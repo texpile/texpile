@@ -1,7 +1,3 @@
-<script lang="ts">
-	// no GitHub links while the repo is private (beta)
-</script>
-
 <footer class="bg-surface-900 text-surface-100 py-12">
 	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 		<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -17,7 +13,12 @@
 						<a href="/download" class="text-surface-300 hover:text-white">Download</a>
 					</li>
 					<li>
-						<span class="text-surface-400">Source code on GitHub soon</span>
+						<a
+							href="https://github.com/nullpointerexceptionkek/texpile-monorepo"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-surface-300 hover:text-white">Source code</a
+						>
 					</li>
 				</ul>
 			</div>
@@ -43,7 +44,14 @@
 		</div>
 
 		<div class="border-surface-700 mt-8 border-t pt-8 text-center">
-			<p class="text-surface-400">Free to use. The source will be published under AGPL-3.0 when Texpile leaves beta.</p>
+			<p class="text-surface-400">
+				Free and <a
+					href="https://github.com/nullpointerexceptionkek/texpile-monorepo"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hover:text-white underline">open source</a
+				> under AGPL-3.0.
+			</p>
 		</div>
 	</div>
 </footer>

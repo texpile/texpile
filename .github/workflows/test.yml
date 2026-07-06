@@ -1,0 +1,31 @@
+# type-check, lint, and unit-test on every commit and pull request
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # svelte-check resolves svelte-pdf-view through its dist, so build the package first
+      - run: pnpm --filter svelte-pdf-view package
+
+      - run: pnpm --filter texpile-editor check
+      - run: pnpm --filter texpile-editor lint
+      - run: pnpm --filter texpile-editor testonce
+      - run: npx tsc -p electron --noEmit

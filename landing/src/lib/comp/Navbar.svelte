@@ -17,15 +17,6 @@
 		onScroll();
 		return () => window.removeEventListener('scroll', onScroll);
 	});
-
-	// the repo is private during the beta, so the GitHub icon shows a note instead of linking out
-	let sourceNote = $state(false);
-	let sourceNoteTimer: ReturnType<typeof setTimeout> | undefined;
-	function showSourceNote() {
-		sourceNote = true;
-		clearTimeout(sourceNoteTimer);
-		sourceNoteTimer = setTimeout(() => (sourceNote = false), 2500);
-	}
 </script>
 
 <header
@@ -47,23 +38,16 @@
 				{/each}
 			</div>
 
-			<div class="relative flex items-center">
-				<button
-					type="button"
-					onclick={showSourceNote}
-					class="text-surface-600 hover:text-surface-950 flex cursor-pointer items-center transition-colors"
+			<div class="flex items-center">
+				<a
+					href="https://github.com/nullpointerexceptionkek/texpile-monorepo"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-surface-600 hover:text-surface-950 flex items-center transition-colors"
 					aria-label="Texpile on GitHub"
 				>
 					<Github class="h-5 w-5" />
-				</button>
-				{#if sourceNote}
-					<div
-						class="border-surface-200 text-surface-700 absolute top-full right-0 mt-3 rounded-lg border bg-white px-3 py-2 text-sm whitespace-nowrap shadow-lg"
-						role="status"
-					>
-						The source will be available on GitHub soon.
-					</div>
-				{/if}
+				</a>
 			</div>
 		</nav>
 	</div>
