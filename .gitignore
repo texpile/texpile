@@ -29,6 +29,8 @@ electron/server-dist/
 # logs
 *-debug.log
 *.log
+# exception: committed LaTeX-log parser test fixtures
+!apps/texpile-editor/tests/unit/lib/latex-log/fixtures/*.log
 
 # editor temp
 vite.config.js.timestamp-*
