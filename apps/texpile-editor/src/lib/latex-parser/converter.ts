@@ -1531,6 +1531,7 @@ function convertNodesToBlocks(nodes: Node[], options: ConversionOptions): PMNode
 
 function isBlockNode(node: Node): boolean {
 	if (node.type === 'environment') return true;
+	if (node.type === 'verbatim') return true;
 	if (node.type === 'mathenv') return true;
 	if (node.type === 'displaymath') return true;
 	if (node.type === 'macro') {
@@ -1606,6 +1607,11 @@ const VERBATIM_ENVS = new Set([
 
 function convertNodeToBlock(node: Node, ctx: ConversionContext, options: ConversionOptions): PMNode[] | null {
 	switch (node.type) {
+		// unified-latex parses any environment it recognizes as genuinely verbatim-bodied
+		// (verbatim, verbatim*, ...) into this dedicated node shape instead of a generic
+		// 'environment' node, even though the fields (env/content/args) are the same.
+		case 'verbatim':
+			return [codeBlockFromVerbatimEnv(node as unknown as Environment)];
 		case 'environment': {
 			const env = node as Environment;
 			const envHandler = envHandlers[env.env];
