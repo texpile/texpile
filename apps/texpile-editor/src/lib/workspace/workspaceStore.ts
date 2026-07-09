@@ -6,6 +6,7 @@ import type { TexFile, TreeEntry } from './fileSystem';
 const RECENT_KEY = 'texpile:recentFolders';
 const MAIN_KEY = 'texpile:mainFiles'; // { [folderRoot]: relPathOfMainFile }
 const CMD_KEY = 'texpile:compileCommands'; // { [folderRoot]: compile command }
+const OUTPUTS_KEY = 'texpile:compileOutputs'; // { [folderRoot]: { pdf?, log? } }
 
 export const workspaceRoot = writable<string | null>(null);
 
@@ -102,4 +103,39 @@ export function setFolderCompileCommand(root: string, cmd: string | null): void 
 	if (cmd) map[norm(root)] = cmd;
 	else delete map[norm(root)];
 	localStorage.setItem(CMD_KEY, JSON.stringify(map));
+}
+
+/** manual overrides for where the compile writes its PDF/log, when auto-detection guesses wrong. */
+export interface CompileOutputs {
+	/** path to the compiled PDF (relative to root, or absolute); blank = auto-detect from command. */
+	pdf?: string;
+	/** path to the .log (relative to root, or absolute); blank = auto-detect (next to the PDF). */
+	log?: string;
+}
+
+function loadOutputsMap(): Record<string, CompileOutputs> {
+	if (!browser) return {};
+	try {
+		const v = JSON.parse(localStorage.getItem(OUTPUTS_KEY) || '{}');
+		return v && typeof v === 'object' ? v : {};
+	} catch {
+		return {};
+	}
+}
+
+/** the folder's manual output-path overrides (empty object if none saved). */
+export function savedCompileOutputs(root: string): CompileOutputs {
+	return loadOutputsMap()[norm(root)] ?? {};
+}
+
+/** persists folder-specific output overrides; an all-blank set removes the entry. */
+export function setCompileOutputs(root: string, outputs: CompileOutputs): void {
+	if (!browser) return;
+	const clean: CompileOutputs = {};
+	if (outputs.pdf) clean.pdf = outputs.pdf;
+	if (outputs.log) clean.log = outputs.log;
+	const map = loadOutputsMap();
+	if (clean.pdf || clean.log) map[norm(root)] = clean;
+	else delete map[norm(root)];
+	localStorage.setItem(OUTPUTS_KEY, JSON.stringify(map));
 }

@@ -25,6 +25,8 @@
 	import SourceControlPanel from '$lib/editor/comp/SourceControlPanel.svelte';
 	import SearchBar from '$lib/editor/comp/SearchBar.svelte';
 	import TableOfContents from '$lib/editor/comp/TableOfContents.svelte';
+	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
+	import { latexHeadings } from '$lib/editor/extensions/tableofcontents/latexHeadings';
 	import BibManager from '$lib/editor/comp/BibManager.svelte';
 	import PreambleFrontmatter from '$lib/editor/comp/PreambleFrontmatter.svelte';
 	import { replacePreambleFrontmatter } from '$lib/editor/extensions/raw-latex/frontmatterView';
@@ -47,7 +49,9 @@
 		savedMainFile,
 		setMainFile,
 		savedCompileCommand,
-		setFolderCompileCommand
+		setFolderCompileCommand,
+		savedCompileOutputs,
+		setCompileOutputs
 	} from '$lib/workspace/workspaceStore';
 	import { addRecentFolder } from '$lib/workspace/workspaceStore';
 	import { refreshGitStatus, isGitRepo, gitStatusMap, gitChanges, gitBranch, takeNoGitHint } from '$lib/workspace/gitStore';
@@ -486,7 +490,12 @@
 		updateSettings({ sidebarWidth });
 	}
 
-	const showToc = $derived(!!loadedPath && kind === 'tex' && viewMode === 'visual');
+	const showToc = $derived(!!loadedPath && kind === 'tex' && (viewMode === 'visual' || viewMode === 'source'));
+	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw .tex
+	$effect(() => {
+		const src = texSource;
+		if (kind === 'tex' && viewMode === 'source') sourceTocStore.set(latexHeadings(src));
+	});
 	let tocFraction = $state(0.5); // TOC share of the sidebar's lower region (0..1)
 	let splitEl = $state<HTMLDivElement>();
 	function startTocResize(e: MouseEvent) {
@@ -530,6 +539,12 @@
 	let compileCommand = $state(''); // the compile command; {main} expands to the main file's path
 	let compileModalOpen = $state(false);
 	let compileDraft = $state('');
+	// Advanced (per-folder) output-path overrides, edited in the compile modal
+	let compileOutputsDraft = $state<{ pdf: string; log: string }>({ pdf: '', log: '' });
+	let advancedOpen = $state(false);
+	// quick-setup chip highlight state, reflected live from the draft (null engine = unrecognized)
+	const draftEngine = $derived(detectEngine(compileDraft));
+	const draftLatexmk = $derived(usesLatexmk(compileDraft));
 	// per-folder command wins over the global default (the last one saved anywhere)
 	const resolveCompileCommand = (root: string | null, global: string) => (root && savedCompileCommand(root)) || global || '';
 	let formatModalOpen = $state(false);
@@ -759,8 +774,46 @@
 		const m = cmd.match(/-(?:output-directory|outdir)[=\s]+("[^"]*"|'[^']*'|\S+)/);
 		return m && m[1] ? m[1].replace(/^["']|["']$/g, '') : '.';
 	}
-	// where the compile will write the PDF: <root>/<outdir>/<main-basename>.pdf
-	function expectedPdfPath(cmd = compileCommand): string | null {
+
+	// Quick-setup chips are a best-effort REFLECTION of the command text and a one-way GENERATOR
+	// on click - never a silent two-way binding. detectEngine returns null for anything we don't
+	// recognize (make, arara, tectonic, a script, multi-engine), so no chip lights up rather than
+	// mislabeling it; clicking a chip regenerates the whole command (visible, Cancel-able as a draft).
+	type Engine = 'pdflatex' | 'lualatex' | 'xelatex';
+	const ENGINE_FLAG: Record<Engine, string> = { pdflatex: '-pdf', lualatex: '-lualatex', xelatex: '-xelatex' };
+	function detectEngine(cmd: string): Engine | null {
+		if (/\b(lualatex|pdflua)\b/.test(cmd)) return 'lualatex';
+		if (/\b(xelatex|pdfxe)\b/.test(cmd)) return 'xelatex';
+		if (/\bpdflatex\b/.test(cmd)) return 'pdflatex';
+		if (/\blatexmk\b/.test(cmd) && /\bpdf\b/.test(cmd)) return 'pdflatex'; // latexmk -pdf defaults to pdflatex
+		return null;
+	}
+	function usesLatexmk(cmd: string) {
+		return /\blatexmk\b/.test(cmd);
+	}
+	// regenerate a standard command, carrying over the current output dir (default 'output')
+	function buildCompileCommand(engine: Engine, latexmk: boolean, cmd: string): string {
+		const cur = compileOutDir(cmd);
+		const out = `-output-directory=${cur === '.' ? 'output' : cur}`;
+		const flags = `-interaction=nonstopmode -file-line-error -synctex=1 ${out}`;
+		return latexmk ? `latexmk ${ENGINE_FLAG[engine]} ${flags} {main}` : `${engine} ${flags} {main}`;
+	}
+	function applyEngine(engine: Engine) {
+		compileDraft = buildCompileCommand(engine, usesLatexmk(compileDraft), compileDraft);
+	}
+	function applyLatexmk(on: boolean) {
+		compileDraft = buildCompileCommand(detectEngine(compileDraft) ?? 'pdflatex', on, compileDraft);
+	}
+	// a Windows drive (C:\), or a POSIX/UNC leading separator
+	const isAbsolutePath = (p: string) => /^([a-zA-Z]:[\\/]|[\\/])/.test(p);
+	// a user-entered override: absolute stays as-is, else it's relative to the folder root
+	function resolveOutputPath(root: string, p: string): string {
+		return isAbsolutePath(p) ? p : joinPath(root, p);
+	}
+
+	// DETECTED (not overridden) PDF path, purely from the command + main file: shown as the
+	// placeholder. <root>/<outdir>/<main-basename>.pdf
+	function detectedPdfPath(cmd = compileCommand): string | null {
 		const root = get(workspaceRoot);
 		const main = get(mainFile) ?? loadedPath;
 		if (!root || !main) return null;
@@ -768,9 +821,9 @@
 		const dir = compileOutDir(cmd);
 		return dir === '.' ? joinPath(root, pdf) : joinPath(joinPath(root, dir), pdf);
 	}
-	// the engine writes <jobname>.log next to the PDF, unless an aux directory
-	// (latexmk -auxdir / MiKTeX -aux-directory) redirects it
-	function expectedLogPath(cmd = compileCommand): string | null {
+	// DETECTED log: <jobname>.log next to the (actual, possibly-overridden) PDF, unless an aux
+	// directory (latexmk -auxdir / MiKTeX -aux-directory) redirects it
+	function detectedLogPath(cmd = compileCommand): string | null {
 		const pdf = expectedPdfPath(cmd);
 		if (!pdf) return null;
 		const aux = cmd.match(/-(?:aux-directory|auxdir)[=\s]+("[^"]*"|'[^']*'|\S+)/);
@@ -782,6 +835,34 @@
 		}
 		return pdf.replace(/\.pdf$/i, '.log');
 	}
+	// ACTUAL PDF/log the preview, log parser, and SyncTeX all use: the folder's manual override
+	// wins (Advanced options in the compile modal), else the detected path
+	function expectedPdfPath(cmd = compileCommand): string | null {
+		const root = get(workspaceRoot);
+		const ov = root ? savedCompileOutputs(root).pdf : undefined;
+		return root && ov ? resolveOutputPath(root, ov) : detectedPdfPath(cmd);
+	}
+	function expectedLogPath(cmd = compileCommand): string | null {
+		const root = get(workspaceRoot);
+		const ov = root ? savedCompileOutputs(root).log : undefined;
+		return root && ov ? resolveOutputPath(root, ov) : detectedLogPath(cmd);
+	}
+	// root-relative detected paths, shown as the Advanced inputs' placeholders; re-derive live as
+	// the user edits the command draft or switches main file
+	const detectedPdfRel = $derived.by(() => {
+		void compileDraft;
+		const root = $workspaceRoot;
+		void $mainFile;
+		const p = detectedPdfPath(compileDraft);
+		return root && p ? relFromRoot(p, root) : 'set a main file first';
+	});
+	const detectedLogRel = $derived.by(() => {
+		void compileDraft;
+		const root = $workspaceRoot;
+		void $mainFile;
+		const p = detectedLogPath(compileDraft);
+		return root && p ? relFromRoot(p, root) : 'set a main file first';
+	});
 
 	// read the .log plus the sibling .blg (it reflects the LAST bib run, which stays valid
 	// even on compiles where latexmk skips bibtex) and publish the parsed problems
@@ -1012,12 +1093,19 @@
 
 	function openCompileModal() {
 		compileDraft = compileCommand;
+		const root = get(workspaceRoot);
+		const ov = root ? savedCompileOutputs(root) : {};
+		compileOutputsDraft = { pdf: ov.pdf ?? '', log: ov.log ?? '' };
+		advancedOpen = !!(ov.pdf || ov.log); // start expanded only if overrides exist
 		compileModalOpen = true;
 	}
 	function saveCompileCommand(thenRun: boolean) {
 		compileCommand = compileDraft.trim();
 		const root = get(workspaceRoot);
-		if (root) setFolderCompileCommand(root, compileCommand || null);
+		if (root) {
+			setFolderCompileCommand(root, compileCommand || null);
+			setCompileOutputs(root, { pdf: compileOutputsDraft.pdf.trim(), log: compileOutputsDraft.log.trim() });
+		}
 		updateSettings({ compileCommand }); // also the starting default for folders without their own
 		compileModalOpen = false;
 		if (thenRun && compileCommand) runCompile();
@@ -1924,7 +2012,7 @@
 								tabindex="0"
 							></div>
 							<div class="border-surface-200-800 min-h-0 overflow-y-auto border-t p-2" style="flex: {tocFraction} 1 0%">
-								<TableOfContents />
+								<TableOfContents mode={viewMode === 'source' ? 'source' : 'visual'} />
 							</div>
 						{/if}
 					</div>
@@ -2356,6 +2444,30 @@
 						</select>
 					</label>
 				{/if}
+
+				<!-- quick setup: chips reflect the command when recognizable, and regenerate it on click -->
+				<div class="mb-2 flex flex-wrap items-center gap-2 text-sm">
+					<span class="text-surface-500 text-xs">Engine</span>
+					{#each ['pdflatex', 'lualatex', 'xelatex'] as const as eng (eng)}
+						<button
+							type="button"
+							class="rounded-base border px-2 py-0.5 text-xs {draftEngine === eng
+								? 'border-primary-500 bg-primary-500/10 text-primary-600-400 font-medium'
+								: 'border-surface-300-700 text-surface-600-300 hover:preset-tonal'}"
+							onclick={() => applyEngine(eng)}
+						>
+							{eng}
+						</button>
+					{/each}
+					{#if draftEngine === null && compileDraft.trim()}
+						<span class="text-surface-400 text-xs italic">custom</span>
+					{/if}
+					<label class="text-surface-600-300 ml-auto inline-flex items-center gap-1.5 text-xs">
+						<input type="checkbox" class="checkbox" checked={draftLatexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
+						use latexmk
+					</label>
+				</div>
+
 				<!-- svelte-ignore a11y_autofocus -->
 				<input
 					class="input w-full font-mono text-sm"
@@ -2379,6 +2491,42 @@
 					Appends a marker echo after the compile command so the editor knows when it finishes. Turn off if it interferes with your shell or
 					compile command.
 				</p>
+
+				<button
+					type="button"
+					class="text-surface-500 hover:text-surface-950-50 mt-4 inline-flex items-center gap-1 text-xs"
+					onclick={() => (advancedOpen = !advancedOpen)}
+				>
+					<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" /> Advanced: output paths
+				</button>
+				{#if advancedOpen}
+					<div class="mt-2 space-y-3">
+						<p class="text-surface-500 text-xs">
+							Texpile reads these from your command to find the PDF, log, and SyncTeX data. Override them if it guesses wrong (a custom
+							<code class="bg-surface-200-800 rounded px-1">-jobname</code>, an unusual output layout). SyncTeX follows the PDF. Leave blank
+							to auto-detect; paths are relative to the folder root.
+						</p>
+						<label class="block">
+							<span class="text-surface-600-300 mb-1 block text-xs font-medium">Compiled PDF</span>
+							<input
+								class="input w-full font-mono text-sm"
+								bind:value={compileOutputsDraft.pdf}
+								placeholder={detectedPdfRel}
+								spellcheck="false"
+							/>
+						</label>
+						<label class="block">
+							<span class="text-surface-600-300 mb-1 block text-xs font-medium">Log file</span>
+							<input
+								class="input w-full font-mono text-sm"
+								bind:value={compileOutputsDraft.log}
+								placeholder={detectedLogRel}
+								spellcheck="false"
+							/>
+						</label>
+					</div>
+				{/if}
+
 				<div class="mt-4 flex items-center justify-between gap-3">
 					<span class="text-surface-500 text-xs">
 						{#if compileDraft.includes('{main}') && !$mainFile}Pick a main file to run.{/if}
