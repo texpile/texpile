@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Download, Terminal, ChevronDown, Star } from '@lucide/svelte';
+	import { Download, ChevronDown, Star } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { trackEvent } from '$lib/plausible';
@@ -214,18 +214,6 @@
 					</div>
 				{/each}
 			</div>
-		</div>
-
-		<div class="border-surface-200 bg-surface-50 mt-10 rounded-lg border p-5">
-			<h2 class="text-surface-500 mb-3 text-xs font-semibold tracking-wide uppercase">Before you install</h2>
-			<ul class="space-y-3">
-				<li class="flex items-start gap-3">
-					<Terminal class="text-surface-400 mt-0.5 h-4 w-4 shrink-0" />
-					<span class="text-surface-600 text-sm leading-relaxed">
-						To compile PDFs, bring your own TeX distribution (TeX Live, MiKTeX, or MacTeX). Editing works without one.
-					</span>
-				</li>
-			</ul>
 		</div>
 
 		{#if history.length}
