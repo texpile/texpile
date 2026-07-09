@@ -77,11 +77,57 @@
 		name="description"
 		content="Texpile is a free, open source LaTeX editor. Edit your .tex files visually, keep byte-perfect output, compile with your own toolchain, and never leave your machine."
 	/>
+	<meta
+		name="keywords"
+		content="LaTeX editor, visual LaTeX editor, WYSIWYG LaTeX editor, offline LaTeX editor, local LaTeX editor, open source LaTeX, LaTeX editor for Windows, LaTeX editor for macOS, LaTeX editor for Linux, .tex editor"
+	/>
+
+	<!-- Page-specific Open Graph -->
+	<meta property="og:url" content="https://desktop.texpile.com/" />
 	<meta property="og:title" content="Texpile - a local, offline LaTeX editor" />
 	<meta
 		property="og:description"
 		content="Edit .tex files visually with byte-perfect saves, built-in git, and local compilation. Free and open source."
 	/>
+
+	<!-- Page-specific Twitter -->
+	<meta property="twitter:url" content="https://desktop.texpile.com/" />
+	<meta property="twitter:title" content="Texpile - a local, offline LaTeX editor" />
+	<meta
+		property="twitter:description"
+		content="Edit .tex files visually with byte-perfect saves, built-in git, and local compilation. Free and open source."
+	/>
+
+	<link rel="canonical" href="https://desktop.texpile.com/" />
+
+	<!-- Structured Data -->
+	{@html `<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "SoftwareApplication",
+		"name": "Texpile",
+		"description": "Texpile is a free, open source LaTeX editor. Edit your .tex files visually, keep byte-perfect output, compile with your own toolchain, and never leave your machine.",
+		"url": "https://desktop.texpile.com",
+		"applicationCategory": "ProductivityApplication",
+		"operatingSystem": "Windows, macOS, Linux",
+		"offers": {
+			"@type": "Offer",
+			"availability": "https://schema.org/InStock"
+		},
+		"creator": {
+			"@type": "Organization",
+			"name": "Texpile"
+		},
+		"featureList": [
+			"Visual and source LaTeX editing, kept in sync",
+			"Byte-perfect round-trip saves",
+			"Local, fully offline compiling",
+			"Built-in terminal and git",
+			"SyncTeX forward and inverse search",
+			"Multi-file project support"
+		]
+	}
+	</script>`}
 </svelte:head>
 
 <section id="top" class="from-primary-50 to-secondary-50 bg-gradient-to-br">

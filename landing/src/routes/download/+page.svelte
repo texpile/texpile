@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Download, Info, Terminal, ChevronDown, Copy, Check, Star } from '@lucide/svelte';
+	import { Download, Terminal, ChevronDown, Star } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { trackEvent } from '$lib/plausible';
@@ -93,19 +93,6 @@
 		a.remove();
 	}
 
-	// macOS Gatekeeper blocks unsigned apps; this strips the quarantine flag from the installed bundle
-	const MAC_UNQUARANTINE = 'xattr -dr com.apple.quarantine /Applications/Texpile.app';
-	let copiedCmd = $state(false);
-	async function copyCmd() {
-		try {
-			await navigator.clipboard.writeText(MAC_UNQUARANTINE);
-			copiedCmd = true;
-			setTimeout(() => (copiedCmd = false), 1500);
-		} catch {
-			/* clipboard unavailable; the command is still selectable */
-		}
-	}
-
 	function onLinuxSelect(value: string) {
 		if (value === 'appimage') {
 			trackDownload('Linux');
@@ -120,6 +107,28 @@
 <svelte:head>
 	<title>Download Texpile - Windows, macOS, Linux</title>
 	<meta name="description" content="Download Texpile, the free offline LaTeX editor, for Windows, macOS, and Linux. No account required." />
+	<meta
+		name="keywords"
+		content="download Texpile, LaTeX editor download, LaTeX editor for Windows, LaTeX editor for macOS, LaTeX editor for Linux"
+	/>
+
+	<!-- Page-specific Open Graph -->
+	<meta property="og:url" content="https://desktop.texpile.com/download" />
+	<meta property="og:title" content="Download Texpile - Windows, macOS, Linux" />
+	<meta
+		property="og:description"
+		content="Download Texpile, the free offline LaTeX editor, for Windows, macOS, and Linux. No account required."
+	/>
+
+	<!-- Page-specific Twitter -->
+	<meta property="twitter:url" content="https://desktop.texpile.com/download" />
+	<meta property="twitter:title" content="Download Texpile - Windows, macOS, Linux" />
+	<meta
+		property="twitter:description"
+		content="Download Texpile, the free offline LaTeX editor, for Windows, macOS, and Linux. No account required."
+	/>
+
+	<link rel="canonical" href="https://desktop.texpile.com/download" />
 </svelte:head>
 
 <section class="bg-surface-50 border-surface-200 border-b">
@@ -210,26 +219,6 @@
 		<div class="border-surface-200 bg-surface-50 mt-10 rounded-lg border p-5">
 			<h2 class="text-surface-500 mb-3 text-xs font-semibold tracking-wide uppercase">Before you install</h2>
 			<ul class="space-y-3">
-				<li class="flex items-start gap-3">
-					<Info class="text-surface-400 mt-0.5 h-4 w-4 shrink-0" />
-					<div class="text-surface-600 text-sm leading-relaxed">
-						<p>
-							Builds are currently unsigned. On Windows, SmartScreen asks you to confirm the first launch. On macOS, if Gatekeeper blocks
-							the app, remove the quarantine flag from Terminal:
-						</p>
-						<div class="border-surface-200 bg-surface-100 rounded-base mt-2 flex items-center gap-2 border py-1.5 pr-1.5 pl-2.5">
-							<code class="text-surface-700 flex-1 overflow-x-auto font-mono text-xs whitespace-nowrap">{MAC_UNQUARANTINE}</code>
-							<button
-								type="button"
-								onclick={copyCmd}
-								class="text-surface-500 hover:text-primary-600 hover:bg-surface-200 rounded-base shrink-0 p-1 transition-colors"
-								aria-label="Copy command"
-							>
-								{#if copiedCmd}<Check class="h-4 w-4" />{:else}<Copy class="h-4 w-4" />{/if}
-							</button>
-						</div>
-					</div>
-				</li>
 				<li class="flex items-start gap-3">
 					<Terminal class="text-surface-400 mt-0.5 h-4 w-4 shrink-0" />
 					<span class="text-surface-600 text-sm leading-relaxed">
