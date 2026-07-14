@@ -1250,9 +1250,16 @@
 			openCompileModal();
 			return;
 		}
-		// {main} with nothing to resolve to means the folder has no .tex file at all
+		// {main} with no main file: a truly empty folder has nothing to compile; otherwise the user
+		// cleared the main file, so let them pick one (then compile). Dismissing leaves it unset.
 		if (cmd.includes('{main}') && !get(mainFile)) {
-			toaster.error({ title: 'Nothing to compile', description: 'No .tex file found in this folder.' });
+			if (get(texFiles).length === 0) {
+				toaster.error({ title: 'Nothing to compile', description: 'No .tex file found in this folder.' });
+			} else {
+				void openMainConfirm(() => {
+					if (get(mainFile)) void runCompile();
+				});
+			}
 			return;
 		}
 		// write the buffer to disk BEFORE compiling so SyncTeX indexes exactly what the editor
