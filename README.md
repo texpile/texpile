@@ -23,7 +23,8 @@ Edit your document as formatted text, math, tables, and figures. The same file o
 
 Type in source view and the page re-typesets with your own LuaLaTeX and updates in place, patched in milliseconds. Math, TikZ, and pgfplots figures render live.
 
-![Live preview compiling as you type](apps/texpile-editor/src/lib/assets/live-preview-demo.png)
+https://github.com/user-attachments/assets/7a2d7997-fe6c-4837-bbe5-1aaa5e0c90b7
+
 
 ## Download
 
