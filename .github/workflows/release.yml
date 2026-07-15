@@ -1,4 +1,5 @@
-# Build Texpile installers for all three OSes; a version tag (v*) also attaches them to a draft release.
+# Build Texpile installers for all three OSes; a version tag (v*) also publishes to R2 and creates
+# a binary-free GitHub release (notes + download link; distribution is texpile.com, not GitHub).
 # publish-r2 also ships the electron-updater feed: latest*.yml at the bucket root (served by
 # updates.texpile.com) with file urls pointing at the immutable v<version>/ binaries + blockmaps.
 #
@@ -25,7 +26,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: write # attach artifacts to the draft release on tag builds
+  contents: write # create the GitHub release on tag builds
 
 jobs:
   build:
@@ -136,12 +137,6 @@ jobs:
           path: ${{ matrix.artifacts }}
           if-no-files-found: error
 
-      - if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          files: ${{ matrix.artifacts }}
-
   # publish the installers to the R2 bucket behind the landing page's download links.
   # Needs CLOUDFLARE_API_TOKEN ("Workers R2 Storage: Edit") + CLOUDFLARE_ACCOUNT_ID secrets.
   publish-r2:
@@ -237,3 +232,14 @@ jobs:
           '
           cat dist/versions.json
           npx wrangler@4 r2 object put "$BUCKET/versions.json" --file dist/versions.json --remote --content-type application/json
+
+      # binaries are deliberately NOT attached: distribution is texpile.com/download (R2).
+      # The release is just the public changelog entry, published automatically.
+      - name: Publish GitHub release (notes + download link, no binaries)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "Download installers: https://texpile.com/download"; echo; \
+            node apps/texpile-editor/scripts/release-notes.mjs | sed 's/^/- /'; } > body.md
+          gh release create "$GITHUB_REF_NAME" --title "Texpile $GITHUB_REF_NAME" --notes-file body.md
