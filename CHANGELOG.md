@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [0.13.2] - 2026-07-15
+
 - feat: the What's New window shows the current release series on new installs and upgrades from older versions
 
 ## [0.13.1] - 2026-07-15
