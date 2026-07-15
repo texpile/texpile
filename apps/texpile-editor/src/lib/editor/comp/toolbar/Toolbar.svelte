@@ -6,7 +6,7 @@
 	import ToolbarTable from './ToolbarTable.svelte';
 	import TextColorDropdown from './TextColorDropdown.svelte';
 	import HighlightDropdown from './HighlightDropdown.svelte';
-	import type { EditorState } from 'prosemirror-state';
+	import { markIsActive, activeMarkColor } from './markState';
 	import { displaySearchBarStore, editorViewStore, rawEditorActiveStore } from '../../../stores/editorStore';
 	import { previewStore } from '$lib/stores/previewStore';
 	import { schema } from '$lib/schema/schema';
@@ -59,17 +59,6 @@
 		};
 	});
 
-	function markIsActive(state: EditorState, type) {
-		const { from, to, empty } = state.selection;
-
-		if (empty) {
-			const marksAtPos = state.selection.$head.marks();
-			return type.isInSet(state.storedMarks || marksAtPos);
-		} else {
-			return state.doc.rangeHasMark(from, to, type);
-		}
-	}
-
 	function keepEditorFocus(cmd: (state, dispatch) => boolean) {
 		return (e: MouseEvent) => {
 			e.preventDefault();
@@ -91,11 +80,8 @@
 				sub: markIsActive($editorViewStore.state, schema.marks.sub)
 			};
 
-			const textColorMark = markIsActive($editorViewStore.state, schema.marks.textcolor);
-			activeTextColor = textColorMark ? textColorMark.attrs.color : null;
-
-			const highlightMark = markIsActive($editorViewStore.state, schema.marks.highlight);
-			activeHighlightColor = highlightMark ? highlightMark.attrs.color : null;
+			activeTextColor = activeMarkColor($editorViewStore.state, schema.marks.textcolor);
+			activeHighlightColor = activeMarkColor($editorViewStore.state, schema.marks.highlight);
 
 			const node = $editorViewStore.state.selection.$from.node($editorViewStore.state.selection.$from.depth);
 			const inHeading = node?.type?.name === 'heading';

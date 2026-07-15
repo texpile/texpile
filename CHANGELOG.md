@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: applying a highlight or text color to selected text froze the app
+
 ## [0.13.0] - 2026-07-14
 
 - feat: added live mode, allowing real-time preview of LuaLaTeX compilation
