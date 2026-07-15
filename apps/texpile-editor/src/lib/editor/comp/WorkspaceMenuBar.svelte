@@ -131,7 +131,8 @@
 		}
 		const status = await checkForUpdate(true);
 		if (status === 'update') updateModalOpen.set(true);
-		else if (status === 'none') toaster.info({ title: 'No update available', description: `Texpile v${appVersion} is the latest version.` });
+		else if (status === 'none')
+			toaster.info({ title: 'No update available', description: `Texpile v${appVersion} is the latest version.` });
 		else if (status === 'error')
 			toaster.error({ title: 'Could not check for updates', description: 'Check your internet connection and try again.' });
 		else toaster.info({ title: 'Updates are not available in this build' });
