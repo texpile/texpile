@@ -10,8 +10,11 @@
 	onMount(initAnalytics);
 </script>
 
-<Navbar />
-
-{@render children()}
-
-<Footer />
+<!-- min-h-screen flex column so short pages (404) still pin the footer to the viewport bottom -->
+<div class="flex min-h-screen flex-col">
+	<Navbar />
+	<main class="flex flex-1 flex-col">
+		{@render children()}
+	</main>
+	<Footer />
+</div>
