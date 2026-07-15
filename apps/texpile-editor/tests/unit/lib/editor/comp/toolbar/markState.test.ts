@@ -14,8 +14,7 @@ describe('toolbar mark state', () => {
 			schema.text(' tail')
 		])
 	]);
-	const select = (from: number, to?: number) =>
-		EditorState.create({ schema, doc, selection: TextSelection.create(doc, from, to) });
+	const select = (from: number, to?: number) => EditorState.create({ schema, doc, selection: TextSelection.create(doc, from, to) });
 
 	it('range selection over marked text reports the color without throwing', () => {
 		const state = select(2, 12); // spans plain + marked text
