@@ -1,0 +1,5 @@
+# LF in repo and working tree; system autocrlf must not rewrite anything
+* text=auto eol=lf
+
+# NSIS license page is a classic edit control, needs CRLF to render line breaks
+build/license.txt -text
