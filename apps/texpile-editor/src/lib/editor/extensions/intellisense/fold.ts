@@ -3,7 +3,10 @@
 // text scans via foldService rather than a language-aware fold prop, since the bundled LaTeX mode
 // is a legacy StreamLanguage with no syntax tree to hang a fold prop on.
 import { foldGutter, foldKeymap, foldService } from '@codemirror/language';
-import { keymap } from '@codemirror/view';
+import { EditorView, keymap } from '@codemirror/view';
+import { mount, unmount, type Component } from 'svelte';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import ChevronRight from '@lucide/svelte/icons/chevron-right';
 import type { EditorState } from '@codemirror/state';
 import type { Extension } from '@codemirror/state';
 
@@ -69,7 +72,46 @@ export function foldRangeAt(state: EditorState, lineStart: number, lineEnd: numb
 	return environmentFoldRange(state, lineStart, lineEnd) ?? sectionFoldRange(state, lineStart, lineEnd);
 }
 
+// CodeMirror's fold gutter defaults to the bare characters "⌄" and "›", the only glyphs in the app
+// that aren't lucide (and that fall back to whatever font happens to carry those codepoints).
+// markerDOM runs per visible line, so each icon is rendered once and cloned rather than mounting a
+// Svelte component per marker.
+const iconCache = new Map<Component, string>();
+
+function iconHtml(Icon: Component): string {
+	let html = iconCache.get(Icon);
+	if (html === undefined) {
+		const host = document.createElement('div');
+		const app = mount(Icon, { target: host, props: { size: 12, strokeWidth: 2.5 } });
+		html = host.innerHTML;
+		void unmount(app);
+		iconCache.set(Icon, html);
+	}
+	return html;
+}
+
+function foldMarkerDOM(open: boolean): HTMLElement {
+	const span = document.createElement('span');
+	span.className = 'cm-foldMarker';
+	// markerDOM opts out of CodeMirror's own title, so carry it ourselves
+	span.title = open ? 'Fold line' : 'Unfold line';
+	span.innerHTML = iconHtml(open ? ChevronDown : ChevronRight); // lucide's own markup, not user input
+	return span;
+}
+
+const foldMarkerTheme = EditorView.baseTheme({
+	'.cm-foldGutter .cm-foldMarker': {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '100%',
+		opacity: '0.45',
+		cursor: 'pointer'
+	},
+	'.cm-foldGutter .cm-foldMarker:hover': { opacity: '1' }
+});
+
 /** folding for LaTeX source: environments and section headings. */
 export function latexFolding(): Extension {
-	return [foldService.of(foldRangeAt), foldGutter(), keymap.of(foldKeymap)];
+	return [foldService.of(foldRangeAt), foldGutter({ markerDOM: foldMarkerDOM }), foldMarkerTheme, keymap.of(foldKeymap)];
 }
