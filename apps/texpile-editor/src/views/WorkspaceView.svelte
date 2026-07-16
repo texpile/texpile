@@ -1803,19 +1803,25 @@
 		} else {
 			flushSave(); // persist the outgoing file's queued edit before tearing down its buffers
 		}
+		loadError = null;
+		// the outgoing file stays on screen until loadFile has the new one ready: clearing here
+		// first is what made every switch blink through the "Opening…" placeholder
+		if (path) loadFile(path);
+		else closeOpenFile();
+	});
+
+	/** drop the open file's buffers. per-file state (anchors, cross-mode history) must not leak. */
+	function closeOpenFile() {
 		texSource = '';
 		docMeta = null;
 		visualDoc = null;
 		rawContent = '';
 		loadedPath = null;
-		loadError = null;
-		// per-file state: scroll-sync anchors and the cross-mode history must not leak across files
 		sourceScrollAnchor = null;
 		pendingVisualAnchor = null;
 		hist = [];
 		histIndex = -1;
-		if (path) loadFile(path);
-	});
+	}
 
 	async function loadFile(path: string) {
 		try {
@@ -1825,35 +1831,56 @@
 			if (k === 'tex') {
 				const raw = await readTextFile(path);
 				if (get(activeFilePath) !== path) return; // raced past this file
-				docEol = detectEol(raw); // remember CRLF/LF to re-apply on save
 				const text = toLf(raw); // editor works in LF
-				// set source text up front so the file loads immediately in source view even if the
-				// visual-mode parse is slow or times out; the async parse fills visualDoc if it succeeds
+				// visual mode parses BEFORE the swap: publishing the new path with no doc yet is what
+				// dropped the pane to "Opening…" for the length of a whole parse. source mode has
+				// nothing to wait for.
+				const mySeq = ++parseSequence;
+				const outcome = viewMode === 'visual' ? await tryParseVisual(text) : null;
+				if (get(activeFilePath) !== path || mySeq !== parseSequence) return; // superseded
+				if (outcome?.failure) fallbackToSource(outcome.failure); // this file opens in source instead
+				const parsed = outcome?.parsed ?? null;
+
+				docEol = detectEol(raw); // remember CRLF/LF to re-apply on save
 				texSource = text;
-				visualDoc = null; // clear last file's doc while we wait for the new parse
+				docMeta = parsed && { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
+				visualDoc = parsed?.doc ?? null;
+				lastDoc = parsed?.doc ?? null;
+				lastParsedSource = parsed ? text : null;
 				loadedPath = path;
 				diskBaseline = text;
 				isDirty.set(false);
 				histReset(text); // the on-disk content is the floor of the cross-mode undo history
-				if (viewMode === 'visual') rebuildVisualFromSource();
-				else if (viewMode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
+				sourceScrollAnchor = null;
+				pendingVisualAnchor = null;
+				if (viewMode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
 			} else if (k === 'text' || k === 'bib') {
 				const raw = await readTextFile(path);
 				if (get(activeFilePath) !== path) return;
 				docEol = detectEol(raw);
 				const text = toLf(raw);
 				rawContent = text;
+				texSource = '';
+				docMeta = null;
+				visualDoc = null;
 				loadedPath = path;
 				diskBaseline = text;
 				isDirty.set(false);
+				hist = []; // no cross-mode history for these kinds (histCapture bails on histIndex < 0)
+				histIndex = -1;
+				sourceScrollAnchor = null;
+				pendingVisualAnchor = null;
 				if (viewMode === 'diff') void captureDiffSnapshot();
 			} else {
 				// image / binary: nothing to load, just display it
 				if (get(activeFilePath) !== path) return;
+				closeOpenFile();
 				loadedPath = path;
 				isDirty.set(false);
 			}
 		} catch (e) {
+			if (get(activeFilePath) !== path) return;
+			closeOpenFile(); // a half-open file must not stay on screen behind the error
 			loadError = e instanceof Error ? e.message : 'Failed to open file';
 		}
 	}
@@ -2381,34 +2408,54 @@
 	// text we last successfully parsed; skip re-parsing when unchanged, a remount on identical content flashes
 	let lastParsedSource: string | null = null;
 
+	interface ParseFailure {
+		timeout: boolean;
+		message: string;
+	}
+	interface ParseOutcome {
+		parsed?: ParsedLatexFile;
+		failure?: ParseFailure;
+	}
+
+	// the failure is returned rather than handled here: only the caller knows whether its parse is
+	// still the current one, and a superseded parse must not yank the user out of visual mode.
+	async function tryParseVisual(text: string): Promise<ParseOutcome> {
+		try {
+			return { parsed: await parseLatexFileAsync(text, projectMacros, 3000) };
+		} catch (e) {
+			const timeout = e instanceof Error && e.message === PARSE_TIMEOUT;
+			return { failure: { timeout, message: e instanceof Error ? e.message : String(e) } };
+		}
+	}
+
+	function fallbackToSource(failure: ParseFailure): void {
+		viewMode = 'source';
+		visualDoc = null;
+		pendingVisualAnchor = null; // never re-anchor a later visual entry off this failed switch
+		if (failure.timeout) {
+			toaster.warning({ title: 'File too large to open in visual mode' });
+		} else {
+			toaster.error({ title: 'Could not parse source', description: failure.message });
+		}
+	}
+
 	function rebuildVisualFromSource(): void {
 		// fast path: source unchanged since the last successful parse, keep the mounted PM view
 		if (texSource === lastParsedSource && visualDoc) return;
 
 		const mySeq = ++parseSequence;
-		parseLatexFileAsync(texSource, projectMacros, 3000)
-			.then((p) => {
-				if (mySeq !== parseSequence) return; // superseded
-				docMeta = { preamble: p.preamble, postamble: p.postamble, hadDocumentEnv: p.hadDocumentEnv };
-				visualDoc = p.doc;
-				lastDoc = p.doc;
-				// quirk: this records the CURRENT texSource, which may be post-edit text if the user
-				// typed while the parse was in flight. harmless: onChange clears the anchor on edits.
-				lastParsedSource = texSource;
-				// EditorView reacts to the new localValue and swaps state on the existing instance: no remount, no flicker
-			})
-			.catch((e: unknown) => {
-				if (mySeq !== parseSequence) return;
-				const isTimeout = e instanceof Error && e.message === PARSE_TIMEOUT;
-				viewMode = 'source';
-				visualDoc = null;
-				pendingVisualAnchor = null; // never re-anchor a later visual entry off this failed switch
-				if (isTimeout) {
-					toaster.warning({ title: 'File too large to open in visual mode' });
-				} else {
-					toaster.error({ title: 'Could not parse source', description: e instanceof Error ? e.message : String(e) });
-				}
-			});
+		void tryParseVisual(texSource).then((o) => {
+			if (mySeq !== parseSequence) return; // superseded
+			if (o.failure) return fallbackToSource(o.failure);
+			if (!o.parsed) return;
+			docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
+			visualDoc = o.parsed.doc;
+			lastDoc = o.parsed.doc;
+			// quirk: this records the CURRENT texSource, which may be post-edit text if the user
+			// typed while the parse was in flight. harmless: onChange clears the anchor on edits.
+			lastParsedSource = texSource;
+			// EditorView reacts to the new localValue and swaps state on the existing instance: no remount, no flicker
+		});
 	}
 
 	// manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest
