@@ -411,7 +411,11 @@
 			const fsType: 'file' | 'dir' = type === 'dir' ? 'dir' : 'file';
 			const path = joinPath(parentDir, name);
 			const isTex = fsType === 'file' && name.toLowerCase().endsWith('.tex');
-			const content = isInclude ? '' : isTex ? createStarterLatex() : '';
+			// source-mode users write their own preamble, so hand them an empty file and let the
+			// editor's ghost offer the skeleton (Tab takes it). Visual mode has no ghost to show
+			// and no way to write a preamble, so it still gets one up front.
+			const wantsStarter = isTex && lastEditMode !== 'source';
+			const content = !isInclude && wantsStarter ? createStarterLatex() : '';
 			await createEntry(path, fsType, content);
 			// insert the \input into the current doc BEFORE switching away (the switch flushes its save)
 			if (isInclude && !insertIncludeAtCursor(path)) {
