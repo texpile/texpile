@@ -108,6 +108,15 @@
 
 	let host = $state<HTMLDivElement>();
 	let view: EditorView | null = null;
+	// CodeMirror sizes the line-number gutter to the widest number the doc could reach, rounded up
+	// to all-nines (9, 99, 999...), so the text column shifts a character at every power of ten:
+	// between files, and mid-typing the moment a document reaches line 10. Reserve three digits, the
+	// way VS Code's editor.lineNumbers.minChars does. The gutter element is border-box, so the
+	// padding has to be inside the floor or it eats a digit; both values are CodeMirror's own,
+	// restated here so they can't drift apart.
+	const gutterWidthFloor = EditorView.theme({
+		'.cm-lineNumbers .cm-gutterElement': { padding: '0 3px 0 5px', minWidth: 'calc(3ch + 3px + 5px)' }
+	});
 	const langConf = new Compartment();
 	// true while pushing an external value into CM, so the update listener doesn't echo it back as a user edit
 	let syncing = false;
@@ -119,6 +128,7 @@
 				doc: value,
 				extensions: [
 					lineNumbers(),
+					gutterWidthFloor,
 					highlightActiveLine(),
 					history(),
 					drawSelection(),
