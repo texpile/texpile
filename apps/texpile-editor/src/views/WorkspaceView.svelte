@@ -5,7 +5,7 @@
 	import { browser } from '$lib/runtime';
 	import { navigate } from '$lib/router.svelte';
 	// prettier-ignore
-	import { Save, FileText, Loader2, CircleAlert, TriangleAlert, FilePlus, FolderPlus, RefreshCw, PanelLeft, PanelRight, Eye, Code, GitCompare, GitBranch, Play, Square, SquareTerminal, X, ChevronDown, Check, Plus, Trash2, LocateFixed, Search, Settings2 } from '@lucide/svelte';
+	import { Save, FileText, Loader2, CircleAlert, TriangleAlert, FilePlus, FolderPlus, RefreshCw, PanelLeft, PanelRight, Eye, Code, GitCompare, GitBranch, Play, Square, SquareTerminal, X, ChevronDown, Check, Plus, Trash2, LocateFixed, Search, Settings2, FoldHorizontal, UnfoldHorizontal } from '@lucide/svelte';
 	import EditorView from '$lib/editor/EditorView.svelte';
 	import Terminal from '$lib/editor/comp/Terminal.svelte';
 	import ProblemsPanel from '$lib/editor/comp/ProblemsPanel.svelte';
@@ -240,6 +240,7 @@
 			lastEditMode = 'source';
 		}
 		if (localStorage.getItem('texpile:diffLayout') === 'split') diffLayout = 'split';
+		if (localStorage.getItem('texpile:terminalShrink') === '1') terminalShrink = true;
 
 		// the tree is a snapshot: rescan on window focus and on the fs-changed event dispatched by
 		// internal writes. any on-disk change also rescans references so \cite autocompletion and
@@ -535,6 +536,7 @@
 	let terminalAvailable = $state(false);
 	let terminalVisible = $state(false);
 	let terminalHeight = $state(240);
+	let terminalShrink = $state(false); // dock only under the editor; the preview pane keeps full height
 	let terminalMounted = $state(false); // stay mounted after first open so shells persist across toggles
 	// VSCode-style multi-terminal: one active (shown), the rest kept mounted (hidden)
 	type TermRef =
@@ -563,6 +565,7 @@
 	// PDF preview pane; opens automatically once a compile writes a fresh PDF
 	let pdfPaneOpen = $state(false);
 	let pdfPaneWidth = $state(480);
+	const dockShrunk = $derived(terminalShrink && pdfPaneOpen);
 	const PDF_FRACTION_KEY = 'texpile:pdfPaneFraction';
 	// cap: whatever's left after the sidebar, keeping ~360px for the editor, so a big pane
 	// saved on a wide screen can't squeeze the editor out in a small window
@@ -1109,6 +1112,10 @@
 			showTerminal();
 			setTimeout(() => activeRef()?.focus(), 40);
 		}
+	}
+	function toggleTerminalShrink() {
+		terminalShrink = !terminalShrink;
+		if (browser) localStorage.setItem('texpile:terminalShrink', terminalShrink ? '1' : '0');
 	}
 	function addTerminal() {
 		const id = ++termSeq;
@@ -2619,8 +2626,11 @@
 			></div>
 		{/if}
 
-		<main class="flex min-w-0 flex-1 flex-col">
-			<header class="border-surface-200-800 flex h-12 items-center justify-between gap-3 border-b px-4">
+		<main
+			class="grid min-h-0 min-w-0 flex-1"
+			style="grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto minmax(0, 1fr) auto auto"
+		>
+			<header class="border-surface-200-800 col-span-full flex h-12 items-center justify-between gap-3 border-b px-4">
 				<div class="flex min-w-0 items-center gap-2">
 					<button
 						class="btn-icon btn-icon-sm hover:preset-tonal shrink-0"
@@ -2775,9 +2785,10 @@
 			</header>
 
 			<!-- editor column (toolbar + content) with the PDF pane beside it, so the PDF
-			     skips the toolbar while the header (Compile) stays above it -->
-			<div class="flex min-h-0 flex-1">
-				<div class="flex min-h-0 min-w-0 flex-1 flex-col">
+			     skips the toolbar while the header (Compile) stays above it. the wrapper is
+			     display:contents so editor/splitter/preview place themselves on main's grid -->
+			<div class="contents">
+				<div class="flex min-h-0 min-w-0 flex-col" style="grid-column: 1; grid-row: 2">
 					{#if visualDoc && loadedPath && kind === 'tex' && viewMode === 'visual'}
 						<div class="border-surface-200-800 toolbar-hscroll overflow-x-auto border-b">
 							<Toolbar minimal />
@@ -2920,6 +2931,7 @@
 					<!-- eslint-disable-next-line svelte/valid-compile -->
 					<div
 						class="hover:bg-primary-500/40 active:bg-primary-500/60 w-1 shrink-0 cursor-col-resize bg-transparent transition-colors"
+						style="grid-column: 2; grid-row: {dockShrunk ? '2 / -1' : '2'}"
 						onmousedown={startPdfResize}
 						onkeydown={resizePdfByKey}
 						role="separator"
@@ -2927,7 +2939,10 @@
 						aria-label="Resize PDF preview"
 						tabindex="0"
 					></div>
-					<aside class="border-surface-200-800 flex shrink-0 flex-col border-l" style="width: {pdfPaneWidth}px">
+					<aside
+						class="border-surface-200-800 flex shrink-0 flex-col border-l"
+						style="width: {pdfPaneWidth}px; grid-column: 3; grid-row: {dockShrunk ? '2 / -1' : '2'}"
+					>
 						<div class="bg-surface-100-900 text-surface-600-300 flex h-8 shrink-0 items-center justify-between border-b px-3 text-xs">
 							<span class="font-medium">{$settings.draftMode ? 'Live preview' : 'PDF preview'}</span>
 							<button class="hover:preset-tonal rounded p-0.5" onclick={togglePdfPane} title="Close preview" aria-label="Close preview">
@@ -2951,13 +2966,14 @@
 				{/if}
 			</div>
 
-			<!-- terminal dock sits under the editor only; the file explorer keeps full height -->
+			<!-- terminal dock; shrunk it stays under the editor column and the preview keeps full height -->
 			{#if terminalMounted && terminalAvailable}
 				{#if terminalVisible}
 					<!-- same WAI-ARIA window-splitter pattern as above; svelte's a11y rule doesn't special-case it -->
 					<!-- eslint-disable-next-line svelte/valid-compile -->
 					<div
 						class="hover:bg-primary-500/40 active:bg-primary-500/60 h-1 shrink-0 cursor-row-resize bg-transparent transition-colors"
+						style="grid-row: 3; grid-column: {dockShrunk ? '1' : '1 / -1'}"
 						onmousedown={startTerminalResize}
 						onkeydown={resizeTerminalByKey}
 						role="separator"
@@ -2969,7 +2985,7 @@
 				<!-- kept mounted so shells persist; hidden via display:none -->
 				<section
 					class="border-surface-200-800 flex shrink-0 flex-col border-t"
-					style={terminalVisible ? `height: ${terminalHeight}px` : 'display: none'}
+					style={`${terminalVisible ? `height: ${terminalHeight}px` : 'display: none'}; grid-row: 4; grid-column: ${dockShrunk ? '1' : '1 / -1'}`}
 				>
 					<div class="bg-surface-100-900 text-surface-600-300 flex h-8 shrink-0 items-center justify-between gap-2 px-2 text-xs">
 						<div class="flex min-w-0 items-center gap-1">
@@ -3045,6 +3061,20 @@
 									onclick={() => activeTermId != null && killTerminal(activeTermId)}
 								>
 									<Trash2 class="size-3.5" />
+								</button>
+							{/if}
+							{#if pdfPaneOpen}
+								<button
+									class="hover:preset-tonal rounded p-1"
+									title={terminalShrink ? 'Expand panel under the preview' : 'Shrink panel to the editor width'}
+									aria-label={terminalShrink ? 'Expand panel to full width' : 'Shrink panel to editor width'}
+									onclick={toggleTerminalShrink}
+								>
+									{#if terminalShrink}
+										<UnfoldHorizontal class="size-3.5" />
+									{:else}
+										<FoldHorizontal class="size-3.5" />
+									{/if}
 								</button>
 							{/if}
 							<button class="hover:preset-tonal rounded p-1" title="Hide panel" aria-label="Hide panel" onclick={toggleTerminal}>
