@@ -41,7 +41,7 @@
 	const faqs = [
 		{
 			q: 'Is it free?',
-			a: 'Yes. Texpile is free. The source code will be published on GitHub under AGPL-3.0 when it leaves beta.'
+			a: 'Yes. Texpile is free, and the source code is published on GitHub under AGPL-3.0.'
 		},
 		{
 			q: 'Where do my files live?',
