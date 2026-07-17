@@ -7,7 +7,7 @@
 
 &nbsp;
 
-Texpile is a modern, local, offline LaTeX editor for Windows, macOS, and Linux. Its visual editor shows your document as formatted text, math, tables, and figures while you write, and a live preview compiled by your own TeX distribution updates as you type. Drop into source view whenever you want. No account, no cloud, nothing leaves your machine.
+Texpile is a modern, local, offline LaTeX editor for Windows, macOS, and Linux. Its visual editor shows your document as formatted text, math, tables, and figures while you write, and a live preview compiled by your own TeX distribution updates as you type. Drop into source view whenever you want. No account, no cloud, your documents never leave your machine.
 
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdl.texpile.com%2Flatest.json&query=%24.version&label=version&prefix=v&color=blue)](https://texpile.com/download)
 [![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-green)](https://texpile.com/download)
@@ -53,6 +53,10 @@ Editing works out of the box. To compile PDFs, install a TeX distribution (TeX L
 - **Source control.** Side-by-side diff against the last commit, staging, and commits, built on your existing git repository.
 - **Spell check** runs locally via [Harper](https://github.com/Automattic/harper).
 - **Starters** for blank articles, APA, and MLA documents.
+
+## Privacy
+
+Your documents stay on your disk. The app's only network traffic is the update check, which you can turn off in Preferences.
 
 ## Community
 
