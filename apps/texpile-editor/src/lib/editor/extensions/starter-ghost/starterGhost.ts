@@ -1,7 +1,5 @@
-// An empty .tex offers a document skeleton as ghost text; Tab takes it. Nothing is written to
-// the file unless the user accepts, so a preamble is never forced on someone who has their own.
-// Only source mode gets this: visual-mode users are handed the skeleton at creation instead
-// (see createInTree in WorkspaceView), because ghost text has no meaning in a WYSIWYG surface.
+// An empty .tex offers a document skeleton as ghost text; Tab takes it. Source mode only: visual
+// mode gets the skeleton written at creation instead (createInTree in WorkspaceView).
 import { Decoration, EditorView, WidgetType, keymap, type DecorationSet } from '@codemirror/view';
 import { Prec, StateField, type Extension } from '@codemirror/state';
 import { createStarterLatex } from '$lib/workspace/latexRoundtrip';

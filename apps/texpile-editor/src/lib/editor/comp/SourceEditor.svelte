@@ -108,14 +108,19 @@
 
 	let host = $state<HTMLDivElement>();
 	let view: EditorView | null = null;
-	// CodeMirror sizes the line-number gutter to the widest number the doc could reach, rounded up
-	// to all-nines (9, 99, 999...), so the text column shifts a character at every power of ten:
-	// between files, and mid-typing the moment a document reaches line 10. Reserve three digits, the
-	// way VS Code's editor.lineNumbers.minChars does. The gutter element is border-box, so the
-	// padding has to be inside the floor or it eats a digit; both values are CodeMirror's own,
-	// restated here so they can't drift apart.
-	const gutterWidthFloor = EditorView.theme({
-		'.cm-lineNumbers .cm-gutterElement': { padding: '0 3px 0 5px', minWidth: 'calc(3ch + 3px + 5px)' }
+	// three digits so the text stops shifting every power of ten. the element is border-box, so the
+	// padding has to be inside the floor or it eats a digit.
+	const gutterTheme = EditorView.theme({
+		// gutters aren't content: without this, double-clicking a line number or a fold arrow selects it
+		'.cm-gutters': { userSelect: 'none', WebkitUserSelect: 'none' },
+		'.cm-lineNumbers .cm-gutterElement': {
+			padding: '0 3px 0 5px',
+			minWidth: 'calc(3ch + 3px + 5px)',
+			textAlign: 'center'
+		},
+		'.cm-gutter-lint': { width: '1em' },
+		'.cm-gutter-lint .cm-gutterElement': { padding: '0 1px' },
+		'.cm-lint-marker': { width: '0.8em', height: '0.8em' }
 	});
 	const langConf = new Compartment();
 	// true while pushing an external value into CM, so the update listener doesn't echo it back as a user edit
@@ -127,8 +132,10 @@
 			state: EditorState.create({
 				doc: value,
 				extensions: [
+					// gutters render in extension order: lint goes before lineNumbers so it lands on their left
+					...(!filename || /\.tex$/i.test(filename) ? [lintGutter({ hoverTime: 0 })] : []),
 					lineNumbers(),
-					gutterWidthFloor,
+					gutterTheme,
 					highlightActiveLine(),
 					history(),
 					drawSelection(),
@@ -137,9 +144,9 @@
 					langConf.of([]),
 					cmSyntaxHighlight(),
 					// full intellisense (completion + shortcuts + hover + folding + go-to-def) + math preview for
-					// .tex only; .bib gets entry-type/field completion; the lint gutter renders compile-log diagnostics
+					// .tex only; .bib gets entry-type/field completion
 					...(!filename || /\.tex$/i.test(filename)
-						? [latexIntellisense(), mathPreview(), lintGutter({ hoverTime: 0 }), starterGhost()]
+						? [latexIntellisense(), mathPreview(), starterGhost()]
 						: /\.bib$/i.test(filename)
 							? [latexAutocomplete({ bib: true })]
 							: []),

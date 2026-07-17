@@ -72,10 +72,7 @@ export function foldRangeAt(state: EditorState, lineStart: number, lineEnd: numb
 	return environmentFoldRange(state, lineStart, lineEnd) ?? sectionFoldRange(state, lineStart, lineEnd);
 }
 
-// CodeMirror's fold gutter defaults to the bare characters "⌄" and "›", the only glyphs in the app
-// that aren't lucide (and that fall back to whatever font happens to carry those codepoints).
-// markerDOM runs per visible line, so each icon is rendered once and cloned rather than mounting a
-// Svelte component per marker.
+// markerDOM runs per visible line, so render each icon once and clone it
 const iconCache = new Map<Component, string>();
 
 function iconHtml(Icon: Component): string {

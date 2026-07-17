@@ -1,11 +1,8 @@
 <script lang="ts">
-	// The Source-mode counterpart to MathToolbar. Same symbol table, different insertion: there's no
-	// mathfield here, so symbols go in as CodeMirror snippets with the tab stops mathlive would have
-	// given us. One popover with group tabs rather than nine buttons, because this toolbar is always
-	// on screen and has to share the row.
+	// Source-mode counterpart to MathToolbar: same symbol table, but symbols go in as CodeMirror
+	// snippets rather than through a mathfield.
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	// Omega, not Sigma: the toolbar's Sigma already means "wrap in inline math", and two identical
-	// icons doing different things is worse than a less literal one.
+	// Omega, not Sigma: the toolbar's Sigma already means "wrap in inline math"
 	import { ChevronDown, Omega } from '@lucide/svelte';
 	import { convertLatexToMarkup } from 'mathlive';
 	import 'mathlive/static.css';
