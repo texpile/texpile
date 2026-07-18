@@ -1,0 +1,527 @@
+{
+  "deps": [
+    {
+      "name": "ifthen"
+    }
+  ],
+  "macros": [
+    {
+      "name": "bar",
+      "detail": " ̄",
+      "doc": "Macron"
+    },
+    {
+      "name": "cross"
+    },
+    {
+      "name": "dot",
+      "detail": " ̇",
+      "doc": "\\dot (wrisym), dot above"
+    },
+    {
+      "name": "doublebar"
+    },
+    {
+      "name": "doublecross"
+    },
+    {
+      "name": "doubledot"
+    },
+    {
+      "name": "doubleeye"
+    },
+    {
+      "name": "doubleplus",
+      "detail": "⧺",
+      "doc": "Double plus"
+    },
+    {
+      "name": "eye"
+    },
+    {
+      "name": "pentdot"
+    },
+    {
+      "name": "penteye"
+    },
+    {
+      "name": "plus",
+      "detail": "+",
+      "doc": "Plus sign"
+    },
+    {
+      "name": "quaddot"
+    },
+    {
+      "name": "quadeye"
+    },
+    {
+      "name": "star",
+      "detail": "⋆",
+      "doc": "Small star, filled, low"
+    },
+    {
+      "name": "triplebar"
+    },
+    {
+      "name": "triplecross"
+    },
+    {
+      "name": "tripledot"
+    },
+    {
+      "name": "tripleeye"
+    },
+    {
+      "name": "tripleplus",
+      "detail": "⧻",
+      "doc": "Triple plus"
+    },
+    {
+      "name": "a"
+    },
+    {
+      "name": "A"
+    },
+    {
+      "name": "adot"
+    },
+    {
+      "name": "arlaug"
+    },
+    {
+      "name": "belgthor"
+    },
+    {
+      "name": "d"
+    },
+    {
+      "name": "D"
+    },
+    {
+      "name": "dh"
+    },
+    {
+      "name": "DH"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": "ea"
+    },
+    {
+      "name": "ey"
+    },
+    {
+      "name": "g"
+    },
+    {
+      "name": "G"
+    },
+    {
+      "name": "h"
+    },
+    {
+      "name": "i"
+    },
+    {
+      "name": "ING"
+    },
+    {
+      "name": "ing"
+    },
+    {
+      "name": "Ing"
+    },
+    {
+      "name": "j"
+    },
+    {
+      "name": "k"
+    },
+    {
+      "name": "K"
+    },
+    {
+      "name": "lbar"
+    },
+    {
+      "name": "ldot"
+    },
+    {
+      "name": "lflag"
+    },
+    {
+      "name": "lring"
+    },
+    {
+      "name": "m"
+    },
+    {
+      "name": "M"
+    },
+    {
+      "name": "n"
+    },
+    {
+      "name": "N"
+    },
+    {
+      "name": "ndot"
+    },
+    {
+      "name": "NG"
+    },
+    {
+      "name": "ng"
+    },
+    {
+      "name": "oo"
+    },
+    {
+      "name": "oO"
+    },
+    {
+      "name": "p"
+    },
+    {
+      "name": "Pdots"
+    },
+    {
+      "name": "q"
+    },
+    {
+      "name": "Q"
+    },
+    {
+      "name": "R"
+    },
+    {
+      "name": "rdot"
+    },
+    {
+      "name": "rex"
+    },
+    {
+      "name": "RR"
+    },
+    {
+      "name": "s"
+    },
+    {
+      "name": "seight"
+    },
+    {
+      "name": "sfive"
+    },
+    {
+      "name": "sfour"
+    },
+    {
+      "name": "sseven"
+    },
+    {
+      "name": "ssix"
+    },
+    {
+      "name": "stan"
+    },
+    {
+      "name": "STAN"
+    },
+    {
+      "name": "sthree"
+    },
+    {
+      "name": "T"
+    },
+    {
+      "name": "tbar"
+    },
+    {
+      "name": "tdot"
+    },
+    {
+      "name": "textsection"
+    },
+    {
+      "name": "tflag"
+    },
+    {
+      "name": "th"
+    },
+    {
+      "name": "TH"
+    },
+    {
+      "name": "thth"
+    },
+    {
+      "name": "tring"
+    },
+    {
+      "name": "tvimadur"
+    },
+    {
+      "name": "V"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "X"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "Y"
+    },
+    {
+      "name": "z"
+    },
+    {
+      "name": "textarc",
+      "arg": {
+        "format": "{}",
+        "snippet": "textarc{${1:text}}"
+      }
+    },
+    {
+      "name": "arcfamily"
+    },
+    {
+      "name": "textara",
+      "arg": {
+        "format": "{}",
+        "snippet": "textara{${1:text}}"
+      }
+    },
+    {
+      "name": "arafamily"
+    },
+    {
+      "name": "textarn",
+      "arg": {
+        "format": "{}",
+        "snippet": "textarn{${1:text}}"
+      }
+    },
+    {
+      "name": "arnfamily"
+    },
+    {
+      "name": "textart",
+      "arg": {
+        "format": "{}",
+        "snippet": "textart{${1:text}}"
+      }
+    },
+    {
+      "name": "artfamily"
+    },
+    {
+      "name": "textarl",
+      "arg": {
+        "format": "{}",
+        "snippet": "textarl{${1:text}}"
+      }
+    },
+    {
+      "name": "arlfamily"
+    },
+    {
+      "name": "textarm",
+      "arg": {
+        "format": "{}",
+        "snippet": "textarm{${1:text}}"
+      }
+    },
+    {
+      "name": "armfamily"
+    },
+    {
+      "name": "bfseries"
+    },
+    {
+      "name": "mdseries"
+    },
+    {
+      "name": "textlf",
+      "arg": {
+        "format": "{}",
+        "snippet": "textlf{${1:text}}"
+      }
+    },
+    {
+      "name": "lfseries"
+    },
+    {
+      "name": "textwil",
+      "arg": {
+        "format": "{}",
+        "snippet": "textwil{${1:text}}"
+      }
+    },
+    {
+      "name": "withlines"
+    },
+    {
+      "name": "textwol",
+      "arg": {
+        "format": "{}",
+        "snippet": "textwol{${1:text}}"
+      }
+    },
+    {
+      "name": "withoutlines"
+    },
+    {
+      "name": "textst",
+      "arg": {
+        "format": "{}",
+        "snippet": "textst{${1:text}}"
+      }
+    },
+    {
+      "name": "straighttwigs"
+    },
+    {
+      "name": "textcu",
+      "arg": {
+        "format": "{}",
+        "snippet": "textcu{${1:text}}"
+      }
+    },
+    {
+      "name": "curvedtwigs"
+    },
+    {
+      "name": "textro",
+      "arg": {
+        "format": "{}",
+        "snippet": "textro{${1:text}}"
+      }
+    },
+    {
+      "name": "roundedtwigs"
+    },
+    {
+      "name": "texthi",
+      "arg": {
+        "format": "{}",
+        "snippet": "texthi{${1:text}}"
+      }
+    },
+    {
+      "name": "hightwigs"
+    },
+    {
+      "name": "textlo",
+      "arg": {
+        "format": "{}",
+        "snippet": "textlo{${1:text}}"
+      }
+    },
+    {
+      "name": "lowtwigs"
+    },
+    {
+      "name": "hflip",
+      "arg": {
+        "format": "{}",
+        "snippet": "hflip{${1:rune}}"
+      }
+    },
+    {
+      "name": "vflip",
+      "arg": {
+        "format": "{}",
+        "snippet": "vflip{${1:rune}}"
+      }
+    },
+    {
+      "name": "turn",
+      "arg": {
+        "format": "{}",
+        "snippet": "turn{${1:rune}}"
+      }
+    },
+    {
+      "name": "DeclareFontShapeWithSizes",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "DeclareFontShapeWithSizes{${1:encoding}}{${2:family}}{${3:series}}{${4:shape}}{${5:loading-info}}"
+      }
+    },
+    {
+      "name": "lfdefault",
+      "unusual": true
+    },
+    {
+      "name": "bldefault",
+      "unusual": true
+    },
+    {
+      "name": "mldefault",
+      "unusual": true
+    },
+    {
+      "name": "lldefault",
+      "unusual": true
+    },
+    {
+      "name": "stdefault",
+      "unusual": true
+    },
+    {
+      "name": "rodefault",
+      "unusual": true
+    },
+    {
+      "name": "cwdefault",
+      "unusual": true
+    },
+    {
+      "name": "rwdefault",
+      "unusual": true
+    },
+    {
+      "name": "DeclareRuneSeparators",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "DeclareRuneSeparators{${1:encoding}}"
+      }
+    },
+    {
+      "name": "artdefault",
+      "unusual": true
+    },
+    {
+      "name": "arndefault",
+      "unusual": true
+    },
+    {
+      "name": "armdefault",
+      "unusual": true
+    },
+    {
+      "name": "arldefault",
+      "unusual": true
+    },
+    {
+      "name": "arcdefault",
+      "unusual": true
+    },
+    {
+      "name": "aradefault",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

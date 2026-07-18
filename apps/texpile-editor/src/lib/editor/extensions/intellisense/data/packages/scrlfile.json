@@ -1,0 +1,14 @@
+{
+  "deps": [
+    {
+      "name": "scrlfile-hook"
+    },
+    {
+      "name": "scrlogo"
+    }
+  ],
+  "macros": [],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

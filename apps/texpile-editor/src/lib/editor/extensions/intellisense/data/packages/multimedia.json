@@ -1,0 +1,148 @@
+{
+  "deps": [
+    {
+      "name": "keyval"
+    },
+    {
+      "name": "ifpdf"
+    }
+  ],
+  "macros": [
+    {
+      "name": "movie",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "movie[${3:options%keyvals}]{${1:poster text%text}}{${2:movie filename%file}}",
+        "keys": [
+          "\\movie"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "movie",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "movie{${1:poster text%text}}{${2:movie filename%file}}"
+      }
+    },
+    {
+      "name": "hyperlinkmovie",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "hyperlinkmovie[${3:options%keyvals}]{${1:movie label}}{${2:text}}",
+        "keys": [
+          "\\hyperlinkmovie"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "hyperlinkmovie",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperlinkmovie{${1:movie label}}{${2:text}}"
+      }
+    },
+    {
+      "name": "sound",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "sound[${3:options%keyvals}]{${1:sound poster text}}{${2:sound filename%file}}",
+        "keys": [
+          "\\sound"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "sound",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "sound{${1:sound poster text}}{${2:sound filename%file}}"
+      }
+    },
+    {
+      "name": "hyperlinksound",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "hyperlinksound[${3:options%keyvals}]{${1:sound label}}{${2:text}}",
+        "keys": [
+          "\\hyperlinksound"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "hyperlinksound",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperlinksound{${1:sound label}}{${2:text}}"
+      }
+    },
+    {
+      "name": "hyperlinkmute",
+      "arg": {
+        "format": "{}",
+        "snippet": "hyperlinkmute{${1:text}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\movie": [
+      "autostart",
+      "borderwidth=",
+      "depth=",
+      "duration=${1:time}s",
+      "externalviewer",
+      "height=",
+      "label=",
+      "loop",
+      "once",
+      "open",
+      "palindrome",
+      "poster",
+      "repeat",
+      "showcontrols",
+      "start=${1:time}s",
+      "width="
+    ],
+    "\\hyperlinkmovie": [
+      "duration=${1:time}s",
+      "loop",
+      "once",
+      "palindrome",
+      "pause",
+      "play",
+      "repeat",
+      "resume",
+      "showcontrols",
+      "start=${1:time}s",
+      "stop"
+    ],
+    "\\sound": [
+      "autostart",
+      "automute",
+      "bitspersample=${1|8,16|}",
+      "channels=${1|1,2|}",
+      "depth=",
+      "encoding=${1|Raw,Signed,muLaw,aLaw|}",
+      "externalviewer",
+      "height=",
+      "inlinesound",
+      "label=",
+      "loop",
+      "mixsound",
+      "repeat",
+      "samplingrate=${1:number}",
+      "width="
+    ],
+    "\\hyperlinksound": [
+      "loop",
+      "mixsound",
+      "repeat"
+    ]
+  },
+  "args": []
+}

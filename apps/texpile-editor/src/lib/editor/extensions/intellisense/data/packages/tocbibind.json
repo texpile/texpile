@@ -1,0 +1,131 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "tocotherhead",
+      "arg": {
+        "format": "{}",
+        "snippet": "tocotherhead{${1:headingname}}"
+      }
+    },
+    {
+      "name": "tocbibname"
+    },
+    {
+      "name": "setindexname",
+      "arg": {
+        "format": "{}",
+        "snippet": "setindexname{${1:name}}"
+      }
+    },
+    {
+      "name": "settocname",
+      "arg": {
+        "format": "{}",
+        "snippet": "settocname{${1:name}}"
+      }
+    },
+    {
+      "name": "setlotname",
+      "arg": {
+        "format": "{}",
+        "snippet": "setlotname{${1:name}}"
+      }
+    },
+    {
+      "name": "setlofname",
+      "arg": {
+        "format": "{}",
+        "snippet": "setlofname{${1:name}}"
+      }
+    },
+    {
+      "name": "settocbibname",
+      "arg": {
+        "format": "{}",
+        "snippet": "settocbibname{${1:name}}"
+      }
+    },
+    {
+      "name": "simplechapter"
+    },
+    {
+      "name": "simplechapter",
+      "arg": {
+        "format": "[]",
+        "snippet": "simplechapter[${1:name}]"
+      }
+    },
+    {
+      "name": "restorechapter"
+    },
+    {
+      "name": "simplechapterdelim"
+    },
+    {
+      "name": "tocchapter"
+    },
+    {
+      "name": "tocsection"
+    },
+    {
+      "name": "tocfile",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "tocfile{${1:text}}{${2:file-extension}}"
+      }
+    },
+    {
+      "name": "tocetcmark",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "tocetcmark{${1:head}}"
+      }
+    },
+    {
+      "name": "PRWPackageNote",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "PRWPackageNote{${1:package}}{${2:note text}}"
+      }
+    },
+    {
+      "name": "PRWPackageNoteNoLine",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "PRWPackageNoteNoLine{${1:package}}{${2:note text}}"
+      }
+    },
+    {
+      "name": "bibsection",
+      "unusual": true
+    }
+  ],
+  "envs": [
+    {
+      "name": "thebibitemlist",
+      "unusual": true
+    }
+  ],
+  "keys": {
+    "\\usepackage/tocbibind#c": [
+      "notbib",
+      "notindex",
+      "nottoc",
+      "notlot",
+      "notlof",
+      "chapter",
+      "section",
+      "numbib",
+      "numindex",
+      "other",
+      "none"
+    ]
+  },
+  "args": [
+    "\\usepackage/tocbibind#c"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "deps": [
+    {
+      "name": "catchfile"
+    },
+    {
+      "name": "ifluatex"
+    },
+    {
+      "name": "pdftexcmds"
+    },
+    {
+      "name": "shellesc"
+    }
+  ],
+  "macros": [
+    {
+      "name": "cygwinname"
+    },
+    {
+      "name": "linuxname"
+    },
+    {
+      "name": "macosxname"
+    },
+    {
+      "name": "notwindowsname"
+    },
+    {
+      "name": "unknownplatform"
+    },
+    {
+      "name": "windowsname"
+    },
+    {
+      "name": "ifshellescape"
+    },
+    {
+      "name": "ifwindows"
+    },
+    {
+      "name": "iflinux"
+    },
+    {
+      "name": "ifmacosx"
+    },
+    {
+      "name": "ifcygwin"
+    },
+    {
+      "name": "platformname"
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

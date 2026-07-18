@@ -6,10 +6,11 @@ const OPTIONS: Completion[] = AT_SUGGESTIONS.map((s) =>
 	snippetCompletion(s.body, { label: '@' + s.prefix, type: 'text', detail: s.detail })
 );
 
-const AT_TRIGGER = /@[^\s@]*$/;
+// leading @ plus optionally one more (the @@ mnemonic), then the rest of the token
+const AT_TRIGGER = /@@?[^\s@]*$/;
 
 export function atSuggestionCompletionSource(ctx: CompletionContext): CompletionResult | null {
 	const match = ctx.matchBefore(AT_TRIGGER);
 	if (!match) return null;
-	return { from: match.from, options: OPTIONS, validFor: /^@[^\s@]*$/ };
+	return { from: match.from, options: OPTIONS, validFor: /^@@?[^\s@]*$/ };
 }

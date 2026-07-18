@@ -1,0 +1,109 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "headcommand",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "headcommand{${1:code}}"
+      }
+    },
+    {
+      "name": "dohead",
+      "unusual": true
+    },
+    {
+      "name": "inserttotalframenumber",
+      "unusual": true
+    },
+    {
+      "name": "insertmainframenumber",
+      "unusual": true
+    },
+    {
+      "name": "partentry",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "partentry{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "slideentry",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}{}",
+        "snippet": "slideentry{${1:arg1}}{${2:arg2}}{${3:arg3}}{${4:arg4}}{${5:arg5}}{${6:arg6}}"
+      }
+    },
+    {
+      "name": "sectionentry",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "sectionentry{${1:arg1}}{${2:arg2}}{${3:arg3}}{${4:arg4}}{${5:arg5}}"
+      }
+    },
+    {
+      "name": "bibname",
+      "unusual": true
+    },
+    {
+      "name": "algorithmname",
+      "unusual": true
+    },
+    {
+      "name": "chaptername",
+      "unusual": true
+    },
+    {
+      "name": "includegraphics<overlay specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "includegraphics<overlay specification>{${1:imagefile}}"
+      }
+    },
+    {
+      "name": "includegraphics<overlay specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "includegraphics<overlay specification>[${2:options%keyvals}]{${1:imagefile}}"
+      }
+    },
+    {
+      "name": "pgfuseimage<overlay specification>",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "pgfuseimage<overlay specification>{${1:image name}}"
+      }
+    },
+    {
+      "name": "pgfimage<overlay specification>",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "pgfimage<overlay specification>[${2:options%keyvals}]{${1:imagefile}}"
+      }
+    },
+    {
+      "name": "pgfimage<overlay specification>",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "pgfimage<overlay specification>{${1:imagefile}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\insertshortauthor,\\insertshortdate,\\insertshortinstitute,\\insertshortpart,\\insertshorttitle,\\insertshortsubtitle,\\insertshortframetitle": [
+      "respectlinebreaks",
+      "width=",
+      "center",
+      "spill"
+    ]
+  },
+  "args": []
+}

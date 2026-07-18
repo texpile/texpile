@@ -1,0 +1,59 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "tableofcontents",
+      "arg": {
+        "format": "[]",
+        "snippet": "tableofcontents[${1:options%keyvals}]",
+        "keys": [
+          "\\tableofcontents"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "inserttocsectionnumber",
+      "unusual": true
+    },
+    {
+      "name": "inserttocsection",
+      "unusual": true
+    },
+    {
+      "name": "inserttocsubsectionnumber",
+      "unusual": true
+    },
+    {
+      "name": "inserttocsubsection",
+      "unusual": true
+    },
+    {
+      "name": "inserttocsubsubsectionnumber",
+      "unusual": true
+    },
+    {
+      "name": "inserttocsubsubsection",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\tableofcontents": [
+      "currentsection",
+      "currentsubsection",
+      "firstsection=${1:section number}",
+      "hideallsubsections",
+      "hideothersubsections",
+      "lastsection=${1:section number}",
+      "part=${1:part number}",
+      "pausesections",
+      "pausesubsections",
+      "sections={${1:overlay specification}}",
+      "sectionstyle=${1:current}/${2:other}",
+      "subsectionstyle=${1:current}/${2:other in current}/${3:other}",
+      "subsubsectionstyle=${1:current}/${2:other in current}/${3:other in other}/${4:other}"
+    ]
+  },
+  "args": []
+}

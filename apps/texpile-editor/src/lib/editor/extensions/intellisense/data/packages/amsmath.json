@@ -1,0 +1,658 @@
+{
+  "deps": [
+    {
+      "name": "amstext"
+    },
+    {
+      "name": "amsbsy"
+    },
+    {
+      "name": "amsopn"
+    }
+  ],
+  "macros": [
+    {
+      "name": "allowdisplaybreaks"
+    },
+    {
+      "name": "allowdisplaybreaks",
+      "arg": {
+        "format": "[]",
+        "snippet": "allowdisplaybreaks[${1:value}]"
+      }
+    },
+    {
+      "name": "AmS"
+    },
+    {
+      "name": "AmSfont",
+      "unusual": true
+    },
+    {
+      "name": "And",
+      "unusual": true
+    },
+    {
+      "name": "binom",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "binom{${1:above}}{${2:below}}"
+      }
+    },
+    {
+      "name": "boxed",
+      "arg": {
+        "format": "{}",
+        "snippet": "boxed{${1:formula}}"
+      }
+    },
+    {
+      "name": "cfrac",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "cfrac[${3:align}]{${1:num%:translatable}}{${2:den%:translatable}}"
+      }
+    },
+    {
+      "name": "cfrac",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "cfrac{${1:num%:translatable}}{${2:den%:translatable}}"
+      }
+    },
+    {
+      "name": "dbinom",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "dbinom{${1:above}}{${2:below}}"
+      }
+    },
+    {
+      "name": "ddddot",
+      "arg": {
+        "format": "{}",
+        "snippet": "ddddot{${1:arg}}"
+      }
+    },
+    {
+      "name": "dddot",
+      "arg": {
+        "format": "{}",
+        "snippet": "dddot{${1:arg}}"
+      }
+    },
+    {
+      "name": "dfrac",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "dfrac{${1:num%:translatable}}{${2:den%:translatable}}"
+      }
+    },
+    {
+      "name": "displaybreak"
+    },
+    {
+      "name": "displaybreak",
+      "arg": {
+        "format": "[]",
+        "snippet": "displaybreak[${1:value}]"
+      }
+    },
+    {
+      "name": "DOTSB",
+      "unusual": true
+    },
+    {
+      "name": "DOTSI",
+      "unusual": true
+    },
+    {
+      "name": "DOTSX",
+      "unusual": true
+    },
+    {
+      "name": "dotsb"
+    },
+    {
+      "name": "dotsc"
+    },
+    {
+      "name": "dotsi"
+    },
+    {
+      "name": "dotsm"
+    },
+    {
+      "name": "dotso"
+    },
+    {
+      "name": "endmathdisplay",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "endmathdisplay{${1:envname}}"
+      }
+    },
+    {
+      "name": "eqref",
+      "arg": {
+        "format": "{}",
+        "snippet": "eqref{${1:label}}"
+      }
+    },
+    {
+      "name": "genfrac",
+      "arg": {
+        "format": "{}{}{}{}{}{}",
+        "snippet": "genfrac{${1:left-delim}}{${2:right-delim}}{${3:thickness%l}}{${4:mathstyle}}{${5:numerator}}{${6:denominator}}"
+      }
+    },
+    {
+      "name": "hdots",
+      "unusual": true
+    },
+    {
+      "name": "hdotsfor",
+      "arg": {
+        "format": "{}",
+        "snippet": "hdotsfor{${1:columns}}"
+      }
+    },
+    {
+      "name": "hdotsfor",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "hdotsfor[${2:multiplier}]{${1:columns}}"
+      }
+    },
+    {
+      "name": "idotsint"
+    },
+    {
+      "name": "iiiint",
+      "detail": "⨌ (\"amsmath esint\" command)",
+      "doc": "Quadruple integral operator"
+    },
+    {
+      "name": "iiint",
+      "detail": "∭ (\"amsmath fourier esint wasysym\" command)",
+      "doc": "Triple integral operator"
+    },
+    {
+      "name": "iint",
+      "detail": "∬ (\"amsmath fourier esint wasysym\" command)",
+      "doc": "Double integral operator"
+    },
+    {
+      "name": "impliedby"
+    },
+    {
+      "name": "implies"
+    },
+    {
+      "name": "intertext",
+      "arg": {
+        "format": "{}",
+        "snippet": "intertext{${1:word or phrase%text}}"
+      }
+    },
+    {
+      "name": "leftroot",
+      "arg": {
+        "format": "{}",
+        "snippet": "leftroot{${1:argument}}"
+      }
+    },
+    {
+      "name": "lvert"
+    },
+    {
+      "name": "lVert"
+    },
+    {
+      "name": "mathdisplay",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "mathdisplay{${1:envname}}"
+      }
+    },
+    {
+      "name": "mintagsep",
+      "unusual": true
+    },
+    {
+      "name": "minalignsep",
+      "unusual": true
+    },
+    {
+      "name": "mod"
+    },
+    {
+      "name": "mspace",
+      "arg": {
+        "format": "{}",
+        "snippet": "mspace{${1:dimen}}"
+      }
+    },
+    {
+      "name": "MultiIntegral",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "MultiIntegral{${1:integer}}"
+      }
+    },
+    {
+      "name": "multlinegap",
+      "unusual": true
+    },
+    {
+      "name": "multlinetaggap",
+      "unusual": true
+    },
+    {
+      "name": "nobreakdash"
+    },
+    {
+      "name": "notag"
+    },
+    {
+      "name": "numberwithin",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "numberwithin{${1:counter}}{${2:within-counter}}"
+      }
+    },
+    {
+      "name": "numberwithin",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "numberwithin[${3:format}]{${1:counter}}{${2:within-counter}}"
+      }
+    },
+    {
+      "name": "overleftrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "overleftrightarrow{${1:argument}}"
+      },
+      "detail": "x⃡ (\"amsmath\" command)",
+      "doc": "Combining left right arrow above"
+    },
+    {
+      "name": "overset",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "overset{${1:superscript}}{${2:argument}}"
+      }
+    },
+    {
+      "name": "overunderset",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "overunderset{${1:superscript}}{${2:subscript}}{${3:argument}}"
+      }
+    },
+    {
+      "name": "pod"
+    },
+    {
+      "name": "raisetag",
+      "arg": {
+        "format": "{}",
+        "snippet": "raisetag{${1:dimen}}"
+      }
+    },
+    {
+      "name": "rvert"
+    },
+    {
+      "name": "rVert"
+    },
+    {
+      "name": "shoveright",
+      "arg": {
+        "format": "{}",
+        "snippet": "shoveright{${1:arg}}"
+      }
+    },
+    {
+      "name": "shoveleft",
+      "arg": {
+        "format": "{}",
+        "snippet": "shoveleft{${1:arg}}"
+      }
+    },
+    {
+      "name": "sideset",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "sideset{${1:left}}{${2:right}}{${3:symbol}}"
+      }
+    },
+    {
+      "name": "smash",
+      "arg": {
+        "format": "{}",
+        "snippet": "smash{${1:argument}}"
+      }
+    },
+    {
+      "name": "smash",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "smash[${2:valign}]{${1:argument}}"
+      }
+    },
+    {
+      "name": "substack",
+      "arg": {
+        "format": "{}",
+        "snippet": "substack{${1:argument}}"
+      }
+    },
+    {
+      "name": "tag",
+      "arg": {
+        "format": "{}",
+        "snippet": "tag{${1:label}}"
+      }
+    },
+    {
+      "name": "tag*",
+      "arg": {
+        "format": "{}",
+        "snippet": "tag*{${1:label}}"
+      }
+    },
+    {
+      "name": "tbinom",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "tbinom{${1:above}}{${2:below}}"
+      }
+    },
+    {
+      "name": "tfrac",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "tfrac{${1:num%:translatable}}{${2:den%:translatable}}"
+      }
+    },
+    {
+      "name": "theparentequation",
+      "unusual": true
+    },
+    {
+      "name": "thetag",
+      "unusual": true
+    },
+    {
+      "name": "underleftarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "underleftarrow{${1:argument}}"
+      },
+      "detail": "x⃮ (\"amsmath\" command)",
+      "doc": "Combining left arrow below"
+    },
+    {
+      "name": "underleftrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "underleftrightarrow{${1:argument}}"
+      }
+    },
+    {
+      "name": "underrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "underrightarrow{${1:argument}}"
+      },
+      "detail": "x⃯ (\"amsmath\" command)",
+      "doc": "Combining right arrow below"
+    },
+    {
+      "name": "underset",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "underset{${1:subscript}}{${2:argument}}"
+      }
+    },
+    {
+      "name": "uproot",
+      "arg": {
+        "format": "{}",
+        "snippet": "uproot{${1:argument}}"
+      }
+    },
+    {
+      "name": "varDelta"
+    },
+    {
+      "name": "varGamma"
+    },
+    {
+      "name": "varLambda"
+    },
+    {
+      "name": "varOmega"
+    },
+    {
+      "name": "varPhi"
+    },
+    {
+      "name": "varPi"
+    },
+    {
+      "name": "varPsi"
+    },
+    {
+      "name": "varSigma"
+    },
+    {
+      "name": "varTheta"
+    },
+    {
+      "name": "varUpsilon"
+    },
+    {
+      "name": "varXi"
+    },
+    {
+      "name": "veqno",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "veqno{${1:eqn num}}"
+      }
+    },
+    {
+      "name": "xleftarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xleftarrow[${2:subscript}]{${1:superscript}}"
+      }
+    },
+    {
+      "name": "xleftarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xleftarrow{${1:superscript}}"
+      }
+    },
+    {
+      "name": "xrightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xrightarrow[${2:subscript}]{${1:superscript}}"
+      }
+    },
+    {
+      "name": "xrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xrightarrow{${1:superscript}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "align"
+    },
+    {
+      "name": "align*"
+    },
+    {
+      "name": "alignat",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "[${2:alignment}]{${1:ncols}}"
+      }
+    },
+    {
+      "name": "alignat*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "[${2:alignment}]{${1:ncols}}"
+      }
+    },
+    {
+      "name": "alignat",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:ncols}}"
+      }
+    },
+    {
+      "name": "alignat*",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:ncols}}"
+      }
+    },
+    {
+      "name": "aligned"
+    },
+    {
+      "name": "aligned",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:alignment}]"
+      }
+    },
+    {
+      "name": "alignedat",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:ncols}}"
+      }
+    },
+    {
+      "name": "bmatrix"
+    },
+    {
+      "name": "Bmatrix"
+    },
+    {
+      "name": "cases"
+    },
+    {
+      "name": "equation*"
+    },
+    {
+      "name": "flalign"
+    },
+    {
+      "name": "flalign*"
+    },
+    {
+      "name": "gather"
+    },
+    {
+      "name": "gather*"
+    },
+    {
+      "name": "gathered"
+    },
+    {
+      "name": "gathered",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:alignment}]"
+      }
+    },
+    {
+      "name": "matrix"
+    },
+    {
+      "name": "multline"
+    },
+    {
+      "name": "multline*"
+    },
+    {
+      "name": "pmatrix"
+    },
+    {
+      "name": "smallmatrix"
+    },
+    {
+      "name": "split"
+    },
+    {
+      "name": "subarray"
+    },
+    {
+      "name": "subarray",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:align}}"
+      }
+    },
+    {
+      "name": "subequations"
+    },
+    {
+      "name": "vmatrix"
+    },
+    {
+      "name": "Vmatrix"
+    },
+    {
+      "name": "xalignat",
+      "unusual": true
+    },
+    {
+      "name": "xalignat*",
+      "unusual": true
+    },
+    {
+      "name": "xxalignat",
+      "unusual": true
+    }
+  ],
+  "keys": {
+    "\\usepackage/amsmath#c": [
+      "intlimits",
+      "nointlimits",
+      "sumlimits",
+      "nosumlimits",
+      "namelimits",
+      "nonamelimits",
+      "leqno",
+      "reqno",
+      "centertags",
+      "tbtags",
+      "cmex10",
+      "fleqn",
+      "alignedleftspaceyes",
+      "alignedleftspaceno",
+      "alignedleftspaceyesifneg"
+    ]
+  },
+  "args": [
+    "\\usepackage/amsmath#c"
+  ]
+}

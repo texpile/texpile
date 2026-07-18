@@ -5,6 +5,23 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [0.14.2] - 2026-07-18
+
+- feat: autocomplete knows package and class names, per-package options and key-values, and bib entry types
+- feat: autocomplete suggests labels with their numbers, your macros, and glossary entries from every file in the project
+- feat: go-to-definition and hover work across files, and citation suggestions are searchable
+- feat: accepting a macro that takes an argument reopens the suggestions for that argument
+- feat: the math preview renders your own macros and can be dismissed with a click or Esc, with a Preferences toggle
+- fix: compile problems are read more accurately from MikTeX, pdfTeX, and dvipdfmx logs, and squiggles land on the exact token
+- feat: bibliography warnings jump to the entry in the .bib file
+- fix: reading the compile log no longer stalls the app on large documents
+- feat: reopening the last workspace also restores the last open file
+- feat: live mode renders exact pages at rest, and large documents only paint the pages in view
+- feat: live mode covers footnotes, beamer slides, tables inside floats, CJK text, and classic math fonts
+- fix: steadier typing in live mode, with fewer misplaced or drifting edits
+- fix: the Linux deb launches on Ubuntu 24.04 and newer
+- fix: the app icon appears in the Ubuntu launcher, and the Linux dock says Texpile instead of Texpile-desktop
+
 ## [0.14.1] - 2026-07-17
 
 - fix: the source editor's line numbers sit between the warning and fold columns, so they no longer have a gap beside them

@@ -1,0 +1,91 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "multirow",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "multirow{${1:number of rows}}{${2:width or *}}{${3:text}}"
+      }
+    },
+    {
+      "name": "multirow",
+      "arg": {
+        "format": "[]{}{}{}",
+        "snippet": "multirow[${4:vpos%keyvals}]{${1:number of rows}}{${2:width or *}}{${3:text}}",
+        "keys": [
+          "\\multirow"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "multirow",
+      "unusual": true,
+      "arg": {
+        "format": "{}[]{}{}",
+        "snippet": "multirow{${1:number of rows}}[${4:bigstruts}]{${2:width or *}}{${3:text}}"
+      }
+    },
+    {
+      "name": "multirow",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}[]{}",
+        "snippet": "multirow{${1:number of rows}}{${2:width or *}}[${4:vmove%l}]{${3:text}}"
+      }
+    },
+    {
+      "name": "multirow",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}[]{}[]{}",
+        "snippet": "multirow[${4:vpos%keyvals}]{${1:number of rows}}[${5:bigstruts}]{${2:width or *}}[${6:vmove%l}]{${3:text}}",
+        "keys": [
+          "\\multirow"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "multirowsetup",
+      "unusual": true
+    },
+    {
+      "name": "multirowdebugtrue",
+      "unusual": true
+    },
+    {
+      "name": "multirowdebugfalse",
+      "unusual": true
+    },
+    {
+      "name": "bigstrutjot",
+      "unusual": true
+    },
+    {
+      "name": "STneed",
+      "if": "supertabular",
+      "arg": {
+        "format": "{}",
+        "snippet": "STneed{${1:length}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/multirow#c": [
+      "debug",
+      "longtable",
+      "supertabular"
+    ],
+    "\\multirow": [
+      "c",
+      "t",
+      "b"
+    ]
+  },
+  "args": [
+    "\\usepackage/multirow#c"
+  ]
+}

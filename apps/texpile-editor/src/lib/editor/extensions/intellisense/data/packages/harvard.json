@@ -1,0 +1,30 @@
+{
+  "deps": [
+    {
+      "name": "html"
+    },
+    {
+      "name": "ifthen"
+    }
+  ],
+  "macros": [
+    {
+      "name": "citeaffixed"
+    },
+    {
+      "name": "citeasnoun"
+    },
+    {
+      "name": "citename"
+    },
+    {
+      "name": "citeyear"
+    },
+    {
+      "name": "possessivecite"
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

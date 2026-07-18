@@ -1,0 +1,113 @@
+{
+  "deps": [
+    {
+      "name": "dirtree"
+    }
+  ],
+  "macros": [
+    {
+      "name": "speakyourlove"
+    },
+    {
+      "name": "speakyourlove",
+      "arg": {
+        "format": "[]",
+        "snippet": "speakyourlove[${1:name}]"
+      }
+    },
+    {
+      "name": "qthis",
+      "arg": {
+        "format": "{}",
+        "snippet": "qthis{${1:text}}"
+      }
+    },
+    {
+      "name": "figref",
+      "arg": {
+        "format": "{}",
+        "snippet": "figref{${1:label}}"
+      }
+    },
+    {
+      "name": "tabref",
+      "arg": {
+        "format": "{}",
+        "snippet": "tabref{${1:label}}"
+      }
+    },
+    {
+      "name": "cmd",
+      "arg": {
+        "format": "{}",
+        "snippet": "cmd{${1:cmd}}"
+      }
+    },
+    {
+      "name": "cs",
+      "arg": {
+        "format": "{}",
+        "snippet": "cs{${1:csname}}"
+      }
+    },
+    {
+      "name": "csgo",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "csgo{${1:csname}}{${2:arg}}"
+      }
+    },
+    {
+      "name": "meta",
+      "arg": {
+        "format": "{}",
+        "snippet": "meta{${1:arg}}"
+      }
+    },
+    {
+      "name": "marg",
+      "arg": {
+        "format": "{}",
+        "snippet": "marg{${1:arg}}"
+      }
+    },
+    {
+      "name": "oarg",
+      "arg": {
+        "format": "{}",
+        "snippet": "oarg{${1:arg}}"
+      }
+    },
+    {
+      "name": "parg",
+      "arg": {
+        "format": "{}",
+        "snippet": "parg{${1:arg}}"
+      }
+    },
+    {
+      "name": "pkg",
+      "arg": {
+        "format": "{}",
+        "snippet": "pkg{${1:package}}"
+      }
+    },
+    {
+      "name": "myicon",
+      "arg": {
+        "format": "{}",
+        "snippet": "myicon{${1:color}}"
+      }
+    },
+    {
+      "name": "myfolder",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "myfolder{${1:color}}{${2:folder}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

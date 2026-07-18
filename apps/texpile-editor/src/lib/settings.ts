@@ -37,6 +37,8 @@ export interface AppSettings {
 	uiZoom: number;
 	/** newest changelog version the What's New modal was dismissed for. */
 	whatsNewSeen: string;
+	/** live math preview tooltip in source mode. */
+	mathPreview: boolean;
 }
 
 /** default compile command. -interaction=nonstopmode keeps errors from parking the engine at its
@@ -64,7 +66,8 @@ const DEFAULTS: AppSettings = {
 	draftMode: false,
 	checkForUpdates: true,
 	uiZoom: 1,
-	whatsNewSeen: ''
+	whatsNewSeen: '',
+	mathPreview: true
 };
 
 const LS_KEY = 'texpile:settings';

@@ -1,0 +1,50 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "import",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "import{${1:full path%definition}}{${2:file}}"
+      }
+    },
+    {
+      "name": "inputfrom",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "inputfrom{${1:full path%definition}}{${2:file}}"
+      }
+    },
+    {
+      "name": "subimport",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "subimport{${1:relative path%definition}}{${2:file}}"
+      }
+    },
+    {
+      "name": "subinputfrom",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "subinputfrom{${1:relative path%definition}}{${2:file}}"
+      }
+    },
+    {
+      "name": "includefrom",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "includefrom{${1:full path%definition}}{${2:file}}"
+      }
+    },
+    {
+      "name": "subincludefrom*",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "subincludefrom*{${1:relative path%definition}}{${2:file}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

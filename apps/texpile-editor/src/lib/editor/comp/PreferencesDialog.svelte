@@ -85,6 +85,10 @@
 				{@render toggle('Check for updates on launch', $settings.checkForUpdates, (v) => updateSettings({ checkForUpdates: v }))}
 				{@render toggle('Spell check', $settings.spellcheck, (v) => setSpellcheckEnabled(v))}
 				<div>
+					{@render toggle('Math preview', $settings.mathPreview !== false, (v) => updateSettings({ mathPreview: v }))}
+					<p class="text-surface-500 mt-1 text-xs">Live typeset preview of the math under the cursor in source mode.</p>
+				</div>
+				<div>
 					{@render toggle('Dark PDF pages in dark mode', $settings.pdfDarkPages, (v) => updateSettings({ pdfDarkPages: v }))}
 					<p class="text-surface-500 mt-1 text-xs">When off, the PDF preview keeps the original page colors even in dark mode.</p>
 				</div>

@@ -1,0 +1,147 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "mathfrak",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathfrak{${1:text%plain}}"
+      }
+    },
+    {
+      "name": "angle",
+      "detail": "∠",
+      "doc": "Angle"
+    },
+    {
+      "name": "Box"
+    },
+    {
+      "name": "dasharrow"
+    },
+    {
+      "name": "dashleftarrow"
+    },
+    {
+      "name": "dashrightarrow"
+    },
+    {
+      "name": "Diamond"
+    },
+    {
+      "name": "hbar"
+    },
+    {
+      "name": "Join",
+      "detail": "⨝ (\"amssymb\" command)",
+      "doc": "Join"
+    },
+    {
+      "name": "leadsto"
+    },
+    {
+      "name": "lhd"
+    },
+    {
+      "name": "llcorner",
+      "detail": "⌞ (\"amsfonts\" command)",
+      "doc": "Lower left corner"
+    },
+    {
+      "name": "lozenge"
+    },
+    {
+      "name": "lrcorner",
+      "detail": "⌟ (\"amsfonts\" command)",
+      "doc": "Lower right corner"
+    },
+    {
+      "name": "mho",
+      "detail": "℧ (\"amsfonts arevmath\" command)",
+      "doc": "\\mho (wrisym), t \\agemo (wasysym), conductance"
+    },
+    {
+      "name": "rhd"
+    },
+    {
+      "name": "rightleftharpoons",
+      "detail": "⇌",
+      "doc": "\\equilibrium (wrisym), right harpoon over left"
+    },
+    {
+      "name": "rightsquigarrow",
+      "detail": "⇝ (\"amssymb\" command)",
+      "doc": "Rightwards squiggle arrow"
+    },
+    {
+      "name": "sqsubset",
+      "detail": "⊏ (\"amsfonts\" command)",
+      "doc": "Square subset"
+    },
+    {
+      "name": "sqsupset",
+      "detail": "⊐ (\"amsfonts\" command)",
+      "doc": "Square superset"
+    },
+    {
+      "name": "square"
+    },
+    {
+      "name": "trianglelefteq",
+      "detail": "⊴ (\"amssymb\" command)",
+      "doc": "\\unlhd (wrisym), left triangle, equals"
+    },
+    {
+      "name": "trianglerighteq",
+      "detail": "⊵ (\"amssymb\" command)",
+      "doc": "\\unrhd (wrisym), right triangle, equals"
+    },
+    {
+      "name": "ulcorner",
+      "detail": "⌜ (\"amsfonts\" command)",
+      "doc": "Upper left corner"
+    },
+    {
+      "name": "unlhd"
+    },
+    {
+      "name": "unrhd"
+    },
+    {
+      "name": "urcorner",
+      "detail": "⌝ (\"amsfonts\" command)",
+      "doc": "Upper right corner"
+    },
+    {
+      "name": "vartriangleleft",
+      "detail": "⊲ (\"amssymb\" command)",
+      "doc": "Left triangle, open, variant"
+    },
+    {
+      "name": "vartriangleright",
+      "detail": "⊳ (\"amssymb\" command)",
+      "doc": "Right triangle, open, variant"
+    },
+    {
+      "name": "yen",
+      "detail": "¥ (\"amsfonts\" command)",
+      "doc": "Yen sign"
+    },
+    {
+      "name": "checkmark",
+      "detail": "✓ (\"amsfonts\" command)",
+      "doc": "\\ballotcheck (arevmath), tick, check mark"
+    },
+    {
+      "name": "circledR"
+    },
+    {
+      "name": "maltese",
+      "detail": "✠ (\"amsfonts\" command)",
+      "doc": "Maltese cross"
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

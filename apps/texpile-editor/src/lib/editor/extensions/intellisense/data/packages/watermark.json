@@ -1,0 +1,43 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "watermark",
+      "arg": {
+        "format": "{}",
+        "snippet": "watermark{${1:body}}"
+      }
+    },
+    {
+      "name": "leftwatermark",
+      "arg": {
+        "format": "{}",
+        "snippet": "leftwatermark{${1:body}}"
+      }
+    },
+    {
+      "name": "rightwatermark",
+      "arg": {
+        "format": "{}",
+        "snippet": "rightwatermark{${1:body}}"
+      }
+    },
+    {
+      "name": "thiswatermark",
+      "arg": {
+        "format": "{}",
+        "snippet": "thiswatermark{${1:body}}"
+      }
+    },
+    {
+      "name": "thispageheading",
+      "arg": {
+        "format": "{}",
+        "snippet": "thispageheading{${1:heading%text}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

@@ -1,0 +1,120 @@
+{
+  "deps": [
+    {
+      "name": "amstext"
+    },
+    {
+      "name": "caption"
+    },
+    {
+      "name": "chemscheme"
+    },
+    {
+      "name": "siunitx"
+    },
+    {
+      "name": "varioref"
+    },
+    {
+      "name": "xspace"
+    },
+    {
+      "name": "xcolor",
+      "if": "journal=orglett"
+    }
+  ],
+  "macros": [
+    {
+      "name": "Hz"
+    },
+    {
+      "name": "Molar"
+    },
+    {
+      "name": "cmc"
+    },
+    {
+      "name": "cstsetup",
+      "arg": {
+        "format": "{}",
+        "snippet": "cstsetup{${1:options%keyvals}}"
+      }
+    },
+    {
+      "name": "cubiccentimeter"
+    },
+    {
+      "name": "eg"
+    },
+    {
+      "name": "etal"
+    },
+    {
+      "name": "etc"
+    },
+    {
+      "name": "ie"
+    },
+    {
+      "name": "invacuo"
+    },
+    {
+      "name": "latin",
+      "arg": {
+        "format": "{}",
+        "snippet": "latin{${1:text}}"
+      }
+    },
+    {
+      "name": "latinemphoff",
+      "unusual": true
+    },
+    {
+      "name": "latinemphon",
+      "unusual": true
+    },
+    {
+      "name": "mmHg"
+    },
+    {
+      "name": "mol"
+    },
+    {
+      "name": "molar"
+    },
+    {
+      "name": "standardstate"
+    },
+    {
+      "name": "thebibnote",
+      "unusual": true
+    },
+    {
+      "name": "torr",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/chemstyle#c,\\cstsetup#c": [
+      "abbrcomma",
+      "abbremph",
+      "journal=${1|angew,jomc,ic,jacs,jcp,orglett,rsc,tetlett|}",
+      "language=${1:language}",
+      "nonotes",
+      "nophrases",
+      "notes",
+      "notesbefore",
+      "phrases",
+      "rademph",
+      "radhyphen",
+      "radprefix",
+      "radsuper",
+      "varioref",
+      "xspace"
+    ]
+  },
+  "args": [
+    "\\usepackage/chemstyle#c,\\cstsetup#c"
+  ]
+}

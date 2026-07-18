@@ -1,0 +1,209 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "Squaremetre"
+    },
+    {
+      "name": "cubicmetre"
+    },
+    {
+      "name": "Graypersecond"
+    },
+    {
+      "name": "metrepersquaresecond"
+    },
+    {
+      "name": "joulepermole"
+    },
+    {
+      "name": "molepercubicmetre"
+    },
+    {
+      "name": "radianpersquaresecond"
+    },
+    {
+      "name": "kilogramsquaremetrepersecond"
+    },
+    {
+      "name": "radianpersecond"
+    },
+    {
+      "name": "Squaremetrepercubicmetre"
+    },
+    {
+      "name": "coulombpermol"
+    },
+    {
+      "name": "amperepersquaremetre"
+    },
+    {
+      "name": "kilogrampercubicmetre"
+    },
+    {
+      "name": "Squaremetrepernewtonsecond"
+    },
+    {
+      "name": "pascalsecond"
+    },
+    {
+      "name": "coulombpercubicmetre"
+    },
+    {
+      "name": "amperemetresecond"
+    },
+    {
+      "name": "voltpermetre"
+    },
+    {
+      "name": "coulombpersquaremetre"
+    },
+    {
+      "name": "faradpermetre"
+    },
+    {
+      "name": "ohmmetre"
+    },
+    {
+      "name": "kilowatthour"
+    },
+    {
+      "name": "wattpersquaremetre"
+    },
+    {
+      "name": "joulepersquaremetre"
+    },
+    {
+      "name": "newtonpercubicmetre"
+    },
+    {
+      "name": "newtonperkilogram"
+    },
+    {
+      "name": "jouleperkelvin"
+    },
+    {
+      "name": "jouleperkilogram"
+    },
+    {
+      "name": "coulombperkilogram"
+    },
+    {
+      "name": "Squaremetrepersecond"
+    },
+    {
+      "name": "rpsquaremetrepersecond"
+    },
+    {
+      "name": "Squaremetrepersquaresecond"
+    },
+    {
+      "name": "rpsquaremetrepersquaresecond"
+    },
+    {
+      "name": "kilogrammetrepersecond"
+    },
+    {
+      "name": "candelapersquaremetre"
+    },
+    {
+      "name": "amperepermetre"
+    },
+    {
+      "name": "joulepertesla"
+    },
+    {
+      "name": "henrypermetre"
+    },
+    {
+      "name": "kilogrampersecond"
+    },
+    {
+      "name": "kilogrampersquaremetresecond"
+    },
+    {
+      "name": "kilogrampersquaremetre"
+    },
+    {
+      "name": "kilogrampermetre"
+    },
+    {
+      "name": "joulepermolekelvin"
+    },
+    {
+      "name": "kilogramperkilomole"
+    },
+    {
+      "name": "kilogramsquaremetre"
+    },
+    {
+      "name": "kilogrammetrepersquaresecond"
+    },
+    {
+      "name": "newtonpersquaremetre"
+    },
+    {
+      "name": "persquaremetresecond"
+    },
+    {
+      "name": "wattperkilogram"
+    },
+    {
+      "name": "wattpercubicmetre"
+    },
+    {
+      "name": "wattpersquaremetresteradian"
+    },
+    {
+      "name": "jouleperkilogramkelvin"
+    },
+    {
+      "name": "Squaremetreperkilogram"
+    },
+    {
+      "name": "rpsquaremetreperkilogram"
+    },
+    {
+      "name": "cubicmetreperkilogram"
+    },
+    {
+      "name": "rpcubicmetreperkilogram"
+    },
+    {
+      "name": "newtonpermetre"
+    },
+    {
+      "name": "Celsius"
+    },
+    {
+      "name": "wattpermetrekelvin"
+    },
+    {
+      "name": "newtonmetre"
+    },
+    {
+      "name": "Squaremetrepercubicsecond"
+    },
+    {
+      "name": "metrepersecond"
+    },
+    {
+      "name": "joulepercubicmetre"
+    },
+    {
+      "name": "kilogrampercubicmetrecoulomb"
+    },
+    {
+      "name": "cubicmetrepersecond"
+    },
+    {
+      "name": "rpcubicmetrepersecond"
+    },
+    {
+      "name": "kilogrampersecondcubicmetre"
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

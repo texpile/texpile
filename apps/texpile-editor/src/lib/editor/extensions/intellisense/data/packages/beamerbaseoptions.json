@@ -1,0 +1,62 @@
+{
+  "deps": [
+    {
+      "name": "keyval"
+    }
+  ],
+  "macros": [
+    {
+      "name": "ProcessOptionsBeamer",
+      "unusual": true
+    },
+    {
+      "name": "ExecuteOptionsBeamer",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "ExecuteOptionsBeamer{${1:options}}"
+      }
+    },
+    {
+      "name": "DeclareOptionBeamer",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "DeclareOptionBeamer{${1:option}}{${2:definition}}"
+      }
+    },
+    {
+      "name": "DeclareOptionBeamer",
+      "unusual": true,
+      "arg": {
+        "format": "{}[]{}",
+        "snippet": "DeclareOptionBeamer{${1:option}}[${3:default}]{${2:definition}}"
+      }
+    },
+    {
+      "name": "defbeameroption",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "defbeameroption{${1:option%specialDef}}{${2:definition}}"
+      }
+    },
+    {
+      "name": "setbeameroption",
+      "arg": {
+        "format": "{}",
+        "snippet": "setbeameroption{${1:options%keyvals}}",
+        "keys": [
+          "\\setbeameroption#c"
+        ],
+        "keyPos": 0
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\setbeameroption#c": [
+      "%beameroption"
+    ]
+  },
+  "args": []
+}

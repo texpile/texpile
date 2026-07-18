@@ -26,6 +26,9 @@ export interface DraftPage {
 	n: number;
 	w: number;
 	h: number;
+	// shipout box height = box top to the box BASELINE, i.e. the footer line's baseline;
+	// the renderer treats rows at/below it as bottom-anchored (never shifted by patches)
+	ht?: number;
 	records: string; // newline-delimited JSON records for this page
 }
 export type DraftResult =
@@ -37,6 +40,8 @@ export type DraftResult =
 			paperW: number;
 			paperH: number;
 			colW: number;
+			// \footskip: body bottom sits at page ht - footSkip; the footer baseline at ht
+			footSkip: number;
 			marginX: number;
 			marginY: number;
 			pages: DraftPage[];

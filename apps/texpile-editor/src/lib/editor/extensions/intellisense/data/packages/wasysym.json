@@ -1,0 +1,519 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "male",
+      "detail": "♂ (\"wasysym\" command)",
+      "doc": "\\mars (mathabx), \\boy (mathabx), mars, male"
+    },
+    {
+      "name": "female",
+      "detail": "♀ (\"wasysym\" command)",
+      "doc": "\\venus (mathabx), \\girl (mathabx), venus, female"
+    },
+    {
+      "name": "currency"
+    },
+    {
+      "name": "phone"
+    },
+    {
+      "name": "recorder"
+    },
+    {
+      "name": "clock"
+    },
+    {
+      "name": "lightning"
+    },
+    {
+      "name": "pointer"
+    },
+    {
+      "name": "RIGHTarrow"
+    },
+    {
+      "name": "LEFTarrow"
+    },
+    {
+      "name": "UParrow"
+    },
+    {
+      "name": "DOWNarrow"
+    },
+    {
+      "name": "AC"
+    },
+    {
+      "name": "HF"
+    },
+    {
+      "name": "VHF"
+    },
+    {
+      "name": "Square"
+    },
+    {
+      "name": "CheckedBox"
+    },
+    {
+      "name": "XBox"
+    },
+    {
+      "name": "hexagon",
+      "detail": "⎔",
+      "doc": "Horizontal benzene ring [hexagon flat open]"
+    },
+    {
+      "name": "pentagon",
+      "detail": "⬠",
+      "doc": "White pentagon"
+    },
+    {
+      "name": "octagon"
+    },
+    {
+      "name": "varhexagon",
+      "detail": "⬡",
+      "doc": "White hexagon"
+    },
+    {
+      "name": "hexstar"
+    },
+    {
+      "name": "varhexstar"
+    },
+    {
+      "name": "davidsstar"
+    },
+    {
+      "name": "diameter",
+      "detail": "⌀ (\"mathabx\" command)",
+      "doc": "\\varnothing (amssymb), diameter sign"
+    },
+    {
+      "name": "invdiameter"
+    },
+    {
+      "name": "varangle"
+    },
+    {
+      "name": "wasylozenge"
+    },
+    {
+      "name": "kreuz"
+    },
+    {
+      "name": "smiley"
+    },
+    {
+      "name": "frownie"
+    },
+    {
+      "name": "blacksmiley",
+      "detail": "☻ (\"wasysym\" command)",
+      "doc": "\\invsmileface (arevmath), black smiling face"
+    },
+    {
+      "name": "sun",
+      "detail": "☼ (\"wasysym\" command)",
+      "doc": "White sun with rays"
+    },
+    {
+      "name": "checked"
+    },
+    {
+      "name": "bell"
+    },
+    {
+      "name": "eighthnote",
+      "detail": "♪ (\"arevmath\" command)",
+      "doc": "Eighth note"
+    },
+    {
+      "name": "quarternote",
+      "detail": "♩ (\"arevmath wasysym\" command)",
+      "doc": "Music note (sung text sign)"
+    },
+    {
+      "name": "halfnote"
+    },
+    {
+      "name": "fullnote"
+    },
+    {
+      "name": "twonotes",
+      "detail": "♫ (\"wasysym\" command)",
+      "doc": "Beamed eighth notes"
+    },
+    {
+      "name": "brokenvert"
+    },
+    {
+      "name": "ataribox"
+    },
+    {
+      "name": "wasytherefore"
+    },
+    {
+      "name": "Circle"
+    },
+    {
+      "name": "CIRCLE"
+    },
+    {
+      "name": "Leftcircle"
+    },
+    {
+      "name": "LEFTCIRCLE"
+    },
+    {
+      "name": "Rightcircle"
+    },
+    {
+      "name": "RIGHTCIRCLE"
+    },
+    {
+      "name": "LEFTcircle"
+    },
+    {
+      "name": "RIGHTcircle"
+    },
+    {
+      "name": "vernal"
+    },
+    {
+      "name": "ascnode"
+    },
+    {
+      "name": "descnode"
+    },
+    {
+      "name": "fullmoon"
+    },
+    {
+      "name": "newmoon"
+    },
+    {
+      "name": "leftmoon",
+      "detail": "☾ (\"wasysym mathabx\" command)",
+      "doc": "Last quarter moon"
+    },
+    {
+      "name": "rightmoon",
+      "detail": "☽ (\"wasysym mathabx\" command)",
+      "doc": "First quarter moon"
+    },
+    {
+      "name": "astrosun",
+      "detail": "☉ (\"mathabx\" command)",
+      "doc": "Sun"
+    },
+    {
+      "name": "mercury"
+    },
+    {
+      "name": "venus"
+    },
+    {
+      "name": "earth"
+    },
+    {
+      "name": "mars"
+    },
+    {
+      "name": "jupiter"
+    },
+    {
+      "name": "saturn"
+    },
+    {
+      "name": "uranus"
+    },
+    {
+      "name": "neptune"
+    },
+    {
+      "name": "pluto"
+    },
+    {
+      "name": "aries"
+    },
+    {
+      "name": "taurus"
+    },
+    {
+      "name": "gemini"
+    },
+    {
+      "name": "cancer"
+    },
+    {
+      "name": "leo"
+    },
+    {
+      "name": "virgo"
+    },
+    {
+      "name": "libra"
+    },
+    {
+      "name": "scorpio"
+    },
+    {
+      "name": "sagittarius"
+    },
+    {
+      "name": "capricornus"
+    },
+    {
+      "name": "aquarius"
+    },
+    {
+      "name": "pisces"
+    },
+    {
+      "name": "conjunction"
+    },
+    {
+      "name": "opposition"
+    },
+    {
+      "name": "APLstar"
+    },
+    {
+      "name": "APLlog"
+    },
+    {
+      "name": "APLbox"
+    },
+    {
+      "name": "APLup"
+    },
+    {
+      "name": "APLdown"
+    },
+    {
+      "name": "APLinput"
+    },
+    {
+      "name": "APLcomment"
+    },
+    {
+      "name": "APLinv"
+    },
+    {
+      "name": "APLuparrowbox"
+    },
+    {
+      "name": "APLdownarrowbox"
+    },
+    {
+      "name": "APLleftarrowbox"
+    },
+    {
+      "name": "APLrightarrowbox"
+    },
+    {
+      "name": "notbackslash"
+    },
+    {
+      "name": "notslash"
+    },
+    {
+      "name": "APLminus"
+    },
+    {
+      "name": "APLnot",
+      "arg": {
+        "format": "{}",
+        "snippet": "APLnot{${1:arg}}"
+      }
+    },
+    {
+      "name": "APLcirc",
+      "arg": {
+        "format": "{}",
+        "snippet": "APLcirc{${1:arg}}"
+      }
+    },
+    {
+      "name": "APLvert",
+      "arg": {
+        "format": "{}",
+        "snippet": "APLvert{${1:arg}}"
+      }
+    },
+    {
+      "name": "Bowtie"
+    },
+    {
+      "name": "leftturn"
+    },
+    {
+      "name": "rightturn"
+    },
+    {
+      "name": "photon"
+    },
+    {
+      "name": "gluon"
+    },
+    {
+      "name": "cent"
+    },
+    {
+      "name": "permil"
+    },
+    {
+      "name": "agemO"
+    },
+    {
+      "name": "thorn"
+    },
+    {
+      "name": "Thorn"
+    },
+    {
+      "name": "openo"
+    },
+    {
+      "name": "inve"
+    },
+    {
+      "name": "mho",
+      "detail": "℧ (\"amsfonts arevmath\" command)",
+      "doc": "\\mho (wrisym), t \\agemo (wasysym), conductance"
+    },
+    {
+      "name": "Join",
+      "detail": "⨝ (\"amssymb\" command)",
+      "doc": "Join"
+    },
+    {
+      "name": "Box"
+    },
+    {
+      "name": "Diamond"
+    },
+    {
+      "name": "leadsto"
+    },
+    {
+      "name": "sqsubset",
+      "detail": "⊏ (\"amsfonts\" command)",
+      "doc": "Square subset"
+    },
+    {
+      "name": "sqsupset",
+      "detail": "⊐ (\"amsfonts\" command)",
+      "doc": "Square superset"
+    },
+    {
+      "name": "lhd"
+    },
+    {
+      "name": "unlhd"
+    },
+    {
+      "name": "LHD"
+    },
+    {
+      "name": "rhd"
+    },
+    {
+      "name": "unrhd"
+    },
+    {
+      "name": "RHD"
+    },
+    {
+      "name": "apprle"
+    },
+    {
+      "name": "apprge"
+    },
+    {
+      "name": "wasypropto"
+    },
+    {
+      "name": "invneg"
+    },
+    {
+      "name": "ocircle"
+    },
+    {
+      "name": "logof"
+    },
+    {
+      "name": "dh"
+    },
+    {
+      "name": "roundz"
+    },
+    {
+      "name": "DH"
+    },
+    {
+      "name": "wasyeuro",
+      "unusual": true
+    },
+    {
+      "name": "euro",
+      "detail": "€",
+      "doc": "Euro sign"
+    },
+    {
+      "name": "longs"
+    },
+    {
+      "name": "wasyparagraph",
+      "unusual": true
+    },
+    {
+      "name": "Paragraph"
+    },
+    {
+      "name": "iint",
+      "detail": "∬ (\"amsmath fourier esint wasysym\" command)",
+      "doc": "Double integral operator"
+    },
+    {
+      "name": "iiint",
+      "detail": "∭ (\"amsmath fourier esint wasysym\" command)",
+      "doc": "Triple integral operator"
+    },
+    {
+      "name": "oiint",
+      "detail": "∯ (\"esint wasysym fourier\" command)",
+      "doc": "\\dbloint (wrisym), double contour integral operator"
+    },
+    {
+      "name": "varint",
+      "unusual": true
+    },
+    {
+      "name": "varoint",
+      "unusual": true
+    },
+    {
+      "name": "applecmd"
+    },
+    {
+      "name": "wasycmd",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/wasysym#c": [
+      "compat1",
+      "integrals",
+      "nointegrals",
+      "noeuro"
+    ]
+  },
+  "args": [
+    "\\usepackage/wasysym#c"
+  ]
+}

@@ -2,11 +2,19 @@
 // only reachable in Source mode (that's where the preamble is actually edited, see
 // SourceEditor.svelte's texSource binding — the visual/WYSIWYG editor never touches the preamble).
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
-import { CLASS_NAMES } from '../data/classnames';
-import { PACKAGE_NAMES } from '../data/packagenames';
+import { CLASS_NAMES, type ClassInfo } from '../data/classnames';
+import { PACKAGE_NAMES, type PackageInfo } from '../data/packagenames';
 
-const CLASS_OPTIONS: Completion[] = CLASS_NAMES.map((c) => ({ label: c.name, type: 'class', detail: c.detail }));
-const PACKAGE_OPTIONS: Completion[] = PACKAGE_NAMES.map((p) => ({ label: p.name, type: 'module', detail: p.detail }));
+// curated everyday names rank above the CTAN long tail; the CTAN page rides along as info text
+function nameOption(e: ClassInfo | PackageInfo, type: string): Completion {
+	const o: Completion = { label: e.name, type, detail: e.detail };
+	if (e.common) o.boost = 10;
+	if (e.url) o.info = e.url;
+	return o;
+}
+
+const CLASS_OPTIONS: Completion[] = CLASS_NAMES.map((c) => nameOption(c, 'class'));
+const PACKAGE_OPTIONS: Completion[] = PACKAGE_NAMES.map((p) => nameOption(p, 'module'));
 
 const DOCUMENTCLASS_NAME = /\\documentclass(?:\[[^\]]*\])?\{([a-zA-Z0-9,-]*)$/;
 const USEPACKAGE_NAME = /\\(?:usepackage|RequirePackage)(?:\[[^\]]*\])?\{([a-zA-Z0-9,-]*)$/;

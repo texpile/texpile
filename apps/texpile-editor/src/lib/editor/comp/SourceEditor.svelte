@@ -30,6 +30,12 @@
 		lineEnd?: number;
 		severity: 'error' | 'warning' | 'info';
 		message: string;
+		/** 1-based column of the error point (from the log's l.NN context). */
+		column?: number;
+		/** source text just before the error point, or the offending \ref/\cite key. */
+		anchorText?: string;
+		/** the offending \command, sized for the underline when found on the line. */
+		token?: string;
 	}
 	let {
 		value = '',
@@ -39,7 +45,9 @@
 		onSyncToPdf,
 		initialScrollPos = null,
 		onHistoryBoundary,
-		diagnostics = []
+		diagnostics = [],
+		onJumpToFile,
+		onOpenFileAt
 	}: {
 		value?: string;
 		onInput?: (v: string) => void;
@@ -49,6 +57,9 @@
 		initialScrollPos?: { scroll: number | null; cursor: number | null } | null;
 		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		diagnostics?: SourceDiagnostic[];
+		/** go-to-definition hooks: \input targets and cross-file definition jumps */
+		onJumpToFile?: (name: string) => void;
+		onOpenFileAt?: (file: string, line: number) => void;
 	} = $props();
 
 	let ctxMenu = $state<{ x: number; y: number; line: number; hasSelection: boolean } | null>(null);
@@ -146,7 +157,7 @@
 					// full intellisense (completion + shortcuts + hover + folding + go-to-def) + math preview for
 					// .tex only; .bib gets entry-type/field completion
 					...(!filename || /\.tex$/i.test(filename)
-						? [latexIntellisense(), mathPreview(), starterGhost()]
+						? [latexIntellisense({ onJumpToFile, onOpenFileAt }), mathPreview(), starterGhost()]
 						: /\.bib$/i.test(filename)
 							? [latexAutocomplete({ bib: true })]
 							: []),
@@ -227,9 +238,37 @@
 		}
 	});
 
-	// the log names lines, not columns, so each diagnostic spans its whole line (clamped, the buffer
-	// may have drifted). declared after the value-sync effect so a same-flush file switch replaces
-	// the document first and the diagnostics anchor on the fresh doc.
+	// narrows a line-level diagnostic to the offending token: the anchor text (the log's l.NN
+	// context tail, or a \ref/\cite key) re-locates the error point even when the buffer drifted
+	// since the compile; the raw column is the fallback, the whole line the last resort.
+	function diagnosticRange(doc: EditorState['doc'], d: SourceDiagnostic): { from: number; to: number } {
+		const startLine = doc.line(Math.min(d.line, doc.lines));
+		const endLine = doc.line(Math.min(d.lineEnd ?? d.line, doc.lines));
+		if (d.lineEnd === undefined) {
+			if (d.anchorText) {
+				const at = startLine.text.indexOf(d.anchorText);
+				if (at !== -1) {
+					// a \ref/\cite key anchors ON itself
+					if (d.token === undefined && !d.anchorText.includes('\\')) {
+						return { from: startLine.from + at, to: startLine.from + at + d.anchorText.length };
+					}
+					// an l.NN tail ENDS at the error point: the offending token is its last chars
+					const errPoint = at + d.anchorText.length;
+					const len = Math.max(1, d.token?.length ?? 1);
+					const from = startLine.from + Math.max(at, errPoint - len);
+					return { from, to: Math.min(startLine.to, startLine.from + errPoint) };
+				}
+			}
+			if (d.column !== undefined && d.column - 1 <= startLine.length) {
+				const from = startLine.from + Math.max(0, d.column - 1 - Math.max(0, d.token?.length ?? 0));
+				return { from, to: Math.min(startLine.to, from + Math.max(1, d.token?.length ?? 1)) };
+			}
+		}
+		return { from: startLine.from, to: Math.max(endLine.to, startLine.from) };
+	}
+
+	// declared after the value-sync effect so a same-flush file switch replaces the document
+	// first and the diagnostics anchor on the fresh doc.
 	$effect(() => {
 		const list = diagnostics;
 		const v = view;
@@ -238,11 +277,7 @@
 		const doc = v.state.doc;
 		const mapped: Diagnostic[] = list
 			.filter((d) => Number.isInteger(d.line) && d.line >= 1)
-			.map((d) => {
-				const from = doc.line(Math.min(d.line, doc.lines)).from;
-				const to = doc.line(Math.min(d.lineEnd ?? d.line, doc.lines)).to;
-				return { from, to: Math.max(to, from), severity: d.severity, message: d.message, source: 'latex' };
-			});
+			.map((d) => ({ ...diagnosticRange(doc, d), severity: d.severity, message: d.message, source: 'latex' }));
 		v.dispatch(setDiagnostics(v.state, mapped));
 	});
 

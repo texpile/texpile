@@ -3,9 +3,11 @@
 import { LogScanner } from './scanner';
 import type { LatexLogParseResult, LogEntry, LogFileNode, LogRunStatus, ParseLatexLogOptions } from './types';
 
-// -file-line-error mode replaces "! " with "<file>:<line>: ". TeX prints the resolved
-// path ("./main.tex", "/abs/x.tex", "c:/..."); a bare "file.tex:12:" does not occur.
-const FILE_LINE_ERROR = /^((?:[A-Za-z]:\/|\/|\.{1,2}\/)[^:]*):(\d+): (.*)$/;
+// -file-line-error mode replaces "! " with "<file>:<line>: ". TeX Live prints resolved paths
+// ("./main.tex", "/abs/x.tex", "c:/..."); MikTeX can print a bare "file.tex:12:", so a second
+// form accepts an extensioned bare name (the extension requirement keeps prose "note: 1: ..."
+// out).
+const FILE_LINE_ERROR = /^((?:[A-Za-z]:\/|\/|\.{1,2}\/)[^:]*|[^:\s()\\{}]+\.[\w-]+):(\d+): (.*)$/;
 
 // warning prefix vocabulary is open (l3msg module types), so match the shape, not a fixed list
 const KERNEL_WARNING = /^(LaTeX(?:3| Font)?) (Warning|Info): (.*)$/;
@@ -23,7 +25,12 @@ const CONTEXT_LINE = /^l\.(\d+)( .*|$)/;
 // "Runaway argument?" preludes a following "! ..." error
 const RUNAWAY = /^Runaway (argument|definition|text|preamble)\?/;
 
-const MISSING_CHARACTER = /^Missing character: There is no .* in font .*!?$/;
+const MISSING_CHARACTER = /^\s*Missing character: There is no .* in font/;
+
+const PDFTEX_WARNING = /^pdfTeX warning(?: \([^)]*\))?: ?(.*)$/;
+
+// boxes reported during page shipout carry a PDF page, never a source line
+const OUTPUT_ACTIVE = / has occurred while \\output is active(?: \[(\d+)\])?/;
 
 const OUTPUT_WRITTEN = /^Output written on (.*) \((\d+) pages?, \d+ bytes\)\.?$/;
 
@@ -40,7 +47,13 @@ function isWarningContinuation(line: string, moduleName?: string): boolean {
  * names, so a space only ends the path after an extension or before markup.
  */
 export function consumeFilePath(rest: string): { path: string; consumed: number } | null {
-	if (!/^(?:[A-Za-z]:\/|\/|\.{1,2}\/)/.test(rest) && !/^[^\s()\\{}]+\//.test(rest)) return null;
+	// MikTeX opens files by bare name ("(foo.sty"); requiring a real lowercase extension of 3+
+	// letters keeps prose parens ("(see x.y)") from polluting the stack
+	if (!/^(?:[A-Za-z]:\/|\/|\.{1,2}\/)/.test(rest) && !/^[^\s()\\{}]+\//.test(rest)) {
+		const bare = rest.match(/^"?([^"\s()\\{}[\]]+\.[a-z]{3,})(?=[\s()"]|$)/);
+		if (!bare) return null;
+		return { path: bare[1], consumed: bare[0].length };
+	}
 	let end = rest.search(/[ ()\\{}]/);
 	while (end !== -1 && rest[end] === ' ') {
 		const sofar = rest.slice(0, end);
@@ -97,6 +110,14 @@ export function parseLatexLog(text: string, options: ParseLatexLogOptions = {}):
 			const ctx = line.match(CONTEXT_LINE);
 			if (ctx) {
 				entry.line = entry.line ?? parseInt(ctx[1], 10);
+				// the l.NN line prints the source up to the error point: its length is the column,
+				// and its tail re-anchors the range if the buffer drifted since the compile
+				const preText = ctx[2].startsWith(' ') ? ctx[2].slice(1) : ctx[2];
+				if (preText.length > 0 && entry.column === undefined) {
+					entry.column = preText.length + 1;
+					const anchor = preText.slice(-24).trimStart();
+					if (anchor.length >= 2) entry.anchorText = anchor;
+				}
 				sawContext = true;
 				contextLines.push(line);
 				// the engine prints one more line: the text after the error point
@@ -139,7 +160,11 @@ export function parseLatexLog(text: string, options: ParseLatexLogOptions = {}):
 			entry.message = [entry.message, ...parts].join(' ').replace(/\s+/g, ' ').trim();
 		}
 		const online = entry.message.match(ON_INPUT_LINE);
-		if (online) entry.line = parseInt(online[1], 10);
+		if (online) {
+			entry.line = parseInt(online[1], 10);
+			// the row already shows ":<line>", so drop the redundant phrase from the text
+			entry.message = entry.message.replace(ON_INPUT_LINE, '.').replace(/([.!?])\.$/, '$1');
+		}
 	}
 
 	/** walk a line's parentheses, maintaining the file stack. */
@@ -194,11 +219,15 @@ export function parseLatexLog(text: string, options: ParseLatexLogOptions = {}):
 		}
 		if (line.startsWith('No pages of output')) {
 			status.noPages = true;
+			// surfaced as an error: a zero-page run with no other complaint would otherwise
+			// read as "Compiled clean" in the Problems panel
+			push({ level: 'error', message: 'No pages of output.', file: currentFile(), raw: line });
 			continue;
 		}
 
 		if (line.startsWith('! ')) {
 			const message = line.slice(2);
+			if (message.includes('ignored error')) continue; // engine note, not a real diagnostic
 			if (/^Emergency stop\./.test(message)) status.emergencyStop = true;
 			const entry: LogEntry = {
 				level: 'error',
@@ -258,6 +287,7 @@ export function parseLatexLog(text: string, options: ParseLatexLogOptions = {}):
 				raw: line
 			};
 			collectWarningContinuation(entry);
+			if (/Empty `thebibliography' environment/.test(entry.message)) continue; // noise, not actionable
 			push(entry);
 			continue;
 		}
@@ -295,6 +325,9 @@ export function parseLatexLog(text: string, options: ParseLatexLogOptions = {}):
 				entry.lineEnd = parseInt(range[2], 10);
 			} else if (single) {
 				entry.line = parseInt(single[1], 10);
+			} else {
+				const active = line.match(OUTPUT_ACTIVE);
+				if (active?.[1]) entry.page = parseInt(active[1], 10);
 			}
 			push(entry);
 			// hbox complaints are followed by a box dump ending in "[]" + blank;
@@ -316,7 +349,13 @@ export function parseLatexLog(text: string, options: ParseLatexLogOptions = {}):
 		}
 
 		if (MISSING_CHARACTER.test(line)) {
-			push({ level: 'warning', message: line, file: currentFile(), raw: line });
+			push({ level: 'warning', message: line.trim(), file: currentFile(), raw: line });
+			continue;
+		}
+
+		// pdfTeX driver warnings (broken \hyperref destinations etc.)
+		if (PDFTEX_WARNING.test(line)) {
+			push({ level: 'warning', message: line.trim(), file: currentFile(), raw: line });
 			continue;
 		}
 

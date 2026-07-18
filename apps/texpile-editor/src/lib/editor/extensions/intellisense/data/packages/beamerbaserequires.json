@@ -1,0 +1,68 @@
+{
+  "deps": [
+    {
+      "name": "beamerbasecompatibility"
+    },
+    {
+      "name": "beamerbasefont"
+    },
+    {
+      "name": "beamerbasetranslator"
+    },
+    {
+      "name": "beamerbasemisc"
+    },
+    {
+      "name": "beamerbasetwoscreens"
+    },
+    {
+      "name": "beamerbaseoverlay"
+    },
+    {
+      "name": "beamerbasetitle"
+    },
+    {
+      "name": "beamerbasesection"
+    },
+    {
+      "name": "beamerbaseframe"
+    },
+    {
+      "name": "beamerbaseverbatim"
+    },
+    {
+      "name": "beamerbaseframesize"
+    },
+    {
+      "name": "beamerbaseframecomponents"
+    },
+    {
+      "name": "beamerbasecolor"
+    },
+    {
+      "name": "beamerbasenotes"
+    },
+    {
+      "name": "beamerbasetoc"
+    },
+    {
+      "name": "beamerbasetemplates"
+    },
+    {
+      "name": "beamerbaselocalstructure"
+    },
+    {
+      "name": "beamerbasenavigation"
+    },
+    {
+      "name": "beamerbasetheorems"
+    },
+    {
+      "name": "beamerbasethemes"
+    }
+  ],
+  "macros": [],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

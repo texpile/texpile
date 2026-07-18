@@ -1,0 +1,84 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "note",
+      "arg": {
+        "format": "{}",
+        "snippet": "note{${1:note text%text}}"
+      }
+    },
+    {
+      "name": "note<overlay specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "note<overlay specification>{${1:note text%text}}"
+      }
+    },
+    {
+      "name": "note",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "note[${2:options%keyvals}]{${1:note text%text}}",
+        "keys": [
+          "\\note"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "note",
+      "arg": {
+        "format": "[]<>{}",
+        "snippet": "note[${2:options%keyvals}]<${3:overlay specification}>{${1:note text%text}}",
+        "keys": [
+          "\\note"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "insertnote",
+      "unusual": true
+    },
+    {
+      "name": "AtBeginNote",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtBeginNote{${1:text}}"
+      }
+    },
+    {
+      "name": "AtEndNote",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtEndNote{${1:text}}"
+      }
+    },
+    {
+      "name": "insertslideintonotes",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "insertslideintonotes{${1:magnification}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\setbeameroption#c": [
+      "hide notes",
+      "show notes",
+      "show notes on second screen",
+      "show notes on second screen=${1|left,right,bottom,top|}",
+      "show only notes",
+      "show only slides with notes"
+    ],
+    "\\note": [
+      "item",
+      "itemize",
+      "enumerate"
+    ]
+  },
+  "args": []
+}

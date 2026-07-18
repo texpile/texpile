@@ -1,0 +1,119 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "toprule"
+    },
+    {
+      "name": "toprule",
+      "arg": {
+        "format": "[]",
+        "snippet": "toprule[${1:line width%l}]"
+      }
+    },
+    {
+      "name": "midrule"
+    },
+    {
+      "name": "midrule",
+      "arg": {
+        "format": "[]",
+        "snippet": "midrule[${1:line width%l}]"
+      }
+    },
+    {
+      "name": "bottomrule"
+    },
+    {
+      "name": "bottomrule",
+      "arg": {
+        "format": "[]",
+        "snippet": "bottomrule[${1:line width%l}]"
+      }
+    },
+    {
+      "name": "cmidrule",
+      "arg": {
+        "format": "{}",
+        "snippet": "cmidrule{${1:a-b}}"
+      }
+    },
+    {
+      "name": "cmidrule",
+      "arg": {
+        "format": "(){}",
+        "snippet": "cmidrule(${2:trim}){${1:a-b}}"
+      }
+    },
+    {
+      "name": "cmidrule",
+      "arg": {
+        "format": "[](){}",
+        "snippet": "cmidrule[${2:line width%l}](${3:trim}){${1:a-b}}"
+      }
+    },
+    {
+      "name": "morecmidrules"
+    },
+    {
+      "name": "specialrule",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "specialrule{${1:line width%l}}{${2:above space}}{${3:below space}}"
+      }
+    },
+    {
+      "name": "addlinespace"
+    },
+    {
+      "name": "addlinespace",
+      "arg": {
+        "format": "[]",
+        "snippet": "addlinespace[${1:vspace}]"
+      }
+    },
+    {
+      "name": "heavyrulewidth",
+      "unusual": true
+    },
+    {
+      "name": "lightrulewidth",
+      "unusual": true
+    },
+    {
+      "name": "cmidrulewidth",
+      "unusual": true
+    },
+    {
+      "name": "belowrulesep",
+      "unusual": true
+    },
+    {
+      "name": "belowbottomsep",
+      "unusual": true
+    },
+    {
+      "name": "aboverulesep",
+      "unusual": true
+    },
+    {
+      "name": "abovetopsep",
+      "unusual": true
+    },
+    {
+      "name": "cmidrulesep",
+      "unusual": true
+    },
+    {
+      "name": "cmidrulekern",
+      "unusual": true
+    },
+    {
+      "name": "defaultaddspace",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

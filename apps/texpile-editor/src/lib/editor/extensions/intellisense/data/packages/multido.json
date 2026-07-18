@@ -1,0 +1,65 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "multido",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "multido{${1:variables%cmd}}{${2:repetitions}}{${3:actions}}"
+      }
+    },
+    {
+      "name": "MultidoCheckNames",
+      "unusual": true
+    },
+    {
+      "name": "mmultido",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "mmultido{${1:variables%cmd}}{${2:repetitions}}{${3:actions}}"
+      }
+    },
+    {
+      "name": "Multido",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "Multido{${1:variables%cmd}}{${2:repetitions}}{${3:actions}}"
+      }
+    },
+    {
+      "name": "MMultido",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "MMultido{${1:variables%cmd}}{${2:repetitions}}{${3:actions}}"
+      }
+    },
+    {
+      "name": "multidocount",
+      "unusual": true
+    },
+    {
+      "name": "multidostop",
+      "unusual": true
+    },
+    {
+      "name": "fpAdd",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "fpAdd{${1:num1}}{${2:num2}}{${3:cmd}}"
+      }
+    },
+    {
+      "name": "fpSub",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "fpSub{${1:num1}}{${2:num2}}{${3:cmd}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

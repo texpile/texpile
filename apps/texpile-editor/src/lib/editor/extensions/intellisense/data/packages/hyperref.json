@@ -1,0 +1,1165 @@
+{
+  "deps": [
+    {
+      "name": "iftex"
+    },
+    {
+      "name": "keyval"
+    },
+    {
+      "name": "kvsetkeys"
+    },
+    {
+      "name": "kvdefinekeys"
+    },
+    {
+      "name": "pdfescape"
+    },
+    {
+      "name": "hycolor"
+    },
+    {
+      "name": "kvoptions"
+    },
+    {
+      "name": "intcalc"
+    },
+    {
+      "name": "url"
+    },
+    {
+      "name": "bitset"
+    },
+    {
+      "name": "bigintcalc"
+    },
+    {
+      "name": "atbegshi"
+    },
+    {
+      "name": "atveryend"
+    },
+    {
+      "name": "rerunfilecheck"
+    },
+    {
+      "name": "nameref"
+    },
+    {
+      "name": "etoolbox"
+    },
+    {
+      "name": "stringenc"
+    },
+    {
+      "name": "backref",
+      "if": "backref"
+    },
+    {
+      "name": "backref",
+      "if": "backref=section"
+    },
+    {
+      "name": "backref",
+      "if": "backref=slide"
+    },
+    {
+      "name": "backref",
+      "if": "backref=page"
+    },
+    {
+      "name": "backref",
+      "if": "pagebackref"
+    },
+    {
+      "name": "backref",
+      "if": "pagebackref=true"
+    },
+    {
+      "name": "color",
+      "if": "colorlinks"
+    },
+    {
+      "name": "color",
+      "if": "colorlinks=true"
+    }
+  ],
+  "macros": [
+    {
+      "name": "HyperDestRename",
+      "if": "destlabel",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "HyperDestRename{${1:destination}}{${2:newname}}"
+      }
+    },
+    {
+      "name": "HyperDestRename",
+      "if": "destlabel=true",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "HyperDestRename{${1:destination}}{${2:newname}}"
+      }
+    },
+    {
+      "name": "hyperindexformat",
+      "if": "hyperindex",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperindexformat{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "hyperindexformat",
+      "if": "hyperindex=true",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperindexformat{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "hypersetup",
+      "arg": {
+        "format": "{}",
+        "snippet": "hypersetup{${1:keyvals}}",
+        "keys": [
+          "\\hypersetup,\\usepackage/hyperref#c"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "href",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "href[${3:options%keyvals}]{${1:URL}}{${2:text%plain}}",
+        "keys": [
+          "\\href"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "href",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "href{${1:URL}}{${2:text%plain}}"
+      }
+    },
+    {
+      "name": "AddToDocumentProperties",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "AddToDocumentProperties{${1:property}}{${2:value}}"
+      }
+    },
+    {
+      "name": "AddToDocumentProperties",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "AddToDocumentProperties[${3:category}]{${1:property}}{${2:value}}"
+      }
+    },
+    {
+      "name": "GetDocumentProperties",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "GetDocumentProperties{${1:property}}"
+      }
+    },
+    {
+      "name": "SetLinkTargetFilter",
+      "arg": {
+        "format": "{}",
+        "snippet": "SetLinkTargetFilter{${1:filter code}}"
+      }
+    },
+    {
+      "name": "url",
+      "arg": {
+        "format": "{}",
+        "snippet": "url{${1:URL}}"
+      }
+    },
+    {
+      "name": "nolinkurl",
+      "arg": {
+        "format": "{}",
+        "snippet": "nolinkurl{${1:URL}}"
+      }
+    },
+    {
+      "name": "hyperbaseurl",
+      "arg": {
+        "format": "{}",
+        "snippet": "hyperbaseurl{${1:URL}}"
+      }
+    },
+    {
+      "name": "hyperimage",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperimage{${1:imageURL%URL}}{${2:text}}"
+      }
+    },
+    {
+      "name": "hyperdef",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "hyperdef{${1:category}}{${2:name}}{${3:text}}"
+      }
+    },
+    {
+      "name": "hyperref",
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "hyperref{${1:URL}}{${2:category}}{${3:name}}{${4:text}}"
+      }
+    },
+    {
+      "name": "hyperref",
+      "arg": {
+        "format": "[]{}{}{}{}",
+        "snippet": "hyperref[${5:label%ref}]{${1:URL}}{${2:category}}{${3:name}}{${4:text}}"
+      }
+    },
+    {
+      "name": "hyperref",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "hyperref[${2:label%ref}]{${1:text}}"
+      }
+    },
+    {
+      "name": "hyperref",
+      "arg": {
+        "format": "{}",
+        "snippet": "hyperref{${1:text}}"
+      }
+    },
+    {
+      "name": "hyperlink",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperlink{${1:target name}}{${2:link text%text}}"
+      }
+    },
+    {
+      "name": "hypertarget",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hypertarget{${1:target name}}{${2:anchor text%text}}"
+      }
+    },
+    {
+      "name": "phantomsection"
+    },
+    {
+      "name": "hyperget",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "hyperget{${1:anchor}}{${2:label}}"
+      }
+    },
+    {
+      "name": "autopageref",
+      "arg": {
+        "format": "{}",
+        "snippet": "autopageref{${1:label}}"
+      }
+    },
+    {
+      "name": "autopageref*",
+      "arg": {
+        "format": "{}",
+        "snippet": "autopageref*{${1:label}}"
+      }
+    },
+    {
+      "name": "autoref",
+      "arg": {
+        "format": "{}",
+        "snippet": "autoref{${1:label}}"
+      }
+    },
+    {
+      "name": "autoref*",
+      "arg": {
+        "format": "{}",
+        "snippet": "autoref*{${1:label}}"
+      }
+    },
+    {
+      "name": "thispdfpagelabel"
+    },
+    {
+      "name": "pdfstringdef",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "pdfstringdef{${1:macroname%cmd}}{${2:TeXstring}}"
+      }
+    },
+    {
+      "name": "pdfbookmark",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "pdfbookmark{${1:text}}{${2:name}}"
+      }
+    },
+    {
+      "name": "pdfbookmark",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "pdfbookmark[${3:level}]{${1:text}}{${2:name}}"
+      }
+    },
+    {
+      "name": "currentpdfbookmark",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "currentpdfbookmark{${1:text}}{${2:name}}"
+      }
+    },
+    {
+      "name": "subpdfbookmark",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "subpdfbookmark{${1:text}}{${2:name}}"
+      }
+    },
+    {
+      "name": "belowpdfbookmark",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "belowpdfbookmark{${1:text}}{${2:name}}"
+      }
+    },
+    {
+      "name": "texorpdfstring",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "texorpdfstring{${1:TEXstring}}{${2:PDFstring}}"
+      }
+    },
+    {
+      "name": "pdfstringdefDisableCommands",
+      "arg": {
+        "format": "{}",
+        "snippet": "pdfstringdefDisableCommands{${1:hooks}}"
+      }
+    },
+    {
+      "name": "hypercalcbp",
+      "arg": {
+        "format": "{}",
+        "snippet": "hypercalcbp{${1:dimen specification}}"
+      }
+    },
+    {
+      "name": "Acrobatmenu",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Acrobatmenu{${1:menuoption}}{${2:text}}"
+      }
+    },
+    {
+      "name": "TextField",
+      "arg": {
+        "format": "{}",
+        "snippet": "TextField{${1:label}}"
+      }
+    },
+    {
+      "name": "TextField",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "TextField[${2:parameters%keyvals}]{${1:label}}",
+        "keys": [
+          "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "CheckBox",
+      "arg": {
+        "format": "{}",
+        "snippet": "CheckBox{${1:label}}"
+      }
+    },
+    {
+      "name": "CheckBox",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "CheckBox[${2:parameters%keyvals}]{${1:label}}",
+        "keys": [
+          "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "ChoiceMenu",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "ChoiceMenu{${1:label}}{${2:choices}}"
+      }
+    },
+    {
+      "name": "ChoiceMenu",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "ChoiceMenu[${3:parameters%keyvals}]{${1:label}}{${2:choices}}",
+        "keys": [
+          "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "PushButton",
+      "arg": {
+        "format": "{}",
+        "snippet": "PushButton{${1:label}}"
+      }
+    },
+    {
+      "name": "PushButton",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "PushButton[${2:parameters%keyvals}]{${1:label}}",
+        "keys": [
+          "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "Submit",
+      "arg": {
+        "format": "{}",
+        "snippet": "Submit{${1:label}}"
+      }
+    },
+    {
+      "name": "Submit",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Submit[${2:parameters%keyvals}]{${1:label}}",
+        "keys": [
+          "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "Reset",
+      "arg": {
+        "format": "{}",
+        "snippet": "Reset{${1:label}}"
+      }
+    },
+    {
+      "name": "Reset",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Reset[${2:parameters%keyvals}]{${1:label}}",
+        "keys": [
+          "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "LayoutTextField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "LayoutTextField{${1:label}}{${2:field}}"
+      }
+    },
+    {
+      "name": "LayoutChoiceField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "LayoutChoiceField{${1:label}}{${2:field}}"
+      }
+    },
+    {
+      "name": "LayoutCheckField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "LayoutCheckField{${1:label}}{${2:field}}"
+      }
+    },
+    {
+      "name": "MakeRadioField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "MakeRadioField{${1:width}}{${2:height}}"
+      }
+    },
+    {
+      "name": "MakeCheckField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "MakeCheckField{${1:width}}{${2:height}}"
+      }
+    },
+    {
+      "name": "MakeTextField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "MakeTextField{${1:width}}{${2:height}}"
+      }
+    },
+    {
+      "name": "MakeChoiceField",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "MakeChoiceField{${1:width}}{${2:height}}"
+      }
+    },
+    {
+      "name": "MakeButtonField",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "MakeButtonField{${1:text}}"
+      }
+    },
+    {
+      "name": "DefaultHeightofSubmit",
+      "unusual": true
+    },
+    {
+      "name": "DefaultWidthofSubmit",
+      "unusual": true
+    },
+    {
+      "name": "DefaultHeightofReset",
+      "unusual": true
+    },
+    {
+      "name": "DefaultWidthofReset",
+      "unusual": true
+    },
+    {
+      "name": "DefaultHeightofCheckBox",
+      "unusual": true
+    },
+    {
+      "name": "DefaultWidthofCheckBox",
+      "unusual": true
+    },
+    {
+      "name": "DefaultHeightofChoiceMenu",
+      "unusual": true
+    },
+    {
+      "name": "DefaultWidthofChoiceMenu",
+      "unusual": true
+    },
+    {
+      "name": "DefaultHeightofText",
+      "unusual": true
+    },
+    {
+      "name": "DefaultHeightofTextMultiline",
+      "unusual": true
+    },
+    {
+      "name": "DefaultWidthofText",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofSubmit",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofReset",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofPushButton",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofCheckBox",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofText",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofListBox",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofComboBox",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofPopdownBox",
+      "unusual": true
+    },
+    {
+      "name": "DefaultOptionsofRadio",
+      "unusual": true
+    },
+    {
+      "name": "AfterBeginDocument",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "AfterBeginDocument{${1:code}}"
+      }
+    },
+    {
+      "name": "AMSautorefname",
+      "unusual": true
+    },
+    {
+      "name": "appendixautorefname",
+      "unusual": true
+    },
+    {
+      "name": "chapterautorefname",
+      "unusual": true
+    },
+    {
+      "name": "equationautorefname",
+      "unusual": true
+    },
+    {
+      "name": "FancyVerbLineautorefname",
+      "unusual": true
+    },
+    {
+      "name": "figureautorefname",
+      "unusual": true
+    },
+    {
+      "name": "footnoteautorefname",
+      "unusual": true
+    },
+    {
+      "name": "Hfootnoteautorefname",
+      "unusual": true
+    },
+    {
+      "name": "Hurl",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "Hurl{${1:URL}}"
+      }
+    },
+    {
+      "name": "HyperDestLabelReplace",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "HyperDestLabelReplace{${1:dest}}"
+      }
+    },
+    {
+      "name": "HyperDestNameFilter",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "HyperDestNameFilter{${1:arg}}"
+      }
+    },
+    {
+      "name": "hypergetpageref",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "hypergetpageref{${1:label}}"
+      }
+    },
+    {
+      "name": "hypergetref",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "hypergetref{${1:label}}"
+      }
+    },
+    {
+      "name": "hyperlinkfileprefix",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "hyperlinkfileprefix{${1:prefix}}"
+      }
+    },
+    {
+      "name": "hyperpage",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "hyperpage{${1:arg}}"
+      }
+    },
+    {
+      "name": "HyperRaiseLinkDefault",
+      "unusual": true
+    },
+    {
+      "name": "HyperRaiseLinkHook",
+      "unusual": true
+    },
+    {
+      "name": "IfHyperBoolean",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "IfHyperBoolean{${1:options}}{${2:true}}{${3:false}}"
+      }
+    },
+    {
+      "name": "IfHyperBooleanExists",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "IfHyperBooleanExists{${1:option}}{${2:true}}{${3:false}}"
+      }
+    },
+    {
+      "name": "ifpdfstringunicode",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "ifpdfstringunicode{${1:unicode chars}}{${2:chars}}"
+      }
+    },
+    {
+      "name": "Itemautorefname",
+      "unusual": true
+    },
+    {
+      "name": "itemautorefname",
+      "unusual": true
+    },
+    {
+      "name": "MakeLowercaseUnsupportedInPdfStrings",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "MakeLowercaseUnsupportedInPdfStrings{${1:text}}"
+      }
+    },
+    {
+      "name": "MakeUppercaseUnsupportedInPdfStrings",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "MakeUppercaseUnsupportedInPdfStrings{${1:text}}"
+      }
+    },
+    {
+      "name": "MaybeStopEarly",
+      "unusual": true
+    },
+    {
+      "name": "MaybeStopNow",
+      "unusual": true
+    },
+    {
+      "name": "nohyperpage",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "nohyperpage{${1:arg}}"
+      }
+    },
+    {
+      "name": "pageautorefname",
+      "unusual": true
+    },
+    {
+      "name": "paragraphautorefname",
+      "unusual": true
+    },
+    {
+      "name": "partautorefname",
+      "unusual": true
+    },
+    {
+      "name": "pdfstringdefPostHook",
+      "unusual": true
+    },
+    {
+      "name": "pdfstringdefPreHook",
+      "unusual": true
+    },
+    {
+      "name": "pdfstringdefWarn",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "pdfstringdefWarn{${1:arg}}"
+      }
+    },
+    {
+      "name": "sectionautorefname",
+      "unusual": true
+    },
+    {
+      "name": "setpdflinkmargin",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "setpdflinkmargin{${1:length}}"
+      }
+    },
+    {
+      "name": "subparagraphautorefname",
+      "unusual": true
+    },
+    {
+      "name": "subsectionautorefname",
+      "unusual": true
+    },
+    {
+      "name": "subsubsectionautorefname",
+      "unusual": true
+    },
+    {
+      "name": "tableautorefname",
+      "unusual": true
+    },
+    {
+      "name": "theHchapter",
+      "unusual": true
+    },
+    {
+      "name": "theHenumi",
+      "unusual": true
+    },
+    {
+      "name": "theHenumii",
+      "unusual": true
+    },
+    {
+      "name": "theHenumiii",
+      "unusual": true
+    },
+    {
+      "name": "theHenumiv",
+      "unusual": true
+    },
+    {
+      "name": "theHequation",
+      "unusual": true
+    },
+    {
+      "name": "theHfigure",
+      "unusual": true
+    },
+    {
+      "name": "theHHfootnote",
+      "unusual": true
+    },
+    {
+      "name": "theHHmpfootnote",
+      "unusual": true
+    },
+    {
+      "name": "theHItem",
+      "unusual": true
+    },
+    {
+      "name": "theHmpfootnote",
+      "unusual": true
+    },
+    {
+      "name": "theHparagraph",
+      "unusual": true
+    },
+    {
+      "name": "theHpart",
+      "unusual": true
+    },
+    {
+      "name": "theHsection",
+      "unusual": true
+    },
+    {
+      "name": "theHsubparagraph",
+      "unusual": true
+    },
+    {
+      "name": "theHsubsection",
+      "unusual": true
+    },
+    {
+      "name": "theHsubsubsection",
+      "unusual": true
+    },
+    {
+      "name": "theHtable",
+      "unusual": true
+    },
+    {
+      "name": "theHtheorem",
+      "unusual": true
+    },
+    {
+      "name": "theHthm",
+      "unusual": true
+    },
+    {
+      "name": "theoremautorefname",
+      "unusual": true
+    },
+    {
+      "name": "unichar",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "unichar{${1:char num}}"
+      }
+    },
+    {
+      "name": "XeTeXLinkBox",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "XeTeXLinkBox{${1:contents}}"
+      }
+    },
+    {
+      "name": "XeTeXLinkMargin",
+      "unusual": true
+    }
+  ],
+  "envs": [
+    {
+      "name": "NoHyper"
+    },
+    {
+      "name": "Form"
+    },
+    {
+      "name": "Form",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:options%keyvals}]",
+        "keys": [
+          "\\begin{Form}"
+        ],
+        "keyPos": 0
+      }
+    }
+  ],
+  "keys": {
+    "\\hypersetup,\\usepackage/hyperref#c": [
+      "addtopdfcreator=${1:text}",
+      "allbordercolors=",
+      "allcolors=",
+      "anchorcolor=",
+      "backref=${1|section,slide,page,none,false|}",
+      "baseurl=${1:URL}",
+      "bookmarks",
+      "bookmarksdepth",
+      "bookmarksdepth=${1:number}",
+      "bookmarksnumbered",
+      "bookmarksopen",
+      "bookmarksopenlevel=${1:level}",
+      "bookmarkstype=",
+      "breaklinks",
+      "citebordercolor=",
+      "citecolor=",
+      "CJKbookmarks",
+      "colorlinks",
+      "customdriver=${1:file}",
+      "debug",
+      "destlabel",
+      "draft",
+      "driverfallback=${1:driver}",
+      "dvipdfm",
+      "dvipdfmx",
+      "dvipdfmx-outline-open",
+      "dvips",
+      "dvipsone",
+      "dviwindo",
+      "encap=${1:character}",
+      "extension=${1:file ext}",
+      "filebordercolor=",
+      "filecolor=",
+      "final",
+      "frenchlinks",
+      "hidelinks",
+      "hitex",
+      "hyperfigures",
+      "hyperfootnotes",
+      "hyperindex",
+      "hypertex",
+      "hypertexnames",
+      "implicit",
+      "linkbordercolor=",
+      "linkcolor=",
+      "linkfileprefix=${1:prefix}",
+      "linktoc=${1|section,page,all,none|}",
+      "linktocpage",
+      "luatex",
+      "menubordercolor=",
+      "menucolor=",
+      "nativepdf",
+      "naturalnames",
+      "nesting",
+      "next-anchor=${1:anchor name}",
+      "ocgcolorlinks",
+      "pageanchor",
+      "pagebackref",
+      "pdfa",
+      "pdfauthor=${1:author}",
+      "pdfborder=",
+      "pdfborderstyle=",
+      "pdfcenterwindow",
+      "pdfcreationdate=${1:date}",
+      "pdfcreator=${1:creator}",
+      "pdfdirection=${1|L2R,R2L|}",
+      "pdfdisplaydoctitle",
+      "pdfduplex=${1|Simplex,DuplexFlipShortEdge,DuplexFlipLongEdge|}",
+      "pdfencoding=${1|pdfdoc,unicode,auto|}",
+      "pdfescapeform",
+      "pdffitwindow",
+      "pdfhighlight=${1|/I,/N,/O,/P|}",
+      "pdfinfo={${1:info keys}}",
+      "pdfkeywords={${1:keyword list}}",
+      "pdflang=${1:lang id}",
+      "pdflinkmargin=",
+      "pdfmark",
+      "pdfmenubar",
+      "pdfmoddate=${1:date}",
+      "pdfnewwindow",
+      "pdfnonfullscreenpagemode",
+      "pdfnumcopies=${1:integer}",
+      "pdfpageduration=",
+      "pdfpagelabels",
+      "pdfpagelayout=${1|SinglePage,OneColumn,TwoColumnLeft,TwoColumnRight,TwoPageLeft,TwoPageRight|}",
+      "pdfpagemode=${1|FullScreen,UseNone,UseOutlines,UseOC,UseAttachments,UseThumbs|}",
+      "pdfpagescrop=${1:n1 n2 n3 n4}",
+      "pdfpagetransition=${1|Split,Blinds,Box,Wipe,Dissolve,Glitter,R,Fly,Push,Cover,Uncover,Fade|}",
+      "pdfpicktraybypdfsize",
+      "pdfprintarea=${1|Mediabox,CropBox,BleedBox,TrimBox,ArtBox|}",
+      "pdfprintclip=${1|Mediabox,CropBox,BleedBox,TrimBox,ArtBox|}",
+      "pdfprintpagerange=${1:n1 n2}",
+      "pdfprintscaling=${1|None,AppDefault|}",
+      "pdfproducer=${1:producer}",
+      "pdfremotestartview=${1|XYZ,Fit,FitH,FitV,FitR,FitB,FitBH,FitBV|}",
+      "pdfstartpage=${1:page number}",
+      "pdfstartview=${1|XYZ,Fit,FitH,FitV,FitR,FitB,FitBH,FitBV|}",
+      "pdfsubject=${1:subject}",
+      "pdftex",
+      "pdftitle=${1:title}",
+      "pdftoolbar",
+      "pdftrapped=${1|True,False,Unknown|}",
+      "pdfusetitle",
+      "pdfversion=${1:version}",
+      "pdfview=${1|XYZ,Fit,FitH,FitV,FitR,FitB,FitBH,FitBV|}",
+      "pdfviewarea=${1|Mediabox,CropBox,BleedBox,TrimBox,ArtBox|}",
+      "pdfviewclip=${1|Mediabox,CropBox,BleedBox,TrimBox,ArtBox|}",
+      "pdfwindowui",
+      "plainpages",
+      "ps2pdf",
+      "psdextra",
+      "raiselinks",
+      "runbordercolor=",
+      "runcolor=",
+      "setpagesize",
+      "tex4ht",
+      "textures",
+      "unicode",
+      "urlbordercolor=",
+      "urlcolor=",
+      "verbose",
+      "vtex",
+      "vtexpdfmark",
+      "xetex"
+    ],
+    "\\href": [
+      "pdfremotestartview=${1|XYZ,Fit,FitH,FitV,FitR,FitB,FitBH,FitBV|}",
+      "pdfnewwindow",
+      "page=${1:number}",
+      "ismap",
+      "nextactionraw={${1:PDF code}}"
+    ],
+    "\\begin{Form}": [
+      "action=${1:URL}",
+      "encoding=${1:encoding}",
+      "method=${1|post,get|}"
+    ],
+    "\\TextField,\\CheckBox,\\ChoiceMenu,\\PushButton,\\Submit,\\Reset": [
+      "accesskey=${1:key}",
+      "align=${1|0,1,2|}",
+      "altname=${1:altname}",
+      "backgroundcolor=",
+      "bordercolor=",
+      "bordersep=",
+      "borderstyle=${1|S,B,D,I,U|}",
+      "borderwidth=",
+      "calculate={${1:JavaScript code}}",
+      "calculatesortkey=${1:key}",
+      "charsize=",
+      "checkboxsymbol=${1:symbol}",
+      "checked",
+      "color=",
+      "combo",
+      "default=${1:default value}",
+      "disabled",
+      "format={${1:JavaScript code}}",
+      "height=",
+      "hidden",
+      "keystroke={${1:JavaScript code}}",
+      "mappingname=${1:name}",
+      "maxlen=${1:number}",
+      "menulength=${1:number}",
+      "multiline",
+      "name=${1:name}",
+      "onblur={${1:JavaScript code}}",
+      "onchange={${1:JavaScript code}}",
+      "onclick={${1:JavaScript code}}",
+      "ondbclick={${1:JavaScript code}}",
+      "onfocus={${1:JavaScript code}}",
+      "onkeydown={${1:JavaScript code}}",
+      "onkeypress={${1:JavaScript code}}",
+      "onkeyup={${1:JavaScript code}}",
+      "onmousedown={${1:JavaScript code}}",
+      "onmousemove={${1:JavaScript code}}",
+      "onmouseout={${1:JavaScript code}}",
+      "onmouseover={${1:JavaScript code}}",
+      "onmouseup={${1:JavaScript code}}",
+      "onselect={${1:JavaScript code}}",
+      "password",
+      "popdown",
+      "radio",
+      "radiosymbol=${1:symbol}",
+      "readonly",
+      "rotation=${1:multiple of 90}",
+      "tabkey=${1:key}",
+      "validate={${1:JavaScript code}}",
+      "value=${1:init value}",
+      "width="
+    ]
+  },
+  "args": [
+    "\\hypersetup,\\usepackage/hyperref#c"
+  ]
+}

@@ -187,3 +187,73 @@ describe('parseLatexLog on generated fixtures', () => {
 		}
 	});
 });
+
+describe('corpus-sweep catches (July 2026)', () => {
+	it('hints the kernel "Invalid UTF-8 byte" error', () => {
+		const r = parseAndEnrichLatexLog('! LaTeX Error: Invalid UTF-8 byte "95.\nl.18411 x\n');
+		expect(r.errors[0]?.ruleId).toBe('unicode-char');
+	});
+
+	it('hints the pdftex.def missing-figure error, with the epstopdf case called out', () => {
+		const eps = parseAndEnrichLatexLog(
+			"! Package pdftex.def Error: File `fig-eps-converted-to.pdf' not found: using draft setting.\nl.60 x\n"
+		);
+		expect(eps.errors[0]?.ruleId).toBe('graphics-file-not-found');
+		expect(eps.errors[0]?.hint).toContain('shell escape');
+		const plain = parseAndEnrichLatexLog("! Package pdftex.def Error: File `figs/model.png' not found: using draft setting.\nl.60 x\n");
+		expect(plain.errors[0]?.hint).toContain('figs/model.png');
+	});
+});
+
+describe('LaTeX Workshop parity additions', () => {
+	it('surfaces "No pages of output." as an error, not just status', () => {
+		const r = parseLatexLog('No pages of output.\nTranscript written on main.log.');
+		expect(r.status.noPages).toBe(true);
+		expect(r.errors.map((e) => e.message)).toContain('No pages of output.');
+	});
+
+	it('recognizes a bare file:line error (MikTeX -file-line-error)', () => {
+		const r = parseLatexLog('chapter1.tex:5: Undefined control sequence.\nl.5 \\foo');
+		expect(r.errors[0]?.file).toBe('chapter1.tex');
+		expect(r.errors[0]?.line).toBe(5);
+	});
+
+	it('tracks MikTeX bare-name file opens on the paren stack', () => {
+		const r = parseLatexLog('(natbib.sty\n! Some error.\nl.3 x\n');
+		expect(r.errors[0]?.file).toBe('natbib.sty');
+	});
+
+	it('skips "ignored error" engine notes', () => {
+		const r = parseLatexLog('! Some ignored error follows.');
+		expect(r.errors).toHaveLength(0);
+	});
+
+	it('captures pdfTeX driver warnings (which LW drops)', () => {
+		const r = parseLatexLog('pdfTeX warning (dest): name{fig:x} has been referenced but does not exist');
+		expect(r.warnings[0]?.message).toMatch(/^pdfTeX warning/);
+	});
+
+	it('extracts column + anchor text from the l.NN context', () => {
+		const r = parseLatexLog('! Undefined control sequence.\nl.12 A line \\badmacro\n');
+		expect(r.errors[0]?.line).toBe(12);
+		expect(r.errors[0]?.column).toBe('A line \\badmacro'.length + 1);
+		expect(r.errors[0]?.anchorText).toBe('A line \\badmacro');
+	});
+
+	it('strips the redundant "on input line N" from folded warnings but keeps the line', () => {
+		const r = parseLatexLog("LaTeX Warning: Reference `fig:x' on page 2 undefined on input line 40.\n");
+		expect(r.warnings[0]?.line).toBe(40);
+		expect(r.warnings[0]?.message).not.toMatch(/on input line/);
+	});
+
+	it('attributes shipout-time boxes to their PDF page', () => {
+		const r = parseLatexLog('Overfull \\hbox (3.0pt too wide) has occurred while \\output is active [7]');
+		expect(r.badboxes[0]?.page).toBe(7);
+		expect(r.badboxes[0]?.line).toBeUndefined();
+	});
+
+	it("suppresses the empty `thebibliography' environment noise", () => {
+		const r = parseLatexLog("LaTeX Warning: Empty `thebibliography' environment on input line 8.\n");
+		expect(r.warnings).toHaveLength(0);
+	});
+});

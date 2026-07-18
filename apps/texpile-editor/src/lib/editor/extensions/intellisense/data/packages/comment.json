@@ -1,0 +1,82 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "includecomment",
+      "arg": {
+        "format": "{}",
+        "snippet": "includecomment{${1:envname}}"
+      }
+    },
+    {
+      "name": "excludecomment",
+      "arg": {
+        "format": "{}",
+        "snippet": "excludecomment{${1:envname}}"
+      }
+    },
+    {
+      "name": "CommentCutFile",
+      "unusual": true
+    },
+    {
+      "name": "ProcessCutFile",
+      "unusual": true
+    },
+    {
+      "name": "generalcomment",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "generalcomment{${1:envname}}{${2:begdef}}{${3:enddef}}"
+      }
+    },
+    {
+      "name": "specialcomment",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "specialcomment{${1:envname}}{${2:begdef}}{${3:enddef}}"
+      }
+    },
+    {
+      "name": "Thiscomment",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "Thiscomment{${1:line stuff}}"
+      }
+    },
+    {
+      "name": "WriteCommentLine",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "WriteCommentLine{${1:line stuff}}"
+      }
+    },
+    {
+      "name": "ThisComment",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "ThisComment{${1:line stuff}}"
+      }
+    },
+    {
+      "name": "processcomment",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "processcomment{${1:envname}}{${2:def}}{${3:begdef}}{${4:enddef}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "comment"
+    }
+  ],
+  "keys": {},
+  "args": []
+}

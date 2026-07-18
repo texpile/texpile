@@ -1,0 +1,68 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "svnInfoFile"
+    },
+    {
+      "name": "svnInfoRevision"
+    },
+    {
+      "name": "svnInfoMinRevision"
+    },
+    {
+      "name": "svnInfoMaxRevision"
+    },
+    {
+      "name": "svnInfoDate"
+    },
+    {
+      "name": "svnInfoTime"
+    },
+    {
+      "name": "svnInfoOwner"
+    },
+    {
+      "name": "svnInfoYear"
+    },
+    {
+      "name": "svnInfoMonth"
+    },
+    {
+      "name": "svnInfoDay"
+    },
+    {
+      "name": "svnInfoLongDate"
+    },
+    {
+      "name": "svnId"
+    },
+    {
+      "name": "svnToday"
+    },
+    {
+      "name": "svnInfoMaxToday"
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/svninfo#c": [
+      "svk",
+      "today",
+      "notoday",
+      "revrange",
+      "fancyhdr",
+      "nofancy",
+      "scrpage",
+      "eso-foot",
+      "margin",
+      "long",
+      "short",
+      "final",
+      "draft"
+    ]
+  },
+  "args": [
+    "\\usepackage/svninfo#c"
+  ]
+}

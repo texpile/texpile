@@ -1,0 +1,276 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "indentpattern",
+      "arg": {
+        "format": "{}",
+        "snippet": "indentpattern{${1:digits}}"
+      }
+    },
+    {
+      "name": "versewidth"
+    },
+    {
+      "name": "vin"
+    },
+    {
+      "name": "vgap"
+    },
+    {
+      "name": "vindent"
+    },
+    {
+      "name": "leftmargini"
+    },
+    {
+      "name": "stanzaskip"
+    },
+    {
+      "name": "verselinebreak"
+    },
+    {
+      "name": "verselinebreak",
+      "arg": {
+        "format": "[]",
+        "snippet": "verselinebreak[${1:length}]"
+      }
+    },
+    {
+      "name": "flagverse",
+      "arg": {
+        "format": "{}",
+        "snippet": "flagverse{${1:flag}}"
+      }
+    },
+    {
+      "name": "vleftskip"
+    },
+    {
+      "name": "vrightskip"
+    },
+    {
+      "name": "poemlines",
+      "arg": {
+        "format": "{}",
+        "snippet": "poemlines{${1:nth}}"
+      }
+    },
+    {
+      "name": "setverselinenums",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "setverselinenums{${1:first line num}}{${2:start nums at}}"
+      }
+    },
+    {
+      "name": "thepoemline"
+    },
+    {
+      "name": "verselinenumfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "verselinenumfont{${1:font-spec}}"
+      }
+    },
+    {
+      "name": "verselinenumbersleft"
+    },
+    {
+      "name": "verselinenumbersright"
+    },
+    {
+      "name": "poemtitle",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "poemtitle{${1:short}}{${2:long}}"
+      }
+    },
+    {
+      "name": "poemtitle*",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "poemtitle*{${1:short}}{${2:long}}"
+      }
+    },
+    {
+      "name": "poemtoc"
+    },
+    {
+      "name": "poemtitlefont"
+    },
+    {
+      "name": "beforepoemtitleskip"
+    },
+    {
+      "name": "afterpoemtitleskip"
+    },
+    {
+      "name": "poemtitlemark",
+      "arg": {
+        "format": "{}",
+        "snippet": "poemtitlemark{${1:title}}"
+      }
+    },
+    {
+      "name": "newarray",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "newarray{${1:array name}}{${2:low}}{${3:high}}"
+      }
+    },
+    {
+      "name": "setarrayelement",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "setarrayelement{${1:array name}}{${2:index}}{${3:text}}"
+      }
+    },
+    {
+      "name": "getarrayelement",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "getarrayelement{${1:array name}}{${2:index}}{${3:result}}"
+      }
+    },
+    {
+      "name": "checkarrayindex",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "checkarrayindex{${1:array name}}{${2:index}}"
+      }
+    },
+    {
+      "name": "stringtoarray",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "stringtoarray{${1:array name}}{${2:string}}"
+      }
+    },
+    {
+      "name": "arraytostring",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "arraytostring{${1:array name}}{${2:result}}"
+      }
+    },
+    {
+      "name": "checkifinteger",
+      "arg": {
+        "format": "{}",
+        "snippet": "checkifinteger{${1:number}}"
+      }
+    },
+    {
+      "name": "altindentfalse",
+      "unusual": true
+    },
+    {
+      "name": "altindenttrue",
+      "unusual": true
+    },
+    {
+      "name": "bounderrorfalse",
+      "unusual": true
+    },
+    {
+      "name": "bounderrortrue",
+      "unusual": true
+    },
+    {
+      "name": "gobm",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "gobm{${1:number}}"
+      }
+    },
+    {
+      "name": "ifaltindent",
+      "unusual": true
+    },
+    {
+      "name": "ifbounderror",
+      "unusual": true
+    },
+    {
+      "name": "ifinteger",
+      "unusual": true
+    },
+    {
+      "name": "ifpattern",
+      "unusual": true
+    },
+    {
+      "name": "ifstarpattern",
+      "unusual": true
+    },
+    {
+      "name": "integerfalse",
+      "unusual": true
+    },
+    {
+      "name": "integertrue",
+      "unusual": true
+    },
+    {
+      "name": "patternfalse",
+      "unusual": true
+    },
+    {
+      "name": "patterntrue",
+      "unusual": true
+    },
+    {
+      "name": "starpatternfalse",
+      "unusual": true
+    },
+    {
+      "name": "starpatterntrue",
+      "unusual": true
+    },
+    {
+      "name": "thechrsinstr",
+      "unusual": true
+    },
+    {
+      "name": "thefvsline",
+      "unusual": true
+    },
+    {
+      "name": "theHpoemline",
+      "unusual": true
+    },
+    {
+      "name": "thevslineno",
+      "unusual": true
+    },
+    {
+      "name": "vlnumfont",
+      "unusual": true
+    }
+  ],
+  "envs": [
+    {
+      "name": "verse"
+    },
+    {
+      "name": "verse",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:length of average line}]"
+      }
+    },
+    {
+      "name": "altverse"
+    },
+    {
+      "name": "patverse"
+    },
+    {
+      "name": "patverse*"
+    }
+  ],
+  "keys": {},
+  "args": []
+}

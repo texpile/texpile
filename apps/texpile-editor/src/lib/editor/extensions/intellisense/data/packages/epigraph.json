@@ -1,0 +1,85 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "epigraph",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "epigraph{${1:text}}{${2:source}}"
+      }
+    },
+    {
+      "name": "qitem",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "qitem{${1:text}}{${2:source}}"
+      }
+    },
+    {
+      "name": "epigraphnoindent",
+      "unusual": true
+    },
+    {
+      "name": "epigraphnoindentfalse",
+      "unusual": true
+    },
+    {
+      "name": "epigraphwidth"
+    },
+    {
+      "name": "textflush"
+    },
+    {
+      "name": "epigraphflush"
+    },
+    {
+      "name": "sourceflush"
+    },
+    {
+      "name": "epigraphsize"
+    },
+    {
+      "name": "epigraphrule"
+    },
+    {
+      "name": "beforeepigraphskip"
+    },
+    {
+      "name": "afterepigraphskip"
+    },
+    {
+      "name": "epigraphhead",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "epigraphhead[${2:distance}]{${1:text}}"
+      }
+    },
+    {
+      "name": "epigraphhead",
+      "arg": {
+        "format": "{}",
+        "snippet": "epigraphhead{${1:text}}"
+      }
+    },
+    {
+      "name": "dropchapter",
+      "arg": {
+        "format": "{}",
+        "snippet": "dropchapter{${1:length}}"
+      }
+    },
+    {
+      "name": "undodrop"
+    },
+    {
+      "name": "cleartoevenpage"
+    }
+  ],
+  "envs": [
+    {
+      "name": "epigraphs"
+    }
+  ],
+  "keys": {},
+  "args": []
+}

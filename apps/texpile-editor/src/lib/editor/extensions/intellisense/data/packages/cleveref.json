@@ -1,0 +1,353 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "Crefformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Crefformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "Crefmultiformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "Crefmultiformat{${1:type}}{${2:first}}{${3:second}}{${4:middle}}{${5:last}}"
+      }
+    },
+    {
+      "name": "Crefname",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "Crefname{${1:type}}{${2:singular}}{${3:plural}}"
+      }
+    },
+    {
+      "name": "Crefrangeformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Crefrangeformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "Crefrangemultiformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "Crefrangemultiformat{${1:type}}{${2:first}}{${3:second}}{${4:middle}}{${5:last}}"
+      }
+    },
+    {
+      "name": "crefalias",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "crefalias{${1:counter}}{${2:type}}"
+      }
+    },
+    {
+      "name": "crefdefaultlabelformat",
+      "arg": {
+        "format": "{}",
+        "snippet": "crefdefaultlabelformat{${1:format}}"
+      }
+    },
+    {
+      "name": "crefformat",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "crefformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "creflabelformat",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "creflabelformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "crefmultiformat",
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "crefmultiformat{${1:type}}{${2:first}}{${3:second}}{${4:middle}}{${5:last}}"
+      }
+    },
+    {
+      "name": "crefname",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "crefname{${1:type}}{${2:singular}}{${3:plural}}"
+      }
+    },
+    {
+      "name": "crefrangeformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "crefrangeformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "crefrangelabelformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "crefrangelabelformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "crefrangemultiformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "crefrangemultiformat{${1:type}}{${2:first}}{${3:second}}{${4:middle}}{${5:last}}"
+      }
+    },
+    {
+      "name": "label",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "label[${2:type}]{${1:key%labeldef}}"
+      }
+    },
+    {
+      "name": "labelcrefformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "labelcrefformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "labelcrefmultiformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "labelcrefmultiformat{${1:type}}{${2:first}}{${3:second}}{${4:middle}}{${5:last}}"
+      }
+    },
+    {
+      "name": "labelcrefrangeformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "labelcrefrangeformat{${1:type}}{${2:format}}"
+      }
+    },
+    {
+      "name": "labelcrefrangemultiformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "labelcrefrangemultiformat{${1:type}}{${2:first}}{${3:second}}{${4:middle}}{${5:last}}"
+      }
+    },
+    {
+      "name": "Cpageref",
+      "arg": {
+        "format": "{}",
+        "snippet": "Cpageref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "Cpagerefrange",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Cpagerefrange{${1:key1}}{${2:key2}}"
+      }
+    },
+    {
+      "name": "Cref",
+      "arg": {
+        "format": "{}",
+        "snippet": "Cref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "Cref*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Cref*{${1:labellist}}"
+      }
+    },
+    {
+      "name": "Crefrange",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Crefrange{${1:key1}}{${2:key2}}"
+      }
+    },
+    {
+      "name": "cpageref",
+      "arg": {
+        "format": "{}",
+        "snippet": "cpageref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "cpagerefrange",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "cpagerefrange{${1:key1}}{${2:key2}}"
+      }
+    },
+    {
+      "name": "cref",
+      "arg": {
+        "format": "{}",
+        "snippet": "cref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "cref*",
+      "arg": {
+        "format": "{}",
+        "snippet": "cref*{${1:labellist}}"
+      }
+    },
+    {
+      "name": "crefrange",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "crefrange{${1:key1}}{${2:key2}}"
+      }
+    },
+    {
+      "name": "labelcpageref",
+      "arg": {
+        "format": "{}",
+        "snippet": "labelcpageref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "labelcref",
+      "arg": {
+        "format": "{}",
+        "snippet": "labelcref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "lcnamecref",
+      "arg": {
+        "format": "{}",
+        "snippet": "lcnamecref{${1:key}}"
+      }
+    },
+    {
+      "name": "lcnamecrefs",
+      "arg": {
+        "format": "{}",
+        "snippet": "lcnamecrefs{${1:key}}"
+      }
+    },
+    {
+      "name": "nameCref",
+      "arg": {
+        "format": "{}",
+        "snippet": "nameCref{${1:key}}"
+      }
+    },
+    {
+      "name": "nameCrefs",
+      "arg": {
+        "format": "{}",
+        "snippet": "nameCrefs{${1:key}}"
+      }
+    },
+    {
+      "name": "namecref",
+      "arg": {
+        "format": "{}",
+        "snippet": "namecref{${1:key}}"
+      }
+    },
+    {
+      "name": "namecrefs",
+      "arg": {
+        "format": "{}",
+        "snippet": "namecrefs{${1:key}}"
+      }
+    },
+    {
+      "name": "crefrangeconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefrangepreconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefrangepostconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefpairconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefmiddleconjunction",
+      "unusual": true
+    },
+    {
+      "name": "creflastconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefpairgroupconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefmiddlegroupconjunction",
+      "unusual": true
+    },
+    {
+      "name": "creflastgroupconjunction",
+      "unusual": true
+    },
+    {
+      "name": "crefstripprefix",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "crefstripprefix{${1:string1}}{${2:string2}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/cleveref#c": [
+      "poorman",
+      "sort",
+      "compress",
+      "sort&compress",
+      "nosort",
+      "capitalise",
+      "capitalize",
+      "nameinlink",
+      "noabbrev",
+      "english",
+      "german",
+      "ngerman",
+      "dutch",
+      "french",
+      "spanish",
+      "italian",
+      "russian",
+      "ukrainian",
+      "norsk",
+      "danish",
+      "esperanto",
+      "swedish",
+      "brazilian",
+      "catalan"
+    ]
+  },
+  "args": [
+    "\\usepackage/cleveref#c"
+  ]
+}

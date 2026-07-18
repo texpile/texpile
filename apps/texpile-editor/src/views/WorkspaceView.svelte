@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount, onDestroy, tick } from 'svelte';
 	import { get } from 'svelte/store';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { browser } from '$lib/runtime';
@@ -10,7 +10,7 @@
 	import Terminal from '$lib/editor/comp/Terminal.svelte';
 	import ProblemsPanel from '$lib/editor/comp/ProblemsPanel.svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
-	import { parseCompileDiagnostics } from '$lib/latex-log';
+	import { parseCompileDiagnosticsInWorker } from '$lib/latex-log/parseInWorker';
 	import PDFViewer from '$lib/editor/comp/PDFViewer.svelte';
 	import DraftView from '$lib/draft/DraftView.svelte';
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
@@ -27,7 +27,10 @@
 	import SearchBar from '$lib/editor/comp/SearchBar.svelte';
 	import TableOfContents from '$lib/editor/comp/TableOfContents.svelte';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
-	import { latexHeadings } from '$lib/editor/extensions/tableofcontents/latexHeadings';
+	import { parseOutlineRaw, assembleProjectOutline } from '$lib/editor/extensions/tableofcontents/latexHeadings';
+	import { refreshProjectIntel } from '$lib/workspace/projectIntel';
+	import { projectIntelStore } from '$lib/stores/projectIntel';
+	import { setGraphicResolver } from '$lib/editor/extensions/intellisense/hover';
 	import BibManager from '$lib/editor/comp/BibManager.svelte';
 	import PreambleFrontmatter from '$lib/editor/comp/PreambleFrontmatter.svelte';
 	import { replacePreambleFrontmatter } from '$lib/editor/extensions/raw-latex/frontmatterView';
@@ -49,6 +52,7 @@
 		mainFile,
 		savedMainFile,
 		setMainFile,
+		setLastFile,
 		savedCompileCommand,
 		setFolderCompileCommand,
 		savedCompileOutputs,
@@ -515,10 +519,21 @@
 	}
 
 	const showToc = $derived(!!loadedPath && kind === 'tex' && (viewMode === 'visual' || viewMode === 'source'));
-	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw .tex
+	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw
+	// .tex; \input fragments pre-scanned into projectIntel merge into one numbered project outline
 	$effect(() => {
 		const src = texSource;
-		if (kind === 'tex' && viewMode === 'source') sourceTocStore.set(latexHeadings(src));
+		const intel = $projectIntelStore;
+		if (kind === 'tex' && viewMode === 'source')
+			sourceTocStore.set(
+				assembleProjectOutline(
+					parseOutlineRaw(src),
+					loadedPath,
+					loadedPath ? dirname(loadedPath) : null,
+					get(workspaceRoot),
+					intel.outlines
+				)
+			);
 	});
 	let tocFraction = $state(0.5); // TOC share of the sidebar's lower region (0..1)
 	let splitEl = $state<HTMLDivElement>();
@@ -553,7 +568,7 @@
 	let terminalMounted = $state(false); // stay mounted after first open so shells persist across toggles
 	// VSCode-style multi-terminal: one active (shown), the rest kept mounted (hidden)
 	type TermRef =
-		| { run: (cmd: string, onDone?: () => void) => void; focus: () => void; refit: () => void; interrupt: () => void }
+		| { run: (cmd: string, onDone?: (output: string) => void) => void; focus: () => void; refit: () => void; interrupt: () => void }
 		| undefined;
 	let terminals = $state<{ id: number; title: string }[]>([]);
 	let activeTermId = $state<number | null>(null);
@@ -682,154 +697,13 @@
 	let lastDraftSrc = ''; // source at the last full draft compile; the patch baseline
 	let lastDraftPath: string | null = null; // file that source belongs to
 
-	// Split a .tex buffer into prose paragraphs (line-numbered), treating blank lines,
-	// comment-only lines, and block-level command lines (\section, \begin, \item, ...) as
-	// boundaries -- so the header line above a body paragraph isn't glued onto it.
-	const BLOCK_CMD =
-		/^\s*\\(section|subsection|subsubsection|paragraph|subparagraph|chapter|begin|end|item|maketitle|caption|label|title|author|date|bibliography|printbibliography|tableofcontents|input|include)\b/;
-	const isBoundary = (ln: string) => ln.trim() === '' || /^\s*%/.test(ln) || BLOCK_CMD.test(ln);
-	const BEGIN_LIST = /^\s*\\begin\{(itemize|enumerate|description)\}/;
-	const END_LIST = /^\s*\\end\{(itemize|enumerate|description)\}/;
-	const ITEM = /^\s*\\item\b[ \t]*(.*)$/;
-	// Split a buffer into editable paragraphs. A \item body is captured as a paragraph too,
-	// tagged with its enclosing list env so the fast path can re-typeset it INSIDE that list
-	// (correct width + label), not as full-width prose.
-	type Para = { text: string; startLine: number; wrap?: string; idx?: number; env?: string };
-	// environments captured WHOLE (\begin..\end as one block): the daemon can typeset a complete
-	// env (display math, tabular, quote), never a bare body -- so an edit inside one becomes a
-	// single-block change the instant path can locate and splice. Lists keep per-item capture;
-	// document would swallow everything.
-	const BEGIN_ENV = /^\s*\\begin\{([a-zA-Z*]+)\}/;
-	const NON_BLOCK_ENVS = new Set(['document', 'itemize', 'enumerate', 'description']);
-	function splitParas(src: string): Para[] {
-		const out: Para[] = [];
-		const lines = src.split('\n');
-		let cur: string[] = [];
-		let start = 0;
-		let wrap = '';
-		let idx = 0;
-		const listStack: { env: string; n: number }[] = [];
-		const flush = () => {
-			if (cur.length) out.push({ text: cur.join('\n'), startLine: start + 1, wrap: wrap || undefined, idx });
-			cur = [];
-		};
-		for (let i = 0; i < lines.length; i++) {
-			const ln = lines[i];
-			const be = ln.match(BEGIN_ENV);
-			if (be && !NON_BLOCK_ENVS.has(be[1]) && !listStack.length) {
-				flush();
-				// nesting-aware: accumulate until the matching \end (blank lines included)
-				const s0 = i;
-				let depth = 0;
-				const blk: string[] = [];
-				for (; i < lines.length; i++) {
-					depth += (lines[i].match(/\\begin\{[a-zA-Z*]+\}/g) || []).length;
-					depth -= (lines[i].match(/\\end\{[a-zA-Z*]+\}/g) || []).length;
-					blk.push(lines[i]);
-					if (depth <= 0) break;
-				}
-				out.push({ text: blk.join('\n'), startLine: s0 + 1, env: be[1] });
-				continue;
-			}
-			const bl = ln.match(BEGIN_LIST),
-				el = ln.match(END_LIST),
-				im = ln.match(ITEM);
-			if (bl) {
-				flush();
-				listStack.push({ env: bl[1], n: 0 });
-				continue;
-			}
-			if (el) {
-				flush();
-				listStack.pop();
-				continue;
-			}
-			if (im) {
-				flush();
-				const top = listStack[listStack.length - 1];
-				if (top) top.n++;
-				if (im[1].trim()) {
-					start = i;
-					cur = [im[1]];
-					wrap = top ? top.env : '';
-					idx = top ? top.n : 0;
-				}
-				continue;
-			}
-			if (isBoundary(ln)) {
-				flush();
-				continue;
-			}
-			if (!cur.length) {
-				start = i;
-				wrap = '';
-				idx = 0;
-			}
-			cur.push(ln);
-		}
-		flush();
-		return out;
-	}
-	// wrap a captured \item body back in its list env for the daemon (correct width + label).
-	// For a numbered list, set the counter so the label shows the item's real number, not 1.
-	const wrapItem = (t: string, w?: string, idx?: number) => {
-		if (!w) return t;
-		const setc = w === 'enumerate' && idx && idx > 1 ? `\\setcounter{enumi}{${idx - 1}}` : '';
-		return `\\begin{${w}}${setc}\\item ${t}\\end{${w}}`;
-	};
-	// strip TeX comments: the daemon single-lines the block, so a trailing % would
-	// otherwise swallow the rest of the paragraph
-	const stripTexComments = (s: string) => s.replace(/([^\\]|^)%.*$/gm, '$1');
-	// While typing you pass through unbalanced states (\textbf{ before the }, $ before its
-	// close). An unclosed brace group has no paragraph terminator, so the daemon's typeset
-	// never finishes -- it blocks the full 6s timeout, then SIGKILLs and cold-respawns the
-	// engine. So only fire the instant patch once groups and inline math are balanced;
-	// while they aren't, keep the last preview and wait for the keystroke that closes them.
-	const daemonReady = (t: string): boolean => {
-		let depth = 0;
-		let dollars = 0;
-		for (let i = 0; i < t.length; i++) {
-			const c = t[i];
-			if (c === '\\')
-				i++; // skip the escaped char: \{ \} \$ \\ aren't grouping
-			else if (c === '{') depth++;
-			else if (c === '}') {
-				if (--depth < 0) return false;
-			} else if (c === '$') dollars++;
-		}
-		return depth === 0 && dollars % 2 === 0;
-	};
-	// Mid-typing repair: close still-open math/braces IN NESTING ORDER so the daemon can render
-	// the partial result instantly ($x + y -> $x + y$; \textbf{par -> \textbf{par}). The closers
-	// exist only in this transient render, never in the buffer. Null = not repairable (stray
-	// closers) -> hold the last preview.
-	function repairForPreview(t: string): string | null {
-		const stack: string[] = [];
-		for (let i = 0; i < t.length; i++) {
-			const c = t[i];
-			if (c === '\\') {
-				const n = t[i + 1];
-				if (n === '(') stack.push('\\)');
-				else if (n === '[') stack.push('\\]');
-				else if (n === ')') {
-					if (stack.pop() !== '\\)') return null;
-				} else if (n === ']') {
-					if (stack.pop() !== '\\]') return null;
-				}
-				i++;
-			} else if (c === '{') stack.push('}');
-			else if (c === '}') {
-				if (stack.pop() !== '}') return null;
-			} else if (c === '$') {
-				if (stack[stack.length - 1] === '$') stack.pop();
-				else stack.push('$');
-			}
-		}
-		return stack.length ? t + stack.reverse().join('') : t;
-	}
+	// the decision layer + paragraph splitter live in $lib/draft/dispatch, shared with
+	// the headless edit-class matrix (tests/live)
+	import { decideEdit } from '$lib/draft/dispatch';
+
 	const dev = (kind: string, detail?: unknown) => {
 		const w = window as unknown as { __draftEvents?: unknown[] };
-		(w.__draftEvents ||= []).push({ kind, detail });
+		(w.__draftEvents ||= []).push({ kind, detail, t: performance.now() });
 	};
 
 	async function fullRecompile(src: string) {
@@ -853,8 +727,10 @@
 		daemonRoot = root;
 	});
 
-	$effect(() => {
-		const src = texSource; // re-run on every edit
+	// one decision point per edit; also re-invoked when a compile settles so edits typed
+	// mid-compile don't wait for the next keystroke to show up
+	function runDraftDecision() {
+		const src = texSource;
 		const active = $settings.draftMode && pdfPaneOpen && !!loadedPath && !draftPaused;
 		if (draftEditTimer) {
 			clearTimeout(draftEditTimer);
@@ -866,193 +742,78 @@
 			draftEditTimer = setTimeout(() => fullRecompile(src), 400);
 			return;
 		}
-		const oldP = splitParas(lastDraftSrc);
-		const newP = splitParas(src);
-		let single = -1;
-		if (oldP.length === newP.length) {
-			const changed: number[] = [];
-			for (let i = 0; i < newP.length; i++) if (newP[i].text !== oldP[i].text) changed.push(i);
-			// whitespace/comment-only edit (pressing Enter makes a blank line, etc.): every
-			// paragraph is identical, so the render is identical -- no compile, no patch, just
-			// advance the baseline. Without this, every Enter cost a full recompile.
-			if (changed.length === 0) {
+		const d = decideEdit(lastDraftSrc, src);
+		const fr = get(workspaceRoot);
+		const file = fr && loadedPath ? relFromRoot(loadedPath, fr) : null;
+		const onRec = async () => {
+			await flushSaveAndWait();
+			lastDraftSrc = src;
+			lastDraftPath = loadedPath;
+		};
+		const debounceRecompile = () => {
+			draftEditTimer = setTimeout(() => fullRecompile(src), 500);
+		};
+		switch (d.kind) {
+			case 'noop':
+				// render-identical edit: no compile, no patch, just advance the baseline
 				lastDraftSrc = src;
 				lastDraftPath = loadedPath;
 				dev('ws-noop-whitespace', {});
 				return;
-			}
-			if (changed.length === 1) single = changed[0];
-		}
-		if (single < 0) {
-			// structural / multi-paragraph edit: heavier, so wait for a pause before recompiling
-			dev('ws-recompile', { reason: oldP.length !== newP.length ? 'para-count' : 'multi-para' });
-			// a structural edit has no patch to follow: register the first diverging paragraph so
-			// the preview jumps to (and highlights) it once the recompile lands
-			const fr = get(workspaceRoot);
-			let fi = 0;
-			{
-				const minLen = Math.min(oldP.length, newP.length);
-				while (fi < minLen && oldP[fi].text === newP[fi].text) fi++;
-			}
-			if (fr && loadedPath) {
-				const t = newP[Math.min(fi, newP.length - 1)];
-				if (t)
+			case 'boundary':
+				dev('ws-recompile', { reason: 'boundary-line' });
+				debounceRecompile();
+				return;
+			case 'skip-unbalanced':
+				// unrepairable mid-command state: hold the preview until the next keystroke
+				dev('ws-skip-unbalanced', { line: d.line });
+				return;
+			case 'env-body':
+				dev('ws-recompile', { reason: 'env-body:' + d.env });
+				debounceRecompile();
+				return;
+			case 'structural': {
+				// heavier change: wait for a pause before recompiling, then land the view on the
+				// first diverging block. Inserts/deletes that CAN render instantly arrived here
+				// as 'patch' (the merged engine typeset); there is no JS-placed splice fallback.
+				dev('ws-recompile', { reason: d.reason });
+				if (file && d.focus)
 					draftRef?.focusAfterCompile({
-						file: relFromRoot(loadedPath, fr),
-						line: t.startLine,
-						endLine: t.startLine + t.text.split('\n').length - 1,
-						text: wrapItem(stripTexComments(t.text), t.wrap, t.idx),
-						listItem: !!t.wrap || !!t.env
+						file,
+						line: d.focus.line,
+						endLine: d.focus.endLine,
+						text: d.focus.text,
+						listItem: d.focus.listItem
 					});
-			}
-			draftEditTimer = setTimeout(() => fullRecompile(src), 500);
-			// PURE single-paragraph insert/delete: splice provisionally instead of leaving the
-			// user staring at a stale preview until the pass lands. Best-effort -- on success the
-			// full-pass debounce is cancelled (the provisional path schedules its own reconcile);
-			// on failure the debounce above still runs.
-			const tailMatches = (o: Para[], nn: Para[], at: number, shift: number) => {
-				for (let j = at; j < o.length; j++) if (o[j].text !== nn[j + shift]?.text) return false;
-				return true;
-			};
-			const onRec = async () => {
-				await flushSaveAndWait();
-				lastDraftSrc = src;
-				lastDraftPath = loadedPath;
-			};
-			if (fr && loadedPath) {
-				const file = relFromRoot(loadedPath, fr);
-				if (newP.length === oldP.length + 1 && fi > 0 && tailMatches(oldP, newP, fi, 1)) {
-					const t = newP[fi];
-					if (!t.env && !t.wrap && daemonReady(stripTexComments(t.text)))
-						void (async () => {
-							// walk back up to 3 anchors: the immediate predecessor can be an odd
-							// fragment (e.g. a list tail) that no tier locates; any earlier
-							// locatable paragraph works because the insert lands below the
-							// contiguous flow, not directly below the anchor band
-							for (let k = fi - 1; k >= 0 && k >= fi - 3; k--) {
-								const a = oldP[k];
-								const ok = await draftRef?.provisionalInsert({
-									file,
-									afterLine: a.startLine,
-									afterEnd: a.startLine + a.text.split('\n').length - 1,
-									anchorOrig: wrapItem(stripTexComments(a.text), a.wrap, a.idx),
-									anchorListItem: !!a.wrap || !!a.env,
-									text: stripTexComments(t.text),
-									onRecompile: onRec
-								});
-								if (ok) {
-									if (draftEditTimer) {
-										clearTimeout(draftEditTimer);
-										draftEditTimer = null;
-									}
-									return;
-								}
-							}
-						})();
-				} else if (newP.length === oldP.length - 1 && tailMatches(newP, oldP, fi, 1)) {
-					const d = oldP[fi];
-					if (d && !d.env)
-						void draftRef
-							?.provisionalDelete({
-								file,
-								line: d.startLine,
-								endLine: d.startLine + d.text.split('\n').length - 1,
-								orig: wrapItem(stripTexComments(d.text), d.wrap, d.idx),
-								listItem: !!d.wrap || !!d.env,
-								onRecompile: onRec
-							})
-							.then((ok) => {
-								if (ok && draftEditTimer) {
-									clearTimeout(draftEditTimer);
-									draftEditTimer = null;
-								}
-							});
-				}
-			}
-			return;
-		}
-		const newText = stripTexComments(newP[single].text);
-		// Mid-command (unbalanced braces / open math): raw dispatch would hang the daemon (an
-		// open group swallows the paragraph terminator). Instead of holding the preview, REPAIR
-		// the transient text (auto-close the open math/groups) so partial math renders live
-		// while typing; the repaired edit is transient (may patch or hold, never compile).
-		let sendText = newText;
-		let transient = false;
-		if (!daemonReady(newText)) {
-			const rep = repairForPreview(newText);
-			if (rep === null || !daemonReady(rep)) {
-				dev('ws-skip-unbalanced', { line: oldP[single].startLine });
+				debounceRecompile();
 				return;
 			}
-			sendText = rep;
-			transient = true;
-			dev('ws-repaired', { line: oldP[single].startLine });
-		}
-		// A paragraph that is the BODY of a non-list environment (equation, tabular, align,
-		// quote...) is not a standalone typeset unit: the daemon error-recovers it into
-		// something with the same glyphs but the wrong layout (a table becomes plain text, a
-		// display equation becomes inline math), which could pass a content match and splice
-		// garbage. Lists are fine (wrapItem re-wraps them); everything else takes the full pass.
-		{
-			const baseLines = lastDraftSrc.split('\n');
-			let pl = oldP[single].startLine - 2; // line above the paragraph, 0-based
-			while (pl >= 0 && baseLines[pl].trim() === '') pl--;
-			// document is exempt: text after \begin{document} is ordinary prose, not an env body
-			const env = pl >= 0 ? baseLines[pl].match(/^\s*\\begin\{([a-zA-Z*]+)\}/) : null;
-			if (env && !['itemize', 'enumerate', 'description', 'document'].includes(env[1])) {
-				dev('ws-recompile', { reason: 'env-body:' + env[1] });
-				draftEditTimer = setTimeout(() => fullRecompile(src), 500);
+			case 'patch': {
+				// one block changed: patch IMMEDIATELY (no debounce -- instantPatch's in-flight
+				// guard coalesces bursts). The daemon typesets IN MEMORY; only an abandon needs
+				// the file on disk (onRecompile saves lazily then advances the baseline).
+				if (!file) return;
+				if (d.transient) dev('ws-repaired', { line: d.line });
+				dev('ws-dispatch', { file, line: d.line });
+				draftRef?.instantPatch({
+					file,
+					line: d.line,
+					endLine: d.endLine,
+					text: d.text,
+					orig: d.orig,
+					transient: d.transient,
+					floatInner: d.floatInner,
+					listItem: d.listItem,
+					cmdChanged: d.cmdChanged,
+					onRecompile: onRec
+				});
 				return;
 			}
 		}
-		const root = get(workspaceRoot);
-		if (!root || !loadedPath) return;
-		dev('ws-dispatch', { file: relFromRoot(loadedPath, root), line: oldP[single].startLine });
-		// One prose paragraph changed: patch IMMEDIATELY. The daemon typesets the text IN
-		// MEMORY (no save needed -- saving here would let a recompile beat the patch), and
-		// instantPatch's in-flight guard coalesces bursts, so the preview updates as you type.
-		// Only an abandon needs the file on disk -- onRecompile saves lazily then advances the
-		// baseline; a successful patch keeps the last full compile as the baseline so
-		// successive keystrokes keep measuring against real geometry.
-		const wrap = newP[single].wrap;
-		// A cell edit inside a FLOATED table can't typeset the whole float (the daemon discards
-		// float material), but the inner tabular alone typesets fine and the float's position is
-		// untouched by content edits: dispatch just the tabular when the change is confined to it.
-		// Caption/placement edits (outside the tabular) keep the whole-block dispatch, which
-		// cal-empties into the full pass.
-		let dispatchText = wrapItem(sendText, wrap, newP[single].idx);
-		let dispatchOrig = wrapItem(stripTexComments(oldP[single].text), oldP[single].wrap, oldP[single].idx);
-		let floatInner = false;
-		if (newP[single].env && /^(table|figure)\*?$/.test(newP[single].env)) {
-			const TAB = /\\begin\{(tabular\*?|tabularx|array)\}[\s\S]*?\\end\{\1\}/;
-			const oSub = dispatchOrig.match(TAB)?.[0] ?? null;
-			const nSub = dispatchText.match(TAB)?.[0] ?? null;
-			if (oSub && nSub && dispatchOrig.replace(oSub, ' ') === dispatchText.replace(nSub, ' ')) {
-				dispatchText = nSub;
-				dispatchOrig = oSub;
-				floatInner = true;
-			}
-		}
-		draftRef?.instantPatch({
-			file: relFromRoot(loadedPath, root),
-			line: oldP[single].startLine,
-			// last source line of the (baseline) paragraph. Its typeset line boxes are often tagged
-			// by synctex to the \par line (blank line / \end{document}), not line 1, so locate's
-			// inverse-mapping fallback needs the range to find the paragraph (esp. the last one).
-			endLine: oldP[single].startLine + oldP[single].text.split('\n').length - 1,
-			text: dispatchText,
-			orig: dispatchOrig,
-			transient,
-			floatInner,
-			// env blocks ride the listItem pathway: paraLeft = column left (their records carry
-			// their own centering/indent) and no \parindent calibration variant
-			listItem: !!wrap || !!newP[single].env,
-			onRecompile: async () => {
-				await flushSaveAndWait();
-				lastDraftSrc = src;
-				lastDraftPath = loadedPath;
-			}
-		});
+	}
+	// signal reads inside runDraftDecision are tracked through this synchronous call
+	$effect(() => {
+		runDraftDecision();
 	});
 	// Draft mode leans on the on-disk file staying current: the full compile reads from disk,
 	// and a successful instant patch is in-memory only (nothing is written until the next
@@ -1092,7 +853,10 @@
 				line: e.line!,
 				lineEnd: e.lineEnd,
 				severity: e.level === 'error' ? ('error' as const) : e.level === 'badbox' ? ('info' as const) : ('warning' as const),
-				message: e.hint ? `${e.message}\n\n${e.hint}` : e.message
+				message: e.hint ? `${e.message}\n\n${e.hint}` : e.message,
+				column: e.column,
+				anchorText: e.anchorText,
+				token: e.command
 			}));
 	});
 	// ref to the compile-pane PDF viewer, for SyncTeX forward search
@@ -1218,7 +982,7 @@
 
 	// show the terminal, wait for mount, then run (the shell queues the command until it has
 	// spawned). onDone fires when the shell reports the line finished (Terminal.run's sentinel echo).
-	function runInTerminal(cmd: string, onDone?: () => void, tries = 0) {
+	function runInTerminal(cmd: string, onDone?: (output: string) => void, tries = 0) {
 		const ref = activeRef();
 		if (ref) {
 			ref.run(cmd, onDone);
@@ -1297,9 +1061,15 @@
 		const track = get(settings).compileSentinel;
 		compiling = track;
 		const gen = ++compileGen;
+		compileStdout = '';
 		runInTerminal(
 			withBatchFlags(resolvedCompileCommand(cmd)),
-			track ? () => finalizeCompile(gen, pdfPath, before, logPath, logBefore) : undefined
+			track
+				? (output) => {
+						compileStdout = output ?? ''; // dvipdfmx/xdvipdfmx diagnostics only exist here
+						finalizeCompile(gen, pdfPath, before, logPath, logBefore);
+					}
+				: undefined
 		);
 		if (pdfPath) watchPdf(gen, pdfPath, before);
 		if (logPath) watchLog(gen, logPath, logBefore);
@@ -1400,12 +1170,28 @@
 	const pdfPathWarning = $derived(outputPathWarning(compileOutputsDraft.pdf, '.pdf'));
 	const logPathWarning = $derived(outputPathWarning(compileOutputsDraft.log, '.log'));
 
+	// dvipdfmx/xdvipdfmx write diagnostics to stdout, not the .log; captured per compile by the
+	// terminal's sentinel tracking and cleared at the start of each run
+	let compileStdout = '';
+
 	// read the .log plus the sibling .blg (it reflects the LAST bib run, which stays valid
 	// even on compiles where latexmk skips bibtex) and publish the parsed problems
 	async function publishLogDiagnostics(logPath: string, mtimeMs: number) {
 		const blgPath = logPath.replace(/\.log$/i, '.blg');
 		const blgText = (await statFile(blgPath)).exists ? await readTextFile(blgPath) : null;
-		const parsed = parseCompileDiagnostics(await readTextFile(logPath), blgText);
+		const parsed = await parseCompileDiagnosticsInWorker(await readTextFile(logPath), blgText, compileStdout || null);
+		// bib warnings name a key ("empty journal in Smith2020"); projectIntel knows every
+		// entry's exact line, so point the row at it (LW resolves these via its citation cache)
+		const bibEntries = get(projectIntelStore).bibEntries;
+		for (const e of parsed.entries) {
+			if (e.source !== 'bib' || e.line !== undefined) continue;
+			const key = e.message.match(/\bin ['"]?([\w:.-]+)['"]?$/) ?? e.message.match(/\bentry '([^']+)'/);
+			const hit = key ? bibEntries.find((b) => b.key === key[1]) : undefined;
+			if (hit) {
+				e.file = hit.file;
+				e.line = hit.line;
+			}
+		}
 		compileLog.set({ ...parsed, logPath, updatedAt: mtimeMs });
 		// a failed build produces no fresh PDF, so nothing else tells the user: surface the
 		// Problems list. clean/warning-only results never steal the dock.
@@ -1772,6 +1558,75 @@
 				}
 			} catch (e) {
 				console.error('Failed to update references in', h.path, e);
+			}
+		}
+	}
+
+	// remember the open file per folder so reopening the workspace restores it (StartView's
+	// initialFile); recorded on every switch, kept when the file later disappears (existence is
+	// checked at restore time)
+	$effect(() => {
+		const root = $workspaceRoot;
+		const path = $activeFilePath;
+		if (root && path) setLastFile(root, path);
+	});
+
+	// cross-file intel (labels/defs/glossary/outlines/aux numbers from the OTHER project files):
+	// rescan when the file list, main file, or active file changes — those are the only times the
+	// non-active files' on-disk state can have moved under us (a switch flushes the previous save)
+	$effect(() => {
+		const files = $texFiles;
+		const main = $mainFile;
+		const active = $activeFilePath;
+		const tree = $fileTree;
+		const root = $workspaceRoot;
+		const bibs = root
+			? flattenPaths(tree, root)
+					.filter((p) => /\.bib$/i.test(p))
+					.map((p) => joinPath(root, p))
+			: [];
+		// the .aux sits next to the log (output/aux dirs included); fall back to a main-sibling .aux
+		const aux = expectedLogPath()?.replace(/\.log$/i, '.aux') ?? (main ? main.replace(/\.tex$/i, '.aux') : null);
+		void refreshProjectIntel(files, bibs, aux, active ?? null);
+	});
+
+	// \includegraphics hover preview: candidate texfile:// URLs (current dir, root, and any
+	// \graphicspath dirs, adding raster extensions when the path has none); the tooltip's img
+	// advances past misses
+	setGraphicResolver((rel) => {
+		const root = get(workspaceRoot);
+		const base = loadedPath ? dirname(loadedPath) : null;
+		const cand = rel.replace(/\\/g, '/');
+		const names = /\.[a-z]+$/i.test(cand) ? [cand] : ['.png', '.jpg', '.jpeg', '.webp', '.gif'].map((e) => cand + e);
+		const dirs: (string | null)[] = [base, root];
+		const gp = texSource.match(/\\graphicspath\s*\{((?:\s*\{[^{}]*\}\s*)+)\}/);
+		if (gp) {
+			for (const d of gp[1].matchAll(/\{([^{}]*)\}/g)) {
+				if (!d[1]) continue;
+				for (const parent of [base, root]) if (parent) dirs.push(joinPath(parent, d[1]));
+			}
+		}
+		const urls: string[] = [];
+		for (const dir of dirs) if (dir) for (const n of names) urls.push(fileUrl(joinPath(dir, n)));
+		return [...new Set(urls)];
+	});
+	onDestroy(() => setGraphicResolver(null));
+
+	// F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added)
+	async function jumpToInclude(name: string) {
+		const root = get(workspaceRoot);
+		const base = loadedPath ? dirname(loadedPath) : null;
+		const cand = name.trim().replace(/\\/g, '/');
+		if (!cand) return;
+		const names = /\.[a-z]+$/i.test(cand) ? [cand] : [cand + '.tex'];
+		for (const dir of [base, root]) {
+			if (!dir) continue;
+			for (const n of names) {
+				const path = joinPath(dir, n);
+				if ((await statFile(path)).exists) {
+					activeFilePath.set(path);
+					return;
+				}
 			}
 		}
 	}
@@ -2666,7 +2521,7 @@
 								tabindex="0"
 							></div>
 							<div class="border-surface-200-800 min-h-0 overflow-y-auto border-t p-2" style="flex: {tocFraction} 1 0%">
-								<TableOfContents mode={viewMode === 'source' ? 'source' : 'visual'} />
+								<TableOfContents mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={openFileAtLine} />
 							</div>
 						{/if}
 					</div>
@@ -2930,6 +2785,8 @@
 										initialScrollPos={sourceScrollAnchor}
 										onHistoryBoundary={workspaceHistoryStep}
 										diagnostics={sourceDiagnostics}
+										onJumpToFile={jumpToInclude}
+										onOpenFileAt={openFileAtLine}
 									/>
 								{/key}
 							{:else if loadedPath && kind === 'tex' && visualDoc}
@@ -3017,6 +2874,7 @@
 									mainFile={draftMainRel}
 									trigger={draftTrigger}
 									onInverseSync={(file, line, selectText) => openFileAtLine(normPath(file), line, selectText)}
+									onSettled={runDraftDecision}
 								/>
 							{:else}
 								<PDFViewer bind:this={pdfPaneRef} filename={pdfFilename} onPageClick={onPdfDoubleClick} />

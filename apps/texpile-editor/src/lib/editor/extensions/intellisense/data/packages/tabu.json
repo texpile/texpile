@@ -1,0 +1,213 @@
+{
+  "deps": [
+    {
+      "name": "array"
+    },
+    {
+      "name": "varwidth"
+    },
+    {
+      "name": "delarray",
+      "if": "delarray"
+    },
+    {
+      "name": "linegoal",
+      "if": "linegoal"
+    }
+  ],
+  "macros": [
+    {
+      "name": "tabulinestyle",
+      "arg": {
+        "format": "{}",
+        "snippet": "tabulinestyle{${1:style}}"
+      }
+    },
+    {
+      "name": "usetabu",
+      "arg": {
+        "format": "{}",
+        "snippet": "usetabu{${1:username}}"
+      }
+    },
+    {
+      "name": "tabucline",
+      "arg": {
+        "format": "{}",
+        "snippet": "tabucline{${1:from-to}}"
+      }
+    },
+    {
+      "name": "tabucline",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "tabucline[${2:spec}]{${1:from-to}}"
+      }
+    },
+    {
+      "name": "savetabu",
+      "arg": {
+        "format": "{}",
+        "snippet": "savetabu{${1:username}}"
+      }
+    },
+    {
+      "name": "preamble",
+      "arg": {
+        "format": "{}",
+        "snippet": "preamble{${1:username}}"
+      }
+    },
+    {
+      "name": "tabuphantomline"
+    },
+    {
+      "name": "extrarowdepth"
+    },
+    {
+      "name": "abovetabulinesep"
+    },
+    {
+      "name": "belowtabulinesep"
+    },
+    {
+      "name": "tabustrutrule"
+    },
+    {
+      "name": "taburulecolor",
+      "arg": {
+        "format": "{}",
+        "snippet": "taburulecolor{${1:color}}"
+      }
+    },
+    {
+      "name": "taburulecolor",
+      "arg": {
+        "format": "||{}",
+        "snippet": "taburulecolor|${2:doubleRuleSepColor}|{${1:color}}"
+      }
+    },
+    {
+      "name": "tabureset"
+    },
+    {
+      "name": "newtabulinestyle",
+      "arg": {
+        "format": "{}",
+        "snippet": "newtabulinestyle{${1:style}}"
+      }
+    },
+    {
+      "name": "everyrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "everyrow{${1:code}}"
+      }
+    },
+    {
+      "name": "rowfont",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "rowfont[${2:alignment}]{${1:fontSpec}}"
+      }
+    },
+    {
+      "name": "tabudecimal",
+      "arg": {
+        "format": "{}",
+        "snippet": "tabudecimal{${1:code}}"
+      }
+    },
+    {
+      "name": "firstline",
+      "unusual": true
+    },
+    {
+      "name": "lastline",
+      "unusual": true
+    },
+    {
+      "name": "iftabuscantokens",
+      "unusual": true
+    },
+    {
+      "name": "tabuscantokenstrue",
+      "unusual": true
+    },
+    {
+      "name": "tabuscantokensfalse",
+      "unusual": true
+    },
+    {
+      "name": "tabucolumn",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "tabucolumn{${1:arg}}"
+      }
+    },
+    {
+      "name": "tabucolX",
+      "unusual": true
+    },
+    {
+      "name": "tabudefaulttarget",
+      "unusual": true
+    },
+    {
+      "name": "tabuDisableCommands",
+      "unusual": true
+    },
+    {
+      "name": "tabuendlongtrial",
+      "unusual": true
+    },
+    {
+      "name": "tabulineoff",
+      "unusual": true
+    },
+    {
+      "name": "tabulineon",
+      "unusual": true
+    },
+    {
+      "name": "tabuthepreamble",
+      "unusual": true
+    },
+    {
+      "name": "thetaburow",
+      "unusual": true
+    },
+    {
+      "name": "tracingtabu",
+      "unusual": true
+    }
+  ],
+  "envs": [
+    {
+      "name": "tabu",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:preamble}}"
+      }
+    },
+    {
+      "name": "longtabu",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:preamble}}"
+      }
+    }
+  ],
+  "keys": {
+    "\\usepackage/tabu#c": [
+      "delarray",
+      "linegoal",
+      "scantokens",
+      "debugshow"
+    ]
+  },
+  "args": [
+    "\\usepackage/tabu#c"
+  ]
+}

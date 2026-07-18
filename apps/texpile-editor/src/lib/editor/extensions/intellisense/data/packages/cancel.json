@@ -1,0 +1,51 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "cancel",
+      "arg": {
+        "format": "{}",
+        "snippet": "cancel{${1:expression}}"
+      }
+    },
+    {
+      "name": "bcancel",
+      "arg": {
+        "format": "{}",
+        "snippet": "bcancel{${1:expression}}"
+      }
+    },
+    {
+      "name": "xcancel",
+      "arg": {
+        "format": "{}",
+        "snippet": "xcancel{${1:expression}}"
+      }
+    },
+    {
+      "name": "cancelto",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "cancelto{${1:value}}{${2:expression}}"
+      }
+    },
+    {
+      "name": "CancelColor",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/cancel#c": [
+      "samesize",
+      "smaller",
+      "Smaller",
+      "makeroom",
+      "overlap",
+      "thicklines"
+    ]
+  },
+  "args": [
+    "\\usepackage/cancel#c"
+  ]
+}

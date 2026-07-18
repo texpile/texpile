@@ -1,2 +1,8 @@
 # vendored pdf.js modules keep upstream style (see the dir's README.md)
 apps/texpile-editor/src/lib/draft/type1/*.js
+
+# vendored LaTeX Workshop package data keeps upstream bytes (see data/VENDORED-LICENSES.md)
+apps/texpile-editor/src/lib/editor/extensions/intellisense/data/packages/*.json
+
+# engine reference sources, not ours to format
+scratch/

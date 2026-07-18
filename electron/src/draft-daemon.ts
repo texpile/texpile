@@ -1,7 +1,6 @@
-// Warm per-paragraph daemon for Draft mode's instant path. Keeps ONE lualatex alive with
-// the document's preamble loaded (keyed by preamble hash), and typesets a single block per
-// request in ~1-2ms of TeX time. This is the "no delay while typing" engine -- the full
-// per-page recompile (draft-service) reconciles the exact layout on a debounce.
+// Keeps ONE warm lualatex alive (the user's real preamble loaded, keyed by its hash) and
+// typesets single blocks on it over stdin/stdout -- nothing else. This is the "no delay
+// while typing" engine; the full recompile (draft-service) reconciles on a debounce.
 import { spawn, type ChildProcess } from 'node:child_process';
 import readline from 'node:readline';
 import * as fs from 'node:fs';
@@ -105,26 +104,40 @@ function spawnDaemon(root: string, engineDir: string, preamble: string): Promise
 		glyphs: []
 	};
 	state.rl = readline.createInterface({ input: child.stdout! });
+	// frame markers carry the app prefix (TeX log chatter can contain bare @@, e.g. \@@par
+	// in error contexts); per-record lines keep the short @@G -- thousands stream per
+	// request, and they're only read between R and GEND
+	const MARK = 'texpile-warm@@';
 	state.rl.on('line', (raw) => {
-		const i = raw.indexOf('@@');
-		if (i < 0) return;
-		const l = raw.slice(i);
-		if (l.startsWith('@@READY')) {
-			const m = raw.match(/@@READY\s+([\d.]+)(?:\s+([\d.]+))?/);
-			state.hsize = m ? parseFloat(m[1]) : 345;
-			state.textheight = m && m[2] ? parseFloat(m[2]) : 550;
-			state.onReady?.();
-		} else if (l.startsWith('@@R ')) {
-			try {
-				state.onResult?.(JSON.parse(l.slice(4)));
-			} catch {
-				/* skip */
+		const i = raw.indexOf(MARK);
+		if (i >= 0) {
+			const l = raw.slice(i + MARK.length);
+			if (l.startsWith('READY')) {
+				// both dimensions are engine registers; a READY without them is a failed
+				// warm-up, never a guessed page size
+				const m = l.match(/^READY\s+([\d.]+)\s+([\d.]+)/);
+				if (!m) {
+					state.child.kill('SIGKILL');
+					return;
+				}
+				state.hsize = parseFloat(m[1]);
+				state.textheight = parseFloat(m[2]);
+				state.onReady?.();
+			} else if (l.startsWith('R ')) {
+				try {
+					state.onResult?.(JSON.parse(l.slice(2)));
+				} catch {
+					/* skip */
+				}
+			} else if (l.startsWith('GEND')) {
+				state.onGlyphsDone?.();
 			}
-		} else if (l.startsWith('@@GEND')) {
-			state.onGlyphsDone?.();
-		} else if (l.startsWith('@@G ')) {
+			return;
+		}
+		const g = raw.indexOf('@@G ');
+		if (g >= 0) {
 			try {
-				state.glyphs.push(JSON.parse(l.slice(4)));
+				state.glyphs.push(JSON.parse(raw.slice(g + 4)));
 			} catch {
 				/* skip */
 			}
@@ -186,8 +199,12 @@ function typesetOn(state: Daemon, text: string, hsize: number): Promise<{ record
 			clearTimeout(timer);
 			resolve({ records: state.glyphs, stats });
 		};
-		// single-line the block so protocol sentinels stay unambiguous (TeX treats newline as space)
-		state.child.stdin!.write(`HSIZE ${hsize}\nGLYPHS\nTEXT\n${text.replace(/[\r\n]+/g, ' ')}\nEND\n`);
+		// LINE-FAITHFUL payload: normalize only the line-ending byte form (\r\n -> \n) and
+		// ship every line as-is -- the ENGINE's catcodes decide what newlines, blank lines,
+		// and % comments mean. Framing = line count + byte count of the joined payload.
+		const payload = text.replace(/\r\n?/g, '\n');
+		const nLines = payload.split('\n').length;
+		state.child.stdin!.write(`HSIZE ${hsize}\nGLYPHS\nTEXT ${nLines} ${Buffer.byteLength(payload, 'utf8')}\n${payload}\nEND\n`);
 	});
 }
 
@@ -214,7 +231,8 @@ export async function typesetParagraph(body: {
 			const hsize = body.hsize && body.hsize > 0 ? body.hsize : state.hsize;
 			const r = await typesetOn(state, body.text, hsize);
 			if (r.timedOut) return { ok: false, error: 'paragraph typeset timed out (daemon reset)' };
-			for (const rec of r.records) if ((rec as any).t === 'font') resolveType1(rec); // Type1: attach { pfb, enc }
+			// Type1: attach { pfb, enc }; async -- kpsewhich spawns must not block the main process
+			await Promise.all(r.records.filter((rec) => (rec as any).t === 'font').map((rec) => resolveType1(rec)));
 			return { ok: true, records: r.records, stats: r.stats, hsize, textheight: state.textheight };
 		} catch (e) {
 			return { ok: false, error: e instanceof Error ? e.message : String(e) };

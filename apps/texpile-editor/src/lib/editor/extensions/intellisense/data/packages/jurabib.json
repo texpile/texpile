@@ -1,0 +1,1086 @@
+{
+  "deps": [
+    {
+      "name": "ifthen"
+    },
+    {
+      "name": "calc"
+    },
+    {
+      "name": "keyval"
+    },
+    {
+      "name": "url"
+    },
+    {
+      "name": "array"
+    }
+  ],
+  "macros": [
+    {
+      "name": "jurabibsetup",
+      "arg": {
+        "format": "{}",
+        "snippet": "jurabibsetup{${1:options%keyvals}}",
+        "keys": [
+          "\\jurabibsetup#c,\\usepackage/jurabib#c"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "cite",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "cite[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "cite*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "cite*[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "cite*",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "cite*[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "citefield",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "citefield[${3:page-range}]{${1:field}}{${2:bibid}}"
+      }
+    },
+    {
+      "name": "citenotitlefortype",
+      "arg": {
+        "format": "{}",
+        "snippet": "citenotitlefortype{${1:article,book,…}}"
+      }
+    },
+    {
+      "name": "citeswithoutentry",
+      "arg": {
+        "format": "{}",
+        "snippet": "citeswithoutentry{${1:bibid1,bibid2,…}}"
+      }
+    },
+    {
+      "name": "citetitle",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "citetitle[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "citetitle",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "citetitle[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "citetitlefortype",
+      "arg": {
+        "format": "{}",
+        "snippet": "citetitlefortype{${1:article,book,…}}"
+      }
+    },
+    {
+      "name": "footcite",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footcite[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footcite",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "footcite[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footcite*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footcite*[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footcite*",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "footcite*[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footcitetitle",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footcitetitle[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footcitetitle",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "footcitetitle[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footfullcite",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footfullcite[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "footfullcite",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "footfullcite[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "fullcite",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "fullcite[${2:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "fullcite",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "fullcite[${2:Annotator/See}][${3:page-range}]{${1:bibid}}"
+      }
+    },
+    {
+      "name": "nextcitefull",
+      "arg": {
+        "format": "{}",
+        "snippet": "nextcitefull{${1:bibid1,bibid2,…}}"
+      }
+    },
+    {
+      "name": "nextcitenotitle",
+      "arg": {
+        "format": "{}",
+        "snippet": "nextcitenotitle{${1:bibid1,bibid2,…}}"
+      }
+    },
+    {
+      "name": "nextcitereset",
+      "arg": {
+        "format": "{}",
+        "snippet": "nextcitereset{${1:bibid1,bibid2,…}}"
+      }
+    },
+    {
+      "name": "nextciteshort",
+      "arg": {
+        "format": "{}",
+        "snippet": "nextciteshort{${1:bibid1,bibid2,…}}"
+      }
+    },
+    {
+      "name": "nobibliography",
+      "arg": {
+        "format": "{}",
+        "snippet": "nobibliography{${1:bib file}}"
+      }
+    },
+    {
+      "name": "noibidem"
+    },
+    {
+      "name": "noidem"
+    },
+    {
+      "name": "bibAnnotePath",
+      "arg": {
+        "format": "{}",
+        "snippet": "bibAnnotePath{${1:file-path%file}}"
+      }
+    },
+    {
+      "name": "biburlfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "biburlfont{${1:choice%keyvals}}",
+        "keys": [
+          "\\biburlfont"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "nopage",
+      "arg": {
+        "format": "{}",
+        "snippet": "nopage{${1:text}}"
+      }
+    },
+    {
+      "name": "pageadd",
+      "arg": {
+        "format": "{}",
+        "snippet": "pageadd{${1:text}}"
+      }
+    },
+    {
+      "name": "formatpages",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "formatpages{${1:article,book,…}}{${2:left-delim}}{${3:right-delim}}"
+      }
+    },
+    {
+      "name": "formatpages",
+      "arg": {
+        "format": "[]{}{}{}",
+        "snippet": "formatpages[${4:after-separator}]{${1:article,book,…}}{${2:left-delim}}{${3:right-delim}}"
+      }
+    },
+    {
+      "name": "formatpages",
+      "arg": {
+        "format": "[][]{}{}{}",
+        "snippet": "formatpages[${4:after-separator}][${5:before-separator}]{${1:article,book,…}}{${2:left-delim}}{${3:right-delim}}"
+      }
+    },
+    {
+      "name": "citealp",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "citealp[${2:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citealp",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "citealp{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citealt",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "citealt{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citeauthor",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "citeauthor{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citep",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "citep[${2:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citep",
+      "unusual": true,
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "citep[${2:prefix}][${3:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citep",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "citep{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citet",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "citet[${2:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citet",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "citet{${1:keylist}}"
+      }
+    },
+    {
+      "name": "citeyearpar",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "citeyearpar{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitealp",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footcitealp[${2:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitealp",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "footcitealp{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitealt",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "footcitealt{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footciteauthor",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "footciteauthor{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitep",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footcitep[${2:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitep",
+      "unusual": true,
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "footcitep[${2:prefix}][${3:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitep",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "footcitep{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitet",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footcitet[${2:postfix}]{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footcitet",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "footcitet{${1:keylist}}"
+      }
+    },
+    {
+      "name": "footciteyear",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "footciteyear{${1:keylist}}"
+      }
+    },
+    {
+      "name": "AddTo",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "AddTo{${1:cmd}}{${2:code}}"
+      }
+    },
+    {
+      "name": "bibansep",
+      "unusual": true
+    },
+    {
+      "name": "bibartperiodhowcited",
+      "unusual": true
+    },
+    {
+      "name": "bibatsep",
+      "unusual": true
+    },
+    {
+      "name": "bibauthormultiple",
+      "unusual": true
+    },
+    {
+      "name": "bibbdsep",
+      "unusual": true
+    },
+    {
+      "name": "bibbfsasep",
+      "unusual": true
+    },
+    {
+      "name": "bibbfsesep",
+      "unusual": true
+    },
+    {
+      "name": "bibbstasep",
+      "unusual": true
+    },
+    {
+      "name": "bibbstesep",
+      "unusual": true
+    },
+    {
+      "name": "bibbtasep",
+      "unusual": true
+    },
+    {
+      "name": "bibbtesep",
+      "unusual": true
+    },
+    {
+      "name": "bibbtsep",
+      "unusual": true
+    },
+    {
+      "name": "bibbudcsep",
+      "unusual": true
+    },
+    {
+      "name": "bibcommenthowcited",
+      "unusual": true
+    },
+    {
+      "name": "bibhowcited",
+      "unusual": true
+    },
+    {
+      "name": "bibidemPfname",
+      "unusual": true
+    },
+    {
+      "name": "bibidempfname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemPmname",
+      "unusual": true
+    },
+    {
+      "name": "bibidempmname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemPnname",
+      "unusual": true
+    },
+    {
+      "name": "bibidempnname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemSfname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemsfname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemSmname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemsmname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemSnname",
+      "unusual": true
+    },
+    {
+      "name": "bibidemsnname",
+      "unusual": true
+    },
+    {
+      "name": "bibjtsep",
+      "unusual": true
+    },
+    {
+      "name": "bibleftcolumn",
+      "unusual": true
+    },
+    {
+      "name": "bibleftcolumnadjust",
+      "unusual": true
+    },
+    {
+      "name": "bibnotcited",
+      "unusual": true
+    },
+    {
+      "name": "bibnumberformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "bibnumberformat{${1:text}}"
+      }
+    },
+    {
+      "name": "bibpagename",
+      "unusual": true
+    },
+    {
+      "name": "bibpagesname",
+      "unusual": true
+    },
+    {
+      "name": "bibrightcolumn",
+      "unusual": true
+    },
+    {
+      "name": "bibrightcolumnadjust",
+      "unusual": true
+    },
+    {
+      "name": "bibsaustrian",
+      "unusual": true
+    },
+    {
+      "name": "bibsdanish",
+      "unusual": true
+    },
+    {
+      "name": "bibsdutch",
+      "unusual": true
+    },
+    {
+      "name": "bibsenglish",
+      "unusual": true
+    },
+    {
+      "name": "bibsfinnish",
+      "unusual": true
+    },
+    {
+      "name": "bibsfrench",
+      "unusual": true
+    },
+    {
+      "name": "bibsgerman",
+      "unusual": true
+    },
+    {
+      "name": "bibsitalian",
+      "unusual": true
+    },
+    {
+      "name": "bibsnfont",
+      "unusual": true
+    },
+    {
+      "name": "bibsnorsk",
+      "unusual": true
+    },
+    {
+      "name": "bibsportuguese",
+      "unusual": true
+    },
+    {
+      "name": "bibsspanish",
+      "unusual": true
+    },
+    {
+      "name": "bibsswedish",
+      "unusual": true
+    },
+    {
+      "name": "biburlprefix",
+      "unusual": true
+    },
+    {
+      "name": "biburlsuffix",
+      "unusual": true
+    },
+    {
+      "name": "diffpageibidemmidname",
+      "unusual": true
+    },
+    {
+      "name": "diffpageibidemname",
+      "unusual": true
+    },
+    {
+      "name": "Edbyname",
+      "unusual": true
+    },
+    {
+      "name": "edbyname",
+      "unusual": true
+    },
+    {
+      "name": "editionname",
+      "unusual": true
+    },
+    {
+      "name": "editorname",
+      "unusual": true
+    },
+    {
+      "name": "editorsname",
+      "unusual": true
+    },
+    {
+      "name": "fifthedname",
+      "unusual": true
+    },
+    {
+      "name": "firstedname",
+      "unusual": true
+    },
+    {
+      "name": "fourthedname",
+      "unusual": true
+    },
+    {
+      "name": "herename",
+      "unusual": true
+    },
+    {
+      "name": "ibidemmidname",
+      "unusual": true
+    },
+    {
+      "name": "ibidemname",
+      "unusual": true
+    },
+    {
+      "name": "idemmidname",
+      "unusual": true
+    },
+    {
+      "name": "idemname",
+      "unusual": true
+    },
+    {
+      "name": "idemPfname",
+      "unusual": true
+    },
+    {
+      "name": "idempfname",
+      "unusual": true
+    },
+    {
+      "name": "idemPmname",
+      "unusual": true
+    },
+    {
+      "name": "idempmname",
+      "unusual": true
+    },
+    {
+      "name": "idemPnname",
+      "unusual": true
+    },
+    {
+      "name": "idempnname",
+      "unusual": true
+    },
+    {
+      "name": "idemSfname",
+      "unusual": true
+    },
+    {
+      "name": "idemsfname",
+      "unusual": true
+    },
+    {
+      "name": "idemSmname",
+      "unusual": true
+    },
+    {
+      "name": "idemsmname",
+      "unusual": true
+    },
+    {
+      "name": "idemSnname",
+      "unusual": true
+    },
+    {
+      "name": "idemsnname",
+      "unusual": true
+    },
+    {
+      "name": "inname",
+      "unusual": true
+    },
+    {
+      "name": "jbactualauthorfnfont",
+      "unusual": true
+    },
+    {
+      "name": "jbactualauthorfont",
+      "unusual": true
+    },
+    {
+      "name": "jbaensep",
+      "unusual": true
+    },
+    {
+      "name": "jbannotatorfont",
+      "unusual": true
+    },
+    {
+      "name": "jbannoteformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jbannoteformat{${1:text}}"
+      }
+    },
+    {
+      "name": "jbapifont",
+      "unusual": true
+    },
+    {
+      "name": "jbatsep",
+      "unusual": true
+    },
+    {
+      "name": "jbauthorfnfont",
+      "unusual": true
+    },
+    {
+      "name": "jbauthorfont",
+      "unusual": true
+    },
+    {
+      "name": "jbauthorfontifannotato",
+      "unusual": true
+    },
+    {
+      "name": "jbauthorfontifannotator",
+      "unusual": true
+    },
+    {
+      "name": "jbauthorindexfont",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jbauthorindexfont{${1:text}}"
+      }
+    },
+    {
+      "name": "jbbfsasep",
+      "unusual": true
+    },
+    {
+      "name": "jbbfsesep",
+      "unusual": true
+    },
+    {
+      "name": "jbbibhang",
+      "unusual": true
+    },
+    {
+      "name": "jbbibyearformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jbbibyearformat{${1:arg}}"
+      }
+    },
+    {
+      "name": "jbbstasep",
+      "unusual": true
+    },
+    {
+      "name": "jbbstesep",
+      "unusual": true
+    },
+    {
+      "name": "jbbtasep",
+      "unusual": true
+    },
+    {
+      "name": "jbbtesep",
+      "unusual": true
+    },
+    {
+      "name": "jbbtitlefont",
+      "unusual": true
+    },
+    {
+      "name": "jbcitationoyearformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jbcitationoyearformat{${1:arg}}"
+      }
+    },
+    {
+      "name": "jbcitationyearformat",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jbcitationyearformat{${1:arg}}"
+      }
+    },
+    {
+      "name": "jbdisablecitationcrossref",
+      "unusual": true
+    },
+    {
+      "name": "jbdonotindexauthors",
+      "unusual": true
+    },
+    {
+      "name": "jbdonotindexeditors",
+      "unusual": true
+    },
+    {
+      "name": "jbdonotindexorganizations",
+      "unusual": true
+    },
+    {
+      "name": "jbeditorindexfont",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jbeditorindexfont{${1:text}}"
+      }
+    },
+    {
+      "name": "jbedseplikecite",
+      "unusual": true
+    },
+    {
+      "name": "jbfirstcitepageranges",
+      "unusual": true
+    },
+    {
+      "name": "jbfulltitlefont",
+      "unusual": true
+    },
+    {
+      "name": "jbhowsepbeforetitle",
+      "unusual": true
+    },
+    {
+      "name": "jbignorevarioref",
+      "unusual": true
+    },
+    {
+      "name": "jbindexbib",
+      "unusual": true
+    },
+    {
+      "name": "jbindexonlyfirstauthors",
+      "unusual": true
+    },
+    {
+      "name": "jbindexonlyfirsteditors",
+      "unusual": true
+    },
+    {
+      "name": "jbindexonlyfirstorganizations",
+      "unusual": true
+    },
+    {
+      "name": "jbindextype",
+      "unusual": true
+    },
+    {
+      "name": "jblangle",
+      "unusual": true
+    },
+    {
+      "name": "jbmakeindexactual",
+      "unusual": true
+    },
+    {
+      "name": "jbnoformatafterstartpagefalse",
+      "unusual": true
+    },
+    {
+      "name": "jbnoformatafterstartpagetrue",
+      "unusual": true
+    },
+    {
+      "name": "jborganizationindexfont",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "jborganizationindexfont{${1:text}}"
+      }
+    },
+    {
+      "name": "jborgauthorfont",
+      "unusual": true
+    },
+    {
+      "name": "jboyearincitation",
+      "unusual": true
+    },
+    {
+      "name": "jbpagename",
+      "unusual": true
+    },
+    {
+      "name": "jbpagesname",
+      "unusual": true
+    },
+    {
+      "name": "jbrangle",
+      "unusual": true
+    },
+    {
+      "name": "jbshorttitlefont",
+      "unusual": true
+    },
+    {
+      "name": "jbsuperscripteditionafterauthor",
+      "unusual": true
+    },
+    {
+      "name": "jbtitlefont",
+      "unusual": true
+    },
+    {
+      "name": "jbyearaftertitle",
+      "unusual": true
+    },
+    {
+      "name": "lookatprefix",
+      "unusual": true
+    },
+    {
+      "name": "lookatsuffix",
+      "unusual": true
+    },
+    {
+      "name": "opcit",
+      "unusual": true
+    },
+    {
+      "name": "samepageibidemmidname",
+      "unusual": true
+    },
+    {
+      "name": "samepageibidemname",
+      "unusual": true
+    },
+    {
+      "name": "secondedname",
+      "unusual": true
+    },
+    {
+      "name": "SSS",
+      "unusual": true
+    },
+    {
+      "name": "thedname",
+      "unusual": true
+    },
+    {
+      "name": "thirdedname",
+      "unusual": true
+    },
+    {
+      "name": "updatename",
+      "unusual": true
+    },
+    {
+      "name": "updatesep",
+      "unusual": true
+    },
+    {
+      "name": "urldatecomment",
+      "unusual": true
+    },
+    {
+      "name": "volumename",
+      "unusual": true
+    },
+    {
+      "name": "Volumename",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\jurabibsetup#c,\\usepackage/jurabib#c": [
+      "authorformat=${1|smallcaps,italic,dynamic,citationreversed,allreversed,firstnotreversed,reducedifibidem,and,year,indexed,abbrv|}",
+      "annotatorformat=${1|italic,normal|}",
+      "round",
+      "square",
+      "superscriptedition=${1|all,commented,switch,kerning,bib,address,year,multiple|}",
+      "biblikecite",
+      "edby",
+      "endnote",
+      "titleformat=${1|italic,all,colonsep,commasep,noreplace|}",
+      "annotatorlastsep=${1|divis|}",
+      "annotatorfirstsep=${1|in,comma|}",
+      "ibidem",
+      "ibidem=${1|strict,nostrict,strictdoublepage,name,name&title,name&title&auto|}",
+      "commabeforerest",
+      "silent",
+      "bibformat=${1|nohang,tabular,numbered,ibidem,ibidemalt,compress,raggedright|}",
+      "lookforgender",
+      "annote",
+      "super",
+      "config=${1:file}",
+      "dotafter=${1|bibentry,endnote|}",
+      "howcited=${1|normal,multiple,compare,all|}",
+      "pages=${1|format,test,always|}",
+      "hypercite",
+      "citefull=${1|first,chapter,section,all|}",
+      "see",
+      "natoptargorder",
+      "crossref=${1|dynamic,normal,short,long|}",
+      "lookat",
+      "idem",
+      "idem=${1|strict,nostrict,strictdoublepage,halfstrict|}",
+      "opcit",
+      "citetoend"
+    ],
+    "\\biburlfont": [
+      "tt",
+      "rm",
+      "sf",
+      "same"
+    ]
+  },
+  "args": [
+    "\\jurabibsetup#c,\\usepackage/jurabib#c"
+  ]
+}

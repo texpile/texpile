@@ -1,0 +1,11 @@
+{
+  "deps": [],
+  "macros": [],
+  "envs": [
+    {
+      "name": "semiverbatim"
+    }
+  ],
+  "keys": {},
+  "args": []
+}

@@ -8,6 +8,8 @@ interface EnrichmentRule {
 	hint?: string | ((entry: LogEntry, m: RegExpMatchArray) => string | undefined);
 	/** pulls the offending \command out of the error context. */
 	command?: (entry: LogEntry) => string | undefined;
+	/** text (a label/cite key) the editor can search for on the line, for a precise range. */
+	anchor?: (m: RegExpMatchArray) => string | undefined;
 	/** suppress when an earlier entry already matched one of these rule ids (cascade noise). */
 	cascadesFrom?: string[];
 }
@@ -241,8 +243,17 @@ const RULES: EnrichmentRule[] = [
 	},
 	{
 		id: 'unicode-char',
-		match: /^LaTeX Error: Unicode character|^Package inputenc Error: (Unicode character|Invalid UTF-8|Keyboard character)/,
-		hint: 'The source contains a character the engine cannot typeset directly (often pasted from a PDF: curly quotes, math glyphs, invisible spaces). Replace it with the LaTeX command for that symbol, or compile with LuaLaTeX/XeLaTeX.'
+		match:
+			/^LaTeX Error: (?:Unicode character|Invalid UTF-8 byte)|^Package inputenc Error: (Unicode character|Invalid UTF-8|Keyboard character)/,
+		hint: 'The source contains a character the engine cannot typeset directly (often pasted from a PDF: curly quotes, math glyphs, invisible spaces, or a non-UTF-8 file). Replace it with the LaTeX command for that symbol, re-save the file as UTF-8, or compile with LuaLaTeX/XeLaTeX.'
+	},
+	{
+		id: 'graphics-file-not-found',
+		match: /^Package pdftex\.def Error: File `([^']+)' not found/,
+		hint: (_e, m) =>
+			m[1].endsWith('-eps-converted-to.pdf')
+				? `The EPS figure could not be auto-converted to PDF (epstopdf needs shell escape, and compiles here run without it). Convert the .eps to .pdf yourself and reference that, or pre-run epstopdf.`
+				: `The image "${m[1]}" could not be found. Check the path and the extension.`
 	},
 	{
 		id: 'dimension-too-large',
@@ -257,12 +268,14 @@ const RULES: EnrichmentRule[] = [
 	{
 		id: 'undefined-reference',
 		match: /^LaTeX Warning: Reference `([^']+)' on page \d+ undefined/,
+		anchor: (m) => m[1],
 		hint: (_e, m) =>
 			`\\ref{${m[1]}} has no matching \\label{${m[1]}}. Add the label, fix the name, or recompile once more if you just added it.`
 	},
 	{
 		id: 'undefined-citation',
 		match: /^(?:LaTeX|Package natbib|Package biblatex) Warning: Citation [`']([^']+)'? .*undefined/,
+		anchor: (m) => m[1],
 		hint: (_e, m) =>
 			`The key "${m[1]}" is not in the bibliography. Check the key, the .bib file, and that the bibliography tool (bibtex/biber) has run.`
 	},
@@ -274,6 +287,7 @@ const RULES: EnrichmentRule[] = [
 	{
 		id: 'multiply-defined-label',
 		match: /^LaTeX Warning: Label `([^']+)' multiply defined/,
+		anchor: (m) => m[1],
 		hint: (_e, m) => `Two \\label{${m[1]}} exist. Every label must be unique.`
 	},
 	{
@@ -350,6 +364,7 @@ export function enrichLogEntries(entries: LogEntry[]): LogEntry[] {
 			if (typeof rule.hint === 'function') entry.hint = rule.hint(entry, m);
 			else if (rule.hint) entry.hint = rule.hint;
 			if (rule.command) entry.command = rule.command(entry);
+			if (rule.anchor && entry.anchorText === undefined) entry.anchorText = rule.anchor(m);
 			if (entry.hint) {
 				const pkg = entry.hint.match(/\\usepackage\{([\w-]+)\}/);
 				if (pkg) entry.suggestedPackage = pkg[1];

@@ -10,9 +10,17 @@
 	// dark wordmark for light backgrounds, white one for dark mode
 	import logoOnLight from '$lib/assets/logo/Logo-dark.svg';
 	import logoOnDark from '$lib/assets/logo/Logo-light.svg';
-	import { pickFolder, scanTexFiles, writeTextFile, joinPath, basename } from '$lib/workspace/fileSystem';
+	import { pickFolder, scanTexFiles, statFile, writeTextFile, joinPath, basename, type TexFile } from '$lib/workspace/fileSystem';
 	import { createStarterLatex } from '$lib/workspace/latexRoundtrip';
-	import { workspaceRoot, texFiles, recentFolders, addRecentFolder, activeFilePath, setMainFile } from '$lib/workspace/workspaceStore';
+	import {
+		workspaceRoot,
+		texFiles,
+		recentFolders,
+		addRecentFolder,
+		activeFilePath,
+		setMainFile,
+		savedLastFile
+	} from '$lib/workspace/workspaceStore';
 	import { getSettings, updateSettings } from '$lib/settings';
 	import StarterPicker from '$lib/editor/comp/StarterPicker.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
@@ -31,6 +39,13 @@
 		addRecentFolder(root);
 		updateSettings({ lastFolder: root });
 		navigate('/workspace');
+	}
+
+	// the file to open with a folder: the one last open there (if it still exists), else the first
+	async function initialFile(root: string, files: TexFile[]): Promise<string | null> {
+		const saved = savedLastFile(root);
+		if (saved && (await statFile(saved)).exists) return saved;
+		return files[0]?.path ?? null;
 	}
 
 	async function applyTemplate(s: Starter) {
@@ -103,7 +118,7 @@
 			const { files } = await scanTexFiles(root);
 			workspaceRoot.set(root);
 			texFiles.set(files);
-			activeFilePath.set(files[0]?.path ?? null);
+			activeFilePath.set(await initialFile(root, files));
 			addRecentFolder(root);
 			updateSettings({ lastFolder: root });
 			navigate('/workspace');
@@ -129,7 +144,7 @@
 			}
 			workspaceRoot.set(root);
 			texFiles.set(files);
-			activeFilePath.set(files[0]?.path ?? null);
+			activeFilePath.set(await initialFile(root, files));
 			addRecentFolder(root);
 			updateSettings({ lastFolder: root });
 			navigate('/workspace');
@@ -151,7 +166,7 @@
 			const { files } = await scanTexFiles(s.lastFolder);
 			workspaceRoot.set(s.lastFolder);
 			texFiles.set(files);
-			activeFilePath.set(files[0]?.path ?? null);
+			activeFilePath.set(await initialFile(s.lastFolder, files));
 			addRecentFolder(s.lastFolder);
 			navigate('/workspace');
 		} catch {

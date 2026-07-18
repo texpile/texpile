@@ -79,13 +79,15 @@
 								<span class="text-surface-500-400 block truncate" title={e.hint}>{e.hint}</span>
 							{/if}
 						</span>
-						{#if e.source === 'bib'}
-							<span class="badge preset-tonal-surface shrink-0 px-1 py-0 text-[10px]">bib</span>
+						{#if e.source}
+							<span class="badge preset-tonal-surface shrink-0 px-1 py-0 text-[10px]">{e.source}</span>
 						{/if}
 						{#if e.file}
 							<span class="text-surface-500-400 shrink-0 font-mono">
 								{shortPath(e)}{e.line ? `:${e.line}` : ''}
 							</span>
+						{:else if e.page}
+							<span class="text-surface-500-400 shrink-0 font-mono">p.{e.page}</span>
 						{/if}
 					</button>
 				{/each}

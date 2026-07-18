@@ -1,0 +1,77 @@
+\documentclass[11pt]{article}
+
+\usepackage{csquotes}
+\usepackage[hidelinks]{hyperref}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{colonequals}
+\usepackage{amsopn}
+\usepackage[version=4]{mhchem}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{natbib}
+
+\title{Welcome to Texpile}
+\author{A live tutorial project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{What is Texpile}
+
+Texpile is both a visual and a non-visual, fully offline LaTeX editor. This document covers the
+basics to get you started.
+
+\section{Switching between visual and non-visual}
+
+In the top right corner you can see a toggle between the visual and non-visual (Source) editor:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{images/visual-source-toggle.png}
+\end{figure}
+
+The visual editor parses your current LaTeX code and renders it live. In most cases the visual
+editor will feel perfect, but if your document is complicated, sometimes it'll leave raw LaTeX
+floating around inline instead of rendering it.
+
+\section{Compiling and formatting}
+
+Compiling turns this source into a PDF using your own LaTeX distribution. Texpile does not bundle
+any LaTeX distribution.
+
+Before compiling a multi-file project, right-click its main .tex file in the file tree on the left
+and choose \textbf{Set as main file}. Once set, you'll see a star next to it:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{images/main-file-star.png}
+\end{figure}
+
+\input{basics}
+
+\input{math-and-figures}
+
+\section{Further reading}
+
+Texpile is open source; please report issues at
+\href{https://github.com/texpile/texpile}{github.com/texpile/texpile}.
+
+\bibliography{references}
+\bibliographystyle{plainnat}
+
+\end{document}

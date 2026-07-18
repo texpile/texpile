@@ -1,0 +1,1101 @@
+{
+  "deps": [
+    {
+      "name": "keyval"
+    },
+    {
+      "name": "calc"
+    },
+    {
+      "name": "mhsetup"
+    },
+    {
+      "name": "amsmath"
+    },
+    {
+      "name": "graphicx"
+    }
+  ],
+  "macros": [
+    {
+      "name": "mathtoolsset",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathtoolsset{${1:options}}",
+        "keys": [
+          "\\mathtoolsset"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "mathllap",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "mathllap[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "mathllap",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathllap{${1:math}}"
+      }
+    },
+    {
+      "name": "mathrlap",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "mathrlap[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "mathrlap",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathrlap{${1:math}}"
+      }
+    },
+    {
+      "name": "mathmbox",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathmbox{${1:math}}"
+      }
+    },
+    {
+      "name": "mathclap",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "mathclap[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "mathclap",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathclap{${1:math}}"
+      }
+    },
+    {
+      "name": "clap",
+      "arg": {
+        "format": "{}",
+        "snippet": "clap{${1:text}}"
+      }
+    },
+    {
+      "name": "mathmakebox",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "mathmakebox[${2:width}][${3:pos}]{${1:math}}"
+      }
+    },
+    {
+      "name": "mathmakebox",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "mathmakebox[${2:width}]{${1:math}}"
+      }
+    },
+    {
+      "name": "mathmakebox",
+      "arg": {
+        "format": "{}",
+        "snippet": "mathmakebox{${1:math}}"
+      }
+    },
+    {
+      "name": "cramped",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "cramped[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "cramped",
+      "arg": {
+        "format": "{}",
+        "snippet": "cramped{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedllap",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "crampedllap[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedllap",
+      "arg": {
+        "format": "{}",
+        "snippet": "crampedllap{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedrlap",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "crampedrlap[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedrlap",
+      "arg": {
+        "format": "{}",
+        "snippet": "crampedrlap{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedclap",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "crampedclap[${2:mathstyle}]{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedclap",
+      "arg": {
+        "format": "{}",
+        "snippet": "crampedclap{${1:math}}"
+      }
+    },
+    {
+      "name": "crampedsubstack",
+      "arg": {
+        "format": "{}",
+        "snippet": "crampedsubstack{${1:arg}}"
+      }
+    },
+    {
+      "name": "smashoperator",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "smashoperator[${2:pos%keyvals}]{${1:operator with limits}}",
+        "keys": [
+          "\\smashoperator"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "smashoperator",
+      "arg": {
+        "format": "{}",
+        "snippet": "smashoperator{${1:operator with limits}}"
+      }
+    },
+    {
+      "name": "adjustlimits",
+      "arg": {
+        "format": "{}_{}{}_{}",
+        "snippet": "adjustlimits{${1:operator1}}_{${2:limit1}}{${3:operator2}}_{${4:limit2}}"
+      }
+    },
+    {
+      "name": "SwapAboveDisplaySkip"
+    },
+    {
+      "name": "newtagform",
+      "arg": {
+        "format": "{}[]{}{}",
+        "snippet": "newtagform{${1:name}}[${4:inner format}]{${2:left}}{${3:right}}"
+      }
+    },
+    {
+      "name": "newtagform",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "newtagform{${1:name}}{${2:left}}{${3:right}}"
+      }
+    },
+    {
+      "name": "renewtagform",
+      "arg": {
+        "format": "{}[]{}{}",
+        "snippet": "renewtagform{${1:name}}[${4:inner format}]{${2:left}}{${3:right}}"
+      }
+    },
+    {
+      "name": "renewtagform",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "renewtagform{${1:name}}{${2:left}}{${3:right}}"
+      }
+    },
+    {
+      "name": "usetagform",
+      "arg": {
+        "format": "{}",
+        "snippet": "usetagform{${1:name}}"
+      }
+    },
+    {
+      "name": "refeq",
+      "arg": {
+        "format": "{}",
+        "snippet": "refeq{${1:label}}"
+      }
+    },
+    {
+      "name": "noeqref",
+      "arg": {
+        "format": "{}",
+        "snippet": "noeqref{${1:labellist}}"
+      }
+    },
+    {
+      "name": "xleftrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xleftrightarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftrightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xleftrightarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLeftarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xLeftarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLeftarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xLeftarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xhookleftarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xhookleftarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xhookleftarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xhookleftarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xmapsto",
+      "arg": {
+        "format": "{}",
+        "snippet": "xmapsto{${1:sup}}"
+      }
+    },
+    {
+      "name": "xmapsto",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xmapsto[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xRightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xRightarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xRightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xRightarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLeftrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xLeftrightarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLeftrightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xLeftrightarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xhookrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xhookrightarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xhookrightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xhookrightarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xrightharpoondown",
+      "arg": {
+        "format": "{}",
+        "snippet": "xrightharpoondown{${1:sup}}"
+      }
+    },
+    {
+      "name": "xrightharpoondown",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xrightharpoondown[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftharpoondown",
+      "arg": {
+        "format": "{}",
+        "snippet": "xleftharpoondown{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftharpoondown",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xleftharpoondown[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xrightleftharpoons",
+      "arg": {
+        "format": "{}",
+        "snippet": "xrightleftharpoons{${1:sup}}"
+      }
+    },
+    {
+      "name": "xrightleftharpoons",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xrightleftharpoons[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xrightharpoonup",
+      "arg": {
+        "format": "{}",
+        "snippet": "xrightharpoonup{${1:sup}}"
+      }
+    },
+    {
+      "name": "xrightharpoonup",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xrightharpoonup[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftharpoonup",
+      "arg": {
+        "format": "{}",
+        "snippet": "xleftharpoonup{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftharpoonup",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xleftharpoonup[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftrightharpoons",
+      "arg": {
+        "format": "{}",
+        "snippet": "xleftrightharpoons{${1:sup}}"
+      }
+    },
+    {
+      "name": "xleftrightharpoons",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xleftrightharpoons[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xlongrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xlongrightarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xlongrightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xlongrightarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLongrightarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xLongrightarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLongrightarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xLongrightarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xlongleftarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xlongleftarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xlongleftarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xlongleftarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLongleftarrow",
+      "arg": {
+        "format": "{}",
+        "snippet": "xLongleftarrow{${1:sup}}"
+      }
+    },
+    {
+      "name": "xLongleftarrow",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xLongleftarrow[${2:sub}]{${1:sup}}"
+      }
+    },
+    {
+      "name": "underbracket",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "underbracket[${2:rule thickness}][${3:bracket height}]{${1:arg}}"
+      },
+      "detail": "⎵",
+      "doc": "Bottom square bracket"
+    },
+    {
+      "name": "underbracket",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "underbracket[${2:rule thickness}]{${1:arg}}"
+      },
+      "detail": "⎵",
+      "doc": "Bottom square bracket"
+    },
+    {
+      "name": "underbracket",
+      "arg": {
+        "format": "{}",
+        "snippet": "underbracket{${1:arg}}"
+      },
+      "detail": "⎵",
+      "doc": "Bottom square bracket"
+    },
+    {
+      "name": "overbracket",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "overbracket[${2:rule thickness}][${3:bracket height}]{${1:arg}}"
+      },
+      "detail": "⎴",
+      "doc": "Top square bracket"
+    },
+    {
+      "name": "overbracket",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "overbracket[${2:rule thickness}]{${1:arg}}"
+      },
+      "detail": "⎴",
+      "doc": "Top square bracket"
+    },
+    {
+      "name": "overbracket",
+      "arg": {
+        "format": "{}",
+        "snippet": "overbracket{${1:arg}}"
+      },
+      "detail": "⎴",
+      "doc": "Top square bracket"
+    },
+    {
+      "name": "LaTeXunderbrace",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "LaTeXunderbrace{${1:arg}}"
+      }
+    },
+    {
+      "name": "LaTeXoverbrace",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "LaTeXoverbrace{${1:arg}}"
+      }
+    },
+    {
+      "name": "newgathered",
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "newgathered{${1:envname}}{${2:pre line}}{${3:post line}}{${4:after}}"
+      }
+    },
+    {
+      "name": "renewgathered",
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "renewgathered{${1:envname}}{${2:pre line}}{${3:post line}}{${4:after}}"
+      }
+    },
+    {
+      "name": "MultlinedHook",
+      "unusual": true
+    },
+    {
+      "name": "shoveleft",
+      "arg": {
+        "format": "{}",
+        "snippet": "shoveleft{${1:arg}}"
+      }
+    },
+    {
+      "name": "shoveleft",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "shoveleft[${2:dimen}]{${1:arg}}"
+      }
+    },
+    {
+      "name": "shoveright",
+      "arg": {
+        "format": "{}",
+        "snippet": "shoveright{${1:arg}}"
+      }
+    },
+    {
+      "name": "shoveright",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "shoveright[${2:dimen}]{${1:arg}}"
+      }
+    },
+    {
+      "name": "MoveEqLeft"
+    },
+    {
+      "name": "MoveEqLeft",
+      "arg": {
+        "format": "[]",
+        "snippet": "MoveEqLeft[${1:number}]"
+      }
+    },
+    {
+      "name": "Aboxed",
+      "arg": {
+        "format": "{}",
+        "snippet": "Aboxed{${1:left hand side & right hand side}}"
+      }
+    },
+    {
+      "name": "ArrowBetweenLines",
+      "unusual": true
+    },
+    {
+      "name": "ArrowBetweenLines",
+      "unusual": true,
+      "arg": {
+        "format": "[]",
+        "snippet": "ArrowBetweenLines[${1:symbol}]"
+      }
+    },
+    {
+      "name": "ArrowBetweenLines*",
+      "unusual": true
+    },
+    {
+      "name": "ArrowBetweenLines*",
+      "unusual": true,
+      "arg": {
+        "format": "[]",
+        "snippet": "ArrowBetweenLines*[${1:symbol}]"
+      }
+    },
+    {
+      "name": "vdotswithin",
+      "arg": {
+        "format": "{}",
+        "snippet": "vdotswithin{${1:symbol}}"
+      }
+    },
+    {
+      "name": "shortvdotswithin",
+      "arg": {
+        "format": "{}",
+        "snippet": "shortvdotswithin{${1:symbol}}"
+      }
+    },
+    {
+      "name": "shortvdotswithin*",
+      "arg": {
+        "format": "{}",
+        "snippet": "shortvdotswithin*{${1:symbol}}"
+      }
+    },
+    {
+      "name": "MTFlushSpaceAbove"
+    },
+    {
+      "name": "MTFlushSpaceBelow"
+    },
+    {
+      "name": "origjot",
+      "unusual": true
+    },
+    {
+      "name": "shortintertext",
+      "arg": {
+        "format": "{}",
+        "snippet": "shortintertext{${1:text}}"
+      }
+    },
+    {
+      "name": "intertext",
+      "arg": {
+        "format": "{}",
+        "snippet": "intertext{${1:text}}"
+      }
+    },
+    {
+      "name": "DeclarePairedDelimiter",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "DeclarePairedDelimiter{${1:cmd}}{${2:left delim%formula}}{${3:right delim%formula}}"
+      }
+    },
+    {
+      "name": "DeclarePairedDelimiterX",
+      "arg": {
+        "format": "{}[]{}{}{}",
+        "snippet": "DeclarePairedDelimiterX{${1:cmd}}[${5:args}]{${2:left delim%formula}}{${3:right delim%formula}}{${4:body%formula}}"
+      }
+    },
+    {
+      "name": "DeclarePairedDelimiterXPP",
+      "arg": {
+        "format": "{}[]{}{}{}{}{}",
+        "snippet": "DeclarePairedDelimiterXPP{${1:cmd}}[${7:args}]{${2:pre code%formula}}{${3:left delim%formula}}{${4:right delim%formula}}{${5:post code%formula}}{${6:body%formula}}"
+      }
+    },
+    {
+      "name": "reDeclarePairedDelimiterInnerWrapper",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "reDeclarePairedDelimiterInnerWrapper{${1:cmd}}{${2:star option%keyvals}}{${3:code%definition}}",
+        "keys": [
+          "\\reDeclarePairedDelimiterInnerWrapper"
+        ],
+        "keyPos": 1
+      }
+    },
+    {
+      "name": "lparen",
+      "detail": "(",
+      "doc": "Left parenthesis"
+    },
+    {
+      "name": "rparen",
+      "detail": ")",
+      "doc": "Right parenthesis"
+    },
+    {
+      "name": "vcentcolon"
+    },
+    {
+      "name": "ordinarycolon"
+    },
+    {
+      "name": "coloneqq"
+    },
+    {
+      "name": "eqqcolon"
+    },
+    {
+      "name": "colonapprox"
+    },
+    {
+      "name": "dblcolon"
+    },
+    {
+      "name": "Coloneqq"
+    },
+    {
+      "name": "Eqqcolon"
+    },
+    {
+      "name": "Colonapprox"
+    },
+    {
+      "name": "coloneq",
+      "detail": "≔ (\"mathabx -txfonts\" command)",
+      "doc": "\\coloneqq (txfonts), \\setdelayed (wrisym), := colon, equals"
+    },
+    {
+      "name": "eqcolon",
+      "detail": "≕ (\"mathabx -txfonts\" command)",
+      "doc": "\\eqqcolon (txfonts), =:, equals, colon"
+    },
+    {
+      "name": "colonsim"
+    },
+    {
+      "name": "Coloneq",
+      "detail": "⩴ (\"txfonts\" command)",
+      "doc": "::=, \\coloneq (txfonts), double colon equal"
+    },
+    {
+      "name": "Eqcolon"
+    },
+    {
+      "name": "Colonsim"
+    },
+    {
+      "name": "approxcolon"
+    },
+    {
+      "name": "Approxcolon"
+    },
+    {
+      "name": "simcolon"
+    },
+    {
+      "name": "Simcolon"
+    },
+    {
+      "name": "colondash"
+    },
+    {
+      "name": "Colondash"
+    },
+    {
+      "name": "dashcolon",
+      "detail": "∹ (\"txfonts -mathabx\" command)",
+      "doc": "-:, excess"
+    },
+    {
+      "name": "Dashcolon"
+    },
+    {
+      "name": "nuparrow"
+    },
+    {
+      "name": "ndownarrow"
+    },
+    {
+      "name": "bigtimes",
+      "detail": "⨉ (\"txfonts\" command)",
+      "doc": "N-ary times operator"
+    },
+    {
+      "name": "prescript",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "prescript{${1:sup}}{${2:sub}}{${3:arg}}"
+      }
+    },
+    {
+      "name": "splitfrac",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "splitfrac{${1:numer}}{${2:denom}}"
+      }
+    },
+    {
+      "name": "splitdfrac",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "splitdfrac{${1:numer}}{${2:denom}}"
+      }
+    },
+    {
+      "name": "xmathstrut",
+      "arg": {
+        "format": "{}",
+        "snippet": "xmathstrut{${1:increase}}"
+      }
+    },
+    {
+      "name": "xmathstrut",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "xmathstrut[${2:depth increase}]{${1:increase}}"
+      }
+    },
+    {
+      "name": "newcases",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "newcases{${1:envname}}{${2:sep}}{${3:preamble}}{${4:left}}{${5:right}}"
+      }
+    },
+    {
+      "name": "renewcases",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "renewcases{${1:envname}}{${2:sep}}{${3:preamble}}{${4:left}}{${5:right}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "crampedsubarray",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:col}}"
+      }
+    },
+    {
+      "name": "dcases"
+    },
+    {
+      "name": "dcases*"
+    },
+    {
+      "name": "rcases"
+    },
+    {
+      "name": "rcases*"
+    },
+    {
+      "name": "drcases"
+    },
+    {
+      "name": "drcases*"
+    },
+    {
+      "name": "cases*"
+    },
+    {
+      "name": "matrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "pmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "bmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "Bmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "vmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "Vmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "smallmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "psmallmatrix"
+    },
+    {
+      "name": "psmallmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "bsmallmatrix"
+    },
+    {
+      "name": "bsmallmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "Bsmallmatrix"
+    },
+    {
+      "name": "Bsmallmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "vsmallmatrix"
+    },
+    {
+      "name": "vsmallmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "Vsmallmatrix"
+    },
+    {
+      "name": "Vsmallmatrix*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:col}]"
+      }
+    },
+    {
+      "name": "spreadlines",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:dimen}}"
+      }
+    },
+    {
+      "name": "lgathered",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:pos}]"
+      }
+    },
+    {
+      "name": "rgathered",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:pos}]"
+      }
+    },
+    {
+      "name": "multlined"
+    },
+    {
+      "name": "multlined",
+      "arg": {
+        "format": "[][]",
+        "snippet": "[${1:pos}][${2:width}]"
+      }
+    }
+  ],
+  "keys": {
+    "\\usepackage/mathtools#c": [
+      "fixamsmath",
+      "donotfixamsmathbugs",
+      "allowspaces",
+      "disallowspaces",
+      "legacycolonsymbols",
+      "intlimits",
+      "nointlimits",
+      "sumlimits",
+      "nosumlimits",
+      "namelimits",
+      "nonamelimits",
+      "leqno",
+      "reqno",
+      "centertags",
+      "tbtags",
+      "cmex10",
+      "fleqn",
+      "alignedleftspaceyes",
+      "alignedleftspaceno",
+      "alignedleftspaceyesifneg"
+    ],
+    "\\mathtoolsset": [
+      "showonlyrefs",
+      "showmanualtags",
+      "original-intertext",
+      "original-shortintertext",
+      "mathic",
+      "above-intertext-sep=",
+      "below-intertext-sep=",
+      "above-shortintertext-sep=",
+      "below-shortintertext-sep=",
+      "smallmatrix-align=${1|c,l,r|}",
+      "smallmatrix-inner-space=",
+      "firstline-afterskip=",
+      "lastline-preskip=",
+      "multlined-width=",
+      "multlined-pos=${1|c,b,t|}",
+      "centercolon",
+      "prescript-sup-format=${1:cmd}",
+      "prescript-sub-format=${1:cmd}",
+      "prescript-arg-format=${1:cmd}",
+      "shortvdotsadjustabove=",
+      "shortvdotsadjustbelow="
+    ],
+    "\\smashoperator": [
+      "l",
+      "r",
+      "lr",
+      "rl"
+    ],
+    "\\reDeclarePairedDelimiterInnerWrapper": [
+      "star",
+      "nostarnonscaled",
+      "nostarscaled"
+    ]
+  },
+  "args": [
+    "\\usepackage/mathtools#c"
+  ]
+}

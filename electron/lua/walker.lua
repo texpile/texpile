@@ -1,4 +1,5 @@
--- Shared glyph walker: post-linebreak node lists -> positioned glyph records.
+-- Turns a typeset TeX box's node list into flat JSON drawing records -- nothing else.
+-- (glyphs, lines, rules, images, colors, fonts, footnote groups; coords in TeX pt.)
 -- Semantics per scratch/luatex-manual: disc.replace renders mid-line, marginkern
 -- advances x, font kerns scale with expansion (adjustspacing=2), box shift is
 -- vertical inside a line, xoffset/yoffset displace drawing but not the advance.
@@ -11,6 +12,7 @@ local KERN  = node.id("kern")
 local RULE  = node.id("rule")
 local DISC  = node.id("disc")
 local MATH  = node.id("math")
+local INS   = node.id("ins")
 local WHATSIT = node.id("whatsit")
 local ok_mk, MKERN = pcall(node.id, "margin_kern")
 if not ok_mk then MKERN = -1 end
@@ -319,15 +321,16 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			local eff = node.effective_glue(n, parent) or n.width
 			if n.leader and n.leader.id == RULE and n.subtype >= LEADERS_MIN and n.subtype <= LEADERS_MAX then
 				local h, d = resolveRuleHD(n.leader, parent)
+				-- parent can be an ins node (no width field) when walking a footnote body
 				emit(string.format('{"t":"rule","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
-					x / pt, (cy + h) / pt, parent.width / pt, h / pt, d / pt, colSuffix(colorStack)))
+					x / pt, (cy + h) / pt, (parent.width or 0) / pt, h / pt, d / pt, colSuffix(colorStack)))
 			end
 			cy = cy + eff
 		elseif id == KERN then
 			cy = cy + n.kern
 		elseif id == RULE then
 			local w, h, d = n.width, resolveRuleHD(n, parent)
-			if w == RUNNING then w = parent.width end
+			if w == RUNNING then w = parent.width or 0 end
 			emit(string.format('{"t":"rule","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
 				x / pt, (cy + h) / pt, w / pt, h / pt, d / pt, colSuffix(colorStack)))
 			cy = cy + h + d
@@ -391,6 +394,17 @@ function M.lines(head, y0)
 			-- block's top-level list (not nested inside a paragraph line).
 			walk_vlist(line.head, line, line.shift or 0, y, emit, fonts, colorStack)
 			y = y + line.height + line.depth
+		elseif line.id == INS then
+			-- footnote body: \insert material migrated out of the paragraph into this list.
+			-- Emitted as a note group with n-prefixed record types and LOCAL y from 0, so
+			-- the body rows never pollute the block's own line/glyph records (every locate
+			-- tier filters t=="g"/"line"). Inserts occupy no space here -> y unchanged.
+			emit(string.format('{"t":"note","cls":%d,"h":%.4f}', line.subtype or 0, (line.height or 0) / pt))
+			if line.head then
+				local nemit = function(s) emit((s:gsub('^{"t":"', '{"t":"n'))) end
+				walk_vlist(line.head, line, 0, 0, nemit, fonts, colorStack)
+			end
+			emit('{"t":"noteend"}')
 		elseif line.id == GLUE then
 			y = y + line.width
 		elseif line.id == DIR then
@@ -398,11 +412,19 @@ function M.lines(head, y0)
 		end
 	end
 	for id in pairs(fonts) do
-		local f = font.getfont(id)
+		-- getfont only knows Lua-defined fonts; format/TeX-loaded ones (classic math:
+		-- cmex10 and friends -- where \int lives) need getcopy, which reads them all.
+		-- Without this their glyph records had no font record and silently drew nothing.
+		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
 		if f then
 			local file = tostring(f.filename or ""):gsub("\\", "/")
-			records[#records + 1] = string.format('{"t":"font","id":%d,"size":%.4f,"name":"%s","file":"%s"}',
-				id, (f.size or 0) / pt, tostring(f.name or f.fullname or ""), file)
+			-- subfont: which face of a TrueType Collection (.ttc) this is; the renderer
+			-- must extract that face before parsing (opentype.js can't read collections)
+			local coll = file:lower():match("%.ttc$") or file:lower():match("%.otc$")
+			local sub = (coll and type(f.subfont) == "number" and f.subfont >= 1)
+				and string.format(',"sub":%d', f.subfont) or ""
+			records[#records + 1] = string.format('{"t":"font","id":%d,"size":%.4f,"name":"%s","file":"%s"%s}',
+				id, (f.size or 0) / pt, tostring(f.name or f.fullname or ""), file, sub)
 		end
 	end
 	-- certification: a block is live-renderable only if it contains no feature we

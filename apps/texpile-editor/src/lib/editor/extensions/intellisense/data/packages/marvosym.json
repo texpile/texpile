@@ -1,0 +1,673 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "Pickup"
+    },
+    {
+      "name": "Letter"
+    },
+    {
+      "name": "Mobilefone"
+    },
+    {
+      "name": "Telefon"
+    },
+    {
+      "name": "fax"
+    },
+    {
+      "name": "FAX"
+    },
+    {
+      "name": "Faxmachine"
+    },
+    {
+      "name": "Email"
+    },
+    {
+      "name": "Lightning"
+    },
+    {
+      "name": "EmailCT"
+    },
+    {
+      "name": "Beam"
+    },
+    {
+      "name": "Bearing"
+    },
+    {
+      "name": "LooseBearing"
+    },
+    {
+      "name": "FixedBearing"
+    },
+    {
+      "name": "LeftTorque"
+    },
+    {
+      "name": "RightTorque"
+    },
+    {
+      "name": "Lineload"
+    },
+    {
+      "name": "MVArrowDown"
+    },
+    {
+      "name": "OktoSteel"
+    },
+    {
+      "name": "HexaSteel"
+    },
+    {
+      "name": "SquareSteel"
+    },
+    {
+      "name": "RectSteel"
+    },
+    {
+      "name": "CircSteel"
+    },
+    {
+      "name": "SquarePipe"
+    },
+    {
+      "name": "RectPipe"
+    },
+    {
+      "name": "CircPipe"
+    },
+    {
+      "name": "LSteel"
+    },
+    {
+      "name": "RoundedLSteel"
+    },
+    {
+      "name": "TSteel"
+    },
+    {
+      "name": "RoundedTSteel"
+    },
+    {
+      "name": "TTSteel"
+    },
+    {
+      "name": "RoundedTTSteel"
+    },
+    {
+      "name": "FlatSteel"
+    },
+    {
+      "name": "Valve"
+    },
+    {
+      "name": "Industry"
+    },
+    {
+      "name": "Coffeecup"
+    },
+    {
+      "name": "LeftScissors"
+    },
+    {
+      "name": "CuttingLine"
+    },
+    {
+      "name": "RightScissors"
+    },
+    {
+      "name": "Football"
+    },
+    {
+      "name": "Bicycle"
+    },
+    {
+      "name": "Info"
+    },
+    {
+      "name": "ClockLogo"
+    },
+    {
+      "name": "CutRight"
+    },
+    {
+      "name": "CutLine"
+    },
+    {
+      "name": "CutLeft"
+    },
+    {
+      "name": "Wheelchair"
+    },
+    {
+      "name": "Gentsroom"
+    },
+    {
+      "name": "Ladiesroom"
+    },
+    {
+      "name": "Checkedbox"
+    },
+    {
+      "name": "CrossedBox"
+    },
+    {
+      "name": "HollowBox"
+    },
+    {
+      "name": "PointingHand"
+    },
+    {
+      "name": "WritingHand"
+    },
+    {
+      "name": "MineSign"
+    },
+    {
+      "name": "Recycling"
+    },
+    {
+      "name": "PackingWaste"
+    },
+    {
+      "name": "WashCotton"
+    },
+    {
+      "name": "WashSynthetics"
+    },
+    {
+      "name": "WashWool"
+    },
+    {
+      "name": "HandWash"
+    },
+    {
+      "name": "NoWash"
+    },
+    {
+      "name": "Tumbler"
+    },
+    {
+      "name": "NoTumbler"
+    },
+    {
+      "name": "NoChemicalCleaning"
+    },
+    {
+      "name": "Bleech"
+    },
+    {
+      "name": "NoBleech"
+    },
+    {
+      "name": "CleaningA"
+    },
+    {
+      "name": "CleaningP"
+    },
+    {
+      "name": "CleaningPP"
+    },
+    {
+      "name": "CleaningF"
+    },
+    {
+      "name": "CleaningFF"
+    },
+    {
+      "name": "IroningI"
+    },
+    {
+      "name": "IroningII"
+    },
+    {
+      "name": "IroningIII"
+    },
+    {
+      "name": "NoIroning"
+    },
+    {
+      "name": "AtNinetyFive"
+    },
+    {
+      "name": "ShortNinetyFive"
+    },
+    {
+      "name": "AtSixty"
+    },
+    {
+      "name": "ShortSixty"
+    },
+    {
+      "name": "ShortFifty"
+    },
+    {
+      "name": "AtForty"
+    },
+    {
+      "name": "ShortForty"
+    },
+    {
+      "name": "SpecialForty"
+    },
+    {
+      "name": "ShortThirty"
+    },
+    {
+      "name": "EUR"
+    },
+    {
+      "name": "EURdig"
+    },
+    {
+      "name": "EURhv"
+    },
+    {
+      "name": "EURcr"
+    },
+    {
+      "name": "EURtm"
+    },
+    {
+      "name": "Ecommerce"
+    },
+    {
+      "name": "Shilling"
+    },
+    {
+      "name": "Denarius"
+    },
+    {
+      "name": "Pfund"
+    },
+    {
+      "name": "EyesDollar"
+    },
+    {
+      "name": "Florin"
+    },
+    {
+      "name": "EurDig"
+    },
+    {
+      "name": "EurHv"
+    },
+    {
+      "name": "EurCr"
+    },
+    {
+      "name": "EurTm"
+    },
+    {
+      "name": "EstimatedSign"
+    },
+    {
+      "name": "Deleatur"
+    },
+    {
+      "name": "Stopsign"
+    },
+    {
+      "name": "CESign"
+    },
+    {
+      "name": "Estatically"
+    },
+    {
+      "name": "Explosionsafe"
+    },
+    {
+      "name": "Laserbeam"
+    },
+    {
+      "name": "Biohazard"
+    },
+    {
+      "name": "Radioactivity"
+    },
+    {
+      "name": "BSEFree"
+    },
+    {
+      "name": "RewindToIndex"
+    },
+    {
+      "name": "RewindToStart"
+    },
+    {
+      "name": "Rewind"
+    },
+    {
+      "name": "Forward"
+    },
+    {
+      "name": "ForwardToEnd"
+    },
+    {
+      "name": "ForwardToIndex"
+    },
+    {
+      "name": "MoveUp"
+    },
+    {
+      "name": "MoveDown"
+    },
+    {
+      "name": "ToTop"
+    },
+    {
+      "name": "ToBottom"
+    },
+    {
+      "name": "ComputerMouse"
+    },
+    {
+      "name": "SerialInterface"
+    },
+    {
+      "name": "Keyboard"
+    },
+    {
+      "name": "SerialPort"
+    },
+    {
+      "name": "ParallelPort"
+    },
+    {
+      "name": "Printer"
+    },
+    {
+      "name": "MVZero"
+    },
+    {
+      "name": "MVOne"
+    },
+    {
+      "name": "MVTwo"
+    },
+    {
+      "name": "MVThree"
+    },
+    {
+      "name": "MVFour"
+    },
+    {
+      "name": "MVFive"
+    },
+    {
+      "name": "MVSix"
+    },
+    {
+      "name": "MVSeven"
+    },
+    {
+      "name": "MVEight"
+    },
+    {
+      "name": "MVNine"
+    },
+    {
+      "name": "MVLeftBracket"
+    },
+    {
+      "name": "MVRightBracket"
+    },
+    {
+      "name": "MVComma"
+    },
+    {
+      "name": "MVPeriod"
+    },
+    {
+      "name": "MVMinus"
+    },
+    {
+      "name": "MVPlus"
+    },
+    {
+      "name": "MVDivision"
+    },
+    {
+      "name": "MVMultiplication"
+    },
+    {
+      "name": "Conclusion"
+    },
+    {
+      "name": "Equivalence"
+    },
+    {
+      "name": "barOver"
+    },
+    {
+      "name": "BarOver"
+    },
+    {
+      "name": "arrowOver"
+    },
+    {
+      "name": "ArrowOver"
+    },
+    {
+      "name": "StrikingThrough"
+    },
+    {
+      "name": "MultiplicationDot"
+    },
+    {
+      "name": "LessOrEqual"
+    },
+    {
+      "name": "LargerOrEqual"
+    },
+    {
+      "name": "AngleSign"
+    },
+    {
+      "name": "Corresponds"
+    },
+    {
+      "name": "Congruent"
+    },
+    {
+      "name": "NotCongruent"
+    },
+    {
+      "name": "Divides"
+    },
+    {
+      "name": "DividesNot"
+    },
+    {
+      "name": "Female"
+    },
+    {
+      "name": "Male"
+    },
+    {
+      "name": "Hermaphrodite",
+      "detail": "⚥",
+      "doc": "Male and female sign"
+    },
+    {
+      "name": "Neutral"
+    },
+    {
+      "name": "FEMALE"
+    },
+    {
+      "name": "MALE"
+    },
+    {
+      "name": "HERMAPHRODITE"
+    },
+    {
+      "name": "FemaleFemale"
+    },
+    {
+      "name": "MaleMale"
+    },
+    {
+      "name": "FemaleMale"
+    },
+    {
+      "name": "Sun"
+    },
+    {
+      "name": "Moon"
+    },
+    {
+      "name": "Mercury"
+    },
+    {
+      "name": "Venus"
+    },
+    {
+      "name": "Mars"
+    },
+    {
+      "name": "Jupiter"
+    },
+    {
+      "name": "Saturn"
+    },
+    {
+      "name": "Uranus"
+    },
+    {
+      "name": "Neptune"
+    },
+    {
+      "name": "Pluto"
+    },
+    {
+      "name": "Earth"
+    },
+    {
+      "name": "Aries"
+    },
+    {
+      "name": "Taurus"
+    },
+    {
+      "name": "Gemini"
+    },
+    {
+      "name": "Cancer"
+    },
+    {
+      "name": "Leo"
+    },
+    {
+      "name": "Virgo"
+    },
+    {
+      "name": "Libra"
+    },
+    {
+      "name": "Scorpio"
+    },
+    {
+      "name": "Sagittarius"
+    },
+    {
+      "name": "Capricorn"
+    },
+    {
+      "name": "Aquarius"
+    },
+    {
+      "name": "Pisces"
+    },
+    {
+      "name": "YinYang"
+    },
+    {
+      "name": "MVRightArrow"
+    },
+    {
+      "name": "MVAt"
+    },
+    {
+      "name": "BOLogo"
+    },
+    {
+      "name": "BOLogoL"
+    },
+    {
+      "name": "BOLogoP"
+    },
+    {
+      "name": "Mundus"
+    },
+    {
+      "name": "Cross"
+    },
+    {
+      "name": "CeltCross"
+    },
+    {
+      "name": "Ankh"
+    },
+    {
+      "name": "Heart"
+    },
+    {
+      "name": "CircledA"
+    },
+    {
+      "name": "Bouquet"
+    },
+    {
+      "name": "Frowny"
+    },
+    {
+      "name": "Smiley"
+    },
+    {
+      "name": "PeaceDove"
+    },
+    {
+      "name": "Bat"
+    },
+    {
+      "name": "WomanFace"
+    },
+    {
+      "name": "ManFace"
+    },
+    {
+      "name": "mvs",
+      "unusual": true
+    },
+    {
+      "name": "mvchr",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "mvchr{${1:char num}}"
+      }
+    },
+    {
+      "name": "textmvs",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "textmvs{${1:text}}"
+      }
+    },
+    {
+      "name": "Zodiac",
+      "arg": {
+        "format": "{}",
+        "snippet": "Zodiac{${1:number}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

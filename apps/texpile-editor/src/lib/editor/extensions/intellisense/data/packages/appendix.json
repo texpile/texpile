@@ -1,0 +1,82 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "appendixpage"
+    },
+    {
+      "name": "addappheadtotoc"
+    },
+    {
+      "name": "noappendicestocpagenum"
+    },
+    {
+      "name": "appendicestocpagenum"
+    },
+    {
+      "name": "appendixtocname"
+    },
+    {
+      "name": "appendixpagename"
+    },
+    {
+      "name": "appendixtocon"
+    },
+    {
+      "name": "appendixtocoff"
+    },
+    {
+      "name": "appendixpageon"
+    },
+    {
+      "name": "appendixpageoff"
+    },
+    {
+      "name": "appendixtitleon"
+    },
+    {
+      "name": "appendixtitleoff"
+    },
+    {
+      "name": "appendixtitletocon"
+    },
+    {
+      "name": "appendixtitletocoff"
+    },
+    {
+      "name": "appendixheaderon"
+    },
+    {
+      "name": "appendixheaderoff"
+    },
+    {
+      "name": "restoreapp"
+    },
+    {
+      "name": "setthesection"
+    },
+    {
+      "name": "setthesubsection"
+    }
+  ],
+  "envs": [
+    {
+      "name": "appendices"
+    },
+    {
+      "name": "subappendices"
+    }
+  ],
+  "keys": {
+    "\\usepackage/appendix#c": [
+      "toc",
+      "title",
+      "titletoc",
+      "header",
+      "page"
+    ]
+  },
+  "args": [
+    "\\usepackage/appendix#c"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "GlobalLetLtxMacro",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "GlobalLetLtxMacro{${1:cmd}}{${2:def}}"
+      }
+    },
+    {
+      "name": "LetLtxMacro",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "LetLtxMacro{${1:cmd}}{${2:def}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

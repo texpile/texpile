@@ -1,0 +1,400 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "XeTeXtracingfonts",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfonttype",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfirstfontchar",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXlastfontchar",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXglyph",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXcountglyphs",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXglyphname",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXglyphindex",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXcharglyph",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXglyphbounds",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXuseglyphmetrics",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXgenerateactualtext",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXOTcountscripts",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXOTscripttag",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXOTcountlanguages",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXOTlanguagetag",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXOTcountfeatures",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXOTfeaturetag",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXcountfeatures",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfeaturecode",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfeaturename",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXisexclusivefeature",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfindfeaturebyname",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXcountselectors",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXselectorcode",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXselectorname",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXisdefaultselector",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfindselectorbyname",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXcountvariations",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXvariation",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXvariationname",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXvariationmin",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXvariationmax",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXvariationdefault",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXfindvariationbyname",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXinterwordspaceshaping",
+      "unusual": true
+    },
+    {
+      "name": "Umathcode",
+      "unusual": true
+    },
+    {
+      "name": "Umathcodenum",
+      "unusual": true
+    },
+    {
+      "name": "Umathchar",
+      "unusual": true
+    },
+    {
+      "name": "Umathcharnum",
+      "unusual": true
+    },
+    {
+      "name": "Umathchardef",
+      "unusual": true
+    },
+    {
+      "name": "Umathcharnumdef",
+      "unusual": true
+    },
+    {
+      "name": "Udelcode",
+      "unusual": true
+    },
+    {
+      "name": "Udelcodenum",
+      "unusual": true
+    },
+    {
+      "name": "Udelimiter",
+      "unusual": true
+    },
+    {
+      "name": "Umathaccent",
+      "unusual": true
+    },
+    {
+      "name": "Uradical",
+      "unusual": true
+    },
+    {
+      "name": "Uchar",
+      "unusual": true
+    },
+    {
+      "name": "Ucharcat",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXinterchartokenstate",
+      "unusual": true
+    },
+    {
+      "name": "newXeTeXintercharclass",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXcharclass",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXinterchartoks",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXinputnormalization",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXinputencoding",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXdefaultencoding",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXdashbreakstate",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXlinebreaklocale",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXlinebreakskip",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXlinebreakpenalty",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXupwardsmode",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXhyphenatablelength",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXpicfile",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXpdffile",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXpdfpagecount",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXprotrudechars",
+      "unusual": true
+    },
+    {
+      "name": "pdfpageheight",
+      "unusual": true
+    },
+    {
+      "name": "pdfpagewidth",
+      "unusual": true
+    },
+    {
+      "name": "pdfsavepos",
+      "unusual": true
+    },
+    {
+      "name": "pdflastxpos",
+      "unusual": true
+    },
+    {
+      "name": "pdflastypos",
+      "unusual": true
+    },
+    {
+      "name": "expanded",
+      "unusual": true
+    },
+    {
+      "name": "ifincsname",
+      "unusual": true
+    },
+    {
+      "name": "ifprimitive",
+      "unusual": true
+    },
+    {
+      "name": "primitive",
+      "unusual": true
+    },
+    {
+      "name": "shellescape",
+      "unusual": true
+    },
+    {
+      "name": "strcmp",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "strcmp{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "normaldeviate",
+      "unusual": true
+    },
+    {
+      "name": "randomseed",
+      "unusual": true
+    },
+    {
+      "name": "setrandomseed",
+      "unusual": true
+    },
+    {
+      "name": "uniformdeviate",
+      "unusual": true
+    },
+    {
+      "name": "elapsedtime",
+      "unusual": true
+    },
+    {
+      "name": "resettimer",
+      "unusual": true
+    },
+    {
+      "name": "creationdate",
+      "unusual": true
+    },
+    {
+      "name": "filedump",
+      "unusual": true
+    },
+    {
+      "name": "filemoddate",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "filemoddate{${1:file}}"
+      }
+    },
+    {
+      "name": "filesize",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "filesize{${1:file}}"
+      }
+    },
+    {
+      "name": "mdfivesum",
+      "unusual": true
+    },
+    {
+      "name": "pdfmapfile",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "pdfmapfile{${1:file}}"
+      }
+    },
+    {
+      "name": "pdfmapline",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "pdfmapline{${1:map spec}}"
+      }
+    },
+    {
+      "name": "suppressfontnotfounderror",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXversion",
+      "unusual": true
+    },
+    {
+      "name": "XeTeXrevision",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

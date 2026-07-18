@@ -1,0 +1,68 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "newfloat",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "newfloat{${1:float type%envname}}{${2:placement}}{${3:ext}}"
+      }
+    },
+    {
+      "name": "newfloat",
+      "arg": {
+        "format": "{}{}{}[]",
+        "snippet": "newfloat{${1:float type%envname}}{${2:placement}}{${3:ext}}[${4:within}]"
+      }
+    },
+    {
+      "name": "floatstyle",
+      "arg": {
+        "format": "{}",
+        "snippet": "floatstyle{${1:default style%keyvals}}",
+        "keys": [
+          "\\floatstyle"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "floatname",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "floatname{${1:float type}}{${2:name}}"
+      }
+    },
+    {
+      "name": "floatplacement",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "floatplacement{${1:float type}}{${2:default placement}}"
+      }
+    },
+    {
+      "name": "restylefloat",
+      "arg": {
+        "format": "{}",
+        "snippet": "restylefloat{${1:float type}}"
+      }
+    },
+    {
+      "name": "listof",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "listof{${1:float type}}{${2:title}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\floatstyle": [
+      "plain",
+      "plaintop",
+      "boxed",
+      "ruled"
+    ]
+  },
+  "args": []
+}

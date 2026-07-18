@@ -92,6 +92,34 @@ export function setMainFile(root: string, path: string | null): void {
 	localStorage.setItem(MAIN_KEY, JSON.stringify(map));
 }
 
+// last file the user had open per folder, so reopening a workspace restores it
+const LAST_FILE_KEY = 'texpile:lastFiles';
+
+function loadLastFileMap(): Record<string, string> {
+	if (!browser) return {};
+	try {
+		const v = JSON.parse(localStorage.getItem(LAST_FILE_KEY) || '{}');
+		return v && typeof v === 'object' ? v : {};
+	} catch {
+		return {};
+	}
+}
+
+/** the last file that was open in a folder (absolute), or null if none was recorded. */
+export function savedLastFile(root: string): string | null {
+	const map = loadLastFileMap();
+	const rel = map[mainKeyFor(map, root)];
+	return rel ? absInRoot(root, rel) : null;
+}
+
+/** records the file currently open in a folder (called on every active-file change). */
+export function setLastFile(root: string, path: string): void {
+	if (!browser) return;
+	const map = loadLastFileMap();
+	map[mainKeyFor(map, root)] = relInRoot(root, path);
+	localStorage.setItem(LAST_FILE_KEY, JSON.stringify(map));
+}
+
 function loadCmdMap(): Record<string, string> {
 	if (!browser) return {};
 	try {

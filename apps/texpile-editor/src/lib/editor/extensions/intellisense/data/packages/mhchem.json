@@ -1,0 +1,240 @@
+{
+  "deps": [
+    {
+      "name": "l3keys2e"
+    },
+    {
+      "name": "calc"
+    },
+    {
+      "name": "amsmath"
+    },
+    {
+      "name": "chemgreek"
+    },
+    {
+      "name": "graphics"
+    },
+    {
+      "name": "ifthen"
+    },
+    {
+      "name": "keyval"
+    },
+    {
+      "name": "pgf",
+      "if": "arrows=pgf"
+    },
+    {
+      "name": "tikz",
+      "if": "arrows=pgf"
+    },
+    {
+      "name": "pgf",
+      "if": "arrows=pgf-filled"
+    },
+    {
+      "name": "tikz",
+      "if": "arrows=pgf-filled"
+    }
+  ],
+  "macros": [
+    {
+      "name": "mhchemoptions",
+      "arg": {
+        "format": "{}",
+        "snippet": "mhchemoptions{${1:options%keyvals}}",
+        "keys": [
+          "\\usepackage/mhchem#c,\\mhchemoptions",
+          "\\mhchemoptions"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "ce",
+      "arg": {
+        "format": "{}",
+        "snippet": "ce{${1:formula}}"
+      }
+    },
+    {
+      "name": "bond",
+      "arg": {
+        "format": "{}",
+        "snippet": "bond{${1:-=~.<${2:}> etc.}}"
+      }
+    },
+    {
+      "name": "cesplit",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "cesplit{${1:search-and-replace list}}{${2:string}}"
+      }
+    },
+    {
+      "name": "cee",
+      "if": "version=1",
+      "arg": {
+        "format": "{}",
+        "snippet": "cee{${1:equation}}"
+      }
+    },
+    {
+      "name": "cf",
+      "if": "version=1",
+      "arg": {
+        "format": "{}",
+        "snippet": "cf{${1:arg}}"
+      }
+    },
+    {
+      "name": "cf",
+      "if": "version=1",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "cf[${2:opt}]{${1:arg}}"
+      }
+    },
+    {
+      "name": "cmath",
+      "if": "version=1",
+      "arg": {
+        "format": "{}",
+        "snippet": "cmath{${1:arg}}"
+      }
+    },
+    {
+      "name": "sbond",
+      "if": "version=1"
+    },
+    {
+      "name": "dbond",
+      "if": "version=1"
+    },
+    {
+      "name": "tbond",
+      "if": "version=1"
+    },
+    {
+      "name": "cee",
+      "if": "version=2",
+      "arg": {
+        "format": "{}",
+        "snippet": "cee{${1:equation}}"
+      }
+    },
+    {
+      "name": "cf",
+      "if": "version=2",
+      "arg": {
+        "format": "{}",
+        "snippet": "cf{${1:arg}}"
+      }
+    },
+    {
+      "name": "cf",
+      "if": "version=2",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "cf[${2:opt}]{${1:arg}}"
+      }
+    },
+    {
+      "name": "cmath",
+      "if": "version=2",
+      "arg": {
+        "format": "{}",
+        "snippet": "cmath{${1:arg}}"
+      }
+    },
+    {
+      "name": "sbond",
+      "if": "version=2"
+    },
+    {
+      "name": "dbond",
+      "if": "version=2"
+    },
+    {
+      "name": "tbond",
+      "if": "version=2"
+    },
+    {
+      "name": "cee",
+      "if": "version=3",
+      "arg": {
+        "format": "{}",
+        "snippet": "cee{${1:equation}}"
+      }
+    },
+    {
+      "name": "cf",
+      "if": "version=3",
+      "arg": {
+        "format": "{}",
+        "snippet": "cf{${1:arg}}"
+      }
+    },
+    {
+      "name": "cf",
+      "if": "version=3",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "cf[${2:opt}]{${1:arg}}"
+      }
+    },
+    {
+      "name": "cmath",
+      "if": "version=3",
+      "arg": {
+        "format": "{}",
+        "snippet": "cmath{${1:arg}}"
+      }
+    },
+    {
+      "name": "sbond",
+      "if": "version=3"
+    },
+    {
+      "name": "dbond",
+      "if": "version=3"
+    },
+    {
+      "name": "tbond",
+      "if": "version=3"
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/mhchem#c": [
+      "version=${1:version}"
+    ],
+    "\\usepackage/mhchem#c,\\mhchemoptions": [
+      "textfontname=${1:font csname}",
+      "mathfontname=${1:font csname}",
+      "font=${1|sf|}",
+      "text-greek=${1|textgreek,upgreek,newtx,kpfonts,mathdesign,fourier,textalpha,fontspec,default,var-default|}",
+      "math-greek=${1|textgreek,upgreek,newtx,kpfonts,mathdesign,fourier,textalpha,fontspec,default,var-default|}",
+      "arrows=${3|font,pgf,pgf-filled,pgf{${1:arrow type}}{${2:width}}|}",
+      "layout=${1|stacked,staggered-deep,staggered-flat|}",
+      "minus-sidebearing-left=",
+      "minus-sidebearing-right=",
+      "minus-math-sidebearing-left=",
+      "minus-math-sidebearing-right=",
+      "minus-text-sidebearing-left=",
+      "minus-text-sidebearing-right="
+    ],
+    "\\mhchemoptions": [
+      "textfontcommand=${1:font command}",
+      "mathfontcommand=${1:font command}",
+      "textminus=${1:symbol}",
+      "cdot=${1:symbol}",
+      "textelectrondot=${1:symbol}"
+    ]
+  },
+  "args": [
+    "\\usepackage/mhchem#c",
+    "\\usepackage/mhchem#c,\\mhchemoptions"
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "layout"
+    },
+    {
+      "name": "layout*"
+    },
+    {
+      "name": "Headertext",
+      "unusual": true
+    },
+    {
+      "name": "Bodytext",
+      "unusual": true
+    },
+    {
+      "name": "Footertext",
+      "unusual": true
+    },
+    {
+      "name": "MarginNotestext",
+      "unusual": true
+    },
+    {
+      "name": "oneinchtext",
+      "unusual": true
+    },
+    {
+      "name": "notshown",
+      "unusual": true
+    },
+    {
+      "name": "LayOuttype",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "LayOuttype{${1:arg}}"
+      }
+    },
+    {
+      "name": "LayOutbs",
+      "unusual": true
+    },
+    {
+      "name": "ConvertToCount",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "ConvertToCount{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "SetToHalf",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "SetToHalf{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "SetToQuart",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "SetToQuart{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "Identify",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "Identify{${1:arg}}"
+      }
+    },
+    {
+      "name": "InsideHArrow",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "InsideHArrow{${1:width}}"
+      }
+    },
+    {
+      "name": "InsideVArrow",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "InsideVArrow{${1:height}}"
+      }
+    },
+    {
+      "name": "OutsideHArrow",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "OutsideHArrow{${1:right arrow pos}}{${2:length}}{${3:arrow length}}"
+      }
+    },
+    {
+      "name": "OutsideVArrow",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "OutsideVArrow{${1:lower arrow pos}}{${2:length}}{${3:arrow length}}"
+      }
+    },
+    {
+      "name": "Show",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Show{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "Type",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Type{${1:arg1}}{${2:arg2}}"
+      }
+    },
+    {
+      "name": "oneinch",
+      "unusual": true
+    },
+    {
+      "name": "fheight",
+      "unusual": true
+    },
+    {
+      "name": "Interval",
+      "unusual": true
+    },
+    {
+      "name": "ExtraYPos",
+      "unusual": true
+    },
+    {
+      "name": "PositionX",
+      "unusual": true
+    },
+    {
+      "name": "PositionY",
+      "unusual": true
+    },
+    {
+      "name": "ArrowLength",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/layout#c": [
+      "dutch",
+      "german",
+      "ngerman",
+      "english",
+      "french",
+      "francais",
+      "spanish",
+      "portuguese",
+      "brazilian",
+      "italian",
+      "romanian",
+      "japanese",
+      "verbose",
+      "silent",
+      "integers",
+      "reals"
+    ]
+  },
+  "args": [
+    "\\usepackage/layout#c"
+  ]
+}

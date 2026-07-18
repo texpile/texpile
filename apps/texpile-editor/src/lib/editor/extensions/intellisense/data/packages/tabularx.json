@@ -1,0 +1,46 @@
+{
+  "deps": [
+    {
+      "name": "array"
+    }
+  ],
+  "macros": [
+    {
+      "name": "arraybackslash",
+      "unusual": true
+    },
+    {
+      "name": "tabularxcolumn",
+      "unusual": true
+    },
+    {
+      "name": "tracingtabularx",
+      "unusual": true
+    }
+  ],
+  "envs": [
+    {
+      "name": "tabularx",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "{${1:width}}{${2:preamble}}"
+      }
+    },
+    {
+      "name": "tabularx",
+      "arg": {
+        "format": "{}[]{}",
+        "snippet": "{${1:width}}[${3:pos}]{${2:preamble}}"
+      }
+    }
+  ],
+  "keys": {
+    "\\usepackage/tabularx#c": [
+      "infoshow",
+      "debugshow"
+    ]
+  },
+  "args": [
+    "\\usepackage/tabularx#c"
+  ]
+}

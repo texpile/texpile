@@ -10,6 +10,13 @@ export interface LogEntry {
 	line?: number;
 	/** End of a range ("at lines 88--90"). */
 	lineEnd?: number;
+	/** 1-based column of the error point, from the length of the `l.NN` context prefix. */
+	column?: number;
+	/** source text just before the error point (context tail) or the offending key; anchors the
+	 * editor range even when the buffer drifted from the compiled file. */
+	anchorText?: string;
+	/** PDF page, for boxes reported "while \output is active [N]" (no source line exists). */
+	page?: number;
 	/** For errors: the raw block that followed (help text, `l.NN` context). Useful for detail display. */
 	context?: string;
 	/** Raw log slice this entry was built from (message line + consumed continuation). */
@@ -22,8 +29,9 @@ export interface LogEntry {
 	suggestedPackage?: string;
 	/** The offending command extracted from error context (e.g. "\alpah"), for precise highlighting. */
 	command?: string;
-	/** Which tool produced the entry: undefined = the LaTeX engine, 'bib' = bibtex/biber (.blg). */
-	source?: 'bib';
+	/** Which tool produced the entry: undefined = the LaTeX engine, 'bib' = bibtex/biber (.blg),
+	 * 'dvi' = the dvipdfmx/xdvipdfmx driver (captured from the compile's terminal output). */
+	source?: 'bib' | 'dvi';
 }
 
 /** Nested file-open tree reconstructed from the log's `(file ... )` markers. */

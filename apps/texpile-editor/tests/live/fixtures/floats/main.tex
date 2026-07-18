@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+
+Intro paragraph before the floats with some ordinary words that wrap onto a second
+line so the fixture has an editable lead-in block.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=100pt]{plot.png}
+\caption{Figure caption text for the caption scenario to edit live.}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+cellalpha & cellone \\
+cellbeta & celltwo \\
+\end{tabular}
+\caption{Table caption text for the table caption scenario to edit live.}
+\end{table}
+
+Paragraph with an inline image \includegraphics[width=40pt]{plot.png} sitting
+inside prose plus enough surrounding words that the paragraph wraps properly.
+
+Tail paragraph after the floats ends this fixture with ordinary words.
+
+\end{document}

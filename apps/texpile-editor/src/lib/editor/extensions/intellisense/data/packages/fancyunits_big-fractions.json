@@ -1,0 +1,170 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "GraypersecondUF"
+    },
+    {
+      "name": "metrepersquaresecondUF"
+    },
+    {
+      "name": "joulepermoleUF"
+    },
+    {
+      "name": "molepercubicmetreUF"
+    },
+    {
+      "name": "radianpersquaresecondUF"
+    },
+    {
+      "name": "kilogramsquaremetrepersecondUF"
+    },
+    {
+      "name": "radianpersecondUF"
+    },
+    {
+      "name": "SquaremetrepercubicmetreUF"
+    },
+    {
+      "name": "coulombpermolUF"
+    },
+    {
+      "name": "amperepersquaremetreUF"
+    },
+    {
+      "name": "kilogrampercubicmetreUF"
+    },
+    {
+      "name": "SquaremetrepernewtonsecondUF"
+    },
+    {
+      "name": "pascalsecondUF"
+    },
+    {
+      "name": "coulombpercubicmetreUF"
+    },
+    {
+      "name": "voltpermetreUF"
+    },
+    {
+      "name": "coulombpersquaremetreUF"
+    },
+    {
+      "name": "faradpermetreUF"
+    },
+    {
+      "name": "wattpersquaremetreUF"
+    },
+    {
+      "name": "joulepersquaremetreUF"
+    },
+    {
+      "name": "newtonpercubicmetreUF"
+    },
+    {
+      "name": "newtonperkilogramUF"
+    },
+    {
+      "name": "jouleperkelvinUF"
+    },
+    {
+      "name": "jouleperkilogramUF"
+    },
+    {
+      "name": "coulombperkilogramUF"
+    },
+    {
+      "name": "SquaremetrepersecondUF"
+    },
+    {
+      "name": "SquaremetrepersquaresecondUF"
+    },
+    {
+      "name": "kilogrammetrepersecondUF"
+    },
+    {
+      "name": "candelapersquaremetreUF"
+    },
+    {
+      "name": "amperepermetreUF"
+    },
+    {
+      "name": "jouleperteslaUF"
+    },
+    {
+      "name": "henrypermetreUF"
+    },
+    {
+      "name": "kilogrampersecondUF"
+    },
+    {
+      "name": "kilogrampersquaremetresecondUF"
+    },
+    {
+      "name": "kilogrampersquaremetreUF"
+    },
+    {
+      "name": "kilogrampermetreUF"
+    },
+    {
+      "name": "joulepermolekelvinUF"
+    },
+    {
+      "name": "kilogramperkilomoleUF"
+    },
+    {
+      "name": "kilogrammetrepersquaresecondUF"
+    },
+    {
+      "name": "newtonpersquaremetreUF"
+    },
+    {
+      "name": "persquaremetresecondUF"
+    },
+    {
+      "name": "wattperkilogramUF"
+    },
+    {
+      "name": "wattpercubicmetreUF"
+    },
+    {
+      "name": "wattpersquaremetresteradianUF"
+    },
+    {
+      "name": "jouleperkilogramkelvinUF"
+    },
+    {
+      "name": "SquaremetreperkilogramUF"
+    },
+    {
+      "name": "cubicmetreperkilogramUF"
+    },
+    {
+      "name": "newtonpermetreUF"
+    },
+    {
+      "name": "wattpermetrekelvinUF"
+    },
+    {
+      "name": "SquaremetrepercubicsecondUF"
+    },
+    {
+      "name": "metrepersecondUF"
+    },
+    {
+      "name": "joulepercubicmetreUF"
+    },
+    {
+      "name": "kilogrampercubicmetrecoulombUF"
+    },
+    {
+      "name": "cubicmetrepersecondUF"
+    },
+    {
+      "name": "kilogrampersecondcubicmetreUF"
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

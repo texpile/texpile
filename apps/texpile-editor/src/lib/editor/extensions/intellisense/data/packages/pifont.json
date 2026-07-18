@@ -1,0 +1,86 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "ding",
+      "arg": {
+        "format": "{}",
+        "snippet": "ding{${1:number}}"
+      }
+    },
+    {
+      "name": "dingfill",
+      "arg": {
+        "format": "{}",
+        "snippet": "dingfill{${1:number}}"
+      }
+    },
+    {
+      "name": "dingline",
+      "arg": {
+        "format": "{}",
+        "snippet": "dingline{${1:number}}"
+      }
+    },
+    {
+      "name": "Pifont",
+      "arg": {
+        "format": "{}",
+        "snippet": "Pifont{${1:family}}"
+      }
+    },
+    {
+      "name": "Pisymbol",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Pisymbol{${1:family}}{${2:number}}"
+      }
+    },
+    {
+      "name": "Pifill",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Pifill{${1:family}}{${2:number}}"
+      }
+    },
+    {
+      "name": "Piline",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Piline{${1:family}}{${2:number}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "dinglist",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:number}}"
+      }
+    },
+    {
+      "name": "dingautolist",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:number}}"
+      }
+    },
+    {
+      "name": "Pilist",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "{${1:family}}{${2:number}}"
+      }
+    },
+    {
+      "name": "Piautolist",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "{${1:family}}{${2:number}}"
+      }
+    }
+  ],
+  "keys": {},
+  "args": []
+}

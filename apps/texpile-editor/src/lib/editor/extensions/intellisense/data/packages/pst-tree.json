@@ -1,0 +1,517 @@
+{
+  "deps": [
+    {
+      "name": "pstricks"
+    },
+    {
+      "name": "pst-node"
+    },
+    {
+      "name": "pst-xkey"
+    }
+  ],
+  "macros": [
+    {
+      "name": "endpsTree",
+      "unusual": true
+    },
+    {
+      "name": "endskiplevels"
+    },
+    {
+      "name": "MakeShortTnput",
+      "arg": {
+        "format": "{}",
+        "snippet": "MakeShortTnput{${1:char}}"
+      }
+    },
+    {
+      "name": "psedge"
+    },
+    {
+      "name": "psnodecnt",
+      "unusual": true
+    },
+    {
+      "name": "pspred"
+    },
+    {
+      "name": "pssucc"
+    },
+    {
+      "name": "pstree",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "pstree[${3:options%keyvals}]{${1:root}}{${2:successors}}"
+      }
+    },
+    {
+      "name": "psTree",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "psTree{${1:root}}"
+      }
+    },
+    {
+      "name": "pstree",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "pstree{${1:root}}{${2:successors}}"
+      }
+    },
+    {
+      "name": "pstreecnt",
+      "unusual": true
+    },
+    {
+      "name": "pstreelevel",
+      "unusual": true
+    },
+    {
+      "name": "skiplevel*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "skiplevel*[${2:options%keyvals}]{${1:subtrees}}"
+      }
+    },
+    {
+      "name": "skiplevel*",
+      "arg": {
+        "format": "{}",
+        "snippet": "skiplevel*{${1:subtrees}}"
+      }
+    },
+    {
+      "name": "skiplevel",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "skiplevel[${2:options%keyvals}]{${1:subtrees}}"
+      }
+    },
+    {
+      "name": "skiplevel",
+      "arg": {
+        "format": "{}",
+        "snippet": "skiplevel{${1:subtrees}}"
+      }
+    },
+    {
+      "name": "skiplevels*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "skiplevels*[${2:options%keyvals}]{${1:n}}"
+      }
+    },
+    {
+      "name": "skiplevels*",
+      "arg": {
+        "format": "{}",
+        "snippet": "skiplevels*{${1:n}}"
+      }
+    },
+    {
+      "name": "skiplevels",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "skiplevels[${2:options%keyvals}]{${1:n}}"
+      }
+    },
+    {
+      "name": "skiplevels",
+      "arg": {
+        "format": "{}",
+        "snippet": "skiplevels{${1:n}}"
+      }
+    },
+    {
+      "name": "TC"
+    },
+    {
+      "name": "TC*"
+    },
+    {
+      "name": "TC*",
+      "arg": {
+        "format": "[]",
+        "snippet": "TC*[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "TC*",
+      "arg": {
+        "format": "[]",
+        "snippet": "TC*[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tc*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tc*[${2:options%keyvals}]{${1:dim}}"
+      }
+    },
+    {
+      "name": "Tc*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tc*[${2:options%keyvals}]{${1:dim}}"
+      }
+    },
+    {
+      "name": "Tc*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tc*{${1:dim}}"
+      }
+    },
+    {
+      "name": "TC",
+      "arg": {
+        "format": "[]",
+        "snippet": "TC[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "TC",
+      "arg": {
+        "format": "[]",
+        "snippet": "TC[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tc",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tc[${2:options%keyvals}]{${1:dim}}"
+      }
+    },
+    {
+      "name": "Tc",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tc[${2:options%keyvals}]{${1:dim}}"
+      }
+    },
+    {
+      "name": "Tc",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tc{${1:dim}}"
+      }
+    },
+    {
+      "name": "Tcircle*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tcircle*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TCircle*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "TCircle*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tcircle*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tcircle*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TCircle*",
+      "arg": {
+        "format": "{}",
+        "snippet": "TCircle*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tcircle",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tcircle[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TCircle",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "TCircle[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tcircle",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tcircle{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TCircle",
+      "arg": {
+        "format": "{}",
+        "snippet": "TCircle{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tdia*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tdia*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tdia*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tdia*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tdia",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tdia[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tdia",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tdia{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tdot"
+    },
+    {
+      "name": "Tdot*"
+    },
+    {
+      "name": "Tdot*",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tdot*[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tdot",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tdot[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tf"
+    },
+    {
+      "name": "Tf*"
+    },
+    {
+      "name": "Tf*",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tf*[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tf",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tf[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tfan"
+    },
+    {
+      "name": "Tfan*"
+    },
+    {
+      "name": "Tfan*",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tfan*[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tfan",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tfan[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tn"
+    },
+    {
+      "name": "Toval*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Toval*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Toval*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Toval*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Toval",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Toval[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Toval",
+      "arg": {
+        "format": "{}",
+        "snippet": "Toval{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tp"
+    },
+    {
+      "name": "Tp*"
+    },
+    {
+      "name": "Tp*",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tp*[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tp",
+      "arg": {
+        "format": "[]",
+        "snippet": "Tp[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "Tr*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tr*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TR*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "TR*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tr*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tr*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TR*",
+      "arg": {
+        "format": "{}",
+        "snippet": "TR*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tr",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Tr[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TR",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "TR[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Tr",
+      "arg": {
+        "format": "{}",
+        "snippet": "Tr{${1:stuff}}"
+      }
+    },
+    {
+      "name": "TR",
+      "arg": {
+        "format": "{}",
+        "snippet": "TR{${1:stuff}}"
+      }
+    },
+    {
+      "name": "tspace",
+      "arg": {
+        "format": "{}",
+        "snippet": "tspace{${1:dim}}"
+      }
+    },
+    {
+      "name": "Ttri*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Ttri*[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Ttri*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Ttri*{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Ttri",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "Ttri[${2:options%keyvals}]{${1:stuff}}"
+      }
+    },
+    {
+      "name": "Ttri",
+      "arg": {
+        "format": "{}",
+        "snippet": "Ttri{${1:stuff}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "psTree",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:root}}"
+      }
+    },
+    {
+      "name": "skiplevels",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "[${2:options%keyvals}]{${1:n}}"
+      }
+    },
+    {
+      "name": "skiplevels",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:n}}"
+      }
+    }
+  ],
+  "keys": {},
+  "args": []
+}

@@ -1,0 +1,423 @@
+{
+  "deps": [
+    {
+      "name": "color"
+    },
+    {
+      "name": "colortbl",
+      "if": "table"
+    }
+  ],
+  "macros": [
+    {
+      "name": "GetGinDriver",
+      "unusual": true
+    },
+    {
+      "name": "GinDriver",
+      "unusual": true
+    },
+    {
+      "name": "xcolorcmd",
+      "unusual": true
+    },
+    {
+      "name": "adjustUCRBG",
+      "unusual": true
+    },
+    {
+      "name": "rangeHsb",
+      "unusual": true
+    },
+    {
+      "name": "rangetHsb",
+      "unusual": true
+    },
+    {
+      "name": "rangeRGB",
+      "unusual": true
+    },
+    {
+      "name": "rangeHSB",
+      "unusual": true
+    },
+    {
+      "name": "rangeGray",
+      "unusual": true
+    },
+    {
+      "name": "substitutecolormodel",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "substitutecolormodel{${1:source model}}{${2:target model-list}}"
+      }
+    },
+    {
+      "name": "selectcolormodel",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "selectcolormodel{${1:num model}}"
+      }
+    },
+    {
+      "name": "ifconvertcolorsD",
+      "unusual": true
+    },
+    {
+      "name": "convertcolorsDtrue",
+      "unusual": true
+    },
+    {
+      "name": "convertcolorsDfalse",
+      "unusual": true
+    },
+    {
+      "name": "ifconvertcolorsU",
+      "unusual": true
+    },
+    {
+      "name": "convertcolorsUtrue",
+      "unusual": true
+    },
+    {
+      "name": "convertcolorsUfalse",
+      "unusual": true
+    },
+    {
+      "name": "definecolor",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "definecolor{${1:name%specialDef}}{${2:model-list}}{${3:spec-list}}"
+      }
+    },
+    {
+      "name": "definecolor",
+      "arg": {
+        "format": "[]{}{}{}",
+        "snippet": "definecolor[${4:type}]{${1:name%specialDef}}{${2:model-list}}{${3:spec-list}}"
+      }
+    },
+    {
+      "name": "providecolor",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "providecolor{${1:name%specialDef}}{${2:model-list}}{${3:spec-list}}"
+      }
+    },
+    {
+      "name": "providecolor",
+      "arg": {
+        "format": "[]{}{}{}",
+        "snippet": "providecolor[${4:type}]{${1:name%specialDef}}{${2:model-list}}{${3:spec-list}}"
+      }
+    },
+    {
+      "name": "colorlet",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "colorlet{${1:name%specialDef}}{${2:color}}"
+      }
+    },
+    {
+      "name": "colorlet",
+      "arg": {
+        "format": "{}[]{}",
+        "snippet": "colorlet{${1:name%specialDef}}[${3:num-model}]{${2:color}}"
+      }
+    },
+    {
+      "name": "colorlet",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "colorlet[${3:type}]{${1:name%specialDef}}{${2:color}}"
+      }
+    },
+    {
+      "name": "colorlet",
+      "arg": {
+        "format": "[]{}[]{}",
+        "snippet": "colorlet[${3:type}]{${1:name%specialDef}}[${4:num-model}]{${2:color}}"
+      }
+    },
+    {
+      "name": "definecolorset",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}{}{}{}",
+        "snippet": "definecolorset[${5:type}]{${1:model-list}}{${2:head}}{${3:tail}}{${4:set-spec}}"
+      }
+    },
+    {
+      "name": "providecolorset",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}{}{}{}",
+        "snippet": "providecolorset[${5:type}]{${1:model-list}}{${2:head}}{${3:tail}}{${4:set-spec}}"
+      }
+    },
+    {
+      "name": "preparecolor",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}{}{}",
+        "snippet": "preparecolor[${4:type}]{${1:name%specialDef}}{${2:model-list}}{${3:spec-list}}"
+      }
+    },
+    {
+      "name": "preparecolorset",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}{}{}{}",
+        "snippet": "preparecolorset[${5:type}]{${1:model-list}}{${2:head}}{${3:tail}}{${4:set-spec}}"
+      }
+    },
+    {
+      "name": "ifdefinecolors",
+      "unusual": true
+    },
+    {
+      "name": "definecolorstrue",
+      "unusual": true
+    },
+    {
+      "name": "definecolorsfalse",
+      "unusual": true
+    },
+    {
+      "name": "definecolors",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "definecolors{${1:id-list}}"
+      }
+    },
+    {
+      "name": "providecolors",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "providecolors{${1:id-list}}"
+      }
+    },
+    {
+      "name": "ifglobalcolors",
+      "unusual": true
+    },
+    {
+      "name": "globalcolorstrue",
+      "unusual": true
+    },
+    {
+      "name": "globalcolorsfalse",
+      "unusual": true
+    },
+    {
+      "name": "xglobal",
+      "unusual": true
+    },
+    {
+      "name": "boxframe",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "boxframe{${1:width}}{${2:height}}{${3:depth}}"
+      }
+    },
+    {
+      "name": "testcolor",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "testcolor{${1:color}}"
+      }
+    },
+    {
+      "name": "testcolor",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "testcolor[${2:model-list}]{${1:spec-list}}"
+      }
+    },
+    {
+      "name": "blendcolors",
+      "arg": {
+        "format": "{}",
+        "snippet": "blendcolors{${1:mix-expr}}"
+      }
+    },
+    {
+      "name": "blendcolors*",
+      "arg": {
+        "format": "{}",
+        "snippet": "blendcolors*{${1:mix-expr}}"
+      }
+    },
+    {
+      "name": "maskcolors",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "maskcolors{${1:color}}"
+      }
+    },
+    {
+      "name": "maskcolors",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "maskcolors[${2:num-model}]{${1:color}}"
+      }
+    },
+    {
+      "name": "ifmaskcolors",
+      "unusual": true
+    },
+    {
+      "name": "maskcolorstrue",
+      "unusual": true
+    },
+    {
+      "name": "maskcolorsfalse",
+      "unusual": true
+    },
+    {
+      "name": "colormask",
+      "unusual": true
+    },
+    {
+      "name": "definecolorseries",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}{}",
+        "snippet": "definecolorseries{${1:name}}{${2:core-model}}{${3:method%keyvals}}{${4:b-spec}}{${5:s-spec}}",
+        "keys": [
+          "\\definecolorseries"
+        ],
+        "keyPos": 2
+      }
+    },
+    {
+      "name": "definecolorseries",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}[]{}[]{}",
+        "snippet": "definecolorseries{${1:name}}{${2:core-model}}{${3:method%keyvals}}[${6:b-model}]{${4:b-spec}}[${7:s-model}]{${5:s-spec}}",
+        "keys": [
+          "\\definecolorseries"
+        ],
+        "keyPos": 2
+      }
+    },
+    {
+      "name": "resetcolorseries",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "resetcolorseries[${2:div}]{${1:name}}"
+      }
+    },
+    {
+      "name": "colorseriescycle",
+      "unusual": true
+    },
+    {
+      "name": "extractcolorspec",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "extractcolorspec{${1:color}}{${2:cmd}}"
+      }
+    },
+    {
+      "name": "extractcolorspecs",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "extractcolorspecs{${1:color}}{${2:model-cmd%cmd}}{${3:color-cmd%cmd}}"
+      }
+    },
+    {
+      "name": "convertcolorspec",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "convertcolorspec{${1:model}}{${2:spec}}{${3:target-model}}{${4:cmd}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "testcolors",
+      "unusual": true
+    },
+    {
+      "name": "testcolors",
+      "unusual": true,
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:model-list}]"
+      }
+    }
+  ],
+  "keys": {
+    "\\usepackage/xcolor#c": [
+      "dvips",
+      "xdvi",
+      "dvipdf",
+      "dvipdfm",
+      "dvipdfmx",
+      "luatex",
+      "pdftex",
+      "dvipsone",
+      "dviwindo",
+      "emtex",
+      "dviwin",
+      "oztex",
+      "textures",
+      "pctexps",
+      "pctexwin",
+      "pctexhp",
+      "pctex32",
+      "truetex",
+      "tcidvi",
+      "vtex",
+      "xetex",
+      "dvisvgm",
+      "natural",
+      "rgb",
+      "cmy",
+      "cmyk",
+      "hsb",
+      "gray",
+      "RGB",
+      "HTML",
+      "HSB",
+      "Gray",
+      "monochrome",
+      "dvipsnames",
+      "dvipsnames*",
+      "svgnames",
+      "svgnames*",
+      "x11names",
+      "x11names*",
+      "table",
+      "prologue",
+      "kernelfbox",
+      "xcdraw",
+      "noxcdraw",
+      "fixinclude",
+      "showerrors",
+      "hideerrors"
+    ],
+    "\\definecolorseries": [
+      "step",
+      "grad",
+      "last"
+    ]
+  },
+  "args": [
+    "\\usepackage/xcolor#c"
+  ]
+}

@@ -1,7 +1,7 @@
-// Classic Type1 (.pfb) fonts for the live renderer: parse with the vendored pdf.js
-// Type1Parser, interpret the (type2-converted) charstrings into canvas paths. Glyphs are
-// addressed by slot through the font's map-file .enc vector, so the ink is the REAL font's,
-// at the engine's exact coordinates. Unknown/failed glyphs return null (absent, never wrong).
+// Turns a real Type1 font (.pfb + .enc) into canvas glyph paths -- nothing else.
+// Parsed with the vendored pdf.js Type1Parser; glyphs addressed by slot through the
+// map-file .enc vector, so the ink is the REAL font's, at the engine's exact
+// coordinates. Unknown/failed glyphs return null (absent, never wrong).
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Type1Parser } from './type1_parser.js';
 import { Stream } from './stream.js';

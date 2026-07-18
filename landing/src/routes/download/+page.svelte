@@ -294,16 +294,16 @@
 			<Menu.Positioner>
 				<Menu.Content class="border-surface-200 z-50 min-w-52 rounded-lg border bg-white p-1 shadow-lg outline-none">
 					<Menu.Item
-						value="appimage"
-						class="rounded-base hover:bg-surface-100 data-[highlighted]:bg-surface-100 cursor-pointer px-3 py-2 text-sm font-medium"
-					>
-						<Menu.ItemText>AppImage</Menu.ItemText>
-					</Menu.Item>
-					<Menu.Item
 						value="deb"
 						class="rounded-base hover:bg-surface-100 data-[highlighted]:bg-surface-100 cursor-pointer px-3 py-2 text-sm font-medium"
 					>
 						<Menu.ItemText>.deb <span class="text-surface-400 font-normal">Debian / Ubuntu</span></Menu.ItemText>
+					</Menu.Item>
+					<Menu.Item
+						value="appimage"
+						class="rounded-base hover:bg-surface-100 data-[highlighted]:bg-surface-100 cursor-pointer px-3 py-2 text-sm font-medium"
+					>
+						<Menu.ItemText>AppImage <span class="text-surface-400 font-normal">other distros, needs libfuse2</span></Menu.ItemText>
 					</Menu.Item>
 				</Menu.Content>
 			</Menu.Positioner>

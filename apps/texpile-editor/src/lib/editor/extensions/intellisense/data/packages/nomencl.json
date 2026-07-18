@@ -1,0 +1,192 @@
+{
+  "deps": [
+    {
+      "name": "xkeyval"
+    },
+    {
+      "name": "ifthen"
+    },
+    {
+      "name": "tocbasic"
+    },
+    {
+      "name": "array",
+      "if": "nomentbl"
+    },
+    {
+      "name": "longtable",
+      "if": "nomentbl"
+    },
+    {
+      "name": "siunitx",
+      "if": "nomentbl"
+    }
+  ],
+  "macros": [
+    {
+      "name": "makenomenclature"
+    },
+    {
+      "name": "printnomenclature"
+    },
+    {
+      "name": "printnomenclature",
+      "arg": {
+        "format": "[]",
+        "snippet": "printnomenclature[${1:space%l}]"
+      }
+    },
+    {
+      "name": "nomenclature",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "nomenclature[${3:prefix}]{${1:symbol}}{${2:description}}"
+      }
+    },
+    {
+      "name": "nomenclature",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "nomenclature{${1:symbol}}{${2:description}}"
+      }
+    },
+    {
+      "name": "nomrefeq"
+    },
+    {
+      "name": "nomrefpage"
+    },
+    {
+      "name": "nomrefeqpage"
+    },
+    {
+      "name": "nomnorefeq"
+    },
+    {
+      "name": "nomnorefpage"
+    },
+    {
+      "name": "nomnorefeqpage"
+    },
+    {
+      "name": "nomenclature",
+      "if": "nomentbl",
+      "arg": {
+        "format": "[]{}{}{}{}",
+        "snippet": "nomenclature[${5:prefix}]{${1:symbol}}{${2:description}}{${3:units}}{${4:note}}"
+      }
+    },
+    {
+      "name": "nomenclature",
+      "if": "nomentbl",
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "nomenclature{${1:symbol}}{${2:description}}{${3:units}}{${4:note}}"
+      }
+    },
+    {
+      "name": "setnomtableformat",
+      "if": "nomentbl",
+      "arg": {
+        "format": "{}",
+        "snippet": "setnomtableformat{${1:column format}}"
+      }
+    },
+    {
+      "name": "nomlabelwidth",
+      "unusual": true
+    },
+    {
+      "name": "nomname",
+      "unusual": true
+    },
+    {
+      "name": "nomAname",
+      "unusual": true
+    },
+    {
+      "name": "nomGname",
+      "unusual": true
+    },
+    {
+      "name": "nomXname",
+      "unusual": true
+    },
+    {
+      "name": "nomZname",
+      "unusual": true
+    },
+    {
+      "name": "nomgroup",
+      "unusual": true
+    },
+    {
+      "name": "nompreamble",
+      "unusual": true
+    },
+    {
+      "name": "nompostamble",
+      "unusual": true
+    },
+    {
+      "name": "nomitemsep",
+      "unusual": true
+    },
+    {
+      "name": "nomprefix",
+      "unusual": true
+    },
+    {
+      "name": "nomlabel",
+      "unusual": true
+    },
+    {
+      "name": "nomentryend",
+      "unusual": true
+    },
+    {
+      "name": "eqdeclaration",
+      "unusual": true
+    },
+    {
+      "name": "pagedeclaration",
+      "unusual": true
+    },
+    {
+      "name": "nomeqref",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "nomeqref{${1:arg}}"
+      }
+    },
+    {
+      "name": "nomeqref",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "nomeqref{${1:arg}}"
+      }
+    },
+    {
+      "name": "nompageref",
+      "unusual": true,
+      "arg": {
+        "format": "{}",
+        "snippet": "nompageref{${1:arg}}"
+      }
+    },
+    {
+      "name": "printglossary",
+      "if": "compatible"
+    }
+  ],
+  "envs": [
+    {
+      "name": "thenomenclature",
+      "unusual": true
+    }
+  ],
+  "keys": {},
+  "args": []
+}

@@ -1,0 +1,37 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "centerline",
+      "arg": {
+        "format": "{}",
+        "snippet": "centerline{${1:text}}"
+      }
+    },
+    {
+      "name": "fussy"
+    },
+    {
+      "name": "sloppy"
+    }
+  ],
+  "envs": [
+    {
+      "name": "appendix"
+    },
+    {
+      "name": "eqnarray"
+    },
+    {
+      "name": "eqnarray*"
+    },
+    {
+      "name": "fussypar"
+    },
+    {
+      "name": "sloppypar"
+    }
+  ],
+  "keys": {},
+  "args": []
+}

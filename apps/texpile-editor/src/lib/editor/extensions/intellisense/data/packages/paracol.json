@@ -1,0 +1,411 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "switchcolumn"
+    },
+    {
+      "name": "switchcolumn",
+      "arg": {
+        "format": "[]",
+        "snippet": "switchcolumn[${1:column}]"
+      }
+    },
+    {
+      "name": "switchcolumn*",
+      "arg": {
+        "format": "[]",
+        "snippet": "switchcolumn*[${1:text}]"
+      }
+    },
+    {
+      "name": "switchcolumn",
+      "arg": {
+        "format": "[]*[]",
+        "snippet": "switchcolumn[${1:column}]*[${2:text}]"
+      }
+    },
+    {
+      "name": "thecolumn"
+    },
+    {
+      "name": "definecolumnpreamble",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "definecolumnpreamble{${1:column}}{${2:preamble}}"
+      }
+    },
+    {
+      "name": "ensurevspace",
+      "arg": {
+        "format": "{}",
+        "snippet": "ensurevspace{${1:length}}"
+      }
+    },
+    {
+      "name": "columnratio",
+      "arg": {
+        "format": "{}",
+        "snippet": "columnratio{${1:ratio 0,...,ratio k}}"
+      }
+    },
+    {
+      "name": "columnratio",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "columnratio{${1:ratio 0,...,ratio k}}[${2:ratio' 0,...,ratio' k}]"
+      }
+    },
+    {
+      "name": "setcolumnwidth",
+      "arg": {
+        "format": "{}",
+        "snippet": "setcolumnwidth{${1:gap 0,...,gap k}}"
+      }
+    },
+    {
+      "name": "setcolumnwidth",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "setcolumnwidth{${1:gap 0,...,gap k}}[${2:gap' 0,...,gap' k}]"
+      }
+    },
+    {
+      "name": "twosided"
+    },
+    {
+      "name": "twosided",
+      "arg": {
+        "format": "[]",
+        "snippet": "twosided[${1:t1t2...tk}]"
+      }
+    },
+    {
+      "name": "marginparthreshold",
+      "arg": {
+        "format": "{}",
+        "snippet": "marginparthreshold{${1:columns}}"
+      }
+    },
+    {
+      "name": "marginparthreshold",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "marginparthreshold{${1:columns}}[${2:columns'}]"
+      }
+    },
+    {
+      "name": "globalcounter",
+      "arg": {
+        "format": "{}",
+        "snippet": "globalcounter{${1:counter}}"
+      }
+    },
+    {
+      "name": "globalcounter*"
+    },
+    {
+      "name": "localcounter",
+      "arg": {
+        "format": "{}",
+        "snippet": "localcounter{${1:counter}}"
+      }
+    },
+    {
+      "name": "definethecounter",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "definethecounter{${1:counter}}{${2:column}}{${3:definition}}"
+      }
+    },
+    {
+      "name": "synccounter",
+      "arg": {
+        "format": "{}",
+        "snippet": "synccounter{${1:counter}}"
+      }
+    },
+    {
+      "name": "syncallcounters"
+    },
+    {
+      "name": "footnotelayout",
+      "arg": {
+        "format": "{}",
+        "snippet": "footnotelayout{${1:layout}}"
+      }
+    },
+    {
+      "name": "footnote*",
+      "arg": {
+        "format": "{}",
+        "snippet": "footnote*{${1:text}}"
+      }
+    },
+    {
+      "name": "footnote*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footnote*[${2:number}]{${1:text}}"
+      }
+    },
+    {
+      "name": "footnotemark*",
+      "unusual": true
+    },
+    {
+      "name": "footnotemark*",
+      "unusual": true,
+      "arg": {
+        "format": "[]",
+        "snippet": "footnotemark*[${1:number}]"
+      }
+    },
+    {
+      "name": "footnotetext*",
+      "arg": {
+        "format": "{}",
+        "snippet": "footnotetext*{${1:text}}"
+      }
+    },
+    {
+      "name": "footnotetext*",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footnotetext*[${2:number}]{${1:text}}"
+      }
+    },
+    {
+      "name": "fncounteradjustment"
+    },
+    {
+      "name": "nofncounteradjustment"
+    },
+    {
+      "name": "belowfootnoteskip"
+    },
+    {
+      "name": "columncolor",
+      "arg": {
+        "format": "{}",
+        "snippet": "columncolor{${1:color}}"
+      }
+    },
+    {
+      "name": "columncolor",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "columncolor{${1:color}}[${2:column}]"
+      }
+    },
+    {
+      "name": "columncolor",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "columncolor[${2:mode}]{${1:color}}"
+      }
+    },
+    {
+      "name": "columncolor",
+      "arg": {
+        "format": "[]{}[]",
+        "snippet": "columncolor[${2:mode}]{${1:color}}[${3:column}]"
+      }
+    },
+    {
+      "name": "normalcolumncolor"
+    },
+    {
+      "name": "normalcolumncolor",
+      "arg": {
+        "format": "[]",
+        "snippet": "normalcolumncolor[${1:column}]"
+      }
+    },
+    {
+      "name": "coloredwordhyphenated"
+    },
+    {
+      "name": "nocoloredwordhyphenated"
+    },
+    {
+      "name": "colseprulecolor",
+      "arg": {
+        "format": "{}",
+        "snippet": "colseprulecolor{${1:color}}"
+      }
+    },
+    {
+      "name": "colseprulecolor",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "colseprulecolor{${1:color}}[${2:column}]"
+      }
+    },
+    {
+      "name": "colseprulecolor",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "colseprulecolor[${2:mode}]{${1:color}}"
+      }
+    },
+    {
+      "name": "colseprulecolor",
+      "arg": {
+        "format": "[]{}[]",
+        "snippet": "colseprulecolor[${2:mode}]{${1:color}}[${3:column}]"
+      }
+    },
+    {
+      "name": "normalcolseprulecolor"
+    },
+    {
+      "name": "normalcolseprulecolor",
+      "arg": {
+        "format": "[]",
+        "snippet": "normalcolseprulecolor[${1:column}]"
+      }
+    },
+    {
+      "name": "backgroundcolor",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "backgroundcolor{${1:region}}{${2:color}}"
+      }
+    },
+    {
+      "name": "backgroundcolor",
+      "arg": {
+        "format": "{}[]{}",
+        "snippet": "backgroundcolor{${1:region}}[${3:mode}]{${2:color}}"
+      }
+    },
+    {
+      "name": "nobackgroundcolor",
+      "arg": {
+        "format": "{}",
+        "snippet": "nobackgroundcolor{${1:region}}"
+      }
+    },
+    {
+      "name": "resetbackgroundcolor"
+    },
+    {
+      "name": "pagerim"
+    },
+    {
+      "name": "addcontentsonly",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "addcontentsonly{${1:file%keyvals}}{${2:column}}",
+        "keys": [
+          "\\addcontentsonly"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "flushpage"
+    }
+  ],
+  "envs": [
+    {
+      "name": "paracol",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:number}}"
+      }
+    },
+    {
+      "name": "paracol",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "{${1:number}}[${2:text}]"
+      }
+    },
+    {
+      "name": "paracol",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}",
+        "snippet": "[${2:numleft}]{${1:number}}"
+      }
+    },
+    {
+      "name": "paracol",
+      "unusual": true,
+      "arg": {
+        "format": "[]{}[]",
+        "snippet": "[${2:numleft}]{${1:number}}[${3:text}]"
+      }
+    },
+    {
+      "name": "column"
+    },
+    {
+      "name": "column*"
+    },
+    {
+      "name": "column*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:text}]"
+      }
+    },
+    {
+      "name": "nthcolumn",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:column}}"
+      }
+    },
+    {
+      "name": "nthcolumn*",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:column}}"
+      }
+    },
+    {
+      "name": "nthcolumn*",
+      "arg": {
+        "format": "{}[]",
+        "snippet": "{${1:column}}[${2:text}]"
+      }
+    },
+    {
+      "name": "leftcolumn"
+    },
+    {
+      "name": "leftcolumn*"
+    },
+    {
+      "name": "leftcolumn*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:text}]"
+      }
+    },
+    {
+      "name": "rightcolumn"
+    },
+    {
+      "name": "rightcolumn*"
+    },
+    {
+      "name": "rightcolumn*",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:text}]"
+      }
+    }
+  ],
+  "keys": {
+    "\\addcontentsonly": [
+      "toc",
+      "lof",
+      "lot"
+    ]
+  },
+  "args": []
+}

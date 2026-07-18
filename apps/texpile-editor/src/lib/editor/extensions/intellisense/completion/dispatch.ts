@@ -10,19 +10,27 @@ import { filePathCompletionSource } from './filePaths';
 import { glossaryCompletionSource } from './glossary';
 import { argumentCompletionSource } from './arguments';
 import { macroOptions } from './macros';
+import { isMathContext, withMathBoost } from './mathContext';
 import { subsuperscriptCompletionSource } from './subsuperscript';
 import { atSuggestionCompletionSource } from './atSuggestions';
 import { bibFileCompletionSource } from './bibFile';
 
-const MACRO_TRIGGER = /\\[a-zA-Z]*$/;
+// letters, or the delimiter-macro families (\(, \[, \{, \left(, \bigl[, \Biggm|, \left\|, ...)
+// mirroring LW's trigger so non-letter macro names stay reachable while typing
+const MACRO_TRIGGER = /\\(?:[a-zA-Z]*|(?:left|[Bb]ig{1,2}[lmr]?)?(?:[({[|]|\\[{|])?)$/;
+const NON_LETTER_END = /[({[|]$/;
 
 // fires on the bare backslash too: LaTeX Workshop registers "\" as a trigger character
 function macroCompletionSource(ctx: CompletionContext): CompletionResult | null {
 	const macro = ctx.matchBefore(MACRO_TRIGGER);
-	if (macro) {
-		return { from: macro.from, options: macroOptions(ctx.state.doc.toString()), validFor: /^\\[a-zA-Z]*$/ };
+	if (!macro) return null;
+	const options = withMathBoost(macroOptions(ctx.state.doc.toString()), isMathContext(ctx.state, macro.from));
+	if (NON_LETTER_END.test(macro.text)) {
+		// delimiter names aren't letter-filterable by the widget; offer only the exact match (LW does the same)
+		const exact = options.filter((o) => o.label === macro.text);
+		return exact.length ? { from: macro.from, options: exact, validFor: /^$/ } : null;
 	}
-	return null;
+	return { from: macro.from, options, validFor: /^\\[a-zA-Z]*$/ };
 }
 
 const TEX_SOURCES = [
@@ -38,10 +46,11 @@ const TEX_SOURCES = [
 	subsuperscriptCompletionSource
 ];
 
-/** the full LaTeX (.tex/.cls/.sty) completion dispatch. */
-export function latexCompletionSource(ctx: CompletionContext): CompletionResult | null {
+/** the full LaTeX (.tex/.cls/.sty) completion dispatch. async because the argument source
+ * lazy-loads vendored package data; every other source resolves synchronously. */
+export async function latexCompletionSource(ctx: CompletionContext): Promise<CompletionResult | null> {
 	for (const source of TEX_SOURCES) {
-		const result = source(ctx);
+		const result = await source(ctx);
 		if (result) return result;
 	}
 	return null;

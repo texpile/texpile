@@ -1,0 +1,37 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "theoremstyle",
+      "arg": {
+        "format": "{}",
+        "snippet": "theoremstyle{${1:style}}"
+      }
+    },
+    {
+      "name": "theorembodyfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "theorembodyfont{${1:font}}"
+      }
+    },
+    {
+      "name": "theoremheaderfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "theoremheaderfont{${1:font}}"
+      }
+    },
+    {
+      "name": "theorempreskipamount",
+      "unusual": true
+    },
+    {
+      "name": "theorempostskipamount",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

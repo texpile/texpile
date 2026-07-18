@@ -46,10 +46,13 @@ Units: node dimensions are TeX points (1/72.27 in); PDF and CSS points are 1/72 
 emits TeX points; the renderer applies one scale, `px_per_pt = DPI / 72.27`. Mixing 72 and
 72.27 shifts everything 0.375% and was an early bug.
 
-Protocol (stdin -> stdout): `HSIZE n` / `GLYPHS` / `TEXT`..`END` in; `@@CAP` (capabilities),
-`@@READY hsize textheight`, `@@R` (per-block stats), `@@G` (one glyph), `@@GEND` out. Blocks
-are flattened to one line before sending so a line equal to a protocol sentinel can't confuse
-the framing.
+Protocol (stdin -> stdout): `HSIZE n` / `GLYPHS` / `TEXT`..`END` in; `texpile-warm@@CAP`
+(capabilities), `texpile-warm@@READY hsize textheight`, `texpile-warm@@R` (per-block stats),
+`@@G` (one glyph), `texpile-warm@@GEND` out. Frame markers carry the app prefix so TeX log
+chatter (which can contain bare `@@`, e.g. `\@@par` in error contexts) can't imitate them;
+the per-glyph `@@G` lines stay short because thousands stream per request and they are only
+read between `R` and `GEND`. Blocks are flattened to one line before sending so a line equal
+to a protocol sentinel can't confuse the framing.
 
 ## Deciding patch vs recompile
 
@@ -124,12 +127,36 @@ Page dimensions are read from the engine's resolved registers at warm-up
 (`tex.dimen["columnwidth"]` for the live measure, not `textwidth`, which isn't the constraining
 width under `twocolumn`), never parsed from preamble text.
 
+## The exact-PDF resting view
+
+At rest the preview paints each visible page from a pdf.js raster of `_draft/draft.pdf` -- the
+reconcile compile's own output, so the resting view is pixel-exact by construction (true fonts,
+figures, tikz). The record canvas remains the LIVE layer: while typing, patches composite over
+the raster (wipe the column band, strip-shift the base below it by delta, overlay the daemon's
+records), and the record render is the interim state before a page's raster lands and the
+permanent fallback when a document error truncates the PDF (records ship per page regardless).
+Rasters are cached per (page, scale), capped near 400dpi, and invalidated per compile.
+
+Viewport windowing keeps this bounded: only visible pages +-2 hold a raster or a painted
+canvas (`cv.width = 0` frees the rest; their CSS boxes preserve scroll geometry). Patch
+targets and navigation destinations force-paint before scrolling.
+
+More record-space anchors from the engine, never heuristics: the shipout box baseline (`ht` in
+the manifest) IS the footer baseline, and `\footskip` above it is the body bottom -- capacity
+checks measure against that, and nothing below it ever shifts with a patch (footers are
+bottom-anchored). Cross-page paragraph straddles and column-bottom overflows render as split
+patches (band A ends its column, the remainder opens the next page's first column), always
+provisional. Beamer frames are transparent to the splitter (`frame` is a non-block env), so
+slide content patches like ordinary prose; frame structure recompiles. Footnote bodies are
+walked as separate `note` record groups (`ins` nodes), letting the patch prove a footnote
+unchanged and stay exact.
+
 ## The no-engine constraint
 
 We ship only text and use the user's TeX, which drives several decisions:
 
 - **Engine variance**: node type and subtype IDs differ across LuaTeX versions, so the walker
-  resolves every ID by name at startup, never by number. A capability probe (`@@CAP`) reports
+  resolves every ID by name at startup, never by number. A capability probe (`texpile-warm@@CAP`) reports
   version and required APIs at warm-up; if it fails, live preview turns off and the app
   compiles on demand as before. Live preview is an enhancement, never a dependency.
 - **Preview vs output engine**: the instant path is always `lualatex`; the user's final build

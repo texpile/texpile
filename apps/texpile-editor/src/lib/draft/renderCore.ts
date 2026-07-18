@@ -1,7 +1,7 @@
-// Draft-mode renderer core: turns the engine's extracted per-page records into
-// target-agnostic canvas draw-ops. Framework-agnostic (no DOM/opentype import) so the
-// same geometry logic could be pixel-tested headlessly. Coords are TeX pt throughout
-// (paper dims and glyph coords come from the same engine, so no bp/pt conversion).
+// Turns engine records into canvas draw-ops -- nothing else. Framework-agnostic (no
+// DOM/opentype import) so the same geometry logic could be pixel-tested headlessly.
+// Coords are TeX pt throughout (paper dims and glyph coords come from the same engine,
+// so no bp/pt conversion).
 //
 // fontFor(id) -> { ot, size } | null   (ot = a parsed opentype.js font; size in pt)
 // S = pixels per TeX pt.

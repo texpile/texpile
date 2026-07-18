@@ -1,0 +1,313 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "thelecture",
+      "unusual": true
+    },
+    {
+      "name": "lecture",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "lecture{${1:lecture name%text}}{${2:lecture label}}"
+      }
+    },
+    {
+      "name": "lecture",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "lecture[${3:short lecture name%text}]{${1:lecture name%text}}{${2:lecture label}}"
+      }
+    },
+    {
+      "name": "AtBeginLecture",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtBeginLecture{${1:text}}"
+      }
+    },
+    {
+      "name": "includeonlylecture",
+      "arg": {
+        "format": "{}",
+        "snippet": "includeonlylecture{${1:lecture label}}"
+      }
+    },
+    {
+      "name": "insertlecture",
+      "unusual": true
+    },
+    {
+      "name": "insertlecturenumber",
+      "unusual": true
+    },
+    {
+      "name": "insertshortlecture",
+      "unusual": true
+    },
+    {
+      "name": "insertshortlecture",
+      "unusual": true,
+      "arg": {
+        "format": "[]",
+        "snippet": "insertshortlecture[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "part<mode specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "part<mode specification>{${1:title}}"
+      }
+    },
+    {
+      "name": "part<mode specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "part<mode specification>[${2:short title}]{${1:title}}"
+      }
+    },
+    {
+      "name": "partlink",
+      "unusual": true
+    },
+    {
+      "name": "partlinkshort",
+      "unusual": true
+    },
+    {
+      "name": "insertpart",
+      "unusual": true
+    },
+    {
+      "name": "insertromanpartnumber",
+      "unusual": true
+    },
+    {
+      "name": "insertpartnumber",
+      "unusual": true
+    },
+    {
+      "name": "insertshortpart",
+      "unusual": true
+    },
+    {
+      "name": "insertshortpart",
+      "unusual": true,
+      "arg": {
+        "format": "[]",
+        "snippet": "insertshortpart[${1:options%keyvals}]"
+      }
+    },
+    {
+      "name": "AtBeginPart",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtBeginPart{${1:text}}"
+      }
+    },
+    {
+      "name": "sectionname",
+      "unusual": true
+    },
+    {
+      "name": "section<mode specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "section<mode specification>[${2:short title}]{${1:title}}"
+      }
+    },
+    {
+      "name": "section<mode specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "section<mode specification>{${1:title}}"
+      }
+    },
+    {
+      "name": "section<mode specification>*",
+      "arg": {
+        "format": "{}",
+        "snippet": "section<mode specification>*{${1:title}}"
+      }
+    },
+    {
+      "name": "secname",
+      "unusual": true
+    },
+    {
+      "name": "lastsection",
+      "unusual": true
+    },
+    {
+      "name": "sectionlink",
+      "unusual": true
+    },
+    {
+      "name": "insertsection",
+      "unusual": true
+    },
+    {
+      "name": "insertsectionhead",
+      "unusual": true
+    },
+    {
+      "name": "insertsectionnumber",
+      "unusual": true
+    },
+    {
+      "name": "AtBeginSection",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtBeginSection{${1:text}}"
+      }
+    },
+    {
+      "name": "AtBeginSection",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "AtBeginSection[${2:special star text%text}]{${1:text}}"
+      }
+    },
+    {
+      "name": "breakhere",
+      "unusual": true
+    },
+    {
+      "name": "subsectionname",
+      "unusual": true
+    },
+    {
+      "name": "subsection<mode specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "subsection<mode specification>[${2:short title}]{${1:title}}"
+      }
+    },
+    {
+      "name": "subsection<mode specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "subsection<mode specification>{${1:title}}"
+      }
+    },
+    {
+      "name": "subsection<mode specification>*",
+      "arg": {
+        "format": "{}",
+        "snippet": "subsection<mode specification>*{${1:title}}"
+      }
+    },
+    {
+      "name": "subsecname",
+      "unusual": true
+    },
+    {
+      "name": "lastsubsection",
+      "unusual": true
+    },
+    {
+      "name": "subsectionlink",
+      "unusual": true
+    },
+    {
+      "name": "insertsubsection",
+      "unusual": true
+    },
+    {
+      "name": "insertsubsectionhead",
+      "unusual": true
+    },
+    {
+      "name": "insertsubsectionnumber",
+      "unusual": true
+    },
+    {
+      "name": "AtBeginSubsection",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtBeginSubsection{${1:text}}"
+      }
+    },
+    {
+      "name": "AtBeginSubsection",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "AtBeginSubsection[${2:special star text%text}]{${1:text}}"
+      }
+    },
+    {
+      "name": "subsubsection<mode specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "subsubsection<mode specification>[${2:short title}]{${1:title}}"
+      }
+    },
+    {
+      "name": "subsubsection<mode specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "subsubsection<mode specification>{${1:title}}"
+      }
+    },
+    {
+      "name": "subsubsection<mode specification>*",
+      "arg": {
+        "format": "{}",
+        "snippet": "subsubsection<mode specification>*{${1:title}}"
+      }
+    },
+    {
+      "name": "subsubsecname",
+      "unusual": true
+    },
+    {
+      "name": "lastsubsubsection",
+      "unusual": true
+    },
+    {
+      "name": "subsubsectionlink",
+      "unusual": true
+    },
+    {
+      "name": "insertsubsubsection",
+      "unusual": true
+    },
+    {
+      "name": "insertsubsubsectionhead",
+      "unusual": true
+    },
+    {
+      "name": "insertsubsubsectionnumber",
+      "unusual": true
+    },
+    {
+      "name": "AtBeginSubsubsection",
+      "arg": {
+        "format": "{}",
+        "snippet": "AtBeginSubsubsection{${1:text}}"
+      }
+    },
+    {
+      "name": "AtBeginSubsubsection",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "AtBeginSubsubsection[${2:special star text%text}]{${1:text}}"
+      }
+    },
+    {
+      "name": "appendix<mode specification>"
+    },
+    {
+      "name": "insertappendixframenumber",
+      "unusual": true
+    },
+    {
+      "name": "insertframenumberinappendix",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

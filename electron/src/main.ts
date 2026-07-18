@@ -10,6 +10,14 @@ import * as updates from './updates';
 
 const isDev = !app.isPackaged;
 
+// display name for menus/notifications and the Linux WM_CLASS (GNOME matches it against the
+// .desktop file's StartupWMClass=Texpile; without this the dock shows "Texpile-desktop").
+// package.json's `name` also names the settings dir on every existing install, so pin the
+// paths BEFORE the rename can move them.
+app.setPath('userData', path.join(app.getPath('appData'), 'texpile-desktop'));
+app.setPath('sessionData', path.join(app.getPath('appData'), 'texpile-desktop'));
+app.setName('Texpile');
+
 // dev/test hook: userData scopes settings, caches, and the single-instance lock,
 // so without this a dev run can't start while an installed Texpile is open
 if (isDev && process.env.TEXPILE_USER_DATA) {
@@ -158,12 +166,13 @@ function createWindow(url: string): void {
 			pendingOpenPath = null;
 		}
 	});
-	// no native View menu, so wire DevTools shortcuts by hand (dev only)
+	// no native View menu, so wire the DevTools shortcut by hand (dev only). Ctrl+Shift+I only:
+	// F12 belongs to the editor's go-to-definition and must reach the renderer
 	if (!app.isPackaged) {
 		mainWindow.webContents.on('before-input-event', (event, input) => {
 			if (input.type !== 'keyDown') return;
 			const mod = input.control || input.meta;
-			if (input.key === 'F12' || (mod && input.shift && input.key.toLowerCase() === 'i')) {
+			if (mod && input.shift && input.key.toLowerCase() === 'i') {
 				mainWindow?.webContents.toggleDevTools();
 				event.preventDefault();
 			}
@@ -267,7 +276,8 @@ const DEFAULT_SETTINGS = {
 	pdfDarkPages: true, // in dark mode, render PDF pages inverted
 	draftMode: false, // preview via the incremental per-page engine instead of the terminal command
 	checkForUpdates: true,
-	uiZoom: 1 // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
+	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
+	mathPreview: true // live math preview tooltip in source mode
 };
 const settingsFile = () => path.join(app.getPath('userData'), 'settings.json');
 function readSettings(): Record<string, unknown> {

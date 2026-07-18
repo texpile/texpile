@@ -1,0 +1,165 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "allsectionsfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "allsectionsfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "partfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "partfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "chapterfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "chapterfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "sectionfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "sectionfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "subsectionfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "subsectionfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "subsubsectionfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "subsubsectionfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "paragraphfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "paragraphfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "subparagraphfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "subparagraphfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "minisecfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "minisecfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "partnumberfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "partnumberfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "parttitlefont",
+      "arg": {
+        "format": "{}",
+        "snippet": "parttitlefont{${1:commands}}"
+      }
+    },
+    {
+      "name": "chapternumberfont",
+      "arg": {
+        "format": "{}",
+        "snippet": "chapternumberfont{${1:commands}}"
+      }
+    },
+    {
+      "name": "chaptertitlefont",
+      "arg": {
+        "format": "{}",
+        "snippet": "chaptertitlefont{${1:commands}}"
+      }
+    },
+    {
+      "name": "nohang"
+    },
+    {
+      "name": "ulemheading",
+      "arg": {
+        "format": "{}",
+        "snippet": "ulemheading{${1:ulem command}}"
+      }
+    },
+    {
+      "name": "sectionrule",
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "sectionrule{${1:raise top%l}}{${2:top rule%l}}{${3:raise bottom%l}}{${4:bottom rule%l}}"
+      }
+    },
+    {
+      "name": "SSifnumberpart",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "SSifnumberpart{${1:true}}{${2:false}}"
+      }
+    },
+    {
+      "name": "SSiftitlepart",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "SSiftitlepart{${1:true}}{${2:false}}"
+      }
+    },
+    {
+      "name": "SSsectlevel",
+      "unusual": true
+    },
+    {
+      "name": "chapterformat",
+      "unusual": true
+    },
+    {
+      "name": "ifcentering",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "ifcentering{${1:true}}{${2:false}}"
+      }
+    },
+    {
+      "name": "ifraggedleft",
+      "unusual": true,
+      "arg": {
+        "format": "{}{}",
+        "snippet": "ifraggedleft{${1:true}}{${2:false}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/sectsty#c": [
+      "garrulous",
+      "chatty",
+      "taciturn",
+      "yorkshire"
+    ]
+  },
+  "args": [
+    "\\usepackage/sectsty#c"
+  ]
+}

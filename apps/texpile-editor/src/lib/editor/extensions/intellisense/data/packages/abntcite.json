@@ -1,0 +1,52 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "citeonline",
+      "arg": {
+        "format": "{}",
+        "snippet": "citeonline{${1:bibid}}"
+      }
+    },
+    {
+      "name": "citeauthor",
+      "arg": {
+        "format": "{}",
+        "snippet": "citeauthor{${1:bibid}}"
+      }
+    },
+    {
+      "name": "citeauthoronline",
+      "arg": {
+        "format": "{}",
+        "snippet": "citeauthoronline{${1:bibid}}"
+      }
+    },
+    {
+      "name": "leftovercite"
+    },
+    {
+      "name": "rightovercite"
+    },
+    {
+      "name": "citeoptions",
+      "arg": {
+        "format": "{}",
+        "snippet": "citeoptions{${1:options}}"
+      }
+    },
+    {
+      "name": "bibtextitlecommand"
+    },
+    {
+      "name": "bibtextitlecommand",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "bibtextitlecommand{${1:entry}}{${2:text}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

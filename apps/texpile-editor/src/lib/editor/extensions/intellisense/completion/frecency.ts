@@ -60,7 +60,8 @@ export function withFrecency(options: Completion[], now = Date.now()): Completio
 		const e = store[o.label];
 		if (!e) return o;
 		const boost = Math.min(MAX_BOOST, Math.round(4 * Math.log2(1 + decayed(e, now))));
-		return boost > 0 ? { ...o, boost } : o;
+		// compose with boosts set upstream (math context, open-env priority), never replace them
+		return boost > 0 ? { ...o, boost: Math.min(99, (o.boost ?? 0) + boost) } : o;
 	});
 }
 

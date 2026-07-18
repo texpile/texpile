@@ -1,0 +1,29 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "Needspace",
+      "arg": {
+        "format": "{}",
+        "snippet": "Needspace{${1:length}}"
+      }
+    },
+    {
+      "name": "Needspace*",
+      "arg": {
+        "format": "{}",
+        "snippet": "Needspace*{${1:length}}"
+      }
+    },
+    {
+      "name": "needspace",
+      "arg": {
+        "format": "{}",
+        "snippet": "needspace{${1:length}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

@@ -1,0 +1,150 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "int",
+      "detail": "∫",
+      "doc": "Integral operator"
+    },
+    {
+      "name": "iint",
+      "detail": "∬ (\"amsmath fourier esint wasysym\" command)",
+      "doc": "Double integral operator"
+    },
+    {
+      "name": "iiint",
+      "detail": "∭ (\"amsmath fourier esint wasysym\" command)",
+      "doc": "Triple integral operator"
+    },
+    {
+      "name": "iiiint",
+      "detail": "⨌ (\"amsmath esint\" command)",
+      "doc": "Quadruple integral operator"
+    },
+    {
+      "name": "idotsint"
+    },
+    {
+      "name": "oint",
+      "detail": "∮",
+      "doc": "Contour integral operator"
+    },
+    {
+      "name": "oiint",
+      "detail": "∯ (\"esint wasysym fourier\" command)",
+      "doc": "\\dbloint (wrisym), double contour integral operator"
+    },
+    {
+      "name": "varoiint"
+    },
+    {
+      "name": "sqint",
+      "detail": "⨖ (\"esint\" command)",
+      "doc": "\\sqrint (wrisym), quaternion integral operator"
+    },
+    {
+      "name": "sqiint"
+    },
+    {
+      "name": "ointctrclockwise",
+      "detail": "∳ (\"esint\" command)",
+      "doc": "\\cntclockoint (wrisym), contour integral, anticlockwise"
+    },
+    {
+      "name": "ointclockwise"
+    },
+    {
+      "name": "varointclockwise",
+      "detail": "∲ (\"esint\" command)",
+      "doc": "\\clockoint (wrisym), contour integral, clockwise"
+    },
+    {
+      "name": "varointctrclockwise"
+    },
+    {
+      "name": "fint",
+      "detail": "⨏ (\"esint wrisym\" command)",
+      "doc": "Integral average with slash"
+    },
+    {
+      "name": "landupint"
+    },
+    {
+      "name": "landdownint"
+    },
+    {
+      "name": "iintop",
+      "unusual": true
+    },
+    {
+      "name": "iiintop",
+      "unusual": true
+    },
+    {
+      "name": "iiiintop",
+      "unusual": true
+    },
+    {
+      "name": "dotsintop",
+      "unusual": true
+    },
+    {
+      "name": "dotsint",
+      "unusual": true
+    },
+    {
+      "name": "oiintop",
+      "unusual": true
+    },
+    {
+      "name": "sqintop",
+      "unusual": true
+    },
+    {
+      "name": "sqiintop",
+      "unusual": true
+    },
+    {
+      "name": "ointctrclockwiseop",
+      "unusual": true
+    },
+    {
+      "name": "ointclockwiseop",
+      "unusual": true
+    },
+    {
+      "name": "varointclockwiseop",
+      "unusual": true
+    },
+    {
+      "name": "varointctrclockwiseop",
+      "unusual": true
+    },
+    {
+      "name": "fintop",
+      "unusual": true
+    },
+    {
+      "name": "varoiintop",
+      "unusual": true
+    },
+    {
+      "name": "landupintop",
+      "unusual": true
+    },
+    {
+      "name": "landdownintop",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/esint#c": [
+      "intlimits",
+      "nointlimits"
+    ]
+  },
+  "args": [
+    "\\usepackage/esint#c"
+  ]
+}

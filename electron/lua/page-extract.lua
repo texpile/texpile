@@ -1,7 +1,7 @@
--- Per-page extractor: walk each shipped page box (the real engine's final, exact
--- layout -- two columns, floats placed, page-broken) and dump positioned records to
--- <outdir>/page-NNN.jsonl, plus a pages.json manifest. Registered from the .tex via the
--- LaTeX kernel shipout hook: \AddToHook{shipout/before}{\directlua{page_extract(\the\ShipoutBox)}}
+-- Writes every SHIPPED PAGE's walker records + the pages.json manifest -- nothing else.
+-- (Each page box is the engine's final exact layout: columns, floats, page breaks.)
+-- Records go to <outdir>/page-NNN.jsonl. Registered from the .tex via the LaTeX kernel
+-- shipout hook: \AddToHook{shipout/before}{\directlua{page_extract(\the\ShipoutBox)}}
 --
 -- Product config (set as Lua globals in the injecting job string before dofile):
 --   TEXPILE_ENGINE_DIR -- absolute dir holding walker.lua (read-only; reads aren't
@@ -29,9 +29,12 @@ local function write_manifest()
 	-- mode); the instant patch calibrates the warm daemon to this so it reproduces the
 	-- page's line breaks. Falls back to \textwidth (single-column docs) then 0.
 	local cw = (tex.dimen and (tex.dimen["columnwidth"] or tex.dimen["textwidth"]) or 0) / 65536.0
+	-- \footskip separates the body bottom from the footer baseline (= the shipout box
+	-- baseline, ht): body bottom in record space is ht - footskip
+	local fsk = (tex.dimen and tex.dimen["footskip"] or 0) / 65536.0
 	local t = {}
 	for i = 1, pageno do t[i] = string.format('{"n":%d,"w":%.4f,"h":%.4f,"ht":%.4f}', i, pages[i].w, pages[i].h, pages[i].ht) end
-	f:write(string.format('{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"pages":[%s]}', pageno, pw, ph, cw, table.concat(t, ",")))
+	f:write(string.format('{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"footSkip":%.4f,"pages":[%s]}', pageno, pw, ph, cw, fsk, table.concat(t, ",")))
 	f:close()
 end
 

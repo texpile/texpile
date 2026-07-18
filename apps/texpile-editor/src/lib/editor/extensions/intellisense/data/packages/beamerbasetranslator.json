@@ -1,0 +1,11 @@
+{
+  "deps": [
+    {
+      "name": "translator"
+    }
+  ],
+  "macros": [],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

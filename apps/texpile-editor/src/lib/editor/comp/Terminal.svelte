@@ -17,7 +17,7 @@
 
 	let status = $state<'loading' | 'ready' | 'unavailable' | 'exited'>('loading');
 	let errorMsg = $state('');
-	let pending: { command: string; onDone?: () => void } | null = null; // asked for before the shell finished spawning
+	let pending: { command: string; onDone?: (output: string) => void } | null = null; // asked for before the shell finished spawning
 
 	const bridge = () => (typeof window !== 'undefined' ? window.texpileTerminal : undefined);
 
@@ -26,8 +26,9 @@
 	// escape, so the input echo can never match; only real output does.
 	let shellName = ''; // basename of the spawned shell, picks the sentinel syntax below
 	let trackSeq = 0;
-	let tracked: { token: string; done: () => void } | null = null;
+	let tracked: { token: string; done: (output: string) => void; out: string } | null = null;
 	let scanTail = ''; // short rolling window over output so a chunk boundary can't split the token
+	const MAX_CAPTURE = 1_000_000; // captured stdout cap; a longer compile keeps its tail
 
 	// unknown shells (nushell, xonsh, ...) get NO sentinel: a suffix they can't parse would fail
 	// the whole line, compile included; the log/PDF pollers still detect completion
@@ -50,7 +51,7 @@
 		return command.split(/\s+/).includes('--%');
 	}
 
-	function withSentinel(command: string, onDone: () => void): string {
+	function withSentinel(command: string, onDone: (output: string) => void): string {
 		if (!get(settings).compileSentinel) return command;
 		if (endsWithChainOperator(command) || hasStopParsingToken(command)) return command;
 		// no shell name: don't guess, syntax the actual shell can't parse could fail the whole line
@@ -63,7 +64,7 @@
 		else if (shell === 'powershell' || shell === 'pwsh') suffix = ` ; echo ('${head}' + '${tail}')`;
 		else if (POSIX_SHELLS.test(shell)) suffix = ` ; echo '${head}''${tail}'`;
 		if (suffix === null) return command;
-		tracked = { token, done: onDone };
+		tracked = { token, done: onDone, out: '' };
 		scanTail = '';
 		return command + suffix;
 	}
@@ -72,8 +73,10 @@
 	// eslint-disable-next-line no-control-regex
 	const stripEscapes = (s: string) => s.replace(/\x1b(?:\[[0-9;?]*[ -/]*[@-~]|\][^\x07\x1b]*(?:\x07|\x1b\\)?)/g, '');
 
-	/** runs a command in the shell, queued if not ready; onDone fires once the command line finishes. */
-	export function run(command: string, onDone?: () => void): void {
+	/** runs a command in the shell, queued if not ready; onDone fires once the command line
+	 * finishes, receiving the command's captured output (escape-stripped, capped) so callers can
+	 * parse tool diagnostics that only go to stdout (dvipdfmx etc.). */
+	export function run(command: string, onDone?: (output: string) => void): void {
 		const b = bridge();
 		if (b && status === 'ready') b.write(id, (onDone ? withSentinel(command, onDone) : command) + '\r');
 		else pending = { command, onDone };
@@ -152,11 +155,15 @@
 					if (tid !== id) return;
 					term?.write(data);
 					if (tracked) {
-						scanTail = (scanTail + stripEscapes(data)).slice(-512);
+						const clean = stripEscapes(data);
+						tracked.out = (tracked.out + clean).slice(-MAX_CAPTURE);
+						scanTail = (scanTail + clean).slice(-512);
 						if (scanTail.includes(tracked.token)) {
-							const { done } = tracked;
+							const { done, out } = tracked;
 							tracked = null;
-							done();
+							// trim from the sentinel's own echo (the last "__texpile" is the token line)
+							const end = out.lastIndexOf('__texpile');
+							done(end > 0 ? out.slice(0, end) : out);
 						}
 					}
 				})

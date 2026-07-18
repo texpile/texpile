@@ -1,0 +1,154 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "setbeamersize",
+      "arg": {
+        "format": "{}",
+        "snippet": "setbeamersize{${1:options%keyvals}}",
+        "keys": [
+          "\\setbeamersize"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "insertpagenumber",
+      "unusual": true
+    },
+    {
+      "name": "column",
+      "arg": {
+        "format": "{}",
+        "snippet": "column{${1:column width%l}}"
+      }
+    },
+    {
+      "name": "column",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "column[${2:placement%keyvals}]{${1:column width%l}}",
+        "keys": [
+          "\\begin{column},\\column"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "column<overlay specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "column<overlay specification>[${2:placement%keyvals}]{${1:column width%l}}"
+      }
+    },
+    {
+      "name": "insertfootnotetext",
+      "unusual": true
+    },
+    {
+      "name": "insertfootnotemark",
+      "unusual": true
+    },
+    {
+      "name": "footnote<overlay specification>",
+      "arg": {
+        "format": "{}",
+        "snippet": "footnote<overlay specification>{${1:text}}"
+      }
+    },
+    {
+      "name": "footnote<overlay specification>",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "footnote<overlay specification>[${2:options%keyvals}]{${1:text}}"
+      }
+    }
+  ],
+  "envs": [
+    {
+      "name": "columns"
+    },
+    {
+      "name": "columns",
+      "arg": {
+        "format": "[]",
+        "snippet": "[${1:options%keyvals}]",
+        "keys": [
+          "\\begin{columns}"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "columns",
+      "arg": {
+        "format": "<>[]",
+        "snippet": "<${2:overlay specification}>[${1:options%keyvals}]",
+        "keys": [
+          "\\begin{columns}"
+        ],
+        "keyPos": 1
+      }
+    },
+    {
+      "name": "column",
+      "arg": {
+        "format": "{}",
+        "snippet": "{${1:column width%l}}"
+      }
+    },
+    {
+      "name": "column",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "[${2:placement%keyvals}]{${1:column width%l}}",
+        "keys": [
+          "\\begin{column},\\column"
+        ],
+        "keyPos": 0
+      }
+    },
+    {
+      "name": "column",
+      "arg": {
+        "format": "<>[]{}",
+        "snippet": "<${3:overlay specification}>[${2:placement%keyvals}]{${1:column width%l}}",
+        "keys": [
+          "\\begin{column},\\column"
+        ],
+        "keyPos": 1
+      }
+    }
+  ],
+  "keys": {
+    "\\setbeamersize": [
+      "text margin left=",
+      "text margin right=",
+      "sidebar width left=",
+      "sidebar width right=",
+      "description width=",
+      "description width of=${1:text}",
+      "mini frame size=",
+      "mini frame offset="
+    ],
+    "\\begin{columns}": [
+      "b",
+      "c",
+      "onlytextwidth",
+      "t",
+      "T",
+      "totalwidth="
+    ],
+    "\\begin{column},\\column": [
+      "t",
+      "T",
+      "c",
+      "b"
+    ],
+    "\\footnote#c": [
+      "${1:number}",
+      "frame"
+    ]
+  },
+  "args": []
+}

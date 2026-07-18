@@ -62,6 +62,13 @@ Your documents stay on your disk. The app's only network traffic is the update c
 
 Questions, bugs, or feedback? Join the [Discord](https://discord.com/invite/7wanVzCBWf).
 
+## Acknowledgements
+
+Beyond its package dependencies, Texpile vendors or derives from the following projects:
+
+- [LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop) (MIT). The editor's autocomplete, hover, and folding are modeled on its IntelliSense, and its completion data (commands, packages, classes, and key-value option lists) is vendored into the editor. Details in [VENDORED-LICENSES](apps/texpile-editor/src/lib/editor/extensions/intellisense/data/VENDORED-LICENSES.md).
+- [pdf.js](https://github.com/mozilla/pdf.js) (Apache-2.0). The live preview's Type1 font parsing is adapted from it.
+
 ## License
 
 [AGPL-3.0](LICENSE.md)

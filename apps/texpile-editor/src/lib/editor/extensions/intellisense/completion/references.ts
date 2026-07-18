@@ -1,14 +1,18 @@
-// \ref-family completion, sourced from labelStore (populated from \label{} by extractDocRefs)
-// plus a light supplementary scan for the environment key-value form \begin{fig}[label=name].
+// \ref-family completion: labelStore (the active buffer's \label{}s via extractDocRefs), a light
+// supplementary scan for the \begin{fig}[label=name] key-value form, labels from every other
+// project file (projectIntel), and resolved numbers from the main .aux when one exists.
 import { get } from 'svelte/store';
-import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
+import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { labelStore } from '$lib/stores/editorStore';
+import { projectIntelStore } from '$lib/stores/projectIntel';
 import { lastListToken } from './shared';
 
-// the \ref family (explicit list, not "\* contains ref": \href would otherwise match too), plus
-// \hyperref[...] and \crefrange{a}{b}'s second arg
+// any macro containing "ref" (LW's generic trigger, so \zref/\vpageref/\namecref/user \fooref all
+// work), plus \hyperref[...] and \crefrange{a}{b}'s second arg. NOT_REFS keeps \href/\hyperref's
+// url/text args from being offered labels (a false-fire LW itself has).
 const REF_BEFORE =
-	/(?:\\hyperref\[[^\]]*$)|(?:\\(?:ref|eqref|pageref|autoref|nameref|cref|Cref|cpageref|Cpageref|vref|Vref|labelcref)\*?(?:\[[^\]]*\])?\{[^{}]*$)|(?:\\[Cc]refrange\*?\{[^{}]*\}\{[^{}]*$)/;
+	/(?:\\hyperref\[[^\]]*$)|(?:\\([a-zA-Z]*ref[a-zA-Z]*)\*?(?:\[[^\]]*\])?\{[^{}]*$)|(?:\\[Cc]refrange\*?\{[^{}]*\}\{[^{}]*$)/;
+const NOT_REFS = new Set(['href', 'hyperref', 'crossref', 'refstepcounter', 'reflectbox']);
 
 // label=name (or {name}) inside an environment's optional key-value args, e.g.
 // \begin{figure}[label=fig:x]. enumerate/itemize excluded: enumitem's label= option styles list
@@ -44,10 +48,29 @@ export function allLabels(bufferText: string): string[] {
 export function referenceCompletionSource(ctx: CompletionContext): CompletionResult | null {
 	const ref = ctx.matchBefore(REF_BEFORE);
 	if (!ref) return null;
-	const labels = allLabels(ctx.state.doc.toString());
-	if (!labels.length) return null;
-	return lastListToken(
-		ref,
-		labels.map((l) => ({ label: l, type: 'variable' }))
-	);
+	// only the {…}-arg branch gets the exclusion: \hyperref[…] (labels) must stay, \hyperref{…}
+	// and \href{…} (url/text args) must not
+	const braceArg = /\\([a-zA-Z]+)\*?(?:\[[^\]]*\])?\{[^{}]*$/.exec(ref.text);
+	if (braceArg && NOT_REFS.has(braceArg[1])) return null;
+	const intel = get(projectIntelStore);
+	const basename = (p: string) => p.replace(/\\/g, '/').split('/').pop() ?? p;
+	const detailOf = (name: string, from?: string): string | undefined => {
+		const num = intel.auxNumbers[name];
+		const page = intel.auxPages[name];
+		const resolved = num ? `${num}${page ? `, p.${page}` : ''}` : '';
+		return [resolved, from].filter(Boolean).join(' · ') || undefined;
+	};
+	const seen = new Set<string>();
+	const options: Completion[] = [];
+	for (const l of allLabels(ctx.state.doc.toString())) {
+		seen.add(l);
+		options.push({ label: l, type: 'variable', detail: detailOf(l) });
+	}
+	for (const l of intel.labels) {
+		if (seen.has(l.name)) continue;
+		seen.add(l.name);
+		options.push({ label: l.name, type: 'variable', detail: detailOf(l.name, basename(l.file)) });
+	}
+	if (!options.length) return null;
+	return lastListToken(ref, options);
 }

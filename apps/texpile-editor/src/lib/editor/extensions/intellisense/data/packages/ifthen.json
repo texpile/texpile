@@ -1,0 +1,89 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "ifthenelse",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "ifthenelse{${1:test}}{${2:then clause}}{${3:else clause}}"
+      }
+    },
+    {
+      "name": "isodd",
+      "arg": {
+        "format": "{}",
+        "snippet": "isodd{${1:number}}"
+      }
+    },
+    {
+      "name": "isundefined",
+      "arg": {
+        "format": "{}",
+        "snippet": "isundefined{${1:command%plain}}"
+      }
+    },
+    {
+      "name": "equal",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "equal{${1:string}}{${2:string}}"
+      },
+      "detail": "=",
+      "doc": "Equals sign r:"
+    },
+    {
+      "name": "AND"
+    },
+    {
+      "name": "OR"
+    },
+    {
+      "name": "NOT"
+    },
+    {
+      "name": "lengthtest",
+      "arg": {
+        "format": "{}",
+        "snippet": "lengthtest{${1:dimen operator dimen}}"
+      }
+    },
+    {
+      "name": "boolean",
+      "arg": {
+        "format": "{}",
+        "snippet": "boolean{${1:name}}"
+      }
+    },
+    {
+      "name": "newboolean",
+      "arg": {
+        "format": "{}",
+        "snippet": "newboolean{${1:name}}"
+      }
+    },
+    {
+      "name": "provideboolean",
+      "arg": {
+        "format": "{}",
+        "snippet": "provideboolean{${1:name}}"
+      }
+    },
+    {
+      "name": "setboolean",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "setboolean{${1:name}}{${2:truth value}}"
+      }
+    },
+    {
+      "name": "whiledo",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "whiledo{${1:test}}{${2:while clause}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}

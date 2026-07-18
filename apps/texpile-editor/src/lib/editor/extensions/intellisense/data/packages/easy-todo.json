@@ -1,0 +1,71 @@
+{
+  "deps": [
+    {
+      "name": "color"
+    },
+    {
+      "name": "tocloft"
+    },
+    {
+      "name": "ifthen"
+    },
+    {
+      "name": "ifdraft"
+    }
+  ],
+  "macros": [
+    {
+      "name": "todo",
+      "arg": {
+        "format": "{}",
+        "snippet": "todo{${1:note%todo}}"
+      }
+    },
+    {
+      "name": "todoi",
+      "arg": {
+        "format": "{}",
+        "snippet": "todoi{${1:note%todo}}"
+      }
+    },
+    {
+      "name": "todoii",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "todoii{${1:note%todo}}{${2:information%text}}"
+      }
+    },
+    {
+      "name": "listoftodos"
+    },
+    {
+      "name": "todoindextitle",
+      "unusual": true
+    },
+    {
+      "name": "todoindexpagetitle",
+      "unusual": true
+    },
+    {
+      "name": "todocolor",
+      "unusual": true
+    },
+    {
+      "name": "listoftodosname",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/easy-todo#c": [
+      "chapter",
+      "section",
+      "obeyFinal",
+      "enable",
+      "disable"
+    ]
+  },
+  "args": [
+    "\\usepackage/easy-todo#c"
+  ]
+}

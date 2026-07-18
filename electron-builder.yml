@@ -54,20 +54,25 @@ extraResources:
 # electron-builder must not try (and overwrite) it here
 npmRebuild: false
 
-# a single 1024x1024 PNG; electron-builder generates the per-platform .ico/.icns
+# mac/win take the single 1024 PNG (electron-builder derives .ico/.icns). Linux needs the
+# pre-sized set in build/icons: Ubuntu's hicolor theme indexes nothing above 512, so a lone
+# 1024 icon is invisible to the launcher (generic gear in the app grid).
 linux:
   target:
     - AppImage
     - deb
   category: Office
   synopsis: A local, offline LaTeX editor
-  icon: electron/icon.png
+  icon: build/icons
 
 # built names are the download names here too (latest-linux.yml records them, see mac note)
 appImage:
   artifactName: ${productName}-${version}.${ext}
 deb:
   artifactName: texpile-${version}.${ext}
+  # stock postinst probes userns as root, leaving chrome-sandbox non-SUID on Ubuntu 24.04+
+  # (AppArmor restricts unprivileged userns) -> app aborts at launch. Ours always SUIDs it.
+  afterInstall: build/deb-after-install.tpl
 
 mac:
   # one universal (x64 + arm64) dmg so Intel Macs are covered; a host-arch build on the arm64

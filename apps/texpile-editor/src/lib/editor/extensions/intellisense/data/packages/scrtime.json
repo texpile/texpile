@@ -1,0 +1,46 @@
+{
+  "deps": [
+    {
+      "name": "scrkbase"
+    },
+    {
+      "name": "scrlogo"
+    }
+  ],
+  "macros": [
+    {
+      "name": "thistime"
+    },
+    {
+      "name": "thistime",
+      "arg": {
+        "format": "[]",
+        "snippet": "thistime[${1:delimiter}]"
+      }
+    },
+    {
+      "name": "thistime*"
+    },
+    {
+      "name": "thistime*",
+      "arg": {
+        "format": "[]",
+        "snippet": "thistime*[${1:delimiter}]"
+      }
+    },
+    {
+      "name": "settime",
+      "arg": {
+        "format": "{}",
+        "snippet": "settime{${1:time}}"
+      }
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\KOMAoptions#c": [
+      "12h=${1|true,on,yes,false,off,no|}"
+    ]
+  },
+  "args": []
+}

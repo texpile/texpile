@@ -1,0 +1,100 @@
+{
+  "deps": [],
+  "macros": [
+    {
+      "name": "indices",
+      "arg": {
+        "format": "{}",
+        "snippet": "indices{${1:^sup1_sub1^sup2_sub2...}}"
+      }
+    },
+    {
+      "name": "indices*",
+      "arg": {
+        "format": "{}",
+        "snippet": "indices*{${1:^sup1_sub1^sup2_sub2...}}"
+      }
+    },
+    {
+      "name": "tensor",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "tensor{${1:symbol}}{${2:^sup1_sub1^sup2_sub2...}}"
+      }
+    },
+    {
+      "name": "tensor",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "tensor[${3:pre-indices}]{${1:symbol}}{${2:^sup1_sub1^sup2_sub2...}}"
+      }
+    },
+    {
+      "name": "tensor*",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "tensor*{${1:symbol}}{${2:^sup1_sub1^sup2_sub2...}}"
+      }
+    },
+    {
+      "name": "tensor*",
+      "arg": {
+        "format": "[]{}{}",
+        "snippet": "tensor*[${3:pre-indices}]{${1:symbol}}{${2:^sup1_sub1^sup2_sub2...}}"
+      }
+    },
+    {
+      "name": "indexmarker",
+      "unusual": true
+    },
+    {
+      "name": "nuclide",
+      "arg": {
+        "format": "{}",
+        "snippet": "nuclide{${1:symbol%formula}}"
+      }
+    },
+    {
+      "name": "nuclide",
+      "arg": {
+        "format": "[]{}",
+        "snippet": "nuclide[${2:mass no%formula}]{${1:symbol%formula}}"
+      }
+    },
+    {
+      "name": "nuclide",
+      "arg": {
+        "format": "[][]{}",
+        "snippet": "nuclide[${2:mass no%formula}][${3:atomic no%formula}]{${1:symbol%formula}}"
+      }
+    },
+    {
+      "name": "nuclideFont",
+      "unusual": true
+    },
+    {
+      "name": "massnumFont",
+      "unusual": true
+    },
+    {
+      "name": "tensorSmash",
+      "unusual": true
+    },
+    {
+      "name": "tensorStrut",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {
+    "\\usepackage/tensor#c": [
+      "align",
+      "text",
+      "nosmash",
+      "nostrut"
+    ]
+  },
+  "args": [
+    "\\usepackage/tensor#c"
+  ]
+}

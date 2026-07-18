@@ -1,17 +1,20 @@
 <script lang="ts">
-	// Draft mode preview: the whole project rendered as one canvas per page, from the
-	// real engine's exact shipped layout (draft-service extracts each page box). On
-	// recompile, only pages whose records changed are re-rendered. The instant path
-	// (instantPatch) re-typesets ONE paragraph on the warm daemon and splices it into
-	// its page -- but ONLY when the failsafe proves a real recompile would produce the
-	// same page (see the C1/C2/C3 predicate below); otherwise it abandons and fires an
-	// immediate full recompile. Everything on screen always came from the real engine.
+	// Shows the engine's output on screen and splices instant patches into it.
+	// Everything painted came from the real engine (page records, the exact PDF at rest,
+	// daemon typesets while typing); a patch applies ONLY where the C1/C2/C3 predicates
+	// prove a real recompile would produce the same page, else it demotes to a tinted
+	// provisional + reconcile or an honest full pass.
+	// KNOWN single-responsibility violation: this component still bundles four jobs --
+	// painting (records/PDF), the locate ladder (matching daemon output to page records),
+	// patch geometry (drop/shift/overflow), and patch verification. Splitting them means
+	// threading the component's reactive state through a context object; planned, not done.
 	// opentype.js 2.x ESM has no default export -- use the namespace (opentype.parse)
 	import * as opentype from 'opentype.js';
 	import { tick, untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { ZoomIn, ZoomOut, MoveHorizontal, ChevronUp, ChevronDown, Crosshair, Download } from '@lucide/svelte';
 	import { buildDrawList } from './renderCore';
+	import { sfntFromTtc } from './ttc';
 	import { parseT1, type T1Font } from './type1/t1font';
 	import { getPdfJs } from 'svelte-pdf-view';
 	import { native, fileUrl } from '$lib/workspace/fileSystem';
@@ -24,11 +27,13 @@
 		trigger: number;
 		/** SyncTeX inverse: a double-click on a page resolved to a source location. */
 		onInverseSync?: (file: string, line: number, selectText?: string) => void;
+		/** a compile landed: the editor re-evaluates any edits typed while it ran. */
+		onSettled?: () => void;
 	}
-	let { root, mainFile, trigger, onInverseSync }: Props = $props();
+	let { root, mainFile, trigger, onInverseSync, onSettled }: Props = $props();
 
 	let pages = $state<DraftPage[]>([]);
-	let paper = $state({ w: 595, h: 842, colW: 0, mx: 72.27, my: 72.27 });
+	let paper = $state({ w: 595, h: 842, colW: 0, fs: 0, mx: 72.27, my: 72.27 });
 	let status = $state('');
 	let error = $state<string | null>(null);
 	let compiling = $state(false);
@@ -40,6 +45,8 @@
 	const fontByFile = new Map<string, { ot?: any; t1?: T1Font } | null>();
 	// Type1 fonts are cached per (pfb, enc) pair: the same pfb can be reencoded differently
 	const t1Key = (r: any) => r.t1.pfb + '|' + (r.t1.enc || '');
+	// a .ttc collection holds several faces under one path: cache per (file, face)
+	const otKey = (r: any) => (r.sub ? `${r.file}#${r.sub}` : r.file);
 	const prevRecords = new Map<number, string>();
 	const parsedPages = new Map<number, any[]>();
 	const patchedPages = new Set<number>();
@@ -70,7 +77,7 @@
 	function ev(kind: string, detail?: unknown) {
 		const w = window as unknown as { __draftEvents?: unknown[] };
 		const a = (w.__draftEvents ||= []);
-		a.push({ kind, detail });
+		a.push({ kind, detail, t: performance.now() });
 		if (a.length > 200) a.splice(0, a.length - 200);
 	}
 
@@ -80,7 +87,7 @@
 		const seen = new Set<string>();
 		for (const r of records) {
 			if (r.t !== 'font') continue;
-			const key = r.t1 ? t1Key(r) : r.file;
+			const key = r.t1 ? t1Key(r) : otKey(r);
 			if (!key || fontByFile.has(key) || seen.has(key)) continue;
 			seen.add(key);
 			jobs.push(
@@ -94,8 +101,8 @@
 							const t1 = parseT1(new Uint8Array(pfb), enc);
 							fontByFile.set(key, t1 ? { t1 } : null);
 						} else {
-							const buf = await (await fetch(fileUrl(key), { cache: 'force-cache' })).arrayBuffer();
-							fontByFile.set(key, { ot: opentype.parse(buf) });
+							const buf = await (await fetch(fileUrl(r.file), { cache: 'force-cache' })).arrayBuffer();
+							fontByFile.set(key, { ot: opentype.parse(sfntFromTtc(buf, (r.sub || 1) - 1)) });
 						}
 					} catch {
 						fontByFile.set(key, null);
@@ -109,11 +116,21 @@
 		const m: Record<number, { ot?: any; t1?: T1Font; size: number } | null> = {};
 		for (const r of records) {
 			if (r.t !== 'font') continue;
-			const key = r.t1 ? t1Key(r) : r.file;
+			const key = r.t1 ? t1Key(r) : otKey(r);
 			const f = key ? fontByFile.get(key) : null;
 			m[r.id] = f ? { ot: f.ot, t1: f.t1, size: r.size } : null;
 		}
 		return m;
+	}
+	// any glyph whose font the renderer cannot ink (no font record, failed fetch/parse):
+	// the patch GEOMETRY is still engine-exact, but the live frame would show a silent
+	// gap where that ink belongs -- the caller demotes to provisional so the state reads
+	// as approximate until the exact-PDF base shows the real glyphs
+	async function missingInk(records: any[]): Promise<boolean> {
+		await ensureFonts(records);
+		const idMap = idMapFor(records);
+		for (const r of records) if (r.t === 'g' && !idMap[r.f]) return true;
+		return false;
 	}
 
 	// figure bitmaps, cached per file: PNG/JPG drawn directly, PDF figures rasterized once via
@@ -165,6 +182,7 @@
 	function invalidatePixels() {
 		pixGen++;
 		pixCache.clear();
+		baseCache.clear(); // the exact-PDF page rasters come from THIS compile's PDF too
 		pixDoc?.then((d) => d.destroy()).catch(() => {});
 		pixDoc = null;
 	}
@@ -213,6 +231,54 @@
 		})();
 	}
 
+	// ---- exact-PDF resting view ----
+	// At rest each visible page paints a pdf.js raster of _draft/draft.pdf -- pixel-exact by
+	// construction (true fonts, figures, tikz). The record canvas remains the LIVE overlay
+	// while typing (patch composites below) and the automatic fallback when the PDF is
+	// truncated by document errors (records ship regardless -- shipout-hook independence).
+	const baseCache = new Map<string, ImageBitmap | 'loading' | 'failed'>();
+	const BASE_MAX_PXPT = 5.5; // ~400dpi cap so deep zoom doesn't raster 30MP pages
+	function basePxPt(dpr: number) {
+		return Math.min(dispScale * dpr, BASE_MAX_PXPT);
+	}
+	function requestBaseAuto(n: number) {
+		const dpr = Math.min(2, window.devicePixelRatio || 1);
+		requestBase(n, `${n}@${Math.round(basePxPt(dpr) * 100)}`);
+	}
+	function requestBase(n: number, key: string) {
+		if (baseCache.has(key)) return;
+		baseCache.set(key, 'loading');
+		const gen = pixGen;
+		void (async () => {
+			try {
+				if (!pixDoc)
+					pixDoc = (async () => {
+						const pdfjs = await getPdfJs();
+						if (!pdfjs) throw new Error('no pdfjs');
+						const buf = await (await fetch(fileUrl(root + '/_draft/draft.pdf'), { cache: 'no-store' })).arrayBuffer();
+						return pdfjs.getDocument({ data: buf }).promise;
+					})();
+				const pg = await (await pixDoc).getPage(n);
+				// pdf space is bp; we want basePxPt pixels per TeX pt
+				const scale = basePxPt(Math.min(2, window.devicePixelRatio || 1)) * (72.27 / 72);
+				const vp = pg.getViewport({ scale });
+				const c = document.createElement('canvas');
+				c.width = Math.ceil(vp.width);
+				c.height = Math.ceil(vp.height);
+				await pg.render({ canvas: c, canvasContext: c.getContext('2d')!, viewport: vp } as any).promise;
+				const bmp = await createImageBitmap(c);
+				if (gen !== pixGen) return;
+				baseCache.set(key, bmp);
+				ev('base-loaded', { page: n, key });
+				renderPage(n, activePatch.get(n));
+			} catch (e) {
+				if (gen === pixGen) baseCache.set(key, 'failed');
+				ev('base-failed', { page: n, err: String(e).slice(0, 80) });
+				// a page HELD on its last frame waiting for this raster must fall back to records
+				if (gen === pixGen) renderPage(n, activePatch.get(n));
+			}
+		})();
+	}
 	function pageRecords(n: number): any[] {
 		if (!parsedPages.has(n)) {
 			const p = pages[n - 1];
@@ -229,6 +295,19 @@
 		return parsedPages.get(n)!;
 	}
 
+	// The body's bottom in record space: the shipout box baseline (ht) IS the footer line's
+	// baseline, \footskip above it is the last body line. Capacity checks measure against
+	// this; everything below it (the footer) is bottom-anchored and no patch may shift,
+	// clip, or move it.
+	const colBottomOf = (p: number) => {
+		const m = pages[p - 1] as any;
+		return m?.ht ? m.ht - paper.fs : m?.h || 1e9;
+	};
+	const contentFloor = (p: number) => colBottomOf(p) + 2;
+
+	// (patch-time image records draw as placeholders: which FILE a daemon image box shows
+	// was a JS dimension-match guess that could swap same-sized figures -- deleted. The
+	// reconcile's compile attaches filenames engine-side and paints the real figure.)
 	function drawRecs(ctx: CanvasRenderingContext2D, records: any[], S: number, dy = 0, pageNo = 0) {
 		const idMap = idMapFor(records);
 		const { ops } = buildDrawList(records, (id) => idMap[id] || null, S, { glyphFill: '#000', ruleFill: '#000' });
@@ -278,11 +357,86 @@
 		colL: number;
 		colR: number;
 		newRecs: any[];
+		// shifted records landing past this y are dropped on THIS page (they are being
+		// re-drawn at the top of the next page by the overflow split)
+		clipBottom?: number;
+		// records BELOW this y are outside the contiguous content flow (the isolated
+		// page-number footer): never shift, clip, or move them
+		flowBottom?: number;
 	};
+
+	// ---- viewport windowing: only paint visible pages +-2 ----
+	// Every page keeps its CSS-sized element (scroll geometry), but only windowed pages hold
+	// a raster: at A4 x dpr2 each painted canvas is ~14MB of backing store, and repainting
+	// every changed page after a reconcile stalled typing O(pages) on long documents.
+	const WINDOW_PAD = 2;
+	let winLo = 1;
+	let winHi = 3;
+	const inWindow = (n: number) => n >= winLo && n <= winHi;
+	let windowTimer: ReturnType<typeof setTimeout> | null = null;
+	function updateWindow() {
+		if (!scroller || !pages.length) return;
+		const top = scroller.scrollTop;
+		const bot = top + scroller.clientHeight;
+		let lo = pages.length;
+		let hi = 1;
+		for (let i = 0; i < pages.length; i++) {
+			const cv = canvasEls[i];
+			if (!cv) continue;
+			const o = pageOrigin(cv).top;
+			const h = cv.clientHeight || paper.h * dispScale;
+			if (o < bot && o + h > top) {
+				lo = Math.min(lo, i + 1);
+				hi = Math.max(hi, i + 1);
+			}
+		}
+		if (hi < lo) {
+			lo = curPage;
+			hi = curPage;
+		}
+		winLo = Math.max(1, lo - WINDOW_PAD);
+		winHi = Math.min(pages.length, hi + WINDOW_PAD);
+		ev('window', { lo: winLo, hi: winHi, top: Math.round(top), bot: Math.round(bot) });
+		for (let n = 1; n <= pages.length; n++) {
+			const cv = canvasEls[n - 1];
+			if (!cv) continue;
+			if (inWindow(n) || activePatch.has(n)) {
+				if (prevRecords.get(n) !== pages[n - 1].records || cv.width === 0)
+					void renderPage(n).then(() => prevRecords.set(n, pages[n - 1].records));
+			} else if (cv.width > 0) {
+				// free the backing store; the CSS box stays so scroll geometry doesn't move
+				cv.width = 0;
+				cv.height = 0;
+				prevRecords.delete(n);
+			}
+		}
+	}
+	function scheduleWindow() {
+		if (windowTimer) clearTimeout(windowTimer);
+		windowTimer = setTimeout(() => {
+			windowTimer = null;
+			updateWindow();
+		}, 90);
+	}
+	// force the window onto a navigation/patch target so the scroll lands on painted pages
+	function paintAround(n: number) {
+		if (!pages.length) return;
+		winLo = Math.max(1, n - WINDOW_PAD);
+		winHi = Math.min(pages.length, n + WINDOW_PAD);
+		for (let k = winLo; k <= winHi; k++) {
+			const cv = canvasEls[k - 1];
+			if (!cv) continue;
+			if (prevRecords.get(k) !== pages[k - 1].records || cv.width === 0)
+				void renderPage(k).then(() => prevRecords.set(k, pages[k - 1].records));
+		}
+	}
 
 	async function renderPage(n: number, patch?: Patch | Patch[]) {
 		const cv = canvasEls[n - 1];
 		if (!cv) return;
+		// windowed: plain repaints of off-screen pages wait for window entry; explicit patch
+		// splices and pages carrying a live patch always paint (they are the user's focus)
+		if (!patch && !activePatch.has(n) && !inWindow(n)) return;
 		// a plain re-render (e.g. after a zoom) must re-apply any live patch on this page
 		patch = patch ?? activePatch.get(n);
 		const patches: Patch[] = !patch ? [] : Array.isArray(patch) ? patch : [patch];
@@ -300,13 +454,29 @@
 		ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 		ctx.fillStyle = '#fff';
 		ctx.fillRect(0, 0, paper.w * S, paper.h * S);
+		// exact-PDF base: paint the raster when it has landed for this compile+scale; the
+		// records draw covers the page meanwhile (and permanently when the PDF is truncated)
+		// the exact-PDF raster is the RESTING view only: pages carrying a live patch always
+		// draw from records -- the proven splice renderer -- and snap to the pixel-exact
+		// base when the patch clears on reconcile
+		const bkey = `${n}@${Math.round(basePxPt(dpr) * 100)}`;
+		const base = baseCache.get(bkey);
+		if (!patches.length && base && base !== 'loading' && base !== 'failed') {
+			ctx.drawImage(base, 0, 0, paper.w * S, paper.h * S);
+			return;
+		}
+		if (!base) requestBase(n, bkey);
 		if (!patches.length) {
 			drawRecs(ctx, records, S, 0, n);
 			return;
 		}
 		// column-aware 3-way split per SEGMENT (page-box-local pt): each record belongs to the
 		// segment whose column contains it -- drop that segment's band, shift its below-band
-		// content by its delta; records outside every segment stay put
+		// content by its delta; records outside every segment stay put. The page-number footer
+		// sits in the bottom margin (below the content box height) and is bottom-anchored by
+		// TeX -- never shift it with the flow.
+		const meta = pages[n - 1] as any;
+		const contentBottom = (meta?.ht || meta?.h || Infinity) + 2;
 		const unchanged: any[] = [];
 		const shifted: any[][] = patches.map(() => []);
 		for (const r of records) {
@@ -315,17 +485,26 @@
 				for (const a of shifted) a.push(r);
 				continue;
 			}
-			const y = r.y ?? -1;
-			if (y < 0) continue;
+			// no y = non-positional record (endx, note markers): pass through untouched. A
+			// NEGATIVE y is real content -- beamer headlines sit above the reference origin,
+			// and skipping them here silently erased slide titles from every patched render.
+			if (r.y === undefined) {
+				unchanged.push(r);
+				continue;
+			}
+			const y = r.y;
 			const x = r.x ?? -1e4;
 			const pi = patches.findIndex((p) => x >= p.colL && x <= p.colR);
-			if (pi < 0) {
+			if (pi < 0 || y > contentBottom) {
 				unchanged.push(r);
 				continue;
 			}
 			const p = patches[pi];
 			if (y < p.dropTop) unchanged.push(r);
-			else if (y > p.dropBottom) shifted[pi].push(r);
+			else if (y > p.dropBottom) {
+				if (p.flowBottom !== undefined && y > p.flowBottom) unchanged.push(r);
+				else if (p.clipBottom === undefined || y + p.delta <= p.clipBottom) shifted[pi].push(r);
+			}
 		}
 		drawRecs(ctx, unchanged, S, 0, n);
 		patches.forEach((p, i) => {
@@ -360,9 +539,10 @@
 		// the same breaks
 		indent?: boolean;
 		// the paragraph STRADDLES a column break: b1/bk/colL/colR describe the FIRST (reading
-		// order) part; `spill` is the continuation at the top of the next column. Split patches
-		// are always provisional.
-		spill?: { b1: number; bk: number; colL: number; colR: number; paraLeft: number };
+		// order) part; `spill` is the continuation at the top of the next column -- or, when
+		// pageNo is set, at the top of a column on the NEXT PAGE. Split patches are always
+		// provisional.
+		spill?: { b1: number; bk: number; colL: number; colR: number; paraLeft: number; pageNo?: number };
 	};
 	// geometry located once per paragraph per compile; keystrokes reuse it
 	const calCache = new Map<string, Cal | { bail: string }>();
@@ -404,6 +584,7 @@
 	}
 
 	let patching = false;
+	let patchingSince = 0;
 	let queuedPatch: { file: string; line: number; endLine?: number; text: string; orig: string; transient?: boolean } | null = null;
 	// pages showing a "close enough" provisional patch (the paragraph is exact, only the reflow
 	// below is approximate) while a full compile reconciles the true layout -- tinted in the view
@@ -542,8 +723,17 @@
 		const boxes: any[] = (sx && sx.boxes) || [];
 		const lineBoxes = boxes.filter((b) => (b.H || 0) < 30);
 		if (!lineBoxes.length) return bail('no-line-boxes', { total: boxes.length, ok: sx?.ok, err: sx?.error });
-		// F0: paragraph spans pages -> cross-page reflow is the recompile's job
-		if (new Set(lineBoxes.map((b) => b.page)).size > 1) return bail('spans-pages', { pages: [...new Set(lineBoxes.map((b) => b.page))] });
+		// F0: paragraph spans pages. Two CONSECUTIVE pages -> try the cross-page split locate
+		// (band A ends page N's column, band B continues at a column top on page N+1); anything
+		// wider or unmatched stays the recompile's job.
+		const pagesSeen = [...new Set(lineBoxes.map((b) => b.page))].sort((a, b) => a - b);
+		if (pagesSeen.length > 1) {
+			if (pagesSeen.length === 2 && pagesSeen[1] === pagesSeen[0] + 1) {
+				const xp = await locateCrossPage(lineBoxes, pagesSeen[0], pagesSeen[1], orig, listItem);
+				if (!('bail' in xp)) return xp;
+			}
+			return bail('spans-pages', { pages: pagesSeen });
+		}
 		const pageNo = lineBoxes[0].page;
 		const recs = pageRecords(pageNo);
 		if (!recs.length) return bail('no-page-records', { pageNo });
@@ -662,18 +852,16 @@
 		for (let i = lo; i < hi; i++) if (colBase[i + 1] - colBase[i] > gap * 1.5) return bail('break-inside');
 		const b1 = colBase[lo],
 			bk = colBase[hi];
-		// left edge to offset the daemon's glyphs by. For prose: the paragraph's own text
-		// left. For a \item: the daemon typesets the whole list env, whose galley left maps
-		// to the COLUMN text margin (the list indents from there itself) -- so use the
-		// column's leftmost text, not the band's (which starts at the indented bullet).
+		// paraLeft = where the daemon BOX ORIGIN sits on the page: the band's observed left
+		// minus the daemon's own left for the same content. Both engine-measured, so content
+		// that carries its own offset (list indent, \centering'd tabular, equation) recovers
+		// the true galley origin and an edited re-typeset re-centers itself; box-anchored
+		// prose (daemon left ~0) reduces to the band left.
 		const band = allG.filter((x: any) => inCol(x.x) && x.y >= b1 - 0.5 && x.y <= bk + 0.5);
-		const colTextLeft = Math.min(...allG.filter((x: any) => inCol(x.x)).map((x: any) => x.x));
 		const bandLeft = band.length ? Math.min(...band.map((x: any) => x.x)) : colStart;
-		// self-positioned daemon content (its records carry an offset: equation centering, list
-		// indents) anchors at the column left; box-anchored content (records from ~0) at the band
 		const dGl = cal.records.filter((x: any) => x.t === 'g' || x.t === 'glyph');
 		const dLeft = dGl.length ? Math.min(...dGl.map((x: any) => x.x as number)) : 0;
-		const paraLeft = listItem && dLeft > 2 ? colTextLeft : bandLeft;
+		const paraLeft = bandLeft - dLeft;
 		const calSpread = (calLines[calLines.length - 1] as any).y - (calLines[0] as any).y;
 		if (Math.abs(calSpread - (bk - b1)) > 0.7)
 			return bail('spread', { calSpread: +calSpread.toFixed(1), pageSpread: +(bk - b1).toFixed(1) });
@@ -704,6 +892,124 @@
 		);
 		if (!dRows.length || !bandMatchesCal(bandRows, dRows)) return bail('content-mismatch', { band: bandRows.length, cal: dRows.length });
 		return { pageNo, b1, bk, medGap: gap, paraLeft, W, colL, colR };
+	}
+
+	// Cross-PAGE split locate: the paragraph's first nA lines END a column on page A and the
+	// remaining nB lines OPEN a column on page B. Both fragments are content-verified against
+	// the daemon reproduction (rows + x offsets), so a match can't land on the wrong text. The
+	// break row between the fragments is a first-order estimate -> always approx/provisional.
+	async function locateCrossPage(
+		lineBoxes: any[],
+		pA: number,
+		pB: number,
+		orig: string,
+		listItem: boolean
+	): Promise<Cal | { bail: string }> {
+		const bail = (why: string, detail?: unknown) => {
+			ev('locate-xpage-bail', { why, ...(typeof detail === 'object' ? detail : { detail }) });
+			return { bail: why };
+		};
+		const recsA = pageRecords(pA);
+		const recsB = pageRecords(pB);
+		if (!recsA.length || !recsB.length) return bail('no-page-records');
+		// \columnwidth is an engine register from the manifest; without it there is no
+		// truthful hsize to reproduce line breaks at -- no invented default
+		if (!(paper.colW > 0)) return bail('no-colwidth');
+		const W = paper.colW;
+		const G = 8;
+		const median = (a: number[]) => (a.length ? a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)] : 0);
+		const variants: { glyphs: any[]; lines: any[]; indent: boolean }[] = [];
+		for (const ind of listItem ? [false] : [false, true]) {
+			const cal = await native()!.draftTypeset({ root, mainFile, text: (ind ? INDENT_PREFIX : '') + orig, hsize: W });
+			if (!cal.ok) continue;
+			const lines = cal.records.filter((x: any) => x.t === 'line');
+			if (!lines.length || (cal.stats && (cal.stats as any).certified === false)) continue;
+			const glyphs = cal.records.filter((x: any) => x.t === 'g' || x.t === 'glyph');
+			if (!glyphs.length) continue;
+			variants.push({ glyphs, lines, indent: ind });
+		}
+		if (!variants.length) return bail('cal-typeset-failed');
+		const calGaps: number[] = [];
+		for (let i = 1; i < variants[0].lines.length; i++) calGaps.push((variants[0].lines[i] as any).y - (variants[0].lines[i - 1] as any).y);
+		const gap = median(calGaps) || 12;
+		const allGA = recsA.filter((x: any) => x.t === 'g');
+		const allGB = recsB.filter((x: any) => x.t === 'g');
+		if (!allGA.length || !allGB.length) return bail('no-page-glyphs');
+		// prefer page A's synctex-anchored column, but fall back to every candidate
+		const boxesA = lineBoxes.filter((b) => b.page === pA);
+		const aMin = boxesA.length ? Math.min(...boxesA.map((b) => (b.bl ?? b.x) * BP2PT - paper.mx)) : null;
+		const colsA = colCandidates(allGA, W, G);
+		if (aMin !== null) colsA.sort((a, b) => Math.abs(a - aMin) - Math.abs(b - aMin));
+		for (const v of variants) {
+			const dRows = rowsOfG(v.glyphs, gap);
+			const N = dRows.length;
+			if (N < 2) continue;
+			for (const clA of colsA) {
+				const colLA = clA - G,
+					colRA = clA + W + G;
+				let rowsA = rowsOfG(
+					allGA.filter((g: any) => g.x >= colLA && g.x <= colRA),
+					gap
+				);
+				// drop up to two trailing isolated rows (page-number footer sits past a big gap)
+				for (let d = 0; d < 2 && rowsA.length >= 2; d++) {
+					if (rowsA[rowsA.length - 1].y - rowsA[rowsA.length - 2].y > gap * 2.2) rowsA = rowsA.slice(0, -1);
+					else break;
+				}
+				if (!rowsA.length) continue;
+				// band A = the longest PREFIX of dRows that matches the TAIL of the column
+				let nA = 0;
+				for (let k = Math.min(N - 1, rowsA.length); k >= 1 && !nA; k--) {
+					let ok = true;
+					for (let i = 0; i < k && ok; i++) {
+						const pr = rowsA[rowsA.length - k + i];
+						if (!eqSeq(pr.cs, dRows[i].cs) || !eqX(pr, dRows[i])) ok = false;
+						else if (i > 0 && pr.y - rowsA[rowsA.length - k + i - 1].y > gap * 1.5) ok = false;
+					}
+					if (ok) nA = k;
+				}
+				if (!nA) continue;
+				const nB = N - nA;
+				for (const clB of colCandidates(allGB, W, G)) {
+					const colLB = clB - G,
+						colRB = clB + W + G;
+					const rowsB = rowsOfG(
+						allGB.filter((g: any) => g.x >= colLB && g.x <= colRB),
+						gap
+					);
+					if (rowsB.length < nB) continue;
+					// the continuation opens the column; allow skipping a few header rows above it
+					for (let s = 0; s <= Math.min(3, rowsB.length - nB); s++) {
+						let ok = true;
+						for (let i = 0; i < nB && ok; i++) {
+							const pr = rowsB[s + i];
+							if (!eqSeq(pr.cs, dRows[nA + i].cs) || !eqX(pr, dRows[nA + i])) ok = false;
+							else if (i > 0 && pr.y - rowsB[s + i - 1].y > gap * 1.5) ok = false;
+						}
+						if (!ok) continue;
+						const bandA = rowsA.slice(rowsA.length - nA);
+						const leftA = Math.min(...bandA.map((r) => r.left)) - Math.min(...dRows.slice(0, nA).map((r) => r.left));
+						const bandB = rowsB.slice(s, s + nB);
+						const leftB = Math.min(...bandB.map((r) => r.left)) - Math.min(...dRows.slice(nA).map((r) => r.left));
+						ev('locate-xpage-ok', { pA, pB, nA, nB, indent: v.indent });
+						return {
+							pageNo: pA,
+							b1: bandA[0].y,
+							bk: bandA[nA - 1].y,
+							medGap: gap,
+							paraLeft: leftA,
+							W,
+							colL: colLA,
+							colR: colRA,
+							indent: v.indent,
+							approx: true,
+							spill: { pageNo: pB, b1: bandB[0].y, bk: bandB[nB - 1].y, colL: colLB, colR: colRB, paraLeft: leftB }
+						};
+					}
+				}
+			}
+		}
+		return bail('no-xpage-match');
 	}
 
 	// Inverse fallback for when the forward path can't anchor: synctex often tags a paragraph's
@@ -898,10 +1204,7 @@
 		ev('locate-inverse-ok', { pageNo, b1, bk, N, gcount: best.gcount, Gd });
 		const invDGl = cal.records.filter((x: any) => x.t === 'g' || x.t === 'glyph');
 		const invDLeft = invDGl.length ? Math.min(...invDGl.map((x: any) => x.x as number)) : 0;
-		const paraLeft =
-			listItem && invDLeft > 2
-				? Math.min(...allG.filter((x: any) => x.x >= best.col - G && x.x <= best.col + W + G).map((x: any) => x.x))
-				: best.left;
+		const paraLeft = best.left - invDLeft;
 		// the inverse evidence is counts + attributions, never per-glyph content (that's the
 		// glyph tier, which runs FIRST and already failed if we're here) -- so its result is
 		// close-enough, not provable: render provisionally and reconcile
@@ -928,7 +1231,8 @@
 		};
 		const n = native()!;
 		const pdf = root + '/_draft/draft.pdf';
-		const W = paper.colW > 0 ? paper.colW : 345;
+		if (!(paper.colW > 0)) return bail('no-colwidth');
+		const W = paper.colW;
 		const G = 8;
 		const median = (a: number[]) => (a.length ? a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)] : 0);
 		// TWO calibrations: TeX indents mid-section paragraphs but the daemon's box is \noindent,
@@ -971,10 +1275,8 @@
 				for (const v of varRows) {
 					const dRows = v.rows,
 						Nv = dRows.length;
-					// placement anchor: if the daemon's own records start at ~0 the content is
-					// BOX-ANCHORED (prose, tabular) and must splice at the band's real left (e.g. a
-					// \centering'd table); records that carry their own offset (equation centering,
-					// list indents) splice at the column text left instead
+					// placement anchor: band left minus daemon left = the daemon box origin on the
+					// page (see locateForward's paraLeft note)
 					const dLeft = Math.min(...dRows.map((r) => r.left));
 					const starts: number[] = [];
 					for (let s = 0; s + Nv <= rows.length; s++) {
@@ -990,8 +1292,7 @@
 						const s = starts[0];
 						const b1 = rows[s].y,
 							bk = rows[s + Nv - 1].y;
-						const paraLeft =
-							listItem && dLeft > 2 ? Math.min(...rows.map((r) => r.left)) : Math.min(...rows.slice(s, s + Nv).map((r) => r.left));
+						const paraLeft = Math.min(...rows.slice(s, s + Nv).map((r) => r.left)) - dLeft;
 						// C2: natural band spacing -> exact. Stretched spacing (flushbottom
 						// vertical justification) with content and x positions matching is still
 						// the right paragraph in the right place: splice with natural spacing as
@@ -1053,8 +1354,7 @@
 								pageNo,
 								b1: rows[s].y,
 								bk: rows[s + len - 1].y,
-								left:
-									listItem && dLeft0 > 2 ? Math.min(...rows.map((r) => r.left)) : Math.min(...rows.slice(s, s + len).map((r) => r.left)),
+								left: Math.min(...rows.slice(s, s + len).map((r) => r.left)) - dLeft0,
 								colL,
 								colR,
 								diff,
@@ -1114,6 +1414,30 @@
 		if (!ANCHOR.has(fwd.bail)) return fwd;
 		const gm = await locateByGlyphs(file, line, endLine, orig, listItem);
 		if (!('bail' in gm)) return gm;
+		// synctex often reports only ONE page of a page-straddling paragraph (its line boxes
+		// carry the \par line's page), so the forward span check never fires -- when the
+		// single-page tiers can't place it, probe the hinted page pairs for a cross-page split
+		{
+			const n = native()!;
+			const pdf = root + '/_draft/draft.pdf';
+			const hints = new Set<number>();
+			for (const ln of [line, endLine + 1]) {
+				const sx: any = await n.synctex({ action: 'view', pdf, tex: file, line: ln, column: 0 });
+				for (const b of ((sx && sx.boxes) || []) as any[]) if (b.page) hints.add(b.page);
+			}
+			const tried = new Set<string>();
+			for (const p of hints) {
+				for (const [pa, pb] of [
+					[p, p + 1],
+					[p - 1, p]
+				]) {
+					if (pa < 1 || pb > pages.length || tried.has(pa + ':' + pb)) continue;
+					tried.add(pa + ':' + pb);
+					const xp = await locateCrossPage([], pa, pb, orig, listItem);
+					if (!('bail' in xp)) return xp;
+				}
+			}
+		}
 		const inv = await locateInverse(file, line, endLine, orig, listItem);
 		if (!('bail' in inv)) return inv;
 		// the inverse's "straddles a column" is more precise than the forward's anchor failure
@@ -1132,6 +1456,10 @@
 		listItem?: boolean;
 		transient?: boolean;
 		floatInner?: boolean;
+		// the edit changed the paragraph's SET of TeX commands: a command can carry
+		// semantics invisible to glyph geometry, so the patch may render but never
+		// claim exact -- the reconcile certifies (undetected drift beats no one)
+		cmdChanged?: boolean;
 		onRecompile?: () => void | Promise<void>;
 	};
 	export async function instantPatch(req: PatchReq) {
@@ -1143,10 +1471,19 @@
 			return;
 		}
 		if (patching) {
-			queuedPatch = req;
-			return;
+			// a patch wedged mid-flight (a native call that never settled) must not swallow
+			// every future edit silently: after 15s declare it dead and take over -- all the
+			// daemon paths time out well under that, so the old run cannot still be live
+			if (performance.now() - patchingSince > 15000) {
+				ev('patch-stuck-reset', { since: Math.round(performance.now() - patchingSince) });
+			} else {
+				queuedPatch = req;
+				ev('bail', 'patch-in-flight');
+				return;
+			}
 		}
 		patching = true;
+		patchingSince = performance.now();
 		const t0 = performance.now();
 		// abandon -> save (so the recompile sees the buffer) + advance the editor's baseline,
 		// then full-recompile
@@ -1184,8 +1521,11 @@
 				return;
 			}
 			ev('located', { key, page: cal.pageNo });
-			// cal.indent: the page paragraph is TeX-indented, so the edit must carry the same
-			// first-line indent or its breaks won't match the calibration
+			// cal.indent: the page paragraph is TeX-indented (the CALIBRATION discovered this
+			// by typesetting both variants through the engine and matching the page), so the
+			// edit carries the same engine-resolved \hspace*{\parindent}. An edit that changes
+			// the paragraph's command set (e.g. typing \noindent) is cmdChanged and always
+			// reconciles -- the engine certifies whatever the commands mean.
 			const r = await n.draftTypeset({ root, mainFile, text: (cal.indent && !req.listItem ? INDENT_PREFIX : '') + req.text, hsize: cal.W });
 			if (!r.ok || (r.stats && (r.stats as any).certified === false)) {
 				await recompile('typeset', { ok: r.ok });
@@ -1202,8 +1542,7 @@
 				// SPLIT patch: the paragraph straddles a column break. Fill column A from the
 				// paragraph's top to its capacity, spill the remaining lines to column B's top,
 				// shift B's content below by the spill-height change. Always provisional.
-				const metaS = pages[cal.pageNo - 1] as any;
-				const colBottomS = metaS.ht || metaS.h;
+				const colBottomS = colBottomOf(cal.pageNo);
 				const capA = Math.max(1, Math.floor((colBottomS - (cal.b1 - h1)) / cal.medGap));
 				const kA = Math.min(lineRecs.length, capA);
 				const cutY = kA >= lineRecs.length ? Infinity : ((lineRecs[kA - 1] as any).y + (lineRecs[kA] as any).y) / 2;
@@ -1221,6 +1560,7 @@
 					colR: cal.colR,
 					newRecs: recsA
 				};
+				const spillOn = cal.spill.pageNo ?? cal.pageNo;
 				const segB: Patch = {
 					top: cal.spill.b1 - yFirstB,
 					dropTop: cal.spill.b1 - h1 - 2,
@@ -1229,24 +1569,43 @@
 					paraLeft: cal.spill.paraLeft,
 					colL: cal.spill.colL,
 					colR: cal.spill.colR,
-					newRecs: kA < lineRecs.length ? recsB : []
+					newRecs: kA < lineRecs.length ? recsB : [],
+					flowBottom: contentFloor(spillOn)
 				};
-				const segs = [segA, segB];
-				activePatch.set(cal.pageNo, segs);
-				await renderPage(cal.pageNo, segs);
+				const spillPage = cal.spill.pageNo ?? cal.pageNo;
+				if (spillPage !== cal.pageNo) {
+					// cross-PAGE split: one segment per page canvas
+					activePatch.set(cal.pageNo, segA);
+					activePatch.set(spillPage, segB);
+					await renderPage(cal.pageNo, segA);
+					await renderPage(spillPage, segB);
+					patchedPages.add(spillPage);
+					provisionalPages = new Set(provisionalPages).add(cal.pageNo).add(spillPage);
+				} else {
+					const segs = [segA, segB];
+					activePatch.set(cal.pageNo, segs);
+					await renderPage(cal.pageNo, segs);
+					provisionalPages = new Set(provisionalPages).add(cal.pageNo);
+				}
 				patchedPages.add(cal.pageNo);
-				provisionalPages = new Set(provisionalPages).add(cal.pageNo);
 				showEditBand({ page: cal.pageNo, top: cal.b1 - h1, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR });
 				followEdit(cal.pageNo, cal.b1, cal.bk, cal.colL, cal.colR);
 				status = `Refining p${cal.pageNo}…`;
-				ev('provisional-split', { page: cal.pageNo, kA, of: lineRecs.length });
+				ev('provisional-split', { page: cal.pageNo, spillPage, kA, of: lineRecs.length });
 				if (!req.transient) scheduleReconcile(req.onRecompile, 'split');
 				return;
 			}
-			let nh = 0;
-			for (const x of r.records as any[]) if (x.t === 'line' || x.t === 'rule') nh = Math.max(nh, (x.y || 0) + (x.d || 0));
-			const oldH = cal.bk - cal.b1 + h1 + dk;
-			const delta = nh - oldH;
+			// the band (cal.b1..bk) is measured in GLYPH-ROW baselines, so the daemon side must
+			// be too: a tabular is ONE line record spanning the whole table (its baseline the
+			// [c]-alignment center), and line-shape math placed it ~half a table off and read a
+			// phantom under/overflow. Glyph rows are identical to line records for prose.
+			const dRowsNew = rowsOfG(
+				(r.records as any[]).filter((x: any) => x.t === 'g'),
+				cal.medGap
+			);
+			const y0 = dRowsNew.length ? dRowsNew[0].y : ((lineRecs[0] as any).y ?? 0);
+			const yk = dRowsNew.length ? dRowsNew[dRowsNew.length - 1].y : ((lineRecs[lineRecs.length - 1] as any).y ?? 0);
+			const delta = yk - y0 - (cal.bk - cal.b1);
 			// C3: the column/page break must not move. A delta<=0 edit (same or fewer lines)
 			// can't push content past the column bottom, so it's always safe on the overflow
 			// side. When it GROWS, the content below the paragraph in this column shifts down
@@ -1259,12 +1618,12 @@
 			// part of the CONTIGUOUS text flow under the paragraph -- walk down line by line and
 			// stop at the big gap before an isolated footer/page-number, which sits in the bottom
 			// margin and isn't content the paragraph could push off the page.
-			const meta = pages[cal.pageNo - 1] as any;
-			const colBottom = meta.ht || meta.h;
+			const colBottom = colBottomOf(cal.pageNo);
+			const floorA = contentFloor(cal.pageNo);
 			const belowBases = [
 				...new Set(
 					pageRecords(cal.pageNo)
-						.filter((x) => x.t === 'g' && x.x >= cal.colL && x.x <= cal.colR && x.y > cal.bk + 0.5)
+						.filter((x) => x.t === 'g' && x.x >= cal.colL && x.x <= cal.colR && x.y > cal.bk + 0.5 && x.y <= floorA)
 						.map((x) => +x.y.toFixed(1))
 				)
 			].sort((a, b) => a - b);
@@ -1280,9 +1639,30 @@
 			// compile, instead of freezing on "recompiling" with no visual update.
 			const overflow = delta > 0 && delta > slack + 1;
 			const underflow = delta < -0.7 * cal.medGap;
-			// footnote body text lives at the page bottom, outside the patch band -- an "exact"
-			// body patch would leave it stale, so footnote paragraphs always reconcile
+			// Overflow with a next page renders TRUTHFULLY: whatever the shift pushes past the
+			// column bottom (the paragraph's own tail and/or the column's last rows) moves to
+			// the top of the next page's first column, pushing that page's content down --
+			// instead of cramming rows past the bottom under the tint. Always provisional.
+			if (overflow && cal.pageNo < pages.length) {
+				const done = await overflowToNextPage(cal, r.records as any[], lineRecs as any[], {
+					h1,
+					dk,
+					delta,
+					colBottom,
+					belowBases,
+					lastBelow
+				});
+				if (done) {
+					if (!req.transient) scheduleReconcile(req.onRecompile, 'overflow');
+					return;
+				}
+			}
+			// Footnote body text lives at the page bottom, outside the patch band: any
+			// footnote-bearing paragraph reconciles. (A char-code signature comparison used to
+			// license EXACT body patches -- deleted: it was blind to font/position changes, and
+			// whether the page-bottom note block still matches is the engine's call.)
 			const footnote = /\\footnote/.test(req.text) || /\\footnote/.test(req.orig);
+			const fontGap = await missingInk(r.records as any[]);
 			// an approx locate is placement-correct but break-inexact: always provisional. A
 			// float-inner patch (tabular inside a \begin{table}) is provisional too: the cell
 			// content is exact but auto column widths / float placement are the full pass's call.
@@ -1296,9 +1676,16 @@
 							? 'float-inner'
 							: footnote
 								? 'footnote'
-								: null;
-			const top = cal.b1 - h1;
-			const dropTop = top - 2,
+								: fontGap
+									? 'font-missing'
+									: req.cmdChanged
+										? 'command-changed'
+										: null;
+			// records anchor by glyph row (first daemon row baseline lands on b1); the wipe keeps
+			// the line-shape extent too -- for a tabular that over-wipes into float glue, which
+			// beats leaving the old table's ink outside a row-based band
+			const top = cal.b1 - y0;
+			const dropTop = cal.b1 - Math.max(h1, y0) - 2,
 				dropBottom = cal.bk + dk + 2;
 			const patchObj: Patch = {
 				top,
@@ -1308,7 +1695,8 @@
 				paraLeft: cal.paraLeft,
 				colL: cal.colL,
 				colR: cal.colR,
-				newRecs: r.records as any[]
+				newRecs: r.records as any[],
+				flowBottom: floorA
 			};
 			activePatch.set(cal.pageNo, patchObj); // survive zoom re-renders until the next compile
 			await renderPage(cal.pageNo, patchObj);
@@ -1346,131 +1734,121 @@
 		}
 	}
 
-	/** Provisional INSERT: a brand-new paragraph used to cost a silent full pass. Instead,
-	 * locate its ANCHOR (the paragraph above, still unchanged on the page), splice the daemon
-	 * render of the new text right below it (zero-height drop band + positive delta), tint,
-	 * and reconcile once at pause. Returns false when it can't (caller keeps the full pass). */
-	export async function provisionalInsert(req: {
-		file: string;
-		afterLine: number;
-		afterEnd: number;
-		anchorOrig: string;
-		anchorListItem?: boolean;
-		text: string;
-		onRecompile?: () => void | Promise<void>;
-	}): Promise<boolean> {
-		const n = native();
-		if (!n || !pages.length || compiling || patching) return false;
-		patching = true;
-		try {
-			const key = `${req.file}:${req.afterLine}`;
-			let cal = calCache.get(key);
-			if (!cal) {
-				cal = await locate(req.file, req.afterLine, req.anchorOrig, req.anchorListItem, req.afterEnd);
-				calCache.set(key, cal);
-			}
-			if ('bail' in cal) return false;
-			const r = await n.draftTypeset({ root, mainFile, text: req.text, hsize: cal.W });
-			if (!r.ok || (r.stats && (r.stats as any).certified === false)) return false;
-			const lineRecs = r.records.filter((x: any) => x.t === 'line');
-			if (!lineRecs.length) return false;
-			const h1 = (lineRecs[0] as any).h ?? 7;
-			const y1 = (lineRecs[0] as any).y ?? h1;
-			const yN = (lineRecs[lineRecs.length - 1] as any).y ?? y1;
-			const dk = (lineRecs[lineRecs.length - 1] as any).d ?? 2;
-			// insert BELOW the contiguous content flow under the anchor: the caller may have
-			// walked back to an earlier locatable paragraph, and list tails/fragments can sit
-			// between the anchor band and the true insertion point
-			const below = [
-				...new Set(
-					pageRecords(cal.pageNo)
-						.filter((x: any) => x.t === 'g' && x.x >= cal.colL && x.x <= cal.colR && x.y > cal.bk + 0.5)
-						.map((x: any) => +x.y.toFixed(1))
-				)
-			].sort((a, b) => a - b);
-			let flowEnd = cal.bk;
-			for (const y of below) {
-				if (y - flowEnd > cal.medGap * 2.5) break;
-				flowEnd = y;
-			}
-			// first inserted baseline sits one line gap below the flow's last baseline
-			const top = flowEnd + cal.medGap - y1;
-			const delta = yN - y1 + cal.medGap;
-			const patch: Patch = {
-				top,
-				dropTop: flowEnd + 0.5,
-				dropBottom: flowEnd + 0.5,
-				delta,
-				paraLeft: cal.paraLeft,
-				colL: cal.colL,
-				colR: cal.colR,
-				newRecs: r.records as any[]
-			};
-			activePatch.set(cal.pageNo, patch);
-			await renderPage(cal.pageNo, patch);
-			patchedPages.add(cal.pageNo);
-			provisionalPages = new Set(provisionalPages).add(cal.pageNo);
-			showEditBand({ page: cal.pageNo, top: top + y1 - h1, bottom: top + yN + dk, colL: cal.colL, colR: cal.colR });
-			followEdit(cal.pageNo, top + y1, top + yN + dk, cal.colL, cal.colR);
-			status = `Refining p${cal.pageNo}…`;
-			ev('provisional-insert', { page: cal.pageNo, lines: lineRecs.length });
-			scheduleReconcile(req.onRecompile, 'insert');
-			return true;
-		} catch (e) {
-			ev('error', String(e));
-			return false;
-		} finally {
-			patching = false;
-		}
-	}
+	// (The JS-placed provisional insert -- anchor flow walk, follower ceiling, medGap seam
+	// arithmetic -- is deleted. Inserted/deleted paragraphs render ONLY via the merged
+	// patch: dispatch typesets them riding the previous block as one engine unit, so the
+	// engine supplies indent and spacing. What that path can't carry takes the full pass.)
+	// digit-tolerant row equality, used ONLY by the patch VERIFIER's grading (pinned
+	// counters render fixed digits; CM digits share a width)
+	const eqSeqDigits = (a: number[], b: number[]) =>
+		a.length === b.length && a.every((v, i) => v === b[i] || (v >= 0x30 && v <= 0x39 && b[i] >= 0x30 && b[i] <= 0x39));
 
-	/** Provisional DELETE: drop the deleted paragraph's located band and close the gap; tint,
-	 * reconcile at pause. Returns false when it can't locate (caller keeps the full pass). */
-	export async function provisionalDelete(req: {
-		file: string;
-		line: number;
-		endLine: number;
-		orig: string;
-		listItem?: boolean;
-		onRecompile?: () => void | Promise<void>;
-	}): Promise<boolean> {
-		const n = native();
-		if (!n || !pages.length || compiling || patching) return false;
-		patching = true;
-		try {
-			const key = `${req.file}:${req.line}`;
-			let cal = calCache.get(key);
-			if (!cal) {
-				cal = await locate(req.file, req.line, req.orig, req.listItem, req.endLine);
-				calCache.set(key, cal);
-			}
-			if ('bail' in cal) return false;
-			const patch: Patch = {
-				top: cal.b1,
-				dropTop: cal.b1 - cal.medGap * 0.8,
-				dropBottom: cal.bk + cal.medGap * 0.35,
-				delta: -(cal.bk - cal.b1 + cal.medGap),
-				paraLeft: cal.paraLeft,
-				colL: cal.colL,
-				colR: cal.colR,
-				newRecs: []
-			};
-			activePatch.set(cal.pageNo, patch);
-			await renderPage(cal.pageNo, patch);
-			patchedPages.add(cal.pageNo);
-			provisionalPages = new Set(provisionalPages).add(cal.pageNo);
-			showEditBand({ page: cal.pageNo, top: cal.b1 - cal.medGap * 0.8, bottom: cal.b1, colL: cal.colL, colR: cal.colR });
-			followEdit(cal.pageNo, cal.b1, cal.b1 + cal.medGap, cal.colL, cal.colR);
-			status = `Refining p${cal.pageNo}…`;
-			ev('provisional-delete', { page: cal.pageNo });
-			scheduleReconcile(req.onRecompile, 'delete');
-			return true;
-		} catch (e) {
-			ev('error', String(e));
-			return false;
-		} finally {
-			patching = false;
+	// The truthful overflow split: page A keeps the band replace + shift with everything
+	// past the column bottom CLIPPED; those rows re-draw at the top of page B's first
+	// column as insert segments (para tail at the column text left, moved page rows at
+	// their own absolute x), pushing page B's content down. First-order break estimate ->
+	// caller always marks provisional and reconciles.
+	async function overflowToNextPage(
+		cal: Cal,
+		recs: any[],
+		lineRecs: any[],
+		g: { h1: number; dk: number; delta: number; colBottom: number; belowBases: number[]; lastBelow: number }
+	): Promise<boolean> {
+		const pB = cal.pageNo + 1;
+		const { h1, dk, delta, colBottom } = g;
+		const topA = cal.b1 - h1;
+		// para lines whose patched position crosses the column bottom
+		let kA = lineRecs.length;
+		while (kA > 1 && topA + lineRecs[kA - 1].y + (lineRecs[kA - 1].d ?? 2) > colBottom + 1) kA--;
+		const cutY = kA < lineRecs.length ? (lineRecs[kA - 1].y + lineRecs[kA].y) / 2 : Infinity;
+		const recsA = recs.filter((x) => x.t === 'font' || (x.y ?? 0) < cutY);
+		const tailRecs = kA < lineRecs.length ? recs.filter((x) => x.t === 'font' || (x.y ?? 0) >= cutY) : [];
+		// existing content-flow rows the shift pushes past the bottom (belowBases already
+		// excludes the bottom-anchored footer via the content floor)
+		const floorA = contentFloor(cal.pageNo);
+		const movedFrom = g.belowBases.filter((y) => y + delta + dk > colBottom + 1);
+		const movedMinY = movedFrom.length ? Math.min(...movedFrom) : Infinity;
+		const pageA = pageRecords(cal.pageNo);
+		const movedRecs = movedFrom.length
+			? pageA.filter(
+					(x: any) =>
+						x.t === 'font' ||
+						((x.t === 'g' || x.t === 'rule' || x.t === 'image' || x.t === 'lit') &&
+							x.x >= cal.colL &&
+							x.x <= cal.colR &&
+							(x.y ?? 0) >= movedMinY - 0.5 &&
+							(x.y ?? 0) <= floorA)
+				)
+			: [];
+		if (!tailRecs.length && !movedRecs.length) return false;
+		// page B's first column: body top under any isolated running-header row
+		const gB = pageRecords(pB).filter((x: any) => x.t === 'g');
+		const colsB = gB.length ? colCandidates(gB, cal.W, 8) : [];
+		const colLB = colsB.length ? colsB[0] - 8 : cal.colL;
+		const colRB = colsB.length ? colsB[0] + cal.W + 8 : cal.colR;
+		let rowsB = gB.length
+			? rowsOfG(
+					gB.filter((x: any) => x.x >= colLB && x.x <= colRB),
+					cal.medGap
+				)
+			: [];
+		while (rowsB.length >= 2 && rowsB[1].y - rowsB[0].y > cal.medGap * 2.2) rowsB = rowsB.slice(1);
+		const topB = rowsB.length ? rowsB[0].y : h1 + cal.medGap;
+		const tailH = tailRecs.length ? lineRecs[lineRecs.length - 1].y + dk - (lineRecs[kA].y - h1) : 0;
+		const movedH = movedRecs.length ? Math.max(...movedFrom) + dk - (movedMinY - h1) : 0;
+		const push = (tailH ? tailH + cal.medGap : 0) + (movedH ? movedH + cal.medGap : 0);
+		const segA: Patch = {
+			top: topA,
+			dropTop: topA - 2,
+			dropBottom: cal.bk + dk + 2,
+			delta,
+			paraLeft: cal.paraLeft,
+			colL: cal.colL,
+			colR: cal.colR,
+			newRecs: recsA,
+			// EXACTLY the negation of the moved-rows predicate (y + delta + dk > colBottom + 1),
+			// or the boundary row draws on both pages
+			clipBottom: colBottom + 1 - dk,
+			flowBottom: floorA
+		};
+		const segsB: Patch[] = [];
+		let curTop = topB;
+		if (tailRecs.length) {
+			segsB.push({
+				top: curTop - lineRecs[kA].y,
+				dropTop: topB - h1 - 2,
+				dropBottom: topB - h1 - 2,
+				delta: push,
+				paraLeft: colLB + 8,
+				colL: colLB,
+				colR: colRB,
+				newRecs: tailRecs
+			});
+			curTop += tailH + cal.medGap;
 		}
+		if (movedRecs.length)
+			segsB.push({
+				top: curTop + h1 - movedMinY,
+				dropTop: topB - h1 - 2,
+				dropBottom: topB - h1 - 2,
+				delta: segsB.length ? 0 : push,
+				paraLeft: 0,
+				colL: colLB,
+				colR: colRB,
+				newRecs: movedRecs
+			});
+		activePatch.set(cal.pageNo, segA);
+		activePatch.set(pB, segsB.length === 1 ? segsB[0] : segsB);
+		await renderPage(cal.pageNo, segA);
+		await renderPage(pB, segsB.length === 1 ? segsB[0] : segsB);
+		patchedPages.add(cal.pageNo);
+		patchedPages.add(pB);
+		provisionalPages = new Set(provisionalPages).add(cal.pageNo).add(pB);
+		showEditBand({ page: cal.pageNo, top: topA, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR });
+		followEdit(cal.pageNo, cal.b1, cal.bk + dk, cal.colL, cal.colR);
+		status = `Refining p${cal.pageNo}…`;
+		ev('provisional-split', { page: cal.pageNo, spillPage: pB, kA, of: lineRecs.length, moved: movedFrom.length, stage: 'overflow' });
+		return true;
 	}
 
 	// Warm the per-paragraph daemon in the background: it loads the document preamble once
@@ -1483,7 +1861,8 @@
 		const n = native();
 		if (!n) return;
 		const t = performance.now();
-		n.draftTypeset({ root, mainFile, text: 'warm', hsize: paper.colW || 300 })
+		// hsize 0 = the daemon falls back to its OWN engine-announced \columnwidth
+		n.draftTypeset({ root, mainFile, text: 'warm', hsize: paper.colW })
 			.then((r) => {
 				ev('daemon-warm', { ms: +(performance.now() - t).toFixed(0), ok: r.ok });
 				// only announce readiness if nothing else took over the status meanwhile
@@ -1492,6 +1871,73 @@
 			.catch(() => {
 				warmed = false;
 			});
+	}
+
+	// The engine grading its own guesses: when a compile lands, every still-active patch's
+	// painted rows are content-matched (digit-tolerant) against the FRESH records and the
+	// vertical drift measured. `patch-verify ok:false` = the instant preview showed
+	// something the recompile had to fix -- the metric the replay harness minimizes.
+	function verifyPatches() {
+		for (const [n, patch] of activePatch) {
+			const plist = Array.isArray(patch) ? patch : [patch];
+			const fresh = rowsOfG(
+				pageRecords(n).filter((x: any) => x.t === 'g'),
+				12
+			);
+			for (const p of plist) {
+				const pred = rowsOfG(
+					p.newRecs.filter((x: any) => x.t === 'g').map((x: any) => ({ ...x, x: x.x + p.paraLeft, y: x.y + p.top })),
+					12
+				);
+				if (!pred.length) continue;
+				let found = 0;
+				let drift = 0;
+				let xdrift = 0;
+				for (const row of pred) {
+					let best: { dy: number; dx: number } | null = null;
+					for (const fr of fresh)
+						if (eqSeqDigits(fr.cs, row.cs)) {
+							const dy = Math.abs(fr.y - row.y);
+							if (best === null || dy < best.dy) best = { dy, dx: Math.abs(fr.left - row.left) };
+						}
+					if (best !== null) {
+						found++;
+						drift = Math.max(drift, best.dy);
+						xdrift = Math.max(xdrift, best.dx);
+					}
+				}
+				// signed first-row delta separates "painted too high" from "too low"
+				let dy0: number | null = null;
+				for (const fr of fresh)
+					if (eqSeqDigits(fr.cs, pred[0].cs)) {
+						const dy = fr.y - pred[0].y;
+						if (dy0 === null || Math.abs(dy) < Math.abs(dy0)) dy0 = dy;
+					}
+				// verdicts: 'wrong' = found content painted at the wrong place (the real bug
+				// signal; x counts -- a missed \parindent is a placement error too); 'stale' =
+				// the compile contained newer text than the patch (normal mid-typing grading
+				// noise); 'unknown' = nothing matched (usually a fully superseded patch, but
+				// worth eyeballing via `near`)
+				const verdict = drift > 3 || xdrift > 3 ? 'wrong' : found === pred.length ? 'ok' : found > 0 ? 'stale' : 'unknown';
+				const near =
+					verdict === 'ok'
+						? undefined
+						: fresh
+								.filter((fr) => Math.abs(fr.y - pred[0].y) < 45)
+								.map((fr) => `${fr.y.toFixed(1)}:${fr.cs.slice(0, 7).map((c: number) => String.fromCodePoint(c)).join('')}`);
+				ev('patch-verify', {
+					page: n,
+					rows: pred.length,
+					found,
+					drift: +drift.toFixed(1),
+					xdrift: +xdrift.toFixed(1),
+					dy0: dy0 === null ? null : +dy0.toFixed(1),
+					verdict,
+					ok: verdict === 'ok',
+					near
+				});
+			}
+		}
 	}
 
 	let compileToken = 0;
@@ -1518,7 +1964,7 @@
 			} // a newer compile owns the state now
 			if (r.ok) {
 				if (r.paperW > 0) {
-					paper = { w: r.paperW, h: r.paperH, colW: r.colW, mx: r.marginX, my: r.marginY };
+					paper = { w: r.paperW, h: r.paperH, colW: r.colW, fs: r.footSkip || 0, mx: r.marginX, my: r.marginY };
 					if (fitMode) fitToWidth(); // size to the pane now that the paper dims are known
 				}
 				pages = r.pages;
@@ -1528,17 +1974,30 @@
 				// pages we patched must repaint even if their records didn't change
 				for (const pn of patchedPages) prevRecords.delete(pn);
 				patchedPages.clear();
+				verifyPatches(); // grade every live patch against the engine's truth before dropping it
 				activePatch.clear(); // fresh records already carry the edits
 				editBand = null; // fresh layout may have shifted the band; don't highlight a stale spot
 				await tick(); // let the {#each} create/resize canvases
+				applyCssSizes(); // every page needs its CSS box (scroll geometry), painted or not
 				let changed = 0;
 				for (const p of pages) {
+					if (!inWindow(p.n)) continue; // off-window pages paint on scroll-in
 					if (prevRecords.get(p.n) !== p.records) {
-						await renderPage(p.n);
+						const cv = canvasEls[p.n - 1];
+						if (cv && cv.width > 0) {
+							// ONE visual swap per reconcile: hold the page's last frame (the
+							// provisional patch, already ~the truth) and repaint once when the
+							// fresh PDF raster lands -- painting records first and the raster
+							// ~300ms later double-swapped the page at every typing pause
+							requestBaseAuto(p.n);
+						} else {
+							await renderPage(p.n);
+						}
 						prevRecords.set(p.n, p.records);
 						changed++;
 					}
 				}
+				updateWindow();
 				// drop stale hashes for removed pages
 				for (const k of [...prevRecords.keys()]) if (k > pages.length) prevRecords.delete(k);
 				const secs = (r.ms / 1000).toFixed(1);
@@ -1589,6 +2048,10 @@
 			queuedPatch = null;
 			instantPatch(q);
 		}
+		// inserts/structural edits typed mid-compile could only bail; have the editor
+		// re-evaluate the buffer against the fresh baseline now instead of waiting for the
+		// next keystroke (the "typed during a reconcile, nothing showed" hole)
+		onSettled?.();
 	}
 
 	// recompile whenever `trigger` changes (and once on mount). untrack the compile call:
@@ -1632,7 +2095,7 @@
 		}
 	}
 	async function rerenderAll() {
-		for (const p of pages) await renderPage(p.n);
+		for (const p of pages) if (inWindow(p.n) || activePatch.has(p.n)) await renderPage(p.n);
 	}
 	// react to zoom changes (from buttons, wheel, or a fit-to-width): instant CSS resize +
 	// debounced crisp re-render
@@ -1693,9 +2156,12 @@
 			}
 		}
 		curPage = best;
+		scheduleWindow();
 	}
 	function goToPage(n: number) {
-		const cv = canvasEls[Math.min(pages.length, Math.max(1, n)) - 1];
+		const clamped = Math.min(pages.length, Math.max(1, n));
+		paintAround(clamped);
+		const cv = canvasEls[clamped - 1];
 		if (cv && scroller) scroller.scrollTo({ top: pageOrigin(cv).top - 12, behavior: 'smooth' });
 	}
 
@@ -1709,6 +2175,7 @@
 	const FOLLOW_ZOOM = 1.08; // a tiny magnification above fit-width, the follow resting level
 	function followEdit(pageNo: number, bandTop: number, bandBottom: number, colL?: number, colR?: number) {
 		if (!followEdits || !scroller) return;
+		paintAround(pageNo);
 		let zoomed = false;
 		if (containerW && paper.w) {
 			const target = clampZoom(((containerW - PAGE_PAD * 2) / (paper.w * PT2PX)) * FOLLOW_ZOOM);
@@ -1953,8 +2420,9 @@
 			<div class="relative shadow-lg">
 				<canvas bind:this={canvasEls[p.n - 1]} ondblclick={(e) => onCanvasDblClick(p.n, e)}></canvas>
 				{#if provisionalPages.has(p.n)}
-					<!-- close-enough placeholder: subtle tint while the full compile reconciles this page -->
-					<div class="pointer-events-none absolute inset-0 animate-pulse bg-primary-500/10" transition:fade={{ duration: 150 }}></div>
+					<!-- close-enough placeholder: STATIC subtle tint while the full compile reconciles
+				     this page (a pulsing overlay reads as flicker during continuous typing) -->
+					<div class="pointer-events-none absolute inset-0 bg-primary-500/10" transition:fade={{ duration: 150 }}></div>
 				{/if}
 				{#if editBand && editBand.page === p.n}
 					<!-- the located band of the paragraph being edited; fades shortly after typing stops -->

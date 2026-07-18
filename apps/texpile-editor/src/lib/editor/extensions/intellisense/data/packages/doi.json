@@ -1,0 +1,27 @@
+{
+  "deps": [
+    {
+      "name": "hyperref"
+    }
+  ],
+  "macros": [
+    {
+      "name": "doi",
+      "arg": {
+        "format": "{}",
+        "snippet": "doi{${1:ref}}"
+      }
+    },
+    {
+      "name": "doitext",
+      "unusual": true
+    },
+    {
+      "name": "doiurl",
+      "unusual": true
+    }
+  ],
+  "envs": [],
+  "keys": {},
+  "args": []
+}
