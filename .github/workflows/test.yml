@@ -1,9 +1,14 @@
-# type-check, lint, and unit-test on every commit and pull request
+# type-check, lint, and unit-test on every commit and pull request. Also callable: the
+# release workflow runs this same job as its gate, so tag pushes are covered there and
+# excluded here (branches-only) to avoid running twice.
 name: test
 
 on:
   push:
+    branches:
+      - '**'
   pull_request:
+  workflow_call:
 
 jobs:
   test:

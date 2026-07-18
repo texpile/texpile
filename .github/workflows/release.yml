@@ -29,7 +29,13 @@ permissions:
   contents: write # create the GitHub release on tag builds
 
 jobs:
+  # the full test workflow gates every release build: a tag or manual dispatch never
+  # ships installers from a commit that fails check/lint/unit tests
+  test:
+    uses: ./.github/workflows/test.yml
+
   build:
+    needs: test
     strategy:
       fail-fast: false
       matrix:
