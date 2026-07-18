@@ -1021,13 +1021,7 @@
 	// baselines whose glyph count matches the daemon's -- which rejects the centered title run and
 	// the 1-glyph footer that also carry the \par line's tag. One synctex edit per candidate
 	// baseline, windowed to the forward hint and run only on the (cached, rare) fallback.
-	async function locateInverse(
-		file: string,
-		line: number,
-		endLine: number,
-		orig: string,
-		listItem: boolean
-	): Promise<Cal | { bail: string }> {
+	async function locateInverse(file: string, line: number, endLine: number, orig: string): Promise<Cal | { bail: string }> {
 		const bail = (why: string, detail?: unknown) => {
 			ev('locate-inverse-bail', { why, ...(typeof detail === 'object' ? detail : { detail }) });
 			return { bail: why };
@@ -1438,7 +1432,7 @@
 				}
 			}
 		}
-		const inv = await locateInverse(file, line, endLine, orig, listItem);
+		const inv = await locateInverse(file, line, endLine, orig);
 		if (!('bail' in inv)) return inv;
 		// the inverse's "straddles a column" is more precise than the forward's anchor failure
 		return inv.bail === 'spans-boundary' ? inv : fwd;
@@ -1924,7 +1918,13 @@
 						? undefined
 						: fresh
 								.filter((fr) => Math.abs(fr.y - pred[0].y) < 45)
-								.map((fr) => `${fr.y.toFixed(1)}:${fr.cs.slice(0, 7).map((c: number) => String.fromCodePoint(c)).join('')}`);
+								.map(
+									(fr) =>
+										`${fr.y.toFixed(1)}:${fr.cs
+											.slice(0, 7)
+											.map((c: number) => String.fromCodePoint(c))
+											.join('')}`
+								);
 				ev('patch-verify', {
 					page: n,
 					rows: pred.length,

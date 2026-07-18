@@ -159,9 +159,9 @@
 		onClose();
 	}
 
-	// close on scroll of the editor or any scrollable ancestor
+	// close on scroll of the editor (either mode) or any scrollable ancestor
 	$effect(() => {
-		const prosemirror = document.querySelector('.ProseMirror');
+		const prosemirror = document.querySelector('.ProseMirror') ?? document.querySelector('.cm-scroller');
 		if (prosemirror) {
 			const scrollableElements = [prosemirror];
 			let parent = prosemirror.parentElement;

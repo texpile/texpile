@@ -2,6 +2,7 @@
 // proxies the Electron bridge calls to the HTTP engine server (server.mjs), rewrites
 // texfile:// fetches the same way, and mounts the REAL DraftView. The matrix driver
 // talks to window.__live from Playwright.
+/* eslint-disable @typescript-eslint/no-explicit-any -- shims the untyped window bridge */
 import { mount, unmount } from 'svelte';
 // the app stylesheet: DraftView's layout (flex column, overflow-auto scroller) is Tailwind
 // utilities from the global sheet -- without it the scroller grows to content height and

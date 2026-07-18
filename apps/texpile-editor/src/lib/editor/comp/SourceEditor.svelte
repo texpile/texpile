@@ -9,6 +9,7 @@
 	import { searchKeymap, openSearchPanel } from '@codemirror/search';
 	import { texpileSearch } from '$lib/editor/extensions/search-panel/searchPanel';
 	import { latexAutocomplete, latexIntellisense } from '$lib/editor/extensions/intellisense/intellisense';
+	import { cmSpellcheck } from '$lib/editor/extensions/spellcheck/cmSpellcheck';
 	import { lintGutter, setDiagnostics, type Diagnostic } from '@codemirror/lint';
 	import { mathPreview } from '$lib/editor/extensions/math-preview/mathPreview';
 	import { starterGhost } from '$lib/editor/extensions/starter-ghost/starterGhost';
@@ -157,7 +158,7 @@
 					// full intellisense (completion + shortcuts + hover + folding + go-to-def) + math preview for
 					// .tex only; .bib gets entry-type/field completion
 					...(!filename || /\.tex$/i.test(filename)
-						? [latexIntellisense({ onJumpToFile, onOpenFileAt }), mathPreview(), starterGhost()]
+						? [latexIntellisense({ onJumpToFile, onOpenFileAt }), mathPreview(), starterGhost(), cmSpellcheck()]
 						: /\.bib$/i.test(filename)
 							? [latexAutocomplete({ bib: true })]
 							: []),

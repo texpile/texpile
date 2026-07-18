@@ -124,7 +124,9 @@ try {
 	const insEvs = allEv.filter((e) => e.kind === 'provisional-insert');
 	for (const i of insEvs.slice(-6)) console.log('  ins:', JSON.stringify(i.detail));
 	const compiles = allEv.filter((e) => e.kind === 'compiled');
-	console.log(`compiles: ${compiles.length}, ms p50=${compiles.map((e) => e.detail.ms).sort((a, b) => a - b)[Math.floor(compiles.length / 2)] ?? '-'}`);
+	console.log(
+		`compiles: ${compiles.length}, ms p50=${compiles.map((e) => e.detail.ms).sort((a, b) => a - b)[Math.floor(compiles.length / 2)] ?? '-'}`
+	);
 	await browser.close();
 } finally {
 	bridge.kill();

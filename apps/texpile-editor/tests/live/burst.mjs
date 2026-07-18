@@ -92,10 +92,7 @@ try {
 	const counts = {};
 	for (const e of evs) counts[e.kind] = (counts[e.kind] || 0) + 1;
 	console.log('event counts:', JSON.stringify(counts));
-	console.log(
-		'inserts at:',
-		JSON.stringify([...new Set(evs.filter((e) => e.kind === 'provisional-insert').map((e) => e.detail.at))])
-	);
+	console.log('inserts at:', JSON.stringify([...new Set(evs.filter((e) => e.kind === 'provisional-insert').map((e) => e.detail.at))]));
 	for (const v of evs.filter((e) => e.kind === 'patch-verify')) console.log('verify:', JSON.stringify(v.detail));
 	await browser.close();
 } finally {

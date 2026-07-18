@@ -69,7 +69,15 @@ describe('decideEdit compound alignment', () => {
 	});
 
 	it('ships the float alignment with a confined tabular (daemon records carry the centering)', () => {
-		const float = ['\\begin{table}[h]', '\\centering', '\\begin{tabular}{ll}', 'a & b \\\\', '\\end{tabular}', '\\caption{Cap.}', '\\end{table}'].join('\n');
+		const float = [
+			'\\begin{table}[h]',
+			'\\centering',
+			'\\begin{tabular}{ll}',
+			'a & b \\\\',
+			'\\end{tabular}',
+			'\\caption{Cap.}',
+			'\\end{table}'
+		].join('\n');
 		const doc = DOC.replace('Beta four five six.', float);
 		const d = decideEdit(doc, doc.replace('a & b', 'a & bx'));
 		expect(d.kind).toBe('patch');

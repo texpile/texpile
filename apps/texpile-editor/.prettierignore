@@ -1,2 +1,5 @@
 # vendored pdf.js modules keep upstream style (see src/lib/draft/type1/README.md)
 src/lib/draft/type1/*.js
+
+# vendored LaTeX Workshop package data keeps upstream bytes (see data/VENDORED-LICENSES.md)
+src/lib/editor/extensions/intellisense/data/packages/*.json

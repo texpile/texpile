@@ -7,6 +7,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [0.14.2] - 2026-07-18
 
+- feat: spell check works in the source editor, checking prose but not commands, math, or comments
 - feat: autocomplete knows package and class names, per-package options and key-values, and bib entry types
 - feat: autocomplete suggests labels with their numbers, your macros, and glossary entries from every file in the project
 - feat: go-to-definition and hover work across files, and citation suggestions are searchable
