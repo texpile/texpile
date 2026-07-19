@@ -88,7 +88,7 @@
 			{:else if u.phase === 'downloaded'}
 				{#if pkexec}
 					<p class="text-surface-600-300 mb-4 text-sm">
-						Texpile v{u.version} downloaded. Your system will ask for your password to install it.
+						Texpile v{u.version} downloaded. Your system will ask for your password, and Texpile restarts when the install finishes.
 					</p>
 					<div class="flex justify-end gap-2">
 						<button class="btn btn-sm hover:preset-tonal" onclick={close}>Later</button>

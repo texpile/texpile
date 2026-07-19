@@ -238,6 +238,14 @@ jobs:
             const entry = JSON.parse(fs.readFileSync("dist/latest.json", "utf8"));
             manifest.versions = manifest.versions.filter((v) => v.version !== version);
             manifest.versions.unshift(entry);
+            // retention: list only the newest major line and its latest 3 minor series; the
+            // v<version>/ binaries stay in R2 forever regardless (blockmaps reference them) delete manually
+            const num = (s) => s.version.split(".").map(Number);
+            const top = Math.max(...manifest.versions.map((v) => num(v)[0]));
+            const minors = [...new Set(manifest.versions.filter((v) => num(v)[0] === top).map((v) => num(v)[1]))]
+              .sort((a, b) => b - a)
+              .slice(0, 3);
+            manifest.versions = manifest.versions.filter((v) => num(v)[0] === top && minors.includes(num(v)[1]));
             fs.writeFileSync("dist/versions.json", JSON.stringify(manifest, null, 2));
           '
           cat dist/versions.json

@@ -5,6 +5,7 @@
 // and MacUpdater hands the zip to Squirrel exactly once, at download completion, and both skip it
 // when the flag is off at that moment. So the download click is the install-at-quit consent.
 import { app, BrowserWindow } from 'electron';
+import { spawn } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { autoUpdater } from 'electron-updater';
@@ -38,6 +39,8 @@ function installMode(): 'restart' | 'package-manager' {
 // returned as a status instead of emitted
 let op: 'download' | 'install' | null = null;
 let wired = false;
+// the downloaded installer path, for the package-manager install path below
+let downloadedFile: string | null = null;
 
 // broadcast, not a pinned webContents: on macOS the window can close and be recreated
 // mid-download, and a stale target would strand the completion event
@@ -57,6 +60,7 @@ function wire(): void {
 	});
 	autoUpdater.on('update-downloaded', (info) => {
 		op = null;
+		downloadedFile = info.downloadedFile ?? null;
 		send('update:downloaded', { version: info.version });
 	});
 	autoUpdater.on('error', (err) => {
@@ -114,6 +118,27 @@ export async function download(): Promise<void> {
 export function install(): void {
 	// a failed install emits 'error' instead of quitting; `op` lets it through to the renderer
 	op = 'install';
-	// silent install + relaunch on windows; mac/linux ignore the flags
+
+	//There seem to be some upstream bug with electron updater (which is delibeartively not sync). This results in tthe app freeze after clicking update. The following is a patch
+	if (installMode() === 'package-manager' && downloadedFile) {
+		const quoted = downloadedFile.replace(/"/g, '\\"');
+		const child = spawn('pkexec', ['/bin/bash', '-c', `dpkg -i "${quoted}" || apt-get install -f -y`], { stdio: 'ignore' });
+		child.on('error', (err) => {
+			op = null;
+			send('update:error', { message: err instanceof Error ? err.message : String(err) });
+		});
+		child.on('close', (code) => {
+			if (code === 0) {
+				app.relaunch();
+				app.quit();
+			} else {
+				// 126/127 = the password prompt was dismissed; anything else is a real dpkg failure
+				op = null;
+				send('update:error', { message: `installer exited with code ${code}` });
+			}
+		});
+		return;
+	}
+	// silent install + relaunch on windows; mac ignores the flags
 	autoUpdater.quitAndInstall(true, true);
 }
