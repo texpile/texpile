@@ -11,7 +11,7 @@ Texpile is a modern, local, offline LaTeX editor for Windows, macOS, and Linux. 
 
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdl.texpile.com%2Flatest.json&query=%24.version&label=version&prefix=v&color=blue)](https://texpile.com/download)
 [![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-green)](https://texpile.com/download)
-[![License](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
 [![Discord](https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/7wanVzCBWf)
 
 </div>
@@ -71,4 +71,4 @@ Beyond its package dependencies, Texpile vendors or derives from the following p
 
 ## License
 
-[AGPL-3.0](LICENSE.md)
+[AGPL-3.0](LICENSE)

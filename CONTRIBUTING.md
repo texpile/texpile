@@ -39,4 +39,4 @@ pnpm --filter texpile-editor testonce          # vitest, single pass
 
 ## License
 
-Texpile is licensed under [AGPL-3.0](LICENSE.md). By contributing, you agree that your contributions are licensed under the same terms.
+Texpile is licensed under [AGPL-3.0](LICENSE). By contributing, you agree that your contributions are licensed under the same terms.
