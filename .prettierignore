@@ -11,3 +11,10 @@ scratch/
 # prettier only reads the root one
 apps/texpile-editor/src/lib/paraglide/
 landing/src/lib/paraglide/
+
+# inlang regenerates everything here except settings.json (see each project.inlang/.gitignore),
+# in its own formatting, so prettier must not police it
+apps/texpile-editor/project.inlang/*
+!apps/texpile-editor/project.inlang/settings.json
+landing/project.inlang/*
+!landing/project.inlang/settings.json
