@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { navigate } from '$lib/router.svelte';
-	import { AppWindow, FolderOpen, FolderPlus, GraduationCap, Loader2 } from '@lucide/svelte';
+	import { AppWindow, FolderOpen, FolderPlus, GraduationCap, Loader2, Users } from '@lucide/svelte';
 	// dark wordmark for light backgrounds, white one for dark mode
 	import logoOnLight from '$lib/assets/logo/Logo-dark.svg';
 	import logoOnDark from '$lib/assets/logo/Logo-light.svg';
@@ -226,6 +226,13 @@
 						{m.start_new_window()}
 					</button>
 				{/if}
+				<button
+					class="text-surface-500 hover:text-surface-950-50 inline-flex items-center gap-1.5 text-sm"
+					onclick={() => navigate('/session')}
+				>
+					<Users class="size-4" />
+					{m.start_join_session()}
+				</button>
 			</div>
 
 			{#if error}

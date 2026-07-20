@@ -19,10 +19,12 @@ const NO_PREBUNDLE = new Set([
 	'harper.js', // ships its own WASM worker; kept external (see optimizeDeps.exclude)
 	'svelte-pdf-view', // bundles the PDF.js worker; pre-bundling breaks worker loading (see optimizeDeps.exclude)
 	'@tailwindcss/vite', // a Vite plugin, not a runtime dependency
-	'@inlang/paraglide-js' // compiler/vite plugin; app code imports the generated $lib/paraglide output, not this package
+	'@inlang/paraglide-js', // compiler/vite plugin; app code imports the generated $lib/paraglide output, not this package
+	'y-protocols' // no root export (only y-protocols/awareness, /sync); prebundling the bare package fails
 ]);
 
-const prebundle = Object.keys(pkg.dependencies ?? {}).filter((d) => !NO_PREBUNDLE.has(d));
+// y-protocols has no "." entry, so pre-bundle its subpaths instead of the bare package
+const prebundle = [...Object.keys(pkg.dependencies ?? {}).filter((d) => !NO_PREBUNDLE.has(d)), 'y-protocols/awareness', 'y-protocols/sync'];
 
 export default defineConfig(({ mode }) => ({
 	plugins: [

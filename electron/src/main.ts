@@ -385,6 +385,7 @@ const DEFAULT_SETTINGS = {
 	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
 	mathPreview: true, // live math preview tooltip in source mode
 	uiLocale: 'en', // UI display language, not the LaTeX document language
+	collabRelayUrl: 'wss://collab.texpile.com', // shared-session relay endpoint
 	openFolders: [] as string[] // folders open across windows; maintained here for session restore
 };
 const settingsFile = () => path.join(app.getPath('userData'), 'settings.json');

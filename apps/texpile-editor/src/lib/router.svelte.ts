@@ -2,7 +2,7 @@
 // identically under the packaged app:// origin and the http dev server, no server cooperation needed.
 import { browser } from './runtime';
 
-export const ROUTES = ['/', '/workspace'] as const;
+export const ROUTES = ['/', '/workspace', '/session'] as const;
 export type RoutePath = (typeof ROUTES)[number];
 
 /** '#/workspace/' -> '/workspace'; missing/empty hash -> '/'. */

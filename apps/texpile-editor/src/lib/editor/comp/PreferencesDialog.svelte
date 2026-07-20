@@ -4,7 +4,11 @@
 	import { themeChoice, setTheme, type ThemeChoice } from '$lib/theme';
 	import { settings, updateSettings, applyUiLocale, type AppSettings } from '$lib/settings';
 	import { setSpellcheckEnabled } from '$lib/editor/extensions/spellcheck/spellcheckConfig';
+	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { m } from '$lib/paraglide/messages';
+
+	// autosave is forced on (shown disabled) while live mode or a hosted session is active
+	const autosaveForced = $derived($settings.draftMode || collabHost.active);
 	import { LOCALE_META } from '$lib/localeMeta';
 	import { toaster } from '$lib/modals/toaster-svelte';
 
@@ -114,13 +118,15 @@
 				<div>
 					{@render toggle(
 						m.prefs_autosave(),
-						$settings.draftMode || $settings.autosave,
+						autosaveForced || $settings.autosave,
 						(v) => updateSettings({ autosave: v }),
-						$settings.draftMode,
-						$settings.draftMode ? m.prefs_autosave_hint_live() : ''
+						autosaveForced,
+						autosaveForced ? m.prefs_autosave_hint_forced() : ''
 					)}
 					<p class="text-surface-500 mt-1 text-xs">
-						{#if $settings.draftMode}
+						{#if collabHost.active}
+							{m.prefs_autosave_note_session()}
+						{:else if $settings.draftMode}
 							{m.prefs_autosave_note_live()}
 						{:else}
 							{m.prefs_autosave_note_off()}

@@ -1,44 +1,42 @@
 <script lang="ts">
 	import { onMount, onDestroy, tick } from 'svelte';
 	import { get } from 'svelte/store';
-	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { browser } from '$lib/runtime';
 	import { navigate } from '$lib/router.svelte';
-	// prettier-ignore
-	import { Save, FileText, Loader2, CircleAlert, TriangleAlert, FilePlus, FolderPlus, RefreshCw, PanelLeft, PanelRight, Eye, Code, GitCompare, GitBranch, Play, Square, SquareTerminal, X, ChevronDown, Check, Plus, Trash2, LocateFixed, Search, Settings2, FoldHorizontal, UnfoldHorizontal } from '@lucide/svelte';
-	import EditorView from '$lib/editor/EditorView.svelte';
-	import Terminal from '$lib/editor/comp/Terminal.svelte';
-	import ProblemsPanel from '$lib/editor/comp/ProblemsPanel.svelte';
+	import TerminalDock from '$lib/editor/comp/TerminalDock.svelte';
+	import EditorTopbar from '$lib/editor/comp/EditorTopbar.svelte';
+	import WorkspaceSidebar from '$lib/editor/comp/WorkspaceSidebar.svelte';
+	import PreviewPane from '$lib/editor/comp/PreviewPane.svelte';
+	import EditorPane from '$lib/editor/comp/EditorPane.svelte';
+	import CompileCommandModal from '$lib/editor/comp/CompileCommandModal.svelte';
+	import MainFileModal from '$lib/editor/comp/MainFileModal.svelte';
+	import FormatModal from '$lib/editor/comp/FormatModal.svelte';
+	import ConflictModal from '$lib/editor/comp/ConflictModal.svelte';
+	import RefUpdateModal, { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
 	import { parseCompileDiagnosticsInWorker } from '$lib/latex-log/parseInWorker';
-	import PDFViewer from '$lib/editor/comp/PDFViewer.svelte';
 	import DraftView from '$lib/draft/DraftView.svelte';
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
-	import StarterPicker from '$lib/editor/comp/StarterPicker.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
-	import WordCount from '$lib/editor/comp/WordCount.svelte';
 	import { applyStarter, applyImportedFiles, openTutorialProject, type Starter, type ImportedFile } from '$lib/workspace/starters';
 	import { pdfStore } from '$lib/stores/pdfStore';
 	import { editorViewStore, sourceCmView, viewMode as viewModeStore } from '$lib/stores/editorStore';
 	import { synctexForward, synctexInverse } from '$lib/workspace/synctex';
-	import SourceEditor from '$lib/editor/comp/SourceEditor.svelte';
-	import DiffPanel from '$lib/editor/comp/DiffPanel.svelte';
-	import SourceControlPanel from '$lib/editor/comp/SourceControlPanel.svelte';
-	import SearchBar from '$lib/editor/comp/SearchBar.svelte';
-	import TableOfContents from '$lib/editor/comp/TableOfContents.svelte';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
 	import { parseOutlineRaw, assembleProjectOutline } from '$lib/editor/extensions/tableofcontents/latexHeadings';
 	import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 	import { projectIntelStore } from '$lib/stores/projectIntel';
 	import { setGraphicResolver } from '$lib/editor/extensions/intellisense/hover';
-	import BibManager from '$lib/editor/comp/BibManager.svelte';
-	import PreambleFrontmatter from '$lib/editor/comp/PreambleFrontmatter.svelte';
 	import { replacePreambleFrontmatter } from '$lib/editor/extensions/raw-latex/frontmatterView';
 	import { initSpellcheckConfig } from '$lib/editor/extensions/spellcheck/spellcheckConfig';
-	import Toolbar from '$lib/editor/comp/toolbar/Toolbar.svelte';
-	import SourceToolbar from '$lib/editor/comp/toolbar/SourceToolbar.svelte';
 	import WorkspaceMenuBar from '$lib/editor/comp/WorkspaceMenuBar.svelte';
-	import FileTree from '$lib/editor/comp/FileTree.svelte';
+	import { collabHost } from '$lib/collab/hostStore.svelte';
+	import { collabGuest } from '$lib/collab/guestStore.svelte';
+	import type { EditSession } from '$lib/collab/editSession';
+	import SessionShareModal from '$lib/collab/SessionShareModal.svelte';
+	import GuestBar from '$lib/collab/GuestBar.svelte';
+	import SessionBadge from '$lib/collab/SessionBadge.svelte';
+	import * as cc from '$lib/workspace/compileCommand';
 	import { references, loadReferences, bibItemsToReferences, type BibLaTeXReference } from '$lib/workspace/citations';
 	import { labelStore, referenceStore, filePathStore } from '$lib/stores/editorStore';
 	import { extractDocRefs } from '$lib/latex-parser/labels';
@@ -59,40 +57,58 @@
 		setCompileOutputs
 	} from '$lib/workspace/workspaceStore';
 	import { addRecentFolder } from '$lib/workspace/workspaceStore';
-	import { refreshGitStatus, isGitRepo, gitStatusMap, gitChanges, gitBranch, takeNoGitHint } from '$lib/workspace/gitStore';
+	import { refreshGitStatus, isGitRepo, gitChanges, takeNoGitHint } from '$lib/workspace/gitStore';
 	import { gitShowHead, gitInit, gitStage, gitUnstage, gitDiscard, gitCommit, type GitStatusEntry } from '$lib/workspace/git';
 	import { settings, loadSettings, updateSettings, DEFAULT_COMPILE_COMMAND } from '$lib/settings';
 	import { detectMainFile, findDocRoots, gatherProjectMacros } from '$lib/workspace/project';
 	import {
-		readTextFile,
-		writeTextFile,
 		basename,
 		dirname,
-		fileUrl,
 		joinPath,
-		scanTexFiles,
-		scanTree,
-		createEntry,
-		deleteEntry,
-		renameEntry,
-		copyEntry,
 		pickFolder,
 		claimWorkspace,
 		releaseWorkspace,
 		relativeTo,
 		isDesktop,
-		statFile,
-		writeBinaryFile,
+		samePath,
 		detectEol,
 		toLf,
 		fromLf,
-		formatLatexDocument,
 		native,
 		freeName,
 		type Eol,
 		type TreeEntry,
 		type TexFile
 	} from '$lib/workspace/fileSystem';
+	import { diskProvider } from '$lib/workspace/diskProvider';
+	import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
+	// the file-access seam: the host gets the disk-backed provider by default; a guest session
+	// mounts this same view with a CRDT-backed one. caps gate the host-only features.
+	let { provider = diskProvider, session = collabHost }: { provider?: WorkspaceProvider; session?: EditSession } = $props();
+	// all file access flows through the provider; these thin delegates keep the existing call sites
+	// (and scan's wrapped {root,...} shape) intact
+	const readTextFile = (p: string) => provider.readText(p);
+	const writeTextFile = (p: string, content: string) => provider.writeText(p, content);
+	const writeBinaryFile = (p: string, data: Blob) => provider.writeBinary(p, data);
+	const statFile = (p: string) => provider.stat(p);
+	const fileUrl = (p: string) => provider.fileUrl(p);
+	const createEntry = (p: string, type: 'file' | 'dir', content = '') => provider.create(p, type, content);
+	const deleteEntry = (p: string) => provider.remove(p);
+	const renameEntry = (from: string, to: string) => provider.rename(from, to);
+	const copyEntry = (from: string, to: string) => provider.copy(from, to);
+	const formatLatexDocument = (p: string, text: string) => provider.format!(p, text);
+	const scanTree = async (root: string) => ({ root, children: await provider.scanTree(root) });
+	const scanTexFiles = async (root: string) => ({ root, files: await provider.scanTexFiles(root) });
+	// true for the disk-backed host; false for a read-only guest session. Gates the host-only
+	// lifecycle (folder claim, terminal, main-file/macro scan, on-disk change checks) so this same
+	// view can run over a shared session.
+	const hostMode = $derived(provider.caps.manageTree);
+	// a guest session: source-mode-only, host chrome (compile/terminal/git/file-ops/share) hidden
+	const guest = $derived(session.isGuest);
+	// guests never enter visual/diff (no local parse pipeline, no disk to diff against)
+	$effect(() => {
+		if (guest && viewMode !== 'source') viewMode = 'source';
+	});
 	import { modLabel } from '$lib/platform';
 	import { serializeLatexFile, createStarterLatex, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { parseLatexFileAsync, PARSE_TIMEOUT } from '$lib/workspace/latexParserClient';
@@ -156,6 +172,19 @@
 		return 'text';
 	}
 	const kind = $derived(fileKind(loadedPath));
+
+	// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go
+	// read-only), else concurrent guest edits to that file's Y.Text would be clobbered. Source mode
+	// (tex/bib/text) is Y-bound and co-edits freely; visual tex (ProseMirror) and bib in BibManager
+	// are not, so they lock.
+	function hostHoldsExclusively(k: string, mode: string, path: string | null): boolean {
+		if (!path) return false;
+		return (k === 'tex' && mode === 'visual') || (k === 'bib' && mode !== 'source');
+	}
+	$effect(() => {
+		if (!session.active) return;
+		session.setVisualLock(hostHoldsExclusively(kind, viewMode, loadedPath) ? loadedPath : null);
+	});
 
 	let applyingStarter = $state(false);
 	async function pickStarter(s: Starter) {
@@ -224,18 +253,22 @@
 			return;
 		}
 		// register as this folder's window (covers reloads); a lost claim means another window
-		// already owns the folder - that window was focused, this one goes back to Start
-		void claimWorkspace(root).then((c) => {
-			if (!c.ok && get(workspaceRoot) === root) {
-				workspaceRoot.set(null);
-				navigate('/');
-			}
-		});
-		terminalAvailable = isDesktop(); // client-only; set here so SSR/CSR agree
-		resolveMainConfirm(root); // storage first, before anything can want a compile
+		// already owns the folder - that window was focused, this one goes back to Start.
+		// a guest session owns no folder, so it neither claims nor sets up a terminal/main file.
+		if (hostMode) {
+			void claimWorkspace(root).then((c) => {
+				if (!c.ok && get(workspaceRoot) === root) {
+					workspaceRoot.set(null);
+					navigate('/');
+				}
+			});
+			resolveMainConfirm(root); // storage first, before anything can want a compile
+			void initProject(root);
+		}
+		terminalAvailable = isDesktop() && hostMode; // client-only; set here so SSR/CSR agree
+		if (guest) pdfPaneOpen = true; // guests land with the host's PDF visible
 		loadReferences(root);
 		refreshTree();
-		void initProject(root);
 		initSpellcheckConfig(); // seed editorConfigStore so the spell-check toggle works
 
 		loadSettings().then((s) => {
@@ -252,9 +285,8 @@
 			compileCommand = resolveCompileCommand(get(workspaceRoot), s.compileCommand ?? '');
 			if (s.terminalHeight >= 120 && s.terminalHeight <= 700) terminalHeight = s.terminalHeight;
 			if (terminalAvailable && s.terminalVisible) {
-				terminalMounted = true;
+				terminalMounted = true; // BottomDock creates its first shell on mount
 				terminalVisible = true;
-				ensureTerminal();
 			}
 		});
 		if (localStorage.getItem('texpile:viewMode') === 'source') {
@@ -273,7 +305,7 @@
 		};
 		const onFocus = () => {
 			refreshTree();
-			void checkExternalChange();
+			if (hostMode) void checkExternalChange(); // guests have no on-disk copy to diff against
 			reloadReferences();
 		};
 		const onFsChanged = () => {
@@ -317,6 +349,8 @@
 		} catch {
 			/* ignore */
 		}
+		// shared session: the manifest mirrors the tree, same single call-site trick
+		void session.syncTree();
 		// git refresh is non-blocking and never throws; this single call-site
 		// covers every refreshTree() trigger for free
 		void refreshGitStatus(root).then(({ missingGit }) => {
@@ -340,6 +374,9 @@
 		try {
 			// already open in another window: that window was focused, this one stays put
 			if (!(await claimWorkspace(root)).ok) return;
+			// a shared session is tied to THIS folder's doc; swapping the root would leave it sharing
+			// the old folder invisibly, so end it before the swap
+			if (session.active && root !== prevRoot) await session.end();
 			const { files } = await scanTexFiles(root);
 			resolveMainConfirm(root); // before the stores flip, so the modal effect can't see a stale state
 			workspaceRoot.set(root);
@@ -386,8 +423,6 @@
 		}
 	}
 	let tutorialModalOpen = $state(false);
-
-	const samePath = (a: string, b: string) => a.replace(/\\/g, '/').toLowerCase() === b.replace(/\\/g, '/').toLowerCase();
 
 	// resolve the main file (persisted choice if it still exists, else auto-detect) and gather
 	// its cross-file macros. runs once on folder open, before any file is loaded.
@@ -648,26 +683,22 @@
 	let terminalHeight = $state(240);
 	let terminalShrink = $state(false); // dock only under the editor; the preview pane keeps full height
 	let terminalMounted = $state(false); // stay mounted after first open so shells persist across toggles
-	// VSCode-style multi-terminal: one active (shown), the rest kept mounted (hidden)
-	type TermRef =
-		| { run: (cmd: string, onDone?: (output: string) => void) => void; focus: () => void; refit: () => void; interrupt: () => void }
-		| undefined;
-	let terminals = $state<{ id: number; title: string }[]>([]);
-	let activeTermId = $state<number | null>(null);
-	let termMenuOpen = $state(false);
-	let termSeq = 0;
-	const termRefs: Record<number, TermRef> = {};
-	const activeRef = (): TermRef => (activeTermId != null ? termRefs[activeTermId] : undefined);
+	// the bottom dock (terminal + problems tabs) owns its own multi-terminal state; we hold a ref
+	// to drive it (run a compile command, refit on resize, reset on folder change)
+	let dock = $state<{
+		runCommand(cmd: string, onDone?: (o: string) => void): void;
+		reset(): void;
+		refit(): void;
+		focusActive(): void;
+		addTerminal(): void;
+		interrupt(): void;
+	}>();
 	let compileCommand = $state(''); // the compile command; {main} expands to the main file's path
 	let compileModalOpen = $state(false);
-	let compileMenuOpen = $state(false); // the small caret dropdown next to the Compile button
 	let compileDraft = $state('');
 	// Advanced (per-folder) output-path overrides, edited in the compile modal
 	let compileOutputsDraft = $state<{ pdf: string; log: string }>({ pdf: '', log: '' });
 	let advancedOpen = $state(false);
-	// quick-setup chip highlight state, reflected live from the draft (null engine = unrecognized)
-	const draftEngine = $derived(detectEngine(compileDraft));
-	const draftLatexmk = $derived(usesLatexmk(compileDraft));
 	// per-folder command wins over the global default (the last one saved anywhere)
 	const resolveCompileCommand = (root: string | null, global: string) => (root && savedCompileCommand(root)) || global || '';
 	let formatModalOpen = $state(false);
@@ -898,15 +929,17 @@
 		runDraftDecision();
 	});
 	// Draft mode leans on the on-disk file staying current: the full compile reads from disk,
-	// and a successful instant patch is in-memory only (nothing is written until the next
-	// recompile or an autosave). So force autosave on while draft mode is enabled -- the
-	// Preferences toggle is disabled to match.
-	$effect(() => {
-		if ($settings.draftMode && !$settings.autosave) updateSettings({ autosave: true });
-	});
+	// Live mode and hosting a session both need current-on-disk content (the draft engine writes
+	// nothing until a recompile; a session's host is the persistence authority). So autosave is
+	// forced effectively on in both, WITHOUT changing the user's setting (it reverts on exit).
+	// The Preferences toggle shows this as forced+disabled.
+	function autosaveActive(): boolean {
+		const s = get(settings);
+		return s.autosave !== false || s.draftMode || (session.active && !guest);
+	}
 
 	function stopCompile() {
-		activeRef()?.interrupt();
+		dock?.interrupt();
 		compiling = false;
 	}
 	// a new folder's diagnostics start blank, the previous folder's log is meaningless here
@@ -949,19 +982,11 @@
 	let sourceGotoLine = $state<{ line: number; token: number; selectText?: string } | undefined>(undefined);
 	let gotoToken = 0;
 
-	function ensureTerminal() {
-		if (terminals.length === 0) {
-			const id = ++termSeq;
-			terminals = [{ id, title: m.wsview_terminal_numbered({ id }) }];
-			activeTermId = id;
-		}
-	}
 	function showTerminal() {
-		terminalMounted = true;
-		ensureTerminal();
+		terminalMounted = true; // mounts BottomDock, which creates its first shell
 		terminalVisible = true;
 		updateSettings({ terminalVisible: true });
-		setTimeout(() => activeRef()?.refit(), 0);
+		setTimeout(() => dock?.refit(), 0);
 	}
 	function toggleTerminal() {
 		if (terminalVisible) {
@@ -969,50 +994,24 @@
 			updateSettings({ terminalVisible: false });
 		} else {
 			showTerminal();
-			setTimeout(() => activeRef()?.focus(), 40);
+			setTimeout(() => dock?.focusActive(), 40);
 		}
 	}
 	function toggleTerminalShrink() {
 		terminalShrink = !terminalShrink;
 		if (browser) localStorage.setItem('texpile:terminalShrink', terminalShrink ? '1' : '0');
 	}
-	function addTerminal() {
-		const id = ++termSeq;
-		terminals = [...terminals, { id, title: m.wsview_terminal_numbered({ id }) }];
-		activeTermId = id;
+	// on folder change, replace the shells so they respawn in the new cwd
+	function resetTerminalsForWorkspace() {
+		dock?.reset();
+	}
+	// menu "New Terminal": open the dock (its first shell is auto-created) or add another
+	function newTerminalFromMenu() {
+		const wasMounted = terminalMounted;
 		terminalMounted = true;
 		terminalVisible = true;
-		termMenuOpen = false;
 		updateSettings({ terminalVisible: true });
-		setTimeout(() => activeRef()?.focus(), 50);
-	}
-	// replace every open shell with one fresh shell in the current workspace: removing the old
-	// Terminal components kills their shells, and the new one mounts with the new cwd
-	function resetTerminalsForWorkspace() {
-		if (terminals.length === 0) return; // none open; the next one opened will spawn in the new folder
-		const id = ++termSeq;
-		terminals = [{ id, title: m.wsview_terminal_numbered({ id }) }];
-		activeTermId = id;
-		if (terminalVisible) setTimeout(() => activeRef()?.refit(), 0);
-	}
-	function selectTerminal(id: number) {
-		activeTermId = id;
-		termMenuOpen = false;
-		setTimeout(() => {
-			activeRef()?.refit();
-			activeRef()?.focus();
-		}, 0);
-	}
-	function killTerminal(id: number) {
-		terminals = terminals.filter((t) => t.id !== id);
-		termRefs[id] = undefined;
-		if (activeTermId === id) activeTermId = terminals.at(-1)?.id ?? null;
-		if (terminals.length === 0) {
-			terminalVisible = false;
-			updateSettings({ terminalVisible: false });
-		} else {
-			setTimeout(() => activeRef()?.refit(), 0);
-		}
+		setTimeout(() => (wasMounted ? dock?.addTerminal() : dock?.focusActive()), 0);
 	}
 	function startTerminalResize(e: MouseEvent) {
 		e.preventDefault();
@@ -1020,7 +1019,7 @@
 		const startH = terminalHeight;
 		const onMove = (ev: MouseEvent) => {
 			terminalHeight = Math.min(700, Math.max(120, startH + (startY - ev.clientY))); // drag up = taller
-			activeRef()?.refit();
+			dock?.refit();
 		};
 		const onUp = () => {
 			window.removeEventListener('mousemove', onMove);
@@ -1035,7 +1034,7 @@
 		if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
 		e.preventDefault();
 		terminalHeight = Math.min(700, Math.max(120, terminalHeight + (e.key === 'ArrowUp' ? 16 : -16))); // up = taller
-		activeRef()?.refit();
+		dock?.refit();
 		updateSettings({ terminalHeight });
 	}
 
@@ -1065,12 +1064,11 @@
 	// show the terminal, wait for mount, then run (the shell queues the command until it has
 	// spawned). onDone fires when the shell reports the line finished (Terminal.run's sentinel echo).
 	function runInTerminal(cmd: string, onDone?: (output: string) => void, tries = 0) {
-		const ref = activeRef();
-		if (ref) {
-			ref.run(cmd, onDone);
+		if (dock) {
+			dock.runCommand(cmd, onDone);
 			return;
 		}
-		if (tries < 40) setTimeout(() => runInTerminal(cmd, onDone, tries + 1), 25); // ~1s for first mount
+		if (tries < 40) setTimeout(() => runInTerminal(cmd, onDone, tries + 1), 25); // ~1s for the dock to mount
 	}
 	// Draft mode: preview via the incremental per-page engine instead of the terminal
 	// command. Saves first (so the compile sees the buffer), opens the preview pane, and
@@ -1128,6 +1126,11 @@
 			}
 			return;
 		}
+		// shared session: guests can inject LaTeX the host compiles, so shell escape stays off
+		if (session.active && /(^|[^-\w])(-{1,2}shell-escape|-{1,2}enable-write18)\b/.test(cmd)) {
+			toaster.error({ title: m.wsview_toast_shell_escape_blocked(), duration: 5000 });
+			return;
+		}
 		// write the buffer to disk BEFORE compiling so SyncTeX indexes exactly what the editor
 		// holds; otherwise reverse search maps PDF clicks into a stale, differently formatted .tex
 		await flushSaveAndWait();
@@ -1161,96 +1164,16 @@
 
 	// the output dir named in the command (-output-directory= / -outdir=), else the folder root.
 	// takes an explicit command so callers that run before compileCommand hydrates can pass the settings value.
-	function compileOutDir(cmd = compileCommand): string {
-		const m = cmd.match(/-(?:output-directory|outdir)[=\s]+("[^"]*"|'[^']*'|\S+)/);
-		return m && m[1] ? m[1].replace(/^["']|["']$/g, '') : '.';
-	}
-
-	// Quick-setup chips are a best-effort REFLECTION of the command text and a one-way GENERATOR
-	// on click - never a silent two-way binding. detectEngine returns null for anything we don't
-	// recognize (make, arara, tectonic, a script, multi-engine), so no chip lights up rather than
-	// mislabeling it; clicking a chip regenerates the whole command (visible, Cancel-able as a draft).
-	type Engine = 'pdflatex' | 'lualatex' | 'xelatex';
-	const ENGINE_FLAG: Record<Engine, string> = { pdflatex: '-pdf', lualatex: '-lualatex', xelatex: '-xelatex' };
-	function detectEngine(cmd: string): Engine | null {
-		if (/\b(lualatex|pdflua)\b/.test(cmd)) return 'lualatex';
-		if (/\b(xelatex|pdfxe)\b/.test(cmd)) return 'xelatex';
-		if (/\bpdflatex\b/.test(cmd)) return 'pdflatex';
-		if (/\blatexmk\b/.test(cmd) && /\bpdf\b/.test(cmd)) return 'pdflatex'; // latexmk -pdf defaults to pdflatex
-		return null;
-	}
-	function usesLatexmk(cmd: string) {
-		return /\blatexmk\b/.test(cmd);
-	}
-	// regenerate a standard command, carrying over the current output dir (default 'output')
-	function buildCompileCommand(engine: Engine, latexmk: boolean, cmd: string): string {
-		const cur = compileOutDir(cmd);
-		const out = `-output-directory=${cur === '.' ? 'output' : cur}`;
-		const flags = `-interaction=nonstopmode -file-line-error -synctex=1 ${out}`;
-		return latexmk ? `latexmk ${ENGINE_FLAG[engine]} ${flags} {main}` : `${engine} ${flags} {main}`;
-	}
-	function applyEngine(engine: Engine) {
-		compileDraft = buildCompileCommand(engine, usesLatexmk(compileDraft), compileDraft);
-	}
-	function applyLatexmk(on: boolean) {
-		compileDraft = buildCompileCommand(detectEngine(compileDraft) ?? 'pdflatex', on, compileDraft);
-	}
-	// a Windows drive (C:\), or a POSIX/UNC leading separator
-	const isAbsolutePath = (p: string) => /^([a-zA-Z]:[\\/]|[\\/])/.test(p);
-	// a user-entered override: absolute stays as-is, else it's relative to the folder root
-	function resolveOutputPath(root: string, p: string): string {
-		return isAbsolutePath(p) ? p : joinPath(root, p);
-	}
-
-	// DETECTED (not overridden) PDF path, purely from the command + main file: shown as the
-	// placeholder. <root>/<outdir>/<main-basename>.pdf
-	function detectedPdfPath(cmd = compileCommand): string | null {
-		const root = get(workspaceRoot);
-		const main = get(mainFile) ?? loadedPath;
-		if (!root || !main) return null;
-		const pdf = basename(main).replace(/\.tex$/i, '') + '.pdf';
-		const dir = compileOutDir(cmd);
-		return dir === '.' ? joinPath(root, pdf) : joinPath(joinPath(root, dir), pdf);
-	}
-	// DETECTED log: <jobname>.log next to the (actual, possibly-overridden) PDF, unless an aux
-	// directory (latexmk -auxdir / MiKTeX -aux-directory) redirects it
-	function detectedLogPath(cmd = compileCommand): string | null {
-		const pdf = expectedPdfPath(cmd);
-		if (!pdf) return null;
-		const aux = cmd.match(/-(?:aux-directory|auxdir)[=\s]+("[^"]*"|'[^']*'|\S+)/);
-		const log = basename(pdf).replace(/\.pdf$/i, '.log');
-		if (aux && aux[1]) {
-			const root = get(workspaceRoot);
-			if (!root) return null;
-			return joinPath(joinPath(root, aux[1].replace(/^["']|["']$/g, '')), log);
-		}
-		return pdf.replace(/\.pdf$/i, '.log');
-	}
-	// ACTUAL PDF/log the preview, log parser, and SyncTeX all use: the folder's manual override
-	// wins (Advanced options in the compile modal), else the detected path
+	// compile-command parsing/generation lives in compileCommand.ts; these thin wrappers supply the
+	// reactive root / main-file / per-folder overrides the pure functions take as arguments
 	function expectedPdfPath(cmd = compileCommand): string | null {
 		const root = get(workspaceRoot);
-		const ov = root ? savedCompileOutputs(root).pdf : undefined;
-		return root && ov ? resolveOutputPath(root, ov) : detectedPdfPath(cmd);
+		return cc.expectedPdfPath(cmd, root, get(mainFile) ?? loadedPath, root ? savedCompileOutputs(root).pdf : undefined);
 	}
 	function expectedLogPath(cmd = compileCommand): string | null {
 		const root = get(workspaceRoot);
-		const ov = root ? savedCompileOutputs(root).log : undefined;
-		return root && ov ? resolveOutputPath(root, ov) : detectedLogPath(cmd);
+		return cc.expectedLogPath(cmd, root, get(mainFile) ?? loadedPath, root ? savedCompileOutputs(root) : undefined);
 	}
-	// root-relative detected paths, shown as the Advanced inputs' placeholders; re-derive live as
-	// the user edits the command draft or switches main file
-	// The Advanced output paths are LITERAL file paths, one file each: the command's {main} is
-	// NOT expanded here, and each must be an actual .pdf / .log. Blank = auto-detect. Warn on
-	// either mistake; the Auto button clears the field back to auto-detect.
-	function outputPathWarning(v: string, ext: '.pdf' | '.log'): string | null {
-		if (!v.trim()) return null;
-		if (/\{[^}]*\}/.test(v)) return m.wsview_warning_no_main_here({ token: '{main}' });
-		if (!v.trim().toLowerCase().endsWith(ext)) return m.wsview_warning_should_end_in({ ext });
-		return null;
-	}
-	const pdfPathWarning = $derived(outputPathWarning(compileOutputsDraft.pdf, '.pdf'));
-	const logPathWarning = $derived(outputPathWarning(compileOutputsDraft.log, '.log'));
 
 	// dvipdfmx/xdvipdfmx write diagnostics to stdout, not the .log; captured per compile by the
 	// terminal's sentinel tracking and cleared at the start of each run
@@ -1352,7 +1275,7 @@
 	}
 	async function ensureOutputDir() {
 		const root = get(workspaceRoot);
-		const dir = compileOutDir();
+		const dir = cc.compileOutDir(compileCommand);
 		if (root && dir !== '.') {
 			try {
 				await createEntry(joinPath(root, dir), 'dir'); // mkdir -p, idempotent
@@ -1364,6 +1287,7 @@
 	// load a freshly compiled PDF into the pane; no-op if this exact build is already
 	// shown so the poller and finalizeCompile can't reload it twice
 	function showCompiledPdf(pdfPath: string, mtimeMs: number) {
+		void session.pushPdf(pdfPath); // shared session: guests get the fresh bytes
 		const url = fileUrl(pdfPath) + '&t=' + Math.round(mtimeMs); // cache-bust so it reloads
 		if (get(pdfStore) === url) return;
 		pdfFilename = basename(pdfPath);
@@ -1460,6 +1384,16 @@
 	// forward: a source line -> the matching place in the PDF (scroll + flash a highlight).
 	// Live mode syncs against the reconcile PDF (same layout the canvases show).
 	async function syncForwardLine(line: number) {
+		if (guest) {
+			// the host holds the .synctex data; ask it to resolve, then scroll our PDF copy
+			if (!loadedPath) return;
+			const res = await collabGuest.syncForward(loadedPath, line);
+			if (res) {
+				setPdfPaneOpen(true);
+				jumpPdf(res.page, res.x, res.y, res.w, res.h);
+			}
+			return;
+		}
 		const live = get(settings).draftMode;
 		const pdf = live ? draftRoot + '/_draft/draft.pdf' : expectedPdfPath();
 		if (!loadedPath || kind !== 'tex' || !pdf) return;
@@ -1491,6 +1425,11 @@
 	// inverse: a double-click in the PDF opens the source at the matching line; selectText
 	// lets the editor snap to the real text even if the line drifted
 	async function onPdfDoubleClick(page: number, x: number, y: number, selectText?: string) {
+		if (guest) {
+			const res = await collabGuest.syncInverse(page, x, y);
+			if (res && res.line >= 1) openFileAtLine(res.file, res.line, res.selectText ?? selectText);
+			return;
+		}
 		const pdf = expectedPdfPath();
 		if (!pdf) return;
 		const res = await synctexInverse(pdf, page, x, y);
@@ -1598,21 +1537,7 @@
 
 	// after a rename/move, find \includegraphics/\input across the project's .tex files
 	// that pointed at the file (AST-based) and offer to repoint them
-	let pendingRefUpdate = $state<{ oldRel: string; newRel: string; hits: { path: string; count: number }[]; total: number } | null>(null);
-	// composed sentence for the ref-update modal: total refs and file count pluralize independently
-	const refUpdateBody = $derived.by(() => {
-		const u = pendingRefUpdate;
-		if (!u) return '';
-		const refClause =
-			u.total === 1 ? m.wsview_refupdate_ref_count_one({ count: u.total }) : m.wsview_refupdate_ref_count_other({ count: u.total });
-		const fileClause =
-			u.hits.length === 1
-				? m.wsview_refupdate_file_count_one({ count: u.hits.length })
-				: m.wsview_refupdate_file_count_other({ count: u.hits.length });
-		return u.total === 1
-			? m.wsview_refupdate_body_one({ refClause, fileClause, oldRel: u.oldRel, newRel: u.newRel })
-			: m.wsview_refupdate_body_other({ refClause, fileClause, oldRel: u.oldRel, newRel: u.newRel });
-	});
+	let pendingRefUpdate = $state<RefUpdate | null>(null);
 
 	async function afterRename(oldPath: string, newPath: string) {
 		const root = get(workspaceRoot);
@@ -1708,6 +1633,41 @@
 	});
 	onDestroy(() => setGraphicResolver(null));
 
+	// shared session: guests can ask for a compile; leaving the workspace ends the session
+	let shareModalOpen = $state(false);
+	onMount(() => {
+		session.onCompileRequest = () => {
+			toaster.info({ title: m.wsview_toast_compile_requested_title(), duration: 3000 });
+			void runCompile();
+		};
+		// resolve a guest's SyncTeX request against our .synctex data and reply
+		session.onSyncRequest = async (payload, from) => {
+			const root = get(workspaceRoot);
+			const pdf = expectedPdfPath();
+			if (!root || !pdf) return;
+			if (payload.kind === 'synctex-inverse') {
+				const res = await synctexInverse(pdf, payload.page, payload.x, payload.y);
+				if (res.ok && res.input && res.line >= 1) {
+					const rel = relativeTo(root, normPath(res.input)).replace(/\\/g, '/');
+					collabHost.replyControl({ kind: 'synctex-inverse-result', reqId: payload.reqId, file: rel, line: res.line }, from);
+				}
+			} else if (payload.kind === 'synctex-forward') {
+				const res = await synctexForward(pdf, joinPath(root, payload.file), payload.line);
+				if (res.ok) {
+					collabHost.replyControl(
+						{ kind: 'synctex-forward-result', reqId: payload.reqId, page: res.page, x: res.h, y: res.v, w: res.width, h: res.height },
+						from
+					);
+				}
+			}
+		};
+		return () => {
+			session.onCompileRequest = null;
+			session.onSyncRequest = null;
+			void session.end();
+		};
+	});
+
 	// F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added)
 	async function jumpToInclude(name: string) {
 		const root = get(workspaceRoot);
@@ -1748,7 +1708,7 @@
 	$effect(() => {
 		const path = $activeFilePath;
 		// autosave off: the outgoing file's edit wasn't auto-written, so warn before tearing it down
-		if (get(settings).autosave === false && loadedPath && path !== loadedPath && pendingSave?.path === loadedPath) {
+		if (!autosaveActive() && loadedPath && path !== loadedPath && pendingSave?.path === loadedPath) {
 			if (confirm(m.wsview_confirm_save_before_switch({ name: basename(loadedPath) }))) flushSave();
 			else pendingSave = null; // discard the unsaved edit
 		} else {
@@ -1777,6 +1737,10 @@
 	async function loadFile(path: string) {
 		try {
 			await writeChain; // let any queued write (e.g. the file we just left) land before we read
+			// shared session: assert the lock BEFORE reading disk, so a guest can't slip an edit in
+			// between the flush and the reactive lock effect; then settle pending guest edits to disk
+			if (session.active) session.setVisualLock(hostHoldsExclusively(fileKind(path), viewMode, path) ? path : null);
+			await session.beforeOpen(path); // settle pending guest edits onto disk first
 			if (get(activeFilePath) !== path) return; // a newer switch superseded us
 			const k = fileKind(path);
 			if (k === 'tex') {
@@ -1866,6 +1830,9 @@
 			rawContent = disk;
 		}
 		isDirty.set(false);
+		// shared session: fold the adopted disk content into the shared doc so guests see it too
+		// (hostEdit's own lastWritten update prevents an echo write back to disk)
+		if (loadedPath) session.hostEdit(loadedPath, disk);
 	}
 
 	function resolveConflict(choice: 'reload' | 'keep') {
@@ -1924,10 +1891,14 @@
 	// so switching files can never drop the previous file's edit
 	function scheduleSave(path: string | null, content: string) {
 		if (!path) return;
+		// shared session: every host edit streams into the shared doc per keystroke (a no-op
+		// splice when the source editor is already Y-bound)
+		session.hostEdit(path, content);
 		if (pendingSave && pendingSave.path !== path) flushSave();
 		pendingSave = { path, content };
-		// autosave off: track the edit (so Save / the switch-guard have it) but don't auto-write
-		if (get(settings).autosave === false) return;
+		// autosave off: track the edit (so Save / the switch-guard have it) but don't auto-write.
+		// live mode and hosting a session force it on (see autosaveActive).
+		if (!autosaveActive()) return;
 		if (autosaveTimer) clearTimeout(autosaveTimer);
 		autosaveTimer = setTimeout(flushSave, AUTOSAVE_MS);
 	}
@@ -2478,8 +2449,8 @@
 
 	function onKeydown(e: KeyboardEvent) {
 		if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
-			e.preventDefault();
-			save();
+			e.preventDefault(); // block the browser save dialog; guests have nothing to save (edits are live)
+			if (!guest) save();
 		} else if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'f') {
 			e.preventDefault();
 			void openGlobalSearch();
@@ -2513,133 +2484,67 @@
 >
 
 <div class="flex h-screen flex-col overflow-hidden">
-	<WorkspaceMenuBar
-		disabled={!loadedPath}
-		imageDir={loadedPath && kind === 'tex' ? dirname(loadedPath) : undefined}
-		onNewFile={(ext) => newFileOfType(ext)}
-		onOpenFolder={openFolderFromMenu}
-		onCloseWorkspace={closeWorkspace}
-		onSave={save}
-		{terminalAvailable}
-		{terminalVisible}
-		onCompile={runCompile}
-		onConfigureCompile={openCompileModal}
-		onNewTerminal={addTerminal}
-		onToggleTerminal={toggleTerminal}
-		onFormatDocument={openFormatModal}
-		onOpenTutorial={() => (tutorialModalOpen = true)}
-		{uiZoomPercent}
-		onZoomIn={uiZoomIn}
-		onZoomOut={uiZoomOut}
-		onZoomReset={uiZoomReset}
-	/>
+	{#if guest}
+		<GuestBar onTogglePdf={togglePdfPane} />
+	{:else}
+		<WorkspaceMenuBar
+			disabled={!loadedPath}
+			imageDir={loadedPath && kind === 'tex' ? dirname(loadedPath) : undefined}
+			onNewFile={(ext) => newFileOfType(ext)}
+			onOpenFolder={openFolderFromMenu}
+			onCloseWorkspace={closeWorkspace}
+			onSave={save}
+			onShareSession={isDesktop() ? () => (shareModalOpen = true) : undefined}
+			{terminalAvailable}
+			{terminalVisible}
+			onCompile={runCompile}
+			onConfigureCompile={openCompileModal}
+			onNewTerminal={newTerminalFromMenu}
+			onToggleTerminal={toggleTerminal}
+			onFormatDocument={openFormatModal}
+			onOpenTutorial={() => (tutorialModalOpen = true)}
+			{uiZoomPercent}
+			onZoomIn={uiZoomIn}
+			onZoomOut={uiZoomOut}
+			onZoomReset={uiZoomReset}
+		/>
+	{/if}
 	<div class="flex min-h-0 flex-1 overflow-hidden">
 		{#if sidebarOpen}
-			<aside class="border-surface-200-800 bg-surface-50-950 flex shrink-0 flex-col border-r" style="width: {sidebarWidth}px">
-				<div class="border-surface-200-800 flex h-12 items-center justify-between gap-2 border-b px-3">
-					<span class="truncate text-sm font-semibold" title={$workspaceRoot ?? ''}>
-						{$workspaceRoot ? basename($workspaceRoot) : m.wsview_no_folder()}
-					</span>
-					<div class="flex items-center gap-1">
-						<button
-							class="btn-icon btn-icon-sm hover:preset-tonal"
-							title={m.wsview_new_file_title()}
-							onclick={() => fileTreeRef?.newAtRoot('file')}
-						>
-							<FilePlus class="size-4" />
-						</button>
-						<button
-							class="btn-icon btn-icon-sm hover:preset-tonal"
-							title={m.wsview_new_folder_title()}
-							onclick={() => fileTreeRef?.newAtRoot('dir')}
-						>
-							<FolderPlus class="size-4" />
-						</button>
-						<button class="btn-icon btn-icon-sm hover:preset-tonal" title={m.wsview_refresh_tree_title()} onclick={refreshTree}>
-							<RefreshCw class="size-4" />
-						</button>
-						<button
-							class="btn-icon btn-icon-sm {sidebarView === 'scm' ? 'text-primary-500' : 'hover:preset-tonal'}"
-							title={m.wsview_source_control()}
-							aria-label={m.wsview_source_control()}
-							onclick={() => (sidebarView = sidebarView === 'scm' ? 'explorer' : 'scm')}
-						>
-							<GitBranch class="size-4" />
-						</button>
-						<button
-							class="btn-icon btn-icon-sm {sidebarView === 'search' ? 'text-primary-500' : 'hover:preset-tonal'}"
-							title={m.wsview_find_in_files_title({ combo: `${modLabel}+Shift+F` })}
-							aria-label={m.wsview_find_in_files()}
-							onclick={() => (sidebarView === 'search' ? (sidebarView = 'explorer') : void openGlobalSearch())}
-						>
-							<Search class="size-4" />
-						</button>
-					</div>
-				</div>
-				{#if sidebarView === 'search'}
-					<GlobalSearch
-						bind:this={globalSearchRef}
-						root={$workspaceRoot ?? ''}
-						onOpen={openFileAtLine}
-						onClose={() => void closeGlobalSearch()}
-					/>
-				{:else if sidebarView === 'scm'}
-					<div class="min-h-0 flex-1 overflow-y-auto">
-						<SourceControlPanel
-							root={$workspaceRoot ?? ''}
-							isRepo={$isGitRepo}
-							branch={$gitBranch}
-							changes={$gitChanges}
-							busy={scmBusy}
-							onInit={scmInit}
-							onStage={scmStage}
-							onUnstage={scmUnstage}
-							onDiscard={scmDiscard}
-							onCommit={scmCommit}
-							onOpenDiff={scmOpenDiff}
-							onRefresh={() => refreshGitStatus($workspaceRoot)}
-						/>
-					</div>
-				{:else}
-					<div class="flex min-h-0 flex-1 flex-col" bind:this={splitEl}>
-						<div class="min-h-0 overflow-y-auto p-1.5" style={showToc ? `flex: ${1 - tocFraction} 1 0%` : 'flex: 1 1 0%'}>
-							<FileTree
-								bind:this={fileTreeRef}
-								tree={$fileTree}
-								rootPath={$workspaceRoot ?? ''}
-								activePath={$activeFilePath}
-								mainPath={$mainFile}
-								gitStatus={$gitStatusMap}
-								onOpen={openEntry}
-								onCreate={createInTree}
-								onRename={renameInTree}
-								onDelete={deleteManyInTree}
-								onMove={moveManyInTree}
-								onImport={importIntoTree}
-								onCopyIn={copyIntoTree}
-								onSetMain={(entry) => applyMainFile(entry.path)}
-							/>
-						</div>
-						{#if showToc}
-							<!-- arrow keys resize when focused: the WAI-ARIA window-splitter pattern
-							     (role=separator + tabindex), which svelte's a11y rule doesn't special-case -->
-							<!-- eslint-disable-next-line svelte/valid-compile -->
-							<div
-								class="hover:bg-primary-500/40 active:bg-primary-500/60 h-1 shrink-0 cursor-row-resize bg-transparent transition-colors"
-								onmousedown={startTocResize}
-								onkeydown={resizeTocByKey}
-								role="separator"
-								aria-orientation="horizontal"
-								aria-label={m.wsview_resize_toc_aria()}
-								tabindex="0"
-							></div>
-							<div class="border-surface-200-800 min-h-0 overflow-y-auto border-t p-2" style="flex: {tocFraction} 1 0%">
-								<TableOfContents mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={openFileAtLine} />
-							</div>
-						{/if}
-					</div>
-				{/if}
-			</aside>
+			<WorkspaceSidebar
+				width={sidebarWidth}
+				{guest}
+				{modLabel}
+				bind:view={sidebarView}
+				{scmBusy}
+				{showToc}
+				{tocFraction}
+				{viewMode}
+				bind:fileTreeRef
+				bind:globalSearchRef
+				bind:splitEl
+				onRefreshTree={refreshTree}
+				onOpenGlobalSearch={() => void openGlobalSearch()}
+				onCloseGlobalSearch={() => void closeGlobalSearch()}
+				onOpenFileAt={openFileAtLine}
+				onOpenEntry={openEntry}
+				onCreate={createInTree}
+				onRename={renameInTree}
+				onDelete={deleteManyInTree}
+				onMove={moveManyInTree}
+				onImport={importIntoTree}
+				onCopyIn={copyIntoTree}
+				onSetMain={(entry) => applyMainFile(entry.path)}
+				onStartTocResize={startTocResize}
+				onResizeTocByKey={resizeTocByKey}
+				onRefreshGit={() => refreshGitStatus($workspaceRoot)}
+				{scmInit}
+				{scmStage}
+				{scmUnstage}
+				{scmDiscard}
+				{scmCommit}
+				{scmOpenDiff}
+			/>
 
 			<!-- same WAI-ARIA window-splitter pattern as above; svelte's a11y rule doesn't special-case it -->
 			<!-- eslint-disable-next-line svelte/valid-compile -->
@@ -2658,833 +2563,155 @@
 			class="grid min-h-0 min-w-0 flex-1"
 			style="grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto minmax(0, 1fr) auto auto"
 		>
-			<header class="border-surface-200-800 col-span-full flex h-12 items-center justify-between gap-3 border-b px-4">
-				<div class="flex min-w-0 items-center gap-2">
-					<button
-						class="btn-icon btn-icon-sm hover:preset-tonal shrink-0"
-						onclick={toggleSidebar}
-						title={sidebarOpen ? m.wsview_hide_file_explorer() : m.wsview_show_file_explorer()}
-						aria-label={m.wsview_toggle_file_explorer_aria()}
-					>
-						<PanelLeft class="size-4" />
-					</button>
-					<FileText class="text-surface-400 size-4 shrink-0" />
-					<span class="truncate text-sm font-medium">{loadedPath ? basename(loadedPath) : m.wsview_no_file()}</span>
-					{#if $isDirty}<span class="bg-warning-500 size-2 shrink-0 rounded-full" title={m.wsview_unsaved_changes()}></span>{/if}
-					{#if loadedPath && kind === 'tex' && (viewMode === 'visual' || viewMode === 'source')}
-						<span class="border-surface-300-700 ml-2 shrink-0 border-l pl-3"><WordCount /></span>
-					{/if}
-				</div>
-				<div class="flex items-center gap-2">
-					{#if loadedPath && (kind === 'tex' || kind === 'bib')}
-						<!-- visual/source toggle; for .bib it's the reference editor vs raw BibTeX -->
-						<div class="border-surface-300-700 inline-flex shrink-0 overflow-hidden rounded-md border text-xs">
-							<button
-								class="flex items-center gap-1 px-2.5 py-1 {viewMode === 'visual' ? 'preset-filled-primary-500' : 'hover:preset-tonal'}"
-								onclick={() => setViewMode('visual')}
-								title={m.wsview_visual_editor_title()}
-							>
-								<Eye class="size-3.5" />
-								{m.wsview_visual_label()}
-							</button>
-							<button
-								class="flex items-center gap-1 px-2.5 py-1 {viewMode === 'source' ? 'preset-filled-primary-500' : 'hover:preset-tonal'}"
-								onclick={() => setViewMode('source')}
-								title={m.wsview_latex_source_title()}
-							>
-								<Code class="size-3.5" />
-								{m.wsview_source_label()}
-							</button>
-						</div>
-					{/if}
-					{#if terminalAvailable}
-						{#if viewMode === 'source' && kind === 'tex'}
-							<button
-								class="btn-icon btn-icon-sm hover:preset-tonal"
-								onclick={syncForward}
-								title={m.wsview_sync_to_pdf_title()}
-								aria-label={m.wsview_sync_to_pdf_aria()}
-							>
-								<LocateFixed class="size-4" />
-							</button>
-						{/if}
-						<!-- Compile / Stop with an attached options caret (Overleaf-style) -->
-						<div class="relative flex items-center">
-							{#if compiling}
-								<button
-									class="btn btn-sm preset-tonal-error w-20 justify-center gap-1.5 rounded-r-none"
-									onclick={stopCompile}
-									title={m.wsview_stop_compile_title({ combo: `${modLabel}+Alt+Enter` })}
-								>
-									<Square class="size-4" />
-									{m.wsview_stop_label()}
-								</button>
-							{:else if $settings.draftMode && pdfPaneOpen && !draftPaused}
-								<button
-									class="btn btn-sm preset-tonal-success min-w-24 justify-center gap-1.5 rounded-r-none whitespace-nowrap"
-									onclick={pauseDraft}
-									title={m.wsview_live_preview_running_title()}
-								>
-									<span class="bg-success-500 size-2 animate-pulse rounded-full"></span>
-									{m.wsview_live_label()}
-								</button>
-							{:else if $settings.draftMode && pdfPaneOpen && draftPaused}
-								<button
-									class="btn btn-sm preset-tonal-warning min-w-24 justify-center gap-1.5 rounded-r-none whitespace-nowrap"
-									onclick={resumeDraft}
-									title={m.wsview_engine_stopped_title()}
-								>
-									<Play class="size-4" />
-									{m.wsview_paused_label()}
-								</button>
-							{:else}
-								<button
-									class="btn btn-sm preset-tonal-primary w-24 justify-center gap-1.5 rounded-r-none"
-									onclick={runCompile}
-									title={$settings.draftMode
-										? m.wsview_open_live_preview_title()
-										: m.wsview_compile_title({ combo: `${modLabel}+Alt+Enter` })}
-								>
-									<Play class="size-4" />
-									{$settings.draftMode ? m.wsview_preview_label() : m.wsview_compile_label()}
-								</button>
-							{/if}
-							<button
-								class="btn btn-sm {compiling
-									? 'preset-tonal-error'
-									: $settings.draftMode && pdfPaneOpen
-										? draftPaused
-											? 'preset-tonal-warning'
-											: 'preset-tonal-success'
-										: 'preset-tonal-primary'} rounded-l-none border-l border-black/10 px-1"
-								onclick={() => (compileMenuOpen = !compileMenuOpen)}
-								title={m.wsview_compile_options()}
-								aria-label={m.wsview_compile_options()}
-								aria-haspopup="menu"
-								aria-expanded={compileMenuOpen}
-							>
-								<ChevronDown class="size-3.5 transition-transform {compileMenuOpen ? 'rotate-180' : ''}" />
-							</button>
-							{#if compileMenuOpen}
-								<!-- click-away layer -->
-								<button
-									class="fixed inset-0 z-1200 cursor-default"
-									onclick={() => (compileMenuOpen = false)}
-									tabindex="-1"
-									aria-hidden="true"
-								></button>
-								<div class="card bg-surface-50-950 border-surface-300-700 absolute top-full right-0 z-1300 mt-1 w-max border p-1 shadow-xl">
-									<button
-										class="hover:preset-tonal flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm whitespace-nowrap"
-										onclick={() => {
-											compileMenuOpen = false;
-											openCompileModal();
-										}}
-									>
-										<Settings2 class="size-4 shrink-0" />
-										{m.wsview_configure_compile_command()}
-									</button>
-								</div>
-							{/if}
-						</div>
-						{#if $compileLog && ($compileLog.errors.length > 0 || $compileLog.warnings.length > 0)}
-							<button
-								class="btn btn-sm gap-1 {$compileLog.errors.length > 0 ? 'preset-tonal-error' : 'preset-tonal-warning'}"
-								onclick={() => {
-									showTerminal();
-									dockView = 'problems';
-								}}
-								title={m.wsview_show_problems_title()}
-							>
-								{#if $compileLog.errors.length > 0}
-									<CircleAlert class="size-3.5" /> {$compileLog.errors.length}
-								{/if}
-								{#if $compileLog.warnings.length > 0}
-									<TriangleAlert class="size-3.5" /> {$compileLog.warnings.length}
-								{/if}
-							</button>
-						{/if}
-						<button
-							class="btn-icon btn-icon-sm hover:preset-tonal {pdfPaneOpen ? 'text-primary-500' : ''}"
-							onclick={togglePdfPane}
-							title={m.wsview_toggle_pdf_preview()}
-							aria-label={m.wsview_toggle_pdf_preview()}
-						>
-							<PanelRight class="size-4" />
-						</button>
-					{/if}
-					<button class="btn btn-sm preset-filled-primary-500 gap-1.5" onclick={save} disabled={!loadedPath || saving || !$isDirty}>
-						{#if saving}<Loader2 class="size-4 animate-spin" />{:else}<Save class="size-4" />{/if}
-						{m.wsview_save_label()}
-					</button>
-				</div>
-			</header>
+			<EditorTopbar
+				{loadedPath}
+				{kind}
+				{viewMode}
+				{guest}
+				{terminalAvailable}
+				{compiling}
+				{pdfPaneOpen}
+				{draftPaused}
+				{saving}
+				{sidebarOpen}
+				{modLabel}
+				onToggleSidebar={toggleSidebar}
+				onSetViewMode={setViewMode}
+				onSyncForward={syncForward}
+				onStopCompile={stopCompile}
+				onPauseDraft={pauseDraft}
+				onResumeDraft={resumeDraft}
+				onCompile={runCompile}
+				onConfigureCompile={openCompileModal}
+				onShowProblems={() => {
+					showTerminal();
+					dockView = 'problems';
+				}}
+				onTogglePdf={togglePdfPane}
+				onSave={save}
+			/>
 
 			<!-- editor column (toolbar + content) with the PDF pane beside it, so the PDF
 			     skips the toolbar while the header (Compile) stays above it. the wrapper is
 			     display:contents so editor/splitter/preview place themselves on main's grid -->
 			<div class="contents">
-				<div class="flex min-h-0 min-w-0 flex-col" style="grid-column: 1; grid-row: 2">
-					{#if visualDoc && loadedPath && kind === 'tex' && viewMode === 'visual'}
-						<div class="border-surface-200-800 toolbar-hscroll overflow-x-auto border-b">
-							<Toolbar minimal />
-						</div>
-					{:else if loadedPath && kind === 'tex' && viewMode === 'source'}
-						<div class="border-surface-200-800 toolbar-hscroll overflow-x-auto border-b px-2 py-1.5">
-							<SourceToolbar />
-						</div>
-					{/if}
-					<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
-					<div class="relative min-h-0 min-w-0 flex-1">
-						{#if loadedPath && kind === 'tex' && viewMode === 'visual' && visualDoc}
-							<SearchBar />
-						{/if}
-						<div class="h-full w-full overflow-auto">
-							{#if folderEmpty && !$activeFilePath}
-								<div class="mx-auto mt-16 max-w-xl px-6">
-									<div class="text-center">
-										<h2 class="text-lg font-semibold">{m.wsview_start_new_doc_heading()}</h2>
-										<p class="text-surface-500 mt-1 text-sm">
-											{m.wsview_start_new_doc_desc_pre()} <code>.tex</code>
-											{m.wsview_start_new_doc_desc_post()}
-										</p>
-									</div>
-									<div class="mt-6">
-										<StarterPicker onPick={pickStarter} onBlank={newTexFile} onImport={importStarterFiles} busy={applyingStarter} />
-									</div>
-								</div>
-							{:else if loadError}
-								<div class="text-error-600 mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
-									<CircleAlert class="size-8" />
-									<p class="text-sm">{loadError}</p>
-								</div>
-							{:else if loadedPath && viewMode === 'diff' && (kind === 'tex' || kind === 'bib' || kind === 'text')}
-								<div class="flex h-full flex-col">
-									<div
-										class="bg-surface-100-900 text-surface-600-300 border-surface-200-800 flex h-8 shrink-0 items-center gap-2 border-b px-3 text-xs"
-									>
-										<GitCompare class="size-3.5 shrink-0" />
-										<span class="font-medium">{m.wsview_diff_heading()}</span>
-										{#if diffLoading}<span class="text-surface-500">· {m.wsview_diff_loading()}</span>
-										{:else if diffError}<span class="text-error-500 truncate">· {diffError}</span>
-										{:else if !diffHasHead}<span class="text-surface-500">· {m.wsview_diff_new_file()}</span>{/if}
-										<div class="ml-auto flex shrink-0 items-center gap-1">
-											<button
-												class="hover:preset-tonal rounded px-1.5 py-0.5"
-												onclick={toggleDiffLayout}
-												title={diffLayout === 'unified' ? m.wsview_switch_to_side_by_side() : m.wsview_switch_to_inline()}
-											>
-												{diffLayout === 'unified' ? m.wsview_side_by_side_label() : m.wsview_inline_label()}
-											</button>
-											<button
-												class="hover:preset-tonal rounded p-0.5"
-												onclick={captureDiffSnapshot}
-												title={m.wsview_refresh_diff()}
-												aria-label={m.wsview_refresh_diff()}
-											>
-												<RefreshCw class="size-3.5" />
-											</button>
-											<button
-												class="hover:preset-tonal-primary flex items-center gap-1 rounded px-1.5 py-0.5 font-medium"
-												onclick={exitDiff}
-												title={m.wsview_back_to_editor_title()}
-											>
-												<X class="size-3.5" />
-												{m.wsview_close_label()}
-											</button>
-										</div>
-									</div>
-									<div class="min-h-0 flex-1 overflow-auto">
-										{#key loadedPath}
-											<DiffPanel filename={loadedPath} original={diffOriginal} modified={diffModified} layout={diffLayout} />
-										{/key}
-									</div>
-								</div>
-							{:else if loadedPath && kind === 'tex' && viewMode === 'source'}
-								{#key loadedPath}
-									<SourceEditor
-										value={texSource}
-										onInput={onTexInput}
-										gotoLine={sourceGotoLine}
-										onSyncToPdf={syncForwardLine}
-										initialScrollPos={sourceScrollAnchor}
-										onHistoryBoundary={workspaceHistoryStep}
-										diagnostics={sourceDiagnostics}
-										onJumpToFile={jumpToInclude}
-										onOpenFileAt={openFileAtLine}
-									/>
-								{/key}
-							{:else if loadedPath && kind === 'tex' && visualDoc}
-								{#key loadedPath}
-									<!-- texpile-main-editor scopes the editor's right-click context menu (ContextMenu.svelte) -->
-									<!-- px-12 reserves room for the block-handle gutters (~48px left / ~30px right); on narrow
-							     windows the mx-auto centering margin collapses and this padding keeps them from clipping -->
-									<div class="px-12 py-8">
-										<div class="texpile-main-editor mx-auto w-full max-w-3xl min-w-0">
-											{#if docMeta?.hadDocumentEnv}
-												<PreambleFrontmatter preamble={docMeta.preamble} onEdit={editPreambleFrontmatter} />
-											{/if}
-											<EditorView
-												localValue={visualDoc}
-												localReferences={allReferences}
-												imageDir={loadedPath ? dirname(loadedPath) : undefined}
-												onLocalChange={onChange}
-												placeholder={m.wsview_editor_placeholder()}
-												onHistoryBoundary={workspaceHistoryStep}
-											/>
-										</div>
-									</div>
-								{/key}
-							{:else if loadedPath && kind === 'bib' && viewMode === 'source'}
-								{#key loadedPath}
-									<SourceEditor value={rawContent} onInput={onRawInput} filename={loadedPath} gotoLine={sourceGotoLine} />
-								{/key}
-							{:else if loadedPath && kind === 'bib'}
-								{#key loadedPath}
-									<BibManager value={rawContent} onInput={onRawInput} />
-								{/key}
-							{:else if loadedPath && kind === 'text'}
-								{#key loadedPath}
-									<SourceEditor value={rawContent} onInput={onRawInput} filename={loadedPath} gotoLine={sourceGotoLine} />
-								{/key}
-							{:else if loadedPath && kind === 'pdf'}
-								<!-- a .pdf opened directly: its own src, independent of the compile-output pane -->
-								<div class="h-full w-full">
-									<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} />
-								</div>
-							{:else if loadedPath && kind === 'image'}
-								<div class="flex h-full items-center justify-center p-8">
-									<img src={fileUrl(loadedPath)} alt={basename(loadedPath)} class="max-h-full max-w-full object-contain" />
-								</div>
-							{:else if loadedPath && kind === 'binary'}
-								<div class="text-surface-500 mt-12 text-center text-sm">
-									{m.wsview_binary_file_note({ name: basename(loadedPath) })}
-								</div>
-							{:else if $activeFilePath}
-								<div class="text-surface-500 mt-12 flex items-center justify-center gap-2 text-sm">
-									<Loader2 class="size-4 animate-spin" />
-									{m.wsview_opening()}
-								</div>
-							{:else}
-								<div class="text-surface-500 mt-12 text-center text-sm">{m.wsview_select_file_prompt()}</div>
-							{/if}
-						</div>
-					</div>
-				</div>
+				<EditorPane
+					{loadedPath}
+					{kind}
+					{viewMode}
+					{session}
+					{folderEmpty}
+					{loadError}
+					{applyingStarter}
+					{texSource}
+					{rawContent}
+					{visualDoc}
+					{docMeta}
+					{allReferences}
+					{sourceGotoLine}
+					{sourceScrollAnchor}
+					{sourceDiagnostics}
+					{diffOriginal}
+					{diffModified}
+					{diffLayout}
+					{diffLoading}
+					{diffError}
+					{diffHasHead}
+					{fileUrl}
+					onPickStarter={pickStarter}
+					onBlankStarter={newTexFile}
+					onImportStarter={importStarterFiles}
+					{onTexInput}
+					{onRawInput}
+					onVisualChange={onChange}
+					onEditFrontmatter={editPreambleFrontmatter}
+					onSyncToPdf={syncForwardLine}
+					onHistoryBoundary={workspaceHistoryStep}
+					onJumpToFile={jumpToInclude}
+					onOpenFileAt={openFileAtLine}
+					onToggleDiffLayout={toggleDiffLayout}
+					onRefreshDiff={captureDiffSnapshot}
+					onExitDiff={exitDiff}
+				/>
 				{#if pdfPaneOpen}
-					<!-- same WAI-ARIA window-splitter pattern as above; svelte's a11y rule doesn't special-case it -->
-					<!-- eslint-disable-next-line svelte/valid-compile -->
-					<div
-						class="hover:bg-primary-500/40 active:bg-primary-500/60 w-1 shrink-0 cursor-col-resize bg-transparent transition-colors"
-						style="grid-column: 2; grid-row: {dockShrunk ? '2 / -1' : '2'}"
-						onmousedown={startPdfResize}
-						onkeydown={resizePdfByKey}
-						role="separator"
-						aria-orientation="vertical"
-						aria-label={m.wsview_resize_pdf_preview_aria()}
-						tabindex="0"
-					></div>
-					<aside
-						class="border-surface-200-800 flex shrink-0 flex-col border-l"
-						style="width: {pdfPaneWidth}px; grid-column: 3; grid-row: {dockShrunk ? '2 / -1' : '2'}"
-					>
-						<div class="bg-surface-100-900 text-surface-600-300 flex h-8 shrink-0 items-center justify-between border-b px-3 text-xs">
-							<span class="font-medium">{$settings.draftMode ? m.wsview_live_preview_label() : m.wsview_pdf_preview_label()}</span>
-							<button
-								class="hover:preset-tonal rounded p-0.5"
-								onclick={togglePdfPane}
-								title={m.wsview_close_preview()}
-								aria-label={m.wsview_close_preview()}
-							>
-								<X class="size-3.5" />
-							</button>
-						</div>
-						<div class="min-h-0 flex-1">
-							{#if $settings.draftMode}
-								<DraftView
-									bind:this={draftRef}
-									root={draftRoot}
-									mainFile={draftMainRel}
-									trigger={draftTrigger}
-									onInverseSync={(file, line, selectText) => openFileAtLine(normPath(file), line, selectText)}
-									onSettled={runDraftDecision}
-								/>
-							{:else}
-								<PDFViewer bind:this={pdfPaneRef} filename={pdfFilename} onPageClick={onPdfDoubleClick} />
-							{/if}
-						</div>
-					</aside>
+					<PreviewPane
+						width={pdfPaneWidth}
+						{dockShrunk}
+						{guest}
+						guestPdf={session.guestPdf}
+						{pdfFilename}
+						{draftRoot}
+						{draftMainRel}
+						{draftTrigger}
+						bind:pdfPaneRef
+						bind:draftRef
+						onStartResize={startPdfResize}
+						onResizeByKey={resizePdfByKey}
+						onClose={togglePdfPane}
+						onPageClick={onPdfDoubleClick}
+						onInverseSync={(file, line, selectText) => openFileAtLine(normPath(file), line, selectText)}
+						onSettled={runDraftDecision}
+					/>
 				{/if}
 			</div>
 
-			<!-- terminal dock; shrunk it stays under the editor column and the preview keeps full height -->
 			{#if terminalMounted && terminalAvailable}
-				{#if terminalVisible}
-					<!-- same WAI-ARIA window-splitter pattern as above; svelte's a11y rule doesn't special-case it -->
-					<!-- eslint-disable-next-line svelte/valid-compile -->
-					<div
-						class="hover:bg-primary-500/40 active:bg-primary-500/60 h-1 shrink-0 cursor-row-resize bg-transparent transition-colors"
-						style="grid-row: 3; grid-column: {dockShrunk ? '1' : '1 / -1'}"
-						onmousedown={startTerminalResize}
-						onkeydown={resizeTerminalByKey}
-						role="separator"
-						aria-orientation="horizontal"
-						aria-label={m.wsview_resize_terminal_aria()}
-						tabindex="0"
-					></div>
-				{/if}
-				<!-- kept mounted so shells persist; hidden via display:none -->
-				<section
-					class="border-surface-200-800 flex shrink-0 flex-col border-t"
-					style={`${terminalVisible ? `height: ${terminalHeight}px` : 'display: none'}; grid-row: 4; grid-column: ${dockShrunk ? '1' : '1 / -1'}`}
-				>
-					<div class="bg-surface-100-900 text-surface-600-300 flex h-8 shrink-0 items-center justify-between gap-2 px-2 text-xs">
-						<div class="flex min-w-0 items-center gap-1">
-							<button
-								class="rounded px-2 py-1 {dockView === 'terminal' ? 'preset-tonal font-medium' : 'hover:preset-tonal'}"
-								onclick={() => (dockView = 'terminal')}
-							>
-								{m.wsview_terminal_label()}
-							</button>
-							<button
-								class="flex items-center gap-1 rounded px-2 py-1 {dockView === 'problems'
-									? 'preset-tonal font-medium'
-									: 'hover:preset-tonal'}"
-								onclick={() => (dockView = 'problems')}
-							>
-								{m.wsview_problems_label()}
-								{#if $compileLog && $compileLog.errors.length > 0}
-									<span class="text-error-500 font-semibold">{$compileLog.errors.length}</span>
-								{:else if $compileLog && $compileLog.warnings.length > 0}
-									<span class="text-warning-600-400 font-semibold">{$compileLog.warnings.length}</span>
-								{/if}
-							</button>
-						</div>
-						<div class="flex items-center gap-0.5">
-							{#if dockView === 'terminal'}
-								<div class="relative">
-									<button
-										class="hover:preset-tonal flex items-center gap-1.5 rounded px-2 py-1"
-										onclick={() => (termMenuOpen = !termMenuOpen)}
-									>
-										<SquareTerminal class="size-3.5" />
-										<span class="font-medium">{terminals.find((t) => t.id === activeTermId)?.title ?? m.wsview_terminal_label()}</span>
-										<ChevronDown class="size-3" />
-									</button>
-									{#if termMenuOpen}
-										<button
-											class="fixed inset-0 z-40 cursor-default"
-											aria-label={m.wsview_close_menu_aria()}
-											onclick={() => (termMenuOpen = false)}
-										></button>
-										<div
-											class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden rounded border py-1 shadow-lg"
-										>
-											{#each terminals as t (t.id)}
-												<div class="hover:preset-tonal-surface flex items-center">
-													<button class="flex flex-1 items-center gap-2 px-2.5 py-1.5 text-left" onclick={() => selectTerminal(t.id)}>
-														<Check class="size-3.5 {t.id === activeTermId ? '' : 'invisible'}" />
-														<span class="truncate">{t.title}</span>
-													</button>
-													<button
-														class="hover:preset-tonal-error mr-1 rounded p-1"
-														title={m.wsview_kill_terminal()}
-														aria-label={m.wsview_kill_terminal()}
-														onclick={() => killTerminal(t.id)}
-													>
-														<Trash2 class="size-3.5" />
-													</button>
-												</div>
-											{/each}
-											<button
-												class="hover:preset-tonal-primary border-surface-200-800 mt-1 flex w-full items-center gap-2 border-t px-2.5 py-1.5 text-left"
-												onclick={addTerminal}
-											>
-												<Plus class="size-3.5" />
-												{m.wsview_new_terminal()}
-											</button>
-										</div>
-									{/if}
-								</div>
-								<button
-									class="hover:preset-tonal rounded p-1"
-									title={m.wsview_new_terminal()}
-									aria-label={m.wsview_new_terminal()}
-									onclick={addTerminal}
-								>
-									<Plus class="size-3.5" />
-								</button>
-								<button
-									class="hover:preset-tonal-error rounded p-1"
-									title={m.wsview_kill_terminal()}
-									aria-label={m.wsview_kill_terminal()}
-									onclick={() => activeTermId != null && killTerminal(activeTermId)}
-								>
-									<Trash2 class="size-3.5" />
-								</button>
-							{/if}
-							{#if pdfPaneOpen}
-								<button
-									class="hover:preset-tonal rounded p-1"
-									title={terminalShrink ? m.wsview_expand_panel_title() : m.wsview_shrink_panel_title()}
-									aria-label={terminalShrink ? m.wsview_expand_panel_aria() : m.wsview_shrink_panel_aria()}
-									onclick={toggleTerminalShrink}
-								>
-									{#if terminalShrink}
-										<UnfoldHorizontal class="size-3.5" />
-									{:else}
-										<FoldHorizontal class="size-3.5" />
-									{/if}
-								</button>
-							{/if}
-							<button
-								class="hover:preset-tonal rounded p-1"
-								title={m.wsview_hide_panel()}
-								aria-label={m.wsview_hide_panel()}
-								onclick={toggleTerminal}
-							>
-								<X class="size-3.5" />
-							</button>
-						</div>
-					</div>
-					<!-- all terminals stay mounted (shells persist); only the active one is shown -->
-					<div class="relative min-h-0 flex-1">
-						{#if dockView === 'problems'}
-							<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
-								<ProblemsPanel root={$workspaceRoot ?? ''} onJump={openFileAtLine} />
-							</div>
-						{/if}
-						{#each terminals as t (t.id)}
-							<div class="absolute inset-0" style={t.id === activeTermId ? '' : 'display: none'}>
-								<Terminal bind:this={termRefs[t.id]} cwd={$workspaceRoot ?? ''} />
-							</div>
-						{/each}
-					</div>
-				</section>
+				<TerminalDock
+					visible={terminalVisible}
+					height={terminalHeight}
+					shrink={terminalShrink}
+					{dockShrunk}
+					cwd={$workspaceRoot ?? ''}
+					{pdfPaneOpen}
+					bind:view={dockView}
+					bind:dock
+					onStartResize={startTerminalResize}
+					onResizeByKey={resizeTerminalByKey}
+					onToggleShrink={toggleTerminalShrink}
+					onClose={toggleTerminal}
+					onProblemJump={openFileAtLine}
+				/>
 			{/if}
 		</main>
 	</div>
 
 	{#if mainConfirmOpen}
-		<div
-			class="fixed inset-0 z-1300 flex items-center justify-center bg-black/40 p-4"
-			role="presentation"
-			onmousedown={(e) => e.target === e.currentTarget && dismissMainConfirm()}
-		>
-			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-lg border p-5 shadow-2xl">
-				<div class="mb-3 flex items-center justify-between">
-					<h2 class="text-base font-semibold">{m.wsview_mainconfirm_title()}</h2>
-					<button class="btn-icon btn-icon-sm hover:preset-tonal" onclick={dismissMainConfirm} aria-label={m.wsview_close_aria()}>
-						<X class="size-4" />
-					</button>
-				</div>
-				<p class="text-surface-600-300 mb-3 text-sm">
-					{m.wsview_mainconfirm_desc()}
-				</p>
-				<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded border">
-					{#each mainCandidates as f (f.path)}
-						<label
-							class="hover:preset-tonal-surface flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm {mainChoice &&
-							samePath(mainChoice, f.path)
-								? 'preset-tonal-primary'
-								: ''}"
-						>
-							<input
-								type="radio"
-								class="radio"
-								name="main-file-choice"
-								value={f.path}
-								checked={!!mainChoice && samePath(mainChoice, f.path)}
-								onchange={() => (mainChoice = f.path)}
-							/>
-							<span class="truncate">{f.relPath}</span>
-							{#if mainDetected && samePath(f.path, mainDetected)}
-								<span class="badge preset-tonal-primary ml-auto shrink-0 text-[10px]">{m.wsview_badge_detected()}</span>
-							{:else if mainDocRoots.has(f.path)}
-								<span class="badge preset-tonal-surface ml-auto shrink-0 text-[10px]">{m.wsview_badge_document()}</span>
-							{/if}
-						</label>
-					{/each}
-				</div>
-				<div class="flex justify-end">
-					<button class="btn btn-sm preset-filled-primary-500" onclick={confirmMainFile} disabled={!mainChoice}
-						>{m.wsview_use_this_file()}</button
-					>
-				</div>
-			</div>
-		</div>
+		<MainFileModal
+			candidates={mainCandidates}
+			bind:choice={mainChoice}
+			detected={mainDetected}
+			docRoots={mainDocRoots}
+			onConfirm={confirmMainFile}
+			onDismiss={dismissMainConfirm}
+		/>
 	{/if}
 
-	{#if compileModalOpen}
-		<div
-			class="fixed inset-0 z-1300 flex items-center justify-center bg-black/40 p-4"
-			role="presentation"
-			onmousedown={(e) => e.target === e.currentTarget && (compileModalOpen = false)}
-		>
-			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-lg border p-5 shadow-2xl">
-				<div class="mb-3 flex items-center justify-between">
-					<h2 class="text-base font-semibold">{m.wsview_compile_modal_title()}</h2>
-					<button
-						class="btn-icon btn-icon-sm hover:preset-tonal"
-						onclick={() => (compileModalOpen = false)}
-						aria-label={m.wsview_close_aria()}
-					>
-						<X class="size-4" />
-					</button>
-				</div>
-				<!-- (main-file selection lives in the first-compile confirm modal and the file
-				     tree's "Set as main file" - not here; this modal is only about the command) -->
+	<CompileCommandModal
+		bind:open={compileModalOpen}
+		bind:command={compileDraft}
+		bind:outputs={compileOutputsDraft}
+		bind:advancedOpen
+		onSave={saveCompileCommand}
+		onUseDefault={useDefaultCommand}
+		onRun={runCompile}
+	/>
 
-				<!-- Live mode has its own lualatex pipeline; when on, the shell command is inert -->
-				<div class="mb-1 flex items-center justify-between gap-4">
-					<span class="text-sm">{m.wsview_live_mode_label()} <span class="text-surface-500">{m.wsview_experimental_label()}</span></span>
-					<Switch checked={$settings.draftMode} onCheckedChange={(d) => updateSettings({ draftMode: d.checked })}>
-						<Switch.Control><Switch.Thumb /></Switch.Control>
-						<Switch.HiddenInput />
-					</Switch>
-				</div>
-
-				{#if $settings.draftMode}
-					<p class="text-surface-500 mt-1 mb-1 text-xs">
-						{m.wsview_livemode_desc_pre()} <strong>lualatex</strong>
-						{m.wsview_livemode_desc_post()}
-					</p>
-					<div class="border-surface-300-700 text-surface-500 mt-3 rounded border border-dashed px-3 py-2 text-xs">
-						{m.wsview_compile_disabled_live()}
-						<code class="bg-surface-200-800 ml-1 rounded px-1 opacity-70">lualatex (built-in)</code>
-					</div>
-				{:else}
-					<p class="text-surface-600-300 mt-2 mb-3 text-sm">
-						{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded px-1">{'{main}'}</code>
-						{m.wsview_compile_desc_post()}
-					</p>
-
-					<!-- quick setup: chips reflect the command when recognizable, and regenerate it on click -->
-					<div class="mb-2 flex flex-wrap items-center gap-2 text-sm">
-						<span class="text-surface-500 text-xs">{m.wsview_engine_label()}</span>
-						{#each ['pdflatex', 'lualatex', 'xelatex'] as const as eng (eng)}
-							<button
-								type="button"
-								class="rounded-base border px-2 py-0.5 text-xs {draftEngine === eng
-									? 'border-primary-500 bg-primary-500/10 text-primary-600-400 font-medium'
-									: 'border-surface-300-700 text-surface-600-300 hover:preset-tonal'}"
-								onclick={() => applyEngine(eng)}
-							>
-								{eng}
-							</button>
-						{/each}
-						{#if draftEngine === null && compileDraft.trim()}
-							<span class="text-surface-400 text-xs italic">{m.wsview_custom_label()}</span>
-						{/if}
-						<label class="text-surface-600-300 ml-auto inline-flex items-center gap-1.5 text-xs">
-							<input type="checkbox" class="checkbox" checked={draftLatexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
-							{m.wsview_use_latexmk_label()}
-						</label>
-					</div>
-
-					<!-- svelte-ignore a11y_autofocus -->
-					<input
-						class="input w-full font-mono text-sm"
-						bind:value={compileDraft}
-						placeholder={DEFAULT_COMPILE_COMMAND}
-						spellcheck="false"
-						autofocus
-						onkeydown={(e) => {
-							if (e.key === 'Enter' && !(compileDraft.includes('{main}') && !$mainFile)) saveCompileCommand(true);
-							else if (e.key === 'Escape') compileModalOpen = false;
-						}}
-					/>
-					<div class="mt-4 flex items-center justify-between gap-4">
-						<span class="text-sm">{m.wsview_completion_marker_label()}</span>
-						<Switch checked={$settings.compileSentinel} onCheckedChange={(d) => updateSettings({ compileSentinel: d.checked })}>
-							<Switch.Control><Switch.Thumb /></Switch.Control>
-							<Switch.HiddenInput />
-						</Switch>
-					</div>
-					<p class="text-surface-500 mt-1 text-xs">
-						{m.wsview_completion_marker_desc()}
-					</p>
-				{/if}
-
-				{#if !$settings.draftMode}
-					<button
-						type="button"
-						class="text-surface-500 hover:text-surface-950-50 mt-4 inline-flex items-center gap-1 text-xs"
-						onclick={() => (advancedOpen = !advancedOpen)}
-					>
-						<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
-						{m.wsview_advanced_output_paths()}
-					</button>
-					{#if advancedOpen}
-						<div class="mt-2 space-y-3">
-							<p class="text-surface-500 text-xs">
-								{m.wsview_advanced_desc_pre()}
-								<code class="bg-surface-200-800 rounded px-1">-jobname</code>
-								{m.wsview_advanced_desc_post()}
-							</p>
-							<div>
-								<div class="mb-1 flex items-center justify-between gap-2">
-									<span class="text-surface-600-300 text-xs font-medium">{m.wsview_pdf_file_label()}</span>
-									{#if pdfPathWarning}<span class="text-warning-600-400 text-xs">{pdfPathWarning}</span>{/if}
-								</div>
-								<div class="flex gap-2">
-									<input
-										class="input flex-1 font-mono text-sm"
-										bind:value={compileOutputsDraft.pdf}
-										placeholder={m.wsview_auto_detected_placeholder()}
-										spellcheck="false"
-									/>
-									<button
-										type="button"
-										class="btn btn-sm hover:preset-tonal shrink-0"
-										onclick={() => (compileOutputsDraft.pdf = '')}
-										disabled={!compileOutputsDraft.pdf}
-										title={m.wsview_clear_autodetect_title()}
-									>
-										{m.wsview_auto_button()}
-									</button>
-								</div>
-							</div>
-							<div>
-								<div class="mb-1 flex items-center justify-between gap-2">
-									<span class="text-surface-600-300 text-xs font-medium">{m.wsview_log_file_label()}</span>
-									{#if logPathWarning}<span class="text-warning-600-400 text-xs">{logPathWarning}</span>{/if}
-								</div>
-								<div class="flex gap-2">
-									<input
-										class="input flex-1 font-mono text-sm"
-										bind:value={compileOutputsDraft.log}
-										placeholder={m.wsview_auto_detected_placeholder()}
-										spellcheck="false"
-									/>
-									<button
-										type="button"
-										class="btn btn-sm hover:preset-tonal shrink-0"
-										onclick={() => (compileOutputsDraft.log = '')}
-										disabled={!compileOutputsDraft.log}
-										title={m.wsview_clear_autodetect_title()}
-									>
-										{m.wsview_auto_button()}
-									</button>
-								</div>
-							</div>
-						</div>
-					{/if}
-				{/if}
-
-				<div class="mt-4 flex items-center justify-between gap-3">
-					<span class="text-surface-500 text-xs">
-						{#if !$mainFile}{m.wsview_pick_main_file_to_run()}{/if}
-					</span>
-					<div class="flex gap-2">
-						<button class="btn btn-sm hover:preset-tonal" onclick={() => (compileModalOpen = false)}>{m.wsview_cancel_label()}</button>
-						{#if $settings.draftMode}
-							<button
-								class="btn btn-sm preset-filled-primary-500 gap-1.5"
-								onclick={() => {
-									compileModalOpen = false;
-									runCompile();
-								}}
-								disabled={!$mainFile}
-							>
-								<Play class="size-4" />
-								{m.wsview_run_preview()}
-							</button>
-						{:else}
-							<button class="btn btn-sm hover:preset-tonal" onclick={() => saveCompileCommand(false)}>{m.wsview_save_label()}</button>
-							<button
-								class="btn btn-sm preset-tonal-primary gap-1.5"
-								onclick={useDefaultCommand}
-								disabled={DEFAULT_COMPILE_COMMAND.includes('{main}') && !$mainFile}
-								title={m.wsview_use_default_title()}
-							>
-								<Play class="size-4" />
-								{m.wsview_use_default()}
-							</button>
-							<button
-								class="btn btn-sm preset-filled-primary-500 gap-1.5"
-								onclick={() => saveCompileCommand(true)}
-								disabled={compileDraft.includes('{main}') && !$mainFile}
-							>
-								<Play class="size-4" />
-								{m.wsview_save_and_run()}
-							</button>
-						{/if}
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
-
-	{#if formatModalOpen}
-		<div
-			class="fixed inset-0 z-1300 flex items-center justify-center bg-black/40 p-4"
-			role="presentation"
-			onmousedown={(e) => e.target === e.currentTarget && (formatModalOpen = false)}
-		>
-			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-md border p-5 shadow-2xl">
-				<div class="mb-3 flex items-center justify-between">
-					<h2 class="flex items-center gap-2 text-base font-semibold">
-						<TriangleAlert class="text-warning-500 size-5" />
-						{m.wsview_format_modal_title()}
-					</h2>
-					<button
-						class="btn-icon btn-icon-sm hover:preset-tonal"
-						onclick={() => (formatModalOpen = false)}
-						aria-label={m.wsview_close_aria()}
-					>
-						<X class="size-4" />
-					</button>
-				</div>
-				<p class="text-surface-600-300 mb-4 text-sm">
-					{m.wsview_format_desc_pre()} <code class="bg-surface-200-800 rounded px-1">latexindent</code>{m.wsview_format_desc_post()}
-				</p>
-				<div class="flex justify-end gap-2">
-					<button class="btn btn-sm hover:preset-tonal" onclick={() => (formatModalOpen = false)}>{m.wsview_cancel_label()}</button>
-					<button class="btn btn-sm preset-filled-primary-500 gap-1.5" onclick={runFormat} disabled={formatting}>
-						{#if formatting}<Loader2 class="size-4 animate-spin" />{/if}
-						{m.wsview_format_button()}
-					</button>
-				</div>
-			</div>
-		</div>
-	{/if}
+	<FormatModal bind:open={formatModalOpen} {formatting} onFormat={runFormat} />
 
 	<!-- file edited on disk while we held unsaved edits -->
 	{#if conflict}
-		<div class="fixed inset-0 z-1300 flex items-center justify-center bg-black/40 p-4">
-			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-md border p-5 shadow-2xl">
-				<h2 class="text-lg font-semibold">{m.wsview_conflict_title()}</h2>
-				<p class="text-surface-600-300 mt-2 text-sm">
-					<span class="font-medium">{basename(conflict.path)}</span>
-					{m.wsview_conflict_body()}
-				</p>
-				<div class="mt-5 flex justify-end gap-2">
-					<button class="btn hover:preset-tonal" onclick={() => resolveConflict('reload')}>{m.wsview_reload_from_disk()}</button>
-					<button class="btn preset-filled-primary-500" onclick={() => resolveConflict('keep')}>{m.wsview_keep_my_version()}</button>
-				</div>
-			</div>
-		</div>
+		<ConflictModal path={conflict.path} onResolve={resolveConflict} />
 	{/if}
 
 	{#if pendingRefUpdate}
-		<div
-			class="fixed inset-0 z-1300 flex items-center justify-center bg-black/40 p-4"
-			role="presentation"
-			onmousedown={(e) => e.target === e.currentTarget && (pendingRefUpdate = null)}
-		>
-			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-md border p-5 shadow-2xl">
-				<h2 class="text-lg font-semibold">{m.wsview_refupdate_title()}</h2>
-				<p class="text-surface-600-300 mt-2 text-sm">
-					{refUpdateBody}
-				</p>
-				<div class="mt-5 flex justify-end gap-2">
-					<button class="btn hover:preset-tonal" onclick={() => (pendingRefUpdate = null)}>{m.wsview_refupdate_keep()}</button>
-					<button class="btn preset-filled-primary-500" onclick={applyRefUpdate}>{m.wsview_refupdate_apply()}</button>
-				</div>
-			</div>
-		</div>
+		<RefUpdateModal update={pendingRefUpdate} onKeep={() => (pendingRefUpdate = null)} onApply={applyRefUpdate} />
 	{/if}
 </div>
 
 <TutorialConfirmModal bind:open={tutorialModalOpen} onConfirm={openTutorial} />
+{#if !guest}
+	<SessionShareModal bind:open={shareModalOpen} root={$workspaceRoot} onBeforeStart={flushSaveAndWait} />
+{/if}
+{#if session.active && !guest}
+	<SessionBadge count={session.guestCount()} onclick={() => (shareModalOpen = true)} />
+{/if}

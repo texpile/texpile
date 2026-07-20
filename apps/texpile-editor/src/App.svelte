@@ -14,6 +14,7 @@
 
 	import StartView from './views/StartView.svelte';
 	import WorkspaceView from './views/WorkspaceView.svelte';
+	import SessionRoute from './views/SessionRoute.svelte';
 	import ErrorView from './views/ErrorView.svelte';
 
 	let whatsNewOpen = $state(false);
@@ -124,6 +125,8 @@
 	<StartView />
 {:else if route.path === '/workspace'}
 	<WorkspaceView />
+{:else if route.path === '/session'}
+	<SessionRoute />
 {:else}
 	<ErrorView status={404} />
 {/if}

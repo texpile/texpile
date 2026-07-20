@@ -42,6 +42,8 @@ export interface AppSettings {
 	mathPreview: boolean;
 	/** UI display language. Not the LaTeX document language (see DocumentLanguage). */
 	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de';
+	/** shared-session relay endpoint (ws:// or wss://). */
+	collabRelayUrl: string;
 	/** folders open across windows; maintained by the MAIN process for session restore.
 	 *  read-only here: renderers never write it. */
 	openFolders: string[];
@@ -75,6 +77,7 @@ const DEFAULTS: AppSettings = {
 	whatsNewSeen: '',
 	mathPreview: true,
 	uiLocale: 'en',
+	collabRelayUrl: 'wss://collab.texpile.com',
 	openFolders: []
 };
 

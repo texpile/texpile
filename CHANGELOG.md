@@ -17,6 +17,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: drop files or folders from your system's file manager onto the file explorer to copy them into the project
 - feat: paste an image or copied files into the file explorer with Ctrl+V; pasted screenshots are saved as pasted-image.png
 - feat: drag files from one window's file explorer into another window to copy them across projects
+- feat: experimental shared sessions: share a folder for real time editing, guests join with a code from the home screen, no account needed
+- feat: shared sessions are end to end encrypted; the relay server only forwards data it cannot read
+- feat: guests see the host's compiled PDF live and can request a compile; compiling with shell escape is disabled while sharing
 
 ## [0.14.3] - 2026-07-18
 

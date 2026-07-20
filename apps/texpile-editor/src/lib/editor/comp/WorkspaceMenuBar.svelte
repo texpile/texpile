@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { Check, ChevronRight, X } from '@lucide/svelte';
+	import { Check, ChevronRight, X, Users } from '@lucide/svelte';
+	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { get } from 'svelte/store';
 	import { editorViewStore, referenceStore, editorConfigStore, cursorInCm } from '$lib/stores/editorStore';
 	import { recentFolders } from '$lib/workspace/workspaceStore';
@@ -33,6 +34,8 @@
 		/** Close the current folder and return to the Start screen. */
 		onCloseWorkspace?: () => void;
 		onSave?: () => void;
+		/** shared-session dialog (desktop only). */
+		onShareSession?: () => void;
 		/** Terminal menu (shown only in the desktop app). */
 		terminalAvailable?: boolean;
 		terminalVisible?: boolean;
@@ -57,6 +60,7 @@
 		onOpenFolder,
 		onCloseWorkspace,
 		onSave,
+		onShareSession,
 		terminalAvailable = false,
 		terminalVisible = false,
 		onCompile,
@@ -224,6 +228,7 @@
 		if (value === 'save') onSave?.();
 		else if (value === 'new-window') openNewWindow();
 		else if (value === 'open-folder-new-window') openFolderInNewWindow();
+		else if (value === 'share-session') onShareSession?.();
 		else if (value === 'close-workspace') onCloseWorkspace?.();
 		else if (value === 'preferences') prefsOpen = true;
 	}
@@ -423,6 +428,9 @@
 						<Menu.Item value="open-folder-new-window" class={itemClass}>
 							<Menu.ItemText>{m.menubar_open_folder_new_window()}</Menu.ItemText>
 						</Menu.Item>
+						{#if onShareSession}
+							<Menu.Item value="share-session" class={itemClass}><Menu.ItemText>{m.menubar_share_session()}</Menu.ItemText></Menu.Item>
+						{/if}
 					{/if}
 					<Menu.Separator class="border-surface-200-800 my-1 border-t" />
 					<Menu.Item value="save" class={itemClass}>
@@ -624,6 +632,37 @@
 	</Menu>
 
 	<input bind:this={imageInput} type="file" accept="image/png,image/jpeg,image/gif,image/webp" class="hidden" onchange={onImagePicked} />
+
+	{#if collabHost.active}
+		<!-- shared-session presence: click to open the share dialog -->
+		<button
+			class="hover:bg-surface-200-800 ml-auto flex items-center gap-1.5 rounded px-2 py-0.5 text-sm"
+			onclick={() => onShareSession?.()}
+			title={m.menubar_share_session()}
+		>
+			<span class="relative flex size-2">
+				<span class="bg-success-500 absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"></span>
+				<span class="bg-success-500 relative inline-flex size-2 rounded-full"></span>
+			</span>
+			<Users class="text-surface-500 size-4" />
+			<div class="flex items-center -space-x-1.5">
+				{#each collabHost.peers.slice(0, 5) as peer, i (i)}
+					<span
+						class="border-surface-100-900 flex size-5 items-center justify-center rounded-full border text-[10px] font-bold text-white"
+						style="background-color: {peer.color}"
+						title={peer.name}>{(peer.name || '?').slice(0, 1).toUpperCase()}</span
+					>
+				{/each}
+			</div>
+			<span class="text-surface-600-400">
+				{collabHost.guestCount() === 1
+					? m.share_guests_one()
+					: collabHost.guestCount() === 0
+						? m.menubar_sharing_waiting()
+						: m.share_guests_other({ count: collabHost.guestCount() })}
+			</span>
+		</button>
+	{/if}
 </nav>
 
 <SpellcheckDictionary bind:open={dictionaryOpen} />

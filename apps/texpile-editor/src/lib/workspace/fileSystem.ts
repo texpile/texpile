@@ -250,6 +250,9 @@ export function dirname(path: string): string {
 	return parts.join('/');
 }
 
+/** Path equality that ignores separator style and case (Windows paths reach us both ways). */
+export const samePath = (a: string, b: string) => a.replace(/\\/g, '/').toLowerCase() === b.replace(/\\/g, '/').toLowerCase();
+
 // joins dir + rel using the dir's own separator so results match the native paths the scan/tree
 // return; a mixed "C:\ws/sub" path would miss the exact-match file-tree highlight
 export function joinPath(dir: string, rel: string): string {
