@@ -255,7 +255,10 @@ function startUrl(): string {
 ipcMain.handle('dialog:openFolder', async (e) => {
 	const res = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender) ?? undefined!, {
 		title: 'Open Folder',
-		properties: ['openDirectory']
+		// createDirectory is macOS-only and off by default: without it NSOpenPanel has no New Folder
+		// button, so "create new project" and the tutorial (both of which want an EMPTY folder) were
+		// impossible without going to Finder first. Ignored on Windows/Linux, which already allow it.
+		properties: ['openDirectory', 'createDirectory']
 	});
 	return res.canceled || res.filePaths.length === 0 ? null : res.filePaths[0];
 });
@@ -454,7 +457,7 @@ ipcMain.handle('window:new', () => {
 ipcMain.handle('window:openFolderNew', async (e) => {
 	const res = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender) ?? undefined!, {
 		title: 'Open Folder',
-		properties: ['openDirectory']
+		properties: ['openDirectory', 'createDirectory']
 	});
 	if (res.canceled || res.filePaths.length === 0) return null;
 	const root = res.filePaths[0]!;
