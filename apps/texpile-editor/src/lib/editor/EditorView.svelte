@@ -71,6 +71,8 @@
 		// the document as a ProseMirror Node
 		localValue?: PMNode | null;
 		onLocalChange?: (value: PMNode) => void;
+		/** any caret/selection movement (shared-session presence publishes through this). */
+		onSelectionChange?: () => void;
 		// references for @ citation suggestions
 		localReferences?: BibLaTeXReference[];
 		// where inserted images go (an images/ subfolder)
@@ -83,6 +85,7 @@
 	let {
 		localValue = null,
 		onLocalChange,
+		onSelectionChange,
 		localReferences = [],
 		imageDir,
 		placeholder = 'Begin your journey here...',
@@ -227,9 +230,12 @@
 				const newState = this.state.apply(transaction);
 				this.updateState(newState);
 
-				if (onLocalChange && transaction.docChanged) {
+				// collabRemotePatch: a collaborator's edit patched in from the shared doc; it's already
+				// the serialized truth, so it must not re-enter the save pipeline as a local change
+				if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) {
 					onLocalChange(newState.doc);
 				}
+				if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
 			}
 		});
 
@@ -261,6 +267,11 @@
 			return;
 		}
 		if (next === mountedDoc) return;
+		if (next === editorView.state.doc) {
+			// a collab patch installed this exact doc on the view already; just adopt it
+			mountedDoc = next;
+			return;
+		}
 
 		// a bare updateState resets the selection to doc start and the focused editor scrolls to it,
 		// so carry the caret offset (clamped) and scroll position across the swap

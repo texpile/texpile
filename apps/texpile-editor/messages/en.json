@@ -855,7 +855,6 @@
 	"collab_e2ee_note": "Sessions are end to end encrypted. The relay forwards data it cannot read.",
 	"share_error_generic": "Could not start the session: {message}",
 	"share_active_hint": "Edits, files, and the compiled PDF are shared live. Compiling with shell escape is disabled while sharing.",
-	"share_active_badge": "Sharing · {count}",
 	"wsview_toast_shell_escape_blocked": "Compiling with shell escape is disabled while a shared session is active.",
 	"wsview_toast_compile_requested_title": "A guest asked for a compile",
 	"session_error_full": "This session is full. Ask the host to make room.",

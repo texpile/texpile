@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, tick } from 'svelte';
+	import { onMount, onDestroy, tick, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import { browser } from '$lib/runtime';
 	import { navigate } from '$lib/router.svelte';
@@ -36,7 +36,6 @@
 	import type { EditSession } from '$lib/collab/editSession';
 	import SessionShareModal from '$lib/collab/SessionShareModal.svelte';
 	import GuestBar from '$lib/collab/GuestBar.svelte';
-	import SessionBadge from '$lib/collab/SessionBadge.svelte';
 	import * as cc from '$lib/workspace/compileCommand';
 	import { references, loadReferences, bibItemsToReferences, type BibLaTeXReference } from '$lib/workspace/citations';
 	import { labelStore, referenceStore, filePathStore } from '$lib/stores/editorStore';
@@ -117,7 +116,14 @@
 	import { serializeLatexFile, createStarterLatex, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { parseLatexFileAsync, PARSE_TIMEOUT } from '$lib/workspace/latexParserClient';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { TextSelection } from 'prosemirror-state';
+	import { TextSelection, EditorState } from 'prosemirror-state';
+	import type { EditorView as PMEditorView } from 'prosemirror-view';
+	import { fixTables } from 'prosemirror-tables';
+	import * as Y from 'yjs';
+	import { schema } from '$lib/schema/schema';
+	import { buildTrailingParagraphTr } from '$lib/editor/extensions/trailing-paragraph-plugin';
+	import { computeBlockPatch, syncOrigAttrs } from '$lib/editor/blockPatch';
+	import { spliceDiff, HOST_EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/materialize';
 	import { flashNodeAt } from '$lib/editor/extensions/flash-plugin';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -184,11 +190,11 @@
 
 	// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go
 	// read-only), else concurrent guest edits to that file's Y.Text would be clobbered. Source mode
-	// (tex/bib/text) is Y-bound and co-edits freely; visual tex (ProseMirror) and bib in BibManager
-	// are not, so they lock.
+	// (tex/bib/text) is Y-bound and co-edits freely; visual tex consumes remote edits through the
+	// re-parse patcher (runRemotePatch below), so only bib held in BibManager still locks.
 	function hostHoldsExclusively(k: string, mode: string, path: string | null): boolean {
 		if (!path) return false;
-		return (k === 'tex' && mode === 'visual') || (k === 'bib' && mode !== 'source');
+		return k === 'bib' && mode !== 'source';
 	}
 	$effect(() => {
 		if (!session.active) return;
@@ -2443,6 +2449,145 @@
 		});
 	}
 
+	// ---- shared session: the visual editor consumes remote edits ----
+	// a collaborator's splice lands in this file's Y.Text; after a lull (scaled to the last parse
+	// cost) the merged source re-parses in the worker and only the changed top-level blocks patch
+	// into the mounted view, so NodeViews, plugin state, history and the caret survive.
+	let remotePatchTimer: ReturnType<typeof setTimeout> | null = null;
+	let remoteParseMs = 0;
+
+	function scheduleRemotePatch(delay = Math.max(150, remoteParseMs * 2)) {
+		if (remotePatchTimer) return;
+		remotePatchTimer = setTimeout(() => {
+			remotePatchTimer = null;
+			void runRemotePatch();
+		}, delay);
+	}
+
+	async function runRemotePatch(): Promise<void> {
+		const path = loadedPath;
+		const binding = session.collabFor(path);
+		const v = get(editorViewStore);
+		if (!binding || !v || kind !== 'tex' || viewMode !== 'visual') return;
+		if (v.composing) return scheduleRemotePatch(250); // never patch under an IME composition
+		const snapshot = binding.ytext.toString();
+		if (snapshot === texSource) return;
+		const t0 = performance.now();
+		const o = await tryParseVisual(snapshot);
+		remoteParseMs = performance.now() - t0;
+		// superseded: the file/mode/view moved on, or more edits landed while parsing
+		if (loadedPath !== path || viewMode !== 'visual' || get(editorViewStore) !== v) return;
+		if (session.collabFor(path)?.ytext !== binding.ytext) return;
+		if (binding.ytext.toString() !== snapshot) return scheduleRemotePatch();
+		if (o.failure || !o.parsed) return; // unparsable mid-edit state; the next change retries
+		const oldPreLen = docMeta?.preamble.length ?? 0;
+		const oldSource = texSource;
+		const newDoc = normalizeParsedDoc(o.parsed.doc);
+		docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
+		texSource = snapshot;
+		lastParsedSource = snapshot;
+		applyRemotePatch(v, newDoc, oldSource, snapshot, oldPreLen, o.parsed.preamble.length);
+		visualDoc = v.state.doc; // reference handshake: EditorView sees its own live doc, skips the state swap
+		lastDoc = v.state.doc;
+		isDirty.set(true);
+		scheduleSave(path, snapshot); // same shape as source mode's remote flow: no-op splice, aligned write pipeline
+	}
+
+	// the mount path's normalization, applied to a fresh parse so it diffs cleanly against the live doc
+	function normalizeParsedDoc(doc: PMNode): PMNode {
+		let s = EditorState.create({ schema, doc });
+		const fix = fixTables(s);
+		if (fix) s = s.apply(fix);
+		const trail = buildTrailingParagraphTr(s);
+		if (trail) s = s.apply(trail);
+		return s.doc;
+	}
+
+	function applyRemotePatch(
+		v: PMEditorView,
+		newDoc: PMNode,
+		oldSource: string,
+		newSource: string,
+		oldPreLen: number,
+		newPreLen: number
+	): void {
+		const patch = computeBlockPatch(v.state.doc, newDoc);
+		// caret inside the replaced range: re-anchor it through the source (outside it, PM maps it)
+		let srcOffset: number | null = null;
+		const head = v.state.selection.head;
+		if (patch && head > patch.from && head < patch.to) {
+			const map = buildBlockMap(v.state.doc, oldPreLen);
+			srcOffset = pmPosToSourceOffset(v.state.doc, map, head);
+			const d = srcOffset != null ? spliceDiff(oldSource, newSource) : null;
+			if (d && srcOffset != null && srcOffset > d.index) {
+				// carry the offset across the remote edit so the re-anchor searches the right region
+				srcOffset = srcOffset >= d.index + d.remove ? srcOffset + d.insert.length - d.remove : d.index + d.insert.length;
+			}
+		}
+		const tr = v.state.tr;
+		if (patch) tr.replaceWith(patch.from, patch.to, patch.nodes);
+		syncOrigAttrs(tr, newDoc);
+		if (!tr.steps.length) return;
+		tr.setMeta('addToHistory', false).setMeta('collabRemotePatch', true);
+		if (srcOffset != null) {
+			const map = buildBlockMap(tr.doc, newPreLen);
+			const pos = sourceOffsetToPmPos(tr.doc, map, srcOffset);
+			if (pos != null) tr.setSelection(TextSelection.near(tr.doc.resolve(pos)));
+		}
+		v.dispatch(tr);
+	}
+
+	// watch the open file's Y.Text while it's in the visual editor; local host edits carry
+	// HOST_EDIT_ORIGIN (and seeds SEED_ORIGIN), everything else is a collaborator
+	$effect(() => {
+		void session.manifestRev; // rebind when the shared file set changes
+		const path = loadedPath;
+		const binding = session.active && kind === 'tex' && viewMode === 'visual' ? session.collabFor(path) : null;
+		if (!binding) return;
+		const t = binding.ytext;
+		const onRemote = (ev: Y.YTextEvent) => {
+			const origin = ev.transaction.origin;
+			if (origin === HOST_EDIT_ORIGIN || origin === SEED_ORIGIN) return;
+			scheduleRemotePatch();
+		};
+		t.observe(onRemote);
+		// edits that landed before this bind (e.g. while this file sat closed or in another mode)
+		untrack(() => {
+			if (t.toString() !== texSource) scheduleRemotePatch();
+		});
+		return () => {
+			t.unobserve(onRemote);
+			if (remotePatchTimer) {
+				clearTimeout(remotePatchTimer);
+				remotePatchTimer = null;
+			}
+			binding.awareness.setLocalStateField('cursor', null); // drop our visual caret from presence
+		};
+	});
+
+	// visual-mode presence: publish the caret as Y-relative source positions in y-codemirror's
+	// awareness shape, so guests' source editors draw the host's cursor natively
+	let visualCursorTimer: ReturnType<typeof setTimeout> | null = null;
+	function publishVisualCursor() {
+		if (visualCursorTimer) return;
+		visualCursorTimer = setTimeout(() => {
+			visualCursorTimer = null;
+			const binding = session.collabFor(loadedPath);
+			const v = get(editorViewStore);
+			if (!binding || !v || kind !== 'tex' || viewMode !== 'visual') return;
+			const map = buildBlockMap(v.state.doc, docMeta?.preamble.length ?? 0);
+			const sel = v.state.selection;
+			const a = pmPosToSourceOffset(v.state.doc, map, sel.anchor);
+			const h = sel.head === sel.anchor ? a : pmPosToSourceOffset(v.state.doc, map, sel.head);
+			if (a == null || h == null) return;
+			const clamp = (n: number) => Math.min(Math.max(0, n), binding.ytext.length);
+			binding.awareness.setLocalStateField('cursor', {
+				anchor: Y.createRelativePositionFromTypeIndex(binding.ytext, clamp(a)),
+				head: Y.createRelativePositionFromTypeIndex(binding.ytext, clamp(h))
+			});
+		}, 120);
+	}
+
 	// manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest
 	function save() {
 		// drop the queued debounce; we're writing the current content now
@@ -2685,6 +2830,7 @@
 					{onTexInput}
 					{onRawInput}
 					onVisualChange={onChange}
+					onVisualSelection={publishVisualCursor}
 					onEditFrontmatter={editPreambleFrontmatter}
 					onSyncToPdf={syncForwardLine}
 					onHistoryBoundary={workspaceHistoryStep}
@@ -2772,7 +2918,4 @@
 <TutorialConfirmModal bind:open={tutorialModalOpen} onConfirm={openTutorial} />
 {#if !guest}
 	<SessionShareModal bind:open={shareModalOpen} root={$workspaceRoot} onBeforeStart={flushSaveAndWait} />
-{/if}
-{#if session.active && !guest}
-	<SessionBadge count={session.guestCount()} onclick={() => (shareModalOpen = true)} />
 {/if}

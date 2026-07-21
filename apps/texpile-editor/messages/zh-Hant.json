@@ -855,7 +855,6 @@
 	"collab_e2ee_note": "工作階段經過端對端加密。中繼伺服器只轉發它無法讀取的資料。",
 	"share_error_generic": "無法開始工作階段：{message}",
 	"share_active_hint": "編輯、檔案和編譯好的 PDF 會即時共享。共享期間停用 shell escape 編譯。",
-	"share_active_badge": "共享中 · {count}",
 	"wsview_toast_shell_escape_blocked": "共享工作階段進行期間，停用帶 shell escape 的編譯。",
 	"wsview_toast_compile_requested_title": "一位訪客要求編譯",
 	"session_error_full": "此工作階段人數已滿。請主持人騰出名額。",

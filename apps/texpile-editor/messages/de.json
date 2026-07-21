@@ -855,7 +855,6 @@
 	"collab_e2ee_note": "Sitzungen sind Ende-zu-Ende-verschlüsselt. Das Relay leitet Daten weiter, die es nicht lesen kann.",
 	"share_error_generic": "Sitzung konnte nicht gestartet werden: {message}",
 	"share_active_hint": "Änderungen, Dateien und das kompilierte PDF werden live geteilt. Kompilieren mit Shell-Escape ist während der Sitzung deaktiviert.",
-	"share_active_badge": "Wird geteilt · {count}",
 	"wsview_toast_shell_escape_blocked": "Kompilieren mit Shell-Escape ist deaktiviert, solange eine geteilte Sitzung aktiv ist.",
 	"wsview_toast_compile_requested_title": "Ein Gast bittet um eine Kompilierung",
 	"session_error_full": "Diese Sitzung ist voll. Bitte den Gastgeber, Platz zu schaffen.",

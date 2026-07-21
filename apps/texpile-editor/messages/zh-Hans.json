@@ -855,7 +855,6 @@
 	"collab_e2ee_note": "会话经过端到端加密。中继服务器只转发它无法读取的数据。",
 	"share_error_generic": "无法开始会话：{message}",
 	"share_active_hint": "编辑、文件和编译好的 PDF 会实时共享。共享期间禁用 shell escape 编译。",
-	"share_active_badge": "共享中 · {count}",
 	"wsview_toast_shell_escape_blocked": "共享会话进行期间，禁用带 shell escape 的编译。",
 	"wsview_toast_compile_requested_title": "一位访客请求编译",
 	"session_error_full": "该会话人数已满。请主持人腾出名额。",

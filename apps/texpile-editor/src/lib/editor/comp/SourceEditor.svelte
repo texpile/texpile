@@ -147,11 +147,25 @@
 		'.cm-gutter-lint .cm-gutterElement': { padding: '0 1px' },
 		'.cm-lint-marker': { width: '0.8em', height: '0.8em' }
 	});
-	// y-codemirror's base theme gives a remote peer's full-line selection horizontal margins, which
-	// shifts the LINE'S TEXT (it's a line decoration), not just the highlight: someone else
-	// selecting must never move glyphs on this screen. Theme > baseTheme, so this wins.
+	// y-codemirror.next's stock theme moves text: full-line selections ZERO the line's own padding
+	// and "compensate" with 4px/2px margins (net shift), and the caret draws as 2px of inline
+	// borders "cancelled" by -1px margins. Neutralize both so a peer's cursor or selection can
+	// never move a glyph on this screen: a highlighted line gets pinned to exactly a normal line's
+	// box (margin 0 + CM's default .cm-line padding), and the caret span becomes a zero-width
+	// in-flow anchor whose visible bar hangs off it out-of-flow (the dot and name label were
+	// already absolutely positioned upstream).
 	const yRemoteLayoutFix = EditorView.theme({
-		'.cm-yLineSelection': { margin: '0' }
+		'.cm-yLineSelection': { margin: '0', padding: '0 2px 0 6px' },
+		'.cm-ySelectionCaret': { border: 'none', margin: '0' },
+		'.cm-ySelectionCaret::before': {
+			content: "''",
+			position: 'absolute',
+			top: '0',
+			bottom: '0',
+			left: '-1px',
+			width: '2px',
+			backgroundColor: 'inherit'
+		}
 	});
 	const langConf = new Compartment();
 	const roConf = new Compartment();

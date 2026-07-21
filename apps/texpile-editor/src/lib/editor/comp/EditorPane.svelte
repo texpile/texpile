@@ -57,6 +57,8 @@
 		onTexInput: (v: string) => void;
 		onRawInput: (v: string) => void;
 		onVisualChange: (doc: PMNode) => void;
+		/** visual-editor caret movement (shared-session presence). */
+		onVisualSelection?: () => void;
 		onEditFrontmatter: (kind: string, inner: string) => void;
 		onSyncToPdf: (line: number) => void;
 		onHistoryBoundary: (dir: 'undo' | 'redo') => boolean;
@@ -96,6 +98,7 @@
 		onTexInput,
 		onRawInput,
 		onVisualChange,
+		onVisualSelection,
 		onEditFrontmatter,
 		onSyncToPdf,
 		onHistoryBoundary,
@@ -191,6 +194,7 @@
 								localReferences={allReferences}
 								imageDir={dirname(loadedPath)}
 								onLocalChange={onVisualChange}
+								onSelectionChange={onVisualSelection}
 								placeholder={m.wsview_editor_placeholder()}
 								{onHistoryBoundary}
 							/>
