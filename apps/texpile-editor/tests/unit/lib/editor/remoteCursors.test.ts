@@ -1,4 +1,4 @@
-// the remote-cursors plugin: peers render as caret widget + selection tint + block edge-mark,
+// the remote-cursors plugin: peers render as a caret widget + selection tint,
 // and the set rides along with document edits between awareness updates
 import { describe, expect, it } from 'vitest';
 import { EditorState } from 'prosemirror-state';
@@ -11,15 +11,13 @@ const mkState = () => {
 };
 
 describe('remoteCursorsPlugin', () => {
-	it('renders caret, selection and block mark for a peer, and clears on empty set', () => {
+	it('renders caret and selection for a peer, and clears on empty set', () => {
 		let state = mkState();
-		const block0End = state.doc.child(0).nodeSize;
-		const peer: RemotePeerSel = { clientId: 7, name: 'Ada', color: '#f06292', anchor: 3, head: 9, blockFrom: 0, blockTo: block0End };
+		const peer: RemotePeerSel = { clientId: 7, name: 'Ada', color: '#f06292', anchor: 3, head: 9 };
 		state = state.apply(state.tr.setMeta(remoteCursorsKey, [peer]));
 		const set = remoteCursorsKey.getState(state)!;
 		expect(set.find(9, 9).length).toBeGreaterThan(0); // caret widget at head
 		expect(set.find(3, 9).length).toBeGreaterThanOrEqual(2); // + selection tint
-		expect(set.find(0, block0End).length).toBeGreaterThanOrEqual(3); // + block mark
 		state = state.apply(state.tr.setMeta(remoteCursorsKey, []));
 		expect(remoteCursorsKey.getState(state)!.find().length).toBe(0);
 	});

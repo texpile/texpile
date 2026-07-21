@@ -21,8 +21,9 @@ export function relayHttpUrl(wsUrl: string): string {
 	return wsUrl.replace(/^ws/i, 'http');
 }
 
-/** registers the room with the relay; the relay stores only hashes. */
-export async function createRelaySession(wsUrl: string, body: { room: string; proofHash: string; hostKeyHash: string }): Promise<void> {
+/** registers the room with the relay. The proof is pre-hashed; the raw host key rides along so the
+ *  relay can store only its hash yet still prove a recreate came from the real host. */
+export async function createRelaySession(wsUrl: string, body: { room: string; proofHash: string; hostKey: string }): Promise<void> {
 	const res = await fetch(`${relayHttpUrl(wsUrl).replace(/\/+$/, '')}/session`, {
 		method: 'POST',
 		headers: { 'content-type': 'application/json' },

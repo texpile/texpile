@@ -5,7 +5,7 @@
 // Injected fs so the whole thing runs headless in tests (and, later, on a server).
 
 import type * as Y from 'yjs';
-import { manifestOf, locksOf, textOf } from './session';
+import { manifestOf, locksOf, textOf, type ManifestEntry } from './session';
 
 export interface MaterializeFs {
 	readText(absPath: string): Promise<string>;
@@ -32,6 +32,14 @@ export const EDIT_ORIGIN = 'collab-edit'; // a local editor's fold-in splice (ho
 const toLf = (s: string) => s.replace(/\r\n?/g, '\n');
 const detectEol = (s: string): '\r\n' | '\n' => (s.includes('\r\n') ? '\r\n' : '\n');
 const fromLf = (s: string, eol: '\r\n' | '\n') => (eol === '\r\n' ? s.replace(/\n/g, '\r\n') : s);
+
+// the shared set as a stable string: which paths exist and their kind, ignoring a binary's rev
+// (an image reswap doesn't change any source binding) and lock state (that's a live read-only flip)
+function manifestSignature(manifest: Y.Map<ManifestEntry>): string {
+	const parts: string[] = [];
+	for (const [rel, e] of manifest.entries()) parts.push(`${rel}:${e.kind}:${e.gone ? 1 : 0}`);
+	return parts.sort().join('|');
+}
 
 /** minimal single-splice diff (common prefix/suffix trim); enough for editor-shaped changes. */
 export function spliceDiff(oldStr: string, newStr: string): { index: number; remove: number; insert: string } | null {
@@ -174,11 +182,14 @@ export class HostMaterializer {
 		}, EDIT_ORIGIN);
 	}
 
-	/** re-sync the manifest after host-side file ops (create/delete/rename/import). */
-	async syncFromTree(): Promise<void> {
+	/** re-sync the manifest after host-side file ops (create/delete/rename/import). Returns whether
+	 *  the shared set actually changed, so the caller only rebinds editors when it did (a plain
+	 *  tree refresh on window focus or after a compile leaves the set untouched). */
+	async syncFromTree(): Promise<boolean> {
 		const files = (await this.fs.listFiles(this.root)).filter((f) => isShared(f.rel));
 		const manifest = manifestOf(this.doc);
 		const seen = new Set(files.map((f) => f.rel));
+		const sigBefore = manifestSignature(manifest);
 		const newTexts: string[] = [];
 		const bodies = new Map<string, { text: string; eol: '\r\n' | '\n' }>();
 		for (const f of files) {
@@ -225,6 +236,7 @@ export class HostMaterializer {
 			this.lastWritten.set(rel, textOf(this.doc, rel).toString());
 			this.observe(rel);
 		}
+		return manifestSignature(manifest) !== sigBefore;
 	}
 
 	/** mark a file as held by the host's visual editor (guests go read-only on it). */

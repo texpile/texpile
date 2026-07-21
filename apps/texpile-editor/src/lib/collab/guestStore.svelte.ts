@@ -67,7 +67,9 @@ class GuestCollabController {
 	}
 
 	async join(code: string, name: string): Promise<void> {
-		if (this.status === 'joining' || this.status === 'online') return;
+		// also bail while reconnecting: a second join would build a fresh transport and orphan the old
+		// one (its backoff loop keeps running), leaking a socket
+		if (this.status === 'joining' || this.status === 'online' || this.status === 'reconnecting') return;
 		this.joinError = '';
 		if (!isValidShareCode(code)) {
 			this.joinError = 'invalid-code';
@@ -166,9 +168,17 @@ class GuestCollabController {
 		// a ghost folder becomes real once a shared file lands inside it
 		for (const g of this.ghosts) if (out.some((f) => f.rel.startsWith(g + '/'))) this.ghosts.delete(g);
 		this.files = out;
-		this.rev++;
+		// bump the rebind key only when the shared SET changed (a file added/removed/became shared),
+		// not on a lock flip: that just updates `files`, and the editor's read-only state live-flips
+		// through it, so remounting would needlessly drop the guest's caret and undo history
+		const sig = out.map((f) => `${f.rel}:${f.kind}`).join('|');
+		if (sig !== this.lastManifestSig) {
+			this.lastManifestSig = sig;
+			this.rev++;
+		}
 		for (const cb of this.fileWatchers) cb();
 	}
+	private lastManifestSig = '';
 
 	private notifyTree(): void {
 		this.rev++;

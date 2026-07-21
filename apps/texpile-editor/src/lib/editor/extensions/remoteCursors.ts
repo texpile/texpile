@@ -1,8 +1,8 @@
-// Remote collaborator presence in the visual editor: caret bar + name label, selection tint,
-// and a block edge-mark on the block a peer's caret sits in. Positions arrive pre-mapped to PM
+// Remote collaborator presence in the visual editor: a caret bar + name label and a selection
+// tint. Positions arrive pre-mapped to PM
 // coordinates (WorkspaceView runs the awareness -> sourceMap chain); this plugin only renders.
 // Every element is layout-inert: zero-width in-flow anchors with out-of-flow bars, tint via
-// background, block mark via inset box-shadow, so a peer's cursor can never move a glyph.
+// background, so a peer's cursor can never move a glyph.
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { Decoration, DecorationSet } from 'prosemirror-view';
@@ -16,12 +16,14 @@ export interface RemotePeerSel {
 	/** PM positions, already clamped-mapped by the caller. */
 	anchor: number;
 	head: number;
-	/** the top-level block containing head, for the edge-mark. */
-	blockFrom?: number;
-	blockTo?: number;
 }
 
 export const remoteCursorsKey = new PluginKey<DecorationSet>('remote-cursors');
+
+// a peer's color rides untrusted awareness; only hex passes before it reaches an inline style string,
+// so a crafted value (e.g. "red;background:url(https://evil/x)") can't inject extra CSS
+const HEX_COLOR = /^#[0-9a-fA-F]{3,8}$/;
+const safeColor = (c: string): string => (HEX_COLOR.test(c) ? c : '#888888');
 
 function caretDom(name: string, color: string): HTMLElement {
 	const span = document.createElement('span');
@@ -40,31 +42,24 @@ function build(doc: PMNode, peers: RemotePeerSel[]): DecorationSet {
 	const max = doc.content.size;
 	const clamp = (n: number) => Math.min(Math.max(0, n), max);
 	for (const p of peers) {
+		const color = safeColor(p.color);
 		const anchor = clamp(p.anchor);
 		const head = clamp(p.head);
 		if (anchor !== head) {
 			decos.push(
 				Decoration.inline(Math.min(anchor, head), Math.max(anchor, head), {
 					class: 'pm-remote-sel',
-					style: `background-color: ${p.color}33`
+					style: `background-color: ${color}33`
 				})
 			);
 		}
 		decos.push(
-			Decoration.widget(head, () => caretDom(p.name, p.color), {
-				key: `caret:${p.clientId}:${p.color}:${p.name}`,
+			Decoration.widget(head, () => caretDom(p.name, color), {
+				key: `caret:${p.clientId}:${color}:${p.name}`,
 				side: 0,
 				ignoreSelection: true
 			})
 		);
-		if (p.blockFrom != null && p.blockTo != null && p.blockTo <= max) {
-			decos.push(
-				Decoration.node(p.blockFrom, p.blockTo, {
-					class: 'pm-remote-block',
-					style: `--peer-color: ${p.color}`
-				})
-			);
-		}
 	}
 	return DecorationSet.create(doc, decos);
 }

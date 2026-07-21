@@ -125,6 +125,9 @@ export function decodeFrame(data: Uint8Array): Frame {
 
 // 256 KB chunks: sealed frames must stay under the relay's 1 MiB message cap with room to spare
 export const BLOB_CHUNK_SIZE = 256 * 1024;
+// a reassembled blob (image or PDF) may not exceed this many chunks; caps the buffer a peer can
+// make us allocate from an attacker-chosen `total` (8192 * 256 KB = 2 GiB, the session byte quota)
+const MAX_BLOB_CHUNKS = 8192;
 
 export function chunkBlob(name: string, rev: number, bytes: Uint8Array): BlobChunkPayload[] {
 	const total = Math.max(1, Math.ceil(bytes.byteLength / BLOB_CHUNK_SIZE));
@@ -140,6 +143,9 @@ export class BlobAssembler {
 	private parts = new Map<string, { total: number; got: number; pieces: (Uint8Array | null)[] }>();
 
 	add(c: BlobChunkPayload): Uint8Array | null {
+		// validate the attacker-controlled shape BEFORE allocating: a bogus `total` must never size a buffer
+		if (!Number.isInteger(c.total) || c.total < 1 || c.total > MAX_BLOB_CHUNKS) return null;
+		if (!Number.isInteger(c.index) || c.index < 0 || c.index >= c.total) return null;
 		const id = `${c.name}@${c.rev}`;
 		let entry = this.parts.get(id);
 		if (!entry || entry.total !== c.total) {
@@ -150,7 +156,7 @@ export class BlobAssembler {
 				if (key !== id && key.startsWith(`${c.name}@`)) this.parts.delete(key);
 			}
 		}
-		if (c.index >= entry.total || entry.pieces[c.index]) return null;
+		if (entry.pieces[c.index]) return null; // duplicate chunk (index bounds already checked above)
 		entry.pieces[c.index] = c.bytes;
 		entry.got++;
 		if (entry.got < entry.total) return null;

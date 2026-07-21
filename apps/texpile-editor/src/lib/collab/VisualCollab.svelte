@@ -15,7 +15,7 @@
 	import { buildTrailingParagraphTr } from '$lib/editor/extensions/trailing-paragraph-plugin';
 	import { computeBlockPatch, syncOrigAttrs } from '$lib/editor/blockPatch';
 	import { setRemoteCursors, type RemotePeerSel } from '$lib/editor/extensions/remoteCursors';
-	import { buildBlockMap, blockAtPm, pmPosToSourceOffset, sourceOffsetToPmPos } from '$lib/editor/sourceMap';
+	import { buildBlockMap, pmPosToSourceOffset, sourceOffsetToPmPos } from '$lib/editor/sourceMap';
 	import { bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { spliceDiff, EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/materialize';
 	import { editorViewStore } from '$lib/stores/editorStore';
@@ -278,15 +278,12 @@
 				drops.push(`${clientId}: offset ${ai} maps to no block (preamble?)`);
 				return;
 			}
-			const blk = blockAtPm(map, headPm);
 			peers.push({
 				clientId,
 				name: user.name ?? 'Anonymous',
 				color: user.color ?? '#888888',
 				anchor: anchorPm,
-				head: headPm,
-				blockFrom: blk?.pmPos,
-				blockTo: blk?.pmEnd
+				head: headPm
 			});
 		});
 		cdbg('render', binding.awareness.getStates().size - 1, 'peers ->', peers.length, drops.length ? drops : '');

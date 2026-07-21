@@ -46,8 +46,3 @@
 		opacity: 0;
 	}
 }
-
-/* the block a peer is editing: a colored edge inside the block, no layout impact */
-.pm-remote-block {
-	box-shadow: inset 2.5px 0 0 var(--peer-color);
-}

@@ -90,12 +90,12 @@ class HostCollabController {
 		try {
 			const code = generateShareCode();
 			const keys = await deriveSessionKeys(code);
-			const hostKey = generateShareCode(); // second random secret; only its hash reaches the relay
+			const hostKey = generateShareCode(); // second random secret; the relay only ever stores its hash
 			const relayUrl = get(settings).collabRelayUrl.trim();
 			await createRelaySession(relayUrl, {
 				room: keys.roomId,
 				proofHash: await sha256Hex(keys.joinProof),
-				hostKeyHash: await sha256Hex(hostKey)
+				hostKey
 			});
 
 			const doc = new Y.Doc();
@@ -206,14 +206,15 @@ class HostCollabController {
 	/** re-scan after host file ops (create/delete/rename/import/paste). */
 	async syncTree(): Promise<void> {
 		if (!this.active) return;
-		await this.materializer?.syncFromTree();
-		this.manifestRev++; // rebind the editor if the open file just became shared
+		// only rebind editors when the shared set actually changed, not on every focus/compile refresh
+		if (await this.materializer?.syncFromTree()) this.manifestRev++;
 	}
 
 	// serve a file's bytes to a guest that requested it (images the guest editor needs to render)
 	private async serveFile(name: string, rel: string, to: number): Promise<void> {
 		if (!this.active || !this.root || !this.session) return;
-		if (rel.includes('..')) return;
+		// only ever serve files the session actually shares: never .git, logs, or anything escaping the root
+		if (!isSafeRel(rel) || !isShared(rel)) return;
 		try {
 			const res = await fetch(fileUrl(joinPath(this.root, rel)), { cache: 'no-store' });
 			if (!res.ok) return;
@@ -228,7 +229,8 @@ class HostCollabController {
 	private async receiveUpload(rel: string, bytes: Uint8Array): Promise<void> {
 		if (!this.active || !this.root) return;
 		const clean = rel.replace(/\\/g, '/').replace(/^\/+/, '');
-		if (!clean || clean.includes('..')) return; // no path traversal outside the shared folder
+		// stay inside the shared set: no traversal, and never let a guest write .git hooks, artifacts, etc.
+		if (!isSafeRel(clean) || !isShared(clean)) return;
 		try {
 			await writeBinaryFile(joinPath(this.root, clean), new Blob([bytes as BlobPart]));
 			await this.syncTree();

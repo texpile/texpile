@@ -57,6 +57,19 @@ describe('collab protocol', () => {
 		expect(asm.add(oldChunks[1])).toBeNull();
 	});
 
+	// a peer controls `total`/`index`, so a bogus value must be rejected before it sizes a buffer
+	it('rejects blob chunks with an out-of-range total or index instead of allocating', () => {
+		const asm = new BlobAssembler();
+		const base = { name: 'pdf', rev: 1, bytes: new Uint8Array([1]) };
+		expect(asm.add({ ...base, index: 0, total: 500_000_000 })).toBeNull(); // would allocate ~500M slots
+		expect(asm.add({ ...base, index: 0, total: 0 })).toBeNull();
+		expect(asm.add({ ...base, index: 0, total: -1 })).toBeNull();
+		expect(asm.add({ ...base, index: 5, total: 2 })).toBeNull(); // index past total
+		expect(asm.add({ ...base, index: -1, total: 2 })).toBeNull();
+		// a legitimate single-chunk blob still assembles
+		expect(asm.add({ ...base, index: 0, total: 1 })).toEqual(base.bytes);
+	});
+
 	it('parses relay notices and rejects junk', () => {
 		expect(parseRelayNotice('{"t":"peers","count":3}')).toEqual({ t: 'peers', count: 3 });
 		expect(parseRelayNotice('not json')).toBeNull();
