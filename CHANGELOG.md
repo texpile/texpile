@@ -20,6 +20,13 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: experimental shared sessions: share a folder for real time editing, guests join with a code from the home screen, no account needed
 - feat: shared sessions are end to end encrypted; the relay server only forwards data it cannot read
 - feat: guests see the host's compiled PDF live and can request a compile; compiling with shell escape is disabled while sharing
+- feat: shared sessions cover the visual editor, not just source; edits sync both ways and you see where collaborators are editing
+- feat: guests can see compile problems in a Problems panel without opening a terminal
+- feat: the share dialog notes that anyone with the code can edit the folder's files, and shows how many people can join
+- feat: open files appear as tabs above the editor, and your open tabs come back when you reopen the folder
+- feat: the compiled PDF refreshes in place after each compile, keeping your scroll position without a flash
+- fix: once you choose a main file it sticks, instead of the prompt returning every time you open the folder
+- fix: renaming, moving, or reloading the open file no longer loses unsaved edits
 
 ## [0.14.3] - 2026-07-18
 
