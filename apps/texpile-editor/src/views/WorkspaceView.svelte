@@ -12,6 +12,7 @@
 	import MainFileModal from '$lib/editor/comp/MainFileModal.svelte';
 	import FormatModal from '$lib/editor/comp/FormatModal.svelte';
 	import ConflictModal from '$lib/editor/comp/ConflictModal.svelte';
+	import SaveBeforeSwitchModal from '$lib/editor/comp/SaveBeforeSwitchModal.svelte';
 	import RefUpdateModal, { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
 	import { parseCompileDiagnosticsInWorker } from '$lib/latex-log/parseInWorker';
@@ -1085,9 +1086,9 @@
 			const file = loadedPath?.replace(/^session\//, '');
 			if (!shared || !file) return [];
 			return shared.log
-				.filter((e) => samePath(e.file, file))
+				.filter((e) => e.line !== undefined && samePath(e.file, file))
 				.map((e) => ({
-					line: e.line,
+					line: e.line!,
 					lineEnd: e.lineEnd,
 					severity: e.level === 'error' ? ('error' as const) : e.level === 'badbox' ? ('info' as const) : ('warning' as const),
 					message: e.hint ? `${e.message}\n\n${e.hint}` : e.message,
@@ -1475,6 +1476,35 @@
 			outputsSharedForSession = false;
 		}
 	});
+	// not a guest (solo or host): if the folder already has a .log from a previous compile, load its
+	// problems on open so they show without a recompile. Re-runs as the command + main file resolve
+	// (they fix the log path); a real compile that fills the log first wins.
+	let existingLogLoadedFor: string | null = null;
+	$effect(() => {
+		const root = $workspaceRoot;
+		void compileCommand; // dep: the log path depends on the resolved command
+		void $mainFile; // dep: and on the detected main file
+		if (guest || !root) {
+			existingLogLoadedFor = null;
+			return;
+		}
+		if (existingLogLoadedFor === root) return;
+		untrack(() => {
+			if (get(compileLog)) {
+				existingLogLoadedFor = root; // a compile already populated it
+				return;
+			}
+			const logPath = expectedLogPath();
+			if (!logPath) return; // command / main file not resolved yet; a later run retries
+			existingLogLoadedFor = root;
+			void (async () => {
+				const s = await statFile(logPath);
+				if (s.exists && s.size > 0 && get(workspaceRoot) === root && !get(compileLog)) {
+					await publishLogDiagnostics(logPath, s.mtimeMs, true);
+				}
+			})();
+		});
+	});
 	// poll the expected PDF after a compile (no-completion-marker fallback); load it once it has
 	// stopped changing, so a mid-write partial or an intermediate latexmk pass isn't shown. `stableAt`
 	// is the mtime seen on the previous poll; a match means the file settled.
@@ -1822,24 +1852,23 @@
 		if (guest || !root || !session.active) return;
 		const intel = get(projectIntelStore);
 		const log = get(compileLog);
+		// share every error/warning/badbox, line-anchored or not: line-less warnings (undefined
+		// \ref/\cite, package warnings) still belong in the guest's Problems panel
 		const entries = (log?.entries ?? [])
-			.filter((e) => e.level !== 'info' && e.line !== undefined)
-			.flatMap((e) => {
-				const abs = resolveLogPath(root, e.file);
-				if (!abs) return [];
-				return [
-					{
-						file: relativeTo(root, abs).replace(/\\/g, '/'),
-						line: e.line!,
-						lineEnd: e.lineEnd,
-						level: e.level as 'error' | 'warning' | 'badbox',
-						message: e.message,
-						hint: e.hint,
-						column: e.column,
-						anchorText: e.anchorText,
-						command: e.command
-					}
-				];
+			.filter((e) => e.level !== 'info')
+			.map((e) => {
+				const abs = e.file ? resolveLogPath(root, e.file) : null;
+				return {
+					file: abs ? relativeTo(root, abs).replace(/\\/g, '/') : '',
+					line: e.line,
+					lineEnd: e.lineEnd,
+					level: e.level as 'error' | 'warning' | 'badbox',
+					message: e.message,
+					hint: e.hint,
+					column: e.column,
+					anchorText: e.anchorText,
+					command: e.command
+				};
 			});
 		session.shareCompileIntel({ auxNumbers: intel.auxNumbers, auxPages: intel.auxPages, log: entries });
 	}
@@ -1984,6 +2013,30 @@
 	// a switch held back by the save-before-switch dialog: the store reverts to the outgoing file
 	// (tabs and tree stay visually on it) and this carries where the user was headed
 	let heldSwitch: { target: string | null } | null = null;
+	// the modal's outgoing snapshot; non-null while the save-before-switch dialog is up
+	let saveSwitchPrompt = $state<{ name: string; outgoing: { path: string; content: string }; eol: Eol } | null>(null);
+
+	// Save keeps the edit + switches, Discard drops it + switches, Cancel (X / backdrop / Escape)
+	// aborts the whole switch and stays on the current file with the edit intact.
+	function resolveSaveSwitch(choice: 'save' | 'discard' | 'cancel') {
+		const prompt = saveSwitchPrompt;
+		saveSwitchPrompt = null;
+		if (!prompt) return;
+		if (choice === 'cancel') {
+			pendingSave = prompt.outgoing; // reattach so the edit is still tracked and re-guarded next time
+			pendingTabClose = null; // a tab-close that triggered this switch is cancelled too
+			heldSwitch = null;
+			return;
+		}
+		if (choice === 'save') writeChain = writeChain.then(() => doWrite(prompt.outgoing.path, prompt.outgoing.content, false, prompt.eol));
+		if (pendingTabClose) {
+			tabs.close(pendingTabClose);
+			pendingTabClose = null;
+		}
+		const target = heldSwitch?.target ?? null;
+		heldSwitch = null;
+		if (target !== get(activeFilePath)) activeFilePath.set(target);
+	}
 
 	// load the active file whenever it changes. Everything but the store read is untracked, so
 	// this runs exactly once per path change (loadedPath updating mid-load must not re-fire it).
@@ -2000,29 +2053,15 @@
 				return;
 			}
 			// autosave off: the outgoing file's edit wasn't auto-written, so ask BEFORE switching.
-			// The dialog decides the content's fate (Escape/backdrop = save; only the explicit
-			// Discard button drops it), then the held switch proceeds.
+			// The modal (SaveBeforeSwitchModal) decides its fate: Save writes it, Discard drops it,
+			// and Cancel aborts the switch entirely (see resolveSaveSwitch).
 			if (!autosaveActive() && loadedPath && path !== loadedPath && pendingSave?.path === loadedPath) {
 				const outgoing = pendingSave;
-				const outgoingEol = docEol; // the outgoing file's EOL, before the switch changes docEol
+				const eol = docEol; // the outgoing file's EOL, before the switch changes docEol
 				pendingSave = null; // detach so loadFile's teardown / the new file's queue can't touch it
 				heldSwitch = { target: path };
 				activeFilePath.set(loadedPath);
-				void confirmAsk(m.wsview_confirm_save_before_switch({ name: basename(loadedPath) }), {
-					confirmLabel: m.wsview_save_label(),
-					cancelLabel: m.vcs_discard_changes(), // "Cancel" here would read as cancel-the-switch
-					supersedeValue: true,
-					dismissValue: true
-				}).then((ok) => {
-					if (ok) writeChain = writeChain.then(() => doWrite(outgoing.path, outgoing.content, false, outgoingEol));
-					if (pendingTabClose) {
-						tabs.close(pendingTabClose);
-						pendingTabClose = null;
-					}
-					const target = heldSwitch?.target ?? null;
-					heldSwitch = null;
-					if (target !== get(activeFilePath)) activeFilePath.set(target);
-				});
+				saveSwitchPrompt = { name: basename(loadedPath), outgoing, eol };
 				return;
 			}
 			flushSave(); // persist the outgoing file's queued edit before tearing down its buffers
@@ -2175,6 +2214,14 @@
 		if (!docMeta) return;
 		lastDoc = doc;
 		texSource = serializeLatexFile(docMeta, doc);
+		// nodeviews settling on load (or an edit undone back to the saved bytes) fire a docChanged
+		// transaction that serializes right back to disk: that isn't an unsaved change, so don't
+		// flag the pristine file dirty or queue a no-op save that would nag on the next switch
+		if (texSource === diskBaseline) {
+			if (get(isDirty)) isDirty.set(false);
+			discardPendingSave();
+			return;
+		}
 		isDirty.set(true);
 		scheduleSave(loadedPath, texSource);
 		// live session: the doc's orig stamps just went stale; VisualCollab re-stamps on the lull
@@ -2214,6 +2261,9 @@
 		// shared session: every edit streams into the shared doc per keystroke, host and guest
 		// alike (a no-op splice when the source editor is already Y-bound)
 		session.edit(path, content);
+		// a guest has no disk to save to: their edits live in the CRDT only. Skipping pendingSave
+		// keeps the (host-only) save-before-switch dialog and disk writes from ever firing for them.
+		if (guest) return;
 		if (pendingSave && pendingSave.path !== path) flushSave();
 		pendingSave = { path, content };
 		// autosave off: track the edit (so Save / the switch-guard have it) but don't auto-write.
@@ -3015,6 +3065,11 @@
 	<!-- file edited on disk while we held unsaved edits -->
 	{#if conflict}
 		<ConflictModal path={conflict.path} onResolve={resolveConflict} />
+	{/if}
+
+	<!-- autosave off, switching away from a file with unsaved edits -->
+	{#if saveSwitchPrompt}
+		<SaveBeforeSwitchModal name={saveSwitchPrompt.name} onResolve={resolveSaveSwitch} />
 	{/if}
 
 	{#if pendingRefUpdate}

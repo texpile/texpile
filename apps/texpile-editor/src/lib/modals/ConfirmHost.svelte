@@ -1,8 +1,6 @@
 <script lang="ts">
 	// Renders the singleton confirmAsk() dialog. Mounted once at app root, like the toast group.
-	// Escape / backdrop clicks are a DISMISSAL, not a decline: they resolve to the ask's
-	// dismissValue, so a dialog whose safe outcome is affirmative (save-before-switch) can make
-	// the reflexive Escape save instead of silently discarding.
+	// Escape / backdrop clicks dismiss it as a cancel.
 	import { confirmDialog, answerConfirm, dismissConfirm } from './confirm.svelte';
 	import { m } from '$lib/paraglide/messages';
 

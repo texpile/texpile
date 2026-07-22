@@ -164,6 +164,29 @@ describe('collab session end-to-end', () => {
 		guest.session.destroy();
 	});
 
+	it('syncs a large text file whose raw sync frame would blow the relay cap', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const hub = new FakeHub();
+		// ~1.5 MB of repetitive LaTeX: far over the ~900 KB per-frame cap raw, but it gzips tiny, so
+		// the full-state frame a joining guest gets only clears the relay because compression runs
+		// before seal. This is the arXiv-monolith case that used to loop on "reconnecting".
+		const big = '\\section{Body}\nSome repeated paragraph text for the corpus.\n'.repeat(26000);
+		expect(big.length).toBeGreaterThan(1_000_000);
+		const { fs } = fakeFs({ 'main.tex': big });
+
+		const host = await makeParty(hub, 'host', 'Host', key);
+		const mat = new HostMaterializer(host.doc, 'root', fs, join);
+		const { oversizedText } = await mat.seed();
+		expect(oversizedText).toEqual([]); // under the 2 MiB co-edit cap, so still co-edited, not view-only
+
+		const guest = await makeParty(hub, 'guest', 'Guest', key);
+		await until(() => textOf(guest.doc, 'main.tex').toString() === big);
+
+		mat.destroy();
+		host.session.destroy();
+		guest.session.destroy();
+	});
+
 	// the visual editors' fold-in contract on both sides: a local splice carries EDIT_ORIGIN (so
 	// the editor's own Y.Text observer can filter it), while the far side receives it under a
 	// different origin (so its remote re-parse observer fires) and the edit still lands on disk

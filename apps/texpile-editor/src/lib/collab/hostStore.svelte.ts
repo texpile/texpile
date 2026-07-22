@@ -49,6 +49,8 @@ class HostCollabController {
 	shareCode = $state('');
 	peers = $state<PeerInfo[]>([]);
 	lastError = $state('');
+	// text files too large to co-edit; shared view-only. Surfaced once, after seeding.
+	oversizedText = $state<string[]>([]);
 	// bumped whenever the manifest changes (seed / syncTree); the editor keys its collab binding on
 	// it so a file created/renamed after seed rebinds instead of staying unshared
 	manifestRev = $state(0);
@@ -134,7 +136,7 @@ class HostCollabController {
 				{ readText: readTextFile, writeText: writeTextFile, listFiles: (r) => scanTree(r).then((t) => flattenTree(t.children, r)) },
 				joinPath
 			);
-			await materializer.seed();
+			this.oversizedText = (await materializer.seed()).oversizedText;
 
 			this.doc = doc;
 			this.session = session;
@@ -164,6 +166,7 @@ class HostCollabController {
 		this.status = 'idle';
 		this.shareCode = '';
 		this.peers = [];
+		this.oversizedText = [];
 		this.lockedRel = null;
 		this.pdfBytes = null;
 		this.pdfRev = 0;

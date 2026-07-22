@@ -26,7 +26,10 @@ export const isShared = (rel: string) => !EXCLUDE.test(rel);
 // co-editable source text (drives CRDT sync); everything else shared is served as bytes on demand
 export const isTextFile = (rel: string) => TEXT_EXT.test(rel);
 
-const MAX_TEXT_BYTES = 2 * 1024 * 1024; // co-edit cap; larger text is shared as binary (name + on-demand bytes)
+// co-edit cap; larger text is shared as binary (name + on-demand bytes). Frames are gzipped before
+// they hit the relay (session.ts), and LaTeX compresses ~4x, so a file up to this size still clears
+// the relay's per-message cap. Anything past it is view-only, and seed() reports it so the host can warn.
+const MAX_TEXT_BYTES = 2 * 1024 * 1024;
 const MAX_BINARY_BYTES = 100 * 1024 * 1024; // a binary/artifact larger than this isn't shared (guest-RAM guard)
 const WRITE_DEBOUNCE_MS = 400;
 
@@ -75,19 +78,25 @@ export class HostMaterializer {
 		private readonly onError?: (rel: string, err: unknown) => void
 	) {}
 
-	/** scan + read every shared text file into the doc, in one transaction. */
-	async seed(): Promise<void> {
+	/** scan + read every shared text file into the doc, in one transaction. Returns the text files
+	 *  too large to co-edit (shared view-only instead), so the host can warn about them. */
+	async seed(): Promise<{ oversizedText: string[] }> {
 		const files = (await this.fs.listFiles(this.root)).filter((f) => isShared(f.rel));
 		const bodies = new Map<string, { text: string; eol: '\r\n' | '\n' }>();
+		const oversizedText: string[] = [];
 		for (const f of files) {
-			if (isTextFile(f.rel) && f.size <= MAX_TEXT_BYTES) {
-				try {
-					const raw = await this.fs.readText(this.joinPath(this.root, f.rel));
-					// tree scans don't always carry sizes; the cap re-applies after the read
-					if (raw.length <= MAX_TEXT_BYTES) bodies.set(f.rel, { text: toLf(raw), eol: detectEol(raw) });
-				} catch (e) {
-					this.onError?.(f.rel, e);
-				}
+			if (!isTextFile(f.rel)) continue;
+			if (f.size > MAX_TEXT_BYTES) {
+				oversizedText.push(f.rel);
+				continue;
+			}
+			try {
+				const raw = await this.fs.readText(this.joinPath(this.root, f.rel));
+				// tree scans don't always carry sizes; the cap re-applies after the read
+				if (raw.length <= MAX_TEXT_BYTES) bodies.set(f.rel, { text: toLf(raw), eol: detectEol(raw) });
+				else oversizedText.push(f.rel);
+			} catch (e) {
+				this.onError?.(f.rel, e);
 			}
 		}
 		this.doc.transact(() => {
@@ -108,6 +117,7 @@ export class HostMaterializer {
 			this.lastWritten.set(rel, textOf(this.doc, rel).toString());
 			this.observe(rel);
 		}
+		return { oversizedText };
 	}
 
 	/** watch one file's Y.Text; any change not caused by disk-side code schedules a write-back. */

@@ -5,28 +5,11 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
-- feat: the app and the website are available in Simplified Chinese, Traditional Chinese, and German; pick a language in Preferences
-- feat: machine-translated languages are marked as such, and switching to one shows where translation mistakes can be reported
-- feat: work in several windows: File > New Window and Open Folder in New Window; a folder opens in one window at a time, and opening it again focuses that window
-- feat: relaunching the app reopens every window from the last session, each on its last open file
-- feat: window titles show the file and folder, so windows are easy to tell apart in the taskbar
-- feat: live mode runs in one window at a time; another window can take it over with a click
-- fix: preferences changed in one window no longer overwrite changes made in another
-- feat: select several files in the file explorer with Ctrl and Shift click, then move or delete them together
-- fix: dragging in the file explorer highlights the folder that would receive the drop, instead of the whole panel
-- feat: drop files or folders from your system's file manager onto the file explorer to copy them into the project
-- feat: paste an image or copied files into the file explorer with Ctrl+V; pasted screenshots are saved as pasted-image.png
-- feat: drag files from one window's file explorer into another window to copy them across projects
-- feat: experimental shared sessions: share a folder for real time editing, guests join with a code from the home screen, no account needed
-- feat: shared sessions are end to end encrypted; the relay server only forwards data it cannot read
-- feat: guests see the host's compiled PDF live and can request a compile; compiling with shell escape is disabled while sharing
-- feat: shared sessions cover the visual editor, not just source; edits sync both ways and you see where collaborators are editing
-- feat: guests can see compile problems in a Problems panel without opening a terminal
-- feat: the share dialog notes that anyone with the code can edit the folder's files, and shows how many people can join
+- feat: experimental shared sessions for real time collaboration. Share a folder with a code from the home screen, no account needed, end to end encrypted so the relay server only forwards data it cannot read. Guests co-edit in both the visual and source editors, see where others are editing, and watch the host's compiled PDF and compile problems live
+- feat: work in several windows, with File > New Window and Open Folder in New Window; relaunching reopens every window on its last open file
+- feat: the app and the website are available in Simplified Chinese, Traditional Chinese, and German, picked in Preferences
 - feat: open files appear as tabs above the editor, and your open tabs come back when you reopen the folder
-- feat: the compiled PDF refreshes in place after each compile, keeping your scroll position without a flash
-- fix: once you choose a main file it sticks, instead of the prompt returning every time you open the folder
-- fix: renaming, moving, or reloading the open file no longer loses unsaved edits
+- feat: the file explorer gains multi-select and drag and drop: select several files with Ctrl and Shift, drop files and folders in from your system's file manager, and paste images or copied files with Ctrl+V
 
 ## [0.14.3] - 2026-07-18
 

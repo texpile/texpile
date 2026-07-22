@@ -85,9 +85,6 @@ export async function check(manual: boolean): Promise<CheckResult> {
 		// + minimum-system-version gate; a hand-rolled numeric compare here broke prereleases
 		if (!res || !res.isUpdateAvailable || !res.updateInfo) return { status: 'none' };
 		const info = res.updateInfo;
-		// a just-tagged release may still get pulled for a bad build: automatic checks sit out the first 3 hours, and manual checks are allowed to override that
-		const age = Date.now() - Date.parse(info.releaseDate ?? '');
-		if (!manual && Number.isFinite(age) && age < 3 * 60 * 60 * 1000) return { status: 'none' };
 		return {
 			status: 'update',
 			version: info.version,

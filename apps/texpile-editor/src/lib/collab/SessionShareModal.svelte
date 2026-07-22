@@ -150,6 +150,12 @@
 					{m.share_guests_count({ count: guestCount, max: MAX_GUESTS })}
 					{#if collabHost.status === 'reconnecting'}<span class="text-warning-600-400"> · {m.session_status_reconnecting()}</span>{/if}
 				</p>
+				{#if collabHost.oversizedText.length}
+					<p class="text-warning-700-300 mb-2 flex items-start gap-1.5 text-xs">
+						<TriangleAlert class="text-warning-600-400 mt-px size-3.5 shrink-0" />
+						<span>{m.share_oversized_warning({ names: collabHost.oversizedText.join(', ') })}</span>
+					</p>
+				{/if}
 				<p class="text-surface-500 border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
 					<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
 					<span>{m.collab_e2ee_note()}</span>

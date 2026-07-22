@@ -22,7 +22,7 @@ Texpile is a modern, local, offline LaTeX editor for Windows, macOS, and Linux. 
 
 Edit your document as formatted text, math, tables, and figures. The same file opens in source view whenever you want it.
 
-![The Texpile visual editor](landing/src/lib/assets/showcase/visual-dark.png)
+![The Texpile visual editor](landing/src/lib/assets/showcase/editor-visual.webp)
 
 ## Live preview
 

@@ -13,10 +13,12 @@ export interface CollabBinding {
 	readOnly?: boolean;
 }
 
-/** one diagnostic from the host's compile, file already root-relative. */
+/** one diagnostic from the host's compile, file already root-relative. line is absent for warnings
+ *  the log gives no source location for (undefined \ref/\cite, package warnings): the Problems panel
+ *  still lists them, only the inline underline needs a line. */
 export interface SharedDiagnostic {
 	file: string;
-	line: number;
+	line?: number;
 	lineEnd?: number;
 	level: 'error' | 'warning' | 'badbox';
 	message: string;

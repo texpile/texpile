@@ -13,6 +13,7 @@ import * as decoding from 'lib0/decoding';
 import * as syncProtocol from 'y-protocols/sync';
 import { Awareness, applyAwarenessUpdate, encodeAwarenessUpdate, removeAwarenessStates } from 'y-protocols/awareness';
 import { seal, open } from './e2e/seal';
+import { gzip, gunzip } from './compress';
 import {
 	FrameType,
 	BROADCAST,
@@ -33,6 +34,38 @@ export interface PeerInfo {
 }
 
 export type SessionEndReason = 'host-ended' | 'relay-closed' | 'quota' | 'error' | 'no-session' | 'full';
+
+// the relay drops any WebSocket message over 1 MiB, which would crash the session into a reconnect
+// loop; stay under it with margin for the seal nonce/tag and the codec byte. Frames still over this
+// after gzip (a pathologically large or incompressible doc) are dropped, not sent: a degraded
+// session (a file that won't sync) beats a socket that keeps dying.
+const MAX_FRAME_BYTES = 900 * 1024;
+// gzip only pays off past a few hundred bytes; below this the header outweighs any saving, so the
+// per-keystroke sync/awareness frames ride uncompressed
+const COMPRESS_THRESHOLD = 512;
+
+// [1-byte codec: 0 raw, 1 gzip][body]. Compression sits INSIDE the seal, so the relay only ever
+// sees ciphertext; the codec byte tells the receiver whether to inflate before decoding.
+async function pack(framed: Uint8Array): Promise<Uint8Array> {
+	if (framed.byteLength >= COMPRESS_THRESHOLD) {
+		const gz = await gzip(framed);
+		if (gz.byteLength < framed.byteLength) {
+			const out = new Uint8Array(gz.byteLength + 1);
+			out[0] = 1;
+			out.set(gz, 1);
+			return out;
+		}
+	}
+	const out = new Uint8Array(framed.byteLength + 1);
+	out[0] = 0;
+	out.set(framed, 1);
+	return out;
+}
+
+async function unpack(body: Uint8Array): Promise<Uint8Array> {
+	const rest = body.subarray(1);
+	return body[0] === 1 ? gunzip(rest) : rest;
+}
 
 // a relay close code is authoritative for WHY the socket ended (the relay only sends 4003/4006 at
 // join time, never mid-session), so the code alone maps to a reason
@@ -153,10 +186,15 @@ export class CollabSession {
 
 	private post(frame: Frame): void {
 		if (this.destroyed) return;
-		const bytes = encodeFrame(frame);
+		const framed = encodeFrame(frame);
 		this.sendChain = this.sendChain
 			.then(async () => {
-				this.transport.send(await seal(this.key, bytes));
+				const sealed = await seal(this.key, await pack(framed));
+				if (sealed.byteLength > MAX_FRAME_BYTES) {
+					console.warn(`[collab] dropping a ${sealed.byteLength}-byte frame over the relay's ${MAX_FRAME_BYTES}-byte cap`);
+					return;
+				}
+				this.transport.send(sealed);
 			})
 			.catch(() => {});
 	}
@@ -220,7 +258,7 @@ export class CollabSession {
 		if (this.destroyed) return;
 		let frame: Frame;
 		try {
-			frame = decodeFrame(await open(this.key, sealed));
+			frame = decodeFrame(await unpack(await open(this.key, sealed)));
 		} catch {
 			return; // tampered or foreign frame: drop silently
 		}
