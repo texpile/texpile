@@ -1,0 +1,89 @@
+# UNSIGNED installers for Windows + macOS + Linux, published as a GitHub PRERELEASE.
+#
+# Trigger: manual only (workflow_dispatch). Run it from the Actions tab -> "Prerelease (unsigned)"
+# -> Run workflow (pick the branch to build), or `gh workflow run prerelease.yml --ref v0.15`.
+# It then builds all three OSes and creates the prerelease automatically. Signed public releases
+# (tag push -> R2 + GitHub release) stay in release.yml; this is for throwaway test builds, so it
+# has no test gate and no code signing (macOS needs right-click -> Open, Windows shows SmartScreen).
+name: Prerelease (unsigned)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Base version for the prerelease tag (e.g. 0.15.0)'
+        default: '0.15.0'
+        type: string
+
+permissions:
+  contents: write # create the prerelease + its tag
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifacts: release/*.exe
+          - os: macos-latest
+            artifacts: |
+              release/*.dmg
+              release/*.zip
+          - os: ubuntu-latest
+            artifacts: |
+              release/*.AppImage
+              release/*.deb
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # no linux prebuilds ship with node-pty
+      - if: runner.os == 'Linux'
+        run: pnpm electron:rebuild
+
+      # `pnpm dist` already passes --publish never; with no signing secrets in the env (and mac
+      # identity auto-discovery disabled) electron-builder produces unsigned installers
+      - run: pnpm dist
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: texpile-unsigned-${{ runner.os }}
+          path: ${{ matrix.artifacts }}
+          if-no-files-found: error
+
+  prerelease:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist-artifacts # all three OS artifacts land in subfolders here
+
+      - name: Create GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${{ inputs.version }}"
+          TAG="v${VERSION}-pre.${{ github.run_number }}"
+          mapfile -t FILES < <(find dist-artifacts -type f | sort)
+          echo "Attaching:"; printf '  %s\n' "${FILES[@]}"
+          gh release create "$TAG" \
+            --prerelease \
+            --target "${{ github.sha }}" \
+            --title "v${VERSION} prerelease (build ${{ github.run_number }})" \
+            --notes "Unsigned prerelease built from \`${{ github.sha }}\`. Not code-signed: macOS needs right-click -> Open, Windows shows a SmartScreen warning." \
+            "${FILES[@]}"
