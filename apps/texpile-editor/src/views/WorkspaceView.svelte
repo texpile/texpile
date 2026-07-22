@@ -866,9 +866,19 @@
 		finishMainConfirm();
 		projectMacros = await gatherProjectMacros(chosen, root);
 	}
-	// dismissed without confirming: compile with the detected file for this session, ask again next time
-	function dismissMainConfirm() {
-		finishMainConfirm();
+	// closing the prompt still settles it: persist the pre-selected (detected) file so it doesn't
+	// return on every open. Nothing is locked in, the main file can be changed anytime via the file tree.
+	async function dismissMainConfirm() {
+		const root = get(workspaceRoot);
+		const chosen = mainChoice ?? mainDetected;
+		if (root && chosen) {
+			setMainFile(root, chosen);
+			void loadExistingPdf();
+			finishMainConfirm();
+			projectMacros = await gatherProjectMacros(chosen, root);
+		} else {
+			finishMainConfirm();
+		}
 	}
 	// live mode compiles on its own as soon as the pane is open; surface the question then.
 	// Strictly `=== false`: null means initProject is still resolving, never a modal.

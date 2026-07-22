@@ -51,7 +51,9 @@ const norm = (p: string) => p.replace(/\\/g, '/').replace(/\/+$/, '');
 function relInRoot(root: string, abs: string): string {
 	const r = norm(root) + '/';
 	const a = norm(abs);
-	return a.startsWith(r) ? a.slice(r.length) : a;
+	// case-insensitive prefix (Windows varies the drive-letter case, see mainKeyFor); a case-sensitive
+	// check would store the whole absolute path as the "rel" and it would never round-trip
+	return a.toLowerCase().startsWith(r.toLowerCase()) ? a.slice(r.length) : a;
 }
 /** joins a folder + a stored relative path back into an absolute path (native-ish separators). */
 function absInRoot(root: string, rel: string): string {
