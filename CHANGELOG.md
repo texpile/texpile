@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-07-22
+
 - feat: experimental shared sessions for real time collaboration. Share a folder with a code from the home screen, no account needed, end to end encrypted so the relay server only forwards data it cannot read. Guests co-edit in both the visual and source editors, see where others are editing, and watch the host's compiled PDF and compile problems live
 - feat: work in several windows, with File > New Window and Open Folder in New Window; relaunching reopens every window on its last open file
 - feat: the app and the website are available in Simplified Chinese, Traditional Chinese, and German, picked in Preferences
