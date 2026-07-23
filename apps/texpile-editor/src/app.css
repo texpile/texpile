@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 @import 'tailwindcss';
 
 @import '@skeletonlabs/skeleton-svelte';
@@ -295,7 +293,6 @@ html[data-mode='dark'] {
 	--gradient-box-bg: linear-gradient(113deg, rgba(0, 136, 247, 0.06) 0%, rgba(0, 214, 249, 0.06) 100%);
 	--gradient-card-bg: linear-gradient(113deg, #0088f7 0%, #00d6f9 100%);
 
-	--font-family-poppins: 'Poppins', sans-serif;
 	--font-family-work-sans: 'Work Sans', sans-serif;
 }
 
@@ -305,10 +302,6 @@ html[data-mode='dark'] {
 
 @utility bg-card-bg {
 	background-image: var(--gradient-card-bg);
-}
-
-@utility font-poppins {
-	font-family: var(--font-family-poppins);
 }
 
 @utility font-Work-Sans {
