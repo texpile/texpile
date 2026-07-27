@@ -19,16 +19,35 @@ interface IntellisenseOptions {
 	bib?: boolean;
 }
 
-// CodeMirror re-queries completion only on INSERTED text; deletions never reactivate it. This to repair it
-const reactivate = EditorView.updateListener.of((update) => {
-	if (completionStatus(update.state) !== null) return; // active session: CM manages it
-	if (update.docChanged && update.transactions.some((tr) => tr.isUserEvent('delete'))) startCompletion(update.view);
-});
+// CodeMirror re-queries completion only on INSERTED text; deletions never reactivate it. This repairs it,
+// but forcing every source on every backspace is too dear on big buffers, so a line-local guard runs first:
+// only fire when the text before the cursor plausibly sits in a trigger context. Supersets of the
+// matchBefore regexes in completion/dispatch.ts + the sources (which are line-local too, so nothing is lost):
+// bare/partial macro incl. delimiter families, any \cmd's open {…/[… arg (cite/ref/begin/usepackage/…),
+// a just-closed \begin{name}, ^{/_{ scripts, @ mnemonics.
+const TEX_CONTEXT =
+	/\\(?:[a-zA-Z]*|(?:left|[Bb]ig{1,2}[lmr]?)?(?:[({[|]|\\[{|])?)$|\\.*(?:\{[^{}]*|\[[^\]]*)$|\\begin\{[^{}\s]+\}$|[\^_]\{[^{}]*$|@@?[^\s@]*$/;
+// bibFile.ts's three triggers: @entrytype, bare field name, field = value
+const BIB_CONTEXT = /^\s*(?:@?[a-zA-Z]*|[a-zA-Z]+\s*=\s*[{"]?[^,{}"\n]*)$/;
+
+function reactivate(context: RegExp): Extension {
+	return EditorView.updateListener.of((update) => {
+		if (completionStatus(update.state) !== null) return; // active session: CM manages it
+		if (!update.docChanged || !update.transactions.some((tr) => tr.isUserEvent('delete'))) return;
+		const head = update.state.selection.main.head;
+		const line = update.state.doc.lineAt(head);
+		if (context.test(line.text.slice(0, head - line.from))) startCompletion(update.view);
+	});
+}
 
 /** completion only — used inside the WYSIWYG editor's raw/inline LaTeX node views. */
 export function latexAutocomplete(opts: IntellisenseOptions = {}): Extension {
 	const source = opts.bib ? bibFileCompletionSource : latexCompletionSource;
-	const ext: Extension[] = [autocompletion({ override: [source], activateOnTyping: true, icons: false }), reactivate, frecencyTracker()];
+	const ext: Extension[] = [
+		autocompletion({ override: [source], activateOnTyping: true, icons: false }),
+		reactivate(opts.bib ? BIB_CONTEXT : TEX_CONTEXT),
+		frecencyTracker()
+	];
 	if (opts.tooltipsInBody) ext.push(tooltips({ parent: document.body }));
 	return ext;
 }

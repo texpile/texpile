@@ -32,8 +32,11 @@ class StarterGhostWidget extends WidgetType {
 const ghostDeco = Decoration.widget({ widget: new StarterGhostWidget(), side: 1 });
 
 /** the offer stands only while the file is genuinely untouched */
-const isBlank = (view: { state: { doc: { length: number; toString(): string } } }) =>
-	view.state.doc.length === 0 || /^\s*$/.test(view.state.doc.toString());
+const isBlank = (view: { state: { doc: { length: number; sliceString(from: number, to?: number): string } } }) => {
+	const doc = view.state.doc;
+	// past a few hundred chars this can never be the blank-file case; never materialize a big doc
+	return doc.length <= 256 && (doc.length === 0 || /^\s*$/.test(doc.sliceString(0, doc.length)));
+};
 
 const ghostField = StateField.define<DecorationSet>({
 	create(state) {

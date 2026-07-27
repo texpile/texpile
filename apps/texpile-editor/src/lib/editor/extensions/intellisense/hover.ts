@@ -8,6 +8,7 @@ import { convertLatexToMarkup } from 'mathlive';
 import { referenceStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { mathMacrosFor } from '$lib/editor/extensions/math-preview/userMacros';
+import { docText } from '$lib/editor/docText';
 import { CLASS_NAMES } from './data/classnames';
 import { PACKAGE_NAMES } from './data/packagenames';
 import { macroLookup } from './completion/macros';
@@ -151,7 +152,7 @@ export function latexHover(): Extension {
 		const at = { pos: token.from, end: token.to, above: true };
 
 		if (token.kind === 'macro') {
-			const found = macroLookup(view.state.doc.toString(), token.value);
+			const found = macroLookup(docText(view.state.doc), token.value);
 			if (!found) return null; // unrecognized macro: no hover, matching LaTeX Workshop
 			const shape = found.detail ?? '';
 			const doc = found.info ? `<div class="text-xs opacity-80">${escapeHtml(found.info)}</div>` : '';
@@ -182,7 +183,7 @@ export function latexHover(): Extension {
 			return { ...at, create: () => ({ dom: dom(escapeHtml(entry.description)) }) };
 		}
 		if (token.kind === 'label') {
-			const preview = labelPreview(token.value, view.state.doc.toString());
+			const preview = labelPreview(token.value, docText(view.state.doc));
 			if (!preview) return null;
 			const suffix = preview.from ? `<div class="text-xs opacity-60">${escapeHtml(preview.from)}</div>` : '';
 			return { ...at, create: () => ({ dom: dom(preview.html + suffix) }) };

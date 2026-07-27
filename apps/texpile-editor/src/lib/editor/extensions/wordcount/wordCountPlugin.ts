@@ -1,6 +1,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import { documentCountStore } from '$lib/stores/countStore.svelte';
+import { trailingDebounce } from '$lib/trailingDebounce';
 
 const wordCountKey = new PluginKey('wordCount');
 
@@ -116,51 +117,40 @@ function updateSelectionCount(doc: Node, from: number, to: number): void {
 	}
 }
 
-/** tracks document and selection word/character counts into documentCountStore. */
+function updateDocCount(doc: Node): void {
+	const text = extractTextForCounting(doc);
+	const characters = countCharacters(text);
+	documentCountStore.words = countWords(text);
+	documentCountStore.characters = characters.withoutSpaces;
+	documentCountStore.charactersWithSpaces = characters.withSpaces;
+}
+
+/** tracks document and selection word/character counts into documentCountStore. counts are
+ * display-only, so the full-doc/range walks run debounced instead of per transaction. */
 export function createWordCountPlugin() {
+	const deferredDocCount = trailingDebounce(300, updateDocCount);
+	const deferredSelectionCount = trailingDebounce(150, ({ doc, from, to }: { doc: Node; from: number; to: number }) =>
+		updateSelectionCount(doc, from, to)
+	);
+
 	return new Plugin({
 		key: wordCountKey,
 
 		state: {
-			init(config, state) {
-				const text = extractTextForCounting(state.doc);
-				const words = countWords(text);
-				const characters = countCharacters(text);
-
-				documentCountStore.words = words;
-				documentCountStore.characters = characters.withoutSpaces;
-				documentCountStore.charactersWithSpaces = characters.withSpaces;
-
+			init(_config, state) {
+				updateDocCount(state.doc);
 				const { from, to } = state.selection;
 				updateSelectionCount(state.doc, from, to);
-
-				return { words, characters: characters.withoutSpaces, charactersWithSpaces: characters.withSpaces };
+				return null;
 			},
 
-			apply(tr, oldState, _oldEditorState, _newEditorState) {
-				let newState = oldState;
-
-				if (tr.docChanged) {
-					const text = extractTextForCounting(tr.doc);
-					const words = countWords(text);
-					const characters = countCharacters(text);
-
-					newState = {
-						words,
-						characters: characters.withoutSpaces,
-						charactersWithSpaces: characters.withSpaces
-					};
-
-					documentCountStore.words = newState.words;
-					documentCountStore.characters = newState.characters;
-					documentCountStore.charactersWithSpaces = newState.charactersWithSpaces;
-				}
-
-				// selection can change without a doc change, so always update
+			apply(tr) {
+				if (tr.docChanged) deferredDocCount(tr.doc);
+				// selection can change without a doc change; one debouncer for range counts AND the
+				// collapsed clear, so a pending count can never land after a newer clear
 				const { from, to } = tr.selection;
-				updateSelectionCount(tr.doc, from, to);
-
-				return newState;
+				deferredSelectionCount({ doc: tr.doc, from, to });
+				return null;
 			}
 		}
 	});

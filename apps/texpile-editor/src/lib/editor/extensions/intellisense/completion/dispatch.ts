@@ -2,6 +2,7 @@
 // contexts (citation/reference/environment/package/file-path) must all get a chance to match
 // before the bare "\" + letters macro trigger, which would otherwise swallow everything after it.
 import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
+import { docText } from '$lib/editor/docText';
 import { citationCompletionSource } from './citations';
 import { referenceCompletionSource } from './references';
 import { environmentCompletionSource } from './environments';
@@ -24,7 +25,7 @@ const NON_LETTER_END = /[({[|]$/;
 function macroCompletionSource(ctx: CompletionContext): CompletionResult | null {
 	const macro = ctx.matchBefore(MACRO_TRIGGER);
 	if (!macro) return null;
-	const options = withMathBoost(macroOptions(ctx.state.doc.toString()), isMathContext(ctx.state, macro.from));
+	const options = withMathBoost(macroOptions(docText(ctx.state.doc)), isMathContext(ctx.state, macro.from));
 	if (NON_LETTER_END.test(macro.text)) {
 		// delimiter names aren't letter-filterable by the widget; offer only the exact match (LW does the same)
 		const exact = options.filter((o) => o.label === macro.text);

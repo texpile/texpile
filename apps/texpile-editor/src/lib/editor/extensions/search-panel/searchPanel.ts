@@ -13,6 +13,7 @@ import {
 	replaceAll,
 	closeSearchPanel
 } from '@codemirror/search';
+import { trailingDebounce } from '$lib/trailingDebounce';
 
 // lucide glyphs inlined: this panel is plain DOM, not svelte, so the icon components can't be used
 const svg = (paths: string) =>
@@ -31,6 +32,11 @@ class TexpileSearchPanel implements Panel {
 	private replaceField: HTMLInputElement;
 	private countBadge: HTMLElement;
 	private replaceRow: HTMLElement;
+	// recount walks the whole doc; per-keystroke/cursor-move it froze big buffers, so the badge
+	// trails edits by a beat instead. isConnected: don't rescan for a panel that's been closed.
+	private deferredRecount = trailingDebounce<void>(200, () => {
+		if (this.dom.isConnected) this.recount();
+	});
 
 	constructor(private view: EditorView) {
 		this.dom = document.createElement('div');
@@ -165,7 +171,9 @@ class TexpileSearchPanel implements Panel {
 	}
 
 	update(update: ViewUpdate) {
-		if (update.docChanged || update.selectionSet) this.recount();
+		// selectionSet matters too: the "current" index follows the cursor, so it also goes through
+		// the debounce rather than rescanning on every arrow key
+		if (update.docChanged || update.selectionSet) this.deferredRecount();
 	}
 
 	mount() {

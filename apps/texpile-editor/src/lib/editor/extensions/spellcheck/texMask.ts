@@ -184,17 +184,22 @@ export function maskTex(src: string): TexMask {
 		}
 	}
 
-	const out = new Array<string>(n);
+	// build the output in runs, not per-char: each masked char becomes exactly one space, so the
+	// result keeps the input's length and offsets, and runs give the merged spans for free
+	const parts: string[] = [];
 	const spans: [number, number][] = [];
-	for (let k = 0; k < n; k++) {
-		if (m[k]) {
-			out[k] = ' ';
-			const last = spans[spans.length - 1];
-			if (last && last[1] === k) last[1] = k + 1;
-			else spans.push([k, k + 1]);
-		} else out[k] = src[k];
+	let k = 0;
+	while (k < n) {
+		const masked = m[k];
+		let j = k + 1;
+		while (j < n && m[j] === masked) j++;
+		if (masked) {
+			parts.push(' '.repeat(j - k));
+			spans.push([k, j]);
+		} else parts.push(src.slice(k, j));
+		k = j;
 	}
-	return { text: out.join(''), spans };
+	return { text: parts.join(''), spans };
 }
 
 /** true when [from, to) overlaps any masked span (binary search; spans are sorted). */

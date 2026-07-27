@@ -1,6 +1,6 @@
 // wrapper around the harper.js WorkerLinter singleton
 import { WorkerLinter, Dialect, binary } from 'harper.js';
-import type { Lint, LintConfig } from 'harper.js';
+import type { Lint, LintConfig, LintOptions } from 'harper.js';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { get } from 'svelte/store';
 
@@ -28,7 +28,10 @@ export async function getHarperLinter(): Promise<WorkerLinter> {
 }
 
 /** lints text, returning matches in prosemirror-proofread format. */
-export async function lintText(text: string): Promise<{
+export async function lintText(
+	text: string,
+	options?: { language?: LintOptions['language']; isStale?: () => boolean }
+): Promise<{
 	matches: Array<{
 		offset: number;
 		length: number;
@@ -40,14 +43,17 @@ export async function lintText(text: string): Promise<{
 }> {
 	try {
 		const linter = await getHarperLinter();
-		const lints: Lint[] = await linter.lint(text);
+		const lints: Lint[] = await linter.lint(text, options?.language ? { language: options.language } : undefined);
+		// mapping below hydrates wasm objects on the main thread; skip it when the caller already
+		// knows the result is superseded
+		if (options?.isStale?.()) return { matches: [] };
 
 		const matches = lints.map((lint) => {
 			const span = lint.span();
 			const suggestions: string[] = [];
 
-			for (let i = 0; i < lint.suggestion_count(); i++) {
-				const sug = lint.suggestions()[i];
+			// suggestions() re-materializes the wasm array on every call, so read it once
+			for (const sug of lint.suggestions()) {
 				const replacement = sug.get_replacement_text();
 				if (replacement) {
 					suggestions.push(replacement);

@@ -1,14 +1,13 @@
 // \command completion: the bundled CTAN signature DB (same one the parser uses), LaTeX Workshop's
 // vendored default set (data/lwMacros.ts), and the user's OWN \newcommand/\NewDocumentCommand
-// definitions scanned live from the buffer (LaTeX Workshop calls this "user-defined macros"; here
-// it's listNewcommands reused from the parser's own converter.ts, not a bespoke scanner).
+// definitions scanned from the buffer in userMacros.worker.ts (LaTeX Workshop calls this
+// "user-defined macros"; the scan itself lives in userMacroScan.ts, not a bespoke scanner here).
 import { get } from 'svelte/store';
 import { snippetCompletion, type Completion } from '@codemirror/autocomplete';
 import { macroInfo } from '@unified-latex/unified-latex-ctan';
-import { listNewcommands } from '@unified-latex/unified-latex-util-macros';
-import { parseLatex } from '$lib/latex-parser/parser';
-import { MACRO_SIGNATURES, ENV_SIGNATURES } from '$lib/latex-parser/macros';
 import { projectIntelStore, type ProjectIntel } from '$lib/stores/projectIntel';
+import { extractUserMacrosAsync } from './userMacrosClient';
+import { extractUserMacros, type UserMacroDef } from './userMacroScan';
 import { macroCompletion, withAutoChain } from './shared';
 import { withFrecency } from './frecency';
 import { ENV_AS_MACRO_OPTIONS } from './environments';
@@ -104,37 +103,40 @@ export const STATIC_MACRO_OPTIONS: Completion[] = (() => {
 	];
 })();
 
-const MAX_SCAN_LENGTH = 2_000_000; // guards against re-parsing megabytes per keystroke
 let cache: { text: string; options: Completion[] } | null = null;
+let pendingText: string | null = null;
+let debounceId: ReturnType<typeof setTimeout> | null = null;
 
-// definition forms listNewcommands doesn't cover (LW parses these in macro.ts parse())
-const EXTRA_DEF_PATTERNS: Array<{ re: RegExp; sig: (m: RegExpExecArray) => string }> = [
-	{ re: /\\DeclareMathOperator\*?\{\\([a-zA-Z@]+)\}/g, sig: () => '' },
-	{ re: /\\DeclarePairedDelimiter(?:XPP|X)?\{?\\([a-zA-Z@]+)\}?/g, sig: () => 'm' },
-	{ re: /\\(?:(?:re)?newrobustcmd|DeclareRobustCommand)\*?\{\\([a-zA-Z@]+)\}(?:\[(\d)\])?/g, sig: (m) => 'm '.repeat(+(m[2] ?? 0)).trim() }
-];
-
-function computeUserMacros(text: string): Completion[] {
-	if (text.length > MAX_SCAN_LENGTH) return [];
-	const seen = new Set<string>();
+// worker results are plain name/signature pairs; the Completions (which carry apply fns and
+// can't cross the worker boundary) are built here
+function userMacroCompletions(defs: UserMacroDef[]): Completion[] {
 	const out: Completion[] = [];
-	const add = (name: string, signature: string) => {
+	for (const { name, signature } of defs) {
 		// skip names the static DB already documents ("avoid over populating suggestions")
-		if (STATIC_NAMES.has(name) || LW_NAMES.has(name) || seen.has(name)) return;
-		seen.add(name);
+		if (STATIC_NAMES.has(name) || LW_NAMES.has(name)) continue;
 		out.push({ ...macroCompletion(name, signature), detail: `${renderUserDetail(signature)} (defined in this file)` });
-	};
-	try {
-		const ast = parseLatex(text, { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES });
-		for (const m of listNewcommands(ast)) add(m.name, m.signature);
-	} catch {
-		// unparseable mid-edit buffer: static + regex-scanned completions still work
-	}
-	for (const { re, sig } of EXTRA_DEF_PATTERNS) {
-		re.lastIndex = 0;
-		for (let m = re.exec(text); m; m = re.exec(text)) add(m[1], sig(m));
 	}
 	return out;
+}
+
+// stale-while-revalidate: the buffer scan parses the whole file (seconds at 1MB), so it runs in
+// userMacros.worker.ts after a short pause and the cache swaps when the result lands
+function scheduleRefresh(text: string) {
+	if (pendingText === text) return; // already debouncing or in flight for this exact version
+	// no Worker (vitest/node): scan inline so the caller sees the result in this same call
+	if (typeof Worker === 'undefined') {
+		cache = { text, options: userMacroCompletions(extractUserMacros(text)) };
+		return;
+	}
+	pendingText = text;
+	if (debounceId != null) clearTimeout(debounceId);
+	debounceId = setTimeout(() => {
+		debounceId = null;
+		void extractUserMacrosAsync(text).then((defs) => {
+			if (pendingText === text) pendingText = null; // settled or failed: a later call may retry this text
+			if (defs) cache = { text, options: userMacroCompletions(defs) };
+		});
+	}, 300);
 }
 
 function renderUserDetail(signature: string): string {
@@ -144,7 +146,7 @@ function renderUserDetail(signature: string): string {
 
 let intelCache: { intel: ProjectIntel; options: Completion[] } | null = null;
 
-// \newcommand-family definitions from OTHER project files (the buffer's own are in computeUserMacros)
+// \newcommand-family definitions from OTHER project files (the buffer's own come from the worker scan)
 function projectMacroOptions(): Completion[] {
 	const intel = get(projectIntelStore);
 	if (intelCache?.intel !== intel) {
@@ -161,12 +163,15 @@ function projectMacroOptions(): Completion[] {
 	return intelCache.options;
 }
 
-/** static + user-defined (buffer and project-wide) macro completions, frecency-boosted. */
+/** static + user-defined (buffer and project-wide) macro completions, frecency-boosted.
+ * buffer definitions are served from the last finished worker scan, so after an edit they can
+ * lag by the debounce plus parse time; static/project options are always current. */
 export function macroOptions(text: string): Completion[] {
-	if (!cache || cache.text !== text) cache = { text, options: computeUserMacros(text) };
-	const bufferNames = new Set(cache.options.map((o) => o.label));
+	if (cache?.text !== text) scheduleRefresh(text); // docText makes this a reference compare
+	const buffer = cache?.options ?? [];
+	const bufferNames = new Set(buffer.map((o) => o.label));
 	const project = projectMacroOptions().filter((o) => !bufferNames.has(o.label));
-	return withFrecency([...STATIC_MACRO_OPTIONS, ...cache.options, ...project]);
+	return withFrecency([...STATIC_MACRO_OPTIONS, ...buffer, ...project]);
 }
 
 /** looks up a macro's completion by name, for hover. null means "not a recognized macro". */

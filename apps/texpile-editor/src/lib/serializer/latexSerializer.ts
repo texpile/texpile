@@ -10,20 +10,22 @@ import { serializeTable } from './tableSerializer';
 import { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from '../latex-parser/converter';
 import type { Ctx, NodeHandler } from './types';
 
-/** text-mode escaping: backslash via sentinel first, fixed order. */
+const ESCAPE_RE = /[\\{}#%&$_^]/g;
+const ESCAPE_MAP: Record<string, string> = {
+	'\\': '\\textbackslash{}',
+	'{': '\\{',
+	'}': '\\}',
+	'#': '\\#',
+	'%': '\\%',
+	'&': '\\&',
+	$: '\\$',
+	_: '\\_',
+	'^': '\\^{}'
+};
+
+/** text-mode escaping, single pass (runs per text node on every serialization). */
 export function sanitizeText(text: string): string {
-	const BACKSLASH = '￿';
-	text = text.replace(/\\/g, BACKSLASH);
-	text = text.replace(/\{/g, '\\{');
-	text = text.replace(/\}/g, '\\}');
-	text = text.replace(/#/g, '\\#');
-	text = text.replace(/%/g, '\\%');
-	text = text.replace(/&/g, '\\&');
-	text = text.replace(/\$/g, '\\$');
-	text = text.replace(/_/g, '\\_');
-	text = text.replace(/\^/g, '\\^{}');
-	text = text.replace(/￿/g, '\\textbackslash{}');
-	return text;
+	return text.replace(ESCAPE_RE, (ch) => ESCAPE_MAP[ch]);
 }
 
 export type EscMode = 'text' | 'href' | 'math' | 'verbatim' | 'raw';
@@ -134,8 +136,9 @@ export function renderChildren(node: Node, inTableCell: boolean): string {
 		// concatenation FUSES them into an undefined command (\answerYes + See = \answerYesSee;
 		// happens when a separating construct didn't survive conversion). a single space restores
 		// the boundary and is render-neutral: TeX eats whitespace after a control word. purely
-		// lexical, runs on serialized output where no AST exists.
-		if (piece && /\\[a-zA-Z@]+$/.test(out) && /^[a-zA-Z]/.test(piece)) out += ' ';
+		// lexical, runs on serialized output where no AST exists. only the tail needs testing (an
+		// end-anchored regex on the whole accumulator is quadratic across pieces).
+		if (piece && /\\[a-zA-Z@]+$/.test(out.slice(-64)) && /^[a-zA-Z]/.test(piece)) out += ' ';
 		out += piece;
 	}
 	return out;
@@ -247,11 +250,34 @@ export interface DocSerializeResult {
  * concatenation. also reproduces the body's leading/trailing gaps (they belong to no node) and
  * does the final trim, ONLY at edges that aren't verbatim-protected.
  */
+// per-block memo. PM nodes are immutable and structurally shared across transactions, so an
+// untouched top-level block keeps its object identity keystroke to keystroke: serializing the
+// whole doc becomes O(edited blocks), not O(doc). a block's output depends only on itself plus
+// the neighbour facts handlers read via prevSibling/nextSibling (heading adjacency for
+// paragraph, type+kind for list coalescing) — captured in `key`. if a handler ever reads more
+// of Ctx at the top level, widen the key.
+const blockCache = new WeakMap<Node, { key: string; text: string }>();
+
+function neighborKey(sib: Node | null): string {
+	if (!sib) return '';
+	return sib.type.name === 'list' ? `list:${String(sib.attrs.kind ?? '')}` : sib.type.name;
+}
+
+function serializeTopBlock(doc: Node, i: number, n: number): string {
+	const node = doc.child(i);
+	const key = neighborKey(i > 0 ? doc.child(i - 1) : null) + '>' + neighborKey(i < n - 1 ? doc.child(i + 1) : null);
+	const hit = blockCache.get(node);
+	if (hit && hit.key === key) return hit.text;
+	const text = serializeNode(node, { parent: doc, index: i, isLastChild: i === n - 1, inTableCell: false });
+	blockCache.set(node, { key, text });
+	return text;
+}
+
 function serializeDocChildrenDetailed(doc: Node): DocSerializeResult {
 	const n = doc.childCount;
 	const parts: string[] = [];
 	for (let i = 0; i < n; i++) {
-		parts.push(serializeNode(doc.child(i), { parent: doc, index: i, isLastChild: i === n - 1, inTableCell: false }));
+		parts.push(serializeTopBlock(doc, i, n));
 	}
 	let out = '';
 	// seq of the last verbatim-emitted child; null once anything regenerated lands in between.

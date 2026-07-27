@@ -32,8 +32,13 @@ const HEADING = /^\s*\\(section|subsection|subsubsection)\*?\s*[[{]/;
 const RUNIN = /^\s*\\(paragraph|subparagraph)\*?\s*[[{]/;
 
 export function splitParas(src: string): Para[] {
+	return splitParaLines(src.split('\n'));
+}
+
+// same splitter over a pre-split line array: decideEdit shares ONE split of each buffer
+// between here, the cut comparison and buildPatch instead of five full-doc re-splits
+function splitParaLines(lines: string[]): Para[] {
 	const out: Para[] = [];
-	const lines = src.split('\n');
 	let cur: string[] = [];
 	let start = 0;
 	let wrap = '';
@@ -203,13 +208,32 @@ export function repairForPreview(raw: string): string | null {
 	return stack.length ? raw + '\n' + stack.reverse().join('') : raw;
 }
 
-// a buffer minus one paragraph's lines: byte-equal cuts on both sides prove the edit is
+// each buffer minus its paragraph's lines: byte-equal cuts on both sides prove the edit is
 // confined to that paragraph. No lexical normalization -- deciding that a comment or a
-// blank line is render-inert is the ENGINE's call, so anything else recompiles.
-const cut = (s: string, p: Para) => {
-	const L = s.split('\n');
-	L.splice(p.startLine - 1, p.text.split('\n').length);
-	return L.join('\n');
+// blank line is render-inert is the ENGINE's call, so anything else recompiles. Compared
+// line-by-line over the shared split arrays (split('\n') lines never contain '\n', so this
+// IS join equality) instead of materializing two full-doc cut strings per keystroke.
+const cutEq = (a: string[], pa: Para, b: string[], pb: Para): boolean => {
+	const a0 = pa.startLine - 1;
+	const an = pa.text.split('\n').length;
+	const b0 = pb.startLine - 1;
+	const bn = pb.text.split('\n').length;
+	const n = a.length - an;
+	if (n !== b.length - bn) return false;
+	for (let i = 0; i < n; i++) if (a[i < a0 ? i : i + an] !== b[i < b0 ? i : i + bn]) return false;
+	return true;
+};
+
+// only one baseline is live at a time (it advances when a compile lands), so a single-slot
+// memo keyed on the string makes the per-keystroke baseline split + splitParas free -- the
+// caller hands back the same string reference until then, so the compare is O(1).
+let baseMemo: { src: string; lines: string[]; paras: Para[] } | null = null;
+const baselineOf = (src: string) => {
+	if (!baseMemo || baseMemo.src !== src) {
+		const lines = src.split('\n');
+		baseMemo = { src, lines, paras: splitParaLines(lines) };
+	}
+	return baseMemo;
 };
 
 export type ParaRef = { line: number; endLine: number; text: string; listItem: boolean };
@@ -257,8 +281,10 @@ const refOf = (p: Para): ParaRef => ({
 
 /** ONE decision point per edit: diff the buffer against the last-compiled baseline. */
 export function decideEdit(baseline: string, src: string): EditDecision {
-	const oldP = splitParas(baseline);
-	const newP = splitParas(src);
+	const base = baselineOf(baseline);
+	const oldP = base.paras;
+	const srcLines = src.split('\n');
+	const newP = splitParaLines(srcLines);
 	let single = -1;
 	if (oldP.length === newP.length) {
 		const changed: number[] = [];
@@ -270,19 +296,19 @@ export function decideEdit(baseline: string, src: string): EditDecision {
 		// instant path. A boundary line changing alongside (a \label edited after an
 		// unreconciled patch left the baseline behind) must recompile.
 		if (changed.length === 1) {
-			if (cut(src, newP[changed[0]]) === cut(baseline, oldP[changed[0]])) single = changed[0];
-			else return structuralOf(baseline, oldP, newP, 'para+boundary');
+			if (cutEq(srcLines, newP[changed[0]], base.lines, oldP[changed[0]])) single = changed[0];
+			else return structuralOf(base.lines, oldP, newP, 'para+boundary');
 		}
 	}
-	if (single < 0) return structuralOf(baseline, oldP, newP, oldP.length !== newP.length ? 'para-count' : 'multi-para');
-	return buildPatch(baseline, oldP[single], newP[single]);
+	if (single < 0) return structuralOf(base.lines, oldP, newP, oldP.length !== newP.length ? 'para-count' : 'multi-para');
+	return buildPatch(base.lines, oldP[single], newP[single]);
 }
 
 // The single-block instant dispatch for a (baseline, edited) paragraph pair. Also used by
 // the compound structural path: an exact patch never advances the baseline, so the routine
 // "type in a paragraph, then open a new one" reads as modified+inserted -- the modified
 // pair goes through here while the insert splices provisionally.
-function buildPatch(baseline: string, oP: Para, nP: Para): EditDecision {
+function buildPatch(baseLines: string[], oP: Para, nP: Para): EditDecision {
 	// text ships VERBATIM (comments, line structure): the engine's catcodes decide what
 	// they mean. Mid-command (unbalanced braces / open math): raw dispatch would hang the
 	// daemon. REPAIR the transient text (auto-close open math/groups) so partial math
@@ -300,7 +326,6 @@ function buildPatch(baseline: string, oP: Para, nP: Para): EditDecision {
 	// not a standalone typeset unit: the daemon error-recovers it into something with the same
 	// glyphs but the wrong layout. Lists are fine (wrapItem re-wraps them).
 	{
-		const baseLines = baseline.split('\n');
 		let pl = oP.startLine - 2; // line above the paragraph, 0-based
 		while (pl >= 0 && baseLines[pl].trim() === '') pl--;
 		// document/frame are exempt: text after \begin{document} or inside a beamer frame is
@@ -377,7 +402,12 @@ function buildPatch(baseline: string, oP: Para, nP: Para): EditDecision {
 	};
 }
 
-function structuralOf(baseline: string, oldP: Para[], newP: Para[], reason: 'para-count' | 'multi-para' | 'para+boundary'): EditDecision {
+function structuralOf(
+	baseLines: string[],
+	oldP: Para[],
+	newP: Para[],
+	reason: 'para-count' | 'multi-para' | 'para+boundary'
+): EditDecision {
 	let fi = 0;
 	const minLen = Math.min(oldP.length, newP.length);
 	while (fi < minLen && oldP[fi].text === newP[fi].text) fi++;
@@ -448,7 +478,7 @@ function structuralOf(baseline: string, oldP: Para[], newP: Para[], reason: 'par
 				const prev = oldP[a.j - 1];
 				if (prev && runProse && mergeable(prev)) {
 					const merged: Para = { ...prev, text: `${prev.text}\n\\par ${joined}` };
-					const one = buildPatch(baseline, prev, merged);
+					const one = buildPatch(baseLines, prev, merged);
 					if (one.kind === 'patch') return one;
 				}
 			} else if (a.mod === a.j - 1) {
@@ -458,7 +488,7 @@ function structuralOf(baseline: string, oldP: Para[], newP: Para[], reason: 'par
 				const modNew = newP[a.mod];
 				if (plainProse(modOld) && plainProse(modNew) && runProse) {
 					const merged: Para = { ...modNew, text: `${modNew.text}\n\\par ${joined}` };
-					const one = buildPatch(baseline, modOld, merged);
+					const one = buildPatch(baseLines, modOld, merged);
 					if (one.kind === 'patch') return one;
 				}
 			}
@@ -474,7 +504,7 @@ function structuralOf(baseline: string, oldP: Para[], newP: Para[], reason: 'par
 			const prev = oldP[a.j - 1];
 			if (prev && mergeable(prev) && gone.every((p) => mergeable(p) || (plainProse(p) && daemonReady(p.text)))) {
 				const mergedOrig: Para = { ...prev, text: `${prev.text}\n\\par ${gone.map((p) => p.text).join('\n\\par ')}` };
-				const one = buildPatch(baseline, mergedOrig, prev);
+				const one = buildPatch(baseLines, mergedOrig, prev);
 				if (one.kind === 'patch') return one;
 			}
 		}

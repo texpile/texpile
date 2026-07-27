@@ -1,4 +1,4 @@
-import type { TocItem } from './tocStore';
+﻿import type { TocItem } from './tocStore';
 
 // mirror the parser's section-level mapping (converter.ts) so the source outline nests the same
 // way the visual one does
@@ -55,11 +55,29 @@ export type RawOutlineItem =
 const SCAN_RE =
 	/\\(part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\s*(?:\[[^\]]*\])?\s*\{|\\begin\{(figure|table)\*?\}|\\begin\{frame\}|\\appendix\b|\\(?:input|include|subfile)\s*\{([^}]+)\}/g;
 
-const lineOf = (src: string, pos: number) => src.slice(0, pos).split('\n').length;
+// one newline index + binary search per parse (a slice+split per item is O(file) each,
+// quadratic across a big outline)
+function buildLineIndex(src: string): number[] {
+	const starts = [0];
+	for (let i = src.indexOf('\n'); i !== -1; i = src.indexOf('\n', i + 1)) starts.push(i + 1);
+	return starts;
+}
+
+function lineAt(starts: number[], pos: number): number {
+	let lo = 0;
+	let hi = starts.length - 1;
+	while (lo < hi) {
+		const mid = (lo + hi + 1) >> 1;
+		if (starts[mid] <= pos) lo = mid;
+		else hi = mid - 1;
+	}
+	return lo + 1;
+}
 
 /** parses one file's outline atoms: headings, floats with captions, beamer frames, \appendix and
  *  \input markers. `pos` is a char offset into `src` (LF-normalized, 1:1 with CodeMirror). */
 export function parseOutlineRaw(src: string): RawOutlineItem[] {
+	const lineStarts = buildLineIndex(src);
 	const items: RawOutlineItem[] = [];
 	let lastHeadingLevel = 0;
 	SCAN_RE.lastIndex = 0;
@@ -75,7 +93,7 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 				level,
 				text: cleanTitle(inner) || m[1],
 				pos: m.index,
-				line: lineOf(src, m.index),
+				line: lineAt(lineStarts, m.index),
 				starred: /\*\s*(?:\[[^\]]*\])?\s*\{$/.test(m[0])
 			});
 			SCAN_RE.lastIndex = end; // resume past the title so braces inside it don't re-trigger
@@ -89,7 +107,7 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 				level: Math.min(6, lastHeadingLevel + 1),
 				text: caption,
 				pos: m.index,
-				line: lineOf(src, m.index),
+				line: lineAt(lineStarts, m.index),
 				kind: envName as 'figure' | 'table'
 			});
 		} else if (m[0].startsWith('\\begin{frame}')) {
@@ -108,7 +126,7 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 				level: Math.min(6, lastHeadingLevel + 1),
 				text: title,
 				pos: m.index,
-				line: lineOf(src, m.index),
+				line: lineAt(lineStarts, m.index),
 				kind: 'frame'
 			});
 		} else if (m[0] === '\\appendix') {

@@ -1,12 +1,13 @@
 // source-mode live math preview: a tooltip above the cursor typesets the math region on every
 // keystroke, rendered with mathlive so it matches what visual mode will show.
 import { EditorView, keymap, showTooltip, type Tooltip, type TooltipView } from '@codemirror/view';
-import { StateEffect, StateField, type EditorState, type Extension } from '@codemirror/state';
+import { StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
 import { convertLatexToMarkup } from 'mathlive';
 import { get } from 'svelte/store';
 import 'mathlive/static.css';
 import 'mathlive/fonts.css';
 import { settings, updateSettings } from '$lib/settings';
+import { docText } from '$lib/editor/docText';
 import { findMathRegions, mathRegionAt, type MathRegion } from './mathScanner';
 import { mathMacrosFor } from './userMacros';
 
@@ -15,20 +16,94 @@ const previewDismissed = StateEffect.define<null>();
 /** above this the preview silently disables instead of re-scanning megabytes per keystroke. */
 const MAX_SCAN_LENGTH = 2_000_000;
 
-const regionsField = StateField.define<MathRegion[]>({
-	create: (state) => scan(state),
-	update: (value, tr) => (tr.docChanged ? scan(tr.state) : value)
+// regions: null = not scanned yet; regionsFor fills the cell in place on first need, which also
+// makes turning the preview setting back on rescan lazily, no transaction required
+type RegionCell = { regions: MathRegion[] | null };
+
+const regionsField = StateField.define<RegionCell>({
+	create: () => ({ regions: null }),
+	update(value, tr) {
+		if (!tr.docChanged) return value;
+		return { regions: value.regions === null ? null : updateRegions(value.regions, tr) };
+	}
 });
 
 function scan(state: EditorState): MathRegion[] {
 	if (state.doc.length > MAX_SCAN_LENGTH) return [];
-	return findMathRegions(state.doc.toString());
+	return findMathRegions(docText(state.doc));
+}
+
+function regionsFor(state: EditorState): MathRegion[] {
+	if (get(settings).mathPreview === false) return []; // preview off: never pay for a scan
+	const cell = state.field(regionsField);
+	if (cell.regions === null) cell.regions = scan(state);
+	return cell.regions;
+}
+
+// a full rescan is O(doc), so when a change is provably inert — stays on one line, no `\` or `$`
+// on that line or its neighbors, at least a line away from every region — just shift the old
+// regions through the edit. Anything else returns null = lazy full rescan. Known blind spot: a
+// \verb whose span crosses lines (invalid latex the scanner tolerates) hides its delimiter from
+// the line check.
+function updateRegions(regions: MathRegion[], tr: Transaction): MathRegion[] | null {
+	let inert = true;
+	tr.changes.iterChanges((fromA, toA, fromB, _toB, inserted) => {
+		if (!inert) return;
+		const oldDoc = tr.startState.doc;
+		const lineA = oldDoc.lineAt(fromA);
+		// inserted or deleted newlines move blank-line clamps and comment/line boundaries
+		if (inserted.lines > 1 || toA > lineA.to || /[\\$]/.test(oldDoc.sliceString(fromA, toA))) {
+			inert = false;
+			return;
+		}
+		const newDoc = tr.newDoc;
+		const lineB = newDoc.lineAt(fromB);
+		const ctxFrom = lineB.number > 1 ? newDoc.line(lineB.number - 1).from : lineB.from;
+		const ctxTo = lineB.number < newDoc.lines ? newDoc.line(lineB.number + 1).to : lineB.to;
+		if (/[\\$]/.test(newDoc.sliceString(ctxFrom, ctxTo))) {
+			inert = false;
+			return;
+		}
+		const oldFrom = lineA.number > 1 ? oldDoc.line(lineA.number - 1).from : lineA.from;
+		const oldTo = lineA.number < oldDoc.lines ? oldDoc.line(lineA.number + 1).to : lineA.to;
+		if (touchesRegion(regions, oldFrom, oldTo)) inert = false;
+	});
+	if (!inert) return null;
+	return regions.map((r) => {
+		const m: MathRegion = {
+			from: tr.changes.mapPos(r.from),
+			to: tr.changes.mapPos(r.to),
+			innerFrom: tr.changes.mapPos(r.innerFrom),
+			innerTo: tr.changes.mapPos(r.innerTo),
+			kind: r.kind
+		};
+		if (r.env !== undefined) m.env = r.env;
+		if (r.unclosed) m.unclosed = true;
+		return m;
+	});
+}
+
+// regions are sorted and disjoint, so only the last one starting at or before `to` can overlap
+function touchesRegion(regions: MathRegion[], from: number, to: number): boolean {
+	let lo = 0;
+	let hi = regions.length - 1;
+	let last = -1;
+	while (lo <= hi) {
+		const mid = (lo + hi) >> 1;
+		if (regions[mid].from <= to) {
+			last = mid;
+			lo = mid + 1;
+		} else {
+			hi = mid - 1;
+		}
+	}
+	return last >= 0 && regions[last].to >= from;
 }
 
 function activeRegion(state: EditorState): MathRegion | null {
 	const sel = state.selection.main;
 	if (!sel.empty) return null;
-	const region = mathRegionAt(state.field(regionsField), sel.head);
+	const region = mathRegionAt(regionsFor(state), sel.head);
 	if (!region) return null;
 	// nothing to render yet, the user just typed the opening delimiter
 	if (!state.sliceDoc(region.innerFrom, region.innerTo).trim()) return null;
@@ -67,7 +142,7 @@ function render(dom: HTMLElement, state: EditorState): void {
 		dom.innerHTML = convertLatexToMarkup(previewLatex(state, region), {
 			defaultMode: region.kind === 'display' ? 'math' : 'inline-math',
 			// user \newcommand/\DeclareMathOperator definitions (this file + project) render too
-			macros: mathMacrosFor(state.doc.toString())
+			macros: mathMacrosFor(docText(state.doc))
 		});
 	} catch {
 		// mathlive rejects some mid-edit input outright, keep the last good render on screen

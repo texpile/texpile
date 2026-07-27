@@ -1,42 +1,38 @@
 import { Plugin } from 'prosemirror-state';
+import type { Node } from 'prosemirror-model';
 import { triggerRefUpdate } from './refUpdateStore';
+import { trailingDebounce } from '$lib/trailingDebounce';
 
-// watches table positions and pokes ref displays when tables are added, removed, or reordered
+function tablePositions(doc: Node): number[] {
+	const positions: number[] = [];
+	doc.descendants((node, pos) => {
+		if (node.type.name === 'table_wrapper') positions.push(pos);
+	});
+	return positions;
+}
+
+// watches table positions and pokes ref displays when tables are added, removed, or reordered.
+// the full-doc walk runs debounced: ref displays may lag a beat, typing may not.
 export function createRefUpdatePlugin() {
 	let lastTablePositions: number[] = [];
+
+	const deferredCheck = trailingDebounce(300, (doc: Node) => {
+		const next = tablePositions(doc);
+		const changed = lastTablePositions.length !== next.length || lastTablePositions.some((pos, i) => pos !== next[i]);
+		if (changed) {
+			lastTablePositions = next;
+			triggerRefUpdate();
+		}
+	});
 
 	return new Plugin({
 		state: {
 			init(_, state) {
-				const positions: number[] = [];
-				state.doc.descendants((node, pos) => {
-					if (node.type.name === 'table_wrapper') {
-						positions.push(pos);
-					}
-				});
-				lastTablePositions = positions;
+				lastTablePositions = tablePositions(state.doc);
 				return null;
 			},
-			apply(tr, value, oldState, newState) {
-				if (!tr.docChanged) {
-					return null;
-				}
-
-				const newTablePositions: number[] = [];
-				newState.doc.descendants((node, pos) => {
-					if (node.type.name === 'table_wrapper') {
-						newTablePositions.push(pos);
-					}
-				});
-
-				const countChanged = lastTablePositions.length !== newTablePositions.length;
-				const positionsChanged = !countChanged && lastTablePositions.some((pos, i) => pos !== newTablePositions[i]);
-
-				if (countChanged || positionsChanged) {
-					lastTablePositions = newTablePositions;
-					triggerRefUpdate();
-				}
-
+			apply(tr) {
+				if (tr.docChanged) deferredCheck(tr.doc);
 				return null;
 			}
 		}

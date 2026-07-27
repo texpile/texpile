@@ -16,7 +16,9 @@
 	import { synctexFlash, flashLineEffect } from '$lib/editor/extensions/synctex-flash/synctexFlash';
 	import { bibtex } from '$lib/editor/extensions/bibtex/bibtex';
 	import { sourceCmView } from '$lib/stores/editorStore';
+	import { docText } from '$lib/editor/docText';
 	import { setSourceDocCount, setSourceSelectionCount } from '$lib/stores/countStore.svelte';
+	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { m } from '$lib/paraglide/messages';
 	import { yCollab, yUndoManagerKeymap } from 'y-codemirror.next';
 	import * as Y from 'yjs';
@@ -171,6 +173,16 @@
 	const roConf = new Compartment();
 	// true while pushing an external value into CM, so the update listener doesn't echo it back as a user edit
 	let syncing = false;
+	// last text handed to onInput: the value-sync effect compares against this first, so our own
+	// round-tripped edits skip the second full doc.toString() per keystroke
+	let lastEmitted: string | null = null;
+	const deferredDocCount = trailingDebounce(300, setSourceDocCount);
+	// reads the selection at fire time (not capture), so a huge selection isn't sliced per keystroke
+	const deferredSelectionCount = trailingDebounce<void>(150, () => {
+		if (!view) return;
+		const s = view.state.selection.main;
+		setSourceSelectionCount(s.empty ? null : view.state.sliceDoc(s.from, s.to));
+	});
 	// held at component scope so onDestroy can tear it down (else its doc observer leaks across
 	// every file switch / mode toggle that remounts this editor)
 	let undoManager: Y.UndoManager | null = null;
@@ -225,14 +237,14 @@
 					EditorView.contentAttributes.of({ spellcheck: 'false', 'data-gramm': 'false', 'data-enable-grammarly': 'false' }),
 					EditorView.updateListener.of((u) => {
 						if (u.docChanged) {
-							const text = u.state.doc.toString();
-							if (!syncing) onInput?.(text);
-							setSourceDocCount(text); // live word/char count in source mode
+							const text = docText(u.state.doc);
+							if (!syncing) {
+								lastEmitted = text;
+								onInput?.(text);
+							}
+							deferredDocCount(text); // word/char count is display-only, off the keystroke path
 						}
-						if (u.docChanged || u.selectionSet) {
-							const s = u.state.selection.main;
-							setSourceSelectionCount(s.empty ? null : u.state.sliceDoc(s.from, s.to));
-						}
+						if (u.docChanged || u.selectionSet) deferredSelectionCount();
 					})
 				]
 			})
@@ -242,7 +254,7 @@
 		// the file was closed) — hand the truth back so the save pipeline starts aligned
 		if (collab && onInput && collab.ytext.toString() !== value) onInput(collab.ytext.toString());
 		// seed the counts now; the updateListener only fires on later changes
-		setSourceDocCount(view.state.doc.toString());
+		setSourceDocCount(docText(view.state.doc));
 		setSourceSelectionCount(null);
 		// mode-switch sync: reveal the scroll offset near the top, park the caret at the
 		// visual editor's caret and flash its line
@@ -280,7 +292,7 @@
 	// collab mode: the Y.Text is the document, external value pushes would fight the CRDT.
 	$effect(() => {
 		const v = value;
-		if (!collab && view && v !== view.state.doc.toString()) {
+		if (!collab && view && v !== lastEmitted && v !== docText(view.state.doc)) {
 			syncing = true;
 			view.dispatch({
 				changes: { from: 0, to: view.state.doc.length, insert: v },
@@ -288,6 +300,9 @@
 			});
 			syncing = false;
 		}
+		// mirror CM's doc after every reconciliation, whichever branch ran, so lastEmitted can
+		// never go stale and wrongly short-circuit a later external push
+		if (!collab && view) lastEmitted = v;
 	});
 
 	// live read-only flips (the host opened/closed this file in its visual editor)
@@ -330,16 +345,31 @@
 
 	// declared after the value-sync effect so a same-flush file switch replaces the document
 	// first and the diagnostics anchor on the fresh doc.
+	// the effect still runs per keystroke (value is a dependency), but dispatching setDiagnostics
+	// re-runs every StateField, so skip when nothing can change: empty mapped onto empty, or the
+	// same list on an unchanged doc (re-anchoring only matters once either of them moved).
+	let lastDiagDoc: EditorState['doc'] | null = null;
+	let lastDiagList: SourceDiagnostic[] | null = null;
+	let lastDiagEmpty = true;
 	$effect(() => {
 		const list = diagnostics;
 		const v = view;
 		void value; // re-anchor when the document is externally replaced
 		if (!v) return;
 		const doc = v.state.doc;
-		const mapped: Diagnostic[] = list
-			.filter((d) => Number.isInteger(d.line) && d.line >= 1)
-			.map((d) => ({ ...diagnosticRange(doc, d), severity: d.severity, message: d.message, source: 'latex' }));
+		const valid = list.filter((d) => Number.isInteger(d.line) && d.line >= 1);
+		if (valid.length === 0 && lastDiagEmpty) return;
+		if (list === lastDiagList && doc === lastDiagDoc) return;
+		const mapped: Diagnostic[] = valid.map((d) => ({
+			...diagnosticRange(doc, d),
+			severity: d.severity,
+			message: d.message,
+			source: 'latex'
+		}));
 		v.dispatch(setDiagnostics(v.state, mapped));
+		lastDiagDoc = doc;
+		lastDiagList = list;
+		lastDiagEmpty = mapped.length === 0;
 	});
 
 	// SyncTeX gives only a line number, which is stale whenever the buffer differs from the compiled
