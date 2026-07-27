@@ -1754,6 +1754,57 @@ function extractContent(ast: Root): Node[] {
 	return ast.content;
 }
 
+// cross-file macros defined in an include reach a file only as preamble TEXT (projectMacros +
+// preamble, can be hundreds of KB), so it gets its own parse. one parse feeds BOTH consumers
+// (the \def-family walk and listNewcommands), and the derived outputs are memoized: the exact
+// same scan string arrives on every reparse (mode switch, reload), and re-parsing it twice per
+// call dominated large projects. single slot, latest wins; a timed-out worker is rebooted,
+// which clears it for free.
+interface PreambleScan {
+	key: string;
+	delimPairs: Map<string, string>;
+	newcommands: ReturnType<typeof listNewcommands>;
+}
+let preambleScanMemo: PreambleScan | null = null;
+
+function scanPreambleText(preamble: string, parseOptions: ParseOptions): PreambleScan {
+	if (preambleScanMemo && preambleScanMemo.key === preamble) return preambleScanMemo;
+	const scan: PreambleScan = { key: preamble, delimPairs: new Map(), newcommands: [] };
+	// the substring probes are just a cheap trigger for the parse; extraction is AST-based
+	// either way. (\edef doesn't contain "\def", hence all four.)
+	const wantsDefs = ['\\def', '\\edef', '\\gdef', '\\xdef'].some((t) => preamble.includes(t));
+	const wantsNewcommands =
+		/\\(?:new|renew|provide)command|\\(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand/.test(preamble);
+	if (wantsDefs || wantsNewcommands) {
+		let preAst: Root | null = null;
+		try {
+			preAst = parseLatex(preamble, parseOptions);
+		} catch {
+			/* a malformed preamble must not break body parsing */
+		}
+		if (preAst) {
+			// listNewcommands first: heuristicMarkTeXPrimitiveDefs splices the tree in place, and
+			// listNewcommands must see the same unmutated tree its own parse used to give it
+			if (wantsNewcommands) {
+				try {
+					scan.newcommands = listNewcommands(preAst);
+				} catch {
+					/* ditto */
+				}
+			}
+			if (wantsDefs) {
+				try {
+					heuristicMarkTeXPrimitiveDefs(preAst.content as Node[], preamble, scan.delimPairs);
+				} catch {
+					/* ditto */
+				}
+			}
+		}
+	}
+	preambleScanMemo = scan;
+	return scan;
+}
+
 /**
  * Convert a LaTeX string to a ProseMirror doc, extracting the document environment's content
  * when present. options.preamble feeds the \newcommand / \def scans below.
@@ -1780,17 +1831,9 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	const delimPairs = new Map<string, string>();
 	heuristicMarkTeXPrimitiveDefs(ast.content as Node[], latex, delimPairs);
 
-	// cross-file pairs: macros defined in an include reach this file only as preamble TEXT, so
-	// parse it and run the same walk. the substring probes are just a cheap trigger for the
-	// parse; extraction is AST-based either way. (\edef doesn't contain "\def", hence all four.)
-	if (options.preamble && ['\\def', '\\edef', '\\gdef', '\\xdef'].some((t) => options.preamble!.includes(t))) {
-		try {
-			const preAst = parseLatex(options.preamble, parseOptions);
-			heuristicMarkTeXPrimitiveDefs(preAst.content as Node[], options.preamble, delimPairs);
-		} catch {
-			/* a malformed preamble must not break body parsing */
-		}
-	}
+	// cross-file pairs come from the shared preamble scan (see scanPreambleText)
+	const preScan = options.preamble ? scanPreambleText(options.preamble, parseOptions) : null;
+	if (preScan) for (const [name, delim] of preScan.delimPairs) delimPairs.set(name, delim);
 
 	// a \def with a delimited parameter tells us \bea swallows everything up to \eea, typically
 	// math the prose path would text-escape into invalid LaTeX. must run after
@@ -1805,18 +1848,10 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	const macroInfo: Record<string, { signature: string }> = {};
 	//  1. \newcommand/\renewcommand/... in the body
 	for (const m of listNewcommands(ast)) macroInfo[m.name] = { signature: m.signature };
-	//  2. \newcommand/... in the preamble (the parser only gets the body). the regex is a cheap
-	//     trigger for a full parse, not an extractor; extraction is AST-based (listNewcommands).
-	if (
-		options.preamble &&
-		/\\(?:new|renew|provide)command|\\(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand/.test(options.preamble)
-	) {
-		try {
-			for (const m of listNewcommands(parseLatex(options.preamble, parseOptions))) {
-				if (!macroInfo[m.name]) macroInfo[m.name] = { signature: m.signature };
-			}
-		} catch {
-			/* a malformed preamble must not break body parsing */
+	//  2. \newcommand/... in the preamble (the parser only gets the body), via the shared scan
+	if (preScan) {
+		for (const m of preScan.newcommands) {
+			if (!macroInfo[m.name]) macroInfo[m.name] = { signature: m.signature };
 		}
 	}
 	//  3. heuristic: infer an unknown command's arity from usage so the args don't flatten
