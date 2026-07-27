@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { onMount, onDestroy, tick, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import { browser } from '$lib/runtime';
@@ -15,17 +15,15 @@
 	import SaveBeforeSwitchModal from '$lib/editor/comp/SaveBeforeSwitchModal.svelte';
 	import RefUpdateModal, { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
-	import { parseCompileDiagnosticsInWorker } from '$lib/latex-log/parseInWorker';
 	import DraftView from '$lib/draft/DraftView.svelte';
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
 	import { applyStarter, applyImportedFiles, openTutorialProject, type Starter, type ImportedFile } from '$lib/workspace/starters';
-	import { pdfStore } from '$lib/stores/pdfStore';
 	import { editorViewStore, sourceCmView, viewMode as viewModeStore } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { synctexForward, synctexInverse } from '$lib/workspace/synctex';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
-	import { buildBlockMap, blockAtPm, blockAtSource, sourceStartAt, pmPosToSourceOffset, sourceOffsetToPmPos } from '$lib/editor/sourceMap';
+	import { captureVisualAnchor as captureVisualAnchorAt, captureSourceAnchor, resolveVisualAnchor } from '$lib/editor/modeSwitchAnchors';
 	import { parseOutlineRaw, assembleProjectOutline } from '$lib/editor/extensions/tableofcontents/latexHeadings';
 	import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 	import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -40,10 +38,11 @@
 	import SessionShareModal from '$lib/collab/SessionShareModal.svelte';
 	import VisualCollab from '$lib/collab/VisualCollab.svelte';
 	import GuestBar from '$lib/collab/GuestBar.svelte';
-	import * as cc from '$lib/workspace/compileCommand';
 	import { references, loadReferences, bibItemsToReferences, type BibLaTeXReference } from '$lib/workspace/citations';
 	import { labelStore, referenceStore, filePathStore } from '$lib/stores/editorStore';
-	import { extractDocRefs } from '$lib/latex-parser/labels';
+	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
+	import { trailingDebounce } from '$lib/trailingDebounce';
+	import { createSourceHistory } from '$lib/workspace/sourceHistory';
 	import { countFileRefs, replaceFileRefs } from '$lib/latex-parser/filerefs';
 	import {
 		workspaceRoot,
@@ -55,16 +54,18 @@
 		savedMainFile,
 		setMainFile,
 		setLastFile,
-		savedCompileCommand,
 		setFolderCompileCommand,
 		savedCompileOutputs,
 		setCompileOutputs
 	} from '$lib/workspace/workspaceStore';
 	import { addRecentFolder } from '$lib/workspace/workspaceStore';
-	import { refreshGitStatus, isGitRepo, gitChanges, takeNoGitHint } from '$lib/workspace/gitStore';
-	import { gitShowHead, gitInit, gitStage, gitUnstage, gitDiscard, gitCommit, type GitStatusEntry } from '$lib/workspace/git';
+	import { refreshGitStatus, isGitRepo, takeNoGitHint } from '$lib/workspace/gitStore';
+	import { gitShowHead } from '$lib/workspace/git';
+	import { ScmActions } from '$lib/workspace/scmActions.svelte';
+	import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+	import { CompilePipeline, resolveCompileCommand, relFromRoot } from '$lib/workspace/compilePipeline.svelte';
+	import { TreeOps } from '$lib/workspace/treeOps';
 	import { settings, loadSettings, updateSettings, DEFAULT_COMPILE_COMMAND } from '$lib/settings';
-	import { confirmAsk } from '$lib/modals/confirm.svelte';
 	import { detectMainFile, findDocRoots, gatherProjectMacros } from '$lib/workspace/project';
 	import {
 		basename,
@@ -141,17 +142,14 @@
 		})();
 	});
 	import { modLabel } from '$lib/platform';
-	import { serializeLatexFile, createStarterLatex, bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { parseLatexFileAsync, PARSE_TIMEOUT } from '$lib/workspace/latexParserClient';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { TextSelection } from 'prosemirror-state';
-	import { flashNodeAt } from '$lib/editor/extensions/flash-plugin';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let loadedPath = $state<string | null>(null);
 	let loadError = $state<string | null>(null);
-	let saving = $state(false);
 
 	let rawContent = $state(''); // non-.tex text files edit this directly
 
@@ -276,7 +274,7 @@
 	async function newTexFile() {
 		const root = get(workspaceRoot);
 		if (!root) return;
-		await createInTree(
+		await treeOps.create(
 			root,
 			freeName(
 				'main.tex',
@@ -354,7 +352,7 @@
 			refreshTree();
 			reloadReferences();
 		};
-		const onCompile = () => runCompile();
+		const onCompile = () => compiler.runCompile();
 		// re-clamp the PDF pane when the window shrinks so it can't squeeze the editor out
 		const onResize = () => {
 			pdfPaneWidth = clampPdf(pdfPaneWidth);
@@ -363,14 +361,29 @@
 		window.addEventListener('texpile:fs-changed', onFsChanged);
 		window.addEventListener('compile', onCompile);
 		window.addEventListener('resize', onResize);
+		// window close is held by main until we answer (2s backstop for a hung renderer). fast
+		// path: flush the autosave debounce and proceed. autosave off with a pending edit: the
+		// modal can outlive the hold, so release the close NOW and re-issue it after the answer.
+		const offBeforeClose = native()?.onBeforeClose?.(async () => {
+			if (autosaveActive() || !loadedPath || saver.pending?.path !== loadedPath) {
+				await saver.flushAndWait();
+				native()?.closeDecision?.(true);
+				return;
+			}
+			native()?.closeDecision?.(false);
+			if (await confirmLeaveUnsaved()) {
+				await saver.flushAndWait();
+				window.close(); // pending is settled, so this pass takes the fast path
+			}
+		});
 		return () => {
+			offBeforeClose?.();
 			window.removeEventListener('focus', onFocus);
 			window.removeEventListener('texpile:fs-changed', onFsChanged);
 			window.removeEventListener('compile', onCompile);
 			window.removeEventListener('resize', onResize);
-			if (pdfWatchTimer) clearTimeout(pdfWatchTimer);
-			if (logWatchTimer) clearTimeout(logWatchTimer);
-			if (autosaveTimer) clearTimeout(autosaveTimer);
+			compiler.dispose();
+			saver.cancelTimer();
 			if (draftEditTimer) clearTimeout(draftEditTimer);
 		};
 	});
@@ -391,7 +404,7 @@
 	function closeTab(path: string) {
 		const active = get(activeFilePath);
 		if (active && samePath(active, path)) {
-			if (!autosaveActive() && pendingSave && samePath(pendingSave.path, path)) pendingTabClose = path;
+			if (!autosaveActive() && saver.pending && samePath(saver.pending.path, path)) pendingTabClose = path;
 			activeFilePath.set(tabs.neighborOf(path));
 			if (pendingTabClose) return;
 		}
@@ -443,10 +456,12 @@
 	}
 
 	// re-init the workspace in place: swap the root, rescan, re-derive the project, load its first
-	// file. setting activeFilePath flushes the outgoing file's edits first (see the $effect).
+	// file. the unsaved-edit guard and flush run BEFORE any store flips, so Cancel really cancels
+	// and no effect can record the old folder's file under the new root.
 	async function openFolderFromMenu(path?: string) {
 		const root = path ?? (await pickFolder());
 		if (!root) return;
+		if (!(await confirmLeaveUnsaved())) return; // Cancel aborts the folder switch outright
 		const prevRoot = get(workspaceRoot);
 		try {
 			// already open in another window: that window was focused, this one stays put
@@ -456,6 +471,8 @@
 			if (session.active && root !== prevRoot) await session.end();
 			const { files } = await scanTexFiles(root);
 			resolveMainConfirm(root); // before the stores flip, so the modal effect can't see a stale state
+			saver.flush(); // autosave-on: persist the outgoing folder's queued edit before the swap
+			activeFilePath.set(null); // detach the old file so nothing re-tabs it under the new root
 			workspaceRoot.set(root);
 			tabs.bind(root, hostMode); // rebind before refreshTree's prune, so tabs persist under the NEW root
 			texFiles.set(files);
@@ -476,7 +493,8 @@
 	// `lastFolder` setting, so relaunching the app still reopens where you left off - this only
 	// affects the current session's view.
 	async function closeWorkspace() {
-		await flushSaveAndWait();
+		if (!(await confirmLeaveUnsaved())) return; // autosave off: Save/Discard/Cancel instead of a silent force-write
+		await saver.flushAndWait();
 		resolveMainConfirm(null);
 		releaseWorkspace(); // frees the folder so another window may open it
 		workspaceRoot.set(null);
@@ -485,6 +503,7 @@
 		activeFilePath.set(null);
 		mainFile.set(null);
 		isDirty.set(false);
+		tabs.bind(null, false); // never leave the store bound persistable to a released root
 		navigate('/');
 	}
 
@@ -518,7 +537,7 @@
 		// compile (single-file folders have nothing to choose)
 		mainConfirmed = files.length <= 1 || !!(saved && files.some((f) => samePath(f.path, saved)));
 		mainFile.set(main);
-		void loadExistingPdf(); // show an already-compiled PDF for this folder without a recompile
+		void compiler.loadExistingPdf(); // show an already-compiled PDF for this folder without a recompile
 		projectMacros = main ? await gatherProjectMacros(main, root) : '';
 	}
 
@@ -530,162 +549,30 @@
 		const next = $mainFile && samePath($mainFile, path) ? null : path; // click the current main again to clear
 		setMainFile(root, next);
 		mainConfirmed = true; // an explicit choice (set or clear) settles the first-compile question
-		void loadExistingPdf(); // the main file changed → its expected PDF did too
+		void compiler.loadExistingPdf(); // the main file changed â†’ its expected PDF did too
 		projectMacros = next ? await gatherProjectMacros(next, root) : '';
 		if (get(workspaceRoot) !== root) return;
 		if (loadedPath && kind === 'tex' && viewMode === 'visual') rebuildVisualFromSource();
 	}
 
-	async function createInTree(parentDir: string, name: string, type: 'file' | 'dir' | 'include') {
-		try {
-			// an "include" is a .tex fragment: it gets \input into a host doc, so no \documentclass skeleton
-			const isInclude = type === 'include';
-			if (isInclude && !name.toLowerCase().endsWith('.tex')) name += '.tex';
-			const fsType: 'file' | 'dir' = type === 'dir' ? 'dir' : 'file';
-			const path = joinPath(parentDir, name);
-			const isTex = fsType === 'file' && name.toLowerCase().endsWith('.tex');
-			// source-mode users write their own preamble, so hand them an empty file and let the
-			// editor's ghost offer the skeleton (Tab takes it). Visual mode has no ghost to show
-			// and no way to write a preamble, so it still gets one up front.
-			const wantsStarter = isTex && lastEditMode !== 'source';
-			const content = !isInclude && wantsStarter ? createStarterLatex() : '';
-			await createEntry(path, fsType, content);
-			// insert the \input into the current doc BEFORE switching away (the switch flushes its save)
-			if (isInclude && !insertIncludeAtCursor(path)) {
-				toaster.error({
-					title: m.wsview_toast_include_not_inserted_title(),
-					description: m.wsview_toast_include_not_inserted_desc()
-				});
-			}
-			await refreshTree();
-			if (name.toLowerCase().endsWith('.bib')) await loadRefs(get(workspaceRoot) ?? parentDir); // new .bib -> refresh citation keys
-			if (isTex) activeFilePath.set(path);
-		} catch (e) {
-			const msg = e instanceof Error ? e.message : String(e);
-			toaster.error({
-				title: m.wsview_toast_create_failed_title(),
-				description: msg.includes('EEXIST') ? m.wsview_toast_already_exists({ name }) : msg
-			});
-		}
-	}
-
-	async function renameInTree(entry: TreeEntry, newName: string) {
-		try {
-			const to = joinPath(dirname(entry.path), newName);
-			await renameEntry(entry.path, to);
-			retargetPendingSave(entry.path, to); // don't let a queued write recreate the old path
-			tabs.rename(entry.path, to);
-			if (get(activeFilePath) === entry.path) activeFilePath.set(to);
-			await refreshTree();
-			void afterRename(entry.path, to);
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_rename_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		}
-	}
-
-	async function deleteInTree(entry: TreeEntry) {
-		try {
-			const active = get(activeFilePath);
-			const sep = entry.path.includes('\\') ? '\\' : '/';
-			// the open file is gone if it's the deleted entry, or lives inside a deleted folder
-			const closesOpenFile = !!active && (samePath(active, entry.path) || active.startsWith(entry.path + sep));
-			if (closesOpenFile) {
-				discardPendingSave(); // don't let a queued autosave write the file back after we delete it
-				activeFilePath.set(null); // clears the editor buffers via the load effect
-			}
-			tabs.closeUnder(entry.path);
-			await deleteEntry(entry.path);
-			await refreshTree();
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_delete_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		}
-	}
-
-	// drag-and-drop move: a move is a rename to a new directory
-	async function moveInTree(entry: TreeEntry, targetDir: string) {
-		try {
-			const sep = entry.path.includes('\\') ? '\\' : '/';
-			const to = targetDir.replace(/[\\/]+$/, '') + sep + entry.name;
-			if (to === entry.path) return; // already in this folder
-			await renameEntry(entry.path, to);
-			retargetPendingSave(entry.path, to); // don't let a queued write recreate the old path
-			tabs.rename(entry.path, to);
-			// keep the open file pointed at its new location if it (or its folder) moved
-			const active = get(activeFilePath);
-			if (active === entry.path) activeFilePath.set(to);
-			else if (active && active.startsWith(entry.path + sep)) activeFilePath.set(to + active.slice(entry.path.length));
-			await refreshTree();
-			void afterRename(entry.path, to);
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_move_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		}
-	}
-
-	// multi-select fan-out: sequential so each move/delete sees the tree state the last one left
-	async function deleteManyInTree(entries: TreeEntry[]) {
-		for (const entry of entries) await deleteInTree(entry);
-	}
-	async function moveManyInTree(entries: TreeEntry[], targetDir: string) {
-		for (const entry of entries) await moveInTree(entry, targetDir);
-	}
-
-	/** targetDir + name, numbered (name-1.ext, name-2.ext, ...) until it doesn't collide. */
-	async function uniqueDest(targetDir: string, name: string): Promise<string> {
-		const sep = targetDir.includes('\\') ? '\\' : '/';
-		const base = targetDir.replace(/[\\/]+$/, '') + sep;
-		let dest = base + name;
-		let n = 0;
-		while ((await statFile(dest)).exists) {
-			n++;
-			const dot = name.lastIndexOf('.');
-			dest = base + (dot > 0 ? `${name.slice(0, dot)}-${n}${name.slice(dot)}` : `${name}-${n}`);
-		}
-		return dest;
-	}
-
-	// files dropped from the OS file manager (or pasted from the clipboard) copy into the tree.
-	// Bytes come from the drag/clipboard payload, so no OS paths are involved.
-	async function importIntoTree(items: { relPath: string; file: File }[], targetDir: string) {
-		let imported = 0;
-		try {
-			for (const item of items) {
-				const sep = targetDir.includes('\\') ? '\\' : '/';
-				const rel = item.relPath.split('/').join(sep);
-				// a clashing top-level name gets a numbered variant instead of overwriting;
-				// nested paths (folder drops) merge like an OS copy would
-				const dest = rel.includes(sep) ? targetDir.replace(/[\\/]+$/, '') + sep + rel : await uniqueDest(targetDir, rel);
-				await writeBinaryFile(dest, item.file);
-				imported++;
-			}
-			toaster.success({
-				title: imported === 1 ? m.wsview_toast_imported_one({ count: imported }) : m.wsview_toast_imported_other({ count: imported })
-			});
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_import_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		} finally {
-			await refreshTree();
-		}
-	}
-
-	// a tree drag from another Texpile window: recursive fs-side copy (the source window's
-	// workspace is left untouched; a cross-window MOVE would go stale under its feet)
-	async function copyIntoTree(paths: string[], targetDir: string) {
-		let copied = 0;
-		try {
-			for (const src of paths) {
-				const dest = await uniqueDest(targetDir, basename(src));
-				await copyEntry(src, dest);
-				copied++;
-			}
-			toaster.success({
-				title: copied === 1 ? m.wsview_toast_imported_one({ count: copied }) : m.wsview_toast_imported_other({ count: copied })
-			});
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_import_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		} finally {
-			await refreshTree();
-		}
-	}
+	// create/rename/delete/move/import/copy live in lib/workspace/treeOps.ts
+	const treeOps = new TreeOps({
+		create: createEntry,
+		remove: deleteEntry,
+		rename: renameEntry,
+		copy: copyEntry,
+		writeBinary: writeBinaryFile,
+		stat: statFile,
+		refreshTree,
+		loadRefs,
+		// source-mode users write their own preamble (the editor's ghost offers the skeleton);
+		// visual mode has no ghost and no way to write a preamble, so it gets one up front
+		wantsStarter: () => lastEditMode !== 'source',
+		insertIncludeAtCursor: (path) => insertIncludeAtCursor(path),
+		afterRename: (oldPath, newPath) => void afterRename(oldPath, newPath),
+		retargetPendingSave: (from, to) => saver.retarget(from, to),
+		discardPendingSave: () => saver.discard()
+	});
 
 	let sidebarWidth = $state(256);
 	let sidebarOpen = $state(true);
@@ -720,20 +607,24 @@
 
 	const showToc = $derived(!!loadedPath && kind === 'tex' && (viewMode === 'visual' || viewMode === 'source'));
 	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw
-	// .tex; \input fragments pre-scanned into projectIntel merge into one numbered project outline
+	// .tex; \input fragments pre-scanned into projectIntel merge into one numbered project outline.
+	// debounced (display-only) and reading state LIVE at fire time, so typing never pays the parse.
+	const deferredSourceToc = trailingDebounce<void>(300, () => {
+		if (kind !== 'tex' || viewMode !== 'source') return;
+		sourceTocStore.set(
+			assembleProjectOutline(
+				parseOutlineRaw(texSource),
+				loadedPath,
+				loadedPath ? dirname(loadedPath) : null,
+				get(workspaceRoot),
+				get(projectIntelStore).outlines
+			)
+		);
+	});
 	$effect(() => {
-		const src = texSource;
-		const intel = $projectIntelStore;
-		if (kind === 'tex' && viewMode === 'source')
-			sourceTocStore.set(
-				assembleProjectOutline(
-					parseOutlineRaw(src),
-					loadedPath,
-					loadedPath ? dirname(loadedPath) : null,
-					get(workspaceRoot),
-					intel.outlines
-				)
-			);
+		void texSource;
+		void $projectIntelStore;
+		if (kind === 'tex' && viewMode === 'source') deferredSourceToc();
 	});
 	let tocFraction = $state(0.5); // TOC share of the sidebar's lower region (0..1)
 	let splitEl = $state<HTMLDivElement>();
@@ -782,8 +673,6 @@
 	// Advanced (per-folder) output-path overrides, edited in the compile modal
 	let compileOutputsDraft = $state<{ pdf: string; log: string }>({ pdf: '', log: '' });
 	let advancedOpen = $state(false);
-	// per-folder command wins over the global default (the last one saved anywhere)
-	const resolveCompileCommand = (root: string | null, global: string) => (root && savedCompileCommand(root)) || global || '';
 	let formatModalOpen = $state(false);
 	let formatting = $state(false);
 	// PDF preview pane; opens automatically once a compile writes a fresh PDF
@@ -802,17 +691,8 @@
 	function savePdfFraction() {
 		if (browser && typeof window !== 'undefined') localStorage.setItem(PDF_FRACTION_KEY, String(pdfPaneWidth / window.innerWidth));
 	}
-	let pdfFilename = $state('output.pdf');
-	let pdfWatchTimer: ReturnType<typeof setTimeout> | null = null;
-	let logWatchTimer: ReturnType<typeof setTimeout> | null = null;
-	// bumped when a compile starts, ends, or the folder changes; pollers from a superseded run
-	// check it and stand down (their timeout may already be in flight when the timers are cleared)
-	let compileGen = 0;
 	// bottom dock body: the terminal shells (always mounted) or the Problems list
 	let dockView = $state<'terminal' | 'problems'>('terminal');
-	// true from Compile until the run visibly ends (PDF landed, log settled, or timeout);
-	// drives the Compile button's Stop toggle, and Stop sends Ctrl+C to the shell
-	let compiling = $state(false);
 	// Draft mode: bump to trigger a DraftView recompile; the derived root/main feed it.
 	let draftTrigger = $state(0);
 	let draftRoot = $derived($workspaceRoot ?? '');
@@ -868,7 +748,7 @@
 		if (!root || !mainChoice) return;
 		const chosen = mainChoice;
 		setMainFile(root, chosen);
-		void loadExistingPdf();
+		void compiler.loadExistingPdf();
 		finishMainConfirm();
 		projectMacros = await gatherProjectMacros(chosen, root);
 	}
@@ -879,7 +759,7 @@
 		const chosen = mainChoice ?? mainDetected;
 		if (root && chosen) {
 			setMainFile(root, chosen);
-			void loadExistingPdf();
+			void compiler.loadExistingPdf();
 			finishMainConfirm();
 			projectMacros = await gatherProjectMacros(chosen, root);
 		} else {
@@ -915,7 +795,7 @@
 	async function fullRecompile(src: string) {
 		lastDraftSrc = src;
 		lastDraftPath = loadedPath;
-		await flushSaveAndWait();
+		await saver.flushAndWait();
 		draftTrigger++;
 	}
 
@@ -952,7 +832,7 @@
 		const fr = get(workspaceRoot);
 		const file = fr && loadedPath ? relFromRoot(loadedPath, fr) : null;
 		const onRec = async () => {
-			await flushSaveAndWait();
+			await saver.flushAndWait();
 			lastDraftSrc = src;
 			lastDraftPath = loadedPath;
 		};
@@ -1031,17 +911,12 @@
 		return s.autosave !== false || s.draftMode || (session.active && !guest);
 	}
 
-	function stopCompile() {
-		dock?.interrupt();
-		compiling = false;
-	}
 	// a new folder's diagnostics start blank, the previous folder's log is meaningless here
 	$effect(() => {
 		const root = $workspaceRoot;
 		compileLog.set(null);
 		dockView = 'terminal';
-		compiling = false;
-		compileGen++; // any pollers still watching the previous folder's paths stand down
+		compiler.resetForFolder(); // any pollers still watching the previous folder's paths stand down
 		compileCommand = resolveCompileCommand(root, get(settings).compileCommand);
 	});
 	// guests: surface the host's shared compile diagnostics through the same Problems UI the
@@ -1181,40 +1056,28 @@
 		updateSettings({ terminalHeight });
 	}
 
-	// a TeX engine at its default errorstop interaction parks at the interactive ? prompt on the
-	// first error. for known engine commands, inject -interaction=nonstopmode (plus -file-line-error
-	// for exact error attribution); custom scripts/makefiles are left untouched.
-	function withBatchFlags(cmd: string): string {
-		const m = cmd.match(/^(\s*(?:latexmk|pdflatex|xelatex|lualatex)(?:\.exe)?)(?=\s|$)/i);
-		if (!m) return cmd;
-		const flags: string[] = [];
-		if (!/-interaction[= ]/.test(cmd)) flags.push('-interaction=nonstopmode');
-		if (!/-file-line-error\b/.test(cmd)) flags.push('-file-line-error');
-		return flags.length > 0 ? cmd.replace(m[1], `${m[1]} ${flags.join(' ')}`) : cmd;
-	}
-
-	// expand {main} to the project's main file (relative to the folder root), else the open file
-	function resolvedCompileCommand(cmd: string): string {
-		const root = get(workspaceRoot);
-		const target = get(mainFile) ?? loadedPath;
-		const rel = root && target ? relFromRoot(target, root) : '';
-		// quote a path containing spaces so the shell keeps it one argument;
-		// a {main} the user already wrapped in quotes stays untouched
-		const quoted = /\s/.test(rel) ? `"${rel}"` : rel;
-		// function replacements so a path containing $&, $1, $` etc. is inserted literally, not as a
-		// replacement-pattern reference
-		return cmd.replace(/(["']){main}\1/g, (_m, q: string) => `${q}${rel}${q}`).replaceAll('{main}', () => quoted);
-	}
-
-	// show the terminal, wait for mount, then run (the shell queues the command until it has
-	// spawned). onDone fires when the shell reports the line finished (Terminal.run's sentinel echo).
-	function runInTerminal(cmd: string, onDone?: (output: string) => void, tries = 0) {
-		if (dock) {
-			dock.runCommand(cmd, onDone);
-			return;
-		}
-		if (tries < 40) setTimeout(() => runInTerminal(cmd, onDone, tries + 1), 25); // ~1s for the dock to mount
-	}
+	// compile / terminal / PDF-watch orchestration lives in lib/workspace/compilePipeline.svelte.ts
+	const compiler = new CompilePipeline({
+		getLoadedPath: () => loadedPath,
+		getCompileCommand: () => compileCommand,
+		terminalAvailable: () => terminalAvailable,
+		mainConfirmed: () => mainConfirmed,
+		getSession: () => session,
+		getDock: () => dock,
+		stat: statFile,
+		readText: readTextFile,
+		create: createEntry,
+		fileUrl,
+		flushSaves: () => saver.flushAndWait(),
+		refreshTree,
+		showTerminal,
+		setDockView: (v) => (dockView = v),
+		setPdfPaneOpen,
+		openCompileModal,
+		openMainConfirm: (then) => void openMainConfirm(then),
+		runDraftCompile,
+		shareCompileState
+	});
 	// Draft mode: preview via the incremental per-page engine instead of the terminal
 	// command. Saves first (so the compile sees the buffer), opens the preview pane, and
 	// bumps the trigger; DraftView runs the actual lualatex draft compile + per-page render.
@@ -1235,242 +1098,20 @@
 			return;
 		}
 		draftPaused = false; // compiling implies live (covers the keyboard-shortcut path)
-		await flushSaveAndWait();
+		await saver.flushAndWait();
 		lastDraftSrc = texSource; // the live-edit effect won't redundantly recompile this same source
 		lastDraftPath = loadedPath;
 		setPdfPaneOpen(true);
 		draftTrigger++;
 	}
 
-	async function runCompile() {
-		// first compile in a folder with no explicitly chosen main file: confirm it first
-		if (mainConfirmed !== true && get(texFiles).length > 1) {
-			void openMainConfirm(() => void runCompile());
-			return;
-		}
-		if (get(settings).draftMode) {
-			await runDraftCompile();
-			return;
-		}
-		if (!terminalAvailable) return;
-		const cmd = compileCommand.trim();
-		// no command yet: ask in the modal first
-		if (!cmd) {
-			openCompileModal();
-			return;
-		}
-		// {main} with no main file: a truly empty folder has nothing to compile; otherwise the user
-		// cleared the main file, so let them pick one (then compile). Dismissing leaves it unset.
-		if (cmd.includes('{main}') && !get(mainFile)) {
-			if (get(texFiles).length === 0) {
-				toaster.error({ title: m.wsview_toast_nothing_to_compile_title(), description: m.wsview_toast_nothing_to_compile_desc() });
-			} else {
-				void openMainConfirm(() => {
-					if (get(mainFile)) void runCompile();
-				});
-			}
-			return;
-		}
-		// shared session: guests can inject LaTeX the host compiles, so shell escape stays off
-		if (session.active && /(^|[^-\w])(-{1,2}shell-escape|-{1,2}enable-write18)\b/.test(cmd)) {
-			toaster.error({ title: m.wsview_toast_shell_escape_blocked(), duration: 5000 });
-			return;
-		}
-		// write the buffer to disk BEFORE compiling so SyncTeX indexes exactly what the editor
-		// holds; otherwise reverse search maps PDF clicks into a stale, differently formatted .tex
-		await flushSaveAndWait();
-		const pdfPath = expectedPdfPath();
-		const before = pdfPath ? (await statFile(pdfPath)).mtimeMs : 0; // baseline BEFORE compiling
-		const logPath = expectedLogPath();
-		const logBefore = logPath ? (await statFile(logPath)).mtimeMs : 0;
-		await ensureOutputDir();
-		refreshTree(); // the output/ folder may have just been created
-		showTerminal();
-		// marker off = no end signal from the shell; leave the button as Compile instead of a
-		// Stop that would linger until the log/PDF pollers time out
-		const track = get(settings).compileSentinel;
-		compiling = track;
-		const gen = ++compileGen;
-		compileStdout = '';
-		runInTerminal(
-			withBatchFlags(resolvedCompileCommand(cmd)),
-			track
-				? (output) => {
-						compileStdout = output ?? ''; // dvipdfmx/xdvipdfmx diagnostics only exist here
-						finalizeCompile(gen, pdfPath, before, logPath, logBefore);
-					}
-				: undefined
-		);
-		// with the completion marker on, finalizeCompile loads the finished PDF once the command
-		// exits. Don't ALSO poll-load here: LaTeX rewrites the PDF across passes (and truncates it
-		// mid-write), so an early poll would load a partial/pass-1 PDF, then finalize reloads the
-		// final one -- a double reload that flashes. Without the marker there's no exit signal, so
-		// watchPdf is the fallback, and it now waits for the file to stop changing before loading.
-		if (!track && pdfPath) watchPdf(gen, pdfPath, before);
-		if (logPath) watchLog(gen, logPath, logBefore);
-		// reload the explorer as the build writes its output (also covers builds that produce no PDF)
-		[2000, 6000].forEach((d) => setTimeout(refreshTree, d));
-	}
-
-	// the output dir named in the command (-output-directory= / -outdir=), else the folder root.
-	// takes an explicit command so callers that run before compileCommand hydrates can pass the settings value.
-	// compile-command parsing/generation lives in compileCommand.ts; these thin wrappers supply the
-	// reactive root / main-file / per-folder overrides the pure functions take as arguments
-	function expectedPdfPath(cmd = compileCommand): string | null {
-		const root = get(workspaceRoot);
-		return cc.expectedPdfPath(cmd, root, get(mainFile) ?? loadedPath, root ? savedCompileOutputs(root).pdf : undefined);
-	}
-	function expectedLogPath(cmd = compileCommand): string | null {
-		const root = get(workspaceRoot);
-		return cc.expectedLogPath(cmd, root, get(mainFile) ?? loadedPath, root ? savedCompileOutputs(root) : undefined);
-	}
-
-	// dvipdfmx/xdvipdfmx write diagnostics to stdout, not the .log; captured per compile by the
-	// terminal's sentinel tracking and cleared at the start of each run
-	let compileStdout = '';
-
-	// read the .log plus the sibling .blg (it reflects the LAST bib run, which stays valid
-	// even on compiles where latexmk skips bibtex) and publish the parsed problems
-	async function publishLogDiagnostics(logPath: string, mtimeMs: number, quiet = false) {
-		const blgPath = logPath.replace(/\.log$/i, '.blg');
-		const blgText = (await statFile(blgPath)).exists ? await readTextFile(blgPath) : null;
-		const parsed = await parseCompileDiagnosticsInWorker(await readTextFile(logPath), blgText, compileStdout || null);
-		// bib warnings name a key ("empty journal in Smith2020"); projectIntel knows every
-		// entry's exact line, so point the row at it (LW resolves these via its citation cache)
-		const bibEntries = get(projectIntelStore).bibEntries;
-		for (const e of parsed.entries) {
-			if (e.source !== 'bib' || e.line !== undefined) continue;
-			const key = e.message.match(/\bin ['"]?([\w:.-]+)['"]?$/) ?? e.message.match(/\bentry '([^']+)'/);
-			const hit = key ? bibEntries.find((b) => b.key === key[1]) : undefined;
-			if (hit) {
-				e.file = hit.file;
-				e.line = hit.line;
-			}
-		}
-		compileLog.set({ ...parsed, logPath, updatedAt: mtimeMs });
-		shareCompileState(); // guests get the fresh diagnostics without waiting for the intel rescan
-		// a failed build produces no fresh PDF, so nothing else tells the user: surface the
-		// Problems list. clean/warning-only results never steal the dock. (quiet = a baseline share
-		// on session start, which shouldn't yank the host's dock open.)
-		if (!quiet && parsed.errors.length > 0) {
-			dockView = 'problems';
-			showTerminal();
-		}
-	}
-
-	// poll the .log and parse once it settles: the engine rewrites the log during each pass, so
-	// "newer than baseline AND unchanged across two polls" is the engine-agnostic completion signal
-	// (a multi-pass latexmk run just re-parses after each later pass). also catches failed builds,
-	// where no PDF ever appears but the log does.
-	function watchLog(
-		gen: number,
-		logPath: string,
-		before: number,
-		elapsed = 0,
-		prev: { mtimeMs: number; size: number } | null = null,
-		lastParsed = 0
-	) {
-		if (logWatchTimer) clearTimeout(logWatchTimer);
-		logWatchTimer = setTimeout(async () => {
-			if (gen !== compileGen) return; // superseded: a newer compile, finalize, or folder switch
-			const s = await statFile(logPath);
-			const changedSinceCompile = s.exists && s.size > 0 && s.mtimeMs > before;
-			const stable = prev !== null && s.mtimeMs === prev.mtimeMs && s.size === prev.size;
-			if (changedSinceCompile && stable && s.mtimeMs !== lastParsed) {
-				try {
-					await publishLogDiagnostics(logPath, s.mtimeMs);
-					compiling = false; // a settled log means the run (or its final pass) ended
-					lastParsed = s.mtimeMs;
-				} catch {
-					/* transient read race with the engine; next poll retries */
-				}
-			}
-			if (elapsed < 180000) {
-				watchLog(gen, logPath, before, elapsed + 1200, { mtimeMs: s.mtimeMs, size: s.size }, lastParsed);
-			} else {
-				logWatchTimer = null;
-				compiling = false;
-			}
-		}, 1200);
-	}
-
-	// the shell reported the command finished (sentinel echo). the pollers only notice runs that
-	// WRITE something; a run that dies without touching the log or PDF would leave Stop showing
-	// until their timeout. give trailing writes a beat, check both artifacts once, stand pollers down.
-	function finalizeCompile(gen: number, pdfPath: string | null, pdfBefore: number, logPath: string | null, logBefore: number) {
-		setTimeout(async () => {
-			if (gen !== compileGen) return; // a newer compile or a folder switch took over
-			compileGen++; // this run is over; its pollers stand down
-			if (pdfWatchTimer) {
-				clearTimeout(pdfWatchTimer);
-				pdfWatchTimer = null;
-			}
-			if (logWatchTimer) {
-				clearTimeout(logWatchTimer);
-				logWatchTimer = null;
-			}
-			try {
-				if (logPath) {
-					const s = await statFile(logPath);
-					if (s.exists && s.size > 0 && s.mtimeMs > logBefore) await publishLogDiagnostics(logPath, s.mtimeMs);
-				}
-				if (pdfPath) {
-					const s = await statFile(pdfPath);
-					if (s.exists && s.size > 0 && s.mtimeMs > pdfBefore) showCompiledPdf(pdfPath, s.mtimeMs);
-				}
-			} catch {
-				/* fs hiccup: the run still ended, the button must still reset */
-			}
-			compiling = false;
-			refreshTree();
-		}, 400);
-	}
-	async function ensureOutputDir() {
-		const root = get(workspaceRoot);
-		const dir = cc.compileOutDir(compileCommand);
-		if (root && dir !== '.') {
-			try {
-				await createEntry(joinPath(root, dir), 'dir'); // mkdir -p, idempotent
-			} catch {
-				/* already exists */
-			}
-		}
-	}
-	// load a freshly compiled PDF into the pane; no-op if this exact build is already
-	// shown so the poller and finalizeCompile can't reload it twice
-	function showCompiledPdf(pdfPath: string, mtimeMs: number) {
-		void session.pushPdf(pdfPath); // shared session: guests get the fresh bytes
-		const url = fileUrl(pdfPath) + '&t=' + Math.round(mtimeMs); // cache-bust so it reloads
-		if (get(pdfStore) === url) return;
-		pdfFilename = basename(pdfPath);
-		pdfStore.set(url);
-		setPdfPaneOpen(true);
-		refreshTree(); // the compiled output landed; reload the file explorer
-	}
-
-	// A joiner needs the CURRENT pdf + log even when no fresh compile happens: latexmk skips
-	// rebuilding an up-to-date project, so finalizeCompile's mtime gate never fires and nothing is
-	// pushed. Read what's on disk (located via our own compile command) and share it once when we
-	// start hosting; guests request the pdf off the published rev and read the log from doc meta.
+	// share the current pdf + log once when we start hosting (see CompilePipeline.shareExistingOutputs)
 	let outputsSharedForSession = false;
-	async function shareExistingOutputs() {
-		if (!session.active || session.isGuest) return;
-		const pdfPath = expectedPdfPath();
-		if (pdfPath) {
-			const s = await statFile(pdfPath);
-			if (s.exists && s.size > 0) await session.pushPdf(pdfPath);
-		}
-		const logPath = expectedLogPath();
-		if (logPath) {
-			const s = await statFile(logPath);
-			if (s.exists && s.size > 0) await publishLogDiagnostics(logPath, s.mtimeMs, true);
-		}
-	}
 	$effect(() => {
 		if (session.active && !session.isGuest) {
 			if (!outputsSharedForSession) {
 				outputsSharedForSession = true;
-				void shareExistingOutputs();
+				void compiler.shareExistingOutputs();
 			}
 		} else {
 			outputsSharedForSession = false;
@@ -1494,67 +1135,17 @@
 				existingLogLoadedFor = root; // a compile already populated it
 				return;
 			}
-			const logPath = expectedLogPath();
+			const logPath = compiler.expectedLogPath();
 			if (!logPath) return; // command / main file not resolved yet; a later run retries
 			existingLogLoadedFor = root;
 			void (async () => {
 				const s = await statFile(logPath);
 				if (s.exists && s.size > 0 && get(workspaceRoot) === root && !get(compileLog)) {
-					await publishLogDiagnostics(logPath, s.mtimeMs, true);
+					await compiler.publishLogDiagnostics(logPath, s.mtimeMs, true);
 				}
 			})();
 		});
 	});
-	// poll the expected PDF after a compile (no-completion-marker fallback); load it once it has
-	// stopped changing, so a mid-write partial or an intermediate latexmk pass isn't shown. `stableAt`
-	// is the mtime seen on the previous poll; a match means the file settled.
-	function watchPdf(gen: number, pdfPath: string, before: number, elapsed = 0, stableAt = 0) {
-		if (pdfWatchTimer) clearTimeout(pdfWatchTimer);
-		pdfWatchTimer = setTimeout(
-			async () => {
-				if (gen !== compileGen) return; // superseded: a newer compile, finalize, or folder switch
-				const s = await statFile(pdfPath);
-				if (s.exists && s.size > 0 && s.mtimeMs > before) {
-					if (s.mtimeMs === stableAt) {
-						showCompiledPdf(pdfPath, s.mtimeMs); // unchanged since the last poll: it's done
-						pdfWatchTimer = null;
-						compiling = false;
-					} else {
-						watchPdf(gen, pdfPath, before, elapsed + 600, s.mtimeMs); // still changing: re-check soon
-					}
-				} else if (elapsed < 180000) {
-					watchPdf(gen, pdfPath, before, elapsed + 1200); // keep polling up to 3 min
-				} else {
-					pdfWatchTimer = null;
-					compiling = false;
-				}
-			},
-			stableAt ? 600 : 1200 // poll faster once the file has started changing, to catch it settling
-		);
-	}
-
-	// on load and main-file change, show the already-compiled PDF sitting on disk; clears the
-	// preview when the expected PDF is absent so a stale one doesn't linger. runs only at
-	// init/folder-open/main-change, never mid-compile, so it can't race watchPdf.
-	async function loadExistingPdf() {
-		// read the persisted command directly: on first mount this can run before the
-		// reactive compileCommand is hydrated, and a stale '' would point at the wrong folder
-		const s0 = await loadSettings();
-		const pdfPath = expectedPdfPath(resolveCompileCommand(get(workspaceRoot), s0.compileCommand));
-		if (!pdfPath) {
-			pdfStore.set(null);
-			return;
-		}
-		const s = await statFile(pdfPath);
-		if (s.exists && s.size > 0) {
-			pdfFilename = basename(pdfPath);
-			pdfStore.set(fileUrl(pdfPath) + '&t=' + Math.round(s.mtimeMs)); // mtime cache-busts a stale load
-			setPdfPaneOpen(true); // a compiled PDF is ready; open the preview so a reload shows it
-		} else {
-			pdfStore.set(null);
-		}
-	}
-
 	// open/close the PDF pane and remember the choice so a reload restores it
 	function setPdfPaneOpen(open: boolean) {
 		pdfPaneOpen = open;
@@ -1614,7 +1205,7 @@
 			return;
 		}
 		const live = get(settings).draftMode;
-		const pdf = live ? draftRoot + '/_draft/draft.pdf' : expectedPdfPath();
+		const pdf = live ? draftRoot + '/_draft/draft.pdf' : compiler.expectedPdfPath();
 		if (!loadedPath || kind !== 'tex' || !pdf) return;
 		const res = await synctexForward(pdf, loadedPath, line);
 		console.debug('[synctex] forward', { tex: loadedPath, line, pdf, res });
@@ -1655,7 +1246,7 @@
 			if (res && res.line >= 1) openFileAtLine(res.file, res.line, res.selectText ?? selectText);
 			return;
 		}
-		const pdf = expectedPdfPath();
+		const pdf = compiler.expectedPdfPath();
 		if (!pdf) return;
 		const res = await synctexInverse(pdf, page, x, y);
 		console.debug('[synctex] inverse', { pdf, page, x, y, res, selectText });
@@ -1679,7 +1270,7 @@
 		}
 		updateSettings({ compileCommand }); // also the starting default for folders without their own
 		compileModalOpen = false;
-		if (thenRun && compileCommand) runCompile();
+		if (thenRun && compileCommand) compiler.runCompile();
 	}
 	function useDefaultCommand() {
 		compileDraft = DEFAULT_COMPILE_COMMAND;
@@ -1698,11 +1289,11 @@
 		formatModalOpen = false;
 		formatting = true;
 		try {
-			await flushSaveAndWait(); // the formatter should see exactly what's on screen
+			await saver.flushAndWait(); // the formatter should see exactly what's on screen
 			const formatted = toLf(await formatLatexDocument(loadedPath, fromLf(texSource, docEol)));
 			texSource = formatted;
 			isDirty.set(true);
-			scheduleSave(loadedPath, texSource);
+			saver.schedule(loadedPath, texSource);
 			if (viewMode === 'visual') rebuildVisualFromSource();
 			toaster.success({ title: m.wsview_toast_formatted_title(), description: basename(loadedPath) });
 		} catch (e) {
@@ -1738,13 +1329,6 @@
 	$effect(() => {
 		referenceStore.set(allReferences);
 	});
-
-	// a root-relative, forward-slashed path (the form file references take in LaTeX)
-	const relFromRoot = (p: string, root: string) =>
-		p
-			.slice(root.length)
-			.replace(/^[\\/]+/, '')
-			.replace(/\\/g, '/');
 
 	// flatten the file tree to root-relative paths for file-path autocompletion
 	function flattenPaths(entries: TreeEntry[], root: string, out: string[] = []): string[] {
@@ -1797,7 +1381,7 @@
 					texSource = replaceFileRefs(texSource, u.oldRel, u.newRel).text;
 					if (viewMode === 'visual') rebuildVisualFromSource();
 					isDirty.set(true);
-					scheduleSave(loadedPath, texSource);
+					saver.schedule(loadedPath, texSource);
 				} else {
 					const content = await readTextFile(h.path);
 					await writeTextFile(h.path, replaceFileRefs(content, u.oldRel, u.newRel).text);
@@ -1818,7 +1402,7 @@
 	});
 
 	// cross-file intel (labels/defs/glossary/outlines/aux numbers from the OTHER project files):
-	// rescan when the file list, main file, or active file changes — those are the only times the
+	// rescan when the file list, main file, or active file changes â€” those are the only times the
 	// non-active files' on-disk state can have moved under us (a switch flushes the previous save)
 	$effect(() => {
 		const files = $texFiles;
@@ -1832,7 +1416,7 @@
 					.map((p) => joinPath(root, p))
 			: [];
 		// the .aux sits next to the log (output/aux dirs included); fall back to a main-sibling .aux
-		const aux = expectedLogPath()?.replace(/\.log$/i, '.aux') ?? (main ? main.replace(/\.tex$/i, '.aux') : null);
+		const aux = compiler.expectedLogPath()?.replace(/\.log$/i, '.aux') ?? (main ? main.replace(/\.tex$/i, '.aux') : null);
 		// a guest has no aux on disk; the host's shared parse fills the numbers in (and re-runs
 		// this when a fresh compile lands). Reading session.active also seeds the host's share
 		// when a session starts against an already-compiled project.
@@ -1904,7 +1488,7 @@
 		},
 		commit(path: string, content: string) {
 			isDirty.set(true);
-			scheduleSave(path, content);
+			saver.schedule(path, content);
 		}
 	};
 
@@ -1941,14 +1525,14 @@
 	onMount(() => {
 		session.onCompileRequest = () => {
 			toaster.info({ title: m.wsview_toast_compile_requested_title(), duration: 3000 });
-			void runCompile();
+			void compiler.runCompile();
 		};
 		// a guest changed files on the host's disk (upload / rename / delete): refresh our own tree
 		session.onFileOp = () => void refreshTree();
 		// resolve a guest's SyncTeX request against our .synctex data and reply
 		session.onSyncRequest = async (payload, from) => {
 			const root = get(workspaceRoot);
-			const pdf = expectedPdfPath();
+			const pdf = compiler.expectedPdfPath();
 			if (!root || !pdf) return;
 			if (payload.kind === 'synctex-inverse') {
 				const res = await synctexInverse(pdf, payload.page, payload.x, payload.y);
@@ -1994,7 +1578,8 @@
 	}
 
 	// keep the \label registry, the embedded-\bibitem refs, and the cross-mode undo history fresh:
-	// recompute from texSource, debounced. one extractDocRefs call = one AST parse for both.
+	// recompute from texSource, debounced. the AST parse runs in a worker (latest-wins; a null
+	// result means superseded/failed and the previous registries stay).
 	let labelTimer: ReturnType<typeof setTimeout> | undefined;
 	$effect(() => {
 		void texSource; // dependency: re-arm the debounce on every source change
@@ -2002,10 +1587,12 @@
 		labelTimer = setTimeout(() => {
 			// read texSource LIVE (not the closed-over value): a file switch blanks it briefly and a
 			// stale closure would push that transient '' into the label/citation/history state
-			const refs = extractDocRefs(texSource);
-			labelStore.set(refs.labels);
-			bibitemRefs = bibItemsToReferences(refs.bibitems);
-			histCapture(texSource);
+			void extractDocRefsAsync(texSource).then((refs) => {
+				if (!refs) return;
+				labelStore.set(refs.labels);
+				bibitemRefs = bibItemsToReferences(refs.bibitems);
+			});
+			sourceHistory.capture(texSource);
 		}, 400);
 		return () => clearTimeout(labelTimer);
 	});
@@ -2013,8 +1600,15 @@
 	// a switch held back by the save-before-switch dialog: the store reverts to the outgoing file
 	// (tabs and tree stay visually on it) and this carries where the user was headed
 	let heldSwitch: { target: string | null } | null = null;
-	// the modal's outgoing snapshot; non-null while the save-before-switch dialog is up
-	let saveSwitchPrompt = $state<{ name: string; outgoing: { path: string; content: string }; eol: Eol } | null>(null);
+	// the modal's outgoing snapshot; non-null while the save-before-switch dialog is up.
+	// `resolve` marks a workspace-level guard (folder switch / close / window close): the choice
+	// goes to the caller and the file-switch heldSwitch machinery is skipped.
+	let saveSwitchPrompt = $state<{
+		name: string;
+		outgoing: { path: string; content: string };
+		eol: Eol;
+		resolve?: (choice: 'save' | 'discard' | 'cancel') => void;
+	} | null>(null);
 
 	// Save keeps the edit + switches, Discard drops it + switches, Cancel (X / backdrop / Escape)
 	// aborts the whole switch and stays on the current file with the edit intact.
@@ -2022,13 +1616,17 @@
 		const prompt = saveSwitchPrompt;
 		saveSwitchPrompt = null;
 		if (!prompt) return;
+		if (prompt.resolve) {
+			prompt.resolve(choice);
+			return;
+		}
 		if (choice === 'cancel') {
-			pendingSave = prompt.outgoing; // reattach so the edit is still tracked and re-guarded next time
+			saver.reattach(prompt.outgoing); // reattach so the edit is still tracked and re-guarded next time
 			pendingTabClose = null; // a tab-close that triggered this switch is cancelled too
 			heldSwitch = null;
 			return;
 		}
-		if (choice === 'save') writeChain = writeChain.then(() => doWrite(prompt.outgoing.path, prompt.outgoing.content, false, prompt.eol));
+		if (choice === 'save') void saver.enqueueWithEol(prompt.outgoing.path, prompt.outgoing.content, false, prompt.eol);
 		if (pendingTabClose) {
 			tabs.close(pendingTabClose);
 			pendingTabClose = null;
@@ -2036,6 +1634,30 @@
 		const target = heldSwitch?.target ?? null;
 		heldSwitch = null;
 		if (target !== get(activeFilePath)) activeFilePath.set(target);
+	}
+
+	// workspace-level unsaved-edit guard (folder switch, workspace close, window close): same
+	// modal as the file-switch guard; resolves true to proceed (Save writes first), false on Cancel.
+	function confirmLeaveUnsaved(): Promise<boolean> {
+		if (autosaveActive() || !loadedPath || saver.pending?.path !== loadedPath) return Promise.resolve(true);
+		const eol = docEol;
+		const outgoing = saver.detach()!;
+		return new Promise((resolve) => {
+			saveSwitchPrompt = {
+				name: basename(outgoing.path),
+				outgoing,
+				eol,
+				resolve: (choice) => {
+					if (choice === 'cancel') {
+						saver.reattach(outgoing);
+						resolve(false);
+						return;
+					}
+					if (choice === 'save') void saver.enqueueWithEol(outgoing.path, outgoing.content, false, eol);
+					resolve(true);
+				}
+			};
+		});
 	}
 
 	// load the active file whenever it changes. Everything but the store read is untracked, so
@@ -2055,19 +1677,18 @@
 			// autosave off: the outgoing file's edit wasn't auto-written, so ask BEFORE switching.
 			// The modal (SaveBeforeSwitchModal) decides its fate: Save writes it, Discard drops it,
 			// and Cancel aborts the switch entirely (see resolveSaveSwitch).
-			if (!autosaveActive() && loadedPath && path !== loadedPath && pendingSave?.path === loadedPath) {
-				const outgoing = pendingSave;
+			if (!autosaveActive() && loadedPath && path !== loadedPath && saver.pending?.path === loadedPath) {
 				const eol = docEol; // the outgoing file's EOL, before the switch changes docEol
-				pendingSave = null; // detach so loadFile's teardown / the new file's queue can't touch it
+				const outgoing = saver.detach()!; // so loadFile's teardown / the new file's queue can't touch it
 				heldSwitch = { target: path };
 				activeFilePath.set(loadedPath);
 				saveSwitchPrompt = { name: basename(loadedPath), outgoing, eol };
 				return;
 			}
-			flushSave(); // persist the outgoing file's queued edit before tearing down its buffers
+			saver.flush(); // persist the outgoing file's queued edit before tearing down its buffers
 			loadError = null;
 			// the outgoing file stays on screen until loadFile has the new one ready: clearing here
-			// first is what made every switch blink through the "Opening…" placeholder
+			// first is what made every switch blink through the "Openingâ€¦" placeholder
 			if (path) loadFile(path);
 			else closeOpenFile();
 		});
@@ -2082,13 +1703,12 @@
 		loadedPath = null;
 		sourceScrollAnchor = null;
 		pendingVisualAnchor = null;
-		hist = [];
-		histIndex = -1;
+		sourceHistory.disable();
 	}
 
 	async function loadFile(path: string) {
 		try {
-			await writeChain; // let any queued write (e.g. the file we just left) land before we read
+			await saver.whenIdle(); // let any queued write (e.g. the file we just left) land before we read
 			// shared session: assert the lock BEFORE reading disk, so a guest can't slip an edit in
 			// between the flush and the reactive lock effect; then settle pending guest edits to disk
 			if (session.active) session.setVisualLock(hostHoldsExclusively(fileKind(path), viewMode, path) ? path : null);
@@ -2100,7 +1720,7 @@
 				if (get(activeFilePath) !== path) return; // raced past this file
 				const text = toLf(raw); // editor works in LF
 				// visual mode parses BEFORE the swap: publishing the new path with no doc yet is what
-				// dropped the pane to "Opening…" for the length of a whole parse. source mode has
+				// dropped the pane to "Openingâ€¦" for the length of a whole parse. source mode has
 				// nothing to wait for.
 				const mySeq = ++parseSequence;
 				const outcome = viewMode === 'visual' ? await tryParseVisual(text) : null;
@@ -2117,7 +1737,7 @@
 				loadedPath = path;
 				diskBaseline = text;
 				isDirty.set(false);
-				histReset(text); // the on-disk content is the floor of the cross-mode undo history
+				sourceHistory.reset(text); // the on-disk content is the floor of the cross-mode undo history
 				sourceScrollAnchor = null;
 				pendingVisualAnchor = null;
 				if (viewMode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
@@ -2133,8 +1753,7 @@
 				loadedPath = path;
 				diskBaseline = text;
 				isDirty.set(false);
-				hist = []; // no cross-mode history for these kinds (histCapture bails on histIndex < 0)
-				histIndex = -1;
+				sourceHistory.disable(); // no cross-mode history for these kinds
 				sourceScrollAnchor = null;
 				pendingVisualAnchor = null;
 				if (viewMode === 'diff') void captureDiffSnapshot();
@@ -2157,7 +1776,7 @@
 	async function checkExternalChange() {
 		const path = loadedPath;
 		if (!path || (kind !== 'tex' && kind !== 'text' && kind !== 'bib') || conflict) return;
-		await writeChain; // let any in-flight autosave finish, so we don't read our own half-written file
+		await saver.whenIdle(); // let any in-flight autosave finish, so we don't read our own half-written file
 		if (loadedPath !== path) return; // the file switched while we waited
 		let raw: string;
 		try {
@@ -2186,7 +1805,7 @@
 		isDirty.set(false);
 		// the buffer now matches disk: drop any queued autosave of the edits we just replaced, or a
 		// later flush would clobber the version the user chose to keep
-		discardPendingSave();
+		saver.discard();
 		// shared session: fold the adopted disk content into the shared doc so guests see it too
 		// (the host materializer's lastWritten update prevents an echo write back to disk)
 		if (loadedPath) session.edit(loadedPath, disk);
@@ -2200,14 +1819,18 @@
 		else if (loadedPath === c.path) save(); // keep mine: overwrite disk now
 	}
 
-	// debounced autosave: write the file ~1.5s after the user stops typing
-	let autosaveTimer: ReturnType<typeof setTimeout> | null = null;
-	// the one queued debounced write, tracked so a file switch can flush it instead of dropping it
-	let pendingSave: { path: string; content: string } | null = null;
-	// all writes run through this chain so they never overlap and apply in order; loadFile
-	// awaits it before re-reading, so a re-opened file never reads stale (pre-flush) bytes
-	let writeChain: Promise<void> = Promise.resolve();
-	const AUTOSAVE_MS = 1500;
+	// debounced autosave + serial write chain live in lib/workspace/savePipeline.svelte.ts
+	const saver = new SavePipeline({
+		sessionEdit: (path, content) => session.edit(path, content),
+		isGuest: () => guest,
+		autosaveActive,
+		writeText: writeTextFile,
+		getEol: () => docEol,
+		getLoadedPath: () => loadedPath,
+		getLiveContent: () => (kind === 'tex' ? texSource : rawContent),
+		setDiskBaseline: (content) => (diskBaseline = content),
+		setDirty: (dirty) => isDirty.set(dirty)
+	});
 
 	// a visual edit serializes straight into texSource (the single source of truth), then saves
 	function onChange(doc: PMNode) {
@@ -2219,11 +1842,11 @@
 		// flag the pristine file dirty or queue a no-op save that would nag on the next switch
 		if (texSource === diskBaseline) {
 			if (get(isDirty)) isDirty.set(false);
-			discardPendingSave();
+			saver.discard();
 			return;
 		}
 		isDirty.set(true);
-		scheduleSave(loadedPath, texSource);
+		saver.schedule(loadedPath, texSource);
 		// live session: the doc's orig stamps just went stale; VisualCollab re-stamps on the lull
 		visualCollab?.noteLocalEdit();
 		// the user is editing: a still-pending mode-switch scroll anchor is moot, and restoring
@@ -2238,102 +1861,20 @@
 		docMeta = { ...docMeta, preamble: replacePreambleFrontmatter(docMeta.preamble, kind, inner) };
 		texSource = serializeLatexFile(docMeta, lastDoc);
 		isDirty.set(true);
-		scheduleSave(loadedPath, texSource);
+		saver.schedule(loadedPath, texSource);
 	}
 
 	// a source edit IS texSource, write it verbatim
 	function onTexInput(v: string) {
 		texSource = v;
 		isDirty.set(true);
-		scheduleSave(loadedPath, v);
+		saver.schedule(loadedPath, v);
 	}
 
 	function onRawInput(v: string) {
 		rawContent = v;
 		isDirty.set(true);
-		scheduleSave(loadedPath, v);
-	}
-
-	// queue a debounced write; a save already queued for a DIFFERENT file flushes first
-	// so switching files can never drop the previous file's edit
-	function scheduleSave(path: string | null, content: string) {
-		if (!path) return;
-		// shared session: every edit streams into the shared doc per keystroke, host and guest
-		// alike (a no-op splice when the source editor is already Y-bound)
-		session.edit(path, content);
-		// a guest has no disk to save to: their edits live in the CRDT only. Skipping pendingSave
-		// keeps the (host-only) save-before-switch dialog and disk writes from ever firing for them.
-		if (guest) return;
-		if (pendingSave && pendingSave.path !== path) flushSave();
-		pendingSave = { path, content };
-		// autosave off: track the edit (so Save / the switch-guard have it) but don't auto-write.
-		// live mode and hosting a session force it on (see autosaveActive).
-		if (!autosaveActive()) return;
-		if (autosaveTimer) clearTimeout(autosaveTimer);
-		autosaveTimer = setTimeout(flushSave, AUTOSAVE_MS);
-	}
-
-	function flushSave() {
-		if (autosaveTimer) {
-			clearTimeout(autosaveTimer);
-			autosaveTimer = null;
-		}
-		if (!pendingSave) return;
-		const { path, content } = pendingSave;
-		pendingSave = null;
-		void enqueueWrite(path, content, false);
-	}
-	// flush and wait for the write to land. used before compiling: SyncTeX line numbers come from
-	// the compiled file, so a stale on-disk copy would put reverse search off by the whole
-	// serializer reformatting delta.
-	async function flushSaveAndWait() {
-		flushSave();
-		await writeChain;
-	}
-	/** drops any queued autosave without writing it (e.g. the open file is being deleted). */
-	function discardPendingSave() {
-		if (autosaveTimer) {
-			clearTimeout(autosaveTimer);
-			autosaveTimer = null;
-		}
-		pendingSave = null;
-	}
-
-	/** repoint a queued autosave when its file (or a parent folder) is renamed/moved, so the edit
-	 *  lands in the new path instead of re-creating the old one. */
-	function retargetPendingSave(from: string, to: string) {
-		if (!pendingSave) return;
-		const sep = from.includes('\\') ? '\\' : '/';
-		if (samePath(pendingSave.path, from)) pendingSave = { ...pendingSave, path: to };
-		else if (pendingSave.path.startsWith(from + sep)) pendingSave = { ...pendingSave, path: to + pendingSave.path.slice(from.length) };
-	}
-
-	// append a write to the serial chain (never overlap, never reject: errors are toasted). snapshot
-	// the line ending now so a queued write still applies the right one if the user switches files first.
-	function enqueueWrite(path: string, content: string, notify: boolean): Promise<void> {
-		const eol = docEol;
-		writeChain = writeChain.then(() => doWrite(path, content, notify, eol));
-		return writeChain;
-	}
-
-	async function doWrite(path: string, content: string, notify: boolean, eol: Eol) {
-		saving = true;
-		try {
-			await writeTextFile(path, fromLf(content, eol)); // re-apply the file's CRLF/LF on disk
-			// what we just wrote is now the on-disk baseline, so our own save isn't seen as a conflict
-			if (loadedPath === path) diskBaseline = content;
-			// clear "unsaved" only if what we wrote is still the live buffer;
-			// otherwise a newer edit arrived mid-write and is still pending
-			if (loadedPath === path) {
-				const live = kind === 'tex' ? texSource : rawContent;
-				if (content === live) isDirty.set(false);
-			}
-			if (notify) toaster.success({ title: m.wsview_toast_saved_title(), description: basename(path), duration: 1200 });
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_save_failed_title(), description: e instanceof Error ? e.message : m.wsview_error_unknown() });
-		} finally {
-			saving = false;
-		}
+		saver.schedule(loadedPath, v);
 	}
 
 	// mode-switch scroll + cursor sync (visual/source, .tex only): both directions carry two anchors
@@ -2344,70 +1885,11 @@
 	// $state so the consuming effect below re-fires when a new anchor is captured
 	let pendingVisualAnchor = $state<{ scroll: number; cursor: number | null } | null>(null);
 
-	function findScrollParent(el: HTMLElement | null): HTMLElement | null {
-		let cur = el?.parentElement ?? null;
-		while (cur) {
-			const oy = getComputedStyle(cur).overflowY;
-			if ((oy === 'auto' || oy === 'scroll') && cur.scrollHeight > cur.clientHeight) return cur;
-			cur = cur.parentElement;
-		}
-		return null;
-	}
-
-	/**
-	 * Leaving visual mode: viewport-top block offset (scroll) plus the PM caret's source offset
-	 * (cursor), the exact inverse of the source-to-visual mapping. An off-screen caret is ignored:
-	 * flashing a line the user wasn't looking at would read as a wrong jump.
-	 */
+	// capture/resolve live in lib/editor/modeSwitchAnchors.ts.
 	// orig.start stamps are body-relative; bodyOffsetOf knows where the body begins in the FILE
 	// (fragments synthesize a preamble that is not in the file, so theirs starts at 0)
 	const visualBodyOffset = () => (docMeta ? bodyOffsetOf(docMeta) : 0);
-
-	function captureVisualAnchor(): { scroll: number | null; cursor: number | null } | null {
-		const v = get(editorViewStore);
-		if (!v) return null;
-		const doc = v.state.doc;
-		const map = buildBlockMap(doc, visualBodyOffset());
-		const scRect = findScrollParent(v.dom)?.getBoundingClientRect();
-		const scTop = (scRect?.top ?? 0) + 4;
-		const scBottom = scRect?.bottom ?? Number.POSITIVE_INFINITY;
-
-		// scroll anchor: the topmost visible block
-		let scroll: number | null = null;
-		for (const b of map) {
-			const dom = v.nodeDOM(b.pmPos);
-			if (dom instanceof HTMLElement && dom.getBoundingClientRect().bottom > scTop) {
-				scroll = sourceStartAt(map, b.index);
-				break;
-			}
-		}
-
-		// cursor anchor: only when the caret's block is on-screen (an off-screen caret must not
-		// yank the incoming view away from the reading position)
-		let cursor: number | null = null;
-		const head = v.state.selection.head;
-		const cb = blockAtPm(map, head);
-		if (cb) {
-			const dom = v.nodeDOM(cb.pmPos);
-			const r = dom instanceof HTMLElement ? dom.getBoundingClientRect() : null;
-			if (r && r.bottom > scTop && r.top < scBottom) {
-				cursor = pmPosToSourceOffset(doc, map, head) ?? sourceStartAt(map, cb.index);
-			}
-		}
-
-		return scroll == null && cursor == null ? null : { scroll, cursor };
-	}
-
-	/** leaving source mode: viewport-top texSource offset (scroll) + the CM caret offset (cursor). */
-	function captureSourceAnchor(): { scroll: number; cursor: number | null } | null {
-		const cm = get(sourceCmView);
-		if (!cm) return null;
-		const rect = cm.scrollDOM.getBoundingClientRect();
-		return {
-			scroll: cm.posAtCoords({ x: rect.left + 10, y: rect.top + 10 }, false),
-			cursor: cm.state.selection.main.head
-		};
-	}
+	const captureVisualAnchor = () => captureVisualAnchorAt(visualBodyOffset());
 
 	// entering visual mode: consume the anchor once the PM view exists AND its doc matches the
 	// current texSource. on the edited path EditorView first mounts with the STALE doc while the
@@ -2421,87 +1903,23 @@
 		if (!v || anchor == null || mode !== 'visual') return;
 		if (texSource !== lastParsedSource) return; // parse in flight; wait for the visualDoc re-fire
 		pendingVisualAnchor = null;
-		// double rAF: EditorView's doc-swap effect restores its saved scrollTop in a single rAF
-		// registered in this same flush; ours must land after it or the anchor scroll gets overwritten
-		requestAnimationFrame(() =>
-			requestAnimationFrame(() => {
-				try {
-					if (v.isDestroyed) return; // the view can be torn down between consume and resolve
-					const doc = v.state.doc; // live doc (includes normalization blocks, which carry no orig)
-					const map = buildBlockMap(doc, visualBodyOffset());
-					// scroll: restore the reading position (the block that topped the source viewport)
-					const scrollHit = blockAtSource(map, anchor.scroll);
-					if (scrollHit) {
-						const dom = v.nodeDOM(scrollHit.pmPos);
-						if (dom instanceof HTMLElement) dom.scrollIntoView({ block: 'start' });
-					}
-					// caret: text-anchored inside the block containing the source cursor, falling back
-					// to the scroll block. no scrollIntoView on the tr: the scroll anchor owns the viewport.
-					const caretPos =
-						(anchor.cursor != null ? sourceOffsetToPmPos(doc, map, anchor.cursor) : null) ?? (scrollHit ? scrollHit.pmPos + 1 : null);
-					if (caretPos == null) return; // everything resolved into the preamble, stay at the top
-					v.dispatch(v.state.tr.setSelection(TextSelection.near(v.state.doc.resolve(caretPos))).setMeta('addToHistory', false));
-					// reclaim DOM focus for PM: the mount-time selection can sit inside a CM-backed
-					// nodeview that focuses its inner CodeMirror; PM then never syncs the DOM caret
-					// and the next keystrokes would land in that nodeview instead of at the parked caret
-					v.focus();
-					// flash the caret's block, same amber as the SyncTeX flash. a node decoration
-					// (flash-plugin) because a bare classList.add doesn't survive PM redraws.
-					const flashBlock = blockAtPm(map, caretPos);
-					if (flashBlock) flashNodeAt(v, flashBlock.pmPos);
-				} catch {
-					/* best-effort; never break the mode switch over a scroll */
-				}
-			})
-		);
+		resolveVisualAnchor(v, anchor, visualBodyOffset());
 	});
 
-	// cross-mode undo/redo: a snapshot history over texSource that lets an undo cross a mode switch
-	// (the PM/CM histories die with their view). native undo/redo runs first; the editors call
-	// workspaceHistoryStep only when their own history is exhausted. content equal to the
-	// previous/next snapshot MOVES the index instead of pushing, so native undos don't pollute the stack.
-	const HIST_MAX = 200;
-	let hist: string[] = [];
-	let histIndex = -1;
-	let applyingHist = false;
-
-	function histReset(content: string) {
-		hist = [content];
-		histIndex = 0;
-	}
-
-	function histCapture(content: string) {
-		if (applyingHist || histIndex < 0) return;
-		if (hist[histIndex] === content) return;
-		if (histIndex > 0 && hist[histIndex - 1] === content) {
-			histIndex--; // a native undo walked the buffer back, follow it
-			return;
-		}
-		if (histIndex < hist.length - 1 && hist[histIndex + 1] === content) {
-			histIndex++; // a native redo, follow forward
-			return;
-		}
-		hist = [...hist.slice(0, histIndex + 1).slice(-(HIST_MAX - 1)), content];
-		histIndex = hist.length - 1;
-	}
+	// cross-mode undo/redo (lib/workspace/sourceHistory.ts): native undo/redo runs first; the
+	// editors call workspaceHistoryStep only when their own history is exhausted.
+	const sourceHistory = createSourceHistory();
 
 	/** steps the workspace history; false at the stack edge lets the key fall through. */
 	function workspaceHistoryStep(dir: 'undo' | 'redo'): boolean {
 		if (kind !== 'tex' || !loadedPath) return false;
-		histCapture(texSource); // flush a pending debounce so we never skip the newest state
-		const target = histIndex + (dir === 'undo' ? -1 : 1);
-		if (target < 0 || target >= hist.length) return false;
-		histIndex = target;
-		applyingHist = true;
-		try {
-			texSource = hist[target];
-			isDirty.set(true);
-			scheduleSave(loadedPath, texSource);
-			// source mode: SourceEditor's value-sync effect replaces the CM doc. visual mode: re-parse.
-			if (viewMode === 'visual') rebuildVisualFromSource();
-		} finally {
-			setTimeout(() => (applyingHist = false), 0);
-		}
+		const target = sourceHistory.step(dir, texSource);
+		if (target == null) return false;
+		texSource = target;
+		isDirty.set(true);
+		saver.schedule(loadedPath, texSource);
+		// source mode: SourceEditor's value-sync effect replaces the CM doc. visual mode: re-parse.
+		if (viewMode === 'visual') rebuildVisualFromSource();
 		return true;
 	}
 
@@ -2520,7 +1938,7 @@
 		}
 		if (kind !== 'tex' && kind !== 'bib') return;
 		if (kind === 'tex') {
-			histCapture(texSource); // flush the pre-switch state into the cross-mode history
+			sourceHistory.capture(texSource); // flush the pre-switch state into the cross-mode history
 			// scroll sync: capture the outgoing view's anchor for the incoming one
 			if (viewMode === 'visual' && mode === 'source') sourceScrollAnchor = captureVisualAnchor();
 			else if (viewMode === 'source' && mode === 'visual') pendingVisualAnchor = captureSourceAnchor();
@@ -2565,112 +1983,17 @@
 		diffOriginal = res.content ?? '';
 	}
 
-	// source control ops: call the git client, refresh status, toast on failure. the panel is presentational.
-	let scmBusy = $state(false);
-
-	async function scmInit() {
-		const root = get(workspaceRoot);
-		if (!root) return;
-		scmBusy = true;
-		const res = await gitInit(root);
-		scmBusy = false;
-		if (!res.ok) {
-			toaster.error({ title: m.wsview_toast_git_init_failed_title(), description: res.error });
-			return;
-		}
-		await refreshGitStatus(root);
-		toaster.success({ title: m.wsview_toast_git_init_success_title() });
-	}
-
-	async function scmStage(paths: string[]) {
-		const root = get(workspaceRoot);
-		if (!root) return;
-		scmBusy = true;
-		const res = await gitStage(root, paths);
-		scmBusy = false;
-		if (!res.ok) toaster.error({ title: m.wsview_toast_stage_failed_title(), description: res.error });
-		await refreshGitStatus(root);
-	}
-
-	async function scmUnstage(paths: string[]) {
-		const root = get(workspaceRoot);
-		if (!root) return;
-		scmBusy = true;
-		const res = await gitUnstage(root, paths);
-		scmBusy = false;
-		if (!res.ok) toaster.error({ title: m.wsview_toast_unstage_failed_title(), description: res.error });
-		await refreshGitStatus(root);
-	}
-
-	async function scmDiscard(changes: GitStatusEntry[]) {
-		const root = get(workspaceRoot);
-		if (!root || !changes.length) return;
-		const confirmMsg =
-			changes.length === 1
-				? m.wsview_confirm_discard_one({ name: basename(changes[0].path) })
-				: m.wsview_confirm_discard_other({ count: changes.length });
-		if (!(await confirmAsk(confirmMsg, { confirmLabel: m.vcs_discard_changes(), danger: true }))) return;
-		// if the open file is being discarded, drop its queued autosave first: otherwise a debounced
-		// write scheduled just before the confirm lands after git reverts and re-creates the changes
-		if (loadedPath && changes.some((c) => samePath(c.path, loadedPath))) discardPendingSave();
-		scmBusy = true;
-		// untracked files are deleted; tracked files are reverted to their staged/committed state
-		const untracked = changes.filter((c) => c.x === '?').map((c) => c.path);
-		const tracked = changes.filter((c) => c.x !== '?').map((c) => c.path);
-		let err: string | undefined;
-		for (const p of untracked) {
-			try {
-				await deleteEntry(p);
-			} catch (e) {
-				err = e instanceof Error ? e.message : String(e);
-			}
-		}
-		if (tracked.length) {
-			const res = await gitDiscard(root, tracked);
-			if (!res.ok) err = res.error;
-		}
-		scmBusy = false;
-		if (err) toaster.error({ title: m.wsview_toast_discard_failed_title(), description: err });
-		const openAffected = !!loadedPath && changes.some((c) => c.path === loadedPath);
-		await refreshTree();
-		await refreshGitStatus(root);
-		if (openAffected && loadedPath) await loadFile(loadedPath); // its on-disk content changed
-	}
-
-	async function scmCommit(message: string): Promise<boolean> {
-		const root = get(workspaceRoot);
-		if (!root) return false;
-		scmBusy = true;
-		// if nothing is staged, stage everything first (the "Commit All" affordance)
-		const hasStaged = get(gitChanges).some((c) => c.x !== ' ' && c.x !== '?');
-		if (!hasStaged) {
-			const s = await gitStage(root, []);
-			if (!s.ok) {
-				scmBusy = false;
-				toaster.error({ title: m.wsview_toast_stage_failed_title(), description: s.error });
-				return false;
-			}
-		}
-		const res = await gitCommit(root, message);
-		scmBusy = false;
-		if (!res.ok) {
-			toaster.error({ title: m.wsview_toast_commit_failed_title(), description: res.error });
-			return false;
-		}
-		await refreshGitStatus(root);
-		if (viewMode === 'diff') void captureDiffSnapshot(); // the open diff now compares against the new HEAD
-		toaster.success({ title: m.wsview_toast_commit_created_title() });
-		return true;
-	}
-
-	// open a changed file's diff from the Source Control panel (keeps the SC sidebar open)
-	function scmOpenDiff(path: string) {
-		if (!get(isGitRepo)) return;
-		const already = loadedPath === path;
-		activeFilePath.set(path);
-		viewMode = 'diff';
-		if (already) void captureDiffSnapshot();
-	}
+	// source control ops live in lib/workspace/scmActions.svelte.ts; the panel is presentational.
+	const scm = new ScmActions({
+		getLoadedPath: () => loadedPath,
+		discardPendingSave: () => saver.discard(),
+		deleteEntry,
+		refreshTree,
+		loadFile,
+		captureDiffSnapshot: () => void captureDiffSnapshot(),
+		isDiffMode: () => viewMode === 'diff',
+		enterDiffMode: () => (viewMode = 'diff')
+	});
 
 	// fire-and-forget off-main-thread parse of texSource into a fresh visual doc; the hard 3s
 	// timeout terminates a runaway worker, snaps back to source mode, and toasts. the
@@ -2732,14 +2055,9 @@
 
 	// manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest
 	function save() {
-		// drop the queued debounce; we're writing the current content now
-		if (autosaveTimer) {
-			clearTimeout(autosaveTimer);
-			autosaveTimer = null;
-		}
-		pendingSave = null;
-		if (kind === 'tex' && loadedPath) void enqueueWrite(loadedPath, texSource, true);
-		else if ((kind === 'text' || kind === 'bib') && loadedPath) void enqueueWrite(loadedPath, rawContent, true);
+		saver.discard(); // drop the queued debounce; we're writing the current content now
+		if (kind === 'tex' && loadedPath) void saver.enqueue(loadedPath, texSource, true);
+		else if ((kind === 'text' || kind === 'bib') && loadedPath) void saver.enqueue(loadedPath, rawContent, true);
 		// image / binary: nothing to save
 	}
 
@@ -2824,8 +2142,8 @@
 			// macOS) rather than dropping Alt entirely - bare ctrl/cmd+enter is already taken
 			// by the Source Control panel's commit shortcut (SourceControlPanel.svelte).
 			e.preventDefault();
-			if (compiling) stopCompile();
-			else runCompile();
+			if (compiler.compiling) compiler.stopCompile();
+			else compiler.runCompile();
 		}
 	}
 </script>
@@ -2851,7 +2169,7 @@
 			onShareSession={isDesktop() ? () => (shareModalOpen = true) : undefined}
 			{terminalAvailable}
 			{terminalVisible}
-			onCompile={runCompile}
+			onCompile={compiler.runCompile}
 			onConfigureCompile={openCompileModal}
 			onNewTerminal={newTerminalFromMenu}
 			onToggleTerminal={toggleTerminal}
@@ -2870,7 +2188,7 @@
 				{guest}
 				{modLabel}
 				bind:view={sidebarView}
-				{scmBusy}
+				scmBusy={scm.busy}
 				{showToc}
 				{tocFraction}
 				{viewMode}
@@ -2882,22 +2200,22 @@
 				onCloseGlobalSearch={() => void closeGlobalSearch()}
 				onOpenFileAt={openFileAtLine}
 				onOpenEntry={openEntry}
-				onCreate={createInTree}
-				onRename={renameInTree}
-				onDelete={deleteManyInTree}
-				onMove={moveManyInTree}
-				onImport={importIntoTree}
-				onCopyIn={copyIntoTree}
+				onCreate={treeOps.create}
+				onRename={treeOps.rename}
+				onDelete={treeOps.deleteMany}
+				onMove={treeOps.moveMany}
+				onImport={treeOps.import}
+				onCopyIn={treeOps.copyIn}
 				onSetMain={(entry) => applyMainFile(entry.path)}
 				onStartTocResize={startTocResize}
 				onResizeTocByKey={resizeTocByKey}
 				onRefreshGit={() => refreshGitStatus($workspaceRoot)}
-				{scmInit}
-				{scmStage}
-				{scmUnstage}
-				{scmDiscard}
-				{scmCommit}
-				{scmOpenDiff}
+				scmInit={scm.init}
+				scmStage={scm.stage}
+				scmUnstage={scm.unstage}
+				scmDiscard={scm.discard}
+				scmCommit={scm.commit}
+				scmOpenDiff={scm.openDiff}
 			/>
 
 			<!-- same WAI-ARIA window-splitter pattern as above; svelte's a11y rule doesn't special-case it -->
@@ -2923,19 +2241,19 @@
 				{viewMode}
 				{guest}
 				{terminalAvailable}
-				{compiling}
+				compiling={compiler.compiling}
 				{pdfPaneOpen}
 				{draftPaused}
-				{saving}
+				saving={saver.saving}
 				{sidebarOpen}
 				{modLabel}
 				onToggleSidebar={toggleSidebar}
 				onSetViewMode={setViewMode}
 				onSyncForward={syncForward}
-				onStopCompile={stopCompile}
+				onStopCompile={compiler.stopCompile}
 				onPauseDraft={pauseDraft}
 				onResumeDraft={resumeDraft}
-				onCompile={runCompile}
+				onCompile={compiler.runCompile}
 				onRequestCompile={() => {
 					collabGuest.requestCompile();
 					toaster.info({ title: m.session_compile_requested(), duration: 2500 });
@@ -3002,7 +2320,7 @@
 						{dockShrunk}
 						{guest}
 						guestPdf={session.guestPdf}
-						{pdfFilename}
+						pdfFilename={compiler.pdfFilename}
 						{draftRoot}
 						{draftMainRel}
 						{draftTrigger}
@@ -3057,7 +2375,7 @@
 		bind:advancedOpen
 		onSave={saveCompileCommand}
 		onUseDefault={useDefaultCommand}
-		onRun={runCompile}
+		onRun={compiler.runCompile}
 	/>
 
 	<FormatModal bind:open={formatModalOpen} {formatting} onFormat={runFormat} />
@@ -3079,7 +2397,7 @@
 
 <TutorialConfirmModal bind:open={tutorialModalOpen} onConfirm={openTutorial} />
 {#if !guest}
-	<SessionShareModal bind:open={shareModalOpen} root={$workspaceRoot} onBeforeStart={flushSaveAndWait} />
+	<SessionShareModal bind:open={shareModalOpen} root={$workspaceRoot} onBeforeStart={() => saver.flushAndWait()} />
 {/if}
 {#if session.active}
 	<VisualCollab bind:this={visualCollab} {session} path={loadedPath} {kind} {viewMode} api={visualCollabApi} />
