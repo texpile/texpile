@@ -131,7 +131,7 @@ export class PDFPageView {
 		this.setDimensions();
 	}
 
-	update({ scale, rotation }: { scale?: number; rotation?: number }): void {
+	update({ scale, rotation, lazy = false }: { scale?: number; rotation?: number; lazy?: boolean }): void {
 		if (scale !== undefined) {
 			this.scale = scale;
 		}
@@ -139,6 +139,13 @@ export class PDFPageView {
 			this.rotation = rotation;
 		}
 		this.updateViewport();
+
+		// off-screen page: drop the stale raster (cancelling any in-flight render) and let the
+		// viewer re-draw it lazily when it scrolls back in; the sized div stays so layout holds
+		if (lazy) {
+			if (this.renderingState !== RenderingStates.INITIAL) this.reset();
+			return;
+		}
 
 		if (this.renderingState === RenderingStates.FINISHED) {
 			// TextLayer.update() handles both scale and rotation (rotation via CSS from data-main-rotation)
@@ -230,13 +237,19 @@ export class PDFPageView {
 			await this.renderTask.promise;
 			this.renderTask = null;
 
+			// a reset()/eviction can land while we await the layers below; bail instead of
+			// resurrecting a torn-down page as FINISHED
+			if ((this.renderingState as RenderingState) !== RenderingStates.RUNNING) return;
+
 			if (!this.textLayerRendered) {
 				await this.renderTextLayer();
 			}
+			if ((this.renderingState as RenderingState) !== RenderingStates.RUNNING) return;
 
 			if (!this.annotationLayerRendered) {
 				await this.renderAnnotationLayer();
 			}
+			if ((this.renderingState as RenderingState) !== RenderingStates.RUNNING) return;
 
 			this.renderingState = RenderingStates.FINISHED;
 			this.eventBus.dispatch('pagerendered', {
@@ -262,34 +275,40 @@ export class PDFPageView {
 			return;
 		}
 
-		this.textLayerDiv = document.createElement('div');
-		this.textLayerDiv.className = 'textLayer';
-		this.div.appendChild(this.textLayerDiv);
+		const textLayerDiv = document.createElement('div');
+		textLayerDiv.className = 'textLayer';
+		this.div.appendChild(textLayerDiv);
+		this.textLayerDiv = textLayerDiv;
 
 		try {
 			const [{ TextLayer }] = await Promise.all([import('pdfjs-dist/legacy/build/pdf.mjs'), ensurePdfJsLoaded()]);
 
 			const textContent = await this.pdfPage.getTextContent();
 
+			// reset() while we were loading: the div is gone, don't rebuild onto it
+			if (this.textLayerDiv !== textLayerDiv) return;
+
 			this.textDivs = [];
 			this.textContentItemsStr = [];
 
 			// mustFlip=false: the text layer uses raw page coordinates, rotation is CSS transforms
-			setLayerDimensions(this.textLayerDiv!, this.viewport, /* mustFlip */ false);
+			setLayerDimensions(textLayerDiv, this.viewport, /* mustFlip */ false);
 
-			this.textLayer = new TextLayer({
+			const textLayer = new TextLayer({
 				textContentSource: textContent,
-				container: this.textLayerDiv,
+				container: textLayerDiv,
 				viewport: this.viewport
 			});
+			this.textLayer = textLayer;
 
-			await this.textLayer.render();
+			await textLayer.render();
+			if (this.textLayerDiv !== textLayerDiv) return;
 			this.textLayerRendered = true;
 
-			this.setupTextSelection(this.textLayerDiv);
+			this.setupTextSelection(textLayerDiv);
 
 			// extract text from the rendered spans so textDivs and textContentItemsStr stay 1:1
-			const spans = this.textLayerDiv.querySelectorAll('span:not(.markedContent)');
+			const spans = textLayerDiv.querySelectorAll('span:not(.markedContent)');
 			spans.forEach((span) => {
 				this.textDivs.push(span as HTMLElement);
 				this.textContentItemsStr.push(span.textContent || '');
@@ -334,7 +353,7 @@ export class PDFPageView {
 		}
 
 		try {
-			this.annotationLayerBuilder = new AnnotationLayerBuilder({
+			const builder = new AnnotationLayerBuilder({
 				pdfPage: this.pdfPage,
 				linkService: this.linkService,
 				renderForms: true,
@@ -342,10 +361,13 @@ export class PDFPageView {
 					this.div.appendChild(div);
 				}
 			});
+			this.annotationLayerBuilder = builder;
 
-			await this.annotationLayerBuilder.render({
+			await builder.render({
 				viewport: this.viewport
 			});
+			// reset() while rendering destroyed the builder; don't mark it live
+			if (this.annotationLayerBuilder !== builder) return;
 			this.annotationLayerRendered = true;
 
 			this.eventBus.dispatch('annotationlayerrendered', {

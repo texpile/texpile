@@ -37,6 +37,11 @@ const DEFAULT_SCALE_DELTA = 0.1;
 // pages to render around the visible ones
 const PAGES_TO_PRERENDER = 2;
 
+// rendered pages kept alive outside the visible window (nearest-first), mirroring the
+// page buffer pdf.js's own viewer uses; anything past this is torn down and re-renders
+// lazily on scroll, so long sessions on big PDFs don't accumulate canvases forever
+const RENDERED_PAGES_TO_KEEP = 15;
+
 // page layout, mirroring renderer-styles.ts (.pdf-renderer-container padding + flex gap). The scroll
 // model below reconstructs page offsets arithmetically (no per-page DOM reads on scroll), so these
 // must track that CSS: the first page starts CONTAINER_PAD from the top, pages are PAGE_GAP apart,
@@ -232,6 +237,7 @@ export class PDFViewerCore {
 			}
 		}
 
+		this.evictHiddenPages(startPage, endPage);
 		this.processRenderingQueue();
 
 		this.eventBus.dispatch('updateviewarea', {
@@ -241,6 +247,26 @@ export class PDFViewerCore {
 				rotation: this.currentRotation
 			}
 		});
+	}
+
+	// cap memory: rendered pages far from the visible window get torn down (canvas + text +
+	// annotation layers) beyond a nearest-first keep buffer. The placeholder div keeps its size,
+	// so layout and scroll position don't move, and evicted pages re-render like any INITIAL
+	// page on scroll. Only FINISHED pages are touched, so an in-flight draw is never yanked.
+	private evictHiddenPages(startPage: number, endPage: number): void {
+		const outside: { index: number; distance: number }[] = [];
+		for (let i = 0; i < this.pages.length; i++) {
+			if (i >= startPage && i <= endPage) continue;
+			if (this.pages[i].renderingState !== RenderingStates.FINISHED) continue;
+			outside.push({ index: i, distance: i < startPage ? startPage - i : i - endPage });
+		}
+		if (outside.length <= RENDERED_PAGES_TO_KEEP) return;
+
+		outside.sort((a, b) => a.distance - b.distance);
+		for (const { index } of outside.slice(RENDERED_PAGES_TO_KEEP)) {
+			this.renderingQueue.delete(index);
+			this.pages[index].reset();
+		}
 	}
 
 	private async processRenderingQueue(): Promise<void> {
@@ -270,10 +296,7 @@ export class PDFViewerCore {
 		if (newScale === this.currentScale) return;
 
 		this.currentScale = newScale;
-
-		for (const page of this.pages) {
-			page.update({ scale: newScale });
-		}
+		this.updatePages({ scale: newScale });
 
 		this.eventBus.dispatch('scalechanged', { scale: newScale });
 		this.updateVisiblePages();
@@ -288,13 +311,22 @@ export class PDFViewerCore {
 		if (newRotation === this.currentRotation) return;
 
 		this.currentRotation = newRotation;
-
-		for (const page of this.pages) {
-			page.update({ rotation: newRotation });
-		}
+		this.updatePages({ rotation: newRotation });
 
 		this.eventBus.dispatch('rotationchanged', { rotation: newRotation });
 		this.updateVisiblePages();
+	}
+
+	// re-render only what's on screen; every other page just gets its box resized and drops any
+	// stale raster (lazy), so one zoom doesn't re-rasterize the whole document at once
+	private updatePages(props: { scale?: number; rotation?: number }): void {
+		const visible = this.getVisiblePages();
+		const start = Math.max(0, visible.first - PAGES_TO_PRERENDER);
+		const end = Math.min(this.pages.length - 1, visible.last + PAGES_TO_PRERENDER);
+
+		for (let i = 0; i < this.pages.length; i++) {
+			this.pages[i].update({ ...props, lazy: i < start || i > end });
+		}
 	}
 
 	zoomIn(): void {
