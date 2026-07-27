@@ -55,6 +55,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	fsWriteBinary: (path: string, data: ArrayBuffer) => invokeFs('fs:writeBinary', path, data),
 	/** nested file/folder tree -> { root, children }. */
 	fsTree: (root: string) => invokeFs('fs:tree', root),
+	/** tree + flat file scan (CSV exts, default 'tex') in ONE walk -> { root, children, files }. */
+	fsTreeScan: (root: string, exts?: string) => invokeFs('fs:treeScan', root, exts),
 	/** create / delete / rename -> { ok }. */
 	fsOp: (body: Record<string, unknown>) => invokeFs('fs:op', body),
 	/** find-in-files -> { results, truncated, total? }. */

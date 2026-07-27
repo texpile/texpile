@@ -420,17 +420,21 @@
 		// the inline input down mid-edit); it re-scans after they commit
 		if (fileTreeRef?.isEditing?.()) return;
 		try {
-			const { children } = await scanTree(root);
-			fileTree.set(children);
-			tabs.prune(flatFiles(children)); // tabs for files that vanished (remote deletes, external rm)
+			// one traversal when the provider can (disk); guests fall back to the two reads
+			if (provider.scanTreeAndFiles) {
+				const { children, files } = await provider.scanTreeAndFiles(root);
+				fileTree.set(children);
+				tabs.prune(flatFiles(children)); // tabs for files that vanished (remote deletes, external rm)
+				texFiles.set(files);
+			} else {
+				const { children } = await scanTree(root);
+				fileTree.set(children);
+				tabs.prune(flatFiles(children));
+				const { files } = await scanTexFiles(root);
+				texFiles.set(files);
+			}
 		} catch (e) {
 			console.error('Failed to read folder tree:', e);
-		}
-		try {
-			const { files } = await scanTexFiles(root);
-			texFiles.set(files);
-		} catch {
-			/* ignore */
 		}
 		// shared session: the manifest mirrors the tree, same single call-site trick
 		void session.syncTree();
@@ -2013,9 +2017,12 @@
 
 	// the failure is returned rather than handled here: only the caller knows whether its parse is
 	// still the current one, and a superseded parse must not yank the user out of visual mode.
+	// timeout scales with file size (parse time is ~linear): small files keep the snappy 3s
+	// fallback, a 1MB paper gets long enough to actually finish instead of always dropping to source.
 	async function tryParseVisual(text: string): Promise<ParseOutcome> {
 		try {
-			return { parsed: await parseLatexFileAsync(text, projectMacros, 3000) };
+			const timeoutMs = Math.min(15000, 3000 + Math.floor(text.length / 100));
+			return { parsed: await parseLatexFileAsync(text, projectMacros, timeoutMs) };
 		} catch (e) {
 			const timeout = e instanceof Error && e.message === PARSE_TIMEOUT;
 			return { failure: { timeout, message: e instanceof Error ? e.message : String(e) } };

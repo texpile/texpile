@@ -6,9 +6,17 @@ import { execFile } from 'node:child_process';
 
 // '_draft' holds Draft-mode's transient compile artifacts (page records, daemon wrapper,
 // draft.pdf) -- never surface them in the tree, scan, or search.
-const SCAN_IGNORE_DIRS = new Set(['node_modules', '.git', '.svelte-kit', 'build', 'dist', 'out', '.cache', '_draft']);
-const TREE_IGNORE_DIRS = new Set(['node_modules', '.git', '.svelte-kit', '.cache', '_draft']);
-const SEARCH_IGNORE_DIRS = new Set(['node_modules', '.git', '.svelte-kit', '.cache', '.vscode', '_draft']);
+// Two tiers of ignoring, plus dot-dirs (.git, .cache, ...) skipped everywhere via skipDir:
+// - TREE stays permissive: it IS the workspace view, and a LaTeX project legitimately
+//   contains dirs named build/ or output/ (the compile output dir, see the renderer's
+//   ensureOutputDir) -- hiding output/ would break finding the compiled PDF in the tree.
+// - scan and search are noise-sensitive, so they also skip common build-output names.
+const TREE_IGNORE_DIRS = new Set(['node_modules', '_draft']);
+const SCAN_IGNORE_DIRS = new Set([...TREE_IGNORE_DIRS, 'build', 'dist', 'out', 'output']);
+const skipDir = (name: string, ignore: Set<string>) => name.startsWith('.') || ignore.has(name);
+
+// one collator for all name sorting; localeCompare per comparison is surprisingly expensive
+const collator = new Intl.Collator();
 
 export const MIME: Record<string, string> = {
 	'.png': 'image/png',
@@ -40,6 +48,13 @@ export interface SearchFileResult {
 	matches: { line: number; text: string }[];
 }
 
+function parseExts(extsCsv?: string): string[] {
+	return (extsCsv || 'tex')
+		.split(',')
+		.map((s) => s.trim().toLowerCase())
+		.filter(Boolean);
+}
+
 async function scanWalk(dir: string, root: string, acc: TexFile[], depth: number, exts: string[]): Promise<void> {
 	if (depth > 12) return;
 	let entries;
@@ -48,27 +63,27 @@ async function scanWalk(dir: string, root: string, acc: TexFile[], depth: number
 	} catch {
 		return;
 	}
+	const subdirs: string[] = [];
 	for (const e of entries) {
 		if (e.isDirectory()) {
-			if (e.name.startsWith('.') || SCAN_IGNORE_DIRS.has(e.name)) continue;
-			await scanWalk(join(dir, e.name), root, acc, depth + 1, exts);
+			if (skipDir(e.name, SCAN_IGNORE_DIRS)) continue;
+			subdirs.push(e.name);
 		} else if (exts.some((ext) => e.name.toLowerCase().endsWith('.' + ext))) {
 			const full = join(dir, e.name);
 			acc.push({ name: e.name, path: full, relPath: full.slice(root.length).replace(/^[\\/]/, '') });
 		}
 	}
+	// siblings in parallel; scan() sorts at the end, so interleaved pushes don't matter
+	await Promise.all(subdirs.map((n) => scanWalk(join(dir, n), root, acc, depth + 1, exts)));
 }
 
 /** recursively scans `root` for files with the given extensions (default: tex). */
 export async function scan(root: string, extsCsv?: string): Promise<{ root: string; files: TexFile[] }> {
 	if (!root) throw new Error('Missing path');
-	const exts = (extsCsv || 'tex')
-		.split(',')
-		.map((s) => s.trim().toLowerCase())
-		.filter(Boolean);
+	const exts = parseExts(extsCsv);
 	const files: TexFile[] = [];
 	await scanWalk(root, root, files, 0, exts);
-	files.sort((a, b) => a.relPath.localeCompare(b.relPath));
+	files.sort((a, b) => collator.compare(a.relPath, b.relPath));
 	return { root, files };
 }
 
@@ -120,19 +135,25 @@ async function treeBuild(dir: string, depth: number): Promise<TreeNode[]> {
 	} catch {
 		return [];
 	}
-	const dirs: TreeNode[] = [];
+	const subdirs: string[] = [];
 	const files: TreeNode[] = [];
 	for (const e of entries) {
-		const full = join(dir, e.name);
 		if (e.isDirectory()) {
-			if (TREE_IGNORE_DIRS.has(e.name)) continue;
-			dirs.push({ name: e.name, path: full, type: 'dir', children: await treeBuild(full, depth + 1) });
+			if (skipDir(e.name, TREE_IGNORE_DIRS)) continue;
+			subdirs.push(e.name);
 		} else {
-			files.push({ name: e.name, path: full, type: 'file' });
+			files.push({ name: e.name, path: join(dir, e.name), type: 'file' });
 		}
 	}
-	dirs.sort((a, b) => a.name.localeCompare(b.name));
-	files.sort((a, b) => a.name.localeCompare(b.name));
+	// sibling dirs recurse in parallel (bounded naturally by the per-level fan-out)
+	const dirs = await Promise.all(
+		subdirs.map(async (name): Promise<TreeNode> => {
+			const full = join(dir, name);
+			return { name, path: full, type: 'dir', children: await treeBuild(full, depth + 1) };
+		})
+	);
+	dirs.sort((a, b) => collator.compare(a.name, b.name));
+	files.sort((a, b) => collator.compare(a.name, b.name));
 	return [...dirs, ...files];
 }
 
@@ -140,6 +161,61 @@ export async function tree(root: string): Promise<{ root: string; children: Tree
 	if (!root) throw new Error('Missing path');
 	const children = await treeBuild(root, 0);
 	return { root, children };
+}
+
+// tree + scan in ONE traversal, for the workspace-open path that used to walk the folder
+// twice. The tree part keeps the permissive rules, the flat list keeps scan's aggressive
+// rules and depth cap (a dir the tree shows but scan ignores contributes nodes, not files),
+// so the result matches calling tree() and scan() separately.
+async function treeScanWalk(
+	dir: string,
+	root: string,
+	depth: number,
+	exts: string[],
+	acc: TexFile[],
+	scanSkipped: boolean
+): Promise<TreeNode[]> {
+	if (depth > 16) return [];
+	let entries;
+	try {
+		entries = await readdir(dir, { withFileTypes: true });
+	} catch {
+		return [];
+	}
+	const collect = !scanSkipped && depth <= 12; // scanWalk stops at depth 12
+	const subdirs: { name: string; skip: boolean }[] = [];
+	const files: TreeNode[] = [];
+	for (const e of entries) {
+		const full = join(dir, e.name);
+		if (e.isDirectory()) {
+			if (skipDir(e.name, TREE_IGNORE_DIRS)) continue;
+			subdirs.push({ name: e.name, skip: scanSkipped || skipDir(e.name, SCAN_IGNORE_DIRS) });
+		} else {
+			files.push({ name: e.name, path: full, type: 'file' });
+			if (collect && exts.some((ext) => e.name.toLowerCase().endsWith('.' + ext))) {
+				acc.push({ name: e.name, path: full, relPath: full.slice(root.length).replace(/^[\\/]/, '') });
+			}
+		}
+	}
+	const dirs = await Promise.all(
+		subdirs.map(async ({ name, skip }): Promise<TreeNode> => {
+			const full = join(dir, name);
+			return { name, path: full, type: 'dir', children: await treeScanWalk(full, root, depth + 1, exts, acc, skip) };
+		})
+	);
+	dirs.sort((a, b) => collator.compare(a.name, b.name));
+	files.sort((a, b) => collator.compare(a.name, b.name));
+	return [...dirs, ...files];
+}
+
+/** tree() + scan() from a single walk -> { root, children, files }. */
+export async function treeScan(root: string, extsCsv?: string): Promise<{ root: string; children: TreeNode[]; files: TexFile[] }> {
+	if (!root) throw new Error('Missing path');
+	const exts = parseExts(extsCsv);
+	const files: TexFile[] = [];
+	const children = await treeScanWalk(root, root, 0, exts, files, false);
+	files.sort((a, b) => collator.compare(a.relPath, b.relPath));
+	return { root, children, files };
 }
 
 export interface FsOpBody {
@@ -211,12 +287,65 @@ interface SearchState {
 	truncated: boolean;
 }
 
+// tiny semaphore so ~n file reads are in flight at once (no dependency needed)
+function limiter(n: number): <T>(fn: () => Promise<T>) => Promise<T> {
+	let active = 0;
+	const queue: (() => void)[] = [];
+	return async (fn) => {
+		if (active >= n) await new Promise<void>((r) => queue.push(r));
+		active++;
+		try {
+			return await fn();
+		} finally {
+			active--;
+			queue.shift()?.();
+		}
+	};
+}
+
+async function searchFile(
+	full: string,
+	root: string,
+	test: (l: string) => boolean,
+	out: SearchFileResult[],
+	state: SearchState
+): Promise<void> {
+	if (state.total >= MAX_RESULTS) return;
+	let size = 0;
+	try {
+		size = (await stat(full)).size;
+	} catch {
+		return;
+	}
+	if (size > MAX_FILE_BYTES) return;
+	let content: string;
+	try {
+		content = await readFile(full, 'utf8');
+	} catch {
+		return;
+	}
+	if (content.includes(String.fromCharCode(0))) return; // a NUL byte: treat as binary
+	const lines = content.split(/\r?\n/);
+	const matches: { line: number; text: string }[] = [];
+	for (let i = 0; i < lines.length; i++) {
+		if (test(lines[i])) {
+			matches.push({ line: i + 1, text: lines[i].slice(0, 400) });
+			if (++state.total >= MAX_RESULTS) {
+				state.truncated = true;
+				break;
+			}
+		}
+	}
+	if (matches.length) out.push({ file: full, rel: relative(root, full).split(sep).join('/'), matches });
+}
+
 async function searchDir(
 	dir: string,
 	root: string,
 	test: (l: string) => boolean,
 	out: SearchFileResult[],
-	state: SearchState
+	state: SearchState,
+	run: <T>(fn: () => Promise<T>) => Promise<T>
 ): Promise<void> {
 	if (state.total >= MAX_RESULTS) return;
 	let entries;
@@ -225,45 +354,23 @@ async function searchDir(
 	} catch {
 		return;
 	}
+	const jobs: Promise<void>[] = [];
 	for (const e of entries) {
 		if (state.total >= MAX_RESULTS) {
 			state.truncated = true;
-			return;
+			break;
 		}
 		const full = join(dir, e.name);
 		if (e.isDirectory()) {
-			if (SEARCH_IGNORE_DIRS.has(e.name)) continue;
-			await searchDir(full, root, test, out, state);
+			if (skipDir(e.name, SCAN_IGNORE_DIRS)) continue;
+			jobs.push(searchDir(full, root, test, out, state, run));
 		} else if (e.isFile()) {
 			if (BINARY_EXT.test(e.name)) continue;
-			let size = 0;
-			try {
-				size = (await stat(full)).size;
-			} catch {
-				continue;
-			}
-			if (size > MAX_FILE_BYTES) continue;
-			let content: string;
-			try {
-				content = await readFile(full, 'utf8');
-			} catch {
-				continue;
-			}
-			if (content.includes(String.fromCharCode(0))) continue; // a NUL byte: treat as binary
-			const lines = content.split(/\r?\n/);
-			const matches: { line: number; text: string }[] = [];
-			for (let i = 0; i < lines.length; i++) {
-				if (test(lines[i])) {
-					matches.push({ line: i + 1, text: lines[i].slice(0, 400) });
-					if (++state.total >= MAX_RESULTS) {
-						state.truncated = true;
-						break;
-					}
-				}
-			}
-			if (matches.length) out.push({ file: full, rel: relative(root, full).split(sep).join('/'), matches });
+			// the limiter bounds the file reads; dir listings are cheap enough to fan out freely
+			jobs.push(run(() => searchFile(full, root, test, out, state)));
 		}
 	}
+	await Promise.all(jobs);
 }
 
 export async function search(
@@ -288,7 +395,9 @@ export async function search(
 	}
 	const out: SearchFileResult[] = [];
 	const state: SearchState = { total: 0, truncated: false };
-	await searchDir(root, root, test, out, state);
+	await searchDir(root, root, test, out, state, limiter(8));
+	// concurrent reads finish in nondeterministic order; sort so the result list is stable
+	out.sort((a, b) => collator.compare(a.rel, b.rel));
 	return { results: out, truncated: state.truncated, total: state.total };
 }
 

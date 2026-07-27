@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, dialog, shell, Menu, protocol } from 'electron';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
+import { Readable } from 'node:stream';
 import { execFileSync } from 'node:child_process';
 import * as fsService from './fs-service';
 import * as gitService from './git-service';
@@ -169,6 +170,12 @@ const RENDERER_CSP = [
 	"form-action 'self'"
 ].join('; ');
 
+// stream a file (or a byte slice of it) as a fetch Response body without buffering it all.
+// node's web ReadableStream type and the DOM lib's don't unify, but the runtime object does.
+function fileStream(file: string, range?: { start: number; end: number }): ReadableStream {
+	return Readable.toWeb(fs.createReadStream(file, range)) as unknown as ReadableStream;
+}
+
 function registerProtocolHandlers(): void {
 	protocol.handle('app', async (request) => {
 		const url = new URL(request.url);
@@ -181,11 +188,24 @@ function registerProtocolHandlers(): void {
 			return new Response('Forbidden', { status: 403 });
 		}
 		try {
-			const data = await fs.promises.readFile(file);
+			const st = await fs.promises.stat(file);
+			if (!st.isFile()) return new Response('Not found', { status: 404 });
 			const mime = BUNDLE_MIME[path.extname(file).toLowerCase()] || 'application/octet-stream';
-			const headers: Record<string, string> = { 'Content-Type': mime };
+			const headers: Record<string, string> = { 'Content-Type': mime, 'Content-Length': String(st.size) };
+			// vite content-hashes everything under assets/ (name-XXXXXXXX.ext), so those bytes can
+			// never change under their URL: cache forever. index.html & co keep stable names and
+			// must revalidate on every load.
+			if (rel.includes('/assets/') && /-[\w-]{8,}\.[a-z0-9]+$/i.test(rel)) {
+				headers['Cache-Control'] = 'public, max-age=31536000, immutable';
+			} else {
+				headers['Cache-Control'] = 'no-cache';
+				headers['Last-Modified'] = st.mtime.toUTCString();
+			}
 			// CSP is a document-level directive; attach it to the served HTML (ignored on subresources)
 			if (mime === 'text/html') headers['Content-Security-Policy'] = RENDERER_CSP;
+			// big files (wasm, fonts) stream; small ones stay buffered, one readFile is cheaper
+			if (st.size > 1_000_000) return new Response(fileStream(file), { headers });
+			const data = await fs.promises.readFile(file);
 			return new Response(new Uint8Array(data), { headers });
 		} catch {
 			return new Response('Not found', { status: 404 });
@@ -196,18 +216,45 @@ function registerProtocolHandlers(): void {
 		const url = new URL(request.url);
 		const p = url.searchParams.get('path');
 		if (!p) return new Response('Missing path', { status: 400 });
+		// texfile:// is a different origin than app://bundle, so pdf.js's fetch needs CORS
+		const cors = { 'Access-Control-Allow-Origin': '*' };
 		try {
-			const { data, mime } = await fsService.fileBytes(p);
-			return new Response(new Uint8Array(data), {
-				headers: {
-					'Content-Type': mime,
-					'Cache-Control': 'no-cache',
-					// texfile:// is a different origin than app://bundle, so pdf.js's fetch needs CORS
-					'Access-Control-Allow-Origin': '*'
+			const st = await fs.promises.stat(p);
+			if (!st.isFile()) return new Response('Not found', { status: 404, headers: cors });
+			const mime = fsService.MIME[path.extname(p).toLowerCase()] || 'application/octet-stream';
+			const etag = `"${st.mtimeMs}-${st.size}"`;
+			const base: Record<string, string> = {
+				...cors,
+				'Content-Type': mime,
+				'Cache-Control': 'no-cache',
+				'Accept-Ranges': 'bytes',
+				ETag: etag,
+				'Last-Modified': st.mtime.toUTCString()
+			};
+			// no-cache means "revalidate": a matching ETag turns a reload into a 304 with no body
+			if (request.headers.get('if-none-match') === etag) {
+				return new Response(null, { status: 304, headers: base });
+			}
+			// pdf.js fetches PDFs in ranged chunks; end is inclusive, `bytes=start-` means to EOF
+			const m = /^bytes=(\d+)-(\d*)$/.exec(request.headers.get('range') ?? '');
+			if (m) {
+				const start = Number(m[1]);
+				const end = m[2] ? Math.min(Number(m[2]), st.size - 1) : st.size - 1;
+				if (start >= st.size || start > end) {
+					return new Response(null, { status: 416, headers: { ...cors, 'Content-Range': `bytes */${st.size}` } });
 				}
-			});
+				return new Response(fileStream(p, { start, end }), {
+					status: 206,
+					headers: {
+						...base,
+						'Content-Length': String(end - start + 1),
+						'Content-Range': `bytes ${start}-${end}/${st.size}`
+					}
+				});
+			}
+			return new Response(fileStream(p), { headers: { ...base, 'Content-Length': String(st.size) } });
 		} catch {
-			return new Response('Not found', { status: 404 });
+			return new Response('Not found', { status: 404, headers: cors });
 		}
 	});
 }
@@ -358,6 +405,7 @@ handleFs('fs:read', fsService.read);
 handleFs('fs:write', fsService.write);
 handleFs('fs:writeBinary', fsService.writeBinary);
 handleFs('fs:tree', fsService.tree);
+handleFs('fs:treeScan', fsService.treeScan);
 handleFs('fs:op', fsService.op);
 handleFs('fs:search', fsService.search);
 handleFs('fs:stat', fsService.statFile);
@@ -642,11 +690,28 @@ ipcMain.handle('terminal:spawn', (e, { id, cwd, cols, rows }: TerminalSpawnOpts 
 		return { ok: false, error: String(err instanceof Error ? err.message : err) };
 	}
 	const wc = e.sender;
-	proc.onData((data) => {
+	// coalesce pty output: one renderer message per ~16ms tick (or 64KB burst) instead of
+	// one per chunk -- a fast compile can emit thousands of tiny chunks per second
+	let buf = '';
+	let flushTimer: NodeJS.Timeout | null = null;
+	const flush = () => {
+		if (flushTimer) {
+			clearTimeout(flushTimer);
+			flushTimer = null;
+		}
+		if (!buf) return;
+		const data = buf;
+		buf = '';
 		if (!wc.isDestroyed()) wc.send('terminal:data', { id, data });
+	};
+	proc.onData((data) => {
+		buf += data;
+		if (buf.length >= 64 * 1024) flush();
+		else if (!flushTimer) flushTimer = setTimeout(flush, 16);
 	});
 	proc.onExit(({ exitCode }) => {
 		ptys.delete(id);
+		flush(); // pending output must land before the exit message, or the tail is lost
 		if (!wc.isDestroyed()) wc.send('terminal:exit', { id, code: exitCode });
 	});
 	ptys.set(id, proc);

@@ -24,6 +24,8 @@ export interface WorkspaceProvider {
 	readText(path: string): Promise<string>;
 	scanTree(root: string): Promise<TreeEntry[]>;
 	scanTexFiles(root: string): Promise<TexFile[]>;
+	/** tree + flat .tex list from one traversal, when the backend can (the disk walk is IO-bound). */
+	scanTreeAndFiles?(root: string): Promise<{ children: TreeEntry[]; files: TexFile[] }>;
 	/** files by extension (no dots), for the .bib scan behind citation completion. */
 	scanFiles(root: string, exts: string[]): Promise<TexFile[]>;
 	stat(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number }>;
