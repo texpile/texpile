@@ -37,6 +37,8 @@ const windowRoots = new Map<number, WindowRoot | null>();
 // a file/folder a freshly-created window should open once its renderer loads
 type PendingOpen = { kind: 'file' | 'folder'; path: string };
 const pendingOpens = new Map<number, PendingOpen>();
+// closes held open while the renderer flushes/confirms unsaved edits (see win.on('close'))
+const pendingCloses = new Map<number, { settle: (proceed: boolean) => void }>();
 // .tex handed over by the OS before any window exists; consumed at whenReady
 let initialOpenPath: string | null = null;
 // set during shutdown so per-window close cleanup doesn't drain the persisted session
@@ -273,9 +275,35 @@ function createWindow(url: string, pending?: PendingOpen): BrowserWindow {
 		event.preventDefault();
 		if (/^https?:/i.test(target)) shell.openExternal(target);
 	});
+	// hold the close so the renderer can flush (autosave's 1.5s debounce) or prompt for unsaved
+	// edits; the timeout guarantees a hung renderer can never make the window unclosable
+	let closeReady = false;
+	win.on('close', (e) => {
+		if (closeReady) return;
+		if (!windowRoots.get(wcId)) return; // no claimed folder (start screen): nothing to flush
+		e.preventDefault();
+		win.webContents.send('app:before-close');
+		const t = setTimeout(() => {
+			pendingCloses.delete(wcId);
+			closeReady = true;
+			if (!win.isDestroyed()) win.close();
+		}, 2000);
+		pendingCloses.set(wcId, {
+			settle: (proceed) => {
+				clearTimeout(t);
+				if (proceed) {
+					closeReady = true;
+					if (!win.isDestroyed()) win.close();
+				} else if (quitting) {
+					quitting = false; // an aborted quit must un-freeze the openFolders snapshot
+				}
+			}
+		});
+	});
 	win.on('closed', () => {
 		windowRoots.delete(wcId);
 		pendingOpens.delete(wcId);
+		pendingCloses.delete(wcId);
 		// the closing window owned the warm engine: stop it so it doesn't hold memory orphaned
 		if (draftOwner?.wcId === wcId) {
 			draftDaemon.stopDaemon();
@@ -532,6 +560,11 @@ ipcMain.handle('workspace:release', (e) => {
 	windowRoots.set(e.sender.id, null);
 	persistOpenFolders();
 	return { ok: true };
+});
+ipcMain.on('window:close-decision', (e, proceed: boolean) => {
+	const held = pendingCloses.get(e.sender.id);
+	pendingCloses.delete(e.sender.id);
+	held?.settle(!!proceed);
 });
 ipcMain.handle('window:new', () => {
 	createWindow(startUrl());

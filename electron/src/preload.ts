@@ -37,6 +37,14 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	openFolderNewWindow: () => ipcRenderer.invoke('window:openFolderNew'),
 	/** true exactly once per app session; the winner runs the update check / What's New. */
 	claimStartupTasks: () => ipcRenderer.invoke('session:claimStartupTasks'),
+	/** subscribe to "this window is about to close" (main holds the close until closeDecision). */
+	onBeforeClose: (cb: () => void) => {
+		const h = () => cb();
+		ipcRenderer.on('app:before-close', h);
+		return () => ipcRenderer.removeListener('app:before-close', h);
+	},
+	/** answer a held close: true proceeds (after flushing), false keeps the window open. */
+	closeDecision: (proceed: boolean) => ipcRenderer.send('window:close-decision', proceed),
 
 	/** recursively scan a folder for files of the given extensions (CSV, default 'tex'). */
 	fsScan: (root: string, exts?: string) => invokeFs('fs:scan', root, exts),

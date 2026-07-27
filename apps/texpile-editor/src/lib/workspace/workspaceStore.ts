@@ -121,8 +121,10 @@ export function savedLastFile(root: string): string | null {
 /** records the file currently open in a folder (called on every active-file change). */
 export function setLastFile(root: string, path: string): void {
 	if (!browser) return;
+	const rel = relInRoot(root, path);
+	if (rel === norm(path)) return; // not under this root (mid folder-switch): never record cross-root
 	const map = loadLastFileMap();
-	map[mainKeyFor(map, root)] = relInRoot(root, path);
+	map[mainKeyFor(map, root)] = rel;
 	localStorage.setItem(LAST_FILE_KEY, JSON.stringify(map));
 }
 
