@@ -22,12 +22,21 @@ directories:
 
 # only the Electron shell goes into the asar; the renderer bundle ships as an extra resource,
 # served from the app:// protocol. The exclusions keep third-party sourcemaps/tests out.
+# node-pty runtime needs only its .node/.dll/.exe binaries (+ lib/ + bin/); the compiler
+# intermediates, sources and debug symbols below are ~20MB of dead weight per install.
 files:
   - electron/dist/**/*
   - electron/icon.png
   - package.json
   - '!**/*.map'
   - '!**/node_modules/**/{test,tests,__mocks__}/**'
+  - '!**/node_modules/node-pty/build/**/*.{iobj,ipdb,pdb,exp,lib,tlog}'
+  - '!**/node_modules/node-pty/build/{deps,obj}/**'
+  - '!**/node_modules/node-pty/build/Release/obj/**'
+  - '!**/node_modules/node-pty/build/*.{sln,gypi}'
+  - '!**/node_modules/node-pty/build/*.vcxproj*'
+  - '!**/node_modules/node-pty/{third_party,src,deps,scripts,typings}/**'
+  - '!**/node_modules/node-pty/prebuilds/**/*.pdb'
 
 # node-pty (its .node binary plus the Windows ConPTY runtime, conpty.dll / OpenConsole.exe) must
 # stay out of the asar so it can be dlopen'd at runtime
@@ -58,6 +67,9 @@ npmRebuild: false
 # pre-sized set in build/icons: Ubuntu's hicolor theme indexes nothing above 512, so a lone
 # 1024 icon is invisible to the launcher (generic gear in the app grid).
 linux:
+  # linux loads from build/Release; every prebuild dir is another platform's
+  files:
+    - '!**/node_modules/node-pty/prebuilds/**'
   target:
     - AppImage
     - deb
@@ -78,6 +90,9 @@ mac:
   # one universal (x64 + arm64) dmg so Intel Macs are covered; a host-arch build on the arm64
   # runner ships an arm64-only dmg. node-pty has both darwin prebuilds, so the merge succeeds.
   # The zip exists only for the updater (Squirrel.Mac consumes it; latest-mac.yml needs it).
+  # KEEP the darwin prebuilds here (both arches feed the universal merge); win32 ones are dead weight.
+  files:
+    - '!**/node_modules/node-pty/prebuilds/win32-*/**'
   target:
     - target: dmg
       arch: universal
@@ -93,6 +108,9 @@ win:
   target:
     - nsis
   icon: electron/icon.png
+  # darwin prebuilds are dead weight on Windows (the universal mac build is why they exist)
+  files:
+    - '!**/node_modules/node-pty/prebuilds/darwin-*/**'
 
 # show the AGPL text as an installer page (macOS/Linux installs have no comparable UI).
 # The artifact name must have no spaces: electron-builder's Trusted Signing signer space-joins
