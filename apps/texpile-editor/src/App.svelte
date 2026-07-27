@@ -15,9 +15,21 @@
 	const whatsNewEntries = $derived(entriesToShow(whatsNew, $settings.whatsNewSeen));
 
 	import StartView from './views/StartView.svelte';
-	import WorkspaceView from './views/WorkspaceView.svelte';
-	import SessionRoute from './views/SessionRoute.svelte';
 	import ErrorView from './views/ErrorView.svelte';
+
+	// route-split: StartView stays static (first paint), the editor views load on demand so the
+	// boot chunk stays small
+	let WorkspaceView = $state<typeof import('./views/WorkspaceView.svelte').default | null>(null);
+	let SessionRoute = $state<typeof import('./views/SessionRoute.svelte').default | null>(null);
+
+	const loadWorkspace = () => WorkspaceView ?? import('./views/WorkspaceView.svelte').then((mod) => (WorkspaceView = mod.default));
+	const loadSession = () => SessionRoute ?? import('./views/SessionRoute.svelte').then((mod) => (SessionRoute = mod.default));
+
+	// covers reloads landing straight on a hash and any navigate() we didn't preload for
+	$effect(() => {
+		if (route.path === '/workspace') loadWorkspace();
+		else if (route.path === '/session') loadSession();
+	});
 
 	onMount(async () => {
 		const s = await loadSettings();
@@ -35,6 +47,7 @@
 		if (!n?.onOpenPath) return;
 		return n.onOpenPath(async (filePath) => {
 			try {
+				loadWorkspace(); // stream the workspace chunk while the folder scans
 				const root = dirname(filePath);
 				// main routes files to the window already owning the folder, so a failed claim
 				// (folder open elsewhere) only happens in odd races; that window was focused
@@ -60,6 +73,7 @@
 		if (!n?.onOpenFolder) return;
 		return n.onOpenFolder(async (root) => {
 			try {
+				loadWorkspace(); // stream the workspace chunk while the folder scans
 				if (!(await claimWorkspace(root)).ok) return;
 				const { files } = await scanTexFiles(root);
 				// reopen the file the user last had open in this folder, like the old restore did
@@ -121,9 +135,10 @@
 {#if route.path === '/'}
 	<StartView />
 {:else if route.path === '/workspace'}
-	<WorkspaceView />
+	<!-- null-render while the chunk loads; usually preloaded by the open handlers already -->
+	{#if WorkspaceView}<WorkspaceView />{/if}
 {:else if route.path === '/session'}
-	<SessionRoute />
+	{#if SessionRoute}<SessionRoute />{/if}
 {:else}
 	<ErrorView status={404} />
 {/if}

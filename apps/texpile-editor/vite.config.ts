@@ -98,7 +98,22 @@ export default defineConfig(({ mode }) => ({
 		// Electron ships a modern Chromium with native modulepreload, so drop Vite's polyfill: it is
 		// the only inline <script> Vite injects, and removing it lets the packaged app's CSP use a
 		// strict script-src 'self' with no inline allowance
-		modulePreload: { polyfill: false }
+		modulePreload: { polyfill: false },
+		rollupOptions: {
+			output: {
+				// the big editor deps go into their own chunks so the workspace payload streams as
+				// parallel, independently-cacheable pieces instead of one blob
+				manualChunks(id: string) {
+					if (!id.includes('node_modules')) return;
+					if (id.includes('mathlive')) return 'mathlive';
+					if (id.includes('prosemirror')) return 'prosemirror';
+					// core only: language-data/legacy-modes/lang-* stay lazy, grouping them here
+					// would load every language mode with the editor
+					if (/@codemirror[\\/](state|view|language|commands|search|autocomplete|lint)[\\/]/.test(id)) return 'codemirror';
+					if (id.includes('@xterm')) return 'xterm';
+				}
+			}
+		}
 	},
 
 	// minification strips our comments but must keep third-party legal comments (/*! */,

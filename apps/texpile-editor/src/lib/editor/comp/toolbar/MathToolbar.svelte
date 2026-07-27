@@ -6,19 +6,27 @@
 </script>
 
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Keyboard, ChevronDown, BoxSelect } from '@lucide/svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { TextSelection } from 'prosemirror-state';
-	import { convertLatexToMarkup } from 'mathlive';
 	import { m } from '$lib/paraglide/messages';
-	// static.css provides styles for convertLatexToMarkup output (fonts.css already loaded by mlview)
-	import 'mathlive/static.css';
 	import { SYMBOL_GROUPS, MATRIX_BRACKETS, generateMatrixLatex, symbolTooltip, type MatrixBracket } from './mathSymbols';
+
+	// mathlive loads lazily so a static edge here can't drag it into the eager bundle (EditorView
+	// already pulls it in with the math plugin, so this resolves from cache by the time we show).
+	// static.css provides styles for convertLatexToMarkup output (fonts.css already loaded by mlview)
+	let convertLatexToMarkup = $state<((latex: string) => string) | null>(null);
+	onMount(() => {
+		Promise.all([import('mathlive'), import('mathlive/static.css')]).then(([ml]) => {
+			convertLatexToMarkup = ml.convertLatexToMarkup;
+		});
+	});
 
 	function renderLatex(latex: string): string {
 		try {
-			return convertLatexToMarkup(latex);
+			return convertLatexToMarkup ? convertLatexToMarkup(latex) : latex;
 		} catch {
 			return latex;
 		}

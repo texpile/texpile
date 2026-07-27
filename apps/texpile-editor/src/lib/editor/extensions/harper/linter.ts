@@ -1,30 +1,35 @@
 // wrapper around the harper.js WorkerLinter singleton
-import { WorkerLinter, Dialect, binary } from 'harper.js';
-import type { Lint, LintConfig, LintOptions } from 'harper.js';
+import type { Lint, LintConfig, LintOptions, WorkerLinter } from 'harper.js';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { get } from 'svelte/store';
 
-let linterInstance: WorkerLinter | null = null;
+let linterPromise: Promise<WorkerLinter> | null = null;
 
 let lastLoadedDictionary: string[] = [];
 
+async function createLinter(): Promise<WorkerLinter> {
+	// harper's js glue is heavy, so it loads with the first lint instead of at boot (the wasm
+	// was already lazy)
+	const { WorkerLinter, Dialect, binary } = await import('harper.js');
+	const linter = new WorkerLinter({
+		binary,
+		dialect: Dialect.American
+	});
+
+	// setup up front so the first lint isn't slow
+	await linter.setup();
+
+	await linter.importWords(['Texpile', 'LaTeX', 'WYSIWYM', 'CTRL', 'CMD']);
+
+	const config = await linter.getLintConfig();
+	await linter.setLintConfig(config);
+
+	return linter;
+}
+
 export async function getHarperLinter(): Promise<WorkerLinter> {
-	if (!linterInstance) {
-		linterInstance = new WorkerLinter({
-			binary,
-			dialect: Dialect.American
-		});
-
-		// setup up front so the first lint isn't slow
-		await linterInstance.setup();
-
-		await linterInstance.importWords(['Texpile', 'LaTeX', 'WYSIWYM', 'CTRL', 'CMD']);
-
-		const config = await linterInstance.getLintConfig();
-		await linterInstance.setLintConfig(config);
-	}
-
-	return linterInstance;
+	linterPromise ??= createLinter();
+	return linterPromise;
 }
 
 /** lints text, returning matches in prosemirror-proofread format. */

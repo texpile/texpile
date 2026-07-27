@@ -27,7 +27,8 @@
 	// escape, so the input echo can never match; only real output does.
 	let shellName = ''; // basename of the spawned shell, picks the sentinel syntax below
 	let trackSeq = 0;
-	let tracked: { token: string; done: (output: string) => void; out: string } | null = null;
+	// chunks accumulate in an array: rebuilding a ~1MB string per pty chunk near the cap was slow
+	let tracked: { token: string; done: (output: string) => void; chunks: string[]; len: number } | null = null;
 	let scanTail = ''; // short rolling window over output so a chunk boundary can't split the token
 	const MAX_CAPTURE = 1_000_000; // captured stdout cap; a longer compile keeps its tail
 
@@ -65,7 +66,7 @@
 		else if (shell === 'powershell' || shell === 'pwsh') suffix = ` ; echo ('${head}' + '${tail}')`;
 		else if (POSIX_SHELLS.test(shell)) suffix = ` ; echo '${head}''${tail}'`;
 		if (suffix === null) return command;
-		tracked = { token, done: onDone, out: '' };
+		tracked = { token, done: onDone, chunks: [], len: 0 };
 		scanTail = '';
 		return command + suffix;
 	}
@@ -156,11 +157,19 @@
 					term?.write(data);
 					if (tracked) {
 						const clean = stripEscapes(data);
-						tracked.out = (tracked.out + clean).slice(-MAX_CAPTURE);
+						tracked.chunks.push(clean);
+						tracked.len += clean.length;
+						// join+trim only past 2x the cap, so the kept tail never dips below MAX_CAPTURE
+						if (tracked.len > MAX_CAPTURE * 2) {
+							const joined = tracked.chunks.join('').slice(-MAX_CAPTURE);
+							tracked.chunks = [joined];
+							tracked.len = joined.length;
+						}
 						scanTail = (scanTail + clean).slice(-512);
 						if (scanTail.includes(tracked.token)) {
-							const { done, out } = tracked;
+							const { done, chunks } = tracked;
 							tracked = null;
+							const out = chunks.join('').slice(-MAX_CAPTURE);
 							// trim from the sentinel's own echo (the last "__texpile" is the token line)
 							const end = out.lastIndexOf('__texpile');
 							done(end > 0 ? out.slice(0, end) : out);

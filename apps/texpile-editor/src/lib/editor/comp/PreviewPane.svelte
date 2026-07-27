@@ -4,9 +4,17 @@
 	// wrapper on the editor grid.
 	import { X } from '@lucide/svelte';
 	import PDFViewer from './PDFViewer.svelte';
-	import DraftView from '$lib/draft/DraftView.svelte';
+	import type DraftView from '$lib/draft/DraftView.svelte';
 	import { settings } from '$lib/settings';
 	import { m } from '$lib/paraglide/messages';
+
+	// DraftView drags in opentype.js; draft mode is opt-in, so it loads only when first shown
+	let DraftViewComp = $state<typeof DraftView | null>(null);
+	$effect(() => {
+		if (!guest && $settings.draftMode && !DraftViewComp) {
+			import('$lib/draft/DraftView.svelte').then((mod) => (DraftViewComp = mod.default));
+		}
+	});
 
 	interface Props {
 		width: number;
@@ -87,7 +95,9 @@
 				</div>
 			{/if}
 		{:else if $settings.draftMode}
-			<DraftView bind:this={draftRef} root={draftRoot} mainFile={draftMainRel} trigger={draftTrigger} {onInverseSync} {onSettled} />
+			{#if DraftViewComp}
+				<DraftViewComp bind:this={draftRef} root={draftRoot} mainFile={draftMainRel} trigger={draftTrigger} {onInverseSync} {onSettled} />
+			{/if}
 		{:else}
 			<PDFViewer bind:this={pdfPaneRef} filename={pdfFilename} {onPageClick} />
 		{/if}

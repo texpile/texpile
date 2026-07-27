@@ -2,7 +2,6 @@
 	// The bottom dock: a Terminal/Problems tab strip over the shell instances. Owns the multi-
 	// terminal state (VS Code-style: one shown, the rest kept mounted so their shells persist).
 	// The parent owns only the dock's height/visibility (they drive its grid layout).
-	import Terminal from './Terminal.svelte';
 	import ProblemsPanel from './ProblemsPanel.svelte';
 	import { compileLog } from '$lib/stores/compileLogStore';
 	import { m } from '$lib/paraglide/messages';
@@ -70,11 +69,16 @@
 		else setTimeout(() => activeRef()?.refit(), 0);
 	}
 
+	// Terminal drags in @xterm/* + css, so it loads when the dock first mounts, not at boot
+	let TerminalComp = $state<typeof import('./Terminal.svelte').default | null>(null);
+
 	// a fresh terminal appears the moment the dock mounts, so opening it never shows an empty
 	// pane. Mount-time read on purpose: a dock is host (shells) or guest (problems-only) for life.
 	// svelte-ignore state_referenced_locally
-	if (terminalEnabled) ensure();
-	else view = 'problems';
+	if (terminalEnabled) {
+		ensure();
+		import('./Terminal.svelte').then((mod) => (TerminalComp = mod.default));
+	} else view = 'problems';
 
 	// ---- parent API (via bind:this) ----
 	/** show + run a command on the active shell, retrying until it has spawned. */
@@ -209,9 +213,11 @@
 			<ProblemsPanel root={cwd} onJump={onProblemJump} />
 		</div>
 	{/if}
-	{#each terminals as t (t.id)}
-		<div class="absolute inset-0" style={t.id === activeTermId ? '' : 'display: none'}>
-			<Terminal bind:this={refs[t.id]} {cwd} />
-		</div>
-	{/each}
+	{#if TerminalComp}
+		{#each terminals as t (t.id)}
+			<div class="absolute inset-0" style={t.id === activeTermId ? '' : 'display: none'}>
+				<TerminalComp bind:this={refs[t.id]} {cwd} />
+			</div>
+		{/each}
+	{/if}
 </div>

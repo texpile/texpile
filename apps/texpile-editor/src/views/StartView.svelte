@@ -26,8 +26,6 @@
 		savedLastFile
 	} from '$lib/workspace/workspaceStore';
 	import { updateSettings } from '$lib/settings';
-	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
-	import PreferencesDialog from '$lib/editor/comp/PreferencesDialog.svelte';
 	import { openTutorialProject } from '$lib/workspace/starters';
 	import { m } from '$lib/paraglide/messages';
 
@@ -37,11 +35,31 @@
 	let prefsOpen = $state(false); // the menu bar isn't on this screen, so settings need a way in from here
 	const appVersion = __APP_VERSION__; // injected by Vite from package.json
 
+	// both modals chain into the editor bundle (prefs reaches harper via spellcheck), so they
+	// load on first open instead of riding in the boot chunk
+	let TutorialModal = $state<typeof import('$lib/editor/comp/TutorialConfirmModal.svelte').default | null>(null);
+	let PrefsDialog = $state<typeof import('$lib/editor/comp/PreferencesDialog.svelte').default | null>(null);
+
+	async function showTutorialModal() {
+		TutorialModal ??= (await import('$lib/editor/comp/TutorialConfirmModal.svelte')).default;
+		tutorialModalOpen = true;
+	}
+
+	async function showPrefs() {
+		PrefsDialog ??= (await import('$lib/editor/comp/PreferencesDialog.svelte')).default;
+		prefsOpen = true;
+	}
+
 	// every entry on this screen is the same row: muted icon, label, optional shortcut on the right
 	const rowClass =
 		'hover:bg-surface-200-800 rounded-base flex w-full items-center gap-2.5 px-2 py-1.5 text-left text-sm disabled:opacity-50';
 
+	// WorkspaceView is route-split (App.svelte); kick its chunk off as soon as an open begins so
+	// it streams while the folder scans
+	const preloadWorkspace = () => void import('./WorkspaceView.svelte');
+
 	async function finishOpen(root: string, active: string | null) {
+		preloadWorkspace();
 		// belt & braces: template/tutorial roots are freshly created, but claiming is cheap
 		if (!(await claimWorkspace(root)).ok) return;
 		const { files } = await scanTexFiles(root);
@@ -77,6 +95,7 @@
 	}
 
 	async function openFolder(path?: string) {
+		preloadWorkspace();
 		error = null;
 		const root = path ?? (await pickFolder());
 		if (!root) return;
@@ -135,7 +154,7 @@
 				<span class="text-surface-400 ml-auto shrink-0 pl-4 text-xs">{modKey('Shift', 'N')}</span>
 			</button>
 		{/if}
-		<button class={rowClass} onclick={() => (prefsOpen = true)}>
+		<button class={rowClass} onclick={showPrefs}>
 			<Settings class="text-surface-500 size-4 shrink-0" />
 			<span>{m.menubar_preferences()}</span>
 		</button>
@@ -143,7 +162,7 @@
 		<!-- onboarding, not a primary action: light so it doesn't compete with the rows above -->
 		<button
 			class="text-surface-500 hover:text-surface-950-50 mt-2 px-2 text-xs disabled:opacity-50"
-			onclick={() => (tutorialModalOpen = true)}
+			onclick={showTutorialModal}
 			disabled={busy}
 		>
 			{m.start_tutorial_cta()}
@@ -184,5 +203,9 @@
 	</div>
 </div>
 
-<TutorialConfirmModal bind:open={tutorialModalOpen} onConfirm={openTutorial} />
-<PreferencesDialog bind:open={prefsOpen} />
+{#if TutorialModal}
+	<TutorialModal bind:open={tutorialModalOpen} onConfirm={openTutorial} />
+{/if}
+{#if PrefsDialog}
+	<PrefsDialog bind:open={prefsOpen} />
+{/if}
