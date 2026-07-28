@@ -21,7 +21,7 @@
 	import { applyStarter, applyImportedFiles, openTutorialProject, type Starter, type ImportedFile } from '$lib/workspace/starters';
 	import { editorViewStore, sourceCmView, viewMode as viewModeStore } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
-	import { synctexForward, synctexInverse } from '$lib/workspace/synctex';
+	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath, resolveGuestSyncRequest } from '$lib/workspace/syncTexNav';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
 	import { captureVisualAnchor as captureVisualAnchorAt, captureSourceAnchor, resolveVisualAnchor } from '$lib/editor/modeSwitchAnchors';
 	import { parseOutlineRaw, assembleProjectOutline } from '$lib/editor/extensions/tableofcontents/latexHeadings';
@@ -42,8 +42,12 @@
 	import { labelStore, referenceStore, filePathStore } from '$lib/stores/editorStore';
 	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
 	import { trailingDebounce } from '$lib/trailingDebounce';
+	import { DiffMode } from '$lib/workspace/diffMode.svelte';
+	import { createKeydownHandler, setUiZoom, uiZoomIn, uiZoomOut, uiZoomReset, UI_ZOOM_STEP } from '$lib/workspace/shortcuts';
+	import { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
+	import { startDrag, nudgeOnKey, clampTo } from '$lib/workspace/paneResize';
 	import { createSourceHistory } from '$lib/workspace/sourceHistory';
-	import { countFileRefs, replaceFileRefs } from '$lib/latex-parser/filerefs';
+	import { scanRenamedRefs, applyRefUpdate, flattenPaths } from '$lib/workspace/refUpdate';
 	import {
 		workspaceRoot,
 		texFiles,
@@ -163,12 +167,12 @@
 
 	// diff view (read-only): committed HEAD vs the live buffer, snapshotted (not bound)
 	// on entry / file switch / manual refresh so it never re-diffs per keystroke
-	let diffOriginal = $state(''); // HEAD content ('' when the file has no committed baseline)
-	let diffModified = $state(''); // the working buffer at snapshot time
-	let diffLoading = $state(false);
-	let diffError = $state<string | null>(null);
-	let diffHasHead = $state(true);
-	let diffLayout = $state<'unified' | 'split'>('unified');
+	// HEAD-vs-working-copy view; state and snapshotting live in lib/workspace/diffMode.svelte.ts
+	const diff = new DiffMode({
+		getLoadedPath: () => loadedPath,
+		getWorkingText: () => (kind === 'tex' ? texSource : rawContent)
+	});
+	const captureDiffSnapshot = () => diff.snapshot();
 	// the editable view to return to when leaving Diff (there's no tab manager)
 	let lastEditMode = $state<'visual' | 'source'>('visual');
 	let texSource = $state('');
@@ -333,7 +337,7 @@
 			viewMode = 'source';
 			lastEditMode = 'source';
 		}
-		if (localStorage.getItem('texpile:diffLayout') === 'split') diffLayout = 'split';
+		diff.restoreLayout();
 		if (localStorage.getItem('texpile:terminalShrink') === '1') terminalShrink = true;
 
 		// the tree is a snapshot: rescan on window focus and on the fs-changed event dispatched by
@@ -528,7 +532,7 @@
 			const { root, mainFile } = await openTutorialProject(pickedRoot);
 			await openFolderFromMenu(root);
 			setMainFile(root, mainFile);
-			mainConfirmed = true; // the starter picked the main; no first-compile question
+			mainPrompt.confirmed = true; // the starter picked the main; no first-compile question
 			activeFilePath.set(mainFile); // openFolderFromMenu opens files[0] (alphabetical), not the main file
 		} catch (e) {
 			toaster.error({ title: m.wsview_toast_tutorial_failed_title(), description: e instanceof Error ? e.message : String(e) });
@@ -550,7 +554,7 @@
 		if (get(workspaceRoot) !== root) return; // folder changed under us
 		// a folder whose main file was never explicitly chosen asks once before the first
 		// compile (single-file folders have nothing to choose)
-		mainConfirmed = files.length <= 1 || !!(saved && files.some((f) => samePath(f.path, saved)));
+		mainPrompt.confirmed = files.length <= 1 || !!(saved && files.some((f) => samePath(f.path, saved)));
 		mainFile.set(main);
 		void compiler.loadExistingPdf(); // show an already-compiled PDF for this folder without a recompile
 		projectMacros = main ? await gatherProjectMacros(main, root) : '';
@@ -563,7 +567,7 @@
 		if (!root) return;
 		const next = $mainFile && samePath($mainFile, path) ? null : path; // click the current main again to clear
 		setMainFile(root, next);
-		mainConfirmed = true; // an explicit choice (set or clear) settles the first-compile question
+		mainPrompt.confirmed = true; // an explicit choice (set or clear) settles the first-compile question
 		void compiler.loadExistingPdf(); // the main file changed â†’ its expected PDF did too
 		projectMacros = next ? await gatherProjectMacros(next, root) : '';
 		if (get(workspaceRoot) !== root) return;
@@ -597,28 +601,16 @@
 		sidebarOpen = !sidebarOpen;
 		updateSettings({ sidebarOpen });
 	}
+	const clampSidebar = clampTo(180, 600);
+	const commitSidebar = () => updateSettings({ sidebarWidth });
+	const setSidebar = (w: number) => (sidebarWidth = clampSidebar(w));
 	function startResize(e: MouseEvent) {
-		e.preventDefault();
 		const startX = e.clientX;
 		const startW = sidebarWidth;
-		const onMove = (ev: MouseEvent) => {
-			sidebarWidth = Math.min(600, Math.max(180, startW + ev.clientX - startX));
-		};
-		const onUp = () => {
-			window.removeEventListener('mousemove', onMove);
-			window.removeEventListener('mouseup', onUp);
-			updateSettings({ sidebarWidth }); // persist once the resize gesture ends
-		};
-		window.addEventListener('mousemove', onMove);
-		window.addEventListener('mouseup', onUp);
+		startDrag(e, { compute: (ev) => startW + ev.clientX - startX, apply: setSidebar, commit: commitSidebar });
 	}
-	// keyboard equivalent of the drag handle (Left/Right nudges 16px)
-	function resizeSidebarByKey(e: KeyboardEvent) {
-		if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-		e.preventDefault();
-		sidebarWidth = Math.min(600, Math.max(180, sidebarWidth + (e.key === 'ArrowRight' ? 16 : -16)));
-		updateSettings({ sidebarWidth });
-	}
+	const resizeSidebarByKey = (e: KeyboardEvent) =>
+		nudgeOnKey(e, { keys: ['ArrowLeft', 'ArrowRight'], step: 16, current: () => sidebarWidth, apply: setSidebar, commit: commitSidebar });
 
 	const showToc = $derived(!!loadedPath && kind === 'tex' && (viewMode === 'visual' || viewMode === 'source'));
 	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw
@@ -643,28 +635,16 @@
 	});
 	let tocFraction = $state(0.5); // TOC share of the sidebar's lower region (0..1)
 	let splitEl = $state<HTMLDivElement>();
+	const clampToc = clampTo(0.1, 0.9);
+	const commitToc = () => updateSettings({ tocFraction });
+	const setToc = (f: number) => (tocFraction = clampToc(f));
 	function startTocResize(e: MouseEvent) {
-		e.preventDefault();
 		const rect = splitEl?.getBoundingClientRect();
-		if (!rect) return;
-		const onMove = (ev: MouseEvent) => {
-			tocFraction = Math.min(0.9, Math.max(0.1, (rect.bottom - ev.clientY) / rect.height)); // drag up = taller TOC
-		};
-		const onUp = () => {
-			window.removeEventListener('mousemove', onMove);
-			window.removeEventListener('mouseup', onUp);
-			updateSettings({ tocFraction });
-		};
-		window.addEventListener('mousemove', onMove);
-		window.addEventListener('mouseup', onUp);
+		// drag up = taller TOC; measured against the split container, so it is a fraction not a delta
+		startDrag(e, { compute: (ev) => (rect ? (rect.bottom - ev.clientY) / rect.height : null), apply: setToc, commit: commitToc });
 	}
-	// keyboard equivalent of the drag handle (Up/Down nudges 2%)
-	function resizeTocByKey(e: KeyboardEvent) {
-		if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
-		e.preventDefault();
-		tocFraction = Math.min(0.9, Math.max(0.1, tocFraction + (e.key === 'ArrowUp' ? 0.02 : -0.02)));
-		updateSettings({ tocFraction });
-	}
+	const resizeTocByKey = (e: KeyboardEvent) =>
+		nudgeOnKey(e, { keys: ['ArrowDown', 'ArrowUp'], step: 0.02, current: () => tocFraction, apply: setToc, commit: commitToc });
 
 	// set in onMount (not at init) so the server and the first client render agree
 	let terminalAvailable = $state(false);
@@ -712,7 +692,7 @@
 	let draftTrigger = $state(0);
 	let draftRoot = $derived($workspaceRoot ?? '');
 	let draftMainRel = $derived.by(() => {
-		if (mainConfirmed !== true) return ''; // hold the first live compile until the main file is confirmed
+		if (mainPrompt.confirmed !== true) return ''; // hold the first live compile until the main file is confirmed
 		const target = $mainFile ?? loadedPath;
 		return $workspaceRoot && target ? relFromRoot(target, $workspaceRoot) : '';
 	});
@@ -725,67 +705,18 @@
 	// null, so it can't flash while initProject is still scanning. Storage is consulted
 	// SYNCHRONOUSLY on folder open (resolveMainConfirm) - a folder with a saved choice is
 	// confirmed before the first render.
-	let mainConfirmed = $state<boolean | null>(null);
-	function resolveMainConfirm(root: string | null) {
-		mainConfirmed = root ? (savedMainFile(root) ? true : null) : null;
-	}
-	let mainConfirmOpen = $state(false);
-	let mainChoice = $state<string | null>(null);
-	let mainDetected = $state<string | null>(null);
-	let mainDocRoots = $state<Set<string>>(new Set());
-	let afterMainConfirm: (() => void) | null = null;
-	// stable order: detected first, then document roots, then the rest (frozen at open so
-	// picking a different radio doesn't reshuffle the list)
-	let mainCandidates = $derived.by(() => {
-		const score = (f: TexFile) => (mainDetected && samePath(f.path, mainDetected) ? 0 : mainDocRoots.has(f.path) ? 1 : 2);
-		return [...$texFiles].sort((a, b) => score(a) - score(b) || a.relPath.localeCompare(b.relPath));
+	const mainPrompt = new MainFilePrompt({
+		loadExistingPdf: () => void compiler.loadExistingPdf(),
+		setProjectMacros: (macros) => (projectMacros = macros),
+		releaseHeldDraftCompile: () => draftTrigger++
 	});
-	async function openMainConfirm(then?: () => void) {
-		const root = get(workspaceRoot);
-		if (!root || mainConfirmOpen) return;
-		mainConfirmOpen = true;
-		afterMainConfirm = then ?? null;
-		const files = get(texFiles);
-		mainDetected = get(mainFile) ?? (await detectMainFile(files));
-		mainChoice = mainDetected;
-		mainDocRoots = await findDocRoots(files);
-	}
-	function finishMainConfirm() {
-		mainConfirmOpen = false;
-		mainConfirmed = true;
-		if (get(settings).draftMode) draftTrigger++; // the held first live compile can run now
-		const k = afterMainConfirm;
-		afterMainConfirm = null;
-		k?.();
-	}
-	async function confirmMainFile() {
-		const root = get(workspaceRoot);
-		if (!root || !mainChoice) return;
-		const chosen = mainChoice;
-		setMainFile(root, chosen);
-		void compiler.loadExistingPdf();
-		finishMainConfirm();
-		projectMacros = await gatherProjectMacros(chosen, root);
-	}
-	// closing the prompt still settles it: persist the pre-selected (detected) file so it doesn't
-	// return on every open. Nothing is locked in, the main file can be changed anytime via the file tree.
-	async function dismissMainConfirm() {
-		const root = get(workspaceRoot);
-		const chosen = mainChoice ?? mainDetected;
-		if (root && chosen) {
-			setMainFile(root, chosen);
-			void compiler.loadExistingPdf();
-			finishMainConfirm();
-			projectMacros = await gatherProjectMacros(chosen, root);
-		} else {
-			finishMainConfirm();
-		}
-	}
+	const resolveMainConfirm = (root: string | null) => mainPrompt.resolve(root);
+	const openMainConfirm = (then?: () => void) => mainPrompt.prompt(then);
 	// live mode compiles on its own as soon as the pane is open; surface the question then.
 	// Strictly `=== false`: null means initProject is still resolving, never a modal.
 	$effect(() => {
 		const wants = $settings.draftMode && pdfPaneOpen && !draftPaused && !!$workspaceRoot && $texFiles.length > 1;
-		if (wants && mainConfirmed === false && !mainConfirmOpen) void openMainConfirm();
+		if (wants && mainPrompt.confirmed === false && !mainPrompt.open) void mainPrompt.prompt();
 	});
 	// Draft mode live preview: ONE decision point per edit (the spec's "decide when to
 	// incrementally compile vs recompile"). Diff against the last-compiled source: if exactly
@@ -1046,37 +977,34 @@
 		updateSettings({ terminalVisible: true });
 		setTimeout(() => (wasMounted ? dock?.addTerminal() : dock?.focusActive()), 0);
 	}
+	const clampTerminal = clampTo(120, 700);
+	const commitTerminal = () => updateSettings({ terminalHeight });
+	// the xterm canvas has to re-measure on every step, not just at the end of the gesture
+	const setTerminalHeight = (h: number) => {
+		terminalHeight = clampTerminal(h);
+		dock?.refit();
+	};
 	function startTerminalResize(e: MouseEvent) {
-		e.preventDefault();
 		const startY = e.clientY;
 		const startH = terminalHeight;
-		const onMove = (ev: MouseEvent) => {
-			terminalHeight = Math.min(700, Math.max(120, startH + (startY - ev.clientY))); // drag up = taller
-			dock?.refit();
-		};
-		const onUp = () => {
-			window.removeEventListener('mousemove', onMove);
-			window.removeEventListener('mouseup', onUp);
-			updateSettings({ terminalHeight }); // persist once the gesture ends
-		};
-		window.addEventListener('mousemove', onMove);
-		window.addEventListener('mouseup', onUp);
+		// drag up = taller
+		startDrag(e, { compute: (ev) => startH + (startY - ev.clientY), apply: setTerminalHeight, commit: commitTerminal });
 	}
-	// keyboard equivalent of the drag handle (Up/Down nudges 16px)
-	function resizeTerminalByKey(e: KeyboardEvent) {
-		if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
-		e.preventDefault();
-		terminalHeight = Math.min(700, Math.max(120, terminalHeight + (e.key === 'ArrowUp' ? 16 : -16))); // up = taller
-		dock?.refit();
-		updateSettings({ terminalHeight });
-	}
+	const resizeTerminalByKey = (e: KeyboardEvent) =>
+		nudgeOnKey(e, {
+			keys: ['ArrowDown', 'ArrowUp'],
+			step: 16,
+			current: () => terminalHeight,
+			apply: setTerminalHeight,
+			commit: commitTerminal
+		});
 
 	// compile / terminal / PDF-watch orchestration lives in lib/workspace/compilePipeline.svelte.ts
 	const compiler = new CompilePipeline({
 		getLoadedPath: () => loadedPath,
 		getCompileCommand: () => compileCommand,
 		terminalAvailable: () => terminalAvailable,
-		mainConfirmed: () => mainConfirmed,
+		mainConfirmed: () => mainPrompt.confirmed,
 		getSession: () => session,
 		getDock: () => dock,
 		stat: statFile,
@@ -1169,36 +1097,23 @@
 	function togglePdfPane() {
 		setPdfPaneOpen(!pdfPaneOpen);
 	}
+	const setPdfWidth = (w: number) => (pdfPaneWidth = clampPdf(w));
 	function startPdfResize(e: MouseEvent) {
-		e.preventDefault();
 		const startX = e.clientX;
 		const startW = pdfPaneWidth;
-		const onMove = (ev: MouseEvent) => {
-			pdfPaneWidth = clampPdf(startW - (ev.clientX - startX)); // drag left = wider
-		};
-		const onUp = () => {
-			window.removeEventListener('mousemove', onMove);
-			window.removeEventListener('mouseup', onUp);
-			savePdfFraction(); // persist once the gesture ends
-		};
-		window.addEventListener('mousemove', onMove);
-		window.addEventListener('mouseup', onUp);
+		// drag left = wider
+		startDrag(e, { compute: (ev) => startW - (ev.clientX - startX), apply: setPdfWidth, commit: savePdfFraction });
 	}
-	// keyboard equivalent of the drag handle (Left/Right nudges 16px)
-	function resizePdfByKey(e: KeyboardEvent) {
-		if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-		e.preventDefault();
-		pdfPaneWidth = clampPdf(pdfPaneWidth + (e.key === 'ArrowLeft' ? 16 : -16)); // left = wider
-		savePdfFraction();
-	}
+	// left = wider, so ArrowRight is the one that shrinks
+	const resizePdfByKey = (e: KeyboardEvent) =>
+		nudgeOnKey(e, {
+			keys: ['ArrowRight', 'ArrowLeft'],
+			step: 16,
+			current: () => pdfPaneWidth,
+			apply: setPdfWidth,
+			commit: savePdfFraction
+		});
 
-	// SyncTeX needs the doc compiled with -synctex=1; the default command does it.
-	// normalize a path from synctex to the workspace separator so it matches the open file
-	function normPath(p: string): string {
-		const root = get(workspaceRoot) ?? '';
-		const sep = root.includes('\\') ? '\\' : '/';
-		return p.replace(/[\\/]+/g, sep);
-	}
 	function jumpPdf(page: number, x: number, y: number, w: number, h: number, tries = 0) {
 		if (pdfPaneRef) {
 			pdfPaneRef.scrollToPosition(page, x, y, w, h);
@@ -1206,67 +1121,29 @@
 		}
 		if (tries < 30) setTimeout(() => jumpPdf(page, x, y, w, h, tries + 1), 30); // wait for the pane to mount
 	}
-	// forward: a source line -> the matching place in the PDF (scroll + flash a highlight).
-	// Live mode syncs against the reconcile PDF (same layout the canvases show).
-	async function syncForwardLine(line: number) {
-		if (guest) {
-			// the host holds the .synctex data; ask it to resolve, then scroll our PDF copy
-			if (!loadedPath) return;
-			const res = await collabGuest.syncForward(loadedPath, line);
-			if (res) {
-				setPdfPaneOpen(true);
-				jumpPdf(res.page, res.x, res.y, res.w, res.h);
-			}
-			return;
-		}
-		const live = get(settings).draftMode;
-		const pdf = live ? draftRoot + '/_draft/draft.pdf' : compiler.expectedPdfPath();
-		if (!loadedPath || kind !== 'tex' || !pdf) return;
-		const res = await synctexForward(pdf, loadedPath, line);
-		console.debug('[synctex] forward', { tex: loadedPath, line, pdf, res });
-		if (!res.ok) {
-			toaster.error({ title: 'SyncTeX', description: res.error ?? m.wsview_toast_synctex_no_match() });
-			return;
-		}
-		setPdfPaneOpen(true);
-		// highlight the enclosing box: origin (h, v) = line-start + baseline, size (W, H). NOT (x, y),
-		// the matched node's point: pairing that with W/H drew the box shifted and ~a line too low.
-		if (live) draftRef?.syncTo(res.page, res.h, res.v, res.width, res.height);
-		else jumpPdf(res.page, res.h, res.v, res.width, res.height);
-	}
-	// forward from the current cursor (the header "Sync to PDF" button)
-	async function syncForward() {
-		const cm = get(sourceCmView);
-		if (!cm || !cm.dom.isConnected) return;
-		await syncForwardLine(cm.state.doc.lineAt(cm.state.selection.main.head).number);
-	}
 	// open a file in source mode and jump to a 1-based line (SyncTeX inverse + Find-in-Files)
 	function openFileAtLine(file: string, line: number, selectText?: string) {
-		// a guest's file keys are manifest-relative, but resolved jump targets (the Problems panel
-		// root-joins via resolveLogPath) arrive prefixed with the synthetic 'session' root. Strip it
-		// back off, else activeFilePath -> the Y.Text binding keys on 'session/foo.tex' and opens an
-		// empty buffer instead of the real shared file. No-op for host absolute paths.
-		const root = get(workspaceRoot);
-		const target = guest && root && file.startsWith(root + '/') ? file.slice(root.length + 1) : file;
+		const target = sessionRelativeTarget(file, guest);
 		viewMode = 'source';
 		localStorage.setItem('texpile:viewMode', 'source');
 		sourceGotoLine = { line, token: ++gotoToken, selectText };
-		if (!samePath(get(activeFilePath) ?? '', target)) activeFilePath.set(target);
+		if (needsActivate(target)) activeFilePath.set(target);
 	}
-	// inverse: a double-click in the PDF opens the source at the matching line; selectText
-	// lets the editor snap to the real text even if the line drifted
-	async function onPdfDoubleClick(page: number, x: number, y: number, selectText?: string) {
-		if (guest) {
-			const res = await collabGuest.syncInverse(page, x, y);
-			if (res && res.line >= 1) openFileAtLine(res.file, res.line, res.selectText ?? selectText);
-			return;
-		}
-		const pdf = compiler.expectedPdfPath();
-		if (!pdf) return;
-		const res = await synctexInverse(pdf, page, x, y);
-		console.debug('[synctex] inverse', { pdf, page, x, y, res, selectText });
-		if (res.ok && res.input && res.line >= 1) openFileAtLine(normPath(res.input), res.line, selectText);
-	}
+	// forward/inverse SyncTeX resolution lives in lib/workspace/syncTexNav.ts
+	const syncTex = new SyncTexNav({
+		isGuest: () => guest,
+		getLoadedPath: () => loadedPath,
+		isTex: () => kind === 'tex',
+		getDraftRoot: () => draftRoot,
+		expectedPdfPath: () => compiler.expectedPdfPath(),
+		setPdfPaneOpen,
+		scrollPdfTo: jumpPdf,
+		syncDraftTo: (page, x, y, w, h) => draftRef?.syncTo(page, x, y, w, h),
+		openFileAtLine
+	});
+	const syncForwardLine = (line: number) => syncTex.forwardToLine(line);
+	const syncForward = () => syncTex.forwardFromCursor();
+	const onPdfDoubleClick = (page: number, x: number, y: number, selectText?: string) => syncTex.inverseFromClick(page, x, y, selectText);
 
 	function openCompileModal() {
 		compileDraft = compileCommand;
@@ -1345,14 +1222,6 @@
 		referenceStore.set(allReferences);
 	});
 
-	// flatten the file tree to root-relative paths for file-path autocompletion
-	function flattenPaths(entries: TreeEntry[], root: string, out: string[] = []): string[] {
-		for (const e of entries) {
-			if (e.type === 'file') out.push(relFromRoot(e.path, root));
-			if (e.children) flattenPaths(e.children, root, out);
-		}
-		return out;
-	}
 	$effect(() => {
 		const tree = $fileTree;
 		const root = $workspaceRoot;
@@ -1363,48 +1232,25 @@
 	// that pointed at the file (AST-based) and offer to repoint them
 	let pendingRefUpdate = $state<RefUpdate | null>(null);
 
-	async function afterRename(oldPath: string, newPath: string) {
-		const root = get(workspaceRoot);
-		if (!root) return;
-		const oldRel = relFromRoot(oldPath, root);
-		const newRel = relFromRoot(newPath, root);
-		if (oldRel === newRel) return;
-		const hits: { path: string; count: number }[] = [];
-		let total = 0;
-		for (const f of get(texFiles)) {
-			try {
-				const content = f.path === loadedPath ? texSource : await readTextFile(f.path);
-				const count = countFileRefs(content, oldRel);
-				if (count > 0) {
-					hits.push({ path: f.path, count });
-					total += count;
-				}
-			} catch {
-				/* skip unreadable file */
-			}
+	const refUpdateDeps = {
+		getLoadedPath: () => loadedPath,
+		getSourceText: () => texSource,
+		setSourceText: (t: string) => (texSource = t),
+		readText: readTextFile,
+		writeText: writeTextFile,
+		onActiveFileEdited: () => {
+			if (viewMode === 'visual') rebuildVisualFromSource();
+			isDirty.set(true);
+			saver.schedule(loadedPath, texSource);
 		}
-		if (total > 0) pendingRefUpdate = { oldRel, newRel, hits, total };
+	};
+	async function afterRename(oldPath: string, newPath: string) {
+		pendingRefUpdate = await scanRenamedRefs(oldPath, newPath, refUpdateDeps);
 	}
-
-	async function applyRefUpdate() {
+	async function doApplyRefUpdate() {
 		const u = pendingRefUpdate;
 		pendingRefUpdate = null;
-		if (!u) return;
-		for (const h of u.hits) {
-			try {
-				if (h.path === loadedPath) {
-					texSource = replaceFileRefs(texSource, u.oldRel, u.newRel).text;
-					if (viewMode === 'visual') rebuildVisualFromSource();
-					isDirty.set(true);
-					saver.schedule(loadedPath, texSource);
-				} else {
-					const content = await readTextFile(h.path);
-					await writeTextFile(h.path, replaceFileRefs(content, u.oldRel, u.newRel).text);
-				}
-			} catch (e) {
-				console.error('Failed to update references in', h.path, e);
-			}
-		}
+		if (u) await applyRefUpdate(u, refUpdateDeps);
 	}
 
 	// remember the open file per folder so reopening the workspace restores it (StartView's
@@ -1549,21 +1395,8 @@
 			const root = get(workspaceRoot);
 			const pdf = compiler.expectedPdfPath();
 			if (!root || !pdf) return;
-			if (payload.kind === 'synctex-inverse') {
-				const res = await synctexInverse(pdf, payload.page, payload.x, payload.y);
-				if (res.ok && res.input && res.line >= 1) {
-					const rel = relativeTo(root, normPath(res.input)).replace(/\\/g, '/');
-					collabHost.replyControl({ kind: 'synctex-inverse-result', reqId: payload.reqId, file: rel, line: res.line }, from);
-				}
-			} else if (payload.kind === 'synctex-forward') {
-				const res = await synctexForward(pdf, joinPath(root, payload.file), payload.line);
-				if (res.ok) {
-					collabHost.replyControl(
-						{ kind: 'synctex-forward-result', reqId: payload.reqId, page: res.page, x: res.h, y: res.v, w: res.width, h: res.height },
-						from
-					);
-				}
-			}
+			const reply = await resolveGuestSyncRequest(payload, root, pdf);
+			if (reply) collabHost.replyControl(reply, from);
 		};
 		return () => {
 			session.onCompileRequest = null;
@@ -1998,32 +1831,6 @@
 		if (kind === 'tex' && lastEditMode === 'visual') rebuildVisualFromSource();
 	}
 
-	function toggleDiffLayout() {
-		diffLayout = diffLayout === 'unified' ? 'split' : 'unified';
-		if (browser) localStorage.setItem('texpile:diffLayout', diffLayout);
-	}
-
-	// snapshot the diff pair imperatively (entry / file switch / manual refresh), NOT from an
-	// $effect, so it never becomes reactive on texSource and re-diffs per keystroke
-	async function captureDiffSnapshot() {
-		if (!loadedPath) return;
-		const path = loadedPath;
-		diffModified = kind === 'tex' ? texSource : rawContent;
-		diffLoading = true;
-		diffError = null;
-		const res = await gitShowHead(path);
-		if (loadedPath !== path) return; // a file switch superseded this snapshot
-		diffLoading = false;
-		if (!res.ok) {
-			diffError = res.reason === 'no-git' ? m.wsview_diff_error_no_git() : (res.error ?? m.wsview_diff_error_default());
-			diffOriginal = '';
-			diffHasHead = false;
-			return;
-		}
-		diffHasHead = res.hasHead;
-		diffOriginal = res.content ?? '';
-	}
-
 	// source control ops live in lib/workspace/scmActions.svelte.ts; the panel is presentational.
 	const scm = new ScmActions({
 		getLoadedPath: () => loadedPath,
@@ -2168,56 +1975,19 @@
 		globalSearchRef?.focusInput(seed);
 	}
 
-	// Whole-window UI zoom (webContents.setZoomFactor scales the entire renderer: editor,
-	// sidebar, toolbars, panels). Persisted in settings and adjusted from the View menu and
-	// Ctrl/Cmd +/-/0. Distinct from the PDF / Live preview zoom, which only scales the preview.
-	const UI_ZOOM_MIN = 0.5;
-	const UI_ZOOM_MAX = 2.5;
-	const UI_ZOOM_STEP = 0.1;
 	const uiZoomPercent = $derived(Math.round(($settings.uiZoom ?? 1) * 100));
-	function setUiZoom(factor: number) {
-		const f = Math.min(UI_ZOOM_MAX, Math.max(UI_ZOOM_MIN, Math.round(factor * 100) / 100));
-		native()?.setZoomFactor?.(f);
-		updateSettings({ uiZoom: f });
-	}
-	const uiZoomIn = () => setUiZoom(($settings.uiZoom ?? 1) + UI_ZOOM_STEP);
-	const uiZoomOut = () => setUiZoom(($settings.uiZoom ?? 1) - UI_ZOOM_STEP);
-	const uiZoomReset = () => setUiZoom(1);
-
-	function onKeydown(e: KeyboardEvent) {
-		if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'w') {
-			e.preventDefault();
-			if (loadedPath) closeTab(loadedPath);
-		} else if (e.ctrlKey && e.key === 'Tab') {
-			e.preventDefault();
-			const next = tabs.cycle(get(activeFilePath), e.shiftKey ? -1 : 1);
-			if (next) activeFilePath.set(next);
-		} else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
-			e.preventDefault(); // block the browser save dialog; guests have nothing to save (edits are live)
-			if (!guest) save();
-		} else if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'f') {
-			e.preventDefault();
-			void openGlobalSearch();
-		} else if ((e.metaKey || e.ctrlKey) && (e.key === '=' || e.key === '+')) {
-			e.preventDefault(); // '=' is the unshifted '+' key, so this is Ctrl/Cmd+Plus
-			uiZoomIn();
-		} else if ((e.metaKey || e.ctrlKey) && e.key === '-') {
-			e.preventDefault();
-			uiZoomOut();
-		} else if ((e.metaKey || e.ctrlKey) && e.key === '0') {
-			e.preventDefault();
-			uiZoomReset();
-		} else if ((e.metaKey || e.ctrlKey) && e.altKey && e.key === 'Enter' && terminalAvailable) {
-			// was ctrl/cmd+alt+b (LaTeX Workshop's default build chord), but macOS treats
-			// option+b as a dead key for a special character, so e.key never reliably comes
-			// through as "b" there. Swapped the letter to Enter (not a dead-key character on
-			// macOS) rather than dropping Alt entirely - bare ctrl/cmd+enter is already taken
-			// by the Source Control panel's commit shortcut (SourceControlPanel.svelte).
-			e.preventDefault();
-			if (compiler.compiling) compiler.stopCompile();
-			else compiler.runCompile();
-		}
-	}
+	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
+	const onKeydown = createKeydownHandler({
+		getLoadedPath: () => loadedPath,
+		closeTab,
+		isGuest: () => guest,
+		save,
+		openGlobalSearch: () => void openGlobalSearch(),
+		terminalAvailable: () => terminalAvailable,
+		isCompiling: () => compiler.compiling,
+		runCompile: () => compiler.runCompile(),
+		stopCompile: () => compiler.stopCompile()
+	});
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -2365,12 +2135,12 @@
 					{sourceGotoLine}
 					{sourceScrollAnchor}
 					{sourceDiagnostics}
-					{diffOriginal}
-					{diffModified}
-					{diffLayout}
-					{diffLoading}
-					{diffError}
-					{diffHasHead}
+					diffOriginal={diff.original}
+					diffModified={diff.modified}
+					diffLayout={diff.layout}
+					diffLoading={diff.loading}
+					diffError={diff.error}
+					diffHasHead={diff.hasHead}
 					{fileUrl}
 					onPickStarter={pickStarter}
 					onBlankStarter={newTexFile}
@@ -2384,7 +2154,7 @@
 					onHistoryBoundary={workspaceHistoryStep}
 					onJumpToFile={jumpToInclude}
 					onOpenFileAt={openFileAtLine}
-					onToggleDiffLayout={toggleDiffLayout}
+					onToggleDiffLayout={() => diff.toggleLayout()}
 					onRefreshDiff={captureDiffSnapshot}
 					onExitDiff={exitDiff}
 				/>
@@ -2404,7 +2174,7 @@
 						onResizeByKey={resizePdfByKey}
 						onClose={togglePdfPane}
 						onPageClick={onPdfDoubleClick}
-						onInverseSync={(file, line, selectText) => openFileAtLine(normPath(file), line, selectText)}
+						onInverseSync={(file, line, selectText) => openFileAtLine(normSyncPath(file), line, selectText)}
 						onSettled={runDraftDecision}
 					/>
 				{/if}
@@ -2431,14 +2201,14 @@
 		</main>
 	</div>
 
-	{#if mainConfirmOpen}
+	{#if mainPrompt.open}
 		<MainFileModal
-			candidates={mainCandidates}
-			bind:choice={mainChoice}
-			detected={mainDetected}
-			docRoots={mainDocRoots}
-			onConfirm={confirmMainFile}
-			onDismiss={dismissMainConfirm}
+			candidates={mainPrompt.candidates}
+			bind:choice={mainPrompt.choice}
+			detected={mainPrompt.detected}
+			docRoots={mainPrompt.docRoots}
+			onConfirm={() => mainPrompt.confirm()}
+			onDismiss={() => mainPrompt.dismiss()}
 		/>
 	{/if}
 
@@ -2465,7 +2235,7 @@
 	{/if}
 
 	{#if pendingRefUpdate}
-		<RefUpdateModal update={pendingRefUpdate} onKeep={() => (pendingRefUpdate = null)} onApply={applyRefUpdate} />
+		<RefUpdateModal update={pendingRefUpdate} onKeep={() => (pendingRefUpdate = null)} onApply={doApplyRefUpdate} />
 	{/if}
 </div>
 
