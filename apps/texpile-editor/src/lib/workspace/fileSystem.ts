@@ -171,10 +171,7 @@ export async function scanTree(root: string): Promise<{ root: string; children: 
 }
 
 /** tree + flat .tex list from ONE native traversal (the refresh path used to walk twice). */
-export async function scanTreeAndFiles(
-	root: string,
-	exts?: string[]
-): Promise<{ root: string; children: TreeEntry[]; files: TexFile[] }> {
+export async function scanTreeAndFiles(root: string, exts?: string[]): Promise<{ root: string; children: TreeEntry[]; files: TexFile[] }> {
 	return ipc(requireNative().fsTreeScan(root, exts?.join(',')));
 }
 

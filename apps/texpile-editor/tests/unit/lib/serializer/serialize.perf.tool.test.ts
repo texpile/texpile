@@ -9,9 +9,7 @@ import { extractDocRefs } from '../../../../src/lib/latex-parser/labels';
 import { parseOutlineRaw } from '../../../../src/lib/editor/extensions/tableofcontents/latexHeadings';
 
 function buildPaper(targetBytes: number): string {
-	const chunks: string[] = [
-		'\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{graphicx}\n\\begin{document}\n'
-	];
+	const chunks: string[] = ['\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{graphicx}\n\\begin{document}\n'];
 	let size = 0;
 	let sec = 0;
 	while (size < targetBytes) {
@@ -67,7 +65,6 @@ describe('1MB document editing hot path', () => {
 		const refs = time(() => extractDocRefs(source));
 		const outline = time(() => parseOutlineRaw(source));
 
-		// eslint-disable-next-line no-console
 		console.log(
 			[
 				`\n--- 1MB paper (${(source.length / 1e6).toFixed(2)} MB, ${doc.childCount} top-level blocks) ---`,

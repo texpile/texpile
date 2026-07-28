@@ -1773,8 +1773,7 @@ function scanPreambleText(preamble: string, parseOptions: ParseOptions): Preambl
 	// the substring probes are just a cheap trigger for the parse; extraction is AST-based
 	// either way. (\edef doesn't contain "\def", hence all four.)
 	const wantsDefs = ['\\def', '\\edef', '\\gdef', '\\xdef'].some((t) => preamble.includes(t));
-	const wantsNewcommands =
-		/\\(?:new|renew|provide)command|\\(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand/.test(preamble);
+	const wantsNewcommands = /\\(?:new|renew|provide)command|\\(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand/.test(preamble);
 	if (wantsDefs || wantsNewcommands) {
 		let preAst: Root | null = null;
 		try {

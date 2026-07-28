@@ -100,7 +100,8 @@ export class SavePipeline {
 		if (!this._pending) return;
 		const sep = from.includes('\\') ? '\\' : '/';
 		if (samePath(this._pending.path, from)) this._pending = { ...this._pending, path: to };
-		else if (this._pending.path.startsWith(from + sep)) this._pending = { ...this._pending, path: to + this._pending.path.slice(from.length) };
+		else if (this._pending.path.startsWith(from + sep))
+			this._pending = { ...this._pending, path: to + this._pending.path.slice(from.length) };
 	}
 
 	/** append a write to the serial chain. snapshots the line ending now so a queued write still
