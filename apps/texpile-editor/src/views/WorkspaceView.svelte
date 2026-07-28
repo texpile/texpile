@@ -365,6 +365,12 @@
 		// path: flush the autosave debounce and proceed. autosave off with a pending edit: the
 		// modal can outlive the hold, so release the close NOW and re-issue it after the answer.
 		const offBeforeClose = native()?.onBeforeClose?.(async () => {
+			// a prompt is already up (ours or the file-switch guard's): its detached edit is
+			// invisible to saver.pending, so the fast path below would destroy it. Just refuse.
+			if (saveSwitchPrompt) {
+				native()?.closeDecision?.(false);
+				return;
+			}
 			if (autosaveActive() || !loadedPath || saver.pending?.path !== loadedPath) {
 				await saver.flushAndWait();
 				native()?.closeDecision?.(true);
@@ -384,6 +390,7 @@
 			window.removeEventListener('resize', onResize);
 			compiler.dispose();
 			saver.cancelTimer();
+			deferredSourceToc.cancel();
 			if (draftEditTimer) clearTimeout(draftEditTimer);
 		};
 	});
@@ -465,11 +472,15 @@
 	async function openFolderFromMenu(path?: string) {
 		const root = path ?? (await pickFolder());
 		if (!root) return;
-		if (!(await confirmLeaveUnsaved())) return; // Cancel aborts the folder switch outright
 		const prevRoot = get(workspaceRoot);
 		try {
-			// already open in another window: that window was focused, this one stays put
+			// already open in another window: that window was focused, this one stays put.
+			// claim BEFORE the unsaved prompt so a doomed switch never asks the user to discard.
 			if (!(await claimWorkspace(root)).ok) return;
+			if (!(await confirmLeaveUnsaved())) {
+				if (prevRoot) void claimWorkspace(prevRoot); // Cancel: restore this window's claim
+				return;
+			}
 			// a shared session is tied to THIS folder's doc; swapping the root would leave it sharing
 			// the old folder invisibly, so end it before the swap
 			if (session.active && root !== prevRoot) await session.end();
@@ -1669,6 +1680,13 @@
 	$effect(() => {
 		const path = $activeFilePath;
 		untrack(() => {
+			// a workspace-level prompt (folder switch / close / window close) detached the pending
+			// edit, so the guard below can't see it: park ALL file switches until it resolves, or a
+			// Ctrl+Tab under the modal reattaches the edit against the wrong file
+			if (saveSwitchPrompt?.resolve) {
+				if (path !== loadedPath) activeFilePath.set(loadedPath);
+				return;
+			}
 			// while the dialog is up, keep the UI parked on the outgoing file; remember the newest
 			// destination (Ctrl+Tab still works under the modal) and resolve it after the answer
 			if (heldSwitch) {

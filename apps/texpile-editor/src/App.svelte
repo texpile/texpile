@@ -22,8 +22,23 @@
 	let WorkspaceView = $state<typeof import('./views/WorkspaceView.svelte').default | null>(null);
 	let SessionRoute = $state<typeof import('./views/SessionRoute.svelte').default | null>(null);
 
-	const loadWorkspace = () => WorkspaceView ?? import('./views/WorkspaceView.svelte').then((mod) => (WorkspaceView = mod.default));
-	const loadSession = () => SessionRoute ?? import('./views/SessionRoute.svelte').then((mod) => (SessionRoute = mod.default));
+	// a chunk 404 (an auto-update swapped the hashed assets under a running window) is fixed by
+	// one reload, since index.html is served no-cache; the flag stops a truly-missing chunk from
+	// reload-looping
+	function chunkFail(e: unknown) {
+		console.error('Failed to load view chunk:', e);
+		if (sessionStorage.getItem('texpile:chunkRetried')) {
+			toaster.error({ title: 'Failed to load the editor', description: 'Please restart Texpile.' });
+			return;
+		}
+		sessionStorage.setItem('texpile:chunkRetried', '1');
+		location.reload();
+	}
+	const loaded = <T,>(mod: T): T => (sessionStorage.removeItem('texpile:chunkRetried'), mod);
+	const loadWorkspace = () =>
+		WorkspaceView ?? import('./views/WorkspaceView.svelte').then((mod) => (WorkspaceView = loaded(mod).default), chunkFail);
+	const loadSession = () =>
+		SessionRoute ?? import('./views/SessionRoute.svelte').then((mod) => (SessionRoute = loaded(mod).default), chunkFail);
 
 	// covers reloads landing straight on a hash and any navigate() we didn't preload for
 	$effect(() => {

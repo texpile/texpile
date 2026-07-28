@@ -329,6 +329,9 @@ function createWindow(url: string, pending?: PendingOpen): BrowserWindow {
 		if (closeReady) return;
 		if (!windowRoots.get(wcId)) return; // no claimed folder (start screen): nothing to flush
 		e.preventDefault();
+		// already held (double X-click, quit racing a click): keep the FIRST hold's timer — a
+		// second arm would orphan it and the orphan force-closes through the renderer's modal
+		if (pendingCloses.has(wcId)) return;
 		win.webContents.send('app:before-close');
 		const t = setTimeout(() => {
 			pendingCloses.delete(wcId);
@@ -343,6 +346,7 @@ function createWindow(url: string, pending?: PendingOpen): BrowserWindow {
 					if (!win.isDestroyed()) win.close();
 				} else if (quitting) {
 					quitting = false; // an aborted quit must un-freeze the openFolders snapshot
+					persistOpenFolders(); // and re-sync it (windows may have closed before the cancel)
 				}
 			}
 		});
@@ -358,6 +362,9 @@ function createWindow(url: string, pending?: PendingOpen): BrowserWindow {
 		}
 		// last window closing means "quit" on win/linux: keep the snapshot for next launch
 		if (BrowserWindow.getAllWindows().length > 0) persistOpenFolders();
+		// the close hold cancelled the original quit; once every window has agreed, finish it
+		// (macOS otherwise stays running with quitting latched and a frozen snapshot)
+		else if (quitting) app.quit();
 	});
 	return win;
 }
@@ -857,6 +864,11 @@ app.on('window-all-closed', () => {
 
 app.on('before-quit', () => {
 	quitting = true; // freeze the persisted openFolders snapshot before windows start closing
+});
+
+// destructive teardown only once the quit is actually happening: the unsaved-edit hold can
+// CANCEL a quit, and a cancelled quit must not have killed every shell and the warm engine
+app.on('will-quit', () => {
 	for (const p of ptys.values()) {
 		try {
 			p.kill();

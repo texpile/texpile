@@ -137,8 +137,9 @@ export function renderChildren(node: Node, inTableCell: boolean): string {
 		// happens when a separating construct didn't survive conversion). a single space restores
 		// the boundary and is render-neutral: TeX eats whitespace after a control word. purely
 		// lexical, runs on serialized output where no AST exists. only the tail needs testing (an
-		// end-anchored regex on the whole accumulator is quadratic across pieces).
-		if (piece && /\\[a-zA-Z@]+$/.test(out.slice(-64)) && /^[a-zA-Z]/.test(piece)) out += ' ';
+		// end-anchored regex on the whole accumulator is quadratic across pieces); 256 chars is
+		// far past any real control-word length.
+		if (piece && /\\[a-zA-Z@]+$/.test(out.slice(-256)) && /^[a-zA-Z]/.test(piece)) out += ' ';
 		out += piece;
 	}
 	return out;

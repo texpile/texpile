@@ -45,6 +45,8 @@ export async function lintText(
 		type: { typeName: string };
 		replacements?: string[];
 	}>;
+	/** worker/wasm failure: callers must NOT cache the empty result as "no problems". */
+	failed?: true;
 }> {
 	try {
 		const linter = await getHarperLinter();
@@ -84,7 +86,7 @@ export async function lintText(
 		return { matches };
 	} catch (error) {
 		console.error('[Harper] Linting error:', error);
-		return { matches: [] };
+		return { matches: [], failed: true };
 	}
 }
 

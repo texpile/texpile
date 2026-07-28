@@ -415,6 +415,10 @@
 		undoManager?.destroy();
 		undoManager = null;
 		view?.destroy();
+		view = null;
+		// stale timers must not write the NEXT file's counts into the shared store
+		deferredDocCount.cancel();
+		deferredSelectionCount.cancel();
 	});
 </script>
 

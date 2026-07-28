@@ -103,6 +103,7 @@ class SpellPlugin {
 
 	/** dictionary changed: cached paragraph results are stale, re-lint from scratch */
 	invalidate() {
+		this.gen++; // abort any in-flight pass: its results predate the dictionary change
 		this.cache.clear();
 		this.schedule(0);
 	}
@@ -159,9 +160,13 @@ class SpellPlugin {
 				size += stale[i].text.length + 2;
 				batch.push(stale[i++]);
 			} while (i < stale.length && size + stale[i].text.length + 2 <= CHUNK_CHARS);
-			const { matches } = await lintText(batch.map((p) => p.text).join('\n\n'), { language: 'plaintext', isStale });
+			const res = await lintText(batch.map((p) => p.text).join('\n\n'), { language: 'plaintext', isStale });
 			// a newer edit or a disable landed while the worker ran
 			if (isStale()) return;
+			// transient worker failure: abort without caching, or these paragraphs would be
+			// permanently marked clean; the next edit/schedule retries them
+			if (res.failed) return;
+			const { matches } = res;
 			// remap chunk offsets back to paragraph-relative and fill the cache
 			let base = 0;
 			for (const p of batch) {

@@ -1,4 +1,4 @@
-﻿import type { TocItem } from './tocStore';
+import type { TocItem } from './tocStore';
 
 // mirror the parser's section-level mapping (converter.ts) so the source outline nests the same
 // way the visual one does

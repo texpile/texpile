@@ -49,10 +49,16 @@ export function extractDocRefsAsync(latex: string, timeoutMs = 10000): Promise<D
 		const timeoutId = setTimeout(() => {
 			if (!pending.has(id)) return;
 			pending.delete(id);
-			// a runaway parse would starve every later request; reboot fresh on the next call
-			worker?.terminate();
-			worker = null;
 			resolve(null);
+			// a runaway parse would starve every later request; reboot fresh on the next call.
+			// only if OUR worker is still live — a prior timeout may have rebooted it, and killing
+			// the fresh one would cancel someone else's healthy request. settle everything queued
+			// on the dying worker so no orphaned timers survive to shoot the next worker.
+			if (worker === w) {
+				settleAll(null);
+				worker.terminate();
+				worker = null;
+			}
 		}, timeoutMs);
 		pending.set(id, { resolve, timeoutId });
 		w.postMessage({ id, latex });

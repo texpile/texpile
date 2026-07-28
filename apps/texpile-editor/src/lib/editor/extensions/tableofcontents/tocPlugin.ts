@@ -27,6 +27,8 @@ export function createTocPlugin() {
 				if (tr.docChanged) deferredCollect(tr.doc);
 				return null;
 			}
-		}
+		},
+		// a timer outliving this editor would overwrite the NEXT document's TOC
+		view: () => ({ destroy: () => deferredCollect.cancel() })
 	});
 }

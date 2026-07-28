@@ -152,6 +152,13 @@ export function createWordCountPlugin() {
 				deferredSelectionCount({ doc: tr.doc, from, to });
 				return null;
 			}
-		}
+		},
+		// a timer outliving this editor would overwrite the NEXT document's counts
+		view: () => ({
+			destroy: () => {
+				deferredDocCount.cancel();
+				deferredSelectionCount.cancel();
+			}
+		})
 	});
 }

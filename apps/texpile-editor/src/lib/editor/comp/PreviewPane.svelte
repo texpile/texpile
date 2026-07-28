@@ -12,7 +12,10 @@
 	let DraftViewComp = $state<typeof DraftView | null>(null);
 	$effect(() => {
 		if (!guest && $settings.draftMode && !DraftViewComp) {
-			import('$lib/draft/DraftView.svelte').then((mod) => (DraftViewComp = mod.default));
+			import('$lib/draft/DraftView.svelte').then(
+				(mod) => (DraftViewComp = mod.default),
+				(e) => console.error('Failed to load draft view chunk:', e)
+			);
 		}
 	});
 

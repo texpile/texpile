@@ -35,6 +35,7 @@ export function createRefUpdatePlugin() {
 				if (tr.docChanged) deferredCheck(tr.doc);
 				return null;
 			}
-		}
+		},
+		view: () => ({ destroy: () => deferredCheck.cancel() })
 	});
 }

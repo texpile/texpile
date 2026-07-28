@@ -47,8 +47,9 @@ class TabsStore {
 	/** every opened file gains a tab (file tree, SyncTeX jumps, include links, restores). */
 	noteOpened(path: string): void {
 		// root-scoped: a transient cross-folder activeFilePath (mid folder-switch, held save
-		// prompt) must never enter this folder's tab set or its persisted entry
-		if (this.root) {
+		// prompt) must never enter this folder's tab set or its persisted entry. persistable
+		// only: guest paths are manifest-relative (no root prefix) and never persist anyway.
+		if (this.root && this.persistable) {
 			const prefix = this.root + sepOf(this.root);
 			if (!samePath(path.slice(0, prefix.length), prefix)) return;
 		}

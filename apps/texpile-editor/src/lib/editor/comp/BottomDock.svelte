@@ -77,7 +77,10 @@
 	// svelte-ignore state_referenced_locally
 	if (terminalEnabled) {
 		ensure();
-		import('./Terminal.svelte').then((mod) => (TerminalComp = mod.default));
+		import('./Terminal.svelte').then(
+			(mod) => (TerminalComp = mod.default),
+			(e) => console.error('Failed to load terminal chunk:', e)
+		);
 	} else view = 'problems';
 
 	// ---- parent API (via bind:this) ----
