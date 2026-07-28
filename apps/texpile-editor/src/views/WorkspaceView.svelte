@@ -1728,22 +1728,19 @@
 		sourceHistory.disable();
 	}
 
-	// how long a visual-mode parse may hold a file open/tab switch before the file shows in
-	// source instead; small files finish inside this and land straight in visual (no flash)
-	const VISUAL_PARSE_GRACE_MS = 300;
-
-	// a parse that outlived the open-grace finishes here: stash the doc so the Visual toggle is
-	// instant (rebuildVisualFromSource's fast path). Discarded when superseded or the buffer
-	// changed underneath it — the toggle just reparses then.
+	// the open-time parse finishes here: fill the visual pane (the spinner branch yields to the
+	// editor reactively), or — if the user bailed to Source while it ran — stash the doc so the
+	// Visual toggle is instant (rebuildVisualFromSource's fast path). Discarded when superseded
+	// or the buffer changed underneath it; the toggle just reparses then.
 	function adoptBackgroundParse(parseP: Promise<ParseOutcome>, path: string, source: string, seq: number) {
 		void parseP.then((o) => {
 			if (get(activeFilePath) !== path || seq !== parseSequence || loadedPath !== path) return;
+			if (texSource !== source) return; // edited meanwhile: stale, drop it
 			if (o.failure) {
-				// already safely in source; only the true too-large case is worth a heads-up
-				if (o.failure.timeout) toaster.warning({ title: m.wsview_toast_file_too_large_title() });
+				fallbackToSource(o.failure); // don't leave the user on a spinner that can't resolve
 				return;
 			}
-			if (!o.parsed || texSource !== source) return; // edited meanwhile: stale, drop it
+			if (!o.parsed) return;
 			docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
 			visualDoc = o.parsed.doc;
 			lastDoc = o.parsed.doc;
@@ -1765,31 +1762,19 @@
 				const raw = await readTextFile(path);
 				if (get(activeFilePath) !== path) return; // raced past this file
 				const text = toLf(raw); // editor works in LF
-				// visual mode parses BEFORE the swap: publishing the new path with no doc yet is what
-				// dropped the pane to "Opening…" for the length of a whole parse. source mode has
-				// nothing to wait for.
-				// ...but only within a short grace window: a large file must not hold the tab switch
-				// hostage for the whole parse. After the grace it opens in SOURCE immediately
-				// (editable, toggle visible) and adopts the visual doc in the background when ready.
+				// the switch commits IMMEDIATELY from every entry point (tab, tree, jumps): buffers swap
+				// now, so the tab bar/toggle/title reflect the new file at once. Visual mode shows the
+				// loading pane (EditorPane's spinner branch) until the background parse lands; Source is
+				// one click away the whole time. The parse never holds the UI.
 				const mySeq = ++parseSequence;
-				const parseP = viewMode === 'visual' ? tryParseVisual(text) : null;
-				const outcome = parseP
-					? await Promise.race([parseP, new Promise<null>((r) => setTimeout(() => r(null), VISUAL_PARSE_GRACE_MS))])
-					: null;
-				if (get(activeFilePath) !== path || mySeq !== parseSequence) return; // superseded
-				if (outcome?.failure) fallbackToSource(outcome.failure); // this file opens in source instead
-				const parsed = outcome?.parsed ?? null;
-				if (parseP && !outcome) {
-					viewMode = 'source'; // not persisted: the same transient flip fallbackToSource does
-					adoptBackgroundParse(parseP, path, text, mySeq);
-				}
+				if (viewMode === 'visual') adoptBackgroundParse(tryParseVisual(text), path, text, mySeq);
 
 				docEol = detectEol(raw); // remember CRLF/LF to re-apply on save
 				texSource = text;
-				docMeta = parsed && { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
-				visualDoc = parsed?.doc ?? null;
-				lastDoc = parsed?.doc ?? null;
-				lastParsedSource = parsed ? text : null;
+				docMeta = null;
+				visualDoc = null;
+				lastDoc = null;
+				lastParsedSource = null;
 				loadedPath = path;
 				diskBaseline = text;
 				isDirty.set(false);

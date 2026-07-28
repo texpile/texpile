@@ -249,7 +249,8 @@
 					{m.wsview_binary_file_note({ name: basename(loadedPath) })}
 				</div>
 			{:else if $activeFilePath}
-				<div class="text-surface-500 mt-12 flex items-center justify-center gap-2 text-sm">
+				<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
+				<div class="text-surface-500 spinner-late mt-12 flex items-center justify-center gap-2 text-sm">
 					<Loader2 class="size-4 animate-spin" />
 					{m.wsview_opening()}
 				</div>
@@ -259,3 +260,15 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.spinner-late {
+		opacity: 0;
+		animation: spinner-late-in 0.2s ease 0.15s forwards;
+	}
+	@keyframes spinner-late-in {
+		to {
+			opacity: 1;
+		}
+	}
+</style>
