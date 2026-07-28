@@ -34,4 +34,19 @@ exports.default = async function afterPack(context) {
 		console.log('after-pack: chmod 755', p);
 	}
 	if (!helpers.length) console.log('after-pack: no spawn-helper found under', unpacked);
+
+	// prune OTHER platforms' node-pty prebuilds. This cannot live in per-platform `files` blocks:
+	// a file set with only exclusions is implicitly '**/*' minus them, which once shipped the
+	// whole repo in the asar. darwin keeps both arches (the universal merge needs them); linux
+	// keeps none (it loads from build/Release).
+	const prebuilds = path.join(unpacked, 'node_modules', 'node-pty', 'prebuilds');
+	if (fs.existsSync(prebuilds)) {
+		const keep = electronPlatformName === 'darwin' ? /^darwin-/ : electronPlatformName === 'win32' ? /^win32-/ : /$^/;
+		for (const dir of fs.readdirSync(prebuilds)) {
+			if (!keep.test(dir)) {
+				fs.rmSync(path.join(prebuilds, dir), { recursive: true, force: true });
+				console.log('after-pack: pruned prebuild', dir);
+			}
+		}
+	}
 };
