@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { onMount, onDestroy, tick, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import { browser } from '$lib/runtime';
@@ -1417,7 +1417,7 @@
 	});
 
 	// cross-file intel (labels/defs/glossary/outlines/aux numbers from the OTHER project files):
-	// rescan when the file list, main file, or active file changes â€” those are the only times the
+	// rescan when the file list, main file, or active file changes — those are the only times the
 	// non-active files' on-disk state can have moved under us (a switch flushes the previous save)
 	$effect(() => {
 		const files = $texFiles;
@@ -1710,7 +1710,7 @@
 			saver.flush(); // persist the outgoing file's queued edit before tearing down its buffers
 			loadError = null;
 			// the outgoing file stays on screen until loadFile has the new one ready: clearing here
-			// first is what made every switch blink through the "Openingâ€¦" placeholder
+			// first is what made every switch blink through the "Opening…" placeholder
 			if (path) loadFile(path);
 			else closeOpenFile();
 		});
@@ -1766,7 +1766,7 @@
 				if (get(activeFilePath) !== path) return; // raced past this file
 				const text = toLf(raw); // editor works in LF
 				// visual mode parses BEFORE the swap: publishing the new path with no doc yet is what
-				// dropped the pane to "Openingâ€¦" for the length of a whole parse. source mode has
+				// dropped the pane to "Opening…" for the length of a whole parse. source mode has
 				// nothing to wait for.
 				// ...but only within a short grace window: a large file must not hold the tab switch
 				// hostage for the whole parse. After the grace it opens in SOURCE immediately
