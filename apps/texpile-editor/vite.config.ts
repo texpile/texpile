@@ -79,9 +79,22 @@ export default defineConfig(({ mode }) => ({
 			// dynamically loaded by @codemirror/language-data's .load(); transitive, so resolve
 			// through it with Vite's `a > b` syntax
 			'@codemirror/language-data > @codemirror/legacy-modes/mode/stex', // LaTeX highlighting
-			'@codemirror/language-data > @codemirror/lang-json'
+			'@codemirror/language-data > @codemirror/lang-json',
+			// both belong to svelte-pdf-view, which stays EXCLUDED (pre-bundling it breaks its
+			// worker), so the prebundle list above misses them and pnpm won't resolve them from the
+			// app root: reach them through their owner. Vite used to discover them lazily when the
+			// preview first loaded, then force-reload the page mid-session, which white-screened the
+			// route-split views on the 504 their in-flight import got.
+			'svelte-pdf-view > esm-env',
+			'svelte-pdf-view > pdfjs-dist/legacy/build/pdf.mjs'
 		],
 		exclude: ['harper.js', 'svelte-pdf-view'],
+		// never discover a dep lazily. Discovery re-optimizes mid-session and force-reloads the
+		// page, which white-screens the route-split views when an in-flight chunk import 504s. The
+		// include list above is generated from package.json, so everything imported directly is
+		// covered; anything else (a language-data mode, say) is served unbundled instead, which is
+		// fine for ESM and fails loudly at first use rather than silently reloading the app.
+		noDiscovery: true,
 		esbuildOptions: {
 			target: 'esnext'
 		}

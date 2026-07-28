@@ -22,23 +22,39 @@
 	let WorkspaceView = $state<typeof import('./views/WorkspaceView.svelte').default | null>(null);
 	let SessionRoute = $state<typeof import('./views/SessionRoute.svelte').default | null>(null);
 
-	// a chunk 404 (an auto-update swapped the hashed assets under a running window) is fixed by
-	// one reload, since index.html is served no-cache; the flag stops a truly-missing chunk from
-	// reload-looping
-	function chunkFail(e: unknown) {
-		console.error('Failed to load view chunk:', e);
-		if (sessionStorage.getItem('texpile:chunkRetried')) {
-			toaster.error({ title: 'Failed to load the editor', description: 'Please restart Texpile.' });
-			return;
+	// a view chunk can fail transiently: in dev Vite re-optimizes deps mid-session and serves 504s
+	// for a beat, and in prod an auto-update swaps the hashed assets under a running window.
+	// Retry before giving up, and never leave the route rendering nothing (that reads as a hang).
+	let chunkError = $state(false);
+
+	async function retryImport<T>(load: () => Promise<T>): Promise<T | null> {
+		for (let attempt = 1; attempt <= 3; attempt++) {
+			try {
+				const mod = await load();
+				chunkError = false;
+				return mod;
+			} catch (e) {
+				console.error(`view chunk failed (attempt ${attempt}/3)`, e);
+				if (attempt < 3) await new Promise((r) => setTimeout(r, 300 * attempt));
+			}
 		}
-		sessionStorage.setItem('texpile:chunkRetried', '1');
-		location.reload();
+		chunkError = true;
+		return null;
 	}
-	const loaded = <T,>(mod: T): T => (sessionStorage.removeItem('texpile:chunkRetried'), mod);
+
+	// one in-flight load per view; cleared on failure so a later navigation can retry
+	let workspaceLoad: Promise<void> | null = null;
+	let sessionLoad: Promise<void> | null = null;
 	const loadWorkspace = () =>
-		WorkspaceView ?? import('./views/WorkspaceView.svelte').then((mod) => (WorkspaceView = loaded(mod).default), chunkFail);
+		(workspaceLoad ??= retryImport(() => import('./views/WorkspaceView.svelte')).then((mod) => {
+			if (mod) WorkspaceView = mod.default;
+			else workspaceLoad = null;
+		}));
 	const loadSession = () =>
-		SessionRoute ?? import('./views/SessionRoute.svelte').then((mod) => (SessionRoute = loaded(mod).default), chunkFail);
+		(sessionLoad ??= retryImport(() => import('./views/SessionRoute.svelte')).then((mod) => {
+			if (mod) SessionRoute = mod.default;
+			else sessionLoad = null;
+		}));
 
 	// covers reloads landing straight on a hash and any navigate() we didn't preload for
 	$effect(() => {
@@ -151,9 +167,9 @@
 	<StartView />
 {:else if route.path === '/workspace'}
 	<!-- null-render while the chunk loads; usually preloaded by the open handlers already -->
-	{#if WorkspaceView}<WorkspaceView />{/if}
+	{#if WorkspaceView}<WorkspaceView />{:else if chunkError}<ErrorView status={500} />{/if}
 {:else if route.path === '/session'}
-	{#if SessionRoute}<SessionRoute />{/if}
+	{#if SessionRoute}<SessionRoute />{:else if chunkError}<ErrorView status={500} />{/if}
 {:else}
 	<ErrorView status={404} />
 {/if}
