@@ -89,7 +89,10 @@ function countRaw(doc: Node): number {
  * macro-defining text from the main file's include chain (workspace/project.ts), scanned for
  * \newcommand signatures only, never written back.
  */
-export function parseLatexFile(latex: string, projectMacros = ''): ParsedLatexFile {
+export type ParsePhase = 'parsing' | 'building' | 'finalizing';
+
+export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (phase: ParsePhase) => void): ParsedLatexFile {
+	onPhase?.('parsing');
 	// a \begin{document} that only appears inside a comment must not count as the real
 	// wrapper, or the file gets mis-split and corrupted on save
 	const bi = uncommentedIndexOf(latex, BEGIN);
@@ -117,7 +120,8 @@ export function parseLatexFile(latex: string, projectMacros = ''): ParsedLatexFi
 	// the parser only sees the body, so pass the preamble plus any cross-file
 	// project macros for \newcommand signature scanning
 	const scanPreamble = projectMacros ? `${projectMacros}\n${preamble}` : preamble;
-	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble });
+	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble, onPhase });
+	onPhase?.('finalizing');
 	// complete the verbatim stamps: untouched blocks then round-trip byte-for-byte
 	const doc = fillOrigNorms(parsedDoc);
 

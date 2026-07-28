@@ -1812,6 +1812,9 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	const parseOptions: ParseOptions = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES };
 
 	const ast = parseLatex(latex, parseOptions);
+	// the sync unified-latex parse above is the single longest step and reports nothing while it
+	// runs; everything after it is ours, so this is the one honest boundary to announce
+	options.onPhase?.('building');
 
 	// capture commented frontmatter calls verbatim BEFORE comments are stripped. "known" =
 	// registered signature, handler, table rule, or indent/noindent. TABLE_RULE_MACROS matters:

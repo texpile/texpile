@@ -25,6 +25,9 @@ export interface ConversionOptions {
 	/** the verbatim-preserved preamble. The parser only gets the body, so this is scanned for
 	 *  \newcommand signatures; otherwise preamble-defined commands' args detach and lose braces. */
 	preamble?: string;
+	/** progress ping for the loading UI; fired at the few boundaries we can actually observe
+	 *  (the unified-latex parse itself is one opaque sync call). */
+	onPhase?: (phase: 'building') => void;
 }
 
 /**

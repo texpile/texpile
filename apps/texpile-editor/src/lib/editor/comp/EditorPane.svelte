@@ -16,7 +16,8 @@
 	import PreambleFrontmatter from './PreambleFrontmatter.svelte';
 	import EditorView from '$lib/editor/EditorView.svelte';
 	import type { EditSession } from '$lib/collab/editSession';
-	import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+	import type { ParsedLatexFile, ParsePhase } from '$lib/workspace/latexRoundtrip';
+	import VisualLoading from './VisualLoading.svelte';
 	import type { BibLaTeXReference } from '$lib/workspace/citations';
 	import type { Starter, ImportedFile } from '$lib/workspace/starters';
 	import { basename, dirname } from '$lib/workspace/fileSystem';
@@ -42,6 +43,10 @@
 		texSource: string;
 		rawContent: string;
 		visualDoc: PMNode | null;
+		/** stage of the in-flight parse, for the visual-mode loading bar; null = idle */
+		parseProgress?: ParsePhase | null;
+		/** escape hatch offered once the parse looks slow */
+		onUseSource?: () => void;
 		docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
 		allReferences: BibLaTeXReference[];
 		sourceGotoLine: { line: number; token: number; selectText?: string } | undefined;
@@ -87,6 +92,8 @@
 		texSource,
 		rawContent,
 		visualDoc,
+		parseProgress = null,
+		onUseSource,
 		docMeta,
 		allReferences,
 		sourceGotoLine,
@@ -209,6 +216,9 @@
 						</div>
 					</div>
 				{/key}
+			{:else if loadedPath && kind === 'tex' && viewMode === 'visual'}
+				<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
+				<VisualLoading phase={parseProgress} sizeBytes={texSource.length} {onUseSource} />
 			{:else if loadedPath && kind === 'bib' && (viewMode === 'source' || session.isGuest)}
 				<!-- guests always co-edit .bib through the Y-bound source editor; BibManager isn't
 				     CRDT-bound and would desync or clobber remote edits -->

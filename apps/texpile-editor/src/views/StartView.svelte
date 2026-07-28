@@ -55,7 +55,7 @@
 		'hover:bg-surface-200-800 rounded-base flex w-full items-center gap-2.5 px-2 py-1.5 text-left text-sm disabled:opacity-50';
 
 	// WorkspaceView is route-split (App.svelte); kick its chunk off as soon as an open begins so
-	// it streams while the folder scans. failures are non-fatal here — App's own loader retries
+	// it streams while the folder scans. failures are non-fatal here: App's own loader retries
 	// and owns the error path
 	const preloadWorkspace = () => void import('./WorkspaceView.svelte').catch(() => {});
 

@@ -142,7 +142,7 @@
 		})();
 	});
 	import { modLabel } from '$lib/platform';
-	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile, type ParsePhase } from '$lib/workspace/latexRoundtrip';
 	import { parseLatexFileAsync, PARSE_TIMEOUT } from '$lib/workspace/latexParserClient';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { toaster } from '$lib/modals/toaster-svelte';
@@ -1729,7 +1729,7 @@
 	}
 
 	// the open-time parse finishes here: fill the visual pane (the spinner branch yields to the
-	// editor reactively), or — if the user bailed to Source while it ran — stash the doc so the
+	// editor reactively), or (if the user bailed to Source while it ran) stash the doc so the
 	// Visual toggle is instant (rebuildVisualFromSource's fast path). Discarded when superseded
 	// or the buffer changed underneath it; the toggle just reparses then.
 	function adoptBackgroundParse(parseP: Promise<ParseOutcome>, path: string, source: string, seq: number) {
@@ -2040,6 +2040,8 @@
 	// timeout terminates a runaway worker, snaps back to source mode, and toasts. the
 	// parseSequence guard drops superseded results so a slow parse can't overwrite fresh state.
 	let parseSequence = 0;
+	// which stage the in-flight parse reached, for the visual-mode loading bar; null = idle
+	let parseProgress = $state<ParsePhase | null>(null);
 	// text we last successfully parsed; skip re-parsing when unchanged, a remount on identical content flashes
 	let lastParsedSource: string | null = null;
 
@@ -2059,10 +2061,13 @@
 	async function tryParseVisual(text: string): Promise<ParseOutcome> {
 		try {
 			const timeoutMs = Math.min(15000, 3000 + Math.floor(text.length / 100));
-			return { parsed: await parseLatexFileAsync(text, projectMacros, timeoutMs) };
+			parseProgress = 'parsing';
+			return { parsed: await parseLatexFileAsync(text, projectMacros, timeoutMs, (p) => (parseProgress = p)) };
 		} catch (e) {
 			const timeout = e instanceof Error && e.message === PARSE_TIMEOUT;
 			return { failure: { timeout, message: e instanceof Error ? e.message : String(e) } };
+		} finally {
+			parseProgress = null;
 		}
 	}
 
@@ -2330,6 +2335,8 @@
 					{texSource}
 					{rawContent}
 					{visualDoc}
+					{parseProgress}
+					onUseSource={() => setViewMode('source')}
 					{docMeta}
 					{allReferences}
 					{sourceGotoLine}
