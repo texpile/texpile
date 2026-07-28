@@ -232,11 +232,11 @@ class CodeBlockView {
 	stopEvent(): boolean {
 		return true;
 	}
-	destory() {
+	// ProseMirror calls destroy(); this used to be spelled `destory`, so it never ran and every
+	// removed code block leaked its CodeMirror instance and both capture listeners.
+	destroy() {
 		this.cm.dom.removeEventListener('focus', this.handleFocus, true);
 		this.cm.dom.removeEventListener('blur', this.handleBlur, true);
-		this.dom.querySelector('select').removeEventListener('focus', this.handleFocus);
-		this.dom.querySelector('select').removeEventListener('blur', this.handleBlur);
 		this.cm.destroy();
 	}
 }

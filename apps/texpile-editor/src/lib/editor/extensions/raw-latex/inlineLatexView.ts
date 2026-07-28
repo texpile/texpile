@@ -9,20 +9,45 @@ import type { EditorView as ProseMirrorView } from 'prosemirror-view';
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { latexAutocomplete } from '$lib/editor/extensions/intellisense/intellisense';
 
-// single-line inline codemirror for inline_latex; newlines rejected, enter / arrow-out exit the node
+// single-line inline codemirror for inline_latex; newlines rejected, enter / arrow-out exit the node.
+// The CodeMirror instance is built on first interaction, not at mount: a real paper carries tens of
+// thousands of these chips, and ProseMirror constructs every node view up front with no
+// virtualization, so eager CM instances (each with its own extensions, autocomplete and async
+// language load) are what lock the renderer for minutes on a large document. Until then the chip is
+// a plain text span, which also reads better for browser find and copy.
 class InlineLatexView {
 	node: Node;
 	view: ProseMirrorView;
 	getPos: () => number;
-	cm: CodeMirrorView;
+	cm: CodeMirrorView | null = null;
 	dom: HTMLElement;
 	updating = false;
 	languageConf = new CodeMirrorCompartment();
+	/** the placeholder shown until the chip is edited; removed once CM takes over */
+	private textEl: HTMLElement | null;
 
 	constructor(node: Node, view: ProseMirrorView, getPos: () => number) {
 		this.node = node;
 		this.view = view;
 		this.getPos = getPos;
+
+		const wrapper = document.createElement('span');
+		// thin outline only, matches the raw latex block
+		wrapper.className =
+			'noautofocus inline-latex-wrapper border-surface-400-600 mx-px inline-block rounded-base border px-0.5 align-baseline';
+		// same monospace as the CM theme below, so upgrading doesn't reflow the line
+		this.textEl = document.createElement('span');
+		this.textEl.className = 'inline-latex-text font-mono whitespace-pre-wrap';
+		this.textEl.textContent = node.textContent;
+		wrapper.appendChild(this.textEl);
+		this.dom = wrapper;
+
+		this.handleBlur = this.handleBlur.bind(this);
+	}
+
+	/** build the real editor and swap it in; idempotent. */
+	private ensureCm(): CodeMirrorView {
+		if (this.cm) return this.cm;
 
 		this.cm = new CodeMirrorView({
 			doc: this.node.textContent,
@@ -53,20 +78,17 @@ class InlineLatexView {
 			]
 		});
 
-		const wrapper = document.createElement('span');
-		// thin outline only, matches the raw latex block
-		wrapper.className =
-			'noautofocus inline-latex-wrapper border-surface-400-600 mx-px inline-block rounded-base border px-0.5 align-baseline';
-		wrapper.appendChild(this.cm.dom);
-		this.dom = wrapper;
+		this.textEl?.remove();
+		this.textEl = null;
+		this.dom.appendChild(this.cm.dom);
 
 		const latexLang = cmlangdata.find((lang) => lang.name === 'LaTeX');
-		latexLang?.load().then((lang) => this.cm.dispatch({ effects: this.languageConf.reconfigure(lang) }));
+		latexLang?.load().then((lang) => this.cm?.dispatch({ effects: this.languageConf.reconfigure(lang) }));
 
 		// collapse the inner CM selection on blur: drawSelection renders even while unfocused, so
 		// without this the chip keeps its own highlighted selection alongside the main editor's
-		this.handleBlur = this.handleBlur.bind(this);
 		this.cm.dom.addEventListener('blur', this.handleBlur, true);
+		return this.cm;
 	}
 
 	handleBlur() {
@@ -75,12 +97,12 @@ class InlineLatexView {
 
 	deselectNode(): void {
 		setTimeout(() => {
-			this.cm.dispatch({ selection: { anchor: 0, head: 0 } });
+			this.cm?.dispatch({ selection: { anchor: 0, head: 0 } });
 		}, 0);
 	}
 
 	forwardUpdate(update: ViewUpdate): void {
-		if (this.updating || !this.cm.hasFocus) return;
+		if (this.updating || !this.cm?.hasFocus) return;
 		let offset = this.getPos() + 1;
 		const { main } = update.state.selection;
 		const selFrom = offset + main.from;
@@ -99,9 +121,10 @@ class InlineLatexView {
 	}
 
 	setSelection(anchor: number, head: number): void {
-		this.cm.focus();
+		const cm = this.ensureCm(); // the caret is landing inside: this chip is now being edited
+		cm.focus();
 		this.updating = true;
-		this.cm.dispatch({ selection: { anchor, head } });
+		cm.dispatch({ selection: { anchor, head } });
 		this.updating = false;
 	}
 
@@ -132,7 +155,7 @@ class InlineLatexView {
 	}
 
 	maybeDelete(): boolean {
-		if (this.cm.state.doc.toString().length !== 0) return false;
+		if (!this.cm || this.cm.state.doc.toString().length !== 0) return false;
 		const pos = this.getPos();
 		this.view.dispatch(this.view.state.tr.delete(pos, pos + this.node.nodeSize));
 		this.view.focus();
@@ -140,6 +163,7 @@ class InlineLatexView {
 	}
 
 	maybeEscape(_unit: string, dir: number): boolean {
+		if (!this.cm) return false;
 		const { main } = this.cm.state.selection;
 		if (!main.empty) return false;
 		if (dir < 0 ? main.from > 0 : main.to < this.cm.state.doc.length) return false;
@@ -155,6 +179,11 @@ class InlineLatexView {
 		this.node = node;
 		if (this.updating) return true;
 		const newText = node.textContent;
+		if (!this.cm) {
+			// still a placeholder: just retext it
+			if (this.textEl && this.textEl.textContent !== newText) this.textEl.textContent = newText;
+			return true;
+		}
 		const curText = this.cm.state.doc.toString();
 		if (newText != curText) {
 			let start = 0;
@@ -173,16 +202,18 @@ class InlineLatexView {
 	}
 
 	selectNode(): void {
-		this.cm.focus();
+		this.ensureCm().focus();
 	}
 
+	// only swallow events once CM owns the DOM; while it's a placeholder ProseMirror must see the
+	// click so it can resolve a position and call setSelection, which is what upgrades the chip
 	stopEvent(): boolean {
-		return true;
+		return this.cm !== null;
 	}
 
 	destroy() {
-		this.cm.dom.removeEventListener('blur', this.handleBlur, true);
-		this.cm.destroy();
+		this.cm?.dom.removeEventListener('blur', this.handleBlur, true);
+		this.cm?.destroy();
 	}
 }
 
