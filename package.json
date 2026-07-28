@@ -17,7 +17,7 @@
 		"app:build": "pnpm --filter=svelte-pdf-view run package && pnpm --filter=texpile-editor run build && pnpm electron:build:prod",
 		"electron": "pnpm electron:build && electron .",
 		"electron:build": "tsc -p electron",
-		"electron:dev": "concurrently -k -n vite,electron \"pnpm --filter=texpile-editor dev\" \"pnpm electron:build && wait-on tcp:5173 && cross-env ELECTRON_START_URL=http://localhost:5173 electron .\"",
+		"electron:dev": "concurrently -k -n vite,electron \"pnpm --filter=texpile-editor dev\" \"pnpm electron:build && wait-on tcp:127.0.0.1:5173 && cross-env ELECTRON_START_URL=http://127.0.0.1:5173 electron .\"",
 		"electron:rebuild": "electron-rebuild -f -w node-pty",
 		"dist": "pnpm app:build && electron-builder --publish never",
 		"dist:linux": "pnpm app:build && electron-builder --linux --publish never",

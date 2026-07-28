@@ -87,6 +87,13 @@ export default defineConfig(({ mode }) => ({
 		}
 	},
 
+	// pin the dev server to IPv4: binding plain `localhost` can land on ::1 only, and the
+	// Electron window (which loads ELECTRON_START_URL over IPv4) then sees ERR_CONNECTION_REFUSED
+	// while browsers happily connect over IPv6 - a white window with a "working" server
+	server: {
+		host: '127.0.0.1'
+	},
+
 	assetsInclude: ['**/*.wasm'],
 
 	worker: {

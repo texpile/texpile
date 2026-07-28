@@ -370,7 +370,7 @@ function createWindow(url: string, pending?: PendingOpen): BrowserWindow {
 }
 
 function startUrl(): string {
-	if (isDev) return process.env.ELECTRON_START_URL || 'http://localhost:5173';
+	if (isDev) return process.env.ELECTRON_START_URL || 'http://127.0.0.1:5173';
 	return 'app://bundle/index.html';
 }
 
@@ -550,7 +550,9 @@ function systemUiLocale(): UiLocale {
 const settingsFile = () => path.join(app.getPath('userData'), 'settings.json');
 function storedSettings(): Record<string, unknown> {
 	try {
-		return JSON.parse(fs.readFileSync(settingsFile(), 'utf8')) as Record<string, unknown>;
+		// tolerate a UTF-8 BOM (an externally-edited file): JSON.parse rejects it, and the silent
+		// catch below would then reset EVERY setting to defaults
+		return JSON.parse(fs.readFileSync(settingsFile(), 'utf8').replace(/^\uFEFF/, '')) as Record<string, unknown>;
 	} catch {
 		return {}; // no file yet (genuine first run) or unreadable: fall back to defaults + detection
 	}
