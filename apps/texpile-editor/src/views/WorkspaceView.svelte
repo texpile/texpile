@@ -43,6 +43,9 @@
 	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { DiffMode } from '$lib/workspace/diffMode.svelte';
+	import { FolderLifecycle } from '$lib/workspace/folderLifecycle';
+	import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
+	import { DraftDispatcher } from '$lib/draft/draftDispatcher';
 	import { createKeydownHandler, setUiZoom, uiZoomIn, uiZoomOut, uiZoomReset, UI_ZOOM_STEP } from '$lib/workspace/shortcuts';
 	import { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
 	import { startDrag, nudgeOnKey, clampTo } from '$lib/workspace/paneResize';
@@ -138,7 +141,7 @@
 				if (macros === projectMacros) return;
 				projectMacros = macros;
 				// signatures changed: a doc parsed without them is stale, re-derive the open one
-				lastParsedSource = '';
+				parser.lastParsedSource = '';
 				if (loadedPath && kind === 'tex' && viewMode === 'visual') rebuildVisualFromSource();
 			} catch {
 				projectMacros = '';
@@ -146,8 +149,8 @@
 		})();
 	});
 	import { modLabel } from '$lib/platform';
-	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile, type ParsePhase } from '$lib/workspace/latexRoundtrip';
-	import { parseLatexFileAsync, PARSE_TIMEOUT, PARSE_TOO_COMPLEX } from '$lib/workspace/latexParserClient';
+	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+	import { VisualParser, type ParseFailure, type ParseOutcome } from '$lib/workspace/visualParse.svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -371,7 +374,7 @@
 		const offBeforeClose = native()?.onBeforeClose?.(async () => {
 			// a prompt is already up (ours or the file-switch guard's): its detached edit is
 			// invisible to saver.pending, so the fast path below would destroy it. Just refuse.
-			if (saveSwitchPrompt) {
+			if (unsaved.prompt) {
 				native()?.closeDecision?.(false);
 				return;
 			}
@@ -395,7 +398,7 @@
 			compiler.dispose();
 			saver.cancelTimer();
 			deferredSourceToc.cancel();
-			if (draftEditTimer) clearTimeout(draftEditTimer);
+			draftDispatcher.cancel();
 		};
 	});
 
@@ -470,95 +473,27 @@
 		activeFilePath.set(entry.path);
 	}
 
-	// re-init the workspace in place: swap the root, rescan, re-derive the project, load its first
-	// file. the unsaved-edit guard and flush run BEFORE any store flips, so Cancel really cancels
-	// and no effect can record the old folder's file under the new root.
-	async function openFolderFromMenu(path?: string) {
-		const root = path ?? (await pickFolder());
-		if (!root) return;
-		const prevRoot = get(workspaceRoot);
-		try {
-			// already open in another window: that window was focused, this one stays put.
-			// claim BEFORE the unsaved prompt so a doomed switch never asks the user to discard.
-			if (!(await claimWorkspace(root)).ok) return;
-			if (!(await confirmLeaveUnsaved())) {
-				if (prevRoot) void claimWorkspace(prevRoot); // Cancel: restore this window's claim
-				return;
-			}
-			// a shared session is tied to THIS folder's doc; swapping the root would leave it sharing
-			// the old folder invisibly, so end it before the swap
-			if (session.active && root !== prevRoot) await session.end();
-			const { files } = await scanTexFiles(root);
-			resolveMainConfirm(root); // before the stores flip, so the modal effect can't see a stale state
-			saver.flush(); // autosave-on: persist the outgoing folder's queued edit before the swap
-			activeFilePath.set(null); // detach the old file so nothing re-tabs it under the new root
-			workspaceRoot.set(root);
-			tabs.bind(root, hostMode); // rebind before refreshTree's prune, so tabs persist under the NEW root
-			texFiles.set(files);
-			addRecentFolder(root);
-			updateSettings({ lastFolder: root });
-			await refreshTree();
-			await initProject(root);
-			loadRefs(root);
-			activeFilePath.set(files[0]?.path ?? null);
-			// the open shells were spawned in the previous folder; respawn them in the new one
-			if (root !== prevRoot) resetTerminalsForWorkspace();
-		} catch (e) {
-			console.error('Failed to open folder:', e);
-		}
-	}
-
-	// clears the in-memory workspace and returns to the Start screen. Doesn't touch the persisted
-	// `lastFolder` setting, so relaunching the app still reopens where you left off - this only
-	// affects the current session's view.
-	async function closeWorkspace() {
-		if (!(await confirmLeaveUnsaved())) return; // autosave off: Save/Discard/Cancel instead of a silent force-write
-		await saver.flushAndWait();
-		resolveMainConfirm(null);
-		releaseWorkspace(); // frees the folder so another window may open it
-		workspaceRoot.set(null);
-		texFiles.set([]);
-		fileTree.set([]);
-		activeFilePath.set(null);
-		mainFile.set(null);
-		isDirty.set(false);
-		tabs.bind(null, false); // never leave the store bound persistable to a released root
-		navigate('/');
-	}
-
-	// TutorialConfirmModal has the user pick an empty folder and confirm first; this only runs after
-	async function openTutorial(pickedRoot: string) {
-		try {
-			const { root, mainFile } = await openTutorialProject(pickedRoot);
-			await openFolderFromMenu(root);
-			setMainFile(root, mainFile);
-			mainPrompt.confirmed = true; // the starter picked the main; no first-compile question
-			activeFilePath.set(mainFile); // openFolderFromMenu opens files[0] (alphabetical), not the main file
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_tutorial_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		}
-	}
+	const folder = new FolderLifecycle({
+		scanTexFiles,
+		confirmLeaveUnsaved: () => confirmLeaveUnsaved(),
+		flushSaves: () => saver.flush(),
+		flushSavesAndWait: () => saver.flushAndWait(),
+		sessionActive: () => session.active,
+		endSession: () => session.end(),
+		hostMode: () => hostMode,
+		refreshTree,
+		loadRefs,
+		resolveMainConfirm: (root) => resolveMainConfirm(root),
+		setMainConfirmed: (v) => (mainPrompt.confirmed = v),
+		loadExistingPdf: () => void compiler.loadExistingPdf(),
+		setProjectMacros: (macros) => (projectMacros = macros),
+		resetTerminals: resetTerminalsForWorkspace
+	});
+	const openFolderFromMenu = (path?: string) => folder.open(path);
+	const closeWorkspace = () => folder.close();
+	const openTutorial = (root: string) => folder.openTutorial(root);
+	const initProject = (root: string) => folder.initProject(root);
 	let tutorialModalOpen = $state(false);
-
-	// resolve the main file (persisted choice if it still exists, else auto-detect) and gather
-	// its cross-file macros. runs once on folder open, before any file is loaded.
-	async function initProject(root: string) {
-		let files: TexFile[] = [];
-		try {
-			files = (await scanTexFiles(root)).files;
-		} catch {
-			/* leave files empty */
-		}
-		const saved = savedMainFile(root);
-		const main = saved && files.some((f) => samePath(f.path, saved)) ? saved : await detectMainFile(files);
-		if (get(workspaceRoot) !== root) return; // folder changed under us
-		// a folder whose main file was never explicitly chosen asks once before the first
-		// compile (single-file folders have nothing to choose)
-		mainPrompt.confirmed = files.length <= 1 || !!(saved && files.some((f) => samePath(f.path, saved)));
-		mainFile.set(main);
-		void compiler.loadExistingPdf(); // show an already-compiled PDF for this folder without a recompile
-		projectMacros = main ? await gatherProjectMacros(main, root) : '';
-	}
 
 	// persist the new main file, re-gather macros, and re-derive the open visual doc from
 	// texSource so the newly resolved command signatures take effect immediately
@@ -725,25 +660,16 @@
 	// daemon's pace rather than only updating when you pause). Any structural change debounces
 	// a full recompile. Only while the preview pane is open; the compile reads from disk.
 	let draftRef = $state<DraftView | null>(null);
-	let draftEditTimer: ReturnType<typeof setTimeout> | null = null;
-	let lastDraftSrc = ''; // source at the last full draft compile; the patch baseline
-	let lastDraftPath: string | null = null; // file that source belongs to
-
-	// the decision layer + paragraph splitter live in $lib/draft/dispatch, shared with
-	// the headless edit-class matrix (tests/live)
-	import { decideEdit } from '$lib/draft/dispatch';
-
-	const dev = (kind: string, detail?: unknown) => {
-		const w = window as unknown as { __draftEvents?: unknown[] };
-		(w.__draftEvents ||= []).push({ kind, detail, t: performance.now() });
-	};
-
-	async function fullRecompile(src: string) {
-		lastDraftSrc = src;
-		lastDraftPath = loadedPath;
-		await saver.flushAndWait();
-		draftTrigger++;
-	}
+	// per-edit patch-vs-recompile decision lives in lib/draft/draftDispatcher.ts
+	const draftDispatcher = new DraftDispatcher({
+		getSource: () => texSource,
+		getLoadedPath: () => loadedPath,
+		isActive: () => $settings.draftMode && pdfPaneOpen && !!loadedPath && !draftPaused,
+		flushSaves: () => saver.flushAndWait(),
+		triggerFullCompile: () => draftTrigger++,
+		getTarget: () => draftRef
+	});
+	const runDraftDecision = () => draftDispatcher.run();
 
 	// Stop the warm engine when draft mode is off, no preview is open, or the folder changed
 	// -- otherwise it keeps a lualatex process (100-300MB with a heavy preamble) alive for the
@@ -759,90 +685,6 @@
 		daemonRoot = root;
 	});
 
-	// one decision point per edit; also re-invoked when a compile settles so edits typed
-	// mid-compile don't wait for the next keystroke to show up
-	function runDraftDecision() {
-		const src = texSource;
-		const active = $settings.draftMode && pdfPaneOpen && !!loadedPath && !draftPaused;
-		if (draftEditTimer) {
-			clearTimeout(draftEditTimer);
-			draftEditTimer = null;
-		}
-		if (!active || src === lastDraftSrc) return;
-		// path changed since the last compile (switched files): recompile, don't diff
-		if (loadedPath !== lastDraftPath || !lastDraftSrc) {
-			draftEditTimer = setTimeout(() => fullRecompile(src), 400);
-			return;
-		}
-		const d = decideEdit(lastDraftSrc, src);
-		const fr = get(workspaceRoot);
-		const file = fr && loadedPath ? relFromRoot(loadedPath, fr) : null;
-		const onRec = async () => {
-			await saver.flushAndWait();
-			lastDraftSrc = src;
-			lastDraftPath = loadedPath;
-		};
-		const debounceRecompile = () => {
-			draftEditTimer = setTimeout(() => fullRecompile(src), 500);
-		};
-		switch (d.kind) {
-			case 'noop':
-				// render-identical edit: no compile, no patch, just advance the baseline
-				lastDraftSrc = src;
-				lastDraftPath = loadedPath;
-				dev('ws-noop-whitespace', {});
-				return;
-			case 'boundary':
-				dev('ws-recompile', { reason: 'boundary-line' });
-				debounceRecompile();
-				return;
-			case 'skip-unbalanced':
-				// unrepairable mid-command state: hold the preview until the next keystroke
-				dev('ws-skip-unbalanced', { line: d.line });
-				return;
-			case 'env-body':
-				dev('ws-recompile', { reason: 'env-body:' + d.env });
-				debounceRecompile();
-				return;
-			case 'structural': {
-				// heavier change: wait for a pause before recompiling, then land the view on the
-				// first diverging block. Inserts/deletes that CAN render instantly arrived here
-				// as 'patch' (the merged engine typeset); there is no JS-placed splice fallback.
-				dev('ws-recompile', { reason: d.reason });
-				if (file && d.focus)
-					draftRef?.focusAfterCompile({
-						file,
-						line: d.focus.line,
-						endLine: d.focus.endLine,
-						text: d.focus.text,
-						listItem: d.focus.listItem
-					});
-				debounceRecompile();
-				return;
-			}
-			case 'patch': {
-				// one block changed: patch IMMEDIATELY (no debounce -- instantPatch's in-flight
-				// guard coalesces bursts). The daemon typesets IN MEMORY; only an abandon needs
-				// the file on disk (onRecompile saves lazily then advances the baseline).
-				if (!file) return;
-				if (d.transient) dev('ws-repaired', { line: d.line });
-				dev('ws-dispatch', { file, line: d.line });
-				draftRef?.instantPatch({
-					file,
-					line: d.line,
-					endLine: d.endLine,
-					text: d.text,
-					orig: d.orig,
-					transient: d.transient,
-					floatInner: d.floatInner,
-					listItem: d.listItem,
-					cmdChanged: d.cmdChanged,
-					onRecompile: onRec
-				});
-				return;
-			}
-		}
-	}
 	// signal reads inside runDraftDecision are tracked through this synchronous call
 	$effect(() => {
 		runDraftDecision();
@@ -1042,8 +884,7 @@
 		}
 		draftPaused = false; // compiling implies live (covers the keyboard-shortcut path)
 		await saver.flushAndWait();
-		lastDraftSrc = texSource; // the live-edit effect won't redundantly recompile this same source
-		lastDraftPath = loadedPath;
+		draftDispatcher.adoptCurrentAsBaseline(); // the live-edit effect must not recompile this same source
 		setPdfPaneOpen(true);
 		draftTrigger++;
 	}
@@ -1332,10 +1173,10 @@
 			texSource = v;
 		},
 		get lastParsedSource() {
-			return lastParsedSource;
+			return parser.lastParsedSource;
 		},
 		set lastParsedSource(v: string) {
-			lastParsedSource = v;
+			parser.lastParsedSource = v;
 		},
 		get docMeta() {
 			return docMeta;
@@ -1445,68 +1286,20 @@
 		return () => clearTimeout(labelTimer);
 	});
 
-	// a switch held back by the save-before-switch dialog: the store reverts to the outgoing file
-	// (tabs and tree stay visually on it) and this carries where the user was headed
-	let heldSwitch: { target: string | null } | null = null;
-	// the modal's outgoing snapshot; non-null while the save-before-switch dialog is up.
-	// `resolve` marks a workspace-level guard (folder switch / close / window close): the choice
-	// goes to the caller and the file-switch heldSwitch machinery is skipped.
-	let saveSwitchPrompt = $state<{
-		name: string;
-		outgoing: { path: string; content: string };
-		eol: Eol;
-		resolve?: (choice: 'save' | 'discard' | 'cancel') => void;
-	} | null>(null);
-
-	// Save keeps the edit + switches, Discard drops it + switches, Cancel (X / backdrop / Escape)
-	// aborts the whole switch and stays on the current file with the edit intact.
-	function resolveSaveSwitch(choice: 'save' | 'discard' | 'cancel') {
-		const prompt = saveSwitchPrompt;
-		saveSwitchPrompt = null;
-		if (!prompt) return;
-		if (prompt.resolve) {
-			prompt.resolve(choice);
-			return;
-		}
-		if (choice === 'cancel') {
-			saver.reattach(prompt.outgoing); // reattach so the edit is still tracked and re-guarded next time
-			pendingTabClose = null; // a tab-close that triggered this switch is cancelled too
-			heldSwitch = null;
-			return;
-		}
-		if (choice === 'save') void saver.enqueueWithEol(prompt.outgoing.path, prompt.outgoing.content, false, prompt.eol);
-		if (pendingTabClose) {
-			tabs.close(pendingTabClose);
+	// unsaved-edit gate for both file switches and workspace-level exits; see lib/workspace/unsavedGuard.svelte.ts
+	const unsaved = new UnsavedGuard({
+		saver: () => saver,
+		getLoadedPath: () => loadedPath,
+		getEol: () => docEol,
+		autosaveActive,
+		takePendingTabClose: () => {
+			const p = pendingTabClose;
 			pendingTabClose = null;
-		}
-		const target = heldSwitch?.target ?? null;
-		heldSwitch = null;
-		if (target !== get(activeFilePath)) activeFilePath.set(target);
-	}
-
-	// workspace-level unsaved-edit guard (folder switch, workspace close, window close): same
-	// modal as the file-switch guard; resolves true to proceed (Save writes first), false on Cancel.
-	function confirmLeaveUnsaved(): Promise<boolean> {
-		if (autosaveActive() || !loadedPath || saver.pending?.path !== loadedPath) return Promise.resolve(true);
-		const eol = docEol;
-		const outgoing = saver.detach()!;
-		return new Promise((resolve) => {
-			saveSwitchPrompt = {
-				name: basename(outgoing.path),
-				outgoing,
-				eol,
-				resolve: (choice) => {
-					if (choice === 'cancel') {
-						saver.reattach(outgoing);
-						resolve(false);
-						return;
-					}
-					if (choice === 'save') void saver.enqueueWithEol(outgoing.path, outgoing.content, false, eol);
-					resolve(true);
-				}
-			};
-		});
-	}
+			return p;
+		},
+		clearPendingTabClose: () => (pendingTabClose = null)
+	});
+	const confirmLeaveUnsaved = () => unsaved.confirmLeave();
 
 	// load the active file whenever it changes. Everything but the store read is untracked, so
 	// this runs exactly once per path change (loadedPath updating mid-load must not re-fire it).
@@ -1516,28 +1309,22 @@
 			// a workspace-level prompt (folder switch / close / window close) detached the pending
 			// edit, so the guard below can't see it: park ALL file switches until it resolves, or a
 			// Ctrl+Tab under the modal reattaches the edit against the wrong file
-			if (saveSwitchPrompt?.resolve) {
+			if (unsaved.parksAllSwitches) {
 				if (path !== loadedPath) activeFilePath.set(loadedPath);
 				return;
 			}
 			// while the dialog is up, keep the UI parked on the outgoing file; remember the newest
 			// destination (Ctrl+Tab still works under the modal) and resolve it after the answer
-			if (heldSwitch) {
+			if (unsaved.held) {
 				if (path !== loadedPath) {
-					heldSwitch.target = path;
+					unsaved.held.target = path;
 					activeFilePath.set(loadedPath);
 				}
 				return;
 			}
 			// autosave off: the outgoing file's edit wasn't auto-written, so ask BEFORE switching.
-			// The modal (SaveBeforeSwitchModal) decides its fate: Save writes it, Discard drops it,
-			// and Cancel aborts the switch entirely (see resolveSaveSwitch).
-			if (!autosaveActive() && loadedPath && path !== loadedPath && saver.pending?.path === loadedPath) {
-				const eol = docEol; // the outgoing file's EOL, before the switch changes docEol
-				const outgoing = saver.detach()!; // so loadFile's teardown / the new file's queue can't touch it
-				heldSwitch = { target: path };
-				activeFilePath.set(loadedPath);
-				saveSwitchPrompt = { name: basename(loadedPath), outgoing, eol };
+			if (unsaved.needsPromptFor(path)) {
+				unsaved.beginFileSwitch(path);
 				return;
 			}
 			saver.flush(); // persist the outgoing file's queued edit before tearing down its buffers
@@ -1567,7 +1354,7 @@
 	// or the buffer changed underneath it; the toggle just reparses then.
 	function adoptBackgroundParse(parseP: Promise<ParseOutcome>, path: string, source: string, seq: number) {
 		void parseP.then((o) => {
-			if (get(activeFilePath) !== path || seq !== parseSequence || loadedPath !== path) return;
+			if (get(activeFilePath) !== path || !parser.isCurrent(seq) || loadedPath !== path) return;
 			if (texSource !== source) return; // edited meanwhile: stale, drop it
 			if (o.failure) {
 				fallbackToSource(o.failure); // don't leave the user on a spinner that can't resolve
@@ -1577,7 +1364,7 @@
 			docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
 			visualDoc = o.parsed.doc;
 			lastDoc = o.parsed.doc;
-			lastParsedSource = source;
+			parser.lastParsedSource = source;
 			if (viewMode === 'source') toaster.success({ title: m.wsview_toast_visual_ready_title(), duration: 2500 });
 		});
 	}
@@ -1599,7 +1386,7 @@
 				// now, so the tab bar/toggle/title reflect the new file at once. Visual mode shows the
 				// loading pane (EditorPane's spinner branch) until the background parse lands; Source is
 				// one click away the whole time. The parse never holds the UI.
-				const mySeq = ++parseSequence;
+				const mySeq = parser.nextSequence();
 				if (viewMode === 'visual') adoptBackgroundParse(tryParseVisual(text), path, text, mySeq);
 
 				docEol = detectEol(raw); // remember CRLF/LF to re-apply on save
@@ -1607,7 +1394,7 @@
 				docMeta = null;
 				visualDoc = null;
 				lastDoc = null;
-				lastParsedSource = null;
+				parser.lastParsedSource = null;
 				loadedPath = path;
 				diskBaseline = text;
 				isDirty.set(false);
@@ -1775,7 +1562,7 @@
 		const anchor = pendingVisualAnchor;
 		const mode = viewMode;
 		if (!v || anchor == null || mode !== 'visual') return;
-		if (texSource !== lastParsedSource) return; // parse in flight; wait for the visualDoc re-fire
+		if (texSource !== parser.lastParsedSource) return; // parse in flight; wait for the visualDoc re-fire
 		pendingVisualAnchor = null;
 		resolveVisualAnchor(v, anchor, visualBodyOffset());
 	});
@@ -1843,58 +1630,9 @@
 		enterDiffMode: () => (viewMode = 'diff')
 	});
 
-	// fire-and-forget off-main-thread parse of texSource into a fresh visual doc; the hard 3s
-	// timeout terminates a runaway worker, snaps back to source mode, and toasts. the
-	// parseSequence guard drops superseded results so a slow parse can't overwrite fresh state.
-	let parseSequence = 0;
-	// which stage the in-flight parse reached, for the visual-mode loading bar; null = idle
-	let parseProgress = $state<ParsePhase | null>(null);
-	// text we last successfully parsed; skip re-parsing when unchanged, a remount on identical content flashes
-	let lastParsedSource: string | null = null;
-
-	// ProseMirror renders the whole doc with no virtualization and builds a node view per
-	// math/raw/citation node, so past a certain size the mount locks the renderer for minutes and
-	// no timeout can save it (the parse already succeeded). Empirical: a healthy 245KB paper is
-	// ~14k nodes, while a 1.9MB paper whose \def-aliased environments defeat the parser reaches
-	// 322k (104k of them node views) and never finishes mounting.
-	const MAX_VISUAL_NODES = 100_000;
-
-	interface ParseFailure {
-		timeout: boolean;
-		message: string;
-		/** doc parsed but is too large to render; carries the node count for the message */
-		tooComplex?: number;
-	}
-	interface ParseOutcome {
-		parsed?: ParsedLatexFile;
-		failure?: ParseFailure;
-	}
-
-	// the failure is returned rather than handled here: only the caller knows whether its parse is
-	// still the current one, and a superseded parse must not yank the user out of visual mode.
-	// timeout scales with file size (parse time is ~linear): small files keep the snappy 3s
-	// fallback, a 1MB paper gets long enough to actually finish instead of always dropping to source.
-	async function tryParseVisual(text: string): Promise<ParseOutcome> {
-		try {
-			const timeoutMs = Math.min(30000, 3000 + Math.floor(text.length / 100));
-			parseProgress = 'parsing';
-			return {
-				parsed: await parseLatexFileAsync(text, projectMacros, timeoutMs, (p) => (parseProgress = p), MAX_VISUAL_NODES)
-			};
-		} catch (e) {
-			const msg = e instanceof Error ? e.message : String(e);
-			// TODO: unified-latex's PEG tokenizer throws "RangeError: Invalid array length" on very
-			// large inputs (upstream, inside grammars/latex.pegjs peg$parseescape). Structure-
-			// dependent rather than a size cutoff: a 1.6MB slice parses, 1.8MB throws, yet a real
-			// 1.82MB paper is fine. Reaches the user as that raw string in a toast; give it the same
-			// friendly source-mode wording as tooComplex, and recheck when @unified-latex is bumped.
-			const timeout = msg === PARSE_TIMEOUT;
-			const tooComplex = msg.startsWith(`${PARSE_TOO_COMPLEX}:`) ? Number(msg.slice(PARSE_TOO_COMPLEX.length + 1)) : undefined;
-			return { failure: { timeout, tooComplex, message: msg } };
-		} finally {
-			parseProgress = null;
-		}
-	}
+	// worker parse + sequencing live in lib/workspace/visualParse.svelte.ts
+	const parser = new VisualParser(() => projectMacros);
+	const tryParseVisual = (text: string) => parser.parse(text);
 
 	function fallbackToSource(failure: ParseFailure): void {
 		viewMode = 'source';
@@ -1914,22 +1652,27 @@
 
 	function rebuildVisualFromSource(): void {
 		// fast path: source unchanged since the last successful parse, keep the mounted PM view
-		if (texSource === lastParsedSource && visualDoc) return;
+		if (texSource === parser.lastParsedSource && visualDoc) return;
 
-		const mySeq = ++parseSequence;
+		const mySeq = parser.nextSequence();
 		void tryParseVisual(texSource).then((o) => {
-			if (mySeq !== parseSequence) return; // superseded
+			if (!parser.isCurrent(mySeq)) return; // superseded
 			if (o.failure) return fallbackToSource(o.failure);
 			if (!o.parsed) return;
-			docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
-			visualDoc = o.parsed.doc;
-			lastDoc = o.parsed.doc;
+			adoptParsedDoc(o.parsed);
 			// quirk: this records the CURRENT texSource, which may be post-edit text if the user
 			// typed while the parse was in flight. harmless: onChange clears the anchor on edits.
-			lastParsedSource = texSource;
+			parser.lastParsedSource = texSource;
 			visualCollab?.noteFreshParse(); // a full re-parse stamped everything fresh
 			// EditorView reacts to the new localValue and swaps state on the existing instance: no remount, no flicker
 		});
+	}
+
+	/** install a freshly parsed document into the visual pane */
+	function adoptParsedDoc(parsed: ParsedLatexFile): void {
+		docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
+		visualDoc = parsed.doc;
+		lastDoc = parsed.doc;
 	}
 
 	// manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest
@@ -2128,7 +1871,7 @@
 					{texSource}
 					{rawContent}
 					{visualDoc}
-					{parseProgress}
+					parseProgress={parser.progress}
 					onUseSource={() => setViewMode('source')}
 					{docMeta}
 					{allReferences}
@@ -2230,8 +1973,8 @@
 	{/if}
 
 	<!-- autosave off, switching away from a file with unsaved edits -->
-	{#if saveSwitchPrompt}
-		<SaveBeforeSwitchModal name={saveSwitchPrompt.name} onResolve={resolveSaveSwitch} />
+	{#if unsaved.prompt}
+		<SaveBeforeSwitchModal name={unsaved.prompt.name} onResolve={(c) => unsaved.resolve(c)} />
 	{/if}
 
 	{#if pendingRefUpdate}
