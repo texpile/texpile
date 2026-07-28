@@ -69,6 +69,8 @@
 	"wsview_toast_discard_failed_title": "放棄變更失敗",
 	"wsview_toast_commit_failed_title": "提交失敗",
 	"wsview_toast_commit_created_title": "已建立提交",
+	"wsview_toast_too_complex_title": "已在原始碼模式中開啟",
+	"wsview_toast_too_complex_desc": "本文件包含 {count} 個元素，超出視覺化編輯器的顯示能力。",
 	"wsview_loading_parsing": "正在讀取 LaTeX…",
 	"wsview_loading_building": "正在建構文件…",
 	"wsview_loading_finalizing": "正在完成…",

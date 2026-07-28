@@ -143,7 +143,7 @@
 	});
 	import { modLabel } from '$lib/platform';
 	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile, type ParsePhase } from '$lib/workspace/latexRoundtrip';
-	import { parseLatexFileAsync, PARSE_TIMEOUT } from '$lib/workspace/latexParserClient';
+	import { parseLatexFileAsync, PARSE_TIMEOUT, PARSE_TOO_COMPLEX } from '$lib/workspace/latexParserClient';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -2045,9 +2045,18 @@
 	// text we last successfully parsed; skip re-parsing when unchanged, a remount on identical content flashes
 	let lastParsedSource: string | null = null;
 
+	// ProseMirror renders the whole doc with no virtualization and builds a node view per
+	// math/raw/citation node, so past a certain size the mount locks the renderer for minutes and
+	// no timeout can save it (the parse already succeeded). Empirical: a healthy 245KB paper is
+	// ~14k nodes, while a 1.9MB paper whose \def-aliased environments defeat the parser reaches
+	// 322k (104k of them node views) and never finishes mounting.
+	const MAX_VISUAL_NODES = 100_000;
+
 	interface ParseFailure {
 		timeout: boolean;
 		message: string;
+		/** doc parsed but is too large to render; carries the node count for the message */
+		tooComplex?: number;
 	}
 	interface ParseOutcome {
 		parsed?: ParsedLatexFile;
@@ -2060,12 +2069,21 @@
 	// fallback, a 1MB paper gets long enough to actually finish instead of always dropping to source.
 	async function tryParseVisual(text: string): Promise<ParseOutcome> {
 		try {
-			const timeoutMs = Math.min(15000, 3000 + Math.floor(text.length / 100));
+			const timeoutMs = Math.min(30000, 3000 + Math.floor(text.length / 100));
 			parseProgress = 'parsing';
-			return { parsed: await parseLatexFileAsync(text, projectMacros, timeoutMs, (p) => (parseProgress = p)) };
+			return {
+				parsed: await parseLatexFileAsync(text, projectMacros, timeoutMs, (p) => (parseProgress = p), MAX_VISUAL_NODES)
+			};
 		} catch (e) {
-			const timeout = e instanceof Error && e.message === PARSE_TIMEOUT;
-			return { failure: { timeout, message: e instanceof Error ? e.message : String(e) } };
+			const msg = e instanceof Error ? e.message : String(e);
+			// TODO: unified-latex's PEG tokenizer throws "RangeError: Invalid array length" on very
+			// large inputs (upstream, inside grammars/latex.pegjs peg$parseescape). Structure-
+			// dependent rather than a size cutoff: a 1.6MB slice parses, 1.8MB throws, yet a real
+			// 1.82MB paper is fine. Reaches the user as that raw string in a toast; give it the same
+			// friendly source-mode wording as tooComplex, and recheck when @unified-latex is bumped.
+			const timeout = msg === PARSE_TIMEOUT;
+			const tooComplex = msg.startsWith(`${PARSE_TOO_COMPLEX}:`) ? Number(msg.slice(PARSE_TOO_COMPLEX.length + 1)) : undefined;
+			return { failure: { timeout, tooComplex, message: msg } };
 		} finally {
 			parseProgress = null;
 		}
@@ -2075,7 +2093,12 @@
 		viewMode = 'source';
 		visualDoc = null;
 		pendingVisualAnchor = null; // never re-anchor a later visual entry off this failed switch
-		if (failure.timeout) {
+		if (failure.tooComplex) {
+			toaster.warning({
+				title: m.wsview_toast_too_complex_title(),
+				description: m.wsview_toast_too_complex_desc({ count: failure.tooComplex.toLocaleString() })
+			});
+		} else if (failure.timeout) {
 			toaster.warning({ title: m.wsview_toast_file_too_large_title() });
 		} else {
 			toaster.error({ title: m.wsview_toast_parse_failed_title(), description: failure.message });

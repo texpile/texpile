@@ -69,6 +69,8 @@
 	"wsview_toast_discard_failed_title": "Discard failed",
 	"wsview_toast_commit_failed_title": "Commit failed",
 	"wsview_toast_commit_created_title": "Commit created",
+	"wsview_toast_too_complex_title": "Opened in Source mode",
+	"wsview_toast_too_complex_desc": "This document has {count} elements, too many for the visual editor to display.",
 	"wsview_loading_parsing": "Reading LaTeX…",
 	"wsview_loading_building": "Building document…",
 	"wsview_loading_finalizing": "Finalizing…",

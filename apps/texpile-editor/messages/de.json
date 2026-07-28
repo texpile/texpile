@@ -69,6 +69,8 @@
 	"wsview_toast_discard_failed_title": "Verwerfen fehlgeschlagen",
 	"wsview_toast_commit_failed_title": "Commit fehlgeschlagen",
 	"wsview_toast_commit_created_title": "Commit erstellt",
+	"wsview_toast_too_complex_title": "Im Quelltextmodus geöffnet",
+	"wsview_toast_too_complex_desc": "Dieses Dokument hat {count} Elemente, zu viele für den visuellen Editor.",
 	"wsview_loading_parsing": "LaTeX wird gelesen…",
 	"wsview_loading_building": "Dokument wird aufgebaut…",
 	"wsview_loading_finalizing": "Wird abgeschlossen…",

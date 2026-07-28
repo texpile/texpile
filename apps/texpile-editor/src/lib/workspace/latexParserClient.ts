@@ -17,6 +17,12 @@ interface ProgressMessage {
 	phase: ParsePhase;
 }
 
+interface TooComplexMessage {
+	type: 'too-complex';
+	id: number;
+	nodeCount: number;
+}
+
 interface ResultMessage {
 	type: 'result';
 	id: number;
@@ -33,10 +39,12 @@ interface ErrorMessage {
 	message: string;
 }
 
-type WorkerMessage = ResultMessage | ErrorMessage | ProgressMessage;
+type WorkerMessage = ResultMessage | ErrorMessage | ProgressMessage | TooComplexMessage;
 
 /** timeout errors carry this exact message so callers can pick them out. */
 export const PARSE_TIMEOUT = 'parse-timeout';
+/** the doc parsed fine but is too big for the view layer to render; message is `too-complex:<n>`. */
+export const PARSE_TOO_COMPLEX = 'too-complex';
 
 let worker: Worker | null = null;
 const pending = new Map<number, PendingRequest>();
@@ -54,6 +62,11 @@ function ensureWorker(): Worker {
 			return;
 		}
 		pending.delete(msg.id);
+		if (msg.type === 'too-complex') {
+			clearTimeout(pend.timeoutId);
+			pend.reject(new Error(`${PARSE_TOO_COMPLEX}:${msg.nodeCount}`));
+			return;
+		}
 		clearTimeout(pend.timeoutId);
 		if (msg.type === 'result') {
 			try {
@@ -93,7 +106,8 @@ export function parseLatexFileAsync(
 	source: string,
 	projectMacros = '',
 	timeoutMs = 3000,
-	onProgress?: (phase: ParsePhase) => void
+	onProgress?: (phase: ParsePhase) => void,
+	maxNodes = 0
 ): Promise<ParsedLatexFile> {
 	return new Promise((resolve, reject) => {
 		const w = ensureWorker();
@@ -107,6 +121,6 @@ export function parseLatexFileAsync(
 			reject(new Error(PARSE_TIMEOUT));
 		}, timeoutMs);
 		pending.set(id, { resolve, reject, timeoutId, onProgress });
-		w.postMessage({ id, source, projectMacros });
+		w.postMessage({ id, source, projectMacros, maxNodes });
 	});
 }
