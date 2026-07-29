@@ -21,7 +21,7 @@
 	import { StarterActions } from '$lib/workspace/starterActions.svelte';
 	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
-	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath, resolveGuestSyncRequest } from '$lib/workspace/syncTexNav';
+	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath } from '$lib/workspace/syncTexNav';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
 	import { parseOutlineRaw, assembleProjectOutline } from '$lib/editor/extensions/tableofcontents/latexHeadings';
 	import { refreshProjectIntel } from '$lib/workspace/projectIntel';
@@ -31,13 +31,14 @@
 	import { setEditorFileAccess } from '$lib/editor/fileAccess';
 	import { initSpellcheckConfig } from '$lib/editor/extensions/spellcheck/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
+	import { visualCollabBridge, attachSessionHandlers } from '$lib/collab/workspaceSession';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import type { EditSession } from '$lib/collab/editSession';
 	import SessionShareModal from '$lib/collab/SessionShareModal.svelte';
 	import VisualCollab from '$lib/collab/VisualCollab.svelte';
-	import { references, loadReferences, bibItemsToReferences, type BibLaTeXReference } from '$lib/workspace/citations';
-	import { labelStore, referenceStore, filePathStore } from '$lib/stores/editorStore';
-	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
+	import { references, loadReferences } from '$lib/workspace/citations';
+	import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
+	import { filePathStore } from '$lib/stores/editorStore';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { DiffMode } from '$lib/workspace/diffMode.svelte';
 	import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
@@ -138,7 +139,6 @@
 		})();
 	});
 	import { modLabel } from '$lib/platform';
-	import { type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { DocumentBuffer, fileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { FileOpener } from '$lib/workspace/fileOpener';
 	import { VisualParser, type ParseFailure } from '$lib/workspace/visualParse.svelte';
@@ -755,19 +755,16 @@
 		return true;
 	}
 
-	// keep referenceStore in sync with the folder's .bib plus any \bibitem entries in the current
-	// doc, so citations resolve in BOTH modes. .bib wins on key clashes. EditorView re-syncs its
-	// localReferences prop into referenceStore, so both writers must agree on the same merged list.
-	let bibitemRefs = $state<BibLaTeXReference[]>([]);
+	// label and bibitem registries live in lib/workspace/docRegistries.svelte.ts
+	const registries = new DocRegistries({
+		getSource: () => doc.texSource,
+		captureHistory: (text) => sourceHistory.capture(text)
+	});
 	const allReferences = $derived.by(() => {
-		const bib = $references;
-		if (!bibitemRefs.length) return bib;
-		const seen = new Set(bib.map((r) => r.key));
-		return [...bib, ...bibitemRefs.filter((r) => !seen.has(r.key))];
+		void $references; // re-derive when the folder's .bib entries change
+		return registries.merged;
 	});
-	$effect(() => {
-		referenceStore.set(allReferences);
-	});
+	$effect(() => registries.publish(allReferences));
 
 	$effect(() => {
 		const tree = $fileTree;
@@ -840,34 +837,12 @@
 	// the visual editor's shared-session machinery (remote patches, presence) lives in
 	// VisualCollab; this api hands it doc-state access, the ref carries its editor hooks
 	let visualCollab = $state<{ noteLocalEdit(): void; noteFreshParse(): void; publishCursor(): void } | null>(null);
-	const visualCollabApi = {
-		get texSource() {
-			return doc.texSource;
-		},
-		set texSource(v: string) {
-			doc.texSource = v;
-		},
-		get lastParsedSource() {
-			return parser.lastParsedSource;
-		},
-		set lastParsedSource(v: string) {
-			parser.lastParsedSource = v;
-		},
-		get docMeta() {
-			return doc.docMeta;
-		},
-		parse: async (text: string) => (await tryParseVisual(text)).parsed ?? null,
-		adopt(parsed: ParsedLatexFile, liveDoc: PMNode) {
-			doc.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
-			// reference handshake: EditorView sees its own live doc and skips the state swap
-			doc.visualDoc = liveDoc;
-			doc.lastDoc = liveDoc;
-		},
-		commit(path: string, content: string) {
-			isDirty.set(true);
-			saver.schedule(path, content);
-		}
-	};
+	const visualCollabApi = visualCollabBridge({
+		doc,
+		parser,
+		parse: (text) => tryParseVisual(text),
+		scheduleSave: (path, content) => saver.schedule(path, content)
+	});
 
 	// visual-editor file access (figure previews, image paste) resolves through the provider,
 	// so a guest's images come from the session blob cache and uploads go through the session
@@ -885,28 +860,13 @@
 
 	// shared session: guests can ask for a compile; leaving the workspace ends the session
 	let shareModalOpen = $state(false);
-	onMount(() => {
-		session.onCompileRequest = () => {
-			toaster.info({ title: m.wsview_toast_compile_requested_title(), duration: 3000 });
-			void compiler.runCompile();
-		};
-		// a guest changed files on the host's disk (upload / rename / delete): refresh our own tree
-		session.onFileOp = () => void refreshTree();
-		// resolve a guest's SyncTeX request against our .synctex data and reply
-		session.onSyncRequest = async (payload, from) => {
-			const root = get(workspaceRoot);
-			const pdf = compiler.expectedPdfPath();
-			if (!root || !pdf) return;
-			const reply = await resolveGuestSyncRequest(payload, root, pdf);
-			if (reply) collabHost.replyControl(reply, from);
-		};
-		return () => {
-			session.onCompileRequest = null;
-			session.onSyncRequest = null;
-			session.onFileOp = null;
-			void session.end();
-		};
-	});
+	onMount(() =>
+		attachSessionHandlers(session, {
+			runCompile: () => void compiler.runCompile(),
+			refreshTree: () => void refreshTree(),
+			expectedPdfPath: () => compiler.expectedPdfPath()
+		})
+	);
 
 	// F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added)
 	async function jumpToInclude(name: string) {
@@ -927,24 +887,10 @@
 		}
 	}
 
-	// keep the \label registry, the embedded-\bibitem refs, and the cross-mode undo history fresh:
-	// recompute from doc.texSource, debounced. the AST parse runs in a worker (latest-wins; a null
-	// result means superseded/failed and the previous registries stay).
-	let labelTimer: ReturnType<typeof setTimeout> | undefined;
+	// keep the label registry, the embedded bibitem refs, and the cross-mode undo history fresh
 	$effect(() => {
 		void doc.texSource; // dependency: re-arm the debounce on every source change
-		clearTimeout(labelTimer);
-		labelTimer = setTimeout(() => {
-			// read doc.texSource LIVE (not the closed-over value): a file switch blanks it briefly and a
-			// stale closure would push that transient '' into the label/citation/history state
-			void extractDocRefsAsync(doc.texSource).then((refs) => {
-				if (!refs) return;
-				labelStore.set(refs.labels);
-				bibitemRefs = bibItemsToReferences(refs.bibitems);
-			});
-			sourceHistory.capture(doc.texSource);
-		}, 400);
-		return () => clearTimeout(labelTimer);
+		return registries.schedule();
 	});
 
 	// unsaved-edit gate for both file switches and workspace-level exits; see lib/workspace/unsavedGuard.svelte.ts
