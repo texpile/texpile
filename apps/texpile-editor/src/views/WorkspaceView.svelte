@@ -77,7 +77,6 @@
 		relativeTo,
 		isDesktop,
 		samePath,
-		detectEol,
 		toLf,
 		fromLf,
 		native,
@@ -141,7 +140,8 @@
 	import { modLabel } from '$lib/platform';
 	import { type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { DocumentBuffer, fileKind } from '$lib/workspace/documentBuffer.svelte';
-	import { VisualParser, type ParseFailure, type ParseOutcome } from '$lib/workspace/visualParse.svelte';
+	import { FileOpener } from '$lib/workspace/fileOpener';
+	import { VisualParser, type ParseFailure } from '$lib/workspace/visualParse.svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -155,6 +155,10 @@
 
 	// diff view (read-only): committed HEAD vs the live buffer, snapshotted (not bound)
 	// on entry / file switch / manual refresh so it never re-diffs per keystroke
+	// worker parse + sequencing live in lib/workspace/visualParse.svelte.ts
+	const parser = new VisualParser(() => projectMacros);
+	const tryParseVisual = (text: string) => parser.parse(text);
+
 	// the open file's buffers and edit handlers live in lib/workspace/documentBuffer.svelte.ts
 	const doc = new DocumentBuffer({
 		scheduleSave: (path, content) => saver.schedule(path, content),
@@ -1006,77 +1010,29 @@
 		modes.pendingVisualAnchor = null;
 	}
 
-	// the open-time parse finishes here: fill the visual pane (the spinner branch yields to the
-	// editor reactively), or (if the user bailed to Source while it ran) stash the doc so the
-	// Visual toggle is instant (rebuildVisualFromSource's fast path). Discarded when superseded
-	// or the buffer changed underneath it; the toggle just reparses then.
-	function adoptBackgroundParse(parseP: Promise<ParseOutcome>, path: string, source: string, seq: number) {
-		void parseP.then((o) => {
-			if (get(activeFilePath) !== path || !parser.isCurrent(seq) || doc.path !== path) return;
-			if (doc.texSource !== source) return; // edited meanwhile: stale, drop it
-			if (o.failure) {
-				fallbackToSource(o.failure); // don't leave the user on a spinner that can't resolve
-				return;
-			}
-			if (!o.parsed) return;
-			doc.docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
-			doc.visualDoc = o.parsed.doc;
-			doc.lastDoc = o.parsed.doc;
-			parser.lastParsedSource = source;
-			if (modes.mode === 'source') toaster.success({ title: m.wsview_toast_visual_ready_title(), duration: 2500 });
-		});
-	}
-
-	async function loadFile(path: string) {
-		try {
-			await saver.whenIdle(); // let any queued write (e.g. the file we just left) land before we read
-			// shared session: assert the lock BEFORE reading disk, so a guest can't slip an edit in
-			// between the flush and the reactive lock effect; then settle pending guest edits to disk
+	// opening the active file into the buffers lives in lib/workspace/fileOpener.ts
+	const opener = new FileOpener({
+		doc,
+		parser,
+		readText: readTextFile,
+		whenIdle: () => saver.whenIdle(),
+		isVisualMode: () => modes.mode === 'visual',
+		isSourceMode: () => modes.mode === 'source',
+		isDiffMode: () => modes.mode === 'diff',
+		claimVisualLock: (path) => {
 			if (session.active) session.setVisualLock(hostHoldsExclusively(fileKind(path), modes.mode, path) ? path : null);
-			await session.beforeOpen(path); // settle pending guest edits onto disk first
-			if (get(activeFilePath) !== path) return; // a newer switch superseded us
-			const k = fileKind(path);
-			if (k === 'tex') {
-				const raw = await readTextFile(path);
-				if (get(activeFilePath) !== path) return; // raced past this file
-				const text = toLf(raw); // editor works in LF
-				// the switch commits IMMEDIATELY from every entry point (tab, tree, jumps): buffers swap
-				// now, so the tab bar/toggle/title reflect the new file at once. Visual mode shows the
-				// loading pane (EditorPane's spinner branch) until the background parse lands; Source is
-				// one click away the whole time. The parse never holds the UI.
-				const mySeq = parser.nextSequence();
-				if (modes.mode === 'visual') adoptBackgroundParse(tryParseVisual(text), path, text, mySeq);
+		},
+		beforeOpen: (path) => session.beforeOpen(path),
+		parse: (text) => tryParseVisual(text),
+		fallbackToSource,
+		resetHistory: (text) => sourceHistory.reset(text),
+		disableHistory: () => sourceHistory.disable(),
+		clearPerFileViewState,
+		captureDiffSnapshot: () => void captureDiffSnapshot(),
+		closeOpenFile: () => closeOpenFile()
+	});
+	const loadFile = (path: string) => opener.open(path);
 
-				doc.openTex(path, text, detectEol(raw)); // detectEol so a CRLF file isn't rewritten to LF
-				parser.lastParsedSource = null;
-				isDirty.set(false);
-				sourceHistory.reset(text); // the on-disk content is the floor of the cross-mode undo history
-				clearPerFileViewState();
-				if (modes.mode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
-			} else if (k === 'text' || k === 'bib') {
-				const raw = await readTextFile(path);
-				if (get(activeFilePath) !== path) return;
-				doc.openRaw(path, toLf(raw), detectEol(raw));
-				isDirty.set(false);
-				sourceHistory.disable(); // no cross-mode history for these kinds
-				clearPerFileViewState();
-				if (modes.mode === 'diff') void captureDiffSnapshot();
-			} else {
-				if (get(activeFilePath) !== path) return;
-				doc.openOpaque(path);
-				clearPerFileViewState();
-				sourceHistory.disable();
-				isDirty.set(false);
-			}
-		} catch (e) {
-			if (get(activeFilePath) !== path) return;
-			closeOpenFile(); // a half-open file must not stay on screen behind the error
-			doc.loadError = e instanceof Error ? e.message : m.wsview_load_error_fallback();
-		}
-	}
-
-	// external-change detection: on window focus, re-read the open file. differs + unsaved
-	// edits = prompt; no local edits = silently adopt the disk version.
 	// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
 	const external = new ExternalChangeWatcher({
 		getLoadedPath: () => doc.path,
@@ -1127,10 +1083,6 @@
 		isDiffMode: () => modes.mode === 'diff',
 		enterDiffMode: () => (modes.mode = 'diff')
 	});
-
-	// worker parse + sequencing live in lib/workspace/visualParse.svelte.ts
-	const parser = new VisualParser(() => projectMacros);
-	const tryParseVisual = (text: string) => parser.parse(text);
 
 	function fallbackToSource(failure: ParseFailure): void {
 		modes.mode = 'source';
