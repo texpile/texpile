@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy, tick, untrack } from 'svelte';
 	import { get } from 'svelte/store';
-	import { browser } from '$lib/runtime';
 	import { navigate } from '$lib/router.svelte';
 	import TerminalDock from '$lib/editor/comp/TerminalDock.svelte';
 	import EditorTopbar from '$lib/editor/comp/EditorTopbar.svelte';
@@ -16,18 +15,16 @@
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
 	import { applyStarter, applyImportedFiles, type Starter, type ImportedFile } from '$lib/workspace/starters';
-	import { editorViewStore, sourceCmView, viewMode as viewModeStore } from '$lib/stores/editorStore';
+	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath, resolveGuestSyncRequest } from '$lib/workspace/syncTexNav';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
-	import { captureVisualAnchor as captureVisualAnchorAt, captureSourceAnchor, resolveVisualAnchor } from '$lib/editor/modeSwitchAnchors';
 	import { parseOutlineRaw, assembleProjectOutline } from '$lib/editor/extensions/tableofcontents/latexHeadings';
 	import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 	import { projectIntelStore } from '$lib/stores/projectIntel';
 	import { setGraphicResolver } from '$lib/editor/extensions/intellisense/hover';
 	import { graphicCandidateUrls } from '$lib/editor/graphicsCandidates';
 	import { setEditorFileAccess } from '$lib/editor/fileAccess';
-	import { replacePreambleFrontmatter } from '$lib/editor/extensions/raw-latex/frontmatterView';
 	import { initSpellcheckConfig } from '$lib/editor/extensions/spellcheck/spellcheckConfig';
 	import WorkspaceMenuBar from '$lib/editor/comp/WorkspaceMenuBar.svelte';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
@@ -41,6 +38,8 @@
 	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { DiffMode } from '$lib/workspace/diffMode.svelte';
+	import { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
+	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import { CompileSettings } from '$lib/workspace/compileSettings.svelte';
 	import { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
@@ -49,8 +48,6 @@
 	import { DraftDispatcher } from '$lib/draft/draftDispatcher';
 	import { createKeydownHandler, uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
 	import { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
-	import { startDrag, nudgeOnKey, clampTo } from '$lib/workspace/paneResize';
-	import { createSourceHistory } from '$lib/workspace/sourceHistory';
 	import { scanRenamedRefs, applyRefUpdate, flattenPaths } from '$lib/workspace/refUpdate';
 	import {
 		workspaceRoot,
@@ -62,7 +59,7 @@
 		setMainFile,
 		setLastFile
 	} from '$lib/workspace/workspaceStore';
-	import { refreshGitStatus, isGitRepo, takeNoGitHint } from '$lib/workspace/gitStore';
+	import { refreshGitStatus, takeNoGitHint } from '$lib/workspace/gitStore';
 	import { ScmActions } from '$lib/workspace/scmActions.svelte';
 	import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
 	import { CompilePipeline, resolveCompileCommand, relFromRoot } from '$lib/workspace/compilePipeline.svelte';
@@ -82,7 +79,6 @@
 		fromLf,
 		native,
 		freeName,
-		type Eol,
 		type TreeEntry
 	} from '$lib/workspace/fileSystem';
 	import { diskProvider } from '$lib/workspace/diskProvider';
@@ -115,7 +111,7 @@
 	// guests never enter diff (no disk/git to diff against); visual is fine, it runs on the
 	// shared Y.Text like everything else
 	$effect(() => {
-		if (guest && viewMode === 'diff') viewMode = 'source';
+		if (guest && modes.mode === 'diff') modes.mode = 'source';
 	});
 	// guests: resolve the main file + cross-file macro context from the shared doc (the host-only
 	// initProject never runs for them), re-gathered when the shared file set changes, so visual
@@ -134,76 +130,81 @@
 				projectMacros = macros;
 				// signatures changed: a doc parsed without them is stale, re-derive the open one
 				parser.lastParsedSource = '';
-				if (loadedPath && kind === 'tex' && viewMode === 'visual') rebuildVisualFromSource();
+				if (doc.path && kind === 'tex' && modes.mode === 'visual') rebuildVisualFromSource();
 			} catch {
 				projectMacros = '';
 			}
 		})();
 	});
 	import { modLabel } from '$lib/platform';
-	import { serializeLatexFile, bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+	import { type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+	import { DocumentBuffer, fileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { VisualParser, type ParseFailure, type ParseOutcome } from '$lib/workspace/visualParse.svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
 
-	let loadedPath = $state<string | null>(null);
-	let loadError = $state<string | null>(null);
-
-	let rawContent = $state(''); // non-.tex text files edit this directly
-
-	// single source of truth for a .tex file: its raw text (texSource), the whole file. the visual
-	// editor is a view over it: entry parses into visualDoc + docMeta, every visual edit serializes
-	// straight back into texSource, and source mode binds to it directly. no rival copy can drift.
-	let viewMode = $state<'visual' | 'source' | 'diff'>('visual');
+	// single source of truth for a .tex file: its raw text (doc.texSource), the whole file. the visual
+	// editor is a view over it: entry parses into doc.visualDoc + doc.docMeta, every visual edit serializes
+	// straight back into doc.texSource, and source mode binds to it directly. no rival copy can drift.
 	// mirror to the global store so menuBarCommands can route Insert/Format;
 	// diff is read-only, so routing it as source is harmless
-	$effect(() => viewModeStore.set(viewMode === 'diff' ? 'source' : viewMode));
+	$effect(() => modes.syncStore());
 
 	// diff view (read-only): committed HEAD vs the live buffer, snapshotted (not bound)
 	// on entry / file switch / manual refresh so it never re-diffs per keystroke
+	// the open file's buffers and edit handlers live in lib/workspace/documentBuffer.svelte.ts
+	const doc = new DocumentBuffer({
+		scheduleSave: (path, content) => saver.schedule(path, content),
+		discardQueuedSave: () => saver.discard(),
+		writeNow: (path, content) => void saver.enqueue(path, content, true),
+		rebuildVisual: () => rebuildVisualFromSource(),
+		isVisualMode: () => modes.mode === 'visual',
+		noteLocalEdit: () => visualCollab?.noteLocalEdit(),
+		clearPendingAnchor: () => (modes.pendingVisualAnchor = null)
+	});
+
+	// view mode, scroll anchors and cross-mode history live in lib/workspace/viewModeSwitch.svelte.ts
+	const modes = new ViewModeSwitch({
+		getKind: () => kind,
+		getLoadedPath: () => doc.path,
+		getSource: () => doc.texSource,
+		setSource: (t) => (doc.texSource = t),
+		getDocMeta: () => doc.docMeta,
+		getLastParsedSource: () => parser.lastParsedSource,
+		rebuildVisual: () => rebuildVisualFromSource(),
+		captureDiffSnapshot: () => void captureDiffSnapshot(),
+		scheduleSave: (path, text) => saver.schedule(path, text)
+	});
+	const sourceHistory = modes.history;
+	const setViewMode = (mode: 'visual' | 'source' | 'diff') => modes.set(mode);
+	const exitDiff = () => modes.exitDiff();
+	const workspaceHistoryStep = (dir: 'undo' | 'redo') => modes.historyStep(dir);
+	// the doc.visualDoc dep re-fires this when an async re-parse lands (the doc swap itself is untracked)
+	$effect(() => {
+		void $editorViewStore;
+		void doc.visualDoc;
+		void modes.pendingVisualAnchor;
+		void modes.mode;
+		modes.tryResolvePendingAnchor();
+	});
+
 	// HEAD-vs-working-copy view; state and snapshotting live in lib/workspace/diffMode.svelte.ts
 	const diff = new DiffMode({
-		getLoadedPath: () => loadedPath,
-		getWorkingText: () => (kind === 'tex' ? texSource : rawContent)
+		getLoadedPath: () => doc.path,
+		getWorkingText: () => (kind === 'tex' ? doc.texSource : doc.rawContent)
 	});
 	const captureDiffSnapshot = () => diff.snapshot();
-	// the editable view to return to when leaving Diff (there's no tab manager)
-	let lastEditMode = $state<'visual' | 'source'>('visual');
-	let texSource = $state('');
-	let docMeta = $state<Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null>(null);
-	let visualDoc = $state<PMNode | null>(null);
-	// the editor's current body doc; needed to re-serialize texSource when an inline
-	// preamble-frontmatter field rewrites the preamble without touching the body
-	let lastDoc = $state<PMNode | null>(null);
 	// macro-defining text from the main file's include chain, fed to the parser (see workspace/project.ts)
 	let projectMacros = $state('');
-	// the open file's original line ending, re-applied on save so a CRLF file isn't rewritten to LF
-	let docEol = $state<Eol>('\n');
-	// LF-normalized on-disk content; if the file changes underneath unsaved edits, we prompt
-	let diskBaseline = $state('');
 	const folderEmpty = $derived($texFiles.length === 0);
 	// lets the header's New file/folder buttons trigger the tree's inline create input
 	let fileTreeRef = $state<{ newAtRoot: (type: 'file' | 'dir' | 'include', defaultName?: string) => void; isEditing: () => boolean }>();
 
-	const IMAGE_EXT = /\.(png|jpe?g|gif|svg|webp|bmp|ico)$/i;
-	const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin)$/i;
-	function fileKind(path: string | null): 'tex' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null {
-		if (!path) return null;
-		const p = path.toLowerCase();
-		if (p.endsWith('.tex')) return 'tex';
-		if (p.endsWith('.bib')) return 'bib';
-		if (p.endsWith('.pdf')) return 'pdf'; // viewable (svelte-pdf-view); must precede the binary check
-		if (IMAGE_EXT.test(path)) return 'image';
-		if (BINARY_EXT.test(path)) return 'binary';
-		return 'text';
-	}
-	const kind = $derived(fileKind(loadedPath));
+	const kind = $derived(doc.kind);
 	// a guest opening a text-looking file the host shares as name only (too large / extension the
 	// session doesn't sync): say so instead of rendering a silently empty editor
-	const nameOnly = $derived(
-		guest && (kind === 'tex' || kind === 'bib' || kind === 'text') && session.sharedKindOf(loadedPath) === 'binary'
-	);
+	const nameOnly = $derived(guest && (kind === 'tex' || kind === 'bib' || kind === 'text') && session.sharedKindOf(doc.path) === 'binary');
 
 	// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go
 	// read-only), else concurrent guest edits to that file's Y.Text would be clobbered. Source mode
@@ -215,7 +216,7 @@
 	}
 	$effect(() => {
 		if (!session.active) return;
-		session.setVisualLock(hostHoldsExclusively(kind, viewMode, loadedPath) ? loadedPath : null);
+		session.setVisualLock(hostHoldsExclusively(kind, modes.mode, doc.path) ? doc.path : null);
 	});
 	// live/draft mode isn't supported in a shared session: guests can't run the incremental engine,
 	// they see the host's compiled PDF. Force it off while hosting (the toggle is disabled there too).
@@ -265,7 +266,7 @@
 		const names: Record<string, string> = { tex: 'untitled.tex', bib: 'references.bib', cls: 'untitled.cls', sty: 'mystyle.sty' };
 		const rootNames = get(fileTree).map((e) => e.name);
 		const defaultName = ext ? freeName(names[ext] ?? `untitled.${ext}`, rootNames) : '';
-		sidebarOpen = true;
+		layout.sidebarOpen = true;
 		fileTreeRef?.newAtRoot('file', defaultName);
 	}
 
@@ -304,29 +305,17 @@
 		}
 		tabs.bind(root, hostMode); // restore this folder's open tabs (guests start fresh)
 		termDock.available = isDesktop() && hostMode; // client-only; set here so SSR/CSR agree
-		if (guest) pdfPaneOpen = true; // guests land with the host's PDF visible
+		if (guest) layout.pdfPaneOpen = true; // guests land with the host's PDF visible
 		loadRefs(root);
 		refreshTree();
 		initSpellcheckConfig(); // seed editorConfigStore so the spell-check toggle works
 
 		loadSettings().then((s) => {
-			if (s.sidebarWidth >= 180 && s.sidebarWidth <= 600) sidebarWidth = s.sidebarWidth;
-			sidebarOpen = s.sidebarOpen;
-			if (s.tocFraction >= 0.1 && s.tocFraction <= 0.9) tocFraction = s.tocFraction;
-			// PDF pane width is saved as a fraction of the window, clamped so a
-			// wide-screen size can't squeeze the editor out in a small window
-			if (browser && typeof window !== 'undefined') {
-				const frac = parseFloat(localStorage.getItem(PDF_FRACTION_KEY) ?? '');
-				pdfPaneWidth = clampPdf((frac > 0 && frac < 1 ? frac : 0.4) * window.innerWidth);
-			}
-			pdfPaneOpen = s.pdfPaneOpen; // reopen the preview if it was open last (loadExistingPdf fills it)
+			layout.restore(s); // loadExistingPdf refills the preview if it was open last
 			compileCommand = resolveCompileCommand(get(workspaceRoot), s.compileCommand ?? '');
 			termDock.restore(s);
 		});
-		if (localStorage.getItem('texpile:viewMode') === 'source') {
-			viewMode = 'source';
-			lastEditMode = 'source';
-		}
+		modes.restore();
 		diff.restoreLayout();
 
 		// the tree is a snapshot: rescan on window focus and on the fs-changed event dispatched by
@@ -346,10 +335,7 @@
 			reloadReferences();
 		};
 		const onCompile = () => compiler.runCompile();
-		// re-clamp the PDF pane when the window shrinks so it can't squeeze the editor out
-		const onResize = () => {
-			pdfPaneWidth = clampPdf(pdfPaneWidth);
-		};
+		const onResize = layout.reclampPdf;
 		window.addEventListener('focus', onFocus);
 		window.addEventListener('texpile:fs-changed', onFsChanged);
 		window.addEventListener('compile', onCompile);
@@ -364,7 +350,7 @@
 				native()?.closeDecision?.(false);
 				return;
 			}
-			if (autosaveActive() || !loadedPath || saver.pending?.path !== loadedPath) {
+			if (autosaveActive() || !doc.path || saver.pending?.path !== doc.path) {
 				await saver.flushAndWait();
 				native()?.closeDecision?.(true);
 				return;
@@ -482,7 +468,7 @@
 	let tutorialModalOpen = $state(false);
 
 	// persist the new main file, re-gather macros, and re-derive the open visual doc from
-	// texSource so the newly resolved command signatures take effect immediately
+	// doc.texSource so the newly resolved command signatures take effect immediately
 	async function applyMainFile(path: string) {
 		const root = get(workspaceRoot);
 		if (!root) return;
@@ -492,7 +478,7 @@
 		void compiler.loadExistingPdf(); // the main file changed â†’ its expected PDF did too
 		projectMacros = next ? await gatherProjectMacros(next, root) : '';
 		if (get(workspaceRoot) !== root) return;
-		if (loadedPath && kind === 'tex' && viewMode === 'visual') rebuildVisualFromSource();
+		if (doc.path && kind === 'tex' && modes.mode === 'visual') rebuildVisualFromSource();
 	}
 
 	// create/rename/delete/move/import/copy live in lib/workspace/treeOps.ts
@@ -507,67 +493,36 @@
 		loadRefs,
 		// source-mode users write their own preamble (the editor's ghost offers the skeleton);
 		// visual mode has no ghost and no way to write a preamble, so it gets one up front
-		wantsStarter: () => lastEditMode !== 'source',
+		wantsStarter: () => modes.lastEditMode !== 'source',
 		insertIncludeAtCursor: (path) => insertIncludeAtCursor(path),
 		afterRename: (oldPath, newPath) => void afterRename(oldPath, newPath),
 		retargetPendingSave: (from, to) => saver.retarget(from, to),
 		discardPendingSave: () => saver.discard()
 	});
 
-	let sidebarWidth = $state(256);
-	let sidebarOpen = $state(true);
-	// one sidebar view at a time (VS Code activity-bar style); toggling an icon swaps back to the explorer
-	let sidebarView = $state<'explorer' | 'search' | 'scm'>('explorer');
-	function toggleSidebar() {
-		sidebarOpen = !sidebarOpen;
-		updateSettings({ sidebarOpen });
-	}
-	const clampSidebar = clampTo(180, 600);
-	const commitSidebar = () => updateSettings({ sidebarWidth });
-	const setSidebar = (w: number) => (sidebarWidth = clampSidebar(w));
-	function startResize(e: MouseEvent) {
-		const startX = e.clientX;
-		const startW = sidebarWidth;
-		startDrag(e, { compute: (ev) => startW + ev.clientX - startX, apply: setSidebar, commit: commitSidebar });
-	}
-	const resizeSidebarByKey = (e: KeyboardEvent) =>
-		nudgeOnKey(e, { keys: ['ArrowLeft', 'ArrowRight'], step: 16, current: () => sidebarWidth, apply: setSidebar, commit: commitSidebar });
+	const layout = new PaneLayout();
 
-	const showToc = $derived(!!loadedPath && kind === 'tex' && (viewMode === 'visual' || viewMode === 'source'));
+	const showToc = $derived(!!doc.path && kind === 'tex' && (modes.mode === 'visual' || modes.mode === 'source'));
 	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw
 	// .tex; \input fragments pre-scanned into projectIntel merge into one numbered project outline.
 	// debounced (display-only) and reading state LIVE at fire time, so typing never pays the parse.
 	const deferredSourceToc = trailingDebounce<void>(300, () => {
-		if (kind !== 'tex' || viewMode !== 'source') return;
+		if (kind !== 'tex' || modes.mode !== 'source') return;
 		sourceTocStore.set(
 			assembleProjectOutline(
-				parseOutlineRaw(texSource),
-				loadedPath,
-				loadedPath ? dirname(loadedPath) : null,
+				parseOutlineRaw(doc.texSource),
+				doc.path,
+				doc.path ? dirname(doc.path) : null,
 				get(workspaceRoot),
 				get(projectIntelStore).outlines
 			)
 		);
 	});
 	$effect(() => {
-		void texSource;
+		void doc.texSource;
 		void $projectIntelStore;
-		if (kind === 'tex' && viewMode === 'source') deferredSourceToc();
+		if (kind === 'tex' && modes.mode === 'source') deferredSourceToc();
 	});
-	let tocFraction = $state(0.5); // TOC share of the sidebar's lower region (0..1)
-	let splitEl = $state<HTMLDivElement>();
-	const clampToc = clampTo(0.1, 0.9);
-	const commitToc = () => updateSettings({ tocFraction });
-	const setToc = (f: number) => (tocFraction = clampToc(f));
-	function startTocResize(e: MouseEvent) {
-		const rect = splitEl?.getBoundingClientRect();
-		// drag up = taller TOC; measured against the split container, so it is a fraction not a delta
-		startDrag(e, { compute: (ev) => (rect ? (rect.bottom - ev.clientY) / rect.height : null), apply: setToc, commit: commitToc });
-	}
-	const resizeTocByKey = (e: KeyboardEvent) =>
-		nudgeOnKey(e, { keys: ['ArrowDown', 'ArrowUp'], step: 0.02, current: () => tocFraction, apply: setToc, commit: commitToc });
-
-	// set in onMount (not at init) so the server and the first client render agree
 	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
 	const termDock = new TerminalDockState(() => guest);
 	const showTerminal = () => termDock.show();
@@ -580,21 +535,7 @@
 	let formatModalOpen = $state(false);
 	let formatting = $state(false);
 	// PDF preview pane; opens automatically once a compile writes a fresh PDF
-	let pdfPaneOpen = $state(false);
-	let pdfPaneWidth = $state(480);
-	const dockShrunk = $derived(termDock.shrink && pdfPaneOpen);
-	const PDF_FRACTION_KEY = 'texpile:pdfPaneFraction';
-	// cap: whatever's left after the sidebar, keeping ~360px for the editor, so a big pane
-	// saved on a wide screen can't squeeze the editor out in a small window
-	function pdfMaxWidth(): number {
-		const win = typeof window !== 'undefined' ? window.innerWidth : 1280;
-		return Math.max(320, win - (sidebarOpen ? sidebarWidth : 0) - 360);
-	}
-	const clampPdf = (w: number) => Math.min(pdfMaxWidth(), Math.max(280, w));
-	// persist as a fraction of window width so the pane stays proportional across window sizes
-	function savePdfFraction() {
-		if (browser && typeof window !== 'undefined') localStorage.setItem(PDF_FRACTION_KEY, String(pdfPaneWidth / window.innerWidth));
-	}
+	const dockShrunk = $derived(termDock.shrink && layout.pdfPaneOpen);
 	// bottom dock body: the terminal shells (always mounted) or the Problems list
 	let dockView = $state<'terminal' | 'problems'>('terminal');
 	// Draft mode: bump to trigger a DraftView recompile; the derived root/main feed it.
@@ -602,7 +543,7 @@
 	let draftRoot = $derived($workspaceRoot ?? '');
 	let draftMainRel = $derived.by(() => {
 		if (mainPrompt.confirmed !== true) return ''; // hold the first live compile until the main file is confirmed
-		const target = $mainFile ?? loadedPath;
+		const target = $mainFile ?? doc.path;
 		return $workspaceRoot && target ? relFromRoot(target, $workspaceRoot) : '';
 	});
 
@@ -624,7 +565,7 @@
 	// live mode compiles on its own as soon as the pane is open; surface the question then.
 	// Strictly `=== false`: null means initProject is still resolving, never a modal.
 	$effect(() => {
-		const wants = $settings.draftMode && pdfPaneOpen && !draftPaused && !!$workspaceRoot && $texFiles.length > 1;
+		const wants = $settings.draftMode && layout.pdfPaneOpen && !draftPaused && !!$workspaceRoot && $texFiles.length > 1;
 		if (wants && mainPrompt.confirmed === false && !mainPrompt.open) void mainPrompt.prompt();
 	});
 	// Draft mode live preview: ONE decision point per edit (the spec's "decide when to
@@ -636,9 +577,9 @@
 	let draftRef = $state<DraftView | null>(null);
 	// per-edit patch-vs-recompile decision lives in lib/draft/draftDispatcher.ts
 	const draftDispatcher = new DraftDispatcher({
-		getSource: () => texSource,
-		getLoadedPath: () => loadedPath,
-		isActive: () => $settings.draftMode && pdfPaneOpen && !!loadedPath && !draftPaused,
+		getSource: () => doc.texSource,
+		getLoadedPath: () => doc.path,
+		isActive: () => $settings.draftMode && layout.pdfPaneOpen && !!doc.path && !draftPaused,
 		flushSaves: () => saver.flushAndWait(),
 		triggerFullCompile: () => draftTrigger++,
 		getTarget: () => draftRef
@@ -652,7 +593,7 @@
 	let daemonActive = false;
 	let daemonRoot: string | null = null;
 	$effect(() => {
-		const active = $settings.draftMode && pdfPaneOpen && !draftPaused;
+		const active = $settings.draftMode && layout.pdfPaneOpen && !draftPaused;
 		const root = $workspaceRoot;
 		if (daemonActive && (!active || root !== daemonRoot)) native()?.draftStop?.();
 		daemonActive = active;
@@ -720,7 +661,7 @@
 		// guest: the host's shared parse (files already root-relative), same shape as below
 		if (guest) {
 			const shared = session.compileIntel;
-			const file = loadedPath?.replace(/^session\//, '');
+			const file = doc.path?.replace(/^session\//, '');
 			if (!shared || !file) return [];
 			return shared.log
 				.filter((e) => e.line !== undefined && samePath(e.file, file))
@@ -736,7 +677,7 @@
 		}
 		const log = $compileLog;
 		const root = $workspaceRoot;
-		const file = loadedPath;
+		const file = doc.path;
 		if (!log || !root || !file) return [];
 		return log.entries
 			.filter((e) => e.level !== 'info' && e.line !== undefined)
@@ -764,7 +705,7 @@
 
 	// compile / terminal / PDF-watch orchestration lives in lib/workspace/compilePipeline.svelte.ts
 	const compiler = new CompilePipeline({
-		getLoadedPath: () => loadedPath,
+		getLoadedPath: () => doc.path,
 		getCompileCommand: () => compileCommand,
 		terminalAvailable: () => termDock.available,
 		mainConfirmed: () => mainPrompt.confirmed,
@@ -778,7 +719,7 @@
 		refreshTree,
 		showTerminal,
 		setDockView: (v) => (dockView = v),
-		setPdfPaneOpen,
+		setPdfPaneOpen: layout.setPdfPaneOpen,
 		openCompileModal: () => openCompileModal(),
 		openMainConfirm: (then) => void openMainConfirm(then),
 		runDraftCompile,
@@ -806,7 +747,7 @@
 		draftPaused = false; // compiling implies live (covers the keyboard-shortcut path)
 		await saver.flushAndWait();
 		draftDispatcher.adoptCurrentAsBaseline(); // the live-edit effect must not recompile this same source
-		setPdfPaneOpen(true);
+		layout.setPdfPaneOpen(true);
 		draftTrigger++;
 	}
 
@@ -852,30 +793,6 @@
 		});
 	});
 	// open/close the PDF pane and remember the choice so a reload restores it
-	function setPdfPaneOpen(open: boolean) {
-		pdfPaneOpen = open;
-		updateSettings({ pdfPaneOpen: open });
-	}
-	function togglePdfPane() {
-		setPdfPaneOpen(!pdfPaneOpen);
-	}
-	const setPdfWidth = (w: number) => (pdfPaneWidth = clampPdf(w));
-	function startPdfResize(e: MouseEvent) {
-		const startX = e.clientX;
-		const startW = pdfPaneWidth;
-		// drag left = wider
-		startDrag(e, { compute: (ev) => startW - (ev.clientX - startX), apply: setPdfWidth, commit: savePdfFraction });
-	}
-	// left = wider, so ArrowRight is the one that shrinks
-	const resizePdfByKey = (e: KeyboardEvent) =>
-		nudgeOnKey(e, {
-			keys: ['ArrowRight', 'ArrowLeft'],
-			step: 16,
-			current: () => pdfPaneWidth,
-			apply: setPdfWidth,
-			commit: savePdfFraction
-		});
-
 	function jumpPdf(page: number, x: number, y: number, w: number, h: number, tries = 0) {
 		if (pdfPaneRef) {
 			pdfPaneRef.scrollToPosition(page, x, y, w, h);
@@ -886,7 +803,7 @@
 	// open a file in source mode and jump to a 1-based line (SyncTeX inverse + Find-in-Files)
 	function openFileAtLine(file: string, line: number, selectText?: string) {
 		const target = sessionRelativeTarget(file, guest);
-		viewMode = 'source';
+		modes.mode = 'source';
 		localStorage.setItem('texpile:viewMode', 'source');
 		sourceGotoLine = { line, token: ++gotoToken, selectText };
 		if (needsActivate(target)) activeFilePath.set(target);
@@ -894,11 +811,11 @@
 	// forward/inverse SyncTeX resolution lives in lib/workspace/syncTexNav.ts
 	const syncTex = new SyncTexNav({
 		isGuest: () => guest,
-		getLoadedPath: () => loadedPath,
+		getLoadedPath: () => doc.path,
 		isTex: () => kind === 'tex',
 		getDraftRoot: () => draftRoot,
 		expectedPdfPath: () => compiler.expectedPdfPath(),
-		setPdfPaneOpen,
+		setPdfPaneOpen: layout.setPdfPaneOpen,
 		scrollPdfTo: jumpPdf,
 		syncDraftTo: (page, x, y, w, h) => draftRef?.syncTo(page, x, y, w, h),
 		openFileAtLine
@@ -918,24 +835,24 @@
 	const useDefaultCommand = () => compileSettings.useDefault();
 
 	function openFormatModal() {
-		if (!loadedPath || kind !== 'tex') return;
+		if (!doc.path || kind !== 'tex') return;
 		formatModalOpen = true;
 	}
-	// reindents via latexindent and swaps texSource for the result; both views re-derive from it
+	// reindents via latexindent and swaps doc.texSource for the result; both views re-derive from it
 	// (source mode's value-sync effect, visual mode's rebuildVisualFromSource below). no backup
 	// file - the confirm modal's warning is the only safety net, undo (Ctrl+Z) covers the rest.
 	async function runFormat() {
-		if (!loadedPath) return;
+		if (!doc.path) return;
 		formatModalOpen = false;
 		formatting = true;
 		try {
 			await saver.flushAndWait(); // the formatter should see exactly what's on screen
-			const formatted = toLf(await formatLatexDocument(loadedPath, fromLf(texSource, docEol)));
-			texSource = formatted;
+			const formatted = toLf(await formatLatexDocument(doc.path, fromLf(doc.texSource, doc.eol)));
+			doc.texSource = formatted;
 			isDirty.set(true);
-			saver.schedule(loadedPath, texSource);
-			if (viewMode === 'visual') rebuildVisualFromSource();
-			toaster.success({ title: m.wsview_toast_formatted_title(), description: basename(loadedPath) });
+			saver.schedule(doc.path, doc.texSource);
+			if (modes.mode === 'visual') rebuildVisualFromSource();
+			toaster.success({ title: m.wsview_toast_formatted_title(), description: basename(doc.path) });
 		} catch (e) {
 			toaster.error({ title: m.wsview_toast_format_failed_title(), description: e instanceof Error ? e.message : String(e) });
 		} finally {
@@ -946,11 +863,11 @@
 	// insert an \input of newFilePath at the cursor in the open visual doc: path relative to the
 	// current file's dir, .tex dropped (the form \input takes). false when there's no editor to insert into.
 	function insertIncludeAtCursor(newFilePath: string): boolean {
-		if (!loadedPath || viewMode !== 'visual') return false;
+		if (!doc.path || modes.mode !== 'visual') return false;
 		const v = get(editorViewStore);
 		const type = v?.state.schema.nodes.includedoc;
 		if (!v || !type) return false;
-		const rel = relativeTo(dirname(loadedPath), newFilePath).replace(/\.tex$/i, '');
+		const rel = relativeTo(dirname(doc.path), newFilePath).replace(/\.tex$/i, '');
 		v.dispatch(v.state.tr.replaceSelectionWith(type.create({ path: rel, command: 'input' })).scrollIntoView());
 		v.focus();
 		return true;
@@ -981,15 +898,15 @@
 	let pendingRefUpdate = $state<RefUpdate | null>(null);
 
 	const refUpdateDeps = {
-		getLoadedPath: () => loadedPath,
-		getSourceText: () => texSource,
-		setSourceText: (t: string) => (texSource = t),
+		getLoadedPath: () => doc.path,
+		getSourceText: () => doc.texSource,
+		setSourceText: (t: string) => (doc.texSource = t),
 		readText: readTextFile,
 		writeText: writeTextFile,
 		onActiveFileEdited: () => {
-			if (viewMode === 'visual') rebuildVisualFromSource();
+			if (modes.mode === 'visual') rebuildVisualFromSource();
 			isDirty.set(true);
-			saver.schedule(loadedPath, texSource);
+			saver.schedule(doc.path, doc.texSource);
 		}
 	};
 	async function afterRename(oldPath: string, newPath: string) {
@@ -1043,10 +960,10 @@
 	let visualCollab = $state<{ noteLocalEdit(): void; noteFreshParse(): void; publishCursor(): void } | null>(null);
 	const visualCollabApi = {
 		get texSource() {
-			return texSource;
+			return doc.texSource;
 		},
 		set texSource(v: string) {
-			texSource = v;
+			doc.texSource = v;
 		},
 		get lastParsedSource() {
 			return parser.lastParsedSource;
@@ -1055,14 +972,14 @@
 			parser.lastParsedSource = v;
 		},
 		get docMeta() {
-			return docMeta;
+			return doc.docMeta;
 		},
 		parse: async (text: string) => (await tryParseVisual(text)).parsed ?? null,
 		adopt(parsed: ParsedLatexFile, liveDoc: PMNode) {
-			docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
+			doc.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
 			// reference handshake: EditorView sees its own live doc and skips the state swap
-			visualDoc = liveDoc;
-			lastDoc = liveDoc;
+			doc.visualDoc = liveDoc;
+			doc.lastDoc = liveDoc;
 		},
 		commit(path: string, content: string) {
 			isDirty.set(true);
@@ -1076,7 +993,9 @@
 		(p) => provider.fileUrl(p),
 		(p, data) => provider.writeBinary(p, data)
 	);
-	setGraphicResolver((rel) => graphicCandidateUrls(rel, { root: get(workspaceRoot), loadedPath, source: texSource, fileUrl }));
+	setGraphicResolver((rel) =>
+		graphicCandidateUrls(rel, { root: get(workspaceRoot), loadedPath: doc.path, source: doc.texSource, fileUrl })
+	);
 	onDestroy(() => {
 		setGraphicResolver(null);
 		setEditorFileAccess(null, null);
@@ -1110,7 +1029,7 @@
 	// F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added)
 	async function jumpToInclude(name: string) {
 		const root = get(workspaceRoot);
-		const base = loadedPath ? dirname(loadedPath) : null;
+		const base = doc.path ? dirname(doc.path) : null;
 		const cand = name.trim().replace(/\\/g, '/');
 		if (!cand) return;
 		const names = /\.[a-z]+$/i.test(cand) ? [cand] : [cand + '.tex'];
@@ -1127,21 +1046,21 @@
 	}
 
 	// keep the \label registry, the embedded-\bibitem refs, and the cross-mode undo history fresh:
-	// recompute from texSource, debounced. the AST parse runs in a worker (latest-wins; a null
+	// recompute from doc.texSource, debounced. the AST parse runs in a worker (latest-wins; a null
 	// result means superseded/failed and the previous registries stay).
 	let labelTimer: ReturnType<typeof setTimeout> | undefined;
 	$effect(() => {
-		void texSource; // dependency: re-arm the debounce on every source change
+		void doc.texSource; // dependency: re-arm the debounce on every source change
 		clearTimeout(labelTimer);
 		labelTimer = setTimeout(() => {
-			// read texSource LIVE (not the closed-over value): a file switch blanks it briefly and a
+			// read doc.texSource LIVE (not the closed-over value): a file switch blanks it briefly and a
 			// stale closure would push that transient '' into the label/citation/history state
-			void extractDocRefsAsync(texSource).then((refs) => {
+			void extractDocRefsAsync(doc.texSource).then((refs) => {
 				if (!refs) return;
 				labelStore.set(refs.labels);
 				bibitemRefs = bibItemsToReferences(refs.bibitems);
 			});
-			sourceHistory.capture(texSource);
+			sourceHistory.capture(doc.texSource);
 		}, 400);
 		return () => clearTimeout(labelTimer);
 	});
@@ -1149,8 +1068,8 @@
 	// unsaved-edit gate for both file switches and workspace-level exits; see lib/workspace/unsavedGuard.svelte.ts
 	const unsaved = new UnsavedGuard({
 		saver: () => saver,
-		getLoadedPath: () => loadedPath,
-		getEol: () => docEol,
+		getLoadedPath: () => doc.path,
+		getEol: () => doc.eol,
 		autosaveActive,
 		takePendingTabClose: () => {
 			const p = pendingTabClose;
@@ -1162,7 +1081,7 @@
 	const confirmLeaveUnsaved = () => unsaved.confirmLeave();
 
 	// load the active file whenever it changes. Everything but the store read is untracked, so
-	// this runs exactly once per path change (loadedPath updating mid-load must not re-fire it).
+	// this runs exactly once per path change (doc.path updating mid-load must not re-fire it).
 	$effect(() => {
 		const path = $activeFilePath;
 		untrack(() => {
@@ -1170,15 +1089,15 @@
 			// edit, so the guard below can't see it: park ALL file switches until it resolves, or a
 			// Ctrl+Tab under the modal reattaches the edit against the wrong file
 			if (unsaved.parksAllSwitches) {
-				if (path !== loadedPath) activeFilePath.set(loadedPath);
+				if (path !== doc.path) activeFilePath.set(doc.path);
 				return;
 			}
 			// while the dialog is up, keep the UI parked on the outgoing file; remember the newest
 			// destination (Ctrl+Tab still works under the modal) and resolve it after the answer
 			if (unsaved.held) {
-				if (path !== loadedPath) {
+				if (path !== doc.path) {
 					unsaved.held.target = path;
-					activeFilePath.set(loadedPath);
+					activeFilePath.set(doc.path);
 				}
 				return;
 			}
@@ -1188,7 +1107,7 @@
 				return;
 			}
 			saver.flush(); // persist the outgoing file's queued edit before tearing down its buffers
-			loadError = null;
+			doc.loadError = null;
 			// the outgoing file stays on screen until loadFile has the new one ready: clearing here
 			// first is what made every switch blink through the "Opening…" placeholder
 			if (path) loadFile(path);
@@ -1197,14 +1116,11 @@
 	});
 
 	/** drop the open file's buffers. per-file state (anchors, cross-mode history) must not leak. */
+	/** drop the open file's buffers AND the per-file view state that must not leak into the next file */
 	function closeOpenFile() {
-		texSource = '';
-		docMeta = null;
-		visualDoc = null;
-		rawContent = '';
-		loadedPath = null;
-		sourceScrollAnchor = null;
-		pendingVisualAnchor = null;
+		doc.close();
+		modes.sourceScrollAnchor = null;
+		modes.pendingVisualAnchor = null;
 		sourceHistory.disable();
 	}
 
@@ -1214,18 +1130,18 @@
 	// or the buffer changed underneath it; the toggle just reparses then.
 	function adoptBackgroundParse(parseP: Promise<ParseOutcome>, path: string, source: string, seq: number) {
 		void parseP.then((o) => {
-			if (get(activeFilePath) !== path || !parser.isCurrent(seq) || loadedPath !== path) return;
-			if (texSource !== source) return; // edited meanwhile: stale, drop it
+			if (get(activeFilePath) !== path || !parser.isCurrent(seq) || doc.path !== path) return;
+			if (doc.texSource !== source) return; // edited meanwhile: stale, drop it
 			if (o.failure) {
 				fallbackToSource(o.failure); // don't leave the user on a spinner that can't resolve
 				return;
 			}
 			if (!o.parsed) return;
-			docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
-			visualDoc = o.parsed.doc;
-			lastDoc = o.parsed.doc;
+			doc.docMeta = { preamble: o.parsed.preamble, postamble: o.parsed.postamble, hadDocumentEnv: o.parsed.hadDocumentEnv };
+			doc.visualDoc = o.parsed.doc;
+			doc.lastDoc = o.parsed.doc;
 			parser.lastParsedSource = source;
-			if (viewMode === 'source') toaster.success({ title: m.wsview_toast_visual_ready_title(), duration: 2500 });
+			if (modes.mode === 'source') toaster.success({ title: m.wsview_toast_visual_ready_title(), duration: 2500 });
 		});
 	}
 
@@ -1234,7 +1150,7 @@
 			await saver.whenIdle(); // let any queued write (e.g. the file we just left) land before we read
 			// shared session: assert the lock BEFORE reading disk, so a guest can't slip an edit in
 			// between the flush and the reactive lock effect; then settle pending guest edits to disk
-			if (session.active) session.setVisualLock(hostHoldsExclusively(fileKind(path), viewMode, path) ? path : null);
+			if (session.active) session.setVisualLock(hostHoldsExclusively(fileKind(path), modes.mode, path) ? path : null);
 			await session.beforeOpen(path); // settle pending guest edits onto disk first
 			if (get(activeFilePath) !== path) return; // a newer switch superseded us
 			const k = fileKind(path);
@@ -1247,48 +1163,48 @@
 				// loading pane (EditorPane's spinner branch) until the background parse lands; Source is
 				// one click away the whole time. The parse never holds the UI.
 				const mySeq = parser.nextSequence();
-				if (viewMode === 'visual') adoptBackgroundParse(tryParseVisual(text), path, text, mySeq);
+				if (modes.mode === 'visual') adoptBackgroundParse(tryParseVisual(text), path, text, mySeq);
 
-				docEol = detectEol(raw); // remember CRLF/LF to re-apply on save
-				texSource = text;
-				docMeta = null;
-				visualDoc = null;
-				lastDoc = null;
+				doc.eol = detectEol(raw); // remember CRLF/LF to re-apply on save
+				doc.texSource = text;
+				doc.docMeta = null;
+				doc.visualDoc = null;
+				doc.lastDoc = null;
 				parser.lastParsedSource = null;
-				loadedPath = path;
-				diskBaseline = text;
+				doc.path = path;
+				doc.diskBaseline = text;
 				isDirty.set(false);
 				sourceHistory.reset(text); // the on-disk content is the floor of the cross-mode undo history
-				sourceScrollAnchor = null;
-				pendingVisualAnchor = null;
-				if (viewMode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
+				modes.sourceScrollAnchor = null;
+				modes.pendingVisualAnchor = null;
+				if (modes.mode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
 			} else if (k === 'text' || k === 'bib') {
 				const raw = await readTextFile(path);
 				if (get(activeFilePath) !== path) return;
-				docEol = detectEol(raw);
+				doc.eol = detectEol(raw);
 				const text = toLf(raw);
-				rawContent = text;
-				texSource = '';
-				docMeta = null;
-				visualDoc = null;
-				loadedPath = path;
-				diskBaseline = text;
+				doc.rawContent = text;
+				doc.texSource = '';
+				doc.docMeta = null;
+				doc.visualDoc = null;
+				doc.path = path;
+				doc.diskBaseline = text;
 				isDirty.set(false);
 				sourceHistory.disable(); // no cross-mode history for these kinds
-				sourceScrollAnchor = null;
-				pendingVisualAnchor = null;
-				if (viewMode === 'diff') void captureDiffSnapshot();
+				modes.sourceScrollAnchor = null;
+				modes.pendingVisualAnchor = null;
+				if (modes.mode === 'diff') void captureDiffSnapshot();
 			} else {
 				// image / binary: nothing to load, just display it
 				if (get(activeFilePath) !== path) return;
 				closeOpenFile();
-				loadedPath = path;
+				doc.path = path;
 				isDirty.set(false);
 			}
 		} catch (e) {
 			if (get(activeFilePath) !== path) return;
 			closeOpenFile(); // a half-open file must not stay on screen behind the error
-			loadError = e instanceof Error ? e.message : m.wsview_load_error_fallback();
+			doc.loadError = e instanceof Error ? e.message : m.wsview_load_error_fallback();
 		}
 	}
 
@@ -1296,17 +1212,17 @@
 	// edits = prompt; no local edits = silently adopt the disk version.
 	// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
 	const external = new ExternalChangeWatcher({
-		getLoadedPath: () => loadedPath,
+		getLoadedPath: () => doc.path,
 		isTextual: () => kind === 'tex' || kind === 'text' || kind === 'bib',
 		isTex: () => kind === 'tex',
 		whenIdle: () => saver.whenIdle(),
 		readText: readTextFile,
-		getDiskBaseline: () => diskBaseline,
-		setDiskBaseline: (t) => (diskBaseline = t),
-		getBuffer: () => (kind === 'tex' ? texSource : rawContent),
-		setTexSource: (t) => (texSource = t),
-		setRawContent: (t) => (rawContent = t),
-		setEol: (e) => (docEol = e),
+		getDiskBaseline: () => doc.diskBaseline,
+		setDiskBaseline: (t) => (doc.diskBaseline = t),
+		getBuffer: () => (kind === 'tex' ? doc.texSource : doc.rawContent),
+		setTexSource: (t) => (doc.texSource = t),
+		setRawContent: (t) => (doc.rawContent = t),
+		setEol: (e) => (doc.eol = e),
 		rebuildVisual: rebuildVisualFromSource,
 		discardQueuedSave: () => saver.discard(),
 		sessionEdit: (path, content) => session.edit(path, content),
@@ -1321,148 +1237,28 @@
 		isGuest: () => guest,
 		autosaveActive,
 		writeText: writeTextFile,
-		getEol: () => docEol,
-		getLoadedPath: () => loadedPath,
-		getLiveContent: () => (kind === 'tex' ? texSource : rawContent),
-		setDiskBaseline: (content) => (diskBaseline = content),
+		getEol: () => doc.eol,
+		getLoadedPath: () => doc.path,
+		getLiveContent: () => (kind === 'tex' ? doc.texSource : doc.rawContent),
+		setDiskBaseline: (content) => (doc.diskBaseline = content),
 		setDirty: (dirty) => isDirty.set(dirty)
 	});
 
-	// a visual edit serializes straight into texSource (the single source of truth), then saves
-	function onChange(doc: PMNode) {
-		if (!docMeta) return;
-		lastDoc = doc;
-		texSource = serializeLatexFile(docMeta, doc);
-		// nodeviews settling on load (or an edit undone back to the saved bytes) fire a docChanged
-		// transaction that serializes right back to disk: that isn't an unsaved change, so don't
-		// flag the pristine file dirty or queue a no-op save that would nag on the next switch
-		if (texSource === diskBaseline) {
-			if (get(isDirty)) isDirty.set(false);
-			saver.discard();
-			return;
-		}
-		isDirty.set(true);
-		saver.schedule(loadedPath, texSource);
-		// live session: the doc's orig stamps just went stale; VisualCollab re-stamps on the lull
-		visualCollab?.noteLocalEdit();
-		// the user is editing: a still-pending mode-switch scroll anchor is moot, and restoring
-		// it later would yank the view away from where they're typing
-		pendingVisualAnchor = null;
-	}
-
-	// inline preamble-frontmatter edit (\title/\author/\date): splice the new text into the
-	// preamble verbatim and re-serialize. anything else in the preamble is Source-view territory.
-	function editPreambleFrontmatter(kind: string, inner: string) {
-		if (!docMeta || !lastDoc) return;
-		docMeta = { ...docMeta, preamble: replacePreambleFrontmatter(docMeta.preamble, kind, inner) };
-		texSource = serializeLatexFile(docMeta, lastDoc);
-		isDirty.set(true);
-		saver.schedule(loadedPath, texSource);
-	}
-
-	// a source edit IS texSource, write it verbatim
-	function onTexInput(v: string) {
-		texSource = v;
-		isDirty.set(true);
-		saver.schedule(loadedPath, v);
-	}
-
-	function onRawInput(v: string) {
-		rawContent = v;
-		isDirty.set(true);
-		saver.schedule(loadedPath, v);
-	}
-
-	// mode-switch scroll + cursor sync (visual/source, .tex only): both directions carry two anchors
-	// as texSource offsets, resolved positionally via the parse-time orig.start stamps (content
-	// matching fails wholesale against an edited buffer; positions only drift). scroll = the
-	// viewport-top block, cursor = the caret mapped proportionally within its block's orig.latex slice.
-	let sourceScrollAnchor = $state<{ scroll: number | null; cursor: number | null } | null>(null); // consumed by SourceEditor at mount
-	// $state so the consuming effect below re-fires when a new anchor is captured
-	let pendingVisualAnchor = $state<{ scroll: number; cursor: number | null } | null>(null);
-
-	// capture/resolve live in lib/editor/modeSwitchAnchors.ts.
-	// orig.start stamps are body-relative; bodyOffsetOf knows where the body begins in the FILE
-	// (fragments synthesize a preamble that is not in the file, so theirs starts at 0)
-	const visualBodyOffset = () => (docMeta ? bodyOffsetOf(docMeta) : 0);
-	const captureVisualAnchor = () => captureVisualAnchorAt(visualBodyOffset());
-
-	// entering visual mode: consume the anchor once the PM view exists AND its doc matches the
-	// current texSource. on the edited path EditorView first mounts with the STALE doc while the
-	// worker re-parse runs; consuming then would resolve against the wrong document. the visualDoc
-	// dep re-fires this effect when the parse lands.
-	$effect(() => {
-		const v = $editorViewStore; // set at EditorView mount
-		void visualDoc; // re-fires when an async re-parse lands (the doc swap itself is untracked)
-		const anchor = pendingVisualAnchor;
-		const mode = viewMode;
-		if (!v || anchor == null || mode !== 'visual') return;
-		if (texSource !== parser.lastParsedSource) return; // parse in flight; wait for the visualDoc re-fire
-		pendingVisualAnchor = null;
-		resolveVisualAnchor(v, anchor, visualBodyOffset());
-	});
-
-	// cross-mode undo/redo (lib/workspace/sourceHistory.ts): native undo/redo runs first; the
-	// editors call workspaceHistoryStep only when their own history is exhausted.
-	const sourceHistory = createSourceHistory();
-
-	/** steps the workspace history; false at the stack edge lets the key fall through. */
-	function workspaceHistoryStep(dir: 'undo' | 'redo'): boolean {
-		if (kind !== 'tex' || !loadedPath) return false;
-		const target = sourceHistory.step(dir, texSource);
-		if (target == null) return false;
-		texSource = target;
-		isDirty.set(true);
-		saver.schedule(loadedPath, texSource);
-		// source mode: SourceEditor's value-sync effect replaces the CM doc. visual mode: re-parse.
-		if (viewMode === 'visual') rebuildVisualFromSource();
-		return true;
-	}
-
-	function setViewMode(mode: 'visual' | 'source' | 'diff') {
-		if (mode === viewMode) return;
-		// diff: a read-only third view (HEAD vs working copy), snapshotted on entry. not
-		// persisted: a reload restores the last visual/source choice, never diff.
-		if (mode === 'diff') {
-			if (!loadedPath || !get(isGitRepo)) return;
-			viewMode = 'diff';
-			// a pending source->visual anchor must not survive a diff detour (exitDiff re-enters
-			// visual without going through this function, so nothing else would clear it)
-			pendingVisualAnchor = null;
-			void captureDiffSnapshot();
-			return;
-		}
-		if (kind !== 'tex' && kind !== 'bib') return;
-		if (kind === 'tex') {
-			sourceHistory.capture(texSource); // flush the pre-switch state into the cross-mode history
-			// scroll sync: capture the outgoing view's anchor for the incoming one
-			if (viewMode === 'visual' && mode === 'source') sourceScrollAnchor = captureVisualAnchor();
-			else if (viewMode === 'source' && mode === 'visual') pendingVisualAnchor = captureSourceAnchor();
-		}
-		// switch optimistically; the async parse fills visualDoc when it returns. on failure
-		// rebuildVisualFromSource drops back to source with a toast, so the user never gets
-		// stuck on a blank pane. .bib uses rawContent for both views, so no rebuild needed.
-		viewMode = mode;
-		lastEditMode = mode;
-		if (kind === 'tex' && mode === 'visual') rebuildVisualFromSource();
-		if (browser) localStorage.setItem('texpile:viewMode', mode);
-	}
-
-	function exitDiff() {
-		viewMode = lastEditMode;
-		if (kind === 'tex' && lastEditMode === 'visual') rebuildVisualFromSource();
-	}
+	const onChange = (node: PMNode) => doc.onVisualChange(node);
+	const editPreambleFrontmatter = (kind: string, inner: string) => doc.editFrontmatter(kind, inner);
+	const onTexInput = (v: string) => doc.onTexInput(v);
+	const onRawInput = (v: string) => doc.onRawInput(v);
 
 	// source control ops live in lib/workspace/scmActions.svelte.ts; the panel is presentational.
 	const scm = new ScmActions({
-		getLoadedPath: () => loadedPath,
+		getLoadedPath: () => doc.path,
 		discardPendingSave: () => saver.discard(),
 		deleteEntry,
 		refreshTree,
 		loadFile,
 		captureDiffSnapshot: () => void captureDiffSnapshot(),
-		isDiffMode: () => viewMode === 'diff',
-		enterDiffMode: () => (viewMode = 'diff')
+		isDiffMode: () => modes.mode === 'diff',
+		enterDiffMode: () => (modes.mode = 'diff')
 	});
 
 	// worker parse + sequencing live in lib/workspace/visualParse.svelte.ts
@@ -1470,9 +1266,9 @@
 	const tryParseVisual = (text: string) => parser.parse(text);
 
 	function fallbackToSource(failure: ParseFailure): void {
-		viewMode = 'source';
-		visualDoc = null;
-		pendingVisualAnchor = null; // never re-anchor a later visual entry off this failed switch
+		modes.mode = 'source';
+		doc.visualDoc = null;
+		modes.pendingVisualAnchor = null; // never re-anchor a later visual entry off this failed switch
 		if (failure.tooComplex) {
 			toaster.warning({
 				title: m.wsview_toast_too_complex_title(),
@@ -1487,40 +1283,28 @@
 
 	function rebuildVisualFromSource(): void {
 		// fast path: source unchanged since the last successful parse, keep the mounted PM view
-		if (texSource === parser.lastParsedSource && visualDoc) return;
+		if (doc.texSource === parser.lastParsedSource && doc.visualDoc) return;
 
 		const mySeq = parser.nextSequence();
-		void tryParseVisual(texSource).then((o) => {
+		void tryParseVisual(doc.texSource).then((o) => {
 			if (!parser.isCurrent(mySeq)) return; // superseded
 			if (o.failure) return fallbackToSource(o.failure);
 			if (!o.parsed) return;
-			adoptParsedDoc(o.parsed);
-			// quirk: this records the CURRENT texSource, which may be post-edit text if the user
+			doc.adoptParsed(o.parsed);
+			// quirk: this records the CURRENT doc.texSource, which may be post-edit text if the user
 			// typed while the parse was in flight. harmless: onChange clears the anchor on edits.
-			parser.lastParsedSource = texSource;
+			parser.lastParsedSource = doc.texSource;
 			visualCollab?.noteFreshParse(); // a full re-parse stamped everything fresh
 			// EditorView reacts to the new localValue and swaps state on the existing instance: no remount, no flicker
 		});
 	}
 
-	/** install a freshly parsed document into the visual pane */
-	function adoptParsedDoc(parsed: ParsedLatexFile): void {
-		docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
-		visualDoc = parsed.doc;
-		lastDoc = parsed.doc;
-	}
-
 	// manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest
-	function save() {
-		saver.discard(); // drop the queued debounce; we're writing the current content now
-		if (kind === 'tex' && loadedPath) void saver.enqueue(loadedPath, texSource, true);
-		else if ((kind === 'text' || kind === 'bib') && loadedPath) void saver.enqueue(loadedPath, rawContent, true);
-		// image / binary: nothing to save
-	}
+	const save = () => doc.save();
 
 	// return keyboard focus to whichever editor is showing (Esc from panels)
 	function focusEditor() {
-		if (viewMode === 'source') {
+		if (modes.mode === 'source') {
 			const cm = get(sourceCmView);
 			if (cm && cm.dom.isConnected) cm.focus();
 		} else {
@@ -1530,7 +1314,7 @@
 	// close Find in Files and hand focus back; tick first so the unmounting input
 	// can't re-steal focus to body
 	async function closeGlobalSearch() {
-		sidebarView = 'explorer';
+		layout.sidebarView = 'explorer';
 		await tick();
 		focusEditor();
 	}
@@ -1547,8 +1331,8 @@
 				if (!sel.includes('\n')) seed = sel;
 			}
 		}
-		sidebarView = 'search';
-		sidebarOpen = true;
+		layout.sidebarView = 'search';
+		layout.sidebarOpen = true;
 		await tick(); // let the panel mount before focusing
 		globalSearchRef?.focusInput(seed);
 	}
@@ -1556,7 +1340,7 @@
 	const uiZoomPercent = $derived(Math.round(($settings.uiZoom ?? 1) * 100));
 	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
 	const onKeydown = createKeydownHandler({
-		getLoadedPath: () => loadedPath,
+		getLoadedPath: () => doc.path,
 		closeTab,
 		isGuest: () => guest,
 		save,
@@ -1571,7 +1355,7 @@
 <svelte:window onkeydown={onKeydown} />
 <!-- file - folder - app (VS Code's order); the folder segment tells windows apart in the taskbar -->
 <svelte:head
-	><title>{$workspaceRoot ? `${loadedPath ? `${basename(loadedPath)} - ` : ''}${basename($workspaceRoot)} - Texpile` : 'Texpile'}</title
+	><title>{$workspaceRoot ? `${doc.path ? `${basename(doc.path)} - ` : ''}${basename($workspaceRoot)} - Texpile` : 'Texpile'}</title
 	></svelte:head
 >
 
@@ -1580,8 +1364,8 @@
 		<GuestBar />
 	{:else}
 		<WorkspaceMenuBar
-			disabled={!loadedPath}
-			imageDir={loadedPath && kind === 'tex' ? dirname(loadedPath) : undefined}
+			disabled={!doc.path}
+			imageDir={doc.path && kind === 'tex' ? dirname(doc.path) : undefined}
 			onNewFile={(ext) => newFileOfType(ext)}
 			onOpenFolder={openFolderFromMenu}
 			onCloseWorkspace={closeWorkspace}
@@ -1602,19 +1386,19 @@
 		/>
 	{/if}
 	<div class="flex min-h-0 flex-1 overflow-hidden">
-		{#if sidebarOpen}
+		{#if layout.sidebarOpen}
 			<WorkspaceSidebar
-				width={sidebarWidth}
+				width={layout.sidebarWidth}
 				{guest}
 				{modLabel}
-				bind:view={sidebarView}
+				bind:view={layout.sidebarView}
 				scmBusy={scm.busy}
 				{showToc}
-				{tocFraction}
-				{viewMode}
+				tocFraction={layout.tocFraction}
+				viewMode={modes.mode}
 				bind:fileTreeRef
 				bind:globalSearchRef
-				bind:splitEl
+				bind:splitEl={layout.splitEl}
 				onRefreshTree={refreshTree}
 				onOpenGlobalSearch={() => void openGlobalSearch()}
 				onCloseGlobalSearch={() => void closeGlobalSearch()}
@@ -1627,8 +1411,8 @@
 				onImport={treeOps.import}
 				onCopyIn={treeOps.copyIn}
 				onSetMain={(entry) => applyMainFile(entry.path)}
-				onStartTocResize={startTocResize}
-				onResizeTocByKey={resizeTocByKey}
+				onStartTocResize={layout.startTocResize}
+				onResizeTocByKey={layout.resizeTocByKey}
 				onRefreshGit={() => refreshGitStatus($workspaceRoot)}
 				scmInit={scm.init}
 				scmStage={scm.stage}
@@ -1642,8 +1426,8 @@
 			<!-- eslint-disable-next-line svelte/valid-compile -->
 			<div
 				class="hover:bg-primary-500/40 active:bg-primary-500/60 relative z-20 -mx-[3px] w-1.5 shrink-0 cursor-col-resize bg-transparent transition-colors"
-				onmousedown={startResize}
-				onkeydown={resizeSidebarByKey}
+				onmousedown={layout.startSidebarResize}
+				onkeydown={layout.resizeSidebarByKey}
 				role="separator"
 				aria-orientation="vertical"
 				aria-label={m.wsview_resize_sidebar_aria()}
@@ -1656,18 +1440,18 @@
 			style="grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto minmax(0, 1fr) auto auto"
 		>
 			<EditorTopbar
-				{loadedPath}
+				loadedPath={doc.path}
 				{kind}
-				{viewMode}
+				viewMode={modes.mode}
 				{guest}
 				terminalAvailable={termDock.available}
 				compiling={compiler.compiling}
-				{pdfPaneOpen}
+				pdfPaneOpen={layout.pdfPaneOpen}
 				{draftPaused}
 				saving={saver.saving}
-				{sidebarOpen}
+				sidebarOpen={layout.sidebarOpen}
 				{modLabel}
-				onToggleSidebar={toggleSidebar}
+				onToggleSidebar={layout.toggleSidebar}
 				onSetViewMode={setViewMode}
 				onSyncForward={syncForward}
 				onStopCompile={compiler.stopCompile}
@@ -1683,7 +1467,7 @@
 					showTerminal();
 					dockView = 'problems';
 				}}
-				onTogglePdf={togglePdfPane}
+				onTogglePdf={layout.togglePdfPane}
 				onSave={save}
 			/>
 
@@ -1695,23 +1479,23 @@
 					openTabs={tabs.list}
 					onActivateTab={activateTab}
 					onCloseTab={closeTab}
-					{loadedPath}
+					loadedPath={doc.path}
 					{kind}
 					{nameOnly}
-					{viewMode}
+					viewMode={modes.mode}
 					{session}
 					{folderEmpty}
-					{loadError}
+					loadError={doc.loadError}
 					{applyingStarter}
-					{texSource}
-					{rawContent}
-					{visualDoc}
+					texSource={doc.texSource}
+					rawContent={doc.rawContent}
+					visualDoc={doc.visualDoc}
 					parseProgress={parser.progress}
 					onUseSource={() => setViewMode('source')}
-					{docMeta}
+					docMeta={doc.docMeta}
 					{allReferences}
 					{sourceGotoLine}
-					{sourceScrollAnchor}
+					sourceScrollAnchor={modes.sourceScrollAnchor}
 					{sourceDiagnostics}
 					diffOriginal={diff.original}
 					diffModified={diff.modified}
@@ -1736,9 +1520,9 @@
 					onRefreshDiff={captureDiffSnapshot}
 					onExitDiff={exitDiff}
 				/>
-				{#if pdfPaneOpen}
+				{#if layout.pdfPaneOpen}
 					<PreviewPane
-						width={pdfPaneWidth}
+						width={layout.pdfPaneWidth}
 						{dockShrunk}
 						{guest}
 						guestPdf={session.guestPdf}
@@ -1748,9 +1532,9 @@
 						{draftTrigger}
 						bind:pdfPaneRef
 						bind:draftRef
-						onStartResize={startPdfResize}
-						onResizeByKey={resizePdfByKey}
-						onClose={togglePdfPane}
+						onStartResize={layout.startPdfResize}
+						onResizeByKey={layout.resizePdfByKey}
+						onClose={layout.togglePdfPane}
 						onPageClick={onPdfDoubleClick}
 						onInverseSync={(file, line, selectText) => openFileAtLine(normSyncPath(file), line, selectText)}
 						onSettled={runDraftDecision}
@@ -1766,7 +1550,7 @@
 					shrink={termDock.shrink}
 					{dockShrunk}
 					cwd={$workspaceRoot ?? ''}
-					{pdfPaneOpen}
+					pdfPaneOpen={layout.pdfPaneOpen}
 					bind:view={dockView}
 					bind:dock={termDock.dock}
 					onStartResize={termDock.startResize}
@@ -1802,5 +1586,5 @@
 	<SessionShareModal bind:open={shareModalOpen} root={$workspaceRoot} onBeforeStart={() => saver.flushAndWait()} />
 {/if}
 {#if session.active}
-	<VisualCollab bind:this={visualCollab} {session} path={loadedPath} {kind} {viewMode} api={visualCollabApi} />
+	<VisualCollab bind:this={visualCollab} {session} path={doc.path} {kind} viewMode={modes.mode} api={visualCollabApi} />
 {/if}
