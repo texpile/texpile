@@ -89,6 +89,11 @@ function makeView(latex = 'x^2', isBlock = false) {
 
 const placeholderOf = (view: { dom: HTMLElement }) => view.dom.querySelector(`.${PLACEHOLDER_CLASS}`);
 
+/** let the idle typeset queue drain; jsdom has no requestIdleCallback so it falls back to a timer */
+const flushIdle = async () => {
+	for (let i = 0; i < 5; i++) await new Promise((r) => setTimeout(r, 0));
+};
+
 beforeEach(() => {
 	watched.clear();
 	built = 0;
@@ -96,14 +101,26 @@ beforeEach(() => {
 });
 
 describe('math node view materialization', () => {
-	it('starts as a typeset placeholder with no mathfield built', () => {
+	it('starts as a cheaply-sized box, not yet typeset and with no mathfield built', () => {
 		const view = makeView('\\alpha_{ij}');
 		expect(built).toBe(0);
 		expect(view.mathField).toBeUndefined();
-		const ph = placeholderOf(view);
+		const ph = placeholderOf(view) as HTMLElement;
 		expect(ph).not.toBeNull();
-		// a real typeset, not an empty box: this is what keeps the node correctly sized
-		expect(ph!.querySelector('.typeset')?.textContent).toBe('\\alpha_{ij}');
+		// typesetting a thousand of these at mount is what froze the UI for ~1.1 s, so mounting must
+		// not do it. An estimated size holds the space instead.
+		expect(ph.querySelector('.typeset')).toBeNull();
+		expect(ph.style.width).not.toBe('');
+	});
+
+	it('typesets the placeholder in idle time, so a fast scroll finds real math', async () => {
+		const view = makeView('\\alpha_{ij}');
+		await flushIdle();
+		const ph = placeholderOf(view) as HTMLElement;
+		expect(ph.querySelector('.typeset')?.textContent).toBe('\\alpha_{ij}');
+		// the real render supersedes the estimate
+		expect(ph.style.width).toBe('');
+		expect(built).toBe(0); // still no mathfield: this stage is rendering only
 	});
 
 	it('builds the field when the node nears the viewport, replacing the placeholder', () => {
@@ -143,11 +160,20 @@ describe('math node view materialization', () => {
 		expect(view.stopEvent()).toBe(true);
 	});
 
-	it('re-typesets the placeholder for an edit that lands while still offscreen', () => {
+	it('picks up an edit that lands before the placeholder has been typeset', async () => {
 		const view = makeView('a+b');
 		view.update(schema.nodes.inline_math.create(null, schema.text('c+d')));
 		expect(built).toBe(0); // an offscreen edit must not force a field into existence
+		await flushIdle();
 		expect(placeholderOf(view)!.querySelector('.typeset')?.textContent).toBe('c+d');
+	});
+
+	it('re-typesets immediately for an edit that lands after the placeholder was typeset', async () => {
+		const view = makeView('a+b');
+		await flushIdle();
+		view.update(schema.nodes.inline_math.create(null, schema.text('c+d')));
+		expect(placeholderOf(view)!.querySelector('.typeset')?.textContent).toBe('c+d');
+		expect(built).toBe(0);
 	});
 
 	it('hands a field materialized after an offscreen edit the edited latex, not the original', () => {

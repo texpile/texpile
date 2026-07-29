@@ -9,7 +9,7 @@ import { mount, unmount } from 'svelte';
 import MathSettings from './MathSettings.svelte';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { generateLabel } from '$lib/editor/utils/label';
-import { renderStaticMath, setStaticMath } from './mathStatic';
+import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic';
 import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 
 // reactive props stashed on the container so update() can reach the mounted component without a registry.
@@ -231,6 +231,7 @@ export default class MathLiveView implements NodeView {
 		field.setValue(this.node.textContent || '', { format: 'latex-expanded' });
 
 		if (this.placeholder) {
+			cancelStaticMath(this.placeholder); // no point typesetting something about to be replaced
 			this.dom.replaceChild(field, this.placeholder);
 			this.placeholder = undefined;
 		} else {
@@ -673,6 +674,7 @@ export default class MathLiveView implements NodeView {
 	}
 	destroy() {
 		cancelUpgrade(this.dom);
+		if (this.placeholder) cancelStaticMath(this.placeholder);
 		const field = this.mathField;
 		if (field) {
 			field.removeEventListener('input', this.forwardupdate);
