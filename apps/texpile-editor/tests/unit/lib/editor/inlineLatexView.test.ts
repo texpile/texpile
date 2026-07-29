@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
-// The inline_latex node view is lazy: a real paper carries tens of thousands of these chips and
-// ProseMirror builds every node view up front, so each one starts as a plain text span and only
-// becomes a CodeMirror instance when the caret actually lands in it. These tests pin both halves:
-// the cheap placeholder path and the upgrade, including that no text is lost across the swap.
+// The inline_latex node view wraps a single-line CodeMirror. These pin the contract ProseMirror
+// relies on: the chip mounts with the node's text, an external edit (undo, collaborator patch,
+// disk reload) is diffed into the existing instance rather than remounting it, and teardown is
+// clean. Syntax highlighting comes from that CodeMirror instance, so it must exist at mount.
 import { describe, it, expect, beforeAll } from 'vitest';
 import { schema } from '$lib/schema/schema';
 import InlineLatexView from '$lib/editor/extensions/raw-latex/inlineLatexView';
@@ -30,70 +30,40 @@ function makeView(text = LATEX) {
 	return { node, view: new InlineLatexView(node, pmView, () => 0) };
 }
 
-describe('InlineLatexView (lazy)', () => {
-	it('mounts as a plain placeholder, with no CodeMirror instance', () => {
+describe('InlineLatexView', () => {
+	it('mounts with a CodeMirror holding the node text, so the chip is highlighted on sight', () => {
 		const { view } = makeView();
-		expect(view.cm).toBeNull();
-		expect(view.dom.querySelector('.cm-editor')).toBeNull();
-		const text = view.dom.querySelector('.inline-latex-text');
-		expect(text).not.toBeNull();
-		expect(text!.textContent).toBe(LATEX);
-	});
-
-	it('lets ProseMirror handle events while it is still a placeholder', () => {
-		// stopEvent must stay false until CodeMirror owns the DOM, otherwise the click that is
-		// supposed to trigger the upgrade never reaches ProseMirror and the chip is uneditable
-		const { view } = makeView();
-		expect(view.stopEvent()).toBe(false);
-	});
-
-	it('retexts the placeholder on update without building CodeMirror', () => {
-		const { view } = makeView();
-		const next = schema.nodes.inline_latex.create(null, schema.text('\\beta'));
-		expect(view.update(next)).toBe(true);
-		expect(view.cm).toBeNull();
-		expect(view.dom.querySelector('.inline-latex-text')!.textContent).toBe('\\beta');
-	});
-
-	it('upgrades to CodeMirror on selectNode, preserving the text', () => {
-		const { view } = makeView();
-		view.selectNode();
-		expect(view.cm).not.toBeNull();
-		expect(view.cm!.state.doc.toString()).toBe(LATEX);
-		// the placeholder is gone and CodeMirror took its place inside the same wrapper
-		expect(view.dom.querySelector('.inline-latex-text')).toBeNull();
+		expect(view.cm).toBeTruthy();
+		expect(view.cm.state.doc.toString()).toBe(LATEX);
 		expect(view.dom.querySelector('.cm-editor')).not.toBeNull();
-		expect(view.stopEvent()).toBe(true);
 	});
 
-	it('upgrades on setSelection (caret moved in by keyboard, not click)', () => {
-		const { view } = makeView();
-		view.setSelection(1, 1);
-		expect(view.cm).not.toBeNull();
-		expect(view.cm!.state.doc.toString()).toBe(LATEX);
+	it('swallows events, since CodeMirror owns the DOM', () => {
+		expect(makeView().view.stopEvent()).toBe(true);
 	});
 
-	it('is idempotent: a second upgrade reuses the same instance', () => {
+	it('diffs an external edit into the existing instance instead of remounting', () => {
 		const { view } = makeView();
-		view.selectNode();
-		const first = view.cm;
-		view.selectNode();
-		expect(view.cm).toBe(first);
+		const before = view.cm;
+		expect(view.update(schema.nodes.inline_latex.create(null, schema.text('\\gamma^2')))).toBe(true);
+		expect(view.cm).toBe(before); // same instance: no remount, no lost selection
+		expect(view.cm.state.doc.toString()).toBe('\\gamma^2');
 		expect(view.dom.querySelectorAll('.cm-editor').length).toBe(1);
 	});
 
-	it('syncs an external edit into CodeMirror once upgraded', () => {
+	it('leaves the document untouched when the text is unchanged', () => {
 		const { view } = makeView();
-		view.selectNode();
-		view.update(schema.nodes.inline_latex.create(null, schema.text('\\gamma^2')));
-		expect(view.cm!.state.doc.toString()).toBe('\\gamma^2');
+		expect(view.update(schema.nodes.inline_latex.create(null, schema.text(LATEX)))).toBe(true);
+		expect(view.cm.state.doc.toString()).toBe(LATEX);
 	});
 
-	it('destroys cleanly whether or not it was ever upgraded', () => {
-		const lazy = makeView().view;
-		expect(() => lazy.destroy()).not.toThrow();
-		const upgraded = makeView().view;
-		upgraded.selectNode();
-		expect(() => upgraded.destroy()).not.toThrow();
+	it('refuses a node of a different type, so ProseMirror rebuilds the view', () => {
+		const { view } = makeView();
+		expect(view.update(schema.nodes.inline_math.create(null, schema.text('x^2')))).toBe(false);
+	});
+
+	it('destroys cleanly', () => {
+		const { view } = makeView();
+		expect(() => view.destroy()).not.toThrow();
 	});
 });
