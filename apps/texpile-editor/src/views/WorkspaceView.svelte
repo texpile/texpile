@@ -2,12 +2,18 @@
 	import { onMount, onDestroy, tick, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import { navigate } from '$lib/router.svelte';
-	import WorkspaceSidebar from '$lib/editor/comp/WorkspaceSidebar.svelte';
 	import WorkspaceModals from '$lib/editor/comp/WorkspaceModals.svelte';
 	import WorkspaceMain from '$lib/editor/comp/WorkspaceMain.svelte';
+	import WorkspaceChrome from '$lib/editor/comp/WorkspaceChrome.svelte';
 	import { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
-	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
-	import { shareCompileState as shareHostCompileState, bibPathsFrom } from '$lib/collab/compileIntelBridge';
+	import { compileLog } from '$lib/stores/compileLogStore';
+	import {
+		shareCompileState as shareHostCompileState,
+		bibPathsFrom,
+		guestCompileLog,
+		guestDiagnosticsFor,
+		hostDiagnosticsFor
+	} from '$lib/collab/compileIntelBridge';
 	import DraftView from '$lib/draft/DraftView.svelte';
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
@@ -24,13 +30,11 @@
 	import { graphicCandidateUrls } from '$lib/editor/graphicsCandidates';
 	import { setEditorFileAccess } from '$lib/editor/fileAccess';
 	import { initSpellcheckConfig } from '$lib/editor/extensions/spellcheck/spellcheckConfig';
-	import WorkspaceMenuBar from '$lib/editor/comp/WorkspaceMenuBar.svelte';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import type { EditSession } from '$lib/collab/editSession';
 	import SessionShareModal from '$lib/collab/SessionShareModal.svelte';
 	import VisualCollab from '$lib/collab/VisualCollab.svelte';
-	import GuestBar from '$lib/collab/GuestBar.svelte';
 	import { references, loadReferences, bibItemsToReferences, type BibLaTeXReference } from '$lib/workspace/citations';
 	import { labelStore, referenceStore, filePathStore } from '$lib/stores/editorStore';
 	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
@@ -550,77 +554,18 @@
 	});
 	// guests: surface the host's shared compile diagnostics through the same Problems UI the
 	// host has (the raw log never crosses the wire; this rebuilds the parsed shape from intel)
+	// guests: surface the host's shared compile diagnostics through the same Problems UI the host
+	// has (see lib/collab/compileIntelBridge.ts)
 	$effect(() => {
 		if (!guest) return;
-		const intel = session.compileIntel;
-		if (!intel) {
-			compileLog.set(null);
-			return;
-		}
-		const entries = intel.log.map((e) => ({
-			level: e.level,
-			message: e.message,
-			file: e.file,
-			line: e.line,
-			lineEnd: e.lineEnd,
-			column: e.column,
-			anchorText: e.anchorText,
-			hint: e.hint,
-			command: e.command,
-			raw: e.message
-		}));
-		compileLog.set({
-			entries,
-			errors: entries.filter((e) => e.level === 'error'),
-			warnings: entries.filter((e) => e.level === 'warning'),
-			badboxes: entries.filter((e) => e.level === 'badbox'),
-			files: [],
-			status: { fatal: false, emergencyStop: false, noPages: false },
-			logPath: '',
-			updatedAt: Date.now()
-		});
+		compileLog.set(guestCompileLog(session.compileIntel, Date.now()));
 	});
 
-	// last compile's problems for the file open in source mode; badboxes ride along
-	// as "info" so they underline without alarming colors
-	const sourceDiagnostics = $derived.by(() => {
-		// guest: the host's shared parse (files already root-relative), same shape as below
-		if (guest) {
-			const shared = session.compileIntel;
-			const file = doc.path?.replace(/^session\//, '');
-			if (!shared || !file) return [];
-			return shared.log
-				.filter((e) => e.line !== undefined && samePath(e.file, file))
-				.map((e) => ({
-					line: e.line!,
-					lineEnd: e.lineEnd,
-					severity: e.level === 'error' ? ('error' as const) : e.level === 'badbox' ? ('info' as const) : ('warning' as const),
-					message: e.hint ? `${e.message}\n\n${e.hint}` : e.message,
-					column: e.column,
-					anchorText: e.anchorText,
-					token: e.command
-				}));
-		}
-		const log = $compileLog;
-		const root = $workspaceRoot;
-		const file = doc.path;
-		if (!log || !root || !file) return [];
-		return log.entries
-			.filter((e) => e.level !== 'info' && e.line !== undefined)
-			.filter((e) => {
-				const abs = resolveLogPath(root, e.file);
-				return abs !== null && samePath(abs, file);
-			})
-			.map((e) => ({
-				line: e.line!,
-				lineEnd: e.lineEnd,
-				severity: e.level === 'error' ? ('error' as const) : e.level === 'badbox' ? ('info' as const) : ('warning' as const),
-				message: e.hint ? `${e.message}\n\n${e.hint}` : e.message,
-				column: e.column,
-				anchorText: e.anchorText,
-				token: e.command
-			}));
-	});
+	// last compile's problems for the file open in source mode
+	const sourceDiagnostics = $derived.by(() =>
+		guest ? guestDiagnosticsFor(session.compileIntel, doc.path) : hostDiagnosticsFor($compileLog, $workspaceRoot, doc.path)
+	);
+
 	// ref to the compile-pane PDF viewer, for SyncTeX forward search
 	let pdfPaneRef = $state<{ scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number) => void }>();
 	// a SyncTeX-inverse / Find-in-Files jump. the token distinguishes repeat jumps to the same line
@@ -1292,6 +1237,30 @@
 		toggleTerminal
 	};
 
+	// the callback surface WorkspaceChrome hands to the menu bar and sidebar
+	const chromeActions = {
+		newFileOfType: (ext?: string) => newFileOfType(ext),
+		openFolder: openFolderFromMenu,
+		closeWorkspace,
+		save: () => save(),
+		openShare: () => (shareModalOpen = true),
+		openCompileModal: () => openCompileModal(),
+		newTerminal: newTerminalFromMenu,
+		toggleTerminal,
+		openFormatModal,
+		openTutorial: () => (tutorialModalOpen = true),
+		uiZoomIn,
+		uiZoomOut,
+		uiZoomReset,
+		refreshTree: () => void refreshTree(),
+		openGlobalSearch: () => void openGlobalSearch(),
+		closeGlobalSearch: () => void closeGlobalSearch(),
+		openFileAt: openFileAtLine,
+		openEntry,
+		setMain: (entry: TreeEntry) => void applyMainFile(entry.path),
+		refreshGit: () => refreshGitStatus(get(workspaceRoot))
+	};
+
 	const uiZoomPercent = $derived(Math.round(($settings.uiZoom ?? 1) * 100));
 	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
 	const onKeydown = createKeydownHandler({
@@ -1315,81 +1284,26 @@
 >
 
 <div class="flex h-screen flex-col overflow-hidden">
-	{#if guest}
-		<GuestBar />
-	{:else}
-		<WorkspaceMenuBar
-			disabled={!doc.path}
-			imageDir={doc.path && kind === 'tex' ? dirname(doc.path) : undefined}
-			onNewFile={(ext) => newFileOfType(ext)}
-			onOpenFolder={openFolderFromMenu}
-			onCloseWorkspace={closeWorkspace}
-			onSave={save}
-			onShareSession={isDesktop() ? () => (shareModalOpen = true) : undefined}
-			terminalAvailable={termDock.available}
-			terminalVisible={termDock.visible}
-			onCompile={compiler.runCompile}
-			onConfigureCompile={openCompileModal}
-			onNewTerminal={newTerminalFromMenu}
-			onToggleTerminal={toggleTerminal}
-			onFormatDocument={openFormatModal}
-			onOpenTutorial={() => (tutorialModalOpen = true)}
-			{uiZoomPercent}
-			onZoomIn={uiZoomIn}
-			onZoomOut={uiZoomOut}
-			onZoomReset={uiZoomReset}
-		/>
-	{/if}
-	<div class="flex min-h-0 flex-1 overflow-hidden">
-		{#if layout.sidebarOpen}
-			<WorkspaceSidebar
-				width={layout.sidebarWidth}
-				{guest}
-				{modLabel}
-				bind:view={layout.sidebarView}
-				scmBusy={scm.busy}
-				{showToc}
-				tocFraction={layout.tocFraction}
-				viewMode={modes.mode}
-				bind:fileTreeRef
-				bind:globalSearchRef
-				bind:splitEl={layout.splitEl}
-				onRefreshTree={refreshTree}
-				onOpenGlobalSearch={() => void openGlobalSearch()}
-				onCloseGlobalSearch={() => void closeGlobalSearch()}
-				onOpenFileAt={openFileAtLine}
-				onOpenEntry={openEntry}
-				onCreate={treeOps.create}
-				onRename={treeOps.rename}
-				onDelete={treeOps.deleteMany}
-				onMove={treeOps.moveMany}
-				onImport={treeOps.import}
-				onCopyIn={treeOps.copyIn}
-				onSetMain={(entry) => applyMainFile(entry.path)}
-				onStartTocResize={layout.startTocResize}
-				onResizeTocByKey={layout.resizeTocByKey}
-				onRefreshGit={() => refreshGitStatus($workspaceRoot)}
-				scmInit={scm.init}
-				scmStage={scm.stage}
-				scmUnstage={scm.unstage}
-				scmDiscard={scm.discard}
-				scmCommit={scm.commit}
-				scmOpenDiff={scm.openDiff}
-			/>
-
-			<!-- same WAI-ARIA window-splitter pattern as above; svelte's a11y rule doesn't special-case it -->
-			<!-- eslint-disable-next-line svelte/valid-compile -->
-			<div
-				class="hover:bg-primary-500/40 active:bg-primary-500/60 relative z-20 -mx-[3px] w-1.5 shrink-0 cursor-col-resize bg-transparent transition-colors"
-				onmousedown={layout.startSidebarResize}
-				onkeydown={layout.resizeSidebarByKey}
-				role="separator"
-				aria-orientation="vertical"
-				aria-label={m.wsview_resize_sidebar_aria()}
-				tabindex="0"
-			></div>
-		{/if}
-
+	<WorkspaceChrome
+		{layout}
+		{modes}
+		{termDock}
+		{compiler}
+		{scm}
+		{treeOps}
+		{guest}
+		{modLabel}
+		{showToc}
+		menu={{
+			disabled: !doc.path,
+			imageDir: doc.path && kind === 'tex' ? dirname(doc.path) : undefined,
+			shareable: isDesktop(),
+			uiZoomPercent
+		}}
+		actions={chromeActions}
+		bind:fileTreeRef
+		bind:globalSearchRef
+	>
 		<WorkspaceMain
 			{doc}
 			{modes}
@@ -1421,7 +1335,7 @@
 			bind:pdfPaneRef
 			bind:draftRef
 		/>
-	</div>
+	</WorkspaceChrome>
 
 	<WorkspaceModals
 		{mainPrompt}
