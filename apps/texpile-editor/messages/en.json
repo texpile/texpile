@@ -74,6 +74,7 @@
 	"wsview_loading_parsing": "Reading LaTeX…",
 	"wsview_loading_building": "Building document…",
 	"wsview_loading_finalizing": "Finalizing…",
+	"wsview_loading_rendering": "Rendering document…",
 	"wsview_loading_large_note": "This file is large ({size}). Still preparing the visual editor.",
 	"wsview_loading_use_source": "Edit in Source mode instead",
 	"wsview_toast_visual_ready_title": "Visual mode is ready",

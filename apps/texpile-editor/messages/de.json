@@ -74,6 +74,7 @@
 	"wsview_loading_parsing": "LaTeX wird gelesen…",
 	"wsview_loading_building": "Dokument wird aufgebaut…",
 	"wsview_loading_finalizing": "Wird abgeschlossen…",
+	"wsview_loading_rendering": "Dokument wird gerendert…",
 	"wsview_loading_large_note": "Diese Datei ist groß ({size}). Der visuelle Editor wird noch vorbereitet.",
 	"wsview_loading_use_source": "Stattdessen im Quelltextmodus bearbeiten",
 	"wsview_toast_visual_ready_title": "Visueller Modus ist bereit",

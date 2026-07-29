@@ -74,6 +74,7 @@
 	"wsview_loading_parsing": "正在讀取 LaTeX…",
 	"wsview_loading_building": "正在建構文件…",
 	"wsview_loading_finalizing": "正在完成…",
+	"wsview_loading_rendering": "正在算繪文件…",
 	"wsview_loading_large_note": "此檔案較大（{size}），正在準備視覺化編輯器。",
 	"wsview_loading_use_source": "改用原始碼模式編輯",
 	"wsview_toast_visual_ready_title": "視覺化模式已就緒",

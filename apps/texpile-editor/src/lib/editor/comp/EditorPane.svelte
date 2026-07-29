@@ -125,11 +125,45 @@
 
 	// remounts the source editor when the file or the session's view of it changes
 	const sourceKey = $derived(`${loadedPath}:${session.active}:${session.manifestRev}`);
+
+	// Building the visual editor's node views is one long synchronous block - seconds, on a large
+	// paper. Swapping straight from the loading state to <EditorView> puts both in the same update,
+	// so the browser never gets to paint the loading state and the pane just sits empty for the
+	// duration. Hold the swap for two frames: the first paints the loading bar, the second confirms
+	// it reached the screen, and only then does the blocking mount start. Whatever was last painted
+	// stays on screen through the block, so the user watches the bar rather than nothing.
+	let mountGate = $state(false);
+	$effect(() => {
+		if (!visualDoc) {
+			mountGate = false;
+			return;
+		}
+		if (mountGate) return;
+		let cancelled = false;
+		const open = () => {
+			if (!cancelled) mountGate = true;
+		};
+		const frame = requestAnimationFrame(() => requestAnimationFrame(open));
+		// requestAnimationFrame does not fire at all while the window is not being rendered -
+		// minimized, occluded, hidden. Without this the editor would never mount in those states and
+		// the user would come back to a loading bar that never finishes. Painting is pointless then
+		// anyway, so just proceed.
+		const fallback = setTimeout(open, 250);
+		return () => {
+			cancelled = true;
+			cancelAnimationFrame(frame);
+			clearTimeout(fallback);
+		};
+	});
+
+	/** the visual editor is wanted, whether or not it has been built yet */
+	const visualPending = $derived(loadedPath && kind === 'tex' && viewMode === 'visual');
+	const visualReady = $derived(!!visualDoc && mountGate);
 </script>
 
 <div class="flex min-h-0 min-w-0 flex-col" style="grid-column: 1; grid-row: 2">
 	<TabBar tabs={openTabs} activePath={loadedPath} dirty={$isDirty && !session.isGuest} onActivate={onActivateTab} onClose={onCloseTab} />
-	{#if visualDoc && loadedPath && kind === 'tex' && viewMode === 'visual'}
+	{#if visualReady && loadedPath && kind === 'tex' && viewMode === 'visual'}
 		<div class="border-surface-200-800 toolbar-hscroll flex min-h-10 items-center overflow-x-auto border-b px-2">
 			<Toolbar minimal />
 		</div>
@@ -140,7 +174,7 @@
 	{/if}
 	<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 	<div class="relative min-h-0 min-w-0 flex-1">
-		{#if loadedPath && kind === 'tex' && viewMode === 'visual' && visualDoc}
+		{#if loadedPath && kind === 'tex' && viewMode === 'visual' && visualReady}
 			<SearchBar />
 		{/if}
 		<div class="h-full w-full overflow-auto">
@@ -194,7 +228,7 @@
 						collab={session.collabFor(loadedPath)}
 					/>
 				{/key}
-			{:else if loadedPath && kind === 'tex' && visualDoc}
+			{:else if loadedPath && kind === 'tex' && visualReady}
 				{#key loadedPath}
 					<!-- texpile-main-editor scopes the editor's right-click context menu (ContextMenu.svelte) -->
 					<!-- px-12 reserves room for the block-handle gutters (~48px left / ~30px right); on narrow
@@ -216,9 +250,11 @@
 						</div>
 					</div>
 				{/key}
-			{:else if loadedPath && kind === 'tex' && viewMode === 'visual'}
-				<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
-				<VisualLoading phase={parseProgress} sizeBytes={texSource.length} {onUseSource} />
+			{:else if visualPending}
+				<!-- One branch covering both waits, deliberately: the parse (in a worker) and then the
+				     editor's own mount. Splitting them would remount this component at the handover and
+				     restart its escalation timers, blanking the pane exactly when the long block starts. -->
+				<VisualLoading phase={parseProgress} mounting={!!visualDoc} sizeBytes={texSource.length} {onUseSource} />
 			{:else if loadedPath && kind === 'bib' && (viewMode === 'source' || session.isGuest)}
 				<!-- guests always co-edit .bib through the Y-bound source editor; BibManager isn't
 				     CRDT-bound and would desync or clobber remote edits -->

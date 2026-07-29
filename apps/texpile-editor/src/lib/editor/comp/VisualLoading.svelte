@@ -4,11 +4,22 @@
 	// between them is an eased creep, because the longest step (unified-latex's sync parse) is a
 	// single opaque call that reports nothing. It therefore never reaches 100% on its own: the
 	// component unmounts when the doc actually arrives.
+	//
+	// `mounting` covers the step after that: ProseMirror building node views, which is one long
+	// synchronous block on the main thread. Nothing driven from JS survives it - the creep interval
+	// stops and a width transition freezes mid-animation, which reads as a hung app. So that phase
+	// switches to an indeterminate bar animated purely on `transform`, which Chromium runs on the
+	// compositor and keeps moving while the main thread is completely blocked.
 	import { Loader2 } from '@lucide/svelte';
 	import type { ParsePhase } from '$lib/workspace/latexRoundtrip';
 	import { m } from '$lib/paraglide/messages';
 
-	let { phase = null, sizeBytes = 0, onUseSource }: { phase?: ParsePhase | null; sizeBytes?: number; onUseSource?: () => void } = $props();
+	let {
+		phase = null,
+		sizeBytes = 0,
+		onUseSource,
+		mounting = false
+	}: { phase?: ParsePhase | null; sizeBytes?: number; onUseSource?: () => void; mounting?: boolean } = $props();
 
 	// escalate with the wait instead of flashing the heaviest UI at every switch: most parses
 	// finish inside 300ms and should show nothing at all.
@@ -49,21 +60,34 @@
 		if (pct < floor) pct = floor;
 	});
 
+	// the block is known to be coming, so skip the escalation and show the bar straight away
+	const shown = $derived(mounting ? 'bar' : stage);
+
 	const label = $derived(
-		phase === 'finalizing' ? m.wsview_loading_finalizing() : phase === 'building' ? m.wsview_loading_building() : m.wsview_loading_parsing()
+		mounting
+			? m.wsview_loading_rendering()
+			: phase === 'finalizing'
+				? m.wsview_loading_finalizing()
+				: phase === 'building'
+					? m.wsview_loading_building()
+					: m.wsview_loading_parsing()
 	);
 	const sizeText = $derived(sizeBytes >= 1_000_000 ? `${(sizeBytes / 1_048_576).toFixed(1)} MB` : `${Math.round(sizeBytes / 1024)} KB`);
 </script>
 
-{#if stage === 'spinner'}
+{#if shown === 'spinner'}
 	<div class="text-surface-500 mt-12 flex items-center justify-center gap-2 text-sm">
 		<Loader2 class="size-4 animate-spin" />
 		{m.wsview_opening()}
 	</div>
-{:else if stage === 'bar'}
+{:else if shown === 'bar'}
 	<div class="mx-auto mt-24 flex max-w-sm flex-col items-center px-6 text-center">
 		<div class="bg-surface-200-800 h-1 w-full overflow-hidden rounded-full">
-			<div class="bg-primary-500 h-full rounded-full transition-[width] duration-200 ease-out" style="width: {pct}%"></div>
+			{#if mounting}
+				<div class="bg-primary-500 indeterminate h-full w-1/4 rounded-full"></div>
+			{:else}
+				<div class="bg-primary-500 h-full rounded-full transition-[width] duration-200 ease-out" style="width: {pct}%"></div>
+			{/if}
 		</div>
 		<p class="text-surface-500 mt-3 text-sm">{label}</p>
 
@@ -77,3 +101,28 @@
 		{/if}
 	</div>
 {/if}
+
+<style>
+	/* transform and nothing else: Chromium runs this on the compositor, so it keeps sliding through
+	   the synchronous ProseMirror mount that blocks the main thread. Animating width or left here
+	   would freeze mid-bar and look like a hung app. */
+	.indeterminate {
+		animation: indeterminate-slide 1.1s ease-in-out infinite;
+		will-change: transform;
+	}
+
+	@keyframes indeterminate-slide {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(400%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.indeterminate {
+			animation-duration: 2.4s;
+		}
+	}
+</style>
