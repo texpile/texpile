@@ -182,19 +182,12 @@ export default class MathLiveView implements NodeView {
 		if (isblock) {
 			this.settingsContainer = document.createElement('div');
 			this.dom.appendChild(this.settingsContainer);
-
-			const componentProps = $state({
-				node: this.node,
-				view: this.view,
-				getPos: this.getPos
-			});
-
-			this.settingsComponent = mount(MathSettings, {
-				target: this.settingsContainer,
-				props: componentProps
-			});
-
-			(this.settingsContainer as SettingsHost).__svelteComponentProps = componentProps;
+			// The settings button is opacity:0 until the block is hovered or focused, so mounting the
+			// component here costs a whole Svelte component per equation for something nobody can see
+			// yet. Defer it to the first hover or focus: a document with 262 equations skips 262 mounts
+			// at load and pays for exactly the ones the user reaches for.
+			this.dom.addEventListener('pointerenter', this.mountSettings);
+			this.dom.addEventListener('focusin', this.mountSettings);
 		}
 
 		this.updating = false;
@@ -241,6 +234,29 @@ export default class MathLiveView implements NodeView {
 			this.mathField.style.outline = 'none';
 		}
 	}
+
+	/** Builds the settings popover on first hover or focus, then unhooks itself. An arrow field so the
+	 * same reference can be removed later. Keyboard reach is preserved because focusing the mathfield
+	 * fires focusin on the container, mounting the button before Tab can move to it. */
+	private mountSettings = (): void => {
+		if (this.settingsComponent || !this.settingsContainer) return;
+
+		const componentProps = $state({
+			node: this.node,
+			view: this.view,
+			getPos: this.getPos
+		});
+
+		this.settingsComponent = mount(MathSettings, {
+			target: this.settingsContainer,
+			props: componentProps
+		});
+
+		(this.settingsContainer as SettingsHost).__svelteComponentProps = componentProps;
+
+		this.dom.removeEventListener('pointerenter', this.mountSettings);
+		this.dom.removeEventListener('focusin', this.mountSettings);
+	};
 
 	/** equation numbers are sequential across the whole doc, count everything numbered before this node. */
 	private getEquationStartNumber(): number {
@@ -606,6 +622,11 @@ export default class MathLiveView implements NodeView {
 		if (this.origFocus) {
 			this.mathField.focus = this.origFocus as typeof this.mathField.focus;
 			this.origFocus = undefined;
+		}
+		if (this.isblock) {
+			// harmless when mountSettings already removed them
+			this.dom.removeEventListener('pointerenter', this.mountSettings);
+			this.dom.removeEventListener('focusin', this.mountSettings);
 		}
 		if (this.settingsComponent) {
 			unmount(this.settingsComponent);
