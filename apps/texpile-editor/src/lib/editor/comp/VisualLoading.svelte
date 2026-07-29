@@ -81,7 +81,7 @@
 		{m.wsview_opening()}
 	</div>
 {:else if shown === 'bar'}
-	<div class="mx-auto mt-24 flex max-w-sm flex-col items-center px-6 text-center">
+	<div class="mx-auto mt-24 flex max-w-sm flex-col items-center px-6 text-center" class:reveal-late={mounting}>
 		<div class="bg-surface-200-800 h-1 w-full overflow-hidden rounded-full">
 			{#if mounting}
 				<div class="bg-primary-500 indeterminate h-full w-1/4 rounded-full"></div>
@@ -103,6 +103,25 @@
 {/if}
 
 <style>
+	/* The same "nothing below 300 ms" rule the parse phase gets from its timers, done in CSS because
+	   the mount blocks the main thread: a setTimeout armed beforehand would not fire until the block
+	   ended, revealing the bar exactly as it stopped being useful. An animation delay is kept by the
+	   animation timeline instead, so the bar reveals itself mid-block if the block runs long, and is
+	   removed from the DOM still invisible if it does not.
+
+	   This also drops any assumption about how fast the machine is. A slower CPU crosses 300 ms on a
+	   smaller document and gets the bar there; a faster one does not. Nothing to calibrate. */
+	.reveal-late {
+		opacity: 0;
+		animation: reveal-after-delay 180ms ease-out 300ms forwards;
+	}
+
+	@keyframes reveal-after-delay {
+		to {
+			opacity: 1;
+		}
+	}
+
 	/* transform and nothing else: Chromium runs this on the compositor, so it keeps sliding through
 	   the synchronous ProseMirror mount that blocks the main thread. Animating width or left here
 	   would freeze mid-bar and look like a hung app. */

@@ -139,18 +139,11 @@
 	let readyFor = $state<string | null>(null);
 	const editorReady = $derived(!!loadedPath && readyFor === loadedPath);
 
-	/** Below this the editor builds fast enough that a bar would flash and vanish, which reads worse
-	 * than a short pause. It is the same 300 ms rule VisualLoading applies to the parse, but it cannot
-	 * be spelled as a timer here: the build blocks the main thread, so a setTimeout armed beforehand
-	 * would not fire until the block ended, and the bar would appear exactly as it became pointless.
-	 * Document size is the stand-in. Calibrated against the load-test fixtures, where ~2,900 nodes of
-	 * an 80 KB file render quickly and 13,600 nodes of a 245 KB file take 1-2 s: roughly 0.1 ms per
-	 * node, putting 300 ms near 80 KB. Approximate by nature, and cheap to get wrong in either
-	 * direction - a brief needless bar, or a brief bare pause. */
-	const RENDER_BAR_MIN_BYTES = 80_000;
-
-	/** the editor is being built and it is big enough that the wait will be noticeable */
-	const showRenderBar = $derived(!editorReady && texSource.length >= RENDER_BAR_MIN_BYTES);
+	/** Rendered for the whole build, but it holds itself invisible for the first 300 ms through a CSS
+	 * animation delay (see VisualLoading), so a fast build never flashes a bar. Deliberately not a
+	 * size threshold: that would bake in an assumption about how fast the machine is, and suppress
+	 * the bar on a slow CPU exactly where the wait is worst. */
+	const showRenderBar = $derived(!editorReady);
 
 	/** the visual editor is wanted, whether or not it has been built yet */
 	const visualPending = $derived(loadedPath && kind === 'tex' && viewMode === 'visual');
