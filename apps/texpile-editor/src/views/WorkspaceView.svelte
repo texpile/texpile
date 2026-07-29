@@ -2,19 +2,17 @@
 	import { onMount, onDestroy, tick, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import { navigate } from '$lib/router.svelte';
-	import TerminalDock from '$lib/editor/comp/TerminalDock.svelte';
-	import EditorTopbar from '$lib/editor/comp/EditorTopbar.svelte';
 	import WorkspaceSidebar from '$lib/editor/comp/WorkspaceSidebar.svelte';
-	import PreviewPane from '$lib/editor/comp/PreviewPane.svelte';
-	import EditorPane from '$lib/editor/comp/EditorPane.svelte';
 	import WorkspaceModals from '$lib/editor/comp/WorkspaceModals.svelte';
+	import WorkspaceMain from '$lib/editor/comp/WorkspaceMain.svelte';
 	import { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
 	import { shareCompileState as shareHostCompileState, bibPathsFrom } from '$lib/collab/compileIntelBridge';
 	import DraftView from '$lib/draft/DraftView.svelte';
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
-	import { applyStarter, applyImportedFiles, type Starter, type ImportedFile } from '$lib/workspace/starters';
+	import type { Starter, ImportedFile } from '$lib/workspace/starters';
+	import { StarterActions } from '$lib/workspace/starterActions.svelte';
 	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath, resolveGuestSyncRequest } from '$lib/workspace/syncTexNav';
@@ -38,6 +36,7 @@
 	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { DiffMode } from '$lib/workspace/diffMode.svelte';
+	import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 	import { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
@@ -78,7 +77,6 @@
 		toLf,
 		fromLf,
 		native,
-		freeName,
 		type TreeEntry
 	} from '$lib/workspace/fileSystem';
 	import { diskProvider } from '$lib/workspace/diskProvider';
@@ -224,63 +222,19 @@
 		if (session.active && !guest && $settings.draftMode) updateSettings({ draftMode: false });
 	});
 
-	let applyingStarter = $state(false);
-	async function pickStarter(s: Starter) {
-		const root = get(workspaceRoot);
-		if (!root || applyingStarter) return;
-		applyingStarter = true;
-		try {
-			const mainPath = await applyStarter(root, s);
-			setMainFile(root, mainPath);
-			await loadRefs(root); // the starter may include references.bib; reload so its \cite keys resolve
-			await refreshTree();
-			activeFilePath.set(mainPath);
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_starter_create_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		} finally {
-			applyingStarter = false;
-		}
-	}
-
-	async function importStarterFiles(files: ImportedFile[]) {
-		const root = get(workspaceRoot);
-		if (!root || applyingStarter) return;
-		applyingStarter = true;
-		try {
-			const mainPath = await applyImportedFiles(root, files);
-			await loadRefs(root); // imported .bib -> resolve its \cite keys
-			await refreshTree();
-			if (mainPath) {
-				setMainFile(root, mainPath);
-				activeFilePath.set(mainPath);
-			}
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_import_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		} finally {
-			applyingStarter = false;
-		}
-	}
-
+	// starter templates + file import live in lib/workspace/starterActions.svelte.ts
+	const starters = new StarterActions({
+		loadRefs,
+		refreshTree: () => refreshTree(),
+		createEntry: (root, name, type) => treeOps.create(root, name, type)
+	});
+	const pickStarter = (s: Starter) => starters.pick(s);
+	const importStarterFiles = (files: ImportedFile[]) => starters.importFiles(files);
+	const newTexFile = () => starters.newTexFile();
 	// File menu "New": inline create in the tree, pre-named for the chosen type
 	function newFileOfType(ext?: string) {
-		const names: Record<string, string> = { tex: 'untitled.tex', bib: 'references.bib', cls: 'untitled.cls', sty: 'mystyle.sty' };
-		const rootNames = get(fileTree).map((e) => e.name);
-		const defaultName = ext ? freeName(names[ext] ?? `untitled.${ext}`, rootNames) : '';
 		layout.sidebarOpen = true;
-		fileTreeRef?.newAtRoot('file', defaultName);
-	}
-
-	async function newTexFile() {
-		const root = get(workspaceRoot);
-		if (!root) return;
-		await treeOps.create(
-			root,
-			freeName(
-				'main.tex',
-				get(fileTree).map((e) => e.name)
-			),
-			'file'
-		);
+		fileTreeRef?.newAtRoot('file', starters.newFileName(ext));
 	}
 
 	// no folder open (e.g. hard navigation): send the user back to the start screen
@@ -318,55 +272,27 @@
 		modes.restore();
 		diff.restoreLayout();
 
-		// the tree is a snapshot: rescan on window focus and on the fs-changed event dispatched by
-		// internal writes. any on-disk change also rescans references so \cite autocompletion and
-		// the citation nodes see fresh keys immediately.
 		const reloadReferences = () => {
-			const root = get(workspaceRoot);
-			if (root) void loadRefs(root);
+			const r = get(workspaceRoot);
+			if (r) void loadRefs(r);
 		};
-		const onFocus = () => {
-			refreshTree();
-			if (hostMode) void checkExternalChange(); // guests have no on-disk copy to diff against
-			reloadReferences();
-		};
-		const onFsChanged = () => {
-			refreshTree();
-			reloadReferences();
-		};
-		const onCompile = () => compiler.runCompile();
-		const onResize = layout.reclampPdf;
-		window.addEventListener('focus', onFocus);
-		window.addEventListener('texpile:fs-changed', onFsChanged);
-		window.addEventListener('compile', onCompile);
-		window.addEventListener('resize', onResize);
-		// window close is held by main until we answer (2s backstop for a hung renderer). fast
-		// path: flush the autosave debounce and proceed. autosave off with a pending edit: the
-		// modal can outlive the hold, so release the close NOW and re-issue it after the answer.
-		const offBeforeClose = native()?.onBeforeClose?.(async () => {
-			// a prompt is already up (ours or the file-switch guard's): its detached edit is
-			// invisible to saver.pending, so the fast path below would destroy it. Just refuse.
-			if (unsaved.prompt) {
-				native()?.closeDecision?.(false);
-				return;
-			}
-			if (autosaveActive() || !doc.path || saver.pending?.path !== doc.path) {
-				await saver.flushAndWait();
-				native()?.closeDecision?.(true);
-				return;
-			}
-			native()?.closeDecision?.(false);
-			if (await confirmLeaveUnsaved()) {
-				await saver.flushAndWait();
-				window.close(); // pending is settled, so this pass takes the fast path
-			}
+		const detachListeners = attachWindowListeners({
+			refreshTree: () => void refreshTree(),
+			reloadReferences,
+			isHost: () => hostMode,
+			checkExternalChange: () => void checkExternalChange(),
+			runCompile: () => compiler.runCompile(),
+			onWindowResize: layout.reclampPdf
+		});
+		const offBeforeClose = attachCloseGuard({
+			promptIsOpen: () => !!unsaved.prompt,
+			canCloseSilently: () => autosaveActive() || !doc.path || saver.pending?.path !== doc.path,
+			flushSaves: () => saver.flushAndWait(),
+			confirmLeaveUnsaved
 		});
 		return () => {
 			offBeforeClose?.();
-			window.removeEventListener('focus', onFocus);
-			window.removeEventListener('texpile:fs-changed', onFsChanged);
-			window.removeEventListener('compile', onCompile);
-			window.removeEventListener('resize', onResize);
+			detachListeners();
 			compiler.dispose();
 			saver.cancelTimer();
 			deferredSourceToc.cancel();
@@ -1115,13 +1041,17 @@
 		});
 	});
 
-	/** drop the open file's buffers. per-file state (anchors, cross-mode history) must not leak. */
 	/** drop the open file's buffers AND the per-file view state that must not leak into the next file */
 	function closeOpenFile() {
 		doc.close();
+		clearPerFileViewState();
+		sourceHistory.disable();
+	}
+
+	/** anchors are keyed to the outgoing file's text; a new file must never inherit them */
+	function clearPerFileViewState() {
 		modes.sourceScrollAnchor = null;
 		modes.pendingVisualAnchor = null;
-		sourceHistory.disable();
 	}
 
 	// the open-time parse finishes here: fill the visual pane (the spinner branch yields to the
@@ -1165,40 +1095,25 @@
 				const mySeq = parser.nextSequence();
 				if (modes.mode === 'visual') adoptBackgroundParse(tryParseVisual(text), path, text, mySeq);
 
-				doc.eol = detectEol(raw); // remember CRLF/LF to re-apply on save
-				doc.texSource = text;
-				doc.docMeta = null;
-				doc.visualDoc = null;
-				doc.lastDoc = null;
+				doc.openTex(path, text, detectEol(raw)); // detectEol so a CRLF file isn't rewritten to LF
 				parser.lastParsedSource = null;
-				doc.path = path;
-				doc.diskBaseline = text;
 				isDirty.set(false);
 				sourceHistory.reset(text); // the on-disk content is the floor of the cross-mode undo history
-				modes.sourceScrollAnchor = null;
-				modes.pendingVisualAnchor = null;
+				clearPerFileViewState();
 				if (modes.mode === 'diff') void captureDiffSnapshot(); // re-diff the newly-opened file
 			} else if (k === 'text' || k === 'bib') {
 				const raw = await readTextFile(path);
 				if (get(activeFilePath) !== path) return;
-				doc.eol = detectEol(raw);
-				const text = toLf(raw);
-				doc.rawContent = text;
-				doc.texSource = '';
-				doc.docMeta = null;
-				doc.visualDoc = null;
-				doc.path = path;
-				doc.diskBaseline = text;
+				doc.openRaw(path, toLf(raw), detectEol(raw));
 				isDirty.set(false);
 				sourceHistory.disable(); // no cross-mode history for these kinds
-				modes.sourceScrollAnchor = null;
-				modes.pendingVisualAnchor = null;
+				clearPerFileViewState();
 				if (modes.mode === 'diff') void captureDiffSnapshot();
 			} else {
-				// image / binary: nothing to load, just display it
 				if (get(activeFilePath) !== path) return;
-				closeOpenFile();
-				doc.path = path;
+				doc.openOpaque(path);
+				clearPerFileViewState();
+				sourceHistory.disable();
 				isDirty.set(false);
 			}
 		} catch (e) {
@@ -1337,6 +1252,46 @@
 		globalSearchRef?.focusInput(seed);
 	}
 
+	// the callback surface WorkspaceMain hands down to the topbar / editor / preview / dock
+	const actions = {
+		setViewMode,
+		syncForward,
+		pauseDraft: () => pauseDraft(),
+		resumeDraft: () => void resumeDraft(),
+		requestCompile: () => {
+			collabGuest.requestCompile();
+			toaster.info({ title: m.session_compile_requested(), duration: 2500 });
+		},
+		openCompileModal: () => openCompileModal(),
+		showProblems: () => {
+			showTerminal();
+			dockView = 'problems';
+		},
+		save: () => save(),
+		activateTab,
+		closeTab,
+		useSource: () => setViewMode('source'),
+		pickStarter,
+		newTexFile,
+		importStarter: importStarterFiles,
+		onTexInput,
+		onRawInput,
+		onVisualChange: onChange,
+		onVisualSelection: () => visualCollab?.publishCursor(),
+		onEditFrontmatter: editPreambleFrontmatter,
+		syncToPdf: syncForwardLine,
+		historyStep: workspaceHistoryStep,
+		jumpToFile: jumpToInclude,
+		openFileAt: openFileAtLine,
+		refreshDiff: captureDiffSnapshot,
+		exitDiff,
+		onPdfDoubleClick,
+		onInverseSync: (file: string, line: number, selectText?: string) => openFileAtLine(normSyncPath(file), line, selectText),
+		onPreviewSettled: runDraftDecision,
+		toggleTerminalShrink,
+		toggleTerminal
+	};
+
 	const uiZoomPercent = $derived(Math.round(($settings.uiZoom ?? 1) * 100));
 	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
 	const onKeydown = createKeydownHandler({
@@ -1435,132 +1390,37 @@
 			></div>
 		{/if}
 
-		<main
-			class="grid min-h-0 min-w-0 flex-1"
-			style="grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto minmax(0, 1fr) auto auto"
-		>
-			<EditorTopbar
-				loadedPath={doc.path}
-				{kind}
-				viewMode={modes.mode}
-				{guest}
-				terminalAvailable={termDock.available}
-				compiling={compiler.compiling}
-				pdfPaneOpen={layout.pdfPaneOpen}
-				{draftPaused}
-				saving={saver.saving}
-				sidebarOpen={layout.sidebarOpen}
-				{modLabel}
-				onToggleSidebar={layout.toggleSidebar}
-				onSetViewMode={setViewMode}
-				onSyncForward={syncForward}
-				onStopCompile={compiler.stopCompile}
-				onPauseDraft={pauseDraft}
-				onResumeDraft={resumeDraft}
-				onCompile={compiler.runCompile}
-				onRequestCompile={() => {
-					collabGuest.requestCompile();
-					toaster.info({ title: m.session_compile_requested(), duration: 2500 });
-				}}
-				onConfigureCompile={openCompileModal}
-				onShowProblems={() => {
-					showTerminal();
-					dockView = 'problems';
-				}}
-				onTogglePdf={layout.togglePdfPane}
-				onSave={save}
-			/>
-
-			<!-- editor column (toolbar + content) with the PDF pane beside it, so the PDF
-			     skips the toolbar while the header (Compile) stays above it. the wrapper is
-			     display:contents so editor/splitter/preview place themselves on main's grid -->
-			<div class="contents">
-				<EditorPane
-					openTabs={tabs.list}
-					onActivateTab={activateTab}
-					onCloseTab={closeTab}
-					loadedPath={doc.path}
-					{kind}
-					{nameOnly}
-					viewMode={modes.mode}
-					{session}
-					{folderEmpty}
-					loadError={doc.loadError}
-					{applyingStarter}
-					texSource={doc.texSource}
-					rawContent={doc.rawContent}
-					visualDoc={doc.visualDoc}
-					parseProgress={parser.progress}
-					onUseSource={() => setViewMode('source')}
-					docMeta={doc.docMeta}
-					{allReferences}
-					{sourceGotoLine}
-					sourceScrollAnchor={modes.sourceScrollAnchor}
-					{sourceDiagnostics}
-					diffOriginal={diff.original}
-					diffModified={diff.modified}
-					diffLayout={diff.layout}
-					diffLoading={diff.loading}
-					diffError={diff.error}
-					diffHasHead={diff.hasHead}
-					{fileUrl}
-					onPickStarter={pickStarter}
-					onBlankStarter={newTexFile}
-					onImportStarter={importStarterFiles}
-					{onTexInput}
-					{onRawInput}
-					onVisualChange={onChange}
-					onVisualSelection={() => visualCollab?.publishCursor()}
-					onEditFrontmatter={editPreambleFrontmatter}
-					onSyncToPdf={syncForwardLine}
-					onHistoryBoundary={workspaceHistoryStep}
-					onJumpToFile={jumpToInclude}
-					onOpenFileAt={openFileAtLine}
-					onToggleDiffLayout={() => diff.toggleLayout()}
-					onRefreshDiff={captureDiffSnapshot}
-					onExitDiff={exitDiff}
-				/>
-				{#if layout.pdfPaneOpen}
-					<PreviewPane
-						width={layout.pdfPaneWidth}
-						{dockShrunk}
-						{guest}
-						guestPdf={session.guestPdf}
-						pdfFilename={compiler.pdfFilename}
-						{draftRoot}
-						{draftMainRel}
-						{draftTrigger}
-						bind:pdfPaneRef
-						bind:draftRef
-						onStartResize={layout.startPdfResize}
-						onResizeByKey={layout.resizePdfByKey}
-						onClose={layout.togglePdfPane}
-						onPageClick={onPdfDoubleClick}
-						onInverseSync={(file, line, selectText) => openFileAtLine(normSyncPath(file), line, selectText)}
-						onSettled={runDraftDecision}
-					/>
-				{/if}
-			</div>
-
-			{#if termDock.mounted && (termDock.available || guest)}
-				<TerminalDock
-					terminalEnabled={termDock.available}
-					visible={termDock.visible}
-					height={termDock.height}
-					shrink={termDock.shrink}
-					{dockShrunk}
-					cwd={$workspaceRoot ?? ''}
-					pdfPaneOpen={layout.pdfPaneOpen}
-					bind:view={dockView}
-					bind:dock={termDock.dock}
-					onStartResize={termDock.startResize}
-					onResizeByKey={termDock.resizeByKey}
-					onToggleShrink={toggleTerminalShrink}
-					onClose={toggleTerminal}
-					onProblemJump={openFileAtLine}
-				/>
-			{/if}
-		</main>
+		<WorkspaceMain
+			{doc}
+			{modes}
+			{layout}
+			{diff}
+			{parser}
+			{termDock}
+			{compiler}
+			{saver}
+			{session}
+			{guest}
+			{kind}
+			{nameOnly}
+			{folderEmpty}
+			{modLabel}
+			{dockShrunk}
+			draft={{ root: draftRoot, mainRel: draftMainRel, trigger: draftTrigger, paused: draftPaused }}
+			panes={{
+				openTabs: tabs.list,
+				applyingStarter: starters.applying,
+				allReferences,
+				sourceGotoLine,
+				sourceDiagnostics,
+				fileUrl,
+				cwd: $workspaceRoot ?? ''
+			}}
+			{actions}
+			bind:dockView
+			bind:pdfPaneRef
+			bind:draftRef
+		/>
 	</div>
 
 	<WorkspaceModals

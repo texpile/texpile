@@ -85,6 +85,34 @@ export class DocumentBuffer {
 		this.path = null;
 	}
 
+	/** install a .tex file's text; the visual doc is cleared and re-parsed separately */
+	openTex(path: string, text: string, eol: Eol): void {
+		this.eol = eol;
+		this.texSource = text;
+		this.docMeta = null;
+		this.visualDoc = null;
+		this.lastDoc = null;
+		this.path = path;
+		this.diskBaseline = text;
+	}
+
+	/** install a non-.tex text file (.bib and friends), which has no visual representation */
+	openRaw(path: string, text: string, eol: Eol): void {
+		this.eol = eol;
+		this.rawContent = text;
+		this.texSource = '';
+		this.docMeta = null;
+		this.visualDoc = null;
+		this.path = path;
+		this.diskBaseline = text;
+	}
+
+	/** image / binary / pdf: nothing to load, the viewer just needs the path */
+	openOpaque(path: string): void {
+		this.close();
+		this.path = path;
+	}
+
 	/** install a freshly parsed document into the visual pane */
 	adoptParsed(parsed: ParsedLatexFile): void {
 		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
