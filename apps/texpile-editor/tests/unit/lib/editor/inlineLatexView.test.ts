@@ -1,8 +1,13 @@
 // @vitest-environment jsdom
 // The inline_latex node view wraps a single-line CodeMirror. These pin the contract ProseMirror
-// relies on: the chip mounts with the node's text, an external edit (undo, collaborator patch,
-// disk reload) is diffed into the existing instance rather than remounting it, and teardown is
-// clean. Syntax highlighting comes from that CodeMirror instance, so it must exist at mount.
+// relies on once that CodeMirror exists: it holds the node's text, an external edit (undo,
+// collaborator patch, disk reload) is diffed into the existing instance rather than remounting it,
+// and teardown is clean.
+//
+// The instance is built lazily now, as the chip nears the viewport. jsdom has no
+// IntersectionObserver, so upgradeWhenNear falls back to building it immediately and these keep
+// exercising a live chip. The laziness itself is covered in cmViewport.test.ts, which installs a
+// fake observer.
 import { describe, it, expect, beforeAll } from 'vitest';
 import { schema } from '$lib/schema/schema';
 import InlineLatexView from '$lib/editor/extensions/raw-latex/inlineLatexView';
