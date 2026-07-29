@@ -13,10 +13,10 @@
 	import type { CompileSettings } from '$lib/workspace/compileSettings.svelte';
 
 	let {
-		mainPrompt,
+		mainPrompt = $bindable(),
 		unsaved,
 		external,
-		compileSettings,
+		compileSettings = $bindable(),
 		formatModalOpen = $bindable(),
 		formatting,
 		pendingRefUpdate,

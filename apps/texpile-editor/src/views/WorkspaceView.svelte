@@ -430,7 +430,10 @@
 		discardPendingSave: () => saver.discard()
 	});
 
-	const layout = new PaneLayout();
+	// $state (not const) because descendants bind into these objects' fields: svelte needs an
+	// assignable, reactive target to keep the ownership chain intact. Class instances are not
+	// proxied by $state, so the objects themselves behave exactly as they would unwrapped.
+	let layout = $state(new PaneLayout());
 
 	const showToc = $derived(!!doc.path && kind === 'tex' && (modes.mode === 'visual' || modes.mode === 'source'));
 	// source mode has no ProseMirror plugin to feed the outline, so parse headings from the raw
@@ -454,7 +457,7 @@
 		if (kind === 'tex' && modes.mode === 'source') deferredSourceToc();
 	});
 	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
-	const termDock = new TerminalDockState(() => guest);
+	let termDock = $state(new TerminalDockState(() => guest));
 	const showTerminal = () => termDock.show();
 	const toggleTerminal = () => termDock.toggle();
 	const toggleTerminalShrink = () => termDock.toggleShrink();
@@ -485,11 +488,13 @@
 	// null, so it can't flash while initProject is still scanning. Storage is consulted
 	// SYNCHRONOUSLY on folder open (resolveMainConfirm) - a folder with a saved choice is
 	// confirmed before the first render.
-	const mainPrompt = new MainFilePrompt({
-		loadExistingPdf: () => void compiler.loadExistingPdf(),
-		setProjectMacros: (macros) => (projectMacros = macros),
-		releaseHeldDraftCompile: () => draftTrigger++
-	});
+	let mainPrompt = $state(
+		new MainFilePrompt({
+			loadExistingPdf: () => void compiler.loadExistingPdf(),
+			setProjectMacros: (macros) => (projectMacros = macros),
+			releaseHeldDraftCompile: () => draftTrigger++
+		})
+	);
 	const resolveMainConfirm = (root: string | null) => mainPrompt.resolve(root);
 	const openMainConfirm = (then?: () => void) => mainPrompt.prompt(then);
 	// live mode compiles on its own as soon as the pane is open; surface the question then.
@@ -590,7 +595,7 @@
 		refreshTree,
 		showTerminal,
 		setDockView: (v) => (dockView = v),
-		setPdfPaneOpen: layout.setPdfPaneOpen,
+		setPdfPaneOpen: (open: boolean) => layout.setPdfPaneOpen(open),
 		openCompileModal: () => openCompileModal(),
 		openMainConfirm: (then) => void openMainConfirm(then),
 		runDraftCompile,
@@ -686,7 +691,7 @@
 		isTex: () => kind === 'tex',
 		getDraftRoot: () => draftRoot,
 		expectedPdfPath: () => compiler.expectedPdfPath(),
-		setPdfPaneOpen: layout.setPdfPaneOpen,
+		setPdfPaneOpen: (open: boolean) => layout.setPdfPaneOpen(open),
 		scrollPdfTo: jumpPdf,
 		syncDraftTo: (page, x, y, w, h) => draftRef?.syncTo(page, x, y, w, h),
 		openFileAtLine
@@ -696,10 +701,12 @@
 	const onPdfDoubleClick = (page: number, x: number, y: number, selectText?: string) => syncTex.inverseFromClick(page, x, y, selectText);
 
 	// compile-command dialog state lives in lib/workspace/compileSettings.svelte.ts
-	const compileSettings = new CompileSettings(
-		() => compileCommand,
-		(c) => (compileCommand = c),
-		() => compiler.runCompile()
+	let compileSettings = $state(
+		new CompileSettings(
+			() => compileCommand,
+			(c) => (compileCommand = c),
+			() => compiler.runCompile()
+		)
 	);
 	const openCompileModal = () => compileSettings.open();
 	const saveCompileCommand = (thenRun: boolean) => compileSettings.save(thenRun);
@@ -1285,9 +1292,9 @@
 
 <div class="flex h-screen flex-col overflow-hidden">
 	<WorkspaceChrome
-		{layout}
+		bind:layout
 		{modes}
-		{termDock}
+		bind:termDock
 		{compiler}
 		{scm}
 		{treeOps}
@@ -1338,10 +1345,10 @@
 	</WorkspaceChrome>
 
 	<WorkspaceModals
-		{mainPrompt}
+		bind:mainPrompt
 		{unsaved}
 		{external}
-		{compileSettings}
+		bind:compileSettings
 		bind:formatModalOpen
 		{formatting}
 		{pendingRefUpdate}

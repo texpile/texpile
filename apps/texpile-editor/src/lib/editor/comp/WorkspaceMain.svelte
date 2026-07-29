@@ -20,10 +20,10 @@
 	let {
 		doc,
 		modes,
-		layout,
+		layout = $bindable(),
 		diff,
 		parser,
-		termDock,
+		termDock = $bindable(),
 		compiler,
 		saver,
 		session,

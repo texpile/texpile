@@ -17,9 +17,9 @@
 
 	let {
 		children,
-		layout,
+		layout = $bindable(),
 		modes,
-		termDock,
+		termDock = $bindable(),
 		compiler,
 		scm,
 		treeOps,
