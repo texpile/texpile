@@ -8,17 +8,14 @@
 	import WorkspaceSidebar from '$lib/editor/comp/WorkspaceSidebar.svelte';
 	import PreviewPane from '$lib/editor/comp/PreviewPane.svelte';
 	import EditorPane from '$lib/editor/comp/EditorPane.svelte';
-	import CompileCommandModal from '$lib/editor/comp/CompileCommandModal.svelte';
-	import MainFileModal from '$lib/editor/comp/MainFileModal.svelte';
-	import FormatModal from '$lib/editor/comp/FormatModal.svelte';
-	import ConflictModal from '$lib/editor/comp/ConflictModal.svelte';
-	import SaveBeforeSwitchModal from '$lib/editor/comp/SaveBeforeSwitchModal.svelte';
-	import RefUpdateModal, { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
+	import WorkspaceModals from '$lib/editor/comp/WorkspaceModals.svelte';
+	import { type RefUpdate } from '$lib/editor/comp/RefUpdateModal.svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
+	import { shareCompileState as shareHostCompileState, bibPathsFrom } from '$lib/collab/compileIntelBridge';
 	import DraftView from '$lib/draft/DraftView.svelte';
 	import GlobalSearch from '$lib/editor/comp/GlobalSearch.svelte';
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
-	import { applyStarter, applyImportedFiles, openTutorialProject, type Starter, type ImportedFile } from '$lib/workspace/starters';
+	import { applyStarter, applyImportedFiles, type Starter, type ImportedFile } from '$lib/workspace/starters';
 	import { editorViewStore, sourceCmView, viewMode as viewModeStore } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath, resolveGuestSyncRequest } from '$lib/workspace/syncTexNav';
@@ -28,6 +25,7 @@
 	import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 	import { projectIntelStore } from '$lib/stores/projectIntel';
 	import { setGraphicResolver } from '$lib/editor/extensions/intellisense/hover';
+	import { graphicCandidateUrls } from '$lib/editor/graphicsCandidates';
 	import { setEditorFileAccess } from '$lib/editor/fileAccess';
 	import { replacePreambleFrontmatter } from '$lib/editor/extensions/raw-latex/frontmatterView';
 	import { initSpellcheckConfig } from '$lib/editor/extensions/spellcheck/spellcheckConfig';
@@ -43,10 +41,13 @@
 	import { extractDocRefsAsync } from '$lib/latex-parser/labelsClient';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { DiffMode } from '$lib/workspace/diffMode.svelte';
+	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
+	import { CompileSettings } from '$lib/workspace/compileSettings.svelte';
+	import { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
 	import { FolderLifecycle } from '$lib/workspace/folderLifecycle';
 	import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
 	import { DraftDispatcher } from '$lib/draft/draftDispatcher';
-	import { createKeydownHandler, setUiZoom, uiZoomIn, uiZoomOut, uiZoomReset, UI_ZOOM_STEP } from '$lib/workspace/shortcuts';
+	import { createKeydownHandler, uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
 	import { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
 	import { startDrag, nudgeOnKey, clampTo } from '$lib/workspace/paneResize';
 	import { createSourceHistory } from '$lib/workspace/sourceHistory';
@@ -58,29 +59,21 @@
 		activeFilePath,
 		isDirty,
 		mainFile,
-		savedMainFile,
 		setMainFile,
-		setLastFile,
-		setFolderCompileCommand,
-		savedCompileOutputs,
-		setCompileOutputs
+		setLastFile
 	} from '$lib/workspace/workspaceStore';
-	import { addRecentFolder } from '$lib/workspace/workspaceStore';
 	import { refreshGitStatus, isGitRepo, takeNoGitHint } from '$lib/workspace/gitStore';
-	import { gitShowHead } from '$lib/workspace/git';
 	import { ScmActions } from '$lib/workspace/scmActions.svelte';
 	import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
 	import { CompilePipeline, resolveCompileCommand, relFromRoot } from '$lib/workspace/compilePipeline.svelte';
 	import { TreeOps } from '$lib/workspace/treeOps';
-	import { settings, loadSettings, updateSettings, DEFAULT_COMPILE_COMMAND } from '$lib/settings';
-	import { detectMainFile, findDocRoots, gatherProjectMacros } from '$lib/workspace/project';
+	import { settings, loadSettings, updateSettings } from '$lib/settings';
+	import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
 	import {
 		basename,
 		dirname,
 		joinPath,
-		pickFolder,
 		claimWorkspace,
-		releaseWorkspace,
 		relativeTo,
 		isDesktop,
 		samePath,
@@ -90,8 +83,7 @@
 		native,
 		freeName,
 		type Eol,
-		type TreeEntry,
-		type TexFile
+		type TreeEntry
 	} from '$lib/workspace/fileSystem';
 	import { diskProvider } from '$lib/workspace/diskProvider';
 	import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
@@ -190,7 +182,6 @@
 	let docEol = $state<Eol>('\n');
 	// LF-normalized on-disk content; if the file changes underneath unsaved edits, we prompt
 	let diskBaseline = $state('');
-	let conflict = $state<{ path: string; disk: string; eol: Eol } | null>(null);
 	const folderEmpty = $derived($texFiles.length === 0);
 	// lets the header's New file/folder buttons trigger the tree's inline create input
 	let fileTreeRef = $state<{ newAtRoot: (type: 'file' | 'dir' | 'include', defaultName?: string) => void; isEditing: () => boolean }>();
@@ -312,7 +303,7 @@
 			void initProject(root);
 		}
 		tabs.bind(root, hostMode); // restore this folder's open tabs (guests start fresh)
-		terminalAvailable = isDesktop() && hostMode; // client-only; set here so SSR/CSR agree
+		termDock.available = isDesktop() && hostMode; // client-only; set here so SSR/CSR agree
 		if (guest) pdfPaneOpen = true; // guests land with the host's PDF visible
 		loadRefs(root);
 		refreshTree();
@@ -330,18 +321,13 @@
 			}
 			pdfPaneOpen = s.pdfPaneOpen; // reopen the preview if it was open last (loadExistingPdf fills it)
 			compileCommand = resolveCompileCommand(get(workspaceRoot), s.compileCommand ?? '');
-			if (s.terminalHeight >= 120 && s.terminalHeight <= 700) terminalHeight = s.terminalHeight;
-			if (terminalAvailable && s.terminalVisible) {
-				terminalMounted = true; // BottomDock creates its first shell on mount
-				terminalVisible = true;
-			}
+			termDock.restore(s);
 		});
 		if (localStorage.getItem('texpile:viewMode') === 'source') {
 			viewMode = 'source';
 			lastEditMode = 'source';
 		}
 		diff.restoreLayout();
-		if (localStorage.getItem('texpile:terminalShrink') === '1') terminalShrink = true;
 
 		// the tree is a snapshot: rescan on window focus and on the fs-changed event dispatched by
 		// internal writes. any on-disk change also rescans references so \cite autocompletion and
@@ -487,7 +473,7 @@
 		setMainConfirmed: (v) => (mainPrompt.confirmed = v),
 		loadExistingPdf: () => void compiler.loadExistingPdf(),
 		setProjectMacros: (macros) => (projectMacros = macros),
-		resetTerminals: resetTerminalsForWorkspace
+		resetTerminals: () => resetTerminalsForWorkspace()
 	});
 	const openFolderFromMenu = (path?: string) => folder.open(path);
 	const closeWorkspace = () => folder.close();
@@ -582,33 +568,21 @@
 		nudgeOnKey(e, { keys: ['ArrowDown', 'ArrowUp'], step: 0.02, current: () => tocFraction, apply: setToc, commit: commitToc });
 
 	// set in onMount (not at init) so the server and the first client render agree
-	let terminalAvailable = $state(false);
-	let terminalVisible = $state(false);
-	let terminalHeight = $state(240);
-	let terminalShrink = $state(false); // dock only under the editor; the preview pane keeps full height
-	let terminalMounted = $state(false); // stay mounted after first open so shells persist across toggles
-	// the bottom dock (terminal + problems tabs) owns its own multi-terminal state; we hold a ref
-	// to drive it (run a compile command, refit on resize, reset on folder change)
-	let dock = $state<{
-		runCommand(cmd: string, onDone?: (o: string) => void): void;
-		reset(): void;
-		refit(): void;
-		focusActive(): void;
-		addTerminal(): void;
-		interrupt(): void;
-	}>();
+	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
+	const termDock = new TerminalDockState(() => guest);
+	const showTerminal = () => termDock.show();
+	const toggleTerminal = () => termDock.toggle();
+	const toggleTerminalShrink = () => termDock.toggleShrink();
+	const resetTerminalsForWorkspace = () => termDock.resetForWorkspace();
+	const newTerminalFromMenu = () => termDock.newTerminal();
+
 	let compileCommand = $state(''); // the compile command; {main} expands to the main file's path
-	let compileModalOpen = $state(false);
-	let compileDraft = $state('');
-	// Advanced (per-folder) output-path overrides, edited in the compile modal
-	let compileOutputsDraft = $state<{ pdf: string; log: string }>({ pdf: '', log: '' });
-	let advancedOpen = $state(false);
 	let formatModalOpen = $state(false);
 	let formatting = $state(false);
 	// PDF preview pane; opens automatically once a compile writes a fresh PDF
 	let pdfPaneOpen = $state(false);
 	let pdfPaneWidth = $state(480);
-	const dockShrunk = $derived(terminalShrink && pdfPaneOpen);
+	const dockShrunk = $derived(termDock.shrink && pdfPaneOpen);
 	const PDF_FRACTION_KEY = 'texpile:pdfPaneFraction';
 	// cap: whatever's left after the sidebar, keeping ~360px for the editor, so a big pane
 	// saved on a wide screen can't squeeze the editor out in a small window
@@ -788,67 +762,14 @@
 	let sourceGotoLine = $state<{ line: number; token: number; selectText?: string } | undefined>(undefined);
 	let gotoToken = 0;
 
-	function showTerminal() {
-		terminalMounted = true; // mounts BottomDock, which creates its first shell (host only)
-		terminalVisible = true;
-		if (!guest) updateSettings({ terminalVisible: true });
-		setTimeout(() => dock?.refit(), 0);
-	}
-	function toggleTerminal() {
-		if (terminalVisible) {
-			terminalVisible = false;
-			if (!guest) updateSettings({ terminalVisible: false });
-		} else {
-			showTerminal();
-			setTimeout(() => dock?.focusActive(), 40);
-		}
-	}
-	function toggleTerminalShrink() {
-		terminalShrink = !terminalShrink;
-		if (browser) localStorage.setItem('texpile:terminalShrink', terminalShrink ? '1' : '0');
-	}
-	// on folder change, replace the shells so they respawn in the new cwd
-	function resetTerminalsForWorkspace() {
-		dock?.reset();
-	}
-	// menu "New Terminal": open the dock (its first shell is auto-created) or add another
-	function newTerminalFromMenu() {
-		const wasMounted = terminalMounted;
-		terminalMounted = true;
-		terminalVisible = true;
-		updateSettings({ terminalVisible: true });
-		setTimeout(() => (wasMounted ? dock?.addTerminal() : dock?.focusActive()), 0);
-	}
-	const clampTerminal = clampTo(120, 700);
-	const commitTerminal = () => updateSettings({ terminalHeight });
-	// the xterm canvas has to re-measure on every step, not just at the end of the gesture
-	const setTerminalHeight = (h: number) => {
-		terminalHeight = clampTerminal(h);
-		dock?.refit();
-	};
-	function startTerminalResize(e: MouseEvent) {
-		const startY = e.clientY;
-		const startH = terminalHeight;
-		// drag up = taller
-		startDrag(e, { compute: (ev) => startH + (startY - ev.clientY), apply: setTerminalHeight, commit: commitTerminal });
-	}
-	const resizeTerminalByKey = (e: KeyboardEvent) =>
-		nudgeOnKey(e, {
-			keys: ['ArrowDown', 'ArrowUp'],
-			step: 16,
-			current: () => terminalHeight,
-			apply: setTerminalHeight,
-			commit: commitTerminal
-		});
-
 	// compile / terminal / PDF-watch orchestration lives in lib/workspace/compilePipeline.svelte.ts
 	const compiler = new CompilePipeline({
 		getLoadedPath: () => loadedPath,
 		getCompileCommand: () => compileCommand,
-		terminalAvailable: () => terminalAvailable,
+		terminalAvailable: () => termDock.available,
 		mainConfirmed: () => mainPrompt.confirmed,
 		getSession: () => session,
-		getDock: () => dock,
+		getDock: () => termDock.dock,
 		stat: statFile,
 		readText: readTextFile,
 		create: createEntry,
@@ -858,10 +779,10 @@
 		showTerminal,
 		setDockView: (v) => (dockView = v),
 		setPdfPaneOpen,
-		openCompileModal,
+		openCompileModal: () => openCompileModal(),
 		openMainConfirm: (then) => void openMainConfirm(then),
 		runDraftCompile,
-		shareCompileState
+		shareCompileState: () => shareCompileState()
 	});
 	// Draft mode: preview via the incremental per-page engine instead of the terminal
 	// command. Saves first (so the compile sees the buffer), opens the preview pane, and
@@ -986,29 +907,15 @@
 	const syncForward = () => syncTex.forwardFromCursor();
 	const onPdfDoubleClick = (page: number, x: number, y: number, selectText?: string) => syncTex.inverseFromClick(page, x, y, selectText);
 
-	function openCompileModal() {
-		compileDraft = compileCommand;
-		const root = get(workspaceRoot);
-		const ov = root ? savedCompileOutputs(root) : {};
-		compileOutputsDraft = { pdf: ov.pdf ?? '', log: ov.log ?? '' };
-		advancedOpen = !!(ov.pdf || ov.log); // start expanded only if overrides exist
-		compileModalOpen = true;
-	}
-	function saveCompileCommand(thenRun: boolean) {
-		compileCommand = compileDraft.trim();
-		const root = get(workspaceRoot);
-		if (root) {
-			setFolderCompileCommand(root, compileCommand || null);
-			setCompileOutputs(root, { pdf: compileOutputsDraft.pdf.trim(), log: compileOutputsDraft.log.trim() });
-		}
-		updateSettings({ compileCommand }); // also the starting default for folders without their own
-		compileModalOpen = false;
-		if (thenRun && compileCommand) compiler.runCompile();
-	}
-	function useDefaultCommand() {
-		compileDraft = DEFAULT_COMPILE_COMMAND;
-		saveCompileCommand(true);
-	}
+	// compile-command dialog state lives in lib/workspace/compileSettings.svelte.ts
+	const compileSettings = new CompileSettings(
+		() => compileCommand,
+		(c) => (compileCommand = c),
+		() => compiler.runCompile()
+	);
+	const openCompileModal = () => compileSettings.open();
+	const saveCompileCommand = (thenRun: boolean) => compileSettings.save(thenRun);
+	const useDefaultCommand = () => compileSettings.useDefault();
 
 	function openFormatModal() {
 		if (!loadedPath || kind !== 'tex') return;
@@ -1112,11 +1019,7 @@
 		const active = $activeFilePath;
 		const tree = $fileTree;
 		const root = $workspaceRoot;
-		const bibs = root
-			? flattenPaths(tree, root)
-					.filter((p) => /\.bib$/i.test(p))
-					.map((p) => joinPath(root, p))
-			: [];
+		const bibs = root ? bibPathsFrom(flattenPaths(tree, root), root) : [];
 		// the .aux sits next to the log (output/aux dirs included); fall back to a main-sibling .aux
 		const aux = compiler.expectedLogPath()?.replace(/\.log$/i, '.aux') ?? (main ? main.replace(/\.tex$/i, '.aux') : null);
 		// a guest has no aux on disk; the host's shared parse fills the numbers in (and re-runs
@@ -1130,34 +1033,7 @@
 		});
 	});
 
-	// publish the parsed compile products (aux label numbers + diagnostics) to guests: parse once
-	// here, share small JSON via session meta, instead of syncing wholesale .aux/.log artifacts
-	// (which rewrite per compile and would bloat the shared doc's history)
-	function shareCompileState() {
-		const root = get(workspaceRoot);
-		if (guest || !root || !session.active) return;
-		const intel = get(projectIntelStore);
-		const log = get(compileLog);
-		// share every error/warning/badbox, line-anchored or not: line-less warnings (undefined
-		// \ref/\cite, package warnings) still belong in the guest's Problems panel
-		const entries = (log?.entries ?? [])
-			.filter((e) => e.level !== 'info')
-			.map((e) => {
-				const abs = e.file ? resolveLogPath(root, e.file) : null;
-				return {
-					file: abs ? relativeTo(root, abs).replace(/\\/g, '/') : '',
-					line: e.line,
-					lineEnd: e.lineEnd,
-					level: e.level as 'error' | 'warning' | 'badbox',
-					message: e.message,
-					hint: e.hint,
-					column: e.column,
-					anchorText: e.anchorText,
-					command: e.command
-				};
-			});
-		session.shareCompileIntel({ auxNumbers: intel.auxNumbers, auxPages: intel.auxPages, log: entries });
-	}
+	const shareCompileState = () => shareHostCompileState(session, guest);
 
 	// \includegraphics hover preview: candidate texfile:// URLs (current dir, root, and any
 	// \graphicspath dirs, adding raster extensions when the path has none); the tooltip's img
@@ -1200,23 +1076,7 @@
 		(p) => provider.fileUrl(p),
 		(p, data) => provider.writeBinary(p, data)
 	);
-	setGraphicResolver((rel) => {
-		const root = get(workspaceRoot);
-		const base = loadedPath ? dirname(loadedPath) : null;
-		const cand = rel.replace(/\\/g, '/');
-		const names = /\.[a-z]+$/i.test(cand) ? [cand] : ['.png', '.jpg', '.jpeg', '.webp', '.gif'].map((e) => cand + e);
-		const dirs: (string | null)[] = [base, root];
-		const gp = texSource.match(/\\graphicspath\s*\{((?:\s*\{[^{}]*\}\s*)+)\}/);
-		if (gp) {
-			for (const d of gp[1].matchAll(/\{([^{}]*)\}/g)) {
-				if (!d[1]) continue;
-				for (const parent of [base, root]) if (parent) dirs.push(joinPath(parent, d[1]));
-			}
-		}
-		const urls: string[] = [];
-		for (const dir of dirs) if (dir) for (const n of names) urls.push(fileUrl(joinPath(dir, n)));
-		return [...new Set(urls)];
-	});
+	setGraphicResolver((rel) => graphicCandidateUrls(rel, { root: get(workspaceRoot), loadedPath, source: texSource, fileUrl }));
 	onDestroy(() => {
 		setGraphicResolver(null);
 		setEditorFileAccess(null, null);
@@ -1434,51 +1294,26 @@
 
 	// external-change detection: on window focus, re-read the open file. differs + unsaved
 	// edits = prompt; no local edits = silently adopt the disk version.
-	async function checkExternalChange() {
-		const path = loadedPath;
-		if (!path || (kind !== 'tex' && kind !== 'text' && kind !== 'bib') || conflict) return;
-		await saver.whenIdle(); // let any in-flight autosave finish, so we don't read our own half-written file
-		if (loadedPath !== path) return; // the file switched while we waited
-		let raw: string;
-		try {
-			raw = await readTextFile(path);
-		} catch {
-			return;
-		}
-		const disk = toLf(raw); // compare in LF against our LF baseline/buffers
-		if (get(activeFilePath) !== path || disk === diskBaseline) return; // unchanged on disk
-		const eol = detectEol(raw); // the external writer may have changed the ending
-		const buffer = kind === 'tex' ? texSource : rawContent;
-		if (!get(isDirty) || buffer === disk) applyDiskReload(disk, eol);
-		else conflict = { path, disk, eol };
-	}
-
-	// adopt the on-disk version into the editor, discarding local edits; disk is LF-normalized
-	function applyDiskReload(disk: string, eol: Eol) {
-		docEol = eol;
-		diskBaseline = disk;
-		if (kind === 'tex') {
-			texSource = disk;
-			rebuildVisualFromSource(); // re-derive docMeta + visualDoc and remount
-		} else {
-			rawContent = disk;
-		}
-		isDirty.set(false);
-		// the buffer now matches disk: drop any queued autosave of the edits we just replaced, or a
-		// later flush would clobber the version the user chose to keep
-		saver.discard();
-		// shared session: fold the adopted disk content into the shared doc so guests see it too
-		// (the host materializer's lastWritten update prevents an echo write back to disk)
-		if (loadedPath) session.edit(loadedPath, disk);
-	}
-
-	function resolveConflict(choice: 'reload' | 'keep') {
-		const c = conflict;
-		conflict = null;
-		if (!c) return;
-		if (choice === 'reload') applyDiskReload(c.disk, c.eol);
-		else if (loadedPath === c.path) save(); // keep mine: overwrite disk now
-	}
+	// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
+	const external = new ExternalChangeWatcher({
+		getLoadedPath: () => loadedPath,
+		isTextual: () => kind === 'tex' || kind === 'text' || kind === 'bib',
+		isTex: () => kind === 'tex',
+		whenIdle: () => saver.whenIdle(),
+		readText: readTextFile,
+		getDiskBaseline: () => diskBaseline,
+		setDiskBaseline: (t) => (diskBaseline = t),
+		getBuffer: () => (kind === 'tex' ? texSource : rawContent),
+		setTexSource: (t) => (texSource = t),
+		setRawContent: (t) => (rawContent = t),
+		setEol: (e) => (docEol = e),
+		rebuildVisual: rebuildVisualFromSource,
+		discardQueuedSave: () => saver.discard(),
+		sessionEdit: (path, content) => session.edit(path, content),
+		saveNow: () => save()
+	});
+	const checkExternalChange = () => external.check();
+	const resolveConflict = (choice: 'reload' | 'keep') => external.resolve(choice);
 
 	// debounced autosave + serial write chain live in lib/workspace/savePipeline.svelte.ts
 	const saver = new SavePipeline({
@@ -1726,7 +1561,7 @@
 		isGuest: () => guest,
 		save,
 		openGlobalSearch: () => void openGlobalSearch(),
-		terminalAvailable: () => terminalAvailable,
+		terminalAvailable: () => termDock.available,
 		isCompiling: () => compiler.compiling,
 		runCompile: () => compiler.runCompile(),
 		stopCompile: () => compiler.stopCompile()
@@ -1752,8 +1587,8 @@
 			onCloseWorkspace={closeWorkspace}
 			onSave={save}
 			onShareSession={isDesktop() ? () => (shareModalOpen = true) : undefined}
-			{terminalAvailable}
-			{terminalVisible}
+			terminalAvailable={termDock.available}
+			terminalVisible={termDock.visible}
 			onCompile={compiler.runCompile}
 			onConfigureCompile={openCompileModal}
 			onNewTerminal={newTerminalFromMenu}
@@ -1825,7 +1660,7 @@
 				{kind}
 				{viewMode}
 				{guest}
-				{terminalAvailable}
+				terminalAvailable={termDock.available}
 				compiling={compiler.compiling}
 				{pdfPaneOpen}
 				{draftPaused}
@@ -1923,19 +1758,19 @@
 				{/if}
 			</div>
 
-			{#if terminalMounted && (terminalAvailable || guest)}
+			{#if termDock.mounted && (termDock.available || guest)}
 				<TerminalDock
-					terminalEnabled={terminalAvailable}
-					visible={terminalVisible}
-					height={terminalHeight}
-					shrink={terminalShrink}
+					terminalEnabled={termDock.available}
+					visible={termDock.visible}
+					height={termDock.height}
+					shrink={termDock.shrink}
 					{dockShrunk}
 					cwd={$workspaceRoot ?? ''}
 					{pdfPaneOpen}
 					bind:view={dockView}
-					bind:dock
-					onStartResize={startTerminalResize}
-					onResizeByKey={resizeTerminalByKey}
+					bind:dock={termDock.dock}
+					onStartResize={termDock.startResize}
+					onResizeByKey={termDock.resizeByKey}
 					onToggleShrink={toggleTerminalShrink}
 					onClose={toggleTerminal}
 					onProblemJump={openFileAtLine}
@@ -1944,42 +1779,22 @@
 		</main>
 	</div>
 
-	{#if mainPrompt.open}
-		<MainFileModal
-			candidates={mainPrompt.candidates}
-			bind:choice={mainPrompt.choice}
-			detected={mainPrompt.detected}
-			docRoots={mainPrompt.docRoots}
-			onConfirm={() => mainPrompt.confirm()}
-			onDismiss={() => mainPrompt.dismiss()}
-		/>
-	{/if}
-
-	<CompileCommandModal
-		bind:open={compileModalOpen}
-		bind:command={compileDraft}
-		bind:outputs={compileOutputsDraft}
-		bind:advancedOpen
-		onSave={saveCompileCommand}
-		onUseDefault={useDefaultCommand}
-		onRun={compiler.runCompile}
+	<WorkspaceModals
+		{mainPrompt}
+		{unsaved}
+		{external}
+		{compileSettings}
+		bind:formatModalOpen
+		{formatting}
+		{pendingRefUpdate}
+		onSaveCompile={saveCompileCommand}
+		onUseDefaultCompile={useDefaultCommand}
+		onRunCompile={compiler.runCompile}
+		onFormat={runFormat}
+		onResolveConflict={resolveConflict}
+		onKeepRefs={() => (pendingRefUpdate = null)}
+		onApplyRefs={doApplyRefUpdate}
 	/>
-
-	<FormatModal bind:open={formatModalOpen} {formatting} onFormat={runFormat} />
-
-	<!-- file edited on disk while we held unsaved edits -->
-	{#if conflict}
-		<ConflictModal path={conflict.path} onResolve={resolveConflict} />
-	{/if}
-
-	<!-- autosave off, switching away from a file with unsaved edits -->
-	{#if unsaved.prompt}
-		<SaveBeforeSwitchModal name={unsaved.prompt.name} onResolve={(c) => unsaved.resolve(c)} />
-	{/if}
-
-	{#if pendingRefUpdate}
-		<RefUpdateModal update={pendingRefUpdate} onKeep={() => (pendingRefUpdate = null)} onApply={doApplyRefUpdate} />
-	{/if}
 </div>
 
 <TutorialConfirmModal bind:open={tutorialModalOpen} onConfirm={openTutorial} />
