@@ -3,7 +3,7 @@
 import { tick } from 'svelte';
 import { get } from 'svelte/store';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
-import { activeFilePath, workspaceRoot, isDirty } from '$lib/workspace/workspaceStore';
+import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { basename, dirname, joinPath, relativeTo, toLf, fromLf, type Eol } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -121,9 +121,4 @@ export async function jumpToInclude(
 			}
 		}
 	}
-}
-
-/** the formatter's edit joins the normal save pipeline like any other whole-source replacement */
-export function markFormattedDirty(): void {
-	isDirty.set(true);
 }

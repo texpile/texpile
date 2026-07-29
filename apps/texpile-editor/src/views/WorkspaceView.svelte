@@ -70,7 +70,8 @@
 		setMainFile,
 		setLastFile
 	} from '$lib/workspace/workspaceStore';
-	import { refreshGitStatus, takeNoGitHint } from '$lib/workspace/gitStore';
+	import { refreshGitStatus } from '$lib/workspace/gitStore';
+	import { refreshTree as refreshTreeState } from '$lib/workspace/treeRefresh';
 	import { ScmActions } from '$lib/workspace/scmActions.svelte';
 	import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
 	import { CompilePipeline, resolveCompileCommand, relFromRoot } from '$lib/workspace/compilePipeline.svelte';
@@ -95,7 +96,6 @@
 	const renameEntry = (from: string, to: string) => provider.rename(from, to);
 	const copyEntry = (from: string, to: string) => provider.copy(from, to);
 	const formatLatexDocument = (p: string, text: string) => provider.format!(p, text);
-	const scanTree = async (root: string) => ({ root, children: await provider.scanTree(root) });
 	const scanTexFiles = async (root: string) => ({ root, files: await provider.scanTexFiles(root) });
 	// citations read through the provider too, so guest sessions resolve \cite keys from the shared doc
 	const loadRefs = (root: string) => loadReferences(root, { scan: (r, e) => provider.scanFiles(r, e), read: readTextFile });
@@ -326,43 +326,13 @@
 		tabs.close(path);
 	}
 
-	const flatFiles = (es: TreeEntry[]): string[] => es.flatMap((e) => (e.type === 'dir' ? flatFiles(e.children ?? []) : [e.path]));
-
-	async function refreshTree() {
-		const root = get(workspaceRoot);
-		if (!root) return;
-		// don't rebuild while the user is typing a name in the tree (a refresh would tear
-		// the inline input down mid-edit); it re-scans after they commit
-		if (fileTreeRef?.isEditing?.()) return;
-		try {
-			// one traversal when the provider can (disk); guests fall back to the two reads
-			if (provider.scanTreeAndFiles) {
-				const { children, files } = await provider.scanTreeAndFiles(root);
-				fileTree.set(children);
-				tabs.prune(flatFiles(children)); // tabs for files that vanished (remote deletes, external rm)
-				texFiles.set(files);
-			} else {
-				const { children } = await scanTree(root);
-				fileTree.set(children);
-				tabs.prune(flatFiles(children));
-				const { files } = await scanTexFiles(root);
-				texFiles.set(files);
-			}
-		} catch (e) {
-			console.error('Failed to read folder tree:', e);
-		}
-		// shared session: the manifest mirrors the tree, same single call-site trick
-		void session.syncTree();
-		// git refresh is non-blocking and never throws; this single call-site
-		// covers every refreshTree() trigger for free. Guests have no disk and no repo, and this
-		// now runs on every manifest change, so don't spawn git per remote file op.
-		if (!provider.caps.git) return;
-		void refreshGitStatus(root).then(({ missingGit }) => {
-			if (missingGit && takeNoGitHint()) {
-				toaster.warning({ title: m.wsview_toast_no_git_title(), description: m.wsview_toast_no_git_desc() });
-			}
+	// tree rescan + manifest sync + git refresh live in lib/workspace/treeRefresh.ts
+	const refreshTree = () =>
+		refreshTreeState({
+			provider,
+			session,
+			isEditingTree: () => !!fileTreeRef?.isEditing?.()
 		});
-	}
 
 	// the shared file set changes under a guest whenever the host adds, renames or deletes a file.
 	// The provider exposes a watch hook for exactly this; without it the tree only ever reflected
