@@ -9,6 +9,8 @@ import { mount, unmount } from 'svelte';
 import MathSettings from './MathSettings.svelte';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { generateLabel } from '$lib/editor/utils/label';
+import { renderStaticMath, setStaticMath } from './mathStatic';
+import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 
 // reactive props stashed on the container so update() can reach the mounted component without a registry.
 interface SettingsHost extends HTMLElement {
@@ -115,9 +117,12 @@ if (browser) {
 }
 export default class MathLiveView implements NodeView {
 	dom: HTMLElement;
-	mathField: MathfieldElement;
+	/** undefined until materialize() runs; see the placeholder note there */
+	mathField?: MathfieldElement;
 	node: Node;
 	updating: boolean;
+	/** static typeset standing in for the field until this node comes near the viewport */
+	private placeholder?: HTMLElement;
 	private mlpluginkey;
 	private origFocus?: (options?: FocusOptions) => void;
 	private settingsContainer?: HTMLElement;
@@ -164,20 +169,13 @@ export default class MathLiveView implements NodeView {
 			this.dom = document.createElement('span');
 		}
 
-		this.mathField = new MathfieldElement();
-		this.mathField.mathVirtualKeyboardPolicy = 'manual';
-		this.mathField.style.border = 'none';
-		this.mathField.style.outline = 'none';
-		this.mathField.style.backgroundColor = 'transparent';
-		// highlight when the cursor is inside the field
-		this.mathField.style.setProperty('--contains-highlight-background-color', 'hsla(210, 100%, 85%, 0.4)');
-
-		const initialContent = node.textContent || '';
-		this.mathField.setValue(initialContent, {
-			format: 'latex-expanded'
-		});
-
-		this.dom.appendChild(this.mathField);
+		// A MathfieldElement is a full editor - shadow DOM, selection model, undo stack, virtual
+		// keyboard - and measures ~7 ms to build. A document with a thousand of them spends that a
+		// thousand times at load for math the reader cannot even see yet. Start with a static typeset
+		// instead (~0.4 ms, and correctly sized so nothing reflows later) and build the real field when
+		// the node nears the viewport, or the moment the caret arrives.
+		this.placeholder = renderStaticMath(node.textContent || '', isblock);
+		this.dom.appendChild(this.placeholder);
 
 		if (isblock) {
 			this.settingsContainer = document.createElement('div');
@@ -197,43 +195,76 @@ export default class MathLiveView implements NodeView {
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleBlur = this.handleBlur.bind(this);
 		this.keydown = this.keydown.bind(this);
-		this.mathField.addEventListener('input', this.forwardupdate);
-		this.mathField.addEventListener('move-out', this.mlkeymap);
-		this.mathField.addEventListener('focus', this.handleFocus);
-		this.mathField.addEventListener('blur', this.handleBlur);
-		this.mathField.addEventListener('keydown', this.keydown);
-
-		// mathlive doesn't fire focus events on programmatic .focus(), so wrap it
-		this.origFocus = this.mathField.focus.bind(this.mathField);
-		this.mathField.focus = ((options?: FocusOptions) => {
-			this.origFocus?.(options);
-			this.handleFocus();
-			// bubbling event for global listeners like the toolbar
-			this.mathField.dispatchEvent(new CustomEvent('ml:focusin', { bubbles: true, cancelable: true }));
-		}) as typeof this.mathField.focus;
-
-		this.mathField.mathVirtualKeyboardPolicy = 'auto';
-
-		// undo/redo handled by prosemirror
-		this.mathField.canUndo = () => false;
-		this.mathField.canRedo = () => false;
-		this.removeSelection();
-
-		if (!this.view.editable) {
-			this.mathField.readOnly = true;
-		}
 
 		// use node.textContent, getValue() may not be ready yet
 		const initialValue = node.textContent || '';
 		const isEmpty = initialValue.trim().length === 0;
 		if (isEmpty) {
-			this.mathField.style.border = '1px solid var(--color-error-500, #ef4444)';
-			this.mathField.style.outline = 'none';
-		} else {
-			this.mathField.style.border = 'none';
-			this.mathField.style.outline = 'none';
+			this.placeholder.style.border = '1px solid var(--color-error-500, #ef4444)';
+			this.placeholder.style.outline = 'none';
 		}
+
+		upgradeWhenNear(this.dom, this.materialize);
 	}
+
+	/** the element currently standing in for this node: the live field once there is one */
+	private get host(): HTMLElement {
+		return this.mathField ?? (this.placeholder as HTMLElement);
+	}
+
+	/** Replaces the static placeholder with a real MathfieldElement. Runs when the node nears the
+	 * viewport, or immediately when the caret arrives first. One-way and idempotent: a field is never
+	 * torn back down, so nothing can lose selection or a half-typed formula. */
+	private materialize = (): void => {
+		if (this.mathField) return;
+
+		const field = new MathfieldElement();
+		this.mathField = field;
+		field.mathVirtualKeyboardPolicy = 'manual';
+		field.style.border = 'none';
+		field.style.outline = 'none';
+		field.style.backgroundColor = 'transparent';
+		// highlight when the cursor is inside the field
+		field.style.setProperty('--contains-highlight-background-color', 'hsla(210, 100%, 85%, 0.4)');
+
+		// this.node, not the constructor's node: edits can land while the placeholder is still up
+		field.setValue(this.node.textContent || '', { format: 'latex-expanded' });
+
+		if (this.placeholder) {
+			this.dom.replaceChild(field, this.placeholder);
+			this.placeholder = undefined;
+		} else {
+			this.dom.appendChild(field);
+		}
+
+		field.addEventListener('input', this.forwardupdate);
+		field.addEventListener('move-out', this.mlkeymap);
+		field.addEventListener('focus', this.handleFocus);
+		field.addEventListener('blur', this.handleBlur);
+		field.addEventListener('keydown', this.keydown);
+
+		// mathlive doesn't fire focus events on programmatic .focus(), so wrap it
+		this.origFocus = field.focus.bind(field);
+		field.focus = ((options?: FocusOptions) => {
+			this.origFocus?.(options);
+			this.handleFocus();
+			// bubbling event for global listeners like the toolbar
+			field.dispatchEvent(new CustomEvent('ml:focusin', { bubbles: true, cancelable: true }));
+		}) as typeof field.focus;
+
+		field.mathVirtualKeyboardPolicy = 'auto';
+
+		// undo/redo handled by prosemirror
+		field.canUndo = () => false;
+		field.canRedo = () => false;
+		this.removeSelection();
+
+		if (!this.view.editable) {
+			field.readOnly = true;
+		}
+
+		this.updateOutline(false);
+	};
 
 	/** Builds the settings popover on first hover or focus, then unhooks itself. An arrow field so the
 	 * same reference can be removed later. Keyboard reach is preserved because focusing the mathfield
@@ -345,39 +376,43 @@ export default class MathLiveView implements NodeView {
 
 	/** empty fields get a red border even when blurred. */
 	private updateOutline(focus: boolean) {
+		const target = this.host;
 		const isEmpty = this.isMathfieldEmpty();
 		if (isEmpty) {
 			// keep pending-delete styling if active
 			if (!this.pendingDelete) {
-				this.mathField.style.border = '1px solid var(--color-error-500, #ef4444)';
-				this.mathField.style.backgroundColor = 'transparent';
+				target.style.border = '1px solid var(--color-error-500, #ef4444)';
+				target.style.backgroundColor = 'transparent';
 			}
-			this.mathField.style.outline = 'none';
+			target.style.outline = 'none';
 			return;
 		}
 		this.pendingDelete = false;
-		this.mathField.style.backgroundColor = 'transparent';
+		target.style.backgroundColor = 'transparent';
 		if (focus) {
-			this.mathField.style.border = '1px solid #000';
-			this.mathField.style.outline = 'none';
+			target.style.border = '1px solid #000';
+			target.style.outline = 'none';
 		} else {
-			this.mathField.style.border = 'none';
-			this.mathField.style.outline = 'none';
+			target.style.border = 'none';
+			target.style.outline = 'none';
 		}
 	}
 
 	forwardupdate() {
-		if (this.updating || !this.mathField.hasFocus) return;
+		const field = this.mathField;
+		// only ever reached from the field's own listeners, so this is a type guard, not a case
+		if (!field) return;
+		if (this.updating || !field.hasFocus) return;
 
 		this.isNewlyCreated = false;
 
 		if (!this.isMathfieldEmpty() && this.pendingDelete) {
 			this.pendingDelete = false;
-			this.mathField.style.backgroundColor = 'transparent';
+			field.style.backgroundColor = 'transparent';
 		}
 
 		const currentContent = this.node.textContent || '';
-		const newValue = this.mathField.getValue('latex-expanded');
+		const newValue = field.getValue('latex-expanded');
 		if (currentContent !== newValue) {
 			const startPos = this.getPos();
 			const endPos = startPos + this.node.nodeSize;
@@ -439,16 +474,20 @@ export default class MathLiveView implements NodeView {
 			this.updating = false;
 		}
 
-		this.updateOutline(this.mathField.hasFocus());
+		this.updateOutline(field.hasFocus());
 	}
 
 	setSelection(anchor: number, head: number) {
 		if (!this.updating) return;
-		this.mathField.focus();
+		// the caret is arriving, so the real field has to exist now
+		this.materialize();
+		const field = this.mathField;
+		if (!field) return;
+		field.focus();
 		if (anchor === 0 && head === 0) {
-			this.mathField.executeCommand('moveToMathfieldStart' as never);
+			field.executeCommand('moveToMathfieldStart' as never);
 		} else {
-			this.mathField.executeCommand('moveToMathfieldEnd' as never);
+			field.executeCommand('moveToMathfieldEnd' as never);
 		}
 	}
 
@@ -459,21 +498,28 @@ export default class MathLiveView implements NodeView {
 
 		// while focused, trust mathlive: stale PM content could clobber typing during the
 		// rAF window before the updating flag clears. next forwardupdate() re-syncs.
-		if (this.mathField.hasFocus()) return true;
+		if (this.mathField?.hasFocus()) return true;
 
 		const newText = node.textContent || '';
-		// compare expanded latex, same as forwardupdate()
-		const currentText = this.mathField.getValue('latex-expanded');
 
-		if (newText != currentText) {
-			this.updating = true;
-			this.mathField.setValue(newText, {
-				format: 'latex-expanded'
-			});
-			// mathlive fires an async input event after setValue, keep updating set until it lands
-			requestAnimationFrame(() => {
-				this.updating = false;
-			});
+		if (!this.mathField) {
+			// still a placeholder: re-typeset it so an offscreen edit (undo, collaborator, disk
+			// reload) is reflected, and so the node keeps the right size for the scrollbar
+			if (this.placeholder) setStaticMath(this.placeholder, newText);
+		} else {
+			// compare expanded latex, same as forwardupdate()
+			const currentText = this.mathField.getValue('latex-expanded');
+
+			if (newText != currentText) {
+				this.updating = true;
+				this.mathField.setValue(newText, {
+					format: 'latex-expanded'
+				});
+				// mathlive fires an async input event after setValue, keep updating set until it lands
+				requestAnimationFrame(() => {
+					this.updating = false;
+				});
+			}
 		}
 
 		if (this.isblock) {
@@ -492,7 +538,7 @@ export default class MathLiveView implements NodeView {
 			}
 		}
 
-		this.updateOutline(this.mathField.hasFocus());
+		this.updateOutline(this.mathField?.hasFocus() ?? false);
 		return true;
 	}
 
@@ -505,8 +551,8 @@ export default class MathLiveView implements NodeView {
 		if (this.isMathfieldEmpty()) {
 			if (!this.pendingDelete) {
 				this.pendingDelete = true;
-				this.mathField.style.border = '1px solid var(--color-error-500, #ef4444)';
-				this.mathField.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+				this.host.style.border = '1px solid var(--color-error-500, #ef4444)';
+				this.host.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
 				return true; // keep the cursor inside
 			}
 
@@ -521,13 +567,15 @@ export default class MathLiveView implements NodeView {
 			return true;
 		}
 		this.pendingDelete = false;
-		this.mathField.style.backgroundColor = 'transparent';
+		this.host.style.backgroundColor = 'transparent';
 		return false;
 	}
 
 	/** empty including wrapper-only content like \begin{align} & \end{align}. */
 	private isMathfieldEmpty(): boolean {
-		const rawValue = this.mathField.getValue('latex-expanded');
+		// before materialize() the node's own text is the source of truth; the field has not been
+		// built to ask, and it would hold exactly this anyway
+		const rawValue = this.mathField ? this.mathField.getValue('latex-expanded') : this.node.textContent || '';
 
 		if (rawValue.length < 1 || rawValue.trim() === '' || rawValue === ' ') {
 			return true;
@@ -544,11 +592,13 @@ export default class MathLiveView implements NodeView {
 	}
 
 	keydown(event: KeyboardEvent) {
+		const field = this.mathField;
+		if (!field) return; // a key event means the field exists; this is a type guard
 		if (event.key === 'Backspace') {
-			if (this.mathField.selection.ranges[0][0] !== this.mathField.selection.ranges[0][1] || this.mathField.selection.ranges[0][1] !== 0) {
+			if (field.selection.ranges[0][0] !== field.selection.ranges[0][1] || field.selection.ranges[0][1] !== 0) {
 				return;
 			}
-			if (!this.maybedelete(-1) && this.mathField.selection.ranges) {
+			if (!this.maybedelete(-1) && field.selection.ranges) {
 				let tr = this.view.state.tr;
 				tr = setTextSelection(this.getPos(), -1)(tr);
 
@@ -583,25 +633,33 @@ export default class MathLiveView implements NodeView {
 	}
 
 	stopEvent() {
-		return true; // mathlive owns all events inside the field
+		// Once the field exists mathlive owns everything inside it. While the placeholder is up there
+		// is nothing to own the events, so let ProseMirror handle the click: it sets a NodeSelection,
+		// which calls selectNode(), which materializes the field and focuses it.
+		return this.mathField !== undefined;
 	}
 
 	selectNode() {
+		// the caret is arriving, so build the field regardless of where the viewport is
+		this.materialize();
+		const field = this.mathField;
+		if (!field) return;
+
 		const maybePos = this.mlpluginkey.getState(this.view.state)?.prevCursorPos;
 
-		this.mathField.focus();
-		console.log(this.mathField.value);
+		field.focus();
 
 		// enter from the side the cursor approached from
 		const nodeStart = this.getPos();
 		if (maybePos === undefined || maybePos <= nodeStart) {
-			this.mathField.executeCommand('moveToMathfieldStart' as never);
+			field.executeCommand('moveToMathfieldStart' as never);
 		} else {
-			this.mathField.executeCommand('moveToMathfieldEnd' as never);
+			field.executeCommand('moveToMathfieldEnd' as never);
 		}
 	}
 
 	removeSelection() {
+		if (!this.mathField) return;
 		this.mathField.selection = { ranges: [[0, 0]] };
 	}
 
@@ -610,18 +668,22 @@ export default class MathLiveView implements NodeView {
 			return;
 		}
 		this.removeSelection();
-		this.mathField.blur();
+		this.mathField?.blur();
 		this.updateOutline(false);
 	}
 	destroy() {
-		this.mathField.removeEventListener('input', this.forwardupdate);
-		this.mathField.removeEventListener('move-out', this.mlkeymap);
-		this.mathField.removeEventListener('focus', this.handleFocus);
-		this.mathField.removeEventListener('blur', this.handleBlur);
-		this.mathField.removeEventListener('keydown', this.keydown);
-		if (this.origFocus) {
-			this.mathField.focus = this.origFocus as typeof this.mathField.focus;
-			this.origFocus = undefined;
+		cancelUpgrade(this.dom);
+		const field = this.mathField;
+		if (field) {
+			field.removeEventListener('input', this.forwardupdate);
+			field.removeEventListener('move-out', this.mlkeymap);
+			field.removeEventListener('focus', this.handleFocus);
+			field.removeEventListener('blur', this.handleBlur);
+			field.removeEventListener('keydown', this.keydown);
+			if (this.origFocus) {
+				field.focus = this.origFocus as typeof field.focus;
+				this.origFocus = undefined;
+			}
 		}
 		if (this.isblock) {
 			// harmless when mountSettings already removed them

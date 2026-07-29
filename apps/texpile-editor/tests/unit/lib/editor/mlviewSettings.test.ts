@@ -25,12 +25,14 @@ vi.mock('mathlive', () => {
 		}
 	}
 	customElements.define('mock-math-field', FakeMathfield);
-	return { MathfieldElement: FakeMathfield };
+	// spelled out so the placeholder renders through its normal path rather than its error fallback
+	return { MathfieldElement: FakeMathfield, convertLatexToMarkup: (latex: string) => `<span>${latex}</span>` };
 });
+vi.mock('mathlive/static.css', () => ({}));
 vi.mock('mathlive/fonts.css', () => ({}));
 vi.mock('$lib/editor/extensions/mathlivebridge/virtualKeyboardConfig', () => ({ configureMathVirtualKeyboard() {} }));
 
-const mountSpy = vi.fn(() => ({ __component: true }));
+const mountSpy = vi.fn((_component: unknown, _options: { props: { node: unknown } }) => ({ __component: true }));
 const unmountSpy = vi.fn();
 vi.mock('svelte', async (orig) => ({ ...(await orig<Record<string, unknown>>()), mount: mountSpy, unmount: unmountSpy }));
 
