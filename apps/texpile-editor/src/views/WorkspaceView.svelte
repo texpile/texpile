@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, tick, untrack } from 'svelte';
+	import { onMount, onDestroy, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import { navigate } from '$lib/router.svelte';
 	import WorkspaceModals from '$lib/editor/comp/WorkspaceModals.svelte';
@@ -19,7 +19,7 @@
 	import TutorialConfirmModal from '$lib/editor/comp/TutorialConfirmModal.svelte';
 	import type { Starter, ImportedFile } from '$lib/workspace/starters';
 	import { StarterActions } from '$lib/workspace/starterActions.svelte';
-	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
+	import { editorViewStore } from '$lib/stores/editorStore';
 	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { SyncTexNav, sessionRelativeTarget, needsActivate, normSyncPath } from '$lib/workspace/syncTexNav';
 	import { sourceTocStore } from '$lib/editor/extensions/tableofcontents/tocStore';
@@ -40,6 +40,13 @@
 	import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
 	import { filePathStore } from '$lib/stores/editorStore';
 	import { trailingDebounce } from '$lib/trailingDebounce';
+	import {
+		openGlobalSearch as openSearchPanel,
+		closeGlobalSearch as closeSearchPanel,
+		runFormat,
+		insertIncludeAtCursor,
+		jumpToInclude as jumpToIncludeTarget
+	} from '$lib/workspace/editorCommands';
 	import { DiffMode } from '$lib/workspace/diffMode.svelte';
 	import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 	import { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
@@ -70,19 +77,7 @@
 	import { TreeOps } from '$lib/workspace/treeOps';
 	import { settings, loadSettings, updateSettings } from '$lib/settings';
 	import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
-	import {
-		basename,
-		dirname,
-		joinPath,
-		claimWorkspace,
-		relativeTo,
-		isDesktop,
-		samePath,
-		toLf,
-		fromLf,
-		native,
-		type TreeEntry
-	} from '$lib/workspace/fileSystem';
+	import { basename, dirname, claimWorkspace, isDesktop, samePath, native, type TreeEntry } from '$lib/workspace/fileSystem';
 	import { diskProvider } from '$lib/workspace/diskProvider';
 	import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 	// the file-access seam: the host gets the disk-backed provider by default; a guest session
@@ -428,7 +423,7 @@
 		// source-mode users write their own preamble (the editor's ghost offers the skeleton);
 		// visual mode has no ghost and no way to write a preamble, so it gets one up front
 		wantsStarter: () => modes.lastEditMode !== 'source',
-		insertIncludeAtCursor: (path) => insertIncludeAtCursor(path),
+		insertIncludeAtCursor: (path) => doInsertInclude(path),
 		afterRename: (oldPath, newPath) => void afterRename(oldPath, newPath),
 		retargetPendingSave: (from, to) => saver.retarget(from, to),
 		discardPendingSave: () => saver.discard()
@@ -720,40 +715,19 @@
 		if (!doc.path || kind !== 'tex') return;
 		formatModalOpen = true;
 	}
-	// reindents via latexindent and swaps doc.texSource for the result; both views re-derive from it
-	// (source mode's value-sync effect, visual mode's rebuildVisualFromSource below). no backup
-	// file - the confirm modal's warning is the only safety net, undo (Ctrl+Z) covers the rest.
-	async function runFormat() {
-		if (!doc.path) return;
+	const doRunFormat = () => {
 		formatModalOpen = false;
-		formatting = true;
-		try {
-			await saver.flushAndWait(); // the formatter should see exactly what's on screen
-			const formatted = toLf(await formatLatexDocument(doc.path, fromLf(doc.texSource, doc.eol)));
-			doc.texSource = formatted;
-			isDirty.set(true);
-			saver.schedule(doc.path, doc.texSource);
-			if (modes.mode === 'visual') rebuildVisualFromSource();
-			toaster.success({ title: m.wsview_toast_formatted_title(), description: basename(doc.path) });
-		} catch (e) {
-			toaster.error({ title: m.wsview_toast_format_failed_title(), description: e instanceof Error ? e.message : String(e) });
-		} finally {
-			formatting = false;
-		}
-	}
-
-	// insert an \input of newFilePath at the cursor in the open visual doc: path relative to the
-	// current file's dir, .tex dropped (the form \input takes). false when there's no editor to insert into.
-	function insertIncludeAtCursor(newFilePath: string): boolean {
-		if (!doc.path || modes.mode !== 'visual') return false;
-		const v = get(editorViewStore);
-		const type = v?.state.schema.nodes.includedoc;
-		if (!v || !type) return false;
-		const rel = relativeTo(dirname(doc.path), newFilePath).replace(/\.tex$/i, '');
-		v.dispatch(v.state.tr.replaceSelectionWith(type.create({ path: rel, command: 'input' })).scrollIntoView());
-		v.focus();
-		return true;
-	}
+		return runFormat({
+			getLoadedPath: () => doc.path,
+			getSource: () => doc.texSource,
+			getEol: () => doc.eol,
+			flushSaves: () => saver.flushAndWait(),
+			format: formatLatexDocument,
+			applyFormatted: (text) => doc.replaceSource(text, { dirty: true }),
+			setBusy: (b) => (formatting = b)
+		});
+	};
+	const doInsertInclude = (newFilePath: string) => insertIncludeAtCursor(newFilePath, doc.path, modes.mode === 'visual');
 
 	// label and bibitem registries live in lib/workspace/docRegistries.svelte.ts
 	const registries = new DocRegistries({
@@ -869,24 +843,7 @@
 	);
 
 	// F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added)
-	async function jumpToInclude(name: string) {
-		const root = get(workspaceRoot);
-		const base = doc.path ? dirname(doc.path) : null;
-		const cand = name.trim().replace(/\\/g, '/');
-		if (!cand) return;
-		const names = /\.[a-z]+$/i.test(cand) ? [cand] : [cand + '.tex'];
-		for (const dir of [base, root]) {
-			if (!dir) continue;
-			for (const n of names) {
-				const path = joinPath(dir, n);
-				if ((await statFile(path)).exists) {
-					activeFilePath.set(path);
-					return;
-				}
-			}
-		}
-	}
-
+	const jumpToInclude = (name: string) => jumpToIncludeTarget(name, doc.path, statFile);
 	// keep the label registry, the embedded bibitem refs, and the cross-mode undo history fresh
 	$effect(() => {
 		void doc.texSource; // dependency: re-arm the debounce on every source change
@@ -1067,40 +1024,16 @@
 	// manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest
 	const save = () => doc.save();
 
-	// return keyboard focus to whichever editor is showing (Esc from panels)
-	function focusEditor() {
-		if (modes.mode === 'source') {
-			const cm = get(sourceCmView);
-			if (cm && cm.dom.isConnected) cm.focus();
-		} else {
-			get(editorViewStore)?.focus();
-		}
-	}
-	// close Find in Files and hand focus back; tick first so the unmounting input
-	// can't re-steal focus to body
-	async function closeGlobalSearch() {
-		layout.sidebarView = 'explorer';
-		await tick();
-		focusEditor();
-	}
-
 	let globalSearchRef = $state<GlobalSearch | null>(null);
-	// open Find in Files with the input focused; a single-line source selection seeds the query
-	async function openGlobalSearch() {
-		let seed: string | undefined;
-		const cm = get(sourceCmView);
-		if (cm && cm.dom.isConnected) {
-			const { from, to } = cm.state.selection.main;
-			if (to > from && to - from < 200) {
-				const sel = cm.state.sliceDoc(from, to);
-				if (!sel.includes('\n')) seed = sel;
-			}
-		}
-		layout.sidebarView = 'search';
-		layout.sidebarOpen = true;
-		await tick(); // let the panel mount before focusing
-		globalSearchRef?.focusInput(seed);
-	}
+	// Find in Files panel plumbing lives in lib/workspace/editorCommands.ts
+	const searchDeps = {
+		setSidebarView: (v: 'explorer' | 'search' | 'scm') => (layout.sidebarView = v),
+		openSidebar: () => (layout.sidebarOpen = true),
+		isSourceMode: () => modes.mode === 'source',
+		focusInput: (seed?: string) => globalSearchRef?.focusInput(seed)
+	};
+	const openGlobalSearch = () => openSearchPanel(searchDeps);
+	const closeGlobalSearch = () => closeSearchPanel(searchDeps);
 
 	// the callback surface WorkspaceMain hands down to the topbar / editor / preview / dock
 	const actions = {
@@ -1253,7 +1186,7 @@
 		onSaveCompile={saveCompileCommand}
 		onUseDefaultCompile={useDefaultCommand}
 		onRunCompile={compiler.runCompile}
-		onFormat={runFormat}
+		onFormat={doRunFormat}
 		onResolveConflict={resolveConflict}
 		onKeepRefs={() => (pendingRefUpdate = null)}
 		onApplyRefs={doApplyRefUpdate}
