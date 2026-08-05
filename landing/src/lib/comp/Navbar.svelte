@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import type { Pathname } from '$app/types';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { locales, localizeHref, getLocale, type Locale } from '$lib/paraglide/runtime';
 	import { m } from '$lib/paraglide/messages';
@@ -22,12 +21,14 @@
 
 	// full document navigation (not client-side routing), same as every other locale switch on this site.
 	// details.value is always one of `locales` (that's all the menu ever renders), hence the cast.
-	// The Pathname cast is a lie by construction and always was: localizeHref returns a rewritten
-	// URL (/de/docs/mcp) whose locale prefix hooks.ts strips again, so it is never one of the route
-	// pathnames resolve() is typed against. resolve() is still what applies `base`.
+	// The route cast is a lie by construction and always was: localizeHref returns a rewritten URL
+	// (/de/docs/mcp) whose locale prefix hooks.ts strips again, so it is never one of the route
+	// pathnames resolve() is typed against. It has to be a single literal rather than Pathname,
+	// because resolve() is overloaded per route and a union matches none of the signatures.
+	// resolve() is still what applies `base`, which is all we want from it here.
 	function onLocaleSelect(details: { value: string }) {
 		const href = localizeHref(page.url.pathname, { locale: details.value as Locale });
-		window.location.href = resolve(href as Pathname);
+		window.location.href = resolve(href as '/');
 	}
 
 	let atTop = $state(true);

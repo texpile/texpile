@@ -26,8 +26,12 @@ const DOC_SLUGS = [
 	'/collaboration',
 	'/mcp'
 ];
+// English-only prose, same as the docs, but the localized routes still have to exist so a footer
+// link can never 404 in another locale.
+const COMPARE_SLUGS = ['', '/overleaf'];
 const NON_BASE_LOCALES = ['zh-Hans', 'zh-Hant', 'de'];
 const localizedDocs = NON_BASE_LOCALES.flatMap((l) => DOC_SLUGS.map((s) => `/${l}/docs${s}`));
+const localizedCompare = NON_BASE_LOCALES.flatMap((l) => COMPARE_SLUGS.map((s) => `/${l}/compare${s}`));
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -39,7 +43,17 @@ const config = {
 		// Menu component (not anchors), so the non-base locales must be listed explicitly or they
 		// silently stop being prerendered.
 		prerender: {
-			entries: ['*', '/zh-Hans', '/zh-Hans/download', '/zh-Hant', '/zh-Hant/download', '/de', '/de/download', ...localizedDocs]
+			entries: [
+				'*',
+				'/zh-Hans',
+				'/zh-Hans/download',
+				'/zh-Hant',
+				'/zh-Hant/download',
+				'/de',
+				'/de/download',
+				...localizedDocs,
+				...localizedCompare
+			]
 		},
 		// absolute asset URLs, so 404.html (served for any missing path) is styled at any URL depth
 		paths: { relative: false }

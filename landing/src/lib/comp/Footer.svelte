@@ -20,6 +20,9 @@
 						<a href="/download" class="text-surface-300 hover:text-white">{m.footer_download()}</a>
 					</li>
 					<li>
+						<a href="/compare" class="text-surface-300 hover:text-white">{m.footer_compare()}</a>
+					</li>
+					<li>
 						<a href="https://github.com/texpile/texpile" target="_blank" rel="noopener noreferrer" class="text-surface-300 hover:text-white"
 							>{m.footer_source_code()}</a
 						>
