@@ -224,7 +224,9 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** a file's contents at an arbitrary commit, for diffing a version -> { ok, hasHead, content? }. */
 	gitShowAt: (path: string, ref: string) => invokeFs('git:showAt', path, ref),
 	/** roll the workspace back to a commit by writing that version forward as a new one. */
-	gitRestore: (root: string, hash: string, message: string) => invokeFs('git:restore', root, hash, message)
+	gitRestore: (root: string, hash: string, message: string) => invokeFs('git:restore', root, hash, message),
+	/** push this branch to the upstream it already tracks -> { ok, failure?, remote? }. */
+	gitPush: (root: string) => invokeFs('git:push', root)
 });
 
 // in-app updates: check/download are explicit renderer calls, events stream back per channel

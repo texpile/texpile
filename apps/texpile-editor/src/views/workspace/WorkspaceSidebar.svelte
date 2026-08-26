@@ -9,6 +9,8 @@
 	import {
 		isGitRepo,
 		gitBranch,
+		gitTracking,
+		gitAhead,
 		gitChanges,
 		gitStatusMap,
 		gitHistory,
@@ -66,6 +68,7 @@
 		scmCommit: (message: string, paths: string[]) => Promise<boolean>;
 		scmRestore: (entry: GitLogEntry) => void;
 		scmIgnoreArtifacts: () => void;
+		scmUpload: () => void;
 		scmCompare: (entry: GitLogEntry, path: string) => void;
 		scmChangesSince: (hash: string) => Promise<GitFileChange[]>;
 		scmOpenDiff: (path: string) => void;
@@ -109,6 +112,7 @@
 		scmCommit,
 		scmRestore,
 		scmIgnoreArtifacts,
+		scmUpload,
 		scmCompare,
 		scmChangesSince,
 		scmOpenDiff
@@ -292,6 +296,8 @@
 				root={workspaceRoot.current ?? ''}
 				isRepo={isGitRepo.current}
 				branch={gitBranch.current}
+				tracking={gitTracking.current}
+				ahead={gitAhead.current}
 				changes={gitChanges.current}
 				history={gitHistory.current}
 				historyError={gitHistoryError.current}
@@ -307,6 +313,7 @@
 				onLoadChanges={scmChangesSince}
 				onOpenDiff={scmOpenDiff}
 				onRefresh={onRefreshGit}
+				onUpload={scmUpload}
 				{historyFraction}
 				bind:splitEl={scmSplitEl}
 				{onStartHistoryResize}

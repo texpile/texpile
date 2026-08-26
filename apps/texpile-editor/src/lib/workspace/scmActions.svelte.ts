@@ -10,9 +10,11 @@ import {
 	gitCommit,
 	gitRestore,
 	gitChangesSince,
+	gitPush,
 	type GitStatusEntry,
 	type GitFileChange
 } from './git';
+import { uploadReason } from './uploadReason';
 import { basename, samePath, joinPath } from './fileSystem';
 import { confirmAsk } from '$lib/modals/confirm.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -210,6 +212,22 @@ export class ScmActions {
 	compare = (entry: { hash: string; subject: string }, path: string) => {
 		if (!isGitRepo.current || !path) return;
 		this.deps.openCompareTab(path, { hash: entry.hash, subject: entry.subject });
+	};
+
+	/** Send saved versions to the upstream. Push only: it never fetches or merges, so a remote that
+	 *  has moved on is reported and left alone rather than combined with guesswork. */
+	upload = async (): Promise<void> => {
+		const root = workspaceRoot.current;
+		if (!root) return;
+		this.busy = true;
+		const res = await gitPush(root);
+		this.busy = false;
+		if (res.ok) {
+			await refreshGitStatus(root); // the ahead count is now zero, and the button goes with it
+			toaster.success({ title: m.vcs_toast_uploaded({ remote: res.remote ?? '' }) });
+			return;
+		}
+		toaster.error({ title: m.vcs_toast_upload_failed(), description: uploadReason(res) });
 	};
 
 	/** read on expand, not with the log: the answer changes as the author types */

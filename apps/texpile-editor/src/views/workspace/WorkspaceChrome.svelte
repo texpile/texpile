@@ -186,6 +186,7 @@
 			scmCommit={scm.commit}
 			scmRestore={scm.restore}
 			scmIgnoreArtifacts={scm.ignoreArtifacts}
+			scmUpload={scm.upload}
 			scmCompare={scm.compare}
 			scmChangesSince={scm.changesSince}
 			scmOpenDiff={scm.openDiff}

@@ -7,6 +7,15 @@ export const isGitRepo = box<boolean>(false);
 
 export const gitBranch = box<string | null>(null);
 
+/** the upstream this branch tracks, or null. Null is what hides the upload button: a branch with
+ *  nowhere to send versions has not failed to send them. */
+export const gitTracking = box<string | null>(null);
+
+/** versions saved here that the upstream does not have. Counted from local refs, so it is exact
+ *  without a fetch, and it is the only remote number shown: `behind` is only as fresh as a fetch
+ *  nothing here runs, so showing it would be claiming to know something we do not. */
+export const gitAhead = box<number>(0);
+
 /** single-letter badges keyed by gitKey(absolutePath); drives the file tree. */
 export const gitStatusMap = box<Record<string, GitBadge>>({});
 
@@ -52,29 +61,32 @@ export function takeNoGitHint(): boolean {
 	return true;
 }
 
+function clearGitState(): void {
+	isGitRepo.current = false;
+	gitBranch.current = null;
+	gitTracking.current = null;
+	gitAhead.current = 0;
+	gitStatusMap.current = {};
+	gitChanges.current = [];
+	gitHistory.current = [];
+	gitHistoryError.current = null;
+}
+
 /** refreshes git state for the open folder; never throws. missingGit lets the caller show the install hint. */
 export async function refreshGitStatus(root: string | null): Promise<{ missingGit: boolean }> {
 	if (!root) {
-		isGitRepo.current = false;
-		gitBranch.current = null;
-		gitStatusMap.current = {};
-		gitChanges.current = [];
-		gitHistory.current = [];
-		gitHistoryError.current = null;
+		clearGitState();
 		return { missingGit: false };
 	}
 	const res = await fetchGitStatus(root);
 	if (!res.ok) {
-		isGitRepo.current = false;
-		gitBranch.current = null;
-		gitStatusMap.current = {};
-		gitChanges.current = [];
-		gitHistory.current = [];
-		gitHistoryError.current = null;
+		clearGitState();
 		return { missingGit: res.reason === 'no-git' };
 	}
 	isGitRepo.current = true;
 	gitBranch.current = res.branch ?? null;
+	gitTracking.current = res.tracking ?? null;
+	gitAhead.current = res.ahead ?? 0;
 	const list = res.entries ?? [];
 	gitChanges.current = list;
 	const map: Record<string, GitBadge> = {};

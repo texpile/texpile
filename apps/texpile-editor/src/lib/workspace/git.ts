@@ -17,6 +17,12 @@ export type GitStatusResult = {
 	error?: string;
 	branch?: string;
 	entries?: GitStatusEntry[];
+	/** the upstream this branch tracks ('origin/master'), or null if it tracks nothing */
+	tracking?: string | null;
+	/** versions here the upstream does not have; read from local refs, so no network and never stale */
+	ahead?: number;
+	/** only as fresh as the last fetch, which Texpile never runs: do not present it as current */
+	behind?: number;
 };
 
 export type GitShowResult = {
@@ -185,5 +191,28 @@ export async function gitRestore(root: string, hash: string, message: string): P
 		return await n.gitRestore(root, hash, message);
 	} catch (e) {
 		return { ok: false, error: errMsg(e) };
+	}
+}
+
+/** why an upload did not happen; the panel turns each into a different sentence */
+export type PushFailure = 'no-upstream' | 'rejected' | 'auth' | 'network' | 'other';
+
+export type GitPushResult = {
+	ok: boolean;
+	reason?: 'not-a-repo' | 'no-git';
+	error?: string;
+	failure?: PushFailure;
+	/** the remote it went to, or would have */
+	remote?: string;
+};
+
+/** send this branch's versions to the upstream it already tracks. Never fetches or merges. */
+export async function gitPush(root: string): Promise<GitPushResult> {
+	const n = nativeBridge();
+	if (!n?.gitPush) return { ok: false, error: NO_BRIDGE };
+	try {
+		return await n.gitPush(root);
+	} catch (e) {
+		return { ok: false, failure: 'other', error: errMsg(e) };
 	}
 }

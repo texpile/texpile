@@ -24,6 +24,12 @@ export type GitStatusResult = {
 	error?: string;
 	branch?: string | null;
 	entries?: GitStatusEntry[];
+	/** the upstream this branch tracks ('origin/master'), or null if it tracks nothing */
+	tracking?: string | null;
+	/** versions here the upstream does not have. Read from local refs, so it costs no network and
+	 *  cannot be stale; `behind` is the same read and is therefore only as fresh as the last fetch. */
+	ahead?: number;
+	behind?: number;
 };
 
 export type GitShowResult = {
@@ -120,7 +126,7 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 			if (rel === '' || rel.startsWith('..') || isAbsolute(rel)) continue;
 			entries.push({ path: join(workspaceRoot, rel), x: f.index, y: f.working_dir });
 		}
-		return { ok: true, branch: status.current, entries };
+		return { ok: true, branch: status.current, entries, tracking: status.tracking ?? null, ahead: status.ahead, behind: status.behind };
 	} catch (e) {
 		if (isMissingGit(e)) {
 			gitBinaryMissing = true;
@@ -468,5 +474,79 @@ export async function gitRestore(workspaceRoot: string, hash: string, message: s
 	} catch (e) {
 		if (isMissingGit(e)) return { ok: false, reason: 'no-git' };
 		return { ok: false, error: errMsg(e) };
+	}
+}
+
+// -- upload ---------------------------------------------------------------------
+
+/** Why a push did not happen. 'failed to push some refs' is the same sentence for all of them and
+ *  the difference is the only part an author can act on. */
+export type PushFailure = 'no-upstream' | 'rejected' | 'auth' | 'network' | 'other';
+
+export type GitPushResult = {
+	ok: boolean;
+	reason?: 'not-a-repo' | 'no-git';
+	error?: string;
+	failure?: PushFailure;
+	/** the remote it went to, or would have, so the message can name it */
+	remote?: string;
+};
+
+// checked in this order: a 403 from a host says both 'unable to access' and a permissions phrase,
+// and it is an authentication problem, not a network one
+const AUTH_RE =
+	/authentication failed|could not read (username|password)|invalid username or password|permission denied|permission to .* denied|terminal prompts disabled|returned error: 40[13]|access denied|no such identity|host key verification failed/i;
+const REJECTED_RE = /non-fast-forward|fetch first|updates were rejected|\[rejected\]|behind its remote/i;
+const NETWORK_RE =
+	/could not resolve host|connection (timed out|refused|reset)|network is unreachable|failed to connect|operation timed out|unable to access|proxy/i;
+
+/** exported for the tests: this is the whole difference between a message worth reading and one
+ *  that sends an author to a search engine */
+export function classifyPushError(message: string): PushFailure {
+	if (AUTH_RE.test(message)) return 'auth';
+	if (REJECTED_RE.test(message)) return 'rejected';
+	if (NETWORK_RE.test(message)) return 'network';
+	return 'other';
+}
+
+/** Push waits on things nothing else here does: a credential dialog someone has to type into, and
+ *  an upload over their connection. The shared factory kills a command after 20s of silence, which
+ *  is exactly what a password prompt looks like from the outside, so this one has no block timeout.
+ *
+ *  GIT_TERMINAL_PROMPT=0 because there is no terminal to prompt on: without it a repo with no
+ *  credential helper hangs for ever on a question nobody can see. Credential managers go through
+ *  git's credential API instead and still work. */
+function pushGit(baseDir: string): SimpleGit {
+	// one name, not a spread of process.env: simple-git rejects an environment containing any of
+	// EDITOR, PAGER, PREFIX and a dozen others, and npm sets PREFIX - so passing the whole
+	// environment through works on the machine you tried it on and fails on someone else's
+	return simpleGit({ baseDir, binary: 'git', maxConcurrentProcesses: 1, config: ['core.quotePath=false'] }).env('GIT_TERMINAL_PROMPT', '0');
+}
+
+/**
+ * Send this branch's versions to the upstream it already tracks.
+ *
+ * Push only, deliberately: it never fetches, merges or rebases, so it cannot rewrite anyone's
+ * files. A remote that has moved on is reported and left alone, because combining two histories
+ * is a different feature with a different failure mode.
+ */
+export async function gitPush(workspaceRoot: string): Promise<GitPushResult> {
+	const rr = await resolveRepoRoot(workspaceRoot);
+	if (!rr.root) return { ok: false, reason: rr.reason };
+	let remote: string | undefined;
+	try {
+		const g = pushGit(rr.root);
+		const status = await g.status();
+		// a branch tracking nothing has nowhere to go, and inventing a remote is a different feature
+		if (!status.tracking || !status.current) return { ok: false, failure: 'no-upstream' };
+		const [name, ...rest] = status.tracking.split('/');
+		remote = name;
+		// explicit refspec: `git push` alone refuses when the upstream branch is named differently
+		await g.push(name, `${status.current}:${rest.join('/')}`);
+		return { ok: true, remote };
+	} catch (e) {
+		if (isMissingGit(e)) return { ok: false, reason: 'no-git' };
+		const msg = errMsg(e);
+		return { ok: false, failure: classifyPushError(msg), error: msg, remote };
 	}
 }

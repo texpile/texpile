@@ -15,4 +15,5 @@ export function registerGitIpc(): void {
 	handleFs('git:changesSince', gitService.gitChangesSince);
 	handleFs('git:showAt', gitService.gitShowAt);
 	handleFs('git:restore', gitService.gitRestore);
+	handleFs('git:push', gitService.gitPush);
 }

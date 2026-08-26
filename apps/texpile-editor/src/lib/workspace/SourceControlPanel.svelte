@@ -1,7 +1,7 @@
 <script lang="ts">
 	// History panel, purely presentational: WorkspaceView implements the callbacks. No
 	// staged/unstaged split - the tick boxes ARE the staging, so a version's scope is visible.
-	import { GitBranch, RefreshCw, Check, GitCommitHorizontal } from '@lucide/svelte';
+	import { GitBranch, RefreshCw, Check, GitCommitHorizontal, ArrowUp } from '@lucide/svelte';
 	import ChangeList from './history/ChangeList.svelte';
 	import HistoryTimeline from './history/HistoryTimeline.svelte';
 	import { pathLabels } from './history/pathLabels';
@@ -14,6 +14,10 @@
 		root: string;
 		isRepo: boolean;
 		branch: string | null;
+		/** the upstream this branch tracks; null means there is nowhere to upload to */
+		tracking?: string | null;
+		/** versions saved here that the upstream does not have */
+		ahead?: number;
 		changes: GitStatusEntry[];
 		history: GitLogEntry[];
 		/** could not be read at all, as against having nothing in it */
@@ -36,12 +40,15 @@
 		onResizeHistoryByKey: (e: KeyboardEvent) => void;
 		onOpenDiff: (path: string) => void;
 		onRefresh: () => void;
+		onUpload: () => void;
 		onIgnoreArtifacts: (() => void) | null;
 	};
 	let {
 		root,
 		isRepo,
 		branch,
+		tracking = null,
+		ahead = 0,
 		changes,
 		history,
 		historyError = null,
@@ -60,6 +67,7 @@
 		onResizeHistoryByKey,
 		onOpenDiff,
 		onRefresh,
+		onUpload,
 		onIgnoreArtifacts
 	}: Props = $props();
 
@@ -124,14 +132,31 @@
 		<div class="text-surface-600-300 flex h-7 shrink-0 items-center gap-1.5 px-3 text-xs">
 			<GitBranch class="size-3.5 shrink-0" />
 			<span class="truncate font-medium">{branch ?? m.vcs_no_branch()}</span>
-			<button
-				class="hover:preset-tonal ml-auto shrink-0 rounded p-0.5"
-				title={m.vcs_refresh_title()}
-				aria-label={m.vcs_refresh_aria()}
-				onclick={onRefresh}
-			>
-				<RefreshCw class="size-3.5" />
-			</button>
+			<div class="ml-auto flex shrink-0 items-center gap-1">
+				<!-- Only with an upstream to send to, and only with something to send. The count is of
+				     local refs, so it is exact without a fetch; there is deliberately no "behind", which
+				     would be as old as a fetch nothing here runs. -->
+				{#if tracking && ahead > 0}
+					<button
+						class="hover:preset-tonal flex items-center gap-0.5 rounded px-1 py-0.5 disabled:opacity-50"
+						title={ahead === 1 ? m.vcs_upload_one() : m.vcs_upload_count({ count: ahead })}
+						aria-label={m.vcs_upload_aria()}
+						onclick={onUpload}
+						disabled={busy}
+					>
+						<ArrowUp class="size-3.5" />
+						<span class="tabular-nums">{ahead}</span>
+					</button>
+				{/if}
+				<button
+					class="hover:preset-tonal rounded p-0.5"
+					title={m.vcs_refresh_title()}
+					aria-label={m.vcs_refresh_aria()}
+					onclick={onRefresh}
+				>
+					<RefreshCw class="size-3.5" />
+				</button>
+			</div>
 		</div>
 
 		<!-- which half matters depends on what you are doing, so it is not the scrollbar's decision -->
