@@ -11,6 +11,7 @@ import { VisualParser, type ParseFailure } from '$lib/workspace/visualParse.svel
 import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
 import { workspaceRoot, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
 import { editorViewStore } from '$lib/stores/editorStore';
+import { visualDocCache } from '$lib/workspace/visualDocCache';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
@@ -221,15 +222,17 @@ export class WorkspaceDoc {
 		// fast path: source unchanged since the last successful parse, keep the mounted PM view
 		if (this.doc.texSource === this.parser.lastParsedSource && this.doc.visualDoc) return;
 
+		// the text being parsed, not doc.texSource on arrival, or the fast path above skips a rebuild
+		const source = this.doc.texSource;
+		const path = this.doc.path;
 		const mySeq = this.parser.nextSequence();
-		void this.tryParseVisual(this.doc.texSource).then((o) => {
+		void this.tryParseVisual(source).then((o) => {
 			if (!this.parser.isCurrent(mySeq)) return; // superseded
 			if (o.failure) return this.fallbackToSource(o.failure);
 			if (!o.parsed) return;
-			this.doc.adoptParsed(o.parsed);
-			// quirk: this records the CURRENT doc.texSource, which may be post-edit text if the user
-			// typed while the parse was in flight. harmless: onChange clears the anchor on edits.
-			this.parser.lastParsedSource = this.doc.texSource;
+			this.doc.adoptParsed(o.parsed, source);
+			this.parser.lastParsedSource = source;
+			if (path && path === this.doc.path) visualDocCache.set(path, source, o.parsed);
 			this.d.visualCollab()?.noteFreshParse(); // a full re-parse stamped everything fresh
 			// EditorView reacts to the new localValue and swaps state on the existing instance: no remount, no flicker
 		});

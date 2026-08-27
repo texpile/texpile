@@ -31,11 +31,11 @@ export class IncludeDocView implements NodeView {
 	private svelteComponent: ReturnType<typeof mount>;
 	private componentProps = $state<{ node: PMNode; onOpen: () => void }>();
 	node: PMNode;
-	private baseDir: string;
+	private baseDir: () => string;
 
-	constructor(node: PMNode, _view: EditorView, _getPos: () => number, baseDir: string) {
+	constructor(node: PMNode, _view: EditorView, _getPos: () => number, baseDir: () => string) {
 		this.node = node;
-		this.baseDir = baseDir ?? '';
+		this.baseDir = baseDir;
 
 		this.dom = document.createElement('div');
 		this.dom.className = 'includedoc-node-view';
@@ -53,7 +53,7 @@ export class IncludeDocView implements NodeView {
 	private open() {
 		const rawPath = String(this.node.attrs.path ?? '').trim();
 		if (!rawPath) return;
-		const resolved = resolveIncludePath(this.baseDir, rawPath, this.node.attrs.command === 'typst' ? '.typ' : '.tex');
+		const resolved = resolveIncludePath(this.baseDir(), rawPath, this.node.attrs.command === 'typst' ? '.typ' : '.tex');
 		// prefer the workspace's canonical path (keeps the file-tree highlight in sync);
 		// fall back to the resolved path so a not-yet-scanned file still opens
 		function norm(p: string) {

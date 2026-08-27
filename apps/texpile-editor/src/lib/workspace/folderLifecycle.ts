@@ -6,6 +6,7 @@
 import { navigate } from '$lib/router.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { docPositions } from '$lib/workspace/docPositions';
+import { visualDocCache } from '$lib/workspace/visualDocCache';
 import {
 	workspaceRoot,
 	texFiles,
@@ -77,6 +78,7 @@ export class FolderLifecycle {
 			mainFile.current = null;
 			tabs.bind(root, d.hostMode()); // rebind before refreshTree's prune, so tabs persist under the NEW root
 			docPositions.bind(root, d.hostMode());
+			visualDocCache.clear();
 			texFiles.current = [];
 			fileTree.current = [];
 			addRecentFolder(root);
@@ -113,6 +115,7 @@ export class FolderLifecycle {
 		isDirty.current = false;
 		tabs.bind(null, false); // never leave the store bound persistable to a released root
 		docPositions.bind(null, false);
+		visualDocCache.clear();
 		navigate('/');
 	}
 

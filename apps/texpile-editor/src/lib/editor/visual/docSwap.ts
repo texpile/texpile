@@ -1,5 +1,5 @@
-// swaps a re-parsed doc onto a live view without remounting, carrying caret and scroll across
 import { EditorState, TextSelection } from 'prosemirror-state';
+import { fixTables } from 'prosemirror-tables';
 import type { EditorView } from 'prosemirror-view';
 import type { Node as PmNode, Schema } from 'prosemirror-model';
 
@@ -13,7 +13,12 @@ function scrollParent(el: HTMLElement | null): HTMLElement | null {
 	return null;
 }
 
-/** installs `next` as a fresh EditorState on the same view, keeping DOM, caret offset, and scroll. */
+function stateForDoc(editorView: EditorView, schema: Schema, next: PmNode): EditorState {
+	const base = EditorState.create({ schema, plugins: editorView.state.plugins, doc: next });
+	const fix = fixTables(base);
+	return fix ? base.apply(fix.setMeta('addToHistory', false)) : base;
+}
+
 export function swapParsedDoc(editorView: EditorView, schema: Schema, next: PmNode): void {
 	// a bare updateState resets the selection to doc start and the focused editor scrolls to it,
 	// so carry the caret offset (clamped) and scroll position across the swap
@@ -21,7 +26,7 @@ export function swapParsedDoc(editorView: EditorView, schema: Schema, next: PmNo
 	const savedTop = scroller?.scrollTop ?? 0;
 	const prevAnchor = editorView.state.selection.anchor;
 
-	const base = EditorState.create({ schema, plugins: editorView.state.plugins, doc: next });
+	const base = stateForDoc(editorView, schema, next);
 	let restored = base;
 	try {
 		const pos = Math.min(Math.max(1, prevAnchor), base.doc.content.size);
@@ -37,4 +42,11 @@ export function swapParsedDoc(editorView: EditorView, schema: Schema, next: PmNo
 		// land after this restore, so bumping this to a double rAF would stomp the anchor
 		requestAnimationFrame(() => (scroller.scrollTop = savedTop)); // and any post-layout scrollIntoView
 	}
+}
+
+/** carries nothing across: the caller restores this file's own caret and scroll */
+export function swapDocForNewFile(editorView: EditorView, schema: Schema, next: PmNode): void {
+	const scroller = scrollParent(editorView.dom);
+	editorView.updateState(stateForDoc(editorView, schema, next));
+	if (scroller) scroller.scrollTop = 0;
 }

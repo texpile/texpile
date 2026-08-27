@@ -77,6 +77,7 @@
 		{#if kind === 'md'}
 			<MarkdownEditorView
 				localValue={visualDoc}
+				docPath={loadedPath}
 				localReferences={allReferences}
 				imageDir={dirname(loadedPath)}
 				onLocalChange={onVisualChange}
@@ -96,6 +97,7 @@
 		{:else if kind === 'typ'}
 			<TypstEditorView
 				localValue={visualDoc}
+				docPath={loadedPath}
 				localReferences={allReferences}
 				docDir={dirname(loadedPath)}
 				onLocalChange={onVisualChange}
@@ -116,6 +118,7 @@
 		{:else}
 			<LatexEditorView
 				localValue={visualDoc}
+				docPath={loadedPath}
 				localReferences={allReferences}
 				imageDir={dirname(loadedPath)}
 				onLocalChange={onVisualChange}

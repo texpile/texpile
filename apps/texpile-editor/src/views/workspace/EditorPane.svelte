@@ -158,8 +158,7 @@
 		return () => view.dom.removeEventListener('compositionend', apply);
 	});
 
-	/** ProseMirror is built: put the caret back where this file was left. A one-shot callback rather
-	 *  than an effect, so it cannot re-enter - the editor is built exactly once per file. */
+	/** a callback, not an effect: it dispatches a selection an effect would re-enter on */
 	function onVisualReady(): void {
 		readyFor = loadedPath;
 		const v = editorViewStore.current;
@@ -308,30 +307,29 @@
 					/>
 				{/key}
 			{:else if loadedPath && structured && visualDoc}
-				{#key loadedPath}
-					<VisualEditorHost
-						{kind}
-						{loadedPath}
-						{visualDoc}
-						{docMeta}
-						{texSource}
-						{allReferences}
-						{showRenderBar}
-						{onVisualChange}
-						{onVisualSelection}
-						{onHistoryBoundary}
-						{onVisualReady}
-						{onMdLink}
-						{onEditFrontmatter}
-						{commentThreads}
-						{selectedComment}
-						{onSelectComment}
-						{onAddCommentAnchored}
-						{onInsertCitation}
-						{onCommentsPlaced}
-						{commentPendingActive}
-					/>
-				{/key}
+				<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
+				<VisualEditorHost
+					{kind}
+					{loadedPath}
+					{visualDoc}
+					{docMeta}
+					{texSource}
+					{allReferences}
+					{showRenderBar}
+					{onVisualChange}
+					{onVisualSelection}
+					{onHistoryBoundary}
+					{onVisualReady}
+					{onMdLink}
+					{onEditFrontmatter}
+					{commentThreads}
+					{selectedComment}
+					{onSelectComment}
+					{onAddCommentAnchored}
+					{onInsertCitation}
+					{onCommentsPlaced}
+					{commentPendingActive}
+				/>
 			{:else if visualPending}
 				<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
 				<VisualLoading phase={parseProgress} sizeBytes={texSource.length} {onUseSource} />

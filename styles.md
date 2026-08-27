@@ -45,6 +45,18 @@ Exceptions and amendments for this project:
 4. Return new values instead of editing arguments. No function should modify what it was given
 5. Reactive collections are replaced, never mutated: build a fresh Map/Set/array and reassign it to the $state field. In-place mutation of a collection a template, $derived, or $effect reads is the one shape that goes stale silently
 
+## View Lifecycle
+
+Every rule here was paid for by the same bug: the editor blinking out and back on every file switch. Read them as one idea — an expensive view is a long lived shell that documents pass through, not a thing built per document.
+
+1. Do not key an expensive view on the document it is showing. `{#key path}` reads as a tidy reset and compiles to destroy plus rebuild; for anything with per node views, measured layout, or a language server attached, that is the whole cost of opening the file, paid to arrive at a view identical to the one just discarded. Give the view a `load`/`swap` entry point and hand it the next document instead
+2. Keep the key only when the reset IS the point, and say so in a comment. A form mid edit, or a pane that must never show the previous file's content under the new file's name, is reset correctly and for free by a key. That is a decision, not an oversight, and the next reader cannot tell the difference unless it is written down
+3. A view that outlives its document must READ per document values, never capture them. Anything a long lived view closes over at construction — the document's directory, its path, its dialect — is frozen at the moment of the first document and silently wrong for the second. Pass `() => value`, not `value`. Svelte 5 props stay reactive inside a closure, so this costs nothing but the arrow
+4. Never publish a hole. State that arrives in two writes — clear the old document, then install the new one — must land in ONE synchronous batch, or the render between them picks the empty branch and flashes a placeholder. Read first, publish together, at the end. The same rule applies to any pair a view reads as a unit: a diff's two sides, a document and its metadata
+5. Cache what is expensive to derive, keyed by identity AND by the input it was derived from. A parse, a layout, a compile. The second key is what makes the entry safe: it turns "this file" into "this file, exactly as it reads right now", so a stale entry misses instead of serving a document that no longer matches the file. Bound it, and clear it where the identity dies (delete, rename, folder switch)
+6. Prefer showing nothing to showing the previous document. Stale content under a new label is worse than an empty pane: it invites edits to the wrong file. Clear it, and keep the placeholder behind the delay in `lateReveal.ts` so a fast load shows nothing at all. Fix the blank by making the common case synchronous — rule 5 — not by leaving the old content up
+7. An async result must be recorded against the input it came from, not against whatever the field holds when it resolves. `parsedFrom = currentText` on arrival marks text that was never parsed as parsed, and every fast path keyed on it then skips work it needed to do. Capture the input at the call, compare it on return, and drop the result if it was superseded
+
 ## Naming and Comments
 
 1. File and folder names should be expressive enough that each file requires 0 top of the file comments. Top of the file comments should be avoided as much as possible

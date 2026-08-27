@@ -11,7 +11,7 @@
 	import { fixTables } from 'prosemirror-tables';
 	import { typSchema } from './schema';
 	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
-	import { swapParsedDoc } from '$lib/editor/visual/docSwap';
+	import { swapParsedDoc, swapDocForNewFile } from '$lib/editor/visual/docSwap';
 	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
@@ -39,6 +39,7 @@
 		onOpenLink?: (href: string) => boolean;
 		/** the open file's directory; #include chips resolve their paths against it */
 		docDir?: string;
+		docPath?: string | null;
 		/** the project's bibliography; @target chips resolve against it for display */
 		localReferences?: BiblatexReference[];
 		/** review comments, same contract as the latex EditorView; see extensions/pmComments */
@@ -63,6 +64,7 @@
 		onReady,
 		onOpenLink,
 		docDir = '',
+		docPath = null,
 		localReferences = [],
 		commentThreads = [],
 		selectedComment = null,
@@ -89,7 +91,7 @@
 		const plugins = typstEditorPlugins({
 			mathlivePlugin,
 			mlarrowHandlers,
-			docDir,
+			docDir: () => docDir,
 			placeholder,
 			onHistoryBoundary,
 			onOpenLink,
@@ -105,7 +107,7 @@
 		editorView = new EditorView(editor, {
 			attributes: { class: 'TexpileEditor TypstEditor', spellcheck: 'false' },
 			state: editorState,
-			nodeViews: typstNodeViews(docDir),
+			nodeViews: typstNodeViews(() => docDir),
 			editable: () => true,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
@@ -127,26 +129,32 @@
 		onReady?.();
 	});
 
-	// swap in a re-parsed doc without remounting (same contract as the other editor views): a
-	// fresh EditorState on the same view keeps the DOM and scroll; fires only when localValue changes
 	let mountedDoc: PMNode | null = null;
+	let mountedPath: string | null = null;
 	/** bumped only on doc SWAPS (see pmCommentsSync); typing maps ranges instead */
 	let docEpoch = $state(0);
 	$effect(() => {
 		const next = localValue;
+		const path = docPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			mountedDoc = next;
+			mountedPath = path;
 			return;
 		}
 		if (next === mountedDoc || next === editorView.state.doc) {
 			mountedDoc = next;
+			mountedPath = path;
 			return;
 		}
 
-		swapParsedDoc(editorView, typSchema, next);
+		const isAnotherFile = path !== mountedPath;
+		if (isAnotherFile) swapDocForNewFile(editorView, typSchema, next);
+		else swapParsedDoc(editorView, typSchema, next);
 		mountedDoc = next;
+		mountedPath = path;
 		docEpoch++;
+		if (isAnotherFile) onReady?.();
 	});
 
 	// after the swap effect, so the sync reads the newly-installed document

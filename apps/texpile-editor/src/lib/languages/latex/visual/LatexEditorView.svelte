@@ -6,7 +6,7 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 	import { latexEditorPlugins, latexNodeViews } from './latexEditorSetup';
-	import { swapParsedDoc } from '$lib/editor/visual/docSwap';
+	import { swapParsedDoc, swapDocForNewFile } from '$lib/editor/visual/docSwap';
 	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
@@ -33,6 +33,7 @@
 		onSelectionChange?: () => void;
 		// references for @ citation suggestions
 		localReferences?: BiblatexReference[];
+		docPath?: string | null;
 		// where inserted images go (an images/ subfolder)
 		imageDir?: string;
 		placeholder?: string;
@@ -68,6 +69,7 @@
 		onLocalChange,
 		onSelectionChange,
 		localReferences = [],
+		docPath = null,
 		imageDir,
 		placeholder = 'Begin your journey here...',
 		onHistoryBoundary,
@@ -96,7 +98,7 @@
 		const plugins = latexEditorPlugins({
 			mathlivePlugin,
 			mlarrowHandlers,
-			imageDir,
+			imageDir: imageDir === undefined ? undefined : () => imageDir ?? '',
 			placeholder,
 			onHistoryBoundary,
 			onSelectComment,
@@ -118,7 +120,7 @@
 			// data-show-section-numbers drives the heading CSS counters; data-unnumbered headings are skipped
 			attributes: { class: 'TexpileEditor', spellcheck: 'false', 'data-show-section-numbers': 'true' },
 			state: editorState,
-			nodeViews: latexNodeViews(imageDir ?? ''),
+			nodeViews: latexNodeViews(() => imageDir ?? ''),
 			editable: () => true,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// A plugin that finishes asynchronously can dispatch into a view that was destroyed while
@@ -149,31 +151,37 @@
 		onReady?.();
 	});
 
-	// swap in a re-parsed doc without remounting: a fresh EditorState on the same view keeps the DOM
-	// and scroll. fires only when localValue changes (async re-parse landing), never on typing.
 	let mountedDoc: PMNode | null = null;
+	let mountedPath: string | null = null;
 	/** bumped when a doc SWAP lands - the one moment plugin state was rebuilt and comment ranges
 	 * with it. Typing never bumps it: ranges map through transactions and re-searching mid-edit
 	 * could snap a range onto another copy of its text. */
 	let docEpoch = $state(0);
 	$effect(() => {
 		const next = localValue;
+		const path = docPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			// initial doc was installed at construction, just remember it
 			mountedDoc = next;
+			mountedPath = path;
 			return;
 		}
 		if (next === mountedDoc) return;
 		if (next === editorView.state.doc) {
 			// a collab patch installed this exact doc on the view already; just adopt it
 			mountedDoc = next;
+			mountedPath = path;
 			return;
 		}
 
-		swapParsedDoc(editorView, schema, next);
+		const isAnotherFile = path !== mountedPath;
+		if (isAnotherFile) swapDocForNewFile(editorView, schema, next);
+		else swapParsedDoc(editorView, schema, next);
 		mountedDoc = next;
+		mountedPath = path;
 		docEpoch++;
+		if (isAnotherFile) onReady?.();
 	});
 
 	// Declared AFTER the swap effect on purpose: effects run in declaration order, so by the time

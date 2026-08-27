@@ -30,7 +30,7 @@ function typUpdateOverlay(overlay: Node, getPos: () => number | undefined, view:
 	overlayHost.__svelteComponentProps = componentProps;
 }
 
-export function createTypstImageSettings(imageDir?: string): ImagePluginSettings {
+export function createTypstImageSettings(imageDir?: () => string): ImagePluginSettings {
 	const base = imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings();
 	return { ...base, enableResize: true, updateOverlay: typUpdateOverlay };
 }

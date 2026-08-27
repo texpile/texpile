@@ -28,7 +28,7 @@
 	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import { createKeydownHandler } from '$lib/workspace/shortcuts';
-	import { workspaceRoot, texFiles, activeCompare } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, texFiles, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import { settings } from '$lib/settings';
 	import { basename, dirname, isDesktop } from '$lib/workspace/fileSystem';
@@ -321,7 +321,8 @@
 			onPickMain={() => void files.mainPrompt.prompt()}
 			panes={{
 				openTabs: tabs.list,
-				activeTabKey: doc.path ? tabKey({ path: doc.path, compare: activeCompare.current ?? undefined }) : null,
+				// activeFilePath, not doc.path, which the strip sits unselected behind for a whole read
+				activeTabKey: activeFilePath.current ? tabKey({ path: activeFilePath.current, compare: activeCompare.current ?? undefined }) : null,
 				previewTab: tabs.preview,
 				applyingStarter: files.starters.applying,
 				allReferences: integrations.allReferences,

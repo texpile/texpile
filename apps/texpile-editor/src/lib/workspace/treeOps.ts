@@ -13,6 +13,7 @@
 import { workspaceRoot, activeFilePath, openFile, mainFile } from './workspaceStore';
 import { tabs } from './tabs.svelte';
 import { docPositions } from './docPositions';
+import { visualDocCache } from './visualDocCache';
 import { joinPath, dirname, basename, samePath, type TreeEntry } from './fileSystem';
 import { createStarterLatex } from './latexRoundtrip';
 import { FileHistory } from './fileHistory.svelte';
@@ -295,6 +296,7 @@ export class TreeOps {
 		if (main && (samePath(main, path) || main.startsWith(path + sep))) this.deps.retargetMainFile?.(null);
 		tabs.closeUnder(path);
 		docPositions.forget(path);
+		visualDocCache.forget(path);
 	}
 
 	/** a path moved: carry the pending save, tab, caret and open-file pointer across with it. */
@@ -302,6 +304,7 @@ export class TreeOps {
 		this.deps.retargetPendingSave(from, to); // don't let a queued write recreate the old path
 		tabs.rename(from, to);
 		docPositions.rename(from, to);
+		visualDocCache.rename(from, to);
 		this.deps.afterPathMoved?.(from, to);
 		const active = activeFilePath.current;
 		const sep = from.includes('\\') ? '\\' : '/';

@@ -29,7 +29,7 @@ function mdUpdateOverlay(overlay: Node, getPos: () => number | undefined, view: 
 	overlayHost.__svelteComponentProps = componentProps;
 }
 
-export function createMarkdownImageSettings(imageDir?: string): ImagePluginSettings {
+export function createMarkdownImageSettings(imageDir?: () => string): ImagePluginSettings {
 	const base = imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings();
 	return { ...base, enableResize: false, updateOverlay: mdUpdateOverlay };
 }

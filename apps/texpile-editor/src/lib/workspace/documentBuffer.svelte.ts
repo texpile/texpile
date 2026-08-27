@@ -80,6 +80,8 @@ export class DocumentBuffer {
 	/** the editor's current body doc; needed to re-serialize when an inline preamble-frontmatter
 	 * field rewrites the preamble without touching the body */
 	lastDoc = $state<PMNode | null>(null);
+	/** the texSource `lastDoc` serializes to */
+	lastDocSource: string | null = null;
 
 	eol = $state<Eol>('\n');
 	/** the bytes we believe are on disk, for conflict detection and dirty tracking */
@@ -113,6 +115,8 @@ export class DocumentBuffer {
 		this.texSource = '';
 		this.docMeta = null;
 		this.visualDoc = null;
+		this.lastDoc = null;
+		this.lastDocSource = null;
 		this.rawContent = '';
 		this.path = null;
 	}
@@ -124,6 +128,7 @@ export class DocumentBuffer {
 		this.docMeta = null;
 		this.visualDoc = null;
 		this.lastDoc = null;
+		this.lastDocSource = null;
 		this.path = path;
 		this.diskBaseline = text;
 	}
@@ -135,6 +140,8 @@ export class DocumentBuffer {
 		this.texSource = '';
 		this.docMeta = null;
 		this.visualDoc = null;
+		this.lastDoc = null;
+		this.lastDocSource = null;
 		this.path = path;
 		this.diskBaseline = text;
 	}
@@ -145,11 +152,11 @@ export class DocumentBuffer {
 		this.path = path;
 	}
 
-	/** install a freshly parsed document into the visual pane */
-	adoptParsed(parsed: ParsedLatexFile): void {
+	adoptParsed(parsed: ParsedLatexFile, source: string): void {
 		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
 		this.visualDoc = parsed.doc;
 		this.lastDoc = parsed.doc;
+		this.lastDocSource = source;
 		// the citation menu offers what this document's packages define, so it cannot put an
 		// undefined command in the source. Merged, not replaced: the other features have owners.
 		templateFeaturesStore.current = {
@@ -163,6 +170,7 @@ export class DocumentBuffer {
 		if (!this.docMeta) return;
 		this.lastDoc = doc;
 		this.texSource = this.serializeFile(doc);
+		this.lastDocSource = this.texSource;
 		// nodeviews settling on load (or an edit undone back to the saved bytes) fire a docChanged
 		// transaction that serializes right back to disk: that isn't an unsaved change, so don't
 		// flag the pristine file dirty or queue a no-op save that would nag on the next switch
@@ -183,6 +191,7 @@ export class DocumentBuffer {
 		if (!this.docMeta || !this.lastDoc || this.kind !== 'tex') return; // \title/\author is LaTeX-only
 		this.docMeta = { ...this.docMeta, preamble: replacePreambleFrontmatter(this.docMeta.preamble, kind, inner) };
 		this.texSource = serializeLatexFile(this.docMeta, this.lastDoc);
+		this.lastDocSource = this.texSource;
 		isDirty.current = true;
 		this.deps.scheduleSave(this.path, this.texSource);
 	}

@@ -79,8 +79,9 @@ export class DiffMode {
 		this.error = null;
 		const ref = this.compareRef;
 		const res = ref ? await gitShowAt(path, ref.hash) : await gitShowHead(path);
-		if (this.deps.getLoadedPath() !== path) return; // a file switch superseded this snapshot
+		// cleared even when superseded, or the bar keeps announcing a read that already ended
 		this.loading = false;
+		if (this.deps.getLoadedPath() !== path) return; // a file switch superseded this snapshot
 		if (!res.ok) {
 			this.error = res.reason === 'no-git' ? m.wsview_diff_error_no_git() : (res.error ?? m.wsview_diff_error_default());
 			this.original = '';

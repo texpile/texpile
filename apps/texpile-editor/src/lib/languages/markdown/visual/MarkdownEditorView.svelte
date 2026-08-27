@@ -4,7 +4,8 @@
 	// everything LaTeX-flavored (intellisense, citations, template views, latex clipboard,
 	// suggestion mode, the block-handle insert menu) is deliberately absent.
 	import { onDestroy, onMount } from 'svelte';
-	import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
+	import { EditorState, type Transaction } from 'prosemirror-state';
+	import { swapParsedDoc, swapDocForNewFile } from '$lib/editor/visual/docSwap';
 	import { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { keymap } from 'prosemirror-keymap';
@@ -69,6 +70,7 @@
 		onSelectionChange?: () => void;
 		localReferences?: BiblatexReference[];
 		imageDir?: string;
+		docPath?: string | null;
 		placeholder?: string;
 		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		onReady?: () => void;
@@ -92,6 +94,7 @@
 		onSelectionChange,
 		localReferences = [],
 		imageDir,
+		docPath = null,
 		placeholder = '',
 		onHistoryBoundary,
 		onReady,
@@ -165,7 +168,7 @@
 			mlarrowHandlers,
 			mathlivePlugin,
 			keymap(baseKeymap),
-			imagePlugin(createMarkdownImageSettings(imageDir)),
+			imagePlugin(createMarkdownImageSettings(imageDir === undefined ? undefined : () => imageDir ?? '')),
 			menuUpdatePlugin(),
 			createCursorPlugin(),
 			createLinkPlugin({ onOpen: onOpenLink }),
@@ -227,53 +230,32 @@
 		onReady?.();
 	});
 
-	function scrollParent(el: HTMLElement | null): HTMLElement | null {
-		let cur = el?.parentElement ?? null;
-		while (cur) {
-			const oy = getComputedStyle(cur).overflowY;
-			if ((oy === 'auto' || oy === 'scroll') && cur.scrollHeight > cur.clientHeight) return cur;
-			cur = cur.parentElement;
-		}
-		return null;
-	}
-
-	// swap in a re-parsed doc without remounting (same contract as the tex EditorView): a fresh
-	// EditorState on the same view keeps the DOM and scroll; fires only when localValue changes
 	let mountedDoc: PMNode | null = null;
+	let mountedPath: string | null = null;
 	/** bumped only on doc SWAPS (see pmCommentsSync); typing maps ranges instead */
 	let docEpoch = $state(0);
 	$effect(() => {
 		const next = localValue;
+		const path = docPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			mountedDoc = next;
+			mountedPath = path;
 			return;
 		}
 		if (next === mountedDoc || next === editorView.state.doc) {
 			mountedDoc = next;
+			mountedPath = path;
 			return;
 		}
 
-		const scroller = scrollParent(editorView.dom);
-		const savedTop = scroller?.scrollTop ?? 0;
-		const prevAnchor = editorView.state.selection.anchor;
-
-		let base = EditorState.create({ schema: mdSchema, plugins: editorView.state.plugins, doc: next });
-		let restored = base;
-		try {
-			const pos = Math.min(Math.max(1, prevAnchor), base.doc.content.size);
-			restored = base.apply(base.tr.setSelection(TextSelection.near(base.doc.resolve(pos))).setMeta('addToHistory', false));
-		} catch {
-			// structural change, position didn't map, fall back to default selection
-		}
-		editorView.updateState(restored);
+		const isAnotherFile = path !== mountedPath;
+		if (isAnotherFile) swapDocForNewFile(editorView, mdSchema, next);
+		else swapParsedDoc(editorView, mdSchema, next);
 		mountedDoc = next;
+		mountedPath = path;
 		docEpoch++;
-
-		if (scroller) {
-			scroller.scrollTop = savedTop;
-			requestAnimationFrame(() => (scroller.scrollTop = savedTop));
-		}
+		if (isAnotherFile) onReady?.();
 	});
 
 	// after the swap effect, so the sync reads the newly-installed document

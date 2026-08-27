@@ -8,6 +8,7 @@ import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
 import { diskChangedSince, recordDiskStamp } from '$lib/workspace/diskStamp';
 import { activeFilePath, activeCompare, isDirty } from '$lib/workspace/workspaceStore';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
+import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { saveVisualPosition } from '$lib/workspace/visualPositions';
 import { bodyOffsetOf } from '$lib/workspace/latexRoundtrip';
 import { editorViewStore } from '$lib/stores/editorStore';
@@ -115,6 +116,7 @@ export class WorkspaceEditFlow {
 		$effect(() =>
 			activeFilePath.onWrite(() =>
 				untrack(() => {
+					this.cacheOutgoingDoc();
 					const v = editorViewStore.current;
 					if (!v || modes.mode !== 'visual' || !doc.path || d.session().collabFor(doc.path)) return;
 					saveVisualPosition(v, doc.path, doc.texSource, doc.docMeta ? bodyOffsetOf(doc.docMeta) : 0);
@@ -154,6 +156,20 @@ export class WorkspaceEditFlow {
 				if (path) d.wsdoc.loadFile(path);
 				else d.wsdoc.closeOpenFile();
 			});
+		});
+	}
+
+	/** the EDITED document, not the one parsed on open */
+	private cacheOutgoingDoc(): void {
+		const { doc } = this.d.wsdoc;
+		if (!doc.path || !doc.lastDoc || !doc.docMeta) return;
+		if (doc.lastDocSource !== doc.texSource) return;
+		visualDocCache.set(doc.path, doc.texSource, {
+			doc: doc.lastDoc,
+			preamble: doc.docMeta.preamble,
+			postamble: doc.docMeta.postamble,
+			hadDocumentEnv: doc.docMeta.hadDocumentEnv,
+			warnings: []
 		});
 	}
 

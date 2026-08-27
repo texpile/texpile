@@ -25,11 +25,11 @@ export function isRawFigure(text: string): boolean {
 }
 
 export class RawFigureView extends RawLatexView {
-	imageDir: string;
+	imageDir: () => string;
 	preview: HTMLElement;
 	private shownKey = '\0';
 
-	constructor(node: Node, view: ProseMirrorView, getPos: () => number, imageDir: string) {
+	constructor(node: Node, view: ProseMirrorView, getPos: () => number, imageDir: () => string) {
 		super(node, view, getPos);
 		this.imageDir = imageDir;
 
@@ -44,7 +44,8 @@ export class RawFigureView extends RawLatexView {
 
 	private resolveSrc(src: string): string {
 		if (isRemoteSrc(src)) return src;
-		return this.imageDir ? editorFileUrl(joinPath(this.imageDir, src)) : src;
+		const dir = this.imageDir();
+		return dir ? editorFileUrl(joinPath(dir, src)) : src;
 	}
 
 	private renderPreview(text: string): void {

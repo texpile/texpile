@@ -188,11 +188,11 @@ async function urlExists(url: string): Promise<boolean> {
 	}
 }
 
-/** image settings for the local folder editor: images land in images/ next to the document. */
-export function createLocalImageSettings(imageDir: string): ImagePluginSettings {
+/** read per call, not captured: a view outlives the file it was built for */
+export function createLocalImageSettings(imageDir: () => string): ImagePluginSettings {
 	return {
 		...sharedImageSettings,
-		uploadFile: (file: File) => uploadLocalImage(file, imageDir),
+		uploadFile: (file: File) => uploadLocalImage(file, imageDir()),
 		// resolve the relative path to a served URL; pass through already-resolved LOCAL srcs.
 		// extensionless srcs probe like the engine would, and PDF figures render to a bitmap.
 		downloadImage: async (src: string) => {
@@ -202,7 +202,7 @@ export function createLocalImageSettings(imageDir: string): ImagePluginSettings 
 			// fallback for a workspace that has not published them (a guest, or before first parse)
 			const urlsFor = (rel: string) => {
 				const dirs = editorGraphicDirs();
-				return (dirs.length ? dirs : [imageDir]).map((d) => editorFileUrl(joinPath(d, rel)));
+				return (dirs.length ? dirs : [imageDir()]).map((d) => editorFileUrl(joinPath(d, rel)));
 			};
 			const { url, isPdf } = await resolveGraphicUrl(src, urlsFor, urlExists);
 			// failed render falls through to the raw URL, whose <img> error shows not-found

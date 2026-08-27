@@ -20,7 +20,7 @@
 		el.value = '';
 		const v = editorViewStore.current;
 		if (!file || !imageDir || !v) return;
-		startImageUpload(v, file, m.menubar_image_alt_default(), createLocalImageSettings(imageDir), v.state.schema);
+		startImageUpload(v, file, m.menubar_image_alt_default(), createLocalImageSettings(() => imageDir ?? ''), v.state.schema);
 		v.focus();
 	}
 </script>

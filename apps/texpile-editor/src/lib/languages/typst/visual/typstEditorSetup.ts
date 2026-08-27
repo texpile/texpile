@@ -115,7 +115,7 @@ export type TypstEditorSetup = {
 	/** resolved by the caller's dynamic import so mathlive stays off the critical path */
 	mathlivePlugin: Plugin;
 	mlarrowHandlers: Plugin;
-	docDir: string;
+	docDir: () => string;
 	placeholder: string;
 	onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 	onOpenLink?: (href: string) => boolean;
@@ -209,7 +209,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 	];
 }
 
-export function typstNodeViews(docDir: string): NonNullable<EditorProps['nodeViews']> {
+export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['nodeViews']> {
 	return {
 		code_block: (node, view, getPos) => new CodeBlockView(node, view, getPos as () => number),
 		// typst raw islands are the safety valve for everything unmodeled: plain CM views

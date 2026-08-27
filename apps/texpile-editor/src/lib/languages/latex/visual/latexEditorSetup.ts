@@ -64,7 +64,7 @@ export type LatexEditorSetup = {
 	/** resolved by the caller's dynamic import so mathlive stays off the critical path */
 	mathlivePlugin: Plugin;
 	mlarrowHandlers: Plugin;
-	imageDir?: string;
+	imageDir?: () => string;
 	placeholder: string;
 	onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 	onSelectComment?: (id: string, from: 'visual') => void;
@@ -162,7 +162,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 
 // PM types getPos as possibly undefined (unmounted), but these views only call it while
 // mounted, so cast instead of threading the optionality through every constructor
-export function latexNodeViews(imageDir: string): NonNullable<EditorProps['nodeViews']> {
+export function latexNodeViews(imageDir: () => string): NonNullable<EditorProps['nodeViews']> {
 	return {
 		code_block: (node, view, getPos) => new CodeBlockView(node, view, getPos as () => number),
 		raw_latex: (node, view, getPos) =>

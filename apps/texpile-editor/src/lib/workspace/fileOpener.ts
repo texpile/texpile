@@ -9,6 +9,7 @@ import { toLf, detectEol } from '$lib/workspace/fileSystem';
 import { recordDiskStamp } from '$lib/workspace/diskStamp';
 import { fileKind, formatOf, hasVisualMode, isRawTextKind, type DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
 import type { VisualParser, ParseOutcome, ParseFailure } from '$lib/workspace/visualParse.svelte';
+import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 
@@ -59,7 +60,8 @@ export class FileOpener {
 				return;
 			}
 			if (!o.parsed) return;
-			doc.adoptParsed(o.parsed);
+			doc.adoptParsed(o.parsed, source);
+			visualDocCache.set(path, source, o.parsed);
 			parser.lastParsedSource = source;
 			if (this.deps.isSourceMode()) toaster.success({ title: m.wsview_toast_visual_ready_title(), duration: 2500 });
 		});
@@ -102,12 +104,15 @@ export class FileOpener {
 				const raw = await this.readWorkingCopy(path);
 				if (!this.current(path)) return;
 				const text = toLf(raw); // the editor works in LF
+				// adopted in the same synchronous batch as openTex below, which clears the doc
+				const cached = visualDocCache.get(path, text);
 				const seq = d.parser.nextSequence();
-				if (d.isVisualMode()) this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
+				if (!cached && d.isVisualMode()) this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
 
 				d.doc.openTex(path, text, detectEol(raw)); // detectEol so a CRLF file isn't rewritten to LF
+				if (cached) d.doc.adoptParsed(cached, text);
 				void recordDiskStamp(path); // arm the external-write guard: disk is known as of this read
-				d.parser.lastParsedSource = null;
+				d.parser.lastParsedSource = cached ? text : null;
 				isDirty.current = false;
 				d.resetHistory(text); // the on-disk content is the floor of the cross-mode undo history
 				d.clearPerFileViewState();
