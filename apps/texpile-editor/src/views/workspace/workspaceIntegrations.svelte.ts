@@ -76,6 +76,8 @@ export class WorkspaceIntegrations {
 		this.scm = new ScmActions({
 			getLoadedPath: () => doc.path,
 			discardPendingSave: () => d.editFlow().saver.discard(),
+			hasPendingSave: () => !!d.editFlow().saver.pending,
+			flushPendingSave: () => d.editFlow().saver.flushAndWait(),
 			deleteEntry: (p) => d.provider.remove(p),
 			refreshTree: () => d.files().refreshTree(),
 			loadFile: (path) => d.wsdoc.loadFile(path),

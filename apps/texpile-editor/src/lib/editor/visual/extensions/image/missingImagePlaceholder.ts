@@ -5,8 +5,16 @@
 // lucide's image-off glyph so it matches the app's icon set.
 import { m } from '$lib/paraglide/messages';
 
+// 480 wide read as a banner across the figure rather than a stand-in for the missing picture.
+// The height is unchanged: it is the width that was out of proportion.
+const W = 320;
+const H = 120;
+const MID = W / 2;
+// the lucide glyph is 24 units at scale 1.5, so half of it is 18
+const GLYPH_X = MID - 18;
+
 const IMAGE_OFF_GLYPH =
-	'<g transform="translate(222,14) scale(1.5)" stroke="#8a8a8a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
+	`<g transform="translate(${GLYPH_X},14) scale(1.5)" stroke="#8a8a8a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">` +
 	'<line x1="2" x2="22" y1="2" y2="22"/>' +
 	'<path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"/>' +
 	'<line x1="13.5" x2="6" y1="13.5" y2="21"/>' +
@@ -19,8 +27,10 @@ function xmlEscape(s: string): string {
 	return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-/** keeps the start and the tail (where the filename lives) of an over-long path */
-function middleTruncate(s: string, max = 46): string {
+/** keeps the start and the tail (where the filename lives) of an over-long path.
+ *  40 rather than 46, because the card is narrower now: the face measures 6.6px a character at
+ *  12px, so 43 is what fits between 16px margins and 40 leaves the margins honest. */
+function middleTruncate(s: string, max = 40): string {
 	return s.length <= max ? s : `${s.slice(0, Math.ceil((max - 1) / 2))}…${s.slice(-Math.floor((max - 1) / 2))}`;
 }
 
@@ -29,11 +39,11 @@ export function missingImageSvg(path: string): string {
 	return (
 		'data:image/svg+xml;utf8,' +
 		encodeURIComponent(
-			'<svg xmlns="http://www.w3.org/2000/svg" width="480" height="120" viewBox="0 0 480 120">' +
-				'<rect width="480" height="120" fill="#80808018" rx="8"/>' +
+			`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">` +
+				`<rect width="${W}" height="${H}" fill="#80808018" rx="8"/>` +
 				IMAGE_OFF_GLYPH +
-				`<text x="240" y="76" text-anchor="middle" font-family="system-ui" font-size="14" fill="#8a8a8a">${xmlEscape(m.image_missing_label())}</text>` +
-				`<text x="240" y="98" text-anchor="middle" font-family="ui-monospace, Consolas, monospace" font-size="12" fill="#8a8a8a">${xmlEscape(middleTruncate(path))}</text>` +
+				`<text x="${MID}" y="76" text-anchor="middle" font-family="system-ui" font-size="14" fill="#8a8a8a">${xmlEscape(m.image_missing_label())}</text>` +
+				`<text x="${MID}" y="98" text-anchor="middle" font-family="ui-monospace, Consolas, monospace" font-size="12" fill="#8a8a8a">${xmlEscape(middleTruncate(path))}</text>` +
 				'</svg>'
 		)
 	);

@@ -1,7 +1,7 @@
 // source control ops: call the git client, refresh status, toast on failure. the panel is
 // presentational; WorkspaceView wires the deps.
 import { workspaceRoot } from './workspaceStore';
-import { refreshGitStatus, refreshGitHistory, isGitRepo } from './gitStore';
+import { refreshGitStatus, refreshGitHistory, isGitRepo, gitChanges } from './gitStore';
 import {
 	gitInit,
 	gitStage,
@@ -24,6 +24,11 @@ export type ScmDeps = {
 	getLoadedPath(): string | null;
 	/** drop the open file's queued autosave before git rewrites it on disk. */
 	discardPendingSave(): void;
+	/** an edit is typed but not yet on disk. With autosave off that is everything since the last
+	 *  manual save, and git cannot see any of it. */
+	hasPendingSave(): boolean;
+	/** write that edit out and wait for it to land, so git can see it */
+	flushPendingSave(): Promise<void>;
 	deleteEntry(path: string): Promise<unknown>;
 	refreshTree(): Promise<void>;
 	loadFile(path: string): Promise<void>;
@@ -145,14 +150,46 @@ export class ScmActions {
 		return true;
 	};
 
-	/** additive: recorded as a new commit, so restoring the entry above undoes it */
-	restore = async (hash: string, subject: string): Promise<boolean> => {
+	/** Clears the way for a restore, and asks about it first.
+	 *
+	 *  Returns false when the answer was no, or when saving failed. Nothing is written before the
+	 *  answer: with autosave off, a Restore that was cancelled must not have saved the file as a
+	 *  side effect of being considered. */
+	private async saveBeforeRestore(root: string, entry: { hash: string; subject: string }): Promise<boolean> {
+		function inTheWay(): string[] {
+			return gitChanges.current.filter((c) => c.x !== '?').map((c) => c.path);
+		}
+		const dirty = this.deps.hasPendingSave() || inTheWay().length > 0;
+
+		const ok = await confirmAsk(
+			dirty ? m.vcs_confirm_restore_unsaved({ name: entry.subject }) : m.vcs_confirm_restore({ name: entry.subject }),
+			{ confirmLabel: dirty ? m.vcs_save_and_restore() : m.vcs_restore() }
+		);
+		if (!ok || !dirty) return ok;
+
+		await this.deps.flushPendingSave();
+		await refreshGitStatus(root); // the edit is on disk now, so git can finally count it
+		const paths = inTheWay();
+		if (!paths.length) return true; // what was queued turned out to match what was already saved
+		return this.commit(m.vcs_restore_presave({ name: entry.subject }), paths);
+	}
+
+	/** additive: recorded as a new commit, so restoring the entry above undoes it.
+	 *  Takes the ENTRY, like compare does - the panel has only ever handed one over, and taking a
+	 *  hash and a subject instead meant the entry arrived as `hash` and the subject as undefined. */
+	restore = async (entry: { hash: string; subject: string }): Promise<boolean> => {
 		const root = workspaceRoot.current;
 		if (!root) return false;
-		if (!(await confirmAsk(m.vcs_confirm_restore({ name: subject }), { confirmLabel: m.vcs_restore() }))) return false;
-		this.deps.discardPendingSave(); // a queued autosave would land after git rewrote the files
+
+		// Work that would be in the way, counted BEFORE asking - the restore refuses on a dirty tree,
+		// and being refused after confirming reads as a bug. Only TRACKED changes count: gitRestore
+		// checks --untracked-files=no, so an untracked file neither blocks it nor belongs in the
+		// version below, having never been chosen for the repo. The typed-but-unwritten edit counts
+		// too, and git cannot see it - that is exactly the work the old discard threw away in silence.
+		if (!(await this.saveBeforeRestore(root, entry))) return false;
+
 		this.busy = true;
-		const res = await gitRestore(root, hash, m.vcs_restore_message({ name: subject }));
+		const res = await gitRestore(root, entry.hash, m.vcs_restore_message({ name: entry.subject }));
 		this.busy = false;
 		if (!res.ok) {
 			toaster.error({ title: m.vcs_toast_restore_failed(), description: res.error });

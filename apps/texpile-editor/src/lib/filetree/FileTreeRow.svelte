@@ -102,12 +102,17 @@
 			     never widens the row. `hidden`, not opacity-0, so it reserves no width when not hovered.
 			     sticky: rows can be wider than the pane, and parked at the row's end this would sit off
 			     screen until you scrolled to it.
-			     The opaque fill belongs to this wrapper rather than the button, because preset-tonal is
-			     a 10% mix over transparent - a button painting its own hover fill would let the name it
-			     is sitting on top of show straight through. -->
-			<span class="bg-surface-200-800 sticky right-0 z-10 hidden shrink-0 items-center pr-1 group-hover:flex">
+			     No fill of its own, deliberately. It used to carry one so that a name scrolled under
+			     it could not show through - but a second painted surface over an already-lit row is
+			     visible however carefully its colour is matched: instant against the row's fade,
+			     square against the row's rounded ends. A name bleeding through while the tree is
+			     scrolled sideways is the cheaper of the two. -->
+			<span class="sticky right-0 z-10 hidden shrink-0 items-center bg-transparent pr-1 group-hover:flex">
+				<!-- the icon answers the hover, not a second fill: the row is already lit, and
+				     preset-tonal washed 10% white over it, leaving a paler rounded patch with a
+				     visible seam against the row it sits on -->
 				<button
-					class="btn-icon btn-icon-xs hover:preset-tonal"
+					class="btn-icon btn-icon-xs text-surface-500 hover:text-surface-950-50 bg-transparent transition-colors"
 					title={m.filetree_row_actions()}
 					aria-label={m.filetree_row_actions()}
 					onclick={(e) => {
