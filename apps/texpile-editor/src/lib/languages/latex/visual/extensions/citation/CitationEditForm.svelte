@@ -36,28 +36,43 @@
 	const initialAttrs = node.attrs;
 	let postnote = $state(initialAttrs.postnote || '');
 	let prenote = $state(initialAttrs.prenote || '');
-	let variant = $state(initialAttrs.variant || 'autocite');
+	let variant = $state(initialAttrs.variant || 'cite');
 
 	let showAdvanced = $state(false);
 
 	let prevValues = $state({
 		postnote: initialAttrs.postnote || '',
 		prenote: initialAttrs.prenote || '',
-		variant: initialAttrs.variant || 'autocite'
+		variant: initialAttrs.variant || 'cite'
 	});
 
 	let hasMounted = $state(false);
 
-	const defaultVariantOptions = [
-		{ value: 'autocite', label: m.citation_variant_automatic_label(), desc: m.citation_variant_automatic_desc() },
-		{ value: 'parencite', label: m.citation_variant_parenthetical_label(), desc: m.citation_variant_parenthetical_desc() },
-		{ value: 'textcite', label: m.citation_variant_intext_label(), desc: m.citation_variant_intext_desc() },
-		{ value: 'cite', label: m.citation_variant_basic_label(), desc: m.citation_variant_basic_desc() }
-	];
+	// one wording per SHAPE, so \citep and \parencite read the same: which of the two a document
+	// gets is its bibliography package's business, not something the writer should have to track
+	function variantOption(value: string) {
+		switch (value) {
+			case 'citep':
+			case 'parencite':
+				return { value, label: m.citation_variant_parenthetical_label(), desc: m.citation_variant_parenthetical_desc() };
+			case 'citet':
+			case 'textcite':
+				return { value, label: m.citation_variant_intext_label(), desc: m.citation_variant_intext_desc() };
+			case 'autocite':
+				return { value, label: m.citation_variant_automatic_label(), desc: m.citation_variant_automatic_desc() };
+			default:
+				return { value, label: m.citation_variant_basic_label(), desc: m.citation_variant_basic_desc() };
+		}
+	}
 
-	const variantOptions = $derived(
-		templateFeaturesStore.current?.citationVariants?.length ? templateFeaturesStore.current.citationVariants : defaultVariantOptions
-	);
+	// what the open document can compile; no preamble was seen (an included chapter) means we do
+	// not know, so nothing is narrowed and the previous list stands
+	const offered = $derived(templateFeaturesStore.current?.citationVariants ?? ['autocite', 'parencite', 'textcite', 'cite']);
+
+	// The chip's OWN command is always in the list, even when the document would not offer it now.
+	// A <select> bound to a value none of its options carry renders blank, and the first touch
+	// would then silently rewrite the command to whichever option happened to be first.
+	const variantOptions = $derived((offered.includes(variant) ? offered : [...offered, variant]).map(variantOption));
 
 	const showCitationStyleSelector = $derived(variantOptions.length > 1);
 

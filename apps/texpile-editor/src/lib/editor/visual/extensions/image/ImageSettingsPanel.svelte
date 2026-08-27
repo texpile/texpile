@@ -7,6 +7,8 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import type { Dialect } from '$lib/editor/visual/dialect';
 	import { sanitizeLabel } from '$lib/editor/visual/label';
+	import { labelTaken } from '$lib/editor/visual/labelTaken';
+	import { repointRefs } from '$lib/editor/visual/repointRefs';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { settings } from '$lib/settings';
 	import { m } from '$lib/paraglide/messages';
@@ -60,6 +62,10 @@
 			...node.attrs,
 			...attrs
 		});
+		// renaming the label follows every reference to it, in the same transaction (one undo
+		// step). This panel had no such branch at all, in either dialect, so a renamed figure left
+		// each \ref to it pointing at a name that no longer existed.
+		if ('label' in attrs) repointRefs(tr, view.state.doc, String(node.attrs.label ?? ''), String(attrs.label ?? ''));
 		view.dispatch(tr);
 	}
 
@@ -133,7 +139,10 @@
 		const input = e.target as HTMLInputElement;
 		const newLabel = sanitizeLabel(input.value);
 
-		if (!newLabel) {
+		// a name another anchor already holds is refused, not merged: the references would survive,
+		// pointing at whichever of the two LaTeX numbered last
+		const pos = getPos();
+		if (!newLabel || (pos !== undefined && labelTaken(view.state.doc, newLabel, pos))) {
 			labelInput = originalTexpileLabel;
 			updateAttrs({ label: originalTexpileLabel });
 			return;

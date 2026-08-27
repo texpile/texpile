@@ -8,6 +8,7 @@ import {
 	convertBibliographyToReferenceItems,
 	extractEquationReferences,
 	extractFigureReferences,
+	extractSectionReferences,
 	extractTableReferences,
 	filterReferences,
 	type ReferenceItem
@@ -43,8 +44,9 @@ const suggestReference: TexpileSuggester = {
 		const tableItems = extractTableReferences(view);
 		const figureItems = extractFigureReferences(view);
 		const equationItems = extractEquationReferences(view);
+		const sectionItems = extractSectionReferences(view);
 
-		const allReferences = [...bibliographyItems, ...tableItems, ...figureItems, ...equationItems];
+		const allReferences = [...bibliographyItems, ...tableItems, ...figureItems, ...equationItems, ...sectionItems];
 
 		referenceList = filterReferences(allReferences, query.full);
 		selectedIndex = 0;
@@ -103,8 +105,12 @@ function handleReferenceSelection(item: ReferenceItem) {
 	const refNode = schema.nodes.typ_ref
 		? schema.nodes.typ_ref.create({ target: item.id })
 		: item.type === 'bibliography'
-			? schema.nodes.citation.create({ prenote: '', postnote: '', variant: 'autocite' }, schema.text(item.id))
-			: schema.nodes.ref.create({ refType: item.type }, schema.text(item.id));
+			? // \cite, not \autocite: \autocite needs biblatex, so the menu was inserting an undefined
+				// command into every natbib or plain-bibtex document. \cite compiles under all of them.
+				schema.nodes.citation.create({ prenote: '', postnote: '', variant: 'cite' }, schema.text(item.id))
+			: // a section ref resolves through its label, not through refType, so it takes the
+				// general type - there is no section counter for the kind-specific walk to count
+				schema.nodes.ref.create({ refType: item.type === 'section' ? 'reference' : item.type }, schema.text(item.id));
 
 	// insert first (shifts positions), then walk back to find and delete the @query text
 	tr.insert(state.selection.from, refNode);

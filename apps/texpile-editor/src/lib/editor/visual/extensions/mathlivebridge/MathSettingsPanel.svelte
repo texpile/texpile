@@ -5,7 +5,9 @@
 	import { ChevronDown, Info, Trash2 } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { generateLabel, isLabelInUse, isTexpileLabel, sanitizeLabel } from '$lib/editor/visual/label';
+	import { generateLabel, isTexpileLabel, sanitizeLabel } from '$lib/editor/visual/label';
+	import { labelTaken } from '$lib/editor/visual/labelTaken';
+	import { repointRefs } from '$lib/editor/visual/repointRefs';
 	import { toggleEnvironmentStar } from './mathEnvironments';
 	import { m } from '$lib/paraglide/messages';
 
@@ -58,7 +60,8 @@
 	function isLabelDuplicate(label: string): boolean {
 		const pos = getPos();
 		if (!label || pos === undefined) return false;
-		return isLabelInUse(view, 'block_math', label, pos);
+		// against every anchor, not only other equations: a name shared with a figure is just as ambiguous
+		return labelTaken(view.state.doc, label, pos);
 	}
 
 	let isDuplicate = $derived(labelInput && !isTexpileLabel(labelInput) && isLabelDuplicate(labelInput));
@@ -70,16 +73,9 @@
 				...node.attrs,
 				...attrs
 			});
-			// typst: renaming the label follows every @ref chip pointing at it, in the same
-			// transaction (one undo step) - the same behavior the table wrapper has
-			const oldLabel = node.attrs.label;
-			if (isTypst && 'label' in attrs && attrs.label !== oldLabel && oldLabel && attrs.label) {
-				view.state.doc.descendants((n, p) => {
-					if (n.type.name === 'typ_ref' && n.attrs.target === String(oldLabel)) {
-						tr.setNodeMarkup(p, undefined, { target: String(attrs.label) });
-					}
-				});
-			}
+			// renaming the label follows every reference to it, in the same transaction (one undo
+			// step). Both dialects: a \ref left behind still compiles, resolving to ??.
+			if ('label' in attrs) repointRefs(tr, view.state.doc, String(node.attrs.label ?? ''), String(attrs.label ?? ''));
 			view.dispatch(tr);
 		}
 	}

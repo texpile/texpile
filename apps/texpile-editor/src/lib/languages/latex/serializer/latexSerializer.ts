@@ -139,23 +139,31 @@ function serializeDocChildren(doc: Node): string {
 /** The text handler's escaping, WITHOUT wrapping in the node's own marks (shared with
  * serializeBare's run merge). */
 function bareText(node: Node): string {
+	const isCode = node.marks.some((m) => m.type.name === 'code');
 	let result = esc(node.text ?? '', 'text');
 	// a pasted tab becomes one space: there's no clean tab mapping and a space is idempotent.
 	// a bare " stays as-is: \texttt{"} re-parses to a code mark and compounds every save.
 	result = result.replace(/\t/g, ' ');
+	// Every tie became a no-break space on the way in, so a tilde still here is one someone typed
+	// meaning the character - emitted bare it would compile to a tie and vanish from the PDF.
+	// MUST run before the no-break space goes back to ~, or it would escape that one too. Code
+	// keeps its literal bytes and never had the tie converted, so it is left alone.
+	if (!isCode) result = result.replace(/~/g, '\\textasciitilde{}');
 	// a no-break space (from a ~ tie) must go back to ~, not a raw U+00A0 byte (renders
 	// differently without inputenc, and is unfaithful to the source either way).
 	result = result.replace(/\u00A0/g, '~');
 	// typographic chars become LaTeX ligatures so the .tex stays ASCII and round-trips; skipped
 	// in code, where they are literal.
-	if (!node.marks.some((m) => m.type.name === 'code')) {
+	if (!isCode) {
 		result = result
 			.replace(/\u2014/g, '---')
 			.replace(/\u2013/g, '--')
 			.replace(/\u201C/g, '``')
 			.replace(/\u201D/g, "''")
 			.replace(/\u2018/g, '`')
-			.replace(/\u2019/g, "'");
+			.replace(/\u2019/g, "'")
+			// \ldots reads back as U+2026, which had no way home and left a non-ASCII byte behind
+			.replace(/\u2026/g, '\\ldots{}');
 	}
 	return result;
 }
@@ -167,6 +175,11 @@ const NODES: Record<string, NodeHandler> = {
 		// an empty paragraph emits nothing: blank lines are semantic no-ops (WYSIWYM). a user who
 		// wants real space types \vspace/\bigskip, which round-trips as a raw chip.
 		if (isEmptyParagraph(node)) return '';
+		// a \label on its own line is an anchor, not prose: it has no paragraph to end, so \par
+		// here would add a token the source never had, on every save, after every section label
+		if (isLabelOnlyParagraph(node) && !ctx.inTableCell) {
+			return (prevSibling(ctx)?.type.name === 'heading' ? '' : '\n') + renderChildren(node, false).trim() + '\n';
+		}
 		const rawContent = renderChildren(node, ctx.inTableCell);
 		if (ctx.inTableCell) return rawContent; // no \par inside table cells
 
@@ -248,7 +261,7 @@ const NODES: Record<string, NodeHandler> = {
 	// \textbackslash{}eg. a 'string' AST node never contains an unescaped special to begin with.
 	citation(node) {
 		const key = node.textContent;
-		const variant = String(node.attrs.variant ?? 'autocite');
+		const variant = String(node.attrs.variant ?? 'cite');
 		const pre = node.attrs.prenote ? String(node.attrs.prenote) : '';
 		const post = node.attrs.postnote ? String(node.attrs.postnote) : '';
 		const NO_NOTES = new Set(['supercite', 'citeauthor', 'citeyear']); // don't take [pre][post]
@@ -257,7 +270,11 @@ const NODES: Record<string, NodeHandler> = {
 	},
 
 	// preserve the original reference command so the output matches the user's preamble
-	ref: (node) => `\\${String(node.attrs.command ?? 'autoref')}{${node.textContent}}`,
+	ref: (node) => `\\${String(node.attrs.command ?? 'ref')}{${node.textContent}}`,
+
+	// back exactly where it stood: a \label names whichever counter was last incremented, so its
+	// position IS its meaning, and moving it would silently repoint it
+	label: (node) => `\\label{${String(node.attrs.name ?? '')}}`,
 
 	image(node) {
 		const numbered = node.attrs.numbered !== false;
@@ -379,6 +396,19 @@ export function serializeToLatex(doc: Node): string {
  */
 export function serializeToLatexDetailed(doc: Node): DocSerializeResult {
 	return serializeDocChildrenDetailed(doc);
+}
+
+/** Nothing but labels (and whitespace) - the paragraph the importer makes for a \label sitting on
+ *  its own line under a heading. */
+function isLabelOnlyParagraph(node: Node): boolean {
+	let sawLabel = false;
+	let sawOther = false;
+	node.forEach((c) => {
+		if (c.type.name === 'label') sawLabel = true;
+		else if (c.isText) sawOther ||= (c.text ?? '').trim() !== '';
+		else sawOther = true;
+	});
+	return sawLabel && !sawOther;
 }
 
 function isEmptyParagraph(node: Node): boolean {

@@ -12,13 +12,19 @@ import { mathBodyRawSource } from './origCapture';
 import { nodeRawSource } from './origCapture';
 
 export function latexLigaturesToUnicode(text: string): string {
-	return text
-		.replace(/---/g, '—') // em-dash
-		.replace(/--/g, '–') // en-dash
-		.replace(/``/g, '“')
-		.replace(/''/g, '”')
-		.replace(/`/g, '‘')
-		.replace(/'/g, '’');
+	return (
+		text
+			.replace(/---/g, '—') // em-dash
+			.replace(/--/g, '–') // en-dash
+			.replace(/``/g, '“')
+			.replace(/''/g, '”')
+			.replace(/`/g, '‘')
+			.replace(/'/g, '’')
+			// a bare ~ means exactly one thing in LaTeX source, so this needs no context test. the
+			// macroHandlers entry keyed '~' never fired: unified-latex emits a tie as a STRING node,
+			// never a macro, which is why ties reached the editor as visible tildes
+			.replace(/~/g, ' ')
+	);
 }
 
 /** Apply ligatures to ordinary prose text nodes (not \texttt/code, where -- and `` are literal). */

@@ -3,6 +3,8 @@
 	import type { EditorView } from 'prosemirror-view';
 	import { AlertCircle, Link2 } from '@lucide/svelte';
 	import { refUpdateTrigger } from './refUpdateStore';
+	import { refText } from './refText';
+	import { sectionNumbers } from '$lib/languages/latex/visual/extensions/label/sectionNumbers';
 
 	let {
 		node,
@@ -17,14 +19,26 @@
 	const label = $derived(node.textContent);
 
 	const refType = $derived(node.attrs?.refType || 'reference');
-	// general refs (and \pageref) have no countable target we can resolve, so show the label
-	// itself as a neutral chip instead of a "Type N" number, and never flag it as missing
-	const isGeneral = $derived(refType === 'reference' || refType === 'page');
+	const command = $derived(String(node.attrs?.command ?? 'ref'));
+
+	// a standalone \label - the one after a \section - now resolves too, which is what turned
+	// "Section sec:bert" into "Section 3.1"
+	const sectionNo = $derived.by(() => {
+		void updateTrigger;
+		void refUpdateTrigger.current;
+		return sectionNumbers(view.state.doc).get(label);
+	});
+
+	// nothing countable to point at: show the label itself as a neutral chip rather than a number
+	// we do not have, and never flag it as missing
+	const isGeneral = $derived(refType === 'reference' && sectionNo == null);
 
 	const labelExists = $derived.by(() => {
 		// void reads register reactivity on both triggers
 		void updateTrigger;
 		void refUpdateTrigger.current;
+
+		if (sectionNo != null) return true;
 
 		let exists = false;
 		const state = view.state;
@@ -56,6 +70,7 @@
 		void updateTrigger;
 		void refUpdateTrigger.current;
 
+		if (sectionNo != null) return sectionNo;
 		if (!labelExists) return '?';
 
 		const state = view.state;
@@ -107,18 +122,7 @@
 		return targetNum || '?';
 	});
 
-	const displayPrefix = $derived.by(() => {
-		switch (refType) {
-			case 'figure':
-				return 'Figure';
-			case 'table':
-				return 'Table';
-			case 'equation':
-				return 'Equation';
-			default:
-				return 'Table';
-		}
-	});
+	const shown = $derived(refText(command, targetNumber));
 
 	function handleClick(e: MouseEvent) {
 		e.preventDefault();
@@ -149,9 +153,9 @@
 		<span>{label}</span>
 	{:else if labelExists}
 		<Link2 class="h-3 w-3" />
-		<span>{displayPrefix} {targetNumber}</span>
+		<span>{shown}</span>
 	{:else}
 		<AlertCircle class="h-3 w-3" />
-		<span>{displayPrefix} {targetNumber}</span>
+		<span>{shown}</span>
 	{/if}
 </button>

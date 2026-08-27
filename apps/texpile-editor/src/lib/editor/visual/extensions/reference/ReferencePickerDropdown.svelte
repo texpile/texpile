@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BookOpen, Hash, Image, Table } from '@lucide/svelte';
+	import { BookOpen, Hash, Heading, Image, Table } from '@lucide/svelte';
 	import type { ReferenceItem } from './referenceManagerPlugin';
 
 	let {
@@ -24,6 +24,8 @@
 				return Image;
 			case 'table':
 				return Table;
+			case 'section':
+				return Heading;
 			default:
 				return BookOpen;
 		}

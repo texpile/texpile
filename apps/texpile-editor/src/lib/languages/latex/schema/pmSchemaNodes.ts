@@ -1,5 +1,6 @@
 import { citationNodeSpec } from '$lib/languages/latex/visual/extensions/citation/citationSchema';
 import { refNodeSpec } from '$lib/languages/latex/visual/extensions/ref/refSchema';
+import { labelNodeSpec } from '$lib/languages/latex/visual/extensions/label/labelSchema';
 import { createListSpec } from 'prosemirror-flat-list';
 import { imageNodes, tableFamilyNodes } from './pmSchemaFloatNodes';
 import type { NodeSpec, DOMOutputSpec } from 'prosemirror-model';
@@ -295,6 +296,7 @@ export const nodes = {
 	} as NodeSpec,
 	citation: citationNodeSpec,
 	ref: refNodeSpec,
+	label: labelNodeSpec,
 
 	// caption + table + optional notes; header rows/columns are prosemirror-tables' native
 	// table_header nodes

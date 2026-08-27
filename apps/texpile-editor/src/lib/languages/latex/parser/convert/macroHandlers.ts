@@ -13,6 +13,7 @@ import {
 	type ConversionOptions
 } from '../builders';
 import { convertNodesToInline } from './inlineConvert';
+import { plainArgText } from './plainArgText';
 
 export type MacroHandler = (macro: Macro, ctx: ConversionContext) => PmNode[] | null;
 
@@ -118,20 +119,18 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	'{': (_m, ctx) => textNodes('{', ctx.marks.length > 0 ? ctx.marks : null),
 	'}': (_m, ctx) => textNodes('}', ctx.marks.length > 0 ? ctx.marks : null),
 	textbackslash: (_m, ctx) => textNodes('\\', ctx.marks.length > 0 ? ctx.marks : null),
-	'~': (_m, ctx) => textNodes('\u00A0', ctx.marks.length > 0 ? ctx.marks : null),
+	// no '~' entry: a tie is a STRING node in unified-latex, never a macro, so one here could never
+	// fire. it is converted with the other ligatures, in latexLigaturesToUnicode.
 	ldots: (_m, ctx) => textNodes('…', ctx.marks.length > 0 ? ctx.marks : null),
 	dots: (_m, ctx) => textNodes('…', ctx.marks.length > 0 ? ctx.marks : null),
 	textendash: (_m, ctx) => textNodes('–', ctx.marks.length > 0 ? ctx.marks : null),
 	textemdash: (_m, ctx) => textNodes('—', ctx.marks.length > 0 ? ctx.marks : null),
 
-	quad: (_m, ctx) => textNodes('  ', ctx.marks.length > 0 ? ctx.marks : null),
-	qquad: (_m, ctx) => textNodes('    ', ctx.marks.length > 0 ? ctx.marks : null),
-	',': (_m, ctx) => textNodes(' ', ctx.marks.length > 0 ? ctx.marks : null), // thin space
-	';': (_m, ctx) => textNodes(' ', ctx.marks.length > 0 ? ctx.marks : null), // medium space
-	':': (_m, ctx) => textNodes(' ', ctx.marks.length > 0 ? ctx.marks : null), // thick space
-	'!': () => null, // negative thin space
-	// spacing commands (\vspace, \hspace, \vfill, ...) are deliberately NOT handled here: they
-	// affect layout, so they fall through to raw inline_latex and round-trip verbatim.
+	// \, \; \: \! \quad \qquad are NOT handled, for the same reason \vspace and \hspace are not:
+	// they are spacing, and no plain space says what they say. Mapping them threw the distinction
+	// away for good - \, collapsed to a space, so 5\,kg saved back as 5 kg, and \! was dropped
+	// outright. As raw chips they round-trip verbatim. Math is unaffected either way: it keeps its
+	// own source, so \int f\,dx was never at risk.
 	indent: () => null, // a leading indent the editor models implicitly; no visible token
 
 	// size/series/shape switches are NOT dropped either: they fall through to raw, and a {...}
@@ -140,8 +139,16 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	defbibheading: () => null,
 	addbibresource: () => null,
 
-	// NB: no `label` handler: table_wrapper/figure/block_math capture their own labels; any other
-	// \label falls through to raw so it's preserved (a dropped label silently breaks \ref/\cref).
+	// table_wrapper/figure/block_math capture their own labels before this is reached, so a \label
+	// arriving here is a standalone one - after a \section, an \item, a theorem. It becomes a chip
+	// in place; a name with structure in it keeps its source, since the attr could only flatten it.
+	label: (macro) => {
+		const braces = (macro.args ?? []).filter((a) => a.openMark === '{');
+		const name = plainArgText(braces[braces.length - 1]);
+		if (name) return [buildNode('label', { name })];
+		return [buildNode('inline_latex', null, [textNode(printRaw(macro))])];
+	},
+
 	def: () => null, // \def\x{...} has no safe arg signature yet, leave for a follow-up
 	let: () => null,
 	ifdefempty: () => null,
@@ -163,21 +170,22 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	},
 
 	// the original command is carried through (createCitation reads macro.content) so
-	// \citep/\citet/... round-trip instead of collapsing to \autocite.
+	// \citep/\citet/... round-trip instead of collapsing to \autocite. All of these put the
+	// citation where they stand; \footcite does NOT (it moves it into a footnote), so it is left
+	// raw rather than drawn inline, where it would claim a position it does not occupy.
 	cite: (macro) => createCitation(macro),
 	citep: (macro) => createCitation(macro),
 	citet: (macro) => createCitation(macro),
 	parencite: (macro) => createCitation(macro),
 	textcite: (macro) => createCitation(macro),
 	autocite: (macro) => createCitation(macro),
-	footcite: (macro) => createCitation(macro),
 
+	// Only the two whose output we can actually compute. \autoref and \cref generate their own
+	// word from \figurename or cleveref's \crefname, both subject to package options and babel's
+	// language, and \pageref needs a page number that only exists after layout. A chip for those
+	// could only ever show a guess, so they stay raw and say exactly what the source says.
 	ref: (macro) => createRef(macro, null),
 	eqref: (macro) => createRef(macro, 'equation'),
-	pageref: (macro) => createRef(macro, 'page'),
-	autoref: (macro) => createRef(macro, null),
-	cref: (macro) => createRef(macro, null),
-	Cref: (macro) => createRef(macro, null),
 
 	// every \vspace round-trips verbatim as a raw chip, including \vspace{\baselineskip} (no
 	// longer the editor's blank-line protocol; one someone typed is real spacing).
@@ -290,9 +298,8 @@ export function createRef(macro: Macro, refType: string | null): PmNode[] {
 		}
 	}
 
-	// keep the original command (ref/eqref/cref/...) so it round-trips instead of normalising
-	// to \autoref.
-	const command = typeof macro.content === 'string' && macro.content ? macro.content : 'autoref';
+	// keep the original command (ref/eqref) so it round-trips instead of being normalised
+	const command = typeof macro.content === 'string' && macro.content ? macro.content : 'ref';
 	// unknown target kind: the general 'reference' type
 	return [buildNode('ref', { refType: kind ?? 'reference', command }, label ? [textNode(label)] : null)];
 }

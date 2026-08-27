@@ -25,12 +25,6 @@ export const labelStore = box<string[]>([]);
 export const filePathStore = box<string[]>([]);
 export const editorConfigStore = box<EditorConfiguration | null>(null);
 
-type CitationVariant = {
-	value: string; // e.g. "cite", "autocite", "parencite"
-	label: string; // e.g. "Numbered", "Parenthetical"
-	desc: string; // e.g. "[1], [2]", "(Author Year)"
-};
-
 export type TemplateFeatures = {
 	citations: boolean;
 	tableCaption: boolean;
@@ -38,7 +32,10 @@ export type TemplateFeatures = {
 	tableHeaderRow?: boolean; // false hides the "Column headers (first row)" toggle
 	tableHeaderColumn?: boolean; // false hides the "Row labels (first column)" toggle
 	columnSpanningFigures: boolean; // true shows the "Span columns" toggle for figures/tables
-	citationVariants?: CitationVariant[]; // undefined = default biblatex options
+	// citation commands the open document can compile, from its preamble (citationVariantsFor).
+	// Names only: the form owns the wording, so a language change is picked up without a reparse.
+	// undefined = no preamble seen (an included chapter), so the form narrows nothing.
+	citationVariants?: string[];
 	highlight?: boolean; // false: highlight won't appear in the final document (user sees warning)
 	textColor?: boolean; // false: text color won't appear in the final document (user sees warning)
 };

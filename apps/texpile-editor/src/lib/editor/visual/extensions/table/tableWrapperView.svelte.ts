@@ -2,24 +2,16 @@ import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
 import TableWrapperComponent from './TableWrapperComponent.svelte';
+import { labelTaken } from '$lib/editor/visual/labelTaken';
+import { repointRefs } from '$lib/editor/visual/repointRefs';
 
 /** which markup language the wrapper edits; typst hides every LaTeX-only control
  * (notes, colspec model, row rules, spanning) and never writes tex concepts into the doc. */
 export type TableDialect = 'latex' | 'typst';
 
 function isLabelDuplicate(view: EditorView, label: string | null, currentPos: number): boolean {
-	if (!label) return false;
-
-	let isDuplicate = false;
-	view.state.doc.descendants((node, pos) => {
-		if (node.type.name === 'table_wrapper' && pos !== currentPos) {
-			if (node.attrs.label === label) {
-				isDuplicate = true;
-				return false;
-			}
-		}
-	});
-	return isDuplicate;
+	// against every anchor, not only other tables: a name shared with a figure is just as ambiguous
+	return labelTaken(view.state.doc, label ?? '', currentPos);
 }
 
 function getTableNumber(view: EditorView, pos: number): number {
@@ -101,16 +93,9 @@ function buildTableWrapperView(dialect: TableDialect, node: Node, view: EditorVi
 				...currentNode.attrs,
 				...attrs
 			});
-			// typst: renaming the label follows every @ref chip pointing at it, in the same
-			// transaction (one undo step). All steps are attr-only, so positions stay valid.
-			const oldLabel = currentNode.attrs.label;
-			if (dialect === 'typst' && 'label' in attrs && attrs.label !== oldLabel && oldLabel && attrs.label) {
-				view.state.doc.descendants((n, p) => {
-					if (n.type.name === 'typ_ref' && n.attrs.target === String(oldLabel)) {
-						tr.setNodeMarkup(p, undefined, { target: String(attrs.label) });
-					}
-				});
-			}
+			// renaming the label follows every reference to it, in the same transaction (one undo
+			// step). Both dialects: a \ref left behind still compiles, resolving to ??.
+			if ('label' in attrs) repointRefs(tr, view.state.doc, String(currentNode.attrs.label ?? ''), String(attrs.label ?? ''));
 			view.dispatch(tr);
 		}
 	}

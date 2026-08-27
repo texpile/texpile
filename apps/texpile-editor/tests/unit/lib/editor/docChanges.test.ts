@@ -179,7 +179,12 @@ describe('docChanges', () => {
 
 	// a raw island IS rendered - the LaTeX is its content - so the change lands on the changed key
 	it('marks a change inside a raw island, on the part that changed', () => {
-		expect(added('A paragraph.\n\n\\label{sec:a}', 'A paragraph.\n\n\\label{sec:b}')).toEqual(['b']);
+		expect(added('A paragraph.\n\n\\unmodelled{sec:a}', 'A paragraph.\n\n\\unmodelled{sec:b}')).toEqual(['b']);
+	});
+
+	// a label keeps its name in an attr, so there is no text range to tint - as with a citation
+	it('marks a renamed label as a node', () => {
+		expect(markedNodes('A paragraph.\n\n\\label{sec:a}', 'A paragraph.\n\n\\label{sec:b}')).toEqual(['label']);
 	});
 
 	it('does not mistake reflowed source for an edit', () => {

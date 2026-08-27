@@ -8,7 +8,8 @@ export const citationNodeSpec: NodeSpec = {
 	attrs: {
 		prenote: { default: '' },
 		postnote: { default: '' },
-		variant: { default: 'autocite' }
+		// \cite is the one spelling every bibliography package defines; \autocite is biblatex-only
+		variant: { default: 'cite' }
 	},
 	toDOM: (node) => [
 		'footnote',

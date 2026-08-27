@@ -2,6 +2,7 @@
 // and equation in the open document, and the text search across them
 import type { EditorView } from 'prosemirror-view';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
+import { sectionNumbers } from '$lib/languages/latex/visual/extensions/label/sectionNumbers';
 
 // table/figure/equation shapes share these; the filter reads the per-kind text field (caption/alt/content)
 export type ReferenceItemMeta = {
@@ -16,12 +17,41 @@ export type ReferenceItemMeta = {
 };
 
 export type ReferenceItem = {
-	type: 'bibliography' | 'equation' | 'figure' | 'table';
+	type: 'bibliography' | 'equation' | 'figure' | 'table' | 'section';
 	id: string;
 	displayText: string;
 	subtitle?: string;
 	payload: BiblatexReference | ReferenceItemMeta;
 };
+
+/** Every standalone \label that anchors a heading, so a section can be referenced from the menu
+ *  the way a figure already could. Labels with no number - inside a list - are not offered: the
+ *  chip could not say what they point at. */
+export function extractSectionReferences(view: EditorView): ReferenceItem[] {
+	const numbers = sectionNumbers(view.state.doc);
+	if (numbers.size === 0) return [];
+
+	const sections: ReferenceItem[] = [];
+	let heading = '';
+	view.state.doc.descendants((node, pos) => {
+		if (node.type.name === 'heading') {
+			heading = node.textContent;
+			return false;
+		}
+		if (node.type.name !== 'label') return;
+		const label = String(node.attrs.name ?? '');
+		const number = numbers.get(label);
+		if (!number) return;
+		sections.push({
+			type: 'section',
+			id: label,
+			displayText: `${number} ${heading}`.trim(),
+			subtitle: label,
+			payload: { label, number: 0, position: pos, section: heading }
+		});
+	});
+	return sections;
+}
 
 export function convertBibliographyToReferenceItems(citations: BiblatexReference[]): ReferenceItem[] {
 	return citations.map((citation) => ({
@@ -265,6 +295,9 @@ export function filterReferences(items: ReferenceItem[], query: string): Referen
 				content.toLowerCase().includes(searchTerm) ||
 				item.id.toLowerCase().includes(searchTerm)
 			);
+		} else if (item.type === 'section') {
+			// the heading's own words are already in displayText, next to its number
+			return item.displayText.toLowerCase().includes(searchTerm) || item.id.toLowerCase().includes(searchTerm);
 		}
 		return false;
 	});

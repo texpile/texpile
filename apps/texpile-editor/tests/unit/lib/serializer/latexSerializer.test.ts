@@ -164,8 +164,10 @@ describe('citation / ref / image', () => {
 			'\\cite[see][p. 5]{smith2020}'
 		);
 	});
-	it('ref → autoref', () => {
-		expect(serializeToLatex(doc(p(N.ref.create({ refType: 'figure' }, tx('fig:1')))))).toContain('\\autoref{fig:1}');
+	// a node with no command carries the schema default, and that has to be a command the parser
+	// reads back - \autoref is no longer one of those, and needs hyperref besides
+	it('ref → ref', () => {
+		expect(serializeToLatex(doc(p(N.ref.create({ refType: 'figure' }, tx('fig:1')))))).toContain('\\ref{fig:1}');
 	});
 	it('image → figure with includegraphics + label', () => {
 		// serialize the image node directly (sidesteps inline/block doc placement)

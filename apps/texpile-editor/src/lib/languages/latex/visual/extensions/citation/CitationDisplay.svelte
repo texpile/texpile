@@ -3,6 +3,7 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { splitCitationKeys } from './citationKeys';
+	import { citationText } from './citationText';
 	import CitationEditForm from './CitationEditForm.svelte';
 
 	let {
@@ -27,19 +28,14 @@
 		const keys = splitCitationKeys(node.textContent);
 		if (!keys.length) return `(${node.textContent} not found)`;
 
-		const text = keys
-			.map((key) => {
-				const reference = references.find((ref) => ref.key === key);
-				if (!reference) return keys.length === 1 ? `${key} not found` : key;
-				return `${reference.author} ${reference.year || reference.date?.slice(0, 4) || 'n.d.'}`;
-			})
-			.join('; ');
+		const works = keys.map((key) => {
+			const reference = references.find((ref) => ref.key === key);
+			if (!reference) return { unresolved: keys.length === 1 ? `${key} not found` : key };
+			return { author: String(reference.author), year: reference.year || reference.date?.slice(0, 4) || 'n.d.' };
+		});
 
-		const { prenote, postnote } = node.attrs;
-		if (prenote && postnote) return `(${prenote}, ${text}, ${postnote})`;
-		if (prenote) return `(${prenote}, ${text})`;
-		if (postnote) return `(${text}, ${postnote})`;
-		return `(${text})`;
+		const { prenote, postnote, variant } = node.attrs;
+		return citationText(String(variant ?? 'cite'), works, String(prenote ?? ''), String(postnote ?? ''));
 	});
 
 	const isValid = $derived.by(() => {

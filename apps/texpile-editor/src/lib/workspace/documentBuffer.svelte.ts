@@ -10,6 +10,8 @@ import { serializeMarkdownFile } from '$lib/languages/markdown/visual/roundtrip'
 import { serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { replacePreambleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
 import { basename, relativeTo, type Eol } from '$lib/workspace/fileSystem';
+import { citationVariantsFor } from '$lib/languages/latex/visual/extensions/citation/citationVariantsFor';
+import { templateFeaturesStore } from '$lib/stores/editorStore';
 import type { Node as PMNode } from 'prosemirror-model';
 
 export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
@@ -148,6 +150,12 @@ export class DocumentBuffer {
 		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
 		this.visualDoc = parsed.doc;
 		this.lastDoc = parsed.doc;
+		// the citation menu offers what this document's packages define, so it cannot put an
+		// undefined command in the source. Merged, not replaced: the other features have owners.
+		templateFeaturesStore.current = {
+			...templateFeaturesStore.current,
+			citationVariants: citationVariantsFor(parsed.preamble)
+		};
 	}
 
 	/** a visual edit serializes straight into texSource, then saves */

@@ -28,6 +28,7 @@ import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tabl
 import { search } from 'prosemirror-search';
 import { CitationView } from '$lib/languages/latex/visual/extensions/citation/citationView.svelte';
 import { RefView } from '$lib/languages/latex/visual/extensions/ref/refView.svelte';
+import { LabelView } from '$lib/languages/latex/visual/extensions/label/labelView.svelte';
 import { createRefUpdatePlugin } from '$lib/languages/latex/visual/extensions/ref/refUpdatePlugin';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
@@ -184,6 +185,7 @@ export function latexNodeViews(imageDir: string): NonNullable<EditorProps['nodeV
 		environment: environmentView,
 		table_wrapper: tableWrapperView,
 		citation: (node, view, getPos) => new CitationView(node, view, getPos as () => number),
-		ref: (node, view) => new RefView(node, view)
+		ref: (node, view) => new RefView(node, view),
+		label: (node, view, getPos) => new LabelView(node, view, getPos as () => number)
 	};
 }
