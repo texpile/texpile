@@ -2,8 +2,8 @@
 // imageplugin.svelte (Svelte + document at module load), fatal for the parser Web Worker
 import { updateImageNode, type SchemaImageSettings } from '$lib/editor/visual/extensions/image/updateImageNode';
 import { Schema } from 'prosemirror-model';
+import { baseMarks as marks } from '$lib/editor/visual/schema/basePMSchema';
 import { nodes } from './pmSchemaNodes';
-import { marks } from './pmSchemaMarks';
 
 export { nodes, marks };
 

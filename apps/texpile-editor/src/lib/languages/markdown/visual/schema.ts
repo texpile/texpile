@@ -1,7 +1,6 @@
-// The markdown editor's OWN schema. Shared node shapes are picked from the tex schema's spec
-// LITERALS (single source of truth, dependency pointing md -> tex only), markdown-specific
-// deviations are declared HERE as overrides — the tex schema itself stays untouched:
-//   - heading accepts levels 1-6 from the DOM (markdown h4-h6; tex caps at 3)
+// The markdown editor's OWN schema. Shared node shapes are picked from the base schema's spec
+// LITERALS (single source of truth), markdown-specific deviations are declared HERE as
+// overrides — the base itself stays untouched:
 //   - raw_latex / inline_latex carry `lang` ('latex' | 'html' | 'markdown') for the raw islands
 //   - an `s` (strikethrough) mark for ~~text~~
 // A separate Schema object keeps the editors fully independent: an md doc physically cannot
@@ -9,7 +8,7 @@
 // Nodes/marks from different Schema objects must never mix in one document.
 import { updateImageNode, type SchemaImageSettings } from '$lib/editor/visual/extensions/image/updateImageNode';
 import { Schema, type NodeSpec, type MarkSpec } from 'prosemirror-model';
-import { nodes as texNodes, marks as texMarks } from '$lib/languages/latex/schema/latexPMSchema';
+import { baseNodes, baseMarks } from '$lib/editor/visual/schema/basePMSchema';
 
 // mirrors schema.ts: built by hand because the imageplugin.svelte settings creators pull in the DOM (fatal for
 // the parser worker), and the image node must stay a block figure
@@ -43,18 +42,14 @@ const MD_NODES = [
 
 const MD_MARKS = ['link', 'em', 'strong', 'code'] as const;
 
-const base = texNodes as Record<string, NodeSpec>;
+const base = baseNodes as Record<string, NodeSpec>;
 const nodes: Record<string, NodeSpec> = {};
 for (const name of MD_NODES) nodes[name] = base[name];
 
-// overrides build NEW spec objects — mutating the imported literals would leak into the tex schema
-nodes.heading = {
-	...base.heading,
-	parseDOM: [1, 2, 3, 4, 5, 6].map((level) => ({ tag: `h${level}`, attrs: { level } }))
-};
+// overrides build NEW spec objects — mutating the imported literals would leak into every dialect
 // a code block created without attrs (shared toolbar button, keybind) must be a FENCE here, not
 // tex's verbatim: fences take an info string, so the language picker works on every md block
-// base attrs first: ORIG_BLOCKS (schema.ts) adds `orig` to code_block, and replacing attrs
+// base attrs first: ORIG_BLOCKS (baseNodes.ts) adds `orig` to code_block, and replacing attrs
 // wholesale dropped it, so a fence never counted as pristine and always regenerated
 nodes.code_block = {
 	...base.code_block,
@@ -75,7 +70,7 @@ nodes.inline_latex = {
 };
 
 const marks: Record<string, MarkSpec> = {};
-for (const name of MD_MARKS) marks[name] = (texMarks as Record<string, MarkSpec>)[name];
+for (const name of MD_MARKS) marks[name] = (baseMarks as Record<string, MarkSpec>)[name];
 marks.s = {
 	parseDOM: [{ tag: 's' }, { tag: 'strike' }, { tag: 'del' }, { style: 'text-decoration=line-through' }],
 	toDOM() {
@@ -83,7 +78,7 @@ marks.s = {
 	}
 } as MarkSpec;
 
-// two-pass, same as schema.ts: updateImageNode needs the node present in an OrderedMap first
+// two-pass, same as latexPMSchema.ts: updateImageNode needs the node present in an OrderedMap first
 const tempschema = new Schema({ nodes, marks });
 const imageNodes = updateImageNode(tempschema.spec.nodes, schemaImageSettings);
 

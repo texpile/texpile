@@ -4,7 +4,7 @@ const emDom: DOMOutputSpec = ['em', 0],
 	strongDom: DOMOutputSpec = ['strong', 0],
 	codeDom: DOMOutputSpec = ['code', 0];
 
-export const marks = {
+export const baseMarks = {
 	link: {
 		attrs: {
 			href: {},

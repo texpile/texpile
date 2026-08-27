@@ -1,14 +1,14 @@
 // The Typst visual editor's OWN schema, built the mdSchema way: shared node shapes are picked
-// from the tex schema's spec LITERALS (single source of truth, dependency pointing typst -> tex
-// only), Typst-specific deviations are declared HERE as overrides. A separate Schema object keeps
-// the editors fully independent — a Typst doc physically cannot contain a citation/environment
-// node, and Typst UI can never dispatch tex-only mark types. Nodes/marks from different Schema
-// objects must never mix in one document.
+// from the base schema's spec LITERALS (single source of truth), Typst-specific deviations are
+// declared HERE as overrides. A separate Schema object keeps the editors fully independent — a
+// Typst doc physically cannot contain a citation/environment node, and Typst UI can never
+// dispatch tex-only mark types. Nodes/marks from different Schema objects must never mix in one
+// document.
 //
 // Deliberately DOM-import-free beyond prosemirror-model: the parse worker loads this module.
 import { updateImageNode, type SchemaImageSettings } from '$lib/editor/visual/extensions/image/updateImageNode';
 import { Schema, type NodeSpec, type MarkSpec } from 'prosemirror-model';
-import { nodes as texNodes, marks as texMarks } from '$lib/languages/latex/schema/latexPMSchema';
+import { baseNodes, baseMarks } from '$lib/editor/visual/schema/basePMSchema';
 
 // mirrors mdSchema: built by hand because the imageplugin.svelte settings creators pull in the DOM (fatal for a
 // worker), and the image node must stay a block figure
@@ -51,19 +51,14 @@ const TYP_NODES = [
 // #highlight - the plain one-content-argument forms; anything fancier stays a raw chip
 const TYP_MARKS = ['link', 'em', 'strong', 'code', 'u', 'sup', 'sub', 'textcolor', 'highlight'] as const;
 
-const base = texNodes as Record<string, NodeSpec>;
+const base = baseNodes as Record<string, NodeSpec>;
 const nodes: Record<string, NodeSpec> = {};
 for (const name of TYP_NODES) nodes[name] = base[name];
 
-// overrides build NEW spec objects — mutating the imported literals would leak into the tex schema
-// Typst headings nest arbitrarily; accept h1-h6 from the DOM (tex caps at 3)
-nodes.heading = {
-	...base.heading,
-	parseDOM: [1, 2, 3, 4, 5, 6].map((level) => ({ tag: `h${level}`, attrs: { level } }))
-};
+// overrides build NEW spec objects — mutating the imported literals would leak into every dialect
 // a code block created without attrs (shared toolbar button, keybind) must be a FENCE here, not
 // tex's verbatim: typst raw fences take an info string, so the language picker works everywhere
-// Spread the base attrs first. ORIG_BLOCKS (schema.ts) adds `orig` to code_block's spec, and
+// Spread the base attrs first. ORIG_BLOCKS (baseNodes.ts) adds `orig` to code_block's spec, and
 // replacing attrs wholesale silently dropped it - so a fence could never be recognised as pristine
 // and always regenerated, which forced a blank line between it and its neighbour. `#set page(..)`
 // directly above a ```` fence came back with a blank line inserted on every save.
@@ -142,9 +137,9 @@ nodes.term_item = {
 };
 
 const marks: Record<string, MarkSpec> = {};
-for (const name of TYP_MARKS) marks[name] = (texMarks as Record<string, MarkSpec>)[name];
+for (const name of TYP_MARKS) marks[name] = (baseMarks as Record<string, MarkSpec>)[name];
 
-// two-pass, same as schema.ts/mdSchema: updateImageNode needs the node present in an OrderedMap
+// two-pass, same as latexPMSchema/mdSchema: updateImageNode needs the node present in an OrderedMap
 // first. numbered stays true (typst figures number themselves), unlike markdown's false.
 const tempschema = new Schema({ nodes, marks });
 const imageNodes = updateImageNode(tempschema.spec.nodes, schemaImageSettings);

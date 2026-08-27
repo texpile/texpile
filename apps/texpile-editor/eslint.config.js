@@ -20,12 +20,15 @@ const packagePrivatePatterns = [
 	{
 		group: ['**/languages/bib/*', '!**/languages/bib/biblatex', '!**/languages/bib/bibtexLanguage'],
 		message: 'bib internals are package-private; import through biblatex.ts or bibtexLanguage.ts'
+	},
+	{
+		group: ['**/editor/visual/schema/*', '!**/editor/visual/schema/basePMSchema'],
+		message: 'base schema internals are package-private; import through basePMSchema.ts'
 	}
 ];
 
-// a language never imports a sibling language; shared code lives in editor/. The two named
-// exceptions are the current shared document model (the latex base schema every dialect derives
-// from) and the per-dialect strip dispatch; both are extraction candidates, not an invitation.
+// a language never imports a sibling language; shared code lives in editor/. The one named
+// exception is the per-dialect strip dispatch, an extraction candidate, not an invitation.
 function languageBoundary(bans) {
 	return {
 		'no-restricted-imports': ['warn', { paths: restrictedImportPaths, patterns: [...packagePrivatePatterns, ...bans, banDesktopOnly] }]
@@ -42,8 +45,7 @@ const banLatex = {
 		'**/languages/latex/source/**',
 		'**/languages/latex/visual/**',
 		'**/languages/latex/intellisense/**',
-		'**/languages/latex/schema/*',
-		'!**/languages/latex/schema/latexPMSchema'
+		'**/languages/latex/schema/**'
 	],
 	message: 'cross-language import; shared code belongs in editor/ (styles.md)'
 };
@@ -206,7 +208,7 @@ export default ts.config(
 	// package-private folders: internals are importable only within their own folder
 	{
 		files: ['src/**'],
-		ignores: ['src/lib/languages/latex/schema/**', 'src/lib/languages/bib/**'],
+		ignores: ['src/lib/languages/latex/schema/**', 'src/lib/languages/bib/**', 'src/lib/editor/visual/schema/**'],
 		rules: {
 			'no-restricted-imports': ['warn', { paths: restrictedImportPaths, patterns: packagePrivatePatterns }]
 		}
