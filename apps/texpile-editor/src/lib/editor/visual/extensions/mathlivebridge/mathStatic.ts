@@ -69,8 +69,7 @@ function scheduleDrain(): void {
 	idle(drain);
 }
 
-function drain(): void {
-	draining = false;
+function drainSlice(budgetMs: number): void {
 	const start = performance.now();
 	// insertion order is document order, since node views are built top-down: typeset what the
 	// reader is nearest to first
@@ -79,8 +78,26 @@ function drain(): void {
 		// dropped from the document, or already upgraded to a live field
 		if (!el.isConnected) continue;
 		typeset(el, latexOf.get(el) ?? '');
-		if (performance.now() - start > SLICE_MS) break;
+		if (performance.now() - start > budgetMs) break;
 	}
+}
+
+function drain(): void {
+	draining = false;
+	drainSlice(SLICE_MS);
+	scheduleDrain();
+}
+
+/**
+ * Typeset now, up to `budgetMs`, rather than waiting for an idle callback.
+ *
+ * For the reveal, and only that: an un-typeset formula is a blank box of about the right size, so a
+ * document shown before the queue has run is one that fills itself in while you watch. Bounded,
+ * because the queue can be the whole document and this runs on the main thread - whatever it does
+ * not reach keeps its place in the idle drain.
+ */
+export function typesetNow(budgetMs: number): void {
+	drainSlice(budgetMs);
 	scheduleDrain();
 }
 

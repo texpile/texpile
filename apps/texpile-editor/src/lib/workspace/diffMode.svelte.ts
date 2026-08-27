@@ -67,7 +67,11 @@ export class DiffMode {
 	async snapshot(): Promise<void> {
 		const path = this.deps.getLoadedPath();
 		if (!path) return;
-		this.modified = this.deps.getWorkingText();
+		// Read now, publish at the end, TOGETHER with the version it is being compared against.
+		// The panel rebuilds on either side changing, so publishing them apart had it diff this
+		// file's working copy against the previous file's baseline, or against none at all - the
+		// whole document reading as changed for the few frames before the other half landed.
+		const working = this.deps.getWorkingText();
 		this.loading = true;
 		this.error = null;
 		this.forgetVersionDoc(); // whatever it held describes the comparison being replaced
@@ -78,11 +82,13 @@ export class DiffMode {
 		if (!res.ok) {
 			this.error = res.reason === 'no-git' ? m.wsview_diff_error_no_git() : (res.error ?? m.wsview_diff_error_default());
 			this.original = '';
+			this.modified = working;
 			this.hasHead = false;
 			return;
 		}
 		this.hasHead = res.hasHead;
 		this.original = res.content ?? '';
+		this.modified = working;
 	}
 
 	private forgetVersionDoc() {

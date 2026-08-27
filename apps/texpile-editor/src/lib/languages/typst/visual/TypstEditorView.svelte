@@ -13,6 +13,7 @@
 	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
 	import { swapParsedDoc } from '$lib/editor/visual/docSwap';
 	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
+	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import ContextMenu from '$lib/editor/visual/toolbar/ContextMenu.svelte';
@@ -119,7 +120,9 @@
 		});
 
 		editorViewStore.current = editorView;
-		editor?.classList?.remove('hidden');
+		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
+		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
+		revealBuiltEditor(editor);
 		editorView.focus();
 		onReady?.();
 	});
@@ -169,7 +172,9 @@
 	});
 </script>
 
-<main bind:this={editor} class="hidden"></main>
+<!-- invisible, not hidden: display:none gives it no box, and an element with no box intersects
+     nothing, so the viewport upgrades could not run until after it was already on screen -->
+<main bind:this={editor} class={BUILDING_CLASS}></main>
 
 <ContextMenu dialect="typst" {onAddComment} {onInsertCitation} />
 

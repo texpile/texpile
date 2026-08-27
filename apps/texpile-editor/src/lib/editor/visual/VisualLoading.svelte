@@ -12,6 +12,7 @@
 	// compositor and keeps moving while the main thread is completely blocked.
 	import { Loader2 } from '@lucide/svelte';
 	import type { ParsePhase } from '$lib/workspace/latexRoundtrip';
+	import { LATE_MS } from '$lib/lateReveal';
 	import { m } from '$lib/paraglide/messages';
 
 	let {
@@ -21,8 +22,8 @@
 		mounting = false
 	}: { phase?: ParsePhase | null; sizeBytes?: number; onUseSource?: () => void; mounting?: boolean } = $props();
 
-	// escalate with the wait instead of flashing the heaviest UI at every switch: most parses
-	// finish inside 300ms and should show nothing at all.
+	// escalate with the wait instead of flashing the heaviest UI at every switch: most parses finish
+	// inside the threshold and should show nothing at all.
 	let stage = $state<'none' | 'spinner' | 'bar'>('none');
 
 	// each phase's floor is the previous phase's ceiling: reaching a real boundary snaps the bar
@@ -45,7 +46,7 @@
 
 	// own effect: a phase change must not re-arm these timers
 	$effect(() => {
-		const toSpinner = setTimeout(() => (stage = 'spinner'), 300);
+		const toSpinner = setTimeout(() => (stage = 'spinner'), LATE_MS);
 		const toBar = setTimeout(() => (stage = 'bar'), 1000);
 		const toSlow = setTimeout(() => (slow = true), 2000);
 		return () => {
@@ -81,6 +82,8 @@
 		{m.wsview_opening()}
 	</div>
 {:else if shown === 'bar'}
+	<!-- reveal-late only while mounting: the parse phases already escalate through their own timers,
+	     and the mount is the one stretch where a timer would not fire (see lateReveal.ts) -->
 	<div class="mx-auto mt-24 flex max-w-sm flex-col items-center px-6 text-center" class:reveal-late={mounting}>
 		<div class="bg-surface-200-800 h-1 w-full overflow-hidden rounded-full">
 			{#if mounting}
@@ -103,25 +106,6 @@
 {/if}
 
 <style>
-	/* The same "nothing below 300 ms" rule the parse phase gets from its timers, done in CSS because
-	   the mount blocks the main thread: a setTimeout armed beforehand would not fire until the block
-	   ended, revealing the bar exactly as it stopped being useful. An animation delay is kept by the
-	   animation timeline instead, so the bar reveals itself mid-block if the block runs long, and is
-	   removed from the DOM still invisible if it does not.
-
-	   This also drops any assumption about how fast the machine is. A slower CPU crosses 300 ms on a
-	   smaller document and gets the bar there; a faster one does not. Nothing to calibrate. */
-	.reveal-late {
-		opacity: 0;
-		animation: reveal-after-delay 180ms ease-out 300ms forwards;
-	}
-
-	@keyframes reveal-after-delay {
-		to {
-			opacity: 1;
-		}
-	}
-
 	/* transform and nothing else: Chromium runs this on the compositor, so it keeps sliding through
 	   the synchronous ProseMirror mount that blocks the main thread. Animating width or left here
 	   would freeze mid-bar and look like a hung app. */

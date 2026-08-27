@@ -92,6 +92,10 @@ html[data-mode='dark'] {
 [data-mode='dark'] .cm-activeLine {
 	background-color: color-mix(in srgb, var(--color-surface-100) 5%, transparent);
 }
+/* Only reaches an editor running drawSelection(), which hides the native caret and draws .cm-cursor
+   in its place. Without it CM's own `&light .cm-content { caret-color: black }` applies instead and
+   nothing here overrides it, because no editor sets EditorView.darkTheme - so every CodeMirror in
+   the app wants drawSelection, the merge view included. */
 [data-mode='dark'] .cm-cursor,
 [data-mode='dark'] .cm-dropCursor {
 	border-left-color: var(--color-surface-100);
@@ -484,6 +488,29 @@ html[data-mode='dark'] .cm-comment-add:hover {
    gap, at heights that move with the view mode and the TOC fraction. */
 .scroll-inset-r {
 	border-right: 3px solid transparent;
+}
+
+/* The visual editor while it builds. VISIBILITY, never display: an element with no box intersects
+   nothing, so display:none blinds the IntersectionObserver that turns the heavy nodes on screen
+   into real ones - guaranteeing the reveal exposes a document still made of stand-ins, chips as
+   plain source and formulas as blank boxes. Keeping the boxes lets that happen while it is still
+   invisible. See revealBuiltEditor.ts, which owns the reveal. */
+.editor-building {
+	visibility: hidden;
+}
+
+/* "Nothing below 300ms" - the whole rule, and the only copy of it. Put this on anything that should
+   stay invisible until the wait is real: a status note, a spinner, a loading bar. lateReveal.ts says
+   why an animation delay rather than a timer, and holds the same threshold for the escalations that
+   have to be driven from JS. The number appears once here and once there; keep them together. */
+.reveal-late {
+	opacity: 0;
+	animation: reveal-late-in 0.2s ease 0.3s forwards;
+}
+@keyframes reveal-late-in {
+	to {
+		opacity: 1;
+	}
 }
 /* CodeMirror builds its own DOM, so its scroller cannot be given the class in markup */
 .cm-scroller {

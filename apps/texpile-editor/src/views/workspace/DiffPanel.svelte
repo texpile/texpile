@@ -5,7 +5,7 @@
 	// back through the buffer's own handler. merge re-diffs as it changes, which is what makes an
 	// editable diff honest.
 	import { onDestroy } from 'svelte';
-	import { EditorView, lineNumbers, keymap } from '@codemirror/view';
+	import { EditorView, lineNumbers, keymap, drawSelection } from '@codemirror/view';
 	import { EditorState, type Extension } from '@codemirror/state';
 	import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 	import { LanguageDescription } from '@codemirror/language';
@@ -20,13 +20,23 @@
 		original?: string;
 		modified?: string;
 		layout?: 'unified' | 'split';
+		/** the version is still being read, so neither side is the pair to build from yet */
+		loading?: boolean;
 		/** set while co-editing: this pane holds plain text, so an edit would be a whole-text replace
 		 *  against a CRDT others are typing into. The Y-bound source editor is where that happens. */
 		readOnly?: boolean;
 		/** the whole text, the shape the buffer's own handler takes */
 		onModifiedInput?: (value: string) => void;
 	};
-	let { filename = '', original = '', modified = '', layout = 'unified', readOnly = false, onModifiedInput }: Props = $props();
+	let {
+		filename = '',
+		original = '',
+		modified = '',
+		layout = 'unified',
+		loading = false,
+		readOnly = false,
+		onModifiedInput
+	}: Props = $props();
 
 	let host = $state<HTMLDivElement>();
 	let current: EditorView | MergeView | null = null;
@@ -82,7 +92,11 @@
 	});
 
 	function sharedExts(): Extension[] {
-		return [lineNumbers(), cmSyntaxHighlight(), langExt, EditorView.lineWrapping];
+		// drawSelection for the CARET, not the selection: without it CodeMirror's base theme keeps the
+		// native one at `caret-color: black`, which nothing overrides because no editor here sets
+		// EditorView.darkTheme - so the caret was invisible on a dark diff. It draws .cm-cursor
+		// instead, which app.css already colours, and brings this pane's selection with it.
+		return [lineNumbers(), drawSelection(), cmSyntaxHighlight(), langExt, EditorView.lineWrapping];
 	}
 
 	/** bytes in git, with nowhere to write back to */
@@ -112,6 +126,11 @@
 		const lay = layout;
 		const lang = langExt; // rebuild when the resolved language arrives
 		if (!host) return;
+		// the version is still being read, so there is no pair to compare yet. Only on the FIRST
+		// build: while a refresh is in flight the previous comparison stays up rather than blinking
+		// out. Without this the panel built an empty merge view the moment the diff opened, and
+		// replaced it a moment later with the real one.
+		if (loading && !modifiedView) return;
 		// an edit flows out to the buffer and a later snapshot brings the same text back
 		if (modifiedView && o === builtOriginal && lay === builtLayout && lang === builtLang && m === modifiedView.state.doc.toString()) {
 			return;

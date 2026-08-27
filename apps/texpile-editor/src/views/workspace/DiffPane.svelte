@@ -56,7 +56,9 @@
 			<span class="text-surface-500 min-w-0 truncate" title={compareRef.hash}>· {compareRef.subject}</span>
 		{/if}
 		{#if fileDeleted}<span class="text-surface-500">· {m.wsview_diff_file_deleted()}</span>
-		{:else if loading}<span class="text-surface-500">· {m.wsview_diff_loading()}</span>
+			<!-- a git read of a local file is usually well under the threshold, and announcing it only
+		     to take it away again is the flash the rule exists to prevent -->
+		{:else if loading}<span class="text-surface-500 reveal-late">· {m.wsview_diff_loading()}</span>
 		{:else if error}<span class="text-error-500 truncate">· {error}</span>
 		{:else if !hasHead}<span class="text-surface-500">· {m.wsview_diff_new_file()}</span>{/if}
 		<div class="ml-auto flex shrink-0 items-center gap-1">
@@ -109,7 +111,7 @@
 	     its scrollbar off the divider lozenge, and the bars above must still reach it -->
 	<div class="scroll-inset-r min-h-0 flex-1 overflow-auto">
 		{#key filename}
-			<DiffPanel {filename} {original} {modified} {layout} {readOnly} {onModifiedInput} />
+			<DiffPanel {filename} {original} {modified} {layout} {loading} {readOnly} {onModifiedInput} />
 		{/key}
 	</div>
 </div>

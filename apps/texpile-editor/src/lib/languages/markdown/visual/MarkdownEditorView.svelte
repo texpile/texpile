@@ -21,6 +21,7 @@
 	import { markdownCopyPlugin } from './clipboard';
 	import { isMac } from '$lib/platform';
 	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
+	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 	import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
@@ -219,7 +220,9 @@
 		});
 
 		editorViewStore.current = editorView;
-		editor?.classList?.remove('hidden');
+		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
+		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
+		revealBuiltEditor(editor);
 		editorView.focus();
 		onReady?.();
 	});
@@ -296,7 +299,9 @@
 	});
 </script>
 
-<main bind:this={editor} class="hidden"></main>
+<!-- invisible, not hidden: display:none gives it no box, and an element with no box intersects
+     nothing, so the viewport upgrades could not run until after it was already on screen -->
+<main bind:this={editor} class={BUILDING_CLASS}></main>
 
 <ContextMenu dialect="markdown" {onAddComment} />
 

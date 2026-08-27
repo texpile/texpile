@@ -112,10 +112,10 @@
 	 *  Deliberately not persisted - it is a view of the templates, not a setting. */
 	let starterLang = $state<'latex' | 'typst'>('latex');
 
-	/** Rendered for the whole build, but it holds itself invisible for the first 300 ms through a CSS
-	 * animation delay (see VisualLoading), so a fast build never flashes a bar. Deliberately not a
-	 * size threshold: that would bake in an assumption about how fast the machine is, and suppress
-	 * the bar on a slow CPU exactly where the wait is worst. */
+	/** Rendered for the whole build, but it holds itself invisible until the wait is real (see
+	 * lateReveal.ts), so a fast build never flashes a bar. Deliberately not a size threshold: that
+	 * would bake in an assumption about how fast the machine is, and suppress the bar on a slow CPU
+	 * exactly where the wait is worst. */
 	const showRenderBar = $derived(!editorReady);
 
 	/** kinds that have a visual (ProseMirror) surface */
@@ -211,9 +211,8 @@
 			{#if fileDeleted}
 				<span class="text-surface-500 min-w-0 truncate">· {m.wsview_diff_file_deleted()}</span>
 			{:else if versionParsing}
-				<!-- the same "nothing below 300ms" rule the editor's own loading bar follows, done with
-				     an animation delay so a parse that lands quickly never flashes anything -->
-				<span class="text-surface-500 note-late min-w-0 truncate">· {m.wsview_diff_finding_changes()}</span>
+				<!-- a parse that lands quickly should flash nothing at all; see lateReveal.ts -->
+				<span class="text-surface-500 reveal-late min-w-0 truncate">· {m.wsview_diff_finding_changes()}</span>
 			{:else if diffVersionUnavailable}
 				<span class="text-surface-500 min-w-0 truncate">· {m.wsview_diff_version_unparsed()}</span>
 			{:else if diffVersionPreamble !== null && docMeta && diffVersionPreamble !== docMeta.preamble}
@@ -392,7 +391,7 @@
 				</div>
 			{:else if activeFilePath.current}
 				<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
-				<div class="text-surface-500 spinner-late mt-12 flex items-center justify-center gap-2 text-sm">
+				<div class="text-surface-500 reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
 					<Loader2 class="size-4 animate-spin" />
 					{m.wsview_opening()}
 				</div>
@@ -402,21 +401,3 @@
 		</div>
 	</div>
 </div>
-
-<style>
-	.spinner-late {
-		opacity: 0;
-		animation: spinner-late-in 0.2s ease 0.15s forwards;
-	}
-	/* 300ms, matching VisualLoading's first step: most parses finish inside it and should show
-	   nothing at all. An animation delay rather than a timer, so nothing has to be armed or cleared. */
-	.note-late {
-		opacity: 0;
-		animation: spinner-late-in 0.2s ease 0.3s forwards;
-	}
-	@keyframes spinner-late-in {
-		to {
-			opacity: 1;
-		}
-	}
-</style>
