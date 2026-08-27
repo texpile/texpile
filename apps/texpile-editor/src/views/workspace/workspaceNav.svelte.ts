@@ -7,7 +7,7 @@ import { updateLayout } from '$lib/storage/layout';
 import { SyncTexNav, sessionRelativeTarget, needsActivate } from '$lib/workspace/syncTexNav';
 import { buildBlockMap, pmPosToSourceOffset, firstWordEndOnLine } from '$lib/editor/visual/sourceMap';
 import { restoreVisualPosition } from '$lib/workspace/visualPositions';
-import { stripTypst } from '$lib/languages/typst/visual/sourceMap';
+import { stripFor } from '$lib/editor/visual/stripFor';
 import { bodyOffsetOf } from '$lib/workspace/latexRoundtrip';
 import { jumpToInclude as jumpToIncludeTarget } from '$lib/workspace/editorCommands';
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
@@ -93,7 +93,7 @@ export class WorkspaceNav {
 			docPositions.set(target, { row: line - 1, column: 0, firstVisibleLine: line });
 			if (target === doc.path) {
 				const v = editorViewStore.current;
-				if (v) restoreVisualPosition(v, target, doc.texSource, this.visBodyOffset(), this.d.kind() === 'typ' ? stripTypst : undefined);
+				if (v) restoreVisualPosition(v, target, doc.texSource, this.visBodyOffset(), stripFor(this.d.kind()));
 			} else if (needsActivate(target)) {
 				openFile(target);
 			}

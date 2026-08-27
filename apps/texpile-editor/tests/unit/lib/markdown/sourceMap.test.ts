@@ -7,7 +7,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Node as PMNode } from 'prosemirror-model';
 import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
-import { stripMarkdown, stripFor } from '$lib/languages/markdown/visual/sourceMap';
+import { stripMarkdown } from '$lib/languages/markdown/visual/sourceMap';
 import { bodyOffsetOf } from '$lib/workspace/latexRoundtrip';
 import { buildBlockMap, pmPosToSourceOffset, sourceOffsetToPmPos } from '$lib/editor/visual/sourceMap';
 
@@ -50,15 +50,6 @@ describe('stripMarkdown', () => {
 		// "target" appears once as prose; the url must not contribute a second
 		const src = 'the target word and [target](https://target.example/target) again';
 		expect(stripMarkdown(src).match(/target/g)?.length).toBe(2); // prose + link caption only
-	});
-});
-
-describe('stripFor', () => {
-	it('selects by dialect and leaves LaTeX on the default', () => {
-		expect(stripFor('markdown')).toBe(stripMarkdown);
-		expect(stripFor('md')).toBe(stripMarkdown);
-		expect(stripFor('latex')).toBeUndefined();
-		expect(stripFor(null)).toBeUndefined();
 	});
 });
 

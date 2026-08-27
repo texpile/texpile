@@ -11,7 +11,7 @@
 	import { applyRemotePatch, normalizeParsedDoc } from './remotePatch';
 	import { computeBlockPatch, protectCaretBlock } from '$lib/editor/visual/blockPatch';
 	import { buildBlockMap, pmPosToSourceOffset, sourceOffsetToPmPos } from '$lib/editor/visual/sourceMap';
-	import { stripFor } from '$lib/languages/markdown/visual/sourceMap';
+	import { stripFor } from '$lib/editor/visual/stripFor';
 	import { bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { spliceDiff, EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/materialize';
 	import { editorViewStore } from '$lib/stores/editorStore';

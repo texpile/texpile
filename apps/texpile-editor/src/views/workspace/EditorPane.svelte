@@ -16,7 +16,7 @@
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { openWorkspaceLink } from '$lib/workspace/openWorkspaceLink';
-	import { stripFor } from '$lib/languages/markdown/visual/sourceMap';
+	import { stripFor } from '$lib/editor/visual/stripFor';
 	import { bodyOffsetOf } from '$lib/workspace/latexRoundtrip';
 	import TabBar from './TabBar.svelte';
 	import EditorToolbarStrip from './EditorToolbarStrip.svelte';

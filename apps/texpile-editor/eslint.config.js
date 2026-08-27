@@ -27,8 +27,7 @@ const packagePrivatePatterns = [
 	}
 ];
 
-// a language never imports a sibling language; shared code lives in editor/. The one named
-// exception is the per-dialect strip dispatch, an extraction candidate, not an invitation.
+// a language never imports a sibling language; shared code lives in editor/, with no exceptions
 function languageBoundary(bans) {
 	return {
 		'no-restricted-imports': ['warn', { paths: restrictedImportPaths, patterns: [...packagePrivatePatterns, ...bans, banDesktopOnly] }]
@@ -58,8 +57,7 @@ const banTypst = {
 		'**/languages/typst/preview/**',
 		'**/languages/typst/source/**',
 		'**/languages/typst/visual/*',
-		'**/languages/typst/visual/extensions/**',
-		'!**/languages/typst/visual/sourceMap'
+		'**/languages/typst/visual/extensions/**'
 	],
 	message: 'cross-language import; shared code belongs in editor/ (styles.md)'
 };

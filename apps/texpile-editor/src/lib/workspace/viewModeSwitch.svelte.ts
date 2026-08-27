@@ -20,7 +20,7 @@ import {
 	resolveVisualAnchor
 } from '$lib/editor/visual/modeSwitchAnchors';
 import { bodyOffsetOf, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
-import { stripFor } from '$lib/languages/markdown/visual/sourceMap';
+import { stripFor } from '$lib/editor/visual/stripFor';
 import { createSourceHistory } from '$lib/workspace/sourceHistory';
 
 /** what callers may ASK for. 'diff' is a command - it opens a comparison tab - not a state. */
