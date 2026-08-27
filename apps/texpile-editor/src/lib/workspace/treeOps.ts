@@ -10,7 +10,7 @@
 //
 // A provider without trash support (a guest session) simply removes and records nothing, so undo is
 // never offered for something that cannot be reversed.
-import { workspaceRoot, activeFilePath, mainFile } from './workspaceStore';
+import { workspaceRoot, activeFilePath, openFile, mainFile } from './workspaceStore';
 import { tabs } from './tabs.svelte';
 import { docPositions } from './docPositions';
 import { joinPath, dirname, basename, samePath, type TreeEntry } from './fileSystem';
@@ -95,7 +95,7 @@ export class TreeOps {
 			this.#recordAdditions([path], m.filehistory_op_create({ name: finalName }));
 			await this.deps.refreshTree();
 			if (name.toLowerCase().endsWith('.bib')) await this.deps.loadRefs(workspaceRoot.current ?? parentDir);
-			if (isTex) activeFilePath.current = path;
+			if (isTex) openFile(path);
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : String(e);
 			toaster.error({
@@ -287,7 +287,7 @@ export class TreeOps {
 		// the open file is gone if it IS this entry, or lives inside this folder
 		if (!!active && (samePath(active, path) || active.startsWith(path + sep))) {
 			this.deps.discardPendingSave(); // don't let a queued autosave write the file back after we delete it
-			activeFilePath.current = null; // clears the editor buffers via the load effect
+			openFile(null); // clears the editor buffers via the load effect
 		}
 		// deleting the main file clears the choice: a pointer at a deleted path fails every
 		// compile lane silently, while a cleared one brings the pick-a-main flow back

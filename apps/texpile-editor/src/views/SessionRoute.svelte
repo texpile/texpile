@@ -7,7 +7,7 @@
 	import { dropGuestTypstLsp } from '$lib/languages/typst/intellisense/guestLspExtension';
 	import SessionJoin from '$lib/collab/SessionJoin.svelte';
 	import WorkspaceView from './workspace/WorkspaceView.svelte';
-	import { workspaceRoot, activeFilePath, fileTree, texFiles } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, activeFilePath, openFile, fileTree, texFiles } from '$lib/workspace/workspaceStore';
 	const joined = $derived(collabGuest.status === 'online' || collabGuest.status === 'reconnecting');
 
 	$effect(() => {
@@ -16,7 +16,7 @@
 			// open the first shared text file so the guest lands on something editable
 			if (!activeFilePath.current) {
 				const first = collabGuest.files.find((f) => f.kind === 'text');
-				if (first) activeFilePath.current = first.rel;
+				if (first) openFile(first.rel);
 			}
 		} else {
 			// left/ended: don't leak session state into a later host workspace
@@ -25,7 +25,7 @@
 				// than leave an editor waiting on a host that is gone
 				dropGuestTypstLsp();
 				workspaceRoot.current = null;
-				activeFilePath.current = null;
+				openFile(null);
 				fileTree.current = [];
 				texFiles.current = [];
 			}

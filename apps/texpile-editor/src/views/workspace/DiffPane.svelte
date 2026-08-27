@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Git-diff view: the status/controls strip above DiffPanel.
-	import { RefreshCw, GitCompare, X, Info, Columns2, Rows2 } from '@lucide/svelte';
+	import { RefreshCw, GitCompare, Info, Columns2, Rows2 } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import DiffPanel from './DiffPanel.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -23,7 +23,6 @@
 		onModifiedInput?: (value: string) => void;
 		onToggleLayout: () => void;
 		onRefresh: () => void;
-		onExit: () => void;
 	};
 	let {
 		filename,
@@ -38,8 +37,7 @@
 		readOnly = false,
 		onModifiedInput,
 		onToggleLayout,
-		onRefresh,
-		onExit
+		onRefresh
 	}: Props = $props();
 </script>
 
@@ -80,16 +78,6 @@
 				aria-label={layout === 'unified' ? m.wsview_side_by_side_label() : m.wsview_inline_label()}
 			>
 				{#if layout === 'unified'}<Columns2 class="size-3.5" />{:else}<Rows2 class="size-3.5" />{/if}
-			</button>
-			<!-- icon-only too, so the bar is three matching controls. Keeps the primary tint on hover:
-			     it is the one that leaves the diff, not another view option. -->
-			<button
-				class="hover:preset-tonal-primary rounded p-0.5"
-				onclick={onExit}
-				title={m.wsview_back_to_editor_title()}
-				aria-label={m.wsview_close_label()}
-			>
-				<X class="size-3.5" />
 			</button>
 		</div>
 	</div>

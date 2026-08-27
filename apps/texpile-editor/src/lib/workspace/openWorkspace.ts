@@ -2,7 +2,7 @@
 import { navigate } from '$lib/router.svelte';
 import { claimWorkspace, dirname, nativeBridge, samePath, scanTexFiles, statFile } from './fileSystem';
 import { latexParserWorker } from './latexParserWorker';
-import { activeFilePath, addRecentFolder, savedLastFile, texFiles, workspaceRoot } from './workspaceStore';
+import { openFile, addRecentFolder, savedLastFile, texFiles, workspaceRoot } from './workspaceStore';
 
 export type BootOpen = { kind: 'file' | 'folder'; path: string };
 
@@ -17,7 +17,7 @@ export function bootOpen(): BootOpen | null {
 function show(root: string): void {
 	workspaceRoot.current = root;
 	texFiles.current = [];
-	activeFilePath.current = null;
+	openFile(null);
 	addRecentFolder(root);
 	navigate('/workspace');
 }
@@ -33,7 +33,7 @@ async function fill(root: string, want: string | null): Promise<void> {
 	// the scan's casing wins where it has the file: the tree matches paths as strings
 	const landing = want && wantExists ? (files.find((f) => samePath(f.path, want))?.path ?? want) : null;
 	texFiles.current = files;
-	activeFilePath.current = landing ?? files[0]?.path ?? null;
+	openFile(landing ?? files[0]?.path ?? null);
 }
 
 /** the launch path: main created this window for this folder, so it is shown without asking */

@@ -131,8 +131,7 @@ export class WorkspaceDoc {
 			void this.diff.original; // the dependency: a new version's bytes start a new parse
 			const kind = this.doc.kind;
 			if (!activeCompare.current || this.modes.mode !== 'visual' || !hasVisualMode(kind)) return;
-			// self-correcting: ensureVersionDoc keys on the text it parsed, so firing early costs one
-			// empty parse and re-runs when the version lands
+			if (this.diff.originalFor !== this.doc.path) return;
 			untrack(() => void this.diff.ensureVersionDoc(kind as 'tex' | 'md' | 'typ'));
 		});
 		// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go

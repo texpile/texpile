@@ -1,7 +1,7 @@
 // Every "jump somewhere" route in the workspace: SyncTeX forward/inverse, the visual-caret
 // source position, include targets, and the PDF pane scroll plumbing.
 import { editorViewStore } from '$lib/stores/editorStore';
-import { activeFilePath } from '$lib/workspace/workspaceStore';
+import { openFile } from '$lib/workspace/workspaceStore';
 import { docPositions } from '$lib/workspace/docPositions';
 import { updateLayout } from '$lib/storage/layout';
 import { SyncTexNav, sessionRelativeTarget, needsActivate } from '$lib/workspace/syncTexNav';
@@ -95,7 +95,7 @@ export class WorkspaceNav {
 				const v = editorViewStore.current;
 				if (v) restoreVisualPosition(v, target, doc.texSource, this.visBodyOffset(), this.d.kind() === 'typ' ? stripTypst : undefined);
 			} else if (needsActivate(target)) {
-				activeFilePath.current = target;
+				openFile(target);
 			}
 			return;
 		}
@@ -117,7 +117,7 @@ export class WorkspaceNav {
 		this.d.modes.mode = 'source';
 		updateLayout({ viewMode: 'source' });
 		this.sourceGotoLine = { line, token: ++this.gotoToken, selectText, path: target };
-		if (needsActivate(target)) activeFilePath.current = target;
+		if (needsActivate(target)) openFile(target);
 	}
 
 	/** a jump asked for THIS file survives a file switch; an older one must not, or every later

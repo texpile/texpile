@@ -5,7 +5,7 @@ import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { normSyncPath } from '$lib/workspace/syncTexNav';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
-import { workspaceRoot, activeCompare } from '$lib/workspace/workspaceStore';
+import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/gitStore';
 import { preferencesOpen } from '$lib/stores/dialogStore';
 import { isDesktop, revealItem, type TreeEntry } from '$lib/workspace/fileSystem';
@@ -158,11 +158,6 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		jumpToFile: (name: string) => d.nav.jumpToInclude(name),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),
 		refreshDiff: () => void toastAfter(m.wsview_toast_diff_refreshed(), () => void d.wsdoc.diff.snapshot()),
-		// leaving a comparison is closing its tab: it is a thing you opened, not a mode you are in
-		exitDiff: () => {
-			const path = d.wsdoc.doc.path;
-			if (path) d.editFlow().closeTab({ path, compare: activeCompare.current ?? undefined });
-		},
 		onPdfDoubleClick: (page: number, x: number, y: number, selectText?: string) => d.nav.onPdfDoubleClick(page, x, y, selectText),
 		onInverseSync: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(normSyncPath(file), line, selectText),
 		onPreviewSettled: d.draftCtl.runDecision,

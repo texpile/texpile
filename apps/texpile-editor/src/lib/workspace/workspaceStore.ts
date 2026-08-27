@@ -57,6 +57,12 @@ export const activeFilePath = {
  */
 export const activeCompare = box<CompareRef | null>(null);
 
+/** open a file by name, leaving any comparison on screen. Only tab activation carries one. */
+export function openFile(path: string | null): void {
+	activeCompare.current = null;
+	activeFilePath.current = path;
+}
+
 /** the main entry .tex, anchors cross-file macro resolution. auto-detected, user-overridable, persisted per folder. */
 export const mainFile = box<string | null>(null);
 

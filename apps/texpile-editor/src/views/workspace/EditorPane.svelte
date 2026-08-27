@@ -2,7 +2,7 @@
 	// The editor column: the mode toolbar on top and, under it, whichever surface the open file
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
-	import { Loader2, CircleAlert, Info, GitCompare, RefreshCw, X } from '@lucide/svelte';
+	import { Loader2, CircleAlert, Info, GitCompare, RefreshCw } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
 	import StarterPicker from '$lib/workspace/StarterPicker.svelte';
@@ -88,8 +88,7 @@
 		commentPendingActive = false,
 		onSelectComment,
 		onToggleDiffLayout,
-		onRefreshDiff,
-		onExitDiff
+		onRefreshDiff
 	}: EditorPaneProps = $props();
 
 	// remounts the source editor when the file or the session's view of it changes
@@ -227,14 +226,6 @@
 				>
 					<RefreshCw class="size-3.5" />
 				</button>
-				<button
-					class="hover:preset-tonal-primary rounded p-0.5"
-					onclick={onExitDiff}
-					title={m.wsview_back_to_editor_title()}
-					aria-label={m.wsview_close_label()}
-				>
-					<X class="size-3.5" />
-				</button>
 			</div>
 		</div>
 	{/if}
@@ -293,7 +284,6 @@
 					onModifiedInput={onDiffInput}
 					onToggleLayout={onToggleDiffLayout}
 					onRefresh={onRefreshDiff}
-					onExit={onExitDiff}
 				/>
 			{:else if loadedPath && structured && viewMode === 'source'}
 				{#key sourceKey}

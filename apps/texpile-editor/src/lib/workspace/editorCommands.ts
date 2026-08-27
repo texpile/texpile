@@ -3,7 +3,7 @@
 import { tick } from 'svelte';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { typSchema } from '$lib/languages/typst/visual/schema';
-import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
+import { openFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { basename, dirname, joinPath, normalizePath, relativeTo, toLf, fromLf, underRoot, type Eol } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -144,7 +144,7 @@ export async function jumpToInclude(
 		for (const n of names) {
 			const path = normalizePath(joinPath(dir, n));
 			if ((await stat(path)).exists) {
-				activeFilePath.current = path;
+				openFile(path);
 				return;
 			}
 		}

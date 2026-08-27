@@ -11,6 +11,7 @@ import {
 	texFiles,
 	fileTree,
 	activeFilePath,
+	openFile,
 	isDirty,
 	mainFile,
 	savedMainFile,
@@ -66,7 +67,7 @@ export class FolderLifecycle {
 			if (d.sessionActive() && root !== prevRoot) await d.endSession();
 			d.resolveMainConfirm(root); // before the stores flip, so the modal effect can't see a stale state
 			d.flushSaves(); // autosave-on: persist the outgoing folder's queued edit before the swap
-			activeFilePath.current = null; // detach the old file so nothing re-tabs it under the new root
+			openFile(null); // detach the old file so nothing re-tabs it under the new root
 			// Flip the shell NOW, before the scan: the new workspace renders immediately (empty
 			// explorer, its saved tabs) and the slow parts backfill below. On a big folder the scan
 			// takes seconds, and it used to run first, freezing the OLD workspace on screen.
@@ -89,7 +90,7 @@ export class FolderLifecycle {
 			texFiles.current = files;
 			await d.refreshTree();
 			await this.initProject(root);
-			if (workspaceRoot.current === root && !activeFilePath.current) activeFilePath.current = files[0]?.path ?? null;
+			if (workspaceRoot.current === root && !activeFilePath.current) openFile(files[0]?.path ?? null);
 		} catch (e) {
 			console.error('Failed to open folder:', e);
 		}
@@ -107,7 +108,7 @@ export class FolderLifecycle {
 		workspaceRoot.current = null;
 		texFiles.current = [];
 		fileTree.current = [];
-		activeFilePath.current = null;
+		openFile(null);
 		mainFile.current = null;
 		isDirty.current = false;
 		tabs.bind(null, false); // never leave the store bound persistable to a released root
@@ -122,7 +123,7 @@ export class FolderLifecycle {
 			await this.open(root);
 			setMainFile(root, main);
 			this.deps.setMainConfirmed(true); // the starter picked the main; no first-compile question
-			activeFilePath.current = main; // open() opens files[0] (alphabetical), not the main file
+			openFile(main); // open() opens files[0] (alphabetical), not the main file
 		} catch (e) {
 			toaster.error({ title: m.wsview_toast_tutorial_failed_title(), description: e instanceof Error ? e.message : String(e) });
 		}

@@ -1,7 +1,7 @@
 // Populating an empty folder: applying a built-in starter template, or importing files the user
 // dropped in. Both write into the workspace root, set the resulting main file, and reload
 // references (a starter or an import may carry a .bib whose \cite keys must resolve immediately).
-import { workspaceRoot, activeFilePath, fileTree, setMainFile } from '$lib/workspace/workspaceStore';
+import { workspaceRoot, openFile, fileTree, setMainFile } from '$lib/workspace/workspaceStore';
 import { applyStarter, applyImportedFiles, type Starter, type ImportedFile } from '$lib/workspace/starters';
 import { freeName } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -38,7 +38,7 @@ export class StarterActions {
 			await this.deps.refreshTree();
 			if (mainPath) {
 				setMainFile(root, mainPath);
-				activeFilePath.current = mainPath;
+				openFile(mainPath);
 			}
 		} finally {
 			this.applying = false;

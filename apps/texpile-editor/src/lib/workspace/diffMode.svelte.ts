@@ -25,6 +25,7 @@ export type DiffDeps = {
 export class DiffMode {
 	/** HEAD content ('' when the file has no committed baseline) */
 	original = $state('');
+	originalFor = $state<string | null>(null);
 	/** the working buffer at snapshot time */
 	modified = $state('');
 	loading = $state(false);
@@ -44,8 +45,9 @@ export class DiffMode {
 	versionUnavailable = $state(false);
 	/** its own, not the editor's: progress and sequence numbers must not collide */
 	private versionParser = new VisualParser(() => this.deps.getMacros());
-	/** so asking twice costs one parse */
-	private versionParsedFrom: string | null = null;
+	/** path and format as well as bytes: the same source parses differently per dialect */
+	private versionKey: string | null = null;
+	private versionFor: string | null = null;
 
 	constructor(private deps: DiffDeps) {}
 
@@ -72,9 +74,9 @@ export class DiffMode {
 		// file's working copy against the previous file's baseline, or against none at all - the
 		// whole document reading as changed for the few frames before the other half landed.
 		const working = this.deps.getWorkingText();
+		if (this.versionFor !== path) this.dropVersionDoc();
 		this.loading = true;
 		this.error = null;
-		this.forgetVersionDoc(); // whatever it held describes the comparison being replaced
 		const ref = this.compareRef;
 		const res = ref ? await gitShowAt(path, ref.hash) : await gitShowHead(path);
 		if (this.deps.getLoadedPath() !== path) return; // a file switch superseded this snapshot
@@ -82,40 +84,47 @@ export class DiffMode {
 		if (!res.ok) {
 			this.error = res.reason === 'no-git' ? m.wsview_diff_error_no_git() : (res.error ?? m.wsview_diff_error_default());
 			this.original = '';
+			this.originalFor = path;
 			this.modified = working;
 			this.hasHead = false;
 			return;
 		}
 		this.hasHead = res.hasHead;
 		this.original = res.content ?? '';
+		this.originalFor = path;
 		this.modified = working;
 	}
 
-	private forgetVersionDoc() {
+	private dropVersionDoc() {
 		this.versionDoc = null;
 		this.versionPreamble = null;
 		this.versionUnavailable = false;
-		this.versionParsedFrom = null;
+		this.versionKey = null;
+		this.versionFor = null;
 	}
 
 	/** once per version, safe to call repeatedly. A version that will not parse is not an error:
 	 *  the source diff shows it, and the visual one says so and points there. */
 	async ensureVersionDoc(format: 'tex' | 'md' | 'typ'): Promise<void> {
+		const path = this.deps.getLoadedPath();
 		const source = this.original;
-		if (this.versionParsedFrom === source) return;
-		this.versionParsedFrom = source;
-		this.versionDoc = null;
-		this.versionPreamble = null;
-		this.versionUnavailable = false;
+		const key = `${path}\u0000${format}\u0000${source}`;
+		if (this.versionKey === key) return;
+		this.versionKey = key;
 		// parsed rather than skipped: no committed baseline compares against an empty document, so
 		// every block reads as new - the same thing the source diff shows
 		const { parsed, failure } = await this.versionParser.parse(source, format);
-		if (this.versionParsedFrom !== source) return; // a newer comparison owns this now
+		if (this.versionKey !== key) return; // a newer comparison owns this now
+		// published together and only now: nulling before the parse reads as the comparison flashing
 		if (failure || !parsed) {
+			this.versionDoc = null;
+			this.versionPreamble = null;
 			this.versionUnavailable = true;
-			return;
+		} else {
+			this.versionDoc = parsed.doc;
+			this.versionPreamble = parsed.preamble;
+			this.versionUnavailable = false;
 		}
-		this.versionDoc = parsed.doc;
-		this.versionPreamble = parsed.preamble;
+		this.versionFor = path;
 	}
 }

@@ -96,5 +96,4 @@ export type EditorPaneProps = {
 
 	onToggleDiffLayout: () => void;
 	onRefreshDiff: () => void;
-	onExitDiff: () => void;
 };

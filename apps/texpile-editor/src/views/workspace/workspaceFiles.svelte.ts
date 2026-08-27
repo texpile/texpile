@@ -14,7 +14,7 @@ import { gatherProjectMacros } from '$lib/workspace/project';
 import { loadReferences } from '$lib/workspace/citations';
 import { insertIncludeAtCursor, insertTypstIncludeAtCursor } from '$lib/workspace/editorCommands';
 import { retargetDiskStamp } from '$lib/workspace/diskStamp';
-import { activeFilePath } from '$lib/workspace/workspaceStore';
+import { openFile } from '$lib/workspace/workspaceStore';
 import { samePath, type TreeEntry } from '$lib/workspace/fileSystem';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
@@ -187,7 +187,7 @@ export class WorkspaceFiles {
 
 	openEntry(entry: TreeEntry): void {
 		if (entry.type !== 'file') return;
-		activeFilePath.current = entry.path;
+		openFile(entry.path);
 	}
 
 	/** File menu "New": inline create in the tree, pre-named for the chosen type */

@@ -26,6 +26,7 @@ import {
 	fileTree,
 	activeFilePath,
 	activeCompare,
+	openFile,
 	isDirty,
 	mainFile,
 	setLastFile,
@@ -117,9 +118,7 @@ export class WorkspaceIntegrations {
 			attachMcpCommands({
 				getLoadedPath: () => doc.path,
 				getBuffer: () => doc.buffer,
-				openFile: (abs) => {
-					activeFilePath.current = abs;
-				},
+				openFile,
 				openFileAtLine: (abs, line) => d.nav().openFileAtLine(abs, line),
 				showDiff: () => modes.set('diff'),
 				setViewMode: (mode) => modes.set(mode),

@@ -315,8 +315,6 @@
 	"wsview_side_by_side_label": "Side-by-side",
 	"wsview_inline_label": "Inline",
 	"wsview_refresh_diff": "Refresh diff",
-	"wsview_back_to_editor_title": "Back to the editor",
-	"wsview_close_label": "Close",
 	"wsview_editor_placeholder": "Start writing…",
 	"menubar_menu_file": "File",
 	"menubar_new_file_menu": "New",

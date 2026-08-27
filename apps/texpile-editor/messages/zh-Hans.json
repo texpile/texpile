@@ -315,8 +315,6 @@
 	"wsview_side_by_side_label": "并排",
 	"wsview_inline_label": "内联",
 	"wsview_refresh_diff": "刷新差异",
-	"wsview_back_to_editor_title": "返回编辑器",
-	"wsview_close_label": "关闭",
 	"wsview_editor_placeholder": "开始写作…",
 	"menubar_menu_file": "文件",
 	"menubar_new_file_menu": "新建",
