@@ -2,6 +2,7 @@
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { referenceStore } from '$lib/stores/editorStore';
+	import { citationRefsWithLibrary } from '$lib/library/libraryRefs';
 	import { splitCitationKeys } from './citationKeys';
 	import CitationEditForm from './CitationEditForm.svelte';
 
@@ -20,9 +21,10 @@
 	// \cite{a, b, c} is ONE command with a shared note, so it stays one chip; each key resolves
 	// on its own and an unresolved one shows as its raw key (the red state says it's broken)
 	const displayText = $derived.by(() => {
-		const references = referenceStore.current;
+		const loaded = referenceStore.current;
+		const references = citationRefsWithLibrary(loaded ?? []);
 
-		if (!references) return '(loading...)';
+		if (!loaded) return '(loading...)';
 
 		const keys = splitCitationKeys(node.textContent);
 		if (!keys.length) return `(${node.textContent} not found)`;
@@ -43,8 +45,9 @@
 	});
 
 	const isValid = $derived.by(() => {
-		const references = referenceStore.current;
-		if (!references) return false;
+		const loaded = referenceStore.current;
+		if (!loaded) return false;
+		const references = citationRefsWithLibrary(loaded);
 		const keys = splitCitationKeys(node.textContent);
 		return keys.length > 0 && keys.every((key) => references.some((ref) => ref.key === key));
 	});

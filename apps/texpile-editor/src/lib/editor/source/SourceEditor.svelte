@@ -42,6 +42,7 @@
 		selectedComment = null,
 		onAddComment,
 		onInsertCitation,
+		onInsertLibraryCitation,
 		onSelectComment
 	}: {
 		value?: string;
@@ -69,6 +70,8 @@
 		onAddComment?: (from: number, to: number) => void;
 		/** pick citations from Zotero and insert them at the caret (host + desktop only) */
 		onInsertCitation?: () => void;
+		/** pick citations from the personal library and insert them at the caret (host + desktop only) */
+		onInsertLibraryCitation?: () => void;
 		onSelectComment?: (id: string, from: 'text' | 'gutter') => void;
 	} = $props();
 
@@ -294,7 +297,14 @@
 
 <div bind:this={host} class="source-editor h-full" oncontextmenu={(e) => view && rightClick?.open(e, view)} role="presentation"></div>
 
-<SourceRightClickMenu bind:this={rightClick} {onSyncToPdf} {onAddComment} {onInsertCitation} syncTarget={isTypFile ? 'preview' : 'pdf'} />
+<SourceRightClickMenu
+	bind:this={rightClick}
+	{onSyncToPdf}
+	{onAddComment}
+	{onInsertCitation}
+	{onInsertLibraryCitation}
+	syncTarget={isTypFile ? 'preview' : 'pdf'}
+/>
 
 <style>
 	.source-editor :global(.cm-editor) {

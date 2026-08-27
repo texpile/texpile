@@ -61,6 +61,8 @@
 			uiZoomPercent: number;
 			/** the compile target is Typst; New-file menus offer .typ instead of .tex/.cls/.sty */
 			typstProject: boolean;
+			/** citation picker available (inserting into the bibliography works) */
+			libraryCite: boolean;
 		};
 		actions: Any;
 		/** a compile command from .texpile/config.json awaiting acceptance; see projectConfig.ts.
@@ -109,6 +111,7 @@
 			onZoomIn={actions.uiZoomIn}
 			onZoomOut={actions.uiZoomOut}
 			onZoomReset={actions.uiZoomReset}
+			onPickCitation={menu.libraryCite ? () => actions.insertLibraryCitation() : undefined}
 		/>
 	{/snippet}
 </TitleBar>

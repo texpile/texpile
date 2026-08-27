@@ -1168,5 +1168,21 @@
 	"zotero_dialog_remove": "Entfernen",
 	"zotero_dialog_hint_toggle": "hinzufügen oder entfernen",
 	"zotero_dialog_group_project": "In diesem Projekt",
-	"zotero_dialog_group_library": "Zotero-Bibliothek"
+	"zotero_dialog_group_library": "Zotero-Bibliothek",
+	"library_insert_citation": "Insert from my library",
+	"library_manage": "Manage reference library",
+	"library_manager_loading": "Loading…",
+	"library_manager_saving": "Saving…",
+	"library_manager_save_failed": "Could not save",
+	"library_manager_note": "Entries are stored in library.bib inside Texpile's app-data folder, outside any project.",
+	"library_dialog_placeholder": "Search your library",
+	"library_dialog_type_hint": "Type to search your library.",
+	"library_dialog_empty": "No matches in your library.",
+	"library_dialog_empty_library": "Your library is empty. Add entries from the command palette (Manage reference library).",
+	"library_dialog_insert": "Insert",
+	"library_dialog_remove": "Remove",
+	"library_dialog_hint_toggle": "add or remove",
+	"library_dialog_manage": "Manage library",
+	"library_dialog_group_library": "My library",
+	"citations_insert_failed": "Could not insert citations"
 }

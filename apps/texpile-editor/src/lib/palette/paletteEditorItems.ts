@@ -1,4 +1,4 @@
-import { AlignLeft, BookMarked, Keyboard } from '@lucide/svelte';
+import { AlignLeft, BookMarked, Keyboard, Library } from '@lucide/svelte';
 import { settings, updateSettings, type AppSettings } from '$lib/settings';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 import type { PaletteItem } from './paletteCommands';
@@ -15,6 +15,24 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			keywords: 'zotero cite citation bibliography reference bibtex import',
 			icon: BookMarked,
 			run: () => a.insertZoteroCitation?.()
+		});
+	if (a.insertLibraryCitation && a.canLibraryCite?.())
+		items.push({
+			id: 'editor.libraryCitation',
+			label: m.library_insert_citation(),
+			group,
+			keywords: 'library cite citation bibliography reference bibtex import',
+			icon: BookMarked,
+			run: () => a.insertLibraryCitation?.()
+		});
+	if (a.openLibraryManager && a.canManageLibrary?.())
+		items.push({
+			id: 'editor.libraryManage',
+			label: m.library_manage(),
+			group,
+			keywords: 'library reference bibtex bibliography manage edit entries',
+			icon: Library,
+			run: () => a.openLibraryManager?.()
 		});
 	if (a.hasFile() && a.canFormat())
 		items.push({

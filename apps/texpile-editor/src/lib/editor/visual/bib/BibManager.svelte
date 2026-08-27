@@ -21,7 +21,11 @@
 	import BibEntryForm from './BibEntryForm.svelte';
 	import BibReferenceList from './BibReferenceList.svelte';
 
-	let { value = '', onInput }: { value?: string; onInput?: (v: string) => void } = $props();
+	let {
+		value = '',
+		onInput,
+		publishReferences = true
+	}: { value?: string; onInput?: (v: string) => void; publishReferences?: boolean } = $props();
 
 	// refs = entries, tokens = file-order stream for round-trip, parseError switches to whole-file raw mode
 	let refs = $state<BiblatexReference[]>([]);
@@ -97,7 +101,7 @@
 		const refsByKey = new Map(refs.map((r) => [r.key, r]));
 		const text = serializeBibtex(tokens, refsByKey);
 		lastSerialized = text;
-		referenceStore.current = [...refs];
+		if (publishReferences) referenceStore.current = [...refs];
 		onInput?.(text);
 	}
 
@@ -197,7 +201,7 @@
 		tokens = result.tokens;
 		parseError = null;
 		lastSerialized = fileRawText;
-		referenceStore.current = [...refs];
+		if (publishReferences) referenceStore.current = [...refs];
 		onInput?.(fileRawText);
 	}
 

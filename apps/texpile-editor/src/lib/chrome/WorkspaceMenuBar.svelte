@@ -69,6 +69,8 @@
 		onZoomIn?: () => void;
 		onZoomOut?: () => void;
 		onZoomReset?: () => void;
+		/** open the citation picker (project + personal library) instead of a bare skeleton */
+		onPickCitation?: () => void;
 	};
 	let {
 		disabled = false,
@@ -91,7 +93,8 @@
 		uiZoomPercent = 100,
 		onZoomIn,
 		onZoomOut,
-		onZoomReset
+		onZoomReset,
+		onPickCitation
 	}: Props = $props();
 
 	// What the open file supports, not just whether one is open. A PDF or an image has no text
@@ -169,7 +172,8 @@
 	const { mathSelect, insertSelect } = makeInsertHandlers({
 		dialect: () => dialect,
 		askText: (title, initial) => textPrompt.askText(title, initial),
-		pickImage: () => imagePicker?.pick()
+		pickImage: () => imagePicker?.pick(),
+		pickCitation: onPickCitation
 	});
 
 	const spellcheckOn = $derived(editorConfigStore.current?.spellcheck ?? false);

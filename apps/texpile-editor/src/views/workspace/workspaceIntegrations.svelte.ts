@@ -15,6 +15,9 @@ import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
 import { graphicCandidateUrls, graphicSearchDirs } from '$lib/editor/visual/graphicsCandidates';
 import { setEditorFileAccess, setEditorGraphicDirs } from '$lib/editor/visual/fileAccess';
 import { insertCitationFromZotero, zoteroAvailable } from '$lib/zotero/insertFromZotero';
+import { libraryAvailable, libraryStore } from '$lib/library/libraryStore.svelte';
+import { libraryPicker } from '$lib/library/libraryPickerState.svelte';
+import { libraryManager } from '$lib/library/libraryManagerState.svelte';
 import { compileLog } from '$lib/stores/compileLogStore';
 import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore } from '$lib/stores/editorStore';
@@ -69,6 +72,9 @@ export class WorkspaceIntegrations {
 	constructor(private d: IntegrationDeps) {
 		const { wsdoc } = d;
 		const { doc, modes } = wsdoc;
+		// the personal library backs the @ picker and citation completion, so it loads with the
+		// workspace rather than on the first picker open (a one-file read; load() is idempotent)
+		if (libraryAvailable()) void libraryStore.load();
 		this.registries = new DocRegistries({
 			getSource: () => doc.texSource,
 			captureHistory: (text) => modes.history.capture(text)
@@ -255,5 +261,36 @@ export class WorkspaceIntegrations {
 			root: workspaceRoot.current ?? '',
 			openDoc: () => ({ path: doc.path, text: doc.buffer })
 		});
+	}
+
+	// The personal bibliography (lib/library): same gates as Zotero minus the settings toggle -
+	// the library needs nothing external. Desktop-only by bridge, host-only in a shared session,
+	// and the open file's dialect must match the main's engine because the entries land in the
+	// bibliography the MAIN file declares.
+	canCiteFromLibrary(): boolean {
+		const kind = this.d.wsdoc.doc.kind;
+		return (
+			!this.d.guest() && libraryAvailable() && !!mainFile.current && (this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex')
+		);
+	}
+
+	insertFromLibrary(): void {
+		if (!this.canCiteFromLibrary()) return;
+		const { doc } = this.d.wsdoc;
+		libraryPicker.show({
+			kind: doc.kind as 'tex' | 'typ',
+			root: workspaceRoot.current ?? '',
+			openDoc: () => ({ path: doc.path, text: doc.buffer })
+		});
+	}
+
+	// managing the library touches only userData, so it needs no project and no main file; a
+	// guest must not edit the host's personal library though
+	canManageLibrary(): boolean {
+		return !this.d.guest() && libraryAvailable();
+	}
+
+	openLibraryManager(): void {
+		if (this.canManageLibrary()) libraryManager.show();
 	}
 }

@@ -55,6 +55,12 @@ export type PaletteActions = {
 	/** Zotero citation pick: available on hosts in the desktop app, for the matching dialect */
 	canZoteroCite?(): boolean;
 	insertZoteroCitation?(): void;
+	/** personal-library citation pick: same availability rules as Zotero, minus its plugin */
+	canLibraryCite?(): boolean;
+	insertLibraryCitation?(): void;
+	/** manage the personal library: desktop hosts only (it touches the app's userData) */
+	canManageLibrary?(): boolean;
+	openLibraryManager?(): void;
 };
 
 class CommandPaletteState {

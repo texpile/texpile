@@ -83,6 +83,14 @@ declare global {
 		exportBib(keys: string[], translator: string): Promise<{ ok: boolean; bib?: string; error?: string }>;
 	};
 
+	/** The personal bibliography: one library.bib in userData, read and written whole. */
+	type TexpileLibraryBridge = {
+		/** The whole library as bib text; '' when it does not exist yet. */
+		read(): Promise<{ ok: boolean; text?: string; error?: string }>;
+		/** Replace the whole library with `text`. */
+		write(text: string): Promise<{ ok: boolean; error?: string }>;
+	};
+
 	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- augmenting lib.dom's Window needs declaration merging
 	interface Window {
 		texpile: {
@@ -101,6 +109,8 @@ declare global {
 		texpileTypst?: TexpileTypstBridge;
 		/** Zotero citation bridge (Electron only; undefined in the browser dev server). */
 		texpileZotero?: TexpileZoteroBridge;
+		/** Personal bibliography bridge (Electron only; undefined in the browser dev server). */
+		texpileLibrary?: TexpileLibraryBridge;
 	}
 }
 

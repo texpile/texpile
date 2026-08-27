@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { CellSelection, mergeCells, splitCell } from 'prosemirror-tables';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { BookMarked, MessageSquarePlus } from '@lucide/svelte';
+	import { BookMarked, Library, MessageSquarePlus } from '@lucide/svelte';
 	import { TextSelection } from 'prosemirror-state';
 	import { buildPmAnchor, setPmCommentPending } from '$lib/editor/visual/extensions/pmComments';
 	import type { CommentAnchor } from '$lib/comments/anchor';
@@ -19,8 +19,10 @@
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		/** pick citations from Zotero and insert at the caret; a menu item when present */
 		onInsertCitation?: () => void;
+		/** pick citations from the personal library and insert at the caret; a menu item when present */
+		onInsertLibraryCitation?: () => void;
 	};
-	let { dialect = 'latex', onAddComment, onInsertCitation }: Props = $props();
+	let { dialect = 'latex', onAddComment, onInsertCitation, onInsertLibraryCitation }: Props = $props();
 	// merged cells have no pipe-table syntax, so the markdown editor loses merge/split. Everywhere
 	// else has a spanning form the serializer emits: \multicolumn/\multirow in LaTeX,
 	// table.cell(colspan:/rowspan:) in Typst.
@@ -244,6 +246,18 @@
 						>
 							<BookMarked class="h-4 w-4 flex-shrink-0" />
 							<span class="min-w-0 flex-1 text-sm">{m.zotero_insert_citation()}</span>
+						</button>
+					{/if}
+
+					{#if onInsertLibraryCitation}
+						<button
+							type="button"
+							class="hover:preset-tonal-primary flex w-full items-center gap-3 px-4 py-2 text-left"
+							onclick={() => handleItemClick(() => onInsertLibraryCitation())}
+							onmousedown={(e) => e.preventDefault()}
+						>
+							<Library class="h-4 w-4 flex-shrink-0" />
+							<span class="min-w-0 flex-1 text-sm">{m.library_insert_citation()}</span>
 						</button>
 					{/if}
 

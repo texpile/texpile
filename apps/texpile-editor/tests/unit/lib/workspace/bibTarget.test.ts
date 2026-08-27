@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { appendBibEntries, bibPathFromSource, citationTextFor, translatorForSource } from '$lib/zotero/bibTarget';
+import { appendBibEntries, bibPathFromSource, citationTextFor, translatorForSource } from '$lib/workspace/bibTarget';
 
 describe('bibPathFromSource', () => {
 	it('takes addbibresource as written, options and all', () => {

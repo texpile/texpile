@@ -37,6 +37,8 @@ type InsertDeps = {
 	dialect: () => ReturnType<typeof formatOf>;
 	askText: (title: string, initial?: string) => Promise<string | null>;
 	pickImage: () => void;
+	/** open the citation picker (project + personal library); absent = plain skeleton fallback */
+	pickCitation?: () => void;
 };
 
 // display-math templates; block_math detects the environment from content (computeMathAttrs)
@@ -109,6 +111,10 @@ export function makeInsertHandlers(deps: InsertDeps): {
 					else cmApply(cm, dialect === 'typ' ? typLink(s) : mdLink(s));
 					break;
 				case 'citation': {
+					if (deps.pickCitation) {
+						deps.pickCitation();
+						break;
+					}
 					const key = referenceStore.current?.[0]?.key ?? 'key';
 					if (dialect === 'tex') cmReplace(cm, `\\autocite{${key}}`);
 					else if (dialect === 'typ') cmReplace(cm, `@${key}`);
@@ -161,6 +167,10 @@ export function makeInsertHandlers(deps: InsertDeps): {
 				});
 				break;
 			case 'citation': {
+				if (deps.pickCitation) {
+					deps.pickCitation();
+					break;
+				}
 				const key = referenceStore.current?.[0]?.key ?? 'key';
 				insertNode((state) =>
 					state.schema.nodes.typ_ref

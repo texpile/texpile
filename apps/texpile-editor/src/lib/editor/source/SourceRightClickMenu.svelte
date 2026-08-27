@@ -2,7 +2,7 @@
 	import type { EditorView as CMView } from '@codemirror/view';
 	import { selectAll } from '@codemirror/commands';
 	import { openSearchPanel } from '@codemirror/search';
-	import { ArrowRight, BookMarked, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
+	import { ArrowRight, BookMarked, Library, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import { copySelection, cutSelection, pasteAtCursor } from '$lib/editor/source/cmClipboardUtils';
 	import { m } from '$lib/paraglide/messages';
@@ -12,10 +12,12 @@
 		onAddComment?: (from: number, to: number) => void;
 		// Zotero Citation
 		onInsertCitation?: () => void;
+		// personal library citation
+		onInsertLibraryCitation?: () => void;
 		// preview = not pdfviewer
 		syncTarget?: 'pdf' | 'preview';
 	};
-	let { onSyncToPdf, onAddComment, onInsertCitation, syncTarget = 'pdf' }: Props = $props();
+	let { onSyncToPdf, onAddComment, onInsertCitation, onInsertLibraryCitation, syncTarget = 'pdf' }: Props = $props();
 
 	/** where the menu was opened, and what the editor could act on there */
 	type SelectonTarget = {
@@ -115,6 +117,12 @@
 			<button class={itemClass} onclick={runCommands(() => onInsertCitation())}>
 				<BookMarked class="size-4 opacity-70" />
 				{m.zotero_insert_citation()}
+			</button>
+		{/if}
+		{#if onInsertLibraryCitation}
+			<button class={itemClass} onclick={runCommands(() => onInsertLibraryCitation())}>
+				<Library class="size-4 opacity-70" />
+				{m.library_insert_citation()}
 			</button>
 		{/if}
 		<div class="border-surface-200-800 my-1 border-t"></div>

@@ -323,6 +323,15 @@ contextBridge.exposeInMainWorld('texpileZotero', {
 	exportBib: (keys: string[], translator: string) => ipcRenderer.invoke('zotero:export', { keys, translator })
 });
 
+// the personal bibliography (see electron/src/library.ts): one library.bib in userData, read and
+// written whole. The renderer parses and edits; main only owns the file.
+contextBridge.exposeInMainWorld('texpileLibrary', {
+	/** the whole library as bib text; '' when it does not exist yet */
+	read: () => ipcRenderer.invoke('library:read'),
+	/** replace the whole library with `text` */
+	write: (text: string) => ipcRenderer.invoke('library:write', { text })
+});
+
 // terminal bridge to the node-pty shells in the main process, keyed by a string `id`
 contextBridge.exposeInMainWorld('texpileTerminal', {
 	/** whether node-pty loaded (false if it needs `pnpm electron:rebuild`). */

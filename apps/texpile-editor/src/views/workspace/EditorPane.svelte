@@ -83,6 +83,7 @@
 		selectedComment = null,
 		onAddComment,
 		onInsertCitation,
+		onInsertLibraryCitation,
 		onAddCommentAnchored,
 		onCommentsPlaced,
 		commentPendingActive = false,
@@ -315,6 +316,7 @@
 						{selectedComment}
 						{onAddComment}
 						{onInsertCitation}
+						{onInsertLibraryCitation}
 						{onSelectComment}
 					/>
 				{/key}
@@ -339,6 +341,7 @@
 						{onSelectComment}
 						{onAddCommentAnchored}
 						{onInsertCitation}
+						{onInsertLibraryCitation}
 						{onCommentsPlaced}
 						{commentPendingActive}
 					/>

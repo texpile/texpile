@@ -1,9 +1,10 @@
-// Where Zotero imports land, and how they are appended: the pure half of the Zotero flow.
+// Where imported citations land, and how they are appended: the pure half of the citation-insert
+// flows (Zotero and the personal library). Everything here is text-in/text-out so it can be unit
+// tested without Zotero, disk, or an editor.
 //
 // The target `.bib` is whatever the MAIN file already declares - `\addbibresource` /
 // `\bibliography` for LaTeX, `#bibliography(...)` for Typst - because that is the file the
-// compile actually reads. Everything here is text-in/text-out so it can be unit tested without
-// Zotero, disk, or an editor.
+// compile actually reads.
 import { parseBibtex, referencesToBib } from '$lib/languages/bib/biblatex';
 
 /**

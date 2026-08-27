@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { referenceStore, templateFeaturesStore } from '$lib/stores/editorStore';
+	import { citationRefsWithLibrary } from '$lib/library/libraryRefs';
 	import { splitCitationKeys } from './citationKeys';
 	import { ChevronDown } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -20,7 +21,10 @@
 
 	const key = $derived(node.textContent);
 	const keys = $derived(splitCitationKeys(node.textContent));
-	const reference = $derived(referenceStore.current?.find((ref) => ref.key === key));
+	// project refs plus the personal library, so a library-only key still displays and offers
+	// its entry in the key dropdown
+	const allRefs = $derived(citationRefsWithLibrary(referenceStore.current ?? []));
+	const reference = $derived(allRefs.find((ref) => ref.key === key));
 
 	// dropdown label, capped so long titles don't blow out the select
 	function refLabel(ref: { author?: string | string[]; year?: string; title?: string; key?: string }): string {
@@ -92,17 +96,17 @@
 			     to one key, so the group is listed read-only; the shared notes below stay editable -->
 			<span class="text-surface-900-100 text-sm font-medium">{m.citation_reference_label()}</span>
 			{#each keys as k (k)}
-				{@const ref = referenceStore.current?.find((r) => r.key === k)}
+				{@const ref = allRefs.find((r) => r.key === k)}
 				<div class="mt-1.5">
 					<span class="text-surface-900-100 text-sm font-semibold">{ref?.author || k}</span>
 					<span class="text-surface-600-400 text-sm">{ref ? ref.year || ref.date?.slice(0, 4) || '' : m.citation_key_missing()}</span>
 				</div>
 			{/each}
-		{:else if onChangeKey && referenceStore.current?.length}
+		{:else if onChangeKey && allRefs.length}
 			<span class="text-surface-900-100 text-sm font-medium">{m.citation_reference_label()}</span>
 			<select class="input mt-1.5 w-full text-sm" value={key} onchange={(e) => onChangeKey?.((e.currentTarget as HTMLSelectElement).value)}>
 				{#if !reference}<option value={key}>{m.citation_ref_not_found({ key })}</option>{/if}
-				{#each referenceStore.current as ref (ref.key)}
+				{#each allRefs as ref (ref.key)}
 					<option value={ref.key} title={ref.title || ref.key}>{refLabel(ref)}</option>
 				{/each}
 			</select>

@@ -13,6 +13,7 @@
 import type { Node as PMNode } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { referenceStore } from '$lib/stores/editorStore';
+import { citationRefsWithLibrary } from '$lib/library/libraryRefs';
 import { observe } from '$lib/runes/observe.svelte';
 
 export class TypstRefView implements NodeView {
@@ -59,7 +60,7 @@ export class TypstRefView implements NodeView {
 	private render(node: PMNode): void {
 		const target = String(node.attrs.target ?? '');
 		// the store starts as null (typed a lie) until a bibliography loads
-		const bib = (referenceStore.current ?? []).find((r) => r.key === target);
+		const bib = citationRefsWithLibrary(referenceStore.current ?? []).find((r) => r.key === target);
 		if (bib) {
 			const author = (Array.isArray(bib.author) ? bib.author.join(', ') : bib.author) || 'Unknown';
 			const year = bib.year ?? bib.date?.slice(0, 4) ?? 'n.d.';
