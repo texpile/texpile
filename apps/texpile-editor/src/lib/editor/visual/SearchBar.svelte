@@ -1,61 +1,48 @@
-<!-- floating Ctrl+F search bar for the ProseMirror editor, toggled by displaySearchBarStore -->
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import { onMount, onDestroy } from 'svelte';
 	import { displaySearchBarStore as display, editorViewStore } from '$lib/stores/editorStore';
-	import { setSearchState, SearchQuery, findNext, findPrev } from 'prosemirror-search';
-	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
-	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import X from '@lucide/svelte/icons/x';
-	import { m } from '$lib/paraglide/messages';
+	import { setSearchState, SearchQuery, findNext, findPrev, replaceNext, replaceAll } from 'prosemirror-search';
+	import FindBar from '$lib/editor/find/FindBar.svelte';
+	import { NO_FIND_OPTIONS, toggledFindOption, type FindOptions } from '$lib/editor/find/findOptions';
 
-	let searchTerm = $state('');
-	let searchInput = $state<HTMLInputElement>();
-	let match = $state(0);
+	let query = $state('');
+	let replaceText = $state('');
+	let options = $state<FindOptions>(NO_FIND_OPTIONS);
+	let total = $state(0);
 	let current = $state(0);
+	let bar = $state<ReturnType<typeof FindBar>>();
 
-	function runSearch(reset = false) {
+	function searchQuery(): SearchQuery {
+		return new SearchQuery({ search: query, replace: replaceText, ...options });
+	}
+
+	function commit(resetPosition = true): void {
 		const view = editorViewStore.current;
 		if (!view?.state) return;
-		if (reset) current = 0;
-		const query = new SearchQuery({ search: searchTerm });
+		if (resetPosition) current = 0;
+		const q = searchQuery();
 
-		let m = 0;
-		for (let from = 0, res; (res = query.findNext(view.state, from)); from = res.to) m++;
-		match = m;
-
-		view.dispatch(setSearchState(view.state.tr, query));
-
-		if (!reset) {
-			findNext(view.state, view.dispatch);
-			incrementCurrent();
-			scrollToSelection();
+		let found = 0;
+		// a half-typed regex throws out of findNext
+		try {
+			for (let from = 0, res; (res = q.findNext(view.state, from)); from = res.to) found++;
+		} catch {
+			found = 0;
 		}
+		total = found;
+		view.dispatch(setSearchState(view.state.tr, q));
 	}
 
-	function incrementCurrent() {
-		if (match === 0) return;
-		current = (current % match) + 1;
-	}
-	function decrementCurrent() {
-		if (match === 0) return;
-		current = current - 1 || match;
-	}
-
-	function gotoPrev() {
-		if (!editorViewStore.current?.state) return;
-		findPrev(editorViewStore.current.state, editorViewStore.current.dispatch);
-		decrementCurrent();
-		scrollToSelection();
-	}
-	function gotoNext() {
-		if (!editorViewStore.current?.state) return;
-		findNext(editorViewStore.current.state, editorViewStore.current.dispatch);
-		incrementCurrent();
+	function step(dir: 1 | -1): void {
+		const view = editorViewStore.current;
+		if (!view?.state || total === 0) return;
+		(dir === 1 ? findNext : findPrev)(view.state, view.dispatch);
+		current = dir === 1 ? (current % total) + 1 : current - 1 || total;
 		scrollToSelection();
 	}
 
-	function scrollToSelection() {
+	function scrollToSelection(): void {
 		const view = editorViewStore.current;
 		if (!view?.state) return;
 		const { from } = view.state.selection;
@@ -68,26 +55,33 @@
 		}
 	}
 
-	function closeBar() {
+	function runReplace(all: boolean): void {
+		const view = editorViewStore.current;
+		if (!view?.state) return;
+		(all ? replaceAll : replaceNext)(view.state, view.dispatch);
+		commit(all); // the document moved under the count, so recount
+	}
+
+	function closeBar(): void {
 		display.current = false;
 		const view = editorViewStore.current;
 		if (view?.state) view.dispatch(setSearchState(view.state.tr, new SearchQuery({ search: '' })));
 	}
 
-	function handleKeydown(e: KeyboardEvent) {
+	function handleKeydown(e: KeyboardEvent): void {
 		// ignore Ctrl/Cmd+Shift+F, that's Find in Files (handled elsewhere)
 		if (e.key.toLowerCase() === 'f' && (e.ctrlKey || e.metaKey) && !e.shiftKey) {
 			e.preventDefault();
 			if (display.current) closeBar();
 			else display.current = true;
-			setTimeout(() => searchInput?.focus(), 0);
+			setTimeout(() => bar?.focusQuery(), 0);
 		}
 		if (e.key === 'Escape' && display.current) closeBar();
 	}
 
 	// focus the input whenever the bar becomes visible
 	$effect(() => {
-		if (display.current) setTimeout(() => searchInput?.focus(), 0);
+		if (display.current) setTimeout(() => bar?.focusQuery(), 0);
 	});
 
 	onMount(() => window.addEventListener('keydown', handleKeydown));
@@ -96,31 +90,32 @@
 
 {#if display.current}
 	<!-- anchored to the editor pane's top-right (the WorkspaceView wrapper is relative), matching the source editor's search panel -->
-	<div
-		transition:slide={{ duration: 180 }}
-		class="card preset-outlined-surface-200-800 bg-surface-50-950 absolute top-2 right-3 z-20 flex items-center gap-2 p-2 shadow-xl"
-	>
-		<input
-			type="text"
-			bind:this={searchInput}
-			bind:value={searchTerm}
-			oninput={() => runSearch(true)}
-			onkeydown={(e) => e.key === 'Enter' && runSearch()}
-			placeholder={m.searchbar_placeholder()}
-			class="input w-56"
+	<div transition:slide={{ duration: 180 }} class="absolute top-3 right-3 z-20">
+		<FindBar
+			bind:this={bar}
+			{query}
+			{replaceText}
+			{options}
+			{current}
+			{total}
+			onQueryChange={(v) => {
+				query = v;
+				commit();
+			}}
+			onReplaceTextChange={(v) => {
+				replaceText = v;
+				commit(false);
+			}}
+			onToggleOption={(key) => {
+				options = toggledFindOption(options, key);
+				commit();
+			}}
+			onPrev={() => step(-1)}
+			onNext={() => step(1)}
+			onReplaceOne={() => runReplace(false)}
+			onReplaceAll={() => runReplace(true)}
+			onClose={closeBar}
 		/>
-		<span class="badge preset-filled-surface-200-800 min-w-[3.5rem] text-center"
-			>{match ? m.searchbar_match_count({ current, total: match }) : m.searchbar_match_count({ current: 0, total: 0 })}</span
-		>
-		<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={gotoPrev} aria-label={m.searchbar_aria_previous()}
-			><ArrowLeft class="size-4" /></button
-		>
-		<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={gotoNext} aria-label={m.searchbar_aria_next()}
-			><ArrowRight class="size-4" /></button
-		>
-		<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={closeBar} aria-label={m.searchbar_aria_close()}
-			><X class="size-4" /></button
-		>
 	</div>
 {/if}
 

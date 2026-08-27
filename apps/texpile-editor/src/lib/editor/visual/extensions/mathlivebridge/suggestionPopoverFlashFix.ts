@@ -15,6 +15,13 @@ const CARRIED_CLASSES = ['is-visible', 'top-tip', 'bottom-tip', 'ML__popover--re
 
 let installed = false;
 
+/** nodeType, not `instanceof HTMLElement`: this observer outlives the document it was installed on,
+ *  and cross-realm the check throws */
+function popoverIn(nodes: NodeList): HTMLElement | null {
+	for (const n of nodes) if (n.nodeType === 1 && (n as HTMLElement).id === POPOVER_ID) return n as HTMLElement;
+	return null;
+}
+
 export function installSuggestionPopoverFlashFix(): void {
 	if (installed) return;
 	installed = true;
@@ -22,8 +29,8 @@ export function installSuggestionPopoverFlashFix(): void {
 		let removed: HTMLElement | null = null;
 		let added: HTMLElement | null = null;
 		for (const r of records) {
-			for (const n of r.removedNodes) if (n instanceof HTMLElement && n.id === POPOVER_ID) removed = n;
-			for (const n of r.addedNodes) if (n instanceof HTMLElement && n.id === POPOVER_ID) added = n;
+			removed = popoverIn(r.removedNodes) ?? removed;
+			added = popoverIn(r.addedNodes) ?? added;
 		}
 		if (!removed || !added || added === removed) return;
 		if (!removed.classList.contains('is-visible')) return; // replaced before it ever showed

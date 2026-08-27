@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { Search, X, CaseSensitive, Regex, ChevronDown, ChevronRight, FileText } from '@lucide/svelte';
+	import { Search, X, ChevronDown, ChevronRight, FileText } from '@lucide/svelte';
 	import { searchInFolder, basename, type SearchFileResult } from '$lib/workspace/fileSystem';
+	import FindToggles from '$lib/editor/find/FindToggles.svelte';
+	import { NO_FIND_OPTIONS, toggledFindOption, type FindOptions } from '$lib/editor/find/findOptions';
 	import { m } from '$lib/paraglide/messages';
 
 	let { root, onOpen, onClose }: { root: string; onOpen: (file: string, line: number) => void; onClose: () => void } = $props();
 
 	let query = $state('');
-	let caseSensitive = $state(false);
-	let useRegex = $state(false);
+	// no wholeWord in `show` below: fs:search takes only regex + caseSensitive
+	let options = $state<FindOptions>(NO_FIND_OPTIONS);
 	let results = $state<SearchFileResult[]>([]);
 	let truncated = $state(false);
 	let searching = $state(false);
@@ -46,7 +48,7 @@
 			return;
 		}
 		searching = true;
-		const res = await searchInFolder(root, q, { caseSensitive, regex: useRegex });
+		const res = await searchInFolder(root, q, { caseSensitive: options.caseSensitive, regex: options.regexp });
 		results = res.results;
 		truncated = res.truncated;
 		error = res.error ?? null;
@@ -55,8 +57,7 @@
 	// debounced re-search on query/option changes; the void reads register the deps
 	$effect(() => {
 		void query;
-		void caseSensitive;
-		void useRegex;
+		void options;
 		clearTimeout(timer);
 		timer = setTimeout(runSearch, 250);
 		return () => clearTimeout(timer);
@@ -65,9 +66,9 @@
 	// split a result line around the matched substring for highlighting (substring mode only)
 	function parts(text: string): { s: string; hit: boolean }[] {
 		const q = query.trim();
-		if (useRegex || !q) return [{ s: text, hit: false }];
-		const hay = caseSensitive ? text : text.toLowerCase();
-		const needle = caseSensitive ? q : q.toLowerCase();
+		if (options.regexp || !q) return [{ s: text, hit: false }];
+		const hay = options.caseSensitive ? text : text.toLowerCase();
+		const needle = options.caseSensitive ? q : q.toLowerCase();
 		const out: { s: string; hit: boolean }[] = [];
 		let i = 0;
 		while (i < text.length) {
@@ -91,11 +92,11 @@
      next to it already sized themselves this way. -->
 <div class="flex min-h-0 flex-1 flex-col">
 	<div class="border-surface-200-800 flex items-center gap-1 border-b p-2">
-		<div class="relative flex-1">
-			<Search class="text-surface-400 pointer-events-none absolute top-1/2 left-2 size-3.5 -translate-y-1/2" />
+		<div class="find-field min-w-0 flex-1">
+			<!-- the gap is on the icon: `.find-field input` zeroes the padding and outranks a utility -->
+			<Search class="text-surface-400 mr-1.5 size-3.5 shrink-0" />
 			<!-- svelte-ignore a11y_autofocus -->
 			<input
-				class="input h-8 w-full pl-7 text-sm"
 				placeholder={m.globalsearch_placeholder()}
 				bind:this={inputEl}
 				bind:value={query}
@@ -103,24 +104,10 @@
 				spellcheck="false"
 				onkeydown={(e) => e.key === 'Escape' && onClose()}
 			/>
+			<FindToggles {options} onToggle={(key) => (options = toggledFindOption(options, key))} show={['caseSensitive', 'regexp']} />
 		</div>
-		<button
-			class="btn-icon btn-icon-xs {caseSensitive ? 'preset-tonal-primary' : 'hover:preset-tonal'}"
-			title={m.globalsearch_match_case()}
-			aria-label={m.globalsearch_match_case()}
-			onclick={() => (caseSensitive = !caseSensitive)}><CaseSensitive class="size-4" /></button
-		>
-		<button
-			class="btn-icon btn-icon-xs {useRegex ? 'preset-tonal-primary' : 'hover:preset-tonal'}"
-			title={m.globalsearch_use_regex()}
-			aria-label={m.globalsearch_use_regex()}
-			onclick={() => (useRegex = !useRegex)}><Regex class="size-4" /></button
-		>
-		<button
-			class="btn-icon btn-icon-xs hover:preset-tonal"
-			title={m.globalsearch_close_search()}
-			aria-label={m.globalsearch_close_search()}
-			onclick={onClose}><X class="size-4" /></button
+		<button class="find-action hover:preset-tonal" title={m.find_close()} aria-label={m.find_close()} onclick={onClose}
+			><X class="size-3.5" /></button
 		>
 	</div>
 

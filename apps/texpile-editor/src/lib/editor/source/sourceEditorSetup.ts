@@ -16,7 +16,7 @@ import { bracketMatching, indentOnInput, foldGutter, LanguageDescription } from 
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { searchKeymap } from '@codemirror/search';
-import { texpileSearch } from '$lib/editor/source/extensions/search-panel/searchPanel';
+import { texpileSearch } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
 import { latexAutocomplete, latexIntellisense } from '$lib/languages/latex/intellisense/intellisense';
 import { foldMarkerDom, foldMarkerTheme } from '$lib/languages/latex/intellisense/fold';
 import { mdSourceShortcuts } from '$lib/languages/markdown/source/sourceExtensions';

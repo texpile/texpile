@@ -512,6 +512,59 @@ html[data-mode='dark'] .cm-comment-add:hover {
 		opacity: 1;
 	}
 }
+/* shared by three surfaces, two of which are not Svelte components. Skeleton pairs and presets do
+   not resolve in @apply, hence the raw variables. */
+.find-widget {
+	width: 419px;
+	border-radius: var(--radius-container);
+	padding: 5px;
+}
+/* transparent rather than omitted so focus does not resize the row */
+.find-field {
+	@apply flex min-w-0 items-center;
+	height: 25px;
+	padding: 0 2px 0 6px;
+	border: 1px solid transparent;
+	border-radius: var(--radius-base);
+	background-color: var(--color-surface-100-900);
+}
+.find-field:focus-within {
+	border-color: var(--color-primary-500);
+}
+.find-field input {
+	@apply h-full min-w-0 flex-1 border-0 bg-transparent p-0 outline-none;
+	font-size: 13px;
+}
+.find-toggle {
+	@apply flex shrink-0 items-center justify-center font-mono;
+	width: 20px;
+	height: 20px;
+	margin-left: 2px;
+	border-radius: 3px;
+	font-size: 11px;
+	line-height: 1;
+}
+.find-action {
+	@apply flex shrink-0 items-center justify-center;
+	width: 25px;
+	height: 25px;
+	margin-left: 3px;
+	border-radius: var(--radius-base);
+	color: var(--color-surface-500);
+}
+.find-expand {
+	margin: 0 5px 0 0;
+}
+/* reserved, not hugging its text: a changing count would resize the field beside it */
+.find-status {
+	margin-left: 6px;
+	min-width: 69px;
+	text-align: center;
+	font-size: 12px;
+	white-space: nowrap;
+	color: var(--color-surface-500);
+}
+
 /* CodeMirror builds its own DOM, so its scroller cannot be given the class in markup */
 .cm-scroller {
 	border-right: 3px solid transparent;

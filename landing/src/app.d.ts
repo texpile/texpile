@@ -9,9 +9,6 @@ declare global {
 		interface Platform {
 			env?: {
 				TEMPLATES: KVNamespace;
-				POLAR_ACCESS_TOKEN?: string;
-				POLAR_CLOUD_PRODUCT_ID?: string;
-				PUBLIC_POLAR_ENVIRONMENT?: string;
 			};
 			context: {
 				waitUntil(promise: Promise<unknown>): void;

@@ -302,27 +302,17 @@
 		font-size: 0.875rem;
 		position: relative; /* anchor the floating top-right search panel */
 	}
-	/* float texpileSearch's panel top-right as the same card the visual editor's find bar uses
-	   (SearchBar.svelte), so the two search UIs stay consistent */
+	/* position only: FindBar brings the card, and .cm-panels paints one behind it */
 	.source-editor :global(.cm-panels.cm-panels-top) {
 		position: absolute;
-		top: 0.5rem;
+		top: 0.75rem;
 		right: 0.75rem;
 		left: auto;
 		width: max-content;
 		max-width: calc(100% - 1.5rem);
-		background: var(--color-surface-50);
-		border: 1px solid var(--color-surface-200);
-		border-radius: var(--radius-container, 0.75rem);
-		box-shadow:
-			0 20px 25px -5px rgb(0 0 0 / 0.1),
-			0 8px 10px -6px rgb(0 0 0 / 0.1);
+		background: none;
+		border: none;
 		z-index: 20;
-		overflow: hidden;
-	}
-	:global([data-mode='dark'] .source-editor .cm-panels.cm-panels-top) {
-		background: var(--color-surface-950);
-		border-color: var(--color-surface-800);
 	}
 	/* same amber scale the ProseMirror search uses (SearchBar.svelte) */
 	.source-editor :global(.cm-searchMatch) {
