@@ -3,6 +3,7 @@ import { Plugin, PluginKey, NodeSelection, TextSelection } from 'prosemirror-sta
 import { mount, unmount } from 'svelte';
 import type { EditorView } from 'prosemirror-view';
 import BlockHandle from './BlockHandle.svelte';
+import { scrollParent } from '$lib/editor/visual/scrollParent';
 import type { BlockInsertItem } from './blockInsertItems';
 
 export const blockHandlePluginKey = new PluginKey('block-handle');
@@ -36,6 +37,9 @@ class BlockHandleView {
 	private hoveredPos: number | null = null;
 	private hideTimer: number | null = null;
 	private rafId: number | null = null;
+	// the last pointer y over the editor, so a scroll can re-anchor without a new mouse event
+	private lastPointerY: number | null = null;
+	private pointerInside = false;
 
 	constructor(view: EditorView, items?: BlockInsertItem[]) {
 		this.view = view;
@@ -55,20 +59,49 @@ class BlockHandleView {
 		});
 
 		view.dom.addEventListener('mousemove', this.onMouseMove);
-		view.dom.addEventListener('mouseleave', this.scheduleHide);
+		view.dom.addEventListener('mouseleave', this.onMouseLeave);
 		this.host.addEventListener('mouseenter', this.cancelHide);
 		this.host.addEventListener('mouseleave', this.scheduleHide);
+		// capture, because scroll does not bubble: this has to catch the editor's scroller and any
+		// nested one (a wide table's wrapper) without knowing which exists
+		document.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
 
 	private onMouseMove = (event: MouseEvent) => {
+		this.pointerInside = true;
+		this.lastPointerY = event.clientY;
 		if (this.state.popoverOpen) return; // frozen while the insert menu is open
-		const y = event.clientY;
+		this.queueUpdate(event.clientY);
+	};
+
+	private onMouseLeave = () => {
+		this.pointerInside = false;
+		this.scheduleHide();
+	};
+
+	/**
+	 * Nothing else recomputes the gutter while the document scrolls, so without this a wheel scroll
+	 * leaves it parked at the old viewport position while its block slides out from under it - and
+	 * a fixed-positioned gutter on document.body is clipped by nothing, so it lands on the toolbar.
+	 */
+	private onScroll = () => {
+		if (this.state.popoverOpen || !this.state.visible) return;
+		// no pointer to re-anchor to (scrolling with the gutter itself hovered, say): hide rather
+		// than leave it pointing at a block that has moved
+		if (!this.pointerInside || this.lastPointerY == null) {
+			this.state.visible = false;
+			return;
+		}
+		this.queueUpdate(this.lastPointerY);
+	};
+
+	private queueUpdate(y: number) {
 		if (this.rafId != null) cancelAnimationFrame(this.rafId);
 		this.rafId = requestAnimationFrame(() => {
 			this.rafId = null;
 			this.updateFromPoint(y);
 		});
-	};
+	}
 
 	// x is pinned to the editor's center so horizontal mouse movement never re-anchors the
 	// handle to an ancestor block; y alone picks the block. returns its pre-position or null.
@@ -103,14 +136,30 @@ class BlockHandleView {
 		if (!(dom instanceof HTMLElement)) return;
 
 		const rect = dom.getBoundingClientRect();
+		const top = rect.top + (dropsForLabel(dom) ? NOINDENT_LABEL_DROP : 0);
+		// A tall block whose top has scrolled past the editor's visible area would put the gutter
+		// over the toolbar above it, or off-screen entirely. Hidden rather than pinned to the top
+		// edge: the gutter's y IS which block it acts on, and one of these buttons deletes, so a
+		// handle floating away from the block edge it belongs to would be guessing on the user's
+		// behalf. Scroll the block's top back into view and it comes back.
+		if (this.aboveVisibleArea(top)) {
+			this.state.visible = false;
+			return;
+		}
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
 		const containerRect = this.view.dom.getBoundingClientRect();
 		this.cancelHide();
 		this.state.visible = true;
-		this.state.top = rect.top + (dropsForLabel(dom) ? NOINDENT_LABEL_DROP : 0);
+		this.state.top = top;
 		this.state.left = containerRect.left - GUTTER_OFFSET_LEFT;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
+	}
+
+	/** null scroller = nothing can scroll, so nothing can be out of view and the check is moot. */
+	private aboveVisibleArea(top: number): boolean {
+		const scroller = scrollParent(this.view.dom);
+		return scroller != null && top < scroller.getBoundingClientRect().top;
 	}
 
 	private cancelHide = () => {
@@ -189,9 +238,10 @@ class BlockHandleView {
 
 	destroy() {
 		this.view.dom.removeEventListener('mousemove', this.onMouseMove);
-		this.view.dom.removeEventListener('mouseleave', this.scheduleHide);
+		this.view.dom.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);
 		this.host.removeEventListener('mouseleave', this.scheduleHide);
+		document.removeEventListener('scroll', this.onScroll, { capture: true });
 		this.cancelHide();
 		if (this.rafId != null) cancelAnimationFrame(this.rafId);
 		if (this.component) unmount(this.component);
