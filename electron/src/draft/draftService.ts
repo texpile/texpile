@@ -328,8 +328,10 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		bodyLine: manifest.bodyLine,
 		counters,
 		seams,
-		marginX: ONE_INCH_PT,
-		marginY: ONE_INCH_PT,
+		// the page's reference point: TeX's 1in default MOVED by the document's own
+		// \hoffset/\voffset, instead of assuming every document leaves them at zero
+		marginX: ONE_INCH_PT + ((manifest as { hOffset?: number }).hOffset || 0),
+		marginY: ONE_INCH_PT + ((manifest as { vOffset?: number }).vOffset || 0),
 		pages
 	};
 }

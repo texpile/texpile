@@ -491,15 +491,15 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 				emit(string.format('{"t":"rule","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
 					x / pt, (cy + h) / pt, (parent.width or 0) / pt, h / pt, d / pt, colSuffix(colorStack)))
 			end
-			-- STRETCHABLE vertical glue only: where the engine would absorb a height change
-			-- (vpack distributes linearly over these), so a patch can shift the flow the way
-			-- a repack would instead of rigidly. Rigid glue never absorbs; skip it. nw = the
-			-- NATURAL width (w is the effective, post-stretch value): a page skeleton rebuilds
-			-- the glue from its natural size and lets the engine re-stretch it.
-			if (n.stretch or 0) ~= 0 or (n.shrink or 0) ~= 0 then
-				emit(string.format('{"t":"vg","x":%.4f,"y":%.4f,"w":%.4f,"nw":%.4f,"st":%.4f,"sto":%d,"sh":%.4f,"sho":%d}',
-					x / pt, cy / pt, eff / pt, (n.width or 0) / pt, (n.stretch or 0) / pt, n.stretch_order or 0, (n.shrink or 0) / pt, n.shrink_order or 0))
-			end
+			-- EVERY vertical glue, rigid included. The stretchables say where the engine would
+			-- absorb a height change (vpack distributes linearly over them); the rigid ones --
+			-- \baselineskip above all -- are what a page skeleton would otherwise DERIVE by
+			-- subtracting the stretchables from the observed gap, which was the one invented
+			-- number inside the break certificate. nw = the NATURAL width (w is the effective,
+			-- post-stretch value): the skeleton rebuilds each glue at its natural size and lets
+			-- the engine re-stretch it.
+			emit(string.format('{"t":"vg","x":%.4f,"y":%.4f,"w":%.4f,"nw":%.4f,"st":%.4f,"sto":%d,"sh":%.4f,"sho":%d}',
+				x / pt, cy / pt, eff / pt, (n.width or 0) / pt, (n.stretch or 0) / pt, n.stretch_order or 0, (n.shrink or 0) / pt, n.shrink_order or 0))
 			cy = cy + eff
 		elseif id == PENALTY then
 			-- pen: vertical break penalties (interline, club/widow, section \nobreak) --
@@ -507,6 +507,9 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			-- a page breaks after an edit
 			emit(string.format('{"t":"pen","y":%.4f,"p":%d}', cy / pt, n.penalty or 0))
 		elseif id == KERN then
+			-- vk: an interline kern carries real height the skeleton has to place, exactly
+			-- like a rigid glue; carries no x, so consumers take it positionally (like pen)
+			if (n.kern or 0) ~= 0 then emit(string.format('{"t":"vk","y":%.4f,"w":%.4f}', cy / pt, n.kern / pt)) end
 			cy = cy + n.kern
 		elseif id == RULE then
 			local w, h, d = n.width, resolveRuleHD(n, parent)
@@ -594,10 +597,8 @@ function M.lines(head, y0)
 			end
 			emit('{"t":"noteend"}')
 		elseif line.id == GLUE then
-			if (line.stretch or 0) ~= 0 or (line.shrink or 0) ~= 0 then
-				emit(string.format('{"t":"vg","x":0,"y":%.4f,"w":%.4f,"nw":%.4f,"st":%.4f,"sto":%d,"sh":%.4f,"sho":%d}',
-					y / pt, line.width / pt, (line.width or 0) / pt, (line.stretch or 0) / pt, line.stretch_order or 0, (line.shrink or 0) / pt, line.shrink_order or 0))
-			end
+			emit(string.format('{"t":"vg","x":0,"y":%.4f,"w":%.4f,"nw":%.4f,"st":%.4f,"sto":%d,"sh":%.4f,"sho":%d}',
+				y / pt, line.width / pt, (line.width or 0) / pt, (line.stretch or 0) / pt, line.stretch_order or 0, (line.shrink or 0) / pt, line.shrink_order or 0))
 			y = y + line.width
 		elseif line.id == PENALTY then
 			emit(string.format('{"t":"pen","y":%.4f,"p":%d}', y / pt, line.penalty or 0))

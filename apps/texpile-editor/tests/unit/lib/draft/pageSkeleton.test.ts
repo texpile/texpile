@@ -34,6 +34,15 @@ describe('buildPageSkeleton float boxes', () => {
 });
 
 describe('buildPageSkeleton', () => {
+	it('the engine’s own kerns become rigid skeleton glue, and nothing is derived', () => {
+		// every gap accounted for by exported records: 4pt gap = 1.5 glue + 2.5 kern
+		const skel = buildPageSkeleton([pl(100), vg(103, 1.5, 1.0, 0.5), { t: 'vk', y: 104, w: 2.5 }, pl(115)], -5, 220)!;
+		expect(skel.items.map((i) => i.t).join('')).toBe('bggb');
+		const glue = skel.items.filter((i) => i.t === 'g') as { w: number; st: number }[];
+		expect(glue[0].w).toBeCloseTo(1.0, 4); // the stretchable, at its NATURAL width
+		expect(glue[1]).toEqual({ t: 'g', w: 2.5, st: 0, sto: 0, sh: 0, sho: 0 }); // the kern
+	});
+
 	it('boxes, penalties, stretchables and the rigid remainder, in list order', () => {
 		// gap between lines: 115-8-(100+3) = 4pt; vg effective 1.5 -> rigid 2.5 at natural nw
 		const skel = buildPageSkeleton([pl(100), pen(103, 150), vg(103, 1.5, 1.0, 0.5), pl(115), pl(130)], -5, 220)!;

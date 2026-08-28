@@ -81,21 +81,25 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 		if (k > 0) {
 			const prev = lines[k - 1];
 			const gap = ln.y - ln.h - (prev.y + prev.d);
-			// the gap's stretchables and penalties, in file order (walker order = list order)
+			// the gap's own glue, kerns and penalties, in file order (walker order = list
+			// order). The engine exports every glue now, rigid included, so this run IS the
+			// column's vertical list rather than a reconstruction of it.
 			let effSum = 0;
 			for (let i = prev.i + 1; i < ln.i; i++) {
 				const r: any = recs[i];
 				if (r.t === 'pen') items.push({ t: 'p', p: r.p });
-				else if (r.t === 'vg' && r.x >= colL && r.x <= colR) {
+				else if (r.t === 'vk') {
+					items.push({ t: 'g', w: r.w, st: 0, sto: 0, sh: 0, sho: 0 });
+					effSum += r.w;
+				} else if (r.t === 'vg' && r.x >= colL && r.x <= colR) {
 					items.push({ t: 'g', w: r.nw ?? r.w, st: r.st || 0, sto: r.sto || 0, sh: r.sh || 0, sho: r.sho || 0 });
 					effSum += r.w;
 				}
 			}
+			// whatever the exported run does not account for. It should now be zero; anything
+			// left is spacing the records cannot explain, and the model would lie about it
 			const rigid = gap - effSum;
-			// a negative remainder means spacing the records cannot explain (a kern pulling
-			// lines together, \vspace with negative glue): the model would lie
 			if (rigid < -GAP_EPS) return null;
-			// the rigid remainder sits where baselineskip does: last before the line
 			if (rigid > GAP_EPS) items.push({ t: 'g', w: rigid, st: 0, sto: 0, sh: 0, sho: 0 });
 		}
 		boxIdx.push(items.length);
@@ -149,7 +153,10 @@ export function spliceBandSkeleton(
 			for (let i = prev.i + 1; i < ln.i; i++) {
 				const r: any = daemonRecs[i];
 				if (r.t === 'pen') band.push({ t: 'p', p: r.p });
-				else if (r.t === 'vg') {
+				else if (r.t === 'vk') {
+					band.push({ t: 'g', w: r.w, st: 0, sto: 0, sh: 0, sho: 0 });
+					effSum += r.w;
+				} else if (r.t === 'vg') {
 					band.push({ t: 'g', w: r.nw ?? r.w, st: r.st || 0, sto: r.sto || 0, sh: r.sh || 0, sho: r.sho || 0 });
 					effSum += r.w;
 				}

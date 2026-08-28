@@ -20,6 +20,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: the compile now records the spacing TeX discards at every column and page break, so lines that flow across a break land on the engine's own spacing instead of a guess
 - fix: content pushed across breaks can now ripple through several columns and pages in one keystroke, each step decided by the engine, and renders exactly with no refining tint when every step is certified
 - fix: deleting lines now pulls content back from the next column or page live, instead of leaving a gap until the recompile
+- fix: live preview reads the spacing between every pair of lines from the engine instead of deriving it, so the break check works from the document's real vertical list
+- fix: pages of documents that shift the page origin no longer render offset in live preview
 
 ## [0.17.1] - 2026-08-19
 

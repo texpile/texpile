@@ -123,6 +123,12 @@ local function write_manifest()
 	-- more engine registers the instant path used to guess: \columnsep (column origin
 	-- synthesis), \baselineskip and \parskip (line-gap fallbacks and flow-gap bounds)
 	local csep = (tex.dimen and tex.dimen["columnsep"] or 0) / 65536.0
+	-- \hoffset/\voffset displace the page's reference point away from TeX's 1in default.
+	-- The renderer used to assume the default for every document, so a class or preamble
+	-- that moves the origin painted every page displaced with nothing able to detect it.
+	local hoff, voff = 0, 0
+	pcall(function() hoff = tex.dimen["hoffset"] / 65536.0 end)
+	pcall(function() voff = tex.dimen["voffset"] / 65536.0 end)
 	local bls, pks, tsk = 0, 0, 0
 	pcall(function() bls = tex.getglue("baselineskip") / 65536.0 end)
 	pcall(function() pks = tex.getglue("parskip") / 65536.0 end)
@@ -143,8 +149,8 @@ local function write_manifest()
 			i, p.w, p.h, p.ht, p.gs or 0, p.gsn or 0, p.go or 0, unc)
 	end
 	f:write(string.format(
-		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f,"topSkip":%.4f%s,"pages":[%s]}',
-		pageno, pw, ph, cw, tw, fsk, csep, bls, pks, tsk,
+		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f,"topSkip":%.4f,"hOffset":%.4f,"vOffset":%.4f%s,"pages":[%s]}',
+		pageno, pw, ph, cw, tw, fsk, csep, bls, pks, tsk, hoff, voff,
 		body_line and string.format(',"bodyLine":%d', body_line) or "", table.concat(t, ",")))
 	f:close()
 	-- counter snapshots ride a sidecar (they are per-line, not per-page)
