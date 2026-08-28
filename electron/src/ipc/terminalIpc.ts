@@ -4,6 +4,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as typstService from '../typstService';
 import * as toolchain from '../toolchain';
+import { shellEnvReady } from '../shell/shellEnv';
 
 // node-pty is a native module: if it isn't built for this Electron ABI the require throws,
 // so guard it and let the renderer show the terminal as unavailable
@@ -32,7 +33,7 @@ function defaultShell(): string {
  * or anything else) by name, exactly as a user typing the same command by hand would, so a compile
  * command stays the same string on every machine.
  *
- * Nothing else needs adding: the user's own installs are on PATH, and fixShellPath() has already
+ * Nothing else needs adding: the user's own installs are on PATH, and shellEnvReady() has already
  * recovered the login-shell PATH this process was launched without.
  */
 function terminalEnv(): NodeJS.ProcessEnv {
@@ -68,9 +69,11 @@ export function killAllPtys(): void {
 export function registerTerminalIpc(): void {
 	ipcMain.handle('terminal:available', () => pty != null);
 
-	ipcMain.handle('terminal:spawn', (e, { id, cwd, cols, rows }: TerminalSpawnOpts = {}) => {
+	ipcMain.handle('terminal:spawn', async (e, { id, cwd, cols, rows }: TerminalSpawnOpts = {}) => {
 		if (!pty) return { ok: false, error: 'node-pty is not built for this Electron build (run `pnpm electron:rebuild`).' };
 		if (id == null) return { ok: false, error: 'Missing terminal id' };
+		// terminalEnv() copies process.env, so the shell's PATH must already be in it
+		await shellEnvReady();
 		// `shell` tells the renderer which chaining syntax works for its done-sentinel
 		// (cmd wants `&`, everything else `;`)
 		const shellPath = defaultShell();

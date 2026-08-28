@@ -5,6 +5,7 @@ import { execFile } from 'node:child_process';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import * as crypto from 'node:crypto';
+import { shellEnvReady } from '../shell/shellEnv';
 
 const OUT = '_draft';
 
@@ -72,6 +73,7 @@ export function seedBbl(root: string, outAbs: string, mainFile: string): void {
 // The aux cycle (latexmk-lite): run biber (biblatex) when the .bcf changed, or bibtex
 // (\bibdata in the aux) when the .bbl is missing/stale. Returns whether the .bbl changed.
 export async function auxCycle(root: string, outAbs: string, mainFile: string): Promise<boolean> {
+	await shellEnvReady();
 	const bbl = path.join(outAbs, 'draft.bbl');
 	const bblBefore = mtimeOf(bbl) + ':' + (fs.existsSync(bbl) ? sha1(fs.readFileSync(bbl)) : '');
 	seedBbl(root, outAbs, mainFile);

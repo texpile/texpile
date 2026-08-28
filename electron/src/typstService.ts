@@ -7,6 +7,7 @@
 import { execFile, spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { shellEnvReady } from './shell/shellEnv';
 
 export type TinymistInfo = {
 	/** the command to spawn: an absolute path, or the bare name when it came from PATH */
@@ -45,7 +46,8 @@ function parseVersion(out: string): { version: string; typstVersion: string } {
 	return { version: v?.[1] ?? 'unknown', typstVersion: t?.[1] ?? 'unknown' };
 }
 
-function probe(command: string): Promise<{ version: string; typstVersion: string } | null> {
+async function probe(command: string): Promise<{ version: string; typstVersion: string } | null> {
+	await shellEnvReady();
 	return new Promise((resolve) => {
 		execFile(command, ['--version'], { timeout: 8000, windowsHide: true }, (err, stdout) => {
 			if (err) return resolve(null);
@@ -61,8 +63,8 @@ function probe(command: string): Promise<{ version: string; typstVersion: string
  *
  * PATH, and nothing the user configures in Texpile. There used to be a path box in Preferences,
  * removed because where a program lives is the operating system's answer to give: every installer
- * (winget, scoop, brew, cargo) puts tinymist on PATH, main.ts's fixShellPath already recovers the
- * real login-shell PATH that a GUI launch would otherwise miss, and none of the eight LaTeX tools
+ * (winget, scoop, brew, cargo) puts tinymist on PATH, shellEnvReady already recovers the real
+ * login-shell PATH that a GUI launch would otherwise miss, and none of the eight LaTeX tools
  * beside it has an override either. A per-app copy of $PATH is a second place for the answer to be
  * wrong.
  *

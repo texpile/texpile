@@ -4,7 +4,7 @@ import { app, BrowserWindow } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { applyAppIdentity } from './appIdentity';
-import { fixShellPath } from './fixShellPath';
+import { shellEnvReady } from './shell/shellEnv';
 import { registerPrivilegedSchemes, registerProtocolHandlers } from './appProtocols';
 import { readSettings, writeSettings, registerSettingsIpc } from './appSettings';
 import { createWindow, startUrl } from './windows/createWindow';
@@ -17,7 +17,6 @@ import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
 
 applyAppIdentity();
-fixShellPath();
 registerPrivilegedSchemes();
 
 // only what a window needs before it can paint; the rest is in deferredIpc
@@ -135,6 +134,9 @@ app.whenReady().then(() => {
 		if (folders.length) for (const f of folders) createWindow(startUrl(), { kind: 'folder', path: f });
 		else createWindow(startUrl());
 	}
+
+	// warmed here, not at module scope: the login shell it spawns is slower than the whole launch
+	void shellEnvReady();
 
 	// Not before the renderer has been served its own bundle. The app:// handler runs on this
 	// thread, so evaluating these any earlier stalls the very requests the first paint waits on -

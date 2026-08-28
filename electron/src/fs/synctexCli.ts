@@ -3,8 +3,10 @@
 import { execFile } from 'node:child_process';
 import { dirname, isAbsolute, normalize, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
+import { shellEnvReady } from '../shell/shellEnv';
 
-function runSynctex(args: string[]): Promise<string> {
+async function runSynctex(args: string[]): Promise<string> {
+	await shellEnvReady();
 	return new Promise((res, rej) => {
 		execFile('synctex', args, { timeout: 10000, maxBuffer: 1 << 20 }, (err, stdout) => {
 			// synctex exits non-zero on "no match" but still prints useful output; only reject on empty

@@ -12,6 +12,7 @@ import { resolveType1Line } from '../fontT1Map';
 import { seedBbl, auxCycle } from './draftBib';
 import { exportDaemonRefs } from './draftRefs';
 import { readImageUses, attachImageFiles } from './draftImages';
+import { shellEnvReady } from '../shell/shellEnv';
 
 // ht = the shipout box HEIGHT = distance from box top to the box baseline, which is the
 // FOOTER line's baseline -- the renderer uses it to keep bottom-anchored footers out of
@@ -82,6 +83,7 @@ function runFor(root: string): CompileRun {
 const ONE_INCH_PT = 72.27;
 
 export async function compileDraft(body: DraftBody): Promise<DraftResult> {
+	await shellEnvReady();
 	const { root, mainFile } = body;
 	const engineDir = body.engineDir.replace(/\\/g, '/');
 	const engine = body.engine || 'lualatex';

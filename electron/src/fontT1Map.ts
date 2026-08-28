@@ -8,6 +8,7 @@
 import { execFile } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { shellEnvReady } from './shell/shellEnv';
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- font records are schemaless engine JSON */
 
@@ -33,11 +34,14 @@ const kpseCache = new Map<string, Promise<string | null>>();
 function kpsewhich(file: string): Promise<string | null> {
 	let p = kpseCache.get(file);
 	if (!p) {
-		p = new Promise((resolve) => {
-			execFile('kpsewhich', [file], { timeout: 15000 }, (err, stdout) => {
-				resolve(err ? null : stdout.toString().trim().replace(/\\/g, '/') || null);
-			});
-		});
+		p = shellEnvReady().then(
+			() =>
+				new Promise<string | null>((resolve) => {
+					execFile('kpsewhich', [file], { timeout: 15000 }, (err, stdout) => {
+						resolve(err ? null : stdout.toString().trim().replace(/\\/g, '/') || null);
+					});
+				})
+		);
 		kpseCache.set(file, p);
 	}
 	return p;

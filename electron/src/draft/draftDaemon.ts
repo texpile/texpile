@@ -7,6 +7,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as crypto from 'node:crypto';
 import { resolveType1 } from '../fontT1Map';
+import { shellEnvReady } from '../shell/shellEnv';
 
 const BLOCK_TIMEOUT_MS = 6000;
 const OUT_REL = '_draft';
@@ -67,7 +68,8 @@ function hashOf(s: string): string {
 	return crypto.createHash('sha1').update(s).digest('hex');
 }
 
-function spawnDaemon(root: string, engineDir: string, preamble: string): Promise<Daemon> {
+async function spawnDaemon(root: string, engineDir: string, preamble: string): Promise<Daemon> {
+	await shellEnvReady();
 	const engine = engineDir.replace(/\\/g, '/');
 	const outDir = path.join(root, '_draft');
 	fs.mkdirSync(outDir, { recursive: true });

@@ -7,6 +7,7 @@
 // Deliberately a PROBE, not a resolver: it reports what it found and where, and never installs or
 // modifies anything.
 import { execFile } from 'node:child_process';
+import { shellEnvReady } from './shell/shellEnv';
 
 export type ToolProbe = {
 	id: string;
@@ -79,6 +80,7 @@ const TOOLS: { id: string; command: string; args: string[] }[] = [
  * sequential probes would make the panel feel broken.
  */
 export async function probeToolchain(): Promise<ToolProbe[]> {
+	await shellEnvReady();
 	return Promise.all(TOOLS.map((t) => probeOne(t.id, t.command, t.args)));
 }
 

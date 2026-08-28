@@ -70,6 +70,6 @@
 {@render toolRows('latex', m.prefs_group_latex())}
 {@render toolRows('typst', m.prefs_group_typst())}
 <!-- No path box for tinymist, and none for the eight above it either. Where a program lives is
-     the operating system's answer to give: every installer puts it on PATH, and fixShellPath()
-     in main.ts already recovers the login-shell PATH a GUI launch misses. -->
+     the operating system's answer to give: every installer puts it on PATH, and shellEnvReady()
+     already recovers the login-shell PATH a GUI launch misses. -->
 {@render toolRows('general', m.prefs_group_vcs())}

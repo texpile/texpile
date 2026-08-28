@@ -5,9 +5,11 @@
 import { writeFile, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { execFile } from 'node:child_process';
+import { shellEnvReady } from '../shell/shellEnv';
 
 export async function formatLatex(filePath: string, text: string): Promise<{ formatted: string }> {
 	if (!filePath) throw new Error('Missing path');
+	await shellEnvReady();
 	const dir = dirname(filePath);
 	const tempFile = join(dir, `.texpile-format-${Date.now()}-${Math.random().toString(36).slice(2)}.tex`);
 	const logFile = join(dir, 'indent.log');
