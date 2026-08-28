@@ -212,7 +212,7 @@ export async function planPullChain(
 		deps.emit('pull-hop', { page: donor.slot.spillPage, pulled, next: pulledNext });
 		// the donor's rest is packed to its goal EXACTLY: only a page the engine also fills
 		// respaces that way (see the same guard in planBreakChain)
-		if (!deps.packsToGoal(donor.slot.spillPage)) exact = false;
+		if (!deps.columnFills(donor.slot.spillPage, donor.slot.col)) exact = false;
 		if (next === 'none') {
 			exact = exact && r.go > 0;
 			return finish('doc-end');

@@ -45,7 +45,7 @@ function deps(results: any[], calls: string[] = [], seams: SeamEntry[] = [], opt
 		},
 		seams: () => seams,
 		colBottomOf: () => 170,
-		packsToGoal: () => opts.packs !== false,
+		columnFills: () => opts.packs !== false,
 		pageIsRtl: () => !!opts.rtl,
 		emit: () => {}
 	};

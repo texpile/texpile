@@ -334,8 +334,14 @@ end
 -- close, page furniture emitted after the last column would read as part of it.
 local function emitColumn(emit, stamp, left, top, box)
 	if box.width <= pt then return false end
-	emit(string.format('{"t":"col","i":%d,"x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-		stamp, left / pt, (top + box.height) / pt, box.width / pt, box.height / pt, box.depth / pt))
+	-- the column box's OWN glue state, which is where the output routine's vpack to
+	-- \textheight lands. gord 0 means finite glue absorbed the slack, so the column packed to
+	-- its goal and an exact re-split reproduces the engine's spacing; gord > 0 means a fil
+	-- took it and the column did not fill. The shipout box carries none of this (measured: 0
+	-- on every page of every fixture) -- the stretch lives one level in, on this box.
+	emit(string.format('{"t":"col","i":%d,"x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f,"gs":%.6f,"gsn":%d,"gord":%d}',
+		stamp, left / pt, (top + box.height) / pt, box.width / pt, box.height / pt, box.depth / pt,
+		box.glue_set or 0, box.glue_sign or 0, box.glue_order or 0))
 	return true
 end
 

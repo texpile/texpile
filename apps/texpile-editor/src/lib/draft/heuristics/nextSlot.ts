@@ -28,6 +28,8 @@ export type NextSlot = {
 	topB: number;
 	// x displacement for rows that keep page-absolute coordinates when they change column
 	movedDx: number;
+	// 0-based index of the receiving column on its page, when the compile recorded columns
+	col?: number;
 };
 
 // The next slot in reading order: TeX fills columns left to right before breaking the
@@ -104,5 +106,5 @@ export function nextSlot(ctx: OverflowContext, cal: SlotFrom, h1: number): NextS
 	// moved rows carry page-absolute x: offset by the measured column displacement, and
 	// snap sub-tolerance offsets to 0 so same-column targets keep their exact x
 	const movedDx = Math.abs(colTx - myTx) <= COL_GUTTER ? 0 : colTx - myTx;
-	return { samePage, spillPage: pB, colTx, colLB, colRB, topB, movedDx };
+	return { samePage, spillPage: pB, colTx, colLB, colRB, topB, movedDx, ...(slot.i === undefined ? {} : { col: slot.i }) };
 }

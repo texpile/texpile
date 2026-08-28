@@ -15,8 +15,8 @@ export type ChainDeps = {
 	seams: () => SeamEntry[];
 	colBottomOf: (p: number) => number;
 	/** the engine fills this page's columns to their goal: only there does a capacity
-	 *  split's packing match the engine's own (see packsToGoal) */
-	packsToGoal: (p: number) => boolean;
+	 *  split's packing match the engine's own (see columnFills) */
+	columnFills: (page: number, col: number | undefined) => boolean;
 	/** a right-to-left page takes the raster and ignores patches: flowing onto one would
 	 *  clip rows off this page with nothing drawn in their place */
 	pageIsRtl: (p: number) => boolean;
@@ -214,11 +214,22 @@ export async function planBreakChain(
 			clipBottom: clipMid === undefined ? undefined : clipMid + delta,
 			flowBottom: floorB
 		});
-		deps.emit('chain-hop', { page: slot.spillPage, certified: true, kA: cf.kA, kB: cf.kB, calDev: +calDev.toFixed(3) });
+		const fills = deps.columnFills(slot.spillPage, slot.col);
+		deps.emit('chain-hop', {
+			page: slot.spillPage,
+			col: slot.col,
+			certified: true,
+			kA: cf.kA,
+			kB: cf.kB,
+			calDev: +calDev.toFixed(3),
+			fills
+		});
 		// the split packs to the goal EXACTLY, so its spacing is the engine's only where the
-		// engine also fills the column; a fil-terminated page (the document's last one
-		// included) leaves the rows at natural spacing and this respace would spread them
-		if (!deps.packsToGoal(slot.spillPage)) exact = false;
+		// engine also filled THIS column; a fil-terminated one (the document's last column
+		// included) leaves its rows at natural spacing and an exact respace would spread them.
+		// Asked per column: the older page-wide inference condemned every column of a page for
+		// one fil anywhere on it, including page furniture above the columns entirely.
+		if (!fills) exact = false;
 		if (cf.kB === 0) {
 			if (exact) exact = await absorbConfirmed(deps, ctx, seams, cal, slot, skelB, recsB, spliced, capacity, total);
 			return finish('absorbed');

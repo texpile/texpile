@@ -41,6 +41,7 @@ export function classify(events) {
 				'bail',
 				'locate-bail',
 				'locate-source-bail',
+				'chain-end',
 				'locate-glyph-bail',
 				'locate-xpage-bail',
 				'locate-inverse-bail',

@@ -49,8 +49,8 @@ type PatcherHooks = {
 	seams: () => SeamEntry[];
 	/** a right-to-left page paints from the raster only: no patch may target it */
 	pageIsRtl: (p: number) => boolean;
-	/** the engine fills this page's columns to their goal (see heuristics/packsToGoal) */
-	packsToGoal: (p: number) => boolean;
+	/** the engine filled this COLUMN to its goal (see heuristics/columnFills) */
+	columnFills: (page: number, col: number | undefined) => boolean;
 	followEdit: (page: number, top: number, bottom: number, colL?: number, colR?: number) => void;
 	emit: (kind: string, detail?: unknown) => void;
 };
@@ -340,7 +340,7 @@ export class DraftPatcher {
 				splitSkeleton: h.splitSkeleton,
 				seams: h.seams,
 				colBottomOf: h.colBottomOf,
-				packsToGoal: h.packsToGoal,
+				columnFills: h.columnFills,
 				pageIsRtl: h.pageIsRtl,
 				emit: h.emit
 			};

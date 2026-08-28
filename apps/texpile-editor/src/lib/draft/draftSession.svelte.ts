@@ -13,7 +13,7 @@ import { DraftFonts } from './draftFonts';
 import { DraftBitmaps } from './draftBitmaps';
 import { paintRecords, splitPatchRecords, type PaintDeps } from './draftPaint';
 import { flowDyAt } from './patch/glueShift';
-import { packsToGoal } from './heuristics/packsToGoal';
+import { columnFills } from './heuristics/columnFills';
 import { DraftViewport } from './draftViewport.svelte';
 import { DraftPatcher } from './draftPatcher.svelte';
 import { DraftCompiler } from './draftCompiler.svelte';
@@ -135,7 +135,7 @@ export class DraftSession {
 			pdfPath: () => this.opts.root() + '/_draft/draft.pdf',
 			seams: () => this.seams,
 			pageIsRtl: (p) => this.rtlPage(p),
-			packsToGoal: (p) => packsToGoal(this.pageRecords(p)),
+			columnFills: (p, c) => columnFills(this.pageRecords(p), c),
 			splitSkeleton: (items, targetPt, capacity) => {
 				const nb = nativeBridge();
 				if (!nb?.draftSkeleton) return Promise.resolve({ ok: false as const, error: 'no-bridge' });
