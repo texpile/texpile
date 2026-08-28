@@ -2,6 +2,8 @@
 // window.__draftEvents via __live.events(), stamped with performance.now() at emit.
 const OUTCOME = {
 	patched: 'EXACT',
+	'patched-chain': 'EXACT',
+	'patched-pull': 'EXACT',
 	provisional: 'PROV',
 	'provisional-split': 'PROV',
 	'provisional-insert': 'PROV',
@@ -10,7 +12,15 @@ const OUTCOME = {
 	'transient-hold': 'TRANSIENT',
 	error: 'ERROR'
 };
-const VISUAL = new Set(['patched', 'provisional', 'provisional-split', 'provisional-insert', 'provisional-delete']);
+const VISUAL = new Set([
+	'patched',
+	'patched-chain',
+	'patched-pull',
+	'provisional',
+	'provisional-split',
+	'provisional-insert',
+	'provisional-delete'
+]);
 
 /** Classify one edit burst: last outcome wins; latency = first event -> first visual outcome. */
 export function classify(events) {

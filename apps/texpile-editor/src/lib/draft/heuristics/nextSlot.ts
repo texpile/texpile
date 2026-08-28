@@ -13,6 +13,10 @@ export type OverflowContext = {
 	colSep?: number;
 };
 
+// the geometry a slot election actually needs; Cal satisfies it, and the chain planner
+// synthesizes one per hop as the flow moves through columns the locate never visited
+export type SlotFrom = Pick<Cal, 'pageNo' | 'colL' | 'colR' | 'W' | 'medGap'>;
+
 export type NextSlot = {
 	samePage: boolean;
 	spillPage: number;
@@ -33,7 +37,7 @@ export type NextSlot = {
 // but as a slot they painted the spill back inside this same column, over the title.
 // Content past the next origin proves a real column there; else route to the next page.
 // null: the spill would leave the document (no next page exists).
-export function nextSlot(ctx: OverflowContext, cal: Cal, h1: number): NextSlot | null {
+export function nextSlot(ctx: OverflowContext, cal: SlotFrom, h1: number): NextSlot | null {
 	const pageA = ctx.pageRecords(cal.pageNo);
 	const myTx = cal.colL + COL_GUTTER;
 	const gA = pageA.filter((x: any) => x.t === 'g');

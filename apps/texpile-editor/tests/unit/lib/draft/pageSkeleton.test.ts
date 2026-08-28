@@ -1,11 +1,37 @@
 import { describe, expect, it } from 'vitest';
 import { buildPageSkeleton, spliceBandSkeleton } from '$lib/draft/heuristics/pageSkeleton';
+import type { PageRecord } from '$lib/draft/geometry/geometry.types';
 
 // The decisions under test: what becomes a skeleton item, the rigid remainder of each
 // gap, and when the builder must refuse rather than lie.
 const pl = (y: number, h = 8, d = 3, x = 10, w = 200) => ({ t: 'pl', x, y, w, h, d });
 const vg = (y: number, w: number, nw: number, st: number, x = 10) => ({ t: 'vg', x, y, w, nw, st, sto: 0, sh: 0, sho: 0 });
 const pen = (y: number, p: number) => ({ t: 'pen', y, p });
+
+describe('buildPageSkeleton float boxes', () => {
+	// engine record shapes from a [t] table float above two body paragraphs: the float's
+	// caption and tabular emit pl records indistinguishable from galley text, and only the
+	// vbox marker says the engine pins them as a unit
+	const pl = (y: number) => ({ t: 'pl', x: 0, y, w: 229.5, h: 7, d: 2 });
+	const body = [pl(70), pl(82), pl(94), pl(151), pl(163), pl(175)];
+	// the real shape: a container's recorded depth stops at its LAST BASELINE, so its last
+	// line's descender hangs below the box it is inside (measured, twocol fixture page 1)
+	const container = { t: 'vbox', x: 0, y: 175, w: 229.5, h: 122, d: 0 };
+
+	it('a box holding PART of the column refuses it: those lines are not galley', () => {
+		const float = { t: 'vbox', x: 0, y: 100, w: 229.5, h: 40, d: 0 };
+		expect(buildPageSkeleton([...body, float, container] as PageRecord[], -10, 240)).toBeNull();
+	});
+
+	it('the column container holds every line and is not a float', () => {
+		expect(buildPageSkeleton([...body, container] as PageRecord[], -10, 240)).not.toBeNull();
+	});
+
+	it('a box in another column is not this column’s problem', () => {
+		const other = { t: 'vbox', x: 300, y: 100, w: 229.5, h: 40, d: 0 };
+		expect(buildPageSkeleton([...body, other, container] as PageRecord[], -10, 240)).not.toBeNull();
+	});
+});
 
 describe('buildPageSkeleton', () => {
 	it('boxes, penalties, stretchables and the rigid remainder, in list order', () => {

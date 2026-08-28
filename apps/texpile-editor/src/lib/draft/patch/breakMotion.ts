@@ -1,11 +1,11 @@
 import type { FlowStep } from './glueShift';
-import type { PageSkeleton } from '../heuristics/pageSkeleton';
+import type { PageSkeleton, SkelItem } from '../heuristics/pageSkeleton';
 
 // What the renderer needs to SHOW a moved break: certified baselines for everything the
 // engine keeps on this column, and the identity (old baselines) of the boxes it carries
 // to the next slot. Derived from the capacity split the certificate already ran. The
-// carried lines' placement in the next slot stays first-order (the seam spacing at a
-// break is material the old layout discarded), so the render is always provisional.
+// chain planner re-splits the receiving column with carriedItems on top; whether the
+// render stays provisional depends on whether every junction has captured seam data.
 export type BreakMotion = {
 	// certified page-absolute baselines for the band lines (the break falls below the band)
 	bandAbsYs: number[];
@@ -13,6 +13,9 @@ export type BreakMotion = {
 	staySteps: FlowStep[];
 	// OLD page-absolute baselines of the boxes the engine carries out, in column order
 	movedBases: number[];
+	// the carried run as skeleton items (first carried box to column end; the glue at the
+	// new break above it is pruned in a real re-break, so the run starts AT the box)
+	carriedItems: SkelItem[];
 	// old-position boundary separating the last staying row from the first carried row
 	clipY: number;
 	maxAboveDy: number;
@@ -23,6 +26,7 @@ export type BreakMotion = {
 // provisional path handles that case honestly.
 export function breakMotion(
 	skel: PageSkeleton,
+	top: number,
 	bandBoxes: number,
 	fromBox: number,
 	toBox: number,
@@ -36,13 +40,13 @@ export function breakMotion(
 	if (split.kA < fromBox + bandBoxes || split.kA >= boxesAfter) return null;
 	if (split.kA + split.kB !== boxesAfter || split.ys.length !== split.kA) return null;
 	const bandAbsYs: number[] = [];
-	for (let j = 0; j < bandBoxes; j++) bandAbsYs.push(skel.top + split.ys[fromBox + j]);
+	for (let j = 0; j < bandBoxes; j++) bandAbsYs.push(top + split.ys[fromBox + j]);
 	const staySteps: FlowStep[] = [];
 	let maxAboveDy = 0;
 	for (let n = 0; n < split.kA; n++) {
 		if (n >= fromBox && n < fromBox + bandBoxes) continue;
 		const k = n < fromBox ? n : toOld(n);
-		const dy = skel.top + split.ys[n] - skel.boxYs[k];
+		const dy = top + split.ys[n] - skel.boxYs[k];
 		if (n < fromBox) maxAboveDy = Math.max(maxAboveDy, Math.abs(dy));
 		// threshold at the box TOP so the whole line moves together
 		else staySteps.push({ y: skel.boxYs[k] - skel.boxHs[k] - 0.01, dy });
@@ -62,6 +66,7 @@ export function breakMotion(
 		bandAbsYs,
 		staySteps,
 		movedBases,
+		carriedItems: skel.items.slice(skel.boxIdx[kFirst]),
 		clipY: (prevBottom + carriedTop) / 2,
 		maxAboveDy
 	};

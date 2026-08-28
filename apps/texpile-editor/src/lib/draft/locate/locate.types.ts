@@ -14,6 +14,7 @@ export type PaperMetrics = {
 	colSep: number;
 	blSkip: number;
 	parSkip: number;
+	topSkip: number;
 };
 
 export type Cal = {

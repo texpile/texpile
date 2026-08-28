@@ -45,6 +45,17 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 	// wholly inside another line's vertical span is not a galley item
 	const lines = pls.filter((a) => !pls.some((b) => b !== a && a.y - a.h >= b.y - b.h - GAP_EPS && a.y + a.d <= b.y + b.d + GAP_EPS));
 	if (lines.length < 2) return null;
+	// A box holding PART of this column's lines (a float pinned at the top, a vmode
+	// parbox): its inner lines look like galley text in the records, but the engine
+	// re-places the whole box on its own terms, so re-breaking those lines would answer a
+	// question TeX never asks. A box holding ALL of them is the column's own container.
+	// by BASELINE, not full extent: a container box's own depth stops at its last baseline
+	// while that line's descender hangs below it, which no line is ever "inside"
+	for (const r of recs as any[]) {
+		if (r.t !== 'vbox' || r.x < colL || r.x > colR) continue;
+		const held = lines.filter((l) => l.y >= r.y - r.h - GAP_EPS && l.y <= r.y + r.d + GAP_EPS).length;
+		if (held > 0 && held < lines.length) return null;
+	}
 	const i0 = lines[0].i,
 		i1 = lines[lines.length - 1].i;
 	// anything the skeleton cannot represent refuses the whole page
@@ -94,6 +105,23 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 	}
 	const top = lines[0].y - lines[0].h;
 	return { items, boxYs, boxHs, boxIdx, top, target: lines[lines.length - 1].y - top };
+}
+
+// Where a re-split of this column packs its top edge. The page builder puts a column's
+// first baseline \topskip below the body top unless the box is taller than \topskip, so a
+// column whose FIRST box changed height does not start where the old one did -- the split
+// ys are measured from the packed top, and anchoring them at the old top would slide the
+// whole column. Identity when the first height is unchanged (the ordinary case).
+export function packedTop(skel: PageSkeleton, firstH: number, topSkip: number): number {
+	if (!(topSkip > 0)) return skel.top;
+	const bodyTop = skel.boxYs[0] - Math.max(topSkip, skel.boxHs[0]);
+	return bodyTop + Math.max(topSkip, firstH) - firstH;
+}
+
+/** the height of a spliced item list's first box, for the landing rule */
+export function firstBoxHeight(items: SkelItem[]): number {
+	const b = items.find((i) => i.t === 'b');
+	return b ? (b as { t: 'b'; h: number; d: number }).h : 0;
 }
 
 // Replace the boxes (and internal gaps) of [fromBox, toBox] with the edited band's own

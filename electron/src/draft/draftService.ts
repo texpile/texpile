@@ -47,10 +47,15 @@ export type DraftResult =
 			colSep: number;
 			blSkip: number;
 			parSkip: number;
+			// \topskip: where a column's first baseline lands (chain-planner landing rule)
+			topSkip: number;
 			// the line \begin{document} executed at (in the main file), from the hook itself
 			bodyLine?: number;
 			// per-line counter snapshots (see page-extract.lua): the daemon pins to these
 			counters: { l: number; f?: string; s: Record<string, number> }[];
+			// per-break pruned runs (see page-extract.lua seam capture): the material TeX
+			// discarded at each column/page break, keyed by page + 1-based column index
+			seams: { page: number; col: number; pen: number; run: Record<string, number>[] }[];
 			marginX: number;
 			marginY: number;
 			pages: DraftPage[];
@@ -116,7 +121,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	}
 	// clear stale page files so a shorter document doesn't keep orphaned pages
 	for (const f of fs.readdirSync(outAbs))
-		if (/^page-\d+\.jsonl$/.test(f) || f === 'pages.json' || f === 'counters.jsonl') {
+		if (/^page-\d+\.jsonl$/.test(f) || f === 'pages.json' || f === 'counters.jsonl' || f === 'seams.jsonl') {
 			try {
 				fs.rmSync(path.join(outAbs, f));
 			} catch {
@@ -176,7 +181,10 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	function refState(): string {
 		return REF_FILES.map((f) => {
 			try {
-				return crypto.createHash('sha1').update(fs.readFileSync(path.join(outAbs, f))).digest('hex');
+				return crypto
+					.createHash('sha1')
+					.update(fs.readFileSync(path.join(outAbs, f)))
+					.digest('hex');
 			} catch {
 				return '';
 			}
@@ -265,6 +273,19 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		/* older engine bridge or an empty log: pins fall back to fixed values */
 	}
 
+	// seam sidecar: per-break pruned runs; absent (older engine, luatexbase missing) means
+	// the chain planner falls back to its guessed junction gap and stays provisional
+	let seams: { page: number; col: number; pen: number; run: Record<string, number>[] }[] = [];
+	try {
+		seams = fs
+			.readFileSync(path.join(outAbs, 'seams.jsonl'), 'utf8')
+			.split('\n')
+			.filter(Boolean)
+			.map((ln) => JSON.parse(ln));
+	} catch {
+		/* no seams: junction gaps stay guessed */
+	}
+
 	const imageUses = readImageUses(outAbs);
 	const pages: DraftPage[] = [];
 	for (let n = 1; n <= manifest.count; n++) {
@@ -303,8 +324,10 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		colSep: (manifest as { colSep?: number }).colSep || 0,
 		blSkip: (manifest as { blSkip?: number }).blSkip || 0,
 		parSkip: (manifest as { parSkip?: number }).parSkip || 0,
+		topSkip: (manifest as { topSkip?: number }).topSkip || 0,
 		bodyLine: manifest.bodyLine,
 		counters,
+		seams,
 		marginX: ONE_INCH_PT,
 		marginY: ONE_INCH_PT,
 		pages

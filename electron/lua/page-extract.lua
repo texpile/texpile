@@ -15,6 +15,60 @@ local walker = dofile(ENGINE_DIR .. "/walker.lua")
 local pageno = 0
 local pages = {}
 
+-- Seam capture: the vertical material TeX prunes at every column/page break (the glue
+-- run that would sit at the junction if the break moved) plus the break's \outputpenalty.
+-- \savingvdiscards makes the engine SAVE each break's pruned run (eTeX \pagediscards);
+-- the run for the break that filled box255 is only complete at the NEXT output firing,
+-- so each pre_output_filter snapshot belongs to the PREVIOUS firing's break. Real breaks
+-- have \outputpenalty >= -10000; LaTeX's float/clearpage cycles run below that and get
+-- no seam entry (their box255 is recycled, not a column).
+local seam_pending, seam_done, seam_cols = nil, {}, 0
+local GLUE_ID, KERN_ID, PEN_ID = node.id("glue"), node.id("kern"), node.id("penalty")
+
+local function seam_run_json()
+	local out, n, cnt = {}, tex.lists.page_discards_head, 0
+	while n and cnt < 40 do
+		if n.id == GLUE_ID then
+			out[#out + 1] = string.format('{"w":%.4f,"st":%.4f,"sto":%d,"sh":%.4f,"sho":%d}',
+				(n.width or 0) / 65536.0, (n.stretch or 0) / 65536.0, n.stretch_order or 0,
+				(n.shrink or 0) / 65536.0, n.shrink_order or 0)
+		elseif n.id == KERN_ID then
+			out[#out + 1] = string.format('{"k":%.4f}', (n.kern or 0) / 65536.0)
+		elseif n.id == PEN_ID then
+			out[#out + 1] = string.format('{"p":%d}', n.penalty or 0)
+		else
+			-- the engine only saves glue/kern/penalty; anything else marks the run unusable
+			out[#out + 1] = '{"x":true}'
+		end
+		n = n.next
+		cnt = cnt + 1
+	end
+	-- a run longer than the cap is TRUNCATED, and a short seam is worse than no seam:
+	-- poison it the same way an unrepresentable node does
+	if n then out[#out + 1] = '{"x":true}' end
+	return "[" .. table.concat(out, ",") .. "]"
+end
+
+local function seam_mark()
+	if seam_pending then
+		seam_pending.run = seam_run_json()
+		seam_done[#seam_done + 1] = seam_pending
+		seam_pending = nil
+	end
+	local pen = tex.outputpenalty or 0
+	if pen >= -10000 then
+		seam_cols = seam_cols + 1
+		seam_pending = { pen = pen, col = seam_cols }
+	end
+	return true
+end
+
+-- registration is best-effort: a build without luatexbase just compiles seamless
+pcall(function()
+	tex.set("global", "savingvdiscards", 1)
+	luatexbase.add_to_callback("pre_output_filter", seam_mark, "texpile.seam")
+end)
+
 -- Counter truth for the instant path: a snapshot of the standard counters at every
 -- \stepcounter/\setcounter (the job string wraps them), keyed by source line + input
 -- file. The daemon pins to these TRUE values, so a heading/footnote/item patch can
@@ -69,9 +123,12 @@ local function write_manifest()
 	-- more engine registers the instant path used to guess: \columnsep (column origin
 	-- synthesis), \baselineskip and \parskip (line-gap fallbacks and flow-gap bounds)
 	local csep = (tex.dimen and tex.dimen["columnsep"] or 0) / 65536.0
-	local bls, pks = 0, 0
+	local bls, pks, tsk = 0, 0, 0
 	pcall(function() bls = tex.getglue("baselineskip") / 65536.0 end)
 	pcall(function() pks = tex.getglue("parskip") / 65536.0 end)
+	-- \topskip governs where a column's FIRST baseline lands: the chain planner needs it
+	-- to place carried lines at a receiving column's top the way the page builder would
+	pcall(function() tsk = tex.getglue("topskip") / 65536.0 end)
 	local t = {}
 	for i = 1, pageno do
 		local p = pages[i]
@@ -86,8 +143,8 @@ local function write_manifest()
 			i, p.w, p.h, p.ht, p.gs or 0, p.gsn or 0, p.go or 0, unc)
 	end
 	f:write(string.format(
-		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f%s,"pages":[%s]}',
-		pageno, pw, ph, cw, tw, fsk, csep, bls, pks,
+		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f,"topSkip":%.4f%s,"pages":[%s]}',
+		pageno, pw, ph, cw, tw, fsk, csep, bls, pks, tsk,
 		body_line and string.format(',"bodyLine":%d', body_line) or "", table.concat(t, ",")))
 	f:close()
 	-- counter snapshots ride a sidecar (they are per-line, not per-page)
@@ -96,12 +153,33 @@ local function write_manifest()
 		cf:write(table.concat(counter_log, "\n"))
 		cf:close()
 	end
+	-- completed seams ride a sidecar too: a page's LAST seam only finishes at the next
+	-- page's first firing, after that page's jsonl is already written
+	local sf = io.open(OUT .. "seams.jsonl", "w")
+	if sf then
+		local lines = {}
+		for _, s in ipairs(seam_done) do
+			if s.page and s.run then
+				lines[#lines + 1] = string.format('{"page":%d,"col":%d,"pen":%d,"run":%s}', s.page, s.col, s.pen, s.run)
+			end
+		end
+		sf:write(table.concat(lines, "\n"))
+		sf:close()
+	end
 end
 
 function page_extract(boxnum)
 	local b = tex.box[boxnum]
 	if not b then return end
 	pageno = pageno + 1
+	-- attribute breaks to this page: the firing shipping it is its last real break, and
+	-- every completed-but-unowned seam was an earlier column of it. Guarded nil-checks:
+	-- a firing can ship several pages (trailing float pages) and must claim only once.
+	if seam_pending and not seam_pending.page then seam_pending.page = pageno end
+	for _, s in ipairs(seam_done) do
+		if not s.page then s.page = pageno end
+	end
+	seam_cols = 0
 	-- The page's DIMENSIONS come from the box and are known whether or not the walk succeeds,
 	-- so record them unconditionally. Registering them only on success left a hole in `pages`
 	-- at the failed index, and the next page's write_manifest then indexed that nil and threw

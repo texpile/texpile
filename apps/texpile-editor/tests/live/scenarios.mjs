@@ -114,15 +114,48 @@ export const FIXTURES = [
 			{ name: 'page2-prose', anchor: 'pagetwobeta', expect: ['EXACT'] },
 			{ name: 'cross-page-span', anchor: 'straddle', expect: ['PROV'], maxMs: 16000 },
 			{
+				// the engine chain can certify this push onto page 2 (seam captured, page 2
+				// absorbs, document ends there) -- EXACT is the new ceiling, PROV legitimate
 				name: 'overflow-full-page',
 				anchor: 'fillerthree',
 				op: { t: 'append', text: ' overflow overflow overflow overflow overflow overflow overflow overflow' },
-				expect: ['PROV'],
+				expect: ['EXACT', 'PROV'],
 				maxMs: 16000
 			},
 			{
 				name: 'underflow-shrink',
 				anchor: 'fillerfive carries steady prose',
+				op: { t: 'deleteAfter', n: 90 },
+				expect: ['EXACT', 'PROV'],
+				maxMs: 16000
+			}
+		]
+	},
+	{
+		// flushbottom two-column article: the engine break-chain's proving ground -- moved
+		// column/page breaks render through per-hop capacity splits with captured seams,
+		// so EXACT is reachable; PROV stays legitimate when a hop refuses (pull probe,
+		// float in the path) and the first-order render stands
+		name: 'twocol',
+		scenarios: [
+			{ name: 'twocol-prose', anchor: 'colfiller five', expect: ['EXACT', 'PROV'] },
+			{
+				name: 'twocol-push-nextcol',
+				anchor: 'colfiller four considers',
+				op: { t: 'append', text: ' plus an appended clause long enough to make this paragraph a full line taller than it was before' },
+				expect: ['EXACT', 'PROV'],
+				maxMs: 16000
+			},
+			{
+				name: 'twocol-push-nextpage',
+				anchor: 'colfiller sixteen listens',
+				op: { t: 'append', text: ' plus an appended clause long enough to make this paragraph a full line taller than it was before' },
+				expect: ['EXACT', 'PROV'],
+				maxMs: 16000
+			},
+			{
+				name: 'twocol-pull',
+				anchor: 'colfiller three describes',
 				op: { t: 'deleteAfter', n: 90 },
 				expect: ['EXACT', 'PROV'],
 				maxMs: 16000

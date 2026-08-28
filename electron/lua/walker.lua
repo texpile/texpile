@@ -472,6 +472,15 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			cy = cy + n.depth
 		elseif id == VLIST then
 			dirOf(n)
+			-- vbox: vertical material grouped into its own box (a float, a vmode \parbox).
+			-- Its inner paragraph lines emit pl records indistinguishable from galley text,
+			-- so the page skeleton needs this marker to know that run is not flowing content
+			-- it may re-break. (The page's own container box carries one too; the skeleton
+			-- tells them apart by whether the box holds only PART of the column.)
+			if n.width > pt and (n.height + n.depth) > pt then
+				emit(string.format('{"t":"vbox","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
+					(x + (n.shift or 0)) / pt, (cy + n.height) / pt, n.width / pt, n.height / pt, n.depth / pt))
+			end
 			walk_vlist(n.head, n, x + (n.shift or 0), cy, emit, fonts, colorStack)
 			cy = cy + n.height + n.depth
 		elseif id == GLUE then

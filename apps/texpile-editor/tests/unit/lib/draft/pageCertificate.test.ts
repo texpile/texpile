@@ -39,7 +39,8 @@ describe('pageBreakCertificate break motion', () => {
 			),
 			cal,
 			[line(8), line(23)],
-			COL_BOTTOM
+			COL_BOTTOM,
+			10
 		);
 		expect(calls).toEqual(['68', '68', '83 cap']); // calibrate, old target, capacity
 		expect(cert!.fits).toBe(false);
@@ -60,7 +61,8 @@ describe('pageBreakCertificate break motion', () => {
 			]),
 			cal,
 			[line(8), line(23)],
-			COL_BOTTOM
+			COL_BOTTOM,
+			10
 		);
 		expect(cert!.fits).toBe(false);
 		expect(cert!.moved).toBeUndefined();
@@ -75,7 +77,8 @@ describe('pageBreakCertificate break motion', () => {
 			]),
 			cal,
 			[line(8), line(23)],
-			COL_BOTTOM
+			COL_BOTTOM,
+			10
 		);
 		expect(cert!.fits).toBe(false);
 		expect(cert!.moved).toBeUndefined();
@@ -87,7 +90,8 @@ describe('pageBreakCertificate break motion', () => {
 			deps([CAL_OK, { ok: true, kA: 4, kB: 2, gs: 0, gsn: 0, go: 0, ys: [8, 23, 38, 53] }], calls),
 			cal,
 			[line(8), line(23), line(38)],
-			COL_BOTTOM
+			COL_BOTTOM,
+			10
 		);
 		expect(calls).toEqual(['68', '83 cap']); // calibrate, capacity fit
 		expect(cert!.fits).toBe(false);
@@ -104,7 +108,8 @@ describe('pageBreakCertificate break motion', () => {
 			deps([CAL_OK, { ok: true, kA: 5, kB: 1, gs: 0, gsn: 0, go: 0, ys: [8, 23, 38, 53, 68] }]),
 			cal,
 			[line(8), line(23), line(38)],
-			COL_BOTTOM
+			COL_BOTTOM,
+			10
 		);
 		expect(cert!.fits).toBe(false);
 		expect(cert!.moved!.movedBases).toEqual([160]); // old box 4 carries
@@ -115,12 +120,34 @@ describe('pageBreakCertificate break motion', () => {
 		expect(cert!.moved!.bandAbsYs.map((y) => +y.toFixed(2))).toEqual([115, 130, 145]);
 	});
 
+	it('editing the column FIRST line re-anchors on the topskip landing rule', async () => {
+		// band = boxes 0..1; the new first line is taller (12 vs 8), so the engine packs the
+		// column 2pt higher: bodyTop 90 = 100 - max(topskip 10, 8), new top = 90 + 12 - 12.
+		// Every certified baseline and the split targets must follow that top, or the whole
+		// column renders 2pt low while claiming to be exact.
+		const calls: string[] = [];
+		const first = { ...cal, b1: 100, bk: 115 };
+		const cert = await pageBreakCertificate(
+			deps([CAL_OK, { ok: true, kA: 5, kB: 0, gs: 0, gsn: 0, go: 0, ys: [12, 27, 42, 57, 70] }], calls),
+			first,
+			[{ t: 'line', y: 12, h: 12, d: 3 }, line(27)],
+			COL_BOTTOM,
+			10
+		);
+		expect(calls).toEqual(['68', '70']); // calibrate at the old target, re-split at 160 - 90
+		expect(cert!.fits).toBe(true);
+		expect(cert!.bandAbsYs!.map((y) => +y.toFixed(2))).toEqual([102, 117]);
+		// the last box lands back on its own 160 baseline: the page bottom pins it
+		expect(cert!.steps!.at(-1)!.dy).toBeCloseTo(0, 4);
+	});
+
 	it('grown band that still fits: fit-only certificate, no motion', async () => {
 		const cert = await pageBreakCertificate(
 			deps([CAL_OK, { ok: true, kA: 6, kB: 0, gs: 0, gsn: 0, go: 0, ys: [8, 23, 38, 53, 68, 83] }]),
 			cal,
 			[line(8), line(23), line(38)],
-			COL_BOTTOM
+			COL_BOTTOM,
+			10
 		);
 		expect(cert!.fits).toBe(true);
 		expect(cert!.moved).toBeUndefined();

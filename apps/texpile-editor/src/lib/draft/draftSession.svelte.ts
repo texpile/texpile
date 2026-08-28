@@ -8,10 +8,12 @@ import { locateParagraph } from './locate/locateParagraph';
 import type { LocateContext, PaperMetrics } from './locate/locate.types';
 import { verifyPatches } from './patch/verifyPatches';
 import type { Patch, PatchReq } from './patch/patch.types';
+import type { SeamEntry } from './patch/seam.types';
 import { DraftFonts } from './draftFonts';
 import { DraftBitmaps } from './draftBitmaps';
 import { paintRecords, splitPatchRecords, type PaintDeps } from './draftPaint';
 import { flowDyAt } from './patch/glueShift';
+import { packsToGoal } from './heuristics/packsToGoal';
 import { DraftViewport } from './draftViewport.svelte';
 import { DraftPatcher } from './draftPatcher.svelte';
 import { DraftCompiler } from './draftCompiler.svelte';
@@ -32,7 +34,19 @@ type SessionOpts = {
 
 export class DraftSession {
 	pages = $state<DraftPage[]>([]);
-	paper = $state<PaperMetrics>({ w: 595, h: 842, colW: 0, textW: 0, fs: 0, mx: 72.27, my: 72.27, colSep: 0, blSkip: 0, parSkip: 0 });
+	paper = $state<PaperMetrics>({
+		w: 595,
+		h: 842,
+		colW: 0,
+		textW: 0,
+		fs: 0,
+		mx: 72.27,
+		my: 72.27,
+		colSep: 0,
+		blSkip: 0,
+		parSkip: 0,
+		topSkip: 0
+	});
 	canvasEls = $state<HTMLCanvasElement[]>([]);
 	savingPdf = $state(false);
 
@@ -44,6 +58,8 @@ export class DraftSession {
 
 	private parsedPages = new Map<number, any[]>();
 	private patchedPages = new Set<number>();
+	// per-break pruned runs from the last compile (see page-extract.lua seam capture)
+	private seams: SeamEntry[] = [];
 	// a live patch stays on screen after the fast path applies it; keep it so a zoom
 	// re-render (which redraws from the untouched page records) re-applies it instead of
 	// reverting. Cleared on a full compile (fresh records already carry the edit).
@@ -116,6 +132,9 @@ export class DraftSession {
 			showEditBand: (b, holdMs) => this.vp.showEditBand(b, holdMs),
 			synctex: (b) => nativeBridge()!.synctex(b as any),
 			pdfPath: () => this.opts.root() + '/_draft/draft.pdf',
+			seams: () => this.seams,
+			pageIsRtl: (p) => this.rtlPage(p),
+			packsToGoal: (p) => packsToGoal(this.pageRecords(p)),
 			splitSkeleton: (items, targetPt, capacity) => {
 				const nb = nativeBridge();
 				if (!nb?.draftSkeleton) return Promise.resolve({ ok: false as const, error: 'no-bridge' });
@@ -260,10 +279,12 @@ export class DraftSession {
 				my: r.marginY,
 				colSep: r.colSep || 0,
 				blSkip: r.blSkip || 0,
-				parSkip: r.parSkip || 0
+				parSkip: r.parSkip || 0,
+				topSkip: r.topSkip || 0
 			};
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
 		}
+		this.seams = r.seams ?? [];
 		// counter truth + the executed \begin{document} line: the decision layer pins to these
 		updateEngineTruth({ counters: r.counters ?? [], bodyLine: r.bodyLine, mainRel: this.opts.mainFile() });
 		this.pages = r.pages;

@@ -56,10 +56,14 @@ export type DraftResult =
 			colSep?: number;
 			blSkip?: number;
 			parSkip?: number;
+			// \topskip: where a column's first baseline lands (chain-planner landing rule)
+			topSkip?: number;
 			// the line \begin{document} executed at (main file), from the hook itself
 			bodyLine?: number;
 			// per-line counter snapshots; the daemon pins typesets to these TRUE values
 			counters?: { l: number; f?: string; s: Record<string, number> }[];
+			// per-break pruned runs: what TeX discarded at each column/page break
+			seams?: { page: number; col: number; pen: number; run: Record<string, number>[] }[];
 			marginX: number;
 			marginY: number;
 			pages: DraftPage[];

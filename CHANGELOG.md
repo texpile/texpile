@@ -17,6 +17,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: the engine fit check now works on many more document classes instead of refusing pages with invisible layout rules
 - fix: when an edit pushes lines past the column or page bottom, the preview now shows them flowing into the next column or page instead of cramming them at the bottom
 - fix: the engine fit check counts an unusually deep last line against the page the way the page builder does
+- fix: the compile now records the spacing TeX discards at every column and page break, so lines that flow across a break land on the engine's own spacing instead of a guess
+- fix: content pushed across breaks can now ripple through several columns and pages in one keystroke, each step decided by the engine, and renders exactly with no refining tint when every step is certified
+- fix: deleting lines now pulls content back from the next column or page live, instead of leaving a gap until the recompile
 
 ## [0.17.1] - 2026-08-19
 
