@@ -126,7 +126,13 @@ type TexpileNative = {
 	synctex: (body: Record<string, unknown>) => Promise<Record<string, unknown>>;
 	draftCompile: (body: { root: string; mainFile: string }) => Promise<DraftResult>;
 	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) => Promise<ParagraphResult>;
-	draftSkeleton?: (body: { root: string; mainFile: string; items: SkeletonItem[]; targetPt: number }) => Promise<SkeletonResult>;
+	draftSkeleton?: (body: {
+		root: string;
+		mainFile: string;
+		items: SkeletonItem[];
+		targetPt: number;
+		capacity?: boolean;
+	}) => Promise<SkeletonResult>;
 	draftStop: () => Promise<{ ok: boolean }>;
 	draftTakeover?: (body: { root: string }) => Promise<{ ok: boolean }>;
 	onDraftPreempted?: (cb: (notice: { root: string }) => void) => () => void;

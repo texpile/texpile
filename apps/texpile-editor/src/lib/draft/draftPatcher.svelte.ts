@@ -4,8 +4,10 @@
 // tinted provisional + debounced reconcile, or an honest full pass.
 import { INDENT_PREFIX } from './daemonIndent';
 import { abandonBand } from './heuristics/abandonBand';
-import { pageBreakCertificate, remapBandRecords, type Certificate } from './patch/pageCertificate';
+import { pageBreakCertificate, remapBandRecords, type Certificate, type FullCertificate } from './patch/pageCertificate';
+import { SpillPatches } from './patch/spillPatches';
 import { planOverflowSplit } from './heuristics/planOverflowSplit';
+import { planBreakMotion } from './heuristics/planBreakMotion';
 import { buildColumnSplit } from './heuristics/buildColumnSplit';
 import { computeReflow, buildBandPatch, lineExtents } from './heuristics/computeReflow';
 import { whyPhrase } from './whyPhrase';
@@ -36,11 +38,13 @@ type PatcherHooks = {
 	missingInk: (records: any[]) => Promise<boolean>;
 	/** record the live patch and paint it (activePatch.set + renderPage + patchedPages.add) */
 	applyPatch: (n: number, p: Patch | Patch[]) => Promise<void>;
+	/** drop a page's live patch and repaint it from records */
+	clearPatch: (n: number) => Promise<void>;
 	showEditBand: (b: EditBand, holdMs?: number) => void;
 	synctex: (body: Record<string, unknown>) => Promise<any>;
 	pdfPath: () => string;
 	/** engine page-break certificate: re-split a dimension skeleton on the warm daemon */
-	splitSkeleton: (items: SkeletonItem[], targetPt: number) => Promise<SkeletonResult>;
+	splitSkeleton: (items: SkeletonItem[], targetPt: number, capacity?: boolean) => Promise<SkeletonResult>;
 	followEdit: (page: number, top: number, bottom: number, colL?: number, colR?: number) => void;
 	emit: (kind: string, detail?: unknown) => void;
 };
@@ -61,11 +65,17 @@ export class DraftPatcher {
 	private refineStatusTimer: ReturnType<typeof setTimeout> | null = null;
 	// geometry located once per paragraph per compile; keystrokes reuse it
 	private calCache = new Map<string, Cal | CalBail>();
+	// bumped when a compile replaces the pages: a patch spanning that landing was built
+	// against replaced geometry and must not paint
+	private geometryEpoch = 0;
 	// a structural edit (new/split/deleted paragraph) has no patch to follow -- the editor
 	// registers the paragraph that diverged; after the recompile we locate and highlight it
 	private pendingFocus: { file: string; line: number; endLine: number; text: string; listItem?: boolean } | null = null;
+	private spills: SpillPatches;
 
-	constructor(private hooks: PatcherHooks) {}
+	constructor(private hooks: PatcherHooks) {
+		this.spills = new SpillPatches(hooks);
+	}
 
 	/** a patch is mid-flight (the daemon warm-ready status must not overwrite its message) */
 	get inFlight(): boolean {
@@ -83,11 +93,13 @@ export class DraftPatcher {
 
 	/** a compile landed: located geometry is stale, paragraphs re-locate on the next patch */
 	geometryChanged(): void {
+		this.geometryEpoch++;
 		this.calCache.clear();
 	}
 
 	/** compile finished: drop the tint and run any edit that arrived mid-compile */
 	afterCompile(): void {
+		this.spills.reset();
 		if (this.provisionalPages.size) this.provisionalPages = new Set();
 		if (this.queuedPatch) {
 			const q = this.queuedPatch;
@@ -201,11 +213,21 @@ export class DraftPatcher {
 				origHead: req.orig.slice(0, 50)
 			});
 			const key = `${req.file}:${req.line}`;
+			const epoch = this.geometryEpoch;
+			const stale = () => {
+				if (epoch === this.geometryEpoch) return false;
+				// a compile landed mid-patch: re-run the edit against the fresh geometry
+				this.queuedPatch ??= req;
+				h.emit('stale-geometry', { key });
+				return true;
+			};
 			let cal = this.calCache.get(key);
 			if (!cal) {
 				cal = await h.locate(req.file, req.line, req.orig, req.listItem, req.endLine);
-				this.calCache.set(key, cal);
+				// a locate that spanned a compile landing must not poison the fresh cache
+				if (epoch === this.geometryEpoch) this.calCache.set(key, cal);
 			}
+			if (stale()) return;
 			if ('bail' in cal) {
 				// A page-PERMANENT bail is not worth a compile per keystroke. Most bail reasons
 				// describe this edit against this layout, so recompiling produces a page the next
@@ -267,13 +289,8 @@ export class DraftPatcher {
 					engine: await engineSplitTo(h.colBottomOf(cal.pageNo) - (cal.b1 - h1))
 				});
 				const { segA, segB, spillPage } = split;
-				if (spillPage !== cal.pageNo) {
-					// cross-PAGE split: one segment per page canvas
-					await h.applyPatch(cal.pageNo, segA);
-					await h.applyPatch(spillPage, segB);
-				} else {
-					await h.applyPatch(cal.pageNo, [segA, segB]);
-				}
+				if (stale()) return;
+				if (!(await this.spills.paint(key, cal.pageNo, spillPage, segA, [segB], stale))) return;
 				this.markProvisional(cal.pageNo, spillPage);
 				h.showEditBand({ page: cal.pageNo, top: cal.b1 - h1, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR });
 				h.followEdit(cal.pageNo, cal.b1, cal.bk, cal.colL, cal.colR);
@@ -285,35 +302,25 @@ export class DraftPatcher {
 			}
 			const colBottom = h.colBottomOf(cal.pageNo);
 			const floorA = h.contentFloor(cal.pageNo);
+			const spillCtx = { pageRecords: h.pageRecords, contentFloor: h.contentFloor, pageCount: h.pageCount, colSep: h.paper().colSep };
 			const flow = computeReflow(cal, r.records, lineRecs, { dk, colBottom, floorA, pageRecords: h.pageRecords });
 			// Overflow renders TRUTHFULLY: whatever the shift pushes past the column bottom
 			// moves to the top of the next slot in reading order, pushing that slot's content
 			// down, instead of cramming rows past the bottom under the tint. Always provisional.
 			if (flow.overflow) {
-				const plan = planOverflowSplit(
-					{ pageRecords: h.pageRecords, contentFloor: h.contentFloor, pageCount: h.pageCount, colSep: h.paper().colSep },
-					cal,
-					r.records as any[],
-					lineRecs as any[],
-					{
-						h1,
-						dk,
-						delta: flow.delta,
-						colBottom,
-						belowBases: flow.belowBases,
-						lastBelow: flow.lastBelow,
-						engine: await engineSplitTo(colBottom - (cal.b1 - h1))
-					}
-				);
+				const plan = planOverflowSplit(spillCtx, cal, r.records as any[], lineRecs as any[], {
+					h1,
+					dk,
+					delta: flow.delta,
+					colBottom,
+					belowBases: flow.belowBases,
+					lastBelow: flow.lastBelow,
+					engine: await engineSplitTo(colBottom - (cal.b1 - h1))
+				});
 				if (plan) {
 					const { segA, segsB, samePage, spillPage } = plan;
-					if (samePage) {
-						// one canvas: the band segment and the next-column insert segments compose there
-						await h.applyPatch(cal.pageNo, [segA, ...segsB]);
-					} else {
-						await h.applyPatch(cal.pageNo, segA);
-						await h.applyPatch(spillPage, segsB.length === 1 ? segsB[0] : segsB);
-					}
+					if (stale()) return;
+					if (!(await this.spills.paint(key, cal.pageNo, spillPage, segA, segsB, stale))) return;
 					this.markProvisional(cal.pageNo, spillPage);
 					h.showEditBand({ page: cal.pageNo, top: segA.top, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR });
 					h.followEdit(cal.pageNo, cal.b1, cal.bk + dk, cal.colL, cal.colR);
@@ -362,9 +369,34 @@ export class DraftPatcher {
 					colBottom
 				);
 			}
+			// Engine-detected moved break: render the motion through the spill machinery
+			// instead of cramming the shifted rows past the bottom under the tint. The carried
+			// boxes are the capacity split's, the slot placement first-order -> provisional.
+			if (cert && !cert.fits && cert.moved) {
+				const bandRecs = remapBandRecords(r.records as any[], cert.moved.bandAbsYs, cal.b1 - flow.y0);
+				const plan = bandRecs ? planBreakMotion(spillCtx, cal, bandRecs, cert.moved, { y0: flow.y0, h1, dk, floorA }) : null;
+				if (plan) {
+					if (stale()) return;
+					if (!(await this.spills.paint(key, cal.pageNo, plan.spillPage, plan.segA, [plan.segB], stale))) return;
+					this.markProvisional(cal.pageNo, plan.spillPage);
+					h.showEditBand({ page: cal.pageNo, top: plan.segA.top, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR });
+					h.followEdit(cal.pageNo, cal.b1, cal.bk + dk, cal.colL, cal.colR);
+					h.emit('provisional-split', {
+						page: cal.pageNo,
+						spillPage: plan.spillPage,
+						moved: plan.carried,
+						stage: 'engine-overflow',
+						target: plan.samePage ? 'next-col' : 'next-page'
+					});
+					h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: (performance.now() - t0).toFixed(0) }));
+					this.noteRefining(cal.pageNo);
+					if (!req.transient) this.scheduleReconcile(req.onRecompile, 'engine-overflow');
+					return;
+				}
+			}
 			// full certificate (same line count) carries the engine's baselines; a fit-only
 			// certificate (grown band) just answers whether the page still holds the content
-			const fullCert = cert?.fits && cert.bandAbsYs ? (cert as Required<Certificate>) : null;
+			const fullCert = cert?.fits && cert.bandAbsYs ? (cert as FullCertificate) : null;
 			const certRecs = fullCert ? remapBandRecords(r.records as any[], fullCert.bandAbsYs, cal.b1 - flow.y0) : null;
 			// the renderer never moves content ABOVE the band; a certificate that needs it
 			// visibly moved renders the exact band/below anyway but keeps the tint
@@ -406,6 +438,10 @@ export class DraftPatcher {
 				pageRecords: h.pageRecords,
 				cert: certRecs && fullCert ? { steps: fullCert.steps } : undefined
 			});
+			if (stale()) return;
+			// this render no longer spills: a spill segment a previous keystroke left on
+			// another page must come off, or its carried rows double-draw
+			await this.spills.drop(key, cal.pageNo);
 			await h.applyPatch(cal.pageNo, patchObj); // survives zoom re-renders until the next compile
 			h.showEditBand({
 				page: cal.pageNo,

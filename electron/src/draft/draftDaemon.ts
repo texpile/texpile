@@ -257,16 +257,13 @@ function typesetOn(
 
 // One item of a page skeleton: a line as a bare box, a glue at natural size, a penalty.
 export type SkeletonItem =
-	| { t: 'b'; h: number; d: number }
-	| { t: 'g'; w: number; st: number; sto: number; sh: number; sho: number }
-	| { t: 'p'; p: number };
+	{ t: 'b'; h: number; d: number } | { t: 'g'; w: number; st: number; sto: number; sh: number; sho: number } | { t: 'p'; p: number };
 
 export type SkeletonResult =
-	| { ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[] }
-	| { ok: false; error: string };
+	{ ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[] } | { ok: false; error: string };
 
 /* eslint-disable no-param-reassign -- same callback-slot protocol as typesetOn */
-function skeletonOn(state: Daemon, items: SkeletonItem[], targetPt: number): Promise<SkeletonResult> {
+function skeletonOn(state: Daemon, items: SkeletonItem[], targetPt: number, capacity?: boolean): Promise<SkeletonResult> {
 	return new Promise((resolve) => {
 		let settled = false;
 		const timer = setTimeout(() => {
@@ -303,7 +300,9 @@ function skeletonOn(state: Daemon, items: SkeletonItem[], targetPt: number): Pro
 					? `g ${it.w.toFixed(4)} ${it.st.toFixed(4)} ${it.sto} ${it.sh.toFixed(4)} ${it.sho}`
 					: `p ${Math.round(it.p)}`
 		);
-		state.child.stdin!.write(`SKELETON ${targetPt.toFixed(4)} ${lines.length}\n${lines.join('\n')}\nEND\n`);
+		// 'cap' = a capacity fit test: the split charges depth beyond \maxdepth like the
+		// page builder; calibration/layout splits keep \vsplit's free allowance
+		state.child.stdin!.write(`SKELETON ${targetPt.toFixed(4)} ${lines.length}${capacity ? ' cap' : ''}\n${lines.join('\n')}\nEND\n`);
 	});
 }
 /* eslint-enable no-param-reassign */
@@ -316,6 +315,7 @@ export async function splitSkeleton(body: {
 	engineDir: string;
 	items: SkeletonItem[];
 	targetPt: number;
+	capacity?: boolean;
 }): Promise<SkeletonResult> {
 	const run = queue.then(async (): Promise<SkeletonResult> => {
 		try {
@@ -323,7 +323,7 @@ export async function splitSkeleton(body: {
 			const split = splitPreamble(path.join(body.root, body.mainFile));
 			if (!split) return { ok: false, error: 'no \\begin{document} in main file' };
 			const state = await ensureDaemon(body.root, body.engineDir, split.preamble);
-			return await skeletonOn(state, body.items, body.targetPt);
+			return await skeletonOn(state, body.items, body.targetPt, body.capacity);
 		} catch (e) {
 			return { ok: false, error: e instanceof Error ? e.message : String(e) };
 		}

@@ -183,7 +183,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) =>
 		invokeFs('draft:typeset', body),
 	/** Draft-mode page-break certificate: re-split a page's dimension skeleton on the engine. */
-	draftSkeleton: (body: { root: string; mainFile: string; items: unknown[]; targetPt: number }) => invokeFs('draft:skeleton', body),
+	draftSkeleton: (body: { root: string; mainFile: string; items: unknown[]; targetPt: number; capacity?: boolean }) =>
+		invokeFs('draft:skeleton', body),
 	/** Stop the warm daemon (draft mode off / preview closed) so it stops holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),
 	/** Steal the warm engine from the window that currently owns it (explicit user action). */

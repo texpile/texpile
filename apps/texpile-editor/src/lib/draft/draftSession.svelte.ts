@@ -109,13 +109,17 @@ export class DraftSession {
 				await this.renderPage(n, p);
 				this.patchedPages.add(n);
 			},
+			clearPatch: async (n) => {
+				// stays in patchedPages: the page painted patch ink and must repaint on landing
+				if (this.activePatch.delete(n)) await this.renderPage(n);
+			},
 			showEditBand: (b, holdMs) => this.vp.showEditBand(b, holdMs),
 			synctex: (b) => nativeBridge()!.synctex(b as any),
 			pdfPath: () => this.opts.root() + '/_draft/draft.pdf',
-			splitSkeleton: (items, targetPt) => {
+			splitSkeleton: (items, targetPt, capacity) => {
 				const nb = nativeBridge();
 				if (!nb?.draftSkeleton) return Promise.resolve({ ok: false as const, error: 'no-bridge' });
-				return nb.draftSkeleton({ root: this.opts.root(), mainFile: this.opts.mainFile(), items, targetPt });
+				return nb.draftSkeleton({ root: this.opts.root(), mainFile: this.opts.mainFile(), items, targetPt, capacity });
 			},
 			followEdit: (page, top, bottom, colL, colR) => this.vp.followEdit(page, top, bottom, colL, colR),
 			emit: (k, d) => this.ev(k, d)

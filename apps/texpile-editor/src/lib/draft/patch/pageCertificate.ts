@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { buildPageSkeleton, spliceBandSkeleton } from '../heuristics/pageSkeleton';
+import { breakMotion, type BreakMotion } from './breakMotion';
 import type { Cal } from '../locate/locate.types';
 import type { FlowStep } from './glueShift';
 import type { PageRecord } from '../geometry/geometry.types';
@@ -28,14 +29,22 @@ export type Certificate = {
 	bandAbsYs?: number[];
 	steps?: FlowStep[];
 	maxAboveDy?: number;
+	// break moved: the capacity split's answer for WHERE -- certified baselines for what
+	// stays and the identity of the carried boxes, so the caller can render the motion
+	// (always provisional). Absent when the break lands inside the band.
+	moved?: BreakMotion;
 };
+
+// what a fits certificate with baselines actually guarantees (Required<Certificate>
+// would falsely promise `moved`, which never accompanies fits:true)
+export type FullCertificate = Certificate & Required<Pick<Certificate, 'bandAbsYs' | 'steps' | 'maxAboveDy'>>;
 
 const CAL_DEV = 0.15;
 
 export async function pageBreakCertificate(
 	deps: {
 		pageRecords: (n: number) => PageRecord[];
-		splitSkeleton: (items: SkeletonItem[], targetPt: number) => Promise<SkeletonResult>;
+		splitSkeleton: (items: SkeletonItem[], targetPt: number, capacity?: boolean) => Promise<SkeletonResult>;
 		emit: (kind: string, detail?: unknown) => void;
 	},
 	cal: Cal,
@@ -69,24 +78,34 @@ export async function pageBreakCertificate(
 	if (spliced.bandBoxes < toBox - fromBox + 1) return refuse('fewer-lines');
 	const boxesAfter = skel.boxYs.length - (toBox - fromBox + 1) + spliced.bandBoxes;
 	const sameCount = spliced.bandBoxes === toBox - fromBox + 1;
+	const capacity = colBottom - skel.top;
 	if (!sameCount) {
 		// grown band: fit test at the page's CAPACITY (top to body bottom) -- the page can
 		// absorb growth into stretch/shrink or the spare room under its current extent,
 		// which the old content extent cannot express
-		const capacity = colBottom - skel.top;
-		const cf = await deps.splitSkeleton(spliced.items, capacity);
+		const cf = await deps.splitSkeleton(spliced.items, capacity, true);
 		if (!cf.ok) return refuse('fit-split', { error: cf.error });
 		const fits = cf.kB === 0 && cf.kA === boxesAfter;
-		deps.emit(fits ? 'skel-fits' : 'skel-break-moved', { kA: cf.kA, kB: cf.kB, boxes: boxesAfter, capacity: +capacity.toFixed(1) });
-		return { fits };
+		const moved = fits ? null : breakMotion(skel, spliced.bandBoxes, fromBox, toBox, cf, boxesAfter);
+		deps.emit(fits ? 'skel-fits' : 'skel-break-moved', {
+			kA: cf.kA,
+			kB: cf.kB,
+			boxes: boxesAfter,
+			capacity: +capacity.toFixed(1),
+			motion: !!moved
+		});
+		return { fits, moved: moved ?? undefined };
 	}
 	const c1 = await deps.splitSkeleton(spliced.items, skel.target);
 	if (!c1.ok) return refuse('edit-split', { error: c1.error });
 	if (c1.kB !== 0 || c1.kA !== boxesAfter) {
-		// not an error: the engine says the break MOVED -- the caller's overflow/
-		// provisional machinery is the right path for that
-		deps.emit('skel-break-moved', { kA: c1.kA, kB: c1.kB, boxes: boxesAfter });
-		return { fits: false };
+		// not an error: the engine says the break MOVED. One more split at CAPACITY says
+		// where it falls -- kB=0 there means the extent merely grew inside the page's
+		// spare room, and there is no motion to render
+		const cs = await deps.splitSkeleton(spliced.items, capacity, true);
+		const moved = cs.ok && cs.kB > 0 ? breakMotion(skel, spliced.bandBoxes, fromBox, toBox, cs, boxesAfter) : null;
+		deps.emit('skel-break-moved', { kA: c1.kA, kB: c1.kB, boxes: boxesAfter, motion: !!moved });
+		return { fits: false, moved: moved ?? undefined };
 	}
 	const bandAbsYs: number[] = [];
 	for (let j = 0; j < spliced.bandBoxes; j++) bandAbsYs.push(skel.top + c1.ys[fromBox + j]);

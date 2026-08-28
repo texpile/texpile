@@ -85,8 +85,8 @@ function texd_step()
 		elseif l:match("^SPLIT ") then
 			split = l:match("^SPLIT (%S+)")
 		elseif l:match("^SKELETON ") then
-			local starget, scnt = l:match("^SKELETON (%S+) (%d+)")
-			texd_skeleton(tonumber(starget), tonumber(scnt))
+			local starget, scnt, sflags = l:match("^SKELETON (%S+) (%d+)(.*)")
+			texd_skeleton(tonumber(starget), tonumber(scnt), sflags and sflags:find("cap", 1, true) ~= nil)
 			return
 		elseif l == "GLYPHS" then
 			want_glyphs = true
@@ -142,9 +142,10 @@ function texd_step()
 		-- penalty nodes) picks the cut -- not JS pixel arithmetic. \global on both boxes:
 		-- the \input's file-hook group pops at EOF and silently restores a LOCAL \setbox
 		-- made after it on the same line (probed: box2 came back void). \splittopskip 0
-		-- keeps the remainder unpadded so its records anchor like any fresh block.
-		tex.print(build .. "\\vbadness=10000 \\vfuzz=\\maxdimen \\splittopskip=0pt\\global\\setbox2\\vsplit0 to "
-			.. split .. "pt\\global\\setbox0\\box0 \\directlua{texd_emit_split()}")
+		-- keeps the remainder unpadded so its records anchor like any fresh block;
+		-- \splitmaxdepth mirrors the page builder's \maxdepth depth charge.
+		tex.print(build .. "\\vbadness=10000 \\vfuzz=\\maxdimen \\splittopskip=0pt\\splitmaxdepth=\\maxdepth"
+			.. "\\global\\setbox2\\vsplit0 to " .. split .. "pt\\global\\setbox0\\box0 \\directlua{texd_emit_split()}")
 	else
 		tex.print(build .. "\\directlua{texd_emit()}")
 	end
@@ -156,7 +157,7 @@ end
 -- arithmetic. Items arrive one per line: `b h d` (box), `g w st sto sh sho` (glue,
 -- natural width), `p n` (penalty); dims in pt. Answers one R with kA/kB (boxes that
 -- fit / spilled), the packed A box's glue state, and every A box's baseline.
-function texd_skeleton(target, cnt)
+function texd_skeleton(target, cnt, cap)
 	local t0 = os.gettimeofday()
 	local HL, VL, GL, KN = node.id("hlist"), node.id("vlist"), node.id("glue"), node.id("kern")
 	local head, tail, bad
@@ -203,6 +204,12 @@ function texd_skeleton(target, cnt)
 		tex.vbadness = 10000
 		tex.vfuzz = 16383 * 65536
 		tex.setglue("splittopskip", 0)
+		-- a CAPACITY split charges a last line's depth beyond \maxdepth against the goal,
+		-- like the page builder deciding a fit; calibration and layout splits keep \vsplit's
+		-- free allowance -- their targets were measured to the last BASELINE, and a charge
+		-- there would refuse every column ending in a deep line the page already carries.
+		-- Set both ways: the register persists across requests.
+		tex.dimen.splitmaxdepth = cap and tex.dimen.maxdepth or 1073741823
 		tex.box[254] = node.vpack(head)
 		local a = tex.splitbox(254, math.floor(target * 65536), "exactly")
 		local ys, kA = {}, 0

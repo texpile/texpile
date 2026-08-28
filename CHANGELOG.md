@@ -15,6 +15,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: the table of contents and cross-references no longer stay empty or show ?? in live preview
 - fix: instant patches now ask the engine whether the edited page still fits and read stretched spacing from it, instead of guessing
 - fix: the engine fit check now works on many more document classes instead of refusing pages with invisible layout rules
+- fix: when an edit pushes lines past the column or page bottom, the preview now shows them flowing into the next column or page instead of cramming them at the bottom
+- fix: the engine fit check counts an unusually deep last line against the page the way the page builder does
 
 ## [0.17.1] - 2026-08-19
 
