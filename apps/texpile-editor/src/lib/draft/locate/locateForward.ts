@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BP2PT } from '../texUnits';
-import { columnCandidates } from '../heuristics/columnCandidates';
+import { columnWindows } from '../heuristics/columnWindows';
 import { glyphRows } from '../geometry/glyphRows';
 import { median } from '../geometry/median';
 import { bandMatchesCalibration } from '../geometry/rowEquality';
@@ -49,8 +49,8 @@ export async function locateForward(
 	const G = COL_GUTTER;
 	const bys = [...new Set(lineBoxes.map((b) => +(b.y * BP2PT - paper.my).toFixed(1)))].sort((a, b) => a - b);
 	const allG = recs.filter((x: any) => x.t === 'g');
-	const colLefts = columnCandidates(allG, W, G, paper.colSep);
-	if (!colLefts.length) return bail('no-columns');
+	const cols = columnWindows(recs, allG, W, G, paper.colSep);
+	if (!cols.length) return bail('no-columns');
 	// The paragraph's column = the nearest column-left at or before the anchor's left edge.
 	// Anchor by the synctex LINE BOX's own left (bl, exact; x sync-point as fallback), never
 	// the leftmost glyph of that page ROW: on a grid-aligned two-column page the same row has
@@ -58,13 +58,14 @@ export async function locateForward(
 	// right-column edit got measured against the left column's rows (spread/glue-gap
 	// abandons on each keystroke).
 	const aMin = Math.min(...lineBoxes.map((b) => (b.bl ?? b.x) * BP2PT - paper.mx));
-	let colStart = colLefts[0];
-	for (const cl of colLefts) {
-		if (cl <= aMin + G) colStart = cl;
+	let col = cols[0];
+	for (const c of cols) {
+		if (c.x <= aMin + G) col = c;
 		else break;
 	}
-	const colL = colStart - G,
-		colR = colStart + W + G;
+	const colStart = col.x;
+	const colL = col.colL,
+		colR = col.colR;
 	function inCol(x: number) {
 		return x >= colL && x <= colR;
 	}

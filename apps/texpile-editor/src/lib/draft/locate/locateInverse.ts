@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BP2PT } from '../texUnits';
 import { COL_GUTTER, GLUE_GAP_TOL, LINE_GAP_FALLBACK, ROW_BREAK, ROW_CLUSTER, SPREAD_TOL } from '../heuristics/tolerances';
-import { columnCandidates } from '../heuristics/columnCandidates';
+import { columnWindows } from '../heuristics/columnWindows';
 import { median } from '../geometry/median';
 import type { Cal, CalBail, LocateContext } from './locate.types';
 
@@ -53,12 +53,13 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 	const fwdYs = boxes.map((b) => b.y * BP2PT - paper.my);
 	const winLo = Math.min(...fwdYs) - 5 * gap,
 		winHi = Math.max(...fwdYs) + (N + 5) * gap;
-	const colLefts = columnCandidates(allG, W, G, paper.colSep);
-	type Run = { col: number; len: number; gcount: number; b1: number; bk: number; left: number };
+	const cols = columnWindows(recs, allG, W, G, paper.colSep);
+	type Run = { col: number; colL: number; colR: number; len: number; gcount: number; b1: number; bk: number; left: number };
 	const runs: Run[] = [];
-	for (const cl of colLefts) {
-		const colL = cl - G;
-		const colR = cl + W + G;
+	for (const cw of cols) {
+		const cl = cw.x;
+		const colL = cw.colL;
+		const colR = cw.colR;
 		function inCol(x: number) {
 			return x >= colL && x <= colR;
 		}
@@ -127,6 +128,8 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 			while (j + 1 < base.length && inRange(j + 1) && base[j + 1] - base[j] <= gap * ROW_BREAK) j++;
 			runs.push({
 				col: cl,
+				colL,
+				colR,
 				len: j - i + 1,
 				gcount: cnt.slice(i, j + 1).reduce((s, c) => s + c, 0),
 				b1: base[i],
@@ -156,10 +159,10 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 						medGap: gap,
 						paraLeft: first.left,
 						W,
-						colL: first.col - G,
-						colR: first.col + W + G,
+						colL: first.colL,
+						colR: first.colR,
 						approx: true,
-						spill: { b1: second.b1, bk: second.bk, colL: second.col - G, colR: second.col + W + G, paraLeft: second.left }
+						spill: { b1: second.b1, bk: second.bk, colL: second.colL, colR: second.colR, paraLeft: second.left }
 					};
 				}
 			}
@@ -172,7 +175,7 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 			fuzzy.sort((a, b) => Math.abs(a.gcount - Gd) - Math.abs(b.gcount - Gd));
 			const f = fuzzy[0];
 			ctx.emit('locate-inverse-approx', { pageNo, b1: f.b1, bk: f.bk, len: f.len, N, gcount: f.gcount, Gd });
-			return { pageNo, b1: f.b1, bk: f.bk, medGap: gap, paraLeft: f.left, W, colL: f.col - G, colR: f.col + W + G, approx: true };
+			return { pageNo, b1: f.b1, bk: f.bk, medGap: gap, paraLeft: f.left, W, colL: f.colL, colR: f.colR, approx: true };
 		}
 		return bail('no-run-of-N', { N, runs: runs.map((r) => ({ len: r.len, g: r.gcount })) });
 	}
@@ -185,7 +188,7 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 		return bail('spread', { calSpread: +calSpread.toFixed(1), pageSpread: +(bk - b1).toFixed(1) });
 	if (calGap) {
 		function inColB(x: number) {
-			return x >= best.col - G && x <= best.col + W + G;
+			return x >= best.colL && x <= best.colR;
 		}
 		const bys = [
 			...new Set(allG.filter((x: any) => inColB(x.x) && x.y >= b1 - 0.5 && x.y <= bk + 0.5).map((x: any) => +(x.y as number).toFixed(1)))
@@ -203,5 +206,5 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 	// the inverse evidence is counts + attributions, never per-glyph content (that's the
 	// glyph tier, which runs FIRST and already failed if we're here) -- so its result is
 	// close-enough, not provable: render provisionally and reconcile
-	return { pageNo, b1, bk, medGap: gap, paraLeft, W, colL: best.col - G, colR: best.col + W + G, approx: true };
+	return { pageNo, b1, bk, medGap: gap, paraLeft, W, colL: best.colL, colR: best.colR, approx: true };
 }

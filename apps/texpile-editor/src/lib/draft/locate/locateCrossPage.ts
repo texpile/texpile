@@ -3,7 +3,7 @@
 import { BP2PT } from '../texUnits';
 import { INDENT_PREFIX } from '../daemonIndent';
 import { COL_GUTTER, LINE_GAP_FALLBACK, ROW_BREAK } from '../heuristics/tolerances';
-import { columnCandidates } from '../heuristics/columnCandidates';
+import { columnWindows } from '../heuristics/columnWindows';
 import { glyphRows } from '../geometry/glyphRows';
 import { median } from '../geometry/median';
 import { sameCodepoints, sameOffsets } from '../geometry/rowEquality';
@@ -57,8 +57,8 @@ export async function locateCrossPage(
 	// prefer page A's synctex-anchored column, but fall back to every candidate
 	const boxesA = lineBoxes.filter((b) => b.page === pA);
 	const aMin = boxesA.length ? Math.min(...boxesA.map((b) => (b.bl ?? b.x) * BP2PT - paper.mx)) : null;
-	const colsA = columnCandidates(allGA, W, G, paper.colSep);
-	if (aMin !== null) colsA.sort((a, b) => Math.abs(a - aMin) - Math.abs(b - aMin));
+	const colsA = columnWindows(recsA, allGA, W, G, paper.colSep);
+	if (aMin !== null) colsA.sort((a, b) => Math.abs(a.x - aMin) - Math.abs(b.x - aMin));
 	// every start where dRows[off..off+len-1] matches `rows` contiguously, content and
 	// x offsets both. No positional anchoring: a real column tail carries footnotes
 	// below the fragment and a real column top carries [t]-floats above it, so the
@@ -79,19 +79,21 @@ export async function locateCrossPage(
 		const dRows = glyphRows(v.glyphs, gap);
 		const N = dRows.length;
 		if (N < 2) continue;
-		for (const clA of colsA) {
-			const colLA = clA - G,
-				colRA = clA + W + G;
+		for (const cwA of colsA) {
+			const clA = cwA.x;
+			const colLA = cwA.colL,
+				colRA = cwA.colR;
 			const rowsA = glyphRows(
 				allGA.filter((g: any) => g.x >= colLA && g.x <= colRA),
 				gap
 			);
 			if (!rowsA.length) continue;
-			for (const clB of columnCandidates(allGB, W, G, paper.colSep)) {
+			for (const cwB of columnWindows(recsB, allGB, W, G, paper.colSep)) {
+				const clB = cwB.x;
 				// same page: the continuation can only open a LATER column of the reading order
 				if (samePage && clB <= clA + G) continue;
-				const colLB = clB - G,
-					colRB = clB + W + G;
+				const colLB = cwB.colL,
+					colRB = cwB.colR;
 				const rowsB = glyphRows(
 					allGB.filter((g: any) => g.x >= colLB && g.x <= colRB),
 					gap

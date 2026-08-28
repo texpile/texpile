@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention -- TeX geometry shorthand: col L/R edges on page B */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { columnCandidates } from './columnCandidates';
+import { columnWindows, type ColumnWindow } from './columnWindows';
 import { COL_GUTTER } from './tolerances';
 import { glyphRows } from '../geometry/glyphRows';
+import { pageColumns } from '../geometry/pageColumns';
 import type { Cal } from '../locate/locate.types';
 import type { PageRecord } from '../geometry/geometry.types';
 
@@ -30,28 +31,52 @@ export type NextSlot = {
 };
 
 // The next slot in reading order: TeX fills columns left to right before breaking the
-// page, so a non-final column overflows into the NEXT COLUMN of the SAME page. The
-// next column's origin is ARITHMETIC -- this column's text left + the engine's
-// \columnwidth + \columnsep -- never elected from glyph clusters: nested cluster
-// candidates (an indented abstract) are fine for MATCH windows, which lose harmlessly,
-// but as a slot they painted the spill back inside this same column, over the title.
-// Content past the next origin proves a real column there; else route to the next page.
+// page, so a non-final column overflows into the NEXT COLUMN of the SAME page.
+//
+// The next column comes from the page's own column boxes. It used to be ARITHMETIC --
+// this column's text left + \columnwidth + \columnsep, with "some glyph sits past it"
+// standing in for proof that a column was there -- because a glyph cluster could not be
+// trusted to name a slot: nested candidates (an indented abstract) lose harmlessly as
+// MATCH windows but as a slot painted the spill back inside this same column, over the
+// title. The engine either names the next column or there is not one.
+//
 // null: the spill would leave the document (no next page exists).
 export function nextSlot(ctx: OverflowContext, cal: SlotFrom, h1: number): NextSlot | null {
 	const pageA = ctx.pageRecords(cal.pageNo);
-	const myTx = cal.colL + COL_GUTTER;
 	const gA = pageA.filter((x: any) => x.t === 'g');
-	const nextTx = myTx + cal.W + (ctx.colSep && ctx.colSep > 0 ? ctx.colSep : 10);
-	const maxRight = gA.length ? Math.max(...gA.map((x: any) => x.x as number)) : 0;
-	const nextCol = maxRight > nextTx + 1 ? nextTx : null;
-	const samePage = nextCol !== null;
+	const colsA = columnWindows(pageA, gA, cal.W, COL_GUTTER, ctx.colSep);
+	const fromEngine = pageColumns(pageA).some((c) => Math.abs(c.w - cal.W) <= 2);
+	// identify this column by its WINDOW, and take its text left from the column itself.
+	// Reconstructing the text left as colL + gutter assumes the window carries a full pad,
+	// which stopped being true when the pad started narrowing to keep adjacent windows
+	// apart: on a 10pt \columnsep that reconstruction sits 3pt right of the real origin,
+	// and movedDx carried the error into every row it displaced.
+	const mine = colsA.findIndex((c) => Math.abs(c.colL - cal.colL) <= 1);
+	const myTx = mine >= 0 ? colsA[mine].x : cal.colL + COL_GUTTER;
+	let next: ColumnWindow | null;
+	if (fromEngine && mine >= 0) {
+		next = mine + 1 < colsA.length ? colsA[mine + 1] : null;
+	} else {
+		// no recorded columns of this width (multicol, a float page, a full-width band, an
+		// older bridge): the arithmetic origin and its glyph-past-it proof stand in
+		const nextTx = myTx + cal.W + (ctx.colSep && ctx.colSep > 0 ? ctx.colSep : 10);
+		const maxRight = gA.length ? Math.max(...gA.map((x: any) => x.x as number)) : 0;
+		next = maxRight > nextTx + 1 ? { x: nextTx, colL: nextTx - COL_GUTTER, colR: nextTx + cal.W + COL_GUTTER } : null;
+	}
+	const samePage = next !== null;
 	const pB = samePage ? cal.pageNo : cal.pageNo + 1;
 	if (!samePage && pB > ctx.pageCount()) return null;
 	// target slot geometry: body top under any isolated running-header row
-	const gB = samePage ? gA : ctx.pageRecords(pB).filter((x: any) => x.t === 'g');
-	const colTx = samePage ? nextCol! : gB.length ? (columnCandidates(gB, cal.W, COL_GUTTER, ctx.colSep)[0] ?? myTx) : myTx;
-	const colLB = colTx - COL_GUTTER;
-	const colRB = colTx + cal.W + COL_GUTTER;
+	const recsB = samePage ? pageA : ctx.pageRecords(pB);
+	const gB = samePage ? gA : recsB.filter((x: any) => x.t === 'g');
+	const slot = samePage
+		? next!
+		: gB.length
+			? (columnWindows(recsB, gB, cal.W, COL_GUTTER, ctx.colSep)[0] ?? { x: myTx, colL: cal.colL, colR: cal.colR })
+			: { x: myTx, colL: cal.colL, colR: cal.colR };
+	const colTx = slot.x;
+	const colLB = slot.colL;
+	const colRB = slot.colR;
 	function rowsIn(lo: number, hi: number) {
 		let rows = gB.length
 			? glyphRows(
@@ -66,7 +91,6 @@ export function nextSlot(ctx: OverflowContext, cal: SlotFrom, h1: number): NextS
 	// width inside the slot window (pl records) -- full-width material (a title block
 	// spanning both columns) carries w = \textwidth and drops out, where the glyph-row
 	// scan mistook it for the column top. Row scan stays as the older-bridge fallback.
-	const recsB = samePage ? pageA : ctx.pageRecords(pB);
 	const plB = (recsB as any[]).filter((x) => x.t === 'pl' && Math.abs(x.w - cal.W) <= 2 && x.x >= colLB && x.x <= colRB);
 	const rowsB = rowsIn(colLB, colRB);
 	// an empty next column still starts at the page's text top: mirror this column's

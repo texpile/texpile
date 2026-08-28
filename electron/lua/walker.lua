@@ -259,6 +259,42 @@ end
 
 local M = {}
 
+-- Column identity. page-extract stamps every top-level node of the list becoming \box255
+-- with the output firing that built it, so the box holding them at shipout IS a column:
+-- the engine's own origin and width, where the renderer used to cluster glyph lefts and
+-- synthesise the second origin as L0 + \columnwidth + \columnsep.
+--
+-- Only the OUTERMOST stamped box counts. A float carried into a column is itself a stamped
+-- top-level node of \box255, so its own contents would otherwise read as a second column.
+--
+-- Dominant stamp rather than the head's: a column can hold material from more than one
+-- firing (a float deferred from an earlier one), and the head is occasionally an unstamped
+-- node the output routine prepended (measured: 4 of 30 columns on a float-heavy paper).
+local in_column = false
+
+local function columnStamp(head)
+	if in_column or not (M.colattr and head) then return nil end
+	local count, best, bestc = {}, nil, 0
+	for n in node.traverse(head) do
+		local a = node.has_attribute(n, M.colattr)
+		if a then
+			local c = (count[a] or 0) + 1
+			count[a] = c
+			if c > bestc then best, bestc = a, c end
+		end
+	end
+	return best
+end
+
+-- y is the box's BASELINE, matching every other box-like record (pl, vbox, line).
+-- A zero-width column (an empty trailing column: probed on a paper ending mid-page) has no
+-- horizontal extent to own records with, so it is not a column for placement purposes.
+local function emitColumn(emit, stamp, left, top, box)
+	if box.width <= pt then return end
+	emit(string.format('{"t":"col","i":%d,"x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
+		stamp, left / pt, (top + box.height) / pt, box.width / pt, box.height / pt, box.depth / pt))
+end
+
 local walk_vlist
 
 -- resolve a rule's RUNNING (fill-to-enclosing-dimension) height/depth against
@@ -389,7 +425,15 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 			if rtl then x = x - n.width end
 			dirOf(n) -- vertical writing modes still uncertify; a vlist has no pen to reverse
 			-- baseline-aligned in a line: contents start at y - height; shift is vertical here
-			walk_vlist(n.head, n, x, y - n.height + (n.shift or 0), emit, fonts, colorStack)
+			local top = y - n.height + (n.shift or 0)
+			-- how a TWO-COLUMN page reaches its columns: the output routine packs both into one
+			-- hbox, so the column vlist hangs off a horizontal walk rather than a vertical one
+			local cs = columnStamp(n.head)
+			if cs then emitColumn(emit, cs, x, top, n) end
+			local wasCol = in_column
+			in_column = in_column or cs ~= nil
+			walk_vlist(n.head, n, x, top, emit, fonts, colorStack)
+			in_column = wasCol
 			if not rtl then x = x + n.width end
 		elseif id == MATH then
 			-- inline-math boundary: advance by \mathsurround, or (mathskip active) by
@@ -472,6 +516,11 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			cy = cy + n.depth
 		elseif id == VLIST then
 			dirOf(n)
+			-- how a ONE-COLUMN page reaches its column: straight down the page's vertical list.
+			-- Emitted alongside the vbox marker below, never instead of it: the skeleton still
+			-- needs to see this box as the container holding ALL of the column's lines.
+			local cs = columnStamp(n.head)
+			if cs then emitColumn(emit, cs, x + (n.shift or 0), cy, n) end
 			-- vbox: vertical material grouped into its own box (a float, a vmode \parbox).
 			-- Its inner paragraph lines emit pl records indistinguishable from galley text,
 			-- so the page skeleton needs this marker to know that run is not flowing content
@@ -481,7 +530,10 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 				emit(string.format('{"t":"vbox","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
 					(x + (n.shift or 0)) / pt, (cy + n.height) / pt, n.width / pt, n.height / pt, n.depth / pt))
 			end
+			local wasCol = in_column
+			in_column = in_column or cs ~= nil
 			walk_vlist(n.head, n, x + (n.shift or 0), cy, emit, fonts, colorStack)
+			in_column = wasCol
 			cy = cy + n.height + n.depth
 		elseif id == GLUE then
 			local eff = node.effective_glue(n, parent) or n.width
@@ -540,6 +592,7 @@ end
 function M.lines(head, y0)
 	local records, fonts = {}, {}
 	flags = {} -- reset certification flags for this walk
+	in_column = false
 	local nglyphs = 0
 	local function emit(s)
 		records[#records + 1] = s
@@ -583,7 +636,12 @@ function M.lines(head, y0)
 			dirOf(line)
 			-- e.g. an [H]-forced float's own \vbox sitting directly in the
 			-- block's top-level list (not nested inside a paragraph line).
+			local cs = columnStamp(line.head)
+			if cs then emitColumn(emit, cs, line.shift or 0, y, line) end
+			local wasCol = in_column
+			in_column = in_column or cs ~= nil
 			walk_vlist(line.head, line, line.shift or 0, y, emit, fonts, colorStack)
+			in_column = wasCol
 			y = y + line.height + line.depth
 		elseif line.id == INS then
 			-- footnote body: \insert material migrated out of the paragraph into this list.

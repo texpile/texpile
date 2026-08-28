@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention -- TeX geometry shorthand: W = column width */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { COL_GUTTER } from './tolerances';
+import { pageColumns } from '../geometry/pageColumns';
 import type { PageRecord } from '../geometry/geometry.types';
 import type { SeamEntry } from '../patch/seam.types';
 import type { SkelItem } from './pageSkeleton';
@@ -51,9 +52,15 @@ export function seamHeight(s: SeamEntry): number {
 	return s.run.reduce((sum, r) => sum + (r.w ?? 0) + (r.k ?? 0), 0);
 }
 
-/** the page's proven column origins in reading order: engine-broken lines at column width
- *  start exactly at their column's left edge */
+/**
+ * the page's column origins in reading order. The page's own column boxes when the compile
+ * recorded them; otherwise the older inference from engine-broken lines, which sees a column
+ * only where a paragraph was broken at exactly column width -- a column holding nothing but
+ * a float is invisible to it, and an undercount here silently refuses the page's seams.
+ */
 function columnOrigins(pageRecs: PageRecord[], W: number): number[] {
+	const cols = pageColumns(pageRecs).filter((c) => Math.abs(c.w - W) <= 2);
+	if (cols.length) return cols.map((c) => c.x);
 	const origins: number[] = [];
 	for (const r of pageRecs as any[]) {
 		if (r.t !== 'pl' || Math.abs(r.w - W) > 2) continue;
@@ -67,6 +74,8 @@ function columnOrigins(pageRecs: PageRecord[], W: number): number[] {
  * origin within a gutter of the window: seam lookups must not guess.
  */
 export function columnIndexOf(pageRecs: PageRecord[], W: number, colL: number): number {
-	const myTx = colL + COL_GUTTER;
-	return columnOrigins(pageRecs, W).findIndex((o) => Math.abs(o - myTx) <= COL_GUTTER) + 1;
+	// a window opens somewhere in [origin - gutter, origin]: test the range rather than
+	// reconstructing the text left as colL + gutter, which assumes a full pad and drifts
+	// once the pad narrows to keep adjacent windows apart
+	return columnOrigins(pageRecs, W).findIndex((o) => colL >= o - COL_GUTTER - 1 && colL <= o + 1) + 1;
 }

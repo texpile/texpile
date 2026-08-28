@@ -49,6 +49,21 @@ describe('seams', () => {
 		expect(seamHeight(s(0, [{ p: 10000 }, { w: 3, st: 1, sto: 0, sh: 0, sho: 0 }, { k: 2 }]))).toBe(5);
 	});
 
+	it('counts a column that broke no full-width line, which the pl scan cannot see', () => {
+		// column 2 holds only a float, so it contributes no pl record at column width. The
+		// pl scan counts one column, mismatches the two recorded firings and refuses the
+		// page's seams; the recorded column boxes count two and serve them.
+		const floatOnly = [
+			...oneCol,
+			{ t: 'col', i: 1, x: 57, y: 700, w: 200, h: 500, d: 0 },
+			{ t: 'col', i: 2, x: 267, y: 700, w: 200, h: 500, d: 0 }
+		];
+		const all = [s(0, []), { ...s(5, []), col: 2 }];
+		expect(seamAfter(all, 1, 2, oneCol, 200)).toBeNull();
+		expect(seamAfter(all, 1, 2, floatOnly, 200)!.pen).toBe(5);
+		expect(columnIndexOf(floatOnly, 200, 259)).toBe(2);
+	});
+
 	it('column index comes from engine-broken lines at column width, in reading order', () => {
 		const recs = [
 			{ t: 'pl', x: 57, y: 80, w: 200, h: 8, d: 3 },

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { INDENT_PREFIX } from '../daemonIndent';
 import { COL_GUTTER, GLUE_GAP_TOL, LINE_GAP_FALLBACK, ROW_BREAK } from '../heuristics/tolerances';
-import { columnCandidates } from '../heuristics/columnCandidates';
+import { columnWindows } from '../heuristics/columnWindows';
 import { extraCalVariants } from '../heuristics/calVariants';
 import { glyphRows } from '../geometry/glyphRows';
 import { median } from '../geometry/median';
@@ -88,12 +88,13 @@ export async function locateByGlyphs(
 	for (const rowEq of [sameCodepoints, sameCodepointsDigitTolerant]) {
 		for (const pageNo of order) {
 			if (ctx.rtlPage(pageNo)) continue; // record x-order is not the page's visual order here
-			const allG = ctx.pageRecords(pageNo).filter((x: any) => x.t === 'g');
+			const recs = ctx.pageRecords(pageNo);
+			const allG = recs.filter((x: any) => x.t === 'g');
 			if (!allG.length) continue;
 			for (const v of varRows) {
-				for (const cl of columnCandidates(allG, v.W, G, paper.colSep)) {
-					const colL = cl - G,
-						colR = cl + v.W + G;
+				for (const cw of columnWindows(recs, allG, v.W, G, paper.colSep)) {
+					const colL = cw.colL,
+						colR = cw.colR;
 					const rows = glyphRows(
 						allG.filter((x: any) => x.x >= colL && x.x <= colR),
 						v.gap
@@ -184,11 +185,12 @@ export async function locateByGlyphs(
 	const found: Fuzzy[] = [];
 	for (const pageNo of order.slice(0, Math.max(3, hintPages.length + 1))) {
 		if (ctx.rtlPage(pageNo)) continue;
-		const allG = ctx.pageRecords(pageNo).filter((x: any) => x.t === 'g');
+		const recs = ctx.pageRecords(pageNo);
+		const allG = recs.filter((x: any) => x.t === 'g');
 		if (!allG.length) continue;
-		for (const cl of columnCandidates(allG, W, G, paper.colSep)) {
-			const colL = cl - G,
-				colR = cl + W + G;
+		for (const cw of columnWindows(recs, allG, W, G, paper.colSep)) {
+			const colL = cw.colL,
+				colR = cw.colR;
 			const rows = glyphRows(
 				allG.filter((x: any) => x.x >= colL && x.x <= colR),
 				gap0

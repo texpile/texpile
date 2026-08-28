@@ -22,6 +22,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: deleting lines now pulls content back from the next column or page live, instead of leaving a gap until the recompile
 - fix: live preview reads the spacing between every pair of lines from the engine instead of deriving it, so the break check works from the document's real vertical list
 - fix: pages of documents that shift the page origin no longer render offset in live preview
+- fix: live preview reads each page's columns from the engine instead of inferring them from where text starts, so edits land in the right column even when the gap between columns is narrow
 
 ## [0.17.1] - 2026-08-19
 

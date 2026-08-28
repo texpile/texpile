@@ -49,7 +49,22 @@ local function seam_run_json()
 	return "[" .. table.concat(out, ",") .. "]"
 end
 
-local function seam_mark()
+-- Column identity: stamp every top-level node of the list becoming \box255 with the ordinal
+-- of the firing that built it. At shipout the box still holding them IS a column, which is
+-- how the walker names column origins from the engine instead of clustering glyph lefts.
+-- Counted separately from seam_cols: that one skips float/clearpage cycles and resets per
+-- page, while the stamp only has to be unique across the run.
+local col_attr, col_firing = nil, 0
+
+local function seam_mark(head)
+	if col_attr then
+		col_firing = col_firing + 1
+		local n = head
+		while n do
+			node.set_attribute(n, col_attr, col_firing)
+			n = n.next
+		end
+	end
 	if seam_pending then
 		seam_pending.run = seam_run_json()
 		seam_done[#seam_done + 1] = seam_pending
@@ -63,7 +78,12 @@ local function seam_mark()
 	return true
 end
 
--- registration is best-effort: a build without luatexbase just compiles seamless
+-- registration is best-effort: a build without luatexbase just compiles seamless.
+-- The attribute gets its own pcall so that losing it cannot also cost us the seams.
+pcall(function()
+	col_attr = luatexbase.new_attribute("texpilecolumn")
+	walker.colattr = col_attr
+end)
 pcall(function()
 	tex.set("global", "savingvdiscards", 1)
 	luatexbase.add_to_callback("pre_output_filter", seam_mark, "texpile.seam")
