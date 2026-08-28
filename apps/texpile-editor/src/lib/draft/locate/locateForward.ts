@@ -66,6 +66,7 @@ export async function locateForward(
 	const colStart = col.x;
 	const colL = col.colL,
 		colR = col.colR;
+	const colIndex = col.i;
 	function inCol(x: number) {
 		return x >= colL && x <= colR;
 	}
@@ -201,5 +202,5 @@ export async function locateForward(
 	);
 	if (!dRows.length || !bandMatchesCalibration(bandRows, dRows))
 		return bail('content-mismatch', { band: bandRows.length, cal: dRows.length });
-	return { pageNo, b1, bk, medGap: gap, paraLeft, W, colL, colR };
+	return { pageNo, b1, bk, medGap: gap, paraLeft, W, colL, colR, ...(colIndex === undefined ? {} : { col: colIndex }) };
 }

@@ -2,6 +2,7 @@
 // Painting page records onto a canvas, and the column-aware record split that composes a
 // live patch into an existing page.
 import { buildDrawList } from './renderCore';
+import { hasRecordedColumns, recordColumns } from './geometry/recordColumns';
 import type { DraftFonts } from './draftFonts';
 import type { DraftBitmaps } from './draftBitmaps';
 import type { PaperMetrics } from './locate/locate.types';
@@ -71,7 +72,13 @@ export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: n
 export function splitPatchRecords(records: any[], patches: Patch[], contentBottom: number): { unchanged: any[]; shifted: any[][] } {
 	const unchanged: any[] = [];
 	const shifted: any[][] = patches.map(() => []);
-	for (const r of records) {
+	// column membership as the compile recorded it. The x-window below stands in only for
+	// pages with no recorded columns: it cannot tell a full-width float or a footer from the
+	// column whose x-range it happens to lie in (measured: 2,006 such glyphs on one paper).
+	const byRun = hasRecordedColumns(records) ? recordColumns(records) : null;
+	const patchCol = patches.map((p) => p.col ?? -1);
+	for (let ri = 0; ri < records.length; ri++) {
+		const r = records[ri];
 		if (r.t === 'font') {
 			unchanged.push(r);
 			for (const a of shifted) a.push(r);
@@ -86,7 +93,11 @@ export function splitPatchRecords(records: any[], patches: Patch[], contentBotto
 		}
 		const y = r.y;
 		const x = r.x ?? -1e4;
-		const pi = patches.findIndex((p) => x >= p.colL && x <= p.colR);
+		// by recorded column when both the page and the patch know theirs, else by x-window.
+		// A record in NO column is furniture and belongs to no patch: it must not fall back to
+		// the x-window, which is what wrongly claimed it in the first place.
+		const useRuns = byRun !== null && patchCol.some((c) => c >= 0);
+		const pi = useRuns ? (byRun![ri] >= 0 ? patchCol.indexOf(byRun![ri]) : -1) : patches.findIndex((p) => x >= p.colL && x <= p.colR);
 		if (pi < 0 || y > contentBottom) {
 			unchanged.push(r);
 			continue;

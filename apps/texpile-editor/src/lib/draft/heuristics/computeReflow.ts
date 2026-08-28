@@ -105,6 +105,7 @@ export function buildBandPatch(
 		paraLeft: cal.paraLeft,
 		colL: cal.colL,
 		colR: cal.colR,
+		...(cal.col === undefined ? {} : { col: cal.col }),
 		newRecs: records,
 		flowBottom: d.floorA,
 		flowSteps: steps ?? undefined,

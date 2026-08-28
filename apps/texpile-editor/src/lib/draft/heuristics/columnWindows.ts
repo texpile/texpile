@@ -4,7 +4,14 @@ import { pageColumns } from '../geometry/pageColumns';
 import type { PageRecord } from '../geometry/geometry.types';
 
 /** a column's text left and the x-window that owns its records */
-export type ColumnWindow = { x: number; colL: number; colR: number };
+export type ColumnWindow = {
+	x: number;
+	colL: number;
+	colR: number;
+	// 0-based reading-order index, and only when the columns came from the compile's own
+	// records: it addresses a `col`/`colend` run, so a clustered guess must not carry one
+	i?: number;
+};
 
 // The page's columns, at the width the caller is asking about, each with the x-window that
 // owns its records.
@@ -32,7 +39,7 @@ export function columnWindows(recs: PageRecord[], allG: PageRecord[], W: number,
 			const next = cols[i + 1];
 			const padL = prev ? Math.min(G, Math.max(0, (c.x - (prev.x + prev.w)) / 2)) : G;
 			const padR = next ? Math.min(G, Math.max(0, (next.x - (c.x + c.w)) / 2)) : G;
-			return { x: c.x, colL: c.x - padL, colR: c.x + c.w + padR };
+			return { x: c.x, colL: c.x - padL, colR: c.x + c.w + padR, i };
 		});
 	return columnCandidates(allG, W, G, colSep).map((x) => ({ x, colL: x - G, colR: x + W + G }));
 }

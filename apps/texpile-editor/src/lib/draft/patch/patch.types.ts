@@ -9,6 +9,9 @@ export type Patch = {
 	paraLeft: number;
 	colL: number;
 	colR: number;
+	// the page column this patch is in, as the compile recorded it. Absent when the page
+	// recorded no columns (multicol, a float page), and the x-window decides instead.
+	col?: number;
 	newRecs: PageRecord[];
 	// shifted records landing past this y are dropped on THIS page (they are being
 	// re-drawn at the top of the next page by the overflow split)

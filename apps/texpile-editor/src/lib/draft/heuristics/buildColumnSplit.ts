@@ -52,6 +52,7 @@ export function buildColumnSplit(
 		paraLeft: cal.paraLeft,
 		colL: cal.colL,
 		colR: cal.colR,
+		...(cal.col === undefined ? {} : { col: cal.col }),
 		newRecs: recsA
 	};
 	const spillOn = cal.spill.pageNo ?? cal.pageNo;

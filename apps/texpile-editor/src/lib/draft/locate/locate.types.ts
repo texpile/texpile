@@ -29,6 +29,9 @@ export type Cal = {
 	W: number;
 	colL: number;
 	colR: number;
+	// 0-based index of the page column this band sits in, from the compile's own column
+	// records; absent when the page recorded none
+	col?: number;
 	// found by the fuzzy inverse map (right glyphs, line count off by one, e.g. the daemon's
 	// \noindent vs an indented page paragraph): good enough for a PROVISIONAL patch that a
 	// full compile reconciles, never for an exact one

@@ -113,6 +113,7 @@ export async function locateBySource(
 		W,
 		colL: col.colL,
 		colR: col.colR,
+		...(col.i === undefined ? {} : { col: col.i }),
 		indent,
 		...(stretched ? { approx: true, approxStretch: true } : {})
 	};

@@ -320,10 +320,17 @@ end
 -- y is the box's BASELINE, matching every other box-like record (pl, vbox, line).
 -- A zero-width column (an empty trailing column: probed on a paper ending mid-page) has no
 -- horizontal extent to own records with, so it is not a column for placement purposes.
+-- Returns whether it emitted, so the caller can close the run. The walk is depth-first in
+-- reading order, so every record between a col and its colend is IN that column -- which is
+-- more accurate than testing x against a padded window, and costs nothing: measured on a
+-- float-heavy two-column paper, 1 glyph of 39,335 fell outside the column its position
+-- implies, and that one is real overhang the x-window also gets wrong. Without an explicit
+-- close, page furniture emitted after the last column would read as part of it.
 local function emitColumn(emit, stamp, left, top, box)
-	if box.width <= pt then return end
+	if box.width <= pt then return false end
 	emit(string.format('{"t":"col","i":%d,"x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
 		stamp, left / pt, (top + box.height) / pt, box.width / pt, box.height / pt, box.depth / pt))
+	return true
 end
 
 local walk_vlist
@@ -460,11 +467,12 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 			-- how a TWO-COLUMN page reaches its columns: the output routine packs both into one
 			-- hbox, so the column vlist hangs off a horizontal walk rather than a vertical one
 			local cs = columnStamp(n.head)
-			if cs then emitColumn(emit, cs, x, top, n) end
+			local opened = cs ~= nil and emitColumn(emit, cs, x, top, n)
 			local wasCol = in_column
 			in_column = in_column or cs ~= nil
 			walk_vlist(n.head, n, x, top, emit, fonts, colorStack)
 			in_column = wasCol
+			if opened then emit('{"t":"colend"}') end
 			if not rtl then x = x + n.width end
 		elseif id == MATH then
 			-- inline-math boundary: advance by \mathsurround, or (mathskip active) by
@@ -552,7 +560,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			-- Emitted alongside the vbox marker below, never instead of it: the skeleton still
 			-- needs to see this box as the container holding ALL of the column's lines.
 			local cs = columnStamp(n.head)
-			if cs then emitColumn(emit, cs, x + (n.shift or 0), cy, n) end
+			local opened = cs ~= nil and emitColumn(emit, cs, x + (n.shift or 0), cy, n)
 			-- vbox: vertical material grouped into its own box (a float, a vmode \parbox).
 			-- Its inner paragraph lines emit pl records indistinguishable from galley text,
 			-- so the page skeleton needs this marker to know that run is not flowing content
@@ -566,6 +574,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			in_column = in_column or cs ~= nil
 			walk_vlist(n.head, n, x + (n.shift or 0), cy, emit, fonts, colorStack)
 			in_column = wasCol
+			if opened then emit('{"t":"colend"}') end
 			cy = cy + n.height + n.depth
 		elseif id == GLUE then
 			local eff = node.effective_glue(n, parent) or n.width
@@ -669,11 +678,12 @@ function M.lines(head, y0)
 			-- e.g. an [H]-forced float's own \vbox sitting directly in the
 			-- block's top-level list (not nested inside a paragraph line).
 			local cs = columnStamp(line.head)
-			if cs then emitColumn(emit, cs, line.shift or 0, y, line) end
+			local opened = cs ~= nil and emitColumn(emit, cs, line.shift or 0, y, line)
 			local wasCol = in_column
 			in_column = in_column or cs ~= nil
 			walk_vlist(line.head, line, line.shift or 0, y, emit, fonts, colorStack)
 			in_column = wasCol
+			if opened then emit('{"t":"colend"}') end
 			y = y + line.height + line.depth
 		elseif line.id == INS then
 			-- footnote body: \insert material migrated out of the paragraph into this list.
