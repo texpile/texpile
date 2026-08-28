@@ -15,6 +15,9 @@ export type PaperMetrics = {
 	blSkip: number;
 	parSkip: number;
 	topSkip: number;
+	// files whose paragraphs the compile stamped, in id order; a line record's `sf` indexes
+	// this 1-based. Empty when the compile recorded no source lines (older bridge).
+	srcFiles: string[];
 };
 
 export type Cal = {

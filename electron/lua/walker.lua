@@ -286,6 +286,37 @@ local function columnStamp(head)
 	return best
 end
 
+-- Source identity for a typeset line: which line of which source file produced it.
+--
+-- The tag rides the GLYPHS, not the line box. hpack builds the line after the paragraph's
+-- attribute scope has closed, so the box itself usually carries nothing (measured on a real
+-- paper: 17 tagged line boxes against 1048 whose glyphs were tagged). Read the line's first
+-- glyph instead, descending into nested boxes because a line can open with one (\mbox, a
+-- math atom, an \includegraphics).
+--
+-- A line with no tagged glyph emits no source field at all: absent means UNKNOWN, never
+-- guessed. That is what a float caption and a running head come back as.
+local function firstGlyphSource(head, depth)
+	if depth > 4 then return nil end
+	for n in node.traverse(head) do
+		if n.id == GLYPH then
+			return node.has_attribute(n, M.srcline), node.has_attribute(n, M.srcfile)
+		elseif n.id == HLIST or n.id == VLIST then
+			local l, f = firstGlyphSource(n.head, depth + 1)
+			if l then return l, f end
+		end
+	end
+	return nil
+end
+
+local function sourceSuffix(head)
+	if not (M.srcline and head) then return "" end
+	local l, f = firstGlyphSource(head, 0)
+	-- the unset sentinel comes back as a large negative rather than nil on some builds
+	if not l or l < 1 then return "" end
+	return string.format(',"s":%d%s', l, (f and f > 0) and (',"sf":' .. f) or "")
+end
+
 -- y is the box's BASELINE, matching every other box-like record (pl, vbox, line).
 -- A zero-width column (an empty trailing column: probed on a paper ending mid-page) has no
 -- horizontal extent to own records with, so it is not a column for placement purposes.
@@ -498,8 +529,9 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			-- box. Display-math lines (equation subtypes) are galley boxes the same way --
 			-- without them a display reads as a gap full of stray fraction rules.
 			if n.subtype == HL_LINE or n.subtype == HL_EQ or n.subtype == HL_EQNO then
-				emit(string.format('{"t":"pl","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-					(x + (n.shift or 0)) / pt, cy / pt, n.width / pt, n.height / pt, n.depth / pt))
+				emit(string.format('{"t":"pl","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
+					(x + (n.shift or 0)) / pt, cy / pt, n.width / pt, n.height / pt, n.depth / pt,
+					sourceSuffix(n.head)))
 			end
 			-- drawing box sitting directly in vertical material (\vbox{\hbox{tikz}}).
 			-- Paragraph LINES are exempt: walk() captures just the inner drawing box,

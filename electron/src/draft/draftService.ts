@@ -49,6 +49,10 @@ export type DraftResult =
 			parSkip: number;
 			// \topskip: where a column's first baseline lands (chain-planner landing rule)
 			topSkip: number;
+			// the files whose paragraphs were stamped, in id order: a line record's "sf" is a
+			// 1-based index into this. Line numbers are file-local, so the id is what makes
+			// "line 45" mean anything in a multi-file project.
+			srcFiles: string[];
 			// the line \begin{document} executed at (in the main file), from the hook itself
 			bodyLine?: number;
 			// per-line counter snapshots (see page-extract.lua): the daemon pins to these
@@ -141,7 +145,12 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		'\\let\\TexpileOrigStep\\stepcounter\n' +
 			'\\renewcommand\\stepcounter[1]{\\TexpileOrigStep{#1}\\directlua{texpile_counters(\\the\\inputlineno)}}\n' +
 			'\\let\\TexpileOrigSetC\\setcounter\n' +
-			'\\renewcommand\\setcounter[2]{\\TexpileOrigSetC{#1}{#2}\\directlua{texpile_counters(\\the\\inputlineno)}}\n'
+			'\\renewcommand\\setcounter[2]{\\TexpileOrigSetC{#1}{#2}\\directlua{texpile_counters(\\the\\inputlineno)}}\n' +
+			// each paragraph stamps its own first source line onto the nodes it produces, and
+			// clears it again so material outside a paragraph reads as unknown rather than
+			// inheriting the last one. The walker reads it back at shipout.
+			'\\AddToHook{para/begin}{\\directlua{texpile_para()}}\n' +
+			'\\AddToHook{para/end}{\\directlua{texpile_para_end()}}\n'
 	);
 	const hooks =
 		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${OUT}/texpile-hooks.tex}` +
@@ -325,6 +334,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		blSkip: (manifest as { blSkip?: number }).blSkip || 0,
 		parSkip: (manifest as { parSkip?: number }).parSkip || 0,
 		topSkip: (manifest as { topSkip?: number }).topSkip || 0,
+		srcFiles: (manifest as { srcFiles?: string[] }).srcFiles || [],
 		bodyLine: manifest.bodyLine,
 		counters,
 		seams,

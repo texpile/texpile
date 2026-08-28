@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { locateBySource } from './locateBySource';
+import { memoizeTypesets } from './memoizeTypesets';
 import { locateForward } from './locateForward';
 import { locateByGlyphs } from './locateByGlyphs';
 import { locateCrossPage } from './locateCrossPage';
@@ -27,14 +29,23 @@ const FORWARD_FALLTHROUGH_BAILS = new Set([
 // are nowhere -- discarded content (\eat, \footnotetext) or an unreproducible break; either
 // way each keystroke's full pass would show nothing new, so the caller reconciles quietly.
 export async function locateParagraph(
-	ctx: LocateContext,
+	rawCtx: LocateContext,
 	rawFile: string,
 	line: number,
 	orig: string,
 	listItem = false,
 	endLine = line
 ): Promise<Cal | CalBail> {
+	// one calibration per (text, width) for this locate: every tier reproduces the same
+	// unedited paragraph before it will believe a band, and each ask is an engine round trip
+	const ctx = memoizeTypesets(rawCtx);
 	const file = rawFile.replace(/\\/g, '/'); // synctex stores forward-slash input paths; a backslash query finds nothing
+	// ask before searching: when the compile stamped source lines, the band is a lookup. Every
+	// bail here falls through to the search tiers unchanged, so this only ever saves work --
+	// including for the constructs the stamp gets wrong (list items point at the previous
+	// item, whose content then fails to match).
+	const src = await locateBySource(ctx, file, line, endLine, orig);
+	if (!('bail' in src)) return src;
 	const fwd = await locateForward(ctx, file, line, orig, listItem);
 	if (!('bail' in fwd)) return fwd;
 	// typesets to nothing: no band anywhere could show this edit; reconcile quietly

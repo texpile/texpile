@@ -45,7 +45,8 @@ export class DraftSession {
 		colSep: 0,
 		blSkip: 0,
 		parSkip: 0,
-		topSkip: 0
+		topSkip: 0,
+		srcFiles: []
 	});
 	canvasEls = $state<HTMLCanvasElement[]>([]);
 	savingPdf = $state(false);
@@ -280,7 +281,8 @@ export class DraftSession {
 				colSep: r.colSep || 0,
 				blSkip: r.blSkip || 0,
 				parSkip: r.parSkip || 0,
-				topSkip: r.topSkip || 0
+				topSkip: r.topSkip || 0,
+				srcFiles: r.srcFiles ?? []
 			};
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
 		}

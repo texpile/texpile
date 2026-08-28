@@ -56,6 +56,12 @@ end
 -- page, while the stamp only has to be unique across the run.
 local col_attr, col_firing = nil, 0
 
+-- declared here, above the registration below, so the assignment there binds THESE locals:
+-- declaring them after it would leave the registration writing globals while every reader
+-- closes over locals that stay nil
+local src_line_attr, src_file_attr
+local src_files, src_filen = {}, 0
+
 local function seam_mark(head)
 	if col_attr then
 		col_firing = col_firing + 1
@@ -85,9 +91,58 @@ pcall(function()
 	walker.colattr = col_attr
 end)
 pcall(function()
+	src_line_attr = luatexbase.new_attribute("texpilesrcline")
+	src_file_attr = luatexbase.new_attribute("texpilesrcfile")
+	walker.srcline, walker.srcfile = src_line_attr, src_file_attr
+end)
+pcall(function()
 	tex.set("global", "savingvdiscards", 1)
 	luatexbase.add_to_callback("pre_output_filter", seam_mark, "texpile.seam")
 end)
+
+-- Source-line truth for the instant path: each paragraph stamps its own first source line
+-- and file onto the nodes it produces, so the walker can say which line of the document a
+-- line of the page came from. That is the question the locate tier answers today by
+-- searching -- snapping synctex boxes to a baseline grid, fingerprinting glyph rows,
+-- typesetting calibration variants against every column of every page.
+--
+-- The stamp is driven from Lua rather than TeX so the file table is built as a side effect
+-- of stamping instead of needing a second channel. Line numbers are FILE-LOCAL (a paragraph
+-- in an \input'ed fragment reports its line within that fragment), hence the file id.
+--
+-- Deliberately NOT covered: \item. Its paragraph starts late enough that \inputlineno has
+-- moved on, so the second item of a list reports the first item's line, and nesting drifts
+-- further (measured: up to 4 lines, with two items claiming the same line). Consumers verify
+-- content before trusting a claim, so a list item simply fails that check and falls back to
+-- the search; it is never mislocated.
+function texpile_para()
+	if not src_line_attr then return end
+	local f = ((status and status.filename or ""):gsub("\\", "/"):match("[^/]+$") or ""):lower()
+	local id = src_files[f]
+	if not id then
+		src_filen = src_filen + 1
+		src_files[f] = src_filen
+		id = src_filen
+	end
+	tex.setattribute(src_line_attr, tex.inputlineno)
+	tex.setattribute(src_file_attr, id)
+end
+
+-- content outside any paragraph (a float caption, a running head) must read as UNKNOWN
+-- rather than inherit the last paragraph's line and claim to be text it is not
+function texpile_para_end()
+	if not src_line_attr then return end
+	tex.setattribute(src_line_attr, -2147483647)
+	tex.setattribute(src_file_attr, -2147483647)
+end
+
+local function src_files_json()
+	local inv = {}
+	for f, i in pairs(src_files) do inv[i] = f end
+	local t = {}
+	for i = 1, src_filen do t[i] = '"' .. tostring(inv[i] or ""):gsub('[%c"\\]', "") .. '"' end
+	return "[" .. table.concat(t, ",") .. "]"
+end
 
 -- Counter truth for the instant path: a snapshot of the standard counters at every
 -- \stepcounter/\setcounter (the job string wraps them), keyed by source line + input
@@ -169,8 +224,8 @@ local function write_manifest()
 			i, p.w, p.h, p.ht, p.gs or 0, p.gsn or 0, p.go or 0, unc)
 	end
 	f:write(string.format(
-		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f,"topSkip":%.4f,"hOffset":%.4f,"vOffset":%.4f%s,"pages":[%s]}',
-		pageno, pw, ph, cw, tw, fsk, csep, bls, pks, tsk, hoff, voff,
+		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f,"topSkip":%.4f,"hOffset":%.4f,"vOffset":%.4f,"srcFiles":%s%s,"pages":[%s]}',
+		pageno, pw, ph, cw, tw, fsk, csep, bls, pks, tsk, hoff, voff, src_files_json(),
 		body_line and string.format(',"bodyLine":%d', body_line) or "", table.concat(t, ",")))
 	f:close()
 	-- counter snapshots ride a sidecar (they are per-line, not per-page)

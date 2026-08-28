@@ -40,6 +40,7 @@ export function classify(events) {
 				'provisional',
 				'bail',
 				'locate-bail',
+				'locate-source-bail',
 				'locate-glyph-bail',
 				'locate-xpage-bail',
 				'locate-inverse-bail',
