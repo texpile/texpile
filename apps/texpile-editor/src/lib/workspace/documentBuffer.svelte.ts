@@ -10,6 +10,7 @@ import { serializeMarkdownFile } from '$lib/languages/markdown/visual/roundtrip'
 import { serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { replacePreambleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
 import { basename, relativeTo, type Eol } from '$lib/workspace/fileSystem';
+import { sourceEncodingError } from '$lib/workspace/sourceEncoding';
 import { citationVariantsFor } from '$lib/languages/latex/visual/extensions/citation/citationVariantsFor';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 import type { Node as PMNode } from 'prosemirror-model';
@@ -70,6 +71,7 @@ export class DocumentBuffer {
 	/** the file is gone from disk, so what is loaded is empty. Only reachable through a comparison,
 	 *  where a deleted file is the thing being looked at rather than a file that failed to open. */
 	deletedOnDisk = $state(false);
+	encodingIssue = $state<string | null>(null);
 
 	/** the whole .tex file, as raw text */
 	texSource = $state('');
@@ -119,6 +121,7 @@ export class DocumentBuffer {
 		this.lastDocSource = null;
 		this.rawContent = '';
 		this.path = null;
+		this.encodingIssue = null;
 	}
 
 	/** install a .tex file's text; the visual doc is cleared and re-parsed separately */
@@ -131,6 +134,7 @@ export class DocumentBuffer {
 		this.lastDocSource = null;
 		this.path = path;
 		this.diskBaseline = text;
+		this.encodingIssue = sourceEncodingError(text);
 	}
 
 	/** install a non-.tex text file (.bib and friends), which has no visual representation */
@@ -144,12 +148,18 @@ export class DocumentBuffer {
 		this.lastDocSource = null;
 		this.path = path;
 		this.diskBaseline = text;
+		this.encodingIssue = sourceEncodingError(text);
 	}
 
 	/** image / binary / pdf: nothing to load, the viewer just needs the path */
 	openOpaque(path: string): void {
 		this.close();
 		this.path = path;
+	}
+
+	private queueSave(text: string): void {
+		if (this.encodingIssue) return;
+		this.deps.scheduleSave(this.path, text);
 	}
 
 	adoptParsed(parsed: ParsedLatexFile, source: string): void {
@@ -180,7 +190,7 @@ export class DocumentBuffer {
 			return;
 		}
 		isDirty.current = true;
-		this.deps.scheduleSave(this.path, this.texSource);
+		this.queueSave(this.texSource);
 		this.deps.noteLocalEdit();
 		this.deps.clearPendingAnchor();
 	}
@@ -193,20 +203,20 @@ export class DocumentBuffer {
 		this.texSource = serializeLatexFile(this.docMeta, this.lastDoc);
 		this.lastDocSource = this.texSource;
 		isDirty.current = true;
-		this.deps.scheduleSave(this.path, this.texSource);
+		this.queueSave(this.texSource);
 	}
 
 	/** a source edit IS texSource, write it verbatim */
 	onTexInput(v: string): void {
 		this.texSource = v;
 		isDirty.current = true;
-		this.deps.scheduleSave(this.path, v);
+		this.queueSave(v);
 	}
 
 	onRawInput(v: string): void {
 		this.rawContent = v;
 		isDirty.current = true;
-		this.deps.scheduleSave(this.path, v);
+		this.queueSave(v);
 	}
 
 	/** replace the whole source (formatter, disk reload, history step) and re-derive the views */
@@ -214,7 +224,7 @@ export class DocumentBuffer {
 		this.texSource = text;
 		if (opts.dirty) {
 			isDirty.current = true;
-			this.deps.scheduleSave(this.path, text);
+			this.queueSave(text);
 		}
 		if (this.deps.isVisualMode()) this.deps.rebuildVisual();
 	}
@@ -224,6 +234,7 @@ export class DocumentBuffer {
 	save(force = false): void {
 		this.deps.discardQueuedSave(); // drop the queued debounce; we're writing the current content now
 		if (!this.path) return;
+		if (this.encodingIssue) return;
 		if (hasVisualMode(this.kind)) this.deps.writeNow(this.path, this.texSource, force);
 		else if (isRawTextKind(this.kind)) this.deps.writeNow(this.path, this.rawContent, force);
 	}

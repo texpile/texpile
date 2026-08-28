@@ -10,6 +10,7 @@ import { recordDiskStamp } from '$lib/workspace/diskStamp';
 import { fileKind, formatOf, hasVisualMode, isRawTextKind, type DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
 import type { VisualParser, ParseOutcome, ParseFailure } from '$lib/workspace/visualParse.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
+import { sourceEncodingError } from '$lib/workspace/sourceEncoding';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 
@@ -107,7 +108,8 @@ export class FileOpener {
 				// adopted in the same synchronous batch as openTex below, which clears the doc
 				const cached = visualDocCache.get(path, text);
 				const seq = d.parser.nextSequence();
-				if (!cached && d.isVisualMode()) this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
+				const decodable = !sourceEncodingError(text);
+				if (decodable && !cached && d.isVisualMode()) this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
 
 				d.doc.openTex(path, text, detectEol(raw)); // detectEol so a CRLF file isn't rewritten to LF
 				if (cached) d.doc.adoptParsed(cached, text);

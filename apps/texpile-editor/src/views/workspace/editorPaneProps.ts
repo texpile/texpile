@@ -29,6 +29,7 @@ export type EditorPaneProps = {
 	loadError: string | null;
 	/** the working copy is gone from disk; only reachable inside a comparison */
 	fileDeleted?: boolean;
+	encodingIssue?: string | null;
 	applyingStarter: boolean;
 	texSource: string;
 	rawContent: string;

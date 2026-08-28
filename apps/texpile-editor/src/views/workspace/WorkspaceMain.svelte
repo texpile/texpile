@@ -69,6 +69,7 @@
 		loadedPath={doc.path}
 		{kind}
 		viewMode={modes.mode}
+		encodingIssue={doc.encodingIssue}
 		{guest}
 		terminalAvailable={termDock.available}
 		compiling={compiler.compiling}
@@ -115,6 +116,7 @@
 			{folderEmpty}
 			loadError={doc.loadError}
 			fileDeleted={doc.deletedOnDisk}
+			encodingIssue={doc.encodingIssue}
 			applyingStarter={panes.applyingStarter}
 			texSource={doc.texSource}
 			rawContent={doc.rawContent}

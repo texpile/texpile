@@ -38,11 +38,12 @@
 		onKeepTab,
 		kind,
 		nameOnly = false,
-		viewMode,
+		viewMode: requestedViewMode,
 		session,
 		folderEmpty,
 		loadError,
 		fileDeleted = false,
+		encodingIssue = null,
 		applyingStarter,
 		texSource,
 		rawContent,
@@ -120,6 +121,8 @@
 	/** kinds that have a visual (ProseMirror) surface */
 	const structured = $derived(kind === 'tex' || kind === 'md' || kind === 'typ');
 
+	const viewMode = $derived(requestedViewMode === 'visual' && encodingIssue ? 'source' : requestedViewMode);
+
 	/** independent of viewMode, which says whether the diff is rendered or in source */
 	const comparing = $derived(!!compare);
 
@@ -195,6 +198,15 @@
 		>
 			<Info class="text-primary-500 size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
+		</div>
+	{/if}
+	{#if loadedPath && encodingIssue}
+		<div
+			class="border-surface-200-800 bg-surface-100-900 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			title={encodingIssue}
+		>
+			<CircleAlert class="text-warning-500 size-3.5 shrink-0" />
+			<p class="min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
 		</div>
 	{/if}
 	{#if loadedPath && comparing && viewMode === 'visual' && structured}
@@ -290,6 +302,7 @@
 						docPath={loadedPath}
 						value={texSource}
 						onInput={onTexInput}
+						readOnly={!!encodingIssue}
 						gotoLine={sourceGotoLine}
 						{onSyncToPdf}
 						initialScrollPos={sourceScrollAnchor}
@@ -341,6 +354,7 @@
 						docPath={loadedPath}
 						value={rawContent}
 						onInput={onRawInput}
+						readOnly={!!encodingIssue}
 						filename={loadedPath}
 						gotoLine={sourceGotoLine}
 						collab={session.collabFor(loadedPath)}
@@ -359,6 +373,7 @@
 						docPath={loadedPath}
 						value={rawContent}
 						onInput={onRawInput}
+						readOnly={!!encodingIssue}
 						filename={loadedPath}
 						gotoLine={sourceGotoLine}
 						collab={session.collabFor(loadedPath)}

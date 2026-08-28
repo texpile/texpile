@@ -31,6 +31,7 @@
 		loadedPath: string | null;
 		kind: FileKind;
 		viewMode: 'visual' | 'source' | 'diff';
+		encodingIssue?: string | null;
 		guest: boolean;
 		terminalAvailable: boolean;
 		compiling: boolean;
@@ -71,6 +72,7 @@
 		loadedPath,
 		kind,
 		viewMode,
+		encodingIssue = null,
 		guest,
 		terminalAvailable,
 		compiling,
@@ -221,9 +223,12 @@
 			     stays host-only: it isn't wired to the shared doc yet) -->
 			<div class="border-surface-300-700 inline-flex shrink-0 overflow-hidden rounded-md border text-xs">
 				<button
-					class="flex items-center gap-1 px-2.5 py-1 {viewMode === 'visual' ? 'preset-filled-primary-500' : 'hover:preset-tonal'}"
+					class="flex items-center gap-1 px-2.5 py-1 disabled:cursor-not-allowed disabled:opacity-40 {viewMode === 'visual'
+						? 'preset-filled-primary-500'
+						: 'hover:preset-tonal disabled:hover:bg-transparent'}"
 					onclick={() => onSetViewMode('visual')}
-					title={m.wsview_visual_editor_title()}
+					disabled={!!encodingIssue}
+					title={encodingIssue ?? m.wsview_visual_editor_title()}
 				>
 					<Eye class="size-3.5" />
 					{m.wsview_visual_label()}

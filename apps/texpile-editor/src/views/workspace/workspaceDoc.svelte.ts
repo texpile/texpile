@@ -60,6 +60,7 @@ export class WorkspaceDoc {
 			setSource: (t) => (this.doc.texSource = t),
 			getDocMeta: () => this.doc.docMeta,
 			getLastParsedSource: () => this.parser.lastParsedSource,
+			getEncodingIssue: () => this.doc.encodingIssue,
 			rebuildVisual: () => this.rebuildVisualFromSource(),
 			captureDiffSnapshot: () => void this.diff.snapshot(),
 			startCompare: () => d.startCompare(),
@@ -219,6 +220,7 @@ export class WorkspaceDoc {
 	}
 
 	rebuildVisualFromSource(): void {
+		if (this.doc.encodingIssue) return;
 		// fast path: source unchanged since the last successful parse, keep the mounted PM view
 		if (this.doc.texSource === this.parser.lastParsedSource && this.doc.visualDoc) return;
 

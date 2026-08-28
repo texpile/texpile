@@ -37,6 +37,7 @@ export type ViewModeDeps = {
 	getDocMeta(): DocMeta;
 	/** the text the current visual doc was parsed from; null while a parse is in flight */
 	getLastParsedSource(): string | null;
+	getEncodingIssue(): string | null;
 	rebuildVisual(): void;
 	/** open a comparison of the open file against the last saved version. */
 	startCompare(): void;
@@ -100,6 +101,7 @@ export class ViewModeSwitch {
 		const kind = d.getKind();
 		const structured = kind === 'tex' || kind === 'md' || kind === 'typ';
 		if (!structured && kind !== 'bib') return;
+		if (mode === 'visual' && d.getEncodingIssue()) return;
 		if (structured) {
 			this.history.capture(d.getSource()); // flush the pre-switch state into the cross-mode history
 			// scroll sync: capture the outgoing view's anchor for the incoming one

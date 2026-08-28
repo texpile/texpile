@@ -42,7 +42,8 @@
 		selectedComment = null,
 		onAddComment,
 		onInsertCitation,
-		onSelectComment
+		onSelectComment,
+		readOnly = false
 	}: {
 		value?: string;
 		onInput?: (v: string) => void;
@@ -70,6 +71,7 @@
 		/** pick citations from Zotero and insert them at the caret (host + desktop only) */
 		onInsertCitation?: () => void;
 		onSelectComment?: (id: string, from: 'text' | 'gutter') => void;
+		readOnly?: boolean;
 	} = $props();
 
 	/** last position reported to onCaretMove, so redundant selection updates do not spray requests */
@@ -164,6 +166,7 @@
 					wrapConf,
 					lspConf,
 					keymapConf,
+					readOnly,
 					lineWrap: settings.current.sourceLineWrap !== false,
 					onAddComment,
 					onSelectComment,
@@ -210,11 +213,10 @@
 		if (!collab && view) sync.pushExternal(view, v);
 	});
 
-	// live read-only flips (the host opened/closed this file in its visual editor)
+	// live read-only flips: the host opened/closed this file in its visual editor, or it is not UTF-8
 	$effect(() => {
-		const ro = collab?.readOnly ?? false;
-		void ro;
-		if (view && collab) {
+		const ro = readOnly || (collab?.readOnly ?? false);
+		if (view) {
 			view.dispatch({ effects: roConf.reconfigure(ro ? [EditorState.readOnly.of(true), EditorView.editable.of(false)] : []) });
 		}
 	});

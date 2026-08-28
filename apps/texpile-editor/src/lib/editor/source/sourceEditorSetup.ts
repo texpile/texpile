@@ -47,6 +47,7 @@ export type SourceSetupDeps = {
 	lspConf: Compartment;
 	keymapConf: Compartment;
 	lineWrap: boolean;
+	readOnly?: boolean;
 	onAddComment?: (from: number, to: number) => void;
 	onSelectComment?: (id: string, from: 'text' | 'gutter') => void;
 	onJumpToFile?: (name: string) => void;
@@ -78,7 +79,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		gutterTheme,
 		highlightActiveLine(),
 		...(collab ? [yCollab(collab.ytext, collab.awareness, { undoManager: deps.undoManager! }), yRemoteLayoutFix] : [history()]),
-		deps.roConf.of(collab?.readOnly ? [EditorState.readOnly.of(true), EditorView.editable.of(false)] : []),
+		deps.roConf.of(deps.readOnly || collab?.readOnly ? [EditorState.readOnly.of(true), EditorView.editable.of(false)] : []),
 		deps.keymapConf.of([]),
 		drawSelection(),
 		// multiple cursors: the keymaps already bind the commands, but every transaction is
