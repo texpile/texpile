@@ -260,7 +260,7 @@ export type SkeletonItem =
 	{ t: 'b'; h: number; d: number } | { t: 'g'; w: number; st: number; sto: number; sh: number; sho: number } | { t: 'p'; p: number };
 
 export type SkeletonResult =
-	{ ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[] } | { ok: false; error: string };
+	{ ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[]; nys?: number[] } | { ok: false; error: string };
 
 /* eslint-disable no-param-reassign -- same callback-slot protocol as typesetOn */
 function skeletonOn(state: Daemon, items: SkeletonItem[], targetPt: number, capacity?: boolean): Promise<SkeletonResult> {
@@ -290,7 +290,9 @@ function skeletonOn(state: Daemon, items: SkeletonItem[], targetPt: number, capa
 					gs: Number(s.gs) || 0,
 					gsn: Number(s.gsn) || 0,
 					go: Number(s.go) || 0,
-					ys: Array.isArray(s.ys) ? (s.ys as number[]).map(Number) : []
+					ys: Array.isArray(s.ys) ? (s.ys as number[]).map(Number) : [],
+					// the same stack at natural glue: what a column the engine did not fill looks like
+					nys: Array.isArray(s.nys) ? (s.nys as number[]).map(Number) : undefined
 				});
 		};
 		const lines = items.map((it) =>

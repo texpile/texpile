@@ -212,19 +212,30 @@ function texd_skeleton(target, cnt, cap)
 		tex.dimen.splitmaxdepth = cap and tex.dimen.maxdepth or 1073741823
 		tex.box[254] = node.vpack(head)
 		local a = tex.splitbox(254, math.floor(target * 65536), "exactly")
-		local ys, kA = {}, 0
+		-- TWO baselines per box. ys is the split as packed: "exactly" stretches the glue to
+		-- reach the target, which is the engine's own layout only where the engine also
+		-- filled the column. nys is the same stack at NATURAL glue, which is what a column
+		-- the engine did not fill actually looks like -- the document's last column, and
+		-- every page of a \raggedbottom class. Neither is derived: both are this box's own
+		-- glue read two ways the engine defines.
+		local ys, nys, kA = {}, {}, 0
 		if a then
-			local cy = 0
+			local cy, ny = 0, 0
 			for n in node.traverse(a.head) do
 				if n.id == HL or n.id == VL then
 					cy = cy + n.height
+					ny = ny + n.height
 					kA = kA + 1
 					ys[#ys + 1] = string.format("%.4f", cy / 65536.0)
+					nys[#nys + 1] = string.format("%.4f", ny / 65536.0)
 					cy = cy + n.depth
+					ny = ny + n.depth
 				elseif n.id == GL then
 					cy = cy + (node.effective_glue(n, a) or n.width)
+					ny = ny + n.width
 				elseif n.id == KN then
 					cy = cy + n.kern
+					ny = ny + n.kern
 				end
 			end
 		end
@@ -236,9 +247,9 @@ function texd_skeleton(target, cnt, cap)
 			end
 		end
 		respond(string.format(
-			'texpile-warm@@R {"skel":true,"ms":%.4f,"kA":%d,"kB":%d,"gs":%.6f,"gsn":%d,"go":%d,"ys":[%s]}',
+			'texpile-warm@@R {"skel":true,"ms":%.4f,"kA":%d,"kB":%d,"gs":%.6f,"gsn":%d,"go":%d,"ys":[%s],"nys":[%s]}',
 			(os.gettimeofday() - t0) * 1000.0, kA, kB, a and a.glue_set or 0, a and a.glue_sign or 0,
-			a and a.glue_order or 0, table.concat(ys, ",")))
+			a and a.glue_order or 0, table.concat(ys, ","), table.concat(nys, ",")))
 		if a then node.flush_list(a) end
 	end)
 	if not ok then

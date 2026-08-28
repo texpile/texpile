@@ -167,10 +167,23 @@ export async function planBreakChain(
 			return finish(reason);
 		}
 		if (!skelB) return uncertified(!seamIts ? 'no-seam' : topSkip <= 0 ? 'no-topskip' : 'no-skeleton');
+		// Did the engine FILL this column? That chooses which of the split's two baseline
+		// readings is its layout. A filled column was stretched to its goal, so the packed
+		// reading is the engine's; one the engine left short -- the document's last column, and
+		// every page of a raggedbottom class -- stacks at natural glue instead, and reading it
+		// as stretched would spread its rows. Both readings come from the same box.
+		const fills = deps.columnFills(slot.spillPage, slot.col);
+		function pick(r: { ys: number[]; nys?: number[] }): number[] | null {
+			return fills ? r.ys : (r.nys ?? null);
+		}
 		const c0 = await deps.splitSkeleton(skelB.items, skelB.target);
 		if (!c0.ok || c0.kB !== 0 || c0.kA !== skelB.boxYs.length) return uncertified('cal-count');
+		const calYs = pick(c0);
+		if (!calYs || calYs.length !== c0.kA) return uncertified('no-natural-ys');
+		// the calibration PROVES the choice: these baselines must reproduce the column's own,
+		// so a wrong reading fails here instead of reaching the page
 		let calDev = 0;
-		for (let k = 0; k < skelB.boxYs.length; k++) calDev = Math.max(calDev, Math.abs(skelB.top + c0.ys[k] - skelB.boxYs[k]));
+		for (let k = 0; k < skelB.boxYs.length; k++) calDev = Math.max(calDev, Math.abs(skelB.top + calYs[k] - skelB.boxYs[k]));
 		if (calDev > CAL_DEV) return uncertified('cal-dev');
 		// the landing rule the page builder uses: the column's first baseline sits at
 		// \topskip below the body top unless the box is taller than \topskip
@@ -181,8 +194,9 @@ export async function planBreakChain(
 		const nCarried = carried.oldBases.length;
 		const total = nCarried + skelB.boxYs.length;
 		const cf = await deps.splitSkeleton(spliced, capacity, true);
-		if (!cf.ok || cf.kA + cf.kB !== total || cf.ys.length !== cf.kA || cf.kA < nCarried) return uncertified('hop-split');
-		const hopYs = cf.ys;
+		if (!cf.ok || cf.kA + cf.kB !== total || cf.kA < nCarried) return uncertified('hop-split');
+		const hopYs = pick(cf);
+		if (!hopYs || hopYs.length !== cf.kA) return uncertified('hop-ys');
 		const newBases = carried.oldBases.map((_, j) => topEdge + hopYs[j]);
 		const stayCount = cf.kA - nCarried;
 		const staySteps = [];
@@ -214,7 +228,6 @@ export async function planBreakChain(
 			clipBottom: clipMid === undefined ? undefined : clipMid + delta,
 			flowBottom: floorB
 		});
-		const fills = deps.columnFills(slot.spillPage, slot.col);
 		deps.emit('chain-hop', {
 			page: slot.spillPage,
 			col: slot.col,
@@ -224,12 +237,9 @@ export async function planBreakChain(
 			calDev: +calDev.toFixed(3),
 			fills
 		});
-		// the split packs to the goal EXACTLY, so its spacing is the engine's only where the
-		// engine also filled THIS column; a fil-terminated one (the document's last column
-		// included) leaves its rows at natural spacing and an exact respace would spread them.
-		// Asked per column: the older page-wide inference condemned every column of a page for
-		// one fil anywhere on it, including page furniture above the columns entirely.
-		if (!fills) exact = false;
+		// a column the engine did not fill no longer costs exactness: its rows were read at
+		// natural glue above, and the calibration proved that reading against the column's own
+		// baselines. The fit is still the split's answer either way.
 		if (cf.kB === 0) {
 			if (exact) exact = await absorbConfirmed(deps, ctx, seams, cal, slot, skelB, recsB, spliced, capacity, total);
 			return finish('absorbed');

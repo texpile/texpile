@@ -52,6 +52,36 @@ function deps(results: any[], calls: string[] = [], seams: SeamEntry[] = [], opt
 }
 
 describe('planBreakChain', () => {
+	it('a column the engine did not fill reads at natural glue, and still certifies', async () => {
+		// packed and natural baselines differ: the split stretched its glue to reach the
+		// target, and a column with a fil at the bottom is not stretched at all. The natural
+		// reading is the one that reproduces the column, so the calibration accepts it.
+		const nat = (kA: number, kB: number, ys: number[], nys: number[]) => ({ ok: true, kA, kB, gs: 0, gsn: 0, go: 0, ys, nys });
+		const plan = (await planBreakChain(
+			deps([nat(2, 0, [40, 99], [8, 23]), nat(3, 0, [40, 99, 140], [8, 24, 39])], [], [seam11, seam12], { packs: false }),
+			ctx({ 1: [...col1, ...col2] }, 1),
+			cal,
+			bandRecs,
+			motion as any,
+			geom,
+			10
+		))!;
+		expect(plan.exact).toBe(true);
+	});
+
+	it('a non-filling column with no natural reading refuses rather than using the stretched one', async () => {
+		const plan = (await planBreakChain(
+			deps([ok(2, 0, [8, 23]), ok(3, 0, [8, 24, 39])], [], [seam11, seam12], { packs: false }),
+			ctx({ 1: [...col1, ...col2] }, 1),
+			cal,
+			bandRecs,
+			motion as any,
+			geom,
+			10
+		))!;
+		expect(plan.exact).toBe(false);
+	});
+
 	it('certified hop absorbed on the document last column: exact, no probe needed', async () => {
 		const calls: string[] = [];
 		const plan = (await planBreakChain(

@@ -90,7 +90,7 @@ export type SkeletonItem =
 	{ t: 'b'; h: number; d: number } | { t: 'g'; w: number; st: number; sto: number; sh: number; sho: number } | { t: 'p'; p: number };
 
 export type SkeletonResult =
-	{ ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[] } | { ok: false; error: string };
+	{ ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[]; nys?: number[] } | { ok: false; error: string };
 
 type TexpileNative = {
 	/** answered synchronously in preload, so the first render already knows what it is opening */

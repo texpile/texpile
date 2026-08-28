@@ -27,6 +27,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: editing one column of a two-column page no longer moves a figure that spans both columns, or the page number
 - fix: two figures included at the same size can no longer be shown in each other's place in live preview
 - fix: live preview flows content across a column break in more documents, instead of giving up when a column held only a figure
+- fix: an edit that pushes content into the next column or page now renders exactly, with no refining tint, on the last page and in document styles that leave the bottom of pages ragged
 
 ## [0.17.1] - 2026-08-19
 
