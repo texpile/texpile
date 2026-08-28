@@ -4,4 +4,6 @@
 // break-penalty node reads 10000, neutralized by the engine before saving).
 export type SeamRun = { w?: number; st?: number; sto?: number; sh?: number; sho?: number; k?: number; p?: number; x?: boolean };
 
-export type SeamEntry = { page: number; col: number; pen: number; run: SeamRun[] };
+// fire: the output firing that built the column this seam follows, the same ordinal the
+// column record carries. It ties a seam to its column directly.
+export type SeamEntry = { page: number; col: number; fire?: number; pen: number; run: SeamRun[] };

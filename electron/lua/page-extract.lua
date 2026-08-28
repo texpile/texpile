@@ -79,7 +79,10 @@ local function seam_mark(head)
 	local pen = tex.outputpenalty or 0
 	if pen >= -10000 then
 		seam_cols = seam_cols + 1
-		seam_pending = { pen = pen, col = seam_cols }
+		-- `fire` is THIS firing's ordinal, the same number stamped on the column it just
+		-- built. It ties a seam to its column directly, where matching by counted position
+		-- only works when every column of the page fired on its own.
+		seam_pending = { pen = pen, col = seam_cols, fire = col_firing }
 	end
 	return true
 end
@@ -217,11 +220,12 @@ local function write_manifest()
 		-- The instant path has always had this per block; without it on the page the renderer
 		-- had no way to know a page's records were unsafe to paint (RTL, in practice).
 		local unc = p.unc and string.format(',"unc":"%s"', p.unc) or ""
+		local dev = p.dev and string.format(',"dev":%.4f', p.dev) or ""
 		-- the shipped vpack's glue state: gsn 1 = the page was stretched to \textheight
 		-- (flushbottom), so a patch must distribute its delta over the page's vg records
 		-- the way a repack would, not shift rigidly
 		t[i] = string.format('{"n":%d,"w":%.4f,"h":%.4f,"ht":%.4f,"gs":%.6f,"gsn":%d,"go":%d%s}',
-			i, p.w, p.h, p.ht, p.gs or 0, p.gsn or 0, p.go or 0, unc)
+			i, p.w, p.h, p.ht, p.gs or 0, p.gsn or 0, p.go or 0, unc .. dev)
 	end
 	f:write(string.format(
 		'{"count":%d,"paperW":%.4f,"paperH":%.4f,"colW":%.4f,"textW":%.4f,"footSkip":%.4f,"colSep":%.4f,"blSkip":%.4f,"parSkip":%.4f,"topSkip":%.4f,"hOffset":%.4f,"vOffset":%.4f,"srcFiles":%s%s,"pages":[%s]}',
@@ -241,7 +245,8 @@ local function write_manifest()
 		local lines = {}
 		for _, s in ipairs(seam_done) do
 			if s.page and s.run then
-				lines[#lines + 1] = string.format('{"page":%d,"col":%d,"pen":%d,"run":%s}', s.page, s.col, s.pen, s.run)
+				lines[#lines + 1] = string.format('{"page":%d,"col":%d,"fire":%d,"pen":%d,"run":%s}',
+					s.page, s.col, s.fire or 0, s.pen, s.run)
 			end
 		end
 		sf:write(table.concat(lines, "\n"))
@@ -273,7 +278,10 @@ function page_extract(boxnum)
 		gs = b.glue_set or 0,
 		gsn = b.glue_sign or 0,
 		go = b.glue_order or 0,
-		unc = ok and stats and stats.uncertified or nil
+		unc = ok and stats and stats.uncertified or nil,
+		-- the walker's OWN proof for this page: how far its pen finished from the engine's
+		-- line width on the worst justified line. Computed since the beginning and never read.
+		dev = ok and stats and stats.maxdev or nil
 	}
 	if ok then
 		local f = io.open(string.format("%spage-%03d.jsonl", OUT, pageno), "w")

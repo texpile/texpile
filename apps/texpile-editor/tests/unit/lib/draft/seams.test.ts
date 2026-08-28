@@ -49,18 +49,24 @@ describe('seams', () => {
 		expect(seamHeight(s(0, [{ p: 10000 }, { w: 3, st: 1, sto: 0, sh: 0, sho: 0 }, { k: 2 }]))).toBe(5);
 	});
 
-	it('counts a column that broke no full-width line, which the pl scan cannot see', () => {
-		// column 2 holds only a float, so it contributes no pl record at column width. The
-		// pl scan counts one column, mismatches the two recorded firings and refuses the
-		// page's seams; the recorded column boxes count two and serve them.
+	it('matches a seam to its column by firing ordinal, not by counted position', () => {
+		// column 2 holds only a float, so it contributes no pl record at column width. The pl
+		// scan counts one column, mismatches the two recorded firings and refuses the page's
+		// seams. The column boxes carry the firing that built them, and so does each seam.
 		const floatOnly = [
 			...oneCol,
-			{ t: 'col', i: 1, x: 57, y: 700, w: 200, h: 500, d: 0 },
-			{ t: 'col', i: 2, x: 267, y: 700, w: 200, h: 500, d: 0 }
+			{ t: 'col', i: 4, x: 57, y: 700, w: 200, h: 500, d: 0 },
+			{ t: 'col', i: 7, x: 267, y: 700, w: 200, h: 500, d: 0 }
 		];
-		const all = [s(0, []), { ...s(5, []), col: 2 }];
+		// firings skip: float and clearpage cycles fire without producing a column, so the
+		// ordinals are 4 and 7 while the columns are 1 and 2. Counting cannot bridge that.
+		const all = [
+			{ ...s(0, []), fire: 4 },
+			{ ...s(5, []), col: 2, fire: 7 }
+		];
 		expect(seamAfter(all, 1, 2, oneCol, 200)).toBeNull();
 		expect(seamAfter(all, 1, 2, floatOnly, 200)!.pen).toBe(5);
+		expect(seamAfter(all, 1, 1, floatOnly, 200)!.pen).toBe(0);
 		expect(columnIndexOf(floatOnly, 200, 259)).toBe(2);
 	});
 

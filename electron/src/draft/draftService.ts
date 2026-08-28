@@ -30,6 +30,10 @@ export type DraftPage = {
 	gsn?: number;
 	go?: number;
 	unc?: string;
+	// the walker's own proof for this page: how far its pen finished from the engine's line
+	// width on the worst justified line. Measured 0.0000 on every page of every fixture, so a
+	// nonzero value is an anomaly worth seeing, not a tolerance to tune.
+	dev?: number;
 	records: string;
 };
 export type DraftResult =
@@ -59,7 +63,7 @@ export type DraftResult =
 			counters: { l: number; f?: string; s: Record<string, number> }[];
 			// per-break pruned runs (see page-extract.lua seam capture): the material TeX
 			// discarded at each column/page break, keyed by page + 1-based column index
-			seams: { page: number; col: number; pen: number; run: Record<string, number>[] }[];
+			seams: { page: number; col: number; fire?: number; pen: number; run: Record<string, number>[] }[];
 			marginX: number;
 			marginY: number;
 			pages: DraftPage[];
@@ -262,7 +266,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		paperH?: number;
 		colW?: number;
 		bodyLine?: number;
-		pages: { n: number; w: number; h: number; ht?: number; gs?: number; gsn?: number; go?: number; unc?: string }[];
+		pages: { n: number; w: number; h: number; ht?: number; gs?: number; gsn?: number; go?: number; unc?: string; dev?: number }[];
 	};
 	try {
 		manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
@@ -284,7 +288,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 
 	// seam sidecar: per-break pruned runs; absent (older engine, luatexbase missing) means
 	// the chain planner falls back to its guessed junction gap and stays provisional
-	let seams: { page: number; col: number; pen: number; run: Record<string, number>[] }[] = [];
+	let seams: { page: number; col: number; fire?: number; pen: number; run: Record<string, number>[] }[] = [];
 	try {
 		seams = fs
 			.readFileSync(path.join(outAbs, 'seams.jsonl'), 'utf8')
@@ -312,7 +316,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 			);
 			records = lines.join('\n');
 		}
-		pages.push({ n, w: meta.w, h: meta.h, ht: meta.ht, gs: meta.gs, gsn: meta.gsn, go: meta.go, unc: meta.unc, records });
+		pages.push({ n, w: meta.w, h: meta.h, ht: meta.ht, gs: meta.gs, gsn: meta.gsn, go: meta.go, unc: meta.unc, dev: meta.dev, records });
 	}
 
 	// some classes never set the engine's page-dimension registers, leaving paperW/H = 0 in the

@@ -222,15 +222,21 @@ end
 -- subtree contain an image-type rule anywhere inside? Bounded depth since
 -- graphics-inclusion nesting is shallow (verified: 6 levels for a plain
 -- \includegraphics; generous headroom below).
+-- Returns the image rule's INDEX when it finds one (true when the engine gave none), so the
+-- record can name which image this is. The index is per distinct FILE -- probed: the same
+-- file included twice carries one index, two different files carry two -- which is exactly
+-- the distinction the renderer's dimension join could not make. It joined image boxes to the
+-- log's inclusion lines by requested size, and two figures at identical sizes could swap.
 local function containsImageRule(head, depthLeft)
-	if depthLeft <= 0 then return false end
+	if depthLeft <= 0 then return nil end
 	for n in node.traverse(head) do
-		if n.id == RULE and n.subtype == RULE_IMAGE then return true end
+		if n.id == RULE and n.subtype == RULE_IMAGE then return n.index or true end
 		if n.id == HLIST or n.id == VLIST then
-			if containsImageRule(n.head, depthLeft - 1) then return true end
+			local ix = containsImageRule(n.head, depthLeft - 1)
+			if ix then return ix end
 		end
 	end
-	return false
+	return nil
 end
 
 -- pgf/tikz wrap their raw-PDF drawing (pdf_literal streams) in a box whose dims are
@@ -434,6 +440,7 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 			local yy = y + (n.shift or 0)
 			-- area guard: a 0x0 picture box (tikz overlay/remember) draws outside its own
 			-- bounds -- a crop of it is empty. Fall through to the normal walk (loose flag).
+			local imgIndex = containsImageRule(n.head, 8)
 			if n.width > pt and (n.height + n.depth) > pt and containsLiteral(n.head, 3) then
 				-- raw PDF drawing (tikz/pgfplots, \rotatebox): emit the region and don't
 				-- recurse -- the renderer shows it as pixels cropped from the reconcile
@@ -445,15 +452,16 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 				flags.literal = true
 				emit(string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
 					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt))
-			elseif containsImageRule(n.head, 8) then
+			elseif imgIndex ~= nil then
 				-- this hlist's OWN w/h already reflect \includegraphics's
 				-- requested display size (natural size lives deeper, on the
 				-- inner rule -- verified empirically); no useful glyph content
-				-- inside, so don't recurse. Filename resolution happens at the
-				-- JS layer (regex over the known block source), not here --
-				-- rule nodes carry no filename field.
-				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt))
+				-- inside, so don't recurse. The rule carries no filename, but its
+				-- index names the file: the renderer maps index N to the Nth
+				-- distinct inclusion the log records.
+				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
+					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt,
+					type(imgIndex) == "number" and (',"ix":' .. imgIndex) or ""))
 			else
 				local r = dirOf(n)
 				walk(n.head, n, penIn(n, x, r), yy, emit, fonts, 0, colorStack, r)

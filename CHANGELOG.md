@@ -25,6 +25,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: live preview reads each page's columns from the engine instead of inferring them from where text starts, so edits land in the right column even when the gap between columns is narrow
 - fix: the compile now records which line of your document produced each line of the page, so live preview finds the text you edited by asking instead of searching, and instant edits land about a third faster
 - fix: editing one column of a two-column page no longer moves a figure that spans both columns, or the page number
+- fix: two figures included at the same size can no longer be shown in each other's place in live preview
+- fix: live preview flows content across a column break in more documents, instead of giving up when a column held only a figure
 
 ## [0.17.1] - 2026-08-19
 

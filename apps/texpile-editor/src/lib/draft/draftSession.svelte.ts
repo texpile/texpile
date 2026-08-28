@@ -290,6 +290,13 @@ export class DraftSession {
 		// counter truth + the executed \begin{document} line: the decision layer pins to these
 		updateEngineTruth({ counters: r.counters ?? [], bodyLine: r.bodyLine, mainRel: this.opts.mainFile() });
 		this.pages = r.pages;
+		// the walker checks its own glyph placement against the engine's line width and had
+		// been discarding the answer. It is 0.0000 on every page of every fixture, so a
+		// nonzero one means this page's records do not reproduce the engine and anything
+		// spliced onto it is suspect. Surfaced rather than refused: no fixture exercises
+		// font expansion, where a legitimate rounding difference could appear.
+		const drift = (r.pages as { n: number; dev?: number }[]).filter((p) => (p.dev ?? 0) > 0);
+		if (drift.length) this.ev('page-walk-drift', { pages: drift.map((p) => ({ n: p.n, dev: p.dev })) });
 		this.parsedPages.clear();
 		this.patcher.geometryChanged(); // geometry changed; paragraphs re-locate on next patch
 		this.bitmaps.invalidate(); // tier-2 crops come from THIS compile's PDF

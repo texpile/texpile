@@ -19,6 +19,12 @@ import type { SkelItem } from './pageSkeleton';
  * column's. Serve nothing unless the two counts match.
  */
 export function seamAfter(seams: SeamEntry[], page: number, col: number, pageRecs: PageRecord[], W: number): SeamEntry | null {
+	// by firing ordinal when both sides carry it: the column record and the seam were stamped
+	// with the same number, so the seam after column N is a lookup, not a count that only
+	// happens to line up when every column of the page broke on its own
+	const boxes = pageColumns(pageRecs).filter((c) => Math.abs(c.w - W) <= 2);
+	const mine = boxes[col - 1];
+	if (mine?.i !== undefined) return seams.find((s) => s.page === page && s.fire === mine.i) ?? null;
 	const cols = columnOrigins(pageRecs, W).length;
 	if (!cols || seams.filter((s) => s.page === page).length !== cols) return null;
 	return seams.find((s) => s.page === page && s.col === col) ?? null;

@@ -1,8 +1,8 @@
 // Attaches figure FILENAMES to a compile's image records -- nothing else.
-// The engine's image rule nodes carry no filename, but the SAME RUN's log records every
-// inclusion (`<use FILE>` + "Requested size: WxH"): a same-run join by those exact
-// dimensions recovers the correspondence the engine had but didn't serialize. Distinct
-// files at identical sizes fall back to log order (only ever swaps two same-sized figures).
+// The engine's image rule nodes carry no filename, but they DO carry an index, numbered per
+// distinct file, and the SAME RUN's log names every inclusion (`<use FILE>`) in first-use
+// order -- so index N is the Nth distinct file. Records from a compile predating that index
+// fall back to the older join by requested size, which could swap two same-sized figures.
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 
@@ -25,6 +25,14 @@ export function readImageUses(outAbs: string): ImageUse[] {
 /** Rewrites {"t":"image"} lines in place, adding the resolved absolute file path. */
 export function attachImageFiles(lines: string[], uses: ImageUse[], root: string): void {
 	if (!uses.length) return;
+	// The engine numbers images per DISTINCT FILE, and the log names them in first-use order,
+	// so index N is the Nth distinct file. That is an exact correspondence where matching by
+	// requested size is not: two different figures at identical sizes could swap.
+	const distinct: string[] = [];
+	for (const u of uses) if (!distinct.includes(u.file)) distinct.push(u.file);
+	function abs(file: string): string {
+		return (path.isAbsolute(file) ? file : path.join(root, file)).replace(/\\/g, '/');
+	}
 	function resolveUse(w: number, h: number): string | null {
 		function near(f: { w: number; h: number }): boolean {
 			return Math.abs(f.w - w) < 0.1 && Math.abs(f.h - h) < 0.1;
@@ -38,7 +46,10 @@ export function attachImageFiles(lines: string[], uses: ImageUse[], root: string
 		if (!lines[i].startsWith('{"t":"image"')) continue;
 		try {
 			const r = JSON.parse(lines[i]);
-			const file = resolveUse(r.w, (r.h || 0) + (r.d || 0));
+			// the engine's own index when the record carries one; the size join only for
+			// records from a compile that predates it
+			const byIndex = typeof r.ix === 'number' && distinct[r.ix - 1] ? abs(distinct[r.ix - 1]) : null;
+			const file = byIndex ?? resolveUse(r.w, (r.h || 0) + (r.d || 0));
 			if (file) {
 				r.file = file;
 				lines[i] = JSON.stringify(r);
