@@ -6,44 +6,49 @@
 
 	type Props = {
 		candidates: TexFile[];
+		tooMany: boolean;
 		choice: string | null;
 		detected: string | null;
 		docRoots: Set<string>;
 		onConfirm: () => void;
 		onDismiss: () => void;
 	};
-	let { candidates, choice = $bindable(), detected, docRoots, onConfirm, onDismiss }: Props = $props();
+	let { candidates, tooMany, choice = $bindable(), detected, docRoots, onConfirm, onDismiss }: Props = $props();
 </script>
 
 <Modal title={m.wsview_mainconfirm_title()} onClose={onDismiss} card="max-h-full max-w-lg overflow-y-auto p-5">
-	<p class="text-surface-600-300 mb-3 text-sm">
-		{m.wsview_mainconfirm_desc()}
-	</p>
-	<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded border">
-		{#each candidates as f (f.path)}
-			<label
-				class="hover:preset-tonal-surface flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm {choice && samePath(choice, f.path)
-					? 'preset-tonal-primary'
-					: ''}"
-			>
-				<input
-					type="radio"
-					class="radio"
-					name="main-file-choice"
-					value={f.path}
-					checked={!!choice && samePath(choice, f.path)}
-					onchange={() => (choice = f.path)}
-				/>
-				<span class="truncate">{f.relPath}</span>
-				{#if detected && samePath(f.path, detected)}
-					<span class="badge preset-tonal-primary ml-auto shrink-0 text-[10px]">{m.wsview_badge_detected()}</span>
-				{:else if docRoots.has(f.path)}
-					<span class="badge preset-tonal-surface ml-auto shrink-0 text-[10px]">{m.wsview_badge_document()}</span>
-				{/if}
-			</label>
-		{/each}
-	</div>
-	<div class="flex justify-end">
-		<button class="btn btn-xs preset-filled-primary-500" onclick={onConfirm} disabled={!choice}>{m.wsview_use_this_file()}</button>
-	</div>
+	{#if tooMany}
+		<p class="text-surface-600-300 text-sm">{m.wsview_mainconfirm_too_many()}</p>
+	{:else}
+		<p class="text-surface-600-300 mb-3 text-sm">
+			{m.wsview_mainconfirm_desc()}
+		</p>
+		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded border">
+			{#each candidates as f (f.path)}
+				<label
+					class="hover:preset-tonal-surface flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm {choice && samePath(choice, f.path)
+						? 'preset-tonal-primary'
+						: ''}"
+				>
+					<input
+						type="radio"
+						class="radio"
+						name="main-file-choice"
+						value={f.path}
+						checked={!!choice && samePath(choice, f.path)}
+						onchange={() => (choice = f.path)}
+					/>
+					<span class="truncate">{f.relPath}</span>
+					{#if detected && samePath(f.path, detected)}
+						<span class="badge preset-tonal-primary ml-auto shrink-0 text-[10px]">{m.wsview_badge_detected()}</span>
+					{:else if docRoots.has(f.path)}
+						<span class="badge preset-tonal-surface ml-auto shrink-0 text-[10px]">{m.wsview_badge_document()}</span>
+					{/if}
+				</label>
+			{/each}
+		</div>
+		<div class="flex justify-end">
+			<button class="btn btn-xs preset-filled-primary-500" onclick={onConfirm} disabled={!choice}>{m.wsview_use_this_file()}</button>
+		</div>
+	{/if}
 </Modal>

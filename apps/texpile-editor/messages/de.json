@@ -252,6 +252,7 @@
 	"wsview_close_menu_aria": "Menü schließen",
 	"wsview_mainconfirm_title": "Hauptdatei auswählen",
 	"wsview_mainconfirm_desc": "Ein Projekt wird aus einer einzigen Haupt-.tex-Datei kompiliert; die anderen Dateien werden von dort eingebunden. Texpile hat unten die wahrscheinlichste ausgewählt. Sie können dies später ändern, indem Sie im Explorer mit der rechten Maustaste auf eine Datei klicken und „Als Hauptdatei festlegen“ wählen.",
+	"wsview_mainconfirm_too_many": "Dieser Ordner enthält zu viele .tex-Dateien, um hier auszuwählen. Klicken Sie im Explorer mit der rechten Maustaste auf die gewünschte Datei und wählen Sie „Als Hauptdatei festlegen“.",
 	"wsview_badge_detected": "erkannt",
 	"wsview_badge_document": "Dokument",
 	"wsview_use_this_file": "Diese Datei verwenden",

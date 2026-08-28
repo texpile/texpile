@@ -52,6 +52,7 @@
 {#if mainPrompt.open}
 	<MainFileModal
 		candidates={mainPrompt.candidates}
+		tooMany={mainPrompt.tooMany}
 		bind:choice={mainPrompt.choice}
 		detected={mainPrompt.detected}
 		docRoots={mainPrompt.docRoots}

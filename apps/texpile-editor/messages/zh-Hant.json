@@ -252,6 +252,7 @@
 	"wsview_close_menu_aria": "關閉選單",
 	"wsview_mainconfirm_title": "選擇主檔案",
 	"wsview_mainconfirm_desc": "專案從一個主 .tex 檔案編譯；其他檔案由該檔案引入。Texpile 已在下方選出最可能的一個。之後可以在檔案總管中右鍵點擊某個檔案並選擇「設為主檔案」來變更。",
+	"wsview_mainconfirm_too_many": "此資料夾中的 .tex 檔案過多，無法在此選擇。請在檔案總管中右鍵點擊所需檔案並選擇「設為主檔案」。",
 	"wsview_badge_detected": "已偵測",
 	"wsview_badge_document": "文件",
 	"wsview_use_this_file": "使用此檔案",

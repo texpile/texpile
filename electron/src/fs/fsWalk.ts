@@ -3,6 +3,7 @@ import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { TREE_IGNORE_DIRS, SCAN_IGNORE_DIRS, skipDir } from './walkIgnoreRules';
 import { collator } from './nameCollator';
+import { byScanOrder } from './scanOrder';
 
 export type TexFile = {
 	name: string;
@@ -55,7 +56,7 @@ export async function scan(root: string, extsCsv?: string): Promise<{ root: stri
 	const exts = parseExts(extsCsv);
 	const files: TexFile[] = [];
 	await scanWalk(root, root, files, 0, exts);
-	files.sort((a, b) => collator.compare(a.relPath, b.relPath));
+	files.sort(byScanOrder);
 	return { root, files };
 }
 
@@ -146,6 +147,6 @@ export async function treeScan(root: string, extsCsv?: string): Promise<{ root: 
 	const exts = parseExts(extsCsv);
 	const files: TexFile[] = [];
 	const children = await treeScanWalk(root, root, 0, exts, files, false);
-	files.sort((a, b) => collator.compare(a.relPath, b.relPath));
+	files.sort(byScanOrder);
 	return { root, children, files };
 }

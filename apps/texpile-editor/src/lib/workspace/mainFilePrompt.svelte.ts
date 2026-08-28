@@ -11,6 +11,7 @@
 import { untrack } from 'svelte';
 import { workspaceRoot, texFiles, mainFile, savedMainFile, setMainFile } from '$lib/workspace/workspaceStore';
 import { detectMainFile, findDocRoots, gatherProjectMacros } from '$lib/workspace/project';
+import { MAX_MAIN_CANDIDATES } from '$lib/workspace/mainCandidates';
 import { samePath, type TexFile } from '$lib/workspace/fileSystem';
 import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 
@@ -29,6 +30,7 @@ export class MainFilePrompt {
 	choice = $state<string | null>(null);
 	detected = $state<string | null>(null);
 	docRoots = $state<Set<string>>(new Set());
+	tooMany = $state(false);
 	private then: (() => void) | null = null;
 
 	constructor(private deps: MainFileDeps) {}
@@ -36,6 +38,7 @@ export class MainFilePrompt {
 	/** stable order: detected first, then document roots, then the rest. Frozen at open time so
 	 * picking a different radio does not reshuffle the list under the pointer. */
 	candidates = $derived.by(() => {
+		if (this.tooMany) return [];
 		const score = (f: TexFile) => (this.detected && samePath(f.path, this.detected) ? 0 : this.docRoots.has(f.path) ? 1 : 2);
 		// untracked on purpose: the list is frozen at open time (detected/docRoots changing is what
 		// recomputes it); tracking texFiles would reshuffle the open dialog under the pointer
@@ -53,6 +56,13 @@ export class MainFilePrompt {
 		this.open = true;
 		this.then = then ?? null;
 		const files = texFiles.current;
+		this.tooMany = files.length > MAX_MAIN_CANDIDATES;
+		if (this.tooMany) {
+			this.detected = null;
+			this.choice = null;
+			this.docRoots = new Set();
+			return;
+		}
 		this.detected = mainFile.current ?? (await detectMainFile(files));
 		this.choice = this.detected;
 		this.docRoots = await findDocRoots(files);

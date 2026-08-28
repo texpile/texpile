@@ -252,6 +252,7 @@
 	"wsview_close_menu_aria": "Close menu",
 	"wsview_mainconfirm_title": "Choose the main file",
 	"wsview_mainconfirm_desc": "A project compiles from one main .tex file; the other files are pulled in from it. Texpile picked the most likely one below. You can change it later by right-clicking a file in the explorer and choosing \"Set as main file\".",
+	"wsview_mainconfirm_too_many": "This folder has too many .tex files to choose from here. Right-click the one you want in the explorer and choose \"Set as main file\".",
 	"wsview_badge_detected": "detected",
 	"wsview_badge_document": "document",
 	"wsview_use_this_file": "Use this file",

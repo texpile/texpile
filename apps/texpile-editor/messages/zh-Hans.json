@@ -252,6 +252,7 @@
 	"wsview_close_menu_aria": "关闭菜单",
 	"wsview_mainconfirm_title": "选择主文件",
 	"wsview_mainconfirm_desc": "项目从一个主 .tex 文件编译；其他文件由该文件引入。Texpile 已在下方选出最可能的一个。之后可以在文件浏览器中右键点击某个文件并选择“设为主文件”来更改。",
+	"wsview_mainconfirm_too_many": "此文件夹中的 .tex 文件过多，无法在此选择。请在文件浏览器中右键点击所需文件并选择“设为主文件”。",
 	"wsview_badge_detected": "已检测",
 	"wsview_badge_document": "文档",
 	"wsview_use_this_file": "使用此文件",
