@@ -28,6 +28,12 @@ export async function engineFlow(
 ): Promise<FlowRender | null> {
 	if (!cert.fits && cert.moved) {
 		const bandRecs = remapBandRecords(daemonRecs, cert.moved.bandAbsYs, cal.b1 - g.y0);
+		// the certificate named a break but the band could not be remapped onto it -- the
+		// band's OWN lines are among the ones leaving, so it has more lines than the
+		// certificate has baselines for. Named because it is otherwise invisible: the log
+		// jumps from skel-break-moved straight to the tint, with nothing saying the motion
+		// went unrendered.
+		if (!bandRecs) deps.emit('chain-end', { reason: 'band-unmapped', bandYs: cert.moved.bandAbsYs.length });
 		const plan = bandRecs ? await planBreakChain(deps, ctx, cal, bandRecs, cert.moved, g, topSkip) : null;
 		if (!plan) return null;
 		return {

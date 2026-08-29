@@ -148,7 +148,15 @@ export async function planBreakChain(
 		if (!slot || deps.pageIsRtl(slot.spillPage)) {
 			// the flow would leave the document: an unrendered first hop keeps today's cram
 			// path; a later hop just leaves its rows to the reconcile
-			if (hops === 0) return null;
+			//
+			// Named even though nothing changes here. This is the end-of-document case -- the
+			// receiving page does not exist yet -- and it is the one bail that reaches the
+			// screen as content drawn over content, so a log that jumps from skel-break-moved
+			// straight to the tint hides exactly the case a reader is looking for.
+			if (hops === 0) {
+				deps.emit('chain-end', { hops, exact: false, reason: slot ? 'rtl-first-hop' : 'no-slot-first-hop', endPage });
+				return null;
+			}
 			exact = false;
 			return finish(slot ? 'rtl-slot' : 'no-slot');
 		}
