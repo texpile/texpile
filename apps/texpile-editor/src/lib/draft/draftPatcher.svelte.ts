@@ -12,6 +12,7 @@ import { provisionalStage } from './heuristics/provisionalStage';
 import { certifiable } from './heuristics/certifiable';
 import { engineSplitTo } from './heuristics/engineSplitAssist';
 import { buildColumnSplit } from './heuristics/buildColumnSplit';
+import { bandCanSpill } from './heuristics/bandCanSpill';
 import { splitExact } from './heuristics/splitExact';
 import { computeReflow, buildBandPatch, lineExtents } from './heuristics/computeReflow';
 import { whyPhrase } from './whyPhrase';
@@ -368,7 +369,7 @@ export class DraftPatcher {
 			// JS-predicted overflow: the engine refused a certificate, named a break inside
 			// the band, or could not chain -- the split planners (with the daemon's \vsplit
 			// assist) render the motion first-order. Always provisional.
-			if (flow.overflow && (!cert || !cert.fits)) {
+			if (bandCanSpill({ overflow: flow.overflow, certFits: !!cert?.fits, floatInner: !!req.floatInner })) {
 				const plan = planOverflowSplit(spillCtx, cal, r.records as any[], lineRecs as any[], {
 					h1,
 					dk,

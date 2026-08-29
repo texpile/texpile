@@ -34,6 +34,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: live preview no longer misses a superscript, accent or inline maths on a paragraph's first or last line when matching it, which used to send those paragraphs down the slower path
 - fix: a paragraph continued in the next column or on the next page now renders exactly when the break stays where it was, instead of always showing the refining tint
 - fix: editing a paragraph that continues in the next column no longer places it wrongly when a figure sits at the bottom of that column
+- fix: editing a cell of a table that sits at the bottom of a column no longer sends the table's own caption to the next page, leaving a gap where it was
 
 ## [0.17.1] - 2026-08-19
 
