@@ -57,10 +57,6 @@ export async function locateSourceSplit(
 		wb = win(fb);
 	if (!wa || !wb) return bail('no-column', { a: fa.lines[0].x, b: fb.lines[0].x });
 
-	// the font comes off the LONGER fragment: same measurement as the single-band tier, taken
-	// where the tally is strongest
-	const long = fa.lines.length >= fb.lines.length ? { w: wa, f: fa } : { w: wb, f: fb };
-	const measured = bandFontPrefix(long.w.recs, long.f.lines);
 	function rowsOf(w: NonNullable<typeof wa>, f: SourceFrag, gap: number) {
 		const y = bandWindow(f.lines[0].y, f.lines[f.lines.length - 1].y, gap);
 		return glyphRows(
@@ -73,52 +69,57 @@ export async function locateSourceSplit(
 	const indented = probe.length > 1 && probe[0].left > Math.min(...probe.slice(1).map((r) => r.left)) + 2;
 	const nA = fa.lines.length,
 		nB = fb.lines.length;
-	const tries: { pre: string; ind: boolean }[] = [];
-	for (const p of measured ? [measured, ''] : ['']) for (const ind of indented ? [true, false] : [false, true]) tries.push({ pre: p, ind });
-	// every variant that breaks to the page's line count is a CANDIDATE, and the glyphs decide
+	// Every variant that breaks to the page's line count is a CANDIDATE, and the glyphs decide
 	// between them. Stopping at the first was enough for a single band, where a wrong variant
 	// simply fails and the search tiers take over; here the wrong one costs the split point,
-	// which is the whole reason to ask.
+	// which is the whole reason to ask. The band's own measured font is the second wave, for
+	// the same reason as the single-band tier: body text is almost every band and pays one box.
 	let won: { calLines: any[]; calGap: number; gap: number; dRows: any[]; rowsA: any[]; rowsB: any[]; ind: boolean; pre: string } | null =
 		null;
 	let why = 'no-matching-cal';
 	let where = -1;
-	for (const t of tries) {
-		const c = await ctx.typesetParagraph({ text: t.pre + (t.ind ? INDENT_PREFIX : '') + orig, hsize: W });
-		if (!c.ok || (c.stats && (c.stats as any).certified === false)) continue;
-		const calLines = c.records.filter((x: any) => x.t === 'line');
-		if (calLines.length !== nA + nB) continue;
-		const calGaps: number[] = [];
-		for (let i = 1; i < calLines.length; i++) calGaps.push(calLines[i].y - calLines[i - 1].y);
-		const calGap = median(calGaps);
-		const gap = calGap || paper.blSkip || LINE_GAP_FALLBACK;
-		const dRows = glyphRows(
-			c.records.filter((x: any) => x.t === 'g' || x.t === 'glyph'),
-			gap
-		);
-		if (dRows.length !== nA + nB) {
-			why = 'cal-row-count';
-			where = dRows.length;
-			continue;
+	for (let wave = 0; wave < 2 && !won; wave++) {
+		// the font comes off the LONGER fragment, where the tally is strongest
+		const long = fa.lines.length >= fb.lines.length ? { w: wa, f: fa } : { w: wb, f: fb };
+		const p = wave === 0 ? '' : bandFontPrefix(long.w.recs, long.f.lines);
+		if (wave === 1 && !p) break;
+		for (const ind of indented ? [true, false] : [false, true]) {
+			const c = await ctx.typesetParagraph({ text: p + (ind ? INDENT_PREFIX : '') + orig, hsize: W });
+			if (!c.ok || (c.stats && (c.stats as any).certified === false)) continue;
+			const calLines = c.records.filter((x: any) => x.t === 'line');
+			if (calLines.length !== nA + nB) continue;
+			const calGaps: number[] = [];
+			for (let i = 1; i < calLines.length; i++) calGaps.push(calLines[i].y - calLines[i - 1].y);
+			const calGap = median(calGaps);
+			const gap = calGap || paper.blSkip || LINE_GAP_FALLBACK;
+			const dRows = glyphRows(
+				c.records.filter((x: any) => x.t === 'g' || x.t === 'glyph'),
+				gap
+			);
+			if (dRows.length !== nA + nB) {
+				why = 'cal-row-count';
+				where = dRows.length;
+				continue;
+			}
+			const rowsA = rowsOf(wa, fa, gap),
+				rowsB = rowsOf(wb, fb, gap);
+			const missA = firstRowMismatch(rowsA, dRows.slice(0, nA));
+			if (missA >= 0) {
+				why = 'content-mismatch-a';
+				where = missA;
+				continue;
+			}
+			const missB = firstRowMismatch(rowsB, dRows.slice(nA));
+			if (missB >= 0) {
+				why = 'content-mismatch-b';
+				where = missB;
+				continue;
+			}
+			won = { calLines, calGap, gap, dRows, rowsA, rowsB, ind, pre: p };
+			break;
 		}
-		const rowsA = rowsOf(wa, fa, gap),
-			rowsB = rowsOf(wb, fb, gap);
-		const missA = firstRowMismatch(rowsA, dRows.slice(0, nA));
-		if (missA >= 0) {
-			why = 'content-mismatch-a';
-			where = missA;
-			continue;
-		}
-		const missB = firstRowMismatch(rowsB, dRows.slice(nA));
-		if (missB >= 0) {
-			why = 'content-mismatch-b';
-			where = missB;
-			continue;
-		}
-		won = { calLines, calGap, gap, dRows, rowsA, rowsB, ind: t.ind, pre: t.pre };
-		break;
 	}
-	if (!won) return bail(why, { nA, nB, row: where, measured: !!measured, tries: tries.length });
+	if (!won) return bail(why, { nA, nB, row: where });
 	const { calLines, calGap, gap, dRows, rowsA, rowsB } = won;
 	const indent = won.ind,
 		pre = won.pre;

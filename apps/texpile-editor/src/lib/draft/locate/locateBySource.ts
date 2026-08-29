@@ -61,32 +61,33 @@ export async function locateBySource(
 	// that one; the other is the fallback, and costs nothing when it is already the answer.
 	const probeRows = glyphRows(bandGlyphs(paper.blSkip || LINE_GAP_FALLBACK), paper.blSkip || LINE_GAP_FALLBACK);
 	const indented = probeRows.length > 1 && probeRows[0].left > Math.min(...probeRows.slice(1).map((r) => r.left)) + 2;
-	// and the same question about the FONT, answered the same way: a footnote, an abstract or a
-	// quote runs at its own size and leading, and the daemon's body-size box breaks it to a
-	// different number of lines. The band's own glyphs say which size it is, so this is one more
-	// asked variant rather than the search tiers' sweep. Empty prefix first when the band is body
-	// text, which is almost always, and the plain box is then the only typeset paid for.
-	const measured = bandFontPrefix(recs, lines);
-	const tries: { pre: string; ind: boolean }[] = [];
-	for (const p of measured ? [measured, ''] : ['']) for (const ind of indented ? [true, false] : [false, true]) tries.push({ pre: p, ind });
+	// and the same question about the FONT, asked only when it has to be. A footnote, an
+	// abstract or a quote runs at its own size and leading, and the daemon's body-size box
+	// breaks it to a different number of lines -- but body text is almost every band, so the
+	// plain box goes first and is the only typeset paid for. The band's own measured size is
+	// the second wave, reached only when no plain variant reproduced the page's line count.
 	let cal: any = null;
 	let indent = false;
 	let pre = '';
-	for (const t of tries) {
-		const c = await ctx.typesetParagraph({ text: t.pre + (t.ind ? INDENT_PREFIX : '') + orig, hsize: W });
-		if (!c.ok) continue;
-		const cl = c.records.filter((x: any) => x.t === 'line');
-		if (!cl.length || (c.stats && (c.stats as any).certified === false)) continue;
-		if (!c.records.some((x: any) => x.t === 'g' || x.t === 'glyph')) continue;
-		// the daemon breaking to a different number of lines than the page did means the splice
-		// would not reproduce this band; the search tiers own that case
-		if (cl.length !== lines.length) continue;
-		cal = c;
-		indent = t.ind;
-		pre = t.pre;
-		break;
+	for (let wave = 0; wave < 2 && !cal; wave++) {
+		const p = wave === 0 ? '' : bandFontPrefix(recs, lines);
+		if (wave === 1 && !p) break;
+		for (const ind of indented ? [true, false] : [false, true]) {
+			const c = await ctx.typesetParagraph({ text: p + (ind ? INDENT_PREFIX : '') + orig, hsize: W });
+			if (!c.ok) continue;
+			const cl = c.records.filter((x: any) => x.t === 'line');
+			if (!cl.length || (c.stats && (c.stats as any).certified === false)) continue;
+			if (!c.records.some((x: any) => x.t === 'g' || x.t === 'glyph')) continue;
+			// the daemon breaking to a different number of lines than the page did means the splice
+			// would not reproduce this band; the search tiers own that case
+			if (cl.length !== lines.length) continue;
+			cal = c;
+			indent = ind;
+			pre = p;
+			break;
+		}
 	}
-	if (!cal) return bail('no-matching-cal', { pageLines: lines.length, measured: !!measured });
+	if (!cal) return bail('no-matching-cal', { pageLines: lines.length });
 	const calLines = cal.records.filter((x: any) => x.t === 'line');
 	const dGl = cal.records.filter((x: any) => x.t === 'g' || x.t === 'glyph');
 
