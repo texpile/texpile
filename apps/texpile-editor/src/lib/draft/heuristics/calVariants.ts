@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention -- TeX geometry shorthand: W = width */
+import { dominant } from '../geometry/dominant';
+import { fontSizePrefix } from './fontSizePrefix';
 import { median } from '../geometry/median';
 import type { PageRecord } from '../geometry/geometry.types';
 
@@ -31,13 +33,7 @@ export function extraCalVariants(paper: { colW: number; textW: number }, recs: P
 			const s = fontSize.get(g.f);
 			if (s !== undefined) sizeCount.set(s, (sizeCount.get(s) || 0) + 1);
 		}
-	let bodySize = 0,
-		bodyC = -1;
-	for (const [s, c] of sizeCount)
-		if (c > bodyC) {
-			bodyC = c;
-			bodySize = s;
-		}
+	const bodySize = dominant(sizeCount);
 	const sorted = [...pls].sort((a, b) => a.w - b.w);
 	const clusters: any[][] = [];
 	for (const p of sorted) {
@@ -60,13 +56,7 @@ export function extraCalVariants(paper: { colW: number; textW: number }, recs: P
 					const s = fontSize.get(g.f);
 					if (s !== undefined) tally.set(s, (tally.get(s) || 0) + 1);
 				}
-		let size = 0,
-			sc = -1;
-		for (const [s, k] of tally)
-			if (k > sc) {
-				sc = k;
-				size = s;
-			}
+		const size = dominant(tally);
 		let pre = '';
 		if (size > 0 && Math.abs(size - bodySize) > 0.05) {
 			const ys = c.map((p) => p.y).sort((a, b) => a - b);
@@ -75,8 +65,7 @@ export function extraCalVariants(paper: { colW: number; textW: number }, recs: P
 				const d = ys[i] - ys[i - 1];
 				if (d > 1 && d < size * 2.5) deltas.push(d);
 			}
-			const lead = median(deltas) || size * 1.2;
-			pre = `\\fontsize{${size.toFixed(4)}pt}{${lead.toFixed(4)}pt}\\selectfont `;
+			pre = fontSizePrefix(size, median(deltas) || size * 1.2);
 		}
 		out.push({ W, pre, count: c.length });
 	}

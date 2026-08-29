@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { COL_GUTTER, GLUE_GAP_TOL, LINE_GAP_FALLBACK, ROW_BREAK, SPREAD_TOL } from '../heuristics/tolerances';
 import { INDENT_PREFIX } from '../daemonIndent';
+import { bandFontPrefix } from './bandFont';
+import { bandWindow } from '../geometry/bandWindow';
 import { columnWindows } from '../heuristics/columnWindows';
 import { glyphRows } from '../geometry/glyphRows';
 import { median } from '../geometry/median';
@@ -49,32 +51,42 @@ export async function locateBySource(
 	const col = columnWindows(recs, allG, W, COL_GUTTER, paper.colSep).find((c) => lines[0].x >= c.colL && lines[0].x <= c.colR);
 	if (!col) return bail('no-column', { x: lines[0].x });
 
+	function bandGlyphs(gap: number) {
+		const y = bandWindow(lines[0].y, lines[lines.length - 1].y, gap);
+		return allG.filter((g: any) => g.x >= col!.colL && g.x <= col!.colR && g.y >= y.top && g.y <= y.bottom);
+	}
 	// TeX indents every paragraph but the first of a section, and the daemon's box is
 	// \noindent, so an indented paragraph breaks its first line differently. Read which it is
 	// off the band -- an indented first row starts further right than the rest -- and ask for
 	// that one; the other is the fallback, and costs nothing when it is already the answer.
-	const probeRows = glyphRows(
-		allG.filter((g: any) => g.x >= col.colL && g.x <= col.colR && g.y >= lines[0].y - 0.5 && g.y <= lines[lines.length - 1].y + 0.5),
-		paper.blSkip || LINE_GAP_FALLBACK
-	);
+	const probeRows = glyphRows(bandGlyphs(paper.blSkip || LINE_GAP_FALLBACK), paper.blSkip || LINE_GAP_FALLBACK);
 	const indented = probeRows.length > 1 && probeRows[0].left > Math.min(...probeRows.slice(1).map((r) => r.left)) + 2;
+	// and the same question about the FONT, answered the same way: a footnote, an abstract or a
+	// quote runs at its own size and leading, and the daemon's body-size box breaks it to a
+	// different number of lines. The band's own glyphs say which size it is, so this is one more
+	// asked variant rather than the search tiers' sweep. Empty prefix first when the band is body
+	// text, which is almost always, and the plain box is then the only typeset paid for.
+	const measured = bandFontPrefix(recs, lines);
+	const tries: { pre: string; ind: boolean }[] = [];
+	for (const p of measured ? [measured, ''] : ['']) for (const ind of indented ? [true, false] : [false, true]) tries.push({ pre: p, ind });
 	let cal: any = null;
 	let indent = false;
-	for (const ind of indented ? [true, false] : [false, true]) {
-		const c = await ctx.typesetParagraph({ text: (ind ? INDENT_PREFIX : '') + orig, hsize: W });
+	let pre = '';
+	for (const t of tries) {
+		const c = await ctx.typesetParagraph({ text: t.pre + (t.ind ? INDENT_PREFIX : '') + orig, hsize: W });
 		if (!c.ok) continue;
 		const cl = c.records.filter((x: any) => x.t === 'line');
 		if (!cl.length || (c.stats && (c.stats as any).certified === false)) continue;
 		if (!c.records.some((x: any) => x.t === 'g' || x.t === 'glyph')) continue;
 		// the daemon breaking to a different number of lines than the page did means the splice
-		// would not reproduce this band; the search tiers own that case (they also try font
-		// variants, which this tier deliberately does not)
+		// would not reproduce this band; the search tiers own that case
 		if (cl.length !== lines.length) continue;
 		cal = c;
-		indent = ind;
+		indent = t.ind;
+		pre = t.pre;
 		break;
 	}
-	if (!cal) return bail('no-matching-cal', { pageLines: lines.length });
+	if (!cal) return bail('no-matching-cal', { pageLines: lines.length, measured: !!measured });
 	const calLines = cal.records.filter((x: any) => x.t === 'line');
 	const dGl = cal.records.filter((x: any) => x.t === 'g' || x.t === 'glyph');
 
@@ -88,10 +100,7 @@ export async function locateBySource(
 	// the daemon's fresh box does not have; a rigid splice there would paint over it
 	for (let i = 1; i < lines.length; i++) if (lines[i].y - lines[i - 1].y > gap * ROW_BREAK) return bail('break-inside');
 
-	const bandRows = glyphRows(
-		allG.filter((g: any) => g.x >= col.colL && g.x <= col.colR && g.y >= b1 - 0.5 && g.y <= bk + 0.5),
-		gap
-	);
+	const bandRows = glyphRows(bandGlyphs(gap), gap);
 	const dRows = glyphRows(dGl, gap);
 	if (!dRows.length || !bandMatchesCalibration(bandRows, dRows))
 		return bail('content-mismatch', { band: bandRows.length, cal: dRows.length });
@@ -103,7 +112,14 @@ export async function locateBySource(
 	const stretched =
 		Math.abs(calSpread - (bk - b1)) > SPREAD_TOL ||
 		(!!calGap && lines.length > 1 && Math.abs(median(lines.slice(1).map((l, i) => l.y - lines[i].y)) - calGap) > GLUE_GAP_TOL);
-	ctx.emit(stretched ? 'locate-source-stretched' : 'locate-source-ok', { pageNo, b1, bk, n: lines.length, W: +W.toFixed(2) });
+	ctx.emit(stretched ? 'locate-source-stretched' : 'locate-source-ok', {
+		pageNo,
+		b1,
+		bk,
+		n: lines.length,
+		W: +W.toFixed(2),
+		...(pre ? { pre: 1 } : {})
+	});
 	return {
 		pageNo,
 		b1,
@@ -114,6 +130,7 @@ export async function locateBySource(
 		colL: col.colL,
 		colR: col.colR,
 		...(col.i === undefined ? {} : { col: col.i }),
+		...(pre ? { pre } : {}),
 		indent,
 		...(stretched ? { approx: true, approxStretch: true } : {})
 	};

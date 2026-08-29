@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { sourceBand } from '$lib/draft/locate/sourceBand';
+import { sourceFragments } from '$lib/draft/locate/sourceFragments';
 import { memoizeTypesets } from '$lib/draft/locate/memoizeTypesets';
 import type { LocateContext } from '$lib/draft/locate/locate.types';
 
@@ -37,9 +38,8 @@ describe('sourceBand', () => {
 		expect(sourceBand(ctx, FILES, 'C:/proj/other.tex', 12, 12)).toMatchObject({ bail: 'file-not-stamped' });
 	});
 
-	it('refuses a straddle rather than serving half of it', () => {
-		// across pages, and across columns of one page: both are the cross-page tier's job,
-		// and it needs the split point, which the union of the lines does not carry
+	it('names the kind of straddle rather than serving half of it', () => {
+		// the split tier takes both from here; a caller wanting one band must know which it hit
 		expect(sourceBand(ctxOf({ 1: [pl(600, 12)], 2: [pl(80, 12)] }), FILES, 'main.tex', 12, 12)).toMatchObject({ bail: 'spans-pages' });
 		expect(sourceBand(ctxOf({ 1: [pl(600, 12), pl(80, 12, 1, 300)] }), FILES, 'main.tex', 12, 12)).toMatchObject({
 			bail: 'spans-columns'
@@ -48,6 +48,28 @@ describe('sourceBand', () => {
 
 	it('an untagged line belongs to no range (a caption claims nothing)', () => {
 		expect(sourceBand(ctxOf({ 1: [pl(88), pl(100)] }), FILES, 'main.tex', 1, 999)).toMatchObject({ bail: 'no-source-records' });
+	});
+});
+
+describe('sourceFragments', () => {
+	it('splits a straddle at the column it crosses, in reading order', () => {
+		// the tail of column 1 and the head of column 2: the SPLIT POINT is what the search
+		// tiers have to recover by trying every cut, and grouping states it
+		const r = sourceFragments(ctxOf({ 1: [pl(80, 12, 1, 300), pl(600, 12), pl(588, 12), pl(92, 12, 1, 300)] }), FILES, 'main.tex', 12, 12);
+		expect('bail' in r).toBe(false);
+		if ('bail' in r) return;
+		expect(r.frags.map((f) => f.lines.map((l) => l.y))).toEqual([
+			[588, 600],
+			[80, 92]
+		]);
+	});
+
+	it('orders a page straddle by page, whichever column each half sits in', () => {
+		// page 2's fragment opens a column further LEFT than page 1's; reading order is still
+		// page first, or the continuation would be handed back as the opening
+		const r = sourceFragments(ctxOf({ 1: [pl(600, 12, 1, 300)], 2: [pl(80, 12)] }), FILES, 'main.tex', 12, 12);
+		if ('bail' in r) throw new Error(r.bail);
+		expect(r.frags.map((f) => f.pageNo)).toEqual([1, 2]);
 	});
 });
 

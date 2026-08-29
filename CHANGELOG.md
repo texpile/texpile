@@ -30,6 +30,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: an edit that pushes content into the next column or page now renders exactly, with no refining tint, on the last page and in document styles that leave the bottom of pages ragged
 - fix: an edit the engine confirmed still fits the page no longer shows the refining tint because a size estimate disagreed with it
 - fix: a page containing a fraction or other stacked maths no longer falls back to the slower refining render for every edit on it
+- fix: live preview reads a narrowed block's own type size and leading from the compile, so edits in an abstract, quote or footnote are placed by asking rather than searching for them
+- fix: live preview no longer misses a superscript, accent or inline maths on a paragraph's first or last line when matching it, which used to send those paragraphs down the slower path
 
 ## [0.17.1] - 2026-08-19
 
