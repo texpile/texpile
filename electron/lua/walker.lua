@@ -278,6 +278,14 @@ local M = {}
 -- node the output routine prepended (measured: 4 of 30 columns on a float-heavy paper).
 local in_column = false
 
+-- Vertical material reached through a HORIZONTAL walk is inside a line: a fraction's
+-- numerator/denominator stack, a \parbox in a sentence. Its glue and kerns are the box's own
+-- internal spacing, already accounted for in the box's height -- they are not spacing between
+-- galley lines. The page skeleton walks records flat between two line records, so without a
+-- marker it summed a fraction's internal kerns as inter-line glue and computed a NEGATIVE
+-- remainder, which refused the whole page (measured: every display fraction did this).
+local in_line_box = 0
+
 local function columnStamp(head)
 	if in_column or not (M.colattr and head) then return nil end
 	local count, best, bestc = {}, nil, 0
@@ -484,7 +492,9 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 			local opened = cs ~= nil and emitColumn(emit, cs, x, top, n)
 			local wasCol = in_column
 			in_column = in_column or cs ~= nil
+			in_line_box = in_line_box + 1
 			walk_vlist(n.head, n, x, top, emit, fonts, colorStack)
+			in_line_box = in_line_box - 1
 			in_column = wasCol
 			if opened then emit('{"t":"colend"}') end
 			if not rtl then x = x + n.width end
@@ -616,7 +626,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 		elseif id == KERN then
 			-- vk: an interline kern carries real height the skeleton has to place, exactly
 			-- like a rigid glue; carries no x, so consumers take it positionally (like pen)
-			if (n.kern or 0) ~= 0 then emit(string.format('{"t":"vk","y":%.4f,"w":%.4f}', cy / pt, n.kern / pt)) end
+			if (n.kern or 0) ~= 0 then emit(string.format('{"t":"vk","y":%.4f,"w":%.4f%s}', cy / pt, n.kern / pt, in_line_box > 0 and ',"z":1' or "")) end
 			cy = cy + n.kern
 		elseif id == RULE then
 			local w, h, d = n.width, resolveRuleHD(n, parent)

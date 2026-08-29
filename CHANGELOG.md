@@ -29,6 +29,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: live preview flows content across a column break in more documents, instead of giving up when a column held only a figure
 - fix: an edit that pushes content into the next column or page now renders exactly, with no refining tint, on the last page and in document styles that leave the bottom of pages ragged
 - fix: an edit the engine confirmed still fits the page no longer shows the refining tint because a size estimate disagreed with it
+- fix: a page containing a fraction or other stacked maths no longer falls back to the slower refining render for every edit on it
 
 ## [0.17.1] - 2026-08-19
 

@@ -33,18 +33,28 @@ const GAP_EPS = 0.05;
 
 type Line = { i: number; y: number; h: number; d: number };
 
-export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number): PageSkeleton | null {
+export function buildPageSkeleton(
+	recs: PageRecord[],
+	colL: number,
+	colR: number,
+	// names the refusal for the caller’s decision log; every branch below reports one
+	note?: (why: string, detail?: unknown) => void
+): PageSkeleton | null {
+	function refuse(why: string, detail?: unknown): null {
+		note?.(why, detail);
+		return null;
+	}
 	// candidate lines in FILE ORDER (the walker emits the vertical list in list order)
 	const pls: Line[] = [];
 	for (let i = 0; i < recs.length; i++) {
 		const r: any = recs[i];
 		if (r.t === 'pl' && r.x >= colL && r.x <= colR && r.h !== undefined) pls.push({ i, y: r.y, h: r.h, d: r.d });
 	}
-	if (pls.length < 2) return null;
+	if (pls.length < 2) return refuse('few-pl', { pls: pls.length });
 	// drop NESTED lines (a minipage or tabular inside a line emits pl records too): a line
 	// wholly inside another line's vertical span is not a galley item
 	const lines = pls.filter((a) => !pls.some((b) => b !== a && a.y - a.h >= b.y - b.h - GAP_EPS && a.y + a.d <= b.y + b.d + GAP_EPS));
-	if (lines.length < 2) return null;
+	if (lines.length < 2) return refuse('few-galley-lines', { lines: lines.length, pls: pls.length });
 	// A box holding PART of this column's lines (a float pinned at the top, a vmode
 	// parbox): its inner lines look like galley text in the records, but the engine
 	// re-places the whole box on its own terms, so re-breaking those lines would answer a
@@ -54,14 +64,14 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 	for (const r of recs as any[]) {
 		if (r.t !== 'vbox' || r.x < colL || r.x > colR) continue;
 		const held = lines.filter((l) => l.y >= r.y - r.h - GAP_EPS && l.y <= r.y + r.d + GAP_EPS).length;
-		if (held > 0 && held < lines.length) return null;
+		if (held > 0 && held < lines.length) return refuse('partial-box', { held, of: lines.length });
 	}
 	const i0 = lines[0].i,
 		i1 = lines[lines.length - 1].i;
 	// anything the skeleton cannot represent refuses the whole page
 	for (let i = i0; i <= i1; i++) {
 		const r: any = recs[i];
-		if (r.t === 'note' || r.t === 'image' || r.t === 'lit') return null;
+		if (r.t === 'note' || r.t === 'image' || r.t === 'lit') return refuse('unrepresentable', { rec: r.t });
 		if (r.t === 'rule') {
 			// invisible rules (zero width struts, 0pt head/foot rules) paint nothing and
 			// their vertical extent is already inside the observed gaps
@@ -69,7 +79,7 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 			// rules INSIDE a line's span are content (tabular, \hrulefill); a rule between
 			// lines is structure the skeleton cannot carry (footnote rule, float rule)
 			const inLine = lines.some((l) => r.y >= l.y - l.h - GAP_EPS && r.y <= l.y + l.d + GAP_EPS);
-			if (!inLine) return null;
+			if (!inLine) return refuse('rule-between-lines', { y: r.y });
 		}
 	}
 	const items: SkelItem[] = [];
@@ -87,6 +97,11 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 			let effSum = 0;
 			for (let i = prev.i + 1; i < ln.i; i++) {
 				const r: any = recs[i];
+				// spacing INSIDE a line box -- a fraction's numerator gap, a nested parbox --
+				// belongs to that box and is already inside its height. Summing it here as
+				// inter-line glue made the remainder NEGATIVE and refused the whole page, which
+				// is what every display fraction did.
+				if (r.z) continue;
 				if (r.t === 'pen') items.push({ t: 'p', p: r.p });
 				else if (r.t === 'vk') {
 					items.push({ t: 'g', w: r.w, st: 0, sto: 0, sh: 0, sho: 0 });
@@ -99,7 +114,7 @@ export function buildPageSkeleton(recs: PageRecord[], colL: number, colR: number
 			// whatever the exported run does not account for. It should now be zero; anything
 			// left is spacing the records cannot explain, and the model would lie about it
 			const rigid = gap - effSum;
-			if (rigid < -GAP_EPS) return null;
+			if (rigid < -GAP_EPS) return refuse('negative-gap', { rigid: +rigid.toFixed(3) });
 			if (rigid > GAP_EPS) items.push({ t: 'g', w: rigid, st: 0, sto: 0, sh: 0, sho: 0 });
 		}
 		boxIdx.push(items.length);
@@ -152,6 +167,7 @@ export function spliceBandSkeleton(
 			let effSum = 0;
 			for (let i = prev.i + 1; i < ln.i; i++) {
 				const r: any = daemonRecs[i];
+				if (r.z) continue; // as above: the daemon's own boxes nest the same way
 				if (r.t === 'pen') band.push({ t: 'p', p: r.p });
 				else if (r.t === 'vk') {
 					band.push({ t: 'g', w: r.w, st: 0, sto: 0, sh: 0, sho: 0 });

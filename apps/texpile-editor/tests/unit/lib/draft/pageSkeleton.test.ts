@@ -34,6 +34,23 @@ describe('buildPageSkeleton float boxes', () => {
 });
 
 describe('buildPageSkeleton', () => {
+	it('ignores spacing inside a line box, which a display fraction always has', () => {
+		// measured on a book-class page: a fraction's numerator and denominator kerns sit
+		// between two line records in the stream, and summing them as inter-line glue made
+		// the remainder -6.28pt, refusing the page and tinting every overflow edit on it
+		const recs: PageRecord[] = [pl(100), { t: 'vk', y: 93, w: 4.07, z: 1 }, { t: 'vk', y: 97, w: 2.22, z: 1 }, vg(103, 11, 11, 0), pl(122)];
+		const skel = buildPageSkeleton(recs, -8, 220);
+		expect(skel).not.toBeNull();
+		// the gap carries the real glue only: the nested kerns contributed nothing
+		expect(skel!.items.filter((i) => i.t === 'g')).toHaveLength(1);
+	});
+
+	it('refuses when the run genuinely over-explains the gap', () => {
+		// same shape WITHOUT the nested marker: the records cannot explain the spacing
+		const recs: PageRecord[] = [pl(100), vg(103, 40, 40, 0), pl(122)];
+		expect(buildPageSkeleton(recs, -8, 220)).toBeNull();
+	});
+
 	it('the engine’s own kerns become rigid skeleton glue, and nothing is derived', () => {
 		// every gap accounted for by exported records: 4pt gap = 1.5 glue + 2.5 kern
 		const skel = buildPageSkeleton([pl(100), vg(103, 1.5, 1.0, 0.5), { t: 'vk', y: 104, w: 2.5 }, pl(115)], -5, 220)!;

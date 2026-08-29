@@ -78,8 +78,8 @@ export async function pageBreakCertificate(
 		deps.emit('skel-refused', { why, ...(typeof detail === 'object' ? detail : { detail }) });
 		return null;
 	}
-	const skel = buildPageSkeleton(deps.pageRecords(cal.pageNo), cal.colL, cal.colR);
-	if (!skel) return refuse('build');
+	const skel = buildPageSkeleton(deps.pageRecords(cal.pageNo), cal.colL, cal.colR, (why, d) => refuse('build:' + why, d));
+	if (!skel) return null;
 	let fromBox = -1,
 		toBox = -1;
 	for (let k = 0; k < skel.boxYs.length; k++)

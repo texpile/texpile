@@ -58,7 +58,7 @@ export function classify(events) {
 		.map(
 			(e) =>
 				(e.kind === 'patch-verify' ? 'verify:' + e.detail?.verdict + (e.detail?.drift ? '/drift' + e.detail.drift : '') : null) ||
-				(e.kind.startsWith('skel-') ? e.kind : null) ||
+				(e.kind.startsWith('skel-') ? (e.detail?.why ?? e.kind) : null) ||
 				e.detail?.reason ||
 				e.detail?.stage ||
 				(e.detail?.why ? e.detail.why + (e.detail.err ? '=' + String(e.detail.err).slice(0, 80) : '') : null) ||
