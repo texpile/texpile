@@ -21,7 +21,12 @@ export type StageFacts = {
 };
 
 export function provisionalStage(f: StageFacts): string | null {
-	if (f.overflow) return 'overflow';
+	// `overflow` is JS arithmetic on predicted line positions, and it used to tint before the
+	// engine's answer was consulted at all -- so a page the certificate had just PROVED still
+	// holds its content was tinted anyway on the strength of the prediction that disagreed
+	// with it. It only speaks when the certificate did not: certExact means the split
+	// certified the fit AND the render is carrying the engine's own baselines.
+	if (f.overflow && !f.certExact) return 'overflow';
 	if (f.certified && !f.certFits) return 'engine-overflow';
 	if (f.underflow && !f.certified) return 'underflow';
 	if (f.approx && !(f.approxStretch && f.certExact)) return 'approx-locate';
