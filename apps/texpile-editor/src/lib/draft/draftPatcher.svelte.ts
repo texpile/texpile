@@ -6,6 +6,7 @@ import { INDENT_PREFIX } from './daemonIndent';
 import { abandonToCompile } from './patch/abandonToCompile';
 import { pageBreakCertificate, remapBandRecords, type Certificate, type FullCertificate } from './patch/pageCertificate';
 import { SpillPatches } from './patch/spillPatches';
+import { showFocus } from './patch/showFocus';
 import { planOverflowSplit } from './heuristics/planOverflowSplit';
 import { engineFlow } from './heuristics/engineFlow';
 import { provisionalStage } from './heuristics/provisionalStage';
@@ -13,6 +14,7 @@ import { certifiable } from './heuristics/certifiable';
 import { engineSplitTo } from './heuristics/engineSplitAssist';
 import { buildColumnSplit } from './heuristics/buildColumnSplit';
 import { bandCanSpill } from './heuristics/bandCanSpill';
+import { editFocus, type EditFocus } from './heuristics/editFocus';
 import { splitExact } from './heuristics/splitExact';
 import { computeReflow, buildBandPatch, lineExtents } from './heuristics/computeReflow';
 import { whyPhrase } from './whyPhrase';
@@ -172,13 +174,13 @@ export class DraftPatcher {
 		stale: () => boolean,
 		plan: { pages: { page: number; segs: Patch[] }[]; exact?: boolean; endPage: number; hops?: number },
 		band: { top: number; bottom: number },
-		ev: { kind?: string; stage: string; detail: Record<string, unknown> }
+		ev: { kind?: string; stage: string; detail: Record<string, unknown> },
+		focus?: EditFocus | null
 	): Promise<void> {
 		const h = this.hooks;
 		const cleared = await this.spills.paint(plan.pages, stale);
 		if (!cleared) return;
-		h.showEditBand({ page: cal.pageNo, top: band.top, bottom: band.bottom, colL: cal.colL, colR: cal.colR });
-		h.followEdit(cal.pageNo, cal.b1, band.bottom, cal.colL, cal.colR);
+		showFocus(h, focus ?? { page: cal.pageNo, top: band.top, bottom: band.bottom, colL: cal.colL, colR: cal.colR });
 		h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: (performance.now() - t0).toFixed(0) }));
 		const detail = { page: cal.pageNo, spillPage: plan.endPage, hops: plan.hops ?? 1, ...ev.detail };
 		if (plan.exact) {
@@ -309,6 +311,20 @@ export class DraftPatcher {
 				// fragments the height they were, moved nothing: the tint would be apologising
 				// for a reflow that did not happen
 				const exact = splitExact(cal, h.paper().topSkip, split);
+				// the two fragments sit on two pages, so "where is the user typing" has two
+				// possible answers and only the edited line picks between them
+				const focus = editFocus(
+					req.orig,
+					req.text,
+					r.records as any[],
+					lineRecs,
+					[
+						{ page: cal.pageNo, top: segA.top, from: 0, colL: cal.colL, colR: cal.colR },
+						{ page: spillPage, top: segB.top, from: split.kA, colL: cal.spill.colL, colR: cal.spill.colR }
+					],
+					{ page: cal.pageNo, top: cal.b1 - h1, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR },
+					{ h1, dk }
+				);
 				await this.renderFlow(
 					req,
 					cal,
@@ -316,7 +332,8 @@ export class DraftPatcher {
 					stale,
 					{ pages, endPage: spillPage, exact },
 					{ top: cal.b1 - h1, bottom: cal.bk + dk },
-					{ stage: 'split', ...(exact ? { kind: 'patched-split' } : {}), detail: { kA: split.kA, of: lineRecs.length } }
+					{ stage: 'split', ...(exact ? { kind: 'patched-split' } : {}), detail: { kA: split.kA, of: lineRecs.length } },
+					focus
 				);
 				return;
 			}
@@ -436,14 +453,12 @@ export class DraftPatcher {
 			// other pages must come off, or their carried rows double-draw
 			const dropped = await this.spills.drop(cal.pageNo);
 			await h.applyPatch(cal.pageNo, patchObj); // survives zoom re-renders until the next compile
-			h.showEditBand({
-				page: cal.pageNo,
-				top: patchObj.top,
-				bottom: cal.bk + dk + Math.max(0, flow.delta),
-				colL: cal.colL,
-				colR: cal.colR
-			});
-			h.followEdit(cal.pageNo, cal.b1, cal.bk + dk, cal.colL, cal.colR); // zoom+center on the edit (Typst-style)
+			// the edited LINE, not the paragraph: a highlight over twenty lines says nothing
+			// about where the words are landing, and the scroll it drives centres the
+			// paragraph's start rather than the cursor
+			const whole = { page: cal.pageNo, top: patchObj.top, bottom: cal.bk + dk + Math.max(0, flow.delta), colL: cal.colL, colR: cal.colR };
+			const focus = editFocus(req.orig, req.text, (certRecs ?? r.records) as any[], lineRecs, [{ ...whole, from: 0 }], whole, { h1, dk });
+			showFocus(h, focus); // zoom+center on the edited line (Typst-style)
 			const ms = performance.now() - t0;
 			if (stage) {
 				this.markProvisional(cal.pageNo); // tint until the recompile lands

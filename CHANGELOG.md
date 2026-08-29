@@ -35,6 +35,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: a paragraph continued in the next column or on the next page now renders exactly when the break stays where it was, instead of always showing the refining tint
 - fix: editing a paragraph that continues in the next column no longer places it wrongly when a figure sits at the bottom of that column
 - fix: editing a cell of a table that sits at the bottom of a column no longer sends the table's own caption to the next page, leaving a gap where it was
+- fix: live preview highlights and follows the line you are typing on rather than the whole paragraph, so editing the end of a paragraph that continues on the next page no longer scrolls back to where it started
 
 ## [0.17.1] - 2026-08-19
 
