@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // SPLIT patch geometry: the paragraph straddles a column break. Fill column A from the
 // paragraph's top to its capacity, spill the remaining lines to column B's top, shift B's
-// content below by the spill-height change. Always provisional.
+// content below by the spill-height change. The measurements the caller needs to ask whether
+// anything moved at all ride back with the segments (see splitExact).
 import { glyphRows } from '../geometry/glyphRows';
 import type { Cal } from '../locate/locate.types';
 import type { Patch } from '../patch/patch.types';
@@ -15,6 +16,11 @@ type SplitDeps = {
 	// the daemon's \vsplit answer: the engine's break row (penalties included) instead of
 	// the capacity arithmetic below
 	engine?: { recsA: any[]; recsB: any[] };
+	// the PAGE's own break, from the compile's source stamp. It beats both: a \vsplit has to
+	// be told how much room the column has, and colBottom is the page body's floor, which is
+	// not where a column ends when a float sits under it -- that mis-measure once packed
+	// sixteen lines into a seven-line hole. The page already broke this paragraph here.
+	at?: number;
 };
 
 export function buildColumnSplit(
@@ -22,13 +28,13 @@ export function buildColumnSplit(
 	records: any[],
 	lineRecs: any[],
 	d: SplitDeps
-): { segA: Patch; segB: Patch; spillPage: number; kA: number } {
+): { segA: Patch; segB: Patch; spillPage: number; kA: number; aSpan: number; spillDelta: number; bH1: number } {
 	let kA: number;
 	let recsA: any[];
 	let recsB: any[];
 	let yFirstB: number;
 	let newSpillH: number;
-	const bLines = d.engine ? d.engine.recsB.filter((x: any) => x.t === 'line') : [];
+	const bLines = d.engine && d.at === undefined ? d.engine.recsB.filter((x: any) => x.t === 'line') : [];
 	if (d.engine && bLines.length) {
 		kA = d.engine.recsA.filter((x: any) => x.t === 'line').length;
 		recsA = d.engine.recsA;
@@ -36,7 +42,7 @@ export function buildColumnSplit(
 		yFirstB = (bLines[0] as any).y;
 		newSpillH = (bLines[bLines.length - 1] as any).y - yFirstB;
 	} else {
-		const capA = Math.max(1, Math.floor((d.colBottom - (cal.b1 - d.h1)) / cal.medGap));
+		const capA = d.at ?? Math.max(1, Math.floor((d.colBottom - (cal.b1 - d.h1)) / cal.medGap));
 		kA = Math.min(lineRecs.length, capA);
 		const cutY = kA >= lineRecs.length ? Infinity : ((lineRecs[kA - 1] as any).y + (lineRecs[kA] as any).y) / 2;
 		recsA = records.filter((x: any) => x.t === 'font' || (x.y ?? 0) < cutY);
@@ -79,5 +85,15 @@ export function buildColumnSplit(
 			.slice(0, 10)
 			.map((rw) => ({ y: rw.y + spillDelta, cs: rw.cs }))
 	};
-	return { segA, segB, spillPage: spillOn, kA };
+	const aLines = recsA.filter((x: any) => x.t === 'line');
+	const newB = recsB.filter((x: any) => x.t === 'line');
+	return {
+		segA,
+		segB,
+		spillPage: spillOn,
+		kA,
+		aSpan: aLines.length > 1 ? aLines[aLines.length - 1].y - aLines[0].y : 0,
+		spillDelta,
+		bH1: newB.length ? (newB[0].h ?? 0) : 0
+	};
 }

@@ -32,6 +32,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: a page containing a fraction or other stacked maths no longer falls back to the slower refining render for every edit on it
 - fix: live preview reads a narrowed block's own type size and leading from the compile, so edits in an abstract, quote or footnote are placed by asking rather than searching for them
 - fix: live preview no longer misses a superscript, accent or inline maths on a paragraph's first or last line when matching it, which used to send those paragraphs down the slower path
+- fix: a paragraph continued in the next column or on the next page now renders exactly when the break stays where it was, instead of always showing the refining tint
+- fix: editing a paragraph that continues in the next column no longer places it wrongly when a figure sits at the bottom of that column
 
 ## [0.17.1] - 2026-08-19
 

@@ -112,7 +112,14 @@ export const FIXTURES = [
 		name: 'twopage',
 		scenarios: [
 			{ name: 'page2-prose', anchor: 'pagetwobeta', expect: ['EXACT'] },
-			{ name: 'cross-page-span', anchor: 'straddle', expect: ['PROV'], maxMs: 16000 },
+			{
+				// the compile's source stamp states where the page broke this paragraph, so a
+				// straddle whose break does not move renders exactly -- EXACT is the new ceiling
+				name: 'cross-page-span',
+				anchor: 'straddle',
+				expect: ['EXACT', 'PROV'],
+				maxMs: 16000
+			},
 			{
 				// the engine chain can certify this push onto page 2 (seam captured, page 2
 				// absorbs, document ends there) -- EXACT is the new ceiling, PROV legitimate

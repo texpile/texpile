@@ -49,9 +49,14 @@ export type Cal = {
 	pre?: string;
 	// the paragraph STRADDLES a column break: b1/bk/colL/colR describe the FIRST (reading
 	// order) part; `spill` is the continuation at the top of the next column -- or, when
-	// pageNo is set, at the top of a column on the NEXT PAGE. Split patches are always
-	// provisional.
-	spill?: { b1: number; bk: number; colL: number; colR: number; paraLeft: number; pageNo?: number };
+	// pageNo is set, at the top of a column on the NEXT PAGE. `h1` is the height of the
+	// spill's own first line, which the receiving column's \topskip landing rule turns on.
+	spill?: { b1: number; bk: number; colL: number; colR: number; paraLeft: number; pageNo?: number; h1?: number };
+	// how many of the paragraph's lines the PAGE put before the break, from the compile's own
+	// source stamp. Present only when the split was asked rather than searched: a break the
+	// engine then puts back on the same line moves nothing, which is what lets a split render
+	// claim to be exact.
+	splitAt?: number;
 };
 
 export type CalBail = { bail: string; invisible?: boolean };

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { locateBySource } from './locateBySource';
+import { locateSourceSplit } from './locateSourceSplit';
 import { memoizeTypesets } from './memoizeTypesets';
 import { locateForward } from './locateForward';
 import { locateByGlyphs } from './locateByGlyphs';
@@ -46,6 +47,12 @@ export async function locateParagraph(
 	// item, whose content then fails to match).
 	const src = await locateBySource(ctx, file, line, endLine, orig);
 	if (!('bail' in src)) return src;
+	// the same lookup for a paragraph the stamp put in two columns: the search tiers can only
+	// recover its break by trying every cut, and this states it
+	if (src.bail === 'spans-pages' || src.bail === 'spans-columns') {
+		const split = await locateSourceSplit(ctx, file, line, endLine, orig);
+		if (!('bail' in split)) return split;
+	}
 	const fwd = await locateForward(ctx, file, line, orig, listItem);
 	if (!('bail' in fwd)) return fwd;
 	// typesets to nothing: no band anywhere could show this edit; reconcile quietly

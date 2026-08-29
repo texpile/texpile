@@ -16,8 +16,17 @@ export function sameOffsets(a: Pick<GlyphRow, 'xs'>, b: Pick<GlyphRow, 'xs'>): b
 	return a.xs.length === b.xs.length && a.xs.every((x, i) => Math.abs(x - a.xs[0] - (b.xs[i] - b.xs[0])) <= 0.5);
 }
 
-// a located band IS this paragraph only if every row matches the daemon's reproduction,
-// glyph-for-glyph and offset-for-offset
+// index of the first row that does not match the daemon's reproduction, glyph-for-glyph and
+// offset-for-offset; -1 when every row does. A refusal names the row so a bail can be read
+// rather than reproduced.
+export function firstRowMismatch(bandRows: Pick<GlyphRow, 'cs' | 'xs'>[], dRows: Pick<GlyphRow, 'cs' | 'xs'>[]): number {
+	if (bandRows.length !== dRows.length) return Math.min(bandRows.length, dRows.length);
+	for (let i = 0; i < bandRows.length; i++)
+		if (!sameCodepoints(bandRows[i].cs, dRows[i].cs) || !sameOffsets(bandRows[i], dRows[i])) return i;
+	return -1;
+}
+
+// a located band IS this paragraph only if every row matches the daemon's reproduction
 export function bandMatchesCalibration(bandRows: Pick<GlyphRow, 'cs' | 'xs'>[], dRows: Pick<GlyphRow, 'cs' | 'xs'>[]): boolean {
-	return bandRows.length === dRows.length && bandRows.every((r, i) => sameCodepoints(r.cs, dRows[i].cs) && sameOffsets(r, dRows[i]));
+	return bandRows.length === dRows.length && firstRowMismatch(bandRows, dRows) < 0;
 }

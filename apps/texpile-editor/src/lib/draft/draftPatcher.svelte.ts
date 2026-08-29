@@ -12,6 +12,7 @@ import { provisionalStage } from './heuristics/provisionalStage';
 import { certifiable } from './heuristics/certifiable';
 import { engineSplitTo } from './heuristics/engineSplitAssist';
 import { buildColumnSplit } from './heuristics/buildColumnSplit';
+import { splitExact } from './heuristics/splitExact';
 import { computeReflow, buildBandPatch, lineExtents } from './heuristics/computeReflow';
 import { whyPhrase } from './whyPhrase';
 import type { Cal, CalBail, PaperMetrics } from './locate/locate.types';
@@ -284,13 +285,18 @@ export class DraftPatcher {
 			}
 			const { h1, dk } = lineExtents(lineRecs);
 			if (cal.spill) {
+				// a stated break needs no \vsplit: the page already broke this paragraph, and asking
+				// again costs a daemon round trip to re-derive it from a room the page-level floor
+				// gets wrong whenever a float sits under the column
 				const split = buildColumnSplit(cal as Cal & { spill: NonNullable<Cal['spill']> }, r.records, lineRecs, {
 					h1,
 					dk,
 					colBottom: h.colBottomOf(cal.pageNo),
 					contentFloorOf: h.contentFloor,
 					pageRecords: h.pageRecords,
-					engine: await engineSplitTo(h.daemonTypeset, sendText, cal.W, h.colBottomOf(cal.pageNo) - (cal.b1 - h1))
+					...(cal.splitAt === undefined
+						? { engine: await engineSplitTo(h.daemonTypeset, sendText, cal.W, h.colBottomOf(cal.pageNo) - (cal.b1 - h1)) }
+						: { at: cal.splitAt })
 				});
 				const { segA, segB, spillPage } = split;
 				if (stale()) return;
@@ -298,14 +304,18 @@ export class DraftPatcher {
 					{ page: cal.pageNo, segs: [segA] },
 					{ page: spillPage, segs: [segB] }
 				];
+				// a straddle whose break the engine put back where the page has it, with both
+				// fragments the height they were, moved nothing: the tint would be apologising
+				// for a reflow that did not happen
+				const exact = splitExact(cal, h.paper().topSkip, split);
 				await this.renderFlow(
 					req,
 					cal,
 					t0,
 					stale,
-					{ pages, endPage: spillPage },
+					{ pages, endPage: spillPage, exact },
 					{ top: cal.b1 - h1, bottom: cal.bk + dk },
-					{ stage: 'split', detail: { kA: split.kA, of: lineRecs.length } }
+					{ stage: 'split', ...(exact ? { kind: 'patched-split' } : {}), detail: { kA: split.kA, of: lineRecs.length } }
 				);
 				return;
 			}
