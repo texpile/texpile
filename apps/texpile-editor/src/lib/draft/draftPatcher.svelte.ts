@@ -386,7 +386,17 @@ export class DraftPatcher {
 					stale,
 					{ pages, endPage: spillPage, exact },
 					{ top: cal.b1 - h1, bottom: cal.bk + dk },
-					{ stage: 'split', ...(exact ? { kind: 'patched-split' } : {}), detail: { kA: split.kA, of: lineRecs.length, bH1: +split.bH1.toFixed(2), wasH1: cal.spill.h1, landShift: +split.landShift.toFixed(2) } },
+					{
+						stage: 'split',
+						...(exact ? { kind: 'patched-split' } : {}),
+						detail: {
+							kA: split.kA,
+							of: lineRecs.length,
+							bH1: +split.bH1.toFixed(2),
+							wasH1: cal.spill.h1,
+							landShift: +split.landShift.toFixed(2)
+						}
+					},
 					focus
 				);
 				return;

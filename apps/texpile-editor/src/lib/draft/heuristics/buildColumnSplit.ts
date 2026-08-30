@@ -74,9 +74,7 @@ export function buildColumnSplit(
 	// That holds wherever the engine put the column -- under a float included.
 	const newB0 = recsB.filter((x: any) => x.t === 'line')[0];
 	const landShift =
-		cal.spill.h1 === undefined || !newB0
-			? 0
-			: Math.max(d.topSkip, (newB0 as any).h ?? 0) - Math.max(d.topSkip, cal.spill.h1);
+		cal.spill.h1 === undefined || !newB0 ? 0 : Math.max(d.topSkip, (newB0 as any).h ?? 0) - Math.max(d.topSkip, cal.spill.h1);
 	const spillDelta = newSpillH - (cal.spill.bk - cal.spill.b1) + landShift;
 	const segB: Patch = {
 		top: cal.spill.b1 + landShift - yFirstB,

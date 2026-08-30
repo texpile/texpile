@@ -220,7 +220,14 @@ describe('planBreakChain', () => {
 		// two boxes carried, one fits: the rest needs a SECOND page that does not exist either,
 		// and drawing only the part that fits would silently drop the remainder
 		const twoOut = [...col1, g(57, 168)];
-		const motion2 = { ...motion, movedBases: [160, 168], carriedItems: [{ t: 'b', h: 8, d: 3 }, { t: 'b', h: 8, d: 3 }] as any[] };
+		const motion2 = {
+			...motion,
+			movedBases: [160, 168],
+			carriedItems: [
+				{ t: 'b', h: 8, d: 3 },
+				{ t: 'b', h: 8, d: 3 }
+			] as any[]
+		};
 		const plan = (await planBreakChain(deps([ok(1, 1, [8])]), ctx({ 1: twoOut, 2: [] }, 2), cal, bandRecs, motion2 as any, geom, 10))!;
 		expect(plan.exact).toBe(false);
 		expect(plan.hops).toBe(1);
