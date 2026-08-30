@@ -17,7 +17,10 @@ export function splitExact(cal: Cal, topSkip: number, s: { kA: number; aSpan: nu
 	if (Math.abs(s.aSpan - (cal.bk - cal.b1)) > SPREAD_TOL) return false;
 	if (Math.abs(s.spillDelta) > SPREAD_TOL) return false;
 	// the receiving column seats its first baseline max(\topskip, height) below its top, so a
-	// spill whose first line grew past \topskip starts lower than the one it replaces
+	// spill whose first line grew past \topskip starts lower than the one it replaces. The
+	// render now SEATS it there (buildColumnSplit) instead of drawing it at the old baseline,
+	// which is what the fragment's own rows needed -- but everything under it then moves, and
+	// the render moves that rigidly where the engine would respace glue. Still not exact.
 	const was = cal.spill.h1;
 	if (was === undefined) return false;
 	return Math.abs(Math.max(topSkip, s.bH1) - Math.max(topSkip, was)) <= SPREAD_TOL;

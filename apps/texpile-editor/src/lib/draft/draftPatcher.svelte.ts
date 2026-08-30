@@ -28,10 +28,14 @@ import { m } from '$lib/paraglide/messages';
 type PatcherHooks = {
 	hasNative: () => boolean;
 	pageCount: () => number;
+	/** add a blank trailing page for a flow that leaves the document; true if one is there */
+	ensureSpillPage: () => boolean;
 	compiling: () => boolean;
 	setStatus: (s: string) => void;
 	compile: (reason: string) => void;
 	locate: (file: string, line: number, orig: string, listItem?: boolean, endLine?: number) => Promise<Cal | CalBail>;
+	/** first source line of this block that actually produced a galley line (see locate/bandStart) */
+	bandStart: (file: string, line: number, endLine: number) => number;
 	daemonTypeset: (body: { text: string; hsize?: number; splitTo?: number }) => Promise<any>;
 	pageRecords: (n: number) => any[];
 	colBottomOf: (p: number) => number;
@@ -78,6 +82,10 @@ export class DraftPatcher {
 	private refineStatusTimer: ReturnType<typeof setTimeout> | null = null;
 	// geometry located once per paragraph per compile; keystrokes reuse it
 	private calCache = new Map<string, Cal | CalBail>();
+	// where each block's galley starts, also once per compile. It cannot ride calCache: that
+	// one is keyed by the NARROWED line, so answering needs this first. Reading the stamps
+	// scans every page's records, which on a 900-page document is not a per-keystroke cost.
+	private bandStartCache = new Map<string, number>();
 	// bumped when a compile replaces the pages: a patch spanning that landing was built
 	// against replaced geometry and must not paint
 	private geometryEpoch = 0;
@@ -108,6 +116,7 @@ export class DraftPatcher {
 	geometryChanged(): void {
 		this.geometryEpoch++;
 		this.calCache.clear();
+		this.bandStartCache.clear();
 	}
 
 	/** compile finished: drop the tint and run any edit that arrived mid-compile */
@@ -130,6 +139,26 @@ export class DraftPatcher {
 		this.pendingReconcile = null;
 		await r?.();
 		return true;
+	}
+
+	// the same block starting where the engine's stamps say its galley does, or null when that
+	// is where it already starts. Both text sides move together: the splice replaces exactly
+	// the range the band covers, so a narrowed band with the full text would overwrite lines
+	// that are no longer part of it.
+	private narrow(req: PatchReq): PatchReq | null {
+		const endLine = req.endLine ?? req.line;
+		const k = `${req.file}:${req.line}:${endLine}`;
+		let start = this.bandStartCache.get(k);
+		if (start === undefined) {
+			start = this.hooks.bandStart(req.file, req.line, endLine);
+			this.bandStartCache.set(k, start);
+		}
+		if (start <= req.line) return null;
+		const drop = start - req.line;
+		const cut = (s: string) => s.split('\n').slice(drop).join('\n');
+		const orig = cut(req.orig);
+		if (!orig.trim()) return null;
+		return { ...req, line: start, orig, text: cut(req.text) };
 	}
 
 	private noteRefining(page: number): void {
@@ -223,6 +252,9 @@ export class DraftPatcher {
 		this.patchingSince = performance.now();
 		const t0 = performance.now();
 		try {
+			// the block's leading source lines may produce no galley of their own, and the daemon
+			// reproducing the block as a paragraph counts them in. Both sides move together or the
+			// splice would replace text the band no longer covers. Inside the try: this owns the
 			h.emit('patch-start', {
 				file: req.file,
 				line: req.line,
@@ -230,7 +262,7 @@ export class DraftPatcher {
 				textLen: req.text.length,
 				origHead: req.orig.slice(0, 50)
 			});
-			const key = `${req.file}:${req.line}`;
+			let key = `${req.file}:${req.line}`;
 			const epoch = this.geometryEpoch;
 			const stale = () => {
 				// a takeover already replaced this run: its successor carries the edit
@@ -244,6 +276,27 @@ export class DraftPatcher {
 			let cal = this.calCache.get(key);
 			if (!cal) {
 				cal = await h.locate(req.file, req.line, req.orig, req.listItem, req.endLine);
+				// An APPROX answer on a block whose leading source lines produced no galley of
+				// their own: \centerline{...} makes a plain \hbox, so the page has one row fewer
+				// than the daemon reproducing the block as a paragraph does, and every row below
+				// renders a baseline high. Retry on the band the engine's stamps name.
+				//
+				// A RECOVERY, never a precondition. The stamps cannot tell that case from a
+				// run-in heading whose text really does open the first galley line (\paragraph,
+				// \subsubsection), whose stamp also points past the heading's own line -- so this
+				// only runs where the ordinary answer was already inexact, and is kept only when
+				// it locates EXACTLY. Narrowing those blocks up front cut real text out of the
+				// band and cost four rows their render (measured on bert: content-mismatch).
+				const narrowed = 'bail' in cal ? null : cal.approx ? this.narrow(req) : null;
+				if (narrowed) {
+					const retry = await h.locate(narrowed.file, narrowed.line, narrowed.orig, narrowed.listItem, narrowed.endLine);
+					if (!('bail' in retry) && !retry.approx) {
+						h.emit('band-narrowed', { from: req.line, to: narrowed.line, endLine: req.endLine });
+						req = narrowed;
+						cal = retry;
+						key = `${req.file}:${req.line}`;
+					}
+				}
 				// a locate that spanned a compile landing must not poison the fresh cache
 				if (epoch === this.geometryEpoch) this.calCache.set(key, cal);
 			}
@@ -297,6 +350,7 @@ export class DraftPatcher {
 					colBottom: h.colBottomOf(cal.pageNo),
 					contentFloorOf: h.contentFloor,
 					pageRecords: h.pageRecords,
+					topSkip: h.paper().topSkip,
 					...(cal.splitAt === undefined
 						? { engine: await engineSplitTo(h.daemonTypeset, sendText, cal.W, h.colBottomOf(cal.pageNo) - (cal.b1 - h1)) }
 						: { at: cal.splitAt })
@@ -332,7 +386,7 @@ export class DraftPatcher {
 					stale,
 					{ pages, endPage: spillPage, exact },
 					{ top: cal.b1 - h1, bottom: cal.bk + dk },
-					{ stage: 'split', ...(exact ? { kind: 'patched-split' } : {}), detail: { kA: split.kA, of: lineRecs.length } },
+					{ stage: 'split', ...(exact ? { kind: 'patched-split' } : {}), detail: { kA: split.kA, of: lineRecs.length, bH1: +split.bH1.toFixed(2), wasH1: cal.spill.h1, landShift: +split.landShift.toFixed(2) } },
 					focus
 				);
 				return;
@@ -373,6 +427,9 @@ export class DraftPatcher {
 				emit: h.emit
 			};
 			if (cert) {
+				// the engine says boxes leave the LAST page: give the flow the page they leave
+				// onto, which this compile has not produced, before the chain looks for a slot
+				if (cert.moved && !cert.fits && cal.pageNo >= h.pageCount()) h.ensureSpillPage();
 				const geom = { y0: flow.y0, h1, dk, floorA };
 				const render = await engineFlow(chainDeps, spillCtx, cal, cert, r.records as any[], geom, h.paper().topSkip);
 				if (render) {

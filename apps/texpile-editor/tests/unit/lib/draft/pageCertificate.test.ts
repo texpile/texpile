@@ -151,5 +151,30 @@ describe('pageBreakCertificate break motion', () => {
 		);
 		expect(cert!.fits).toBe(true);
 		expect(cert!.moved).toBeUndefined();
+		// room under the extent: where the growth went is the full pass's answer, not this one
+		expect(cert!.bandAbsYs).toBeUndefined();
+	});
+
+	it('a column already ON the body bottom certifies its grown layout, not just the fit', async () => {
+		// colBottom AT the last baseline: nothing under the extent for the growth to go into,
+		// so the capacity split and the layout split are one question and its answer is the
+		// engine's baselines. Without them the render fell back to the JS overflow arithmetic,
+		// which moved a band the engine had just said stays put (measured 13.6pt, one blSkip).
+		const calls: string[] = [];
+		const cert = await pageBreakCertificate(
+			deps([CAL_OK, { ok: true, kA: 6, kB: 0, gs: 0, gsn: 0, go: 0, ys: [8, 21, 34, 47, 58, 68] }], calls),
+			cal,
+			[line(8), line(23), line(38)],
+			160,
+			10
+		);
+		expect(calls).toEqual(['68', '68 cap']); // calibrate, then the one split that answers both
+		expect(cert!.fits).toBe(true);
+		expect(cert!.bandAbsYs!.map((y) => +y.toFixed(2))).toEqual([113, 126, 139]);
+		// below-band boxes respace by the engine's own numbers, thresholded at their OLD tops
+		expect(cert!.steps!.map((s) => +s.dy.toFixed(2))).toEqual([5, 0]);
+		expect(cert!.steps![0].y).toBeCloseTo(136.99, 4);
+		// the page bottom pins the last box, so nothing above the band had to move
+		expect(cert!.maxAboveDy).toBeCloseTo(0, 4);
 	});
 });

@@ -3,7 +3,7 @@ import type { LocateContext } from './locate.types';
 
 export type SourceLine = { x: number; y: number; w: number; h: number };
 /** one contiguous run of the paragraph's lines inside a single column */
-export type SourceFrag = { pageNo: number; lines: SourceLine[] };
+export type SourceFrag = { pageNo: number; lines: SourceLine[]; stamps: number[] };
 export type SourceFragsResult = { frags: SourceFrag[] } | { bail: string; detail?: unknown };
 
 /** line boxes whose left edges are within this (pt) sit in the same column */
@@ -34,8 +34,11 @@ export function sourceFragments(ctx: LocateContext, srcFiles: string[], file: st
 			// rather than an exact left edge, because a hanging indent or a parshape moves the
 			// box a point or two without moving it to another column, and columns stand a
 			// column-width apart.
-			const f = found.find((k) => k.pageNo === p && Math.abs(k.lines[0].x - r.x) <= COL_SAME) ?? { pageNo: p, lines: [] };
+			const f = found.find((k) => k.pageNo === p && Math.abs(k.lines[0].x - r.x) <= COL_SAME) ?? { pageNo: p, lines: [], stamps: [] };
 			f.lines.push({ x: r.x, y: r.y, w: r.w, h: r.h ?? 0 });
+			// the source line this galley line came from, kept so a caller can ask where the
+			// block's output actually STARTS -- a leading \centerline or \label produces none
+			f.stamps.push(r.s);
 			if (f.lines.length === 1) found.push(f);
 		}
 	}

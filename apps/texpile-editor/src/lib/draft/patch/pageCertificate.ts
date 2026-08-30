@@ -8,6 +8,9 @@ import {
 	type SkelItem
 } from '../heuristics/pageSkeleton';
 import { breakMotion, type BreakMotion } from './breakMotion';
+import { certifiedFlow } from './certifiedFlow';
+import { columnFills } from '../heuristics/columnFills';
+import { columnIndexOf } from '../heuristics/seams';
 import type { Cal } from '../locate/locate.types';
 import type { FlowStep } from './glueShift';
 import type { PageRecord } from '../geometry/geometry.types';
@@ -25,8 +28,10 @@ import type { SkeletonItem, SkeletonResult } from '$lib/workspace/fileSystem';
 // - GROWN band: the page may absorb the growth into stretch/shrink or spare room below
 //   its current extent, so the layout target is unknowable from one sub-range -- but the
 //   FIT question is not: split at the page's capacity (content top to the body bottom).
-//   kB=0 -> the engine says it fits (fit-only certificate: keep the flow-steps render);
-//   kB>0 -> the engine says the break moves, whatever the JS slack arithmetic thought.
+//   kB=0 -> the engine says it fits; kB>0 -> the engine says the break moves, whatever the
+//   JS slack arithmetic thought. Where the column's last baseline already sits ON the body
+//   bottom there is no room below to be unknowable ABOUT, so capacity and layout target are
+//   one number and that split's baselines are the layout too -- a full certificate.
 export type Certificate = {
 	// the engine's answer to "does the edited content still fit this page"
 	fits: boolean;
@@ -62,6 +67,8 @@ export type ShrinkSeed = {
 export type FullCertificate = Certificate & Required<Pick<Certificate, 'bandAbsYs' | 'steps' | 'maxAboveDy'>>;
 
 const CAL_DEV = 0.15;
+// the column's last baseline sits on the body bottom: full, with nothing below to grow into
+const PINNED_EPS = 0.5;
 
 export async function pageBreakCertificate(
 	deps: {
@@ -78,8 +85,15 @@ export async function pageBreakCertificate(
 		deps.emit('skel-refused', { why, ...(typeof detail === 'object' ? detail : { detail }) });
 		return null;
 	}
-	const skel = buildPageSkeleton(deps.pageRecords(cal.pageNo), cal.colL, cal.colR, (why, d) => refuse('build:' + why, d));
+	const recsA = deps.pageRecords(cal.pageNo);
+	const skel = buildPageSkeleton(recsA, cal.colL, cal.colR, (why, d) => refuse('build:' + why, d));
 	if (!skel) return null;
+	// which reading of the split IS this column's layout. The chain planner has always made
+	// this distinction per hop; the certificate did not, so on a column the engine left short
+	// -- the document's LAST page above all -- it measured the page's own baselines against a
+	// stretched reading and reported content above the band as having moved.
+	const ciA = columnIndexOf(recsA, cal.W, cal.colL);
+	const fillsA = columnFills(recsA, ciA > 0 ? ciA - 1 : undefined);
 	let fromBox = -1,
 		toBox = -1;
 	for (let k = 0; k < skel.boxYs.length; k++)
@@ -118,7 +132,25 @@ export async function pageBreakCertificate(
 		const cf = await deps.splitSkeleton(spliced.items, capacity, true);
 		if (!cf.ok) return refuse('fit-split', { error: cf.error });
 		const fits = cf.kB === 0 && cf.kA === boxesAfter;
-		const moved = fits ? null : breakMotion(skel, top, spliced.bandBoxes, fromBox, toBox, cf, boxesAfter);
+		// A column whose last baseline already sits ON the body bottom has no spare room under
+		// its extent to absorb the growth into, so the target the layout is unknowable from --
+		// how far down the column may grow -- is pinned to the capacity the fit test just split
+		// at. That split IS the engine's layout for the grown column, and returning only its
+		// yes/no left the render to the JS overflow arithmetic, which moved a band the engine
+		// had just said stays put.
+		const ysFit = fillsA ? cf.ys : (cf.nys ?? cf.ys);
+		if (fits && Math.abs(capacity - layoutTarget) <= PINNED_EPS && ysFit?.length === cf.kA) {
+			const flow = certifiedFlow(skel, top, fromBox, toBox, spliced.bandBoxes, ysFit);
+			deps.emit('skel-certified', {
+				page: cal.pageNo,
+				boxes: boxesAfter,
+				calDev: +calDev.toFixed(3),
+				maxAboveDy: +flow.maxAboveDy.toFixed(3),
+				grown: true
+			});
+			return { fits: true, ...flow };
+		}
+		const moved = fits ? null : breakMotion(skel, top, spliced.bandBoxes, fromBox, toBox, cf, boxesAfter, fillsA);
 		deps.emit(fits ? 'skel-fits' : 'skel-break-moved', {
 			kA: cf.kA,
 			kB: cf.kB,
@@ -135,29 +167,18 @@ export async function pageBreakCertificate(
 		// where it falls -- kB=0 there means the extent merely grew inside the page's
 		// spare room, and there is no motion to render
 		const cs = await deps.splitSkeleton(spliced.items, capacity, true);
-		const moved = cs.ok && cs.kB > 0 ? breakMotion(skel, top, spliced.bandBoxes, fromBox, toBox, cs, boxesAfter) : null;
+		const moved = cs.ok && cs.kB > 0 ? breakMotion(skel, top, spliced.bandBoxes, fromBox, toBox, cs, boxesAfter, fillsA) : null;
 		deps.emit('skel-break-moved', { kA: c1.kA, kB: c1.kB, boxes: boxesAfter, motion: !!moved });
 		return { fits: false, moved: moved ?? undefined };
 	}
-	const bandAbsYs: number[] = [];
-	for (let j = 0; j < spliced.bandBoxes; j++) bandAbsYs.push(top + c1.ys[fromBox + j]);
-	const steps: FlowStep[] = [];
-	let maxAboveDy = 0;
-	for (let k = 0; k < skel.boxYs.length; k++) {
-		if (k >= fromBox && k <= toBox) continue;
-		const kNew = k < fromBox ? k : k - (toBox - fromBox + 1) + spliced.bandBoxes;
-		const dy = top + c1.ys[kNew] - skel.boxYs[k];
-		if (k < fromBox) maxAboveDy = Math.max(maxAboveDy, Math.abs(dy));
-		// threshold at the box TOP so the whole line moves together
-		else steps.push({ y: skel.boxYs[k] - skel.boxHs[k] - 0.01, dy });
-	}
+	const flow = certifiedFlow(skel, top, fromBox, toBox, spliced.bandBoxes, c1.ys);
 	deps.emit('skel-certified', {
 		page: cal.pageNo,
 		boxes: boxesAfter,
 		calDev: +calDev.toFixed(3),
-		maxAboveDy: +maxAboveDy.toFixed(3)
+		maxAboveDy: +flow.maxAboveDy.toFixed(3)
 	});
-	return { fits: true, bandAbsYs, steps, maxAboveDy };
+	return { fits: true, ...flow };
 }
 
 // bake the certified baselines into the daemon records: every record moves with its

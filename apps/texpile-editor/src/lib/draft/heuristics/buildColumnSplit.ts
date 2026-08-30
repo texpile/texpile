@@ -21,6 +21,7 @@ type SplitDeps = {
 	// not where a column ends when a float sits under it -- that mis-measure once packed
 	// sixteen lines into a seven-line hole. The page already broke this paragraph here.
 	at?: number;
+	topSkip: number;
 };
 
 export function buildColumnSplit(
@@ -28,7 +29,7 @@ export function buildColumnSplit(
 	records: any[],
 	lineRecs: any[],
 	d: SplitDeps
-): { segA: Patch; segB: Patch; spillPage: number; kA: number; aSpan: number; spillDelta: number; bH1: number } {
+): { segA: Patch; segB: Patch; spillPage: number; kA: number; aSpan: number; spillDelta: number; bH1: number; landShift: number } {
 	let kA: number;
 	let recsA: any[];
 	let recsB: any[];
@@ -62,9 +63,23 @@ export function buildColumnSplit(
 		newRecs: recsA
 	};
 	const spillOn = cal.spill.pageNo ?? cal.pageNo;
-	const spillDelta = newSpillH - (cal.spill.bk - cal.spill.b1);
+	// The receiving column seats its first baseline max(\topskip, height) below its own top,
+	// so a spill whose first line is TALLER than the one it replaces starts lower -- and
+	// everything under it moves with it. Measured on bert: an inline-math line arriving at the
+	// head of the spill put the whole fragment 15.6pt high, which splitExact already knew to
+	// call inexact while the render drew it anyway.
+	//
+	// The column top itself is not needed and must not be guessed: it is the same top either
+	// way, so the OLD landing gives it away and the shift is the difference of the two rules.
+	// That holds wherever the engine put the column -- under a float included.
+	const newB0 = recsB.filter((x: any) => x.t === 'line')[0];
+	const landShift =
+		cal.spill.h1 === undefined || !newB0
+			? 0
+			: Math.max(d.topSkip, (newB0 as any).h ?? 0) - Math.max(d.topSkip, cal.spill.h1);
+	const spillDelta = newSpillH - (cal.spill.bk - cal.spill.b1) + landShift;
 	const segB: Patch = {
-		top: cal.spill.b1 - yFirstB,
+		top: cal.spill.b1 + landShift - yFirstB,
 		dropTop: cal.spill.b1 - d.h1 - 2,
 		dropBottom: cal.spill.bk + d.dk + 2,
 		delta: spillDelta,
@@ -94,6 +109,7 @@ export function buildColumnSplit(
 		kA,
 		aSpan: aLines.length > 1 ? aLines[aLines.length - 1].y - aLines[0].y : 0,
 		spillDelta,
-		bH1: newB.length ? (newB[0].h ?? 0) : 0
+		bH1: newB.length ? (newB[0].h ?? 0) : 0,
+		landShift
 	};
 }

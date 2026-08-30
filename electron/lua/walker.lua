@@ -323,6 +323,22 @@ local function firstGlyphSource(head, depth)
 	return nil
 end
 
+-- Galley identity for a typeset line: the output firing whose \box255 held it.
+--
+-- pre_output_filter sees the galley ALONE -- TeX has already moved footnote inserts into
+-- \box\footins, and floats are contributed after -- so the column stamp lands on exactly the
+-- material the page builder broke. Inside one column box a stamped line is galley and an
+-- unstamped one (a footnote, a float pinned there) is not, which no position test can say.
+--
+-- Absent means UNSTAMPED, never guessed: a build without the attribute emits nothing here and
+-- its readers keep their older reading.
+local function columnSuffix(n)
+	if not M.colattr then return "" end
+	local a = node.has_attribute(n, M.colattr)
+	if not a or a < 1 then return "" end
+	return string.format(',"c":%d', a)
+end
+
 local function sourceSuffix(head)
 	if not (M.srcline and head) then return "" end
 	local l, f = firstGlyphSource(head, 0)
@@ -561,9 +577,9 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			-- box. Display-math lines (equation subtypes) are galley boxes the same way --
 			-- without them a display reads as a gap full of stray fraction rules.
 			if n.subtype == HL_LINE or n.subtype == HL_EQ or n.subtype == HL_EQNO then
-				emit(string.format('{"t":"pl","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
+				emit(string.format('{"t":"pl","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s%s}',
 					(x + (n.shift or 0)) / pt, cy / pt, n.width / pt, n.height / pt, n.depth / pt,
-					sourceSuffix(n.head)))
+					sourceSuffix(n.head), columnSuffix(n)))
 			end
 			-- drawing box sitting directly in vertical material (\vbox{\hbox{tikz}}).
 			-- Paragraph LINES are exempt: walk() captures just the inner drawing box,

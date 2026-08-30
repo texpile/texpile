@@ -28,6 +28,11 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: two figures included at the same size can no longer be shown in each other's place in live preview
 - fix: live preview flows content across a column break in more documents, instead of giving up when a column held only a figure
 - fix: an edit that pushes content into the next column or page now renders exactly, with no refining tint, on the last page and in document styles that leave the bottom of pages ragged
+- fix: content pushed off the end of the document now flows onto a new page in live preview, instead of being drawn on top of the text below it
+- fix: live preview no longer reads a footnote or a figure spanning both columns as body text, so an edit that pushes a line onto a page with either lands it where the engine does
+- fix: on a page already full to the bottom, an edit that adds a line now redraws at the engine's own spacing instead of an estimate, so the text no longer shifts by a line before the recompile catches up
+- fix: editing a paragraph that sits directly under a centered heading, with no blank line between them, no longer draws the paragraph a line high
+- fix: when a paragraph split across a page break starts its second half with a taller line, live preview seats that half where the engine does instead of at the old line's position
 - fix: an edit the engine confirmed still fits the page no longer shows the refining tint because a size estimate disagreed with it
 - fix: a page containing a fraction or other stacked maths no longer falls back to the slower refining render for every edit on it
 - fix: live preview reads a narrowed block's own type size and leading from the compile, so edits in an abstract, quote or footnote are placed by asking rather than searching for them

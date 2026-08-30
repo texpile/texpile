@@ -44,12 +44,21 @@ export function buildPageSkeleton(
 		note?.(why, detail);
 		return null;
 	}
-	// candidate lines in FILE ORDER (the walker emits the vertical list in list order)
-	const pls: Line[] = [];
+	// candidate lines in FILE ORDER (the walker emits the vertical list in list order), GALLEY
+	// only: each line carries the output firing whose \box255 held it, and pre_output_filter
+	// sees the galley alone -- footnote inserts have already moved to \box\footins, floats are
+	// contributed after. So an unstamped line is a footnote or a float pinned in this column,
+	// which the page builder never re-breaks with the text. A column window is horizontal only
+	// and cannot say either: full-width material above the columns starts at the left margin,
+	// and a footnote sits inside the column's own box.
+	const cand: { i: number; r: any }[] = [];
 	for (let i = 0; i < recs.length; i++) {
 		const r: any = recs[i];
-		if (r.t === 'pl' && r.x >= colL && r.x <= colR && r.h !== undefined) pls.push({ i, y: r.y, h: r.h, d: r.d });
+		if (r.t === 'pl' && r.x >= colL && r.x <= colR && r.h !== undefined) cand.push({ i, r });
 	}
+	// a build that stamps nothing keeps the older reading rather than emptying the column
+	const galley = cand.some((c) => c.r.c !== undefined) ? cand.filter((c) => c.r.c !== undefined) : cand;
+	const pls: Line[] = galley.map(({ i, r }) => ({ i, y: r.y, h: r.h, d: r.d }));
 	if (pls.length < 2) return refuse('few-pl', { pls: pls.length });
 	// drop NESTED lines (a minipage or tabular inside a line emits pl records too): a line
 	// wholly inside another line's vertical span is not a galley item

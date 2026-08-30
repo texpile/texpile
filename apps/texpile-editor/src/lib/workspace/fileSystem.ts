@@ -38,6 +38,10 @@ export type DraftPage = {
 	// escape, dir); absent when every record on it is safe to paint
 	unc?: string;
 	records: string; // newline-delimited JSON records for this page
+	// live mode's own page, not the compile's: content the engine says leaves the last page
+	// has to land somewhere, and the page it belongs on does not exist until the next
+	// compile. Carries no PDF raster, so it is drawn from records alone.
+	spill?: true;
 };
 export type DraftResult =
 	| {

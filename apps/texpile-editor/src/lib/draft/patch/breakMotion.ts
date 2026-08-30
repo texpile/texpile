@@ -30,23 +30,29 @@ export function breakMotion(
 	bandBoxes: number,
 	fromBox: number,
 	toBox: number,
-	split: { kA: number; kB: number; ys: number[] },
-	boxesAfter: number
+	split: { kA: number; kB: number; ys: number[]; nys?: number[] },
+	boxesAfter: number,
+	// did the engine FILL this column? A column it left short -- the document's last page,
+	// every page of a raggedbottom class -- stacks at natural glue, and reading it as
+	// stretched spreads its rows. That spread then reads as content ABOVE the band needing
+	// to move, which costs the render its exactness for a layout difference that is not there.
+	fills = true
 ): BreakMotion | null {
+	const ys = fills ? split.ys : (split.nys ?? split.ys);
 	const oldBand = toBox - fromBox + 1;
 	function toOld(n: number): number {
 		return n + oldBand - bandBoxes;
 	}
 	if (split.kA < fromBox + bandBoxes || split.kA >= boxesAfter) return null;
-	if (split.kA + split.kB !== boxesAfter || split.ys.length !== split.kA) return null;
+	if (split.kA + split.kB !== boxesAfter || ys.length !== split.kA) return null;
 	const bandAbsYs: number[] = [];
-	for (let j = 0; j < bandBoxes; j++) bandAbsYs.push(top + split.ys[fromBox + j]);
+	for (let j = 0; j < bandBoxes; j++) bandAbsYs.push(top + ys[fromBox + j]);
 	const staySteps: FlowStep[] = [];
 	let maxAboveDy = 0;
 	for (let n = 0; n < split.kA; n++) {
 		if (n >= fromBox && n < fromBox + bandBoxes) continue;
 		const k = n < fromBox ? n : toOld(n);
-		const dy = top + split.ys[n] - skel.boxYs[k];
+		const dy = top + ys[n] - skel.boxYs[k];
 		if (n < fromBox) maxAboveDy = Math.max(maxAboveDy, Math.abs(dy));
 		// threshold at the box TOP so the whole line moves together
 		else staySteps.push({ y: skel.boxYs[k] - skel.boxHs[k] - 0.01, dy });

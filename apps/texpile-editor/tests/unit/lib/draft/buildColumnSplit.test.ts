@@ -25,7 +25,8 @@ const DEPS = {
 	// the rest, and nothing in the page metadata says so
 	colBottom: 690,
 	contentFloorOf: () => 692,
-	pageRecords: () => []
+	pageRecords: () => [],
+	topSkip: 11
 };
 
 describe('buildColumnSplit', () => {
@@ -41,6 +42,35 @@ describe('buildColumnSplit', () => {
 		// almost the whole paragraph in a hole that held seven lines
 		const s = buildColumnSplit(CAL, records, lineRecs, DEPS);
 		expect(s.kA).toBeGreaterThan(7);
+	});
+
+	it('seats the spill by the landing rule when its first line grew taller', () => {
+		// an inline-math line arriving at the head of the spill: the receiving column seats its
+		// first baseline max(\topskip, height) below the same top, so the whole fragment starts
+		// lower and everything under it moves with it. Measured on bert as 15.6pt of drift the
+		// render drew anyway, because only the exactness CHECK knew this rule.
+		const tall = lineRecs.map((r, i) => (i === 7 ? { ...r, h: 26.6 } : r));
+		const s = buildColumnSplit(CAL, [records[0], ...tall], tall, { ...DEPS, at: 7 });
+		// spill.b1 1.8 was seated at max(11, 7.7) = 11, the new head at max(11, 26.6) = 26.6
+		const shift = 26.6 - 11;
+		expect(s.segB.top).toBeCloseTo(1.8 + shift - tall[7].y, 4);
+		// content below the spill moves by the landing shift too, not only by the span change
+		expect(s.segB.delta).toBeCloseTo(tall[16].y - tall[7].y - (124 - 1.8) + shift, 4);
+	});
+
+	it('leaves the spill where it was when its first line did not change the landing', () => {
+		// both heights below \topskip: the rule seats them identically, so nothing shifts
+		const s = buildColumnSplit(CAL, records, lineRecs, { ...DEPS, at: 7 });
+		expect(s.segB.top).toBeCloseTo(1.8 - lineRecs[7].y, 4);
+	});
+
+	it('cannot difference a landing it was never told: no shift', () => {
+		// an older locate that recorded no spill h1. Guessing the column top to recover it would
+		// be inventing page geometry, so the render stays where it was and splitExact refuses.
+		const noH1 = { ...CAL, spill: { ...CAL.spill, h1: undefined } };
+		const tall = lineRecs.map((r, i) => (i === 7 ? { ...r, h: 26.6 } : r));
+		const s = buildColumnSplit(noH1, [records[0], ...tall], tall, { ...DEPS, at: 7 });
+		expect(s.segB.top).toBeCloseTo(1.8 - tall[7].y, 4);
 	});
 
 	it('a paragraph that shrank past the stated cut no longer spills', () => {

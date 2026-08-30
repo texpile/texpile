@@ -195,6 +195,46 @@ describe('planBreakChain', () => {
 		expect(await planBreakChain(deps([]), ctx({ 1: col1 }, 1), cal, bandRecs, motion, geom, 10)).toBeNull();
 	});
 
+	it('lands on a page the compile never produced, with no calibration to run', async () => {
+		// the same last-page overflow as above once the session has opened a spill page for it.
+		// A blank receiving column has nothing to merge with, so the hop skips the skeleton and
+		// the calibration entirely and asks the engine one question: does the carried run fit?
+		const calls: string[] = [];
+		const plan = (await planBreakChain(deps([ok(1, 0, [8])], calls), ctx({ 1: col1, 2: [] }, 2), cal, bandRecs, motion, geom, 10))!;
+		expect(calls).toEqual(['98 cap']); // capacity only: body top 70 + \topskip landing
+		expect(plan.exact).toBe(true);
+		expect(plan.hops).toBe(1);
+		expect(plan.endPage).toBe(2);
+		expect(plan.samePage).toBe(false);
+		const seg = plan.pages[1].segs[0];
+		// the landing rule seats the row max(\topskip, height) below the body top, which is
+		// read off page 1: 70 + 10 = 80, the same baseline any first line of a page gets
+		expect(seg.newRecs.filter((r: any) => r.y !== undefined).map((r: any) => r.y)).toEqual([80]);
+		expect(seg.delta).toBe(0);
+		// a blank page has nothing to wipe, so the drop band is empty rather than a region
+		expect(seg.dropTop).toBeCloseTo(68, 4);
+		expect(seg.dropBottom).toBeCloseTo(68, 4);
+	});
+
+	it('a fresh page the carried run overruns keeps the tint rather than landing half of it', async () => {
+		// two boxes carried, one fits: the rest needs a SECOND page that does not exist either,
+		// and drawing only the part that fits would silently drop the remainder
+		const twoOut = [...col1, g(57, 168)];
+		const motion2 = { ...motion, movedBases: [160, 168], carriedItems: [{ t: 'b', h: 8, d: 3 }, { t: 'b', h: 8, d: 3 }] as any[] };
+		const plan = (await planBreakChain(deps([ok(1, 1, [8])]), ctx({ 1: twoOut, 2: [] }, 2), cal, bandRecs, motion2 as any, geom, 10))!;
+		expect(plan.exact).toBe(false);
+		expect(plan.hops).toBe(1);
+	});
+
+	it('a page whose body top cannot be read keeps the tint rather than inventing one', async () => {
+		// every line on page 1 spans \textwidth (a title block, a starred figure): there is no
+		// column-width line to apply the landing rule to, and a guessed top misplaces the run
+		const wide = col1.map((r: any) => (r.t === 'pl' ? { ...r, w: 469, x: 36 } : r));
+		const plan = (await planBreakChain(deps([ok(1, 0, [8])]), ctx({ 1: wide, 2: [] }, 2), cal, bandRecs, motion, geom, 10))!;
+		expect(plan.exact).toBe(false);
+		expect(plan.hops).toBe(1);
+	});
+
 	it('a ragged receiving page keeps the tint: its rows are not packed to the goal', async () => {
 		const plan = (await planBreakChain(
 			deps([ok(2, 0, [8, 23]), ok(3, 0, [8, 24, 39])], [], [seam11, seam12], { packs: false }),

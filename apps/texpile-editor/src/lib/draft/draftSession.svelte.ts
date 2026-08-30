@@ -5,6 +5,7 @@
 import { tick } from 'svelte';
 import { parseRecords, pageIsRtl } from './pageRecords';
 import { locateParagraph } from './locate/locateParagraph';
+import { bandStartLine } from './locate/bandStart';
 import type { LocateContext, PaperMetrics } from './locate/locate.types';
 import { verifyPatches } from './patch/verifyPatches';
 import type { Patch, PatchReq } from './patch/patch.types';
@@ -107,10 +108,12 @@ export class DraftSession {
 		this.patcher = new DraftPatcher({
 			hasNative: () => !!nativeBridge(),
 			pageCount: () => this.pages.length,
+			ensureSpillPage: () => this.ensureSpillPage(),
 			compiling: () => this.compiler.compiling,
 			setStatus: (s) => (this.compiler.status = s),
 			compile: (reason) => void this.compiler.compile(reason),
 			locate: (file, line, orig, listItem, endLine) => locateParagraph(this.locateCtx, file, line, orig, listItem, endLine),
+			bandStart: (file, line, endLine) => bandStartLine(this.locateCtx, file, line, endLine),
 			daemonTypeset: (body) => this.compiler.daemonTypeset(body),
 			pageRecords: (n) => this.pageRecords(n),
 			colBottomOf: (p) => this.colBottomOf(p),
@@ -183,6 +186,23 @@ export class DraftSession {
 		return pageIsRtl(this.pages[n - 1]?.unc);
 	}
 
+	// Somewhere for content leaving the LAST page to land. The engine can certify that a box
+	// no longer fits, but the page it belongs on is not in this compile -- it arrives with the
+	// next one. Without a page to flow onto, the chain declined and the overflow was drawn
+	// over whatever sat below it, which is what editing the last paragraph before a
+	// bibliography looked like.
+	//
+	// Geometry is the last page's, because that is the only page shape the document has shown
+	// us. Empty of records, so nothing is claimed about it beyond what the flow paints. The
+	// compile replaces this.pages wholesale, so it cannot outlive the edit that asked for it.
+	ensureSpillPage(): boolean {
+		const last = this.pages[this.pages.length - 1];
+		if (!last) return false;
+		if (last.spill) return true;
+		this.pages = [...this.pages, { n: last.n + 1, w: last.w, h: last.h, ht: last.ht, records: '', spill: true }];
+		return true;
+	}
+
 	// The body's bottom in record space: the shipout box baseline (ht) IS the footer line's
 	// baseline, \footskip above it is the last body line. Capacity checks measure against
 	// this; everything below it (the footer) is bottom-anchored and no patch may shift,
@@ -236,7 +256,8 @@ export class DraftSession {
 			ctx.drawImage(base as ImageBitmap, 0, 0, this.paper.w * S, this.paper.h * S);
 			return;
 		}
-		if (!base) this.bitmaps.requestBase(n, bkey);
+		// a spill page has no raster to wait for: the PDF this compile produced ends before it
+		if (!base && !this.pages[n - 1]?.spill) this.bitmaps.requestBase(n, bkey);
 		// hold the white page until the raster lands rather than flash mirrored text. If the
 		// raster can never land (a truncated PDF -- 'failed'), fall through: wrong-order ink still
 		// carries the words, and a permanently blank page carries nothing.

@@ -2,6 +2,7 @@
 import { nextSlot, type OverflowContext, type SlotFrom } from './nextSlot';
 import { buildPageSkeleton, type PageSkeleton, type SkelItem } from './pageSkeleton';
 import { carriedRecords, remapCarried } from './carryRecords';
+import { pageBodyTop } from './pageBodyTop';
 import { seamAfter, seamForced, seamItems, seamHeight, columnIndexOf } from './seams';
 import type { BreakMotion } from '../patch/breakMotion';
 import type { Cal } from '../locate/locate.types';
@@ -137,7 +138,9 @@ export async function planBreakChain(
 		else pages.push({ page, segs: [seg] });
 	}
 	function finish(reason: string): ChainPlan {
-		deps.emit('chain-end', { hops, exact, reason, endPage });
+		// aboveDy says WHY a hop that certified is still not exact: the certificate needed
+		// content above the band moved, which the renderer does not do
+		deps.emit('chain-end', { hops, exact, reason, endPage, aboveDy: +motion.maxAboveDy.toFixed(2) });
 		return { pages, carried: motion.movedBases.length, hops, exact, endPage, samePage };
 	}
 
@@ -166,13 +169,55 @@ export async function planBreakChain(
 		const floorB = ctx.contentFloor(slot.spillPage);
 		const seamIts = carried.seam && !seamForced(carried.seam) ? seamItems(carried.seam) : null;
 		const recsB = ctx.pageRecords(slot.spillPage);
-		const skelB = seamIts && topSkip > 0 ? buildPageSkeleton(recsB, slot.colLB, slot.colRB) : null;
+		// the receiving column's refusal decides the whole hop, so it is named like the source
+		// column's: 'no-skeleton' alone says a column could not be modelled without saying why,
+		// and the fallback it selects is the guess that shows up as drift
+		const skelB =
+			seamIts && topSkip > 0
+				? buildPageSkeleton(recsB, slot.colLB, slot.colRB, (why, d) =>
+						deps.emit('skel-refused', { where: 'recv', page: slot!.spillPage, why, ...(typeof d === 'object' ? d : { detail: d }) })
+					)
+				: null;
 		const gap = carried.seam ? seamHeight(carried.seam) : cal.medGap;
 		async function uncertified(reason: string): Promise<ChainPlan> {
 			addSeg(slot!.spillPage, legacySeg(slot!, carried, gap, floorB));
 			exact = false;
 			deps.emit('chain-hop', { page: slot!.spillPage, certified: false, reason });
 			return finish(reason);
+		}
+		// A page with nothing on it yet: the flow left the document and this is the page it
+		// leaves onto. It is the SIMPLEST hop, not the hardest -- everything the ordinary hop
+		// does (build the receiving column's skeleton, splice into it, prove the calibration
+		// against its own baselines) exists to merge with content already there, and there is
+		// none. The landing is the page builder's own rule, so this stays exact.
+		if (!recsB.length && topSkip > 0) {
+			const bodyTop = pageBodyTop(ctx.pageRecords(cal.pageNo), cal.colL, cal.colR, cal.W, topSkip);
+			if (bodyTop === null) return uncertified('no-body-top');
+			const topEdge = bodyTop + Math.max(topSkip, hFirst) - hFirst;
+			const cf = await deps.splitSkeleton(carried.items, deps.colBottomOf(slot.spillPage) - topEdge, true);
+			if (!cf.ok || cf.kA + cf.kB !== carried.oldBases.length) return uncertified('fresh-split');
+			// a fresh page the flow OVERRUNS would need a second page that does not exist
+			// either; one new page is as far as this can see, so the rest is the reconcile's
+			if (cf.kB > 0) return uncertified('fresh-overrun');
+			const ys = cf.nys ?? cf.ys;
+			if (!ys || ys.length !== cf.kA) return uncertified('fresh-ys');
+			addSeg(slot.spillPage, {
+				top: 0,
+				dropTop: bodyTop - 2,
+				dropBottom: bodyTop - 2,
+				delta: 0,
+				paraLeft: slot.movedDx,
+				colL: slot.colLB,
+				colR: slot.colRB,
+				newRecs: remapCarried(
+					carried.recs,
+					carried.oldBases,
+					carried.oldBases.map((_, j) => topEdge + ys[j])
+				),
+				flowBottom: floorB
+			});
+			deps.emit('chain-hop', { page: slot.spillPage, certified: true, kA: cf.kA, kB: 0, fresh: true });
+			return finish('landed-fresh');
 		}
 		if (!skelB) return uncertified(!seamIts ? 'no-seam' : topSkip <= 0 ? 'no-topskip' : 'no-skeleton');
 		// Did the engine FILL this column? That chooses which of the split's two baseline
