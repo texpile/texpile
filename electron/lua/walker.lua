@@ -690,9 +690,13 @@ function M.lines(head, y0)
 			-- head; node.rangedimensions rejects nil outright and would abort
 			-- the whole compile.
 			local rdw = line.head and node.rangedimensions(line, line.head) or 0
+			-- `x` is the line's own shift: 0 for prose, nonzero for a centered display. It rides
+			-- along because the RECORD STORE speaks the page's vocabulary (`pl`, which carries
+			-- x) and a patch's band has to be translated into it -- without the shift a display
+			-- line would be re-filed at the paragraph's left edge.
 			emit(string.format(
-				'{"t":"line","n":%d,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f,"gset":%.5f,"gsign":%d,"gord":%d,"rdw":%.4f}',
-				lineno, y / pt, line.width / pt, line.height / pt, line.depth / pt,
+				'{"t":"line","n":%d,"x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f,"gset":%.5f,"gsign":%d,"gord":%d,"rdw":%.4f}',
+				lineno, (line.shift or 0) / pt, y / pt, line.width / pt, line.height / pt, line.depth / pt,
 				line.glue_set, line.glue_sign, line.glue_order, rdw / pt))
 			-- display math lines arrive centered via shift
 			local x0 = line.shift or 0

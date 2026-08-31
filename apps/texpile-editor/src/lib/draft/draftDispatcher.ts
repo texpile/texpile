@@ -151,10 +151,14 @@ export class DraftDispatcher {
 					floatInner: d.floatInner,
 					listItem: d.listItem,
 					cmdChanged: d.cmdChanged,
+					interiorEdit: d.interiorEdit,
 					onRecompile: async () => {
 						await this.deps.flushSaves();
 						this.advanceBaseline(src);
-					}
+					},
+					// the patch derived the page's new records itself: no compile is coming, so
+					// the baseline moves here instead, in the same tick as the record store
+					onBaseline: () => this.advanceBaseline(src)
 				});
 				return;
 			}

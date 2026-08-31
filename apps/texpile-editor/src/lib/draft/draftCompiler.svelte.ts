@@ -27,6 +27,8 @@ export class DraftCompiler {
 
 	private warmed = false;
 	private compileToken = 0;
+	// what asked for the pass, for the landed status: an abandon names its refusal
+	lastReason = '';
 
 	constructor(private hooks: CompilerHooks) {}
 
@@ -100,14 +102,14 @@ export class DraftCompiler {
 		// edit (else the 120s pass timeout would freeze the preview). This run drops its own
 		// result if a still-newer compile started before it returned (token guard).
 		const myToken = ++this.compileToken;
+		this.lastReason = reason;
 		this.hooks.emit('compile-start', { reason });
 		this.compiling = true;
 		// a recompile after an abandon already shows "Left warm engine (...), recompiling…"
-		// keep the "Recompiling (…)…" / "Refining…" status the caller set for an abandon or a
-		// provisional reconcile; a quiet pass (boundary-line edit) announces nothing at all;
-		// only a fresh compile announces "Compiling project…"
-		if (!reason.startsWith('abandon:') && !reason.startsWith('provisional:') && !reason.startsWith('quiet:'))
-			this.status = m.draft_status_compiling();
+		// keep the "Recompiling (…)…" status the caller set for an abandon; a quiet pass (a
+		// boundary-line edit, or the re-baseline behind an exact patch) announces nothing at
+		// all; only a fresh compile announces "Compiling project…"
+		if (!reason.startsWith('abandon:') && !reason.startsWith('quiet:')) this.status = m.draft_status_compiling();
 		this.error = null;
 		try {
 			const r = await n.draftCompile({ root: this.hooks.root(), mainFile: this.hooks.mainFile() });

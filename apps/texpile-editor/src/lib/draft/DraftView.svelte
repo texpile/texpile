@@ -2,8 +2,8 @@
 	// Shows the engine's output on screen and splices instant patches into it.
 	// Everything painted came from the real engine (page records, the exact PDF at rest,
 	// daemon typesets while typing); a patch applies ONLY where the C1/C2/C3 predicates
-	// prove a real recompile would produce the same page, else it demotes to a tinted
-	// provisional + reconcile or an honest full pass.
+	// prove a real recompile would produce the same page, else nothing is painted and the
+	// full pass runs.
 	// The locate ladder, overflow planning, and patch verification live in ./locate and
 	// ./patch; the caches, painting, patch lifecycle, and compile lifecycle live in the
 	// session pieces (draftSession and what it composes). This file is the view shell.
@@ -211,11 +211,6 @@
 		{#each ctrl.pages as p (p.n)}
 			<div class="relative shadow-lg">
 				<canvas bind:this={ctrl.canvasEls[p.n - 1]} ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}></canvas>
-				{#if ctrl.patcher.provisionalPages.has(p.n)}
-					<!-- close-enough placeholder: STATIC subtle tint while the full compile reconciles
-				     this page (a pulsing overlay reads as flicker during continuous typing) -->
-					<div class="pointer-events-none absolute inset-0 bg-primary-500/10" transition:fade={{ duration: 150 }}></div>
-				{/if}
 				{#if vp.editBand && vp.editBand.page === p.n}
 					<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
 					<div

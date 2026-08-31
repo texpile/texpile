@@ -1,28 +1,22 @@
 // Classification helpers for the live matrix (browser-harness edition): events come from
 // window.__draftEvents via __live.events(), stamped with performance.now() at emit.
+// PROV is gone: an unproven render is no longer painted, so every render on screen is an
+// EXACT one and everything else recompiles. A row still grading PROV means a provisional
+// paint path survived the removal, so the outcome is kept and will show up as `other`.
 const OUTCOME = {
 	patched: 'EXACT',
 	'patched-chain': 'EXACT',
 	'patched-pull': 'EXACT',
 	'patched-split': 'EXACT',
-	provisional: 'PROV',
-	'provisional-split': 'PROV',
-	'provisional-insert': 'PROV',
-	'provisional-delete': 'PROV',
+	provisional: 'LEAK',
+	'provisional-split': 'LEAK',
+	'provisional-insert': 'LEAK',
+	'provisional-delete': 'LEAK',
 	abandon: 'RECOMPILE',
 	'transient-hold': 'TRANSIENT',
 	error: 'ERROR'
 };
-const VISUAL = new Set([
-	'patched',
-	'patched-chain',
-	'patched-pull',
-	'patched-split',
-	'provisional',
-	'provisional-split',
-	'provisional-insert',
-	'provisional-delete'
-]);
+const VISUAL = new Set(['patched', 'patched-chain', 'patched-pull', 'patched-split']);
 
 /** Classify one edit burst: last outcome wins; latency = first event -> first visual outcome. */
 export function classify(events) {
@@ -47,6 +41,8 @@ export function classify(events) {
 				'chain-end',
 				'patch-verify',
 				'skel-refused',
+				'hop-refused',
+				'hop-skel-b',
 				'skel-shrunk',
 				'skel-break-moved',
 				'skel-certified',
@@ -55,12 +51,18 @@ export function classify(events) {
 				'locate-inverse-bail',
 				'locate-inverse-span',
 				'locate-inverse-ok',
-				'compile-start'
+				'compile-start',
+				// the incremental record store disagreeing with the engine's own. Invisible in
+				// the UI -- it costs a later LOCATE, not this render -- so the sweep must carry it
+				'records-adopted-drift'
 			].includes(e.kind)
 		)
 		.map(
 			(e) =>
 				(e.kind === 'patch-verify' ? 'verify:' + e.detail?.verdict + (e.detail?.drift ? '/drift' + e.detail.drift : '') : null) ||
+				(e.kind === 'records-adopted-drift'
+					? `RECORDS-DRIFT/p${e.detail?.page}/dy${e.detail?.maxDy}/rows${e.detail?.rows}v${e.detail?.freshRows}`
+					: null) ||
 				(e.kind.startsWith('skel-') ? (e.detail?.why ?? e.kind) : null) ||
 				e.detail?.reason ||
 				e.detail?.stage ||

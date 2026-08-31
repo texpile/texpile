@@ -104,12 +104,15 @@ export function splitParaLines(lines: string[]): Para[] {
 			flush();
 			const top = listStack[listStack.length - 1];
 			if (top) top.n++;
-			if (im[1].trim()) {
-				start = i;
-				cur = [im[1]];
-				wrap = top ? top.env : '';
-				idx = top ? top.n : 0;
-			}
+			// an \item with no text YET still opens a paragraph. It used to open none, which
+			// made a freshly typed bullet invisible to the dispatcher: both sides split to the
+			// same paragraphs, so the edit read as a bare buffer difference and took the
+			// debounced full pass -- the pause a writer feels on pressing Enter in a list. It
+			// also lost the list wrap for `\item` written with its text on the NEXT line.
+			start = i;
+			cur = [im[1]];
+			wrap = top ? top.env : '';
+			idx = top ? top.n : 0;
 			continue;
 		}
 		const hd = ln.match(HEADING);

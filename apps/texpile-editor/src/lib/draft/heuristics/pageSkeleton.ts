@@ -2,16 +2,19 @@
 import type { PageRecord } from '../geometry/geometry.types';
 
 // Rebuild a column's vertical list as a DIMENSION skeleton the engine can re-split
-// (tex.splitbox = the same vert_break as the page builder), so "did this edit move the
-// page break, and what is the new spacing" is the ENGINE's answer. Everything here is
-// assembly, not physics: boxes from pl records (engine h/d), stretchable glue from vg
-// records (engine natural width + stretch), penalties from pen records, and ONE derived
-// number -- the rigid remainder of each inter-line gap (observed gap minus the effective
+// (tex.splitbox runs vert_break, the routine behind \vsplit -- NOT the page builder's own,
+// which is separate and adds insert_penalties to an otherwise identical cost formula), so
+// "did this edit move the page break, and what is the new spacing" is the ENGINE's answer.
+// Everything here is assembly, not physics: boxes from pl records (engine h/d), stretchable
+// glue from vg records (engine natural width + stretch), penalties from pen records, and ONE
+// derived number -- the rigid remainder of each inter-line gap (observed gap minus the effective
 // stretchables; kerns fold in). The decisions are which records participate and when to
 // REFUSE: footnotes/inserts, floats, graphics, or a negative rigid remainder all mean the
 // skeleton would lie, and a wrong certificate is worse than no certificate -- the caller
-// then keeps today's provisional path. A calibration split of the UNEDITED skeleton must
-// reproduce the page's own baselines before any certificate is issued.
+// then keeps today's provisional path. The insert refusal is what makes the split equal the
+// page builder at all, so it is load-bearing, not a conservatism to relax. A calibration
+// split of the UNEDITED skeleton must reproduce the page's own baselines before any
+// certificate is issued.
 export type SkelItem =
 	{ t: 'b'; h: number; d: number } | { t: 'g'; w: number; st: number; sto: number; sh: number; sho: number } | { t: 'p'; p: number };
 

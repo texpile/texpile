@@ -4,6 +4,7 @@
 // takeover.
 import * as draftService from '../draft/draftService';
 import * as draftDaemon from '../draft/draftDaemon';
+import { stopWarmCompiler } from '../draft/draftWarmCompile';
 import { luaDir } from '../appIdentity';
 import { normRoot, windowFor } from '../windows/windowRegistry';
 import { handleFsE } from './ipcResult';
@@ -25,6 +26,7 @@ function draftBusy(e: Electron.IpcMainInvokeEvent, root: string): boolean {
 export function releaseDraftOwnerFor(wcId: number): void {
 	if (draftOwner?.wcId === wcId) {
 		draftDaemon.stopDaemon();
+		stopWarmCompiler();
 		draftOwner = null;
 	}
 }
@@ -54,6 +56,7 @@ export function registerDraftIpc(): void {
 	handleFsE('draft:stop', async (e) => {
 		if (!draftOwner || draftOwner.wcId === e.sender.id) {
 			draftDaemon.stopDaemon();
+			stopWarmCompiler();
 			draftOwner = null;
 		}
 		return { ok: true };
@@ -67,6 +70,7 @@ export function registerDraftIpc(): void {
 			if (prev && !prev.webContents.isDestroyed()) prev.webContents.send('draft:preempted', { root: draftOwner.root });
 		}
 		draftDaemon.stopDaemon();
+		stopWarmCompiler();
 		draftOwner = { wcId: e.sender.id, root: body.root };
 		return { ok: true };
 	});

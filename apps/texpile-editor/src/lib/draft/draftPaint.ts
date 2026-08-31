@@ -48,6 +48,13 @@ export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: n
 				ctx.strokeRect(op.x, op.y, op.w, op.h);
 				if (file && pageNo && !d.bitmaps.hasImg(file)) d.bitmaps.ensureImage(file, pageNo, op.w);
 			}
+		} else if (op.kind === 'missing') {
+			// a glyph whose font the renderer could not parse (a virtual font, an unresolved
+			// Type1): the geometry is engine-exact, only the ink is unavailable. Drawn as a
+			// faint box because a silent gap looks like intent -- the exact-PDF raster shows
+			// the real glyphs at rest, and the reconcile's page replaces this within a second
+			ctx.fillStyle = '#eef0f3';
+			ctx.fillRect(op.x, op.y, op.w, op.h);
 		} else if (op.kind === 'pixels') {
 			const bmp = d.bitmaps.pix(d.bitmaps.pixKey(pageNo, op.rec));
 			if (bmp && bmp !== 'loading' && bmp !== 'failed') {
@@ -69,9 +76,17 @@ export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: n
 // content by its delta; records outside every segment stay put. The page-number footer
 // sits in the bottom margin (below the content box height) and is bottom-anchored by
 // TeX -- never shift it with the flow.
-export function splitPatchRecords(records: any[], patches: Patch[], contentBottom: number): { unchanged: any[]; shifted: any[][] } {
+export function splitPatchRecords(
+	records: any[],
+	patches: Patch[],
+	contentBottom: number
+): { unchanged: any[]; shifted: any[][]; raised: any[][] } {
 	const unchanged: any[] = [];
 	const shifted: any[][] = patches.map(() => []);
+	// content ABOVE the band that a certificate says the engine respaced. Its own bucket
+	// because it moves by aboveSteps from a zero default, where shifted moves by flowSteps
+	// from the band's delta -- one region, one meaning each.
+	const raised: any[][] = patches.map(() => []);
 	// column membership as the compile recorded it. The x-window below stands in only for
 	// pages with no recorded columns: it cannot tell a full-width float or a footer from the
 	// column whose x-range it happens to lie in (measured: 2,006 such glyphs on one paper).
@@ -80,8 +95,11 @@ export function splitPatchRecords(records: any[], patches: Patch[], contentBotto
 	for (let ri = 0; ri < records.length; ri++) {
 		const r = records[ri];
 		if (r.t === 'font') {
+			// every bucket is painted as its own array and paintRecords resolves glyph ids from
+			// the array it is handed, so a bucket without the font table draws nothing at all
 			unchanged.push(r);
 			for (const a of shifted) a.push(r);
+			for (const a of raised) a.push(r);
 			continue;
 		}
 		// no y = non-positional record (endx, note markers): pass through untouched. A
@@ -103,11 +121,13 @@ export function splitPatchRecords(records: any[], patches: Patch[], contentBotto
 			continue;
 		}
 		const p = patches[pi];
-		if (y < p.dropTop) unchanged.push(r);
-		else if (y > p.dropBottom) {
+		if (y < p.dropTop) {
+			if (p.aboveSteps?.length) raised[pi].push(r);
+			else unchanged.push(r);
+		} else if (y > p.dropBottom) {
 			if (p.flowBottom !== undefined && y > p.flowBottom) unchanged.push(r);
 			else if (p.clipBottom === undefined || y + p.delta <= p.clipBottom) shifted[pi].push(r);
 		}
 	}
-	return { unchanged, shifted };
+	return { unchanged, shifted, raised };
 }

@@ -21,8 +21,19 @@ export type AbandonHooks = {
 	emit: (kind: string, detail?: unknown) => void;
 };
 
-/** abandon the instant path: save via onRecompile, highlight roughly, run the full pass */
-export async function abandonToCompile(h: AbandonHooks, req: PatchReq, stage: string, detail?: unknown): Promise<void> {
+/** abandon the instant path: announce now, highlight roughly, and hand the caller the
+ *  save+compile to DEBOUNCE -- typing five refused characters must cost one pass at the
+ *  pause, not five passes racing each other's supersede */
+export async function abandonToCompile(
+	h: AbandonHooks,
+	req: PatchReq,
+	stage: string,
+	detail?: unknown,
+	schedule?: (reason: string) => void,
+	// the located band, when the caller has one: precise, and skips a synctex spawn --
+	// most abandons happen AFTER locate and were re-deriving a fuzzier version of it
+	band?: EditBand
+): Promise<void> {
 	// a TRANSIENT (auto-repaired mid-typing) edit may only patch or hold, never compile:
 	// its source is a half-typed state not worth a full pass; the balanced keystroke
 	// that follows re-evaluates normally
@@ -31,28 +42,35 @@ export async function abandonToCompile(h: AbandonHooks, req: PatchReq, stage: st
 		return;
 	}
 	h.emit('abandon', { stage, ...(typeof detail === 'object' ? detail : { detail }) });
-	await req.onRecompile?.();
-	// the edit still deserves a place on the page while the full pass runs: synctex
-	// is too fuzzy to anchor a splice, but a highlight only needs roughly the right
-	// rows. The landing compile clears the band (fresh layout may have shifted it).
-	try {
-		const sx: any = await h.synctex({
-			action: 'view',
-			pdf: h.pdfPath(),
-			tex: req.file.replace(/\\/g, '/'),
-			line: req.line,
-			column: 0
-		});
-		const band = abandonBand(((sx && sx.boxes) || []) as any[], h.paper() as any);
-		if (band) {
-			h.showEditBand(band, RECOMPILE_BAND_HOLD);
-			h.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
-		}
-	} catch {
-		// hint only; the status line still says why
+	if (schedule) schedule('abandon:' + stage);
+	else {
+		await req.onRecompile?.();
+		// the daemon SURVIVES this: an abandon means "this edit renders via a full pass",
+		// never an engine reload (that only happens on a preamble change)
+		h.compile('abandon:' + stage);
 	}
-	// the daemon SURVIVES this: an abandon means "this edit renders via a full pass",
-	// never an engine reload (that only happens on a preamble change)
+	// the edit still deserves a place on the page while the full pass runs: the located
+	// band when the caller has it, else a synctex box -- a highlight only needs roughly
+	// the right rows. The landing compile clears it (fresh layout may have shifted it).
+	if (band) {
+		h.showEditBand(band, RECOMPILE_BAND_HOLD);
+		h.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
+	} else
+		try {
+			const sx: any = await h.synctex({
+				action: 'view',
+				pdf: h.pdfPath(),
+				tex: req.file.replace(/\\/g, '/'),
+				line: req.line,
+				column: 0
+			});
+			const sb = abandonBand(((sx && sx.boxes) || []) as any[], h.paper() as any);
+			if (sb) {
+				h.showEditBand(sb, RECOMPILE_BAND_HOLD);
+				h.followEdit(sb.page, sb.top, sb.bottom, sb.colL, sb.colR);
+			}
+		} catch {
+			// hint only; the status line still says why
+		}
 	h.setStatus(m.draft_status_not_instant({ reason: whyPhrase(stage) }));
-	h.compile('abandon:' + stage);
 }

@@ -22,6 +22,11 @@ export type Patch = {
 	// piecewise below-band shift from the page's real glue (stretched pages): content
 	// past each step's y shifts by its dy instead of the constant delta
 	flowSteps?: FlowStep[];
+	// the same for content ABOVE the band, and only ever from a certificate: the engine
+	// respaces a whole column, so a band that grows pushes the rows over it up as surely as
+	// the ones under it down. Content above the first step does not move (the default dy is
+	// 0), which is what leaves a float pinned at the column top where the engine put it.
+	aboveSteps?: FlowStep[];
 	// the patch's CLAIM about the content below the band (rows sampled at patch time,
 	// y already shifted by delta): verifyPatches grades it against the fresh compile --
 	// a row that lands elsewhere means the live render put the column/page break in the
@@ -42,5 +47,11 @@ export type PatchReq = {
 	// semantics invisible to glyph geometry, so the patch may render but never
 	// claim exact -- the reconcile certifies (undetected drift beats no one)
 	cmdChanged?: boolean;
+	// interior-tier edit (text inside unchanged structure): renders, never adopts, always reconciles
+	interiorEdit?: boolean;
 	onRecompile?: () => void | Promise<void>;
+	/** advance the patch baseline WITHOUT saving or compiling. Used when the patch produced the
+	 *  page's new records itself: baseline and record store must move in the SAME tick, or the
+	 *  next edit diffs its `orig` against a page that already shows the newer text. */
+	onBaseline?: () => void;
 };

@@ -176,12 +176,15 @@ try {
 					`  ${sc.name}: ${res.outcome}${res.latencyMs != null ? ` ${res.latencyMs}ms` : ''} ${ceilOk ? 'AT-CEILING' : `(ceiling ${sc.expect.join('|')})`} ${res.reasons.join(',')}`
 				);
 				pushRow({ fixture: fx.name, ...sc, ...res });
-				// baseline resync: make sure a compile has landed with the edited source
+				// baseline resync: make sure a compile has landed with the edited source.
+				// A fixture whose pass outlasts this budget hands the next scenario a live
+				// compile, which bails 'compiling' and measures nothing, so slow fixtures
+				// declare their own settleMs.
 				base = edited;
 				if (sc.thenOp) base = applyOp(edited, { ...sc, op: sc.thenOp }) ?? edited;
 				await post('/write', { root, content: base });
 				await page.evaluate(() => window.__live.recompile());
-				await collectUntilQuiet(page, { quietMs: 1200, maxMs: 25000 });
+				await collectUntilQuiet(page, { quietMs: 1200, maxMs: fx.settleMs ?? 25000 });
 			} catch (e) {
 				// the harness tab occasionally dies under memory pressure; reboot it and retry once
 				if (retried.has(sc.name) || !/context was destroyed|Target.*closed|has been closed/i.test(String(e))) throw e;

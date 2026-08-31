@@ -39,7 +39,7 @@ const scenarios = picked.map((c) => ({
 	name: `L${String(c.line).padStart(4, '0')}-insert`,
 	anchor: c.anchor,
 	op: { t: 'append', text: ' genuinely' },
-	expect: ['EXACT', 'PROV', 'RECOMPILE'],
+	expect: ['EXACT', 'RECOMPILE'],
 	maxMs: 90000
 }));
 

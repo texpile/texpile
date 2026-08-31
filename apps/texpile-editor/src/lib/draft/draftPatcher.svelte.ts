@@ -1,26 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // The instant-patch lifecycle: re-typeset one edited paragraph on the warm daemon and splice
-// it into its page -- ONLY when provably identical to a full recompile; else demote to a
-// tinted provisional + debounced reconcile, or an honest full pass.
+// it into its page -- ONLY when provably identical to a full recompile; else nothing is
+// painted and the full pass runs. Two outcomes, no middle: the tinted "close enough" tier
+// that used to sit between them graded 62-66% wrong against the reconcile, so it was showing
+// the wrong page more often than the right one and calling it a render.
 import { INDENT_PREFIX } from './daemonIndent';
 import { abandonToCompile } from './patch/abandonToCompile';
 import { pageBreakCertificate, remapBandRecords, type Certificate, type FullCertificate } from './patch/pageCertificate';
-import { SpillPatches } from './patch/spillPatches';
+import { bandStampOf } from './patch/recordsAfterPatch';
 import { showFocus } from './patch/showFocus';
-import { planOverflowSplit } from './heuristics/planOverflowSplit';
-import { engineFlow } from './heuristics/engineFlow';
-import { provisionalStage } from './heuristics/provisionalStage';
+import { whyNotExact } from './heuristics/whyNotExact';
 import { certifiable } from './heuristics/certifiable';
-import { engineSplitTo } from './heuristics/engineSplitAssist';
-import { buildColumnSplit } from './heuristics/buildColumnSplit';
-import { bandCanSpill } from './heuristics/bandCanSpill';
-import { editFocus, type EditFocus } from './heuristics/editFocus';
-import { splitExact } from './heuristics/splitExact';
+import { bandChanged } from './heuristics/eligibility/bandChanged';
+import { planHop } from './heuristics/planHop';
+import { columnIndexOf } from './heuristics/seams';
+import { editFocus } from './heuristics/editFocus';
 import { computeReflow, buildBandPatch, lineExtents } from './heuristics/computeReflow';
 import { whyPhrase } from './whyPhrase';
 import type { Cal, CalBail, PaperMetrics } from './locate/locate.types';
 import type { Patch, PatchReq } from './patch/patch.types';
 import type { SeamEntry } from './patch/seam.types';
+import type { PageColumn } from './geometry/pageColumns';
 import type { EditBand } from './draftViewport.svelte';
 import type { SkeletonItem, SkeletonResult } from '$lib/workspace/fileSystem';
 import { m } from '$lib/paraglide/messages';
@@ -28,8 +28,6 @@ import { m } from '$lib/paraglide/messages';
 type PatcherHooks = {
 	hasNative: () => boolean;
 	pageCount: () => number;
-	/** add a blank trailing page for a flow that leaves the document; true if one is there */
-	ensureSpillPage: () => boolean;
 	compiling: () => boolean;
 	setStatus: (s: string) => void;
 	compile: (reason: string) => void;
@@ -48,38 +46,42 @@ type PatcherHooks = {
 	applyPatch: (n: number, p: Patch | Patch[]) => Promise<void>;
 	/** drop a page's live patch and repaint it from records */
 	clearPatch: (n: number) => Promise<void>;
+	/** install the records this patch produced, so the store describes what is on screen.
+	 *  false = it declined, and the caller must fall back to the recompile */
+	adoptPatchedRecords: (n: number, p: Patch, stamp: { s?: number; sf?: number }) => boolean;
 	showEditBand: (b: EditBand, holdMs?: number) => void;
 	synctex: (body: Record<string, unknown>) => Promise<any>;
 	pdfPath: () => string;
 	/** engine page-break certificate: re-split a dimension skeleton on the warm daemon */
 	splitSkeleton: (items: SkeletonItem[], targetPt: number, capacity?: boolean) => Promise<SkeletonResult>;
-	/** per-break pruned runs from the last compile (junction truth for moved breaks) */
-	seams: () => SeamEntry[];
-	/** a right-to-left page paints from the raster only: no patch may target it */
-	pageIsRtl: (p: number) => boolean;
 	/** the engine filled this COLUMN to its goal (see heuristics/columnFills) */
 	columnFills: (page: number, col: number | undefined) => boolean;
+	/** per-break pruned runs from the last compile (junction truth for the certified hop) */
+	seams: () => SeamEntry[];
+	/** a right-to-left page paints from the raster only: no hop may land on it */
+	pageIsRtl: (p: number) => boolean;
+	/** the box the engine built a column in, found by the window that owns its records */
+	colBox: (page: number, colL: number, colR: number) => PageColumn | undefined;
 	followEdit: (page: number, top: number, bottom: number, colL?: number, colR?: number) => void;
 	emit: (kind: string, detail?: unknown) => void;
 };
 
 export class DraftPatcher {
-	// pages showing a "close enough" provisional patch (the paragraph is exact, only the reflow
-	// below is approximate) while a full compile reconciles the true layout -- tinted in the view
-	provisionalPages = $state(new Set<number>());
-
 	private patching = false;
 	private patchingSince = 0;
 	// the run that owns the patch flag: a stuck-patch takeover starts a new one, and the
-	// abandoned run must not paint, un-tint, or release the flag behind its successor
+	// abandoned run must not paint or release the flag behind its successor
 	private patchRun = 0;
 	private queuedPatch: PatchReq | null = null;
-	// the reconcile after a provisional patch is DEBOUNCED: keep patching provisionally at typing
-	// speed and run ONE full pass when the user pauses (an immediate recompile per keystroke lags)
+	// an EXACT patch already produced the page's records, so its trailing pass has nothing to
+	// discover -- the timer only exists to flush the lazy save at the typing pause
 	private reconcileTimer: ReturnType<typeof setTimeout> | null = null;
-	private pendingReconcile: (() => void | Promise<void>) | null = null;
-	// only complain if its slow
-	private refineStatusTimer: ReturnType<typeof setTimeout> | null = null;
+	private pendingSave: (() => void | Promise<void>) | null = null;
+	private pendingReason: string | null = null;
+	// a certified hop paints TWO pages; when its source page renders again without one, the
+	// receiver still shows carried lines a patch no longer clips away -- track and clear
+	private hopSource: number | null = null;
+	private hopTarget: number | null = null;
 	// geometry located once per paragraph per compile; keystrokes reuse it
 	private calCache = new Map<string, Cal | CalBail>();
 	// where each block's galley starts, also once per compile. It cannot ride calCache: that
@@ -92,11 +94,7 @@ export class DraftPatcher {
 	// a structural edit (new/split/deleted paragraph) has no patch to follow -- the editor
 	// registers the paragraph that diverged; after the recompile we locate and highlight it
 	private pendingFocus: { file: string; line: number; endLine: number; text: string; listItem?: boolean } | null = null;
-	private spills: SpillPatches;
-
-	constructor(private hooks: PatcherHooks) {
-		this.spills = new SpillPatches(hooks);
-	}
+	constructor(private hooks: PatcherHooks) {}
 
 	/** a patch is mid-flight (the daemon warm-ready status must not overwrite its message) */
 	get inFlight(): boolean {
@@ -119,10 +117,10 @@ export class DraftPatcher {
 		this.bandStartCache.clear();
 	}
 
-	/** compile finished: drop the tint and run any edit that arrived mid-compile */
+	/** compile finished: run any edit that arrived mid-compile */
 	afterCompile(): void {
-		this.spills.reset();
-		if (this.provisionalPages.size) this.provisionalPages = new Set();
+		this.hopSource = null;
+		this.hopTarget = null;
 		if (this.queuedPatch) {
 			const q = this.queuedPatch;
 			this.queuedPatch = null;
@@ -135,8 +133,9 @@ export class DraftPatcher {
 		if (!this.reconcileTimer) return false;
 		clearTimeout(this.reconcileTimer);
 		this.reconcileTimer = null;
-		const r = this.pendingReconcile;
-		this.pendingReconcile = null;
+		const r = this.pendingSave;
+		this.pendingSave = null;
+		this.pendingReason = null;
 		await r?.();
 		return true;
 	}
@@ -161,70 +160,40 @@ export class DraftPatcher {
 		return { ...req, line: start, orig, text: cut(req.text) };
 	}
 
-	private noteRefining(page: number): void {
-		if (this.refineStatusTimer) clearTimeout(this.refineStatusTimer);
-		this.refineStatusTimer = setTimeout(() => {
-			this.refineStatusTimer = null;
-			if (this.provisionalPages.size) this.hooks.setStatus(m.draft_status_refining({ page }));
-		}, 2000);
+	// Only an EXACT patch reaches here, so the pass has nothing left to discover and stays
+	// quiet; the timer exists to flush the lazy save at the typing pause. compile=false when
+	// the patch also produced the page's records, which leaves nothing at all to run.
+	private scheduleReconcile(onRecompile: (() => void | Promise<void>) | undefined, compile = true, why = 'baseline'): void {
+		this.schedulePause(onRecompile, compile ? 'quiet:' + why : null);
 	}
 
-	private scheduleReconcile(onRecompile: (() => void | Promise<void>) | undefined, stage: string): void {
-		this.pendingReconcile = onRecompile ?? null;
+	// ONE debounced slot for the typing pause: the LATEST save wins, and the compile reason
+	// is STICKY -- an interior edit that owes the document a pass must not have it downgraded
+	// by a later adopted keystroke that owes nothing, and five refused keystrokes must cost
+	// one pass, not five racing each other's supersede.
+	private schedulePause(onRecompile: (() => void | Promise<void>) | undefined, reason: string | null): void {
+		this.pendingSave = onRecompile ?? null;
+		if (reason) this.pendingReason = reason;
 		if (this.reconcileTimer) clearTimeout(this.reconcileTimer);
 		this.reconcileTimer = setTimeout(async () => {
 			this.reconcileTimer = null;
-			const r = this.pendingReconcile;
-			this.pendingReconcile = null;
-			await r?.();
-			this.hooks.compile('provisional:' + stage);
+			const save = this.pendingSave;
+			const why = this.pendingReason;
+			this.pendingSave = null;
+			this.pendingReason = null;
+			await save?.();
+			if (why) this.hooks.compile(why);
 		}, 700);
 	}
 
-	private markProvisional(...pageNos: number[]): void {
-		const s = new Set(this.provisionalPages);
-		for (const p of pageNos) s.add(p);
-		this.provisionalPages = s;
-	}
-
-	private unmarkProvisional(pageNos: number[]): void {
-		if (!this.provisionalPages.size) return;
-		const s = new Set(this.provisionalPages);
-		let changed = false;
-		for (const p of pageNos) changed = s.delete(p) || changed;
-		if (changed) this.provisionalPages = s;
-	}
-
-	/** paint a multi-page flow render and carry its exact/provisional effects */
-	private async renderFlow(
-		req: PatchReq,
-		cal: Cal,
-		t0: number,
-		stale: () => boolean,
-		plan: { pages: { page: number; segs: Patch[] }[]; exact?: boolean; endPage: number; hops?: number },
-		band: { top: number; bottom: number },
-		ev: { kind?: string; stage: string; detail: Record<string, unknown> },
-		focus?: EditFocus | null
-	): Promise<void> {
-		const h = this.hooks;
-		const cleared = await this.spills.paint(plan.pages, stale);
-		if (!cleared) return;
-		showFocus(h, focus ?? { page: cal.pageNo, top: band.top, bottom: band.bottom, colL: cal.colL, colR: cal.colR });
-		h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: (performance.now() - t0).toFixed(0) }));
-		const detail = { page: cal.pageNo, spillPage: plan.endPage, hops: plan.hops ?? 1, ...ev.detail };
-		if (plan.exact) {
-			// engine-answered end to end: band lines, every column's respace, every junction's
-			// seam, and the final break's fate -- nothing to refine. Pages a shorter chain
-			// stopped reaching lose the tint too: their patch just came off.
-			this.unmarkProvisional([...plan.pages.map((p) => p.page), ...cleared]);
-			h.emit(ev.kind ?? 'patched', { ...detail, endPage: plan.endPage });
-			if (!req.transient) this.scheduleReconcile(req.onRecompile, 'baseline');
-		} else {
-			this.markProvisional(...plan.pages.map((p) => p.page));
-			h.emit('provisional-split', { ...detail, stage: ev.stage });
-			this.noteRefining(cal.pageNo);
-			if (!req.transient) this.scheduleReconcile(req.onRecompile, ev.stage);
-		}
+	// An abandon runs its own pass and saves on the way; a timer armed by an earlier keystroke
+	// would fire a second one behind it, against a baseline this edit has already moved past.
+	// (Declining to ARM one was never enough -- nothing cancelled the one already ticking.)
+	private cancelReconcile(): void {
+		if (this.reconcileTimer) clearTimeout(this.reconcileTimer);
+		this.reconcileTimer = null;
+		this.pendingSave = null;
+		this.pendingReason = null;
 	}
 
 	async instantPatch(req: PatchReq): Promise<void> {
@@ -315,10 +284,10 @@ export class DraftPatcher {
 					// reconciles in silence -- each keystroke's full pass would show nothing new
 					if (cal.bail === 'page-rtl') h.setStatus(m.draft_status_recompiling({ reason: whyPhrase(cal.bail) }));
 					h.emit('abandon-debounced', { stage: cal.bail, key });
-					this.scheduleReconcile(req.onRecompile, cal.bail);
+					this.scheduleReconcile(req.onRecompile, true, cal.bail);
 					return;
 				}
-				await abandonToCompile(h, req, cal.bail, { key });
+				await abandonToCompile(h, req, cal.bail, { key }, (reason) => this.schedulePause(req.onRecompile, reason));
 				return;
 			}
 			h.emit('located', { key, page: cal.pageNo });
@@ -331,85 +300,54 @@ export class DraftPatcher {
 			const sendText = (cal.pre ?? '') + (cal.indent && !req.listItem ? INDENT_PREFIX : '') + req.text;
 			const r = await h.daemonTypeset({ text: sendText, hsize: cal.W });
 			if (!r.ok || (r.stats && (r.stats as any).certified === false)) {
-				await abandonToCompile(h, req, 'typeset', { ok: r.ok });
+				await abandonToCompile(h, req, 'typeset', { ok: r.ok }, (reason) => this.schedulePause(req.onRecompile, reason), bandOf(cal));
 				return;
 			}
 			const lineRecs = r.records.filter((x: any) => x.t === 'line');
 			if (!lineRecs.length) {
-				await abandonToCompile(h, req, 'no-lines');
+				await abandonToCompile(h, req, 'no-lines', undefined, (reason) => this.schedulePause(req.onRecompile, reason), bandOf(cal));
 				return;
+			}
+			// An interior edit (text inside unchanged structure) renders only when the ENGINE's
+			// output says the edit is content: typeset the OLD block too and compare. A band
+			// that did not change means the text was consumed as a value (\gdef\ver{2.0} ->
+			// {3.0}, an index term) and its only effect is elsewhere -- the pass is the only
+			// honest render. One extra daemon round trip, paid only on this tier.
+			if (req.interiorEdit) {
+				const orig = await h.daemonTypeset({
+					text: (cal.pre ?? '') + (cal.indent && !req.listItem ? INDENT_PREFIX : '') + req.orig,
+					hsize: cal.W
+				});
+				if (!orig.ok || !bandChanged(orig.records as any[], r.records as any[])) {
+					this.cancelReconcile();
+					await abandonToCompile(h, req, 'value-changed', { key }, (reason) => this.schedulePause(req.onRecompile, reason), bandOf(cal));
+					return;
+				}
 			}
 			const { h1, dk } = lineExtents(lineRecs);
 			if (cal.spill) {
-				// a stated break needs no \vsplit: the page already broke this paragraph, and asking
-				// again costs a daemon round trip to re-derive it from a room the page-level floor
-				// gets wrong whenever a float sits under the column
-				const split = buildColumnSplit(cal as Cal & { spill: NonNullable<Cal['spill']> }, r.records, lineRecs, {
-					h1,
-					dk,
-					colBottom: h.colBottomOf(cal.pageNo),
-					contentFloorOf: h.contentFloor,
-					pageRecords: h.pageRecords,
-					topSkip: h.paper().topSkip,
-					...(cal.splitAt === undefined
-						? { engine: await engineSplitTo(h.daemonTypeset, sendText, cal.W, h.colBottomOf(cal.pageNo) - (cal.b1 - h1)) }
-						: { at: cal.splitAt })
-				});
-				const { segA, segB, spillPage } = split;
-				if (stale()) return;
-				const pages = [
-					{ page: cal.pageNo, segs: [segA] },
-					{ page: spillPage, segs: [segB] }
-				];
-				// a straddle whose break the engine put back where the page has it, with both
-				// fragments the height they were, moved nothing: the tint would be apologising
-				// for a reflow that did not happen
-				const exact = splitExact(cal, h.paper().topSkip, split);
-				// the two fragments sit on two pages, so "where is the user typing" has two
-				// possible answers and only the edited line picks between them
-				const focus = editFocus(
-					req.orig,
-					req.text,
-					r.records as any[],
-					lineRecs,
-					[
-						{ page: cal.pageNo, top: segA.top, from: 0, colL: cal.colL, colR: cal.colR },
-						{ page: spillPage, top: segB.top, from: split.kA, colL: cal.spill.colL, colR: cal.spill.colR }
-					],
-					{ page: cal.pageNo, top: cal.b1 - h1, bottom: cal.bk + dk, colL: cal.colL, colR: cal.colR },
-					{ h1, dk }
-				);
-				await this.renderFlow(
-					req,
-					cal,
-					t0,
-					stale,
-					{ pages, endPage: spillPage, exact },
-					{ top: cal.b1 - h1, bottom: cal.bk + dk },
-					{
-						stage: 'split',
-						...(exact ? { kind: 'patched-split' } : {}),
-						detail: {
-							kA: split.kA,
-							of: lineRecs.length,
-							bH1: +split.bH1.toFixed(2),
-							wasH1: cal.spill.h1,
-							landShift: +split.landShift.toFixed(2)
-						}
-					},
-					focus
-				);
+				// The paragraph straddles a column or page break. The chain planners that used to
+				// re-derive the flow hop by hop are gone: their EXACT claims graded 13.6% wrong
+				// (92 of 678 rows), because every hop's landing was JS assembly around engine
+				// answers rather than an engine answer. A straddle recompiles -- with the warm
+				// engine that costs ~650ms, not the wrong page it used to risk.
+				this.cancelReconcile();
+				const stage = cal.spill.pageNo !== undefined && cal.spill.pageNo !== cal.pageNo ? 'spans-pages' : 'spans-columns';
+				await abandonToCompile(h, req, stage, { key }, (reason) => this.schedulePause(req.onRecompile, reason), bandOf(cal));
 				return;
 			}
 			const colBottom = h.colBottomOf(cal.pageNo);
 			const floorA = h.contentFloor(cal.pageNo);
-			const spillCtx = { pageRecords: h.pageRecords, contentFloor: h.contentFloor, pageCount: h.pageCount, colSep: h.paper().colSep };
 			const flow = computeReflow(cal, r.records, lineRecs, { dk, colBottom, floorA, pageRecords: h.pageRecords });
 			// Footnote body text lives at the page bottom, outside the patch band: any
-			// footnote-bearing paragraph reconciles. (A char-code signature comparison used to
-			// license EXACT body patches -- deleted: it was blind to font/position changes, and
-			// whether the page-bottom note block still matches is the engine's call.)
-			const footnote = /\\footnote/.test(req.text) || /\\footnote/.test(req.orig);
+			// footnote-bearing paragraph reconciles. Asked of the ENGINE, from `note` records
+			// (walker emits one per \insert), not of the source: the regex this replaced was
+			// unanchored, so \footnotesize refused a page carrying no note at all. The PAGE
+			// side catches a REMOVED note, and is the honest condition anyway -- pageSkeleton
+			// cannot model inserts, so no page carrying one is certifiable however it got
+			// there. (A char-code signature comparison used to license EXACT body patches --
+			// deleted: whether the page-bottom note block still matches is the engine's call.)
+			const footnote = (r.records as any[]).some((x: any) => x.t === 'note') || h.pageRecords(cal.pageNo).some((x: any) => x.t === 'note');
 			const fontGap = await h.missingInk(r.records as any[]);
 			// Engine page-break certificate: two skeleton splits on the warm daemon --
 			// calibrate on the unedited column, then re-split with the edited band spliced in.
@@ -417,6 +355,7 @@ export class DraftPatcher {
 			// own numbers, so stretch-approx locates and underflow stop demoting. Break moved,
 			// or any refusal -> the existing provisional path stands unchanged.
 			const facts = { stretchy: h.pageStretchy(cal.pageNo), footnote, fontGap, delta: flow.delta, underflow: flow.underflow };
+			const ciA = columnIndexOf(h.pageRecords(cal.pageNo), cal.W, cal.colL);
 			let cert: Certificate | null = certifiable(cal, req, facts)
 				? await pageBreakCertificate(
 						{ pageRecords: h.pageRecords, splitSkeleton: h.splitSkeleton, emit: h.emit },
@@ -426,71 +365,22 @@ export class DraftPatcher {
 						h.paper().topSkip
 					)
 				: null;
-			// The engine's flow render: a moved break chains forward through the next slots,
-			// a shrunk band pulls content back. Fully certified -> EXACT, no tint.
-			const chainDeps = {
-				splitSkeleton: h.splitSkeleton,
-				seams: h.seams,
-				colBottomOf: h.colBottomOf,
-				columnFills: h.columnFills,
-				pageIsRtl: h.pageIsRtl,
-				emit: h.emit
-			};
-			if (cert) {
-				// the engine says boxes leave the LAST page: give the flow the page they leave
-				// onto, which this compile has not produced, before the chain looks for a slot
-				if (cert.moved && !cert.fits && cal.pageNo >= h.pageCount()) h.ensureSpillPage();
-				const geom = { y0: flow.y0, h1, dk, floorA };
-				const render = await engineFlow(chainDeps, spillCtx, cal, cert, r.records as any[], geom, h.paper().topSkip);
-				if (render) {
-					if (stale()) return;
-					await this.renderFlow(req, cal, t0, stale, render.plan, render.band, render.ev);
-					return;
-				}
-				// a shrink the pull chain could not answer keeps today's un-pulled render
-				if (cert.shrunk) cert = null;
-			}
-			// JS-predicted overflow: the engine refused a certificate, named a break inside
-			// the band, or could not chain -- the split planners (with the daemon's \vsplit
-			// assist) render the motion first-order. Always provisional.
-			if (bandCanSpill({ overflow: flow.overflow, certFits: !!cert?.fits, floatInner: !!req.floatInner })) {
-				const plan = planOverflowSplit(spillCtx, cal, r.records as any[], lineRecs as any[], {
-					h1,
-					dk,
-					delta: flow.delta,
-					colBottom,
-					belowBases: flow.belowBases,
-					lastBelow: flow.lastBelow,
-					engine: await engineSplitTo(h.daemonTypeset, sendText, cal.W, colBottom - (cal.b1 - h1))
-				});
-				if (plan) {
-					const { segA, segsB, samePage, spillPage } = plan;
-					if (stale()) return;
-					const pages = [
-						{ page: cal.pageNo, segs: [segA] },
-						{ page: spillPage, segs: segsB }
-					];
-					await this.renderFlow(
-						req,
-						cal,
-						t0,
-						stale,
-						{ pages, endPage: spillPage },
-						{ top: segA.top, bottom: cal.bk + dk },
-						{
-							stage: 'overflow',
-							detail: { kA: plan.kA, of: plan.lineCount, moved: plan.movedCount, target: samePage ? 'next-col' : 'next-page' }
-						}
-					);
-					return;
-				}
-			}
+			// A shrink whose break the certificate says moved BACKWARD has content arriving from
+			// the next column, which only a full pass can place -- the pull chain that used to
+			// assemble it is gone with the rest of the chain machinery.
+			if (cert && cert.shrunk) cert = null;
 			// full certificate (same line count) carries the engine's baselines; a fit-only
 			// certificate (grown band) just answers whether the page still holds the content
 			const fullCert = cert?.fits && cert.bandAbsYs ? (cert as FullCertificate) : null;
 			const certRecs = fullCert ? remapBandRecords(r.records as any[], fullCert.bandAbsYs, cal.b1 - flow.y0) : null;
-			const certExact = !!fullCert && !!certRecs && fullCert.maxAboveDy <= 0.2;
-			const stage = provisionalStage({
+			// The region above the band no longer costs a certificate its exactness: the engine
+			// respaced the whole column and the patch now carries those rows' own steps, where
+			// it used to reduce them to maxAboveDy and refuse. There is no magnitude bound left
+			// to apply -- certifiedFlow names a step for every box it moves, so a large
+			// displacement is exactly as renderable as a small one, and the old `maxAboveDy`
+			// test would only be re-deriving `aboveSteps.length`.
+			const certExact = !!fullCert && !!certRecs;
+			const stage = whyNotExact({
 				overflow: flow.overflow,
 				underflow: flow.underflow,
 				certified: !!cert,
@@ -503,8 +393,95 @@ export class DraftPatcher {
 				footnote,
 				fontGap,
 				cmdChanged: !!req.cmdChanged,
-				transient: !!req.transient
+				transient: !!req.transient,
+				stretchy: facts.stretchy,
+				// the same column reading pageCertificate uses; an unidentified column answers
+				// from the page-wide inference, which is the conservative side here
+				packed: h.columnFills(cal.pageNo, ciA > 0 ? ciA - 1 : undefined),
+				grew: flow.delta !== 0
 			});
+			// A certified HOP before any overflow abandon: when the engine's capacity split
+			// names whole paragraphs leaving this column, and the receiver calibrates and
+			// absorbs them, the flow renders from engine answers end to end -- and still
+			// reconciles behind itself like the interior tier, so nothing painted can outlive
+			// a mistake. Any refusal falls through to the ordinary abandon.
+			if ((stage === 'overflow' || stage === 'engine-overflow') && !req.transient) {
+				let hopMoved = cert?.moved ?? null;
+				if (!hopMoved && !cert) {
+					// certifiable() gates the SAME-page certificate on stretchy pages; the hop
+					// needs only the capacity split's motion, which a ragged page answers too
+					const hc = await pageBreakCertificate(
+						{ pageRecords: h.pageRecords, splitSkeleton: h.splitSkeleton, emit: h.emit },
+						cal,
+						r.records as any[],
+						colBottom,
+						h.paper().topSkip
+					);
+					hopMoved = hc?.moved ?? null;
+				}
+				if (hopMoved) {
+					const plan = await planHop(
+						{
+							pageRecords: h.pageRecords,
+							splitSkeleton: h.splitSkeleton,
+							seams: h.seams,
+							colBottomOf: h.colBottomOf,
+							contentFloor: h.contentFloor,
+							columnFills: h.columnFills,
+							pageIsRtl: h.pageIsRtl,
+							pageCount: h.pageCount,
+							paper: h.paper,
+							emit: h.emit
+						},
+						cal,
+						hopMoved,
+						r.records as any[],
+						{ y0: flow.y0, h1, dk, floorA }
+					);
+					if (plan && !stale()) {
+						if (this.hopTarget !== null && this.hopTarget !== plan.pageB) await h.clearPatch(this.hopTarget);
+						await h.applyPatch(cal.pageNo, plan.patchA);
+						await h.applyPatch(plan.pageB, plan.patchB);
+						this.hopSource = cal.pageNo;
+						this.hopTarget = plan.pageB;
+						// the edited LINE's highlight, same as the exact path: the band always stays
+						// on the source page (breakMotion refuses breaks inside it), so the focus
+						// reads the remapped band records like any certified render
+						const hopWhole = {
+							page: cal.pageNo,
+							top: plan.patchA.top,
+							bottom: hopMoved.bandAbsYs[hopMoved.bandAbsYs.length - 1] + dk,
+							colL: cal.colL,
+							colR: cal.colR
+						};
+						const hopFocus = editFocus(req.orig, req.text, plan.patchA.newRecs as any[], lineRecs, [{ ...hopWhole, from: 0 }], hopWhole, {
+							h1,
+							dk
+						});
+						showFocus(h, hopFocus);
+						const hopMs = performance.now() - t0;
+						h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: hopMs.toFixed(0) }));
+						h.emit('patched-split', { hop: 1, page: cal.pageNo, spillPage: plan.pageB, carried: hopMoved.movedBases.length });
+						// never adopts; the pass behind it repaints whatever a hop cannot speak for
+						this.scheduleReconcile(req.onRecompile, true, 'hop');
+						return;
+					}
+				}
+			}
+			// Nothing unproven reaches the screen. This used to paint first and tint after,
+			// which put a render the reconcile had to fix in front of the user on two thirds
+			// of the rows that took it -- the page it replaced was closer to the truth.
+			if (stage) {
+				this.cancelReconcile();
+				await abandonToCompile(
+					h,
+					req,
+					stage,
+					{ page: cal.pageNo, delta: +flow.delta.toFixed(1), col: certCol(h, cal, colBottom) },
+					(reason) => this.schedulePause(req.onRecompile, reason)
+				);
+				return;
+			}
 			const patchObj = buildBandPatch(cal, (certRecs ?? r.records) as any[], {
 				y0: flow.y0,
 				h1,
@@ -513,13 +490,16 @@ export class DraftPatcher {
 				floorA,
 				stretchy: h.pageStretchy(cal.pageNo),
 				pageRecords: h.pageRecords,
-				cert: certRecs && fullCert ? { steps: fullCert.steps } : undefined
+				cert: certRecs && fullCert ? { steps: fullCert.steps, aboveSteps: fullCert.aboveSteps } : undefined
 			});
 			if (stale()) return;
-			// this render no longer spills: spill segments a previous keystroke left on
-			// other pages must come off, or their carried rows double-draw
-			const dropped = await this.spills.drop(cal.pageNo);
 			await h.applyPatch(cal.pageNo, patchObj); // survives zoom re-renders until the next compile
+			if (this.hopTarget !== null && this.hopSource === cal.pageNo) {
+				const t = this.hopTarget;
+				this.hopSource = null;
+				this.hopTarget = null;
+				await h.clearPatch(t);
+			}
 			// the edited LINE, not the paragraph: a highlight over twenty lines says nothing
 			// about where the words are landing, and the scroll it drives centres the
 			// paragraph's start rather than the cursor
@@ -527,25 +507,27 @@ export class DraftPatcher {
 			const focus = editFocus(req.orig, req.text, (certRecs ?? r.records) as any[], lineRecs, [{ ...whole, from: 0 }], whole, { h1, dk });
 			showFocus(h, focus); // zoom+center on the edited line (Typst-style)
 			const ms = performance.now() - t0;
-			if (stage) {
-				this.markProvisional(cal.pageNo); // tint until the recompile lands
-				h.emit('provisional', { stage, page: cal.pageNo, delta: +flow.delta.toFixed(1), transient: !!req.transient });
-				h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: ms.toFixed(0) }));
-				this.noteRefining(cal.pageNo);
-				// debounced reconcile: the provisional render carries the typing; ONE full pass
-				// runs after the user pauses instead of one per keystroke. Transient (repaired
-				// mid-typing) edits never schedule one -- the balanced keystroke that follows will.
-				if (!req.transient) this.scheduleReconcile(req.onRecompile, stage);
-			} else {
-				// the edit page, and any spill page whose patch just came off with it
-				this.unmarkProvisional([cal.pageNo, ...dropped]);
-				h.emit('patched', { page: cal.pageNo, delta: +flow.delta.toFixed(1), ms: +ms.toFixed(0) });
-				h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: ms.toFixed(0) }));
-				// exact patches never advanced the baseline, so the FIRST edit in any other
-				// paragraph read as two pending edits -> a visible full pass. A quiet pass at
-				// the typing pause re-baselines, so moving to another section stays instant.
-				if (!req.transient) this.scheduleReconcile(req.onRecompile, 'baseline');
-			}
+			h.emit('patched', { page: cal.pageNo, delta: +flow.delta.toFixed(1), ms: +ms.toFixed(0) });
+			h.setStatus(m.draft_status_patched({ page: cal.pageNo, ms: ms.toFixed(0) }));
+			// An exact patch IS the engine's answer -- band records from the daemon, the
+			// column's own respace from the certificate -- so the pass that used to follow
+			// it only regenerated numbers already in hand. Where the page's new records can
+			// be derived from the same pieces the painter drew, derive them and move the
+			// baseline here; the recompile then has nothing left to discover and is skipped.
+			// (It re-baselines either way: without it the FIRST edit in any other paragraph
+			// reads as two pending edits and takes a visible full pass.)
+			// A source line ADDED or REMOVED shifts the stamps of every paragraph after it,
+			// on every page -- more than this page's records can answer for, so that case
+			// keeps the pass. Typing inside a line (the common edit) changes no line count.
+			const sameLines = req.orig.split('\n').length === req.text.split('\n').length;
+			// adoption itself invalidates the located-geometry caches when it moved anything:
+			// the store is the writer, so the invariant lives in adoptPatchedRecords
+			const adopted =
+				sameLines &&
+				!req.interiorEdit &&
+				h.adoptPatchedRecords(cal.pageNo, patchObj, bandStampOf(h.pageRecords(cal.pageNo), cal.b1, cal.bk));
+			if (adopted) req.onBaseline?.();
+			this.scheduleReconcile(req.onRecompile, !adopted);
 		} catch (e) {
 			h.emit('error', String(e));
 			// instant path is best-effort; the debounced full recompile always follows
@@ -562,4 +544,34 @@ export class DraftPatcher {
 			}
 		}
 	}
+}
+
+// Diagnostic only: whether the edited column has material the certificate's skeleton cannot
+// see. `pinned` = its galley stops short of the column box, which is a float placed at the
+// foot -- the case where capacity and the layout target stop being the same number.
+function bandOf(cal: Cal): { page: number; top: number; bottom: number; colL: number; colR: number } {
+	return { page: cal.pageNo, top: cal.b1 - 10, bottom: cal.bk + 4, colL: cal.colL, colR: cal.colR };
+}
+
+function certCol(h: PatcherHooks, cal: Cal, colBottom: number): Record<string, unknown> | undefined {
+	const box = h.colBox(cal.pageNo, cal.colL, cal.colR);
+	if (!box) return undefined;
+	const pls = (h.pageRecords(cal.pageNo) as any[]).filter(
+		(r) => r.t === 'pl' && r.x >= cal.colL && r.x <= cal.colR && r.h !== undefined && r.c !== undefined
+	);
+	if (!pls.length) return { top: +box.top.toFixed(1), bottom: +box.bottom.toFixed(1), gord: box.gord };
+	const first = pls.reduce((a, b) => (a.y < b.y ? a : b));
+	const last = pls.reduce((a, b) => (a.y > b.y ? a : b));
+	const foot = last.y + (last.d ?? 0);
+	return {
+		top: +box.top.toFixed(1),
+		bottom: +box.bottom.toFixed(1),
+		gord: box.gord,
+		galleyTop: +(first.y - first.h).toFixed(1),
+		lastBase: +last.y.toFixed(1),
+		above: +(first.y - first.h - box.top).toFixed(1),
+		below: +(box.bottom - foot).toFixed(1),
+		pinned: box.bottom - foot > 0.5,
+		colBottom: +colBottom.toFixed(1)
+	};
 }

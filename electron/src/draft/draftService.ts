@@ -12,6 +12,8 @@ import { resolveType1Line } from '../fontT1Map';
 import { seedBbl, auxCycle } from './draftBib';
 import { exportDaemonRefs } from './draftRefs';
 import { readImageUses, attachImageFiles } from './draftImages';
+import { jobPrefix, writeHooksFile } from './compileJob';
+import { splitForWarm, takeWarmCompiler, goWarmCompiler, rewarmCompiler, aliasSynctex, WARM_BODY } from './draftWarmCompile';
 import { shellEnvReady } from '../shell/shellEnv';
 
 // ht = the shipout box HEIGHT = distance from box top to the box baseline, which is the
@@ -139,38 +141,27 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 
 	// forward-slash the input path for TeX; keep it relative to the compile cwd (root)
 	const mainRel = mainFile.replace(/\\/g, '/');
-	const setup = `\\directlua{TEXPILE_ENGINE_DIR='${engineDir}'; TEXPILE_DRAFT_OUT='${OUT}'; dofile('${engineDir}/page-extract.lua')}`;
-	// counter-truth wraps live in a FILE, not the job string: their bodies carry #1/#2,
-	// which \AtBeginDocument would need doubled (hook code is stored in a macro), while a
-	// file input at hook time reads them plainly. \the\inputlineno for begindoc expands
-	// BEFORE the input, so it names the main file's \begin{document} line.
-	fs.writeFileSync(
-		path.join(outAbs, 'texpile-hooks.tex'),
-		'\\let\\TexpileOrigStep\\stepcounter\n' +
-			'\\renewcommand\\stepcounter[1]{\\TexpileOrigStep{#1}\\directlua{texpile_counters(\\the\\inputlineno)}}\n' +
-			'\\let\\TexpileOrigSetC\\setcounter\n' +
-			'\\renewcommand\\setcounter[2]{\\TexpileOrigSetC{#1}{#2}\\directlua{texpile_counters(\\the\\inputlineno)}}\n' +
-			// each paragraph stamps its own first source line onto the nodes it produces, and
-			// clears it again so material outside a paragraph reads as unknown rather than
-			// inheriting the last one. The walker reads it back at shipout.
-			'\\AddToHook{para/begin}{\\directlua{texpile_para()}}\n' +
-			'\\AddToHook{para/end}{\\directlua{texpile_para_end()}}\n'
-	);
-	const hooks =
-		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${OUT}/texpile-hooks.tex}` +
-		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AtEndDocument{\\directlua{page_extract_finish()}}}`;
-	// \pdfoutput is a pdfTeX primitive luatex lacks; many arXiv preambles set it unguarded
-	// (\pdfoutput=1) and crash lualatex. Define it as a dummy count if absent so the assignment
-	// is a harmless no-op. Injected before \input so it runs before the main preamble; a no-op
-	// for docs that never touch it (only defines what isn't there). See PDF_SHIM in draftDaemon.
-	const pdfShim = `\\ifdefined\\pdfoutput\\else\\newcount\\pdfoutput\\fi`;
-	const job = `${setup}${hooks}${pdfShim}\\input{${mainRel}}`;
+	writeHooksFile(outAbs);
+	const job = `${jobPrefix(engineDir)}\\input{${mainRel}}`;
+	// A pre-warmed engine (preamble loaded, parked before the body) takes the FIRST pass;
+	// extra passes and every fallback go cold. lualatex only: the warm pool spawns that.
+	const split = engine === 'lualatex' ? splitForWarm(path.join(root, mainFile)) : null;
+	let warmLeft = split ? takeWarmCompiler(root, split.preamble) : null;
+	let usedWarm = false;
 	function enginePass(): Promise<void> {
+		if (superseded()) return Promise.resolve(); // a newer compile already took over
+		if (warmLeft && split) {
+			const w = warmLeft;
+			warmLeft = null;
+			usedWarm = true;
+			// adopt: a superseded run's partial products must never be promoted over draft.*
+			const g = goWarmCompiler(w, root, fs.readFileSync(path.join(root, mainFile), 'utf8'), split.beginLine, () => !superseded());
+			run.child = g.child; // a superseding compile of this root kills this to unblock itself
+			return g.done.then(() => {
+				if (run.child === g.child) run.child = null;
+			});
+		}
 		return new Promise<void>((resolve) => {
-			if (superseded()) {
-				resolve();
-				return;
-			} // a newer compile already took over
 			const child = execFile(
 				engine,
 				// -synctex=1 so the instant path can map a source line to its page box (draft.synctex.gz)
@@ -243,6 +234,13 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	if (superseded()) return { ok: false, error: 'superseded', ms: Date.now() - t0, superseded: true };
 	exportDaemonRefs(outAbs);
 	const ms = Date.now() - t0;
+	// Warm the NEXT pass now: every product this compile reads has been read (aux cycle,
+	// refs, log checks), and the warm process runs under its own jobname so nothing the app
+	// reads after this return is touched. Also on the failure path -- a body typo does not
+	// invalidate the preamble, and the next attempt deserves the same head start.
+	const rewarm = () => {
+		if (engine === 'lualatex') rewarmCompiler(root, mainFile, engineDir);
+	};
 
 	const manifestPath = path.join(outAbs, 'pages.json');
 	if (!fs.existsSync(manifestPath)) {
@@ -257,6 +255,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		} catch {
 			/* no log */
 		}
+		rewarm();
 		return { ok: false, error: 'Draft compile produced no pages (is lualatex on PATH? see _draft/draft.log)', ms, log };
 	}
 
@@ -284,6 +283,28 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 			.map((ln) => JSON.parse(ln));
 	} catch {
 		/* older engine bridge or an empty log: pins fall back to fixed values */
+	}
+
+	// A warm first pass read the body from the padded _draft file, so single-pass products
+	// name it where a cold pass names the main file (line numbers already agree -- that is
+	// what the padding buys). Put the main file's name back so nothing downstream can tell
+	// which kind of pass ran. Multi-pass compiles end on a cold pass and alias nothing.
+	if (usedWarm && split && passes === 1) {
+		const mainBase = path.basename(mainRel);
+		// the padded body reads as texd-body.tex, and anything read via \jobname (the seeded
+		// bbl, an .ind) as texd_warm.*; a cold pass names main.tex and draft.* there
+		const alias = (f: string): string => {
+			const lower = f.toLowerCase();
+			if (lower === WARM_BODY.toLowerCase()) return mainBase.toLowerCase();
+			if (lower.startsWith('texd_warm.')) return 'draft.' + f.slice('texd_warm.'.length);
+			return f;
+		};
+		const sf = (manifest as { srcFiles?: string[] }).srcFiles;
+		if (sf) for (let i = 0; i < sf.length; i++) sf[i] = alias(sf[i]);
+		for (const c of counters) if (c.f) c.f = alias(c.f);
+		// begindoc fired inside the warm wrapper, so its line number names the wrong file
+		manifest.bodyLine = split.beginLine;
+		aliasSynctex(outAbs, mainRel);
 	}
 
 	// seam sidecar: per-break pruned runs; absent (older engine, luatexbase missing) means
@@ -324,6 +345,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	// dims (always known at shipout) plus the 1in reference margins
 	const maxPageW = manifest.pages.length ? Math.max(...manifest.pages.map((p) => p.w || 0)) : 0;
 	const maxPageH = manifest.pages.length ? Math.max(...manifest.pages.map((p) => p.h || 0)) : 0;
+	rewarm();
 	return {
 		ok: true,
 		ms,

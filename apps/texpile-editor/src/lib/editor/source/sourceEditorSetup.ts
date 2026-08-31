@@ -28,6 +28,7 @@ import { comments, commentGutterHandlers } from '$lib/editor/visual/extensions/c
 import { mathPreview } from '$lib/editor/source/extensions/math-preview/mathPreview';
 import { starterGhost } from '$lib/editor/source/extensions/starter-ghost/starterGhost';
 import { synctexFlash } from '$lib/languages/latex/source/synctexFlash';
+import { latexListContinuation } from '$lib/languages/latex/source/listContinuation';
 import { bibtex } from '$lib/languages/bib/bibtexLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { caretDoctor } from '$lib/debug/caretDoctor';
@@ -98,6 +99,9 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		...(!fileFor || /\.(tex|bbl)$/i.test(fileFor)
 			? [
 					latexIntellisense({ onJumpToFile: deps.onJumpToFile, onOpenFileAt: deps.onOpenFileAt }),
+					// ahead of defaultKeymap below, so Enter reaches it first; it declines
+					// everywhere except inside a list item and Enter then behaves normally
+					latexListContinuation(),
 					mathPreview(),
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost()] : []),
 					cmSpellcheck()

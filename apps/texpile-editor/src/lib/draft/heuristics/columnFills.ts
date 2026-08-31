@@ -23,3 +23,12 @@ export function columnFills(recs: PageRecord[], colIndex: number | undefined): b
 	// no recorded column (multicol, a float page, an older bridge): the page-wide inference
 	return packsToGoal(recs);
 }
+
+// Was that answer the COLUMN's own, or the page-wide stand-in? The inference is fine as a
+// fallback for a render and not fine inside a certificate: picking the wrong reading spreads
+// every row the split places. A wide table widens its column box, so the band's own width
+// stops matching it -- which is how one page in a document silently loses column identity
+// while its neighbours keep theirs.
+export function columnKnown(recs: PageRecord[], colIndex: number | undefined): boolean {
+	return colIndex !== undefined && pageColumns(recs)[colIndex]?.gord !== undefined;
+}

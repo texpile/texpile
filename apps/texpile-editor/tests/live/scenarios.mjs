@@ -8,37 +8,37 @@ export const FIXTURES = [
 		scenarios: [
 			{ name: 'prose-short', anchor: 'baseline', expect: ['EXACT'] },
 			{ name: 'prose-long-wrapped', anchor: 'breaker', expect: ['EXACT'] },
-			{ name: 'heading-section', anchor: 'Alpha', line: '\\section{Alpha}', expect: ['EXACT', 'PROV'] },
-			{ name: 'heading-subsection', anchor: 'Beta', line: '\\subsection{Beta}', expect: ['EXACT', 'PROV'] },
-			{ name: 'runin-paragraph-title', anchor: 'Runin', expect: ['EXACT', 'PROV'] },
-			{ name: 'runin-following-prose', anchor: 'onward', expect: ['EXACT', 'PROV'] },
-			{ name: 'abstract-small-env', anchor: 'environment', expect: ['EXACT', 'PROV'] },
+			{ name: 'heading-section', anchor: 'Alpha', line: '\\section{Alpha}', expect: ['EXACT'] },
+			{ name: 'heading-subsection', anchor: 'Beta', line: '\\subsection{Beta}', expect: ['EXACT'] },
+			{ name: 'runin-paragraph-title', anchor: 'Runin', expect: ['EXACT'] },
+			{ name: 'runin-following-prose', anchor: 'onward', expect: ['EXACT'] },
+			{ name: 'abstract-small-env', anchor: 'environment', expect: ['EXACT'] },
 			{ name: 'ref-paragraph', anchor: 'resolution', expect: ['EXACT'] },
 			{ name: 'item-middle-bullet', anchor: 'Middle bullet', expect: ['EXACT'] },
 			// enumerate labels: the counter pin is a FIXED value now (no JS re-count of \item
 			// lines), so a non-first item's label digit differs and the patch certifies
 			// EXACT with the compile's counter log (the true enumi pin reproduces the label);
-			// PROV only when the log is missing and the 0 pin falls back
-			{ name: 'enum-middle-item', anchor: 'Middle numbered', expect: ['EXACT', 'PROV'] },
-			{ name: 'equation-body', anchor: '= m', expect: ['EXACT', 'PROV'] },
-			{ name: 'tabular-cell', anchor: 'alpha & one', expect: ['EXACT', 'PROV'] },
+			// a recompile only when the log is missing and the 0 pin falls back
+			{ name: 'enum-middle-item', anchor: 'Middle numbered', expect: ['EXACT'] },
+			{ name: 'equation-body', anchor: '= m', expect: ['EXACT'] },
+			{ name: 'tabular-cell', anchor: 'alpha & one', expect: ['EXACT'] },
 			// footnote-bearing paragraphs always reconcile (the page-bottom note block is the
 			// engine's to certify; the char-code note comparison was deleted)
-			{ name: 'footnote-paragraph', anchor: 'carrying', expect: ['PROV'] },
-			{ name: 'footnote-body-edit', anchor: 'Footnote body text', expect: ['PROV'], maxMs: 16000 },
+			{ name: 'footnote-paragraph', anchor: 'carrying', expect: ['RECOMPILE'] },
+			{ name: 'footnote-body-edit', anchor: 'Footnote body text', expect: ['RECOMPILE'], maxMs: 16000 },
 			{ name: 'label-boundary-line', anchor: 'sec:alpha', line: '\\label{sec:alpha}', expect: ['RECOMPILE'] },
 			{
 				name: 'transient-unbalanced-math',
 				anchor: 'Closing paragraph',
 				op: { t: 'appendLine', text: ' $x_i' },
 				thenOp: { t: 'appendLine', text: '$' },
-				expect: ['EXACT', 'PROV', 'TRANSIENT']
+				expect: ['EXACT', 'TRANSIENT']
 			},
 			{
 				name: 'insert-paragraph',
 				anchor: 'Closing paragraph',
 				op: { t: 'insertPara', text: 'Freshly inserted paragraph stands alone here.' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			},
 			{
@@ -49,19 +49,19 @@ export const FIXTURES = [
 				preOp: { t: 'insertMid' },
 				anchor: 'much longer prose paragraph',
 				op: { t: 'insertPara', text: 'Continuing thought in a brand new paragraph here.' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			},
 			{
 				// delete + pending edit takes the full pass (two splices alternated visually);
-				// PROV is also legitimate -- when the pending edit reconciled first the delete
-				// becomes pure and splices provisionally
+				// EXACT is also legitimate -- when the pending edit reconciled first the delete
+				// becomes pure and can certify
 				name: 'edit-then-delete',
 				preAnchor: 'exercised',
 				preOp: { t: 'insertMid' },
 				anchor: 'heading merge scenario',
 				op: { t: 'deletePara' },
-				expect: ['RECOMPILE', 'PROV'],
+				expect: ['RECOMPILE'],
 				maxMs: 16000
 			},
 			{
@@ -72,7 +72,7 @@ export const FIXTURES = [
 				name: 'delete-paragraph',
 				anchor: 'Freshly inserted',
 				op: { t: 'deletePara' },
-				expect: ['PROV', 'RECOMPILE'],
+				expect: ['RECOMPILE'],
 				maxMs: 16000
 			},
 			{
@@ -82,7 +82,7 @@ export const FIXTURES = [
 				anchor: 'subsection',
 				line: '\\subsection',
 				op: { t: 'insertPara', text: 'Inserted right before the subsection heading.' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			},
 			{
@@ -93,7 +93,7 @@ export const FIXTURES = [
 				anchor: 'tabular',
 				line: '\\begin{tabular}',
 				op: { t: 'insertPara', text: 'Inserted directly below the display, wrapping with enough words to make two lines.' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			},
 			{
@@ -103,7 +103,7 @@ export const FIXTURES = [
 				name: 'noindent-toggle',
 				anchor: 'Short prose',
 				op: { t: 'prefix', text: '\\noindent ' },
-				expect: ['PROV'],
+				expect: ['RECOMPILE'],
 				maxMs: 16000
 			}
 		]
@@ -113,58 +113,56 @@ export const FIXTURES = [
 		scenarios: [
 			{ name: 'page2-prose', anchor: 'pagetwobeta', expect: ['EXACT'] },
 			{
-				// the compile's source stamp states where the page broke this paragraph, so a
-				// straddle whose break does not move renders exactly -- EXACT is the new ceiling
+				// a straddling paragraph recompiles: the chain that assembled cross-boundary
+				// renders is gone (its EXACT claims graded 13.6% wrong)
 				name: 'cross-page-span',
 				anchor: 'straddle',
-				expect: ['EXACT', 'PROV'],
+				expect: ['RECOMPILE'],
 				maxMs: 16000
 			},
 			{
-				// the engine chain can certify this push onto page 2 (seam captured, page 2
-				// absorbs, document ends there) -- EXACT is the new ceiling, PROV legitimate
+				// the certified hop can land this push on page 2 (seam + receiver calibrate)
 				name: 'overflow-full-page',
 				anchor: 'fillerthree',
 				op: { t: 'append', text: ' overflow overflow overflow overflow overflow overflow overflow overflow' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			},
 			{
 				name: 'underflow-shrink',
 				anchor: 'fillerfive carries steady prose',
 				op: { t: 'deleteAfter', n: 90 },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			}
 		]
 	},
 	{
-		// flushbottom two-column article: the engine break-chain's proving ground -- moved
-		// column/page breaks render through per-hop capacity splits with captured seams,
-		// so EXACT is reachable; PROV stays legitimate when a hop refuses (pull probe,
-		// float in the path) and the first-order render stands
+		// flushbottom two-column article: growth here always crosses a column, and a moved
+		// every interior column here is FULL, so a push needs a second hop and recompiles;
+		// the certified single hop shows on twopage/overflow-full-page, whose receiver has room
 		name: 'twocol',
 		scenarios: [
-			{ name: 'twocol-prose', anchor: 'colfiller five', expect: ['EXACT', 'PROV'] },
+			{ name: 'twocol-prose', anchor: 'colfiller five', expect: ['EXACT'] },
 			{
 				name: 'twocol-push-nextcol',
 				anchor: 'colfiller four considers',
 				op: { t: 'append', text: ' plus an appended clause long enough to make this paragraph a full line taller than it was before' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['RECOMPILE'],
 				maxMs: 16000
 			},
 			{
 				name: 'twocol-push-nextpage',
 				anchor: 'colfiller sixteen listens',
 				op: { t: 'append', text: ' plus an appended clause long enough to make this paragraph a full line taller than it was before' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['RECOMPILE'],
 				maxMs: 16000
 			},
 			{
 				name: 'twocol-pull',
 				anchor: 'colfiller three describes',
 				op: { t: 'deleteAfter', n: 90 },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			}
 		]
@@ -172,17 +170,17 @@ export const FIXTURES = [
 	{
 		name: 'floats',
 		scenarios: [
-			{ name: 'float-tabular-cell', anchor: 'cellalpha', expect: ['EXACT', 'PROV'] },
-			{ name: 'float-figure-caption', anchor: 'Figure caption', expect: ['PROV'], maxMs: 16000 },
-			{ name: 'float-table-caption', anchor: 'Table caption', expect: ['PROV'], maxMs: 16000 },
-			{ name: 'inline-image-paragraph', anchor: 'inside prose', expect: ['EXACT', 'PROV'] }
+			{ name: 'float-tabular-cell', anchor: 'cellalpha', expect: ['EXACT'] },
+			{ name: 'float-figure-caption', anchor: 'Figure caption', expect: ['RECOMPILE'], maxMs: 16000 },
+			{ name: 'float-table-caption', anchor: 'Table caption', expect: ['RECOMPILE'], maxMs: 16000 },
+			{ name: 'inline-image-paragraph', anchor: 'inside prose', expect: ['EXACT'] }
 		]
 	},
 	{
 		name: 'cjk',
 		scenarios: [
 			{ name: 'cjk-prose', anchor: '字体', expect: ['EXACT'] },
-			{ name: 'cjk-heading', anchor: '中文标题', line: '\\section', expect: ['EXACT', 'PROV'] },
+			{ name: 'cjk-heading', anchor: '中文标题', line: '\\section', expect: ['EXACT'] },
 			// paragraph spans two SOURCE lines: luatexja swallows the newline after a CJK char,
 			// which the daemon only reproduces because it reads blocks through a real file
 			{ name: 'cjk-wrapped-para', anchor: '同一段落', expect: ['EXACT'] }
@@ -199,7 +197,7 @@ export const FIXTURES = [
 				name: 'book-stretch-grow',
 				anchor: 'certificate machinery',
 				op: { t: 'append', text: ' plus the appended clause that makes the paragraph one line taller than before' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 16000
 			}
 		]
@@ -209,13 +207,13 @@ export const FIXTURES = [
 		// \input fragments, bibtex -- the document both reported bugs came from
 		name: 'tut',
 		scenarios: [
-			{ name: 'tut-prose', anchor: 'covers the', expect: ['EXACT', 'PROV'], maxMs: 25000 },
+			{ name: 'tut-prose', anchor: 'covers the', expect: ['EXACT'], maxMs: 25000 },
 			{
 				name: 'tut-insert-before-section',
 				anchor: 'Switching between visual',
 				line: '\\section{Switching',
 				op: { t: 'insertPara', text: 'okay wfawfawfaw new thoughts typed here.' },
-				expect: ['EXACT', 'PROV'],
+				expect: ['EXACT'],
 				maxMs: 25000
 			}
 		]
@@ -223,10 +221,41 @@ export const FIXTURES = [
 	{
 		name: 'beamer',
 		scenarios: [
-			{ name: 'frame-prose', anchor: 'harness to edit', expect: ['EXACT', 'PROV'], maxMs: 16000 },
-			{ name: 'slide-bullet-middle', anchor: 'Middle slide bullet', expect: ['EXACT', 'PROV'], maxMs: 16000 },
-			{ name: 'slide-math-prose', anchor: 'extra words', expect: ['EXACT', 'PROV'], maxMs: 16000 },
+			{ name: 'frame-prose', anchor: 'harness to edit', expect: ['EXACT'], maxMs: 16000 },
+			{ name: 'slide-bullet-middle', anchor: 'Middle slide bullet', expect: ['EXACT'], maxMs: 16000 },
+			{ name: 'slide-math-prose', anchor: 'extra words', expect: ['EXACT'], maxMs: 16000 },
 			{ name: 'frame-title', anchor: 'Second Slide', line: '\\begin{frame}{Second Slide}', expect: ['RECOMPILE'], maxMs: 16000 }
+		]
+	},
+	{
+		// The ELIGIBILITY gate's own fixture: which edits may be sent to the engine at all.
+		// Every other fixture edits plain prose, so the two candidate gates -- a sorted diff of
+		// command NAMES, and a structural proof that only text moved -- answer identically on
+		// all of them and the sweep cannot tell them apart. These rows are the difference.
+		name: 'cmdedits',
+		scenarios: [
+			// CONTROL: no commands anywhere. Both gates must let it through, or the fixture
+			// itself is what refuses and nothing below means anything.
+			{ name: 'plain-prose', anchor: 'control row', expect: ['EXACT'] },
+
+			// MEANING THE COMMAND NAME CANNOT CARRY. A name-set diff reads each of these as
+			// unchanged and renders it: a wrong page, adopted as truth, with no compile behind.
+			{ name: 'section-star', anchor: '\\section', line: '\\section{Alpha}', op: { t: 'append', text: '*' }, expect: ['RECOMPILE'] },
+			{ name: 'vspace-argument', anchor: '10pt', line: '\\vspace{10pt}', op: { t: 'append', text: '0' }, expect: ['RECOMPILE'] },
+			{ name: 'gdef-argument', anchor: '2.0', line: '\\gdef\\vernum{2.0}', op: { t: 'append', text: '1' }, expect: ['RECOMPILE'] },
+
+			// THE STRICTER SIDE: text inside an argument, inside math, inside a list body. A
+			// name-set diff calls these plain text edits and renders them. The structural gate
+			// refuses, because the text inside \input{} decides which FILE is read and no
+			// vocabulary-free rule separates that argument from a formatting one. Whether the
+			// coverage this costs is worth the safety is exactly what these rows measure.
+			{ name: 'inside-emph', anchor: 'emphasised span', expect: ['EXACT'] },
+			{ name: 'inside-inline-math', anchor: 'a + b = c', expect: ['EXACT'] },
+			{ name: 'inside-list-item', anchor: 'Middle bullet item', expect: ['EXACT'] },
+
+			// prose that USES a macro without touching it: nothing about the command moved, so
+			// both gates should render, and the structural one must not refuse on presence alone
+			{ name: 'prose-using-macro', anchor: 'continues with enough', expect: ['EXACT'] }
 		]
 	}
 ];

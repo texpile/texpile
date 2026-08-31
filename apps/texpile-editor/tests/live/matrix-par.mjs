@@ -108,6 +108,9 @@ async function runWorker(w) {
 	let curFxName = null;
 	let root = null;
 	let base = null;
+	// the fixture as opened. Every scenario is reset to this, so a row reproduces on its own
+	// instead of only together with the rows that happened to run before it in this worker.
+	let pristine = null;
 	let openSeq = 0;
 	// worker body wrapped so the browser ALWAYS closes: a leaked chromium connection
 	// keeps node alive after the run ends
@@ -119,8 +122,9 @@ async function runWorker(w) {
 			if (!r.root) throw new Error('fixture failed: ' + (r.error ?? 'no root'));
 			root = r.root;
 			base = fs.readFileSync(path.join(root, 'main.tex'), 'utf8');
+			pristine = base;
 			await page.evaluate((rt) => window.__live.open(rt), root);
-			const ev0 = await collectUntilQuiet(page, { quietMs: 1500, maxMs: 90000 });
+			const ev0 = await collectUntilQuiet(page, { quietMs: 1500, maxMs: Math.max(90000, (fx.settleMs ?? 0) * 2) });
 			if (!ev0.some((e) => e.kind === 'compiled')) console.log(`  [w${w}] warmup compile not observed`, ev0.map((e) => e.kind).join(' '));
 			curFxName = fx.name;
 		};
@@ -206,8 +210,37 @@ async function runWorker(w) {
 							}
 						}
 						res = classify(ev);
-						const pv = ev.filter((e) => e.kind === 'patch-verify').map((e) => e.detail);
+						let pv = ev.filter((e) => e.kind === 'patch-verify').map((e) => e.detail);
+						// A patch that adopted its own records schedules NO compile, and patch-verify
+						// only runs when one lands -- so the better the exact path works, the LESS of
+						// it gets graded. Measured before this: 15 of 116 EXACT rows checked, the
+						// other 101 seen by nothing at all. Force the pass on the EDITED source
+						// purely to obtain the comparison. `res.outcome` was classified above and is
+						// untouched, and the app itself is unchanged: this is the harness paying for
+						// its own oracle rather than production compiling when it need not.
+						if (!pv.length && res.outcome === 'EXACT') {
+							await post('/write', { root, content: edited });
+							await page.evaluate(() => window.__live.recompile());
+							const evV = await collectUntilQuiet(page, { quietMs: 1200, maxMs: fx.settleMs ?? 25000 });
+							pv = evV.filter((e) => e.kind === 'patch-verify').map((e) => e.detail);
+							// an adopted record store disagreeing with the engine's own is a SEPARATE
+							// defect from a mispainted row, and this is the only pass that can see it
+							const dr = evV.filter((e) => e.kind === 'records-adopted-drift').map((e) => e.detail);
+							if (dr.length) res.drift = dr;
+							res.forced = true;
+						}
 						if (pv.length) res.verify = pv;
+						// every hop's landing derivation, so a row that verifies wrong carries the
+						// numbers that placed it instead of needing its own re-run
+						const hops = ev.filter((e) => e.kind === 'chain-hop').map((e) => e.detail);
+						if (hops.length) res.hops = hops;
+						// the edited column's own geometry, so a tint bucket can be attributed
+						const pc = ev.filter((e) => e.kind === 'provisional' && e.detail?.col).map((e) => e.detail.col);
+						if (pc.length) res.col = pc[pc.length - 1];
+						// what the certificate proved, including how far it needed content ABOVE the
+						// band moved -- the one number that decides certExact on a fitting page
+						const certEv = ev.filter((e) => e.kind === 'skel-certified').map((e) => e.detail);
+						if (certEv.length) res.cert = certEv[certEv.length - 1];
 						if (d.transient && res.outcome === 'NOFEEDBACK') res.outcome = 'TRANSIENT';
 					}
 					const ceilOk = sc.expect.includes(res.outcome);
@@ -215,12 +248,17 @@ async function runWorker(w) {
 						`  [w${w}] ${sc.name}: ${res.outcome}${res.latencyMs != null ? ` ${res.latencyMs}ms` : ''} ${ceilOk ? 'AT-CEILING' : `(ceiling ${sc.expect.join('|')})`} ${res.reasons.join(',')}`
 					);
 					pushRow({ fixture: fx.name, ...sc, ...res });
-					// baseline resync: make sure a compile has landed with the edited source
-					base = edited;
-					if (sc.thenOp) base = applyOp(edited, { ...sc, op: sc.thenOp }) ?? edited;
+					// RESET, not advance. Scenarios used to run against whatever the previous ones
+					// left behind, so two runs of the same file were not the same test -- only
+					// aggregates could be compared, and any-WRONG swung 42-81 on identical input.
+					// From the pristine source every row stands alone and run A diffs against run
+					// B row by row. The compile still has to LAND before the next scenario: one
+					// arriving mid-dispatch bails 'compiling' and measures nothing, which is what
+					// settleMs is for.
+					base = pristine;
 					await post('/write', { root, content: base });
 					await page.evaluate(() => window.__live.recompile());
-					await collectUntilQuiet(page, { quietMs: 1200, maxMs: 25000 });
+					await collectUntilQuiet(page, { quietMs: 1200, maxMs: fx.settleMs ?? 25000 });
 					break;
 				} catch (e) {
 					// the harness page occasionally dies under memory pressure; reboot and retry once

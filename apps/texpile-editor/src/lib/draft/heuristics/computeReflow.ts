@@ -85,7 +85,7 @@ export function buildBandPatch(
 		pageRecords: (n: number) => any[];
 		// engine page-break certificate: the caller pre-mapped the band records onto the
 		// certified baselines; the column follows the certified steps with NO rigid delta
-		cert?: { steps: FlowStep[] };
+		cert?: { steps: FlowStep[]; aboveSteps: FlowStep[] };
 	}
 ): Patch {
 	// on a stretched (flushbottom) page the delta distributes over the column's real glue
@@ -97,6 +97,9 @@ export function buildBandPatch(
 			? flowShiftSteps(d.pageRecords(cal.pageNo), cal.bk, d.floorA, cal.colL, cal.colR, d.delta)
 			: null;
 	const flowDelta = d.cert ? 0 : d.delta;
+	// only a certificate speaks for the region ABOVE the band: the derived path has no answer
+	// for it, and the renderer leaving it alone is the honest default
+	const aboveSteps = d.cert?.aboveSteps.length ? d.cert.aboveSteps : undefined;
 	return {
 		top: cal.b1 - d.y0,
 		dropTop: cal.b1 - Math.max(d.h1, d.y0) - 2,
@@ -109,11 +112,26 @@ export function buildBandPatch(
 		newRecs: records,
 		flowBottom: d.floorA,
 		flowSteps: steps ?? undefined,
-		flowPred: glyphRows(
-			d.pageRecords(cal.pageNo).filter((x) => x.t === 'g' && x.x >= cal.colL && x.x <= cal.colR && x.y > cal.bk + 0.5 && x.y <= d.floorA),
-			cal.medGap
-		)
-			.slice(0, 10)
-			.map((rw) => ({ y: rw.y + flowDyAt(steps, rw.y, flowDelta), cs: rw.cs }))
+		aboveSteps,
+		// the patch's CLAIM about every row it moves without redrawing. Sampled BOTH sides of
+		// the band once the certificate started respacing the column above it too: graded on
+		// one side only, a wrong lift up there reads as a clean verify, which is how the
+		// sweep scored a change that erased the region as a 25-row improvement.
+		flowPred: [
+			...(aboveSteps
+				? glyphRows(
+						d.pageRecords(cal.pageNo).filter((x) => x.t === 'g' && x.x >= cal.colL && x.x <= cal.colR && x.y < cal.b1 - d.h1 - 0.5),
+						cal.medGap
+					)
+						.slice(-6)
+						.map((rw) => ({ y: rw.y + flowDyAt(aboveSteps, rw.y, 0), cs: rw.cs }))
+				: []),
+			...glyphRows(
+				d.pageRecords(cal.pageNo).filter((x) => x.t === 'g' && x.x >= cal.colL && x.x <= cal.colR && x.y > cal.bk + 0.5 && x.y <= d.floorA),
+				cal.medGap
+			)
+				.slice(0, 10)
+				.map((rw) => ({ y: rw.y + flowDyAt(steps, rw.y, flowDelta), cs: rw.cs }))
+		]
 	};
 }

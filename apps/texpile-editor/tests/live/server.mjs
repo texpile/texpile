@@ -98,7 +98,12 @@ http
 							mainFile: body.mainFile || 'main.tex',
 							engineDir,
 							items: body.items,
-							targetPt: body.targetPt
+							targetPt: body.targetPt,
+							// dropped until now, so every CAPACITY split in the sweep ran with
+							// \splitmaxdepth at its permissive default: the harness held more in a
+							// column than the page builder does, and graded renders against a fit
+							// the product never claims
+							capacity: body.capacity
 						})
 					);
 				case '/synctex':

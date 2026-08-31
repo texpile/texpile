@@ -152,11 +152,15 @@ function texd_step()
 end
 
 -- Rebuild a page's vertical list as dimension-only nodes and let the ENGINE re-split it:
--- tex.splitbox runs the same vert_break as \vsplit and the page builder (penalties
--- included), so "did this edit move the page break" is answered by TeX, not JS
--- arithmetic. Items arrive one per line: `b h d` (box), `g w st sto sh sho` (glue,
--- natural width), `p n` (penalty); dims in pt. Answers one R with kA/kB (boxes that
--- fit / spilled), the packed A box's glue state, and every A box's baseline.
+-- tex.splitbox runs vert_break, the routine behind \vsplit, so "did this edit move the
+-- page break" is answered by TeX, not JS arithmetic. NOT the page builder's routine --
+-- that one is separate (buildpage.c, which never calls vert_break) and adds
+-- insert_penalties to an otherwise identical cost formula. The two coincide on a list
+-- carrying no insertions, which is what makes the skeleton's refusal of footnote pages
+-- load-bearing rather than conservative. Items arrive one per line: `b h d` (box),
+-- `g w st sto sh sho` (glue, natural width), `p n` (penalty); dims in pt. Answers one R
+-- with kA/kB (boxes that fit / spilled), the packed A box's glue state, and every A box's
+-- baseline.
 function texd_skeleton(target, cnt, cap)
 	local t0 = os.gettimeofday()
 	local HL, VL, GL, KN = node.id("hlist"), node.id("vlist"), node.id("glue"), node.id("kern")

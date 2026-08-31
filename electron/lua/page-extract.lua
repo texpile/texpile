@@ -23,6 +23,8 @@ local pages = {}
 -- have \outputpenalty >= -10000; LaTeX's float/clearpage cycles run below that and get
 -- no seam entry (their box255 is recycled, not a column).
 local seam_pending, seam_done, seam_cols = nil, {}, 0
+-- \AtEndDocument has run: from here every shipout rewrites the manifest (see page_extract)
+local doc_ended = false
 local GLUE_ID, KERN_ID, PEN_ID = node.id("glue"), node.id("kern"), node.id("penalty")
 
 local function seam_run_json()
@@ -287,10 +289,28 @@ function page_extract(boxnum)
 		local f = io.open(string.format("%spage-%03d.jsonl", OUT, pageno), "w")
 		if f then f:write(table.concat(records, "\n")); f:close() end
 	end
+	-- The manifest serializes EVERY page each time it is written, so writing it per shipout
+	-- was O(n^2) -- measured 6.8s of a 907-page pass, with no reader before the process
+	-- exits. It exists per-page only because \AtEndDocument fires BEFORE the final
+	-- \clearpage ships the last page(s): so stay silent until finish has run, and let every
+	-- post-finish shipout rewrite it -- the last one to fire leaves the complete file.
+	if doc_ended then write_manifest() end
+end
+
+function page_extract_finish()
+	doc_ended = true
 	write_manifest()
 end
 
--- kept for compatibility with existing wrappers; the real work happens per shipout
-function page_extract_finish()
-	write_manifest()
+-- Warm-compile handshake. The wrapper calls this right after the preamble: hooks are
+-- registered, \begin{document} has run, fonts are loaded -- everything a pass pays for
+-- before the first page. Hold here until the driver has written the BODY (padded so its
+-- line numbers equal the main file's) and answers GO; anything else aborts the process,
+-- which the driver treats as "compile cold".
+function texpile_warm_wait()
+	io.write("TEXPILE_WARM_READY\n")
+	io.flush()
+	local l = io.stdin:read("*l")
+	if l then l = l:gsub("\r$", "") end
+	if l ~= "GO" then os.exit(101) end
 end

@@ -10,6 +10,8 @@ import {
 import { breakMotion, type BreakMotion } from './breakMotion';
 import { certifiedFlow } from './certifiedFlow';
 import { columnFills } from '../heuristics/columnFills';
+import { belowGalley } from '../heuristics/aboveGalley';
+import { columnBox } from '../geometry/columnBox';
 import { columnIndexOf } from '../heuristics/seams';
 import type { Cal } from '../locate/locate.types';
 import type { FlowStep } from './glueShift';
@@ -40,6 +42,9 @@ export type Certificate = {
 	// ABOVE the band (the renderer never moves that region; visible value -> provisional)
 	bandAbsYs?: number[];
 	steps?: FlowStep[];
+	// the engine's respace for the rows OVER the band, which the render now applies instead
+	// of reducing to maxAboveDy and wearing a tint for
+	aboveSteps?: FlowStep[];
 	maxAboveDy?: number;
 	// break moved: the capacity split's answer for WHERE -- certified baselines for what
 	// stays and the identity of the carried boxes, so the chain planner can render the
@@ -64,7 +69,7 @@ export type ShrinkSeed = {
 
 // what a fits certificate with baselines actually guarantees (Required<Certificate>
 // would falsely promise `moved`, which never accompanies fits:true)
-export type FullCertificate = Certificate & Required<Pick<Certificate, 'bandAbsYs' | 'steps' | 'maxAboveDy'>>;
+export type FullCertificate = Certificate & Required<Pick<Certificate, 'bandAbsYs' | 'steps' | 'aboveSteps' | 'maxAboveDy'>>;
 
 const CAL_DEV = 0.15;
 // the column's last baseline sits on the body bottom: full, with nothing below to grow into
@@ -94,6 +99,19 @@ export async function pageBreakCertificate(
 	// stretched reading and reported content above the band as having moved.
 	const ciA = columnIndexOf(recsA, cal.W, cal.colL);
 	const fillsA = columnFills(recsA, ciA > 0 ? ciA - 1 : undefined);
+	// Room this galley does NOT have: a float pinned at the column's foot. The capacity split
+	// asks whether the edited content still fits, and measuring to the body bottom credits the
+	// text with the float's room -- so it answers "fits" on a column that overflows, and a
+	// fits answer suppresses the spill render outright (see bandCanSpill). \@colroom is
+	// reduced by the float at its NATURAL size, before any of it stretches.
+	const lastK = skel.boxYs.length - 1;
+	const colA = columnBox(recsA, cal.colL, cal.colR);
+	const belowA = colA ? belowGalley(recsA, colA, skel.boxYs[lastK] + (skel.items[skel.boxIdx[lastK]] as { d: number }).d) : null;
+	// A float is a BOX; a trailing run of glue is the column's own slack, which the galley may
+	// legitimately grow into -- subtracting that refused certificates on columns with nothing
+	// pinned at all. Unread is not absent either: a foot that will not model keeps the old
+	// reading rather than inventing a reduction for it.
+	const pinned = belowA && belowA.boxes > 0 ? belowA.natural : 0;
 	let fromBox = -1,
 		toBox = -1;
 	for (let k = 0; k < skel.boxYs.length; k++)
@@ -121,7 +139,7 @@ export async function pageBreakCertificate(
 		return { fits: true, shrunk: { skel, items: spliced.items, top, fromBox, toBox, bandBoxes: spliced.bandBoxes, boxesAfter } };
 	}
 	const sameCount = spliced.bandBoxes === toBox - fromBox + 1;
-	const capacity = colBottom - top;
+	const capacity = colBottom - top - pinned;
 	// the layout target is measured from the packed top to the column's own last baseline,
 	// which the page bottom pins: identical to skel.target unless the top moved
 	const layoutTarget = skel.boxYs[skel.boxYs.length - 1] - top;
@@ -171,12 +189,19 @@ export async function pageBreakCertificate(
 		deps.emit('skel-break-moved', { kA: c1.kA, kB: c1.kB, boxes: boxesAfter, motion: !!moved });
 		return { fits: false, moved: moved ?? undefined };
 	}
-	const flow = certifiedFlow(skel, top, fromBox, toBox, spliced.bandBoxes, c1.ys);
+	// which reading is this column's layout -- the same question the grown branch asks at the
+	// fit split. Missing here, the SAME-COUNT edit (typing inside a line, the commonest edit
+	// there is) read a column the engine left short as though its glue had been stretched to
+	// the goal, and adopted those baselines into the record store.
+	const ys1 = fillsA ? c1.ys : (c1.nys ?? c1.ys);
+	if (ys1.length !== c1.kA) return refuse('no-natural-ys');
+	const flow = certifiedFlow(skel, top, fromBox, toBox, spliced.bandBoxes, ys1);
 	deps.emit('skel-certified', {
 		page: cal.pageNo,
 		boxes: boxesAfter,
 		calDev: +calDev.toFixed(3),
-		maxAboveDy: +flow.maxAboveDy.toFixed(3)
+		maxAboveDy: +flow.maxAboveDy.toFixed(3),
+		fills: fillsA
 	});
 	return { fits: true, ...flow };
 }

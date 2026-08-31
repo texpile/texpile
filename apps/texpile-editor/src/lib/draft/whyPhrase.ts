@@ -32,6 +32,9 @@ export function whyPhrase(reason: string): string {
 		case 'cal-empty':
 		case 'typeset':
 			return m.draft_reason_cannot_reproduce();
+		case 'command-changed':
+		case 'value-changed':
+			return m.draft_reason_command_changed();
 		case 'no-lines':
 			return m.draft_reason_nothing_to_typeset();
 		default:

@@ -2,10 +2,11 @@
 // (no Svelte, no DOM, no engine calls): diff the buffer against the baseline, pick
 // patch / merged insert-delete / full recompile, and assemble the exact TeX to send.
 // The same code drives the app and the headless edit-class matrix (tests/live).
-import { paraTex, splitParaLines, stripTexComments, wrapHead, wrapItem, type Para } from './splitParas';
+import { paraTex, splitParaLines, wrapHead, wrapItem, type Para } from './splitParas';
 import { daemonReady, repairForPreview } from './repairForPreview';
 import { scanAlignment, type Align } from './alignScan';
 import { bodyLineFor, counterBefore, isFloatEnv } from '../engineTruth';
+import { editTier } from './eligibility/editTier';
 
 export { splitParas, stripTexComments, wrapItem, type Para } from './splitParas';
 export { daemonReady, repairForPreview } from './repairForPreview';
@@ -47,6 +48,10 @@ export type PatchAction = {
 	// user macros), so such a patch renders instantly but must reconcile to certify --
 	// silent drift is worse than a recompile. Our own \par joiner is exempt.
 	cmdChanged: boolean;
+	// text moved only INSIDE unchanged structure (a heading title, an emph body, math
+	// content): renders from the engine, never adopts, always reconciles -- the text can
+	// also reach a running head or a later use, which only the pass repaints
+	interiorEdit: boolean;
 };
 export type EditDecision =
 	| { kind: 'noop' }
@@ -216,12 +221,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 		dispatchText = `\\setcounter{footnote}{${fnPin}}` + dispatchText;
 		dispatchOrig = `\\setcounter{footnote}{${fnPin}}` + dispatchOrig;
 	}
-	function cmdsOf(s: string) {
-		return (s.match(/\\[a-zA-Z@]+/g) || [])
-			.filter((c) => c !== '\\par')
-			.sort()
-			.join(' ');
-	}
+	const tier = editTier(oP.text, sendText);
 	return {
 		kind: 'patch',
 		line: oP.startLine,
@@ -233,9 +233,14 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 		// env blocks and headings ride the listItem pathway: paraLeft = column left (their
 		// records carry their own centering/indent) and no \parindent calibration variant
 		listItem: !!nP.wrap || !!nP.env || !!nP.head,
-		// both sides stripped: a \cmd inside a comment or a verb body never executes, so it
-		// must not read as a command-set change on either side
-		cmdChanged: cmdsOf(stripTexComments(sendText)) !== cmdsOf(stripTexComments(oP.text))
+		// PROVE where the edit moved, never enumerate which commands are dangerous. Three
+		// tiers: pure text adopts and skips the compile; text inside unchanged structure (a
+		// heading title, an emph body, math content) renders from the engine but never
+		// adopts and always reconciles, because an argument can reach a running head or a
+		// later use; anything structural recompiles. The name-list diff this replaced read
+		// \section{X} -> \section*{X} and \gdef\ver{2.0} -> {3.0} as unchanged.
+		cmdChanged: tier === 'structural',
+		interiorEdit: tier === 'interior'
 	};
 }
 

@@ -1,0 +1,36 @@
+% Purpose-built for the eligibility gate: every paragraph carries a construct whose meaning
+% can change WITHOUT its command name changing, which is the blind spot in a name-set diff.
+% Kept single-column and roomy so layout never decides an outcome -- the gate should be the
+% only thing that separates these rows.
+\documentclass[12pt]{article}
+\usepackage{xcolor}
+\begin{document}
+
+\section{Alpha}
+
+Plain prose with no commands at all, which any gate must let through unchanged so the
+control row proves the harness itself is not the thing refusing everything else.
+
+Prose carrying an \emph{emphasised span} in the middle of it plus enough further words
+that the paragraph wraps onto a second visual line for the locator to work with.
+
+Prose carrying inline math $a + b = c$ set in the middle of it plus enough further words
+that this paragraph also wraps onto a second visual line.
+
+\gdef\vernum{2.0}
+Prose that mentions version \vernum{} and continues with enough additional words to wrap,
+so an edit to the definition above changes text down here rather than in the band.
+
+\vspace{10pt}
+Prose after an explicit vertical space of ten points, with enough further words to wrap
+onto a second line so the band has more than one baseline.
+
+\begin{itemize}
+\item First bullet item text goes here with a few extra words.
+\item Middle bullet item text goes here with a few extra words.
+\item Last bullet item text goes here with a few extra words.
+\end{itemize}
+
+Closing prose paragraph after everything else so the document does not end on a list.
+
+\end{document}

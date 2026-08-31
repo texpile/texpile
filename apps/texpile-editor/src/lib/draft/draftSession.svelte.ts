@@ -8,6 +8,7 @@ import { locateParagraph } from './locate/locateParagraph';
 import { bandStartLine } from './locate/bandStart';
 import type { LocateContext, PaperMetrics } from './locate/locate.types';
 import { verifyPatches } from './patch/verifyPatches';
+import { recordsAfterPatch, recordDrift } from './patch/recordsAfterPatch';
 import type { Patch, PatchReq } from './patch/patch.types';
 import type { SeamEntry } from './patch/seam.types';
 import { DraftFonts } from './draftFonts';
@@ -15,11 +16,13 @@ import { DraftBitmaps } from './draftBitmaps';
 import { paintRecords, splitPatchRecords, type PaintDeps } from './draftPaint';
 import { flowDyAt } from './patch/glueShift';
 import { columnFills } from './heuristics/columnFills';
+import { columnBox } from './geometry/columnBox';
 import { DraftViewport } from './draftViewport.svelte';
 import { DraftPatcher } from './draftPatcher.svelte';
 import { DraftCompiler } from './draftCompiler.svelte';
 import { resetEngineTruth, updateEngineTruth } from './engineTruth';
 import { wordAt } from './draftWordAt';
+import { whyPhrase } from './whyPhrase';
 import { BP2PT } from './texUnits';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import type { DraftPage } from '$lib/workspace/fileSystem';
@@ -59,8 +62,11 @@ export class DraftSession {
 	readonly patcher: DraftPatcher;
 
 	private parsedPages = new Map<number, any[]>();
+	// pages whose records a patch derived rather than a compile: graded against the engine's
+	// own the next time a pass lands on them (see recordDrift)
+	private adoptedPages = new Set<number>();
 	private patchedPages = new Set<number>();
-	// per-break pruned runs from the last compile (see page-extract.lua seam capture)
+	// per-break pruned runs from the last compile: junction truth for the certified hop
 	private seams: SeamEntry[] = [];
 	// a live patch stays on screen after the fast path applies it; keep it so a zoom
 	// re-render (which redraws from the untouched page records) re-applies it instead of
@@ -108,7 +114,6 @@ export class DraftSession {
 		this.patcher = new DraftPatcher({
 			hasNative: () => !!nativeBridge(),
 			pageCount: () => this.pages.length,
-			ensureSpillPage: () => this.ensureSpillPage(),
 			compiling: () => this.compiler.compiling,
 			setStatus: (s) => (this.compiler.status = s),
 			compile: (reason) => void this.compiler.compile(reason),
@@ -133,12 +138,14 @@ export class DraftSession {
 				// stays in patchedPages: the page painted patch ink and must repaint on landing
 				if (this.activePatch.delete(n)) await this.renderPage(n);
 			},
+			adoptPatchedRecords: (n, p, stamp) => this.adoptPatchedRecords(n, p, stamp),
 			showEditBand: (b, holdMs) => this.vp.showEditBand(b, holdMs),
 			synctex: (b) => nativeBridge()!.synctex(b as any),
 			pdfPath: () => this.opts.root() + '/_draft/draft.pdf',
+			columnFills: (p, c) => columnFills(this.pageRecords(p), c),
+			colBox: (p, colL, colR) => columnBox(this.pageRecords(p), colL, colR),
 			seams: () => this.seams,
 			pageIsRtl: (p) => this.rtlPage(p),
-			columnFills: (p, c) => columnFills(this.pageRecords(p), c),
 			splitSkeleton: (items, targetPt, capacity) => {
 				const nb = nativeBridge();
 				if (!nb?.draftSkeleton) return Promise.resolve({ ok: false as const, error: 'no-bridge' });
@@ -172,6 +179,28 @@ export class DraftSession {
 		if (a.length > 200) a.splice(0, a.length - 200);
 	}
 
+	// The record store, advanced by the patch that just painted rather than by a compile. Only
+	// the parsed map moves: this.pages keeps the compile's raw strings, so the next real pass
+	// still starts from the engine's own text and any drift here cannot outlive it.
+	private adoptPatchedRecords(n: number, p: Patch, stamp: { s?: number; sf?: number }): boolean {
+		const meta = this.pages[n - 1] as any;
+		if (!meta || meta.spill) return false;
+		const next = recordsAfterPatch(this.pageRecords(n), p, (meta.ht || meta.h || Infinity) + 2, stamp);
+		if (!next) return false;
+		this.parsedPages.set(n, next);
+		this.adoptedPages.add(n);
+		this.ev('records-adopted', { page: n, records: next.length });
+		// The store just changed WITHOUT a compile, and the located-geometry caches key their
+		// validity off store changes -- so the invalidation lives HERE, with the write, where
+		// no second (or future third) writer can forget it. Left to callers, it was forgotten:
+		// typing past a wrap reused a cal describing the pre-adoption band, wiped one line too
+		// few, and left each keystroke's last line behind, a staircase marching down the page.
+		// A same-extent adoption (nothing moved) keeps the caches: plain typing must not pay a
+		// relocate on every keystroke.
+		if (p.delta !== 0 || p.flowSteps?.length || p.aboveSteps?.length) this.patcher.geometryChanged();
+		return true;
+	}
+
 	pageRecords(n: number): any[] {
 		if (!this.parsedPages.has(n)) {
 			const { records, dropped } = parseRecords(this.pages[n - 1]?.records ?? '');
@@ -184,23 +213,6 @@ export class DraftSession {
 	// nothing on it may be painted or spliced from records -- it waits for the exact-PDF raster
 	rtlPage(n: number): boolean {
 		return pageIsRtl(this.pages[n - 1]?.unc);
-	}
-
-	// Somewhere for content leaving the LAST page to land. The engine can certify that a box
-	// no longer fits, but the page it belongs on is not in this compile -- it arrives with the
-	// next one. Without a page to flow onto, the chain declined and the overflow was drawn
-	// over whatever sat below it, which is what editing the last paragraph before a
-	// bibliography looked like.
-	//
-	// Geometry is the last page's, because that is the only page shape the document has shown
-	// us. Empty of records, so nothing is claimed about it beyond what the flow paints. The
-	// compile replaces this.pages wholesale, so it cannot outlive the edit that asked for it.
-	ensureSpillPage(): boolean {
-		const last = this.pages[this.pages.length - 1];
-		if (!last) return false;
-		if (last.spill) return true;
-		this.pages = [...this.pages, { n: last.n + 1, w: last.w, h: last.h, ht: last.ht, records: '', spill: true }];
-		return true;
 	}
 
 	// The body's bottom in record space: the shipout box baseline (ht) IS the footer line's
@@ -268,9 +280,15 @@ export class DraftSession {
 		}
 		const meta = this.pages[n - 1] as any;
 		const contentBottom = (meta?.ht || meta?.h || Infinity) + 2;
-		const { unchanged, shifted } = splitPatchRecords(records, patches, contentBottom);
+		const { unchanged, shifted, raised } = splitPatchRecords(records, patches, contentBottom);
 		paintRecords(ctx, unchanged, S, 0, n, this.paintDeps());
 		patches.forEach((p, i) => {
+			// the engine's respace for the rows OVER the band, from a 0 default so anything
+			// above the column's first galley box (a pinned float, the header) stays put
+			if (raised[i].length) {
+				const lifted = raised[i].map((r: any) => (r.y === undefined ? r : { ...r, y: r.y + flowDyAt(p.aboveSteps, r.y, 0) }));
+				paintRecords(ctx, lifted, S, 0, n, this.paintDeps());
+			}
 			// glue-distributed shift (stretched pages): per-record dy from the flow steps
 			if (p.flowSteps?.length) {
 				const flowed = shifted[i].map((r: any) => (r.y === undefined ? r : { ...r, y: r.y + flowDyAt(p.flowSteps, r.y, p.delta) }));
@@ -307,7 +325,6 @@ export class DraftSession {
 			};
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
 		}
-		this.seams = r.seams ?? [];
 		// counter truth + the executed \begin{document} line: the decision layer pins to these
 		updateEngineTruth({ counters: r.counters ?? [], bodyLine: r.bodyLine, mainRel: this.opts.mainFile() });
 		this.pages = r.pages;
@@ -318,7 +335,19 @@ export class DraftSession {
 		// font expansion, where a legitimate rounding difference could appear.
 		const drift = (r.pages as { n: number; dev?: number }[]).filter((p) => (p.dev ?? 0) > 0);
 		if (drift.length) this.ev('page-walk-drift', { pages: drift.map((p) => ({ n: p.n, dev: p.dev })) });
+		// grade the derived records against the engine's own BEFORE dropping them: this is the
+		// only check that the incremental record store still describes the same document the
+		// compiler does, and it is worth having loudly rather than discovering it by a locate
+		// going wrong three edits later
+		for (const n of this.adoptedPages) {
+			const adopted = this.parsedPages.get(n);
+			if (!adopted) continue;
+			const d = recordDrift(adopted, parseRecords(this.pages[n - 1]?.records ?? '').records);
+			if (d.maxDy > 0.05 || d.maxDx > 0.05 || d.rows !== d.freshRows) this.ev('records-adopted-drift', { page: n, ...d });
+		}
+		this.adoptedPages.clear();
 		this.parsedPages.clear();
+		this.seams = r.seams ?? [];
 		this.patcher.geometryChanged(); // geometry changed; paragraphs re-locate on next patch
 		this.bitmaps.invalidate(); // tier-2 crops come from THIS compile's PDF
 		// pages we patched must repaint even if their records didn't change
@@ -357,7 +386,10 @@ export class DraftSession {
 				? m.draft_compiled_pages_one({ count: this.pages.length })
 				: m.draft_compiled_pages_other({ count: this.pages.length });
 		const passesSuffix = (r.passes ?? 1) > 1 ? ` · ${m.draft_compiled_passes({ passes: r.passes })}` : '';
-		this.compiler.status = `${m.draft_status_compiled({ secs })} · ${pageCount}${passesSuffix}`;
+		// an abandon-triggered pass closes its own loop: the status that said "Recompiling
+		// (heading)..." lands as "Recompiled (heading) in 0.7 s", not a generic compile line
+		const why = this.compiler.lastReason.startsWith('abandon:') ? whyPhrase(this.compiler.lastReason.slice(8)) : null;
+		this.compiler.status = `${why ? m.draft_status_recompiled({ reason: why, secs }) : m.draft_status_compiled({ secs })} · ${pageCount}${passesSuffix}`;
 		this.ev('compiled', { pages: this.pages.length, passes: r.passes ?? 1, changed, ms: r.ms });
 		const f = this.patcher.takeFocus();
 		if (f) {

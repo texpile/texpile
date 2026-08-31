@@ -178,3 +178,88 @@ describe('pageBreakCertificate break motion', () => {
 		expect(cert!.maxAboveDy).toBeCloseTo(0, 4);
 	});
 });
+
+describe('pageBreakCertificate column geometry', () => {
+	const run = (records: any[], results: any[], calls: string[] = [], band = [line(8), line(23), line(38)]) =>
+		pageBreakCertificate(
+			{
+				pageRecords: () => records,
+				splitSkeleton: (_i: any[], t: number, capacity?: boolean) => {
+					calls.push(`${+t.toFixed(2)}${capacity ? ' cap' : ''}`);
+					return Promise.resolve(results.shift());
+				},
+				emit: () => {}
+			} as any,
+			cal,
+			band,
+			COL_BOTTOM,
+			10
+		);
+	const spills = { ok: true, kA: 5, kB: 1, gs: 0, gsn: 0, go: 0, ys: [8, 23, 38, 53, 68] };
+
+	it('a float pinned at the column foot is not room for the text', async () => {
+		// column box 92 -> 175, galley ending at 163, then 4pt of separation and an 8pt float
+		const footFloat = [
+			{ t: 'col', x: 10, y: 175, h: 83, d: 0, w: 200, gord: 0 },
+			...recs,
+			{ t: 'vg', x: 10, y: 163, w: 4, nw: 4 },
+			{ t: 'vbox', x: 10, y: 175, h: 8, d: 0, w: 200 },
+			{ t: 'colend' }
+		];
+		const calls: string[] = [];
+		await run(footFloat, [CAL_OK, spills], calls);
+		// 83 - 12: the fit split is asked about the room the galley actually has. Measured to
+		// the body bottom it answered "fits" on a column that overflows, and a fits answer
+		// suppresses the spill render outright.
+		expect(calls).toEqual(['68', '71 cap']);
+	});
+
+	it('trailing glue is the column own slack, not something pinned', async () => {
+		// no box under the galley: 12pt of glue the text may legitimately grow into. Charging
+		// the galley for it refused certificates on columns with nothing pinned at all, and
+		// cost more correct renders than the float case ever gained.
+		const slack = [
+			{ t: 'col', x: 10, y: 175, h: 83, d: 0, w: 200, gord: 0 },
+			...recs,
+			{ t: 'vg', x: 10, y: 163, w: 12, nw: 12 },
+			{ t: 'colend' }
+		];
+		const calls: string[] = [];
+		await run(slack, [CAL_OK, spills], calls);
+		expect(calls).toEqual(['68', '83 cap']);
+	});
+
+	it('a column whose foot will not model keeps the old reading rather than inventing one', async () => {
+		// no colend: the run cannot be reconstructed to the column bottom, so nothing is
+		// subtracted and the capacity is what it always was
+		const torn = [{ t: 'col', x: 10, y: 175, h: 83, d: 0, w: 200, gord: 0 }, ...recs];
+		const calls: string[] = [];
+		await run(torn, [CAL_OK, spills], calls);
+		expect(calls).toEqual(['68', '83 cap']);
+	});
+
+	it('a same-count edit on a column the engine left short reads it at natural glue', async () => {
+		// gord 2 = a fil took the slack, so the column stacks at natural and the stretched
+		// reading would spread its rows. The grown branch has always made this distinction;
+		// the same-count branch -- typing inside a line, the commonest edit there is -- did not.
+		const ragged = [{ t: 'col', x: 10, y: 175, h: 83, d: 0, w: 200, gord: 2 }, ...recs, { t: 'colend' }];
+		const stretchedAndNatural = {
+			ok: true,
+			kA: 5,
+			kB: 0,
+			gs: 0,
+			gsn: 0,
+			go: 0,
+			ys: [8, 28, 48, 68, 88],
+			nys: [8, 23, 38, 53, 68]
+		};
+		// the calibration splits the unedited column at its own natural extent, so it packs at
+		// natural either way; only the LAYOUT split, handed an edited band, has slack to set
+		const cert = await run(ragged, [CAL_OK, stretchedAndNatural], [], [line(8), line(23)]);
+		expect(cert!.fits).toBe(true);
+		// natural: every box back where the page has it. The stretched reading would have
+		// reported the column spread and the band 5pt low.
+		expect(cert!.bandAbsYs!.map((y) => +y.toFixed(2))).toEqual([115, 130]);
+		expect(cert!.maxAboveDy).toBeCloseTo(0, 4);
+	});
+});
