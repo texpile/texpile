@@ -269,4 +269,4 @@ jobs:
         run: |
           { echo "Download installers: https://texpile.com/download"; echo; \
             node apps/texpile-editor/scripts/release-notes.mjs | sed 's/^/- /'; } > body.md
-          gh release create "$GITHUB_REF_NAME" --title "Texpile $GITHUB_REF_NAME" --notes-file body.md
+          gh release create "$GITHUB_REF_NAME" --title "Texpile $GITHUB_REF_NAME" --notes-file body.md             $([[ "$GITHUB_REF_NAME" == *-* ]] && echo --prerelease)

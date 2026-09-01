@@ -16,6 +16,9 @@ copyright: Copyright © Texpile
 publish:
   provider: generic
   url: https://updates.texpile.com
+# one feed for every version: without this a 1.0.0-rc.1 build writes rc*.yml and installs of it
+# poll rc*.yml, while release.yml and every other install only know latest*.yml
+detectUpdateChannel: false
 
 directories:
   output: release
