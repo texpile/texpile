@@ -35,3 +35,4 @@ vite.config.ts.timestamp-*
 roundtrip-diff/
 # exception: the installer license page (electron-builder nsis.license)
 !build/license.txt
+**/test-results/

@@ -24,6 +24,7 @@
 		"dist:linux": "pnpm app:build && electron-builder --linux --publish never",
 		"dist:dir": "pnpm app:build && electron-builder --dir",
 		"format": "prettier --write .",
+		"lint": "prettier --check . && pnpm --filter texpile-editor exec eslint . && eslint electron",
 		"lint:electron": "eslint electron",
 		"electron:build:prod": "tsc -p electron --noEmit && node scripts/build-electron.mjs"
 	},
