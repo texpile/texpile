@@ -1,6 +1,3 @@
-# type-check, lint, and unit-test on every commit and pull request. Also callable: the
-# release workflow runs this same job as its gate, so tag pushes are covered there and
-# excluded here (branches-only) to avoid running twice.
 name: test
 
 on:
@@ -16,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # pnpm version comes from package.json's packageManager field
       - uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v4
@@ -25,15 +21,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-
-      # svelte-check resolves svelte-pdf-view through its dist, so build the package first
       - run: pnpm --filter svelte-pdf-view package
-
       - run: pnpm --filter texpile-editor check
       - run: pnpm --filter texpile-editor lint
       - run: pnpm --filter texpile-editor testonce
-      # The Typst parser package. NO Rust toolchain is needed: its wasm-pack output (pkg/) is
-      # committed, and its build script is deliberately named `build:wasm` so the root
-      # `pnpm build` (-r run build) does not try to invoke wasm-pack here.
       - run: pnpm --filter texpile-typst-syntax-wasm test
       - run: npx tsc -p electron --noEmit

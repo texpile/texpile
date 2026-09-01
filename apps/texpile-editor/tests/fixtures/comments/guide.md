@@ -31,11 +31,11 @@ pnpm electron:dev
 
 ## A table of the projects
 
-| Folder     | Format   | Main file   | Compiles with        |
-| ---------- | -------- | ----------- | -------------------- |
-| `latex/`   | LaTeX    | `main.tex`  | `latexmk -pdf`       |
-| `typst/`   | Typst    | `main.typ`  | `typst compile`      |
-| `markdown/`| Markdown | `notes.md`  | nothing; preview only|
+| Folder      | Format   | Main file  | Compiles with         |
+| ----------- | -------- | ---------- | --------------------- |
+| `latex/`    | LaTeX    | `main.tex` | `latexmk -pdf`        |
+| `typst/`    | Typst    | `main.typ` | `typst compile`       |
+| `markdown/` | Markdown | `notes.md` | nothing; preview only |
 
 > Each folder is meant to be opened as its own workspace, since the compile command is stored
 > per folder.

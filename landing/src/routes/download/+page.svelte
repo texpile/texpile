@@ -193,7 +193,9 @@
 							<OsLogo os={p.os} class="h-7 w-7" />
 						</div>
 						<div class="font-semibold">{p.name}</div>
-						<div class="text-surface-500 text-sm">{p.detail}</div>
+						<div class="text-surface-500 text-sm">
+							{p.detail}{#if versionLabel}&nbsp;·&nbsp;{versionLabel}{/if}
+						</div>
 						<div class="mt-auto flex flex-col items-center pt-2">
 							{#if p.key === 'linux'}
 								{@render linuxDownload('grid')}
@@ -205,7 +207,7 @@
 									class="btn preset-outlined-primary-500 rounded-base inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium"
 								>
 									<Download class="h-4 w-4" />
-									{m.word_download()}{#if versionLabel}&nbsp;{versionLabel}{/if}
+									{m.word_download()}
 								</a>
 							{/if}
 						</div>
@@ -295,7 +297,7 @@
 				: 'btn preset-outlined-primary-500 rounded-base inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium'}
 		>
 			<Download class="h-4 w-4" />
-			{m.word_download()}{#if variant === 'grid' && versionLabel}&nbsp;{versionLabel}{/if}
+			{m.word_download()}
 			<ChevronDown class="h-4 w-4 opacity-70" />
 		</Menu.Trigger>
 		<Portal>

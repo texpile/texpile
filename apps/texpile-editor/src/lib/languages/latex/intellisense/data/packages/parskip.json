@@ -1,20 +1,9 @@
 {
-  "deps": [],
-  "macros": [],
-  "envs": [],
-  "keys": {
-    "\\usepackage/parskip#c": [
-      "skip",
-      "skip=",
-      "tocskip",
-      "tocskip=",
-      "indent",
-      "indent=",
-      "parfill",
-      "parfill="
-    ]
-  },
-  "args": [
-    "\\usepackage/parskip#c"
-  ]
+	"deps": [],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/parskip#c": ["skip", "skip=", "tocskip", "tocskip=", "indent", "indent=", "parfill", "parfill="]
+	},
+	"args": ["\\usepackage/parskip#c"]
 }

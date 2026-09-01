@@ -26,11 +26,9 @@ on:
       - 'v*'
 
 permissions:
-  contents: write # create the GitHub release on tag builds
+  contents: write # github release perm
 
 jobs:
-  # the full test workflow gates every release build: a tag or manual dispatch never
-  # ships installers from a commit that fails check/lint/unit tests
   test:
     uses: ./.github/workflows/test.yml
 
@@ -39,8 +37,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # latest*.yml + the mac zip + the blockmaps feed electron-updater (see publish-r2);
-        # AppImage embeds its blockmap, so Linux ships no separate one
         include:
           - os: windows-latest
             artifacts: |
@@ -75,23 +71,14 @@ jobs:
       - if: runner.os == 'Linux'
         run: pnpm electron:rebuild
 
-      # version goes into the artifact name so a stale build can't be mistaken for a fresh one
       - id: ver
         run: echo "v=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
         shell: bash
 
-      # newest CHANGELOG entry -> latest*.yml releaseNotes (shown in the in-app update modal)
       - name: Write release notes for the updater feed
         run: node apps/texpile-editor/scripts/release-notes.mjs > release-notes.md
         shell: bash
 
-      # the PowerShell module electron-builder uses for Azure Trusted Signing; a named up-front step
-      # turns a PSGallery hiccup into an obvious failure. electron-builder@26 asks the gallery for
-      # >= 0.5.0 (25.1.8 pinned 0.4.1), so match its floor rather than a hard pin.
-      # Installed with PSResourceGet, which ships with the runner's PowerShell 7 and reaches the
-      # gallery on its own: PowerShellGet v2 first has to bootstrap a NuGet provider, and when that
-      # fails PSGallery is never registered, so Set-PSRepository dies with "No repository with the
-      # name 'PSGallery' was found" (this is what broke the v0.14.0 build).
       - name: Set up Azure Trusted Signing (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
@@ -101,17 +88,6 @@ jobs:
           Import-Module TrustedSigning -MinimumVersion 0.5.0 -ErrorAction Stop
           Write-Host "TrustedSigning $((Get-Module TrustedSigning).Version) ready"
 
-      # creds come from the AZURE_* secrets, account/profile/endpoint from repo variables. The
-      # RFC-3161 timestamp is essential: Trusted Signing certs live ~3 days, so untimestamped
-      # signatures die when the cert lapses. Use the long --config.<path> form: pwsh tokenizes
-      # -c.<path> into `-c` plus a bogus config file path (ENOENT).
-      #
-      # publisherName is REQUIRED by electron-builder@26 (25.1.8 had no such field for Azure, and
-      # nothing derives it from the signing service). It must equal the certificate subject's CN
-      # verbatim, because it is written into app-update.yml and electron-updater checks the
-      # downloaded installer's Authenticode publisher against it before running it. The timestamp
-      # keys are camelCase here for the same reason: 26 reads timestampRfc3161/timestampDigest and
-      # forwards anything else through untouched.
       - name: Build & sign installer (Windows / Azure Trusted Signing)
         if: runner.os == 'Windows'
         shell: pwsh
@@ -129,8 +105,6 @@ jobs:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
 
-      # decode the notarization API key to a real file: @electron/notarize passes it straight to
-      # `xcrun notarytool --key`, which requires an actual path, not the secret's base64 content
       - name: Build & sign installer (macOS / Developer ID + notarization)
         if: runner.os == 'macOS'
         shell: bash
@@ -145,7 +119,6 @@ jobs:
           APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
 
-      # Linux always builds unsigned (no distribution-wide signing convention there)
       - name: Build installer (Linux, unsigned)
         if: runner.os == 'Linux'
         run: pnpm dist --config.releaseInfo.releaseNotesFile=release-notes.md
@@ -156,18 +129,14 @@ jobs:
           path: ${{ matrix.artifacts }}
           if-no-files-found: error
 
-  # publish the installers to the R2 bucket behind the landing page's download links.
-  # Needs CLOUDFLARE_API_TOKEN ("Workers R2 Storage: Edit") + CLOUDFLARE_ACCOUNT_ID secrets.
   publish-r2:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish_r2
     runs-on: ubuntu-latest
-    # the Cloudflare secrets live in this environment; without naming it they never reach the job
     environment: CICD
     env:
       BUCKET: texpile-releases # must match the bucket name created in the Cloudflare dashboard
     steps:
-      # only needed to read the version from package.json
       - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v4
@@ -176,10 +145,6 @@ jobs:
           merge-multiple: true
           path: dist
 
-      # artifact names are pinned in electron-builder.yml (they're recorded inside latest*.yml,
-      # so nothing may be renamed here); point the ymls' file urls at the immutable v<version>/ copies.
-      # The presence check runs BEFORE any R2 write: the uploads aren't atomic, so a missing
-      # artifact must fail the job here, not halfway through publishing
       - name: Verify artifacts and rewrite updater feed urls
         run: |
           VERSION=$(node -p "require('./package.json').version")
@@ -195,18 +160,11 @@ jobs:
           node apps/texpile-editor/scripts/update-yml.mjs dist/latest.yml dist/latest-mac.yml dist/latest-linux.yml
           ls -la dist
 
-      # the landing fetches this to link the versioned files and show the version; the updates
-      # worker serves its `version` + `notes` (from the newest CHANGELOG.md entry) to the app
       - name: Write latest.json
         run: |
           node apps/texpile-editor/scripts/latest-json.mjs > dist/latest.json
           cat dist/latest.json
 
-      # each release lands twice: an immutable copy under v<version>/, plus the stable root names
-      # (overwritten every release, the landing's no-JS fallback links). The updater files ship
-      # too: mac zip + blockmaps under v<version>/ (differential downloads fetch old-version
-      # blockmaps by path, so v-prefixed copies must stay forever), latest*.yml at the root
-      # (served to the app by updates.texpile.com from this same bucket).
       - name: Upload to R2
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -229,8 +187,6 @@ jobs:
           put "latest-linux.yml" "dist/latest-linux.yml" "text/yaml; charset=utf-8"
           put "latest.json" "dist/latest.json" application/json
 
-      # cumulative manifest for the landing's version history (latest.json only describes the
-      # newest). Dropping any existing entry for this version keeps a re-publish idempotent.
       - name: Update versions.json
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -260,8 +216,6 @@ jobs:
           cat dist/versions.json
           npx wrangler@4 r2 object put "$BUCKET/versions.json" --file dist/versions.json --remote --content-type application/json
 
-      # binaries are deliberately NOT attached: distribution is texpile.com/download (R2).
-      # The release is just the public changelog entry, published automatically.
       - name: Publish GitHub release (notes + download link, no binaries)
         if: startsWith(github.ref, 'refs/tags/v')
         env:

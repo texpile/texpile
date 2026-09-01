@@ -132,7 +132,6 @@ Breaking changes take a `!` before the colon and a `BREAKING CHANGE:` footer des
 
     BREAKING CHANGE: consumers passing a store to createEditor must pass a rune instead
 
-
 ## Merging
 
 1. Squash merge every PR. Main keeps one commit per change, with a subject that follows the rules above

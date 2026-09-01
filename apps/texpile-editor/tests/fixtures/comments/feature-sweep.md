@@ -24,7 +24,7 @@ between them unchanged. The frontmatter above is YAML and is edited in source mo
 
 ###### H6 (ATX)
 
-### A closed ATX heading ###
+### A closed ATX heading
 
 Setext H1
 =========
@@ -34,7 +34,7 @@ Setext H2
 
 ## Inline formatting
 
-Text can be *emphasised*, _also emphasised_, **strong**, __also strong__, ***both at once***,
+Text can be _emphasised_, _also emphasised_, **strong**, **also strong**, _**both at once**_,
 `inline code`, and ~~struck through~~ where the renderer supports it.
 
 Escapes matter: \*not emphasis\*, \_not emphasis\_, \# not a heading, and a literal backslash \\.
@@ -59,7 +59,8 @@ Non-ASCII prose for the spell checker: naïve, café, Gödel, Erdős, Straße, �
   This paragraph belongs to the item above, indented by two spaces.
 
 * A different bullet marker.
-+ And a third.
+
+- And a third.
 
 1. Ordered.
 2. Second.
@@ -79,8 +80,8 @@ A list may start at any number:
 
 Parentheses are a valid delimiter:
 
-1) First.
-2) Second.
+1. First.
+2. Second.
 
 Mixed nesting:
 
@@ -100,8 +101,8 @@ Task lists, where supported:
 
 ## Links and images
 
-An [inline link](https://texpile.com), an [inline link with a title](https://texpile.com "The
-Texpile site"), a [reference link][ref], a [collapsed reference][], and a bare autolink:
+An [inline link](https://texpile.com), an [inline link with a title](https://texpile.com 'The
+Texpile site'), a [reference link][ref], a [collapsed reference][], and a bare autolink:
 <https://typst.app>.
 
 [ref]: https://github.com/typst/typst
@@ -114,7 +115,7 @@ An image, which the editor should render inline and let you resize:
 
 ![A generated plate](images/plate.png)
 
-An image with a title: ![plate](images/plate.png "Hover text")
+An image with a title: ![plate](images/plate.png 'Hover text')
 
 ## Blockquotes
 
@@ -128,7 +129,7 @@ An image with a title: ![plate](images/plate.png "Hover text")
 
 ## Code
 
-Inline `code`, and code containing a backtick: `` a ` b ``.
+Inline `code`, and code containing a backtick: ``a ` b``.
 
 An indented code block:
 
@@ -148,18 +149,18 @@ def fib(n: int) -> int:
 
 ```json
 {
-  "name": "texpile-test",
-  "nested": { "array": [1, 2, 3], "flag": true, "nothing": null }
+	"name": "texpile-test",
+	"nested": { "array": [1, 2, 3], "flag": true, "nothing": null }
 }
 ```
 
 A fence using tildes, containing backticks:
 
-~~~
+````
 ```
 not a nested fence
 ```
-~~~
+````
 
 ## Math
 
@@ -181,31 +182,33 @@ $$
 
 | Method   | Variant |  Mean |  Std |
 | :------- | :-----: | ----: | ---: |
-| Baseline | none    | 61.30 | 2.41 |
-| Ours     | small   | 74.05 | 1.98 |
-| Ours     | large   | 81.77 | 1.12 |
+| Baseline |  none   | 61.30 | 2.41 |
+| Ours     |  small  | 74.05 | 1.98 |
+| Ours     |  large  | 81.77 | 1.12 |
 
 A table with inline formatting and a pipe escape:
 
-| Syntax | Renders as | Note |
-| ------ | ---------- | ---- |
-| `*x*`  | *x*        | a \| literal pipe |
-| `[l](u)` | [l](https://texpile.com) | a link |
+| Syntax   | Renders as               | Note              |
+| -------- | ------------------------ | ----------------- |
+| `*x*`    | _x_                      | a \| literal pipe |
+| `[l](u)` | [l](https://texpile.com) | a link            |
 
 ## Horizontal rules
 
 ---
 
-***
+---
 
-___
+---
 
 ## Footnotes
 
 A sentence with a footnote.[^1] And a second.[^note]
 
 [^1]: The first footnote body.
-[^note]: A named footnote, which can span
+
+[^note]:
+    A named footnote, which can span
     multiple lines when indented.
 
 ## HTML passthrough

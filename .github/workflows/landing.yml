@@ -1,6 +1,4 @@
-# Deploy the landing page to Cloudflare Pages on changes to master.
-# Needs CLOUDFLARE_API_TOKEN (with "Cloudflare Pages: Edit") + CLOUDFLARE_ACCOUNT_ID secrets;
-# the Pages project must already exist, with the custom domain attached in the dashboard.
+#TODO: need migration to worker
 name: landing
 
 on:
@@ -15,10 +13,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # the Cloudflare secrets live in this environment; without naming it they never reach the job
     environment: CICD
     env:
-      PROJECT: texpile-desktop # the Cloudflare Pages project name
+      PROJECT: texpile-desktop
     steps:
       - uses: actions/checkout@v4
 
@@ -38,5 +35,4 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        # --branch must match the project's production branch, or the deploy is filed as a preview
         run: npx wrangler@4 pages deploy build --project-name "$PROJECT" --branch master

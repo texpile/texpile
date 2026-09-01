@@ -1,15 +1,15 @@
 {
-  "deps": [],
-  "macros": [],
-  "envs": [
-    {
-      "name": "enumerate",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:option}]"
-      }
-    }
-  ],
-  "keys": {},
-  "args": []
+	"deps": [],
+	"macros": [],
+	"envs": [
+		{
+			"name": "enumerate",
+			"arg": {
+				"format": "[]",
+				"snippet": "[${1:option}]"
+			}
+		}
+	],
+	"keys": {},
+	"args": []
 }

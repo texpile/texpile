@@ -1,14 +1,14 @@
 {
-  "deps": [
-    {
-      "name": "tikz"
-    },
-    {
-      "name": "tikzlibrarycd"
-    }
-  ],
-  "macros": [],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [
+		{
+			"name": "tikz"
+		},
+		{
+			"name": "tikzlibrarycd"
+		}
+	],
+	"macros": [],
+	"envs": [],
+	"keys": {},
+	"args": []
 }

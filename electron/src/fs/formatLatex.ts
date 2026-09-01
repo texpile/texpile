@@ -1,7 +1,4 @@
-// shell out to latexindent (ships with TeX Live/MiKTeX, same assumption as the compile command)
-// rather than reimplement LaTeX-aware reindenting ourselves. runs next to the original file so a
-// project-local .indentconfig.yaml/localSettings.yaml is picked up, same as latexindent's own CLI
-// convention; the temp input + its indent.log are cleaned up either way.
+// calls latex indent via shell
 import { writeFile, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { execFile } from 'node:child_process';
