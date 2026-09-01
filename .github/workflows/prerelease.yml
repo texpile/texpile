@@ -85,5 +85,5 @@ jobs:
             --prerelease \
             --target "${{ github.sha }}" \
             --title "v${VERSION} prerelease (build ${{ github.run_number }})" \
-            --notes "Unsigned prerelease built from \`${{ github.sha }}\`. Not code-signed: macOS needs right-click -> Open, Windows shows a SmartScreen warning." \
+            --notes "Unsigned prerelease built from \`${{ github.sha }}\`. Not code-signed: macOS blocks the first launch, allow it in System Settings > Privacy & Security. Windows shows a SmartScreen warning." \
             "${FILES[@]}"

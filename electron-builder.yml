@@ -131,10 +131,8 @@ mac:
   # CI-side rename would break the updater feed; keep them canonical at the source.
   artifactName: ${productName}-${version}.${ext}
   category: public.app-category.productivity
-  # a prebuilt icns, NOT icon.png: electron-builder 26 started deriving a 16x16 variant, and the
-  # logo is a thin unplated glyph that rasterises to mostly anti-aliased haze at that size (36%
-  # solid ink vs 59% at 32px), which is the speckled dmg title-bar icon. This set omits 16x16 so
-  # macOS downscales the 32x32 as it did under 25. Regenerate it if icon.png ever changes.
+  # built by scripts/make-icns.py rather than derived from icon.png: a derived set gains a 16x16
+  # (haze for this thin glyph) and carries PNG in the icp5/icp6 slots, which macOS renders as noise
   icon: electron/icon.icns
 
 # NOTE: per-platform `files` blocks must NOT be used for the cross-platform prebuild pruning:
