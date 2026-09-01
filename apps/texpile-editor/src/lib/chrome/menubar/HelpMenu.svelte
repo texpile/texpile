@@ -27,23 +27,28 @@
 				{#if canTutorial}
 					<Menu.Item value="tutorial" class={itemClass}><Menu.ItemText>{m.menubar_open_tutorial()}</Menu.ItemText></Menu.Item>
 				{/if}
-				<Menu.Item value="whatsnew" class={itemClass}>
-					<Menu.ItemText>{m.whatsnew_menu_label()}</Menu.ItemText>
-					{#if hasUnseenWhatsNew.current}
-						<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>
-					{/if}
-				</Menu.Item>
+				{#if !__WEB__}
+					<Menu.Item value="whatsnew" class={itemClass}>
+						<Menu.ItemText>{m.whatsnew_menu_label()}</Menu.ItemText>
+						{#if hasUnseenWhatsNew.current}
+							<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>
+						{/if}
+					</Menu.Item>
+				{/if}
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="docs" class={itemClass}><Menu.ItemText>{m.menubar_documentation()}</Menu.ItemText></Menu.Item>
 				<Menu.Item value="discord" class={itemClass}><Menu.ItemText>{m.menubar_join_discord()}</Menu.ItemText></Menu.Item>
 				<Menu.Item value="support" class={itemClass}><Menu.ItemText>{m.menubar_contact_support()}</Menu.ItemText></Menu.Item>
-				<Menu.Separator class={separatorClass} />
-				<Menu.Item value="updates" class={itemClass}>
-					<Menu.ItemText>{m.menubar_check_for_updates()}</Menu.ItemText>
-					{#if updateState.current.phase === 'downloaded'}
-						<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>
-					{/if}
-				</Menu.Item>
+				<!-- a web page updates by reloading; there is no installer to offer -->
+				{#if !__WEB__}
+					<Menu.Separator class={separatorClass} />
+					<Menu.Item value="updates" class={itemClass}>
+						<Menu.ItemText>{m.menubar_check_for_updates()}</Menu.ItemText>
+						{#if updateState.current.phase === 'downloaded'}
+							<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>
+						{/if}
+					</Menu.Item>
+				{/if}
 				<Menu.Separator class={separatorClass} />
 				<!-- Dev Tools used to ride this line; it lives in the command palette now (search
 				     "dev"), so the menu every writer opens carries no debugger furniture -->

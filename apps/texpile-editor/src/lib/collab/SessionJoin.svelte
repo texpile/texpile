@@ -4,13 +4,23 @@
 	import { navigate } from '$lib/router.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { formatShareCode, isValidShareCode, normalizeShareCode } from '$lib/collab/e2e/shareCode';
+	import { pendingJoinCode, pendingJoinName, codeFromJoinLink, appLinkFor } from '$lib/collab/joinLink.svelte';
 	import AppFrame from '$lib/chrome/AppFrame.svelte';
 	import { settings, updateSettings, DEFAULT_COLLAB_RELAY_URL } from '$lib/settings';
 	import { userData, updateUserData } from '$lib/storage/userData';
 	import { m } from '$lib/paraglide/messages';
-	import { RotateCcw, ShieldCheck, ChevronDown } from '@lucide/svelte';
+	import { RotateCcw, ShieldCheck, ChevronDown, ExternalLink } from '@lucide/svelte';
+	import Modal from '$lib/modals/Modal.svelte';
 
 	let codeInput = $state('');
+	// a join link carries the code, whether this tab opened with one or the OS handed the running
+	// app a texpile:// link. Either way the name is all that is left to fill in.
+	$effect(() => {
+		const handed = pendingJoinCode.current;
+		if (handed) codeInput = formatShareCode(handed);
+		const handedName = pendingJoinName.current;
+		if (handedName) nameInput = handedName;
+	});
 	let nameInput = $state(loadName());
 	let relayDraft = $state(settings.current.collabRelayUrl);
 	let relayTouched = $state(false);
@@ -47,6 +57,14 @@
 	 */
 	function onCodeInput(e: Event) {
 		const el = e.currentTarget as HTMLInputElement;
+		// a pasted join link resolves to the code it carries; caret handling below is for typing
+		const linked = codeFromJoinLink(el.value);
+		if (linked) {
+			el.value = formatShareCode(linked);
+			codeInput = el.value;
+			el.setSelectionRange(el.value.length, el.value.length);
+			return;
+		}
 		const before = normalizeShareCode(el.value.slice(0, el.selectionStart ?? el.value.length)).length;
 		const formatted = formatShareCode(el.value);
 		// assign the DOM value first: Svelte's own update then sees the element already holding this
@@ -59,6 +77,35 @@
 		// next one rather than in front of a hyphen
 		while (pos < formatted.length && formatted[pos] === '-') pos++;
 		el.setSelectionRange(pos, pos);
+	}
+
+	let appModalOpen = $state(false);
+	let nameEl = $state<HTMLInputElement | null>(null);
+
+	// the modal interrupted a join, so dismissing it should finish the join rather than hand the
+	// user back a form they have to submit again. Nothing to submit without a name: put the caret
+	// there instead of failing silently.
+	function continueInBrowser() {
+		appModalOpen = false;
+		if (!joinDisabled) void join();
+		else nameEl?.focus();
+	}
+
+	/**
+	 * Hand the code to the desktop app, then offer the way out regardless.
+	 *
+	 * There is no API for "is this scheme registered". Watching for blur to infer success sounds
+	 * right and is not: anything else taking focus - devtools, a notification - looks identical to
+	 * the app opening, so a genuinely dead link stayed silent. Showing the prompt unconditionally is
+	 * never wrong; if the app did open, the tab is behind it and the prompt is dismissed on return.
+	 */
+	function openInApp() {
+		if (!isValidShareCode(codeInput)) return;
+		window.location.href = appLinkFor(codeInput, nameInput);
+		// 300ms, not longer: nothing is being detected, so the only job is to let the browser's own
+		// "Open Texpile?" dialog land first rather than stacking two prompts. Below the threshold
+		// where a stall reads as one, so it needs no spinner.
+		setTimeout(() => (appModalOpen = true), 300);
 	}
 
 	function backHome() {
@@ -115,6 +162,7 @@
 				<label class="mb-3 block">
 					<span class="mb-1 block text-sm font-medium">{m.session_name_label()}</span>
 					<input
+						bind:this={nameEl}
 						class="input w-full"
 						maxlength={40}
 						bind:value={nameInput}
@@ -125,29 +173,33 @@
 					<p class="text-error-600-400 mb-3 text-sm">{errorText(collabGuest.joinError)}</p>
 				{/if}
 
-				<!-- plumbing almost nobody changes: collapsed unless they're already on a custom relay -->
-				<button
-					type="button"
-					class="text-surface-500 hover:text-surface-950-50 inline-flex items-center gap-1 text-xs"
-					onclick={() => (advancedOpen = !advancedOpen)}
-				>
-					<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
-					{m.session_relay_label()}
-				</button>
-				{#if advancedOpen}
-					<div class="mt-2 flex gap-2">
-						<input class="input flex-1 text-sm" bind:value={relayDraft} oninput={() => (relayTouched = true)} />
-						<button
-							type="button"
-							class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
-							onclick={resetRelay}
-							disabled={relayIsDefault}
-							title={m.collab_relay_reset_title()}
-							aria-label={m.collab_relay_reset()}
-						>
-							<RotateCcw class="size-4" />
-						</button>
-					</div>
+				<!-- the browser build pins the relay: its CSP only allows the official one, so a custom
+				     address here would fail silently -->
+				{#if !__WEB__}
+					<!-- plumbing almost nobody changes: collapsed unless they're already on a custom relay -->
+					<button
+						type="button"
+						class="text-surface-500 hover:text-surface-950-50 inline-flex items-center gap-1 text-xs"
+						onclick={() => (advancedOpen = !advancedOpen)}
+					>
+						<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
+						{m.session_relay_label()}
+					</button>
+					{#if advancedOpen}
+						<div class="mt-2 flex gap-2">
+							<input class="input flex-1 text-sm" bind:value={relayDraft} oninput={() => (relayTouched = true)} />
+							<button
+								type="button"
+								class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
+								onclick={resetRelay}
+								disabled={relayIsDefault}
+								title={m.collab_relay_reset_title()}
+								aria-label={m.collab_relay_reset()}
+							>
+								<RotateCcw class="size-4" />
+							</button>
+						</div>
+					{/if}
 				{/if}
 
 				<p class="text-surface-500 border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
@@ -156,12 +208,41 @@
 				</p>
 
 				<div class="mt-4 flex justify-end gap-2">
-					<button class="btn preset-tonal" onclick={() => navigate('/')}>{m.session_cancel()}</button>
-					<button class="btn preset-filled-primary-500" disabled={joinDisabled} onclick={join}>
-						{collabGuest.status === 'joining' ? m.session_joining() : m.session_join_button()}
-					</button>
+					<!-- nowhere to cancel TO in the browser build: this screen is the whole app -->
+					{#if !__WEB__}
+						<button class="btn preset-tonal" onclick={() => navigate('/')}>{m.session_cancel()}</button>
+					{/if}
+					{#if __WEB__ && isValidShareCode(codeInput)}
+						<!-- stacked, not side by side: two labels of different lengths made a lopsided row, and
+						     stacking also lets the app option keep the full width it deserves as the lead. -->
+						<div class="flex w-full flex-col gap-2">
+							<button class="btn preset-filled-primary-500 w-full" onclick={openInApp}>
+								<ExternalLink class="size-4" />
+								{m.session_open_in_app()}
+							</button>
+							<button class="btn preset-tonal w-full" disabled={joinDisabled} onclick={join}>
+								{collabGuest.status === 'joining' ? m.session_joining() : m.session_join_here()}
+							</button>
+						</div>
+					{:else}
+						<button class="btn preset-filled-primary-500" disabled={joinDisabled} onclick={join}>
+							{collabGuest.status === 'joining' ? m.session_joining() : m.session_join_button()}
+						</button>
+					{/if}
 				</div>
 			</div>
 		</div>
 	{/if}
 </AppFrame>
+
+{#if __WEB__}
+	<Modal bind:open={appModalOpen} title={m.session_app_missing_title()}>
+		<p class="text-surface-600-300 mb-4 text-sm">{m.session_app_missing_body()}</p>
+		<div class="flex justify-end gap-2">
+			<button class="btn preset-tonal" onclick={continueInBrowser}>{m.session_continue_browser()}</button>
+			<a class="btn preset-filled-primary-500" href="https://texpile.com/download" target="_blank" rel="noopener noreferrer">
+				{m.session_download()}
+			</a>
+		</div>
+	</Modal>
+{/if}

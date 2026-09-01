@@ -1,4 +1,7 @@
 declare global {
+	/** injected by Vite `define`: true in the browser-guest build (`vite build --mode web`). */
+	const __WEB__: boolean;
+
 	/** injected by Vite `define` from package.json. */
 	const __APP_VERSION__: string;
 

@@ -5,6 +5,7 @@
 	import { settings, updateSettings, DEFAULT_COLLAB_RELAY_URL } from '$lib/settings';
 	import { m } from '$lib/paraglide/messages';
 	import { Copy, Check, RotateCcw, ShieldCheck, ChevronDown, TriangleAlert } from '@lucide/svelte';
+	import { joinLinkFor } from '$lib/collab/joinLink.svelte';
 	import Modal from '$lib/modals/Modal.svelte';
 
 	let {
@@ -16,6 +17,7 @@
 	let relayDraft = $state(settings.current.collabRelayUrl);
 	let relayTouched = $state(false);
 	let copied = $state(false);
+	let linkCopied = $state(false);
 	let advancedOpen = $state(false);
 	$effect(() => {
 		const url = settings.current.collabRelayUrl;
@@ -44,6 +46,20 @@
 			await navigator.clipboard.writeText(collabHost.shareCode);
 			copied = true;
 			setTimeout(() => (copied = false), 1500);
+		} catch {
+			/* clipboard denied */
+		}
+	}
+
+	// only offered on the default relay: the public join page cannot reach a session on someone
+	// else's relay, and a link that quietly fails is worse than no link
+	const linkable = $derived(settings.current.collabRelayUrl.trim().replace(/\/+$/, '') === DEFAULT_COLLAB_RELAY_URL);
+
+	async function copyLink() {
+		try {
+			await navigator.clipboard.writeText(joinLinkFor(collabHost.shareCode));
+			linkCopied = true;
+			setTimeout(() => (linkCopied = false), 1500);
 		} catch {
 			/* clipboard denied */
 		}
@@ -113,18 +129,28 @@
 	{:else}
 		<p class="text-surface-600-300 mb-3 text-sm">{m.share_active_hint()}</p>
 		<div class="mb-3">
-			<span class="mb-1 block text-sm font-medium">{m.share_code_label()}</span>
+			<span class="mb-1 block text-sm font-medium">{linkable ? m.share_link_label() : m.share_code_label()}</span>
 			<div class="flex items-stretch gap-2">
-				<code class="bg-surface-200-800 flex-1 rounded px-3 py-2 font-mono text-sm tracking-wide select-all">{collabHost.shareCode}</code>
+				<code class="bg-surface-200-800 min-w-0 flex-1 truncate rounded px-3 py-2 font-mono text-sm tracking-wide select-all">
+					{linkable ? joinLinkFor(collabHost.shareCode) : collabHost.shareCode}
+				</code>
 				<button
 					class="preset-tonal flex shrink-0 items-center justify-center rounded px-3"
-					onclick={copyCode}
-					title={copied ? m.share_copied() : m.share_copy()}
-					aria-label={m.share_copy()}
+					onclick={linkable ? copyLink : copyCode}
+					title={linkable ? m.share_copy_link() : m.share_copy()}
+					aria-label={linkable ? m.share_copy_link() : m.share_copy()}
 				>
-					{#if copied}<Check class="size-4" />{:else}<Copy class="size-4" />{/if}
+					{#if linkable ? linkCopied : copied}<Check class="size-4" />{:else}<Copy class="size-4" />{/if}
 				</button>
 			</div>
+			<!-- still shown: a code is what you read out over a call, and what someone types into the
+			     desktop app by hand. The join field takes either. -->
+			{#if linkable}
+				<p class="text-surface-500 mt-1.5 text-xs">
+					{m.share_or_code()}
+					<span class="font-mono select-all">{collabHost.shareCode}</span>
+				</p>
+			{/if}
 		</div>
 		<p class="text-surface-600-300 mb-2 text-sm">
 			{m.share_guests_count({ count: guestCount, max: MAX_GUESTS })}

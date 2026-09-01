@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { route } from '$lib/router.svelte';
+	import { navigate, route } from '$lib/router.svelte';
 	import { nativeBridge, openNewWindow } from '$lib/workspace/fileSystem';
 	import { openFileInWindow, openFolderInWindow } from '$lib/workspace/openWorkspace';
 	import { settings, loadSettings } from '$lib/settings';
@@ -8,6 +8,7 @@
 	import UpdateAvailableModal from '$lib/modals/window/UpdateAvailableModal.svelte';
 	import WhatsNewModal from '$lib/modals/window/WhatsNewModal.svelte';
 	import { entriesToShow, whatsNewOpen } from '$lib/whatsNew';
+	import { codeFromJoinLink, nameFromJoinLink, pendingJoinCode, pendingJoinName } from '$lib/collab/joinLink.svelte';
 
 	// every released CHANGELOG.md entry, injected at build (vite.config)
 	const whatsNew = __WHATS_NEW__;
@@ -61,13 +62,16 @@
 
 	// covers reloads landing straight on a hash and any navigate() we didn't preload for
 	$effect(() => {
-		if (route.path === '/workspace') loadWorkspace();
+		if (__WEB__)
+			loadSession(); // the browser build has one route
+		else if (route.path === '/workspace') loadWorkspace();
 		else if (route.path === '/session') loadSession();
 	});
 
 	// not during the launch itself: this is a DNS lookup, a TLS handshake and an HTTP round trip,
 	// and nothing about it is worth putting in front of the document opening
 	onMount(() => {
+		if (__WEB__) return; // a web page updates by reloading; there is no installer to offer
 		const t = setTimeout(async () => {
 			const s = await loadSettings();
 			// once per app SESSION, not per window: without this every new window would re-check
@@ -78,6 +82,22 @@
 			if ((await checkForUpdate()) === 'update') updateModalOpen.current = true;
 		}, 3000);
 		return () => clearTimeout(t);
+	});
+
+	// a texpile://join#CODE link the OS handed over. The renderer pulls the code out, so main can
+	// stay ignorant of the code format.
+	onMount(() => {
+		const n = nativeBridge();
+		if (!n?.onJoinSession) return;
+		return n.onJoinSession((url) => {
+			const code = codeFromJoinLink(url);
+			if (!code) return;
+			pendingJoinCode.current = code;
+			const name = nameFromJoinLink(url);
+			if (name) pendingJoinName.current = name;
+			loadSession();
+			navigate('/session');
+		});
 	});
 
 	// OS "Open With" hands us a .tex via the main process; open its folder and activate the file.
@@ -136,7 +156,10 @@
 
 <ConfirmHost />
 
-{#if route.path === '/'}
+{#if __WEB__}
+	<!-- the browser build is the join client and nothing else: no start screen, no local folder -->
+	{#if SessionRoute}<SessionRoute />{:else if chunkError}<ErrorView status={500} />{/if}
+{:else if route.path === '/'}
 	<StartView />
 {:else if route.path === '/workspace'}
 	{#if WorkspaceView}<WorkspaceView />{:else if chunkError}<ErrorView status={500} />{:else}<WorkspaceSkeleton />{/if}

@@ -8,7 +8,9 @@
 	import SessionJoin from '$lib/collab/SessionJoin.svelte';
 	import WorkspaceView from './workspace/WorkspaceView.svelte';
 	import { workspaceRoot, activeFilePath, openFile, fileTree, texFiles } from '$lib/workspace/workspaceStore';
-	const joined = $derived(collabGuest.status === 'online' || collabGuest.status === 'reconnecting');
+	// collabGuest.joined, not the status: a connected socket is not yet an accepted join, and
+	// mounting on status alone flashed the whole workspace up and back down on a bad code
+	const joined = $derived(collabGuest.joined);
 
 	$effect(() => {
 		if (joined) {

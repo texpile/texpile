@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"build:web": "vite build --mode web --outDir dist-web && node -e \"require('fs').copyFileSync('web/_headers','dist-web/_headers')\"",
 		"preview": "vite preview",
 		"sync": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide --emit-ts-declarations",
 		"test": "npm run test:integration && npm run test:unit",

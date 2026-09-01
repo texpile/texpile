@@ -281,7 +281,8 @@
 	{#if showAt(1, overflow)}
 		<EditMenu index={1} select={(v) => (v === 'palette' ? commandPalette.show() : editSelect(v))} {editable} />
 	{/if}
-	{#if showAt(2, overflow)}
+	<!-- zoom is webContents.setZoomFactor, and View holds nothing else; the browser has its own -->
+	{#if !__WEB__ && showAt(2, overflow)}
 		<ViewMenu index={2} select={viewSelect} {uiZoomPercent} />
 	{/if}
 	{#if showAt(3, overflow)}

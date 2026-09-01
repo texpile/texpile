@@ -1,0 +1,15 @@
+{
+	// The browser guest (join.texpile.com): the editor built with `--mode web`, served as static
+	// assets with no Worker script. Workers rather than Pages, which is where Cloudflare puts new
+	// projects; the rest of this repo's Cloudflare surface is Workers and R2 already.
+	"name": "texpile-join",
+	"compatibility_date": "2026-08-31",
+	"assets": {
+		"directory": "./dist-web",
+		// hash-routed SPA: every path has to come back as index.html, not a 404
+		"not_found_handling": "single-page-application"
+	},
+	// wrangler provisions the DNS record and the certificate on deploy
+	"routes": [{ "pattern": "join.texpile.com", "custom_domain": true }],
+	"observability": { "enabled": true }
+}

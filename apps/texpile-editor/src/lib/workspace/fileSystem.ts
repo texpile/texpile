@@ -102,6 +102,7 @@ type TexpileNative = {
 	openFolder: () => Promise<string | null>;
 	onOpenPath?: (cb: (filePath: string) => void) => () => void;
 	onOpenFolder?: (cb: (root: string) => void) => () => void;
+	onJoinSession?: (cb: (url: string) => void) => () => void;
 	claimWorkspace?: (root: string) => Promise<{ ok: boolean; reason?: string }>;
 	releaseWorkspace?: () => Promise<{ ok: boolean }>;
 	newWindow?: () => Promise<void>;

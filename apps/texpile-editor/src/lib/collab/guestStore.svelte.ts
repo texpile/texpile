@@ -24,6 +24,24 @@ export type GuestFile = {
 
 class GuestCollabController {
 	status = $state<'idle' | 'joining' | 'online' | 'reconnecting' | 'ended'>('idle');
+
+	/**
+	 * The relay has stamped at least one frame as coming from the AUTHENTICATED host.
+	 *
+	 * A connected socket proves nothing: the relay accepts the connection and only then checks
+	 * the join proof, so a wrong code reached 'online' for a moment. Anything watching status
+	 * alone mounted the whole workspace and tore it down again a beat later.
+	 */
+	hostSeen = $state(false);
+
+	/** connected AND answered by the host: the point where a workspace can safely mount. */
+	get joined(): boolean {
+		return (this.status === 'online' || this.status === 'reconnecting') && this.hostSeen;
+	}
+
+	private noteHost(): void {
+		if (!this.hostSeen && this.session?.hostId != null) this.hostSeen = true;
+	}
 	/** why the session ended, for the goodbye screen. */
 	endedReason = $state<'host-ended' | 'relay-closed' | 'quota' | 'error' | ''>('');
 	joinError = $state('');
@@ -106,7 +124,10 @@ class GuestCollabController {
 				role: 'guest',
 				user: { name: name.trim() || 'Guest', color: guestColor(doc.clientID) },
 				events: {
-					onPeersChange: (peers) => (this.peers = [...peers.values()]),
+					onPeersChange: (peers) => {
+						this.peers = [...peers.values()];
+						this.noteHost();
+					},
 					onBlob: (blobName, rev, bytes) => {
 						if (blobName === 'comments') {
 							this.onCommentLog?.(new TextDecoder().decode(bytes));
@@ -183,6 +204,7 @@ class GuestCollabController {
 
 	private refreshFromDoc(): void {
 		if (!this.doc) return;
+		this.noteHost();
 		const locks = locksOf(this.doc);
 		const out: GuestFile[] = [];
 		for (const [rel, entry] of manifestOf(this.doc).entries()) {
@@ -371,6 +393,7 @@ class GuestCollabController {
 
 	private teardown(destroySession: boolean): void {
 		this.clearJoinTimer();
+		this.hostSeen = false;
 		this.fileWatchers.clear();
 		// revoke, don't just drop: these are object URLs, and a surviving entry would also let the
 		// next session render a previous host's image for a path that happens to match

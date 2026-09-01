@@ -56,7 +56,10 @@
 	// which editor, and which of them, was only answerable by reading the hint under each.
 	type Category = 'appearance' | 'editor' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
-	const categories: { id: Category; label: string }[] = [
+	// the browser guest has no local toolchain, no Zotero, no MCP server and no folder to reopen:
+	// four tabs that could only ever report nothing
+	const DESKTOP_ONLY_TABS: Category[] = ['toolchain', 'integrations', 'startup', 'ai'];
+	const ALL_TABS: { id: Category; label: string }[] = [
 		{ id: 'appearance', label: m.prefs_appearance() },
 		// Editing, Source editor and Visual editor were three tabs holding three, two and two rows.
 		// They were split so that "wrap long lines" and "editor width" could be told apart - which
@@ -75,6 +78,7 @@
 		{ id: 'startup', label: m.prefs_group_startup() },
 		{ id: 'ai', label: m.prefs_group_ai() }
 	];
+	const categories = ALL_TABS.filter((c) => !__WEB__ || !DESKTOP_ONLY_TABS.includes(c.id));
 
 	// Opened to answer a particular question (the compile modal's "your compiler is missing"): land
 	// on that tab, then clear the request. Cleared only when it was SET, or the store write would

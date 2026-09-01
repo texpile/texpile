@@ -52,6 +52,8 @@ export default defineConfig(({ mode }) => ({
 	// changelog entry is bundled: the What's New modal shows each release the user skipped, so an
 	// upgrade across several versions doesn't silently swallow the features in between.
 	define: {
+		// `vite build --mode web` produces the browser guest bundle: join a session, nothing else
+		__WEB__: JSON.stringify(mode === 'web'),
 		__APP_VERSION__: JSON.stringify(rootPkg.version ?? '0.0.0'),
 		__WHATS_NEW__: JSON.stringify(
 			readChangelog()

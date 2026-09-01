@@ -14,7 +14,7 @@
 	// The bar itself is NOT one big drag region: a drag region swallows clicks, and the menu triggers
 	// and window buttons live inside it. Only the empty stretch in the middle drags.
 	import { onMount, untrack, type Snippet } from 'svelte';
-	import { Search } from '@lucide/svelte';
+	import { Search, Download } from '@lucide/svelte';
 	import { isMac } from '$lib/platform';
 	import { isDesktop } from '$lib/workspace/fileSystem';
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
@@ -38,6 +38,9 @@
 	} = $props();
 
 	const desktop = isDesktop();
+	// the browser build still needs the bar: the menus live in it, and a guest edits with them.
+	// Only the window furniture below is genuinely the desktop shell's.
+	const showBar = desktop || __WEB__;
 
 	// Ctrl+K had no affordance anywhere, which makes a palette useless to anyone who was not told
 	// about it. VS Code's answer is the command center: the window title becomes a button that opens
@@ -128,13 +131,14 @@
 
 <svelte:window bind:innerWidth={winWidth} />
 
-<!-- in a browser (dev, or the hosted build) there is no frame to replace, so render nothing -->
-{#if desktop}
+<!-- in the dev server there is no frame and no menus worth showing; the hosted guest build gets
+     the bar without the window controls -->
+{#if showBar}
 	<div bind:this={barEl} class="border-surface-200-800 bg-surface-100-900 relative flex h-8 shrink-0 items-stretch border-b text-sm">
 		<!-- measured as one block: everything to the left of the centre. On macOS that is the gap the
 		     OS draws the traffic lights into; trafficLightPosition in main.ts matches the inset. -->
 		<div class="flex shrink-0 items-stretch" bind:clientWidth={leftW}>
-			{#if isMac}
+			{#if isMac && desktop}
 				<div class="app-drag w-[76px] shrink-0"></div>
 			{:else if showIcon}
 				<!-- decoration, not a trigger. It briefly carried a Preferences / Share session dropdown so
@@ -165,6 +169,19 @@
 			{#if status}
 				{@render status()}
 			{/if}
+			<!-- where the window buttons sit on desktop, which the browser build leaves free -->
+			{#if __WEB__}
+				<a
+					class="app-no-drag text-surface-600-400 hover:text-surface-950-50 hover:bg-surface-200-800 mr-1 flex items-center gap-1.5 self-center rounded px-2 py-1 text-xs whitespace-nowrap"
+					href="https://texpile.com/download"
+					target="_blank"
+					rel="noopener noreferrer"
+					title={m.web_get_desktop_note()}
+				>
+					<Download class="size-3.5 shrink-0" />
+					{m.web_get_desktop()}
+				</a>
+			{/if}
 			<!--
 				Off macOS this is EMPTY, and that is the point: Chromium draws minimise / maximise /
 				close on top of it (main.ts's titleBarOverlay), so all the page owes it is the right
@@ -176,7 +193,7 @@
 				it only ever asked how wide the right-hand block was, and reserved space answers that
 				as well as three buttons did.
 			-->
-			{#if !isMac}
+			{#if !isMac && desktop}
 				<div class="app-window-controls"></div>
 			{/if}
 		</div>
