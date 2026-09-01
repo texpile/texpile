@@ -16,7 +16,7 @@ export type { BibToken } from './bibtexParser';
 export { parseBblEntries, sliceBblBibitems, type BblBibItem } from './bblScan';
 
 // schema validation is opt-in, used only by the visual add/edit form on save
-export { BibEntrySchema, biblatexReferenceSchema } from './schema';
+export { BibEntrySchema, biblatexReferenceSchema, schemaForType } from './schema';
 
 export { fitsVisualEditor } from './fits';
 

@@ -1193,5 +1193,17 @@
 	"zotero_dialog_remove": "移除",
 	"zotero_dialog_hint_toggle": "加入或移除",
 	"zotero_dialog_group_project": "本專案中",
-	"zotero_dialog_group_library": "Zotero 文獻庫"
+	"zotero_dialog_group_library": "Zotero 文獻庫",
+	"bibfield_label_urldate": "存取日期",
+	"bibfield_label_eprint": "預印本編號",
+	"bibfield_label_eprinttype": "預印本平台",
+	"bibfield_label_eprintclass": "預印本分類",
+	"bib_warn_unknown_type": "biblatex 沒有名為 {entryType} 的條目類型",
+	"bib_warn_legacy_field": "{field} 是 {prefer} 的舊名稱",
+	"bib_warn_misspelled": "{field} 看起來是 {suggest} 的拼寫錯誤",
+	"bib_warn_field_not_for_type": "{entryType} 條目會忽略 {field}",
+	"bib_warn_missing": "缺少：{fields}",
+	"bib_warn_missing_one_of": "需要其中之一：{fields}",
+	"bib_warn_conflict": "只能使用其中一個：{fields}",
+	"bib_warnings_heading": "biblatex 將會回報"
 }

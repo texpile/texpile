@@ -18,6 +18,7 @@ import { describe, it, beforeAll, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseBibtexWithWarnings, serializeBibtex, type BiblatexReference } from '../../../../src/lib/languages/bib/biblatex';
+import { validateEntry } from '../../../../src/lib/languages/bib/bibValidate';
 
 const PAPER_DIRS = process.env.PAPER_DIRS;
 const REPORT_DIR = process.env.CITATION_REPORT_DIR;
@@ -74,6 +75,8 @@ interface PaperResult {
 	citedKeys: number;
 	resolvedKeys: number;
 	unresolvedKeys: string[];
+	/** entries the validator called wrong that biber would have accepted */
+	validatorNoise: string[];
 }
 
 const results: PaperResult[] = [];
@@ -106,7 +109,8 @@ describe('citation/.bib corpus fidelity', () => {
 				bibByteIdentical: [],
 				citedKeys: 0,
 				resolvedKeys: 0,
-				unresolvedKeys: []
+				unresolvedKeys: [],
+				validatorNoise: []
 			};
 			try {
 				const bibFiles = listFilesRec(paperDir, '.bib');
@@ -121,6 +125,16 @@ describe('citation/.bib corpus fidelity', () => {
 						continue;
 					}
 					for (const e of parsed.entries) allEntries.set(e.key, e);
+
+					// A published bibliography compiles, so the validator must not call its entries
+					// broken. Only the confident verdicts count here: a missing field is fair game,
+					// since plenty of real entries genuinely lack one and biber says so too.
+					for (const e of parsed.entries) {
+						for (const p of validateEntry(e.entrytype, Object.keys(e))) {
+							if (p.kind === 'unknown-type') r.validatorNoise.push(`${e.key}: @${p.entryType} unknown`);
+							if (p.kind === 'misspelled-field') r.validatorNoise.push(`${e.key}: "${p.field}" called a typo for "${p.suggest}"`);
+						}
+					}
 					r.totalEntries += parsed.entries.length;
 
 					// sanity count of @Type{ excluding @Comment/@Preamble/@String (tokens, not entries)
@@ -199,6 +213,15 @@ describe('citation/.bib corpus fidelity', () => {
 
 	it('scanned at least one paper directory', () => {
 		expect(papers.length).toBeGreaterThan(0);
+	});
+
+	// A warning shown on a bibliography that compiles is worse than no warning: it teaches the
+	// reader to skip the next one too. Reference managers stamp their own fields on every entry
+	// they export, so an unrecognised name is only worth mentioning when it cost the author a
+	// field they meant to write.
+	it('reports nothing against bibliographies that already compile', () => {
+		const noise = results.flatMap((r) => r.validatorNoise.map((n) => `${r.paper}: ${n}`));
+		expect(noise).toEqual([]);
 	});
 
 	// not zero: 2108.07258/main_without_refdb.bib has literal prose text pasted between two real

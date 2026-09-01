@@ -224,6 +224,6 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 		// the shared table wrapper chrome (Table N header, gear with label + verbatim columns)
 		// in typst mode: every LaTeX-only control is gated off inside
 		table_wrapper: (node, view, getPos) => typstTableWrapperView(node, view, getPos as () => number),
-		typ_ref: (node, view) => new TypstRefView(node, view)
+		typ_ref: (node) => new TypstRefView(node)
 	};
 }

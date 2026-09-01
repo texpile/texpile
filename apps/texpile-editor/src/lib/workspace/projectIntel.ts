@@ -2,6 +2,7 @@
 // buffer, whose live text the editor owns), the .bib files, and the main file's .aux, and
 // derives what completion/hover/definition/outline need. see stores/projectIntel.ts for types.
 import { readTextFile, type TexFile } from './fileSystem';
+import { parseAuxLabels } from './auxLabels';
 import { projectIntelStore, EMPTY_PROJECT_INTEL, type ProjectIntel } from '$lib/stores/projectIntel';
 import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
 import { scanScripts } from '$lib/languages/latex/intellisense/completion/subsuperscript';
@@ -35,8 +36,6 @@ const DEF_RES: Array<{ re: RegExp; sig: (m: RegExpExecArray) => string }> = [
 ];
 const ENV_DEF_RE = /\\(?:(?:re)?newenvironment|NewDocumentEnvironment|newtheorem)\*?\s*\{([a-zA-Z][^{}\s]*)\}/g;
 const BIB_ENTRY_RE = /^\s*@[a-zA-Z]+\s*\{\s*([^\s,{}]+)\s*,/gm;
-// \newlabel{name}{{number}{page}...}; cleveref adds name@cref twins, skipped
-const AUX_LABEL_RE = /\\newlabel\{([^{}]+)\}\{\{([^{}]*)\}\{([^{}]*)\}/g;
 
 function scanTexIntel(text: string, file: string, draft: ProjectIntel) {
 	if (text.length > MAX_FILE_LENGTH) return;
@@ -97,12 +96,9 @@ async function readAux(auxPath: string, draft: ProjectIntel, read: (p: string) =
 	} catch {
 		return; // never compiled (or aux elsewhere): completion just shows no numbers
 	}
-	AUX_LABEL_RE.lastIndex = 0;
-	for (let m = AUX_LABEL_RE.exec(aux); m; m = AUX_LABEL_RE.exec(aux)) {
-		if (m[1].includes('@cref')) continue;
-		draft.auxNumbers[m[1]] = m[2];
-		draft.auxPages[m[1]] = m[3];
-	}
+	const { numbers, pages } = parseAuxLabels(aux);
+	Object.assign(draft.auxNumbers, numbers);
+	Object.assign(draft.auxPages, pages);
 }
 
 let scanToken = 0;

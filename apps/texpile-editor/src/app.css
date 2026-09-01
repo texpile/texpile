@@ -1199,24 +1199,44 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	font-size: 0.95em;
 }
 
-/* inline chips for unknown/unhandled macros */
-.ProseMirror code.inline-latex {
-	font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-	font-size: 0.9em;
-	padding: 0.1em 0.3em;
-	margin: 0 0.1em;
-	border-radius: 3px;
-	background-color: color-mix(in srgb, var(--color-surface-500) 10%, transparent);
-	color: var(--color-surface-700);
-	border: 1px solid var(--color-surface-300);
+/* Inline chips for unknown/unhandled macros. The chip IS the source, standing where the source
+   stands, so it takes the document's own type and ground and nothing sets it apart but its syntax
+   colour - which every chip on screen has, since all three editors build a CodeMirror into one.
+   No padding, no background, no border: each of them boxed the chip off from the line instead of
+   letting it sit in it, and vertical padding on an inline-block set the whole paragraph wider. */
+.ProseMirror code.inline-latex,
+.ProseMirror .inline-latex-wrapper {
+	font: inherit;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
 	white-space: pre-wrap;
 	word-break: break-word;
 }
 
-[data-mode='dark'] .ProseMirror code.inline-latex {
-	background-color: color-mix(in srgb, var(--color-surface-400) 15%, transparent);
-	color: var(--color-surface-300);
-	border-color: var(--color-surface-600);
+/* A block island reads as source the same way, in the same face, flush with the prose margin.
+   These land in CSS rather than the view's own CodeMirror theme because the offscreen placeholder
+   borrows CodeMirror's class names and a view-scoped theme never reaches it - the two would then
+   measure differently, and every upgrade would nudge the scroll. */
+.ProseMirror .raw-latex-wrapper .cm-scroller {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+.ProseMirror .raw-latex-wrapper .cm-content {
+	padding: 0;
+}
+.ProseMirror .raw-latex-wrapper .cm-line {
+	padding: 0;
+}
+
+/* the bounds only matter while you are editing. An OUTLINE, never a border: it is painted outside
+   the box, so it cannot shift the line, or the paragraphs below it, the moment the caret arrives. */
+.ProseMirror .inline-latex-wrapper:focus-within,
+.ProseMirror .raw-latex-wrapper:focus-within {
+	outline: 1px solid color-mix(in srgb, var(--color-surface-500) 45%, transparent);
+	outline-offset: 1px;
+	border-radius: 2px;
 }
 
 /* a comment chip owns its whole line in the source (% consumes to end of line) and serializes

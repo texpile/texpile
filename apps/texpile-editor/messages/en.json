@@ -1193,5 +1193,17 @@
 	"zotero_dialog_remove": "Remove",
 	"zotero_dialog_hint_toggle": "add or remove",
 	"zotero_dialog_group_project": "In this project",
-	"zotero_dialog_group_library": "Zotero library"
+	"zotero_dialog_group_library": "Zotero library",
+	"bibfield_label_urldate": "Accessed on",
+	"bibfield_label_eprint": "Preprint ID",
+	"bibfield_label_eprinttype": "Preprint server",
+	"bibfield_label_eprintclass": "Preprint category",
+	"bib_warn_unknown_type": "biblatex has no entry type called {entryType}",
+	"bib_warn_legacy_field": "{field} is the old name for {prefer}",
+	"bib_warn_misspelled": "{field} looks like a misspelling of {suggest}",
+	"bib_warn_field_not_for_type": "{field} is ignored on a {entryType} entry",
+	"bib_warn_missing": "Missing: {fields}",
+	"bib_warn_missing_one_of": "Needs one of: {fields}",
+	"bib_warn_conflict": "Use only one of: {fields}",
+	"bib_warnings_heading": "biblatex will report"
 }

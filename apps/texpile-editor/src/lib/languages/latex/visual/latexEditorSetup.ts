@@ -29,7 +29,6 @@ import { search } from 'prosemirror-search';
 import { CitationView } from '$lib/languages/latex/visual/extensions/citation/citationView.svelte';
 import { RefView } from '$lib/languages/latex/visual/extensions/ref/refView.svelte';
 import { LabelView } from '$lib/languages/latex/visual/extensions/label/labelView.svelte';
-import { createRefUpdatePlugin } from '$lib/languages/latex/visual/extensions/ref/refUpdatePlugin';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
@@ -144,7 +143,6 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		placeholderPlugin(placeholder),
 		tablePlaceholderPlugin(),
 		createWordCountPlugin(),
-		createRefUpdatePlugin(),
 		createTocPlugin(),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment

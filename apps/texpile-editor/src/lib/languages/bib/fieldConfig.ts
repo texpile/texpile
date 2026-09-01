@@ -2,6 +2,7 @@
 import { m } from '$lib/paraglide/messages';
 import { classicEntryTypes } from './entryTypesClassic';
 import { modernEntryTypes } from './entryTypesModern';
+import { OFFERED_ENTRY_TYPES } from './bibCompletion';
 
 export type FieldConfig = {
 	name: string;
@@ -60,11 +61,20 @@ export function getFieldsForType(entrytype: string): FieldConfig[] {
 	return config ? config.fields : commonFields();
 }
 
+/**
+ * Every entry type biblatex defines, the ones with a form first and named in the user's language.
+ *
+ * The rest are offered under their own names rather than left out: choosing one is how you write a
+ * @patent or a @periodical, and the entry keeps working either way - an entry the form cannot
+ * represent is shown as editable source instead (see fits.ts), never dropped.
+ */
 export function getEntryTypeOptions(): Array<{ value: string; label: string }> {
-	return Object.values(getEntryTypeConfigs()).map((config) => ({
-		value: config.name,
-		label: config.label
-	}));
+	const curated = Object.values(getEntryTypeConfigs()).map((config) => ({ value: config.name, label: config.label }));
+	const named = new Set(curated.map((o) => o.value));
+	const rest = OFFERED_ENTRY_TYPES.filter((t) => !named.has(t))
+		.sort()
+		.map((t) => ({ value: t, label: `@${t}` }));
+	return [...curated, ...rest];
 }
 
 export function getRequiredFields(entrytype: string): string[] {

@@ -4,6 +4,8 @@
 	import { ChevronDown } from '@lucide/svelte';
 	import { getFieldsForType, type BiblatexReference } from '$lib/languages/bib/biblatex';
 	import { generateLabel } from '$lib/editor/visual/label';
+	import { validateEntry } from '$lib/languages/bib/bibValidate';
+	import { bibProblemText } from '$lib/languages/bib/bibProblemText';
 	import { m } from '$lib/paraglide/messages';
 
 	let {
@@ -23,6 +25,19 @@
 	} = $props();
 
 	let showAdvanced = $state(false);
+
+	// what biber would say about this entry, from biblatex's own data model. Advisory, never
+	// blocking: an incomplete entry still saves, the same way an incomplete one still compiles.
+	const problems = $derived(
+		currentReference.entrytype
+			? validateEntry(
+					currentReference.entrytype,
+					Object.entries(currentReference)
+						.filter(([, v]) => typeof v === 'string' && v.trim().length > 0)
+						.map(([k]) => k)
+				)
+			: []
+	);
 
 	const currentFields = $derived(currentReference.entrytype ? getFieldsForType(currentReference.entrytype) : []);
 	const regularFields = $derived(currentFields.filter((f) => f.name !== 'key'));
@@ -78,6 +93,17 @@
 	{/if}
 
 	{#if formErrors.form}<p class="text-error-500 text-sm">{formErrors.form[0]}</p>{/if}
+
+	{#if problems.length > 0}
+		<div class="border-warning-500 bg-warning-50-950 mt-3 rounded-base border-l-2 px-3 py-2">
+			<p class="text-surface-700-300 text-xs font-medium">{m.bib_warnings_heading()}</p>
+			<ul class="text-surface-600-400 mt-1 space-y-0.5 text-xs">
+				{#each problems as problem (bibProblemText(problem))}
+					<li>{bibProblemText(problem)}</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
 
 	<div class="mt-3 flex justify-end gap-2">
 		{#if isEditing}<button class="btn hover:preset-tonal" type="button" onclick={onCancel}>{m.bib_cancel_button()}</button>{/if}

@@ -42,9 +42,8 @@ export class InlineLatexView {
 		this.getPos = getPos;
 
 		const wrapper = document.createElement('span');
-		// thin outline only, matches the raw latex block
-		wrapper.className =
-			'noautofocus inline-latex-wrapper border-surface-400-600 mx-px inline-block rounded-base border px-0.5 align-baseline';
+		// layout only; the chip's own look lives with the schema-rendered one in app.css
+		wrapper.className = 'noautofocus inline-latex-wrapper inline-block align-baseline';
 		this.dom = wrapper;
 		this.syncCommentClass();
 
@@ -85,11 +84,9 @@ export class InlineLatexView {
 				// inline-block shrink-to-fit keeps short macros tight, max-width + lineWrapping wraps long ones
 				CodeMirrorView.theme({
 					'&': { backgroundColor: 'transparent', display: 'inline-block', verticalAlign: 'baseline', maxWidth: '100%' },
-					'.cm-scroller': {
-						fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
-						lineHeight: 'inherit',
-						overflow: 'visible'
-					},
+					// the document's own face, not a monospace one: a chip stands inside a sentence, and
+					// its syntax colour already says it is source
+					'.cm-scroller': { fontFamily: 'inherit', fontSize: 'inherit', lineHeight: 'inherit', overflow: 'visible' },
 					'.cm-content': { padding: '0', caretColor: 'auto' },
 					'.cm-line': { padding: '0' },
 					'&.cm-focused': { outline: 'none' }

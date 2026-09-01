@@ -23,6 +23,8 @@ export class LabelView implements NodeView {
 		this.dom = document.createElement('span');
 		// kills the stray whitespace the svelte template would otherwise contribute
 		this.dom.style.fontSize = '0';
+		// the anchor a \ref jumps to, named the way tables, figures and equations name theirs
+		this.dom.setAttribute('data-label', String(node.attrs.name ?? ''));
 
 		this.componentProps = {
 			name: String(node.attrs.name ?? ''),
@@ -36,6 +38,7 @@ export class LabelView implements NodeView {
 		if (node.type !== this.node.type) return false;
 		this.node = node;
 		this.componentProps.name = String(node.attrs.name ?? '');
+		this.dom.setAttribute('data-label', String(node.attrs.name ?? ''));
 		return true;
 	}
 

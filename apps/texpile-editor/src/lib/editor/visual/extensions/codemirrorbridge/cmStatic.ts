@@ -10,8 +10,8 @@ import { EditorView as CodeMirrorView } from '@codemirror/view';
 
 export const CM_PLACEHOLDER_CLASS = 'cm-static-placeholder';
 
-/** the inline chip's font stack, mirrored from the theme block in inlineLatexView.ts */
-const INLINE_FONT = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+/** the inline chip takes the document's own face; mirrored from the theme in inlineLatexView.ts */
+const INLINE_FONT = 'inherit';
 
 let stylesPrimed = false;
 

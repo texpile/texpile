@@ -64,6 +64,23 @@ describe('a reference the picker inserts', () => {
 	});
 });
 
+// found in a relativity paper that labels its remarks \label{Remark:$ethf$}. The chip flattened
+// the name to Remark:ethf, so saving the file wrote a reference that no longer matched its own
+// label - while the \label, which keeps a structured name raw, still had the delimiters.
+describe('a label name with structure in it', () => {
+	it('stays raw rather than being flattened into a chip', () => {
+		expect(types('\\ref{Remark:$ethf$}')).not.toContain('ref');
+		expect(rt('\\ref{Remark:$ethf$}')).toBe('\\ref{Remark:$ethf$}');
+		expect(rt('\\label{Remark:$ethf$} \\ref{Remark:$ethf$}')).toBe('\\label{Remark:$ethf$} \\ref{Remark:$ethf$}');
+	});
+
+	// only the delimiters were the problem: a plain name with punctuation is still a chip
+	it('is still a chip when the name is plain', () => {
+		expect(types('\\ref{estimate:forchecka^S}')).toContain('ref');
+		expect(rt('\\ref{estimate:forchecka^S}')).toBe('\\ref{estimate:forchecka^S}');
+	});
+});
+
 describe('what a reference chip claims', () => {
 	it('gives \\eqref the parentheses amsmath will print', () => {
 		expect(refText('eqref', 3)).toBe('(3)');

@@ -283,7 +283,10 @@ export type EnvHandler = (env: Environment, ctx: ConversionContext, options: Con
 
 export function createRef(macro: Macro, refType: string | null): PmNode[] {
 	const mandatoryArgs = macro.args?.filter((arg) => arg.openMark === '{') || [];
-	const label = mandatoryArgs[0] ? getTextContent(mandatoryArgs[0].content) : '';
+	// a name with structure in it keeps its source, the way \label's does: flattening dropped the
+	// delimiters from \ref{Remark:$ethf$} and saved a reference that no longer matched its label
+	const label = plainArgText(mandatoryArgs[0]);
+	if (!label) return [buildNode('inline_latex', null, [textNode(printRaw(macro))])];
 
 	// infer the kind from the label prefix if not provided
 	let kind = refType;
@@ -301,7 +304,7 @@ export function createRef(macro: Macro, refType: string | null): PmNode[] {
 	// keep the original command (ref/eqref) so it round-trips instead of being normalised
 	const command = typeof macro.content === 'string' && macro.content ? macro.content : 'ref';
 	// unknown target kind: the general 'reference' type
-	return [buildNode('ref', { refType: kind ?? 'reference', command }, label ? [textNode(label)] : null)];
+	return [buildNode('ref', { refType: kind ?? 'reference', command }, [textNode(label)])];
 }
 
 // only `document` is truly transparent: center/flushleft/flushright change the rendered

@@ -48,8 +48,7 @@ describe('openListAt says no', () => {
 	});
 
 	it('inside lstlisting and minted bodies too', () => {
-		for (const env of ['lstlisting', 'minted'])
-			expect(at(`\\begin{${env}}\n\\begin{itemize}\n\\item printed|\n`)).toBeNull();
+		for (const env of ['lstlisting', 'minted']) expect(at(`\\begin{${env}}\n\\begin{itemize}\n\\item printed|\n`)).toBeNull();
 	});
 
 	it('after a verbatim block that printed an unclosed list', () => {
@@ -84,7 +83,10 @@ describe('openListAt says no', () => {
 describe('itemLineAbove', () => {
 	const walk = (doc: string) => {
 		const lines = doc.split('\n');
-		return itemLineAbove(lines, lines.findIndex((l) => l.includes('|')));
+		return itemLineAbove(
+			lines,
+			lines.findIndex((l) => l.includes('|'))
+		);
 	};
 
 	it('yes when the caret line IS the item', () => {

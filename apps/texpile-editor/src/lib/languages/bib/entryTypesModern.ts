@@ -160,6 +160,29 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 					label: m.bibfield_label_note(),
 					type: 'textarea',
 					required: false
+				},
+				// almost every @misc in a real bibliography is an arXiv preprint: 16 of the 17 in
+				// the sample carry these three and nothing else distinguishing
+				{
+					name: 'eprint',
+					label: m.bibfield_label_eprint(),
+					type: 'text',
+					required: false,
+					placeholder: '2106.09685'
+				},
+				{
+					name: 'eprinttype',
+					label: m.bibfield_label_eprinttype(),
+					type: 'text',
+					required: false,
+					placeholder: 'arXiv'
+				},
+				{
+					name: 'eprintclass',
+					label: m.bibfield_label_eprintclass(),
+					type: 'text',
+					required: false,
+					placeholder: 'cs.CL'
 				}
 			]
 		},

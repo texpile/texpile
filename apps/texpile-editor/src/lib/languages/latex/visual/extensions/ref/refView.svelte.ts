@@ -9,7 +9,6 @@ export class RefView implements NodeView {
 	private componentProps = $state<{
 		node: PMNode;
 		view: EditorView;
-		updateTrigger: number;
 	}>();
 	node: PMNode;
 	private view: EditorView;
@@ -18,13 +17,12 @@ export class RefView implements NodeView {
 		this.node = node;
 		this.view = view;
 
+		// classless: an inline-block wrapper would box the reference off from the line it sits in
 		this.dom = document.createElement('span');
-		this.dom.className = 'inline-block';
 
 		this.componentProps = {
 			node: this.node,
-			view: this.view,
-			updateTrigger: 0
+			view: this.view
 		};
 
 		this.svelteComponent = mount(RefDisplay, {
@@ -40,10 +38,7 @@ export class RefView implements NodeView {
 
 		this.node = node;
 
-		if (this.componentProps) {
-			this.componentProps.node = node;
-			this.componentProps.updateTrigger++;
-		}
+		if (this.componentProps) this.componentProps.node = node;
 
 		return true;
 	}

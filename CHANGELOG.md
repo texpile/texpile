@@ -41,6 +41,23 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: editing a paragraph that continues in the next column no longer places it wrongly when a figure sits at the bottom of that column
 - fix: editing a cell of a table that sits at the bottom of a column no longer sends the table's own caption to the next page, leaving a gap where it was
 - fix: live preview highlights and follows the line you are typing on rather than the whole paragraph, so editing the end of a paragraph that continues on the next page no longer scrolls back to where it started
+- fix: cross-references in the visual editor read as part of the sentence, like citations, instead of sitting in a tinted box at a smaller size
+- fix: cross-reference numbers now come from your last compile rather than the editor's own count, so a reference to a theorem, an appendix, a chapter-numbered section or a file you include shows the number the PDF will print
+- fix: a reference only shows as broken when the compiler reported it undefined, instead of whenever the editor could not find the label itself
+- fix: clicking a reference to a section jumps to it, which previously only worked for figures, tables and equations
+- fix: Typst references show the label rather than a guessed figure or table number, since Typst numbering is set by the document's own rules
+- fix: saving in the visual editor no longer rewrites a reference whose label name contains maths, such as \ref{Remark:$ethf$}, into one that no longer matches its label
+- fix: a macro shown inline in the visual editor now takes the document's own font and background instead of sitting in a boxed monospace chip, and shows its outline only while you are editing it
+- fix: the left and right arrow keys now move the cursor into an inline macro instead of stepping over it, landing at the end of it when you arrive from the right
+- feat: equations in the visual editor render the macros your document defines, so a formula written with your own \newcommand shortcuts looks the way it will in the PDF instead of showing the shortcut's name. Editing such an equation leaves your macros in place rather than replacing them with what they stand for
+- feat: the bibliography editor knows every biblatex entry type and field, read from biblatex itself, so a reference can be a patent, a periodical or a piece of software and not just one of ten kinds
+- feat: writing a reference now warns about what your bibliography tool would reject: a field the entry is missing, a name that is the old BibTeX spelling of another, and a field that entry type ignores
+- feat: the .bib editor completes entry types and field names, offering only what the entry type accepts
+- fix: an article can now record its URL and the date you read it, and a preprint its identifier, server and category, without dropping to raw source
+- fix: references written the BibTeX way, or carrying fields a reference manager added, now open in the reference form instead of dropping to raw source, and keep every field they came with when saved
+- fix: an incomplete reference now opens in the form that would let you complete it, rather than being shown as source because it was incomplete
+- fix: choosing one of the less common entry types can now be saved
+- fix: the reference list shows a reference dated with date rather than year, instead of reporting No year, and marks entries biblatex would complain about
 
 ## [0.17.1] - 2026-08-19
 

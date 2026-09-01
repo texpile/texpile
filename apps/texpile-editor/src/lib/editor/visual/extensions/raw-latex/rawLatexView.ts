@@ -53,8 +53,10 @@ export class RawLatexView {
 				// wrapper's own padding is the visual gap, not CodeMirror's default 6px line inset
 				CodeMirrorView.theme({
 					'&': { backgroundColor: 'transparent' },
-					'.cm-content': { backgroundColor: 'transparent', padding: '2px 0' },
-					'.cm-line': { padding: '0 2px' },
+					// face and padding are set in app.css instead: the offscreen placeholder borrows
+					// CodeMirror's own class names, and a view-scoped theme never reaches it, so the
+					// two would measure differently and every upgrade would nudge the scroll
+					'.cm-content': { backgroundColor: 'transparent' },
 					'.cm-gutters': { backgroundColor: 'transparent', border: 'none' },
 					'.cm-activeLine': { backgroundColor: 'transparent' },
 					'.cm-activeLineGutter': { backgroundColor: 'transparent' },
@@ -68,9 +70,9 @@ export class RawLatexView {
 			]
 		});
 
-		// thin outline, no card background
+		// layout only; the island's look lives beside the inline chip's in app.css
 		const wrapper = document.createElement('div');
-		wrapper.className = 'noautofocus raw-latex-wrapper border-surface-400-600 my-1 rounded-base border px-1 py-1';
+		wrapper.className = 'noautofocus raw-latex-wrapper my-1';
 
 		wrapper.appendChild(this.cm.dom);
 		this.dom = wrapper;

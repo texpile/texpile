@@ -2,6 +2,7 @@
 // hand-written bibtex StreamLanguage: neither @codemirror/language-data nor legacy-modes ships one.
 // token() returns standard highlight-tag names, which StreamLanguage resolves via tags[name], so no tokenTable needed.
 import { StreamLanguage, LanguageSupport } from '@codemirror/language';
+import { bibCompletions } from './bibCompletion';
 
 type BibState = {
 	inEntry: boolean;
@@ -116,5 +117,7 @@ export const bibtexLanguage = StreamLanguage.define<BibState>({
 });
 
 export function bibtex(): LanguageSupport {
-	return new LanguageSupport(bibtexLanguage);
+	// entry types and field names from biblatex's own data model, so what the editor offers is what
+	// biber will take
+	return new LanguageSupport(bibtexLanguage, [bibtexLanguage.data.of({ autocomplete: bibCompletions })]);
 }

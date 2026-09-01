@@ -1,161 +1,63 @@
 <script lang="ts">
 	import type { Node as PMNode } from 'prosemirror-model';
 	import type { EditorView } from 'prosemirror-view';
-	import { AlertCircle, Link2 } from '@lucide/svelte';
-	import { refUpdateTrigger } from './refUpdateStore';
-	import { refText } from './refText';
-	import { sectionNumbers } from '$lib/languages/latex/visual/extensions/label/sectionNumbers';
+	import { refState } from './refState';
+	import { undefinedRefs } from './undefinedRefs.svelte';
+	import { projectIntelStore } from '$lib/stores/projectIntel';
 
 	let {
 		node,
-		view,
-		updateTrigger = 0
+		view
 	}: {
 		node: PMNode;
 		view: EditorView;
-		updateTrigger?: number;
 	} = $props();
 
 	const label = $derived(node.textContent);
 
-	const refType = $derived(node.attrs?.refType || 'reference');
 	const command = $derived(String(node.attrs?.command ?? 'ref'));
 
-	// a standalone \label - the one after a \section - now resolves too, which is what turned
-	// "Section sec:bert" into "Section 3.1"
-	const sectionNo = $derived.by(() => {
-		void updateTrigger;
-		void refUpdateTrigger.current;
-		return sectionNumbers(view.state.doc).get(label);
-	});
+	const state = $derived(refState(command, label, projectIntelStore.current.auxNumbers, undefinedRefs.current));
 
-	// nothing countable to point at: show the label itself as a neutral chip rather than a number
-	// we do not have, and never flag it as missing
-	const isGeneral = $derived(refType === 'reference' && sectionNo == null);
-
-	const labelExists = $derived.by(() => {
-		// void reads register reactivity on both triggers
-		void updateTrigger;
-		void refUpdateTrigger.current;
-
-		if (sectionNo != null) return true;
-
-		let exists = false;
-		const state = view.state;
-
-		state.doc.descendants((n) => {
-			if (refType === 'table' && n.type.name === 'table_wrapper' && n.attrs.label === label) {
-				exists = true;
-				return false;
-			} else if (refType === 'figure' && n.type.name === 'image' && n.attrs.label === label) {
-				exists = true;
-				return false;
-			} else if (refType === 'equation' && n.type.name === 'block_math' && n.attrs.numbered) {
-				if (n.attrs.label === label) {
-					exists = true;
-					return false;
-				}
-				const lineLabels = (n.attrs.lineLabels as string[]) || [];
-				if (lineLabels.includes(label)) {
-					exists = true;
-					return false;
-				}
-			}
-		});
-
-		return exists;
-	});
-
-	const targetNumber = $derived.by(() => {
-		void updateTrigger;
-		void refUpdateTrigger.current;
-
-		if (sectionNo != null) return sectionNo;
-		if (!labelExists) return '?';
-
-		const state = view.state;
-		let count = 0;
-		let found = false;
-		let targetNum = 0;
-
-		state.doc.descendants((n) => {
-			if (found) return false;
-
-			if (refType === 'table' && n.type.name === 'table_wrapper') {
-				count++;
-				if (n.attrs.label === label) {
-					targetNum = count;
-					found = true;
-					return false;
-				}
-			} else if (refType === 'figure' && n.type.name === 'image') {
-				count++;
-				if (n.attrs.label === label) {
-					targetNum = count;
-					found = true;
-					return false;
-				}
-			} else if (refType === 'equation' && n.type.name === 'block_math' && n.attrs.numbered) {
-				const lineLabels = (n.attrs.lineLabels as string[]) || [];
-				if (lineLabels.length > 0) {
-					for (const lineLabel of lineLabels) {
-						if (lineLabel && lineLabel.trim()) {
-							count++;
-							if (lineLabel === label) {
-								targetNum = count;
-								found = true;
-								return false;
-							}
-						}
-					}
-				} else if (n.attrs.label) {
-					count++;
-					if (n.attrs.label === label) {
-						targetNum = count;
-						found = true;
-						return false;
-					}
-				}
-			}
-		});
-
-		return targetNum || '?';
-	});
-
-	const shown = $derived(refText(command, targetNumber));
-
-	function handleClick(e: MouseEvent) {
+	// the anchor in the document decides whether the jump happens, not whether we could resolve a
+	// number. matching in js rather than in the selector keeps a label with a quote in it from
+	// breaking the query.
+	function handleClick(e: Event) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (!labelExists) return;
-
-		const targetElement = view.dom.querySelector(`[data-label="${label}"]`) || view.dom.querySelector(`[imageplugin-label="${label}"]`);
-		if (targetElement) {
-			targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		for (const el of view.dom.querySelectorAll('[data-label], [imageplugin-label]')) {
+			if (el.getAttribute('data-label') !== label && el.getAttribute('imageplugin-label') !== label) continue;
+			el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			return;
 		}
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key !== 'Enter' && e.key !== ' ') return;
+		e.preventDefault();
+		e.stopPropagation();
+		handleClick(e);
 	}
 </script>
 
-<button
-	type="button"
-	class="inline-flex cursor-pointer items-center gap-1 rounded px-1.5 py-0.5 text-sm font-medium transition-colors"
-	class:text-primary-600={isGeneral || labelExists}
-	class:bg-primary-50={isGeneral || labelExists}
-	class:hover:bg-primary-100={isGeneral || labelExists}
-	class:text-error-600={!isGeneral && !labelExists}
-	class:bg-error-50={!isGeneral && !labelExists}
+<!-- tinted text at the surrounding size, never a chip: the number the compiler prints belongs to
+     the sentence, the way the citation beside it does. inline, not a button, so the padding cannot
+     grow the line box. -->
+<span
+	class="cursor-pointer rounded py-0.5 transition-colors"
+	class:text-blue-600={!state.broken}
+	class:dark:text-blue-400={!state.broken}
+	class:hover:bg-blue-50={!state.broken}
+	class:dark:hover:bg-blue-950={!state.broken}
+	class:text-red-600={state.broken}
+	class:dark:text-red-400={state.broken}
+	class:hover:bg-red-50={state.broken}
+	class:dark:hover:bg-red-950={state.broken}
+	role="button"
+	tabindex="0"
 	onclick={handleClick}
-	title={isGeneral ? `Reference: ${label}` : labelExists ? `Reference to ${label}` : `Label "${label}" not found`}
+	onkeydown={handleKeydown}
+	title={state.broken ? `Label "${label}" not found` : state.text === label ? `Reference: ${label}` : `Reference to ${label}`}
+	>{state.text}</span
 >
-	{#if isGeneral}
-		<Link2 class="h-3 w-3" />
-		<span>{label}</span>
-	{:else if labelExists}
-		<Link2 class="h-3 w-3" />
-		<span>{shown}</span>
-	{:else}
-		<AlertCircle class="h-3 w-3" />
-		<span>{shown}</span>
-	{/if}
-</button>

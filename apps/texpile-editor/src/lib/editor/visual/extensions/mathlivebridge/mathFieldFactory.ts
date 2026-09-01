@@ -16,6 +16,9 @@ export function buildMathField(
 	listeners: FieldListeners
 ): { field: MathfieldElement; origFocus: (options?: FocusOptions) => void } {
 	const field = new MathfieldElement();
+	// The document's own macros are NOT applied here: reading field.macros throws "Mathfield not
+	// mounted" until the element is in the document, and this one is built detached. The node view
+	// applies them once it has inserted the field.
 	field.mathVirtualKeyboardPolicy = 'manual';
 	field.style.border = 'none';
 	field.style.outline = 'none';

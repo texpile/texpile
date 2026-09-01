@@ -15,6 +15,8 @@ import { MathFieldExit, applyMathOutline } from './mathFieldExit';
 import { buildMathField, releaseMathField, type FieldListeners } from './mathFieldFactory';
 import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic';
 import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
+import { mathMacros } from './mathMacros.svelte';
+import { observe } from '$lib/runes/observe.svelte';
 
 // reactive props stashed on the container so update() can reach the mounted component without a registry.
 type SettingsHost = {
@@ -38,6 +40,8 @@ export class MathLiveView implements NodeView {
 	private origFocus?: (options?: FocusOptions) => void;
 	private settingsContainer?: HTMLElement;
 	private settingsComponent?: ReturnType<typeof mount>;
+	private unwatchMacros?: () => void;
+	private macrosApplied = false;
 	private isblock: boolean;
 	// no user input yet: skip auto-delete on first blur (focus race when created via shortcut)
 	private isNewlyCreated: boolean = true;
@@ -118,6 +122,30 @@ export class MathLiveView implements NodeView {
 		}
 
 		upgradeWhenNear(this.dom, this.materialize);
+		// a \newcommand edited in the preamble changes what this equation reads as; the static
+		// placeholders are re-typeset centrally, a live field has to be told
+		this.unwatchMacros = observe(
+			() => mathMacros.current,
+			() => this.applyMacros()
+		);
+	}
+
+	/**
+	 * Applies the document's macros and re-parses the source against them.
+	 *
+	 * Only ever on a field that is IN the document: mathlive throws "Mathfield not mounted" from
+	 * the macros getter otherwise, which is why the factory cannot do this at build time. Skipped
+	 * when there is nothing to add, so a document without \newcommand pays no second setValue.
+	 * Silenced: this is the same formula rendered again, not an edit, and a notification would
+	 * write it back to the document.
+	 */
+	private applyMacros(): void {
+		if (!this.mathField?.isConnected) return;
+		const macros = mathMacros.current;
+		if (Object.keys(macros).length === 0 && !this.macrosApplied) return;
+		this.macrosApplied = true;
+		this.mathField.macros = { ...this.mathField.macros, ...macros };
+		this.mathField.setValue(this.node.textContent || '', { format: 'latex-expanded', silenceNotifications: true });
 	}
 
 	/** the element currently standing in for this node: the live field once there is one */
@@ -162,6 +190,9 @@ export class MathLiveView implements NodeView {
 		} else {
 			this.dom.appendChild(field);
 		}
+
+		// the field is in the document now, which is the earliest mathlive will accept macros
+		this.applyMacros();
 
 		this.removeSelection();
 		this.updateOutline(false);
@@ -389,6 +420,7 @@ export class MathLiveView implements NodeView {
 		this.updateOutline(false);
 	}
 	destroy() {
+		this.unwatchMacros?.();
 		cancelUpgrade(this.dom);
 		if (this.placeholder) cancelStaticMath(this.placeholder);
 		if (this.mathField) {

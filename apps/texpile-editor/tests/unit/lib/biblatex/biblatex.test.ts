@@ -4,6 +4,7 @@ import {
 	parseSingleEntry,
 	serializeBibtex,
 	fitsVisualEditor,
+	schemaForType,
 	type BibToken,
 	type BiblatexReference
 } from '../../../../src/lib/languages/bib/biblatex';
@@ -92,7 +93,11 @@ describe('parseBibtexWithWarnings — read path', () => {
 	});
 });
 
-describe('fitsVisualEditor — strict fit rule', () => {
+// The rule used to be "every field is in the hand-written schema, and the entry validates". Both
+// halves were wrong for the same reason: they answered "is this entry good?" when the question is
+// "can the form hold it?". The schemas pass unknown fields through on save now, so holding one
+// costs nothing, and an entry that is merely incomplete is exactly the one that needs a form.
+describe('fitsVisualEditor — what the form can hold', () => {
 	const article = (extra: Record<string, unknown> = {}, key = 'k'): BiblatexReference => ({
 		key,
 		entrytype: 'article',
@@ -107,14 +112,16 @@ describe('fitsVisualEditor — strict fit rule', () => {
 		expect(fitsVisualEditor(article())).toBe(true);
 	});
 
-	it('rejects an @Article that uses legacy `journal` instead of `journaltitle`', () => {
+	// a bibliography written the BibTeX way is most of what exists; sending all of it to a source
+	// editor was the form declining to do its job
+	it('holds an @Article that uses legacy `journal` instead of `journaltitle`', () => {
 		const ref: BiblatexReference = { key: 'k', entrytype: 'article', author: 'A', title: 'T', journal: 'J', year: '2001' };
-		expect(fitsVisualEditor(ref)).toBe(false);
+		expect(fitsVisualEditor(ref)).toBe(true);
 	});
 
-	it('rejects an @Book with `address` instead of `location`', () => {
+	it('holds an @Book with `address` instead of `location`', () => {
 		const ref: BiblatexReference = { key: 'k', entrytype: 'book', author: 'A', title: 'T', address: 'NY', year: '2001' };
-		expect(fitsVisualEditor(ref)).toBe(false);
+		expect(fitsVisualEditor(ref)).toBe(true);
 	});
 
 	it('accepts an @Book with BibLaTeX `location`', () => {
@@ -122,13 +129,18 @@ describe('fitsVisualEditor — strict fit rule', () => {
 		expect(fitsVisualEditor(ref)).toBe(true);
 	});
 
-	it('rejects when a required field is missing', () => {
-		// article requires journaltitle
+	it('holds an entry that is missing a required field, which is when a form helps most', () => {
+		// article requires journaltitle; the form says so rather than refusing to open
 		const ref: BiblatexReference = { key: 'k', entrytype: 'article', author: 'A', title: 'T', year: '2001' };
-		expect(fitsVisualEditor(ref)).toBe(false);
+		expect(fitsVisualEditor(ref)).toBe(true);
 	});
 
-	it('rejects an unknown entrytype', () => {
+	it('holds an entry type biblatex defines but the form has no field list for', () => {
+		const ref: BiblatexReference = { key: 'k', entrytype: 'patent', title: 'T', holder: 'H' };
+		expect(fitsVisualEditor(ref)).toBe(true);
+	});
+
+	it('rejects an entrytype biblatex does not define, which is usually a typo', () => {
 		const ref: BiblatexReference = { key: 'k', entrytype: 'gizmo', title: 'T' };
 		expect(fitsVisualEditor(ref)).toBe(false);
 	});
@@ -139,6 +151,42 @@ describe('fitsVisualEditor — strict fit rule', () => {
 
 	it('ignores internal bookkeeping fields (raw, displayLabel, hasInlineComment=false)', () => {
 		expect(fitsVisualEditor(article({ raw: '@Article{…}', displayLabel: 'Smith (2001)', hasInlineComment: false }))).toBe(true);
+	});
+});
+
+// The form saves what the schema returns, so a field the schema drops is a field deleted from the
+// user's file. That is the whole reason the fit rule above could be relaxed, and it has to hold.
+describe('saving keeps fields the form never showed', () => {
+	const saved = (ref: Record<string, string>) => {
+		const parsed = schemaForType(ref.entrytype).safeParse(ref);
+		expect(parsed.success).toBe(true);
+		return parsed.success ? (parsed.data as Record<string, string>) : {};
+	};
+
+	it('keeps a legacy name, an exporter field and one belonging to another type', () => {
+		const ref = {
+			key: 'k',
+			entrytype: 'article',
+			author: 'A',
+			title: 'T',
+			journaltitle: 'J',
+			year: '2001',
+			journal: 'J',
+			timestamp: 'Wed, 14 Nov 2018',
+			holder: 'Westinghouse'
+		};
+		expect(saved(ref)).toEqual(ref);
+	});
+
+	// the type picker offers every biblatex type, so every one of them has to survive a save
+	it('keeps a whole entry of a type the form has no rules for', () => {
+		const ref = { key: 'p', entrytype: 'patent', title: 'A Difference Engine', author: 'Ada', holder: 'Analytical Society', date: '1843' };
+		expect(saved(ref)).toEqual(ref);
+	});
+
+	it('still refuses an entry that is genuinely incomplete', () => {
+		const ref = { key: 'm', entrytype: 'article', title: 'T', journaltitle: 'J', year: '2024' };
+		expect(schemaForType(ref.entrytype).safeParse(ref).success).toBe(false);
 	});
 });
 

@@ -17,9 +17,11 @@
 // swap at stage 3 is visually a no-op. That is the reason not to reach for KaTeX: a second engine
 // would lay the same latex out differently and every equation would twitch as it went live.
 //
-// No user macros are passed, deliberately. The live field in this bridge is not configured with
-// them either, so leaving them out is what keeps the two renders identical.
+// The document's own macros are passed here AND to the live field, from the same dictionary. That
+// is not incidental: give one of them a \newcommand the other lacks and every equation using it
+// would visibly change as it went live, which is the twitch stage 3 exists to avoid.
 import { convertLatexToMarkup } from 'mathlive';
+import { mathMacros } from './mathMacros.svelte';
 import 'mathlive/static.css';
 
 export const PLACEHOLDER_CLASS = 'math-static-placeholder';
@@ -104,7 +106,7 @@ export function typesetNow(budgetMs: number): void {
 function typeset(el: HTMLElement, latex: string): void {
 	try {
 		// 'math' matches MathfieldElement's own default mode; anything else would resize on upgrade
-		el.innerHTML = convertLatexToMarkup(latex, { defaultMode: 'math' });
+		el.innerHTML = convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current });
 	} catch {
 		// mathlive throws outright on some malformed input. Fall back to the source text so the node
 		// still occupies roughly the right space instead of collapsing to nothing.
@@ -149,4 +151,15 @@ export function setStaticMath(el: HTMLElement, latex: string): void {
 /** stop tracking a placeholder that has been replaced by a live field or removed */
 export function cancelStaticMath(el: HTMLElement): void {
 	pending.delete(el);
+}
+
+/** Re-typeset what is already on screen, for when a \newcommand changed under it. Found through
+ *  the DOM rather than a registry: a placeholder that was removed without being cancelled would
+ *  otherwise be held alive by it, and this only runs when a definition actually changes. */
+export function retypesetStaticMath(): void {
+	for (const el of document.querySelectorAll<HTMLElement>(`.${PLACEHOLDER_CLASS}`)) {
+		const latex = latexOf.get(el);
+		// still queued: the drain will pick up the new dictionary on its own
+		if (latex !== undefined && !pending.has(el)) typeset(el, latex);
+	}
 }

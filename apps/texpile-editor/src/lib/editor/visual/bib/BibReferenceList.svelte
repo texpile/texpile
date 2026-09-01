@@ -1,9 +1,20 @@
 <script lang="ts">
 	// The reference rows on the manager's left: author/title/year summary, a raw badge for
 	// entries that only edit as CM text, and per-row delete.
-	import { Code, Trash2 } from '@lucide/svelte';
+	import { AlertTriangle, Code, Trash2 } from '@lucide/svelte';
 	import { fitsVisualEditor, type BiblatexReference } from '$lib/languages/bib/biblatex';
+	import { validateEntry } from '$lib/languages/bib/bibValidate';
+	import { bibProblemText } from '$lib/languages/bib/bibProblemText';
 	import { m } from '$lib/paraglide/messages';
+
+	// one walk per row per render; a bibliography is short and the check is a few set lookups
+	const problemsOf = (ref: BiblatexReference) =>
+		validateEntry(
+			ref.entrytype,
+			Object.entries(ref)
+				.filter(([, v]) => typeof v === 'string' && v.trim().length > 0)
+				.map(([k]) => k)
+		);
 
 	let {
 		refs,
@@ -36,9 +47,22 @@
 				<div class="truncate text-sm font-semibold">{ref.author || m.bib_unknown_author_placeholder()}</div>
 				<div class="text-surface-600-400 truncate text-xs">{ref.title || m.bib_untitled_placeholder()}</div>
 				<div class="text-surface-500 mt-1 flex items-center gap-2 text-xs">
-					<span>{ref.year || m.bib_no_year_placeholder()}</span>
+					<!-- date is biblatex's spelling and year the older one; a row showing "No year"
+					     next to date = {1843} was reading only half the document -->
+					<span>{ref.year || ref.date || m.bib_no_year_placeholder()}</span>
 					<span>•</span>
 					<code class="text-xs">{ref.key}</code>
+					{#if problemsOf(ref).length > 0}
+						<!-- what the entry would be reported for, where the entries are actually read:
+						     a warning only in the edit form is one nobody goes looking for -->
+						<span
+							class="text-warning-700-300 inline-flex items-center gap-0.5 text-[10px]"
+							title={problemsOf(ref).map(bibProblemText).join('\n')}
+						>
+							<AlertTriangle class="size-2.5" />
+							{problemsOf(ref).length}
+						</span>
+					{/if}
 					{#if !fitsVisualEditor(ref)}
 						<!-- raw badge: this row edits as raw CM -->
 						<span

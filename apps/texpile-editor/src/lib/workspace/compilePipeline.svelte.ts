@@ -31,6 +31,9 @@ export class CompilePipeline {
 	// overlapping compile has to work whether or not the marker is on.
 	busy = $state(false);
 	pdfFilename = $state('output.pdf');
+	// bumped when a run ends. A finished compile is the only thing that rewrites the .aux, and the
+	// project intel rescan has no other way to hear that its label numbers are stale.
+	runsFinished = $state(0);
 	private watchers = new CompileWatchers({
 		isCurrent: (gen) => gen === this.compileGen,
 		stat: (p) => this.deps.stat(p),
@@ -50,6 +53,9 @@ export class CompilePipeline {
 
 	/** a run ended (or was stopped): clear both the button state and the overlap guard */
 	private endRun() {
+		// only a real transition counts: endRun is reached from the watchers, from Stop, and from
+		// the failure paths, and a rescan per call would be several per compile
+		if (this.compiling || this.busy) this.runsFinished++;
 		this.compiling = false;
 		this.busy = false;
 	}

@@ -6,7 +6,7 @@
 	import {
 		type BiblatexReference,
 		type BibToken,
-		biblatexReferenceSchema,
+		schemaForType,
 		parseBibtexWithWarnings,
 		parseSingleEntry,
 		serializeBibtex,
@@ -151,7 +151,7 @@
 
 	function saveReference() {
 		formErrors = {};
-		const parsed = biblatexReferenceSchema.safeParse(currentReference);
+		const parsed = schemaForType(currentReference.entrytype).safeParse(currentReference);
 		if (!parsed.success) {
 			formErrors = mapIssues(parsed.error.issues);
 			return;

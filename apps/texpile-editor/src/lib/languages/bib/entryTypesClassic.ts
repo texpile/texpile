@@ -41,6 +41,22 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 					type: 'text',
 					required: false,
 					placeholder: '10.1000/xyz123'
+				},
+				// carried by more than half the articles in real bibliographies, and by nothing in
+				// the form until now
+				{
+					name: 'url',
+					label: m.bibfield_label_url(),
+					type: 'text',
+					required: false,
+					placeholder: 'https://example.org/article'
+				},
+				{
+					name: 'urldate',
+					label: m.bibfield_label_urldate(),
+					type: 'text',
+					required: false,
+					placeholder: '2026-08-31'
 				}
 			]
 		},

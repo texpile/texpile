@@ -258,17 +258,21 @@ export const Dataset = Base.extend({
 	...commonOptionals
 });
 
+// Passthrough, all of them: zod's output is what gets saved, so a field the form does not model -
+// `journal`, a reference manager's `timestamp`, a @patent's `holder` - would be stripped out of the
+// user's file on save. Keeping them is what lets these entries be edited in the form at all
+// instead of being sent to the raw editor to protect them.
 export const BibEntry = z.discriminatedUnion('entrytype', [
-	Article,
-	Book,
-	Inbook,
-	Incollection,
-	Inproceedings,
-	Thesis,
-	Report,
-	Online,
-	Misc,
-	Dataset
+	Article.passthrough(),
+	Book.passthrough(),
+	Inbook.passthrough(),
+	Incollection.passthrough(),
+	Inproceedings.passthrough(),
+	Thesis.passthrough(),
+	Report.passthrough(),
+	Online.passthrough(),
+	Misc.passthrough(),
+	Dataset.passthrough()
 ]);
 
 export const BibEntrySchema = BibEntry.superRefine((v, ctx) => {
@@ -286,6 +290,27 @@ export const BibEntrySchema = BibEntry.superRefine((v, ctx) => {
 		}
 	}
 });
+
+/**
+ * The ten types above have hand-written rules. Every other biblatex type - @patent, @software,
+ * @periodical - is checked only for the things any entry needs, so choosing one from the type
+ * picker actually saves. biblatex's own mandatory-field rules are reported separately by
+ * bibValidate, which knows all of them.
+ */
+export const GenericEntry = z
+	.object({
+		key: zStr,
+		entrytype: zStr,
+		title: zMaybeStr,
+		year: zYear.optional(),
+		date: zDate.optional()
+	})
+	.passthrough();
+
+/** the rules for this entry's type: the strict ones where they exist, the shared ones otherwise */
+export function schemaForType(entrytype: string | undefined) {
+	return entrytype && entrytype in perTypeSchemas ? BibEntrySchema : GenericEntry;
+}
 
 // alias used by the BibManager form validation
 export const biblatexReferenceSchema = BibEntrySchema;

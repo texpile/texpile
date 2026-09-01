@@ -9,6 +9,11 @@ import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
 import { ScmActions } from '$lib/workspace/scmActions.svelte';
 import { gitignoreLines } from '$lib/workspace/buildArtifacts';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
+import { projectIntelStore } from '$lib/stores/projectIntel';
+import { trailingDebounce } from '$lib/trailingDebounce';
+import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { setMathMacros } from '$lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte';
+import { retypesetStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
 import { bibPathsFrom } from '$lib/collab/compileIntelBridge';
 import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
@@ -191,6 +196,10 @@ export class WorkspaceIntegrations {
 			const session = d.session();
 			const guest = d.guest();
 			const bibs = root ? bibPathsFrom(flattenPaths(tree, root), root) : [];
+			// tracked: a finished compile rewrites the .aux, and the \ref chips read their numbers
+			// from it. Without this they would show the previous compile's numbering until the file
+			// list happened to change.
+			void d.compiler().runsFinished;
 			// the .aux sits next to the log (output/aux dirs included); fall back to a main-sibling .aux.
 			// untracked: expectedLogPath reads compileConfig, and a config edit alone (output dir,
 			// live-mode toggle) must not trigger a full intel rescan - the deps named above cover it
@@ -205,6 +214,19 @@ export class WorkspaceIntegrations {
 			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux).then(() => {
 				if (live && !guest) d.cc().share();
 			});
+		});
+		// the document's own \newcommand definitions, so the visual editor's maths renders them
+		// instead of showing the macro name. Debounced and change-checked: the scan is over the
+		// whole file, and a real change re-typesets every equation on screen.
+		const refreshMathMacros = trailingDebounce(400, (source: string) => {
+			if (setMathMacros(mathMacrosFor(source))) retypesetStaticMath();
+		});
+		$effect(() => {
+			// both sources the dictionary merges: this file's definitions and the other files'
+			const source = doc.texSource;
+			void projectIntelStore.current;
+			refreshMathMacros(source);
+			return () => refreshMathMacros.cancel();
 		});
 		// visual-editor file access (figure previews, image paste) resolves through the provider,
 		// so a guest's images come from the session blob cache and uploads go through the session.
