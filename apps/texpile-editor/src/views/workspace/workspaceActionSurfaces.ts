@@ -232,6 +232,7 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		getViewMode: () => d.wsdoc.modes.mode,
 		hasFile: () => !!d.wsdoc.doc.path,
 		canManageTree: () => d.provider.caps.manageTree,
+		isHostWorkspace: () => !d.guest(),
 		canSearch: () => d.provider.caps.search,
 		canFormat: () => d.fmt.canFormatDoc(),
 		formatTool: () => (d.wsdoc.doc.kind === 'typ' ? 'typstyle' : 'latexindent') as 'typstyle' | 'latexindent',

@@ -33,14 +33,15 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 				icon: FilePlus2,
 				run: () => a.newFile('typ')
 			});
-			items.push({
-				id: 'typst.preview',
-				label: m.typst_preview_open(),
-				group,
-				keywords: 'typst live preview watch tinymist',
-				icon: Play,
-				run: () => a.openTypstPreview()
-			});
+			if (a.isHostWorkspace())
+				items.push({
+					id: 'typst.preview',
+					label: m.typst_preview_open(),
+					group,
+					keywords: 'typst live preview watch tinymist',
+					icon: Play,
+					run: () => a.openTypstPreview()
+				});
 		} else {
 			items.push({
 				id: 'file.newTex',
@@ -68,14 +69,15 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 			run: () => a.newFile('md')
 		});
 	}
-	items.push({
-		id: 'file.openFolder',
-		label: m.menubar_open_new_folder(),
-		group,
-		keywords: 'project workspace directory',
-		icon: FolderOpen,
-		run: () => a.openFolder()
-	});
+	if (a.isHostWorkspace())
+		items.push({
+			id: 'file.openFolder',
+			label: m.menubar_open_new_folder(),
+			group,
+			keywords: 'project workspace directory',
+			icon: FolderOpen,
+			run: () => a.openFolder()
+		});
 	items.push({
 		id: 'file.refreshTree',
 		label: m.wsview_refresh_tree_title(),
@@ -89,7 +91,7 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 	// reload forgets the folder and lands on Start - main re-queues the folder push instead, the
 	// same path session restore uses, which also reopens the last file. Hosts only: a guest's
 	// "workspace" is the live session, and reloading is just disconnecting.
-	if (a.canManageTree() && nativeBridge()?.reloadWorkspace)
+	if (a.isHostWorkspace() && nativeBridge()?.reloadWorkspace)
 		items.push({
 			id: 'window.reload',
 			label: m.palette_reload_workspace(),

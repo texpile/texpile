@@ -14,7 +14,7 @@ import {
 	writeTextFile,
 	writeBinaryFile,
 	renameEntry,
-	deleteEntry,
+	trashEntry,
 	scanTree,
 	fileUrl,
 	relativeTo,
@@ -279,7 +279,7 @@ class HostCollabController {
 		if (!this.active || !this.root) return;
 		if (!isSafeRel(p.from) || !isShared(p.from)) return;
 		try {
-			if (p.op === 'delete') await deleteEntry(joinPath(this.root, p.from));
+			if (p.op === 'delete') await trashEntry(joinPath(this.root, p.from), this.root);
 			else if (p.op === 'rename') {
 				if (!p.to || !isSafeRel(p.to) || !isShared(p.to)) return;
 				await renameEntry(joinPath(this.root, p.from), joinPath(this.root, p.to));

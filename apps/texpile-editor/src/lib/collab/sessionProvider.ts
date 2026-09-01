@@ -1,6 +1,6 @@
 // A guest's workspace provider: the "filesystem" is the shared CRDT, not disk. Files are read from
-// their Y.Text and the tree from the manifest; writes and every host-only capability are off, so
-// WorkspaceView runs read-only over the session. Paths are the manifest's root-relative keys.
+// their Y.Text and the tree from the manifest; text edits flow through the CRDT and tree writes
+// execute on the host, which owns the disk. Paths are the manifest's root-relative keys.
 
 import { basename, fileUrl as diskFileUrl } from '$lib/workspace/fileSystem';
 import type { TreeEntry, TexFile } from '$lib/workspace/fileSystem';
@@ -46,7 +46,7 @@ export function guestRelPath(p: string) {
 const toRel = guestRelPath;
 
 export const sessionProvider: WorkspaceProvider = {
-	caps: { manageTree: false, compile: false, git: false, format: false, search: false },
+	caps: { manageTree: true, compile: false, git: false, format: false, search: false },
 
 	readText: async (path) => collabGuest.ytextFor(toRel(path))?.toString() ?? '',
 	scanTree: async () => buildTree(collabGuest.files, collabGuest.ghostDirs),

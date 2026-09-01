@@ -55,8 +55,9 @@
 			fileKind: import('$lib/workspace/documentBuffer.svelte').FileKind;
 			imageDir: string | undefined;
 			shareable: boolean;
-			/** provider.caps.manageTree: the workspace takes tree writes */
+			/** the disk-backed host rather than a guest: folder lifecycle, terminal, on-disk checks */
 			hostMode: boolean;
+			canManageTree: boolean;
 			canFormat: boolean;
 			uiZoomPercent: number;
 			/** the compile target is Typst; New-file menus offer .typ instead of .tex/.cls/.sty */
@@ -91,7 +92,7 @@
 			disabled={menu.disabled}
 			fileKind={menu.fileKind}
 			imageDir={menu.imageDir}
-			onNewFile={menu.hostMode ? actions.newFileOfType : undefined}
+			onNewFile={menu.canManageTree ? actions.newFileOfType : undefined}
 			typstProject={menu.typstProject}
 			onOpenFolder={menu.hostMode ? actions.openFolder : undefined}
 			onCloseWorkspace={menu.hostMode ? actions.closeWorkspace : undefined}

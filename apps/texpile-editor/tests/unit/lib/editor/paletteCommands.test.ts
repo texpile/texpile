@@ -1,33 +1,33 @@
-// A guest joins over the CRDT and owns none of the host's folder: no tree writes, no latexindent,
-// no grep, no git. The palette used to offer all four anyway - it gated on whether a file was open
-// and on compile, but never on the provider's capabilities - so a guest could find "New LaTeX
-// document" and run it into a provider that cannot create files.
+// A guest joins over the CRDT and owns none of the host's toolchain: no latexindent, no grep, no
+// git, no compile. It does take tree writes, which execute on the host, so New document belongs to
+// both roles; Open folder does not, since swapping the folder abandons a live session.
 import { describe, it, expect } from 'vitest';
 import { buildCommands } from '$lib/palette/paletteCommands';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 
-/** every host-only capability off is exactly what a guest's provider reports */
-function actions(caps: boolean): PaletteActions {
+/** `host` false is exactly what a guest's session provider reports */
+function actions(host: boolean): PaletteActions {
 	return {
 		save: () => {},
 		runCompile: () => {},
 		stopCompile: () => {},
 		isCompiling: () => false,
-		compileAvailable: () => caps,
+		compileAvailable: () => host,
 		setViewMode: () => {},
 		getViewMode: () => 'visual',
 		hasFile: () => true,
-		canManageTree: () => caps,
-		canSearch: () => caps,
-		canFormat: () => caps,
+		canManageTree: () => true,
+		isHostWorkspace: () => host,
+		canSearch: () => host,
+		canFormat: () => host,
 		formatTool: () => 'latexindent' as const,
-		canGit: () => caps,
+		canGit: () => host,
 		openFile: () => {},
 		toggleSidebar: () => {},
 		sidebarOpen: () => true,
 		toggleTerminal: () => {},
 		terminalVisible: () => false,
-		terminalAvailable: () => caps,
+		terminalAvailable: () => host,
 		newTerminal: () => {},
 		openCompileModal: () => {},
 		openFormatModal: () => {},
@@ -41,7 +41,8 @@ function actions(caps: boolean): PaletteActions {
 	};
 }
 
-const HOST_ONLY = ['file.newTex', 'file.newBib', 'view.findInFiles', 'editor.format', 'view.diff'];
+const HOST_ONLY = ['view.findInFiles', 'editor.format', 'view.diff', 'file.openFolder'];
+const BOTH = ['file.newTex', 'file.newBib', 'file.save', 'view.sidebar', 'file.preferences'];
 
 describe('palette commands', () => {
 	it('offers the host-only commands to a host', () => {
@@ -54,11 +55,8 @@ describe('palette commands', () => {
 		expect(HOST_ONLY.filter((id) => ids.includes(id))).toEqual([]);
 	});
 
-	// what is left has to still be worth opening: a guest can move around, switch view, save
-	it('still gives a guest something to run', () => {
+	it('still gives a guest the commands that are legitimately its own', () => {
 		const ids = buildCommands(actions(false)).map((c) => c.id);
-		expect(ids).toContain('file.save');
-		expect(ids).toContain('view.sidebar');
-		expect(ids).toContain('file.preferences');
+		expect(BOTH.filter((id) => !ids.includes(id))).toEqual([]);
 	});
 });

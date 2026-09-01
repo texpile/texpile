@@ -103,7 +103,8 @@ export default ts.config(
 	...svelte.configs['flat/prettier'],
 	{
 		languageOptions: {
-			globals: { ...globals.browser, ...globals.node }
+			globals: { ...globals.browser, ...globals.node },
+			parserOptions: { tsconfigRootDir: import.meta.dirname }
 		},
 		rules: {
 			'no-undef': 'off',

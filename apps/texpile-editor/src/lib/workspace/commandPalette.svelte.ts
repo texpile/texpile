@@ -27,6 +27,7 @@ export type PaletteActions = {
 	 * can find but not run is worse than one that was never there.
 	 */
 	canManageTree(): boolean;
+	isHostWorkspace(): boolean;
 	canSearch(): boolean;
 	canFormat(): boolean;
 	/** which formatter Format runs for the open file; names the tool in the row's label */

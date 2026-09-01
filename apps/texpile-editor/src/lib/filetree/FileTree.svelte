@@ -45,8 +45,7 @@
 		onReveal?: (entry: TreeEntry) => void;
 		/** the tree's own undo/redo stack for FILE operations - never the editor's text history. */
 		history?: FileHistory | null;
-		/** guest session: browse + open only, no rename/delete/internal-move. */
-		/** allow adding new files by drop-from-OS / paste (true even for a read-only guest). */
+		/** allow adding new files by drop-from-OS / paste. */
 		allowImport?: boolean;
 	};
 	let {

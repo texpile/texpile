@@ -39,10 +39,10 @@
 	let { provider = diskProvider, session = collabHost }: { provider?: WorkspaceProvider; session?: EditSession } = $props();
 	// all file access flows through the provider; these thin delegates keep the existing call sites
 	// (and scan's wrapped {root,...} shape) intact
-	// true for the disk-backed host; false for a read-only guest session. Gates the host-only
-	// lifecycle (folder claim, terminal, main-file/macro scan, on-disk change checks) so this same
-	// view can run over a shared session.
-	const hostMode = $derived(provider.caps.manageTree);
+	// true for the disk-backed host; false for a guest session. Gates the host-only lifecycle
+	// (folder claim, terminal, main-file/macro scan, on-disk change checks) so this same view can
+	// run over a shared session.
+	const hostMode = $derived(!session.isGuest);
 	// tree undo needs somewhere to park a deleted entry AND a way to fetch it back; only the
 	// disk-backed provider has both, so a guest session records no file history at all
 	const canTrash = $derived(!!provider.trash && !!provider.restore);
@@ -283,10 +283,11 @@
 			fileKind: kind,
 			// an image is written next to the document, so a workspace that takes no tree writes has
 			// nowhere to put one however good the path looks
-			imageDir: hostMode && doc.path && hasVisualMode(kind) ? dirname(doc.path) : undefined,
+			imageDir: provider.caps.manageTree && doc.path && hasVisualMode(kind) ? dirname(doc.path) : undefined,
 			// never a guest: a guest is IN someone's session, not in a position to open one
 			shareable: isDesktop() && !guest,
 			hostMode,
+			canManageTree: provider.caps.manageTree,
 			canFormat: fmt.canFormatDoc(),
 			uiZoomPercent,
 			typstProject: cc.typstProject
