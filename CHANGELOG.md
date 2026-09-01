@@ -5,59 +5,14 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
-- fix: improved launch speed
-- fix: editor now correctly handles bbl files
-- fix: various improvements in the visual editor
-- fix: live preview reads section, footnote and list numbers from the engine, so more edits render exactly instead of provisionally
-- fix: live preview no longer stalls on paragraphs with \verb or \url
-- fix: editing an abstract or other narrowed block now patches instantly instead of waiting for a full recompile
-- fix: edits that need a full recompile now highlight where the change will land while it runs
-- fix: the table of contents and cross-references no longer stay empty or show ?? in live preview
-- fix: instant patches now ask the engine whether the edited page still fits and read stretched spacing from it, instead of guessing
-- fix: the engine fit check now works on many more document classes instead of refusing pages with invisible layout rules
-- fix: when an edit pushes lines past the column or page bottom, the preview now shows them flowing into the next column or page instead of cramming them at the bottom
-- fix: the engine fit check counts an unusually deep last line against the page the way the page builder does
-- fix: the compile now records the spacing TeX discards at every column and page break, so lines that flow across a break land on the engine's own spacing instead of a guess
-- fix: content pushed across breaks can now ripple through several columns and pages in one keystroke, each step decided by the engine, and renders exactly with no refining tint when every step is certified
-- fix: deleting lines now pulls content back from the next column or page live, instead of leaving a gap until the recompile
-- fix: live preview reads the spacing between every pair of lines from the engine instead of deriving it, so the break check works from the document's real vertical list
-- fix: pages of documents that shift the page origin no longer render offset in live preview
-- fix: live preview reads each page's columns from the engine instead of inferring them from where text starts, so edits land in the right column even when the gap between columns is narrow
-- fix: the compile now records which line of your document produced each line of the page, so live preview finds the text you edited by asking instead of searching, and instant edits land about a third faster
-- fix: editing one column of a two-column page no longer moves a figure that spans both columns, or the page number
-- fix: two figures included at the same size can no longer be shown in each other's place in live preview
-- fix: live preview flows content across a column break in more documents, instead of giving up when a column held only a figure
-- fix: an edit that pushes content into the next column or page now renders exactly, with no refining tint, on the last page and in document styles that leave the bottom of pages ragged
-- fix: content pushed off the end of the document now flows onto a new page in live preview, instead of being drawn on top of the text below it
-- fix: live preview no longer reads a footnote or a figure spanning both columns as body text, so an edit that pushes a line onto a page with either lands it where the engine does
-- fix: on a page already full to the bottom, an edit that adds a line now redraws at the engine's own spacing instead of an estimate, so the text no longer shifts by a line before the recompile catches up
-- fix: editing a paragraph that sits directly under a centered heading, with no blank line between them, no longer draws the paragraph a line high
-- fix: when a paragraph split across a page break starts its second half with a taller line, live preview seats that half where the engine does instead of at the old line's position
-- fix: an edit the engine confirmed still fits the page no longer shows the refining tint because a size estimate disagreed with it
-- fix: a page containing a fraction or other stacked maths no longer falls back to the slower refining render for every edit on it
-- fix: live preview reads a narrowed block's own type size and leading from the compile, so edits in an abstract, quote or footnote are placed by asking rather than searching for them
-- fix: live preview no longer misses a superscript, accent or inline maths on a paragraph's first or last line when matching it, which used to send those paragraphs down the slower path
-- fix: a paragraph continued in the next column or on the next page now renders exactly when the break stays where it was, instead of always showing the refining tint
-- fix: editing a paragraph that continues in the next column no longer places it wrongly when a figure sits at the bottom of that column
-- fix: editing a cell of a table that sits at the bottom of a column no longer sends the table's own caption to the next page, leaving a gap where it was
-- fix: live preview highlights and follows the line you are typing on rather than the whole paragraph, so editing the end of a paragraph that continues on the next page no longer scrolls back to where it started
-- fix: cross-references in the visual editor read as part of the sentence, like citations, instead of sitting in a tinted box at a smaller size
-- fix: cross-reference numbers now come from your last compile rather than the editor's own count, so a reference to a theorem, an appendix, a chapter-numbered section or a file you include shows the number the PDF will print
-- fix: a reference only shows as broken when the compiler reported it undefined, instead of whenever the editor could not find the label itself
-- fix: clicking a reference to a section jumps to it, which previously only worked for figures, tables and equations
-- fix: Typst references show the label rather than a guessed figure or table number, since Typst numbering is set by the document's own rules
-- fix: saving in the visual editor no longer rewrites a reference whose label name contains maths, such as \ref{Remark:$ethf$}, into one that no longer matches its label
-- fix: a macro shown inline in the visual editor now takes the document's own font and background instead of sitting in a boxed monospace chip, and shows its outline only while you are editing it
-- fix: the left and right arrow keys now move the cursor into an inline macro instead of stepping over it, landing at the end of it when you arrive from the right
-- feat: equations in the visual editor render the macros your document defines, so a formula written with your own \newcommand shortcuts looks the way it will in the PDF instead of showing the shortcut's name. Editing such an equation leaves your macros in place rather than replacing them with what they stand for
-- feat: the bibliography editor knows every biblatex entry type and field, read from biblatex itself, so a reference can be a patent, a periodical or a piece of software and not just one of ten kinds
-- feat: writing a reference now warns about what your bibliography tool would reject: a field the entry is missing, a name that is the old BibTeX spelling of another, and a field that entry type ignores
-- feat: the .bib editor completes entry types and field names, offering only what the entry type accepts
-- fix: an article can now record its URL and the date you read it, and a preprint its identifier, server and category, without dropping to raw source
-- fix: references written the BibTeX way, or carrying fields a reference manager added, now open in the reference form instead of dropping to raw source, and keep every field they came with when saved
-- fix: an incomplete reference now opens in the form that would let you complete it, rather than being shown as source because it was incomplete
-- fix: choosing one of the less common entry types can now be saved
-- fix: the reference list shows a reference dated with date rather than year, instead of reporting No year, and marks entries biblatex would complain about
+## [1.0.0-rc.1] - 2026-09-01
+
+- feat: guest able to join a shared session from the browser (join.texpile.com)
+- feat: open a single file (.tex, .typ ...etc)
+- fix: various fixes and improvements to LaTeX live preview
+- fix: various improvements to the visual editor
+- fix: various improvement to .bib editor
+- fix: faster startup and various performance optimizations
 
 ## [0.17.1] - 2026-08-19
 

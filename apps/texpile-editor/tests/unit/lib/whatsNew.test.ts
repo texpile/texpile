@@ -21,6 +21,18 @@ describe('what’s new selection', () => {
 		expect(unseenEntries(ALL, '0.13.1')).toEqual([]);
 	});
 
+	it('orders prereleases below their final release', () => {
+		const rc = [
+			{ version: '1.0.0', notes: ['final'] },
+			{ version: '1.0.0-rc.2', notes: ['rc2'] },
+			{ version: '1.0.0-rc.1', notes: ['rc1'] },
+			...ALL
+		];
+		expect(unseenEntries(rc, '1.0.0-rc.1').map((e) => e.version)).toEqual(['1.0.0-rc.2', '1.0.0']);
+		expect(unseenEntries(rc, '0.13.1').map((e) => e.version)).toEqual(['1.0.0-rc.1', '1.0.0-rc.2', '1.0.0']);
+		expect(unseenEntries(rc, '1.0.0')).toEqual([]);
+	});
+
 	it('empty marker (fresh install or pre-marker upgrade) shows the current minor series only', () => {
 		expect(unseenEntries(ALL, '').map((e) => e.version)).toEqual(['0.13.0', '0.13.1']);
 	});

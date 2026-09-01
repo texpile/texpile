@@ -17,15 +17,33 @@ export const hasUnseenWhatsNew = {
 	}
 };
 
+// semver order: numeric core, then a final release outranks its own prereleases (1.0.0-rc.1 < 1.0.0)
 function isNewer(a: string, b: string): boolean {
-	const x = a.split('.').map(Number);
-	const y = b.split('.').map(Number);
-	for (let i = 0; i < Math.max(x.length, y.length); i++) {
-		const p = x[i] ?? 0;
-		const q = y[i] ?? 0;
-		if (p !== q) return p > q;
+	const [ac, ap] = parts(a);
+	const [bc, bp] = parts(b);
+	for (let i = 0; i < 3; i++) if (ac[i] !== bc[i]) return ac[i] > bc[i];
+	if (!ap.length || !bp.length) return !ap.length && bp.length > 0;
+	for (let i = 0; i < Math.max(ap.length, bp.length); i++) {
+		const p = ap[i];
+		const q = bp[i];
+		if (p === undefined || q === undefined) return p !== undefined;
+		if (p !== q) return typeof p === 'number' && typeof q === 'number' ? p > q : String(p) > String(q);
 	}
 	return false;
+}
+
+function parts(v: string): [number[], (number | string)[]] {
+	const dash = v.indexOf('-');
+	const core = (dash === -1 ? v : v.slice(0, dash)).split('.').map((n) => Number(n) || 0);
+	while (core.length < 3) core.push(0);
+	const pre =
+		dash === -1
+			? []
+			: v
+					.slice(dash + 1)
+					.split('.')
+					.map((x) => (/^\d+$/.test(x) ? Number(x) : x));
+	return [core, pre];
 }
 
 // bounds an upgrade that skipped many releases; the newest sections win
