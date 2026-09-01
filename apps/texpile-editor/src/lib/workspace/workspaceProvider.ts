@@ -15,6 +15,8 @@ export type WorkspaceCapabilities = {
 	format: boolean;
 	/** find-in-files across the folder (host only). */
 	search: boolean;
+	/** the shell dock (host only, desktop only). */
+	terminal: boolean;
 };
 
 export type WorkspaceProvider = {

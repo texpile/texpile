@@ -1,6 +1,7 @@
 // The workspace's outward integrations: the MCP command surface and window-state cache,
 // shared-session handlers, cross-file project intel, the label/bibitem registries, editor
 // file access + graphics resolution, Zotero citations, and source-control actions.
+import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { untrack } from 'svelte';
 import { publishWindowState } from '$lib/workspace/mcpPublish';
 import { attachMcpCommands } from '$lib/workspace/mcpCommands';
@@ -211,6 +212,7 @@ export class WorkspaceIntegrations {
 			const live = session.active;
 			const sharedAux =
 				guest && session.compileIntel ? { numbers: session.compileIntel.auxNumbers, pages: session.compileIntel.auxPages } : null;
+			if (fileMode.current) return;
 			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux).then(() => {
 				if (live && !guest) d.cc().share();
 			});

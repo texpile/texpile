@@ -7,7 +7,7 @@ import { initSpellcheckConfig } from '$lib/editor/spellcheck/spellcheckConfig';
 import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
-import { claimWorkspace, isDesktop, purgeUndoBackups } from '$lib/workspace/fileSystem';
+import { claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
@@ -61,7 +61,6 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 	}
 	tabs.bind(root, hostMode); // restore this folder's open tabs (guests start fresh)
 	docPositions.bind(root, hostMode); // and where the caret was in each of them
-	termDock.available = isDesktop() && hostMode; // client-only; set here so SSR/CSR agree
 	if (guest) layout.pdfPaneOpen = true; // guests land with the host's PDF visible
 	files.loadRefs(root);
 	void files.refreshTree();

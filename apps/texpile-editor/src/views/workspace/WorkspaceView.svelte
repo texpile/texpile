@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fileMode, NO_PROJECT_CAPS } from '$lib/workspace/fileMode.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import WorkspaceModals from '$lib/modals/workspace/WorkspaceModals.svelte';
 	import WorkspaceMain from './WorkspaceMain.svelte';
@@ -36,7 +37,8 @@
 	import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 	// the file-access seam: the host gets the disk-backed provider by default; a guest session
 	// mounts this same view with a CRDT-backed one. caps gate the host-only features.
-	let { provider = diskProvider, session = collabHost }: { provider?: WorkspaceProvider; session?: EditSession } = $props();
+	let { provider: hostProvider = diskProvider, session = collabHost }: { provider?: WorkspaceProvider; session?: EditSession } = $props();
+	const provider = $derived(fileMode.current ? { ...hostProvider, caps: NO_PROJECT_CAPS } : hostProvider);
 	// all file access flows through the provider; these thin delegates keep the existing call sites
 	// (and scan's wrapped {root,...} shape) intact
 	// true for the disk-backed host; false for a guest session. Gates the host-only lifecycle
@@ -124,6 +126,9 @@
 	attachSourceToc(wsdoc);
 	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
 	let termDock = $state(new TerminalDockState(() => guest));
+	$effect(() => {
+		termDock.available = isDesktop() && provider.caps.terminal;
+	});
 	/**
 	 * The bottom dock is confined to the editor column rather than spanning every column.
 	 *

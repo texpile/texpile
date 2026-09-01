@@ -2,6 +2,8 @@
 	// The editor's top bar: sidebar toggle, word count, the visual/source toggle, and the
 	// compile / preview / save controls. Pure chrome driven by props + callbacks. The open-file
 	// tabs live on their own strip below (TabBar in EditorPane).
+	import { openWorkspaceForFile } from '$lib/workspace/openWorkspace';
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { isDirty } from '$lib/workspace/workspaceStore';
 	import { compileLog } from '$lib/stores/compileLogStore';
@@ -24,7 +26,8 @@
 		Save,
 		Loader2,
 		ShieldQuestion,
-		MessageSquare
+		MessageSquare,
+		FolderOpen
 	} from '@lucide/svelte';
 
 	type Props = {
@@ -257,7 +260,12 @@
 				{/if}
 			</button>
 		{/if}
-		{#if terminalAvailable}
+		{#if fileMode.current}
+			<button class="btn btn-xs {COMPILE_TONE.primary}" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
+				<FolderOpen class="size-4" />
+				{m.wsview_open_in_workspace()}
+			</button>
+		{:else if terminalAvailable}
 			<!-- the one-shot sync-to-cursor button used to sit here; it lives on the preview pane's
 			     own header now (PreviewPane / TypstPreview) - and returns beside Compile while the
 			     preview is popped out (see onSyncToCursor above) -->

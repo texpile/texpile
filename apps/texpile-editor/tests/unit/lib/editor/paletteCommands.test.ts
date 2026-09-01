@@ -19,6 +19,7 @@ function actions(host: boolean): PaletteActions {
 		canManageTree: () => true,
 		isHostWorkspace: () => host,
 		canSearch: () => host,
+		hasSidebar: () => true,
 		canFormat: () => host,
 		formatTool: () => 'latexindent' as const,
 		canGit: () => host,

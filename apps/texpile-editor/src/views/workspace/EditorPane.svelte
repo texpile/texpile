@@ -2,6 +2,7 @@
 	// The editor column: the mode toolbar on top and, under it, whichever surface the open file
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { Loader2, CircleAlert, Info, GitCompare, RefreshCw } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
@@ -171,15 +172,17 @@
 </script>
 
 <div class="flex min-h-0 min-w-0 flex-col" style="grid-column: 1; grid-row: 2">
-	<TabBar
-		tabs={openTabs}
-		activeKey={activeTabKey}
-		dirty={isDirty.current && !session.isGuest}
-		previewKey={previewTab}
-		onActivate={onActivateTab}
-		onClose={onCloseTab}
-		onKeep={onKeepTab}
-	/>
+	{#if !fileMode.current}
+		<TabBar
+			tabs={openTabs}
+			activeKey={activeTabKey}
+			dirty={isDirty.current && !session.isGuest}
+			previewKey={previewTab}
+			onActivate={onActivateTab}
+			onClose={onCloseTab}
+			onKeep={onKeepTab}
+		/>
+	{/if}
 	{#if loadedPath && structured && !comparing && (viewMode === 'source' || visualDoc)}
 		<EditorToolbarStrip {kind} mode={viewMode === 'visual' ? 'visual' : 'source'} />
 	{/if}

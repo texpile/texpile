@@ -1,5 +1,6 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
+import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { normSyncPath } from '$lib/workspace/syncTexNav';
@@ -238,6 +239,7 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		formatTool: () => (d.wsdoc.doc.kind === 'typ' ? 'typstyle' : 'latexindent') as 'typstyle' | 'latexindent',
 		canGit: () => d.provider.caps.git,
 		openFile: (abs: string) => d.editFlow().activateTab({ path: abs }),
+		hasSidebar: () => !fileMode.current,
 		toggleSidebar: () => d.layout().toggleSidebar(),
 		sidebarOpen: () => d.layout().sidebarOpen,
 		toggleTerminal: () => d.termDock().toggle(),

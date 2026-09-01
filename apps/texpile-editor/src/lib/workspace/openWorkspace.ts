@@ -1,6 +1,7 @@
 // the one folder-open sequence: launch bootstrap, main's later pushes, and the start screen
+import { fileMode } from './fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
-import { claimWorkspace, dirname, nativeBridge, samePath, scanTexFiles, statFile } from './fileSystem';
+import { claimWorkspace, dirname, joinPath, nativeBridge, samePath, scanTexFiles, statFile } from './fileSystem';
 import { latexParserWorker } from './latexParserWorker';
 import { openFile, addRecentFolder, savedLastFile, texFiles, workspaceRoot } from './workspaceStore';
 
@@ -39,6 +40,7 @@ async function fill(root: string, want: string | null): Promise<void> {
 /** the launch path: main created this window for this folder, so it is shown without asking */
 export function adoptBootOpen(open: BootOpen): void {
 	const root = open.kind === 'file' ? dirname(open.path) : open.path;
+	fileMode.current = open.kind === 'file';
 	// a document is certain here, so warm the parser alongside the editor chunk
 	latexParserWorker();
 	show(root);
@@ -62,10 +64,39 @@ async function open(root: string, want: string | null): Promise<OpenOutcome> {
 /** a folder picked on the start screen, or pushed at a window that is already running. `want` is
  *  the file to land on; omit it for whichever was open there last. */
 export function openFolderInWindow(root: string, want?: string | null): Promise<OpenOutcome> {
+	fileMode.current = false;
 	return open(root, want === undefined ? savedLastFile(root) : want);
+}
+
+const ROOT_SEARCH_DEPTH = 5;
+
+/** nearest ancestor with a marker, else the file's own folder. Nearest wins, .texpile first. */
+export async function projectRootFor(filePath: string): Promise<string> {
+	const first = dirname(filePath);
+	let dir = first;
+	for (let level = 0; level < ROOT_SEARCH_DEPTH; level++) {
+		for (const marker of ['.texpile', '.git']) {
+			if ((await statFile(joinPath(dir, marker))).exists) return dir;
+		}
+		const up = dirname(dir);
+		if (!up || up === dir) break;
+		dir = up;
+	}
+	return first;
+}
+
+/** re-root on the file's project, then show the chrome */
+export async function openWorkspaceForFile(filePath: string): Promise<OpenOutcome> {
+	const root = await projectRootFor(filePath);
+	if (workspaceRoot.current && samePath(root, workspaceRoot.current)) {
+		fileMode.current = false;
+		return 'opened';
+	}
+	return openFolderInWindow(root, filePath);
 }
 
 /** OS "Open With": open the file's folder and land on the file itself */
 export function openFileInWindow(filePath: string): Promise<OpenOutcome> {
+	fileMode.current = true;
 	return open(dirname(filePath), filePath);
 }

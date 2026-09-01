@@ -37,14 +37,15 @@ export function viewItems(a: PaletteActions): PaletteItem[] {
 				run: () => a.setViewMode('diff')
 			});
 	}
-	items.push({
-		id: 'view.sidebar',
-		label: a.sidebarOpen() ? m.palette_hide_sidebar() : m.palette_show_sidebar(),
-		group,
-		keywords: 'explorer files panel',
-		icon: PanelLeft,
-		run: () => a.toggleSidebar()
-	});
+	if (a.hasSidebar())
+		items.push({
+			id: 'view.sidebar',
+			label: a.sidebarOpen() ? m.palette_hide_sidebar() : m.palette_show_sidebar(),
+			group,
+			keywords: 'explorer files panel',
+			icon: PanelLeft,
+			run: () => a.toggleSidebar()
+		});
 	if (a.canSearch())
 		items.push({
 			id: 'view.findInFiles',

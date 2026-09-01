@@ -2,6 +2,7 @@
 	// The editor column: toolbar, editor/preview pair, and the bottom dock. Everything here reads
 	// from the workspace's state objects rather than a long list of scalar props, which is what
 	// makes this splittable at all - the state lives in lib/workspace/*.svelte.ts, not in the view.
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import EditorTopbar from './EditorTopbar.svelte';
 	import EditorPane from './EditorPane.svelte';
 	import PreviewPane from '$lib/preview/PreviewPane.svelte';
@@ -164,7 +165,7 @@
 			onCommentsPlaced={actions.visualCommentsPlaced}
 			onSelectComment={actions.selectComment}
 		/>
-		{#if layout.pdfPaneOpen && !layout.pdfPopout}
+		{#if !fileMode.current && layout.pdfPaneOpen && !layout.pdfPopout}
 			<PreviewPane
 				width={layout.pdfPaneWidth}
 				{dockShrunk}
@@ -190,7 +191,7 @@
 				onSettled={actions.onPreviewSettled}
 				onDiagnostics={actions.onPreviewDiagnostics}
 			/>
-		{:else if termDock.available || guest || layout.pdfPopout}
+		{:else if !fileMode.current && (termDock.available || guest || layout.pdfPopout)}
 			<!-- the pane is gone but its divider stays, on the editor's right edge with the chevron
 			     flipped: that is the way back, now that the toolbar has no toggle. Not resizable -
 			     there is nothing to size - so it loses the drag cursor too.

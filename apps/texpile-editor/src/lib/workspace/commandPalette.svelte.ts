@@ -29,6 +29,8 @@ export type PaletteActions = {
 	canManageTree(): boolean;
 	isHostWorkspace(): boolean;
 	canSearch(): boolean;
+	/** false in single-file mode, where there is no file explorer to show or hide */
+	hasSidebar(): boolean;
 	canFormat(): boolean;
 	/** which formatter Format runs for the open file; names the tool in the row's label */
 	formatTool(): 'latexindent' | 'typstyle';

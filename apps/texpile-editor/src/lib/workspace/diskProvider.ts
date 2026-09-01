@@ -24,7 +24,7 @@ import {
 import type { WorkspaceProvider } from './workspaceProvider';
 
 export const diskProvider: WorkspaceProvider = {
-	caps: { manageTree: true, compile: true, git: true, format: true, search: true },
+	caps: { manageTree: true, compile: true, git: true, format: true, search: true, terminal: true },
 	readText: readTextFile,
 	scanTree: (root) => scanTree(root).then((t) => t.children),
 	scanTexFiles: (root) => scanTexFiles(root).then((r) => r.files),

@@ -2,6 +2,7 @@
 	// The workspace's chrome: the menu bar (or the guest banner in its place) and the left sidebar
 	// with its drag handle. Like WorkspaceMain, this reads from the shared state objects rather
 	// than a long prop list.
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import TitleBar from '$lib/chrome/TitleBar.svelte';
 	import WorkspaceMenuBar from '$lib/chrome/WorkspaceMenuBar.svelte';
 	import SessionPresence from '$lib/chrome/SessionPresence.svelte';
@@ -147,7 +148,7 @@
 {/if}
 
 <div class="flex min-h-0 flex-1 overflow-hidden">
-	{#if layout.sidebarOpen}
+	{#if layout.sidebarOpen && !fileMode.current}
 		<WorkspaceSidebar
 			width={layout.sidebarWidth}
 			{guest}
@@ -208,20 +209,22 @@
 	     needs 7px of clearance or the edge cuts it in half. Open, it has panes on both sides and
 	     needs none. The preview says the same thing with a plain mr-[7px] because its closed state
 	     is a second instance that only ever exists at the edge. -->
-	<PaneSplitter
-		topInset={48}
-		resizable
-		resizeLabel={m.wsview_resize_sidebar_aria()}
-		onStartResize={layout.startSidebarResize}
-		onResizeByKey={layout.resizeSidebarByKey}
-		toggle={{
-			icon: layout.sidebarOpen ? ChevronLeft : ChevronRight,
-			onclick: layout.toggleSidebar,
-			title: layout.sidebarOpen ? m.wsview_hide_file_explorer() : m.wsview_show_file_explorer(),
-			ariaLabel: m.wsview_toggle_file_explorer_aria()
-		}}
-		class="z-20 {layout.sidebarOpen ? '' : 'ml-[7px]'}"
-	/>
+	{#if !fileMode.current}
+		<PaneSplitter
+			topInset={48}
+			resizable
+			resizeLabel={m.wsview_resize_sidebar_aria()}
+			onStartResize={layout.startSidebarResize}
+			onResizeByKey={layout.resizeSidebarByKey}
+			toggle={{
+				icon: layout.sidebarOpen ? ChevronLeft : ChevronRight,
+				onclick: layout.toggleSidebar,
+				title: layout.sidebarOpen ? m.wsview_hide_file_explorer() : m.wsview_show_file_explorer(),
+				ariaLabel: m.wsview_toggle_file_explorer_aria()
+			}}
+			class="z-20 {layout.sidebarOpen ? '' : 'ml-[7px]'}"
+		/>
+	{/if}
 
 	{@render children()}
 </div>
