@@ -2,12 +2,12 @@ appId: com.texpile.desktop
 productName: Texpile
 copyright: Copyright © Texpile
 
-# .tex file associations; main.ts turns an opened file into an "open its folder" workspace action
-fileAssociations:
-  - ext: tex
-    name: LaTeX Document
-    role: Editor
-    mimeType: text/x-tex
+# File associations are declared PER PLATFORM because declaring means different things.
+# Windows (nsis) writes the extension's default handler, so it only gets the two formats
+# installing Texpile is consent for. macOS and Linux only add us to "Open with" and set no
+# default, so they can list everything the editor can actually open. main.ts turns any opened
+# file into an "open its folder" workspace action, and fileFromArgv must accept every
+# extension listed here or the Linux/Windows argv path drops it silently.
 
 # generic provider = electron-updater feed only: it makes electron-builder emit latest*.yml and
 # stamp resources/app-update.yml, and it cannot self-upload (release.yml pushes everything to R2).
@@ -68,10 +68,26 @@ npmRebuild: false
 # mac/win take the single 1024 PNG (electron-builder derives .ico/.icns). Linux needs the
 # pre-sized set in build/icons: Ubuntu's hicolor theme indexes nothing above 512, so a lone
 # 1024 icon is invisible to the launcher (generic gear in the app grid).
+protocols:
+  - name: Texpile
+    schemes: [texpile]
+
 linux:
   target:
     - AppImage
     - deb
+  # the desktop entry only advertises these; xdg-mime sets defaults separately, so listing more
+  # costs nobody anything
+  fileAssociations:
+    - ext: [tex, sty, cls, tikz]
+      name: LaTeX Document
+      mimeType: text/x-tex
+    - ext: typ
+      name: Typst Document
+      mimeType: text/x-typst
+    - ext: bib
+      name: BibTeX Bibliography
+      mimeType: text/x-bibtex
   category: Office
   synopsis: A local, offline editor for LaTeX, Typst, and Markdown
   icon: build/icons
@@ -99,6 +115,18 @@ mac:
   # BOTH single-arch darwin prebuilds, so each staging build holds the identical pair (the runtime
   # dlopens only its own arch's dir). Without this the merge dies on prebuilds/darwin-arm64/pty.node.
   x64ArchFiles: '**/node_modules/node-pty/prebuilds/**'
+  # CFBundleDocumentTypes with role Editor only puts Texpile in "Open with"; LaunchServices keeps
+  # whatever default the user already had, so this can list everything the editor opens.
+  fileAssociations:
+    - ext: [tex, sty, cls, tikz]
+      name: LaTeX Document
+      role: Editor
+    - ext: typ
+      name: Typst Document
+      role: Editor
+    - ext: bib
+      name: BibTeX Bibliography
+      role: Editor
   # built names ARE the download names. latest-mac.yml records these exact filenames, so a
   # CI-side rename would break the updater feed; keep them canonical at the source.
   artifactName: ${productName}-${version}.${ext}
@@ -116,10 +144,22 @@ win:
   target:
     - nsis
   icon: electron/icon.png
+  # nsis WRITES the default handler for these, so the list stays at the two formats someone
+  # installing a LaTeX/Typst editor is asking for. Companion files (.bib, .sty, .cls) belong to
+  # other tools and are left alone here; a user can still point them at Texpile by hand.
+  fileAssociations:
+    - ext: tex
+      name: LaTeX Document
+      description: LaTeX Document
+    - ext: typ
+      name: Typst Document
+      description: Typst Document
 
 # show the AGPL text as an installer page (macOS/Linux installs have no comparable UI).
 # The artifact name must have no spaces: electron-builder's Trusted Signing signer space-joins
 # its Invoke-TrustedSigning -Files arg without quoting, so a spaced name gets split and signing fails.
 nsis:
+  # tells Explorer the associations changed; electron-builder only does that on UNINSTALL
+  include: build/installer.nsh
   license: build/license.txt
   artifactName: ${productName}-Setup-${version}.${ext}

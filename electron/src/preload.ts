@@ -28,6 +28,7 @@ function bufferedChannel<T>(channel: string, map: (...args: unknown[]) => T) {
 }
 const onOpenPathBuffered = bufferedChannel('main:open-path', (p) => String(p));
 const onOpenFolderBuffered = bufferedChannel('main:open-folder', (r) => String(r));
+const onJoinSessionBuffered = bufferedChannel('main:join-session', (u) => String(u));
 
 // The one deliberate sendSync in the app. Preload runs before any page code, so what it returns
 // here the renderer has before its first render: a restored window can go straight to the
@@ -65,6 +66,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	onOpenPath: (cb: (filePath: string) => void) => onOpenPathBuffered(cb),
 	/** subscribe to "open this folder" pushes (session restore, Open Folder in New Window). */
 	onOpenFolder: (cb: (root: string) => void) => onOpenFolderBuffered(cb),
+	/** subscribe to a texpile:// join link the OS handed over; the payload is the raw URL. */
+	onJoinSession: (cb: (url: string) => void) => onJoinSessionBuffered(cb),
 	/** register this window as the folder's owner; { ok:false } means another window has it (and was focused). */
 	claimWorkspace: (root: string) => ipcRenderer.invoke('workspace:claim', root),
 	/** mark this window as back on the start screen. */
