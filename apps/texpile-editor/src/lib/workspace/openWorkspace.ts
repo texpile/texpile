@@ -19,7 +19,7 @@ function show(root: string): void {
 	workspaceRoot.current = root;
 	texFiles.current = [];
 	openFile(null);
-	addRecentFolder(root);
+	if (!fileMode.current) addRecentFolder(root);
 	navigate('/workspace');
 }
 

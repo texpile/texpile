@@ -1,12 +1,14 @@
 <script lang="ts">
 	import TitleBar from './TitleBar.svelte';
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { layout } from '$lib/storage/layout';
 	import { pdfWidthOf, sidebarWidthOf } from '$lib/workspace/paneGeometry';
 
 	// read once: the window cannot resize between this and the workspace that replaces it
 	const winWidth = typeof window === 'undefined' ? 1280 : window.innerWidth;
-	const sidebar = $derived(layout.current.sidebarOpen ? sidebarWidthOf(layout.current) : 0);
-	const preview = $derived(layout.current.pdfPaneOpen ? pdfWidthOf(layout.current, winWidth) : 0);
+	// single-file mode paints neither, and the boot path sets it before we render
+	const sidebar = $derived(!fileMode.current && layout.current.sidebarOpen ? sidebarWidthOf(layout.current) : 0);
+	const preview = $derived(!fileMode.current && layout.current.pdfPaneOpen ? pdfWidthOf(layout.current, winWidth) : 0);
 </script>
 
 <div class="flex h-screen flex-col overflow-hidden">

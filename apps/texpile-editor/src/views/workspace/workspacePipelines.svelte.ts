@@ -1,5 +1,6 @@
 // Constructs the compile-side pipeline stack in one place: the compile-command state, draft
 // mode's controller, the Typst live preview, the compile pipeline, and the jump/sync router.
+import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { DraftController } from '$lib/draft/draftController.svelte';
 import { TypstPreviewController } from '$lib/languages/typst/preview/previewController.svelte';
 import { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
@@ -50,7 +51,7 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 		compileCommand: () => cc.command,
 		// hold the first live compile until the main file is confirmed
 		mainConfirmed: () => d.files().mainPrompt.confirmed === true,
-		pdfPaneOpen: () => d.layout().pdfPaneOpen,
+		pdfPaneOpen: () => !fileMode.current && d.layout().pdfPaneOpen,
 		setPdfPaneOpen: (open) => d.layout().setPdfPaneOpen(open),
 		openCompileModal: d.openCompileModal,
 		getSource: () => doc.texSource,

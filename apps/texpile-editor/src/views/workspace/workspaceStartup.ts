@@ -1,5 +1,6 @@
 // The workspace's mount sequence: folder claim, per-folder state binds, layout restores, the
 // window listeners and the before-close guard. Returns the teardown for onMount.
+import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { docPositions } from '$lib/workspace/docPositions';
@@ -44,11 +45,14 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 	}
 	// register as this folder's window (covers reloads); a lost claim means another window
 	// already owns the folder - that window was focused, this one goes back to Start.
-	// a guest session owns no folder, so it neither claims nor sets up a terminal/main file.
-	if (hostMode) {
+	// A guest owns no folder and single-file mode is only visiting one: neither claims it, sets up
+	// its project, nor writes to its remembered state.
+	const projectMode = hostMode && !fileMode.current;
+	if (projectMode) {
 		void claimWorkspace(root).then((c) => {
 			if (!c.ok && workspaceRoot.current === root) {
 				workspaceRoot.current = null;
+				fileMode.current = false;
 				navigate('/');
 			}
 		});
@@ -59,8 +63,8 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		void purgeUndoBackups(root).catch(() => {});
 		void files.folder.initProject(root);
 	}
-	tabs.bind(root, hostMode); // restore this folder's open tabs (guests start fresh)
-	docPositions.bind(root, hostMode); // and where the caret was in each of them
+	tabs.bind(root, projectMode); // restore this folder's open tabs (guests and single files start fresh)
+	docPositions.bind(root, projectMode); // and where the caret was in each of them
 	if (guest) layout.pdfPaneOpen = true; // guests land with the host's PDF visible
 	files.loadRefs(root);
 	void files.refreshTree();

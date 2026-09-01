@@ -3,6 +3,7 @@
 // The ordering here is load-bearing. The claim and the unsaved-edit guard both run BEFORE any
 // store flips, so a folder already open in another window never prompts the user to discard, and
 // a cancelled switch really cancels: no effect can record the old folder's file under the new root.
+import { fileMode } from './fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { docPositions } from '$lib/workspace/docPositions';
@@ -54,6 +55,8 @@ export class FolderLifecycle {
 		const d = this.deps;
 		const root = path ?? (await pickFolder());
 		if (!root) return;
+		// picking a folder is asking for a workspace, whatever this window was showing before
+		fileMode.current = false;
 		const prevRoot = workspaceRoot.current;
 		try {
 			// already open in another window: that window was focused, this one stays put.
@@ -108,6 +111,7 @@ export class FolderLifecycle {
 		d.resolveMainConfirm(null);
 		releaseWorkspace(); // frees the folder so another window may open it
 		workspaceRoot.current = null;
+		fileMode.current = false;
 		texFiles.current = [];
 		fileTree.current = [];
 		openFile(null);

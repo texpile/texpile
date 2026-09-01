@@ -1,6 +1,7 @@
 <script lang="ts">
 	// The /session route: the join screen until connected, then the SAME WorkspaceView the host
 	// uses, driven by the CRDT-backed provider + guest session (no separate guest editor to drift).
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { guestSession } from '$lib/collab/guestSession';
 	import { sessionProvider, GUEST_ROOT } from '$lib/collab/sessionProvider';
@@ -15,6 +16,7 @@
 	$effect(() => {
 		if (joined) {
 			if (workspaceRoot.current !== GUEST_ROOT) workspaceRoot.current = GUEST_ROOT;
+			fileMode.current = false;
 			// open the first shared text file so the guest lands on something editable
 			if (!activeFilePath.current) {
 				const first = collabGuest.files.find((f) => f.kind === 'text');

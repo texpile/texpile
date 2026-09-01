@@ -168,7 +168,7 @@ export class WorkspaceIntegrations {
 		$effect(() => {
 			const root = workspaceRoot.current;
 			const path = activeFilePath.current;
-			if (root && path) setLastFile(root, path);
+			if (root && path && !fileMode.current) setLastFile(root, path);
 		});
 		// a new folder starts blank: the previous folder's log, PDF and macros are meaningless here
 		// (the switch now flips the root before its scan, so these would otherwise linger on screen)
