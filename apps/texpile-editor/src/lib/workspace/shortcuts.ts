@@ -33,7 +33,7 @@ export type ShortcutDeps = {
 	/** a guest has nothing to save: its edits are already live in the shared doc */
 	isGuest(): boolean;
 	save(): void;
-	openGlobalSearch(): void;
+	toggleGlobalSearch(): void;
 	terminalAvailable(): boolean;
 	isCompiling(): boolean;
 	runCompile(): void;
@@ -63,7 +63,7 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 			if (!deps.isGuest()) deps.save();
 		} else if (mod && e.shiftKey && e.key.toLowerCase() === 'f') {
 			e.preventDefault();
-			deps.openGlobalSearch();
+			deps.toggleGlobalSearch();
 		} else if (mod && (e.key === '=' || e.key === '+')) {
 			e.preventDefault(); // '=' is the unshifted '+' key, so this is Ctrl/Cmd+Plus
 			uiZoomIn();

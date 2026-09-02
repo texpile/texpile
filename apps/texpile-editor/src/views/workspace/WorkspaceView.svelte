@@ -14,7 +14,11 @@
 	import type { EditSession } from '$lib/collab/editSession';
 	import SessionShareModal from '$lib/collab/SessionShareModal.svelte';
 	import VisualCollab from '$lib/collab/VisualCollab.svelte';
-	import { openGlobalSearch as openSearchPanel, closeGlobalSearch as closeSearchPanel } from '$lib/workspace/editorCommands';
+	import {
+		openGlobalSearch as openSearchPanel,
+		closeGlobalSearch as closeSearchPanel,
+		toggleGlobalSearch as toggleSearchPanel
+	} from '$lib/workspace/editorCommands';
 	import { WorkspaceComments } from './workspaceComments.svelte';
 	import { WorkspaceFiles } from './workspaceFiles.svelte';
 	import { WorkspaceDoc } from './workspaceDoc.svelte';
@@ -208,6 +212,9 @@
 	const searchDeps = {
 		setSidebarView: (v: 'explorer' | 'search' | 'scm') => (layout.sidebarView = v),
 		openSidebar: () => (layout.sidebarOpen = true),
+		closeSidebar: () => (layout.sidebarOpen = false),
+		isSidebarOpen: () => layout.sidebarOpen,
+		isSearchVisible: () => layout.sidebarOpen && layout.sidebarView === 'search',
 		isSourceMode: () => modes.mode === 'source',
 		focusInput: (seed?: string) => globalSearchRef?.focusInput(seed)
 	};
@@ -254,7 +261,7 @@
 		closeTab: (t) => editFlow.closeTab(t),
 		isGuest: () => guest,
 		save: () => wsdoc.save(),
-		openGlobalSearch: () => void openSearchPanel(searchDeps),
+		toggleGlobalSearch: () => void toggleSearchPanel(searchDeps),
 		terminalAvailable: () => termDock.available,
 		isCompiling: () => compiler.compiling,
 		runCompile: () => compiler.runCompile(),

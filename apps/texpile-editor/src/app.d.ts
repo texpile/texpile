@@ -108,3 +108,10 @@ declare global {
 }
 
 export {};
+
+// @codemirror/search finds the panel's input by this attribute
+declare module 'svelte/elements' {
+	interface HTMLInputAttributes {
+		'main-field'?: string;
+	}
+}

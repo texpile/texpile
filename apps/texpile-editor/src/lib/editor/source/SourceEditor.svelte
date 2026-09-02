@@ -315,6 +315,19 @@
 		background: none;
 		border: none;
 		z-index: 20;
+		animation: find-slide 180ms ease-out; /* the visual editor's bar slides for 180ms too */
+	}
+	.source-editor :global(.cm-panels.cm-panels-top.closing) {
+		animation: find-slide 180ms ease-in reverse forwards;
+		pointer-events: none;
+	}
+	@keyframes -global-find-slide {
+		from {
+			clip-path: inset(0 0 100% 0);
+		}
+		to {
+			clip-path: inset(0);
+		}
 	}
 	/* same amber scale the ProseMirror search uses (SearchBar.svelte) */
 	.source-editor :global(.cm-searchMatch) {

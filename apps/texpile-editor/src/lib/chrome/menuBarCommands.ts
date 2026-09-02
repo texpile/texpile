@@ -4,9 +4,9 @@
 // Dialect-aware on both paths: the CM wraps write the open file's own syntax, and the PM commands
 // read the mark/node off the view's OWN schema - the tex, md and typ editors are three different
 // Schema objects, and a MarkType from one must never be dispatched into another.
+import { toggleSearchPanel } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
 import { EditorView as CMView } from '@codemirror/view';
 import { undo as cmUndo, redo as cmRedo } from '@codemirror/commands';
-import { openSearchPanel } from '@codemirror/search';
 import { undo, redo } from 'prosemirror-history';
 import { toggleMark } from 'prosemirror-commands';
 import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
@@ -90,7 +90,7 @@ export function editSelect(value: string) {
 		if (value === 'undo') cmUndo(cm);
 		else if (value === 'redo') cmRedo(cm);
 		else if (value === 'find') {
-			openSearchPanel(cm); // takes focus itself
+			toggleSearchPanel(cm); // opens focused, or closes, like the visual editor's bar
 			return;
 		}
 		cm.focus();

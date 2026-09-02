@@ -81,7 +81,7 @@ html[data-mode='dark'] {
 
 /* CodeMirror doesn't auto-theme, so dark-theme its chrome to match the dark editor */
 [data-mode='dark'] .cm-gutters {
-	background-color: transparent;
+	background-color: var(--color-surface-950); /* opaque: content scrolled sideways must pass under it */
 	color: var(--color-surface-500);
 	border-right: 1px solid color-mix(in srgb, var(--color-surface-100) 10%, transparent);
 }
@@ -100,24 +100,24 @@ html[data-mode='dark'] {
 [data-mode='dark'] .cm-dropCursor {
 	border-left-color: var(--color-surface-100);
 }
-[data-mode='dark'] .cm-selectionBackground,
-[data-mode='dark'] .cm-focused .cm-selectionBackground,
-[data-mode='dark'] .cm-content ::selection {
-	background-color: color-mix(in srgb, var(--color-primary-500) 35%, transparent) !important;
+/* only the drawn layer: drawSelection keeps the real DOM selection for copy and IME and relies on
+   native ::selection staying transparent, so colouring it too painted every selection twice */
+.cm-selectionBackground,
+.cm-focused .cm-selectionBackground {
+	background-color: var(--editor-selection) !important;
 }
 
-/* ONE selection colour for the visual editor - and the same colour for every simulated one.
-   Node views (math fields, code chips) sit outside the browser's ::selection painting, so
-   cursor-plugin shades them with .pm-selected-node when a range crosses them; the blurred-editor
-   simulation (.pm-blur-selection) and the keep-visible-under-menu rule (ContextMenu.svelte) are
-   the same species. They all read this variable, because any drift between them showed as
-   patchwork inside a single drag: solid Tailwind blue boxes over math, native blue over prose.
-   Scoped to .ProseMirror so every visual editor (latex, markdown, typst) gets the pair together;
-   dark matches the source editor's 35% primary, light is lighter over a white page. */
-.ProseMirror {
+/* ONE selection colour for both editors and every simulated one. The source editor's drawn layer
+   (above) and the visual editor's ::selection read it; node views (math fields, code chips) sit
+   outside the browser's ::selection painting, so cursor-plugin shades them with .pm-selected-node
+   when a range crosses them; the blurred-editor simulation (.pm-blur-selection) and the
+   keep-visible-under-menu rule (ContextMenu.svelte) are the same species. Any drift showed as
+   patchwork inside a single drag: solid Tailwind blue boxes over math, native blue over prose,
+   lavender in source. Light is lighter over a white page. */
+:root {
 	--editor-selection: color-mix(in srgb, var(--color-primary-500) 30%, transparent);
 }
-html[data-mode='dark'] .ProseMirror {
+html[data-mode='dark'] {
 	--editor-selection: color-mix(in srgb, var(--color-primary-500) 35%, transparent);
 }
 .ProseMirror ::selection {

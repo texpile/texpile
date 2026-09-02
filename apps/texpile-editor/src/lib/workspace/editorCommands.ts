@@ -34,13 +34,21 @@ export function searchSeed(): string | undefined {
 export type SearchPanelDeps = {
 	setSidebarView(view: 'explorer' | 'search' | 'scm'): void;
 	openSidebar(): void;
+	closeSidebar(): void;
+	isSidebarOpen(): boolean;
+	/** the sidebar is open AND showing search */
+	isSearchVisible(): boolean;
 	isSourceMode(): boolean;
 	focusInput(seed?: string): void;
 };
 
+// whether the sidebar was already open when Find in Files took it over, so closing puts it back
+let sidebarWasOpen = true;
+
 /** open Find in Files with its input focused */
 export async function openGlobalSearch(deps: SearchPanelDeps): Promise<void> {
 	const seed = searchSeed();
+	sidebarWasOpen = deps.isSidebarOpen();
 	deps.setSidebarView('search');
 	deps.openSidebar();
 	await tick(); // let the panel mount before focusing
@@ -51,8 +59,15 @@ export async function openGlobalSearch(deps: SearchPanelDeps): Promise<void> {
  * focus to the body */
 export async function closeGlobalSearch(deps: SearchPanelDeps): Promise<void> {
 	deps.setSidebarView('explorer');
+	if (!sidebarWasOpen) deps.closeSidebar();
 	await tick();
 	focusEditor(deps.isSourceMode());
+}
+
+/** the shortcut's contract: open it, or put it away if it is already showing */
+export async function toggleGlobalSearch(deps: SearchPanelDeps): Promise<void> {
+	if (deps.isSearchVisible()) return closeGlobalSearch(deps);
+	return openGlobalSearch(deps);
 }
 
 export type FormatDeps = {

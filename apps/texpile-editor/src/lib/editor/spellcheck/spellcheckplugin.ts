@@ -47,7 +47,8 @@ function elementBefore(view: EditorView, pos: number): HTMLElement | null {
 
 /**
  * Swallows the click that lands exactly AFTER the last letter of a flagged word, so putting the
- * caret at the end of "World" doesn't pop the suggestion box.
+ * caret at the end of "World" doesn't pop the suggestion box. Also swallows any click inside a
+ * link, where the link tooltip is the popup that belongs.
  *
  * Must be registered BEFORE proofreadPlugin: props are consulted in plugin order and the first
  * handler returning true wins, which is the only way to stop that plugin's own handleClick, since
@@ -64,6 +65,9 @@ export const spellClickBoundaryPlugin = new Plugin({
 	props: {
 		handleClick(view, pos) {
 			const $pos = view.state.doc.resolve(pos);
+			// a link's text is an address, not prose, and its own tooltip owns this click
+			const linkType = view.state.schema.marks.link;
+			if (linkType && $pos.marks().some((mk) => mk.type === linkType)) return true;
 			const before = $pos.nodeBefore;
 			const after = $pos.nodeAfter;
 			const prev = before?.isText ? before.text?.slice(-1) : undefined;

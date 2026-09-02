@@ -11,33 +11,32 @@
 
 	type Props = {
 		href: string;
-		title: string | null;
+		/** the link's display text in the document */
+		text: string;
 		position: { x: number; y: number };
-		onUpdate: (href: string, title: string | null) => void;
+		onUpdate: (href: string, text: string) => void;
 		onRemove: () => void;
 		onClose: () => void;
 		/** open interception: true = handled in-app, else the browser fallback runs */
 		onOpen?: (href: string) => boolean;
 	};
 
-	let { href, title, position, onUpdate, onRemove, onClose, onOpen }: Props = $props();
+	let { href, text, position, onUpdate, onRemove, onClose, onOpen }: Props = $props();
 
 	let boxElement: HTMLDivElement;
-	let isReady = $state(false);
 	let isEditing = $state(false);
 
 	// edit fields are seeded once by design: the tooltip is remounted per link
 	// svelte-ignore state_referenced_locally
 	let editHref = $state(href);
 	// svelte-ignore state_referenced_locally
-	let editTitle = $state(title || '');
+	let editText = $state(text);
 
-	// delay the window click handler so the opening click doesn't instantly close the tooltip
+	// the component is mounted once and updated in place, so the fields follow the link it now shows
 	$effect(() => {
-		const timer = setTimeout(() => {
-			isReady = true;
-		}, 100);
-		return () => clearTimeout(timer);
+		if (isEditing) return;
+		editHref = href;
+		editText = text;
 	});
 
 	// keep the box within the viewport
@@ -72,14 +71,14 @@
 
 	function handleSave() {
 		if (editHref.trim()) {
-			onUpdate(editHref.trim(), editTitle.trim() || null);
+			onUpdate(editHref.trim(), editText.trim());
 		}
 	}
 
 	function handleCancel() {
 		isEditing = false;
 		editHref = href;
-		editTitle = title || '';
+		editText = text;
 	}
 
 	function handleRemove() {
@@ -119,12 +118,14 @@
 	}
 
 	function handleWindowClick(e: MouseEvent) {
-		if (boxElement && boxElement.contains(e.target as Node)) {
-			return;
-		}
-		if (isReady) {
-			onClose();
-		}
+		const target = e.target as Node;
+		if (boxElement?.contains(target)) return;
+		// The editor's own clicks belong to the link plugin, which reopens or hides the tooltip from
+		// the new selection. Closing here as well raced it: ProseMirror sets the selection on
+		// mousedown, so a click held longer than the old 100ms arming delay mounted the tooltip and
+		// then dismissed it on mouseup - the flash.
+		if ((target as Element)?.parentElement?.closest?.('.ProseMirror') || (target as Element)?.closest?.('.ProseMirror')) return;
+		onClose();
 	}
 
 	function handleScroll() {
@@ -182,9 +183,8 @@
 			</label>
 
 			<label class="block">
-				<span class="text-surface-900-100 text-sm font-medium">{m.linktooltip_label_title()}</span>
-				<span class="text-surface-500-400 ml-1 text-xs">{m.linktooltip_label_title_optional()}</span>
-				<input type="text" bind:value={editTitle} placeholder={m.linktooltip_placeholder_title()} class="input mt-1 w-full text-sm" />
+				<span class="text-surface-900-100 text-sm font-medium">{m.linktooltip_label_text()}</span>
+				<input type="text" bind:value={editText} placeholder={m.linktooltip_placeholder_text()} class="input mt-1 w-full text-sm" />
 			</label>
 
 			<div class="flex justify-end gap-2 pt-1">
@@ -192,7 +192,12 @@
 					<X class="h-4 w-4" />
 					<span>{m.linktooltip_button_cancel()}</span>
 				</button>
-				<button type="button" class="btn btn-xs preset-filled-primary-500" onclick={handleSave} disabled={!editHref.trim()}>
+				<button
+					type="button"
+					class="btn btn-xs preset-filled-primary-500"
+					onclick={handleSave}
+					disabled={!editHref.trim() || !editText.trim()}
+				>
 					<Check class="h-4 w-4" />
 					<span>{m.linktooltip_button_save()}</span>
 				</button>
@@ -203,7 +208,7 @@
 			<div class="mb-2 flex items-center gap-2 p-1">
 				<Link2 class="text-surface-500-400 h-4 w-4 flex-shrink-0" />
 				<a {href} target="_blank" rel="noopener noreferrer" class="anchor flex-1 truncate text-sm" title={href}>
-					{title || href}
+					{href}
 				</a>
 			</div>
 

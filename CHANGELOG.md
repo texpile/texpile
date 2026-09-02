@@ -5,6 +5,12 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.0.0-rc.2] - 2026-09-01
+
+- fix: link not showing on click
+- fix: UI inconsistency
+- fix: search bar does not auto-focus
+
 ## [1.0.0-rc.1] - 2026-09-01
 
 - feat: guest able to join a shared session from the browser (join.texpile.com)

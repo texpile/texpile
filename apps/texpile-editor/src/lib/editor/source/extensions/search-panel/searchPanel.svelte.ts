@@ -1,15 +1,17 @@
 import type { EditorView, Panel, ViewUpdate } from '@codemirror/view';
-import { mount, unmount } from 'svelte';
+import { flushSync, mount, unmount } from 'svelte';
 import {
-	search,
 	SearchQuery,
-	setSearchQuery,
-	getSearchQuery,
+	closeSearchPanel,
 	findNext,
 	findPrevious,
-	replaceNext,
+	getSearchQuery,
+	openSearchPanel,
 	replaceAll,
-	closeSearchPanel
+	replaceNext,
+	search,
+	searchPanelOpen,
+	setSearchQuery
 } from '@codemirror/search';
 import FindBar from '$lib/editor/find/FindBar.svelte';
 import { NO_FIND_OPTIONS, toggledFindOption, type FindOptions } from '$lib/editor/find/findOptions';
@@ -71,7 +73,7 @@ class TexpileSearchPanel implements Panel {
 			this.recount();
 		},
 		onClose: () => {
-			closeSearchPanel(this.view);
+			closeSearchPanelAnimated(this.view);
 			this.view.focus();
 		}
 	});
@@ -94,6 +96,7 @@ class TexpileSearchPanel implements Panel {
 		};
 
 		this.bar = mount(FindBar, { target: this.dom, props: this.props }) as { focusQuery: () => void };
+		flushSync(); // bind:this lands in an effect; CodeMirror calls mount() before a microtask could run it
 	}
 
 	private commit(): void {
@@ -134,6 +137,24 @@ class TexpileSearchPanel implements Panel {
 }
 
 /** drop-in for `search()`, with the shared find bar as its panel */
+const CLOSE_MS = 180; // the visual editor's bar slides for 180ms; the panel matches it both ways
+
+/** slides the panel out, then lets CodeMirror remove it */
+export function closeSearchPanelAnimated(view: EditorView): boolean {
+	if (!searchPanelOpen(view.state)) return false;
+	const panel = view.dom.querySelector('.cm-panels-top');
+	if (!panel || panel.classList.contains('closing')) return true;
+	panel.classList.add('closing');
+	setTimeout(() => closeSearchPanel(view), CLOSE_MS);
+	view.focus();
+	return true;
+}
+
+/** Mod-f: open when closed, close when open, like the visual editor's bar */
+export function toggleSearchPanel(view: EditorView): boolean {
+	return searchPanelOpen(view.state) ? closeSearchPanelAnimated(view) : openSearchPanel(view);
+}
+
 export function texpileSearch() {
 	return search({ top: true, createPanel: (view) => new TexpileSearchPanel(view) });
 }

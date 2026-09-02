@@ -62,7 +62,12 @@
 	}
 
 	function onFieldKeydown(e: KeyboardEvent): void {
-		if (e.key === 'Enter') {
+		// handled here, so the app menu's own Mod+F (fired only for keys the page leaves alone) cannot toggle it back
+		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
+			e.preventDefault();
+			e.stopPropagation(); // the visual editor also listens on window; it would reopen what we just closed
+			onClose();
+		} else if (e.key === 'Enter') {
 			e.preventDefault();
 			if (e.shiftKey) onPrev();
 			else onNext();
@@ -93,6 +98,7 @@
 			<div class="find-field flex-1">
 				<input
 					type="text"
+					main-field="true"
 					bind:this={queryInput}
 					value={query}
 					oninput={(e) => onQueryChange(e.currentTarget.value)}
@@ -136,10 +142,7 @@
 							if (e.key === 'Enter') {
 								e.preventDefault();
 								onReplaceOne();
-							} else if (e.key === 'Escape') {
-								e.preventDefault();
-								onClose();
-							}
+							} else onFieldKeydown(e);
 						}}
 						placeholder={m.find_replace_placeholder()}
 						aria-label={m.find_replace_placeholder()}

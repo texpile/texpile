@@ -16,7 +16,7 @@ import { bracketMatching, indentOnInput, foldGutter, LanguageDescription } from 
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { searchKeymap } from '@codemirror/search';
-import { texpileSearch } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
+import { closeSearchPanelAnimated, texpileSearch, toggleSearchPanel } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
 import { latexAutocomplete, latexIntellisense } from '$lib/languages/latex/intellisense/intellisense';
 import { foldMarkerDom, foldMarkerTheme } from '$lib/languages/latex/intellisense/fold';
 import { mdSourceShortcuts } from '$lib/languages/markdown/source/sourceExtensions';
@@ -121,7 +121,14 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		synctexFlash(), // flash the line jumped to by SyncTeX inverse search / Find-in-Files
 		// compact find/replace widget, floated top-right (styles in SourceEditor)
 		texpileSearch(),
-		keymap.of([...defaultKeymap, ...(collab ? yUndoManagerKeymap : historyKeymap), ...searchKeymap, indentWithTab]),
+		keymap.of([
+			{ key: 'Mod-f', run: toggleSearchPanel },
+			{ key: 'Escape', run: closeSearchPanelAnimated },
+			...defaultKeymap,
+			...(collab ? yUndoManagerKeymap : historyKeymap),
+			...searchKeymap,
+			indentWithTab
+		]),
 		// lower precedence than historyKeymap, so CM's own undo/redo runs first; these fire only
 		// when it's exhausted and the workspace snapshot history takes over. consume the key even
 		// at the stack edge: a failed redo falling through to another binding is worse than a no-op.
