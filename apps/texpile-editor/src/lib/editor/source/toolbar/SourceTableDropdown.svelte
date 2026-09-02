@@ -1,6 +1,7 @@
 <script lang="ts">
 	// The Source-mode counterpart to ToolbarTable: same drag-a-grid gesture, but it writes LaTeX
 	// rather than building a ProseMirror node.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal, Switch } from '@skeletonlabs/skeleton-svelte';
 	import { Table } from '@lucide/svelte';
 	import { sourceCmView } from '$lib/stores/editorStore';
@@ -47,7 +48,7 @@
 			class="toolbarButton flex items-center rounded p-1 hover:preset-tonal"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_insert_table_aria()}
-			title={m.tbar_insert_table_aria()}
+			use:tip={m.tbar_insert_table_aria()}
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
 		>

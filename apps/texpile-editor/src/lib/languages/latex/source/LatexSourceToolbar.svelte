@@ -7,6 +7,7 @@
 	// The three source toolbars (tex here, MarkdownSourceToolbar, TypstSourceToolbar) share one
 	// group layout: format (inline wraps) | headings | blocks (lists, quote, code, math) |
 	// inserts (link, table, image, hr). Each writes its own dialect's syntax.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import {
 		Bold,
 		Italic,
@@ -55,7 +56,7 @@
 					onclick={run((s) => computeToggleWrap(s, 'textbf'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_bold_aria()}
-					title={m.srctoolbar_bold_title()}
+					use:tip={m.srctoolbar_bold_title()}
 				>
 					<Bold class="h-4.5 w-4.5" />
 				</button>
@@ -65,7 +66,7 @@
 					onclick={run((s) => computeToggleWrap(s, 'textit'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_italic_aria()}
-					title={m.srctoolbar_italic_title()}
+					use:tip={m.srctoolbar_italic_title()}
 				>
 					<Italic class="h-4.5 w-4.5" />
 				</button>
@@ -75,7 +76,7 @@
 					onclick={run((s) => computeToggleWrap(s, 'underline'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_underline_aria()}
-					title={m.srctoolbar_underline_title()}
+					use:tip={m.srctoolbar_underline_title()}
 				>
 					<Underline class="h-4.5 w-4.5 translate-y-[1px]" />
 				</button>
@@ -85,7 +86,7 @@
 					onclick={run((s) => computeToggleWrap(s, 'texttt'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_monospace_aria()}
-					title={m.srctoolbar_monospace_title()}
+					use:tip={m.srctoolbar_monospace_title()}
 				>
 					<Code class="h-4.5 w-4.5" />
 				</button>
@@ -95,7 +96,7 @@
 					onclick={run((s) => computeToggleWrap(s, 'textsuperscript'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_superscript_aria()}
-					title={m.srctoolbar_superscript_title()}
+					use:tip={m.srctoolbar_superscript_title()}
 				>
 					<Superscript class="h-4.5 w-4.5" />
 				</button>
@@ -105,7 +106,7 @@
 					onclick={run((s) => computeToggleWrap(s, 'textsubscript'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_subscript_aria()}
-					title={m.srctoolbar_subscript_title()}
+					use:tip={m.srctoolbar_subscript_title()}
 				>
 					<Subscript class="h-4.5 w-4.5" />
 				</button>
@@ -120,7 +121,7 @@
 						onclick={run((s) => computeWrapBlock(s, `\\${h.macro}{`, '}'))}
 						class="flex h-6 min-w-6 items-center justify-center px-1 text-xs font-semibold"
 						aria-label={h.label}
-						title={h.label}
+						use:tip={h.label}
 					>
 						{h.label}
 					</button>
@@ -135,7 +136,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\begin{itemize}\n  \\item ', '\n\\end{itemize}'))}
 					class="flex items-center p-1"
 					aria-label={m.blockmenu_bullet_list()}
-					title={m.blockmenu_bullet_list()}
+					use:tip={m.blockmenu_bullet_list()}
 				>
 					<List class="h-4.5 w-4.5" />
 				</button>
@@ -145,7 +146,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\begin{enumerate}\n  \\item ', '\n\\end{enumerate}'))}
 					class="flex items-center p-1"
 					aria-label={m.blockmenu_numbered_list()}
-					title={m.blockmenu_numbered_list()}
+					use:tip={m.blockmenu_numbered_list()}
 				>
 					<ListOrdered class="h-4.5 w-4.5" />
 				</button>
@@ -155,7 +156,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\begin{quote}\n', '\n\\end{quote}'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_quote_block_aria()}
-					title={m.srctoolbar_quote_title()}
+					use:tip={m.srctoolbar_quote_title()}
 				>
 					<Quote class="h-4.5 w-4.5" />
 				</button>
@@ -165,7 +166,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\begin{verbatim}\n', '\n\\end{verbatim}'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_verbatim_block_aria()}
-					title={m.srctoolbar_verbatim_title()}
+					use:tip={m.srctoolbar_verbatim_title()}
 				>
 					<Code class="h-4.5 w-4.5" />
 				</button>
@@ -175,7 +176,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\(', '\\)'))}
 					class="flex items-center p-1"
 					aria-label={m.srctoolbar_inline_math_aria()}
-					title={m.srctoolbar_inline_math_title()}
+					use:tip={m.srctoolbar_inline_math_title()}
 				>
 					<Sigma class="h-4.5 w-4.5" />
 				</button>
@@ -186,7 +187,7 @@
 	{#snippet st_inserts()}
 		<ul class="flex items-center gap-1 sm:gap-1.5">
 			<li class="toolbarButton hover:preset-tonal">
-				<button onclick={run(computeLink)} class="flex items-center p-1" aria-label={m.mdtoolbar_link()} title={m.mdtoolbar_link()}>
+				<button onclick={run(computeLink)} class="flex items-center p-1" aria-label={m.mdtoolbar_link()} use:tip={m.mdtoolbar_link()}>
 					<LinkIcon class="h-4.5 w-4.5" />
 				</button>
 			</li>
@@ -196,7 +197,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\includegraphics{', '}'))}
 					class="flex items-center p-1"
 					aria-label={m.menubar_insert_image()}
-					title={m.menubar_insert_image()}
+					use:tip={m.menubar_insert_image()}
 				>
 					<ImageIcon class="h-4.5 w-4.5" />
 				</button>
@@ -206,7 +207,7 @@
 					onclick={run((s) => computeWrapBlock(s, '\\rule{\\linewidth}{0.4pt}', ''))}
 					class="flex items-center p-1"
 					aria-label={m.mdtoolbar_hr()}
-					title={m.mdtoolbar_hr()}
+					use:tip={m.mdtoolbar_hr()}
 				>
 					<Minus class="h-4.5 w-4.5" />
 				</button>

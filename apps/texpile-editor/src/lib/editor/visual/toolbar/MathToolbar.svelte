@@ -11,6 +11,7 @@
 </script>
 
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { ChevronDown, BoxSelect } from '@lucide/svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { TextSelection } from 'prosemirror-state';
@@ -128,7 +129,7 @@
 			class="toolbarButton flex items-center gap-1 rounded p-1 hover:preset-tonal"
 			class:preset-tonal-primary={mathToolbarState.openGroup === group.id}
 			aria-label={group.label()}
-			title={group.label()}
+			use:tip={group.label()}
 			aria-pressed={mathToolbarState.openGroup === group.id}
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
@@ -152,7 +153,7 @@
 			onmousedown={preventFocusLoss}
 			onclick={selectBlockMath}
 			aria-label={m.mathtoolbar_select_block_aria()}
-			title={m.mathtoolbar_select_equation_block_title()}
+			use:tip={m.mathtoolbar_select_equation_block_title()}
 		>
 			<BoxSelect class="h-5 w-5" />
 		</button>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Folder } from '@lucide/svelte';
 	import Modal from '../Modal.svelte';
 	import { basename } from '$lib/workspace/fileSystem';
@@ -25,7 +26,7 @@
 		<button
 			class="hover:preset-tonal group flex w-full min-w-0 items-center gap-3 rounded px-2 py-1.5 text-left text-sm"
 			onclick={() => pick(folder)}
-			title={folder}
+			use:tip={folder}
 		>
 			<Folder class="text-surface-500 size-4 shrink-0" />
 			<span class="flex min-w-0 flex-1 items-baseline gap-2">

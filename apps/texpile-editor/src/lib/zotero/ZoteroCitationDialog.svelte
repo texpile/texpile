@@ -5,6 +5,7 @@
 	//
 	// Selection is a TOGGLE and the list stays open: citing several works at once is the normal
 	// case, and closing on first pick would turn that into three round trips.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { SvelteMap } from 'svelte/reactivity';
 	import { Combobox, useListCollection } from '@skeletonlabs/skeleton-svelte';
 	import { BookMarked, Check, X } from '@lucide/svelte';
@@ -175,7 +176,7 @@
 								<button
 									class="hover:text-error-500 shrink-0"
 									onclick={() => toggle(hit.citekey)}
-									title={m.zotero_dialog_remove()}
+									use:tip={m.zotero_dialog_remove()}
 									aria-label={m.zotero_dialog_remove()}
 								>
 									<X class="size-3" />

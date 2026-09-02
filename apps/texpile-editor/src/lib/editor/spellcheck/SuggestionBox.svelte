@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import IconBookText from '@lucide/svelte/icons/book-text';
 	import IconX from '@lucide/svelte/icons/x';
 	import IconType from '@lucide/svelte/icons/type';
@@ -246,7 +247,7 @@
 				<button
 					class="bg-surface-100-900 hover:preset-tonal border-surface-300-700 w-full cursor-pointer rounded border px-2 py-1.5 text-left transition-colors"
 					onclick={() => handleReplace(error.replacements[0])}
-					title={m.harper_apply_suggestion_title()}
+					use:tip={m.harper_apply_suggestion_title()}
 				>
 					<div class="font-mono text-xs leading-snug">
 						{#each diffParts as part, i (i)}
@@ -287,7 +288,7 @@
 			<button
 				class="btn btn-xs preset-tonal-primary hover:preset-filled-primary-500 flex-1 justify-center gap-1 text-xs"
 				onclick={handleAddToDictionary}
-				title={m.harper_add_to_dictionary_title({ word: error.text })}
+				use:tip={m.harper_add_to_dictionary_title({ word: error.text })}
 			>
 				<IconBookPlus size={13} />
 				<span>{m.harper_add_to_dictionary_button()}</span>

@@ -2,6 +2,7 @@
 	// Typst source-mode table inserter: the typst sibling of the LaTeX SourceTableDropdown. Same
 	// drag-a-grid gesture, but it writes a #table(...) skeleton (optionally wrapped in a captioned
 	// #figure) through computeTableSkeleton.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal, Switch } from '@skeletonlabs/skeleton-svelte';
 	import { Table as TableIcon } from '@lucide/svelte';
 	import { sourceCmView } from '$lib/stores/editorStore';
@@ -47,7 +48,7 @@
 			class="toolbarButton flex items-center rounded p-1 hover:preset-tonal"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_insert_table_aria()}
-			title={m.tbar_insert_table_aria()}
+			use:tip={m.tbar_insert_table_aria()}
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
 		>

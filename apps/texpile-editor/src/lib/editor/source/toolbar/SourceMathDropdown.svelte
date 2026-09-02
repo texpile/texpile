@@ -1,6 +1,7 @@
 <script lang="ts">
 	// Source-mode counterpart to MathToolbar: same symbol table, but symbols go in as CodeMirror
 	// snippets rather than through a mathfield.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	// Omega, not Sigma: the toolbar's Sigma already means "wrap in inline math"
 	import { ChevronDown, Omega } from '@lucide/svelte';
@@ -61,7 +62,7 @@
 			class="toolbarButton flex items-center gap-1 rounded p-1 hover:preset-tonal"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_math_symbols()}
-			title={m.tbar_math_symbols()}
+			use:tip={m.tbar_math_symbols()}
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
 		>
@@ -84,7 +85,7 @@
 								class:hover:preset-tonal={activeGroup !== g.id}
 								tabindex="-1"
 								onclick={() => (activeGroup = g.id)}
-								title={g.label()}
+								use:tip={g.label()}
 							>
 								<Icon class="h-3.5 w-3.5" />
 								{g.label()}
@@ -108,7 +109,7 @@
 											class:border-surface-300-700={matrixBracket !== b.mode}
 											tabindex="-1"
 											onclick={() => (matrixBracket = b.mode)}
-											title={b.title()}
+											use:tip={b.title()}
 										>
 											{b.label}
 										</button>
@@ -166,7 +167,7 @@
 										class="symbol-btn bg-surface-100-900"
 										tabindex="-1"
 										onclick={() => insert(symbol.latex)}
-										title={symbolTooltip(symbol) || symbol.latex}
+										use:tip={symbolTooltip(symbol) || symbol.latex}
 									>
 										<span class="symbol-content">
 											<!-- eslint-disable-next-line svelte/no-at-html-tags -- renderLatex() is mathlive's own trusted math-typesetting HTML for a symbol from the hardcoded SYMBOL_GROUPS table, never user/network input. -->

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Baseline, AlertTriangle } from '@lucide/svelte';
 	import { editorViewStore, templateFeaturesStore } from '$lib/stores/editorStore';
@@ -51,7 +52,7 @@
 	autoFocus={false}
 >
 	<Popover.Trigger class="toolbarButton rounded p-1 hover:bg-surface-200-800">
-		<button aria-label={m.tbar_text_color_aria()} title={m.tbar_text_color_aria()} class="relative flex items-center">
+		<button aria-label={m.tbar_text_color_aria()} use:tip={m.tbar_text_color_aria()} class="relative flex items-center">
 			<!-- nudged down 1.5px, lucide's A glyph rides high; matches the underline correction -->
 			<Baseline class="h-5 w-5 translate-y-[1.5px] text-surface-800-200" />
 			<!-- active-color bar is absolute so it doesn't add height and lift the icon off center -->

@@ -1,5 +1,6 @@
 <script lang="ts">
 	// The open half of a panel row: the thread's messages, per-message edit, and the reply box.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Trash2, Pencil } from '@lucide/svelte';
 	import InitialAvatar from '$lib/components/InitialAvatar.svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
@@ -86,7 +87,7 @@
 				<div class="flex shrink-0 items-center gap-0.5 opacity-0 group-hover/msg:opacity-100">
 					<button
 						class="hover:preset-tonal rounded p-1"
-						title={m.comments_edit()}
+						use:tip={m.comments_edit()}
 						aria-label={m.comments_edit()}
 						onclick={() => {
 							editing = msg.id;
@@ -97,7 +98,7 @@
 					</button>
 					<button
 						class="hover:preset-tonal-error rounded p-1"
-						title={m.comments_delete_message()}
+						use:tip={m.comments_delete_message()}
 						aria-label={m.comments_delete_message()}
 						onclick={() => onDeleteMessage(thread, msg)}
 					>

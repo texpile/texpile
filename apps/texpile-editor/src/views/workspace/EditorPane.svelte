@@ -2,6 +2,7 @@
 	// The editor column: the mode toolbar on top and, under it, whichever surface the open file
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { Loader2, CircleAlert, Info, GitCompare, RefreshCw } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
@@ -197,7 +198,7 @@
 		     down. -->
 		<div
 			class="border-surface-200-800 bg-surface-100-900 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
-			title={m.texpile_managed_note()}
+			use:tip={m.texpile_managed_note()}
 		>
 			<Info class="text-primary-500 size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
@@ -206,7 +207,7 @@
 	{#if loadedPath && encodingIssue}
 		<div
 			class="border-surface-200-800 bg-surface-100-900 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
-			title={encodingIssue}
+			use:tip={encodingIssue}
 		>
 			<CircleAlert class="text-warning-500 size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
@@ -218,7 +219,7 @@
 		>
 			<GitCompare class="size-3.5 shrink-0" />
 			<span class="font-medium">{m.wsview_diff_heading()}</span>
-			{#if compare}<span class="text-surface-500 min-w-0 truncate" title={compare.hash}>· {compare.subject}</span>{/if}
+			{#if compare}<span class="text-surface-500 min-w-0 truncate" use:tip={compare.hash}>· {compare.subject}</span>{/if}
 			<!-- What it cannot show, said out loud: an unmarked document otherwise reads as "nothing
 			     changed". No count - the number would be of source runs, which nothing on screen shows. -->
 			{#if fileDeleted}
@@ -235,7 +236,7 @@
 				<button
 					class="hover:preset-tonal rounded p-0.5"
 					onclick={onRefreshDiff}
-					title={m.wsview_refresh_diff()}
+					use:tip={m.wsview_refresh_diff()}
 					aria-label={m.wsview_refresh_diff()}
 				>
 					<RefreshCw class="size-3.5" />

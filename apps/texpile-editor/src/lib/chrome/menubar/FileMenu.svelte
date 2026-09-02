@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronRight } from '@lucide/svelte';
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
@@ -84,7 +85,11 @@
 										</div>
 										{#each recentFolders.current as folder (folder)}
 											<Menu.Item value={folder} class={itemClass}>
-												<Menu.ItemText class="block max-w-64 truncate" title={folder}>{basename(folder)}</Menu.ItemText>
+												<Menu.ItemText class="block max-w-64 truncate">
+													{#snippet element(attrs)}
+														<div {...attrs} use:tip={folder}>{basename(folder)}</div>
+													{/snippet}
+												</Menu.ItemText>
 											</Menu.Item>
 										{/each}
 									{/if}

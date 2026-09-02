@@ -135,6 +135,7 @@
 	import { Toast } from '@skeletonlabs/skeleton-svelte';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import ConfirmHost from '$lib/modals/ConfirmHost.svelte';
+	import TooltipHost from '$lib/components/TooltipHost.svelte';
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -155,6 +156,7 @@
 </Toast.Group>
 
 <ConfirmHost />
+<TooltipHost />
 
 {#if __WEB__}
 	<!-- the browser build is the join client and nothing else: no start screen, no local folder -->

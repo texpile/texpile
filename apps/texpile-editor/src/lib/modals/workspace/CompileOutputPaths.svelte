@@ -2,6 +2,7 @@
 	// The compile modal's "Advanced: output paths" disclosure. Both lanes have these - a command
 	// that writes somewhere unusual has to be told where, whichever compiler it runs - so this is
 	// shared rather than duplicated into each lane.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import * as cc from '$lib/workspace/compileCommand';
 	import { m } from '$lib/paraglide/messages';
@@ -54,7 +55,7 @@
 					class="btn btn-xs hover:preset-tonal shrink-0"
 					onclick={() => (outputs.pdf = '')}
 					disabled={!outputs.pdf}
-					title={m.wsview_clear_autodetect_title()}
+					use:tip={m.wsview_clear_autodetect_title()}
 				>
 					{m.wsview_auto_button()}
 				</button>
@@ -77,7 +78,7 @@
 					class="btn btn-xs hover:preset-tonal shrink-0"
 					onclick={() => (outputs.log = '')}
 					disabled={!outputs.log}
-					title={m.wsview_clear_autodetect_title()}
+					use:tip={m.wsview_clear_autodetect_title()}
 				>
 					{m.wsview_auto_button()}
 				</button>

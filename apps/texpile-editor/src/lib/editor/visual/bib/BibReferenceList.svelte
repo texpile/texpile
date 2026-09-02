@@ -1,6 +1,7 @@
 <script lang="ts">
 	// The reference rows on the manager's left: author/title/year summary, a raw badge for
 	// entries that only edit as CM text, and per-row delete.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { AlertTriangle, Code, Trash2 } from '@lucide/svelte';
 	import { fitsVisualEditor, type BiblatexReference } from '$lib/languages/bib/biblatex';
 	import { validateEntry } from '$lib/languages/bib/bibValidate';
@@ -57,7 +58,7 @@
 						     a warning only in the edit form is one nobody goes looking for -->
 						<span
 							class="text-warning-700-300 inline-flex items-center gap-0.5 text-[10px]"
-							title={problemsOf(ref).map(bibProblemText).join('\n')}
+							use:tip={problemsOf(ref).map(bibProblemText).join('\n')}
 						>
 							<AlertTriangle class="size-2.5" />
 							{problemsOf(ref).length}
@@ -67,7 +68,7 @@
 						<!-- raw badge: this row edits as raw CM -->
 						<span
 							class="border-surface-300-700 text-surface-500 inline-flex items-center gap-0.5 rounded border px-1 py-px text-[10px]"
-							title={m.bib_raw_badge_list_tooltip()}
+							use:tip={m.bib_raw_badge_list_tooltip()}
 						>
 							<Code class="size-2.5" />
 							{m.bib_raw_badge_text()}
@@ -82,7 +83,7 @@
 					e.stopPropagation();
 					onDelete(ref.key);
 				}}
-				title={m.bib_delete_tooltip()}
+				use:tip={m.bib_delete_tooltip()}
 			>
 				<Trash2 class="size-4" />
 			</button>

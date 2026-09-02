@@ -5,6 +5,7 @@
 	// There is no typesetter to choose here. The main file's extension names it - typst cannot build
 	// a .tex and latex cannot build a .typ - so a switch beside it could only ever disagree with the
 	// pipeline. Change the main file to change the lane; this dialog just shows which one it is.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { Play } from '@lucide/svelte';
 	import Modal from '../Modal.svelte';
@@ -135,7 +136,7 @@
 					class="btn btn-xs preset-tonal-primary gap-1.5"
 					onclick={onUseDefault}
 					disabled={DEFAULT_COMPILE_COMMAND.includes('{main}') && !mainFile.current}
-					title={m.wsview_use_default_title()}
+					use:tip={m.wsview_use_default_title()}
 				>
 					<Play class="size-4" />
 					{m.wsview_use_default()}

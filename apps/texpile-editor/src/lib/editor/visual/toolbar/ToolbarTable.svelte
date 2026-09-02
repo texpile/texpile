@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { editorViewStore, templateFeaturesStore } from '$lib/stores/editorStore';
-	import { Popover, Portal, Switch, Tooltip } from '@skeletonlabs/skeleton-svelte';
+	import { Popover, Portal, Switch } from '@skeletonlabs/skeleton-svelte';
 	import { Table } from '@lucide/svelte';
 	import { createTableNode } from '$lib/editor/visual/tableUtils';
 	import { m } from '$lib/paraglide/messages';
@@ -69,7 +70,7 @@
 			<button
 				class="flex items-center p-1"
 				aria-label={m.tbar_insert_table_aria()}
-				title={m.tbar_insert_table_aria()}
+				use:tip={m.tbar_insert_table_aria()}
 				onmousedown={preventFocusLoss}
 			>
 				<Table class="h-5 w-5" />
@@ -112,27 +113,20 @@
 							<Switch.HiddenInput />
 						</Switch>
 					{:else}
-						<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-							<Tooltip.Trigger class="w-full">
-								<Switch
-									name="numbered-table"
-									checked={false}
-									disabled
-									class="flex cursor-not-allowed items-center justify-between text-sm opacity-50"
-								>
-									<Switch.Label>{m.tbar_numbered_table()}</Switch.Label>
-									<Switch.Control class="preset-filled-surface-200-800">
-										<Switch.Thumb />
-									</Switch.Control>
-									<Switch.HiddenInput />
-								</Switch>
-							</Tooltip.Trigger>
-							<Portal>
-								<Tooltip.Positioner class="z-floating-ui">
-									<Tooltip.Content class="card preset-filled p-2 text-sm">{m.tbar_feature_not_enabled()}</Tooltip.Content>
-								</Tooltip.Positioner>
-							</Portal>
-						</Tooltip>
+						<div class="w-full" use:tip={m.tbar_feature_not_enabled()}>
+							<Switch
+								name="numbered-table"
+								checked={false}
+								disabled
+								class="flex cursor-not-allowed items-center justify-between text-sm opacity-50"
+							>
+								<Switch.Label>{m.tbar_numbered_table()}</Switch.Label>
+								<Switch.Control class="preset-filled-surface-200-800">
+									<Switch.Thumb />
+								</Switch.Control>
+								<Switch.HiddenInput />
+							</Switch>
+						</div>
 					{/if}
 				</div>
 			</Popover.Content>

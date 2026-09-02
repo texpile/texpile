@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Tag } from '@lucide/svelte';
 	import { sanitizeLabel } from '$lib/editor/visual/label';
@@ -34,11 +35,14 @@
 <Popover {open} onOpenChange={(e) => onOpenChange(e.open)} positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}>
 	<Popover.Trigger
 		class="text-surface-600-300 bg-surface-200-800 hover:bg-surface-300-700 inline-flex cursor-pointer items-center gap-1 rounded px-1.5 py-0.5 align-baseline text-xs font-medium transition-colors"
-		title={m.label_chip_title({ name })}
 		style="font-size: 0.75rem;"
 	>
-		<Tag class="size-3 shrink-0" />
-		<span class="font-mono">{name}</span>
+		{#snippet element(attrs)}
+			<button {...attrs} use:tip={m.label_chip_title({ name })}>
+				<Tag class="size-3 shrink-0" />
+				<span class="font-mono">{name}</span>
+			</button>
+		{/snippet}
 	</Popover.Trigger>
 
 	<Portal>

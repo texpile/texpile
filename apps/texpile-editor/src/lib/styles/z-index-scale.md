@@ -19,16 +19,17 @@ Custom z-index utilities are defined in `app.css` using `@utility` directive (Ta
 
 ## Scale (lowest to highest)
 
-| Layer                  | z-index   | Usage                               | Components                                                               |
-| ---------------------- | --------- | ----------------------------------- | ------------------------------------------------------------------------ |
-| **Base Content**       | 0-9       | Default document flow               | Most content                                                             |
-| **Elevated Content**   | 10-19     | Sticky elements, dropdowns          | Sidebar (z-40 legacy)                                                    |
-| **Sticky Headers**     | 100-109   | Fixed headers and toolbars          | `z-sticky-header` (100), `z-header` (101)                                |
-| **Floating UI**        | 200-299   | Search bars, tooltips, popovers     | `z-floating-ui`, `z-search` (200), `z-dropdown` (210), `z-tooltip` (220) |
-| **Modals/Dialogs**     | 1000-1099 | Standard modals and dialogs         | `z-dialog`, `z-modal` (1000)                                             |
-| **Critical Overlays**  | 1100-1199 | Banners, important notifications    | `z-banner`, `z-overlay-critical` (1100)                                  |
-| **Special Modals**     | 2000-2099 | Template picker, special overlays   | `z-special-modal`, `z-template-picker` (2000)                            |
-| **Full-Screen Modals** | 3000-3099 | PDF viewer, full-screen experiences | `z-fullscreen-modal`, `z-pdf-viewer` (3000)                              |
+| Layer                  | z-index   | Usage                               | Components                                            |
+| ---------------------- | --------- | ----------------------------------- | ----------------------------------------------------- |
+| **Base Content**       | 0-9       | Default document flow               | Most content                                          |
+| **Elevated Content**   | 10-19     | Sticky elements, dropdowns          | Sidebar (z-40 legacy)                                 |
+| **Sticky Headers**     | 100-109   | Fixed headers and toolbars          | `z-sticky-header` (100), `z-header` (101)             |
+| **Floating UI**        | 200-299   | Search bars, popovers, dropdowns    | `z-floating-ui`, `z-search` (200), `z-dropdown` (210) |
+| **Modals/Dialogs**     | 1000-1099 | Standard modals and dialogs         | `z-dialog`, `z-modal` (1000)                          |
+| **Critical Overlays**  | 1100-1199 | Banners, important notifications    | `z-banner`, `z-overlay-critical` (1100)               |
+| **Special Modals**     | 2000-2099 | Template picker, special overlays   | `z-special-modal`, `z-template-picker` (2000)         |
+| **Full-Screen Modals** | 3000-3099 | PDF viewer, full-screen experiences | `z-fullscreen-modal`, `z-pdf-viewer` (3000)           |
+| **Hover hints**        | 4000      | The one tooltip, above every layer  | `z-tooltip` (4000)                                    |
 
 ## Usage Guidelines
 
@@ -62,8 +63,7 @@ Custom z-index utilities are defined in `app.css` using `@utility` directive (Ta
 ### Floating UI (200-299)
 
 - `SearchBar.svelte`: z-[200]
-- Dropdowns/Popovers: z-[210] (when added)
-- Tooltips: z-[220] (when added)
+- Dropdowns/Popovers: z-[210]
 
 ### Modals/Dialogs (1000-1099)
 
@@ -84,6 +84,11 @@ Custom z-index utilities are defined in `app.css` using `@utility` directive (Ta
 ### Full-Screen Modals (3000-3099)
 
 - `PdfViewerModal.svelte`: z-[3000] (backdrop), z-[3001] (content)
+
+### Hover hints (4000)
+
+- `TooltipHost.svelte`: z-[4000]. The whole app has one tooltip, and it has to clear modals and
+  the PDF viewer because controls inside those have hints too.
 
 ## Migration Notes
 

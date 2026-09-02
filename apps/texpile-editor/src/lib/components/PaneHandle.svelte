@@ -7,6 +7,7 @@
 	//
 	// Positioning is the caller's: only the caller knows where its divider is.
 	import type { Component } from 'svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
 
 	type Props = {
 		// capitalised so it can be used as a tag: {@const} is not allowed directly inside an element
@@ -24,7 +25,7 @@
 	class="bg-surface-700-300 hover:bg-primary-500 absolute z-30 flex size-6 cursor-pointer items-center justify-center rounded-full text-white opacity-80 shadow-md transition hover:opacity-100 focus-visible:opacity-100 dark:text-black {extra}"
 	onmousedown={(e) => e.preventDefault()}
 	{onclick}
-	{title}
+	use:tip={title}
 	aria-label={ariaLabel}
 >
 	<Icon class="size-3.5 shrink-0" />

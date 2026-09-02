@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { FindOptions } from './findOptions';
 	import { m } from '$lib/paraglide/messages';
 
@@ -25,7 +26,7 @@
 		class="find-toggle {options[b.key] ? 'preset-tonal-primary' : 'hover:preset-tonal text-surface-600-300'}"
 		class:underline={b.key === 'wholeWord'}
 		aria-pressed={options[b.key]}
-		title={b.title}
+		use:tip={b.title}
 		aria-label={b.title}
 		onmousedown={(e) => e.preventDefault()}
 		onclick={() => onToggle(b.key)}

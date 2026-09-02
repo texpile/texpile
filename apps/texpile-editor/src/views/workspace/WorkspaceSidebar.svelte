@@ -1,6 +1,7 @@
 <script lang="ts">
 	// The left sidebar: folder header + explorer / source-control / find-in-files, with the file
 	// tree and (in explorer) a resizable table-of-contents. Presentational — logic stays in the view.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import FileTree from '$lib/filetree/FileTree.svelte';
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
 	import SourceControlPanel from '$lib/workspace/SourceControlPanel.svelte';
@@ -218,7 +219,7 @@
 	<div class="border-surface-200-800 flex h-12 shrink-0 items-center justify-between gap-2 border-b px-3">
 		<!-- min-w-0: the name is what gives up room as the sidebar narrows, truncating to a stub before
 		     any action is allowed to collapse into the menu -->
-		<span class="min-w-0 truncate text-sm font-semibold" title={workspaceRoot.current ?? ''}>
+		<span class="min-w-0 truncate text-sm font-semibold" use:tip={workspaceRoot.current ?? ''}>
 			{workspaceRoot.current ? basename(workspaceRoot.current) : m.wsview_no_folder()}
 		</span>
 		<div class="flex shrink-0 items-center gap-1">
@@ -226,7 +227,7 @@
 				{@const Icon = action.icon}
 				<button
 					class="btn-icon btn-icon-xs {action.active ? 'text-primary-500' : 'hover:preset-tonal'}"
-					title={action.title ?? action.label}
+					use:tip={action.title ?? action.label}
 					aria-label={action.label}
 					onclick={action.run}
 				>
@@ -241,12 +242,10 @@
 					positioning={{ placement: 'bottom-end', offset: { mainAxis: 2 } }}
 					autoFocus={false}
 				>
-					<Popover.Trigger
-						class="btn-icon btn-icon-xs hover:preset-tonal"
-						title={m.wsview_more_actions()}
-						aria-label={m.wsview_more_actions()}
-					>
-						<MoreHorizontal class="size-4" />
+					<Popover.Trigger class="btn-icon btn-icon-xs hover:preset-tonal" aria-label={m.wsview_more_actions()}>
+						{#snippet element(attrs)}
+							<button {...attrs} use:tip={m.wsview_more_actions()}><MoreHorizontal class="size-4" /></button>
+						{/snippet}
 					</Popover.Trigger>
 					<Portal>
 						<Popover.Positioner class="z-floating-ui">
@@ -258,7 +257,7 @@
 											type="button"
 											class="hover:preset-tonal-primary flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm"
 											class:preset-tonal-primary={action.active}
-											title={action.title ?? action.label}
+											use:tip={action.title ?? action.label}
 											onclick={() => runAction(action.run)}
 										>
 											<Icon class="size-4 shrink-0" />
@@ -277,7 +276,7 @@
 				{@const Icon = action.icon}
 				<button
 					class="btn-icon btn-icon-xs {action.active ? 'text-primary-500' : 'hover:preset-tonal'}"
-					title={action.title ?? action.label}
+					use:tip={action.title ?? action.label}
 					aria-label={action.label}
 					onclick={action.run}
 				>

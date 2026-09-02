@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Tooltip, Portal } from '@skeletonlabs/skeleton-svelte';
+	import { tip } from './tooltip.svelte';
 	import type { Snippet } from 'svelte';
 
 	type Props = {
@@ -9,27 +9,17 @@
 	};
 
 	let { enabled, tooltip = 'This feature is not enabled for this template', children }: Props = $props();
-
-	let tooltipOpen = $state(false);
 </script>
 
 {#if enabled}
 	{@render children()}
 {:else}
-	<Tooltip open={tooltipOpen} onOpenChange={(e) => (tooltipOpen = e.open)} positioning={{ placement: 'top' }} openDelay={300}>
-		<Tooltip.Trigger class="w-full">
-			<div class="disabled-feature">
-				{@render children()}
-			</div>
-		</Tooltip.Trigger>
-		<Portal>
-			<Tooltip.Positioner class="z-floating-ui">
-				<Tooltip.Content class="card preset-filled p-2 text-sm">
-					{tooltip}
-				</Tooltip.Content>
-			</Tooltip.Positioner>
-		</Portal>
-	</Tooltip>
+	<!-- the hint hangs on the wrapper, not on the greyed content: that has pointer-events: none -->
+	<div class="w-full" use:tip={tooltip}>
+		<div class="disabled-feature">
+			{@render children()}
+		</div>
+	</div>
 {/if}
 
 <style>

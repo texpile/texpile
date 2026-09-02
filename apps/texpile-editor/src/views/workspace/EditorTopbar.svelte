@@ -2,6 +2,7 @@
 	// The editor's top bar: sidebar toggle, word count, the visual/source toggle, and the
 	// compile / preview / save controls. Pure chrome driven by props + callbacks. The open-file
 	// tabs live on their own strip below (TabBar in EditorPane).
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { openWorkspaceForFile } from '$lib/workspace/openWorkspace';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
@@ -196,7 +197,7 @@
 			<button
 				class="border-surface-300-700 hover:preset-tonal flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs"
 				onclick={onShowComments}
-				title={m.wsview_show_comments_title()}
+				use:tip={m.wsview_show_comments_title()}
 			>
 				<MessageSquare class="size-3.5" />
 				{commentCount}
@@ -212,7 +213,7 @@
 				class="border-surface-300-700 hover:preset-filled-primary-500 hover:border-primary-500 flex items-center rounded-md border px-2.5 py-1 text-xs"
 				onmousedown={(e) => e.preventDefault()}
 				onclick={onSyncToCursor}
-				title={syncTargetsPreview ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
+				use:tip={syncTargetsPreview ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
 				aria-label={syncTargetsPreview ? m.wsview_sync_to_preview_aria() : m.wsview_sync_to_pdf_aria()}
 			>
 				<!-- icon-only: the 1lh wrapper stands in for exactly one text-xs line box - the thing
@@ -231,7 +232,7 @@
 						: 'hover:preset-tonal disabled:hover:bg-transparent'}"
 					onclick={() => onSetViewMode('visual')}
 					disabled={!!encodingIssue}
-					title={encodingIssue ?? m.wsview_visual_editor_title()}
+					use:tip={encodingIssue ?? m.wsview_visual_editor_title()}
 				>
 					<Eye class="size-3.5" />
 					{m.wsview_visual_label()}
@@ -239,7 +240,7 @@
 				<button
 					class="flex items-center gap-1 px-2.5 py-1 {viewMode === 'source' ? 'preset-filled-primary-500' : 'hover:preset-tonal'}"
 					onclick={() => onSetViewMode('source')}
-					title={kind === 'typ' ? m.wsview_typst_source_title() : m.wsview_latex_source_title()}
+					use:tip={kind === 'typ' ? m.wsview_typst_source_title() : m.wsview_latex_source_title()}
 				>
 					<Code class="size-3.5" />
 					{m.wsview_source_label()}
@@ -250,7 +251,7 @@
 			<button
 				class="btn btn-xs gap-1 {compileLog.current.errors.length > 0 ? 'preset-tonal-error' : 'preset-tonal-warning'}"
 				onclick={onShowProblems}
-				title={m.wsview_show_problems_title()}
+				use:tip={m.wsview_show_problems_title()}
 			>
 				{#if compileLog.current.errors.length > 0}
 					<CircleAlert class="size-3.5" /> {compileLog.current.errors.length}
@@ -276,7 +277,7 @@
 				<button
 					class="btn btn-xs {COMPILE_TONE[compile.tone]} rounded-l-none self-stretch border-l-0 px-1"
 					onclick={() => (compileMenuOpen = !compileMenuOpen)}
-					title={m.wsview_compile_options()}
+					use:tip={m.wsview_compile_options()}
 					aria-label={m.wsview_compile_options()}
 					aria-haspopup="menu"
 					aria-expanded={compileMenuOpen}
@@ -310,7 +311,7 @@
 			     preview pane there). .typ shows it too - a Typst project compiled by shell (the
 			     Preview switch off) pushes its PDF exactly as a LaTeX one does. -->
 			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
-				<button class="btn btn-xs preset-tonal-primary gap-1.5" onclick={onRequestCompile} title={m.session_request_compile()}>
+				<button class="btn btn-xs preset-tonal-primary gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
 					<Play class="size-4" />
 					{m.session_request_compile()}
 				</button>

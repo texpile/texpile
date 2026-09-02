@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { X, Languages } from '@lucide/svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import Modal from '../Modal.svelte';
@@ -121,7 +122,7 @@
 {/snippet}
 
 {#snippet toggleRow(text: string, hint: string, checked: boolean, onChange: (v: boolean) => void, disabled = false, title = '')}
-	<div class={ROW} {title}>
+	<div class={ROW} use:tip={title}>
 		{@render label(text, hint, disabled)}
 		<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
 			<Switch.Control><Switch.Thumb /></Switch.Control>

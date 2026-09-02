@@ -12,6 +12,7 @@
 	//
 	// A collapsed pane keeps its divider, not draggable and with the chevron flipped. That is the
 	// way back in, and it means the control never has to overhang into the editor.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { Component } from 'svelte';
 
 	type Props = {
@@ -91,7 +92,7 @@
 			style="top: calc(50% + {(topInset - bottomInset) / 2}px)"
 			onmousedown={(e) => e.preventDefault()}
 			onclick={toggle.onclick}
-			title={toggle.title}
+			use:tip={toggle.title}
 			aria-label={toggle.ariaLabel}
 		>
 			<span

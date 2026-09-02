@@ -7,6 +7,7 @@
 	// The locate ladder, overflow planning, and patch verification live in ./locate and
 	// ./patch; the caches, painting, patch lifecycle, and compile lifecycle live in the
 	// session pieces (draftSession and what it composes). This file is the view shell.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { ZoomIn, ZoomOut, MoveHorizontal, ChevronUp, ChevronDown, Crosshair, Download } from '@lucide/svelte';
@@ -109,7 +110,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => ctrl.savePdf()}
 			disabled={!ctrl.pages.length || ctrl.savingPdf}
-			title={m.draft_toolbar_save_pdf()}
+			use:tip={m.draft_toolbar_save_pdf()}
 			aria-label={m.draft_toolbar_save_pdf()}
 		>
 			<Download class="size-4" />
@@ -119,7 +120,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => vp.zoomOut()}
 			disabled={!ctrl.pages.length}
-			title={m.draft_toolbar_zoom_out()}
+			use:tip={m.draft_toolbar_zoom_out()}
 			aria-label={m.draft_toolbar_zoom_out()}
 		>
 			<ZoomOut class="size-4" />
@@ -128,7 +129,7 @@
 			class="hover:preset-tonal min-w-11 rounded px-1 py-1 text-center tabular-nums"
 			onclick={() => vp.actualSize()}
 			disabled={!ctrl.pages.length}
-			title={m.draft_toolbar_actual_size()}
+			use:tip={m.draft_toolbar_actual_size()}
 		>
 			{Math.round(vp.zoom * 100)}%
 		</button>
@@ -136,7 +137,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => vp.zoomIn()}
 			disabled={!ctrl.pages.length}
-			title={m.draft_toolbar_zoom_in()}
+			use:tip={m.draft_toolbar_zoom_in()}
 			aria-label={m.draft_toolbar_zoom_in()}
 		>
 			<ZoomIn class="size-4" />
@@ -146,7 +147,7 @@
 			class:preset-tonal={vp.fitMode}
 			onclick={() => vp.fitWidthBtn()}
 			disabled={!ctrl.pages.length}
-			title={m.draft_toolbar_fit_width()}
+			use:tip={m.draft_toolbar_fit_width()}
 			aria-label={m.draft_toolbar_fit_width()}
 		>
 			<MoveHorizontal class="size-4" />
@@ -157,7 +158,7 @@
 			class:text-primary-500={vp.followEdits}
 			onclick={() => (vp.followEdits = !vp.followEdits)}
 			disabled={!ctrl.pages.length}
-			title={vp.followEdits ? m.draft_toolbar_follow_edits_on() : m.draft_toolbar_follow_edits_off()}
+			use:tip={vp.followEdits ? m.draft_toolbar_follow_edits_on() : m.draft_toolbar_follow_edits_off()}
 			aria-label={m.draft_toolbar_follow_edits_aria()}
 			aria-pressed={vp.followEdits}
 		>
@@ -169,7 +170,7 @@
 				class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 				onclick={() => vp.goToPage(vp.curPage - 1)}
 				disabled={vp.curPage <= 1}
-				title={m.draft_toolbar_prev_page()}
+				use:tip={m.draft_toolbar_prev_page()}
 				aria-label={m.draft_toolbar_prev_page()}
 			>
 				<ChevronUp class="size-4" />
@@ -179,7 +180,7 @@
 				class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 				onclick={() => vp.goToPage(vp.curPage + 1)}
 				disabled={vp.curPage >= ctrl.pages.length}
-				title={m.draft_toolbar_next_page()}
+				use:tip={m.draft_toolbar_next_page()}
 				aria-label={m.draft_toolbar_next_page()}
 			>
 				<ChevronDown class="size-4" />

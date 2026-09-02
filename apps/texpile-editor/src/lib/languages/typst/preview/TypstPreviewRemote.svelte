@@ -18,6 +18,7 @@
 	// Recovery is the viewer's own reconnect ladder: anything wrong (a lost frame, the host's
 	// preview restarting, the relay dropping) is turned into a close at the shim, the viewer
 	// constructs a new "socket", and that reattach starts over with a whole-document frame.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, PictureInPicture2 } from '@lucide/svelte';
 	import { resolvedMode } from '$lib/theme';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
@@ -239,7 +240,7 @@
 		<span class="shrink-0 font-medium">{m.typst_preview_label()}</span>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		{#if error}
-			<span class="text-error-500 truncate" title={error}>{error}</span>
+			<span class="text-error-500 truncate" use:tip={error}>{error}</span>
 		{:else}
 			<span class="text-surface-700-200 truncate">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
 		{/if}
@@ -248,7 +249,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => stepZoom(-1)}
 			disabled={!frameUrl}
-			title={m.draft_toolbar_zoom_out()}
+			use:tip={m.draft_toolbar_zoom_out()}
 			aria-label={m.draft_toolbar_zoom_out()}
 		>
 			<ZoomOut class="size-4" />
@@ -258,7 +259,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => stepZoom(1)}
 			disabled={!frameUrl}
-			title={m.draft_toolbar_zoom_in()}
+			use:tip={m.draft_toolbar_zoom_in()}
 			aria-label={m.draft_toolbar_zoom_in()}
 		>
 			<ZoomIn class="size-4" />
@@ -272,7 +273,7 @@
 			class:text-primary-500={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
 			disabled={!frameUrl}
-			title={settings.current.typstPreviewFollow === true ? m.typst_preview_follow_on() : m.typst_preview_follow_off()}
+			use:tip={settings.current.typstPreviewFollow === true ? m.typst_preview_follow_on() : m.typst_preview_follow_off()}
 			aria-label={m.typst_preview_follow_aria()}
 			aria-pressed={settings.current.typstPreviewFollow === true}
 		>
@@ -285,7 +286,7 @@
 			<button
 				class="hover:preset-tonal shrink-0 rounded p-1"
 				onclick={onPopout}
-				title={m.wsview_popout_preview()}
+				use:tip={m.wsview_popout_preview()}
 				aria-label={m.wsview_popout_preview()}
 			>
 				<PictureInPicture2 class="size-4" />

@@ -3,6 +3,7 @@
 	// binds, for people who don't know them. The SHELL mirrors the LaTeX SourceToolbar (groups,
 	// borders, icon metrics); the actions write markdown, not LaTeX. No active-state highlighting,
 	// same trade-off as the tex source bar.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import {
 		Bold,
 		Italic,
@@ -48,7 +49,7 @@
 
 {#snippet iconButton(label: string, action: (e: MouseEvent) => void, IconComp: typeof Bold)}
 	<li class="toolbarButton hover:preset-tonal">
-		<button onclick={action} class="flex items-center p-1" aria-label={label} title={label}>
+		<button onclick={action} class="flex items-center p-1" aria-label={label} use:tip={label}>
 			<IconComp class="h-4.5 w-4.5" />
 		</button>
 	</li>
@@ -87,7 +88,7 @@
 						onclick={run((s) => computeHeadingLine(s, level))}
 						class="flex items-center p-1 text-xs font-semibold"
 						aria-label={m.mdtoolbar_heading_n({ n: level })}
-						title={m.mdtoolbar_heading_n({ n: level })}
+						use:tip={m.mdtoolbar_heading_n({ n: level })}
 					>
 						H{level}
 					</button>

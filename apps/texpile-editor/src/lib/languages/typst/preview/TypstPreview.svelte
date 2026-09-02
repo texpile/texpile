@@ -8,6 +8,7 @@
 	// The frame is a SEPARATE ORIGIN, so the page cannot reach this window's bridges. The only
 	// channel between us is postMessage, and the bridge on the far side is one we injected. That is
 	// what lets the zoom control below drive a viewer we cannot otherwise touch.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, FileDown, Loader2, PictureInPicture2 } from '@lucide/svelte';
 	import { resolvedMode } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
@@ -215,11 +216,11 @@
 		<span class="shrink-0 font-medium">{m.typst_preview_label()}</span>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		{#if error}
-			<span class="text-error-500 truncate" title={error}>{error}</span>
+			<span class="text-error-500 truncate" use:tip={error}>{error}</span>
 		{:else if stall && !noDocument}
 			<!-- the no-document stall is NOT repeated here: the frame overlay below already says it -->
 
-			<span class="text-warning-700-300 truncate" title="{stall}&#10;{stallDetail}">{stall}</span>
+			<span class="text-warning-700-300 truncate" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
 			<span class="text-surface-500 truncate font-mono text-[10px]">{stallDetail}</span>
 		{:else}
 			<span class="text-surface-700-200 truncate">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
@@ -229,7 +230,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => stepZoom(-1)}
 			disabled={!frameUrl}
-			title={m.draft_toolbar_zoom_out()}
+			use:tip={m.draft_toolbar_zoom_out()}
 			aria-label={m.draft_toolbar_zoom_out()}
 		>
 			<ZoomOut class="size-4" />
@@ -239,7 +240,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={() => stepZoom(1)}
 			disabled={!frameUrl}
-			title={m.draft_toolbar_zoom_in()}
+			use:tip={m.draft_toolbar_zoom_in()}
 			aria-label={m.draft_toolbar_zoom_in()}
 		>
 			<ZoomIn class="size-4" />
@@ -252,7 +253,7 @@
 			class:text-primary-500={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
 			disabled={!frameUrl}
-			title={settings.current.typstPreviewFollow === true ? m.typst_preview_follow_on() : m.typst_preview_follow_off()}
+			use:tip={settings.current.typstPreviewFollow === true ? m.typst_preview_follow_on() : m.typst_preview_follow_off()}
 			aria-label={m.typst_preview_follow_aria()}
 			aria-pressed={settings.current.typstPreviewFollow === true}
 		>
@@ -266,7 +267,7 @@
 			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
 			onclick={saveAsPdf}
 			disabled={!frameUrl || savingPdf}
-			title={m.typst_preview_save_pdf()}
+			use:tip={m.typst_preview_save_pdf()}
 			aria-label={m.typst_preview_save_pdf()}
 		>
 			{#if savingPdf}<Loader2 class="size-3.5 animate-spin" />{:else}<FileDown class="size-3.5" />{/if}
@@ -278,7 +279,7 @@
 			<button
 				class="hover:preset-tonal shrink-0 rounded p-1"
 				onclick={onPopout}
-				title={m.wsview_popout_preview()}
+				use:tip={m.wsview_popout_preview()}
 				aria-label={m.wsview_popout_preview()}
 			>
 				<PictureInPicture2 class="size-4" />

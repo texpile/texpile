@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { onMount, untrack } from 'svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	// Menu is Skeleton's here, so lucide's hamburger comes in aliased
@@ -243,8 +244,12 @@
 			<!-- the leftovers, as submenus. A hamburger when it holds everything, an ellipsis when it
 			     is genuinely an overflow of a bar that still shows some menus. -->
 			<Menu>
-				<Menu.Trigger class={triggerClass} aria-label={m.menubar_all_menus()} title={m.menubar_all_menus()}>
-					{#if visible === 0}<MenuIcon class="size-4" />{:else}<MoreHorizontal class="size-4" />{/if}
+				<Menu.Trigger class={triggerClass} aria-label={m.menubar_all_menus()}>
+					{#snippet element(attrs)}
+						<button {...attrs} use:tip={m.menubar_all_menus()}>
+							{#if visible === 0}<MenuIcon class="size-4" />{:else}<MoreHorizontal class="size-4" />{/if}
+						</button>
+					{/snippet}
 				</Menu.Trigger>
 				<Portal>
 					<Menu.Positioner>

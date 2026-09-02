@@ -1,7 +1,8 @@
 <script lang="ts">
 	// The equation settings popover's content: numbering, labels (per line for align-family
 	// environments), and the environment picker. MathSettings owns the trigger and shell.
-	import { Tooltip, Switch, Portal } from '@skeletonlabs/skeleton-svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
+	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronDown, Info, Trash2 } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
@@ -207,16 +208,9 @@
 			<Switch checked={numberedInput} onCheckedChange={handleNumberedToggle} class="flex w-full items-center justify-between gap-3">
 				<Switch.Label class="flex items-center gap-2">
 					<span>{m.mathsettings_numbered_label()}</span>
-					<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-						<Tooltip.Trigger class="inline-flex items-center">
-							<Info class="text-surface-500 h-3.5 w-3.5" />
-						</Tooltip.Trigger>
-						<Portal>
-							<Tooltip.Positioner class="z-floating-ui">
-								<Tooltip.Content class="card preset-filled p-2 text-sm">{m.mathsettings_numbered_tooltip()}</Tooltip.Content>
-							</Tooltip.Positioner>
-						</Portal>
-					</Tooltip>
+					<button type="button" class="inline-flex items-center" use:tip={m.mathsettings_numbered_tooltip()}>
+						<Info class="text-surface-500 h-3.5 w-3.5" />
+					</button>
 				</Switch.Label>
 				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
 					<Switch.Thumb />
@@ -231,22 +225,13 @@
 					<div class="flex items-center gap-2">
 						<span class="text-surface-600-400 text-sm">{m.mathsettings_environment_label()}</span>
 						<span class="preset-tonal-primary rounded px-2 py-0.5 text-sm font-medium capitalize">{environmentInput}</span>
-						<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-							<Tooltip.Trigger class="inline-flex items-center">
-								<Info class="text-surface-500 h-3.5 w-3.5" />
-							</Tooltip.Trigger>
-							<Portal>
-								<Tooltip.Positioner class="z-floating-ui">
-									<Tooltip.Content class="card preset-filled max-w-[220px] p-2 text-sm">
-										{#if isPerLineLabelMode}
-											{m.mathsettings_environment_tooltip_perline()}
-										{:else}
-											{m.mathsettings_environment_tooltip_single()}
-										{/if}
-									</Tooltip.Content>
-								</Tooltip.Positioner>
-							</Portal>
-						</Tooltip>
+						<button
+							type="button"
+							class="inline-flex items-center"
+							use:tip={isPerLineLabelMode ? m.mathsettings_environment_tooltip_perline() : m.mathsettings_environment_tooltip_single()}
+						>
+							<Info class="text-surface-500 h-3.5 w-3.5" />
+						</button>
 					</div>
 				</div>
 			{/if}
@@ -272,7 +257,7 @@
 									type="button"
 									class="preset-tonal-surface hover:preset-tonal-error btn-icon btn-icon-xs"
 									onclick={() => clearLineLabel(i)}
-									title={m.mathsettings_clear_label_title()}
+									use:tip={m.mathsettings_clear_label_title()}
 								>
 									<Trash2 class="h-3 w-3" />
 								</button>

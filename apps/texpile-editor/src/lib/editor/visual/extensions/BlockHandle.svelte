@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Plus, GripVertical, Trash2 } from '@lucide/svelte';
 	import { BLOCK_INSERT_ITEMS, type BlockInsertItem } from './blockInsertItems';
@@ -40,8 +41,10 @@
 		onOpenChange={(e) => (state.popoverOpen = e.open)}
 		positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}
 	>
-		<Popover.Trigger class="block-handle-btn" aria-label={m.blockhandle_insert_below()} title={m.blockhandle_insert_below()}>
-			<Plus class="size-4" />
+		<Popover.Trigger class="block-handle-btn" aria-label={m.blockhandle_insert_below()}>
+			{#snippet element(attrs)}
+				<button {...attrs} use:tip={m.blockhandle_insert_below()}><Plus class="size-4" /></button>
+			{/snippet}
 		</Popover.Trigger>
 		<Portal>
 			<Popover.Positioner class="z-floating-ui">
@@ -71,7 +74,7 @@
 		type="button"
 		class="block-handle-btn cursor-grab"
 		aria-label={m.blockhandle_drag_move()}
-		title={m.blockhandle_drag_move()}
+		use:tip={m.blockhandle_drag_move()}
 		draggable="true"
 		ondragstart={onDragStart}
 	>
@@ -90,7 +93,7 @@
 		type="button"
 		class="block-handle-btn block-handle-btn-danger"
 		aria-label={m.blockhandle_delete_block()}
-		title={m.blockhandle_delete_block()}
+		use:tip={m.blockhandle_delete_block()}
 		onmousedown={(e) => {
 			// preventDefault keeps focus on PM; delete runs, then PM refocuses itself
 			e.preventDefault();

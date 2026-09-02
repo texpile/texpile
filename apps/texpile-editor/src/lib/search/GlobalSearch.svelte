@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Search, X, ChevronDown, ChevronRight, FileText } from '@lucide/svelte';
 	import { searchInFolder, basename, type SearchFileResult } from '$lib/workspace/fileSystem';
 	import FindToggles from '$lib/editor/find/FindToggles.svelte';
@@ -106,7 +107,7 @@
 			/>
 			<FindToggles {options} onToggle={(key) => (options = toggledFindOption(options, key))} show={['caseSensitive', 'regexp']} />
 		</div>
-		<button class="find-action hover:preset-tonal" title={m.find_close()} aria-label={m.find_close()} onclick={onClose}
+		<button class="find-action hover:preset-tonal" use:tip={m.find_close()} aria-label={m.find_close()} onclick={onClose}
 			><X class="size-3.5" /></button
 		>
 	</div>
@@ -134,7 +135,7 @@
 						/>{/if}
 					<FileText class="text-surface-400 size-3.5 shrink-0" />
 					<span class="shrink-0 font-medium">{basename(r.rel)}</span>
-					<span class="text-surface-400 truncate text-xs" title={r.rel}>{r.rel}</span>
+					<span class="text-surface-400 truncate text-xs" use:tip={r.rel}>{r.rel}</span>
 					<span class="text-surface-400 ml-auto shrink-0 text-xs">{r.matches.length}</span>
 				</button>
 				{#if !collapsed[r.file]}
@@ -142,7 +143,7 @@
 						<button
 							class="hover:preset-tonal-primary flex w-full items-baseline gap-2 py-0.5 pr-2 pl-7 text-left text-xs"
 							onclick={() => onOpen(r.file, match.line)}
-							title={m.globalsearch_line_title({ line: match.line })}
+							use:tip={m.globalsearch_line_title({ line: match.line })}
 						>
 							<span class="text-surface-400 w-8 shrink-0 text-right tabular-nums">{match.line}</span>
 							<span class="truncate font-mono"

@@ -1,6 +1,7 @@
 <!-- visual .bib editor: reference list + add/edit form. value is the raw .bib text;
   every change re-serialises and flows back through onInput -->
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Pencil, Code } from '@lucide/svelte';
 	import { generateLabel } from '$lib/editor/visual/label';
 	import {
@@ -285,7 +286,7 @@
 					{#if editMode === 'raw'}
 						<span
 							class="border-surface-300-700 text-surface-500 ml-1 inline-flex items-center gap-0.5 rounded border px-1 py-px text-[10px]"
-							title={m.bib_raw_badge_edit_tooltip()}
+							use:tip={m.bib_raw_badge_edit_tooltip()}
 						>
 							<Code class="size-2.5" />
 							{m.bib_raw_badge_text()}

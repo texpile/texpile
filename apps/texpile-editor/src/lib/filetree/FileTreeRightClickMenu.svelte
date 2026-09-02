@@ -15,6 +15,7 @@
 </script>
 
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { FilePlus, FolderPlus, FileSymlink, Star, Copy, ClipboardPaste, FolderOpen, Undo2, Redo2, Pencil, Trash2 } from '@lucide/svelte';
 	import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -116,7 +117,7 @@
 			<button
 				class={itemClass}
 				onclick={runCommands((at) => onCreate?.(at.createDir, 'include'))}
-				title={typstProject ? m.filetree_new_include_hint_typst() : m.filetree_new_include_hint()}
+				use:tip={typstProject ? m.filetree_new_include_hint_typst() : m.filetree_new_include_hint()}
 			>
 				<FileSymlink class="text-surface-500 size-4" />
 				{m.filetree_menu_new_include()}

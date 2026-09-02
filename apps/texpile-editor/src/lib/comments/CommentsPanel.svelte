@@ -6,6 +6,7 @@
 	// in-context half is the gutter dot and the highlight in the editor. Splitting them that way is
 	// what lets comments exist at all in a layout that already spends its width on the preview: a
 	// list wants horizontal room, which the dock has and a 230px rail beside the editor does not.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { MessageSquare, Check, Trash2, Unlink, EyeOff, FileX } from '@lucide/svelte';
 	import CommentThreadConversation from './CommentThreadConversation.svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
@@ -127,7 +128,7 @@
 	<div bind:this={list} class="min-h-0 flex-1 overflow-y-auto">
 		{#if pending}
 			<div class="border-surface-200-800 bg-surface-100-900/60 max-w-2xl space-y-2 border-b p-2">
-				<span class="text-surface-500-400 block truncate font-mono" title={pending.quote}>{oneLine(pending.quote)}</span>
+				<span class="text-surface-500-400 block truncate font-mono" use:tip={pending.quote}>{oneLine(pending.quote)}</span>
 				<textarea
 					bind:this={composer}
 					class="textarea min-h-8 w-full text-xs"
@@ -206,13 +207,14 @@
 							<span class="min-w-0 flex-1">
 								<!-- the quote first: it is what tells you which comment this is, faster than the
 								     body does, and it is the only part that ties the row to the document -->
-								<span class="text-surface-500-400 block truncate font-mono" title={thread.anchor.quote}>{oneLine(thread.anchor.quote)}</span
+								<span class="text-surface-500-400 block truncate font-mono" use:tip={thread.anchor.quote}
+									>{oneLine(thread.anchor.quote)}</span
 								>
 								<!-- the body preview goes when the thread opens: the messages below start with
 								     this same text, and showing both made every thread look like it had a
 								     duplicate first reply -->
 								{#if !isOpen}
-									<span class="block truncate" title={thread.messages[0]?.body}>{thread.messages[0]?.body}</span>
+									<span class="block truncate" use:tip={thread.messages[0]?.body}>{thread.messages[0]?.body}</span>
 								{/if}
 							</span>
 							<!-- one centred cluster: the row is items-start (the quote block can be two lines),
@@ -239,7 +241,7 @@
 						<div class="flex shrink-0 items-center gap-0.5 py-1.5 pr-2 {isOpen ? '' : 'opacity-0 group-hover:opacity-100'}">
 							<button
 								class="hover:preset-tonal rounded p-1"
-								title={thread.resolved ? m.comments_reopen() : m.comments_resolve()}
+								use:tip={thread.resolved ? m.comments_reopen() : m.comments_resolve()}
 								aria-label={thread.resolved ? m.comments_reopen() : m.comments_resolve()}
 								onclick={() => onResolve(thread, !thread.resolved)}
 							>
@@ -247,7 +249,7 @@
 							</button>
 							<button
 								class="hover:preset-tonal-error rounded p-1"
-								title={m.comments_delete()}
+								use:tip={m.comments_delete()}
 								aria-label={m.comments_delete()}
 								onclick={() => onDelete(thread)}
 							>

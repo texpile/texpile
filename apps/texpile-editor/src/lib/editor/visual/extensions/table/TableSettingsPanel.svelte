@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Portal, Switch, Tooltip } from '@skeletonlabs/skeleton-svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
+	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronDown, Info, AlignLeft, AlignCenter, AlignRight, WrapText, StretchHorizontal } from '@lucide/svelte';
 	import type { Node } from 'prosemirror-model';
 	import TableAdvancedSection from './TableAdvancedSection.svelte';
@@ -127,7 +128,7 @@
 							{#if !opt.tabularx || isTabularx}
 								<button
 									type="button"
-									title={opt.title}
+									use:tip={opt.title}
 									aria-label={opt.title}
 									class="hover:preset-tonal p-1 {activeAlign(col.align) === opt.value ? 'preset-filled-primary-500' : ''}"
 									onclick={() => setAlign(i, opt.value)}
@@ -186,24 +187,15 @@
 					<Switch.HiddenInput />
 				</Switch>
 			{:else}
-				<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-					<Tooltip.Trigger class="w-full">
-						<Switch checked={false} disabled class="flex cursor-not-allowed items-center justify-between gap-3 opacity-50">
-							<Switch.Label>{m.tablewrap_show_notes()}</Switch.Label>
-							<Switch.Control class="preset-filled-surface-200-800">
-								<Switch.Thumb />
-							</Switch.Control>
-							<Switch.HiddenInput />
-						</Switch>
-					</Tooltip.Trigger>
-					<Portal>
-						<Tooltip.Positioner class="z-floating-ui">
-							<Tooltip.Content class="card preset-filled p-2 text-sm">
-								{m.tablewrap_notes_disabled_tooltip()}
-							</Tooltip.Content>
-						</Tooltip.Positioner>
-					</Portal>
-				</Tooltip>
+				<div class="w-full" use:tip={m.tablewrap_notes_disabled_tooltip()}>
+					<Switch checked={false} disabled class="flex cursor-not-allowed items-center justify-between gap-3 opacity-50">
+						<Switch.Label>{m.tablewrap_show_notes()}</Switch.Label>
+						<Switch.Control class="preset-filled-surface-200-800">
+							<Switch.Thumb />
+						</Switch.Control>
+						<Switch.HiddenInput />
+					</Switch>
+				</div>
 			{/if}
 		</div>
 	{/if}
@@ -213,18 +205,9 @@
 			<Switch checked={spanningInput} onCheckedChange={handleSpanningToggle} class="flex items-center justify-between gap-3">
 				<Switch.Label class="flex items-center gap-2">
 					{m.tablewrap_span_columns()}
-					<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-						<Tooltip.Trigger class="inline-flex items-center">
-							<Info class="text-surface-500 h-3.5 w-3.5" />
-						</Tooltip.Trigger>
-						<Portal>
-							<Tooltip.Positioner class="z-floating-ui">
-								<Tooltip.Content class="card preset-filled p-2 text-sm">
-									{m.tablewrap_span_columns_tooltip()}
-								</Tooltip.Content>
-							</Tooltip.Positioner>
-						</Portal>
-					</Tooltip>
+					<button type="button" class="inline-flex items-center" use:tip={m.tablewrap_span_columns_tooltip()}>
+						<Info class="text-surface-500 h-3.5 w-3.5" />
+					</button>
 				</Switch.Label>
 				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
 					<Switch.Thumb />

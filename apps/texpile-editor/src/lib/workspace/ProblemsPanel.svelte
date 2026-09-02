@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { CircleAlert, TriangleAlert, Box, FileCheck2, Info } from '@lucide/svelte';
 	import { compileLog, resolveLogPath } from '$lib/stores/compileLogStore';
 	import { mainFile, effectiveCompileFormat } from '$lib/workspace/workspaceStore';
@@ -92,9 +93,9 @@
 							<Box class="text-surface-400-600 mt-0.5 size-3.5 shrink-0" />
 						{/if}
 						<span class="min-w-0 flex-1">
-							<span class="block truncate" title={e.message}>{e.message}</span>
+							<span class="block truncate" use:tip={e.message}>{e.message}</span>
 							{#if e.hint}
-								<span class="text-surface-500-400 block truncate" title={e.hint}>{e.hint}</span>
+								<span class="text-surface-500-400 block truncate" use:tip={e.hint}>{e.hint}</span>
 							{/if}
 						</span>
 						{#if e.source}

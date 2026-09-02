@@ -1,6 +1,7 @@
 <script lang="ts">
 	// The join screen for a shared session: enter the code, or the goodbye screen after it ends.
 	// Once joined, App swaps to WorkspaceView (guest mode) — this only covers the not-yet-editing states.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { navigate } from '$lib/router.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { formatShareCode, isValidShareCode, normalizeShareCode } from '$lib/collab/e2e/shareCode';
@@ -193,7 +194,7 @@
 								class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
 								onclick={resetRelay}
 								disabled={relayIsDefault}
-								title={m.collab_relay_reset_title()}
+								use:tip={m.collab_relay_reset_title()}
 								aria-label={m.collab_relay_reset()}
 							>
 								<RotateCcw class="size-4" />

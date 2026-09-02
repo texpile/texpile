@@ -2,6 +2,7 @@
 	// A version opens to what differs between it and the working copy NOW - deliberately not what
 	// that version changed, which a commit graph lists. Those answer different questions, and this
 	// is the one standing next to Restore. Shaped after VS Code's Source Control Graph.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { onDestroy } from 'svelte';
 	import { GitCommitHorizontal, GitBranch, TriangleAlert, MoreHorizontal, History } from '@lucide/svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
@@ -129,7 +130,7 @@
 			<button
 				class="flex h-full min-w-0 flex-1 items-center gap-1.5 text-left"
 				onclick={() => toggle(entry.hash)}
-				title="{entry.subject}&#10;{entry.author} - {exact(entry.date)}{entry.parentCount > 1 ? `\n${m.vcs_merged_version()}` : ''}"
+				use:tip={`${entry.subject}\n${entry.author} - ${exact(entry.date)}${entry.parentCount > 1 ? `\n$${m.vcs_merged_version()}` : ''}`}
 			>
 				<span class="truncate text-sm {i === 0 ? 'font-semibold' : ''}">{entry.subject}</span>
 				<span class="text-surface-500 truncate text-xs">{entry.author} · {ago(entry.date)}</span>
@@ -153,10 +154,11 @@
 			>
 				<Popover.Trigger
 					class="hover:preset-tonal shrink-0 rounded p-0.5 opacity-0 group-hover:opacity-100 {openMenu === entry.hash ? 'opacity-100' : ''}"
-					title={m.vcs_row_actions()}
 					aria-label={m.vcs_row_actions()}
 				>
-					<MoreHorizontal class="size-3.5" />
+					{#snippet element(attrs)}
+						<button {...attrs} use:tip={m.vcs_row_actions()}><MoreHorizontal class="size-3.5" /></button>
+					{/snippet}
 				</Popover.Trigger>
 				<Portal>
 					<Popover.Positioner class="z-floating-ui">
@@ -201,13 +203,13 @@
 					<button
 						class="hover:bg-surface-200-800 flex h-[22px] w-full items-center pr-1 text-left"
 						onclick={() => onCompare(entry, f.path)}
-						title={m.tabs_compare_title({ name: baseName(f.path), version: entry.subject })}
+						use:tip={m.tabs_compare_title({ name: baseName(f.path), version: entry.subject })}
 					>
 						<!-- the lane runs past a version's files, which is what makes them read as belonging
 						     to it rather than as a list that happens to sit underneath -->
 						<GraphRail above={true} below={!isLast || fi < changes.length - 1} />
 						<FileIcon name={baseName(f.path)} class="size-4 shrink-0" />
-						<span class="ml-1.5 truncate text-sm {STATUS_COLOR[f.status]}" title={STATUS_TITLE[f.status]}>{baseName(f.path)}</span>
+						<span class="ml-1.5 truncate text-sm {STATUS_COLOR[f.status]}" use:tip={STATUS_TITLE[f.status]}>{baseName(f.path)}</span>
 						{#if dirName(f.path)}<span class="text-surface-500 ml-1.5 truncate text-xs">{dirName(f.path)}</span>{/if}
 					</button>
 				{/each}

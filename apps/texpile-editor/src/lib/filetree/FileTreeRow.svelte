@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { Snippet } from 'svelte';
 	import { ChevronRight, ChevronDown, MoreHorizontal, Star } from '@lucide/svelte';
 	import FileIcon from './FileIcon.svelte';
@@ -92,7 +93,7 @@
 				{@const status = gitBadgeOf(gitStatus, entry)}
 				<!-- names are never trimmed; the tree scrolls sideways instead (see FileTree's min-w-max).
 				     git status is the name's own colour, so it needs no column of its own -->
-				<span class="whitespace-nowrap {status ? STATUS_COLOR[status] : ''}" title={status ? STATUS_TITLE[status] : undefined}
+				<span class="whitespace-nowrap {status ? STATUS_COLOR[status] : ''}" use:tip={status ? STATUS_TITLE[status] : undefined}
 					>{entry.name}</span
 				>
 			{/if}
@@ -113,7 +114,7 @@
 				     visible seam against the row it sits on -->
 				<button
 					class="btn-icon btn-icon-xs text-surface-500 hover:text-surface-950-50 bg-transparent transition-colors"
-					title={m.filetree_row_actions()}
+					use:tip={m.filetree_row_actions()}
 					aria-label={m.filetree_row_actions()}
 					onclick={(e) => {
 						e.stopPropagation();

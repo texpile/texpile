@@ -13,6 +13,7 @@
 	//
 	// The bar itself is NOT one big drag region: a drag region swallows clicks, and the menu triggers
 	// and window buttons live inside it. Only the empty stretch in the middle drags.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { onMount, untrack, type Snippet } from 'svelte';
 	import { Search, Download } from '@lucide/svelte';
 	import { isMac } from '$lib/platform';
@@ -176,7 +177,7 @@
 					href="https://texpile.com/download"
 					target="_blank"
 					rel="noopener noreferrer"
-					title={m.web_get_desktop_note()}
+					use:tip={m.web_get_desktop_note()}
 				>
 					<Download class="size-3.5 shrink-0" />
 					{m.web_get_desktop()}
@@ -218,7 +219,7 @@
 					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-surface-600-400 pointer-events-auto flex h-[22px] items-center gap-2 rounded-md border px-2.5 text-xs"
 					style="width: {centerW}px"
 					onclick={() => commandPalette.show()}
-					title={m.palette_open()}
+					use:tip={m.palette_open()}
 				>
 					<Search class="size-3.5 shrink-0 opacity-60" />
 					<!-- centred, not left-aligned: the field is sized to the window rather than to the

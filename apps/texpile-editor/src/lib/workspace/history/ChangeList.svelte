@@ -6,6 +6,7 @@
 	// scope is visible rather than implied by which of two lists a row landed in. Build output starts
 	// collapsed and unticked: a LaTeX project puts a dozen sidecars next to the source, and
 	// committing them makes every later version's diff meaningless.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import ChangeGroup from './ChangeGroup.svelte';
 	import { pathLabels } from './pathLabels';
 	import type { GitStatusEntry } from '$lib/workspace/git';
@@ -67,7 +68,7 @@
 				<!-- the permanent fix, one click: unticking these every time is a chore nobody should repeat -->
 				<button
 					class="hover:preset-tonal text-primary-500 shrink-0 rounded px-1 text-[11px] opacity-0 group-hover:opacity-100"
-					title={m.vcs_ignore_artifacts_title()}
+					use:tip={m.vcs_ignore_artifacts_title()}
 					onclick={onIgnoreArtifacts}
 				>
 					{m.vcs_ignore_artifacts()}

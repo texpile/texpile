@@ -6,6 +6,7 @@
 	// space to hold one label and one button, and it meant a guest window had no command field and
 	// no drag strip while a host's did. Compile and PDF controls were already in EditorTopbar, so
 	// the row was carrying nothing else.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { navigate } from '$lib/router.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -27,14 +28,14 @@
 	{/if}
 
 	{#if collabGuest.peers.length}
-		<span class="flex items-center gap-1.5" title={collabGuest.peers.map((p) => p.name).join(', ')}>
+		<span class="flex items-center gap-1.5" use:tip={collabGuest.peers.map((p) => p.name).join(', ')}>
 			<Users class="text-surface-500 size-4 shrink-0" />
 			<span class="flex items-center -space-x-1.5">
 				{#each collabGuest.peers.slice(0, 5) as peer, i (i)}
 					<span
 						class="border-surface-100-900 flex size-5 items-center justify-center rounded-full border text-[10px] font-bold text-white"
 						style="background-color: {peer.color}"
-						title={peer.name}>{(peer.name || '?').slice(0, 1).toUpperCase()}</span
+						use:tip={peer.name}>{(peer.name || '?').slice(0, 1).toUpperCase()}</span
 					>
 				{/each}
 			</span>

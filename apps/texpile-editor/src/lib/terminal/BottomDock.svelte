@@ -2,6 +2,7 @@
 	// The bottom dock: a Terminal/Problems tab strip over the shell instances. Owns the multi-
 	// terminal state (VS Code-style: one shown, the rest kept mounted so their shells persist).
 	// The parent owns only the dock's height/visibility (they drive its grid layout).
+	import { tip } from '$lib/components/tooltip.svelte';
 	import ProblemsPanel from '$lib/workspace/ProblemsPanel.svelte';
 	import CommentsPanel from '$lib/comments/CommentsPanel.svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
@@ -199,7 +200,7 @@
 								</button>
 								<button
 									class="hover:preset-tonal-error mr-1 rounded p-1"
-									title={m.wsview_kill_terminal()}
+									use:tip={m.wsview_kill_terminal()}
 									aria-label={m.wsview_kill_terminal()}
 									onclick={() => shells.kill(t.id)}
 								>
@@ -221,12 +222,12 @@
 					</div>
 				{/if}
 			</div>
-			<button class="hover:preset-tonal rounded p-1" title={m.wsview_new_terminal()} aria-label={m.wsview_new_terminal()} onclick={add}>
+			<button class="hover:preset-tonal rounded p-1" use:tip={m.wsview_new_terminal()} aria-label={m.wsview_new_terminal()} onclick={add}>
 				<Plus class="size-3.5" />
 			</button>
 			<button
 				class="hover:preset-tonal-error rounded p-1"
-				title={m.wsview_kill_terminal()}
+				use:tip={m.wsview_kill_terminal()}
 				aria-label={m.wsview_kill_terminal()}
 				onclick={() => shells.activeTermId != null && shells.kill(shells.activeTermId)}
 			>
@@ -236,14 +237,14 @@
 		{#if pdfPaneOpen}
 			<button
 				class="hover:preset-tonal rounded p-1"
-				title={shrink ? m.wsview_expand_panel_title() : m.wsview_shrink_panel_title()}
+				use:tip={shrink ? m.wsview_expand_panel_title() : m.wsview_shrink_panel_title()}
 				aria-label={shrink ? m.wsview_expand_panel_aria() : m.wsview_shrink_panel_aria()}
 				onclick={onToggleShrink}
 			>
 				{#if shrink}<UnfoldHorizontal class="size-3.5" />{:else}<FoldHorizontal class="size-3.5" />{/if}
 			</button>
 		{/if}
-		<button class="hover:preset-tonal rounded p-1" title={m.wsview_hide_panel()} aria-label={m.wsview_hide_panel()} onclick={onClose}>
+		<button class="hover:preset-tonal rounded p-1" use:tip={m.wsview_hide_panel()} aria-label={m.wsview_hide_panel()} onclick={onClose}>
 			<X class="size-3.5" />
 		</button>
 	</div>

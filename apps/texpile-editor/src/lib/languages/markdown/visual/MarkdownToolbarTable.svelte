@@ -2,6 +2,7 @@
 	// The markdown visual toolbar's table inserter: same drag-a-grid gesture as the LaTeX and
 	// Typst ToolbarTables, but it builds mdSchema nodes. No switches: a GFM pipe table has no
 	// caption to number, and its first row is ALWAYS a header row, so the grid is the whole UI.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Table as TableIcon } from '@lucide/svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
@@ -46,7 +47,7 @@
 			<button
 				class="flex items-center p-1"
 				aria-label={m.tbar_insert_table_aria()}
-				title={m.tbar_insert_table_aria()}
+				use:tip={m.tbar_insert_table_aria()}
 				onmousedown={preventFocusLoss}
 			>
 				<TableIcon class="h-5 w-5" />

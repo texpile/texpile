@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import type { EditorView } from 'prosemirror-view';
 	import { refState } from './refState';
@@ -58,6 +59,6 @@
 	tabindex="0"
 	onclick={handleClick}
 	onkeydown={handleKeydown}
-	title={state.broken ? `Label "${label}" not found` : state.text === label ? `Reference: ${label}` : `Reference to ${label}`}
+	use:tip={state.broken ? `Label "${label}" not found` : state.text === label ? `Reference: ${label}` : `Reference to ${label}`}
 	>{state.text}</span
 >

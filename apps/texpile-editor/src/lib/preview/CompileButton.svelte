@@ -31,6 +31,7 @@
 	// icon, label and click, and five near-identical <button> blocks drifted apart every time one
 	// of them was touched. The chevron beside it is the caller's (it belongs to the menu, not to a
 	// state) and reads its colour from COMPILE_TONE above, so the pair always matches.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { Component } from 'svelte';
 
 	type Props = {
@@ -55,7 +56,7 @@
 		tone
 	]} w-24 justify-center gap-1.5 rounded-r-none whitespace-nowrap disabled:pointer-events-none disabled:opacity-50"
 	{onclick}
-	{title}
+	use:tip={title}
 	{disabled}
 >
 	{#if dot}

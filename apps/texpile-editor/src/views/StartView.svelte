@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { navigate } from '$lib/router.svelte';
 	import { AppWindow, Folder, FolderOpen, Loader2, Settings, Users } from '@lucide/svelte';
 	import { modKey } from '$lib/platform';
@@ -148,7 +149,7 @@
 				{#each visibleRecents as folder (folder)}
 					<!-- min-w-0 on the row and the path: flex items default to min-width:auto, so
 					     without it `truncate` never engages and long paths overflow -->
-					<button class="{rowClass} group min-w-0" onclick={() => openFolder(folder)} disabled={busy} title={folder}>
+					<button class="{rowClass} group min-w-0" onclick={() => openFolder(folder)} disabled={busy} use:tip={folder}>
 						<Folder class="text-surface-500 size-4 shrink-0" />
 						<!-- inner baseline row: the icon stays centred in the row, but the name (text-sm) and
 						     path (text-xs) sit on a shared baseline, else the smaller one rides low -->

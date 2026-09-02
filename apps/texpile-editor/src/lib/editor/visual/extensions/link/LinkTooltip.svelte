@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import Link2 from '@lucide/svelte/icons/link-2';
 	import ExternalLink from '@lucide/svelte/icons/external-link';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
@@ -207,7 +208,7 @@
 		<div class="p-2">
 			<div class="mb-2 flex items-center gap-2 p-1">
 				<Link2 class="text-surface-500-400 h-4 w-4 flex-shrink-0" />
-				<a {href} target="_blank" rel="noopener noreferrer" class="anchor flex-1 truncate text-sm" title={href}>
+				<a {href} target="_blank" rel="noopener noreferrer" class="anchor flex-1 truncate text-sm" use:tip={href}>
 					{href}
 				</a>
 			</div>
@@ -217,7 +218,7 @@
 					type="button"
 					class="btn btn-xs preset-tonal hover:preset-filled flex-1"
 					onclick={() => (isEditing = true)}
-					title={m.linktooltip_button_edit_title()}
+					use:tip={m.linktooltip_button_edit_title()}
 				>
 					<Pencil class="h-4 w-4" />
 					<span>{m.linktooltip_button_edit()}</span>
@@ -226,7 +227,7 @@
 					type="button"
 					class="btn btn-xs preset-tonal hover:preset-filled flex-1"
 					onclick={handleOpenLink}
-					title={m.linktooltip_button_open_title()}
+					use:tip={m.linktooltip_button_open_title()}
 				>
 					<ExternalLink class="h-4 w-4" />
 					<span>{m.linktooltip_button_open()}</span>
@@ -235,7 +236,7 @@
 					type="button"
 					class="btn btn-xs preset-tonal-error hover:preset-filled-error-500"
 					onclick={handleRemove}
-					title={m.linktooltip_button_remove_title()}
+					use:tip={m.linktooltip_button_remove_title()}
 				>
 					<Trash2 class="h-4 w-4" />
 				</button>

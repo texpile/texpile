@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { tocStore, sourceTocStore, type TocItem } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { TextSelection } from 'prosemirror-state';
@@ -52,7 +53,7 @@
 						? 'opacity-80'
 						: ''}"
 					style="padding-left: {(Math.max(1, item.level) - 1) * 0.7 + 0.25}rem"
-					title={item.text}
+					use:tip={item.text}
 					onclick={() => goTo(item)}
 				>
 					{display(item)}

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Popover, Portal, Tooltip } from '@skeletonlabs/skeleton-svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
+	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings, AlertCircle } from '@lucide/svelte';
 	import type { Node } from 'prosemirror-model';
 	import TableSettingsPanel from './TableSettingsPanel.svelte';
@@ -43,7 +44,6 @@
 	const tableCaptionEnabled = $derived(templateFeaturesStore.current?.tableCaption ?? true);
 
 	let settingsOpen = $state(false);
-	let tooltipOpen = $state(false);
 
 	// display number is calculated (updates when the table moves); the label is only for \ref
 	let tableDisplay = $derived(m.tablewrap_table_display({ number: tableNumber }));
@@ -73,20 +73,13 @@
 		<div class="table-number-row">
 			<div class="table-number">{tableDisplay}</div>
 			{#if hasPlaceholderCaption}
-				<Tooltip open={tooltipOpen} onOpenChange={(e) => (tooltipOpen = e.open)} positioning={{ placement: 'top' }} openDelay={200}>
-					<Tooltip.Trigger class="flex items-center">
-						<AlertCircle class="text-warning-500 h-4 w-4" />
-					</Tooltip.Trigger>
-					<!-- without Portal + Positioner the content renders in normal flow: it took up layout
-					     space beside the caption instead of floating above the icon -->
-					<Portal>
-						<Tooltip.Positioner class="z-floating-ui">
-							<Tooltip.Content class="card preset-filled max-w-[260px] p-2 text-sm">
-								{dialect === 'typst' ? m.tablewrap_caption_placeholder_tooltip() : m.tablewrap_caption_required_tooltip()}
-							</Tooltip.Content>
-						</Tooltip.Positioner>
-					</Portal>
-				</Tooltip>
+				<button
+					type="button"
+					class="flex items-center"
+					use:tip={dialect === 'typst' ? m.tablewrap_caption_placeholder_tooltip() : m.tablewrap_caption_required_tooltip()}
+				>
+					<AlertCircle class="text-warning-500 h-4 w-4" />
+				</button>
 			{/if}
 		</div>
 
@@ -98,7 +91,7 @@
 			<Popover.Trigger class="table-settings-btn">
 				<button
 					aria-label={m.tablewrap_settings_button()}
-					title={m.tablewrap_settings_button()}
+					use:tip={m.tablewrap_settings_button()}
 					type="button"
 					disabled={isReadOnly.current}
 				>

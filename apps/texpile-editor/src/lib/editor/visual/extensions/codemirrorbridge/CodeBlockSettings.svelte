@@ -5,6 +5,7 @@
 	// chrome on a node view: the button's visibility is plain CSS :hover toggling an untransitioned
 	// opacity, so ProseMirror re-rendering under the cursor cannot restart a fade or eat an enter
 	// event, and the only thing overlaying the editor is one small icon in the card's padding.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
@@ -59,14 +60,11 @@
 		onOpenChange={(details) => (settingsOpen = details.open)}
 		positioning={{ placement: 'bottom-end', offset: { mainAxis: 4 } }}
 	>
-		<!-- the Trigger renders a <button> itself; nesting our own inside it would be invalid HTML -->
-		<Popover.Trigger
-			class="codeblock-settings-btn"
-			title={m.codeblock_settings_button_label()}
-			aria-label={m.codeblock_settings_button_label()}
-			disabled={isReadOnly.current}
-		>
-			<Settings class="h-4 w-4" />
+		<!-- the Trigger renders the <button>; we take it over to hang the hint on it -->
+		<Popover.Trigger class="codeblock-settings-btn" aria-label={m.codeblock_settings_button_label()} disabled={isReadOnly.current}>
+			{#snippet element(attrs)}
+				<button {...attrs} use:tip={m.codeblock_settings_button_label()}><Settings class="h-4 w-4" /></button>
+			{/snippet}
 		</Popover.Trigger>
 
 		<Portal>

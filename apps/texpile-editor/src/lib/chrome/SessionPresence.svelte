@@ -7,6 +7,7 @@
 	// - next to it on the left it looked like a ninth menu that had lost its dropdown. And the left
 	// block is what the command center measures itself against: anything in there eats into
 	// menuBudget, so opening a session used to push menus into the overflow button.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Users } from '@lucide/svelte';
 	import InitialAvatar from '$lib/components/InitialAvatar.svelte';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
@@ -24,7 +25,7 @@
 	<button
 		class="app-no-drag hover:bg-surface-200-800 mr-1 flex h-[22px] shrink-0 items-center gap-1.5 self-center rounded px-2 text-xs"
 		onclick={() => onShareSession?.()}
-		title={m.menubar_share_session()}
+		use:tip={m.menubar_share_session()}
 	>
 		<span class="bg-success-500 size-2 shrink-0 rounded-full"></span>
 		<Users class="text-surface-500 size-4 shrink-0" />

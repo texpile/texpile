@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
@@ -48,7 +49,7 @@
 			<Popover.Trigger class="image-settings-btn">
 				<button
 					class="settings-button"
-					title={m.imageoverlay_settings_title()}
+					use:tip={m.imageoverlay_settings_title()}
 					type="button"
 					aria-label={m.imageoverlay_settings_aria()}
 					disabled={isReadOnly.current}

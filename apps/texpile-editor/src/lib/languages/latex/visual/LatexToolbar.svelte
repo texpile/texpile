@@ -5,6 +5,7 @@
 	// sup/sub colors | inline code, link | lists | quote | math table code-block hr | select
 	// block. Each bar renders only what its schema can hold, but an item present in two bars
 	// must sit in the same place and behave the same way in both.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import {
 		Search,
 		Undo,
@@ -137,7 +138,7 @@
 
 {#snippet iconButton(label: string, isActive: boolean, cmd: Cmd, IconComp: typeof Bold, iconClass = 'h-5 w-5')}
 	<div class={`toolbarButton ${isActive ? 'preset-tonal-primary' : 'hover:preset-tonal'}`}>
-		<button onclick={keepEditorFocus(cmd)} class="flex items-center p-1" aria-label={label} title={label}>
+		<button onclick={keepEditorFocus(cmd)} class="flex items-center p-1" aria-label={label} use:tip={label}>
 			<IconComp class={iconClass} />
 		</button>
 	</div>

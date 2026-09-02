@@ -1,6 +1,7 @@
 <script lang="ts">
 	// History panel, purely presentational: WorkspaceView implements the callbacks. No
 	// staged/unstaged split - the tick boxes ARE the staging, so a version's scope is visible.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { GitBranch, RefreshCw, Check, GitCommitHorizontal, ArrowUp } from '@lucide/svelte';
 	import ChangeList from './history/ChangeList.svelte';
 	import HistoryTimeline from './history/HistoryTimeline.svelte';
@@ -139,7 +140,7 @@
 				{#if tracking && ahead > 0}
 					<button
 						class="hover:preset-tonal flex items-center gap-0.5 rounded px-1 py-0.5 disabled:opacity-50"
-						title={ahead === 1 ? m.vcs_upload_one() : m.vcs_upload_count({ count: ahead })}
+						use:tip={ahead === 1 ? m.vcs_upload_one() : m.vcs_upload_count({ count: ahead })}
 						aria-label={m.vcs_upload_aria()}
 						onclick={onUpload}
 						disabled={busy}
@@ -150,7 +151,7 @@
 				{/if}
 				<button
 					class="hover:preset-tonal rounded p-0.5"
-					title={m.vcs_refresh_title()}
+					use:tip={m.vcs_refresh_title()}
 					aria-label={m.vcs_refresh_aria()}
 					onclick={onRefresh}
 				>
@@ -188,7 +189,7 @@
 							class="input resize-none text-sm"
 							rows="2"
 							placeholder={m.vcs_save_placeholder()}
-							title={m.vcs_commit_placeholder({ modLabel })}
+							use:tip={m.vcs_commit_placeholder({ modLabel })}
 							bind:value={message}
 							onkeydown={onKeydown}></textarea>
 						<button

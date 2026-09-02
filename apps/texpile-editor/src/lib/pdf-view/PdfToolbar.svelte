@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import {
 		ZoomIn,
 		ZoomOut,
@@ -79,11 +80,11 @@
 
 	{#snippet pdfZoom()}
 		<div class="pdf-toolbar-group">
-			<button onclick={() => actions.zoomOut()} aria-label="Zoom out" title="Zoom Out">
+			<button onclick={() => actions.zoomOut()} aria-label="Zoom out" use:tip={'Zoom Out'}>
 				<ZoomOut size={16} />
 			</button>
 			<span class="zoom-level">{Math.round(viewerState.scale * 100)}%</span>
-			<button onclick={() => actions.zoomIn()} aria-label="Zoom in" title="Zoom In">
+			<button onclick={() => actions.zoomIn()} aria-label="Zoom in" use:tip={'Zoom In'}>
 				<ZoomIn size={16} />
 			</button>
 		</div>
@@ -92,17 +93,17 @@
 
 	<!-- pinned: Fit Width is the one zoom control worth keeping at any width -->
 	<div class="pdf-toolbar-group">
-		<button onclick={() => actions.fitWidth()} aria-label="Fit width" title="Fit Width">
+		<button onclick={() => actions.fitWidth()} aria-label="Fit width" use:tip={'Fit Width'}>
 			<MoveHorizontal size={16} />
 		</button>
 	</div>
 
 	{#snippet pdfRotate()}
 		<div class="pdf-toolbar-group">
-			<button onclick={() => actions.rotateCounterClockwise()} aria-label="Rotate counter-clockwise" title="Rotate Left">
+			<button onclick={() => actions.rotateCounterClockwise()} aria-label="Rotate counter-clockwise" use:tip={'Rotate Left'}>
 				<RotateCcw size={16} />
 			</button>
-			<button onclick={() => actions.rotateClockwise()} aria-label="Rotate clockwise" title="Rotate Right">
+			<button onclick={() => actions.rotateClockwise()} aria-label="Rotate clockwise" use:tip={'Rotate Right'}>
 				<RotateCw size={16} />
 			</button>
 		</div>
@@ -119,14 +120,14 @@
 			onkeydown={handleSearchKeydown}
 			aria-label="Search in document"
 		/>
-		<button onclick={handleSearch} disabled={viewerState.isSearching} aria-label="Search" title="Search">
+		<button onclick={handleSearch} disabled={viewerState.isSearching} aria-label="Search" use:tip={'Search'}>
 			<Search size={16} />
 		</button>
 		{#if viewerState.searchTotal > 0}
-			<button onclick={() => actions.searchPrevious()} aria-label="Previous match" title="Previous">
+			<button onclick={() => actions.searchPrevious()} aria-label="Previous match" use:tip={'Previous'}>
 				<ChevronLeft size={16} />
 			</button>
-			<button onclick={() => actions.searchNext()} aria-label="Next match" title="Next">
+			<button onclick={() => actions.searchNext()} aria-label="Next match" use:tip={'Next'}>
 				<ChevronRight size={16} />
 			</button>
 			<span class="match-info">{viewerState.searchCurrent}/{viewerState.searchTotal}</span>
@@ -135,13 +136,13 @@
 
 	{#snippet pdfExtras()}
 		<div class="pdf-toolbar-group">
-			<button onclick={() => actions.enterPresentationMode()} aria-label="Presentation Mode" title="Presentation Mode">
+			<button onclick={() => actions.enterPresentationMode()} aria-label="Presentation Mode" use:tip={'Presentation Mode'}>
 				<Presentation size={16} />
 			</button>
 			{#if viewerState.canSavePdf}
 				<!-- "Save", not "Download": the PDF is already on this machine (or in memory for a
 					 guest), so this writes a copy wherever the user picks. -->
-				<button onclick={() => actions.savePdf()} aria-label="Save PDF" title="Save PDF">
+				<button onclick={() => actions.savePdf()} aria-label="Save PDF" use:tip={'Save PDF'}>
 					<Save size={16} />
 				</button>
 			{/if}
@@ -156,7 +157,7 @@
 				bind:this={bar.menuButton}
 				onclick={bar.toggleMenu}
 				aria-label="More actions"
-				title="More actions"
+				use:tip={'More actions'}
 				aria-expanded={bar.menuOpen}
 			>
 				<MoreHorizontal size={16} />

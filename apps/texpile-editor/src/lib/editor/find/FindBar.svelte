@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import ArrowUp from '@lucide/svelte/icons/arrow-up';
@@ -84,7 +85,7 @@
 			type="button"
 			class="find-action find-expand hover:preset-tonal"
 			aria-expanded={showReplace}
-			title={m.find_toggle_replace()}
+			use:tip={m.find_toggle_replace()}
 			aria-label={m.find_toggle_replace()}
 			onmousedown={(e) => e.preventDefault()}
 			onclick={toggleReplaceRow}
@@ -112,7 +113,7 @@
 			<button
 				type="button"
 				class="find-action hover:preset-tonal"
-				title={m.find_previous()}
+				use:tip={m.find_previous()}
 				aria-label={m.find_previous()}
 				onmousedown={(e) => e.preventDefault()}
 				onclick={onPrev}><ArrowUp class="size-3.5" /></button
@@ -120,12 +121,12 @@
 			<button
 				type="button"
 				class="find-action hover:preset-tonal"
-				title={m.find_next()}
+				use:tip={m.find_next()}
 				aria-label={m.find_next()}
 				onmousedown={(e) => e.preventDefault()}
 				onclick={onNext}><ArrowDown class="size-3.5" /></button
 			>
-			<button type="button" class="find-action hover:preset-tonal" title={m.find_close()} aria-label={m.find_close()} onclick={onClose}
+			<button type="button" class="find-action hover:preset-tonal" use:tip={m.find_close()} aria-label={m.find_close()} onclick={onClose}
 				><X class="size-3.5" /></button
 			>
 		</div>
@@ -151,7 +152,7 @@
 				<button
 					type="button"
 					class="find-action hover:preset-tonal"
-					title={m.find_replace()}
+					use:tip={m.find_replace()}
 					aria-label={m.find_replace()}
 					onmousedown={(e) => e.preventDefault()}
 					onclick={onReplaceOne}><Replace class="size-3.5" /></button
@@ -159,7 +160,7 @@
 				<button
 					type="button"
 					class="find-action hover:preset-tonal"
-					title={m.find_replace_all()}
+					use:tip={m.find_replace_all()}
 					aria-label={m.find_replace_all()}
 					onmousedown={(e) => e.preventDefault()}
 					onclick={onReplaceAll}><ReplaceAll class="size-3.5" /></button

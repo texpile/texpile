@@ -1,7 +1,7 @@
 <script lang="ts">
 	// The image settings popover's content: size, caption/numbering toggles, column spanning,
 	// and the LaTeX \label under Advanced. ImageOverlay owns the popover shell and trigger.
-	import { Portal, Tooltip } from '@skeletonlabs/skeleton-svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { ChevronDown, Info } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
@@ -190,16 +190,9 @@
 	<div class="settings-row flex items-center justify-between">
 		<div class="flex items-center gap-2">
 			<span class="text-sm">{m.imageoverlay_show_caption_label()}</span>
-			<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-				<Tooltip.Trigger class="inline-flex items-center">
-					<Info class="text-surface-500 h-3.5 w-3.5" />
-				</Tooltip.Trigger>
-				<Portal>
-					<Tooltip.Positioner class="z-floating-ui">
-						<Tooltip.Content class="card preset-filled p-2 text-sm">{m.imageoverlay_show_caption_tooltip()}</Tooltip.Content>
-					</Tooltip.Positioner>
-				</Portal>
-			</Tooltip>
+			<button type="button" class="inline-flex items-center" use:tip={m.imageoverlay_show_caption_tooltip()}>
+				<Info class="text-surface-500 h-3.5 w-3.5" />
+			</button>
 		</div>
 		<button
 			type="button"
@@ -219,16 +212,9 @@
 		<div class="settings-row flex items-center justify-between">
 			<div class="flex items-center gap-2">
 				<span class="text-sm">{m.imageoverlay_numbered_label()}</span>
-				<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-					<Tooltip.Trigger class="inline-flex items-center">
-						<Info class="text-surface-500 h-3.5 w-3.5" />
-					</Tooltip.Trigger>
-					<Portal>
-						<Tooltip.Positioner class="z-floating-ui">
-							<Tooltip.Content class="card preset-filled p-2 text-sm">{m.imageoverlay_numbered_tooltip()}</Tooltip.Content>
-						</Tooltip.Positioner>
-					</Portal>
-				</Tooltip>
+				<button type="button" class="inline-flex items-center" use:tip={m.imageoverlay_numbered_tooltip()}>
+					<Info class="text-surface-500 h-3.5 w-3.5" />
+				</button>
 			</div>
 			<button
 				type="button"
@@ -249,16 +235,9 @@
 		<div class="settings-row flex items-center justify-between">
 			<div class="flex items-center gap-2">
 				<span class="text-sm">{m.imageoverlay_span_columns_label()}</span>
-				<Tooltip positioning={{ placement: 'top' }} openDelay={200}>
-					<Tooltip.Trigger class="inline-flex items-center">
-						<Info class="text-surface-500 h-3.5 w-3.5" />
-					</Tooltip.Trigger>
-					<Portal>
-						<Tooltip.Positioner class="z-floating-ui">
-							<Tooltip.Content class="card preset-filled p-2 text-sm">{m.imageoverlay_span_columns_tooltip()}</Tooltip.Content>
-						</Tooltip.Positioner>
-					</Portal>
-				</Tooltip>
+				<button type="button" class="inline-flex items-center" use:tip={m.imageoverlay_span_columns_tooltip()}>
+					<Info class="text-surface-500 h-3.5 w-3.5" />
+				</button>
 			</div>
 			<button
 				type="button"

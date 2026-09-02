@@ -2,6 +2,7 @@
 	// The Toolchain category: what did we find on this machine. Probe results live in
 	// toolchainProbe.svelte.ts so revisiting the tab never re-spawns the ten probe processes.
 	// eslint-disable-next-line no-restricted-imports -- only the catalog's names/groups; probing gates on the desktop bridge at runtime
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { toolsInGroup } from '$lib/workspace/toolchainCatalog';
 	import { toolchainProbe } from './toolchainProbe.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -50,7 +51,7 @@
 						? `${probe.tinymist.version} (Typst ${probe.tinymist.typstVersion}, ${probe.tinymist.source})`
 						: undefined
 					: hit?.detail}
-			<div class="border-surface-200-800 flex min-w-0 items-baseline gap-2 border-b py-2" title={tool.purpose}>
+			<div class="border-surface-200-800 flex min-w-0 items-baseline gap-2 border-b py-2" use:tip={tool.purpose}>
 				<span class="shrink-0 font-mono text-sm font-medium">{tool.name}</span>
 				{#if probe.probing || probe.probeFailed}
 					<span class="text-surface-400 text-xs">…</span>
@@ -59,7 +60,7 @@
 						{found ? m.prefs_toolchain_found() : m.prefs_toolchain_missing()}
 					</span>
 					{#if found && detail}
-						<span class="text-surface-400 min-w-0 truncate font-mono text-xs" title={detail}>{detail}</span>
+						<span class="text-surface-400 min-w-0 truncate font-mono text-xs" use:tip={detail}>{detail}</span>
 					{/if}
 				{/if}
 			</div>

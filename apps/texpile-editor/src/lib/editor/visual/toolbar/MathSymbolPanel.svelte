@@ -5,6 +5,7 @@
 	// the equation being edited - and, worse, Zag returns focus to a popover's trigger when it closes
 	// (setFinalFocus), blurring the mathfield after every single insert. As part of the layout it
 	// covers nothing, and there is no trigger for focus to go back to.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { onMount } from 'svelte';
 	import { X } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -101,7 +102,7 @@
 							onclick={() => (matrixBracketMode = b.mode)}
 							onmousedown={preventFocusLoss}
 							tabindex="-1"
-							title={b.title()}
+							use:tip={b.title()}
 						>
 							{b.label}
 						</button>
@@ -156,7 +157,7 @@
 							e.preventDefault();
 							pick(symbol.latex);
 						}}
-						title={symbolTooltip(symbol) || symbol.latex}
+						use:tip={symbolTooltip(symbol) || symbol.latex}
 					>
 						<span class="env-label">{symbolTooltip(symbol)}</span>
 						<span class="env-preview">
@@ -178,7 +179,7 @@
 							e.preventDefault();
 							pick(symbol.latex);
 						}}
-						title={symbolTooltip(symbol) || symbol.latex}
+						use:tip={symbolTooltip(symbol) || symbol.latex}
 					>
 						<span class="symbol-content">
 							<!-- eslint-disable-next-line svelte/no-at-html-tags -- renderLatex() is mathlive's own trusted math-typesetting HTML for a symbol from the hardcoded SYMBOL_GROUPS table above, never user/network input. -->

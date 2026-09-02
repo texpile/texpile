@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { SquareRadical, ChevronDown } from '@lucide/svelte';
 	import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
@@ -44,7 +45,7 @@
 	autoFocus={false}
 >
 	<Popover.Trigger class="toolbarButton rounded p-1 hover:bg-surface-200-800">
-		<button aria-label={m.mathpal_insert_math_aria()} title={m.mathpal_insert_math_aria()} class="flex items-center gap-0.5">
+		<button aria-label={m.mathpal_insert_math_aria()} use:tip={m.mathpal_insert_math_aria()} class="flex items-center gap-0.5">
 			<SquareRadical class="h-5 w-5 text-surface-800-200" />
 			<ChevronDown class="text-surface-500 size-3 shrink-0" />
 		</button>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { FileSymlink } from '@lucide/svelte';
 
@@ -11,7 +12,7 @@
 <button
 	type="button"
 	class="includedoc-chip"
-	title={command === 'typst' ? `Open #include "${path}"` : `Open \\${command}{${path}}`}
+	use:tip={command === 'typst' ? `Open #include "${path}"` : `Open \\${command}{${path}}`}
 	onclick={onOpen}
 	contenteditable="false"
 >

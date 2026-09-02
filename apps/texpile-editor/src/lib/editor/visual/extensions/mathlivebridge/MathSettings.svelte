@@ -1,5 +1,6 @@
 <script lang="ts">
 	// MathSettings popover for equation numbering, labels, and multi-line environments
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings } from '@lucide/svelte';
 	import MathSettingsPanel from './MathSettingsPanel.svelte';
@@ -28,7 +29,7 @@
 		<Popover.Trigger class="math-settings-btn">
 			<button
 				type="button"
-				title={m.mathsettings_settings_button_label()}
+				use:tip={m.mathsettings_settings_button_label()}
 				aria-label={m.mathsettings_settings_button_label()}
 				disabled={isReadOnly.current}
 			>

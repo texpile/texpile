@@ -6,6 +6,7 @@
 	// A tab is a file or a comparison of that file against one saved version. Both live here
 	// because both are things you opened and can close; visual/source is a separate axis and
 	// stays a toolbar toggle applying to whichever tab is focused.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { X, ChevronDown, GitCompare } from '@lucide/svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { basename } from '$lib/workspace/fileSystem';
@@ -92,7 +93,7 @@
 				role="tab"
 				aria-selected={isActive(tab)}
 				tabindex="0"
-				title={tabTitle(tab)}
+				use:tip={tabTitle(tab)}
 				onclick={() => onActivate(tab)}
 				ondblclick={() => onKeep?.(tab)}
 				onkeydown={(e) => {
@@ -116,7 +117,7 @@
 				     ml-auto keeps it on the right edge when the name leaves slack -->
 				<span class="-mr-1 ml-auto flex size-5 shrink-0 items-center justify-center">
 					{#if isActive(tab) && dirty && !tab.compare}
-						<span class="bg-warning-500 size-2 rounded-full group-hover:hidden" title={m.wsview_unsaved_changes()}></span>
+						<span class="bg-warning-500 size-2 rounded-full group-hover:hidden" use:tip={m.wsview_unsaved_changes()}></span>
 					{/if}
 					<button
 						class="hover:bg-surface-300-700 items-center justify-center rounded p-0.5 {isActive(tab) && dirty && !tab.compare
@@ -129,7 +130,7 @@
 							onClose(tab);
 						}}
 						aria-label={m.tabs_close()}
-						title={m.tabs_close()}
+						use:tip={m.tabs_close()}
 					>
 						<X class="size-3.5" />
 					</button>
@@ -147,10 +148,13 @@
 				<Popover.Trigger
 					class="text-surface-600-400 hover:bg-surface-200-800/60 ml-auto flex shrink-0 items-center gap-0.5 px-2 text-sm"
 					aria-label={m.tabs_show_all({ count: tabs.length })}
-					title={m.tabs_show_all({ count: tabs.length })}
 				>
-					<span class="tabular-nums">{tabs.length - capacity}</span>
-					<ChevronDown class="size-4" />
+					{#snippet element(attrs)}
+						<button {...attrs} use:tip={m.tabs_show_all({ count: tabs.length })}>
+							<span class="tabular-nums">{tabs.length - capacity}</span>
+							<ChevronDown class="size-4" />
+						</button>
+					{/snippet}
 				</Popover.Trigger>
 				<Portal>
 					<Popover.Positioner class="z-floating-ui">
@@ -162,7 +166,7 @@
 										type="button"
 										class="hover:preset-tonal-primary flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm"
 										class:preset-tonal-primary={isActive(tab)}
-										title={tabTitle(tab)}
+										use:tip={tabTitle(tab)}
 										onclick={() => chooseFromMenu(tab)}
 									>
 										{#if tab.compare}<GitCompare class="text-primary-500 size-3.5 shrink-0" />{/if}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronDown, Check, Superscript, Subscript } from '@lucide/svelte';
 	import { modLabel } from '$lib/platform';
@@ -38,11 +39,14 @@
 			? 'preset-tonal-primary'
 			: 'hover:preset-tonal'}"
 		aria-label={m.tbar_supsub_aria()}
-		title={m.tbar_supsub_title()}
 	>
-		<!-- same box + stroke as every other toolbar icon so it doesn't read bigger/bolder -->
-		<Superscript class="h-5 w-5" />
-		<ChevronDown class="text-surface-500 size-3 shrink-0" />
+		{#snippet element(attrs)}
+			<button {...attrs} use:tip={m.tbar_supsub_title()}>
+				<!-- same box + stroke as every other toolbar icon so it doesn't read bigger/bolder -->
+				<Superscript class="h-5 w-5" />
+				<ChevronDown class="text-surface-500 size-3 shrink-0" />
+			</button>
+		{/snippet}
 	</Popover.Trigger>
 
 	<Portal>

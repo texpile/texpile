@@ -599,7 +599,6 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	--z-index-floating-ui: 200;
 	--z-index-search: 200;
 	--z-index-dropdown: 210;
-	--z-index-tooltip: 220;
 	--z-index-dialog: 1000;
 	--z-index-modal: 1000;
 	--z-index-banner: 1100;
@@ -608,6 +607,8 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	--z-index-template-picker: 2000;
 	--z-index-fullscreen-modal: 3000;
 	--z-index-pdf-viewer: 3000;
+	/* the one hover hint sits above every layer: it is transient, tiny, and hints controls inside modals too */
+	--z-index-tooltip: 4000;
 
 	--gradient-box-bg: linear-gradient(113deg, rgba(0, 136, 247, 0.06) 0%, rgba(0, 214, 249, 0.06) 100%);
 	--gradient-card-bg: linear-gradient(113deg, #0088f7 0%, #00d6f9 100%);

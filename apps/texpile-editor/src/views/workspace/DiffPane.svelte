@@ -1,5 +1,6 @@
 <script lang="ts">
 	// Git-diff view: the status/controls strip above DiffPanel.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { RefreshCw, GitCompare, Info, Columns2, Rows2 } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import DiffPanel from './DiffPanel.svelte';
@@ -51,7 +52,7 @@
 		<span class="font-medium">{m.wsview_diff_heading()}</span>
 		<!-- naming the version matters more than the word "diff" once this can point at any of them -->
 		{#if compareRef}
-			<span class="text-surface-500 min-w-0 truncate" title={compareRef.hash}>· {compareRef.subject}</span>
+			<span class="text-surface-500 min-w-0 truncate" use:tip={compareRef.hash}>· {compareRef.subject}</span>
 		{/if}
 		{#if fileDeleted}<span class="text-surface-500">· {m.wsview_diff_file_deleted()}</span>
 			<!-- a git read of a local file is usually well under the threshold, and announcing it only
@@ -63,7 +64,7 @@
 			<button
 				class="hover:preset-tonal rounded p-0.5"
 				onclick={onRefresh}
-				title={m.wsview_refresh_diff()}
+				use:tip={m.wsview_refresh_diff()}
 				aria-label={m.wsview_refresh_diff()}
 			>
 				<RefreshCw class="size-3.5" />
@@ -74,7 +75,7 @@
 			<button
 				class="hover:preset-tonal rounded p-0.5"
 				onclick={onToggleLayout}
-				title={layout === 'unified' ? m.wsview_switch_to_side_by_side() : m.wsview_switch_to_inline()}
+				use:tip={layout === 'unified' ? m.wsview_switch_to_side_by_side() : m.wsview_switch_to_inline()}
 				aria-label={layout === 'unified' ? m.wsview_side_by_side_label() : m.wsview_inline_label()}
 			>
 				{#if layout === 'unified'}<Columns2 class="size-3.5" />{:else}<Rows2 class="size-3.5" />{/if}
@@ -89,7 +90,7 @@
 		     look like the same notice -->
 		<div
 			class="border-surface-200-800 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
-			title={m.texpile_managed_note()}
+			use:tip={m.texpile_managed_note()}
 		>
 			<Info class="text-primary-500 size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>

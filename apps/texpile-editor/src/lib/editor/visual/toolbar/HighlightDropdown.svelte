@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Highlighter, AlertTriangle } from '@lucide/svelte';
 	import { editorViewStore, templateFeaturesStore } from '$lib/stores/editorStore';
@@ -50,7 +51,7 @@
 	autoFocus={false}
 >
 	<Popover.Trigger class="toolbarButton rounded p-1 hover:bg-surface-200-800">
-		<button aria-label={m.tbar_highlight_aria()} title={m.tbar_highlight_aria()} class="relative flex items-center">
+		<button aria-label={m.tbar_highlight_aria()} use:tip={m.tbar_highlight_aria()} class="relative flex items-center">
 			<Highlighter class="h-5 w-5 text-surface-800-200" />
 			<!-- active-color bar is absolute so it doesn't add height and lift the icon off center -->
 			<span

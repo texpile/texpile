@@ -4,6 +4,7 @@
 	// PreviewPane so the same component can render docked in the workspace grid or portalled into
 	// the popped-out preview window (PreviewPopout) - the pane chrome (splitter, divider chips)
 	// stays with the docked pane, which is the only place it means anything.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { PictureInPicture2 } from '@lucide/svelte';
 	import PDFViewer from './PDFViewer.svelte';
 	import type DraftView from '$lib/draft/DraftView.svelte';
@@ -137,7 +138,7 @@
 					<button
 						class="hover:preset-tonal rounded p-1"
 						onclick={onPopout}
-						title={m.wsview_popout_preview()}
+						use:tip={m.wsview_popout_preview()}
 						aria-label={m.wsview_popout_preview()}
 					>
 						<PictureInPicture2 class="size-4" />

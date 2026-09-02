@@ -1,5 +1,6 @@
 <script lang="ts">
 	// Host-side share dialog: start/stop the session, show the code, count the guests.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { MAX_GUESTS } from '$lib/collab/protocol';
 	import { settings, updateSettings, DEFAULT_COLLAB_RELAY_URL } from '$lib/settings';
@@ -107,7 +108,7 @@
 					class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
 					onclick={resetRelay}
 					disabled={relayIsDefault}
-					title={m.collab_relay_reset_title()}
+					use:tip={m.collab_relay_reset_title()}
 					aria-label={m.collab_relay_reset()}
 				>
 					<RotateCcw class="size-4" />
@@ -137,7 +138,7 @@
 				<button
 					class="preset-tonal flex shrink-0 items-center justify-center rounded px-3"
 					onclick={linkable ? copyLink : copyCode}
-					title={linkable ? m.share_copy_link() : m.share_copy()}
+					use:tip={linkable ? m.share_copy_link() : m.share_copy()}
 					aria-label={linkable ? m.share_copy_link() : m.share_copy()}
 				>
 					{#if linkable ? linkCopied : copied}<Check class="size-4" />{:else}<Copy class="size-4" />{/if}

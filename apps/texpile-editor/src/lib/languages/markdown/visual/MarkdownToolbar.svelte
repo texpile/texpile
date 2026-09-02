@@ -3,6 +3,7 @@
 	// imports. The SHELL deliberately mirrors the tex Toolbar (same search + undo/redo groups,
 	// same ToolbarOverflow gaps, same button metrics), so switching file kinds doesn't feel like
 	// switching apps; only the item set is markdown-shaped.
+	import { tip } from '$lib/components/tooltip.svelte';
 	import {
 		Search,
 		Undo,
@@ -108,7 +109,7 @@
 
 {#snippet iconButton(label: string, isActive: boolean, cmd: Cmd, IconComp: typeof Bold)}
 	<div class={`toolbarButton ${isActive ? 'preset-tonal-primary' : 'hover:preset-tonal'}`}>
-		<button onclick={keepEditorFocus(cmd)} class="flex items-center p-1" aria-label={label} title={label}>
+		<button onclick={keepEditorFocus(cmd)} class="flex items-center p-1" aria-label={label} use:tip={label}>
 			<IconComp class="h-5 w-5" />
 		</button>
 	</div>
