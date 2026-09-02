@@ -37,6 +37,10 @@ pnpm --filter texpile-editor lint              # prettier --check + eslint
 pnpm --filter texpile-editor testonce          # vitest, single pass
 ```
 
-## License
+## Contributing and the CLA
 
-Texpile is licensed under [AGPL-3.0](LICENSE). By contributing, you agree that your contributions are licensed under the same terms.
+Texpile is licensed under [AGPL-3.0](LICENSE).
+
+Before we can merge your first pull request, you'll need to sign our
+[CLA](https://cla-assistant.io/texpile/texpile). Our CLA Assistant bot will
+comment on your PR with a link.
