@@ -173,7 +173,7 @@
 			<!-- where the window buttons sit on desktop, which the browser build leaves free -->
 			{#if __WEB__}
 				<a
-					class="app-no-drag text-surface-600-400 hover:text-surface-950-50 hover:bg-surface-200-800 mr-1 flex items-center gap-1.5 self-center rounded-base px-2 py-1 text-xs whitespace-nowrap"
+					class="app-no-drag text-muted hover:text-surface-950-50 hover:bg-surface-200-800 mr-1 flex items-center gap-1.5 self-center rounded-base px-2 py-1 text-xs whitespace-nowrap"
 					href="https://texpile.com/download"
 					target="_blank"
 					rel="noopener noreferrer"
@@ -216,7 +216,7 @@
 					an edge rather than the whole design. hover lifts it a step instead of tinting it.
 				-->
 				<button
-					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-surface-600-400 pointer-events-auto flex h-[22px] items-center gap-2 rounded-md border px-2.5 text-xs"
+					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted pointer-events-auto flex h-[22px] items-center gap-2 rounded-md border px-2.5 text-xs"
 					style="width: {centerW}px"
 					onclick={() => commandPalette.show()}
 					use:tip={m.palette_open()}
@@ -244,7 +244,7 @@
 					{/if}
 				</button>
 			{:else if !palettable}
-				<span class="text-surface-600-400 max-w-[50%] truncate text-xs">{title}</span>
+				<span class="text-muted max-w-[50%] truncate text-xs">{title}</span>
 			{/if}
 		</div>
 	</div>

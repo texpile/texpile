@@ -101,7 +101,7 @@
 <div class="bg-surface-200-800 flex h-full w-full flex-col">
 	<!-- one toolbar row: status on the left, zoom + page-nav on the right ("Draft preview"
 	     already labels the pane header above) -->
-	<div class="border-surface-300-700 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-1 border-b px-2 text-xs">
+	<div class="border-surface-300-700 text-muted flex min-h-10 shrink-0 items-center gap-1 border-b px-2 text-xs">
 		{#if compiler.error}<span class="text-error-500 shrink-0">{m.draft_preview_error_label()}</span>{:else}<span
 				class="text-surface-700-200 truncate">{compiler.status}</span
 			>{/if}
@@ -191,7 +191,7 @@
 		<div
 			class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded-base border p-3 text-sm"
 		>
-			<span class="text-surface-600-300">{m.draft_busy_other_window()}</span>
+			<span class="text-muted">{m.draft_busy_other_window()}</span>
 			<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => compiler.takeoverEngine()}
 				>{m.draft_busy_takeover()}</button
 			>
@@ -238,7 +238,7 @@
 					</div>
 				{/if}
 			</div>
-			<div class="text-surface-500 -mt-3 text-[10px]">{m.draft_page_label({ n: p.n })}</div>
+			<div class="text-muted -mt-3 text-[10px]">{m.draft_page_label({ n: p.n })}</div>
 		{/each}
 	</div>
 </div>

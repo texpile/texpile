@@ -13,7 +13,7 @@
 	<Portal>
 		<Menu.Positioner>
 			<Menu.Content class={contentClass}>
-				<div class="text-surface-500 px-2.5 py-1 text-xs">{m.menubar_interface_zoom({ percent: uiZoomPercent })}</div>
+				<div class="text-muted px-2.5 py-1 text-xs">{m.menubar_interface_zoom({ percent: uiZoomPercent })}</div>
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="zoom-in" class={itemClass}>
 					<Menu.ItemText>{m.menubar_zoom_in()}</Menu.ItemText><span class="opacity-50">{isMac ? '⌘ +' : 'Ctrl +'}</span>

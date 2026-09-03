@@ -115,12 +115,12 @@
 
 <div class="flex h-full min-h-0 flex-col text-xs">
 	<div class="border-surface-200-800 flex h-7 shrink-0 items-center gap-3 border-b px-2">
-		<span class="text-surface-600-300">{m.comments_open_count({ count: openCount })}</span>
-		<label class="text-surface-500-400 ml-auto flex cursor-pointer items-center gap-1.5">
+		<span class="text-muted">{m.comments_open_count({ count: openCount })}</span>
+		<label class="text-muted ml-auto flex cursor-pointer items-center gap-1.5">
 			<input type="checkbox" class="checkbox scale-75" bind:checked={thisFileOnly} />
 			{m.comments_this_file()}
 		</label>
-		<label class="text-surface-500-400 flex cursor-pointer items-center gap-1.5">
+		<label class="text-muted flex cursor-pointer items-center gap-1.5">
 			<input type="checkbox" class="checkbox scale-75" bind:checked={showResolved} />
 			{m.comments_show_resolved()}
 		</label>
@@ -128,7 +128,7 @@
 	<div bind:this={list} class="min-h-0 flex-1 overflow-y-auto">
 		{#if pending}
 			<div class="border-surface-200-800 bg-surface-100-900/60 max-w-2xl space-y-2 border-b p-2">
-				<span class="text-surface-500-400 block truncate font-mono" use:tip={pending.quote}>{oneLine(pending.quote)}</span>
+				<span class="text-muted block truncate font-mono" use:tip={pending.quote}>{oneLine(pending.quote)}</span>
 				<textarea
 					bind:this={composer}
 					class="textarea min-h-8 w-full text-xs"
@@ -170,7 +170,7 @@
 			</div>
 		{/if}
 		{#if shown.length === 0 && !pending}
-			<div class="text-surface-500-400 flex flex-1 items-center gap-2 p-4">
+			<div class="text-muted flex flex-1 items-center gap-2 p-4">
 				<MessageSquare class="size-4 shrink-0" />
 				{threads.length === 0 ? m.comments_empty() : m.comments_empty_file()}
 			</div>
@@ -200,16 +200,14 @@
 							{:else if lost}
 								<Unlink class="text-warning-600-400 mt-0.5 size-3.5 shrink-0" />
 							{:else if hidden}
-								<EyeOff class="text-surface-500-400 mt-0.5 size-3.5 shrink-0" />
+								<EyeOff class="text-muted mt-0.5 size-3.5 shrink-0" />
 							{:else}
 								<MessageSquare class="text-primary-500 mt-0.5 size-3.5 shrink-0" />
 							{/if}
 							<span class="min-w-0 flex-1">
 								<!-- the quote first: it is what tells you which comment this is, faster than the
 								     body does, and it is the only part that ties the row to the document -->
-								<span class="text-surface-500-400 block truncate font-mono" use:tip={thread.anchor.quote}
-									>{oneLine(thread.anchor.quote)}</span
-								>
+								<span class="text-muted block truncate font-mono" use:tip={thread.anchor.quote}>{oneLine(thread.anchor.quote)}</span>
 								<!-- the body preview goes when the thread opens: the messages below start with
 								     this same text, and showing both made every thread look like it had a
 								     duplicate first reply -->
@@ -233,7 +231,7 @@
 									     visual editor renders rather than shows -->
 									<span class="badge preset-tonal-surface px-1 py-0 text-[10px]">{m.comments_not_in_view_badge()}</span>
 								{/if}
-								<span class="text-surface-500-400 font-mono">{thread.file}</span>
+								<span class="text-muted font-mono">{thread.file}</span>
 							</span>
 						</button>
 						<!-- icon-only, and only on hover or while open: Resolve and Delete are one click from

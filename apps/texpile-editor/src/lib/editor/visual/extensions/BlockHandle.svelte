@@ -49,7 +49,7 @@
 		<Portal>
 			<Popover.Positioner class="z-floating-ui">
 				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 min-w-48 max-w-64 border p-1 shadow-lg">
-					<div class="text-surface-500 px-2 py-1 text-[10px] font-semibold tracking-wider uppercase">
+					<div class="text-muted px-2 py-1 text-[10px] font-semibold tracking-wider uppercase">
 						{m.blockhandle_insert_header()}
 					</div>
 					{#each items as item (item.label)}
@@ -61,7 +61,7 @@
 								onInsert(item);
 							}}
 						>
-							<item.icon class="text-surface-500 size-4 shrink-0" />
+							<item.icon class="text-muted size-4 shrink-0" />
 							<span>{item.label()}</span>
 						</button>
 					{/each}

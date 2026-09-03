@@ -48,3 +48,4 @@ electron/dist/
 
 # git worktrees checked out under .claude/
 .claude/
+apps/texpile-editor/public/themes/

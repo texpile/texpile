@@ -88,7 +88,7 @@
 			<div
 				class="group border-surface-200-800 flex shrink cursor-pointer items-center gap-1.5 border-r px-3 text-sm {isActive(tab)
 					? 'bg-surface-50-950'
-					: 'text-surface-600-400 hover:bg-surface-200-800/60'}"
+					: 'text-muted hover:bg-surface-200-800/60'}"
 				style="min-width: {MIN_TAB_PX}px; max-width: 15rem"
 				role="tab"
 				aria-selected={isActive(tab)}
@@ -146,7 +146,7 @@
 				autoFocus={false}
 			>
 				<Popover.Trigger
-					class="text-surface-600-400 hover:bg-surface-200-800/60 ml-auto flex shrink-0 items-center gap-0.5 px-2 text-sm"
+					class="text-muted hover:bg-surface-200-800/60 ml-auto flex shrink-0 items-center gap-0.5 px-2 text-sm"
 					aria-label={m.tabs_show_all({ count: tabs.length })}
 				>
 					{#snippet element(attrs)}
@@ -174,7 +174,7 @@
 										<!-- in the menu there IS room for the version, and without it two comparisons of
 										     the same file would be two identical rows -->
 										{#if tab.compare}
-											<span class="text-surface-500 ml-auto shrink-0 truncate text-xs">{tab.compare.subject}</span>
+											<span class="text-muted ml-auto shrink-0 truncate text-xs">{tab.compare.subject}</span>
 										{/if}
 									</button>
 								{/each}

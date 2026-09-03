@@ -198,7 +198,7 @@
 		     included - so this reads as another piece of chrome rather than prose shoving the document
 		     down. -->
 		<div
-			class="border-surface-200-800 bg-surface-100-900 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
 			use:tip={m.texpile_managed_note()}
 		>
 			<Info class="text-primary-500 size-3.5 shrink-0" />
@@ -207,7 +207,7 @@
 	{/if}
 	{#if loadedPath && encodingIssue}
 		<div
-			class="border-surface-200-800 bg-surface-100-900 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
 			use:tip={encodingIssue}
 		>
 			<CircleAlert class="text-warning-500 size-3.5 shrink-0" />
@@ -215,23 +215,21 @@
 		</div>
 	{/if}
 	{#if loadedPath && comparing && viewMode === 'visual' && structured}
-		<div
-			class="bg-surface-100-900 text-surface-600-300 border-surface-200-800 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
-		>
+		<div class="bg-surface-100-900 text-muted border-surface-200-800 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs">
 			<GitCompare class="size-3.5 shrink-0" />
 			<span class="font-medium">{m.wsview_diff_heading()}</span>
-			{#if compare}<span class="text-surface-500 min-w-0 truncate" use:tip={compare.hash}>· {compare.subject}</span>{/if}
+			{#if compare}<span class="text-muted min-w-0 truncate" use:tip={compare.hash}>· {compare.subject}</span>{/if}
 			<!-- What it cannot show, said out loud: an unmarked document otherwise reads as "nothing
 			     changed". No count - the number would be of source runs, which nothing on screen shows. -->
 			{#if fileDeleted}
-				<span class="text-surface-500 min-w-0 truncate">· {m.wsview_diff_file_deleted()}</span>
+				<span class="text-muted min-w-0 truncate">· {m.wsview_diff_file_deleted()}</span>
 			{:else if versionParsing}
 				<!-- a parse that lands quickly should flash nothing at all; see lateReveal.ts -->
-				<span class="text-surface-500 reveal-late min-w-0 truncate">· {m.wsview_diff_finding_changes()}</span>
+				<span class="text-muted reveal-late min-w-0 truncate">· {m.wsview_diff_finding_changes()}</span>
 			{:else if diffVersionUnavailable}
-				<span class="text-surface-500 min-w-0 truncate">· {m.wsview_diff_version_unparsed()}</span>
+				<span class="text-muted min-w-0 truncate">· {m.wsview_diff_version_unparsed()}</span>
 			{:else if diffVersionPreamble !== null && docMeta && diffVersionPreamble !== docMeta.preamble}
-				<span class="text-surface-500 min-w-0 truncate">· {m.wsview_diff_source_only()}</span>
+				<span class="text-muted min-w-0 truncate">· {m.wsview_diff_source_only()}</span>
 			{/if}
 			<div class="ml-auto flex shrink-0 items-center gap-1">
 				<button
@@ -259,7 +257,7 @@
 				<div class="mx-auto mt-16 max-w-xl px-6">
 					<div class="text-center">
 						<h2 class="text-lg font-semibold">{m.wsview_start_new_doc_heading()}</h2>
-						<p class="text-surface-500 mt-1 text-sm">
+						<p class="text-muted mt-1 text-sm">
 							<!-- follows the open tab: telling someone reading the Typst templates that this folder
 							     has no .tex files in it is true and useless -->
 							{m.wsview_start_new_doc_desc_pre()} <code>{starterLang === 'typst' ? '.typ' : '.tex'}</code>
@@ -282,7 +280,7 @@
 					<p class="text-sm">{loadError}</p>
 				</div>
 			{:else if loadedPath && nameOnly}
-				<div class="text-surface-500 mt-12 text-center text-sm">
+				<div class="text-muted mt-12 text-center text-sm">
 					{m.wsview_shared_name_only({ name: basename(loadedPath) })}
 				</div>
 			{:else if loadedPath && comparing && (viewMode === 'source' || !structured) && (structured || kind === 'bib' || kind === 'text')}
@@ -395,17 +393,17 @@
 					<img src={fileUrl(loadedPath)} alt={basename(loadedPath)} class="max-h-full max-w-full object-contain" />
 				</div>
 			{:else if loadedPath && kind === 'binary'}
-				<div class="text-surface-500 mt-12 text-center text-sm">
+				<div class="text-muted mt-12 text-center text-sm">
 					{m.wsview_binary_file_note({ name: basename(loadedPath) })}
 				</div>
 			{:else if activeFilePath.current}
 				<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
-				<div class="text-surface-500 reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
+				<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
 					<Loader2 class="size-4 animate-spin" />
 					{m.wsview_opening()}
 				</div>
 			{:else}
-				<div class="text-surface-500 mt-12 text-center text-sm">{m.wsview_select_file_prompt()}</div>
+				<div class="text-muted mt-12 text-center text-sm">{m.wsview_select_file_prompt()}</div>
 			{/if}
 		</div>
 	</div>

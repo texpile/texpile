@@ -186,7 +186,7 @@
 			<label class="label">
 				<span>
 					{m.tablewrap_typst_label()}
-					<span class="text-surface-600-400 text-sm">{m.tablewrap_typst_label_hint()}</span>
+					<span class="text-muted text-sm">{m.tablewrap_typst_label_hint()}</span>
 				</span>
 				<input
 					type="text"
@@ -200,7 +200,7 @@
 				{#if isDuplicate}
 					<p class="text-error-600 mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
 				{/if}
-				<p class="text-surface-500 mt-1 text-xs">{m.mathsettings_typst_numbering_note()}</p>
+				<p class="text-muted mt-1 text-xs">{m.mathsettings_typst_numbering_note()}</p>
 			</label>
 		</div>
 	{:else}
@@ -209,7 +209,7 @@
 				<Switch.Label class="flex items-center gap-2">
 					<span>{m.mathsettings_numbered_label()}</span>
 					<button type="button" class="inline-flex items-center" use:tip={m.mathsettings_numbered_tooltip()}>
-						<Info class="text-surface-500 h-3.5 w-3.5" />
+						<Info class="text-muted h-3.5 w-3.5" />
 					</button>
 				</Switch.Label>
 				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
@@ -223,14 +223,14 @@
 			{#if hasSpecialEnvironment}
 				<div class="settings-row">
 					<div class="flex items-center gap-2">
-						<span class="text-surface-600-400 text-sm">{m.mathsettings_environment_label()}</span>
+						<span class="text-muted text-sm">{m.mathsettings_environment_label()}</span>
 						<span class="preset-tonal-primary rounded-base px-2 py-0.5 text-sm font-medium capitalize">{environmentInput}</span>
 						<button
 							type="button"
 							class="inline-flex items-center"
 							use:tip={isPerLineLabelMode ? m.mathsettings_environment_tooltip_perline() : m.mathsettings_environment_tooltip_single()}
 						>
-							<Info class="text-surface-500 h-3.5 w-3.5" />
+							<Info class="text-muted h-3.5 w-3.5" />
 						</button>
 					</div>
 				</div>
@@ -238,13 +238,13 @@
 
 			{#if isPerLineLabelMode}
 				<div class="border-surface-300-700 mt-3 border-t pt-3">
-					<span class="text-surface-700-300 mb-2 block text-sm font-medium">{m.mathsettings_line_labels_heading()}</span>
-					<p class="text-surface-500 mb-2 text-xs">
+					<span class="text-muted mb-2 block text-sm font-medium">{m.mathsettings_line_labels_heading()}</span>
+					<p class="text-muted mb-2 text-xs">
 						{m.mathsettings_line_labels_hint({ refSyntax: '\\ref{label}' })}
 					</p>
 					{#each { length: detectedLineCount() } as _, i (i)}
 						<div class="mb-2 flex items-center gap-2">
-							<span class="text-surface-500 w-12 text-xs">{m.mathsettings_line_number_label({ number: i + 1 })}</span>
+							<span class="text-muted w-12 text-xs">{m.mathsettings_line_number_label({ number: i + 1 })}</span>
 							<input
 								type="text"
 								class="input flex-1 text-sm"
@@ -269,7 +269,7 @@
 						</div>
 					{/each}
 					{#if detectedLineCount() === 1}
-						<p class="text-surface-500 mt-2 text-xs italic">{m.mathsettings_multiline_tip()}</p>
+						<p class="text-muted mt-2 text-xs italic">{m.mathsettings_multiline_tip()}</p>
 					{/if}
 				</div>
 			{/if}
@@ -277,7 +277,7 @@
 			{#if !isPerLineLabelMode}
 				<button
 					type="button"
-					class="text-surface-600-400 hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
+					class="text-muted hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
 					onclick={() => (showAdvanced = !showAdvanced)}
 				>
 					<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
@@ -289,7 +289,7 @@
 						<label class="label">
 							<span>
 								{m.mathsettings_label_field_label()}
-								<span class="text-surface-600-400 text-sm">{m.mathsettings_label_field_hint()}</span>
+								<span class="text-muted text-sm">{m.mathsettings_label_field_hint()}</span>
 							</span>
 							<input
 								type="text"
@@ -303,7 +303,7 @@
 							{#if isDuplicate}
 								<p class="text-error-600 mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
 							{/if}
-							<p class="text-surface-500 mt-1 text-xs">{m.mathsettings_label_field_note()}</p>
+							<p class="text-muted mt-1 text-xs">{m.mathsettings_label_field_note()}</p>
 						</label>
 					</div>
 				{/if}

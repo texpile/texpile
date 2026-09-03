@@ -83,7 +83,7 @@
 
 <Modal bind:open title={m.share_title()}>
 	{#if !collabHost.active}
-		<p class="text-surface-600-300 mb-3 text-sm">{m.share_desc()} {m.share_capacity({ max: MAX_GUESTS })}</p>
+		<p class="text-muted mb-3 text-sm">{m.share_desc()} {m.share_capacity({ max: MAX_GUESTS })}</p>
 		<p class="text-warning-700-300 mb-4 flex items-start gap-1.5 text-xs">
 			<TriangleAlert class="text-warning-600-400 mt-px size-3.5 shrink-0" />
 			<span>{m.share_trust_warning()}</span>
@@ -95,7 +95,7 @@
 		<!-- plumbing almost nobody changes: collapsed unless they're already on a custom relay -->
 		<button
 			type="button"
-			class="text-surface-500 hover:text-surface-950-50 inline-flex items-center gap-1 text-xs"
+			class="text-muted hover:text-surface-950-50 inline-flex items-center gap-1 text-xs"
 			onclick={() => (advancedOpen = !advancedOpen)}
 		>
 			<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
@@ -115,10 +115,10 @@
 					<RotateCcw class="size-4" />
 				</button>
 			</div>
-			<span class="text-surface-500 mt-1 block text-xs">{m.share_relay_hint()}</span>
+			<span class="text-muted mt-1 block text-xs">{m.share_relay_hint()}</span>
 		{/if}
 
-		<p class="text-surface-500 border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
+		<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
 			<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
@@ -135,7 +135,7 @@
 			]}
 		/>
 	{:else}
-		<p class="text-surface-600-300 mb-3 text-sm">{m.share_active_hint()}</p>
+		<p class="text-muted mb-3 text-sm">{m.share_active_hint()}</p>
 		<div class="mb-3">
 			<span class="mb-1 block text-sm font-medium">{linkable ? m.share_link_label() : m.share_code_label()}</span>
 			<div class="flex items-stretch gap-2">
@@ -154,13 +154,13 @@
 			<!-- still shown: a code is what you read out over a call, and what someone types into the
 			     desktop app by hand. The join field takes either. -->
 			{#if linkable}
-				<p class="text-surface-500 mt-1.5 text-xs">
+				<p class="text-muted mt-1.5 text-xs">
 					{m.share_or_code()}
 					<span class="font-mono select-all">{collabHost.shareCode}</span>
 				</p>
 			{/if}
 		</div>
-		<p class="text-surface-600-300 mb-2 text-sm">
+		<p class="text-muted mb-2 text-sm">
 			{m.share_guests_count({ count: guestCount, max: MAX_GUESTS })}
 			{#if collabHost.status === 'reconnecting'}<span class="text-warning-600-400"> · {m.session_status_reconnecting()}</span>{/if}
 		</p>
@@ -170,7 +170,7 @@
 				<span>{m.share_oversized_warning({ names: collabHost.oversizedText.join(', ') })}</span>
 			</p>
 		{/if}
-		<p class="text-surface-500 border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
+		<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
 			<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
 			<span>{m.collab_e2ee_note()}</span>
 		</p>

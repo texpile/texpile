@@ -28,10 +28,10 @@
 			onclick={() => pick(folder)}
 			use:tip={folder}
 		>
-			<Folder class="text-surface-500 size-4 shrink-0" />
+			<Folder class="text-muted size-4 shrink-0" />
 			<span class="flex min-w-0 flex-1 items-baseline gap-2">
 				<span class="max-w-[45%] shrink-0 truncate group-hover:underline">{basename(folder)}</span>
-				<span class="text-surface-400 min-w-0 truncate text-xs">{folder}</span>
+				<span class="text-faint min-w-0 truncate text-xs">{folder}</span>
 			</span>
 		</button>
 	{/each}

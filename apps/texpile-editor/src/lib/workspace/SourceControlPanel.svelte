@@ -119,8 +119,8 @@
 
 {#if !isRepo}
 	<div class="flex flex-col items-center gap-3 p-6 text-center">
-		<GitBranch class="text-surface-400 size-8" />
-		<p class="text-surface-500 text-sm">{m.vcs_not_a_repo()}</p>
+		<GitBranch class="text-faint size-8" />
+		<p class="text-muted text-sm">{m.vcs_not_a_repo()}</p>
 		<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={onInit} disabled={busy}>
 			<GitBranch class="size-4" />
 			{m.vcs_init_repo()}
@@ -130,7 +130,7 @@
 	<div class="flex h-full min-h-0 flex-col">
 		<!-- refresh belongs beside the branch: both are the state of the repository, and parked above
 		     an unrelated heading it read as a stray duplicate of the file tree's own refresh -->
-		<div class="text-surface-600-300 flex h-7 shrink-0 items-center gap-1.5 px-3 text-xs">
+		<div class="text-muted flex h-7 shrink-0 items-center gap-1.5 px-3 text-xs">
 			<GitBranch class="size-3.5 shrink-0" />
 			<span class="truncate font-medium">{branch ?? m.vcs_no_branch()}</span>
 			<div class="ml-auto flex shrink-0 items-center gap-1">
@@ -167,7 +167,7 @@
 					{#if changes.length}
 						<!-- The total, then the groups it is made of. Deliberately not a group row itself: no
 						     tick box and no chevron, so a summary cannot be mistaken for what it summarises. -->
-						<div class="border-surface-200-800 text-surface-500 flex items-center gap-2 border-t px-3 py-1 text-xs">
+						<div class="border-surface-200-800 text-muted flex items-center gap-2 border-t px-3 py-1 text-xs">
 							<span class="font-medium">{m.vcs_total_changes()}</span>
 							<span class="tabular-nums">{changes.length}</span>
 						</div>
@@ -175,7 +175,7 @@
 							<ChangeList {root} {sources} {artifacts} {selected} onToggle={toggle} {onOpenDiff} {onDiscard} {onIgnoreArtifacts} />
 						</div>
 					{:else}
-						<div class="text-surface-500 mt-6 mb-2 flex flex-col items-center gap-1 text-center text-sm">
+						<div class="text-muted mt-6 mb-2 flex flex-col items-center gap-1 text-center text-sm">
 							<GitCommitHorizontal class="size-6 opacity-60" />
 							{m.vcs_no_changes()}
 						</div>
@@ -217,7 +217,7 @@
 			></div>
 
 			<div class="border-surface-200-800 flex min-h-0 flex-col border-t" style="flex: {historyFraction} 1 0%">
-				<div class="text-surface-500 shrink-0 px-2 py-1 text-sm">{m.vcs_history_heading()}</div>
+				<div class="text-muted shrink-0 px-2 py-1 text-sm">{m.vcs_history_heading()}</div>
 				<div class="scroll-inset-r min-h-0 flex-1 overflow-y-auto pb-2">
 					<HistoryTimeline
 						{history}

@@ -32,7 +32,7 @@
 </script>
 
 {#if refs.length === 0}
-	<li class="text-surface-500 flex h-40 items-center justify-center rounded-base border border-dashed text-sm">
+	<li class="text-muted flex h-40 items-center justify-center rounded-base border border-dashed text-sm">
 		{m.bib_no_references_empty()}
 	</li>
 {:else}
@@ -46,8 +46,8 @@
 		>
 			<div class="pointer-events-none min-w-0 flex-1">
 				<div class="truncate text-sm font-semibold">{ref.author || m.bib_unknown_author_placeholder()}</div>
-				<div class="text-surface-600-400 truncate text-xs">{ref.title || m.bib_untitled_placeholder()}</div>
-				<div class="text-surface-500 mt-1 flex items-center gap-2 text-xs">
+				<div class="text-muted truncate text-xs">{ref.title || m.bib_untitled_placeholder()}</div>
+				<div class="text-muted mt-1 flex items-center gap-2 text-xs">
 					<!-- date is biblatex's spelling and year the older one; a row showing "No year"
 					     next to date = {1843} was reading only half the document -->
 					<span>{ref.year || ref.date || m.bib_no_year_placeholder()}</span>
@@ -67,7 +67,7 @@
 					{#if !fitsVisualEditor(ref)}
 						<!-- raw badge: this row edits as raw CM -->
 						<span
-							class="border-surface-300-700 text-surface-500 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
+							class="border-surface-300-700 text-muted inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
 							use:tip={m.bib_raw_badge_list_tooltip()}
 						>
 							<Code class="size-2.5" />

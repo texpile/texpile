@@ -253,7 +253,7 @@
 				name=""
 				folder="closed"
 				class="size-4 shrink-0"
-			/>{:else if editor.createType === 'include'}<FileSymlink class="text-surface-400 size-4 shrink-0" />{:else}<FileIcon
+			/>{:else if editor.createType === 'include'}<FileSymlink class="text-faint size-4 shrink-0" />{:else}<FileIcon
 				name={editor.createValue}
 				class="size-4 shrink-0"
 			/>{/if}

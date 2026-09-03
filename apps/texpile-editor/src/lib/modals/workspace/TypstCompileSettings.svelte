@@ -29,17 +29,17 @@
 	</Switch>
 </div>
 
-<p class="text-surface-500 mt-1 mb-1 text-xs">{m.wsview_typst_preview_note()}</p>
+<p class="text-muted mt-1 mb-1 text-xs">{m.wsview_typst_preview_note()}</p>
 
 {#if superseded}
 	<!-- the same dashed slot live mode uses: the command is kept for the folder, it just is not
 	     what Compile runs while Preview is on -->
-	<div class="border-surface-300-700 text-surface-500 mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
+	<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
 		{m.wsview_compile_disabled_preview()}
 		<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">tinymist (built-in)</code>
 	</div>
 {:else}
-	<p class="text-surface-600-300 mt-2 mb-3 text-sm">
+	<p class="text-muted mt-2 mb-3 text-xs">
 		{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">{'{main}'}</code>
 		{m.wsview_compile_desc_post()}
 	</p>

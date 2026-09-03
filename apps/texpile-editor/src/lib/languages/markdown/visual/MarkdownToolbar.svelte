@@ -147,7 +147,7 @@
 
 			{#if rawEditorActiveStore.current}
 				<!-- a raw CM island is focused: prose formatting doesn't apply -->
-				<div class="text-surface-600-300 hidden min-h-9 min-w-0 items-center gap-2 text-sm whitespace-nowrap @sm:flex">
+				<div class="text-muted hidden min-h-9 min-w-0 items-center gap-2 text-sm whitespace-nowrap @sm:flex">
 					<Code class="size-4 shrink-0" />
 					<span class="font-medium">{m.toolbar_latex_code()}</span>
 				</div>

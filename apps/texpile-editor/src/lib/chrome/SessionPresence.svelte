@@ -28,13 +28,13 @@
 		use:tip={m.menubar_share_session()}
 	>
 		<span class="bg-success-500 size-2 shrink-0 rounded-full"></span>
-		<Users class="text-surface-500 size-4 shrink-0" />
+		<Users class="text-muted size-4 shrink-0" />
 		<div class="flex items-center -space-x-1.5">
 			{#each collabHost.peers.slice(0, 5) as peer, i (i)}
 				<!-- the border is what separates the overlapping stack (-space-x-1.5) into faces -->
 				<InitialAvatar name={peer.name} color={peer.color} class="border-surface-100-900 size-5 border text-[10px]" />
 			{/each}
 		</div>
-		<span class="text-surface-600-400 whitespace-nowrap">{summary}</span>
+		<span class="text-muted whitespace-nowrap">{summary}</span>
 	</button>
 {/if}

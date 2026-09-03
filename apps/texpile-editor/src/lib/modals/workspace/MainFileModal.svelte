@@ -19,9 +19,9 @@
 
 <Modal title={m.wsview_mainconfirm_title()} onClose={onDismiss} card="max-h-full max-w-lg overflow-y-auto p-5">
 	{#if tooMany}
-		<p class="text-surface-600-300 text-sm">{m.wsview_mainconfirm_too_many()}</p>
+		<p class="text-muted text-sm">{m.wsview_mainconfirm_too_many()}</p>
 	{:else}
-		<p class="text-surface-600-300 mb-3 text-sm">
+		<p class="text-muted mb-3 text-sm">
 			{m.wsview_mainconfirm_desc()}
 		</p>
 		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded-base border">

@@ -6,6 +6,8 @@
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { themeColour } from '$lib/languages/typst/preview/themeColour';
+	import { observe } from '$lib/runes/observe.svelte';
+	import { resolvedMode, themeName } from '$lib/theme';
 
 	// a real shell (node-pty in the Electron main) rendered with xterm.js via the window.texpileTerminal bridge
 	let { cwd = '' }: { cwd?: string } = $props();
@@ -142,6 +144,19 @@
 			fit = new FitAddon();
 			term.loadAddon(fit);
 			term.open(el);
+			// xterm holds concrete colours, so a theme or mode switch while a shell is up re-reads them
+			unsubs.push(
+				observe(
+					() => [resolvedMode.current, themeName.current],
+					() => {
+						if (term)
+							term.options.theme = {
+								background: themeColour('--terminal-bg', '#1e1e1e'),
+								foreground: themeColour('--terminal-fg', '#e4e4e7')
+							};
+					}
+				)
+			);
 			// Same guard as refit(): a zero box fits to 1 row, and here that row count goes straight
 			// into spawn(), so every line of output would wrap at 1 row for the shell's whole life.
 			// This is reachable now that the compile shell runs in the background and can mount while

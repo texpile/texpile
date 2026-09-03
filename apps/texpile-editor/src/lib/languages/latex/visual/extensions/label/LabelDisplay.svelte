@@ -34,7 +34,7 @@
 
 <Popover {open} onOpenChange={(e) => onOpenChange(e.open)} positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}>
 	<Popover.Trigger
-		class="text-surface-600-300 bg-surface-200-800 hover:bg-surface-300-700 inline-flex cursor-pointer items-center gap-1 rounded-base px-1.5 py-0.5 align-baseline text-xs font-medium transition-colors"
+		class="text-muted bg-surface-200-800 hover:bg-surface-300-700 inline-flex cursor-pointer items-center gap-1 rounded-base px-1.5 py-0.5 align-baseline text-xs font-medium transition-colors"
 		style="font-size: 0.75rem;"
 	>
 		{#snippet element(attrs)}
@@ -51,7 +51,7 @@
 				<label class="block">
 					<span class="text-surface-900-100 text-sm font-medium">{m.label_rename_heading()}</span>
 					<input class="input mt-1.5 w-full font-mono text-sm" bind:value={draft} onkeydown={onKeydown} />
-					<span class="text-surface-500-400 mt-1 block text-xs">{m.label_rename_hint()}</span>
+					<span class="text-muted mt-1 block text-xs">{m.label_rename_hint()}</span>
 				</label>
 				<button type="button" class="btn btn-sm preset-filled-primary-500 mt-3 w-full" onclick={commit}>
 					{m.label_rename_confirm()}

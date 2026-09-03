@@ -41,20 +41,19 @@
 <div class="hover:bg-surface-100-900/40 my-4 rounded-base px-2 py-2 text-sm select-none {selected ? 'ring-primary-500 ring-2' : ''}">
 	<div class="mb-3 text-center font-semibold">{heading}</div>
 	{#if refs.length === 0}
-		<div class="text-surface-500 text-center italic">No bibliography entries yet. Add references to a .bib file.</div>
+		<div class="text-muted text-center italic">No bibliography entries yet. Add references to a .bib file.</div>
 	{:else}
 		<ul class="flex flex-col gap-2">
 			{#each refs.slice(0, LIMIT) as r (r.key)}
 				<li class="-indent-6 pl-6 leading-snug">
-					{#if authors(r)}<span>{authors(r)} </span>{/if}<span class="text-surface-600-400">({yearOf(r)}). </span>{#if r.title}<em
+					{#if authors(r)}<span>{authors(r)} </span>{/if}<span class="text-muted">({yearOf(r)}). </span>{#if r.title}<em
 							>{r.title}.
-						</em>{/if}{#if container(r)}<span>{container(r)}. </span>{/if}{#if meta(r)}<span class="text-surface-600-400">{meta(r)}.</span
-						>{/if}
+						</em>{/if}{#if container(r)}<span>{container(r)}. </span>{/if}{#if meta(r)}<span class="text-muted">{meta(r)}.</span>{/if}
 				</li>
 			{/each}
 		</ul>
 		{#if refs.length > LIMIT}
-			<div class="text-surface-400 mt-2 text-center text-xs">+{refs.length - LIMIT} more</div>
+			<div class="text-faint mt-2 text-center text-xs">+{refs.length - LIMIT} more</div>
 		{/if}
 	{/if}
 </div>

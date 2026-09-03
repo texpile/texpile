@@ -49,7 +49,7 @@
 				</button>
 			</li>
 		{:else}
-			<li class="text-surface-500 py-4 text-center text-sm">{m.spelldict_empty_state()}</li>
+			<li class="text-muted py-4 text-center text-sm">{m.spelldict_empty_state()}</li>
 		{/each}
 	</ul>
 </Modal>

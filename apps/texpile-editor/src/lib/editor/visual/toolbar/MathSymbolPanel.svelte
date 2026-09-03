@@ -81,7 +81,7 @@
 	style="top: {top}px; left: {left}px"
 >
 	<div class="border-surface-300-700 flex shrink-0 items-center justify-between border-b px-3 py-1.5">
-		<span class="text-surface-600-400 text-xs font-semibold uppercase">{group.label()}</span>
+		<span class="text-muted text-xs font-semibold uppercase">{group.label()}</span>
 		<button
 			class="hover:preset-tonal rounded-base p-1"
 			onmousedown={preventFocusLoss}
@@ -145,7 +145,7 @@
 							{/each}
 						{/each}
 					</div>
-					<div class="text-surface-600 text-center text-xs font-medium">{matrixGridHoverRows}×{matrixGridHoverCols}</div>
+					<div class="text-muted text-center text-xs font-medium">{matrixGridHoverRows}×{matrixGridHoverCols}</div>
 				</div>
 			</div>
 		{/if}

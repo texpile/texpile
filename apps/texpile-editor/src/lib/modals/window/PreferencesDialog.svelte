@@ -3,14 +3,15 @@
 	import { X, Languages } from '@lucide/svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import Modal from '../Modal.svelte';
-	import { themeChoice, setTheme } from '$lib/theme';
 	import { settings, updateSettings, updateSettingsLive, setMcpEnabled, type AppSettings } from '$lib/settings';
 	import { layout, updateLayout } from '$lib/storage/layout';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
-	import { changeUiLocale, keymapOptions, resizeStepOptions, themeOptions, uiLocaleOptions } from './prefsOptions';
+	import { changeUiLocale, keymapOptions, resizeStepOptions, uiLocaleOptions } from './prefsOptions';
+	import AppearanceMode from './AppearanceMode.svelte';
+	import ThemePicker from './ThemePicker.svelte';
 	import { preferencesTab } from '$lib/stores/dialogStore';
 	import McpSetupModal from './McpSetupModal.svelte';
 	// dark wordmark for light backgrounds, white one for dark mode - the pair StartView uses
@@ -107,8 +108,8 @@
 
 {#snippet label(text: string, hint: string, disabled = false)}
 	<div class="min-w-0">
-		<div class="text-sm font-medium {disabled ? 'text-surface-400' : ''}">{text}</div>
-		{#if hint}<p class="text-surface-500 mt-1 text-xs leading-relaxed">{hint}</p>{/if}
+		<div class="text-sm font-medium {disabled ? 'text-faint' : ''}">{text}</div>
+		{#if hint}<p class="text-muted mt-1 text-xs leading-relaxed">{hint}</p>{/if}
 	</div>
 {/snippet}
 
@@ -118,7 +119,7 @@
      One panel for all of them, grouped by what they serve. They were three sidebar tabs; a reader
      asking "is my machine set up" had to visit all three and could not see the answer at once. -->
 {#snippet sectionHeading(text: string)}
-	<h3 class="text-surface-600-300 pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{text}</h3>
+	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{text}</h3>
 {/snippet}
 
 {#snippet toggleRow(text: string, hint: string, checked: boolean, onChange: (v: boolean) => void, disabled = false, title = '')}
@@ -183,25 +184,15 @@
 		<div class="min-h-0 flex-1 overflow-y-auto px-5">
 			{#if category === 'appearance'}
 				<div class={ROW}>
-					{@render label(m.prefs_theme(), m.prefs_appearance_hint())}
-					<div class="bg-surface-200-800 rounded-base flex shrink-0 gap-1 p-0.5">
-						{#each themeOptions() as t (t.value)}
-							<button
-								class="rounded-base px-3 py-1 text-sm {themeChoice.current === t.value
-									? 'bg-surface-50-950 font-medium shadow-sm'
-									: 'text-surface-600-400 hover:text-surface-950-50'}"
-								onclick={() => setTheme(t.value)}
-							>
-								{t.label}
-							</button>
-						{/each}
-					</div>
+					{@render label(m.prefs_mode(), m.prefs_appearance_hint())}
+					<AppearanceMode />
 				</div>
+				<ThemePicker />
 				<div class={ROW}>
 					<!-- the one setting a user may need to find while the UI is in a language they
 							     cannot read, so it carries an icon the others do not -->
 					<div class="flex min-w-0 items-center gap-2">
-						<Languages class="text-surface-500 size-4 shrink-0" />
+						<Languages class="text-muted size-4 shrink-0" />
 						{@render label(m.prefs_language(), '')}
 					</div>
 					<select class="select w-32 shrink-0 text-sm" value={settings.current.uiLocale} onchange={changeUiLocale}>
@@ -264,7 +255,7 @@
 					<div class={ROW}>
 						{@render label(m.prefs_visual_width(), m.prefs_visual_width_note())}
 						<div class="w-48 shrink-0">
-							<div class="text-surface-500 mb-1 text-right text-xs tabular-nums">{settings.current.visualMaxWidth ?? 768}px</div>
+							<div class="text-muted mb-1 text-right text-xs tabular-nums">{settings.current.visualMaxWidth ?? 768}px</div>
 							<!-- oninput, not onchange: a width slider is only useful if the column moves under
 									     the cursor. updateSettingsLive applies each value, writing only the settled one. -->
 							<input
@@ -317,7 +308,7 @@
 				{#if settings.current.mcpEnabled === true && mcp}
 					<div class="border-surface-200-800 flex items-center justify-between gap-3 border-b py-3">
 						{#if mcp.running && mcp.port}
-							<span class="text-surface-500 text-xs">{m.prefs_mcp_status({ addr: `127.0.0.1:${mcp.port}` })}</span>
+							<span class="text-muted text-xs">{m.prefs_mcp_status({ addr: `127.0.0.1:${mcp.port}` })}</span>
 							<!-- the command lives in its own modal: it is long, and read once -->
 							<button class="btn btn-xs preset-tonal shrink-0 text-xs" onclick={() => (setupOpen = true)}>{m.prefs_mcp_show()}</button>
 						{:else}

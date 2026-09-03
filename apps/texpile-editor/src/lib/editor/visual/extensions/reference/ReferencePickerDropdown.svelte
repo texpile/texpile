@@ -35,7 +35,7 @@
 <div class="card bg-surface-50-950 border-surface-300-700 max-h-80 w-96 overflow-hidden border shadow-lg">
 	<div class="max-h-80 overflow-y-auto">
 		{#if items.length === 0}
-			<div class="text-surface-500-400 p-4 text-center text-sm">
+			<div class="text-muted p-4 text-center text-sm">
 				{#if query}
 					No references found for "{query}"
 				{:else}

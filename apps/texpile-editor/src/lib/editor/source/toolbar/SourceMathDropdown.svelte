@@ -143,7 +143,7 @@
 										{/each}
 									{/each}
 								</div>
-								<div class="text-surface-600-400 mt-2 w-fit text-center text-xs font-medium">{matrixRows}x{matrixCols}</div>
+								<div class="text-muted mt-2 w-fit text-center text-xs font-medium">{matrixRows}x{matrixCols}</div>
 							</div>
 						{/if}
 

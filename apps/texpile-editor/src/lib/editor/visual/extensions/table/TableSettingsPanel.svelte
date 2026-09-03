@@ -119,10 +119,10 @@
 <div class="settings-content">
 	{#if dialect === 'latex' && colModel && colModel.columns.length > 0}
 		<div class="settings-row">
-			<div class="text-surface-700-300 mb-1.5 text-xs font-semibold">{m.tablewrap_columns_heading()}</div>
+			<div class="text-muted mb-1.5 text-xs font-semibold">{m.tablewrap_columns_heading()}</div>
 			{#each colModel.columns as col, i (i)}
 				<div class="mb-1 flex items-center gap-2">
-					<span class="text-surface-400 w-4 text-right text-xs">{i + 1}</span>
+					<span class="text-faint w-4 text-right text-xs">{i + 1}</span>
 					<div class="border-surface-300-700 flex overflow-hidden rounded-base border">
 						{#each ALIGN_ICONS as opt (opt.value)}
 							{#if !opt.tabularx || isTabularx}
@@ -165,14 +165,14 @@
 	{:else if colspec && colspec.trim()}
 		<!-- spec too exotic to model visually: edit the verbatim string -->
 		<div class="settings-row">
-			<div class="text-surface-700-300 mb-1.5 text-xs font-semibold">{m.tablewrap_column_spec()}</div>
+			<div class="text-muted mb-1.5 text-xs font-semibold">{m.tablewrap_column_spec()}</div>
 			<input
 				class="input w-full px-1.5 py-0.5 text-xs"
 				value={colspec}
 				aria-label={m.tablewrap_column_spec()}
 				onchange={(e) => setColspec((e.currentTarget as HTMLInputElement).value)}
 			/>
-			<div class="text-surface-400 mt-1 text-xs">{m.tablewrap_column_spec_hint()}</div>
+			<div class="text-faint mt-1 text-xs">{m.tablewrap_column_spec_hint()}</div>
 			<hr class="border-surface-200-800 mt-3" />
 		</div>
 	{/if}
@@ -206,7 +206,7 @@
 				<Switch.Label class="flex items-center gap-2">
 					{m.tablewrap_span_columns()}
 					<button type="button" class="inline-flex items-center" use:tip={m.tablewrap_span_columns_tooltip()}>
-						<Info class="text-surface-500 h-3.5 w-3.5" />
+						<Info class="text-muted h-3.5 w-3.5" />
 					</button>
 				</Switch.Label>
 				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
@@ -219,7 +219,7 @@
 
 	<button
 		type="button"
-		class="text-surface-600-400 hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
+		class="text-muted hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
 		onclick={() => (showAdvanced = !showAdvanced)}
 	>
 		<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />

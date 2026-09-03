@@ -109,13 +109,13 @@
 {#if error && history.length === 0}
 	<!-- an empty timeline used to mean both "nothing saved yet" and "the read failed", and the
 	     reassuring reading won: a log that never once succeeded looked like a fresh project -->
-	<div class="text-surface-500 mt-6 flex flex-col items-center gap-1 px-3 text-center text-sm">
+	<div class="text-muted mt-6 flex flex-col items-center gap-1 px-3 text-center text-sm">
 		<TriangleAlert class="text-warning-500 size-6" />
 		{m.vcs_history_error()}
-		<span class="text-surface-600-400 text-xs break-words">{error}</span>
+		<span class="text-muted text-xs break-words">{error}</span>
 	</div>
 {:else if history.length === 0}
-	<div class="text-surface-500 mt-6 flex flex-col items-center gap-1 text-center text-sm">
+	<div class="text-muted mt-6 flex flex-col items-center gap-1 text-center text-sm">
 		<GitCommitHorizontal class="size-6 opacity-60" />
 		{m.vcs_no_history()}
 	</div>
@@ -133,7 +133,7 @@
 				use:tip={`${entry.subject}\n${entry.author} - ${exact(entry.date)}${entry.parentCount > 1 ? `\n$${m.vcs_merged_version()}` : ''}`}
 			>
 				<span class="truncate text-sm {i === 0 ? 'font-semibold' : ''}">{entry.subject}</span>
-				<span class="text-surface-500 truncate text-xs">{entry.author} · {ago(entry.date)}</span>
+				<span class="text-muted truncate text-xs">{entry.author} · {ago(entry.date)}</span>
 				{#if i === 0 && branch}
 					<!-- VS Code marks the checked-out branch against the newest item; here it also answers
 					     "is the version I am looking at the one the editor is showing" -->
@@ -179,7 +179,7 @@
 									{m.vcs_restore()}
 								</button>
 								<div class="border-surface-200-800 my-1 border-t"></div>
-								<div class="text-surface-500 px-3 py-1 font-mono text-[10px]">{entry.short}</div>
+								<div class="text-muted px-3 py-1 font-mono text-[10px]">{entry.short}</div>
 							</div>
 						</Popover.Content>
 					</Popover.Positioner>
@@ -189,14 +189,14 @@
 
 		{#if isOpen}
 			{#if loading}
-				<div class="text-surface-500 flex h-[22px] items-center text-xs">
+				<div class="text-muted flex h-[22px] items-center text-xs">
 					<GraphRail above={true} below={!isLast} />
 					<span class="ml-1">{m.vcs_loading_changes()}</span>
 				</div>
 			{:else if changes.length === 0}
 				<!-- the file that is not there: this version and the working copy agree, so restoring
 				     it would change nothing. Saying so beats an empty gap under an opened row. -->
-				<div class="text-surface-500 flex h-[22px] items-center text-xs">
+				<div class="text-muted flex h-[22px] items-center text-xs">
 					<GraphRail above={true} below={!isLast} />
 					<span class="ml-1">{m.vcs_no_changes_since()}</span>
 				</div>
@@ -212,7 +212,7 @@
 						<GraphRail above={true} below={!isLast || fi < changes.length - 1} />
 						<FileIcon name={baseName(f.path)} class="size-4 shrink-0" />
 						<span class="ml-1.5 truncate text-sm {STATUS_COLOR[f.status]}" use:tip={STATUS_TITLE[f.status]}>{baseName(f.path)}</span>
-						{#if dirName(f.path)}<span class="text-surface-500 ml-1.5 truncate text-xs">{dirName(f.path)}</span>{/if}
+						{#if dirName(f.path)}<span class="text-muted ml-1.5 truncate text-xs">{dirName(f.path)}</span>{/if}
 					</button>
 				{/each}
 			{/if}
@@ -225,7 +225,7 @@
 		     the beginning. The lane runs INTO this row and stops there, so the history visibly
 		     continues past what is drawn. -->
 		<button
-			class="hover:bg-surface-200-800 text-surface-500 flex h-[22px] w-full items-center pr-1 text-left text-xs"
+			class="hover:bg-surface-200-800 text-muted flex h-[22px] w-full items-center pr-1 text-left text-xs"
 			onclick={onShowMore}
 			disabled={busy}
 		>

@@ -25,7 +25,7 @@
 
 <button
 	type="button"
-	class="text-surface-500 hover:text-surface-950-50 mt-4 inline-flex items-center gap-1 text-xs"
+	class="text-muted hover:text-surface-950-50 mt-4 inline-flex items-center gap-1 text-xs"
 	onclick={() => (open = !open)}
 >
 	<ChevronDown class="size-3.5 transition-transform {open ? '' : '-rotate-90'}" />
@@ -33,14 +33,14 @@
 </button>
 {#if open}
 	<div class="mt-2 space-y-3">
-		<p class="text-surface-500 text-xs">
+		<p class="text-muted text-xs">
 			{m.wsview_advanced_desc_pre()}
 			<code class="bg-surface-200-800 rounded-base px-1">-jobname</code>
 			{m.wsview_advanced_desc_post()}
 		</p>
 		<div>
 			<div class="mb-1 flex items-center justify-between gap-2">
-				<span class="text-surface-600-300 text-xs font-medium">{m.wsview_pdf_file_label()}</span>
+				<span class="text-muted text-xs font-medium">{m.wsview_pdf_file_label()}</span>
 				{#if pdfPathWarning}<span class="text-warning-600-400 text-xs">{pdfPathWarning}</span>{/if}
 			</div>
 			<div class="flex gap-2">
@@ -63,7 +63,7 @@
 		</div>
 		<div>
 			<div class="mb-1 flex items-center justify-between gap-2">
-				<span class="text-surface-600-300 text-xs font-medium">{m.wsview_log_file_label()}</span>
+				<span class="text-muted text-xs font-medium">{m.wsview_log_file_label()}</span>
 				{#if logPathWarning}<span class="text-warning-600-400 text-xs">{logPathWarning}</span>{/if}
 			</div>
 			<div class="flex gap-2">

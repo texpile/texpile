@@ -44,7 +44,7 @@
 			<button {...attrs} use:tip={m.tbar_supsub_title()}>
 				<!-- same box + stroke as every other toolbar icon so it doesn't read bigger/bolder -->
 				<Superscript class="h-5 w-5" />
-				<ChevronDown class="text-surface-500 size-3 shrink-0" />
+				<ChevronDown class="text-muted size-3 shrink-0" />
 			</button>
 		{/snippet}
 	</Popover.Trigger>
@@ -58,9 +58,9 @@
 					class:preset-tonal-primary={sup}
 					onclick={() => choose('sup')}
 				>
-					<Superscript class="text-surface-500 size-[18px] shrink-0" strokeWidth={2.25} />
+					<Superscript class="text-muted size-[18px] shrink-0" strokeWidth={2.25} />
 					<span class="flex-1">{m.tbar_superscript()}</span>
-					<span class="text-surface-500 text-xs">{modKey}+.</span>
+					<span class="text-muted text-xs">{modKey}+.</span>
 					{#if sup}<Check class="ml-1 h-4 w-4 shrink-0" />{/if}
 				</button>
 				<button
@@ -69,9 +69,9 @@
 					class:preset-tonal-primary={sub}
 					onclick={() => choose('sub')}
 				>
-					<Subscript class="text-surface-500 size-[18px] shrink-0" strokeWidth={2.25} />
+					<Subscript class="text-muted size-[18px] shrink-0" strokeWidth={2.25} />
 					<span class="flex-1">{m.tbar_subscript()}</span>
-					<span class="text-surface-500 text-xs">{modKey}+,</span>
+					<span class="text-muted text-xs">{modKey}+,</span>
 					{#if sub}<Check class="ml-1 h-4 w-4 shrink-0" />{/if}
 				</button>
 			</Popover.Content>

@@ -7,7 +7,7 @@
 	}
 </script>
 
-<span class="text-surface-500 text-xs whitespace-nowrap tabular-nums select-none">
+<span class="text-muted text-xs whitespace-nowrap tabular-nums select-none">
 	{#if c.selectionWords != null}
 		{m.wordcount_selected({ selection: fmt(c.selectionWords), total: fmt(c.words) })}
 	{:else}

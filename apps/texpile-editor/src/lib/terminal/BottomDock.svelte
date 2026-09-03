@@ -122,7 +122,7 @@
 	}
 </script>
 
-<div class="@container bg-surface-100-900 text-surface-600-300 flex h-8 shrink-0 items-center gap-2 px-2 text-xs">
+<div class="@container bg-surface-100-900 text-muted flex h-8 shrink-0 items-center gap-2 px-2 text-xs">
 	<!-- The tabs scroll and the actions never shrink. Both sides used to be shrinkable, so a narrow
 	     dock squeezed each group below its content and the two drew on top of each other - which is
 	     what a dock beside an open PDF preview does routinely. toolbar-hscroll hides the bar; there

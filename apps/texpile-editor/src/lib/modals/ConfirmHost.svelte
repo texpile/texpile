@@ -18,9 +18,9 @@
 		onClose={dismissPrompt}
 		onEnter={primary ? () => answerPrompt(primary.id) : undefined}
 	>
-		<p class="text-surface-600-300 text-sm whitespace-pre-line">{prompt.message}</p>
+		<p class="text-muted text-sm whitespace-pre-line">{prompt.message}</p>
 		{#if prompt.detail}
-			<p class="text-surface-500 mt-2 text-sm whitespace-pre-line">{prompt.detail}</p>
+			<p class="text-muted mt-2 text-sm whitespace-pre-line">{prompt.detail}</p>
 		{/if}
 		<ModalActions
 			class="mt-5"

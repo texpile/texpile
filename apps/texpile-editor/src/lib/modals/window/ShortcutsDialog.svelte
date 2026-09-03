@@ -73,7 +73,7 @@
 	<div class="max-h-[60vh] space-y-4 overflow-y-auto pr-1">
 		{#each SHORTCUTS as grp (grp.group)}
 			<div>
-				<div class="text-surface-500 mb-1.5 text-xs font-semibold tracking-wider uppercase">{grp.group}</div>
+				<div class="text-muted mb-1.5 text-xs font-semibold tracking-wider uppercase">{grp.group}</div>
 				<ul class="space-y-1">
 					{#each grp.items as s (s.label)}
 						<li class="flex items-center justify-between gap-4 text-sm">

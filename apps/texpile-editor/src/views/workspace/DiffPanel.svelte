@@ -197,7 +197,7 @@
 	/* collapsed unchanged region: theme-matched band instead of @codemirror/merge's washed-out defaults */
 	.diff-panel :global(.cm-collapsedLines) {
 		background: color-mix(in srgb, var(--color-surface-500) 12%, transparent);
-		color: var(--color-surface-500);
+		color: var(--muted-text);
 	}
 
 	/* deleted = error red, added = success green. cm-merge-a is the original pane, cm-merge-b the

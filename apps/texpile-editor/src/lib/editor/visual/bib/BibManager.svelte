@@ -247,7 +247,7 @@
 				{m.bib_parse_syntax_error_title()}
 			</div>
 			<div class="text-error-600-400 text-xs">{parseError}</div>
-			<div class="text-surface-600-400 mt-2 text-xs">
+			<div class="text-muted mt-2 text-xs">
 				{m.bib_parse_syntax_error_hint()}
 			</div>
 		</div>
@@ -285,7 +285,7 @@
 					{m.bib_editing_heading({ key: currentReference.key ?? '' })}
 					{#if editMode === 'raw'}
 						<span
-							class="border-surface-300-700 text-surface-500 ml-1 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
+							class="border-surface-300-700 text-muted ml-1 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
 							use:tip={m.bib_raw_badge_edit_tooltip()}
 						>
 							<Code class="size-2.5" />

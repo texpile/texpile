@@ -50,16 +50,16 @@
 	{:else if lost}
 		<p class="text-warning-600-400">{m.comments_orphaned()}</p>
 	{:else if hidden}
-		<p class="text-surface-500-400">{m.comments_not_in_view()}</p>
+		<p class="text-muted">{m.comments_not_in_view()}</p>
 	{/if}
 	{#each thread.messages as msg (msg.id)}
 		<div class="group/msg flex items-start gap-2 leading-snug">
 			<InitialAvatar name={msg.by} class="mt-0.5 size-5 text-[10px]" />
 			<div class="min-w-0 flex-1">
-				<span class="text-surface-500-400 font-medium">{msg.by}</span>
+				<span class="text-muted font-medium">{msg.by}</span>
 				{#if msg.editedAt}
 					<!-- so nobody is quoted saying something they later rewrote -->
-					<span class="text-surface-500-400 italic">({m.comments_edited()})</span>
+					<span class="text-muted italic">({m.comments_edited()})</span>
 				{/if}
 				{#if editing === msg.id}
 					<textarea

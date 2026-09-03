@@ -17,6 +17,9 @@ export type LayoutState = {
 	v: 1;
 	/** appearance choice; `resolvedMode` in lib/theme.ts turns 'system' into light/dark */
 	theme: 'light' | 'dark' | 'system';
+	/** the Skeleton theme on <html data-theme>: 'theme' is the bundled default, a preset name loads
+	 *  /themes/<name>.css */
+	themeName: string;
 	viewMode: 'visual' | 'source' | 'diff';
 	diffLayout: 'unified' | 'split';
 	sidebarOpen: boolean;
@@ -45,6 +48,7 @@ const KEY = 'texpile:layout';
 const DEFAULTS: LayoutState = {
 	v: 1,
 	theme: 'system',
+	themeName: 'theme',
 	viewMode: 'visual',
 	diffLayout: 'unified',
 	sidebarOpen: true,

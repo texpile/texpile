@@ -10,7 +10,7 @@
 	// what lets the zoom control below drive a viewer we cannot otherwise touch.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, FileDown, Loader2, PictureInPicture2 } from '@lucide/svelte';
-	import { resolvedMode } from '$lib/theme';
+	import { resolvedMode, themeName } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
 	import { themeColour } from './themeColour';
@@ -71,8 +71,15 @@
 	// and nothing else, so a near-white surround makes the page edges vanish and the document reads
 	// as one endless sheet. surface-300 in light, surface-800 in dark - dark enough to separate the
 	// pages, short of the near-black surface-950 the PDF pane uses, which reads as a hole.
-	const background = $derived(dark ? themeColour('--color-surface-800', '#27272a') : themeColour('--color-surface-300', '#d4d4d8'));
-	const foreground = $derived(dark ? themeColour('--color-surface-200', '#e4e4e7') : themeColour('--color-surface-700', '#3f3f46'));
+	// tracked on the theme too: the probe reads computed colours, which a theme switch changes
+	const background = $derived.by(() => {
+		void themeName.current;
+		return dark ? themeColour('--color-surface-800', '#27272a') : themeColour('--color-surface-300', '#d4d4d8');
+	});
+	const foreground = $derived.by(() => {
+		void themeName.current;
+		return dark ? themeColour('--color-surface-200', '#e4e4e7') : themeColour('--color-surface-700', '#3f3f46');
+	});
 
 	$effect(() => {
 		// tracked: the host, and the theme colours baked into the page at prepare time
@@ -212,7 +219,7 @@
 	     zoom is the one thing with no keyboard-free equivalent. -->
 	<!-- border-surface-200-800, not 300-700: this header, the editor's tab strip and the channel
 	     between them draw one line, and a darker step here made the preview's stretch of it stand out -->
-	<div class="bg-surface-100-900 border-surface-200-800 text-surface-600-300 flex h-9 shrink-0 items-center gap-1 border-b px-3 text-xs">
+	<div class="bg-surface-100-900 border-surface-200-800 text-muted flex h-9 shrink-0 items-center gap-1 border-b px-3 text-xs">
 		<span class="shrink-0 font-medium">{m.typst_preview_label()}</span>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		{#if error}
@@ -221,7 +228,7 @@
 			<!-- the no-document stall is NOT repeated here: the frame overlay below already says it -->
 
 			<span class="text-warning-700-300 truncate" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
-			<span class="text-surface-500 truncate font-mono text-[10px]">{stallDetail}</span>
+			<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
 		{:else}
 			<span class="text-surface-700-200 truncate">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
 		{/if}
@@ -313,7 +320,7 @@
 				</div>
 			{/if}
 		{:else if !error}
-			<div class="text-surface-500 flex h-full items-center justify-center text-center text-sm">
+			<div class="text-muted flex h-full items-center justify-center text-center text-sm">
 				{m.typst_preview_waiting()}
 			</div>
 		{/if}

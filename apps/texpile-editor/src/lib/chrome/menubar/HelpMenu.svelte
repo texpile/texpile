@@ -52,7 +52,7 @@
 				<Menu.Separator class={separatorClass} />
 				<!-- Dev Tools used to ride this line; it lives in the command palette now (search
 				     "dev"), so the menu every writer opens carries no debugger furniture -->
-				<div class="text-surface-500 px-2.5 py-1 text-xs">{m.menubar_version_footer({ version: appVersion })}</div>
+				<div class="text-muted px-2.5 py-1 text-xs">{m.menubar_version_footer({ version: appVersion })}</div>
 			</Menu.Content>
 		</Menu.Positioner>
 	</Portal>

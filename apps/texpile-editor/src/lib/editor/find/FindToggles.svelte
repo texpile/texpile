@@ -23,7 +23,7 @@
 {#each buttons as b (b.key)}
 	<button
 		type="button"
-		class="find-toggle {options[b.key] ? 'preset-tonal-primary' : 'hover:preset-tonal text-surface-600-300'}"
+		class="find-toggle {options[b.key] ? 'preset-tonal-primary' : 'hover:preset-tonal text-muted'}"
 		class:underline={b.key === 'wholeWord'}
 		aria-pressed={options[b.key]}
 		use:tip={b.title}

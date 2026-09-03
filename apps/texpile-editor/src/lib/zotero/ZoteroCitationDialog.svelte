@@ -159,9 +159,9 @@
 				open={true}
 			>
 				<Combobox.Control class="border-surface-200-800 flex items-center gap-2 border-b px-3 py-2">
-					<BookMarked class="text-surface-500 size-4 shrink-0" />
+					<BookMarked class="text-muted size-4 shrink-0" />
 					<Combobox.Input
-						class="placeholder:text-surface-500 w-full bg-transparent text-sm outline-none"
+						class="placeholder:text-muted w-full bg-transparent text-sm outline-none"
 						placeholder={m.zotero_dialog_placeholder()}
 						autocomplete="off"
 						spellcheck="false"
@@ -187,7 +187,7 @@
 				{/if}
 
 				{#if shown.length === 0}
-					<div class="text-surface-500 px-3 py-10 text-center text-sm">
+					<div class="text-muted px-3 py-10 text-center text-sm">
 						{searched && query.trim() ? m.zotero_dialog_empty() : m.zotero_dialog_type_hint()}
 					</div>
 				{:else}
@@ -195,13 +195,13 @@
 						{#each shown as hit, i (hit.citekey)}
 							{@const header = headerOf(i)}
 							{#if header}
-								<div class="text-surface-500 px-2.5 pt-2 pb-1 text-xs font-semibold tracking-wider uppercase">
+								<div class="text-muted px-2.5 pt-2 pb-1 text-xs font-semibold tracking-wider uppercase">
 									{header === 'project' ? m.zotero_dialog_group_project() : m.zotero_dialog_group_library()}
 								</div>
 							{/if}
 							<Combobox.Item class={rowClass} item={hit}>
 								<Combobox.ItemText class="truncate">{hit.title || hit.citekey}</Combobox.ItemText>
-								<span class="text-surface-500 max-w-56 truncate text-xs">
+								<span class="text-muted max-w-56 truncate text-xs">
 									{[hit.author, hit.year ? `(${hit.year})` : ''].filter(Boolean).join(' ')}
 								</span>
 								{#if selected.has(hit.citekey)}
@@ -214,7 +214,7 @@
 					</Combobox.Content>
 				{/if}
 
-				<div class="border-surface-200-800 text-surface-500 flex items-center gap-3 border-t px-3 py-1.5 text-xs">
+				<div class="border-surface-200-800 text-muted flex items-center gap-3 border-t px-3 py-1.5 text-xs">
 					<span><Kbd cap keys="enter" /> {m.zotero_dialog_hint_toggle()}</span>
 					<span><Kbd cap keys="esc" /> {m.palette_hint_close()}</span>
 					<span class="flex-1"></span>

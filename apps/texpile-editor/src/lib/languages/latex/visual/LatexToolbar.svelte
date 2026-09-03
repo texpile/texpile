@@ -162,7 +162,7 @@
 			</ul>
 
 			{#if isReadOnly.current}
-				<div class="text-surface-500 flex items-center gap-1.5">
+				<div class="text-muted flex items-center gap-1.5">
 					<Eye class="size-4" />
 					<span class="text-sm font-medium">{m.toolbar_read_only()}</span>
 				</div>
@@ -186,10 +186,10 @@
 					     behind reads as a button you can press, and this is a status label, not a control.
 					     Container queries, not sm:, which measures the WINDOW: a wide window with a narrow
 					     editor pane kept showing the hint and it wrapped onto a second line. -->
-					<div class="text-surface-600-300 hidden min-h-9 min-w-0 items-center gap-2 text-sm whitespace-nowrap @sm:flex">
+					<div class="text-muted hidden min-h-9 min-w-0 items-center gap-2 text-sm whitespace-nowrap @sm:flex">
 						<Code class="size-4 shrink-0" />
 						<span class="font-medium">{m.toolbar_latex_code()}</span>
-						<span class="text-surface-500 hidden @xl:inline">{m.toolbar_latex_code_hint()}</span>
+						<span class="text-muted hidden @xl:inline">{m.toolbar_latex_code_hint()}</span>
 					</div>
 				{:else if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
 					<MathToolbar />

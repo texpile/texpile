@@ -205,7 +205,7 @@
 		transform: translateY(-50%);
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 		font-size: 0.8em;
-		color: var(--color-surface-500);
+		color: var(--muted-text);
 		user-select: none;
 		pointer-events: none;
 	}

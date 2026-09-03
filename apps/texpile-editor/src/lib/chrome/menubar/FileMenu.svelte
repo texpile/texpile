@@ -80,7 +80,7 @@
 									<Menu.Item value="newfolder" class={itemClass}><Menu.ItemText>{m.menubar_open_new_folder()}</Menu.ItemText></Menu.Item>
 									{#if recentFolders.current.length > 0}
 										<Menu.Separator class={separatorClass} />
-										<div class="text-surface-500 px-2.5 py-0.5 text-xs font-semibold tracking-wider uppercase">
+										<div class="text-muted px-2.5 py-0.5 text-xs font-semibold tracking-wider uppercase">
 											{m.menubar_recent_heading()}
 										</div>
 										{#each recentFolders.current as folder (folder)}

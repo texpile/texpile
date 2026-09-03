@@ -37,7 +37,7 @@
 
 	// the segmented-control classes the compile dialog and Preferences use for an exclusive choice
 	function seg(active: boolean) {
-		return `rounded-base px-3 py-1 text-sm ${active ? 'bg-surface-50-950 font-medium shadow-sm' : 'text-surface-600-400 hover:text-surface-950-50'}`;
+		return `rounded-base px-3 py-1 text-sm ${active ? 'bg-surface-50-950 font-medium shadow-sm' : 'text-muted hover:text-surface-950-50'}`;
 	}
 
 	let importInput = $state<HTMLInputElement>();
@@ -71,7 +71,7 @@
 				onclick={() => onPick(s)}
 			>
 				<span class="flex items-center gap-2 font-medium"><FileText class="text-primary-500 size-4 shrink-0" /> {s.name}</span>
-				<span class="text-surface-500 text-xs">{s.description}</span>
+				<span class="text-muted text-xs">{s.description}</span>
 			</button>
 		{/each}
 		{#if onImport && isLatex}
@@ -83,14 +83,14 @@
 				<span class="flex items-center gap-2 font-medium"
 					><FolderInput class="text-primary-500 size-4 shrink-0" /> {m.starter_import_own()}</span
 				>
-				<span class="text-surface-500 text-xs">{m.starter_import_description()}</span>
+				<span class="text-muted text-xs">{m.starter_import_description()}</span>
 			</button>
 			<input bind:this={importInput} type="file" multiple accept=".tex,.bib,.cls,.sty,.bst" class="hidden" onchange={onFilesPicked} />
 		{/if}
 	</div>
 	{#if onBlank && isLatex}
 		<button
-			class="text-surface-500 hover:text-surface-950-50 mt-3 inline-flex items-center gap-1.5 text-sm disabled:opacity-50"
+			class="text-muted hover:text-surface-950-50 mt-3 inline-flex items-center gap-1.5 text-sm disabled:opacity-50"
 			disabled={busy}
 			onclick={onBlank}
 		>

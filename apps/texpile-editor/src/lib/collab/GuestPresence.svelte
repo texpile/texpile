@@ -24,12 +24,12 @@
 		<span class="font-medium whitespace-nowrap">{m.session_collaborating()}</span>
 	</span>
 	{#if !online}
-		<span class="text-surface-500 whitespace-nowrap">{statusText}</span>
+		<span class="text-muted whitespace-nowrap">{statusText}</span>
 	{/if}
 
 	{#if collabGuest.peers.length}
 		<span class="flex items-center gap-1.5" use:tip={collabGuest.peers.map((p) => p.name).join(', ')}>
-			<Users class="text-surface-500 size-4 shrink-0" />
+			<Users class="text-muted size-4 shrink-0" />
 			<span class="flex items-center -space-x-1.5">
 				{#each collabGuest.peers.slice(0, 5) as peer, i (i)}
 					<span

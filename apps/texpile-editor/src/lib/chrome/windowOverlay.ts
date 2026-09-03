@@ -120,7 +120,7 @@ export function syncWindowOverlay(el: HTMLElement): () => void {
 	const ro = new ResizeObserver(push);
 	ro.observe(el);
 	const mo = new MutationObserver(push);
-	mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-mode'] });
+	mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-mode', 'data-theme'] });
 	// uiZoom resizes nothing the observer can see: setZoomFactor scales the whole renderer, so the
 	// bar's CSS height is unchanged and only the device-pixel height it maps to moves
 	const unsub = observe(() => settings.current, push);

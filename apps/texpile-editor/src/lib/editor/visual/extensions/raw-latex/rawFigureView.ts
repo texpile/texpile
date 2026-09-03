@@ -73,7 +73,7 @@ export class RawFigureView extends RawLatexView {
 
 	private makeMissing(src: string): HTMLElement {
 		const box = document.createElement('div');
-		box.className = 'text-surface-500 border-surface-300-700 flex h-20 items-center rounded-base border border-dashed px-3 text-xs';
+		box.className = 'text-muted border-surface-300-700 flex h-20 items-center rounded-base border border-dashed px-3 text-xs';
 		box.textContent = `\u{1F5BC} ${src}`;
 		return box;
 	}

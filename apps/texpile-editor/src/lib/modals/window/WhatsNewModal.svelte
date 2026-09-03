@@ -38,9 +38,9 @@
 				{#each entries as entry (entry.version)}
 					<div>
 						{#if entries.length > 1}
-							<div class="text-surface-500 mb-1 text-xs font-semibold">v{entry.version}</div>
+							<div class="text-muted mb-1 text-xs font-semibold">v{entry.version}</div>
 						{/if}
-						<ul class="text-surface-600-300 list-disc space-y-1 pl-5 text-sm">
+						<ul class="text-muted list-disc space-y-1 pl-5 text-sm">
 							{#each entry.notes as note (note)}
 								<li>{note}</li>
 							{/each}

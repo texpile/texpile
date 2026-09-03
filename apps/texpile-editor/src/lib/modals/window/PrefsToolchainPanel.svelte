@@ -17,7 +17,7 @@
 </script>
 
 <div class="border-surface-200-800 flex items-center justify-between gap-3 border-b pt-1 pb-3">
-	<p class="text-surface-500 text-xs">
+	<p class="text-muted text-xs">
 		{m.prefs_toolchain_intro()}
 		<!-- always shown, not only when something is missing: one place to go, stated up front -->
 		{m.prefs_toolchain_docs_hint()}
@@ -34,7 +34,7 @@
 {/if}
 
 {#snippet toolRows(group: 'latex' | 'typst' | 'general', heading: string)}
-	<h3 class="text-surface-600-300 pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{heading}</h3>
+	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{heading}</h3>
 	<!-- two columns for the LaTeX crowd: one column of name-plus-verdict rows was half whitespace.
 	     A group with a single tool (tinymist, git) keeps the full width, so its version line does
 	     not truncate for a column that isn't there. The version rides along truncated when needed
@@ -54,13 +54,13 @@
 			<div class="border-surface-200-800 flex min-w-0 items-baseline gap-2 border-b py-2" use:tip={tool.purpose}>
 				<span class="shrink-0 font-mono text-sm font-medium">{tool.name}</span>
 				{#if probe.probing || probe.probeFailed}
-					<span class="text-surface-400 text-xs">…</span>
+					<span class="text-faint text-xs">…</span>
 				{:else}
-					<span class="shrink-0 text-xs {found ? 'text-success-600-400' : 'text-surface-400'}">
+					<span class="shrink-0 text-xs {found ? 'text-success-600-400' : 'text-faint'}">
 						{found ? m.prefs_toolchain_found() : m.prefs_toolchain_missing()}
 					</span>
 					{#if found && detail}
-						<span class="text-surface-400 min-w-0 truncate font-mono text-xs" use:tip={detail}>{detail}</span>
+						<span class="text-faint min-w-0 truncate font-mono text-xs" use:tip={detail}>{detail}</span>
 					{/if}
 				{/if}
 			</div>

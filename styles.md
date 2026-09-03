@@ -102,6 +102,18 @@ languages/latex/schema/ // the LaTeX ProseMirror schema, split:
 5. Tests mirror the source tree under tests/unit. src/lib/workspace/treeOps.ts is covered by tests/unit/lib/workspace/treeOps*.test.ts
 6. Runes only, no stores. Module-level reactive values go through lib/runes (box for a writable value, observe for a subscription in a non-reactive scope); a third party library that hands you a store is adapted at the same edge
 
+## Styling
+
+The app is themed by swapping one Skeleton theme for another at runtime. Every rule here keeps that swap complete: a style that does not follow the theme is a style the next theme cannot change.
+
+1. Colour, radius, spacing, border width and type scale come from the theme, never from literals. In markup that is the Skeleton utility: `bg-surface-200-800`, `text-primary-500`, `rounded-base`, `p-2`, `border`. In CSS it is the variable: `var(--color-primary-500)`, `var(--radius-base)`, `calc(var(--spacing) * 2)`, `var(--default-border-width)`. A hex, rgb, oklch or px value in a component is a bug: it survives a theme switch unchanged
+2. A colour with a meaning of its own (a syntax role, a diff tint, a git state, a comment tint, the jump flash) is a Texpile token. Declare it in `texpile-default-theme.css` inside the `[data-theme='theme']` block, and give it a derivation from Skeleton's colour families in `src/texpile-tokens.css` so every other theme gets one too. Consumers name the token, never its value
+3. Light and dark are a pairing, not a branch. `light-dark()` in CSS, the `{color}-{light}-{dark}` utilities in markup. No `.dark` selectors or `data-mode` checks in components
+4. Code that hands colours to something outside CSS (xterm, the Typst preview page, the window title bar) reads them through `themeColour()` and re-reads when `themeName` or `resolvedMode` changes. Those are the only places a resolved colour value may exist
+5. Font sizes go through the `text-*` utilities, which carry the theme's `--text-scaling`. Do not read `--text-xs` and friends directly
+6. Secondary text is `text-muted`, disabled or placeholder text is `text-faint` (in CSS, `var(--muted-text)` and `var(--faint-text)`). Both are a share of the text colour, so they keep their distance from it on every theme. A mid step of the surface scale (`text-surface-500`, `text-surface-600-400`) is not a muted colour: a theme whose scale does not run light to dark puts it on top of the ground
+7. Skeleton's presets are the test: every one of them must render correctly with no changes. Something that looks wrong under a preset is fixed in the tokens, never with a special case for that theme
+
 ## Commit Messages
 
 Format: `type(scope): subject`

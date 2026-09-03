@@ -121,9 +121,7 @@
 <div class="relative flex h-full w-full flex-col">
 	{#if !(typstPreviewWanted && !guest) && !(guest && guestTypstOffered)}
 		<!-- h-9 matches the editor column's tab strip, so the two header borders draw one line -->
-		<div
-			class="bg-surface-100-900 text-surface-600-300 border-surface-200-800 flex h-9 shrink-0 items-center justify-between border-b px-3 text-xs"
-		>
+		<div class="bg-surface-100-900 text-muted border-surface-200-800 flex h-9 shrink-0 items-center justify-between border-b px-3 text-xs">
 			<span class="font-medium">
 				{#if !guest && compileConfig.current.latex.liveMode}
 					{m.wsview_live_preview_label()}
@@ -159,7 +157,7 @@
 				<!-- the host pushes its compiled PDF over the session; no local compile/synctex -->
 				<PDFViewer bind:this={pdfViewer} src={guestPdf} filename={m.wsview_pdf_preview_label()} {onPageClick} />
 			{:else}
-				<div class="text-surface-500 flex h-full items-center justify-center p-6 text-center text-sm">
+				<div class="text-muted flex h-full items-center justify-center p-6 text-center text-sm">
 					{m.session_pdf_waiting()}
 				</div>
 			{/if}
@@ -170,7 +168,7 @@
 			     One message for all four lanes, carrying the fix. -->
 			<div class="flex h-full items-center justify-center p-6">
 				<div class="max-w-sm text-center">
-					<p class="text-surface-500 text-sm">{m.wsview_pane_no_main()}</p>
+					<p class="text-muted text-sm">{m.wsview_pane_no_main()}</p>
 					<button class="btn btn-sm preset-tonal-primary mt-3" onclick={onPickMain}>
 						{m.wsview_pane_pick_main()}
 					</button>

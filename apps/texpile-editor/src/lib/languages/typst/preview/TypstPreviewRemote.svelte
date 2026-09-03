@@ -20,7 +20,7 @@
 	// constructs a new "socket", and that reattach starts over with a whole-document frame.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, PictureInPicture2 } from '@lucide/svelte';
-	import { resolvedMode } from '$lib/theme';
+	import { resolvedMode, themeName } from '$lib/theme';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { PreviewStream, type PreviewPayload } from '$lib/collab/protocol';
 	import { settings, updateSettings } from '$lib/settings';
@@ -56,8 +56,15 @@
 	});
 
 	const dark = $derived(resolvedMode.current === 'dark');
-	const background = $derived(dark ? themeColour('--color-surface-800', '#27272a') : themeColour('--color-surface-300', '#d4d4d8'));
-	const foreground = $derived(dark ? themeColour('--color-surface-200', '#e4e4e7') : themeColour('--color-surface-700', '#3f3f46'));
+	// tracked on the theme too: the probe reads computed colours, which a theme switch changes
+	const background = $derived.by(() => {
+		void themeName.current;
+		return dark ? themeColour('--color-surface-800', '#27272a') : themeColour('--color-surface-300', '#d4d4d8');
+	});
+	const foreground = $derived.by(() => {
+		void themeName.current;
+		return dark ? themeColour('--color-surface-200', '#e4e4e7') : themeColour('--color-surface-700', '#3f3f46');
+	});
 
 	// The page travels once per session, but the ASK must repeat until it is answered: a single
 	// ask could race the host's preview task coming up and was silently dropped there, leaving
@@ -236,7 +243,7 @@
 <div class="bg-surface-200-800 flex h-full w-full flex-col">
 	<!-- the local pane's header, minus what a guest cannot do: no Save as PDF (the exporter is the
 	     host's tinymist). Zoom is local to this viewer; follow works (see the toggle below). -->
-	<div class="bg-surface-100-900 border-surface-200-800 text-surface-600-300 flex h-9 shrink-0 items-center gap-1 border-b px-3 text-xs">
+	<div class="bg-surface-100-900 border-surface-200-800 text-muted flex h-9 shrink-0 items-center gap-1 border-b px-3 text-xs">
 		<span class="shrink-0 font-medium">{m.typst_preview_label()}</span>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		{#if error}
@@ -307,7 +314,7 @@
 				onerror={() => (error = m.typst_preview_frame_failed())}
 			></iframe>
 		{:else if !error}
-			<div class="text-surface-500 flex h-full items-center justify-center p-6 text-center text-sm">
+			<div class="text-muted flex h-full items-center justify-center p-6 text-center text-sm">
 				{m.typst_preview_guest_waiting()}
 			</div>
 		{/if}

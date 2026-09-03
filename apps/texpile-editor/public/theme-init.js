@@ -19,6 +19,15 @@ try {
 	var dark = c === 'dark' || ((c === 'system' || !c) && sysDark);
 	document.documentElement.setAttribute('data-mode', dark ? 'dark' : 'light');
 	if (dark) document.documentElement.classList.add('dark');
+
+	// the theme's variables too, so a preset is on before the first paint: a static stylesheet
+	// under /themes. Mirrors applyThemeName in src/lib/theme.ts, which finds the link in place
+	// and leaves it.
+	var name = (layout && layout.v === 1 && layout.themeName) || 'theme';
+	if (/^[a-z][a-z0-9-]*$/.test(name) && name !== 'theme') {
+		document.write('<link id="texpile-theme" rel="stylesheet" href="/themes/' + name + '.css">');
+	} else name = 'theme';
+	document.documentElement.setAttribute('data-theme', name);
 } catch {
 	/* no localStorage / matchMedia: fall back to the default light theme */
 }

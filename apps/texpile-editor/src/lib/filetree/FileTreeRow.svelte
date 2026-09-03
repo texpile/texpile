@@ -57,8 +57,8 @@
 			ondblclick={() => entry.type === 'file' && onOpen(entry)}
 		>
 			{#if entry.type === 'dir'}
-				{#if sel.expanded[entry.path]}<ChevronDown class="text-surface-400 size-3.5 shrink-0" />{:else}<ChevronRight
-						class="text-surface-400 size-3.5 shrink-0"
+				{#if sel.expanded[entry.path]}<ChevronDown class="text-faint size-3.5 shrink-0" />{:else}<ChevronRight
+						class="text-faint size-3.5 shrink-0"
 					/>{/if}
 				<FileIcon name={entry.name} folder={sel.expanded[entry.path] ? 'open' : 'closed'} class="size-4 shrink-0" />
 			{:else}
@@ -113,7 +113,7 @@
 				     preset-tonal washed 10% white over it, leaving a paler rounded-base patch with a
 				     visible seam against the row it sits on -->
 				<button
-					class="btn-icon btn-icon-xs text-surface-500 hover:text-surface-950-50 bg-transparent transition-colors"
+					class="btn-icon btn-icon-xs text-muted hover:text-surface-950-50 bg-transparent transition-colors"
 					use:tip={m.filetree_row_actions()}
 					aria-label={m.filetree_row_actions()}
 					onclick={(e) => {

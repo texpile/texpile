@@ -137,7 +137,7 @@
 		<div class="bg-surface-50-950 flex min-h-full flex-1 items-center justify-center p-6">
 			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-md border p-6 text-center shadow-2xl">
 				<h1 class="mb-2 text-xl font-semibold">{m.session_ended_title()}</h1>
-				<p class="text-surface-600-300 mb-5 text-sm">
+				<p class="text-muted mb-5 text-sm">
 					{collabGuest.endedReason === 'host-ended' ? m.session_ended_host() : m.session_ended_error()}
 				</p>
 				<button class="btn preset-filled-primary-500" onclick={backHome}>{m.session_back_home()}</button>
@@ -147,7 +147,7 @@
 		<div class="bg-surface-50-950 flex min-h-full flex-1 items-center justify-center p-6">
 			<div class="card bg-surface-50-950 border-surface-300-700 w-full max-w-md border p-6 shadow-2xl">
 				<h1 class="mb-1 text-xl font-semibold">{m.session_join_title()}</h1>
-				<p class="text-surface-600-300 mb-5 text-sm">{m.session_join_desc()}</p>
+				<p class="text-muted mb-5 text-sm">{m.session_join_desc()}</p>
 				<label class="mb-3 block">
 					<span class="mb-1 block text-sm font-medium">{m.session_code_label()}</span>
 					<input
@@ -181,7 +181,7 @@
 					<!-- plumbing almost nobody changes: collapsed unless they're already on a custom relay -->
 					<button
 						type="button"
-						class="text-surface-500 hover:text-surface-950-50 inline-flex items-center gap-1 text-xs"
+						class="text-muted hover:text-surface-950-50 inline-flex items-center gap-1 text-xs"
 						onclick={() => (advancedOpen = !advancedOpen)}
 					>
 						<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
@@ -204,7 +204,7 @@
 					{/if}
 				{/if}
 
-				<p class="text-surface-500 border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
+				<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
 					<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
 					<span>{m.collab_e2ee_note()}</span>
 				</p>
@@ -239,7 +239,7 @@
 
 {#if __WEB__}
 	<Modal bind:open={appModalOpen} title={m.session_app_missing_title()}>
-		<p class="text-surface-600-300 mb-4 text-sm">{m.session_app_missing_body()}</p>
+		<p class="text-muted mb-4 text-sm">{m.session_app_missing_body()}</p>
 		<ModalActions
 			buttons={[
 				{ label: m.session_continue_browser(), onclick: continueInBrowser, class: 'preset-tonal' },

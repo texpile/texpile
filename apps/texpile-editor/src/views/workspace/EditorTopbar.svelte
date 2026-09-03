@@ -176,7 +176,7 @@
 	     moves - so this row is only about the document -->
 	<div class="flex min-w-0 items-center gap-2">
 		{#if !loadedPath}
-			<FileText class="text-surface-400 size-4 shrink-0" />
+			<FileText class="text-faint size-4 shrink-0" />
 			<span class="truncate text-sm font-medium">{m.wsview_no_file()}</span>
 		{/if}
 		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ') && (viewMode === 'visual' || viewMode === 'source')}

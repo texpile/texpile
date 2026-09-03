@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div class="group text-surface-600-300 hover:bg-surface-200-800 flex items-center gap-1.5 rounded-base px-2 py-0.5 text-sm">
+<div class="group text-muted hover:bg-surface-200-800 flex items-center gap-1.5 rounded-base px-2 py-0.5 text-sm">
 	<input
 		type="checkbox"
 		class="checkbox border-surface-400-600 accent-primary-500 size-3.5 shrink-0"
@@ -61,7 +61,7 @@
 		<span class="truncate font-medium">{label}</span>
 		<!-- plain dim text, not a filled pill: the pill inherited the row's muted colour and the
 		     digit inside it was barely legible -->
-		<span class="text-surface-500 shrink-0 text-xs tabular-nums">{entries.length}</span>
+		<span class="text-muted shrink-0 text-xs tabular-nums">{entries.length}</span>
 	</button>
 	{#if action}{@render action()}{/if}
 </div>

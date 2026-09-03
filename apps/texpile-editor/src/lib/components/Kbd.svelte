@@ -73,7 +73,7 @@
 	const parts = $derived(raw != null ? null : formatShortcut(keys ?? ''));
 	// mac stacks its symbols with no separator, the way the system does; win/linux joins with +
 	const gap = $derived(isMac ? 'gap-0' : 'gap-0.5');
-	const look = $derived(cap ? 'border-surface-300-700 bg-surface-100-900 rounded-base border px-1.5 py-0.5' : 'text-surface-500');
+	const look = $derived(cap ? 'border-surface-300-700 bg-surface-100-900 rounded-base border px-1.5 py-0.5' : 'text-muted');
 </script>
 
 <kbd class="inline-flex items-center font-sans text-xs whitespace-nowrap {gap} {look} {className}">

@@ -207,7 +207,7 @@
 	{:else}
 		<div class="p-2">
 			<div class="mb-2 flex items-center gap-2 p-1">
-				<Link2 class="text-surface-500-400 h-4 w-4 flex-shrink-0" />
+				<Link2 class="text-muted h-4 w-4 flex-shrink-0" />
 				<a {href} target="_blank" rel="noopener noreferrer" class="anchor flex-1 truncate text-sm" use:tip={href}>
 					{href}
 				</a>

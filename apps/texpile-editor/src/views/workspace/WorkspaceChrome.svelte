@@ -134,7 +134,7 @@
 		<code class="bg-surface-200-800 min-w-0 truncate rounded-base px-1.5 py-0.5 font-mono" use:tip={pendingCommand.command}>
 			{pendingCommand.command}
 		</code>
-		<span class="text-surface-500-400" use:tip={m.project_command_why()}>({m.project_command_why()})</span>
+		<span class="text-muted" use:tip={m.project_command_why()}>({m.project_command_why()})</span>
 		<!-- Two ways to ANSWER, not one answer and one dismissal. The other button used to be "Keep
 		     mine", which only cleared the bar: it recorded nothing, so the question came back on every
 		     reopen - and now that compiling is held until this is settled, that meant starting blocked

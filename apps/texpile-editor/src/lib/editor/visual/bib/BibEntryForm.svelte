@@ -79,7 +79,7 @@
 	{/each}
 
 	{#if currentReference.entrytype}
-		<button type="button" class="text-surface-600-400 my-2 flex items-center gap-2 text-sm" onclick={() => (showAdvanced = !showAdvanced)}>
+		<button type="button" class="text-muted my-2 flex items-center gap-2 text-sm" onclick={() => (showAdvanced = !showAdvanced)}>
 			<ChevronDown class="size-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
 			{m.bib_advanced_citation_key_button()}
 		</button>
@@ -96,8 +96,8 @@
 
 	{#if problems.length > 0}
 		<div class="border-warning-500 bg-warning-50-950 mt-3 rounded-base border-l-2 px-3 py-2">
-			<p class="text-surface-700-300 text-xs font-medium">{m.bib_warnings_heading()}</p>
-			<ul class="text-surface-600-400 mt-1 space-y-0.5 text-xs">
+			<p class="text-muted text-xs font-medium">{m.bib_warnings_heading()}</p>
+			<ul class="text-muted mt-1 space-y-0.5 text-xs">
 				{#each problems as problem (bibProblemText(problem))}
 					<li>{bibProblemText(problem)}</li>
 				{/each}

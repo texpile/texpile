@@ -41,15 +41,15 @@
 </script>
 
 <nav class="text-sm">
-	<div class="text-surface-400 mb-2 text-xs font-semibold tracking-wide uppercase">{m.toc_heading()}</div>
+	<div class="text-faint mb-2 text-xs font-semibold tracking-wide uppercase">{m.toc_heading()}</div>
 	{#if items.length === 0}
-		<p class="text-surface-400 text-xs">{m.toc_empty()}</p>
+		<p class="text-faint text-xs">{m.toc_empty()}</p>
 	{:else}
 		<div class="flex flex-col gap-0.5">
 			{#each items as item, i (i)}
 				<button
 					type="button"
-					class="text-surface-600-300 hover:text-primary-600 block w-full max-w-full truncate rounded-base px-1 py-0.5 text-left transition-colors {item.kind
+					class="text-muted hover:text-primary-600 block w-full max-w-full truncate rounded-base px-1 py-0.5 text-left transition-colors {item.kind
 						? 'opacity-80'
 						: ''}"
 					style="padding-left: {(Math.max(1, item.level) - 1) * 0.7 + 0.25}rem"

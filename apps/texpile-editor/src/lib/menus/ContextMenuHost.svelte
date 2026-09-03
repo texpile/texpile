@@ -65,7 +65,7 @@
 				>
 					{#if item.icon}
 						{@const Icon = item.icon}
-						<Icon class="size-4 shrink-0 {item.danger ? '' : 'text-surface-500'}" />
+						<Icon class="size-4 shrink-0 {item.danger ? '' : 'text-muted'}" />
 					{:else}
 						<span class="size-4 shrink-0"></span>
 					{/if}

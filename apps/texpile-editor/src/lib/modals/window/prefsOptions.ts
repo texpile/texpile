@@ -1,18 +1,9 @@
 // The option lists Preferences' selects render, and the locale switch with its
 // machine-translation warning.
-import type { ThemeChoice } from '$lib/theme';
 import { applyUiLocale, updateSettings, type AppSettings } from '$lib/settings';
 import { LOCALE_META } from '$lib/localeMeta';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-
-export function themeOptions(): { value: ThemeChoice; label: string }[] {
-	return [
-		{ value: 'system', label: m.prefs_theme_system() },
-		{ value: 'light', label: m.prefs_theme_light() },
-		{ value: 'dark', label: m.prefs_theme_dark() }
-	];
-}
 
 // source-editor keybindings; Vim and Emacs are names, so they are not translated
 export function keymapOptions(): { value: AppSettings['editorKeymap']; label: string }[] {

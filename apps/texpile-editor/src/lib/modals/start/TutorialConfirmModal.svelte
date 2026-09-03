@@ -52,7 +52,7 @@
 			{m.tutorial_checking()}
 		</div>
 	{:else if folderState === 'occupied'}
-		<p class="text-surface-600-300 mb-4 flex items-start gap-2 text-sm">
+		<p class="text-muted mb-4 flex items-start gap-2 text-sm">
 			<TriangleAlert class="text-warning-500 mt-0.5 size-4 shrink-0" />
 			<span>
 				{m.tutorial_occupied_desc({ root: root ?? '' })}
@@ -66,7 +66,7 @@
 			]}
 		/>
 	{:else if folderState === 'ours'}
-		<p class="text-surface-600-300 mb-4 text-sm">
+		<p class="text-muted mb-4 text-sm">
 			{m.tutorial_reopen_desc({ root: root ?? '' })}
 		</p>
 		<ModalActions
@@ -78,7 +78,7 @@
 			]}
 		/>
 	{:else if folderState === 'empty'}
-		<p class="text-surface-600-300 mb-4 text-sm">
+		<p class="text-muted mb-4 text-sm">
 			{m.tutorial_create_desc({ root: root ?? '' })}
 		</p>
 		<ModalActions
@@ -90,7 +90,7 @@
 			]}
 		/>
 	{:else}
-		<p class="text-surface-600-300 mb-4 text-sm">{m.tutorial_pick_empty_desc()}</p>
+		<p class="text-muted mb-4 text-sm">{m.tutorial_pick_empty_desc()}</p>
 		<ModalActions
 			size="xs"
 			buttons={[

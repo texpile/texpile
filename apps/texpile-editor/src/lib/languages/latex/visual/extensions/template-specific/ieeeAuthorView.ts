@@ -49,7 +49,7 @@ export class IeeeAuthorView extends RawLatexView {
 
 			for (const line of a.affil) {
 				const ln = document.createElement('div');
-				ln.className = 'text-surface-600-400 text-xs' + (line.italic ? ' italic' : '');
+				ln.className = 'text-muted text-xs' + (line.italic ? ' italic' : '');
 				ln.textContent = line.text;
 				card.append(ln);
 			}

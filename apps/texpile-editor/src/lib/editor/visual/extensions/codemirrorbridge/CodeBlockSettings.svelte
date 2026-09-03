@@ -72,7 +72,7 @@
 				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 w-[240px] border shadow-lg">
 					<div class="settings-content">
 						<div class="mb-2 flex items-center justify-between gap-2">
-							<span class="text-surface-700-300 text-sm font-medium">{m.codeblock_language_label()}</span>
+							<span class="text-muted text-sm font-medium">{m.codeblock_language_label()}</span>
 							{#if currentLang}
 								<span class="preset-tonal-primary rounded-base px-2 py-0.5 text-sm font-medium">{currentLang}</span>
 							{/if}
@@ -91,11 +91,11 @@
 										{name}
 									</button>
 								{:else}
-									<p class="text-surface-500 px-2 py-1 text-xs">{m.codeblock_language_no_match()}</p>
+									<p class="text-muted px-2 py-1 text-xs">{m.codeblock_language_no_match()}</p>
 								{/each}
 							</div>
 						{:else}
-							<p class="text-surface-500 text-xs">{m.codeblock_verbatim_note()}</p>
+							<p class="text-muted text-xs">{m.codeblock_verbatim_note()}</p>
 						{/if}
 					</div>
 				</Popover.Content>

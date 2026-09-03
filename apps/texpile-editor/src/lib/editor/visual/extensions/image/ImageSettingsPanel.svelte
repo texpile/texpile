@@ -157,7 +157,7 @@
 		<div class="settings-row">
 			<div class="mb-1 flex items-center justify-between">
 				<span class="text-sm">{m.imageoverlay_size_label()}</span>
-				<span class="text-surface-500 text-xs tabular-nums">{sizePercent}%</span>
+				<span class="text-muted text-xs tabular-nums">{sizePercent}%</span>
 			</div>
 			<input
 				type="range"
@@ -183,7 +183,7 @@
 				spellcheck="false"
 				onchange={(e) => setTypstWidth((e.currentTarget as HTMLInputElement).value)}
 			/>
-			<p class="text-surface-500 mt-1 text-xs">{m.imageoverlay_typst_width_note()}</p>
+			<p class="text-muted mt-1 text-xs">{m.imageoverlay_typst_width_note()}</p>
 		</div>
 	{/if}
 
@@ -191,7 +191,7 @@
 		<div class="flex items-center gap-2">
 			<span class="text-sm">{m.imageoverlay_show_caption_label()}</span>
 			<button type="button" class="inline-flex items-center" use:tip={m.imageoverlay_show_caption_tooltip()}>
-				<Info class="text-surface-500 h-3.5 w-3.5" />
+				<Info class="text-muted h-3.5 w-3.5" />
 			</button>
 		</div>
 		<button
@@ -213,7 +213,7 @@
 			<div class="flex items-center gap-2">
 				<span class="text-sm">{m.imageoverlay_numbered_label()}</span>
 				<button type="button" class="inline-flex items-center" use:tip={m.imageoverlay_numbered_tooltip()}>
-					<Info class="text-surface-500 h-3.5 w-3.5" />
+					<Info class="text-muted h-3.5 w-3.5" />
 				</button>
 			</div>
 			<button
@@ -236,7 +236,7 @@
 			<div class="flex items-center gap-2">
 				<span class="text-sm">{m.imageoverlay_span_columns_label()}</span>
 				<button type="button" class="inline-flex items-center" use:tip={m.imageoverlay_span_columns_tooltip()}>
-					<Info class="text-surface-500 h-3.5 w-3.5" />
+					<Info class="text-muted h-3.5 w-3.5" />
 				</button>
 			</div>
 			<button
@@ -260,7 +260,7 @@
 	{#if latexControls && numberedInput}
 		<button
 			type="button"
-			class="text-surface-600-400 hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
+			class="text-muted hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
 			onclick={() => (showAdvanced = !showAdvanced)}
 		>
 			<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
@@ -272,7 +272,7 @@
 				<label class="label">
 					<span>
 						{m.imageoverlay_latex_label()}
-						<span class="text-surface-600-400 text-sm">{m.imageoverlay_latex_label_hint()}</span>
+						<span class="text-muted text-sm">{m.imageoverlay_latex_label_hint()}</span>
 					</span>
 					<input
 						type="text"
@@ -283,7 +283,7 @@
 						placeholder={m.imageoverlay_label_placeholder()}
 					/>
 					{#if isTexpileManagedLabel(labelInput)}
-						<span class="text-surface-500-400 mt-1 flex items-center gap-1 text-xs">
+						<span class="text-muted mt-1 flex items-center gap-1 text-xs">
 							<Info class="h-3 w-3" />
 							{m.imageoverlay_auto_label_hint()}
 						</span>

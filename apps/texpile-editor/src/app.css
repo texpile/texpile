@@ -596,6 +596,8 @@ html[data-mode='dark'] .cm-comment-add:hover {
 /* utilities over Texpile's own theme variables (texpile-default-theme.css): markup says
    text-ref-fg and the value still comes from whichever theme is on */
 @theme inline {
+	--color-muted: var(--muted-text);
+	--color-faint: var(--faint-text);
 	--color-blue: var(--brand-blue);
 	--color-gray-1100: var(--brand-gray);
 	--color-ref-fg: var(--ref-fg);

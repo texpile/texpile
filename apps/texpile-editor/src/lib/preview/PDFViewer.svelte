@@ -97,7 +97,7 @@
 </script>
 
 {#if loading && !pdfSource}
-	<div class="text-surface-500 flex h-full w-full items-center justify-center text-sm">Loading PDF…</div>
+	<div class="text-muted flex h-full w-full items-center justify-center text-sm">Loading PDF…</div>
 {:else if error}
 	<div class="text-error-500 flex h-full w-full items-center justify-center p-4 text-center text-sm">{error}</div>
 {:else if pdfSource}
@@ -123,5 +123,5 @@
 		</PdfViewer>
 	</div>
 {:else}
-	<div class="text-surface-500 flex h-full w-full items-center justify-center p-4 text-center text-sm">Compile to preview the PDF.</div>
+	<div class="text-muted flex h-full w-full items-center justify-center p-4 text-center text-sm">Compile to preview the PDF.</div>
 {/if}

@@ -56,7 +56,7 @@
 	// theme picker's System/Light/Dark, and at full size they push the latexmk checkbox off the row
 	function seg(active: boolean, compact = false) {
 		return `rounded-base ${compact ? 'px-2.5 py-1 text-xs' : 'px-3 py-1 text-sm'} ${
-			active ? 'bg-surface-50-950 font-medium shadow-sm' : 'text-surface-600-400 hover:text-surface-950-50'
+			active ? 'bg-surface-50-950 font-medium shadow-sm' : 'text-muted hover:text-surface-950-50'
 		}`;
 	}
 </script>
@@ -72,7 +72,7 @@
 		<!-- LaTeX and Typst are product names, so they are not translated -->
 		<span class="text-sm">{isTypst ? 'Typst' : 'LaTeX'}</span>
 	</div>
-	<p class="text-surface-500 mb-3 text-xs">{m.wsview_format_from_main()}</p>
+	<p class="text-muted mb-3 text-xs">{m.wsview_format_from_main()}</p>
 
 	<!-- the lane's own settings, so this block always describes the compiler that will run -->
 	{#if isTypst}
@@ -83,16 +83,18 @@
 
 	{#if !superseded}
 		<!-- svelte-ignore a11y_autofocus -->
-		<input
-			class="input w-full font-mono text-sm"
+		<textarea
+			class="textarea w-full resize-none font-mono text-sm [field-sizing:content]"
+			rows="1"
 			bind:value={command}
 			placeholder={DEFAULT_COMPILE_COMMAND}
 			spellcheck="false"
 			autofocus
 			onkeydown={(e) => {
-				if (e.key === 'Enter' && !(command.includes('{main}') && !mainFile.current)) onSave(true);
-			}}
-		/>
+				if (e.key !== 'Enter') return;
+				e.preventDefault();
+				if (!(command.includes('{main}') && !mainFile.current)) onSave(true);
+			}}></textarea>
 		<div class="mt-4 flex items-center justify-between gap-4">
 			<span class="text-sm">{m.wsview_completion_marker_label()}</span>
 			<Switch
@@ -103,7 +105,7 @@
 				<Switch.HiddenInput />
 			</Switch>
 		</div>
-		<p class="text-surface-500 mt-1 text-xs">
+		<p class="text-muted mt-1 text-xs">
 			{m.wsview_completion_marker_desc()}
 		</p>
 
@@ -111,7 +113,7 @@
 	{/if}
 
 	<div class="mt-4 flex items-center justify-between gap-3">
-		<span class="text-surface-500 text-xs">
+		<span class="text-muted text-xs">
 			{#if !mainFile.current}{m.wsview_pick_main_file_to_run()}{/if}
 		</span>
 		<!-- superseded: one button either way, since onRun goes through runCompile, which routes to the
@@ -138,7 +140,6 @@
 						{
 							label: m.wsview_use_default(),
 							icon: Play,
-							class: 'preset-tonal-primary',
 							tip: m.wsview_use_default_title(),
 							disabled: DEFAULT_COMPILE_COMMAND.includes('{main}') && !mainFile.current,
 							onclick: onUseDefault

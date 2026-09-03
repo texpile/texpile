@@ -32,7 +32,7 @@
 		class="text-surface-800-200 hover:bg-surface-200-800 flex h-7 items-center gap-1 rounded-base px-2 text-sm font-medium transition-colors"
 	>
 		<span class="min-w-[5.5rem] text-left">{triggerLabel}</span>
-		<ChevronDown class="text-surface-500 size-4 shrink-0" />
+		<ChevronDown class="text-muted size-4 shrink-0" />
 	</Popover.Trigger>
 
 	<Portal>
@@ -45,7 +45,7 @@
 						class:preset-tonal-primary={level === 0}
 						onclick={() => choose(0)}
 					>
-						<span class="text-surface-400 w-10 shrink-0"></span>
+						<span class="text-faint w-10 shrink-0"></span>
 						<span class="flex-1">{m.mdtoolbar_paragraph()}</span>
 						{#if level === 0}<Check class="h-4 w-4 shrink-0" />{/if}
 					</button>
@@ -57,7 +57,7 @@
 							class:preset-tonal-primary={active}
 							onclick={() => choose(lvl)}
 						>
-							<span class="text-surface-500-400 w-10 shrink-0 font-mono text-xs">{'='.repeat(lvl)}</span>
+							<span class="text-muted w-10 shrink-0 font-mono text-xs">{'='.repeat(lvl)}</span>
 							<span class="flex-1">{m.mdtoolbar_heading_n({ n: lvl })}</span>
 							{#if active}<Check class="h-4 w-4 shrink-0" />{/if}
 						</button>

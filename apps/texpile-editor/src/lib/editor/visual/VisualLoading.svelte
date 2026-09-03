@@ -77,7 +77,7 @@
 </script>
 
 {#if shown === 'spinner'}
-	<div class="text-surface-500 mt-12 flex items-center justify-center gap-2 text-sm">
+	<div class="text-muted mt-12 flex items-center justify-center gap-2 text-sm">
 		<Loader2 class="size-4 animate-spin" />
 		{m.wsview_opening()}
 	</div>
@@ -92,10 +92,10 @@
 				<div class="bg-primary-500 h-full rounded-full transition-[width] duration-200 ease-out" style="width: {pct}%"></div>
 			{/if}
 		</div>
-		<p class="text-surface-500 mt-3 text-sm">{label}</p>
+		<p class="text-muted mt-3 text-sm">{label}</p>
 
 		{#if slow}
-			<p class="text-surface-400 mt-2 text-xs">{m.wsview_loading_large_note({ size: sizeText })}</p>
+			<p class="text-faint mt-2 text-xs">{m.wsview_loading_large_note({ size: sizeText })}</p>
 			{#if onUseSource}
 				<button class="text-primary-500 mt-3 text-xs hover:underline" onclick={onUseSource}>
 					{m.wsview_loading_use_source()}

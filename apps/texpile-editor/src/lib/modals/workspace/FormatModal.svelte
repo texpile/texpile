@@ -21,7 +21,7 @@
 </script>
 
 <Modal bind:open title={m.wsview_format_modal_title()} icon={TriangleAlert} iconClass="text-warning-500">
-	<p class="text-surface-600-300 mb-4 text-sm">
+	<p class="text-muted mb-4 text-sm">
 		{#if tool === 'typstyle'}
 			{m.wsview_format_desc_typst_pre()}
 			<code class="bg-surface-200-800 rounded-base px-1">typstyle</code>{m.wsview_format_desc_typst_post()}

@@ -35,9 +35,9 @@
 {#if u.phase !== 'idle'}
 	<Modal bind:open={updateModalOpen.current} {title} icon={Download} card="flex max-h-full max-w-md flex-col p-5">
 		{#if u.phase === 'available'}
-			<p class="text-surface-600-300 mb-4 text-sm">{m.updatemodal_version_available({ version: u.version ?? '' })}</p>
+			<p class="text-muted mb-4 text-sm">{m.updatemodal_version_available({ version: u.version ?? '' })}</p>
 			{#if u.notes?.length}
-				<ul class="text-surface-600-300 mb-4 min-h-0 list-disc space-y-1 overflow-y-auto pl-5 text-sm">
+				<ul class="text-muted mb-4 min-h-0 list-disc space-y-1 overflow-y-auto pl-5 text-sm">
 					{#each u.notes as note (note)}
 						<li>{note}</li>
 					{/each}
@@ -61,7 +61,7 @@
 			<div class="bg-surface-200-800 mb-2 h-2 w-full overflow-hidden rounded-full">
 				<div class="bg-primary-500 h-full rounded-full transition-[width] duration-300" style="width: {Math.max(2, u.percent)}%"></div>
 			</div>
-			<p class="text-surface-600-300 mb-4 text-sm">
+			<p class="text-muted mb-4 text-sm">
 				{#if u.total > 0}
 					{m.updatemodal_progress_percent({
 						percent: Math.round(u.percent),
@@ -72,11 +72,11 @@
 					{m.updatemodal_starting_download()}
 				{/if}
 			</p>
-			<p class="text-surface-500 mb-4 text-sm">{m.updatemodal_background_download_notice()}</p>
+			<p class="text-muted mb-4 text-sm">{m.updatemodal_background_download_notice()}</p>
 			<ModalActions size="xs" buttons={[{ label: m.updatemodal_hide(), role: 'cancel', onclick: close }]} />
 		{:else if u.phase === 'downloaded'}
 			{#if pkexec}
-				<p class="text-surface-600-300 mb-4 text-sm">
+				<p class="text-muted mb-4 text-sm">
 					{m.updatemodal_downloaded_pkexec({ version: u.version ?? '' })}
 				</p>
 				<ModalActions
@@ -87,7 +87,7 @@
 					]}
 				/>
 			{:else}
-				<p class="text-surface-600-300 mb-4 text-sm">{m.updatemodal_downloaded_ready({ version: u.version ?? '' })}</p>
+				<p class="text-muted mb-4 text-sm">{m.updatemodal_downloaded_ready({ version: u.version ?? '' })}</p>
 				<ModalActions
 					size="xs"
 					buttons={[
@@ -97,11 +97,11 @@
 				/>
 			{/if}
 		{:else if u.phase === 'error'}
-			<p class="text-surface-600-300 mb-4 text-sm">
+			<p class="text-muted mb-4 text-sm">
 				{m.updatemodal_download_error()}
 			</p>
 			{#if u.error}
-				<p class="text-surface-500 mb-4 text-xs break-words">{u.error}</p>
+				<p class="text-muted mb-4 text-xs break-words">{u.error}</p>
 			{/if}
 			<ModalActions
 				size="xs"

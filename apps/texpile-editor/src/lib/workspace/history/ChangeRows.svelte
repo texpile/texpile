@@ -43,7 +43,7 @@
 		/>
 		<button class="flex min-w-0 flex-1 items-center gap-1.5 text-left" onclick={() => onOpenDiff(c.path)} use:tip={relPath(c.path)}>
 			<span class="truncate {STATUS_COLOR[badge]}" use:tip={STATUS_TITLE[badge]}>{baseName(c.path)}</span>
-			{#if dirName(c.path)}<span class="text-surface-500 truncate text-xs">{dirName(c.path)}</span>{/if}
+			{#if dirName(c.path)}<span class="text-muted truncate text-xs">{dirName(c.path)}</span>{/if}
 			<!-- .texpile is hidden from the file tree, so this is the first place anyone meets the
 			     file. Unexplained, it reads as junk to discard rather than review notes to keep. -->
 			{#if isTexpileManaged(relPath(c.path))}

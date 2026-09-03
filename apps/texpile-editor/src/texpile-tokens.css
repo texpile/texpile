@@ -10,8 +10,11 @@
    and inherits the rest. Pairs are light-dark(), the way Skeleton's own pairing tokens are built. */
 
 html {
+	/* secondary and faint text as a share of the text colour, whatever the theme's scale does */
+	--muted-text: color-mix(in oklab, currentColor 60%, transparent);
+	--faint-text: color-mix(in oklab, currentColor 40%, transparent);
 	/* CodeMirror syntax roles (cmHighlight.ts) */
-	--syntax-comment: light-dark(var(--color-surface-600), var(--color-surface-400));
+	--syntax-comment: var(--muted-text);
 	--syntax-keyword: light-dark(var(--color-error-700), var(--color-error-300));
 	--syntax-import: light-dark(var(--color-secondary-700), var(--color-secondary-300));
 	--syntax-command: light-dark(var(--color-primary-700), var(--color-primary-300));
@@ -79,7 +82,7 @@ html {
 	--page-sheet: var(--color-surface-50);
 	/* an empty math field, and one about to be deleted */
 	--math-empty-tint: var(--color-error-500);
-	--mathfield-focus-border: light-dark(var(--color-surface-950), var(--color-surface-400));
+	--mathfield-focus-border: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the selected block's outline while the context menu is open */
 	--selected-node-outline: var(--color-primary-300);
 	/* a peer's cursor label when it carries no colour of its own */
@@ -111,6 +114,6 @@ html {
 	--pdf-toolbar-input-border: light-dark(var(--color-surface-200), var(--color-surface-700));
 	--pdf-toolbar-accent: var(--color-primary-500);
 	--pdf-toolbar-accent-ring: color-mix(in srgb, var(--color-primary-500) 25%, transparent);
-	--pdf-toolbar-muted: light-dark(var(--color-surface-500), var(--color-surface-400));
-	--pdf-toolbar-muted-strong: light-dark(var(--color-surface-600), var(--color-surface-400));
+	--pdf-toolbar-muted: color-mix(in oklab, var(--pdf-toolbar-fg) 60%, transparent);
+	--pdf-toolbar-muted-strong: color-mix(in oklab, var(--pdf-toolbar-fg) 80%, transparent);
 }

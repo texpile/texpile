@@ -43,7 +43,7 @@
 		class="flex h-7 items-center gap-1 rounded-base px-2 text-sm font-medium text-surface-800-200 transition-colors hover:bg-surface-200-800"
 	>
 		<span class="min-w-[5.5rem] text-left">{triggerLabel}</span>
-		<ChevronDown class="text-surface-500 size-4 shrink-0" />
+		<ChevronDown class="text-muted size-4 shrink-0" />
 	</Popover.Trigger>
 
 	<Portal>
@@ -56,12 +56,12 @@
 						class:preset-tonal-primary={level === 0}
 						onclick={() => choose(0, true)}
 					>
-						<span class="text-surface-400 w-10 shrink-0"></span>
+						<span class="text-faint w-10 shrink-0"></span>
 						<span class="flex-1">Normal</span>
 						{#if level === 0}<Check class="h-4 w-4 shrink-0" />{/if}
 					</button>
 
-					<div class="text-surface-600-400 px-3 pt-2 pb-1 text-xs font-semibold tracking-wide uppercase">Numbered</div>
+					<div class="text-muted px-3 pt-2 pb-1 text-xs font-semibold tracking-wide uppercase">Numbered</div>
 					{#each LEVELS as l (l)}
 						{@const active = level === l.level && numbered}
 						<button
@@ -71,13 +71,13 @@
 							style="padding-left: {l.level * 0.5 + 0.75}rem"
 							onclick={() => choose(l.level, true)}
 						>
-							<span class="text-surface-500-400 w-10 shrink-0 font-mono text-xs">{l.number}</span>
+							<span class="text-muted w-10 shrink-0 font-mono text-xs">{l.number}</span>
 							<span class="flex-1">{l.name}</span>
 							{#if active}<Check class="h-4 w-4 shrink-0" />{/if}
 						</button>
 					{/each}
 
-					<div class="text-surface-600-400 px-3 pt-2 pb-1 text-xs font-semibold tracking-wide uppercase">Unnumbered</div>
+					<div class="text-muted px-3 pt-2 pb-1 text-xs font-semibold tracking-wide uppercase">Unnumbered</div>
 					{#each LEVELS as l (l)}
 						{@const active = level === l.level && !numbered}
 						<button
@@ -87,7 +87,7 @@
 							style="padding-left: {l.level * 0.5 + 0.75}rem"
 							onclick={() => choose(l.level, false)}
 						>
-							<span class="text-surface-400 w-10 shrink-0 font-mono text-xs">*</span>
+							<span class="text-faint w-10 shrink-0 font-mono text-xs">*</span>
 							<span class="flex-1">{l.name}</span>
 							{#if active}<Check class="h-4 w-4 shrink-0" />{/if}
 						</button>

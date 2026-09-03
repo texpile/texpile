@@ -95,7 +95,7 @@
 	<div class="border-surface-200-800 flex items-center gap-1 border-b p-2">
 		<div class="find-field min-w-0 flex-1">
 			<!-- the gap is on the icon: `.find-field input` zeroes the padding and outranks a utility -->
-			<Search class="text-surface-400 mr-1.5 size-3.5 shrink-0" />
+			<Search class="text-faint mr-1.5 size-3.5 shrink-0" />
 			<!-- svelte-ignore a11y_autofocus -->
 			<input
 				placeholder={m.globalsearch_placeholder()}
@@ -112,7 +112,7 @@
 		>
 	</div>
 
-	<div class="text-surface-500 px-2 py-1 text-xs">
+	<div class="text-muted px-2 py-1 text-xs">
 		{#if searching}
 			{m.globalsearch_searching()}
 		{:else if error}
@@ -130,13 +130,13 @@
 					class="hover:preset-tonal-surface flex w-full items-center gap-1 px-2 py-1 text-left text-sm"
 					onclick={() => (collapsed[r.file] = !collapsed[r.file])}
 				>
-					{#if collapsed[r.file]}<ChevronRight class="text-surface-400 size-3.5 shrink-0" />{:else}<ChevronDown
-							class="text-surface-400 size-3.5 shrink-0"
+					{#if collapsed[r.file]}<ChevronRight class="text-faint size-3.5 shrink-0" />{:else}<ChevronDown
+							class="text-faint size-3.5 shrink-0"
 						/>{/if}
-					<FileText class="text-surface-400 size-3.5 shrink-0" />
+					<FileText class="text-faint size-3.5 shrink-0" />
 					<span class="shrink-0 font-medium">{basename(r.rel)}</span>
-					<span class="text-surface-400 truncate text-xs" use:tip={r.rel}>{r.rel}</span>
-					<span class="text-surface-400 ml-auto shrink-0 text-xs">{r.matches.length}</span>
+					<span class="text-faint truncate text-xs" use:tip={r.rel}>{r.rel}</span>
+					<span class="text-faint ml-auto shrink-0 text-xs">{r.matches.length}</span>
 				</button>
 				{#if !collapsed[r.file]}
 					{#each r.matches as match (match.line)}
@@ -145,7 +145,7 @@
 							onclick={() => onOpen(r.file, match.line)}
 							use:tip={m.globalsearch_line_title({ line: match.line })}
 						>
-							<span class="text-surface-400 w-8 shrink-0 text-right tabular-nums">{match.line}</span>
+							<span class="text-faint w-8 shrink-0 text-right tabular-nums">{match.line}</span>
 							<span class="truncate font-mono"
 								>{#each parts(match.text.trim()) as p, i (i)}<span class={p.hit ? 'bg-warning-500/40 rounded-base' : ''}>{p.s}</span
 									>{/each}</span

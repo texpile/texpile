@@ -45,21 +45,19 @@
 <div class="flex h-full flex-col">
 	<!-- min-h-10 is the app's bar height, shared with the PDF, editor and draft toolbars: this sits
 	     level with the PDF toolbar across the split instead of a few pixels short of it -->
-	<div
-		class="bg-surface-100-900 text-surface-600-300 border-surface-200-800 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
-	>
+	<div class="bg-surface-100-900 text-muted border-surface-200-800 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs">
 		<GitCompare class="size-3.5 shrink-0" />
 		<span class="font-medium">{m.wsview_diff_heading()}</span>
 		<!-- naming the version matters more than the word "diff" once this can point at any of them -->
 		{#if compareRef}
-			<span class="text-surface-500 min-w-0 truncate" use:tip={compareRef.hash}>· {compareRef.subject}</span>
+			<span class="text-muted min-w-0 truncate" use:tip={compareRef.hash}>· {compareRef.subject}</span>
 		{/if}
-		{#if fileDeleted}<span class="text-surface-500">· {m.wsview_diff_file_deleted()}</span>
+		{#if fileDeleted}<span class="text-muted">· {m.wsview_diff_file_deleted()}</span>
 			<!-- a git read of a local file is usually well under the threshold, and announcing it only
 		     to take it away again is the flash the rule exists to prevent -->
-		{:else if loading}<span class="text-surface-500 reveal-late">· {m.wsview_diff_loading()}</span>
+		{:else if loading}<span class="text-muted reveal-late">· {m.wsview_diff_loading()}</span>
 		{:else if error}<span class="text-error-500 truncate">· {error}</span>
-		{:else if !hasHead}<span class="text-surface-500">· {m.wsview_diff_new_file()}</span>{/if}
+		{:else if !hasHead}<span class="text-muted">· {m.wsview_diff_new_file()}</span>{/if}
 		<div class="ml-auto flex shrink-0 items-center gap-1">
 			<button
 				class="hover:preset-tonal rounded-base p-0.5"
@@ -89,7 +87,7 @@
 		<!-- same 40px bar as the editor's, so meeting this file in a diff and meeting it in the editor
 		     look like the same notice -->
 		<div
-			class="border-surface-200-800 text-surface-600-300 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			class="border-surface-200-800 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
 			use:tip={m.texpile_managed_note()}
 		>
 			<Info class="text-primary-500 size-3.5 shrink-0" />

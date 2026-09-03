@@ -356,7 +356,7 @@
 	}
 
 	:global(.TexpileEditor blockquote) {
-		@apply border-primary-300-700 text-surface-700-300 my-4 border-l-4 pl-4 italic;
+		@apply border-primary-300-700 text-muted my-4 border-l-4 pl-4 italic;
 	}
 
 	:global(.TexpileEditor div.abstract) {
@@ -364,7 +364,7 @@
 	}
 	:global(.TexpileEditor div.abstract::before) {
 		content: 'Abstract';
-		@apply text-surface-600-400 absolute top-2 left-4 text-[10px] font-semibold tracking-wider uppercase;
+		@apply text-muted absolute top-2 left-4 text-[10px] font-semibold tracking-wider uppercase;
 	}
 	:global(.TexpileEditor div.abstract p) {
 		@apply my-2 leading-relaxed;

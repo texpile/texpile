@@ -110,7 +110,7 @@
 				{@const ref = referenceStore.current?.find((r) => r.key === k)}
 				<div class="mt-1.5">
 					<span class="text-surface-900-100 text-sm font-semibold">{ref?.author || k}</span>
-					<span class="text-surface-600-400 text-sm">{ref ? ref.year || ref.date?.slice(0, 4) || '' : m.citation_key_missing()}</span>
+					<span class="text-muted text-sm">{ref ? ref.year || ref.date?.slice(0, 4) || '' : m.citation_key_missing()}</span>
 				</div>
 			{/each}
 		{:else if onChangeKey && referenceStore.current?.length}
@@ -123,7 +123,7 @@
 			</select>
 		{:else}
 			<div class="text-surface-900-100 text-base font-semibold">{reference?.author || m.citation_unknown_author()}</div>
-			<div class="text-surface-600-400 text-sm">
+			<div class="text-muted text-sm">
 				{reference?.year || m.citation_year_na()}
 				{#if reference?.title}<span class="mt-1 block text-xs italic">{reference.title}</span>{/if}
 			</div>
@@ -132,14 +132,14 @@
 
 	<label class="mb-4 block">
 		<span class="text-surface-900-100 text-sm font-medium">{m.citation_page_numbers_label()}</span>
-		<span class="text-surface-500-400 ml-1 text-xs">{m.citation_optional()}</span>
+		<span class="text-muted ml-1 text-xs">{m.citation_optional()}</span>
 		<input type="text" bind:value={postnote} placeholder={m.citation_page_numbers_placeholder()} class="input mt-1.5 w-full" />
-		<span class="text-surface-500-400 mt-1 block text-xs"> {m.citation_page_numbers_hint()} </span>
+		<span class="text-muted mt-1 block text-xs"> {m.citation_page_numbers_hint()} </span>
 	</label>
 
 	<button
 		type="button"
-		class="text-surface-600-400 hover:text-surface-900-100 mb-3 flex w-full items-center gap-2 text-sm transition-colors"
+		class="text-muted hover:text-surface-900-100 mb-3 flex w-full items-center gap-2 text-sm transition-colors"
 		onclick={() => (showAdvanced = !showAdvanced)}
 	>
 		<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
@@ -169,7 +169,7 @@
 					<button type="button" class="btn btn-xs preset-outlined-primary-500" onclick={() => (prenote = 'compare')}> compare </button>
 				</div>
 				<input type="text" bind:value={prenote} placeholder={m.citation_prefix_placeholder()} class="input w-full text-sm" />
-				<span class="text-surface-500-400 mt-1 block text-xs"> {m.citation_prefix_hint()} </span>
+				<span class="text-muted mt-1 block text-xs"> {m.citation_prefix_hint()} </span>
 			</div>
 		</div>
 	{/if}

@@ -154,9 +154,9 @@
 				open={true}
 			>
 				<Combobox.Control class="border-surface-200-800 flex items-center gap-2 border-b px-3 py-2">
-					<Search class="text-surface-500 size-4 shrink-0" />
+					<Search class="text-muted size-4 shrink-0" />
 					<Combobox.Input
-						class="w-full bg-transparent text-sm outline-none placeholder:text-surface-500"
+						class="w-full bg-transparent text-sm outline-none placeholder:text-muted"
 						placeholder={m.palette_placeholder()}
 						autocomplete="off"
 						spellcheck="false"
@@ -164,18 +164,18 @@
 				</Combobox.Control>
 
 				{#if results.length === 0}
-					<div class="text-surface-500 px-3 py-10 text-center text-sm">{m.palette_empty()}</div>
+					<div class="text-muted px-3 py-10 text-center text-sm">{m.palette_empty()}</div>
 				{:else}
 					<Combobox.Content class="min-h-0 overflow-y-auto border-none bg-transparent p-1.5">
 						{#each results as scored, i (scored.item.id)}
 							{@const header = groupOf(i)}
 							{#if header}
-								<div class="text-surface-500 px-2.5 pt-2 pb-1 text-xs font-semibold tracking-wider uppercase">{header}</div>
+								<div class="text-muted px-2.5 pt-2 pb-1 text-xs font-semibold tracking-wider uppercase">{header}</div>
 							{/if}
 							<Combobox.Item class={rowClass} item={scored}>
 								{#if scored.item.icon}
 									{@const Icon = scored.item.icon}
-									<Icon class="text-surface-500 size-4 shrink-0" />
+									<Icon class="text-muted size-4 shrink-0" />
 								{:else}
 									<span class="size-4 shrink-0"></span>
 								{/if}
@@ -185,7 +185,7 @@
 											>{:else}{run.text}{/if}{/each}
 								</Combobox.ItemText>
 								{#if scored.item.hint}
-									<span class="text-surface-500 max-w-56 truncate text-xs">{scored.item.hint}</span>
+									<span class="text-muted max-w-56 truncate text-xs">{scored.item.hint}</span>
 								{/if}
 							</Combobox.Item>
 						{/each}
@@ -194,7 +194,7 @@
 
 				<!-- Skeleton has no .kbd class; Kbd is ours, and using it here means these caps and the
 				     ones in the Help shortcut sheet cannot drift apart again -->
-				<div class="border-surface-200-800 text-surface-500 flex gap-3 border-t px-3 py-1.5 text-xs">
+				<div class="border-surface-200-800 text-muted flex gap-3 border-t px-3 py-1.5 text-xs">
 					<span><Kbd cap keys="up" /> <Kbd cap keys="down" /> {m.palette_hint_navigate()}</span>
 					<span><Kbd cap keys="enter" /> {m.palette_hint_select()}</span>
 					<span><Kbd cap keys="esc" /> {m.palette_hint_close()}</span>

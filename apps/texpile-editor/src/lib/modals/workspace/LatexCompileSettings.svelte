@@ -55,7 +55,7 @@
 <!-- Live mode IS the incremental lualatex pipeline. The setting is global and stays whatever it
      was, ready for the next LaTeX folder. -->
 <div class="mb-1 flex items-center justify-between gap-4">
-	<span class="text-sm">{m.wsview_live_mode_label()} <span class="text-surface-500">{m.wsview_experimental_label()}</span></span>
+	<span class="text-sm">{m.wsview_live_mode_label()} <span class="text-muted">{m.wsview_experimental_label()}</span></span>
 	<Switch
 		checked={compileConfig.current.latex.liveMode}
 		disabled={sessionActive}
@@ -71,16 +71,16 @@
 {/if}
 
 {#if superseded}
-	<p class="text-surface-500 mt-1 mb-1 text-xs">
+	<p class="text-muted mt-1 mb-1 text-xs">
 		{m.wsview_livemode_desc_pre()} <strong>lualatex</strong>
 		{m.wsview_livemode_desc_post()}
 	</p>
-	<div class="border-surface-300-700 text-surface-500 mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
+	<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
 		{m.wsview_compile_disabled_live()}
 		<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">lualatex (built-in)</code>
 	</div>
 {:else}
-	<p class="text-surface-600-300 mt-2 mb-3 text-sm">
+	<p class="text-muted mt-2 mb-3 text-xs">
 		{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">{'{main}'}</code>
 		{m.wsview_compile_desc_post()}
 	</p>
@@ -91,7 +91,7 @@
 			{m.wsview_engine_label()}
 			<!-- no segment is raised when the engine is unrecognized, so say why -->
 			{#if engine === null && command.trim()}
-				<span class="text-surface-400 truncate text-xs italic">{m.wsview_custom_label()}</span>
+				<span class="text-faint truncate text-xs italic">{m.wsview_custom_label()}</span>
 			{/if}
 		</span>
 		<div class="flex shrink-0 items-center gap-3">
@@ -102,7 +102,7 @@
 					</button>
 				{/each}
 			</div>
-			<label class="text-surface-600-300 inline-flex items-center gap-1.5 text-xs">
+			<label class="text-muted inline-flex items-center gap-1.5 text-xs">
 				<input type="checkbox" class="checkbox" checked={latexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
 				{m.wsview_use_latexmk_label()}
 			</label>
@@ -110,7 +110,7 @@
 	</div>
 
 	{#if runsIn}
-		<p class="text-surface-500 -mt-1 mb-3 text-xs">
+		<p class="text-muted -mt-1 mb-3 text-xs">
 			{m.wsview_compile_runs_in({ dir: runsIn.dir, out: runsIn.out })}
 		</p>
 	{/if}
