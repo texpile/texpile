@@ -5,6 +5,11 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: text, tints and buttons stay readable on every theme, including pastel ones
+- fix: source editor line numbers, cursor and active line follow the theme in both modes
+- fix: the terminal, Typst preview and title bar pick up a new theme without reopening
+- fix: buttons, chips and panels use Skeleton classes; Compile is the one filled action
+
 ## [1.0.0-rc.3] - 2026-09-03
 
 - fix: various improvements to align with Apple's design guidances on macOS
