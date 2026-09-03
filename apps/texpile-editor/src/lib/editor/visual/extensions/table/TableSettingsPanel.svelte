@@ -233,11 +233,11 @@
 
 <style>
 	.settings-content {
-		padding: 0.75rem;
+		padding: calc(var(--spacing) * 3);
 	}
 
 	.settings-row {
-		margin-bottom: 0.75rem;
+		margin-bottom: calc(var(--spacing) * 3);
 	}
 
 	.settings-row:last-child {

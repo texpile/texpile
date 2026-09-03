@@ -85,6 +85,20 @@ describe('docPositions', () => {
 		expect(docPositions.get(at('bad.tex'))).toBeNull();
 		expect(docPositions.get(at('ok.tex'))).toBeNull(); // no `at`, so also rejected
 	});
+
+	// the landing flash reads this: once, for the restore the jump caused, and never for the
+	// ordinary tab switch that comes after it
+	it('hands out a jump marker exactly once', () => {
+		docPositions.set(at('main.tex'), pos(12), { jump: true });
+		expect(docPositions.takeJump(at('main.tex'))).toBe(true);
+		expect(docPositions.takeJump(at('main.tex'))).toBe(false);
+	});
+
+	it('lets a plain write to the same file cancel a jump that never landed', () => {
+		docPositions.set(at('main.tex'), pos(12), { jump: true });
+		docPositions.set(at('main.tex'), pos(13));
+		expect(docPositions.takeJump(at('main.tex'))).toBe(false);
+	});
 });
 
 describe('resolvePosition', () => {

@@ -5,6 +5,7 @@
 	import '@xterm/xterm/css/xterm.css';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { themeColour } from '$lib/languages/typst/preview/themeColour';
 
 	// a real shell (node-pty in the Electron main) rendered with xterm.js via the window.texpileTerminal bridge
 	let { cwd = '' }: { cwd?: string } = $props();
@@ -135,7 +136,8 @@
 				fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
 				cursorBlink: true,
 				scrollback: 5000,
-				theme: { background: '#1e1e1e', foreground: '#e4e4e7' }
+				// resolved to rgb(): xterm parses colours itself and does not read CSS variables
+				theme: { background: themeColour('--terminal-bg', '#1e1e1e'), foreground: themeColour('--terminal-fg', '#e4e4e7') }
 			});
 			fit = new FitAddon();
 			term.loadAddon(fit);
@@ -251,7 +253,7 @@
 	 * pane while the text is inset. That is what we want anyway (it is where VS Code puts it).
 	 */
 	.terminal-host :global(.xterm) {
-		padding: 4px 8px;
+		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
 	}
 
 	/* Pin the scrollbar width for both themes. The app's global dark-mode rule (app.css:
@@ -262,7 +264,7 @@
 	   The thumb colours are here because the terminal has its own dark background regardless of the
 	   app's theme, so the app's scrollbar would look wrong on it. */
 	.terminal-host :global(.xterm-viewport::-webkit-scrollbar) {
-		width: 10px;
+		width: calc(var(--spacing) * 2.5);
 	}
 	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-track) {
 		background: transparent;
@@ -271,7 +273,7 @@
 		background-color: #4a4a52;
 		border: 2px solid transparent;
 		background-clip: padding-box;
-		border-radius: 5px;
+		border-radius: calc(var(--radius-base) * 1.25);
 	}
 	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-thumb:hover) {
 		background-color: #5e5e68;

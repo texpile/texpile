@@ -2,6 +2,7 @@
 	import { Download, RefreshCw, ExternalLink } from '@lucide/svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import Modal from '../Modal.svelte';
+	import ModalActions from '../ModalActions.svelte';
 	import { settings, updateSettings } from '$lib/settings';
 	// eslint-disable-next-line no-restricted-imports -- this modal IS the desktop updater's UI; a web entry never mounts it
 	import { updateState, updateModalOpen, startDownload, installNow } from '$lib/updates';
@@ -49,13 +50,13 @@
 					<Switch.HiddenInput />
 				</Switch>
 			</div>
-			<div class="flex justify-end gap-2">
-				<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.updatemodal_dismiss()}</button>
-				<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={() => startDownload()}>
-					<Download class="size-4" />
-					{m.updatemodal_download_update()}
-				</button>
-			</div>
+			<ModalActions
+				size="xs"
+				buttons={[
+					{ label: m.updatemodal_dismiss(), role: 'cancel', onclick: close },
+					{ label: m.updatemodal_download_update(), role: 'primary', icon: Download, onclick: () => startDownload() }
+				]}
+			/>
 		{:else if u.phase === 'downloading'}
 			<div class="bg-surface-200-800 mb-2 h-2 w-full overflow-hidden rounded-full">
 				<div class="bg-primary-500 h-full rounded-full transition-[width] duration-300" style="width: {Math.max(2, u.percent)}%"></div>
@@ -72,30 +73,28 @@
 				{/if}
 			</p>
 			<p class="text-surface-500 mb-4 text-sm">{m.updatemodal_background_download_notice()}</p>
-			<div class="flex justify-end">
-				<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.updatemodal_hide()}</button>
-			</div>
+			<ModalActions size="xs" buttons={[{ label: m.updatemodal_hide(), role: 'cancel', onclick: close }]} />
 		{:else if u.phase === 'downloaded'}
 			{#if pkexec}
 				<p class="text-surface-600-300 mb-4 text-sm">
 					{m.updatemodal_downloaded_pkexec({ version: u.version ?? '' })}
 				</p>
-				<div class="flex justify-end gap-2">
-					<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.updatemodal_later()}</button>
-					<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={installNow}>
-						<RefreshCw class="size-4" />
-						{m.updatemodal_install_now()}
-					</button>
-				</div>
+				<ModalActions
+					size="xs"
+					buttons={[
+						{ label: m.updatemodal_later(), role: 'cancel', onclick: close },
+						{ label: m.updatemodal_install_now(), role: 'primary', icon: RefreshCw, onclick: installNow }
+					]}
+				/>
 			{:else}
 				<p class="text-surface-600-300 mb-4 text-sm">{m.updatemodal_downloaded_ready({ version: u.version ?? '' })}</p>
-				<div class="flex justify-end gap-2">
-					<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.updatemodal_later()}</button>
-					<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={installNow}>
-						<RefreshCw class="size-4" />
-						{m.updatemodal_restart_and_install()}
-					</button>
-				</div>
+				<ModalActions
+					size="xs"
+					buttons={[
+						{ label: m.updatemodal_later(), role: 'cancel', onclick: close },
+						{ label: m.updatemodal_restart_and_install(), role: 'primary', icon: RefreshCw, onclick: installNow }
+					]}
+				/>
 			{/if}
 		{:else if u.phase === 'error'}
 			<p class="text-surface-600-300 mb-4 text-sm">
@@ -104,13 +103,13 @@
 			{#if u.error}
 				<p class="text-surface-500 mb-4 text-xs break-words">{u.error}</p>
 			{/if}
-			<div class="flex justify-end gap-2">
-				<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.updatemodal_close()}</button>
-				<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={openDownloadPage}>
-					<ExternalLink class="size-4" />
-					{m.updatemodal_open_download_page()}
-				</button>
-			</div>
+			<ModalActions
+				size="xs"
+				buttons={[
+					{ label: m.updatemodal_close(), role: 'cancel', onclick: close },
+					{ label: m.updatemodal_open_download_page(), role: 'primary', icon: ExternalLink, onclick: openDownloadPage }
+				]}
+			/>
 		{/if}
 	</Modal>
 {/if}

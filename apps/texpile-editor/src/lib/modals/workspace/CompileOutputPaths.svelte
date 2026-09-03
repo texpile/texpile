@@ -35,7 +35,7 @@
 	<div class="mt-2 space-y-3">
 		<p class="text-surface-500 text-xs">
 			{m.wsview_advanced_desc_pre()}
-			<code class="bg-surface-200-800 rounded px-1">-jobname</code>
+			<code class="bg-surface-200-800 rounded-base px-1">-jobname</code>
 			{m.wsview_advanced_desc_post()}
 		</p>
 		<div>

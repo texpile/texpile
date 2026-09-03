@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import PdfRightClickMenu from './PdfRightClickMenu.svelte';
+	import { openPdfContextMenu } from './pdfContextMenu';
 	import { untrack } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import {
@@ -47,8 +47,6 @@
 		class: className = '',
 		children
 	}: Props = $props();
-
-	let rightClick: { open: (event: MouseEvent) => void } | undefined;
 
 	// download needs its own copy of binary source data (PDF.js detaches ArrayBuffers);
 	// set by PdfRenderer before it hands the data to PDF.js
@@ -155,7 +153,7 @@
 	});
 </script>
 
-<div class="pdf-viewer-container {className}" oncontextmenu={(e) => rightClick?.open(e)} role="presentation">
+<div class="pdf-viewer-container {className}" oncontextmenu={openPdfContextMenu} role="presentation">
 	<!-- loading is only ever true before the first document lands; reloads swap in place -->
 	{#if viewerState.loading}
 		<div class="pdf-loading">Loading PDF...</div>
@@ -174,7 +172,6 @@
 		{/await}
 	{/if}
 </div>
-<PdfRightClickMenu bind:this={rightClick} />
 
 <style>
 	.pdf-viewer-container {
@@ -182,7 +179,7 @@
 		flex-direction: column;
 		width: 100%;
 		height: 100%;
-		background-color: var(--pdf-viewer-bg, #f0f0f0);
+		background-color: var(--pdf-viewer-bg);
 		overflow: hidden;
 		/* contain the absolutely-positioned .pdf-loading / .pdf-error so they center inside this
 		   pane, not the viewport (otherwise they render over the editor) */

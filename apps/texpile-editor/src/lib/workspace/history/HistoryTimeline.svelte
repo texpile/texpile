@@ -153,7 +153,9 @@
 				autoFocus={false}
 			>
 				<Popover.Trigger
-					class="hover:preset-tonal shrink-0 rounded p-0.5 opacity-0 group-hover:opacity-100 {openMenu === entry.hash ? 'opacity-100' : ''}"
+					class="hover:preset-tonal shrink-0 rounded-base p-0.5 opacity-0 group-hover:opacity-100 {openMenu === entry.hash
+						? 'opacity-100'
+						: ''}"
 					aria-label={m.vcs_row_actions()}
 				>
 					{#snippet element(attrs)}

@@ -3,72 +3,72 @@
 /* catch-all for any proofread type (lowest specificity) */
 [class^='proofread-'],
 [class*=' proofread-'] {
-	background-color: rgba(20, 184, 166, 0.08);
-	border-bottom: 2px dotted #14b8a6;
+	background-color: color-mix(in srgb, var(--proof-default) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-default);
 	cursor: pointer;
 }
 
 [class^='proofread-']:hover,
 [class*=' proofread-']:hover {
-	background-color: rgba(20, 184, 166, 0.12);
+	background-color: color-mix(in srgb, var(--proof-default) 12%, transparent);
 }
 
 .proofread-spelling {
-	background-color: rgba(255, 0, 0, 0.08);
-	border-bottom: 2px dotted #ff0000;
+	background-color: color-mix(in srgb, var(--proof-spelling) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-spelling);
 	cursor: pointer;
 }
 
 .proofread-spelling:hover {
-	background-color: rgba(255, 0, 0, 0.12);
+	background-color: color-mix(in srgb, var(--proof-spelling) 12%, transparent);
 }
 
 .proofread-typo {
-	background-color: rgba(255, 0, 0, 0.08);
-	border-bottom: 2px dotted #ff0000;
+	background-color: color-mix(in srgb, var(--proof-spelling) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-typo);
 	cursor: pointer;
 }
 
 .proofread-typo:hover {
-	background-color: rgba(255, 0, 0, 0.12);
+	background-color: color-mix(in srgb, var(--proof-spelling) 12%, transparent);
 }
 
 .proofread-capitalization {
-	background-color: rgba(255, 140, 0, 0.08);
-	border-bottom: 2px dotted #ff8c00;
+	background-color: color-mix(in srgb, var(--proof-capitalization) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-capitalization);
 	cursor: pointer;
 }
 
 .proofread-capitalization:hover {
-	background-color: rgba(255, 140, 0, 0.12);
+	background-color: color-mix(in srgb, var(--proof-capitalization) 12%, transparent);
 }
 
 .proofread-wordchoice {
-	background-color: rgba(0, 100, 255, 0.08);
-	border-bottom: 2px dotted #0064ff;
+	background-color: color-mix(in srgb, var(--proof-wordchoice) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-wordchoice);
 	cursor: pointer;
 }
 
 .proofread-wordchoice:hover {
-	background-color: rgba(0, 100, 255, 0.12);
+	background-color: color-mix(in srgb, var(--proof-wordchoice) 12%, transparent);
 }
 
 .proofread-style {
-	background-color: rgba(147, 51, 234, 0.08);
-	border-bottom: 2px dotted #9333ea;
+	background-color: color-mix(in srgb, var(--proof-style) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-style);
 	cursor: pointer;
 }
 
 .proofread-style:hover {
-	background-color: rgba(147, 51, 234, 0.12);
+	background-color: color-mix(in srgb, var(--proof-style) 12%, transparent);
 }
 
 .proofread-repetition {
-	background-color: rgba(234, 179, 8, 0.08);
-	border-bottom: 2px dotted #eab308;
+	background-color: color-mix(in srgb, var(--proof-repetition) 8%, transparent);
+	border-bottom: 2px dotted var(--proof-repetition);
 	cursor: pointer;
 }
 
 .proofread-repetition:hover {
-	background-color: rgba(234, 179, 8, 0.12);
+	background-color: color-mix(in srgb, var(--proof-repetition) 12%, transparent);
 }

@@ -37,12 +37,16 @@ class DocPositionsStore {
 	private root: string | null = null;
 	private persistable = false;
 	private byRel = new Map<string, DocPosition>();
+	/** the file whose position was last written by a jump, so its landing flashes once. Memory
+	 *  only: persisted, it would flash again the next time the folder opened. */
+	private jumpRel: string | null = null;
 
 	/** folder (re)opened: load this root's saved positions. Mirrors tabs.bind. */
 	bind(root: string | null, persist: boolean): void {
 		this.root = root;
 		this.persistable = persist && !!root && typeof localStorage !== 'undefined';
 		this.byRel = new Map();
+		this.jumpRel = null;
 		if (!this.persistable || !root) return;
 		const mine = getFolder(root).positions;
 		if (mine && typeof mine === 'object') {
@@ -79,12 +83,22 @@ class DocPositionsStore {
 		return rel ? (this.byRel.get(rel) ?? null) : null;
 	}
 
-	set(path: string, pos: Omit<DocPosition, 'at'>): void {
+	set(path: string, pos: Omit<DocPosition, 'at'>, opts?: { jump?: boolean }): void {
 		const rel = this.relOf(path);
 		if (!rel) return;
 		this.byRel.set(rel, { ...pos, at: Date.now() });
+		// a plain write to the same file supersedes a jump that never got restored
+		this.jumpRel = opts?.jump ? rel : this.jumpRel === rel ? null : this.jumpRel;
 		this.evict();
 		this.persist();
+	}
+
+	/** whether this file's position was written by a jump; asking clears it */
+	takeJump(path: string): boolean {
+		const rel = this.relOf(path);
+		if (rel === null || this.jumpRel !== rel) return false;
+		this.jumpRel = null;
+		return true;
 	}
 
 	/** a rename/move retargets the entry, or every entry under it when a folder moved */

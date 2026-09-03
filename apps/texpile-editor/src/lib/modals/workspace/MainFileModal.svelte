@@ -1,6 +1,7 @@
 <script lang="ts">
 	// First-compile prompt: pick which .tex is the project's main entry file.
 	import Modal from '../Modal.svelte';
+	import ModalActions from '../ModalActions.svelte';
 	import { samePath, type TexFile } from '$lib/workspace/fileSystem';
 	import { m } from '$lib/paraglide/messages';
 
@@ -23,7 +24,7 @@
 		<p class="text-surface-600-300 mb-3 text-sm">
 			{m.wsview_mainconfirm_desc()}
 		</p>
-		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded border">
+		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded-base border">
 			{#each candidates as f (f.path)}
 				<label
 					class="hover:preset-tonal-surface flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm {choice && samePath(choice, f.path)
@@ -47,8 +48,6 @@
 				</label>
 			{/each}
 		</div>
-		<div class="flex justify-end">
-			<button class="btn btn-xs preset-filled-primary-500" onclick={onConfirm} disabled={!choice}>{m.wsview_use_this_file()}</button>
-		</div>
+		<ModalActions size="xs" buttons={[{ label: m.wsview_use_this_file(), role: 'primary', disabled: !choice, onclick: onConfirm }]} />
 	{/if}
 </Modal>

@@ -246,7 +246,7 @@
 		{/if}
 		<div class="flex-1"></div>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => stepZoom(-1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_out()}
@@ -256,7 +256,7 @@
 		</button>
 		<span class="min-w-11 text-center tabular-nums">{zoom !== null ? `${zoom}%` : '—'}</span>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => stepZoom(1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_in()}
@@ -268,7 +268,7 @@
 		<!-- follow works for guests too: the caret position travels to the host, tinymist resolves
 		     it, and the relay hands the resulting jump to only this viewer -->
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			class:preset-tonal={settings.current.typstPreviewFollow === true}
 			class:text-primary-500={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
@@ -284,7 +284,7 @@
 		{#if onPopout}
 			<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 			<button
-				class="hover:preset-tonal shrink-0 rounded p-1"
+				class="hover:preset-tonal shrink-0 rounded-base p-1"
 				onclick={onPopout}
 				use:tip={m.wsview_popout_preview()}
 				aria-label={m.wsview_popout_preview()}

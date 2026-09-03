@@ -5,6 +5,7 @@
 import { untrack } from 'svelte';
 import { CommentsController } from '$lib/workspace/commentsController.svelte';
 import { workspaceRoot, fileTree } from '$lib/workspace/workspaceStore';
+import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { userData } from '$lib/storage/userData';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
@@ -67,7 +68,11 @@ export class WorkspaceComments {
 			// null for a guest: their workspaceRoot is the sentinel 'session', not a path, and the log
 			// lives on the host's disk. Comments in a shared session need the session protocol to carry
 			// their events; until it does, a guest has no log rather than a broken one.
-			void this.ctl.load(d.guest() ? null : workspaceRoot.current);
+			//
+			// Null in single-file mode too: the root there is only the file's own folder, so the log it
+			// points at is some other project's - and writing to it would drop a .texpile beside a file
+			// we are visiting, holding threads that project will never see.
+			void this.ctl.load(d.guest() || fileMode.current ? null : workspaceRoot.current);
 		});
 		// A guest has no disk, so its log arrives over the wire: single events as they happen, and the
 		// whole thing once on join. load(null) above leaves it empty until then rather than reading a

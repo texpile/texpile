@@ -173,7 +173,7 @@
 			<!-- where the window buttons sit on desktop, which the browser build leaves free -->
 			{#if __WEB__}
 				<a
-					class="app-no-drag text-surface-600-400 hover:text-surface-950-50 hover:bg-surface-200-800 mr-1 flex items-center gap-1.5 self-center rounded px-2 py-1 text-xs whitespace-nowrap"
+					class="app-no-drag text-surface-600-400 hover:text-surface-950-50 hover:bg-surface-200-800 mr-1 flex items-center gap-1.5 self-center rounded-base px-2 py-1 text-xs whitespace-nowrap"
 					href="https://texpile.com/download"
 					target="_blank"
 					rel="noopener noreferrer"

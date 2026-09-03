@@ -29,7 +29,7 @@
 	autoFocus={false}
 >
 	<Popover.Trigger
-		class="text-surface-800-200 hover:bg-surface-200-800 flex h-7 items-center gap-1 rounded px-2 text-sm font-medium transition-colors"
+		class="text-surface-800-200 hover:bg-surface-200-800 flex h-7 items-center gap-1 rounded-base px-2 text-sm font-medium transition-colors"
 	>
 		<span class="min-w-[5.5rem] text-left">{triggerLabel}</span>
 		<ChevronDown class="text-surface-500 size-4 shrink-0" />

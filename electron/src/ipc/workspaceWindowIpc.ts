@@ -17,6 +17,20 @@ import {
 // first renderer to ask runs the once-per-session startup work (update check, What's New)
 let startupTasksClaimed = false;
 
+/** the folder picker, then a window for the folder (or the one that already has it); null when cancelled */
+export async function openFolderInNewWindow(from: BrowserWindow | undefined): Promise<string | null> {
+	const res = await dialog.showOpenDialog(from!, {
+		title: 'Open Folder',
+		properties: ['openDirectory', 'createDirectory']
+	});
+	if (res.canceled || res.filePaths.length === 0) return null;
+	const root = res.filePaths[0]!;
+	const existing = windowWithRoot(root);
+	if (existing) focusWindow(existing);
+	else focusWindow(createWindow(startUrl(), { kind: 'folder', path: root }));
+	return root;
+}
+
 export function registerWorkspaceWindowIpc(): void {
 	// A folder may be open in exactly one window (two autosavers on the same .tex files would
 	// silently clobber each other). claim() registers the sender as that folder's window; if
@@ -75,18 +89,7 @@ export function registerWorkspaceWindowIpc(): void {
 	});
 
 	// picker + new window in one step, deduped against windows that already have the folder
-	ipcMain.handle('window:openFolderNew', async (e) => {
-		const res = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender) ?? undefined!, {
-			title: 'Open Folder',
-			properties: ['openDirectory', 'createDirectory']
-		});
-		if (res.canceled || res.filePaths.length === 0) return null;
-		const root = res.filePaths[0]!;
-		const existing = windowWithRoot(root);
-		if (existing) focusWindow(existing);
-		else focusWindow(createWindow(startUrl(), { kind: 'folder', path: root }));
-		return root;
-	});
+	ipcMain.handle('window:openFolderNew', (e) => openFolderInNewWindow(BrowserWindow.fromWebContents(e.sender) ?? undefined));
 
 	// whole-window zoom: setZoomFactor scales the entire renderer (editor, sidebar, toolbars,
 	// panels) crisply, unlike a CSS transform. The renderer persists the value in settings.

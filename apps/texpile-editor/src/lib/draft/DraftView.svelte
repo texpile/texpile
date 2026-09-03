@@ -107,7 +107,7 @@
 			>{/if}
 		<div class="flex-1"></div>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => ctrl.savePdf()}
 			disabled={!ctrl.pages.length || ctrl.savingPdf}
 			use:tip={m.draft_toolbar_save_pdf()}
@@ -117,7 +117,7 @@
 		</button>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => vp.zoomOut()}
 			disabled={!ctrl.pages.length}
 			use:tip={m.draft_toolbar_zoom_out()}
@@ -126,7 +126,7 @@
 			<ZoomOut class="size-4" />
 		</button>
 		<button
-			class="hover:preset-tonal min-w-11 rounded px-1 py-1 text-center tabular-nums"
+			class="hover:preset-tonal min-w-11 rounded-base px-1 py-1 text-center tabular-nums"
 			onclick={() => vp.actualSize()}
 			disabled={!ctrl.pages.length}
 			use:tip={m.draft_toolbar_actual_size()}
@@ -134,7 +134,7 @@
 			{Math.round(vp.zoom * 100)}%
 		</button>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => vp.zoomIn()}
 			disabled={!ctrl.pages.length}
 			use:tip={m.draft_toolbar_zoom_in()}
@@ -143,7 +143,7 @@
 			<ZoomIn class="size-4" />
 		</button>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			class:preset-tonal={vp.fitMode}
 			onclick={() => vp.fitWidthBtn()}
 			disabled={!ctrl.pages.length}
@@ -153,7 +153,7 @@
 			<MoveHorizontal class="size-4" />
 		</button>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			class:preset-tonal={vp.followEdits}
 			class:text-primary-500={vp.followEdits}
 			onclick={() => (vp.followEdits = !vp.followEdits)}
@@ -167,7 +167,7 @@
 		{#if ctrl.pages.length}
 			<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 			<button
-				class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+				class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 				onclick={() => vp.goToPage(vp.curPage - 1)}
 				disabled={vp.curPage <= 1}
 				use:tip={m.draft_toolbar_prev_page()}
@@ -177,7 +177,7 @@
 			</button>
 			<span class="shrink-0 tabular-nums">{vp.curPage} / {ctrl.pages.length}</span>
 			<button
-				class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+				class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 				onclick={() => vp.goToPage(vp.curPage + 1)}
 				disabled={vp.curPage >= ctrl.pages.length}
 				use:tip={m.draft_toolbar_next_page()}
@@ -188,7 +188,9 @@
 		{/if}
 	</div>
 	{#if compiler.busyElsewhere}
-		<div class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded border p-3 text-sm">
+		<div
+			class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded-base border p-3 text-sm"
+		>
 			<span class="text-surface-600-300">{m.draft_busy_other_window()}</span>
 			<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => compiler.takeoverEngine()}
 				>{m.draft_busy_takeover()}</button
@@ -201,7 +203,7 @@
 		     scroll a box that is free to grow. Without a height constraint this took its full content
 		     height and the flex-1 scroller below it got whatever was left. -->
 		<pre
-			class="text-error-500 bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto rounded p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
+			class="text-error-500 bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto rounded-base p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
 	<div
 		bind:this={vp.scroller}
@@ -215,7 +217,7 @@
 				{#if vp.editBand && vp.editBand.page === p.n}
 					<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
 					<div
-						class="pointer-events-none absolute rounded-sm bg-yellow-300/30"
+						class="pointer-events-none absolute rounded-base bg-draft-band/30"
 						transition:fade={{ duration: 300 }}
 						style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
 							vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -

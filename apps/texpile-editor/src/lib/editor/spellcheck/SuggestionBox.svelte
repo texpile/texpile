@@ -245,7 +245,7 @@
 			{#if error.text}
 				{@const diffParts = getDiffParts(error.text, error.replacements[0])}
 				<button
-					class="bg-surface-100-900 hover:preset-tonal border-surface-300-700 w-full cursor-pointer rounded border px-2 py-1.5 text-left transition-colors"
+					class="bg-surface-100-900 hover:preset-tonal border-surface-300-700 w-full cursor-pointer rounded-base border px-2 py-1.5 text-left transition-colors"
 					onclick={() => handleReplace(error.replacements[0])}
 					use:tip={m.harper_apply_suggestion_title()}
 				>

@@ -8,6 +8,7 @@
 	import { Copy, Check, RotateCcw, ShieldCheck, ChevronDown, TriangleAlert } from '@lucide/svelte';
 	import { joinLinkFor } from '$lib/collab/joinLink.svelte';
 	import Modal from '$lib/modals/Modal.svelte';
+	import ModalActions from '$lib/modals/ModalActions.svelte';
 
 	let {
 		open = $bindable(false),
@@ -122,21 +123,27 @@
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
 
-		<div class="mt-4 flex justify-end">
-			<button class="btn preset-filled-primary-500" disabled={collabHost.status === 'starting' || !root} onclick={start}>
-				{collabHost.status === 'starting' ? m.share_starting() : m.share_start()}
-			</button>
-		</div>
+		<ModalActions
+			class="mt-4"
+			buttons={[
+				{
+					label: collabHost.status === 'starting' ? m.share_starting() : m.share_start(),
+					role: 'primary',
+					disabled: collabHost.status === 'starting' || !root,
+					onclick: start
+				}
+			]}
+		/>
 	{:else}
 		<p class="text-surface-600-300 mb-3 text-sm">{m.share_active_hint()}</p>
 		<div class="mb-3">
 			<span class="mb-1 block text-sm font-medium">{linkable ? m.share_link_label() : m.share_code_label()}</span>
 			<div class="flex items-stretch gap-2">
-				<code class="bg-surface-200-800 min-w-0 flex-1 truncate rounded px-3 py-2 font-mono text-sm tracking-wide select-all">
+				<code class="bg-surface-200-800 min-w-0 flex-1 truncate rounded-base px-3 py-2 font-mono text-sm tracking-wide select-all">
 					{linkable ? joinLinkFor(collabHost.shareCode) : collabHost.shareCode}
 				</code>
 				<button
-					class="preset-tonal flex shrink-0 items-center justify-center rounded px-3"
+					class="preset-tonal flex shrink-0 items-center justify-center rounded-base px-3"
 					onclick={linkable ? copyLink : copyCode}
 					use:tip={linkable ? m.share_copy_link() : m.share_copy()}
 					aria-label={linkable ? m.share_copy_link() : m.share_copy()}
@@ -167,8 +174,6 @@
 			<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
-		<div class="mt-4 flex justify-end">
-			<button class="btn preset-tonal-error" onclick={endSession}>{m.share_end()}</button>
-		</div>
+		<ModalActions class="mt-4" buttons={[{ label: m.share_end(), role: 'primary', danger: true, onclick: endSession }]} />
 	{/if}
 </Modal>

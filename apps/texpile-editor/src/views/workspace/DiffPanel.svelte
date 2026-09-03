@@ -188,7 +188,7 @@
 		line-height: 1.6;
 	}
 	.diff-panel :global(.cm-content) {
-		padding: 0.5rem 0;
+		padding: calc(var(--spacing) * 2) 0;
 	}
 	.diff-panel :global(.cm-focused) {
 		outline: none;

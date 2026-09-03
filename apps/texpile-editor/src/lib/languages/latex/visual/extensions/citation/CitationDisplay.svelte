@@ -68,17 +68,12 @@
 >
 	<Popover.Trigger class="inline-flex cursor-pointer items-center" style="font-size: 1rem;">
 		<span
-			class="rounded py-0.5 transition-colors"
-			class:text-blue-600={isValid}
-			class:dark:text-blue-400={isValid}
-			class:bg-blue-50={isValid && dropdownOpen}
-			class:dark:bg-blue-950={isValid && dropdownOpen}
-			class:text-red-600={!isValid}
-			class:dark:text-red-400={!isValid}
-			class:hover:bg-blue-50={isValid}
-			class:dark:hover:bg-blue-950={isValid}
-			class:hover:bg-red-50={!isValid}
-			class:dark:hover:bg-red-950={!isValid}
+			class="rounded-base py-0.5 transition-colors"
+			class:text-ref-fg={isValid}
+			class:bg-ref-bg={isValid && dropdownOpen}
+			class:text-ref-broken-fg={!isValid}
+			class:hover:bg-ref-bg={isValid}
+			class:hover:bg-ref-broken-bg={!isValid}
 			role="button"
 			tabindex="0"
 			onclick={handleClick}

@@ -3,13 +3,12 @@
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { onMount } from 'svelte';
 	import { CellSelection, mergeCells, splitCell } from 'prosemirror-tables';
-	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { BookMarked, MessageSquarePlus } from '@lucide/svelte';
 	import { TextSelection } from 'prosemirror-state';
 	import { buildPmAnchor, setPmCommentPending } from '$lib/editor/visual/extensions/pmComments';
 	import type { CommentAnchor } from '$lib/comments/anchor';
-	import Kbd from '$lib/components/Kbd.svelte';
-	import { buildMenuItems, buildTableMenuItems } from './contextMenuItems';
+	import { buildMenuItems, buildTableMenuItems, type ContextMenuEntry } from './contextMenuItems';
+	import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -25,15 +24,10 @@
 	// else has a spanning form the serializer emits: \multicolumn/\multirow in LaTeX,
 	// table.cell(colspan:/rowspan:) in Typst.
 
-	let isVisible: boolean = $state(false);
-	let isOnTable: boolean = $state(false);
-	/** captured when the menu opens: a text selection Comment could act on */
-	let hasTextSelection: boolean = $state(false);
-	let selectionType: 'cell' | 'column' | 'row' | null = $state(null);
-	let canMerge: boolean = $state(false);
-	let canSplit: boolean = $state(false);
-	let cursorX: number = $state(0);
-	let cursorY: number = $state(0);
+	let isOnTable = false;
+	let selectionType: 'cell' | 'column' | 'row' | null = null;
+	let canMerge = false;
+	let canSplit = false;
 
 	function detectSelectionType(): 'cell' | 'column' | 'row' | null {
 		const { state } = editorViewStore.current!;
@@ -129,11 +123,38 @@
 			canSplit = false;
 		}
 		const sel = editorViewStore.current!.state.selection;
-		hasTextSelection = sel instanceof TextSelection && !sel.empty;
+		const hasTextSelection = sel instanceof TextSelection && !sel.empty;
 
-		isVisible = true;
-		cursorX = event.clientX;
-		cursorY = event.clientY;
+		const items: ContextMenuItem[] = menuItems.map(entry);
+		if (onAddComment) {
+			// the same gesture the floating tooltip offers, for people who reach for the menu;
+			// disabled rather than hidden with nothing selected, so it is discoverable
+			items.push(
+				{ separator: true },
+				{
+					label: m.comments_add(),
+					icon: MessageSquarePlus,
+					disabled: !hasTextSelection,
+					onclick: () =>
+						run(() => {
+							const view = editorViewStore.current!;
+							const s = view.state.selection;
+							if (!(s instanceof TextSelection) || s.empty) return;
+							const anchor = buildPmAnchor(view.state.doc, s.from, s.to);
+							onAddComment(anchor);
+							// keep the commented text visible once the composer takes focus
+							if (anchor) setPmCommentPending(view, { from: s.from, to: s.to });
+						})
+				}
+			);
+		}
+		if (onInsertCitation)
+			items.push(
+				{ separator: true },
+				{ label: m.zotero_insert_citation(), icon: BookMarked, onclick: () => run(() => onInsertCitation()) }
+			);
+		if (isOnTable) items.push({ separator: true }, ...getVisibleTableMenuItems().map(entry));
+		void showContextMenu(items, { x: event.clientX, y: event.clientY });
 
 		// empty transaction keeps the selection visible while the editor is blurred
 		requestAnimationFrame(() => {
@@ -145,136 +166,29 @@
 		});
 	}
 
-	function handleClickOutside(event: MouseEvent): void {
-		if (isVisible && !(event.target as Element).closest('.context-menu-popover')) {
-			isVisible = false;
-		}
+	// both item builders share this shape, one of them without the ContextMenuEntry name
+	type Entryish = Pick<ContextMenuEntry, 'label' | 'icon' | 'shortcut' | 'action'> & { type: string };
+	function entry(e: Entryish): ContextMenuItem {
+		return e.type === 'separator'
+			? { separator: true }
+			: { label: e.label ?? '', icon: e.icon, keys: e.shortcut, onclick: () => e.action && run(e.action) };
 	}
 
-	function handleItemClick(action: () => void): void {
+	function run(action: () => void): void {
 		action();
-		isVisible = false;
 		editorViewStore.current!.focus();
 	}
 
 	onMount(() => {
 		document.addEventListener('contextmenu', handleContextMenu);
-		document.addEventListener('click', handleClickOutside);
-
-		return () => {
-			document.removeEventListener('contextmenu', handleContextMenu);
-			document.removeEventListener('click', handleClickOutside);
-		};
+		return () => document.removeEventListener('contextmenu', handleContextMenu);
 	});
 </script>
-
-<Popover
-	open={isVisible}
-	onOpenChange={(e) => (isVisible = e.open)}
-	positioning={{
-		getAnchorRect: () => ({
-			x: cursorX,
-			y: cursorY,
-			width: 0,
-			height: 0
-		}),
-		placement: 'bottom-start',
-		gutter: 2
-	}}
-	closeOnInteractOutside={true}
-	closeOnEscape={true}
-	portalled={true}
-	autoFocus={false}
->
-	<Portal>
-		<Popover.Positioner class="z-floating-ui">
-			<Popover.Content class="card bg-surface-50-950 context-menu-popover border-surface-300-700 min-w-[240px] border shadow-lg">
-				<div class="py-1">
-					{#each menuItems as item, i (i)}
-						{#if item.type === 'separator'}
-							<div class="my-1 border-t"></div>
-						{:else}
-							<button
-								type="button"
-								class="hover:preset-tonal-primary flex w-full items-center gap-3 px-4 py-2 text-left"
-								onclick={() => handleItemClick(item.action)}
-								onmousedown={(e) => e.preventDefault()}
-							>
-								<item.icon class="h-4 w-4 flex-shrink-0" />
-								<span class="min-w-0 flex-1 text-sm">{item.label}</span>
-								{#if item.shortcut}
-									<Kbd keys={item.shortcut} />
-								{/if}
-							</button>
-						{/if}
-					{/each}
-
-					{#if onAddComment}
-						<!-- the same gesture the floating tooltip offers, for people who reach for the menu;
-						     disabled rather than hidden with nothing selected, so it is discoverable -->
-						<div class="my-1 border-t"></div>
-						<button
-							type="button"
-							class="hover:preset-tonal-primary flex w-full items-center gap-3 px-4 py-2 text-left disabled:opacity-50"
-							disabled={!hasTextSelection}
-							onclick={() =>
-								handleItemClick(() => {
-									const view = editorViewStore.current!;
-									const sel = view.state.selection;
-									if (!(sel instanceof TextSelection) || sel.empty) return;
-									const anchor = buildPmAnchor(view.state.doc, sel.from, sel.to);
-									onAddComment(anchor);
-									// keep the commented text visible once the composer takes focus
-									if (anchor) setPmCommentPending(view, { from: sel.from, to: sel.to });
-								})}
-							onmousedown={(e) => e.preventDefault()}
-						>
-							<MessageSquarePlus class="h-4 w-4 flex-shrink-0" />
-							<span class="min-w-0 flex-1 text-sm">{m.comments_add()}</span>
-						</button>
-					{/if}
-
-					{#if onInsertCitation}
-						<div class="my-1 border-t"></div>
-						<button
-							type="button"
-							class="hover:preset-tonal-primary flex w-full items-center gap-3 px-4 py-2 text-left"
-							onclick={() => handleItemClick(() => onInsertCitation())}
-							onmousedown={(e) => e.preventDefault()}
-						>
-							<BookMarked class="h-4 w-4 flex-shrink-0" />
-							<span class="min-w-0 flex-1 text-sm">{m.zotero_insert_citation()}</span>
-						</button>
-					{/if}
-
-					{#if isOnTable}
-						<div class="my-1 border-t"></div>
-						{#each getVisibleTableMenuItems() as item, i (i)}
-							{#if item?.type === 'separator'}
-								<div class="my-1 border-t"></div>
-							{:else}
-								<button
-									type="button"
-									class="hover:preset-tonal-primary flex w-full items-center gap-3 px-4 py-2 text-left"
-									onclick={() => item.action && handleItemClick(item.action)}
-									onmousedown={(e) => e.preventDefault()}
-								>
-									<item.icon class="h-4 w-4 flex-shrink-0" />
-									<span class="min-w-0 flex-1 text-sm">{item.label}</span>
-								</button>
-							{/if}
-						{/each}
-					{/if}
-				</div>
-			</Popover.Content>
-		</Popover.Positioner>
-	</Portal>
-</Popover>
 
 <style>
 	/* keep the editor selection visible while the context menu is open */
 	:global(.ProseMirror .ProseMirror-selectednode) {
-		outline: 2px solid #8cf !important;
+		outline: 2px solid var(--selected-node-outline) !important;
 	}
 
 	:global(.ProseMirror.ProseMirror-hideselection *::selection),
@@ -287,10 +201,10 @@
 		/* the shared selection colour (app.css), not its own grey: this rule exists to keep the
 		   selection visible while the menu is open, and visible-but-recoloured still reads as a
 		   different selection */
-		background: var(--editor-selection, #d3d3d3);
+		background: var(--editor-selection);
 	}
 
 	:global(.ProseMirror-selectednode) {
-		outline: 2px solid #8cf;
+		outline: 2px solid var(--selected-node-outline);
 	}
 </style>

@@ -241,7 +241,7 @@
 {#if parseError}
 	<!-- file-level parse failure: edit the whole .bib as raw CM until it parses cleanly -->
 	<div class="mx-auto flex h-full max-w-5xl flex-col gap-3 p-4">
-		<div class="border-error-500 bg-error-500/10 rounded border p-3 text-sm">
+		<div class="border-error-500 bg-error-500/10 rounded-base border p-3 text-sm">
 			<div class="mb-1 flex items-center gap-2 font-semibold">
 				<Code class="size-4" />
 				{m.bib_parse_syntax_error_title()}
@@ -251,7 +251,7 @@
 				{m.bib_parse_syntax_error_hint()}
 			</div>
 		</div>
-		<div class="min-h-0 flex-1 overflow-hidden rounded border border-surface-200-800">
+		<div class="min-h-0 flex-1 overflow-hidden rounded-base border border-surface-200-800">
 			<CodeMirrorLatex bind:value={fileRawText} language="bibtex" />
 		</div>
 		{#if fileRawError}
@@ -285,7 +285,7 @@
 					{m.bib_editing_heading({ key: currentReference.key ?? '' })}
 					{#if editMode === 'raw'}
 						<span
-							class="border-surface-300-700 text-surface-500 ml-1 inline-flex items-center gap-0.5 rounded border px-1 py-px text-[10px]"
+							class="border-surface-300-700 text-surface-500 ml-1 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
 							use:tip={m.bib_raw_badge_edit_tooltip()}
 						>
 							<Code class="size-2.5" />
@@ -296,7 +296,7 @@
 			</div>
 
 			{#if editMode === 'raw'}
-				<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded border">
+				<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded-base border">
 					<CodeMirrorLatex bind:value={rawEntryText} language="bibtex" />
 				</div>
 				{#if rawEntryError}
@@ -319,7 +319,7 @@
 						bind:value={bibtexContent}
 						placeholder={m.bib_paste_bibtex_placeholder()}></textarea>
 					{#if bibtexWarnings.length}
-						<div class="border-warning-500 bg-warning-500/10 mt-2 rounded border p-2 text-xs">
+						<div class="border-warning-500 bg-warning-500/10 mt-2 rounded-base border p-2 text-xs">
 							{#each bibtexWarnings as w (w.key)}<div><strong>{w.key}:</strong> {w.issues.join(', ')}</div>{/each}
 						</div>
 					{/if}

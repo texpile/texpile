@@ -171,7 +171,7 @@
 				{#if selected.size > 0}
 					<div class="border-surface-200-800 flex flex-wrap gap-1.5 border-b px-3 py-2">
 						{#each [...selected.values()] as hit (hit.citekey)}
-							<span class="preset-tonal flex max-w-60 items-center gap-1 rounded px-1.5 py-0.5 text-xs">
+							<span class="preset-tonal flex max-w-60 items-center gap-1 rounded-base px-1.5 py-0.5 text-xs">
 								<span class="truncate">{hit.title || hit.citekey}</span>
 								<button
 									class="hover:text-error-500 shrink-0"

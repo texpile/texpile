@@ -240,7 +240,7 @@
 						     destroying somebody's thread, so they should not sit lit up on every row -->
 						<div class="flex shrink-0 items-center gap-0.5 py-1.5 pr-2 {isOpen ? '' : 'opacity-0 group-hover:opacity-100'}">
 							<button
-								class="hover:preset-tonal rounded p-1"
+								class="hover:preset-tonal rounded-base p-1"
 								use:tip={thread.resolved ? m.comments_reopen() : m.comments_resolve()}
 								aria-label={thread.resolved ? m.comments_reopen() : m.comments_resolve()}
 								onclick={() => onResolve(thread, !thread.resolved)}
@@ -248,7 +248,7 @@
 								<Check class="size-3.5" />
 							</button>
 							<button
-								class="hover:preset-tonal-error rounded p-1"
+								class="hover:preset-tonal-error rounded-base p-1"
 								use:tip={m.comments_delete()}
 								aria-label={m.comments_delete()}
 								onclick={() => onDelete(thread)}

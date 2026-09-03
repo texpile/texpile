@@ -44,6 +44,8 @@ export type MenuState = {
 	canOpenFolder: boolean;
 	canTutorial: boolean;
 	recentFolders: string[];
+	/** the start screen (or another workspace-less screen): the bar offers only what opens a folder */
+	home?: boolean;
 	/** already-localized labels, so this module never has to know about locales */
 	labels: Record<string, string>;
 };
@@ -84,7 +86,52 @@ function recentItems(win: BrowserWindow, s: MenuState): MenuItemConstructorOptio
  * item here that the in-app bar does not have is an item that will drift, and the previous attempt
  * at a native View/Window menu is exactly how that went wrong.
  */
+/** what main itself does for the home bar; the start screen has no menu handlers to fire at */
+export type HomeMenuActions = {
+	/** pick a folder and open it in THIS window */
+	openFolder(win: BrowserWindow): Promise<void>;
+	newWindow(): void;
+	openFolderNewWindow(win: BrowserWindow): Promise<void>;
+};
+let homeActions: HomeMenuActions | undefined;
+
+/**
+ * The bar for a window with no workspace. Only what can open one: the in-app start screen has
+ * the same three affordances and nothing else, and every other native item fires an action a
+ * workspace renderer would handle, which this screen does not.
+ */
+function homeTemplate(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[] {
+	const recents: MenuItemConstructorOptions[] = s.recentFolders.length
+		? [
+				{ type: 'separator' },
+				{
+					label: label(s, 'recent', 'Open Recent'),
+					submenu: s.recentFolders.map((folder) => ({
+						label: folder.split(/[\\/]/).filter(Boolean).pop() || folder,
+						click: () => win.webContents.send('main:open-folder', folder)
+					}))
+				}
+			]
+		: [];
+	return [
+		{ role: 'appMenu' },
+		{
+			label: label(s, 'file', 'File'),
+			submenu: [
+				{ label: label(s, 'openFolder', 'Open folder…'), accelerator: 'CmdOrCtrl+O', click: () => void homeActions?.openFolder(win) },
+				...recents,
+				{ type: 'separator' },
+				{ label: label(s, 'newWindow', 'New window'), accelerator: 'Shift+CmdOrCtrl+N', click: () => homeActions?.newWindow() },
+				{ label: label(s, 'openFolderNewWindow', 'Open folder in new window'), click: () => void homeActions?.openFolderNewWindow(win) }
+			]
+		},
+		{ role: 'editMenu' },
+		{ role: 'windowMenu' }
+	];
+}
+
 function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[] {
+	if (s.home) return homeTemplate(win, s);
 	const dialect = s.dialect ?? 'tex';
 	const doc = { enabled: s.editable ?? !s.disabled }; // needs a text buffer (undo/redo/find/spelling)
 	const pm = { enabled: (s.structured ?? !s.disabled) && !s.cursorInCm }; // needs a structured document
@@ -343,7 +390,8 @@ export type ChromeColors = {
  *   them. Kept as a callback rather than importing the settings helpers, because those live in
  *   main.ts and main.ts already imports this module.
  */
-export function registerWindowChrome(onChrome?: (c: ChromeColors) => void): void {
+export function registerWindowChrome(onChrome?: (c: ChromeColors) => void, home?: HomeMenuActions): void {
+	homeActions = home;
 	// ---- window controls, for the renderer's own title bar (Windows / Linux) ----
 	ipcMain.handle('window:minimize', (e) => {
 		BrowserWindow.fromWebContents(e.sender)?.minimize();

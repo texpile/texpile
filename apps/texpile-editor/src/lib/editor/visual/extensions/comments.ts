@@ -344,21 +344,21 @@ const theme = EditorView.baseTheme({
 	// fill was strong enough to flatten the syntax colours underneath, which is the thing the
 	// reader is being asked to comment on.
 	'.cm-comment': {
-		backgroundColor: 'rgba(234, 179, 8, 0.14)'
+		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 14%, transparent)'
 	},
 	'.cm-comment-focused': {
-		backgroundColor: 'rgba(234, 179, 8, 0.3)'
+		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 30%, transparent)'
 	},
 	// an inset shadow rather than a border or a dot: it is painted inside the cell that is already
 	// there, so a commented line costs the gutter no width. Scoped to the line-number column,
 	// because gutterLineClass marks the cell in EVERY gutter on that line, the lint one included.
 	'.cm-lineNumbers .cm-comment-line': {
-		boxShadow: 'inset 2px 0 0 rgba(234, 179, 8, 0.85)',
+		boxShadow: 'inset 2px 0 0 color-mix(in srgb, var(--comment-tint) 85%, transparent)',
 		// it selects the thread, so it has to look like it does something
 		cursor: 'pointer'
 	},
 	'.cm-lineNumbers .cm-comment-line:hover': {
-		boxShadow: 'inset 3px 0 0 rgb(234, 179, 8)'
+		boxShadow: 'inset 3px 0 0 var(--comment-tint)'
 	},
 	// Only geometry lives here. The pill's colours need the app's surface tokens and a dark-mode
 	// branch, which a CodeMirror baseTheme cannot express, so they are in app.css.

@@ -131,10 +131,10 @@
 	}
 
 	:global(.table-wrapper) {
-		margin: 1rem 0;
-		border: 1px solid var(--color-surface-300);
-		border-radius: 0.5rem;
-		padding: 1rem;
+		margin: calc(var(--spacing) * 4) 0;
+		border: var(--default-border-width) solid var(--color-surface-300);
+		border-radius: calc(var(--radius-base) * 2);
+		padding: calc(var(--spacing) * 4);
 		background: var(--color-surface-50);
 	}
 
@@ -160,12 +160,12 @@
 	.table-caption-warning {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.5rem 0.75rem;
-		margin-bottom: 0.75rem;
+		gap: calc(var(--spacing) * 2);
+		padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+		margin-bottom: calc(var(--spacing) * 3);
 		background: var(--color-warning-100);
-		border: 1px solid var(--color-warning-400);
-		border-radius: 0.375rem;
+		border: var(--default-border-width) solid var(--color-warning-400);
+		border-radius: calc(var(--radius-base) * 1.5);
 		color: var(--color-warning-700);
 		font-size: 0.75rem;
 		line-height: 1.4;
@@ -179,15 +179,15 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: 0.75rem;
-		padding-bottom: 0.5rem;
-		border-bottom: 1px solid var(--color-surface-200);
+		margin-bottom: calc(var(--spacing) * 3);
+		padding-bottom: calc(var(--spacing) * 2);
+		border-bottom: var(--default-border-width) solid var(--color-surface-200);
 	}
 
 	.table-number-row {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: calc(var(--spacing) * 2);
 	}
 
 	.table-number {
@@ -197,8 +197,8 @@
 	}
 
 	:global(.table-settings-btn) button {
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
+		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+		border-radius: var(--radius-base);
 		cursor: pointer;
 		transition: background-color 0.15s;
 		border: none;
@@ -215,29 +215,29 @@
 	:global(.table-wrapper-content) {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: calc(var(--spacing) * 2);
 	}
 
 	:global(.table-caption) {
 		font-size: 0.875rem;
 		font-weight: 600;
-		margin-bottom: 0.5rem;
+		margin-bottom: calc(var(--spacing) * 2);
 		color: var(--color-surface-900);
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
+		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+		border-radius: var(--radius-base);
 		cursor: text;
-		min-height: 1.5rem;
+		min-height: calc(var(--spacing) * 6);
 	}
 
 	:global(.table-notes) {
 		font-size: 0.75rem;
-		margin-top: 0.5rem;
+		margin-top: calc(var(--spacing) * 2);
 		color: var(--color-surface-600);
 		font-style: italic;
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
+		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+		border-radius: var(--radius-base);
 		cursor: text;
-		min-height: 1.5rem;
+		min-height: calc(var(--spacing) * 6);
 	}
 
 	:global(.table-wrapper-content.hide-notes .table-notes) {

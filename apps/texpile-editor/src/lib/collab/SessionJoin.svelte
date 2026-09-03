@@ -12,6 +12,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { RotateCcw, ShieldCheck, ChevronDown, ExternalLink } from '@lucide/svelte';
 	import Modal from '$lib/modals/Modal.svelte';
+	import ModalActions from '$lib/modals/ModalActions.svelte';
 
 	let codeInput = $state('');
 	// a join link carries the code, whether this tab opened with one or the OS handed the running
@@ -239,11 +240,11 @@
 {#if __WEB__}
 	<Modal bind:open={appModalOpen} title={m.session_app_missing_title()}>
 		<p class="text-surface-600-300 mb-4 text-sm">{m.session_app_missing_body()}</p>
-		<div class="flex justify-end gap-2">
-			<button class="btn preset-tonal" onclick={continueInBrowser}>{m.session_continue_browser()}</button>
-			<a class="btn preset-filled-primary-500" href="https://texpile.com/download" target="_blank" rel="noopener noreferrer">
-				{m.session_download()}
-			</a>
-		</div>
+		<ModalActions
+			buttons={[
+				{ label: m.session_continue_browser(), onclick: continueInBrowser, class: 'preset-tonal' },
+				{ label: m.session_download(), role: 'primary', href: 'https://texpile.com/download' }
+			]}
+		/>
 	</Modal>
 {/if}

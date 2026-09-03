@@ -1,0 +1,116 @@
+/* Texpile's own colour tokens, derived from whichever Skeleton theme is on.
+
+   The app paints more roles than Skeleton names (syntax highlighting, find matches, proofread
+   underlines, review comments, the PDF chrome...). Each gets a variable here, built from the
+   theme's families, so switching data-theme to any Skeleton theme recolours all of it.
+
+   The default theme (texpile-default-theme.css) overrides every one of these with the exact value
+   it always painted: its [data-theme] selector outranks the bare html below, so the default look
+   is untouched and only other themes take these derivations. A new theme overrides what it likes
+   and inherits the rest. Pairs are light-dark(), the way Skeleton's own pairing tokens are built. */
+
+html {
+	/* CodeMirror syntax roles (cmHighlight.ts) */
+	--syntax-comment: light-dark(var(--color-surface-600), var(--color-surface-400));
+	--syntax-keyword: light-dark(var(--color-error-700), var(--color-error-300));
+	--syntax-import: light-dark(var(--color-secondary-700), var(--color-secondary-300));
+	--syntax-command: light-dark(var(--color-primary-700), var(--color-primary-300));
+	--syntax-math-ident: light-dark(var(--color-tertiary-700), var(--color-tertiary-300));
+	--syntax-math-text: light-dark(var(--color-success-700), var(--color-success-300));
+	--syntax-literal: light-dark(var(--color-warning-700), var(--color-warning-300));
+	--syntax-string: light-dark(var(--color-primary-800), var(--color-primary-200));
+	--syntax-url: light-dark(var(--color-primary-600), var(--color-primary-400));
+	--syntax-monospace: light-dark(var(--color-warning-800), var(--color-warning-400));
+	--syntax-operator: light-dark(var(--color-secondary-600), var(--color-secondary-400));
+	--syntax-inserted: light-dark(var(--color-success-700), var(--color-success-300));
+	--syntax-deleted: light-dark(var(--color-error-800), var(--color-error-300));
+
+	/* find-in-document matches, both editors */
+	--find-match-bg: light-dark(var(--color-warning-200), var(--color-warning-900));
+	--find-match-active-bg: light-dark(var(--color-warning-300), var(--color-warning-700));
+	--find-match-border: var(--color-warning-400);
+	--find-match-active-border: var(--color-warning-500);
+	--find-match-active-fg: light-dark(var(--color-surface-950), var(--color-surface-50));
+	--find-match-dark-fg: var(--color-surface-50);
+
+	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
+	--proof-default: var(--color-tertiary-500);
+	--proof-spelling: var(--color-error-500);
+	--proof-typo: var(--color-error-500);
+	--proof-capitalization: var(--color-warning-500);
+	--proof-wordchoice: var(--color-primary-500);
+	--proof-style: var(--color-secondary-500);
+	--proof-repetition: var(--color-warning-600);
+
+	/* review comments: the thread tint, and the selection a composer is open for */
+	--comment-tint: var(--color-warning-500);
+	--comment-pending-tint: var(--color-primary-500);
+
+	/* the "you are here" flash after a SyncTeX, mode-switch or reference jump */
+	--jump-flash: var(--color-warning-400);
+	/* draft mode: the band around the paragraph being edited */
+	--draft-band: var(--color-warning-300);
+
+	/* suggestion and agent diff tints in the visual editor */
+	--diff-insert-tint: var(--color-success-500);
+	--diff-delete-tint: var(--color-error-500);
+	--diff-highlight-tint: var(--color-warning-400);
+
+	/* \ref and \cite chips */
+	--ref-fg: light-dark(var(--color-primary-600), var(--color-primary-400));
+	--ref-bg: light-dark(var(--color-primary-50), var(--color-primary-950));
+	--ref-broken-fg: light-dark(var(--color-error-600), var(--color-error-400));
+	--ref-broken-bg: light-dark(var(--color-error-50), var(--color-error-950));
+
+	/* git status, carried by the file name's colour */
+	--git-modified: var(--color-warning-500);
+	--git-added: var(--color-success-500);
+	--git-deleted: var(--color-error-500);
+	--git-renamed: var(--color-secondary-500);
+
+	/* math symbol keys */
+	--math-key-hover: light-dark(var(--color-primary-100), var(--color-primary-900));
+	--math-key-edge: var(--color-primary-400);
+	--math-key-down: light-dark(var(--color-primary-200), var(--color-primary-800));
+
+	/* the colour picker's clear mark */
+	--swatch-clear: var(--color-error-500);
+	/* page view: the sheet behind the document, paper-white in both modes */
+	--page-sheet: var(--color-surface-50);
+	/* an empty math field, and one about to be deleted */
+	--math-empty-tint: var(--color-error-500);
+	--mathfield-focus-border: light-dark(var(--color-surface-950), var(--color-surface-400));
+	/* the selected block's outline while the context menu is open */
+	--selected-node-outline: var(--color-primary-300);
+	/* a peer's cursor label when it carries no colour of its own */
+	--collab-cursor-fallback: var(--color-warning-500);
+	/* the source editor's math preview: its control buttons on hover */
+	--math-preview-btn-hover: color-mix(in srgb, var(--color-surface-500) 18%, transparent);
+	/* the image resize frame */
+	--image-frame: light-dark(var(--color-surface-950), var(--color-surface-50));
+	/* the terminal: dark in both modes; xterm reads these through themeColour() */
+	--terminal-bg: var(--color-surface-950);
+	--terminal-fg: var(--color-surface-100);
+	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */
+	--brand-blue: var(--color-primary-500);
+	--brand-gray: var(--color-surface-200);
+
+	/* the PDF pane's chrome */
+	--pdf-viewer-bg: light-dark(var(--color-surface-100), var(--color-surface-950));
+	--pdf-page-area-bg: light-dark(var(--color-surface-100), var(--color-surface-950));
+	--pdf-toolbar-bg: light-dark(var(--color-surface-50), var(--color-surface-900));
+	--pdf-toolbar-fg: light-dark(var(--color-surface-800), var(--color-surface-100));
+	--pdf-toolbar-border: light-dark(var(--color-surface-200), var(--color-surface-700));
+	--pdf-toolbar-btn-bg: light-dark(var(--color-surface-100), var(--color-surface-800));
+	--pdf-toolbar-btn-border: light-dark(var(--color-surface-200), var(--color-surface-700));
+	--pdf-toolbar-btn-fg: light-dark(var(--color-surface-600), var(--color-surface-200));
+	--pdf-toolbar-btn-hover-bg: light-dark(var(--color-surface-200), var(--color-surface-700));
+	--pdf-toolbar-btn-hover-border: light-dark(var(--color-surface-300), var(--color-surface-600));
+	--pdf-toolbar-btn-active-bg: light-dark(var(--color-surface-300), var(--color-surface-600));
+	--pdf-toolbar-input-bg: light-dark(var(--color-surface-50), var(--color-surface-800));
+	--pdf-toolbar-input-border: light-dark(var(--color-surface-200), var(--color-surface-700));
+	--pdf-toolbar-accent: var(--color-primary-500);
+	--pdf-toolbar-accent-ring: color-mix(in srgb, var(--color-primary-500) 25%, transparent);
+	--pdf-toolbar-muted: light-dark(var(--color-surface-500), var(--color-surface-400));
+	--pdf-toolbar-muted-strong: light-dark(var(--color-surface-600), var(--color-surface-400));
+}

@@ -23,7 +23,7 @@ export function applyMathOutline(target: HTMLElement, empty: boolean, pendingDel
 	if (empty) {
 		// keep pending-delete styling if active
 		if (!pendingDelete) {
-			target.style.border = '1px solid var(--color-error-500, #ef4444)';
+			target.style.border = '1px solid var(--color-error-500)';
 			target.style.backgroundColor = 'transparent';
 		}
 		target.style.outline = 'none';
@@ -31,7 +31,7 @@ export function applyMathOutline(target: HTMLElement, empty: boolean, pendingDel
 	}
 	target.style.backgroundColor = 'transparent';
 	// var, not #000: a black ring is invisible against the dark-mode editor background
-	target.style.border = focus ? '1px solid var(--mathfield-focus-border, #000)' : 'none';
+	target.style.border = focus ? '1px solid var(--mathfield-focus-border)' : 'none';
 	target.style.outline = 'none';
 }
 /* eslint-enable no-param-reassign */
@@ -46,8 +46,8 @@ export class MathFieldExit {
 		if (this.h.isEmpty()) {
 			if (!this.pendingDelete) {
 				this.pendingDelete = true;
-				this.h.host().style.border = '1px solid var(--color-error-500, #ef4444)';
-				this.h.host().style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+				this.h.host().style.border = '1px solid var(--color-error-500)';
+				this.h.host().style.backgroundColor = 'color-mix(in srgb, var(--math-empty-tint) 10%, transparent)';
 				return true; // keep the cursor inside
 			}
 

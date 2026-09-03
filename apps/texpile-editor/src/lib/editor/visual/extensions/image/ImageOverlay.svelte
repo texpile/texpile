@@ -95,11 +95,11 @@
 
 	/* match the table settings button */
 	.settings-button {
-		width: 2rem;
-		height: 2rem;
+		width: calc(var(--spacing) * 8);
+		height: calc(var(--spacing) * 8);
 		padding: 0;
-		border: 1px solid var(--color-surface-300);
-		border-radius: 0.25rem;
+		border: var(--default-border-width) solid var(--color-surface-300);
+		border-radius: var(--radius-base);
 		background: var(--color-surface-50);
 		display: flex;
 		align-items: center;

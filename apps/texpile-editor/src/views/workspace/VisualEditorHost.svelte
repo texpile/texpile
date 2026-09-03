@@ -35,6 +35,7 @@
 		onSelectComment,
 		onAddCommentAnchored,
 		onInsertCitation,
+		onJumpToLabel,
 		onCommentsPlaced,
 		commentPendingActive
 	}: {
@@ -56,6 +57,7 @@
 		onSelectComment?: (id: string, from: 'visual') => void;
 		onAddCommentAnchored?: (anchor: CommentAnchor | null) => void;
 		onInsertCitation?: () => void;
+		onJumpToLabel?: (name: string) => boolean;
 		onCommentsPlaced?: (lost: string[]) => void;
 		commentPendingActive: boolean;
 	} = $props();
@@ -131,6 +133,7 @@
 				{onSelectComment}
 				onAddComment={onAddCommentAnchored}
 				{onInsertCitation}
+				{onJumpToLabel}
 				{onCommentsPlaced}
 				{commentPendingActive}
 				addCommentLabel={m.comments_add()}

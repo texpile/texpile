@@ -139,7 +139,7 @@
 				     would be as old as a fetch nothing here runs. -->
 				{#if tracking && ahead > 0}
 					<button
-						class="hover:preset-tonal flex items-center gap-0.5 rounded px-1 py-0.5 disabled:opacity-50"
+						class="hover:preset-tonal flex items-center gap-0.5 rounded-base px-1 py-0.5 disabled:opacity-50"
 						use:tip={ahead === 1 ? m.vcs_upload_one() : m.vcs_upload_count({ count: ahead })}
 						aria-label={m.vcs_upload_aria()}
 						onclick={onUpload}
@@ -150,7 +150,7 @@
 					</button>
 				{/if}
 				<button
-					class="hover:preset-tonal rounded p-0.5"
+					class="hover:preset-tonal rounded-base p-0.5"
 					use:tip={m.vcs_refresh_title()}
 					aria-label={m.vcs_refresh_aria()}
 					onclick={onRefresh}

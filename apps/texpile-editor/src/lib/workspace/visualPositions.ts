@@ -13,6 +13,7 @@ import { TextSelection } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { buildBlockMap, pmPosToSourceOffset, sourceOffsetToPmPos } from '$lib/editor/visual/sourceMap';
 import { docPositions, offsetToRowCol, rowColToOffset } from './docPositions';
+import { flashNodeAt } from '$lib/editor/visual/extensions/flash-plugin';
 
 /**
  * Leaving the visual editor: map the PM caret back to a file position and store it. Must be called
@@ -43,6 +44,7 @@ export function restoreVisualPosition(
 	strip?: (s: string) => string
 ): void {
 	const pos = docPositions.get(path);
+	const jumped = docPositions.takeJump(path); // taken even when the restore below gives up
 	if (!pos) return;
 	const doc = v.state.doc;
 	const target = sourceOffsetToPmPos(doc, buildBlockMap(doc, bodyOffset), rowColToOffset(source, pos.row, pos.column), strip);
@@ -65,6 +67,9 @@ export function restoreVisualPosition(
 		// those (a resume built from \resumeItem macros) hit it on nearly every restore, while a file
 		// of ordinary paragraphs never does. Same reason resolveVisualAnchor calls this.
 		v.focus();
+		// a jump's landing gets the amber the SyncTeX and mode-switch flashes use: the reader sees
+		// that the view moved, instead of wondering whether the click did anything
+		if (jumped && selection.$head.depth > 0) flashNodeAt(v, selection.$head.before(1));
 	} catch {
 		/* the document moved under a stored position; leave the caret where it mounted */
 	}

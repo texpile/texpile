@@ -246,4 +246,113 @@
 	--color-surface-contrast-800: var(--color-surface-contrast-light);
 	--color-surface-contrast-900: var(--color-surface-contrast-light);
 	--color-surface-contrast-950: var(--color-surface-contrast-light);
+
+	/* Texpile's own colours, beside Skeleton's families. Each is the exact value the app painted
+	   before it was themeable, so this theme looks unchanged and another theme overrides them.
+	   light-dark() pairs follow data-mode through color-scheme (app.css). */
+
+	/* CodeMirror syntax roles (cmHighlight.ts): GitHub Primer hues, one per mode */
+	--syntax-comment: light-dark(#59636e, #9198a1);
+	--syntax-keyword: light-dark(#cf222e, #ff7b72);
+	--syntax-import: light-dark(#8250df, #d2a8ff);
+	--syntax-command: light-dark(#0550ae, #79c0ff);
+	--syntax-math-ident: light-dark(#1b7c83, #56d4dd);
+	--syntax-math-text: light-dark(#116329, #7ee787);
+	--syntax-literal: light-dark(#953800, #ffa657);
+	--syntax-string: light-dark(#0a3069, #a5d6ff);
+	--syntax-url: light-dark(#0969da, #58a6ff);
+	--syntax-monospace: light-dark(#7d4e00, #e3b341);
+	--syntax-operator: light-dark(#bf3989, #f778ba);
+	--syntax-inserted: light-dark(#116329, #7ee787);
+	--syntax-deleted: light-dark(#82071e, #ffa198);
+
+	/* find-in-document matches, both editors */
+	--find-match-bg: light-dark(rgb(255, 237, 153), rgb(102, 77, 3));
+	--find-match-active-bg: light-dark(rgb(255, 213, 79), rgb(161, 123, 5));
+	--find-match-border: rgb(255, 213, 79);
+	--find-match-active-border: rgb(255, 179, 0);
+	--find-match-active-fg: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));
+	--find-match-dark-fg: rgb(255, 255, 255);
+
+	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
+	--proof-default: #14b8a6;
+	--proof-spelling: #ff0000;
+	--proof-typo: #ff0000;
+	--proof-capitalization: #ff8c00;
+	--proof-wordchoice: #0064ff;
+	--proof-style: #9333ea;
+	--proof-repetition: #eab308;
+
+	/* review comments: the thread tint, and the selection a composer is open for */
+	--comment-tint: rgb(234, 179, 8);
+	--comment-pending-tint: rgb(59, 130, 246);
+
+	/* the "you are here" flash after a SyncTeX, mode-switch or reference jump */
+	--jump-flash: rgb(255, 196, 0);
+	/* draft mode: the band around the paragraph being edited */
+	--draft-band: oklch(90.5% 0.182 98.111);
+
+	/* suggestion and agent diff tints in the visual editor */
+	--diff-insert-tint: rgb(74, 222, 128);
+	--diff-delete-tint: rgb(239, 68, 68);
+	--diff-highlight-tint: rgb(250, 204, 21);
+
+	/* \ref and \cite chips */
+	--ref-fg: light-dark(oklch(54.6% 0.245 262.881), oklch(70.7% 0.165 254.624));
+	--ref-bg: light-dark(oklch(97% 0.014 254.604), oklch(28.2% 0.091 267.935));
+	--ref-broken-fg: light-dark(oklch(57.7% 0.245 27.325), oklch(70.4% 0.191 22.216));
+	--ref-broken-bg: light-dark(oklch(97.1% 0.013 17.38), oklch(25.8% 0.092 26.042));
+
+	/* git status, carried by the file name's colour */
+	--git-modified: oklch(76.9% 0.188 70.08);
+	--git-added: oklch(72.3% 0.219 149.579);
+	--git-deleted: oklch(63.7% 0.237 25.331);
+	--git-renamed: oklch(60.6% 0.25 292.717);
+
+	/* math symbol keys */
+	--math-key-hover: oklch(88.2% 0.059 254.128);
+	--math-key-edge: oklch(70.7% 0.165 254.624);
+	--math-key-down: oklch(80.9% 0.105 251.813);
+
+	/* the colour picker's clear mark */
+	--swatch-clear: oklch(63.7% 0.237 25.331);
+	/* page view: the sheet behind the document */
+	--page-sheet: light-dark(#fff, oklch(98.5% 0.002 247.839));
+	/* an empty math field, and one about to be deleted */
+	--math-empty-tint: rgb(239, 68, 68);
+	--mathfield-focus-border: light-dark(var(--color-surface-950), var(--color-surface-400));
+	/* the selected block's outline while the context menu is open */
+	--selected-node-outline: #8cf;
+	/* a peer's cursor label when it carries no colour of its own */
+	--collab-cursor-fallback: rgb(250, 129, 0);
+	/* the source editor's math preview: its control buttons on hover */
+	--math-preview-btn-hover: rgba(128, 128, 128, 0.18);
+	/* the image resize frame */
+	--image-frame: light-dark(#000, #fff);
+	/* the terminal; xterm reads these through themeColour() */
+	--terminal-bg: #1e1e1e;
+	--terminal-fg: #e4e4e7;
+	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */
+	--brand-blue: #0088f7;
+	--brand-gray: #d0d4e9;
+
+	/* the PDF pane's chrome: the light values its styles used to fall back to, and the dark
+	   ones app.css used to switch in */
+	--pdf-viewer-bg: light-dark(#f0f0f0, var(--color-surface-950));
+	--pdf-page-area-bg: light-dark(#f5f5f5, var(--color-surface-950));
+	--pdf-toolbar-bg: light-dark(#ffffff, var(--color-surface-900));
+	--pdf-toolbar-fg: light-dark(#333, var(--color-surface-100));
+	--pdf-toolbar-border: light-dark(#e0e0e0, var(--color-surface-700));
+	--pdf-toolbar-btn-bg: light-dark(#fafafa, var(--color-surface-800));
+	--pdf-toolbar-btn-border: light-dark(#e0e0e0, var(--color-surface-700));
+	--pdf-toolbar-btn-fg: light-dark(#555, var(--color-surface-200));
+	--pdf-toolbar-btn-hover-bg: light-dark(#f0f0f0, var(--color-surface-700));
+	--pdf-toolbar-btn-hover-border: light-dark(#d0d0d0, var(--color-surface-600));
+	--pdf-toolbar-btn-active-bg: light-dark(#e8e8e8, var(--color-surface-600));
+	--pdf-toolbar-input-bg: light-dark(#fff, var(--color-surface-800));
+	--pdf-toolbar-input-border: light-dark(#e0e0e0, var(--color-surface-700));
+	--pdf-toolbar-accent: light-dark(#0066cc, var(--color-primary-500));
+	--pdf-toolbar-accent-ring: light-dark(rgba(0, 102, 204, 0.15), color-mix(in srgb, var(--color-primary-500) 25%, transparent));
+	--pdf-toolbar-muted: light-dark(#888, var(--color-surface-400));
+	--pdf-toolbar-muted-strong: light-dark(#666, var(--color-surface-400));
 }

@@ -66,7 +66,7 @@
 						{#each cells as cell (`${cell.row}-${cell.col}`)}
 							<button
 								type="button"
-								class="h-6 w-6 rounded"
+								class="h-6 w-6 rounded-base"
 								class:bg-surface-200-800={!(cell.row <= rows && cell.col <= cols)}
 								class:bg-blue={cell.row <= rows && cell.col <= cols}
 								tabindex="-1"

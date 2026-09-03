@@ -3,7 +3,8 @@
 	import { untrack } from 'svelte';
 	import FileIcon from './FileIcon.svelte';
 	import FileTreeRow from './FileTreeRow.svelte';
-	import FileTreeRightClickMenu, { type TreeTarget } from './FileTreeRightClickMenu.svelte';
+	import { openFileTreeContextMenu, type TreeTarget } from './fileTreeContextMenu';
+	import { contextMenuOpen, closeContextMenu } from '$lib/menus/contextMenu.svelte';
 	import { samePath, type TreeEntry } from '$lib/workspace/fileSystem';
 	import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
 	import type { GitBadge } from '$lib/workspace/git';
@@ -172,11 +173,10 @@
 		}
 	}
 
-	let rightClick: { open: (event: MouseEvent, at: TreeTarget) => void; close: () => void; isOpen: () => boolean } | undefined;
 	function openCtx(e: MouseEvent, entry: TreeEntry | null) {
 		// right-clicking outside the selection retargets it (the menu acts on what's selected)
 		if (entry) sel.ensureSelected(entry);
-		rightClick?.open(e, {
+		const at: TreeTarget = {
 			entry,
 			createDir: entry?.type === 'dir' ? entry.path : rootPath,
 			pasteDir: entry?.type === 'dir' ? entry.path : pasteTargetDir(),
@@ -185,6 +185,18 @@
 			canSetMain: !!entry && deleteCount(entry) === 1 && isMainable(entry) && !!onSetMain,
 			canPaste,
 			canReveal: !!entry && !!onReveal && deleteCount(entry) === 1
+		};
+		openFileTreeContextMenu(e, at, {
+			history,
+			typstProject,
+			onSetMain,
+			onReveal,
+			onCreate: (dir, type) => editor.startCreate(dir, type),
+			onCopy: copySelection,
+			onPaste: pasteClipboard,
+			onRename: (entry) => editor.startRename(entry),
+			onDelete: confirmDelete,
+			onClose: refocusTree
 		});
 	}
 
@@ -226,7 +238,7 @@
 			return;
 		}
 		// escape hatch even if the inline input lost focus
-		if (rightClick?.isOpen()) rightClick.close();
+		if (contextMenuOpen()) closeContextMenu();
 		else if (editor.creatingIn !== null) editor.cancelCreate();
 		else if (editor.renaming !== null) editor.renaming = null;
 		else if (sel.selected.length) sel.selected = [];
@@ -276,7 +288,7 @@
 	bind:this={treeEl}
 	role="presentation"
 	tabindex="-1"
-	class="min-h-full min-w-max rounded outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
+	class="min-h-full min-w-max rounded-base outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
 	onfocusin={() => (focused = true)}
 	onfocusout={(e) => {
 		// relatedTarget is where focus is HEADING; moving between two rows must not read as leaving
@@ -295,17 +307,3 @@
 		<FileTreeRow {entry} depth={0} {sel} {dnd} {editor} {focused} {gitStatus} {isActive} {isMain} {onOpen} {openCtx} {createInput} />
 	{/each}
 </div>
-
-<FileTreeRightClickMenu
-	bind:this={rightClick}
-	{history}
-	{typstProject}
-	{onSetMain}
-	{onReveal}
-	onCreate={(dir, type) => editor.startCreate(dir, type)}
-	onCopy={copySelection}
-	onPaste={pasteClipboard}
-	onRename={(e) => editor.startRename(e)}
-	onDelete={confirmDelete}
-	onClose={refocusTree}
-/>

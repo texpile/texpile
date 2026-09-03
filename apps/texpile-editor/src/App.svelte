@@ -136,6 +136,7 @@
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import ConfirmHost from '$lib/modals/ConfirmHost.svelte';
 	import TooltipHost from '$lib/components/TooltipHost.svelte';
+	import ContextMenuHost from '$lib/menus/ContextMenuHost.svelte';
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -157,6 +158,7 @@
 
 <ConfirmHost />
 <TooltipHost />
+<ContextMenuHost />
 
 {#if __WEB__}
 	<!-- the browser build is the join client and nothing else: no start screen, no local folder -->
@@ -221,7 +223,7 @@
 	 */
 	:global([data-scope='toast'][data-part='root'][data-type]) {
 		background-color: var(--color-surface-50, #ffffff);
-		border: 1px solid var(--color-surface-300, #cbd5e1);
+		border: var(--default-border-width) solid var(--color-surface-300, #cbd5e1);
 		color: var(--color-surface-950, #0b1220);
 		box-shadow: 0 10px 30px rgb(0 0 0 / 0.22);
 	}

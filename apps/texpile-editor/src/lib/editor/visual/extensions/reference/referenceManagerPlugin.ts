@@ -29,7 +29,7 @@ const suggestReference: TexpileSuggester = {
 	supportedCharacters: /[a-zA-Z0-9\s_]/,
 	maxQueryLength: 30,
 	suggestClassName:
-		'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded px-0.5 underline decoration-wavy decoration-primary-500 dark:decoration-primary-400',
+		'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-base px-0.5 underline decoration-wavy decoration-primary-500 dark:decoration-primary-400',
 	onChange: (params) => {
 		const { query, range, view } = params;
 

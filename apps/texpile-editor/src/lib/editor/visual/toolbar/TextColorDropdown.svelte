@@ -51,7 +51,7 @@
 	positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}
 	autoFocus={false}
 >
-	<Popover.Trigger class="toolbarButton rounded p-1 hover:bg-surface-200-800">
+	<Popover.Trigger class="toolbarButton rounded-base p-1 hover:bg-surface-200-800">
 		<button aria-label={m.tbar_text_color_aria()} use:tip={m.tbar_text_color_aria()} class="relative flex items-center">
 			<!-- nudged down 1.5px, lucide's A glyph rides high; matches the underline correction -->
 			<Baseline class="h-5 w-5 translate-y-[1.5px] text-surface-800-200" />
@@ -75,12 +75,12 @@
 				{#each textColors as { name, value } (value)}
 					<button
 						type="button"
-						class="hover:preset-tonal-primary flex w-full items-center gap-2 rounded px-3 py-2 text-left"
+						class="hover:preset-tonal-primary flex w-full items-center gap-2 rounded-base px-3 py-2 text-left"
 						onclick={() => setTextColor(value)}
 					>
 						{#if value === 'default'}
 							<span class="relative inline-block h-3 w-3 rounded-full border border-surface-300-700 bg-surface-100-900">
-								<span class="absolute inset-0 flex items-center justify-center text-xs text-red-500">✕</span>
+								<span class="absolute inset-0 flex items-center justify-center text-xs text-swatch-clear">✕</span>
 							</span>
 						{:else}
 							<span class="inline-block h-3 w-3 rounded-full border border-surface-300-700" style="background-color: {value};"></span>

@@ -60,6 +60,8 @@
 			: (mainIsTypst ? kind === 'typ' && typstPreviewWanted : kind === 'tex') && !activeCompare.current
 	);
 	const syncToCursor = $derived(canSync ? (actions.syncForward as () => void) : null);
+	// a lone file has no project to hold the log, so the menus drop their Add comment entry
+	const canComment = $derived(!fileMode.current);
 </script>
 
 <main
@@ -152,16 +154,17 @@
 			onHistoryBoundary={actions.historyStep}
 			onJumpToFile={actions.jumpToFile}
 			onOpenFileAt={actions.openFileAt}
+			onJumpToLabel={actions.jumpToLabel}
 			onCaretMove={actions.onCaretMove}
 			onToggleDiffLayout={() => diff.toggleLayout()}
 			onRefreshDiff={actions.refreshDiff}
 			commentRanges={panes.commentRanges}
 			commentThreads={panes.comments.filter((t: Any) => t.file === panes.commentFile)}
 			selectedComment={panes.commentSelected}
-			onAddComment={actions.beginComment}
+			onAddComment={canComment ? actions.beginComment : undefined}
+			onAddCommentAnchored={canComment ? actions.beginCommentAnchored : undefined}
 			commentPendingActive={!!panes.commentPending}
 			onInsertCitation={panes.zoteroCite ? actions.insertZoteroCitation : undefined}
-			onAddCommentAnchored={actions.beginCommentAnchored}
 			onCommentsPlaced={actions.visualCommentsPlaced}
 			onSelectComment={actions.selectComment}
 		/>

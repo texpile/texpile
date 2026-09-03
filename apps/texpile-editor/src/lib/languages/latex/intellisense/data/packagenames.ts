@@ -2510,7 +2510,7 @@ export const PACKAGE_NAMES: PackageInfo[] = [
 	{ name: 'randtext', detail: 'Randomise the order of characters in strings', url: 'https://ctan.org/pkg/randtext' },
 	{ name: 'rank-2-roots', detail: 'Draw (mathematical) rank 2 root systems', url: 'https://ctan.org/pkg/rank-2-roots' },
 	{ name: 'rawfonts', detail: 'Low level font compatibility mode for LaTeX', url: 'https://ctan.org/pkg/rawfonts' },
-	{ name: 'rccol', detail: 'Decimal-centered optionally rounded numbers in tabular', url: 'https://ctan.org/pkg/rccol' },
+	{ name: 'rccol', detail: 'Decimal-centered optionally rounded-base numbers in tabular', url: 'https://ctan.org/pkg/rccol' },
 	{ name: 'rcs', detail: 'Use RCS (revision control system) tags in LaTeX documents', url: 'https://ctan.org/pkg/rcs' },
 	{ name: 'rcs-multi', detail: 'Typeset RCS version control in multiple-file documents', url: 'https://ctan.org/pkg/rcs-multi' },
 	{ name: 'rcsinfo', detail: 'Support for the revision control system', url: 'https://ctan.org/pkg/rcsinfo' },

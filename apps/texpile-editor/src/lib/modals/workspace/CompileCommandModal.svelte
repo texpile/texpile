@@ -5,10 +5,10 @@
 	// There is no typesetter to choose here. The main file's extension names it - typst cannot build
 	// a .tex and latex cannot build a .typ - so a switch beside it could only ever disagree with the
 	// pipeline. Change the main file to change the lane; this dialog just shows which one it is.
-	import { tip } from '$lib/components/tooltip.svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { Play } from '@lucide/svelte';
 	import Modal from '../Modal.svelte';
+	import ModalActions from '../ModalActions.svelte';
 	import LatexCompileSettings from './LatexCompileSettings.svelte';
 	import TypstCompileSettings from './TypstCompileSettings.svelte';
 	import CompileOutputPaths from './CompileOutputPaths.svelte';
@@ -114,42 +114,43 @@
 		<span class="text-surface-500 text-xs">
 			{#if !mainFile.current}{m.wsview_pick_main_file_to_run()}{/if}
 		</span>
-		<div class="flex gap-2">
-			<button class="btn btn-xs hover:preset-tonal" onclick={() => (open = false)}>{m.wsview_cancel_label()}</button>
-			{#if superseded}
-				<!-- one button either way: onRun goes through runCompile, which routes to the draft
-						     engine or the Typst preview by the same conditions that hid the command above -->
-				<button
-					class="btn btn-xs preset-filled-primary-500 gap-1.5"
-					onclick={() => {
-						open = false;
-						onRun();
-					}}
-					disabled={!mainFile.current}
-				>
-					<Play class="size-4" />
-					{m.wsview_run_preview()}
-				</button>
-			{:else}
-				<button class="btn btn-xs hover:preset-tonal" onclick={() => onSave(false)}>{m.wsview_save_label()}</button>
-				<button
-					class="btn btn-xs preset-tonal-primary gap-1.5"
-					onclick={onUseDefault}
-					disabled={DEFAULT_COMPILE_COMMAND.includes('{main}') && !mainFile.current}
-					use:tip={m.wsview_use_default_title()}
-				>
-					<Play class="size-4" />
-					{m.wsview_use_default()}
-				</button>
-				<button
-					class="btn btn-xs preset-filled-primary-500 gap-1.5"
-					onclick={() => onSave(true)}
-					disabled={command.includes('{main}') && !mainFile.current}
-				>
-					<Play class="size-4" />
-					{m.wsview_save_and_run()}
-				</button>
-			{/if}
-		</div>
+		<!-- superseded: one button either way, since onRun goes through runCompile, which routes to the
+		     draft engine or the Typst preview by the same conditions that hid the command above -->
+		<ModalActions
+			size="xs"
+			buttons={superseded
+				? [
+						{ label: m.wsview_cancel_label(), role: 'cancel', onclick: () => (open = false) },
+						{
+							label: m.wsview_run_preview(),
+							role: 'primary',
+							icon: Play,
+							disabled: !mainFile.current,
+							onclick: () => {
+								open = false;
+								onRun();
+							}
+						}
+					]
+				: [
+						{ label: m.wsview_cancel_label(), role: 'cancel', onclick: () => (open = false) },
+						{ label: m.wsview_save_label(), onclick: () => onSave(false) },
+						{
+							label: m.wsview_use_default(),
+							icon: Play,
+							class: 'preset-tonal-primary',
+							tip: m.wsview_use_default_title(),
+							disabled: DEFAULT_COMPILE_COMMAND.includes('{main}') && !mainFile.current,
+							onclick: onUseDefault
+						},
+						{
+							label: m.wsview_save_and_run(),
+							role: 'primary',
+							icon: Play,
+							disabled: command.includes('{main}') && !mainFile.current,
+							onclick: () => onSave(true)
+						}
+					]}
+		/>
 	</div>
 </Modal>

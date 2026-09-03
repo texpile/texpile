@@ -9,11 +9,12 @@ export class RefView implements NodeView {
 	private componentProps = $state<{
 		node: PMNode;
 		view: EditorView;
+		onJumpToLabel?: (name: string) => boolean;
 	}>();
 	node: PMNode;
 	private view: EditorView;
 
-	constructor(node: PMNode, view: EditorView) {
+	constructor(node: PMNode, view: EditorView, onJumpToLabel?: (name: string) => boolean) {
 		this.node = node;
 		this.view = view;
 
@@ -22,7 +23,8 @@ export class RefView implements NodeView {
 
 		this.componentProps = {
 			node: this.node,
-			view: this.view
+			view: this.view,
+			onJumpToLabel
 		};
 
 		this.svelteComponent = mount(RefDisplay, {

@@ -55,7 +55,7 @@
 					{#each items as item (item.label)}
 						<button
 							type="button"
-							class="hover:preset-tonal flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm"
+							class="hover:preset-tonal flex w-full items-center gap-2 rounded-base px-2 py-1.5 text-left text-sm"
 							onmousedown={(e) => {
 								e.preventDefault();
 								onInsert(item);

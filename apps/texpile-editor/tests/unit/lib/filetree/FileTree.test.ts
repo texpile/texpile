@@ -4,6 +4,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
 import { mount, unmount, flushSync } from 'svelte';
 import FileTree from '../../../../src/lib/filetree/FileTree.svelte';
+// the tree's right-click menu is drawn by the app-wide host now, so the tests mount that too
+import ContextMenuHost from '../../../../src/lib/menus/ContextMenuHost.svelte';
+import { closeContextMenu } from '../../../../src/lib/menus/contextMenu.svelte';
 import type { TreeEntry } from '../../../../src/lib/workspace/fileSystem';
 
 const ROOT = '/ws';
@@ -19,6 +22,7 @@ type CopyInFn = (paths: string[], targetDir: string) => void;
 
 let host: HTMLDivElement;
 let app: Record<string, unknown> | null = null;
+let menuHost: Record<string, unknown> | null = null;
 let onCreate: Mock<CreateFn>;
 let onCopyIn: Mock<CopyInFn>;
 let history: {
@@ -74,10 +78,13 @@ beforeEach(() => {
 			history: history as unknown as never
 		}
 	});
+	menuHost = mount(ContextMenuHost, { target: host });
 	flushSync();
 });
 afterEach(() => {
+	closeContextMenu();
 	if (app) void unmount(app);
+	if (menuHost) void unmount(menuHost);
 	host.remove();
 });
 

@@ -184,18 +184,18 @@
 		justify-content: safe center;
 		align-items: center;
 		/* matches the editor (ProseMirror/CodeMirror) and draft toolbars: a 40px bar, border included */
-		min-height: 40px;
+		min-height: calc(var(--spacing) * 10);
 		box-sizing: border-box;
-		gap: 0.5rem;
-		padding: 0 0.5rem;
-		background-color: var(--pdf-toolbar-bg, #ffffff);
-		color: var(--pdf-toolbar-fg, #333);
+		gap: calc(var(--spacing) * 2);
+		padding: 0 calc(var(--spacing) * 2);
+		background-color: var(--pdf-toolbar-bg);
+		color: var(--pdf-toolbar-fg);
 		flex-shrink: 0;
 		/* never wraps to a second row (it shifted the whole viewer down and read as a layout
 		   glitch) and never scrolls either: a bar that does not fit collapses into the "..." */
 		flex-wrap: nowrap;
 		overflow: hidden;
-		border-bottom: 1px solid var(--pdf-toolbar-border, #e0e0e0);
+		border-bottom: var(--default-border-width) solid var(--pdf-toolbar-border);
 		/* No drop shadow. It is 40px like every other bar in the app, but the shadow spread its band
 		   ~3px further, so it never read level with whatever the editor column had beside it - the
 		   diff header most visibly. A leftover from pdf.js's light-theme chrome; no other bar here
@@ -213,21 +213,21 @@
 		z-index: 50;
 		max-width: min(22rem, calc(100vw - 1rem));
 		flex-wrap: wrap;
-		row-gap: 0.5rem;
+		row-gap: calc(var(--spacing) * 2);
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.375rem;
-		border-radius: 6px;
-		border: 1px solid var(--pdf-toolbar-border, #e0e0e0);
-		background-color: var(--pdf-toolbar-bg, #ffffff);
+		gap: calc(var(--spacing) * 2);
+		padding: calc(var(--spacing) * 1.5);
+		border-radius: calc(var(--radius-base) * 1.5);
+		border: var(--default-border-width) solid var(--pdf-toolbar-border);
+		background-color: var(--pdf-toolbar-bg);
 		box-shadow: 0 6px 18px rgb(0 0 0 / 0.18);
 	}
 
 	.pdf-toolbar-group {
 		display: flex;
 		align-items: center;
-		gap: 0.25rem;
+		gap: calc(var(--spacing) * 1);
 		flex-shrink: 0;
 	}
 
@@ -235,25 +235,25 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 28px;
-		height: 28px;
+		width: calc(var(--spacing) * 7);
+		height: calc(var(--spacing) * 7);
 		padding: 0;
-		border: 1px solid var(--pdf-toolbar-btn-border, #e0e0e0);
-		background-color: var(--pdf-toolbar-btn-bg, #fafafa);
-		color: var(--pdf-toolbar-btn-fg, #555);
-		border-radius: 6px;
+		border: var(--default-border-width) solid var(--pdf-toolbar-btn-border);
+		background-color: var(--pdf-toolbar-btn-bg);
+		color: var(--pdf-toolbar-btn-fg);
+		border-radius: calc(var(--radius-base) * 1.5);
 		cursor: pointer;
 		transition: all 0.15s ease;
 	}
 
 	.pdf-toolbar button:hover:not(:disabled) {
-		background-color: var(--pdf-toolbar-btn-hover-bg, #f0f0f0);
-		border-color: var(--pdf-toolbar-btn-hover-border, #d0d0d0);
-		color: var(--pdf-toolbar-fg, #333);
+		background-color: var(--pdf-toolbar-btn-hover-bg);
+		border-color: var(--pdf-toolbar-btn-hover-border);
+		color: var(--pdf-toolbar-fg);
 	}
 
 	.pdf-toolbar button:active:not(:disabled) {
-		background-color: var(--pdf-toolbar-btn-active-bg, #e8e8e8);
+		background-color: var(--pdf-toolbar-btn-active-bg);
 	}
 
 	.pdf-toolbar button:disabled {
@@ -263,12 +263,12 @@
 
 	.pdf-toolbar input[type='text'],
 	.pdf-toolbar input[type='number'] {
-		height: 28px;
-		padding: 0 0.5rem;
-		border: 1px solid var(--pdf-toolbar-input-border, #e0e0e0);
-		border-radius: 6px;
-		background-color: var(--pdf-toolbar-input-bg, #fff);
-		color: var(--pdf-toolbar-fg, #333);
+		height: calc(var(--spacing) * 7);
+		padding: 0 calc(var(--spacing) * 2);
+		border: var(--default-border-width) solid var(--pdf-toolbar-input-border);
+		border-radius: calc(var(--radius-base) * 1.5);
+		background-color: var(--pdf-toolbar-input-bg);
+		color: var(--pdf-toolbar-fg);
 		font-size: 0.8rem;
 		outline: none;
 		transition:
@@ -278,12 +278,12 @@
 
 	.pdf-toolbar input[type='text']:focus,
 	.pdf-toolbar input[type='number']:focus {
-		border-color: var(--pdf-toolbar-accent, #0066cc);
-		box-shadow: 0 0 0 2px var(--pdf-toolbar-accent-ring, rgba(0, 102, 204, 0.15));
+		border-color: var(--pdf-toolbar-accent);
+		box-shadow: 0 0 0 2px var(--pdf-toolbar-accent-ring);
 	}
 
 	.pdf-toolbar input[type='number'] {
-		width: 34px;
+		width: calc(var(--spacing) * 8.5);
 		font-size: 0.75rem;
 		text-align: center;
 		appearance: textfield;
@@ -297,27 +297,27 @@
 	}
 
 	.pdf-toolbar .search-input {
-		width: 160px;
+		width: calc(var(--spacing) * 40);
 	}
 
 	.pdf-toolbar .zoom-level {
-		min-width: 48px;
+		min-width: calc(var(--spacing) * 12);
 		text-align: center;
 		font-size: 0.8rem;
-		color: var(--pdf-toolbar-muted, #666);
+		color: var(--pdf-toolbar-muted-strong);
 		font-weight: 500;
 	}
 
 	.pdf-toolbar .page-info {
 		font-size: 0.8rem;
-		color: var(--pdf-toolbar-muted, #888);
-		margin-left: 0.25rem;
+		color: var(--pdf-toolbar-muted);
+		margin-left: calc(var(--spacing) * 1);
 	}
 
 	.pdf-toolbar .match-info {
 		font-size: 0.75rem;
-		color: var(--pdf-toolbar-muted, #888);
-		min-width: 60px;
-		margin-left: 0.25rem;
+		color: var(--pdf-toolbar-muted);
+		min-width: calc(var(--spacing) * 15);
+		margin-left: calc(var(--spacing) * 1);
 	}
 </style>

@@ -290,7 +290,7 @@
 					></button>
 					<div class="card bg-surface-50-950 border-surface-300-700 absolute top-full right-0 z-1300 mt-1 w-max border p-1 shadow-xl">
 						<button
-							class="hover:preset-tonal flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm whitespace-nowrap"
+							class="hover:preset-tonal flex w-full items-center gap-2 rounded-base px-2 py-1.5 text-left text-sm whitespace-nowrap"
 							onclick={() => {
 								compileMenuOpen = false;
 								onConfigureCompile();

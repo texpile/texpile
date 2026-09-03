@@ -55,6 +55,11 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	replaceSettings: (full: Record<string, unknown>) => ipcRenderer.invoke('settings:replace', full),
 	/** set the whole-window zoom factor (clamped 0.5..2.5); resolves to the applied factor. */
 	setZoomFactor: (factor: number) => ipcRenderer.invoke('window:setZoom', factor),
+	/** a native message box, modal to this window; resolves to the index of the pressed button
+	 *  in the array as sent (primary first, cancel last), or null. */
+	showMessageBox: (req: Record<string, unknown>) => ipcRenderer.invoke('dialog:messageBox', req),
+	/** a native context menu at window coordinates; resolves to the chosen item id, or null. */
+	popupMenu: (req: Record<string, unknown>) => ipcRenderer.invoke('menu:popup', req),
 	/** whether AI-assistant access is enabled, and the loopback port if it is listening. */
 	mcpStatus: () => ipcRenderer.invoke('mcp:status'),
 	/** turn AI-assistant access on or off; persists and starts/stops the server. */

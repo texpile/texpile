@@ -65,7 +65,7 @@ export class RawFigureView extends RawLatexView {
 			img.alt = p;
 			img.title = p;
 			img.draggable = false;
-			img.className = 'max-h-40 max-w-full rounded object-contain';
+			img.className = 'max-h-40 max-w-full rounded-base object-contain';
 			img.onerror = () => img.replaceWith(this.makeMissing(p));
 			this.preview.appendChild(img);
 		}
@@ -73,7 +73,7 @@ export class RawFigureView extends RawLatexView {
 
 	private makeMissing(src: string): HTMLElement {
 		const box = document.createElement('div');
-		box.className = 'text-surface-500 border-surface-300-700 flex h-20 items-center rounded border border-dashed px-3 text-xs';
+		box.className = 'text-surface-500 border-surface-300-700 flex h-20 items-center rounded-base border border-dashed px-3 text-xs';
 		box.textContent = `\u{1F5BC} ${src}`;
 		return box;
 	}

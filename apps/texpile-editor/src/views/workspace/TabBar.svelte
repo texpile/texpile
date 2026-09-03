@@ -120,7 +120,7 @@
 						<span class="bg-warning-500 size-2 rounded-full group-hover:hidden" use:tip={m.wsview_unsaved_changes()}></span>
 					{/if}
 					<button
-						class="hover:bg-surface-300-700 items-center justify-center rounded p-0.5 {isActive(tab) && dirty && !tab.compare
+						class="hover:bg-surface-300-700 items-center justify-center rounded-base p-0.5 {isActive(tab) && dirty && !tab.compare
 							? 'hidden group-hover:inline-flex'
 							: isActive(tab)
 								? 'inline-flex'

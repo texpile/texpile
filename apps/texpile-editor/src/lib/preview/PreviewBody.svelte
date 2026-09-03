@@ -136,7 +136,7 @@
 			<div class="flex items-center gap-1">
 				{#if onPopout}
 					<button
-						class="hover:preset-tonal rounded p-1"
+						class="hover:preset-tonal rounded-base p-1"
 						onclick={onPopout}
 						use:tip={m.wsview_popout_preview()}
 						aria-label={m.wsview_popout_preview()}

@@ -160,7 +160,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 
 // PM types getPos as possibly undefined (unmounted), but these views only call it while
 // mounted, so cast instead of threading the optionality through every constructor
-export function latexNodeViews(imageDir: () => string): NonNullable<EditorProps['nodeViews']> {
+export function latexNodeViews(imageDir: () => string, onJumpToLabel?: (name: string) => boolean): NonNullable<EditorProps['nodeViews']> {
 	return {
 		code_block: (node, view, getPos) => new CodeBlockView(node, view, getPos as () => number),
 		raw_latex: (node, view, getPos) =>
@@ -183,7 +183,7 @@ export function latexNodeViews(imageDir: () => string): NonNullable<EditorProps[
 		environment: environmentView,
 		table_wrapper: tableWrapperView,
 		citation: (node, view, getPos) => new CitationView(node, view, getPos as () => number),
-		ref: (node, view) => new RefView(node, view),
+		ref: (node, view) => new RefView(node, view, onJumpToLabel),
 		label: (node, view, getPos) => new LabelView(node, view, getPos as () => number)
 	};
 }

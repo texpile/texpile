@@ -38,7 +38,7 @@
 	}
 </script>
 
-<div class="hover:bg-surface-100-900/40 my-4 rounded px-2 py-2 text-sm select-none {selected ? 'ring-primary-500 ring-2' : ''}">
+<div class="hover:bg-surface-100-900/40 my-4 rounded-base px-2 py-2 text-sm select-none {selected ? 'ring-primary-500 ring-2' : ''}">
 	<div class="mb-3 text-center font-semibold">{heading}</div>
 	{#if refs.length === 0}
 		<div class="text-surface-500 text-center italic">No bibliography entries yet. Add references to a .bib file.</div>

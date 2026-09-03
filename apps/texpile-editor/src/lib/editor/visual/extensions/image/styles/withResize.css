@@ -1,7 +1,7 @@
 @reference "../../../../../../app.css";
 .imagePluginRoot[imageplugin-align='left'] {
 	float: left;
-	margin: 1rem 2rem 0 0;
+	margin: calc(var(--spacing) * 4) calc(var(--spacing) * 8) 0 0;
 }
 .imagePluginRoot[imageplugin-align='right'] {
 	float: right;
@@ -25,7 +25,7 @@
 .alignRightButton,
 .alignLeftButton,
 .alignCenterButton {
-	width: 5rem;
+	width: calc(var(--spacing) * 20);
 }
 
 .imagePluginRoot[imageplugin-align='left'] [imagealign='left'] {
@@ -41,10 +41,8 @@
 /* The frame drawn round a figure on hover. Neutral rather than the vendored plugin's darkblue,
    which was the one saturated colour in the editor and read as a selection state rather than as an
    outline. Black on a white page, white on a dark one - the same html[data-mode] switch the rest of
-   the editor chrome uses (see app.css). Declared on the box so the resize handles below can share
-   it if they ever need to. */
+   the editor chrome uses (see app.css). --image-frame is the theme's light-dark pair. */
 .imageResizeBox {
-	--image-frame: #000;
 	background-repeat: no-repeat;
 	box-sizing: border-box;
 	left: 0;
@@ -55,10 +53,6 @@
 	transition: all 0.3s ease;
 	box-shadow: 0 0 1px 1px var(--image-frame);
 	align-self: center;
-}
-
-html[data-mode='dark'] .imageResizeBox {
-	--image-frame: #fff;
 }
 
 .imageResizeBox.active {
@@ -134,11 +128,11 @@ html[data-mode='dark'] .imageResizeBox {
 	border: solid 1px #fff;
 	box-sizing: border-box;
 	content: '';
-	height: 10px;
+	height: calc(var(--spacing) * 2.5);
 	left: 0px;
 	position: absolute;
 	top: 0px;
-	width: 10px;
+	width: calc(var(--spacing) * 2.5);
 }
 
 .imageResizeBoxControl::before {

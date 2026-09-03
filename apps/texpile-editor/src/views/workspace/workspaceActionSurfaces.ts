@@ -158,6 +158,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		historyStep: (dir: 'undo' | 'redo') => d.wsdoc.modes.historyStep(dir),
 		jumpToFile: (name: string) => d.nav.jumpToInclude(name),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),
+		jumpToLabel: (name: string) => d.nav.jumpToLabel(name),
 		refreshDiff: () => void toastAfter(m.wsview_toast_diff_refreshed(), () => void d.wsdoc.diff.snapshot()),
 		onPdfDoubleClick: (page: number, x: number, y: number, selectText?: string) => d.nav.onPdfDoubleClick(page, x, y, selectText),
 		onInverseSync: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(normSyncPath(file), line, selectText),

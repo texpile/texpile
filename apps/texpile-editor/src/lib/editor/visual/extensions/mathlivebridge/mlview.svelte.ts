@@ -117,7 +117,7 @@ export class MathLiveView implements NodeView {
 		const initialValue = node.textContent || '';
 		const isEmpty = initialValue.trim().length === 0;
 		if (isEmpty) {
-			this.placeholder.style.border = '1px solid var(--color-error-500, #ef4444)';
+			this.placeholder.style.border = '1px solid var(--color-error-500)';
 			this.placeholder.style.outline = 'none';
 		}
 

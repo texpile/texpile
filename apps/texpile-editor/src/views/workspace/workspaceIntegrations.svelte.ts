@@ -174,6 +174,7 @@ export class WorkspaceIntegrations {
 		// (the switch now flips the root before its scan, so these would otherwise linger on screen)
 		$effect(() => {
 			void workspaceRoot.current; // dependency: re-run per folder
+			void fileMode.current; // and when a lone file takes over a folder already open in this window
 			// untracked: resolveNow reads mainFile/compileConfig, and tracking those would replay
 			// this whole reset (blank PDF, dock steal) on a mere main-file or live-mode change
 			untrack(() => {

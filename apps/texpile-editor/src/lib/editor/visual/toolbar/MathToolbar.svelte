@@ -126,7 +126,7 @@
 	{@const Icon = group.icon}
 	<div>
 		<button
-			class="toolbarButton flex items-center gap-1 rounded p-1 hover:preset-tonal"
+			class="toolbarButton flex items-center gap-1 rounded-base p-1 hover:preset-tonal"
 			class:preset-tonal-primary={mathToolbarState.openGroup === group.id}
 			aria-label={group.label()}
 			use:tip={group.label()}
@@ -148,7 +148,7 @@
 	<div class="flex items-center gap-1 sm:gap-1.5">
 		<span class="border-surface-300-700 h-6 border-r"></span>
 		<button
-			class="toolbarButton rounded p-1 hover:preset-tonal"
+			class="toolbarButton rounded-base p-1 hover:preset-tonal"
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
 			onclick={selectBlockMath}
@@ -191,9 +191,9 @@
 
 	.symbol-grid {
 		display: grid;
-		gap: 4px;
+		gap: calc(var(--spacing) * 1);
 		grid-template-columns: repeat(4, 80px);
-		padding: 6px;
+		padding: calc(var(--spacing) * 1.5);
 		max-height: 60vh;
 		overflow-y: auto;
 	}
@@ -209,9 +209,9 @@
 	.env-list {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
-		padding: 6px;
-		width: 260px;
+		gap: calc(var(--spacing) * 0.5);
+		padding: calc(var(--spacing) * 1.5);
+		width: calc(var(--spacing) * 65);
 		max-height: 60vh;
 		overflow-y: auto;
 	}
@@ -220,11 +220,11 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 4px;
+		gap: calc(var(--spacing) * 1);
 		width: 100%;
-		padding: 8px 12px;
-		border-radius: 4px;
-		border: 1px solid transparent;
+		padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+		border-radius: var(--radius-base);
+		border: var(--default-border-width) solid transparent;
 		text-align: left;
 		transition:
 			background-color 0.15s,
@@ -232,12 +232,12 @@
 	}
 
 	.env-btn:hover {
-		background: var(--color-blue-200, #bfdbfe);
-		border-color: var(--color-blue-400, #60a5fa);
+		background: var(--math-key-hover);
+		border-color: var(--math-key-edge);
 	}
 
 	.env-btn:active {
-		@apply bg-blue-300;
+		background: var(--math-key-down);
 	}
 
 	.env-label {
@@ -256,10 +256,10 @@
 	.symbol-btn {
 		display: grid;
 		place-items: center;
-		width: 80px;
-		height: 80px;
-		border-radius: 4px;
-		border: 1px solid transparent;
+		width: calc(var(--spacing) * 20);
+		height: calc(var(--spacing) * 20);
+		border-radius: var(--radius-base);
+		border: var(--default-border-width) solid transparent;
 		transition:
 			background-color 0.15s,
 			border-color 0.15s;
@@ -277,9 +277,9 @@
 	}
 
 	.symbol-grid[data-group='matrices'] .symbol-btn {
-		width: 66px;
-		height: 66px;
-		padding: 4px;
+		width: calc(var(--spacing) * 16.5);
+		height: calc(var(--spacing) * 16.5);
+		padding: calc(var(--spacing) * 1);
 	}
 
 	.symbol-grid[data-group='matrices'] .symbol-content {
@@ -287,8 +287,8 @@
 	}
 
 	.symbol-grid[data-group='greek'] .symbol-btn {
-		width: 56px;
-		height: 56px;
+		width: calc(var(--spacing) * 14);
+		height: calc(var(--spacing) * 14);
 	}
 
 	.symbol-grid[data-group='greek'] .symbol-content {
@@ -296,11 +296,11 @@
 	}
 
 	.symbol-btn:hover {
-		background: var(--color-blue-200, #bfdbfe);
-		border-color: var(--color-blue-400, #60a5fa);
+		background: var(--math-key-hover);
+		border-color: var(--math-key-edge);
 	}
 
 	.symbol-btn:active {
-		@apply bg-blue-300;
+		background: var(--math-key-down);
 	}
 </style>

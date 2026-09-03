@@ -1,6 +1,6 @@
 /* rough fix for the first cursor position when the first paragraph is empty */
 .ProseMirror > .ProseMirror-yjs-cursor:first-child {
-	margin-top: 16px;
+	margin-top: calc(var(--spacing) * 4);
 }
 .ProseMirror p:first-child,
 .ProseMirror h1:first-child,
@@ -9,15 +9,15 @@
 .ProseMirror h4:first-child,
 .ProseMirror h5:first-child,
 .ProseMirror h6:first-child {
-	margin-top: 16px;
+	margin-top: calc(var(--spacing) * 4);
 }
 /* remote user caret, colors get overwritten automatically */
 .ProseMirror-yjs-cursor {
 	position: relative;
 	margin-left: -1px;
 	margin-right: -1px;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
+	border-left: var(--default-border-width) solid black;
+	border-right: var(--default-border-width) solid black;
 	border-color: orange;
 	word-break: normal;
 	pointer-events: none;
@@ -28,14 +28,14 @@
 	top: -1.05em;
 	left: -1px;
 	font-size: 13px;
-	background-color: rgb(250, 129, 0);
+	background-color: var(--collab-cursor-fallback);
 	font-family: serif;
 	font-style: normal;
 	font-weight: normal;
 	line-height: normal;
 	user-select: none;
 	color: white;
-	padding-left: 2px;
-	padding-right: 2px;
+	padding-left: calc(var(--spacing) * 0.5);
+	padding-right: calc(var(--spacing) * 0.5);
 	white-space: nowrap;
 }

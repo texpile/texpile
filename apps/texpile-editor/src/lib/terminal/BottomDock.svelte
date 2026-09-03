@@ -134,7 +134,7 @@
 	<div class="toolbar-hscroll flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
 		{#if terminalEnabled}
 			<button
-				class="shrink-0 rounded px-2 py-1 whitespace-nowrap {view === 'terminal' ? 'preset-tonal' : 'hover:preset-tonal'}"
+				class="shrink-0 rounded-base px-2 py-1 whitespace-nowrap {view === 'terminal' ? 'preset-tonal' : 'hover:preset-tonal'}"
 				onclick={() => {
 					view = 'terminal';
 					shells.ensure(); // a fresh shell if the last one was killed, so the pane is never empty
@@ -144,7 +144,7 @@
 			</button>
 		{/if}
 		<button
-			class="flex shrink-0 items-center gap-1 rounded px-2 py-1 whitespace-nowrap {view === 'problems'
+			class="flex shrink-0 items-center gap-1 rounded-base px-2 py-1 whitespace-nowrap {view === 'problems'
 				? 'preset-tonal'
 				: 'hover:preset-tonal'}"
 			onclick={() => (view = 'problems')}
@@ -159,7 +159,7 @@
 		<!-- always present, not only once a thread exists: a tab that appears when there is something
 			     in it is a tab nobody finds in the document they actually want to comment on -->
 		<button
-			class="flex shrink-0 items-center gap-1 rounded px-2 py-1 whitespace-nowrap {view === 'comments'
+			class="flex shrink-0 items-center gap-1 rounded-base px-2 py-1 whitespace-nowrap {view === 'comments'
 				? 'preset-tonal'
 				: 'hover:preset-tonal'}"
 			onclick={() => (view = 'comments')}
@@ -173,7 +173,7 @@
 	<div class="flex shrink-0 items-center gap-0.5">
 		{#if view === 'terminal'}
 			<div class="relative">
-				<button class="hover:preset-tonal flex max-w-40 items-center gap-1.5 rounded px-2 py-1" onclick={() => (menuOpen = !menuOpen)}>
+				<button class="hover:preset-tonal flex max-w-40 items-center gap-1.5 rounded-base px-2 py-1" onclick={() => (menuOpen = !menuOpen)}>
 					<SquareTerminal class="size-3.5 shrink-0" />
 					<!-- The first thing to go when the dock narrows, and the right thing: it is the only
 					     label up here that is redundant. The icon still says terminal, the chevron still
@@ -190,7 +190,7 @@
 					<button class="fixed inset-0 z-40 cursor-default" aria-label={m.wsview_close_menu_aria()} onclick={() => (menuOpen = false)}
 					></button>
 					<div
-						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden rounded border py-1 shadow-lg"
+						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden rounded-base border py-1 shadow-lg"
 					>
 						{#each shells.terminals as t (t.id)}
 							<div class="hover:preset-tonal-surface flex items-center">
@@ -199,7 +199,7 @@
 									<span class="truncate">{t.title}</span>
 								</button>
 								<button
-									class="hover:preset-tonal-error mr-1 rounded p-1"
+									class="hover:preset-tonal-error mr-1 rounded-base p-1"
 									use:tip={m.wsview_kill_terminal()}
 									aria-label={m.wsview_kill_terminal()}
 									onclick={() => shells.kill(t.id)}
@@ -222,11 +222,16 @@
 					</div>
 				{/if}
 			</div>
-			<button class="hover:preset-tonal rounded p-1" use:tip={m.wsview_new_terminal()} aria-label={m.wsview_new_terminal()} onclick={add}>
+			<button
+				class="hover:preset-tonal rounded-base p-1"
+				use:tip={m.wsview_new_terminal()}
+				aria-label={m.wsview_new_terminal()}
+				onclick={add}
+			>
 				<Plus class="size-3.5" />
 			</button>
 			<button
-				class="hover:preset-tonal-error rounded p-1"
+				class="hover:preset-tonal-error rounded-base p-1"
 				use:tip={m.wsview_kill_terminal()}
 				aria-label={m.wsview_kill_terminal()}
 				onclick={() => shells.activeTermId != null && shells.kill(shells.activeTermId)}
@@ -236,7 +241,7 @@
 		{/if}
 		{#if pdfPaneOpen}
 			<button
-				class="hover:preset-tonal rounded p-1"
+				class="hover:preset-tonal rounded-base p-1"
 				use:tip={shrink ? m.wsview_expand_panel_title() : m.wsview_shrink_panel_title()}
 				aria-label={shrink ? m.wsview_expand_panel_aria() : m.wsview_shrink_panel_aria()}
 				onclick={onToggleShrink}
@@ -244,7 +249,12 @@
 				{#if shrink}<UnfoldHorizontal class="size-3.5" />{:else}<FoldHorizontal class="size-3.5" />{/if}
 			</button>
 		{/if}
-		<button class="hover:preset-tonal rounded p-1" use:tip={m.wsview_hide_panel()} aria-label={m.wsview_hide_panel()} onclick={onClose}>
+		<button
+			class="hover:preset-tonal rounded-base p-1"
+			use:tip={m.wsview_hide_panel()}
+			aria-label={m.wsview_hide_panel()}
+			onclick={onClose}
+		>
 			<X class="size-3.5" />
 		</button>
 	</div>

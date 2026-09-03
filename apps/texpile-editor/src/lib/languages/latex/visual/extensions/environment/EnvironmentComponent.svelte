@@ -88,7 +88,7 @@
 		text-align: center;
 		font-size: 1.05rem;
 		font-weight: 600;
-		margin-bottom: 0.5rem;
+		margin-bottom: calc(var(--spacing) * 2);
 		user-select: none;
 	}
 	.env-header {
@@ -96,7 +96,7 @@
 		display: flex;
 		align-items: baseline;
 		gap: 0;
-		margin-bottom: 6px;
+		margin-bottom: calc(var(--spacing) * 1.5);
 		user-select: none;
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 		font-size: 11px;
@@ -110,7 +110,7 @@
 		background: transparent;
 		outline: none;
 		padding: 0;
-		border-radius: var(--radius-base, 4px);
+		border-radius: var(--radius-base);
 		font-family: inherit;
 		font-size: inherit;
 	}

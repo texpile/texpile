@@ -24,7 +24,7 @@
 <Modal bind:open title={m.start_recent_heading()} icon={Folder}>
 	{#each folders as folder (folder)}
 		<button
-			class="hover:preset-tonal group flex w-full min-w-0 items-center gap-3 rounded px-2 py-1.5 text-left text-sm"
+			class="hover:preset-tonal group flex w-full min-w-0 items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
 			onclick={() => pick(folder)}
 			use:tip={folder}
 		>

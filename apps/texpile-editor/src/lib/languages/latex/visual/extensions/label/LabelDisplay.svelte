@@ -34,7 +34,7 @@
 
 <Popover {open} onOpenChange={(e) => onOpenChange(e.open)} positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}>
 	<Popover.Trigger
-		class="text-surface-600-300 bg-surface-200-800 hover:bg-surface-300-700 inline-flex cursor-pointer items-center gap-1 rounded px-1.5 py-0.5 align-baseline text-xs font-medium transition-colors"
+		class="text-surface-600-300 bg-surface-200-800 hover:bg-surface-300-700 inline-flex cursor-pointer items-center gap-1 rounded-base px-1.5 py-0.5 align-baseline text-xs font-medium transition-colors"
 		style="font-size: 0.75rem;"
 	>
 		{#snippet element(attrs)}

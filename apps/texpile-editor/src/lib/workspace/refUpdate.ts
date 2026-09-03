@@ -5,7 +5,13 @@
 import { workspaceRoot, texFiles } from '$lib/workspace/workspaceStore';
 import { countFileRefs, replaceFileRefs, refDialectOf, REF_SCAN_EXTS, type RefDialect } from '$lib/workspace/fileRefs';
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
-import type { RefUpdate } from '$lib/modals/workspace/RefUpdateModal.svelte';
+export type RefUpdate = {
+	oldRel: string;
+	newRel: string;
+	/** the dialect decides how each hit is rewritten, so it travels with the hit */
+	hits: { path: string; count: number; dialect: RefDialect }[];
+	total: number;
+};
 import type { TreeEntry } from '$lib/workspace/fileSystem';
 
 export type RefUpdateDeps = {

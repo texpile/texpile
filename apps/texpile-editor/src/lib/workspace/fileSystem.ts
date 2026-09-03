@@ -114,6 +114,20 @@ type TexpileNative = {
 	onWorkspaceFsChanged?: (cb: () => void) => () => void;
 	closeDecision?: (proceed: boolean) => void;
 	setZoomFactor?: (factor: number) => Promise<number>;
+	// optional: an older preload predates the native surfaces, and the renderer draws its own
+	showMessageBox?: (req: {
+		kind: 'question' | 'warning';
+		title?: string;
+		message: string;
+		detail?: string;
+		buttons: string[];
+		cancelId?: number;
+	}) => Promise<number | null>;
+	popupMenu?: (req: {
+		items: ({ separator: true } | { id: string; label: string; enabled?: boolean; accelerator?: string })[];
+		x: number;
+		y: number;
+	}) => Promise<string | null>;
 	fsScan: (root: string, exts?: string) => Promise<{ root: string; files: TexFile[] }>;
 	fsRead: (path: string) => Promise<{ content: string }>;
 	fsWrite: (path: string, content: string) => Promise<{ ok: boolean }>;

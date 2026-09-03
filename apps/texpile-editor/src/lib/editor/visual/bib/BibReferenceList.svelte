@@ -32,14 +32,14 @@
 </script>
 
 {#if refs.length === 0}
-	<li class="text-surface-500 flex h-40 items-center justify-center rounded border border-dashed text-sm">
+	<li class="text-surface-500 flex h-40 items-center justify-center rounded-base border border-dashed text-sm">
 		{m.bib_no_references_empty()}
 	</li>
 {:else}
 	{#each refs as ref (ref.key)}
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions a11y_click_events_have_key_events -->
 		<li
-			class="mb-2 flex cursor-pointer items-center justify-between gap-2 rounded border p-3 transition-colors {ref.key === selectedKey
+			class="mb-2 flex cursor-pointer items-center justify-between gap-2 rounded-base border p-3 transition-colors {ref.key === selectedKey
 				? 'border-primary-500 bg-primary-50 dark:bg-primary-950/30'
 				: 'border-surface-200-800 hover:bg-surface-100-900'}"
 			onclick={() => onEdit(ref)}
@@ -67,7 +67,7 @@
 					{#if !fitsVisualEditor(ref)}
 						<!-- raw badge: this row edits as raw CM -->
 						<span
-							class="border-surface-300-700 text-surface-500 inline-flex items-center gap-0.5 rounded border px-1 py-px text-[10px]"
+							class="border-surface-300-700 text-surface-500 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
 							use:tip={m.bib_raw_badge_list_tooltip()}
 						>
 							<Code class="size-2.5" />

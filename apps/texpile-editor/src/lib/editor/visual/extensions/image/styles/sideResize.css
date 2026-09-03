@@ -23,9 +23,9 @@
 	border: solid 1px #fff;
 	box-sizing: border-box;
 	content: '';
-	height: 50px;
+	height: calc(var(--spacing) * 12.5);
 	left: 0px;
 	position: absolute;
 	top: -20px;
-	width: 10px;
+	width: calc(var(--spacing) * 2.5);
 }

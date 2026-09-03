@@ -121,21 +121,17 @@
 
 <style lang="postcss">
 	:global(.ProseMirror .ProseMirror-search-match) {
-		background-color: rgb(255, 237, 153) !important;
-		border-bottom: 2px solid rgb(255, 213, 79) !important;
+		background-color: var(--find-match-bg) !important;
+		border-bottom: 2px solid var(--find-match-border) !important;
 	}
 	:global(.ProseMirror .ProseMirror-active-search-match) {
-		background-color: rgb(255, 213, 79) !important;
-		color: rgb(0, 0, 0) !important;
-		border-bottom: 2px solid rgb(255, 179, 0) !important;
+		background-color: var(--find-match-active-bg) !important;
+		color: var(--find-match-active-fg) !important;
+		border-bottom: 2px solid var(--find-match-active-border) !important;
 		font-weight: 500 !important;
 	}
+	/* light leaves the text colour alone; dark lifts it */
 	:global(.dark .ProseMirror .ProseMirror-search-match) {
-		background-color: rgb(102, 77, 3) !important;
-		color: rgb(255, 255, 255) !important;
-	}
-	:global(.dark .ProseMirror .ProseMirror-active-search-match) {
-		background-color: rgb(161, 123, 5) !important;
-		color: rgb(255, 255, 255) !important;
+		color: var(--find-match-dark-fg) !important;
 	}
 </style>

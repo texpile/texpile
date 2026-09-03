@@ -3,6 +3,8 @@
 import { editorViewStore } from '$lib/stores/editorStore';
 import { openFile } from '$lib/workspace/workspaceStore';
 import { docPositions } from '$lib/workspace/docPositions';
+import { fileMode } from '$lib/workspace/fileMode.svelte';
+import { projectIntelStore } from '$lib/stores/projectIntel';
 import { updateLayout } from '$lib/storage/layout';
 import { SyncTexNav, sessionRelativeTarget, needsActivate } from '$lib/workspace/syncTexNav';
 import { buildBlockMap, pmPosToSourceOffset, firstWordEndOnLine } from '$lib/editor/visual/sourceMap';
@@ -13,6 +15,13 @@ import { jumpToInclude as jumpToIncludeTarget } from '$lib/workspace/editorComma
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import { samePath } from '$lib/workspace/fileSystem';
+
+/** 1-based line of `\label{name}` in `source`, or null */
+function labelLine(source: string, name: string): number | null {
+	const re = new RegExp(String.raw`\\(?:line)?label\s*\{\s*` + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + String.raw`\s*\}`);
+	const m = re.exec(source);
+	return m ? source.slice(0, m.index).split('\n').length : null;
+}
 
 type NavDeps = {
 	doc: DocumentBuffer;
@@ -90,7 +99,7 @@ export class WorkspaceNav {
 		const { doc, modes } = this.d;
 		if (modes.mode === 'visual' && hasVisualMode(this.d.kind())) {
 			const target = sessionRelativeTarget(file, this.d.guest());
-			docPositions.set(target, { row: line - 1, column: 0, firstVisibleLine: line });
+			docPositions.set(target, { row: line - 1, column: 0, firstVisibleLine: line }, { jump: true });
 			if (target === doc.path) {
 				const v = editorViewStore.current;
 				if (v) restoreVisualPosition(v, target, doc.texSource, this.visBodyOffset(), stripFor(this.d.kind()));
@@ -100,6 +109,26 @@ export class WorkspaceNav {
 			return;
 		}
 		this.openFileAtLine(file, line, selectText);
+	}
+
+	/**
+	 * The visual \ref chip's jump when the label is not drawn in the open document: its \label
+	 * line, in this file (an environment the editor keeps raw) or in whichever project file defines
+	 * it. False when nothing knows where it is; in single-file mode nothing can, there being no
+	 * project to ask.
+	 */
+	jumpToLabel(name: string): boolean {
+		if (fileMode.current) return false;
+		const { doc } = this.d;
+		const own = doc.path ? labelLine(doc.texSource, name) : null;
+		if (doc.path && own) {
+			this.syncJumpToFileLine(doc.path, own);
+			return true;
+		}
+		const hit = projectIntelStore.current.labels.find((l) => l.name === name);
+		if (!hit) return false;
+		this.syncJumpToFileLine(hit.file, hit.line);
+		return true;
 	}
 
 	/** waits for the PDF pane to mount, then scrolls it to the reported box */

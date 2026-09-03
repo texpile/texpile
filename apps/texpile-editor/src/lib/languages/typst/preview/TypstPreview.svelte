@@ -227,7 +227,7 @@
 		{/if}
 		<div class="flex-1"></div>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => stepZoom(-1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_out()}
@@ -237,7 +237,7 @@
 		</button>
 		<span class="min-w-11 text-center tabular-nums">{zoom !== null ? `${zoom}%` : '—'}</span>
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={() => stepZoom(1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_in()}
@@ -248,7 +248,7 @@
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		<!-- follow-always lives here; its one-shot sibling rides the pane splitter (PreviewPane) -->
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			class:preset-tonal={settings.current.typstPreviewFollow === true}
 			class:text-primary-500={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
@@ -264,7 +264,7 @@
 		     extension's Export PDF runs. Disabled until the preview is live: same server, same
 		     document, so "previewable" and "exportable" are the same condition. -->
 		<button
-			class="hover:preset-tonal rounded p-1 disabled:opacity-40"
+			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			onclick={saveAsPdf}
 			disabled={!frameUrl || savingPdf}
 			use:tip={m.typst_preview_save_pdf()}
@@ -277,7 +277,7 @@
 		{#if onPopout}
 			<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 			<button
-				class="hover:preset-tonal shrink-0 rounded p-1"
+				class="hover:preset-tonal shrink-0 rounded-base p-1"
 				onclick={onPopout}
 				use:tip={m.wsview_popout_preview()}
 				aria-label={m.wsview_popout_preview()}

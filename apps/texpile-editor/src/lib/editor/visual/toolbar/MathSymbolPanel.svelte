@@ -82,7 +82,12 @@
 >
 	<div class="border-surface-300-700 flex shrink-0 items-center justify-between border-b px-3 py-1.5">
 		<span class="text-surface-600-400 text-xs font-semibold uppercase">{group.label()}</span>
-		<button class="hover:preset-tonal rounded p-1" onmousedown={preventFocusLoss} onclick={onClose} aria-label={m.mathpanel_close_aria()}>
+		<button
+			class="hover:preset-tonal rounded-base p-1"
+			onmousedown={preventFocusLoss}
+			onclick={onClose}
+			aria-label={m.mathpanel_close_aria()}
+		>
 			<X class="size-4" />
 		</button>
 	</div>
@@ -94,9 +99,9 @@
 					{#each MATRIX_BRACKETS as b (b.mode)}
 						<button
 							type="button"
-							class="rounded border px-2 py-1 text-xs transition-colors"
+							class="rounded-base border px-2 py-1 text-xs transition-colors"
 							class:preset-tonal-primary={matrixBracketMode === b.mode}
-							class:border-blue-400={matrixBracketMode === b.mode}
+							class:border-math-key-edge={matrixBracketMode === b.mode}
 							class:bg-surface-100-900={matrixBracketMode !== b.mode}
 							class:border-surface-300-700={matrixBracketMode !== b.mode}
 							onclick={() => (matrixBracketMode = b.mode)}
@@ -115,9 +120,9 @@
 							{#each Array.from({ length: 6 }) as _, col (col)}
 								<button
 									type="button"
-									class="aspect-square w-full rounded border text-xs transition-colors"
+									class="aspect-square w-full rounded-base border text-xs transition-colors"
 									class:preset-tonal-primary={row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols}
-									class:border-blue-400={row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols}
+									class:border-math-key-edge={row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols}
 									class:bg-surface-100-900={!(row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols)}
 									class:border-surface-300-700={!(row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols)}
 									aria-label={m.mathtoolbar_insert_matrix_aria({ rows: row + 1, cols: col + 1 })}
@@ -200,9 +205,9 @@
 	   owned its own height; the panel owns it now. */
 	.symbol-grid {
 		display: grid;
-		gap: 4px;
+		gap: calc(var(--spacing) * 1);
 		grid-template-columns: repeat(4, 80px);
-		padding: 6px;
+		padding: calc(var(--spacing) * 1.5);
 	}
 
 	.symbol-grid[data-group='greek'] {
@@ -216,20 +221,20 @@
 	.env-list {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
-		padding: 6px;
-		width: 260px;
+		gap: calc(var(--spacing) * 0.5);
+		padding: calc(var(--spacing) * 1.5);
+		width: calc(var(--spacing) * 65);
 	}
 
 	.env-btn {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 4px;
+		gap: calc(var(--spacing) * 1);
 		width: 100%;
-		padding: 8px 12px;
-		border-radius: 4px;
-		border: 1px solid transparent;
+		padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+		border-radius: var(--radius-base);
+		border: var(--default-border-width) solid transparent;
 		text-align: left;
 		transition:
 			background-color 0.15s,
@@ -237,12 +242,12 @@
 	}
 
 	.env-btn:hover {
-		background: var(--color-blue-200, #bfdbfe);
-		border-color: var(--color-blue-400, #60a5fa);
+		background: var(--math-key-hover);
+		border-color: var(--math-key-edge);
 	}
 
 	.env-btn:active {
-		@apply bg-blue-300;
+		background: var(--math-key-down);
 	}
 
 	.env-label {
@@ -261,10 +266,10 @@
 	.symbol-btn {
 		display: grid;
 		place-items: center;
-		width: 80px;
-		height: 80px;
-		border-radius: 4px;
-		border: 1px solid transparent;
+		width: calc(var(--spacing) * 20);
+		height: calc(var(--spacing) * 20);
+		border-radius: var(--radius-base);
+		border: var(--default-border-width) solid transparent;
 		transition:
 			background-color 0.15s,
 			border-color 0.15s;
@@ -282,9 +287,9 @@
 	}
 
 	.symbol-grid[data-group='matrices'] .symbol-btn {
-		width: 66px;
-		height: 66px;
-		padding: 4px;
+		width: calc(var(--spacing) * 16.5);
+		height: calc(var(--spacing) * 16.5);
+		padding: calc(var(--spacing) * 1);
 	}
 
 	.symbol-grid[data-group='matrices'] .symbol-content {
@@ -292,8 +297,8 @@
 	}
 
 	.symbol-grid[data-group='greek'] .symbol-btn {
-		width: 56px;
-		height: 56px;
+		width: calc(var(--spacing) * 14);
+		height: calc(var(--spacing) * 14);
 	}
 
 	.symbol-grid[data-group='greek'] .symbol-content {
@@ -301,11 +306,11 @@
 	}
 
 	.symbol-btn:hover {
-		background: var(--color-blue-200, #bfdbfe);
-		border-color: var(--color-blue-400, #60a5fa);
+		background: var(--math-key-hover);
+		border-color: var(--math-key-edge);
 	}
 
 	.symbol-btn:active {
-		@apply bg-blue-300;
+		background: var(--math-key-down);
 	}
 </style>

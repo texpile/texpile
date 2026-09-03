@@ -113,7 +113,7 @@
 			<PdfRenderer
 				{onPageClick}
 				darkMode={dark && layout.current.pdfDarkPages}
-				backgroundColor={dark ? 'var(--color-surface-950, #131316)' : '#f5f5f5'}
+				backgroundColor="var(--pdf-page-area-bg)"
 				pageShadow={dark ? '0 2px 8px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4)' : undefined}
 				scrollbarThumbColor={dark ? 'var(--color-surface-700, #4a4a52)' : undefined}
 				scrollbarTrackColor={dark ? 'transparent' : undefined}

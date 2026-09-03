@@ -19,7 +19,7 @@
 	import { SourceDiagnosticsFeed } from './sourceDiagnosticsFeed';
 	import { resolveGotoTarget } from './sourceGotoTarget';
 	import { TypstLspBinding } from './typstLspBinding';
-	import SourceRightClickMenu from '$lib/editor/source/SourceRightClickMenu.svelte';
+	import { openSourceContextMenu } from '$lib/editor/source/sourceContextMenu';
 
 	// gotoLine: token makes repeat jumps to the same line re-fire; selectText anchors against line drift.
 	// initialScrollPos: one-shot mode-switch sync applied at mount.
@@ -83,8 +83,6 @@
 	// latex intellisense shortcuts and highlighting in markdown source mode included
 	const fileFor = $derived(filename || docPath || '');
 	const isTypFile = $derived(/\.typ$/i.test(fileFor));
-
-	let rightClick: { open: (event: MouseEvent, on: EditorView) => void } | undefined;
 
 	let host = $state<HTMLDivElement>();
 	let view: EditorView | null = null;
@@ -294,9 +292,13 @@
 	});
 </script>
 
-<div bind:this={host} class="source-editor h-full" oncontextmenu={(e) => view && rightClick?.open(e, view)} role="presentation"></div>
-
-<SourceRightClickMenu bind:this={rightClick} {onSyncToPdf} {onAddComment} {onInsertCitation} syncTarget={isTypFile ? 'preview' : 'pdf'} />
+<div
+	bind:this={host}
+	class="source-editor h-full"
+	oncontextmenu={(e) =>
+		view && openSourceContextMenu(e, view, { onSyncToPdf, onAddComment, onInsertCitation, syncTarget: isTypFile ? 'preview' : 'pdf' })}
+	role="presentation"
+></div>
 
 <style>
 	.source-editor :global(.cm-editor) {
@@ -307,8 +309,8 @@
 	/* position only: FindBar brings the card, and .cm-panels paints one behind it */
 	.source-editor :global(.cm-panels.cm-panels-top) {
 		position: absolute;
-		top: 0.75rem;
-		right: 0.75rem;
+		top: calc(var(--spacing) * 3);
+		right: calc(var(--spacing) * 3);
 		left: auto;
 		width: max-content;
 		max-width: calc(100% - 1.5rem);
@@ -331,23 +333,17 @@
 	}
 	/* same amber scale the ProseMirror search uses (SearchBar.svelte) */
 	.source-editor :global(.cm-searchMatch) {
-		background-color: rgb(255, 237, 153);
+		background-color: var(--find-match-bg);
 	}
 	.source-editor :global(.cm-searchMatch-selected) {
-		background-color: rgb(255, 213, 79);
-	}
-	:global([data-mode='dark'] .source-editor .cm-searchMatch) {
-		background-color: rgb(102, 77, 3);
-	}
-	:global([data-mode='dark'] .source-editor .cm-searchMatch-selected) {
-		background-color: rgb(161, 123, 5);
+		background-color: var(--find-match-active-bg);
 	}
 	.source-editor :global(.cm-scroller) {
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 		line-height: 1.6;
 	}
 	.source-editor :global(.cm-content) {
-		padding: 1rem 0;
+		padding: calc(var(--spacing) * 4) 0;
 	}
 	.source-editor :global(.cm-focused) {
 		outline: none;
@@ -355,7 +351,7 @@
 	/* vim / emacs mode line. Unlike the search widget above this is a BOTTOM panel, so it keeps
 	   CodeMirror's normal in-flow layout (the scroller shrinks for it) and only needs skinning. */
 	.source-editor :global(.cm-panels.cm-panels-bottom) {
-		border-top: 1px solid var(--color-surface-200);
+		border-top: var(--default-border-width) solid var(--color-surface-200);
 		background: var(--color-surface-100);
 	}
 	:global([data-mode='dark'] .source-editor .cm-panels.cm-panels-bottom) {

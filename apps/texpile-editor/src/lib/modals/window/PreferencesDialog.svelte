@@ -162,7 +162,7 @@
 		</div>
 		{#each categories as c (c.id)}
 			<button
-				class="mb-0.5 block w-full rounded px-3 py-1.5 text-left text-sm {category === c.id
+				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
 					? 'bg-primary-500/15 text-primary-700 dark:text-primary-300 font-medium'
 					: 'hover:bg-surface-200-800'}"
 				onclick={() => (category = c.id)}

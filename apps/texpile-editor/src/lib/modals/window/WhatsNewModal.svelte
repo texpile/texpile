@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Modal from '../Modal.svelte';
+	import ModalActions from '../ModalActions.svelte';
 	import { updateSettings } from '$lib/settings';
 	import demoVideo from '$lib/assets/live-preview-demo.mp4';
 	import type { ChangelogEntry } from '$lib/whatsNew';
@@ -31,7 +32,7 @@
 	<Modal bind:open onClose={markSeen} title={m.whatsnew_title({ version: newest.version })} card="flex max-h-full max-w-2xl flex-col p-5">
 		<div class="mb-4 min-h-0 overflow-y-auto">
 			{#if video}
-				<video src={video} class="border-surface-300-700 mb-4 w-full rounded border" autoplay loop muted playsinline></video>
+				<video src={video} class="border-surface-300-700 mb-4 w-full rounded-base border" autoplay loop muted playsinline></video>
 			{/if}
 			<div class="space-y-3">
 				{#each entries as entry (entry.version)}
@@ -48,8 +49,6 @@
 				{/each}
 			</div>
 		</div>
-		<div class="flex justify-end">
-			<button class="btn btn-xs preset-filled-primary-500" onclick={close}>{m.whatsnew_got_it()}</button>
-		</div>
+		<ModalActions size="xs" buttons={[{ label: m.whatsnew_got_it(), role: 'primary', onclick: close }]} />
 	</Modal>
 {/if}

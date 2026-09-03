@@ -74,7 +74,7 @@
 						<div class="mb-2 flex items-center justify-between gap-2">
 							<span class="text-surface-700-300 text-sm font-medium">{m.codeblock_language_label()}</span>
 							{#if currentLang}
-								<span class="preset-tonal-primary rounded px-2 py-0.5 text-sm font-medium">{currentLang}</span>
+								<span class="preset-tonal-primary rounded-base px-2 py-0.5 text-sm font-medium">{currentLang}</span>
 							{/if}
 						</div>
 						{#if canSet}
@@ -83,7 +83,7 @@
 								{#each filtered as name (name)}
 									<button
 										type="button"
-										class="hover:bg-surface-200-800 block w-full rounded px-2 py-1 text-left text-sm {name === currentLang
+										class="hover:bg-surface-200-800 block w-full rounded-base px-2 py-1 text-left text-sm {name === currentLang
 											? 'preset-tonal-primary'
 											: ''}"
 										onclick={() => pick(name)}
@@ -112,15 +112,15 @@
 	   and after a rebuild has nothing to flash. */
 	.codeblock-settings-container {
 		position: absolute;
-		right: 0.125rem;
-		top: 0.25rem;
+		right: calc(var(--spacing) * 0.5);
+		top: calc(var(--spacing) * 1);
 		display: flex;
 		align-items: center;
 	}
 
 	:global(.codeblock-settings-btn) {
-		padding: 0.25rem;
-		border-radius: 0.25rem;
+		padding: calc(var(--spacing) * 1);
+		border-radius: var(--radius-base);
 		cursor: pointer;
 		border: none;
 		background: transparent;
@@ -136,6 +136,6 @@
 	}
 
 	.settings-content {
-		padding: 0.75rem;
+		padding: calc(var(--spacing) * 3);
 	}
 </style>

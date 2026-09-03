@@ -1,7 +1,7 @@
 placeholder {
 	color: #ccc;
 	position: relative;
-	top: 6px;
+	top: calc(var(--spacing) * 1.5);
 }
 placeholder:after {
 	content: '☁';
@@ -14,7 +14,7 @@ placeholder:after {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	border-radius: 0.25rem;
+	border-radius: var(--radius-base);
 }
 
 .imagePluginRoot img {

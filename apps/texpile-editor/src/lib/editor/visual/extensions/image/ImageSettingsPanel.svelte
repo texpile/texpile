@@ -296,11 +296,11 @@
 
 <style>
 	.settings-content {
-		padding: 0.75rem;
+		padding: calc(var(--spacing) * 3);
 	}
 
 	.settings-row {
-		margin-bottom: 0.75rem;
+		margin-bottom: calc(var(--spacing) * 3);
 	}
 
 	.settings-row:last-child {
@@ -309,9 +309,9 @@
 
 	.toggle-button {
 		position: relative;
-		width: 36px;
-		height: 20px;
-		border-radius: 10px;
+		width: calc(var(--spacing) * 9);
+		height: calc(var(--spacing) * 5);
+		border-radius: calc(var(--radius-base) * 2.5);
 		border: none;
 		background: var(--color-surface-300);
 		cursor: pointer;
@@ -326,10 +326,10 @@
 
 	.toggle-thumb {
 		position: absolute;
-		top: 2px;
-		left: 2px;
-		width: 16px;
-		height: 16px;
+		top: calc(var(--spacing) * 0.5);
+		left: calc(var(--spacing) * 0.5);
+		width: calc(var(--spacing) * 4);
+		height: calc(var(--spacing) * 4);
 		border-radius: 50%;
 		background: white;
 		transition: transform 0.2s ease;

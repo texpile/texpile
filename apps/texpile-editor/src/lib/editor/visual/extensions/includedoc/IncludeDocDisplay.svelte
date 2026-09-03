@@ -42,7 +42,7 @@
 		padding: 0.1rem 0.3rem;
 		border: none;
 		background: transparent;
-		border-radius: var(--radius-base, 4px);
+		border-radius: var(--radius-base);
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 		font-size: 11px;
 		cursor: pointer;

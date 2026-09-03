@@ -169,6 +169,12 @@ export function publishMenuState(state: MenuStateInput): void {
 	api()?.publishMenuState?.({ ...state, labels: labels(state.dialect === 'typ' ? 'typstyle' : 'latexindent') });
 }
 
+/** a screen with no workspace: the bar keeps only what opens one, with this window's recents */
+export function publishHomeMenuState(): void {
+	if (!isMac) return;
+	api()?.publishMenuState?.({ home: true, recentFolders: recentFolders.current, labels: labels('latexindent') });
+}
+
 /** wire the native selections into the in-app handlers; returns the detach function */
 export function attachNativeMenu(handlers: NativeMenuHandlers): () => void {
 	const off = api()?.onMenuAction?.((action) => {

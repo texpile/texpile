@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Loader2, TriangleAlert, FolderSearch } from '@lucide/svelte';
 	import Modal from '../Modal.svelte';
+	import ModalActions from '../ModalActions.svelte';
 	import { pickFolder } from '$lib/workspace/fileSystem';
 	import { checkTutorialFolder, type TutorialFolderState } from '$lib/workspace/starters';
 	import { m } from '$lib/paraglide/messages';
@@ -57,45 +58,45 @@
 				{m.tutorial_occupied_desc({ root: root ?? '' })}
 			</span>
 		</p>
-		<div class="flex justify-end gap-2">
-			<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.tutorial_cancel()}</button>
-			<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={chooseFolder}>
-				<FolderSearch class="size-4" />
-				{m.tutorial_choose_folder()}
-			</button>
-		</div>
+		<ModalActions
+			size="xs"
+			buttons={[
+				{ label: m.tutorial_cancel(), role: 'cancel', onclick: close },
+				{ label: m.tutorial_choose_folder(), role: 'primary', icon: FolderSearch, onclick: chooseFolder }
+			]}
+		/>
 	{:else if folderState === 'ours'}
 		<p class="text-surface-600-300 mb-4 text-sm">
 			{m.tutorial_reopen_desc({ root: root ?? '' })}
 		</p>
-		<div class="flex justify-end gap-2">
-			<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.tutorial_cancel()}</button>
-			<button class="btn btn-xs hover:preset-tonal gap-1.5" onclick={chooseFolder}>
-				<FolderSearch class="size-4" />
-				{m.tutorial_choose_different_folder()}
-			</button>
-			<button class="btn btn-xs preset-filled-primary-500" onclick={confirm}>{m.tutorial_open()}</button>
-		</div>
+		<ModalActions
+			size="xs"
+			buttons={[
+				{ label: m.tutorial_cancel(), role: 'cancel', onclick: close },
+				{ label: m.tutorial_choose_different_folder(), icon: FolderSearch, onclick: chooseFolder },
+				{ label: m.tutorial_open(), role: 'primary', onclick: confirm }
+			]}
+		/>
 	{:else if folderState === 'empty'}
 		<p class="text-surface-600-300 mb-4 text-sm">
 			{m.tutorial_create_desc({ root: root ?? '' })}
 		</p>
-		<div class="flex justify-end gap-2">
-			<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.tutorial_cancel()}</button>
-			<button class="btn btn-xs hover:preset-tonal gap-1.5" onclick={chooseFolder}>
-				<FolderSearch class="size-4" />
-				{m.tutorial_choose_different_folder()}
-			</button>
-			<button class="btn btn-xs preset-filled-primary-500" onclick={confirm}>{m.tutorial_create()}</button>
-		</div>
+		<ModalActions
+			size="xs"
+			buttons={[
+				{ label: m.tutorial_cancel(), role: 'cancel', onclick: close },
+				{ label: m.tutorial_choose_different_folder(), icon: FolderSearch, onclick: chooseFolder },
+				{ label: m.tutorial_create(), role: 'primary', onclick: confirm }
+			]}
+		/>
 	{:else}
 		<p class="text-surface-600-300 mb-4 text-sm">{m.tutorial_pick_empty_desc()}</p>
-		<div class="flex justify-end gap-2">
-			<button class="btn btn-xs hover:preset-tonal" onclick={close}>{m.tutorial_cancel()}</button>
-			<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={chooseFolder}>
-				<FolderSearch class="size-4" />
-				{m.tutorial_choose_folder()}
-			</button>
-		</div>
+		<ModalActions
+			size="xs"
+			buttons={[
+				{ label: m.tutorial_cancel(), role: 'cancel', onclick: close },
+				{ label: m.tutorial_choose_folder(), role: 'primary', icon: FolderSearch, onclick: chooseFolder }
+			]}
+		/>
 	{/if}
 </Modal>

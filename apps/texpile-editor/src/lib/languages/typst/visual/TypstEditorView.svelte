@@ -200,7 +200,7 @@
 	:global(.TypstEditor .block-math-container[data-typst-label]:not([data-typst-label=''])::after) {
 		content: '<' attr(data-typst-label) '>';
 		position: absolute;
-		right: 1rem;
+		right: calc(var(--spacing) * 4);
 		top: 50%;
 		transform: translateY(-50%);
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -211,12 +211,12 @@
 	}
 	/* keep the hover gear clear of the chip, the way the LaTeX number pushes it left */
 	:global(.TypstEditor .block-math-container[data-typst-label]:not([data-typst-label='']) .math-settings-container) {
-		right: 5rem;
+		right: calc(var(--spacing) * 20);
 	}
 
 	/* @target chips: citation tint when the key resolves in the bibliography, neutral otherwise */
 	:global(.TypstEditor .typ-ref) {
-		border-radius: var(--radius-base, 4px);
+		border-radius: var(--radius-base);
 		padding: 0 0.2em;
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 		font-size: 0.85em;
@@ -237,12 +237,12 @@
 
 	/* term lists: bold term line, hanging description */
 	:global(.TypstEditor .term-item) {
-		margin: 0.25rem 0;
+		margin: calc(var(--spacing) * 1) 0;
 	}
 	:global(.TypstEditor .term-title) {
 		font-weight: 600;
 	}
 	:global(.TypstEditor .term-item > :not(.term-title)) {
-		margin-left: 1.25rem;
+		margin-left: calc(var(--spacing) * 5);
 	}
 </style>

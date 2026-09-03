@@ -10,7 +10,7 @@
 	left: -1px;
 	top: 0;
 	bottom: 0;
-	width: 2px;
+	width: calc(var(--spacing) * 0.5);
 	background-color: var(--peer-color);
 }
 
@@ -18,8 +18,8 @@
 	position: absolute;
 	top: -1.35em;
 	left: -1px;
-	padding: 0 4px;
-	border-radius: 3px;
+	padding: 0 calc(var(--spacing) * 1);
+	border-radius: calc(var(--radius-base) * 0.75);
 	font-size: 0.7em;
 	font-weight: 600;
 	line-height: 1.5;

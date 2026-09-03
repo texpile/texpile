@@ -34,13 +34,13 @@
 {#if superseded}
 	<!-- the same dashed slot live mode uses: the command is kept for the folder, it just is not
 	     what Compile runs while Preview is on -->
-	<div class="border-surface-300-700 text-surface-500 mt-3 rounded border border-dashed px-3 py-2 text-xs">
+	<div class="border-surface-300-700 text-surface-500 mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
 		{m.wsview_compile_disabled_preview()}
-		<code class="bg-surface-200-800 ml-1 rounded px-1 opacity-70">tinymist (built-in)</code>
+		<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">tinymist (built-in)</code>
 	</div>
 {:else}
 	<p class="text-surface-600-300 mt-2 mb-3 text-sm">
-		{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded px-1">{'{main}'}</code>
+		{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">{'{main}'}</code>
 		{m.wsview_compile_desc_post()}
 	</p>
 {/if}

@@ -260,7 +260,7 @@ const previewTheme = EditorView.baseTheme({
 	},
 	'.cm-math-preview-controls button:hover': {
 		opacity: '1',
-		background: 'rgba(128, 128, 128, 0.18)'
+		background: 'var(--math-preview-btn-hover)'
 	}
 });
 

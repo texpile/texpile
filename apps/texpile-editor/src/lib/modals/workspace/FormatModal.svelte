@@ -1,8 +1,9 @@
 <script lang="ts">
 	// Confirm before the formatter rewrites the open file in place: latexindent for .tex,
 	// tinymist's built-in typstyle for .typ.
-	import { Loader2, TriangleAlert } from '@lucide/svelte';
+	import { TriangleAlert } from '@lucide/svelte';
 	import Modal from '../Modal.svelte';
+	import ModalActions from '../ModalActions.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let {
@@ -23,16 +24,16 @@
 	<p class="text-surface-600-300 mb-4 text-sm">
 		{#if tool === 'typstyle'}
 			{m.wsview_format_desc_typst_pre()}
-			<code class="bg-surface-200-800 rounded px-1">typstyle</code>{m.wsview_format_desc_typst_post()}
+			<code class="bg-surface-200-800 rounded-base px-1">typstyle</code>{m.wsview_format_desc_typst_post()}
 		{:else}
-			{m.wsview_format_desc_pre()} <code class="bg-surface-200-800 rounded px-1">latexindent</code>{m.wsview_format_desc_post()}
+			{m.wsview_format_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">latexindent</code>{m.wsview_format_desc_post()}
 		{/if}
 	</p>
-	<div class="flex justify-end gap-2">
-		<button class="btn btn-xs hover:preset-tonal" onclick={() => (open = false)}>{m.wsview_cancel_label()}</button>
-		<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={onFormat} disabled={formatting}>
-			{#if formatting}<Loader2 class="size-4 animate-spin" />{/if}
-			{m.wsview_format_button()}
-		</button>
-	</div>
+	<ModalActions
+		size="xs"
+		buttons={[
+			{ label: m.wsview_cancel_label(), role: 'cancel', onclick: () => (open = false) },
+			{ label: m.wsview_format_button(), role: 'primary', busy: formatting, onclick: onFormat }
+		]}
+	/>
 </Modal>

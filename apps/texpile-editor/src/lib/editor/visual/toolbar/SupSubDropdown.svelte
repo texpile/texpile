@@ -35,7 +35,7 @@
 	autoFocus={false}
 >
 	<Popover.Trigger
-		class="text-surface-800-200 flex h-7 items-center gap-0.5 rounded px-1.5 transition-colors {anyActive
+		class="text-surface-800-200 flex h-7 items-center gap-0.5 rounded-base px-1.5 transition-colors {anyActive
 			? 'preset-tonal-primary'
 			: 'hover:preset-tonal'}"
 		aria-label={m.tbar_supsub_aria()}
@@ -54,7 +54,7 @@
 			<Popover.Content class="card bg-surface-50-950 border-surface-300-700 min-w-[220px] border p-1 shadow-lg">
 				<button
 					type="button"
-					class="hover:preset-tonal-primary flex w-full items-center gap-3 rounded px-2 py-1.5 text-left text-sm"
+					class="hover:preset-tonal-primary flex w-full items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
 					class:preset-tonal-primary={sup}
 					onclick={() => choose('sup')}
 				>
@@ -65,7 +65,7 @@
 				</button>
 				<button
 					type="button"
-					class="hover:preset-tonal-primary flex w-full items-center gap-3 rounded px-2 py-1.5 text-left text-sm"
+					class="hover:preset-tonal-primary flex w-full items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
 					class:preset-tonal-primary={sub}
 					onclick={() => choose('sub')}
 				>

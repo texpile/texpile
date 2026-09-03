@@ -50,7 +50,7 @@
 <style>
 	.math-settings-container {
 		position: absolute;
-		right: 0.5rem;
+		right: calc(var(--spacing) * 2);
 		top: 50%;
 		transform: translateY(-50%);
 		z-index: 10;
@@ -61,13 +61,13 @@
 
 	/* when numbered, push further left to avoid the equation number */
 	:global(.block-math-container[data-numbered='true']) .math-settings-container {
-		right: 4rem;
+		right: calc(var(--spacing) * 16);
 	}
 
 	/* match table wrapper styling */
 	:global(.math-settings-btn) button {
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
+		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+		border-radius: var(--radius-base);
 		cursor: pointer;
 		transition: background-color 0.15s;
 		border: none;

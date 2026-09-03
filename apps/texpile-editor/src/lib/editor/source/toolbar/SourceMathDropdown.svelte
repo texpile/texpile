@@ -59,7 +59,7 @@
 >
 	<Popover.Trigger>
 		<button
-			class="toolbarButton flex items-center gap-1 rounded p-1 hover:preset-tonal"
+			class="toolbarButton flex items-center gap-1 rounded-base p-1 hover:preset-tonal"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_math_symbols()}
 			use:tip={m.tbar_math_symbols()}
@@ -80,7 +80,7 @@
 							{@const Icon = g.icon}
 							<button
 								type="button"
-								class="flex items-center gap-1 rounded px-1.5 py-1 text-xs transition-colors"
+								class="flex items-center gap-1 rounded-base px-1.5 py-1 text-xs transition-colors"
 								class:preset-tonal-primary={activeGroup === g.id}
 								class:hover:preset-tonal={activeGroup !== g.id}
 								tabindex="-1"
@@ -102,9 +102,9 @@
 									{#each MATRIX_BRACKETS as b (b.mode)}
 										<button
 											type="button"
-											class="rounded border px-2 py-1 text-xs transition-colors"
+											class="rounded-base border px-2 py-1 text-xs transition-colors"
 											class:preset-tonal-primary={matrixBracket === b.mode}
-											class:border-blue-400={matrixBracket === b.mode}
+											class:border-math-key-edge={matrixBracket === b.mode}
 											class:bg-surface-100-900={matrixBracket !== b.mode}
 											class:border-surface-300-700={matrixBracket !== b.mode}
 											tabindex="-1"
@@ -123,9 +123,9 @@
 										{#each Array.from({ length: 6 }) as _, col (col)}
 											<button
 												type="button"
-												class="size-6 rounded border text-xs transition-colors"
+												class="size-6 rounded-base border text-xs transition-colors"
 												class:preset-tonal-primary={row < matrixRows && col < matrixCols}
-												class:border-blue-400={row < matrixRows && col < matrixCols}
+												class:border-math-key-edge={row < matrixRows && col < matrixCols}
 												class:bg-surface-100-900={!(row < matrixRows && col < matrixCols)}
 												class:border-surface-300-700={!(row < matrixRows && col < matrixCols)}
 												aria-label={m.tbar_insert_matrix_aria({ rows: row + 1, cols: col + 1 })}
@@ -194,9 +194,9 @@
 	/* auto-fill against the popover's fixed width, so a grid never leaves half the panel empty */
 	.symbol-grid {
 		display: grid;
-		gap: 4px;
+		gap: calc(var(--spacing) * 1);
 		grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
-		padding: 6px;
+		padding: calc(var(--spacing) * 1.5);
 	}
 
 	.symbol-grid[data-group='greek'] {
@@ -211,8 +211,8 @@
 		display: grid;
 		place-items: center;
 		aspect-ratio: 1;
-		border-radius: 4px;
-		border: 1px solid transparent;
+		border-radius: var(--radius-base);
+		border: var(--default-border-width) solid transparent;
 		transition:
 			background-color 0.15s,
 			border-color 0.15s;
@@ -224,7 +224,7 @@
 	}
 
 	.symbol-grid[data-group='matrices'] .symbol-btn {
-		padding: 4px;
+		padding: calc(var(--spacing) * 1);
 	}
 
 	/* the matrix previews are the tallest things in the palette; shrink them to fit their button
@@ -234,12 +234,12 @@
 	}
 
 	.symbol-btn:hover {
-		background: var(--color-blue-200, #bfdbfe);
-		border-color: var(--color-blue-400, #60a5fa);
+		background: var(--math-key-hover);
+		border-color: var(--math-key-edge);
 	}
 
 	.symbol-btn:active {
-		@apply bg-blue-300;
+		background: var(--math-key-down);
 	}
 
 	.symbol-content {
@@ -255,9 +255,9 @@
 	.env-list {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
-		padding: 6px;
-		width: 260px;
+		gap: calc(var(--spacing) * 0.5);
+		padding: calc(var(--spacing) * 1.5);
+		width: calc(var(--spacing) * 65);
 		max-height: 50vh;
 		overflow-y: auto;
 	}
@@ -266,11 +266,11 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 4px;
+		gap: calc(var(--spacing) * 1);
 		width: 100%;
-		padding: 8px 12px;
-		border-radius: 4px;
-		border: 1px solid transparent;
+		padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+		border-radius: var(--radius-base);
+		border: var(--default-border-width) solid transparent;
 		text-align: left;
 		transition:
 			background-color 0.15s,
@@ -278,8 +278,8 @@
 	}
 
 	.env-btn:hover {
-		background: var(--color-blue-200, #bfdbfe);
-		border-color: var(--color-blue-400, #60a5fa);
+		background: var(--math-key-hover);
+		border-color: var(--math-key-edge);
 	}
 
 	.env-label {

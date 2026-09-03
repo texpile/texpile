@@ -1,27 +1,35 @@
 <script lang="ts">
-	// Renders the singleton confirmAsk() dialog. Mounted once at app root, like the toast group.
-	// Escape / backdrop clicks dismiss it as a cancel.
+	// Draws the app's own prompt (confirm.svelte.ts decides when); mounted once at app root, like
+	// the toast group. The button row orders the buttons for the platform.
 	import Modal from './Modal.svelte';
-	import { confirmDialog, answerConfirm, dismissConfirm } from './confirm.svelte';
-	import { m } from '$lib/paraglide/messages';
+	import ModalActions from './ModalActions.svelte';
+	import { promptDialog, dismissPrompt, answerPrompt } from './confirm.svelte';
 
-	const state = $derived(confirmDialog.state);
+	const prompt = $derived(promptDialog.state);
+	const primary = $derived(prompt?.buttons.find((b) => b.primary) ?? null);
 </script>
 
-{#if state}
-	<Modal onClose={dismissConfirm} alert onEnter={() => answerConfirm(true)}>
-		<p class="text-surface-600-300 text-sm whitespace-pre-line">{state.message}</p>
-		<div class="mt-5 flex justify-end gap-2">
-			<button class="btn hover:preset-tonal" type="button" onclick={() => answerConfirm(false)}>
-				{state.cancelLabel ?? m.menubar_prompt_cancel()}
-			</button>
-			<button
-				class="btn {state.danger ? 'preset-tonal-error' : 'preset-filled-primary-500'}"
-				type="button"
-				onclick={() => answerConfirm(true)}
-			>
-				{state.confirmLabel}
-			</button>
-		</div>
+{#if prompt}
+	<Modal
+		title={prompt.title}
+		card="max-h-full max-w-sm overflow-y-auto p-5"
+		alert
+		dismissable={prompt.cancelId !== undefined}
+		onClose={dismissPrompt}
+		onEnter={primary ? () => answerPrompt(primary.id) : undefined}
+	>
+		<p class="text-surface-600-300 text-sm whitespace-pre-line">{prompt.message}</p>
+		{#if prompt.detail}
+			<p class="text-surface-500 mt-2 text-sm whitespace-pre-line">{prompt.detail}</p>
+		{/if}
+		<ModalActions
+			class="mt-5"
+			buttons={prompt.buttons.map((b) => ({
+				label: b.label,
+				role: b.primary ? 'primary' : b.id === prompt.cancelId ? 'cancel' : 'secondary',
+				danger: b.primary && prompt.danger,
+				onclick: () => answerPrompt(b.id)
+			}))}
+		/>
 	</Modal>
 {/if}

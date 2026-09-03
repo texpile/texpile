@@ -55,6 +55,8 @@
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		/** pick citations from Zotero, offered in the context menu when present */
 		onInsertCitation?: () => void;
+		/** a \ref whose label is not drawn here: the workspace jumps to its \label line */
+		onJumpToLabel?: (name: string) => boolean;
 		/** after each placement pass: the threads that could not be drawn in this view (every tier
 		 * failed), so the panel can say "not in this view" instead of implying they are gone */
 		onCommentsPlaced?: (lost: string[]) => void;
@@ -79,6 +81,7 @@
 		onSelectComment,
 		onAddComment,
 		onInsertCitation,
+		onJumpToLabel,
 		onCommentsPlaced,
 		addCommentLabel = 'Comment',
 		commentPendingActive = false
@@ -120,7 +123,7 @@
 			// data-show-section-numbers drives the heading CSS counters; data-unnumbered headings are skipped
 			attributes: { class: 'TexpileEditor', spellcheck: 'false', 'data-show-section-numbers': 'true' },
 			state: editorState,
-			nodeViews: latexNodeViews(() => imageDir ?? ''),
+			nodeViews: latexNodeViews(() => imageDir ?? '', onJumpToLabel),
 			editable: () => true,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// A plugin that finishes asynchronously can dispatch into a view that was destroyed while
@@ -230,46 +233,46 @@
 	@reference "../../../../app.css";
 
 	:global(.suggestion-add) {
-		background-color: rgba(74, 222, 128, 0.2);
-		border-bottom: 2px solid rgba(74, 222, 128, 0.5);
+		background-color: color-mix(in srgb, var(--diff-insert-tint) 2%, transparent);
+		border-bottom: 2px solid color-mix(in srgb, var(--diff-insert-tint) 5%, transparent);
 	}
 	:global(.suggestion-delete) {
-		background-color: rgba(239, 68, 68, 0.15);
+		background-color: color-mix(in srgb, var(--diff-delete-tint) 15%, transparent);
 		text-decoration: line-through;
-		text-decoration-color: rgba(239, 68, 68, 0.6);
+		text-decoration-color: color-mix(in srgb, var(--diff-delete-tint) 6%, transparent);
 		opacity: 0.7;
 	}
 	:global(.suggestion-node-insert) {
-		outline: 2px solid rgba(74, 222, 128, 0.5);
-		background-color: rgba(74, 222, 128, 0.08);
+		outline: 2px solid color-mix(in srgb, var(--diff-insert-tint) 5%, transparent);
+		background-color: color-mix(in srgb, var(--diff-insert-tint) 8%, transparent);
 	}
 	:global(.suggestion-node-delete) {
-		outline: 2px solid rgba(239, 68, 68, 0.4);
-		background-color: rgba(239, 68, 68, 0.08);
+		outline: 2px solid color-mix(in srgb, var(--diff-delete-tint) 4%, transparent);
+		background-color: color-mix(in srgb, var(--diff-delete-tint) 8%, transparent);
 		opacity: 0.6;
 	}
 
 	:global(.agent-diff-insert) {
-		background-color: rgba(74, 222, 128, 0.2);
-		outline: 2px solid rgba(74, 222, 128, 0.4);
+		background-color: color-mix(in srgb, var(--diff-insert-tint) 2%, transparent);
+		outline: 2px solid color-mix(in srgb, var(--diff-insert-tint) 4%, transparent);
 		outline-offset: -1px;
 	}
 	:global(.agent-diff-delete) {
-		background-color: rgba(239, 68, 68, 0.15);
+		background-color: color-mix(in srgb, var(--diff-delete-tint) 15%, transparent);
 		text-decoration: line-through;
-		color: rgba(239, 68, 68, 0.8);
+		color: color-mix(in srgb, var(--diff-delete-tint) 8%, transparent);
 		opacity: 0.7;
 	}
 
 	:global(.agent-highlight) {
-		background-color: rgba(250, 204, 21, 0.35);
-		outline: 1px solid rgba(250, 204, 21, 0.6);
+		background-color: color-mix(in srgb, var(--diff-highlight-tint) 35%, transparent);
+		outline: var(--default-border-width) solid color-mix(in srgb, var(--diff-highlight-tint) 6%, transparent);
 		outline-offset: -1px;
-		border-radius: 2px;
+		border-radius: calc(var(--radius-base) * 0.5);
 	}
 	:global(.dark .agent-highlight) {
-		background-color: rgba(250, 204, 21, 0.25);
-		outline: 1px solid rgba(250, 204, 21, 0.4);
+		background-color: color-mix(in srgb, var(--diff-highlight-tint) 25%, transparent);
+		outline: var(--default-border-width) solid color-mix(in srgb, var(--diff-highlight-tint) 4%, transparent);
 	}
 
 	:global(.TexpileEditor) {
@@ -277,7 +280,7 @@
 	}
 
 	:global(.TexpileEditor.page-view) {
-		@apply mx-auto my-8 w-[85%] max-w-[1400px] rounded-sm bg-white px-[8%] py-12 shadow-lg dark:bg-gray-50;
+		@apply bg-page-sheet rounded-base mx-auto my-8 w-[85%] max-w-[1400px] px-[8%] py-12 shadow-lg;
 		min-height: 70vh;
 	}
 
@@ -357,7 +360,7 @@
 	}
 
 	:global(.TexpileEditor div.abstract) {
-		@apply border-surface-300-700 bg-surface-100-900 relative mx-4 my-6 rounded border p-4 pt-8;
+		@apply border-surface-300-700 bg-surface-100-900 rounded-base relative mx-4 my-6 border p-4 pt-8;
 	}
 	:global(.TexpileEditor div.abstract::before) {
 		content: 'Abstract';
@@ -368,10 +371,10 @@
 	}
 
 	:global(.TexpileEditor code) {
-		@apply bg-surface-200-800 rounded px-1 py-0.5 text-[0.95em];
+		@apply bg-surface-200-800 rounded-base px-1 py-0.5 text-[0.95em];
 	}
 	:global(.TexpileEditor pre) {
-		@apply bg-surface-200-800 my-3 overflow-x-auto rounded p-3 text-[0.95em];
+		@apply bg-surface-200-800 rounded-base my-3 overflow-x-auto p-3 text-[0.95em];
 	}
 	:global(.TexpileEditor table) {
 		@apply my-4 w-full border-collapse;

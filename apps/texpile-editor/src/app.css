@@ -7,6 +7,8 @@
 @tailwind utilities;
 
 @import '../texpile-default-theme';
+/* the app's own colour roles, derived from whichever theme is on; the default theme overrides them */
+@import './texpile-tokens.css';
 
 @custom-variant dark (&:where([data-mode=dark], [data-mode=dark] *));
 
@@ -27,14 +29,6 @@ html[data-mode='dark'],
 html[data-mode='dark'] body {
 	background-color: var(--color-surface-950);
 	color: var(--color-surface-50);
-}
-
-/* focus ring around a focused mathfield (mlview sets it inline, so it has to be a var) */
-html {
-	--mathfield-focus-border: var(--color-surface-950);
-}
-html[data-mode='dark'] {
-	--mathfield-focus-border: var(--color-surface-400);
 }
 
 /* mathlive's caret defaults to its blue accent in both schemes; follow the page text color
@@ -76,14 +70,14 @@ html[data-mode='dark'] {
 .TexpileEditor hr {
 	border-top-width: 1px;
 	border-color: var(--color-surface-200-800);
-	margin: 1.5rem 0;
+	margin: calc(var(--spacing) * 6) 0;
 }
 
 /* CodeMirror doesn't auto-theme, so dark-theme its chrome to match the dark editor */
 [data-mode='dark'] .cm-gutters {
 	background-color: var(--color-surface-950); /* opaque: content scrolled sideways must pass under it */
 	color: var(--color-surface-500);
-	border-right: 1px solid color-mix(in srgb, var(--color-surface-100) 10%, transparent);
+	border-right: var(--default-border-width) solid color-mix(in srgb, var(--color-surface-100) 10%, transparent);
 }
 [data-mode='dark'] .cm-activeLineGutter {
 	background-color: transparent;
@@ -148,13 +142,13 @@ html[data-mode='dark'] {
 /* CodeMirror ships light panel controls (white textfields, gradient buttons) that glare in a dark panel */
 [data-mode='dark'] .cm-textfield {
 	background-color: var(--color-surface-800);
-	border: 1px solid var(--color-surface-600);
+	border: var(--default-border-width) solid var(--color-surface-600);
 	color: var(--color-surface-100);
 }
 [data-mode='dark'] .cm-button {
 	background-image: none;
 	background-color: var(--color-surface-800);
-	border: 1px solid var(--color-surface-600);
+	border: var(--default-border-width) solid var(--color-surface-600);
 	color: var(--color-surface-100);
 }
 [data-mode='dark'] .cm-button:active {
@@ -164,14 +158,14 @@ html[data-mode='dark'] {
 /* the PM gap cursor defaults to solid black, invisible on dark; !important so the
    override wins regardless of stylesheet order */
 [data-mode='dark'] .ProseMirror-gapcursor:after {
-	border-top: 1px solid var(--color-surface-50) !important;
+	border-top: var(--default-border-width) solid var(--color-surface-50) !important;
 }
 /* CM autocomplete/tooltips (rendered in <body> via tooltipsInBody) default light, showed white in dark mode */
 [data-mode='dark'] .cm-tooltip,
 [data-mode='dark'] .cm-tooltip.cm-tooltip-autocomplete,
 [data-mode='dark'] .cm-completionInfo {
 	background-color: var(--color-surface-900);
-	border: 1px solid var(--color-surface-700);
+	border: var(--default-border-width) solid var(--color-surface-700);
 	color: var(--color-surface-100);
 }
 [data-mode='dark'] .cm-tooltip-autocomplete > ul > li {
@@ -195,13 +189,13 @@ html[data-mode='dark'] {
 html #mathlive-suggestion-popover {
 	background-color: var(--color-surface-50-950);
 	color: var(--color-surface-950-50);
-	border: 1px solid var(--color-surface-300-700);
+	border: var(--default-border-width) solid var(--color-surface-300-700);
 	border-radius: var(--radius-container, 0.25rem);
 	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 	text-align: left;
 	font-size: 0.75rem;
-	min-width: 12.5rem;
-	max-width: 17.5rem;
+	min-width: calc(var(--spacing) * 50);
+	max-width: calc(var(--spacing) * 70);
 }
 /* the caret-pointing arrow doesn't fit the flat-card look */
 html #mathlive-suggestion-popover.top-tip::after,
@@ -210,13 +204,13 @@ html #mathlive-suggestion-popover.bottom-tip::after {
 }
 html #mathlive-suggestion-popover ul {
 	align-items: stretch; /* rows span the panel; mathlive sizes each to its content */
-	padding: 4px;
+	padding: calc(var(--spacing) * 1);
 }
 html #mathlive-suggestion-popover li {
 	width: auto;
 	margin: 0;
-	padding: 4px 8px;
-	border-radius: var(--radius-base, 0.25rem);
+	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+	border-radius: var(--radius-base);
 }
 /* the rendered symbol rides its own KaTeX sizing; 1.6rem made three rows fill the panel */
 html #mathlive-suggestion-popover .ML__popover__command {
@@ -256,10 +250,10 @@ html #mathlive-suggestion-popover li a:hover {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 22px;
-	height: 22px;
+	width: calc(var(--spacing) * 5.5);
+	height: calc(var(--spacing) * 5.5);
 	border: none;
-	border-radius: 4px;
+	border-radius: var(--radius-base);
 	background: transparent;
 	color: var(--color-surface-400);
 	cursor: pointer;
@@ -283,12 +277,12 @@ html #mathlive-suggestion-popover li a:hover {
 	color: var(--color-error-300);
 }
 .block-handle-menu {
-	min-width: 11rem;
+	min-width: calc(var(--spacing) * 44);
 	max-height: 60vh;
 	overflow-y: auto;
-	padding: 0.25rem;
-	border-radius: var(--radius-base, 6px);
-	border: 1px solid var(--color-surface-300);
+	padding: calc(var(--spacing) * 1);
+	border-radius: var(--radius-base);
+	border: var(--default-border-width) solid var(--color-surface-300);
 	background: var(--color-surface-50);
 	box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
 }
@@ -301,7 +295,7 @@ html #mathlive-suggestion-popover li a:hover {
 	width: 100%;
 	padding: 0.3rem 0.55rem;
 	border: none;
-	border-radius: 4px;
+	border-radius: var(--radius-base);
 	background: transparent;
 	text-align: left;
 	font-size: 0.875rem;
@@ -351,15 +345,15 @@ html #mathlive-suggestion-popover li a:hover {
 
 /* dark-mode scrollbars for the app's own scrollers; the PDF viewer (shadow DOM) and terminal style their own */
 [data-mode='dark'] ::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	width: calc(var(--spacing) * 2.5);
+	height: calc(var(--spacing) * 2.5);
 }
 [data-mode='dark'] ::-webkit-scrollbar-track {
 	background: transparent;
 }
 [data-mode='dark'] ::-webkit-scrollbar-thumb {
 	background-color: var(--color-surface-700);
-	border-radius: 5px;
+	border-radius: calc(var(--radius-base) * 1.25);
 	border: 2px solid transparent;
 	background-clip: padding-box;
 }
@@ -441,8 +435,8 @@ html #mathlive-suggestion-popover li a:hover {
    the CodeMirror extension; the colours are here because a baseTheme cannot branch on dark mode,
    and this has to read as part of the app's chrome rather than as part of the document. */
 .cm-comment-add {
-	border: 1px solid var(--color-surface-300);
-	border-radius: 6px;
+	border: var(--default-border-width) solid var(--color-surface-300);
+	border-radius: calc(var(--radius-base) * 1.5);
 	background-color: var(--color-surface-50);
 	color: var(--color-surface-700);
 	box-shadow: 0 2px 4px rgb(0 0 0 / 0.18);
@@ -466,15 +460,15 @@ html[data-mode='dark'] .cm-comment-add:hover {
    .cm-comment (extensions/comments.ts baseTheme), so a thread looks like the same thread on
    either side of a mode switch. */
 .TexpileEditor .pm-comment {
-	background-color: rgba(234, 179, 8, 0.14);
+	background-color: color-mix(in srgb, var(--comment-tint) 14%, transparent);
 }
 .TexpileEditor .pm-comment-focused {
-	background-color: rgba(234, 179, 8, 0.3);
+	background-color: color-mix(in srgb, var(--comment-tint) 30%, transparent);
 }
 /* the selection being commented on, held visible while the composer owns the focus (an
    unfocused ProseMirror hides the native selection); selection-blue, not thread-yellow */
 .TexpileEditor .pm-comment-pending {
-	background-color: rgba(59, 130, 246, 0.22);
+	background-color: color-mix(in srgb, var(--comment-pending-tint) 22%, transparent);
 }
 
 /* Hold a scroll container's scrollbar 3px in from its right edge, for panes that sit against a
@@ -517,14 +511,14 @@ html[data-mode='dark'] .cm-comment-add:hover {
 .find-widget {
 	width: 419px;
 	border-radius: var(--radius-container);
-	padding: 5px;
+	padding: calc(var(--spacing) * 1.25);
 }
 /* transparent rather than omitted so focus does not resize the row */
 .find-field {
 	@apply flex min-w-0 items-center;
 	height: 25px;
-	padding: 0 2px 0 6px;
-	border: 1px solid transparent;
+	padding: 0 calc(var(--spacing) * 0.5) 0 calc(var(--spacing) * 1.5);
+	border: var(--default-border-width) solid transparent;
 	border-radius: var(--radius-base);
 	background-color: var(--color-surface-100-900);
 }
@@ -537,10 +531,10 @@ html[data-mode='dark'] .cm-comment-add:hover {
 }
 .find-toggle {
 	@apply flex shrink-0 items-center justify-center font-mono;
-	width: 20px;
-	height: 20px;
-	margin-left: 2px;
-	border-radius: 3px;
+	width: calc(var(--spacing) * 5);
+	height: calc(var(--spacing) * 5);
+	margin-left: calc(var(--spacing) * 0.5);
+	border-radius: calc(var(--radius-base) * 0.75);
 	font-size: 11px;
 	line-height: 1;
 }
@@ -548,19 +542,19 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	@apply flex shrink-0 items-center justify-center;
 	width: 25px;
 	height: 25px;
-	margin-left: 3px;
+	margin-left: calc(var(--spacing) * 0.75);
 	border-radius: var(--radius-base);
 	color: var(--color-surface-500);
 }
 .find-expand {
-	margin: 0 5px 0 0;
+	margin: 0 calc(var(--spacing) * 1.25) 0 0;
 }
 /* reserved, not hugging its text: a changing count would resize the field beside it */
 .find-status {
-	margin-left: 6px;
+	margin-left: calc(var(--spacing) * 1.5);
 	min-width: 69px;
 	text-align: center;
-	font-size: 12px;
+	font-size: 0.75rem;
 	white-space: nowrap;
 	color: var(--color-surface-500);
 }
@@ -571,18 +565,6 @@ html[data-mode='dark'] .cm-comment-add:hover {
 }
 
 @theme {
-	--line-height-2: 0.5rem;
-
-	--color-dark: #0b2949;
-	--color-dark-4: #536c73;
-	--color-gray-1000: #ebf6ff;
-	--color-blue: #0088f7;
-	--color-gray-1100: #d0d4e9;
-	--color-gray-1200: #fbfbfb;
-	--color-gray-1300: #f4f4f4;
-
-	--shadow-3xl: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
-
 	--breakpoint-xs: 490px;
 	--breakpoint-sm: 576px;
 	--breakpoint-md: 768px;
@@ -609,23 +591,25 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	--z-index-pdf-viewer: 3000;
 	/* the one hover hint sits above every layer: it is transient, tiny, and hints controls inside modals too */
 	--z-index-tooltip: 4000;
-
-	--gradient-box-bg: linear-gradient(113deg, rgba(0, 136, 247, 0.06) 0%, rgba(0, 214, 249, 0.06) 100%);
-	--gradient-card-bg: linear-gradient(113deg, #0088f7 0%, #00d6f9 100%);
-
-	--font-family-work-sans: 'Work Sans', sans-serif;
 }
 
-@utility bg-box-bg {
-	background-image: var(--gradient-box-bg);
-}
-
-@utility bg-card-bg {
-	background-image: var(--gradient-card-bg);
-}
-
-@utility font-Work-Sans {
-	font-family: var(--font-family-work-sans);
+/* utilities over Texpile's own theme variables (texpile-default-theme.css): markup says
+   text-ref-fg and the value still comes from whichever theme is on */
+@theme inline {
+	--color-blue: var(--brand-blue);
+	--color-gray-1100: var(--brand-gray);
+	--color-ref-fg: var(--ref-fg);
+	--color-ref-bg: var(--ref-bg);
+	--color-ref-broken-fg: var(--ref-broken-fg);
+	--color-ref-broken-bg: var(--ref-broken-bg);
+	--color-git-modified: var(--git-modified);
+	--color-git-added: var(--git-added);
+	--color-git-deleted: var(--git-deleted);
+	--color-git-renamed: var(--git-renamed);
+	--color-math-key-edge: var(--math-key-edge);
+	--color-swatch-clear: var(--swatch-clear);
+	--color-page-sheet: var(--page-sheet);
+	--color-draft-band: var(--draft-band);
 }
 
 @utility z-sticky-header {
@@ -758,7 +742,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
    the title line sets the height */
 [data-scope='toast'][data-part='root']:has([data-part='description']:empty) [data-part='close-trigger'] {
 	height: auto;
-	padding-block: 2px;
+	padding-block: calc(var(--spacing) * 0.5);
 }
 
 .box-show .preview-box {
@@ -770,13 +754,6 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	width: 100%;
 }
 
-.button-blue {
-	@apply border-blue bg-blue hover:text-blue font-Work-Sans rounded border font-semibold text-white transition-all duration-500 ease-in-out hover:bg-transparent;
-}
-
-.button-white {
-	@apply text-blue border-blue hover:bg-blue font-Work-Sans rounded border font-semibold transition-all duration-500 ease-in-out hover:text-white;
-}
 .scroll::-webkit-scrollbar {
 	display: none;
 }
@@ -786,19 +763,6 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	/* IE and Edge */
 	scrollbar-width: none;
 	/* Firefox */
-}
-
-.scroll2::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
-}
-
-.scroll2::-webkit-scrollbar-track {
-	background: #f1f1f1;
-}
-
-.scroll2::-webkit-scrollbar-thumb {
-	background: #888;
 }
 
 #cta-button-sidebar::-webkit-scrollbar {
@@ -845,9 +809,9 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 /* template blocks: data-style "style-1".."style-6", or semantic aliases (style-blue, style-green, ...) */
 .texpile-template-block {
-	padding: 16px;
-	margin: 24px 0;
-	border-radius: var(--radius-base, 6px);
+	padding: calc(var(--spacing) * 4);
+	margin: calc(var(--spacing) * 6) 0;
+	border-radius: var(--radius-base);
 	position: relative;
 	border-left: 4px solid;
 }
@@ -969,12 +933,12 @@ html[data-mode='dark'] .cm-comment-add:hover {
 .template-block-warning {
 	display: flex;
 	align-items: center;
-	gap: 8px;
-	padding: 8px 12px;
-	margin-bottom: 12px;
+	gap: calc(var(--spacing) * 2);
+	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+	margin-bottom: calc(var(--spacing) * 3);
 	background: color-mix(in srgb, var(--color-warning-500) 15%, transparent);
-	border: 1px solid var(--color-warning-500);
-	border-radius: var(--radius-base, 6px);
+	border: var(--default-border-width) solid var(--color-warning-500);
+	border-radius: var(--radius-base);
 	color: var(--color-warning-700);
 	font-size: 13px;
 	font-weight: 500;
@@ -997,10 +961,10 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	color: var(--color-warning-700);
 	font-weight: 500;
 	margin-top: -8px;
-	margin-bottom: 8px;
-	padding: 4px 8px;
+	margin-bottom: calc(var(--spacing) * 2);
+	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
 	background: color-mix(in srgb, var(--color-warning-500) 15%, transparent);
-	border-radius: var(--radius-base, 4px);
+	border-radius: var(--radius-base);
 	width: fit-content;
 }
 
@@ -1037,10 +1001,10 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	color: var(--color-error-700);
 	font-weight: 500;
 	margin-top: -8px;
-	margin-bottom: 8px;
-	padding: 4px 8px;
+	margin-bottom: calc(var(--spacing) * 2);
+	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
 	background: color-mix(in srgb, var(--color-error-500) 15%, transparent);
-	border-radius: var(--radius-base, 4px);
+	border-radius: var(--radius-base);
 	width: fit-content;
 }
 
@@ -1167,7 +1131,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 .ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-environment='multline']::after {
 	content: '(' attr(data-equation-number) ')';
 	position: absolute;
-	right: 1rem;
+	right: calc(var(--spacing) * 4);
 	top: 50%;
 	transform: translateY(-50%);
 	font-weight: 500;
@@ -1183,13 +1147,13 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror .block-math-container .equation-numbers {
 	position: absolute;
-	right: 1rem;
+	right: calc(var(--spacing) * 4);
 	top: 50%;
 	transform: translateY(-50%);
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
-	gap: 0.5rem;
+	gap: calc(var(--spacing) * 2);
 	pointer-events: none;
 	user-select: none;
 }
@@ -1235,9 +1199,9 @@ html[data-mode='dark'] .cm-comment-add:hover {
    the box, so it cannot shift the line, or the paragraphs below it, the moment the caret arrives. */
 .ProseMirror .inline-latex-wrapper:focus-within,
 .ProseMirror .raw-latex-wrapper:focus-within {
-	outline: 1px solid color-mix(in srgb, var(--color-surface-500) 45%, transparent);
+	outline: var(--default-border-width) solid color-mix(in srgb, var(--color-surface-500) 45%, transparent);
 	outline-offset: 1px;
-	border-radius: 2px;
+	border-radius: calc(var(--radius-base) * 0.5);
 }
 
 /* a comment chip owns its whole line in the source (% consumes to end of line) and serializes
@@ -1250,10 +1214,10 @@ html[data-mode='dark'] .cm-comment-add:hover {
 /* generic editable LaTeX environment block; the env name lives in the node-view header, so no ::before badge */
 .tex-environment {
 	position: relative;
-	border: 1px solid var(--color-surface-300-700, #d4d4d8);
-	border-radius: var(--radius-base, 0.25rem);
-	padding: 0.5rem 0.75rem;
-	margin: 0.75rem 0;
+	border: var(--default-border-width) solid var(--color-surface-300-700);
+	border-radius: var(--radius-base);
+	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+	margin: calc(var(--spacing) * 3) 0;
 }
 .tex-environment-body > :last-child {
 	margin-bottom: 0;
@@ -1294,7 +1258,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 /* \title/\author/\date rendered as in-place editable fields (frontmatterView.ts) */
 .frontmatter-block {
-	margin: 0.75rem 0;
+	margin: calc(var(--spacing) * 3) 0;
 }
 .frontmatter-input {
 	width: 100%;
@@ -1304,7 +1268,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	font: inherit;
 	color: inherit;
 	padding: 0.1rem 0.25rem;
-	border-radius: var(--radius-base, 4px);
+	border-radius: var(--radius-base);
 }
 .frontmatter-input:hover,
 .frontmatter-input:focus {
@@ -1327,7 +1291,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
 	color: var(--color-surface-500);
-	margin-bottom: 2px;
+	margin-bottom: calc(var(--spacing) * 0.5);
 }
 
 /* structural placeholder commands (\maketitle, \tableofcontents, ...) rendered as a subtle selectable marker */
@@ -1340,8 +1304,8 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	user-select: none;
 	cursor: pointer;
 	padding: 0.2rem 0;
-	margin: 0.5rem 0;
-	border-radius: var(--radius-base, 4px);
+	margin: calc(var(--spacing) * 2) 0;
+	border-radius: var(--radius-base);
 }
 .latex-placeholder:hover {
 	color: var(--color-surface-500);
@@ -1355,13 +1319,13 @@ html[data-mode='dark'] .cm-comment-add:hover {
 .latex-placeholder-inline {
 	user-select: none;
 	cursor: pointer;
-	border-bottom: 1px dotted var(--color-surface-400);
+	border-bottom: var(--default-border-width) dotted var(--color-surface-400);
 }
 .latex-placeholder-inline:hover {
 	background: color-mix(in srgb, var(--color-primary-500) 12%, transparent);
 }
 .latex-placeholder-inline.latex-placeholder-selected {
-	border-radius: var(--radius-base, 4px);
+	border-radius: var(--radius-base);
 	outline-offset: 1px;
 }
 
@@ -1378,7 +1342,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
    here so they follow the app mode */
 .cm-tooltip.cm-math-preview {
 	background-color: var(--color-surface-50);
-	border: 1px solid var(--color-surface-300);
+	border: var(--default-border-width) solid var(--color-surface-300);
 	color: var(--color-surface-950);
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
@@ -1393,7 +1357,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
    duration tracks FLASH_MS in synctexFlash.ts. */
 @keyframes synctex-flash {
 	from {
-		background-color: rgba(255, 196, 0, 0.5);
+		background-color: color-mix(in srgb, var(--jump-flash) 50%, transparent);
 	}
 	to {
 		background-color: transparent;
@@ -1405,7 +1369,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 /* mode-switch scroll-sync flash, same amber so both flashes read as one feature */
 .mode-sync-flash {
 	animation: synctex-flash 1.4s ease-out;
-	border-radius: 4px;
+	border-radius: var(--radius-base);
 }
 
 /* Visual diff: what changed since a saved version, drawn on the rendered document. Added text is
@@ -1414,7 +1378,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
    diff uses, so the two representations of one comparison read as the same colours. */
 .texpile-diff-added {
 	background-color: color-mix(in srgb, var(--color-success-500) 22%, transparent);
-	border-radius: 2px;
+	border-radius: calc(var(--radius-base) * 0.5);
 }
 /* The same change on a node that renders its OWN content - a CodeMirror island, a formula, a
    citation chip, a figure. ProseMirror draws nothing inside those, so an inline decoration there
@@ -1433,13 +1397,13 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	background-color: color-mix(in srgb, var(--color-success-500) 16%, transparent);
 	outline: 2px solid color-mix(in srgb, var(--color-success-500) 45%, transparent);
 	outline-offset: -2px;
-	border-radius: 4px;
+	border-radius: var(--radius-base);
 }
 .texpile-diff-changed-node {
 	background-color: color-mix(in srgb, var(--color-warning-500) 16%, transparent);
 	outline: 2px solid color-mix(in srgb, var(--color-warning-500) 45%, transparent);
 	outline-offset: -2px;
-	border-radius: 4px;
+	border-radius: var(--radius-base);
 }
 /* What was deleted, shown rather than hidden behind a hover. It was a 3px hairline with the text
    on its title, which collapsed a deleted paragraph - and a deleted FILE - into a sliver.
@@ -1453,7 +1417,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	color: color-mix(in srgb, var(--color-error-500) 55%, var(--color-surface-950));
 	text-decoration: line-through;
 	text-decoration-color: color-mix(in srgb, var(--color-error-500) 70%, transparent);
-	border-radius: 2px;
+	border-radius: calc(var(--radius-base) * 0.5);
 	white-space: pre-wrap; /* multi-paragraph removals keep their breaks */
 }
 [data-mode='dark'] .texpile-diff-removed,
@@ -1462,7 +1426,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 }
 /* inside a paragraph: sits in the line where the words were */
 .texpile-diff-removed {
-	padding: 0 2px;
+	padding: 0 calc(var(--spacing) * 0.5);
 }
 /* between paragraphs: the removal WAS whole blocks, so it takes a block of its own rather than
    being crammed into the line beside it.
@@ -1476,22 +1440,5 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	padding: 0.15em 0.3em;
 }
 
-/* svelte-pdf-view exposes --pdf-* hooks with light defaults; set them so the viewer chrome follows
-   the app mode. page canvases are inverted by the darkMode prop (PDFViewer.svelte). */
-[data-mode='dark'] .pdf-viewer-container {
-	--pdf-viewer-bg: var(--color-surface-950);
-	--pdf-toolbar-bg: var(--color-surface-900);
-	--pdf-toolbar-fg: var(--color-surface-100);
-	--pdf-toolbar-border: var(--color-surface-700);
-	--pdf-toolbar-btn-bg: var(--color-surface-800);
-	--pdf-toolbar-btn-border: var(--color-surface-700);
-	--pdf-toolbar-btn-fg: var(--color-surface-200);
-	--pdf-toolbar-btn-hover-bg: var(--color-surface-700);
-	--pdf-toolbar-btn-hover-border: var(--color-surface-600);
-	--pdf-toolbar-btn-active-bg: var(--color-surface-600);
-	--pdf-toolbar-input-bg: var(--color-surface-800);
-	--pdf-toolbar-input-border: var(--color-surface-700);
-	--pdf-toolbar-accent: var(--color-primary-500);
-	--pdf-toolbar-accent-ring: color-mix(in srgb, var(--color-primary-500) 25%, transparent);
-	--pdf-toolbar-muted: var(--color-surface-400);
-}
+/* the PDF pane's --pdf-* hooks are light-dark pairs in texpile-default-theme.css; page canvases
+   are inverted by the darkMode prop (PDFViewer.svelte). */

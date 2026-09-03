@@ -1,6 +1,6 @@
 // The composition root: pins the app identity, registers every IPC surface, and owns the
 // launch/open/quit lifecycle. Each domain lives in its own module (ipc/, windows/, fs/, ...).
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { applyAppIdentity } from './appIdentity';
@@ -12,7 +12,8 @@ import { windowRoots, pendingOpens, normRoot, windowFor, focusWindow, beginQuit 
 import { registerBootstrapIpc } from './ipc/bootstrapIpc';
 import { registerFsIpc } from './ipc/fsIpc';
 import { registerDraftIpc } from './ipc/draftIpc';
-import { registerWorkspaceWindowIpc } from './ipc/workspaceWindowIpc';
+import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspaceWindowIpc';
+import { registerSurfacesIpc } from './ipc/surfacesIpc';
 import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
 
@@ -26,6 +27,7 @@ registerBootstrapIpc();
 registerFsIpc();
 registerDraftIpc();
 registerWorkspaceWindowIpc();
+registerSurfacesIpc();
 
 // .tex handed over by the OS before any window exists; consumed at whenReady
 let initialOpenPath: string | null = null;
@@ -170,13 +172,23 @@ app.whenReady().then(() => {
 	// and the renderer draws it. See windowChrome.ts.
 	// persisted so the NEXT launch can paint its window buttons in the right colours before a
 	// renderer exists to report them; see chromeColors()
-	registerWindowChrome((c) =>
-		writeSettings({
-			chromeHeight: c.height,
-			chromeColor: c.color,
-			chromeSymbolColor: c.symbolColor,
-			chromeBackground: c.background
-		})
+	registerWindowChrome(
+		(c) =>
+			writeSettings({
+				chromeHeight: c.height,
+				chromeColor: c.color,
+				chromeSymbolColor: c.symbolColor,
+				chromeBackground: c.background
+			}),
+		// the start screen's File menu; the renderer's own open-folder push handles the result
+		{
+			openFolder: async (win) => {
+				const res = await dialog.showOpenDialog(win, { title: 'Open Folder', properties: ['openDirectory', 'createDirectory'] });
+				if (!res.canceled && res.filePaths[0]) win.webContents.send('main:open-folder', res.filePaths[0]);
+			},
+			newWindow: () => focusWindow(createWindow(startUrl())),
+			openFolderNewWindow: async (win) => void (await openFolderInNewWindow(win))
+		}
 	);
 
 	if (initialJoinLink) {

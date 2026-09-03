@@ -36,7 +36,7 @@
 	<!-- accent TEXT only while the tree has focus: it promises Ctrl+Z acts on files, not the document -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
-		class="group flex items-center rounded text-sm transition-colors {isActive(entry)
+		class="group flex items-center rounded-base text-sm transition-colors {isActive(entry)
 			? `bg-primary-500/15 font-medium ${focused ? 'text-primary-700 dark:text-primary-300' : ''}`
 			: sel.selected.includes(entry.path)
 				? 'bg-surface-300-700/60'
@@ -106,11 +106,11 @@
 			     No fill of its own, deliberately. It used to carry one so that a name scrolled under
 			     it could not show through - but a second painted surface over an already-lit row is
 			     visible however carefully its colour is matched: instant against the row's fade,
-			     square against the row's rounded ends. A name bleeding through while the tree is
+			     square against the row's rounded-base ends. A name bleeding through while the tree is
 			     scrolled sideways is the cheaper of the two. -->
 			<span class="sticky right-0 z-10 hidden shrink-0 items-center bg-transparent pr-1 group-hover:flex">
 				<!-- the icon answers the hover, not a second fill: the row is already lit, and
-				     preset-tonal washed 10% white over it, leaving a paler rounded patch with a
+				     preset-tonal washed 10% white over it, leaving a paler rounded-base patch with a
 				     visible seam against the row it sits on -->
 				<button
 					class="btn-icon btn-icon-xs text-surface-500 hover:text-surface-950-50 bg-transparent transition-colors"

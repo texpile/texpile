@@ -1,6 +1,7 @@
 <script lang="ts">
 	// text prompt dialog, Electron has no window.prompt()
 	import Modal from '$lib/modals/Modal.svelte';
+	import ModalActions from '$lib/modals/ModalActions.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let open = $state(false);
@@ -35,9 +36,13 @@
 				if (e.key === 'Enter') close(true);
 			}}
 		/>
-		<div class="mt-4 flex justify-end gap-2">
-			<button class="btn btn-xs hover:preset-tonal" type="button" onclick={() => close(false)}>{m.menubar_prompt_cancel()}</button>
-			<button class="btn btn-xs preset-filled-primary-500" type="button" onclick={() => close(true)}>{m.menubar_prompt_ok()}</button>
-		</div>
+		<ModalActions
+			class="mt-4"
+			size="xs"
+			buttons={[
+				{ label: m.menubar_prompt_cancel(), role: 'cancel', onclick: () => close(false) },
+				{ label: m.menubar_prompt_ok(), role: 'primary', onclick: () => close(true) }
+			]}
+		/>
 	</Modal>
 {/if}

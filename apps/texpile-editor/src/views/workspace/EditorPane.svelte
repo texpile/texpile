@@ -80,6 +80,7 @@
 		onHistoryBoundary,
 		onJumpToFile,
 		onOpenFileAt,
+		onJumpToLabel,
 		onCaretMove,
 		commentRanges = [],
 		commentThreads = [],
@@ -234,7 +235,7 @@
 			{/if}
 			<div class="ml-auto flex shrink-0 items-center gap-1">
 				<button
-					class="hover:preset-tonal rounded p-0.5"
+					class="hover:preset-tonal rounded-base p-0.5"
 					onclick={onRefreshDiff}
 					use:tip={m.wsview_refresh_diff()}
 					aria-label={m.wsview_refresh_diff()}
@@ -344,6 +345,7 @@
 					{onSelectComment}
 					{onAddCommentAnchored}
 					{onInsertCitation}
+					{onJumpToLabel}
 					{onCommentsPlaced}
 					{commentPendingActive}
 				/>
