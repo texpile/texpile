@@ -16,3 +16,7 @@ vite.config.ts.timestamp-*
 /devtyp.html
 /src/devtyp.ts
 /public/tmp-fixture/
+
+# Skeleton's preset themes, copied in by scripts/sync-themes.mjs on `pnpm sync`; prettier reads
+# this file too when lint runs from this package
+public/themes/
