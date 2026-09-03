@@ -36,7 +36,9 @@ function accelerator(keys: string): string {
 async function showNative(items: ContextMenuItem[], x: number, y: number): Promise<ContextMenuItem | null> {
 	const chosen = await nativeBridge()!.popupMenu!({
 		items: items.map((it, i) =>
-			'separator' in it ? { separator: true } : { id: String(i), label: it.label, enabled: !it.disabled, accelerator: it.keys ? accelerator(it.keys) : undefined }
+			'separator' in it
+				? { separator: true }
+				: { id: String(i), label: it.label, enabled: !it.disabled, accelerator: it.keys ? accelerator(it.keys) : undefined }
 		),
 		x: Math.round(x),
 		y: Math.round(y)
@@ -46,7 +48,11 @@ async function showNative(items: ContextMenuItem[], x: number, y: number): Promi
 
 /** show the menu; resolves once it has closed, chosen item already run. onClose runs before the
  *  item on both paths: an item that opens an inline input needs the focus hand-back to land first */
-export async function showContextMenu(items: ContextMenuItem[], at: { x: number; y: number }, opts?: { onClose?: () => void }): Promise<void> {
+export async function showContextMenu(
+	items: ContextMenuItem[],
+	at: { x: number; y: number },
+	opts?: { onClose?: () => void }
+): Promise<void> {
 	if (nativeContextMenus()) {
 		const it = await showNative(items, at.x, at.y);
 		opts?.onClose?.();
