@@ -109,7 +109,7 @@
 				<!-- the marker carries the whole distinction between a file and a comparison of it, so
 				     it sits BEFORE the name where it cannot be trimmed away by a long filename -->
 				{#if tab.compare}
-					<GitCompare class="text-primary-500 size-3.5 shrink-0" />
+					<GitCompare class="text-primary-ink size-3.5 shrink-0" />
 				{/if}
 				<span class="truncate leading-none" class:italic={previewKey === key}>{basename(tab.path)}</span>
 				<!-- fixed-size trailing slot: dirty dot and close button share it, so neither ever
@@ -169,7 +169,7 @@
 										use:tip={tabTitle(tab)}
 										onclick={() => chooseFromMenu(tab)}
 									>
-										{#if tab.compare}<GitCompare class="text-primary-500 size-3.5 shrink-0" />{/if}
+										{#if tab.compare}<GitCompare class="text-primary-ink size-3.5 shrink-0" />{/if}
 										<span class="truncate" class:italic={previewKey === key}>{basename(tab.path)}</span>
 										<!-- in the menu there IS room for the version, and without it two comparisons of
 										     the same file would be two identical rows -->

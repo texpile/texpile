@@ -53,7 +53,7 @@
 		</div>
 	{:else if folderState === 'occupied'}
 		<p class="text-muted mb-4 flex items-start gap-2 text-sm">
-			<TriangleAlert class="text-warning-500 mt-0.5 size-4 shrink-0" />
+			<TriangleAlert class="text-warning-ink mt-0.5 size-4 shrink-0" />
 			<span>
 				{m.tutorial_occupied_desc({ root: root ?? '' })}
 			</span>

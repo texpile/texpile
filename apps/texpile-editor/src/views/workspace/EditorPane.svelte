@@ -201,7 +201,7 @@
 			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
 			use:tip={m.texpile_managed_note()}
 		>
-			<Info class="text-primary-500 size-3.5 shrink-0" />
+			<Info class="text-primary-ink size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
 		</div>
 	{/if}
@@ -210,7 +210,7 @@
 			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
 			use:tip={encodingIssue}
 		>
-			<CircleAlert class="text-warning-500 size-3.5 shrink-0" />
+			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
 		</div>
 	{/if}
@@ -275,7 +275,7 @@
 					</div>
 				</div>
 			{:else if loadError}
-				<div class="text-error-600 mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
+				<div class="text-error-ink mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
 					<CircleAlert class="size-8" />
 					<p class="text-sm">{loadError}</p>
 				</div>

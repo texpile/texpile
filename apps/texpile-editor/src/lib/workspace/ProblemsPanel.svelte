@@ -35,12 +35,12 @@
 	{:else}
 		<div class="border-surface-200-800 flex h-7 shrink-0 items-center gap-3 border-b px-2">
 			{#if log.status.fatal || (log.errors.length > 0 && log.status.pages === undefined)}
-				<span class="text-error-500 flex items-center gap-1 font-medium">
+				<span class="text-error-ink flex items-center gap-1 font-medium">
 					<CircleAlert class="size-3.5" />
 					{log.status.fatal ? m.problems_status_failed_no_pdf() : m.problems_status_failed()}
 				</span>
 			{:else if log.errors.length === 0 && log.warnings.length === 0}
-				<span class="text-success-600-400 flex items-center gap-1 font-medium">
+				<span class="text-success-ink flex items-center gap-1 font-medium">
 					<FileCheck2 class="size-3.5" />
 					{m.problems_status_clean()}{log.status.pages
 						? ` (${
@@ -86,9 +86,9 @@
 						onclick={() => t && onJump(t.file, t.line)}
 					>
 						{#if e.level === 'error'}
-							<CircleAlert class="text-error-500 mt-0.5 size-3.5 shrink-0" />
+							<CircleAlert class="text-error-ink mt-0.5 size-3.5 shrink-0" />
 						{:else if e.level === 'warning'}
-							<TriangleAlert class="text-warning-600-400 mt-0.5 size-3.5 shrink-0" />
+							<TriangleAlert class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
 						{:else}
 							<Box class="text-faint mt-0.5 size-3.5 shrink-0" />
 						{/if}

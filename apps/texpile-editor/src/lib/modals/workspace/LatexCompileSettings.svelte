@@ -72,7 +72,7 @@
 	</div>
 
 	{#if sessionActive}
-		<p class="text-warning-700-300 mt-1 text-xs">{m.wsview_live_mode_collab_note()}</p>
+		<p class="text-warning-ink mt-1 text-xs">{m.wsview_live_mode_collab_note()}</p>
 	{/if}
 
 	{#if superseded}

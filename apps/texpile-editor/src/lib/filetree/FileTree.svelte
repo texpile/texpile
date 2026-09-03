@@ -288,7 +288,7 @@
 	bind:this={treeEl}
 	role="presentation"
 	tabindex="-1"
-	class="min-h-full min-w-max rounded-base outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
+	class="min-h-full min-w-max rounded-container outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
 	onfocusin={() => (focused = true)}
 	onfocusout={(e) => {
 		// relatedTarget is where focus is HEADING; moving between two rows must not read as leaving

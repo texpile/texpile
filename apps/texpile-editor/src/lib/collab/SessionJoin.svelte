@@ -172,7 +172,7 @@
 					/>
 				</label>
 				{#if collabGuest.joinError}
-					<p class="text-error-600-400 mb-3 text-sm">{errorText(collabGuest.joinError)}</p>
+					<p class="text-error-ink mb-3 text-sm">{errorText(collabGuest.joinError)}</p>
 				{/if}
 
 				<!-- the browser build pins the relay: its CSP only allows the official one, so a custom
@@ -205,7 +205,7 @@
 				{/if}
 
 				<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
-					<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
+					<ShieldCheck class="text-success-ink mt-px size-3.5 shrink-0" />
 					<span>{m.collab_e2ee_note()}</span>
 				</p>
 

@@ -186,7 +186,7 @@
 				{#if changes.length}
 					<div class="border-surface-200-800 shrink-0 space-y-2 border-t px-2 py-2">
 						<textarea
-							class="input resize-none text-sm"
+							class="textarea resize-none text-sm rounded-container"
 							rows="2"
 							placeholder={m.vcs_save_placeholder()}
 							use:tip={m.vcs_commit_placeholder({ modLabel })}

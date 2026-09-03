@@ -164,7 +164,7 @@
 		{#each categories as c (c.id)}
 			<button
 				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
-					? 'bg-primary-500/15 text-primary-700 dark:text-primary-300 font-medium'
+					? 'bg-primary-500/15 text-primary-ink font-medium'
 					: 'hover:bg-surface-200-800'}"
 				onclick={() => (category = c.id)}
 			>
@@ -312,7 +312,7 @@
 							<!-- the command lives in its own modal: it is long, and read once -->
 							<button class="btn btn-xs preset-tonal shrink-0 text-xs" onclick={() => (setupOpen = true)}>{m.prefs_mcp_show()}</button>
 						{:else}
-							<span class="text-error-600 text-xs">{m.prefs_mcp_error({ error: mcp.error ?? '' })}</span>
+							<span class="text-error-ink text-xs">{m.prefs_mcp_error({ error: mcp.error ?? '' })}</span>
 						{/if}
 					</div>
 					<!-- A SECOND permission, listed under the first because it is meaningless without it,

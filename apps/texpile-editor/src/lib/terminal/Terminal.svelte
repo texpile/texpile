@@ -5,7 +5,7 @@
 	import '@xterm/xterm/css/xterm.css';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import { themeColour } from '$lib/languages/typst/preview/themeColour';
+	import { terminalTheme } from './terminalTheme';
 	import { observe } from '$lib/runes/observe.svelte';
 	import { resolvedMode, themeName } from '$lib/theme';
 
@@ -138,8 +138,10 @@
 				fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
 				cursorBlink: true,
 				scrollback: 5000,
-				// resolved to rgb(): xterm parses colours itself and does not read CSS variables
-				theme: { background: themeColour('--terminal-bg', '#1e1e1e'), foreground: themeColour('--terminal-fg', '#e4e4e7') }
+				// xterm keeps its own colours (terminalTheme.ts); the ratio is what keeps them readable on
+				// whichever ground the theme gives it, the way VS Code's terminal does
+				minimumContrastRatio: 4.5,
+				theme: terminalTheme(resolvedMode.current)
 			});
 			fit = new FitAddon();
 			term.loadAddon(fit);
@@ -149,11 +151,7 @@
 				observe(
 					() => [resolvedMode.current, themeName.current],
 					() => {
-						if (term)
-							term.options.theme = {
-								background: themeColour('--terminal-bg', '#1e1e1e'),
-								foreground: themeColour('--terminal-fg', '#e4e4e7')
-							};
+						if (term) term.options.theme = terminalTheme(resolvedMode.current);
 					}
 				)
 			);

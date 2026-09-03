@@ -136,7 +136,7 @@
 			</button>
 
 			{#if error}
-				<p class="text-error-500 mt-2 px-2 text-sm">{error}</p>
+				<p class="text-error-ink mt-2 px-2 text-sm">{error}</p>
 			{/if}
 
 			{#if recentFolders.current.length > 0}

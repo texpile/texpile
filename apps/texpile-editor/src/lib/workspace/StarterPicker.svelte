@@ -70,7 +70,7 @@
 				disabled={busy}
 				onclick={() => onPick(s)}
 			>
-				<span class="flex items-center gap-2 font-medium"><FileText class="text-primary-500 size-4 shrink-0" /> {s.name}</span>
+				<span class="flex items-center gap-2 font-medium"><FileText class="text-primary-ink size-4 shrink-0" /> {s.name}</span>
 				<span class="text-muted text-xs">{s.description}</span>
 			</button>
 		{/each}
@@ -81,7 +81,7 @@
 				onclick={() => importInput?.click()}
 			>
 				<span class="flex items-center gap-2 font-medium"
-					><FolderInput class="text-primary-500 size-4 shrink-0" /> {m.starter_import_own()}</span
+					><FolderInput class="text-primary-ink size-4 shrink-0" /> {m.starter_import_own()}</span
 				>
 				<span class="text-muted text-xs">{m.starter_import_description()}</span>
 			</button>

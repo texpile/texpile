@@ -47,7 +47,7 @@
 				</span>
 				{#if active}
 					<span
-						class="bg-primary-500 pointer-events-none absolute -top-1.5 -right-1.5 flex size-4 items-center justify-center rounded-full text-white"
+						class="bg-primary-500 pointer-events-none absolute -top-1.5 -right-1.5 flex size-4 items-center justify-center rounded-full text-primary-contrast-500"
 					>
 						<Check class="size-3" />
 					</span>

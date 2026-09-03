@@ -67,7 +67,7 @@
 			{#if onIgnoreArtifacts}
 				<!-- the permanent fix, one click: unticking these every time is a chore nobody should repeat -->
 				<button
-					class="hover:preset-tonal text-primary-500 shrink-0 rounded-base px-1 text-[11px] opacity-0 group-hover:opacity-100"
+					class="hover:preset-tonal text-primary-ink shrink-0 rounded-base px-1 text-[11px] opacity-0 group-hover:opacity-100"
 					use:tip={m.vcs_ignore_artifacts_title()}
 					onclick={onIgnoreArtifacts}
 				>

@@ -162,7 +162,7 @@
 				     nothing at all. fixed escapes the clip. -->
 				<div
 					bind:this={menuEl}
-					class="bg-surface-50-950 border-surface-300-700 fixed z-50 flex max-w-[min(22rem,calc(100vw-1rem))] flex-wrap items-center gap-3 gap-y-2 rounded-base border p-2 shadow-lg"
+					class="bg-surface-50-950 border-surface-300-700 fixed z-50 flex max-w-[min(22rem,calc(100vw-1rem))] flex-wrap items-center gap-3 gap-y-2 rounded-container border p-2 shadow-lg"
 					style="top: {menuPos.top}px; right: {menuPos.right}px"
 					role="group"
 				>

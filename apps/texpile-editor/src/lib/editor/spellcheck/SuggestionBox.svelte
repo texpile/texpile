@@ -215,17 +215,17 @@
 	<div class="flex items-center justify-between gap-2">
 		<div class="flex items-center gap-2">
 			{#if sanitizedType() === 'spelling' || sanitizedType() === 'typo'}
-				<IconBookText size={14} class="text-primary-500" />
+				<IconBookText size={14} class="text-primary-ink" />
 			{:else if sanitizedType() === 'capitalization'}
-				<IconType size={14} class="text-primary-500" />
+				<IconType size={14} class="text-primary-ink" />
 			{:else if sanitizedType() === 'wordchoice'}
-				<IconMessageSquare size={14} class="text-primary-500" />
+				<IconMessageSquare size={14} class="text-primary-ink" />
 			{:else if sanitizedType() === 'style'}
-				<IconSparkles size={14} class="text-primary-500" />
+				<IconSparkles size={14} class="text-primary-ink" />
 			{:else if sanitizedType() === 'repetition'}
-				<IconRepeat size={14} class="text-primary-500" />
+				<IconRepeat size={14} class="text-primary-ink" />
 			{:else}
-				<IconHelpCircle size={14} class="text-primary-500" />
+				<IconHelpCircle size={14} class="text-primary-ink" />
 			{/if}
 			<span class="text-xs font-semibold capitalize opacity-75">
 				{sanitizedType()}
@@ -252,9 +252,9 @@
 					<div class="font-mono text-xs leading-snug">
 						{#each diffParts as part, i (i)}
 							{#if part.removed}
-								<del class="text-error-700-300 line-through opacity-60">{part.value === ' ' ? '␣' : part.value}</del>
+								<del class="text-error-ink line-through opacity-60">{part.value === ' ' ? '␣' : part.value}</del>
 							{:else if part.added}
-								<ins class="text-success-700-300 font-bold no-underline">{part.value === ' ' ? '␣' : part.value}</ins>
+								<ins class="text-success-ink font-bold no-underline">{part.value === ' ' ? '␣' : part.value}</ins>
 							{:else}
 								<span>{part.value}</span>
 							{/if}

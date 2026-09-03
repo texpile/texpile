@@ -13,20 +13,32 @@ html {
 	/* secondary and faint text as a share of the text colour, whatever the theme's scale does */
 	--muted-text: color-mix(in oklab, currentColor 60%, transparent);
 	--faint-text: color-mix(in oklab, currentColor 40%, transparent);
+	/* a theme colour as text or a mark on the ground: its hue and chroma, with the lightness held
+	   at or below 0.5 on a light ground and at or above 0.78 on a dark one, so it reads on any
+	   preset, including one whose whole scale is pastel (Reign's primary never leaves 87-97%) */
+	--primary-ink: light-dark(oklch(from var(--color-primary-500) min(l, 0.5) c h), oklch(from var(--color-primary-500) max(l, 0.78) c h));
+	--secondary-ink: light-dark(
+		oklch(from var(--color-secondary-500) min(l, 0.5) c h),
+		oklch(from var(--color-secondary-500) max(l, 0.78) c h)
+	);
+	--tertiary-ink: light-dark(oklch(from var(--color-tertiary-500) min(l, 0.5) c h), oklch(from var(--color-tertiary-500) max(l, 0.78) c h));
+	--success-ink: light-dark(oklch(from var(--color-success-500) min(l, 0.5) c h), oklch(from var(--color-success-500) max(l, 0.78) c h));
+	--warning-ink: light-dark(oklch(from var(--color-warning-500) min(l, 0.5) c h), oklch(from var(--color-warning-500) max(l, 0.78) c h));
+	--error-ink: light-dark(oklch(from var(--color-error-500) min(l, 0.5) c h), oklch(from var(--color-error-500) max(l, 0.78) c h));
 	/* CodeMirror syntax roles (cmHighlight.ts) */
 	--syntax-comment: var(--muted-text);
-	--syntax-keyword: light-dark(var(--color-error-700), var(--color-error-300));
-	--syntax-import: light-dark(var(--color-secondary-700), var(--color-secondary-300));
-	--syntax-command: light-dark(var(--color-primary-700), var(--color-primary-300));
-	--syntax-math-ident: light-dark(var(--color-tertiary-700), var(--color-tertiary-300));
-	--syntax-math-text: light-dark(var(--color-success-700), var(--color-success-300));
-	--syntax-literal: light-dark(var(--color-warning-700), var(--color-warning-300));
-	--syntax-string: light-dark(var(--color-primary-800), var(--color-primary-200));
-	--syntax-url: light-dark(var(--color-primary-600), var(--color-primary-400));
-	--syntax-monospace: light-dark(var(--color-warning-800), var(--color-warning-400));
-	--syntax-operator: light-dark(var(--color-secondary-600), var(--color-secondary-400));
-	--syntax-inserted: light-dark(var(--color-success-700), var(--color-success-300));
-	--syntax-deleted: light-dark(var(--color-error-800), var(--color-error-300));
+	--syntax-keyword: var(--error-ink);
+	--syntax-import: var(--secondary-ink);
+	--syntax-command: var(--primary-ink);
+	--syntax-math-ident: var(--tertiary-ink);
+	--syntax-math-text: var(--success-ink);
+	--syntax-literal: var(--warning-ink);
+	--syntax-string: var(--primary-ink);
+	--syntax-url: var(--primary-ink);
+	--syntax-monospace: var(--warning-ink);
+	--syntax-operator: var(--secondary-ink);
+	--syntax-inserted: var(--success-ink);
+	--syntax-deleted: var(--error-ink);
 
 	/* find-in-document matches, both editors */
 	--find-match-bg: light-dark(var(--color-warning-200), var(--color-warning-900));
@@ -37,13 +49,13 @@ html {
 	--find-match-dark-fg: var(--color-surface-50);
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
-	--proof-default: var(--color-tertiary-500);
-	--proof-spelling: var(--color-error-500);
-	--proof-typo: var(--color-error-500);
-	--proof-capitalization: var(--color-warning-500);
-	--proof-wordchoice: var(--color-primary-500);
-	--proof-style: var(--color-secondary-500);
-	--proof-repetition: var(--color-warning-600);
+	--proof-default: var(--tertiary-ink);
+	--proof-spelling: var(--error-ink);
+	--proof-typo: var(--error-ink);
+	--proof-capitalization: var(--warning-ink);
+	--proof-wordchoice: var(--primary-ink);
+	--proof-style: var(--secondary-ink);
+	--proof-repetition: var(--warning-ink);
 
 	/* review comments: the thread tint, and the selection a composer is open for */
 	--comment-tint: var(--color-warning-500);
@@ -60,16 +72,16 @@ html {
 	--diff-highlight-tint: var(--color-warning-400);
 
 	/* \ref and \cite chips */
-	--ref-fg: light-dark(var(--color-primary-600), var(--color-primary-400));
-	--ref-bg: light-dark(var(--color-primary-50), var(--color-primary-950));
-	--ref-broken-fg: light-dark(var(--color-error-600), var(--color-error-400));
-	--ref-broken-bg: light-dark(var(--color-error-50), var(--color-error-950));
+	--ref-fg: var(--primary-ink);
+	--ref-bg: color-mix(in oklab, var(--color-primary-500) 15%, transparent);
+	--ref-broken-fg: var(--error-ink);
+	--ref-broken-bg: color-mix(in oklab, var(--color-error-500) 15%, transparent);
 
 	/* git status, carried by the file name's colour */
-	--git-modified: var(--color-warning-500);
-	--git-added: var(--color-success-500);
-	--git-deleted: var(--color-error-500);
-	--git-renamed: var(--color-secondary-500);
+	--git-modified: var(--warning-ink);
+	--git-added: var(--success-ink);
+	--git-deleted: var(--error-ink);
+	--git-renamed: var(--secondary-ink);
 
 	/* math symbol keys */
 	--math-key-hover: light-dark(var(--color-primary-100), var(--color-primary-900));
@@ -92,8 +104,8 @@ html {
 	/* the image resize frame */
 	--image-frame: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the terminal: dark in both modes; xterm reads these through themeColour() */
-	--terminal-bg: var(--color-surface-950);
-	--terminal-fg: var(--color-surface-50);
+	--terminal-bg: light-dark(var(--color-surface-100), var(--color-surface-950));
+	--terminal-fg: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */
 	--brand-blue: var(--color-primary-500);
 	--brand-gray: var(--color-surface-200);

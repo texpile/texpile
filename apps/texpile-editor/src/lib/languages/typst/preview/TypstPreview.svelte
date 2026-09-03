@@ -223,11 +223,11 @@
 		<span class="shrink-0 font-medium">{m.typst_preview_label()}</span>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		{#if error}
-			<span class="text-error-500 truncate" use:tip={error}>{error}</span>
+			<span class="text-error-ink truncate" use:tip={error}>{error}</span>
 		{:else if stall && !noDocument}
 			<!-- the no-document stall is NOT repeated here: the frame overlay below already says it -->
 
-			<span class="text-warning-700-300 truncate" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
+			<span class="text-warning-ink truncate" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
 			<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
 		{:else}
 			<span class="text-surface-700-200 truncate">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
@@ -257,7 +257,7 @@
 		<button
 			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			class:preset-tonal={settings.current.typstPreviewFollow === true}
-			class:text-primary-500={settings.current.typstPreviewFollow === true}
+			class:text-primary-ink={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
 			disabled={!frameUrl}
 			use:tip={settings.current.typstPreviewFollow === true ? m.typst_preview_follow_on() : m.typst_preview_follow_off()}

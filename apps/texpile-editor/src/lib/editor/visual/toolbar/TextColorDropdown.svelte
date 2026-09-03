@@ -67,7 +67,7 @@
 		<Popover.Positioner class="z-floating-ui">
 			<Popover.Content class="card bg-surface-50-950 border-surface-300-700 min-w-[140px] border p-1 shadow-lg">
 				{#if textColorDisabled}
-					<div class="text-warning-600 dark:text-warning-400 border-surface-300-700 flex items-start gap-2 border-b px-3 py-2 text-xs">
+					<div class="text-warning-ink border-surface-300-700 flex items-start gap-2 border-b px-3 py-2 text-xs">
 						<AlertTriangle class="mt-0.5 h-4 w-4 flex-shrink-0" />
 						<span>{m.tbar_text_color_disabled_warning()}</span>
 					</div>

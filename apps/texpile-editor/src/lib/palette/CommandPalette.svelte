@@ -181,7 +181,7 @@
 								{/if}
 								<Combobox.ItemText class="truncate">
 									{#each highlightRuns(scored.item.label, scored.hits) as run, ri (ri)}{#if run.hit}<span
-												class="text-primary-600-400 font-semibold">{run.text}</span
+												class="text-primary-ink font-semibold">{run.text}</span
 											>{:else}{run.text}{/if}{/each}
 								</Combobox.ItemText>
 								{#if scored.item.hint}

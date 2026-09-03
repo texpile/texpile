@@ -174,7 +174,7 @@
 							<span class="preset-tonal flex max-w-60 items-center gap-1 rounded-base px-1.5 py-0.5 text-xs">
 								<span class="truncate">{hit.title || hit.citekey}</span>
 								<button
-									class="hover:text-error-500 shrink-0"
+									class="hover:text-error-ink shrink-0"
 									onclick={() => toggle(hit.citekey)}
 									use:tip={m.zotero_dialog_remove()}
 									aria-label={m.zotero_dialog_remove()}
@@ -205,7 +205,7 @@
 									{[hit.author, hit.year ? `(${hit.year})` : ''].filter(Boolean).join(' ')}
 								</span>
 								{#if selected.has(hit.citekey)}
-									<Check class="text-primary-500 size-4 shrink-0" />
+									<Check class="text-primary-ink size-4 shrink-0" />
 								{:else}
 									<span class="size-4 shrink-0"></span>
 								{/if}

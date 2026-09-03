@@ -198,7 +198,7 @@
 					placeholder="eq:mass"
 				/>
 				{#if isDuplicate}
-					<p class="text-error-600 mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
+					<p class="text-error-ink mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
 				{/if}
 				<p class="text-muted mt-1 text-xs">{m.mathsettings_typst_numbering_note()}</p>
 			</label>
@@ -301,7 +301,7 @@
 								placeholder={m.mathsettings_label_placeholder()}
 							/>
 							{#if isDuplicate}
-								<p class="text-error-600 mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
+								<p class="text-error-ink mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
 							{/if}
 							<p class="text-muted mt-1 text-xs">{m.mathsettings_label_field_note()}</p>
 						</label>

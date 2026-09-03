@@ -56,7 +56,7 @@
 			<!-- a git read of a local file is usually well under the threshold, and announcing it only
 		     to take it away again is the flash the rule exists to prevent -->
 		{:else if loading}<span class="text-muted reveal-late">· {m.wsview_diff_loading()}</span>
-		{:else if error}<span class="text-error-500 truncate">· {error}</span>
+		{:else if error}<span class="text-error-ink truncate">· {error}</span>
 		{:else if !hasHead}<span class="text-muted">· {m.wsview_diff_new_file()}</span>{/if}
 		<div class="ml-auto flex shrink-0 items-center gap-1">
 			<button
@@ -90,7 +90,7 @@
 			class="border-surface-200-800 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
 			use:tip={m.texpile_managed_note()}
 		>
-			<Info class="text-primary-500 size-3.5 shrink-0" />
+			<Info class="text-primary-ink size-3.5 shrink-0" />
 			<p class="min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
 		</div>
 	{/if}

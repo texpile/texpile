@@ -56,16 +56,20 @@
 			<option value="">{m.bib_select_type_option()}</option>
 			{#each entryTypeOptions as opt (opt.value)}<option value={opt.value}>{opt.label}</option>{/each}
 		</select>
-		{#if formErrors.entrytype}<p class="text-error-500 text-sm">{formErrors.entrytype[0]}</p>{/if}
+		{#if formErrors.entrytype}<p class="text-error-ink text-sm">{formErrors.entrytype[0]}</p>{/if}
 	</label>
 
 	{#each regularFields as field (field.name)}
 		<label class="label mb-3 block">
 			<span class="text-sm font-medium"
-				>{field.label}{#if field.required}<span class="text-error-500">*</span>{/if}</span
+				>{field.label}{#if field.required}<span class="text-error-ink">*</span>{/if}</span
 			>
 			{#if field.type === 'textarea'}
-				<textarea class="input mt-1 w-full" rows="3" placeholder={field.placeholder} bind:value={currentReference[field.name]}></textarea>
+				<textarea
+					class="textarea mt-1 w-full rounded-container"
+					rows="3"
+					placeholder={field.placeholder}
+					bind:value={currentReference[field.name]}></textarea>
 			{:else}
 				<input
 					class="input mt-1 w-full"
@@ -74,7 +78,7 @@
 					bind:value={currentReference[field.name]}
 				/>
 			{/if}
-			{#if formErrors[field.name]}<p class="text-error-500 text-sm">{formErrors[field.name][0]}</p>{/if}
+			{#if formErrors[field.name]}<p class="text-error-ink text-sm">{formErrors[field.name][0]}</p>{/if}
 		</label>
 	{/each}
 
@@ -87,15 +91,15 @@
 			<label class="label mb-3 block pl-6">
 				<span class="text-sm font-medium">{m.bib_key_label()}</span>
 				<input class="input mt-1 w-full text-sm" type="text" bind:value={currentReference.key} placeholder={generateLabel('citation')} />
-				{#if formErrors.key}<p class="text-error-500 text-sm">{formErrors.key[0]}</p>{/if}
+				{#if formErrors.key}<p class="text-error-ink text-sm">{formErrors.key[0]}</p>{/if}
 			</label>
 		{/if}
 	{/if}
 
-	{#if formErrors.form}<p class="text-error-500 text-sm">{formErrors.form[0]}</p>{/if}
+	{#if formErrors.form}<p class="text-error-ink text-sm">{formErrors.form[0]}</p>{/if}
 
 	{#if problems.length > 0}
-		<div class="border-warning-500 bg-warning-50-950 mt-3 rounded-base border-l-2 px-3 py-2">
+		<div class="border-warning-500 bg-warning-500/15 mt-3 rounded-base border-l-2 px-3 py-2">
 			<p class="text-muted text-xs font-medium">{m.bib_warnings_heading()}</p>
 			<ul class="text-muted mt-1 space-y-0.5 text-xs">
 				{#each problems as problem (bibProblemText(problem))}

@@ -78,7 +78,7 @@
 					class="flex items-center"
 					use:tip={dialect === 'typst' ? m.tablewrap_caption_placeholder_tooltip() : m.tablewrap_caption_required_tooltip()}
 				>
-					<AlertCircle class="text-warning-500 h-4 w-4" />
+					<AlertCircle class="text-warning-ink h-4 w-4" />
 				</button>
 			{/if}
 		</div>

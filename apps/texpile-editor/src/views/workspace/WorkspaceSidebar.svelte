@@ -226,7 +226,7 @@
 			{#each inlineActions as action (action.key)}
 				{@const Icon = action.icon}
 				<button
-					class="btn-icon btn-icon-xs {action.active ? 'text-primary-500' : 'hover:preset-tonal'}"
+					class="btn-icon btn-icon-xs {action.active ? 'text-primary-ink' : 'hover:preset-tonal'}"
 					use:tip={action.title ?? action.label}
 					aria-label={action.label}
 					onclick={action.run}
@@ -275,7 +275,7 @@
 			{#each pinned as action (action.key)}
 				{@const Icon = action.icon}
 				<button
-					class="btn-icon btn-icon-xs {action.active ? 'text-primary-500' : 'hover:preset-tonal'}"
+					class="btn-icon btn-icon-xs {action.active ? 'text-primary-ink' : 'hover:preset-tonal'}"
 					use:tip={action.title ?? action.label}
 					aria-label={action.label}
 					onclick={action.run}

@@ -49,7 +49,7 @@
 			{#each items as item, i (i)}
 				<button
 					type="button"
-					class="text-muted hover:text-primary-600 block w-full max-w-full truncate rounded-base px-1 py-0.5 text-left transition-colors {item.kind
+					class="text-muted hover:text-primary-ink block w-full max-w-full truncate rounded-base px-1 py-0.5 text-left transition-colors {item.kind
 						? 'opacity-80'
 						: ''}"
 					style="padding-left: {(Math.max(1, item.level) - 1) * 0.7 + 0.25}rem"

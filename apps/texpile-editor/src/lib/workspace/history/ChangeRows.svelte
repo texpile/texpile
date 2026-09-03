@@ -88,7 +88,7 @@
 							<div class="border-surface-200-800 my-1 border-t"></div>
 							<button
 								type="button"
-								class="hover:preset-tonal-error text-error-500 flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm"
+								class="hover:preset-tonal-error text-error-ink flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm"
 								onclick={() => {
 									openMenu = null;
 									onDiscard([c]);

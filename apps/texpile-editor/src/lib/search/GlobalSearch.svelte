@@ -116,7 +116,7 @@
 		{#if searching}
 			{m.globalsearch_searching()}
 		{:else if error}
-			<span class="text-error-500">{error}</span>
+			<span class="text-error-ink">{error}</span>
 		{:else if query.trim()}
 			{m.globalsearch_summary({ results: resultsText, files: filesText })}{#if truncated}
 				{m.globalsearch_truncated()}{/if}

@@ -131,7 +131,7 @@
 				<span class="text-muted block truncate font-mono" use:tip={pending.quote}>{oneLine(pending.quote)}</span>
 				<textarea
 					bind:this={composer}
-					class="textarea min-h-8 w-full text-xs"
+					class="textarea min-h-8 w-full text-xs rounded-container"
 					rows="2"
 					placeholder={m.comments_reply_placeholder()}
 					bind:value={newDraft}
@@ -194,15 +194,15 @@
 							aria-expanded={isOpen}
 						>
 							{#if thread.resolved}
-								<Check class="text-success-600-400 mt-0.5 size-3.5 shrink-0" />
+								<Check class="text-success-ink mt-0.5 size-3.5 shrink-0" />
 							{:else if fileGone}
-								<FileX class="text-warning-600-400 mt-0.5 size-3.5 shrink-0" />
+								<FileX class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
 							{:else if lost}
-								<Unlink class="text-warning-600-400 mt-0.5 size-3.5 shrink-0" />
+								<Unlink class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
 							{:else if hidden}
 								<EyeOff class="text-muted mt-0.5 size-3.5 shrink-0" />
 							{:else}
-								<MessageSquare class="text-primary-500 mt-0.5 size-3.5 shrink-0" />
+								<MessageSquare class="text-primary-ink mt-0.5 size-3.5 shrink-0" />
 							{/if}
 							<span class="min-w-0 flex-1">
 								<!-- the quote first: it is what tells you which comment this is, faster than the

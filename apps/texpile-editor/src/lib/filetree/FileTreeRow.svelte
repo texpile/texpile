@@ -37,7 +37,7 @@
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
 		class="group flex items-center rounded-base text-sm transition-colors {isActive(entry)
-			? `bg-primary-500/15 font-medium ${focused ? 'text-primary-700 dark:text-primary-300' : ''}`
+			? `bg-primary-500/15 font-medium ${focused ? 'text-primary-ink' : ''}`
 			: sel.selected.includes(entry.path)
 				? 'bg-surface-300-700/60'
 				: 'hover:bg-surface-200-800'} {dnd.dropTarget === entry.path && entry.type === 'dir'
@@ -66,7 +66,7 @@
 				     the mark sits in one column instead of trailing a name of whatever length -->
 				<span class="flex w-3.5 shrink-0 items-center justify-center">
 					{#if isMain(entry)}
-						<Star class="fill-primary-500 text-primary-500 size-3" aria-label={m.filetree_main_file_label()} />
+						<Star class="fill-primary-500 text-primary-ink size-3" aria-label={m.filetree_main_file_label()} />
 					{/if}
 				</span>
 				<FileIcon name={entry.name} class="size-4 shrink-0" />

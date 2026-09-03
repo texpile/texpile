@@ -151,9 +151,9 @@
 		>
 			{m.wsview_problems_label()}
 			{#if compileLog.current && compileLog.current.errors.length > 0}
-				<span class="text-error-500 font-semibold">{compileLog.current.errors.length}</span>
+				<span class="text-error-ink font-semibold">{compileLog.current.errors.length}</span>
 			{:else if compileLog.current && compileLog.current.warnings.length > 0}
-				<span class="text-warning-600-400 font-semibold">{compileLog.current.warnings.length}</span>
+				<span class="text-warning-ink font-semibold">{compileLog.current.warnings.length}</span>
 			{/if}
 		</button>
 		<!-- always present, not only once a thread exists: a tab that appears when there is something
@@ -166,7 +166,7 @@
 		>
 			{m.wsview_comments_label()}
 			{#if openComments > 0}
-				<span class="text-primary-500 font-semibold">{openComments}</span>
+				<span class="text-primary-ink font-semibold">{openComments}</span>
 			{/if}
 		</button>
 	</div>
@@ -190,7 +190,7 @@
 					<button class="fixed inset-0 z-40 cursor-default" aria-label={m.wsview_close_menu_aria()} onclick={() => (menuOpen = false)}
 					></button>
 					<div
-						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden rounded-base border py-1 shadow-lg"
+						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden rounded-container border py-1 shadow-lg"
 					>
 						{#each shells.terminals as t (t.id)}
 							<div class="hover:preset-tonal-surface flex items-center">

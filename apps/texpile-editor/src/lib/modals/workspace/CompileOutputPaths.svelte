@@ -41,7 +41,7 @@
 		<div>
 			<div class="mb-1 flex items-center justify-between gap-2">
 				<span class="text-muted text-xs font-medium">{m.wsview_pdf_file_label()}</span>
-				{#if pdfPathWarning}<span class="text-warning-600-400 text-xs">{pdfPathWarning}</span>{/if}
+				{#if pdfPathWarning}<span class="text-warning-ink text-xs">{pdfPathWarning}</span>{/if}
 			</div>
 			<div class="flex gap-2">
 				<input
@@ -64,7 +64,7 @@
 		<div>
 			<div class="mb-1 flex items-center justify-between gap-2">
 				<span class="text-muted text-xs font-medium">{m.wsview_log_file_label()}</span>
-				{#if logPathWarning}<span class="text-warning-600-400 text-xs">{logPathWarning}</span>{/if}
+				{#if logPathWarning}<span class="text-warning-ink text-xs">{logPathWarning}</span>{/if}
 			</div>
 			<div class="flex gap-2">
 				<input

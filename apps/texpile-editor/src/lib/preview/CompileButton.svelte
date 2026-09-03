@@ -18,10 +18,10 @@
 	 */
 	export type CompileTone = 'primary' | 'success' | 'warning' | 'error';
 	export const COMPILE_TONE: Record<CompileTone, string> = {
-		primary: 'preset-tonal-primary text-primary-800-200 border border-primary-500/30 hover:filter-none hover:bg-primary-100-900',
-		success: 'preset-tonal-success text-success-800-200 border border-success-500/30 hover:filter-none hover:bg-success-100-900',
-		warning: 'preset-tonal-warning text-warning-800-200 border border-warning-500/30 hover:filter-none hover:bg-warning-100-900',
-		error: 'preset-tonal-error text-error-800-200 border border-error-500/30 hover:filter-none hover:bg-error-100-900'
+		primary: 'preset-tonal-primary text-primary-ink border border-primary-500/30 hover:filter-none hover:bg-primary-500/20',
+		success: 'preset-tonal-success text-success-ink border border-success-500/30 hover:filter-none hover:bg-success-500/20',
+		warning: 'preset-tonal-warning text-warning-ink border border-warning-500/30 hover:filter-none hover:bg-warning-500/20',
+		error: 'preset-tonal-error text-error-ink border border-error-500/30 hover:filter-none hover:bg-error-500/20'
 	};
 </script>
 

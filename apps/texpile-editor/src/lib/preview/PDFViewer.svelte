@@ -99,7 +99,7 @@
 {#if loading && !pdfSource}
 	<div class="text-muted flex h-full w-full items-center justify-center text-sm">Loading PDF…</div>
 {:else if error}
-	<div class="text-error-500 flex h-full w-full items-center justify-center p-4 text-center text-sm">{error}</div>
+	<div class="text-error-ink flex h-full w-full items-center justify-center p-4 text-center text-sm">{error}</div>
 {:else if pdfSource}
 	{@const dark = resolvedMode.current === 'dark'}
 	<div class="flex h-full w-full flex-col">

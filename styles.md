@@ -112,7 +112,9 @@ The app is themed by swapping one Skeleton theme for another at runtime. Every r
 4. Code that hands colours to something outside CSS (xterm, the Typst preview page, the window title bar) reads them through `themeColour()` and re-reads when `themeName` or `resolvedMode` changes. Those are the only places a resolved colour value may exist
 5. Font sizes go through the `text-*` utilities, which carry the theme's `--text-scaling`. Do not read `--text-xs` and friends directly
 6. Secondary text is `text-muted`, disabled or placeholder text is `text-faint` (in CSS, `var(--muted-text)` and `var(--faint-text)`). Both are a share of the text colour, so they keep their distance from it on every theme. A mid step of the surface scale (`text-surface-500`, `text-surface-600-400`) is not a muted colour: a theme whose scale does not run light to dark puts it on top of the ground
-7. Skeleton's presets are the test: every one of them must render correctly with no changes. Something that looks wrong under a preset is fixed in the tokens, never with a special case for that theme
+7. A theme colour never goes straight onto the ground. As text or a thin mark it is `text-{family}-ink` (in CSS `var(--{family}-ink)`), whose lightness is clamped per mode so it reads on a pastel scale too. As a tint behind content it is `bg-{family}-500/15`, alpha over the ground. Text on a fill is Skeleton's `text-{family}-contrast-500`, never `text-white`. `text-primary-500` on a surface is the shape Reign turns invisible
+8. Two radii, by what the box is. `rounded-base` is for controls that hold one line: buttons, inputs, chips, menu rows. `rounded-container` is for anything that holds content: cards, panels, popovers, menus, code boxes, and every textarea. A theme may set the base radius to a pill (Rosé Pine does), and a pill on a tall box swallows its corners
+9. Skeleton's presets are the test: every one of them must render correctly with no changes. Something that looks wrong under a preset is fixed in the tokens, never with a special case for that theme
 
 ## Commit Messages
 

@@ -15,7 +15,7 @@
 	let { above, below, node = null, merge = false }: Props = $props();
 </script>
 
-<svg width="22" height="22" viewBox="0 0 22 22" class="text-primary-500 shrink-0 self-start" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 22 22" class="text-primary-ink shrink-0 self-start" aria-hidden="true">
 	{#if above}<line x1="11" y1="0" x2="11" y2="11" stroke="currentColor" stroke-width="1" />{/if}
 	{#if below}<line x1="11" y1="11" x2="11" y2="22" stroke="currentColor" stroke-width="1" />{/if}
 	{#if merge && node}

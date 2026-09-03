@@ -102,7 +102,7 @@
 	<!-- one toolbar row: status on the left, zoom + page-nav on the right ("Draft preview"
 	     already labels the pane header above) -->
 	<div class="border-surface-300-700 text-muted flex min-h-10 shrink-0 items-center gap-1 border-b px-2 text-xs">
-		{#if compiler.error}<span class="text-error-500 shrink-0">{m.draft_preview_error_label()}</span>{:else}<span
+		{#if compiler.error}<span class="text-error-ink shrink-0">{m.draft_preview_error_label()}</span>{:else}<span
 				class="text-surface-700-200 truncate">{compiler.status}</span
 			>{/if}
 		<div class="flex-1"></div>
@@ -155,7 +155,7 @@
 		<button
 			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
 			class:preset-tonal={vp.followEdits}
-			class:text-primary-500={vp.followEdits}
+			class:text-primary-ink={vp.followEdits}
 			onclick={() => (vp.followEdits = !vp.followEdits)}
 			disabled={!ctrl.pages.length}
 			use:tip={vp.followEdits ? m.draft_toolbar_follow_edits_on() : m.draft_toolbar_follow_edits_off()}
@@ -189,7 +189,7 @@
 	</div>
 	{#if compiler.busyElsewhere}
 		<div
-			class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded-base border p-3 text-sm"
+			class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded-container border p-3 text-sm"
 		>
 			<span class="text-muted">{m.draft_busy_other_window()}</span>
 			<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => compiler.takeoverEngine()}
@@ -203,7 +203,7 @@
 		     scroll a box that is free to grow. Without a height constraint this took its full content
 		     height and the flex-1 scroller below it got whatever was left. -->
 		<pre
-			class="text-error-500 bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto rounded-base p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
+			class="text-error-ink bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto rounded-container p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
 	<div
 		bind:this={vp.scroller}

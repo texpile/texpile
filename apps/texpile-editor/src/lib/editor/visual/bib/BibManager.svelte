@@ -241,21 +241,21 @@
 {#if parseError}
 	<!-- file-level parse failure: edit the whole .bib as raw CM until it parses cleanly -->
 	<div class="mx-auto flex h-full max-w-5xl flex-col gap-3 p-4">
-		<div class="border-error-500 bg-error-500/10 rounded-base border p-3 text-sm">
+		<div class="border-error-500 bg-error-500/10 rounded-container border p-3 text-sm">
 			<div class="mb-1 flex items-center gap-2 font-semibold">
 				<Code class="size-4" />
 				{m.bib_parse_syntax_error_title()}
 			</div>
-			<div class="text-error-600-400 text-xs">{parseError}</div>
+			<div class="text-error-ink text-xs">{parseError}</div>
 			<div class="text-muted mt-2 text-xs">
 				{m.bib_parse_syntax_error_hint()}
 			</div>
 		</div>
-		<div class="min-h-0 flex-1 overflow-hidden rounded-base border border-surface-200-800">
+		<div class="min-h-0 flex-1 overflow-hidden rounded-container border border-surface-200-800">
 			<CodeMirrorLatex bind:value={fileRawText} language="bibtex" />
 		</div>
 		{#if fileRawError}
-			<p class="text-error-500 text-sm">{fileRawError}</p>
+			<p class="text-error-ink text-sm">{fileRawError}</p>
 		{/if}
 		<div class="flex justify-end gap-2">
 			<button class="btn hover:preset-tonal" type="button" onclick={() => (fileRawText = value)}>{m.bib_reset_button()}</button>
@@ -296,11 +296,11 @@
 			</div>
 
 			{#if editMode === 'raw'}
-				<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded-base border">
+				<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded-container border">
 					<CodeMirrorLatex bind:value={rawEntryText} language="bibtex" />
 				</div>
 				{#if rawEntryError}
-					<p class="text-error-500 mt-2 text-sm">{rawEntryError}</p>
+					<p class="text-error-ink mt-2 text-sm">{rawEntryError}</p>
 				{/if}
 				<div class="mt-3 flex justify-end gap-2">
 					<button class="btn hover:preset-tonal" type="button" onclick={resetForm}>{m.bib_cancel_button()}</button>
@@ -314,7 +314,7 @@
 				<div class="border-surface-200-800 mt-4 border-t pt-4">
 					<div class="text-sm font-semibold">{m.bib_paste_bibtex_heading()}</div>
 					<textarea
-						class="input mt-1 w-full font-mono text-xs"
+						class="textarea mt-1 w-full font-mono text-xs rounded-container"
 						rows="5"
 						bind:value={bibtexContent}
 						placeholder={m.bib_paste_bibtex_placeholder()}></textarea>

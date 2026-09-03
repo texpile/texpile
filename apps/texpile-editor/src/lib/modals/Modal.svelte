@@ -14,7 +14,7 @@
 		onClose,
 		title,
 		icon: Icon,
-		iconClass = 'text-primary-500',
+		iconClass = 'text-primary-ink',
 		card = 'max-h-full max-w-md overflow-y-auto p-5',
 		z = 'z-1300',
 		dismissable = true,

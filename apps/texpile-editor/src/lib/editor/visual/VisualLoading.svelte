@@ -97,7 +97,7 @@
 		{#if slow}
 			<p class="text-faint mt-2 text-xs">{m.wsview_loading_large_note({ size: sizeText })}</p>
 			{#if onUseSource}
-				<button class="text-primary-500 mt-3 text-xs hover:underline" onclick={onUseSource}>
+				<button class="text-primary-ink mt-3 text-xs hover:underline" onclick={onUseSource}>
 					{m.wsview_loading_use_source()}
 				</button>
 			{/if}

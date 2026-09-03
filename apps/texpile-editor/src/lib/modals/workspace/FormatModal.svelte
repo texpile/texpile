@@ -20,7 +20,7 @@
 	} = $props();
 </script>
 
-<Modal bind:open title={m.wsview_format_modal_title()} icon={TriangleAlert} iconClass="text-warning-500">
+<Modal bind:open title={m.wsview_format_modal_title()} icon={TriangleAlert} iconClass="text-warning-ink">
 	<p class="text-muted mb-4 text-sm">
 		{#if tool === 'typstyle'}
 			{m.wsview_format_desc_typst_pre()}

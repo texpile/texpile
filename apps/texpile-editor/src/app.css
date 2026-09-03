@@ -598,6 +598,12 @@ html[data-mode='dark'] .cm-comment-add:hover {
 @theme inline {
 	--color-muted: var(--muted-text);
 	--color-faint: var(--faint-text);
+	--color-primary-ink: var(--primary-ink);
+	--color-secondary-ink: var(--secondary-ink);
+	--color-tertiary-ink: var(--tertiary-ink);
+	--color-success-ink: var(--success-ink);
+	--color-warning-ink: var(--warning-ink);
+	--color-error-ink: var(--error-ink);
 	--color-blue: var(--brand-blue);
 	--color-gray-1100: var(--brand-gray);
 	--color-ref-fg: var(--ref-fg);

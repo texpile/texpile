@@ -30,7 +30,7 @@
 	</button>
 </div>
 {#if probe.probeFailed}
-	<p class="text-warning-700-300 pt-3 text-xs">{m.prefs_toolchain_probe_failed()}</p>
+	<p class="text-warning-ink pt-3 text-xs">{m.prefs_toolchain_probe_failed()}</p>
 {/if}
 
 {#snippet toolRows(group: 'latex' | 'typst' | 'general', heading: string)}
@@ -56,7 +56,7 @@
 				{#if probe.probing || probe.probeFailed}
 					<span class="text-faint text-xs">…</span>
 				{:else}
-					<span class="shrink-0 text-xs {found ? 'text-success-600-400' : 'text-faint'}">
+					<span class="shrink-0 text-xs {found ? 'text-success-ink' : 'text-faint'}">
 						{found ? m.prefs_toolchain_found() : m.prefs_toolchain_missing()}
 					</span>
 					{#if found && detail}

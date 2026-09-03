@@ -213,11 +213,11 @@ describe('FileTree focus indicator', () => {
 
 		// unfocused: still tinted, so you can see which file is open, but not accented
 		expect(row.className, 'open-file tint should not depend on focus').toContain('bg-primary-500/15');
-		expect(row.className).not.toContain('text-primary-700');
+		expect(row.className).not.toContain('text-primary-ink');
 
 		host.querySelector('button')!.focus();
 		flushSync();
-		expect(row.className, 'should accent once the tree has focus').toContain('text-primary-700');
+		expect(row.className, 'should accent once the tree has focus').toContain('text-primary-ink');
 
 		outside.focus();
 		flushSync();

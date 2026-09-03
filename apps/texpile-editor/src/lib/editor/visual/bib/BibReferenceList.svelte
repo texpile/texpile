@@ -32,15 +32,16 @@
 </script>
 
 {#if refs.length === 0}
-	<li class="text-muted flex h-40 items-center justify-center rounded-base border border-dashed text-sm">
+	<li class="text-muted flex h-40 items-center justify-center rounded-container border border-dashed text-sm">
 		{m.bib_no_references_empty()}
 	</li>
 {:else}
 	{#each refs as ref (ref.key)}
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions a11y_click_events_have_key_events -->
 		<li
-			class="mb-2 flex cursor-pointer items-center justify-between gap-2 rounded-base border p-3 transition-colors {ref.key === selectedKey
-				? 'border-primary-500 bg-primary-50 dark:bg-primary-950/30'
+			class="mb-2 flex cursor-pointer items-center justify-between gap-2 rounded-container border p-3 transition-colors {ref.key ===
+			selectedKey
+				? 'border-primary-500 bg-primary-500/15 '
 				: 'border-surface-200-800 hover:bg-surface-100-900'}"
 			onclick={() => onEdit(ref)}
 		>
@@ -57,7 +58,7 @@
 						<!-- what the entry would be reported for, where the entries are actually read:
 						     a warning only in the edit form is one nobody goes looking for -->
 						<span
-							class="text-warning-700-300 inline-flex items-center gap-0.5 text-[10px]"
+							class="text-warning-ink inline-flex items-center gap-0.5 text-[10px]"
 							use:tip={problemsOf(ref).map(bibProblemText).join('\n')}
 						>
 							<AlertTriangle class="size-2.5" />

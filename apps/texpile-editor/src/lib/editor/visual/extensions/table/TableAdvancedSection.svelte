@@ -94,7 +94,7 @@
 			</span>
 		{/if}
 		{#if isDuplicate}
-			<p class="text-error-500 mt-1 flex items-center gap-1 text-sm">
+			<p class="text-error-ink mt-1 flex items-center gap-1 text-sm">
 				<AlertCircle class="h-4 w-4" />
 				{m.tablewrap_label_duplicate()}
 			</p>

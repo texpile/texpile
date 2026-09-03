@@ -84,12 +84,12 @@
 <Modal bind:open title={m.share_title()}>
 	{#if !collabHost.active}
 		<p class="text-muted mb-3 text-sm">{m.share_desc()} {m.share_capacity({ max: MAX_GUESTS })}</p>
-		<p class="text-warning-700-300 mb-4 flex items-start gap-1.5 text-xs">
-			<TriangleAlert class="text-warning-600-400 mt-px size-3.5 shrink-0" />
+		<p class="text-warning-ink mb-4 flex items-start gap-1.5 text-xs">
+			<TriangleAlert class="text-warning-ink mt-px size-3.5 shrink-0" />
 			<span>{m.share_trust_warning()}</span>
 		</p>
 		{#if collabHost.lastError}
-			<p class="text-error-600-400 mb-3 text-sm">{m.share_error_generic({ message: collabHost.lastError })}</p>
+			<p class="text-error-ink mb-3 text-sm">{m.share_error_generic({ message: collabHost.lastError })}</p>
 		{/if}
 
 		<!-- plumbing almost nobody changes: collapsed unless they're already on a custom relay -->
@@ -119,7 +119,7 @@
 		{/if}
 
 		<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
-			<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
+			<ShieldCheck class="text-success-ink mt-px size-3.5 shrink-0" />
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
 
@@ -162,16 +162,16 @@
 		</div>
 		<p class="text-muted mb-2 text-sm">
 			{m.share_guests_count({ count: guestCount, max: MAX_GUESTS })}
-			{#if collabHost.status === 'reconnecting'}<span class="text-warning-600-400"> · {m.session_status_reconnecting()}</span>{/if}
+			{#if collabHost.status === 'reconnecting'}<span class="text-warning-ink"> · {m.session_status_reconnecting()}</span>{/if}
 		</p>
 		{#if collabHost.oversizedText.length}
-			<p class="text-warning-700-300 mb-2 flex items-start gap-1.5 text-xs">
-				<TriangleAlert class="text-warning-600-400 mt-px size-3.5 shrink-0" />
+			<p class="text-warning-ink mb-2 flex items-start gap-1.5 text-xs">
+				<TriangleAlert class="text-warning-ink mt-px size-3.5 shrink-0" />
 				<span>{m.share_oversized_warning({ names: collabHost.oversizedText.join(', ') })}</span>
 			</p>
 		{/if}
 		<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
-			<ShieldCheck class="text-success-600-400 mt-px size-3.5 shrink-0" />
+			<ShieldCheck class="text-success-ink mt-px size-3.5 shrink-0" />
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
 		<ModalActions class="mt-4" buttons={[{ label: m.share_end(), role: 'primary', danger: true, onclick: endSession }]} />

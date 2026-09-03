@@ -46,9 +46,9 @@
      that wide is unreadable. Prose wants a measure, not the space available -->
 <div class="max-w-2xl space-y-2 px-2 pt-1 pb-3 pl-7">
 	{#if fileGone}
-		<p class="text-warning-600-400">{m.comments_file_gone()}</p>
+		<p class="text-warning-ink">{m.comments_file_gone()}</p>
 	{:else if lost}
-		<p class="text-warning-600-400">{m.comments_orphaned()}</p>
+		<p class="text-warning-ink">{m.comments_orphaned()}</p>
 	{:else if hidden}
 		<p class="text-muted">{m.comments_not_in_view()}</p>
 	{/if}
@@ -63,7 +63,7 @@
 				{/if}
 				{#if editing === msg.id}
 					<textarea
-						class="textarea mt-1 w-full resize-none py-1 text-xs"
+						class="textarea mt-1 w-full resize-none py-1 text-xs rounded-container"
 						rows="2"
 						bind:value={editDraft}
 						onkeydown={(e) => {
@@ -114,7 +114,7 @@
 	     message bodies, past their avatars. -->
 	<div class="space-y-1.5 pl-7">
 		<textarea
-			class="textarea w-full resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'min-h-0 h-7'}"
+			class="textarea w-full resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'min-h-0 h-7'} rounded-container"
 			rows="1"
 			placeholder={m.comments_reply_placeholder()}
 			bind:value={draft}

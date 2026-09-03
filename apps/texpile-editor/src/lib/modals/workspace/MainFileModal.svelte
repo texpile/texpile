@@ -24,7 +24,7 @@
 		<p class="text-muted mb-3 text-sm">
 			{m.wsview_mainconfirm_desc()}
 		</p>
-		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded-base border">
+		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded-container border">
 			{#each candidates as f (f.path)}
 				<label
 					class="hover:preset-tonal-surface flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm {choice && samePath(choice, f.path)

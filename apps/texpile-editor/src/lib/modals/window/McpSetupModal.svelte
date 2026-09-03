@@ -31,7 +31,7 @@
 		</div>
 		<div class="flex items-start gap-2">
 			<code
-				class="bg-surface-200-800 rounded-base text-surface-900-100 min-w-0 flex-1 p-2 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap"
+				class="bg-surface-200-800 rounded-container text-surface-900-100 min-w-0 flex-1 p-2 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap"
 				>{text}</code
 			>
 			<button class="btn btn-xs preset-tonal shrink-0 text-xs" onclick={() => copy(key, text)} aria-label={m.prefs_mcp_copy()}>
