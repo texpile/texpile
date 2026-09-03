@@ -240,9 +240,9 @@
 	});
 </script>
 
-<div class="relative h-full w-full overflow-hidden bg-[#1e1e1e]">
+<div class="relative h-full w-full overflow-hidden bg-(--terminal-bg)">
 	{#if status === 'unavailable'}
-		<div class="text-surface-300 flex h-full items-center justify-center p-4 text-center text-sm">
+		<div class="text-(--terminal-fg) flex h-full items-center justify-center p-4 text-center text-sm">
 			{errorMsg || m.terminal_error_desktop_only()}
 		</div>
 	{:else}
@@ -285,12 +285,12 @@
 		background: transparent;
 	}
 	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-thumb) {
-		background-color: #4a4a52;
+		background-color: color-mix(in oklab, var(--terminal-fg) 30%, transparent);
 		border: 2px solid transparent;
 		background-clip: padding-box;
 		border-radius: calc(var(--radius-base) * 1.25);
 	}
 	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-thumb:hover) {
-		background-color: #5e5e68;
+		background-color: color-mix(in oklab, var(--terminal-fg) 45%, transparent);
 	}
 </style>

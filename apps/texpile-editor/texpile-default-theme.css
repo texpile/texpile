@@ -330,8 +330,8 @@
 	/* the image resize frame */
 	--image-frame: light-dark(#000, #fff);
 	/* the terminal; xterm reads these through themeColour() */
-	--terminal-bg: #1e1e1e;
-	--terminal-fg: #e4e4e7;
+	--terminal-bg: var(--color-surface-950);
+	--terminal-fg: var(--color-surface-50);
 	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */
 	--brand-blue: #0088f7;
 	--brand-gray: #d0d4e9;
