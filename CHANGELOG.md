@@ -5,6 +5,12 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.0.0-rc.3] - 2026-09-03
+
+- fix: various improvements to align with Apple's design guidances on macOS
+- fix: various UI improvements
+- feat: a lot more theme (check it out at File > Preferences)
+
 ## [1.0.0-rc.2] - 2026-09-01
 
 - fix: link not showing on click
