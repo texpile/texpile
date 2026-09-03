@@ -107,7 +107,7 @@
 			>{/if}
 		<div class="flex-1"></div>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => ctrl.savePdf()}
 			disabled={!ctrl.pages.length || ctrl.savingPdf}
 			use:tip={m.draft_toolbar_save_pdf()}
@@ -117,7 +117,7 @@
 		</button>
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => vp.zoomOut()}
 			disabled={!ctrl.pages.length}
 			use:tip={m.draft_toolbar_zoom_out()}
@@ -126,7 +126,7 @@
 			<ZoomOut class="size-4" />
 		</button>
 		<button
-			class="hover:preset-tonal min-w-11 rounded-base px-1 py-1 text-center tabular-nums"
+			class="btn btn-xs hover:preset-tonal min-w-11 tabular-nums"
 			onclick={() => vp.actualSize()}
 			disabled={!ctrl.pages.length}
 			use:tip={m.draft_toolbar_actual_size()}
@@ -134,7 +134,7 @@
 			{Math.round(vp.zoom * 100)}%
 		</button>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => vp.zoomIn()}
 			disabled={!ctrl.pages.length}
 			use:tip={m.draft_toolbar_zoom_in()}
@@ -143,7 +143,7 @@
 			<ZoomIn class="size-4" />
 		</button>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			class:preset-tonal={vp.fitMode}
 			onclick={() => vp.fitWidthBtn()}
 			disabled={!ctrl.pages.length}
@@ -153,7 +153,7 @@
 			<MoveHorizontal class="size-4" />
 		</button>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			class:preset-tonal={vp.followEdits}
 			class:text-primary-ink={vp.followEdits}
 			onclick={() => (vp.followEdits = !vp.followEdits)}
@@ -167,7 +167,7 @@
 		{#if ctrl.pages.length}
 			<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 			<button
-				class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+				class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 				onclick={() => vp.goToPage(vp.curPage - 1)}
 				disabled={vp.curPage <= 1}
 				use:tip={m.draft_toolbar_prev_page()}
@@ -177,7 +177,7 @@
 			</button>
 			<span class="shrink-0 tabular-nums">{vp.curPage} / {ctrl.pages.length}</span>
 			<button
-				class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+				class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 				onclick={() => vp.goToPage(vp.curPage + 1)}
 				disabled={vp.curPage >= ctrl.pages.length}
 				use:tip={m.draft_toolbar_next_page()}

@@ -79,7 +79,7 @@
 			</div>
 			<button
 				type="button"
-				class="btn-icon btn-icon-xs hover:preset-tonal-error shrink-0"
+				class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink shrink-0"
 				onclick={(e) => {
 					e.stopPropagation();
 					onDelete(ref.key);

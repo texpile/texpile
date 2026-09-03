@@ -134,7 +134,7 @@
 			<div class="flex items-center gap-1">
 				{#if onPopout}
 					<button
-						class="hover:preset-tonal rounded-base p-1"
+						class="btn-icon btn-icon-xs hover:preset-tonal"
 						onclick={onPopout}
 						use:tip={m.wsview_popout_preview()}
 						aria-label={m.wsview_popout_preview()}
@@ -169,7 +169,7 @@
 			<div class="flex h-full items-center justify-center p-6">
 				<div class="max-w-sm text-center">
 					<p class="text-muted text-sm">{m.wsview_pane_no_main()}</p>
-					<button class="btn btn-sm preset-tonal-primary mt-3" onclick={onPickMain}>
+					<button class="btn btn-sm preset-filled-primary-500 mt-3" onclick={onPickMain}>
 						{m.wsview_pane_pick_main()}
 					</button>
 				</div>

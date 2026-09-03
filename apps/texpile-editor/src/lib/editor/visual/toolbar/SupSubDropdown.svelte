@@ -54,7 +54,7 @@
 			<Popover.Content class="card bg-surface-50-950 border-surface-300-700 min-w-[220px] border p-1 shadow-lg">
 				<button
 					type="button"
-					class="hover:preset-tonal-primary flex w-full items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
+					class="hover:preset-tonal flex w-full items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
 					class:preset-tonal-primary={sup}
 					onclick={() => choose('sup')}
 				>
@@ -65,7 +65,7 @@
 				</button>
 				<button
 					type="button"
-					class="hover:preset-tonal-primary flex w-full items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
+					class="hover:preset-tonal flex w-full items-center gap-3 rounded-base px-2 py-1.5 text-left text-sm"
 					class:preset-tonal-primary={sub}
 					onclick={() => choose('sub')}
 				>

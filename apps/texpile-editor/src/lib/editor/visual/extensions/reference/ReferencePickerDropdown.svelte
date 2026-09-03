@@ -50,7 +50,7 @@
 						type="button"
 						class="flex w-full items-start gap-3 px-4 py-2 text-left {index === selectedIndex
 							? 'preset-tonal-primary'
-							: 'hover:preset-tonal-primary'}"
+							: 'hover:preset-tonal'}"
 						onclick={() => onSelect(item)}
 						onmousedown={(e) => e.preventDefault()}
 					>

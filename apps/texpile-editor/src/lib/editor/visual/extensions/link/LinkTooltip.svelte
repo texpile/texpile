@@ -234,7 +234,7 @@
 				</button>
 				<button
 					type="button"
-					class="btn btn-xs preset-tonal-error hover:preset-filled-error-500"
+					class="btn btn-xs preset-outlined-surface-200-800 text-error-ink hover:preset-filled-error-500"
 					onclick={handleRemove}
 					use:tip={m.linktooltip_button_remove_title()}
 				>

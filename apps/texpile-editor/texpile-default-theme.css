@@ -202,10 +202,11 @@
 	--color-error-100: oklch(83.94% 0.08 348.39deg);
 	--color-error-200: oklch(75.74% 0.12 349.39deg);
 	--color-error-300: oklch(68.16% 0.17 351.73deg);
-	--color-error-400: oklch(61.78% 0.2 354.34deg);
-	--color-error-500: oklch(57.22% 0.22 358.61deg);
-	--color-error-600: oklch(52.78% 0.2 358.29deg);
-	--color-error-700: oklch(48.48% 0.19 358.24deg);
+	/* the text-relevant reds lift on dark, where the light-tuned steps lose contrast; ordering kept */
+	--color-error-400: light-dark(oklch(61.78% 0.2 354.34deg), oklch(71% 0.19 354.34deg));
+	--color-error-500: light-dark(oklch(57.22% 0.22 358.61deg), oklch(67% 0.2 358.61deg));
+	--color-error-600: light-dark(oklch(52.78% 0.2 358.29deg), oklch(62.5% 0.2 358.29deg));
+	--color-error-700: light-dark(oklch(48.48% 0.19 358.24deg), oklch(58% 0.19 358.24deg));
 	--color-error-800: oklch(43.85% 0.17 357.8deg);
 	--color-error-900: oklch(39.34% 0.15 357.68deg);
 	--color-error-950: oklch(34.45% 0.13 356.99deg);
@@ -337,7 +338,7 @@
 	--success-ink: light-dark(var(--color-success-600), var(--color-success-400));
 	--warning-ink: light-dark(var(--color-warning-600), var(--color-warning-400));
 	--error-ink: var(--color-error-500);
-	--terminal-bg: light-dark(var(--color-surface-100), var(--color-surface-950));
+	--terminal-bg: light-dark(var(--color-surface-50), var(--color-surface-950));
 	--terminal-fg: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */
 	--brand-blue: #0088f7;

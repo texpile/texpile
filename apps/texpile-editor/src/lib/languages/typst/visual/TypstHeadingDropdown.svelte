@@ -41,7 +41,7 @@
 				<div class="py-1">
 					<button
 						type="button"
-						class="hover:preset-tonal-primary flex w-full items-center gap-3 px-3 py-1.5 text-left text-sm"
+						class="hover:preset-tonal flex w-full items-center gap-3 px-3 py-1.5 text-left text-sm"
 						class:preset-tonal-primary={level === 0}
 						onclick={() => choose(0)}
 					>
@@ -53,7 +53,7 @@
 						{@const active = level === lvl}
 						<button
 							type="button"
-							class="hover:preset-tonal-primary flex w-full items-center gap-3 px-3 py-1.5 text-left text-sm"
+							class="hover:preset-tonal flex w-full items-center gap-3 px-3 py-1.5 text-left text-sm"
 							class:preset-tonal-primary={active}
 							onclick={() => choose(lvl)}
 						>

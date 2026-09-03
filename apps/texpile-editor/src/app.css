@@ -16,38 +16,23 @@
    get the right base in dark mode */
 html,
 body {
-	background-color: var(--color-surface-50);
-	color: var(--color-surface-950);
+	background-color: var(--color-surface-50-950);
+	color: var(--color-surface-950-50);
 }
+/* the mode is read here and nowhere else in this file: color-scheme is what makes every
+   light-dark() value and pairing token pick a side, and what native controls follow */
 html {
-	color-scheme: light; /* native controls (checkboxes, scrollbars) follow the mode */
+	color-scheme: light;
 }
 html[data-mode='dark'] {
 	color-scheme: dark;
-}
-html[data-mode='dark'],
-html[data-mode='dark'] body {
-	background-color: var(--color-surface-950);
-	color: var(--color-surface-50);
 }
 
 /* mathlive's caret defaults to its blue accent in both schemes; follow the page text color
    instead (the var pierces the shadow root, and an explicit value beats both of its
    prefers-color-scheme fallbacks, which track the OS rather than the app toggle) */
 math-field {
-	--caret-color: var(--color-surface-950);
-}
-html[data-mode='dark'] math-field {
-	--caret-color: var(--color-surface-50);
-}
-
-/* the theme's error reds are tuned for white backgrounds and lose contrast as text on dark;
-   lift the text-relevant steps while preserving the scale's ordering */
-html[data-mode='dark'] {
-	--color-error-400: oklch(71% 0.19 354.34deg);
-	--color-error-500: oklch(67% 0.2 358.61deg);
-	--color-error-600: oklch(62.5% 0.2 358.29deg);
-	--color-error-700: oklch(58% 0.19 358.24deg);
+	--caret-color: var(--color-surface-950-50);
 }
 
 /* no focus outlines app-wide: the browser ring stacked on components' own borders and read
@@ -73,26 +58,28 @@ html[data-mode='dark'] {
 	margin: calc(var(--spacing) * 6) 0;
 }
 
-/* CodeMirror doesn't auto-theme, so dark-theme its chrome to match the dark editor */
-[data-mode='dark'] .cm-gutters {
-	background-color: var(--color-surface-950); /* opaque: content scrolled sideways must pass under it */
-	color: var(--color-surface-500);
-	border-right: var(--default-border-width) solid color-mix(in srgb, var(--color-surface-100) 10%, transparent);
+/* CodeMirror doesn't auto-theme, so its chrome takes the editor's ground and text tokens. Its base
+   theme is mounted at the top of <head> under a generated scope class, two classes deep, so every
+   override here carries :root to weigh the same and win by order. */
+:root .cm-gutters {
+	background-color: var(--color-surface-50-950); /* opaque: content scrolled sideways must pass under it */
+	color: var(--muted-text);
+	border-right: var(--default-border-width) solid color-mix(in srgb, currentColor 10%, transparent);
 }
-[data-mode='dark'] .cm-activeLineGutter {
+:root .cm-activeLineGutter {
 	background-color: transparent;
-	color: var(--color-surface-300);
+	color: inherit;
 }
-[data-mode='dark'] .cm-activeLine {
-	background-color: color-mix(in srgb, var(--color-surface-100) 5%, transparent);
+:root .cm-activeLine {
+	background-color: color-mix(in srgb, var(--color-surface-950-50) 5%, transparent);
 }
 /* Only reaches an editor running drawSelection(), which hides the native caret and draws .cm-cursor
    in its place. Without it CM's own `&light .cm-content { caret-color: black }` applies instead and
    nothing here overrides it, because no editor sets EditorView.darkTheme - so every CodeMirror in
    the app wants drawSelection, the merge view included. */
-[data-mode='dark'] .cm-cursor,
-[data-mode='dark'] .cm-dropCursor {
-	border-left-color: var(--color-surface-100);
+:root .cm-cursor,
+:root .cm-dropCursor {
+	border-left-color: var(--color-surface-950-50);
 }
 /* only the drawn layer: drawSelection keeps the real DOM selection for copy and IME and relies on
    native ::selection staying transparent, so colouring it too painted every selection twice */
@@ -109,10 +96,10 @@ html[data-mode='dark'] {
    patchwork inside a single drag: solid Tailwind blue boxes over math, native blue over prose,
    lavender in source. Light is lighter over a white page. */
 :root {
-	--editor-selection: color-mix(in srgb, var(--color-primary-500) 30%, transparent);
-}
-html[data-mode='dark'] {
-	--editor-selection: color-mix(in srgb, var(--color-primary-500) 35%, transparent);
+	--editor-selection: light-dark(
+		color-mix(in srgb, var(--color-primary-500) 30%, transparent),
+		color-mix(in srgb, var(--color-primary-500) 35%, transparent)
+	);
 }
 .ProseMirror ::selection {
 	background-color: var(--editor-selection);
@@ -135,48 +122,47 @@ html[data-mode='dark'] {
 .ProseMirror th.selectedCell::after {
 	background: var(--editor-selection);
 }
-[data-mode='dark'] .cm-panels {
-	background-color: var(--color-surface-900);
-	color: var(--color-surface-100);
+:root .cm-panels {
+	background-color: var(--color-surface-100-900);
+	color: var(--color-surface-950-50);
 }
-/* CodeMirror ships light panel controls (white textfields, gradient buttons) that glare in a dark panel */
-[data-mode='dark'] .cm-textfield {
-	background-color: var(--color-surface-800);
-	border: var(--default-border-width) solid var(--color-surface-600);
-	color: var(--color-surface-100);
+/* CodeMirror ships its own panel controls (white textfields, gradient buttons); these put them on
+   the theme in both modes */
+:root .cm-textfield {
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-800));
+	border: var(--default-border-width) solid light-dark(var(--color-surface-300), var(--color-surface-600));
+	color: var(--color-surface-950-50);
 }
-[data-mode='dark'] .cm-button {
+:root .cm-button {
 	background-image: none;
-	background-color: var(--color-surface-800);
-	border: var(--default-border-width) solid var(--color-surface-600);
-	color: var(--color-surface-100);
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-800));
+	border: var(--default-border-width) solid light-dark(var(--color-surface-300), var(--color-surface-600));
+	color: var(--color-surface-950-50);
 }
-[data-mode='dark'] .cm-button:active {
+:root .cm-button:active {
 	background-image: none;
-	background-color: var(--color-surface-700);
+	background-color: light-dark(var(--color-surface-200), var(--color-surface-600));
 }
 /* the PM gap cursor defaults to solid black, invisible on dark; !important so the
    override wins regardless of stylesheet order */
-[data-mode='dark'] .ProseMirror-gapcursor:after {
-	border-top: var(--default-border-width) solid var(--color-surface-50) !important;
+.ProseMirror-gapcursor:after {
+	border-top: var(--default-border-width) solid var(--color-surface-950-50) !important;
 }
-/* CM autocomplete/tooltips (rendered in <body> via tooltipsInBody) default light, showed white in dark mode */
-[data-mode='dark'] .cm-tooltip,
-[data-mode='dark'] .cm-tooltip.cm-tooltip-autocomplete,
-[data-mode='dark'] .cm-completionInfo {
-	background-color: var(--color-surface-900);
-	border: var(--default-border-width) solid var(--color-surface-700);
-	color: var(--color-surface-100);
+/* CM autocomplete/tooltips (rendered in <body> via tooltipsInBody) ship light; these put them on
+   the theme in both modes */
+:root .cm-tooltip,
+:root .cm-tooltip.cm-tooltip-autocomplete,
+:root .cm-completionInfo {
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
+	border: var(--default-border-width) solid var(--color-surface-300-700);
+	color: var(--color-surface-950-50);
 }
-[data-mode='dark'] .cm-tooltip-autocomplete > ul > li {
-	color: var(--color-surface-200);
-}
-[data-mode='dark'] .cm-tooltip-autocomplete > ul > li[aria-selected] {
+:root .cm-tooltip-autocomplete > ul > li[aria-selected] {
 	background-color: var(--color-primary-500);
-	color: white;
+	color: var(--color-primary-contrast-500);
 }
-[data-mode='dark'] .cm-completionMatchedText {
-	color: var(--color-primary-300);
+:root .cm-completionMatchedText {
+	color: var(--primary-ink);
 }
 
 /* mathlive's \command suggestion popover (light DOM in <body>) ships one hardcoded gray look
@@ -232,17 +218,14 @@ html #mathlive-suggestion-popover li a:hover {
 }
 
 /* Skeleton's .input transparent bg leaks the OS-default white on <select> (native form chrome
-   ignores transparent). force dark bg + color-scheme so the control and the <option> popup go dark. */
-[data-mode='dark'] select.input,
-[data-mode='dark'] select {
-	background-color: var(--color-surface-900);
-	color: var(--color-surface-50);
-	color-scheme: dark;
-}
-[data-mode='dark'] select.input option,
-[data-mode='dark'] select option {
-	background-color: var(--color-surface-900);
-	color: var(--color-surface-50);
+   ignores transparent), so the control and its <option> popup get the theme's ground outright;
+   color-scheme is inherited from html, which is what makes the popup follow the mode */
+select.input,
+select,
+select.input option,
+select option {
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
+	color: var(--color-surface-950-50);
 }
 
 /* block handle gutter, rendered on document.body by block-handle-plugin */
@@ -255,26 +238,21 @@ html #mathlive-suggestion-popover li a:hover {
 	border: none;
 	border-radius: var(--radius-base);
 	background: transparent;
-	color: var(--color-surface-400);
+	color: var(--faint-text);
 	cursor: pointer;
 	transition: background-color 0.12s ease;
 }
 .block-handle-btn:hover {
-	background: var(--color-surface-200);
-	color: var(--color-surface-700);
-}
-[data-mode='dark'] .block-handle-btn:hover {
-	background: var(--color-surface-700);
-	color: var(--color-surface-200);
+	background: light-dark(var(--color-surface-200), var(--color-surface-700));
+	color: var(--color-surface-950-50);
 }
 /* destructive, so tint red on hover */
 .block-handle-btn-danger:hover {
-	background: color-mix(in srgb, var(--color-error-500) 15%, transparent);
-	color: var(--color-error-600);
-}
-[data-mode='dark'] .block-handle-btn-danger:hover {
-	background: color-mix(in srgb, var(--color-error-500) 22%, transparent);
-	color: var(--color-error-300);
+	background: light-dark(
+		color-mix(in srgb, var(--color-error-500) 15%, transparent),
+		color-mix(in srgb, var(--color-error-500) 22%, transparent)
+	);
+	color: var(--error-ink);
 }
 .block-handle-menu {
 	min-width: calc(var(--spacing) * 44);
@@ -282,13 +260,9 @@ html #mathlive-suggestion-popover li a:hover {
 	overflow-y: auto;
 	padding: calc(var(--spacing) * 1);
 	border-radius: var(--radius-base);
-	border: var(--default-border-width) solid var(--color-surface-300);
-	background: var(--color-surface-50);
+	border: var(--default-border-width) solid var(--color-surface-300-700);
+	background: var(--color-surface-50-950);
 	box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
-}
-[data-mode='dark'] .block-handle-menu {
-	border-color: var(--color-surface-700);
-	background: var(--color-surface-950);
 }
 .block-handle-menu-item {
 	display: block;
@@ -299,17 +273,11 @@ html #mathlive-suggestion-popover li a:hover {
 	background: transparent;
 	text-align: left;
 	font-size: 0.875rem;
-	color: var(--color-surface-800);
+	color: var(--color-surface-800-200);
 	cursor: pointer;
 }
 .block-handle-menu-item:hover {
-	background: var(--color-surface-200);
-}
-[data-mode='dark'] .block-handle-menu-item {
-	color: var(--color-surface-200);
-}
-[data-mode='dark'] .block-handle-menu-item:hover {
-	background: var(--color-surface-800);
+	background: var(--color-surface-200-800);
 }
 
 /* first-line indent from the Tab toggle (data-indent). 'noindent' renders flush like 'auto', so it
@@ -335,7 +303,7 @@ html #mathlive-suggestion-popover li a:hover {
 	margin-right: 0.4em;
 	max-width: 2.6rem;
 	overflow: hidden;
-	color: var(--color-surface-400);
+	color: var(--faint-text);
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 	font-size: 0.7em;
 	white-space: nowrap;
@@ -343,22 +311,23 @@ html #mathlive-suggestion-popover li a:hover {
 	pointer-events: none;
 }
 
-/* dark-mode scrollbars for the app's own scrollers; the PDF viewer (shadow DOM) and terminal style their own */
-[data-mode='dark'] ::-webkit-scrollbar {
+/* scrollbars for the app's own scrollers, a share of the text colour so they sit on any ground;
+   the PDF viewer (shadow DOM) and terminal style their own */
+::-webkit-scrollbar {
 	width: calc(var(--spacing) * 2.5);
 	height: calc(var(--spacing) * 2.5);
 }
-[data-mode='dark'] ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
 	background: transparent;
 }
-[data-mode='dark'] ::-webkit-scrollbar-thumb {
-	background-color: var(--color-surface-700);
+::-webkit-scrollbar-thumb {
+	background-color: color-mix(in oklab, currentColor 30%, transparent);
 	border-radius: calc(var(--radius-base) * 1.25);
 	border: 2px solid transparent;
 	background-clip: padding-box;
 }
-[data-mode='dark'] ::-webkit-scrollbar-thumb:hover {
-	background-color: var(--color-surface-600);
+::-webkit-scrollbar-thumb:hover {
+	background-color: color-mix(in oklab, currentColor 45%, transparent);
 }
 
 /* Custom title bar drag regions. Global rather than scoped per component, for two reasons: there is
@@ -435,25 +404,15 @@ html #mathlive-suggestion-popover li a:hover {
    the CodeMirror extension; the colours are here because a baseTheme cannot branch on dark mode,
    and this has to read as part of the app's chrome rather than as part of the document. */
 .cm-comment-add {
-	border: var(--default-border-width) solid var(--color-surface-300);
+	border: var(--default-border-width) solid var(--color-surface-300-700);
 	border-radius: calc(var(--radius-base) * 1.5);
-	background-color: var(--color-surface-50);
-	color: var(--color-surface-700);
-	box-shadow: 0 2px 4px rgb(0 0 0 / 0.18);
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
+	color: var(--muted-text);
+	box-shadow: 0 2px 4px light-dark(rgb(0 0 0 / 0.18), rgb(0 0 0 / 0.4));
 }
 .cm-comment-add:hover {
-	background-color: var(--color-surface-100);
-	color: var(--color-primary-600);
-}
-html[data-mode='dark'] .cm-comment-add {
-	border-color: var(--color-surface-700);
-	background-color: var(--color-surface-900);
-	color: var(--color-surface-200);
-	box-shadow: 0 2px 4px rgb(0 0 0 / 0.4);
-}
-html[data-mode='dark'] .cm-comment-add:hover {
-	background-color: var(--color-surface-800);
-	color: var(--color-primary-400);
+	background-color: light-dark(var(--color-surface-100), var(--color-surface-800));
+	color: var(--primary-ink);
 }
 
 /* Review-comment highlights in the visual editor: the same tints as the source editor's
@@ -544,7 +503,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	height: 25px;
 	margin-left: calc(var(--spacing) * 0.75);
 	border-radius: var(--radius-base);
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 }
 .find-expand {
 	margin: 0 calc(var(--spacing) * 1.25) 0 0;
@@ -556,7 +515,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	text-align: center;
 	font-size: 0.75rem;
 	white-space: nowrap;
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 }
 
 /* CodeMirror builds its own DOM, so its scroller cannot be given the class in markup */
@@ -841,7 +800,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .texpile-template-block[data-style='style-1'] .template-block-label,
 .texpile-template-block[data-style='style-blue'] .template-block-label {
-	color: var(--color-primary-600);
+	color: var(--primary-ink);
 }
 
 .texpile-template-block[data-style='style-1']:hover,
@@ -857,7 +816,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .texpile-template-block[data-style='style-2'] .template-block-label,
 .texpile-template-block[data-style='style-green'] .template-block-label {
-	color: var(--color-success-600);
+	color: var(--success-ink);
 }
 
 .texpile-template-block[data-style='style-2']:hover,
@@ -873,7 +832,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .texpile-template-block[data-style='style-3'] .template-block-label,
 .texpile-template-block[data-style='style-cyan'] .template-block-label {
-	color: var(--color-secondary-600);
+	color: var(--secondary-ink);
 }
 
 .texpile-template-block[data-style='style-3']:hover,
@@ -889,7 +848,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .texpile-template-block[data-style='style-4'] .template-block-label,
 .texpile-template-block[data-style='style-yellow'] .template-block-label {
-	color: var(--color-warning-600);
+	color: var(--warning-ink);
 }
 
 .texpile-template-block[data-style='style-4']:hover,
@@ -905,7 +864,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .texpile-template-block[data-style='style-5'] .template-block-label,
 .texpile-template-block[data-style='style-gray'] .template-block-label {
-	color: var(--color-tertiary-600);
+	color: var(--tertiary-ink);
 }
 
 .texpile-template-block[data-style='style-5']:hover,
@@ -921,7 +880,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .texpile-template-block[data-style='style-6'] .template-block-label,
 .texpile-template-block[data-style='style-red'] .template-block-label {
-	color: var(--color-error-600);
+	color: var(--error-ink);
 }
 
 .texpile-template-block[data-style='style-6']:hover,
@@ -935,7 +894,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 }
 
 .texpile-template-block[data-orphaned='true'] .template-block-label {
-	color: var(--color-warning-700);
+	color: var(--warning-ink);
 }
 
 .template-block-warning {
@@ -947,18 +906,18 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	background: color-mix(in srgb, var(--color-warning-500) 15%, transparent);
 	border: var(--default-border-width) solid var(--color-warning-500);
 	border-radius: var(--radius-base);
-	color: var(--color-warning-700);
+	color: var(--warning-ink);
 	font-size: 13px;
 	font-weight: 500;
 }
 
 .template-block-warning .warning-icon {
 	flex-shrink: 0;
-	color: var(--color-warning-600);
+	color: var(--warning-ink);
 }
 
 .texpile-template-block[data-orphaned='true']::before {
-	color: var(--color-warning-700);
+	color: var(--warning-ink);
 }
 
 /* orphaned message; the template-loading state below overrides it */
@@ -966,7 +925,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	content: 'This feature is not supported in this template';
 	display: block;
 	font-size: 11px;
-	color: var(--color-warning-700);
+	color: var(--warning-ink);
 	font-weight: 500;
 	margin-top: -8px;
 	margin-bottom: calc(var(--spacing) * 2);
@@ -978,17 +937,17 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 /* during template load, show "Loading..." instead of the orphaned warning */
 .ProseMirror[data-template-loading='true'] .texpile-template-block[data-orphaned='true'] {
-	border-left-color: var(--color-surface-400);
+	border-left-color: var(--color-surface-300-700);
 	background: color-mix(in srgb, var(--color-surface-400) 5%, transparent);
 }
 
 .ProseMirror[data-template-loading='true'] .texpile-template-block[data-orphaned='true']::before {
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 }
 
 .ProseMirror[data-template-loading='true'] .texpile-template-block[data-orphaned='true']::after {
 	content: 'Loading template...';
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 	background: color-mix(in srgb, var(--color-surface-400) 10%, transparent);
 }
 
@@ -999,14 +958,14 @@ html[data-mode='dark'] .cm-comment-add:hover {
 }
 
 .texpile-template-block[data-duplicate='true']::before {
-	color: var(--color-error-700);
+	color: var(--error-ink);
 }
 
 .texpile-template-block[data-duplicate='true']::after {
 	content: 'Duplicate section (only one allowed)';
 	display: block;
 	font-size: 11px;
-	color: var(--color-error-700);
+	color: var(--error-ink);
 	font-weight: 500;
 	margin-top: -8px;
 	margin-bottom: calc(var(--spacing) * 2);
@@ -1047,7 +1006,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror[data-show-section-numbers='true'] h1::before {
 	content: counter(h1) '. ';
-	color: var(--color-surface-700);
+	color: var(--muted-text);
 	font-weight: 700;
 	margin-right: 0.5em;
 	user-select: none;
@@ -1055,7 +1014,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror[data-show-section-numbers='true'] h2::before {
 	content: counter(h1) '.' counter(h2) '. ';
-	color: var(--color-surface-600);
+	color: var(--muted-text);
 	font-weight: 600;
 	margin-right: 0.5em;
 	user-select: none;
@@ -1063,7 +1022,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror[data-show-section-numbers='true'] h3::before {
 	content: counter(h1) '.' counter(h2) '.' counter(h3) '. ';
-	color: var(--color-surface-600);
+	color: var(--muted-text);
 	font-weight: 600;
 	margin-right: 0.5em;
 	user-select: none;
@@ -1071,7 +1030,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror[data-show-section-numbers='true'] h4::before {
 	content: counter(h1) '.' counter(h2) '.' counter(h3) '.' counter(h4) '. ';
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 	font-weight: 500;
 	margin-right: 0.5em;
 	user-select: none;
@@ -1079,7 +1038,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror[data-show-section-numbers='true'] h5::before {
 	content: counter(h1) '.' counter(h2) '.' counter(h3) '.' counter(h4) '.' counter(h5) '. ';
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 	font-weight: 500;
 	margin-right: 0.4em;
 	user-select: none;
@@ -1110,16 +1069,8 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	.text::before {
 	content: 'Figure ' counter(figure) ': ';
 	font-weight: 600;
-	color: var(--color-surface-700);
+	color: var(--muted-text);
 	margin-right: 0.25em;
-}
-
-/* follow the app toggle (data-mode), not the OS preference */
-[data-mode='dark']
-	.ProseMirror
-	.imagePluginRoot[imageplugin-label]:not([imageplugin-label='']):not([imageplugin-label='null']):not([imageplugin-numbered='false'])
-	.text::before {
-	color: var(--color-surface-300);
 }
 
 .ProseMirror .imagePluginRoot[imageplugin-showCaption='false'] .text {
@@ -1143,7 +1094,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	top: 50%;
 	transform: translateY(-50%);
 	font-weight: 500;
-	color: var(--color-surface-600);
+	color: var(--muted-text);
 	user-select: none;
 	pointer-events: none;
 }
@@ -1168,7 +1119,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 .ProseMirror .block-math-container .equation-number-line {
 	font-weight: 500;
-	color: var(--color-surface-600);
+	color: var(--muted-text);
 	font-size: 0.95em;
 }
 
@@ -1298,7 +1249,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	font-size: 0.7rem;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 	margin-bottom: calc(var(--spacing) * 0.5);
 }
 
@@ -1308,7 +1259,7 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	font-size: 0.7rem;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	color: var(--color-surface-400);
+	color: var(--faint-text);
 	user-select: none;
 	cursor: pointer;
 	padding: 0.2rem 0;
@@ -1316,18 +1267,18 @@ html[data-mode='dark'] .cm-comment-add:hover {
 	border-radius: var(--radius-base);
 }
 .latex-placeholder:hover {
-	color: var(--color-surface-500);
+	color: var(--muted-text);
 }
 .latex-placeholder-selected {
 	outline: 2px solid var(--color-primary-500);
-	color: var(--color-primary-500);
+	color: var(--primary-ink);
 }
 
 /* inline placeholder (e.g. \today): the dotted underline hints it's a resolved command, not typed text */
 .latex-placeholder-inline {
 	user-select: none;
 	cursor: pointer;
-	border-bottom: var(--default-border-width) dotted var(--color-surface-400);
+	border-bottom: var(--default-border-width) dotted var(--faint-text);
 }
 .latex-placeholder-inline:hover {
 	background: color-mix(in srgb, var(--color-primary-500) 12%, transparent);
@@ -1349,16 +1300,10 @@ html[data-mode='dark'] .cm-comment-add:hover {
 /* math preview tooltip: structure lives in the extension's baseTheme, only surface colors
    here so they follow the app mode */
 .cm-tooltip.cm-math-preview {
-	background-color: var(--color-surface-50);
-	border: var(--default-border-width) solid var(--color-surface-300);
-	color: var(--color-surface-950);
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-}
-[data-mode='dark'] .cm-tooltip.cm-math-preview {
-	background-color: var(--color-surface-900);
-	border-color: var(--color-surface-700);
-	color: var(--color-surface-50);
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
+	border: var(--default-border-width) solid var(--color-surface-300-700);
+	color: var(--color-surface-950-50);
+	box-shadow: 0 4px 14px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.45));
 }
 
 /* synctex inverse-search flash. amber matches the PDF forward-search highlight;
@@ -1422,15 +1367,11 @@ html[data-mode='dark'] .cm-comment-add:hover {
 .texpile-diff-removed,
 .texpile-diff-removed-block {
 	background-color: color-mix(in srgb, var(--color-error-500) 14%, transparent);
-	color: color-mix(in srgb, var(--color-error-500) 55%, var(--color-surface-950));
+	color: var(--error-ink);
 	text-decoration: line-through;
 	text-decoration-color: color-mix(in srgb, var(--color-error-500) 70%, transparent);
 	border-radius: calc(var(--radius-base) * 0.5);
 	white-space: pre-wrap; /* multi-paragraph removals keep their breaks */
-}
-[data-mode='dark'] .texpile-diff-removed,
-[data-mode='dark'] .texpile-diff-removed-block {
-	color: color-mix(in srgb, var(--color-error-500) 45%, var(--color-surface-50));
 }
 /* inside a paragraph: sits in the line where the words were */
 .texpile-diff-removed {
@@ -1450,3 +1391,38 @@ html[data-mode='dark'] .cm-comment-add:hover {
 
 /* the PDF pane's --pdf-* hooks are light-dark pairs in texpile-default-theme.css; page canvases
    are inverted by the darkMode prop (PDFViewer.svelte). */
+
+/* Skeleton's tonal presets fill with the family's 50/950 step and write in its 950/50 step, which on
+   a pastel scale (Reign) is pale on pale. Redefined as the family at 15% over the ground with the
+   ink on top, so a state colour reads on every preset. Unlayered on purpose: it must beat the
+   utility whatever the import order. */
+.preset-tonal-primary,
+.hover\:preset-tonal-primary:hover {
+	background-color: color-mix(in oklab, var(--color-primary-500) 15%, transparent);
+	color: var(--primary-ink);
+}
+.preset-tonal-secondary,
+.hover\:preset-tonal-secondary:hover {
+	background-color: color-mix(in oklab, var(--color-secondary-500) 15%, transparent);
+	color: var(--secondary-ink);
+}
+.preset-tonal-tertiary,
+.hover\:preset-tonal-tertiary:hover {
+	background-color: color-mix(in oklab, var(--color-tertiary-500) 15%, transparent);
+	color: var(--tertiary-ink);
+}
+.preset-tonal-success,
+.hover\:preset-tonal-success:hover {
+	background-color: color-mix(in oklab, var(--color-success-500) 15%, transparent);
+	color: var(--success-ink);
+}
+.preset-tonal-warning,
+.hover\:preset-tonal-warning:hover {
+	background-color: color-mix(in oklab, var(--color-warning-500) 15%, transparent);
+	color: var(--warning-ink);
+}
+.preset-tonal-error,
+.hover\:preset-tonal-error:hover {
+	background-color: color-mix(in oklab, var(--color-error-500) 15%, transparent);
+	color: var(--error-ink);
+}

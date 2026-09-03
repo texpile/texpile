@@ -86,7 +86,7 @@
 			{#if editing !== msg.id}
 				<div class="flex shrink-0 items-center gap-0.5 opacity-0 group-hover/msg:opacity-100">
 					<button
-						class="hover:preset-tonal rounded-base p-1"
+						class="btn-icon btn-icon-xs hover:preset-tonal"
 						use:tip={m.comments_edit()}
 						aria-label={m.comments_edit()}
 						onclick={() => {
@@ -97,7 +97,7 @@
 						<Pencil class="size-3" />
 					</button>
 					<button
-						class="hover:preset-tonal-error rounded-base p-1"
+						class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
 						use:tip={m.comments_delete_message()}
 						aria-label={m.comments_delete_message()}
 						onclick={() => onDeleteMessage(thread, msg)}

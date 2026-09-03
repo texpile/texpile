@@ -12,7 +12,7 @@ export function tablePlaceholderPlugin() {
 						const placeholder = document.createElement('span');
 						placeholder.className = 'table-placeholder';
 						placeholder.textContent = 'Caption: Click to edit';
-						placeholder.style.color = 'var(--color-surface-400)';
+						placeholder.style.color = 'var(--faint-text)';
 						placeholder.style.fontStyle = 'italic';
 						placeholder.style.fontWeight = 'normal';
 						decorations.push(Decoration.widget(pos + 1, placeholder));
@@ -22,7 +22,7 @@ export function tablePlaceholderPlugin() {
 						const placeholder = document.createElement('span');
 						placeholder.className = 'table-placeholder';
 						placeholder.textContent = 'Notes: Click to add notes';
-						placeholder.style.color = 'var(--color-surface-400)';
+						placeholder.style.color = 'var(--faint-text)';
 						placeholder.style.fontStyle = 'italic';
 						decorations.push(Decoration.widget(pos + 1, placeholder));
 					}

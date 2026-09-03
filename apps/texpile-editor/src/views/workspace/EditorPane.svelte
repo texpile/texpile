@@ -233,7 +233,7 @@
 			{/if}
 			<div class="ml-auto flex shrink-0 items-center gap-1">
 				<button
-					class="hover:preset-tonal rounded-base p-0.5"
+					class="btn-icon btn-icon-xs hover:preset-tonal"
 					onclick={onRefreshDiff}
 					use:tip={m.wsview_refresh_diff()}
 					aria-label={m.wsview_refresh_diff()}

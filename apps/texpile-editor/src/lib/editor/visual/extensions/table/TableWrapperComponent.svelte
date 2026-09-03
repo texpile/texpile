@@ -166,7 +166,7 @@
 		background: var(--color-warning-100);
 		border: var(--default-border-width) solid var(--color-warning-400);
 		border-radius: calc(var(--radius-base) * 1.5);
-		color: var(--color-warning-700);
+		color: var(--warning-ink);
 		font-size: 0.75rem;
 		line-height: 1.4;
 	}
@@ -232,7 +232,7 @@
 	:global(.table-notes) {
 		font-size: 0.75rem;
 		margin-top: calc(var(--spacing) * 2);
-		color: var(--color-surface-600);
+		color: var(--muted-text);
 		font-style: italic;
 		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
 		border-radius: var(--radius-base);
@@ -258,7 +258,7 @@
 		color: var(--color-surface-100);
 	}
 	:global([data-mode='dark'] .table-notes) {
-		color: var(--color-surface-400);
+		color: var(--faint-text);
 	}
 	:global([data-mode='dark'] .table-wrapper-content table th) {
 		background: var(--color-surface-800);
@@ -275,6 +275,6 @@
 	:global([data-mode='dark']) .table-caption-warning {
 		background: var(--color-warning-950);
 		border-color: var(--color-warning-700);
-		color: var(--color-warning-200);
+		color: var(--warning-ink);
 	}
 </style>

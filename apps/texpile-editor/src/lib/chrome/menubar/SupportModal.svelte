@@ -27,6 +27,8 @@
 	<p class="text-muted mb-2 text-sm">{m.menubar_support_email_intro()}</p>
 	<div class="border-surface-300-700 bg-surface-100-900 flex items-center justify-between gap-3 rounded-base border px-3 py-2">
 		<code class="text-sm select-all">{SUPPORT_EMAIL}</code>
-		<button class="btn btn-xs preset-tonal-primary shrink-0" onclick={copyEmail}>{copied ? m.menubar_copied() : m.menubar_copy()}</button>
+		<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={copyEmail}
+			>{copied ? m.menubar_copied() : m.menubar_copy()}</button
+		>
 	</div>
 </Modal>

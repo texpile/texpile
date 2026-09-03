@@ -265,7 +265,7 @@
 {:else}
 	<div class="mx-auto flex h-full max-w-5xl gap-4 p-4">
 		<div class="w-1/2 overflow-y-auto pr-2">
-			<button class="btn preset-outlined-primary-500 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
+			<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
 				>{m.bib_new_reference_button()}</button
 			>
 			<ul>
@@ -324,7 +324,7 @@
 						</div>
 					{/if}
 					<div class="mt-2 flex justify-end">
-						<button class="btn btn-xs preset-outlined-primary-500 hover:preset-tonal" type="button" onclick={importBibtex}
+						<button class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" type="button" onclick={importBibtex}
 							>{m.bib_import_button()}</button
 						>
 					</div>

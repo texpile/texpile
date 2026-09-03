@@ -39,7 +39,7 @@
 	<div
 		bind:this={card}
 		role="tooltip"
-		class="border-surface-300-700 bg-surface-50-950 text-surface-700-200 z-tooltip pointer-events-none fixed max-w-xs rounded-container border px-2 py-1 text-xs whitespace-pre-line shadow-lg"
+		class="border-surface-300-700 bg-surface-50-950 text-surface-700-200 z-tooltip pointer-events-none fixed max-w-xs card border px-2 py-1 text-xs whitespace-pre-line shadow-lg"
 		style="left: {placed?.x ?? 0}px; top: {placed?.y ?? 0}px; opacity: {placed?.for === shownTip.current ? 1 : 0}"
 	>
 		{shownTip.current.text}

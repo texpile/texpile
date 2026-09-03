@@ -80,7 +80,7 @@
 							{@const Icon = g.icon}
 							<button
 								type="button"
-								class="flex items-center gap-1 rounded-base px-1.5 py-1 text-xs transition-colors"
+								class="btn btn-xs hover:preset-tonal gap-1"
 								class:preset-tonal-primary={activeGroup === g.id}
 								class:hover:preset-tonal={activeGroup !== g.id}
 								tabindex="-1"
@@ -102,7 +102,7 @@
 									{#each MATRIX_BRACKETS as b (b.mode)}
 										<button
 											type="button"
-											class="rounded-base border px-2 py-1 text-xs transition-colors"
+											class="chip preset-outlined-surface-400-600"
 											class:preset-tonal-primary={matrixBracket === b.mode}
 											class:border-math-key-edge={matrixBracket === b.mode}
 											class:bg-surface-100-900={matrixBracket !== b.mode}
@@ -285,7 +285,7 @@
 	.env-label {
 		font-size: 0.8rem;
 		font-weight: 500;
-		color: var(--color-surface-600);
+		color: var(--muted-text);
 	}
 
 	.env-preview {

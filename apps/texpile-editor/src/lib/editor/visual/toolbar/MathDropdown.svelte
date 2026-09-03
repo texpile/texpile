@@ -57,7 +57,7 @@
 				{#each mathOptions as option (option.label)}
 					<button
 						type="button"
-						class="hover:preset-tonal-primary flex w-full items-center justify-between gap-3 rounded-base px-3 py-2 text-left"
+						class="hover:preset-tonal flex w-full items-center justify-between gap-3 rounded-base px-3 py-2 text-left"
 						onclick={() => handleInsert(option)}
 					>
 						<span class="text-sm">{option.label()}</span>

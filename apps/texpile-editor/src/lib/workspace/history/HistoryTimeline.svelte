@@ -168,7 +168,7 @@
 							<div class="py-1">
 								<button
 									type="button"
-									class="hover:preset-tonal-primary flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm disabled:opacity-50"
+									class="hover:preset-tonal flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm disabled:opacity-50"
 									disabled={busy || i === 0}
 									onclick={() => {
 										openMenu = null;

@@ -190,7 +190,7 @@
 					<button class="fixed inset-0 z-40 cursor-default" aria-label={m.wsview_close_menu_aria()} onclick={() => (menuOpen = false)}
 					></button>
 					<div
-						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden rounded-container border py-1 shadow-lg"
+						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden card border py-1 shadow-lg"
 					>
 						{#each shells.terminals as t (t.id)}
 							<div class="hover:preset-tonal-surface flex items-center">
@@ -199,7 +199,7 @@
 									<span class="truncate">{t.title}</span>
 								</button>
 								<button
-									class="hover:preset-tonal-error mr-1 rounded-base p-1"
+									class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink mr-1"
 									use:tip={m.wsview_kill_terminal()}
 									aria-label={m.wsview_kill_terminal()}
 									onclick={() => shells.kill(t.id)}
@@ -211,7 +211,7 @@
 						<!-- the rule and its margin separate this from the terminal list above; with no terminals
 						     there is nothing to separate it from and they just read as a gap at the top -->
 						<button
-							class="hover:preset-tonal-primary flex w-full items-center gap-2 px-2.5 py-1.5 text-left {shells.terminals.length
+							class="hover:preset-tonal flex w-full items-center gap-2 px-2.5 py-1.5 text-left {shells.terminals.length
 								? 'border-surface-200-800 mt-1 border-t'
 								: ''}"
 							onclick={add}
@@ -223,7 +223,7 @@
 				{/if}
 			</div>
 			<button
-				class="hover:preset-tonal rounded-base p-1"
+				class="btn-icon btn-icon-xs hover:preset-tonal"
 				use:tip={m.wsview_new_terminal()}
 				aria-label={m.wsview_new_terminal()}
 				onclick={add}
@@ -231,7 +231,7 @@
 				<Plus class="size-3.5" />
 			</button>
 			<button
-				class="hover:preset-tonal-error rounded-base p-1"
+				class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
 				use:tip={m.wsview_kill_terminal()}
 				aria-label={m.wsview_kill_terminal()}
 				onclick={() => shells.activeTermId != null && shells.kill(shells.activeTermId)}
@@ -241,7 +241,7 @@
 		{/if}
 		{#if pdfPaneOpen}
 			<button
-				class="hover:preset-tonal rounded-base p-1"
+				class="btn-icon btn-icon-xs hover:preset-tonal"
 				use:tip={shrink ? m.wsview_expand_panel_title() : m.wsview_shrink_panel_title()}
 				aria-label={shrink ? m.wsview_expand_panel_aria() : m.wsview_shrink_panel_aria()}
 				onclick={onToggleShrink}
@@ -250,7 +250,7 @@
 			</button>
 		{/if}
 		<button
-			class="hover:preset-tonal rounded-base p-1"
+			class="btn-icon btn-icon-xs hover:preset-tonal"
 			use:tip={m.wsview_hide_panel()}
 			aria-label={m.wsview_hide_panel()}
 			onclick={onClose}

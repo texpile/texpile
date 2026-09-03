@@ -53,6 +53,11 @@ export const themeName = box<string>(layout.current.themeName);
 
 const THEME_EL = 'texpile-theme';
 
+/** bumps once a chosen theme's variables are actually on the page. `themeName` changes the moment
+ *  a tile is clicked, but a preset's stylesheet still has to load; anything that reads computed
+ *  colours (xterm, the Typst preview, the title bar) has to wait for this, not for the name. */
+export const themeEpoch = box(0);
+
 function isPreset(name: string): boolean {
 	return /^[a-z][a-z0-9-]*$/.test(name) && name !== 'theme';
 }
@@ -72,9 +77,11 @@ function applyThemeName(wanted: string): void {
 		link.id = THEME_EL;
 		link.rel = 'stylesheet';
 		link.href = `/themes/${name}.css`;
+		link.addEventListener('load', () => (themeEpoch.current += 1));
 		document.head.appendChild(link);
 	}
 	root.setAttribute('data-theme', name);
+	if (name === 'theme') themeEpoch.current += 1;
 }
 
 export function setThemeName(name: string): void {

@@ -60,7 +60,7 @@
 		{:else if !hasHead}<span class="text-muted">· {m.wsview_diff_new_file()}</span>{/if}
 		<div class="ml-auto flex shrink-0 items-center gap-1">
 			<button
-				class="hover:preset-tonal rounded-base p-0.5"
+				class="btn-icon btn-icon-xs hover:preset-tonal"
 				onclick={onRefresh}
 				use:tip={m.wsview_refresh_diff()}
 				aria-label={m.wsview_refresh_diff()}
@@ -71,7 +71,7 @@
 			     to crowd it in a narrow editor column. Shows what you switch TO - two columns for
 			     side-by-side, stacked rows for inline - with the wording kept on the tooltip. -->
 			<button
-				class="hover:preset-tonal rounded-base p-0.5"
+				class="btn-icon btn-icon-xs hover:preset-tonal"
 				onclick={onToggleLayout}
 				use:tip={layout === 'unified' ? m.wsview_switch_to_side_by_side() : m.wsview_switch_to_inline()}
 				aria-label={layout === 'unified' ? m.wsview_side_by_side_label() : m.wsview_inline_label()}

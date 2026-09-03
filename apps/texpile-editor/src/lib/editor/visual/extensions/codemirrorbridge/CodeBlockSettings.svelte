@@ -127,11 +127,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: var(--color-surface-400);
+		color: var(--faint-text);
 	}
 
 	:global(.codeblock-settings-btn:hover) {
-		color: var(--color-surface-600);
+		color: var(--muted-text);
 		background: color-mix(in srgb, var(--color-surface-500) 15%, transparent);
 	}
 

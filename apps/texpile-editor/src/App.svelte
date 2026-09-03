@@ -261,6 +261,6 @@
 	}
 	/* neutralize the close button, Skeleton tints it by type by default */
 	:global([data-scope='toast'][data-part='close-trigger']) {
-		color: var(--color-surface-500) !important;
+		color: var(--muted-text) !important;
 	}
 </style>

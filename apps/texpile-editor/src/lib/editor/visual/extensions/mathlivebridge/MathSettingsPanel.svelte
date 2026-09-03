@@ -255,7 +255,7 @@
 							{#if lineLabelsInput[i]}
 								<button
 									type="button"
-									class="preset-tonal-surface hover:preset-tonal-error btn-icon btn-icon-xs"
+									class="preset-tonal-surface hover:preset-tonal hover:text-error-ink btn-icon btn-icon-xs"
 									onclick={() => clearLineLabel(i)}
 									use:tip={m.mathsettings_clear_label_title()}
 								>

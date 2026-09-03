@@ -45,7 +45,7 @@
 >
 	<Popover.Trigger>
 		<button
-			class="toolbarButton flex items-center rounded-base p-1 hover:preset-tonal"
+			class="btn-icon btn-icon-xs toolbarButton flex items-center hover:preset-tonal"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_insert_table_aria()}
 			use:tip={m.tbar_insert_table_aria()}

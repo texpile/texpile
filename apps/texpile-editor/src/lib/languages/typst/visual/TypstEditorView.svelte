@@ -225,10 +225,10 @@
 	}
 	:global(.TypstEditor .typ-ref-known) {
 		background: color-mix(in srgb, var(--color-primary-500) 16%, transparent);
-		color: var(--color-primary-700);
+		color: var(--primary-ink);
 	}
 	:global(.dark .TypstEditor .typ-ref-known) {
-		color: var(--color-primary-300);
+		color: var(--primary-ink);
 	}
 
 	/* figure-wrapped tables render through the shared tableWrapperView (typst mode), which owns

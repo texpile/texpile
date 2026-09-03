@@ -1,27 +1,18 @@
 <script lang="ts" module>
 	/**
-	 * The four states the compile slot can be in, and the tonal preset each wears.
+	 * The states the compile slot can be in. They all wear the one filled primary: on Skeleton's
+	 * own recipe the fill is the single action a surface offers, drawn with the theme's contrast
+	 * token so it reads on every preset. What state we are in is told by the label, the leading
+	 * icon or dot, and the problems button beside it - not by recolouring the action.
 	 *
-	 * The label is pinned a step darker than the preset's own (800 in light, 200 in dark) because
-	 * a tonal preset puts its text on its own tint - the same hue at both ends - which reads as
-	 * washed out.
-	 *
-	 * The hairline is the button's OWN hue at 30%, not a solid one: a full-strength outline round
-	 * a pale fill reads as a highlight ring rather than an edge. At 30% it is enough to separate
-	 * the button from the toolbar behind it and nothing more.
-	 *
-	 * `filter-none` on hover overrides Skeleton's own `.btn` hover, which is
-	 * `filter: brightness(125%)` in light mode (and 75% in dark). Brightening a tonal preset whose
-	 * light-mode fill is already the 50 shade pushes it to white and takes the label and the
-	 * hairline up with it, since a filter applies to the whole element - that is the glow. One
-	 * step deeper in the same hue is what a hover should do at both ends.
+	 * The map is kept so callers can still name a tone; every entry resolves to the same classes.
 	 */
 	export type CompileTone = 'primary' | 'success' | 'warning' | 'error';
 	export const COMPILE_TONE: Record<CompileTone, string> = {
-		primary: 'preset-tonal-primary text-primary-ink border border-primary-500/30 hover:filter-none hover:bg-primary-500/20',
-		success: 'preset-tonal-success text-success-ink border border-success-500/30 hover:filter-none hover:bg-success-500/20',
-		warning: 'preset-tonal-warning text-warning-ink border border-warning-500/30 hover:filter-none hover:bg-warning-500/20',
-		error: 'preset-tonal-error text-error-ink border border-error-500/30 hover:filter-none hover:bg-error-500/20'
+		primary: 'preset-filled-primary-500',
+		success: 'preset-filled-primary-500',
+		warning: 'preset-filled-primary-500',
+		error: 'preset-filled-primary-500'
 	};
 </script>
 

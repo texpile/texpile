@@ -9,6 +9,7 @@
 // carries without anyone remembering this file exists.
 
 import { settings } from '$lib/settings';
+import { themeEpoch } from '$lib/theme';
 import { observe } from '$lib/runes/observe.svelte';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { isMac } from '$lib/platform';
@@ -124,6 +125,8 @@ export function syncWindowOverlay(el: HTMLElement): () => void {
 	// uiZoom resizes nothing the observer can see: setZoomFactor scales the whole renderer, so the
 	// bar's CSS height is unchanged and only the device-pixel height it maps to moves
 	const unsub = observe(() => settings.current, push);
+	// a preset's colours arrive when its stylesheet loads, after the data-theme flip the observer above sees
+	const unsubTheme = observe(() => themeEpoch.current, push);
 	// maximise / restore / full screen all change the overlay's geometry, and full screen removes it
 	// entirely; re-reporting keeps the strip and the window fill correct across each of those
 	const offState = api.onWindowState?.(push);
@@ -147,6 +150,7 @@ export function syncWindowOverlay(el: HTMLElement): () => void {
 		mo.disconnect();
 		scrimMo.disconnect();
 		unsub();
+		unsubTheme();
 		offState?.();
 	};
 }

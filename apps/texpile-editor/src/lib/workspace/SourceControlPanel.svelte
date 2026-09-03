@@ -150,7 +150,7 @@
 					</button>
 				{/if}
 				<button
-					class="hover:preset-tonal rounded-base p-0.5"
+					class="btn-icon btn-icon-xs hover:preset-tonal"
 					use:tip={m.vcs_refresh_title()}
 					aria-label={m.vcs_refresh_aria()}
 					onclick={onRefresh}

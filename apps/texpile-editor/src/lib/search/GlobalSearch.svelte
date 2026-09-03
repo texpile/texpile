@@ -141,7 +141,7 @@
 				{#if !collapsed[r.file]}
 					{#each r.matches as match (match.line)}
 						<button
-							class="hover:preset-tonal-primary flex w-full items-baseline gap-2 py-0.5 pr-2 pl-7 text-left text-xs"
+							class="hover:preset-tonal flex w-full items-baseline gap-2 py-0.5 pr-2 pl-7 text-left text-xs"
 							onclick={() => onOpen(r.file, match.line)}
 							use:tip={m.globalsearch_line_title({ line: match.line })}
 						>

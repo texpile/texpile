@@ -7,7 +7,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { terminalTheme } from './terminalTheme';
 	import { observe } from '$lib/runes/observe.svelte';
-	import { resolvedMode, themeName } from '$lib/theme';
+	import { resolvedMode, themeEpoch } from '$lib/theme';
 
 	// a real shell (node-pty in the Electron main) rendered with xterm.js via the window.texpileTerminal bridge
 	let { cwd = '' }: { cwd?: string } = $props();
@@ -149,7 +149,7 @@
 			// xterm holds concrete colours, so a theme or mode switch while a shell is up re-reads them
 			unsubs.push(
 				observe(
-					() => [resolvedMode.current, themeName.current],
+					() => [resolvedMode.current, themeEpoch.current],
 					() => {
 						if (term) term.options.theme = terminalTheme(resolvedMode.current);
 					}

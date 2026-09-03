@@ -105,7 +105,7 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		color: var(--color-surface-700);
+		color: var(--muted-text);
 		transition: all 0.2s ease;
 	}
 
@@ -117,11 +117,11 @@
 	:global(.dark) .settings-button {
 		background: var(--color-surface-800);
 		border-color: var(--color-surface-700);
-		color: var(--color-surface-300);
+		color: var(--muted-text);
 	}
 
 	:global(.dark) .settings-button:hover {
 		background: var(--color-surface-700);
-		border-color: var(--color-surface-600);
+		border-color: var(--color-surface-700);
 	}
 </style>

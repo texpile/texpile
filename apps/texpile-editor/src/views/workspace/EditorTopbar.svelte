@@ -9,7 +9,7 @@
 	import { isDirty } from '$lib/workspace/workspaceStore';
 	import { compileLog } from '$lib/stores/compileLogStore';
 	import WordCount from './WordCount.svelte';
-	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
+	import CompileButton from '$lib/preview/CompileButton.svelte';
 	import type { ComponentProps } from 'svelte';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -195,7 +195,7 @@
 			     floats shapeless in the bar. Border, radius, padding and type size all mirror the
 			     view toggle beside it, so the two read as one family of document controls. -->
 			<button
-				class="border-surface-300-700 hover:preset-tonal flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs"
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1"
 				onclick={onShowComments}
 				use:tip={m.wsview_show_comments_title()}
 			>
@@ -210,7 +210,7 @@
 			<!-- same chip recipe as the comments badge and view toggle; quiet at rest, primary blue
 			     on hover - the divider chip's gray-until-hover behavior from the docked state -->
 			<button
-				class="border-surface-300-700 hover:preset-filled-primary-500 hover:border-primary-500 flex items-center rounded-md border px-2.5 py-1 text-xs"
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal"
 				onmousedown={(e) => e.preventDefault()}
 				onclick={onSyncToCursor}
 				use:tip={syncTargetsPreview ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
@@ -225,7 +225,7 @@
 		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ' || (kind === 'bib' && !guest))}
 			<!-- visual/source toggle; for .bib it's the reference editor vs raw BibTeX (BibManager
 			     stays host-only: it isn't wired to the shared doc yet) -->
-			<div class="border-surface-300-700 inline-flex shrink-0 overflow-hidden rounded-md border text-xs">
+			<div class="border-surface-300-700 inline-flex shrink-0 overflow-hidden rounded-base border text-xs">
 				<button
 					class="flex items-center gap-1 px-2.5 py-1 disabled:cursor-not-allowed disabled:opacity-40 {viewMode === 'visual'
 						? 'preset-filled-primary-500'
@@ -249,7 +249,9 @@
 		{/if}
 		{#if compileLog.current && (compileLog.current.errors.length > 0 || compileLog.current.warnings.length > 0)}
 			<button
-				class="btn btn-xs gap-1 {compileLog.current.errors.length > 0 ? 'preset-tonal-error' : 'preset-tonal-warning'}"
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1 {compileLog.current.errors.length > 0
+					? 'text-error-ink'
+					: 'text-warning-ink'}"
 				onclick={onShowProblems}
 				use:tip={m.wsview_show_problems_title()}
 			>
@@ -262,7 +264,7 @@
 			</button>
 		{/if}
 		{#if fileMode.current}
-			<button class="btn btn-xs {COMPILE_TONE.primary}" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
+			<button class="btn btn-xs preset-filled-primary-500" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
 				<FolderOpen class="size-4" />
 				{m.wsview_open_in_workspace()}
 			</button>
@@ -275,7 +277,7 @@
 				<!-- border-l-0: the button's right edge already draws the seam, and two hairlines
 				     meeting there would read as a heavier line than the outline itself -->
 				<button
-					class="btn btn-xs {COMPILE_TONE[compile.tone]} rounded-l-none self-stretch border-l-0 px-1"
+					class="btn btn-xs preset-filled-primary-500 rounded-l-none self-stretch border-l border-surface-100-900 px-1"
 					onclick={() => (compileMenuOpen = !compileMenuOpen)}
 					use:tip={m.wsview_compile_options()}
 					aria-label={m.wsview_compile_options()}
@@ -311,7 +313,7 @@
 			     preview pane there). .typ shows it too - a Typst project compiled by shell (the
 			     Preview switch off) pushes its PDF exactly as a LaTeX one does. -->
 			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
-				<button class="btn btn-xs preset-tonal-primary gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
+				<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
 					<Play class="size-4" />
 					{m.session_request_compile()}
 				</button>
@@ -319,7 +321,11 @@
 		{/if}
 		{#if !guest}
 			<!-- guests have nothing to save: their edits sync live through the shared doc -->
-			<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={onSave} disabled={!loadedPath || saving || !isDirty.current}>
+			<button
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1.5"
+				onclick={onSave}
+				disabled={!loadedPath || saving || !isDirty.current}
+			>
 				{#if saving}<Loader2 class="size-4 animate-spin" />{:else}<Save class="size-4" />{/if}
 				{m.wsview_save_label()}
 			</button>

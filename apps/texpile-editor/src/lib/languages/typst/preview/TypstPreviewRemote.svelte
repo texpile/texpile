@@ -20,7 +20,7 @@
 	// constructs a new "socket", and that reattach starts over with a whole-document frame.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, PictureInPicture2 } from '@lucide/svelte';
-	import { resolvedMode, themeName } from '$lib/theme';
+	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { PreviewStream, type PreviewPayload } from '$lib/collab/protocol';
 	import { settings, updateSettings } from '$lib/settings';
@@ -56,13 +56,14 @@
 	});
 
 	const dark = $derived(resolvedMode.current === 'dark');
-	// tracked on the theme too: the probe reads computed colours, which a theme switch changes
+	// tracked on the theme epoch too: the probe reads computed colours, which change once a chosen
+	// theme's stylesheet has loaded, not when its name does
 	const background = $derived.by(() => {
-		void themeName.current;
+		void themeEpoch.current;
 		return dark ? themeColour('--color-surface-800', '#27272a') : themeColour('--color-surface-300', '#d4d4d8');
 	});
 	const foreground = $derived.by(() => {
-		void themeName.current;
+		void themeEpoch.current;
 		return dark ? themeColour('--color-surface-200', '#e4e4e7') : themeColour('--color-surface-700', '#3f3f46');
 	});
 
@@ -253,7 +254,7 @@
 		{/if}
 		<div class="flex-1"></div>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => stepZoom(-1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_out()}
@@ -263,7 +264,7 @@
 		</button>
 		<span class="min-w-11 text-center tabular-nums">{zoom !== null ? `${zoom}%` : '—'}</span>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => stepZoom(1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_in()}
@@ -275,7 +276,7 @@
 		<!-- follow works for guests too: the caret position travels to the host, tinymist resolves
 		     it, and the relay hands the resulting jump to only this viewer -->
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			class:preset-tonal={settings.current.typstPreviewFollow === true}
 			class:text-primary-ink={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
@@ -291,7 +292,7 @@
 		{#if onPopout}
 			<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 			<button
-				class="hover:preset-tonal shrink-0 rounded-base p-1"
+				class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
 				onclick={onPopout}
 				use:tip={m.wsview_popout_preview()}
 				aria-label={m.wsview_popout_preview()}

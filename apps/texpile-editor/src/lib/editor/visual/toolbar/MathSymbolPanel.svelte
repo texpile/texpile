@@ -83,7 +83,7 @@
 	<div class="border-surface-300-700 flex shrink-0 items-center justify-between border-b px-3 py-1.5">
 		<span class="text-muted text-xs font-semibold uppercase">{group.label()}</span>
 		<button
-			class="hover:preset-tonal rounded-base p-1"
+			class="btn-icon btn-icon-xs hover:preset-tonal"
 			onmousedown={preventFocusLoss}
 			onclick={onClose}
 			aria-label={m.mathpanel_close_aria()}
@@ -99,7 +99,7 @@
 					{#each MATRIX_BRACKETS as b (b.mode)}
 						<button
 							type="button"
-							class="rounded-base border px-2 py-1 text-xs transition-colors"
+							class="chip preset-outlined-surface-400-600"
 							class:preset-tonal-primary={matrixBracketMode === b.mode}
 							class:border-math-key-edge={matrixBracketMode === b.mode}
 							class:bg-surface-100-900={matrixBracketMode !== b.mode}
@@ -253,7 +253,7 @@
 	.env-label {
 		font-size: 0.8rem;
 		font-weight: 500;
-		color: var(--color-surface-600);
+		color: var(--muted-text);
 	}
 
 	.env-preview {

@@ -10,7 +10,7 @@
 	// what lets the zoom control below drive a viewer we cannot otherwise touch.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, FileDown, Loader2, PictureInPicture2 } from '@lucide/svelte';
-	import { resolvedMode, themeName } from '$lib/theme';
+	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
 	import { themeColour } from './themeColour';
@@ -71,13 +71,14 @@
 	// and nothing else, so a near-white surround makes the page edges vanish and the document reads
 	// as one endless sheet. surface-300 in light, surface-800 in dark - dark enough to separate the
 	// pages, short of the near-black surface-950 the PDF pane uses, which reads as a hole.
-	// tracked on the theme too: the probe reads computed colours, which a theme switch changes
+	// tracked on the theme epoch too: the probe reads computed colours, which change once a chosen
+	// theme's stylesheet has loaded, not when its name does
 	const background = $derived.by(() => {
-		void themeName.current;
+		void themeEpoch.current;
 		return dark ? themeColour('--color-surface-800', '#27272a') : themeColour('--color-surface-300', '#d4d4d8');
 	});
 	const foreground = $derived.by(() => {
-		void themeName.current;
+		void themeEpoch.current;
 		return dark ? themeColour('--color-surface-200', '#e4e4e7') : themeColour('--color-surface-700', '#3f3f46');
 	});
 
@@ -234,7 +235,7 @@
 		{/if}
 		<div class="flex-1"></div>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => stepZoom(-1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_out()}
@@ -244,7 +245,7 @@
 		</button>
 		<span class="min-w-11 text-center tabular-nums">{zoom !== null ? `${zoom}%` : '—'}</span>
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={() => stepZoom(1)}
 			disabled={!frameUrl}
 			use:tip={m.draft_toolbar_zoom_in()}
@@ -255,7 +256,7 @@
 		<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 		<!-- follow-always lives here; its one-shot sibling rides the pane splitter (PreviewPane) -->
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			class:preset-tonal={settings.current.typstPreviewFollow === true}
 			class:text-primary-ink={settings.current.typstPreviewFollow === true}
 			onclick={() => updateSettings({ typstPreviewFollow: settings.current.typstPreviewFollow !== true })}
@@ -271,7 +272,7 @@
 		     extension's Export PDF runs. Disabled until the preview is live: same server, same
 		     document, so "previewable" and "exportable" are the same condition. -->
 		<button
-			class="hover:preset-tonal rounded-base p-1 disabled:opacity-40"
+			class="btn-icon btn-icon-xs hover:preset-tonal disabled:opacity-40"
 			onclick={saveAsPdf}
 			disabled={!frameUrl || savingPdf}
 			use:tip={m.typst_preview_save_pdf()}
@@ -284,7 +285,7 @@
 		{#if onPopout}
 			<span class="bg-surface-300-700 mx-1 h-4 w-px shrink-0"></span>
 			<button
-				class="hover:preset-tonal shrink-0 rounded-base p-1"
+				class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
 				onclick={onPopout}
 				use:tip={m.wsview_popout_preview()}
 				aria-label={m.wsview_popout_preview()}
@@ -313,7 +314,7 @@
 				     muted text was barely legible on it -->
 				<div class="pointer-events-none absolute inset-0 flex items-center justify-center p-6">
 					<div
-						class="bg-surface-100-900 text-surface-700-200 border-surface-300-700 max-w-sm rounded-lg border px-4 py-3 text-center text-sm shadow-sm"
+						class="bg-surface-100-900 text-surface-700-200 border-surface-300-700 max-w-sm rounded-container border px-4 py-3 text-center text-sm shadow-sm"
 					>
 						{m.typst_preview_no_document_hint()}
 					</div>

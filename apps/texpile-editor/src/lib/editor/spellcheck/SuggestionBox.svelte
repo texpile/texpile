@@ -271,7 +271,7 @@
 					<div class="space-y-1">
 						{#each error.replacements.slice(1) as replacement, i (i)}
 							<button
-								class="btn btn-xs preset-tonal hover:preset-filled-primary-500 w-full justify-start font-mono text-xs"
+								class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal w-full justify-start font-mono text-xs"
 								onclick={() => handleReplace(replacement)}
 							>
 								{formatReplacement(replacement)}
@@ -286,7 +286,7 @@
 	<div class="border-surface-200-800 flex items-center gap-1.5 border-t pt-1.5">
 		{#if canAddToDictionary()}
 			<button
-				class="btn btn-xs preset-tonal-primary hover:preset-filled-primary-500 flex-1 justify-center gap-1 text-xs"
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal flex-1 justify-center gap-1 text-xs"
 				onclick={handleAddToDictionary}
 				use:tip={m.harper_add_to_dictionary_title({ word: error.text })}
 			>

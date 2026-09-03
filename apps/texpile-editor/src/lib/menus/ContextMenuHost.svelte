@@ -45,7 +45,7 @@
 		bind:this={card}
 		role="menu"
 		aria-label={m.tbar_close_menu_aria()}
-		class="bg-surface-50-950 border-surface-300-700 z-dropdown fixed min-w-48 overflow-hidden rounded-container border py-1 text-sm shadow-lg"
+		class="bg-surface-50-950 border-surface-300-700 z-dropdown fixed min-w-48 overflow-hidden card border py-1 text-sm shadow-lg"
 		style="left: {placed?.x ?? menu.x}px; top: {placed?.y ?? menu.y}px; opacity: {placed?.for === menu ? 1 : 0}"
 	>
 		{#each menu.items as item, i (i)}
@@ -56,8 +56,8 @@
 					type="button"
 					role="menuitem"
 					class="flex w-full items-center gap-2.5 px-3 py-1.5 text-left disabled:pointer-events-none disabled:opacity-40 {item.danger
-						? 'hover:preset-tonal-error text-error-ink'
-						: 'hover:preset-tonal-primary'}"
+						? 'hover:preset-tonal text-error-ink'
+						: 'hover:preset-tonal'}"
 					disabled={item.disabled}
 					onclick={() => run(item)}
 					onmousedown={(e) => e.preventDefault()}

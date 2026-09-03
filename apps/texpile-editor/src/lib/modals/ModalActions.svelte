@@ -25,9 +25,9 @@
 			? ''
 			: b.role === 'primary'
 				? b.danger
-					? 'preset-tonal-error'
+					? 'preset-filled-error-500'
 					: 'preset-filled-primary-500'
-				: 'preset-outlined-surface-300-700 hover:preset-tonal';
+				: 'preset-outlined-surface-200-800 hover:preset-tonal';
 		return ['btn', size === 'xs' ? 'btn-xs' : '', look, b.icon || b.busy ? 'gap-1.5' : '', b.class ?? ''].filter(Boolean).join(' ');
 	}
 </script>

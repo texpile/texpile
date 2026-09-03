@@ -73,7 +73,7 @@
 				{#each highlightColors as { name, value } (name)}
 					<button
 						type="button"
-						class="hover:preset-tonal-primary flex w-full items-center gap-2 rounded-base px-3 py-2 text-left"
+						class="hover:preset-tonal flex w-full items-center gap-2 rounded-base px-3 py-2 text-left"
 						onclick={() => setHighlight(value)}
 					>
 						{#if value === 'none'}

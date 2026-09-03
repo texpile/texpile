@@ -102,7 +102,7 @@
 		font-size: 11px;
 	}
 	.env-syntax {
-		color: var(--color-surface-500);
+		color: var(--muted-text);
 	}
 	.env-name,
 	.env-args {
@@ -117,10 +117,10 @@
 	.env-name {
 		flex: none; /* hold the exact text width so the closing } hugs it */
 		font-weight: 600;
-		color: var(--color-primary-600);
+		color: var(--primary-ink);
 	}
 	.env-args {
-		color: var(--color-surface-600);
+		color: var(--muted-text);
 		flex: 1;
 		margin-left: 0.6em; /* the only gap: a space after the closing } */
 		min-width: 8ch;
@@ -132,6 +132,6 @@
 		background: color-mix(in srgb, var(--color-surface-500) 12%, transparent);
 	}
 	.env-args::placeholder {
-		color: var(--color-surface-400);
+		color: var(--faint-text);
 	}
 </style>

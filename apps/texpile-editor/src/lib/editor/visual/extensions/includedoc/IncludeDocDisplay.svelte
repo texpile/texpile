@@ -56,13 +56,10 @@
 		text-decoration: underline;
 	}
 	.includedoc-syntax {
-		color: var(--color-surface-500);
+		color: var(--muted-text);
 	}
 	.includedoc-path {
 		font-weight: 600;
-		color: var(--color-primary-600);
-	}
-	:global(.dark) .includedoc-path {
-		color: var(--color-primary-400);
+		color: var(--primary-ink);
 	}
 </style>

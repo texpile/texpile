@@ -115,7 +115,11 @@
 			{/each}
 		{:else if onChangeKey && referenceStore.current?.length}
 			<span class="text-surface-900-100 text-sm font-medium">{m.citation_reference_label()}</span>
-			<select class="input mt-1.5 w-full text-sm" value={key} onchange={(e) => onChangeKey?.((e.currentTarget as HTMLSelectElement).value)}>
+			<select
+				class="select mt-1.5 w-full text-sm"
+				value={key}
+				onchange={(e) => onChangeKey?.((e.currentTarget as HTMLSelectElement).value)}
+			>
 				{#if !reference}<option value={key}>{m.citation_ref_not_found({ key })}</option>{/if}
 				{#each referenceStore.current as ref (ref.key)}
 					<option value={ref.key} title={ref.title || ref.key}>{refLabel(ref)}</option>
@@ -164,9 +168,15 @@
 			<div>
 				<span class="text-surface-900-100 mb-1.5 block text-sm font-medium">{m.citation_add_prefix_label()}</span>
 				<div class="mb-2 flex flex-wrap gap-2">
-					<button type="button" class="btn btn-xs preset-outlined-primary-500" onclick={() => (prenote = 'see')}> see </button>
-					<button type="button" class="btn btn-xs preset-outlined-primary-500" onclick={() => (prenote = 'cf.')}> cf. </button>
-					<button type="button" class="btn btn-xs preset-outlined-primary-500" onclick={() => (prenote = 'compare')}> compare </button>
+					<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'see')}>
+						see
+					</button>
+					<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'cf.')}>
+						cf.
+					</button>
+					<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'compare')}>
+						compare
+					</button>
 				</div>
 				<input type="text" bind:value={prenote} placeholder={m.citation_prefix_placeholder()} class="input w-full text-sm" />
 				<span class="text-muted mt-1 block text-xs"> {m.citation_prefix_hint()} </span>
