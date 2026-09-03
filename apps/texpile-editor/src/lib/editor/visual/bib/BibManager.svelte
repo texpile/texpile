@@ -240,7 +240,7 @@
 
 {#if parseError}
 	<!-- file-level parse failure: edit the whole .bib as raw CM until it parses cleanly -->
-	<div class="mx-auto flex h-full max-w-5xl flex-col gap-3 p-4">
+	<div class="mx-auto flex h-full max-w-7xl flex-col gap-3 p-4">
 		<div class="border-error-500 bg-error-tint rounded-container border p-3 text-sm">
 			<div class="mb-1 flex items-center gap-2 font-semibold">
 				<Code class="size-4" />
@@ -263,8 +263,8 @@
 		</div>
 	</div>
 {:else}
-	<div class="mx-auto flex h-full max-w-5xl gap-4 p-4">
-		<div class="w-1/2 overflow-y-auto pr-2">
+	<div class="mx-auto flex h-full max-w-7xl gap-4 p-4">
+		<div class="w-1/2 overflow-y-auto pr-3">
 			<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
 				>{m.bib_new_reference_button()}</button
 			>
@@ -278,7 +278,7 @@
 			</ul>
 		</div>
 
-		<div class="border-surface-200-800 w-1/2 overflow-y-auto border-l pl-4">
+		<div class="border-surface-200-800 w-1/2 overflow-y-auto border-l pr-4 pl-4">
 			<div class="mb-2 flex items-center gap-2 text-base font-semibold">
 				{#if isEditing}
 					<Pencil class="size-4" />

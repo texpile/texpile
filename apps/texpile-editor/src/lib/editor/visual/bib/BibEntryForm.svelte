@@ -1,7 +1,7 @@
 <script lang="ts">
 	// The typed entry form: type picker, per-type fields, and the citation key under Advanced.
 	// BibManager owns the reference list, validation, and the save/commit path.
-	import { ChevronDown } from '@lucide/svelte';
+	import { ChevronDown, TriangleAlert } from '@lucide/svelte';
 	import { getFieldsForType, type BiblatexReference } from '$lib/languages/bib/biblatex';
 	import { generateLabel } from '$lib/editor/visual/label';
 	import { validateEntry } from '$lib/languages/bib/bibValidate';
@@ -99,13 +99,16 @@
 	{#if formErrors.form}<p class="text-error-ink text-sm">{formErrors.form[0]}</p>{/if}
 
 	{#if problems.length > 0}
-		<div class="border-warning-500 bg-warning-tint mt-3 rounded-base border-l-2 px-3 py-2">
-			<p class="text-muted text-xs font-medium">{m.bib_warnings_heading()}</p>
-			<ul class="text-muted mt-1 space-y-0.5 text-xs">
-				{#each problems as problem (bibProblemText(problem))}
-					<li>{bibProblemText(problem)}</li>
-				{/each}
-			</ul>
+		<div class="bg-surface-100-900 border-surface-200-800 mt-3 flex gap-2.5 rounded-container border px-3 py-2">
+			<TriangleAlert class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
+			<div class="min-w-0">
+				<p class="text-xs font-medium">{m.bib_warnings_heading()}</p>
+				<ul class="text-muted mt-1 space-y-0.5 text-xs">
+					{#each problems as problem (bibProblemText(problem))}
+						<li>{bibProblemText(problem)}</li>
+					{/each}
+				</ul>
+			</div>
 		</div>
 	{/if}
 

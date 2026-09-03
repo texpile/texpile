@@ -45,7 +45,7 @@
 				: 'border-surface-200-800 hover:bg-surface-100-900'}"
 			onclick={() => onEdit(ref)}
 		>
-			<div class="pointer-events-none min-w-0 flex-1">
+			<div class="min-w-0 flex-1">
 				<div class="truncate text-sm font-semibold">{ref.author || m.bib_unknown_author_placeholder()}</div>
 				<div class="text-muted truncate text-xs">{ref.title || m.bib_untitled_placeholder()}</div>
 				<div class="text-muted mt-1 flex items-center gap-2 text-xs">
@@ -53,24 +53,18 @@
 					     next to date = {1843} was reading only half the document -->
 					<span>{ref.year || ref.date || m.bib_no_year_placeholder()}</span>
 					<span>•</span>
-					<code class="text-xs">{ref.key}</code>
+					<span class="chip preset-outlined-surface-400-600 [--chip-size:var(--text-xs)] font-mono">{ref.key}</span>
 					{#if problemsOf(ref).length > 0}
 						<!-- what the entry would be reported for, where the entries are actually read:
 						     a warning only in the edit form is one nobody goes looking for -->
-						<span
-							class="text-warning-ink inline-flex items-center gap-0.5 text-[10px]"
-							use:tip={problemsOf(ref).map(bibProblemText).join('\n')}
-						>
-							<AlertTriangle class="size-2.5" />
+						<span class="badge preset-tonal-warning gap-1" use:tip={problemsOf(ref).map(bibProblemText).join('\n')}>
+							<AlertTriangle class="size-3" />
 							{problemsOf(ref).length}
 						</span>
 					{/if}
 					{#if !fitsVisualEditor(ref)}
 						<!-- raw badge: this row edits as raw CM -->
-						<span
-							class="border-surface-300-700 text-muted inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
-							use:tip={m.bib_raw_badge_list_tooltip()}
-						>
+						<span class="badge preset-outlined-surface-400-600 text-muted gap-1" use:tip={m.bib_raw_badge_list_tooltip()}>
 							<Code class="size-2.5" />
 							{m.bib_raw_badge_text()}
 						</span>

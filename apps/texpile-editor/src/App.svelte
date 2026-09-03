@@ -133,6 +133,7 @@
 	}
 
 	import { Toast } from '@skeletonlabs/skeleton-svelte';
+	import { CircleAlert, CircleCheck, Info, TriangleAlert } from '@lucide/svelte';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import ConfirmHost from '$lib/modals/ConfirmHost.svelte';
 	import TooltipHost from '$lib/components/TooltipHost.svelte';
@@ -145,8 +146,18 @@
 	{#snippet children(toast)}
 		<Toast {toast}>
 			<Toast.Message>
-				<Toast.Title>{toast.title}</Toast.Title>
-				<Toast.Description>{toast.description}</Toast.Description>
+				<!-- the icon carries the kind; the words stay in the text colours, so no state colour has
+				     to be legible as text, only as a glyph, which is what holds on a pastel theme -->
+				<div class="flex items-start gap-2.5">
+					{#if toast.type === 'success'}<CircleCheck class="text-success-ink mt-0.5 size-4 shrink-0" />
+					{:else if toast.type === 'warning'}<TriangleAlert class="text-warning-ink mt-0.5 size-4 shrink-0" />
+					{:else if toast.type === 'error'}<CircleAlert class="text-error-ink mt-0.5 size-4 shrink-0" />
+					{:else}<Info class="text-primary-ink mt-0.5 size-4 shrink-0" />{/if}
+					<div class="min-w-0">
+						<Toast.Title>{toast.title}</Toast.Title>
+						<Toast.Description>{toast.description}</Toast.Description>
+					</div>
+				</div>
 			</Toast.Message>
 			{#if toast.action}
 				<Toast.ActionTrigger>{toast.action.label}</Toast.ActionTrigger>
@@ -222,42 +233,17 @@
 	 * dark mode and a wall of red in light. Matching its specificity settles it in both.
 	 */
 	:global([data-scope='toast'][data-part='root'][data-type]) {
-		background-color: var(--color-surface-50, #ffffff);
-		border: var(--default-border-width) solid var(--color-surface-300, #cbd5e1);
-		color: var(--color-surface-950, #0b1220);
+		background-color: var(--color-surface-50-950);
+		border: var(--default-border-width) solid var(--color-surface-300-700);
+		color: var(--color-surface-950-50);
 		box-shadow: 0 10px 30px rgb(0 0 0 / 0.22);
 	}
-	/* deliberately NOT also carrying [data-type]: it already outweighs Skeleton at this weight, and a
-	   fourth token would have outranked the accent-border rules below and swallowed the colored edge */
-	:global(.dark [data-scope='toast'][data-part='root']) {
-		background-color: var(--color-surface-950, #0b1220);
-		border-color: var(--color-surface-700, #334155);
-		color: var(--color-surface-50, #f8fafc);
-	}
-	/* explicit text colors, the defaults were too low-contrast on the surface */
 	:global([data-scope='toast'][data-part='title']) {
-		color: var(--color-surface-950, #0b1220);
 		font-weight: 600;
 	}
 	:global([data-scope='toast'][data-part='description']) {
-		color: var(--color-surface-700, #334155);
+		color: var(--muted-text);
 		overflow-wrap: anywhere; /* a path or command in the text must not widen the card */
-	}
-	:global(.dark [data-scope='toast'][data-part='title']) {
-		color: var(--color-surface-50, #f8fafc);
-	}
-	:global(.dark [data-scope='toast'][data-part='description']) {
-		color: var(--color-surface-200, #e2e8f0);
-	}
-	/* colored left border so success/error/warning read as typed cards */
-	:global([data-scope='toast'][data-part='root'][data-type='success']) {
-		border-inline-start: 3px solid var(--color-success-500);
-	}
-	:global([data-scope='toast'][data-part='root'][data-type='error']) {
-		border-inline-start: 3px solid var(--color-error-500);
-	}
-	:global([data-scope='toast'][data-part='root'][data-type='warning']) {
-		border-inline-start: 3px solid var(--color-warning-500);
 	}
 	/* neutralize the close button, Skeleton tints it by type by default */
 	:global([data-scope='toast'][data-part='close-trigger']) {
