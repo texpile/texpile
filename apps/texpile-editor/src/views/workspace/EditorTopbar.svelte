@@ -9,7 +9,7 @@
 	import { isDirty } from '$lib/workspace/workspaceStore';
 	import { compileLog } from '$lib/stores/compileLogStore';
 	import WordCount from './WordCount.svelte';
-	import CompileButton from '$lib/preview/CompileButton.svelte';
+	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import type { ComponentProps } from 'svelte';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -264,7 +264,7 @@
 			</button>
 		{/if}
 		{#if fileMode.current}
-			<button class="btn btn-xs preset-filled-primary-500" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
+			<button class="btn btn-xs {COMPILE_TONE.primary}" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
 				<FolderOpen class="size-4" />
 				{m.wsview_open_in_workspace()}
 			</button>
@@ -277,7 +277,7 @@
 				<!-- border-l-0: the button's right edge already draws the seam, and two hairlines
 				     meeting there would read as a heavier line than the outline itself -->
 				<button
-					class="btn btn-xs preset-filled-primary-500 rounded-l-none self-stretch border-l border-surface-100-900 px-1"
+					class="btn btn-xs {COMPILE_TONE[compile.tone]} rounded-l-none self-stretch border-l-0 px-1"
 					onclick={() => (compileMenuOpen = !compileMenuOpen)}
 					use:tip={m.wsview_compile_options()}
 					aria-label={m.wsview_compile_options()}
@@ -313,7 +313,7 @@
 			     preview pane there). .typ shows it too - a Typst project compiled by shell (the
 			     Preview switch off) pushes its PDF exactly as a LaTeX one does. -->
 			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
-				<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
+				<button class="btn btn-xs preset-tonal-primary gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
 					<Play class="size-4" />
 					{m.session_request_compile()}
 				</button>

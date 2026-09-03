@@ -241,7 +241,7 @@
 {#if parseError}
 	<!-- file-level parse failure: edit the whole .bib as raw CM until it parses cleanly -->
 	<div class="mx-auto flex h-full max-w-5xl flex-col gap-3 p-4">
-		<div class="border-error-500 bg-error-500/10 rounded-container border p-3 text-sm">
+		<div class="border-error-500 bg-error-tint rounded-container border p-3 text-sm">
 			<div class="mb-1 flex items-center gap-2 font-semibold">
 				<Code class="size-4" />
 				{m.bib_parse_syntax_error_title()}
@@ -319,7 +319,7 @@
 						bind:value={bibtexContent}
 						placeholder={m.bib_paste_bibtex_placeholder()}></textarea>
 					{#if bibtexWarnings.length}
-						<div class="border-warning-500 bg-warning-500/10 mt-2 rounded-base border p-2 text-xs">
+						<div class="border-warning-500 bg-warning-tint mt-2 rounded-base border p-2 text-xs">
 							{#each bibtexWarnings as w (w.key)}<div><strong>{w.key}:</strong> {w.issues.join(', ')}</div>{/each}
 						</div>
 					{/if}

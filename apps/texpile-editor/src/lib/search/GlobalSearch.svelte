@@ -147,7 +147,7 @@
 						>
 							<span class="text-faint w-8 shrink-0 text-right tabular-nums">{match.line}</span>
 							<span class="truncate font-mono"
-								>{#each parts(match.text.trim()) as p, i (i)}<span class={p.hit ? 'bg-warning-500/40 rounded-base' : ''}>{p.s}</span
+								>{#each parts(match.text.trim()) as p, i (i)}<span class={p.hit ? 'bg-warning-wash rounded-base' : ''}>{p.s}</span
 									>{/each}</span
 							>
 						</button>

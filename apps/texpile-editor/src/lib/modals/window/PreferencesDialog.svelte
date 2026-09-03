@@ -164,7 +164,7 @@
 		{#each categories as c (c.id)}
 			<button
 				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
-					? 'bg-primary-500/15 text-primary-ink font-medium'
+					? 'bg-primary-tint text-primary-ink font-medium'
 					: 'hover:bg-surface-200-800'}"
 				onclick={() => (category = c.id)}
 			>

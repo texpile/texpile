@@ -62,9 +62,7 @@
 	<!-- the WAI-ARIA window-splitter pattern (role=separator + tabindex); svelte's a11y rule doesn't special-case it -->
 	<!-- eslint-disable-next-line svelte/valid-compile -->
 	<div
-		class="absolute -inset-x-[3px] transition-colors {resizable
-			? 'hover:bg-primary-500/30 active:bg-primary-500/50 cursor-col-resize'
-			: ''}"
+		class="absolute -inset-x-[3px] transition-colors {resizable ? 'hover:bg-primary-wash active:bg-primary-flood cursor-col-resize' : ''}"
 		style="top: {topInset}px; bottom: {bottomInset}px"
 		onmousedown={resizable ? onStartResize : undefined}
 		onkeydown={resizable ? onResizeByKey : undefined}

@@ -127,7 +127,7 @@
 	</div>
 	<div bind:this={list} class="min-h-0 flex-1 overflow-y-auto">
 		{#if pending}
-			<div class="border-surface-200-800 bg-surface-100-900/60 max-w-2xl space-y-2 border-b p-2">
+			<div class="border-surface-200-800 bg-surface-scrim max-w-2xl space-y-2 border-b p-2">
 				<span class="text-muted block truncate font-mono" use:tip={pending.quote}>{oneLine(pending.quote)}</span>
 				<textarea
 					bind:this={composer}
@@ -180,14 +180,11 @@
 				{@const fileGone = filesPresent !== null && !filesPresent.has(thread.file)}
 				{@const lost = !fileGone && orphaned.has(thread.id)}
 				{@const hidden = !fileGone && !lost && notVisible.has(thread.id)}
-				<div
-					data-thread={thread.id}
-					class="border-surface-200-800/60 border-b last:border-b-0 {selected === thread.id ? 'bg-surface-200-800/40' : ''}"
-				>
+				<div data-thread={thread.id} class="border-surface-wash border-b last:border-b-0 {selected === thread.id ? 'bg-surface-tint' : ''}">
 					<!-- the summary and the thread actions are SIBLINGS: a button cannot contain a button,
 					     and Resolve/Delete belong on the header rather than under the reply box, where
 					     they read as things you do to your reply -->
-					<div class="hover:bg-surface-200-800/60 group flex items-start">
+					<div class="hover:bg-surface-wash group flex items-start">
 						<button
 							class="flex min-w-0 flex-1 items-start gap-2 px-2 py-1.5 text-left"
 							onclick={() => toggle(thread)}

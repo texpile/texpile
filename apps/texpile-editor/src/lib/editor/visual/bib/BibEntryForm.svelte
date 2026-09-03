@@ -99,7 +99,7 @@
 	{#if formErrors.form}<p class="text-error-ink text-sm">{formErrors.form[0]}</p>{/if}
 
 	{#if problems.length > 0}
-		<div class="border-warning-500 bg-warning-500/15 mt-3 rounded-base border-l-2 px-3 py-2">
+		<div class="border-warning-500 bg-warning-tint mt-3 rounded-base border-l-2 px-3 py-2">
 			<p class="text-muted text-xs font-medium">{m.bib_warnings_heading()}</p>
 			<ul class="text-muted mt-1 space-y-0.5 text-xs">
 				{#each problems as problem (bibProblemText(problem))}

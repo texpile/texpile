@@ -557,6 +557,40 @@ select option {
 @theme inline {
 	--color-muted: var(--muted-text);
 	--color-faint: var(--faint-text);
+	--color-primary-tint: var(--primary-tint);
+	--color-primary-wash: var(--primary-wash);
+	--color-primary-flood: var(--primary-flood);
+	--color-secondary-tint: var(--secondary-tint);
+	--color-secondary-wash: var(--secondary-wash);
+	--color-secondary-flood: var(--secondary-flood);
+	--color-tertiary-tint: var(--tertiary-tint);
+	--color-tertiary-wash: var(--tertiary-wash);
+	--color-tertiary-flood: var(--tertiary-flood);
+	--color-success-tint: var(--success-tint);
+	--color-success-wash: var(--success-wash);
+	--color-success-flood: var(--success-flood);
+	--color-warning-tint: var(--warning-tint);
+	--color-warning-wash: var(--warning-wash);
+	--color-warning-flood: var(--warning-flood);
+	--color-error-tint: var(--error-tint);
+	--color-error-wash: var(--error-wash);
+	--color-error-flood: var(--error-flood);
+	--color-primary-tonal: var(--primary-tonal);
+	--color-primary-tonal-hover: var(--primary-tonal-hover);
+	--color-secondary-tonal: var(--secondary-tonal);
+	--color-secondary-tonal-hover: var(--secondary-tonal-hover);
+	--color-tertiary-tonal: var(--tertiary-tonal);
+	--color-tertiary-tonal-hover: var(--tertiary-tonal-hover);
+	--color-success-tonal: var(--success-tonal);
+	--color-success-tonal-hover: var(--success-tonal-hover);
+	--color-warning-tonal: var(--warning-tonal);
+	--color-warning-tonal-hover: var(--warning-tonal-hover);
+	--color-error-tonal: var(--error-tonal);
+	--color-error-tonal-hover: var(--error-tonal-hover);
+	--color-surface-tint: var(--surface-tint);
+	--color-surface-wash: var(--surface-wash);
+	--color-surface-strong-wash: var(--surface-strong-wash);
+	--color-surface-scrim: var(--surface-scrim);
 	--color-primary-ink: var(--primary-ink);
 	--color-secondary-ink: var(--secondary-ink);
 	--color-tertiary-ink: var(--tertiary-ink);
@@ -1393,36 +1427,39 @@ select option {
    are inverted by the darkMode prop (PDFViewer.svelte). */
 
 /* Skeleton's tonal presets fill with the family's 50/950 step and write in its 950/50 step, which on
-   a pastel scale (Reign) is pale on pale. Redefined as the family at 15% over the ground with the
-   ink on top, so a state colour reads on every preset. Unlayered on purpose: it must beat the
-   utility whatever the import order. */
-.preset-tonal-primary,
-.hover\:preset-tonal-primary:hover {
-	background-color: color-mix(in oklab, var(--color-primary-500) 15%, transparent);
-	color: var(--primary-ink);
-}
-.preset-tonal-secondary,
-.hover\:preset-tonal-secondary:hover {
-	background-color: color-mix(in oklab, var(--color-secondary-500) 15%, transparent);
-	color: var(--secondary-ink);
-}
-.preset-tonal-tertiary,
-.hover\:preset-tonal-tertiary:hover {
-	background-color: color-mix(in oklab, var(--color-tertiary-500) 15%, transparent);
-	color: var(--tertiary-ink);
-}
-.preset-tonal-success,
-.hover\:preset-tonal-success:hover {
-	background-color: color-mix(in oklab, var(--color-success-500) 15%, transparent);
-	color: var(--success-ink);
-}
-.preset-tonal-warning,
-.hover\:preset-tonal-warning:hover {
-	background-color: color-mix(in oklab, var(--color-warning-500) 15%, transparent);
-	color: var(--warning-ink);
-}
-.preset-tonal-error,
-.hover\:preset-tonal-error:hover {
-	background-color: color-mix(in oklab, var(--color-error-500) 15%, transparent);
-	color: var(--error-ink);
+   a pastel scale (Reign) is pale on pale. Redefined on the tonal token (the family's hue at the far
+   end for the mode, see texpile-tokens.css) with the on-tonal text on top, so it reads on every preset. In the utilities layer, after Tailwind's
+   own output: later in the same layer beats Skeleton's definition, while a hover:bg-* utility
+   still outranks it by specificity, so hover tints keep working. */
+@layer utilities {
+	.preset-tonal-primary,
+	.hover\:preset-tonal-primary:hover {
+		background-color: var(--primary-tonal);
+		color: var(--primary-on-tonal);
+	}
+	.preset-tonal-secondary,
+	.hover\:preset-tonal-secondary:hover {
+		background-color: var(--secondary-tonal);
+		color: var(--secondary-on-tonal);
+	}
+	.preset-tonal-tertiary,
+	.hover\:preset-tonal-tertiary:hover {
+		background-color: var(--tertiary-tonal);
+		color: var(--tertiary-on-tonal);
+	}
+	.preset-tonal-success,
+	.hover\:preset-tonal-success:hover {
+		background-color: var(--success-tonal);
+		color: var(--success-on-tonal);
+	}
+	.preset-tonal-warning,
+	.hover\:preset-tonal-warning:hover {
+		background-color: var(--warning-tonal);
+		color: var(--warning-on-tonal);
+	}
+	.preset-tonal-error,
+	.hover\:preset-tonal-error:hover {
+		background-color: var(--error-tonal);
+		color: var(--error-on-tonal);
+	}
 }

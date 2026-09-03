@@ -128,7 +128,7 @@
 	     until it is answered (compilePipeline.runCompile) - so it must not sit in a column that a
 	     closed sidebar or a wide preview can push out of view.
 	     Still not a modal: you can keep reading and editing while you decide. -->
-	<div class="border-warning-500/40 bg-warning-500/10 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 border-b px-3 py-2 text-xs">
+	<div class="border-warning-wash bg-warning-tint flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 border-b px-3 py-2 text-xs">
 		<ShieldQuestion class="text-warning-ink size-4 shrink-0" />
 		<span>{m.project_command_prompt()}</span>
 		<code class="bg-surface-200-800 min-w-0 truncate rounded-base px-1.5 py-0.5 font-mono" use:tip={pendingCommand.command}>

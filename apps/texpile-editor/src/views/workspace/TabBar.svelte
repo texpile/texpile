@@ -88,7 +88,7 @@
 			<div
 				class="group border-surface-200-800 flex shrink cursor-pointer items-center gap-1.5 border-r px-3 text-sm {isActive(tab)
 					? 'bg-surface-50-950'
-					: 'text-muted hover:bg-surface-200-800/60'}"
+					: 'text-muted hover:bg-surface-wash'}"
 				style="min-width: {MIN_TAB_PX}px; max-width: 15rem"
 				role="tab"
 				aria-selected={isActive(tab)}
@@ -146,7 +146,7 @@
 				autoFocus={false}
 			>
 				<Popover.Trigger
-					class="text-muted hover:bg-surface-200-800/60 ml-auto flex shrink-0 items-center gap-0.5 px-2 text-sm"
+					class="text-muted hover:bg-surface-wash ml-auto flex shrink-0 items-center gap-0.5 px-2 text-sm"
 					aria-label={m.tabs_show_all({ count: tabs.length })}
 				>
 					{#snippet element(attrs)}

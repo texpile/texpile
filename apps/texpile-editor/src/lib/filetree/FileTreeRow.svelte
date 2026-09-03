@@ -37,9 +37,9 @@
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
 		class="group flex items-center rounded-base text-sm transition-colors {isActive(entry)
-			? `bg-primary-500/15 font-medium ${focused ? 'text-primary-ink' : ''}`
+			? `bg-primary-tint font-medium ${focused ? 'text-primary-ink' : ''}`
 			: sel.selected.includes(entry.path)
-				? 'bg-surface-300-700/60'
+				? 'bg-surface-strong-wash'
 				: 'hover:bg-surface-200-800'} {dnd.dropTarget === entry.path && entry.type === 'dir'
 			? 'ring-primary-500 ring-2 ring-inset'
 			: ''} {dnd.dragPaths.includes(entry.path) ? 'opacity-50' : ''}"

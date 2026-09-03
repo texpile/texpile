@@ -41,7 +41,7 @@
 		<li
 			class="mb-2 flex cursor-pointer items-center justify-between gap-2 rounded-container border p-3 transition-colors {ref.key ===
 			selectedKey
-				? 'border-primary-500 bg-primary-500/15 '
+				? 'border-primary-500 bg-primary-tint '
 				: 'border-surface-200-800 hover:bg-surface-100-900'}"
 			onclick={() => onEdit(ref)}
 		>

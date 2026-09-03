@@ -302,7 +302,7 @@
 			<!-- the grab zone overhangs the rule by 3px, and can only overhang upwards here: below it
 			     is the window's edge -->
 			<div
-				class="hover:bg-primary-500/30 active:bg-primary-500/50 absolute inset-x-0 -inset-y-[3px] cursor-row-resize transition-colors"
+				class="hover:bg-primary-wash active:bg-primary-flood absolute inset-x-0 -inset-y-[3px] cursor-row-resize transition-colors"
 				onmousedown={termDock.startResize}
 				onkeydown={termDock.resizeByKey}
 				role="separator"

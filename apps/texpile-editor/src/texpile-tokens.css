@@ -25,6 +25,107 @@ html {
 	--success-ink: light-dark(oklch(from var(--color-success-500) min(l, 0.5) c h), oklch(from var(--color-success-500) max(l, 0.78) c h));
 	--warning-ink: light-dark(oklch(from var(--color-warning-500) min(l, 0.5) c h), oklch(from var(--color-warning-500) max(l, 0.78) c h));
 	--error-ink: light-dark(oklch(from var(--color-error-500) min(l, 0.5) c h), oklch(from var(--color-error-500) max(l, 0.78) c h));
+	/* a theme colour over the ground: tint at rest, wash on hover and for hairlines, flood for a pressed
+	   or selected state. Tokens rather than bg-primary-500/15 because Tailwind bakes an alpha-modified
+	   family colour to Skeleton's base placeholder, a grey that never changes with the theme */
+	--primary-tint: color-mix(in oklab, var(--color-primary-500) 15%, transparent);
+	--primary-wash: color-mix(in oklab, var(--color-primary-500) 35%, transparent);
+	--primary-flood: color-mix(in oklab, var(--color-primary-500) 55%, transparent);
+	--secondary-tint: color-mix(in oklab, var(--color-secondary-500) 15%, transparent);
+	--secondary-wash: color-mix(in oklab, var(--color-secondary-500) 35%, transparent);
+	--secondary-flood: color-mix(in oklab, var(--color-secondary-500) 55%, transparent);
+	--tertiary-tint: color-mix(in oklab, var(--color-tertiary-500) 15%, transparent);
+	--tertiary-wash: color-mix(in oklab, var(--color-tertiary-500) 35%, transparent);
+	--tertiary-flood: color-mix(in oklab, var(--color-tertiary-500) 55%, transparent);
+	--success-tint: color-mix(in oklab, var(--color-success-500) 15%, transparent);
+	--success-wash: color-mix(in oklab, var(--color-success-500) 35%, transparent);
+	--success-flood: color-mix(in oklab, var(--color-success-500) 55%, transparent);
+	--warning-tint: color-mix(in oklab, var(--color-warning-500) 15%, transparent);
+	--warning-wash: color-mix(in oklab, var(--color-warning-500) 35%, transparent);
+	--warning-flood: color-mix(in oklab, var(--color-warning-500) 55%, transparent);
+	--error-tint: color-mix(in oklab, var(--color-error-500) 15%, transparent);
+	--error-wash: color-mix(in oklab, var(--color-error-500) 35%, transparent);
+	--error-flood: color-mix(in oklab, var(--color-error-500) 55%, transparent);
+	/* the tonal fill: opaque, the family's hue at the far end for the mode with the chroma eased the
+	   way a scale's own 50 and 950 steps are (Texpile's primary-950 is L .38 C .11 from a 500 of
+	   C .19), computed from the 500 so a pastel scale gets it too. The hover sits one step back */
+	--primary-tonal: light-dark(
+		oklch(from var(--color-primary-500) max(l, 0.94) calc(c * 0.2) h),
+		oklch(from var(--color-primary-500) min(l, 0.38) calc(c * 0.6) h)
+	);
+	--primary-tonal-hover: light-dark(
+		oklch(from var(--color-primary-500) max(l, 0.87) calc(c * 0.37) h),
+		oklch(from var(--color-primary-500) min(l, 0.44) calc(c * 0.7) h)
+	);
+	--secondary-tonal: light-dark(
+		oklch(from var(--color-secondary-500) max(l, 0.94) calc(c * 0.2) h),
+		oklch(from var(--color-secondary-500) min(l, 0.38) calc(c * 0.6) h)
+	);
+	--secondary-tonal-hover: light-dark(
+		oklch(from var(--color-secondary-500) max(l, 0.87) calc(c * 0.37) h),
+		oklch(from var(--color-secondary-500) min(l, 0.44) calc(c * 0.7) h)
+	);
+	--tertiary-tonal: light-dark(
+		oklch(from var(--color-tertiary-500) max(l, 0.94) calc(c * 0.2) h),
+		oklch(from var(--color-tertiary-500) min(l, 0.38) calc(c * 0.6) h)
+	);
+	--tertiary-tonal-hover: light-dark(
+		oklch(from var(--color-tertiary-500) max(l, 0.87) calc(c * 0.37) h),
+		oklch(from var(--color-tertiary-500) min(l, 0.44) calc(c * 0.7) h)
+	);
+	--success-tonal: light-dark(
+		oklch(from var(--color-success-500) max(l, 0.94) calc(c * 0.2) h),
+		oklch(from var(--color-success-500) min(l, 0.38) calc(c * 0.6) h)
+	);
+	--success-tonal-hover: light-dark(
+		oklch(from var(--color-success-500) max(l, 0.87) calc(c * 0.37) h),
+		oklch(from var(--color-success-500) min(l, 0.44) calc(c * 0.7) h)
+	);
+	--warning-tonal: light-dark(
+		oklch(from var(--color-warning-500) max(l, 0.94) calc(c * 0.2) h),
+		oklch(from var(--color-warning-500) min(l, 0.38) calc(c * 0.6) h)
+	);
+	--warning-tonal-hover: light-dark(
+		oklch(from var(--color-warning-500) max(l, 0.87) calc(c * 0.37) h),
+		oklch(from var(--color-warning-500) min(l, 0.44) calc(c * 0.7) h)
+	);
+	--error-tonal: light-dark(
+		oklch(from var(--color-error-500) max(l, 0.94) calc(c * 0.2) h),
+		oklch(from var(--color-error-500) min(l, 0.38) calc(c * 0.6) h)
+	);
+	--error-tonal-hover: light-dark(
+		oklch(from var(--color-error-500) max(l, 0.87) calc(c * 0.37) h),
+		oklch(from var(--color-error-500) min(l, 0.44) calc(c * 0.7) h)
+	);
+	/* text on the tonal fill: the same hue, pulled to the near end for the mode. Its own token, not the
+	   ink, because a theme may set its ink for text on the ground (Texpile's is its 500), which sits
+	   too close to the deep fill */
+	--primary-on-tonal: light-dark(
+		oklch(from var(--color-primary-500) min(l, 0.42) c h),
+		oklch(from var(--color-primary-500) max(l, 0.86) c h)
+	);
+	--secondary-on-tonal: light-dark(
+		oklch(from var(--color-secondary-500) min(l, 0.42) c h),
+		oklch(from var(--color-secondary-500) max(l, 0.86) c h)
+	);
+	--tertiary-on-tonal: light-dark(
+		oklch(from var(--color-tertiary-500) min(l, 0.42) c h),
+		oklch(from var(--color-tertiary-500) max(l, 0.86) c h)
+	);
+	--success-on-tonal: light-dark(
+		oklch(from var(--color-success-500) min(l, 0.42) c h),
+		oklch(from var(--color-success-500) max(l, 0.86) c h)
+	);
+	--warning-on-tonal: light-dark(
+		oklch(from var(--color-warning-500) min(l, 0.42) c h),
+		oklch(from var(--color-warning-500) max(l, 0.86) c h)
+	);
+	--error-on-tonal: light-dark(oklch(from var(--color-error-500) min(l, 0.42) c h), oklch(from var(--color-error-500) max(l, 0.86) c h));
+	/* the same for the neutral surface pair: a faint overlay, a hover, a stronger wash, a scrim */
+	--surface-tint: color-mix(in oklab, var(--color-surface-200-800) 40%, transparent);
+	--surface-wash: color-mix(in oklab, var(--color-surface-200-800) 60%, transparent);
+	--surface-strong-wash: color-mix(in oklab, var(--color-surface-300-700) 60%, transparent);
+	--surface-scrim: color-mix(in oklab, var(--color-surface-100-900) 60%, transparent);
 	/* CodeMirror syntax roles (cmHighlight.ts) */
 	--syntax-comment: var(--muted-text);
 	--syntax-keyword: var(--error-ink);

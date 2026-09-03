@@ -1,18 +1,24 @@
 <script lang="ts" module>
 	/**
-	 * The states the compile slot can be in. They all wear the one filled primary: on Skeleton's
-	 * own recipe the fill is the single action a surface offers, drawn with the theme's contrast
-	 * token so it reads on every preset. What state we are in is told by the label, the leading
-	 * icon or dot, and the problems button beside it - not by recolouring the action.
+	 * The four states the compile slot can be in, and the tonal preset each wears: the state's colour
+	 * at the far end for the mode (deep on dark, pale on light) with its ink on top, so the slot reads
+	 * as Texpile's own control rather than as the toolbar's one filled action.
 	 *
-	 * The map is kept so callers can still name a tone; every entry resolves to the same classes.
+	 * The hairline is the button's OWN hue at 30%, not a solid one: a full-strength outline round
+	 * a pale fill reads as a highlight ring rather than an edge. At 30% it is enough to separate
+	 * the button from the toolbar behind it and nothing more.
+	 *
+	 * `filter-none` on hover overrides Skeleton's own `.btn` hover, which is
+	 * `filter: brightness(125%)` in light mode (and 75% in dark). Brightening a tint takes the label
+	 * and the hairline with it, since a filter applies to the whole element - that is the glow. One
+	 * step deeper in the same hue is what a hover should do at both ends.
 	 */
 	export type CompileTone = 'primary' | 'success' | 'warning' | 'error';
 	export const COMPILE_TONE: Record<CompileTone, string> = {
-		primary: 'preset-filled-primary-500',
-		success: 'preset-filled-primary-500',
-		warning: 'preset-filled-primary-500',
-		error: 'preset-filled-primary-500'
+		primary: 'preset-tonal-primary border border-primary-wash hover:filter-none hover:bg-primary-tonal-hover',
+		success: 'preset-tonal-success border border-success-wash hover:filter-none hover:bg-success-tonal-hover',
+		warning: 'preset-tonal-warning border border-warning-wash hover:filter-none hover:bg-warning-tonal-hover',
+		error: 'preset-tonal-error border border-error-wash hover:filter-none hover:bg-error-tonal-hover'
 	};
 </script>
 

@@ -212,7 +212,7 @@ describe('FileTree focus indicator', () => {
 		const outside = document.body.appendChild(document.createElement('button'));
 
 		// unfocused: still tinted, so you can see which file is open, but not accented
-		expect(row.className, 'open-file tint should not depend on focus').toContain('bg-primary-500/15');
+		expect(row.className, 'open-file tint should not depend on focus').toContain('bg-primary-tint');
 		expect(row.className).not.toContain('text-primary-ink');
 
 		host.querySelector('button')!.focus();
@@ -222,7 +222,7 @@ describe('FileTree focus indicator', () => {
 		outside.focus();
 		flushSync();
 		expect(row.className, 'should drop the accent when focus leaves').not.toContain('text-primary-700');
-		expect(row.className).toContain('bg-primary-500/15');
+		expect(row.className).toContain('bg-primary-tint');
 		outside.remove();
 	});
 });

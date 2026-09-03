@@ -207,7 +207,7 @@
 			<!-- arrow keys resize when focused: the WAI-ARIA window-splitter pattern (role=separator + tabindex) -->
 			<!-- eslint-disable-next-line svelte/valid-compile -->
 			<div
-				class="hover:bg-primary-500/40 active:bg-primary-500/60 relative z-20 -my-[3px] h-1.5 shrink-0 cursor-row-resize bg-transparent transition-colors"
+				class="hover:bg-primary-wash active:bg-primary-flood relative z-20 -my-[3px] h-1.5 shrink-0 cursor-row-resize bg-transparent transition-colors"
 				onmousedown={onStartHistoryResize}
 				onkeydown={onResizeHistoryByKey}
 				role="separator"
