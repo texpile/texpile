@@ -10,37 +10,35 @@
 	type Props = {
 		/** Preview is on, so the command below is not what Compile runs */
 		superseded: boolean;
+		/** the modal's row classes, so this lane's rows sit like its own */
+		row: string;
 	};
-	let { superseded }: Props = $props();
+	let { superseded, row }: Props = $props();
 </script>
 
 <!-- Called "Preview" because that is what Typst's own tooling calls it: tinymist has a `preview`
      subcommand, and its editor plugins ship the command as typst-preview.preview. (The other live
      thing Typst has is `typst watch`, which is a rebuild-on-change - that is the separate Watch
      setting in Preferences, and this is faster than it.) -->
-<div class="mb-1 flex items-center justify-between gap-4">
-	<span class="text-sm">{m.wsview_preview_label()}</span>
-	<Switch
-		checked={compileConfig.current.typst.preview}
-		onCheckedChange={(d) => projectConfigSync.setTypstPreview(workspaceRoot.current, d.checked)}
-	>
-		<Switch.Control><Switch.Thumb /></Switch.Control>
-		<Switch.HiddenInput />
-	</Switch>
-</div>
-
-<p class="text-muted mt-1 mb-1 text-xs">{m.wsview_typst_preview_note()}</p>
-
-{#if superseded}
-	<!-- the same dashed slot live mode uses: the command is kept for the folder, it just is not
-	     what Compile runs while Preview is on -->
-	<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
-		{m.wsview_compile_disabled_preview()}
-		<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">tinymist (built-in)</code>
+<div class={row}>
+	<div class="flex items-center justify-between gap-4">
+		<span class="text-sm font-medium">{m.wsview_preview_label()}</span>
+		<Switch
+			checked={compileConfig.current.typst.preview}
+			onCheckedChange={(d) => projectConfigSync.setTypstPreview(workspaceRoot.current, d.checked)}
+		>
+			<Switch.Control><Switch.Thumb /></Switch.Control>
+			<Switch.HiddenInput />
+		</Switch>
 	</div>
-{:else}
-	<p class="text-muted mt-2 mb-3 text-xs">
-		{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">{'{main}'}</code>
-		{m.wsview_compile_desc_post()}
-	</p>
-{/if}
+	<p class="text-muted mt-1 text-xs">{m.wsview_typst_preview_note()}</p>
+
+	{#if superseded}
+		<!-- the same dashed slot live mode uses: the command is kept for the folder, it just is not
+		     what Compile runs while Preview is on -->
+		<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
+			{m.wsview_compile_disabled_preview()}
+			<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">tinymist (built-in)</code>
+		</div>
+	{/if}
+</div>

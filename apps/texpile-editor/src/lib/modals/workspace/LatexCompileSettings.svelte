@@ -21,8 +21,10 @@
 		/** the segmented-control classes, shared with the modal's format switch */
 		segment: string;
 		seg: (active: boolean, compact?: boolean) => string;
+		/** the modal's row classes, so this lane's rows sit like its own */
+		row: string;
 	};
-	let { command = $bindable(), superseded, sessionActive, segment, seg }: Props = $props();
+	let { command = $bindable(), superseded, sessionActive, segment, seg, row }: Props = $props();
 
 	// chip highlight state, reflected live from the draft (null engine = unrecognized)
 	const engine = $derived(cc.detectEngine(command));
@@ -54,64 +56,64 @@
 
 <!-- Live mode IS the incremental lualatex pipeline. The setting is global and stays whatever it
      was, ready for the next LaTeX folder. -->
-<div class="mb-1 flex items-center justify-between gap-4">
-	<span class="text-sm">{m.wsview_live_mode_label()} <span class="text-muted">{m.wsview_experimental_label()}</span></span>
-	<Switch
-		checked={compileConfig.current.latex.liveMode}
-		disabled={sessionActive}
-		onCheckedChange={(d) => projectConfigSync.setLiveMode(workspaceRoot.current, d.checked)}
-	>
-		<Switch.Control><Switch.Thumb /></Switch.Control>
-		<Switch.HiddenInput />
-	</Switch>
+<div class={row}>
+	<div class="flex items-center justify-between gap-4">
+		<span class="text-sm font-medium">
+			{m.wsview_live_mode_label()} <span class="text-muted font-normal">{m.wsview_experimental_label()}</span>
+		</span>
+		<Switch
+			checked={compileConfig.current.latex.liveMode}
+			disabled={sessionActive}
+			onCheckedChange={(d) => projectConfigSync.setLiveMode(workspaceRoot.current, d.checked)}
+		>
+			<Switch.Control><Switch.Thumb /></Switch.Control>
+			<Switch.HiddenInput />
+		</Switch>
+	</div>
+
+	{#if sessionActive}
+		<p class="text-warning-700-300 mt-1 text-xs">{m.wsview_live_mode_collab_note()}</p>
+	{/if}
+
+	{#if superseded}
+		<p class="text-muted mt-1 text-xs">
+			{m.wsview_livemode_desc_pre()} <strong>lualatex</strong>
+			{m.wsview_livemode_desc_post()}
+		</p>
+		<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
+			{m.wsview_compile_disabled_live()}
+			<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">lualatex (built-in)</code>
+		</div>
+	{/if}
 </div>
 
-{#if sessionActive}
-	<p class="text-warning-700-300 mt-1 mb-1 text-xs">{m.wsview_live_mode_collab_note()}</p>
-{/if}
-
-{#if superseded}
-	<p class="text-muted mt-1 mb-1 text-xs">
-		{m.wsview_livemode_desc_pre()} <strong>lualatex</strong>
-		{m.wsview_livemode_desc_post()}
-	</p>
-	<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
-		{m.wsview_compile_disabled_live()}
-		<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">lualatex (built-in)</code>
-	</div>
-{:else}
-	<p class="text-muted mt-2 mb-3 text-xs">
-		{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">{'{main}'}</code>
-		{m.wsview_compile_desc_post()}
-	</p>
-
+{#if !superseded}
 	<!-- quick setup: chips reflect the command when recognizable, and regenerate it on click -->
-	<div class="mb-3 flex items-center justify-between gap-3">
-		<span class="flex min-w-0 items-baseline gap-2 text-sm font-medium">
-			{m.wsview_engine_label()}
-			<!-- no segment is raised when the engine is unrecognized, so say why -->
-			{#if engine === null && command.trim()}
-				<span class="text-faint truncate text-xs italic">{m.wsview_custom_label()}</span>
-			{/if}
-		</span>
-		<div class="flex shrink-0 items-center gap-3">
-			<div class={segment}>
-				{#each ENGINES as eng (eng)}
-					<button type="button" class={seg(engine === eng, true)} onclick={() => applyEngine(eng)}>
-						{eng}
-					</button>
-				{/each}
+	<div class={row}>
+		<div class="flex items-center justify-between gap-3">
+			<span class="flex min-w-0 items-baseline gap-2 text-sm font-medium">
+				{m.wsview_engine_label()}
+				<!-- no segment is raised when the engine is unrecognized, so say why -->
+				{#if engine === null && command.trim()}
+					<span class="text-faint truncate text-xs font-normal italic">{m.wsview_custom_label()}</span>
+				{/if}
+			</span>
+			<div class="flex shrink-0 items-center gap-3">
+				<div class={segment}>
+					{#each ENGINES as eng (eng)}
+						<button type="button" class={seg(engine === eng, true)} onclick={() => applyEngine(eng)}>
+							{eng}
+						</button>
+					{/each}
+				</div>
+				<label class="text-muted inline-flex items-center gap-1.5 text-xs">
+					<input type="checkbox" class="checkbox" checked={latexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
+					{m.wsview_use_latexmk_label()}
+				</label>
 			</div>
-			<label class="text-muted inline-flex items-center gap-1.5 text-xs">
-				<input type="checkbox" class="checkbox" checked={latexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
-				{m.wsview_use_latexmk_label()}
-			</label>
 		</div>
+		{#if runsIn}
+			<p class="text-muted mt-1 text-xs">{m.wsview_compile_runs_in({ dir: runsIn.dir, out: runsIn.out })}</p>
+		{/if}
 	</div>
-
-	{#if runsIn}
-		<p class="text-muted -mt-1 mb-3 text-xs">
-			{m.wsview_compile_runs_in({ dir: runsIn.dir, out: runsIn.out })}
-		</p>
-	{/if}
 {/if}

@@ -56,10 +56,6 @@ export class WorkspaceFormatting {
 		return this.compileSettings.save(thenRun);
 	}
 
-	useDefaultCommand() {
-		return this.compileSettings.useDefault();
-	}
-
 	/**
 	 * Whether Format can serve the open file. LaTeX goes through latexindent (an external tool the
 	 * provider must expose); Typst goes through tinymist's built-in typstyle, gated to SOURCE mode:

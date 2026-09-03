@@ -1,6 +1,6 @@
 <script lang="ts">
 	// The compile-command modal: the typesetter's own settings, the shell command, and the per-folder
-	// output-path overrides. Persisting is the caller's job.
+	// output-path overrides, one row each. Persisting is the caller's job.
 	//
 	// There is no typesetter to choose here. The main file's extension names it - typst cannot build
 	// a .tex and latex cannot build a .typ - so a switch beside it could only ever disagree with the
@@ -12,8 +12,10 @@
 	import LatexCompileSettings from './LatexCompileSettings.svelte';
 	import TypstCompileSettings from './TypstCompileSettings.svelte';
 	import CompileOutputPaths from './CompileOutputPaths.svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { mainFile, workspaceRoot, effectiveCompileFormat } from '$lib/workspace/workspaceStore';
 	import { compileConfig, projectConfigSync } from '$lib/workspace/projectConfigSync.svelte';
+	import { buildTypstCommand } from '$lib/workspace/typstCommand';
 	import { DEFAULT_COMPILE_COMMAND } from '$lib/settings';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -28,18 +30,9 @@
 		outputs: { pdf: string; log: string };
 		advancedOpen: boolean;
 		onSave: (thenRun: boolean) => void;
-		onUseDefault: () => void;
 		onRun: () => void;
 	};
-	let {
-		open = $bindable(),
-		command = $bindable(),
-		outputs = $bindable(),
-		advancedOpen = $bindable(),
-		onSave,
-		onUseDefault,
-		onRun
-	}: Props = $props();
+	let { open = $bindable(), command = $bindable(), outputs = $bindable(), advancedOpen = $bindable(), onSave, onRun }: Props = $props();
 
 	// the same call the pipeline makes, so what this dialog shows and what Compile runs cannot drift
 	const isTypst = $derived(effectiveCompileFormat(mainFile.current) === 'typst');
@@ -49,11 +42,14 @@
 	// and is kept - it just is not what Compile runs, so showing it as editable would lie.
 	const superseded = $derived(isTypst ? compileConfig.current.typst.preview : compileConfig.current.latex.liveMode);
 
-	// the segmented-control classes Preferences' theme picker uses, so an exclusive choice looks the
-	// same wherever it appears. Still needed for the LaTeX engine chips inside LatexCompileSettings.
+	const defaultCommand = $derived(isTypst ? buildTypstCommand(mainFile.current) : DEFAULT_COMPILE_COMMAND);
+	const needsMain = $derived(command.includes('{main}') && !mainFile.current);
+
+	// one row per setting, the way Preferences lays them out
+	const ROW = 'border-surface-200-800 border-b py-3 first:pt-0';
+	// the segmented-control classes the LaTeX engine chips use. `compact` keeps the engine row
+	// inside max-w-lg: three engine names at full size push the latexmk checkbox off the row
 	const SEGMENT = 'bg-surface-200-800 rounded-base flex shrink-0 gap-1 p-0.5';
-	// `compact` keeps the engine row inside max-w-lg: three engine names are far longer than the
-	// theme picker's System/Light/Dark, and at full size they push the latexmk checkbox off the row
 	function seg(active: boolean, compact = false) {
 		return `rounded-base ${compact ? 'px-2.5 py-1 text-xs' : 'px-3 py-1 text-sm'} ${
 			active ? 'bg-surface-50-950 font-medium shadow-sm' : 'text-muted hover:text-surface-950-50'
@@ -63,51 +59,73 @@
 
 <Modal bind:open title={m.wsview_compile_modal_title()} card="max-h-full max-w-lg overflow-y-auto p-5">
 	<!-- (main-file selection lives in the first-compile confirm modal and the file
-			     tree's "Set as main file" - not here; this modal is only about the command) -->
+	     tree's "Set as main file" - not here; this modal is only about the command) -->
 
 	<!-- Which typesetter is in effect: a readout, not a choice. It decides what every control
-			     under it means, and the main file decides IT. -->
-	<div class="border-surface-200-800 mb-2 flex items-center justify-between gap-4 border-b pb-3">
-		<span class="text-sm font-medium">{m.wsview_format_label()}</span>
-		<!-- LaTeX and Typst are product names, so they are not translated -->
-		<span class="text-sm">{isTypst ? 'Typst' : 'LaTeX'}</span>
+	     under it means, and the main file decides IT. -->
+	<div class={ROW}>
+		<div class="flex items-center justify-between gap-4">
+			<span class="text-sm font-medium">{m.wsview_format_label()}</span>
+			<!-- LaTeX and Typst are product names, so they are not translated -->
+			<span class="text-muted text-sm">{isTypst ? 'Typst' : 'LaTeX'}</span>
+		</div>
+		<p class="text-muted mt-1 text-xs">{m.wsview_format_from_main()}</p>
 	</div>
-	<p class="text-muted mb-3 text-xs">{m.wsview_format_from_main()}</p>
 
 	<!-- the lane's own settings, so this block always describes the compiler that will run -->
 	{#if isTypst}
-		<TypstCompileSettings {superseded} />
+		<TypstCompileSettings {superseded} row={ROW} />
 	{:else}
-		<LatexCompileSettings bind:command {superseded} {sessionActive} segment={SEGMENT} {seg} />
+		<LatexCompileSettings bind:command {superseded} {sessionActive} segment={SEGMENT} {seg} row={ROW} />
 	{/if}
 
 	{#if !superseded}
-		<!-- svelte-ignore a11y_autofocus -->
-		<textarea
-			class="textarea w-full resize-none font-mono text-sm [field-sizing:content]"
-			rows="1"
-			bind:value={command}
-			placeholder={DEFAULT_COMPILE_COMMAND}
-			spellcheck="false"
-			autofocus
-			onkeydown={(e) => {
-				if (e.key !== 'Enter') return;
-				e.preventDefault();
-				if (!(command.includes('{main}') && !mainFile.current)) onSave(true);
-			}}></textarea>
-		<div class="mt-4 flex items-center justify-between gap-4">
-			<span class="text-sm">{m.wsview_completion_marker_label()}</span>
-			<Switch
-				checked={compileConfig.current.completionMarker}
-				onCheckedChange={(d) => projectConfigSync.setCompletionMarker(workspaceRoot.current, d.checked)}
-			>
-				<Switch.Control><Switch.Thumb /></Switch.Control>
-				<Switch.HiddenInput />
-			</Switch>
+		<div class={ROW}>
+			<div class="flex items-center justify-between gap-4">
+				<span class="text-sm font-medium">{m.wsview_command_label()}</span>
+				{#if command !== defaultCommand}
+					<button
+						type="button"
+						class="text-muted hover:text-surface-950-50 text-xs"
+						use:tip={m.wsview_use_default_title()}
+						onclick={() => (command = defaultCommand)}
+					>
+						{m.wsview_use_default()}
+					</button>
+				{/if}
+			</div>
+			<!-- svelte-ignore a11y_autofocus -->
+			<textarea
+				class="textarea mt-2 w-full resize-none font-mono text-sm [field-sizing:content]"
+				rows="1"
+				bind:value={command}
+				placeholder={defaultCommand}
+				spellcheck="false"
+				autofocus
+				onkeydown={(e) => {
+					if (e.key !== 'Enter') return;
+					e.preventDefault();
+					if (!needsMain) onSave(true);
+				}}></textarea>
+			<p class="text-muted mt-1 text-xs">
+				{m.wsview_compile_desc_pre()} <code class="bg-surface-200-800 rounded-base px-1">{'{main}'}</code>
+				{m.wsview_compile_desc_post()}
+			</p>
 		</div>
-		<p class="text-muted mt-1 text-xs">
-			{m.wsview_completion_marker_desc()}
-		</p>
+
+		<div class={ROW}>
+			<div class="flex items-center justify-between gap-4">
+				<span class="text-sm font-medium">{m.wsview_completion_marker_label()}</span>
+				<Switch
+					checked={compileConfig.current.completionMarker}
+					onCheckedChange={(d) => projectConfigSync.setCompletionMarker(workspaceRoot.current, d.checked)}
+				>
+					<Switch.Control><Switch.Thumb /></Switch.Control>
+					<Switch.HiddenInput />
+				</Switch>
+			</div>
+			<p class="text-muted mt-1 text-xs">{m.wsview_completion_marker_desc()}</p>
+		</div>
 
 		<CompileOutputPaths bind:outputs bind:open={advancedOpen} />
 	{/if}
@@ -137,20 +155,7 @@
 				: [
 						{ label: m.wsview_cancel_label(), role: 'cancel', onclick: () => (open = false) },
 						{ label: m.wsview_save_label(), onclick: () => onSave(false) },
-						{
-							label: m.wsview_use_default(),
-							icon: Play,
-							tip: m.wsview_use_default_title(),
-							disabled: DEFAULT_COMPILE_COMMAND.includes('{main}') && !mainFile.current,
-							onclick: onUseDefault
-						},
-						{
-							label: m.wsview_save_and_run(),
-							role: 'primary',
-							icon: Play,
-							disabled: command.includes('{main}') && !mainFile.current,
-							onclick: () => onSave(true)
-						}
+						{ label: m.wsview_save_and_run(), role: 'primary', icon: Play, disabled: needsMain, onclick: () => onSave(true) }
 					]}
 		/>
 	</div>

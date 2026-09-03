@@ -372,7 +372,6 @@
 		formatting={fmt.formatting}
 		pendingRefUpdate={files.pendingRefUpdate}
 		onSaveCompile={(thenRun) => fmt.saveCompileCommand(thenRun)}
-		onUseDefaultCompile={() => fmt.useDefaultCommand()}
 		onRunCompile={compiler.runCompile}
 		onFormat={() => void fmt.runFormatNow()}
 		onResolveConflict={(c) => external.resolve(c)}

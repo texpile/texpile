@@ -24,7 +24,6 @@
 		formatting,
 		pendingRefUpdate,
 		onSaveCompile,
-		onUseDefaultCompile,
 		onRunCompile,
 		onFormat,
 		onResolveConflict,
@@ -41,7 +40,6 @@
 		formatting: boolean;
 		pendingRefUpdate: RefUpdate | null;
 		onSaveCompile: (thenRun: boolean) => void;
-		onUseDefaultCompile: () => void;
 		onRunCompile: () => void;
 		onFormat: () => void;
 		onResolveConflict: (choice: 'reload' | 'keep') => void;
@@ -142,7 +140,6 @@
 	bind:outputs={compileSettings.outputsDraft}
 	bind:advancedOpen={compileSettings.advancedOpen}
 	onSave={onSaveCompile}
-	onUseDefault={onUseDefaultCompile}
 	onRun={onRunCompile}
 />
 

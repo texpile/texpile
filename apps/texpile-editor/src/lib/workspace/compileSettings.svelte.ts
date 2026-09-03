@@ -9,8 +9,6 @@
 import { workspaceRoot, mainFile, effectiveCompileFormat } from '$lib/workspace/workspaceStore';
 import { compileConfig, projectConfigSync } from '$lib/workspace/projectConfigSync.svelte';
 import { resolveFormatCommand } from '$lib/workspace/compilePipeline.svelte';
-import { buildTypstCommand } from '$lib/workspace/typstCommand';
-import { DEFAULT_COMPILE_COMMAND } from '$lib/settings';
 
 export class CompileSettings {
 	modalOpen = $state(false);
@@ -79,17 +77,5 @@ export class CompileSettings {
 		}
 		// keep an open dialog showing what was just applied under it
 		if (this.modalOpen) this.open();
-	}
-
-	/**
-	 * Back to the stock command for the lane this folder builds with.
-	 *
-	 * Lane-aware, where it used to be latex's default plus a pin to latex - which in a .typ project
-	 * meant "Use default" quietly reassigned the project to LaTeX and handed it a latexmk line. The
-	 * pin was the only thing making that coherent, and it was coherently wrong.
-	 */
-	useDefault() {
-		this.draft = this.lane() === 'typst' ? buildTypstCommand(mainFile.current) : DEFAULT_COMPILE_COMMAND;
-		this.save(true);
 	}
 }
