@@ -29,8 +29,10 @@ Texpile's visual editor supports LaTeX, Typst, and Markdown. Texpile stores them
 ## Live preview for LaTeX
 
 Type in source view and the page re-typesets with your own LuaLaTeX. Many updates, such as text changes, are rendered instantly.
-https://github.com/user-attachments/assets/4ecb01f8-ae3b-4b24-be75-a0bce801768f
 
+<p align="center" width="100%">
+<video src="https://github.com/user-attachments/assets/4ecb01f8-ae3b-4b24-be75-a0bce801768f" width="80%" controls></video>
+</p>
 
 ## Shared sessions (real time collaboration)
 
