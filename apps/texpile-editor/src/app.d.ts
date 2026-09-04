@@ -96,6 +96,8 @@ declare global {
 		};
 		/** DevTools helper for the caret-vanished reports; see lib/debug/focusDoctor.ts. */
 		texpileFocusDoctor: () => Record<string, unknown>;
+		/** DevTools helper for slow launches; see lib/debug/startupDoctor.ts. */
+		texpileStartupDoctor: () => Promise<Record<string, unknown>>;
 		MathfieldElement: typeof import('mathlive').MathfieldElement;
 		mathVirtualKeyboard: import('mathlive').VirtualKeyboardInterface;
 		/** Interactive terminal bridge (Electron only; undefined in the browser dev server). */

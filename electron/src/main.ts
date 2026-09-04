@@ -10,6 +10,8 @@ import { readSettings, writeSettings, registerSettingsIpc } from './appSettings'
 import { createWindow, startUrl } from './windows/createWindow';
 import { windowRoots, pendingOpens, normRoot, windowFor, focusWindow, beginQuit } from './windows/windowRegistry';
 import { registerBootstrapIpc } from './ipc/bootstrapIpc';
+import { registerStartupStatsIpc } from './startupStats';
+import { startStartupProfile } from './startupProfile';
 import { registerFsIpc } from './ipc/fsIpc';
 import { registerDraftIpc } from './ipc/draftIpc';
 import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspaceWindowIpc';
@@ -24,6 +26,8 @@ registerPrivilegedSchemes();
 registerSettingsIpc();
 // before every other surface: preload calls it synchronously while the window is still loading
 registerBootstrapIpc();
+registerStartupStatsIpc();
+startStartupProfile();
 registerFsIpc();
 registerDraftIpc();
 registerWorkspaceWindowIpc();

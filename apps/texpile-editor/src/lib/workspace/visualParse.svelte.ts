@@ -6,6 +6,7 @@
 // never overwrite fresher state.
 import type { ParsedLatexFile, ParsePhase } from '$lib/workspace/latexRoundtrip';
 import { parseLatexFileAsync, PARSE_TIMEOUT, PARSE_TOO_COMPLEX } from '$lib/workspace/latexParserClient';
+import { mark } from '$lib/debug/startupDoctor';
 
 // ProseMirror renders the whole doc with no virtualization and builds a node view per
 // math/raw/citation node, so past a certain size the mount locks the renderer for minutes and no
@@ -49,6 +50,7 @@ export class VisualParser {
 	/** The failure is RETURNED rather than handled here: only the caller knows whether its parse is
 	 * still the current one, and a superseded parse must not yank the user out of visual mode. */
 	async parse(text: string, format: 'tex' | 'md' | 'typ' = 'tex'): Promise<ParseOutcome> {
+		mark('parse');
 		if (format === 'typ') return this.parseTypst(text);
 		try {
 			const timeoutMs = Math.min(MAX_TIMEOUT_MS, MIN_TIMEOUT_MS + Math.floor(text.length / 100));
@@ -77,7 +79,9 @@ export class VisualParser {
 	private async parseTypst(text: string): Promise<ParseOutcome> {
 		try {
 			this.progress = 'parsing';
+			mark('typst-import');
 			const { parseTypstFile } = await import('$lib/languages/typst/visual/roundtrip');
+			mark('typst-ready');
 			const parsed = parseTypstFile(text, this.getMacros());
 			let nodeCount = 0;
 			parsed.doc.descendants(() => {

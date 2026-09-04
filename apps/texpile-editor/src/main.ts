@@ -10,11 +10,15 @@ import '$lib/theme'; // side-effect: applies the saved appearance and watches OS
 import { loadSettings } from '$lib/settings';
 import { adoptBootOpen, bootOpen } from '$lib/workspace/openWorkspace';
 import { focusDoctor } from '$lib/debug/focusDoctor';
+import { mark, startupDoctor } from '$lib/debug/startupDoctor';
+import { warmEditor } from '$lib/warmup';
 import App from './App.svelte';
 
 // Silence console.log is from legacy webapp, not nesscarily needed for desktop app
 window.texpile = window.texpile || { debug: { log: import.meta.env.DEV } };
 window.texpileFocusDoctor = focusDoctor;
+window.texpileStartupDoctor = startupDoctor;
+mark('boot');
 const originalLog = console.log;
 console.log = (...args: unknown[]) => {
 	if (window.texpile?.debug?.log) {
@@ -40,5 +44,7 @@ if (boot) {
 // flash of English UI (settings.ts applies the locale as soon as this resolves). top-level await
 // isn't available at this app's build target, hence the .then() instead of an await here.
 loadSettings().then(() => {
+	mark('settings');
 	mount(App, { target: document.getElementById('app')! });
+	if (!bootOpen()) warmEditor(); // a restored folder opens a file at once; EditorPane warms after it
 });

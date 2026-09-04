@@ -96,6 +96,9 @@ export type SkeletonItem =
 export type SkeletonResult =
 	{ ok: true; kA: number; kB: number; gs: number; gsn: number; go: number; ys: number[]; nys?: number[] } | { ok: false; error: string };
 
+/** a held main thread or a timed spawn, epoch ms; see electron/src/startupStats.ts */
+export type MainSpan = { label: string; at: number; ms: number };
+
 type TexpileNative = {
 	/** answered synchronously in preload, so the first render already knows what it is opening */
 	bootstrap?: { open: { kind: 'file' | 'folder'; path: string } | null; settings: Record<string, unknown> };
@@ -107,6 +110,7 @@ type TexpileNative = {
 	releaseWorkspace?: () => Promise<{ ok: boolean }>;
 	newWindow?: () => Promise<void>;
 	toggleDevTools?: () => void;
+	startupMainStats?: () => Promise<{ stalls: MainSpan[]; spans: MainSpan[]; profile: string | null }>;
 	reloadWorkspace?: () => void;
 	openFolderNewWindow?: () => Promise<string | null>;
 	claimStartupTasks?: () => Promise<boolean>;

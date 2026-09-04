@@ -2,6 +2,7 @@
 // its raw text (doc.texSource), the whole file. The visual editor is a view over it: entry
 // parses into doc.visualDoc + doc.docMeta, every visual edit serializes straight back into
 // doc.texSource, and source mode binds to it directly. No rival copy can drift.
+import { mark } from '$lib/debug/startupDoctor';
 import { untrack } from 'svelte';
 import { DocumentBuffer, fileKind, formatOf, hasVisualMode } from '$lib/workspace/documentBuffer.svelte';
 import { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
@@ -186,6 +187,7 @@ export class WorkspaceDoc {
 	}
 
 	loadFile(path: string) {
+		mark('file-open');
 		return this.opener.open(path);
 	}
 

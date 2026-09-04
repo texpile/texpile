@@ -1,7 +1,7 @@
 // the multi-window surface: folder claims, held closes, new windows, zoom, and the
 // once-per-session startup claim
 import { BrowserWindow, dialog, ipcMain } from 'electron';
-import { startWorkspaceWatch, stopWorkspaceWatch } from '../fs/fsWatch';
+import { startWorkspaceWatch, stopWorkspaceWatch } from '../fs/workspaceWatch';
 import { createWindow, startUrl } from '../windows/createWindow';
 import {
 	windowRoots,

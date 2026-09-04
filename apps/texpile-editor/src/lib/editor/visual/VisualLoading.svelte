@@ -12,15 +12,21 @@
 	// compositor and keeps moving while the main thread is completely blocked.
 	import { Loader2 } from '@lucide/svelte';
 	import type { ParsePhase } from '$lib/workspace/latexRoundtrip';
+	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { LATE_MS } from '$lib/lateReveal';
 	import { m } from '$lib/paraglide/messages';
 
 	let {
 		phase = null,
+		format = 'tex',
 		sizeBytes = 0,
 		onUseSource,
 		mounting = false
-	}: { phase?: ParsePhase | null; sizeBytes?: number; onUseSource?: () => void; mounting?: boolean } = $props();
+	}: { phase?: ParsePhase | null; format?: FileKind; sizeBytes?: number; onUseSource?: () => void; mounting?: boolean } = $props();
+
+	// below this the wait is the machine, not the file: a cold launch reading and compiling the
+	// editor's chunks, or a file that has not arrived yet (0 bytes). Say that, not "large".
+	const LARGE_BYTES = 200_000;
 
 	// escalate with the wait instead of flashing the heaviest UI at every switch: most parses finish
 	// inside the threshold and should show nothing at all.
@@ -71,7 +77,13 @@
 				? m.wsview_loading_finalizing()
 				: phase === 'building'
 					? m.wsview_loading_building()
-					: m.wsview_loading_parsing()
+					: sizeBytes === 0
+						? m.wsview_opening()
+						: format === 'typ'
+							? m.wsview_loading_parsing_typst()
+							: format === 'md'
+								? m.wsview_loading_parsing_markdown()
+								: m.wsview_loading_parsing()
 	);
 	const sizeText = $derived(sizeBytes >= 1_000_000 ? `${(sizeBytes / 1_048_576).toFixed(1)} MB` : `${Math.round(sizeBytes / 1024)} KB`);
 </script>
@@ -95,7 +107,9 @@
 		<p class="text-muted mt-3 text-sm">{label}</p>
 
 		{#if slow}
-			<p class="text-faint mt-2 text-xs">{m.wsview_loading_large_note({ size: sizeText })}</p>
+			<p class="text-faint mt-2 text-xs">
+				{sizeBytes >= LARGE_BYTES ? m.wsview_loading_large_note({ size: sizeText }) : m.wsview_loading_slow_note()}
+			</p>
 			{#if onUseSource}
 				<button class="text-primary-ink mt-3 text-xs hover:underline" onclick={onUseSource}>
 					{m.wsview_loading_use_source()}

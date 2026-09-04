@@ -13,6 +13,8 @@
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
 	import PDFViewer from '$lib/preview/PDFViewer.svelte';
 	import VisualLoading from '$lib/editor/visual/VisualLoading.svelte';
+	import { mark } from '$lib/debug/startupDoctor';
+	import { warmEditor } from '$lib/warmup';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
 	import { editorViewStore } from '$lib/stores/editorStore';
@@ -166,6 +168,8 @@
 
 	/** a callback, not an effect: it dispatches a selection an effect would re-enter on */
 	function onVisualReady(): void {
+		mark('editor-ready');
+		warmEditor();
 		readyFor = loadedPath;
 		const v = editorViewStore.current;
 		if (!v || !loadedPath || session.collabFor(loadedPath)) return;
@@ -349,7 +353,7 @@
 				/>
 			{:else if visualPending}
 				<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
-				<VisualLoading phase={parseProgress} sizeBytes={texSource.length} {onUseSource} />
+				<VisualLoading phase={parseProgress} format={kind} sizeBytes={texSource.length} {onUseSource} />
 			{:else if loadedPath && kind === 'bib' && (viewMode === 'source' || session.isGuest)}
 				<!-- guests always co-edit .bib through the Y-bound source editor; BibManager isn't
 				     CRDT-bound and would desync or clobber remote edits -->

@@ -1,6 +1,7 @@
 // wrapper around the harper.js WorkerLinter singleton
 import type { Lint, LintConfig, LintOptions, WorkerLinter } from 'harper.js';
 import { editorConfigStore } from '$lib/stores/editorStore';
+import { mark } from '$lib/debug/startupDoctor';
 
 let linterPromise: Promise<WorkerLinter> | null = null;
 
@@ -9,6 +10,7 @@ let lastLoadedDictionary: string[] = [];
 async function createLinter(): Promise<WorkerLinter> {
 	// harper's js glue is heavy, so it loads with the first lint instead of at boot (the wasm
 	// was already lazy)
+	mark('harper-start');
 	const { WorkerLinter, Dialect, binary } = await import('harper.js');
 	const linter = new WorkerLinter({
 		binary,
@@ -17,6 +19,7 @@ async function createLinter(): Promise<WorkerLinter> {
 
 	// setup up front so the first lint isn't slow
 	await linter.setup();
+	mark('harper-ready');
 
 	await linter.importWords(['Texpile', 'LaTeX', 'WYSIWYM', 'CTRL', 'CMD']);
 

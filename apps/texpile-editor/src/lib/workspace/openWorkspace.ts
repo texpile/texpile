@@ -1,4 +1,5 @@
 // the one folder-open sequence: launch bootstrap, main's later pushes, and the start screen
+import { mark } from '$lib/debug/startupDoctor';
 import { fileMode } from './fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
 import { claimWorkspace, dirname, joinPath, nativeBridge, samePath, scanTexFiles, statFile } from './fileSystem';
@@ -41,6 +42,7 @@ async function fill(root: string, want: string | null): Promise<void> {
 export function adoptBootOpen(open: BootOpen): void {
 	const root = open.kind === 'file' ? dirname(open.path) : open.path;
 	fileMode.current = open.kind === 'file';
+	mark('folder-open');
 	// a document is certain here, so warm the parser alongside the editor chunk
 	latexParserWorker();
 	show(root);
@@ -50,6 +52,7 @@ export function adoptBootOpen(open: BootOpen): void {
 // Resolves once the workspace is on screen; the scan lands after it, as at launch. Waiting for the
 // scan first put three round trips between the click and anything happening.
 async function open(root: string, want: string | null): Promise<OpenOutcome> {
+	mark('folder-open');
 	// together, and both before navigating: claiming does not check the folder is still there, so a
 	// recent-folders entry for a deleted one has to fail here rather than in an empty workspace
 	const [claim, found] = await Promise.all([claimWorkspace(root), statFile(root)]);

@@ -5,6 +5,7 @@
 // this app downloaded into userData - in that order, so a user who manages their own toolchain
 // keeps control of which version runs.
 import { execFile, spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+import { timeSpan, timeSync } from './startupStats';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { shellEnvReady } from './shell/shellEnv';
@@ -80,7 +81,7 @@ export async function resolveTinymist(userData: string): Promise<TinymistInfo | 
 	for (const c of candidates) {
 		// an absolute path that isn't there can't be spawned; skip without paying the exec timeout
 		if (path.isAbsolute(c.command) && !fs.existsSync(c.command)) continue;
-		const v = await probe(c.command);
+		const v = await timeSpan('tinymist --version', probe(c.command));
 		if (v) return { command: c.command, ...v, source: c.source };
 	}
 	return null;
@@ -144,11 +145,13 @@ export function startLsp(
 ): LspHandle {
 	let proc: ChildProcessWithoutNullStreams;
 	try {
-		proc = spawn(command, ['lsp'], {
-			cwd: cwd && fs.existsSync(cwd) ? cwd : undefined,
-			windowsHide: true,
-			stdio: ['pipe', 'pipe', 'pipe']
-		});
+		proc = timeSync('spawn tinymist lsp', () =>
+			spawn(command, ['lsp'], {
+				cwd: cwd && fs.existsSync(cwd) ? cwd : undefined,
+				windowsHide: true,
+				stdio: ['pipe', 'pipe', 'pipe']
+			})
+		);
 	} catch (err) {
 		on.exit(null);
 		throw err;

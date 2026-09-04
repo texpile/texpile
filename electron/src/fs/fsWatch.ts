@@ -1,3 +1,6 @@
+// Runs in the helper process (helper/helperWorker.ts): chokidar opens a native watcher per entry,
+// synchronously, and that must not hold the main process. workspaceWatch.ts is the main-side end.
+//
 // Watches a claimed workspace root so the renderer hears about external writes NOW, not on the
 // next window focus. Before this, an agent or another editor writing a file went unnoticed until
 // the user alt-tabbed back - and the renderer's conflict machinery (externalChange.svelte.ts),

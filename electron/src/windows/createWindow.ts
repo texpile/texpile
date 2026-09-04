@@ -4,7 +4,7 @@ import { app, BrowserWindow, shell } from 'electron';
 import * as path from 'node:path';
 import { readSettings } from '../appSettings';
 import { isDev } from '../appIdentity';
-import { stopWorkspaceWatch } from '../fs/fsWatch';
+import { stopWorkspaceWatch } from '../fs/workspaceWatch';
 import { forgetWindow } from '../mcp/windowState';
 import { forgetWindowChrome, watchWindowState } from '../windowChrome';
 import { releaseDraftOwnerFor } from '../ipc/draftIpc';

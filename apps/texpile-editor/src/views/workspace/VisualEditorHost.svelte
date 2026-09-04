@@ -144,7 +144,7 @@
 			     space the editor will occupy rather than over it. It is on screen for the paint
 			     that happens while EditorView awaits its dynamic import, and stays there through
 			     the synchronous build that follows. -->
-			<VisualLoading mounting sizeBytes={texSource.length} />
+			<VisualLoading mounting format={kind} sizeBytes={texSource.length} />
 		{/if}
 	</div>
 </div>

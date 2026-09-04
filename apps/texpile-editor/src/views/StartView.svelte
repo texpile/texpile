@@ -11,6 +11,8 @@
 	import logoOnDark from '$branding/Logo-light.svg';
 	import { pickFolder, isDesktop, openNewWindow, basename } from '$lib/workspace/fileSystem';
 	import { recentFolders, setMainFile } from '$lib/workspace/workspaceStore';
+	import { onMount } from 'svelte';
+	import { mark } from '$lib/debug/startupDoctor';
 	import { openFolderInWindow } from '$lib/workspace/openWorkspace';
 	import { openTutorialProject } from '$lib/workspace/starters';
 	import { m } from '$lib/paraglide/messages';
@@ -89,6 +91,8 @@
 	// (settings.openFolders) and pushes a main:open-folder to each restored window at launch;
 	// App.svelte handles it. A StartView-side auto-reopen would make every NEW window reopen
 	// the last folder too.
+
+	onMount(() => mark('start-screen'));
 </script>
 
 <svelte:head><title>Texpile</title></svelte:head>

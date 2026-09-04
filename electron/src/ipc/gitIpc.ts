@@ -1,29 +1,29 @@
-// the git:* surface, backing the Source Control panel
-import * as gitService from '../gitService';
+// the git:* surface, backing the Source Control panel. Every call runs in the helper process
+// (helper/helperWorker.ts); main only relays.
+import { helperCall } from '../helper/helperProcess';
 import { handleFs } from './ipcResult';
 import { shellEnvReady } from '../shell/shellEnv';
+import { timeSpan } from '../startupStats';
 
-// simple-git spawns git with our own environment (see gitService), so every call waits on the
-// login shell's PATH instead of being handed one
-function withShellEnv(fn: (...args: never[]) => Promise<unknown>): (...args: never[]) => Promise<unknown> {
-	return async (...args: never[]) => {
-		await shellEnvReady();
-		return fn(...args);
-	};
-}
+// channel -> gitService export
+const OPS: Record<string, string> = {
+	'git:status': 'gitStatus',
+	'git:show': 'gitShowHead',
+	'git:init': 'gitInit',
+	'git:stage': 'gitStage',
+	'git:unstage': 'gitUnstage',
+	'git:discard': 'gitDiscard',
+	'git:commit': 'gitCommit',
+	'git:userName': 'gitUserName',
+	'git:log': 'gitLog',
+	'git:changesSince': 'gitChangesSince',
+	'git:showAt': 'gitShowAt',
+	'git:restore': 'gitRestore',
+	'git:push': 'gitPush'
+};
 
 export function registerGitIpc(): void {
-	handleFs('git:status', withShellEnv(gitService.gitStatus));
-	handleFs('git:show', withShellEnv(gitService.gitShowHead));
-	handleFs('git:init', withShellEnv(gitService.gitInit));
-	handleFs('git:stage', withShellEnv(gitService.gitStage));
-	handleFs('git:unstage', withShellEnv(gitService.gitUnstage));
-	handleFs('git:discard', withShellEnv(gitService.gitDiscard));
-	handleFs('git:commit', withShellEnv(gitService.gitCommit));
-	handleFs('git:userName', withShellEnv(gitService.gitUserName));
-	handleFs('git:log', withShellEnv(gitService.gitLog));
-	handleFs('git:changesSince', withShellEnv(gitService.gitChangesSince));
-	handleFs('git:showAt', withShellEnv(gitService.gitShowAt));
-	handleFs('git:restore', withShellEnv(gitService.gitRestore));
-	handleFs('git:push', withShellEnv(gitService.gitPush));
+	for (const [channel, op] of Object.entries(OPS)) {
+		handleFs(channel, (...args: unknown[]) => timeSpan(channel, helperCall(`git.${op}`, args)));
+	}
 }

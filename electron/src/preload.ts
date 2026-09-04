@@ -81,6 +81,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	newWindow: () => ipcRenderer.invoke('window:new'),
 	/** palette "Toggle Developer Tools"; the window's own devtools, not a global */
 	toggleDevTools: () => ipcRenderer.send('window:toggle-devtools'),
+	/** what the main process was doing during launch; see startupStats.ts */
+	startupMainStats: () => ipcRenderer.invoke('startup:mainStats'),
 	/** palette "Reload workspace": reload this window and reopen its folder (main keeps the root) */
 	reloadWorkspace: () => ipcRenderer.send('window:reload-workspace'),
 

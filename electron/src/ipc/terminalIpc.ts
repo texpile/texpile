@@ -5,6 +5,7 @@ import * as path from 'node:path';
 import * as typstService from '../typstService';
 import * as toolchain from '../toolchain';
 import { shellEnvReady } from '../shell/shellEnv';
+import { timeSync } from '../startupStats';
 
 // node-pty is a native module: if it isn't built for this Electron ABI the require throws,
 // so guard it and let the renderer show the terminal as unavailable
@@ -85,16 +86,18 @@ export function registerTerminalIpc(): void {
 			// (MacTeX registers /Library/TeX/texbin there). A Finder-launched app only has
 			// launchd's bare PATH, and a non-login zsh never repairs it - Terminal.app,
 			// iTerm and VS Code all spawn login shells for the same reason.
-			proc = pty.spawn(shellPath, process.platform === 'darwin' ? ['-l'] : [], {
-				name: 'xterm-color',
-				cwd: cwd && fs.existsSync(cwd) ? cwd : app.getPath('home'),
-				cols: Math.max(1, cols! | 0) || 80,
-				rows: Math.max(1, rows! | 0) || 24,
-				// the shell must be able to find the tools Preferences says are installed; without this a
-				// configured tinymist works for intellisense and for the Toolchain tab, then fails at the
-				// compile command with "not recognized" (see withPathDirs)
-				env: terminalEnv() as Record<string, string>
-			});
+			proc = timeSync('spawn terminal shell', () =>
+				pty.spawn(shellPath, process.platform === 'darwin' ? ['-l'] : [], {
+					name: 'xterm-color',
+					cwd: cwd && fs.existsSync(cwd) ? cwd : app.getPath('home'),
+					cols: Math.max(1, cols! | 0) || 80,
+					rows: Math.max(1, rows! | 0) || 24,
+					// the shell must be able to find the tools Preferences says are installed; without this a
+					// configured tinymist works for intellisense and for the Toolchain tab, then fails at the
+					// compile command with "not recognized" (see withPathDirs)
+					env: terminalEnv() as Record<string, string>
+				})
+			);
 		} catch (err) {
 			return { ok: false, error: String(err instanceof Error ? err.message : err) };
 		}

@@ -1,5 +1,5 @@
-// Bundles the Electron main process into two files, main.js and preload.js (preload must stay its
-// own file: Electron loads it by path). tsc handles type-checking; this only emits.
+// Bundles the Electron main process into app.js, preload.js and helperWorker.js (the last two
+// must stay their own files: Electron loads them by path). tsc handles type-checking; this only emits.
 //
 // Used by BOTH `electron:build` (dev, --dev) and `electron:build:prod`. That matters: dev used to
 // run plain `tsc -p electron`, which emits per-file CJS and leaves every dependency as a runtime
@@ -23,7 +23,12 @@ mkdirSync(DIST, { recursive: true });
 buildSync({
 	// app.js, not main.js: main.js is the shim below, and the entry script is already compiled by
 	// the time it can turn the compile cache on
-	entryPoints: { app: join(ROOT, 'electron', 'src', 'main.ts'), preload: join(ROOT, 'electron', 'src', 'preload.ts') },
+	entryPoints: {
+		app: join(ROOT, 'electron', 'src', 'main.ts'),
+		preload: join(ROOT, 'electron', 'src', 'preload.ts'),
+		// the helper utility process (git, workspace watcher); utilityProcess.fork loads it by path
+		helperWorker: join(ROOT, 'electron', 'src', 'helper', 'helperWorker.ts')
+	},
 	outdir: DIST,
 	bundle: true,
 	platform: 'node',
@@ -62,5 +67,5 @@ require('./app.js');
 `
 );
 console.log(
-	`build-electron: bundled ${dev ? 'app.js and preload.js (dev: unminified, inline sourcemaps)' : '+ minified app.js and preload.js'} + main.js shim`
+	`build-electron: bundled ${dev ? 'app.js, preload.js and helperWorker.js (dev: unminified, inline sourcemaps)' : '+ minified app.js, preload.js and helperWorker.js'} + main.js shim`
 );

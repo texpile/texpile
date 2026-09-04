@@ -32,6 +32,7 @@
 	import { setPaletteActions } from '$lib/workspace/commandPalette.svelte';
 	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
+	import { mark } from '$lib/debug/startupDoctor';
 	import { createKeydownHandler } from '$lib/workspace/shortcuts';
 	import { workspaceRoot, texFiles, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
@@ -116,7 +117,10 @@
 		resetTerminals: () => termDock.resetForWorkspace()
 	});
 
-	onMount(() => startWorkspace({ guest, hostMode, wsdoc, editFlow, files, cc, compiler, draftCtl, commentsCtl, layout, termDock }));
+	onMount(() => {
+		mark('workspace');
+		return startWorkspace({ guest, hostMode, wsdoc, editFlow, files, cc, compiler, draftCtl, commentsCtl, layout, termDock });
+	});
 
 	let tutorialModalOpen = $state(false);
 

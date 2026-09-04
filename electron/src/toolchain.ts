@@ -7,6 +7,7 @@
 // Deliberately a PROBE, not a resolver: it reports what it found and where, and never installs or
 // modifies anything.
 import { execFile } from 'node:child_process';
+import { timeSync } from './startupStats';
 import { shellEnvReady } from './shell/shellEnv';
 
 export type ToolProbe = {
@@ -51,11 +52,13 @@ export function firstInformativeLine(out: string): string | undefined {
  */
 function probeOne(id: string, command: string, args: string[]): Promise<ToolProbe> {
 	return new Promise((resolve) => {
-		execFile(command, args, { timeout: 10000, windowsHide: true }, (err, stdout, stderr) => {
-			const code = (err as NodeJS.ErrnoException | null)?.code;
-			if (code === 'ENOENT') return resolve({ id, found: false, command });
-			resolve({ id, found: true, detail: firstInformativeLine(`${stdout}\n${stderr}`), command });
-		});
+		timeSync(`probe ${id}`, () =>
+			execFile(command, args, { timeout: 10000, windowsHide: true }, (err, stdout, stderr) => {
+				const code = (err as NodeJS.ErrnoException | null)?.code;
+				if (code === 'ENOENT') return resolve({ id, found: false, command });
+				resolve({ id, found: true, detail: firstInformativeLine(`${stdout}\n${stderr}`), command });
+			})
+		);
 	});
 }
 
