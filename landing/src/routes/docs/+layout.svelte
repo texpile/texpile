@@ -1,18 +1,28 @@
 <script lang="ts">
 	import { ChevronDown, ChevronLeft, ChevronRight, BookOpen } from '@lucide/svelte';
 	import { page } from '$app/state';
-	import { TOPICS, hrefFor, siblings, lookup, type Topic } from '$lib/docs/nav';
+	import { hrefFor, siblings, lookup, type NavNode } from '$lib/docs/nav';
 
-	let { children } = $props();
+	let { data, children } = $props();
 
-	// route.id, not url.pathname: the localized routes (/de/docs/visual-editing/math) reroute to the
-	// same route id, so this stays correct in every locale. Already the full path segment (e.g.
-	// "visual-editing/math") for a nested topic, since that's exactly what the route id contains.
-	const slug = $derived(page.route.id?.replace('/docs/', '') ?? '');
-	const isIndex = $derived(page.route.id === '/docs');
-	const pager = $derived(siblings(slug));
-	const active = $derived(lookup(slug));
-	const currentTitle = $derived(active?.topic.title ?? 'Documentation');
+	// params, not url.pathname: the localized routes (/de/docs/visual-editing/math) reroute to the
+	// same route, so this stays correct in every locale
+	const slug = $derived(page.params.slug ?? '');
+	const isIndex = $derived(slug === '');
+	const pager = $derived(siblings(data.nav, slug));
+	const active = $derived(lookup(data.nav, slug));
+	const currentTitle = $derived(active?.title ?? 'Documentation');
+
+	// the top level, split where the section label changes; pages are already in section order
+	const groups = $derived.by(() => {
+		const out: { section: string; topics: NavNode[] }[] = [];
+		for (const topic of data.nav) {
+			const last = out[out.length - 1];
+			if (last && last.section === topic.section) last.topics.push(topic);
+			else out.push({ section: topic.section ?? '', topics: [topic] });
+		}
+		return out;
+	});
 </script>
 
 <div class="container mx-auto max-w-6xl flex-1 px-4 py-8 sm:px-6 md:py-12 lg:px-8">
@@ -37,7 +47,7 @@
 			<nav class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto">
 				<a
 					href="/docs"
-					class="mb-3 flex items-center gap-2 px-3 text-xs font-semibold tracking-wide uppercase {isIndex
+					class="mb-5 flex items-center gap-2 px-3 text-xs font-semibold tracking-wide uppercase {isIndex
 						? 'text-primary-600'
 						: 'text-surface-500 hover:text-surface-900'}"
 				>
@@ -86,29 +96,28 @@
 </div>
 
 <!--
-	Recursive, so the depth of the tree lives in TOPICS and not here. The install pages are three
+	Recursive, so the depth of the tree lives in the docs folder and not here. The install pages are three
 	levels deep (installation > latex > windows); everything else is one or two.
 
 	Grandchildren render only under the branch the reader is inside. Showing all of them at once put
 	25 rows in a sidebar that has to stay under one screen, and a reader installing Typst has no use
 	for the three LaTeX platform pages.
 -->
-{#snippet navItems(topics: Topic[], prefix: string, depth: number)}
+{#snippet navItems(topics: NavNode[], depth: number)}
 	<ul class={depth === 0 ? 'space-y-0.5' : 'border-surface-200 mt-0.5 mb-1 ml-3 space-y-0.5 border-l pl-3'}>
 		{#each topics as topic (topic.slug)}
-			{@const path = prefix ? `${prefix}/${topic.slug}` : topic.slug}
-			{@const onPath = slug === path || slug.startsWith(`${path}/`)}
+			{@const onPath = slug === topic.slug || slug.startsWith(`${topic.slug}/`)}
 			<li>
 				<a
-					href={hrefFor(path)}
-					class="rounded-base block px-3 text-sm transition-colors {depth === 0 ? 'py-1.5' : 'py-1'} {path === slug
+					href={hrefFor(topic.slug)}
+					class="rounded-base block px-3 text-sm transition-colors {depth === 0 ? 'py-1.5' : 'py-1'} {topic.slug === slug
 						? 'bg-primary-50 text-primary-700 font-medium'
 						: `${depth === 0 ? 'text-surface-600' : 'text-surface-500'} hover:bg-surface-100 hover:text-surface-900`}"
 				>
 					{topic.title}
 				</a>
-				{#if topic.children && (depth === 0 || onPath)}
-					{@render navItems(topic.children, path, depth + 1)}
+				{#if topic.children.length && (depth === 0 || onPath)}
+					{@render navItems(topic.children, depth + 1)}
 				{/if}
 			</li>
 		{/each}
@@ -116,5 +125,12 @@
 {/snippet}
 
 {#snippet navList()}
-	{@render navItems(TOPICS, '', 0)}
+	<div class="space-y-8">
+		{#each groups as group (group.section)}
+			<div>
+				<p class="text-surface-500 mb-3 px-3 text-xs font-semibold tracking-wide uppercase">{group.section}</p>
+				{@render navItems(group.topics, 0)}
+			</div>
+		{/each}
+	</div>
 {/snippet}

@@ -1,39 +1,24 @@
 import adapter from '@sveltejs/adapter-static';
+import { readdirSync } from 'node:fs';
+import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-// The docs prose is English-only for now, but the localized routes still have to exist so the
-// nav can never 404 in another locale. Keep in sync with TOPICS in src/lib/docs/nav.ts.
-const DOC_SLUGS = [
-	'',
-	'/installation',
-	'/installation/latex',
-	'/installation/latex/windows',
-	'/installation/latex/macos',
-	'/installation/latex/linux',
-	'/installation/typst',
-	'/installation/typst/windows',
-	'/installation/typst/macos',
-	'/installation/typst/linux',
-	'/getting-started',
-	'/live-preview',
-	'/visual-editing',
-	'/visual-editing/math',
-	'/visual-editing/images',
-	'/visual-editing/tables',
-	'/visual-editing/citations',
-	'/visual-editing/smart-selection',
-	'/source-editing',
-	'/spell-check',
-	'/intellisense',
-	'/compiling',
-	'/projects',
-	'/version-control',
-	'/comments',
-	'/collaboration',
-	'/integrations',
-	'/integrations/zotero',
-	'/integrations/mcp'
-];
+// Every docs page, from the markdown files themselves. The prose is English-only, but the
+// localized routes still have to exist so the nav can never 404 in another locale.
+const DOCS_DIR = fileURLToPath(new URL('../docs', import.meta.url));
+const docSlugs = (dir = DOCS_DIR) =>
+	readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+		const p = join(dir, e.name);
+		if (e.isDirectory()) return docSlugs(p);
+		if (!e.name.endsWith('.md')) return [];
+		const slug = relative(DOCS_DIR, p)
+			.replace(/\\/g, '/')
+			.replace(/\.md$/, '')
+			.replace(/(^|\/)README$/, '');
+		return [slug ? `/${slug}` : ''];
+	});
+const DOC_SLUGS = docSlugs();
 const NON_BASE_LOCALES = ['zh-Hans', 'zh-Hant', 'de'];
 const localizedDocs = NON_BASE_LOCALES.flatMap((l) => DOC_SLUGS.map((s) => `/${l}/docs${s}`));
 
@@ -49,7 +34,17 @@ const config = {
 		// Menu component (not anchors), so the non-base locales must be listed explicitly or they
 		// silently stop being prerendered.
 		prerender: {
-			entries: ['*', '/zh-Hans', '/zh-Hans/download', '/zh-Hant', '/zh-Hant/download', '/de', '/de/download', ...localizedDocs]
+			entries: [
+				'*',
+				'/zh-Hans',
+				'/zh-Hans/download',
+				'/zh-Hant',
+				'/zh-Hant/download',
+				'/de',
+				'/de/download',
+				...DOC_SLUGS.map((s) => `/docs${s}`),
+				...localizedDocs
+			]
 		},
 		// absolute asset URLs, so 404.html (served for any missing path) is styled at any URL depth
 		paths: { relative: false }

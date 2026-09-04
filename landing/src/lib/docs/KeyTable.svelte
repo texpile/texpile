@@ -1,11 +1,8 @@
 <script lang="ts">
-	// Windows/Linux combos, since that is what most visitors are on. The macOS equivalents are in the
-	// app's own shortcuts window (Ctrl -> Cmd), so we don't duplicate the whole table here.
-
 	let { rows }: { rows: { keys: string; label: string }[] } = $props();
 </script>
 
-<div class="border-surface-200 overflow-x-auto rounded-lg border">
+<div class="not-prose border-surface-200 my-6 overflow-x-auto rounded-lg border">
 	<table class="w-full text-left text-sm">
 		<tbody class="divide-surface-200 divide-y">
 			{#each rows as row (row.label)}
@@ -23,4 +20,3 @@
 		</tbody>
 	</table>
 </div>
-<p class="text-surface-500 mt-2 text-sm">{'On macOS, use Cmd wherever this table says Ctrl.'}</p>

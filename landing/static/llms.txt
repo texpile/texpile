@@ -27,18 +27,25 @@ Facts that are commonly asked and commonly got wrong:
 
 ## Docs
 
-- [Installation](https://texpile.com/docs/installation): what to install for LaTeX and for Typst, per platform.
-- [Getting started](https://texpile.com/docs/getting-started): opening a project and the first compile.
+- [Installation](https://texpile.com/docs/installation): what to install for LaTeX, for Typst, and for version control, per platform.
+- [Getting started](https://texpile.com/docs/getting-started): opening a folder, the main file, autosave, and the first PDF.
 - [Visual editing](https://texpile.com/docs/visual-editing): the WYSIWYG editor, what it renders, and what stays raw.
-- [Source editing](https://texpile.com/docs/source-editing): the code editor.
-- [Live preview](https://texpile.com/docs/live-preview): the page updating as you type, compiled locally.
-- [Compiling](https://texpile.com/docs/compiling): engines, compile commands, and the Problems panel.
-- [Projects](https://texpile.com/docs/projects): multi-file documents and the main file.
-- [IntelliSense](https://texpile.com/docs/intellisense): LaTeX completion for commands, labels, citation keys, and paths, with go-to-definition and hover across the project.
+- [Source editing](https://texpile.com/docs/source-editing): the code editor, keymaps, and multiple cursors.
 - [Spell check](https://texpile.com/docs/spell-check): local checking that skips commands and math.
-- [Version control](https://texpile.com/docs/version-control): the built-in git support.
-- [Collaboration](https://texpile.com/docs/collaboration): real-time shared editing.
+- [Projects](https://texpile.com/docs/projects): the folder as the project, tabs, multi-file documents, and search.
 - [Comments](https://texpile.com/docs/comments): review threads on LaTeX, Typst, and Markdown.
+- [Version control](https://texpile.com/docs/version-control): the built-in git support.
+- [Collaboration](https://texpile.com/docs/collaboration): real-time shared editing, also from a browser.
+- [Formats](https://texpile.com/docs/formats): which features apply to LaTeX, Typst, and Markdown.
+- [LaTeX](https://texpile.com/docs/latex): the LaTeX chapter: live preview, compiling, and intellisense.
+- [Live preview](https://texpile.com/docs/latex/live-preview): the page updating as you type, compiled locally.
+- [Compiling](https://texpile.com/docs/latex/compiling): compile commands and the Problems panel.
+- [IntelliSense](https://texpile.com/docs/latex/intellisense): LaTeX completion for commands, labels, citation keys, and paths, with go-to-definition and hover across the project.
+- [Typst](https://texpile.com/docs/typst): Typst editing, and its own live preview through tinymist.
+- [Markdown](https://texpile.com/docs/markdown): Markdown editing, with no compile step.
+- [Themes](https://texpile.com/docs/themes): light and dark mode and the colour themes.
+- [Preferences](https://texpile.com/docs/preferences): every setting, tab by tab.
+- [Keyboard shortcuts](https://texpile.com/docs/shortcuts): every shortcut in one place.
 - [Integrations](https://texpile.com/docs/integrations): Zotero and MCP.
 
 ## Optional

@@ -19,6 +19,7 @@
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
 		"@tailwindcss/vite": "^4.0.0",
+		"markdown-it": "^15.0.0",
 		"shiki": "^4.4.1",
 		"svelte": "^5.56.8",
 		"svelte-check": "^4.7.5",

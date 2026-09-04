@@ -26,3 +26,21 @@
 /de/docs/mcp /de/docs/integrations/mcp 301
 /zh-Hans/docs/mcp /zh-Hans/docs/integrations/mcp 301
 /zh-Hant/docs/mcp /zh-Hant/docs/integrations/mcp 301
+
+# The LaTeX-only pages moved under a LaTeX chapter when the docs got a chapter per format. Each
+# one has an exact new home.
+/docs/live-preview /docs/latex/live-preview 301
+/docs/compiling /docs/latex/compiling 301
+/docs/intellisense /docs/latex/intellisense 301
+
+/de/docs/live-preview /de/docs/latex/live-preview 301
+/de/docs/compiling /de/docs/latex/compiling 301
+/de/docs/intellisense /de/docs/latex/intellisense 301
+
+/zh-Hans/docs/live-preview /zh-Hans/docs/latex/live-preview 301
+/zh-Hans/docs/compiling /zh-Hans/docs/latex/compiling 301
+/zh-Hans/docs/intellisense /zh-Hans/docs/latex/intellisense 301
+
+/zh-Hant/docs/live-preview /zh-Hant/docs/latex/live-preview 301
+/zh-Hant/docs/compiling /zh-Hant/docs/latex/compiling 301
+/zh-Hant/docs/intellisense /zh-Hant/docs/latex/intellisense 301

@@ -62,3 +62,72 @@ html {
 		transform: none;
 	}
 }
+
+/* Docs prose: the typography plugin's scale in the site's colours. The blocks the docs draw
+   themselves (notes, figures, tables of paths and keys, card grids) opt out with not-prose. */
+.doc {
+	--tw-prose-body: var(--color-surface-600);
+	--tw-prose-headings: var(--color-surface-900);
+	--tw-prose-lead: var(--color-surface-600);
+	--tw-prose-links: var(--color-primary-600);
+	--tw-prose-bold: var(--color-surface-900);
+	--tw-prose-counters: var(--color-surface-500);
+	--tw-prose-bullets: var(--color-primary-500);
+	--tw-prose-hr: var(--color-surface-200);
+	--tw-prose-quotes: var(--color-surface-700);
+	--tw-prose-quote-borders: var(--color-surface-200);
+	--tw-prose-code: var(--color-surface-800);
+	--tw-prose-pre-code: var(--color-surface-800);
+	--tw-prose-pre-bg: var(--color-surface-50);
+	--tw-prose-th-borders: var(--color-surface-200);
+	--tw-prose-td-borders: var(--color-surface-200);
+}
+
+.doc :where(h2, h3) {
+	font-weight: 600;
+}
+
+.doc :where(a:hover) {
+	color: var(--color-primary-700);
+}
+
+/* the plugin wraps inline code in backticks; a chip instead, the way the app shows a command */
+.doc :where(code)::before,
+.doc :where(code)::after {
+	content: none;
+}
+
+.doc code:not(pre *) {
+	background-color: var(--color-surface-100);
+	border-radius: 0.25rem;
+	padding: 0.1em 0.3em;
+	font-size: 0.9em;
+	font-weight: 400;
+}
+
+.doc :where(pre) {
+	border: 1px solid var(--color-surface-200);
+}
+
+/* a check in place of the bullet, the mark the app itself uses for a feature list */
+.doc :where(ul) {
+	padding-left: 0;
+}
+
+.doc :where(ul > li) {
+	position: relative;
+	padding-left: 1.75rem;
+	list-style: none;
+}
+
+.doc :where(ul > li)::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0.35em;
+	width: 1rem;
+	height: 1rem;
+	background-color: var(--color-primary-500);
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}

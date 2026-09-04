@@ -258,7 +258,7 @@
 						<span class="text-surface-700 leading-relaxed">{f.sourcePoints[0]}</span>
 					</div>
 				{/each}
-				<div class="mt-auto pt-1">{@render docsLink('/docs/intellisense')}</div>
+				<div class="mt-auto pt-1">{@render docsLink('/docs/latex/intellisense')}</div>
 			</div>
 		</div>
 	</div>
@@ -272,7 +272,7 @@
 			<div class="lg:col-span-4" use:reveal>
 				<h2 class="display text-surface-950 text-[clamp(2rem,3.4vw,3rem)]">{m.live_preview_heading()}</h2>
 				<p class="text-surface-600 mt-5 leading-relaxed">{m.live_preview_body()}</p>
-				<p class="mt-6">{@render docsLink('/docs/live-preview')}</p>
+				<p class="mt-6">{@render docsLink('/docs/latex/live-preview')}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
 				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">

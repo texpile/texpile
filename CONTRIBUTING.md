@@ -26,6 +26,19 @@ pnpm electron:dev        # normal dev server
 pnpm electron:rebuild    # rebuild node-pty for Electron's ABI (optional; the app runs without it)
 ```
 
+## Docs
+
+The docs live in `docs/` as markdown, one file per page, and the landing site builds its `/docs` pages from them. A folder's `README.md` is the page for the folder. Each file starts with front matter (`description`, `section` on a top-level page (the sidebar group), and optionally `nav`, `blurb`, `icon`, `order`), then a `# heading` and a lead paragraph.
+
+A few shapes get their own design on the site and still read as plain markdown on GitHub:
+
+- `> [!NOTE]` for a callout.
+- An image on a line of its own for a figure, with the title as its caption. Add `#narrow` to the path for a small screenshot. Two images on one line sit side by side.
+- A table headed `Where to find it | Path | Note` for the "where to find it" block, and one headed `Shortcut | Action` for a shortcut table.
+- A list of links to other pages for a card grid, and a paragraph of only links for a row of arrow links.
+
+Link to other pages by their `.md` path, relative to the file. The build fails on a link or image that points nowhere. The landing dev server reloads on any change under `docs/`, new files included.
+
 ## Before opening a PR
 
 Run these from the repo root and make sure they pass:

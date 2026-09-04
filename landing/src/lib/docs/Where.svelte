@@ -12,7 +12,7 @@
 	let { rows }: { rows: { label: string; value: string; note?: string }[] } = $props();
 </script>
 
-<div class="border-surface-200 bg-surface-50 rounded-lg border p-4">
+<div class="not-prose border-surface-200 bg-surface-50 my-6 rounded-lg border p-4">
 	<div class="mb-3 flex items-center gap-2">
 		<Compass class="text-surface-400 h-4 w-4" />
 		<span class="text-surface-500 text-xs font-semibold tracking-wide uppercase">{'Where to find it'}</span>
