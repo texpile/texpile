@@ -5,7 +5,7 @@
 
 <footer class="bg-ink-950 text-surface-100 py-14">
 	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+		<div class="grid grid-cols-1 gap-8 md:grid-cols-4">
 			<div class="space-y-4">
 				<img src={LogoLight} alt={m.footer_brand()} class="h-7" />
 				<p class="text-surface-300">{m.footer_tagline()}</p>
@@ -24,6 +24,18 @@
 						<a href="https://github.com/texpile/texpile" target="_blank" rel="noopener noreferrer" class="text-surface-300 hover:text-white"
 							>{m.footer_source_code()}</a
 						>
+					</li>
+				</ul>
+			</div>
+
+			<div class="space-y-4">
+				<h4 class="font-semibold text-white">{m.footer_editors_heading()}</h4>
+				<ul class="space-y-2">
+					<li>
+						<a href="/latex-editor" class="text-surface-300 hover:text-white">{m.footer_latex()}</a>
+					</li>
+					<li>
+						<a href="/typst-editor" class="text-surface-300 hover:text-white">{m.footer_typst()}</a>
 					</li>
 				</ul>
 			</div>

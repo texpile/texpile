@@ -14,7 +14,7 @@ Live preview is Texpile's answer to recompiling by hand. Texpile injects its own
 | Toolbar          | The Preview button                                | Top right of the editor. It reads Live while the engine is running. Click it to pause. |
 | Setting          | Terminal › Configure compile command… › Live mode |                                                                                        |
 
-![A page updating in the live preview while the source is edited](../../landing/src/lib/assets/showcase/live-preview.mp4 'A page updating in the live preview while the source is edited')
+![A page updating in the live preview while the source is edited](../../landing/src/lib/assets/showcase/live-preview.webp 'A page updating in the live preview while the source is edited')
 
 > [!NOTE]
 > Live preview needs a TeX distribution installed. A failed compile is reported in the Problems panel.

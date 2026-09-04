@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Github, Globe, Check } from '@lucide/svelte';
+	import Github from '@lucide/svelte/icons/github';
+	import Globe from '@lucide/svelte/icons/globe';
+	import Check from '@lucide/svelte/icons/check';
 	import LogoDark from '$branding/Logo-dark.svg';
 	import LogoLight from '$branding/Logo-light.svg';
 	import { onMount } from 'svelte';
@@ -22,7 +24,7 @@
 	// full document navigation (not client-side routing), same as every other locale switch on this site.
 	// details.value is always one of `locales` (that's all the menu ever renders), hence the cast.
 	//
-	// `base` rather than resolve(): localizeHref returns a rewritten URL (/de/docs/mcp) whose locale
+	// `base` rather than resolve(): localizeHref returns a rewritten URL (/zh-Hans/docs/mcp) whose locale
 	// prefix hooks.ts strips again, so it is never one of the route pathnames resolve() is typed
 	// against. Casting it to Pathname was a lie that only type-checked by accident — resolve()'s
 	// ResolveArgs is a distributive conditional, so a union argument expands to a union of tuples
@@ -40,9 +42,10 @@
 		return () => window.removeEventListener('scroll', onScroll);
 	});
 
-	// Only the home page opens on the ink hero, and only until you scroll off it. route.id is
+	// Only the pages that open on an ink band, and only until you scroll off it. route.id is
 	// locale-independent (hooks.ts strips the prefix before routing), so this holds in all four.
-	const overInk = $derived(page.route.id === '/' && atTop);
+	const INK_ROUTES = new Set(['/', '/latex-editor', '/typst-editor']);
+	const overInk = $derived(INK_ROUTES.has(page.route.id ?? '') && atTop);
 </script>
 
 <!-- The header is in normal flow, not overlaid, so "transparent" shows the page background rather
@@ -95,9 +98,6 @@
 									>
 										<Menu.ItemText>
 											{LOCALE_META[locale]?.label ?? locale}
-											{#if LOCALE_META[locale]?.machineTranslated}
-												<span class="text-surface-400 font-normal">{m.nav_machine_translated_tag({}, { locale })}</span>
-											{/if}
 										</Menu.ItemText>
 										{#if locale === currentLocale}
 											<Check class="text-primary-600 h-4 w-4 shrink-0" />

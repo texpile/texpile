@@ -30,8 +30,7 @@ Texpile's visual editor supports LaTeX, Typst, and Markdown. Texpile stores them
 
 Type in source view and the page re-typesets with your own LuaLaTeX. Many updates, such as text changes, are rendered instantly.
 
-https://github.com/user-attachments/assets/7a2d7997-fe6c-4837-bbe5-1aaa5e0c90b7
-
+https://github.com/user-attachments/assets/a0ad6f8f-44b4-470f-885a-b946f4469d03
 ## Shared sessions (real time collaboration)
 
 Share a folder for real time editing, no account needed. Start a session (File > Shared Session) to get a code; others join with it from the home screen and edit alongside you, in the visual editor or in source. Everything is end to end encrypted, so the relay server only forwards data it cannot read.

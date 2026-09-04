@@ -4,8 +4,11 @@
 	// ways to write it" section already shows both modes side by side, and this shot's job is to
 	// show the whole thing at once, typeset page included.
 	import { onMount } from 'svelte';
-	import shot from '$lib/assets/showcase/hero-overview.webp';
+	import overview from '$lib/assets/showcase/hero-overview.webp';
 	import { m } from '$lib/paraglide/messages';
+
+	// the home page's shot by default; an editor page passes the one for its format
+	let { shot = overview, alt = m.hero_shot_alt() }: { shot?: string; alt?: string } = $props();
 
 	// finish the zoom well before the hero clears the viewport, so there's still hero left to look at
 	const revealOver = () => Math.min(340, Math.max(220, window.innerHeight * 0.42));
@@ -40,7 +43,7 @@
 	<div class="stage">
 		<div bind:this={frame} class="frame overflow-hidden rounded-lg border border-white/10">
 			<!-- eager + high priority: this is the largest contentful paint on the page -->
-			<img src={shot} alt={m.hero_shot_alt()} loading="eager" fetchpriority="high" draggable="false" class="block h-auto w-full" />
+			<img src={shot} {alt} loading="eager" fetchpriority="high" draggable="false" class="block h-auto w-full" />
 		</div>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowRight } from '@lucide/svelte';
+	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import type { LinkItem } from './blocks';
 
 	let { items }: { items: LinkItem[] } = $props();

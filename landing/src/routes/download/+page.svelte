@@ -1,16 +1,20 @@
 <script lang="ts">
-	import { Download, ChevronDown, Star } from '@lucide/svelte';
+	import Download from '@lucide/svelte/icons/download';
+	import ChevronDown from '@lucide/svelte/icons/chevron-down';
+	import Star from '@lucide/svelte/icons/star';
 	import { onMount } from 'svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { trackEvent } from '$lib/plausible';
 	import OsLogo from '$lib/comp/OsLogo.svelte';
 	import { detectOS } from '$lib/os';
 	import { m } from '$lib/paraglide/messages';
-	import { getLocale } from '$lib/paraglide/runtime';
+	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
 
 	// latest.json upgrades the links to versioned files; versions.json feeds the history list.
 	// Without either (fetch failed, JS off) the stable root names still download the newest release.
 	const DL = 'https://dl.texpile.com';
+	// self-referencing per locale; the alternates in the head say which language each URL is
+	const canonical = 'https://texpile.com' + localizeHref('/download');
 
 	type Release = { version: string; publishedAt?: string; files: Record<string, string> };
 	let latest = $state<Release | null>(null);
@@ -110,20 +114,19 @@
 	<meta name="description" content={m.dl_meta_description()} />
 
 	<!-- Page-specific Open Graph -->
-	<meta property="og:url" content="https://texpile.com/download" />
+	<meta property="og:url" content={canonical} />
 	<meta property="og:title" content={m.dl_title()} />
 	<meta property="og:description" content={m.dl_meta_description()} />
 
 	<!-- Page-specific Twitter -->
-	<meta property="twitter:url" content="https://texpile.com/download" />
+	<meta property="twitter:url" content={canonical} />
 	<meta property="twitter:title" content={m.dl_title()} />
 	<meta property="twitter:description" content={m.dl_meta_description()} />
 
-	<link rel="canonical" href="https://texpile.com/download" />
+	<link rel="canonical" href={canonical} />
 	<link rel="alternate" hreflang="en" href="https://texpile.com/download" />
 	<link rel="alternate" hreflang="zh-Hans" href="https://texpile.com/zh-Hans/download" />
 	<link rel="alternate" hreflang="zh-Hant" href="https://texpile.com/zh-Hant/download" />
-	<link rel="alternate" hreflang="de" href="https://texpile.com/de/download" />
 	<link rel="alternate" hreflang="x-default" href="https://texpile.com/download" />
 </svelte:head>
 

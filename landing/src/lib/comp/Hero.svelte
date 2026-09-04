@@ -1,9 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Download, Github } from '@lucide/svelte';
+	import Download from '@lucide/svelte/icons/download';
+	import Github from '@lucide/svelte/icons/github';
 	import HeroShot from './HeroShot.svelte';
 	import { detectOS, type OS } from '$lib/os';
 	import { m } from '$lib/paraglide/messages';
+
+	// the home page's words by default; the LaTeX page passes its own and keeps the rest
+	let {
+		heading = m.hero_heading(),
+		body = m.hero_body(),
+		shot,
+		shotAlt
+	}: { heading?: string; body?: string; shot?: string; shotAlt?: string } = $props();
 
 	const OS_NAME: Record<OS, string> = {
 		windows: m.word_windows(),
@@ -29,10 +38,10 @@
 		<div class="mx-auto max-w-6xl space-y-8 text-center">
 			<!-- No accent colour in the headline on purpose: the download button is then the only
 				 saturated thing in the fold, so it wins the eye instead of competing with 77px of cyan. -->
-			<h1 class="display text-[clamp(2.5rem,6vw,5.25rem)] text-balance text-white">{m.hero_heading()}</h1>
+			<h1 class="display text-[clamp(2.5rem,6vw,5.25rem)] text-balance text-white">{heading}</h1>
 
 			<p class="text-surface-400 mx-auto max-w-xl text-sm leading-relaxed text-pretty sm:text-base">
-				{m.hero_body()}
+				{body}
 			</p>
 
 			<div class="flex flex-col items-center gap-5">
@@ -60,6 +69,6 @@
 	</div>
 
 	<div class="pb-20 md:pb-28">
-		<HeroShot />
+		<HeroShot {shot} alt={shotAlt} />
 	</div>
 </section>

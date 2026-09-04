@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { ChevronDown, ChevronLeft, ChevronRight, BookOpen } from '@lucide/svelte';
+	import ChevronDown from '@lucide/svelte/icons/chevron-down';
+	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
+	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import BookOpen from '@lucide/svelte/icons/book-open';
 	import { page } from '$app/state';
 	import { hrefFor, siblings, lookup, type NavNode } from '$lib/docs/nav';
 
 	let { data, children } = $props();
 
-	// params, not url.pathname: the localized routes (/de/docs/visual-editing/math) reroute to the
+	// params, not url.pathname: the localized routes (/zh-Hans/docs/visual-editing/math) reroute to the
 	// same route, so this stays correct in every locale
 	const slug = $derived(page.params.slug ?? '');
 	const isIndex = $derived(slug === '');

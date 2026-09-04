@@ -4,7 +4,7 @@
 	// collaboration) — a reader searching the menus needs the string that is actually on screen.
 	// Once the docs are translated these have to track the app's translated labels, not be
 	// translated independently.
-	import { Compass } from '@lucide/svelte';
+	import Compass from '@lucide/svelte/icons/compass';
 
 	// `value` is the path and nothing else, so it stays scannable; anything qualifying it (when it
 	// applies, what it does) goes in `note` and renders muted underneath. One path per row - two

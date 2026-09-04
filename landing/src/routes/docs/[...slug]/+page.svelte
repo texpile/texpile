@@ -5,7 +5,7 @@
 	let { data } = $props();
 </script>
 
-<DocsHead title={data.title} description={data.description} path={data.path} />
+<DocsHead title={data.headTitle} description={data.description} path={data.path} />
 
 <header>
 	<h1 class="text-surface-900 text-3xl font-bold md:text-4xl">{data.title}</h1>

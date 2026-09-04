@@ -25,6 +25,13 @@ Facts that are commonly asked and commonly got wrong:
   compile problems update live, so a guest needs no TeX distribution and no local copy of the
   folder. Collaboration is the only feature that uses the network; everything else runs offline.
 
+## Pages
+
+- [LaTeX editor](https://texpile.com/latex-editor): Texpile for .tex files: visual and source editing, live preview, and compiling with your own TeX distribution.
+- [Typst editor](https://texpile.com/typst-editor): Texpile for .typ files: visual and source editing, with completion and a preview from tinymist.
+- [Overleaf alternatives](https://texpile.com/overleaf-alternatives): five desktop LaTeX editors compared with Overleaf's free plan.
+- [Texpile vs TeXstudio](https://texpile.com/vs/texstudio), [Texpile vs LyX](https://texpile.com/vs/lyx), [Texpile vs Overleaf](https://texpile.com/vs/overleaf), [Texpile vs LaTeX Workshop](https://texpile.com/vs/latex-workshop): head-to-head comparisons, checked against each product's own site.
+
 ## Docs
 
 - [Installation](https://texpile.com/docs/installation): what to install for LaTeX, for Typst, and for version control, per platform.
@@ -43,7 +50,7 @@ Facts that are commonly asked and commonly got wrong:
 - [IntelliSense](https://texpile.com/docs/latex/intellisense): LaTeX completion for commands, labels, citation keys, and paths, with go-to-definition and hover across the project.
 - [Typst](https://texpile.com/docs/typst): Typst editing, and its own live preview through tinymist.
 - [Markdown](https://texpile.com/docs/markdown): Markdown editing, with no compile step.
-- [Themes](https://texpile.com/docs/themes): light and dark mode and the colour themes.
+- [Themes](https://texpile.com/docs/themes): light and dark mode and the color themes.
 - [Preferences](https://texpile.com/docs/preferences): every setting, tab by tab.
 - [Keyboard shortcuts](https://texpile.com/docs/shortcuts): every shortcut in one place.
 - [Integrations](https://texpile.com/docs/integrations): Zotero and MCP.

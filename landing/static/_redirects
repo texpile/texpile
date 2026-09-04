@@ -8,9 +8,6 @@
 /docs/installation/macos /docs/installation 301
 /docs/installation/linux /docs/installation 301
 
-/de/docs/installation/windows /de/docs/installation 301
-/de/docs/installation/macos /de/docs/installation 301
-/de/docs/installation/linux /de/docs/installation 301
 
 /zh-Hans/docs/installation/windows /zh-Hans/docs/installation 301
 /zh-Hans/docs/installation/macos /zh-Hans/docs/installation 301
@@ -23,7 +20,6 @@
 # MCP moved under Integrations. Unlike the install pages this one has an exact new home, so it
 # redirects to the page itself rather than to a parent.
 /docs/mcp /docs/integrations/mcp 301
-/de/docs/mcp /de/docs/integrations/mcp 301
 /zh-Hans/docs/mcp /zh-Hans/docs/integrations/mcp 301
 /zh-Hant/docs/mcp /zh-Hant/docs/integrations/mcp 301
 
@@ -33,9 +29,6 @@
 /docs/compiling /docs/latex/compiling 301
 /docs/intellisense /docs/latex/intellisense 301
 
-/de/docs/live-preview /de/docs/latex/live-preview 301
-/de/docs/compiling /de/docs/latex/compiling 301
-/de/docs/intellisense /de/docs/latex/intellisense 301
 
 /zh-Hans/docs/live-preview /zh-Hans/docs/latex/live-preview 301
 /zh-Hans/docs/compiling /zh-Hans/docs/latex/compiling 301
@@ -44,3 +37,12 @@
 /zh-Hant/docs/live-preview /zh-Hant/docs/latex/live-preview 301
 /zh-Hant/docs/compiling /zh-Hant/docs/latex/compiling 301
 /zh-Hant/docs/intellisense /zh-Hant/docs/latex/intellisense 301
+
+# The site before this one had a /learn section. Search engines still list those URLs, and the
+# docs are the nearest thing to what they covered.
+/learn/* /docs 301
+
+# German was dropped from this site (the app still has it). Every old German URL lands on its
+# English page, and the browser then follows any rule above for a page that has moved.
+/de / 301
+/de/* /:splat 301

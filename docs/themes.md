@@ -1,6 +1,6 @@
 ---
-description: Pick a light or dark mode and a colour theme for Texpile from Preferences › Appearance.
-blurb: Light or dark mode, and a colour theme for the whole window.
+description: Pick a light or dark mode and a color theme for Texpile from Preferences › Appearance.
+blurb: Light or dark mode, and a color theme for the whole window.
 icon: palette
 order: 14
 section: Settings
@@ -8,7 +8,7 @@ section: Settings
 
 # Themes
 
-Texpile has a light and a dark mode, and a set of colour themes. Both are picked in Preferences and apply to the whole window.
+Texpile has a light and a dark mode, and a set of color themes. Both are picked in Preferences and apply to the whole window.
 
 | Where to find it | Path                     | Note                                                                                         |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------- |

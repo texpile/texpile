@@ -1,22 +1,12 @@
 <script lang="ts">
-	import {
-		Download,
-		Check,
-		ArrowRight,
-		Terminal,
-		GitCommitHorizontal,
-		FolderTree,
-		Command,
-		Keyboard,
-		TextCursorInput,
-		SpellCheck,
-		Plug,
-		History
-	} from '@lucide/svelte';
+	import Download from '@lucide/svelte/icons/download';
+	import Check from '@lucide/svelte/icons/check';
+	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { tick } from 'svelte';
 	import Hero from '$lib/comp/Hero.svelte';
+	import { featureList } from '$lib/features';
 	import { reveal } from '$lib/reveal';
-	import livePreviewMp4 from '$lib/assets/showcase/live-preview.mp4';
+	import livePreviewWebp from '$lib/assets/showcase/live-preview.webp';
 	import collabShot from '$lib/assets/showcase/editor-collab.webp';
 	import commentsShot from '$lib/assets/showcase/editor-comments.webp';
 	// One document (showcase.tex/.typ/.md) captured in both modes, so the toggle reads as one file
@@ -28,18 +18,11 @@
 	import mdVisualShot from '$lib/assets/showcase/editor-markdown-visual.webp';
 	import mdSourceShot from '$lib/assets/showcase/editor-markdown-source.webp';
 	import { m } from '$lib/paraglide/messages';
+	import { localizeHref } from '$lib/paraglide/runtime';
 
-	const features = [
-		{ icon: Terminal, title: m.feature_terminal_title(), body: m.feature_terminal_body() },
-		{ icon: GitCommitHorizontal, title: m.feature_history_title(), body: m.feature_history_body() },
-		{ icon: FolderTree, title: m.feature_multifile_title(), body: m.feature_multifile_body() },
-		{ icon: Command, title: m.feature_palette_title(), body: m.feature_palette_body() },
-		{ icon: Keyboard, title: m.feature_keymaps_title(), body: m.feature_keymaps_body() },
-		{ icon: TextCursorInput, title: m.feature_multicursor_title(), body: m.feature_multicursor_body() },
-		{ icon: SpellCheck, title: m.feature_spellcheck_title(), body: m.feature_spellcheck_body() },
-		{ icon: Plug, title: m.feature_mcp_title(), body: m.feature_mcp_body() },
-		{ icon: History, title: m.feature_tabs_title(), body: m.feature_tabs_body() }
-	];
+	const features = featureList();
+	// self-referencing per locale; the alternates in the head say which language each URL is
+	const canonical = 'https://texpile.com' + localizeHref('/');
 
 	/**
 	 * The editing section switches BOTH panels by format, bullets included. The bullets cannot be
@@ -54,6 +37,7 @@
 		{
 			key: 'latex',
 			label: m.formats_latex_title(),
+			page: '/latex-editor',
 			visual: { img: latexVisualShot, alt: m.visual_editing_video_aria() },
 			source: { img: latexSourceShot, alt: m.intellisense_shot_alt() },
 			visualPoints: [m.editing_point_1(), m.editing_point_2(), m.editing_point_3(), m.editing_point_5()],
@@ -62,6 +46,7 @@
 		{
 			key: 'typst',
 			label: m.formats_typst_title(),
+			page: '/typst-editor',
 			visual: { img: typstVisualShot, alt: m.formats_typst_title() },
 			source: { img: typstSourceShot, alt: m.formats_typst_title() },
 			visualPoints: [m.typst_visual_1(), m.typst_visual_2(), m.typst_visual_3(), m.typst_visual_4()],
@@ -70,6 +55,7 @@
 		{
 			key: 'markdown',
 			label: m.formats_md_title(),
+			page: '/docs/markdown',
 			visual: { img: mdVisualShot, alt: m.formats_md_title() },
 			source: { img: mdSourceShot, alt: m.formats_md_title() },
 			visualPoints: [m.md_visual_1(), m.md_visual_2(), m.md_visual_3(), m.md_visual_4()],
@@ -136,20 +122,19 @@
 	<meta name="description" content={m.home_meta_description()} />
 
 	<!-- Page-specific Open Graph -->
-	<meta property="og:url" content="https://texpile.com/" />
+	<meta property="og:url" content={canonical} />
 	<meta property="og:title" content={m.home_title()} />
 	<meta property="og:description" content={m.home_social_description()} />
 
 	<!-- Page-specific Twitter -->
-	<meta property="twitter:url" content="https://texpile.com/" />
+	<meta property="twitter:url" content={canonical} />
 	<meta property="twitter:title" content={m.home_title()} />
 	<meta property="twitter:description" content={m.home_social_description()} />
 
-	<link rel="canonical" href="https://texpile.com/" />
+	<link rel="canonical" href={canonical} />
 	<link rel="alternate" hreflang="en" href="https://texpile.com/" />
 	<link rel="alternate" hreflang="zh-Hans" href="https://texpile.com/zh-Hans/" />
 	<link rel="alternate" hreflang="zh-Hant" href="https://texpile.com/zh-Hant/" />
-	<link rel="alternate" hreflang="de" href="https://texpile.com/de/" />
 	<link rel="alternate" hreflang="x-default" href="https://texpile.com/" />
 
 	<!-- Structured Data -->
@@ -261,6 +246,20 @@
 				<div class="mt-auto pt-1">{@render docsLink('/docs/latex/intellisense')}</div>
 			</div>
 		</div>
+
+		<!-- Every format's page link is in the HTML (inactive ones hidden), for the same reason as the
+			 bullets above: a crawler has to find /latex-editor and /typst-editor from here. -->
+		<div class="mt-8">
+			{#each FORMATS as f (f.key)}
+				<!-- hidden on the wrapper: on the link itself, inline-flex would outrank it -->
+				<div class:hidden={f.key !== fmt.key}>
+					<a href={f.page} class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors">
+						{m.editing_more_about({ label: f.label })}
+						<ArrowRight class="h-4 w-4" />
+					</a>
+				</div>
+			{/each}
+		</div>
 	</div>
 </section>
 
@@ -276,10 +275,8 @@
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
 				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<!-- muted looping demo, behaves like an animated image -->
-					<video autoplay muted loop playsinline disablepictureinpicture aria-label={m.live_preview_video_aria()} class="block w-full">
-						<source src={livePreviewMp4} type="video/mp4" />
-					</video>
+					<!-- an animated WebP: plays wherever an image does, with no autoplay rules to satisfy -->
+					<img src={livePreviewWebp} alt={m.live_preview_video_aria()} loading="lazy" draggable="false" class="block w-full" />
 				</div>
 			</div>
 		</div>
@@ -349,10 +346,7 @@
 			{/each}
 		</div>
 
-		<p class="text-surface-600 mt-14">
-			{m.features_docs_note()}
-			<span class="ml-2 inline-block">{@render docsLink('/docs')}</span>
-		</p>
+		<p class="mt-14">{@render docsLink('/docs')}</p>
 	</div>
 </section>
 
