@@ -21,7 +21,6 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter svelte-pdf-view package
       - run: pnpm --filter texpile-editor check
       - run: pnpm --filter texpile-editor lint
       - run: pnpm --filter texpile-editor testonce
