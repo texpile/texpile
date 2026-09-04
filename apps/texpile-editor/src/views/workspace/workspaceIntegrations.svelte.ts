@@ -136,7 +136,13 @@ export class WorkspaceIntegrations {
 				getCompileCommand: () => d.cc().command,
 				// deferred through compileSettings so an MCP change persists exactly the way the dialog's
 				// Save does - folder command, global default, folder output overrides
-				applyCompile: (command, outputs) => d.compileSettings().applyCommand(command, outputs)
+				applyCompile: (command, outputs) => d.compileSettings().applyCommand(command, outputs),
+				comments: {
+					comments: d.commentsCtl,
+					getLoadedPath: () => doc.path,
+					getBuffer: () => doc.buffer,
+					adoptDiskChange: () => d.editFlow().external.check()
+				}
 			})
 		);
 		// shared session: guests can ask for a compile; leaving the workspace ends the session

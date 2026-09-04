@@ -1,9 +1,12 @@
 // The MCP tool surface: what the server tells a client at initialize, and every registered tool.
-// Nothing here mutates a document, deliberately - see server.ts for the hosting story.
+// Nothing here mutates a document, deliberately - see server.ts for the hosting story. The comment
+// tools write the review log in .texpile only.
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { snapshotWindows, type WorkspaceSnapshot } from './windowState';
 import { askRenderer, sendCommand } from './bridge';
+import { registerCommentTools } from './commentTools';
+import { fail, ok } from './toolReply';
 import type { McpHost } from './server';
 
 /**
@@ -34,7 +37,18 @@ const INSTRUCTIONS = [
 	'',
 	'Do not infer where a build lands from the compile command. A folder can override the PDF and log paths',
 	'independently of it, which is normal in a repo where one output directory serves several documents, so',
-	'get_compile_config reports the resolved paths and set_output_paths is what changes them.'
+	'get_compile_config reports the resolved paths and set_output_paths is what changes them.',
+	'',
+	'Review comments live in .texpile/comments.jsonl, pinned to the exact text they quote. Rewriting a quoted',
+	'sentence detaches its thread, and a detached thread reads as lost, not as done. So before editing a file, call',
+	'get_comments for it. When your edit addresses a thread, reply_to_comment with what changed, then resolve_comment.',
+	'When it rewrites the quoted text but the thread should stay open, reanchor_comment it onto the new text; after',
+	'renaming a file, reanchor its threads with the new path. Never write comments.jsonl yourself: the editor holds',
+	'it in memory and its next append overwrites your line, and nothing written straight to disk reaches guests in',
+	'a shared session. add_comment is for review notes of your own, not a replacement for a thread you could not',
+	'reanchor - reply to and resolve that one, or leave it detached with a reply saying why. Pass your own name as',
+	'by on every comment write; it is shown as the author. A thread get_comments marks weak was found, but the words',
+	'around it changed: check it is the sentence meant before acting on it.'
 ].join('\n');
 
 export function buildServer(currentHost: () => McpHost | null): McpServer {
@@ -56,7 +70,7 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		},
 		async () => {
 			const h = currentHost();
-			if (!h) return { content: [{ type: 'text' as const, text: '{"error":"server not running"}' }] };
+			if (!h) return fail('server not running');
 			const workspaces: WorkspaceSnapshot[] = snapshotWindows(h.windowObjects(), (id) => h.rootFor(id));
 			const focused = workspaces.find((w) => w.focused)?.root ?? null;
 			return {
@@ -64,13 +78,6 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 			};
 		}
 	);
-
-	function ok(data: unknown) {
-		return { content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }] };
-	}
-	function fail(message: string) {
-		return { isError: true, content: [{ type: 'text' as const, text: JSON.stringify({ error: message }) }] };
-	}
 
 	/** every tool below needs a window; root picks one when several are open */
 	function target(root?: string) {
@@ -359,6 +366,8 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 			return ok(r);
 		}
 	);
+
+	registerCommentTools(server, target);
 
 	return server;
 }

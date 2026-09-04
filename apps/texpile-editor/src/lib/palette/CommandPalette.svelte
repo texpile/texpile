@@ -11,7 +11,8 @@
 	import { Search } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import { isMac } from '$lib/platform';
-	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
+	import { commandPalette, type PaletteMode } from '$lib/workspace/commandPalette.svelte';
+	import FileIcon from '$lib/filetree/FileIcon.svelte';
 	import { buildCommands, type PaletteItem } from './paletteCommands';
 	import { goToFileItems, MAX_FILE_RESULTS } from './paletteGoItems';
 	import { fuzzyScore, highlightRuns } from './paletteFilter';
@@ -22,19 +23,23 @@
 	// Cmd on macOS, Ctrl elsewhere - not "either". Ctrl+K on macOS is emacs kill-line, which
 	// CodeMirror's standard keymap binds there, and stealing it would break editing for the people
 	// most likely to notice.
-	function isPaletteChord(e: KeyboardEvent): boolean {
+	function paletteChord(e: KeyboardEvent): PaletteMode | null {
 		const mod = isMac ? e.metaKey && !e.ctrlKey : e.ctrlKey && !e.metaKey;
-		if (!mod || e.altKey) return false;
-		if (!e.shiftKey && e.key.toLowerCase() === 'k') return true;
+		if (!mod || e.altKey) return null;
+		if (!e.shiftKey && e.key.toLowerCase() === 'k') return 'all';
 		// VS Code's chord, for the muscle memory it comes with
-		return e.shiftKey && e.key.toLowerCase() === 'p';
+		if (e.shiftKey && e.key.toLowerCase() === 'p') return 'all';
+		// the file picker, on the key that opens a tab everywhere else
+		if (!e.shiftKey && e.key.toLowerCase() === 't') return 'files';
+		return null;
 	}
 
 	function onWindowKeydown(e: KeyboardEvent) {
-		if (!isPaletteChord(e)) return;
+		const mode = paletteChord(e);
+		if (!mode) return;
 		e.preventDefault();
 		query = '';
-		commandPalette.toggle();
+		commandPalette.toggle(mode);
 	}
 
 	/**
@@ -101,6 +106,8 @@
 	// entirely - "everything in the project" is not a useful first screen.
 	const results = $derived.by<Scored[]>(() => {
 		const q = query.trim();
+		// the picker is the one screen where "everything in the project" IS the point
+		if (commandPalette.mode === 'files') return rank(files, q, MAX_FILE_RESULTS);
 		const cmds = rank(commands, q, 50);
 		if (!q) return cmds;
 		return [...cmds, ...rank(files, q, MAX_FILE_RESULTS)];
@@ -157,7 +164,7 @@
 					<Search class="text-muted size-4 shrink-0" />
 					<Combobox.Input
 						class="w-full bg-transparent text-sm outline-none placeholder:text-muted"
-						placeholder={m.palette_placeholder()}
+						placeholder={commandPalette.mode === 'files' ? m.palette_placeholder_files() : m.palette_placeholder()}
 						autocomplete="off"
 						spellcheck="false"
 					/>
@@ -173,7 +180,9 @@
 								<div class="text-muted px-2.5 pt-2 pb-1 text-xs font-semibold tracking-wider uppercase">{header}</div>
 							{/if}
 							<Combobox.Item class={rowClass} item={scored}>
-								{#if scored.item.icon}
+								{#if scored.item.fileName}
+									<FileIcon name={scored.item.fileName} class="size-4 shrink-0" />
+								{:else if scored.item.icon}
 									{@const Icon = scored.item.icon}
 									<Icon class="text-muted size-4 shrink-0" />
 								{:else}

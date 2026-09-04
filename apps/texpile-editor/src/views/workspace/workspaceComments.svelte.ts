@@ -122,6 +122,11 @@ export class WorkspaceComments {
 		return hasVisualMode(this.d.kind()) ? this.d.doc.texSource : this.d.doc.rawContent;
 	}
 
+	/** re-search the open file's threads against its text as it is now; see the reanchor effect */
+	reanchorNow(): void {
+		this.ctl.reanchor(this.d.doc.path, this.activeText());
+	}
+
 	/**
 	 * Which files the panel's threads can actually open: threads survive their file's deletion ON
 	 * PURPOSE (the log is append-only, and undoing the delete brings them straight back), so the

@@ -28,7 +28,6 @@ export function uiZoomReset() {
 }
 
 export type ShortcutDeps = {
-	getLoadedPath(): string | null;
 	closeTab(tab: Tab): void;
 	/** a guest has nothing to save: its edits are already live in the shared doc */
 	isGuest(): boolean;
@@ -45,8 +44,10 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 		const mod = e.metaKey || e.ctrlKey;
 		if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'w') {
 			e.preventDefault();
-			// closes the FOCUSED tab, which may be a comparison rather than the file itself
-			const path = deps.getLoadedPath();
+			// closes the FOCUSED tab, which may be a comparison rather than the file itself. The tab
+			// strip runs on activeFilePath, not on the loaded document: a file that failed to load
+			// (deleted on disk) still has its tab focused while the document buffer holds no path
+			const path = activeFilePath.current;
 			if (path) deps.closeTab({ path, compare: activeCompare.current ?? undefined });
 		} else if (e.ctrlKey && e.key === 'Tab') {
 			e.preventDefault();

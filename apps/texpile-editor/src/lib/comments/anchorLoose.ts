@@ -1,6 +1,15 @@
 // loose anchoring: resolveAnchor across dialect boundaries, plus the block downgrade for
 // quotes that cannot be matched whole
-import { buildAnchor, CONTEXT, MIN_QUOTE, resolveAnchor, searchQuote, type CommentAnchor, type ResolvedAnchor } from './anchorSearch';
+import {
+	buildAnchor,
+	CONTEXT,
+	MIN_QUOTE,
+	resolveAnchor,
+	searchQuote,
+	WEAK_CONTEXT,
+	type CommentAnchor,
+	type ResolvedAnchor
+} from './anchorSearch';
 import { normalizeForMatch, type AnchorDialect } from './anchorNormalize';
 
 /**
@@ -44,7 +53,7 @@ export function resolveAnchorLooseIn(h: LooseHaystack, a: CommentAnchor): Resolv
 	if (!hit) return null;
 	const from = h.map[hit.from];
 	const to = hit.to < h.map.length ? h.map[hit.to] : h.raw.length;
-	return { from, to, exact: false };
+	return { from, to, exact: false, weak: hit.context < WEAK_CONTEXT };
 }
 
 /** the single-anchor form; callers with a list should prepare once and loop resolveAnchorLooseIn */
@@ -108,7 +117,7 @@ export function resolveFragment(h: LooseHaystack, quote: string): ResolvedAnchor
 	}
 	if (!hits.length) return null;
 	const ordered = hits.every((x, i) => i === 0 || x.from >= hits[i - 1].from);
-	if (ordered) return { from: hits[0].from, to: Math.max(...hits.map((x) => x.to)), exact: false };
+	if (ordered) return { from: hits[0].from, to: Math.max(...hits.map((x) => x.to)), exact: false, weak: hits.some((x) => x.weak) };
 	return longest!.hit;
 }
 

@@ -194,7 +194,7 @@
 			file: fileSelect,
 			newFile: newFileSelect,
 			openFolder: openFolderSelect,
-			edit: (v) => (v === 'palette' ? commandPalette.show() : editSelect(v)),
+			edit: (v) => (v === 'palette' ? commandPalette.show() : v === 'goToFile' ? commandPalette.show('files') : editSelect(v)),
 			view: viewSelect,
 			insert: (v) => void insertSelect(v),
 			math: mathSelect,
@@ -284,7 +284,11 @@
 		/>
 	{/if}
 	{#if showAt(1, overflow)}
-		<EditMenu index={1} select={(v) => (v === 'palette' ? commandPalette.show() : editSelect(v))} {editable} />
+		<EditMenu
+			index={1}
+			select={(v) => (v === 'palette' ? commandPalette.show() : v === 'goToFile' ? commandPalette.show('files') : editSelect(v))}
+			{editable}
+		/>
 	{/if}
 	<!-- zoom is webContents.setZoomFactor, and View holds nothing else; the browser has its own -->
 	{#if !__WEB__ && showAt(2, overflow)}

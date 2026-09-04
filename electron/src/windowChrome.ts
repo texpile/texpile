@@ -199,6 +199,7 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 			label: label(s, 'edit', 'Edit'),
 			submenu: [
 				{ label: label(s, 'palette', 'Command palette'), accelerator: 'CmdOrCtrl+K', click: () => fire(win, 'edit:palette') },
+				{ label: label(s, 'goToFile', 'Go to file'), accelerator: 'CmdOrCtrl+T', click: () => fire(win, 'edit:goToFile') },
 				{ type: 'separator' },
 				// our own undo/redo, not the roles: the document history is ProseMirror's or
 				// CodeMirror's, and the native role would only reach a focused native input

@@ -33,6 +33,10 @@ export type CommentEvent =
 	// workspace-relative like thread.file. Same version on purpose: an older build's isEvent skips
 	// the unknown t, so it degrades to threads staying under the old path rather than breaking.
 	| (Base & { t: 'move'; from: string; to: string })
+	// the thread re-pinned to other text, after an edit rewrote the quote it sat on (an agent acting
+	// on the comment, mostly). `file` only when it also changed. Same version, same degrade story as
+	// move: an older build keeps the old anchor and shows the thread detached.
+	| (Base & { t: 'anchor'; thread: string; anchor: CommentAnchor; file?: string })
 	// The last thing a Texpile instance SAW when it looked for this thread's text. Unlike every other
 	// event here it records an observation rather than a decision, and it is written only when the
 	// answer changed - so browsing a project appends nothing, and the file stays quiet in git.
@@ -63,8 +67,9 @@ export type CommentThread = {
 	 * The last recorded observation of whether this thread's text could still be found (`detached`)
 	 * and whether the visual editor could draw it (`hidden`). Undefined means nobody has looked yet.
 	 *
-	 * A cached ANSWER, not a fact about the thread: the anchor never changes, but the file it points
-	 * at does. See the `place` event for why that is acceptable and what it costs.
+	 * A cached ANSWER, not a fact about the thread: the anchor changes only by an `anchor` event, but
+	 * the file it points at changes freely. See the `place` event for why that is acceptable and what
+	 * it costs.
 	 */
 	detached?: boolean;
 	hidden?: boolean;
@@ -170,6 +175,12 @@ export function foldLog(events: CommentEvent[]): CommentThread[] {
 			// `place` carrying only one of them must not erase the other's last answer.
 			if (e.detached !== undefined) thread.detached = e.detached;
 			if (e.hidden !== undefined) thread.hidden = e.hidden;
+		} else if (e.t === 'anchor') {
+			thread.anchor = e.anchor;
+			if (e.file) thread.file = e.file;
+			// whatever was observed was observed about the old anchor
+			thread.detached = undefined;
+			thread.hidden = undefined;
 		} else {
 			deleted.add(e.thread);
 		}
@@ -237,6 +248,14 @@ export function moveEvent(o: { from: string; to: string; by: string; at: string 
 	};
 }
 
+export function anchorEvent(o: { thread: string; anchor: CommentAnchor; file?: string; by: string; at: string }): CommentEvent {
+	return {
+		v: LOG_VERSION,
+		t: 'anchor',
+		...o
+	};
+}
+
 function isEvent(x: unknown): x is CommentEvent {
 	if (typeof x !== 'object' || x === null) return false;
 	const e = x as Partial<CommentEvent> & { anchor?: unknown };
@@ -265,6 +284,8 @@ function isEvent(x: unknown): x is CommentEvent {
 			return typeof e.message === 'string';
 		case 'move':
 			return typeof (e as { from?: unknown }).from === 'string' && typeof (e as { to?: unknown }).to === 'string';
+		case 'anchor':
+			return typeof e.thread === 'string' && isAnchor(e.anchor) && (e.file === undefined || typeof e.file === 'string');
 		default:
 			return false;
 	}

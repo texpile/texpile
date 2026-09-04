@@ -60,8 +60,12 @@ export type PaletteActions = {
 	insertZoteroCitation?(): void;
 };
 
+/** 'files' is the picker: files only, listed before anything is typed */
+export type PaletteMode = 'all' | 'files';
+
 class CommandPaletteState {
 	open = $state(false);
+	mode = $state<PaletteMode>('all');
 	/**
 	 * null until WorkspaceView mounts; the palette refuses to open without it.
 	 *
@@ -72,15 +76,18 @@ class CommandPaletteState {
 	 */
 	actions = $state.raw<PaletteActions | null>(null);
 
-	show(): void {
-		if (this.actions) this.open = true;
+	show(mode: PaletteMode = 'all'): void {
+		if (!this.actions) return;
+		this.mode = mode;
+		this.open = true;
 	}
 	hide(): void {
 		this.open = false;
 	}
-	toggle(): void {
-		if (this.open) this.hide();
-		else this.show();
+	/** the other chord while open switches the mode rather than closing */
+	toggle(mode: PaletteMode = 'all'): void {
+		if (this.open && this.mode === mode) this.hide();
+		else this.show(mode);
 	}
 }
 

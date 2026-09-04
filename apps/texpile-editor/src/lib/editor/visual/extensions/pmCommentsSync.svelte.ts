@@ -36,8 +36,8 @@ export function syncPmComments(args: PmCommentsSyncArgs): void {
 	// Re-place threads when the list changes or a swap lands. The fingerprint guard matters
 	// because the threads array usually arrives through an object literal rebuilt on every parent
 	// render - identity alone would re-resolve (a full flatten + search per thread) on every
-	// unrelated state change. Anchors are immutable, so id + resolved is the whole of what the
-	// decorations depend on.
+	// unrelated state change. An anchor changes only by re-pinning (an `anchor` event), so id +
+	// resolved + the anchor's own offsets are the whole of what the decorations depend on.
 	let lastFp = '';
 	let lastEpoch = -1;
 	$effect(() => {
@@ -45,7 +45,7 @@ export function syncPmComments(args: PmCommentsSyncArgs): void {
 		const threads = args.threads();
 		const epoch = args.epoch();
 		if (!v) return;
-		const fp = threads.map((t) => `${t.id}:${t.resolved ? 1 : 0}`).join('|');
+		const fp = threads.map((t) => `${t.id}:${t.resolved ? 1 : 0}:${t.anchor.start}-${t.anchor.end}`).join('|');
 		if (fp === lastFp && epoch === lastEpoch) return;
 		lastFp = fp;
 		lastEpoch = epoch;

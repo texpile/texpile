@@ -11,6 +11,7 @@
 		fileGone,
 		lost,
 		hidden,
+		unsure = false,
 		onReply,
 		onEditMessage,
 		onDeleteMessage
@@ -19,6 +20,8 @@
 		fileGone: boolean;
 		lost: boolean;
 		hidden: boolean;
+		/** placed, but the words around the quote changed; see CommentsPanel's weak */
+		unsure?: boolean;
 		onReply: (thread: CommentThread, body: string) => void;
 		onEditMessage: (message: CommentMessage, body: string) => void;
 		onDeleteMessage: (thread: CommentThread, message: CommentMessage) => void;
@@ -49,6 +52,8 @@
 		<p class="text-warning-ink">{m.comments_file_gone()}</p>
 	{:else if lost}
 		<p class="text-warning-ink">{m.comments_orphaned()}</p>
+	{:else if unsure}
+		<p class="text-warning-ink">{m.comments_weak()}</p>
 	{:else if hidden}
 		<p class="text-muted">{m.comments_not_in_view()}</p>
 	{/if}

@@ -23,6 +23,7 @@
 		comments = [],
 		commentFile = null,
 		commentsOrphaned = new Set<string>(),
+		commentsWeak = new Set<string>(),
 		commentsNotVisible = new Set<string>(),
 		commentFilesPresent = null,
 		commentSelected = null,
@@ -49,6 +50,7 @@
 		comments?: CommentThread[];
 		commentFile?: string | null;
 		commentsOrphaned?: Set<string>;
+		commentsWeak?: Set<string>;
 		commentsNotVisible?: Set<string>;
 		commentFilesPresent?: Set<string> | null;
 		commentSelected?: string | null;
@@ -271,6 +273,7 @@
 				threads={comments}
 				activeFile={commentFile}
 				orphaned={commentsOrphaned}
+				weak={commentsWeak}
 				notVisible={commentsNotVisible}
 				filesPresent={commentFilesPresent}
 				selected={commentSelected}

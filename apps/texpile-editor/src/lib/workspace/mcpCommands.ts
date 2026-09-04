@@ -1,14 +1,23 @@
 // Renderer end of the MCP tools: answering requests main cannot serve from its state cache, and
 // carrying out the steer commands. Nothing here writes a document - the connected agent has its own
-// file tools for that, and keeping writes out is what makes this surface safe.
+// file tools for that, and keeping writes out is what makes this surface safe. The comment tools
+// (mcpComments.ts) write the comment log only, never a document.
 import { browser } from '$lib/runtime';
-import { workspaceRoot, isDirty, mainFile, texFiles, fileTree, effectiveCompileFormat } from './workspaceStore';
-import type { TreeEntry } from './fileSystem';
+import { workspaceRoot, isDirty, mainFile, texFiles, effectiveCompileFormat } from './workspaceStore';
 import { isGitRepo, refreshGitStatus } from './gitStore';
 import { compileLog } from '$lib/stores/compileLogStore';
 import { settings } from '$lib/settings';
 import { compileConfig } from './projectConfigSync.svelte';
-import { joinPath, relativeTo, samePath } from './fileSystem';
+import { relativeTo, samePath } from './fileSystem';
+import { inOpenTree, resolveInWorkspace } from './mcpWorkspacePath';
+import {
+	addCommentPayload,
+	commentsPayload,
+	reanchorCommentPayload,
+	replyCommentPayload,
+	resolveCommentPayload,
+	type McpCommentDeps
+} from './mcpComments';
 import {
 	compileOutDir,
 	detectEngine,
@@ -45,6 +54,8 @@ export type McpCommandDeps = {
 	getCompileCommand(): string;
 	/** persist a command and/or the folder's PDF/log overrides; both optional, see applyCommand */
 	applyCompile(command?: string, outputs?: { pdf?: string; log?: string }): void;
+	/** the review-comment tools; see mcpComments.ts */
+	comments: McpCommentDeps;
 };
 
 type NativeMcp = {
@@ -116,21 +127,6 @@ function diagnosticsPayload(deps: McpCommandDeps) {
 	};
 }
 
-/** resolve a workspace-relative path against the OPEN TREE, never the filesystem. This is the
- * containment boundary for the whole server: the only path a client can supply arrives here, and it
- * can only ever name a file already known to this workspace. */
-function resolveInWorkspace(rel: string): string | null {
-	const root = workspaceRoot.current;
-	if (!root || !rel) return null;
-	if (rel.includes('\0')) return null;
-	const abs = joinPath(root, rel.replace(/\\/g, '/'));
-	// reject anything that climbed out of the root via .. before it reaches an open
-	if (!samePath(abs, root) && !abs.toLowerCase().startsWith(root.toLowerCase())) return null;
-	// a file that does not exist is left to the opener's normal "cannot load" path rather than
-	// checked here: this function's job is containment, not existence
-	return abs;
-}
-
 /**
  * Switching mode can be REFUSED, so this reports what actually happened instead of assuming.
  * Diff is the case that bites: viewModeSwitch.set() returns silently when the folder is not a git
@@ -157,14 +153,6 @@ async function viewModePayload(deps: McpCommandDeps, mode: unknown) {
 	deps.setViewMode(mode);
 	const now = deps.getViewMode();
 	return now === mode ? { ok: true, viewMode: now } : { ok: false, reason: 'the editor refused the switch', viewMode: now };
-}
-
-/** whether the open tree contains this exact file; the .typ leg of main_file's containment. */
-function inOpenTree(abs: string): boolean {
-	function walk(nodes: TreeEntry[]): boolean {
-		return nodes.some((n) => (n.type === 'file' && samePath(n.path, abs)) || (n.children ? walk(n.children) : false));
-	}
-	return walk(fileTree.current);
 }
 
 /**
@@ -343,6 +331,11 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 		if (req.kind === 'set_output_paths') return reply(setOutputPathsPayload(deps, a));
 		if (req.kind === 'set_compile_command') return reply(setCompileCommandPayload(deps, a.command));
 		if (req.kind === 'main_file') return void mainFilePayload(deps, a.path).then(reply);
+		if (req.kind === 'comments') return void commentsPayload(deps.comments, a).then(reply);
+		if (req.kind === 'comment_add') return void addCommentPayload(deps.comments, a).then(reply);
+		if (req.kind === 'comment_reply') return void replyCommentPayload(deps.comments, a).then(reply);
+		if (req.kind === 'comment_resolve') return void resolveCommentPayload(deps.comments, a).then(reply);
+		if (req.kind === 'comment_reanchor') return void reanchorCommentPayload(deps.comments, a).then(reply);
 		if (req.kind === 'compile') {
 			// Live mode and terminal mode are different enough that the caller has to be told which one
 			// it got. In live mode runCompile() drives the incremental draft engine, the preview is

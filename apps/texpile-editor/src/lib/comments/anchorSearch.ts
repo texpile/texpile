@@ -10,7 +10,7 @@ export const CONTEXT = 32;
 export const MIN_QUOTE = 3;
 
 /** a runaway scan guard: past this many hits the quote is not distinctive enough to place */
-const MAX_HITS = 500;
+export const MAX_HITS = 500;
 
 export type CommentAnchor = {
 	/** the commented text itself */
@@ -28,7 +28,19 @@ export type ResolvedAnchor = {
 	to: number;
 	/** the offsets were still right - nothing has moved under this comment */
 	exact: boolean;
+	/**
+	 * Found, but under WEAK_CONTEXT characters of the remembered surroundings line up. The words
+	 * around the quote changed, and if the document holds the sentence twice this may be the OTHER
+	 * copy: a single surviving copy is taken on the strength of the quote alone, because from here
+	 * a sentence moved into a new paragraph looks exactly the same. Placed with a warning rather
+	 * than detached - a reader loses a glance to the warning and a whole thread to a detach.
+	 */
+	weak: boolean;
 };
+
+/** matched context characters (both sides together) under which a relocated hit is weak. What a
+ *  duplicate shares by chance - a period and two newlines each side - scores about five. */
+export const WEAK_CONTEXT = 8;
 
 export function buildAnchor(text: string, from: number, to: number): CommentAnchor {
 	return {
@@ -50,19 +62,20 @@ export function buildAnchor(text: string, from: number, to: number): CommentAnch
 export function resolveAnchor(text: string, a: CommentAnchor): ResolvedAnchor | null {
 	if (a.quote.length < MIN_QUOTE) return null;
 	// the common case by far - the file has not been touched behind our back
-	if (text.slice(a.start, a.end) === a.quote) return { from: a.start, to: a.end, exact: true };
+	if (text.slice(a.start, a.end) === a.quote) return { from: a.start, to: a.end, exact: true, weak: false };
 	const hit = searchQuote(text, a.quote, a.prefix, a.suffix, a.start);
-	return hit ? { ...hit, exact: false } : null;
+	return hit ? { from: hit.from, to: hit.to, exact: false, weak: hit.context < WEAK_CONTEXT } : null;
 }
 
-/** the search behind resolveAnchor, shared with the loose path; `hint` breaks exact-score ties */
+/** the search behind resolveAnchor, shared with the loose path; `hint` breaks exact-score ties,
+ *  `context` is how much of the surroundings matched at the pick (see ResolvedAnchor.weak) */
 export function searchQuote(
 	text: string,
 	quote: string,
 	prefix: string,
 	suffix: string,
 	hint: number
-): { from: number; to: number } | null {
+): { from: number; to: number; context: number } | null {
 	if (quote.length < MIN_QUOTE) return null;
 	const hits = occurrences(text, quote);
 	if (hits.length === 0) return null;
@@ -71,11 +84,12 @@ export function searchQuote(
 	// confidently near the top of the file, which is precisely the lie this module exists to avoid.
 	// Orphaned is the honest answer for a quote this repetitive.
 	if (hits.length >= MAX_HITS) return null;
-	if (hits.length === 1) return { from: hits[0], to: hits[0] + quote.length };
+	const a = { quote, prefix, suffix };
+	if (hits.length === 1)
+		return { from: hits[0], to: hits[0] + quote.length, context: contextScore(text, hits[0], hits[0] + quote.length, a) };
 
 	// repeated quote: the context decides. Ties go to whichever copy is nearest where the comment
 	// used to be, since edits move text a little more often than they move it a long way.
-	const a = { quote, prefix, suffix };
 	let best = hits[0];
 	let bestScore = -1;
 	for (const at of hits) {
@@ -85,11 +99,11 @@ export function searchQuote(
 			best = at;
 		}
 	}
-	return { from: best, to: best + quote.length };
+	return { from: best, to: best + quote.length, context: bestScore };
 }
 
 /** how many characters of the remembered context still line up around a candidate */
-function contextScore(text: string, from: number, to: number, a: Pick<CommentAnchor, 'prefix' | 'suffix'>): number {
+export function contextScore(text: string, from: number, to: number, a: Pick<CommentAnchor, 'prefix' | 'suffix'>): number {
 	let score = 0;
 	const before = text.slice(Math.max(0, from - a.prefix.length), from);
 	for (let i = 1; i <= Math.min(before.length, a.prefix.length); i++) {
@@ -104,7 +118,7 @@ function contextScore(text: string, from: number, to: number, a: Pick<CommentAnc
 	return score;
 }
 
-function occurrences(text: string, needle: string): number[] {
+export function occurrences(text: string, needle: string): number[] {
 	const out: number[] = [];
 	for (let at = text.indexOf(needle); at !== -1; at = text.indexOf(needle, at + 1)) {
 		out.push(at);

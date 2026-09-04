@@ -32,7 +32,7 @@ describe('resolveAnchor', () => {
 	it('reports an untouched document as exact', () => {
 		const at = doc.indexOf('gravity');
 		const a = buildAnchor(doc, at, at + 7);
-		expect(resolveAnchor(doc, a)).toEqual({ from: at, to: at + 7, exact: true });
+		expect(resolveAnchor(doc, a)).toEqual({ from: at, to: at + 7, exact: true, weak: false });
 	});
 
 	it('follows the quote when text is inserted above it', () => {
@@ -120,7 +120,7 @@ describe('resolveAnchor', () => {
 		const at = src.indexOf(target);
 		const a = buildAnchor(src, at, at + 6); // just "\begin"
 		// the offsets still hold, so the fast path answers without searching
-		expect(resolveAnchor(src, a)).toEqual({ from: at, to: at + 6, exact: true });
+		expect(resolveAnchor(src, a)).toEqual({ from: at, to: at + 6, exact: true, weak: false });
 		// push everything down and it has to search - and must decline
 		expect(resolveAnchor('padding\n' + src, a)).toBeNull();
 	});

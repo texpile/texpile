@@ -16,6 +16,9 @@
 				<Menu.Item value="palette" class={itemClass}>
 					<Menu.ItemText>{m.palette_open()}</Menu.ItemText><span class="opacity-50">{combo('K')}</span>
 				</Menu.Item>
+				<Menu.Item value="goToFile" class={itemClass}>
+					<Menu.ItemText>{m.palette_group_go()}</Menu.ItemText><span class="opacity-50">{combo('T')}</span>
+				</Menu.Item>
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="undo" class={itemClass}
 					><Menu.ItemText>{m.menubar_undo()}</Menu.ItemText><span class="opacity-50">{combo('Z')}</span></Menu.Item

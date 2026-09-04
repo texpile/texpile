@@ -5,10 +5,14 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
-- fix: text, tints and buttons stay readable on every theme, including pastel ones
-- fix: source editor line numbers, cursor and active line follow the theme in both modes
-- fix: the terminal, Typst preview and title bar pick up a new theme without reopening
-- fix: buttons, chips and panels use Skeleton classes; Compile is the one filled action
+## [1.0.0-rc.4] - 2026-09-04
+
+- fix: MCP now give assistant tools to fix issues regarding comments when editing files
+- fix: a comment whose surrounding words changed shows a Check placement badge instead of silently sitting on another copy of its sentence
+- feat: Ctrl+T (Cmd+T on macOS) opens the file picker, and the palette's file rows show the explorer's icons
+- fix: Ctrl+W closes a tab whose file could not be loaded, such as one deleted on disk
+- fix: UI freeze in cold start
+- fix: improve contrast in all themes
 
 ## [1.0.0-rc.3] - 2026-09-03
 

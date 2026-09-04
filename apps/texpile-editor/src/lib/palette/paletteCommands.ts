@@ -22,6 +22,8 @@ export type PaletteItem = {
 	/** right-aligned: a shortcut, or a path for a file entry */
 	hint?: string;
 	icon?: Component;
+	/** a file entry: drawn with the explorer's icon for this name instead of `icon` */
+	fileName?: string;
 	/** never listed in the empty-query browse view; typing is the only way to reach it.
 	 *  For diagnostics: present enough for support to say "press Ctrl+K, type dev",
 	 *  invisible enough that browsing users never meet a debugger. */

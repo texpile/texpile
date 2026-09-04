@@ -24,6 +24,8 @@
 		comments?: CommentThread[];
 		commentFile?: string | null;
 		commentsOrphaned?: Set<string>;
+		/** placed, but the words around the quote changed; see CommentsPanel */
+		commentsWeak?: Set<string>;
 		/** placed in the file but not drawable in the current view; see CommentsPanel */
 		commentsNotVisible?: Set<string>;
 		/** workspace-relative paths that exist; null = unknown. See CommentsPanel's fileGone. */
@@ -57,6 +59,7 @@
 		comments = [],
 		commentFile = null,
 		commentsOrphaned = new Set<string>(),
+		commentsWeak = new Set<string>(),
 		commentsNotVisible = new Set<string>(),
 		commentFilesPresent = null,
 		commentSelected = null,
@@ -103,6 +106,7 @@
 		{comments}
 		{commentFile}
 		{commentsOrphaned}
+		{commentsWeak}
 		{commentsNotVisible}
 		{commentFilesPresent}
 		{commentSelected}

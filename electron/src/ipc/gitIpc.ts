@@ -2,7 +2,6 @@
 // (helper/helperWorker.ts); main only relays.
 import { helperCall } from '../helper/helperProcess';
 import { handleFs } from './ipcResult';
-import { shellEnvReady } from '../shell/shellEnv';
 import { timeSpan } from '../startupStats';
 
 // channel -> gitService export

@@ -1,4 +1,3 @@
-import { FileText } from '@lucide/svelte';
 import { fileTree, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { relativeTo, type TreeEntry } from '$lib/workspace/fileSystem';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
@@ -31,7 +30,7 @@ export function goToFileItems(a: PaletteActions): PaletteItem[] {
 				// matching runs against the label plus the keywords, so typing part of a folder works
 				keywords: rel,
 				hint: rel.includes('/') ? rel.slice(0, rel.lastIndexOf('/')) : '',
-				icon: FileText,
+				fileName: e.name,
 				run: () => a.openFile(e.path)
 			});
 		}

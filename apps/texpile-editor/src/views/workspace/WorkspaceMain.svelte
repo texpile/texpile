@@ -274,6 +274,7 @@
 			comments={panes.comments}
 			commentFile={panes.commentFile}
 			commentsOrphaned={panes.commentsOrphaned}
+			commentsWeak={panes.commentsWeak}
 			commentsNotVisible={panes.commentsNotVisible}
 			commentFilesPresent={panes.commentFilesPresent}
 			commentSelected={panes.commentSelected}

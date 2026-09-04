@@ -82,6 +82,9 @@
 		jumpToFileLine: (abs, line) => nav.syncJumpToFileLine(abs, line)
 	});
 	const commentsCtl = commentsW.ctl;
+	// an outside write adopted into the open file (an agent, vim) re-places its threads now, so a
+	// rewritten quote badges detached at once rather than at the next mode switch
+	external.onAdopted = () => commentsW.reanchorNow();
 
 	const folderEmpty = $derived(texFiles.current.length === 0);
 
@@ -261,7 +264,6 @@
 	const uiZoomPercent = $derived(Math.round((settings.current.uiZoom ?? 1) * 100));
 	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
 	const onKeydown = createKeydownHandler({
-		getLoadedPath: () => doc.path,
 		closeTab: (t) => editFlow.closeTab(t),
 		isGuest: () => guest,
 		save: () => wsdoc.save(),
@@ -351,6 +353,7 @@
 				commentFile: commentsCtl.activeFile,
 				commandPending: !!projectConfig.pending,
 				commentsOrphaned: commentsCtl.orphaned,
+				commentsWeak: commentsCtl.weak,
 				commentsNotVisible: commentsCtl.notVisible,
 				commentFilesPresent: commentsW.filesPresent,
 				commentSelected: commentsCtl.selected,

@@ -96,6 +96,7 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		closeWorkspace: m.menubar_close_workspace(),
 		preferences: m.menubar_preferences(),
 		palette: m.palette_open(),
+		goToFile: m.palette_group_go(),
 		undo: m.menubar_undo(),
 		redo: m.menubar_redo(),
 		find: m.menubar_find(),

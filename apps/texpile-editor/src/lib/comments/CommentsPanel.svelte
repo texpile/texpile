@@ -16,6 +16,7 @@
 		threads,
 		activeFile = null,
 		orphaned = new Set<string>(),
+		weak = new Set<string>(),
 		notVisible = new Set<string>(),
 		filesPresent = null,
 		selected = null,
@@ -34,6 +35,9 @@
 		activeFile?: string | null;
 		/** threads on the ACTIVE file whose quote no longer appears in it; unknown for other files */
 		orphaned?: Set<string>;
+		/** placed on the active file, but the words around the quote changed; if the sentence
+		 * repeats in the file the highlight may be on the other copy, so the reader should look */
+		weak?: Set<string>;
 		/** placed in the file but not drawable in the CURRENT view (visual mode, quote is markup);
 		 * distinct from orphaned - switching to source brings these back */
 		notVisible?: Set<string>;
@@ -180,6 +184,7 @@
 				{@const fileGone = filesPresent !== null && !filesPresent.has(thread.file)}
 				{@const lost = !fileGone && orphaned.has(thread.id)}
 				{@const hidden = !fileGone && !lost && notVisible.has(thread.id)}
+				{@const unsure = !fileGone && !lost && !hidden && weak.has(thread.id)}
 				<div data-thread={thread.id} class="border-surface-wash border-b last:border-b-0 {selected === thread.id ? 'bg-surface-tint' : ''}">
 					<!-- the summary and the thread actions are SIBLINGS: a button cannot contain a button,
 					     and Resolve/Delete belong on the header rather than under the reply box, where
@@ -227,6 +232,8 @@
 									<!-- neutral, not warning: nothing is wrong, the comment just lives in markup the
 									     visual editor renders rather than shows -->
 									<span class="badge preset-tonal-surface px-1 py-0 text-[10px]">{m.comments_not_in_view_badge()}</span>
+								{:else if unsure}
+									<span class="badge preset-tonal-warning px-1 py-0 text-[10px]">{m.comments_weak_badge()}</span>
 								{/if}
 								<span class="text-muted font-mono">{thread.file}</span>
 							</span>
@@ -253,7 +260,7 @@
 						</div>
 					</div>
 					{#if isOpen}
-						<CommentThreadConversation {thread} {fileGone} {lost} {hidden} {onReply} {onEditMessage} {onDeleteMessage} />
+						<CommentThreadConversation {thread} {fileGone} {lost} {hidden} {unsure} {onReply} {onEditMessage} {onDeleteMessage} />
 					{/if}
 				</div>
 			{/each}

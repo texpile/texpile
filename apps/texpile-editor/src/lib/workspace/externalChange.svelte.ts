@@ -38,6 +38,8 @@ export type ExternalChangeDeps = {
 
 export class ExternalChangeWatcher {
 	conflict = $state<{ path: string; disk: string; eol: Eol } | null>(null);
+	/** told after disk content replaced the buffer, for state resolved against the old text */
+	onAdopted: (() => void) | null = null;
 
 	constructor(private deps: ExternalChangeDeps) {}
 
@@ -83,6 +85,7 @@ export class ExternalChangeWatcher {
 			// external write and re-raise the conflict we just resolved
 			void recordDiskStamp(path);
 		}
+		this.onAdopted?.();
 	}
 
 	resolve(choice: 'reload' | 'keep'): void {

@@ -79,6 +79,20 @@ describe('persisted placement status', () => {
 		expect(writes).toBe(afterFirst);
 	});
 
+	// a disk reload and a log refresh from one watcher event both measure before either commit lands
+	it('two passes in the same tick write the verdict once', async () => {
+		disk['.texpile/comments.jsonl'] = log([{ id: 'gone', file: 'main.tex' }]);
+		const ctl = make();
+		await ctl.load(ROOT);
+		const changed = 'The introduction was rewritten entirely.\n';
+		ctl.reanchor(`${ROOT}/main.tex`, changed);
+		ctl.reanchor(`${ROOT}/main.tex`, changed);
+		await settle();
+		await settle();
+		const places = parseLog(disk['.texpile/comments.jsonl']).filter((e) => e.t === 'place');
+		expect(places).toHaveLength(1);
+	});
+
 	/**
 	 * The panel only asks `if (t.detached)`, so "nobody looked" and "looked, nothing wrong" draw the
 	 * identical row - and recording the second would put one line per thread into a committed file the

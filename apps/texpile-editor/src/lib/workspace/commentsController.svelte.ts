@@ -16,6 +16,7 @@ import {
 	type LooseHaystack
 } from '$lib/comments/anchor';
 import {
+	anchorEvent,
 	deleteEvent,
 	deleteMessageEvent,
 	editEvent,
@@ -28,6 +29,7 @@ import {
 	type CommentMessage,
 	type CommentThread
 } from '$lib/comments/log';
+import { lineOf } from '$lib/comments/anchorLocate';
 import { resolveAuthor, forgetAuthor } from '$lib/comments/author';
 import type { CommentRange } from '$lib/editor/visual/extensions/comments';
 
@@ -75,6 +77,13 @@ export class CommentsController {
 	 */
 	notVisible = $state<Set<string>>(new Set());
 	/**
+	 * Threads on the active file that were found, but whose surroundings changed (see
+	 * ResolvedAnchor.weak). If the file holds their sentence twice the highlight may be on the
+	 * other copy, so the panel asks the reader to check. Measured, never recorded: it is a fact
+	 * about this text, and the next edit can change it either way.
+	 */
+	weak = $state<Set<string>>(new Set());
+	/**
 	 * A selection the reader has asked to comment on, before they have written anything.
 	 *
 	 * Held here rather than written straight to the log, because an empty thread on disk is a thread
@@ -96,6 +105,10 @@ export class CommentsController {
 	private visual = false;
 	/** a thread we are opening a different file for; selected once that file re-anchors */
 	private pendingOpen: string | null = null;
+	/** verdicts whose place event is still being written, keyed d:/h: + thread id; a second pass
+	 *  landing before the first commit (a disk reload and a log refresh from one watcher event)
+	 *  must not write the same line twice */
+	private inFlight = new Map<string, boolean>();
 
 	constructor(private readonly deps: Deps) {}
 
@@ -114,6 +127,7 @@ export class CommentsController {
 		this.activeHidden = new Set();
 		this.activeLost = new Set();
 		this.notVisible = new Set();
+		this.weak = new Set();
 		await this.store.load(root);
 	}
 
@@ -209,12 +223,14 @@ export class CommentsController {
 		if (!this.file) {
 			this.ranges = [];
 			this.activeLost = new Set();
+			this.weak = new Set();
 			this.applyOrphans();
 			return;
 		}
 		const text = this.fresh();
 		const ranges: CommentRange[] = [];
 		const lost = new Set<string>();
+		const weak = new Set<string>();
 		// normalized once for the whole file, and only if something actually misses the fast path
 		let hay: LooseHaystack | null = null;
 		for (const t of this.store.forFile(this.file)) {
@@ -225,11 +241,14 @@ export class CommentsController {
 				hay ??= prepareLoose(text, this.dialect());
 				hit = resolveAnchorLooseIn(hay, t.anchor);
 			}
-			if (hit) ranges.push({ id: t.id, from: hit.from, to: hit.to, resolved: t.resolved });
-			else lost.add(t.id);
+			if (hit) {
+				ranges.push({ id: t.id, from: hit.from, to: hit.to, resolved: t.resolved });
+				if (hit.weak) weak.add(t.id);
+			} else lost.add(t.id);
 		}
 		this.ranges = ranges;
 		this.activeLost = lost;
+		this.weak = weak;
 		this.applyOrphans();
 		void this.recordDetached(this.file, lost);
 		if (this.pendingOpen) {
@@ -251,10 +270,26 @@ export class CommentsController {
 	private async recordDetached(file: string, lost: Set<string>): Promise<void> {
 		if (!this.store.writable) return;
 		const stale = this.store.forFile(file).filter((t) => asFlag(t.detached) !== lost.has(t.id));
-		if (stale.length === 0) return;
-		const by = await this.author();
-		const at = new Date().toISOString();
-		await this.commit(...stale.map((t) => placeEvent({ thread: t.id, detached: lost.has(t.id), by, at })));
+		await this.recordPlacement('d:', stale, lost, (t) => ({ thread: t.id, detached: lost.has(t.id) }));
+	}
+
+	/** the write behind recordDetached and recordHidden, skipping verdicts already on their way */
+	private async recordPlacement(
+		key: 'd:' | 'h:',
+		stale: CommentThread[],
+		lost: Set<string>,
+		fields: (t: CommentThread) => { thread: string; detached?: boolean; hidden?: boolean }
+	): Promise<void> {
+		const fresh = stale.filter((t) => this.inFlight.get(key + t.id) !== lost.has(t.id));
+		if (fresh.length === 0) return;
+		for (const t of fresh) this.inFlight.set(key + t.id, lost.has(t.id));
+		try {
+			const by = await this.author();
+			const at = new Date().toISOString();
+			await this.commit(...fresh.map((t) => placeEvent({ ...fields(t), by, at })));
+		} finally {
+			for (const t of fresh) this.inFlight.delete(key + t.id);
+		}
 	}
 
 	/**
@@ -268,10 +303,7 @@ export class CommentsController {
 		this.applyOrphans();
 		if (!this.store.writable) return;
 		const stale = this.store.forFile(file).filter((t) => asFlag(t.hidden) !== lost.has(t.id));
-		if (stale.length === 0) return;
-		const by = await this.author();
-		const at = new Date().toISOString();
-		await this.commit(...stale.map((t) => placeEvent({ thread: t.id, hidden: lost.has(t.id), by, at })));
+		await this.recordPlacement('h:', stale, lost, (t) => ({ thread: t.id, hidden: lost.has(t.id) }));
 	}
 
 	/**
@@ -314,50 +346,81 @@ export class CommentsController {
 		const p = this.pending;
 		if (!p) return;
 		this.pending = null;
-		if (!p.anchor) return;
-		const id = await this.writeOpen(p.anchor, body);
-		if (!id) return;
-		// The new thread gets its highlight now. Re-resolved rather than pushing the beginAdd
-		// offsets: the composer window may have seen remote edits, and the anchor search lands on
-		// the text wherever it sits NOW. Visual-editor anchors are source-dialect too since
-		// beginAddAnchored converts them, so the same resolve serves both origins (the visual side
-		// still re-resolves for itself off the list changing).
-		{
-			const text = this.fresh();
-			const hit = resolveAnchor(text, p.anchor) ?? resolveAnchorLoose(text, p.anchor, this.dialect());
-			if (hit) this.ranges = [...this.ranges, { id, from: hit.from, to: hit.to, resolved: false }];
-		}
-		this.selected = id;
+		if (!p.anchor || !this.file) return;
+		const id = await this.openOn(this.file, p.anchor, body);
+		if (id) this.selected = id;
 	}
 
-	/** write the open event; returns the new thread's id, or null if there was nothing to write */
-	private async writeOpen(anchor: CommentAnchor, body: string): Promise<string | null> {
+	/**
+	 * Open a thread on `file` at a ready-made anchor: the panel's commit, and the MCP tools' way in.
+	 *
+	 * On the active file the new thread gets its highlight now, re-resolved rather than pushed from
+	 * the gesture's offsets: the composer window may have seen remote edits, and the search lands on
+	 * the text wherever it sits NOW (visual-editor anchors are source-dialect by then too, see
+	 * beginAddAnchored). Returns the id, or null when there was nothing to write.
+	 */
+	async openOn(file: string, anchor: CommentAnchor, body: string, by?: string): Promise<string | null> {
 		const root = this.deps.root();
-		if (!root || !this.file || !body.trim()) return null;
+		if (!root || !body.trim()) return null;
 		const id = crypto.randomUUID();
-		await this.commit(
-			openEvent({
-				id,
-				file: this.file,
-				by: await this.author(),
-				body: body.trim(),
-				anchor,
-				at: new Date().toISOString()
-			})
-		);
+		await this.commit(openEvent({ id, file, by: await this.author(by), body: body.trim(), anchor, at: new Date().toISOString() }));
+		if (file === this.file) this.placeOne(id, anchor, false);
 		return id;
 	}
 
-	async reply(thread: CommentThread, body: string): Promise<void> {
-		if (!body.trim()) return;
+	/**
+	 * Re-pin a thread to `anchor` in `file`, after an edit rewrote the text it sat on. An event,
+	 * not a rewrite of the open line, same as move: the log is append-only.
+	 */
+	async moveAnchor(thread: CommentThread, anchor: CommentAnchor, file: string, by?: string): Promise<void> {
+		const moved = file !== thread.file;
 		await this.commit(
-			replyEvent({ id: crypto.randomUUID(), thread: thread.id, by: await this.author(), body: body.trim(), at: new Date().toISOString() })
+			anchorEvent({ thread: thread.id, anchor, file: moved ? file : undefined, by: await this.author(by), at: new Date().toISOString() })
 		);
+		if (file === this.file) this.placeOne(thread.id, anchor, thread.resolved);
+		else if (thread.file === this.file) this.dropRange(thread.id);
 	}
 
-	async setResolved(thread: CommentThread, resolved: boolean): Promise<void> {
-		await this.commit(resolveEvent({ thread: thread.id, by: await this.author(), resolved, at: new Date().toISOString() }));
+	/** returns the new message's id, or null if there was nothing to write */
+	async reply(thread: CommentThread, body: string, by?: string): Promise<string | null> {
+		if (!body.trim()) return null;
+		const id = crypto.randomUUID();
+		await this.commit(replyEvent({ id, thread: thread.id, by: await this.author(by), body: body.trim(), at: new Date().toISOString() }));
+		return id;
+	}
+
+	async setResolved(thread: CommentThread, resolved: boolean, by?: string): Promise<void> {
+		await this.commit(resolveEvent({ thread: thread.id, by: await this.author(by), resolved, at: new Date().toISOString() }));
 		this.ranges = this.ranges.map((r) => (r.id === thread.id ? { ...r, resolved } : r));
+	}
+
+	/** one thread's range on the active file, from the live text; lost there when the quote is not */
+	private placeOne(id: string, anchor: CommentAnchor, resolved: boolean): void {
+		const text = this.fresh();
+		const hit = resolveAnchor(text, anchor) ?? resolveAnchorLoose(text, anchor, this.dialect());
+		const rest = this.ranges.filter((r) => r.id !== id);
+		this.ranges = hit ? [...rest, { id, from: hit.from, to: hit.to, resolved }] : rest;
+		if (hit) this.activeLost.delete(id);
+		else this.activeLost.add(id);
+		this.setWeak(id, hit?.weak === true);
+		this.applyOrphans();
+	}
+
+	/** a thread that left the active file, by deletion or by moving elsewhere */
+	private dropRange(id: string): void {
+		this.ranges = this.ranges.filter((r) => r.id !== id);
+		this.activeLost.delete(id);
+		this.setWeak(id, false);
+		this.applyOrphans();
+		if (this.selected === id) this.selected = null;
+	}
+
+	private setWeak(id: string, on: boolean): void {
+		if (this.weak.has(id) === on) return;
+		const next = new Set(this.weak);
+		if (on) next.add(id);
+		else next.delete(id);
+		this.weak = next;
 	}
 
 	/** rewrite one message. Not restricted to your own: the log is a file anyone can edit anyway */
@@ -416,15 +479,15 @@ export class CommentsController {
 		if (event.t === 'open' && this.store.threads.some((t) => t.id === event.id)) return;
 		await this.store.append(event);
 		if (event.t === 'open' && event.file === this.file) {
-			const text = this.fresh();
-			const hit = resolveAnchor(text, event.anchor) ?? resolveAnchorLoose(text, event.anchor, this.dialect());
-			if (hit) this.ranges = [...this.ranges, { id: event.id, from: hit.from, to: hit.to, resolved: false }];
-			else this.orphaned = new Set([...this.orphaned, event.id]);
+			this.placeOne(event.id, event.anchor, false);
 		} else if (event.t === 'resolve') {
 			this.ranges = this.ranges.map((r) => (r.id === event.thread ? { ...r, resolved: event.resolved } : r));
 		} else if (event.t === 'delete') {
-			this.ranges = this.ranges.filter((r) => r.id !== event.thread);
-			if (this.selected === event.thread) this.selected = null;
+			this.dropRange(event.thread);
+		} else if (event.t === 'anchor') {
+			const t = this.store.threads.find((x) => x.id === event.thread);
+			if (t && t.file === this.file) this.placeOne(t.id, t.anchor, t.resolved);
+			else this.dropRange(event.thread);
 		}
 	}
 
@@ -466,8 +529,10 @@ export class CommentsController {
 		if (hit) this.deps.openFileAt(`${this.deps.root()}/${this.file}`, lineOf(this.text, hit.from));
 	}
 
-	private author(): Promise<string> {
-		return resolveAuthor(this.deps.root(), this.deps.preferredAuthor());
+	/** who signs an event: a caller's own name (an MCP client), else this workspace's author */
+	private author(by?: string): Promise<string> {
+		const own = by?.trim();
+		return own ? Promise.resolve(own) : resolveAuthor(this.deps.root(), this.deps.preferredAuthor());
 	}
 }
 
@@ -482,11 +547,4 @@ export class CommentsController {
  */
 function asFlag(v: boolean | undefined): boolean {
 	return v === true;
-}
-
-/** 1-based line containing `offset` */
-function lineOf(text: string, offset: number): number {
-	let line = 1;
-	for (let i = 0; i < offset && i < text.length; i++) if (text[i] === '\n') line++;
-	return line;
 }
