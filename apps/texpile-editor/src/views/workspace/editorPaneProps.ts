@@ -30,6 +30,9 @@ export type EditorPaneProps = {
 	/** the working copy is gone from disk; only reachable inside a comparison */
 	fileDeleted?: boolean;
 	encodingIssue?: string | null;
+	/** the file looks binary: nothing was read, the pane warns and offers to open it as text */
+	binaryWarning?: { path: string; size: number } | null;
+	onOpenAsText?: (path: string) => void;
 	applyingStarter: boolean;
 	texSource: string;
 	rawContent: string;

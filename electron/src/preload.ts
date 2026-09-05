@@ -163,6 +163,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	fsScan: (root: string, exts?: string) => invokeFs('fs:scan', root, exts),
 	/** read a text file -> { content }. */
 	fsRead: (path: string) => invokeFs('fs:read', path),
+	/** the first bytes only -> { size, binary, encoding }: whether the file looks binary. */
+	fsProbe: (path: string) => invokeFs('fs:probe', path),
 	fsWrite: (path: string, content: string) => invokeFs('fs:write', path, content),
 	/** write raw bytes, creating parent dirs -> { ok }. */
 	fsWriteBinary: (path: string, data: ArrayBuffer) => invokeFs('fs:writeBinary', path, data),

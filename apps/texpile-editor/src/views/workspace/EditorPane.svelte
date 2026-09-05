@@ -4,7 +4,7 @@
 	// state behind it all lives in WorkspaceView.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
-	import { Loader2, CircleAlert, Info, GitCompare, RefreshCw } from '@lucide/svelte';
+	import { Loader2, CircleAlert, FileWarning, Info, GitCompare, RefreshCw } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
 	import StarterPicker from '$lib/workspace/StarterPicker.svelte';
@@ -48,6 +48,8 @@
 		loadError,
 		fileDeleted = false,
 		encodingIssue = null,
+		binaryWarning = null,
+		onOpenAsText,
 		applyingStarter,
 		texSource,
 		rawContent,
@@ -282,6 +284,14 @@
 				<div class="text-error-ink mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
 					<CircleAlert class="size-8" />
 					<p class="text-sm">{loadError}</p>
+				</div>
+			{:else if binaryWarning}
+				<div class="text-muted mx-auto mt-12 flex max-w-md flex-col items-center gap-3 text-center">
+					<FileWarning class="size-8" />
+					<p class="text-sm">{m.wsview_binary_warning_body()}</p>
+					<button type="button" class="btn btn-sm preset-tonal" onclick={() => onOpenAsText?.(binaryWarning.path)}>
+						{m.wsview_binary_open_anyway()}
+					</button>
 				</div>
 			{:else if loadedPath && nameOnly}
 				<div class="text-muted mt-12 text-center text-sm">

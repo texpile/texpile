@@ -3,6 +3,7 @@ import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import * as path from 'node:path';
 import { createHash } from 'node:crypto';
 import * as fsService from '../fs/fsService';
+import { probe } from '../fs/binaryProbe';
 import { scan, tree, treeScan } from '../fs/fsWalk';
 import { search } from '../fs/fsSearch';
 import { synctex } from '../fs/synctexCli';
@@ -38,6 +39,7 @@ export function registerFsIpc(): void {
 
 	handleFs('fs:scan', scan);
 	handleFs('fs:read', fsService.read);
+	handleFs('fs:probe', probe);
 	handleFs('fs:write', fsService.write);
 	handleFs('fs:writeBinary', fsService.writeBinary);
 	handleFs('fs:tree', tree);

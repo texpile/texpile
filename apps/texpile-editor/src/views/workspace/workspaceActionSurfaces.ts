@@ -142,6 +142,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		closeTab: (t: Tab) => d.editFlow().closeTab(t),
 		keepTab: (t: Tab) => tabs.keep(tabKey(t)),
 		useSource: () => d.wsdoc.modes.set('source'),
+		openAsText: (path: string) => d.wsdoc.openAsText(path),
 		pickStarter: (s: Starter) => d.files().starters.pick(s),
 		newTexFile: () => d.files().starters.newTexFile(),
 		importStarter: (imported: ImportedFile[]) => d.files().starters.importFiles(imported),

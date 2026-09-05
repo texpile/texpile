@@ -18,6 +18,9 @@ export type FileOpenerDeps = {
 	doc: DocumentBuffer;
 	parser: VisualParser;
 	readText(path: string): Promise<string>;
+	/** the first bytes: does the file look binary, and how big is it. Absent for a guest, whose
+	 * files are text by construction; a failed probe reads as not binary and the read decides */
+	probe?(path: string): Promise<{ size: number; binary: boolean } | null>;
 	/** the save pipeline must be idle before we read, or we'd read our own half-written file */
 	whenIdle(): Promise<void>;
 	isVisualMode(): boolean;
@@ -41,6 +44,20 @@ export type FileOpenerDeps = {
 
 export class FileOpener {
 	constructor(private deps: FileOpenerDeps) {}
+
+	/** files the user chose to open as text despite the binary warning */
+	private textAnyway = new Set<string>();
+
+	openAsText(path: string): Promise<void> {
+		this.textAnyway.add(path);
+		return this.open(path);
+	}
+
+	/** a binary shown as text is read-only: saving it as text would corrupt it. Left to the
+	 * encoding check otherwise, which would call the same bytes UTF-16 */
+	private readOnlyReason(path: string): string | undefined {
+		return this.textAnyway.has(path) ? m.wsview_read_only_binary() : undefined;
+	}
 
 	/** still the file the user asked for? every await is a chance for a newer switch to win */
 	private current(path: string): boolean {
@@ -101,6 +118,17 @@ export class FileOpener {
 			if (!this.current(path)) return;
 
 			const k = fileKind(path);
+			if ((hasVisualMode(k) || isRawTextKind(k)) && !this.textAnyway.has(path)) {
+				const probe = await d.probe?.(path).catch(() => null);
+				if (!this.current(path)) return;
+				if (probe?.binary) {
+					d.doc.openBinaryWarning(path, probe.size);
+					d.clearPerFileViewState();
+					d.disableHistory();
+					isDirty.current = false;
+					return;
+				}
+			}
 			if (hasVisualMode(k)) {
 				const raw = await this.readWorkingCopy(path);
 				if (!this.current(path)) return;
@@ -111,7 +139,7 @@ export class FileOpener {
 				const decodable = !sourceEncodingError(text);
 				if (decodable && !cached && d.isVisualMode()) this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
 
-				d.doc.openTex(path, text, detectEol(raw)); // detectEol so a CRLF file isn't rewritten to LF
+				d.doc.openTex(path, text, detectEol(raw), this.readOnlyReason(path)); // detectEol so a CRLF file isn't rewritten to LF
 				if (cached) d.doc.adoptParsed(cached, text);
 				void recordDiskStamp(path); // arm the external-write guard: disk is known as of this read
 				d.parser.lastParsedSource = cached ? text : null;
@@ -122,7 +150,7 @@ export class FileOpener {
 			} else if (isRawTextKind(k)) {
 				const raw = await this.readWorkingCopy(path);
 				if (!this.current(path)) return;
-				d.doc.openRaw(path, toLf(raw), detectEol(raw));
+				d.doc.openRaw(path, toLf(raw), detectEol(raw), this.readOnlyReason(path));
 				void recordDiskStamp(path);
 				isDirty.current = false;
 				d.disableHistory(); // no cross-mode history for these kinds

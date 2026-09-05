@@ -134,6 +134,8 @@ type TexpileNative = {
 	}) => Promise<string | null>;
 	fsScan: (root: string, exts?: string) => Promise<{ root: string; files: TexFile[] }>;
 	fsRead: (path: string) => Promise<{ content: string }>;
+	// optional: an older preload predates the binary probe
+	fsProbe?: (path: string) => Promise<{ size: number; binary: boolean }>;
 	fsWrite: (path: string, content: string) => Promise<{ ok: boolean }>;
 	fsWriteBinary: (path: string, bytes: ArrayBuffer) => Promise<{ ok: boolean }>;
 	fsTree: (root: string) => Promise<{ root: string; children: TreeEntry[] }>;
@@ -331,6 +333,12 @@ export async function savePdfBytes(bytes: Uint8Array, defaultName: string): Prom
 
 export async function readTextFile(path: string): Promise<string> {
 	return (await ipc(requireNative().fsRead(path))).content;
+}
+
+/** the first bytes only: whether the file looks binary, and its size. null when the bridge predates it. */
+export async function probeFile(path: string): Promise<{ size: number; binary: boolean } | null> {
+	const probe = requireNative().fsProbe;
+	return probe ? ipc(probe(path)) : null;
 }
 
 export async function writeTextFile(path: string, content: string): Promise<void> {

@@ -71,6 +71,8 @@ export class DocumentBuffer {
 	/** the file is gone from disk, so what is loaded is empty. Only reachable through a comparison,
 	 *  where a deleted file is the thing being looked at rather than a file that failed to open. */
 	deletedOnDisk = $state(false);
+	/** the file looks binary and was not read; the pane offers to open it as text anyway */
+	binaryWarning = $state<{ path: string; size: number } | null>(null);
 	encodingIssue = $state<string | null>(null);
 
 	/** the whole .tex file, as raw text */
@@ -122,10 +124,11 @@ export class DocumentBuffer {
 		this.rawContent = '';
 		this.path = null;
 		this.encodingIssue = null;
+		this.binaryWarning = null;
 	}
 
 	/** install a .tex file's text; the visual doc is cleared and re-parsed separately */
-	openTex(path: string, text: string, eol: Eol): void {
+	openTex(path: string, text: string, eol: Eol, issue?: string): void {
 		this.eol = eol;
 		this.texSource = text;
 		this.docMeta = null;
@@ -134,11 +137,12 @@ export class DocumentBuffer {
 		this.lastDocSource = null;
 		this.path = path;
 		this.diskBaseline = text;
-		this.encodingIssue = sourceEncodingError(text);
+		this.encodingIssue = issue ?? sourceEncodingError(text);
+		this.binaryWarning = null;
 	}
 
 	/** install a non-.tex text file (.bib and friends), which has no visual representation */
-	openRaw(path: string, text: string, eol: Eol): void {
+	openRaw(path: string, text: string, eol: Eol, issue?: string): void {
 		this.eol = eol;
 		this.rawContent = text;
 		this.texSource = '';
@@ -148,13 +152,21 @@ export class DocumentBuffer {
 		this.lastDocSource = null;
 		this.path = path;
 		this.diskBaseline = text;
-		this.encodingIssue = sourceEncodingError(text);
+		this.encodingIssue = issue ?? sourceEncodingError(text);
+		this.binaryWarning = null;
 	}
 
 	/** image / binary / pdf: nothing to load, the viewer just needs the path */
 	openOpaque(path: string): void {
 		this.close();
 		this.path = path;
+	}
+
+	/** the probe found bytes text never has: nothing is read until the user asks for it as text */
+	openBinaryWarning(path: string, size: number): void {
+		this.close();
+		this.path = path;
+		this.binaryWarning = { path, size };
 	}
 
 	private queueSave(text: string): void {

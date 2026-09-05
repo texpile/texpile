@@ -24,6 +24,8 @@ export type WorkspaceProvider = {
 
 	// reads (both host and guest)
 	readText(path: string): Promise<string>;
+	/** the first bytes: whether the file looks binary, and its size (host only; a guest's files are text). */
+	probe?(path: string): Promise<{ size: number; binary: boolean } | null>;
 	scanTree(root: string): Promise<TreeEntry[]>;
 	scanTexFiles(root: string): Promise<TexFile[]>;
 	/** tree + flat .tex list from one traversal, when the backend can (the disk walk is IO-bound). */

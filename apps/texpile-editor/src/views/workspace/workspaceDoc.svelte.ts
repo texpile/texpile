@@ -81,6 +81,7 @@ export class WorkspaceDoc {
 			doc: this.doc,
 			parser: this.parser,
 			readText: (p) => d.provider.readText(p),
+			probe: async (p) => (await d.provider.probe?.(p)) ?? null,
 			whenIdle: () => d.saver().whenIdle(),
 			isVisualMode: () => this.modes.mode === 'visual',
 			isSourceMode: () => this.modes.mode === 'source',
@@ -192,6 +193,11 @@ export class WorkspaceDoc {
 	}
 
 	/** drop the open file's buffers AND the per-file view state that must not leak into the next file */
+	/** the binary warning's way in: read the file as text after all */
+	openAsText(path: string): void {
+		void this.opener.openAsText(path);
+	}
+
 	closeOpenFile(): void {
 		this.doc.close();
 		this.clearPerFileViewState();

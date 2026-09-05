@@ -4,6 +4,7 @@
 
 import {
 	readTextFile,
+	probeFile,
 	writeTextFile,
 	writeBinaryFile,
 	scanTree,
@@ -26,6 +27,7 @@ import type { WorkspaceProvider } from './workspaceProvider';
 export const diskProvider: WorkspaceProvider = {
 	caps: { manageTree: true, compile: true, git: true, format: true, search: true, terminal: true },
 	readText: readTextFile,
+	probe: probeFile,
 	scanTree: (root) => scanTree(root).then((t) => t.children),
 	scanTexFiles: (root) => scanTexFiles(root).then((r) => r.files),
 	scanTreeAndFiles: (root) => scanTreeAndFiles(root).then((r) => ({ children: r.children, files: r.files })),

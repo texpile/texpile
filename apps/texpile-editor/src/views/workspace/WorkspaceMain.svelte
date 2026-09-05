@@ -120,6 +120,8 @@
 			loadError={doc.loadError}
 			fileDeleted={doc.deletedOnDisk}
 			encodingIssue={doc.encodingIssue}
+			binaryWarning={doc.binaryWarning}
+			onOpenAsText={actions.openAsText}
 			applyingStarter={panes.applyingStarter}
 			texSource={doc.texSource}
 			rawContent={doc.rawContent}
