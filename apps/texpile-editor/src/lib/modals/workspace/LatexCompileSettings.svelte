@@ -58,9 +58,7 @@
      was, ready for the next LaTeX folder. -->
 <div class={row}>
 	<div class="flex items-center justify-between gap-4">
-		<span class="text-sm font-medium">
-			{m.wsview_live_mode_label()} <span class="text-muted font-normal">{m.wsview_experimental_label()}</span>
-		</span>
+		<span class="text-sm font-medium">{m.wsview_live_mode_label()}</span>
 		<Switch
 			checked={compileConfig.current.latex.liveMode}
 			disabled={sessionActive}
@@ -70,6 +68,7 @@
 			<Switch.HiddenInput />
 		</Switch>
 	</div>
+	<p class="text-muted mt-1 text-xs">{m.wsview_live_mode_hint()}</p>
 
 	{#if sessionActive}
 		<p class="text-warning-ink mt-1 text-xs">{m.wsview_live_mode_collab_note()}</p>
@@ -80,6 +79,7 @@
 			{m.wsview_livemode_desc_pre()} <strong>lualatex</strong>
 			{m.wsview_livemode_desc_post()}
 		</p>
+		<p class="text-warning-ink mt-1 text-xs">{m.wsview_live_mode_battery_note()}</p>
 		<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
 			{m.wsview_compile_disabled_live()}
 			<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">lualatex (built-in)</code>

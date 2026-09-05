@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: live mode is no longer marked experimental in the compile dialog, and the docs list its limits
+
 ## [1.0.0-rc.4] - 2026-09-04
 
 - fix: MCP now give assistant tools to fix issues regarding comments when editing files
