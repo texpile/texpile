@@ -48,12 +48,14 @@
 			<div class="min-w-0 flex-1">
 				<div class="truncate text-sm font-semibold">{ref.author || m.bib_unknown_author_placeholder()}</div>
 				<div class="text-muted truncate text-xs">{ref.title || m.bib_untitled_placeholder()}</div>
-				<div class="text-muted mt-1 flex items-center gap-2 text-xs">
+				<!-- wraps, and the key truncates, so a narrow pane never scrolls sideways -->
+				<div class="text-muted mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
 					<!-- date is biblatex's spelling and year the older one; a row showing "No year"
 					     next to date = {1843} was reading only half the document -->
 					<span>{ref.year || ref.date || m.bib_no_year_placeholder()}</span>
-					<span>•</span>
-					<span class="chip preset-outlined-surface-400-600 [--chip-size:var(--text-xs)] font-mono">{ref.key}</span>
+					<span class="chip preset-outlined-surface-400-600 [--chip-size:var(--text-xs)] min-w-0 max-w-full font-mono">
+						<span class="truncate">{ref.key}</span>
+					</span>
 					{#if problemsOf(ref).length > 0}
 						<!-- what the entry would be reported for, where the entries are actually read:
 						     a warning only in the edit form is one nobody goes looking for -->

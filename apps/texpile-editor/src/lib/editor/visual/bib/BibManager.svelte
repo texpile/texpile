@@ -263,73 +263,78 @@
 		</div>
 	</div>
 {:else}
-	<div class="mx-auto flex h-full max-w-7xl gap-4 p-4">
-		<div class="w-1/2 overflow-y-auto pr-3">
-			<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
-				>{m.bib_new_reference_button()}</button
-			>
-			<ul>
-				<BibReferenceList
-					{refs}
-					selectedKey={isEditing ? (currentReference.key ?? null) : null}
-					onEdit={editReference}
-					onDelete={deleteReference}
-				/>
-			</ul>
-		</div>
-
-		<div class="border-surface-200-800 w-1/2 overflow-y-auto border-l pr-4 pl-4">
-			<div class="mb-2 flex items-center gap-2 text-base font-semibold">
-				{#if isEditing}
-					<Pencil class="size-4" />
-					{m.bib_editing_heading({ key: currentReference.key ?? '' })}
-					{#if editMode === 'raw'}
-						<span
-							class="border-surface-300-700 text-muted ml-1 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
-							use:tip={m.bib_raw_badge_edit_tooltip()}
-						>
-							<Code class="size-2.5" />
-							{m.bib_raw_badge_text()}
-						</span>
-					{/if}
-				{:else}{m.bib_new_reference_heading()}{/if}
+	<!-- list above form until the pane is @xl wide: with the PDF preview open two half columns cram the cards -->
+	<div class="@container h-full">
+		<div class="mx-auto flex h-full max-w-7xl flex-col gap-4 p-4 @xl:flex-row">
+			<div class="max-h-[40%] min-h-0 shrink-0 overflow-y-auto pr-3 @xl:max-h-none @xl:w-1/2">
+				<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
+					>{m.bib_new_reference_button()}</button
+				>
+				<ul>
+					<BibReferenceList
+						{refs}
+						selectedKey={isEditing ? (currentReference.key ?? null) : null}
+						onEdit={editReference}
+						onDelete={deleteReference}
+					/>
+				</ul>
 			</div>
 
-			{#if editMode === 'raw'}
-				<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded-container border">
-					<CodeMirrorLatex bind:value={rawEntryText} language="bibtex" />
+			<div
+				class="border-surface-200-800 min-h-0 flex-1 overflow-y-auto border-t pt-4 @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
+			>
+				<div class="mb-2 flex items-center gap-2 text-base font-semibold">
+					{#if isEditing}
+						<Pencil class="size-4" />
+						{m.bib_editing_heading({ key: currentReference.key ?? '' })}
+						{#if editMode === 'raw'}
+							<span
+								class="border-surface-300-700 text-muted ml-1 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
+								use:tip={m.bib_raw_badge_edit_tooltip()}
+							>
+								<Code class="size-2.5" />
+								{m.bib_raw_badge_text()}
+							</span>
+						{/if}
+					{:else}{m.bib_new_reference_heading()}{/if}
 				</div>
-				{#if rawEntryError}
-					<p class="text-error-ink mt-2 text-sm">{rawEntryError}</p>
-				{/if}
-				<div class="mt-3 flex justify-end gap-2">
-					<button class="btn hover:preset-tonal" type="button" onclick={resetForm}>{m.bib_cancel_button()}</button>
-					<button class="btn preset-filled-primary-500" type="button" onclick={saveRawEntry}>{m.bib_update_reference_button()}</button>
-				</div>
-			{:else}
-				<BibEntryForm bind:currentReference {formErrors} {entryTypeOptions} {isEditing} onSave={saveReference} onCancel={resetForm} />
-			{/if}
 
-			{#if !isEditing}
-				<div class="border-surface-200-800 mt-4 border-t pt-4">
-					<div class="text-sm font-semibold">{m.bib_paste_bibtex_heading()}</div>
-					<textarea
-						class="textarea mt-1 w-full font-mono text-xs rounded-container"
-						rows="5"
-						bind:value={bibtexContent}
-						placeholder={m.bib_paste_bibtex_placeholder()}></textarea>
-					{#if bibtexWarnings.length}
-						<div class="border-warning-500 bg-warning-tint mt-2 rounded-base border p-2 text-xs">
-							{#each bibtexWarnings as w (w.key)}<div><strong>{w.key}:</strong> {w.issues.join(', ')}</div>{/each}
-						</div>
-					{/if}
-					<div class="mt-2 flex justify-end">
-						<button class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" type="button" onclick={importBibtex}
-							>{m.bib_import_button()}</button
-						>
+				{#if editMode === 'raw'}
+					<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded-container border">
+						<CodeMirrorLatex bind:value={rawEntryText} language="bibtex" />
 					</div>
-				</div>
-			{/if}
+					{#if rawEntryError}
+						<p class="text-error-ink mt-2 text-sm">{rawEntryError}</p>
+					{/if}
+					<div class="mt-3 flex justify-end gap-2">
+						<button class="btn hover:preset-tonal" type="button" onclick={resetForm}>{m.bib_cancel_button()}</button>
+						<button class="btn preset-filled-primary-500" type="button" onclick={saveRawEntry}>{m.bib_update_reference_button()}</button>
+					</div>
+				{:else}
+					<BibEntryForm bind:currentReference {formErrors} {entryTypeOptions} {isEditing} onSave={saveReference} onCancel={resetForm} />
+				{/if}
+
+				{#if !isEditing}
+					<div class="border-surface-200-800 mt-4 border-t pt-4">
+						<div class="text-sm font-semibold">{m.bib_paste_bibtex_heading()}</div>
+						<textarea
+							class="textarea mt-1 w-full font-mono text-xs rounded-container"
+							rows="5"
+							bind:value={bibtexContent}
+							placeholder={m.bib_paste_bibtex_placeholder()}></textarea>
+						{#if bibtexWarnings.length}
+							<div class="border-warning-500 bg-warning-tint mt-2 rounded-base border p-2 text-xs">
+								{#each bibtexWarnings as w (w.key)}<div><strong>{w.key}:</strong> {w.issues.join(', ')}</div>{/each}
+							</div>
+						{/if}
+						<div class="mt-2 flex justify-end">
+							<button class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" type="button" onclick={importBibtex}
+								>{m.bib_import_button()}</button
+							>
+						</div>
+					</div>
+				{/if}
+			</div>
 		</div>
 	</div>
 {/if}
