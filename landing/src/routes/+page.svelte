@@ -21,8 +21,10 @@
 	import { localizeHref } from '$lib/paraglide/runtime';
 
 	const features = featureList();
-	// self-referencing per locale; the alternates in the head say which language each URL is
-	const canonical = 'https://texpile.com' + localizeHref('/');
+	// self-referencing per locale; the alternates in the head say which language each URL is.
+	// localizeHref('/') ends in a slash for a locale ('/zh-Hans/'), and Pages redirects that to '/zh-Hans'
+	const home = localizeHref('/');
+	const canonical = 'https://texpile.com' + (home.length > 1 && home.endsWith('/') ? home.slice(0, -1) : home);
 
 	/**
 	 * The editing section switches BOTH panels by format, bullets included. The bullets cannot be
@@ -133,8 +135,8 @@
 
 	<link rel="canonical" href={canonical} />
 	<link rel="alternate" hreflang="en" href="https://texpile.com/" />
-	<link rel="alternate" hreflang="zh-Hans" href="https://texpile.com/zh-Hans/" />
-	<link rel="alternate" hreflang="zh-Hant" href="https://texpile.com/zh-Hant/" />
+	<link rel="alternate" hreflang="zh-Hans" href="https://texpile.com/zh-Hans" />
+	<link rel="alternate" hreflang="zh-Hant" href="https://texpile.com/zh-Hant" />
 	<link rel="alternate" hreflang="x-default" href="https://texpile.com/" />
 
 	<!-- Structured Data -->

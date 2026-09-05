@@ -1,11 +1,3 @@
-# Everything here is public and we want all of it indexed and retrievable, including by AI
-# crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended). They are covered by the wildcard
-# below - being cited by an assistant is discovery, not leakage. Do not add Disallow rules for
-# them without deciding that deliberately.
-#
-# No Crawl-delay: this is a static site of ~37 pages behind a CDN. Google ignores the directive
-# outright, and everything that does honour it was only being slowed down for no benefit.
-
 User-agent: *
 Allow: /
 
