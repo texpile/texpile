@@ -11,7 +11,8 @@ async function createLinter(): Promise<WorkerLinter> {
 	// harper's js glue is heavy, so it loads with the first lint instead of at boot (the wasm
 	// was already lazy)
 	mark('harper-start');
-	const { WorkerLinter, Dialect, binary } = await import('harper.js');
+	// harper.js 2 moved the wasm binaries to subpath exports; this is the full one, not slim
+	const [{ WorkerLinter, Dialect }, { binary }] = await Promise.all([import('harper.js'), import('harper.js/binary')]);
 	const linter = new WorkerLinter({
 		binary,
 		dialect: Dialect.American

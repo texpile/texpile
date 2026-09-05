@@ -38,7 +38,7 @@ describe('maskTex', () => {
 	});
 
 	it('finds a real misspelling through harper at source offsets, none inside markup', async () => {
-		const { LocalLinter, binaryInlined } = await import('harper.js');
+		const [{ LocalLinter }, { binaryInlined }] = await Promise.all([import('harper.js'), import('harper.js/binaryInlined')]);
 		const linter = new LocalLinter({ binary: binaryInlined });
 		const src = 'The\n  \\textbf{misteak} is visible, $misteak + 1$ and \\cite{misteak} are not.';
 		const { text, spans } = maskTex(src);

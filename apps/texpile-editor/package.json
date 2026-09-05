@@ -74,7 +74,7 @@
 		"@xterm/xterm": "^5.5.0",
 		"diff": "^8.0.2",
 		"esm-env": "^1.2.2",
-		"harper.js": "^1.0.0",
+		"harper.js": "^2.7.0",
 		"lib0": "^0.2.117",
 		"markdown-it": "^15.0.0",
 		"mathlive": "^0.110.0",
