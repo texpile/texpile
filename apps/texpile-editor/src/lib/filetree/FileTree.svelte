@@ -257,8 +257,11 @@
 				name={editor.createValue}
 				class="size-4 shrink-0"
 			/>{/if}
+		<!-- size=1: an input is ~20 characters wide by default, and the tree's min-w-max would adopt
+		     that as the row width, pushing the explorer wider than its column -->
 		<input
-			class="input h-6 flex-1 py-0 text-sm"
+			class="input h-6 min-w-0 flex-1 py-0 text-sm"
+			size={1}
 			placeholder={editor.createType === 'dir'
 				? m.filetree_placeholder_folder_name()
 				: editor.createType === 'include'

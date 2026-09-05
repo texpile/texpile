@@ -72,8 +72,10 @@
 				<FileIcon name={entry.name} class="size-4 shrink-0" />
 			{/if}
 			{#if editor.renaming === entry.path}
+				<!-- size=1 for the same reason as the create input in FileTree: the default width would widen the tree -->
 				<input
 					class="input h-6 min-w-0 flex-1 py-0 text-sm"
+					size={1}
 					value={editor.renameValue}
 					oninput={(e) => {
 						editor.renameValue = e.currentTarget.value;
