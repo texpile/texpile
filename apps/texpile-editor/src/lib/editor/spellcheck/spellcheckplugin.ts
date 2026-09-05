@@ -2,6 +2,7 @@ import { Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { createProofreadPlugin, createSpellCheckEnabledStore } from 'prosemirror-proofread';
 import { lintText, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
+import { textWithoutLinks } from '$lib/editor/spellcheck/linkFreeText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
@@ -106,6 +107,6 @@ export const proofreadPlugin = createProofreadPlugin(
 	lintTextAfterComposition,
 	createHarperSuggestionBox,
 	spellcheckenabled,
-	undefined, // getCustomText
+	textWithoutLinks,
 	true // useCustomCSS: enables the proofread-* class naming
 );
