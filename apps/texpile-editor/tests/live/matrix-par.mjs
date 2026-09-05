@@ -17,7 +17,6 @@ import { classify, collectUntilQuiet } from './lib.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(here, '../..');
-const repoRoot = path.resolve(appRoot, '../..');
 const VITE = 5177;
 const BRIDGE0 = 8110; // 8099 stays free for the sequential runners
 
@@ -32,11 +31,6 @@ const [onlyFixture, onlyScenario] = only ? only.split(':') : [null, null];
 const pick = new Set((process.env.MATRIX_PICK || '').split(',').filter(Boolean));
 
 const { FIXTURES, applyOp } = await import('./' + scenarioMod);
-
-if (!fs.existsSync(path.join(repoRoot, 'electron/dist/draft/draftService.js'))) {
-	console.error('electron/dist modules missing - run pnpm electron:build first');
-	process.exit(1);
-}
 
 const work = [];
 for (const fx of FIXTURES) {

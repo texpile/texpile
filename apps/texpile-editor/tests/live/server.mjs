@@ -5,19 +5,13 @@ import http from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import { loadEngine } from './engineBridge.mjs';
 
-const require = createRequire(import.meta.url);
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../../../..');
 const engineDir = path.join(repoRoot, 'electron/lua').replace(/\\/g, '/');
-const dist = (m) => require(path.join(repoRoot, 'electron/dist', m));
-const draftService = dist('draft/draftService.js');
-const draftDaemon = dist('draft/draftDaemon.js');
-const fsService = dist('fs/fsService.js');
-// synctex moved out of fsService (fs/synctexCli.ts); emit it alongside the other bridges
-const synctexCli = dist('fs/synctexCli.js');
+const { draftService, draftDaemon, fsService, synctexCli } = loadEngine();
 
 const PORT = Number(process.env.LIVE_BRIDGE_PORT || 8099);
 const workBase = path.join(os.tmpdir(), 'texpile-live-harness');

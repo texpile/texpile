@@ -2,8 +2,8 @@
 // headless Chromium (vite dev serves it), the REAL engine behind an HTTP bridge, and the
 // REAL dispatch decision layer ($lib/draft/dispatch) imported by the page. No Electron.
 //
-// Prereq: `pnpm electron:build` (module dist for the bridge). Renderer needs NO build --
-// vite dev serves source, so source edits are picked up per run.
+// No build step: the bridge bundles the engine from electron/src and vite dev serves the
+// renderer from source, so edits on either side are picked up per run.
 // Run from apps/texpile-editor:  node tests/live/matrix.mjs [--only=fixture[:scenario]]
 import { spawn, execSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -15,17 +15,11 @@ import { classify, collectUntilQuiet } from './lib.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(here, '../..');
-const repoRoot = path.resolve(appRoot, '../..');
 const BRIDGE = 8099;
 const VITE = 5177;
 
 const only = (process.argv.find((a) => a.startsWith('--only=')) || '').slice(7);
 const [onlyFixture, onlyScenario] = only ? only.split(':') : [null, null];
-
-if (!fs.existsSync(path.join(repoRoot, 'electron/dist/draft/draftService.js'))) {
-	console.error('electron/dist modules missing - run pnpm electron:build first');
-	process.exit(1);
-}
 
 const waitHttp = async (url, tries = 120) => {
 	for (let i = 0; i < tries; i++) {

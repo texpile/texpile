@@ -16,8 +16,8 @@ Per scenario the driver applies a pure string edit to the fixture buffer, runs
 - `NOOP` - render-identical edit, correctly ignored
 - `NOFEEDBACK` - nothing happened (a bug unless the scenario is a deliberate no-op)
 
-Run (from `apps/texpile-editor`; needs `pnpm electron:build` for the bridge modules, the
-renderer is served from source so it needs no build):
+Run from `apps/texpile-editor`. There is no build step: the bridge bundles the engine from
+`electron/src` with esbuild on start, and vite dev serves the renderer from source.
 
 ```sh
 node tests/live/matrix.mjs                 # full matrix
