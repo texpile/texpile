@@ -56,3 +56,9 @@ Press Preview (or Compile, in source mode) and Texpile runs a default command fo
 
 [Installing TeX Live, MacTeX, or MiKTeX](installation/README.md)
 [Compiling, live preview, and the Problems panel, in full](latex/compiling.md)
+
+## Interface language
+
+Menus, dialogs, and messages come in English, Simplified Chinese (简体中文), Traditional Chinese (繁體中文), and German (Deutsch). English is the default. Pick another under Preferences › Appearance › Language and the window reloads in it. The German translation is machine translated and marked as such in the list.
+
+This is the language of the interface, not of your document. A LaTeX or Typst document can be written in any language; [spell check](spell-check.md) currently covers English only.

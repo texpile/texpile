@@ -18,12 +18,12 @@ Settings apply to every folder you open. The compile command and its options are
 
 ## Appearance
 
-| Setting                     | What it does                                                                                           |
-| --------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Mode                        | Light, System, or Dark. System follows the operating system's light or dark setting.                   |
-| Theme                       | The color theme, as tiles. See [Themes](themes.md).                                                    |
-| Language                    | English, Simplified Chinese, Traditional Chinese, or German.                                           |
-| Dark PDF pages in dark mode | Darkens the pages in the PDF preview when the mode is dark. Off, the pages keep their original colors. |
+| Setting                     | What it does                                                                                                                                                              |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mode                        | Light, System, or Dark. System follows the operating system's light or dark setting.                                                                                      |
+| Theme                       | The color theme, as tiles. See [Themes](themes.md).                                                                                                                       |
+| Language                    | English, Simplified Chinese, Traditional Chinese, or German. English is the default; the window reloads when you switch. German is machine translated and marked as such. |
+| Dark PDF pages in dark mode | Darkens the pages in the PDF preview when the mode is dark. Off, the pages keep their original colors.                                                                    |
 
 ## Editor
 
