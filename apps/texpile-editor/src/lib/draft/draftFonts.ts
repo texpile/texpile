@@ -65,8 +65,8 @@ export class DraftFonts {
 
 	// any glyph whose font the renderer cannot ink (no font record, failed fetch/parse):
 	// the patch GEOMETRY is still engine-exact, but the live frame would show a silent
-	// gap where that ink belongs -- the caller demotes to provisional so the state reads
-	// as approximate until the exact-PDF base shows the real glyphs
+	// gap where that ink belongs -- the caller refuses the render (font-missing) and the
+	// full pass shows the real glyphs
 	async missingInk(records: any[]): Promise<boolean> {
 		await this.ensureFonts(records);
 		const idMap = this.idMapFor(records);

@@ -1,8 +1,8 @@
 // Engine-announced facts about the current document, consulted by the decision layer
 // (heuristics/) instead of assuming LaTeX defaults. Everything here came from the real
 // engine -- the warm daemon's announce or the full compile's sidecars; a missing fact
-// falls back to the standard-LaTeX assumption it replaces, whose result stays
-// provisional-grade through the existing calibration checks.
+// falls back to the standard-LaTeX assumption it replaces; the result must still pass
+// the same exactness checks and is refused when it does not.
 
 /** one stepcounter/setcounter snapshot: source line, input-file basename, values after */
 export type CounterSnap = { l: number; f?: string; s: Record<string, number> };

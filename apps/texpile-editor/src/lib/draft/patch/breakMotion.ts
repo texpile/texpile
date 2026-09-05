@@ -4,8 +4,8 @@ import type { PageSkeleton, SkelItem } from '../heuristics/pageSkeleton';
 // What the renderer needs to SHOW a moved break: certified baselines for everything the
 // engine keeps on this column, and the identity (old baselines) of the boxes it carries
 // to the next slot. Derived from the capacity split the certificate already ran. The
-// chain planner re-splits the receiving column with carriedItems on top; whether the
-// render stays provisional depends on whether every junction has captured seam data.
+// hop planner re-splits the receiving column with carriedItems on top, and refuses
+// unless every junction has captured seam data.
 export type BreakMotion = {
 	// certified page-absolute baselines for the band lines (the break falls below the band)
 	bandAbsYs: number[];
@@ -22,8 +22,8 @@ export type BreakMotion = {
 };
 
 // null when the break lands inside or above the band: the carried set would then mix
-// daemon band records with page records in two coordinate frames, and today's
-// provisional path handles that case honestly.
+// daemon band records with page records in two coordinate frames; that case takes
+// the full pass.
 export function breakMotion(
 	skel: PageSkeleton,
 	top: number,

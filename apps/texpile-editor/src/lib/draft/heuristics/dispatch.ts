@@ -86,7 +86,7 @@ function refOf(p: Para, file?: string): ParaRef {
 /** ONE decision point per edit: diff the buffer against the last-compiled baseline.
  * `file` (root-relative) keys the engine-truth lookups: counter pins, the \begin{document}
  * line, the float set -- omitted (the harness, older callers), every truth lookup falls
- * back to the standard-LaTeX assumption and the result stays provisional-grade. */
+ * back to the standard-LaTeX assumption; the result still has to certify, else the full pass. */
 export function decideEdit(baseline: string, src: string, file?: string): EditDecision {
 	const base = baselineOf(baseline);
 	const oldP = base.paras;
@@ -137,7 +137,7 @@ function captionOf(s: string): string | null {
 // The single-block instant dispatch for a (baseline, edited) paragraph pair. Also used by
 // the compound structural path: an exact patch never advances the baseline, so the routine
 // "type in a paragraph, then open a new one" reads as modified+inserted -- the modified
-// pair goes through here while the insert splices provisionally.
+// pair goes through here while the insert rides the merged typeset.
 function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): EditDecision {
 	// a preamble block (above \begin{document}) parses as prose but typesets nothing a
 	// band could match: route it straight to the boundary pass instead of a doomed
@@ -194,8 +194,8 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 		// a \caption edit: typeset JUST the caption (float material cal-empties). \@captype is
 		// what \caption reads to know its float type; the counter pin makes the daemon's number
 		// deterministic. The TRUE value from the compile's counter log renders the page's own
-		// number ("Figure 4") and can certify; the 0 fallback rides the fuzzy tier into a
-		// provisional patch and the reconcile paints it, same as section numbers.
+		// number ("Figure 4") and can certify; the 0 fallback renders a wrong number, fails
+		// verification, and takes the full pass, same as section numbers.
 		if (!floatInner) {
 			const oCap = captionOf(dispatchOrig);
 			const nCap = captionOf(dispatchText);
@@ -212,7 +212,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 	// footnote counter pin: the engine's own counter accumulates across requests, so a pin
 	// is needed for determinism. The TRUE value from the compile's counter log renders the
 	// page's own mark and can certify; the 0 fallback's wrong digit fails exact
-	// verification and rides the provisional tier until the reconcile. (A JS re-count of
+	// verification and takes the full pass. (A JS re-count of
 	// earlier \footnote marks used to guess it: deleted -- TeX counter state
 	// reconstructed in JS.)
 	const FN = /\\footnote(?:mark)?\s*[[{]/;
@@ -285,9 +285,8 @@ function structuralOf(
 		return scanAlignment(ins ? oldP : newP, ins ? newP : oldP, fi, bi, k);
 	}
 	// a run of list items rides its neighbouring item as ONE re-wrapped list typeset; the
-	// pinned counter makes labels deterministic-but-wrong, so the patch is provisional and
-	// the reconcile paints the truth (nested lists included: a wrong label just fails
-	// verification, same as any other uncertified render)
+	// pinned counter makes labels deterministic; a wrong label fails verification and takes
+	// the full pass (nested lists included), same as any other uncertified render
 	function itemRun(run: Para[], anchor: Para | null) {
 		return !!anchor?.wrap && run.every((p) => p.wrap === anchor.wrap && (daemonReady(p.text) || repairForPreview(p.text) !== null));
 	}
@@ -306,8 +305,8 @@ function structuralOf(
 		if (a) {
 			const run = newP.slice(a.j, a.j + k);
 			// mergeable, not plain prose: a freshly TYPED heading or env must ride the merged
-			// unit too (typing from scratch is headings + prose), rendering provisionally when
-			// its number is off. What the engine can't certify still falls to the full pass.
+			// unit too (typing from scratch is headings + prose); a wrong number fails
+			// verification and falls to the full pass like anything the engine cannot certify.
 			const runProse = run.every(insertable);
 			const joined = run.map((p) => p.text).join('\n\\par ');
 			if (a.mod === null) {

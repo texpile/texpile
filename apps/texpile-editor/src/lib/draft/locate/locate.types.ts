@@ -33,8 +33,8 @@ export type Cal = {
 	// records; absent when the page recorded none
 	col?: number;
 	// found by the fuzzy inverse map (right glyphs, line count off by one, e.g. the daemon's
-	// \noindent vs an indented page paragraph): good enough for a PROVISIONAL patch that a
-	// full compile reconciles, never for an exact one
+	// \noindent vs an indented page paragraph): never rendered, the edit takes the full pass
+	// (approxStretch is the one approx a full page-break certificate can still carry)
 	approx?: boolean;
 	// approx SOLELY because the band's spacing is glue-stretched/context-adjusted while its
 	// glyphs and offsets matched exactly: an engine page-break certificate can restore exact

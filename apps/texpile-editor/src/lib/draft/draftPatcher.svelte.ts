@@ -353,7 +353,7 @@ export class DraftPatcher {
 			// calibrate on the unedited column, then re-split with the edited band spliced in.
 			// Break held -> the certified baselines respace band and column to the engine's
 			// own numbers, so stretch-approx locates and underflow stop demoting. Break moved,
-			// or any refusal -> the existing provisional path stands unchanged.
+			// or any refusal -> the edit takes the full pass.
 			const facts = { stretchy: h.pageStretchy(cal.pageNo), footnote, fontGap, delta: flow.delta, underflow: flow.underflow };
 			const ciA = columnIndexOf(h.pageRecords(cal.pageNo), cal.W, cal.colL);
 			let cert: Certificate | null = certifiable(cal, req, facts)

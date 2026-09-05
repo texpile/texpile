@@ -13,8 +13,8 @@ import type { Cal, CalBail, LocateContext } from './locate.types';
 // search, so synctex attribution fuzziness (the chief "could not locate" source) drops out of
 // the critical path. Indent-invariant (sequences, not x positions). An exact per-row match of
 // all N rows is stronger evidence than any synctex anchor; a same-glyphs different-breaks
-// match (daemon \noindent vs an indented paragraph) returns an approx cal for the provisional
-// path. Ambiguity (identical paragraph twice) bails rather than guessing.
+// match (daemon \noindent vs an indented paragraph) returns an approx cal, which the caller
+// refuses (approx-locate). Ambiguity (identical paragraph twice) bails rather than guessing.
 export async function locateByGlyphs(
 	ctx: LocateContext,
 	file: string,
@@ -143,8 +143,8 @@ export async function locateByGlyphs(
 						const win = { medGap: v.gap, W: v.W, indent: v.indent, ...(v.pre ? { pre: v.pre } : {}) };
 						// C2: natural band spacing -> exact. Stretched spacing (flushbottom
 						// vertical justification) with content and x positions matching is still
-						// the right paragraph in the right place: splice with natural spacing as
-						// a close-enough PROVISIONAL and let the reconcile restore the stretch.
+						// the right paragraph in the right place: mark it approxStretch, which only a
+						// full page-break certificate can render; otherwise the edit takes the full pass.
 						if (v.calGap && Nv > 1) {
 							const pg: number[] = [];
 							for (let i = 1; i < Nv; i++) pg.push(rows[s + i].y - rows[s + i - 1].y);

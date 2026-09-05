@@ -6,8 +6,8 @@
 // rigid shifting there is what verifyPatches used to grade as drift.
 //
 // The band itself stays anchored (glue above it also stretches in a true repack; that
-// second-order share is the residual the reconcile still corrects) -- callers keep these
-// patches provisional.
+// second-order share is the residual the full pass corrects) -- so a render on these
+// steps is exact only under a full page-break certificate, and refused otherwise.
 
 export type FlowStep = { y: number; dy: number };
 

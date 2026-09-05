@@ -161,7 +161,7 @@ export function splitParaLines(lines: string[]): Para[] {
 // The counter is pinned so repeated typesets are deterministic -- the engine's own counter
 // would accumulate across requests. The pin is the TRUE value from the last compile's
 // counter log when it is known (the patch can then certify exact); without it the 0 pin's
-// wrong digit fails exact verification and demotes to provisional, and the reconcile
+// wrong digit fails exact verification and takes the full pass, which
 // paints the real number. (A JS re-count of \item lines used to guess the value: deleted --
 // reconstructing TeX counter state in JS is exactly the approximation we don't do.)
 export function wrapItem(t: string, w?: string, line?: number, file?: string) {
@@ -196,7 +196,7 @@ export function stripTexComments(s: string) {
 // force @nobreak so every typeset of the same heading is identical. Pins are the TRUE
 // values from the last compile's counter log when known -- the heading then reproduces
 // the page exactly and the patch certifies; the fixed fallbacks render a wrong number
-// that stays provisional until the reconcile.
+// that fails verification and takes the full pass.
 const HEAD_CHAIN: Record<string, string[]> = {
 	section: ['section'],
 	subsection: ['section', 'subsection'],

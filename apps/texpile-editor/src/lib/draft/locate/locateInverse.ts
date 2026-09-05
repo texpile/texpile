@@ -145,7 +145,7 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 	if (!exact.length) {
 		// two partial runs in DIFFERENT columns adding up to N (with the daemon's glyph count)
 		// = the paragraph straddles a column break: return a SPLIT cal (first part + spill)
-		// so the caller can render it provisionally instead of abandoning
+		// so the caller can name the honest reason (spans-boundary) when it refuses
 		for (const a of runs)
 			for (const b of runs) {
 				if (a.col === b.col) continue;
@@ -168,8 +168,8 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 			}
 		// a run whose GLYPHS match the daemon almost exactly but whose line count is off by
 		// one (\noindent calibration vs an indented page paragraph): the right place, an
-		// inexact break. Take it as an APPROX cal -- the caller renders it provisionally
-		// (tinted) and reconciles with a full compile, instead of freezing on a recompile.
+		// inexact break. Take it as an APPROX cal -- the caller refuses it (approx-locate)
+		// unless a narrowed retry locates exactly, but the locate names the right paragraph.
 		const fuzzy = runs.filter((r) => Math.abs(r.len - N) <= 1 && Math.abs(r.gcount - Gd) <= Math.max(4, Gd * 0.02));
 		if (fuzzy.length) {
 			fuzzy.sort((a, b) => Math.abs(a.gcount - Gd) - Math.abs(b.gcount - Gd));
@@ -205,6 +205,6 @@ export async function locateInverse(ctx: LocateContext, file: string, line: numb
 	const paraLeft = best.left - invDLeft;
 	// the inverse evidence is counts + attributions, never per-glyph content (that's the
 	// glyph tier, which runs FIRST and already failed if we're here) -- so its result is
-	// close-enough, not provable: render provisionally and reconcile
+	// close-enough, not provable: approx, refused unless a narrowed retry locates exactly
 	return { pageNo, b1, bk, medGap: gap, paraLeft, W, colL: best.colL, colR: best.colR, approx: true };
 }

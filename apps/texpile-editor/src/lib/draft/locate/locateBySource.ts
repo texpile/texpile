@@ -107,7 +107,7 @@ export async function locateBySource(
 		return bail('content-mismatch', { band: bandRows.length, cal: dRows.length });
 
 	const paraLeft = Math.min(...bandRows.map((r) => r.left)) - Math.min(...dRows.map((r) => r.left));
-	// spacing decides EXACT vs provisional, the same test the other tiers apply: matching
+	// spacing decides EXACT vs approxStretch, the same test the other tiers apply: matching
 	// content at stretched spacing is the right paragraph rendered at the wrong leading
 	const calSpread = (calLines[calLines.length - 1] as any).y - (calLines[0] as any).y;
 	const stretched =

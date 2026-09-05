@@ -366,7 +366,7 @@ export class DraftSession {
 				const cv = this.canvasEls[p.n - 1];
 				if (cv && cv.width > 0) {
 					// ONE visual swap per reconcile: hold the page's last frame (the
-					// provisional patch, already ~the truth) and repaint once when the
+					// last exact patch) and repaint once when the
 					// fresh PDF raster lands -- painting records first and the raster
 					// ~300ms later double-swapped the page at every typing pause
 					this.bitmaps.requestBaseAuto(p.n);

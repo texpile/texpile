@@ -11,7 +11,7 @@ import type { PageRecord } from '../geometry/geometry.types';
 // stretchables; kerns fold in). The decisions are which records participate and when to
 // REFUSE: footnotes/inserts, floats, graphics, or a negative rigid remainder all mean the
 // skeleton would lie, and a wrong certificate is worse than no certificate -- the caller
-// then keeps today's provisional path. The insert refusal is what makes the split equal the
+// then takes the full pass. The insert refusal is what makes the split equal the
 // page builder at all, so it is load-bearing, not a conservatism to relax. A calibration
 // split of the UNEDITED skeleton must reproduce the page's own baselines before any
 // certificate is issued.

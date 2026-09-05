@@ -13,7 +13,8 @@ import type { Cal, CalBail, LocateContext } from './locate.types';
 // OPEN a later one -- the next column of the SAME page (pA === pB, the two-column
 // straddle) or a column of the next page. Both fragments are content-verified against
 // the daemon reproduction (rows + x offsets), so a match can't land on the wrong text.
-// The break row between the fragments is a first-order estimate -> always provisional.
+// The break row between the fragments is a first-order estimate -> always approx, so the
+// edit takes the full pass.
 export async function locateCrossPage(
 	ctx: LocateContext,
 	lineBoxes: any[],

@@ -39,7 +39,7 @@ export type Certificate = {
 	fits: boolean;
 	// full certificate only (same line count): certified page-absolute baselines for the
 	// band lines, respace steps for the rest of the column, and the largest displacement
-	// ABOVE the band (the renderer never moves that region; visible value -> provisional)
+	// ABOVE the band, which the render applies from aboveSteps (maxAboveDy is informational)
 	bandAbsYs?: number[];
 	steps?: FlowStep[];
 	// the engine's respace for the rows OVER the band, which the render now applies instead
