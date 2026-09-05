@@ -65,14 +65,15 @@ export const FIXTURES = [
 				maxMs: 16000
 			},
 			{
-				// deletes ride prev + \par + gone as ONE merged engine typeset. By this point
-				// in the run the band sits at the page break, and a merged band that straddles
-				// pages honestly takes the full pass (the cross-page matcher only handles
-				// single-paragraph bands) -- RECOMPILE is at ceiling there, not a gap
+				// deletes ride prev + \par + gone as ONE merged engine typeset. The closing
+				// paragraph's neighbour carries a footnote and the band sits at the page break,
+				// so the full pass is at ceiling; EXACT is legitimate when the engine certifies
+				// it. Anchored on the fixture's own text: the parallel runner can hand this
+				// scenario to a worker that never ran insert-paragraph
 				name: 'delete-paragraph',
-				anchor: 'Freshly inserted',
+				anchor: 'Closing paragraph',
 				op: { t: 'deletePara' },
-				expect: ['RECOMPILE'],
+				expect: ['RECOMPILE', 'EXACT'],
 				maxMs: 16000
 			},
 			{
