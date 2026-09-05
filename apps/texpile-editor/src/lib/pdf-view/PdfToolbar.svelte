@@ -72,6 +72,7 @@
 				max={viewerState.totalPages}
 				onchange={handlePageChange}
 				aria-label="Current page"
+				style:--digits={String(viewerState.totalPages).length}
 			/>
 			<span class="page-info">/ {viewerState.totalPages}</span>
 		</div>
@@ -269,6 +270,7 @@
 		border-radius: calc(var(--radius-base) * 1.5);
 		background-color: var(--pdf-toolbar-input-bg);
 		color: var(--pdf-toolbar-fg);
+		font-family: inherit;
 		font-size: 0.8rem;
 		outline: none;
 		transition:
@@ -282,12 +284,21 @@
 		box-shadow: 0 0 0 2px var(--pdf-toolbar-accent-ring);
 	}
 
+	/* the page box sits among the icon buttons, so it takes their square, fill and border, and
+	   only grows past the square when the document has more digits than fit */
 	.pdf-toolbar input[type='number'] {
-		width: calc(var(--spacing) * 8.5);
-		font-size: 0.75rem;
+		width: max(calc(var(--spacing) * 7), calc(var(--digits, 1) * 1ch + var(--spacing) * 3));
+		padding: 0;
+		background-color: var(--pdf-toolbar-btn-bg);
+		border-color: var(--pdf-toolbar-btn-border);
+		font-weight: 500;
 		text-align: center;
 		appearance: textfield;
 		-moz-appearance: textfield;
+	}
+
+	.pdf-toolbar input[type='number']:hover:not(:focus) {
+		border-color: var(--pdf-toolbar-btn-hover-border);
 	}
 
 	.pdf-toolbar input[type='number']::-webkit-outer-spin-button,
@@ -310,6 +321,7 @@
 
 	.pdf-toolbar .page-info {
 		font-size: 0.8rem;
+		font-weight: 500;
 		color: var(--pdf-toolbar-muted);
 		margin-left: calc(var(--spacing) * 1);
 	}
