@@ -19,7 +19,7 @@
 	import Download from '@lucide/svelte/icons/download';
 	import Hero from '$lib/comp/Hero.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import { localizeHref } from '$lib/paraglide/runtime';
+	import Alternates, { absolute } from '$lib/comp/Alternates.svelte';
 	import { reveal } from '$lib/reveal';
 
 	let {
@@ -59,9 +59,8 @@
 		needsLine: string;
 	} = $props();
 
-	const SITE = 'https://texpile.com';
 	// self-referencing per locale; the alternates in the head say which language each URL is
-	const canonical = $derived(SITE + localizeHref(path));
+	const canonical = $derived(absolute(path));
 
 	const slowest = $derived(Math.max(...startup.map((s) => s.ms)));
 </script>
@@ -79,11 +78,8 @@
 	<meta property="twitter:description" content={description} />
 
 	<link rel="canonical" href={canonical} />
-	<link rel="alternate" hreflang="en" href={SITE + path} />
-	<link rel="alternate" hreflang="zh-Hans" href={`${SITE}/zh-Hans${path}`} />
-	<link rel="alternate" hreflang="zh-Hant" href={`${SITE}/zh-Hant${path}`} />
-	<link rel="alternate" hreflang="x-default" href={SITE + path} />
 </svelte:head>
+<Alternates {path} />
 
 <Hero {heading} body={lead} shot={heroShot} shotAlt={heroAlt} />
 

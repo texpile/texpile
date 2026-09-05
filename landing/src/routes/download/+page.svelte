@@ -8,13 +8,14 @@
 	import OsLogo from '$lib/comp/OsLogo.svelte';
 	import { detectOS } from '$lib/os';
 	import { m } from '$lib/paraglide/messages';
-	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
+	import { getLocale } from '$lib/paraglide/runtime';
+	import Alternates, { absolute } from '$lib/comp/Alternates.svelte';
 
 	// latest.json upgrades the links to versioned files; versions.json feeds the history list.
 	// Without either (fetch failed, JS off) the stable root names still download the newest release.
 	const DL = 'https://dl.texpile.com';
 	// self-referencing per locale; the alternates in the head say which language each URL is
-	const canonical = 'https://texpile.com' + localizeHref('/download');
+	const canonical = absolute('/download');
 
 	type Release = { version: string; publishedAt?: string; files: Record<string, string> };
 	let latest = $state<Release | null>(null);
@@ -124,11 +125,8 @@
 	<meta property="twitter:description" content={m.dl_meta_description()} />
 
 	<link rel="canonical" href={canonical} />
-	<link rel="alternate" hreflang="en" href="https://texpile.com/download" />
-	<link rel="alternate" hreflang="zh-Hans" href="https://texpile.com/zh-Hans/download" />
-	<link rel="alternate" hreflang="zh-Hant" href="https://texpile.com/zh-Hant/download" />
-	<link rel="alternate" hreflang="x-default" href="https://texpile.com/download" />
 </svelte:head>
+<Alternates path="/download" />
 
 <section class="bg-surface-50 border-surface-200 border-b">
 	<div class="container mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 md:py-16 lg:px-8">

@@ -18,13 +18,11 @@
 	import mdVisualShot from '$lib/assets/showcase/editor-markdown-visual.webp';
 	import mdSourceShot from '$lib/assets/showcase/editor-markdown-source.webp';
 	import { m } from '$lib/paraglide/messages';
-	import { localizeHref } from '$lib/paraglide/runtime';
+	import Alternates, { absolute } from '$lib/comp/Alternates.svelte';
 
 	const features = featureList();
-	// self-referencing per locale; the alternates in the head say which language each URL is.
-	// localizeHref('/') ends in a slash for a locale ('/zh-Hans/'), and Pages redirects that to '/zh-Hans'
-	const home = localizeHref('/');
-	const canonical = 'https://texpile.com' + (home.length > 1 && home.endsWith('/') ? home.slice(0, -1) : home);
+	// self-referencing per locale; the alternates in the head say which language each URL is
+	const canonical = absolute('/');
 
 	/**
 	 * The editing section switches BOTH panels by format, bullets included. The bullets cannot be
@@ -134,14 +132,11 @@
 	<meta property="twitter:description" content={m.home_social_description()} />
 
 	<link rel="canonical" href={canonical} />
-	<link rel="alternate" hreflang="en" href="https://texpile.com/" />
-	<link rel="alternate" hreflang="zh-Hans" href="https://texpile.com/zh-Hans" />
-	<link rel="alternate" hreflang="zh-Hant" href="https://texpile.com/zh-Hant" />
-	<link rel="alternate" hreflang="x-default" href="https://texpile.com/" />
 
 	<!-- Structured Data -->
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
+<Alternates path="/" />
 
 <!--
 	Section tone, one rule: INK only where nothing has to stand out against it.
