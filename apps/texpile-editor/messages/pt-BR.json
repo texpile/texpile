@@ -619,7 +619,6 @@
 	"updatemodal_progress_percent": "{percent}% ({transferred} MB de {total} MB)",
 	"updatemodal_starting_download": "Iniciando o download…",
 	"updatemodal_background_download_notice": "Você pode fechar esta janela. O download continua em segundo plano.",
-	"updatemodal_hide": "Ocultar",
 	"updatemodal_downloaded_pkexec": "O Texpile v{version} foi baixado. O sistema solicitará sua senha e o Texpile será reiniciado quando a instalação terminar.",
 	"updatemodal_later": "Mais tarde",
 	"updatemodal_install_now": "Instalar agora",

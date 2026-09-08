@@ -73,7 +73,18 @@
 				{/if}
 			</p>
 			<p class="text-muted mb-4 text-sm">{m.updatemodal_background_download_notice()}</p>
-			<ModalActions size="xs" buttons={[{ label: m.updatemodal_hide(), role: 'cancel', onclick: close }]} />
+			<div class="text-muted flex items-baseline justify-between gap-4 text-sm">
+				<span>{m.updatemodal_like_texpile()}</span>
+				<span>
+					<a class="anchor" href="https://github.com/texpile/texpile" target="_blank" rel="noopener noreferrer"
+						>{m.updatemodal_star_on_github()}</a
+					>
+					·
+					<a class="anchor" href="https://github.com/sponsors/louisqli" target="_blank" rel="noopener noreferrer"
+						>{m.updatemodal_donate()}</a
+					>
+				</span>
+			</div>
 		{:else if u.phase === 'downloaded'}
 			{#if pkexec}
 				<p class="text-muted mb-4 text-sm">
