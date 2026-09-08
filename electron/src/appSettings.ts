@@ -39,7 +39,7 @@ const DEFAULT_SETTINGS = {
 };
 
 // The UI languages we ship. Anything else, or a failed probe, falls back to English.
-type UiLocale = 'en' | 'de' | 'zh-Hans' | 'zh-Hant';
+type UiLocale = 'en' | 'de' | 'zh-Hans' | 'zh-Hant' | 'pt-BR';
 let cachedLocale: UiLocale | null = null;
 /** first-run UI language from the OS. A stored uiLocale always wins (readSettings' merge order),
  *  so a deliberate choice is never overridden on a later launch. */
@@ -57,6 +57,8 @@ function systemUiLocale(): UiLocale {
 	for (const raw of tags) {
 		const tag = raw.toLowerCase();
 		if (tag.startsWith('de')) return (cachedLocale = 'de');
+		// the only Portuguese we ship, so pt-PT lands here rather than in English
+		if (tag.startsWith('pt')) return (cachedLocale = 'pt-BR');
 		// an explicit script subtag wins over region: zh-Hans-HK is Simplified despite the HK region.
 		// Only when no script is present do TW/HK/MO imply Traditional; everything else is Simplified.
 		if (tag.startsWith('zh')) {

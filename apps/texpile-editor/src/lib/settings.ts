@@ -67,7 +67,7 @@ export type AppSettings = {
 	/** modal keybindings for the source editor and code blocks. */
 	editorKeymap: 'default' | 'vim' | 'emacs';
 	/** UI display language. Not the LaTeX document language (see DocumentLanguage). */
-	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de';
+	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de' | 'pt-BR';
 	/** shared-session relay endpoint (ws:// or wss://); the self-hosted-relay escape hatch. */
 	collabRelayUrl: string;
 	/** folders open across windows; maintained by the MAIN process for session restore.

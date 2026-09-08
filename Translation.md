@@ -9,6 +9,7 @@ one, or with keeping one of these current.
 | Chinese (Simplified)  | `zh-Hans` | Maintained by [@louisqli](https://github.com/louisqli)                  |
 | Chinese (Traditional) | `zh-Hant` | Maintained by [@louisqli](https://github.com/louisqli)                  |
 | German                | `de`      | Machine translated, review welcome                                      |
+| Portuguese (Brazil)   | `pt-BR`   | Reviewed by [@ale4-dev](https://github.com/ale4-dev)                    |
 
 ## Translating
 
