@@ -4,7 +4,7 @@ Thanks for your interest in contributing.
 
 ## Talk before you code
 
-**Drive-by pull requests will not be accepted.** Before writing any code, discuss the change with the current maintainer:
+**Drive-by pull requests will not be accepted.** Texpile is very particular about its interface, its behavior, and which features it takes on, and this rule exists so that you do not waste your time. Before writing any code, discuss the change with the current maintainer:
 
 - Open a [GitHub issue](../../issues) describing what you want to change and why, or
 - Bring it up on [Discord](https://discord.com/invite/7wanVzCBWf).
@@ -57,3 +57,9 @@ Texpile is licensed under [AGPL-3.0](LICENSE).
 Before we can merge your first pull request, you'll need to sign our
 [CLA](https://cla-assistant.io/texpile/texpile). Our CLA Assistant bot will
 comment on your PR with a link.
+
+The desktop app is free and open source, and we are committed to keeping it that way. The CLA exists
+for one reason: so that Texpile can run the hosted services built from this code, such as
+join.texpile.com and the public relay server at collabs.texpile.com. The relay server's implementation
+is kept private because of DDoS problems. Either way, the relay cannot read your data, because sessions
+are end to end encrypted.
