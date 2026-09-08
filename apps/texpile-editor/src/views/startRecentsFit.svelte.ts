@@ -22,12 +22,15 @@ export class RecentsFit {
 			}
 			if (!frame || !this.rowPitch) return;
 			const block = card.querySelector<HTMLElement>('[data-recent-block]');
-			if (block) this.blockChrome = block.offsetHeight - rows.length * this.rowPitch;
+			if (block) this.blockChrome = block.getBoundingClientRect().height - rows.length * this.rowPitch;
 			const around = getComputedStyle(card.parentElement ?? card);
-			const available = frame.clientHeight - parseFloat(around.paddingTop) - parseFloat(around.paddingBottom);
+			// rects, not offsetHeight/clientHeight: at most zoom levels the card and the frame are not whole
+			// pixels, and the rounded values let a fit land a fraction over the frame, which is a scrollbar
+			const available = frame.getBoundingClientRect().height - parseFloat(around.paddingTop) - parseFloat(around.paddingBottom);
 			// a hidden block is costed as if it were up, or hiding it would free the room that brings it back
-			const fixed = card.offsetHeight - rows.length * this.rowPitch + (block ? 0 : this.blockChrome);
-			const fit = Math.floor((available - fixed) / this.rowPitch);
+			const fixed = card.getBoundingClientRect().height - rows.length * this.rowPitch + (block ? 0 : this.blockChrome);
+			// one pixel in hand for layout snapping once the rows are actually laid out
+			const fit = Math.floor((available - fixed - 1) / this.rowPitch);
 			const next = Math.max(0, Math.min(this.cap, fit));
 			if (next !== this.count) this.count = next;
 		};
