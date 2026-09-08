@@ -21,6 +21,7 @@
 		"electron:dev": "concurrently -k -n vite,electron \"pnpm --filter=texpile-editor dev --host 127.0.0.1 --strictPort\" \"pnpm electron:build && wait-on -t 180000 http-get://127.0.0.1:5173 && cross-env ELECTRON_START_URL=http://127.0.0.1:5173 electron .\"",
 		"electron:rebuild": "electron-rebuild -f -w node-pty",
 		"dist": "pnpm app:build && electron-builder --publish never",
+		"dist:portable": "pnpm app:build && electron-builder --win zip --publish never -c.extraMetadata.portable=true",
 		"dist:linux": "pnpm app:build && electron-builder --linux --publish never",
 		"dist:dir": "pnpm app:build && electron-builder --dir",
 		"format": "prettier --write .",

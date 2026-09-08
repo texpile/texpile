@@ -144,10 +144,9 @@ mac:
 win:
   target:
     - nsis
-    # the portable build: the installer's folder as a zip, no installer. main tells the two apart by
-    # the uninstaller the installer writes beside the exe, so nothing is stamped at build time
-    - zip
-  # nsis names its own artifact below; this one names the zip
+  # the portable zip is a separate build (pnpm dist:portable): the same folder, zipped, with
+  # extraMetadata.portable stamped into its package.json so main knows without guessing. nsis
+  # names its own artifact below; this names the zip
   artifactName: ${productName}-${version}-portable.${ext}
   icon: electron/icon.png
   # nsis WRITES the default handler for these, so the list stays at the two formats someone

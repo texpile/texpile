@@ -41,9 +41,12 @@ jobs:
           - os: windows-latest
             artifacts: |
               release/*.exe
-              release/*-portable.zip
               release/*.blockmap
               release/latest.yml
+          - os: windows-latest
+            variant: portable
+            artifacts: |
+              release/*-portable.zip
           - os: macos-15
             artifacts: |
               release/*.dmg
@@ -90,10 +93,27 @@ jobs:
           Write-Host "TrustedSigning $((Get-Module TrustedSigning).Version) ready"
 
       - name: Build & sign installer (Windows / Azure Trusted Signing)
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && matrix.variant != 'portable'
         shell: pwsh
         run: >
           pnpm dist
+          --config.releaseInfo.releaseNotesFile=release-notes.md
+          --config.win.azureSignOptions.endpoint=${{ vars.AZURE_ENDPOINT }}
+          --config.win.azureSignOptions.codeSigningAccountName=${{ vars.AZURE_CODE_SIGNING_ACCOUNT }}
+          --config.win.azureSignOptions.certificateProfileName=${{ vars.AZURE_CERT_PROFILE }}
+          "--config.win.azureSignOptions.publisherName=Texpile LLC"
+          --config.win.azureSignOptions.timestampRfc3161=http://timestamp.acs.microsoft.com
+          --config.win.azureSignOptions.timestampDigest=SHA256
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Build & sign portable zip (Windows / Azure Trusted Signing)
+        if: runner.os == 'Windows' && matrix.variant == 'portable'
+        shell: pwsh
+        run: >
+          pnpm dist:portable
           --config.releaseInfo.releaseNotesFile=release-notes.md
           --config.win.azureSignOptions.endpoint=${{ vars.AZURE_ENDPOINT }}
           --config.win.azureSignOptions.codeSigningAccountName=${{ vars.AZURE_CODE_SIGNING_ACCOUNT }}
@@ -126,7 +146,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: texpile-${{ runner.os }}-v${{ steps.ver.outputs.v }}
+          name: texpile-${{ runner.os }}${{ matrix.variant && format('-{0}', matrix.variant) || '' }}-v${{ steps.ver.outputs.v }}
           path: ${{ matrix.artifacts }}
           if-no-files-found: error
 

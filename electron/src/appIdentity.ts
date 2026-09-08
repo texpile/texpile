@@ -11,11 +11,19 @@ export const isDev = !app.isPackaged;
 // without touching its settings or fighting its single-instance lock.
 export const devChannel = /[ -]dev$/.test(app.getName().toLowerCase());
 
-// the Windows zip build: the installer always writes an uninstaller beside the exe, a zip never has one
-export const portable =
-	app.isPackaged &&
-	process.platform === 'win32' &&
-	!fs.existsSync(path.join(path.dirname(process.execPath), `Uninstall ${app.getName()}.exe`));
+// the Windows zip is its own build (pnpm dist:portable) and carries this flag in its package.json
+// through electron-builder's extraMetadata. A build-time stamp, never a guess from the folder the
+// exe sits in: 1.0.1 guessed from the missing uninstaller, got it wrong for every installed copy,
+// and started them all with fresh settings
+export const portable = app.isPackaged && packagedFlag('portable');
+
+function packagedFlag(name: string): boolean {
+	try {
+		return JSON.parse(fs.readFileSync(path.join(app.getAppPath(), 'package.json'), 'utf8'))[name] === true;
+	} catch {
+		return false;
+	}
+}
 
 /**
  * Must run before anything reads app.getPath('userData') and before whenReady.
