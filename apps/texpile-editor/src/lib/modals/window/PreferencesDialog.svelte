@@ -204,7 +204,8 @@
 						<Languages class="text-muted size-4 shrink-0" />
 						{@render label(m.prefs_language(), '')}
 					</div>
-					<select class="select w-32 shrink-0 text-sm" value={settings.current.uiLocale} onchange={changeUiLocale}>
+					<!-- sized by its widest label: a fixed width ran long language names under the native arrow -->
+					<select class="select w-auto min-w-32 shrink-0 text-sm" value={settings.current.uiLocale} onchange={changeUiLocale}>
 						{#each uiLocaleOptions() as l (l.value)}
 							<option value={l.value}>{l.label}</option>
 						{/each}
