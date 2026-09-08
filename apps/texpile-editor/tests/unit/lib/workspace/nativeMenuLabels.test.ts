@@ -78,6 +78,8 @@ describe('locale coverage', () => {
 	const en = messages('en');
 	const keys = Object.keys(en).filter((k) => !k.startsWith('$'));
 
+	// only the locales kept current in-house; a contributed locale may lag behind en.json and shows
+	// English for whatever is missing
 	for (const locale of ['zh-Hans', 'zh-Hant', 'de']) {
 		it(`${locale} translates every message`, () => {
 			const other = messages(locale);
