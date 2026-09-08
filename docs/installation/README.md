@@ -17,6 +17,8 @@ Install Texpile first, then a compiler for the format you write in. Editing work
 
 Download the installer and run it. Texpile appears in the Start menu when it finishes.
 
+There is also a portable zip on the [downloads page](/download). Extract it anywhere and run `Texpile.exe`. It keeps its settings in a `data` folder next to the exe, so the folder can move, and it runs beside an installed Texpile. It registers no file types or `texpile://` links, and it does not update itself: when a new version is out, the update window points to the downloads page for a fresh zip.
+
 ### macOS
 
 Open the .dmg and drag Texpile to your Applications folder.

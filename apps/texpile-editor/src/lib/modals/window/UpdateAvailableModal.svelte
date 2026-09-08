@@ -10,6 +10,8 @@
 
 	const u = $derived(updateState.current);
 	const pkexec = $derived(u.installMode === 'package-manager');
+	// a portable copy has nothing to install over; the download page hands out a fresh zip
+	const portable = $derived(u.installMode === 'portable');
 	const title = $derived(
 		u.phase === 'downloading'
 			? m.updatemodal_title_downloading()
@@ -54,7 +56,9 @@
 				size="xs"
 				buttons={[
 					{ label: m.updatemodal_dismiss(), role: 'cancel', onclick: close },
-					{ label: m.updatemodal_download_update(), role: 'primary', icon: Download, onclick: () => startDownload() }
+					portable
+						? { label: m.updatemodal_open_download_page(), role: 'primary', icon: ExternalLink, onclick: openDownloadPage }
+						: { label: m.updatemodal_download_update(), role: 'primary', icon: Download, onclick: () => startDownload() }
 				]}
 			/>
 		{:else if u.phase === 'downloading'}

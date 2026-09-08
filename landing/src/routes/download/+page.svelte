@@ -70,6 +70,8 @@
 
 	const hrefFor = (p: Platform) => `${DL}/${latest?.files[p.fileKey] ?? p.fallback}`;
 	const debHref = $derived(`${DL}/${latest?.files.linuxDeb ?? 'texpile.deb'}`);
+	// no stable-name fallback: the link shows once a release manifest names the zip
+	const portableHref = $derived(latest?.files.windowsPortable ? `${DL}/${latest.files.windowsPortable}` : null);
 	const versionLabel = $derived(latest ? `v${latest.version.replace(/^v/, '')}` : null);
 	const recommended = $derived(PLATFORMS.find((p) => p.key === detected) ?? null);
 	const others = $derived(recommended ? PLATFORMS.filter((p) => p.key !== recommended.key) : PLATFORMS);
@@ -181,6 +183,11 @@
 					</div>
 				</a>
 			{/if}
+			{#if recommended.key === 'windows' && portableHref}
+				<p class="text-surface-500 mt-3 text-center text-sm">
+					<a class="anchor" href={portableHref} download onclick={() => trackDownload('Windows (portable)')}>{m.dl_windows_portable()}</a>
+				</p>
+			{/if}
 		{/if}
 
 		<div class="mt-10">
@@ -210,6 +217,11 @@
 									<Download class="h-4 w-4" />
 									{m.word_download()}
 								</a>
+								{#if p.key === 'windows' && portableHref}
+									<a class="anchor mt-2 text-xs" href={portableHref} download onclick={() => trackDownload('Windows (portable)')}
+										>{m.dl_windows_portable()}</a
+									>
+								{/if}
 							{/if}
 						</div>
 					</div>
@@ -236,6 +248,11 @@
 								{#if r.files.windows}
 									<a class="anchor" href={`${DL}/${r.files.windows}`} download onclick={() => trackDownload('Windows')}
 										>{m.word_windows()}</a
+									>
+								{/if}
+								{#if r.files.windowsPortable}
+									<a class="anchor" href={`${DL}/${r.files.windowsPortable}`} download onclick={() => trackDownload('Windows (portable)')}
+										>{m.dl_windows_portable()}</a
 									>
 								{/if}
 								{#if r.files.mac}

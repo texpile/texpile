@@ -144,6 +144,11 @@ mac:
 win:
   target:
     - nsis
+    # the portable build: the installer's folder as a zip, no installer. main tells the two apart by
+    # the uninstaller the installer writes beside the exe, so nothing is stamped at build time
+    - zip
+  # nsis names its own artifact below; this one names the zip
+  artifactName: ${productName}-${version}-portable.${ext}
   icon: electron/icon.png
   # nsis WRITES the default handler for these, so the list stays at the two formats someone
   # installing a LaTeX/Typst editor is asking for. Companion files (.bib, .sty, .cls) belong to

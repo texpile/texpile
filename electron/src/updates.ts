@@ -8,6 +8,7 @@ import { app, BrowserWindow } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { autoUpdater } from 'electron-updater';
+import { portable } from './appIdentity';
 
 export type CheckResult =
 	| {
@@ -15,8 +16,9 @@ export type CheckResult =
 			version: string;
 			/** latest*.yml releaseNotes (one note per line) or null. */
 			notes: string | null;
-			/** 'package-manager' = linux deb/rpm/pacman: full download + a pkexec password prompt. */
-			installMode: 'restart' | 'package-manager';
+			/** 'package-manager' = linux deb/rpm/pacman: full download + a pkexec password prompt.
+			 *  'portable' = the Windows zip: nothing to install over, the modal offers the download page. */
+			installMode: 'restart' | 'package-manager' | 'portable';
 	  }
 	| { status: 'none' }
 	| { status: 'error'; message: string }
@@ -24,7 +26,8 @@ export type CheckResult =
 
 // electron-builder stamps resources/package-type for deb/rpm/pacman installs; the updater
 // factory routes on the same file
-function installMode(): 'restart' | 'package-manager' {
+function installMode(): 'restart' | 'package-manager' | 'portable' {
+	if (portable) return 'portable';
 	if (process.platform !== 'linux') return 'restart';
 	try {
 		const t = fs.readFileSync(path.join(process.resourcesPath, 'package-type'), 'utf8').trim();

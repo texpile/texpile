@@ -3,7 +3,7 @@
 import { app, BrowserWindow, dialog } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { applyAppIdentity } from './appIdentity';
+import { applyAppIdentity, portable } from './appIdentity';
 import { shellEnvReady } from './shell/shellEnv';
 import { registerPrivilegedSchemes, registerProtocolHandlers } from './appProtocols';
 import { readSettings, writeSettings, registerSettingsIpc } from './appSettings';
@@ -165,8 +165,9 @@ if (!app.requestSingleInstanceLock()) {
 
 app.whenReady().then(() => {
 	registerProtocolHandlers();
-	// installed builds only; a dev run registers the electron binary instead
-	app.setAsDefaultProtocolClient('texpile');
+	// installed builds only; a dev run registers the electron binary instead, and a portable copy
+	// would register a folder that may move or be deleted
+	if (!portable) app.setAsDefaultProtocolClient('texpile');
 	if (!initialOpenPath) initialOpenPath = fileFromArgv(process.argv);
 	if (!initialJoinLink) initialJoinLink = linkFromArgv(process.argv);
 	const argvFolder = folderFromArgv(process.argv);

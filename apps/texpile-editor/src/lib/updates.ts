@@ -16,8 +16,9 @@ export type UpdateState = {
 	percent: number;
 	transferred: number;
 	total: number;
-	/** 'package-manager' = linux deb/rpm/pacman: full download, then a system password prompt. */
-	installMode: 'restart' | 'package-manager';
+	/** 'package-manager' = linux deb/rpm/pacman: full download, then a system password prompt.
+	 *  'portable' = the Windows zip: nothing to install over, the modal offers the download page. */
+	installMode: 'restart' | 'package-manager' | 'portable';
 	error: string | null;
 };
 
@@ -27,7 +28,7 @@ export const updateState = box<UpdateState>({ ...IDLE });
 export const updateModalOpen = box(false);
 
 type CheckResult =
-	| { status: 'update'; version: string; notes: string | null; installMode: 'restart' | 'package-manager' }
+	| { status: 'update'; version: string; notes: string | null; installMode: 'restart' | 'package-manager' | 'portable' }
 	| { status: 'none' }
 	| { status: 'error'; message: string }
 	| { status: 'unsupported' };

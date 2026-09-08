@@ -145,6 +145,7 @@
 	"dl_other_platforms": "其他平台",
 	"dl_choose_platform": "選擇你的平台",
 	"dl_detail_windows": "安裝程式 (.exe)",
+	"dl_windows_portable": "可攜版 (.zip)",
 	"dl_detail_mac": "Intel 與 Apple 晶片皆可 (.dmg)",
 	"dl_deb_desc": "Debian / Ubuntu",
 	"dl_appimage_desc": "其他發行版，需要 libfuse2",

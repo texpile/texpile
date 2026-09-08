@@ -41,6 +41,7 @@ jobs:
           - os: windows-latest
             artifacts: |
               release/*.exe
+              release/*-portable.zip
               release/*.blockmap
               release/latest.yml
           - os: macos-15
@@ -150,7 +151,7 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           missing=0
-          for f in "Texpile-Setup-$VERSION.exe" "Texpile-Setup-$VERSION.exe.blockmap" \
+          for f in "Texpile-Setup-$VERSION.exe" "Texpile-Setup-$VERSION.exe.blockmap" "Texpile-$VERSION-portable.zip" \
                    "Texpile-$VERSION.dmg" "Texpile-$VERSION.zip" "Texpile-$VERSION.zip.blockmap" \
                    "Texpile-$VERSION.AppImage" "texpile-$VERSION.deb" \
                    latest.yml latest-mac.yml latest-linux.yml; do
@@ -172,6 +173,7 @@ jobs:
         run: |
           put() { npx wrangler@4 r2 object put "$BUCKET/$1" --file "$2" --remote --content-type "$3"; }
           put "v$VERSION/Texpile-Setup-$VERSION.exe" "dist/Texpile-Setup-$VERSION.exe" application/octet-stream
+          put "v$VERSION/Texpile-$VERSION-portable.zip" "dist/Texpile-$VERSION-portable.zip" application/zip
           put "v$VERSION/Texpile-$VERSION.dmg" "dist/Texpile-$VERSION.dmg" application/octet-stream
           put "v$VERSION/Texpile-$VERSION.AppImage" "dist/Texpile-$VERSION.AppImage" application/octet-stream
           put "v$VERSION/texpile-$VERSION.deb" "dist/texpile-$VERSION.deb" application/octet-stream

@@ -17,6 +17,7 @@ const manifest = {
 	publishedAt: new Date().toISOString(),
 	files: {
 		windows: `v${version}/Texpile-Setup-${version}.exe`,
+		windowsPortable: `v${version}/Texpile-${version}-portable.zip`,
 		mac: `v${version}/Texpile-${version}.dmg`,
 		linuxAppImage: `v${version}/Texpile-${version}.AppImage`,
 		linuxDeb: `v${version}/texpile-${version}.deb`

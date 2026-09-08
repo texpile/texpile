@@ -34,7 +34,8 @@ const PLATFORM_ALIAS: Record<string, string> = {
 	macos: 'mac',
 	linux: 'linuxAppImage',
 	appimage: 'linuxAppImage',
-	deb: 'linuxDeb'
+	deb: 'linuxDeb',
+	portable: 'windowsPortable'
 };
 
 function platformOf(key: string): string {

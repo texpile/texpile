@@ -145,6 +145,7 @@
 	"dl_other_platforms": "Other platforms",
 	"dl_choose_platform": "Choose your platform",
 	"dl_detail_windows": "Installer (.exe)",
+	"dl_windows_portable": "Portable (.zip)",
 	"dl_detail_mac": "Intel & Apple silicon (.dmg)",
 	"dl_deb_desc": "Debian / Ubuntu",
 	"dl_appimage_desc": "other distros, needs libfuse2",
