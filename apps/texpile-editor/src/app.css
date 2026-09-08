@@ -104,7 +104,11 @@ math-field {
 .ProseMirror ::selection {
 	background-color: var(--editor-selection);
 }
-.ProseMirror .pm-selected-node {
+/* the inline chip declares its own transparent ground further down at the same specificity and
+   would win by source order; the <code> form is the same chip where the schema renders it */
+.ProseMirror .pm-selected-node,
+.ProseMirror .inline-latex-wrapper.pm-selected-node,
+.ProseMirror code.inline-latex.pm-selected-node {
 	background-color: var(--editor-selection);
 }
 /* an <hr> is a border line over a zero-height content box, so the background above paints
