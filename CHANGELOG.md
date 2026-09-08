@@ -5,6 +5,14 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: Brazilian Portuguese interface language, contributed by @ale4-dev; picked automatically on a Portuguese system
+- feat: a portable Windows build, a zip that runs from any folder without an installer and keeps its settings beside the exe
+- feat: the update window links to the project on GitHub
+- fix: selecting text across an inline LaTeX chip now highlights the chip too
+- fix: the start screen no longer shows a thin scrollbar at some window sizes and zoom levels
+- fix: long language names fit in the Preferences language list
+- fix: German is no longer marked as machine translated
+
 ## [1.0.0] - 2026-09-07
 
 - fix: live mode is no longer marked experimental in the compile
