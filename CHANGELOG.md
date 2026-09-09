@@ -5,7 +5,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
-- fix: an installed 1.0.1 took itself for the portable build and started with fresh settings; your settings are back. 1.0.1 also offered no in-app update, so this one is a manual download
+## [1.0.2] - 2026-09-09
+
+- fix: 1.0.1 portable build and installed windows build update issue.
 
 ## [1.0.1] - 2026-09-08
 
