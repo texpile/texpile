@@ -213,7 +213,12 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{ role: 'paste', label: label(s, 'paste', 'Paste') },
 				{ role: 'selectAll', label: label(s, 'selectAll', 'Select All') },
 				{ type: 'separator' },
-				{ enabled: s.findable ?? doc.enabled, label: label(s, 'find', 'Find'), accelerator: 'CmdOrCtrl+F', click: () => fire(win, 'edit:find') }
+				{
+					enabled: s.findable ?? doc.enabled,
+					label: label(s, 'find', 'Find'),
+					accelerator: 'CmdOrCtrl+F',
+					click: () => fire(win, 'edit:find')
+				}
 			]
 		},
 		{

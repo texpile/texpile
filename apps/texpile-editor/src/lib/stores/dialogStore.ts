@@ -8,6 +8,26 @@ import { box } from '$lib/runes/box.svelte';
 
 export const preferencesOpen = box(false);
 
+const REOPEN_PREFERENCES = 'texpile:reopen-preferences';
+
+export function markPreferencesReopen(): void {
+	try {
+		sessionStorage.setItem(REOPEN_PREFERENCES, '1');
+	} catch {
+		return;
+	}
+}
+
+export function takePreferencesReopen(): boolean {
+	try {
+		const set = sessionStorage.getItem(REOPEN_PREFERENCES) === '1';
+		sessionStorage.removeItem(REOPEN_PREFERENCES);
+		return set;
+	} catch {
+		return false;
+	}
+}
+
 /**
  * The tab Preferences should land on, for the places that open it to answer a specific question -
  * the compile modal sending someone to Toolchain because their compiler is not installed.

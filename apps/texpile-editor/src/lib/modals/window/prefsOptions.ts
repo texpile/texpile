@@ -1,6 +1,7 @@
 // The option lists Preferences' selects render, and the locale switch.
 import { applyUiLocale, updateSettings, type AppSettings } from '$lib/settings';
 import { LOCALE_META } from '$lib/localeMeta';
+import { markPreferencesReopen } from '$lib/stores/dialogStore';
 import { m } from '$lib/paraglide/messages';
 
 // source-editor keybindings; Vim and Emacs are names, so they are not translated
@@ -30,5 +31,6 @@ export function uiLocaleOptions(): { value: AppSettings['uiLocale']; label: stri
 export function changeUiLocale(e: Event): void {
 	const uiLocale = (e.currentTarget as HTMLSelectElement).value as AppSettings['uiLocale'];
 	updateSettings({ uiLocale });
+	markPreferencesReopen();
 	applyUiLocale(uiLocale);
 }

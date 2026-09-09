@@ -16,6 +16,7 @@
 	import { openFolderInWindow } from '$lib/workspace/openWorkspace';
 	import { openTutorialProject } from '$lib/workspace/starters';
 	import { m } from '$lib/paraglide/messages';
+	import { takePreferencesReopen } from '$lib/stores/dialogStore';
 	import { RecentsFit } from './startRecentsFit.svelte';
 
 	let busy = $state(false);
@@ -94,7 +95,10 @@
 	// App.svelte handles it. A StartView-side auto-reopen would make every NEW window reopen
 	// the last folder too.
 
-	onMount(() => mark('start-screen'));
+	onMount(() => {
+		mark('start-screen');
+		if (takePreferencesReopen()) void showPrefs();
+	});
 </script>
 
 <svelte:head><title>Texpile</title></svelte:head>

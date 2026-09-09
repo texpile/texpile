@@ -13,7 +13,9 @@
 	import PreferencesDialog from './PreferencesDialog.svelte';
 	import SpellcheckDictionary from './SpellcheckDictionary.svelte';
 	import ShortcutsDialog from './ShortcutsDialog.svelte';
-	import { preferencesOpen, dictionaryOpen } from '$lib/stores/dialogStore';
+	import { preferencesOpen, dictionaryOpen, takePreferencesReopen } from '$lib/stores/dialogStore';
+
+	if (takePreferencesReopen()) preferencesOpen.current = true;
 </script>
 
 <PreferencesDialog bind:open={preferencesOpen.current} />
