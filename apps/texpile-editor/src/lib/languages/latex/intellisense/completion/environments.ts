@@ -64,11 +64,17 @@ function asNameOption(name: string, detail?: string): Completion {
 }
 
 function forBeginOption(name: string, detail?: string): Completion {
-	return snippetCompletion(`${name}}${ENV_BODY[name] ?? '\n\t${0}'}\n\\end{${name}}`, {
+	const option = snippetCompletion(`${name}}${ENV_BODY[name] ?? '\n\t${0}'}\n\\end{${name}}`, {
 		label: name,
 		type: 'class',
 		detail: detail ?? renderSignature(ENV_SIGNATURE_MAP.get(name) ?? '')
 	});
+	// for handeling auto closing [] and {}...etc
+	const apply = option.apply as Exclude<Completion['apply'], string | undefined>;
+	return {
+		...option,
+		apply: (view, completion, from, to) => apply(view, completion, from, to + (view.state.sliceDoc(to, to + 1) === '}' ? 1 : 0))
+	};
 }
 
 /** plain name completion, used for \end{…} and mid-edit \begin{…} (content already follows). */

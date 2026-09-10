@@ -5,6 +5,16 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-10
+
+- fix: Typst completion issues after a `.`
+- fix: switching languages now reopens the workspace
+- fix: enabled differential updates
+- feat: LaTeX and Typst auto-close pairs such as `{}` and `` `' ``
+- feat: recompile from scratch and clean auxiliary files for LaTeX
+- feat: copying and pasting in the terminal via right-click and keybindings
+- feat: the PDF preview refreshes automatically even when the document is compiled externally
+
 ## [1.0.2] - 2026-09-09
 
 - fix: 1.0.1 portable build and installed windows build update issue.

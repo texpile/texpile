@@ -18,6 +18,10 @@
 // detector, the visual editor's parse - is already custom and independent of this mode. All this
 // has to do is colour tokens, which line-local state does fine.
 import { StreamLanguage, LanguageSupport } from '@codemirror/language';
+import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
+import { keymap } from '@codemirror/view';
+import { latexEscapedBrackets } from './latexEscapedBrackets';
+import { latexQuotePair } from './latexQuotePair';
 import { tags } from '@lezer/highlight';
 
 // starred variants share the base name; matched with the * already stripped
@@ -61,7 +65,12 @@ function enterEnv(state: LatexState, name: string) {
 
 export const latexLanguage = StreamLanguage.define<LatexState>({
 	name: 'latex',
-	languageData: { commentTokens: { line: '%' } },
+	// the pairs and the before-set are LaTeX Workshop's; `$` deliberately not among them there or
+	// here: \$ for currency and $$ display math both fight a same-character auto-close
+	languageData: {
+		commentTokens: { line: '%' },
+		closeBrackets: { brackets: ['(', '[', '{'], before: ';:.,={}])>\\` \t$' }
+	},
 
 	startState: () => ({ math: null, verbatim: null, startVerbatim: null, argTag: null, argDepth: 0, pendingArg: null, pendingEnv: null }),
 
@@ -231,5 +240,5 @@ export const latexLanguage = StreamLanguage.define<LatexState>({
 });
 
 export function latex(): LanguageSupport {
-	return new LanguageSupport(latexLanguage);
+	return new LanguageSupport(latexLanguage, [latexEscapedBrackets(), latexQuotePair(), closeBrackets(), keymap.of(closeBracketsKeymap)]);
 }

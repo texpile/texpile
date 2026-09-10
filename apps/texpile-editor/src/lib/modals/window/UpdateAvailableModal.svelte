@@ -6,6 +6,7 @@
 	import { settings, updateSettings } from '$lib/settings';
 	// eslint-disable-next-line no-restricted-imports -- this modal IS the desktop updater's UI; a web entry never mounts it
 	import { updateState, updateModalOpen, startDownload, installNow } from '$lib/updates';
+	import UpdateSupportLinks from './UpdateSupportLinks.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const u = $derived(updateState.current);
@@ -77,23 +78,13 @@
 				{/if}
 			</p>
 			<p class="text-muted mb-4 text-sm">{m.updatemodal_background_download_notice()}</p>
-			<div class="text-muted flex items-baseline justify-between gap-4 text-sm">
-				<span>{m.updatemodal_like_texpile()}</span>
-				<span>
-					<a class="anchor" href="https://github.com/texpile/texpile" target="_blank" rel="noopener noreferrer"
-						>{m.updatemodal_star_on_github()}</a
-					>
-					·
-					<a class="anchor" href="https://github.com/sponsors/louisqli" target="_blank" rel="noopener noreferrer"
-						>{m.updatemodal_donate()}</a
-					>
-				</span>
-			</div>
+			<UpdateSupportLinks />
 		{:else if u.phase === 'downloaded'}
 			{#if pkexec}
 				<p class="text-muted mb-4 text-sm">
 					{m.updatemodal_downloaded_pkexec({ version: u.version ?? '' })}
 				</p>
+				<UpdateSupportLinks class="mb-4" />
 				<ModalActions
 					size="xs"
 					buttons={[
@@ -103,6 +94,7 @@
 				/>
 			{:else}
 				<p class="text-muted mb-4 text-sm">{m.updatemodal_downloaded_ready({ version: u.version ?? '' })}</p>
+				<UpdateSupportLinks class="mb-4" />
 				<ModalActions
 					size="xs"
 					buttons={[

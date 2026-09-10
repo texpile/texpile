@@ -30,9 +30,13 @@ exports.default = async function afterPack(context) {
 
 	if (electronPlatformName === 'win32' && packager.config.extraMetadata?.portable === true) {
 		const publish = Array.isArray(packager.config.publish) ? packager.config.publish[0] : packager.config.publish;
-		const feed = [`provider: ${publish.provider}`, `url: ${publish.url}`, `updaterCacheDirName: ${packager.appInfo.name}-updater`, ''].join(
-			'\n'
-		);
+		const feed = [
+			`provider: ${publish.provider}`,
+			`url: ${publish.url}`,
+			`useMultipleRangeRequest: ${publish.useMultipleRangeRequest !== false}`,
+			`updaterCacheDirName: ${packager.appInfo.name}-updater`,
+			''
+		].join('\n');
 		fs.writeFileSync(path.join(resources, 'app-update.yml'), feed);
 		console.log('after-pack: wrote app-update.yml for the portable build');
 	}

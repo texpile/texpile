@@ -15,6 +15,7 @@
 // from it shipped a second 320KB wasm alongside ours.
 import { Language, LanguageSupport, defineLanguageFacet, foldKeymap, languageDataProp } from '@codemirror/language';
 import { keymap } from '@codemirror/view';
+import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 import type { Extension } from '@codemirror/state';
 import { TypstParser, typstHighlight } from 'texpile-typst-syntax-wasm';
 import { typstFold, typstFoldSections } from '../intellisense/typstFold';
@@ -35,7 +36,13 @@ function typstFolding(): Extension {
 // Typst's comment delimiters. `line` is what Mod-/ (toggleComment) actually uses: without it the
 // command falls back to wrapping every line in /* */, which reads as "comment is broken" - .tex
 // gets its `%` from language-data's LaTeX descriptor, and this facet is the .typ equivalent.
-const typstFacet = defineLanguageFacet({ commentTokens: { line: '//', block: { open: '/*', close: '*/' } } });
+// the pairs and the before-set are tinymist's VS Code language configuration, `$` included: an
+// unclosed `$` flips every line below it into math, so closing it as it is typed matters more
+// here than for a bracket
+const typstFacet = defineLanguageFacet({
+	commentTokens: { line: '//', block: { open: '/*', close: '*/' } },
+	closeBrackets: { brackets: ['(', '[', '{', '"', '$'], before: ';:.,=}])>$ \t' }
+});
 
 function makeLanguage(support: Extension[]): LanguageSupport {
 	// highlight tags come from the parser package (a Lezer concern); folding and the language-data
@@ -55,7 +62,7 @@ function makeLanguage(support: Extension[]): LanguageSupport {
  * Typst syntax support. No colours of its own — cmSyntaxHighlight() supplies those.
  */
 export function typstLanguage(): LanguageSupport {
-	return makeLanguage([typstFolding()]);
+	return makeLanguage([typstFolding(), closeBrackets(), keymap.of(closeBracketsKeymap)]);
 }
 
 /**

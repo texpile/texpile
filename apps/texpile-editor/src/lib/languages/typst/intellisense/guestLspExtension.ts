@@ -1,13 +1,6 @@
 // A guest's .typ editor, wired to the host's tinymist.
-//
-// The mirror of typstLspExtension, and deliberately the same shape: same LSPClient, same
-// languageServerSupport, same hover theme. Only the transport differs, so a guest's completions,
-// hovers and go-to-definition are the host's, not a second implementation that drifts from it.
-//
-// Kept out of lspClient.ts because that file owns the local server PROCESS - starting it, counting
-// holders, reclaiming its ~90MB when the last .typ closes. A guest has no process to manage: the
-// thing being shared here is a session, and it belongs to whoever is still reading a .typ file.
-import { LSPClient, languageServerExtensions, languageServerSupport } from '@codemirror/lsp-client';
+import { LSPClient, LSPPlugin } from '@codemirror/lsp-client';
+import { typstServerExtensions } from './serverExtensions';
 import type { Extension } from '@codemirror/state';
 import { lspHoverTheme } from './lspClient';
 import { sessionUri } from './sessionUri';
@@ -64,7 +57,7 @@ export async function typstGuestLspExtension(port: SessionLspPort, rel: string):
 		const transport = createSessionTransport(port);
 		const client = new LSPClient({
 			rootUri: sessionUri(''),
-			extensions: languageServerExtensions(),
+			extensions: typstServerExtensions(),
 			timeout: 12000
 		});
 		client.connect(transport);
@@ -92,7 +85,7 @@ export async function typstGuestLspExtension(port: SessionLspPort, rel: string):
 		dropGuestTypstLsp();
 		return null;
 	}
-	return [languageServerSupport(session.client, sessionUri(rel), 'typst'), lspHoverTheme];
+	return [LSPPlugin.create(session.client, sessionUri(rel), 'typst'), lspHoverTheme];
 }
 
 /**

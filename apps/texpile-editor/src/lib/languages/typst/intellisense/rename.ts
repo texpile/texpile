@@ -100,5 +100,5 @@ export function renameTypstSymbolCommand(view: EditorView): boolean {
 	return true;
 }
 
-/** Bound at high precedence so it wins over the identical binding inside languageServerSupport. */
+/** Bound at high precedence so it wins over the identical binding in the client's renameKeymap. */
 export const typstRenameKeymap: Extension = Prec.high(keymap.of([{ key: 'F2', run: renameTypstSymbolCommand, preventDefault: true }]));

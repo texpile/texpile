@@ -5,7 +5,8 @@
 // deliberate: the intellisense is an integration against the PROTOCOL, so a different Typst server
 // would be a change here and nowhere else. (Live preview, if it is ever added, is not like this -
 // tinymist's preview is its own private protocol, and would be genuine lock-in.)
-import { LSPClient, languageServerExtensions, languageServerSupport } from '@codemirror/lsp-client';
+import { LSPClient, LSPPlugin } from '@codemirror/lsp-client';
+import { typstServerExtensions } from './serverExtensions';
 import type { Transport } from '@codemirror/lsp-client';
 import type { Extension } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
@@ -169,7 +170,7 @@ export async function typstClient(root: string | null): Promise<LSPClient | null
 
 	const client = new LSPClient({
 		rootUri: root ? fileUri(root) : undefined,
-		extensions: languageServerExtensions(),
+		extensions: typstServerExtensions(),
 		notificationHandlers: {
 			// tinymist's click-to-jump: the framed preview reports the span the user clicked over its
 			// own websocket, the server resolves it to a file and range, and it lands here. Same
@@ -481,8 +482,11 @@ export async function typstLspExtension(root: string | null, filePath: string): 
 		releaseTypstLsp();
 		return null;
 	}
-	// our F2 first: languageServerSupport binds the same key to a rename that drops every edit
+	// our F2 first: the client's renameKeymap binds the same key to a rename that drops every edit
 	// outside the open file (see typst/rename.ts)
 	const { typstRenameKeymap } = await import('./rename');
-	return [typstRenameKeymap, languageServerSupport(client, fileUri(filePath), 'typst'), lspHoverTheme];
+	// the plugin alone: the client already carries its extensions (serverExtensions.ts), and mounting
+	// the library's languageServerSupport() on top once registered every extension twice, so each
+	// keystroke mapped the completion result twice and the second pass threw
+	return [typstRenameKeymap, LSPPlugin.create(client, fileUri(filePath), 'typst'), lspHoverTheme];
 }
