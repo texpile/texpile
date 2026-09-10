@@ -6,6 +6,7 @@
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { terminalTheme } from './terminalTheme';
+	import { attachTerminalClipboard } from './terminalClipboard';
 	import { observe } from '$lib/runes/observe.svelte';
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 
@@ -148,6 +149,7 @@
 			fit = new FitAddon();
 			term.loadAddon(fit);
 			term.open(el);
+			unsubs.push(attachTerminalClipboard(term, el));
 			// xterm holds concrete colours, so a theme or mode switch while a shell is up re-reads them
 			unsubs.push(
 				observe(

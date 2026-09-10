@@ -47,5 +47,14 @@ export function terminalTheme(mode: 'light' | 'dark'): ITheme {
 	const dark = mode === 'dark';
 	const background = themeColour('--terminal-bg', dark ? '#1e1e1e' : '#ffffff');
 	const foreground = themeColour('--terminal-fg', dark ? '#e4e4e7' : '#333333');
-	return { background, foreground, cursor: foreground, cursorAccent: background, ...(dark ? ANSI_DARK : ANSI_LIGHT) };
+	// the one selection colour both editors use (app.css), so a drag reads the same in the dock
+	const selectionBackground = themeColour('--editor-selection', dark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)');
+	return {
+		background,
+		foreground,
+		cursor: foreground,
+		cursorAccent: background,
+		selectionBackground,
+		...(dark ? ANSI_DARK : ANSI_LIGHT)
+	};
 }

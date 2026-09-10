@@ -85,6 +85,7 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		isHost: () => hostMode,
 		checkExternalChange: () => void editFlow.external.check(),
 		runCompile: () => d.compiler.runCompile(),
+		loadExternalPdf: () => void d.compiler.loadExternalPdf(),
 		onWindowResize: layout.reclampPdf,
 		reloadProjectState: () => {
 			// both live in .texpile/ and both are committed, so both arrive by pull

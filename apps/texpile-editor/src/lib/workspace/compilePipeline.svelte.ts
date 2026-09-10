@@ -416,4 +416,29 @@ export class CompilePipeline {
 			pdfStore.current = null;
 		}
 	};
+	// For external files path that user compield that iddnt press the compile buttons
+	loadExternalPdf = async () => {
+		if (this.busy) return;
+		const pdfPath = this.expectedPdfPath();
+		if (!pdfPath) return;
+		const first = await this.deps.stat(pdfPath);
+		if (first.exists && (first.size === 0 || Math.round(first.mtimeMs) <= this.shownPdfMtime())) return;
+		if (!first.exists && pdfStore.current === null) return;
+		await new Promise((r) => setTimeout(r, 600));
+		const second = await this.deps.stat(pdfPath);
+		if (this.busy || this.expectedPdfPath() !== pdfPath) return;
+		if (!second.exists) {
+			pdfStore.current = null;
+			return;
+		}
+		if (second.size === 0 || second.mtimeMs !== first.mtimeMs || second.size !== first.size) return;
+		if (Math.round(second.mtimeMs) <= this.shownPdfMtime()) return;
+		this.showCompiledPdf(pdfPath, second.mtimeMs);
+		this.runsFinished++;
+	};
+
+	private shownPdfMtime(): number {
+		const url = pdfStore.current;
+		return typeof url === 'string' ? Number(url.match(/[?&]t=(\d+)/)?.[1] ?? 0) : 0;
+	}
 }

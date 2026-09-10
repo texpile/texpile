@@ -16,13 +16,18 @@ export type WindowWiringDeps = {
 	onWindowResize(): void;
 	/** re-read .texpile/ - the comment log and the compile config - after an outside write */
 	reloadProjectState(): void;
+	/** show a PDF something other than our Compile wrote (an agent, latexmk -pvc, another editor) */
+	loadExternalPdf(): void;
 };
 
 /** attach the workspace's window listeners; returns the detach function */
 export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 	function onFocus() {
 		deps.refreshTree();
-		if (deps.isHost()) deps.checkExternalChange();
+		if (deps.isHost()) {
+			deps.checkExternalChange();
+			deps.loadExternalPdf();
+		}
 		deps.reloadReferences();
 		// also here, not only on the watch: a workspace on a filesystem that cannot be watched
 		// degrades to focus, and that is exactly where a pull happens - in the terminal, elsewhere
@@ -46,7 +51,10 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 	// which with an agent or second editor writing mid-session was too late.
 	const detachNativeWatch = nativeBridge()?.onWorkspaceFsChanged?.(() => {
 		onFsChanged();
-		if (deps.isHost()) deps.checkExternalChange();
+		if (deps.isHost()) {
+			deps.checkExternalChange();
+			deps.loadExternalPdf();
+		}
 		// .texpile/ is watched for this: a pulled comment log or compile config is someone else's
 		// write by definition, and until now it waited for the folder to be reopened
 		deps.reloadProjectState();
