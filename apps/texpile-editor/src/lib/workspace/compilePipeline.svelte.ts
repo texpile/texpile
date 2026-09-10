@@ -10,17 +10,28 @@ import { settings } from '$lib/settings';
 import { compileConfig } from './projectConfigSync.svelte';
 import { workspaceRoot, mainFile, texFiles, effectiveCompileFormat, savedMainFile } from './workspaceStore';
 import * as cc from './compileCommand';
-import { expandMain, relFromRoot, resolveCompileCommand, withBatchFlags } from './compileResolve';
+import {
+	expandMain,
+	isLatexmkCommand,
+	relFromRoot,
+	resolveCompileCommand,
+	withBatchFlags,
+	withCleanAux,
+	withFullRebuild
+} from './compileResolve';
 import type { CompileDeps } from './compileDeps';
 import { CompileWatchers } from './compileWatchers';
 
 export { relFromRoot, resolveCompileCommand, resolveFormatCommand } from './compileResolve';
 export type { CompileDeps } from './compileDeps';
 import { drivesTypst, isTypstCommand } from './typstCommand';
-import { basename, joinPath, samePath } from './fileSystem';
+import { basename, dirname, joinPath, revealItem, samePath } from './fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { reportMissingTool } from './toolMissing';
 import { m } from '$lib/paraglide/messages';
+
+// what the Compile menu asked for besides a plain run: both are latexmk flags spliced into the same command
+type CompileMode = 'normal' | 'scratch' | 'clean';
 
 export class CompilePipeline {
 	// true from Compile until the run visibly ends (PDF landed, log settled, or timeout);
@@ -91,7 +102,27 @@ export class CompilePipeline {
 		if (tries < 40) setTimeout(() => this.runInTerminal(cmd, onDone, tries + 1), 25); // ~1s for the dock to mount
 	}
 
-	runCompile = async () => {
+	runCompile = () => this.startCompile('normal');
+	// latexmk -gg: clean its own products, then rebuild; the way out of a run latexmk remembers as failed
+	runCompileFromScratch = () => this.startCompile('scratch');
+	// latexmk -c: drop the aux, log, fls and fdb files, keep the PDF
+	runCleanAux = () => this.startCompile('clean');
+	// the latexmk rows of the Compile menu: latexmk only, and only while Compile runs the shell command
+	get latexmkActionsAvailable(): boolean {
+		return isLatexmkCommand(resolveCompileCommand(mainFile.current)) && !compileConfig.current.latex.liveMode;
+	}
+	get hasOutput(): boolean {
+		return pdfStore.current !== null;
+	}
+	// the compiled PDF in the OS file manager, or its folder while there is none
+	revealOutput = async () => {
+		const pdfPath = this.expectedPdfPath();
+		if (!pdfPath) return;
+		const s = await this.deps.stat(pdfPath);
+		await revealItem(s.exists ? pdfPath : dirname(pdfPath));
+	};
+
+	private startCompile = async (mode: CompileMode) => {
 		// One run at a time. The Compile button becomes Stop so a local user rarely gets here twice,
 		// but the shortcut and shared-session guests both reach this directly - and a guest can fire
 		// requests as fast as they like. Overlapping runs fight over the same aux/output files and
@@ -122,13 +153,13 @@ export class CompilePipeline {
 		if (main && !(await this.deps.fileExists(main))) {
 			this.deps.clearMainFile();
 			this.deps.openMainConfirm(() => {
-				if (mainFile.current) void this.runCompile();
+				if (mainFile.current) void this.startCompile(mode);
 			});
 			return;
 		}
 		// first compile in a folder with no explicitly chosen main file: confirm it first
 		if (this.deps.mainConfirmed() !== true && texFiles.current.length > 1) {
-			this.deps.openMainConfirm(() => void this.runCompile());
+			this.deps.openMainConfirm(() => void this.startCompile(mode));
 			return;
 		}
 		// No main file at all, in a folder that has candidates: pick one, then compile. EVERY lane
@@ -139,7 +170,7 @@ export class CompilePipeline {
 		// empty must close, not reopen itself forever.
 		if (!mainFile.current && texFiles.current.length > 0) {
 			this.deps.openMainConfirm(() => {
-				if (mainFile.current) void this.runCompile();
+				if (mainFile.current) void this.startCompile(mode);
 			});
 			return;
 		}
@@ -150,7 +181,7 @@ export class CompilePipeline {
 		// Live mode IS the incremental lualatex pipeline, so it cannot serve a Typst project. The
 		// setting is global and the user may arrive here with it left on from a LaTeX folder, so
 		// ignore it rather than trapping them - the terminal command below is the correct build.
-		if (compileConfig.current.latex.liveMode && !isTypstCommand(cmd)) {
+		if (mode === 'normal' && compileConfig.current.latex.liveMode && !isTypstCommand(cmd)) {
 			await this.deps.runDraftCompile();
 			return;
 		}
@@ -160,7 +191,7 @@ export class CompilePipeline {
 		//
 		// In a shared session too: the preview's data plane is relayed to guests (previewRelay), so
 		// opening it here is answering a guest's compile request, not ignoring it.
-		if (compileConfig.current.typst.preview && isTypstCommand(cmd)) {
+		if (mode === 'normal' && compileConfig.current.typst.preview && isTypstCommand(cmd)) {
 			this.deps.openTypstPreview();
 			return;
 		}
@@ -211,15 +242,22 @@ export class CompilePipeline {
 		this.busy = true; // set even without the marker: the overlap guard must not depend on it
 		const gen = ++this.compileGen;
 		this.compileStdout = '';
+		const line = this.resolvedCompileCommand(cmd);
 		this.runInTerminal(
-			withBatchFlags(this.resolvedCompileCommand(cmd)),
+			withBatchFlags(mode === 'scratch' ? withFullRebuild(line) : mode === 'clean' ? withCleanAux(line) : line),
 			track
 				? (output) => {
 						this.compileStdout = output ?? ''; // dvipdfmx/xdvipdfmx diagnostics only exist here
-						this.finalizeCompile(gen, pdfPath, before, logPath, logBefore);
+						this.finalizeCompile(gen, pdfPath, before, logPath, logBefore, mode);
 					}
 				: undefined
 		);
+		// a clean writes no log and no PDF, so the pollers below would only wait out their timeout
+		if (mode === 'clean') {
+			if (!track) this.endRun();
+			[2000].forEach((d) => setTimeout(this.deps.refreshTree, d));
+			return;
+		}
 		// with the completion marker on, finalizeCompile loads the finished PDF once the command
 		// exits. Don't ALSO poll-load here: LaTeX rewrites the PDF across passes (and truncates it
 		// mid-write), so an early poll would load a partial/pass-1 PDF, then finalize reloads the
@@ -303,7 +341,14 @@ export class CompilePipeline {
 	// the shell reported the command finished (sentinel echo). the pollers only notice runs that
 	// WRITE something; a run that dies without touching the log or PDF would leave Stop showing
 	// until their timeout. give trailing writes a beat, check both artifacts once, stand pollers down.
-	private finalizeCompile(gen: number, pdfPath: string | null, pdfBefore: number, logPath: string | null, logBefore: number) {
+	private finalizeCompile(
+		gen: number,
+		pdfPath: string | null,
+		pdfBefore: number,
+		logPath: string | null,
+		logBefore: number,
+		mode: CompileMode = 'normal'
+	) {
 		setTimeout(async () => {
 			if (gen !== this.compileGen) return; // a newer compile or a folder switch took over
 			this.compileGen++; // this run is over; its pollers stand down
@@ -335,7 +380,7 @@ export class CompilePipeline {
 			// wrote somewhere the app is not watching (a cd-prefixed command, say), and every panel
 			// would stay silent while the user reads that as "compiled ok". An up-to-date rebuild is
 			// exempt: its PDF exists. Say where we looked and point at the output overrides.
-			if (!toolMissing && pdfPath && !pdfExists && !logAdvanced) {
+			if (!toolMissing && mode !== 'clean' && pdfPath && !pdfExists && !logAdvanced) {
 				const root = workspaceRoot.current;
 				toaster.warning({
 					title: m.compile_no_output_title(),

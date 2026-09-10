@@ -42,6 +42,22 @@ export function withBatchFlags(cmd: string): string {
 	return flags.length > 0 ? cmd.replace(hit[1], `${hit[1]} ${flags.join(' ')}`) : cmd;
 }
 
+const LATEXMK = /^(\s*latexmk(?:\.exe)?)(?=\s|$)/i;
+
+export function isLatexmkCommand(cmd: string): boolean {
+	return LATEXMK.test(cmd);
+}
+
+/** latexmk -gg: delete its own products, then run every rule regardless of timestamps */
+export function withFullRebuild(cmd: string): string {
+	return cmd.replace(LATEXMK, '$1 -gg');
+}
+
+/** latexmk -c: delete the aux, log, fls and fdb files it made, keep the PDF, run nothing */
+export function withCleanAux(cmd: string): string {
+	return cmd.replace(LATEXMK, '$1 -c');
+}
+
 /** expand {main} to the target file's root-relative path, quoted when it holds spaces */
 export function expandMain(cmd: string, root: string | null, target: string | null): string {
 	const rel = root && target ? relFromRoot(target, root) : '';

@@ -90,6 +90,11 @@
 		commandPending={panes.commandPending}
 		onRequestCompile={actions.requestCompile}
 		onConfigureCompile={actions.openCompileModal}
+		onCompileFromScratch={compiler.runCompileFromScratch}
+		onCleanAux={compiler.runCleanAux}
+		latexmkActionsAvailable={compiler.latexmkActionsAvailable}
+		onShowOutput={() => void compiler.revealOutput()}
+		outputAvailable={compiler.hasOutput}
 		onShowProblems={actions.showProblems}
 		commentCount={panes.comments.filter((t: Any) => !t.resolved).length}
 		onShowComments={actions.showComments}

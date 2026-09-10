@@ -11,6 +11,7 @@
 	import WordCount from './WordCount.svelte';
 	import { hideIfCramped } from '$lib/components/hideIfCramped';
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
+	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import type { ComponentProps } from 'svelte';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -22,7 +23,6 @@
 		Square,
 		Play,
 		ChevronDown,
-		Settings2,
 		CircleAlert,
 		TriangleAlert,
 		Save,
@@ -58,6 +58,12 @@
 		/** guest only: ask the host to compile (it owns the toolchain). */
 		onRequestCompile: () => void;
 		onConfigureCompile: () => void;
+		onCompileFromScratch: () => void;
+		onCleanAux: () => void;
+		/** latexmk only, and only while Compile runs the shell command (CompilePipeline decides) */
+		latexmkActionsAvailable?: boolean;
+		onShowOutput: () => void;
+		outputAvailable?: boolean;
 		onShowProblems: () => void;
 		/** open review threads in the project; 0 hides the badge, like a clean compile hides Problems */
 		commentCount?: number;
@@ -95,6 +101,11 @@
 		commandPending = false,
 		onRequestCompile,
 		onConfigureCompile,
+		onCompileFromScratch,
+		onCleanAux,
+		latexmkActionsAvailable = false,
+		onShowOutput,
+		outputAvailable = false,
 		onShowProblems,
 		commentCount = 0,
 		onShowComments = () => {},
@@ -288,23 +299,16 @@
 				>
 					<ChevronDown class="size-3.5 transition-transform {compileMenuOpen ? 'rotate-180' : ''}" />
 				</button>
-				{#if compileMenuOpen}
-					<!-- click-away layer -->
-					<button class="fixed inset-0 z-1200 cursor-default" onclick={() => (compileMenuOpen = false)} tabindex="-1" aria-hidden="true"
-					></button>
-					<div class="card bg-surface-50-950 border-surface-300-700 absolute top-full right-0 z-1300 mt-1 w-max border p-1 shadow-xl">
-						<button
-							class="hover:preset-tonal flex w-full items-center gap-2 rounded-base px-2 py-1.5 text-left text-sm whitespace-nowrap"
-							onclick={() => {
-								compileMenuOpen = false;
-								onConfigureCompile();
-							}}
-						>
-							<Settings2 class="size-4 shrink-0" />
-							{m.wsview_configure_compile_command()}
-						</button>
-					</div>
-				{/if}
+				<CompileOptionsMenu
+					open={compileMenuOpen}
+					onClose={() => (compileMenuOpen = false)}
+					onConfigure={onConfigureCompile}
+					onFromScratch={onCompileFromScratch}
+					{onCleanAux}
+					latexmkActions={latexmkActionsAvailable}
+					{onShowOutput}
+					{outputAvailable}
+				/>
 			</div>
 		{/if}
 		{#if guest}
