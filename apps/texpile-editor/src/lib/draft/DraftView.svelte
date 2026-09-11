@@ -237,13 +237,13 @@
 		     scroll a box that is free to grow. Without a height constraint this took its full content
 		     height and the flex-1 scroller below it got whatever was left. -->
 		<pre
-			class="text-error-ink bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto rounded-container p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
+			class="text-error-ink bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto [scrollbar-gutter:stable] rounded-container p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
 	<div
 		bind:this={vp.scroller}
 		bind:clientWidth={vp.containerW}
 		onscroll={() => vp.onScroll()}
-		class="flex flex-1 flex-col items-center gap-4 overflow-auto p-4"
+		class="flex flex-1 flex-col items-center gap-4 overflow-auto [scrollbar-gutter:stable] p-4"
 	>
 		{#each ctrl.pages as p (p.n)}
 			<div class="relative shadow-lg">

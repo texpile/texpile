@@ -27,6 +27,7 @@
 	import TabBar from './TabBar.svelte';
 	import EditorToolbarStrip from './EditorToolbarStrip.svelte';
 	import VisualEditorHost from './VisualEditorHost.svelte';
+	import CommentRail from '$lib/comments/rail/CommentRail.svelte';
 	import { attachVisualDiff } from '$lib/editor/visual/diff/attachVisualDiff';
 	import { untrack } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -98,8 +99,11 @@
 		commentPendingActive = false,
 		onSelectComment,
 		onToggleDiffLayout,
-		onRefreshDiff
+		onRefreshDiff,
+		commentsCtl
 	}: EditorPaneProps = $props();
+
+	let scroller = $state<HTMLElement | null>(null);
 
 	// remounts the source editor when the file or the session's view of it changes
 	const sourceKey = $derived(`${loadedPath}:${session.active}:${session.manifestRev}`);
@@ -286,7 +290,12 @@
 		     mode or for a .pdf: those are panes, not documents - each fills the height, scrolls inside
 		     itself and draws its own full-width bar, so the 3px showed up as a gap between that bar
 		     and the divider. Each wears the inset on its own scroller instead. -->
-		<div class="h-full w-full overflow-auto {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}">
+		<div
+			bind:this={scroller}
+			class="h-full w-full overflow-auto {structured && viewMode === 'visual' && !comparing
+				? '[scrollbar-gutter:stable]'
+				: ''} {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}"
+		>
 			{#if folderEmpty && !activeFilePath.current}
 				<div class="mx-auto mt-16 max-w-xl px-6">
 					<div class="text-center">
@@ -342,54 +351,68 @@
 					onRefresh={onRefreshDiff}
 				/>
 			{:else if loadedPath && structured && viewMode === 'source'}
-				{#key sourceKey}
-					<SourceEditor
-						docPath={loadedPath}
-						value={texSource}
-						onInput={onTexInput}
-						readOnly={!!encodingIssue}
-						gotoLine={sourceGotoLine}
-						{onSyncToPdf}
-						initialScrollPos={sourceScrollAnchor}
-						{onHistoryBoundary}
-						diagnostics={kind === 'typ' ? undefined : sourceDiagnostics}
-						{onJumpToFile}
-						{onOpenFileAt}
-						{onCaretMove}
-						collab={session.collabFor(loadedPath)}
-						{commentRanges}
-						{commentThreads}
-						{selectedComment}
-						{onAddComment}
-						{onInsertCitation}
-						{onSelectComment}
-					/>
-				{/key}
+				<div class="flex h-full">
+					<div class="isolate h-full min-w-0 flex-1">
+						{#key sourceKey}
+							<SourceEditor
+								docPath={loadedPath}
+								value={texSource}
+								onInput={onTexInput}
+								readOnly={!!encodingIssue}
+								gotoLine={sourceGotoLine}
+								{onSyncToPdf}
+								initialScrollPos={sourceScrollAnchor}
+								{onHistoryBoundary}
+								diagnostics={kind === 'typ' ? undefined : sourceDiagnostics}
+								{onJumpToFile}
+								{onOpenFileAt}
+								{onCaretMove}
+								collab={session.collabFor(loadedPath)}
+								{commentRanges}
+								{commentThreads}
+								{selectedComment}
+								{onAddComment}
+								{onInsertCitation}
+								{onSelectComment}
+							/>
+						{/key}
+					</div>
+					{#if commentsCtl}
+						<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
+					{/if}
+				</div>
 			{:else if loadedPath && structured && visualDoc}
-				<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
-				<VisualEditorHost
-					{kind}
-					{loadedPath}
-					{visualDoc}
-					{docMeta}
-					{texSource}
-					{allReferences}
-					{showRenderBar}
-					{onVisualChange}
-					{onVisualSelection}
-					{onHistoryBoundary}
-					{onVisualReady}
-					{onMdLink}
-					{onEditFrontmatter}
-					{commentThreads}
-					{selectedComment}
-					{onSelectComment}
-					{onAddCommentAnchored}
-					{onInsertCitation}
-					{onJumpToLabel}
-					{onCommentsPlaced}
-					{commentPendingActive}
-				/>
+				<div class="flex min-h-full items-stretch">
+					<div class="isolate min-w-0 flex-1">
+						<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
+						<VisualEditorHost
+							{kind}
+							{loadedPath}
+							{visualDoc}
+							{docMeta}
+							{texSource}
+							{allReferences}
+							{showRenderBar}
+							{onVisualChange}
+							{onVisualSelection}
+							{onHistoryBoundary}
+							{onVisualReady}
+							{onMdLink}
+							{onEditFrontmatter}
+							{commentThreads}
+							{selectedComment}
+							{onSelectComment}
+							{onAddCommentAnchored}
+							{onInsertCitation}
+							{onJumpToLabel}
+							{onCommentsPlaced}
+							{commentPendingActive}
+						/>
+					</div>
+					{#if commentsCtl}
+						<CommentRail ctl={commentsCtl} threads={commentThreads} mode="visual" {scroller} onSelect={(id) => onSelectComment?.(id)} />
+					{/if}
+				</div>
 			{:else if visualPending}
 				<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
 				<VisualLoading phase={parseProgress} format={kind} sizeBytes={texSource.length} {onUseSource} />

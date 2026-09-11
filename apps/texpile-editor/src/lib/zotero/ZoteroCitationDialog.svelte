@@ -191,7 +191,7 @@
 						{searched && query.trim() ? m.zotero_dialog_empty() : m.zotero_dialog_type_hint()}
 					</div>
 				{:else}
-					<Combobox.Content class="min-h-0 overflow-y-auto border-none bg-transparent p-1.5">
+					<Combobox.Content class="min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-none bg-transparent p-1.5">
 						{#each shown as hit, i (hit.citekey)}
 							{@const header = headerOf(i)}
 							{#if header}

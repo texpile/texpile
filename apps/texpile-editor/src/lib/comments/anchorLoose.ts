@@ -4,7 +4,9 @@ import {
 	buildAnchor,
 	CONTEXT,
 	MIN_QUOTE,
+	POINT_WEAK,
 	resolveAnchor,
+	searchContext,
 	searchQuote,
 	WEAK_CONTEXT,
 	type CommentAnchor,
@@ -49,11 +51,14 @@ export function prepareLoose(text: string, dialect: AnchorDialect = 'tex'): Loos
  */
 export function resolveAnchorLooseIn(h: LooseHaystack, a: CommentAnchor): ResolvedAnchor | null {
 	const quote = normalizeForMatch(a.quote, h.dialect).text;
-	const hit = searchQuote(h.text, quote, normalizeForMatch(a.prefix, h.dialect).text, normalizeForMatch(a.suffix, h.dialect).text, 0);
+	const prefix = normalizeForMatch(a.prefix, h.dialect).text;
+	const suffix = normalizeForMatch(a.suffix, h.dialect).text;
+	const point = quote.length < MIN_QUOTE;
+	const hit = point ? searchContext(h.text, quote, prefix, suffix, 0) : searchQuote(h.text, quote, prefix, suffix, 0);
 	if (!hit) return null;
-	const from = h.map[hit.from];
+	const from = hit.from < h.map.length ? h.map[hit.from] : h.raw.length;
 	const to = hit.to < h.map.length ? h.map[hit.to] : h.raw.length;
-	return { from, to, exact: false, weak: hit.context < WEAK_CONTEXT };
+	return { from, to, exact: false, weak: hit.context < (point ? POINT_WEAK : WEAK_CONTEXT) };
 }
 
 /** the single-anchor form; callers with a list should prepare once and loop resolveAnchorLooseIn */

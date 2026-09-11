@@ -30,12 +30,10 @@
 		onCommentOpen = () => {},
 		onCommentReply = () => {},
 		onCommentResolve = () => {},
-		onCommentDelete = () => {},
 		onCommentEditMessage = () => {},
 		onCommentDeleteMessage = () => {},
-		commentPending = null,
-		onCommentSubmitPending = () => {},
-		onCommentCancelPending = () => {}
+		commentBeside = new Set<string>(),
+		onCommentAttach
 	}: {
 		cwd: string;
 		view?: 'terminal' | 'problems' | 'comments';
@@ -57,12 +55,10 @@
 		onCommentOpen?: (thread: CommentThread) => void;
 		onCommentReply?: (thread: CommentThread, body: string) => void;
 		onCommentResolve?: (thread: CommentThread, resolved: boolean) => void;
-		onCommentDelete?: (thread: CommentThread) => void;
 		onCommentEditMessage?: (message: CommentMessage, body: string) => void;
 		onCommentDeleteMessage?: (thread: CommentThread, message: CommentMessage) => void;
-		commentPending?: { quote: string } | null;
-		onCommentSubmitPending?: (body: string) => void;
-		onCommentCancelPending?: () => void;
+		commentBeside?: Set<string>;
+		onCommentAttach?: (thread: CommentThread) => void;
 	} = $props();
 
 	const openComments = $derived(comments.filter((c) => !c.resolved).length);
@@ -280,12 +276,10 @@
 				onOpen={onCommentOpen}
 				onReply={onCommentReply}
 				onResolve={onCommentResolve}
-				onDelete={onCommentDelete}
 				onEditMessage={onCommentEditMessage}
 				onDeleteMessage={onCommentDeleteMessage}
-				pending={commentPending}
-				onSubmitPending={onCommentSubmitPending}
-				onCancelPending={onCommentCancelPending}
+				beside={commentBeside}
+				onAttach={onCommentAttach}
 			/>
 		</div>
 	{/if}

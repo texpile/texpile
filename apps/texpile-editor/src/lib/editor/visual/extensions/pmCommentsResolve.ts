@@ -3,6 +3,7 @@
 // Quotes containing markup, math, or wrap whitespace fail to resolve and draw nothing -
 // honest absence over a guessed highlight, same policy as anchor.ts.
 import type { Node as PMNode } from 'prosemirror-model';
+import { TextSelection } from 'prosemirror-state';
 import {
 	prepareLoose,
 	resolveAnchor,
@@ -70,6 +71,16 @@ export function flattenDoc(doc: PMNode): FlatDoc {
 	return { text, index };
 }
 
+function textPosition(doc: PMNode, index: number[], flat: number): number | null {
+	const raw = flat < index.length ? index[flat] : index.length ? index[index.length - 1] + 1 : null;
+	if (raw === null) return null;
+	try {
+		return TextSelection.near(doc.resolve(raw), 1).from;
+	} catch {
+		return null;
+	}
+}
+
 /**
  * Place every thread in the rendered document, or report it as not visible in this view.
  *
@@ -103,11 +114,19 @@ export function resolvePmComments(
 			hit = resolveAnchorLooseIn(hay, t.anchor);
 		}
 		if (hit) {
-			const from = index[hit.from];
-			const to = hit.to > hit.from ? index[hit.to - 1] + 1 : from;
-			if (from !== undefined && to !== undefined && to > from) {
-				ranges.push({ id: t.id, from, to, resolved: t.resolved });
-				continue;
+			if (hit.to === hit.from) {
+				const at = textPosition(doc, index, hit.from);
+				if (at !== null) {
+					ranges.push({ id: t.id, from: at, to: at, resolved: t.resolved });
+					continue;
+				}
+			} else {
+				const from = index[hit.from];
+				const to = index[hit.to - 1] + 1;
+				if (from !== undefined && to !== undefined && to > from) {
+					ranges.push({ id: t.id, from, to, resolved: t.resolved });
+					continue;
+				}
 			}
 		}
 		// tier 3: the fragment places the thread, the enclosing textblocks carry the highlight

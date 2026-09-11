@@ -121,7 +121,7 @@ export type TypstEditorSetup = {
 	placeholder: string;
 	onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 	onOpenLink?: (href: string) => boolean;
-	onSelectComment?: (id: string, from: 'visual') => void;
+	onSelectComment?: (id: string) => void;
 	onAddComment?: (anchor: CommentAnchor | null) => void;
 	addCommentLabel: string;
 };
@@ -207,7 +207,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session
 		remoteCursorsPlugin,
 		...pmComments({
-			onSelect: (id) => onSelectComment?.(id, 'visual'),
+			onSelect: (id) => onSelectComment?.(id),
 			onAdd: onAddComment,
 			addLabel: addCommentLabel
 		})

@@ -11,6 +11,10 @@ export const SIDEBAR_MAX = 600;
 export const PDF_MIN = 280;
 /** keep this much room for the editor no matter how wide the preview was saved */
 export const EDITOR_RESERVE = 360;
+export const COMMENT_RAIL_WIDTH = 272;
+export const COMMENT_RAIL_PEEK = 40;
+export const EDITOR_TEXT_MIN = 440;
+export const EDITOR_TEXT_PAD = 96;
 
 /** the saved sidebar width, or the default if it is out of bounds */
 export function sidebarWidthOf(s: LayoutState): number {

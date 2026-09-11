@@ -224,7 +224,7 @@
 				title: layout.sidebarOpen ? m.wsview_hide_file_explorer() : m.wsview_show_file_explorer(),
 				ariaLabel: m.wsview_toggle_file_explorer_aria()
 			}}
-			class="z-20 {layout.sidebarOpen ? '' : 'ml-[7px]'}"
+			class="z-30 {layout.sidebarOpen ? '' : 'ml-[7px]'}"
 		/>
 	{/if}
 

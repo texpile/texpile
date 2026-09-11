@@ -102,7 +102,7 @@
 	{/if}
 	<!-- the inset lives here rather than on EditorPane's scroller: only the diff BODY needs to keep
 	     its scrollbar off the divider lozenge, and the bars above must still reach it -->
-	<div class="scroll-inset-r min-h-0 flex-1 overflow-auto">
+	<div class="scroll-inset-r min-h-0 flex-1 overflow-auto [scrollbar-gutter:stable]">
 		{#key filename}
 			<DiffPanel {filename} {original} {modified} {layout} {loading} {readOnly} {onModifiedInput} />
 		{/key}

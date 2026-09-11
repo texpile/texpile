@@ -5,6 +5,11 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: review comments show beside the text they are about
+- fix: comments keep their exact place across saves after edits made in Texpile, in both editors
+- fix: the Comments panel closes a thread with Resolve; the separate Delete is gone
+- fix: a comment whose text is deleted in Texpile stays where the text was instead of detaching
+
 ## [1.1.0] - 2026-09-10
 
 - fix: Typst completion issues after a `.`

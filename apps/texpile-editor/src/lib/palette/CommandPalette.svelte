@@ -173,7 +173,7 @@
 				{#if results.length === 0}
 					<div class="text-muted px-3 py-10 text-center text-sm">{m.palette_empty()}</div>
 				{:else}
-					<Combobox.Content class="min-h-0 overflow-y-auto border-none bg-transparent p-1.5">
+					<Combobox.Content class="min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-none bg-transparent p-1.5">
 						{#each results as scored, i (scored.item.id)}
 							{@const header = groupOf(i)}
 							{#if header}

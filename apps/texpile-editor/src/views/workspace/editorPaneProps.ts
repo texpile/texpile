@@ -9,6 +9,7 @@ import type { Starter, ImportedFile } from '$lib/workspace/starters';
 import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { Tab, CompareRef } from '$lib/workspace/tabs.svelte';
 import type { CommentAnchor } from '$lib/comments/anchor';
+import type { CommentsController } from '$lib/workspace/commentsController.svelte';
 
 export type EditorPaneProps = {
 	loadedPath: string | null;
@@ -98,7 +99,8 @@ export type EditorPaneProps = {
 	onCommentsPlaced?: (lost: string[]) => void;
 	/** a comment composer is open; keeps the commented selection tinted in the visual editor */
 	commentPendingActive?: boolean;
-	onSelectComment?: (id: string, from: 'text' | 'gutter' | 'visual') => void;
+	onSelectComment?: (id: string) => void;
+	commentsCtl?: CommentsController;
 
 	onToggleDiffLayout: () => void;
 	onRefreshDiff: () => void;

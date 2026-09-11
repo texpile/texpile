@@ -40,9 +40,12 @@ describe('source editor comment edges', () => {
 		expect(next.doc.sliceString(r.from, r.to)).toBe('woRRRrld');
 	});
 
-	it('drops a range whose text is deleted outright', () => {
+	it('keeps a range whose text is deleted as a point where it was, before anything typed there', () => {
 		const next = seeded().update({ changes: { from: 6, to: 11, insert: '' } }).state;
-		expect(commentAt(next, 6)).toBeNull();
+		expect(commentAt(next, 6)).toMatchObject({ from: 6, to: 6 });
+		const typed = next.update({ changes: { from: 6, insert: 'there' } }).state;
+		expect(commentAt(typed, 6)).toMatchObject({ from: 6, to: 6 });
+		expect(commentAt(typed, 8)).toBeNull();
 	});
 });
 
@@ -76,9 +79,12 @@ describe('visual editor comment edges', () => {
 		expect(textOf(next, pmCommentAt(next, 9)!)).toBe('woRRRrld');
 	});
 
-	it('drops a range whose text is deleted outright', () => {
+	it('keeps a range whose text is deleted as a point where it was, before anything typed there', () => {
 		const s = seeded();
 		const next = s.apply(s.tr.delete(7, 12));
-		expect(pmCommentAt(next, 7)).toBeNull();
+		expect(pmCommentAt(next, 7)).toMatchObject({ from: 7, to: 7 });
+		const typed = next.apply(next.tr.insertText('there', 7));
+		expect(pmCommentAt(typed, 7)).toMatchObject({ from: 7, to: 7 });
+		expect(pmCommentAt(typed, 9)).toBeNull();
 	});
 });

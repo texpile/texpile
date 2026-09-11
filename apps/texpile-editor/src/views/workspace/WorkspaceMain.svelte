@@ -42,6 +42,7 @@
 		onPickMain,
 		panes,
 		actions,
+		commentsCtl,
 		dockView = $bindable(),
 		pdfPaneRef = $bindable()
 	}: WorkspaceMainProps = $props();
@@ -62,6 +63,9 @@
 	const syncToCursor = $derived(canSync ? (actions.syncForward as () => void) : null);
 	// a lone file has no project to hold the log, so the menus drop their Add comment entry
 	const canComment = $derived(!fileMode.current);
+	const beside = $derived(
+		new Set<string>(panes.commentRanges.filter((r: Any) => !r.resolved && !panes.commentsNotVisible.has(r.id)).map((r: Any) => r.id))
+	);
 </script>
 
 <main
@@ -166,7 +170,7 @@
 			onToggleDiffLayout={() => diff.toggleLayout()}
 			onRefreshDiff={actions.refreshDiff}
 			commentRanges={panes.commentRanges}
-			commentThreads={panes.comments.filter((t: Any) => t.file === panes.commentFile)}
+			commentThreads={commentsCtl.withKnownAnchors(panes.comments.filter((t: Any) => t.file === panes.commentFile))}
 			selectedComment={panes.commentSelected}
 			onAddComment={canComment ? actions.beginComment : undefined}
 			onAddCommentAnchored={canComment ? actions.beginCommentAnchored : undefined}
@@ -174,6 +178,7 @@
 			onInsertCitation={panes.zoteroCite ? actions.insertZoteroCitation : undefined}
 			onCommentsPlaced={actions.visualCommentsPlaced}
 			onSelectComment={actions.selectComment}
+			commentsCtl={fileMode.current ? undefined : commentsCtl}
 		/>
 		{#if !fileMode.current && layout.pdfPaneOpen && !layout.pdfPopout}
 			<PreviewPane
@@ -236,7 +241,7 @@
 					ariaLabel: m.wsview_toggle_pdf_preview()
 				}}
 				bottomInset={termDock.shrink || !termDock.visible ? 0 : termDock.height}
-				class="z-20 mr-[7px]"
+				class="z-30 mr-[7px]"
 				style="grid-column: 3; grid-row: 2 / -1"
 			/>
 		{/if}
@@ -288,12 +293,10 @@
 			onCommentOpen={actions.openComment}
 			onCommentReply={actions.replyToComment}
 			onCommentResolve={actions.resolveComment}
-			onCommentDelete={actions.deleteComment}
 			onCommentEditMessage={actions.editCommentMessage}
 			onCommentDeleteMessage={actions.deleteCommentMessage}
-			commentPending={panes.commentPending}
-			onCommentSubmitPending={actions.submitComment}
-			onCommentCancelPending={actions.cancelComment}
+			commentBeside={beside}
+			onCommentAttach={actions.attachCommentToSelection}
 		/>
 	{/if}
 

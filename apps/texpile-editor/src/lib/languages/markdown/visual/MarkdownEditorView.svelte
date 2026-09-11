@@ -83,7 +83,7 @@
 		/** review comments, same contract as the latex EditorView; see extensions/pmComments */
 		commentThreads?: CommentThread[];
 		selectedComment?: string | null;
-		onSelectComment?: (id: string, from: 'visual') => void;
+		onSelectComment?: (id: string) => void;
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		onCommentsPlaced?: (lost: string[]) => void;
 		addCommentLabel?: string;
@@ -195,7 +195,7 @@
 			// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session
 			remoteCursorsPlugin,
 			...pmComments({
-				onSelect: (id) => onSelectComment?.(id, 'visual'),
+				onSelect: (id) => onSelectComment?.(id),
 				onAdd: onAddComment,
 				addLabel: addCommentLabel
 			})

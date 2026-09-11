@@ -373,7 +373,10 @@
 					tabindex="0"
 				></div>
 				<!-- scroll-inset-r moves the scrollbar in, not the box: the border-t still reaches the divider -->
-				<div class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto border-t p-2" style="flex: {tocFraction} 1 0%">
+				<div
+					class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-t p-2"
+					style="flex: {tocFraction} 1 0%"
+				>
 					<TableOfContents mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={onOpenFileAt} />
 				</div>
 			{/if}

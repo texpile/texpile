@@ -19,7 +19,8 @@ import {
 	hoverTooltip,
 	showTooltip,
 	type BlockInfo,
-	type Tooltip
+	type Tooltip,
+	WidgetType
 } from '@codemirror/view';
 import { StateEffect, StateField, RangeSet, type Extension, type EditorState } from '@codemirror/state';
 import type { CommentMessage } from '$lib/comments/log';
@@ -127,18 +128,24 @@ const commentRanges = StateField.define<CommentRange[]>({
 		// every later transaction, wedging the whole editor. Dropped rather than clamped: clamped it
 		// would highlight text the comment was never about; the next reanchor re-supplies the rest.
 		for (const e of tr.effects)
-			if (e.is(setCommentRanges)) return e.value.filter((r) => r.from >= 0 && r.to > r.from && r.to <= tr.newDoc.length);
+			if (e.is(setCommentRanges)) return e.value.filter((r) => r.from >= 0 && r.to >= r.from && r.to <= tr.newDoc.length);
 		if (!tr.docChanged) return ranges;
 		// A comment covers the text it was made about, and nothing typed after the fact at its
 		// edges: assoc 1 on `from` and -1 on `to` both point AWAY from the range, so text inserted
 		// at a boundary lands outside it. (The reverse - what this used to do - grows the highlight
 		// under the cursor as you keep typing, which reads as the comment refusing to end.) An edit
-		// strictly inside still extends it, and a range whose text is gone collapses and is dropped.
+		// strictly inside still extends it.
 		const mapped: CommentRange[] = [];
 		for (const r of ranges) {
+			if (r.to === r.from) {
+				const at = tr.changes.mapPos(r.from, -1);
+				mapped.push({ ...r, from: at, to: at });
+				continue;
+			}
 			const from = tr.changes.mapPos(r.from, 1);
 			const to = tr.changes.mapPos(r.to, -1);
 			if (to > from) mapped.push({ ...r, from, to });
+			else mapped.push({ ...r, from: Math.min(from, to), to: Math.min(from, to) });
 		}
 		return mapped;
 	}
@@ -154,6 +161,28 @@ const commentDecorations = StateField.define<DecorationSet>({
 	provide: (f) => EditorView.decorations.from(f)
 });
 
+class CommentPointWidget extends WidgetType {
+	constructor(
+		readonly id: string,
+		readonly focused: boolean
+	) {
+		super();
+	}
+	override eq(other: CommentPointWidget): boolean {
+		return other.id === this.id && other.focused === this.focused;
+	}
+	toDOM(): HTMLElement {
+		const el = document.createElement('span');
+		el.className = `cm-comment cm-comment-point${this.focused ? ' cm-comment-focused' : ''}`;
+		el.dataset.comment = this.id;
+		el.setAttribute('aria-hidden', 'true');
+		return el;
+	}
+	override ignoreEvent(): boolean {
+		return false;
+	}
+}
+
 function build(state: EditorState): DecorationSet {
 	const focus = state.field(focusedThread, false) ?? null;
 	return RangeSet.of(
@@ -163,10 +192,12 @@ function build(state: EditorState): DecorationSet {
 			// under "Show resolved".
 			.filter((r) => !r.resolved)
 			.map((r) =>
-				Decoration.mark({
-					class: `cm-comment${r.id === focus ? ' cm-comment-focused' : ''}`,
-					attributes: { 'data-comment': r.id }
-				}).range(r.from, r.to)
+				r.to > r.from
+					? Decoration.mark({
+							class: `cm-comment${r.id === focus ? ' cm-comment-focused' : ''}`,
+							attributes: { 'data-comment': r.id }
+						}).range(r.from, r.to)
+					: Decoration.widget({ widget: new CommentPointWidget(r.id, r.id === focus), side: -1 }).range(r.from)
 			),
 		true
 	);
@@ -213,6 +244,10 @@ export function commentGutterHandlers(onSelect: (id: string) => void, preview?: 
 	};
 }
 
+export function liveCommentRanges(state: EditorState): CommentRange[] {
+	return state.field(commentRanges, false) ?? [];
+}
+
 /** the innermost thread at a position, so nested comments resolve to the one you clicked */
 export function commentAt(state: EditorState, pos: number): CommentRange | null {
 	let best: CommentRange | null = null;
@@ -249,7 +284,7 @@ type CommentsConfig = {
 	 * document who happened to land on commented text, and rearranging the window under them for
 	 * that would be rude.
 	 */
-	onSelect?: (id: string, from: 'text' | 'gutter') => void;
+	onSelect?: (id: string) => void;
 	/** the reader asked to comment on the current selection */
 	onAdd?: (from: number, to: number) => void;
 	/** label for the tooltip button, so the caller owns translation */
@@ -284,7 +319,7 @@ export function comments({ onSelect, onAdd, addLabel = 'Comment', preview }: Com
 				if (pos === null) return false;
 				const hit = commentAt(view.state, pos);
 				if (!hit) return false;
-				onSelect(hit.id, 'text');
+				onSelect(hit.id);
 				// not handled: the click should still place the caret where it landed
 				return false;
 			}
@@ -448,6 +483,19 @@ const theme = EditorView.baseTheme({
 	},
 	'.cm-comment-focused': {
 		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 30%, transparent)'
+	},
+	'.cm-comment-point': {
+		display: 'inline-block',
+		width: '3px',
+		height: '1.1em',
+		verticalAlign: 'text-bottom',
+		margin: '0 1px',
+		borderRadius: '1px',
+		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 55%, transparent)',
+		cursor: 'pointer'
+	},
+	'.cm-comment-point.cm-comment-focused': {
+		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 90%, transparent)'
 	},
 	// an inset shadow rather than a border or a dot: it is painted inside the cell that is already
 	// there, so a commented line costs the gutter no width. Scoped to the line-number column,

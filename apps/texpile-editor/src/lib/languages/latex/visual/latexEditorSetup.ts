@@ -68,7 +68,7 @@ export type LatexEditorSetup = {
 	imageDir?: () => string;
 	placeholder: string;
 	onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
-	onSelectComment?: (id: string, from: 'visual') => void;
+	onSelectComment?: (id: string) => void;
 	onAddComment?: (anchor: CommentAnchor | null) => void;
 	addCommentLabel: string;
 };
@@ -160,7 +160,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		createBlockHandlePlugin(),
 		createNodeFlashPlugin(),
 		...pmComments({
-			onSelect: (id) => onSelectComment?.(id, 'visual'),
+			onSelect: (id) => onSelectComment?.(id),
 			onAdd: onAddComment,
 			addLabel: addCommentLabel
 		})

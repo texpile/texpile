@@ -45,7 +45,7 @@
 		/** review comments, same contract as the latex EditorView; see extensions/pmComments */
 		commentThreads?: CommentThread[];
 		selectedComment?: string | null;
-		onSelectComment?: (id: string, from: 'visual') => void;
+		onSelectComment?: (id: string) => void;
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		/** pick citations from Zotero, offered in the context menu when present */
 		onInsertCitation?: () => void;

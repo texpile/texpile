@@ -28,6 +28,8 @@ import type { WorkspaceCompileState } from './workspaceCompileState.svelte';
 import type { Starter, ImportedFile } from '$lib/workspace/starters';
 import type { CommentMessage, CommentThread } from '$lib/comments/log';
 import type { CommentAnchor } from '$lib/comments/anchor';
+import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
+import { buildPmAnchor } from '$lib/editor/visual/extensions/pmComments';
 import type { Node as PMNode } from 'prosemirror-model';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -83,19 +85,29 @@ function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments') {
 
 export function makeMainActions(d: ActionSurfaceDeps) {
 	return {
-		// "Comment" on a selection: reveal the dock's Comments tab with a composer for it. The thread
-		// is not written until the first message, so an abandoned composer leaves nothing behind.
-		beginComment: (from: number, to: number) => {
-			d.commentsCtl.beginAdd(from, to);
-			d.setDockView('comments');
-			d.termDock().show();
-		},
+		beginComment: (from: number, to: number) => d.commentsCtl.beginAdd(from, to),
 		// same gesture from the visual editor, which brings its own anchor (see beginAddAnchored)
-		beginCommentAnchored: (anchor: CommentAnchor | null) => {
-			d.commentsCtl.beginAddAnchored(anchor);
-			if (!d.commentsCtl.pending) return; // nothing to compose (no file, or an empty anchor)
-			d.setDockView('comments');
-			d.termDock().show();
+		beginCommentAnchored: (anchor: CommentAnchor | null) => d.commentsCtl.beginAddAnchored(anchor),
+		attachCommentToSelection: (thread: CommentThread) => {
+			if (d.wsdoc.modes.mode === 'visual') {
+				const view = editorViewStore.current;
+				const sel = view?.state.selection;
+				if (view && sel && !sel.empty) {
+					const anchor = buildPmAnchor(view.state.doc, sel.from, sel.to);
+					if (anchor) {
+						void d.commentsCtl.reattachAnchored(thread, anchor);
+						return;
+					}
+				}
+			} else {
+				const cm = sourceCmView.current;
+				const sel = cm?.state.selection.main;
+				if (cm && sel && !sel.empty) {
+					void d.commentsCtl.reattach(thread, sel.from, sel.to);
+					return;
+				}
+			}
+			toaster.info({ title: m.comments_attach_select_first(), duration: 2500 });
 		},
 		// The visual editor's placement report. Goes through the controller rather than straight onto
 		// the set, because this is also the only moment anyone can observe visual placement - so it is
@@ -104,29 +116,12 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			const file = d.commentsCtl.activeFile;
 			if (file) void d.commentsCtl.recordHidden(file, new Set(lost));
 		},
-		/**
-		 * A thread was clicked in the editor.
-		 *
-		 * From the gutter this opens the panel: that mark exists for no other reason than to point at
-		 * a comment, so clicking it means "show me it". From source PROSE it only selects - someone
-		 * working in their own document happened to land on commented text, and taking over the dock
-		 * for that would throw away whatever terminal they were reading; the gutter is right there
-		 * for the deliberate gesture. The visual editor HAS no gutter, so its highlight is the only
-		 * affordance pointing at the thread and a click on it opens the panel too.
-		 */
-		selectComment: (id: string, from: 'text' | 'gutter' | 'visual') => {
-			const ctl = d.commentsCtl;
-			ctl.selected = id;
-			if (from === 'text') return;
-			d.setDockView('comments');
-			d.termDock().show();
+		selectComment: (id: string) => {
+			d.commentsCtl.selected = id;
 		},
-		submitComment: (body: string) => void d.commentsCtl.commitAdd(body),
-		cancelComment: () => d.commentsCtl.cancelAdd(),
 		openComment: (t: CommentThread) => d.commentsCtl.open(t),
 		replyToComment: (t: CommentThread, body: string) => void d.commentsCtl.reply(t, body),
 		resolveComment: (t: CommentThread, resolved: boolean) => void d.commentsCtl.setResolved(t, resolved),
-		deleteComment: (t: CommentThread) => void d.commentsCtl.remove(t),
 		editCommentMessage: (msg: CommentMessage, body: string) => void d.commentsCtl.editMessage(msg, body),
 		deleteCommentMessage: (t: CommentThread, msg: CommentMessage) => void d.commentsCtl.removeMessage(t, msg),
 		setViewMode: (mode: 'visual' | 'source' | 'diff') => d.wsdoc.modes.set(mode),

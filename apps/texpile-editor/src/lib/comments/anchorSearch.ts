@@ -3,11 +3,11 @@
 /** how much text either side is kept, to tell repeated quotes apart */
 export const CONTEXT = 32;
 
-/**
- * A quote long enough to be worth searching for. A one- or two-character quote appears everywhere
- * and its context decides the match on its own, which is guesswork dressed up as a result.
- */
 export const MIN_QUOTE = 3;
+
+export const POINT_CONTEXT = 12;
+export const POINT_WEAK = 24;
+const NEEDLE = 8;
 
 /** a runaway scan guard: past this many hits the quote is not distinctive enough to place */
 export const MAX_HITS = 500;
@@ -60,7 +60,12 @@ export function buildAnchor(text: string, from: number, to: number): CommentAnch
  * place, because the reader has no way to tell it is lying.
  */
 export function resolveAnchor(text: string, a: CommentAnchor): ResolvedAnchor | null {
-	if (a.quote.length < MIN_QUOTE) return null;
+	if (a.quote.length < MIN_QUOTE) {
+		if (text.slice(a.start, a.end) === a.quote && contextScore(text, a.start, a.end, a) >= POINT_WEAK)
+			return { from: a.start, to: a.end, exact: true, weak: false };
+		const hit = searchContext(text, a.quote, a.prefix, a.suffix, a.start);
+		return hit ? { from: hit.from, to: hit.to, exact: false, weak: hit.context < POINT_WEAK } : null;
+	}
 	// the common case by far - the file has not been touched behind our back
 	if (text.slice(a.start, a.end) === a.quote) return { from: a.start, to: a.end, exact: true, weak: false };
 	const hit = searchQuote(text, a.quote, a.prefix, a.suffix, a.start);
@@ -99,6 +104,35 @@ export function searchQuote(
 			best = at;
 		}
 	}
+	return { from: best, to: best + quote.length, context: bestScore };
+}
+
+export function searchContext(
+	text: string,
+	quote: string,
+	prefix: string,
+	suffix: string,
+	hint: number
+): { from: number; to: number; context: number } | null {
+	const after = quote + suffix;
+	const byAfter = after.length >= NEEDLE;
+	const needle = byAfter ? after.slice(0, NEEDLE) : prefix.slice(-NEEDLE);
+	if (needle.length < NEEDLE) return null;
+	const hits = occurrences(text, needle);
+	if (hits.length === 0 || hits.length >= MAX_HITS) return null;
+	const a = { prefix, suffix };
+	let best = -1;
+	let bestScore = -1;
+	for (const h of hits) {
+		const at = byAfter ? h : h + needle.length;
+		if (text.slice(at, at + quote.length) !== quote) continue;
+		const score = contextScore(text, at, at + quote.length, a);
+		if (score > bestScore || (score === bestScore && Math.abs(at - hint) < Math.abs(best - hint))) {
+			bestScore = score;
+			best = at;
+		}
+	}
+	if (best < 0 || bestScore < POINT_CONTEXT) return null;
 	return { from: best, to: best + quote.length, context: bestScore };
 }
 

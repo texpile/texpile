@@ -43,6 +43,8 @@ export class SavePipeline {
 	/** paths of writes that have been handed to the chain but have not settled yet */
 	private inFlight = new Set<string>();
 
+	beforeWrite: ((path: string, content: string) => Promise<void>) | null = null;
+
 	constructor(private deps: SaveDeps) {}
 
 	/** the queued debounced write, if any (read-only; use reattach/detach/discard to mutate). */
@@ -170,6 +172,7 @@ export class SavePipeline {
 				this.deps.raiseConflict(path, notify);
 				return false;
 			}
+			await this.beforeWrite?.(path, content).catch(() => undefined);
 			await this.deps.writeText(path, fromLf(content, eol)); // re-apply the file's CRLF/LF on disk
 			await this.deps.recordDiskStamp(path); // our own write must not read as an external one
 			if (this.deps.getLoadedPath() === path) {

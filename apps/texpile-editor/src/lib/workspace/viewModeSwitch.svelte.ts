@@ -91,6 +91,8 @@ export class ViewModeSwitch {
 		viewModeStore.current = this.mode;
 	}
 
+	beforeSwitch: (() => void) | null = null;
+
 	set(mode: ViewMode): void {
 		const d = this.deps;
 		if (mode === this.mode) return;
@@ -110,6 +112,7 @@ export class ViewModeSwitch {
 			// scroll sync: capture the outgoing view's anchor for the incoming one
 			if (this.mode === 'visual' && mode === 'source') this.sourceScrollAnchor = captureVisualAnchorAt(this.bodyOffset());
 			else if (this.mode === 'source' && mode === 'visual') this.pendingVisualAnchor = captureSourceAnchor();
+			this.beforeSwitch?.();
 		}
 		// switch optimistically; the async parse fills the visual doc when it returns. On failure
 		// the rebuild drops back to source with a toast, so the user never gets stuck on a blank

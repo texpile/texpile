@@ -86,6 +86,8 @@
 	// an outside write adopted into the open file (an agent, vim) re-places its threads now, so a
 	// rewritten quote badges detached at once rather than at the next mode switch
 	external.onAdopted = () => commentsW.reanchorNow();
+	saver.beforeWrite = (path, content) => commentsCtl.syncAnchorsToText(path, content);
+	modes.beforeSwitch = () => commentsCtl.carryLive();
 
 	const folderEmpty = $derived(texFiles.current.length === 0);
 
@@ -368,6 +370,7 @@
 				zoteroCite: integrations.canZoteroCite()
 			}}
 			{actions}
+			{commentsCtl}
 			bind:dockView
 			bind:pdfPaneRef={nav.pdfPaneRef}
 		/>

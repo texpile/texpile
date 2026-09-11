@@ -237,7 +237,7 @@
 	</div>
 
 	<div class="space-y-1.5">
-		<p class="text-xs leading-snug">
+		<p class="text-xs leading-snug [overflow-wrap:anywhere]">
 			{error.shortmsg || error.msg}
 		</p>
 
@@ -249,7 +249,7 @@
 					onclick={() => handleReplace(error.replacements[0])}
 					use:tip={m.harper_apply_suggestion_title()}
 				>
-					<div class="font-mono text-xs leading-snug">
+					<div class="font-mono text-xs leading-snug [overflow-wrap:anywhere]">
 						{#each diffParts as part, i (i)}
 							{#if part.removed}
 								<del class="text-error-ink line-through opacity-60">{part.value === ' ' ? '␣' : part.value}</del>

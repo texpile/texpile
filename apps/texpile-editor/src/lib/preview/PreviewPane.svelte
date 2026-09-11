@@ -85,7 +85,7 @@
 	{onStartResize}
 	{onResizeByKey}
 	toggle={{ icon: ChevronRight, onclick: onClose, title: m.wsview_toggle_pdf_preview(), ariaLabel: m.wsview_toggle_pdf_preview() }}
-	class="z-20"
+	class="z-30"
 	style="grid-column: 2; grid-row: {dockShrunk ? '2 / -1' : '2'}"
 />
 <!-- no border-l: the splitter's own 1px IS the rule now, and a border beside it read as two -->

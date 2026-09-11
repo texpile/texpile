@@ -54,7 +54,7 @@
 		onEditFrontmatter: (kind: string, inner: string) => void;
 		commentThreads: CommentThread[];
 		selectedComment: string | null;
-		onSelectComment?: (id: string, from: 'visual') => void;
+		onSelectComment?: (id: string) => void;
 		onAddCommentAnchored?: (anchor: CommentAnchor | null) => void;
 		onInsertCitation?: () => void;
 		onJumpToLabel?: (name: string) => boolean;

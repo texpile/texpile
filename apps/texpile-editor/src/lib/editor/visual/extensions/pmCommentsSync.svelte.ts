@@ -7,7 +7,7 @@
 import type { EditorView } from 'prosemirror-view';
 import type { CommentThread } from '$lib/comments/log';
 import type { AnchorDialect } from '$lib/comments/anchor';
-import { setPmComments, focusPmComment, resolvePmComments, revealPmComment, setPmCommentPending } from './pmComments';
+import { setPmComments, focusPmComment, resolvePmComments, setPmCommentPending } from './pmComments';
 
 export type PmCommentsSyncArgs = {
 	/** the mounted view, or null until it exists */
@@ -70,11 +70,5 @@ export function syncPmComments(args: PmCommentsSyncArgs): void {
 		if (!v || id === lastFocused) return;
 		lastFocused = id;
 		focusPmComment(v, id);
-		// Scroll to it as well as tint it. This is what carries a CROSS-FILE jump: the controller tries
-		// to reveal at the moment of the click, when this file's view has not mounted yet, so the only
-		// place that can finish the job is here - the first run after the new view exists and has
-		// placed its threads. Keyed on the selection CHANGING, never on re-placement, or a background
-		// re-parse would yank the viewport to whatever thread happened to be selected.
-		if (id) revealPmComment(v, id);
 	});
 }

@@ -123,7 +123,7 @@
 		{/if}
 	</div>
 
-	<div class="min-h-0 flex-1 overflow-y-auto pb-2">
+	<div class="min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] pb-2">
 		{#each results as r (r.file)}
 			<div>
 				<button

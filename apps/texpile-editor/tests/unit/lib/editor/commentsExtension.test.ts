@@ -42,15 +42,17 @@ describe('comments extension adoption', () => {
 		expect(commentAt(s, 1)?.id).toBe('ok');
 	});
 
-	it('drops inverted and negative ranges', () => {
+	it('drops inverted and negative ranges, and keeps an empty one as a point', () => {
 		let s = state('abcdef');
 		s = s.update({
 			effects: setCommentRanges.of([
 				{ id: 'neg', from: -3, to: 2, resolved: false },
-				{ id: 'inv', from: 4, to: 4, resolved: false }
+				{ id: 'inv', from: 5, to: 4, resolved: false },
+				{ id: 'point', from: 3, to: 3, resolved: false }
 			])
 		}).state;
 		expect(commentAt(s, 1)).toBeNull();
-		expect(commentAt(s, 4)).toBeNull();
+		expect(commentAt(s, 5)).toBeNull();
+		expect(commentAt(s, 3)).toMatchObject({ id: 'point', from: 3, to: 3 });
 	});
 });

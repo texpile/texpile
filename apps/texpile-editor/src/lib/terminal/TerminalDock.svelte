@@ -34,12 +34,10 @@
 		onCommentOpen?: (thread: CommentThread) => void;
 		onCommentReply?: (thread: CommentThread, body: string) => void;
 		onCommentResolve?: (thread: CommentThread, resolved: boolean) => void;
-		onCommentDelete?: (thread: CommentThread) => void;
 		onCommentEditMessage?: (message: CommentMessage, body: string) => void;
 		onCommentDeleteMessage?: (thread: CommentThread, message: CommentMessage) => void;
-		commentPending?: { quote: string } | null;
-		onCommentSubmitPending?: (body: string) => void;
-		onCommentCancelPending?: () => void;
+		commentBeside?: Set<string>;
+		onCommentAttach?: (thread: CommentThread) => void;
 	};
 	let {
 		visible,
@@ -66,12 +64,10 @@
 		onCommentOpen,
 		onCommentReply,
 		onCommentResolve,
-		onCommentDelete,
 		onCommentEditMessage,
 		onCommentDeleteMessage,
-		commentPending = null,
-		onCommentSubmitPending,
-		onCommentCancelPending
+		commentBeside = new Set<string>(),
+		onCommentAttach
 	}: Props = $props();
 </script>
 
@@ -113,11 +109,9 @@
 		{onCommentOpen}
 		{onCommentReply}
 		{onCommentResolve}
-		{onCommentDelete}
 		{onCommentEditMessage}
 		{onCommentDeleteMessage}
-		{commentPending}
-		{onCommentSubmitPending}
-		{onCommentCancelPending}
+		{commentBeside}
+		{onCommentAttach}
 	/>
 </section>

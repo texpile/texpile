@@ -51,7 +51,7 @@
 		/** commented text was clicked. Origin 'visual': unlike source mode's prose clicks, this one
 		 * OPENS the panel - the visual editor has no gutter rail, so the highlight is the only
 		 * affordance pointing at the thread, and select-only left no way in at all. */
-		onSelectComment?: (id: string, from: 'visual') => void;
+		onSelectComment?: (id: string) => void;
 		/** the reader asked to comment on a selection; the anchor is rendered-dialect (buildPmAnchor) */
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		/** pick citations from Zotero, offered in the context menu when present */

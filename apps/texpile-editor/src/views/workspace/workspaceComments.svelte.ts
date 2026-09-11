@@ -10,8 +10,10 @@ import { userData } from '$lib/storage/userData';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { isSafeRel } from '$lib/collab/protocol';
-import { editorViewStore } from '$lib/stores/editorStore';
-import { revealPmComment } from '$lib/editor/visual/extensions/pmComments';
+import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
+import { buildPmAnchor, buildPmPoint, pmCommentsKey, revealPmComment } from '$lib/editor/visual/extensions/pmComments';
+import { liveCommentRanges } from '$lib/editor/visual/extensions/comments';
+import { buildAnchor, dialectOfPath, toSourceAnchor, type CommentAnchor } from '$lib/comments/anchor';
 import { flatFiles } from '$lib/workspace/treeRefresh';
 import { relativeTo } from '$lib/comments/store.svelte';
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
@@ -50,6 +52,7 @@ export class WorkspaceComments {
 				const v = editorViewStore.current;
 				return !!v && revealPmComment(v, id);
 			},
+			liveAnchors: (text) => this.liveAnchors(text),
 			// a guest's events go up to the host, which owns the log; a host's go out to every guest.
 			// Solo, both are no-ops and the log is just a file.
 			publish: (event) => {
@@ -125,6 +128,29 @@ export class WorkspaceComments {
 	/** re-search the open file's threads against its text as it is now; see the reanchor effect */
 	reanchorNow(): void {
 		this.ctl.reanchor(this.d.doc.path, this.activeText());
+	}
+
+	liveAnchors(text: string): Map<string, CommentAnchor> | null {
+		const out = new Map<string, CommentAnchor>();
+		if (this.d.modes.mode === 'visual' && hasVisualMode(this.d.kind())) {
+			const v = editorViewStore.current;
+			if (!v) return null;
+			const dialect = dialectOfPath(this.d.doc.path ?? '');
+			for (const r of pmCommentsKey.getState(v.state)?.ranges ?? []) {
+				if (r.resolved) continue;
+				const rendered = r.to > r.from ? buildPmAnchor(v.state.doc, r.from, r.to) : buildPmPoint(v.state.doc, r.from);
+				if (!rendered) continue;
+				const converted = toSourceAnchor(text, dialect, rendered);
+				if (converted.tier === 'precise') out.set(r.id, converted.anchor);
+			}
+			return out;
+		}
+		const cm = sourceCmView.current;
+		if (!cm || cm.state.doc.toString() !== text) return null;
+		for (const r of liveCommentRanges(cm.state)) {
+			if (!r.resolved) out.set(r.id, buildAnchor(text, r.from, r.to));
+		}
+		return out;
 	}
 
 	/**

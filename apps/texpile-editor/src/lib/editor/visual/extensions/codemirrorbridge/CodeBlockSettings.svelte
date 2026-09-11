@@ -79,7 +79,7 @@
 						</div>
 						{#if canSet}
 							<input type="text" class="input text-sm" placeholder={m.codeblock_language_search_placeholder()} bind:value={search} />
-							<div class="mt-2 max-h-48 overflow-y-auto">
+							<div class="mt-2 max-h-48 overflow-y-auto [scrollbar-gutter:stable]">
 								{#each filtered as name (name)}
 									<button
 										type="button"

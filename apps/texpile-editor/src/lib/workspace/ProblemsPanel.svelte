@@ -70,7 +70,7 @@
 				{m.problems_boxes_count({ count: log.badboxes.length })}
 			</label>
 		</div>
-		<div class="min-h-0 flex-1 overflow-y-auto">
+		<div class="min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable]">
 			{#if rows.length === 0}
 				<!-- no icon: the header row above already carries the check next to "Compiled clean" -->
 				<div class="text-muted p-4">

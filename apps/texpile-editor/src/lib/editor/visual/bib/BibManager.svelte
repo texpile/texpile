@@ -266,7 +266,7 @@
 	<!-- list above form until the pane is @xl wide: with the PDF preview open two half columns cram the cards -->
 	<div class="@container h-full">
 		<div class="mx-auto flex h-full max-w-7xl flex-col gap-4 p-4 @xl:flex-row">
-			<div class="max-h-[40%] min-h-0 shrink-0 overflow-y-auto pr-3 @xl:max-h-none @xl:w-1/2">
+			<div class="max-h-[40%] min-h-0 shrink-0 overflow-y-auto [scrollbar-gutter:stable] pr-3 @xl:max-h-none @xl:w-1/2">
 				<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
 					>{m.bib_new_reference_button()}</button
 				>
@@ -281,7 +281,7 @@
 			</div>
 
 			<div
-				class="border-surface-200-800 min-h-0 flex-1 overflow-y-auto border-t pt-4 @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
+				class="border-surface-200-800 min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] border-t pt-4 @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
 			>
 				<div class="mb-2 flex items-center gap-2 text-base font-semibold">
 					{#if isEditing}

@@ -51,7 +51,7 @@ export type SourceSetupDeps = {
 	lineWrap: boolean;
 	readOnly?: boolean;
 	onAddComment?: (from: number, to: number) => void;
-	onSelectComment?: (id: string, from: 'text' | 'gutter') => void;
+	onSelectComment?: (id: string) => void;
 	/** the thread behind a comment id, for the hover card over its text and line number */
 	commentPreview?: (id: string) => CommentPreview | null;
 	onJumpToFile?: (name: string) => void;
@@ -72,7 +72,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			? [
 					comments({
 						onAdd: (from, to) => onAddComment?.(from, to),
-						onSelect: (id, from) => onSelectComment?.(id, from),
+						onSelect: (id) => onSelectComment?.(id),
 						addLabel: m.comments_add(),
 						preview: commentPreview
 					})
@@ -80,7 +80,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			: []),
 		// the comment mark rides these cells (gutterLineClass), so the click on it has to be
 		// handled by the gutter that owns them - EditorView.domEventHandlers only sees the text
-		lineNumbers(onSelectComment ? { domEventHandlers: commentGutterHandlers((id) => onSelectComment(id, 'gutter'), commentPreview) } : {}),
+		lineNumbers(onSelectComment ? { domEventHandlers: commentGutterHandlers((id) => onSelectComment(id), commentPreview) } : {}),
 		gutterTheme,
 		highlightActiveLine(),
 		...(collab ? [yCollab(collab.ytext, collab.awareness, { undoManager: deps.undoManager! }), yRemoteLayoutFix] : [history()]),

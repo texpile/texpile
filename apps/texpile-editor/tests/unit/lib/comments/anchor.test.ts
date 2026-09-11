@@ -63,9 +63,26 @@ describe('resolveAnchor', () => {
 		expect(resolveAnchor('An entirely different document.', a)).toBeNull();
 	});
 
-	it('refuses a quote too short to identify', () => {
+	it('places a stub of a quote by its surroundings, not by the stub', () => {
 		const a = buildAnchor(doc, 0, 2);
-		expect(resolveAnchor(doc, a)).toBeNull();
+		expect(resolveAnchor(doc, a)).toMatchObject({ from: 0, to: 2, exact: true });
+		expect(resolveAnchor('An entirely different document.', a)).toBeNull();
+	});
+
+	describe('a point', () => {
+		const at = doc.indexOf(' mentions gravity.');
+		const point = buildAnchor(doc, at, at);
+		it('is exact while its neighbours stand', () => {
+			expect(point.quote).toBe('');
+			expect(resolveAnchor(doc, point)).toMatchObject({ from: at, to: at, exact: true, weak: false });
+		});
+		it('follows its neighbours when text before it changes', () => {
+			const edited = 'A new opening line.\n' + doc;
+			expect(resolveAnchor(edited, point)).toMatchObject({ from: at + 20, to: at + 20, exact: false, weak: false });
+		});
+		it('detaches once both neighbours are gone', () => {
+			expect(resolveAnchor('Something else entirely, twice over.\n', point)).toBeNull();
+		});
 	});
 
 	it('normalizes both dialects to one canonical form, remembering raw offsets', () => {

@@ -72,7 +72,7 @@
 		onAddComment?: (from: number, to: number) => void;
 		/** pick citations from Zotero and insert them at the caret (host + desktop only) */
 		onInsertCitation?: () => void;
-		onSelectComment?: (id: string, from: 'text' | 'gutter') => void;
+		onSelectComment?: (id: string) => void;
 		/** this file's threads, read by the hover card over commented text and its line number */
 		commentThreads?: CommentThread[];
 		readOnly?: boolean;

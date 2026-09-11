@@ -10,6 +10,7 @@ import { layout as layoutStore, updateLayout } from '$lib/storage/layout';
 import { startDrag, nudgeOnKey, clampTo, SNAP_SLACK } from '$lib/workspace/paneResize';
 // the launch skeleton lays the same panes out from these, so they live where both can reach them
 import { SIDEBAR_MIN, SIDEBAR_MAX, PDF_MIN, pdfMaxWidth, pdfWidthOf } from '$lib/workspace/paneGeometry';
+
 const TOC_MIN = 0.1;
 const TOC_MAX = 0.9;
 // the same kind of split one level in: what has changed, against the versions behind it. Bounded

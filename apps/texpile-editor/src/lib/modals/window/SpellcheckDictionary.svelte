@@ -35,7 +35,7 @@
 		>
 	</div>
 
-	<ul class="min-h-0 flex-1 overflow-y-auto">
+	<ul class="min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable]">
 		{#each words as word (word)}
 			<li class="border-surface-200-800 flex items-center justify-between border-b py-1.5 text-sm last:border-b-0">
 				<span class="truncate">{word}</span>

@@ -94,7 +94,7 @@
 					</div>
 
 					<!-- tabs stay put; only the palette body scrolls -->
-					<div class="max-h-[60vh] overflow-y-auto">
+					<div class="max-h-[60vh] overflow-y-auto [scrollbar-gutter:stable]">
 						{#if group.id === 'matrices'}
 							<div class="border-surface-300-700 border-b p-3">
 								<div class="mb-2 text-xs font-medium">{m.tbar_matrix_style()}</div>

@@ -187,7 +187,9 @@ function stubView(initial: EditorState) {
 		},
 		dispatch(tr: ReturnType<EditorState['tr']['setMeta']>) {
 			current = current.apply(tr);
-		}
+		},
+		dom: { parentElement: null },
+		coordsAtPos: () => ({ top: 0, bottom: 0, left: 0, right: 0 })
 	};
 }
 

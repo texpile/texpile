@@ -3,6 +3,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { Trash2, Pencil } from '@lucide/svelte';
 	import InitialAvatar from '$lib/components/InitialAvatar.svelte';
+	import type { Snippet } from 'svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
 	import { m } from '$lib/paraglide/messages';
 
@@ -12,9 +13,12 @@
 		lost,
 		hidden,
 		unsure = false,
+		dense = false,
 		onReply,
 		onEditMessage,
-		onDeleteMessage
+		onDeleteMessage,
+		onAttach,
+		footer
 	}: {
 		thread: CommentThread;
 		fileGone: boolean;
@@ -22,9 +26,12 @@
 		hidden: boolean;
 		/** placed, but the words around the quote changed; see CommentsPanel's weak */
 		unsure?: boolean;
+		dense?: boolean;
 		onReply: (thread: CommentThread, body: string) => void;
 		onEditMessage: (message: CommentMessage, body: string) => void;
 		onDeleteMessage: (thread: CommentThread, message: CommentMessage) => void;
+		onAttach?: (thread: CommentThread) => void;
+		footer?: Snippet;
 	} = $props();
 
 	let draft = $state('');
@@ -47,15 +54,20 @@
 
 <!-- max-w: the dock is as wide as the editor, and a conversation set in a column
      that wide is unreadable. Prose wants a measure, not the space available -->
-<div class="max-w-2xl space-y-2 px-2 pt-1 pb-3 pl-7">
+<div class="space-y-2 {dense ? '' : 'max-w-2xl px-2 pt-1 pb-3 pl-7'}">
 	{#if fileGone}
 		<p class="text-warning-ink">{m.comments_file_gone()}</p>
 	{:else if lost}
 		<p class="text-warning-ink">{m.comments_orphaned()}</p>
+		{#if onAttach}
+			<button class="btn btn-xs preset-tonal" onclick={() => onAttach(thread)}>{m.comments_attach_selection()}</button>
+		{/if}
 	{:else if unsure}
 		<p class="text-warning-ink">{m.comments_weak()}</p>
 	{:else if hidden}
 		<p class="text-muted">{m.comments_not_in_view()}</p>
+	{:else if !thread.anchor.quote}
+		<p class="text-muted">{m.comments_text_removed()}</p>
 	{/if}
 	{#each thread.messages as msg (msg.id)}
 		<div class="group/msg flex items-start gap-2 leading-snug">
@@ -117,20 +129,23 @@
 	     button appears with the text. An empty box three rows tall under every thread
 	     was most of what made this panel feel like a form. pl-7 lines it up with the
 	     message bodies, past their avatars. -->
-	<div class="space-y-1.5 pl-7">
-		<textarea
-			class="textarea w-full resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'min-h-0 h-7'} rounded-container"
-			rows="1"
-			placeholder={m.comments_reply_placeholder()}
-			bind:value={draft}
-			onkeydown={(e) => {
-				// Enter sends, Shift+Enter breaks the line: a review reply is one or two
-				// sentences, so reaching for a button every time is the wrong default
-				if (e.key === 'Enter' && !e.shiftKey) {
-					e.preventDefault();
-					submit();
-				}
-			}}></textarea>
+	<div class="space-y-1.5 {dense ? '' : 'pl-7'}">
+		<div class="flex items-start gap-1">
+			<textarea
+				class="textarea min-w-0 flex-1 resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'min-h-0 h-7'} rounded-container"
+				rows="1"
+				placeholder={m.comments_reply_placeholder()}
+				bind:value={draft}
+				onkeydown={(e) => {
+					// Enter sends, Shift+Enter breaks the line: a review reply is one or two
+					// sentences, so reaching for a button every time is the wrong default
+					if (e.key === 'Enter' && !e.shiftKey) {
+						e.preventDefault();
+						submit();
+					}
+				}}></textarea>
+			{#if footer}{@render footer()}{/if}
+		</div>
 		{#if draft.trim()}
 			<button class="btn btn-xs preset-filled-primary-500" onclick={submit}>
 				{m.comments_reply()}

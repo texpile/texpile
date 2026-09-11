@@ -428,6 +428,65 @@ select option {
 .TexpileEditor .pm-comment-focused {
 	background-color: color-mix(in srgb, var(--comment-tint) 30%, transparent);
 }
+.TexpileEditor .pm-comment-point {
+	display: inline-block;
+	width: 3px;
+	height: 1.1em;
+	vertical-align: text-bottom;
+	margin: 0 1px;
+	border-radius: 1px;
+	background-color: color-mix(in srgb, var(--comment-tint) 55%, transparent);
+	cursor: pointer;
+}
+.TexpileEditor .pm-comment-point.pm-comment-focused {
+	background-color: color-mix(in srgb, var(--comment-tint) 90%, transparent);
+}
+.comment-card {
+	position: absolute;
+	left: 18px;
+	width: 242px;
+	z-index: 2;
+	padding: 6px 8px 6px 10px;
+	transition:
+		top 160ms ease,
+		left 160ms ease,
+		box-shadow 160ms ease;
+}
+.comment-rail-source {
+	position: sticky;
+	top: 0;
+	z-index: 300;
+	flex: 0 0 auto;
+	align-self: stretch;
+	overflow: visible clip;
+}
+.comment-rail-narrow::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 260px;
+	width: var(--comment-rail-tail, 0px);
+	height: 1px;
+}
+.comment-card-hovered {
+	border-color: var(--color-surface-300-700);
+}
+.comment-card-selected,
+.comment-card-pending {
+	left: 6px;
+	width: 254px;
+	z-index: 4;
+	border-color: var(--color-surface-300-700);
+	box-shadow: 0 6px 20px color-mix(in srgb, var(--color-surface-950) 22%, transparent);
+}
+.comment-card-pending {
+	z-index: 5;
+}
+@media (prefers-reduced-motion: reduce) {
+	.comment-card {
+		transition: none;
+	}
+}
 /* the selection being commented on, held visible while the composer owns the focus (an
    unfocused ProseMirror hides the native selection); selection-blue, not thread-yellow */
 .TexpileEditor .pm-comment-pending {
@@ -445,6 +504,10 @@ select option {
    gap, at heights that move with the view mode and the TOC fraction. */
 .scroll-inset-r {
 	border-right: 3px solid transparent;
+}
+
+.source-editor .cm-scroller {
+	scrollbar-gutter: stable;
 }
 
 /* The visual editor while it builds. VISIBILITY, never display: an element with no box intersects

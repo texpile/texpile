@@ -3,6 +3,7 @@
 //
 // Kept out of WorkspaceView the way the other pipelines are - the view is already long, and none of
 // this needs anything from it but the workspace root and a way to open a file.
+import { untrack } from 'svelte';
 import { CommentStore, relativeTo } from '$lib/comments/store.svelte';
 import {
 	buildAnchor,
@@ -17,7 +18,6 @@ import {
 } from '$lib/comments/anchor';
 import {
 	anchorEvent,
-	deleteEvent,
 	deleteMessageEvent,
 	editEvent,
 	moveEvent,
@@ -52,6 +52,7 @@ type Deps = {
 	 * there. False means "not from here" and the line jump is used instead.
 	 */
 	revealInVisual?: (id: string) => boolean;
+	liveAnchors?: (text: string) => Map<string, CommentAnchor> | null;
 	/**
 	 * Hand a locally-made event to the session, if there is one.
 	 *
@@ -65,6 +66,7 @@ export class CommentsController {
 	readonly store = new CommentStore();
 	/** the thread the reader is looking at, highlighted in both the panel and the editor */
 	selected = $state<string | null>(null);
+	toReveal = $state<{ id: string; seq: number } | null>(null);
 	/** where each thread on the ACTIVE file sits now; what the editor decorates */
 	ranges = $state<CommentRange[]>([]);
 	/** threads on the active file whose quote is gone from it */
@@ -109,6 +111,17 @@ export class CommentsController {
 	 *  landing before the first commit (a disk reload and a log refresh from one watcher event)
 	 *  must not write the same line twice */
 	private inFlight = new Map<string, boolean>();
+	private carried: { text: string; anchors: Map<string, CommentAnchor> } | null = null;
+	knownAnchors = $state.raw<Map<string, CommentAnchor>>(new Map());
+
+	withKnownAnchors(threads: CommentThread[]): CommentThread[] {
+		const known = this.knownAnchors;
+		if (known.size === 0) return threads;
+		return threads.map((t) => {
+			const a = known.get(t.id);
+			return a && a !== t.anchor ? { ...t, anchor: a } : t;
+		});
+	}
 
 	constructor(private readonly deps: Deps) {}
 
@@ -128,6 +141,9 @@ export class CommentsController {
 		this.activeLost = new Set();
 		this.notVisible = new Set();
 		this.weak = new Set();
+		this.knownAnchors = new Map();
+		this.lastWords.clear();
+		this.carried = null;
 		await this.store.load(root);
 	}
 
@@ -141,9 +157,17 @@ export class CommentsController {
 	 */
 	reanchor(absPath: string | null, text: string): void {
 		const root = this.deps.root();
-		this.file = absPath && root ? relativeTo(root, absPath) : null;
+		const file = absPath && root ? relativeTo(root, absPath) : null;
+		if (file !== this.file && this.knownAnchors.size > 0) this.knownAnchors = new Map();
+		this.file = file;
 		this.text = text;
 		this.resolve();
+	}
+
+	carryLive(): void {
+		const text = this.fresh();
+		const anchors = this.deps.liveAnchors?.(text);
+		this.carried = anchors ? { text, anchors } : null;
 	}
 
 	/**
@@ -231,21 +255,44 @@ export class CommentsController {
 		const ranges: CommentRange[] = [];
 		const lost = new Set<string>();
 		const weak = new Set<string>();
+		const carried = this.carried;
+		this.carried = null;
+		const live = this.deps.liveAnchors?.(text) ?? null;
+		const handed = carried && carried.text === text ? carried.anchors : null;
+		const known = new Map(untrack(() => this.knownAnchors));
+		let knownChanged = false;
 		// normalized once for the whole file, and only if something actually misses the fast path
 		let hay: LooseHaystack | null = null;
 		for (const t of this.store.forFile(this.file)) {
+			let exact = live?.get(t.id) ?? handed?.get(t.id) ?? null;
+			if (exact) {
+				exact = this.wordsBack(t, exact, text);
+				ranges.push({ id: t.id, from: exact.start, to: exact.end, resolved: t.resolved });
+				const had = known.get(t.id);
+				if (!had || !sameAnchor(had, exact)) {
+					known.set(t.id, exact);
+					knownChanged = true;
+				}
+				continue;
+			}
+			const prior = known.get(t.id);
 			// loose second: an anchor authored in the visual editor is rendered-dialect, and only the
 			// normalized search can carry it back onto source with its wraps, escapes and ligatures
-			let hit = resolveAnchor(text, t.anchor);
-			if (!hit) {
-				hay ??= prepareLoose(text, this.dialect());
-				hit = resolveAnchorLooseIn(hay, t.anchor);
+			let hit = null;
+			for (const a of prior ? [prior, t.anchor] : [t.anchor]) {
+				hit = resolveAnchor(text, a);
+				if (!hit) {
+					hay ??= prepareLoose(text, this.dialect());
+					hit = resolveAnchorLooseIn(hay, a);
+				}
+				if (hit) break;
 			}
 			if (hit) {
 				ranges.push({ id: t.id, from: hit.from, to: hit.to, resolved: t.resolved });
 				if (hit.weak) weak.add(t.id);
 			} else lost.add(t.id);
 		}
+		if (knownChanged) this.knownAnchors = known;
 		this.ranges = ranges;
 		this.activeLost = lost;
 		this.weak = weak;
@@ -257,6 +304,17 @@ export class CommentsController {
 			this.selected = target;
 			this.scrollTo(target);
 		}
+	}
+
+	private lastWords = new Map<string, CommentAnchor>();
+	private wordsBack(t: CommentThread, exact: CommentAnchor, text: string): CommentAnchor {
+		if (exact.quote) {
+			this.lastWords.set(t.id, exact);
+			return exact;
+		}
+		const words = this.lastWords.get(t.id) ?? (t.anchor.quote ? t.anchor : null);
+		if (!words || !text.startsWith(words.quote, exact.start)) return exact;
+		return buildAnchor(text, exact.start, exact.start + words.quote.length);
 	}
 
 	/**
@@ -381,6 +439,40 @@ export class CommentsController {
 		else if (thread.file === this.file) this.dropRange(thread.id);
 	}
 
+	async reattach(thread: CommentThread, from: number, to: number): Promise<void> {
+		if (!this.file || to <= from) return;
+		const text = this.fresh();
+		if (to > text.length) return;
+		await this.moveAnchor(thread, buildAnchor(text, from, to), this.file);
+	}
+
+	async reattachAnchored(thread: CommentThread, anchor: CommentAnchor): Promise<void> {
+		if (!this.file) return;
+		const converted = toSourceAnchor(this.fresh(), this.dialect(), anchor);
+		await this.moveAnchor(thread, converted.anchor, this.file);
+	}
+
+	async syncAnchorsToText(absPath: string, text: string): Promise<void> {
+		const root = this.deps.root();
+		if (!root || !this.file || !this.store.writable) return;
+		if (relativeTo(root, absPath) !== this.file) return;
+		const live = this.deps.liveAnchors?.(text);
+		if (!live) return;
+		const moved: { id: string; anchor: CommentAnchor }[] = [];
+		for (const t of this.store.forFile(this.file)) {
+			const anchor = live.get(t.id);
+			if (!anchor || t.resolved) continue;
+			const hit = resolveAnchor(text, t.anchor);
+			if (hit && !hit.weak && hit.from === anchor.start && hit.to === anchor.end) continue;
+			moved.push({ id: t.id, anchor });
+		}
+		if (moved.length === 0) return;
+		const by = await this.author();
+		const at = new Date().toISOString();
+		await this.commit(...moved.map((m) => anchorEvent({ thread: m.id, anchor: m.anchor, by, at })));
+		for (const m of moved) this.placeOne(m.id, m.anchor, false);
+	}
+
 	/** returns the new message's id, or null if there was nothing to write */
 	async reply(thread: CommentThread, body: string, by?: string): Promise<string | null> {
 		if (!body.trim()) return null;
@@ -438,15 +530,10 @@ export class CommentsController {
 		}
 	}
 
-	async remove(thread: CommentThread): Promise<void> {
-		await this.commit(deleteEvent({ thread: thread.id, by: await this.author(), at: new Date().toISOString() }));
-		this.ranges = this.ranges.filter((r) => r.id !== thread.id);
-		if (this.selected === thread.id) this.selected = null;
-	}
-
 	/** reveal a thread: scroll to it here, or open the file it is on and scroll once it lands */
 	open(thread: CommentThread): void {
 		this.selected = thread.id;
+		this.toReveal = { id: thread.id, seq: (this.toReveal?.seq ?? 0) + 1 };
 		if (thread.file === this.file) {
 			this.scrollTo(thread.id);
 			return;
@@ -547,4 +634,8 @@ export class CommentsController {
  */
 function asFlag(v: boolean | undefined): boolean {
 	return v === true;
+}
+
+function sameAnchor(a: CommentAnchor, b: CommentAnchor): boolean {
+	return a.start === b.start && a.end === b.end && a.quote === b.quote && a.prefix === b.prefix && a.suffix === b.suffix;
 }

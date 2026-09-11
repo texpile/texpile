@@ -93,12 +93,19 @@ export function revealPmComment(view: EditorView, id: string): boolean {
 	const sel = TextSelection.near($at, 1);
 	if (!(sel instanceof TextSelection)) return false;
 	try {
-		view.dispatch(view.state.tr.setSelection(sel).scrollIntoView().setMeta('addToHistory', false));
+		view.dispatch(view.state.tr.setSelection(sel).setMeta('addToHistory', false));
 	} catch {
 		return false; // the doc moved under the range; the caller falls back to the line jump
 	}
+	const at = view.coordsAtPos(sel.from);
+	let box: HTMLElement | null = view.dom.parentElement;
+	while (box && !/auto|scroll/.test(getComputedStyle(box).overflowY)) box = box.parentElement;
+	if (!box) return true;
+	const b = box.getBoundingClientRect();
+	if (at.top < b.top + REVEAL_EDGE || at.bottom > b.bottom - REVEAL_EDGE) box.scrollTop += at.top - (b.top + b.height / 3);
 	return true;
 }
+const REVEAL_EDGE = 40;
 
 /** the innermost thread at a position, so nested comments resolve to the one you clicked */
 export function pmCommentAt(state: EditorState, pos: number): PmCommentRange | null {
@@ -110,15 +117,28 @@ export function pmCommentAt(state: EditorState, pos: number): PmCommentRange | n
 	return best;
 }
 
+function pointNode(id: string, focused: boolean): HTMLElement {
+	const el = document.createElement('span');
+	el.className = `pm-comment pm-comment-point${focused ? ' pm-comment-focused' : ''}`;
+	el.dataset.comment = id;
+	el.setAttribute('aria-hidden', 'true');
+	return el;
+}
+
 function build(doc: PMNode, ranges: PmCommentRange[], focused: string | null, pending: { from: number; to: number } | null): DecorationSet {
 	const decos = ranges
 		// resolved threads draw nothing, same as the source editor: the argument is over
 		.filter((r) => !r.resolved)
 		.map((r) =>
-			Decoration.inline(r.from, r.to, {
-				class: `pm-comment${r.id === focused ? ' pm-comment-focused' : ''}`,
-				'data-comment': r.id
-			})
+			r.to > r.from
+				? Decoration.inline(r.from, r.to, {
+						class: `pm-comment${r.id === focused ? ' pm-comment-focused' : ''}`,
+						'data-comment': r.id
+					})
+				: Decoration.widget(r.from, () => pointNode(r.id, r.id === focused), {
+						side: -1,
+						key: `comment-point:${r.id}:${r.id === focused ? 1 : 0}`
+					})
 		);
 	if (pending && pending.to > pending.from) decos.push(Decoration.inline(pending.from, pending.to, { class: 'pm-comment-pending' }));
 	return DecorationSet.create(doc, decos);
@@ -140,6 +160,13 @@ export function buildPmAnchor(doc: PMNode, from: number, to: number): CommentAnc
 	while (t < index.length && index[t] < to) t++;
 	if (t <= f) return null;
 	return buildAnchor(text, f, t);
+}
+
+export function buildPmPoint(doc: PMNode, pos: number): CommentAnchor {
+	const { text, index } = flattenDoc(doc);
+	let f = 0;
+	while (f < index.length && index[f] < pos) f++;
+	return buildAnchor(text, f, f);
 }
 
 type PmCommentsConfig = {
@@ -167,13 +194,18 @@ export function pmComments({ onSelect, onAdd, addLabel = 'Comment' }: PmComments
 				// its edges: bias 1 on `from` and -1 on `to` both point AWAY from the range, so
 				// text inserted at a boundary lands outside it. Same rule as the source editor's
 				// field (extensions/comments.ts) - the two views must agree about where a thread
-				// ends. An edit strictly inside still extends it, and a range whose text is gone
-				// collapses and is dropped.
+				// ends. An edit strictly inside still extends it.
 				const mapped: PmCommentRange[] = [];
 				for (const r of value.ranges) {
+					if (r.to === r.from) {
+						const at = tr.mapping.map(r.from, -1);
+						mapped.push({ ...r, from: at, to: at });
+						continue;
+					}
 					const from = tr.mapping.map(r.from, 1);
 					const to = tr.mapping.map(r.to, -1);
 					if (to > from) mapped.push({ ...r, from, to });
+					else mapped.push({ ...r, from: Math.min(from, to), to: Math.min(from, to) });
 				}
 				// the pending tint follows edits the same way, and collapses away if its text goes
 				let pending = value.pending;
