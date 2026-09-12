@@ -18,6 +18,8 @@ A shared session lets several people edit the same folder at once, in either edi
 
 ![Two people editing the same document, with each other's cursors visible](../landing/src/lib/assets/showcase/editor-collab.webp "Two people editing the same document, with each other's cursors visible")
 
+The name and the color the others see are yours to set, in Preferences under Collaboration. Changing either one during a session reaches the others straight away.
+
 The host compiles with their own toolchain, and guests see the PDF and the compile problems update live. Actions that belong to the host's machine, such as starting a compile, are left out of a guest's menus.
 
 > [!NOTE]

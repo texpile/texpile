@@ -35,7 +35,7 @@ export class WorkspaceComments {
 			root: () => workspaceRoot.current,
 			// a guest has no git repo to fall back to (its root is the 'session' sentinel), but it DOES
 			// have the name it joined with - that is what every peer already sees on its cursor
-			preferredAuthor: () => userData.current.commentAuthor || (d.guest() ? collabGuest.selfName : ''),
+			preferredAuthor: () => userData.current.commentAuthor || userData.current.collabName || (d.guest() ? collabGuest.selfName : ''),
 			// new anchors and event resolution read the LIVE buffer; the reanchor snapshot goes stale
 			// under remote edits in a shared session (see the controller's activeText comment)
 			activeText: () => this.activeText(),

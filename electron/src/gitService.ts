@@ -233,24 +233,27 @@ export async function gitDiscard(workspaceRoot: string, paths: string[]): Promis
 }
 
 /**
- * The repo's configured author name, for attributing review comments.
+ * The repo's configured author name and email, for attributing review comments and for showing
+ * people which identity git will use.
  *
  * Reads the same `user.name` a commit would, so a comment and a commit from the same person carry
  * the same name and nobody has to be told twice who they are. Returns null for every failure -
  * no git, not a repo, name unset - because the caller has its own fallbacks and none of those is
  * an error worth surfacing.
  */
-export async function gitUserName(workspaceRoot: string): Promise<{ ok: true; name: string | null }> {
-	if (!workspaceRoot || gitBinaryMissing) return { ok: true, name: null };
-	try {
-		// --get walks the whole config chain (local, global, system), which is what makes this work
-		// in a repo whose author is set once, machine-wide
-		const name = (await git(workspaceRoot).raw(['config', '--get', 'user.name'])).trim();
-		return { ok: true, name: name || null };
-	} catch (e) {
-		if (isMissingGit(e)) gitBinaryMissing = true;
-		return { ok: true, name: null };
-	}
+export async function gitIdentity(workspaceRoot: string): Promise<{ ok: true; name: string | null; email: string | null }> {
+	if (!workspaceRoot || gitBinaryMissing) return { ok: true, name: null, email: null };
+	const read = async (key: string): Promise<string | null> => {
+		try {
+			// --get walks the whole config chain (local, global, system), which is what makes this work
+			// in a repo whose author is set once, machine-wide
+			return (await git(workspaceRoot).raw(['config', '--get', key])).trim() || null;
+		} catch (e) {
+			if (isMissingGit(e)) gitBinaryMissing = true;
+			return null;
+		}
+	};
+	return { ok: true, name: await read('user.name'), email: await read('user.email') };
 }
 
 /** commit the staged changes. Fails if nothing is staged or no author identity is configured. */

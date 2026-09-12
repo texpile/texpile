@@ -100,7 +100,7 @@
 		onShowOutput={() => void compiler.revealOutput()}
 		outputAvailable={compiler.hasOutput}
 		onShowProblems={actions.showProblems}
-		commentCount={panes.comments.filter((t: Any) => !t.resolved).length}
+		commentCount={panes.comments.filter((t: Any) => !t.resolved && !panes.commentGhosts.has(t.id)).length}
 		onShowComments={actions.showComments}
 		onTogglePdf={layout.togglePdfPane}
 		onSave={actions.save}
@@ -283,7 +283,7 @@
 			onToggleShrink={actions.toggleTerminalShrink}
 			onClose={actions.toggleTerminal}
 			onProblemJump={actions.openFileAt}
-			comments={panes.comments}
+			comments={panes.comments.filter((t: Any) => !panes.commentGhosts.has(t.id))}
 			commentFile={panes.commentFile}
 			commentsOrphaned={panes.commentsOrphaned}
 			commentsWeak={panes.commentsWeak}

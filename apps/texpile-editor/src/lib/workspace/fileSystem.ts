@@ -178,7 +178,7 @@ type TexpileNative = {
 	gitUnstage: (root: string, paths: string[]) => Promise<GitOpResult>;
 	gitDiscard: (root: string, paths: string[]) => Promise<GitOpResult>;
 	gitCommit: (root: string, message: string) => Promise<GitOpResult>;
-	gitUserName: (root: string) => Promise<{ ok: true; name: string | null }>;
+	gitIdentity: (root: string) => Promise<{ ok: true; name: string | null; email: string | null }>;
 	// optional: an older preload predates the history surface, and the client degrades to no history
 	gitLog?: (root: string, limit?: number) => Promise<GitLogResult>;
 	gitChangesSince?: (root: string, hash: string) => Promise<GitChangesResult>;

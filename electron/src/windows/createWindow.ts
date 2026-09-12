@@ -84,6 +84,7 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 			preload: path.join(__dirname, 'preload.js'),
 			contextIsolation: true,
 			nodeIntegration: false,
+			spellcheck: false,
 			// explicit (it IS the default): the preload/bridges must never reach any subframe;
 			// the renderer CSP forbids frames entirely (frame-src 'none'), this backs that up
 			nodeIntegrationInSubFrames: false,

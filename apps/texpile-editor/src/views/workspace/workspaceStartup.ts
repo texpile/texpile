@@ -86,7 +86,10 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		checkExternalChange: () => void editFlow.external.check(),
 		runCompile: () => d.compiler.runCompile(),
 		loadExternalPdf: () => void d.compiler.loadExternalPdf(),
-		onWindowResize: layout.reclampPdf,
+		onWindowResize: () => {
+			layout.reclampPdf();
+			termDock.reclamp();
+		},
 		reloadProjectState: () => {
 			// both live in .texpile/ and both are committed, so both arrive by pull
 			void d.commentsCtl.refresh();

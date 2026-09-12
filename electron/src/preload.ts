@@ -238,7 +238,7 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	gitDiscard: (root: string, paths: string[]) => invokeFs('git:discard', root, paths),
 	gitCommit: (root: string, message: string) => invokeFs('git:commit', root, message),
 	/** the repo's configured user.name, for attributing comments -> { ok, name }. */
-	gitUserName: (root: string) => invokeFs('git:userName', root),
+	gitIdentity: (root: string) => invokeFs('git:identity', root),
 	/** commits touching the workspace, newest first -> { ok, entries? }. */
 	gitLog: (root: string, limit?: number) => invokeFs('git:log', root, limit),
 	/** files that differ between a commit and the working copy now -> { ok, entries? }. */

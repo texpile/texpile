@@ -172,6 +172,21 @@ describe('collab session end-to-end', () => {
 		guest.session.destroy();
 	});
 
+	it('carries a renamed profile to the peers of a running session', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const hub = new FakeHub();
+		const host = await makeParty(hub, 'host', 'Host', key);
+		const guest = await makeParty(hub, 'guest', 'Guest', key);
+		await until(() => [...guest.session.peers.values()].some((p) => p.name === 'Host'));
+
+		host.session.setIdentity({ name: 'Mei', color: '#059669' });
+		await until(() => [...guest.session.peers.values()].some((p) => p.name === 'Mei' && p.color === '#059669'));
+		expect([...guest.session.peers.values()].find((p) => p.name === 'Mei')?.role).toBe('host');
+
+		host.session.destroy();
+		guest.session.destroy();
+	});
+
 	it('syncs a large text file whose raw sync frame would blow the relay cap', async () => {
 		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
 		const hub = new FakeHub();

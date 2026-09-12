@@ -148,11 +148,7 @@
 							<span class="min-w-0 flex-1">
 								<!-- the quote first: it is what tells you which comment this is, faster than the
 								     body does, and it is the only part that ties the row to the document -->
-								{#if thread.anchor.quote}
-									<span class="text-muted block truncate font-mono" use:tip={thread.anchor.quote}>{oneLine(thread.anchor.quote)}</span>
-								{:else}
-									<span class="text-muted block truncate italic">{m.comments_text_removed_label()}</span>
-								{/if}
+								<span class="text-muted block truncate font-mono" use:tip={thread.anchor.quote}>{oneLine(thread.anchor.quote)}</span>
 								<!-- the body preview goes when the thread opens: the messages below start with
 								     this same text, and showing both made every thread look like it had a
 								     duplicate first reply -->

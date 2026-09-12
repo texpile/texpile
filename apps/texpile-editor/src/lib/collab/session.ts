@@ -130,7 +130,7 @@ export class CollabSession {
 	private readonly events: SessionEvents;
 	private readonly assembler = new BlobAssembler();
 	private readonly uploadAssembler = new BlobAssembler();
-	private readonly user: PeerInfo;
+	private user: PeerInfo;
 	private destroyed = false;
 	// the host's clientID, learned ONLY from frames the relay marked host-origin — never from a
 	// peer's self-reported role, so a guest can't impersonate the host
@@ -173,6 +173,11 @@ export class CollabSession {
 
 	get clientId(): number {
 		return this.doc.clientID;
+	}
+
+	setIdentity(user: { name: string; color: string }): void {
+		this.user = { ...user, role: this.role };
+		this.awareness.setLocalStateField('user', user);
 	}
 
 	/** the host's Y clientID, learned from a relay-authenticated host frame. */

@@ -8,6 +8,7 @@
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
+	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
 	import { changeUiLocale, keymapOptions, resizeStepOptions, uiLocaleOptions } from './prefsOptions';
 	import AppearanceMode from './AppearanceMode.svelte';
@@ -57,7 +58,7 @@
 	// One category on screen at a time, rather than every setting in one scroll. The list had grown
 	// past the point where "wrap long lines" and "editor width" could be told apart at a glance -
 	// which editor, and which of them, was only answerable by reading the hint under each.
-	type Category = 'appearance' | 'editor' | 'toolchain' | 'integrations' | 'startup' | 'ai';
+	type Category = 'appearance' | 'editor' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
 	// the browser guest has no local toolchain, no Zotero, no MCP server and no folder to reopen:
 	// four tabs that could only ever report nothing
@@ -69,6 +70,7 @@
 		// editor, and which of them - and a heading inside one tab answers that just as well as a
 		// sidebar entry did, without making the reader guess which of three tabs a setting is in.
 		{ id: 'editor', label: m.prefs_group_editor() },
+		{ id: 'collaboration', label: m.prefs_group_collaboration() },
 		// LaTeX, Typst and Version control used to be three tabs. Every one of them was the same
 		// thing - a list of external programs and whether they were found - so three sidebar entries
 		// bought three clicks to answer one question ("is my machine set up"), and the two settings
@@ -161,7 +163,7 @@
 		<div class="mb-2 px-3 pt-2 pb-3">
 			<button
 				type="button"
-				class="block h-6 cursor-default"
+				class="block h-6 cursor-default select-none"
 				style:transform="rotate({logoSpin.angle}deg)"
 				onclick={logoSpin.kick}
 				aria-label="Texpile"
@@ -173,7 +175,7 @@
 		{#each categories as c (c.id)}
 			<button
 				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
-					? 'bg-primary-tint text-primary-ink font-medium'
+					? 'bg-primary-tint font-medium'
 					: 'hover:bg-surface-200-800'}"
 				onclick={() => (category = c.id)}
 			>
@@ -289,6 +291,8 @@
 						'w-24'
 					)}
 				</div>
+			{:else if category === 'collaboration'}
+				<PrefsCollaborationPanel />
 			{:else if category === 'toolchain'}
 				<!-- Nothing here is a preference; it is all "what did we find on this machine".
 						     The switches that used to sit above the LaTeX list - live mode, the compile

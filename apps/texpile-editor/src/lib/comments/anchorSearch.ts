@@ -61,10 +61,11 @@ export function buildAnchor(text: string, from: number, to: number): CommentAnch
  */
 export function resolveAnchor(text: string, a: CommentAnchor): ResolvedAnchor | null {
 	if (a.quote.length < MIN_QUOTE) {
-		if (text.slice(a.start, a.end) === a.quote && contextScore(text, a.start, a.end, a) >= POINT_WEAK)
+		const sure = Math.min(POINT_WEAK, a.prefix.length + a.suffix.length);
+		if (text.slice(a.start, a.end) === a.quote && contextScore(text, a.start, a.end, a) >= sure)
 			return { from: a.start, to: a.end, exact: true, weak: false };
 		const hit = searchContext(text, a.quote, a.prefix, a.suffix, a.start);
-		return hit ? { from: hit.from, to: hit.to, exact: false, weak: hit.context < POINT_WEAK } : null;
+		return hit ? { from: hit.from, to: hit.to, exact: false, weak: hit.context < sure } : null;
 	}
 	// the common case by far - the file has not been touched behind our back
 	if (text.slice(a.start, a.end) === a.quote) return { from: a.start, to: a.end, exact: true, weak: false };
@@ -117,7 +118,7 @@ export function searchContext(
 	const after = quote + suffix;
 	const byAfter = after.length >= NEEDLE;
 	const needle = byAfter ? after.slice(0, NEEDLE) : prefix.slice(-NEEDLE);
-	if (needle.length < NEEDLE) return null;
+	if (!needle) return null;
 	const hits = occurrences(text, needle);
 	if (hits.length === 0 || hits.length >= MAX_HITS) return null;
 	const a = { prefix, suffix };
@@ -132,7 +133,7 @@ export function searchContext(
 			best = at;
 		}
 	}
-	if (best < 0 || bestScore < POINT_CONTEXT) return null;
+	if (best < 0 || bestScore < Math.min(POINT_CONTEXT, prefix.length + suffix.length)) return null;
 	return { from: best, to: best + quote.length, context: bestScore };
 }
 

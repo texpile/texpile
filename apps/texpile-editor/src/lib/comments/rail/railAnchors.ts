@@ -33,6 +33,18 @@ function caretCoords(view: ProseMirrorView): { top: number } | null {
 	}
 }
 
+export function cmTextExtent(view: CodeMirrorView): { box: number; text: number } {
+	const left = view.contentDOM.getBoundingClientRect().left;
+	let text = 0;
+	const range = document.createRange();
+	for (const line of view.contentDOM.querySelectorAll('.cm-line')) {
+		range.selectNodeContents(line);
+		const r = range.getBoundingClientRect();
+		if (r.width > 0) text = Math.max(text, r.right - left);
+	}
+	return { box: view.contentDOM.getBoundingClientRect().width, text };
+}
+
 export function measureCmAnchors(
 	view: CodeMirrorView,
 	ranges: CommentRange[],
@@ -43,7 +55,7 @@ export function measureCmAnchors(
 	const len = view.state.doc.length;
 	const out = new Map<string, number>();
 	for (const r of ranges) {
-		if (r.resolved || out.has(r.id)) continue;
+		if (r.resolved || r.to === r.from || out.has(r.id)) continue;
 		const c = view.coordsAtPos(Math.min(r.from, len));
 		if (c) out.set(r.id, Math.round(c.top - top));
 	}

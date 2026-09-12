@@ -220,7 +220,6 @@
 	"wsview_problems_label": "Problemas",
 	"wsview_comments_label": "Comentários",
 	"comments_add": "Comentar",
-	"comments_preview_more": "{count} mais",
 	"comments_cancel": "Cancelar",
 	"comments_empty": "Ainda não há comentários. Selecione o texto no editor e escolha Comentar para iniciar uma discussão.",
 	"comments_empty_file": "Sem comentários sobre este arquivo.",

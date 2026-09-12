@@ -428,22 +428,9 @@ select option {
 .TexpileEditor .pm-comment-focused {
 	background-color: color-mix(in srgb, var(--comment-tint) 30%, transparent);
 }
-.TexpileEditor .pm-comment-point {
-	display: inline-block;
-	width: 3px;
-	height: 1.1em;
-	vertical-align: text-bottom;
-	margin: 0 1px;
-	border-radius: 1px;
-	background-color: color-mix(in srgb, var(--comment-tint) 55%, transparent);
-	cursor: pointer;
-}
-.TexpileEditor .pm-comment-point.pm-comment-focused {
-	background-color: color-mix(in srgb, var(--comment-tint) 90%, transparent);
-}
 .comment-card {
 	position: absolute;
-	left: 18px;
+	left: calc(18px - var(--comment-card-shift, 0px));
 	width: 242px;
 	z-index: 2;
 	padding: 6px 8px 6px 10px;
@@ -464,7 +451,7 @@ select option {
 	content: '';
 	position: absolute;
 	top: 0;
-	left: 260px;
+	left: calc(260px - var(--comment-card-shift, 0px));
 	width: var(--comment-rail-tail, 0px);
 	height: 1px;
 }
@@ -473,7 +460,7 @@ select option {
 }
 .comment-card-selected,
 .comment-card-pending {
-	left: 6px;
+	left: calc(6px - var(--comment-card-shift, 0px));
 	width: 254px;
 	z-index: 4;
 	border-color: var(--color-surface-300-700);

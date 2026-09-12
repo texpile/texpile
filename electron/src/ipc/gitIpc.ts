@@ -13,7 +13,7 @@ const OPS: Record<string, string> = {
 	'git:unstage': 'gitUnstage',
 	'git:discard': 'gitDiscard',
 	'git:commit': 'gitCommit',
-	'git:userName': 'gitUserName',
+	'git:identity': 'gitIdentity',
 	'git:log': 'gitLog',
 	'git:changesSince': 'gitChangesSince',
 	'git:showAt': 'gitShowAt',

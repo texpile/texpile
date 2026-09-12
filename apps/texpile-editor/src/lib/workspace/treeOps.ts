@@ -331,15 +331,15 @@ export class TreeOps {
 		visualDocCache.rename(from, to);
 		this.deps.afterPathMoved?.(from, to);
 		const active = activeFilePath.current;
-		const sep = from.includes('\\') ? '\\' : '/';
-		if (active === from) activeFilePath.current = to;
-		else if (active && active.startsWith(from + sep)) activeFilePath.current = to + active.slice(from.length);
+		const under = (p: string, dir: string) => p.replace(/\\/g, '/').startsWith(dir.replace(/\\/g, '/') + '/');
+		if (active && samePath(active, from)) activeFilePath.current = to;
+		else if (active && under(active, from)) activeFilePath.current = to + active.slice(from.length);
 		// the main-file pointer follows too: compile, draft mode and the typst preview all target
 		// it, and a rename that left it on the dead path failed every lane with no way to recover
 		// short of re-picking. Covers the file itself and a main inside a renamed folder.
 		const main = mainFile.current;
 		if (main && samePath(main, from)) this.deps.retargetMainFile?.(to);
-		else if (main && main.startsWith(from + sep)) this.deps.retargetMainFile?.(to + main.slice(from.length));
+		else if (main && under(main, from)) this.deps.retargetMainFile?.(to + main.slice(from.length));
 	}
 
 	/** delete one entry, backing it up first when that is possible. */

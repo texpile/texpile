@@ -125,6 +125,15 @@ describe('anchors follow edits made in Texpile', () => {
 		expect(parseLog(disk['.texpile/comments.jsonl']).some((e) => e.t === 'anchor')).toBe(false);
 	});
 
+	it('deletes a thread whose text was gone when the project was last closed', async () => {
+		const at = ORIGINAL.indexOf(QUOTE);
+		disk = { '.texpile/comments.jsonl': logWith(buildAnchor(ORIGINAL, at, at)) };
+		const ctl = make(() => null);
+		await ctl.load(ROOT);
+		expect(ctl.threads).toHaveLength(0);
+		expect(parseLog(disk['.texpile/comments.jsonl']).some((e) => e.t === 'delete' && e.thread === 't1')).toBe(true);
+	});
+
 	it('leaves a file the editor is not showing alone', async () => {
 		const ctl = make(() => null);
 		await ctl.load(ROOT);

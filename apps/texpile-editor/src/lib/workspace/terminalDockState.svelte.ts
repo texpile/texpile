@@ -6,8 +6,11 @@ import { layout, updateLayout } from '$lib/storage/layout';
 import { startDrag, nudgeOnKey, clampTo, SNAP_SLACK } from '$lib/workspace/paneResize';
 
 const MIN_HEIGHT = 120;
-const MAX_HEIGHT = 700;
-const clampHeight = clampTo(MIN_HEIGHT, MAX_HEIGHT);
+const EDITOR_KEEP = 300;
+function maxHeight(): number {
+	return browser && typeof window !== 'undefined' ? Math.max(MIN_HEIGHT, window.innerHeight - EDITOR_KEEP) : 700;
+}
+const clampHeight = (h: number) => clampTo(MIN_HEIGHT, maxHeight())(h);
 
 /** the imperative handle TerminalDock exposes */
 export type DockHandle = {
@@ -37,7 +40,7 @@ export class TerminalDockState {
 	/** restore persisted height/visibility/shrink (texpile:layout); call once at mount */
 	restore() {
 		const s = layout.current;
-		if (s.terminalHeight >= MIN_HEIGHT && s.terminalHeight <= MAX_HEIGHT) this.height = s.terminalHeight;
+		if (s.terminalHeight >= MIN_HEIGHT) this.height = clampHeight(s.terminalHeight);
 		if (this.available && s.terminalVisible) {
 			this.mounted = true;
 			this.visible = true;
@@ -121,6 +124,13 @@ export class TerminalDockState {
 		this.dock?.refit();
 	};
 	private commit = () => updateLayout({ terminalHeight: this.height });
+
+	reclamp = () => {
+		const h = clampHeight(this.height);
+		if (h === this.height) return;
+		this.height = h;
+		this.dock?.refit();
+	};
 
 	startResize = (e: MouseEvent) => {
 		const startY = e.clientY;

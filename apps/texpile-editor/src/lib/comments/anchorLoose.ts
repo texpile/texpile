@@ -58,7 +58,7 @@ export function resolveAnchorLooseIn(h: LooseHaystack, a: CommentAnchor): Resolv
 	if (!hit) return null;
 	const from = hit.from < h.map.length ? h.map[hit.from] : h.raw.length;
 	const to = hit.to < h.map.length ? h.map[hit.to] : h.raw.length;
-	return { from, to, exact: false, weak: hit.context < (point ? POINT_WEAK : WEAK_CONTEXT) };
+	return { from, to, exact: false, weak: hit.context < (point ? Math.min(POINT_WEAK, prefix.length + suffix.length) : WEAK_CONTEXT) };
 }
 
 /** the single-anchor form; callers with a list should prepare once and loop resolveAnchorLooseIn */

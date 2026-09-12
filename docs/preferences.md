@@ -1,6 +1,6 @@
 ---
 nav: Preferences
-description: Every setting in Texpile's Preferences dialog, tab by tab: appearance, editor, toolchain, integrations, startup, and the AI assistant.
+description: Every setting in Texpile's Preferences dialog, tab by tab: appearance, editor, collaboration, toolchain, integrations, startup, and the AI assistant.
 blurb: Every setting in the Preferences dialog, tab by tab.
 icon: settings
 order: 15
@@ -48,6 +48,16 @@ Settings apply to every folder you open. The compile command and its options are
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
 | Editor width      | How wide text gets in the visual editor. Extra window space stays empty, so short lines are easier to read. |
 | Image resize step | Dragging an image snaps its width to multiples of this fraction of the text width: 10%, 25%, or 50%.        |
+
+## Collaboration
+
+How other people see you in a [shared session](collaboration.md). The name and the color apply whether you host the session or join one, and a change reaches the others straight away.
+
+| Setting      | What it does                                                                                                                                                                                        |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Display name | The name over your cursor, in the participant list, and on the review comments you write. It also fills in the join form. Left blank you appear as Host when you share, and as Guest when you join. |
+| Color        | Your cursor color. Automatic gives the host blue, and every guest a color of their own.                                                                                                             |
+| Git identity | The name and email git will use in the open folder. Comments fall back to that name while the display name is blank. Set them with git, not here.                                                   |
 
 ## Toolchain
 

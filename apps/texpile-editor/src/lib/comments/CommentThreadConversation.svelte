@@ -54,7 +54,7 @@
 
 <!-- max-w: the dock is as wide as the editor, and a conversation set in a column
      that wide is unreadable. Prose wants a measure, not the space available -->
-<div class="space-y-2 {dense ? '' : 'max-w-2xl px-2 pt-1 pb-3 pl-7'}">
+<div class="space-y-2 break-words {dense ? '' : 'max-w-2xl px-2 pt-1 pb-3 pl-7'}">
 	{#if fileGone}
 		<p class="text-warning-ink">{m.comments_file_gone()}</p>
 	{:else if lost}
@@ -66,8 +66,6 @@
 		<p class="text-warning-ink">{m.comments_weak()}</p>
 	{:else if hidden}
 		<p class="text-muted">{m.comments_not_in_view()}</p>
-	{:else if !thread.anchor.quote}
-		<p class="text-muted">{m.comments_text_removed()}</p>
 	{/if}
 	{#each thread.messages as msg (msg.id)}
 		<div class="group/msg flex items-start gap-2 leading-snug">

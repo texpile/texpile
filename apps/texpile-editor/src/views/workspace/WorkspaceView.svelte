@@ -358,6 +358,7 @@
 				fileUrl: (p: string) => provider.fileUrl(p),
 				cwd: workspaceRoot.current ?? '',
 				comments: commentsCtl.threads,
+				commentGhosts: commentsCtl.ghosts,
 				commentFile: commentsCtl.activeFile,
 				commandPending: !!projectConfig.pending,
 				commentsOrphaned: commentsCtl.orphaned,

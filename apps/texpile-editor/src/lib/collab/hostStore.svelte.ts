@@ -21,7 +21,7 @@ import {
 	joinPath
 } from '$lib/workspace/fileSystem';
 import { settings } from '$lib/settings';
-import { userData } from '$lib/storage/userData';
+import { presenceIdentity } from './identity';
 import { flattenShareManifest } from './shareManifest';
 
 class HostCollabController {
@@ -102,7 +102,7 @@ class HostCollabController {
 				transport,
 				key: keys.contentKey,
 				role: 'host',
-				user: { name: userData.current.collabName || 'Host', color: '#2563eb' },
+				user: presenceIdentity('host'),
 				events: {
 					onPeersChange: (peers) => {
 						this.peers = [...peers.values()];
@@ -170,6 +170,10 @@ class HostCollabController {
 			this.lastError = e instanceof Error ? e.message : String(e);
 			throw e;
 		}
+	}
+
+	refreshIdentity(): void {
+		this.session?.setIdentity(presenceIdentity('host'));
 	}
 
 	/** stop sharing; tellGuests=false when the teardown came from the far side. */

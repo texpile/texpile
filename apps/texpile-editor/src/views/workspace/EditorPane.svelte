@@ -369,7 +369,6 @@
 								{onCaretMove}
 								collab={session.collabFor(loadedPath)}
 								{commentRanges}
-								{commentThreads}
 								{selectedComment}
 								{onAddComment}
 								{onInsertCitation}

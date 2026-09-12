@@ -8,7 +8,7 @@
 	import { revealPmComment } from '$lib/editor/visual/extensions/pmComments';
 	import { COMMENT_RAIL_PEEK, COMMENT_RAIL_WIDTH, EDITOR_TEXT_MIN, EDITOR_TEXT_PAD } from '$lib/workspace/paneGeometry';
 	import { RailGeometry } from './railGeometry.svelte';
-	import { measureCmAnchors, measurePmAnchors, PENDING_ANCHOR } from './railAnchors';
+	import { cmTextExtent, measureCmAnchors, measurePmAnchors, PENDING_ANCHOR } from './railAnchors';
 	import { stackRailItems, type RailBounds, type RailItem } from './railLayout';
 	import CommentCard from './CommentCard.svelte';
 	import CommentComposerCard from './CommentComposerCard.svelte';
@@ -57,13 +57,15 @@
 			mutate: view.contentDOM,
 			resize: view.scrollDOM,
 			scroll: view.scrollDOM,
-			measure: () =>
-				measureCmAnchors(
+			measure: () => {
+				extent = cmTextExtent(view);
+				return measureCmAnchors(
 					view,
 					liveCommentRanges(view.state),
 					untrack(() => ctl.pending),
 					el
-				)
+				);
+			}
 		});
 	});
 	$effect(() => {
@@ -131,6 +133,10 @@
 
 	let inflow = $state(COMMENT_RAIL_WIDTH);
 	let tail = $state(0);
+	let extent = $state.raw({ box: 0, text: 0 });
+	const shift = $derived(
+		mode === 'source' && inflow < COMMENT_RAIL_WIDTH ? Math.max(0, Math.min(COMMENT_RAIL_WIDTH - inflow, extent.box - extent.text - 12)) : 0
+	);
 	function measureInflow() {
 		const box = mode === 'visual' ? scroller : cmView?.scrollDOM;
 		if (!box) return;
@@ -157,7 +163,9 @@
 		};
 		const go = (again = 2) => {
 			if (whole()) return;
-			box.scrollTo({ left: box.scrollWidth, behavior: glide() });
+			const edge = box.getBoundingClientRect().left + box.clientWidth;
+			const over = Math.max(...[...el.querySelectorAll('.comment-card')].map((c) => c.getBoundingClientRect().right - edge));
+			box.scrollTo({ left: box.scrollLeft + over, behavior: glide() });
 			let last = box.scrollLeft;
 			const stop = () => {
 				box.removeEventListener('scroll', onScroll);
@@ -241,7 +249,7 @@
 	class="comment-rail shrink-0 {mode === 'source' ? 'comment-rail-source' : 'relative z-[1]'} {showing && inflow < COMMENT_RAIL_WIDTH
 		? 'comment-rail-narrow'
 		: ''}"
-	style="width: {showing ? inflow : 0}px; --comment-rail-tail: {tail}px"
+	style="width: {showing ? inflow : 0}px; --comment-rail-tail: {tail}px; --comment-card-shift: {shift}px"
 	aria-label={m.wsview_comments_label()}
 	onclick={() => reveal()}
 	onkeydown={(e) => {

@@ -9,5 +9,6 @@ export function nativeContextMenus(): boolean {
 }
 
 export function nativeDialogs(): boolean {
+	if (typeof localStorage !== 'undefined' && localStorage.getItem('texpile:dialogs') === 'inapp') return false;
 	return !!nativeBridge()?.showMessageBox;
 }

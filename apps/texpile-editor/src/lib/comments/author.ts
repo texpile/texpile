@@ -1,8 +1,9 @@
 // Who a comment is from.
 //
-// Preferences first, then the repo's git user.name. The order matters: the Preferences name is the
-// only one the user set FOR this, so it has to win, but leaving it blank must not stop anyone
-// commenting - the whole point of the log is that it gets committed and read by another person.
+// The name from Preferences first, then the repo's git user.name. The order matters: the
+// Preferences name is the one the user typed to be seen by other people, so it has to win, but
+// leaving it blank must not stop anyone commenting - the whole point of the log is that it gets
+// committed and read by another person.
 //
 // There is no OS-account tier. The renderer cannot see the OS username without another IPC round
 // trip, and a browser deliberately exposes nothing of the sort; anyone with neither a Preferences
@@ -34,7 +35,7 @@ export function forgetAuthor(): void {
 async function gitName(root: string | null): Promise<string | null> {
 	if (!root) return null;
 	try {
-		return (await nativeBridge()?.gitUserName?.(root))?.name ?? null;
+		return (await nativeBridge()?.gitIdentity?.(root))?.name ?? null;
 	} catch {
 		// no bridge, no git, not a repo - all the same answer here, and none of them is an error
 		return null;

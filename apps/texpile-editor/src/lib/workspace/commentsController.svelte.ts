@@ -16,8 +16,10 @@ import {
 	type CommentAnchor,
 	type LooseHaystack
 } from '$lib/comments/anchor';
+import { MIN_QUOTE, POINT_WEAK, searchContext, searchQuote } from '$lib/comments/anchorSearch';
 import {
 	anchorEvent,
+	deleteEvent,
 	deleteMessageEvent,
 	editEvent,
 	moveEvent,
@@ -128,6 +130,15 @@ export class CommentsController {
 	get threads(): CommentThread[] {
 		return this.store.threads;
 	}
+
+	get ghosts(): Set<string> {
+		const out = new Set<string>();
+		const expanded = new Set(this.ranges.filter((r) => r.to > r.from).map((r) => r.id));
+		for (const r of this.ranges) if (r.to === r.from) out.add(r.id);
+		for (const t of this.store.threads) if (!t.anchor.quote && !expanded.has(t.id)) out.add(t.id);
+		for (const [id, a] of this.knownAnchors) if (!a.quote && !expanded.has(id)) out.add(id);
+		return out;
+	}
 	get activeFile(): string | null {
 		return this.file;
 	}
@@ -145,6 +156,12 @@ export class CommentsController {
 		this.lastWords.clear();
 		this.carried = null;
 		await this.store.load(root);
+		const ghosts = this.store.threads.filter((t) => !t.anchor.quote);
+		if (ghosts.length && this.store.writable) {
+			const by = await this.author();
+			const at = new Date().toISOString();
+			await this.commit(...ghosts.map((t) => deleteEvent({ thread: t.id, by, at })));
+		}
 	}
 
 	/**
@@ -276,6 +293,15 @@ export class CommentsController {
 				continue;
 			}
 			const prior = known.get(t.id);
+			if (!(prior ?? t.anchor).quote) {
+				const back = this.revive(t, text, (prior ?? t.anchor).start);
+				if (back) {
+					ranges.push({ id: t.id, from: back.start, to: back.end, resolved: t.resolved });
+					known.set(t.id, back);
+					knownChanged = true;
+				}
+				continue;
+			}
 			// loose second: an anchor authored in the visual editor is rendered-dialect, and only the
 			// normalized search can carry it back onto source with its wraps, escapes and ligatures
 			let hit = null;
@@ -290,6 +316,7 @@ export class CommentsController {
 			if (hit) {
 				ranges.push({ id: t.id, from: hit.from, to: hit.to, resolved: t.resolved });
 				if (hit.weak) weak.add(t.id);
+				this.lastWords.set(t.id, buildAnchor(text, hit.from, hit.to));
 			} else lost.add(t.id);
 		}
 		if (knownChanged) this.knownAnchors = known;
@@ -312,9 +339,17 @@ export class CommentsController {
 			this.lastWords.set(t.id, exact);
 			return exact;
 		}
+		return this.revive(t, text, exact.start) ?? exact;
+	}
+	private revive(t: CommentThread, text: string, hint: number): CommentAnchor | null {
 		const words = this.lastWords.get(t.id) ?? (t.anchor.quote ? t.anchor : null);
-		if (!words || !text.startsWith(words.quote, exact.start)) return exact;
-		return buildAnchor(text, exact.start, exact.start + words.quote.length);
+		if (!words) return null;
+		const hit =
+			words.quote.length < MIN_QUOTE
+				? searchContext(text, words.quote, words.prefix, words.suffix, hint)
+				: searchQuote(text, words.quote, words.prefix, words.suffix, hint);
+		if (!hit || hit.context < Math.min(POINT_WEAK, words.prefix.length + words.suffix.length)) return null;
+		return buildAnchor(text, hit.from, hit.to);
 	}
 
 	/**
@@ -489,7 +524,9 @@ export class CommentsController {
 	/** one thread's range on the active file, from the live text; lost there when the quote is not */
 	private placeOne(id: string, anchor: CommentAnchor, resolved: boolean): void {
 		const text = this.fresh();
-		const hit = resolveAnchor(text, anchor) ?? resolveAnchorLoose(text, anchor, this.dialect());
+		const hit = anchor.quote
+			? (resolveAnchor(text, anchor) ?? resolveAnchorLoose(text, anchor, this.dialect()))
+			: { from: anchor.start, to: anchor.end, exact: true, weak: false };
 		const rest = this.ranges.filter((r) => r.id !== id);
 		this.ranges = hit ? [...rest, { id, from: hit.from, to: hit.to, resolved }] : rest;
 		if (hit) this.activeLost.delete(id);
@@ -593,9 +630,11 @@ export class CommentsController {
 		const from = relativeTo(root, fromAbs);
 		const to = relativeTo(root, toAbs);
 		if (from === to) return;
+		if (this.file && (this.file === from || this.file.startsWith(from + '/'))) this.file = to + this.file.slice(from.length);
 		const affected = this.store.threads.some((t) => t.file === from || t.file.startsWith(from + '/'));
 		if (!affected) return;
 		await this.commit(moveEvent({ from, to, by: await this.author(), at: new Date().toISOString() }));
+		this.resolve();
 	}
 
 	/** a guest's catch-up: the host's whole log, served over the blob channel on join */

@@ -9,21 +9,8 @@
 // Ranges arrive already resolved. Anchoring lives in $lib/comments/anchor and runs on load; once a
 // range is in this field, CodeMirror's own mapping keeps it correct through every edit, exactly and
 // for free. Nothing here re-searches the document.
-import {
-	EditorView,
-	Decoration,
-	type DecorationSet,
-	ViewPlugin,
-	gutterLineClass,
-	GutterMarker,
-	hoverTooltip,
-	showTooltip,
-	type BlockInfo,
-	type Tooltip,
-	WidgetType
-} from '@codemirror/view';
+import { EditorView, Decoration, type DecorationSet, ViewPlugin, gutterLineClass, GutterMarker, type BlockInfo } from '@codemirror/view';
 import { StateEffect, StateField, RangeSet, type Extension, type EditorState } from '@codemirror/state';
-import type { CommentMessage } from '$lib/comments/log';
 import { settings, updateSettings } from '$lib/settings';
 import { observe } from '$lib/runes/observe.svelte';
 import { m } from '$lib/paraglide/messages';
@@ -34,64 +21,6 @@ export type CommentRange = {
 	to: number;
 	resolved: boolean;
 };
-
-/** what the hover card shows for a thread, oldest message first */
-export type CommentPreview = { messages: Pick<CommentMessage, 'by' | 'body'>[] };
-
-/** enough to know what a thread is about without opening the panel */
-const PREVIEW_MESSAGES = 3;
-
-function previewCard(preview: CommentPreview): HTMLElement {
-	const card = document.createElement('div');
-	card.className = 'cm-tooltip-latex-hover cm-comment-preview';
-	for (const msg of preview.messages.slice(0, PREVIEW_MESSAGES)) {
-		const row = card.appendChild(document.createElement('div'));
-		row.className = 'cm-comment-preview-message';
-		const by = row.appendChild(document.createElement('div'));
-		by.className = 'cm-comment-preview-by';
-		by.textContent = msg.by;
-		row.appendChild(document.createElement('div')).textContent = msg.body;
-	}
-	const more = preview.messages.length - PREVIEW_MESSAGES;
-	if (more > 0) {
-		const rest = card.appendChild(document.createElement('div'));
-		rest.className = 'cm-comment-preview-by';
-		rest.textContent = m.comments_preview_more({ count: more });
-	}
-	return card;
-}
-
-/** the card over commented text, the way a macro gets its documentation card */
-function previewOnHover(preview: (id: string) => CommentPreview | null): Extension {
-	return hoverTooltip(
-		(view, pos) => {
-			const hit = commentAt(view.state, pos);
-			if (!hit || hit.resolved) return null;
-			const thread = preview(hit.id);
-			if (!thread?.messages.length) return null;
-			return { pos: hit.from, end: hit.to, above: true, create: () => ({ dom: previewCard(thread) }) };
-		},
-		{ hoverTime: 250 }
-	);
-}
-
-// the gutter's card is driven by its own mouse handlers, so it lives in a field the handlers set
-const setGutterPreview = StateEffect.define<{ pos: number; preview: CommentPreview } | null>();
-
-const gutterPreview = StateField.define<Tooltip | null>({
-	create: () => null,
-	update(tooltip, tr) {
-		for (const e of tr.effects) {
-			if (e.is(setGutterPreview)) {
-				const next = e.value;
-				return next ? { pos: next.pos, above: true, create: () => ({ dom: previewCard(next.preview) }) } : null;
-			}
-		}
-		if (tooltip && tr.docChanged) return { ...tooltip, pos: tr.changes.mapPos(tooltip.pos) };
-		return tooltip;
-	},
-	provide: (f) => showTooltip.from(f)
-});
 
 /** the thread whose mark sits on this line: the one that begins there */
 function threadStartingOn(state: EditorState, line: BlockInfo): CommentRange | null {
@@ -161,28 +90,6 @@ const commentDecorations = StateField.define<DecorationSet>({
 	provide: (f) => EditorView.decorations.from(f)
 });
 
-class CommentPointWidget extends WidgetType {
-	constructor(
-		readonly id: string,
-		readonly focused: boolean
-	) {
-		super();
-	}
-	override eq(other: CommentPointWidget): boolean {
-		return other.id === this.id && other.focused === this.focused;
-	}
-	toDOM(): HTMLElement {
-		const el = document.createElement('span');
-		el.className = `cm-comment cm-comment-point${this.focused ? ' cm-comment-focused' : ''}`;
-		el.dataset.comment = this.id;
-		el.setAttribute('aria-hidden', 'true');
-		return el;
-	}
-	override ignoreEvent(): boolean {
-		return false;
-	}
-}
-
 function build(state: EditorState): DecorationSet {
 	const focus = state.field(focusedThread, false) ?? null;
 	return RangeSet.of(
@@ -190,14 +97,12 @@ function build(state: EditorState): DecorationSet {
 			// resolved threads are not decorated at all. The point of resolving is that the argument
 			// is over, and leaving a mark on the text says the opposite; the panel still lists them
 			// under "Show resolved".
-			.filter((r) => !r.resolved)
+			.filter((r) => !r.resolved && r.to > r.from)
 			.map((r) =>
-				r.to > r.from
-					? Decoration.mark({
-							class: `cm-comment${r.id === focus ? ' cm-comment-focused' : ''}`,
-							attributes: { 'data-comment': r.id }
-						}).range(r.from, r.to)
-					: Decoration.widget({ widget: new CommentPointWidget(r.id, r.id === focus), side: -1 }).range(r.from)
+				Decoration.mark({
+					class: `cm-comment${r.id === focus ? ' cm-comment-focused' : ''}`,
+					attributes: { 'data-comment': r.id }
+				}).range(r.from, r.to)
 			),
 		true
 	);
@@ -211,35 +116,14 @@ function build(state: EditorState): DecorationSet {
  * its own config, and the gutter here is the caller's - the whole point of gutterLineClass was to
  * mark the line-number cells rather than add a column of our own.
  */
-export function commentGutterHandlers(onSelect: (id: string) => void, preview?: (id: string) => CommentPreview | null) {
-	const hideCard = (view: EditorView) => {
-		if (view.state.field(gutterPreview, false)) view.dispatch({ effects: setGutterPreview.of(null) });
-	};
+export function commentGutterHandlers(onSelect: (id: string) => void) {
 	return {
 		mousedown(view: EditorView, line: BlockInfo): boolean {
 			const hit = threadStartingOn(view.state, line);
 			// unmarked lines fall through, so clicking a bare line number keeps doing whatever it did
 			if (!hit) return false;
-			hideCard(view);
 			onSelect(hit.id);
 			return true;
-		},
-		mousemove(view: EditorView, line: BlockInfo): boolean {
-			if (!preview) return false;
-			const hit = threadStartingOn(view.state, line);
-			const thread = hit ? preview(hit.id) : null;
-			if (!hit || !thread?.messages.length) {
-				hideCard(view);
-				return false;
-			}
-			// the pointer crossing the same cell must not rebuild the card on every pixel
-			if (view.state.field(gutterPreview, false)?.pos === hit.from) return false;
-			view.dispatch({ effects: setGutterPreview.of({ pos: hit.from, preview: thread }) });
-			return false;
-		},
-		mouseleave(view: EditorView): boolean {
-			hideCard(view);
-			return false;
 		}
 	};
 }
@@ -289,17 +173,13 @@ type CommentsConfig = {
 	onAdd?: (from: number, to: number) => void;
 	/** label for the tooltip button, so the caller owns translation */
 	addLabel?: string;
-	/** the thread behind an id, for the hover card; without it hovering shows nothing */
-	preview?: (id: string) => CommentPreview | null;
 };
 
-export function comments({ onSelect, onAdd, addLabel = 'Comment', preview }: CommentsConfig = {}): Extension {
+export function comments({ onSelect, onAdd, addLabel = 'Comment' }: CommentsConfig = {}): Extension {
 	return [
 		focusedThread,
 		commentRanges,
 		commentDecorations,
-		gutterPreview,
-		preview ? previewOnHover(preview) : [],
 		// only the line a thread BEGINS on. Marking every line a range covered read as four separate
 		// comments on a four-line quote.
 		gutterLineClass.compute([commentRanges], (state) => {
@@ -358,6 +238,7 @@ function addButton(onAdd: (from: number, to: number) => void, label: string): Ex
 			private readonly dom: HTMLDivElement;
 			private timer: ReturnType<typeof setTimeout> | null = null;
 			private shown = false;
+			private added: { from: number; to: number } | null = null;
 			private readonly resize: ResizeObserver;
 			private readonly unsub: () => void;
 
@@ -380,7 +261,10 @@ function addButton(onAdd: (from: number, to: number) => void, label: string): Ex
 				};
 				button(label, COMMENT_ICON, '', () => {
 					const sel = view.state.selection.main;
-					if (!sel.empty) onAdd(sel.from, sel.to);
+					if (sel.empty) return;
+					this.added = { from: sel.from, to: sel.to };
+					onAdd(sel.from, sel.to);
+					this.hide();
 				});
 				button(m.comments_pill_off(), X_ICON, ' cm-comment-add-off', () => {
 					updateSettings({ commentPill: false });
@@ -428,11 +312,13 @@ function addButton(onAdd: (from: number, to: number) => void, label: string): Ex
 						const sel = view.state.selection.main;
 						// turned off in Preferences: the pill never appears
 						if (settings.current.commentPill === false || sel.empty) return null;
+						if (this.added && this.added.from === sel.from && this.added.to === sel.to) return null;
 						const coords = view.coordsAtPos(sel.head);
 						if (!coords) return null;
 						const scroller = view.scrollDOM.getBoundingClientRect();
 						// scrolled out of the pane: hide rather than park the pill at the edge
 						if (coords.top < scroller.top || coords.top > scroller.bottom) return null;
+						if (view.contentDOM.getBoundingClientRect().left < scroller.left) return null;
 						const height = this.dom.getBoundingClientRect().height;
 						return {
 							top: (coords.top + coords.bottom) / 2 - height / 2,
@@ -484,19 +370,6 @@ const theme = EditorView.baseTheme({
 	'.cm-comment-focused': {
 		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 30%, transparent)'
 	},
-	'.cm-comment-point': {
-		display: 'inline-block',
-		width: '3px',
-		height: '1.1em',
-		verticalAlign: 'text-bottom',
-		margin: '0 1px',
-		borderRadius: '1px',
-		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 55%, transparent)',
-		cursor: 'pointer'
-	},
-	'.cm-comment-point.cm-comment-focused': {
-		backgroundColor: 'color-mix(in srgb, var(--comment-tint) 90%, transparent)'
-	},
 	// an inset shadow rather than a border or a dot: it is painted inside the cell that is already
 	// there, so a commented line costs the gutter no width. Scoped to the line-number column,
 	// because gutterLineClass marks the cell in EVERY gutter on that line, the lint one included.
@@ -507,19 +380,6 @@ const theme = EditorView.baseTheme({
 	},
 	'.cm-lineNumbers .cm-comment-line:hover': {
 		boxShadow: 'inset 3px 0 0 var(--comment-tint)'
-	},
-	'.cm-comment-preview': {
-		maxWidth: '360px',
-		borderRadius: '4px',
-		whiteSpace: 'pre-wrap',
-		overflowWrap: 'anywhere'
-	},
-	'.cm-comment-preview-message + .cm-comment-preview-message': {
-		marginTop: '6px'
-	},
-	'.cm-comment-preview-by': {
-		fontSize: '0.85em',
-		opacity: '0.7'
 	},
 	// Only geometry lives here. The pill's colours need the app's surface tokens and a dark-mode
 	// branch, which a CodeMirror baseTheme cannot express, so they are in app.css.

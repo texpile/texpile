@@ -117,28 +117,15 @@ export function pmCommentAt(state: EditorState, pos: number): PmCommentRange | n
 	return best;
 }
 
-function pointNode(id: string, focused: boolean): HTMLElement {
-	const el = document.createElement('span');
-	el.className = `pm-comment pm-comment-point${focused ? ' pm-comment-focused' : ''}`;
-	el.dataset.comment = id;
-	el.setAttribute('aria-hidden', 'true');
-	return el;
-}
-
 function build(doc: PMNode, ranges: PmCommentRange[], focused: string | null, pending: { from: number; to: number } | null): DecorationSet {
 	const decos = ranges
 		// resolved threads draw nothing, same as the source editor: the argument is over
-		.filter((r) => !r.resolved)
+		.filter((r) => !r.resolved && r.to > r.from)
 		.map((r) =>
-			r.to > r.from
-				? Decoration.inline(r.from, r.to, {
-						class: `pm-comment${r.id === focused ? ' pm-comment-focused' : ''}`,
-						'data-comment': r.id
-					})
-				: Decoration.widget(r.from, () => pointNode(r.id, r.id === focused), {
-						side: -1,
-						key: `comment-point:${r.id}:${r.id === focused ? 1 : 0}`
-					})
+			Decoration.inline(r.from, r.to, {
+				class: `pm-comment${r.id === focused ? ' pm-comment-focused' : ''}`,
+				'data-comment': r.id
+			})
 		);
 	if (pending && pending.to > pending.from) decos.push(Decoration.inline(pending.from, pending.to, { class: 'pm-comment-pending' }));
 	return DecorationSet.create(doc, decos);

@@ -8,7 +8,7 @@ import { isValidShareCode } from './e2e/shareCode';
 import { CollabSession, manifestOf, locksOf, metaOf, textOf, type PeerInfo, type ManifestEntry } from './session';
 import { GhostDirs } from './guestGhostDirs';
 import { GuestFileCache } from './guestFileCache';
-import { guestColor } from './guestColors';
+import { presenceIdentity } from './identity';
 import { GuestSyncRequests } from './guestSyncRequests';
 import { RelayTransport } from './transport';
 import type { SharedCompileIntel } from './editSession';
@@ -111,7 +111,7 @@ class GuestCollabController {
 			return;
 		}
 		this.status = 'joining';
-		this.selfName = name.trim() || 'Guest';
+		this.selfName = presenceIdentity('guest', 0, name).name;
 		try {
 			const keys = await deriveSessionKeys(code);
 			const relayUrl = settings.current.collabRelayUrl.trim();
@@ -122,7 +122,7 @@ class GuestCollabController {
 				transport,
 				key: keys.contentKey,
 				role: 'guest',
-				user: { name: name.trim() || 'Guest', color: guestColor(doc.clientID) },
+				user: presenceIdentity('guest', doc.clientID, name),
 				events: {
 					onPeersChange: (peers) => {
 						this.peers = [...peers.values()];
@@ -381,6 +381,13 @@ class GuestCollabController {
 			this.status = 'idle';
 			this.endedReason = '';
 		}
+	}
+
+	refreshIdentity(): void {
+		if (!this.session) return;
+		const me = presenceIdentity('guest', this.doc?.clientID ?? 0);
+		this.selfName = me.name;
+		this.session.setIdentity(me);
 	}
 
 	/** back to a clean slate (from the goodbye screen). */
