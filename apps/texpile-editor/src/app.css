@@ -625,6 +625,7 @@ select option {
 	--color-muted: var(--muted-text);
 	--color-faint: var(--faint-text);
 	--color-primary-tint: var(--primary-tint);
+	--color-primary-tint-solid: var(--primary-tint-solid);
 	--color-primary-wash: var(--primary-wash);
 	--color-primary-flood: var(--primary-flood);
 	--color-secondary-tint: var(--secondary-tint);
@@ -657,6 +658,7 @@ select option {
 	--color-surface-tint: var(--surface-tint);
 	--color-surface-wash: var(--surface-wash);
 	--color-surface-strong-wash: var(--surface-strong-wash);
+	--color-surface-strong-wash-solid: var(--surface-strong-wash-solid);
 	--color-surface-scrim: var(--surface-scrim);
 	--color-primary-ink: var(--primary-ink);
 	--color-secondary-ink: var(--secondary-ink);

@@ -111,20 +111,17 @@
 		</button>
 		{#if editor.renaming !== entry.path}
 			<!-- one slot, not three: the row's actions live in the context menu this opens, so hovering
-			     never widens the row. `hidden`, not opacity-0, so it reserves no width when not hovered.
+			     never widens the row.
 			     sticky: rows can be wider than the pane, and parked at the row's end this would sit off
-			     screen until you scrolled to it.
-			     No fill of its own, deliberately. It used to carry one so that a name scrolled under
-			     it could not show through - but a second painted surface over an already-lit row is
-			     visible however carefully its colour is matched: instant against the row's fade,
-			     square against the row's rounded-base ends. A name bleeding through while the tree is
-			     scrolled sideways is the cheaper of the two. -->
-			<span class="sticky right-0 z-10 hidden shrink-0 items-center bg-transparent pr-1 group-hover:flex">
-				<!-- the icon answers the hover, not a second fill: the row is already lit, and
-				     preset-tonal washed 10% white over it, leaving a paler rounded-base patch with a
-				     visible seam against the row it sits on -->
+			     screen until you scrolled to it. -->
+			{@const fill = isActive(entry)
+				? 'bg-primary-tint-solid'
+				: sel.selected.includes(entry.path)
+					? 'bg-surface-strong-wash-solid'
+					: 'bg-surface-200-800'}
+			<span class="sticky right-0 z-10 flex w-0 shrink-0 items-center justify-end">
 				<button
-					class="btn-icon btn-icon-xs text-muted hover:text-surface-950-50 bg-transparent transition-colors"
+					class="btn-icon btn-icon-xs text-muted hover:text-surface-950-50 mr-1 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 {fill}"
 					use:tip={m.filetree_row_actions()}
 					aria-label={m.filetree_row_actions()}
 					onclick={(e) => {

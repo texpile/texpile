@@ -238,7 +238,7 @@
 
 <aside
 	bind:this={rail}
-	class="comment-rail shrink-0 {mode === 'source' ? 'comment-rail-source' : 'relative z-[1]'} {inflow < COMMENT_RAIL_WIDTH
+	class="comment-rail shrink-0 {mode === 'source' ? 'comment-rail-source' : 'relative z-[1]'} {showing && inflow < COMMENT_RAIL_WIDTH
 		? 'comment-rail-narrow'
 		: ''}"
 	style="width: {showing ? inflow : 0}px; --comment-rail-tail: {tail}px"

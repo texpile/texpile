@@ -9,6 +9,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: comments keep their exact place across saves after edits made in Texpile, in both editors
 - fix: the Comments panel closes a thread with Resolve; the separate Delete is gone
 - fix: a comment whose text is deleted in Texpile stays where the text was instead of detaching
+- fix: the file tree's hover button keeps the tree's width and covers the name it sits over
 
 ## [1.1.0] - 2026-09-10
 

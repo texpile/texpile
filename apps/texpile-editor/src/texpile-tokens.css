@@ -29,6 +29,7 @@ html {
 	   or selected state. Tokens rather than bg-primary-500/15 because Tailwind bakes an alpha-modified
 	   family colour to Skeleton's base placeholder, a grey that never changes with the theme */
 	--primary-tint: color-mix(in oklab, var(--color-primary-500) 15%, transparent);
+	--primary-tint-solid: color-mix(in oklab, var(--color-primary-500) 15%, var(--color-surface-50-950));
 	--primary-wash: color-mix(in oklab, var(--color-primary-500) 35%, transparent);
 	--primary-flood: color-mix(in oklab, var(--color-primary-500) 55%, transparent);
 	--secondary-tint: color-mix(in oklab, var(--color-secondary-500) 15%, transparent);
@@ -125,6 +126,7 @@ html {
 	--surface-tint: color-mix(in oklab, var(--color-surface-200-800) 40%, transparent);
 	--surface-wash: color-mix(in oklab, var(--color-surface-200-800) 60%, transparent);
 	--surface-strong-wash: color-mix(in oklab, var(--color-surface-300-700) 60%, transparent);
+	--surface-strong-wash-solid: color-mix(in oklab, var(--color-surface-300-700) 60%, var(--color-surface-50-950));
 	--surface-scrim: color-mix(in oklab, var(--color-surface-100-900) 60%, transparent);
 	/* CodeMirror syntax roles (cmHighlight.ts) */
 	--syntax-comment: var(--muted-text);
