@@ -1,6 +1,7 @@
 // Builds and releases the live MathfieldElement a math node view swaps in for its static
 // placeholder once the node nears the viewport.
 import { MathfieldElement } from 'mathlive';
+import { isMac } from '$lib/platform';
 
 export type FieldListeners = {
 	input: () => void;
@@ -52,6 +53,22 @@ export function buildMathField(
 	}
 
 	return { field, origFocus };
+}
+
+/**
+ * On macOS, drops mathlive's `[IntlBackslash]` binding (it opens a LaTeX group with a `\`). The
+ * binding is there for UK keyboards, where that key types a backslash; on a Mac it is the key left
+ * of 1 and never does. It also fires on keys nobody pressed: mathlive maps a dead-key character (`^`
+ * on Nordic and German Macs) back to a physical key through a keyboard layout it guesses from what
+ * the user has typed, and a backslash typed as Shift+Option+7 makes that guess German, where `^`
+ * sits on IntlBackslash. From then on every `^` wrote `\^` instead of a superscript, in every field,
+ * until a restart. A no-op on a field outside the document: the keybindings getter throws there.
+ */
+export function dropIntlBackslashBinding(field: MathfieldElement): void {
+	if (!isMac || !field.isConnected) return;
+	const kept = field.keybindings.filter((binding) => binding.key !== '[IntlBackslash]');
+	// eslint-disable-next-line no-param-reassign -- configuring the field handed in is the point
+	if (kept.length !== field.keybindings.length) field.keybindings = kept;
 }
 
 export function releaseMathField(

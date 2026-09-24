@@ -13,7 +13,7 @@ import { syncBlockMathAttrs, isMathLatexEmpty } from './mathEnvironments';
 import { mathLatexEquivalent } from './mlEquivalent';
 import { renderEquationNumbers } from './equationNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
-import { buildMathField, releaseMathField, type FieldListeners } from './mathFieldFactory';
+import { buildMathField, releaseMathField, dropIntlBackslashBinding, type FieldListeners } from './mathFieldFactory';
 import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic';
 import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 import { mathMacros } from './mathMacros.svelte';
@@ -229,6 +229,9 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
+		// keys only reach a focused field, and a focused field is in the document, which the
+		// keybindings getter needs; materialize() cannot promise that on its append path
+		if (this.mathField) dropIntlBackslashBinding(this.mathField);
 		this.updateOutline(true);
 	}
 	handleBlur() {
