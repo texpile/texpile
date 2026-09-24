@@ -13,7 +13,7 @@ import { syncBlockMathAttrs, isMathLatexEmpty } from './mathEnvironments';
 import { mathLatexEquivalent } from './mlEquivalent';
 import { renderEquationNumbers } from './equationNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
-import { buildMathField, releaseMathField, type FieldListeners } from './mathFieldFactory';
+import { buildMathField, releaseMathField, dropIntlBackslashBinding, type FieldListeners } from './mathFieldFactory';
 import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic';
 import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 import { mathMacros } from './mathMacros.svelte';
@@ -229,6 +229,8 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
+		// mathlive#3066 hotfix
+		if (this.mathField) dropIntlBackslashBinding(this.mathField);
 		this.updateOutline(true);
 	}
 	handleBlur() {

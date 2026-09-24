@@ -1,6 +1,7 @@
 // Builds and releases the live MathfieldElement a math node view swaps in for its static
 // placeholder once the node nears the viewport.
 import { MathfieldElement } from 'mathlive';
+import { isMac } from '$lib/platform';
 
 export type FieldListeners = {
 	input: () => void;
@@ -52,6 +53,14 @@ export function buildMathField(
 	}
 
 	return { field, origFocus };
+}
+
+// hotfix for https://github.com/arnog/mathlive/issues/3066
+export function dropIntlBackslashBinding(field: MathfieldElement): void {
+	if (!isMac || !field.isConnected) return;
+	const kept = field.keybindings.filter((binding) => binding.key !== '[IntlBackslash]');
+	// eslint-disable-next-line no-param-reassign
+	if (kept.length !== field.keybindings.length) field.keybindings = kept;
 }
 
 export function releaseMathField(
