@@ -229,8 +229,7 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
-		// keys only reach a focused field, and a focused field is in the document, which the
-		// keybindings getter needs; materialize() cannot promise that on its append path
+		// mathlive#3066 hotfix
 		if (this.mathField) dropIntlBackslashBinding(this.mathField);
 		this.updateOutline(true);
 	}
