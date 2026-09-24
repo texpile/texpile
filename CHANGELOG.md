@@ -6,6 +6,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 ## [Unreleased]
 
 - fix: `^` in the visual math editor no longer turns into `\^` on Nordic and German Macs after typing a backslash
+- fix: `\boxed` and black math in the visual editor are visible in dark themes
 
 ## [1.2.0] - 2026-09-23
 

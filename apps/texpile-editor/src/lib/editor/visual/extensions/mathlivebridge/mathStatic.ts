@@ -22,6 +22,7 @@
 // would visibly change as it went live, which is the twitch stage 3 exists to avoid.
 import { convertLatexToMarkup } from 'mathlive';
 import { mathMacros } from './mathMacros.svelte';
+import { themeStaticMarkup } from './themeBlack';
 import 'mathlive/static.css';
 
 export const PLACEHOLDER_CLASS = 'math-static-placeholder';
@@ -106,7 +107,7 @@ export function typesetNow(budgetMs: number): void {
 function typeset(el: HTMLElement, latex: string): void {
 	try {
 		// 'math' matches MathfieldElement's own default mode; anything else would resize on upgrade
-		el.innerHTML = convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current });
+		el.innerHTML = themeStaticMarkup(convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current }));
 	} catch {
 		// mathlive throws outright on some malformed input. Fall back to the source text so the node
 		// still occupies roughly the right space instead of collapsing to nothing.

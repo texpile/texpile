@@ -2,6 +2,7 @@
 // placeholder once the node nears the viewport.
 import { MathfieldElement } from 'mathlive';
 import { isMac } from '$lib/platform';
+import { themeColorMap } from './themeBlack';
 
 export type FieldListeners = {
 	input: () => void;
@@ -26,6 +27,7 @@ export function buildMathField(
 	field.style.backgroundColor = 'transparent';
 	// highlight when the cursor is inside the field
 	field.style.setProperty('--contains-highlight-background-color', 'hsla(210, 100%, 85%, 0.4)');
+	field.colorMap = themeColorMap;
 
 	field.setValue(latex, { format: 'latex-expanded' });
 
