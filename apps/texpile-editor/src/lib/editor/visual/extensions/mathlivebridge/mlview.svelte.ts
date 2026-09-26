@@ -1,4 +1,4 @@
-import { TextSelection, type PluginKey } from 'prosemirror-state';
+import { NodeSelection, TextSelection, type PluginKey } from 'prosemirror-state';
 import type { MathLivePluginState } from './mlplugin';
 import { MathfieldElement } from 'mathlive';
 import type { EditorView, NodeView } from 'prosemirror-view';
@@ -9,7 +9,7 @@ import { mount, unmount } from 'svelte';
 import MathSettings from './MathSettings.svelte';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
-import { syncBlockMathAttrs, isMathLatexEmpty } from './mathEnvironments';
+import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
 import { mathLatexEquivalent } from './mlEquivalent';
 import { renderEquationNumbers } from './equationNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
@@ -385,6 +385,20 @@ export class MathLiveView implements NodeView {
 	keydown(event: KeyboardEvent) {
 		const field = this.mathField;
 		if (!field) return; // a key event means the field exists; this is a type guard
+		if (
+			this.isblock &&
+			this.view.editable &&
+			event.key === 'Enter' &&
+			event.shiftKey &&
+			!event.altKey &&
+			!event.ctrlKey &&
+			!event.metaKey
+		) {
+			const pos = this.getPos() + this.node.nodeSize;
+			const tr = this.view.state.tr.insert(pos, emptyMathBlockLike(this.node));
+			this.view.dispatch(tr.setSelection(NodeSelection.create(tr.doc, pos)));
+			return;
+		}
 		this.exit.keydown(event, field);
 	}
 

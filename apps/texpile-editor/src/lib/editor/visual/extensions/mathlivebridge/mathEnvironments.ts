@@ -168,3 +168,19 @@ export function isMathLatexEmpty(rawValue: string): boolean {
 
 	return strippedValue.length === 0;
 }
+
+/** an empty display of the same kind, for Shift+Enter. */
+export function emptyMathBlockLike(node: Node): Node {
+	const { environment, numbered, starredEnv, continuesAfter } = node.attrs;
+	const { schema } = node.type;
+	// continuesAfter: the prose after this display now follows the new one
+	if (environment) {
+		// alignat needs a column count ({2}) an empty copy would not have; align lines up the same way without one
+		const kind = environment === 'alignat' ? 'align' : environment;
+		const env = numbered ? kind : `${kind}*`;
+		const latex = `\\begin{${env}}\\end{${env}}`;
+		return node.type.create({ ...computeMathAttrs(latex), continuesAfter }, schema.text(latex));
+	}
+	const label = numbered ? generateLabel('equation') : null;
+	return node.type.create({ numbered, starredEnv, continuesAfter, label }, schema.text(' '));
+}

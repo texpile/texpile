@@ -14,6 +14,7 @@ Equations are edited as math on the page, in every format. Two shortcuts cover m
 | ---------------- | ------------- | ------------------------------------------------------------------------------- |
 | Shortcut         | Ctrl+M        | Inline equation, flowing with the text.                                         |
 | Shortcut         | Ctrl+Shift+M  | Display equation, on its own line.                                              |
+| Shortcut         | Shift+Enter   | In a display equation: a new one of the same kind below it.                     |
 | Menu             | Insert › Math | Inline equation, Display equation, and in a LaTeX file every environment below. |
 
 ## The math toolbar
