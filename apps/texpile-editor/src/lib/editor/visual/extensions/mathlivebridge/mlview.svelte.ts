@@ -234,6 +234,8 @@ export class MathLiveView implements NodeView {
 		this.updateOutline(true);
 	}
 	handleBlur() {
+		// alt-tab blurs the field too: keep its caret (and keep it if empty) for when the window comes back
+		if (!document.hasFocus()) return;
 		const isEmpty = this.isMathfieldEmpty();
 
 		if (isEmpty && (this.exit.pendingDelete || !this.isNewlyCreated)) {
