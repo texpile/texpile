@@ -5,8 +5,9 @@
 	//
 	// A paste looks up at once; typing waits for a pause, so a DOI half typed is not looked up at
 	// every keystroke. Nothing is written until Cite: the preview is only a read.
-	import { BookPlus, Loader2 } from '@lucide/svelte';
+	import { BookPlus, FileText, Loader2 } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { parseWorkId, type WorkId } from './doiInput';
 	import { citeWork, lookUpWork, type Lookup } from './citeByDoi';
 	import { citeByDoi } from './citeByDoiState.svelte';
@@ -128,33 +129,34 @@
 				/>
 			</div>
 
-			<div class="min-h-24 px-3 py-3" aria-live="polite">
+			<div class="p-1.5" aria-live="polite">
 				{#if looking && id}
-					<div class="text-muted flex items-center gap-2 py-6 text-sm">
+					<div class="text-muted flex items-center gap-2 px-1.5 py-4 text-sm">
 						<Loader2 class="size-4 shrink-0 animate-spin" />
 						<span class="truncate">{m.cite_doi_looking({ id: id.kind === 'arxiv' ? `arXiv:${id.id}` : id.doi })}</span>
 					</div>
 				{:else if result?.state === 'found' || result?.state === 'cited'}
 					{@const r = result.state === 'found' ? result.work : result}
-					<div class="rounded-base bg-surface-100-900 px-3 py-2.5">
-						<div class="line-clamp-2 text-sm font-medium">{r.title || r.key}</div>
-						<div class="text-muted mt-0.5 truncate text-xs">
-							{[r.authors, r.venue, r.year].filter(Boolean).join(' · ')}
-						</div>
-						<div class="text-muted mt-1.5 flex min-w-0 items-center gap-1.5 text-xs">
-							<span class="shrink-0 font-mono">{r.key}</span>
-							<span aria-hidden="true">·</span>
-							<span class="truncate">
-								{result.state === 'found' ? m.cite_doi_adds_to({ name: result.bibName }) : m.cite_doi_already()}
-							</span>
-						</div>
-					</div>
+					<button
+						class="preset-tonal rounded-base grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 px-2.5 py-1.5 text-left text-sm"
+						onclick={cite}
+						use:tip={r.title}
+					>
+						<FileText class="text-muted size-4 shrink-0" />
+						<span class="min-w-0">
+							<span class="block truncate">{r.title || r.key}</span>
+							<span class="text-muted block truncate text-xs">{[r.authors, r.venue, r.year].filter(Boolean).join(' · ')}</span>
+						</span>
+						<span class="text-muted text-xs whitespace-nowrap">
+							{result.state === 'found' ? m.cite_doi_adds_to({ name: result.bibName }) : m.cite_doi_already()}
+						</span>
+					</button>
 				{:else if result?.state === 'error'}
-					<p class="text-error-ink py-6 text-sm">{errorText(result)}</p>
+					<p class="text-error-ink px-1.5 py-4 text-sm">{errorText(result)}</p>
 				{:else if input.trim() && !id}
-					<p class="text-muted py-6 text-sm">{m.cite_doi_unrecognized()}</p>
+					<p class="text-muted px-1.5 py-4 text-sm">{m.cite_doi_unrecognized()}</p>
 				{:else}
-					<p class="text-muted py-6 text-sm">{m.cite_doi_hint()}</p>
+					<p class="text-muted px-1.5 py-4 text-sm">{m.cite_doi_hint()}</p>
 				{/if}
 			</div>
 
