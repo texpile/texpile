@@ -142,6 +142,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		showProblems: () => toggleDockPanel(d, 'problems'),
 		showComments: () => toggleDockPanel(d, 'comments'),
 		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
+		citeByDoi: () => d.integrations.citeByDoi(),
 		save: () => d.wsdoc.save(),
 		activateTab: (t: Tab) => d.editFlow().activateTab(t),
 		closeTab: (t: Tab) => d.editFlow().closeTab(t),
@@ -294,6 +295,8 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		openTypstPreview: () => d.typstPreview.enable(),
 		isTypstProject: () => d.cc.typstProject,
 		canZoteroCite: () => d.integrations.canZoteroCite(),
-		insertZoteroCitation: () => d.integrations.insertZoteroCitation()
+		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
+		canCiteByDoi: () => d.integrations.canCiteByDoi(),
+		citeByDoi: () => d.integrations.citeByDoi()
 	};
 }

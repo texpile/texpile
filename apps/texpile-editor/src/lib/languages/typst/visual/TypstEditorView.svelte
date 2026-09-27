@@ -58,6 +58,8 @@
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		/** pick citations from Zotero, offered in the context menu when present */
 		onInsertCitation?: () => void;
+		/** cite by DOI or arXiv ID, offered in the context menu when present */
+		onCiteByDoi?: () => void;
 		onCommentsPlaced?: (lost: string[]) => void;
 		addCommentLabel?: string;
 		/** a composer is open for a selection here; false clears the pending selection tint */
@@ -85,6 +87,7 @@
 		onSelectComment,
 		onAddComment,
 		onInsertCitation,
+		onCiteByDoi,
 		onCommentsPlaced,
 		addCommentLabel = 'Comment',
 		commentPendingActive = false
@@ -200,7 +203,7 @@
      nothing, so the viewport upgrades could not run until after it was already on screen -->
 <main bind:this={editor} class={BUILDING_CLASS}></main>
 
-<ContextMenu dialect="typst" {onAddComment} {sourceAnchor} {onInsertCitation} />
+<ContextMenu dialect="typst" {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} />
 
 <style lang="postcss">
 	@reference "../../../../app.css";

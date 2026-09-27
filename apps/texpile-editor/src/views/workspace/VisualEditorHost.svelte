@@ -40,6 +40,7 @@
 		onSelectComment,
 		onAddCommentAnchored,
 		onInsertCitation,
+		onCiteByDoi,
 		onJumpToLabel,
 		onJumpToDefinition,
 		onCommentsPlaced,
@@ -67,6 +68,7 @@
 		onSelectComment?: (id: string) => void;
 		onAddCommentAnchored?: (anchor: CommentAnchor | null) => void;
 		onInsertCitation?: () => void;
+		onCiteByDoi?: () => void;
 		onJumpToLabel?: (name: string) => boolean;
 		onJumpToDefinition?: (name: string) => boolean;
 		onCommentsPlaced?: (lost: string[]) => void;
@@ -158,6 +160,7 @@
 				{onSelectComment}
 				onAddComment={onAddCommentAnchored}
 				{onInsertCitation}
+				{onCiteByDoi}
 				{onCommentsPlaced}
 				{commentPendingActive}
 				addCommentLabel={m.comments_add()}
@@ -183,6 +186,7 @@
 				{onSelectComment}
 				onAddComment={onAddCommentAnchored}
 				{onInsertCitation}
+				{onCiteByDoi}
 				{onJumpToLabel}
 				{onJumpToDefinition}
 				{onCommentsPlaced}

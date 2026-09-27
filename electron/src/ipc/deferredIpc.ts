@@ -31,6 +31,7 @@ const steps: Array<() => Promise<void>> = [
 	async () => (await import('./toolchainIpc.js')).registerToolchainIpc(),
 	async () => (await import('./typstPreviewIpc.js')).registerTypstPreviewIpc(),
 	async () => (await import('../zotero.js')).registerZotero(),
+	async () => (await import('./doiIpc.js')).registerDoiIpc(),
 	async () => (await import('./agentIpc.js')).registerAgentIpc(),
 	async () => {
 		terminal = await import('./terminalIpc.js');

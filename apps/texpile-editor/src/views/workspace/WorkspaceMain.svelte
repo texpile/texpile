@@ -191,6 +191,7 @@
 			onAddCommentAnchored={canComment ? actions.beginCommentAnchored : undefined}
 			commentPendingActive={!!panes.commentPending}
 			onInsertCitation={panes.zoteroCite ? actions.insertZoteroCitation : undefined}
+			onCiteByDoi={panes.doiCite ? actions.citeByDoi : undefined}
 			onCommentsPlaced={actions.visualCommentsPlaced}
 			onSelectComment={actions.selectComment}
 			commentsCtl={fileMode.current ? undefined : commentsCtl}

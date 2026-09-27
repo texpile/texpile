@@ -20,7 +20,9 @@ import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
 import { graphicCandidateUrls, graphicSearchDirs } from '$lib/editor/visual/graphicsCandidates';
 import { setEditorFileAccess, setEditorGraphicDirs } from '$lib/editor/visual/fileAccess';
-import { insertCitationFromZotero, zoteroAvailable } from '$lib/zotero/insertFromZotero';
+import { insertCitationFromZotero, zoteroAvailable, type ZoteroInsertDeps } from '$lib/zotero/insertFromZotero';
+import { doiLookupAvailable } from '$lib/cite/citeByDoi';
+import { citeByDoi as citeByDoiDialog } from '$lib/cite/citeByDoiState.svelte';
 import { compileLog } from '$lib/stores/compileLogStore';
 import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore } from '$lib/stores/editorStore';
@@ -293,11 +295,28 @@ export class WorkspaceIntegrations {
 
 	insertZoteroCitation(): void {
 		if (!this.canZoteroCite()) return;
+		void insertCitationFromZotero(this.citeDeps());
+	}
+
+	// Cite by DOI (see lib/cite): the Zotero gate without Zotero - the entry lands in the same
+	// bibliography, so the open file must still be written in the main's language
+	canCiteByDoi(): boolean {
+		const kind = this.d.wsdoc.doc.kind;
+		return (
+			!this.d.guest() && doiLookupAvailable() && !!mainFile.current && (this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex')
+		);
+	}
+
+	citeByDoi(): void {
+		if (this.canCiteByDoi()) citeByDoiDialog.show(this.citeDeps());
+	}
+
+	private citeDeps(): ZoteroInsertDeps {
 		const { doc } = this.d.wsdoc;
-		void insertCitationFromZotero({
+		return {
 			kind: doc.kind as 'tex' | 'typ',
 			root: workspaceRoot.current ?? '',
 			openDoc: () => ({ path: doc.path, text: doc.buffer })
-		});
+		};
 	}
 }

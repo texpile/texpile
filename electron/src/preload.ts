@@ -375,6 +375,11 @@ contextBridge.exposeInMainWorld('texpileZotero', {
 	exportBib: (keys: string[], translator: string) => ipcRenderer.invoke('zotero:export', { keys, translator })
 });
 
+// Cite by DOI: the BibTeX doi.org's registry gives for a DOI (see electron/src/doiLookup.ts)
+contextBridge.exposeInMainWorld('texpileDoi', {
+	lookup: (doi: string) => ipcRenderer.invoke('doi:lookup', { doi })
+});
+
 // the reader's own command-line agent (Preferences > AI); main picks the command, a run only carries the prompt
 contextBridge.exposeInMainWorld('texpileAgent', {
 	/** which preset agents are on PATH */

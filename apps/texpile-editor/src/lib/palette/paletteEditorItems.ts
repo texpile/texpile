@@ -1,4 +1,4 @@
-import { AlignLeft, BookMarked, Keyboard } from '@lucide/svelte';
+import { AlignLeft, BookMarked, BookPlus, Keyboard } from '@lucide/svelte';
 import { settings, updateSettings, type AppSettings } from '$lib/settings';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 import type { PaletteItem } from './paletteCommands';
@@ -15,6 +15,15 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			keywords: 'zotero cite citation bibliography reference bibtex import',
 			icon: BookMarked,
 			run: () => a.insertZoteroCitation?.()
+		});
+	if (a.citeByDoi && a.canCiteByDoi?.())
+		items.push({
+			id: 'editor.citeByDoi',
+			label: m.cite_doi_insert(),
+			group,
+			keywords: 'doi arxiv cite citation bibliography reference bibtex crossref paper',
+			icon: BookPlus,
+			run: () => a.citeByDoi?.()
 		});
 	if (a.hasFile() && a.canFormat())
 		items.push({
