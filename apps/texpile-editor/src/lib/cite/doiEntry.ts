@@ -18,8 +18,12 @@ import {
 } from '$lib/languages/bib/biblatex';
 import type { WorkId } from './doiInput';
 
-/** which field names the project's bibliography reads: classic BibTeX, or biblatex through biber */
-export type BibDialect = 'bibtex' | 'biblatex';
+/**
+ * What reads the project's bibliography: classic BibTeX, biblatex through biber, or Typst, whose
+ * bib reader takes biblatex's field names and TeX's accents and escapes but prints a formatting
+ * command such as \textit{...} as it stands
+ */
+export type BibDialect = 'bibtex' | 'biblatex' | 'typst';
 
 export type Work = {
 	/** the cite key, unique among `taken` */
@@ -88,10 +92,10 @@ export function workFromBibtex(fetched: string, id: WorkId, dialect: BibDialect,
 	if (fields.pages) fields.pages = fields.pages.replace(/\s*[-\u2010-\u2015]+\s*/g, '--');
 	// a title with braces was protected by whoever wrote it; only a bare one gets them added
 	const protect = !!fields.title && !/[{}]/.test(fields.title);
-	for (const [name, value] of Object.entries(fields)) if (!VERBATIM.has(name)) fields[name] = texText(value);
+	for (const [name, value] of Object.entries(fields)) if (!VERBATIM.has(name)) fields[name] = texText(value, dialect !== 'typst');
 	if (protect) fields.title = protectCapitals(fields.title);
 
-	if (dialect === 'biblatex') {
+	if (dialect !== 'bibtex') {
 		for (const [legacy, modern] of Object.entries(BIB_FIELD_ALIASES)) {
 			if (legacy in fields && !(modern in fields)) fields[modern] = fields[legacy];
 			delete fields[legacy];
@@ -191,15 +195,18 @@ const TAGS: Record<string, string> = {
 };
 const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
 
-/** a registry's field value as LaTeX text: HTML markup to commands, entities decoded, specials escaped */
-function texText(value: string): string {
+/**
+ * A registry's field value as LaTeX text: entities decoded, specials escaped, and HTML markup made
+ * formatting commands - or, without `commands`, dropped with its text kept
+ */
+function texText(value: string, commands: boolean): string {
 	let s = value;
 	// innermost first, so <i>a <b>b</b></i> nests; tags this does not know go, their text stays
 	for (let prev = ''; prev !== s;) {
 		prev = s;
 		s = s.replace(/<(\w+)(?:\s[^>]*)?>([^<]*)<\/\1>/g, (_, tag: string, inner: string) => {
 			const cmd = TAGS[tag.toLowerCase()];
-			return cmd ? `\\${cmd}{${inner}}` : inner;
+			return cmd && commands ? `\\${cmd}{${inner}}` : inner;
 		});
 	}
 	s = s.replace(/<\/?[\w:-]+(?:\s[^>]*)?\/?>/g, '');

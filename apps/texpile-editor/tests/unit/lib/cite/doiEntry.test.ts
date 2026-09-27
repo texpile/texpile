@@ -98,6 +98,15 @@ describe('workFromBibtex', () => {
 		expect(e.pages).toBe('1--10');
 	});
 
+	it('writes plain text for Typst, whose bib reader prints formatting commands as they stand', () => {
+		const e = entryOf(workFromBibtex(MARKUP, smith, 'typst', [])!.bib);
+		expect(e.title).toBe('Deep learning for in vivo imaging of {COVID-19} \\& {BERT-based} Pre-Training in {iPhone} apps: 50\\% faster');
+		// biblatex's field names, which is what it reads
+		expect(e.journaltitle).toBe('Journal of Imaging \\& Sensing');
+		expect(e.journal).toBeUndefined();
+		expect(entryOf(workFromBibtex(DATACITE, vaswani, 'typst', [])!.bib)).toMatchObject({ eprint: '1706.03762', eprinttype: 'arXiv' });
+	});
+
 	it('leaves a title the registry already protected as it is', () => {
 		const src = '@article{X_1, title={The {ATLAS} Detector and BERT}, author={Aad, G.}, year={2008}, journal={JINST}}';
 		expect(entryOf(workFromBibtex(src, smith, 'bibtex', [])!.bib).title).toBe('The {ATLAS} Detector and BERT');
@@ -126,7 +135,7 @@ describe('workFromBibtex', () => {
 			[DATACITE, vaswani],
 			[MARKUP, smith]
 		] as [string, WorkId][]) {
-			expect(problems(workFromBibtex(src, id, 'biblatex', [])!.bib)).toEqual([]);
+			for (const d of ['biblatex', 'typst'] as const) expect(problems(workFromBibtex(src, id, d, [])!.bib)).toEqual([]);
 		}
 	});
 

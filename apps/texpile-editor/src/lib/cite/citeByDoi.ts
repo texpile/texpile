@@ -81,8 +81,8 @@ async function landing(main: string, deps: CiteDeps): Promise<{ path: string; un
 	const mainText = await mainTextOf(main, deps);
 	const target = await targetBib(main, mainText, deps);
 	const text = (await statFile(target.path)).exists ? await readTextFile(target.path) : '';
-	// the same reading the Zotero export makes of the preamble: biblatex, or classic BibTeX
-	const dialect = translatorForSource(mainText, deps.kind) === 'Better BibLaTeX' ? 'biblatex' : 'bibtex';
+	// Typst's own reader; else the same reading the Zotero export makes of the preamble
+	const dialect = deps.kind === 'typ' ? 'typst' : translatorForSource(mainText, deps.kind) === 'Better BibLaTeX' ? 'biblatex' : 'bibtex';
 	return { ...target, text, dialect };
 }
 

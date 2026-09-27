@@ -118,6 +118,18 @@ describe('citeWork', () => {
 		expect(added.journaltitle).toBeUndefined();
 	});
 
+	it("writes a Typst project's entry for Typst's bib reader, and cites it there", async () => {
+		const MAIN_TYP = '/paper/main.typ';
+		disk.set(MAIN_TYP, '= Paper\n#bibliography("refs.bib")\n');
+		const typ = { kind: 'typ' as const, root: '/paper', openDoc: () => ({ path: MAIN_TYP, text: disk.get(MAIN_TYP)! }) };
+		mainFile.current = MAIN_TYP;
+		lookup.mockResolvedValue({ ok: true, bibtex: CROSSREF.replace('Molecular Structure', '<i>Molecular</i> Structure') });
+		await citeWork(await lookUpWork(watson, typ), watson, typ);
+		const added = parseBibtex(disk.get(BIB)!)[1];
+		expect(added).toMatchObject({ key: 'watson1953molecular', title: 'Molecular Structure of Nucleic Acids', journaltitle: 'Nature' });
+		expect(inserted).toEqual([['watson1953molecular']]);
+	});
+
 	it('only cites a work the project already has', async () => {
 		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}}');
 		const before = disk.get(BIB);
