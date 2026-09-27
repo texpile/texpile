@@ -3,6 +3,7 @@
 	import { navigate, route } from '$lib/router.svelte';
 	import { nativeBridge, openNewWindow } from '$lib/workspace/fileSystem';
 	import { openFileInWindow, openFolderInWindow } from '$lib/workspace/openWorkspace';
+	import { warnMissingFolder } from '$lib/workspace/missingFolder';
 	import { setupOwed } from '$lib/setup/setupGate';
 	import { holdPendingWorkspace } from '$lib/setup/pendingWorkspace';
 	import { settings, loadSettings } from '$lib/settings';
@@ -126,7 +127,8 @@
 				return;
 			}
 			loadWorkspace(); // stream the workspace chunk while the folder scans
-			void openFolderInWindow(root);
+			// the start screen's native Open Recent lands here: a deleted entry must not do nothing
+			void openFolderInWindow(root).then((r) => (r === 'missing' ? warnMissingFolder(root) : undefined));
 		});
 	});
 

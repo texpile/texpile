@@ -7,6 +7,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 - fix: `\overline`, `\sqrt`, `\hat` and similar typed in the visual math editor put the caret inside them instead of after an empty box (by @hkarlsen06)
 - feat: shift-enter in a display equation starts a new one of the same kind below it (by @hkarlsen06)
+- fix: opening a recent folder that was moved or deleted says so and offers to remove it from the list, instead of doing nothing or showing an empty workspace (by @louisqli)
 
 ## [1.2.0] - 2026-09-25
 

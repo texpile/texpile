@@ -76,3 +76,9 @@ export function addRecentFolder(path: string): void {
 	const list = userData.current.recentFolders;
 	updateUserData({ recentFolders: [path, ...list.filter((p) => p !== path)].slice(0, MAX_RECENT) });
 }
+
+/** drop `path` from the recents MRU (a folder that was moved or deleted). */
+export function removeRecentFolder(path: string): void {
+	const list = userData.current.recentFolders;
+	if (list.includes(path)) updateUserData({ recentFolders: list.filter((p) => p !== path) });
+}
