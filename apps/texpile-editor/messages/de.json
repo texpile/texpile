@@ -1381,7 +1381,7 @@
 	"zotero_dialog_group_library": "Zotero-Bibliothek",
 	"cite_doi_insert": "Zitat aus DOI oder arXiv einfügen",
 	"cite_doi_placeholder": "DOI oder arXiv-ID einfügen",
-	"cite_doi_hint": "Eine DOI wie 10.1038/171737a0, ein Link zu doi.org oder zum Verlag, oder eine arXiv-ID wie 1706.03762.",
+	"cite_doi_hint": "Eine DOI wie 10.xxxx/xxxxx, ein Link zu doi.org oder zum Verlag, oder eine arXiv-ID wie xxxx.xxxxx.",
 	"cite_doi_unrecognized": "Das ist weder eine DOI noch eine arXiv-ID.",
 	"cite_doi_looking": "{id} wird gesucht…",
 	"cite_doi_adds_to": "Wird zu {name} hinzugefügt",

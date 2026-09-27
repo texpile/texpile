@@ -1381,7 +1381,7 @@
 	"zotero_dialog_group_library": "Zotero 文献库",
 	"cite_doi_insert": "从 DOI 或 arXiv 插入引用",
 	"cite_doi_placeholder": "粘贴 DOI 或 arXiv 编号",
-	"cite_doi_hint": "可以是 DOI（如 10.1038/171737a0）、doi.org 或出版商链接，也可以是 arXiv 编号（如 1706.03762）。",
+	"cite_doi_hint": "可以是 DOI（如 10.xxxx/xxxxx）、doi.org 或出版商链接，也可以是 arXiv 编号（如 xxxx.xxxxx）。",
 	"cite_doi_unrecognized": "这不是 DOI 或 arXiv 编号。",
 	"cite_doi_looking": "正在查找 {id}…",
 	"cite_doi_adds_to": "将添加到 {name}",

@@ -1381,7 +1381,7 @@
 	"zotero_dialog_group_library": "Zotero library",
 	"cite_doi_insert": "Insert citation from DOI or arXiv",
 	"cite_doi_placeholder": "Paste a DOI or arXiv ID",
-	"cite_doi_hint": "A DOI such as 10.1038/171737a0, a doi.org or publisher link, or an arXiv ID such as 1706.03762.",
+	"cite_doi_hint": "A DOI such as 10.xxxx/xxxxx, a doi.org or publisher link, or an arXiv ID such as xxxx.xxxxx.",
 	"cite_doi_unrecognized": "This is not a DOI or an arXiv ID.",
 	"cite_doi_looking": "Looking up {id}…",
 	"cite_doi_adds_to": "Adds it to {name}",

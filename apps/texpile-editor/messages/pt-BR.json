@@ -1220,7 +1220,7 @@
 	"zotero_dialog_group_library": "Biblioteca do Zotero",
 	"cite_doi_insert": "Inserir citação por DOI ou arXiv",
 	"cite_doi_placeholder": "Cole um DOI ou ID do arXiv",
-	"cite_doi_hint": "Um DOI como 10.1038/171737a0, um link do doi.org ou da editora, ou um ID do arXiv como 1706.03762.",
+	"cite_doi_hint": "Um DOI como 10.xxxx/xxxxx, um link do doi.org ou da editora, ou um ID do arXiv como xxxx.xxxxx.",
 	"cite_doi_unrecognized": "Isto não é um DOI nem um ID do arXiv.",
 	"cite_doi_looking": "Buscando {id}…",
 	"cite_doi_adds_to": "Será adicionado a {name}",
