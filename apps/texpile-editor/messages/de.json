@@ -23,6 +23,8 @@
 	"prefs_group_integrations": "Integrationen",
 	"prefs_zotero": "Zotero-Zitate",
 	"prefs_zotero_note": "Zitate aus der eigenen Zotero-Bibliothek einfügen: Rechtsklick in ein LaTeX- oder Typst-Dokument und die Zitat-Aktion wählen (auch in der Befehlspalette). Benötigt ein laufendes Zotero mit dem Better-BibTeX-Plugin. Ausgeschaltet werden diese Aktionen ausgeblendet.",
+	"prefs_cite_doi": "Zitieren per DOI oder arXiv-ID",
+	"prefs_cite_doi_note": "Ein Paper über seine DOI oder arXiv-ID nachschlagen und ins Literaturverzeichnis aufnehmen: Rechtsklick in ein LaTeX- oder Typst-Dokument und die Zitat-Aktion wählen (auch in der Befehlspalette). Nur die nachgeschlagene ID wird an doi.org gesendet. Ausgeschaltet werden diese Aktionen ausgeblendet.",
 	"prefs_group_ai": "KI-Assistent",
 	"prefs_group_collaboration": "Zusammenarbeit",
 	"prefs_collab_name": "Anzeigename",

@@ -65,6 +65,9 @@ export type AppSettings = {
 	/** the Zotero citation picker (Insert menu, palette, topbar). On by default: it only probes
 	 *  Zotero when invoked, so leaving it available costs nothing until it is used. */
 	zoteroEnabled: boolean;
+	/** Cite by DOI or arXiv ID (context menus, palette). On by default: nothing leaves the machine
+	 *  until someone looks an ID up, and then only that ID, to doi.org. */
+	citeByDoiEnabled: boolean;
 	/** modal keybindings for the source editor and code blocks. */
 	editorKeymap: 'default' | 'vim' | 'emacs';
 	/** UI display language. Not the LaTeX document language (see DocumentLanguage). */
@@ -116,6 +119,7 @@ const DEFAULTS: AppSettings = {
 	typstPreviewFollow: false,
 	openDockOnCompile: true,
 	zoteroEnabled: true,
+	citeByDoiEnabled: true,
 	editorKeymap: 'default',
 	uiLocale: 'en',
 	collabRelayUrl: DEFAULT_COLLAB_RELAY_URL,

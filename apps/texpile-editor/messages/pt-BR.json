@@ -23,6 +23,8 @@
 	"prefs_group_integrations": "Integrações",
 	"prefs_zotero": "Citações do Zotero",
 	"prefs_zotero_note": "Insira citações da sua biblioteca do Zotero: clique com o botão direito em um documento LaTeX ou Typst e escolha a ação de citação, também disponível na paleta de comandos. É necessário manter o Zotero aberto com o plugin Better BibTeX. Ao desativar esta opção, essas ações ficam ocultas.",
+	"prefs_cite_doi": "Citar por DOI ou ID do arXiv",
+	"prefs_cite_doi_note": "Busque um artigo pelo DOI ou ID do arXiv e adicione-o à sua bibliografia: clique com o botão direito em um documento LaTeX ou Typst e escolha a ação de citação, também disponível na paleta de comandos. Só o ID buscado é enviado, ao doi.org. Ao desativar esta opção, essas ações ficam ocultas.",
 	"prefs_group_ai": "Assistente de IA",
 	"prefs_theme_system": "Sistema",
 	"prefs_theme_light": "Claro",

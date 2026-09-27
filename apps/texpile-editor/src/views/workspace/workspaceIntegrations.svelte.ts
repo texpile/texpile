@@ -299,11 +299,16 @@ export class WorkspaceIntegrations {
 	}
 
 	// Cite by DOI (see lib/cite): the Zotero gate without Zotero - the entry lands in the same
-	// bibliography, so the open file must still be written in the main's language
+	// bibliography, so the open file must still be written in the main's language.
+	// citeByDoiEnabled gates every entry point through this one predicate, as zoteroEnabled does
 	canCiteByDoi(): boolean {
 		const kind = this.d.wsdoc.doc.kind;
 		return (
-			!this.d.guest() && doiLookupAvailable() && !!mainFile.current && (this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex')
+			settings.current.citeByDoiEnabled !== false &&
+			!this.d.guest() &&
+			doiLookupAvailable() &&
+			!!mainFile.current &&
+			(this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex')
 		);
 	}
 

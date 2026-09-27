@@ -23,6 +23,8 @@
 	"prefs_group_integrations": "集成",
 	"prefs_zotero": "Zotero 引用",
 	"prefs_zotero_note": "从您的 Zotero 文献库插入引用：在 LaTeX 或 Typst 文档中右键单击并选择引用操作（命令面板中也有）。需要 Zotero 正在运行并安装 Better BibTeX 插件。关闭后这些操作将被隐藏。",
+	"prefs_cite_doi": "通过 DOI 或 arXiv 编号引用",
+	"prefs_cite_doi_note": "通过 DOI 或 arXiv 编号查找论文并添加到参考文献：在 LaTeX 或 Typst 文档中右键单击并选择引用操作（命令面板中也有）。只会将您查找的编号发送到 doi.org。关闭后这些操作将被隐藏。",
 	"prefs_group_ai": "AI 助手",
 	"prefs_group_collaboration": "协作",
 	"prefs_collab_name": "显示名称",

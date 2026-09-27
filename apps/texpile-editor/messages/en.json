@@ -23,6 +23,8 @@
 	"prefs_group_integrations": "Integrations",
 	"prefs_zotero": "Zotero citations",
 	"prefs_zotero_note": "Insert citations from your Zotero library: right-click in a LaTeX or Typst document and choose the citation action (also in the command palette). Needs Zotero running with the Better BibTeX plugin. Off hides these actions.",
+	"prefs_cite_doi": "Cite by DOI or arXiv ID",
+	"prefs_cite_doi_note": "Look up a paper by its DOI or arXiv ID and add it to your bibliography: right-click in a LaTeX or Typst document and choose the citation action (also in the command palette). Only the ID you look up is sent, to doi.org. Off hides these actions.",
 	"prefs_group_ai": "AI assistant",
 	"prefs_group_collaboration": "Collaboration",
 	"prefs_collab_name": "Display name",
