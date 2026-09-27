@@ -71,14 +71,19 @@ export function workFromBibtex(fetched: string, id: WorkId, dialect: BibDialect,
 		fields[name] = value.trim();
 	}
 
-	if (fields.doi) fields.doi = bareDoi(fields.doi);
+	// DOIs ignore case, and Crossref lower-cases them (10.1109/cvpr.2016.90): keep the spelling pasted
+	if (fields.doi) fields.doi = bareDoi(fields.doi).toLowerCase() === id.doi.toLowerCase() ? id.doi : bareDoi(fields.doi);
+	let entrytype = got.entrytype;
 	if (id.kind === 'arxiv') {
 		// DataCite prints the prefix upper-cased; this is how arXiv itself writes it
 		fields.doi = id.doi;
 		fields.eprint = id.id;
 		fields.archiveprefix = 'arXiv';
 		fields.url ??= `https://arxiv.org/abs/${id.id}`;
+		// DataCite types some old-style papers @article, with no journal to go with it
+		if (!fields.journal && !fields.journaltitle) entrytype = 'misc';
 	}
+	for (const name of ['author', 'editor']) if (fields[name]) fields[name] = nameList(fields[name]);
 	if (fields.url && /^https?:\/\/(?:dx\.)?doi\.org\//i.test(fields.url)) delete fields.url;
 	if (fields.pages) fields.pages = fields.pages.replace(/\s*[-\u2010-\u2015]+\s*/g, '--');
 	// a title with braces was protected by whoever wrote it; only a bare one gets them added
@@ -91,16 +96,19 @@ export function workFromBibtex(fetched: string, id: WorkId, dialect: BibDialect,
 			if (legacy in fields && !(modern in fields)) fields[modern] = fields[legacy];
 			delete fields[legacy];
 		}
-	} else if (id.kind === 'arxiv') {
+	} else {
 		// classic styles print no eprint field; this is the line they do print for a preprint
-		fields.howpublished ??= `arXiv preprint arXiv:${id.id}`;
+		if (id.kind === 'arxiv') fields.howpublished ??= `arXiv preprint arXiv:${id.id}`;
+		// Crossref's chapter-with-a-booktitle: classic @inbook takes its title as the book's and
+		// drops the booktitle, where @incollection prints both
+		if (entrytype === 'inbook' && fields.booktitle) entrytype = 'incollection';
 	}
 	// what the type never prints, such as a publisher on an article: the bib editor would flag
 	// every new entry for it, and BibTeX's standard styles skip the same fields
-	for (const p of validateEntry(got.entrytype, Object.keys(fields))) if (p.kind === 'field-not-for-type') delete fields[p.field];
+	for (const p of validateEntry(entrytype, Object.keys(fields))) if (p.kind === 'field-not-for-type') delete fields[p.field];
 
 	const key = uniqueKey(baseKey(fields), taken);
-	const ordered: BiblatexReference = { key, entrytype: got.entrytype };
+	const ordered: BiblatexReference = { key, entrytype };
 	for (const name of LEADING) if (name in fields) ordered[name] = fields[name];
 	for (const name of Object.keys(fields)) if (!LEADING.includes(name) && !TRAILING.includes(name)) ordered[name] = fields[name];
 	for (const name of TRAILING) if (name in fields) ordered[name] = fields[name];
@@ -145,6 +153,33 @@ function escapeRe(s: string): string {
 	return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/**
+ * A registry's name list as BibTeX reads it. Crossref ends a list whose last member is an
+ * organisation it could not name with an empty "and" (an empty name to BibTeX), and some old
+ * records are in capitals throughout (WATSON, J. D.). DataCite writes an organisation as a family
+ * name with an empty given name ("The pandas development team, "), which unbraced BibTeX would
+ * read as a person called "team".
+ */
+function nameList(value: string): string {
+	const letters = value.replace(/\sand\s/g, ' ');
+	const shouting = /[A-Z]{2}/.test(letters) && !/[a-z]/.test(letters);
+	return value
+		.split(/\s+and(?:\s+|$)/)
+		.map((n) => n.trim())
+		.filter(Boolean)
+		.map((n) => {
+			if (/,$/.test(n)) {
+				const org = n.replace(/,+$/, '').trim();
+				return /^\{.*\}$/.test(org) ? org : `{${org}}`;
+			}
+			// capitals on every letter: each word as a name is written, O'BRIEN to O'Brien
+			return shouting && !/^\{/.test(n)
+				? n.toLowerCase().replace(/(^|[\s\-'’.])(\p{L})/gu, (_, b: string, c: string) => b + c.toUpperCase())
+				: n;
+		})
+		.join(' and ');
+}
+
 const TAGS: Record<string, string> = {
 	i: 'textit',
 	em: 'emph',
@@ -168,6 +203,9 @@ function texText(value: string): string {
 		});
 	}
 	s = s.replace(/<\/?[\w:-]+(?:\s[^>]*)?\/?>/g, '');
+	// Crossref pretty-prints the XML around a tag, and the line break it leaves before a colon
+	// would print as a space
+	s = s.replace(/\s*\n\s*([:;,.?!)])/g, '$1');
 	s = s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e: string) => {
 		if (e[0] === '#') return String.fromCodePoint(e[1] === 'x' || e[1] === 'X' ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10));
 		return ENTITIES[e.toLowerCase()] ?? m;

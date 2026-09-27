@@ -136,6 +136,72 @@ describe('workFromBibtex', () => {
 	});
 });
 
+// doi.org's real answers (trimmed), for the quirks the registries' BibTeX has in the wild
+describe('workFromBibtex on real registry answers', () => {
+	it('writes a record kept in capitals the way the names are written', () => {
+		const src = ` @article{WATSON_1953, title={Molecular Structure of Nucleic Acids}, DOI={10.1038/171737a0}, journal={Nature}, author={WATSON, J. D. and CRICK, F. H. C.}, year={1953}, month=Apr, pages={737–738} }`;
+		expect(entryOf(workFromBibtex(src, watson, 'bibtex', [])!.bib).author).toBe('Watson, J. D. and Crick, F. H. C.');
+		const irish = ` @article{X_1, title={T}, author={O'BRIEN, J.-P. and MÜLLER, A.}, year={1990}, journal={J}}`;
+		expect(entryOf(workFromBibtex(irish, smith, 'bibtex', [])!.bib).author).toBe("O'Brien, J.-P. and Müller, A.");
+	});
+
+	it('drops the empty name Crossref leaves at the end of a collaboration list', () => {
+		const src = ` @article{Abbott_2016, title={Observation of Gravitational Waves from a Binary Black Hole Merger}, DOI={10.1103/physrevlett.116.061102}, journal={Physical Review Letters}, author={Abbott, B. P. and Zuraw, S. E. and Zweizig, J. and }, year={2016}, month=Feb }`;
+		const e = entryOf(workFromBibtex(src, parseWorkId('10.1103/PhysRevLett.116.061102')!, 'bibtex', [])!.bib);
+		expect(e.author).toBe('Abbott, B. P. and Zuraw, S. E. and Zweizig, J.');
+		// DOIs ignore case, and Crossref lower-cases them: the spelling pasted is kept
+		expect(e.doi).toBe('10.1103/PhysRevLett.116.061102');
+	});
+
+	it("braces DataCite's organisation authors and keys on their name", () => {
+		const src = `@misc{https://doi.org/10.5281/zenodo.3509134,
+  doi = {10.5281/ZENODO.3509134},
+  url = {https://zenodo.org/doi/10.5281/zenodo.3509134},
+  author = {The pandas development team, },
+  keywords = {python, data science},
+  title = {pandas-dev/pandas: Pandas},
+  publisher = {Zenodo},
+  year = {2026},
+  copyright = {BSD 3-Clause "New" or "Revised" License}
+}`;
+		const w = workFromBibtex(src, parseWorkId('10.5281/zenodo.3509134')!, 'bibtex', [])!;
+		expect(w.key).toBe('pandas2026pandas');
+		expect(entryOf(w.bib)).toMatchObject({ author: '{The pandas development team}', doi: '10.5281/zenodo.3509134' });
+	});
+
+	it('makes an old-style arXiv paper DataCite types as an article a preprint', () => {
+		const src = `@article{https://doi.org/10.48550/arxiv.hep-th/9901001,
+  doi = {10.48550/ARXIV.HEP-TH/9901001},
+  url = {https://arxiv.org/abs/hep-th/9901001},
+  author = {Imamura, Yosuke},
+  title = {String Junctions and Their Duals in Heterotic String Theory},
+  publisher = {arXiv},
+  year = {1999}
+}`;
+		const bib = workFromBibtex(src, parseWorkId('hep-th/9901001')!, 'biblatex', [])!.bib;
+		expect(entryOf(bib)).toMatchObject({ entrytype: 'misc', eprint: 'hep-th/9901001', doi: '10.48550/arXiv.hep-th/9901001' });
+		expect(problems(bib)).toEqual([]);
+	});
+
+	it('closes up the line break Crossref leaves after an italic span', () => {
+		const src = ` @article{Wirth_2006, title={Sex and virulence in
+                    <i>Escherichia coli</i>
+                    : an evolutionary perspective}, DOI={10.1111/j.1365-2958.2006.05172.x}, journal={Molecular Microbiology}, author={Wirth, Thierry}, year={2006}}`;
+		expect(entryOf(workFromBibtex(src, smith, 'bibtex', [])!.bib).title).toBe(
+			'Sex and virulence in \\textit{Escherichia coli}: an evolutionary perspective'
+		);
+	});
+
+	it("files Crossref's conference chapter where each dialect prints its book title", () => {
+		const src = ` @inbook{Carion_2020, title={End-to-End Object Detection with Transformers}, ISBN={9783030584528}, DOI={10.1007/978-3-030-58452-8_13}, booktitle={Computer Vision – ECCV 2020}, publisher={Springer International Publishing}, author={Carion, Nicolas and Massa, Francisco}, year={2020}, pages={213–229} }`;
+		const id = parseWorkId('10.1007/978-3-030-58452-8_13')!;
+		expect(entryOf(workFromBibtex(src, id, 'bibtex', [])!.bib).entrytype).toBe('incollection');
+		const modern = workFromBibtex(src, id, 'biblatex', [])!.bib;
+		expect(entryOf(modern).entrytype).toBe('inbook');
+		expect(problems(modern)).toEqual([]);
+	});
+});
+
 describe('findCited', () => {
 	const refs = parseBibtex(
 		[
