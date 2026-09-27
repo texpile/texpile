@@ -141,12 +141,13 @@
 						<div class="text-muted mt-0.5 truncate text-xs">
 							{[r.authors, r.venue, r.year].filter(Boolean).join(' · ')}
 						</div>
-					</div>
-					<div class="text-muted mt-2 flex items-center gap-2 px-0.5 text-xs">
-						<code class="bg-surface-100-900 rounded-base truncate px-1.5 py-0.5">{r.key}</code>
-						<span class="truncate">
-							{result.state === 'found' ? m.cite_doi_adds_to({ name: result.bibName }) : m.cite_doi_already()}
-						</span>
+						<div class="text-muted mt-1.5 flex min-w-0 items-center gap-1.5 text-xs">
+							<span class="shrink-0 font-mono">{r.key}</span>
+							<span aria-hidden="true">·</span>
+							<span class="truncate">
+								{result.state === 'found' ? m.cite_doi_adds_to({ name: result.bibName }) : m.cite_doi_already()}
+							</span>
+						</div>
 					</div>
 				{:else if result?.state === 'error'}
 					<p class="text-error-ink py-6 text-sm">{errorText(result)}</p>
