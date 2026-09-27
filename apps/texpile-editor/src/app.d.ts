@@ -109,6 +109,13 @@ declare global {
 		exportBib(keys: string[], translator: string): Promise<{ ok: boolean; bib?: string; error?: string }>;
 	};
 
+	type TexpileDoiBridge = {
+		/** The BibTeX doi.org's registry gives for a DOI (see electron/src/doiLookup.ts). */
+		lookup(
+			doi: string
+		): Promise<{ ok: true; bibtex: string } | { ok: false; reason: 'not-found' | 'no-bibtex' | 'offline' | 'failed'; error?: string }>;
+	};
+
 	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- augmenting lib.dom's Window needs declaration merging
 	interface Window {
 		texpile: {
@@ -129,6 +136,8 @@ declare global {
 		texpileTypst?: TexpileTypstBridge;
 		/** Zotero citation bridge (Electron only; undefined in the browser dev server). */
 		texpileZotero?: TexpileZoteroBridge;
+		/** Cite by DOI's lookup (Electron only; undefined in the browser dev server). */
+		texpileDoi?: TexpileDoiBridge;
 	}
 }
 

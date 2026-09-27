@@ -3,7 +3,7 @@
 import type { EditorView as CMView } from '@codemirror/view';
 import { selectAll } from '@codemirror/commands';
 import { openSearchPanel } from '@codemirror/search';
-import { ArrowRight, BookMarked, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
+import { ArrowRight, BookMarked, BookPlus, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
 import { copySelection, cutSelection, pasteAtCursor } from '$lib/editor/source/cmClipboardUtils';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { m } from '$lib/paraglide/messages';
@@ -13,6 +13,7 @@ export type SourceMenuDeps = {
 	onSyncToPdf?: (line: number) => void;
 	onAddComment?: (from: number, to: number) => void;
 	onInsertCitation?: () => void;
+	onCiteByDoi?: () => void;
 	/** preview = the Typst pane, not the PDF viewer */
 	syncTarget?: 'pdf' | 'preview';
 };
@@ -52,9 +53,15 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 			}
 		);
 	}
+	// the citation sources share one group
+	if (deps.onInsertCitation || deps.onCiteByDoi) items.push({ separator: true });
 	if (deps.onInsertCitation) {
 		const cite = deps.onInsertCitation;
-		items.push({ separator: true }, { label: m.zotero_insert_citation(), icon: BookMarked, onclick: () => cite() });
+		items.push({ label: m.zotero_insert_citation(), icon: BookMarked, onclick: () => cite() });
+	}
+	if (deps.onCiteByDoi) {
+		const cite = deps.onCiteByDoi;
+		items.push({ label: m.cite_doi_insert(), icon: BookPlus, onclick: () => cite() });
 	}
 	items.push({ separator: true }, { label: m.tbar_ctx_find(), icon: Search, keys: 'Mod+F', onclick: () => void openSearchPanel(view) });
 	if (deps.onSyncToPdf) {

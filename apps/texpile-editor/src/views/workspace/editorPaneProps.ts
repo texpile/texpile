@@ -103,6 +103,8 @@ export type EditorPaneProps = {
 	onSetViewMode?: (m: 'visual' | 'source') => void;
 	/** pick citations from Zotero and insert them at the caret (host + desktop only) */
 	onInsertCitation?: () => void;
+	/** look a work up by DOI or arXiv ID and cite it at the caret (host + desktop only) */
+	onCiteByDoi?: () => void;
 	/** the visual editor's add: it hands a finished rendered-dialect anchor, not source offsets */
 	onAddCommentAnchored?: (anchor: import('$lib/comments/anchor').CommentAnchor | null) => void;
 	/** threads the visual editor could not draw, so the panel can label them "not in this view" */

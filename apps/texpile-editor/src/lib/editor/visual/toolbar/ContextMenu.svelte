@@ -3,7 +3,7 @@
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { onMount } from 'svelte';
 	import { CellSelection, mergeCells, splitCell } from 'prosemirror-tables';
-	import { BookMarked, MessageSquarePlus } from '@lucide/svelte';
+	import { BookMarked, BookPlus, MessageSquarePlus } from '@lucide/svelte';
 	import { TextSelection } from 'prosemirror-state';
 	import { setPmCommentPending, type SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 	import type { CommentAnchor } from '$lib/comments/anchor';
@@ -20,8 +20,10 @@
 		sourceAnchor?: SourceAnchorFn;
 		/** pick citations from Zotero and insert at the caret; a menu item when present */
 		onInsertCitation?: () => void;
+		/** look a work up by DOI or arXiv ID and cite it; a menu item when present */
+		onCiteByDoi?: () => void;
 	};
-	let { dialect = 'latex', onAddComment, sourceAnchor, onInsertCitation }: Props = $props();
+	let { dialect = 'latex', onAddComment, sourceAnchor, onInsertCitation, onCiteByDoi }: Props = $props();
 	// merged cells have no pipe-table syntax, so the markdown editor loses merge/split. Everywhere
 	// else has a spanning form the serializer emits: \multicolumn/\multirow in LaTeX,
 	// table.cell(colspan:/rowspan:) in Typst.
@@ -152,11 +154,10 @@
 				}
 			);
 		}
-		if (onInsertCitation)
-			items.push(
-				{ separator: true },
-				{ label: m.zotero_insert_citation(), icon: BookMarked, onclick: () => run(() => onInsertCitation()) }
-			);
+		// the citation sources share one group
+		if (onInsertCitation || onCiteByDoi) items.push({ separator: true });
+		if (onInsertCitation) items.push({ label: m.zotero_insert_citation(), icon: BookMarked, onclick: () => run(() => onInsertCitation()) });
+		if (onCiteByDoi) items.push({ label: m.cite_doi_insert(), icon: BookPlus, onclick: () => run(() => onCiteByDoi()) });
 		if (isOnTable) items.push({ separator: true }, ...getVisibleTableMenuItems().map(entry));
 		void showContextMenu(items, { x: event.clientX, y: event.clientY });
 

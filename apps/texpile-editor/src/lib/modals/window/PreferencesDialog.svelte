@@ -268,6 +268,9 @@
 				{@render toggleRow(m.prefs_zotero(), m.prefs_zotero_note(), settings.current.zoteroEnabled !== false, (v) =>
 					updateSettings({ zoteroEnabled: v })
 				)}
+				{@render toggleRow(m.prefs_cite_doi(), m.prefs_cite_doi_note(), settings.current.citeByDoiEnabled !== false, (v) =>
+					updateSettings({ citeByDoiEnabled: v })
+				)}
 			{:else if category === 'startup'}
 				{@render toggleRow(m.prefs_reopen_last_folder(), '', settings.current.reopenLastFolder, (v) =>
 					updateSettings({ reopenLastFolder: v })

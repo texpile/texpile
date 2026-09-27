@@ -58,6 +58,9 @@ export type PaletteActions = {
 	/** Zotero citation pick: available on hosts in the desktop app, for the matching dialect */
 	canZoteroCite?(): boolean;
 	insertZoteroCitation?(): void;
+	/** Cite by DOI or arXiv ID: the same gate without Zotero */
+	canCiteByDoi?(): boolean;
+	citeByDoi?(): void;
 };
 
 /** 'files' is the picker: files only, listed before anything is typed */

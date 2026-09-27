@@ -39,6 +39,7 @@
 	import { preferencesOpen } from '$lib/stores/dialogStore';
 	import { workspaceRoot, texFiles, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
+	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
 	import { settings } from '$lib/settings';
 	import { basename, dirname, isDesktop } from '$lib/workspace/fileSystem';
 	import { diskProvider } from '$lib/workspace/diskProvider';
@@ -377,7 +378,8 @@
 				commentSelected: commentsCtl.selected,
 				commentRanges: commentsCtl.ranges,
 				commentPending: commentsCtl.pending,
-				zoteroCite: integrations.canZoteroCite()
+				zoteroCite: integrations.canZoteroCite(),
+				doiCite: integrations.canCiteByDoi()
 			}}
 			{actions}
 			{commentsCtl}
@@ -387,6 +389,7 @@
 	</WorkspaceChrome>
 
 	<ZoteroCitationDialog />
+	<CiteByDoiDialog />
 
 	<WorkspaceModals
 		bind:mainPrompt={files.mainPrompt}

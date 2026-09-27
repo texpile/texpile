@@ -50,27 +50,8 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 	const main = mainFile.current;
 	if (!bridge || !main || !keys.length) return;
 	try {
-		// the main file as the user sees it: the open buffer when the main IS the open file
-		const open = deps.openDoc();
-		const mainText = open.path && samePath(open.path, main) ? open.text : await readTextFile(main);
-
-		const declaredRel = bibPathFromSource(mainText, deps.kind);
-		let bibPath: string;
-		let undeclared = false;
-		if (declaredRel) {
-			// resolved against the main file's folder: latexmk compiles with -cd, and Typst
-			// resolves #bibliography against the file that calls it
-			bibPath = joinPath(dirname(main), declaredRel);
-		} else {
-			const found = (await scanFiles(deps.root, ['bib'])).files;
-			const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
-			if (preferred) {
-				bibPath = preferred.path;
-			} else {
-				bibPath = joinPath(dirname(main), 'references.bib');
-				undeclared = true;
-			}
-		}
+		const mainText = await mainTextOf(main, deps);
+		const { path: bibPath, undeclared } = await targetBib(main, mainText, deps);
 
 		const exported = await bridge.exportBib(keys, translatorForSource(mainText, deps.kind));
 		if (!exported.ok || typeof exported.bib !== 'string') {
@@ -80,7 +61,11 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 
 		const existing = (await statFile(bibPath)).exists ? await readTextFile(bibPath) : '';
 		const merged = appendBibEntries(existing, exported.bib);
-		if (merged.added.length) await writeTextFile(bibPath, merged.text);
+		if (merged.added.length) {
+			await writeTextFile(bibPath, merged.text);
+			// our own write: refresh the references now, so the citation below resolves at once
+			dispatchEvent(new CustomEvent('texpile:fs-changed'));
+		}
 
 		insertCitation(keys, deps.kind);
 
@@ -102,8 +87,29 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 	}
 }
 
+/** the main file as the user sees it: the open buffer when the main IS the open file */
+export async function mainTextOf(main: string, deps: ZoteroInsertDeps): Promise<string> {
+	const open = deps.openDoc();
+	return open.path && samePath(open.path, main) ? open.text : await readTextFile(main);
+}
+
+/**
+ * Where new entries land: the bib the main file declares, else the project's references.bib or
+ * first .bib, else a new references.bib beside the main - `undeclared`, since nothing reads it yet.
+ */
+export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<{ path: string; undeclared: boolean }> {
+	const declaredRel = bibPathFromSource(mainText, deps.kind);
+	// resolved against the main file's folder: latexmk compiles with -cd, and Typst
+	// resolves #bibliography against the file that calls it
+	if (declaredRel) return { path: joinPath(dirname(main), declaredRel), undeclared: false };
+	const found = (await scanFiles(deps.root, ['bib'])).files;
+	const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
+	if (preferred) return { path: preferred.path, undeclared: false };
+	return { path: joinPath(dirname(main), 'references.bib'), undeclared: true };
+}
+
 /** citation at the caret: a node in the visual editor when its schema has one, text in source */
-function insertCitation(keys: string[], kind: 'tex' | 'typ'): void {
+export function insertCitation(keys: string[], kind: 'tex' | 'typ'): void {
 	const v = editorViewStore.current;
 	if (v?.dom.isConnected) {
 		// branch off the MOUNTED schema, never the file extension (see referenceManagerPlugin)

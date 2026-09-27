@@ -65,6 +65,8 @@
 		onAddComment?: (anchor: CommentAnchor | null) => void;
 		/** pick citations from Zotero, offered in the context menu when present */
 		onInsertCitation?: () => void;
+		/** cite by DOI or arXiv ID, offered in the context menu when present */
+		onCiteByDoi?: () => void;
 		/** a \ref whose label is not drawn here: the workspace jumps to its \label line */
 		onJumpToLabel?: (name: string) => boolean;
 		/** a drawn call of the paper's own macro: the workspace opens its definition in the source */
@@ -98,6 +100,7 @@
 		onSelectComment,
 		onAddComment,
 		onInsertCitation,
+		onCiteByDoi,
 		onJumpToLabel,
 		onJumpToDefinition,
 		onCommentsPlaced,
@@ -249,7 +252,7 @@
      nothing, so the viewport upgrades could not run until after it was already on screen -->
 <main bind:this={editor} class={BUILDING_CLASS}></main>
 
-<ContextMenu {onAddComment} {sourceAnchor} {onInsertCitation} />
+<ContextMenu {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} />
 
 <style lang="postcss">
 	@reference "../../../../app.css";
