@@ -14,6 +14,7 @@
 	import { onMount } from 'svelte';
 	import { mark } from '$lib/debug/startupDoctor';
 	import { openFolderInWindow } from '$lib/workspace/openWorkspace';
+	import { warnMissingFolder } from '$lib/workspace/missingFolder';
 	import { openTutorialProject } from '$lib/workspace/starters';
 	import { m } from '$lib/paraglide/messages';
 	import { preferencesTab, takePreferencesReopen, takeSetupReopen } from '$lib/stores/dialogStore';
@@ -88,7 +89,8 @@
 		busy = true;
 		try {
 			// 'elsewhere' means another window already had it and was focused: stay on the start screen
-			if ((await openFolderInWindow(root)) === 'missing') error = m.start_error_open_folder();
+			// not awaited: the prompt is modal on its own, and awaiting it kept the busy spinner up behind it
+			if ((await openFolderInWindow(root)) === 'missing') void warnMissingFolder(root);
 		} catch (e) {
 			error = e instanceof Error ? e.message : m.start_error_open_folder();
 		} finally {

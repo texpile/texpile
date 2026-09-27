@@ -2,7 +2,7 @@
 import { mark } from '$lib/debug/startupDoctor';
 import { fileMode } from './fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
-import { claimWorkspace, dirname, joinPath, nativeBridge, samePath, scanTexFiles, statFile } from './fileSystem';
+import { claimWorkspace, dirname, joinPath, nativeBridge, releaseWorkspace, samePath, scanTexFiles, statFile } from './fileSystem';
 import { latexParserWorker } from './latexParserWorker';
 import { landingFile } from './landingFile';
 import { openFile, addRecentFolder, savedLastFile, texFiles, workspaceRoot } from './workspaceStore';
@@ -61,7 +61,12 @@ async function open(root: string, want: string | null): Promise<OpenOutcome> {
 	// recent-folders entry for a deleted one has to fail here rather than in an empty workspace
 	const [claim, found] = await Promise.all([claimWorkspace(root), statFile(root)]);
 	if (!claim.ok) return 'elsewhere';
-	if (!found.exists) return 'missing';
+	if (!found.exists) {
+		// the claim registered the dead path as this window's folder: hand it back
+		if (workspaceRoot.current) void claimWorkspace(workspaceRoot.current);
+		else releaseWorkspace();
+		return 'missing';
+	}
 	latexParserWorker();
 	show(root);
 	void fill(root, want).catch(() => {});

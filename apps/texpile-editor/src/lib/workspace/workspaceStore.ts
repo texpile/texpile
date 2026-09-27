@@ -74,7 +74,7 @@ export const recentFolders = {
 		return userData.current.recentFolders;
 	}
 };
-export { addRecentFolder } from '$lib/storage/userData';
+export { addRecentFolder, removeRecentFolder } from '$lib/storage/userData';
 
 function norm(p: string) {
 	return p.replace(/\\/g, '/').replace(/\/+$/, '');

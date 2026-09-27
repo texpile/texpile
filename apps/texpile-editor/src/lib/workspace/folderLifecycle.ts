@@ -21,7 +21,8 @@ import {
 	addRecentFolder
 } from '$lib/workspace/workspaceStore';
 import { gatherProjectMacros } from '$lib/workspace/project';
-import { claimWorkspace, releaseWorkspace, pickFolder, samePath, type TexFile } from '$lib/workspace/fileSystem';
+import { claimWorkspace, releaseWorkspace, pickFolder, samePath, statFile, type TexFile } from '$lib/workspace/fileSystem';
+import { warnMissingFolder } from '$lib/workspace/missingFolder';
 import { openTutorialProject } from '$lib/workspace/starters';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -55,6 +56,9 @@ export class FolderLifecycle {
 		const d = this.deps;
 		const root = path ?? (await pickFolder());
 		if (!root) return;
+		// a recents entry for a folder that is gone stops before anything else: the claim would make
+		// the dead path this window's folder, and the swap would leave an empty workspace behind
+		if (!(await statFile(root)).exists) return warnMissingFolder(root);
 		// picking a folder is asking for a workspace, whatever this window was showing before
 		fileMode.current = false;
 		const prevRoot = workspaceRoot.current;
