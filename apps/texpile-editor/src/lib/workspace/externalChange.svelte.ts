@@ -7,6 +7,7 @@
 import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
 import { toLf, detectEol, type Eol } from '$lib/workspace/fileSystem';
 import { recordDiskStamp } from '$lib/workspace/diskStamp';
+import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 
 // long enough for a rewrite-in-place to finish, short enough that the banner still feels immediate
 const RECHECK_MS = 100;
@@ -143,7 +144,10 @@ export class ExternalChangeWatcher {
 			return;
 		}
 		this.deferred = null;
-		if (choice === 'reload') this.applyDiskReload(c.disk, c.eol);
-		else if (this.deps.getLoadedPath() === c.path) this.deps.saveNow();
+		if (choice === 'reload') {
+			// the edits being replaced were never saved: kept first, so Reload is not the end of them
+			if (this.deps.getLoadedPath() === c.path) void addLocalHistory(c.path, this.deps.getBuffer(), 'before-reload');
+			this.applyDiskReload(c.disk, c.eol);
+		} else if (this.deps.getLoadedPath() === c.path) this.deps.saveNow();
 	}
 }

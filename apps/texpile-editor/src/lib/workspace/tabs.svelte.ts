@@ -10,8 +10,9 @@ import { getFolder, updateFolder } from '$lib/storage/workspaces';
 const MAX_TABS = 50;
 const REOPEN_DEPTH = 20;
 
-/** the saved version a comparison tab is against */
-export type CompareRef = { hash: string; subject: string };
+/** the saved version a comparison tab is against; `path` is the file's path in that version when
+ *  it was named differently (a Timeline row from before a rename) */
+export type CompareRef = { hash: string; subject: string; path?: string };
 
 export type Tab = { path: string; compare?: CompareRef };
 

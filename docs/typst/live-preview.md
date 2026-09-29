@@ -13,7 +13,7 @@ A Typst document renders as you type in a pane beside the editor, through tinymi
 | Where to find it | Path                                            | Note                                       |
 | ---------------- | ----------------------------------------------- | ------------------------------------------ |
 | Toolbar          | The Preview button                              | It reads Live while the pane is open.      |
-| Setting          | Terminal › Configure compile command… › Preview | Off, the button compiles to a PDF instead. |
+| Setting          | Terminal › Configure Compile Command… › Preview | Off, the button compiles to a PDF instead. |
 
 ![The Typst preview beside the source editor, rendering the document as it is typed](../../landing/src/lib/assets/showcase/typst-preview.webp 'The Typst preview beside the source editor, rendering the document as it is typed')
 

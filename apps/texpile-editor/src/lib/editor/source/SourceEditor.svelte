@@ -9,6 +9,7 @@
 	import { EditorState, Compartment } from '@codemirror/state';
 	import { setCommentRanges, focusCommentThread, type CommentRange } from '$lib/editor/visual/extensions/comments';
 	import { setSuggestionRanges, focusSuggestion, fitsSuggestion } from '$lib/editor/source/cmSuggestions';
+	import { setChangeBaseline } from '$lib/editor/source/cmChangeMarkers';
 	import { activeSuggestions } from '$lib/comments/activeSuggestions.svelte';
 	import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
 	import { bindModalKeymap, modalKeymapCompartment } from '$lib/editor/source/extensions/keybindings/modalKeymap';
@@ -52,7 +53,8 @@
 		onInsertCitation,
 		onCiteByDoi,
 		onSelectComment,
-		readOnly = false
+		readOnly = false,
+		changeBaseline = null
 	}: {
 		value?: string;
 		onInput?: (v: string) => void;
@@ -84,6 +86,8 @@
 		onSelectComment?: (id: string) => void;
 		/** this file's threads, read by the hover card over commented text and its line number */
 		readOnly?: boolean;
+		/** the file as it was in the last saved version, for the change bars in the margin; null for none */
+		changeBaseline?: string | null;
 	} = $props();
 
 	/** last position reported to onCaretMove, so redundant selection updates do not spray requests */
@@ -243,6 +247,18 @@
 		// forever; consumed but not dispatched, so the field keeps what CM has been mapping
 		if (list.some((r) => r.from < 0 || r.to > v.state.doc.length)) return;
 		v.dispatch({ effects: setCommentRanges.of(list) });
+	});
+
+	// the last saved version arrives after the file does (git is asked separately), and again when a
+	// new version is saved; the field then diffs every keystroke against it incrementally
+	let lastBaseline: string | null | undefined;
+	$effect(() => {
+		const base = changeBaseline;
+		const v = view;
+		void value;
+		if (!v || base === lastBaseline) return;
+		lastBaseline = base;
+		v.dispatch({ effects: setChangeBaseline.of(base) });
 	});
 
 	let lastSuggestions: typeof activeSuggestions.current | null = null;

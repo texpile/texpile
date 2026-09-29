@@ -32,7 +32,8 @@
 	}
 </script>
 
-<div class="flex justify-end gap-2 {extra}">
+<!-- wraps rather than overflow when three long labels will not fit on one line -->
+<div class="flex flex-wrap justify-end gap-2 {extra}">
 	{#each ordered as b (b.label)}
 		{#if b.href}
 			<a class={classes(b)} href={b.href} target="_blank" rel="noopener noreferrer">

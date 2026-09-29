@@ -26,6 +26,7 @@ export function registerDeferredIpc(): Promise<void> {
 // cheapest and most likely to be wanted first; the MCP server last, as nothing in the UI waits on it
 const steps: Array<() => Promise<void>> = [
 	async () => (await import('./gitIpc.js')).registerGitIpc(),
+	async () => (await import('./localHistoryIpc.js')).registerLocalHistoryIpc(),
 	async () => (await import('./pdfSaveIpc.js')).registerPdfSaveIpc(),
 	async () => (await import('./typstIpc.js')).registerTypstIpc(),
 	async () => (await import('./toolchainIpc.js')).registerToolchainIpc(),

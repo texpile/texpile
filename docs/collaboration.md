@@ -12,8 +12,8 @@ A shared session lets several people edit the same folder at once, in either edi
 
 | Where to find it | Path                  | Note                                                                                           |
 | ---------------- | --------------------- | ---------------------------------------------------------------------------------------------- |
-| Menu             | File › Shared session | Share a folder of your own and get a code.                                                     |
-| Start screen     | Join session          | Join someone else's with the code.                                                             |
+| Menu             | File › Shared Session | Share a folder of your own and get a code.                                                     |
+| Start screen     | Join Session          | Join someone else's with the code.                                                             |
 | Link             | join.texpile.com      | The share dialog gives a link. It opens in Texpile, or in the browser with nothing to install. |
 
 ![Two people editing the same document, with each other's cursors visible](../landing/src/lib/assets/showcase/editor-collab.webp "Two people editing the same document, with each other's cursors visible")

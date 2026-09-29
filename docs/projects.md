@@ -15,7 +15,7 @@ A paper is usually more than one file. Texpile treats the folder as the project,
 | Panel            | The sidebar       | The file explorer, with Contents below it.         |
 | Shortcut         | Ctrl+Shift+F      | Find in files.                                     |
 | Shortcut         | Ctrl+K            | The command palette: open a file or run an action. |
-| Menu             | File › New Window | Also File › Open folder in new window.             |
+| Menu             | File › New Window | Also File › Open Folder in New Window.             |
 
 ![The file explorer showing a multi-file paper](../landing/src/lib/assets/showcase/thumbs/thumb-tree.png#narrow 'The file explorer showing a multi-file paper')
 

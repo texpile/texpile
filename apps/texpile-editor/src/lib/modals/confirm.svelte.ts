@@ -7,6 +7,7 @@
 // vanished until the window was cycled), which is why an in-app dialog replaced it at all.
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { nativeDialogs } from '$lib/platformSurfaces';
+import { m } from '$lib/paraglide/messages';
 
 export type PromptButton = { id: string; label: string; primary?: boolean };
 
@@ -63,12 +64,19 @@ export function promptAsk(o: PromptOptions): Promise<string | null> {
 	});
 }
 
-export function confirmAsk(message: string, opts?: { confirmLabel?: string; cancelLabel?: string; danger?: boolean }): Promise<boolean> {
+/** A yes/no. As VS Code asks: the question in `message`, what follows from it (that it cannot be
+ *  undone, what is lost) in `detail`, which the native box sets under the question in smaller type */
+export function confirmAsk(
+	message: string,
+	opts?: { confirmLabel?: string; cancelLabel?: string; danger?: boolean; detail?: string; title?: string }
+): Promise<boolean> {
 	return promptAsk({
+		title: opts?.title,
 		message,
+		detail: opts?.detail,
 		buttons: [
-			{ id: 'ok', label: opts?.confirmLabel ?? 'OK', primary: true },
-			{ id: 'cancel', label: opts?.cancelLabel ?? 'Cancel' }
+			{ id: 'ok', label: opts?.confirmLabel ?? m.menubar_prompt_ok(), primary: true },
+			{ id: 'cancel', label: opts?.cancelLabel ?? m.menubar_prompt_cancel() }
 		],
 		cancelId: 'cancel',
 		danger: opts?.danger

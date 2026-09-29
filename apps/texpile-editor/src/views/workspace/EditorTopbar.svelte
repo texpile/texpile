@@ -31,14 +31,20 @@
 		Loader2,
 		ShieldQuestion,
 		MessageSquare,
-		FolderOpen
+		FolderOpen,
+		GitCompare
 	} from '@lucide/svelte';
+	import { scmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
+	import { gitChanges } from '$lib/workspace/scm/gitStore';
+	import { samePath } from '$lib/workspace/fileSystem';
 
 	type Props = {
 		loadedPath: string | null;
 		kind: FileKind;
 		viewMode: 'visual' | 'source' | 'diff';
 		encodingIssue?: string | null;
+		/** the file holds places a merge marked, which only the source editor offers a choice at */
+		conflicted?: boolean;
 		guest: boolean;
 		terminalAvailable: boolean;
 		compiling: boolean;
@@ -87,6 +93,7 @@
 		kind,
 		viewMode,
 		encodingIssue = null,
+		conflicted = false,
 		guest,
 		terminalAvailable,
 		compiling,
@@ -118,6 +125,11 @@
 		onSyncToCursor = null,
 		syncTargetsPreview = false
 	}: Props = $props();
+
+	// saved in a version before, and different now: a new file has nothing to compare against
+	const changedSinceVersion = $derived(
+		!guest && !!loadedPath && gitChanges.current.some((c) => c.x !== '?' && !c.files && samePath(c.path, loadedPath ?? ''))
+	);
 
 	let compileMenuOpen = $state(false);
 
@@ -242,6 +254,18 @@
 				<span class="flex h-[1lh] items-center"><ArrowRight class="size-3.5" /></span>
 			</button>
 		{/if}
+		{#if loadedPath && changedSinceVersion && scmHandlers.current}
+			<!-- "what did I change in this chapter?" without knowing a palette command's name: only
+			     while there is something to compare, as VS Code's Open Changes in the editor title -->
+			<button
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal"
+				onclick={() => scmHandlers.current?.compare(loadedPath)}
+				use:tip={m.wsview_compare_last()}
+				aria-label={m.wsview_compare_last()}
+			>
+				<span class="flex h-[1lh] items-center"><GitCompare class="size-3.5" /></span>
+			</button>
+		{/if}
 		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ' || (kind === 'bib' && !guest))}
 			<!-- visual/source toggle; for .bib it's the reference editor vs raw BibTeX (BibManager
 			     stays host-only: it isn't wired to the shared doc yet) -->
@@ -251,8 +275,8 @@
 						? 'preset-filled-primary-500'
 						: 'hover:preset-tonal disabled:hover:bg-transparent'}"
 					onclick={() => onSetViewMode('visual')}
-					disabled={!!encodingIssue}
-					use:tip={encodingIssue ?? m.wsview_visual_editor_title()}
+					disabled={!!encodingIssue || conflicted}
+					use:tip={encodingIssue ?? (conflicted ? m.vcs_conflict_visual_off() : m.wsview_visual_editor_title())}
 				>
 					<Eye class="size-3.5" />
 					{m.wsview_visual_label()}

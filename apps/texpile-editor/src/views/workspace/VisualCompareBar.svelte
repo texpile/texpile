@@ -1,7 +1,9 @@
 <script lang="ts">
 	// the bar over a visual comparison
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { GitCompare, RefreshCw } from '@lucide/svelte';
+	import { GitCompare, RefreshCw, ChevronUp, ChevronDown } from '@lucide/svelte';
+	import { editorViewStore } from '$lib/stores/editorStore';
+	import { stepVisualDiff } from '$lib/editor/visual/diff/stepVisualDiff';
 	import type { CompareRef } from '$lib/workspace/tabs.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -16,6 +18,16 @@
 	};
 
 	const props: VisualCompareBarProps = $props();
+
+	const STEPS = [
+		[-1, ChevronUp, () => m.wsview_diff_previous()],
+		[1, ChevronDown, () => m.wsview_diff_next()]
+	] as const;
+
+	function step(dir: 1 | -1) {
+		const view = editorViewStore.current;
+		if (view) stepVisualDiff(view, dir);
+	}
 </script>
 
 <div class="bg-surface-100-900 text-muted border-surface-200-800 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs">
@@ -35,6 +47,12 @@
 		<span class="text-muted min-w-0 truncate">· {m.wsview_diff_source_only()}</span>
 	{/if}
 	<div class="ml-auto flex shrink-0 items-center gap-1">
+		<!-- through the marked changes from the caret, wrapping round -->
+		{#each STEPS as [dir, Icon, label] (dir)}
+			<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={() => step(dir)} use:tip={label()} aria-label={label()}>
+				<Icon class="size-3.5" />
+			</button>
+		{/each}
 		<button
 			class="btn-icon btn-icon-xs hover:preset-tonal"
 			onclick={props.onRefresh}

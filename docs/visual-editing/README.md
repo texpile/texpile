@@ -17,7 +17,7 @@ The visual editor shows your document as formatted text, math, figures, and tabl
 | Where to find it | Path                       | Note                                |
 | ---------------- | -------------------------- | ----------------------------------- |
 | In the editor    | The Visual / Source toggle | Top right corner of the editor.     |
-| Shortcut         | Ctrl+K                     | Then "Switch to the visual editor". |
+| Shortcut         | Ctrl+K                     | Then "Switch to the Visual Editor". |
 
 ![The Visual / Source toggle, Visual selected, in the top right corner of the editor](../../landing/src/lib/assets/showcase/app/visual-source-toggle-visual.png)
 

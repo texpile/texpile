@@ -56,7 +56,7 @@ export type WorkspaceProvider = {
 	 * should degrade to a plain remove rather than pretend. TreeOps checks for it and skips
 	 * recording history when it is absent, so undo is never offered for something it cannot reverse.
 	 */
-	trash?(path: string, root: string): Promise<{ backup: string | null; recycled: boolean }>;
+	trash?(path: string, root: string, keep?: boolean): Promise<{ backup: string | null; recycled: boolean; kept?: boolean }>;
 	/** copy a backed-up entry back to `to`; must refuse rather than overwrite. */
 	restore?(from: string, to: string): Promise<void>;
 

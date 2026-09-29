@@ -3,7 +3,7 @@
 // change to a document is suggest_edit (mcpSuggestEdit.ts), which lands as a suggestion.
 import { browser } from '$lib/runtime';
 import { workspaceRoot, isDirty, mainFile, texFiles, effectiveCompileFormat } from './workspaceStore';
-import { isGitRepo, refreshGitStatus } from './gitStore';
+import { isGitRepo, refreshGitStatus } from './scm/gitStore';
 import { compileLog } from '$lib/stores/compileLogStore';
 import { compileConfig } from './projectConfigSync.svelte';
 import { relativeTo, samePath } from './fileSystem';

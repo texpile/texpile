@@ -28,9 +28,9 @@ export type MaterializeFs = {
 // routing them through the CRDT would grow every participant's session memory with dead compile
 // output. They stay in the fetch-on-demand binary tier (guests still get the log and friends).
 const GENERATED_EXT = LATEX_SIDECAR_RE;
-// never shared: VCS internals and dependency trees (credentials + noise). Everything else is shared,
-// gated by size, so a guest can pull the output folder for local intellisense, the log, and the PDF.
-const EXCLUDE = /(^|\/)(\.git|\.svn|node_modules|__pycache__)(\/|$)/i;
+// never shared: anything hidden (.git, .env, .npmrc) and dependency trees (credentials + noise). Everything
+// else is shared, gated by size, so a guest can pull the output folder for local intellisense, the log, and the PDF.
+const EXCLUDE = /(^|\/)(\.[^/]*|node_modules|__pycache__)(\/|$)/i;
 // Name-based HINT that a file is source text, where content is not worth reading: the too-big-to-
 // co-edit warning, and the tree scan's "text needs no stat" fast path. Never used to DENY co-edit.
 const LIKELY_TEXT = /\.(tex|bib|cls|sty|txt|md|csv|dat|def|tikz|pgf|json|yml|yaml|toml|lco|ldf|clo|bst|typ)$/i;
@@ -128,6 +128,8 @@ export class HostMaterializer {
 	private readonly lastWritten = new Map<string, string>(); // rel -> LF content last synced with disk
 	private readonly running = new Map<string, string>(); // rel -> LF content as of the last transaction
 	private readonly observers = new Map<string, () => void>();
+	// what this host listed; the manifest is not the authority, since any guest can write to it
+	private listed = new Set<string>();
 	private readonly fork: LocalFork;
 	private destroyed = false;
 
@@ -145,6 +147,7 @@ export class HostMaterializer {
 	 *  too large to co-edit (shared view-only instead), so the host can warn about them. */
 	async seed(): Promise<{ oversizedText: string[] }> {
 		const files = (await this.fs.listFiles(this.root)).filter((f) => isShared(f.rel));
+		this.listed = new Set(files.map((f) => f.rel));
 		const bodies = new Map<string, { text: string; eol: '\r\n' | '\n' }>();
 		const oversizedText: string[] = [];
 		for (const f of files) {
@@ -277,6 +280,7 @@ export class HostMaterializer {
 		const files = (await this.fs.listFiles(this.root)).filter((f) => isShared(f.rel));
 		const manifest = manifestOf(this.doc);
 		const seen = new Set(files.map((f) => f.rel));
+		this.listed = seen;
 		const sigBefore = manifestSignature(manifest);
 		const newTexts: string[] = [];
 		const bodies = new Map<string, { text: string; eol: '\r\n' | '\n' }>();
@@ -326,6 +330,18 @@ export class HostMaterializer {
 			this.observe(rel);
 		}
 		return manifestSignature(manifest) !== sigBefore;
+	}
+
+	/** whether this host shares the file at rel */
+	sharesFile(rel: string): boolean {
+		return this.listed.has(rel);
+	}
+
+	/** whether rel is a folder holding files this host shares */
+	sharesFolder(rel: string): boolean {
+		const prefix = rel + '/';
+		for (const f of this.listed) if (f.startsWith(prefix)) return true;
+		return false;
 	}
 
 	/** mark a file as held by the host's visual editor (guests go read-only on it). */

@@ -2,7 +2,8 @@
 // data ops over fs:* IPC, raw file bytes over the texfile:// protocol. no browser transport.
 import type { SourceEncoding, SourceRead } from './sourceEncoding';
 import { browser } from '$lib/runtime';
-import type { GitStatusResult, GitShowResult, GitOpResult, GitLogResult, GitChangesResult, GitPushResult } from './git';
+import type { GitStatusResult, GitShowResult, GitOpResult, GitLogResult, GitChangesResult, GitPushResult } from './scm/git';
+import type { GitBridges } from './scm/gitBridges';
 
 export type TexFile = {
 	name: string;
@@ -175,7 +176,7 @@ type TexpileNative = {
 	fsTree: (root: string) => Promise<{ root: string; children: TreeEntry[] }>;
 	fsTreeScan: (root: string, exts?: string) => Promise<{ root: string; children: TreeEntry[]; files: TexFile[] }>;
 	fsOp: (body: Record<string, unknown>) => Promise<{ ok: boolean }>;
-	fsTrash: (body: { path: string; root: string }) => Promise<{ backup: string | null; recycled: boolean }>;
+	fsTrash: (body: { path: string; root: string; keep?: boolean }) => Promise<{ backup: string | null; recycled: boolean; kept?: boolean }>;
 	fsPurgeUndo: (root: string) => Promise<{ ok: boolean }>;
 	revealItem?: (path: string) => Promise<{ ok: boolean }>;
 	fsSearch: (
@@ -185,6 +186,7 @@ type TexpileNative = {
 		caseSensitive: boolean
 	) => Promise<{ results: SearchFileResult[]; truncated: boolean; total?: number; error?: string }>;
 	fsStat: (path: string) => Promise<{ exists: boolean; mtimeMs: number; size: number }>;
+	fsRealRelative: (root: string, rel: string) => Promise<string | null>;
 	fsFormatLatex: (path: string, text: string) => Promise<{ formatted: string }>;
 	synctex: (body: Record<string, unknown>) => Promise<Record<string, unknown>>;
 	draftCompile: (body: { root: string; mainFile: string }) => Promise<DraftResult>;
@@ -215,9 +217,10 @@ type TexpileNative = {
 	gitLog?: (root: string, limit?: number) => Promise<GitLogResult>;
 	gitChangesSince?: (root: string, hash: string) => Promise<GitChangesResult>;
 	gitShowAt?: (path: string, ref: string) => Promise<GitShowResult>;
-	gitRestore?: (root: string, hash: string, message: string) => Promise<GitOpResult>;
+	gitRestore?: (root: string, hash: string, message: string) => Promise<GitOpResult & { untracked?: string[]; failure?: 'same' }>;
+	gitRestoreInTheWay?: (root: string, hash: string) => Promise<GitOpResult & { files?: string[] }>;
 	gitPush?: (root: string) => Promise<GitPushResult>;
-};
+} & GitBridges;
 
 export function nativeBridge(): TexpileNative | undefined {
 	if (!browser) return undefined;
@@ -325,13 +328,18 @@ export function copyEntry(from: string, to: string) {
  * The undoable delete: back the entry up outside the workspace, then send it to the OS recycle bin.
  *
  * `backup` is null when the entry was too large to copy - still deleted, just not undoable here.
- * `recycled` is false when the OS had nowhere to put it and it had to be unlinked instead. Both
+ * `recycled` is false when the OS had nowhere to put it and it had to be unlinked instead - or, with
+ * `keep`, was left where it is (`kept`) for the caller to ask about. Both
  * are reported rather than inferred, because the two failures compound: neither one leaves anything
  * to recover from, and that is the only case worth interrupting the user about.
  */
-export async function trashEntry(path: string, root: string): Promise<{ backup: string | null; recycled: boolean }> {
-	const r = await ipc(requireNative().fsTrash({ path, root }));
-	return { backup: r?.backup ?? null, recycled: r?.recycled !== false };
+export async function trashEntry(
+	path: string,
+	root: string,
+	keep = false
+): Promise<{ backup: string | null; recycled: boolean; kept?: boolean }> {
+	const r = await ipc(requireNative().fsTrash({ path, root, keep }));
+	return { backup: r?.backup ?? null, recycled: r?.recycled !== false, ...(r?.kept ? { kept: true } : {}) };
 }
 
 /** copy a backed-up entry back into place; refuses rather than overwrite whatever stands at `to`. */

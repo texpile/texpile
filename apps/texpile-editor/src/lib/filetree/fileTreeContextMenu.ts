@@ -1,6 +1,19 @@
 // The file tree's right-click menu: what the tree can do to the row under the pointer, as items
 // for the shared menu (lib/menus).
-import { FilePlus, FolderPlus, FileSymlink, Star, Copy, ClipboardPaste, FolderOpen, Undo2, Redo2, Pencil, Trash2 } from '@lucide/svelte';
+import {
+	FilePlus,
+	FolderPlus,
+	FileSymlink,
+	Star,
+	Copy,
+	ClipboardPaste,
+	FolderOpen,
+	Undo2,
+	Redo2,
+	Pencil,
+	Trash2,
+	History
+} from '@lucide/svelte';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
 import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
@@ -27,6 +40,9 @@ export type TreeMenuDeps = {
 	onCopy?: () => void;
 	onPaste?: (dir: string) => void;
 	onReveal?: (entry: TreeEntry) => void;
+	/** a file's Local History; a folder's (or the project's) deleted files with copies left */
+	onLocalHistory?: (entry: TreeEntry) => void;
+	onRestoreDeleted?: (dir: string) => void;
 	onRename?: (entry: TreeEntry) => void;
 	onDelete?: (entry: TreeEntry) => void;
 	/** the menu closed, chosen or not: the tree takes focus back */
@@ -59,6 +75,11 @@ export function openFileTreeContextMenu(event: MouseEvent, at: TreeTarget, d: Tr
 	if (entry) items.push({ label: m.filetree_menu_copy(), icon: Copy, onclick: () => d.onCopy?.() });
 	if (at.canPaste) items.push({ label: m.filetree_menu_paste(), icon: ClipboardPaste, onclick: () => d.onPaste?.(at.pasteDir) });
 	if (at.canReveal && entry) items.push({ label: m.filetree_menu_reveal(), icon: FolderOpen, onclick: () => d.onReveal?.(entry) });
+	// where a writer looks for a lost paragraph, or a chapter deleted by mistake
+	if (entry?.type === 'file' && at.selectionCount === 1 && d.onLocalHistory)
+		items.push({ label: m.history_menu_open(), icon: History, onclick: () => d.onLocalHistory?.(entry) });
+	if ((!entry || entry.type === 'dir') && d.onRestoreDeleted)
+		items.push({ label: m.history_menu_restore_deleted(), icon: History, onclick: () => d.onRestoreDeleted?.(at.createDir) });
 	if (history && (history.canUndo || history.canRedo)) {
 		// something always precedes this group: a file shows Copy, anywhere else the New File block
 		items.push({ separator: true });

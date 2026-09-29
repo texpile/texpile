@@ -1,18 +1,27 @@
 <script lang="ts">
 	// The left sidebar: folder header + explorer / source-control / find-in-files, with the file
 	// tree and (in explorer) a resizable table-of-contents. Presentational — logic stays in the view.
+	import { parentRepoToConfirm } from '$lib/workspace/parentRepo.svelte';
 	import { untrack } from 'svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import FileTree from '$lib/filetree/FileTree.svelte';
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
-	import SourceControlPanel from '$lib/workspace/SourceControlPanel.svelte';
-	import TableOfContents from './TableOfContents.svelte';
+	import SourceControlPanel from '$lib/workspace/scm/ui/SourceControlPanel.svelte';
+	import ExplorerSections from './ExplorerSections.svelte';
+	import SidebarIconButton from './SidebarIconButton.svelte';
+	import { isBuildArtifact } from '$lib/workspace/buildArtifacts';
 	import { workspaceRoot, fileTree, activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
 	import {
 		isGitRepo,
 		gitBranch,
 		gitTracking,
 		gitAhead,
+		gitBehind,
+		gitHasCommits,
+		gitDetached,
+		gitOperation,
+		gitRepoRoot,
+		gitMissing,
 		gitChanges,
 		gitStatusMap,
 		gitHistory,
@@ -20,13 +29,15 @@
 		gitHistoryHasMore,
 		refreshGitHistory,
 		refreshGitStatus,
+		useParentRepoNow,
 		showMoreGitHistory
-	} from '$lib/workspace/gitStore';
+	} from '$lib/workspace/scm/gitStore';
 	import { basename, type TreeEntry } from '$lib/workspace/fileSystem';
 	import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
-	import type { GitStatusEntry, GitLogEntry, GitFileChange } from '$lib/workspace/git';
+	import type { GitStatusEntry, GitLogEntry, GitFileChange } from '$lib/workspace/scm/git';
 	import { m } from '$lib/paraglide/messages';
 	import { combo } from '$lib/chrome/shortcutText';
+	import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { FilePlus, FolderPlus, RefreshCw, GitBranch, Search, MoreHorizontal } from '@lucide/svelte';
 
@@ -73,7 +84,12 @@
 		scmCommit: (message: string, paths: string[]) => Promise<boolean>;
 		scmRestore: (entry: GitLogEntry) => void;
 		scmIgnoreArtifacts: () => void;
-		scmUpload: () => void;
+		scmPublish: () => void;
+		scmSync: () => void;
+		scmRecheckGit: () => void;
+		scmOpenConflict?: (path: string) => void;
+		scmFinishCombine?: () => void;
+		scmCancelCombine?: () => void;
 		scmCompare: (entry: GitLogEntry, path: string) => void;
 		scmChangesSince: (hash: string) => Promise<GitFileChange[]>;
 		scmOpenDiff: (path: string) => void;
@@ -117,7 +133,12 @@
 		scmCommit,
 		scmRestore,
 		scmIgnoreArtifacts,
-		scmUpload,
+		scmPublish,
+		scmSync,
+		scmRecheckGit,
+		scmOpenConflict,
+		scmFinishCombine,
+		scmCancelCombine,
 		scmCompare,
 		scmChangesSince,
 		scmOpenDiff
@@ -141,7 +162,16 @@
 
 	// One list, rendered either as a header icon or as a menu row, so the two can never drift apart.
 	// `active` is the view-toggle state the icon shows as a tint.
-	type SidebarAction = { key: string; icon: typeof FilePlus; label: string; title?: string; active?: boolean; run: () => void };
+	// count: drawn on the icon, as VS Code badges Source Control's with its changed files
+	type SidebarAction = {
+		key: string;
+		icon: typeof FilePlus;
+		label: string;
+		title?: string;
+		active?: boolean;
+		count?: number;
+		run: () => void;
+	};
 
 	/**
 	 * The plain actions, in the order they give way to the "..." menu (last one goes first).
@@ -172,6 +202,8 @@
 						icon: GitBranch,
 						label: m.wsview_source_control(),
 						active: view === 'scm',
+						// not build output: it starts unticked, and every compile would leave a badge that never clears
+						count: gitChanges.current.filter((c) => !isBuildArtifact(c.path)).length,
 						run: () => (view = view === 'scm' ? 'explorer' : 'scm')
 					},
 					{
@@ -213,7 +245,13 @@
      commit message or the search box is not a trapdoor out of the panel you are typing into. -->
 <svelte:window
 	onkeydown={(e) => {
-		if (e.key !== 'Escape' || view === 'explorer') return;
+		if (e.key !== 'Escape' || view === 'explorer' || e.defaultPrevented) return;
+		// a row's menu, a popover, a dialog or a confirmation takes this Escape to close itself; the view stays.
+		// Visible ones only: a closed popover stays in the page, hidden
+		const open = [...document.querySelectorAll('.z-dropdown, [role="dialog"], [role="alertdialog"]')].some(
+			(el) => el.getClientRects().length > 0
+		);
+		if (open) return;
 		const el = document.activeElement;
 		if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || (el as HTMLElement | null)?.isContentEditable) return;
 		e.preventDefault();
@@ -285,15 +323,14 @@
 
 			<!-- after the menu, so the toggles keep the same two slots at the right edge whatever collapses -->
 			{#each pinned as action (action.key)}
-				{@const Icon = action.icon}
-				<button
-					class="btn-icon btn-icon-xs {action.active ? 'text-primary-ink' : 'hover:preset-tonal'}"
-					use:tip={action.title ?? action.label}
-					aria-label={action.label}
+				<SidebarIconButton
+					icon={action.icon}
+					label={action.label}
+					title={action.title}
+					active={action.active}
+					count={action.count}
 					onclick={action.run}
-				>
-					<Icon class="size-4" />
-				</button>
+				/>
 			{/each}
 		</div>
 	</div>
@@ -306,9 +343,17 @@
 			<SourceControlPanel
 				root={workspaceRoot.current ?? ''}
 				isRepo={isGitRepo.current}
+				parentRepo={parentRepoToConfirm(workspaceRoot.current, gitRepoRoot.current)}
+				onUseParentRepo={() => void useParentRepoNow(workspaceRoot.current)}
+				gitMissing={gitMissing.current}
+				onRecheckGit={scmRecheckGit}
+				operation={gitOperation.current}
 				branch={gitBranch.current}
 				tracking={gitTracking.current}
 				ahead={gitAhead.current}
+				behind={gitBehind.current}
+				hasCommits={gitHasCommits.current}
+				detached={gitDetached.current}
 				changes={gitChanges.current}
 				history={gitHistory.current}
 				historyError={gitHistoryError.current}
@@ -324,7 +369,11 @@
 				onLoadChanges={scmChangesSince}
 				onOpenDiff={scmOpenDiff}
 				onRefresh={onRefreshGit}
-				onUpload={scmUpload}
+				onPublish={scmPublish}
+				onSync={scmSync}
+				onOpenConflict={scmOpenConflict}
+				onFinishCombine={scmFinishCombine}
+				onCancelCombine={scmCancelCombine}
 				{historyFraction}
 				bind:splitEl={scmSplitEl}
 				{onStartHistoryResize}
@@ -356,6 +405,7 @@
 					{onCopyIn}
 					onSetMain={guest ? undefined : onSetMain}
 					onReveal={guest ? undefined : onReveal}
+					localHistory={!guest && canKeepLocalHistory()}
 					history={guest ? null : fileHistory}
 				/>
 			</div>
@@ -376,7 +426,7 @@
 					class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-t p-2"
 					style="flex: {tocFraction} 1 0%"
 				>
-					<TableOfContents mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={onOpenFileAt} />
+					<ExplorerSections mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={onOpenFileAt} />
 				</div>
 			{/if}
 		</div>

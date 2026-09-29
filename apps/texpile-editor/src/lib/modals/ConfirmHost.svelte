@@ -10,20 +10,25 @@
 </script>
 
 {#if prompt}
+	<!-- above every other dialog: a prompt is asked from inside one (Preferences, Local History) and
+	     drawn on the same layer it would sit behind it -->
 	<Modal
 		title={prompt.title}
+		z="z-1500"
 		card="max-h-full max-w-sm overflow-y-auto p-5"
 		alert
 		dismissable={prompt.cancelId !== undefined}
 		onClose={dismissPrompt}
 		onEnter={primary ? () => answerPrompt(primary.id) : undefined}
 	>
-		<p class="text-muted text-sm whitespace-pre-line">{prompt.message}</p>
+		<!-- as the native box sets them: the question, then what follows from it, smaller and quieter -->
+		<p class="text-sm whitespace-pre-line">{prompt.message}</p>
 		{#if prompt.detail}
-			<p class="text-muted mt-2 text-sm whitespace-pre-line">{prompt.detail}</p>
+			<p class="text-muted mt-2 text-xs whitespace-pre-line">{prompt.detail}</p>
 		{/if}
 		<ModalActions
 			class="mt-5"
+			size="xs"
 			buttons={prompt.buttons.map((b) => ({
 				label: b.label,
 				role: b.primary ? 'primary' : b.id === prompt.cancelId ? 'cancel' : 'secondary',

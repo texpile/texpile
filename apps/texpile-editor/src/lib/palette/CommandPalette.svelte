@@ -7,6 +7,7 @@
 	// the same library as the rest of the UI; the filtering, ranking and highlighting are ours.
 	//
 	// No props: the commands come from the palette action registry, which WorkspaceView fills in.
+	import { untrack } from 'svelte';
 	import { Combobox, useListCollection } from '@skeletonlabs/skeleton-svelte';
 	import { Search } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
@@ -15,6 +16,7 @@
 	import FileIcon from '$lib/filetree/FileIcon.svelte';
 	import { buildCommands, type PaletteItem } from './paletteCommands';
 	import { goToFileItems, MAX_FILE_RESULTS } from './paletteGoItems';
+	import { branchItems } from './paletteBranchItems';
 	import { fuzzyScore, highlightRuns } from './paletteFilter';
 	import { m } from '$lib/paraglide/messages';
 
@@ -63,12 +65,29 @@
 	// run the wrong command.
 	let commands = $state<PaletteItem[]>([]);
 	let files = $state<PaletteItem[]>([]);
+	// Switch branch's list is read from git, so it arrives a moment after the palette opens
+	let branches = $state<PaletteItem[]>([]);
+	let branchesLoading = $state(false);
 	$effect(() => {
 		if (!commandPalette.open) return;
 		const a = commandPalette.actions;
 		if (!a) return;
-		commands = buildCommands(a);
-		files = goToFileItems(a);
+		const mode = commandPalette.mode;
+		// untracked: a file tree read again (a compile, the watcher) or any state a label reads would
+		// otherwise rebuild the lists, empty what the author was typing and load the branches again
+		untrack(() => {
+			commands = buildCommands(a);
+			files = goToFileItems(a);
+			// a command that opens another list (Switch branch) starts it empty, not with its own name typed
+			query = '';
+			if (mode !== 'branches') return;
+			branches = [];
+			branchesLoading = true;
+			void branchItems().then((items) => {
+				branches = items;
+				branchesLoading = false;
+			});
+		});
 	});
 
 	type Scored = {
@@ -108,6 +127,7 @@
 		const q = query.trim();
 		// the picker is the one screen where "everything in the project" IS the point
 		if (commandPalette.mode === 'files') return rank(files, q, MAX_FILE_RESULTS);
+		if (commandPalette.mode === 'branches') return rank(branches, q, 200);
 		const cmds = rank(commands, q, 50);
 		if (!q) return cmds;
 		return [...cmds, ...rank(files, q, MAX_FILE_RESULTS)];
@@ -164,14 +184,26 @@
 					<Search class="text-muted size-4 shrink-0" />
 					<Combobox.Input
 						class="w-full bg-transparent text-sm outline-none placeholder:text-muted"
-						placeholder={commandPalette.mode === 'files' ? m.palette_placeholder_files() : m.palette_placeholder()}
+						placeholder={commandPalette.mode === 'files'
+							? m.palette_placeholder_files()
+							: commandPalette.mode === 'branches'
+								? m.vcs_branch_filter()
+								: m.palette_placeholder()}
 						autocomplete="off"
 						spellcheck="false"
 					/>
 				</Combobox.Control>
 
 				{#if results.length === 0}
-					<div class="text-muted px-3 py-10 text-center text-sm">{m.palette_empty()}</div>
+					<div class="text-muted px-3 py-10 text-center text-sm">
+						{#if commandPalette.mode !== 'branches'}
+							{m.palette_empty()}
+						{:else if branchesLoading}
+							{m.vcs_branch_loading()}
+						{:else}
+							{query.trim() ? m.palette_empty() : m.vcs_branch_none()}
+						{/if}
+					</div>
 				{:else}
 					<Combobox.Content class="min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-none bg-transparent p-1.5">
 						{#each results as scored, i (scored.item.id)}

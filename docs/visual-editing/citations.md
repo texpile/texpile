@@ -23,7 +23,7 @@ The @ picker searches your bibliography and, in the same list, your document's o
 
 ## Editing a citation
 
-Click an inserted citation to open its editor: a Page numbers field for a pinpoint reference, and under Advanced options, Add prefix (with see / cf. / compare as one-click fills) and a Citation style picker with Automatic, Parenthetical, In-text, or Basic.
+Click an inserted citation to open its editor: a Page numbers field for a pinpoint reference, and under Advanced Options, Add prefix (with see / cf. / compare as one-click fills) and a Citation style picker with Automatic, Parenthetical, In-text, or Basic.
 
 ## Managing your bibliography
 

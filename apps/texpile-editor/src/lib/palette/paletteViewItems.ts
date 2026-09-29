@@ -1,4 +1,7 @@
-import { Columns2, Eye, GitCompare, PanelLeft, Search } from '@lucide/svelte';
+import { CloudDownload, Columns2, Eye, GitBranch, GitCompare, PanelLeft, Search } from '@lucide/svelte';
+import { isMac } from '$lib/platform';
+import { scmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
+import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 import { combo } from '$lib/chrome/shortcutText';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 import type { PaletteItem } from './paletteCommands';
@@ -55,6 +58,37 @@ export function viewItems(a: PaletteActions): PaletteItem[] {
 			hint: combo('F', { shift: true }),
 			icon: Search,
 			run: () => a.openGlobalSearch()
+		});
+	if (a.hasSidebar() && a.canGit())
+		items.push({
+			id: 'view.sourceControl',
+			label: m.palette_source_control(),
+			group,
+			keywords: 'git scm version commit save changes history',
+			hint: isMac ? '⌃⇧G' : 'Ctrl+Shift+G',
+			icon: GitBranch,
+			run: () => a.openSourceControl()
+		});
+	// looks at the remote without taking anything in; Sync is what takes it in
+	if (a.canGit() && scmHandlers.current?.hasUpstream())
+		items.push({
+			id: 'view.checkForNew',
+			label: m.vcs_fetch(),
+			group,
+			keywords: 'git fetch remote co-author upstream github new versions',
+			icon: CloudDownload,
+			run: () => scmHandlers.current?.checkForNew()
+		});
+	// the one way to another branch: not in the panel, where a writer would meet it without needing
+	// it, but here for whoever landed on another branch and wants to go back
+	if (a.canGit() && scmHandlers.current?.canSwitchBranch())
+		items.push({
+			id: 'view.switchBranch',
+			label: m.vcs_branch_switch(),
+			group,
+			keywords: 'git branch checkout switch',
+			icon: GitBranch,
+			run: () => commandPalette.show('branches')
 		});
 	return items;
 }

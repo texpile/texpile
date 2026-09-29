@@ -25,15 +25,15 @@ Select two or more cells and right-click for Merge Cells (and Split Cell to undo
 
 ## Table settings
 
-Hover the table for a Settings icon: per-column alignment and width, an optional vertical line between columns, the notes-section toggle, and under Advanced options, the LaTeX Label and the row rules (`\toprule`, `\midrule`, `\bottomrule`) before or after any row.
+Hover the table for a Settings icon: per-column alignment and width, an optional vertical line between columns, the notes-section toggle, and under Advanced Options, the LaTeX Label and the row rules (`\toprule`, `\midrule`, `\bottomrule`) before or after any row.
 
 ![A table's settings panel: per-column alignment, vertical lines, a LaTeX label, and row rules](../../landing/src/lib/assets/showcase/app/table-settings-panel.png#narrow)
 
 ## In Typst
 
-The grid picker has the same Numbered table switch and a Header row switch. Cells merge and split the same way, and column widths change by dragging the border between two columns. The settings panel shows the table's column spec as Typst text, with the Label under Advanced options. There is no notes section and no row rules.
+The grid picker has the same Numbered table switch and a Header row switch. Cells merge and split the same way, and column widths change by dragging the border between two columns. The settings panel shows the table's column spec as Typst text, with the Label under Advanced Options. There is no notes section and no row rules.
 
-![The Typst table picker, with the Numbered table and Header row switches](../../landing/src/lib/assets/showcase/app/typst-table-picker.png#narrow) ![A Typst table's settings: the column spec as text, and Advanced options](../../landing/src/lib/assets/showcase/app/typst-table-settings.png#narrow)
+![The Typst table picker, with the Numbered table and Header row switches](../../landing/src/lib/assets/showcase/app/typst-table-picker.png#narrow) ![A Typst table's settings: the column spec as text, and Advanced Options](../../landing/src/lib/assets/showcase/app/typst-table-settings.png#narrow)
 
 ## In Markdown
 

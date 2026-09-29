@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Test fixture: gives DiffPanel reactive props so a test can change one the way the workspace
 	// does. mount() hands the exports back, so the test drives it through these setters.
-	import DiffPanel from '../../../../src/views/workspace/DiffPanel.svelte';
+	import DiffPanel from '../../../../src/views/workspace/diff/DiffPanel.svelte';
 
 	type Props = { readOnly?: boolean; onModifiedInput?: (v: string) => void };
 	let { readOnly = false, onModifiedInput }: Props = $props();

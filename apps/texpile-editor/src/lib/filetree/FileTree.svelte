@@ -7,7 +7,7 @@
 	import { contextMenuOpen, closeContextMenu } from '$lib/menus/contextMenu.svelte';
 	import { samePath, type TreeEntry } from '$lib/workspace/fileSystem';
 	import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
-	import type { GitBadge } from '$lib/workspace/git';
+	import type { GitBadge } from '$lib/workspace/scm/git';
 	import { FileTreeState } from './treeState.svelte';
 	import { treeRevealRequest } from './treeReveal.svelte';
 	import { FileTreeDnd, ROOT } from './treeDnd.svelte';
@@ -19,6 +19,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { confirmAsk } from '$lib/modals/confirm.svelte';
 	import { toaster } from '$lib/modals/toaster-svelte';
+	import { openLocalHistory, openRestoreDeleted } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
 
 	type Props = {
 		tree: TreeEntry[];
@@ -46,6 +47,8 @@
 		onSetMain?: (entry: TreeEntry) => void;
 		/** select the entry in the OS file manager. Omitted outside the desktop shell. */
 		onReveal?: (entry: TreeEntry) => void;
+		/** a file's Local History and a folder's deleted files: off for a guest, whose files are the host's */
+		localHistory?: boolean;
 		/** the tree's own undo/redo stack for FILE operations - never the editor's text history. */
 		history?: FileHistory | null;
 		/** allow adding new files by drop-from-OS / paste. */
@@ -69,6 +72,7 @@
 		onCopyIn,
 		onSetMain,
 		onReveal,
+		localHistory = false,
 		history = null,
 		allowImport = true,
 		hasUnsaved
@@ -217,6 +221,8 @@
 			typstProject,
 			onSetMain,
 			onReveal,
+			onLocalHistory: localHistory ? (e) => openLocalHistory(e.path) : undefined,
+			onRestoreDeleted: localHistory ? (dir) => openRestoreDeleted(dir) : undefined,
 			onCreate: (dir, type) => editor.startCreate(dir, type),
 			onCopy: copySelection,
 			onPaste: pasteClipboard,

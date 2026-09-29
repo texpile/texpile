@@ -45,11 +45,17 @@ export type PaletteActions = {
 	openCompileModal(): void;
 	openFormatModal(): void;
 	openGlobalSearch(): void;
+	/** the Source Control panel, keyboard in its message box */
+	openSourceControl(): void;
 	openPreferences(): void;
 	/** undefined when sharing is unavailable (a guest, or the browser build) */
 	openShareSession?: () => void;
 	newFile(ext?: string): void;
 	openFolder(): void;
+	/** absent where git cannot be run: the web build, an older desktop preload */
+	cloneRepository?: () => void;
+	/** drop the git sign-ins kept in the keychain; absent without the desktop app */
+	forgetSignIns?: () => void;
 	refreshTree(): void;
 	/** open tinymist's incremental viewer for the current .typ, in its own window */
 	openTypstPreview(): void;
@@ -63,8 +69,9 @@ export type PaletteActions = {
 	citeByDoi?(): void;
 };
 
-/** 'files' is the picker: files only, listed before anything is typed */
-export type PaletteMode = 'all' | 'files';
+/** 'files' is the picker: files only, listed before anything is typed. 'branches' is Switch
+ *  branch's list of local branches. */
+export type PaletteMode = 'all' | 'files' | 'branches';
 
 class CommandPaletteState {
 	open = $state(false);

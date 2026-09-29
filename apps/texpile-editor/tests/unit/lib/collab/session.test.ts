@@ -141,7 +141,7 @@ describe('sharing filters', () => {
 		expect(decodeIfText(new Uint8Array([0xc3, 0x28]))).toBeNull(); // invalid UTF-8 sequence
 	});
 
-	it('keeps compile artifacts out of the CRDT, hides only VCS and deps', () => {
+	it('keeps compile artifacts out of the CRDT, hides only VCS, deps and hidden files', () => {
 		for (const p of ['main.log', 'output/main.aux', 'main.synctex.gz', 'main.fdb_latexmk', 'main.bbl']) {
 			expect(isShared(p), p).toBe(true); // still fetchable as bytes
 			expect(isGeneratedArtifact(p), p).toBe(true); // never co-edited
@@ -149,9 +149,30 @@ describe('sharing filters', () => {
 		for (const p of ['main.tex', 'refs.bib', 'typst/main.typ', 'chapters/01-basics.typ', 'fig/plot.png']) {
 			expect(isGeneratedArtifact(p), p).toBe(false);
 		}
-		for (const p of ['.git/config', '.svn/entries', 'node_modules/x/index.js', '__pycache__/y.pyc']) {
+		for (const p of ['.git/config', '.svn/entries', 'node_modules/x/index.js', '__pycache__/y.pyc', '.env', 'sub/.texpile/config.json']) {
 			expect(isShared(p), p).toBe(false);
 		}
+	});
+
+	it('shares only what the host listed, whatever a guest writes into the manifest', async () => {
+		const doc = new Y.Doc();
+		const mat = new HostMaterializer(doc, 'root', fakeFs({ 'main.tex': 'x', 'figures/plot.png': 'png' }).fs, join);
+		await mat.seed();
+		manifestOf(doc).set('.texpile/config.json', { kind: 'binary', size: 1, rev: 0 });
+		expect(mat.sharesFile('main.tex')).toBe(true);
+		expect(mat.sharesFolder('figures')).toBe(true);
+		expect(mat.sharesFile('.texpile/config.json')).toBe(false);
+		expect(mat.sharesFolder('.texpile')).toBe(false);
+		mat.destroy();
+	});
+
+	it('leaves hidden files out of the manifest', async () => {
+		const doc = new Y.Doc();
+		const files = { 'main.tex': 'x', '.env': 'TOKEN=1', 'sub/.npmrc': '//registry/:_authToken=1', '.latexmkrc': '$pdf_mode = 1;' };
+		const mat = new HostMaterializer(doc, 'root', fakeFs(files).fs, join);
+		await mat.seed();
+		expect([...manifestOf(doc).keys()]).toEqual(['main.tex']);
+		mat.destroy();
 	});
 });
 

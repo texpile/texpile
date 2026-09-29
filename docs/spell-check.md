@@ -13,8 +13,8 @@ Spell check currently supports English only.
 | Where to find it | Path                                | Note                              |
 | ---------------- | ----------------------------------- | --------------------------------- |
 | Setting          | Preferences › Spell check           | Off by default.                   |
-| Menu             | Spelling › Check spelling & grammar | The same toggle, checked when on. |
-| Menu             | Spelling › Edit dictionary…         | Add or remove your own words.     |
+| Menu             | Spelling › Check Spelling & Grammar | The same toggle, checked when on. |
+| Menu             | Spelling › Edit Dictionary…         | Add or remove your own words.     |
 
 ## Turning it on
 
@@ -22,4 +22,4 @@ Spell check starts off. Switch it on from Preferences, or from the Spelling menu
 
 ## Adding your own words
 
-Click a flagged word for suggestions and an Add to Dictionary button, or manage the whole list from Spelling › Edit dictionary…. Added words apply across every project you open, not only the current one.
+Click a flagged word for suggestions and an Add to Dictionary button, or manage the whole list from Spelling › Edit Dictionary…. Added words apply across every project you open, not only the current one.

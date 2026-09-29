@@ -1,15 +1,21 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
+import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
+import { canClone } from '$lib/workspace/scm/remote/gitClone';
+import { forgetSignIns } from '$lib/workspace/forgetSignIns';
+import { focusScmMessage } from '$lib/workspace/scm/actions/scmHandlers.svelte';
 import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
+import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+import { openLocalHistory, openRestoreDeleted } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
 import { normSyncPath } from '$lib/workspace/syncTexNav';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
 import { workspaceRoot, isDirty, activeFilePath, activeCompare } from '$lib/workspace/workspaceStore';
 import { revealInTree } from '$lib/filetree/treeReveal.svelte';
 import { openTabContextMenu } from './tabContextMenu';
-import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/gitStore';
+import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/scm/gitStore';
 import { preferencesOpen } from '$lib/stores/dialogStore';
 import { isDesktop, revealItem, type TreeEntry } from '$lib/workspace/fileSystem';
 import { hasUnsavedUnder } from '$lib/workspace/unsavedPaths';
@@ -158,6 +164,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 				close: (x) => d.editFlow().closeTab(x),
 				keep: (x) => tabs.keep(tabKey(x)),
 				reveal: isDesktop() && !d.guest() ? (p) => void revealItem(p) : undefined,
+				localHistory: !d.guest() && canKeepLocalHistory() ? (p) => openLocalHistory(p) : undefined,
 				showInTree: (p) => {
 					d.layout().setSidebarOpen(true);
 					// eslint-disable-next-line no-param-reassign -- the deps hand over the live controllers this surface drives
@@ -167,6 +174,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			});
 		},
 		useSource: () => d.wsdoc.modes.set('source'),
+		leaveConflicts: () => d.wsdoc.modes.set('visual'),
 		openAsText: (path: string) => d.wsdoc.openAsText(path),
 		pickStarter: (s: Starter) => d.files().starters.pick(s),
 		newTexFile: () => d.files().starters.newTexFile(),
@@ -209,9 +217,20 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 	};
 }
 
+/** VS Code's Ctrl+Shift+G: the Source Control panel, with the keyboard in its message box. Not for
+ *  a session guest, or a workspace without git, which the sidebar shows no Source Control for */
+function openSourceControl(d: ActionSurfaceDeps): void {
+	if (d.guest() || !d.provider.caps.git) return;
+	d.layout().setSidebarOpen(true);
+	// eslint-disable-next-line no-param-reassign -- the deps hand over the live controllers this surface drives
+	d.layout().sidebarView = 'scm';
+	focusScmMessage();
+}
+
 /** the callback surface WorkspaceChrome hands to the menu bar and sidebar */
 export function makeChromeActions(d: ActionSurfaceDeps) {
 	return {
+		openSourceControl: () => openSourceControl(d),
 		// the project's compile command, accepted for this folder on this machine. Here rather than
 		// in the main actions because its banner is window-wide chrome now, not part of the editor column.
 		acceptProjectCommand: () => {
@@ -220,6 +239,16 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 		},
 		newFileOfType: (ext?: string) => d.files().newFileOfType(ext),
 		openFolder: (path?: string) => void d.files().folder.open(path),
+		// the clone opens here the way Open Folder does, unsaved-work checks and all
+		cloneRepository: () => void startClone((path) => d.files().folder.open(path)),
+		localHistory: () => {
+			const path = activeFilePath.current;
+			if (path) openLocalHistory(path);
+		},
+		restoreDeleted: () => {
+			const root = workspaceRoot.current;
+			if (root) openRestoreDeleted(root);
+		},
 		closeWorkspace: () => void d.files().folder.close(),
 		save: () => d.wsdoc.save(),
 		openShare: () => d.setShareModalOpen(true),
@@ -257,6 +286,7 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 /** the Ctrl+K palette's command surface (registered on mount, cleared on destroy) */
 export function makePaletteActions(d: ActionSurfaceDeps) {
 	return {
+		openSourceControl: () => openSourceControl(d),
 		save: () => d.wsdoc.save(),
 		runCompile: () => d.compiler.runCompile(),
 		stopCompile: () => d.compiler.stopCompile(),
@@ -291,6 +321,8 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		openShareSession: isDesktop() && !d.guest() ? () => d.setShareModalOpen(true) : undefined,
 		newFile: (ext?: string) => d.files().newFileOfType(ext),
 		openFolder: () => void d.files().folder.open(),
+		cloneRepository: canClone() ? () => void startClone((path) => d.files().folder.open(path)) : undefined,
+		forgetSignIns: canClone() ? () => void forgetSignIns() : undefined,
 		refreshTree: () => void d.files().refreshTree(),
 		openTypstPreview: () => d.typstPreview.enable(),
 		isTypstProject: () => d.cc.typstProject,

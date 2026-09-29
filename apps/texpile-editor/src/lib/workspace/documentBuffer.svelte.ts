@@ -11,7 +11,7 @@ import { parseTypstRegion, serializeTypstFileDetailed } from '$lib/languages/typ
 import { emptyMap, type RegionParser, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { verifiedSerialize } from '$lib/workspace/verifiedSerialize';
 import { replacePreambleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
-import { basename, relativeTo, type Eol } from '$lib/workspace/fileSystem';
+import { basename, relativeTo, samePath, type Eol } from '$lib/workspace/fileSystem';
 import { citationVariantsFor } from '$lib/languages/latex/visual/extensions/citation/citationVariantsFor';
 import { refCommandsFor } from '$lib/languages/latex/visual/extensions/drawn/settings/refCommandsFor';
 import { bibliographyKindFor } from '$lib/languages/latex/visual/extensions/drawn/settings/bibliographyCommand';
@@ -19,6 +19,8 @@ import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { documentHyphenationLanguage } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
 import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
 import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { findConflicts, hasConflictMarkers, hasMarkerLines } from '$lib/workspace/scm/conflictMarkers';
+import { gitChanges, isConflicted } from '$lib/workspace/scm/gitStore';
 import type { Node as PMNode } from 'prosemirror-model';
 
 export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
@@ -83,6 +85,13 @@ export type DocumentBufferDeps = {
 	noteSaveUnchecked?(path: string): void;
 };
 
+/** The file holds a whole place a merge marked, or git still counts it as unmerged and a marker line
+ *  is left: reopened after a place was settled by hand with one line missed, it is not done. */
+function inMerge(path: string, text: string): boolean {
+	if (hasConflictMarkers(text)) return true;
+	return hasMarkerLines(text) && gitChanges.current.some((c) => isConflicted(c.x, c.y) && samePath(c.path, path));
+}
+
 export class DocumentBuffer {
 	path = $state<string | null>(null);
 	loadError = $state<string | null>(null);
@@ -92,6 +101,16 @@ export class DocumentBuffer {
 	/** the file looks binary and was not read; the pane offers to open it as text anyway */
 	binaryWarning = $state<{ path: string; size: number } | null>(null);
 	encodingIssue = $state<string | null>(null);
+	/** the file came in holding places a merge marked, which the visual editor would show as
+	 *  stray paragraphs of <<<<<<< and =======. The source editor offers a choice at each, so the
+	 *  file stays there until it is opened afresh, even once every place is chosen: flipping to
+	 *  the visual editor under the author's last click would be its own surprise. */
+	conflicted = $state(false);
+	/** marked places still waiting for a choice, counted only in a file that came in with some */
+	conflictsLeft = $derived(this.conflicted ? findConflicts(this.buffer).length : 0);
+	/** every place chosen, but a marker line left behind (a place settled by hand, one line of it
+	 *  missed): Complete Merge refuses the file, so it is not done here either */
+	strayMarkers = $derived(this.conflicted && this.conflictsLeft === 0 && hasMarkerLines(this.buffer));
 
 	/** the whole .tex file, as raw text */
 	texSource = $state('');
@@ -191,6 +210,7 @@ export class DocumentBuffer {
 		this.rawContent = '';
 		this.path = null;
 		this.encodingIssue = null;
+		this.conflicted = false;
 		this.binaryWarning = null;
 	}
 
@@ -207,6 +227,7 @@ export class DocumentBuffer {
 		this.path = path;
 		this.diskBaseline = text;
 		this.encodingIssue = issue;
+		this.conflicted = inMerge(path, text);
 		this.binaryWarning = null;
 	}
 
@@ -224,6 +245,7 @@ export class DocumentBuffer {
 		this.path = path;
 		this.diskBaseline = text;
 		this.encodingIssue = issue;
+		this.conflicted = inMerge(path, text);
 		this.binaryWarning = null;
 	}
 
@@ -331,10 +353,24 @@ export class DocumentBuffer {
 		this.queueSave(v);
 	}
 
+	/** text arriving from outside the editor - a merge in a terminal, Sync's Combine - that holds
+	 *  marked places sends the file to the source editor as opening it would */
+	noteConflicts(text: string): void {
+		if (hasConflictMarkers(text)) this.conflicted = true;
+	}
+
+	/** once every place is chosen, the author may take the file back to the visual editor */
+	leaveConflicts(): boolean {
+		if (this.conflictsLeft || this.strayMarkers) return false;
+		this.conflicted = false;
+		return true;
+	}
+
 	/** replace the whole source (formatter, disk reload, history step) and re-derive the views */
 	replaceSource(text: string, opts: { dirty: boolean }): void {
 		const before = this.texSource;
 		this.texSource = text;
+		this.noteConflicts(text);
 		if (opts.dirty) {
 			isDirty.current = true;
 			this.queueSave(text, before);

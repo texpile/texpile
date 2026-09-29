@@ -12,6 +12,7 @@ import type { VisualParser, ParseOutcome, ParseFailure } from '$lib/workspace/vi
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { visualMountDied } from '$lib/workspace/visualMountGuard';
 import { sourceEncodingError, type SourceRead } from '$lib/workspace/sourceEncoding';
+import { hasConflictMarkers } from '$lib/workspace/scm/conflictMarkers';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 
@@ -135,7 +136,9 @@ export class FileOpener {
 				const issue = sourceEncodingError(encoding);
 				// last time this file's visual build took the renderer down with it
 				if (d.isVisualMode() && visualMountDied(path)) d.fallbackToSource({ timeout: true, message: '' });
-				if (!issue && !cached && d.isVisualMode()) this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
+				// a file holding marked places opens in the source editor whatever the mode (DocumentBuffer.conflicted)
+				if (!issue && !cached && d.isVisualMode() && !hasConflictMarkers(text))
+					this.adoptBackgroundParse(d.parse(text, formatOf(k)), path, text, seq);
 
 				d.doc.openTex(path, text, detectEol(raw), issue); // detectEol so a CRLF file isn't rewritten to LF
 				if (cached) d.doc.adoptParsed(cached, text);

@@ -1,6 +1,7 @@
 // The edit-persistence flow around the open document: the debounced save pipeline, the
 // unsaved-edit gate, on-disk change detection, tab activation/closing, and the load-the-
 // active-file effect that ties them together.
+import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { untrack } from 'svelte';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
 import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
@@ -62,6 +63,8 @@ export class WorkspaceEditFlow {
 			// and raises its conflict modal; "keep mine" comes back through saveNow with force
 			raiseConflict: (_path, deliberate) => void this.external.check(deliberate)
 		});
+		// every save keeps a copy in Local History, as VS Code does; a guest has no disk to keep from
+		if (!d.guest()) this.saver.afterWrite = (path, content) => void addLocalHistory(path, content);
 		// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
 		this.external = new ExternalChangeWatcher({
 			getLoadedPath: () => doc.path,
@@ -74,8 +77,14 @@ export class WorkspaceEditFlow {
 			getDiskBaseline: () => doc.diskBaseline,
 			setDiskBaseline: (t) => (doc.diskBaseline = t),
 			getBuffer: () => (hasVisualMode(doc.kind) ? doc.texSource : doc.rawContent),
-			setTexSource: (t) => (doc.texSource = t),
-			setRawContent: (t) => (doc.rawContent = t),
+			setTexSource: (t) => {
+				doc.texSource = t;
+				doc.noteConflicts(t);
+			},
+			setRawContent: (t) => {
+				doc.rawContent = t;
+				doc.noteConflicts(t);
+			},
 			setEol: (e) => (doc.eol = e),
 			rebuildVisual: () => d.wsdoc.rebuildVisualFromSource(),
 			discardQueuedSave: () => this.saver.discard(),

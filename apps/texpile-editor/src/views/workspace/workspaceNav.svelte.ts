@@ -1,7 +1,7 @@
 // Every "jump somewhere" route in the workspace: SyncTeX forward/inverse, the visual-caret
 // source position, include targets, and the PDF pane scroll plumbing.
 import { editorViewStore } from '$lib/stores/editorStore';
-import { openFile } from '$lib/workspace/workspaceStore';
+import { openFile, activeCompare } from '$lib/workspace/workspaceStore';
 import { Text } from '@codemirror/state';
 import { docPositions, offsetToRowCol } from '$lib/workspace/docPositions';
 import { resolveGotoTarget } from '$lib/editor/source/sourceGotoTarget';
@@ -181,6 +181,17 @@ export class WorkspaceNav {
 		updateLayout({ viewMode: 'source' });
 		this.sourceGotoLine = { line, token: ++this.gotoToken, selectText, column, path: target };
 		if (needsActivate(target)) openFile(target);
+	}
+
+	/** A line in the source editor without choosing the view for the author: the one caller is a
+	 *  file holding places a merge marked, which the pane shows in the source editor regardless
+	 *  (DocumentBuffer.conflicted), and switching the mode would outlast the merge. A comparison tab
+	 *  open on the file is left for the file's own tab: compared, the marked places are two
+	 *  "changes" to revert rather than places to choose in. */
+	showSourceLine(file: string, line: number): void {
+		const target = sessionRelativeTarget(file, this.d.guest());
+		this.sourceGotoLine = { line, token: ++this.gotoToken, path: target };
+		if (needsActivate(target) || activeCompare.current) openFile(target);
 	}
 
 	/** a jump asked for THIS file survives a file switch; an older one must not, or every later
