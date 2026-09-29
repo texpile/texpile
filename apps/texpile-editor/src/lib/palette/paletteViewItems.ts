@@ -1,4 +1,4 @@
-import { CloudDownload, Columns2, Eye, GitBranch, GitCompare, PanelLeft, Search } from '@lucide/svelte';
+import { CloudDownload, Columns2, Eye, GitBranch, GitCompare, GitMerge, PanelLeft, Search, Undo2 } from '@lucide/svelte';
 import { isMac } from '$lib/platform';
 import { scmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
 import { commandPalette } from '$lib/workspace/commandPalette.svelte';
@@ -90,5 +90,25 @@ export function viewItems(a: PaletteActions): PaletteItem[] {
 			icon: GitBranch,
 			run: () => commandPalette.show('branches')
 		});
+	// the merge's two ends, beside the panel's buttons for them: VS Code has Git: Abort Merge here too
+	if (a.canGit() && scmHandlers.current?.canFinishMerge())
+		items.push(
+			{
+				id: 'view.completeMerge',
+				label: m.vcs_finish_combine(),
+				group,
+				keywords: 'git merge conflicts finish continue commit',
+				icon: GitMerge,
+				run: () => scmHandlers.current?.finishMerge()
+			},
+			{
+				id: 'view.abortMerge',
+				label: m.vcs_cancel_combine(),
+				group,
+				keywords: 'git merge cancel abort undo',
+				icon: Undo2,
+				run: () => scmHandlers.current?.abortMerge()
+			}
+		);
 	return items;
 }

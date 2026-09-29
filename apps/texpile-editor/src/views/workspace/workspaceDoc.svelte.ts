@@ -12,6 +12,7 @@ import { VisualParser, MAX_VISUAL_BYTES, type ParseFailure } from '$lib/workspac
 import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
 import { workspaceRoot, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
 import { editorViewStore } from '$lib/stores/editorStore';
+import { countOpenFile } from '$lib/stores/countStore.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
@@ -133,6 +134,8 @@ export class WorkspaceDoc {
 
 		// mirror to the global store so menuBarCommands can route Insert/Format
 		$effect(() => this.modes.syncStore());
+		// the top bar's word count
+		$effect(() => countOpenFile(this.doc.path, this.doc.buffer));
 		// the doc.visualDoc dep re-fires this when an async re-parse lands (the doc swap itself is untracked)
 		$effect(() => {
 			void editorViewStore.current;

@@ -120,7 +120,7 @@
 	<!-- an empty timeline used to mean both "nothing saved yet" and "the read failed", and the
 	     reassuring reading won: a log that never once succeeded looked like a fresh project -->
 	<div class="text-muted mt-6 flex flex-col items-center gap-1 px-3 text-center text-sm">
-		<TriangleAlert class="text-warning-ink size-6" />
+		<TriangleAlert class="size-6 opacity-60" />
 		{m.vcs_history_error()}
 		<span class="text-muted text-xs break-words">{error}</span>
 	</div>
@@ -158,7 +158,7 @@
 					     name cannot push the message out of the row. -->
 					<span class="badge preset-tonal-primary ml-auto max-w-32 shrink-0 gap-1 px-1.5 py-0 text-[10px]" use:tip={branch}>
 						<GitBranch class="size-3 shrink-0" />
-						<span class="truncate">{branch}</span>
+						<span class="cap-center truncate">{branch}</span>
 					</span>
 				{/if}
 			</button>

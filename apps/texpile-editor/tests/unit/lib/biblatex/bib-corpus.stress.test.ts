@@ -18,7 +18,7 @@ import { describe, it, beforeAll, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseBibtexWithWarnings, serializeBibtex, type BiblatexReference } from '../../../../src/lib/languages/bib/biblatex';
-import { validateEntry } from '../../../../src/lib/languages/bib/bibValidate';
+import { validateEntry } from '../../../../src/lib/languages/bib/checks/bibValidate';
 
 const PAPER_DIRS = process.env.PAPER_DIRS;
 const REPORT_DIR = process.env.CITATION_REPORT_DIR;

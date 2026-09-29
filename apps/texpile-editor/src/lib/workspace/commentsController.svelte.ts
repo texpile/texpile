@@ -587,7 +587,7 @@ export class CommentsController {
 	}
 
 	/** who signs an event: a caller's own name (an MCP client), else this workspace's author */
-	private author(by?: string): Promise<string> {
+	author(by?: string): Promise<string> {
 		const own = by?.trim();
 		return own ? Promise.resolve(own) : resolveAuthor(this.deps.root(), this.deps.preferredAuthor());
 	}

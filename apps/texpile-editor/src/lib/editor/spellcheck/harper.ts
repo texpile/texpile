@@ -10,6 +10,7 @@ export {
 	exportDictionary,
 	syncDocumentDictionary,
 	addWordToDocumentDictionary,
+	addWordsToDocumentDictionary,
 	removeWordFromDocumentDictionary
 } from './linter';
 

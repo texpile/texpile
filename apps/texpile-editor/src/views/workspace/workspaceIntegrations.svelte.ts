@@ -1,6 +1,8 @@
 // The workspace's outward integrations: the MCP command surface and window-state cache,
 // shared-session handlers, cross-file project intel, the label/bibitem registries, editor
 // file access + graphics resolution, Zotero citations, and source-control actions.
+import { toaster } from '$lib/modals/toaster-svelte';
+import { m } from '$lib/paraglide/messages';
 import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { untrack } from 'svelte';
 import { publishWindowState } from '$lib/workspace/mcpPublish';
@@ -11,6 +13,7 @@ import { ScmActions } from '$lib/workspace/scm/actions/scmActions.svelte';
 import { ChangeBaseline } from '$lib/workspace/changeBaseline.svelte';
 import { gitHead, gitHeldBack, gitOperation, gitTracking, isGitRepo } from '$lib/workspace/scm/gitStore';
 import { canSwitchBranch } from '$lib/workspace/scm/branches/gitBranches';
+import { canCombine } from '$lib/workspace/scm/branches/gitCombine';
 import { gitignoreLines } from '$lib/workspace/buildArtifacts';
 import { provideScmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
 import { ScmFetch } from '$lib/workspace/scm/remote/scmFetch.svelte';
@@ -25,6 +28,7 @@ import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMa
 import { setMathMacros } from '$lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte';
 import { retypesetStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
 import { bibPathsFrom } from '$lib/collab/compileIntelBridge';
+import { compileOutDir } from '$lib/workspace/compileCommand';
 import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
 import { graphicCandidateUrls, graphicSearchDirs } from '$lib/editor/visual/graphicsCandidates';
@@ -36,6 +40,7 @@ import { compileLog } from '$lib/stores/compileLogStore';
 import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
+import { LiveRefChecks } from '$lib/workspace/document/liveRefChecks.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import {
 	workspaceRoot,
@@ -176,7 +181,10 @@ export class WorkspaceIntegrations {
 				// not a repository above the folder the author has not agreed to use: its branches are not this project's
 				canSwitchBranch: () => isGitRepo.current && !gitHeldBack.current && canSwitchBranch(),
 				listBranches: () => this.scm.branches.list(),
-				switchBranch: (name) => void this.scm.branches.switchTo(name)
+				switchBranch: (name) => void this.scm.branches.switchTo(name),
+				canFinishMerge: () => gitOperation.current === 'merge' && !gitHeldBack.current && canCombine(),
+				finishMerge: () => void this.scm.combine.finish(),
+				abortMerge: () => void this.scm.combine.cancel()
 			})
 		);
 
@@ -256,18 +264,45 @@ export class WorkspaceIntegrations {
 			return this.registries.schedule();
 		});
 		$effect(() => this.registries.publish(this.allReferences));
+		const refChecks = new LiveRefChecks({
+			read: (p) => d.provider.readText(p),
+			open: () => (doc.path && doc.kind === 'tex' && !activeCompare.current ? { path: doc.path, text: doc.texSource } : null),
+			main: () => mainFile.current,
+			root: () => workspaceRoot.current,
+			files: () => filePathStore.current,
+			knownKeys: () => new Set(references.current.map((r) => r.key)),
+			outDir: () => compileOutDir(d.cc().command),
+			readTexBib: async (name) => (await window.texpileTypst?.texBib?.(name)) ?? null
+		});
+		// what the other files hold moves only when a file, the main file or the open file does
+		$effect(() => {
+			void fileTree.current;
+			void mainFile.current;
+			void doc.path;
+			void activeCompare.current;
+			void references.current;
+			void workspaceRoot.current;
+			untrack(() => void refChecks.refresh());
+		});
+		$effect(() => {
+			void doc.texSource;
+			void filePathStore.current;
+			return untrack(() => refChecks.schedule());
+		});
+		$effect(() => () => refChecks.destroy());
 		$effect(() => {
 			const tree = fileTree.current;
 			const root = workspaceRoot.current;
 			filePathStore.current = root ? flattenPaths(tree, root) : [];
 		});
-		// remember the open file per folder so reopening the workspace restores it (StartView's
+		// remember the focused tab per folder so reopening the workspace restores it (StartView's
 		// initialFile); recorded on every switch, kept when the file later disappears (existence is
 		// checked at restore time)
 		$effect(() => {
 			const root = workspaceRoot.current;
 			const path = activeFilePath.current;
-			if (root && path && !fileMode.current) setLastFile(root, path);
+			const compare = activeCompare.current;
+			if (root && path && !fileMode.current) setLastFile(root, path, compare);
 		});
 		// a new folder starts blank: the previous folder's log, PDF and macros are meaningless here
 		// (the switch now flips the root before its scan, so these would otherwise linger on screen)
@@ -367,42 +402,41 @@ export class WorkspaceIntegrations {
 	}
 
 	// Zotero citations (host-only; see lib/zotero)
-	// The open file's dialect must match the main's engine: the imported entries land in the
-	// bibliography the MAIN file declares, so a .typ scratch file open in a LaTeX project has
-	// nowhere sensible to point its citation.
 	// zoteroEnabled gates every entry point (editor context menu, command palette) through this one predicate
 	canZoteroCite(): boolean {
-		const kind = this.d.wsdoc.doc.kind;
-		return (
-			settings.current.zoteroEnabled !== false &&
-			!this.d.guest() &&
-			zoteroAvailable() &&
-			!!mainFile.current &&
-			(this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex')
-		);
+		return settings.current.zoteroEnabled !== false && !this.d.guest() && zoteroAvailable() && this.citesHere();
+	}
+
+	// entries land in the main file's bibliography, so only a file in the main file's language cites
+	private citesHere(): boolean {
+		const { kind, path } = this.d.wsdoc.doc;
+		if (!path || (kind !== 'tex' && kind !== 'typ')) return false;
+		return !mainFile.current || (this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex');
 	}
 
 	insertZoteroCitation(): void {
-		if (!this.canZoteroCite()) return;
-		void insertCitationFromZotero(this.citeDeps());
+		if (this.canZoteroCite() && !this.needsMain(() => this.insertZoteroCitation())) void insertCitationFromZotero(this.citeDeps());
+	}
+
+	// the main file is usually picked at the first compile; until then a citation has nowhere to go
+	private needsMain(retry: () => void): boolean {
+		if (mainFile.current) return false;
+		toaster.warning({
+			title: m.cite_needs_main_title(),
+			description: m.cite_needs_main_desc(),
+			action: { label: m.wsview_pane_pick_main(), onClick: () => void this.d.files().mainPrompt.prompt(retry) }
+		});
+		return true;
 	}
 
 	// Cite by DOI (see lib/cite): the Zotero gate without Zotero - the entry lands in the same
-	// bibliography, so the open file must still be written in the main's language.
-	// citeByDoiEnabled gates every entry point through this one predicate, as zoteroEnabled does
+	// bibliography
 	canCiteByDoi(): boolean {
-		const kind = this.d.wsdoc.doc.kind;
-		return (
-			settings.current.citeByDoiEnabled !== false &&
-			!this.d.guest() &&
-			doiLookupAvailable() &&
-			!!mainFile.current &&
-			(this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex')
-		);
+		return settings.current.citeByDoiEnabled !== false && !this.d.guest() && doiLookupAvailable() && this.citesHere();
 	}
 
 	citeByDoi(): void {
-		if (this.canCiteByDoi()) citeByDoiDialog.show(this.citeDeps());
+		if (this.canCiteByDoi() && !this.needsMain(() => this.citeByDoi())) citeByDoiDialog.show(this.citeDeps());
 	}
 
 	private citeDeps(): ZoteroInsertDeps {

@@ -966,6 +966,15 @@ html.pm-drop-refused .pm-drop-cursor {
 .comment-card-hovered {
 	border-color: var(--color-surface-300-700);
 }
+/* the cards fading into the pane where its edge cuts them; placed by CommentRail */
+.comment-rail-fade {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 6;
+	pointer-events: none;
+	background: linear-gradient(to right, transparent, var(--comment-rail-fade-bg));
+}
 .comment-card-selected,
 .comment-card-pending {
 	left: calc(6px - var(--comment-card-shift, 0px));
@@ -1170,6 +1179,110 @@ html.pm-drop-refused .pm-drop-cursor {
 	--color-swatch-clear: var(--swatch-clear);
 	--color-page-sheet: var(--page-sheet);
 	--color-draft-band: var(--draft-band);
+}
+
+/* lines an even number of pixels tall, else an icon and its words snap to the pixel grid apart (+ 0.001 for float error) */
+@theme inline {
+	--text-xs--line-height: calc(
+		(round(16 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(12 * var(--text-scaling), 1 / 64)
+	);
+	--text-sm--line-height: calc(
+		(round(20 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(14 * var(--text-scaling), 1 / 64)
+	);
+	--text-base--line-height: calc(
+		(round(24 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(16 * var(--text-scaling), 1 / 64)
+	);
+	--text-lg--line-height: calc(
+		(round(28 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(18 * var(--text-scaling), 1 / 64)
+	);
+	--text-xl--line-height: calc(
+		(round(28 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(20 * var(--text-scaling), 1 / 64)
+	);
+	--text-2xl--line-height: calc(
+		(round(32 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(24 * var(--text-scaling), 1 / 64)
+	);
+	--text-3xl--line-height: calc(
+		(round(36 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(30 * var(--text-scaling), 1 / 64)
+	);
+	--text-4xl--line-height: calc(
+		(round(40 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(36 * var(--text-scaling), 1 / 64)
+	);
+	--text-5xl--line-height: calc(
+		(round(48 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(48 * var(--text-scaling), 1 / 64)
+	);
+	--text-6xl--line-height: calc(
+		(round(60 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(60 * var(--text-scaling), 1 / 64)
+	);
+	--text-7xl--line-height: calc(
+		(round(72 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(72 * var(--text-scaling), 1 / 64)
+	);
+	--text-8xl--line-height: calc(
+		(round(96 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(96 * var(--text-scaling), 1 / 64)
+	);
+	--text-9xl--line-height: calc(
+		(round(128 * var(--text-scaling) * var(--text-scaling), 2) + 0.001) / round(128 * var(--text-scaling), 1 / 64)
+	);
+}
+
+/* Skeleton's btn, chip and badge lines and icons on even pixels, so an icon sits level with its word */
+@utility btn {
+	--btn-line: round(up, var(--btn-size), 2px);
+	line-height: var(--btn-line);
+	padding-block: round(calc((var(--btn-size) * 2 - --spacing(0.5) - var(--btn-line)) / 2), 1px);
+	& > :where(svg) {
+		width: round(var(--btn-size), 2px);
+		height: round(var(--btn-size), 2px);
+	}
+}
+@utility btn-icon {
+	--btn-box: round(calc(var(--btn-size) * 2 - --spacing(0.5)), 2px);
+	--btn-glyph: round(var(--btn-size), 2px);
+	width: var(--btn-box);
+	height: var(--btn-box);
+	padding: calc((var(--btn-box) - var(--btn-glyph)) / 2);
+	& > :where(svg) {
+		width: var(--btn-glyph);
+		height: var(--btn-glyph);
+	}
+}
+/* a label trimmed to its capitals, so items-center puts an icon on the capitals' middle in any font; not with py-* */
+@utility cap-center {
+	@supports (text-box: trim-both cap alphabetic) {
+		/* 1lh can read up to 1/32px short of the line, so within 1/32px of a whole pixel it snaps to it */
+		--lh: round(1lh, 1px / 64);
+		--to-whole: calc(round(1lh, 1px) - var(--lh));
+		--line: calc(var(--lh) + 2 * clamp(-1px / 32, var(--to-whole), 1px / 32) - clamp(-1px / 16, var(--to-whole), 1px / 16));
+		/* in the browser's 1/64px steps, so the three parts add up to exactly one line */
+		--cap: round(1cap, 1px / 64);
+		--cap-above: round(down, calc((var(--line) - var(--cap)) / 2), 1px / 64);
+		text-box: trim-both cap alphabetic;
+		padding-top: var(--cap-above);
+		padding-bottom: calc(var(--line) - var(--cap) - var(--cap-above));
+		/* truncate clips only the sides, or a tight line loses the tails of g and y; clip needs min-width 0 that hidden gave */
+		&.truncate {
+			overflow-x: clip;
+			overflow-y: visible;
+			min-width: 0;
+		}
+	}
+}
+@utility chip {
+	--chip-line: round(up, var(--chip-size), 2px);
+	line-height: var(--chip-line);
+	padding-block: round(calc((var(--chip-size) * 2 - --spacing(0.5) - var(--chip-line)) / 2), 1px);
+	& > :where(svg) {
+		width: round(var(--chip-size), 2px);
+		height: round(var(--chip-size), 2px);
+	}
+}
+@utility badge {
+	--badge-line: round(up, var(--badge-size), 2px);
+	line-height: var(--badge-line);
+	padding-block: round(calc((var(--badge-size) * 2 - --spacing(0.5) - var(--badge-line)) / 2), 1px);
+	& > :where(svg) {
+		width: round(var(--badge-size), 2px);
+		height: round(var(--badge-size), 2px);
+	}
 }
 
 @utility z-sticky-header {

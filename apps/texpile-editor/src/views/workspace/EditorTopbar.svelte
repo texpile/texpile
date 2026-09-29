@@ -14,6 +14,7 @@
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import type { ComponentProps } from 'svelte';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
+	import type { ProjectWords } from '$lib/workspace/wordCount/projectWords';
 	import { m } from '$lib/paraglide/messages';
 	import { combo } from '$lib/chrome/shortcutText';
 	import EditModePicker from './EditModePicker.svelte';
@@ -72,6 +73,8 @@
 		onShowOutput: () => void;
 		outputAvailable?: boolean;
 		onShowProblems: () => void;
+		/** the open document's words by part and by file, for the word count's details */
+		onCountWords?: () => Promise<ProjectWords | null>;
 		/** open review threads in the project; 0 hides the badge, like a clean compile hides Problems */
 		commentCount?: number;
 		onShowComments?: () => void;
@@ -116,6 +119,7 @@
 		onShowOutput,
 		outputAvailable = false,
 		onShowProblems,
+		onCountWords,
 		commentCount = 0,
 		onShowComments = () => {},
 		suggesting = false,
@@ -198,7 +202,8 @@
 	});
 </script>
 
-<header class="border-surface-200-800 col-span-full flex h-12 items-center justify-between gap-3 border-b px-4">
+<!-- an inset shadow, not a border: a border leaves 47px of the 48px bar and centered icons land half a pixel off -->
+<header class="col-span-full flex h-12 items-center justify-between gap-3 px-4 shadow-[inset_0_-1px_0_var(--color-surface-200-800)]">
 	<!-- the sidebar and preview toggles used to bracket this row. Both moved onto the divider of the
 	     pane they open (WorkspaceChrome / PreviewPane), where the control sits on the boundary it
 	     moves - so this row is only about the document -->
@@ -209,7 +214,8 @@
 		{/if}
 		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ') && (viewMode === 'visual' || viewMode === 'source')}
 			<!-- hidden, not truncated, once it no longer fits beside the buttons -->
-			<span class="shrink-0" use:hideIfCramped><WordCount /></span>
+			<!-- Markdown has no parts to count by -->
+			<span class="shrink-0" use:hideIfCramped><WordCount details={kind === 'md' ? undefined : onCountWords} /></span>
 		{/if}
 	</div>
 	<div class="flex items-center gap-2">
@@ -279,7 +285,7 @@
 					use:tip={encodingIssue ?? (conflicted ? m.vcs_conflict_visual_off() : m.wsview_visual_editor_title())}
 				>
 					<Eye class="size-3.5" />
-					{m.wsview_visual_label()}
+					<span class="cap-center">{m.wsview_visual_label()}</span>
 				</button>
 				<button
 					class="flex items-center gap-1 px-2.5 py-1 {viewMode === 'source' ? 'preset-filled-primary-500' : 'hover:preset-tonal'}"
@@ -287,7 +293,7 @@
 					use:tip={kind === 'typ' ? m.wsview_typst_source_title() : m.wsview_latex_source_title()}
 				>
 					<Code class="size-3.5" />
-					{m.wsview_source_label()}
+					<span class="cap-center">{m.wsview_source_label()}</span>
 				</button>
 			</div>
 		{/if}
@@ -310,7 +316,7 @@
 		{#if fileMode.current}
 			<button class="btn btn-xs {COMPILE_TONE.primary}" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
 				<FolderOpen class="size-4" />
-				{m.wsview_open_in_workspace()}
+				<span class="cap-center">{m.wsview_open_in_workspace()}</span>
 			</button>
 		{:else if terminalAvailable}
 			<!-- the one-shot sync-to-cursor button used to sit here; it lives on the preview pane's
@@ -352,7 +358,7 @@
 			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
 				<button class="btn btn-xs preset-tonal-primary gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
 					<Play class="size-4" />
-					{m.session_request_compile()}
+					<span class="cap-center">{m.session_request_compile()}</span>
 				</button>
 			{/if}
 		{/if}
@@ -364,7 +370,7 @@
 				disabled={!loadedPath || saving || !isDirty.current}
 			>
 				{#if saving}<Loader2 class="size-4 animate-spin" />{:else}<Save class="size-4" />{/if}
-				{m.wsview_save_label()}
+				<span class="cap-center">{m.wsview_save_label()}</span>
 			</button>
 		{/if}
 	</div>

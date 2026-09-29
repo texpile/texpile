@@ -30,21 +30,24 @@
 	}
 </script>
 
-<div class="bg-surface-100-900 text-muted border-surface-200-800 flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs">
+<!-- the rule is an inset shadow, as under the source comparison's bar (diff/DiffPane.svelte) -->
+<div
+	class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
+>
 	<GitCompare class="size-3.5 shrink-0" />
-	<span class="font-medium">{m.wsview_diff_since()}</span>
-	{#if props.compare}<span class="text-muted min-w-0 truncate" use:tip={props.compare.hash}>· {props.compare.subject}</span>{/if}
+	<span class="cap-center font-medium">{m.wsview_diff_since()}</span>
+	{#if props.compare}<span class="cap-center text-muted min-w-0 truncate" use:tip={props.compare.hash}>· {props.compare.subject}</span>{/if}
 	<!-- What it cannot show, said out loud: an unmarked document otherwise reads as "nothing
 	     changed". No count - the number would be of source runs, which nothing on screen shows. -->
 	{#if props.fileDeleted}
-		<span class="text-muted min-w-0 truncate">· {m.wsview_diff_file_deleted()}</span>
+		<span class="cap-center text-muted min-w-0 truncate">· {m.wsview_diff_file_deleted()}</span>
 	{:else if props.versionParsing}
 		<!-- a parse that lands quickly should flash nothing at all; see lateReveal.ts -->
-		<span class="text-muted reveal-late min-w-0 truncate">· {m.wsview_diff_finding_changes()}</span>
+		<span class="cap-center text-muted reveal-late min-w-0 truncate">· {m.wsview_diff_finding_changes()}</span>
 	{:else if props.versionUnavailable}
-		<span class="text-muted min-w-0 truncate">· {m.wsview_diff_version_unparsed()}</span>
+		<span class="cap-center text-muted min-w-0 truncate">· {m.wsview_diff_version_unparsed()}</span>
 	{:else if props.sourceOnly}
-		<span class="text-muted min-w-0 truncate">· {m.wsview_diff_source_only()}</span>
+		<span class="cap-center text-muted min-w-0 truncate">· {m.wsview_diff_source_only()}</span>
 	{/if}
 	<div class="ml-auto flex shrink-0 items-center gap-1">
 		<!-- through the marked changes from the caret, wrapping round -->

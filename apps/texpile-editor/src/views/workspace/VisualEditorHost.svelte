@@ -194,12 +194,5 @@
 				addCommentLabel={m.comments_add()}
 			/>
 		{/if}
-		{#if showRenderBar}
-			<!-- EditorView keeps its own root hidden until ProseMirror exists, so this sits in the
-			     space the editor will occupy rather than over it. It is on screen for the paint
-			     that happens while EditorView awaits its dynamic import, and stays there through
-			     the synchronous build that follows. -->
-			<VisualLoading mounting format={kind} sizeBytes={texSource.length} />
-		{/if}
 	</div>
 </div>

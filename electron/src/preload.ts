@@ -413,6 +413,8 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 	},
 	/** the TeX and Typst installs on this machine, the one PATH reaches marked. */
 	distros: () => ipcRenderer.invoke('toolchain:distros'),
+	/** a .bib from the TeX installation by bare name, as text; null when it has none */
+	texBib: (name: string) => ipcRenderer.invoke('toolchain:texBib', name),
 	/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
 	dirForms: (entry: string) => ipcRenderer.invoke('toolchain:dirForms', entry),
 	/** fetch tinymist's preview page, theme it, and re-serve it; resolves to a typstpreview:// URL. */
@@ -470,9 +472,12 @@ contextBridge.exposeInMainWorld('texpileZotero', {
 	exportBib: (keys: string[], translator: string) => ipcRenderer.invoke('zotero:export', { keys, translator })
 });
 
-// Cite by DOI: the BibTeX doi.org's registry gives for a DOI (see electron/src/doiLookup.ts)
+// Cite by DOI's lookups (see electron/src/ipc/doiIpc.ts)
 contextBridge.exposeInMainWorld('texpileDoi', {
-	lookup: (doi: string) => ipcRenderer.invoke('doi:lookup', { doi })
+	lookup: (doi: string) => ipcRenderer.invoke('doi:lookup', { doi }),
+	search: (query: string) => ipcRenderer.invoke('doi:search', { query }),
+	isbn: (isbn: string) => ipcRenderer.invoke('doi:isbn', { isbn }),
+	pmid: (pmid: string) => ipcRenderer.invoke('doi:pmid', { pmid })
 });
 
 // the reader's own command-line agent (Preferences > AI); main picks the command, a run only carries the prompt

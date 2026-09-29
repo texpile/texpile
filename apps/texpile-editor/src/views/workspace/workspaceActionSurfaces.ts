@@ -1,5 +1,6 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
+import type { ReplaceSpec } from '$lib/search/replaceInFiles';
 import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
 import { forgetSignIns } from '$lib/workspace/forgetSignIns';
@@ -15,6 +16,7 @@ import { uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
 import { workspaceRoot, isDirty, activeFilePath, activeCompare } from '$lib/workspace/workspaceStore';
 import { revealInTree } from '$lib/filetree/treeReveal.svelte';
 import { openTabContextMenu } from './tabContextMenu';
+import { countDocumentWords } from './writing/workspaceWordCount';
 import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/scm/gitStore';
 import { preferencesOpen } from '$lib/stores/dialogStore';
 import { isDesktop, revealItem, type TreeEntry } from '$lib/workspace/fileSystem';
@@ -65,6 +67,7 @@ export type ActionSurfaceDeps = {
 	setTutorialModalOpen: (open: boolean) => void;
 	openGlobalSearch: () => void;
 	closeGlobalSearch: () => void;
+	replaceInFolder: (files: string[], spec: ReplaceSpec) => Promise<void>;
 };
 
 /**
@@ -149,6 +152,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		showComments: () => toggleDockPanel(d, 'comments'),
 		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
 		citeByDoi: () => d.integrations.citeByDoi(),
+		countWords: () => countDocumentWords(d.wsdoc.doc, d.provider),
 		save: () => d.wsdoc.save(),
 		activateTab: (t: Tab) => d.editFlow().activateTab(t),
 		closeTab: (t: Tab) => d.editFlow().closeTab(t),
@@ -263,6 +267,7 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 		refreshTree: () => void toastAfter(m.wsview_toast_tree_refreshed(), () => d.files().refreshTree()),
 		openGlobalSearch: () => void d.openGlobalSearch(),
 		closeGlobalSearch: () => void d.closeGlobalSearch(),
+		replaceInFolder: (files: string[], spec: ReplaceSpec) => d.replaceInFolder(files, spec),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),
 		openEntry: (entry: TreeEntry) => d.files().openEntry(entry),
 		// the main file is a property of the project, so it goes in .texpile/config.json with the rest

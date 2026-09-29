@@ -3,18 +3,27 @@
 // activeFilePath; WorkspaceView wires activation, closing and tree-change cleanup to this.
 //
 // A tab is a FILE or a COMPARISON of one against a saved version - the same kind of thing, so
-// one strip. Not the visual/source axis, which stays a preference. Comparisons are never persisted.
+// one strip, and both are persisted. Not the visual/source axis, which stays a preference.
 import { samePath, joinPath } from './fileSystem';
-import { getFolder, updateFolder } from '$lib/storage/workspaces';
+import { getFolder, updateFolder, savedCompare, type SavedCompare } from '$lib/storage/workspaces';
 
 const MAX_TABS = 50;
 const REOPEN_DEPTH = 20;
 
 /** the saved version a comparison tab is against; `path` is the file's path in that version when
  *  it was named differently (a Timeline row from before a rename) */
-export type CompareRef = { hash: string; subject: string; path?: string };
+export type CompareRef = SavedCompare;
 
 export type Tab = { path: string; compare?: CompareRef };
+
+/** a saved tab back on the strip, or null for an entry this build cannot read */
+function restoredTab(root: string, saved: unknown): Tab | null {
+	if (typeof saved === 'string') return { path: joinPath(root, saved) };
+	if (!saved || typeof saved !== 'object') return null;
+	const { path, compare } = saved as { path?: unknown; compare?: unknown };
+	const ref = savedCompare(compare);
+	return typeof path === 'string' && ref ? { path: joinPath(root, path), compare: ref } : null;
+}
 
 // a path cannot contain NUL, so a comparison key can never collide with a plain file key
 const KEY_SEP = '\u0000';
@@ -45,8 +54,8 @@ class TabsStore {
 		this.preview = null;
 		this.closed = [];
 		if (!this.persistable || !root) return;
-		const rels = getFolder(root).tabs;
-		if (Array.isArray(rels)) this.list = rels.slice(0, MAX_TABS).map((r) => ({ path: joinPath(root, String(r)) }));
+		const saved = getFolder(root).tabs;
+		if (Array.isArray(saved)) this.list = saved.slice(0, MAX_TABS).flatMap((s) => restoredTab(root, s) ?? []);
 	}
 
 	/** for callers that only care about documents (MCP, guards) */
@@ -66,10 +75,12 @@ class TabsStore {
 	private persist(): void {
 		if (!this.persistable || !this.root) return;
 		const root = this.root;
-		// comparisons are transient by design and never reach storage
-		const rels = this.list.filter((t) => !t.compare).map((t) => t.path.slice(root.length).replace(/^[\\/]/, ''));
+		const saved = this.list.map((t) => {
+			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
+			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
+		});
 		updateFolder(root, (draft) => {
-			draft.tabs = rels;
+			draft.tabs = saved;
 		});
 	}
 

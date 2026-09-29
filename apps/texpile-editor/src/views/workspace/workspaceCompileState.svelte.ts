@@ -1,6 +1,8 @@
 // The resolved compile command and everything that follows it around: the project config
 // adopt, the per-engine Problems lane, the shared-session compile intel, and loading an
 // existing log on folder open.
+import { withLiveRefs } from '$lib/workspace/document/liveRefDiagnostics';
+import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
 import { untrack } from 'svelte';
 import { compileLog } from '$lib/stores/compileLogStore';
 import {
@@ -123,11 +125,12 @@ export class WorkspaceCompileState {
 		return isTypstCommand(this.command);
 	}
 
-	/** last compile's problems for the file open in source mode */
+	/** last compile's problems for the file open in source mode, and the live reference checks' */
 	get sourceDiagnostics() {
-		return this.d.guest()
+		const compiled = this.d.guest()
 			? guestDiagnosticsFor(this.d.session().compileIntel, this.d.doc.path)
 			: hostDiagnosticsFor(compileLog.current, workspaceRoot.current, this.d.doc.path);
+		return withLiveRefs(compiled, liveRefProblems.current, this.d.doc.path);
 	}
 
 	/** re-derive the command from the current main file (folder switches, accepted config) */

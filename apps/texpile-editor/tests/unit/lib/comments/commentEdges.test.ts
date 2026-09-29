@@ -47,6 +47,19 @@ describe('source editor comment edges', () => {
 		expect(commentAt(typed, 6)).toMatchObject({ from: 6, to: 6 });
 		expect(commentAt(typed, 8)).toBeNull();
 	});
+
+	it('moves onto the new words when exactly its words are replaced, as a replace across files does', () => {
+		const state = CmState.create({ doc: 'a gizmo and a gizmo', extensions: [comments()] });
+		const seededTwice = state.update({ effects: setCommentRanges.of([{ ...RANGE, from: 14, to: 19 }]) }).state;
+		const next = seededTwice.update({
+			changes: [
+				{ from: 2, to: 7, insert: 'sprocket' },
+				{ from: 14, to: 19, insert: 'sprocket' }
+			]
+		}).state;
+		const r = commentAt(next, 18)!;
+		expect(next.doc.sliceString(r.from, r.to)).toBe('sprocket');
+	});
 });
 
 describe('visual editor comment edges', () => {

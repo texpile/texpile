@@ -24,7 +24,7 @@ const MATH_ENVS = new Set([
 // bodies that are code/markup, never prose
 const OPAQUE_ENVS = new Set(['verbatim', 'verbatim*', 'lstlisting', 'minted', 'tikzpicture', 'comment', 'filecontents', 'filecontents*']);
 
-// commands whose braced argument IS prose: mask "\name[opt]{" and keep scanning inside
+// commands whose braced argument IS prose, starred or not: mask "\name*[opt]{" and keep scanning inside
 const CONTENT_COMMANDS = new Set([
 	'section',
 	'subsection',
@@ -39,8 +39,16 @@ const CONTENT_COMMANDS = new Set([
 	'textbf',
 	'textit',
 	'textsc',
+	'textsf',
+	'textrm',
+	'textup',
+	'textsl',
+	'textnormal',
 	'emph',
+	'enquote',
 	'underline',
+	'uline',
+	'mbox',
 	'footnote',
 	'footnotetext',
 	'thanks'
@@ -162,7 +170,7 @@ export function maskTex(src: string): TexMask {
 					mask(i, j);
 					i = j;
 				}
-			} else if (curlyAt >= 0 && CONTENT_COMMANDS.has(name)) {
+			} else if (curlyAt >= 0 && CONTENT_COMMANDS.has(name.replace(/\*$/, ''))) {
 				// the argument is prose: mask up to and including '{', keep scanning inside
 				// (the closing brace is masked as a bare brace when the scan reaches it)
 				mask(i, curlyAt + 1);

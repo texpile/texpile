@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { lookupDoi } from '../../../../../electron/src/doiLookup';
+import { lookupDoi } from '../../../../../../electron/src/cite/doiLookup';
 
 const ENTRY = '@article{Watson_1953, title={Molecular Structure of Nucleic Acids}, DOI={10.1038/171737a0}}';
 

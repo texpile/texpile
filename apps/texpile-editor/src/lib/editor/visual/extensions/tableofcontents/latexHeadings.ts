@@ -1,4 +1,5 @@
 import type { TocItem } from './tocStore';
+import { codeOnly } from '$lib/languages/latex/texCode';
 
 // mirror the parser's section-level mapping (converter.ts) so the source outline nests the same
 // way the visual one does
@@ -37,15 +38,6 @@ function cleanTitle(s: string): string {
 		.trim();
 }
 
-// true if `i` sits after an unescaped % on its own line (a commented-out heading)
-function inComment(src: string, i: number): boolean {
-	for (let j = src.lastIndexOf('\n', i - 1) + 1; j < i; j++) {
-		if (src[j] === '\\') j++;
-		else if (src[j] === '%') return true;
-	}
-	return false;
-}
-
 /** raw outline atoms: TocItems plus the structural markers numbering/merging consume. */
 export type RawOutlineItem =
 	(TocItem & { starred?: boolean }) | { kind: 'input'; pos: number; target: string } | { kind: 'appendix'; pos: number };
@@ -78,10 +70,12 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 	const lineStarts = buildLineIndex(src);
 	const items: RawOutlineItem[] = [];
 	let lastHeadingLevel = 0;
+	// what TeX skips (a comment, \iffalse, a comment environment) is no part of the outline
+	const code = codeOnly(src);
 	SCAN_RE.lastIndex = 0;
 	let m: RegExpExecArray | null;
 	while ((m = SCAN_RE.exec(src))) {
-		if (inComment(src, m.index)) continue;
+		if (code[m.index] !== src[m.index]) continue;
 		if (m[1]) {
 			const braceOpen = SCAN_RE.lastIndex - 1;
 			const { inner, end } = readGroup(src, braceOpen);

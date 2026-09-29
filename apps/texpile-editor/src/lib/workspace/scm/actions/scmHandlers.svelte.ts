@@ -24,6 +24,10 @@ export type ScmHandlers = {
 	listBranches(): Promise<GitBranchesResult>;
 	/** check one out, saving unsaved changes first if the switch would overwrite them */
 	switchBranch(name: string): void;
+	/** a merge this app can finish is in progress: Complete Merge and Abort Merge are offered */
+	canFinishMerge(): boolean;
+	finishMerge(): void;
+	abortMerge(): void;
 };
 
 let current = $state<ScmHandlers | null>(null);

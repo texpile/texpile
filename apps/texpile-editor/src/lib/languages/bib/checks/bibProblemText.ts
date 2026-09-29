@@ -18,5 +18,7 @@ export function bibProblemText(problem: BibProblem): string {
 			return m.bib_warn_missing_one_of({ fields: problem.fields.join(', ') });
 		case 'mutually-exclusive':
 			return m.bib_warn_conflict({ fields: problem.fields.join(', ') });
+		case 'same-work':
+			return problem.by === 'doi' ? m.bib_warn_same_work_doi({ key: problem.key }) : m.bib_warn_same_work_arxiv({ key: problem.key });
 	}
 }

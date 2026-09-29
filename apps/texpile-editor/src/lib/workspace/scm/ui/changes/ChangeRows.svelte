@@ -63,8 +63,9 @@
 			aria-label={relPath(c.path)}
 			use:tip={selected.includes(c.path) ? m.vcs_untick_tip() : m.vcs_tick_tip()}
 		/>
+		<!-- a container: in a narrow sidebar the Texpile badge and the Resolved note shrink to their icons -->
 		<button
-			class="flex min-w-0 flex-1 items-center gap-1.5 text-left"
+			class="@container flex min-w-0 flex-1 items-center gap-1.5 text-left"
 			onclick={() => {
 				// a deleted or non-text file has no places to open at: the question is which side to keep
 				if (locked && c.choose) scmHandlers.current?.chooseWhole(c.path, c.choose);
@@ -87,22 +88,24 @@
 			{/if}
 			{#if dirName(c.path) && !c.files}<span class="text-muted truncate text-xs">{dirName(c.path)}</span>{/if}
 			<!-- every marked place in it is chosen: nothing more to do here before Finish -->
+			<!-- notes in gray: the name's color already says conflict, as in the file tree -->
 			{#if locked && c.choose}
 				<!-- the name keeps its room; the note gives way, its whole text in the tip -->
-				<span class="text-warning-ink min-w-0 truncate text-xs" use:tip={`${chooseNote(c.choose)}. ${m.vcs_choose_tip()}`}
+				<span class="text-muted min-w-0 truncate text-xs" use:tip={`${chooseNote(c.choose)}. ${m.vcs_choose_tip()}`}
 					>{chooseNote(c.choose)}</span
 				>
 			{:else if locked && c.markers === false}
-				<span class="text-success-ink flex shrink-0 items-center gap-0.5 text-xs" use:tip={m.vcs_conflict_ready_tip()}>
-					<Check class="size-3" />{m.vcs_conflict_ready()}
+				<span class="text-muted flex shrink-0 items-center gap-0.5 text-xs" use:tip={m.vcs_conflict_ready_tip()}>
+					<Check class="size-3" /><span class="cap-center @max-[11rem]:hidden">{m.vcs_conflict_ready()}</span>
 				</span>
 			{/if}
 			<!-- .texpile is hidden from the file tree, so this is the first place anyone meets the
-			     file. Unexplained, it reads as junk to discard rather than review notes to keep. -->
+			     file. Unexplained, it reads as junk to discard rather than review notes to keep. Neutral,
+			     as the Comments panel's badge for what is not a problem. -->
 			{#if isTexpileManaged(relPath(c.path))}
-				<span class="badge preset-tonal-primary shrink-0 gap-1 px-1 py-0 text-[10px]" use:tip={m.texpile_managed_note()}>
+				<span class="badge preset-tonal-surface shrink-0 gap-1 px-1 py-0 text-[10px]" use:tip={m.texpile_managed_note()}>
 					<Info class="size-3" />
-					{m.vcs_texpile_managed()}
+					<span class="cap-center @max-[16rem]:hidden">{m.vcs_texpile_managed()}</span>
 				</span>
 			{/if}
 		</button>

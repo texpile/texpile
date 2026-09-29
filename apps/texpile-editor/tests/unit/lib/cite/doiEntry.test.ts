@@ -211,14 +211,60 @@ describe('workFromBibtex on real registry answers', () => {
 	});
 });
 
+describe('workFromBibtex for books and PubMed records', () => {
+	// electron/src/cite/citeSearch.ts's entries for an ISBN and an old PubMed ID
+	const BOOK =
+		'@book{isbn,\n  title = {The TeXbook},\n  author = {Donald E. Knuth},\n  publisher = {Addison-Wesley},\n  year = {1986},\n  isbn = {9780201134476},\n}';
+	const PUBMED =
+		'@article{pmid100,\n  title = {Bovine mannosidosis--a model lysosomal storage disease},\n  author = {Jolly, R. D. and Thompson, K. G.},\n  journal = {Birth defects original article series},\n  volume = {11},\n  number = {6},\n  pages = {273--278},\n  year = {1975},\n  eprint = {100},\n  eprinttype = {pubmed},\n}';
+	const isbn = parseWorkId('0201134470')!;
+	const pmid = parseWorkId('PMID: 100')!;
+
+	it('keys a book like a paper and keeps its ISBN', () => {
+		const work = workFromBibtex(BOOK, isbn, 'biblatex', [])!;
+		expect(work.key).toBe('knuth1986texbook');
+		expect(parseBibtex(work.bib)[0]).toMatchObject({
+			entrytype: 'book',
+			author: 'Donald E. Knuth',
+			publisher: 'Addison-Wesley',
+			isbn: '9780201134476'
+		});
+		expect(work).toMatchObject({ authors: 'Knuth', venue: 'Addison-Wesley', year: '1986' });
+	});
+
+	it('keeps a PubMed ID where biblatex prints one, and leaves it out where nothing would', () => {
+		expect(parseBibtex(workFromBibtex(PUBMED, pmid, 'biblatex', [])!.bib)[0]).toMatchObject({
+			key: 'jolly1975bovine',
+			journaltitle: 'Birth defects original article series',
+			eprint: '100',
+			eprinttype: 'pubmed'
+		});
+		for (const dialect of ['bibtex', 'typst'] as const) {
+			const ref = parseBibtex(workFromBibtex(PUBMED, pmid, dialect, [])!.bib)[0];
+			expect(ref.eprint, dialect).toBeUndefined();
+			expect(ref.eprinttype, dialect).toBeUndefined();
+		}
+	});
+});
+
 describe('findCited', () => {
 	const refs = parseBibtex(
 		[
 			'@article{dna, doi = {https://doi.org/10.1038/171737A0}, title = {Molecular Structure}}',
 			'@misc{transformer, eprint = {arXiv:1706.03762v5}, title = {Attention}}',
-			'@misc{bert, url = {https://arxiv.org/abs/1810.04805v2}, title = {BERT}}'
+			'@misc{bert, url = {https://arxiv.org/abs/1810.04805v2}, title = {BERT}}',
+			'@book{texbook, isbn = {0-201-13447-0}, title = {The TeXbook}}',
+			'@article{cow, eprint = {100}, eprinttype = {pubmed}, title = {Bovine mannosidosis}}',
+			'@article{bwa, pmid = {19451168}, title = {Fast and accurate}}'
 		].join('\n\n')
 	);
+
+	it('matches a book on its ISBN in either length, and a PubMed record on its ID', () => {
+		expect(findCited(refs, parseWorkId('978-0-201-13447-6')!)?.key).toBe('texbook');
+		expect(findCited(refs, parseWorkId('PMID: 100')!)?.key).toBe('cow');
+		expect(findCited(refs, parseWorkId('PMID: 19451168')!)?.key).toBe('bwa');
+		expect(findCited(refs, parseWorkId('PMID: 101')!)).toBeNull();
+	});
 
 	it('matches a DOI however the entry spells it', () => {
 		expect(findCited(refs, watson)?.key).toBe('dna');

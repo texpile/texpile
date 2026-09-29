@@ -3,7 +3,7 @@
 // proofread-* styles, and open the shared SuggestionBox on click.
 import { Decoration, EditorView, ViewPlugin, type DecorationSet, type ViewUpdate } from '@codemirror/view';
 import { Facet, RangeSetBuilder } from '@codemirror/state';
-import { lintText } from '$lib/editor/spellcheck/linter';
+import { lintText, onLintRulesChanged } from '$lib/editor/spellcheck/linter';
 import { createHarperSuggestionBox, type Problem } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { observe } from '$lib/runes/observe.svelte';
@@ -76,6 +76,7 @@ class SpellPlugin {
 	private enabled = false;
 	private ignored = new Set<string>();
 	private unsubscribe: () => void;
+	private stopRules: () => void;
 	// lint results per paragraph text (offsets paragraph-relative); text-keyed, so results survive
 	// edits elsewhere in the doc and only changed paragraphs get re-linted
 	private cache = new Map<string, LintMatch[]>();
@@ -100,6 +101,8 @@ class SpellPlugin {
 				}
 			}
 		);
+		// another English or another set of rules: what was found is out of date
+		this.stopRules = onLintRulesChanged(() => this.invalidate());
 	}
 
 	update(u: ViewUpdate) {
@@ -116,6 +119,7 @@ class SpellPlugin {
 
 	destroy() {
 		this.unsubscribe();
+		this.stopRules();
 		if (this.timer) clearTimeout(this.timer);
 		this.gen++;
 	}
@@ -234,7 +238,8 @@ class SpellPlugin {
 					shortmsg: m.shortMessage || m.message,
 					type: m.type.typeName,
 					replacements: m.replacements ?? [],
-					text: src.slice(from, to)
+					text: src.slice(from, to),
+					rule: m.rule
 				};
 				if (this.ignored.has(`${problem.type}:${problem.text}`)) continue;
 				builder.add(from, to, Decoration.mark({ class: `proofread-${cssType(problem.type)}`, problem }));

@@ -1,6 +1,6 @@
 import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { BIB_ENTRY_TYPES, BIB_FIELDS, BIB_FIELD_ALIASES } from './bibDatamodel';
-import { fieldsForType } from './bibValidate';
+import { fieldsForType } from './checks/bibValidate';
 
 /** entry types worth offering: the machinery ones are not bibliography */
 const MACHINERY = new Set(['xdata', 'set', 'customa', 'customb', 'customc', 'customd', 'custome', 'customf']);

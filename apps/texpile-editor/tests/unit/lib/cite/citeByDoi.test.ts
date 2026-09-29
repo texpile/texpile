@@ -31,7 +31,7 @@ vi.mock('$lib/modals/toaster-svelte', () => ({
 	)
 }));
 
-import { citeWork, lookUpWork } from '$lib/cite/citeByDoi';
+import { citeWork, lookUpWork, searchPapers } from '$lib/cite/citeByDoi';
 import { parseWorkId } from '$lib/cite/doiInput';
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { references } from '$lib/workspace/citations';
@@ -44,13 +44,19 @@ const deps = { kind: 'tex' as const, root: '/paper', openDoc: () => ({ path: MAI
 const watson = parseWorkId('https://doi.org/10.1038/171737a0')!;
 
 const lookup = vi.fn();
+const search = vi.fn();
+const isbn = vi.fn();
+const pmid = vi.fn();
 
 beforeEach(() => {
 	disk.clear();
 	inserted.length = 0;
 	toasts.length = 0;
 	lookup.mockReset().mockResolvedValue({ ok: true, bibtex: CROSSREF });
-	window.texpileDoi = { lookup };
+	search.mockReset();
+	isbn.mockReset();
+	pmid.mockReset();
+	window.texpileDoi = { lookup, search, isbn, pmid };
 	disk.set(MAIN, '\\documentclass{article}\n\\usepackage{biblatex}\n\\addbibresource{refs.bib}\n');
 	disk.set(BIB, '@book{knuth1984texbook, title = {The TeXbook}, author = {Knuth, Donald}, year = {1984}}\n');
 	mainFile.current = MAIN;
@@ -80,9 +86,78 @@ describe('lookUpWork', () => {
 	});
 });
 
+describe('lookUpWork for books and PubMed records', () => {
+	it("takes a PubMed record's entry from its DOI, and cites it under that DOI", async () => {
+		pmid.mockResolvedValue({ ok: true, doi: '10.1038/171737a0' });
+		const found = await lookUpWork(parseWorkId('PMID: 13054692')!, deps);
+		expect(pmid).toHaveBeenCalledWith('13054692');
+		expect(lookup).toHaveBeenCalledWith('10.1038/171737a0');
+		expect(found).toMatchObject({ state: 'found', id: { kind: 'doi', doi: '10.1038/171737a0' }, work: { key: 'watson1953molecular' } });
+		await citeWork(found, deps);
+		expect(parseBibtex(disk.get(BIB)!)[1]).toMatchObject({ key: 'watson1953molecular', doi: '10.1038/171737a0' });
+	});
+
+	it('finds a PubMed record the project cites by DOI once the DOI is known', async () => {
+		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}');
+		pmid.mockResolvedValue({ ok: true, doi: '10.1038/171737a0' });
+		expect(await lookUpWork(parseWorkId('PMID: 13054692')!, deps)).toMatchObject({ state: 'cited', key: 'dna' });
+		expect(lookup).not.toHaveBeenCalled();
+	});
+
+	it('adds a book from its ISBN', async () => {
+		isbn.mockResolvedValue({
+			ok: true,
+			bibtex: '@book{isbn, title = {The TeXbook}, author = {Donald E. Knuth}, publisher = {Addison-Wesley}, year = {1986}}'
+		});
+		const found = await lookUpWork(parseWorkId('0-201-13447-0')!, deps);
+		expect(isbn).toHaveBeenCalledWith('9780201134476');
+		await citeWork(found, deps);
+		expect(parseBibtex(disk.get(BIB)!)[1]).toMatchObject({ key: 'knuth1986texbook', entrytype: 'book', isbn: '9780201134476' });
+		expect(inserted).toEqual([['knuth1986texbook']]);
+	});
+});
+
+describe('searchPapers', () => {
+	it('ranks what the sources found and marks the papers the project already cites', async () => {
+		references.current = parseBibtex('@article{resnet, doi = {10.1109/CVPR.2016.90}}');
+		search.mockResolvedValue({
+			ok: true,
+			hits: [
+				{
+					doi: '10.3390/app12188972',
+					title: 'Deep Residual Learning for Image Recognition: A Survey',
+					authors: ['Shafiq'],
+					venue: 'Applied Sciences',
+					year: '2022',
+					cites: 987
+				},
+				{
+					doi: '10.1109/cvpr.2016.90',
+					title: 'Deep Residual Learning for Image Recognition',
+					authors: ['He'],
+					venue: 'CVPR',
+					year: '2016',
+					cites: 175414
+				}
+			]
+		});
+		const got = await searchPapers('deep residual learning for image recognition');
+		expect(search).toHaveBeenCalledWith('deep residual learning for image recognition');
+		expect(got.state === 'hits' && got.hits.map((h) => [h.doi, h.citedKey])).toEqual([
+			['10.1109/cvpr.2016.90', 'resnet'],
+			['10.3390/app12188972', undefined]
+		]);
+	});
+
+	it('passes a failed search on as it came', async () => {
+		search.mockResolvedValue({ ok: false, reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
+		expect(await searchPapers('anything')).toEqual({ state: 'error', reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
+	});
+});
+
 describe('citeWork', () => {
 	it('adds the entry to the bib the main file declares, in its dialect, and cites it', async () => {
-		await citeWork(await lookUpWork(watson, deps), watson, deps);
+		await citeWork(await lookUpWork(watson, deps), deps);
 		const refs = parseBibtex(disk.get(BIB)!);
 		expect(refs.map((r) => r.key)).toEqual(['knuth1984texbook', 'watson1953molecular']);
 		// \addbibresource: biblatex names, and no publisher on an article
@@ -97,7 +172,7 @@ describe('citeWork', () => {
 		const found = await lookUpWork(watson, deps);
 		disk.set(BIB, `${disk.get(BIB)}\n@article{crick, doi = {10.1038/171737a0}, title = {DNA}}\n`);
 		const before = disk.get(BIB);
-		await citeWork(found, watson, deps);
+		await citeWork(found, deps);
 		expect(disk.get(BIB)).toBe(before);
 		expect(inserted).toEqual([['crick']]);
 	});
@@ -105,14 +180,14 @@ describe('citeWork', () => {
 	it('takes a fresh key when the one previewed was taken in the meantime', async () => {
 		const found = await lookUpWork(watson, deps);
 		disk.set(BIB, `${disk.get(BIB)}\n@misc{watson1953molecular, title = {Something else}}\n`);
-		await citeWork(found, watson, deps);
+		await citeWork(found, deps);
 		expect(parseBibtex(disk.get(BIB)!).map((r) => r.key)).toContain('watson1953molecular2');
 		expect(inserted).toEqual([['watson1953molecular2']]);
 	});
 
 	it('writes classic BibTeX names for a \\bibliography project', async () => {
 		disk.set(MAIN, '\\documentclass{article}\n\\bibliography{refs}\n');
-		await citeWork(await lookUpWork(watson, deps), watson, deps);
+		await citeWork(await lookUpWork(watson, deps), deps);
 		const added = parseBibtex(disk.get(BIB)!)[1];
 		expect(added.journal).toBe('Nature');
 		expect(added.journaltitle).toBeUndefined();
@@ -124,7 +199,7 @@ describe('citeWork', () => {
 		const typ = { kind: 'typ' as const, root: '/paper', openDoc: () => ({ path: MAIN_TYP, text: disk.get(MAIN_TYP)! }) };
 		mainFile.current = MAIN_TYP;
 		lookup.mockResolvedValue({ ok: true, bibtex: CROSSREF.replace('Molecular Structure', '<i>Molecular</i> Structure') });
-		await citeWork(await lookUpWork(watson, typ), watson, typ);
+		await citeWork(await lookUpWork(watson, typ), typ);
 		const added = parseBibtex(disk.get(BIB)!)[1];
 		expect(added).toMatchObject({ key: 'watson1953molecular', title: 'Molecular Structure of Nucleic Acids', journaltitle: 'Nature' });
 		expect(inserted).toEqual([['watson1953molecular']]);
@@ -133,7 +208,7 @@ describe('citeWork', () => {
 	it('only cites a work the project already has', async () => {
 		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}}');
 		const before = disk.get(BIB);
-		await citeWork(await lookUpWork(watson, deps), watson, deps);
+		await citeWork(await lookUpWork(watson, deps), deps);
 		expect(disk.get(BIB)).toBe(before);
 		expect(inserted).toEqual([['dna']]);
 		expect(toasts).toEqual([]);
@@ -143,7 +218,7 @@ describe('citeWork', () => {
 		disk.delete(BIB);
 		disk.set(MAIN, '\\documentclass{article}\n');
 		references.current = [];
-		await citeWork(await lookUpWork(watson, deps), watson, deps);
+		await citeWork(await lookUpWork(watson, deps), deps);
 		expect(parseBibtex(disk.get('/paper/references.bib')!)[0].key).toBe('watson1953molecular');
 		expect(toasts.map((t) => t.kind)).toEqual(['success', 'warning']);
 	});

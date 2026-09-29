@@ -13,8 +13,11 @@
 		serializeBibtex,
 		fitsVisualEditor,
 		getEntryTypeOptions,
+		sameWorkAs,
 		isKeyUnique as checkKeyUnique
 	} from '$lib/languages/bib/biblatex';
+	import { onMount } from 'svelte';
+	import { citedKeys, loadCitedKeys } from '$lib/workspace/document/citedKeys';
 	import type { ZodIssue } from 'zod';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import CodeMirrorLatex from '$lib/components/CodeMirrorLatex.svelte';
@@ -78,6 +81,28 @@
 	});
 
 	const entryTypeOptions = getEntryTypeOptions();
+
+	// checked as typed, so a DOI pasted into a new entry says at once the paper is already here
+	const formTwins = $derived(
+		sameWorkAs(
+			currentReference as BiblatexReference,
+			refs.filter((r) => r.key !== originalKey)
+		)
+	);
+
+	// reread when the reader comes back from writing elsewhere
+	onMount(() => {
+		function reload() {
+			void loadCitedKeys();
+		}
+		reload();
+		addEventListener('focus', reload);
+		addEventListener('texpile:fs-changed', reload);
+		return () => {
+			removeEventListener('focus', reload);
+			removeEventListener('texpile:fs-changed', reload);
+		};
+	});
 
 	function isKeyUnique(k: string) {
 		return checkKeyUnique(k, refs, originalKey ?? undefined);
@@ -175,6 +200,7 @@
 		if (isEditing && originalKey) refs = refs.map((r) => (r.key === originalKey ? entry : r));
 		else refs = [...refs, entry];
 		commit();
+		announceKeyRenamed(entry.key);
 		resetForm();
 	}
 
@@ -193,7 +219,14 @@
 		if (isEditing && originalKey) refs = refs.map((r) => (r.key === originalKey ? parsed.entry : r));
 		else refs = [...refs, parsed.entry];
 		commit();
+		announceKeyRenamed(parsed.entry.key);
 		resetForm();
+	}
+
+	/** the documents' citations follow a renamed key (views/workspace/writing/workspaceReplace.ts) */
+	function announceKeyRenamed(key: string) {
+		if (!isEditing || !originalKey || key === originalKey) return;
+		dispatchEvent(new CustomEvent('texpile:citekey-renamed', { detail: { from: originalKey, to: key } }));
 	}
 
 	// whole .bib failed to parse; on a clean re-parse drop back to the normal split-pane UI
@@ -295,6 +328,7 @@
 				<ul>
 					<BibReferenceList
 						{refs}
+						cited={citedKeys.current}
 						selectedKey={isEditing ? (currentReference.key ?? null) : null}
 						onEdit={editReference}
 						onDelete={deleteReference}
@@ -333,7 +367,15 @@
 						<button class="btn preset-filled-primary-500" type="button" onclick={saveRawEntry}>{m.bib_update_reference_button()}</button>
 					</div>
 				{:else}
-					<BibEntryForm bind:currentReference {formErrors} {entryTypeOptions} {isEditing} onSave={saveReference} onCancel={resetForm} />
+					<BibEntryForm
+						bind:currentReference
+						{formErrors}
+						{entryTypeOptions}
+						{isEditing}
+						twins={formTwins}
+						onSave={saveReference}
+						onCancel={resetForm}
+					/>
 				{/if}
 
 				{#if !isEditing}

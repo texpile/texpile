@@ -4,9 +4,14 @@
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Tag } from '@lucide/svelte';
 	import { sanitizeLabel } from '$lib/editor/visual/label';
+	import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
+	import { refProblemText } from '$lib/workspace/document/liveRefDiagnostics';
 	import { m } from '$lib/paraglide/messages';
 
 	let { name, onRename }: { name: string; onRename: (next: string) => void } = $props();
+
+	// the label is defined a second time, here or in another file of the document
+	const twice = $derived(liveRefProblems.current?.problems.find((p) => p.kind === 'label-twice' && p.name === name) ?? null);
 
 	let open = $state(false);
 	let draft = $state('');
@@ -43,9 +48,9 @@
 		style="font-size: 0.75rem;"
 	>
 		{#snippet element(attrs)}
-			<button {...attrs} use:tip={m.label_chip_title({ name })}>
-				<Tag class="size-3 shrink-0" />
-				<span class="font-mono">{name}</span>
+			<button {...attrs} use:tip={twice ? refProblemText(twice) : m.label_chip_title({ name })}>
+				<Tag class="size-3 shrink-0 {twice ? 'text-ref-broken-fg' : ''}" />
+				<span class="font-mono {twice ? 'text-ref-broken-fg' : ''}">{name}</span>
 			</button>
 		{/snippet}
 	</Popover.Trigger>

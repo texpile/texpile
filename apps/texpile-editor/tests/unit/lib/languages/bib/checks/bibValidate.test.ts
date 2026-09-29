@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseBibtexRaw } from '$lib/languages/bib/bibtexParser';
-import { validateEntry, fieldsForType } from '$lib/languages/bib/bibValidate';
+import { validateEntry, fieldsForType } from '$lib/languages/bib/checks/bibValidate';
 import { BIB_ENTRY_TYPES, BIB_MANDATORY, BIB_UNIVERSAL_FIELDS } from '$lib/languages/bib/bibDatamodel';
 
 const kinds = (p: { kind: string }[]) => p.map((x) => x.kind).sort();
@@ -96,7 +96,7 @@ describe('validating a bib entry', () => {
 // is the small always-on version; bib-corpus.stress.test.ts runs the same check over a real arXiv
 // corpus when PAPER_DIRS is set.
 describe('the validator against a bibliography that compiles', () => {
-	const file = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../../../live/fixtures/tut/references.bib');
+	const file = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../../../../live/fixtures/tut/references.bib');
 
 	it.skipIf(!fs.existsSync(file))('reports nothing it cannot stand behind', () => {
 		const entries = parseBibtexRaw(fs.readFileSync(file, 'utf8'));

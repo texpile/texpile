@@ -42,19 +42,23 @@
 	}
 </script>
 
-<div class="flex flex-col items-center gap-3 p-6 text-center">
-	<ShieldAlert class="text-warning-ink size-8" />
-	<p class="text-sm">{m.vcs_unsafe()}</p>
+<!-- px-3 as the panel's rows: at 24px a side a narrow sidebar left the words a column one or two wide -->
+<div class="@container flex flex-col items-center gap-3 px-3 py-6 text-center">
+	<!-- faint, as the other gates' icons: the words say what is wrong -->
+	<ShieldAlert class="text-faint size-8" />
+	<p class="text-sm @max-[11rem]:text-xs">{m.vcs_unsafe()}</p>
 	<RepoPath path={repo} />
 	{#if canTrustRepo()}
 		<button
-			class="btn btn-xs preset-filled-primary-500 w-full gap-1.5"
+			class="btn btn-xs preset-filled-primary-500 w-full gap-1.5 whitespace-normal"
 			onclick={trust}
 			disabled={trusting}
 			use:tip={m.vcs_unsafe_trust_tip()}
 		>
-			{#if trusting}<LoaderCircle class="size-3.5 animate-spin" />{:else}<ShieldCheck class="size-3.5" />{/if}
-			{trusting ? m.vcs_running_trust() : m.vcs_unsafe_trust()}
+			{#if trusting}<LoaderCircle class="size-3.5 shrink-0 animate-spin @max-[8rem]:hidden" />{:else}<ShieldCheck
+					class="size-3.5 shrink-0 @max-[8rem]:hidden"
+				/>{/if}
+			<span class="cap-center min-w-0 overflow-x-clip text-ellipsis">{trusting ? m.vcs_running_trust() : m.vcs_unsafe_trust()}</span>
 		</button>
 	{/if}
 </div>

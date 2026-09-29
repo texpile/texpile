@@ -4,7 +4,7 @@ import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { docPositions } from '$lib/workspace/docPositions';
-import { initSpellcheckConfig } from '$lib/editor/spellcheck/spellcheckConfig';
+import { initSpellcheckConfig } from '$lib/editor/spellcheck/config/spellcheckConfig';
 import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';

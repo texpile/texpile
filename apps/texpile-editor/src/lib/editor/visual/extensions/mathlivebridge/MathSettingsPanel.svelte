@@ -8,7 +8,7 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { generateLabel, isTexpileLabel, sanitizeLabel } from '$lib/editor/visual/label';
 	import { labelTaken } from '$lib/editor/visual/labelTaken';
-	import { repointRefs } from '$lib/editor/visual/repointRefs';
+	import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 	import { toggleEnvironmentStar } from './mathEnvironments';
 	import { m } from '$lib/paraglide/messages';
 
@@ -76,8 +76,10 @@
 			});
 			// renaming the label follows every reference to it, in the same transaction (one undo
 			// step). Both dialects: a \ref left behind still compiles, resolving to ??.
-			if ('label' in attrs) repointRefs(tr, view.state.doc, String(node.attrs.label ?? ''), String(attrs.label ?? ''));
+			const renamedFrom = 'label' in attrs ? String(node.attrs.label ?? '') : null;
+			if (renamedFrom !== null) repointRefs(tr, view.state.doc, renamedFrom, String(attrs.label ?? ''));
 			view.dispatch(tr);
+			if (renamedFrom !== null) announceLabelRenamed(renamedFrom, String(attrs.label ?? ''));
 		}
 	}
 

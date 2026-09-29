@@ -24,6 +24,7 @@
 				</Menu.Item>
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="dictionary" class={itemClass}><Menu.ItemText>{m.menubar_edit_dictionary()}</Menu.ItemText></Menu.Item>
+				<Menu.Item value="settings" class={itemClass}><Menu.ItemText>{m.menubar_spelling_settings()}</Menu.ItemText></Menu.Item>
 			</Menu.Content>
 		</Menu.Positioner>
 	</Portal>

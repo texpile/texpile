@@ -15,6 +15,8 @@ const DEFAULT_SETTINGS = {
 	reopenLastFolder: true,
 	autosave: true, // off = manual save, warn before switching files
 	spellcheck: false,
+	englishVariant: '', // the English spelling and grammar follow: 'american', 'british', ...; '' = the system's own
+	grammarRules: {} as Record<string, boolean>, // grammar rules turned on or off by hand, over the defaults
 	checkForUpdates: true,
 	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
 	transparentWindow: false, // the window's grounds let the blurred desktop through (windowGlass.ts)

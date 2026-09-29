@@ -126,6 +126,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	// a splitter drag or a window resize changes the width every frame, and each change would re-break the whole
 	// document; the browser wraps on its own until the width rests
 	let widthMoving = false;
+	let lastWidthChange = -Infinity;
 	let wanted = '';
 	let language: DocumentHyphenation | undefined;
 	const typing = linesKeptWhileTyping((paragraph) => broken.get(paragraph));
@@ -157,6 +158,11 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			rebreakFrame = 0;
 			if (fromScratch) startOver();
 			else rebreak();
+			// already inside a frame: the check it asked for would wait for the next one, and this one be drawn spilling
+			if (checkFrame) {
+				cancelAnimationFrame(checkFrame);
+				check();
+			}
 		});
 	}
 
@@ -227,7 +233,13 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			spilled = true;
 		}
 		unchecked.clear();
-		if (spilled) rebreak();
+		if (!spilled) return;
+		rebreak();
+		// the retry is checked in this same frame: waiting for the next would draw it, spilling or not yet settled
+		if (checkFrame) {
+			cancelAnimationFrame(checkFrame);
+			check();
+		}
 	}
 
 	function rebreak(fromScratch = false): void {
@@ -316,6 +328,9 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		if (view.isDestroyed) return;
 		rootWidth = view.dom.clientWidth;
 		rebreak(true);
+		// the rest is counted from here: a drag's next step comes only once a slow break is done, and must still count
+		// as moving
+		lastWidthChange = performance.now();
 	}
 
 	function wrapNatively(): void {
@@ -334,6 +349,15 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		}
 		rootWidth = width;
 		clearTimeout(widthRest);
+		// a width that changes once (the comment margin opening) is broken for at once; wrapping the browser's way until
+		// it rests would re-wrap every line twice
+		const now = performance.now();
+		const moving = now - lastWidthChange < WIDTH_REST_MS;
+		lastWidthChange = now;
+		if (!moving && !widthMoving) {
+			rebreakNextFrame(true);
+			return;
+		}
 		widthRest = window.setTimeout(startOver, WIDTH_REST_MS);
 		if (widthMoving) return;
 		widthMoving = true;

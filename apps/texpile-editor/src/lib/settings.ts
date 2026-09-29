@@ -11,6 +11,7 @@ import { browser } from '$lib/runtime';
 import { box } from '$lib/runes/box.svelte';
 import { setLocale as setParaglideLocale } from '$lib/paraglide/runtime';
 import { migrateSettingsObject } from '$lib/migration/settings';
+import type { EnglishVariant } from '$lib/editor/spellcheck/config/grammarRules';
 
 export type AppSettings = {
 	/** settings.json's own shape version; absent means pre-restructure and triggers migration */
@@ -20,6 +21,10 @@ export type AppSettings = {
 	autosave: boolean;
 	/** Harper spell-check enabled. */
 	spellcheck: boolean;
+	/** the English that spelling and grammar follow; '' = the system's own */
+	englishVariant: '' | EnglishVariant;
+	/** grammar rules the user turned on or off; a rule not here follows its default (grammarRules.ts) */
+	grammarRules: Record<string, boolean>;
 	/** check the update feed (updates.texpile.com) for a newer version on launch; downloads stay click-only. */
 	checkForUpdates: boolean;
 	/** let an MCP client (Claude Code, Claude Desktop) read what the editor is showing. Off by
@@ -111,6 +116,8 @@ const DEFAULTS: AppSettings = {
 	reopenLastFolder: true,
 	autosave: true,
 	spellcheck: false,
+	englishVariant: '',
+	grammarRules: {},
 	checkForUpdates: true,
 	mcpEnabled: false,
 	uiZoom: 1,

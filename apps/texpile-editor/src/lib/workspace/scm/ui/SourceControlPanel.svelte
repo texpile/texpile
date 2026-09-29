@@ -4,7 +4,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { GitBranch, RefreshCw, Check, GitCommitHorizontal, PackageX, LoaderCircle } from '@lucide/svelte';
 	import ChangeList from './changes/ChangeList.svelte';
-	import OperationBanner from './OperationBanner.svelte';
+	import MergeActions from './MergeActions.svelte';
 	import SyncControls from './SyncControls.svelte';
 	import ScmProgress from './ScmProgress.svelte';
 	import ParentRepoGate from './gates/ParentRepoGate.svelte';
@@ -154,6 +154,18 @@
 
 	/** a merge the panel can finish or cancel itself; the rest go back to the terminal they came from */
 	const combining = $derived(operation === 'merge' && !!onFinishCombine && !!onCancelCombine);
+	// beside the branch, as VS Code's status bar says main (Rebasing); the tip says where to finish it
+	const OPERATION: Record<GitOperation, { label: () => string; tip: () => string }> = {
+		merge: { label: m.vcs_op_merge_label, tip: m.vcs_op_merge },
+		rebase: { label: m.vcs_op_rebase_label, tip: m.vcs_op_rebase },
+		'cherry-pick': { label: m.vcs_op_cherry_pick_label, tip: m.vcs_op_cherry_pick },
+		revert: { label: m.vcs_op_revert_label, tip: m.vcs_op_revert }
+	};
+	const opNote = $derived(
+		operation ? { label: OPERATION[operation].label(), tip: combining ? m.vcs_finish_combine_tip() : OPERATION[operation].tip() } : null
+	);
+	// too narrow for both: the branch name hides for the operation or Sync's counts, rather than show half a letter
+	const branchFit = $derived(opNote ? '@max-[14rem]:hidden' : tracking && (ahead > 0 || behind > 0) ? '@max-[8rem]:hidden' : '');
 	/** files still holding a place nobody has chosen for */
 	const marked = $derived(conflicts.filter((c) => c.markers).length);
 
@@ -173,15 +185,23 @@
 
 {#if gitMissing}
 	<!-- "not under source control" with an Initialize button that then fails is what this used to say -->
-	<div class="flex flex-col items-center gap-3 p-6 text-center">
+	<div class="@container flex flex-col items-center gap-3 px-3 py-6 text-center">
 		<PackageX class="text-faint size-8" />
-		<p class="text-muted text-sm">{m.vcs_git_missing()}</p>
-		<a class="anchor text-sm" href="https://texpile.com/docs/installation/git" target="_blank" rel="noopener noreferrer"
-			>{m.vcs_git_install()}</a
+		<p class="text-muted text-sm @max-[11rem]:text-xs">{m.vcs_git_missing()}</p>
+		<!-- the app installs nothing: the page says how, for each system -->
+		<a
+			class="anchor text-sm @max-[11rem]:text-xs"
+			href="https://texpile.com/docs/installation/git"
+			target="_blank"
+			rel="noopener noreferrer">{m.vcs_git_install()}</a
 		>
-		<button class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal w-full gap-1.5" onclick={onRecheckGit} disabled={busy}>
-			<RefreshCw class="size-3.5" />
-			{m.vcs_check_again()}
+		<button
+			class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal w-full gap-1.5 whitespace-normal"
+			onclick={onRecheckGit}
+			disabled={busy}
+		>
+			<RefreshCw class="size-3.5 shrink-0 @max-[8rem]:hidden" />
+			<span class="cap-center min-w-0 overflow-x-clip text-ellipsis">{m.vcs_check_again()}</span>
 		</button>
 	</div>
 {:else if gitUnsafe.current && root}
@@ -195,14 +215,21 @@
 		<ScmProgress active={busy || !!gitRunning.current} />
 		<!-- refresh belongs beside the branch: both are the state of the repository, and parked above
 		     an unrelated heading it read as a stray duplicate of the file tree's own refresh -->
-		<div class="text-muted flex h-7 shrink-0 items-center gap-1.5 px-3 text-xs">
+		<!-- a container, so in a narrow sidebar Sync and Publish drop their word and Refresh stays in sight -->
+		<div class="text-muted @container flex h-7 shrink-0 items-center gap-1.5 px-3 text-xs">
 			<!-- a label, as on master: switching is Switch branch in the command palette. Detached, git
 			     calls the branch "HEAD", which says nothing; this says what it means and where the way back is -->
 			<GitBranch class="size-3.5 shrink-0" />
 			{#if detached}
-				<span class="truncate font-medium" use:tip={m.vcs_detached_tip()}>{m.vcs_detached({ short: shortHead })}</span>
+				<span class="cap-center shrink-100 truncate font-medium {branchFit}" use:tip={m.vcs_detached_tip()}
+					>{m.vcs_detached({ short: shortHead })}</span
+				>
 			{:else}
-				<span class="truncate font-medium">{branch ?? m.vcs_no_branch()}</span>
+				<span class="cap-center shrink-100 truncate font-medium {branchFit}">{branch ?? m.vcs_no_branch()}</span>
+			{/if}
+			<!-- the tip is read out as well as hovered -->
+			{#if opNote}
+				<span class="cap-center truncate" use:tip={opNote.tip}>{opNote.label}<span class="sr-only">. {opNote.tip}</span></span>
 			{/if}
 			<div class="ml-auto flex shrink-0 items-center gap-1">
 				<SyncControls place="header" {tracking} {ahead} {behind} {hasCommits} {detached} {branch} {operation} {busy} {onSync} {onPublish} />
@@ -219,11 +246,8 @@
 
 		<!-- which half matters depends on what you are doing, so it is not the scrollbar's decision -->
 		<div class="flex min-h-0 flex-1 flex-col" bind:this={splitEl}>
-			<div class="flex min-h-0 flex-col" style="flex: {1 - historyFraction} 1 0%">
+			<div class="flex min-h-0 flex-col" style="flex: 1 1 0%">
 				<div class="scroll-inset-r min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] pb-2">
-					{#if operation}
-						<OperationBanner {operation} {marked} {busy} {onFinishCombine} {onCancelCombine} />
-					{/if}
 					{#if changes.length}
 						<!-- The total, then the groups it is made of. Deliberately not a group row itself: no
 						     tick box and no chevron, so a summary cannot be mistaken for what it summarises. -->
@@ -232,7 +256,8 @@
 							<span class="tabular-nums">{gitTruncated.current || changes.length}</span>
 						</div>
 						{#if gitTruncated.current}
-							<p class="text-warning-ink px-3 py-1 text-xs" role="status">
+							<!-- gray, as Find in Files says (truncated): a limit, not something wrong -->
+							<p class="text-muted px-3 py-1 text-xs" role="status">
 								{m.vcs_truncated({ shown: changes.length.toLocaleString() })}
 							</p>
 						{/if}
@@ -251,9 +276,9 @@
 							/>
 						</div>
 					{:else}
-						<div class="text-muted mt-6 mb-2 flex flex-col items-center gap-1 px-3 text-center text-sm">
+						<div class="text-muted @container mt-6 mb-2 flex flex-col items-center gap-1 px-3 text-center text-sm">
 							<GitCommitHorizontal class="size-6 opacity-60" />
-							{m.vcs_no_changes()}
+							<span class="@max-[11rem]:text-xs">{m.vcs_no_changes()}</span>
 						</div>
 						<!-- VS Code's action button: with nothing to save, what is left to do is send and receive
 						     versions, or give the branch somewhere to go -->
@@ -273,9 +298,10 @@
 					{/if}
 				</div>
 
-				<!-- outside the scroller: what you are about to save must not scroll away from its list. Not
-				     while combining: the merge is saved by Finish combining, as one version -->
-				{#if changes.length && !combining}
+				<!-- outside the scroller, so what you are about to save stays in sight; while merging, Complete Merge stands here -->
+				{#if combining}
+					<MergeActions {marked} {busy} onFinish={() => onFinishCombine?.()} onCancel={() => onCancelCombine?.()} />
+				{:else if changes.length}
 					<div class="border-surface-200-800 shrink-0 space-y-2 border-t px-2 py-2">
 						<textarea
 							data-scm-message
@@ -294,10 +320,10 @@
 						>
 							{#if gitRunning.current === 'save'}
 								<LoaderCircle class="size-3.5 animate-spin" />
-								{m.vcs_running_save()}
+								<span class="cap-center">{m.vcs_running_save()}</span>
 							{:else}
 								<Check class="size-3.5" />
-								{m.vcs_save_version_one()}
+								<span class="cap-center">{m.vcs_save_version_one()}</span>
 							{/if}
 						</button>
 					</div>
@@ -316,7 +342,8 @@
 				tabindex="0"
 			></div>
 
-			<div class="border-surface-200-800 flex min-h-0 flex-col border-t" style="flex: {historyFraction} 1 0%">
+			<!-- whole pixels tall, as the explorer's Contents: fractional heights started every row below part-way into a pixel -->
+			<div class="border-surface-200-800 flex min-h-0 flex-col border-t" style="flex: 0 1 round({historyFraction * 100}%, 1px)">
 				<!-- the explorer's section heading, so the two sidebars name their parts alike -->
 				<div class="text-faint shrink-0 px-3 py-1 text-xs font-semibold tracking-wide uppercase">{m.vcs_history_heading()}</div>
 				<div class="scroll-inset-r min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] pb-2 pl-1.5">

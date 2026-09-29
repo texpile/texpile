@@ -16,7 +16,7 @@
 	import { typstServerGen } from '$lib/languages/typst/intellisense/lspClient';
 	import { sourceCmView } from '$lib/stores/editorStore';
 	import { docText } from '$lib/editor/source/docText';
-	import { setSourceDocCount, setSourceSelectionCount } from '$lib/stores/countStore.svelte';
+	import { setSourceDocCount, setSourceSelectionCount, sourceCounting } from '$lib/stores/countStore.svelte';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { settings } from '$lib/settings';
 	import * as Y from 'yjs';
@@ -118,14 +118,18 @@
 	const diagFeed = new SourceDiagnosticsFeed();
 	const lsp = new TypstLspBinding(() => view, lspConf);
 
-	const deferredDocCount = trailingDebounce(300, setSourceDocCount);
+	const counting = $derived(sourceCounting(fileFor));
+	// a LaTeX or Typst file's whole count comes from the workspace, in either view (countOpenFile)
+	const deferredDocCount = trailingDebounce(300, (text: string) => {
+		if (counting === 'text') setSourceDocCount(text);
+	});
 	// throttle-ish: scrolling and arrow keys fire constantly, and only the resting place matters
 	const deferredRememberPosition = trailingDebounce<void>(400, () => positions.remember(view, docPath, !!collab));
 	// reads the selection at fire time (not capture), so a huge selection isn't sliced per keystroke
 	const deferredSelectionCount = trailingDebounce<void>(150, () => {
 		if (!view) return;
 		const s = view.state.selection.main;
-		setSourceSelectionCount(s.empty ? null : view.state.sliceDoc(s.from, s.to));
+		setSourceSelectionCount(s.empty ? null : view.state.sliceDoc(s.from, s.to), counting);
 	});
 	// held at component scope so onDestroy can tear it down (else its doc observer leaks across
 	// every file switch / mode toggle that remounts this editor)
@@ -200,7 +204,7 @@
 		// the file was closed) — hand the truth back so the save pipeline starts aligned
 		if (collab && onInput && collab.ytext.toString() !== value) onInput(collab.ytext.toString());
 		// seed the counts now; the updateListener only fires on later changes
-		setSourceDocCount(docText(view.state.doc));
+		if (counting === 'text') setSourceDocCount(docText(view.state.doc));
 		setSourceSelectionCount(null);
 		if (initialScrollPos != null) applyModeSwitchAnchor(view, initialScrollPos);
 		// publish this CM as the source-mode editor so menuBarCommands can route Insert/Format to it

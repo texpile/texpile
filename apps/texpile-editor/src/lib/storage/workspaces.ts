@@ -17,13 +17,26 @@ export type FolderEntry = {
 	lastFile?: string;
 	/** compile commands accepted for this folder, per format - THIS MACHINE's approval record */
 	trusted?: { latex?: string; typst?: string };
-	/** open tabs, in order, root-relative */
-	tabs?: string[];
+	/** open tabs, in order, root-relative: a file, or a file compared against one of its versions */
+	tabs?: (string | { path: string; compare: SavedCompare })[];
+	/** the version lastFile was left compared against, when the focused tab was a comparison */
+	lastCompare?: SavedCompare;
 	/** per-file caret + scroll; shape owned and validated by workspace/docPositions.ts */
 	positions?: Record<string, unknown>;
 	/** left in Suggesting; a choice per project and per person, so not in the project's own config */
 	suggesting?: boolean;
 };
+
+/** the saved version a comparison tab is against; `path` is the file's name in that version when it had another */
+export type SavedCompare = { hash: string; subject: string; path?: string };
+
+/** a stored comparison read back, or null when the value is not one */
+export function savedCompare(v: unknown): SavedCompare | null {
+	if (!v || typeof v !== 'object') return null;
+	const { hash, subject, path } = v as Record<string, unknown>;
+	if (typeof hash !== 'string' || !hash || typeof subject !== 'string') return null;
+	return typeof path === 'string' && path ? { hash, subject, path } : { hash, subject };
+}
 
 type WorkspacesBlob = {
 	v: 1;

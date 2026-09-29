@@ -41,6 +41,7 @@ import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/sugge
 import { proofreadPlugin, spellChipPlugin, spellClickBoundaryPlugin } from '$lib/editor/spellcheck/spellcheckplugin';
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
+import { latexProse } from '$lib/workspace/wordCount/proseWords';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { tableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
@@ -72,6 +73,7 @@ import { listRuleWithoutIndent } from './listItemIndent';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
+import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
 
 export type LatexEditorSetup = {
 	/** resolved by the caller's dynamic import so mathlive stays off the critical path */
@@ -101,6 +103,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 	} = setup;
 	return [
 		parseCarryPlugin,
+		labelRenameUndo,
 		gapCursor(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
@@ -188,7 +191,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		search(),
 		placeholderPlugin(placeholder),
 		tablePlaceholderPlugin(),
-		createWordCountPlugin(),
+		createWordCountPlugin((raw) => latexProse(raw, false)),
 		createTocPlugin(),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment

@@ -11,6 +11,8 @@
 	import WorkspaceMain from './WorkspaceMain.svelte';
 	import WorkspaceChrome from './WorkspaceChrome.svelte';
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
+	import { makeFolderReplace, makeRenameElsewhere } from './writing/workspaceReplace';
+	import type { TextEdit } from '$lib/workspace/edits/textEdits';
 	import TutorialConfirmModal from '$lib/modals/start/TutorialConfirmModal.svelte';
 	import { tabs, tabKey } from '$lib/workspace/tabs.svelte';
 	import { makeMainActions, makeChromeActions, makePaletteActions, type ActionSurfaceDeps } from './workspaceActionSurfaces';
@@ -43,11 +45,11 @@
 	import { createKeydownHandler, createCaptureKeydownHandler } from '$lib/workspace/shortcuts';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
-	import { workspaceRoot, texFiles, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, texFiles, activeCompare, activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
 	import { settings } from '$lib/settings';
-	import { basename, dirname, isDesktop } from '$lib/workspace/fileSystem';
+	import { basename, dirname, isDesktop, searchInFolder } from '$lib/workspace/fileSystem';
 	import { diskProvider } from '$lib/workspace/diskProvider';
 	import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 	// the file-access seam: the host gets the disk-backed provider by default; a guest session
@@ -235,6 +237,39 @@
 	const scm = integrations.scm;
 
 	let globalSearchRef = $state<GlobalSearch | null>(null);
+	// folder replace, and renames in the open file followed into the other files
+	const replaceWiring = {
+		provider: () => provider,
+		doc,
+		modes,
+		kind: () => kind,
+		parseVisual: async (text: string) => (await wsdoc.tryParseVisual(text)).parsed ?? null,
+		saver: () => saver,
+		history: () => (files.treeOps.undoable ? files.treeOps.history : null),
+		reloadOpen: () => external.check(),
+		main: () => mainFile.current,
+		editedClosed: (path: string, before: string, after: string, edits: TextEdit[], undoing: boolean) =>
+			commentsW.editClosedFile({ path, before, after, edits, undoing }),
+		editedOpenVisual: (before: string, after: string, edits: readonly TextEdit[]) => commentsW.editOpenVisual(before, after, edits)
+	};
+	const renameElsewhere = makeRenameElsewhere({ ...replaceWiring, root: () => workspaceRoot.current, search: searchInFolder });
+	onMount(() => {
+		function follow(kind: 'label' | 'cite') {
+			return (e: Event) => {
+				const { from, to } = (e as CustomEvent<{ from: string; to: string }>).detail;
+				// the other files are the host's to write; a guest's rename stays in the file it made it in
+				if (!guest && provider.caps.manageTree) renameElsewhere(kind, from, to);
+			};
+		}
+		const onLabel = follow('label');
+		const onCite = follow('cite');
+		addEventListener('texpile:label-renamed', onLabel);
+		addEventListener('texpile:citekey-renamed', onCite);
+		return () => {
+			removeEventListener('texpile:label-renamed', onLabel);
+			removeEventListener('texpile:citekey-renamed', onCite);
+		};
+	});
 	// Find in Files panel plumbing lives in lib/workspace/editorCommands.ts
 	const searchDeps = {
 		setSidebarView: (v: 'explorer' | 'search' | 'scm') => (layout.sidebarView = v),
@@ -273,7 +308,8 @@
 		setShareModalOpen: (open) => (shareModalOpen = open),
 		setTutorialModalOpen: (open) => (tutorialModalOpen = open),
 		openGlobalSearch: () => void openSearchPanel(searchDeps),
-		closeGlobalSearch: () => void closeSearchPanel(searchDeps)
+		closeGlobalSearch: () => void closeSearchPanel(searchDeps),
+		replaceInFolder: makeFolderReplace(replaceWiring)
 	};
 	const actions = makeMainActions(actionDeps);
 	const chromeActions = makeChromeActions(actionDeps);

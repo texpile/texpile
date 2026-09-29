@@ -70,6 +70,8 @@ declare global {
 		onProbeResult?(cb: (p: ToolProbe) => void): () => void;
 		/** The TeX and Typst installs on this machine, the one PATH reaches marked. */
 		distros?(): Promise<ToolDistro[]>;
+		/** a .bib from the TeX installation by bare name; null when it has none */
+		texBib?(name: string): Promise<string | null>;
 		/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
 		dirForms(entry: string): Promise<{ absolute: string; relative: string | null; exists: boolean; real: string }>;
 		/** Fetch tinymist's preview page, theme it, re-serve it from typstpreview://. */
@@ -109,11 +111,24 @@ declare global {
 		exportBib(keys: string[], translator: string): Promise<{ ok: boolean; bib?: string; error?: string }>;
 	};
 
+	/** a paper a title search found (see electron/src/cite/citeSearch.ts) */
+	type CiteSearchHit = { doi: string; title: string; authors: string[]; venue: string; year: string; cites: number };
+
 	type TexpileDoiBridge = {
-		/** The BibTeX doi.org's registry gives for a DOI (see electron/src/doiLookup.ts). */
+		/** the BibTeX doi.org's registry gives for a DOI (see electron/src/cite/doiLookup.ts) */
 		lookup(
 			doi: string
 		): Promise<{ ok: true; bibtex: string } | { ok: false; reason: 'not-found' | 'no-bibtex' | 'offline' | 'failed'; error?: string }>;
+		/** papers matching a title, from Crossref and arXiv's DataCite records, unranked */
+		search(query: string): Promise<{ ok: true; hits: CiteSearchHit[] } | { ok: false; reason: 'offline' | 'failed'; error?: string }>;
+		/** a book's entry from Open Library, by its 13-digit ISBN */
+		isbn(isbn: string): Promise<{ ok: true; bibtex: string } | { ok: false; reason: 'not-found' | 'offline' | 'failed'; error?: string }>;
+		/** a PubMed record's DOI, or its entry when it has none */
+		pmid(
+			pmid: string
+		): Promise<
+			{ ok: true; doi: string } | { ok: true; bibtex: string } | { ok: false; reason: 'not-found' | 'offline' | 'failed'; error?: string }
+		>;
 	};
 
 	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- augmenting lib.dom's Window needs declaration merging

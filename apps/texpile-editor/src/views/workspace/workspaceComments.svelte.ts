@@ -23,12 +23,15 @@ import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspac
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { SourceEdit } from '$lib/workspace/suggestionsController';
-import { patchVisualFromSource } from '$lib/workspace/visualSourcePatch';
+import { editOpenFile } from '$lib/workspace/edits/openEditorEdit';
 import { onDecisionStep } from '$lib/comments/decisionHistory';
 import { markPmDecision } from '$lib/editor/visual/extensions/pmDecisionStep';
 import { markCmDecision } from '$lib/editor/source/extensions/cmDecisionStep';
 import { editMode, suggesting } from '$lib/comments/activeSuggestions.svelte';
 import type { EditMode } from '$lib/comments/suggestCompare';
+import { carryClosedEdit } from '$lib/workspace/edits/closedFileEdit';
+import { carriedAnchors } from '$lib/workspace/threadPlacement';
+import type { TextEdit } from '$lib/workspace/edits/textEdits';
 
 type CommentsDeps = {
 	doc: DocumentBuffer;
@@ -42,12 +45,14 @@ type CommentsDeps = {
 
 export class WorkspaceComments {
 	readonly ctl: CommentsController;
+	private readonly mode: () => EditMode;
 
 	constructor(private d: CommentsDeps) {
 		function mode(): EditMode {
 			// a guest suggests only through a host that records it; an older host would take it as editing
 			return suggesting.current && !fileMode.current && (!d.guest() || collabGuest.hostRecords) ? 'suggesting' : 'editing';
 		}
+		this.mode = mode;
 		// a guest has no git repo to fall back to (its root is the 'session' sentinel), but it DOES
 		// have the name it joined with - that is what every peer already sees on its cursor
 		function preferredAuthor(): string {
@@ -195,14 +200,26 @@ export class WorkspaceComments {
 		const before = this.activeText();
 		if (edit.from < 0 || edit.to > before.length || edit.to < edit.from) return false;
 		const next = before.slice(0, edit.from) + edit.insert + before.slice(edit.to);
-		if (this.d.modes.mode === 'visual' && hasVisualMode(this.d.kind())) {
-			const v = editorViewStore.current;
-			return !!v && patchVisualFromSource(v, this.d.doc, this.d.parseVisual, before, next);
+		const d = { doc: this.d.doc, mode: () => this.d.modes.mode, kind: this.d.kind, parseVisual: this.d.parseVisual };
+		return editOpenFile(d, before, next, edit);
+	}
+
+	/** comments and suggestions carried through a change to a file that is not open (a replace across files) */
+	editClosedFile(change: Parameters<typeof carryClosedEdit>[3]): Promise<void> {
+		return carryClosedEdit(this.ctl, workspaceRoot.current, this.mode(), change);
+	}
+
+	/** the visual editor patches whole paragraphs, so a replace there carries comments by their text */
+	async editOpenVisual(before: string, after: string, edits: readonly TextEdit[]): Promise<void> {
+		const file = this.ctl.activeFile;
+		if (file && this.ctl.store.writable) {
+			const by = await this.ctl.author();
+			for (const { id, anchor } of carriedAnchors(this.ctl.store.forFile(file), before, after, edits)) {
+				const thread = this.ctl.store.threads.find((t) => t.id === id);
+				if (thread) await this.ctl.moveAnchor(thread, anchor, file, by);
+			}
 		}
-		const cm = sourceCmView.current;
-		if (!cm || cm.state.doc.toString() !== before) return false;
-		cm.dispatch({ changes: { from: edit.from, to: edit.to, insert: edit.insert } });
-		return true;
+		this.ctl.reanchor(this.d.doc.path, after);
 	}
 
 	private markDecision(seq: number): void {

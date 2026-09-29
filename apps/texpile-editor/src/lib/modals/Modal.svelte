@@ -106,7 +106,7 @@
 				<div class="mb-3 flex items-center justify-between gap-4">
 					<h2 class="flex items-center gap-2 text-base font-semibold">
 						{#if Icon}<Icon class="{iconClass} size-5" />{/if}
-						{title}
+						<span class="cap-center">{title}</span>
 					</h2>
 					{#if dismissable}
 						<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={close} aria-label={m.modal_close_aria()}>

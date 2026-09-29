@@ -42,13 +42,14 @@
 	const ICON = 'btn-icon btn-icon-xs hover:preset-tonal shrink-0';
 </script>
 
+<!-- the rule is an inset shadow, as under the comparison bar (diff/DiffPane.svelte) -->
 <div
-	class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+	class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
 	role="status"
 >
 	<GitMerge class="text-warning-ink size-3.5 shrink-0" />
 	{#if left}
-		<p class="min-w-0 flex-1 truncate">
+		<p class="cap-center min-w-0 flex-1 truncate">
 			<span class="font-medium">{m.vcs_conflict_notice_title()}.</span>
 			{left === 1 ? m.vcs_conflict_notice_one() : m.vcs_conflict_notice_count({ count: left })}
 		</p>
@@ -61,7 +62,7 @@
 		<Popover open={allOpen} onOpenChange={(e) => (allOpen = e.open)} positioning={{ placement: 'bottom-end', offset: { mainAxis: 2 } }}>
 			<Popover.Trigger class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal shrink-0 gap-1.5">
 				<ChevronsDown class="size-3.5" />
-				{m.vcs_conflict_keep_all()}
+				<span class="cap-center">{m.vcs_conflict_keep_all()}</span>
 			</Popover.Trigger>
 			<Portal>
 				<Popover.Positioner class="z-floating-ui">
@@ -78,12 +79,12 @@
 		</Popover>
 	{:else if stray}
 		<!-- every place chosen, but a marker line was left behind: Complete Merge would refuse it -->
-		<p class="min-w-0 truncate">
+		<p class="cap-center min-w-0 truncate">
 			<span class="font-medium">{m.vcs_conflict_notice_title()}.</span>
 			{m.vcs_conflict_notice_stray()}
 		</p>
 	{:else}
-		<p class="min-w-0 truncate">
+		<p class="cap-center min-w-0 truncate">
 			<span class="font-medium">{m.vcs_conflict_notice_done_title()}.</span>
 			{m.vcs_conflict_notice_done()}
 		</p>
