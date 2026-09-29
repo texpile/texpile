@@ -16,6 +16,9 @@
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
+	import { canCombine } from '$lib/workspace/scm/branches/gitCombine';
+	import { canClone } from '$lib/workspace/scm/remote/gitClone';
+	import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import type { Snippet } from 'svelte';
 
@@ -95,6 +98,9 @@
 			onNewFile={menu.canManageTree ? actions.newFileOfType : undefined}
 			typstProject={menu.typstProject}
 			onOpenFolder={menu.hostMode ? actions.openFolder : undefined}
+			onCloneRepository={menu.hostMode && canClone() ? actions.cloneRepository : undefined}
+			onLocalHistory={menu.hostMode && canKeepLocalHistory() ? actions.localHistory : undefined}
+			onRestoreDeleted={menu.hostMode && canKeepLocalHistory() ? actions.restoreDeleted : undefined}
 			onCloseWorkspace={menu.hostMode ? actions.closeWorkspace : undefined}
 			onSave={actions.save}
 			onShareSession={menu.shareable ? actions.openShare : undefined}
@@ -187,7 +193,12 @@
 			scmCommit={scm.commit}
 			scmRestore={scm.restore}
 			scmIgnoreArtifacts={scm.ignoreArtifacts}
-			scmUpload={scm.upload}
+			scmPublish={scm.publish}
+			scmSync={scm.sync}
+			scmRecheckGit={scm.recheckGit}
+			scmOpenConflict={scm.combine.openConflict}
+			scmFinishCombine={canCombine() ? scm.combine.finish : undefined}
+			scmCancelCombine={canCombine() ? scm.combine.cancel : undefined}
 			scmCompare={scm.compare}
 			scmChangesSince={scm.changesSince}
 			scmOpenDiff={scm.openDiff}

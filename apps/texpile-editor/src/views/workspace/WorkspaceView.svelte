@@ -1,4 +1,10 @@
 <script lang="ts">
+	import VersionChangesModal from './VersionChangesModal.svelte';
+	import TwoVersionsModal from './TwoVersionsModal.svelte';
+	import LocalHistoryDialog from './LocalHistoryDialog.svelte';
+	import { versionChanges } from '$lib/workspace/versionChanges.svelte';
+	import { twoVersions } from '$lib/workspace/twoVersions.svelte';
+	import { localHistoryDialog } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
 	import { fileMode, NO_PROJECT_CAPS } from '$lib/workspace/fileMode.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import WorkspaceModals from '$lib/modals/workspace/WorkspaceModals.svelte';
@@ -34,7 +40,7 @@
 	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import { mark } from '$lib/debug/startupDoctor';
-	import { createKeydownHandler } from '$lib/workspace/shortcuts';
+	import { createKeydownHandler, createCaptureKeydownHandler } from '$lib/workspace/shortcuts';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
 	import { workspaceRoot, texFiles, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
@@ -146,7 +152,8 @@
 	let layout = $state(new PaneLayout());
 
 	// visual TOC reads PM headings (works for md too); source-mode TOC parses raw LaTeX, tex-only
-	const showToc = $derived(!!doc.path && (modes.mode === 'visual' ? hasVisualMode(kind) : modes.mode === 'source' && kind === 'tex'));
+	// the explorer's lower pane: Contents and Timeline, for whichever file is open (ExplorerSections)
+	const showToc = $derived(!!doc.path);
 	attachSourceToc(wsdoc);
 	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
 	let termDock = $state(new TerminalDockState(() => guest));
@@ -241,7 +248,11 @@
 
 	// the three callback surfaces live in ./workspaceActionSurfaces.ts
 	const actionDeps: ActionSurfaceDeps = {
-		provider,
+		// read when an action runs, not now: the provider follows the folder (and file mode), and a
+		// copy taken here kept whatever it was while the window was still starting
+		get provider() {
+			return provider;
+		},
 		wsdoc,
 		editFlow: () => editFlow,
 		files: () => files,
@@ -290,9 +301,10 @@
 		openPreferences: () => (preferencesOpen.current = true),
 		stepDocumentHistory: (direction) => editSelect(direction)
 	});
+	const onKeydownCapture = createCaptureKeydownHandler({ openSourceControl: () => chromeActions.openSourceControl() });
 </script>
 
-<svelte:window onkeydown={onKeydown} />
+<svelte:window onkeydown={onKeydown} onkeydowncapture={onKeydownCapture} />
 <!-- file - folder - app (VS Code's order); the folder segment tells windows apart in the taskbar -->
 <svelte:head
 	><title
@@ -363,6 +375,7 @@
 				previewTab: tabs.preview,
 				applyingStarter: files.starters.applying,
 				allReferences: integrations.allReferences,
+				changeBaseline: integrations.changeBaseline.text,
 				sourceGotoLine: nav.sourceGotoLine,
 				sourceDiagnostics: cc.sourceDiagnostics,
 				fileUrl: (p: string) => provider.fileUrl(p),
@@ -390,6 +403,17 @@
 
 	<ZoteroCitationDialog />
 	<CiteByDoiDialog />
+	{#if versionChanges.entry && workspaceRoot.current}
+		<VersionChangesModal entry={versionChanges.entry} root={workspaceRoot.current} />
+	{/if}
+	{#if twoVersions.current}
+		<TwoVersionsModal versions={twoVersions.current} />
+	{/if}
+	{#if localHistoryDialog.view && workspaceRoot.current}
+		{#key localHistoryDialog.view}
+			<LocalHistoryDialog root={workspaceRoot.current} view={localHistoryDialog.view} />
+		{/key}
+	{/if}
 
 	<WorkspaceModals
 		bind:mainPrompt={files.mainPrompt}

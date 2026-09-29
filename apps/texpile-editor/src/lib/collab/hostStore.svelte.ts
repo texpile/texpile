@@ -5,7 +5,7 @@ import * as Y from 'yjs';
 import { generateShareCode } from './e2e/shareCode';
 import { deriveSessionKeys, sha256Hex } from './e2e/keys';
 import { CollabSession, manifestOf, locksOf, metaOf, textOf, type PeerInfo } from './session';
-import { isSafeRel, type ControlPayload, type PreviewPayload } from './protocol';
+import type { ControlPayload, PreviewPayload } from './protocol';
 import type { SharedCompileIntel } from './editSession';
 import type { RemoteEdit } from '$lib/workspace/suggestionStates';
 import { commentLogOf } from './sharedComments';
@@ -21,9 +21,11 @@ import {
 	relativeTo,
 	joinPath
 } from '$lib/workspace/fileSystem';
+import { resolveRealRelative } from '$lib/workspace/realRelative';
 import { settings } from '$lib/settings';
 import { presenceIdentity } from './identity';
 import { flattenShareManifest } from './shareManifest';
+import { resolveSharedTarget } from './sharedPathGuard';
 
 class HostCollabController {
 	active = $state(false);
@@ -261,14 +263,15 @@ class HostCollabController {
 
 	// serve a file's bytes to a guest that requested it (images the guest editor needs to render)
 	private async serveFile(name: string, rel: string, to: number): Promise<void> {
-		if (!this.active || !this.root || !this.session) return;
-		// only ever serve files the session actually shares: never .git, logs, or anything escaping the root
-		if (!isSafeRel(rel) || !isShared(rel)) return;
+		const { root, session, doc, materializer } = this;
+		if (!this.active || !root || !session || !doc || !materializer?.sharesFile(rel)) return;
+		// a short name like GIT~1 spells .git without saying so
+		if (!(await resolveSharedTarget(root, rel, resolveRealRelative))) return;
 		try {
-			const res = await fetch(fileUrl(joinPath(this.root, rel)), { cache: 'no-store' });
+			const res = await fetch(fileUrl(joinPath(root, rel)), { cache: 'no-store' });
 			if (!res.ok) return;
-			const rev = Number(manifestOf(this.doc!).get(rel)?.rev ?? 0);
-			this.session.sendBlob(name, rev, new Uint8Array(await res.arrayBuffer()), to);
+			const rev = Number(manifestOf(doc).get(rel)?.rev ?? 0);
+			session.sendBlob(name, rev, new Uint8Array(await res.arrayBuffer()), to);
 		} catch {
 			/* the guest just won't see this file */
 		}
@@ -276,12 +279,13 @@ class HostCollabController {
 
 	// write a file a guest uploaded (drag/paste), then re-sync so everyone sees it
 	private async receiveUpload(rel: string, bytes: Uint8Array): Promise<void> {
-		if (!this.active || !this.root) return;
+		const root = this.root;
+		if (!this.active || !root) return;
 		const clean = rel.replace(/\\/g, '/').replace(/^\/+/, '');
-		// stay inside the shared set: no traversal, and never let a guest write .git hooks, artifacts, etc.
-		if (!isSafeRel(clean) || !isShared(clean)) return;
+		const target = await resolveSharedTarget(root, clean, resolveRealRelative);
+		if (!target) return;
 		try {
-			await writeBinaryFile(joinPath(this.root, clean), new Blob([bytes as BlobPart]));
+			await writeBinaryFile(joinPath(root, target), new Blob([bytes as BlobPart]));
 			await this.syncTree();
 			this.onFileOp?.(); // the host's own tree UI, not just the manifest
 		} catch {
@@ -291,13 +295,16 @@ class HostCollabController {
 
 	/** a guest's rename/delete, executed against the host's disk after path validation. */
 	private async applyGuestFileOp(p: ControlPayload & { kind: 'file-op' }): Promise<void> {
-		if (!this.active || !this.root) return;
-		if (!isSafeRel(p.from) || !isShared(p.from)) return;
+		const { root, materializer } = this;
+		if (!this.active || !root || !materializer) return;
+		if (!materializer.sharesFile(p.from) && !materializer.sharesFolder(p.from)) return;
+		if (!(await resolveSharedTarget(root, p.from, resolveRealRelative))) return;
 		try {
-			if (p.op === 'delete') await trashEntry(joinPath(this.root, p.from), this.root);
+			if (p.op === 'delete') await trashEntry(joinPath(root, p.from), root);
 			else if (p.op === 'rename') {
-				if (!p.to || !isSafeRel(p.to) || !isShared(p.to)) return;
-				await renameEntry(joinPath(this.root, p.from), joinPath(this.root, p.to));
+				// the spelling a guest gave is kept: a case-only rename resolves to the file it renames
+				if (!p.to || !(await resolveSharedTarget(root, p.to, resolveRealRelative))) return;
+				await renameEntry(joinPath(root, p.from), joinPath(root, p.to));
 			}
 			await this.syncTree();
 			this.onFileOp?.();

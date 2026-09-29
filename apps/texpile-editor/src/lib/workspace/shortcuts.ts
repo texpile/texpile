@@ -123,3 +123,16 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 		}
 	};
 }
+
+/** Keys that must reach the workspace before an editor sees them. Ctrl+Shift+G is VS Code's Source
+ *  Control, and the source editor would take it as find-previous (still on Shift+F3 and Shift+Enter).
+ *  Ctrl on macOS too, as in VS Code: Cmd+Shift+G stays find-previous there. */
+export function createCaptureKeydownHandler(deps: { openSourceControl(): void }): (e: KeyboardEvent) => void {
+	return (e: KeyboardEvent) => {
+		if (e.ctrlKey && e.shiftKey && !e.altKey && !e.metaKey && e.key.toLowerCase() === 'g') {
+			e.preventDefault();
+			e.stopPropagation();
+			deps.openSourceControl();
+		}
+	};
+}

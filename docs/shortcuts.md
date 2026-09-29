@@ -9,17 +9,17 @@ section: Settings
 
 # Keyboard shortcuts
 
-The combinations below are for Windows and Linux. On macOS, use Cmd wherever a table says Ctrl. The same list is in the app under Edit › Keyboard shortcuts.
+The combinations below are for Windows and Linux. On macOS, use Cmd wherever a table says Ctrl. The same list is in the app under Edit › Keyboard Shortcuts.
 
 ## The app
 
 | Shortcut       | Action                           |
 | -------------- | -------------------------------- |
 | Ctrl S         | Save                             |
-| Ctrl K         | Command palette                  |
-| Ctrl T         | Go to file                       |
+| Ctrl K         | Command Palette                  |
+| Ctrl T         | Go to File                       |
 | Ctrl W         | Close the tab                    |
-| Ctrl Shift T   | Reopen the last closed tab       |
+| Ctrl Shift T   | Reopen the Last Closed Tab       |
 | Ctrl F         | Find in this document            |
 | Ctrl Shift F   | Find in every file in the folder |
 | Ctrl Shift N   | New window                       |
@@ -34,12 +34,12 @@ Each key maps to the markup you would have typed.
 | Ctrl B         | Bold                  |
 | Ctrl I         | Italic                |
 | Ctrl U         | Underline             |
-| Ctrl \`        | Inline code           |
+| Ctrl \`        | Inline Code           |
 | Ctrl .         | Superscript           |
 | Ctrl ,         | Subscript             |
 | Ctrl Shift 1…3 | Heading levels 1 to 3 |
-| Ctrl M         | Inline math           |
-| Ctrl Shift M   | Display math          |
+| Ctrl M         | Inline Math           |
+| Ctrl Shift M   | Display Math          |
 
 ## Source editor
 
@@ -47,8 +47,8 @@ Each key maps to the markup you would have typed.
 | -------------- | -------------------------------- |
 | Ctrl Alt ↑ / ↓ | Add a cursor above or below      |
 | Ctrl D         | Select the next occurrence       |
-| Ctrl Space     | Open suggestions                 |
-| F12            | Go to definition (or Ctrl+Click) |
+| Ctrl Space     | Open Suggestions                 |
+| F12            | Go to Definition (or Ctrl+Click) |
 | Esc            | Hide the math preview            |
 
 Vim and Emacs keybindings for the source editor are a setting. See [Preferences](preferences.md).

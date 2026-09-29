@@ -8,6 +8,7 @@
 	import type { Component, Snippet } from 'svelte';
 	import { X } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { takeFocus } from './dialogFocus';
 
 	let {
 		open = $bindable(true),
@@ -36,7 +37,7 @@
 		z?: string;
 		/** false for forced-choice dialogs: no X, and backdrop and Escape do nothing */
 		dismissable?: boolean;
-		/** alertdialog semantics: the card takes focus so Enter and Escape work immediately */
+		/** alertdialog semantics */
 		alert?: boolean;
 		/** Enter pressed on the dialog body; never fires from a button, whose own activation runs */
 		onEnter?: () => void;
@@ -58,8 +59,23 @@
 		onClose?.();
 	}
 
+	/** A menu or popover open above the dialog takes Escape first: it closes that, not the dialog
+	 *  under it, as VS Code closes the innermost thing (a copy's "…" menu in Local History). Looked
+	 *  at as the key press starts: by the time it bubbles here the menu has already closed itself. */
+	let menuTakesEscape = false;
+	function onWindowKeydownCapture(e: KeyboardEvent) {
+		if (e.key === 'Escape')
+			menuTakesEscape = !!document.querySelector(
+				'[data-part="content"][data-state="open"]:is([data-scope="popover"], [data-scope="menu"])'
+			);
+	}
+
 	function onWindowKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape' && dismissable && escapeStack[escapeStack.length - 1] === id) close();
+		if (e.key === 'Escape' && dismissable && escapeStack[escapeStack.length - 1] === id && !menuTakesEscape) {
+			// used up here: nothing behind the dialog should act on it too
+			e.preventDefault();
+			close();
+		}
 	}
 
 	function onCardKeydown(e: KeyboardEvent) {
@@ -69,7 +85,7 @@
 	}
 </script>
 
-<svelte:window onkeydown={open ? onWindowKeydown : undefined} />
+<svelte:window onkeydowncapture={open ? onWindowKeydownCapture : undefined} onkeydown={open ? onWindowKeydown : undefined} />
 
 {#if open}
 	<div
@@ -78,13 +94,12 @@
 		onmousedown={(e) => e.target === e.currentTarget && dismissable && close()}
 	>
 		<!-- max-h + card scroll: a short window scrolls the card instead of clipping the buttons -->
-		<!-- svelte-ignore a11y_autofocus -->
 		<div
 			class="card bg-surface-50-950 border-surface-300-700 w-full border shadow-2xl {card}"
 			role={alert ? 'alertdialog' : 'dialog'}
 			aria-modal="true"
 			tabindex="-1"
-			autofocus={alert}
+			use:takeFocus
 			onkeydown={onEnter ? onCardKeydown : undefined}
 		>
 			{#if title}

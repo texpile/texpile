@@ -39,6 +39,8 @@ import { gutterTheme, yRemoteLayoutFix } from './sourceEditorThemes';
 import type { CollabBinding } from './sourceEditorTypes';
 import { tocCaretListener } from '$lib/editor/visual/extensions/tableofcontents/tocCaretListener';
 import { cmDecisionSteps } from './extensions/cmDecisionStep';
+import { cmConflicts } from './cmConflicts';
+import { cmChangeMarkers } from './cmChangeMarkers';
 
 export type SourceSetupDeps = {
 	fileFor: string;
@@ -81,12 +83,17 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// the comment mark rides these cells (gutterLineClass), so the click on it has to be
 		// handled by the gutter that owns them - EditorView.domEventHandlers only sees the text
 		lineNumbers(onSelectComment ? { domEventHandlers: commentGutterHandlers((id) => onSelectComment(id)) } : {}),
+		// between the numbers and the text, where VS Code puts them; nothing is drawn until the last
+		// saved version's text arrives
+		...(deps.readOnly ? [] : [cmChangeMarkers()]),
 		gutterTheme,
 		highlightActiveLine(),
 		...(collab
 			? [yCollab(collab.ytext, collab.awareness, { undoManager: deps.undoManager! }), yRemoteLayoutFix]
 			: [history(), cmDecisionSteps()]),
 		deps.roConf.of(deps.readOnly || collab?.readOnly ? [EditorState.readOnly.of(true), EditorView.editable.of(false)] : []),
+		// what a merge left marked, with a choice at each place; a read-only view has no choice to offer
+		...(deps.readOnly || collab?.readOnly ? [] : [cmConflicts()]),
 		deps.keymapConf.of([]),
 		drawSelection(),
 		// multiple cursors: the keymaps already bind the commands, but every transaction is

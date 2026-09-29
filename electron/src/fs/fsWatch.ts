@@ -18,6 +18,7 @@
 // either way and its module format is no longer this file's problem.
 import { watch, type FSWatcher } from 'chokidar';
 import * as path from 'node:path';
+import { resolveRepoRoot, gitDirsOf } from '../git/gitService';
 
 /**
  * Dirs whose contents never matter to the renderer's view of the workspace. Matches the tree
@@ -42,7 +43,25 @@ const WATCHED_DOT_DIRS = new Set(['.texpile']);
  * come through as one refresh, not five */
 const QUIET_MS = 200;
 
-const watchers = new Map<string, { watcher: FSWatcher; timer: NodeJS.Timeout | null }>();
+type Entry = { watcher: FSWatcher; git: FSWatcher | null; timer: NodeJS.Timeout | null };
+const watchers = new Map<string, Entry>();
+
+/**
+ * git's own bookkeeping, which the dot-dir rule hides: what a commit, checkout, fetch, merge or
+ * reset writes. Without these, a `git commit` in the built-in terminal - where the docs send
+ * people for everything the panel does not do - left the change list, the branch, the counts and
+ * History stale until something else happened to refresh them.
+ *
+ * Status itself runs with GIT_OPTIONAL_LOCKS=0 (gitProcessEnv.ts), so the refresh this triggers
+ * does not rewrite the index and trigger itself again.
+ */
+function gitStatePaths(gitDir: string, commonDir: string): string[] {
+	return [
+		...['HEAD', 'index', 'MERGE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD', 'rebase-merge', 'rebase-apply'].map((f) => path.join(gitDir, f)),
+		path.join(commonDir, 'refs'),
+		path.join(commonDir, 'packed-refs')
+	];
+}
 
 function ignored(root: string, p: string): boolean {
 	const rel = path.relative(root, p);
@@ -66,14 +85,16 @@ export function startWorkspaceWatch(key: string, root: string, onChange: () => v
 			// briefly show a truncated document. Wait until the size has been stable for a beat.
 			awaitWriteFinish: { stabilityThreshold: 300, pollInterval: 100 }
 		});
-		const entry: { watcher: FSWatcher; timer: NodeJS.Timeout | null } = { watcher, timer: null };
-		watcher.on('all', () => {
+		const entry: Entry = { watcher, git: null, timer: null };
+		function changed() {
 			if (entry.timer) clearTimeout(entry.timer);
 			entry.timer = setTimeout(() => {
 				entry.timer = null;
 				onChange();
 			}, QUIET_MS);
-		});
+		}
+		watcher.on('all', changed);
+		void watchGitState(key, entry, root, changed);
 		// EPERM/ENOENT churn (a dir deleted mid-scan, a locked file on Windows) is routine; the
 		// watcher keeps running for everything else
 		watcher.on('error', (e) => console.warn('fsWatch:', root, e instanceof Error ? e.message : e));
@@ -83,10 +104,33 @@ export function startWorkspaceWatch(key: string, root: string, onChange: () => v
 	}
 }
 
+/** Follow the repository the folder is in, if it is in one. A folder that becomes a repository
+ *  later (Initialize, or `git init` in the terminal) is picked up the next time it is watched. */
+async function watchGitState(key: string, entry: Entry, root: string, changed: () => void): Promise<void> {
+	try {
+		const rr = await resolveRepoRoot(root);
+		if (!rr.repo) return;
+		const { gitDir, commonDir } = await gitDirsOf(rr.repo.root);
+		const current = watchers.get(key);
+		if (current !== entry) return; // stopped or replaced while git answered
+		const gitWatcher = watch(gitStatePaths(gitDir, commonDir), {
+			ignoreInitial: true,
+			// every write to these goes through a .lock file first; the rename that follows is the event
+			ignored: (p: string) => p.endsWith('.lock')
+		});
+		gitWatcher.on('all', changed);
+		gitWatcher.on('error', (e) => console.warn('fsWatch (git):', gitDir, e instanceof Error ? e.message : e));
+		current.git = gitWatcher;
+	} catch (e) {
+		console.warn('fsWatch: could not follow git state for', root, e instanceof Error ? e.message : e);
+	}
+}
+
 export function stopWorkspaceWatch(key: string): void {
 	const entry = watchers.get(key);
 	if (!entry) return;
 	watchers.delete(key);
 	if (entry.timer) clearTimeout(entry.timer);
 	void entry.watcher.close();
+	void entry.git?.close();
 }

@@ -15,7 +15,7 @@ Equations are edited as math on the page, in every format. Two shortcuts cover m
 | Shortcut         | Ctrl+M        | Inline equation, flowing with the text.                                         |
 | Shortcut         | Ctrl+Shift+M  | Display equation, on its own line.                                              |
 | Shortcut         | Shift+Enter   | In a display equation: a new one of the same kind below it.                     |
-| Menu             | Insert › Math | Inline equation, Display equation, and in a LaTeX file every environment below. |
+| Menu             | Insert › Math | Inline Equation, Display Equation, and in a LaTeX file every environment below. |
 
 ## The math toolbar
 
@@ -43,7 +43,7 @@ Switch on Numbered in an equation's settings to add a label. Which kind of label
 
 ### Single equations
 
-A plain equation gets one label. Find it under the settings' Advanced options as `\label`, the same one a `\ref` points to, and edit it there.
+A plain equation gets one label. Find it under the settings' Advanced Options as `\label`, the same one a `\ref` points to, and edit it there.
 
 ### Align, Gather, Alignat, and Eqnarray
 

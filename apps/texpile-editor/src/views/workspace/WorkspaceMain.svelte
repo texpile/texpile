@@ -85,8 +85,9 @@
 	<EditorTopbar
 		loadedPath={doc.path}
 		{kind}
-		viewMode={modes.mode}
+		viewMode={doc.conflicted ? 'source' : modes.mode}
 		encodingIssue={doc.encodingIssue}
+		conflicted={doc.conflictsLeft > 0}
 		{guest}
 		terminalAvailable={termDock.available}
 		compiling={compiler.compiling}
@@ -141,6 +142,11 @@
 			loadError={doc.loadError}
 			fileDeleted={doc.deletedOnDisk}
 			encodingIssue={doc.encodingIssue}
+			conflicted={doc.conflicted}
+			conflictsLeft={doc.conflictsLeft}
+			conflictStray={doc.strayMarkers}
+			changeBaseline={panes.changeBaseline}
+			onLeaveConflicts={actions.leaveConflicts}
 			binaryWarning={doc.binaryWarning}
 			onOpenAsText={actions.openAsText}
 			applyingStarter={panes.applyingStarter}

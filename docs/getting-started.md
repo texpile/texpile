@@ -13,11 +13,11 @@ Point Texpile at the folder your .tex files are in, and it scans for them.
 | Where to find it | Path                                  | Note                                                                                         |
 | ---------------- | ------------------------------------- | -------------------------------------------------------------------------------------------- |
 | Start screen     | Open Folder…                          |                                                                                              |
-| Menu             | File › Open folder                    | Once you are already in a folder.                                                            |
-| In the editor    | Right-click a file › Set as main file | In the file explorer.                                                                        |
+| Menu             | File › Open Folder                    | Once you are already in a folder.                                                            |
+| In the editor    | Right-click a file › Set as Main File | In the file explorer.                                                                        |
 | Setting          | Preferences › Autosave                | Preferences opens from the start screen, and from File › Preferences… once a folder is open. |
 
-![The start screen: Open Folder, Join session, New Window, and Preferences](../landing/src/lib/assets/showcase/app/start-screen.png 'The start screen: Open Folder, Join session, New Window, and Preferences')
+![The start screen: Open Folder, Join Session, New Window, and Preferences](../landing/src/lib/assets/showcase/app/start-screen.png 'The start screen: Open Folder, Join Session, New Window, and Preferences')
 
 ## Open a folder
 
@@ -28,7 +28,7 @@ There is no import step and no project format. Choose Open Folder… on the star
 
 ## Opening a single file
 
-A .tex, .typ, or .bib file can also be opened on its own: double-click it in your file manager, or open it with Texpile. The window then shows that file and nothing else. There is no file explorer, no preview pane, and no compile, since those need a folder. An Open in workspace button in the top right opens the file's folder as a project, with the file still selected.
+A .tex, .typ, or .bib file can also be opened on its own: double-click it in your file manager, or open it with Texpile. The window then shows that file and nothing else. There is no file explorer, no preview pane, and no compile, since those need a folder. An Open in Workspace button in the top right opens the file's folder as a project, with the file still selected.
 
 ## The main file
 

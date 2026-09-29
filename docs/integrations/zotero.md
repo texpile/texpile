@@ -12,8 +12,8 @@ Search your Zotero library from inside Texpile, pick references, and have them a
 
 | Where to find it | Path                                          | Note                      |
 | ---------------- | --------------------------------------------- | ------------------------- |
-| Editor           | Right-click › Insert citation from Zotero     | In a LaTeX or Typst file. |
-| Palette          | Insert citation from Zotero                   |                           |
+| Editor           | Right-click › Insert Citation from Zotero     | In a LaTeX or Typst file. |
+| Palette          | Insert Citation from Zotero                   |                           |
 | Settings         | Preferences › Integrations › Zotero citations | Off hides the action.     |
 
 Zotero has to be running, with the Better BibTeX plugin installed. References go into the bibliography your main file declares. If there is none, Texpile finds or creates a .bib file, and you add the bibliography command to your main file yourself. A reference already in the bibliography is not added twice.

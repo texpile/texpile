@@ -12,8 +12,8 @@ Texpile runs the compile command you choose, on your computer, and shows what ca
 | Where to find it | Path                                  | Note                                           |
 | ---------------- | ------------------------------------- | ---------------------------------------------- |
 | Menu             | Terminal › Compile                    |                                                |
-| Menu             | Terminal › Configure compile command… | The command, the engine, and live mode.        |
-| Menu             | Terminal › New terminal               | Opens another shell alongside the running one. |
+| Menu             | Terminal › Configure Compile Command… | The command, the engine, and live mode.        |
+| Menu             | Terminal › New Terminal               | Opens another shell alongside the running one. |
 | Shortcut         | Ctrl+Alt+Enter                        | Start or stop a compile.                       |
 | Panel            | Problems                              | In the dock at the bottom of the window.       |
 
@@ -22,7 +22,7 @@ Texpile runs the compile command you choose, on your computer, and shows what ca
 
 ## The command
 
-Terminal › Configure compile command… sets what runs. Any shell command works, `{main}` expands to your main file, and the command is saved per folder. Use default puts the default back. Under Advanced: output paths you can name the PDF and log file yourself, for a custom `-jobname` or an unusual output layout.
+Terminal › Configure Compile Command… sets what runs. Any shell command works, `{main}` expands to your main file, and the command is saved per folder. Use Default puts the default back. Under Advanced: Output Paths you can name the PDF and log file yourself, for a custom `-jobname` or an unusual output layout.
 
 ```bash
 latexmk -pdf {main}
@@ -44,4 +44,4 @@ In the source editor, right-click a line and choose Show in PDF, or click the ar
 
 ## Terminal
 
-Compiles run in a terminal named Compile in the dock. Terminal › New terminal opens another shell beside it.
+Compiles run in a terminal named Compile in the dock. Terminal › New Terminal opens another shell beside it.

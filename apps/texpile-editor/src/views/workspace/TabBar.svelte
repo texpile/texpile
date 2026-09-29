@@ -7,7 +7,8 @@
 	// because both are things you opened and can close; visual/source is a separate axis and
 	// stays a toolbar toggle applying to whichever tab is focused.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { X, ChevronDown, GitCompare } from '@lucide/svelte';
+	import { X, ChevronDown, GitCompare, GitMerge } from '@lucide/svelte';
+	import { gitChanges, gitKey, isConflicted } from '$lib/workspace/scm/gitStore';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { tabKey, type Tab } from '$lib/workspace/tabs.svelte';
@@ -28,6 +29,9 @@
 		onContextMenu?: (tab: Tab, event: MouseEvent) => void;
 	};
 	let { tabs, activeKey, dirty, previewKey = null, onActivate, onClose, onKeep, onContextMenu }: Props = $props();
+
+	/** files both sides changed, by the key the tree's badges use */
+	const conflicted = $derived(new Set(gitChanges.current.filter((c) => isConflicted(c.x, c.y)).map((c) => gitKey(c.path))));
 
 	function isActive(t: Tab) {
 		return !!activeKey && tabKey(t) === activeKey;
@@ -112,6 +116,9 @@
 				     it sits BEFORE the name where it cannot be trimmed away by a long filename -->
 				{#if tab.compare}
 					<GitCompare class="text-primary-ink size-3.5 shrink-0" />
+				{:else if conflicted.has(gitKey(tab.path))}
+					<!-- the file holds places a merge marked: visible from any tab, as the tree's C is -->
+					<span class="shrink-0" use:tip={m.tabs_conflicted()}><GitMerge class="text-warning-ink size-3.5" /></span>
 				{/if}
 				<span class="truncate" class:italic={previewKey === key}>{basename(tab.path)}</span>
 				<!-- fixed-size trailing slot: dirty dot and close button share it, so neither ever

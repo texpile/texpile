@@ -14,11 +14,11 @@ Texpile runs a local MCP server, so an AI assistant can see what you are working
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------- |
 | Setting          | Preferences › MCP server | Preferences opens from the start screen, and from File › Preferences… once a folder is open. |
 
-![The Connect an assistant dialog, with a message to paste into your assistant](../../landing/src/lib/assets/showcase/app/mcp-modal.png 'The Connect an assistant dialog, with a message to paste into your assistant')
+![The Connect an Assistant dialog, with a message to paste into your assistant](../../landing/src/lib/assets/showcase/app/mcp-modal.png 'The Connect an Assistant dialog, with a message to paste into your assistant')
 
 ## Setting it up
 
-**Show instructions** in Preferences gives a message to paste into your assistant, with the real port filled in. The assistant then adds the server itself:
+**Show Instructions** in Preferences gives a message to paste into your assistant, with the real port filled in. The assistant then adds the server itself:
 
 ```text
 Please set up the MCP server named texpile at http://127.0.0.1:PORT. It is a streamable HTTP server on this computer.
@@ -48,7 +48,7 @@ Comments are pinned to the text they quote, so an assistant that rewrites a comm
 
 ## Refine selected text
 
-Refine rewrites the text you select with an AI agent installed on your computer, such as Claude Code, Codex, or Antigravity CLI, signed in with your own account. It does not need the MCP server. Choose the agent under **Preferences > AI assistant > Refine with**, then right-click a selection and pick **Refine with** and a task: match the writing style around it, rephrase, shorten, elaborate, make it more formal, fix the grammar, turn it into a list, or summarize it. The Refine button on the selection toolbar opens the same tasks, with a box for an instruction of your own.
+Refine rewrites the text you select with an AI agent installed on your computer, such as Claude Code, Codex, or Antigravity CLI, signed in with your own account. It does not need the MCP server. Choose the agent under **Preferences > AI Assistant > Refine with**, then right-click a selection and pick **Refine with** and a task: match the writing style around it, rephrase, shorten, elaborate, make it more formal, fix the grammar, turn it into a list, or summarize it. The Refine button on the selection toolbar opens the same tasks, with a box for an instruction of your own.
 
 The new text appears as a suggestion under the agent's name, with the task as its note, so nothing changes until you accept it. Texpile sends the selected text and the text around it to the service the agent uses. It keeps your text as it was when the answer cites a source your bibliography does not have, removes a label, or when you changed the passage while the agent was working.
 

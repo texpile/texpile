@@ -1145,6 +1145,7 @@ html.pm-drop-refused .pm-drop-cursor {
 	--color-error-tonal: var(--error-tonal);
 	--color-error-tonal-hover: var(--error-tonal-hover);
 	--color-surface-tint: var(--surface-tint);
+	--color-tonal-hover-solid: var(--tonal-hover-solid);
 	--color-surface-wash: var(--surface-wash);
 	--color-surface-strong-wash: var(--surface-strong-wash);
 	--color-surface-strong-wash-solid: var(--surface-strong-wash-solid);

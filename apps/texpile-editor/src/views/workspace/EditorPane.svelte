@@ -5,9 +5,10 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { Loader2, CircleAlert, FileWarning, Info } from '@lucide/svelte';
+	import ConflictNotice from './ConflictNotice.svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
-	import DiffPane from './DiffPane.svelte';
+	import DiffPane from './diff/DiffPane.svelte';
 	import VisualCompareBar from './VisualCompareBar.svelte';
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
@@ -51,6 +52,11 @@
 		loadError,
 		fileDeleted = false,
 		encodingIssue = null,
+		conflicted = false,
+		conflictsLeft = 0,
+		conflictStray = false,
+		changeBaseline = null,
+		onLeaveConflicts,
 		binaryWarning = null,
 		onOpenAsText,
 		applyingStarter,
@@ -135,7 +141,7 @@
 	/** kinds that have a visual (ProseMirror) surface */
 	const structured = $derived(kind === 'tex' || kind === 'md' || kind === 'typ');
 
-	const viewMode = $derived(requestedViewMode === 'visual' && encodingIssue ? 'source' : requestedViewMode);
+	const viewMode = $derived(requestedViewMode === 'visual' && (encodingIssue || conflicted) ? 'source' : requestedViewMode);
 
 	/** kinds edited as raw text, which is every text file that is not one of those */
 	const rawText = $derived(kind === 'text' || (kind === 'bib' && (viewMode === 'source' || session.isGuest)));
@@ -245,6 +251,9 @@
 			<p class="min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
 		</div>
 	{/if}
+	{#if loadedPath && conflicted && !comparing}
+		<ConflictNotice left={conflictsLeft} stray={conflictStray} onLeave={structured ? onLeaveConflicts : undefined} />
+	{/if}
 	<!-- the buffer is now the only copy, so it stays on screen; what a save will do is spelled out
 	     because it recreates the old name rather than following the rename -->
 	{#if loadedPath && fileDeleted && !comparing}
@@ -326,6 +335,7 @@
 							<SourceEditor
 								docPath={loadedPath}
 								value={texSource}
+								{changeBaseline}
 								onInput={onTexInput}
 								readOnly={!!encodingIssue}
 								gotoLine={sourceGotoLine}
@@ -403,6 +413,7 @@
 							<SourceEditor
 								docPath={loadedPath}
 								value={rawContent}
+								{changeBaseline}
 								onInput={onRawInput}
 								readOnly={!!encodingIssue}
 								filename={loadedPath}

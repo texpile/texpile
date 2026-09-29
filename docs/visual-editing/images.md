@@ -25,7 +25,7 @@ Hover the top right of the image for a Settings icon. Show Caption adds a captio
 
 ## Advanced: custom labels
 
-Advanced options in the same Settings panel shows the LaTeX Label directly, so you can rename it to something easier to remember. If you never set one, Texpile has already generated a random label for the image, so @ references still work.
+Advanced Options in the same Settings panel shows the LaTeX Label directly, so you can rename it to something easier to remember. If you never set one, Texpile has already generated a random label for the image, so @ references still work.
 
 ## In Typst
 

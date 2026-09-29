@@ -44,6 +44,8 @@ export class SavePipeline {
 	private inFlight = new Set<string>();
 
 	beforeWrite: ((path: string, content: string) => Promise<void>) | null = null;
+	/** the bytes are on disk: Local History keeps a copy (localHistory.svelte.ts) */
+	afterWrite: ((path: string, content: string) => void) | null = null;
 	/** the content checked and, when it had to be, rewritten before it goes to disk: what the
 	 *  visual editor serialized must parse back to what it shows (see verifiedSerialize). Null
 	 *  keeps the content as queued */
@@ -184,6 +186,7 @@ export class SavePipeline {
 			await this.beforeWrite?.(path, content).catch(() => undefined);
 			await this.deps.writeText(path, fromLf(content, eol)); // re-apply the file's CRLF/LF on disk
 			await this.deps.recordDiskStamp(path); // our own write must not read as an external one
+			this.afterWrite?.(path, content);
 			if (this.deps.getLoadedPath() === path) {
 				// what we just wrote is now the on-disk baseline, so our own save isn't seen as a conflict
 				this.deps.setDiskBaseline(content);

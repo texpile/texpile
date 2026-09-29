@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { navigate } from '$lib/router.svelte';
-	import { AppWindow, Folder, FolderOpen, Loader2, Settings, Users } from '@lucide/svelte';
+	import { AppWindow, Folder, FolderGit2, FolderOpen, Loader2, Settings, Users } from '@lucide/svelte';
 	import { combo } from '$lib/chrome/shortcutText';
 	import { whatsNewOpen, hasUnseenWhatsNew } from '$lib/whatsNew';
 	import AppFrame from '$lib/chrome/AppFrame.svelte';
@@ -22,6 +22,9 @@
 	import WelcomeSetup from '$lib/setup/WelcomeSetup.svelte';
 	import { setupOwed } from '$lib/setup/setupGate';
 	import { takePendingWorkspace } from '$lib/setup/pendingWorkspace';
+	import GitDialogsHost from '$lib/modals/workspace/GitDialogsHost.svelte';
+	import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
+	import { canClone } from '$lib/workspace/scm/remote/gitClone';
 
 	// the flag is taken even when the welcome is owed anyway: left set, the workspace opens the welcome a second time
 	let welcome = $state(takeSetupReopen() || setupOwed());
@@ -54,8 +57,7 @@
 	}
 
 	// every entry on this screen is the same row: muted icon, label, optional shortcut on the right
-	const rowClass =
-		'hover:bg-surface-200-800 rounded-base flex w-full items-center gap-2.5 px-2 py-1.5 text-left text-sm disabled:opacity-50';
+	const rowClass = 'hover:preset-tonal rounded-base flex w-full items-center gap-2.5 px-2 py-1.5 text-left text-sm disabled:opacity-50';
 
 	// WorkspaceView is route-split (App.svelte); kick its chunk off as soon as an open begins so
 	// it streams while the folder scans. failures are non-fatal here: App's own loader retries
@@ -96,6 +98,20 @@
 		} finally {
 			busy = false;
 		}
+	}
+
+	// the clone dialog stays up until the folder exists, then this opens it like any other
+	function cloneRepository() {
+		preloadWorkspace();
+		error = null;
+		void startClone(async (path) => {
+			busy = true;
+			try {
+				if ((await openFolderInWindow(path)) === 'missing') error = m.start_error_open_folder();
+			} finally {
+				busy = false;
+			}
+		});
 	}
 
 	function afterSetup() {
@@ -139,6 +155,12 @@
 				{#if busy}<Loader2 class="text-muted size-4 shrink-0 animate-spin" />{:else}<FolderOpen class="text-muted size-4 shrink-0" />{/if}
 				<span>{m.start_open_folder()}</span>
 			</button>
+			{#if canClone()}
+				<button class={rowClass} onclick={cloneRepository} disabled={busy}>
+					<FolderGit2 class="text-muted size-4 shrink-0" />
+					<span>{m.start_clone_repository()}</span>
+				</button>
+			{/if}
 			<button class={rowClass} onclick={() => navigate('/session')}>
 				<Users class="text-muted size-4 shrink-0" />
 				<span>{m.start_join_session()}</span>
@@ -206,6 +228,9 @@
 		</div>
 	</div>
 </AppFrame>
+
+<!-- the clone dialog, and git's sign-in questions while it runs -->
+<GitDialogsHost />
 
 <RecentFoldersModal bind:open={recentModalOpen} folders={recentFolders.current} onPick={(folder) => openFolder(folder)} />
 

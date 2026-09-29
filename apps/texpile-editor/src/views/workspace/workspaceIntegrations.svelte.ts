@@ -7,8 +7,17 @@ import { publishWindowState } from '$lib/workspace/mcpPublish';
 import { attachMcpCommands } from '$lib/workspace/mcpCommands';
 import { attachSessionHandlers } from '$lib/collab/workspaceSession';
 import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
-import { ScmActions } from '$lib/workspace/scmActions.svelte';
+import { ScmActions } from '$lib/workspace/scm/actions/scmActions.svelte';
+import { ChangeBaseline } from '$lib/workspace/changeBaseline.svelte';
+import { gitHead, gitHeldBack, gitOperation, gitTracking, isGitRepo } from '$lib/workspace/scm/gitStore';
+import { canSwitchBranch } from '$lib/workspace/scm/branches/gitBranches';
 import { gitignoreLines } from '$lib/workspace/buildArtifacts';
+import { provideScmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
+import { ScmFetch } from '$lib/workspace/scm/remote/scmFetch.svelte';
+import { AutoCheck } from '$lib/workspace/scm/actions/scmAutoCheck.svelte';
+import { LocalHistoryActions, provideLocalHistoryActions } from '$lib/workspace/localHistory/localHistoryActions.svelte';
+import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+import { joinPath } from '$lib/workspace/fileSystem';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { trailingDebounce } from '$lib/trailingDebounce';
@@ -74,8 +83,10 @@ type IntegrationDeps = {
 export class WorkspaceIntegrations {
 	// label and bibitem registries live in lib/workspace/docRegistries.svelte.ts
 	readonly registries: DocRegistries;
-	// source control ops live in lib/workspace/scmActions.svelte.ts; the panel is presentational.
+	// source control ops live in lib/workspace/scm/actions/scmActions.svelte.ts; the panel is presentational.
 	readonly scm: ScmActions;
+	/** the open file in the last saved version, for the source editor's change bars */
+	readonly changeBaseline = new ChangeBaseline();
 
 	constructor(private d: IntegrationDeps) {
 		const { wsdoc } = d;
@@ -87,9 +98,18 @@ export class WorkspaceIntegrations {
 		this.scm = new ScmActions({
 			getLoadedPath: () => doc.path,
 			discardPendingSave: () => d.editFlow().saver.discard(),
+			detachPendingSave: () => d.editFlow().saver.detach(),
 			hasPendingSave: () => !!d.editFlow().saver.pending,
 			flushPendingSave: () => d.editFlow().saver.flushAndWait(),
-			deleteEntry: (p) => d.provider.remove(p),
+			// the Trash where there is one: a file never saved as a version has no other copy anywhere
+			trashEntry: async (p) => {
+				const root = workspaceRoot.current;
+				if (!d.provider.trash || !root) return 'kept';
+				return (await d.provider.trash(p, root, true)).kept ? 'kept' : 'trashed';
+			},
+			removeEntry: async (p) => {
+				await d.provider.remove(p);
+			},
 			refreshTree: () => d.files().refreshTree(),
 			loadFile: (path) => d.wsdoc.loadFile(path),
 			captureDiffSnapshot: () => void d.wsdoc.diff.snapshot(),
@@ -97,6 +117,10 @@ export class WorkspaceIntegrations {
 			openCompareTab: (path, compare) => {
 				const key = tabs.openCompare(path, compare);
 				d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
+			},
+			openAtLine: (path, line) => d.nav().showSourceLine(path, line),
+			settleConflicts: () => {
+				if (d.wsdoc.doc.leaveConflicts() && modes.mode === 'visual') d.wsdoc.rebuildVisualFromSource();
 			},
 			ignoreLines: () => gitignoreLines(effectiveCompileFormat(mainFile.current)),
 			writeText: (p, content) => d.provider.writeText(p, content),
@@ -107,6 +131,65 @@ export class WorkspaceIntegrations {
 					return null; // no .gitignore yet: this is the first one
 				}
 			}
+		});
+
+		// what the panel's rows, its branch bar and the palette ask of Source Control, while this workspace is open
+		// the Timeline's Local History commands, with the same hands on the editor Source Control has
+		const history = new LocalHistoryActions({
+			getLoadedPath: () => doc.path,
+			flushPendingSave: () => d.editFlow().saver.flushAndWait(),
+			whenSaved: () => d.editFlow().saver.whenIdle(),
+			detachPendingSave: () => d.editFlow().saver.detach(),
+			readTextIfPresent: async (p) => {
+				try {
+					return await d.provider.readText(p);
+				} catch {
+					return null;
+				}
+			},
+			writeText: (p, content) => d.provider.writeText(p, content),
+			loadFile: (path) => d.wsdoc.loadFile(path),
+			openCompareTab: (path, compare) => {
+				const key = tabs.openCompare(path, compare);
+				d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
+			}
+		});
+		$effect(() => provideLocalHistoryActions(history));
+		const fetcher = new ScmFetch(this.scm);
+		// co-authors' new versions, looked for every few minutes while this project is open
+		const autoCheck = new AutoCheck({ isBusy: () => this.scm.busy, sync: () => void this.scm.sync() });
+		$effect(() => {
+			// again for each folder opened in this window: checked soon after it opens, as the first
+			// was, with nothing the last one announced counted against it
+			void workspaceRoot.current;
+			autoCheck.start();
+			return autoCheck.stop;
+		});
+		$effect(() =>
+			provideScmHandlers({
+				ignore: (paths) => void this.scm.ignoreFiles(paths),
+				checkForNew: () => void fetcher.checkForNew(),
+				compare: (path) => this.scm.openDiff(path),
+				hasUpstream: () => !!gitTracking.current,
+				keepSide: (path, side) => void this.scm.combine.keepSide(path, side),
+				chooseWhole: (path, choose) => void this.scm.combine.chooseWhole(path, choose),
+				// not a repository above the folder the author has not agreed to use: its branches are not this project's
+				canSwitchBranch: () => isGitRepo.current && !gitHeldBack.current && canSwitchBranch(),
+				listBranches: () => this.scm.branches.list(),
+				switchBranch: (name) => void this.scm.branches.switchTo(name)
+			})
+		);
+
+		// again whenever HEAD moves: the file's last saved version is then a different one; when a
+		// merge starts or ends, since a file being combined has no marks; and when the author chooses
+		// to use a repository above the folder, whose HEAD may be the one already read
+		$effect(() => {
+			const path = doc.path;
+			void gitHead.current;
+			void isGitRepo.current;
+			void gitOperation.current;
+			void gitHeldBack.current;
+			untrack(() => void this.changeBaseline.load(path));
 		});
 
 		// Keep main's cache of what this window shows current, for the MCP get_editor_state tool.
@@ -157,7 +240,13 @@ export class WorkspaceIntegrations {
 				refreshTree: () => void d.files().refreshTree(),
 				expectedPdfPath: () => d.compiler().expectedPdfPath(),
 				recordGuestEdit: (rel, before, after, edit) => d.commentsCtl.remoteEdit(rel, before, after, edit),
-				beforeGuestWrite: (rel, content) => d.commentsCtl.beforeRemoteWrite(rel, content),
+				beforeGuestWrite: async (rel, content) => {
+					await d.commentsCtl.beforeRemoteWrite(rel, content);
+					// what the session writes for guests, kept like a save of the host's own: a guest's edits to a
+					// file the host never opens would otherwise have no copy at all
+					const root = workspaceRoot.current;
+					if (root) void addLocalHistory(joinPath(root, rel), content, 'shared');
+				},
 				typstScrollForGuest: (rel, line, character) => d.typstPreview().scrollForGuest(rel, line, character)
 			})
 		);

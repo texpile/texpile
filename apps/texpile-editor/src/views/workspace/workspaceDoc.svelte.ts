@@ -88,6 +88,8 @@ export class WorkspaceDoc {
 			getMountedSource: () => this.doc.lastDocSource,
 			getSourceMap: () => this.doc.sourceMap,
 			getEncodingIssue: () => this.doc.encodingIssue,
+			getConflicted: () => this.doc.conflicted,
+			leaveConflicts: () => this.doc.leaveConflicts(),
 			rebuildVisual: () => this.rebuildVisualFromSource(),
 			captureDiffSnapshot: () => void this.diff.snapshot(),
 			startCompare: () => d.startCompare(),
@@ -264,7 +266,8 @@ export class WorkspaceDoc {
 
 	/** `force` reparses even when the buffer still matches the mounted doc (new macro signatures) */
 	rebuildVisualFromSource(force = false): void {
-		if (this.doc.encodingIssue) return;
+		// marked places parse into stray paragraphs; the source editor holds the file until they are chosen
+		if (this.doc.encodingIssue || this.doc.conflicted) return;
 		// fast path: the doc last in the view already serializes to this text, so it mounts again as
 		// is. the buffer, not the parser: a visual edit moves that doc on from the last parse without
 		// reparsing, so a disk reload back to the parse's text still rebuilds, and a remount after a

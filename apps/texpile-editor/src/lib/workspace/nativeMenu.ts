@@ -66,6 +66,9 @@ export type MenuStateInput = {
 	typstProject: boolean;
 	canInsertImage: boolean;
 	canOpenFolder: boolean;
+	canClone?: boolean;
+	canLocalHistory?: boolean;
+	fileOpen?: boolean;
 	canTutorial: boolean;
 	recentFolders: string[];
 };
@@ -92,6 +95,9 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		newCls: m.menubar_new_cls(),
 		newSty: m.menubar_new_sty(),
 		openFolder: m.menubar_open_new_folder(),
+		clone: m.menubar_clone_repository(),
+		localHistory: m.history_menu_open(),
+		restoreDeleted: m.history_menu_restore_deleted(),
 		recent: m.menubar_recent_heading(),
 		newWindow: m.menubar_new_window(),
 		openFolderNewWindow: m.menubar_open_folder_new_window(),

@@ -5,7 +5,7 @@
 	// Menu is Skeleton's here, so lucide's hamburger comes in aliased
 	import { Menu as MenuIcon, MoreHorizontal } from '@lucide/svelte';
 	import { editorConfigStore, cursorInCm } from '$lib/stores/editorStore';
-	import { recentFolders } from '$lib/workspace/workspaceStore';
+	import { recentFolders, activeFilePath } from '$lib/workspace/workspaceStore';
 	import { isDesktop, openNewWindow, openFolderInNewWindow } from '$lib/workspace/fileSystem';
 	import { isMac } from '$lib/platform';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/spellcheckConfig';
@@ -49,6 +49,10 @@
 		/** the compile target is Typst: New offers .typ instead of .tex/.cls/.sty (md either way) */
 		typstProject?: boolean;
 		onOpenFolder?: (path?: string) => void;
+		onCloneRepository?: () => void;
+		/** File › Local History… and Restore Deleted File…: the host's own workspace */
+		onLocalHistory?: () => void;
+		onRestoreDeleted?: () => void;
 		/** Close the current folder and return to the Start screen. */
 		onCloseWorkspace?: () => void;
 		onSave?: () => void;
@@ -78,6 +82,9 @@
 		onNewFile,
 		typstProject = false,
 		onOpenFolder,
+		onCloneRepository,
+		onLocalHistory,
+		onRestoreDeleted,
 		onCloseWorkspace,
 		onSave,
 		onShareSession,
@@ -155,6 +162,9 @@
 		if (value === 'save') onSave?.();
 		else if (value === 'new-window') openNewWindow();
 		else if (value === 'open-folder-new-window') openFolderInNewWindow();
+		else if (value === 'clone') onCloneRepository?.();
+		else if (value === 'local-history') onLocalHistory?.();
+		else if (value === 'restore-deleted') onRestoreDeleted?.();
 		else if (value === 'share-session') onShareSession?.();
 		else if (value === 'close-workspace') onCloseWorkspace?.();
 		else if (value === 'preferences') preferencesOpen.current = true;
@@ -232,6 +242,9 @@
 			typstProject,
 			canInsertImage: !!imageDir,
 			canOpenFolder: !!onOpenFolder,
+			canClone: !!onCloneRepository,
+			canLocalHistory: !!onLocalHistory,
+			fileOpen: !!activeFilePath.current,
 			canTutorial: !!onOpenTutorial,
 			recentFolders: recentFolders.current
 		})
@@ -289,6 +302,9 @@
 			canNewFile={!!onNewFile}
 			{typstProject}
 			canOpenFolder={!!onOpenFolder}
+			canClone={!!onCloneRepository}
+			canLocalHistory={!!onLocalHistory}
+			fileOpen={!!activeFilePath.current}
 			canCloseWorkspace={!!onCloseWorkspace}
 			canShareSession={!!onShareSession}
 		/>

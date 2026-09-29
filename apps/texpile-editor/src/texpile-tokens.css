@@ -124,6 +124,8 @@ html {
 	--error-on-tonal: light-dark(oklch(from var(--color-error-500) min(l, 0.42) c h), oklch(from var(--color-error-500) max(l, 0.86) c h));
 	/* the same for the neutral surface pair: a faint overlay, a hover, a stronger wash, a scrim */
 	--surface-tint: color-mix(in oklab, var(--color-surface-200-800) 40%, transparent);
+	/* hover:preset-tonal's fill laid on the ground, for a control that must hide what is under it */
+	--tonal-hover-solid: color-mix(in oklab, light-dark(var(--color-surface-950), var(--color-surface-50)) 10%, var(--color-surface-50-950));
 	--surface-wash: color-mix(in oklab, var(--color-surface-200-800) 60%, transparent);
 	--surface-strong-wash: color-mix(in oklab, var(--color-surface-300-700) 60%, transparent);
 	--surface-strong-wash-solid: color-mix(in oklab, var(--color-surface-300-700) 60%, var(--color-surface-50-950));

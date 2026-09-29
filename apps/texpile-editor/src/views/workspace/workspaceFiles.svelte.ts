@@ -1,6 +1,7 @@
 // The workspace's file-management wiring: tree rescans, create/rename/delete/move ops,
 // starter templates, the folder lifecycle, the main-file choice, and the repoint-references
 // offer after a rename.
+import { moveLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { StarterActions } from '$lib/workspace/starterActions.svelte';
 import { TreeOps } from '$lib/workspace/treeOps';
 import { FolderLifecycle } from '$lib/workspace/folderLifecycle';
@@ -104,7 +105,10 @@ export class WorkspaceFiles {
 			afterRename: (oldPath, newPath) => void this.afterRename(oldPath, newPath),
 			// comment threads follow the file, on user gestures AND on undo/redo replays (which skip
 			// afterRename because it prompts). Writes a `move` event to the log - see fileMoved.
-			afterPathMoved: (from, to) => d.commentsFileMoved(from, to),
+			afterPathMoved: (from, to) => {
+				d.commentsFileMoved(from, to);
+				void moveLocalHistory(from, to, (p) => provider.readText(p)); // and so does its Local History
+			},
 			retargetPendingSave: (from, to) => {
 				d.saver().retarget(from, to);
 				retargetDiskStamp(from, to); // the guard's stamp must follow the rename too

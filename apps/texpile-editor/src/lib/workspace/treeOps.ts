@@ -27,7 +27,7 @@ export type TreeOpsDeps = {
 	rename(from: string, to: string): Promise<unknown>;
 	copy(from: string, to: string): Promise<unknown>;
 	/** undoable delete: back up (if small enough) then recycle. Absent = no undo at all. */
-	trash?(path: string, root: string): Promise<{ backup: string | null; recycled: boolean }>;
+	trash?(path: string, root: string, keep?: boolean): Promise<{ backup: string | null; recycled: boolean; kept?: boolean }>;
 	/** put a trashed entry back; must refuse rather than overwrite. */
 	restore?(from: string, to: string): Promise<void>;
 	/** whether the two above actually work. Lets a caller pass unconditional closures and report

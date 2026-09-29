@@ -5,11 +5,11 @@
 	import FileIcon from './FileIcon.svelte';
 	import FileTreeRow from './FileTreeRow.svelte';
 	import type { TreeEntry } from '$lib/workspace/fileSystem';
-	import type { GitBadge } from '$lib/workspace/git';
+	import type { GitBadge } from '$lib/workspace/scm/git';
 	import type { FileTreeState } from './treeState.svelte';
 	import type { FileTreeDnd } from './treeDnd.svelte';
 	import type { TreeNameEditor } from './treeNameEditor.svelte';
-	import { gitBadgeOf, STATUS_COLOR, STATUS_TITLE } from './treeBadges';
+	import { gitBadgeOf, folderTitle, STATUS_COLOR, STATUS_DECOR, STATUS_TITLE } from './treeBadges';
 	import { focusSelect } from './focusSelect';
 	import { m } from '$lib/paraglide/messages';
 
@@ -48,7 +48,7 @@
 			? `bg-primary-tint font-medium ${focused ? 'text-primary-ink' : ''}`
 			: sel.selected.includes(entry.path)
 				? 'bg-surface-strong-wash'
-				: 'hover:bg-surface-200-800'} {dnd.dropTarget === entry.path && entry.type === 'dir'
+				: 'hover:preset-tonal'} {dnd.dropTarget === entry.path && entry.type === 'dir'
 			? 'ring-primary-500 ring-2 ring-inset'
 			: ''} {dnd.dragPaths.includes(entry.path) ? 'opacity-50' : ''}"
 		draggable={editor.renaming !== entry.path}
@@ -103,11 +103,21 @@
 				/>
 			{:else}
 				{@const status = gitBadgeOf(gitStatus, entry)}
+				{@const folder = entry.type === 'dir'}
 				<!-- names are never trimmed; the tree scrolls sideways instead (see FileTree's min-w-max).
-				     git status is the name's own colour, so it needs no column of its own -->
-				<span class="whitespace-nowrap {status ? STATUS_COLOR[status] : ''}" use:tip={status ? STATUS_TITLE[status] : undefined}
-					>{entry.name}</span
+				     git status is the name's own colour, so it needs no column of its own; a folder takes
+				     the colour of the weightiest change inside it, so a changed chapter can be found -->
+				<span
+					class="whitespace-nowrap {status ? STATUS_COLOR[status] : ''} {status && !folder ? (STATUS_DECOR[status] ?? '') : ''}"
+					use:tip={status ? (folder ? folderTitle(status) : STATUS_TITLE[status]) : undefined}>{entry.name}</span
 				>
+				<!-- and a mark that is not a colour, for a state the tooltip should not be the only way to know -->
+				{#if status === 'C' && !folder}
+					<span class="text-error-ink ml-0.5 font-bold" aria-label={STATUS_TITLE.C}>!</span>
+				{:else if status && folder}
+					<span class="ml-1 inline-block size-1.5 shrink-0 rounded-full bg-current opacity-70 {STATUS_COLOR[status]}" aria-hidden="true"
+					></span>
+				{/if}
 			{/if}
 		</button>
 		{#if editor.renaming !== entry.path}
@@ -119,7 +129,7 @@
 				? 'bg-primary-tint-solid'
 				: sel.selected.includes(entry.path)
 					? 'bg-surface-strong-wash-solid'
-					: 'bg-surface-200-800'}
+					: 'bg-tonal-hover-solid'}
 			<span class="sticky right-0 z-10 flex w-0 shrink-0 items-center justify-end">
 				<button
 					class="btn-icon btn-icon-xs text-muted hover:text-surface-950-50 mr-1 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 {fill}"

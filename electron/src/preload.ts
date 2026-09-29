@@ -194,7 +194,7 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	fsOp: (body: Record<string, unknown>) => invokeFs('fs:op', body),
 	/** undoable delete: backs the entry up (if small enough) then sends it to the OS recycle bin.
 	 *  -> { backup } , null when it was too large to copy and so cannot be undone. */
-	fsTrash: (body: { path: string; root: string }) => invokeFs('fs:trash', body),
+	fsTrash: (body: { path: string; root: string; keep?: boolean }) => invokeFs('fs:trash', body),
 	/** discard a folder's undo backups -> { ok }. */
 	fsPurgeUndo: (root: string) => invokeFs('fs:purgeUndo', root),
 	/** select a file in the OS file manager (Explorer, Finder, ...) -> { ok }. */
@@ -203,6 +203,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	fsSearch: (root: string, q: string, regex: boolean, caseSensitive: boolean) => invokeFs('fs:search', root, q, regex, caseSensitive),
 	/** { exists, mtimeMs, size }, used to poll for a freshly-written compile output. */
 	fsStat: (path: string) => invokeFs('fs:stat', path),
+	/** where `rel` really lands under root, root-relative with forward slashes -> null when outside it. */
+	fsRealRelative: (root: string, rel: string) => invokeFs('fs:realRelative', root, rel),
 	/** reindent via latexindent -> { formatted }; throws if latexindent isn't on PATH. */
 	fsFormatLatex: (path: string, text: string) => invokeFs('fs:formatLatex', path, text),
 	synctex: (body: Record<string, unknown>) => invokeFs('synctex:call', body),
@@ -259,12 +261,105 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	gitLog: (root: string, limit?: number) => invokeFs('git:log', root, limit),
 	/** files that differ between a commit and the working copy now -> { ok, entries? }. */
 	gitChangesSince: (root: string, hash: string) => invokeFs('git:changesSince', root, hash),
+	/** what one version changed against the one before it -> { ok, parent?, entries? }. */
+	gitChangesIn: (root: string, hash: string) => invokeFs('git:changesIn', root, hash),
+	/** a file at a revision, found through the project folder -> { ok, hasHead, content? }. */
+	gitFileAt: (root: string, path: string, ref: string) => invokeFs('git:fileAt', root, path, ref),
 	/** a file's contents at an arbitrary commit, for diffing a version -> { ok, hasHead, content? }. */
 	gitShowAt: (path: string, ref: string) => invokeFs('git:showAt', path, ref),
+	/** one file's versions, newest first, across renames -> { ok, entries? }. */
+	gitFileLog: (root: string, path: string, limit?: number) => invokeFs('git:fileLog', root, path, limit),
 	/** roll the workspace back to a commit by writing that version forward as a new one. */
 	gitRestore: (root: string, hash: string, message: string) => invokeFs('git:restore', root, hash, message),
+	gitRestoreInTheWay: (root: string, hash: string) => invokeFs('git:restoreInTheWay', root, hash),
 	/** push this branch to the upstream it already tracks -> { ok, failure?, remote? }. */
-	gitPush: (root: string) => invokeFs('git:push', root)
+	gitPush: (root: string) => invokeFs('git:push', root),
+	/** forget that git was missing, after the author installs it -> { ok }. */
+	gitRecheck: () => invokeFs('git:recheck'),
+	/** list the repository git refused (another account owns its folder) in safe.directory -> { ok, path? }. */
+	gitTrustRepo: (root: string) => invokeFs('git:trustRepo', root),
+	/** write user.name / user.email to the global git config. */
+	gitSetIdentity: (root: string, name: string, email: string) => invokeFs('git:setIdentity', root, name, email),
+	/** the repository's remotes -> { ok, remotes?: { name, url }[] }. */
+	gitRemotes: (root: string) => invokeFs('git:remotes', root),
+	gitAddRemote: (root: string, name: string, url: string) => invokeFs('git:addRemote', root, name, url),
+	/** push this branch to `remote` and make it the upstream (push -u) -> { ok, failure?, remote? }. */
+	gitPublish: (root: string, remote: string) => invokeFs('git:publish', root, remote),
+	/** fetch, take in the upstream's versions, send ours -> { ok, failure?, pulled?, pushed?, files? }. */
+	gitSync: (root: string, message?: string) => invokeFs('git:sync', root, message ?? ''),
+	/** fetch the upstream's remote and count, taking nothing in -> { ok, remote?, ahead?, behind?, failure? }. */
+	gitFetch: (root: string) => invokeFs('git:fetch', root),
+	gitFetchQuiet: (root: string) => invokeFs('git:fetchQuiet', root),
+	/** merge the upstream Sync just fetched, leaving what both sides changed marked -> { ok, failure?, conflicts? }. */
+	gitCombine: (root: string, message?: string) => invokeFs('git:combine', root, message ?? ''),
+	/** commit the merge once no file holds a marked place -> { ok, failure?, files? }. */
+	gitFinishCombine: (root: string) => invokeFs('git:finishCombine', root),
+	/** merge --abort -> { ok }. */
+	gitCancelCombine: (root: string) => invokeFs('git:cancelCombine', root),
+	/** one side's whole file for a file both sides changed (checkout --ours/--theirs) -> { ok }. */
+	gitKeepSide: (root: string, path: string, side: 'mine' | 'theirs') => invokeFs('git:keepSide', root, path, side),
+	/** local branches -> { ok, current?, local? }. */
+	gitBranches: (root: string) => invokeFs('git:branches', root),
+	/** check out a local branch -> { ok, branch?, failure?, files? }. */
+	gitSwitch: (root: string, name: string) => invokeFs('git:switch', root, name),
+	/** Local History (localHistory.ts): a copy per save, kept in the app's data -> the entry, or null. */
+	localHistoryAdd: (path: string, content: string, source?: string) => invokeFs('history:add', path, content, source),
+	localHistoryList: (path: string) => invokeFs('history:list', path),
+	localHistoryRead: (path: string, id: string) => invokeFs('history:read', path, id),
+	localHistoryRemove: (path: string, id: string) => invokeFs('history:remove', path, id),
+	localHistoryRename: (path: string, id: string, label: string) => invokeFs('history:rename', path, id, label),
+	localHistoryRemoveAll: () => invokeFs('history:removeAll'),
+	localHistoryMove: (from: string, to: string) => invokeFs('history:move', from, to),
+	localHistoryUsage: () => invokeFs('history:usage'),
+	localHistoryAll: (root: string) => invokeFs('history:all', root),
+	/** Signing in to GitHub in the browser (githubAuth.ts): offered only once Texpile's OAuth app is configured. */
+	githubSignInAvailable: () => ipcRenderer.invoke('github:available'),
+	/** the signed-in GitHub account's login, or null */
+	githubAccount: () => ipcRenderer.invoke('github:account'),
+	/** the one-time code to show -> { ok, userCode?, verificationUri?, failure? } */
+	githubStartSignIn: () => ipcRenderer.invoke('github:startSignIn'),
+	githubOpenVerification: () => ipcRenderer.invoke('github:openVerification'),
+	/** waits until the code was typed at GitHub, or it expired or was cancelled -> { ok, login?, failure? } */
+	githubFinishSignIn: () => ipcRenderer.invoke('github:finishSignIn'),
+	githubCancelSignIn: () => ipcRenderer.invoke('github:cancelSignIn'),
+	githubSignOut: () => ipcRenderer.invoke('github:signOut'),
+	/** answer git's github.com question with the account just signed in -> true */
+	gitAskpassUseGithub: (id: number) => ipcRenderer.invoke('git:askpassUseGithub', id),
+	/** drop every sign-in Texpile kept in the keychain -> true. */
+	gitForgetSignIns: () => ipcRenderer.invoke('git:forgetSignIns'),
+	/** git clone into <parent>/<name> -> { ok, path?, failure? }; progress arrives on onGitCloneProgress. */
+	gitClone: (url: string, parent: string, name: string) => invokeFs('git:clone', url, parent, name),
+	/** stop this window's clone; git removes what it had downloaded */
+	gitCancelClone: () => invokeFs('git:cancelClone'),
+	/** a running clone's stage and percentage; returns an unsubscribe fn */
+	onGitCloneProgress: (cb: (p: { stage: string; percent: number }) => void) => {
+		function h(_e: unknown, p: { stage: string; percent: number }) {
+			cb(p);
+		}
+		ipcRenderer.on('git:cloneProgress', h);
+		return () => ipcRenderer.removeListener('git:cloneProgress', h);
+	},
+	/** create a GitHub repository, add it as `remote`, publish the branch there -> { ok, url?, failure? }. */
+	githubPublish: (root: string, opts: { name: string; isPrivate: boolean; remote: string; ssh?: boolean }) =>
+		invokeFs('git:githubPublish', root, opts),
+	/** git or ssh asking for a username, password, passphrase or host-key answer; returns an unsubscribe fn */
+	onGitAskpass: (cb: (req: unknown) => void) => {
+		function h(_e: unknown, req: unknown) {
+			cb(req);
+		}
+		ipcRenderer.on('git:askpass', h);
+		return () => ipcRenderer.removeListener('git:askpass', h);
+	},
+	/** questions that no longer need an answer (the operation ended); returns an unsubscribe fn */
+	onGitAskpassClosed: (cb: (ids: number[]) => void) => {
+		function h(_e: unknown, ids: number[]) {
+			cb(ids);
+		}
+		ipcRenderer.on('git:askpassClosed', h);
+		return () => ipcRenderer.removeListener('git:askpassClosed', h);
+	},
+	/** answer a git:askpass question; null cancels. */
+	gitAskpassReply: (id: number, answer: string | null) => ipcRenderer.invoke('git:askpassReply', id, answer)
 });
 
 // in-app updates: check/download are explicit renderer calls, events stream back per channel

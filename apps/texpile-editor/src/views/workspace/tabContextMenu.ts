@@ -1,4 +1,4 @@
-import { Copy, FolderOpen, FolderTree, Pin, X } from '@lucide/svelte';
+import { Copy, FolderOpen, FolderTree, History, Pin, X } from '@lucide/svelte';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { relativeTo, tabsToClose, type CloseScope } from './tabMenuTargets';
@@ -17,6 +17,8 @@ export type TabMenuDeps = {
 	/** select the file in the OS file manager; omitted outside the desktop shell */
 	reveal?: (path: string) => void;
 	showInTree?: (path: string) => void;
+	/** the file's Local History; omitted for a guest, whose files are the host's */
+	localHistory?: (path: string) => void;
 };
 
 function copy(text: string): void {
@@ -46,10 +48,12 @@ export function openTabContextMenu(event: MouseEvent, tab: Tab, d: TabMenuDeps):
 		{ label: m.tabs_menu_copy_path(), icon: Copy, onclick: () => copy(tab.path) }
 	];
 	if (rel !== null) items.push({ label: m.tabs_menu_copy_relative_path(), onclick: () => copy(rel) });
-	const { reveal, showInTree } = d;
-	if (d.preview === key || reveal || showInTree) items.push({ separator: true });
+	const { reveal, showInTree, localHistory } = d;
+	if (d.preview === key || reveal || showInTree || localHistory) items.push({ separator: true });
 	if (d.preview === key) items.push({ label: m.tabs_menu_keep_open(), icon: Pin, onclick: () => d.keep(tab) });
 	if (reveal) items.push({ label: m.filetree_menu_reveal(), icon: FolderOpen, onclick: () => reveal(tab.path) });
 	if (showInTree) items.push({ label: m.tabs_menu_show_in_tree(), icon: FolderTree, onclick: () => showInTree(tab.path) });
+	// a comparison tab is the file too: its history is the file's
+	if (localHistory) items.push({ label: m.history_menu_open(), icon: History, onclick: () => localHistory(tab.path) });
 	void showContextMenu(items, { x: event.clientX, y: event.clientY });
 }

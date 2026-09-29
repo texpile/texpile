@@ -15,7 +15,7 @@ LaTeX is the format the rest of these docs describe. Where a page says nothing a
 | ---------------- | ------------------------------------- | ---------------------------------------------------------- |
 | In the editor    | Open any .tex file                    | The main file is picked automatically, or set it yourself. |
 | Toolbar          | The Compile or Preview button         | Top right of the editor. Preview once live mode is on.     |
-| Setting          | Terminal › Configure compile command… | The command, the engine, and the Live mode switch.         |
+| Setting          | Terminal › Configure Compile Command… | The command, the engine, and the Live mode switch.         |
 
 ## Its own pages
 

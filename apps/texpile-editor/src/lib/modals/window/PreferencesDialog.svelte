@@ -9,6 +9,7 @@
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
+	import PrefsVersionControlPanel from './PrefsVersionControlPanel.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
 	import { changeUiLocale, keymapOptions, uiLocaleOptions } from './prefsOptions';
 	import AppearanceMode from './AppearanceMode.svelte';
@@ -30,11 +31,11 @@
 	// One category on screen at a time, rather than every setting in one scroll. The list had grown
 	// past the point where "wrap long lines" and "editor width" could be told apart at a glance -
 	// which editor, and which of them, was only answerable by reading the hint under each.
-	type Category = 'appearance' | 'editor' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
+	type Category = 'appearance' | 'editor' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
-	// the browser guest has no local toolchain, no Zotero, no MCP server and no folder to reopen:
-	// four tabs that could only ever report nothing
-	const DESKTOP_ONLY_TABS: Category[] = ['toolchain', 'integrations', 'startup', 'ai'];
+	// the browser guest has no local toolchain, no Zotero, no MCP server, no folder to reopen and no
+	// copies or versions of its own: five tabs that could only ever report nothing
+	const DESKTOP_ONLY_TABS: Category[] = ['vcs', 'toolchain', 'integrations', 'startup', 'ai'];
 	const ALL_TABS: { id: Category; label: string }[] = [
 		{ id: 'appearance', label: m.prefs_appearance() },
 		// Editing, Source editor and Visual editor were three tabs holding three, two and two rows.
@@ -42,6 +43,8 @@
 		// editor, and which of them - and a heading inside one tab answers that just as well as a
 		// sidebar entry did, without making the reader guess which of three tabs a setting is in.
 		{ id: 'editor', label: m.prefs_group_editor() },
+		// Git's settings and Local History, in Git's and VS Code's words
+		{ id: 'vcs', label: m.prefs_group_history() },
 		{ id: 'collaboration', label: m.prefs_group_collaboration() },
 		// LaTeX, Typst and Version control used to be three tabs. Every one of them was the same
 		// thing - a list of external programs and whether they were found - so three sidebar entries
@@ -149,7 +152,7 @@
 			<button
 				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
 					? 'bg-primary-tint font-medium'
-					: 'hover:bg-surface-200-800'}"
+					: 'hover:preset-tonal'}"
 				onclick={() => (category = c.id)}
 			>
 				{c.label}
@@ -255,6 +258,8 @@
 						)}
 					{/if}
 				</div>
+			{:else if category === 'vcs'}
+				<PrefsVersionControlPanel />
 			{:else if category === 'collaboration'}
 				<PrefsCollaborationPanel />
 			{:else if category === 'toolchain'}

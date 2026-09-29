@@ -4,6 +4,7 @@
 	import MainFileModal from './MainFileModal.svelte';
 	import CompileCommandModal from './CompileCommandModal.svelte';
 	import FormatModal from './FormatModal.svelte';
+	import GitDialogsHost from './GitDialogsHost.svelte';
 	import CommandPalette from '$lib/palette/CommandPalette.svelte';
 	import { promptAsk } from '$lib/modals/confirm.svelte';
 	import { basename } from '$lib/workspace/fileSystem';
@@ -155,3 +156,6 @@
 
 <!-- takes no props: it reads the action registry WorkspaceView fills in, and owns its own Ctrl+K -->
 <CommandPalette />
+
+<!-- who is committing, where to publish, and git's own sign-in questions -->
+<GitDialogsHost />

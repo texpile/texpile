@@ -1,6 +1,23 @@
-import { FilePlus2, FolderOpen, Play, RefreshCw, RotateCw, Save, Settings, Users, Wrench } from '@lucide/svelte';
-import { isDirty } from '$lib/workspace/workspaceStore';
+import {
+	FilePlus2,
+	FolderGit2,
+	FolderOpen,
+	Github,
+	History,
+	KeyRound,
+	Play,
+	RefreshCw,
+	RotateCw,
+	Save,
+	Settings,
+	Users,
+	Wrench
+} from '@lucide/svelte';
+import { isDirty, activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { nativeBridge } from '$lib/workspace/fileSystem';
+import { githubStatus, signInToGithub, signOutOfGithub } from '$lib/workspace/scm/remote/githubSignIn.svelte';
+import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+import { openLocalHistory, openRestoreDeleted } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
 import { confirmAsk } from '$lib/modals/confirm.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { combo } from '$lib/chrome/shortcutText';
@@ -77,6 +94,58 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 			keywords: 'project workspace directory',
 			icon: FolderOpen,
 			run: () => a.openFolder()
+		});
+	const clone = a.cloneRepository;
+	if (a.isHostWorkspace() && clone)
+		items.push({
+			id: 'file.clone',
+			label: m.palette_clone_repository(),
+			group,
+			keywords: 'git github download repository remote',
+			icon: FolderGit2,
+			run: () => clone()
+		});
+	// VS Code's Accounts menu, for GitHub: sign in in the browser, or out
+	const github = githubStatus.current;
+	if (a.isHostWorkspace() && github.available)
+		items.push({
+			id: 'file.githubAccount',
+			label: github.login ? m.palette_github_sign_out({ login: github.login }) : m.palette_github_sign_in(),
+			group,
+			keywords: 'github account login logout browser oauth token',
+			icon: Github,
+			run: () => void (github.login ? signOutOfGithub() : signInToGithub())
+		});
+	// Local History: the open file's copies, and the way back to a deleted file's (the File menu's two)
+	const open = activeFilePath.current;
+	if (a.isHostWorkspace() && canKeepLocalHistory() && open)
+		items.push({
+			id: 'file.localHistory',
+			label: m.palette_history_open(),
+			group,
+			keywords: 'local history copies versions restore recover lost text backup undo timeline',
+			icon: History,
+			run: () => openLocalHistory(open)
+		});
+	const root = workspaceRoot.current;
+	if (a.isHostWorkspace() && canKeepLocalHistory() && root)
+		items.push({
+			id: 'file.restoreDeleted',
+			label: m.palette_history_find(),
+			group,
+			keywords: 'local history restore recover deleted lost file copy backup undo find entry',
+			icon: History,
+			run: () => openRestoreDeleted(root)
+		});
+	const forget = a.forgetSignIns;
+	if (a.isHostWorkspace() && forget)
+		items.push({
+			id: 'file.forgetSignIns',
+			label: m.palette_forget_signins(),
+			group,
+			keywords: 'git password token credential keychain github sign in login logout',
+			icon: KeyRound,
+			run: () => forget()
 		});
 	items.push({
 		id: 'file.refreshTree',

@@ -5,7 +5,7 @@
 // git refresh here means every trigger gets them for free from a single call site.
 import { workspaceRoot, fileTree, texFiles } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
-import { refreshGitStatus, takeNoGitHint } from '$lib/workspace/gitStore';
+import { refreshGitStatus, takeNoGitHint } from '$lib/workspace/scm/gitStore';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import type { TreeEntry } from '$lib/workspace/fileSystem';

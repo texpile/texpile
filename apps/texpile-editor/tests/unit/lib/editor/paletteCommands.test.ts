@@ -33,6 +33,7 @@ function actions(host: boolean): PaletteActions {
 		openCompileModal: () => {},
 		openFormatModal: () => {},
 		openGlobalSearch: () => {},
+		openSourceControl: () => {},
 		openPreferences: () => {},
 		newFile: () => {},
 		openFolder: () => {},
