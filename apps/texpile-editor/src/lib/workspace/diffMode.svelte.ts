@@ -5,8 +5,7 @@
 // re-diff on every keystroke, so the snapshot deliberately reads the buffer untracked rather than
 // depending on it.
 //
-// The layout choice persists; which comparison was open does not, so a reload restores the files
-// you had rather than dropping you back into a diff.
+// The layout choice persists here; which comparisons were open persists with the other tabs.
 import type { Node as PMNode } from 'prosemirror-model';
 import { browser } from '$lib/runtime';
 import { layout, updateLayout } from '$lib/storage/layout';

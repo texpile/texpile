@@ -68,5 +68,5 @@
 		{@const Icon = icon}
 		<Icon class="size-4" />
 	{/if}
-	{label}
+	<span class="cap-center">{label}</span>
 </button>

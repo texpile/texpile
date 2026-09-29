@@ -11,11 +11,17 @@
 	let { busy, onInit }: { busy: boolean; onInit: () => void } = $props();
 </script>
 
-<div class="flex flex-col items-center gap-3 p-6 text-center">
+<!-- px-3 as the panel's rows, since 24px a side left a narrow sidebar one word a line; narrower, words shrink and icons go -->
+<div class="@container flex flex-col items-center gap-3 px-3 py-6 text-center">
 	<FolderGit2 class="text-faint size-8" />
-	<p class="text-muted text-sm">{m.vcs_not_a_repo()}</p>
-	<button class="btn btn-xs preset-filled-primary-500 w-full gap-1.5" onclick={onInit} disabled={busy} use:tip={m.vcs_init_repo_tip()}>
-		<FolderGit2 class="size-3.5" />
-		{m.vcs_init_repo()}
+	<p class="text-muted text-sm @max-[11rem]:text-xs">{m.vcs_not_a_repo()}</p>
+	<button
+		class="btn btn-xs preset-filled-primary-500 w-full gap-1.5 whitespace-normal"
+		onclick={onInit}
+		disabled={busy}
+		use:tip={m.vcs_init_repo_tip()}
+	>
+		<FolderGit2 class="size-3.5 shrink-0 @max-[8rem]:hidden" />
+		<span class="cap-center min-w-0 overflow-x-clip text-ellipsis">{m.vcs_init_repo()}</span>
 	</button>
 </div>

@@ -6,12 +6,14 @@
 	import { settings, updateSettings, type AppSettings } from '$lib/settings';
 	import { layout, updateLayout } from '$lib/storage/layout';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
-	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/spellcheckConfig';
+	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
 	import PrefsVersionControlPanel from './PrefsVersionControlPanel.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
-	import { changeUiLocale, keymapOptions, uiLocaleOptions } from './prefsOptions';
+	import { changeUiLocale, englishVariantOptions, keymapOptions, uiLocaleOptions } from './prefsOptions';
+	import PrefsGrammarRules from './spelling/PrefsGrammarRules.svelte';
+	import PrefsDictionary from './spelling/PrefsDictionary.svelte';
 	import AppearanceMode from './AppearanceMode.svelte';
 	import ThemePicker from './ThemePicker.svelte';
 	import { preferencesTab } from '$lib/stores/dialogStore';
@@ -31,7 +33,7 @@
 	// One category on screen at a time, rather than every setting in one scroll. The list had grown
 	// past the point where "wrap long lines" and "editor width" could be told apart at a glance -
 	// which editor, and which of them, was only answerable by reading the hint under each.
-	type Category = 'appearance' | 'editor' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
+	type Category = 'appearance' | 'editor' | 'proofing' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
 	// the browser guest has no local toolchain, no Zotero, no MCP server, no folder to reopen and no
 	// copies or versions of its own: five tabs that could only ever report nothing
@@ -43,6 +45,8 @@
 		// editor, and which of them - and a heading inside one tab answers that just as well as a
 		// sidebar entry did, without making the reader guess which of three tabs a setting is in.
 		{ id: 'editor', label: m.prefs_group_editor() },
+		// its own tab, as it was the bulk of Editor; named as the Spelling menu, which leads here
+		{ id: 'proofing', label: m.prefs_group_proofing() },
 		// Git's settings and Local History, in Git's and VS Code's words
 		{ id: 'vcs', label: m.prefs_group_history() },
 		{ id: 'collaboration', label: m.prefs_group_collaboration() },
@@ -84,10 +88,13 @@
 	const SUB = 'pl-4';
 </script>
 
-{#snippet label(text: string, hint: string, disabled = false)}
+{#snippet label(text: string, hint: string, disabled = false, docs = '')}
 	<div class="min-w-0">
 		<div class="text-sm font-medium {disabled ? 'text-faint' : ''}">{text}</div>
-		{#if hint}<p class="text-muted mt-1 text-xs leading-relaxed">{hint}</p>{/if}
+		{#if hint}<p class="text-muted mt-1 text-xs leading-relaxed">
+				{hint}
+				{#if docs}<a class="anchor" href={docs} target="_blank" rel="noopener noreferrer">{m.prefs_how_to_set_up()}</a>{/if}
+			</p>{/if}
 	</div>
 {/snippet}
 
@@ -100,9 +107,9 @@
 	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{text}</h3>
 {/snippet}
 
-{#snippet toggleRow(text: string, hint: string, checked: boolean, onChange: (v: boolean) => void, disabled = false, title = '')}
+{#snippet toggleRow(text: string, hint: string, checked: boolean, onChange: (v: boolean) => void, disabled = false, title = '', docs = '')}
 	<div class={ROW} use:tip={title}>
-		{@render label(text, hint, disabled)}
+		{@render label(text, hint, disabled, docs)}
 		<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
 			<Switch.Control><Switch.Thumb /></Switch.Control>
 			<Switch.HiddenInput />
@@ -214,7 +221,6 @@
 					autosaveForced,
 					autosaveForced ? m.prefs_autosave_hint_forced() : ''
 				)}
-				{@render toggleRow(m.prefs_spellcheck(), '', settings.current.spellcheck, (v) => setSpellcheckEnabled(v))}
 				{@render toggleRow(m.prefs_comment_pill(), m.prefs_comment_pill_note(), settings.current.commentPill !== false, (v) =>
 					updateSettings({ commentPill: v })
 				)}
@@ -258,6 +264,23 @@
 						)}
 					{/if}
 				</div>
+			{:else if category === 'proofing'}
+				<!-- all of it stays up with the switch off: the Spelling menu's Edit Dictionary leads here -->
+				{@render toggleRow(m.prefs_spellcheck(), '', settings.current.spellcheck, (v) => setSpellcheckEnabled(v))}
+				<div class={ROW}>
+					{@render label(m.prefs_english_variant(), m.prefs_english_variant_note())}
+					<select
+						class="select w-auto min-w-32 shrink-0 text-sm"
+						value={settings.current.englishVariant ?? ''}
+						onchange={(e) => updateSettings({ englishVariant: e.currentTarget.value as AppSettings['englishVariant'] })}
+					>
+						{#each englishVariantOptions() as o (o.value)}
+							<option value={o.value}>{o.label}</option>
+						{/each}
+					</select>
+				</div>
+				<PrefsDictionary />
+				<PrefsGrammarRules />
 			{:else if category === 'vcs'}
 				<PrefsVersionControlPanel />
 			{:else if category === 'collaboration'}
@@ -270,8 +293,14 @@
 						     Typst's preview switch was never duplicated here for the same reason. -->
 				<PrefsToolchainPanel />
 			{:else if category === 'integrations'}
-				{@render toggleRow(m.prefs_zotero(), m.prefs_zotero_note(), settings.current.zoteroEnabled !== false, (v) =>
-					updateSettings({ zoteroEnabled: v })
+				{@render toggleRow(
+					m.prefs_zotero(),
+					m.prefs_zotero_note(),
+					settings.current.zoteroEnabled !== false,
+					(v) => updateSettings({ zoteroEnabled: v }),
+					false,
+					'',
+					'https://texpile.com/docs/integrations/zotero'
 				)}
 				{@render toggleRow(m.prefs_cite_doi(), m.prefs_cite_doi_note(), settings.current.citeByDoiEnabled !== false, (v) =>
 					updateSettings({ citeByDoiEnabled: v })

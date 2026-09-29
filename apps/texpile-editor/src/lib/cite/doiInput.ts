@@ -1,12 +1,14 @@
-// What the Cite by DOI box accepts: a DOI in any of the forms people copy it in (bare, doi:,
-// a doi.org link, a publisher page that carries it in the path) or an arXiv identifier (new or
-// old style, arXiv: prefix, abs or pdf link). Text in, identifier out, so it tests without a
-// network.
+// the identifiers the citation box accepts (DOI, arXiv, ISBN, PubMed ID); anything else is a title to search for
 //
 // arXiv papers resolve through their DataCite DOI (10.48550/arXiv.<id>), which doi.org answers
 // like any other; the version suffix is dropped because the DOI names the paper, not a revision.
 
-export type WorkId = { kind: 'doi'; doi: string } | { kind: 'arxiv'; id: string; doi: string };
+export type WorkId =
+	| { kind: 'doi'; doi: string }
+	| { kind: 'arxiv'; id: string; doi: string }
+	/** always the 13-digit form, so the two spellings of one book match */
+	| { kind: 'isbn'; isbn: string }
+	| { kind: 'pmid'; pmid: string };
 
 // a DOI is 10.<registrant>/<suffix>, and the suffix may hold almost anything but whitespace
 const DOI = /\b(10\.\d{4,9}\/[^\s"<>]+)/i;
@@ -35,7 +37,65 @@ export function parseWorkId(input: string): WorkId | null {
 		return (viaArxiv && arxivId(viaArxiv[1])) || { kind: 'doi', doi };
 	}
 
-	return arxivId(text.replace(/^arxiv:\s*/i, ''));
+	const arxiv = arxivId(text.replace(/^arxiv:\s*/i, ''));
+	if (arxiv) return arxiv;
+
+	// a PubMed ID is a bare number, which a year or a page is too: only its prefix or link says so
+	const pmid = /^pmid:?\s*(\d{1,9})$/i.exec(text) ?? /pubmed\.ncbi\.nlm\.nih\.gov\/(\d{1,9})\/?(?:[?#].*)?$/i.exec(text);
+	if (pmid) return { kind: 'pmid', pmid: pmid[1] };
+
+	const isbn = isbn13(text.replace(/^isbn(?:-1[03])?:?\s*/i, ''));
+	return isbn ? { kind: 'isbn', isbn } : null;
+}
+
+/** one string per work, for telling a respelled identifier from a different one */
+export function workKey(id: WorkId): string {
+	switch (id.kind) {
+		case 'isbn':
+			return `isbn:${id.isbn}`;
+		case 'pmid':
+			return `pmid:${id.pmid}`;
+		default:
+			return id.doi.toLowerCase();
+	}
+}
+
+/** how the dialog names the identifier while it looks it up */
+export function workLabel(id: WorkId): string {
+	switch (id.kind) {
+		case 'arxiv':
+			return `arXiv:${id.id}`;
+		case 'isbn':
+			return `ISBN ${id.isbn}`;
+		case 'pmid':
+			return `PMID ${id.pmid}`;
+		default:
+			return id.doi;
+	}
+}
+
+/** an ISBN as its 13 digits when `raw` is a valid ISBN-10 or ISBN-13 (check digit included), else null */
+export function isbn13(raw: string): string | null {
+	const s = raw.trim();
+	// hyphens or spaces between the groups, never other characters
+	if (!/^[\d][\d -]{8,15}[\dXx]$/.test(s)) return null;
+	const digits = s.replace(/[ -]/g, '').toUpperCase();
+	if (digits.length === 10 && /^\d{9}[\dX]$/.test(digits)) {
+		let sum = 0;
+		for (let i = 0; i < 10; i++) sum += (digits[i] === 'X' ? 10 : Number(digits[i])) * (10 - i);
+		if (sum % 11 !== 0) return null;
+		return withCheck13(`978${digits.slice(0, 9)}`);
+	}
+	if (digits.length === 13 && /^97[89]\d{10}$/.test(digits)) {
+		return withCheck13(digits.slice(0, 12)) === digits ? digits : null;
+	}
+	return null;
+}
+
+function withCheck13(first12: string): string {
+	let sum = 0;
+	for (let i = 0; i < 12; i++) sum += Number(first12[i]) * (i % 2 ? 3 : 1);
+	return first12 + String((10 - (sum % 10)) % 10);
 }
 
 function arxivId(raw: string): WorkId | null {

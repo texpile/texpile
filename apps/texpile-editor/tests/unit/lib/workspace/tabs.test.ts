@@ -143,8 +143,8 @@ describe('comparison tabs', () => {
 		expect(paths()).toEqual(['C:\\p\\other.tex']);
 	});
 
-	it('a comparison never reaches the persisted set', () => {
-		// paths is what persist() writes and what the MCP surface reports: files only
+	it('a comparison is not listed among the open documents', () => {
+		// paths is what the MCP surface reports: files only
 		openAndEdit('C:\\p\\main.tex');
 		tabs.openCompare('C:\\p\\main.tex', V1);
 		expect(tabs.paths).toEqual(['C:\\p\\main.tex']);

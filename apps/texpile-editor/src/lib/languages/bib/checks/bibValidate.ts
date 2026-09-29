@@ -1,4 +1,4 @@
-import { BIB_ENTRY_TYPES, BIB_FIELDS, BIB_FIELDS_BY_TYPE, BIB_FIELD_ALIASES, BIB_MANDATORY, BIB_UNIVERSAL_FIELDS } from './bibDatamodel';
+import { BIB_ENTRY_TYPES, BIB_FIELDS, BIB_FIELDS_BY_TYPE, BIB_FIELD_ALIASES, BIB_MANDATORY, BIB_UNIVERSAL_FIELDS } from '../bibDatamodel';
 
 /**
  * What biber will say about an entry, said before the compile.
@@ -16,7 +16,9 @@ export type BibProblem =
 	| { kind: 'field-not-for-type'; field: string; entryType: string }
 	| { kind: 'missing'; fields: string[] }
 	| { kind: 'missing-one-of'; fields: string[] }
-	| { kind: 'mutually-exclusive'; fields: string[] };
+	| { kind: 'mutually-exclusive'; fields: string[] }
+	/** another entry for the same paper, by a DOI or an arXiv number both carry (bibSameWork.ts) */
+	| { kind: 'same-work'; key: string; by: 'doi' | 'arxiv' };
 
 /** the app's own bookkeeping, never part of the entry's data */
 const INTERNAL = new Set(['key', 'entrytype', 'raw', 'displayLabel', 'hasInlineComment']);

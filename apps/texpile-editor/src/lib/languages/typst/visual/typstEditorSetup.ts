@@ -6,6 +6,7 @@ import { Fragment, Slice, type Node as PmNode } from 'prosemirror-model';
 import { typstToProseMirror } from './converter';
 import { typstCopyPlugin } from './clipboard';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
+import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
 import { selectDocStart, selectDocEnd } from '$lib/editor/visual/selectDocBoundary';
@@ -51,6 +52,7 @@ import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
+import { typstProse } from '$lib/workspace/wordCount/proseWords';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { proofreadPlugin, spellClickBoundaryPlugin } from '$lib/editor/spellcheck/spellcheckplugin';
@@ -151,6 +153,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 	} = setup;
 	return [
 		parseCarryPlugin,
+		labelRenameUndo,
 		pasteTypstPlugin,
 		typstCopyPlugin,
 		gapCursor(),
@@ -213,7 +216,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		search(),
 		placeholderPlugin(placeholder),
 		tablePlaceholderPlugin(),
-		createWordCountPlugin(),
+		createWordCountPlugin(typstProse),
 		createTocPlugin(),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment

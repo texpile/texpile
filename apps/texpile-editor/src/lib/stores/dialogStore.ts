@@ -37,21 +37,24 @@ export function takePreferencesReopen(): boolean {
  */
 export const preferencesTab = box<string | null>(null);
 
-/** the one deep link there is: "your compiler is not installed" -> the panel that lists them. */
+/** "your compiler is not installed" -> the panel that lists them */
 export function openToolchainPrefs(): void {
-	preferencesTab.current = 'toolchain';
+	openPreferencesAt('toolchain');
+}
+
+export function openPreferencesAt(tab: string): void {
+	preferencesTab.current = tab;
 	preferencesOpen.current = true;
 }
 
 /**
- * The dictionary and the shortcut sheet, for the same reason and then one more.
+ * The shortcut sheet and the welcome screen, for the same reason and then one more.
  *
  * These were local state in WorkspaceMenuBar, which also MOUNTED the dialogs - fine while the host
  * menu bar is the only way in. But a guest session renders no menu bar at all, so for a guest the
  * dialogs did not exist, and the palette's Preferences command set a flag nothing was listening to.
  * The flags live here and WindowDialogs mounts the dialogs for both.
  */
-export const dictionaryOpen = box(false);
 export const shortcutsOpen = box(false);
 export const setupOpen = box(false);
 

@@ -2,7 +2,14 @@
 	// The typed entry form: type picker, per-type fields, and the citation key under Advanced.
 	// BibManager owns the reference list, validation, and the save/commit path.
 	import { ChevronDown, TriangleAlert } from '@lucide/svelte';
-	import { bibProblemText, getFieldsForType, validateEntry, type BiblatexReference } from '$lib/languages/bib/biblatex';
+	import {
+		bibProblemText,
+		getFieldsForType,
+		validateEntry,
+		type BibProblem,
+		type BiblatexReference,
+		type SameWork
+	} from '$lib/languages/bib/biblatex';
 	import { generateLabel } from '$lib/editor/visual/label';
 	import { m } from '$lib/paraglide/messages';
 
@@ -11,6 +18,7 @@
 		formErrors,
 		entryTypeOptions,
 		isEditing,
+		twins = [],
 		onSave,
 		onCancel
 	}: {
@@ -18,6 +26,8 @@
 		formErrors: Record<string, string[]>;
 		entryTypeOptions: Array<{ value: string; label: string }>;
 		isEditing: boolean;
+		/** the other entries this one is the same paper as */
+		twins?: SameWork[];
 		onSave: () => void;
 		onCancel: () => void;
 	} = $props();
@@ -95,6 +105,18 @@
 	{/if}
 
 	{#if formErrors.form}<p class="text-error-ink text-sm">{formErrors.form[0]}</p>{/if}
+
+	{#if twins.length > 0}
+		<!-- biblatex prints both entries without a word, so this says it -->
+		<div class="bg-surface-100-900 border-surface-200-800 mt-3 flex gap-2.5 rounded-container border px-3 py-2">
+			<TriangleAlert class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
+			<ul class="min-w-0 space-y-0.5 text-xs">
+				{#each twins as twin (twin.key)}
+					<li>{bibProblemText({ kind: 'same-work', ...twin } satisfies BibProblem)}</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
 
 	{#if problems.length > 0}
 		<div class="bg-surface-100-900 border-surface-200-800 mt-3 flex gap-2.5 rounded-container border px-3 py-2">

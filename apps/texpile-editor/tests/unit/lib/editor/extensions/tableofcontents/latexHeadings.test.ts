@@ -54,4 +54,17 @@ describe('outline parsing and numbering', () => {
 			['3', 'After', undefined]
 		]);
 	});
+
+	it('leaves out what TeX skips: a comment, an \\iffalse block, a comment environment', () => {
+		const src = [
+			'\\section{Kept}',
+			'% \\section{Commented}',
+			'\\iffalse \\section{Off} \\include{old} \\fi',
+			'\\begin{comment}\\input{old2}\\end{comment}',
+			'\\input{kept}'
+		].join('\n');
+		expect(
+			parseOutlineRaw(src).map((i) => ('kind' in i && i.kind === 'input' ? `input:${i.target}` : 'text' in i ? i.text : i.kind))
+		).toEqual(['Kept', 'input:kept']);
+	});
 });

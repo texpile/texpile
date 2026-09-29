@@ -15,7 +15,7 @@
 		onclick={onToggle}
 	>
 		{#if collapsed}<ChevronRight class="size-3.5 shrink-0" />{:else}<ChevronDown class="size-3.5 shrink-0" />{/if}
-		<span class="truncate">{title}</span>
+		<span class="cap-center truncate">{title}</span>
 	</button>
 	{#if actions && !collapsed}{@render actions()}{/if}
 </div>

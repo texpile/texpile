@@ -2,17 +2,24 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { FileSymlink } from '@lucide/svelte';
+	import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
+	import { refProblemText } from '$lib/workspace/document/liveRefDiagnostics';
 
 	let { node, onOpen }: { node: PMNode; onOpen: () => void } = $props();
 
 	const path = $derived(String(node.attrs.path ?? ''));
 	const command = $derived(String(node.attrs.command ?? 'input'));
+	// the file it names is not in the project (the live reference checks decide; Typst has its own)
+	const missing = $derived(
+		liveRefProblems.current?.problems.find((p) => p.kind === 'file-missing' && p.what === 'input' && p.name === path.trim()) ?? null
+	);
 </script>
 
 <button
 	type="button"
 	class="includedoc-chip"
-	use:tip={command === 'typst' ? `Open #include "${path}"` : `Open \\${command}{${path}}`}
+	class:includedoc-missing={missing}
+	use:tip={missing ? refProblemText(missing) : command === 'typst' ? `Open #include "${path}"` : `Open \\${command}{${path}}`}
 	onclick={onOpen}
 	contenteditable="false"
 >
@@ -61,5 +68,10 @@
 	.includedoc-path {
 		font-weight: 600;
 		color: var(--primary-ink);
+	}
+	.includedoc-missing .includedoc-path {
+		color: var(--color-ref-broken-fg);
+		text-decoration: underline wavy;
+		text-decoration-thickness: 1px;
 	}
 </style>

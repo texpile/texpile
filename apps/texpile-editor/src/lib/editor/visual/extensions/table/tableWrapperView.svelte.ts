@@ -3,7 +3,7 @@ import type { EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
 import TableWrapperComponent from './TableWrapperComponent.svelte';
 import { labelTaken } from '$lib/editor/visual/labelTaken';
-import { repointRefs } from '$lib/editor/visual/repointRefs';
+import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 
 /** which markup language the wrapper edits; typst hides every LaTeX-only control
  * (notes, colspec model, row rules, spanning) and never writes tex concepts into the doc. */
@@ -95,8 +95,10 @@ function buildTableWrapperView(dialect: TableDialect, node: Node, view: EditorVi
 			});
 			// renaming the label follows every reference to it, in the same transaction (one undo
 			// step). Both dialects: a \ref left behind still compiles, resolving to ??.
-			if ('label' in attrs) repointRefs(tr, view.state.doc, String(currentNode.attrs.label ?? ''), String(attrs.label ?? ''));
+			const renamedFrom = 'label' in attrs ? String(currentNode.attrs.label ?? '') : null;
+			if (renamedFrom !== null) repointRefs(tr, view.state.doc, renamedFrom, String(attrs.label ?? ''));
 			view.dispatch(tr);
+			if (renamedFrom !== null) announceLabelRenamed(renamedFrom, String(attrs.label ?? ''));
 		}
 	}
 

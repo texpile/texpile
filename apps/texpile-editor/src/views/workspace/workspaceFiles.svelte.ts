@@ -12,6 +12,7 @@ import { workspaceRoot, texFiles, mainFile, setMainFile, isDirty } from '$lib/wo
 import { projectConfigSync as projectConfig, compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { gatherProjectMacros } from '$lib/workspace/project';
 import { loadReferences } from '$lib/workspace/citations';
+import { readCitationsThrough } from '$lib/workspace/document/citedKeys';
 import { insertIncludeAtCursor, insertTypstIncludeAtCursor } from '$lib/workspace/editorCommands';
 import { retargetDiskStamp } from '$lib/workspace/diskStamp';
 import { openFile } from '$lib/workspace/workspaceStore';
@@ -178,7 +179,10 @@ export class WorkspaceFiles {
 
 	// citations read through the provider too, so guest sessions resolve \cite keys from the shared doc
 	loadRefs(root: string) {
-		return loadReferences(root, { scan: (r, e) => this.d.provider.scanFiles(r, e), read: (p) => this.d.provider.readText(p) });
+		const through = { scan: (r: string, e: string[]) => this.d.provider.scanFiles(r, e), read: (p: string) => this.d.provider.readText(p) };
+		// and so do the bibliography editor's reads of what the documents cite
+		readCitationsThrough(through);
+		return loadReferences(root, through);
 	}
 
 	// tree rescan + manifest sync + git refresh live in lib/workspace/treeRefresh.ts

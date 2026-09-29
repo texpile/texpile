@@ -156,6 +156,11 @@ export class DocumentBuffer {
 
 	/** serialize the visual doc back to source in the open file's dialect, with where its runs
 	 *  landed; the blocks in `afresh` written whole (see verifiedSerialize) */
+	/** the file `doc` would be written as */
+	textOf(doc: PMNode): string {
+		return this.serializeFile(doc).text;
+	}
+
 	private serializeFile(doc: PMNode, afresh?: ReadonlySet<PMNode>): { text: string; map: SourceMap } {
 		if (!this.docMeta) return { text: this.texSource, map: this.sourceMap };
 		if (this.kind === 'md') return serializeMarkdownFileDetailed(this.docMeta, doc, afresh);

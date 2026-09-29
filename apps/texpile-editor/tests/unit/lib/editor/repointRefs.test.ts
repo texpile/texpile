@@ -4,12 +4,16 @@
 //
 // The two reference nodes hold their target differently: typst's in an attr, LaTeX's in text. Only
 // the LaTeX path changes node sizes, which is what the position mapping is for.
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { EditorState } from 'prosemirror-state';
+import { history, redo, undo } from 'prosemirror-history';
 import { schema as texSchema } from '$lib/languages/latex/schema/latexPMSchema';
 import { typSchema } from '$lib/languages/typst/visual/schema';
-import { repointRefs } from '$lib/editor/visual/repointRefs';
+import { labelRenameUndo, repointRefs } from '$lib/editor/visual/repointRefs';
 import { labelTaken } from '$lib/editor/visual/labelTaken';
+import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
+import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
+import { adoptParse } from '$lib/editor/visual/parseOrigins';
 import type { Schema, Node as PMNode } from 'prosemirror-model';
 
 function texDoc(refs: string[]): PMNode {
@@ -94,5 +98,51 @@ describe('a name already in use', () => {
 			if (n.type.name === 'label') at = pos;
 		});
 		expect(labelTaken(doc, 'sec:a', at)).toBe(false);
+	});
+});
+
+describe('undoing a rename', () => {
+	it('tells the workspace, so the uses in other files go back and forth with it', () => {
+		const events: unknown[] = [];
+		vi.stubGlobal('window', globalThis);
+		vi.stubGlobal('dispatchEvent', (e: CustomEvent) => events.push(e.detail));
+		const doc = texSchema.node('doc', null, [texSchema.node('paragraph', null, [texSchema.nodes.label.create({ name: 'sec:a' })])]);
+		let state = EditorState.create({ doc, plugins: [history(), labelRenameUndo] });
+		const tr = state.tr.setNodeMarkup(1, null, { ...state.doc.nodeAt(1)!.attrs, name: 'sec:b' });
+		repointRefs(tr, state.doc, 'sec:a', 'sec:b');
+		state = state.apply(tr);
+		undo(state, (t) => (state = state.apply(t)));
+		redo(state, (t) => (state = state.apply(t)));
+		vi.unstubAllGlobals();
+		expect(events).toEqual([
+			{ from: 'sec:b', to: 'sec:a' },
+			{ from: 'sec:a', to: 'sec:b' }
+		]);
+	});
+});
+
+describe('a rename, saved', () => {
+	async function saved(src: string, from: string, to: string): Promise<string> {
+		const parsed = await parseLatexFile(src);
+		const state = EditorState.create({ doc: parsed.doc, plugins: [parseCarryPlugin] });
+		adoptParse(state.doc, parsed.origins);
+		const tr = state.tr;
+		state.doc.descendants((n, pos) => {
+			if (n.type.name === 'label' && n.attrs.name === from) tr.setNodeMarkup(pos, null, { ...n.attrs, name: to });
+		});
+		repointRefs(tr, state.doc, from, to);
+		return serializeLatexFile(parsed, state.apply(tr).doc);
+	}
+	const doc = (...body: string[]) => ['\\documentclass{article}', '\\begin{document}', ...body, '\\end{document}', ''].join('\n');
+
+	it('writes each reference as it was, the command kept and only the name new', async () => {
+		// the name used to be written over the whole \ref{...}, command and all
+		const src = doc('See Figure~\\ref{fig:a} in', 'the text, and \\eqref{fig:a}.', '', '\\ref{fig:a} starts this one.');
+		expect(await saved(src, 'fig:a', 'fig:b')).toBe(src.replaceAll('fig:a', 'fig:b'));
+	});
+
+	it('keeps the line break after a label chip that starts a paragraph', async () => {
+		const src = doc('\\section{Introduction}\\label{sec:a}', 'The first line,', 'and a second.', '', 'Next.');
+		expect(await saved(src, 'sec:a', 'sec:b')).toBe(src.replace('sec:a', 'sec:b'));
 	});
 });

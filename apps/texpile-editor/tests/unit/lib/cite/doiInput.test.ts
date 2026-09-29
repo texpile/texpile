@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseWorkId } from '$lib/cite/doiInput';
+import { isbn13, parseWorkId, workKey, workLabel } from '$lib/cite/doiInput';
 
 describe('parseWorkId: DOIs', () => {
 	it('takes a bare DOI and the prefixes people copy it with', () => {
@@ -74,6 +74,40 @@ describe('parseWorkId: arXiv', () => {
 	it("treats arXiv's own DOI as the arXiv paper", () => {
 		expect(parseWorkId('10.48550/arXiv.1706.03762')).toEqual(vaswani);
 		expect(parseWorkId('https://doi.org/10.48550/ARXIV.1706.03762')).toEqual(vaswani);
+	});
+});
+
+describe('parseWorkId: books and PubMed records', () => {
+	it('takes an ISBN in either length, grouped or not, and names it by its 13 digits', () => {
+		for (const input of ['9780201134476', '978-0-201-13447-6', 'ISBN 978-0-201-13447-6', 'isbn: 0201134470', 'ISBN-10: 0-201-13447-0']) {
+			expect(parseWorkId(input), input).toEqual({ kind: 'isbn', isbn: '9780201134476' });
+		}
+		// an ISBN-10 can end in X
+		expect(isbn13('0-8044-2957-X')).toBe('9780804429573');
+	});
+
+	it('rejects a number whose check digit is wrong', () => {
+		expect(parseWorkId('978-0-201-13447-5')).toBeNull();
+		expect(parseWorkId('0201134471')).toBeNull();
+	});
+
+	it('takes a PubMed ID only with its prefix or link, since a bare number could be anything', () => {
+		for (const input of [
+			'PMID: 19451168',
+			'pmid19451168',
+			'https://pubmed.ncbi.nlm.nih.gov/19451168/',
+			'pubmed.ncbi.nlm.nih.gov/19451168?x=1'
+		]) {
+			expect(parseWorkId(input), input).toEqual({ kind: 'pmid', pmid: '19451168' });
+		}
+		expect(parseWorkId('19451168')).toBeNull();
+	});
+
+	it('names each kind of work for the dialog, and keys respellings of one work alike', () => {
+		expect(workLabel({ kind: 'isbn', isbn: '9780201134476' })).toBe('ISBN 9780201134476');
+		expect(workLabel({ kind: 'pmid', pmid: '100' })).toBe('PMID 100');
+		expect(workKey(parseWorkId('0201134470')!)).toBe(workKey(parseWorkId('978-0-201-13447-6')!));
+		expect(workKey(parseWorkId('10.1109/CVPR.2016.90')!)).toBe(workKey(parseWorkId('https://doi.org/10.1109/cvpr.2016.90')!));
 	});
 });
 

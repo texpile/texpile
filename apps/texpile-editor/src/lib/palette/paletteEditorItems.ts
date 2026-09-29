@@ -25,7 +25,7 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			id: 'editor.citeByDoi',
 			label: m.cite_doi_insert(),
 			group,
-			keywords: 'doi arxiv cite citation bibliography reference bibtex crossref paper',
+			keywords: 'doi arxiv isbn pubmed pmid title search find cite citation bibliography reference bibtex crossref paper book',
 			icon: BookPlus,
 			run: () => a.citeByDoi?.()
 		});

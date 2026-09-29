@@ -70,7 +70,7 @@
 			<!-- tonal: Continue below stays the dialog's one primary, at the dialog's button size -->
 			<button class="btn btn-xs preset-tonal-primary mb-2 w-full gap-1.5" onclick={() => void answerWithGithubSignIn(question)}>
 				<Globe class="size-3.5" />
-				{m.github_signin_browser()}
+				<span class="cap-center">{m.github_signin_browser()}</span>
 			</button>
 			<p class="text-muted mb-3 text-center text-xs">{m.github_signin_or()}</p>
 		{/if}

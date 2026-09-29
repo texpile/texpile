@@ -9,7 +9,7 @@
 	import { sanitizeLabel } from '$lib/editor/visual/label';
 	import { DEFAULT_FIGURE_FRACTION, FIGURE_SIZE_STEP } from './figureDefaults';
 	import { labelTaken } from '$lib/editor/visual/labelTaken';
-	import { repointRefs } from '$lib/editor/visual/repointRefs';
+	import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
 
@@ -65,8 +65,10 @@
 		// renaming the label follows every reference to it, in the same transaction (one undo
 		// step). This panel had no such branch at all, in either dialect, so a renamed figure left
 		// each \ref to it pointing at a name that no longer existed.
-		if ('label' in attrs) repointRefs(tr, view.state.doc, String(node.attrs.label ?? ''), String(attrs.label ?? ''));
+		const renamedFrom = 'label' in attrs ? String(node.attrs.label ?? '') : null;
+		if (renamedFrom !== null) repointRefs(tr, view.state.doc, renamedFrom, String(attrs.label ?? ''));
 		view.dispatch(tr);
+		if (renamedFrom !== null) announceLabelRenamed(renamedFrom, String(attrs.label ?? ''));
 	}
 
 	// fraction from a prior resize (width/maxWidth), else parsed \includegraphics options, else full width

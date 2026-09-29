@@ -6,6 +6,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import FileTree from '$lib/filetree/FileTree.svelte';
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
+	import type { ReplaceSpec } from '$lib/search/replaceInFiles';
 	import SourceControlPanel from '$lib/workspace/scm/ui/SourceControlPanel.svelte';
 	import ExplorerSections from './ExplorerSections.svelte';
 	import SidebarIconButton from './SidebarIconButton.svelte';
@@ -59,6 +60,7 @@
 		onOpenGlobalSearch: () => void;
 		onCloseGlobalSearch: () => void;
 		onOpenFileAt: (file: string, line: number, selectText?: string) => void;
+		onReplaceInFolder?: (files: string[], spec: ReplaceSpec) => Promise<void>;
 		onOpenEntry: (entry: TreeEntry) => void;
 		onCreate: (parentDir: string, name: string, type: 'file' | 'dir' | 'include') => void;
 		/** the compile target is Typst: the tree's New Include creates a .typ fragment */
@@ -111,6 +113,7 @@
 		onOpenGlobalSearch,
 		onCloseGlobalSearch,
 		onOpenFileAt,
+		onReplaceInFolder,
 		onOpenEntry,
 		onCreate,
 		typstProject = false,
@@ -335,7 +338,13 @@
 		</div>
 	</div>
 	{#if view === 'search'}
-		<GlobalSearch bind:this={globalSearchRef} root={workspaceRoot.current ?? ''} onOpen={onOpenFileAt} onClose={onCloseGlobalSearch} />
+		<GlobalSearch
+			bind:this={globalSearchRef}
+			root={workspaceRoot.current ?? ''}
+			onOpen={onOpenFileAt}
+			onClose={onCloseGlobalSearch}
+			onReplace={onReplaceInFolder}
+		/>
 	{:else if view === 'scm'}
 		<!-- the panel owns its own scrolling: it is two regions with a splitter between them, each
 		     scrolling on its own, and an outer scroller here would fight both -->
@@ -383,10 +392,7 @@
 	{:else}
 		<div class="flex min-h-0 flex-1 flex-col" bind:this={splitEl}>
 			<!-- overflow-x-auto pairs with the tree's min-w-max: long names scroll, they are never trimmed -->
-			<div
-				class="scroll-inset-r min-h-0 overflow-x-auto overflow-y-auto p-1.5"
-				style={showToc ? `flex: ${1 - tocFraction} 1 0%` : 'flex: 1 1 0%'}
-			>
+			<div class="scroll-inset-r min-h-0 overflow-x-auto overflow-y-auto p-1.5" style="flex: 1 1 0%">
 				<FileTree
 					bind:this={fileTreeRef}
 					tree={fileTree.current}
@@ -421,10 +427,10 @@
 					aria-label={m.wsview_resize_toc_aria()}
 					tabindex="0"
 				></div>
-				<!-- scroll-inset-r moves the scrollbar in, not the box: the border-t still reaches the divider -->
+				<!-- scroll-inset-r moves the scrollbar, not the box, so border-t reaches the divider; whole pixels keep rows on the grid -->
 				<div
 					class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-t p-2"
-					style="flex: {tocFraction} 1 0%"
+					style="flex: 0 1 round({tocFraction * 100}%, 1px)"
 				>
 					<ExplorerSections mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={onOpenFileAt} />
 				</div>

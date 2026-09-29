@@ -364,7 +364,7 @@
 						{:else}
 							<button class="btn btn-xs hover:preset-tonal w-full justify-start gap-1.5" onclick={() => (naming = true)}>
 								<Bookmark class="size-3.5" />
-								{m.history_save_copy_now()}
+								<span class="cap-center">{m.history_save_copy_now()}</span>
 							</button>
 						{/if}
 					</div>
@@ -408,11 +408,11 @@
 					</button>
 					<button class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1.5" onclick={copy} disabled={!selected}>
 						<Copy class="size-3.5" />
-						{m.history_copy_text()}
+						<span class="cap-center">{m.history_copy_text()}</span>
 					</button>
 					<button class="btn btn-xs preset-filled-primary-500 gap-1.5" onclick={restore} disabled={!selected}>
 						<RotateCcw class="size-3.5" />
-						{m.history_restore_this()}
+						<span class="cap-center">{m.history_restore_this()}</span>
 					</button>
 				</div>
 				<div class="border-surface-200-800 min-h-0 flex-1 overflow-hidden rounded-base border">

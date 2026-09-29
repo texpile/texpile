@@ -1,0 +1,1060 @@
+{
+	"attention is all you need": [
+		{
+			"doi": "10.1007/978-3-031-84300-6_13",
+			"title": "Is Attention All You Need?",
+			"authors": ["Mineault"],
+			"venue": "From Human Attention to Computational Attention",
+			"year": "2025",
+			"cites": 55
+		},
+		{
+			"doi": "10.2139/ssrn.4993784",
+			"title": "Attention Is All You Need: An Analysis Of The Valuation Of Artificial Intelligence Tokens",
+			"authors": ["Akpan"],
+			"venue": "Elsevier BV",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.2139/ssrn.5967774",
+			"title": "Attention is All You Need... Unless You Are a CISO: The Inherent Incompatibility Between Transformer Architectures and Zero-Trust Environments",
+			"authors": ["Canale"],
+			"venue": "Elsevier BV",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.21203/rs.3.rs-10916252/v1",
+			"title": "One Vector Is All You Need for O(1) Self-Attention: The Ocean State",
+			"authors": ["YU"],
+			"venue": "Springer Science and Business Media LLC",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.2139/ssrn.7137418",
+			"title": "Year 2026: Attention to AI Over-Reliance is All You Need in AI Education!",
+			"authors": ["Teo"],
+			"venue": "Elsevier BV",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.1093/bib/bbag239",
+			"title": "Correction to: Attention is all you need: utilizing attention in AI-enabled drug discovery",
+			"authors": [],
+			"venue": "Briefings in Bioinformatics",
+			"year": "2026",
+			"cites": 1
+		},
+		{
+			"doi": "10.2139/ssrn.6096874",
+			"title": "Attention via Synaptic Plasticity is All You Need A Biologically Inspired Spiking Neuromorphic Transformer",
+			"authors": ["Kumar", "Mondal"],
+			"venue": "Elsevier BV",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.65215/ysbyhc05",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 22
+		},
+		{
+			"doi": "10.1201/9781003561460-19",
+			"title": "Attention Is All You Need",
+			"authors": ["Bishop", "Seiberth"],
+			"venue": "Driving Intelligence: The Green Book",
+			"year": "2025",
+			"cites": 6
+		},
+		{
+			"doi": "10.65215/pc26a033",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 21
+		},
+		{
+			"doi": "10.65215/mdcm8z23",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 3
+		},
+		{
+			"doi": "10.65215/nxvz2v36",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 16
+		},
+		{
+			"doi": "10.65215/ctdc8e75",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 69
+		},
+		{
+			"doi": "10.65215/2q58a426",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 11
+		},
+		{
+			"doi": "10.65215/r5bs2d54",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 20
+		},
+		{
+			"doi": "10.36227/techrxiv.176827103.31624241/v1",
+			"title": "Physics Is All You Need: Outperforming Self-Attention Mechanisms in Solar Irradiance Forecasting",
+			"authors": ["Abdullah", "Mohammed"],
+			"venue": "Institute of Electrical and Electronics Engineers (IEEE)",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.18653/v1/2024.findings-emnlp.752",
+			"title": "All You Need is Attention: Lightweight Attention-based Data Augmentation for Text Classification",
+			"authors": ["Kim", "Hwang"],
+			"venue": "Findings of the Association for Computational Linguistics: EMNLP 2024",
+			"year": "2024",
+			"cites": 2
+		},
+		{
+			"doi": "10.1108/02630809410074466",
+			"title": "Attention All Surveyors: Our Schools Need You",
+			"authors": ["Davies", "Jones"],
+			"venue": "Structural Survey",
+			"year": "1994",
+			"cites": 5
+		},
+		{
+			"doi": "10.1093/oso/9780190460723.003.0003",
+			"title": "All You Need Is Love(s)",
+			"authors": ["Sie"],
+			"venue": "Oxford Scholarship Online",
+			"year": "2018",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2501.09166",
+			"title": "Attention is All You Need Until You Need Retention",
+			"authors": ["Yaslioglu"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2512.08417",
+			"title": "Attention is All You Need to Defend Against Indirect Prompt Injection Attacks in LLMs",
+			"authors": ["Zhong", "Miao", "Chen"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2606.12848",
+			"title": "(Human) Attention Is (Still) All You Need: Human oversight makes AI-assisted social science reliable",
+			"authors": ["Zhu", "Wang", "Zhang"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2606.02332",
+			"title": "Forget Attention: Importance-Aware Attention Is All You Need",
+			"authors": ["Shin", "Yang"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2605.13784",
+			"title": "Attention Once Is All You Need: Efficient Streaming Inference with Stateful Transformers",
+			"authors": ["Norgren"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2509.03683",
+			"title": "Attention is all you need to solve chiral superconductivity",
+			"authors": ["Li", "Ong", "Geier"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2604.23811",
+			"title": "Attention Is Not All You Need for Diffraction",
+			"authors": ["Baggett", "Friedman", "Shetty"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2604.21816",
+			"title": "Tool Attention Is All You Need: Dynamic Tool Gating and Lazy Schema Loading for Eliminating the MCP/Tools Tax in Scalable Agentic Workflows",
+			"authors": ["Sadani", "Kumar"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2603.01285",
+			"title": "Attention Smoothing Is All You Need For Unlearning",
+			"authors": ["Zade", "Zhou", "Liu"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2501.06425",
+			"title": "Tensor Product Attention Is All You Need",
+			"authors": ["Zhang", "Liu", "Yuan"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2510.14973",
+			"title": "Attention Is All You Need for KV Cache in Diffusion LLMs",
+			"authors": ["Nguyen-Tri", "Ranjan", "Shen"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2512.11254",
+			"title": "FAIR: Focused Attention Is All You Need for Generative Recommendation",
+			"authors": ["Xiao", "Zhang", "Cai"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2510.19861",
+			"title": "Some Attention is All You Need for Retrieval",
+			"authors": ["Michalak", "Abreu"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2509.03895",
+			"title": "Attn-Adapter: Attention Is All You Need for Online Few-shot Learner of Vision-Language Model",
+			"authors": ["Bui", "Nguyen", "Choo"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2410.18368",
+			"title": "Multi-objective Optimization in CPU Design Space Exploration: Attention is All You Need",
+			"authors": ["Xue", "Wu", "Yan"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2502.07864",
+			"title": "TransMLA: Multi-Head Latent Attention Is All You Need",
+			"authors": ["Meng", "Tang", "Tang"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2505.06633",
+			"title": "Attention Is Not All You Need: The Importance of Feedforward Networks in Transformer Models",
+			"authors": ["Gerber"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.1706.03762",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "arXiv",
+			"year": "2017",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2501.05730",
+			"title": "Element-wise Attention Is All You Need",
+			"authors": ["Feng"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2412.20875",
+			"title": "Attention Is All You Need For Mixture-of-Depths Routing",
+			"authors": ["Gadhikar", "Majumdar", "Popp"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2410.24052",
+			"title": "Attention is All You Need to Optimize Wind Farm Operations and Maintenance",
+			"authors": ["Kazemian", "Yildirim", "Ramanan"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2410.21802",
+			"title": "Text-Guided Attention is All You Need for Zero-Shot Robustness in Vision-Language Models",
+			"authors": ["Yu", "Zhang", "Xu"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2401.11143",
+			"title": "Density Adaptive Attention is All You Need: Robust Parameter-Efficient Fine-Tuning Across Multiple Modalities",
+			"authors": ["Ioannides", "Chadha", "Elkins"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2407.01375",
+			"title": "Transferable-guided Attention Is All You Need for Video Domain Adaptation",
+			"authors": ["Sacilotti", "Santos", "Sebe"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2408.02692",
+			"title": "Attention is all you need for an improved CNN-based flash flood susceptibility modeling. The case of the ungauged Rheraya watershed, Morocco",
+			"authors": ["Elghouat", "Algouti", "Algouti"],
+			"venue": "arXiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2607.23678",
+			"title": "Focus Is All You Need: Adaptive Goal-aware Attention Orchestration for Multi-Agent Graph Systems",
+			"authors": ["Fan", "Xu", "Yuan"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2607.13537",
+			"title": "Transformer is All You Need: Attention-Based Anomaly Detection and Classification in Inverter-Rich Power Systems",
+			"authors": ["Abukhousa", "Zonouz", "Meliopoulos"],
+			"venue": "arXiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2511.14691",
+			"title": "Attention via Synaptic Plasticity is All You Need: A Biologically Inspired Spiking Neuromorphic Transformer",
+			"authors": ["Mondal", "Kumar"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2502.05383",
+			"title": "Is attention all you need to solve the correlated electron problem?",
+			"authors": ["Geier", "Nazaryan", "Zaklama"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2503.05840",
+			"title": "Slim attention: cut your context memory in half without loss -- K-cache is all you need for MHA",
+			"authors": ["Graef", "Wasielewski"],
+			"venue": "arXiv",
+			"year": "2025",
+			"cites": 0
+		}
+	],
+	"deep residual learning for image recognition": [
+		{
+			"doi": "10.22541/au.170666177.72403547/v1",
+			"title": "Multiple butterflies recognition based on deep residual learning and image analyze",
+			"authors": ["Xi", "Wang", "Han"],
+			"venue": "Wiley",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.3390/app12188972",
+			"title": "Deep Residual Learning for Image Recognition: A Survey",
+			"authors": ["Shafiq", "Gu"],
+			"venue": "Applied Sciences",
+			"year": "2022",
+			"cites": 987
+		},
+		{
+			"doi": "10.1109/cvpr.2016.90",
+			"title": "Deep Residual Learning for Image Recognition",
+			"authors": ["He", "Zhang", "Ren"],
+			"venue": "2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+			"year": "2016",
+			"cites": 175414
+		},
+		{
+			"doi": "10.5220/0011270400003277",
+			"title": "RRConvNet: Recursive-residual Network for Real-life Character Image Recognition",
+			"authors": ["Mengiste", "Belay", "Tilahun"],
+			"venue": "Proceedings of the 3rd International Conference on Deep Learning Theory and Applications",
+			"year": "2022",
+			"cites": 0
+		},
+		{
+			"doi": "10.1109/cvidl58838.2023.10167244",
+			"title": "EEG-based Drowsiness and Alertness Recognition Using Feature Fusion and Deep Residual Networks",
+			"authors": ["Lu", "Liu"],
+			"venue": "2023 4th International Conference on Computer Vision, Image and Deep Learning (CVIDL)",
+			"year": "2023",
+			"cites": 1
+		},
+		{
+			"doi": "10.1109/cvprw.2018.00116",
+			"title": "Recursive Deep Residual Learning for Single Image Dehazing",
+			"authors": ["Du", "Li"],
+			"venue": "2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+			"year": "2018",
+			"cites": 37
+		},
+		{
+			"doi": "10.1201/9781003366249-1",
+			"title": "Medical Image Detection and Recognition Using Machine Learning and Deep Learning",
+			"authors": ["Arun Anoop", "Karthikeyan", "Poonkuntran"],
+			"venue": "Machine Learning and Deep Learning Techniques for Medical Image Recognition",
+			"year": "2023",
+			"cites": 0
+		},
+		{
+			"doi": "10.1016/c2024-0-02169-8",
+			"title": "Deep Learning for Image Recognition",
+			"authors": [],
+			"venue": "Elsevier",
+			"year": "2026",
+			"cites": 2
+		},
+		{
+			"doi": "10.5220/0012911100004508",
+			"title": "RARN: Lightweight Deep Residual Learning with Attention for Human Emotions Recognition",
+			"authors": ["Zhu"],
+			"venue": "Proceedings of the 1st International Conference on Engineering Management, Information Technology and Intelligence",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.1142/s0219467827500811",
+			"title": "PSILO-XAI-ResDCN: Handwritten Character Recognition Using Optimized Explainable Residual Deep Learning Mechanism",
+			"authors": ["Pandey", "Gupta", "Agrawal"],
+			"venue": "International Journal of Image and Graphics",
+			"year": "2025",
+			"cites": 2
+		},
+		{
+			"doi": "10.1109/cvidl70130.2026.11637700",
+			"title": "Residual Spatial Gating with AU-Assisted Supervision for Facial Expression Recognition",
+			"authors": ["Wang", "Wang"],
+			"venue": "2026 7th International Conference on Computer Vision, Image and Deep Learning (CVIDL)",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.1016/b978-0-443-43950-6.12001-5",
+			"title": "Copyright",
+			"authors": [],
+			"venue": "Deep Learning for Image Recognition",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.5220/0013515300004619",
+			"title": "Applications and Challenges of Deep Learning in Image Recognition",
+			"authors": ["Li"],
+			"venue": "Proceedings of the 2nd International Conference on Data Analysis and Machine Learning",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.1109/itnec.2017.8284852",
+			"title": "FPGA accelerates deep residual learning for image recognition",
+			"authors": ["Li", "Ding", "Wang"],
+			"venue": "2017 IEEE 2nd Information Technology, Networking, Electronic and Automation Control Conference (ITNEC)",
+			"year": "2017",
+			"cites": 52
+		},
+		{
+			"doi": "10.1016/b978-0-443-43950-6.01001-7",
+			"title": "Front Matter",
+			"authors": [],
+			"venue": "Deep Learning for Image Recognition",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.1016/b978-0-443-43950-6.20001-4",
+			"title": "Index",
+			"authors": [],
+			"venue": "Deep Learning for Image Recognition",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.1016/b978-0-443-43950-6.00002-2",
+			"title": "Data Usage in Deep Learning",
+			"authors": ["Long", "Song"],
+			"venue": "Deep Learning for Image Recognition",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.5220/0013512900004619",
+			"title": "Image Recognition of Pigmented Skin Diseases Based on Deep Learning",
+			"authors": ["Zhao"],
+			"venue": "Proceedings of the 2nd International Conference on Data Analysis and Machine Learning",
+			"year": "2024",
+			"cites": 2
+		},
+		{
+			"doi": "10.5220/0012798500003885",
+			"title": "Butterfly and Moth Image Recognition Based on Residual Neural Network",
+			"authors": ["Liu"],
+			"venue": "Proceedings of the 1st International Conference on Data Analysis and Machine Learning",
+			"year": "2023",
+			"cites": 0
+		},
+		{
+			"doi": "10.1016/b978-0-443-27318-6.00005-x",
+			"title": "Enhancing iris recognition accuracy through dilated residual features",
+			"authors": ["Kumar"],
+			"venue": "Iris and Periocular Recognition using Deep Learning",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.1512.03385",
+			"title": "Deep Residual Learning for Image Recognition",
+			"authors": ["He", "Zhang", "Ren"],
+			"venue": "arXiv",
+			"year": "2015",
+			"cites": 0
+		}
+	],
+	"vaswani attention": [
+		{
+			"doi": "10.65215/r5bs2d54",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 20
+		},
+		{
+			"doi": "10.65215/ysbyhc05",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 22
+		},
+		{
+			"doi": "10.65215/mdcm8z23",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 3
+		},
+		{
+			"doi": "10.65215/nxvz2v36",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 16
+		},
+		{
+			"doi": "10.65215/pc26a033",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 21
+		},
+		{
+			"doi": "10.65215/2q58a426",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 11
+		},
+		{
+			"doi": "10.65215/ctdc8e75",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "Shenzhen Medical Academy of Research and Translation",
+			"year": "2025",
+			"cites": 69
+		},
+		{
+			"doi": "10.1109/iccv.2019.00338",
+			"title": "Attention Augmented Convolutional Networks",
+			"authors": ["Bello", "Zoph", "Le"],
+			"venue": "2019 IEEE/CVF International Conference on Computer Vision (ICCV)",
+			"year": "2019",
+			"cites": 929
+		},
+		{
+			"doi": "10.1109/cvpr46437.2021.01270",
+			"title": "Scaling Local Self-Attention for Parameter Efficient Visual Backbones",
+			"authors": ["Vaswani", "Ramachandran", "Srinivas"],
+			"venue": "2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+			"year": "2021",
+			"cites": 374
+		},
+		{
+			"doi": "10.1162/tacl_a_00353",
+			"title": "Efficient Content-Based Sparse Attention with Routing Transformers",
+			"authors": ["Roy", "Saffar", "Vaswani"],
+			"venue": "Transactions of the Association for Computational Linguistics",
+			"year": "2021",
+			"cites": 341
+		},
+		{
+			"doi": "10.51248/.v43i1.2576",
+			"title": "Knowledge, attitude and perception about surrogacy among urban working women",
+			"authors": ["Sultana", "Vaswani", "Vaswani"],
+			"venue": "Biomedicine",
+			"year": "2023",
+			"cites": 0
+		},
+		{
+			"doi": "10.18653/v1/n18-2074",
+			"title": "Self-Attention with Relative Position Representations",
+			"authors": ["Shaw", "Uszkoreit", "Vaswani"],
+			"venue": "Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 2 (Short Papers)",
+			"year": "2018",
+			"cites": 1545
+		},
+		{
+			"doi": "10.14264/220203",
+			"title": "Determinants of effective information technology (IT) governance",
+			"authors": ["Vaswani"],
+			"venue": "University of Queensland Library",
+			"year": "",
+			"cites": 0
+		},
+		{
+			"doi": "10.1097/smj.0b013e31815d3d4d",
+			"title": "Rinne Test Modified to Quantify Hearing",
+			"authors": ["Vaswani", "Parikh", "Udochi"],
+			"venue": "Southern Medical Journal",
+			"year": "2008",
+			"cites": 4
+		},
+		{
+			"doi": "10.1007/978-94-017-9232-5_3",
+			"title": "Bioethics Education in India",
+			"authors": ["Vaswani", "Vaswani"],
+			"venue": "Advancing Global Bioethics",
+			"year": "2014",
+			"cites": 1
+		},
+		{
+			"doi": "10.48550/arXiv.1706.03762",
+			"title": "Attention Is All You Need",
+			"authors": ["Vaswani", "Shazeer", "Parmar"],
+			"venue": "arXiv",
+			"year": "2017",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.1803.02155",
+			"title": "Self-Attention with Relative Position Representations",
+			"authors": ["Shaw", "Uszkoreit", "Vaswani"],
+			"venue": "arXiv",
+			"year": "2018",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.1904.09925",
+			"title": "Attention Augmented Convolutional Networks",
+			"authors": ["Bello", "Zoph", "Vaswani"],
+			"venue": "arXiv",
+			"year": "2019",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.1906.05909",
+			"title": "Stand-Alone Self-Attention in Vision Models",
+			"authors": ["Ramachandran", "Parmar", "Vaswani"],
+			"venue": "arXiv",
+			"year": "2019",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2003.05997",
+			"title": "Efficient Content-Based Sparse Attention with Routing Transformers",
+			"authors": ["Roy", "Saffar", "Vaswani"],
+			"venue": "arXiv",
+			"year": "2020",
+			"cites": 0
+		},
+		{
+			"doi": "10.48550/arXiv.2103.12731",
+			"title": "Scaling Local Self-Attention for Parameter Efficient Visual Backbones",
+			"authors": ["Vaswani", "Ramachandran", "Srinivas"],
+			"venue": "arXiv",
+			"year": "2021",
+			"cites": 0
+		}
+	],
+	"he 2016 deep residual learning": [
+		{
+			"doi": "10.1109/cvpr.2016.90",
+			"title": "Deep Residual Learning for Image Recognition",
+			"authors": ["He", "Zhang", "Ren"],
+			"venue": "2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+			"year": "2016",
+			"cites": 175414
+		},
+		{
+			"doi": "10.1007/s00371-019-01774-8",
+			"title": "DRCDN: learning deep residual convolutional dehazing networks",
+			"authors": ["Zhang", "He"],
+			"venue": "The Visual Computer",
+			"year": "2019",
+			"cites": 154
+		},
+		{
+			"doi": "10.1145/2964284.2964309",
+			"title": "Deep Cross Residual Learning for Multitask Visual Recognition",
+			"authors": ["Jou", "Chang"],
+			"venue": "Proceedings of the 24th ACM international conference on Multimedia",
+			"year": "2016",
+			"cites": 55
+		},
+		{
+			"doi": "10.1117/12.2640899",
+			"title": "Damaged buildings classification using residual network",
+			"authors": ["He", "Pi", "Wu"],
+			"venue": "International Conference on Cloud Computing, Performance Computing, and Deep Learning (CCPCDL 2022)",
+			"year": "2022",
+			"cites": 1
+		},
+		{
+			"doi": "10.52202/068431-2073",
+			"title": "Coded Residual Transform for Generalizable Deep Metric Learning",
+			"authors": ["Kan", "Liang", "Li"],
+			"venue": "Advances in Neural Information Processing Systems 35",
+			"year": "2022",
+			"cites": 0
+		},
+		{
+			"doi": "10.1109/cvidl58838.2023.10165843",
+			"title": "SPECT bone scan image classification by fusing multi-attention mechanism with deep residual networks",
+			"authors": ["Feng", "Cao", "Lin"],
+			"venue": "2023 4th International Conference on Computer Vision, Image and Deep Learning (CVIDL)",
+			"year": "2023",
+			"cites": 3
+		},
+		{
+			"doi": "10.5220/0009799100230029",
+			"title": "Deep Learning Residual-like Convolutional Neural Networks for Optic Disc Segmentation in Medical Retinal Images",
+			"authors": ["Panahi", "Moghadam", "Madani"],
+			"venue": "Proceedings of the 1st International Conference on Deep Learning Theory and Applications",
+			"year": "2020",
+			"cites": 0
+		},
+		{
+			"doi": "10.5220/0010231501190131",
+			"title": "Discrete and Continuous Deep Residual Learning over Graphs",
+			"authors": ["Avelar", "Tavares", "Gori"],
+			"venue": "Proceedings of the 13th International Conference on Agents and Artificial Intelligence",
+			"year": "2021",
+			"cites": 3
+		},
+		{
+			"doi": "10.32469/10355/70143",
+			"title": "Pixel level pavement crack detection using deep convolutional neural network with residual blocks",
+			"authors": ["Hou"],
+			"venue": "University of Missouri Libraries",
+			"year": "",
+			"cites": 0
+		},
+		{
+			"doi": "10.5220/0012911100004508",
+			"title": "RARN: Lightweight Deep Residual Learning with Attention for Human Emotions Recognition",
+			"authors": ["Zhu"],
+			"venue": "Proceedings of the 1st International Conference on Engineering Management, Information Technology and Intelligence",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.21741/9781945291173-43",
+			"title": "Influence of the Pre-Stressing on the Residual Stresses Induced by Deep Rolling",
+			"authors": [],
+			"venue": "Materials Research Proceedings",
+			"year": "2016",
+			"cites": 2
+		},
+		{
+			"doi": "10.1016/j.compag.2023.108135",
+			"title": "Hybrid residual deep learning models with physical knowledge for improving plant transpiration estimation",
+			"authors": ["Liu", "He", "Liu"],
+			"venue": "Computers and Electronics in Agriculture",
+			"year": "2023",
+			"cites": 13
+		},
+		{
+			"doi": "10.1109/radar.2016.8059230",
+			"title": "Automatic recognition of ISAR images based on deep learning",
+			"authors": ["He", "Tong", "Hu"],
+			"venue": "2016 CIE International Conference on Radar (RADAR)",
+			"year": "2016",
+			"cites": 11
+		},
+		{
+			"doi": "10.21741/9781945291173-42",
+			"title": "Residual Stress and Contact Force Study for Deep Cold Rolling of Aero-engine Material",
+			"authors": [],
+			"venue": "Materials Research Proceedings",
+			"year": "2016",
+			"cites": 0
+		},
+		{
+			"doi": "10.1016/j.measurement.2022.110889",
+			"title": "A deep multi-signal fusion adversarial model based transfer learning and residual network for axial piston pump fault diagnosis",
+			"authors": ["He", "Tang", "Ren"],
+			"venue": "Measurement",
+			"year": "2022",
+			"cites": 110
+		},
+		{
+			"doi": "10.5220/0013099000003911",
+			"title": "Retinoblastoma Detection: Leveraging Deep Learning and Residual Connections for Enhanced Diagnostic Accuracy",
+			"authors": ["Alharbi"],
+			"venue": "Proceedings of the 18th International Joint Conference on Biomedical Engineering Systems and Technologies",
+			"year": "2025",
+			"cites": 1
+		},
+		{
+			"doi": "10.18653/v1/d19-6115",
+			"title": "Unlearn Dataset Bias in Natural Language Inference by Fitting the Residual",
+			"authors": ["He", "Zha", "Wang"],
+			"venue": "Proceedings of the 2nd Workshop on Deep Learning Approaches for Low-Resource NLP (DeepLo 2019)",
+			"year": "2019",
+			"cites": 48
+		},
+		{
+			"doi": "10.2991/aiie-16.2016.77",
+			"title": "An Empirical Study on Energy Disaggregation via Deep Learning",
+			"authors": ["He", "Chai"],
+			"venue": "Proceedings of the 2016 2nd International Conference on Artificial Intelligence and Industrial Engineering (AIIE 2016)",
+			"year": "2016",
+			"cites": 44
+		},
+		{
+			"doi": "10.1117/12.2242711",
+			"title": "Brain tumor classification of microscopy images using deep residual learning",
+			"authors": ["Ishikawa", "Washiya", "Aoki"],
+			"venue": "SPIE Proceedings",
+			"year": "2016",
+			"cites": 10
+		},
+		{
+			"doi": "10.1201/9781003187158-11",
+			"title": "Defenses Against Deep Learning Attacks",
+			"authors": ["He", "Hu"],
+			"venue": "AI, Machine Learning and Deep Learning",
+			"year": "2023",
+			"cites": 0
+		}
+	],
+	"fast and accurate short read alignment": [
+		{
+			"doi": "10.1101/2024.02.20.581311",
+			"title": "Fast and accurate short read alignment with hybrid hash-tree data structure",
+			"authors": ["Makino", "Ebisuzaki", "Himeno"],
+			"venue": "openRxiv",
+			"year": "2024",
+			"cites": 0
+		},
+		{
+			"doi": "10.1093/bioinformatics/btp324",
+			"title": "Fast and accurate short read alignment with Burrows–Wheeler transform",
+			"authors": ["Li", "Durbin"],
+			"venue": "Bioinformatics",
+			"year": "2009",
+			"cites": 48637
+		},
+		{
+			"doi": "10.1101/2021.06.18.449070",
+			"title": "Flexible seed size enables ultra-fast and accurate read alignment",
+			"authors": ["Sahlin"],
+			"venue": "openRxiv",
+			"year": "2021",
+			"cites": 2
+		},
+		{
+			"doi": "10.1186/s44342-024-00012-5",
+			"title": "Fast and accurate short-read alignment with hybrid hash-tree data structure",
+			"authors": ["Makino", "Ebisuzaki", "Himeno"],
+			"venue": "Genomics & Informatics",
+			"year": "2024",
+			"cites": 15
+		},
+		{
+			"doi": "10.1109/ipdpsw52791.2021.00039",
+			"title": "GateKeeper-GPU: Fast and Accurate Pre-Alignment Filtering in Short Read Mapping",
+			"authors": ["Bingol", "Alser", "Mutlu"],
+			"venue": "2021 IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW)",
+			"year": "2021",
+			"cites": 13
+		},
+		{
+			"doi": "10.64898/2026.09.20.753062",
+			"title": "RosaSeed: Faster and Accurate Short Read Alignment Using a Configurable Seeding Strategy",
+			"authors": ["Gandhi", "Cockburn"],
+			"venue": "openRxiv",
+			"year": "2026",
+			"cites": 0
+		},
+		{
+			"doi": "10.1186/s13059-022-02831-7",
+			"title": "Strobealign: flexible seed size enables ultra-fast and accurate read alignment",
+			"authors": ["Sahlin"],
+			"venue": "Genome Biology",
+			"year": "2022",
+			"cites": 96
+		},
+		{
+			"doi": "10.1093/bioinformatics/btp698",
+			"title": "Fast and accurate long-read alignment with Burrows–Wheeler transform",
+			"authors": ["Li", "Durbin"],
+			"venue": "Bioinformatics",
+			"year": "2010",
+			"cites": 11662
+		},
+		{
+			"doi": "10.1186/s12859-016-1316-y",
+			"title": "LSCplus: a fast solution for improving long read accuracy by short read alignment",
+			"authors": ["Hu", "Sun", "Sun"],
+			"venue": "BMC Bioinformatics",
+			"year": "2016",
+			"cites": 22
+		},
+		{
+			"doi": "10.1109/tc.2024.3365931",
+			"title": "GateKeeper-GPU: Fast and Accurate Pre-Alignment Filtering in Short Read Mapping",
+			"authors": ["Bingöl", "Alser", "Mutlu"],
+			"venue": "IEEE Transactions on Computers",
+			"year": "2024",
+			"cites": 8
+		},
+		{
+			"doi": "10.1101/612176",
+			"title": "deSALT: fast and accurate long transcriptomic read alignment with de Bruijn graph-based index",
+			"authors": ["Liu", "Liu", "Li"],
+			"venue": "openRxiv",
+			"year": "2019",
+			"cites": 2
+		},
+		{
+			"doi": "10.1186/s12859-021-04088-6",
+			"title": "Fast and SNP-aware short read alignment with SALT",
+			"authors": ["Quan", "Liu", "Wang"],
+			"venue": "BMC Bioinformatics",
+			"year": "2021",
+			"cites": 2
+		},
+		{
+			"doi": "10.1101/688465",
+			"title": "PhyloMagnet: Fast and accurate screening of short-read meta-omics data using gene-centric phylogenetics",
+			"authors": ["Schön", "Eme", "Ettema"],
+			"venue": "openRxiv",
+			"year": "2019",
+			"cites": 0
+		},
+		{
+			"doi": "10.1093/bioinformatics/bts450",
+			"title": "Fast and accurate read alignment for resequencing",
+			"authors": ["Mu", "Jiang", "Kiani"],
+			"venue": "Bioinformatics",
+			"year": "2012",
+			"cites": 44
+		},
+		{
+			"doi": "10.1371/journal.pone.0086869",
+			"title": "CUSHAW3: Sensitive and Accurate Base-Space and Color-Space Short-Read Alignment with Hybrid Seeding",
+			"authors": ["Liu", "Popp", "Schmidt"],
+			"venue": "PLoS ONE",
+			"year": "2014",
+			"cites": 44
+		},
+		{
+			"doi": "10.1109/bibm47256.2019.8983162",
+			"title": "SALT: a fast, memory-efficient and SNP-aware short read alignment tool",
+			"authors": ["Quan", "Liu", "Wang"],
+			"venue": "2019 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)",
+			"year": "2019",
+			"cites": 0
+		},
+		{
+			"doi": "10.5353/th_b4586252",
+			"title": "Detection of splice junctions and gene fusions via short read alignment",
+			"authors": ["Huang"],
+			"venue": "The University of Hong Kong Libraries",
+			"year": "",
+			"cites": 0
+		},
+		{
+			"doi": "10.1186/s13059-019-1895-9",
+			"title": "deSALT: fast and accurate long transcriptomic read alignment with de Bruijn graph-based index",
+			"authors": ["Liu", "Liu", "Li"],
+			"venue": "Genome Biology",
+			"year": "2019",
+			"cites": 56
+		},
+		{
+			"doi": "10.1101/530972",
+			"title": "Fast and accurate long-read assembly with wtdbg2",
+			"authors": ["Ruan", "Li"],
+			"venue": "openRxiv",
+			"year": "2019",
+			"cites": 95
+		},
+		{
+			"doi": "10.48550/arXiv.2103.14978",
+			"title": "GateKeeper-GPU: Fast and Accurate Pre-Alignment Filtering in Short Read Mapping",
+			"authors": ["Bingöl", "Alser", "Mutlu"],
+			"venue": "arXiv",
+			"year": "2021",
+			"cites": 0
+		}
+	]
+}

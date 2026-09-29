@@ -5,7 +5,8 @@ import { navigate } from '$lib/router.svelte';
 import { claimWorkspace, dirname, joinPath, nativeBridge, releaseWorkspace, samePath, scanTexFiles, statFile } from './fileSystem';
 import { latexParserWorker } from './latexParserWorker';
 import { landingFile } from './landingFile';
-import { openFile, addRecentFolder, savedLastFile, texFiles, workspaceRoot } from './workspaceStore';
+import { openFile, activeCompare, addRecentFolder, savedLastFile, savedLastCompare, texFiles, workspaceRoot } from './workspaceStore';
+import type { CompareRef } from './tabs.svelte';
 
 export type BootOpen = { kind: 'file' | 'folder'; path: string };
 
@@ -25,8 +26,9 @@ function show(root: string): void {
 	navigate('/workspace');
 }
 
-// together, not serially: which file to reopen comes from storage, so only its stat has to wait
-async function fill(root: string, want: string | null): Promise<void> {
+// together, not serially: which file to reopen comes from storage, so only its stat has to wait.
+// `compare` is the version that file was left compared against, when reopening a folder as it was
+async function fill(root: string, want: string | null, compare: CompareRef | null = null): Promise<void> {
 	const [scanned, wantExists] = await Promise.all([
 		scanTexFiles(root),
 		want ? statFile(want).then((s) => s.exists) : Promise.resolve(false)
@@ -36,7 +38,11 @@ async function fill(root: string, want: string | null): Promise<void> {
 	// the scan's casing wins where it has the file: the tree matches paths as strings
 	const landing = want && wantExists ? (files.find((f) => samePath(f.path, want))?.path ?? want) : null;
 	texFiles.current = files;
-	if (landing) return openFile(landing);
+	if (landing) {
+		openFile(landing);
+		if (compare) activeCompare.current = compare;
+		return;
+	}
 	const detected = await landingFile(root, files);
 	if (workspaceRoot.current !== root) return;
 	openFile(detected);
@@ -50,12 +56,13 @@ export function adoptBootOpen(open: BootOpen): void {
 	// a document is certain here, so warm the parser alongside the editor chunk
 	latexParserWorker();
 	show(root);
-	void fill(root, open.kind === 'file' ? open.path : savedLastFile(root)).catch(() => {});
+	const restoring = open.kind === 'folder';
+	void fill(root, restoring ? savedLastFile(root) : open.path, restoring ? savedLastCompare(root) : null).catch(() => {});
 }
 
 // Resolves once the workspace is on screen; the scan lands after it, as at launch. Waiting for the
 // scan first put three round trips between the click and anything happening.
-async function open(root: string, want: string | null): Promise<OpenOutcome> {
+async function open(root: string, want: string | null, compare: CompareRef | null = null): Promise<OpenOutcome> {
 	mark('folder-open');
 	// together, and both before navigating: claiming does not check the folder is still there, so a
 	// recent-folders entry for a deleted one has to fail here rather than in an empty workspace
@@ -69,15 +76,15 @@ async function open(root: string, want: string | null): Promise<OpenOutcome> {
 	}
 	latexParserWorker();
 	show(root);
-	void fill(root, want).catch(() => {});
+	void fill(root, want, compare).catch(() => {});
 	return 'opened';
 }
 
 /** a folder picked on the start screen, or pushed at a window that is already running. `want` is
- *  the file to land on; omit it for whichever was open there last. */
+ *  the file to land on; omit it for whichever tab was focused there last. */
 export function openFolderInWindow(root: string, want?: string | null): Promise<OpenOutcome> {
 	fileMode.current = false;
-	return open(root, want === undefined ? savedLastFile(root) : want);
+	return want === undefined ? open(root, savedLastFile(root), savedLastCompare(root)) : open(root, want);
 }
 
 const ROOT_SEARCH_DEPTH = 5;

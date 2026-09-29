@@ -5,10 +5,9 @@
 // actual outlines (apps/texpile-editor/src/lib/draft/type1). No tables, no substitution.
 // Everything here is ASYNC: kpsewhich spawns take 50-200ms each and a synchronous call
 // in the main process froze the whole UI during compile-result processing.
-import { execFile } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { shellEnvReady } from './shell/shellEnv';
+import { kpsewhich } from './shell/kpsewhich';
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- font records are schemaless engine JSON */
 
@@ -28,23 +27,6 @@ function registerFontPath(p: string | null | undefined): void {
 }
 export function isAllowedFontPath(p: string): boolean {
 	return allowedFonts.has(fontKey(p));
-}
-
-const kpseCache = new Map<string, Promise<string | null>>();
-function kpsewhich(file: string): Promise<string | null> {
-	let p = kpseCache.get(file);
-	if (!p) {
-		p = shellEnvReady().then(
-			() =>
-				new Promise<string | null>((resolve) => {
-					execFile('kpsewhich', [file], { timeout: 15000 }, (err, stdout) => {
-						resolve(err ? null : stdout.toString().trim().replace(/\\/g, '/') || null);
-					});
-				})
-		);
-		kpseCache.set(file, p);
-	}
-	return p;
 }
 
 type MapEntry = { pfb: string; enc?: string };

@@ -16,7 +16,7 @@ import {
 	validateEntry,
 	type BiblatexReference
 } from '$lib/languages/bib/biblatex';
-import type { WorkId } from './doiInput';
+import { isbn13, type WorkId } from './doiInput';
 
 /**
  * What reads the project's bibliography: classic BibTeX, biblatex through biber, or Typst, whose
@@ -76,7 +76,16 @@ export function workFromBibtex(fetched: string, id: WorkId, dialect: BibDialect,
 	}
 
 	// DOIs ignore case, and Crossref lower-cases them (10.1109/cvpr.2016.90): keep the spelling pasted
-	if (fields.doi) fields.doi = bareDoi(fields.doi).toLowerCase() === id.doi.toLowerCase() ? id.doi : bareDoi(fields.doi);
+	if (fields.doi) {
+		const pasted = 'doi' in id ? id.doi : '';
+		fields.doi = bareDoi(fields.doi).toLowerCase() === pasted.toLowerCase() ? pasted : bareDoi(fields.doi);
+	}
+	if (id.kind === 'isbn') fields.isbn = id.isbn;
+	// biblatex prints a PubMed ID from these two fields; BibTeX's styles and Typst have no place for one
+	if (id.kind === 'pmid' && dialect !== 'biblatex') {
+		delete fields.eprint;
+		delete fields.eprinttype;
+	}
 	let entrytype = got.entrytype;
 	if (id.kind === 'arxiv') {
 		// DataCite prints the prefix upper-cased; this is how arXiv itself writes it
@@ -135,8 +144,10 @@ export function preview(ref: BiblatexReference): Pick<Work, 'title' | 'authors' 
 	};
 }
 
-/** the project's entry for the same work, matched on DOI, or for an arXiv paper on its eprint number */
+/** the project's entry for the same work, by DOI, arXiv eprint, ISBN or PubMed ID */
 export function findCited(refs: readonly BiblatexReference[], id: WorkId): BiblatexReference | null {
+	if (id.kind === 'isbn') return refs.find((ref) => typeof ref.isbn === 'string' && isbn13(ref.isbn) === id.isbn) ?? null;
+	if (id.kind === 'pmid') return refs.find((ref) => pubmedId(ref) === id.pmid) ?? null;
 	const want = id.doi.toLowerCase();
 	for (const ref of refs) {
 		if (typeof ref.doi === 'string' && bareDoi(ref.doi).toLowerCase() === want) return ref;
@@ -147,6 +158,11 @@ export function findCited(refs: readonly BiblatexReference[], id: WorkId): Bibla
 			return ref;
 	}
 	return null;
+}
+
+function pubmedId(ref: BiblatexReference): string {
+	if (typeof ref.pmid === 'string') return ref.pmid.trim();
+	return typeof ref.eprint === 'string' && /^pubmed$/i.test(String(ref.eprinttype ?? '')) ? ref.eprint.trim() : '';
 }
 
 function bareDoi(doi: string): string {

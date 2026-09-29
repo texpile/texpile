@@ -171,6 +171,7 @@
 			onOpenGlobalSearch={actions.openGlobalSearch}
 			onCloseGlobalSearch={actions.closeGlobalSearch}
 			onOpenFileAt={actions.openFileAt}
+			onReplaceInFolder={menu.hostMode && menu.canManageTree ? actions.replaceInFolder : undefined}
 			onOpenEntry={actions.openEntry}
 			onCreate={treeOps.create}
 			typstProject={menu.typstProject}

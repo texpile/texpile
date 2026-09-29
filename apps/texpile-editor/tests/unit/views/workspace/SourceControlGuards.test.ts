@@ -1,8 +1,5 @@
 // @vitest-environment jsdom
-// The panel's guarded states. During a merge: Complete Merge stays disabled while any file still
-// holds a marked place, the file row opens that file rather than a comparison, and the ordinary
-// commit box is not offered, since the merge is committed by Complete Merge. Inside a
-// larger repository: nothing of it is used until the author says so.
+// the panel's guarded states: a merge in progress, and a repository that starts above the folder
 import { it, expect, vi, afterEach } from 'vitest';
 import { mount, unmount, flushSync } from 'svelte';
 import SourceControlPanel from '../../../../src/lib/workspace/scm/ui/SourceControlPanel.svelte';
@@ -65,8 +62,10 @@ it('finishes once every place is chosen, and says the file is ready', () => {
 		{ path: '/p/main.tex', x: 'U', y: 'U', markers: false },
 		{ path: '/p/notes.tex', x: 'M', y: ' ' }
 	]);
-	expect(document.body.textContent).toContain('All conflicts handled, the merge can be completed now.');
+	// no banner: the file's row says it is resolved
 	expect(document.body.textContent).toContain('Resolved');
+	expect(document.querySelector('[role=status]')).toBeNull();
+	expect(button('Complete Merge')?.disabled).toBe(false);
 	button('Complete Merge')!.click();
 	expect(calls.finish).toHaveBeenCalledOnce();
 });
@@ -82,6 +81,9 @@ it('opens a file both sides changed at its marked place, not as a comparison', (
 it('leaves a rebase to the terminal it was started in', () => {
 	render([{ path: '/p/main.tex', x: 'U', y: 'U', markers: true }], { operation: 'rebase' });
 	expect(button('Complete Merge')).toBeUndefined();
+	// beside the branch, with the way to finish it in the tip
+	const label = document.querySelector<HTMLElement>('[data-tip*="git rebase --continue"]');
+	expect(label?.textContent).toContain('(Rebasing)');
 	expect(document.body.textContent).toContain('git rebase --continue');
 });
 

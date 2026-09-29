@@ -148,6 +148,8 @@ export function createLeafSplice(options: BlockAssemblyOptions): Splice {
 					ctx
 				);
 			}
+			// a leaf with more bytes than characters (a \ref chip's name) is left to the whole node's splice
+			if (p.parent !== node && cut === 0 && cutEnd === 0 && write(x, true) !== origin.text.slice(from - base, to - base)) return null;
 			let bytes = middle === '' ? '' : write(middle, true);
 			if (bytes === null) return null;
 			// the prefix goes in after every line end, which moves the bytes the characters stand for

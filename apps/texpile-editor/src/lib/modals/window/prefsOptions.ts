@@ -3,6 +3,7 @@ import { applyUiLocale, updateSettings, type AppSettings } from '$lib/settings';
 import { LOCALE_META } from '$lib/localeMeta';
 import { markPreferencesReopen } from '$lib/stores/dialogStore';
 import { m } from '$lib/paraglide/messages';
+import { ENGLISH_VARIANTS, systemVariant, type EnglishVariant } from '$lib/editor/spellcheck/config/grammarRules';
 
 // source-editor keybindings; Vim and Emacs are names, so they are not translated
 export function keymapOptions(): { value: AppSettings['editorKeymap']; label: string }[] {
@@ -24,4 +25,19 @@ export function changeUiLocale(e: Event): void {
 	updateSettings({ uiLocale });
 	markPreferencesReopen();
 	applyUiLocale(uiLocale);
+}
+
+/** the Englishes spelling can follow, the system's own first */
+export function englishVariantOptions(): { value: AppSettings['englishVariant']; label: string }[] {
+	const names: Record<EnglishVariant, string> = {
+		american: m.prefs_english_american(),
+		british: m.prefs_english_british(),
+		australian: m.prefs_english_australian(),
+		canadian: m.prefs_english_canadian(),
+		indian: m.prefs_english_indian()
+	};
+	return [
+		{ value: '', label: m.prefs_english_system({ variant: names[systemVariant(navigator.languages)] }) },
+		...ENGLISH_VARIANTS.map((v) => ({ value: v, label: names[v] }))
+	];
 }

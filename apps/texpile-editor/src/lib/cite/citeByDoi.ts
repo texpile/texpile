@@ -1,6 +1,4 @@
-// Cite by DOI: the lookup behind the dialog, and the insert once the user confirms. It lands
-// where a Zotero import does - the bib the main file reads, the citation at the caret - so it
-// shares that glue (lib/zotero) instead of keeping a second copy of it.
+// cite by DOI: the dialog's lookups, and the insert through the Zotero import's glue (lib/zotero)
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { references } from '$lib/workspace/citations';
 import { basename, readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
@@ -10,7 +8,8 @@ import { m } from '$lib/paraglide/messages';
 import { appendBibEntries, translatorForSource } from '$lib/zotero/bibTarget';
 import { insertCitation, mainTextOf, targetBib, type ZoteroInsertDeps } from '$lib/zotero/insertFromZotero';
 import { findCited, preview, workFromBibtex, type BibDialect, type Work } from './doiEntry';
-import type { WorkId } from './doiInput';
+import { parseWorkId, type WorkId } from './doiInput';
+import { rankHits, type SearchHit } from './searchRank';
 
 /** the insert context: the same one the Zotero picker acts on */
 export type CiteDeps = ZoteroInsertDeps;
@@ -20,9 +19,13 @@ export type LookupFailure = 'not-found' | 'no-bibtex' | 'offline' | 'failed';
 export type Lookup =
 	/** the project already has it, under `key` */
 	| ({ state: 'cited'; key: string } & Pick<Work, 'title' | 'authors' | 'venue' | 'year'>)
-	/** fetched; `bibName` is the file it will be added to */
-	| { state: 'found'; work: Work; fetched: string; bibName: string }
+	/** `bibName`: the file it will be added to; `id` is a PubMed ID's DOI when it has one */
+	| { state: 'found'; work: Work; fetched: string; bibName: string; id: WorkId }
 	| { state: 'error'; reason: LookupFailure; error?: string };
+
+export type Hit = SearchHit & { citedKey?: string };
+
+export type Search = { state: 'hits'; hits: Hit[] } | { state: 'error'; reason: 'offline' | 'failed'; error?: string };
 
 /** the bridge exists (desktop app); says nothing about the network */
 export function doiLookupAvailable(): boolean {
@@ -37,22 +40,41 @@ export async function lookUpWork(id: WorkId, deps: CiteDeps): Promise<Lookup> {
 	const bridge = window.texpileDoi;
 	const main = mainFile.current;
 	if (!bridge || !main) return { state: 'error', reason: 'failed' };
-	const got = await bridge.lookup(id.doi);
+	const got =
+		id.kind === 'isbn' ? await bridge.isbn(id.isbn) : id.kind === 'pmid' ? await bridge.pmid(id.pmid) : await bridge.lookup(id.doi);
 	if (!got.ok) return { state: 'error', reason: got.reason, error: got.error };
+	// a PubMed record with a DOI: its entry is the publisher's, through doi.org
+	if ('doi' in got) return lookUpWork(parseWorkId(got.doi) ?? { kind: 'doi', doi: got.doi }, deps);
 
 	const target = await landing(main, deps);
 	const cited = findCited(parseBibtex(target.text), id);
 	if (cited) return { state: 'cited', key: cited.key, ...preview(cited) };
 	const work = workFromBibtex(got.bibtex, id, target.dialect, takenKeys(target.text));
 	if (!work) return { state: 'error', reason: 'no-bibtex' };
-	return { state: 'found', work, fetched: got.bibtex, bibName: basename(target.path) };
+	return { state: 'found', work, fetched: got.bibtex, bibName: basename(target.path), id };
+}
+
+export async function searchPapers(query: string): Promise<Search> {
+	const bridge = window.texpileDoi;
+	if (!bridge) return { state: 'error', reason: 'failed' };
+	const got = await bridge.search(query);
+	if (!got.ok) return { state: 'error', reason: got.reason, error: got.error };
+	return {
+		state: 'hits',
+		hits: rankHits(query, got.hits).map((hit) => {
+			const id = parseWorkId(hit.doi);
+			const known = id ? findCited(references.current, id) : null;
+			return known ? { ...hit, citedKey: known.key } : hit;
+		})
+	};
 }
 
 /** a found work into the bib and its citation at the caret; a cited one only cited */
-export async function citeWork(found: Lookup, id: WorkId, deps: CiteDeps): Promise<void> {
+export async function citeWork(found: Lookup, deps: CiteDeps): Promise<void> {
 	if (found.state === 'cited') return insertCitation([found.key], deps.kind);
 	const main = mainFile.current;
 	if (found.state !== 'found' || !main) return;
+	const { id } = found;
 	try {
 		// read again: the bib can change while the dialog is open, and the key must still be free
 		const target = await landing(main, deps);

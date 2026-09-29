@@ -1,7 +1,7 @@
 import type { EditorView } from 'prosemirror-view';
 import { sanitizeLabel } from '$lib/editor/visual/label';
 import { labelTaken } from '$lib/editor/visual/labelTaken';
-import { repointRefs } from '$lib/editor/visual/repointRefs';
+import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 
 /**
  * Renames a label AND every reference pointing at it, in ONE transaction.
@@ -25,4 +25,5 @@ export function renameLabel(view: EditorView, pos: number, to: string): void {
 	repointRefs(tr, view.state.doc, from, name);
 
 	view.dispatch(tr);
+	announceLabelRenamed(from, name);
 }

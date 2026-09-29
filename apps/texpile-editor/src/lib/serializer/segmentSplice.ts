@@ -125,15 +125,17 @@ export function createSegmentSplice(options: BlockAssemblyOptions): Splice {
 			}
 		}
 		onToWord(0);
-		// a stretch beginning or ending in a node that is not text takes a word in on that side
+		// an edge at a chip takes in a word on that side, unless kept space sits beside it (a line break after a label)
+		const spaceBefore = cut === 0 && p > 0 && plain(a[p - 1]) && ws(a[p - 1].text!.slice(-1));
+		const spaceAfter = cutEnd === 0 && s > 0 && plain(a[a.length - s]) && ws(a[a.length - s].text![0]);
 		const firstNode = b[p] && b[p].isText && cut >= b[p].text!.length ? b[p + 1] : b[p];
-		if (firstNode && !firstNode.isText && (cut > 0 || p > 0)) {
+		if (firstNode && !firstNode.isText && (cut > 0 || p > 0) && !spaceBefore) {
 			backToWord(1);
 			endCut();
 			onToWord(0);
 		}
 		const lastNode = b[ib] && b[ib].isText && cutEnd >= b[ib].text!.length ? b[ib - 1] : b[ib];
-		if (lastNode && !lastNode.isText && (cutEnd > 0 || s > 0)) onToWord(1);
+		if (lastNode && !lastNode.isText && (cutEnd > 0 || s > 0) && !spaceAfter) onToWord(1);
 		// the word moves can leave an edge of the stretch at a marked leaf, whose runs hold none of
 		// its delimiters: cutting there would leave half a code span or an emphasis in the kept bytes
 		while (cut === 0 && p > 0 && !plain(a[p - 1])) p--;
@@ -149,8 +151,14 @@ export function createSegmentSplice(options: BlockAssemblyOptions): Splice {
 		/** the file offset of character `c` of the parsed leaf `a[k]`, when a run of its own bytes holds it */
 		function byteAt(k: number, c: number): number | null {
 			const leafPm = origin.pmFrom + pmOf(a, k);
-			for (const r of leafRuns(origin, a[k], pmOf(a, k))) {
+			const runs = leafRuns(origin, a[k], pmOf(a, k));
+			for (const r of runs) {
 				if (r.kind === 'text' && leafPm + c >= r.pmFrom && leafPm + c <= r.pmTo) return r.srcFrom + (leafPm + c - r.pmFrom);
+			}
+			// a character written as something else (a line break read as a space) has its bytes' edges
+			for (const r of runs) {
+				if (leafPm + c === r.pmFrom) return r.srcFrom;
+				if (leafPm + c === r.pmTo) return r.srcTo;
 			}
 			return null;
 		}

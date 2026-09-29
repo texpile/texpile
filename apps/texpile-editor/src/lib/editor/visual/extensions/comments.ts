@@ -65,7 +65,17 @@ const commentRanges = StateField.define<CommentRange[]>({
 		// under the cursor as you keep typing, which reads as the comment refusing to end.) An edit
 		// strictly inside still extends it.
 		const mapped: CommentRange[] = [];
+		// a comment on exactly the replaced words moves onto the new ones, as in a file that is not open
+		const replaced = new Map<string, { from: number; to: number }>();
+		tr.changes.iterChanges((fromA, toA, fromB, toB) => {
+			if (toA > fromA && toB > fromB) replaced.set(`${fromA}:${toA}`, { from: fromB, to: toB });
+		});
 		for (const r of ranges) {
+			const exact = replaced.get(`${r.from}:${r.to}`);
+			if (exact) {
+				mapped.push({ ...r, ...exact });
+				continue;
+			}
 			if (r.to === r.from) {
 				const at = tr.changes.mapPos(r.from, -1);
 				mapped.push({ ...r, from: at, to: at });

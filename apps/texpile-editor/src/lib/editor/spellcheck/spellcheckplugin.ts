@@ -1,7 +1,7 @@
 import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
-import { createProofreadPlugin, createSpellCheckEnabledStore } from 'prosemirror-proofread';
-import { lintText, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
+import { createProofreadPlugin, createSpellCheckEnabledStore, invalidateProofreadCache } from 'prosemirror-proofread';
+import { lintText, onLintRulesChanged, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
 import { blockSpellText, chipLetters, harperReading } from '$lib/editor/spellcheck/blockSpellText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import './suggestion.css';
@@ -128,6 +128,18 @@ const libraryPlugin = createProofreadPlugin(
 // the library's own spec and key, with its click kept off struck words
 export const proofreadPlugin = new Plugin({
 	...libraryPlugin.spec,
+	view(view) {
+		const inner = libraryPlugin.spec.view?.(view);
+		// another English or another set of rules: what was found is out of date
+		const stopRules = onLintRulesChanged(() => invalidateProofreadCache(view));
+		return {
+			...inner,
+			destroy() {
+				stopRules();
+				inner?.destroy?.();
+			}
+		};
+	},
 	props: {
 		...libraryPlugin.spec.props,
 		handleClick(view, pos, event) {

@@ -7,9 +7,9 @@
 // session memory and this machine's approvals.
 import { untrack } from 'svelte';
 import { box } from '$lib/runes/box.svelte';
-import { getFolder, updateFolder } from '$lib/storage/workspaces';
+import { getFolder, updateFolder, savedCompare } from '$lib/storage/workspaces';
 import { userData } from '$lib/storage/userData';
-import type { TexFile, TreeEntry } from './fileSystem';
+import { samePath, type TexFile, type TreeEntry } from './fileSystem';
 import type { CompareRef } from './tabs.svelte';
 
 export const workspaceRoot = box<string | null>(null);
@@ -138,13 +138,25 @@ export function savedLastFile(root: string): string | null {
 	return rel ? absInRoot(root, rel) : null;
 }
 
-/** records the file currently open in a folder (called on every active-file change). */
-export function setLastFile(root: string, path: string): void {
+/** records the tab focused in a folder (called on every switch): its file, and the version when it is a comparison */
+export function setLastFile(root: string, path: string, compare: CompareRef | null): void {
 	const rel = relInRoot(root, path);
 	if (rel === norm(path)) return; // not under this root (mid folder-switch): never record cross-root
 	updateFolder(root, (draft) => {
 		draft.lastFile = rel;
+		if (compare) draft.lastCompare = { ...compare };
+		else delete draft.lastCompare;
 	});
+}
+
+/** the version the last file was left compared against, while that comparison is still among the saved tabs */
+export function savedLastCompare(root: string): CompareRef | null {
+	const { lastFile, lastCompare, tabs } = getFolder(root);
+	const ref = savedCompare(lastCompare);
+	if (!ref || !lastFile) return null;
+	// a comparison on screen with no tab of its own could not be closed
+	const kept = tabs?.some((t) => typeof t === 'object' && samePath(t.path, lastFile) && t.compare?.hash === ref.hash);
+	return kept ? ref : null;
 }
 
 /** whether this folder was left in Suggesting */

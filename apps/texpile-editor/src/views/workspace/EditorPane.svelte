@@ -233,22 +233,22 @@
 		     SCM badge tooltip and the diff bar, so the notice reads as one voice. -->
 		<!-- 40px is the app's bar height - the PDF, editor and draft toolbars are all min-h-10, border
 		     included - so this reads as another piece of chrome rather than prose shoving the document
-		     down. -->
+		     down. Its rule is an inset shadow, as on the two below and diff/DiffPane.svelte's bars. -->
 		<div
-			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
 			use:tip={m.texpile_managed_note()}
 		>
 			<Info class="text-primary-ink size-3.5 shrink-0" />
-			<p class="min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
+			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
 		</div>
 	{/if}
 	{#if loadedPath && encodingIssue}
 		<div
-			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
 			use:tip={encodingIssue}
 		>
 			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />
-			<p class="min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
+			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
 		</div>
 	{/if}
 	{#if loadedPath && conflicted && !comparing}
@@ -258,11 +258,11 @@
 	     because it recreates the old name rather than following the rename -->
 	{#if loadedPath && fileDeleted && !comparing}
 		<div
-			class="border-surface-200-800 bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 border-b px-3 text-xs"
+			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
 			use:tip={m.wsview_file_deleted_note()}
 		>
 			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />
-			<p class="min-w-0 truncate">
+			<p class="cap-center min-w-0 truncate">
 				<span class="font-medium">{m.wsview_file_deleted_title()}.</span>
 				{m.wsview_file_deleted_note()}
 			</p>

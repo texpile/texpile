@@ -38,3 +38,9 @@ export async function initSpellcheckConfig(): Promise<void> {
 export function setSpellcheckEnabled(enabled: boolean): void {
 	editorConfigStore.current = { ...(editorConfigStore.current ?? DEFAULT_CONFIG), spellcheck: enabled };
 }
+
+/** turns one grammar rule on or off everywhere; undefined gives it back its default */
+export function setGrammarRule(rule: string, on: boolean | undefined): void {
+	const { [rule]: _, ...others } = settings.current.grammarRules ?? {};
+	updateSettings({ grammarRules: on === undefined ? others : { ...others, [rule]: on } });
+}

@@ -11,7 +11,7 @@
 // discipline as the CodeMirror field, for the same reason: mapping is exact, and a lookup mid-edit
 // would read a map of text the editor is still ahead of). Re-placement happens only when the
 // thread list changes or a re-parsed document replaces the current one.
-import { Plugin, PluginKey, TextSelection, type EditorState } from 'prosemirror-state';
+import { Plugin, PluginKey, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import { paintRange } from '$lib/editor/visual/highlight/paintRange';
 import type { Node as PMNode } from 'prosemirror-model';
@@ -49,6 +49,27 @@ type PmCommentsMeta =
 	| { type: 'pending'; range: { from: number; to: number } | null };
 
 export const pmCommentsKey = new PluginKey<PmCommentsState>('texpile-comments');
+
+/** a comment on exactly the words a step replaced moves onto the new words, as in the source editor */
+function replacedExactly(tr: Transaction, from: number, to: number): { from: number; to: number } | null {
+	let a = from;
+	let b = to;
+	let hit = false;
+	for (const map of tr.mapping.maps) {
+		let exact: { from: number; to: number } | null = null;
+		map.forEach((oldStart, oldEnd, newStart, newEnd) => {
+			if (oldStart === a && oldEnd === b && newEnd > newStart) exact = { from: newStart, to: newEnd };
+		});
+		if (exact) {
+			({ from: a, to: b } = exact);
+			hit = true;
+		} else {
+			a = map.map(a, 1);
+			b = map.map(b, -1);
+		}
+	}
+	return hit && b > a ? { from: a, to: b } : null;
+}
 
 /** replace every range; the store folds its whole log, so partial updates would not buy anything */
 export function setPmComments(view: EditorView, ranges: PmCommentRange[]): void {
@@ -230,6 +251,11 @@ export function pmComments({ onSelect, onAdd, sourceAnchor, addLabel = 'Comment'
 				// ends. An edit strictly inside still extends it.
 				const mapped: PmCommentRange[] = [];
 				for (const r of value.ranges) {
+					const exact = r.to > r.from ? replacedExactly(tr, r.from, r.to) : null;
+					if (exact) {
+						mapped.push({ ...r, ...exact });
+						continue;
+					}
 					if (r.to === r.from) {
 						const at = tr.mapping.map(r.from, -1);
 						mapped.push({ ...r, from: at, to: at });
