@@ -13,7 +13,7 @@ import { openLocalHistory, openRestoreDeleted } from '$lib/workspace/localHistor
 import { normSyncPath } from '$lib/workspace/syncTexNav';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
-import { workspaceRoot, isDirty, activeFilePath, activeCompare } from '$lib/workspace/workspaceStore';
+import { workspaceRoot, isDirty, activeFilePath, activeCompare, mainFile } from '$lib/workspace/workspaceStore';
 import { revealInTree } from '$lib/filetree/treeReveal.svelte';
 import { openTabContextMenu } from './tabContextMenu';
 import { countDocumentWords } from './writing/workspaceWordCount';
@@ -21,12 +21,18 @@ import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/scm/gitStore
 import { preferencesOpen } from '$lib/stores/dialogStore';
 import { isDesktop, revealItem, type TreeEntry } from '$lib/workspace/fileSystem';
 import { hasUnsavedUnder } from '$lib/workspace/unsavedPaths';
+import { openSaveAsTemplate } from '$lib/workspace/templates/saved/templateDetails.svelte';
+import { userTemplatesAvailable } from '$lib/workspace/templates/templateBridge';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
 import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { DraftController } from '$lib/draft/draftController.svelte';
 import type { TypstPreviewController } from '$lib/languages/typst/preview/previewController.svelte';
+import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
+import { typstSymbolSet } from '$lib/languages/typst/symbols/typstSymbolSet';
+import { latexSymbolSet } from '$lib/languages/latex/symbols/latexSymbolSet';
+import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
 import type { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
 import type { WorkspaceNav } from './workspaceNav.svelte';
 import type { WorkspaceDoc } from './workspaceDoc.svelte';
@@ -35,7 +41,8 @@ import type { WorkspaceFiles } from './workspaceFiles.svelte';
 import type { WorkspaceFormatting } from './workspaceFormatting.svelte';
 import type { WorkspaceIntegrations } from './workspaceIntegrations.svelte';
 import type { WorkspaceCompileState } from './workspaceCompileState.svelte';
-import type { Starter, ImportedFile } from '$lib/workspace/starters';
+import type { ImportedFile } from '$lib/workspace/starters';
+import type { StarterChoice } from '$lib/workspace/templates/starterChoice';
 import type { CommentMessage, CommentThread } from '$lib/comments/log';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
@@ -81,6 +88,13 @@ export type ActionSurfaceDeps = {
 export async function toastAfter(title: string, work: () => unknown): Promise<void> {
 	await work();
 	toaster.success({ title, duration: 1500 });
+}
+
+/** File > Save as template: the main file (or, with none set, the open document) is the one it opens on */
+function saveAsTemplate(d: ActionSurfaceDeps): void {
+	void openSaveAsTemplate(workspaceRoot.current, mainFile.current ?? d.wsdoc.doc.path, d.compiler.expectedPdfPath(), () =>
+		d.editFlow().saver.flushAndWait()
+	);
 }
 
 /** the callback surface WorkspaceMain hands down to the topbar / editor / preview / dock */
@@ -180,7 +194,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		useSource: () => d.wsdoc.modes.set('source'),
 		leaveConflicts: () => d.wsdoc.modes.set('visual'),
 		openAsText: (path: string) => d.wsdoc.openAsText(path),
-		pickStarter: (s: Starter) => d.files().starters.pick(s),
+		pickStarter: (choice: StarterChoice) => d.files().starters.pick(choice),
 		newTexFile: () => d.files().starters.newTexFile(),
 		importStarter: (imported: ImportedFile[]) => d.files().starters.importFiles(imported),
 		onTexInput: (v: string) => d.wsdoc.doc.onTexInput(v),
@@ -261,6 +275,7 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 		toggleTerminal: () => d.termDock().toggle(),
 		openFormatModal: () => d.fmt.openFormatModal(),
 		openTutorial: () => d.setTutorialModalOpen(true),
+		saveAsTemplate: () => saveAsTemplate(d),
 		uiZoomIn,
 		uiZoomOut,
 		uiZoomReset,
@@ -325,15 +340,21 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		// same condition the app-icon menu uses: desktop only, and never for a guest
 		openShareSession: isDesktop() && !d.guest() ? () => d.setShareModalOpen(true) : undefined,
 		newFile: (ext?: string) => d.files().newFileOfType(ext),
+		// the host's own folder, in the desktop app, where the templates folder is
+		saveAsTemplate: userTemplatesAvailable() && !d.guest() ? () => saveAsTemplate(d) : undefined,
 		openFolder: () => void d.files().folder.open(),
 		cloneRepository: canClone() ? () => void startClone((path) => d.files().folder.open(path)) : undefined,
 		forgetSignIns: canClone() ? () => void forgetSignIns() : undefined,
 		refreshTree: () => void d.files().refreshTree(),
 		openTypstPreview: () => d.typstPreview.enable(),
 		isTypstProject: () => d.cc.typstProject,
+		canExportTypst: () => typstExport.available,
+		exportTypst: () => typstExport.show(),
 		canZoteroCite: () => d.integrations.canZoteroCite(),
 		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
 		canCiteByDoi: () => d.integrations.canCiteByDoi(),
-		citeByDoi: () => d.integrations.citeByDoi()
+		citeByDoi: () => d.integrations.citeByDoi(),
+		canInsertSymbol: () => (d.wsdoc.doc.kind === 'typ' || d.wsdoc.doc.kind === 'tex') && !activeCompare.current,
+		insertSymbol: () => void (d.wsdoc.doc.kind === 'tex' ? symbolPicker.show(latexSymbolSet) : symbolPicker.show(typstSymbolSet))
 	};
 }

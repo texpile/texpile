@@ -29,7 +29,7 @@ Advanced Options in the same Settings panel shows the LaTeX Label directly, so y
 
 ## In Typst
 
-Dragging the handles sets the width as a percentage of the text width, and the settings panel has a Width field for typing a Typst length instead. There is no size slider and no label field.
+Dragging the handles sets the width as a percentage of the text width, and the settings panel has a Width field for typing a Typst length instead. There is no size slider. Advanced Options has the Label, written as `<fig:x>` after the figure so @ references reach it; clearing the field removes it. A bare `#image` given a label becomes a `#figure`, since Typst references figures only. With Show Caption on, the figure is written with a `caption:`, empty until you type one, so Typst prints its "Figure 1" line as the editor does; turn Show Caption off for a figure without one.
 
 ## In Markdown
 

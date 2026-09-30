@@ -11,11 +11,10 @@
 //
 //   in - a selection, as the same `menu:value` string the in-app menu would have produced, routed
 //   into the very same handlers. One implementation, two front ends.
-import { MENU_SYMBOLS } from '$lib/chrome/menubar/menuBarInsertDrawn';
-import { SYMBOLS } from '$lib/languages/latex/texCharacters';
 import { browser } from '$lib/runtime';
 import { isMac } from '$lib/platform';
 import { recentFolders } from './workspaceStore';
+import { COLOR_VISION_MODES, colorVisionLabel, type ColorVisionMode } from '$lib/preview/colorVision/colorVision';
 import { m } from '$lib/paraglide/messages';
 
 type NativeMenuApi = {
@@ -64,8 +63,14 @@ export type MenuStateInput = {
 	canNewFile: boolean;
 	/** the compile target is Typst: File > New offers .typ instead of .tex/.cls/.sty */
 	typstProject: boolean;
+	/** File > Export… for a Typst main file */
+	canExportTypst: boolean;
+	/** the previews' color vision simulation, checked in View */
+	colorVision: ColorVisionMode;
 	canInsertImage: boolean;
 	canOpenFolder: boolean;
+	/** File > Save as template: a host in the desktop app */
+	canSaveTemplate: boolean;
 	canClone?: boolean;
 	canLocalHistory?: boolean;
 	fileOpen?: boolean;
@@ -103,6 +108,8 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		openFolderNewWindow: m.menubar_open_folder_new_window(),
 		share: m.menubar_share_session(),
 		save: m.menubar_save(),
+		saveAsTemplate: m.menubar_save_as_template(),
+		exportTypst: m.typst_export_menu(),
 		closeWorkspace: m.menubar_close_workspace(),
 		preferences: m.menubar_preferences(),
 		palette: m.palette_open(),
@@ -113,6 +120,9 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		zoomIn: m.menubar_zoom_in(),
 		zoomOut: m.menubar_zoom_out(),
 		zoomReset: m.menubar_zoom_reset(),
+		colorVision: m.color_vision_menu(),
+		// the View submenu is built from these keys, in this order, as the Symbol one is
+		...Object.fromEntries(COLOR_VISION_MODES.map((mode) => [`vision:${mode}`, colorVisionLabel(mode)])),
 		math: m.menubar_insert_math_menu(),
 		mathInline: m.menubar_inline_equation(),
 		mathDisplay: m.menubar_display_equation(),
@@ -135,7 +145,7 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		hrefLink: m.drawn_chip_hyperref_title(),
 		references: m.menubar_insert_references(),
 		breaksSpaces: m.menubar_insert_breaks_spaces(),
-		symbol: m.menubar_insert_symbol(),
+		symbolPicker: m.menubar_insert_symbol_picker(),
 		documentParts: m.menubar_insert_document_parts(),
 		latexSource: m.menubar_insert_latex_source(),
 		comment: m.drawn_chip_comment_title(),
@@ -146,8 +156,6 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		textSize: m.drawn_chip_style_size(),
 		framed: m.drawn_chip_style_framed(),
 		together: m.drawn_chip_style_together(),
-		// the Symbol submenu is built from these keys, in this order, so main keeps no list of its own
-		...Object.fromEntries(MENU_SYMBOLS.map((name) => [`symbol:${name}`, `${SYMBOLS[name]}   \\${name}`])),
 		link: m.menubar_insert_link(),
 		codeBlock: m.menubar_insert_code_block(),
 		hrule: m.menubar_insert_hrule(),

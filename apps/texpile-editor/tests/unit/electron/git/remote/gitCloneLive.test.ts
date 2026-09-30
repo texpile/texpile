@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { gitClone, classifyCloneError, isFolderName, type CloneProgress } from '../../../../../../../electron/src/git/remote/gitClone';
+import { copyMissing } from '../../../../../../../electron/src/templates/templateCopy';
 import { AVAILABLE, out, run, identify, commit, tempDir, removeTempDirs, makePublished } from '../gitLiveFixture';
 
 afterEach(removeTempDirs);
@@ -21,6 +22,22 @@ describe.skipIf(!AVAILABLE)('cloning a repository', () => {
 		expect(out(join(parent, 'thesis'), 'rev-parse', '--abbrev-ref', '@{u}')).toMatch(/^origin\//);
 		// progress is whatever git reported; a local clone may report none, but never nonsense
 		for (const s of steps) expect(s.percent).toBeGreaterThanOrEqual(0);
+	});
+
+	it('clones a template as its newest files alone: no history, and no .git in the project it joins', async () => {
+		const { remote, root } = await makePublished();
+		const staging = tempDir('texpile-staging-');
+		// file:// because git ignores --depth for a plain path
+		const res = await gitClone(`file://${remote}`, staging, 'clone', {}, undefined, undefined, { shallow: true });
+		expect(res.ok).toBe(true);
+		expect(out(join(staging, 'clone'), 'rev-list', '--count', 'HEAD')).toBe('1');
+		const project = tempDir('texpile-project-');
+		execFileSync('git', ['init', '-q', project], { stdio: 'ignore', env: { ...process.env, GIT_CONFIG_NOSYSTEM: '1' } });
+		const head = readFileSync(join(project, '.git', 'HEAD'), 'utf8');
+		await copyMissing(join(staging, 'clone'), project);
+		expect(readFileSync(join(project, 'main.tex'), 'utf8')).toBe(readFileSync(join(root, 'main.tex'), 'utf8'));
+		expect(readFileSync(join(project, '.git', 'HEAD'), 'utf8')).toBe(head);
+		expect(existsSync(join(project, '.git', 'packed-refs'))).toBe(false);
 	});
 
 	it('refuses a folder that already has something in it, before downloading anything', async () => {

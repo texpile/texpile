@@ -47,6 +47,32 @@ export function esc(value: string, mode: EscMode = 'text'): string {
 	return mode === 'text' ? sanitizeText(value) : value;
 }
 
+/**
+ * A mark's color as xcolor reads it: whatever the file wrote, or a CSS color (one copied from a
+ * Typst file) in the model that takes it; null for a CSS color no model takes.
+ */
+function xcolorOf(color: unknown, model: unknown): { model: string; value: string } | null {
+	const value = String(color ?? '').trim();
+	if (typeof model === 'string' && model) return { model, value };
+	const hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(value)?.[1];
+	if (hex) return { model: 'HTML', value: (hex.length === 3 ? hex.replace(/./g, '$&$&') : hex).toUpperCase() };
+	const rgb = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i.exec(value);
+	if (rgb) return { model: 'RGB', value: rgb.slice(1, 4).join(',') };
+	return /^#|^[a-z]+\(/i.test(value) ? null : { model: '', value };
+}
+
+// a color xcolor cannot read drops its wrapper and keeps the text, as the Typst serializer does
+function textcolorMark(a: Record<string, unknown>): { open: string; close: string } {
+	const c = xcolorOf(a.color ?? 'black', a.model);
+	return c ? { open: `\\textcolor${c.model ? `[${c.model}]` : ''}{${esc(c.value)}}{`, close: '}' } : { open: '', close: '' };
+}
+
+// \sethlcolor takes a color name, never a model, so a color only a model can say highlights in the default one
+function highlightMark(a: Record<string, unknown>): { open: string; close: string } {
+	const c = a.color == null ? null : xcolorOf(a.color, null);
+	return c && !c.model ? { open: `{\\sethlcolor{${esc(c.value)}}\\hl{`, close: '}}' } : { open: '\\hl{', close: '}' };
+}
+
 // em is \textit unless the file said \emph; highlight is soul's \hl. href is NOT escaped.
 const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; close: string }> = {
 	strong: () => ({ open: '\\textbf{', close: '}' }),
@@ -56,11 +82,8 @@ const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; 
 	sub: () => ({ open: '\\textsubscript{', close: '}' }),
 	code: () => ({ open: '\\texttt{', close: '}' }),
 	link: (a) => ({ open: `\\href{${String(a.href ?? '')}}{`, close: '}' }),
-	textcolor: (a) => ({
-		open: `\\textcolor${typeof a.model === 'string' && a.model ? `[${a.model}]` : ''}{${esc(String(a.color ?? 'black'))}}{`,
-		close: '}'
-	}),
-	highlight: (a) => (a.color == null ? { open: '\\hl{', close: '}' } : { open: `{\\sethlcolor{${esc(String(a.color))}}\\hl{`, close: '}}' })
+	textcolor: textcolorMark,
+	highlight: highlightMark
 };
 
 /**

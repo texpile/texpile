@@ -77,6 +77,12 @@ describe('marks', () => {
 	it('textcolor escapes its color value but emits the command', () => {
 		expect(serializeToLatex(doc(p(tx('R', mk('textcolor', { color: 'red' })))))).toContain('\\textcolor{red}{R}');
 	});
+	it('writes a CSS color in the model xcolor reads it in, and never as a color name', () => {
+		expect(serializeToLatex(doc(p(tx('R', mk('textcolor', { color: '#f00' })))))).toContain('\\textcolor[HTML]{FF0000}{R}');
+		// \sethlcolor takes no model: the highlight stays, in the document's own color
+		expect(serializeToLatex(doc(p(tx('H', mk('highlight', { color: 'rgb(217, 234, 211)' })))))).toMatch(/^\\hl\{H\}\s/);
+		expect(serializeToLatex(doc(p(tx('R', mk('textcolor', { color: 'hsl(0, 100%, 50%)' })))))).toMatch(/^R\s/);
+	});
 });
 
 describe('escaping — text mode', () => {

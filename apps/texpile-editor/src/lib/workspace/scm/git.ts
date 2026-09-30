@@ -297,6 +297,8 @@ export type GitRemotesResult = {
 	reason?: 'not-a-repo' | 'no-git' | 'unsafe';
 	error?: string;
 	remotes?: GitRemote[];
+	/** the opened folder is the repository's top level, not a folder inside it */
+	atTopLevel?: boolean;
 };
 
 export async function gitRemotes(root: string): Promise<GitRemotesResult> {

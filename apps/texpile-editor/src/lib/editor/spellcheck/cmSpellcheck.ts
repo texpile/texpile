@@ -1,7 +1,7 @@
 // harper spell/grammar check for SOURCE mode: mask LaTeX markup (texMask), lint the prose with
 // the same harper worker + dictionary the visual editor uses, underline with the same
 // proofread-* styles, and open the shared SuggestionBox on click.
-import { Decoration, EditorView, ViewPlugin, type DecorationSet, type ViewUpdate } from '@codemirror/view';
+import { Decoration, EditorView, ViewPlugin, keymap, type DecorationSet, type ViewUpdate } from '@codemirror/view';
 import { Facet, RangeSetBuilder } from '@codemirror/state';
 import { lintText, onLintRulesChanged } from '$lib/editor/spellcheck/linter';
 import { createHarperSuggestionBox, type Problem } from '$lib/editor/spellcheck/suggestionBoxFactory';
@@ -10,6 +10,7 @@ import { observe } from '$lib/runes/observe.svelte';
 import { docText } from '$lib/editor/source/docText';
 import { maskTex, overlapsMask, type TexMask } from './texMask';
 import { clearOfOldWords, liveSuggestionRanges } from '$lib/editor/source/cmSuggestions';
+import { nextProblem, type Span } from './problemNav';
 import './suggestion.css';
 
 /**
@@ -299,8 +300,23 @@ const spellPlugin = ViewPlugin.fromClass(SpellPlugin, {
 	}
 });
 
+/** select the next (1) or previous (-1) problem the plugin is showing */
+export function jumpToProblem(view: EditorView, dir: 1 | -1): boolean {
+	const spans: Span[] = [];
+	view.plugin(spellPlugin)?.shown.between(0, view.state.doc.length, (from, to) => void spans.push({ from, to }));
+	const target = nextProblem(spans, view.state.selection.main, dir);
+	if (!target) return false;
+	view.dispatch({ selection: { anchor: target.from, head: target.to }, scrollIntoView: true, userEvent: 'select' });
+	return true;
+}
+
+const problemKeymap = keymap.of([
+	{ key: 'F8', run: (view) => jumpToProblem(view, 1), preventDefault: true },
+	{ key: 'Shift-F8', run: (view) => jumpToProblem(view, -1), preventDefault: true }
+]);
+
 /** harper proofreading for LaTeX source mode; obeys the shared spell-check setting. */
 /** `language` selects Harper's parser; omit it for LaTeX/plain prose (see spellLanguage). */
 export function cmSpellcheck(language?: 'plaintext' | 'typst') {
-	return language ? [spellPlugin, spellLanguage.of(language)] : spellPlugin;
+	return language ? [spellPlugin, problemKeymap, spellLanguage.of(language)] : [spellPlugin, problemKeymap];
 }

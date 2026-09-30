@@ -5,6 +5,7 @@ import { selectAll } from '@codemirror/commands';
 import { openSearchPanel } from '@codemirror/search';
 import { ArrowRight, BookMarked, BookPlus, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
 import { copySelection, cutSelection, pasteAtCursor } from '$lib/editor/source/cmClipboardUtils';
+import { hasSourcePaste, pasteIntoSource } from '$lib/editor/source/paste/cmSourcePaste';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { m } from '$lib/paraglide/messages';
 import { refineMenuItem } from '$lib/ai/refineMenu';
@@ -27,7 +28,11 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 	const items: ContextMenuItem[] = [
 		{ label: m.tbar_ctx_cut(), icon: Scissors, keys: 'Mod+X', disabled: !selection, onclick: () => void cutSelection(view) },
 		{ label: m.tbar_ctx_copy(), icon: Copy, keys: 'Mod+C', disabled: !selection, onclick: () => void copySelection(view) },
-		{ label: m.tbar_ctx_paste(), icon: ClipboardPaste, keys: 'Mod+V', onclick: () => void pasteAtCursor(view) },
+		{ label: m.tbar_ctx_paste(), icon: ClipboardPaste, keys: 'Mod+V', onclick: () => void pasteIntoSource(view) },
+		// where Paste converts, the plain one sits beside it
+		...(hasSourcePaste(view.state)
+			? [{ label: m.ctxmenu_paste_without_formatting(), keys: 'Mod+Shift+V', onclick: () => void pasteAtCursor(view) }]
+			: []),
 		{
 			label: m.tbar_ctx_select_all(),
 			keys: 'Mod+A',

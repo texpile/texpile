@@ -23,4 +23,4 @@ The name and the color the others see are yours to set, in Preferences under Col
 The host compiles with their own toolchain, and guests see the PDF and the compile problems update live. Actions that belong to the host's machine, such as starting a compile, are left out of a guest's menus.
 
 > [!NOTE]
-> Everything else in Texpile works offline. This is the one feature that uses the network.
+> Everything else in Texpile works offline. Apart from shared sessions, the update check, and Autofetch in a Git folder, Texpile goes online only when you ask it to: citing by DOI, installing tinymist, or browsing Typst templates.

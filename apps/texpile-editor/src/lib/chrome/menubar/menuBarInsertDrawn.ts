@@ -1,5 +1,5 @@
 // The menu items for what the visual editor draws in place of the source: cross-references and links to a
-// label, footnotes, labels, symbols, page breaks, spaces, the abstract, the appendix, the bibliography,
+// label, footnotes, labels, page breaks, spaces, the abstract, the appendix, the bibliography,
 // included files and source comments (Insert), and the text styles no mark gives (Format). A drawn one goes
 // in as its chip and opens the chip's own panel, the way Enter opens a selected chip, so its settings are
 // chosen where they are shown. Source mode writes the command.
@@ -46,28 +46,6 @@ export const DRAWN_INSERT_ITEMS = [
 	'comment'
 ] as const;
 
-// the symbols the editor draws that a keyboard does not reach easily, each kernel LaTeX (no package needed).
-// Letters (ß, ø, æ) and accents are left to typing
-export const MENU_SYMBOLS = [
-	'LaTeX',
-	'LaTeXe',
-	'TeX',
-	'S',
-	'P',
-	'dag',
-	'ddag',
-	'copyright',
-	'textregistered',
-	'texttrademark',
-	'texteuro',
-	'pounds',
-	'ldots',
-	'textbullet',
-	'textdegree',
-	'textpm',
-	'texttimes'
-] as const;
-
 // the text styles the editor draws that no mark gives (bold, italic, underline and code are marks)
 export const MENU_TEXT_STYLES = {
 	textsc: ['\\textsc{', '}'],
@@ -88,7 +66,7 @@ function bibliographySources(): string[] {
 	return ['\\bibliographystyle{plain}', `\\bibliography{${bibFileNames(projectIntelStore.current.bibEntries).join(',')}}`];
 }
 
-function folderOf(path: string): string {
+export function folderOf(path: string): string {
 	return path.replace(/[\\/][^\\/]*$/, '');
 }
 
@@ -164,7 +142,7 @@ function openPanelOfSelected(view: EditorView): void {
 	else open();
 }
 
-function insertChips(sources: string[], shape: ChipShape, holdsSelection = false): void {
+export function insertChips(sources: string[], shape: ChipShape, holdsSelection = false): void {
 	const view = editorViewStore.current;
 	if (!view) return;
 	const { schema, selection } = view.state;
@@ -195,7 +173,7 @@ function insertChips(sources: string[], shape: ChipShape, holdsSelection = false
 	openPanelOfSelected(view);
 }
 
-function insertOne(node: PMNode, caretInside = false): void {
+export function insertOne(node: PMNode, caretInside = false): void {
 	const view = editorViewStore.current;
 	if (!view) return;
 	const { tr, from } = insertAt(view, [node], node.isBlock ? 'after-paragraph' : 'caret');
@@ -212,7 +190,7 @@ function styleOf(value: string): readonly [string, string] | null {
 }
 
 /** a block of source after the line the caret is on, as the visual editor puts one after its paragraph */
-function cmAfterLine(cm: CMView, text: string, caret = text.length): void {
+export function cmAfterLine(cm: CMView, text: string, caret = text.length): void {
 	const line = cm.state.doc.lineAt(cm.state.selection.main.to);
 	const lead = line.text.trim() ? '\n' : '';
 	const at = line.text.trim() ? line.to : line.from;
@@ -223,7 +201,7 @@ function cmAfterLine(cm: CMView, text: string, caret = text.length): void {
 }
 
 /** a command that stands on a line of its own in the source, the caret `caret` characters into it */
-function cmOnOwnLine(cm: CMView, text: string, caret = text.length): void {
+export function cmOnOwnLine(cm: CMView, text: string, caret = text.length): void {
 	const { state } = cm;
 	const { from, to } = state.selection.main;
 	const before = /\S/.test(state.sliceDoc(state.doc.lineAt(from).from, from)) ? '\n' : '';
@@ -244,7 +222,6 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 	}
 
 	async function inSource(cm: CMView, value: string, dialect: Dialect): Promise<void> {
-		if (value.startsWith('symbol:')) return cmReplace(cm, `\\${value.slice(7)}{}`);
 		const style = styleOf(value);
 		if (style) return cmReplace(cm, style[0], style[1]);
 		if (dialect === 'typ') {
@@ -298,8 +275,6 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 		const view = editorViewStore.current;
 		if (!view) return;
 		const { schema } = view.state;
-		// {} so the spaces typed after it are kept: TeX drops every space after a command name
-		if (value.startsWith('symbol:')) return insertChips([`\\${value.slice(7)}{}`], 'inline');
 		const style = styleOf(value);
 		if (style) {
 			const words = selectedLatex(view);
@@ -350,7 +325,7 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 	}
 
 	return async (value) => {
-		const ours = (DRAWN_INSERT_ITEMS as readonly string[]).includes(value) || value.startsWith('symbol:') || styleOf(value) !== null;
+		const ours = (DRAWN_INSERT_ITEMS as readonly string[]).includes(value) || styleOf(value) !== null;
 		if (!ours) return false;
 		const dialect = deps.dialect();
 		if (dialect === 'md' || (dialect === 'typ' && value !== 'include' && value !== 'comment')) return true;

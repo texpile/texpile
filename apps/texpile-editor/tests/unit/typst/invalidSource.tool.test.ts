@@ -9,8 +9,8 @@
 //      damaged construct drift a little more on every save?
 import { describe, it, expect } from 'vitest';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 
 const roundtrip = (src: string): string => {
 	const parsed = parseTypstFile(src);

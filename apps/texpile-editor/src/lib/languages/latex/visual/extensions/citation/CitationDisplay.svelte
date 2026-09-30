@@ -4,7 +4,7 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { splitCitationKeys } from './citationKeys';
-	import { citationText } from './citationText';
+	import { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 	import { bibAuthorShort } from '$lib/languages/bib/biblatex';
 	import CitationEditForm from './CitationEditForm.svelte';
 

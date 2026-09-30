@@ -42,6 +42,17 @@ In the source editor, right-click a line and choose Show in PDF, or click the ar
 
 ![The sync-to-PDF arrow button on the divider between the source editor and the PDF](../../landing/src/lib/assets/showcase/app/sync-to-pdf-icon.png)
 
+## Color vision check
+
+The eye button in the PDF toolbar shows the document as a reader with a color vision deficiency sees it: protanopia (red-blind), deuteranopia (green-blind), tritanopia (blue-blind), or achromatopsia (no color). It is a check for figures and charts that rely on color alone.
+
+| Where to find it | Path                           | Note                                 |
+| ---------------- | ------------------------------ | ------------------------------------ |
+| Toolbar          | The eye button in the PDF pane | Also in the live and Typst previews. |
+| Menu             | View › Simulate Color Vision   |                                      |
+
+Only the screen changes, never the PDF. While a simulation is on, the button is highlighted and a notice at the bottom of the pane names it, with a button back to true colors. The choice holds for the window until you change it or close it. The simulation follows Machado, Oliveira, and Fernandes (2009).
+
 ## Terminal
 
 Compiles run in a terminal named Compile in the dock. Terminal › New Terminal opens another shell beside it.

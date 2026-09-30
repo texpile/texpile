@@ -18,9 +18,9 @@ import {
 	type Look
 } from '$lib/languages/latex/drawnCommands';
 import { texLength, lengthLabel } from './texLength';
-import { horizontalSpaceFace, verticalSpaceFace } from './spaceFace';
-import { dividerFace } from './dividerFace';
-import { footnoteFace } from './footnoteFace';
+import { horizontalSpaceFace, verticalSpaceFace } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
+import { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
+import { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteFace';
 import { crossRefFace } from './crossRefFace.svelte';
 import { ownMacroDefined, ownMacroDefinition, ownMacroFace } from './ownMacroFace.svelte';
 
@@ -109,10 +109,10 @@ function drawMacro(macro: Macro, d: Drawing): ChipFace | ChipFace[] | null {
 	}
 	if (name === 'vspace' || name === 'addvspace') {
 		const length = argText(args[0]);
-		return verticalSpaceFace(starred(macro) ? name + '*' : name, texLength(length), lengthLabel(length), source);
+		return verticalSpaceFace(`\\${name}${starred(macro) ? '*' : ''}`, texLength(length), lengthLabel(length), source);
 	}
-	if (name in VERTICAL_SKIPS) return verticalSpaceFace(name, { em: VERTICAL_SKIPS[name] / 10 }, `${VERTICAL_SKIPS[name]}pt`, source);
-	if (name === 'vfill') return verticalSpaceFace(name, { fill: true }, '', source);
+	if (name in VERTICAL_SKIPS) return verticalSpaceFace(`\\${name}`, { em: VERTICAL_SKIPS[name] / 10 }, `${VERTICAL_SKIPS[name]}pt`, source);
+	if (name === 'vfill') return verticalSpaceFace('\\vfill', { fill: true }, '', source);
 	if (name === 'hspace') return horizontalSpaceFace(texLength(argText(args[0])), source, true);
 	if (name === 'hfill' || name === 'hfil') return horizontalSpaceFace({ fill: true }, source, true);
 	if (name in HORIZONTAL_SPACES) return horizontalSpaceFace({ em: HORIZONTAL_SPACES[name] }, source, false);
@@ -217,7 +217,9 @@ function drawNodes(nodes: Node[], d: Drawing): ChipFace[] | null {
 			const length = texLength(rest);
 			const source = printRaw(nodes.slice(i));
 			add(
-				node.content === 'vskip' ? verticalSpaceFace('vskip', length, lengthLabel(rest), source) : horizontalSpaceFace(length, source, true)
+				node.content === 'vskip'
+					? verticalSpaceFace('\\vskip', length, lengthLabel(rest), source)
+					: horizontalSpaceFace(length, source, true)
 			);
 			break;
 		}

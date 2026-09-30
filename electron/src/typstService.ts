@@ -1,14 +1,15 @@
 // tinymist: the one binary Typst support runs on. It compiles documents (`tinymist compile`,
 // embedding the Typst 0.15 crates) and serves the language features (`tinymist lsp`, stdio).
 //
-// The binary is NOT bundled. It is found on PATH, at a path the user configured, or in the copy
-// this app downloaded into userData - in that order, so a user who manages their own toolchain
-// keeps control of which version runs.
+// The binary is NOT bundled. It is found on PATH (the folders the user listed included), or in the
+// copy this app downloads into userData when the user asks it to - in that order, so a user who
+// manages their own toolchain keeps control of which version runs.
 import { execFile, spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { timeSpan, timeSync } from './startupStats';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { shellEnvReady } from './shell/shellEnv';
+import { pathKey } from './shell/toolDirs';
 
 export type TinymistInfo = {
 	/** the command to spawn: an absolute path, or the bare name when it came from PATH */
@@ -24,12 +25,37 @@ export type TinymistInfo = {
 const EXE = process.platform === 'win32' ? '.exe' : '';
 
 /**
- * Where a copy Texpile manages itself WOULD live; the caller passes userData because app isn't
- * imported here. Nothing writes this path today - there is no downloader - so every read of it is
- * guarded by existsSync and the resolution chain below is, in practice, configured -> PATH.
+ * Where the copy Texpile installs itself lives (Preferences › Toolchain, tinymist/tinymistInstall.ts);
+ * the caller passes userData because app isn't imported here. It may not exist, so every read of
+ * it is guarded by existsSync. A portable Texpile's userData is the data folder beside the exe,
+ * so the copy travels with the folder.
  */
 export function managedTinymistPath(userData: string): string {
 	return path.join(userData, 'tinymist', `tinymist${EXE}`);
+}
+
+function fileKey(p: string): string {
+	let real = p;
+	try {
+		real = fs.realpathSync(p);
+	} catch {
+		// a missing file keeps its own spelling
+	}
+	return process.platform === 'win32' ? real.toLowerCase() : real;
+}
+
+/**
+ * Whether a bare `tinymist` on this PATH runs Texpile's own copy: its folder is picked in
+ * Preferences › Toolchain as the Typst distribution, which lists it in front of PATH.
+ */
+export function pathReachesManagedCopy(pathValue: string, userData: string): boolean {
+	const sep = process.platform === 'win32' ? ';' : ':';
+	const first = pathValue
+		.split(sep)
+		.filter(Boolean)
+		.map((dir) => path.join(dir, `tinymist${EXE}`))
+		.find((file) => fs.existsSync(file));
+	return !!first && fileKey(first) === fileKey(managedTinymistPath(userData));
 }
 
 /**
@@ -40,23 +66,38 @@ export function managedTinymistPath(userData: string): string {
  *     Typst Version:       0.15.0
  * Both numbers matter: the Typst one is what a document is actually compiled by, and is the one
  * to show a user asking "which Typst built this?".
+ *
+ * The project's release builds carry no git metadata and print `VERGEN_IDEMPOTENT_OUTPUT` there
+ * instead, so their own version comes from the short form, `tinymist -V`: `tinymist 0.15.8`.
  */
 export function parseTinymistVersion(out: string): { version: string; typstVersion: string } {
-	const v = out.match(/Build Git Describe:\s*v?([^\s]+)/i);
-	const t = out.match(/Typst Version:\s*([^\s]+)/i);
-	return { version: v?.[1] ?? 'unknown', typstVersion: t?.[1] ?? 'unknown' };
+	const described = /Build Git Describe:\s*v?(\d[^\s]*)/i.exec(out)?.[1];
+	const short = /^tinymist\s+v?(\d[^\s]*)/im.exec(out)?.[1];
+	const t = /Typst Version:\s*([^\s]+)/i.exec(out)?.[1];
+	return { version: described ?? short ?? 'unknown', typstVersion: t ?? 'unknown' };
 }
 
-async function probe(command: string): Promise<{ version: string; typstVersion: string } | null> {
-	await shellEnvReady();
+function versionOutput(command: string, flag: string, timeoutMs: number): Promise<string | null> {
 	return new Promise((resolve) => {
-		execFile(command, ['--version'], { timeout: 8000, windowsHide: true }, (err, stdout) => {
-			if (err) return resolve(null);
-			const parsed = parseTinymistVersion(stdout);
-			// a binary that answers --version but names no Typst is not tinymist
-			resolve(parsed.typstVersion === 'unknown' ? null : parsed);
-		});
+		execFile(command, [flag], { timeout: timeoutMs, windowsHide: true }, (err, stdout) => resolve(err ? null : stdout));
 	});
+}
+
+/**
+ * tinymist's and its Typst's versions, or null when `command` is not a tinymist that runs.
+ *
+ * `timeoutMs` is longer for a program that was just downloaded: Windows Defender scans a new exe
+ * before its first run, and that alone can outlast the usual wait.
+ */
+export async function probeTinymist(command: string, timeoutMs = 8000): Promise<{ version: string; typstVersion: string } | null> {
+	await shellEnvReady();
+	const long = await versionOutput(command, '--version', timeoutMs);
+	const parsed = long === null ? null : parseTinymistVersion(long);
+	// a binary that answers --version but names no Typst is not tinymist
+	if (!parsed || parsed.typstVersion === 'unknown') return null;
+	if (parsed.version !== 'unknown') return parsed;
+	const short = await versionOutput(command, '-V', timeoutMs);
+	return { ...parsed, version: short === null ? 'unknown' : parseTinymistVersion(short).version };
 }
 
 /**
@@ -76,8 +117,10 @@ export async function resolveTinymist(userData: string): Promise<TinymistInfo | 
 	for (const c of candidates) {
 		// an absolute path that isn't there can't be spawned; skip without paying the exec timeout
 		if (path.isAbsolute(c.command) && !fs.existsSync(c.command)) continue;
-		const v = await timeSpan('tinymist --version', probe(c.command));
-		if (v) return { command: c.command, ...v, source: c.source };
+		const v = await timeSpan('tinymist --version', probeTinymist(c.command));
+		if (!v) continue;
+		const managedViaPath = c.source === 'path' && pathReachesManagedCopy(process.env[pathKey()] ?? '', userData);
+		return { command: c.command, ...v, source: managedViaPath ? 'managed' : c.source };
 	}
 	return null;
 }

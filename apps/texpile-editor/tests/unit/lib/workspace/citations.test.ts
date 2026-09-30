@@ -130,3 +130,43 @@ describe('loadReferences (.bib beats .bbl on key clashes)', () => {
 		expect(refs[1].fromBibitem).toBe(true);
 	});
 });
+
+describe('loadReferences (Hayagriva .yml files)', () => {
+	const hayagriva = 'doan2020:\n  type: article\n  title: Kinetics\n  author: Doan, T. D.\n  date: 2020-10-14\n';
+	const workflow = 'name: CI\non:\n  push:\njobs:\n  build:\n    runs-on: ubuntu-latest\n';
+
+	const sources: Record<string, string> = {
+		'/p/main.bib': bibA,
+		'/p/refs.yml': hayagriva,
+		'/p/ci.yaml': workflow,
+		'/p/main.typ': '#bibliography(("main.bib", "refs.yml"))',
+		'/p/main.tex': '\\bibliography{main}'
+	};
+
+	async function load(main: string): Promise<string[]> {
+		const read: string[] = [];
+		await loadReferences(
+			'/p',
+			{
+				scan: async () => [{ name: 'main.bib', path: '/p/main.bib', relPath: 'main.bib' }],
+				read: async (p) => (read.push(p), sources[p] ?? '')
+			},
+			main
+		);
+		return read;
+	}
+
+	it("reads the Hayagriva bibliography a Typst main names, and none of the project's other YAML", async () => {
+		const read = await load('/p/main.typ');
+		expect(read).not.toContain('/p/ci.yaml');
+		const refs = references.current;
+		expect(refs.map((r) => r.key)).toEqual(['smith2020', 'doan2020']);
+		expect(refs[1]).toMatchObject({ title: 'Kinetics', author: 'Doan, T. D.', year: '2020', fromHayagriva: true });
+	});
+
+	it('reads no YAML for a LaTeX main', async () => {
+		const read = await load('/p/main.tex');
+		expect(read.filter((p) => /\.ya?ml$/.test(p))).toEqual([]);
+		expect(references.current.map((r) => r.key)).toEqual(['smith2020']);
+	});
+});

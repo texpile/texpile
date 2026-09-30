@@ -20,6 +20,8 @@
 				{ keys: combo('F', { shift: true }), label: m.menubar_shortcut_find_in_files() },
 				{ keys: combo('Z'), label: m.menubar_undo() },
 				{ keys: combo('Z', { shift: true }), label: m.menubar_redo() },
+				{ keys: combo('V', { shift: true }), label: m.ctxmenu_paste_without_formatting() },
+				{ keys: isMac ? 'F8 / ⇧F8' : 'F8 / Shift+F8', label: m.menubar_shortcut_next_problem() },
 				{ keys: combo(','), label: m.menubar_preferences() }
 			]
 		},
@@ -39,6 +41,7 @@
 			group: m.menubar_shortcut_group_source_editor(),
 			items: [
 				{ keys: isMac ? 'F12 / ⌘ Click' : 'F12 / Ctrl+Click', label: m.menubar_shortcut_go_to_definition() },
+				{ keys: isMac ? '⌥↩' : 'Alt+Enter', label: m.menubar_shortcut_quick_fix() },
 				{ keys: isMac ? '⌃Space' : 'Ctrl+Space', label: m.menubar_shortcut_open_suggestions() },
 				{ keys: 'Esc', label: m.menubar_shortcut_hide_math_preview() }
 			]

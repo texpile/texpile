@@ -50,7 +50,7 @@
 		return null;
 	}
 
-	const menuItems = buildMenuItems(dialect);
+	const menuItems = buildMenuItems();
 	const tableMenuItems = buildTableMenuItems({ dialect, canMerge: () => canMerge, canSplit: () => canSplit });
 
 	function getVisibleTableMenuItems() {

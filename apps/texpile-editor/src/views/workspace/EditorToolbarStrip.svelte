@@ -5,7 +5,7 @@
 	import LatexSourceToolbar from '$lib/languages/latex/source/LatexSourceToolbar.svelte';
 	import MarkdownToolbar from '$lib/languages/markdown/visual/MarkdownToolbar.svelte';
 	import MarkdownSourceToolbar from '$lib/languages/markdown/source/MarkdownSourceToolbar.svelte';
-	import TypstToolbar from '$lib/languages/typst/visual/TypstToolbar.svelte';
+	import TypstToolbar from '$lib/languages/typst/visual/toolbar/TypstToolbar.svelte';
 	import TypstSourceToolbar from '$lib/languages/typst/source/TypstSourceToolbar.svelte';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 

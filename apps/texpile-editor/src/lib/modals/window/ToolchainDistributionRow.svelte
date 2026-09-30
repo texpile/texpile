@@ -6,13 +6,22 @@
 
 	const props: { family: ToolDistro['family'] } = $props();
 	const family = $derived(props.family);
-	// the copy PATH reaches is the From PATH option, not an entry of its own
-	const others = $derived(distros.list(family).filter((d) => !d.onPath));
 	const active = $derived(distros.active(family));
 	const onPath = $derived(distros.onPath(family));
-	const shown = $derived(active ?? onPath);
-	const value = $derived(active && !active.onPath ? active.dir : '');
-	const pathLabel = $derived(onPath ? m.prefs_toolchain_distro_path({ name: onPath.name }) : m.prefs_toolchain_distro_path_none());
+	// with no folder picked, tinymist runs from PATH, else Texpile's own copy (resolveTinymist)
+	const managed = $derived(distros.list(family).find((d) => d.managed) ?? null);
+	const fallback = $derived(onPath ?? managed);
+	// the copy the empty pick runs is that option, not an entry of its own
+	const others = $derived(distros.list(family).filter((d) => !d.onPath && d.dir !== fallback?.dir));
+	const shown = $derived(active ?? fallback);
+	const value = $derived(active && active.dir !== fallback?.dir ? active.dir : '');
+	const fallbackLabel = $derived(
+		onPath
+			? m.prefs_toolchain_distro_path({ name: onPath.name })
+			: managed
+				? m.prefs_toolchain_distro_managed({ name: managed.name })
+				: m.prefs_toolchain_distro_path_none()
+	);
 </script>
 
 <!-- shown for a known install even when none is listed or on PATH: picking it lists its folder -->
@@ -33,9 +42,9 @@
 				onchange={(e) => void distros.choose(family, e.currentTarget.value || null)}
 			>
 				{#each others as d (d.dir)}
-					<option value={d.dir}>{d.name}</option>
+					<option value={d.dir}>{d.managed ? m.prefs_toolchain_distro_managed({ name: d.name }) : d.name}</option>
 				{/each}
-				<option value="">{pathLabel}</option>
+				<option value="">{fallbackLabel}</option>
 			</select>
 		{/key}
 	</div>

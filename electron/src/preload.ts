@@ -242,6 +242,9 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	savePdfAs: (body: { src: string; defaultPath: string; to?: string }) => invokeFs('shell:savePdfAs', body),
 	/** Save PDF bytes the viewer holds (a guest has no file on disk) -> { saved, path? }. */
 	savePdfBytes: (body: { bytes: Uint8Array; defaultName: string; to?: string }) => invokeFs('shell:savePdfBytes', body),
+	/** Ask where a Typst export goes (a file to save, or a folder for its pages) -> the path, or null. */
+	pickExportTarget: (body: { kind: 'file' | 'folder'; defaultPath: string; extension?: string; title?: string }) =>
+		invokeFs('shell:pickExportTarget', body),
 
 	/** per-file git status + branch -> { ok, branch?, entries? }. */
 	gitStatus: (root: string) => invokeFs('git:status', root),
@@ -327,8 +330,9 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	gitAskpassUseGithub: (id: number) => ipcRenderer.invoke('git:askpassUseGithub', id),
 	/** drop every sign-in Texpile kept in the keychain -> true. */
 	gitForgetSignIns: () => ipcRenderer.invoke('git:forgetSignIns'),
-	/** git clone into <parent>/<name> -> { ok, path?, failure? }; progress arrives on onGitCloneProgress. */
-	gitClone: (url: string, parent: string, name: string) => invokeFs('git:clone', url, parent, name),
+	/** git clone into <parent>/<name> -> { ok, path?, failure? }; progress arrives on onGitCloneProgress.
+	 *  shallow: the newest version only, for a template whose history is left behind */
+	gitClone: (url: string, parent: string, name: string, opts?: { shallow?: boolean }) => invokeFs('git:clone', url, parent, name, opts),
 	/** stop this window's clone; git removes what it had downloaded */
 	gitCancelClone: () => invokeFs('git:cancelClone'),
 	/** a running clone's stage and percentage; returns an unsubscribe fn */
@@ -417,6 +421,28 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 	texBib: (name: string) => ipcRenderer.invoke('toolchain:texBib', name),
 	/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
 	dirForms: (entry: string) => ipcRenderer.invoke('toolchain:dirForms', entry),
+	/** Texpile's own copy of tinymist: the pinned release, whether this machine has a build, what is installed */
+	tinymistStatus: () => ipcRenderer.invoke('typst:tinymist:status'),
+	/** download, check and install the pinned tinymist; joins an install already under way */
+	installTinymist: () => ipcRenderer.invoke('typst:tinymist:install'),
+	cancelTinymistInstall: () => ipcRenderer.send('typst:tinymist:cancel'),
+	removeTinymist: () => ipcRenderer.invoke('typst:tinymist:remove'),
+	/** an install's progress, whichever window started it; returns an unsubscribe fn */
+	onTinymistProgress: (cb: (step: unknown) => void) => {
+		function h(_e: unknown, step: unknown) {
+			cb(step);
+		}
+		ipcRenderer.on('typst:tinymist:progress', h);
+		return () => ipcRenderer.removeListener('typst:tinymist:progress', h);
+	},
+	/** an install or removal ended, in any window; returns an unsubscribe fn */
+	onTinymistFinished: (cb: (result: unknown) => void) => {
+		function h(_e: unknown, result: unknown) {
+			cb(result);
+		}
+		ipcRenderer.on('typst:tinymist:finished', h);
+		return () => ipcRenderer.removeListener('typst:tinymist:finished', h);
+	},
 	/** fetch tinymist's preview page, theme it, and re-serve it; resolves to a typstpreview:// URL. */
 	preparePreview: (host: string, background: string, foreground: string) =>
 		ipcRenderer.invoke('typst:preview:prepare', { host, background, foreground }),
@@ -478,6 +504,25 @@ contextBridge.exposeInMainWorld('texpileDoi', {
 	search: (query: string) => ipcRenderer.invoke('doi:search', { query }),
 	isbn: (isbn: string) => ipcRenderer.invoke('doi:isbn', { isbn }),
 	pmid: (pmid: string) => ipcRenderer.invoke('doi:pmid', { pmid })
+});
+
+// templates: the user's own, saved under userData, and the Typst Universe gallery (see templatesIpc.ts)
+contextBridge.exposeInMainWorld('texpileTemplates', {
+	list: () => invokeFs('templates:list'),
+	/** the project's files with their sizes, minus ignored folders; stops at a file limit */
+	survey: (root: string) => invokeFs('templates:survey', root),
+	save: (req: Record<string, unknown>) => invokeFs('templates:save', req),
+	update: (id: string, name: string, description: string) => invokeFs('templates:update', { id, name, description }),
+	remove: (id: string) => invokeFs('templates:delete', id),
+	/** copy a template into root, keeping existing files; resolves to the absolute main file */
+	apply: (id: string, root: string) => invokeFs('templates:apply', { id, root }),
+	/** an empty folder for tinymist to unpack a Typst Universe template into */
+	stage: () => invokeFs('templates:stage'),
+	adopt: (dir: string, root: string) => invokeFs('templates:adopt', { dir, root }),
+	discard: (dir: string) => invokeFs('templates:discard', dir),
+	/** goes online: the gallery calls it when opened, never before */
+	universeIndex: () => ipcRenderer.invoke('templates:universeIndex'),
+	universeThumbnail: (name: string, version: string) => ipcRenderer.invoke('templates:universeThumbnail', { name, version })
 });
 
 // the reader's own command-line agent (Preferences > AI); main picks the command, a run only carries the prompt

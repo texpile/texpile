@@ -1,6 +1,7 @@
 // The workspace's file-management wiring: tree rescans, create/rename/delete/move ops,
 // starter templates, the folder lifecycle, the main-file choice, and the repoint-references
 // offer after a rename.
+import { untrack } from 'svelte';
 import { moveLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { StarterActions } from '$lib/workspace/starterActions.svelte';
 import { TreeOps } from '$lib/workspace/treeOps';
@@ -161,6 +162,12 @@ export class WorkspaceFiles {
 		$effect(() => {
 			if (mainFile.current) this.mainPrompt.confirmed = true;
 		});
+		// a Typst main names the Hayagriva bibliography whose keys the @ picker offers
+		$effect(() => {
+			const main = mainFile.current;
+			const root = untrack(() => workspaceRoot.current);
+			if (root && main && /\.typ$/i.test(main)) untrack(() => void this.loadRefs(root));
+		});
 		// live mode compiles on its own as soon as the pane is open; surface the question then.
 		// Strictly `=== false`: null means initProject is still resolving, never a modal.
 		$effect(() => {
@@ -182,7 +189,7 @@ export class WorkspaceFiles {
 		const through = { scan: (r: string, e: string[]) => this.d.provider.scanFiles(r, e), read: (p: string) => this.d.provider.readText(p) };
 		// and so do the bibliography editor's reads of what the documents cite
 		readCitationsThrough(through);
-		return loadReferences(root, through);
+		return loadReferences(root, through, mainFile.current);
 	}
 
 	// tree rescan + manifest sync + git refresh live in lib/workspace/treeRefresh.ts

@@ -2,8 +2,8 @@
 // must read back as the same document. Each case here used to change meaning on reload
 // (findings T2, T3, T11, T15, T21 of the 2026-09-05 hunt).
 import { describe, it, expect } from 'vitest';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import type { Node } from 'prosemirror-model';
 
@@ -49,6 +49,45 @@ describe('references (T2)', () => {
 	});
 });
 
+describe('emphasis delimiters beside a reference, a url or a code chip', () => {
+	const chip = (s: string, marks: string[] = []) =>
+		n.inline_latex.create(
+			{ lang: 'typst' },
+			typSchema.text(s),
+			marks.map((name) => m[name].create())
+		);
+	const back = (src: string) =>
+		typstToProseMirror(src + '\n')
+			.doc.child(0)
+			.toJSON();
+
+	it('a space ending the emphasis stays inside it where the delimiter would go on as more of what the space follows', () => {
+		const atoms: [Node, string][] = [
+			[n.typ_ref.create({ target: 'knuth' }).mark([m.em.create()]), '@knuth'],
+			[chip('https://x.org/a', ['em']), 'https://x.org/a'],
+			[chip('#sym.alpha', ['em']), '#sym.alpha']
+		];
+		for (const [atom, written] of atoms) {
+			const p = para(text('see ', ['em']), atom, text(' ', ['em']), text(' now.'));
+			const src = out(p);
+			expect(src).toBe(`_see ${written} _ now.`);
+			expect(back(src)).toEqual(p.toJSON());
+		}
+	});
+
+	it('an emphasis ending or starting against a code chip takes the function form', () => {
+		const ends = para(text('the angle '), text('is ', ['em']), chip('#sym.alpha', ['em']), text(' here.'));
+		expect(out(ends)).toBe('the angle #emph[is #sym.alpha] here.');
+		expect(back(out(ends))).toEqual(ends.toJSON());
+		const starts = para(text('a '), chip('#sym.alpha'), text('(x)', ['em']));
+		expect(out(starts)).toBe('a #sym.alpha#emph[(x)]');
+		expect(back(out(starts))).toEqual(starts.toJSON());
+		// a star does not go on with a code expression, and nothing goes on past a call's parenthesis
+		expect(out(para(text('is ', ['strong']), chip('#sym.alpha', ['strong'])))).toBe('*is #sym.alpha*');
+		expect(out(para(chip('#f(x)', ['em'])))).toBe('_#f(x)_');
+	});
+});
+
 describe('inline raw (T3)', () => {
 	it('inline code holding a backtick takes the function form', () => {
 		const src = out(para(text('a`b', ['code'])));
@@ -66,6 +105,19 @@ describe('line-start markers inside brackets (T11)', () => {
 		expect(reread('#underline[\\= y]')).toEqual([['u', '= y']]);
 		const term = n.term_item.create(null, [n.term_title.create(null, text('a: b')), para(text('desc'))]);
 		expect(out(term)).toBe('/ a\\: b: desc');
+	});
+
+	it('a cell ending in a line break or a line comment has its closing bracket on the next line', () => {
+		const note = n.inline_latex.create({ lang: 'typst' }, typSchema.text('// note'));
+		const ends = [[para(), para(text('1'), n.hard_break.create({ lineBreak: true }))], [para(text('x '), note)]];
+		for (const content of ends) {
+			const row = n.table_row.create(null, [n.table_cell.create(null, content), n.table_cell.create(null, para(text('z')))]);
+			const src = out(n.table.create(null, row));
+			expect(src).toContain('\n], [z]');
+			const back = typstToProseMirror(src + '\n').doc.child(0);
+			expect(back.type.name).toBe('table');
+			expect(back.child(0).childCount).toBe(2);
+		}
 	});
 });
 

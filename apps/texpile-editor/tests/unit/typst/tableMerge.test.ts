@@ -12,8 +12,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { EditorState } from 'prosemirror-state';
 import { CellSelection, mergeCells } from 'prosemirror-tables';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 
 const WITH_HEADER = '#table(\n  columns: 2,\n  table.header([H1], [H2]),\n  [a], [b],\n  [c], [d],\n)\n';

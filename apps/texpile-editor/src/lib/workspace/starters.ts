@@ -1,13 +1,15 @@
-// starter templates: real .tex/.bib files under ./starters/<id>/, bundled as raw strings at
+// starter templates: real .tex/.typ/.bib files under ./starters/<id>/, bundled as raw strings at
 // build time; to change a starter, edit those files. the canonical package set is the article
 // starter's preamble; apa tailors its own because the apa7 class preloads packages that clash
 // when re-loaded with different options. only bundle content we can freely redistribute
-// (no IEEEtran.cls and friends).
+// (no IEEEtran.cls and friends). the Typst starters use the standard library alone: a fresh
+// tinymist with no network has to compile every one of them.
 import { joinPath, writeTextFile, writeBinaryFile, statFile, scanTree } from './fileSystem';
 import { m } from '$lib/paraglide/messages';
 
-// keys look like "./starters/mla/main.tex"; vite inlines the contents eagerly as strings
-const RAW = import.meta.glob('./starters/*/*.{tex,bib,typ}', {
+// keys look like "./starters/mla/main.tex" or "./starters/typst-report/chapters/method.typ"; vite
+// inlines the contents eagerly as strings
+const RAW = import.meta.glob('./starters/*/**/*.{tex,bib,typ,svg}', {
 	query: '?raw',
 	import: 'default',
 	eager: true
@@ -58,6 +60,22 @@ function binaryFilesFor(id: string): Record<string, string> {
 		if (key.startsWith(prefix)) out[key.slice(prefix.length)] = url;
 	}
 	return out;
+}
+
+/** a Typst starter: every one opens on main.typ, the file its lang promises the compiler */
+function typstStarter(id: string, name: () => string, description: () => string): Starter {
+	return {
+		id,
+		get name() {
+			return name();
+		},
+		get description() {
+			return description();
+		},
+		lang: 'typst',
+		mainFile: 'main.typ',
+		files: filesFor(id)
+	};
 }
 
 // name/description are getters so the label is resolved at read time, not at module-eval time
@@ -112,22 +130,34 @@ export const STARTERS: Starter[] = [
 		files: filesFor('tutorial'),
 		binaryFiles: binaryFilesFor('tutorial')
 	},
-	// The whole Typst lane for now, and deliberately bare: one line of prose and nothing else. It
-	// still has to be a STARTER rather than the blank-file link beside it, because only applyStarter
-	// sets the result as the main file - and with the format switch gone, a .typ that is not the main
-	// file leaves the folder compiling as LaTeX.
-	{
-		id: 'typst-empty',
-		get name() {
-			return m.starterdef_typst_empty_name();
-		},
-		get description() {
-			return m.starterdef_typst_empty_description();
-		},
-		lang: 'typst',
-		mainFile: 'main.typ',
-		files: filesFor('typst-empty')
-	}
+	typstStarter(
+		'typst-paper',
+		() => m.starterdef_typst_paper_name(),
+		() => m.starterdef_typst_paper_description()
+	),
+	typstStarter(
+		'typst-report',
+		() => m.starterdef_typst_report_name(),
+		() => m.starterdef_typst_report_description()
+	),
+	typstStarter(
+		'typst-letter',
+		() => m.starterdef_typst_letter_name(),
+		() => m.starterdef_typst_letter_description()
+	),
+	typstStarter(
+		'typst-slides',
+		() => m.starterdef_typst_slides_name(),
+		() => m.starterdef_typst_slides_description()
+	),
+	// Deliberately bare: one line of prose and nothing else. It still has to be a STARTER rather than
+	// a blank-file link, because only applyStarter sets the result as the main file - and with the
+	// format switch gone, a .typ that is not the main file leaves the folder compiling as LaTeX.
+	typstStarter(
+		'typst-empty',
+		() => m.starterdef_typst_empty_name(),
+		() => m.starterdef_typst_empty_description()
+	)
 ];
 
 export function starterById(id: string): Starter | undefined {

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import { chipReplacement } from '$lib/editor/visual/extensions/drawnChips/chipReparse';
 

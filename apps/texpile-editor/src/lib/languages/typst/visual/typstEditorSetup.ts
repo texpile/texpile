@@ -1,9 +1,9 @@
 // plugin stack, autoformat rules, paste handling, and node views for the Typst visual editor;
 // TypstEditorView.svelte mounts it
 import { Plugin } from 'prosemirror-state';
-import type { EditorProps } from 'prosemirror-view';
+import type { EditorProps, EditorView } from 'prosemirror-view';
 import { Fragment, Slice, type Node as PmNode } from 'prosemirror-model';
-import { typstToProseMirror } from './converter';
+import { typstToProseMirror } from './convert/converter';
 import { typstCopyPlugin } from './clipboard';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
@@ -35,7 +35,8 @@ import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/fi
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { search } from 'prosemirror-search';
 import { typSchema } from './schema';
-import { TypstRefView } from './extensions/typstRefView';
+import { TypstRefView } from './extensions/ref/typstRefView.svelte';
+import { typstEnvView } from './extensions/env/typstEnvView.svelte';
 import { TYP_BLOCK_INSERT_ITEMS } from './blockInsertItems';
 import { isMac } from '$lib/platform';
 import { toggleHeading } from '$lib/editor/visual/helperCommands';
@@ -49,13 +50,15 @@ import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin'
 import { lineBreakPlugins } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
+import { visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
+import { pasteReadingOfText } from '$lib/editor/paste/pasteReadingOfText';
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { typstProse } from '$lib/workspace/wordCount/proseWords';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
-import { proofreadPlugin, spellClickBoundaryPlugin } from '$lib/editor/spellcheck/spellcheckplugin';
+import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
@@ -68,6 +71,8 @@ import { typstTableWrapperView } from '$lib/editor/visual/extensions/table/table
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
 import { typstChipKind } from './extensions/typstChipKind';
+import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import { typstFootnoteMarks } from './extensions/drawn/footnoteCall';
 import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
@@ -95,30 +100,34 @@ const typInputRules = [
 ];
 
 // Pasted TYPST SOURCE becomes rich nodes - the typst counterpart of the latex clipboard.
-// Gated on structural markers so ordinary prose still pastes as plain text; html-flavored
-// pastes keep ProseMirror's own path. The parse knows nothing of this document, so the pasted
-// blocks carry no origins and are always written out afresh.
+// Gated on structural markers so ordinary prose still pastes as plain text. The parse knows
+// nothing of this document, so the pasted blocks carry no origins and are always written out afresh.
+function pasteTypstSource(view: EditorView, text: string): boolean {
+	if (!/(^|\n)(={1,6} |[-+] |\/ |```|#[a-zA-Z])|\*[^\s*][^*]*\*|_[^\s_][^_]*_/.test(text)) return false;
+	try {
+		const { doc } = typstToProseMirror(text);
+		const blocks: PmNode[] = [];
+		doc.forEach((c) => blocks.push(c));
+		if (blocks.length === 0) return false;
+		const frag = Fragment.fromArray(blocks);
+		// a single pasted paragraph merges inline into the current one; anything more
+		// structured inserts as whole blocks
+		const open = blocks.length === 1 && blocks[0].type.name === 'paragraph' ? 1 : 0;
+		pasteReadingOfText(view, text, new Slice(frag, open, open));
+		return true;
+	} catch {
+		return false; // unparsable clipboard: let the plain-text path have it
+	}
+}
+
+// html-flavored pastes keep ProseMirror's own path; smart paste reads a code editor's copy itself
 const pasteTypstPlugin = new Plugin({
 	props: {
 		handlePaste(view, event) {
 			const cb = event.clipboardData;
 			const text = cb?.getData('text/plain');
 			if (!text || cb?.getData('text/html')) return false;
-			if (!/(^|\n)(={1,6} |[-+] |\/ |```|#[a-zA-Z])|\*[^\s*][^*]*\*|_[^\s_][^_]*_/.test(text)) return false;
-			try {
-				const { doc } = typstToProseMirror(text);
-				const blocks: PmNode[] = [];
-				doc.forEach((c) => blocks.push(c));
-				if (blocks.length === 0) return false;
-				const frag = Fragment.fromArray(blocks);
-				// a single pasted paragraph merges inline into the current one; anything more
-				// structured inserts as whole blocks
-				const open = blocks.length === 1 && blocks[0].type.name === 'paragraph' ? 1 : 0;
-				view.dispatch(view.state.tr.replaceSelection(new Slice(frag, open, open)).scrollIntoView());
-				return true;
-			} catch {
-				return false; // unparsable clipboard: let the plain-text path have it
-			}
+			return pasteTypstSource(view, text);
 		}
 	}
 });
@@ -154,7 +163,6 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 	return [
 		parseCarryPlugin,
 		labelRenameUndo,
-		pasteTypstPlugin,
 		typstCopyPlugin,
 		gapCursor(),
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
@@ -167,6 +175,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		tableEditing(),
 		wholeTableEdits,
 		crossBlockEdits,
+		visualSmartPaste('typst', typSchema, pasteTypstSource),
+		pasteTypstPlugin,
 		...createListPlugins({ schema: typSchema }),
 		history(),
 		// the @ reference/citation popup; its arrow/enter keymap must precede the others.
@@ -221,12 +231,14 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
 		proofreadPlugin,
+		spellProblemKeymap,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
 		// the Notion-style + / drag / delete gutter, with the typst insert set
 		createBlockHandlePlugin({ items: TYP_BLOCK_INSERT_ITEMS }),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
+		footnoteNumbersPlugin(typstFootnoteMarks),
 		createNodeFlashPlugin(),
 		// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session
 		remoteCursorsPlugin,
@@ -254,6 +266,7 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 		// the shared table wrapper chrome (Table N header, gear with label + verbatim columns)
 		// in typst mode: every LaTeX-only control is gated off inside
 		table_wrapper: (node, view, getPos) => typstTableWrapperView(node, view, getPos as () => number),
-		typ_ref: (node) => new TypstRefView(node)
+		typ_ref: (node, view, getPos) => new TypstRefView(node, view, getPos),
+		typ_env: (node, view, getPos) => typstEnvView(node, view, getPos)
 	};
 }

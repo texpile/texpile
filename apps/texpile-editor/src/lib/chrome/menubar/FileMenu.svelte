@@ -16,7 +16,10 @@
 		openFolderSelect: (value: string) => void;
 		canNewFile: boolean;
 		typstProject: boolean;
+		/** the main file is Typst and tinymist can export it (see languages/typst/export) */
+		canExportTypst: boolean;
 		canOpenFolder: boolean;
+		canSaveAsTemplate: boolean;
 		canClone?: boolean;
 		/** the File menu's Local History items: the host's own workspace */
 		canLocalHistory?: boolean;
@@ -33,7 +36,9 @@
 		openFolderSelect,
 		canNewFile,
 		typstProject,
+		canExportTypst,
 		canOpenFolder,
+		canSaveAsTemplate,
 		canClone = false,
 		canLocalHistory = false,
 		fileOpen = false,
@@ -122,6 +127,12 @@
 				<Menu.Item value="save" class={itemClass}>
 					<Menu.ItemText>{m.menubar_save()}</Menu.ItemText><span class="opacity-50">{combo('S')}</span>
 				</Menu.Item>
+				{#if canSaveAsTemplate}
+					<Menu.Item value="save-as-template" class={itemClass}><Menu.ItemText>{m.menubar_save_as_template()}</Menu.ItemText></Menu.Item>
+				{/if}
+				{#if canExportTypst}
+					<Menu.Item value="export-typst" class={itemClass}><Menu.ItemText>{m.typst_export_menu()}</Menu.ItemText></Menu.Item>
+				{/if}
 				<!-- under File, where Word and Google Docs keep version history and writers look first -->
 				{#if canLocalHistory}
 					<Menu.Item value="local-history" class={itemClass} disabled={!fileOpen}

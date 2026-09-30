@@ -224,6 +224,9 @@
 				{@render toggleRow(m.prefs_comment_pill(), m.prefs_comment_pill_note(), settings.current.commentPill !== false, (v) =>
 					updateSettings({ commentPill: v })
 				)}
+				{@render toggleRow(m.prefs_smart_paste(), m.prefs_smart_paste_note(), settings.current.smartPaste !== false, (v) =>
+					updateSettings({ smartPaste: v })
+				)}
 				<!-- off silences BOTH compile-time dock opens - the terminal on start and Problems on
 						     errors (a chronically-erroring LaTeX doc that still builds would have the dock
 						     stolen every run). The badge beside Compile stays as the passive signal. -->

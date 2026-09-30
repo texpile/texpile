@@ -41,10 +41,16 @@ export type MenuState = {
 	canNewFile: boolean;
 	/** the compile target is Typst: File > New offers .typ instead of .tex/.cls/.sty */
 	typstProject?: boolean;
+	/** the main file is Typst and tinymist can export it: File > Export… */
+	canExportTypst?: boolean;
+	/** the previews' color vision simulation ('none' when showing true colors) */
+	colorVision?: string;
 	/** there is a directory to write an image next to (a .tex on a host) */
 	canInsertImage: boolean;
 	/** the workspace may be swapped out. False for a guest: it would abandon the session unleft */
 	canOpenFolder: boolean;
+	/** File > Save as template; optional so a renderer predating it simply shows none */
+	canSaveTemplate?: boolean;
 	canClone?: boolean;
 	/** Local History in the File menu: the host's own workspace, not a guest's */
 	canLocalHistory?: boolean;
@@ -71,6 +77,22 @@ function label(s: MenuState, key: string, fallback: string): string {
  *  menu bar uses, so the renderer needs one dispatcher rather than two. */
 function fire(win: BrowserWindow | null, action: string): void {
 	win?.webContents.send('main:menu-action', action);
+}
+
+/** the simulations, as radio items; the renderer sends one label per mode as `vision:<mode>`, in order */
+function colorVisionItems(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[] {
+	const modes = Object.keys(s.labels)
+		.filter((key) => key.startsWith('vision:'))
+		.map((key) => key.slice('vision:'.length));
+	return modes.flatMap((mode, i) => [
+		{
+			label: s.labels[`vision:${mode}`],
+			type: 'radio' as const,
+			checked: (s.colorVision ?? 'none') === mode,
+			click: () => fire(win, `view:vision:${mode}`)
+		},
+		...(i === 0 ? [{ type: 'separator' as const }] : [])
+	]);
 }
 
 function recentItems(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[] {
@@ -198,6 +220,10 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{ label: label(s, 'openFolderNewWindow', 'Open Folder in New Window'), click: () => fire(win, 'file:open-folder-new-window') },
 				{ type: 'separator' },
 				{ label: label(s, 'save', 'Save'), accelerator: 'CmdOrCtrl+S', click: () => fire(win, 'file:save') },
+				...(s.canSaveTemplate
+					? [{ label: label(s, 'saveAsTemplate', 'Save as Template…'), click: () => fire(win, 'file:save-as-template') }]
+					: []),
+				...(s.canExportTypst ? [{ label: label(s, 'exportTypst', 'Export…'), click: () => fire(win, 'file:export-typst') }] : []),
 				// under File, where Word and Google Docs keep version history and writers look first
 				...(s.canLocalHistory
 					? [
@@ -241,6 +267,8 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{ label: label(s, 'zoomIn', 'Zoom In'), accelerator: 'CmdOrCtrl+Plus', click: () => fire(win, 'view:zoom-in') },
 				{ label: label(s, 'zoomOut', 'Zoom Out'), accelerator: 'CmdOrCtrl+-', click: () => fire(win, 'view:zoom-out') },
 				{ label: label(s, 'zoomReset', 'Reset Zoom'), accelerator: 'CmdOrCtrl+0', click: () => fire(win, 'view:zoom-reset') },
+				{ type: 'separator' },
+				{ label: label(s, 'colorVision', 'Simulate Color Vision'), submenu: colorVisionItems(win, s) },
 				{ type: 'separator' },
 				// Electron's role is a static "Toggle Full Screen"; mac apps say Enter / Exit and flip.
 				// Main can read the state directly, and watchWindowState rebuilds on the transition.
@@ -309,13 +337,7 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 									{ label: label(s, 'horizontalSpace', 'Horizontal Space'), click: () => fire(win, 'insert:hspace') }
 								]
 							},
-							{
-								...pm,
-								label: label(s, 'symbol', 'Symbol'),
-								submenu: Object.keys(s.labels)
-									.filter((key) => key.startsWith('symbol:'))
-									.map((key) => ({ label: s.labels[key], click: () => fire(win, `insert:${key}`) }))
-							},
+							{ ...pm, label: label(s, 'symbolPicker', 'Symbol…'), click: () => fire(win, 'insert:symbolpicker') },
 							{
 								...pm,
 								label: label(s, 'documentParts', 'Document Parts'),
@@ -341,6 +363,8 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					: dialect === 'typ'
 						? [
 								{ type: 'separator' as const },
+								{ ...pm, label: label(s, 'symbolPicker', 'Symbol…'), click: () => fire(win, 'insert:symbolpicker') },
+								{ ...pm, label: label(s, 'environment', 'Environment…'), click: () => fire(win, 'insert:environment') },
 								{ ...pm, label: label(s, 'includeFile', 'Include File…'), click: () => fire(win, 'insert:include') },
 								{ ...pm, label: label(s, 'sourceComment', 'Source Comment'), click: () => fire(win, 'insert:comment') }
 							]

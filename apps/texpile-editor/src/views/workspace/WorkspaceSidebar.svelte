@@ -8,7 +8,7 @@
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
 	import type { ReplaceSpec } from '$lib/search/replaceInFiles';
 	import SourceControlPanel from '$lib/workspace/scm/ui/SourceControlPanel.svelte';
-	import ExplorerSections from './ExplorerSections.svelte';
+	import TableOfContents from './TableOfContents.svelte';
 	import SidebarIconButton from './SidebarIconButton.svelte';
 	import { isBuildArtifact } from '$lib/workspace/buildArtifacts';
 	import { workspaceRoot, fileTree, activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
@@ -35,6 +35,7 @@
 	} from '$lib/workspace/scm/gitStore';
 	import { basename, type TreeEntry } from '$lib/workspace/fileSystem';
 	import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
+	import type { TocList } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 	import type { GitStatusEntry, GitLogEntry, GitFileChange } from '$lib/workspace/scm/git';
 	import { m } from '$lib/paraglide/messages';
 	import { combo } from '$lib/chrome/shortcutText';
@@ -47,12 +48,12 @@
 		guest: boolean;
 		view: 'explorer' | 'scm' | 'search';
 		scmBusy: boolean;
-		showToc: boolean;
+		/** what the Contents pane under the tree lists */
+		toc: TocList;
 		tocFraction: number;
 		/** the source control panel's own split: the timeline's share of it */
 		historyFraction: number;
 		scmSplitEl?: HTMLDivElement;
-		viewMode: 'visual' | 'source' | 'diff';
 		fileTreeRef?: { newAtRoot: (type: 'file' | 'dir' | 'include', defaultName?: string) => void; isEditing: () => boolean };
 		globalSearchRef?: GlobalSearch | null;
 		splitEl?: HTMLDivElement;
@@ -101,11 +102,10 @@
 		guest,
 		view = $bindable(),
 		scmBusy,
-		showToc,
+		toc,
 		tocFraction,
 		historyFraction,
 		scmSplitEl = $bindable(),
-		viewMode,
 		fileTreeRef = $bindable(),
 		globalSearchRef = $bindable(),
 		splitEl = $bindable(),
@@ -415,26 +415,24 @@
 					history={guest ? null : fileHistory}
 				/>
 			</div>
-			{#if showToc}
-				<!-- arrow keys resize when focused: the WAI-ARIA window-splitter pattern (role=separator + tabindex) -->
-				<!-- eslint-disable-next-line svelte/valid-compile -->
-				<div
-					class="hover:bg-primary-wash active:bg-primary-flood relative z-20 -my-[3px] h-1.5 shrink-0 cursor-row-resize bg-transparent transition-colors"
-					onmousedown={onStartTocResize}
-					onkeydown={onResizeTocByKey}
-					role="separator"
-					aria-orientation="horizontal"
-					aria-label={m.wsview_resize_toc_aria()}
-					tabindex="0"
-				></div>
-				<!-- scroll-inset-r moves the scrollbar, not the box, so border-t reaches the divider; whole pixels keep rows on the grid -->
-				<div
-					class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-t p-2"
-					style="flex: 0 1 round({tocFraction * 100}%, 1px)"
-				>
-					<ExplorerSections mode={viewMode === 'source' ? 'source' : 'visual'} onOpenFile={onOpenFileAt} />
-				</div>
-			{/if}
+			<!-- arrow keys resize when focused: the WAI-ARIA window-splitter pattern (role=separator + tabindex) -->
+			<!-- eslint-disable-next-line svelte/valid-compile -->
+			<div
+				class="hover:bg-primary-wash active:bg-primary-flood relative z-20 -my-[3px] h-1.5 shrink-0 cursor-row-resize bg-transparent transition-colors"
+				onmousedown={onStartTocResize}
+				onkeydown={onResizeTocByKey}
+				role="separator"
+				aria-orientation="horizontal"
+				aria-label={m.wsview_resize_toc_aria()}
+				tabindex="0"
+			></div>
+			<!-- scroll-inset-r moves the scrollbar, not the box, so border-t reaches the divider; whole pixels keep rows on the grid -->
+			<div
+				class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-t p-2"
+				style="flex: 0 1 round({tocFraction * 100}%, 1px)"
+			>
+				<TableOfContents list={toc} onOpenFile={onOpenFileAt} />
+			</div>
 		</div>
 	{/if}
 </aside>

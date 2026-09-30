@@ -5,7 +5,7 @@
 // by the editor that has to render it.
 import { describe, it, expect } from 'vitest';
 import { validateLatex } from 'mathlive';
-import { typstMathToLatex } from '$lib/languages/typst/visual/mathTranslate';
+import { typstMathToLatex } from '$lib/languages/typst/visual/convert/mathTranslate';
 
 /** what people actually write in Typst papers */
 const CORPUS = [

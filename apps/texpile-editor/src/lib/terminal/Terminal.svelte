@@ -8,6 +8,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { terminalTheme } from './terminalTheme';
 	import { attachTerminalClipboard } from './terminalClipboard';
+	import { TerminalResizeDebouncer } from './terminalResizeDebouncer';
 	import { observe } from '$lib/runes/observe.svelte';
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 
@@ -17,6 +18,8 @@
 	let host = $state<HTMLDivElement>();
 	let term: Terminal | null = null;
 	let fit: FitAddon | null = null;
+	let resizer: TerminalResizeDebouncer | null = null;
+	let answersDeviceAttributes = false;
 	let unsubs: Array<() => void> = [];
 	let id = newId();
 	// a shell keeps the PATH it was spawned with, so a change to the folders in Preferences makes it stale
@@ -105,6 +108,17 @@
 			return false;
 		}
 		shellName = res.shell ?? '';
+		// conpty repaints its screen after a resize; told so, xterm grows as conpty does and no line shows twice
+		if (res.windowsPty && term) term.options.windowsPty = res.windowsPty;
+		// conpty 1.22+ holds the shell until its device attributes query is answered; VS Code's answer
+		if (res.windowsPty?.backend === 'conpty' && term && !answersDeviceAttributes) {
+			answersDeviceAttributes = true;
+			term.parser.registerCsiHandler({ final: 'c' }, (params) => {
+				if (params.length !== 0 && !(params.length === 1 && params[0] === 0)) return false;
+				b.write(id, '\x1b[?61;4c');
+				return true;
+			});
+		}
 		status = 'ready';
 		return true;
 	}
@@ -139,12 +153,16 @@
 	export function refit(): void {
 		// offsetParent is null while display:none; fitting a zero box would resize the PTY
 		// to 1 row and reflow the shell. we refit again when shown.
-		if (!host || host.offsetParent === null) return;
+		if (!host || host.offsetParent === null || !term) return;
+		let dims: { cols: number; rows: number } | undefined;
 		try {
-			fit?.fit();
+			dims = fit?.proposeDimensions();
 		} catch {
 			/* fit before layout can throw; ignore */
 		}
+		// no same-size check: a width still waiting in the debouncer may be the one to undo
+		if (!dims || isNaN(dims.cols) || isNaN(dims.rows)) return;
+		resizer?.resize(dims.cols, dims.rows, false);
 	}
 
 	onMount(() => {
@@ -179,10 +197,21 @@
 				// xterm keeps its own colours (terminalTheme.ts); the ratio is what keeps them readable on
 				// whichever ground the theme gives it, the way VS Code's terminal does
 				minimumContrastRatio: 4.5,
+				// VS Code's: a clear screen goes into the scrollback, and a glyph wider than its cell is squeezed in
+				scrollOnEraseInDisplay: true,
+				rescaleOverlappingGlyphs: true,
 				theme: terminalTheme(resolvedMode.current)
 			});
 			fit = new FitAddon();
 			term.loadAddon(fit);
+			const t = term;
+			resizer = new TerminalResizeDebouncer(
+				() => el.offsetParent !== null,
+				() => term,
+				(cols, rows) => t.resize(cols, rows),
+				(cols) => t.resize(cols, t.rows),
+				(rows) => t.resize(t.cols, rows)
+			);
 			term.open(el);
 			unsubs.push(attachTerminalClipboard(term, el));
 			// xterm holds concrete colours, so a theme or mode switch while a shell is up re-reads them
@@ -269,6 +298,8 @@
 		return () => {
 			disposed = true;
 			ro?.disconnect();
+			resizer?.dispose();
+			resizer = null;
 			for (const u of unsubs) u();
 			unsubs = [];
 			b.kill(id);
@@ -285,50 +316,31 @@
 		</div>
 	{:else}
 		<!-- NO padding here: it must go on .xterm instead, see the note in the style block below -->
-		<div bind:this={host} class="terminal-host h-full w-full"></div>
+		<div bind:this={host} class="terminal-host relative h-full w-full"></div>
 	{/if}
 </div>
 
 <style>
-	/*
-	 * The inset has to live on .xterm, not on the host, or the terminal ends up wider than the space
-	 * it has and the scrollbar covers the end of the command line.
-	 *
-	 * FitAddon sizes the grid from `getComputedStyle(host).width` minus `.xterm`'s OWN padding. The
-	 * host is border-box (Tailwind preflight), and for a border-box element that computed width is the
-	 * BORDER box - so a px-2 py-1 on the host is counted as usable space and never subtracted by
-	 * anyone. Measured here with a 760px pane: FitAddon saw 760 and asked for 104 columns where only
-	 * 102 fit, leaving the last two under the scrollbar, and one row too many so the bottom line was
-	 * clipped as well. Padding on .xterm is subtracted, which is what makes the arithmetic close.
-	 *
-	 * .xterm-viewport is absolutely positioned with inset 0, and an absolute box resolves against its
-	 * containing block's PADDING box - so the scrollbar still sits flush against the right edge of the
-	 * pane while the text is inset. That is what we want anyway (it is where VS Code puts it).
-	 */
+	/* VS Code's terminal layout (its terminal.css and its copy of xterm.css), with an 8px gutter for
+	   its 20px. FitAddon subtracts .xterm's own padding, so the gutter goes there and never on the host;
+	   the scrollbar gets the right edge, and the grid sits on the bottom, any spare pixels above it */
 	.terminal-host :global(.xterm) {
-		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding-left: calc(var(--spacing) * 2);
 	}
-
-	/* Pin the scrollbar width for both themes. The app's global dark-mode rule (app.css:
-	   [data-mode='dark'] ::-webkit-scrollbar { width: 10px }) is a universal selector, so it matches
-	   this viewport too - and xterm measures the bar ONCE in its Viewport constructor and never
-	   re-reads it, so a theme toggle after mount would leave the reservation disagreeing with the real
-	   width. Not what caused the overlap above, but it is one fewer way for the arithmetic to drift.
-	   The thumb colours are here because the terminal has its own dark background regardless of the
-	   app's theme, so the app's scrollbar would look wrong on it. */
-	.terminal-host :global(.xterm-viewport::-webkit-scrollbar) {
-		width: calc(var(--spacing) * 2.5);
+	.terminal-host :global(.xterm .xterm-scrollable-element) {
+		margin-left: calc(var(--spacing) * -2);
+		padding-left: calc(var(--spacing) * 2);
 	}
-	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-track) {
-		background: transparent;
-	}
-	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-thumb) {
-		background-color: color-mix(in oklab, var(--terminal-fg) 30%, transparent);
-		border: 2px solid transparent;
-		background-clip: padding-box;
-		border-radius: calc(var(--radius-base) * 1.25);
-	}
-	.terminal-host :global(.xterm-viewport::-webkit-scrollbar-thumb:hover) {
-		background-color: color-mix(in oklab, var(--terminal-fg) 45%, transparent);
+	/* xterm.css paints this black for a native scrollbar the viewport no longer has; stopped short of
+	   the scrollbar so the area that takes the mouse ends where it starts */
+	.terminal-host :global(.xterm .xterm-viewport) {
+		background-color: transparent;
+		overflow-y: visible;
+		cursor: auto;
+		right: 14px;
 	}
 </style>

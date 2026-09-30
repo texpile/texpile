@@ -15,7 +15,9 @@ function fakeClient() {
 	const calls: Call[] = [];
 	// URIs the EDITOR has open (a live view on the workspace entry); the set must defer to these
 	const editorOwned = new Set<string>();
-	// URIs anybody has open, tracked the way the real workspace would
+	// URIs the visual editor streams: a workspace entry with no view, which is the editor's all the same
+	const streamed = new Set<string>();
+	// URIs the server has open, whoever opened them
 	const workspaceFiles = new Set<string>();
 	const client = {
 		didOpen: (f: { uri: string; version: number; languageId: string; doc: { toString(): string } }) => {
@@ -29,11 +31,10 @@ function fakeClient() {
 		notification: (_m: string, p: { textDocument: { uri: string; version: number }; contentChanges: { text: string }[] }) =>
 			calls.push({ kind: 'change', uri: p.textDocument.uri, text: p.contentChanges[0].text, version: p.textDocument.version }),
 		workspace: {
-			getFile: (uri: string) =>
-				workspaceFiles.has(uri) || editorOwned.has(uri) ? { getView: () => (editorOwned.has(uri) ? {} : null) } : null
+			getFile: (uri: string) => (streamed.has(uri) || editorOwned.has(uri) ? { getView: () => (editorOwned.has(uri) ? {} : null) } : null)
 		}
 	} as unknown as LSPClient;
-	return { client, calls, editorOwned, workspaceFiles };
+	return { client, calls, editorOwned, streamed, workspaceFiles };
 }
 
 const uriFor = (rel: string) => `file:///root/${rel}`;
@@ -42,6 +43,7 @@ const f = (rel: string, text: string) => ({ rel, text });
 describe('the project handed to the server', () => {
 	let calls: Call[];
 	let editorOwned: Set<string>;
+	let streamed: Set<string>;
 	let workspaceFiles: Set<string>;
 	let set: ProjectFileSet;
 
@@ -49,6 +51,7 @@ describe('the project handed to the server', () => {
 		const fake = fakeClient();
 		calls = fake.calls;
 		editorOwned = fake.editorOwned;
+		streamed = fake.streamed;
 		workspaceFiles = fake.workspaceFiles;
 		set = new ProjectFileSet(fake.client, uriFor);
 	});
@@ -98,6 +101,17 @@ describe('the project handed to the server', () => {
 		editorOwned.add(uriFor('a.typ')); // the host opened it in their editor
 		set.reconcile([f('a.typ', 'x edited by host')]);
 		expect(calls).toEqual([]); // no close, no change - the editor owns the URI now
+	});
+
+	it('leaves the file the visual editor streams alone, though it has no view', () => {
+		// a second opener would write the same URI on a version count of its own, and the stream's
+		// next incremental change would land on text it never sent
+		streamed.add(uriFor('main.typ'));
+		set.reconcile([f('main.typ', 'A'), f('lib.typ', 'B')]);
+		expect(calls).toEqual([{ kind: 'open', uri: uriFor('lib.typ'), text: 'B', version: 1, languageId: 'typst' }]);
+		calls.length = 0;
+		set.reconcile([f('main.typ', 'A edited'), f('lib.typ', 'B')]);
+		expect(calls).toEqual([]);
 	});
 
 	it('re-adopts a file the host editor lets go of', () => {

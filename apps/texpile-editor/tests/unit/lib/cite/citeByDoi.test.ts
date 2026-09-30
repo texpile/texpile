@@ -205,6 +205,39 @@ describe('citeWork', () => {
 		expect(inserted).toEqual([['watson1953molecular']]);
 	});
 
+	it('never writes BibTeX into the Hayagriva file a Typst project lists; it uses a .bib and says to list it', async () => {
+		const MAIN_TYP = '/paper/main.typ';
+		const YML = '/paper/refs.yml';
+		const hayagriva = 'knuth84:\n  type: article\n  title: Literate Programming\n';
+		disk.delete(BIB);
+		disk.set(YML, hayagriva);
+		disk.set(MAIN_TYP, '= Paper\n#bibliography("refs.yml")\n');
+		const typ = { kind: 'typ' as const, root: '/paper', openDoc: () => ({ path: MAIN_TYP, text: disk.get(MAIN_TYP)! }) };
+		mainFile.current = MAIN_TYP;
+		references.current = [];
+		const found = await lookUpWork(watson, typ);
+		expect(found).toMatchObject({ state: 'found', bibName: 'references.bib' });
+		await citeWork(found, typ);
+		expect(disk.get(YML)).toBe(hayagriva);
+		expect(parseBibtex(disk.get('/paper/references.bib')!)[0].key).toBe('watson1953molecular');
+		expect(inserted).toEqual([['watson1953molecular']]);
+		expect(toasts).toEqual([
+			{ kind: 'success', title: 'Added 1 reference' },
+			{ kind: 'warning', title: 'Add references.bib to your bibliography' }
+		]);
+	});
+
+	it('adds to the .bib a Typst project lists beside its Hayagriva file, and to a root-relative one', async () => {
+		const MAIN_TYP = '/paper/chapters/main.typ';
+		disk.set('/paper/refs.yml', 'knuth84:\n  title: Literate Programming\n');
+		disk.set(MAIN_TYP, '#bibliography(("/refs.yml", "/refs.bib"))\n');
+		const typ = { kind: 'typ' as const, root: '/paper', openDoc: () => ({ path: MAIN_TYP, text: disk.get(MAIN_TYP)! }) };
+		mainFile.current = MAIN_TYP;
+		await citeWork(await lookUpWork(watson, typ), typ);
+		expect(parseBibtex(disk.get(BIB)!).map((r) => r.key)).toEqual(['knuth1984texbook', 'watson1953molecular']);
+		expect(toasts.map((t) => t.kind)).toEqual(['success']);
+	});
+
 	it('only cites a work the project already has', async () => {
 		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}}');
 		const before = disk.get(BIB);

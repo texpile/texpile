@@ -4,6 +4,7 @@ import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspac
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { SourceEdit } from '$lib/workspace/suggestionsController';
 import { patchVisualFromSource } from '$lib/workspace/edits/visualSourcePatch';
+import type { OpenTexFile } from '$lib/languages/latex/symbols/latexSymbolPackage';
 
 export type OpenEditorDeps = {
 	doc: DocumentBuffer;
@@ -27,6 +28,15 @@ export async function editOpenFile(
 	if (!cm || cm.state.doc.toString() !== before) return false;
 	cm.dispatch({ changes: edit ? [edit].flat() : changedSpan(before, next) });
 	return true;
+}
+
+/** the open file for code outside the workspace that edits it whole (the LaTeX symbol picker's \usepackage) */
+export function openTexFileOf(d: OpenEditorDeps): OpenTexFile {
+	return {
+		path: () => d.doc.path,
+		text: () => (d.kind() === 'tex' ? d.doc.texSource : null),
+		edit: (before, next) => editOpenFile(d, before, next)
+	};
 }
 
 /** the one range that turns `before` into `next`: all but their shared start and end */

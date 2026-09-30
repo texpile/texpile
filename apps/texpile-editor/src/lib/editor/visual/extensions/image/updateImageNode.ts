@@ -68,6 +68,14 @@ export function updateImageNode(nodes: Schema['spec']['nodes'], pluginSettings: 
 						}))
 						.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 				}
+			},
+			// a picture pasted from another app, which never had a caption; editor/paste decides whether it can stay
+			{
+				tag: 'img[src]',
+				getAttrs(dom) {
+					if (typeof dom === 'string') return {};
+					return { src: dom.getAttribute('src'), alt: dom.getAttribute('alt') || null, numbered: false, showCaption: false };
+				}
 			}
 		]
 	});

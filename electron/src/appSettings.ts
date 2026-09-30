@@ -24,6 +24,7 @@ const DEFAULT_SETTINGS = {
 	sourceLineWrap: true, // soft-wrap long lines in Source mode
 	visualJustify: true, // paragraphs in the visual editor fill the column edge to edge
 	visualHyphenate: true, // long words may split at line ends in justified text
+	smartPaste: true, // formatting, tables and Markdown from other apps come in converted on paste
 	typstPreviewFollow: false,
 	editorKeymap: 'default', // modal keybindings for the source editor: 'default' | 'vim' | 'emacs'
 	uiLocale: 'en', // UI display language, not the LaTeX document language. Overridden per-read by

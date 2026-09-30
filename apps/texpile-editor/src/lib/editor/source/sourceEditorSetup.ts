@@ -4,6 +4,7 @@ import {
 	EditorView,
 	keymap,
 	drawSelection,
+	tooltips,
 	lineNumbers,
 	highlightActiveLine,
 	rectangularSelection,
@@ -21,13 +22,18 @@ import { latexAutocomplete, latexIntellisense } from '$lib/languages/latex/intel
 import { foldMarkerDom, foldMarkerTheme } from '$lib/languages/latex/intellisense/fold';
 import { mdSourceShortcuts } from '$lib/languages/markdown/source/sourceExtensions';
 import { typSourceShortcuts } from '$lib/languages/typst/source/sourceExtensions';
+import { typstEnterContinuation } from '$lib/languages/typst/source/enterContinuation';
+import { typstGoTo } from '$lib/languages/typst/intellisense/actions/goToDefinition';
+import { createProjectFile, typstQuickFix } from '$lib/languages/typst/intellisense/actions/quickFix';
+import { typstColorSwatches } from '$lib/languages/typst/intellisense/actions/colorSwatches';
+import { guestSession } from '$lib/collab/guestSession';
 import { mdPathCompletion } from '$lib/languages/markdown/pathCompletion';
 import { cmSpellcheck } from '$lib/editor/spellcheck/cmSpellcheck';
 import { lintGutter } from '@codemirror/lint';
 import { comments, commentGutterHandlers } from '$lib/editor/visual/extensions/comments';
 import { mathPreview } from '$lib/editor/source/extensions/math-preview/mathPreview';
 import { starterGhost } from '$lib/editor/source/extensions/starter-ghost/starterGhost';
-import { synctexFlash } from '$lib/languages/latex/source/synctexFlash';
+import { flashLineEffect, synctexFlash } from '$lib/languages/latex/source/synctexFlash';
 import { latexListContinuation } from '$lib/languages/latex/source/listContinuation';
 import { bibtex } from '$lib/languages/bib/bibtexLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
@@ -41,6 +47,9 @@ import { tocCaretListener } from '$lib/editor/visual/extensions/tableofcontents/
 import { cmDecisionSteps } from './extensions/cmDecisionStep';
 import { cmConflicts } from './cmConflicts';
 import { cmChangeMarkers } from './cmChangeMarkers';
+import { sourcePaste } from './paste/cmSourcePaste';
+import type { PasteDialect } from '$lib/editor/paste/pastedImages';
+import { dirname } from '$lib/workspace/fileSystem';
 
 export type SourceSetupDeps = {
 	fileFor: string;
@@ -63,8 +72,15 @@ export type SourceSetupDeps = {
 	updateListener: (u: ViewUpdate) => void;
 };
 
+function pasteDialectOf(fileFor: string): PasteDialect | null {
+	if (/\.tex$/i.test(fileFor)) return 'latex';
+	if (/\.typ$/i.test(fileFor)) return 'typst';
+	return /\.(md|markdown)$/i.test(fileFor) ? 'markdown' : null;
+}
+
 export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 	const { fileFor, collab, onAddComment, onSelectComment, onHistoryBoundary } = deps;
+	const pasteDialect = pasteDialectOf(fileFor);
 	return [
 		// gutters render in extension order: lint goes before lineNumbers so it lands on their left
 		...(!fileFor || /\.(tex|typ)$/i.test(fileFor) ? [lintGutter({ hoverTime: 0 })] : []),
@@ -96,6 +112,9 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		...(deps.readOnly || collab?.readOnly ? [] : [cmConflicts()]),
 		deps.keymapConf.of([]),
 		drawSelection(),
+		// tooltips fit in the editor, not the window: tinymist's hover sits above its line and otherwise
+		// covered the toolbar, under the toolbar's own layer
+		tooltips({ tooltipSpace: (view) => view.scrollDOM.getBoundingClientRect() }),
 		// multiple cursors: the keymaps already bind the commands, but every transaction is
 		// normalized down to one range until the state allows extra ones
 		EditorState.allowMultipleSelections.of(true),
@@ -128,9 +147,30 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						? // completion/hover/diagnostics arrive over LSP, filled into lspConf below. the fold
 							// RAIL is mounted here rather than with the language, whose parser is a dynamic
 							// import: a gutter arriving a second late shoves the text sideways on every open
-							[typSourceShortcuts(), cmSpellcheck('typst'), foldGutter({ markerDOM: foldMarkerDom }), foldMarkerTheme]
+							[
+								typSourceShortcuts(),
+								// ahead of defaultKeymap below, as latexListContinuation is
+								typstEnterContinuation(),
+								// server-backed, so inert until the LSP extension lands in lspConf
+								typstGoTo({ onOpenFileAt: deps.onOpenFileAt, flash: (pos) => flashLineEffect.of(pos) }),
+								// a guest's missing file would be created on its own disk, not the project's
+								typstQuickFix({ onCreateFile: guestSession.active ? undefined : createProjectFile }),
+								typstColorSwatches(),
+								cmSpellcheck('typst'),
+								foldGutter({ markerDOM: foldMarkerDom }),
+								foldMarkerTheme
+							]
 						: []),
 		deps.lspConf.of([]),
+		...(pasteDialect
+			? [
+					sourcePaste({
+						dialect: pasteDialect,
+						imageDir: () => dirname(fileFor) || null,
+						stopUndoCapture: () => deps.undoManager?.stopCapturing()
+					})
+				]
+			: []),
 		synctexFlash(), // flash the line jumped to by SyncTeX inverse search / Find-in-Files
 		// compact find/replace widget, floated top-right (styles in SourceEditor)
 		texpileSearch(),

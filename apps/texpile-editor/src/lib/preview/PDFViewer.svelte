@@ -4,6 +4,7 @@
 	import PdfActionsBridge from './PdfActionsBridge.svelte';
 	import PreviewHeader from './PreviewHeader.svelte';
 	import PdfSearchBar from '$lib/pdf-view/PdfSearchBar.svelte';
+	import ColorVisionFilter from './colorVision/ColorVisionFilter.svelte';
 	import { pdfStore } from '$lib/stores/pdfStore';
 	import { pdfFindToggle } from '$lib/stores/editorStore';
 	import { PictureInPicture2 } from '@lucide/svelte';
@@ -154,17 +155,19 @@
 			<!-- the find bar drops over the pages, under the toolbar -->
 			<div class="relative flex min-h-0 flex-1 flex-col">
 				<PdfSearchBar open={findOpen} onClose={() => (findOpen = false)} />
-				<PdfRenderer
-					{onPageClick}
-					darkMode={dark && layout.current.pdfDarkPages}
-					backgroundColor="var(--pdf-page-area-bg)"
-					pageShadow={dark ? '0 2px 8px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4)' : undefined}
-					scrollbarThumbColor="color-mix(in oklab, var(--color-surface-950-50) 30%, transparent)"
-					scrollbarTrackColor="transparent"
-					scrollbarThumbHoverColor="color-mix(in oklab, var(--color-surface-950-50) 45%, transparent)"
-					scrollbarWidth="10px"
-					scrollInsetRight={inEditor ? '3px' : undefined}
-				/>
+				<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
+					<PdfRenderer
+						{onPageClick}
+						darkMode={dark && layout.current.pdfDarkPages}
+						backgroundColor="var(--pdf-page-area-bg)"
+						pageShadow={dark ? '0 2px 8px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4)' : undefined}
+						scrollbarThumbColor="color-mix(in oklab, var(--color-surface-950-50) 30%, transparent)"
+						scrollbarTrackColor="transparent"
+						scrollbarThumbHoverColor="color-mix(in oklab, var(--color-surface-950-50) 45%, transparent)"
+						scrollbarWidth="10px"
+						scrollInsetRight={inEditor ? '3px' : undefined}
+					/>
+				</ColorVisionFilter>
 			</div>
 		</PdfViewer>
 	</div>

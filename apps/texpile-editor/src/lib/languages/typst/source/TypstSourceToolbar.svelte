@@ -15,6 +15,7 @@
 		Link as LinkIcon,
 		SquareRadical,
 		Sigma,
+		Omega,
 		Image as ImageIcon,
 		Minus
 	} from '@lucide/svelte';
@@ -23,6 +24,8 @@
 	import SourceToolbarButton, { type SourceToolbarButtonProps } from '$lib/editor/source/toolbar/SourceToolbarButton.svelte';
 	import ToolbarOverflow from '$lib/editor/visual/toolbar/ToolbarOverflow.svelte';
 	import TypstSourceTableDropdown from './TypstSourceTableDropdown.svelte';
+	import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
+	import { typstSymbolSet } from '../symbols/typstSymbolSet';
 	import {
 		computeToggleDelim,
 		computeWrap,
@@ -44,6 +47,11 @@
 			view.dispatch(build(view.state));
 			view.focus();
 		};
+	}
+
+	function openSymbols(e: MouseEvent) {
+		e.preventDefault();
+		void symbolPicker.show(typstSymbolSet);
 	}
 </script>
 
@@ -125,6 +133,8 @@
 				payload: { label: m.srctoolbar_inline_math_aria(), action: run((s) => computeToggleDelim(s, '$')), Icon: Sigma }
 			},
 			{ id: 'mathBlock', render: button, payload: { label: m.blockmenu_math_block(), action: run(computeMathBlock), Icon: SquareRadical } },
+			// Omega, as on the LaTeX bar: Sigma already means "wrap in inline math"
+			{ id: 'symbols', render: button, payload: { label: m.symbols_title(), action: openSymbols, Icon: Omega } },
 			{ id: 'link', render: button, payload: { label: m.mdtoolbar_link(), action: run(computeLink), Icon: LinkIcon, divider: true } },
 			{ id: 'table', render: table },
 			{ id: 'image', render: button, payload: { label: m.menubar_insert_image(), action: run(computeFigureSkeleton), Icon: ImageIcon } },

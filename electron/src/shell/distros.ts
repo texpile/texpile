@@ -22,6 +22,8 @@ export type ToolDistro = {
 	detail: string;
 	/** the copy the shell PATH reaches on its own */
 	onPath: boolean;
+	/** Texpile's own tinymist, the one Preferences › Toolchain installs */
+	managed: boolean;
 };
 
 const EXE = process.platform === 'win32' ? '.exe' : '';
@@ -66,6 +68,11 @@ export function latexPlaces(home = os.homedir(), env = process.env): DistroPlace
 
 export function typstPlaces(userData: string): DistroPlaces {
 	return { program: 'tinymist', yearRoots: [], binDirs: [path.dirname(managedTinymistPath(userData))], pathDirs: pathDirs() };
+}
+
+/** the folder of Texpile's own tinymist as a found install's dir spells it */
+export function managedDistroDir(userData: string): string {
+	return realDir(path.dirname(managedTinymistPath(userData)), 'tinymist');
 }
 
 function hasProgram(dir: string, program: string): boolean {
@@ -130,27 +137,37 @@ export function candidateBinDirs(places: DistroPlaces, extra: string[] = []): { 
 export function distroName(family: DistroFamily, out: string): string | null {
 	if (family === 'typst') {
 		const v = parseTinymistVersion(out);
-		return v.typstVersion === 'unknown' ? null : `Typst ${v.typstVersion}, tinymist ${v.version}`;
+		if (v.typstVersion === 'unknown') return null;
+		return v.version === 'unknown' ? `Typst ${v.typstVersion}` : `Typst ${v.typstVersion}, tinymist ${v.version}`;
 	}
 	const line = firstInformativeLine(out);
 	if (!line) return null;
 	return /\((TeX Live [^)]*|MiKTeX [^)]*)\)/.exec(line)?.[1] ?? line;
 }
 
-function probeDir(
+function versionOutput(command: string, flag: string): Promise<string | null> {
+	return new Promise((resolve) => {
+		execFile(command, [flag], { timeout: 10000, windowsHide: true }, (err, stdout, stderr) => resolve(err ? null : `${stdout}\n${stderr}`));
+	});
+}
+
+async function probeDir(
 	family: DistroFamily,
 	program: string,
-	{ dir, dirs, onPath }: { dir: string; dirs: string[]; onPath: boolean }
+	{ dir, dirs, onPath }: { dir: string; dirs: string[]; onPath: boolean },
+	managedDir: string | null
 ): Promise<ToolDistro | null> {
-	return new Promise((resolve) => {
-		execFile(path.join(dir, program + EXE), ['--version'], { timeout: 10000, windowsHide: true }, (err, stdout, stderr) => {
-			const out = `${stdout}\n${stderr}`;
-			const name = err ? null : distroName(family, out);
-			if (!name) return resolve(null);
-			// tinymist's first version-shaped line is a build timestamp, so the name says more
-			resolve({ family, name, dir, dirs, detail: family === 'typst' ? name : (firstInformativeLine(out) ?? name), onPath });
-		});
-	});
+	const command = path.join(dir, program + EXE);
+	const long = await versionOutput(command, '--version');
+	if (long === null) return null;
+	// a tinymist release build names its own version only in the short form (see parseTinymistVersion)
+	const short = family === 'typst' && parseTinymistVersion(long).version === 'unknown' ? await versionOutput(command, '-V') : null;
+	const out = short === null ? long : `${long}\n${short}`;
+	const name = distroName(family, out);
+	if (!name) return null;
+	// tinymist's first version-shaped line is a build timestamp, so the name says more
+	const managed = managedDir !== null && folderKey(dir) === folderKey(managedDir);
+	return { family, name, dir, dirs, detail: family === 'typst' ? name : (firstInformativeLine(out) ?? name), onPath, managed };
 }
 
 /** `configured` is the folder list as settings hold it */
@@ -158,12 +175,14 @@ export async function detectDistros(configured: unknown, userData: string): Prom
 	await shellEnvReady();
 	const listed = Array.isArray(configured) ? configured.filter((d): d is string => typeof d === 'string' && d.trim() !== '') : [];
 	const extra = listed.map((d) => resolveToolDir(d));
-	const families: [DistroFamily, DistroPlaces][] = [
-		['latex', latexPlaces()],
-		['typst', typstPlaces(userData)]
+	const families: [DistroFamily, DistroPlaces, string | null][] = [
+		['latex', latexPlaces(), null],
+		['typst', typstPlaces(userData), managedDistroDir(userData)]
 	];
 	const found = await Promise.all(
-		families.flatMap(([family, places]) => candidateBinDirs(places, extra).map((c) => probeDir(family, places.program, c)))
+		families.flatMap(([family, places, managedDir]) =>
+			candidateBinDirs(places, extra).map((c) => probeDir(family, places.program, c, managedDir))
+		)
 	);
 	return found.filter((d): d is ToolDistro => d !== null);
 }

@@ -51,6 +51,8 @@ export type PaletteActions = {
 	/** undefined when sharing is unavailable (a guest, or the browser build) */
 	openShareSession?: () => void;
 	newFile(ext?: string): void;
+	/** undefined where there is nowhere to keep templates (a guest, or the browser build) */
+	saveAsTemplate?: () => void;
 	openFolder(): void;
 	/** absent where git cannot be run: the web build, an older desktop preload */
 	cloneRepository?: () => void;
@@ -61,12 +63,18 @@ export type PaletteActions = {
 	openTypstPreview(): void;
 	/** the compile target is Typst: New-file commands offer .typ instead of .tex */
 	isTypstProject(): boolean;
+	/** the Export dialog for a Typst main file: hosts in the desktop app, with tinymist's bridge */
+	canExportTypst?(): boolean;
+	exportTypst?(): void;
 	/** Zotero citation pick: available on hosts in the desktop app, for the matching dialect */
 	canZoteroCite?(): boolean;
 	insertZoteroCitation?(): void;
 	/** Cite by DOI or arXiv ID: the same gate without Zotero */
 	canCiteByDoi?(): boolean;
 	citeByDoi?(): void;
+	/** the symbol picker: a .typ or .tex file open in the visual or source editor */
+	canInsertSymbol?(): boolean;
+	insertSymbol?(): void;
 };
 
 /** 'files' is the picker: files only, listed before anything is typed. 'branches' is Switch

@@ -4,8 +4,8 @@
 // and a list run was always re-emitted tight (T16). Each block now remembers the gap before it.
 import { describe, it, expect } from 'vitest';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import type { Node } from 'prosemirror-model';
 

@@ -1,7 +1,8 @@
-import { AlignLeft, BookMarked, BookPlus, Keyboard, ArrowDownToLine, ArrowUpToLine, Undo2 } from '@lucide/svelte';
+import { AlignLeft, BookMarked, BookPlus, ClipboardPaste, Keyboard, Omega, ArrowDownToLine, ArrowUpToLine, Undo2 } from '@lucide/svelte';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { changedLines, nextChange, previousChange, revertChange, revertChangeAt } from '$lib/editor/source/cmChangeMarkers';
 import { conflictBlocks, nextConflict, previousConflict } from '$lib/editor/source/cmConflicts';
+import { hasSourcePaste, showPasteAsMenu } from '$lib/editor/source/paste/cmSourcePaste';
 import { isMac } from '$lib/platform';
 import { settings, updateSettings, type AppSettings } from '$lib/settings';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
@@ -29,6 +30,15 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			icon: BookPlus,
 			run: () => a.citeByDoi?.()
 		});
+	if (a.insertSymbol && a.canInsertSymbol?.())
+		items.push({
+			id: 'editor.symbol',
+			label: m.symbols_title(),
+			group,
+			keywords: 'typst latex sym emoji symbol character glyph unicode arrow greek letter shorthand detexify math',
+			icon: Omega,
+			run: () => a.insertSymbol?.()
+		});
 	if (a.hasFile() && a.canFormat())
 		items.push({
 			id: 'editor.format',
@@ -38,8 +48,18 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			icon: AlignLeft,
 			run: () => a.openFormatModal()
 		});
-	// the change bars' own keys, Alt+F5 and Shift+Alt+F5, found where people look for a command
 	const view = sourceCmView.current;
+	// the Paste As button's choices, for a paste not made yet
+	if (view && hasSourcePaste(view.state) && !view.state.readOnly)
+		items.push({
+			id: 'editor.pasteAs',
+			label: m.paste_as_command(),
+			group,
+			keywords: 'paste clipboard plain text table spreadsheet excel sheets link markdown formatting convert',
+			icon: ClipboardPaste,
+			run: () => void showPasteAsMenu(view)
+		});
+	// the change bars' own keys, Alt+F5 and Shift+Alt+F5, found where people look for a command
 	if (view && changedLines(view.state).length) {
 		for (const [id, label, step, icon, shift] of [
 			['editor.nextChange', m.palette_next_change(), nextChange, ArrowDownToLine, false],

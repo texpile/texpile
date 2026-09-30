@@ -3,11 +3,13 @@ import { app, ipcMain } from 'electron';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import * as fs from 'node:fs';
+import * as os from 'node:os';
 import * as path from 'node:path';
 import * as typstService from '../typstService';
 import { withPathDirs } from '../shell/pathDirs';
 import { shellEnvReady } from '../shell/shellEnv';
 import { killTree } from '../shell/killTree';
+import { windowsPtyFor } from '../shell/windowsPty';
 import { timeSync } from '../startupStats';
 
 // node-pty is a native module: if it isn't built for this Electron ABI the require throws,
@@ -22,6 +24,7 @@ try {
 	console.error('node-pty unavailable, run `pnpm electron:rebuild`:', e instanceof Error ? e.message : e);
 }
 const ptys = new Map<string, PtyProcess>();
+const windowsPty = windowsPtyFor(process.platform, os.release());
 const execFileP = promisify(execFile);
 
 /** pids of the shell's direct children: the foreground job a Stop should end */
@@ -60,16 +63,13 @@ function defaultShell(): string {
  *
  * Nothing else needs adding: the user's own installs are on PATH, and shellEnvReady() has already
  * recovered the login-shell PATH this process was launched without.
+ *
+ * LAST on PATH, as resolveTinymist tries it last: a tinymist of the user's own must compile what
+ * it also serves intellisense for. Added even before it exists, so a terminal opened before the
+ * one-click install finds the copy the install puts there.
  */
 function terminalEnv(): NodeJS.ProcessEnv {
-	const dirs: string[] = [];
-	try {
-		const managed = typstService.managedTinymistPath(app.getPath('userData'));
-		if (fs.existsSync(managed)) dirs.push(path.dirname(managed));
-	} catch {
-		// an unreadable userData dir must never stop a terminal from opening
-	}
-	return withPathDirs(process.env, dirs);
+	return withPathDirs(process.env, [path.dirname(typstService.managedTinymistPath(app.getPath('userData')))], true);
 }
 
 type TerminalSpawnOpts = {
@@ -103,7 +103,7 @@ export function registerTerminalIpc(): void {
 		// (cmd wants `&`, everything else `;`)
 		const shellPath = defaultShell();
 		const shell = shellPath.split(/[\\/]/).pop() ?? shellPath;
-		if (ptys.has(id)) return { ok: true, shell };
+		if (ptys.has(id)) return { ok: true, shell, windowsPty };
 		let proc: PtyProcess;
 		try {
 			// macOS: login shell, so /etc/zprofile runs path_helper and picks up /etc/paths.d
@@ -151,7 +151,7 @@ export function registerTerminalIpc(): void {
 			if (!wc.isDestroyed()) wc.send('terminal:exit', { id, code: exitCode });
 		});
 		ptys.set(id, proc);
-		return { ok: true, shell };
+		return { ok: true, shell, windowsPty };
 	});
 
 	ipcMain.on('terminal:input', (_e, { id, data } = {} as { id?: string; data?: string }) => {

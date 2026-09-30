@@ -13,8 +13,10 @@ import { EditorView } from '@codemirror/view';
 import { box } from '$lib/runes/box.svelte';
 import { observe } from '$lib/runes/observe.svelte';
 import { settings } from '$lib/settings';
+import { mainFile } from '$lib/workspace/workspaceStore';
 import { applyTextEdits, type LspTextEdit } from './textEdits';
-import { normalizeCompletionJson } from './completionNormalize';
+import { normalizeCompletionJson } from './completion/completionNormalize';
+import { TypstWorkspace } from './typstWorkspace';
 
 // @codemirror/lsp-client caps its SIGNATURE tooltips but not its hover tooltips, and tinymist's
 // hover for a builtin is the function's whole documentation page - unconstrained, that renders
@@ -86,7 +88,7 @@ function createTransport(): Transport {
 	});
 	return {
 		send(message: string) {
-			bridge()?.send(message);
+			bridge()?.send(withInitializationOptions(message));
 		},
 		subscribe(handler: (value: string) => void) {
 			handlers.add(handler);
@@ -97,6 +99,21 @@ function createTransport(): Transport {
 	};
 }
 
+/**
+ * The settings, on the `initialize` request itself.
+ *
+ * tinymist reads some settings only when it builds the project, and a later didChangeConfiguration
+ * does not rebuild it for them - the lint switch is one, so pushed after the handshake it never took
+ * effect. @codemirror/lsp-client has no initializationOptions of its own, so they are added here, on
+ * the way out.
+ */
+function withInitializationOptions(message: string): string {
+	if (!message.includes('"initialize"')) return message;
+	const msg = JSON.parse(message) as { method?: string; params?: Record<string, unknown> };
+	if (msg.method !== 'initialize') return message;
+	return JSON.stringify({ ...msg, params: { ...msg.params, initializationOptions: serverSettings } });
+}
+
 type Session = {
 	root: string | null;
 	client: LSPClient;
@@ -105,6 +122,18 @@ type Session = {
 };
 
 let session: Session | null = null;
+
+/** the host's open .typ as its editor last had it, whether or not a server is running to take it */
+let streamed: { root: string | null; uri: string; text: string } | null = null;
+
+function workspaceOf(client: LSPClient): TypstWorkspace | null {
+	return client.workspace instanceof TypstWorkspace ? client.workspace : null;
+}
+
+/** the running server's workspace, only if it serves `root`; never starts one */
+function runningWorkspace(root: string | null): TypstWorkspace | null {
+	return session && session.root === root ? workspaceOf(session.client) : null;
+}
 
 /**
  * Bumped when the server process DIES out from under us (never for our own stops - the spawn
@@ -137,6 +166,20 @@ function hookExit(): void {
 		dropSession();
 		typstServerGen.current += 1;
 	});
+	// a server running the copy that changed hears about it as an exit (main stops it); one that
+	// never started for want of tinymist only hears this, and tries again
+	b.onTinymistFinished?.((result) => {
+		if (result.ok) retryUnstartedSession();
+	});
+}
+
+function retryUnstartedSession(): void {
+	const tried = session;
+	void tried?.started.then((up) => {
+		if (up || session !== tried) return;
+		dropSession();
+		typstServerGen.current += 1;
+	});
 }
 
 // the folders in Preferences moved PATH: the running server is the old pick, the next start is the new one.
@@ -151,6 +194,67 @@ observe(
 		dropSession();
 		bridge()?.stopLsp();
 		typstServerGen.current += 1;
+	}
+);
+
+/**
+ * Texpile's tinymist settings, sent WHOLE on every push.
+ *
+ * tinymist does not merge a didChangeConfiguration into what it has: every key a push leaves out
+ * goes back to its default (config.rs, `update_by_map`). A push of the export path alone turned the
+ * formatter off, and one of the formatter alone forgot the export path - so every push goes through
+ * pushSettings, with all of them.
+ */
+const serverSettings: {
+	/** tinymist ships with the formatter disabled; typstyle is the one its VS Code extension binds */
+	formatterMode: 'typstyle';
+	/**
+	 * tinymist's own checks beyond the compiler's: a font family that does not exist (with the
+	 * nearest names), a `#set`/`#show` rule that cannot take effect where it stands, a value a
+	 * function silently throws away. Off unless asked for, and read only at startup (see
+	 * withInitializationOptions). `onType` because nothing here ever sends didSave - on its
+	 * `onSave` default the checks would never run at all.
+	 */
+	lint: { enabled: boolean; when: 'onType' };
+	/** where exportPdf writes; set per export (see exportTypstPdf) */
+	outputPath?: string;
+} = { formatterMode: 'typstyle', lint: { enabled: true, when: 'onType' } };
+
+function pushSettings(client: LSPClient): void {
+	client.notification('workspace/didChangeConfiguration', { settings: serverSettings });
+}
+
+/**
+ * Make the folder's main file tinymist's entry, whichever file is open.
+ *
+ * Unpinned, tinymist compiles whatever document was touched last, so a chapter open on its own is
+ * checked as a document of its own: every `@label` and `@citation` defined elsewhere is an error,
+ * the main's `#set` rules do not apply, and completion offers none of the main's labels. Pinned, the
+ * chapter is checked as part of the document it belongs to. A main that is not a .typ (a LaTeX
+ * project with a scratch .typ) pins nothing, which hands tinymist back its own choice.
+ */
+function pinMain(client: LSPClient, main: string | null): void {
+	const entry = main && /\.typ$/i.test(main) ? main : null;
+	client
+		.request<{ command: string; arguments: unknown[] }, unknown>('workspace/executeCommand', {
+			command: 'tinymist.pinMain',
+			arguments: [entry]
+		})
+		.catch(() => {
+			/* an old tinymist without the command: it keeps choosing its own entry, as before */
+		});
+}
+
+// the main file changed (the user picked another, or a different folder opened): re-pin the running
+// server. Module level for the same reason as the tool-folder watch above.
+observe(
+	() => mainFile.current,
+	(main) => {
+		const s = session;
+		if (!s) return;
+		void s.started.then((ok) => {
+			if (ok && session === s) void s.client.initializing.then(() => pinMain(s.client, main));
+		});
 	}
 );
 
@@ -187,11 +291,12 @@ export async function typstClient(root: string | null): Promise<LSPClient | null
 	hookExit();
 	if (session && session.root === root) return (await session.started) ? session.client : null;
 
-	stopTypstClient();
+	endSession();
 
 	const client = new LSPClient({
 		rootUri: root ? fileUri(root) : undefined,
 		extensions: typstServerExtensions(),
+		workspace: (c) => new TypstWorkspace(c),
 		notificationHandlers: {
 			// tinymist's click-to-jump: the framed preview reports the span the user clicked over its
 			// own websocket, the server resolves it to a file and range, and it lands here. Same
@@ -205,10 +310,20 @@ export async function typstClient(root: string | null): Promise<LSPClient | null
 		// the 3s default times out completions that would have arrived
 		timeout: 10000
 	});
+	// a fresh server (first start, restart, folder switch) opens the visual editor's document too;
+	// the workspace announces it once the client connects
+	if (streamed && streamed.root === root) workspaceOf(client)?.openText(streamed.uri, 'typst', streamed.text);
 
 	const started = b.startLsp(root).then((res) => {
 		if (!res.ok) return false;
 		client.connect(createTransport());
+		// the entry, as soon as the handshake allows anything to be sent (the settings went with it)
+		client.initializing.then(
+			() => pinMain(client, mainFile.current),
+			() => {
+				/* the server died during initialize; the exit hook handles that */
+			}
+		);
 		return true;
 	});
 
@@ -216,11 +331,40 @@ export async function typstClient(root: string | null): Promise<LSPClient | null
 	return (await started) ? client : null;
 }
 
+/**
+ * Hand the server the host's open .typ as the editor has it, or pass a null `path` to let go.
+ *
+ * The source editor's plugin streams its own edits; the visual editor has no plugin, so without
+ * this the server compiled the file on DISK - the preview trailed typing by an autosave plus the
+ * watcher's lag. An edit is recorded, not sent: syncTypstDocuments() sends, so the caller can
+ * debounce typing, and any request that syncs first (a preview scroll, a guest's completion) sees
+ * the newest text regardless. True when an edit is waiting on that sync; opening and closing go
+ * out at once. Never starts the server: a document is no reason to spend its ~90MB, and whichever
+ * server starts next opens it.
+ */
+export function streamTypstDocument(root: string | null, path: string | null, text: string): boolean {
+	const previous = streamed;
+	const uri = path ? fileUri(path) : null;
+	streamed = uri ? { root, uri, text } : null;
+	const same = !!previous && previous.uri === uri && previous.root === root;
+	if (previous && !same) runningWorkspace(previous.root)?.closeText(previous.uri);
+	if (!uri) return false;
+	const workspace = runningWorkspace(root);
+	if (same) return workspace?.updateText(uri, text) ?? false;
+	workspace?.openText(uri, 'typst', text);
+	return false;
+}
+
+/** send the running server whatever its open documents have gained since the last sync */
+export function syncTypstDocuments(): void {
+	session?.client.sync();
+}
+
 /** what `tinymist.doStartPreview` answers with */
 export async function formatTypstDocument(root: string | null, file: string, text: string): Promise<string> {
 	const client = await typstClient(root);
 	if (!client) throw new Error('tinymist is not available');
-	client.notification('workspace/didChangeConfiguration', { settings: { formatterMode: 'typstyle' } });
+	pushSettings(client);
 	const edits = await client.request<
 		{ textDocument: { uri: string }; options: { tabSize: number; insertSpaces: boolean } },
 		LspTextEdit[] | null
@@ -306,12 +450,28 @@ export async function exportTypstPdf(root: string | null, file: string, outDir?:
 	if (!client) return null;
 	const dir = (outDir ?? '').replace(/\\/g, '/').replace(/\/+$/, '');
 	const pattern = dir && dir !== '.' ? `$root/${dir}/$name` : '$root/$dir/$name';
-	client.notification('workspace/didChangeConfiguration', { settings: { outputPath: pattern } });
+	serverSettings.outputPath = pattern;
+	pushSettings(client);
+	client.sync(); // the last keystrokes may still be waiting on a sync debounce
 	const res = await client.request<{ command: string; arguments: unknown[] }, { path?: string | null } | null>('workspace/executeCommand', {
 		command: 'tinymist.exportPdf',
 		arguments: [file]
 	});
 	return res?.path ?? null;
+}
+
+/**
+ * The client, with tinymist told to write the next export to `outputPath` and sent the newest text,
+ * for the Export dialog (languages/typst/export), whose own request follows. Where to write travels
+ * as configuration for the reason exportTypstPdf gives. Null without a server.
+ */
+export async function typstClientForExport(root: string | null, outputPath: string): Promise<LSPClient | null> {
+	const client = await typstClient(root);
+	if (!client) return null;
+	serverSettings.outputPath = outputPath;
+	pushSettings(client);
+	client.sync(); // as exportTypstPdf: the last keystrokes may still be waiting on a sync debounce
+	return client;
 }
 
 /**
@@ -446,10 +606,15 @@ function observeDiagnostics(json: string): void {
 	for (const fn of diagnosticsListeners) fn(path, diags);
 }
 
-/** Tear the server down (folder switch, no editors left, or the window going away). */
+/** Tear the server down (no editors left, or the window going away). */
 export function stopTypstClient(): void {
-	cancelIdleStop();
 	holders = 0;
+	endSession();
+}
+
+/** the server goes and the references stay: a folder switch's were taken for the server that starts next */
+function endSession(): void {
+	cancelIdleStop();
 	if (!session) return;
 	try {
 		session.client.disconnect();
@@ -505,7 +670,7 @@ export async function typstLspExtension(root: string | null, filePath: string): 
 	}
 	// our F2 first: the client's renameKeymap binds the same key to a rename that drops every edit
 	// outside the open file (see typst/rename.ts)
-	const { typstRenameKeymap } = await import('./rename');
+	const { typstRenameKeymap } = await import('./actions/rename');
 	// the plugin alone: the client already carries its extensions (serverExtensions.ts), and mounting
 	// the library's languageServerSupport() on top once registered every extension twice, so each
 	// keystroke mapped the completion result twice and the second pass threw

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { referenceStore, templateFeaturesStore } from '$lib/stores/editorStore';
+	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { splitCitationKeys } from './citationKeys';
-	import { bibDisplayText, bibAuthorShort } from '$lib/languages/bib/biblatex';
+	import CitationReferenceField from '$lib/editor/visual/extensions/citation/CitationReferenceField.svelte';
+	import CitationPagesField from '$lib/editor/visual/extensions/citation/CitationPagesField.svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -21,17 +22,6 @@
 
 	const key = $derived(node.textContent);
 	const keys = $derived(splitCitationKeys(node.textContent));
-	const reference = $derived(referenceStore.current?.find((ref) => ref.key === key));
-
-	// one line per entry, authors the way the chip prints them and the title capped: a 20-author
-	// entry spelled out in full stretched the card across the window
-	function refLabel(ref: { author?: string | string[]; year?: string; title?: string; key?: string }): string {
-		const author = bibAuthorShort(Array.isArray(ref.author) ? ref.author.join(' and ') : ref.author);
-		let s = author || ref.key || '';
-		if (ref.year) s += ` (${ref.year})`;
-		if (ref.title) s += `: ${bibDisplayText(ref.title)}`;
-		return s.length > 70 ? s.slice(0, 69).trimEnd() + '…' : s;
-	}
 
 	// seeded from the node once by design: the form pushes changes back via the auto-save $effect
 	// svelte-ignore state_referenced_locally
@@ -103,49 +93,14 @@
 </script>
 
 <div class="citation-edit-form" role="dialog" aria-label={m.citation_dialog_aria_label()} tabindex="-1" onkeydown={handleKeydown}>
-	<div class="border-surface-300-700 mb-4 border-b pb-3">
-		{#if keys.length > 1}
-			<!-- a multi-key cite: swapping through the single-key select would silently collapse it
-			     to one key, so the group is listed read-only; the shared notes below stay editable -->
-			<span class="text-surface-900-100 text-sm font-medium">{m.citation_reference_label()}</span>
-			{#each keys as k (k)}
-				{@const ref = referenceStore.current?.find((r) => r.key === k)}
-				<div class="mt-1.5 text-sm">
-					{#if ref}
-						<span class="text-surface-900-100">{refLabel(ref)}</span>
-					{:else}
-						<span class="text-surface-900-100 font-mono">{k}</span>
-						<span class="text-muted">{m.citation_key_missing()}</span>
-					{/if}
-				</div>
-			{/each}
-		{:else if onChangeKey && referenceStore.current?.length}
-			<span class="text-surface-900-100 text-sm font-medium">{m.citation_reference_label()}</span>
-			<select
-				class="select mt-1.5 w-full text-sm"
-				value={key}
-				onchange={(e) => onChangeKey?.((e.currentTarget as HTMLSelectElement).value)}
-			>
-				{#if !reference}<option value={key}>{m.citation_ref_not_found({ key })}</option>{/if}
-				{#each referenceStore.current as ref (ref.key)}
-					<option value={ref.key} title={ref.title || ref.key}>{refLabel(ref)}</option>
-				{/each}
-			</select>
-		{:else}
-			<div class="text-surface-900-100 text-base font-semibold">{bibAuthorShort(reference?.author) || m.citation_unknown_author()}</div>
-			<div class="text-muted text-sm">
-				{reference?.year || m.citation_year_na()}
-				{#if reference?.title}<span class="mt-1 block text-xs italic">{bibDisplayText(reference.title)}</span>{/if}
-			</div>
-		{/if}
-	</div>
+	<CitationReferenceField citeKey={key} {keys} {onChangeKey} />
 
-	<label class="mb-4 block">
-		<span class="text-surface-900-100 text-sm font-medium">{m.citation_page_numbers_label()}</span>
-		<span class="text-muted ml-1 text-xs">{m.citation_optional()}</span>
-		<input type="text" bind:value={postnote} placeholder={m.citation_page_numbers_placeholder()} class="input mt-1.5 w-full" />
-		<span class="text-muted mt-1 block text-xs"> {m.citation_page_numbers_hint()} </span>
-	</label>
+	<CitationPagesField
+		bind:value={postnote}
+		label={m.citation_page_numbers_label()}
+		placeholder={m.citation_page_numbers_placeholder()}
+		hint={m.citation_page_numbers_hint()}
+	/>
 
 	<button
 		type="button"
@@ -153,7 +108,7 @@
 		onclick={() => (showAdvanced = !showAdvanced)}
 	>
 		<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
-		<span>{m.citation_advanced_options()}</span>
+		<span class="cap-center">{m.citation_advanced_options()}</span>
 	</button>
 
 	{#if showAdvanced}

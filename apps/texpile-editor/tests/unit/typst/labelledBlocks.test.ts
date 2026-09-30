@@ -11,7 +11,7 @@
 // island - because swallowing a label into a node with nowhere to put it deletes it on the next
 // save. What is never correct is a block turning into inline chips.
 import { describe, it, expect } from 'vitest';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 
@@ -44,8 +44,10 @@ export const BLOCKS: Record<string, string> = {
 	block_math: '$ x = 1 $',
 	unmodelled_call: '#lorem(20)',
 	// a real builtin the converter has no model for - the previous fixture here invented a function
-	// name, which our parser was happy to treat as raw and typst rejected outright
-	unmodelled_builtin: '#rect(width: 2cm)[body]',
+	// name, which our parser was happy to treat as raw and typst rejected outright. Two bodies are
+	// more than an environment holds
+	unmodelled_builtin: '#grid(columns: 2)[a][b]',
+	environment: '#rect(width: 2cm)[body]',
 	divider: '#line(length: 100%)'
 };
 

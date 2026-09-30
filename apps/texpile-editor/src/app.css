@@ -1937,6 +1937,19 @@ html.pm-drop-refused .pm-drop-cursor {
 	font-size: 0.85em;
 }
 
+/* a Typst set rule as one quiet line saying what it sets */
+.ProseMirror .drawn-setting {
+	display: block;
+	overflow: hidden;
+	font-size: 0.85em;
+	color: var(--muted-text);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.ProseMirror .drawn-setting-target {
+	font-weight: 600;
+}
+
 /* a vertical space at its size: an arrow from its top to its bottom, labelled with the command and its length */
 .ProseMirror .drawn-vspace {
 	display: flex;
@@ -2043,15 +2056,18 @@ html.pm-drop-refused .pm-drop-cursor {
 	border-bottom: var(--default-border-width) dotted var(--faint-text);
 }
 
-/* generic editable LaTeX environment block; the env name lives in the node-view header, so no ::before badge */
-.tex-environment {
+/* generic editable LaTeX environment block, and typst's call around content; the name lives in the
+   node-view header, so no ::before badge */
+.tex-environment,
+.typ-environment {
 	position: relative;
 	border: var(--default-border-width) solid var(--color-surface-300-700);
 	border-radius: var(--radius-base);
 	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
 	margin: calc(var(--spacing) * 3) 0;
 }
-.tex-environment-body > :last-child {
+.tex-environment-body > :last-child,
+.typ-environment-body > :last-child {
 	margin-bottom: 0;
 }
 

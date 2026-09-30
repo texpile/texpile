@@ -17,7 +17,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
-import { parseTracks, distribute, toFrShares, type Track } from '$lib/languages/typst/visual/tracks';
+import { parseTracks, distribute, toFrShares, type Track } from '$lib/languages/typst/visual/serialize/tracks';
 
 const key = new PluginKey('captureColumnWidths');
 

@@ -6,7 +6,7 @@ import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/c
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { refText } from '$lib/languages/latex/visual/extensions/ref/refText';
-import { citationText } from '$lib/languages/latex/visual/extensions/citation/citationText';
+import { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 
 function parse(src: string) {
 	return latexToProseMirror(src, {}).doc;

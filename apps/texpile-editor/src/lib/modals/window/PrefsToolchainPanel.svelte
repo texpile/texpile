@@ -9,6 +9,8 @@
 	import { toolDirs } from './toolDirs.svelte';
 	import { distros } from './distros.svelte';
 	import ToolchainDistributionRow from './ToolchainDistributionRow.svelte';
+	import ToolchainTinymistRow from './ToolchainTinymistRow.svelte';
+	import { tinymistSourceLabel } from './tinymistInstallText';
 	import { m } from '$lib/paraglide/messages';
 
 	const probe = toolchainProbe;
@@ -118,7 +120,7 @@
 			{@const detail =
 				tool.id === 'tinymist'
 					? probe.tinymist && probe.tinymist !== 'unchecked'
-						? `${probe.tinymist.version} (Typst ${probe.tinymist.typstVersion}, ${probe.tinymist.source})`
+						? `${probe.tinymist.version} (Typst ${probe.tinymist.typstVersion}, ${tinymistSourceLabel(probe.tinymist.source)})`
 						: undefined
 					: hit?.detail}
 			<div class="border-surface-200-800 flex min-w-0 items-baseline gap-2 border-b py-2" use:tip={tool.purpose}>
@@ -144,6 +146,9 @@
 			</div>
 		{/each}
 	</div>
+	{#if group === 'typst'}
+		<div class={SUB}><ToolchainTinymistRow /></div>
+	{/if}
 {/snippet}
 
 {@render toolRows('latex', m.prefs_group_latex())}

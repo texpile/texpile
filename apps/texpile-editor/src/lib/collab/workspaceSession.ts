@@ -10,7 +10,7 @@ import { previewRelay } from '$lib/collab/previewRelay.svelte';
 import { isSafeRel } from '$lib/collab/protocol';
 import { noteGuestJumpFreeze } from '$lib/languages/typst/preview/followSignal';
 import { resolveGuestSyncRequest } from '$lib/workspace/syncTexNav';
-import { serveGuestLspRequest, diagnosticsNotificationForGuest } from '$lib/languages/typst/intellisense/guestLsp';
+import { serveGuestLspRequest, diagnosticsNotificationForGuest } from '$lib/languages/typst/intellisense/guest/guestLsp';
 import {
 	typstClient,
 	addTypstDiagnosticsListener,

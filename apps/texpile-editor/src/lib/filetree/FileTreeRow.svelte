@@ -31,8 +31,13 @@
 
 	let { entry, depth, sel, dnd, editor, focused, gitStatus, isActive, isMain, onOpen, openCtx, createInput }: Props = $props();
 	let row = $state<HTMLDivElement>();
+	// only as the row becomes the open file: a refreshed tree hands every row a new entry, and the
+	// tree stays where it was scrolled
+	let wasActive = false;
 	$effect(() => {
-		if (isActive(entry)) row?.scrollIntoView?.({ block: 'nearest' });
+		const active = isActive(entry);
+		if (active && !wasActive) row?.scrollIntoView?.({ block: 'nearest' });
+		wasActive = active;
 	});
 </script>
 

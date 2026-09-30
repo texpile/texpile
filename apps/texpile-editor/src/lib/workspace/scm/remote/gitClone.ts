@@ -18,9 +18,12 @@ export type GitCloneResult = {
 /** git's stage ('receiving', 'resolving', ...) and how far through it */
 export type CloneProgress = { stage: string; percent: number };
 
+/** shallow: the newest version only, for a template whose history is left behind */
+export type CloneOptions = { shallow?: boolean };
+
 /** Optional: an older preload predates it, and nothing offers to clone. */
 export type GitCloneBridge = {
-	gitClone?: (url: string, parent: string, name: string) => Promise<GitCloneResult>;
+	gitClone?: (url: string, parent: string, name: string, opts?: CloneOptions) => Promise<GitCloneResult>;
 	onGitCloneProgress?: (cb: (p: CloneProgress) => void) => () => void;
 	gitCancelClone?: () => Promise<boolean>;
 };
@@ -34,7 +37,8 @@ export async function gitClone(
 	url: string,
 	parent: string,
 	name: string,
-	onProgress?: (p: CloneProgress) => void
+	onProgress?: (p: CloneProgress) => void,
+	opts?: CloneOptions
 ): Promise<GitCloneResult> {
 	const n = nativeBridge();
 	if (!n?.gitClone) return { ok: false, error: NO_BRIDGE };
@@ -46,7 +50,7 @@ export async function gitClone(
 			})
 		: undefined;
 	try {
-		return await n.gitClone(url, parent, name);
+		return await n.gitClone(url, parent, name, opts);
 	} catch (e) {
 		return { ok: false, failure: 'other', error: errMsg(e) };
 	} finally {

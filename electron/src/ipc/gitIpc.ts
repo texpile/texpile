@@ -80,7 +80,7 @@ export function registerGitIpc(): void {
 	// window can stop it
 	let clones = 0;
 	const running = new Map<string, WebContents>();
-	handleFsE('git:clone', (e, url: string, parent: string, name: string) => {
+	handleFsE('git:clone', (e, url: string, parent: string, name: string, opts?: { shallow?: boolean }) => {
 		const key = `clone-${++clones}`;
 		running.set(key, e.sender);
 		const off = onHelperEvent((ev) => {
@@ -90,7 +90,11 @@ export function registerGitIpc(): void {
 			'git:clone',
 			withAskpass(
 				e.sender,
-				(env) => helperCall('git.gitClone', [url, parent, name, env, key]) as Promise<{ ok: boolean; failure?: string }>
+				(env) =>
+					helperCall('git.gitClone', [url, parent, name, env, key, { shallow: opts?.shallow === true }]) as Promise<{
+						ok: boolean;
+						failure?: string;
+					}>
 			)
 		).finally(() => {
 			off();

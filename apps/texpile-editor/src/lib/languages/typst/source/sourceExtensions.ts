@@ -3,12 +3,11 @@
 // button produce identical edits; only the trigger differs.
 //
 // The chords match Typst VISUAL mode (TypstEditorView's Mod-b/i/u/`/./,/Shift-b/Shift-`/m/Shift-m/
-// Alt-0..6) rather than being invented here, so muscle memory survives a mode switch. Mod-k for
-// links follows the markdown source keymap; LaTeX source has no link chord because \href takes two
-// arguments and its toolbar button owns that flow.
+// Alt-0..6) rather than being invented here, so muscle memory survives a mode switch. No link chord:
+// Mod-k is the command palette's everywhere, and a link here opened the palette over the edit.
 import { keymap, type EditorView } from '@codemirror/view';
 import type { Extension, TransactionSpec, EditorState } from '@codemirror/state';
-import { computeToggleDelim, computeWrap, computeHeadingLine, computeFence, computeLink, computeMathBlock } from './sourceInsert';
+import { computeToggleDelim, computeWrap, computeHeadingLine, computeFence, computeMathBlock } from './sourceInsert';
 
 function run(build: (state: EditorState) => TransactionSpec) {
 	return (view: EditorView): boolean => {
@@ -31,7 +30,6 @@ export function typSourceShortcuts(): Extension {
 		{ key: 'Mod-Shift-m', run: run(computeMathBlock) },
 		{ key: 'Mod-Shift-b', run: run((s) => computeWrap(s, '#quote(block: true)[', ']')) },
 		{ key: 'Mod-Shift-`', run: run(computeFence) },
-		{ key: 'Mod-k', run: run(computeLink) },
 		...[0, 1, 2, 3, 4, 5, 6].map((level) => ({
 			key: `Mod-Alt-${level}`,
 			run: run((s: EditorState) => computeHeadingLine(s, level))

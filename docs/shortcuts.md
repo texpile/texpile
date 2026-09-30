@@ -24,6 +24,9 @@ The combinations below are for Windows and Linux. On macOS, use Cmd wherever a t
 | Ctrl Shift F   | Find in every file in the folder |
 | Ctrl Shift N   | New window                       |
 | Ctrl Alt Enter | Start or stop a compile          |
+| F8             | Next spelling problem            |
+| Shift F8       | Previous spelling problem        |
+| Ctrl Shift V   | Paste without formatting         |
 
 ## Visual editor
 
@@ -49,6 +52,7 @@ Each key maps to the markup you would have typed.
 | Ctrl D         | Select the next occurrence       |
 | Ctrl Space     | Open Suggestions                 |
 | F12            | Go to Definition (or Ctrl+Click) |
+| Alt Enter      | Quick Fixes (Typst)              |
 | Esc            | Hide the math preview            |
 
 Vim and Emacs keybindings for the source editor are a setting. See [Preferences](preferences.md).

@@ -290,10 +290,12 @@
 
 			<div class="border-surface-200-800 text-muted flex items-center gap-3 border-t px-3 py-1.5 text-xs">
 				{#if !id && hits?.length}
-					<span><Kbd cap keys="up" /> <Kbd cap keys="down" /> {m.palette_hint_navigate()}</span>
+					<span class="flex items-center gap-1"
+						><Kbd cap keys="up" /> <Kbd cap keys="down" /> <span class="cap-center">{m.palette_hint_navigate()}</span></span
+					>
 				{/if}
-				<span><Kbd cap keys="enter" /> {m.cite_doi_hint_cite()}</span>
-				<span><Kbd cap keys="esc" /> {m.palette_hint_close()}</span>
+				<span class="flex items-center gap-1"><Kbd cap keys="enter" /> <span class="cap-center">{m.cite_doi_hint_cite()}</span></span>
+				<span class="flex items-center gap-1"><Kbd cap keys="esc" /> <span class="cap-center">{m.palette_hint_close()}</span></span>
 				<span class="flex-1"></span>
 				<button
 					class="btn btn-xs preset-filled-primary-500"

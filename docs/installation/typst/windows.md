@@ -8,7 +8,7 @@ order: 1
 
 # Typst on Windows
 
-Either route is one command.
+Texpile can install tinymist for you in one click, see [From Texpile](README.md#from-texpile). To install it yourself, either route below is one command.
 
 ## With winget
 

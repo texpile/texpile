@@ -20,7 +20,9 @@
 	// constructs a new "socket", and that reattach starts over with a whole-document frame.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, PictureInPicture2 } from '@lucide/svelte';
-	import PreviewToolbar from '$lib/preview/PreviewToolbar.svelte';
+	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
+	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
+	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import { PreviewStream, type PreviewPayload } from '$lib/collab/protocol';
@@ -276,6 +278,9 @@
 			<Crosshair size={16} />
 		</button>
 	{/snippet}
+	{#snippet vision(place: PreviewToolbarPlace)}
+		<ColorVisionMenu {place} />
+	{/snippet}
 	<!-- no close button, exactly as the host pane: the divider's lozenge (docked) or the OS
 	     window's close (popped out) is the way off -->
 	{#snippet popout()}
@@ -289,22 +294,25 @@
 		{asTabStrip}
 		groups={[
 			{ id: 'zoom', render: zoomGroup },
-			{ id: 'follow', render: follow }
+			{ id: 'follow', render: follow },
+			{ id: 'vision', render: vision }
 		]}
 	/>
 
 	<div bind:this={frameBox} class="relative min-h-0 flex-1 overflow-hidden">
 		{#if frameUrl}
-			<iframe
-				bind:this={frame}
-				src={frameUrl}
-				title={m.typst_preview_label()}
-				class="h-full border-0 transition-[filter] duration-100"
-				class:blur-[1.5px]={frozenWidth !== null}
-				class:pointer-events-none={frozenWidth !== null}
-				style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
-				onerror={() => (error = m.typst_preview_frame_failed())}
-			></iframe>
+			<ColorVisionFilter class="h-full">
+				<iframe
+					bind:this={frame}
+					src={frameUrl}
+					title={m.typst_preview_label()}
+					class="h-full border-0 transition-[filter] duration-100"
+					class:blur-[1.5px]={frozenWidth !== null}
+					class:pointer-events-none={frozenWidth !== null}
+					style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
+					onerror={() => (error = m.typst_preview_frame_failed())}
+				></iframe>
+			</ColorVisionFilter>
 		{:else if !error}
 			<div class="text-muted flex h-full items-center justify-center p-6 text-center text-sm">
 				{m.typst_preview_guest_waiting()}

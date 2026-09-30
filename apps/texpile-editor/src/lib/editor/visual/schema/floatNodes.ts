@@ -6,16 +6,6 @@ const tableNodeSpecs = tableNodes({
 	tableGroup: 'block',
 	cellContent: 'paragraph+',
 	cellAttributes: {
-		background: {
-			default: null,
-			getFromDOM(dom) {
-				return dom.style.backgroundColor || null;
-			},
-			setDOMAttr(value, attrs) {
-				// eslint-disable-next-line no-param-reassign -- prosemirror-tables collects DOM attrs by mutation
-				if (value) attrs.style = (attrs.style || '') + `background-color: ${value};`;
-			}
-		},
 		// the alignment spec of a source \multicolumn{n}{spec}{...}, re-emitted as written
 		mcAlign: {
 			default: null,

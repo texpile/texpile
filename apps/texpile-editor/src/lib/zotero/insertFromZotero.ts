@@ -12,6 +12,7 @@ import { readTextFile, writeTextFile, statFile, scanFiles, joinPath, dirname, ba
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { bibPathFromSource, translatorForSource, appendBibEntries, citationTextFor } from './bibTarget';
+import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { zoteroPicker } from './pickerState.svelte';
 
 /** the bridge exists (desktop app); says nothing about Zotero itself being up */
@@ -51,7 +52,8 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 	if (!bridge || !main || !keys.length) return;
 	try {
 		const mainText = await mainTextOf(main, deps);
-		const { path: bibPath, undeclared } = await targetBib(main, mainText, deps);
+		const target = await targetBib(main, mainText, deps);
+		const bibPath = target.path;
 
 		const exported = await bridge.exportBib(keys, translatorForSource(mainText, deps.kind));
 		if (!exported.ok || typeof exported.bib !== 'string') {
@@ -78,10 +80,7 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 		} else {
 			toaster.info({ title: m.zotero_none_new_title(), description: name });
 		}
-		// a bib file the document never references compiles to nothing; say so once, loudly
-		if (undeclared) {
-			toaster.warning({ title: m.zotero_bib_created_title({ name }), description: m.zotero_bib_created_desc(), duration: 8000 });
-		}
+		if (target.undeclared) warnUndeclared(target);
 	} catch (e) {
 		toaster.error({ title: m.zotero_failed_title(), description: e instanceof Error ? e.message : String(e) });
 	}
@@ -93,19 +92,50 @@ export async function mainTextOf(main: string, deps: ZoteroInsertDeps): Promise<
 	return open.path && samePath(open.path, main) ? open.text : await readTextFile(main);
 }
 
+export type BibTarget = {
+	path: string;
+	/** the main file reads no bibliography from this file yet, so what lands there compiles to nothing */
+	undeclared: boolean;
+	/** the Hayagriva file a Typst main lists instead, when that is why the target is undeclared */
+	hayagriva?: string;
+};
+
 /**
  * Where new entries land: the bib the main file declares, else the project's references.bib or
  * first .bib, else a new references.bib beside the main - `undeclared`, since nothing reads it yet.
+ *
+ * A Typst main that lists only Hayagriva `.yml` files gets a `.bib` all the same: the entries are
+ * BibTeX, and appended to a `.yml` they would break it. That `.bib` is undeclared until the user
+ * adds it to the `#bibliography` list.
  */
-export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<{ path: string; undeclared: boolean }> {
+export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<BibTarget> {
 	const declaredRel = bibPathFromSource(mainText, deps.kind);
-	// resolved against the main file's folder: latexmk compiles with -cd, and Typst
-	// resolves #bibliography against the file that calls it
-	if (declaredRel) return { path: joinPath(dirname(main), declaredRel), undeclared: false };
+	// resolved against the main file's folder: latexmk compiles with -cd, and Typst resolves
+	// #bibliography against the file that calls it (and a leading / against the project root)
+	if (declaredRel) {
+		const rootRelative = deps.kind === 'typ' && declaredRel.startsWith('/');
+		return { path: rootRelative ? joinPath(deps.root, declaredRel.slice(1)) : joinPath(dirname(main), declaredRel), undeclared: false };
+	}
+	const hayagriva = deps.kind === 'typ' ? typstBibliographyPaths(mainText)[0] : undefined;
 	const found = (await scanFiles(deps.root, ['bib'])).files;
 	const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
-	if (preferred) return { path: preferred.path, undeclared: false };
-	return { path: joinPath(dirname(main), 'references.bib'), undeclared: true };
+	if (preferred) return { path: preferred.path, undeclared: !!hayagriva, hayagriva };
+	return { path: joinPath(dirname(main), 'references.bib'), undeclared: true, hayagriva };
+}
+
+/** a bib file the document never references compiles to nothing; say so once, loudly */
+export function warnUndeclared(target: BibTarget): void {
+	const name = basename(target.path);
+	if (target.hayagriva) {
+		const yml = basename(target.hayagriva);
+		toaster.warning({
+			title: m.zotero_bib_beside_yml_title({ name }),
+			description: m.zotero_bib_beside_yml_desc({ name, yml }),
+			duration: 8000
+		});
+		return;
+	}
+	toaster.warning({ title: m.zotero_bib_created_title({ name }), description: m.zotero_bib_created_desc(), duration: 8000 });
 }
 
 /** citation at the caret: a node in the visual editor when its schema has one, text in source */

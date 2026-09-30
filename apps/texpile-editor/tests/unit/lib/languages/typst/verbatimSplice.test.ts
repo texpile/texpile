@@ -406,6 +406,15 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 		expect(out).not.toContain('ca*strong*');
 		expect(parseTypstFile(out).doc.child(1).textContent).toBe('Text castrong, and plain after it.');
 	});
+
+	it('so does one that would leave a letter against the marker closing it', () => {
+		const parsed = parseTypstFile('Intro line.\n\nOnly *even* numbers here.\n');
+		const at = posOf(parsed.doc, ' number');
+		const doc = new Transform(parsed.doc).delete(at, at + ' number'.length).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(out).toContain('Only #strong[even]s here.');
+		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
+	});
 });
 
 describe('typst: markup that a seam would open', () => {
@@ -427,6 +436,28 @@ describe('typst: markup that a seam would open', () => {
 		const doc = new Transform(parsed.doc).replaceWith(at, at + 1, parsed.doc.type.schema.text('.word')).doc;
 		const out = serializeTypstFile(parsed, doc);
 		expect(out).toContain('#ref(<sec:basics>)\\.word');
+		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
+	});
+
+	const FIGURE_TABLE =
+		'Intro line.\n\n#figure(\n  table(\n    columns: 2,\n    [A], [x - y],\n    [B], [4.2],\n  ),\n  caption: [Tables are numbered.],\n)\n';
+
+	it('a marker typed at the start of a cell or a caption is escaped, as a content block starts its markup afresh', () => {
+		const parsed = parseTypstFile(FIGURE_TABLE);
+		const s = parsed.doc.type.schema;
+		const tr = new Transform(parsed.doc).insert(posOf(parsed.doc, 'A'), s.text('- '));
+		const typed = tr.insert(tr.mapping.map(posOf(parsed.doc, 'Tables')), s.text('= ')).doc;
+		const out = serializeTypstFile(parsed, typed);
+		expect(out).toBe(FIGURE_TABLE.replace('[A]', '[\\- A]').replace('[Tables', '[\\= Tables'));
+		expect(parseTypstFile(out).doc.child(1).toString()).toBe(typed.child(1).toString());
+	});
+
+	it('a deletion leaving a marker the file kept at the start of a cell writes the block afresh', () => {
+		const parsed = parseTypstFile(FIGURE_TABLE);
+		const at = posOf(parsed.doc, 'x - y');
+		const doc = new Transform(parsed.doc).delete(at, at + 2).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(out).toContain('[\\- y]');
 		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
 	});
 
@@ -457,6 +488,36 @@ describe('typst: markup that a seam would open', () => {
 		const parsed = parseTypstFile('See #link("https://github.com/typst/typst") here.\n');
 		expect(parsed.doc.child(0).toString()).toBe('paragraph("See ", inline_latex("https://github.com/typst/typst"), " here.")');
 		expect(serializeTypstFile(parsed, parsed.doc)).toBe('See #link("https://github.com/typst/typst") here.\n');
+	});
+
+	/** `typed` put over the `gone` characters after `needle`, in the marks the text there has */
+	function typeOver(src: string, needle: string, gone: number, typed: string): { doc: Node; out: string } {
+		const parsed = parseTypstFile(src);
+		const at = posOf(parsed.doc, needle) + needle.length;
+		const text = parsed.doc.type.schema.text(typed, parsed.doc.resolve(at + 1).marks());
+		const doc = new Transform(parsed.doc).replaceWith(at, at + gone, text).doc;
+		return { doc, out: serializeTypstFile(parsed, doc) };
+	}
+
+	it('a marker typed after a bracket in code, raw text or a chip is written as typed', () => {
+		const cases: [string, string, number, string, string][] = [
+			['```py\nx = arr[i]\n```', 'arr[', 1, '-1', '```py\nx = arr[-1]\n```'],
+			['See `arr[i]` here.', 'arr[', 1, '-1', 'See `arr[-1]` here.'],
+			['Some #text(font: "[x")[y] here.', '"[', 0, '-', 'Some #text(font: "[-x")[y] here.'],
+			['A claim#footnote[a] here.', 'footnote[', 0, '- ', 'A claim#footnote[- a] here.']
+		];
+		for (const [block, needle, gone, typed, written] of cases) {
+			const { doc, out } = typeOver(`Intro.\n\n${block}\n`, needle, gone, typed);
+			expect(out).toBe(`Intro.\n\n${written}\n`);
+			expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
+		}
+	});
+
+	it('a line typed into a code block or a code island keeps its dash or comment', () => {
+		const code = typeOver('Intro.\n\n```py\nx = 1\nz = 3\n```\n', 'x = 1\n', 0, '-y = 2\n');
+		expect(code.out).toBe('Intro.\n\n```py\nx = 1\n-y = 2\nz = 3\n```\n');
+		const island = typeOver('Intro.\n\n#let a = 1\n#let b = 2\n', 'a = 1\n', 0, '// note\n');
+		expect(island.out).toBe('Intro.\n\n#let a = 1\n// note\n#let b = 2\n');
 	});
 });
 

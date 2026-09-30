@@ -4,6 +4,7 @@
 	import { getPdfViewerContext } from './pdf-viewer/context';
 	import PdfZoomMenu from './PdfZoomMenu.svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
+	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 
 	import type { Snippet } from 'svelte';
 
@@ -83,6 +84,10 @@
 	</button>
 {/snippet}
 
+{#snippet vision(place: PreviewToolbarPlace)}
+	<ColorVisionMenu {place} />
+{/snippet}
+
 <!-- pinned: one switch for the find bar, on the bar at every width -->
 {#snippet search()}
 	<button aria-pressed={findOpen} onclick={() => onToggleFind?.()} aria-label="Find" use:tip={'Find'}>
@@ -134,6 +139,7 @@
 	groups={[
 		{ id: 'page', render: page },
 		{ id: 'zoom', render: zoom },
+		{ id: 'vision', render: vision },
 		{ id: 'search', pinned: true, alignEnd: true, render: search },
 		// rarely reached for, so they sit in the ... at every width and the bar stays short
 		{ id: 'rotate', inMenu: true, render: rotate },

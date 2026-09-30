@@ -33,6 +33,7 @@ Settings apply to every folder you open. The compile command and its options are
 | Autosave                           | On by default. Off, changes save only when you press Save, and you are warned before switching files. Live preview and hosting a shared session keep it on. |
 | Spell check                        | Off by default. See [Spell check](spell-check.md).                                                                                                          |
 | Toolbar on selection               | Buttons over selected text for commenting, and for Refine when an agent is set up. In both editors.                                                         |
+| Smart paste                        | Formatting, tables, and Markdown from other apps come in converted. Off, they paste as plain text. In both editors.                                         |
 | Open terminal panel when compiling | Also opens Problems when a compile reports errors. Off, the badge next to Compile is the only signal.                                                       |
 | Keybindings                        | Default, Vim, or Emacs, for the source editor. The mode line appears under the editor.                                                                      |
 
@@ -80,6 +81,8 @@ How other people see you in a [shared session](collaboration.md). The name and t
 ## Toolchain
 
 Every external program Texpile runs, for LaTeX, Typst, and version control, and whether each one was found. Nothing is bundled; these are found on your PATH and in the folders you add here. Folders are searched first, by every program Texpile starts, the compile command and the Refine agent included, so a TeX distribution installed somewhere that is not on your PATH works once its bin folder is added. Type a folder into the path field, or use Browse to pick one; Locate next to a missing program picks the program and fills in its folder. A relative path counts from the folder Texpile runs from. Browse fills in a relative path for a folder on the same drive as a portable Texpile, so it still works after the drive letter changes, and an absolute path otherwise; either can be edited before Add. Distribution lists the installs found on this machine, TeX Live and MiKTeX under LaTeX and each tinymist with the Typst it carries under Typst, and names the one your PATH reaches. Choosing one puts its bin folder first in Folders, so every program of that kind comes from that install; From PATH takes it out again. Check Again runs the check once more after you install something.
+
+Under Typst, Texpile's copy installs tinymist for you when none is found: Install tinymist downloads the release Texpile is tested with from GitHub, checks it against the published checksum, and keeps it in Texpile's data folder (the `data` folder of a portable Texpile). It is used right away, with no restart. Reinstall fetches it again and Remove deletes it. A tinymist on your PATH or in Folders always comes first, and the row says so when it does. The tinymist row names the one in use, Texpile's copy or PATH. See [Typst](installation/typst/README.md#from-texpile).
 
 [Installation](installation/README.md)
 

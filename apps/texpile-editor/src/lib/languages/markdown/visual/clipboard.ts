@@ -1,8 +1,8 @@
 // Copy-side clipboard bridge for the markdown editor: the third dialect alongside latexClipboard
 // and the typst visual editor's clipboard.ts. Copy puts real markdown on the clipboard so pasting
 // into source mode, a terminal, or another editor yields working markup; PM's own HTML format
-// rides alongside, so visual->visual paste is untouched. There is no paste half: markdown text
-// pasted into the visual editor stays plain text (no md-text -> nodes parser is wired up).
+// rides alongside, so visual->visual paste is untouched. The paste half is editor/paste's
+// visualSmartPaste, shared with the other editors.
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { mdSchema } from './schema';
