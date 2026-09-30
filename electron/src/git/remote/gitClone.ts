@@ -25,6 +25,9 @@ export type GitCloneResult = {
 /** how far along a clone is: git's own stage ('receiving', 'resolving', ...) and its percentage */
 export type CloneProgress = { stage: string; percent: number };
 
+/** shallow: the newest version only, for a template whose history is left behind anyway */
+export type CloneOptions = { shallow?: boolean };
+
 // A private repository asked for with the wrong account reads as missing on GitHub and GitLab, so
 // the message says to check both; checked after sign-in failures, which say so outright.
 const NOT_FOUND_RE = /repository not found|does not appear to be a git repository|returned error: 404|not found|does not exist/i;
@@ -77,7 +80,8 @@ export async function gitClone(
 	name: string,
 	auth: GitAuthEnv = {},
 	onProgress?: (p: CloneProgress) => void,
-	signal?: AbortSignal
+	signal?: AbortSignal,
+	opts: CloneOptions = {}
 ): Promise<GitCloneResult> {
 	if (!isRemoteUrl(url) || !isFolderName(name) || !isAbsolute(parent)) return { ok: false, failure: 'invalid' };
 	try {
@@ -100,7 +104,8 @@ export async function gitClone(
 	}).env(netEnv(auth));
 	try {
 		// `--` so an address can never be read as an option; isRemoteUrl already refuses one that could
-		await g.raw(['clone', '--progress', '--recurse-submodules', '--', url.trim(), target]);
+		const depth = opts.shallow ? ['--depth', '1', '--shallow-submodules'] : [];
+		await g.raw(['clone', '--progress', '--recurse-submodules', ...depth, '--', url.trim(), target]);
 		return { ok: true, path: target };
 	} catch (e) {
 		if (isMissingGit(e)) return { ok: false, reason: 'no-git' };

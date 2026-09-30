@@ -18,6 +18,8 @@
 		symbolTooltip,
 		type MatrixBracket
 	} from '$lib/editor/visual/toolbar/mathSymbols';
+	import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
+	import { latexSymbolSet } from '$lib/languages/latex/symbols/latexSymbolSet';
 	import { m } from '$lib/paraglide/messages';
 
 	let open = $state(false);
@@ -39,6 +41,11 @@
 	// mousedown fires before focus moves, so this keeps the caret in the CodeMirror view
 	function preventFocusLoss(e: MouseEvent) {
 		e.preventDefault();
+	}
+
+	function openPicker() {
+		open = false;
+		void symbolPicker.show(latexSymbolSet);
 	}
 
 	function insert(latex: string) {
@@ -177,6 +184,12 @@
 								{/each}
 							</div>
 						{/if}
+					</div>
+					<!-- the few symbols above are the common ones; every symbol LaTeX has is one click further -->
+					<div class="border-surface-300-700 border-t p-1.5">
+						<button type="button" class="btn btn-sm hover:preset-tonal w-full justify-start text-xs" tabindex="-1" onclick={openPicker}>
+							{m.menubar_insert_symbol_more()}
+						</button>
 					</div>
 				</div>
 			</Popover.Content>

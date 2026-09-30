@@ -1,10 +1,12 @@
 import {
+	FileOutput,
 	FilePlus2,
 	FolderGit2,
 	FolderOpen,
 	Github,
 	History,
 	KeyRound,
+	LayoutTemplate,
 	Play,
 	RefreshCw,
 	RotateCw,
@@ -37,6 +39,15 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 			hint: combo('S'),
 			icon: Save,
 			run: () => a.save()
+		});
+	if (a.canExportTypst?.())
+		items.push({
+			id: 'typst.export',
+			label: m.typst_export_palette(),
+			group,
+			keywords: 'typst export pdf png svg html image pdf/a pdf/ua accessible tinymist',
+			icon: FileOutput,
+			run: () => a.exportTypst?.()
 		});
 	if (a.canManageTree()) {
 		// the compile target decides the document rows, exactly as in the File > New menus:
@@ -86,6 +97,15 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 			run: () => a.newFile('md')
 		});
 	}
+	if (a.saveAsTemplate)
+		items.push({
+			id: 'file.saveAsTemplate',
+			label: m.menubar_save_as_template(),
+			group,
+			keywords: 'template starter reuse copy project',
+			icon: LayoutTemplate,
+			run: () => a.saveAsTemplate?.()
+		});
 	if (a.isHostWorkspace())
 		items.push({
 			id: 'file.openFolder',

@@ -43,12 +43,13 @@
 	import { lineBreakPlugins } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 	import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 	import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
+	import { pasteMarkdownSource, visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
 	import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 	import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 	import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 	import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 	import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
-	import { proofreadPlugin, spellClickBoundaryPlugin } from '$lib/editor/spellcheck/spellcheckplugin';
+	import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 	import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 	import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
 	import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
@@ -167,6 +168,7 @@
 			tableEditing(),
 			wholeTableEdits,
 			crossBlockEdits,
+			visualSmartPaste('markdown', mdSchema, pasteMarkdownSource),
 			firstRowHeader,
 			...createListPlugins({ schema: mdSchema }),
 			listAttrInheritance,
@@ -218,6 +220,7 @@
 			createPersistentSelectionPlugin(),
 			spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
 			proofreadPlugin,
+			spellProblemKeymap,
 			createBoundaryClickPlugin(),
 			wordSelectionTrim(),
 			// the Notion-style + / drag / delete gutter, with the markdown insert set

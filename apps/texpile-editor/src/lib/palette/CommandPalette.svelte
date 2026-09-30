@@ -236,9 +236,13 @@
 				<!-- Skeleton has no .kbd class; Kbd is ours, and using it here means these caps and the
 				     ones in the Help shortcut sheet cannot drift apart again -->
 				<div class="border-surface-200-800 text-muted flex gap-3 border-t px-3 py-1.5 text-xs">
-					<span><Kbd cap keys="up" /> <Kbd cap keys="down" /> {m.palette_hint_navigate()}</span>
-					<span><Kbd cap keys="enter" /> {m.palette_hint_select()}</span>
-					<span><Kbd cap keys="esc" /> {m.palette_hint_close()}</span>
+					<span class="flex items-center gap-1"
+						><Kbd cap keys="up" /> <Kbd cap keys="down" /> <span class="cap-center">{m.palette_hint_navigate()}</span></span
+					>
+					<span class="ml-auto flex items-center gap-1"
+						><Kbd cap keys="enter" /> <span class="cap-center">{m.palette_hint_select()}</span></span
+					>
+					<span class="flex items-center gap-1"><Kbd cap keys="esc" /> <span class="cap-center">{m.palette_hint_close()}</span></span>
 				</div>
 			</Combobox>
 		</div>

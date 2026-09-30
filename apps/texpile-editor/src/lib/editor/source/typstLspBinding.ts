@@ -4,7 +4,7 @@
 import type { EditorView } from '@codemirror/view';
 import type { Compartment } from '@codemirror/state';
 import { releaseTypstLsp, typstLspExtension } from '$lib/languages/typst/intellisense/lspClient';
-import { typstGuestLspExtension, releaseGuestTypstLsp } from '$lib/languages/typst/intellisense/guestLspExtension';
+import { typstGuestLspExtension, releaseGuestTypstLsp } from '$lib/languages/typst/intellisense/guest/guestLspExtension';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { guestSession } from '$lib/collab/guestSession';
 import { guestRelPath } from '$lib/collab/sessionProvider';

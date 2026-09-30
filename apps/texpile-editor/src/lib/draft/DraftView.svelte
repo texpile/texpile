@@ -11,7 +11,9 @@
 	import { untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { ZoomIn, ZoomOut, MoveHorizontal, ChevronUp, ChevronDown, Crosshair, Download, PictureInPicture2 } from '@lucide/svelte';
-	import PreviewToolbar from '$lib/preview/PreviewToolbar.svelte';
+	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
+	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
+	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { PatchReq } from './patch/patch.types';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
@@ -205,6 +207,9 @@
 			<Download size={16} />
 		</button>
 	{/snippet}
+	{#snippet vision(place: PreviewToolbarPlace)}
+		<ColorVisionMenu {place} />
+	{/snippet}
 	{#snippet popout()}
 		<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
 			<PictureInPicture2 size={16} />
@@ -219,6 +224,7 @@
 			...(ctrl.pages.length ? [{ id: 'pages', render: pages }] : []),
 			{ id: 'zoom', render: zoom },
 			{ id: 'follow', render: follow },
+			{ id: 'vision', render: vision },
 			{ id: 'save', render: save }
 		]}
 	/>
@@ -245,40 +251,42 @@
 		<pre
 			class="text-error-ink bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto [scrollbar-gutter:stable] rounded-container p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
-	<div
-		bind:this={vp.scroller}
-		bind:clientWidth={vp.containerW}
-		onscroll={() => vp.onScroll()}
-		class="flex flex-1 flex-col items-center gap-4 overflow-auto [scrollbar-gutter:stable] p-4"
-	>
-		{#each ctrl.pages as p (p.n)}
-			<div class="relative shadow-lg">
-				<canvas bind:this={ctrl.canvasEls[p.n - 1]} ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}></canvas>
-				{#if vp.editBand && vp.editBand.page === p.n}
-					<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
-					<div
-						class="pointer-events-none absolute rounded-base bg-draft-band/30"
-						transition:fade={{ duration: 300 }}
-						style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
-							vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -
-							vp.editBand.top +
-							4) *
-							vp.dispScale}px"
-					></div>
-				{/if}
-				{#if vp.clickMark && vp.clickMark.page === p.n}
-					<!-- where the sync double-click landed -->
-					<div
-						class="pointer-events-none absolute"
-						transition:fade={{ duration: 200 }}
-						style="left:{vp.clickMark.x * vp.dispScale}px; top:{vp.clickMark.y * vp.dispScale}px"
-					>
-						<span class="border-primary-500 absolute size-6 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border-2"></span>
-						<span class="bg-primary-500 absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-					</div>
-				{/if}
-			</div>
-			<div class="text-muted -mt-3 text-[10px]">{m.draft_page_label({ n: p.n })}</div>
-		{/each}
-	</div>
+	<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
+		<div
+			bind:this={vp.scroller}
+			bind:clientWidth={vp.containerW}
+			onscroll={() => vp.onScroll()}
+			class="flex flex-1 flex-col items-center gap-4 overflow-auto [scrollbar-gutter:stable] p-4"
+		>
+			{#each ctrl.pages as p (p.n)}
+				<div class="relative shadow-lg">
+					<canvas bind:this={ctrl.canvasEls[p.n - 1]} ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}></canvas>
+					{#if vp.editBand && vp.editBand.page === p.n}
+						<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
+						<div
+							class="pointer-events-none absolute rounded-base bg-draft-band/30"
+							transition:fade={{ duration: 300 }}
+							style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
+								vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -
+								vp.editBand.top +
+								4) *
+								vp.dispScale}px"
+						></div>
+					{/if}
+					{#if vp.clickMark && vp.clickMark.page === p.n}
+						<!-- where the sync double-click landed -->
+						<div
+							class="pointer-events-none absolute"
+							transition:fade={{ duration: 200 }}
+							style="left:{vp.clickMark.x * vp.dispScale}px; top:{vp.clickMark.y * vp.dispScale}px"
+						>
+							<span class="border-primary-500 absolute size-6 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border-2"></span>
+							<span class="bg-primary-500 absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+						</div>
+					{/if}
+				</div>
+				<div class="text-muted -mt-3 text-[10px]">{m.draft_page_label({ n: p.n })}</div>
+			{/each}
+		</div>
+	</ColorVisionFilter>
 </div>

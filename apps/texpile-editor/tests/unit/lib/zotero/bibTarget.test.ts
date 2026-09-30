@@ -25,6 +25,12 @@ describe('bibPathFromSource', () => {
 		expect(bibPathFromSource('#bibliography(("a.bib", "b.bib"), style: "apa")', 'typ')).toBe('a.bib');
 	});
 
+	it('never picks a Hayagriva file in a typst list, where BibTeX would break it', () => {
+		expect(bibPathFromSource('#bibliography(("refs.yml", "extra.bib"))', 'typ')).toBe('extra.bib');
+		expect(bibPathFromSource('#bibliography("refs.yml")', 'typ')).toBeNull();
+		expect(bibPathFromSource('#bibliography("refs.yaml")', 'typ')).toBeNull();
+	});
+
 	it('returns null when nothing is declared', () => {
 		expect(bibPathFromSource('\\documentclass{article}', 'tex')).toBeNull();
 		expect(bibPathFromSource('= Heading', 'typ')).toBeNull();

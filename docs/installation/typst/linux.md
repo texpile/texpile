@@ -8,7 +8,7 @@ order: 3
 
 # Typst on Linux
 
-No distribution packages tinymist, so the installer script is the usual route here.
+Texpile can install tinymist for you in one click, see [From Texpile](README.md#from-texpile). To install it yourself: no distribution packages tinymist, so the installer script is the usual route.
 
 ## With the installer script
 

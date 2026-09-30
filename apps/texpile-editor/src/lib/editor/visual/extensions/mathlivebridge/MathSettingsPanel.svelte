@@ -10,6 +10,7 @@
 	import { labelTaken } from '$lib/editor/visual/labelTaken';
 	import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 	import { toggleEnvironmentStar } from './mathEnvironments';
+	import { equationNumberingChange, equationsNumbered } from '$lib/languages/typst/visual/equationNumbering';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -20,9 +21,12 @@
 
 	let { node, view, getPos }: Props = $props();
 
-	// the typst editor: no numbering toggle or environments (numbering is a document-level
-	// #set rule the template owns), just the <label> that @refs point at
+	// the typst editor: no environments, and numbering is one document-level #set rule for every
+	// equation, which its switch writes; the <label> is what @refs point at
 	const isTypst = $derived(!!view.state.schema.nodes.typ_ref);
+	// read when the panel opens, then kept by the switch: the rule sits outside this equation's node
+	// svelte-ignore state_referenced_locally
+	let typstNumbered = $state(isTypst && equationsNumbered(view.state.doc));
 
 	let showAdvanced = $state(false);
 	// form fields are seeded from the node once, by design
@@ -125,6 +129,12 @@
 		}
 	}
 
+	function handleTypstNumberedToggle(details: { checked: boolean }) {
+		typstNumbered = details.checked;
+		const tr = equationNumberingChange(view.state, details.checked);
+		if (tr) view.dispatch(tr);
+	}
+
 	function handleLineLabelChange(index: number, value: string) {
 		const sanitized = sanitizeLabel(value);
 		const newLabels = [...lineLabelsInput];
@@ -202,8 +212,17 @@
 				{#if isDuplicate}
 					<p class="text-error-ink mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
 				{/if}
-				<p class="text-muted mt-1 text-xs">{m.mathsettings_typst_numbering_note()}</p>
 			</label>
+		</div>
+		<div class="settings-row">
+			<Switch checked={typstNumbered} onCheckedChange={handleTypstNumberedToggle} class="flex w-full items-center justify-between gap-3">
+				<Switch.Label>{m.mathsettings_typst_numbered_label()}</Switch.Label>
+				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
+					<Switch.Thumb />
+				</Switch.Control>
+				<Switch.HiddenInput />
+			</Switch>
+			<p class="text-muted mt-1 text-xs">{m.mathsettings_typst_numbered_hint()}</p>
 		</div>
 	{:else}
 		<div class="settings-row">

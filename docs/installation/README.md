@@ -51,7 +51,7 @@ sudo apt install libfuse2      # Debian 12, Ubuntu 23.10 and older
 
 ## 2. Install a compiler
 
-Pick the one for the format you write in. If you write both, install both.
+Pick the one for the format you write in. If you write both, install both. For Typst, Texpile can install it for you in one click.
 
 - [LaTeX](latex/README.md)
 - [Typst](typst/README.md)
@@ -67,14 +67,14 @@ Only for the Source Control panel. Everything else works without it.
 
 ## Do I need a compiler?
 
-For editing, no. The visual editor, source editor, spell check, intellisense, and version control all work on their own. For compiling a PDF and for live preview, yes. Texpile runs the compiler on your computer and does not include one.
+For editing, no. The visual editor, source editor, spell check, intellisense, and version control all work on their own. For compiling a PDF and for live preview, yes. Texpile runs the compiler on your computer and does not include one. For Typst it downloads one when you ask it to, from Preferences › Toolchain.
 
 ## Check it worked
 
 Texpile checks for you. Preferences › Toolchain lists every external program it runs, for both formats, and whether each one was found.
 
 > [!NOTE]
-> Texpile only looks for programs when it starts, so restart it after installing anything before deciding a program is missing. The per-format pages above have the command-line test as well.
+> Texpile only looks for programs when it starts, so restart it after installing anything before deciding a program is missing. The tinymist Texpile installs itself is the exception and needs no restart. The per-format pages above have the command-line test as well.
 
 [Getting started](../getting-started.md)
 [Compiling, in full](../latex/compiling.md)

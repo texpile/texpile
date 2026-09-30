@@ -10,12 +10,12 @@ order: 1
 
 Equations are edited as math on the page, in every format. Two shortcuts cover most of it, and everything else is a click away.
 
-| Where to find it | Path          | Note                                                                            |
-| ---------------- | ------------- | ------------------------------------------------------------------------------- |
-| Shortcut         | Ctrl+M        | Inline equation, flowing with the text.                                         |
-| Shortcut         | Ctrl+Shift+M  | Display equation, on its own line.                                              |
-| Shortcut         | Shift+Enter   | In a display equation: a new one of the same kind below it.                     |
-| Menu             | Insert › Math | Inline Equation, Display Equation, and in a LaTeX file every environment below. |
+| Where to find it | Path          | Note                                                                                                                              |
+| ---------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Shortcut         | Ctrl+M        | Inline equation, flowing with the text.                                                                                           |
+| Shortcut         | Ctrl+Shift+M  | Display equation, on its own line.                                                                                                |
+| Shortcut         | Shift+Enter   | In a display equation: a new one of the same kind below it.                                                                       |
+| Menu             | Insert › Math | Inline Equation, Display Equation, and in a LaTeX file every environment below; in a Typst file Aligned, Cases, and the matrices. |
 
 ## The math toolbar
 
@@ -57,7 +57,11 @@ Multline keeps a single label rather than one per line, since it still renders a
 
 ## In Typst
 
-The same math editor and toolbar apply. There is no Numbered switch, since Typst numbers equations from a rule in the document rather than one at a time. The settings panel has a Label field instead, and @ inserts a reference to it, the same as in LaTeX. There are no environments. An equation the editor cannot translate into its math editor stays in place as a Typst code chip, and is still editable there.
+The same math editor and toolbar apply. The settings panel has a Label field, and @ inserts a reference to it, the same as in LaTeX.
+
+Typst numbers equations with one rule for the whole document, so the settings' Number all equations switch applies to every equation. On, it adds `#set math.equation(numbering: "(1)")` after the set rules at the top of the document, or keeps the numbering the document already has. Off, it takes that rule out. Typst can only reference a numbered equation.
+
+Insert › Math also offers Aligned, Cases, and the two matrices, written as `&` alignment, `cases()`, and `mat()`. The other LaTeX environments have no Typst form. An equation the editor cannot translate into its math editor stays in place as a Typst code chip, and is still editable there.
 
 ![A Typst equation's settings: a Label field and a note that numbering comes from the document](../../landing/src/lib/assets/showcase/app/typst-math-settings.png#narrow)
 

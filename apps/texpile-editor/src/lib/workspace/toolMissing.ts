@@ -1,4 +1,6 @@
 import { toaster } from '$lib/modals/toaster-svelte';
+import { tinymistInstaller } from '$lib/modals/window/tinymistInstall.svelte';
+import { installTinymistWithToast } from '$lib/modals/window/tinymistInstallToast';
 import { openToolchainPrefs } from '$lib/stores/dialogStore';
 import { workspaceRoot } from './workspaceStore';
 import { resolveOutputPath } from './compileCommand';
@@ -123,11 +125,23 @@ export async function reportMissingTool(opts: {
 		}
 	}
 	if (!program) return false;
+	await toastMissingTool(program);
+	return true;
+}
+
+/**
+ * "`program` is not installed", with the one next step there is: the panel listing what IS
+ * installed, or for tinymist, which Texpile can fetch itself, the install.
+ */
+export async function toastMissingTool(program: string): Promise<void> {
+	if (program === 'tinymist' && tinymistInstaller.available) await tinymistInstaller.refresh();
+	const installable = program === 'tinymist' && tinymistInstaller.offered;
 	toaster.error({
 		title: m.compile_tool_missing_title(),
 		description: m.compile_tool_missing({ tool: program }),
-		duration: 8000,
-		action: { label: m.compile_tool_missing_action(), onClick: openToolchainPrefs }
+		duration: installable ? 12000 : 8000,
+		action: installable
+			? { label: m.tinymist_install(), onClick: () => void installTinymistWithToast() }
+			: { label: m.compile_tool_missing_action(), onClick: openToolchainPrefs }
 	});
-	return true;
 }

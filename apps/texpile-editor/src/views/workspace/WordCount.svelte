@@ -1,5 +1,5 @@
 <script lang="ts">
-	// the top bar's word count; a LaTeX or Typst document's opens to the whole count by part and by file
+	// the top bar's word count; a LaTeX or Typst document's shows the whole count by part and by file on hover or click
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { documentCountStore as c } from '$lib/stores/countStore.svelte';
@@ -7,6 +7,7 @@
 	import type { ProjectWords } from '$lib/workspace/wordCount/projectWords';
 	import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename, relativeInside, samePath } from '$lib/workspace/fileSystem';
+	import { fileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let { details }: { details?: () => Promise<ProjectWords | null> } = $props();
@@ -53,6 +54,31 @@
 	}
 
 	const others = $derived(result ? result.files.length - 1 : 0);
+
+	// the tooltip's delay; the close waits so the pointer can cross into the panel and scroll its file list
+	const HOVER_OPEN_MS = 400;
+	const HOVER_CLOSE_MS = 200;
+	let hoverTimer: ReturnType<typeof setTimeout> | undefined;
+	let overTrigger = false;
+	let escaped = false;
+
+	function show() {
+		if (open) return;
+		open = true;
+		void recount();
+	}
+
+	function hoverIn(e: PointerEvent) {
+		if (e.pointerType === 'touch') return;
+		clearTimeout(hoverTimer);
+		if (!open) hoverTimer = setTimeout(show, HOVER_OPEN_MS);
+	}
+
+	function hoverOut(e: PointerEvent) {
+		if (e.pointerType === 'touch') return;
+		clearTimeout(hoverTimer);
+		hoverTimer = setTimeout(() => (open = false), HOVER_CLOSE_MS);
+	}
 </script>
 
 {#snippet summary()}
@@ -67,9 +93,14 @@
 	<Popover
 		{open}
 		onOpenChange={(e) => {
-			open = e.open;
-			if (e.open) void recount();
+			// a click on the count that hover already opened keeps it open
+			if (!e.open && overTrigger && !escaped) return;
+			escaped = false;
+			clearTimeout(hoverTimer);
+			if (e.open) show();
+			else open = false;
 		}}
+		onEscapeKeyDown={() => (escaped = true)}
 		positioning={{ placement: 'bottom-start', offset: { mainAxis: 6 } }}
 		autoFocus={false}
 	>
@@ -79,7 +110,14 @@
 					{...attrs}
 					type="button"
 					class="text-muted hover:text-surface-950-50 rounded-base text-xs whitespace-nowrap tabular-nums select-none"
-					use:tip={m.wordcount_open_details()}
+					onpointerenter={(e) => {
+						overTrigger = e.pointerType !== 'touch';
+						hoverIn(e);
+					}}
+					onpointerleave={(e) => {
+						overTrigger = false;
+						hoverOut(e);
+					}}
 				>
 					{@render summary()}
 				</button>
@@ -87,7 +125,11 @@
 		</Popover.Trigger>
 		<Portal>
 			<Popover.Positioner class="z-floating-ui">
-				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 w-80 border p-3 shadow-lg">
+				<Popover.Content
+					class="card bg-surface-50-950 border-surface-300-700 w-80 border p-3 shadow-lg"
+					onpointerenter={hoverIn}
+					onpointerleave={hoverOut}
+				>
 					{#if failed}
 						<p class="text-error-ink text-xs">{m.wordcount_failed()}</p>
 					{:else if !result}
@@ -128,7 +170,9 @@
 								{/each}
 							</ul>
 						{/if}
-						<p class="text-faint mt-3 text-xs leading-relaxed">{m.wordcount_note()}</p>
+						<p class="text-faint mt-3 text-xs leading-relaxed">
+							{fileKind(result.files[0].path) === 'typ' ? m.wordcount_note_typst() : m.wordcount_note_latex()}
+						</p>
 					{/if}
 				</Popover.Content>
 			</Popover.Positioner>

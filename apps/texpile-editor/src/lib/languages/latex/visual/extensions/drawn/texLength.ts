@@ -1,7 +1,6 @@
-// a TeX length as the editor draws it: in ems of the editor's font, or as a share of the text width
-
-/** `fill` stretches to whatever is left (\fill, \stretch, \hfill) */
-export type TexLength = { em: number } | { share: number } | { fill: true };
+// a TeX length as the editor draws it: in ems of the editor's font, or as a share of the text width; \fill,
+// \stretch and \hfill stretch to whatever is left
+import type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
 
 // points per unit; an em and an ex are the 10pt article class's, which is what the editor's own em stands for
 const POINTS: Record<string, number> = {
@@ -41,7 +40,7 @@ const REGISTERS: Record<string, number> = {
 const WIDTHS = new Set(['linewidth', 'textwidth', 'columnwidth', 'hsize']);
 
 /** null when it is not a length the editor can place */
-export function texLength(source: string): TexLength | null {
+export function texLength(source: string): DrawnLength | null {
 	// glue: only the natural size shows
 	const natural = source.replace(/\s+(?:plus|minus)\s.*$/s, '').trim();
 	if (/^\\(?:fill|hfill|vfill|fil|hfil|vfil)$/.test(natural) || /^\\stretch\s*\{[^}]*\}$/.test(natural)) return { fill: true };

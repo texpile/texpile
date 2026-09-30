@@ -5,8 +5,8 @@
 import { describe, it, expect } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { serializeToTypst, escTypst } from '$lib/languages/typst/visual/serializer';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { serializeToTypst, escTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import { computeTableSkeleton } from '$lib/languages/typst/source/sourceInsert';
 import { typTableNode } from '$lib/languages/typst/visual/blockInsertItems';
@@ -313,14 +313,14 @@ describe('converted document shape', () => {
 		expect(doc.child(1).type.name).toBe('raw_latex');
 	});
 
-	it('bare @refs become atoms; supplemented refs stay chips', () => {
+	it('@refs become atoms, a supplement riding on the atom', () => {
 		const para = docOf('see @typst2023 and @fig[Figure] here\n').child(0);
 		const kinds: string[] = [];
 		para.forEach((n) => {
-			if (n.type.name === 'typ_ref') kinds.push(`ref:${n.attrs.target}`);
+			if (n.type.name === 'typ_ref') kinds.push(`ref:${n.attrs.target}:${n.attrs.supplement}`);
 			if (n.type.name === 'inline_latex') kinds.push(`chip:${n.textContent}`);
 		});
-		expect(kinds).toEqual(['ref:typst2023', 'chip:@fig[Figure]']);
+		expect(kinds).toEqual(['ref:typst2023:null', 'ref:fig:Figure']);
 	});
 
 	it('a stale colspec falls back to the real column count', () => {

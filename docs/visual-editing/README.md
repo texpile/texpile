@@ -31,6 +31,18 @@ Articles, papers, essays, and reports. Anything the editor cannot show stays in 
 
 Type @ to reference any equation, figure, table, or citation. Equations keep their numbers, so a reference reads as the number it will print as.
 
+## Pasting
+
+Text pasted from a web page, Word, Google Docs, or a spreadsheet keeps its headings, lists, tables, links, bold, italic, underline, and code. Its fonts, sizes, text colors, and cell fills are left behind. Text copied inside Texpile keeps everything, colors included.
+
+- Markdown, such as an answer copied from an AI chat, pastes as the formatting it spells out: headings, lists, tables, links, and math.
+- LaTeX or Typst source pastes as the document it describes, the same as a copy from the source editor, and so does a copy from a code editor such as VS Code. Other code copied from a code editor pastes as a code block.
+- A picture held in the clipboard is saved into the project's images folder. A picture that only links to the web or to a file is left out, and a notice says so; copy that picture on its own and paste it. In a Markdown file a web picture stays as a link.
+- When Markdown, LaTeX or Typst was read wrong, Ctrl+Z leaves the text as it was copied. A second Ctrl+Z removes the paste.
+- Ctrl+Shift+V, or Paste Without Formatting in the right-click menu, pastes the plain text.
+
+To paste everything from other apps as plain text, turn off Preferences › Editor › Smart paste.
+
 ## Shortcuts
 
 The usual keys apply: Ctrl+B for bold, Ctrl+I for italic, Ctrl+M for an inline equation.

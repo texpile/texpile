@@ -93,6 +93,8 @@ export const baseMarks = {
 		}
 	} as MarkSpec,
 
+	// colors come only from the editor's own spans: a web page's text color or a spreadsheet's cell
+	// fill is how that app drew it, not part of the writing
 	textcolor: {
 		attrs: {
 			color: { default: 'black' },
@@ -103,18 +105,13 @@ export const baseMarks = {
 			{
 				tag: 'span[data-textcolor]',
 				getAttrs(dom: HTMLElement) {
-					return { color: dom.getAttribute('data-textcolor') || 'black' };
-				}
-			},
-			{
-				style: 'color',
-				getAttrs(value: string) {
-					return { color: value };
+					return { color: dom.getAttribute('data-textcolor') || 'black', model: dom.getAttribute('data-color-model') };
 				}
 			}
 		],
 		toDOM(node) {
-			return ['span', { 'data-textcolor': node.attrs.color, style: `color: ${node.attrs.color}` }, 0];
+			const { color, model } = node.attrs;
+			return ['span', { 'data-textcolor': color, ...(model ? { 'data-color-model': model } : {}), style: `color: ${color}` }, 0];
 		}
 	} as MarkSpec,
 
@@ -127,23 +124,13 @@ export const baseMarks = {
 			{
 				tag: 'span[data-highlight]',
 				getAttrs(dom: HTMLElement) {
-					return { color: dom.getAttribute('data-highlight') || 'yellow' };
-				}
-			},
-			{
-				style: 'background-color',
-				getAttrs(value: string) {
-					return { color: value };
+					return { color: dom.getAttribute('data-highlight') || null };
 				}
 			}
 		],
 		toDOM(node) {
 			const color = node.attrs.color;
-			return [
-				'span',
-				{ ...(color ? { 'data-highlight': color } : {}), style: `background-color: ${color ?? 'yellow'}; padding: 0 2px;` },
-				0
-			];
+			return ['span', { 'data-highlight': color ?? '', style: `background-color: ${color ?? 'yellow'}; padding: 0 2px;` }, 0];
 		}
 	} as MarkSpec,
 

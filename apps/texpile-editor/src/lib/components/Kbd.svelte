@@ -7,6 +7,7 @@
      glyphs the OS draws in its own menus. Three places used to hand-roll a mono <kbd> instead of
      using this, and the ⌘ in the title bar looked mangled. -->
 <script lang="ts">
+	import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from '@lucide/svelte';
 	import { isMac } from '$lib/platform';
 
 	type Props = {
@@ -70,18 +71,31 @@
 		});
 	}
 
+	// drawn rather than typed: the UI font sets ← and → lower than ↑ and ↓, and thinner than a key's letters
+	const ARROWS = { '↑': ArrowUp, '↓': ArrowDown, '←': ArrowLeft, '→': ArrowRight } as const;
+
 	const parts = $derived(raw != null ? null : formatShortcut(keys ?? ''));
 	// mac stacks its symbols with no separator, the way the system does; win/linux joins with +
 	const gap = $derived(isMac ? 'gap-0' : 'gap-0.5');
-	const look = $derived(cap ? 'border-surface-300-700 bg-surface-100-900 rounded-base border px-1.5 py-0.5' : 'text-muted');
+	// one glyph sits in a square cap, a word gets room either side
+	const pad = $derived(parts?.length === 1 && [...parts[0]].length === 1 ? 'px-1' : 'px-1.5');
+	// a key: at least square, with the lower edge a real key has
+	const look = $derived(
+		cap
+			? `text-surface-700-300 border-surface-300-700 bg-surface-100-900 rounded-base h-5 min-w-5 justify-center border ${pad} leading-none shadow-[0_1px_0_var(--color-surface-300-700)]`
+			: 'text-muted'
+	);
 </script>
 
 <kbd class="inline-flex items-center font-sans text-xs whitespace-nowrap {gap} {look} {className}">
 	{#if parts === null}
-		{raw}
+		<span class:cap-center={cap}>{raw}</span>
 	{:else}
 		{#each parts as key, i (i)}
-			<span>{key}</span>{#if !isMac && i < parts.length - 1}<span class="mx-px opacity-60">+</span>{/if}
+			{@const Arrow = ARROWS[key as keyof typeof ARROWS]}
+			{#if Arrow}<Arrow class="size-3" aria-hidden="true" /><span class="sr-only">{key}</span>{:else}<span class:cap-center={cap}
+					>{key}</span
+				>{/if}{#if !isMac && i < parts.length - 1}<span class="mx-px opacity-60" class:cap-center={cap}>+</span>{/if}
 		{/each}
 	{/if}
 </kbd>

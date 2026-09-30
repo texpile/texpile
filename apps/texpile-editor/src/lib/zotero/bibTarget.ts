@@ -5,6 +5,7 @@
 // compile actually reads. Everything here is text-in/text-out so it can be unit tested without
 // Zotero, disk, or an editor.
 import { parseBibtex, referencesToBib } from '$lib/languages/bib/biblatex';
+import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 
 /**
  * The bib path the main file declares, relative as written (resolution against the main file's
@@ -13,13 +14,12 @@ import { parseBibtex, referencesToBib } from '$lib/languages/bib/biblatex';
  * `\bibliography{a,b}` names keys without extensions and may list several files; the first one
  * is where new entries go. `\addbibresource` includes the extension by convention, but a bare
  * name still gets `.bib` - biblatex assumes the same default.
+ *
+ * Typst also reads Hayagriva `.yml` files, but what gets appended is BibTeX, so only a `.bib` in
+ * the `#bibliography` list counts; a list of `.yml` files alone declares nowhere to write.
  */
 export function bibPathFromSource(text: string, kind: 'tex' | 'typ'): string | null {
-	if (kind === 'typ') {
-		// #bibliography("refs.bib") or #bibliography(("a.bib", "b.bib")) - first string wins
-		const m = /bibliography\s*\(\s*\(?\s*"([^"\n]+)"/.exec(text);
-		return m ? m[1] : null;
-	}
+	if (kind === 'typ') return typstBibliographyPaths(text).find(isBibPath) ?? null;
 	const resource = /\\addbibresource\s*(?:\[[^\]]*\])?\s*\{([^}\n]+)\}/.exec(text);
 	if (resource) return withBibExt(resource[1].trim());
 	const classic = /\\bibliography\s*\{([^}\n]+)\}/.exec(text);
@@ -32,6 +32,10 @@ export function bibPathFromSource(text: string, kind: 'tex' | 'typ'): string | n
 
 function withBibExt(path: string): string {
 	return /\.[A-Za-z0-9]+$/.test(path) ? path : `${path}.bib`;
+}
+
+export function isBibPath(path: string): boolean {
+	return /\.bib$/i.test(path);
 }
 
 /**

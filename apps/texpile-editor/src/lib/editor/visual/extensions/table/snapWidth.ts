@@ -2,7 +2,7 @@
 //
 // Kept out of the vendored columnResizing so that file stays a diffable copy of upstream: it knows
 // only that a `snap` function exists, and nothing about `fr`.
-import { FR_STEP } from '$lib/languages/typst/visual/tracks';
+import { FR_STEP } from '$lib/languages/typst/visual/serialize/tracks';
 import type { SnapContext } from './columnResizing';
 
 /**

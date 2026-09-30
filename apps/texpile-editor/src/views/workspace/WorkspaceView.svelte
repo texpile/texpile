@@ -35,7 +35,7 @@
 	import { WorkspaceIntegrations } from './workspaceIntegrations.svelte';
 	import { createWorkspacePipelines } from './workspacePipelines.svelte';
 	import { WorkspaceFormatting } from './workspaceFormatting.svelte';
-	import { attachSourceToc } from './workspaceToc.svelte';
+	import { attachSourceToc, tocListOf } from './workspaceToc.svelte';
 	import { startWorkspace } from './workspaceStartup';
 	import { projectConfigSync as projectConfig, compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { setPaletteActions } from '$lib/workspace/commandPalette.svelte';
@@ -153,9 +153,9 @@
 	// proxied by $state, so the objects themselves behave exactly as they would unwrapped.
 	let layout = $state(new PaneLayout());
 
-	// visual TOC reads PM headings (works for md too); source-mode TOC parses raw LaTeX, tex-only
-	// the explorer's lower pane: Contents and Timeline, for whichever file is open (ExplorerSections)
-	const showToc = $derived(!!doc.path);
+	// the explorer's Contents pane stays whatever is open, so the file tree above it keeps its height
+	// and its scroll; this is the list it shows (workspaceToc.svelte.ts)
+	const toc = $derived(tocListOf(doc, modes.mode, nameOnly));
 	attachSourceToc(wsdoc);
 	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
 	let termDock = $state(new TerminalDockState(() => guest));
@@ -176,7 +176,7 @@
 	let dockView = $state<'terminal' | 'problems' | 'comments'>('terminal');
 	// the compile-side stack (compile-command state, draft controller, typst preview, compile
 	// pipeline, jump router) is built in ./workspacePipelines.svelte.ts
-	const { cc, draftCtl, typstPreview, compiler, nav } = createWorkspacePipelines({
+	const { cc, draftCtl, typstPreview, typstStream, compiler, nav } = createWorkspacePipelines({
 		provider,
 		session: () => session,
 		guest: () => guest,
@@ -212,6 +212,7 @@
 	});
 	onDestroy(() => {
 		typstPreview.dispose(); // leaving the workspace must not leave a preview compiling in the server
+		typstStream.dispose();
 		projectConfig.reset(); // adopted compile state is per folder; the start screen holds defaults
 	});
 	// shared session: guests can ask for a compile; leaving the workspace ends the session
@@ -356,13 +357,12 @@
 <div class="flex h-screen flex-col overflow-clip">
 	<WorkspaceChrome
 		bind:layout
-		{modes}
 		bind:termDock
 		{compiler}
 		{scm}
 		treeOps={files.treeOps}
 		{guest}
-		{showToc}
+		{toc}
 		menu={{
 			disabled: !doc.path,
 			fileKind: kind,

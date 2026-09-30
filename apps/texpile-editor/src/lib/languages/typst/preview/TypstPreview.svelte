@@ -9,8 +9,11 @@
 	// channel between us is postMessage, and the bridge on the far side is one we injected. That is
 	// what lets the zoom control below drive a viewer we cannot otherwise touch.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { ZoomIn, ZoomOut, Crosshair, FileDown, Loader2, PictureInPicture2 } from '@lucide/svelte';
-	import PreviewToolbar from '$lib/preview/PreviewToolbar.svelte';
+	import { ZoomIn, ZoomOut, Crosshair, FileDown, FileOutput, Loader2, PictureInPicture2 } from '@lucide/svelte';
+	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
+	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
+	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
+	import { typstExport } from '../export/dialog/typstExportState.svelte';
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
@@ -263,6 +266,18 @@
 		>
 			{#if savingPdf}<Loader2 size={16} class="animate-spin" />{:else}<FileDown size={16} />{/if}
 		</button>
+		<!-- the other formats and the PDF options, through the same server -->
+		<button
+			onclick={() => typstExport.show()}
+			disabled={!frameUrl || !typstExport.available}
+			use:tip={m.typst_export_toolbar()}
+			aria-label={m.typst_export_toolbar()}
+		>
+			<FileOutput size={16} />
+		</button>
+	{/snippet}
+	{#snippet vision(place: PreviewToolbarPlace)}
+		<ColorVisionMenu {place} />
 	{/snippet}
 	<!-- no close button: docked, the divider's lozenge closes the pane; popped out, the OS
 	     window's own close does. The green Live button in the topbar is the third way off. -->
@@ -278,6 +293,7 @@
 		groups={[
 			{ id: 'zoom', render: zoomGroup },
 			{ id: 'follow', render: follow },
+			{ id: 'vision', render: vision },
 			{ id: 'export', render: exportPdf }
 		]}
 	/>
@@ -286,16 +302,18 @@
 		{#if frameUrl}
 			<!-- sandboxed by origin, not by the sandbox attribute: the page needs scripts and its own
 			     wasm, and its CSP (set where it is served) is what actually bounds it -->
-			<iframe
-				bind:this={frame}
-				src={frameUrl}
-				title={m.typst_preview_label()}
-				class="h-full border-0 transition-[filter] duration-100"
-				class:blur-[1.5px]={frozenWidth !== null}
-				class:pointer-events-none={frozenWidth !== null}
-				style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
-				onerror={() => (error = m.typst_preview_frame_failed())}
-			></iframe>
+			<ColorVisionFilter class="h-full">
+				<iframe
+					bind:this={frame}
+					src={frameUrl}
+					title={m.typst_preview_label()}
+					class="h-full border-0 transition-[filter] duration-100"
+					class:blur-[1.5px]={frozenWidth !== null}
+					class:pointer-events-none={frozenWidth !== null}
+					style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
+					onerror={() => (error = m.typst_preview_frame_failed())}
+				></iframe>
+			</ColorVisionFilter>
 			{#if noDocument}
 				<!-- a card, not bare text: the surround behind it is mid-grey in both themes, so bare
 				     muted text was barely legible on it -->

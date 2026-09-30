@@ -68,6 +68,16 @@ describe('source editor clipboard', () => {
 		});
 	});
 
+	// CodeMirror holds a Windows line break as one character
+	it('pastes Windows line breaks at the end of the document', async () => {
+		await withView('alpha ', { anchor: 6, head: 6 }, async (view) => {
+			clipboard = 'a\r\nb\r\nc';
+			await pasteAtCursor(view);
+			expect(view.state.doc.toString()).toBe('alpha a\nb\nc');
+			expect(view.state.selection.main.head).toBe(11);
+		});
+	});
+
 	it('pastes nothing when the clipboard is empty, keeping the selection intact', async () => {
 		await withView('alpha beta', { anchor: 0, head: 5 }, async (view) => {
 			await pasteAtCursor(view);

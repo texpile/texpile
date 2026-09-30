@@ -8,7 +8,7 @@ order: 2
 
 # Typst on macOS
 
-One command either way.
+Texpile can install tinymist for you in one click, see [From Texpile](README.md#from-texpile). To install it yourself, it is one command either way.
 
 ## With Homebrew
 

@@ -4,8 +4,8 @@
 // rendered pages (the 2026-09-05 hunt, findings T1 to T24).
 import { describe, it, expect } from 'vitest';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import type { Node } from 'prosemirror-model';
 

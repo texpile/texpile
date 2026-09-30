@@ -215,8 +215,10 @@
 				{/if}
 
 				<div class="border-surface-200-800 text-muted flex items-center gap-3 border-t px-3 py-1.5 text-xs">
-					<span><Kbd cap keys="enter" /> {m.zotero_dialog_hint_toggle()}</span>
-					<span><Kbd cap keys="esc" /> {m.palette_hint_close()}</span>
+					<span class="flex items-center gap-1"
+						><Kbd cap keys="enter" /> <span class="cap-center">{m.zotero_dialog_hint_toggle()}</span></span
+					>
+					<span class="flex items-center gap-1"><Kbd cap keys="esc" /> <span class="cap-center">{m.palette_hint_close()}</span></span>
 					<span class="flex-1"></span>
 					<button class="btn btn-xs preset-filled-primary-500" disabled={selected.size === 0} onclick={insert}>
 						{m.zotero_dialog_insert()}{selected.size ? ` (${selected.size})` : ''}

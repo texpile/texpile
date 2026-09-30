@@ -1,11 +1,12 @@
 <script lang="ts">
 	// the start screen of a folder with no documents
 	import StarterPicker from '$lib/workspace/StarterPicker.svelte';
-	import type { Starter, ImportedFile } from '$lib/workspace/starters';
+	import type { ImportedFile } from '$lib/workspace/starters';
+	import type { StarterChoice } from '$lib/workspace/templates/starterChoice';
 	import { m } from '$lib/paraglide/messages';
 
 	type NewDocumentStartProps = {
-		onPick: (s: Starter) => void;
+		onPick: (choice: StarterChoice) => void;
 		onBlank: () => void;
 		onImport: (files: ImportedFile[]) => void;
 		busy: boolean;
@@ -17,7 +18,7 @@
 	let lang = $state<'latex' | 'typst'>('latex');
 </script>
 
-<div class="mx-auto mt-16 max-w-xl px-6">
+<div class="mx-auto max-w-xl px-6 pt-16 pb-16">
 	<div class="text-center">
 		<h2 class="text-lg font-semibold">{m.wsview_start_new_doc_heading()}</h2>
 		<p class="text-muted mt-1 text-sm">

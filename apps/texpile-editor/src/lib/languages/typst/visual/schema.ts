@@ -121,20 +121,78 @@ nodes.term_title = {
 // `@target` - one atom for BOTH of typst's meanings (bibliography citation and label
 // cross-reference): the serialization is identical either way, so the doc never has to decide.
 // The node VIEW resolves the target against the loaded bibliography for display.
+//
+// supplement: the markup inside `@target[...]` (a citation's page, a reference's word before the
+// number), verbatim; null for none, which is not the empty `[]`. form: the `form:` of a
+// `#cite(<target>, form: "prose")`, the one spelling that needs the call; null leaves it to the style
 nodes.typ_ref = {
 	inline: true,
 	group: 'inline',
 	atom: true,
 	selectable: true,
-	attrs: { target: {} },
+	attrs: { target: {}, supplement: { default: null }, form: { default: null } },
 	parseDOM: [
 		{
 			tag: 'span[data-typ-ref]',
-			getAttrs: (dom) => ({ target: (dom as HTMLElement).getAttribute('data-typ-ref') || '' })
+			getAttrs: (dom) => {
+				const el = dom as HTMLElement;
+				return {
+					target: el.getAttribute('data-typ-ref') || '',
+					supplement: el.getAttribute('data-supplement'),
+					form: el.getAttribute('data-form') || null
+				};
+			}
 		}
 	],
-	toDOM: (node) => ['span', { 'data-typ-ref': String(node.attrs.target), class: 'typ-ref' }, `@${node.attrs.target}`],
+	toDOM: (node) => [
+		'span',
+		{
+			'data-typ-ref': String(node.attrs.target),
+			'data-supplement': node.attrs.supplement,
+			'data-form': node.attrs.form,
+			class: 'typ-ref'
+		},
+		`@${node.attrs.target}`
+	],
 	leafText: (node) => `@${node.attrs.target}`
+};
+// `#theorem[...]`, `#align(center)[...]`: a call whose last argument is the content block it
+// wraps, standing on its own lines. name is the callee and args the bytes between its
+// parentheses (null: it had none), both verbatim; bodyLead/bodyTrail are the whitespace inside
+// the brackets around the body (null: editor-made, which opens the body on a line of its own),
+// and typIndent the width the call's line stood at, which a container holding it writes itself
+nodes.typ_env = {
+	content: 'block+',
+	group: 'block',
+	definingAsContext: true,
+	allowGapCursor: true,
+	attrs: {
+		name: { default: 'block' },
+		args: { default: null },
+		label: { default: null },
+		labelGap: { default: null },
+		bodyLead: { default: null },
+		bodyTrail: { default: null },
+		typIndent: { default: null }
+	},
+	parseDOM: [
+		{
+			tag: 'div.typ-environment',
+			getAttrs: (dom) => {
+				const el = dom as HTMLElement;
+				return {
+					name: el.getAttribute('data-typ-env') || 'block',
+					args: el.getAttribute('data-args'),
+					label: el.getAttribute('data-label') || null
+				};
+			}
+		}
+	],
+	toDOM: (node) => [
+		'div',
+		{ class: 'typ-environment', 'data-typ-env': node.attrs.name, 'data-args': node.attrs.args, 'data-label': node.attrs.label },
+		0
+	]
 };
 nodes.term_item = {
 	content: 'term_title block+',

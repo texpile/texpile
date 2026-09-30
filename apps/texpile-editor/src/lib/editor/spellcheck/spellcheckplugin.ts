@@ -1,9 +1,11 @@
-import { Plugin } from 'prosemirror-state';
+import { Plugin, TextSelection, type Command } from 'prosemirror-state';
+import { keymap } from 'prosemirror-keymap';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import { createProofreadPlugin, createSpellCheckEnabledStore, invalidateProofreadCache } from 'prosemirror-proofread';
 import { lintText, onLintRulesChanged, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
 import { blockSpellText, chipLetters, harperReading } from '$lib/editor/spellcheck/blockSpellText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
+import { nextProblem } from './problemNav';
 import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
 import { activeCompare } from '$lib/workspace/workspaceStore';
@@ -174,3 +176,16 @@ export const spellChipPlugin = new Plugin({
 		}
 	}
 });
+
+function jumpToProblem(dir: 1 | -1): Command {
+	return (state, dispatch) => {
+		const squiggles: DecorationSet | undefined = proofreadPlugin.getState(state)?.decor;
+		const target = nextProblem(squiggles?.find() ?? [], state.selection, dir);
+		if (!target) return false;
+		dispatch?.(state.tr.setSelection(TextSelection.create(state.doc, target.from, target.to)).scrollIntoView());
+		return true;
+	};
+}
+
+/** F8 and Shift-F8, as in source mode: to the next or previous spelling or grammar problem */
+export const spellProblemKeymap = keymap({ F8: jumpToProblem(1), 'Shift-F8': jumpToProblem(-1) });

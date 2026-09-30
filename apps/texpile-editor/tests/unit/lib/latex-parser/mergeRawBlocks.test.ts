@@ -94,13 +94,14 @@ describe('latex raw island merging', () => {
 
 describe('typst raw island merging', () => {
 	it('merges adjacent raw islands and stays byte-identical untouched', () => {
-		// #show and #set rules at the top level are raw islands in the typst visual editor
-		const src = 'prose before\n\n#show heading: set text(blue)\n#set par(justify: true)\n\nprose after\n';
+		// #show and #set rules at the top level are raw islands in the typst visual editor; the set rules it draws
+		// (page, text, par...) stay chips of their own, so this one sets what it does not draw
+		const src = 'prose before\n\n#show heading: set text(blue)\n#set table(stroke: none)\n\nprose after\n';
 		const parsed = parseTypstFile(src);
 		const raws = rawBlocks(parsed.doc);
 		if (raws.length === 0) return; // islands modelled natively: nothing to merge, nothing to test
 		expect(raws.length).toBe(1);
-		expect(raws[0].textContent).toBe('#show heading: set text(blue)\n#set par(justify: true)');
+		expect(raws[0].textContent).toBe('#show heading: set text(blue)\n#set table(stroke: none)');
 		expect(serializeTypstFile(parsed, parsed.doc)).toBe(src);
 	});
 });

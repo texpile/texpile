@@ -14,6 +14,10 @@ export type TocItem = {
 	file?: string;
 };
 
+/** which headings the explorer's Contents lists: the visual editor's, the source text's, none for
+ * a file without any (a picture, a .bib), or none because no file is open */
+export type TocList = 'visual' | 'source' | 'none' | 'closed';
+
 /** Headings of the current document, kept in sync by the TOC plugin (createTocPlugin). Visual mode. */
 export const tocStore = box<TocItem[]>([]);
 

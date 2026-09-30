@@ -5,25 +5,20 @@
 		sourceTocStore,
 		tocCaretStore,
 		activeTocIndex,
-		type TocItem
+		type TocItem,
+		type TocList
 	} from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { TextSelection } from 'prosemirror-state';
 	import { EditorView } from '@codemirror/view';
 	import { m } from '$lib/paraglide/messages';
 
-	// source mode reads headings parsed from the raw .tex (char offsets); visual reads the PM plugin's.
+	// source mode reads headings parsed from the raw text (char offsets); visual reads the PM plugin's.
+	// A file with neither lists nothing, never the last file's headings.
 	// onOpenFile routes clicks on entries merged in from other files (source-mode project outline).
-	let {
-		mode = 'visual',
-		onOpenFile,
-		heading = true
-	}: {
-		mode?: 'visual' | 'source';
-		onOpenFile?: (file: string, line: number) => void;
-		/** false under a section header of its own */ heading?: boolean;
-	} = $props();
-	const items = $derived(mode === 'source' ? sourceTocStore.current : tocStore.current);
+	let { list, onOpenFile }: { list: TocList; onOpenFile?: (file: string, line: number) => void } = $props();
+	const items = $derived(list === 'source' ? sourceTocStore.current : list === 'visual' ? tocStore.current : []);
+	const emptyText = $derived(list === 'closed' ? m.toc_no_file() : list === 'none' ? m.toc_no_headings_here() : m.toc_empty());
 	const active = $derived(activeTocIndex(items, tocCaretStore.current));
 	let rows = $state<HTMLButtonElement[]>([]);
 	$effect(() => {
@@ -35,7 +30,7 @@
 			onOpenFile(item.file, item.line ?? 1);
 			return;
 		}
-		if (mode === 'source') {
+		if (list === 'source') {
 			const view = sourceCmView.current;
 			if (!view) return;
 			const p = Math.min(item.pos, view.state.doc.length);
@@ -60,9 +55,9 @@
 </script>
 
 <nav class="text-sm">
-	{#if heading}<div class="text-faint mb-2 text-xs font-semibold tracking-wide uppercase">{m.toc_heading()}</div>{/if}
+	<div class="text-faint mb-2 text-xs font-semibold tracking-wide uppercase">{m.toc_heading()}</div>
 	{#if items.length === 0}
-		<p class="text-faint text-xs">{m.toc_empty()}</p>
+		<p class="text-faint text-xs">{emptyText}</p>
 	{:else}
 		<div class="flex flex-col gap-0.5">
 			{#each items as item, i (i)}

@@ -57,10 +57,11 @@ export class ProjectFileSet {
 	/**
 	 * Make the server's view of the project match `files`.
 	 *
-	 * Ownership is decided per URI, per call: a workspace entry with a live view belongs to the
-	 * host's editor, and the set backs off it in BOTH directions. A file the editor holds is never
-	 * opened here, and a file the editor TAKES OVER is forgotten silently - a didClose at that
-	 * moment would close the editor's document out from under the host.
+	 * Ownership is decided per URI, per call: a workspace entry belongs to the host's editor (a
+	 * source view, or the visual editor's stream), and the set backs off it in BOTH directions. A
+	 * file the editor holds is never opened here, and a file the editor TAKES OVER is forgotten
+	 * silently - a didClose at that moment would close the editor's document out from under the
+	 * host.
 	 *
 	 * Every call is guarded: one unreadable file costs that file, never the rest of the project.
 	 */
@@ -94,10 +95,13 @@ export class ProjectFileSet {
 		}
 	}
 
-	/** a live view on the workspace entry means the host's editor holds this URI */
+	/**
+	 * Any workspace entry, view or not: the visual editor holds its file with no view at all, and
+	 * a second opener there would write the same URI on a version count of its own.
+	 */
 	private editorOwns(uri: string): boolean {
 		try {
-			return this.client.workspace.getFile(uri)?.getView() != null;
+			return this.client.workspace.getFile(uri) != null;
 		} catch {
 			return false;
 		}

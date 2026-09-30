@@ -14,6 +14,8 @@
 	import { preferencesOpen, shortcutsOpen, setupOpen, openPreferencesAt } from '$lib/stores/dialogStore';
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 	import { attachNativeMenu, publishMenuState } from '$lib/workspace/nativeMenu';
+	import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
+	import { colorVision, parseColorVisionMode } from '$lib/preview/colorVision/colorVision';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import { whatsNewOpen } from '$lib/whatsNew';
 	import { triggerClass, contentClass } from './menubar/menuBarStyles';
@@ -49,6 +51,8 @@
 		/** the compile target is Typst: New offers .typ instead of .tex/.cls/.sty (md either way) */
 		typstProject?: boolean;
 		onOpenFolder?: (path?: string) => void;
+		/** Save the folder as a template of the user's own (desktop, host only). */
+		onSaveAsTemplate?: () => void;
 		onCloneRepository?: () => void;
 		/** File › Local History… and Restore Deleted File…: the host's own workspace */
 		onLocalHistory?: () => void;
@@ -82,6 +86,7 @@
 		onNewFile,
 		typstProject = false,
 		onOpenFolder,
+		onSaveAsTemplate,
 		onCloneRepository,
 		onLocalHistory,
 		onRestoreDeleted,
@@ -146,6 +151,7 @@
 		if (value === 'zoom-in') onZoomIn?.();
 		else if (value === 'zoom-out') onZoomOut?.();
 		else if (value === 'zoom-reset') onZoomReset?.();
+		else if (value.startsWith('vision:')) colorVision.current = parseColorVisionMode(value.slice('vision:'.length)) ?? 'none';
 	}
 
 	function helpSelect(value: string) {
@@ -162,10 +168,12 @@
 		if (value === 'save') onSave?.();
 		else if (value === 'new-window') openNewWindow();
 		else if (value === 'open-folder-new-window') openFolderInNewWindow();
+		else if (value === 'export-typst') typstExport.show();
 		else if (value === 'clone') onCloneRepository?.();
 		else if (value === 'local-history') onLocalHistory?.();
 		else if (value === 'restore-deleted') onRestoreDeleted?.();
 		else if (value === 'share-session') onShareSession?.();
+		else if (value === 'save-as-template') onSaveAsTemplate?.();
 		else if (value === 'close-workspace') onCloseWorkspace?.();
 		else if (value === 'preferences') preferencesOpen.current = true;
 	}
@@ -241,8 +249,11 @@
 			canFormat: !!onFormatDocument,
 			canNewFile: !!onNewFile,
 			typstProject,
+			canExportTypst: typstExport.available,
+			colorVision: colorVision.current,
 			canInsertImage: !!imageDir,
 			canOpenFolder: !!onOpenFolder,
+			canSaveTemplate: !!onSaveAsTemplate,
 			canClone: !!onCloneRepository,
 			canLocalHistory: !!onLocalHistory,
 			fileOpen: !!activeFilePath.current,
@@ -302,7 +313,9 @@
 			{openFolderSelect}
 			canNewFile={!!onNewFile}
 			{typstProject}
+			canExportTypst={typstExport.available}
 			canOpenFolder={!!onOpenFolder}
+			canSaveAsTemplate={!!onSaveAsTemplate}
 			canClone={!!onCloneRepository}
 			canLocalHistory={!!onLocalHistory}
 			fileOpen={!!activeFilePath.current}
@@ -318,9 +331,10 @@
 			{findable}
 		/>
 	{/if}
-	<!-- zoom is webContents.setZoomFactor, and View holds nothing else; the browser has its own -->
+	<!-- zoom is webContents.setZoomFactor, which the browser has its own of; the color vision check
+	     there is the eye on the preview toolbar -->
 	{#if !__WEB__ && showAt(2, overflow)}
-		<ViewMenu index={2} select={viewSelect} {uiZoomPercent} />
+		<ViewMenu index={2} select={viewSelect} {uiZoomPercent} colorVisionMode={colorVision.current} />
 	{/if}
 	{#if showAt(3, overflow)}
 		<InsertMenu index={3} select={(v) => void insertSelect(v)} {mathSelect} {structured} {dialect} canInsertImage={!!imageDir} />

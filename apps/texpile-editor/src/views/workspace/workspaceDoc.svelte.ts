@@ -18,6 +18,8 @@ import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
+import { openTexFileOf } from '$lib/workspace/edits/openEditorEdit';
+import { openTexFile } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { m } from '$lib/paraglide/messages';
 
 type DocDeps = {
@@ -168,6 +170,12 @@ export class WorkspaceDoc {
 			if (!activeCompare.current || this.modes.mode !== 'visual' || !hasVisualMode(kind)) return;
 			if (this.diff.originalFor !== this.doc.path) return;
 			untrack(() => void this.diff.ensureVersionDoc(kind as 'tex' | 'md' | 'typ'));
+		});
+		// the LaTeX symbol picker offers the \usepackage a picked symbol needs, written into the open file
+		$effect(() => {
+			const parseVisual = async (text: string) => (await this.tryParseVisual(text)).parsed ?? null;
+			openTexFile.current = openTexFileOf({ doc: this.doc, mode: () => this.modes.mode, kind: () => this.doc.kind, parseVisual });
+			return () => (openTexFile.current = null);
 		});
 		// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go
 		// read-only), else concurrent guest edits to that file's Y.Text would be clobbered.

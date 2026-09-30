@@ -240,7 +240,7 @@
 		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 		font-size: 0.85em;
 		background: color-mix(in srgb, var(--color-surface-500) 14%, transparent);
-		cursor: default;
+		cursor: pointer;
 	}
 	:global(.TypstEditor .typ-ref-known) {
 		background: color-mix(in srgb, var(--color-primary-500) 16%, transparent);

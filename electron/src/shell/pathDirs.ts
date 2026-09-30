@@ -1,6 +1,9 @@
 // PATH with extra folders in front of it, for a child process
-/** `base` with `dirs` in front of PATH: a folder the user listed beats a stale copy the system PATH holds */
-export function withPathDirs(base: NodeJS.ProcessEnv, dirs: (string | null | undefined)[]): NodeJS.ProcessEnv {
+/**
+ * `base` with `dirs` in front of PATH: a folder the user listed beats a stale copy the system PATH
+ * holds. `last` puts them behind it instead, for a fallback that must not shadow anything.
+ */
+export function withPathDirs(base: NodeJS.ProcessEnv, dirs: (string | null | undefined)[], last = false): NodeJS.ProcessEnv {
 	const clean = dirs.filter((d): d is string => !!d && d.trim().length > 0);
 	if (!clean.length) return { ...base };
 
@@ -16,6 +19,6 @@ export function withPathDirs(base: NodeJS.ProcessEnv, dirs: (string | null | und
 	const added = clean.filter((d) => !seen.has(process.platform === 'win32' ? d.toLowerCase() : d));
 	if (!added.length) return env;
 
-	env[key] = [...added, ...existing].join(sep);
+	env[key] = (last ? [...existing, ...added] : [...added, ...existing]).join(sep);
 	return env;
 }

@@ -140,6 +140,8 @@ export type GitRemotesResult = {
 	reason?: 'not-a-repo' | 'no-git' | 'unsafe';
 	error?: string;
 	remotes?: GitRemote[];
+	/** the opened folder is the repository's top level, not a folder inside it */
+	atTopLevel?: boolean;
 };
 
 /** an http(s) address without its user part, where a token can sit (https://<token>@github.com) */
@@ -154,7 +156,11 @@ export async function gitRemotes(workspaceRoot: string): Promise<GitRemotesResul
 	if (!rr.repo) return { ok: false, reason: rr.reason };
 	try {
 		const list = await git(rr.repo.root).getRemotes(true);
-		return { ok: true, remotes: list.map((r) => ({ name: r.name, url: withoutSignIn(r.refs.push || r.refs.fetch) })) };
+		return {
+			ok: true,
+			remotes: list.map((r) => ({ name: r.name, url: withoutSignIn(r.refs.push || r.refs.fetch) })),
+			atTopLevel: rr.repo.prefix === ''
+		};
 	} catch (e) {
 		if (isMissingGit(e)) return { ok: false, reason: 'no-git' };
 		return { ok: false, error: errMsg(e) };

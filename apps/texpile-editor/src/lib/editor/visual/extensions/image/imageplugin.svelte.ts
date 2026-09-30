@@ -138,7 +138,8 @@ export function createTemplateEditorSettings(): ImagePluginSettings {
 
 const LOCAL_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
-async function uploadLocalImage(file: File, imageDir: string): Promise<string> {
+/** the path the file references the picture by, relative to `imageDir`; source mode's paste writes pictures here too */
+export async function uploadLocalImage(file: File, imageDir: string): Promise<string> {
 	if (!LOCAL_IMAGE_TYPES.includes(file.type)) {
 		dispatchEvent(new CustomEvent('toast', { detail: { message: 'Only PNG, JPEG, GIF and WebP images are supported.', timeout: 3000 } }));
 		throw new Error('Unsupported image type');

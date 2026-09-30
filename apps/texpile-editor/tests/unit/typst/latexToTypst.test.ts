@@ -4,8 +4,8 @@
 // and \mathrm{d} came back a bare italic `d`.
 import { describe, it, expect } from 'vitest';
 import { typSchema } from '$lib/languages/typst/visual/schema';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
-import { latexToTypst } from '$lib/languages/typst/visual/latexToTypst';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { latexToTypst } from '$lib/languages/typst/visual/serialize/latexToTypst';
 
 /** an inline equation as the converter builds it: latex as content, typst + latexOrig as attrs */
 function mathDoc(typst: string, latexOrig: string, latexNow = latexOrig) {

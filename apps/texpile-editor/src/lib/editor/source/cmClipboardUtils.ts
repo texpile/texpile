@@ -20,9 +20,6 @@ export async function cutSelection(view: CMView): Promise<void> {
 
 export async function pasteAtCursor(view: CMView): Promise<void> {
 	const text = await navigator.clipboard.readText().catch(() => '');
-	if (text) {
-		const { from, to } = view.state.selection.main;
-		view.dispatch({ changes: { from, to, insert: text }, selection: { anchor: from + text.length } });
-	}
+	if (text) view.dispatch({ ...view.state.replaceSelection(text), userEvent: 'input.paste', scrollIntoView: true });
 	view.focus();
 }

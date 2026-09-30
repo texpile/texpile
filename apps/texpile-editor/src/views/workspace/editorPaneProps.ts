@@ -5,7 +5,8 @@ import type SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 import type { EditSession } from '$lib/collab/editSession';
 import type { ParsedLatexFile, ParsePhase } from '$lib/workspace/latexRoundtrip';
 import type { BiblatexReference } from '$lib/workspace/citations';
-import type { Starter, ImportedFile } from '$lib/workspace/starters';
+import type { ImportedFile } from '$lib/workspace/starters';
+import type { StarterChoice } from '$lib/workspace/templates/starterChoice';
 import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { Tab, CompareRef } from '$lib/workspace/tabs.svelte';
 import type { CommentAnchor } from '$lib/comments/anchor';
@@ -82,7 +83,7 @@ export type EditorPaneProps = {
 	compare: CompareRef | null;
 	/** the workspace provider's URL builder: guests resolve through the session, not disk */
 	fileUrl: (path: string) => string;
-	onPickStarter: (s: Starter) => void;
+	onPickStarter: (choice: StarterChoice) => void;
 	onBlankStarter: () => void;
 	onImportStarter: (files: ImportedFile[]) => void;
 	onTexInput: (v: string) => void;

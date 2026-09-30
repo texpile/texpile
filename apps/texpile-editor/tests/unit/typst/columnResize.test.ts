@@ -11,10 +11,10 @@
 // The px side lives in captureColumnWidths (it needs a measured table); what is exercised here is
 // the pure half: the track model, and what the serializer does with widths once they exist.
 import { describe, it, expect } from 'vitest';
-import { typstToProseMirror } from '$lib/languages/typst/visual/converter';
-import { serializeToTypst } from '$lib/languages/typst/visual/serializer';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { parseTracks, distribute, toFrTracks, snapFr } from '$lib/languages/typst/visual/tracks';
+import { parseTracks, distribute, toFrTracks, snapFr } from '$lib/languages/typst/visual/serialize/tracks';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
 import type { Node } from 'prosemirror-model';
 

@@ -5,7 +5,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { EditorState, ChangeSet, type Text } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import { applyLspItem, type LspCompletionItem } from '$lib/languages/typst/intellisense/typstCompletionSource';
+import { applyLspItem, type LspCompletionItem } from '$lib/languages/typst/intellisense/completion/typstCompletionSource';
 
 const fromPosition = (p: { line: number; character: number }, doc: Text) => doc.line(p.line + 1).from + p.character;
 const at = (character: number) => ({ start: { line: 0, character }, end: { line: 0, character } });

@@ -25,7 +25,8 @@ import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin'
 import { lineBreakPlugins } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors';
 import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
-import { latexClipboardPlugin } from '$lib/editor/visual/extensions/latexClipboard';
+import { latexClipboardPlugin, pasteLatexText } from '$lib/editor/visual/extensions/latexClipboard';
+import { visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
 import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
@@ -38,7 +39,7 @@ import { LabelView } from '$lib/languages/latex/visual/extensions/label/labelVie
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
-import { proofreadPlugin, spellChipPlugin, spellClickBoundaryPlugin } from '$lib/editor/spellcheck/spellcheckplugin';
+import { proofreadPlugin, spellChipPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
@@ -66,7 +67,8 @@ import { createNodeFlashPlugin } from '$lib/editor/visual/extensions/flash-plugi
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
 import { latexChipKind } from '$lib/languages/latex/visual/extensions/drawn/latexChipKind';
-import { footnoteNumbersPlugin } from '$lib/languages/latex/visual/extensions/drawn/footnoteNumbers';
+import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import { latexFootnoteMarks } from '$lib/languages/latex/visual/extensions/drawn/latexFootnoteMarks';
 import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import { listRuleWithoutIndent } from './listItemIndent';
@@ -186,6 +188,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		...lineBreakPlugins(),
 		remoteCursorsPlugin,
 		createLinkPlugin(),
+		visualSmartPaste('latex', schema, pasteLatexText),
 		latexClipboardPlugin,
 		pasteUuidFixPlugin,
 		search(),
@@ -196,13 +199,14 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
 		proofreadPlugin,
+		spellProblemKeymap,
 		spellChipPlugin,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
-		footnoteNumbersPlugin(),
+		footnoteNumbersPlugin(latexFootnoteMarks),
 		createNodeFlashPlugin(),
 		...pmComments({
 			onSelect: (id) => onSelectComment?.(id),

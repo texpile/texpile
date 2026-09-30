@@ -1,12 +1,13 @@
-// parses the folder's .bib and .bbl files into the shared references list; read-only
+// parses the folder's .bib and .bbl files, and the Hayagriva .yml a Typst main names, into the shared references list; read-only
 import { box } from '$lib/runes/box.svelte';
-import { parseBibtex, parseBblEntries, sliceBblBibitems, type BiblatexReference } from '$lib/languages/bib/biblatex';
+import { parseBibtex, parseBblEntries, parseHayagriva, sliceBblBibitems, type BiblatexReference } from '$lib/languages/bib/biblatex';
 import { extractDocRefs, type BibItemSlice } from '$lib/languages/latex/parser/labels';
-import { scanFiles, readTextFile, type TexFile } from './fileSystem';
+import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
+import { scanFiles, readTextFile, basename, dirname, joinPath, type TexFile } from './fileSystem';
 
 export type { BiblatexReference };
 
-/** references from the folder's .bib and .bbl files, also fed to the editor for @-cites. */
+/** references from the folder's .bib, .bbl and Hayagriva files, also fed to the editor for @-cites. */
 export const references = box<BiblatexReference[]>([]);
 
 function parseBibSafe(text: string): BiblatexReference[] {
@@ -103,21 +104,48 @@ let loadSeq = 0;
 function isBblFile(f: TexFile): boolean {
 	return /\.bbl$/i.test(f.name);
 }
-/** de-dupe order: references.bib, the other .bib files, then .bbl (generated, so it yields) */
+function isYamlFile(f: TexFile): boolean {
+	return /\.ya?ml$/i.test(f.name);
+}
+/** de-dupe order: references.bib, the other .bib and Hayagriva files, then .bbl (generated, so it yields) */
 function precedence(f: TexFile): number {
 	return f.name.toLowerCase() === 'references.bib' ? 0 : isBblFile(f) ? 2 : 1;
 }
 
-/** parses all .bib and .bbl files in the folder, merged; on key clashes references.bib wins,
- *  then the other .bib files, then .bbl (a .bbl is generated FROM the .bib, so when both hold a
- *  key the editable source is the truth - .bbl-only keys, arXiv-style, still resolve).
+/** the references a file holds; a YAML file that is not a Hayagriva bibliography holds none */
+function referencesIn(f: TexFile, text: string): BiblatexReference[] {
+	if (isBblFile(f)) return bblToReferences(text);
+	if (isYamlFile(f)) return parseHayagriva(text) ?? [];
+	return parseBibSafe(text);
+}
+
+/**
+ * The Hayagriva files a Typst main's `#bibliography` names: the only YAML read, where a project's
+ * other YAML (CI, data) would be read and parsed on every save and window focus for nothing.
+ */
+async function declaredHayagriva(root: string, main: string | null, fs: ReferencesFs): Promise<TexFile[]> {
+	if (!main || !/\.typ$/i.test(main)) return [];
+	const text = await fs.read(main).catch(() => '');
+	// Typst reads a path against the file naming it, and a leading / against the project root
+	return typstBibliographyPaths(text)
+		.filter((p) => /\.ya?ml$/i.test(p))
+		.map((p) => {
+			const path = p.startsWith('/') ? joinPath(root, p) : joinPath(dirname(main), p);
+			return { name: basename(path), path, relPath: p };
+		});
+}
+
+/** parses all .bib and .bbl files in the folder and the Hayagriva (.yml, Typst's own format) ones a
+ *  Typst main names, merged; on key clashes references.bib wins, then the other .bib and Hayagriva
+ *  files, then .bbl (a .bbl is generated FROM the .bib, so when both hold a key the editable source
+ *  is the truth - .bbl-only keys, arXiv-style, still resolve).
  *  The store is NOT cleared up front: it used to be, and the empty window while the folder
  *  rescanned made every citation chip downgrade to its raw key and snap back - a visible flash
  *  on each save. The old list stays up until the fresh one replaces it in a single set. */
-export async function loadReferences(root: string, fs: ReferencesFs = nativeFs): Promise<void> {
+export async function loadReferences(root: string, fs: ReferencesFs = nativeFs, main: string | null = null): Promise<void> {
 	const my = ++loadSeq;
 	try {
-		const files = await fs.scan(root, ['bib', 'bbl']);
+		const files = [...(await fs.scan(root, ['bib', 'bbl'])), ...(await declaredHayagriva(root, main, fs))];
 		if (my !== loadSeq) return;
 		if (!files.length) {
 			references.current = [];
@@ -128,7 +156,7 @@ export async function loadReferences(root: string, fs: ReferencesFs = nativeFs):
 		for (const f of ordered) {
 			try {
 				const text = await fs.read(f.path);
-				lists.push(isBblFile(f) ? bblToReferences(text) : parseBibSafe(text));
+				lists.push(referencesIn(f, text));
 			} catch {
 				/* skip unreadable file */
 			}

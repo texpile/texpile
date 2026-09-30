@@ -10,7 +10,7 @@ import * as gitCombine from '../git/history/gitCombine';
 import * as gitBranches from '../git/history/gitBranches';
 import * as gitTrust from '../git/gitTrust';
 import * as gitFetch from '../git/remote/gitFetch';
-import { gitClone } from '../git/remote/gitClone';
+import { gitClone, type CloneOptions } from '../git/remote/gitClone';
 import type { GitAuthEnv } from '../git/remote/gitRemote';
 import { startWorkspaceWatch, stopWorkspaceWatch } from '../fs/fsWatch';
 import { pathKey } from '../shell/toolDirs';
@@ -44,11 +44,11 @@ function run(op: string, args: unknown[]): unknown {
 	if (op === 'git.gitClone') {
 		// the one git call that reports as it goes, and the one that can be stopped: both by the key
 		// in its last argument
-		const [url, parent, name, auth, key] = args as [string, string, string, GitAuthEnv, string];
+		const [url, parent, name, auth, key, opts] = args as [string, string, string, GitAuthEnv, string, CloneOptions | undefined];
 		const stop = new AbortController();
 		clones.set(key, stop);
-		return gitClone(url, parent, name, auth, (data) => port.postMessage({ event: 'git-progress', key, data }), stop.signal).finally(() =>
-			clones.delete(key)
+		return gitClone(url, parent, name, auth, (data) => port.postMessage({ event: 'git-progress', key, data }), stop.signal, opts).finally(
+			() => clones.delete(key)
 		);
 	}
 	if (op === 'git.cancelClone') {

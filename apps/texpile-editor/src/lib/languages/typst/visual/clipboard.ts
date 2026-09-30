@@ -5,7 +5,7 @@
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { typSchema } from './schema';
-import { serializeToTypst } from './serializer';
+import { serializeToTypst } from './serialize/serializer';
 
 /** serialize a clipboard slice to Typst. Inline slices (a selection inside one paragraph) wrap
  *  in a paragraph first; block slices serialize as they are - a partially selected block fails

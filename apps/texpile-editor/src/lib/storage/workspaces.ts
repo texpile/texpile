@@ -25,6 +25,9 @@ export type FolderEntry = {
 	positions?: Record<string, unknown>;
 	/** left in Suggesting; a choice per project and per person, so not in the project's own config */
 	suggesting?: boolean;
+	/** the Typst export dialog's last choices and destination; shape owned and validated by
+	 *  languages/typst/export/exportOptions.ts */
+	typstExport?: Record<string, unknown>;
 };
 
 /** the saved version a comparison tab is against; `path` is the file's name in that version when it had another */

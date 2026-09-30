@@ -1,11 +1,19 @@
 <script lang="ts">
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
+	import { Check } from '@lucide/svelte';
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
+	import MenuBarSubmenu from './MenuBarSubmenu.svelte';
 	import { contentClass, itemClass, separatorClass } from './menuBarStyles';
 	import { isMac } from '$lib/platform';
+	import { COLOR_VISION_MODES, colorVisionLabel, type ColorVisionMode } from '$lib/preview/colorVision/colorVision';
 	import { m } from '$lib/paraglide/messages';
 
-	let { index, select, uiZoomPercent }: { index: number; select: (value: string) => void; uiZoomPercent: number } = $props();
+	let {
+		index,
+		select,
+		uiZoomPercent,
+		colorVisionMode
+	}: { index: number; select: (value: string) => void; uiZoomPercent: number; colorVisionMode: ColorVisionMode } = $props();
 </script>
 
 <Menu onSelect={(d) => select(d.value)}>
@@ -24,6 +32,17 @@
 				<Menu.Item value="zoom-reset" class={itemClass}>
 					<Menu.ItemText>{m.menubar_zoom_reset()}</Menu.ItemText><span class="opacity-50">{isMac ? '⌘ 0' : 'Ctrl 0'}</span>
 				</Menu.Item>
+				<Menu.Separator class={separatorClass} />
+				<!-- the previews' color vision check; the same choice as the eye on the preview toolbar -->
+				<MenuBarSubmenu value="vision" label={m.color_vision_menu()} {select}>
+					{#each COLOR_VISION_MODES as mode (mode)}
+						<Menu.Item value="vision:{mode}" class={itemClass}>
+							<Menu.ItemText>{colorVisionLabel(mode)}</Menu.ItemText>
+							{#if colorVisionMode === mode}<Check class="size-4" />{/if}
+						</Menu.Item>
+						{#if mode === 'none'}<Menu.Separator class={separatorClass} />{/if}
+					{/each}
+				</MenuBarSubmenu>
 			</Menu.Content>
 		</Menu.Positioner>
 	</Portal>

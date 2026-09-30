@@ -22,15 +22,21 @@ Tests live at `tests/unit/typst/previewProtocol.test.ts`.
    left as raw bytes.
 4. The payload is merged into a wasm render session, which renders the document to SVG.
 
-## Why it needs no save, and no debounce
+## Why it needs no save
 
 Because nothing here reads the file. A standalone `tinymist preview` watches the filesystem, so it
 can only ever show _saved_ text. Started through the language server instead, the preview renders
-the server's **in-memory** document - the one our LSP client already keeps current by sending
-`textDocument/didChange` on every keystroke.
+the server's **in-memory** document, which both editors keep current with `textDocument/didChange`:
+the source editor through its LSP plugin, the visual editor through `TypstDocumentStream`
+(`../intellisense/typstDocumentStream.ts`), which sends the text it serializes to once typing pauses
+for 200ms. Without that stream the visual editor left the server reading the disk: an autosave
+behind, plus the file watcher's ~1.5s.
 
-Measured against tinymist 0.15.2: an in-memory edit produced a new `diff-v1` frame **6ms** later,
-with the file on disk untouched. There is no timer in this path to shorten.
+Both hold the same open document (`../intellisense/typstWorkspace.ts`), so a mode switch hands it
+from one to the other without closing it, and its versions keep climbing.
+
+Measured against tinymist 0.15: an in-memory edit produced a new `diff-v1` frame **6-20ms** later,
+with the file on disk untouched. The only timers in the path are the editors' sync debounces.
 
 While a preview is attached, `WorkspaceView` skips the debounced `runTypstLive` recompile entirely;
 that fallback only exists for when this pane is not showing.

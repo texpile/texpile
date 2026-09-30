@@ -6,7 +6,7 @@ import { parseBibtex } from '$lib/languages/bib/biblatex';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { appendBibEntries, translatorForSource } from '$lib/zotero/bibTarget';
-import { insertCitation, mainTextOf, targetBib, type ZoteroInsertDeps } from '$lib/zotero/insertFromZotero';
+import { insertCitation, mainTextOf, targetBib, warnUndeclared, type BibTarget, type ZoteroInsertDeps } from '$lib/zotero/insertFromZotero';
 import { findCited, preview, workFromBibtex, type BibDialect, type Work } from './doiEntry';
 import { parseWorkId, type WorkId } from './doiInput';
 import { rankHits, type SearchHit } from './searchRank';
@@ -87,19 +87,15 @@ export async function citeWork(found: Lookup, deps: CiteDeps): Promise<void> {
 		dispatchEvent(new CustomEvent('texpile:fs-changed'));
 		insertCitation([work.key], deps.kind);
 
-		const name = basename(target.path);
-		toaster.success({ title: m.zotero_added_one(), description: name });
-		// a bib file the document never references compiles to nothing; say so once, loudly
-		if (target.undeclared) {
-			toaster.warning({ title: m.zotero_bib_created_title({ name }), description: m.zotero_bib_created_desc(), duration: 8000 });
-		}
+		toaster.success({ title: m.zotero_added_one(), description: basename(target.path) });
+		if (target.undeclared) warnUndeclared(target);
 	} catch (e) {
 		toaster.error({ title: m.cite_doi_add_failed(), description: e instanceof Error ? e.message : String(e) });
 	}
 }
 
 /** the bib new entries go to, what it holds now, and which field names it is read with */
-async function landing(main: string, deps: CiteDeps): Promise<{ path: string; undeclared: boolean; text: string; dialect: BibDialect }> {
+async function landing(main: string, deps: CiteDeps): Promise<BibTarget & { text: string; dialect: BibDialect }> {
 	const mainText = await mainTextOf(main, deps);
 	const target = await targetBib(main, mainText, deps);
 	const text = (await statFile(target.path)).exists ? await readTextFile(target.path) : '';

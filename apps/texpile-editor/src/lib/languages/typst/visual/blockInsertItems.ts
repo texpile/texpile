@@ -2,11 +2,30 @@
 // constructs typSchema can hold. Same BlockInsertItem contract as the LaTeX and markdown lists,
 // so the shared BlockHandle renders any of them. No table/math/image entries until those have
 // typst-aware nodes — the menu must not be able to create what the serializer can't emit.
-import { Type, Heading1, Heading2, Heading3, List, ListOrdered, Code, Minus, Table as TableIcon } from '@lucide/svelte';
+import {
+	Type,
+	Heading1,
+	Heading2,
+	Heading3,
+	List,
+	ListOrdered,
+	Code,
+	Minus,
+	Table as TableIcon,
+	SeparatorHorizontal,
+	MoveVertical,
+	TableOfContents,
+	FileCode2
+} from '@lucide/svelte';
 import type { Schema, Node as PMNode } from 'prosemirror-model';
 import type { BlockInsertItem } from '$lib/editor/visual/extensions/blockInsertItems';
 import { generateLabel } from '$lib/editor/visual/label';
 import { m } from '$lib/paraglide/messages';
+
+/** a call the visual editor draws, as a block of Typst of its own; its panel opens on Enter */
+function typstBlock(schema: Schema, source: string): PMNode {
+	return schema.nodes.raw_latex.create(null, schema.text(source));
+}
 
 function listItem(schema: Schema, kind: 'bullet' | 'ordered') {
 	return schema.nodes.list.create(
@@ -54,5 +73,9 @@ export const TYP_BLOCK_INSERT_ITEMS: BlockInsertItem[] = [
 		icon: Code,
 		make: (s) => s.nodes.code_block.createAndFill({ env: 'fence', args: '' }),
 		select: 'node'
-	}
+	},
+	{ label: () => m.drawn_chip_page_label(), icon: SeparatorHorizontal, make: (s) => typstBlock(s, '#pagebreak()'), select: 'node' },
+	{ label: () => m.drawn_chip_space_vertical(), icon: MoveVertical, make: (s) => typstBlock(s, '#v(1em)'), select: 'node' },
+	{ label: () => m.drawn_chip_typst_outline_contents(), icon: TableOfContents, make: (s) => typstBlock(s, '#outline()'), select: 'node' },
+	{ label: () => m.blockmenu_raw_typst(), icon: FileCode2, make: (s) => s.nodes.raw_latex.createAndFill(), select: 'node' }
 ];

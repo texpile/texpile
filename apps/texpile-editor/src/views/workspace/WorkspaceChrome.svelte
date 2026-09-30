@@ -4,6 +4,7 @@
 	// than a long prop list.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
+	import { userTemplatesAvailable } from '$lib/workspace/templates/templateBridge';
 	import TitleBar from '$lib/chrome/TitleBar.svelte';
 	import WorkspaceMenuBar from '$lib/chrome/WorkspaceMenuBar.svelte';
 	import SessionPresence from '$lib/chrome/SessionPresence.svelte';
@@ -14,8 +15,8 @@
 	import { ChevronLeft, ChevronRight, ShieldQuestion } from '@lucide/svelte';
 	import type GlobalSearch from '$lib/search/GlobalSearch.svelte';
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
-	import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
+	import type { TocList } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 	import { canCombine } from '$lib/workspace/scm/branches/gitCombine';
 	import { canClone } from '$lib/workspace/scm/remote/gitClone';
 	import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
@@ -28,13 +29,12 @@
 	let {
 		children,
 		layout = $bindable(),
-		modes,
 		termDock = $bindable(),
 		compiler,
 		scm,
 		treeOps,
 		guest,
-		showToc,
+		toc,
 		menu,
 		actions,
 		pendingCommand = null,
@@ -44,13 +44,12 @@
 		/** the editor column, rendered as a sibling of the sidebar inside the row */
 		children: Snippet;
 		layout: PaneLayout;
-		modes: ViewModeSwitch;
 		termDock: TerminalDockState;
 		compiler: Any;
 		scm: Any;
 		treeOps: Any;
 		guest: boolean;
-		showToc: boolean;
+		toc: TocList;
 		/** menu-bar inputs that are not workspace state */
 		menu: {
 			disabled: boolean;
@@ -98,6 +97,7 @@
 			onNewFile={menu.canManageTree ? actions.newFileOfType : undefined}
 			typstProject={menu.typstProject}
 			onOpenFolder={menu.hostMode ? actions.openFolder : undefined}
+			onSaveAsTemplate={menu.hostMode && userTemplatesAvailable() ? actions.saveAsTemplate : undefined}
 			onCloneRepository={menu.hostMode && canClone() ? actions.cloneRepository : undefined}
 			onLocalHistory={menu.hostMode && canKeepLocalHistory() ? actions.localHistory : undefined}
 			onRestoreDeleted={menu.hostMode && canKeepLocalHistory() ? actions.restoreDeleted : undefined}
@@ -159,10 +159,9 @@
 			{guest}
 			bind:view={layout.sidebarView}
 			scmBusy={scm.busy}
-			{showToc}
+			{toc}
 			tocFraction={layout.tocFraction}
 			historyFraction={layout.historyFraction}
-			viewMode={modes.mode}
 			bind:fileTreeRef
 			bind:globalSearchRef
 			bind:splitEl={layout.splitEl}

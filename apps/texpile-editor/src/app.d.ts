@@ -12,7 +12,13 @@ declare global {
 		/** False if node-pty failed to load (needs `pnpm electron:rebuild`). */
 		available(): Promise<boolean>;
 		/** Spawn or reuse a shell for `id` in `cwd`. `shell` is the executable's basename (e.g. "cmd.exe"). */
-		spawn(opts: { id: string; cwd?: string; cols?: number; rows?: number }): Promise<{ ok: boolean; shell?: string; error?: string }>;
+		spawn(opts: { id: string; cwd?: string; cols?: number; rows?: number }): Promise<{
+			ok: boolean;
+			shell?: string;
+			error?: string;
+			/** the pseudo console a Windows shell runs in; null elsewhere */
+			windowsPty?: { backend: 'conpty' | 'winpty'; buildNumber: number } | null;
+		}>;
 		/** Send keystrokes / a command (append '\r' to run). */
 		write(id: string, input: string): void;
 		resize(id: string, cols: number, rows: number): void;
@@ -59,11 +65,43 @@ declare global {
 		detail: string;
 		/** the copy the shell PATH reaches on its own */
 		onPath: boolean;
+		/** Texpile's own tinymist, the one Preferences › Toolchain installs */
+		managed: boolean;
+	};
+
+	/** how far an install of Texpile's own tinymist has got; received/total are bytes while downloading */
+	type TinymistInstallStep = { phase: 'download' | 'verify' | 'extract'; received: number; total: number };
+
+	type TinymistInstallFailure = 'unsupported' | 'offline' | 'download' | 'checksum' | 'extract' | 'disk' | 'broken' | 'cancelled';
+
+	/** an install's outcome; a removal's success carries no command */
+	type TinymistInstallResult =
+		{ ok: true; command?: string; version?: string; typstVersion?: string } | { ok: false; reason: TinymistInstallFailure; detail: string };
+
+	type ManagedTinymistStatus = {
+		/** the release Install fetches */
+		pinned: string;
+		/** tinymist publishes a build for this OS and CPU */
+		supported: boolean;
+		/** Texpile's copy when there is one; version null when it no longer runs */
+		installed: { command: string; version: string | null; typstVersion: string | null } | null;
+		/** the step an install under way has reached */
+		step: TinymistInstallStep | null;
 	};
 
 	type TexpileTypstBridge = {
 		/** Locate tinymist; null when it isn't installed. */
 		resolve(): Promise<TinymistInfo | null>;
+		/** Texpile's own copy of tinymist (absent from an older main process). */
+		tinymistStatus?(): Promise<ManagedTinymistStatus>;
+		/** Download, check and install the pinned tinymist; joins an install already under way. */
+		installTinymist?(): Promise<TinymistInstallResult>;
+		cancelTinymistInstall?(): void;
+		removeTinymist?(): Promise<TinymistInstallResult>;
+		/** An install's progress, whichever window started it; returns an unsubscribe fn. */
+		onTinymistProgress?(cb: (step: TinymistInstallStep) => void): () => void;
+		/** An install or removal ended, in any window; returns an unsubscribe fn. */
+		onTinymistFinished?(cb: (result: TinymistInstallResult) => void): () => void;
 		/** Probe every external program the app shells out to. */
 		probeToolchain(): Promise<ToolProbe[]>;
 		/** each result as it lands, ahead of probeToolchain resolving; returns an unsubscribe fn */

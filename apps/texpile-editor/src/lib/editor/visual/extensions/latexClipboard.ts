@@ -11,6 +11,7 @@ import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
 import { regenerateCopiedLabels } from './paste-uuid-fix';
+import { pasteReadingOfText } from '$lib/editor/paste/pasteReadingOfText';
 
 /** serialize a clipboard slice to LaTeX. Inline slices (a selection inside one paragraph) wrap
  *  in a paragraph first; block slices serialize as they are, open ends included (a partially
@@ -45,8 +46,7 @@ export function parseLatexFragment(text: string): Fragment | null {
 }
 
 /** parse LaTeX-looking text and insert it as rich nodes; false = not LaTeX, caller inserts it as
- *  plain text. Shared by the paste event handler and the context menu's programmatic paste
- *  (which has no ClipboardEvent, so the plugin's handlePaste never sees it). */
+ *  plain text */
 export function pasteLatexText(view: EditorView, text: string): boolean {
 	if (!text || !looksLikeLatex(text)) return false;
 	const frag = parseLatexFragment(text);
@@ -54,8 +54,7 @@ export function pasteLatexText(view: EditorView, text: string): boolean {
 	// a single paragraph pastes open (merges into the paragraph at the caret); anything
 	// heavier inserts as blocks
 	const open = frag.childCount === 1 && frag.firstChild!.type.name === 'paragraph' ? 1 : 0;
-	const slice = regenerateCopiedLabels(new Slice(frag, open, open));
-	view.dispatch(view.state.tr.replaceSelection(slice).scrollIntoView());
+	pasteReadingOfText(view, text, regenerateCopiedLabels(new Slice(frag, open, open)));
 	return true;
 }
 

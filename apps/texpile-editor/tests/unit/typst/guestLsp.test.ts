@@ -5,9 +5,13 @@
 // chose. And a request that never settles leaves a guest's editor looking hung rather than
 // looking like it has no intellisense.
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { sessionUri, relFromSessionUri, mapUris } from '$lib/languages/typst/intellisense/sessionUri';
-import { createSessionTransport, type SessionLspPort } from '$lib/languages/typst/intellisense/sessionTransport';
-import { serveGuestLspRequest, diagnosticsNotificationForGuest, type GuestLspContext } from '$lib/languages/typst/intellisense/guestLsp';
+import { sessionUri, relFromSessionUri, mapUris } from '$lib/languages/typst/intellisense/guest/sessionUri';
+import { createSessionTransport, type SessionLspPort } from '$lib/languages/typst/intellisense/guest/sessionTransport';
+import {
+	serveGuestLspRequest,
+	diagnosticsNotificationForGuest,
+	type GuestLspContext
+} from '$lib/languages/typst/intellisense/guest/guestLsp';
 import { guestRelPath } from '$lib/collab/sessionProvider';
 import type { ControlPayload } from '$lib/collab/protocol';
 import type { LSPClient } from '@codemirror/lsp-client';
@@ -225,6 +229,19 @@ describe('the host answering a guest', () => {
 		const { ctx } = hostCtx({ request: () => ({ uri: 'file:///C:/other/std.typ', range: {} }) });
 		const out = await serveGuestLspRequest(req('textDocument/definition', {}), ctx);
 		expect((out.result as { uri?: string }).uri).toBeUndefined();
+	});
+
+	it("brings a path's link into the guest namespace, and drops one outside the project", async () => {
+		const links = [
+			{ range: { start: { line: 0, character: 7 } }, target: 'file:///C:/proj/fig.png' },
+			{ range: { start: { line: 1, character: 7 } }, target: 'file:///C:/other/secret.png' }
+		];
+		const { ctx } = hostCtx({ request: () => links });
+		const out = await serveGuestLspRequest(req('textDocument/documentLink', {}), ctx);
+		expect(out.ok).toBe(true);
+		const [inside, outside] = out.result as { target?: string }[];
+		expect(inside.target).toBe(sessionUri('fig.png'));
+		expect(outside.target).toBeUndefined();
 	});
 
 	it('answers initialize from cache instead of initialising a running server twice', async () => {

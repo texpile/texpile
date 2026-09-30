@@ -20,6 +20,9 @@ export type UserData = {
 	recentFolders: string[];
 	/** completion frecency: label -> { s: decayed accept score, t: last accept ms epoch } */
 	completionUsage: Record<string, { s: number; t: number }>;
+	/** the symbol picker's picks by id, most recent first, one list per language */
+	recentTypstSymbols: string[];
+	recentLatexSymbols: string[];
 	onboardingCompleted: boolean;
 	tourCompleted: boolean;
 	advancedWarningDismissed: boolean;
@@ -35,10 +38,16 @@ const DEFAULTS: UserData = {
 	dictionary: [],
 	recentFolders: [],
 	completionUsage: {},
+	recentTypstSymbols: [],
+	recentLatexSymbols: [],
 	onboardingCompleted: false,
 	tourCompleted: false,
 	advancedWarningDismissed: false
 };
+
+function stringsOf(list: unknown): string[] {
+	return Array.isArray(list) ? list.filter((s): s is string => typeof s === 'string') : [];
+}
 
 function read(): UserData {
 	if (typeof localStorage === 'undefined') return { ...DEFAULTS };
@@ -48,6 +57,8 @@ function read(): UserData {
 			const merged = { ...DEFAULTS, ...raw, v: 1 as const };
 			// cap on read as well as write: a hand-edited entry must not render an unbounded list
 			merged.recentFolders = merged.recentFolders.filter((p): p is string => typeof p === 'string').slice(0, MAX_RECENT);
+			merged.recentTypstSymbols = stringsOf(merged.recentTypstSymbols);
+			merged.recentLatexSymbols = stringsOf(merged.recentLatexSymbols);
 			return merged;
 		}
 	} catch {
