@@ -1,0 +1,14 @@
+{
+	"version": "0.15.8",
+	"release": "https://github.com/Myriad-Dreamin/tinymist/releases/tag/v0.15.8",
+	"archives": {
+		"tinymist-x86_64-pc-windows-msvc.zip": "b36c3e2926b2fe870e377b27aeebcb6265dd6a19fdca148a9a3ac4fdf57ee8a5",
+		"tinymist-aarch64-pc-windows-msvc.zip": "9c9a48bc73a4ead1260c202ea0d590d16ffac1465ea9e1a4f0a1c1850638351f",
+		"tinymist-aarch64-apple-darwin.tar.gz": "c3e8673fe4b7d8d21ad6d90e3c0684317191e1350758f7eaa02b5bde84339885",
+		"tinymist-x86_64-apple-darwin.tar.gz": "0ca702f40c5028d5937e081799a2c07d30c3f8f2ce3e40ce469471856cd6cef1",
+		"tinymist-x86_64-unknown-linux-gnu.tar.gz": "2428932e8d8b593ebc1ac4eed41fb9d3584166e1044bbcdef740b7296c348295",
+		"tinymist-x86_64-unknown-linux-musl.tar.gz": "816d33895ae343f934403dbd73f687a531368464450451510f3c108b0c04bcfd",
+		"tinymist-aarch64-unknown-linux-gnu.tar.gz": "ec78300e89b34e0958b615b1d42c275fd11bf91d2d27401bbef07150e477f199",
+		"tinymist-aarch64-unknown-linux-musl.tar.gz": "8055377bfd463c05dc7e9cf4116d355ba0c2bb80a68a583b31905830f2d311eb"
+	}
+}

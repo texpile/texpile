@@ -1,0 +1,274 @@
+# Signs the tinymist release vendor/tinymist.json pins and puts it on dl.texpile.com/vendor/tinymist/<version>/,
+# where Texpile's one-click install downloads it. Started by hand only; see vendor/README.md.
+#
+# The upstream archives are checked against the pin before anything is signed. Windows programs are signed
+# with Azure Trusted Signing and macOS ones with the Developer ID and notarized, using release.yml's
+# credentials; the Linux archives are served exactly as tinymist published them. Each program goes back
+# into an archive laid out as upstream's was, so the app unpacks ours the way it unpacked theirs.
+#
+# With Publish off the run stops at a workflow artifact, to check the signatures before anything is public.
+# A published version is never replaced: SHA256SUMS goes up last, and its presence stops a second upload.
+name: vendor-tinymist
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Upload to dl.texpile.com (off: build the signed archives as a workflow artifact only)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency: vendor-tinymist
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.pin.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: pin
+        run: echo "version=$(jq -r .version vendor/tinymist.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Download the pinned archives and check them against the pin
+        env:
+          VERSION: ${{ steps.pin.outputs.version }}
+        run: |
+          set -euo pipefail
+          mkdir upstream
+          jq -r '.archives | to_entries[] | "\(.value)  \(.key)"' vendor/tinymist.json > upstream/pinned.sha256
+          while read -r _ name; do
+            curl -fsSL --retry 3 -o "upstream/$name" "https://github.com/Myriad-Dreamin/tinymist/releases/download/v$VERSION/$name"
+          done < upstream/pinned.sha256
+          (cd upstream && sha256sum --strict -c pinned.sha256)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: upstream
+          path: upstream/
+          if-no-files-found: error
+
+  sign-windows:
+    needs: fetch
+    runs-on: windows-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: upstream
+          path: upstream
+
+      - name: Set up Azure Trusted Signing
+        shell: pwsh
+        run: |
+          Install-PSResource -Name TrustedSigning -Version '[0.5.0,)' -Repository PSGallery -TrustRepository -Scope CurrentUser -ErrorAction Stop
+          Import-Module TrustedSigning -MinimumVersion 0.5.0 -ErrorAction Stop
+
+      - name: Sign tinymist.exe
+        shell: pwsh
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          SIGN_ENDPOINT: ${{ vars.AZURE_ENDPOINT }}
+          SIGN_ACCOUNT: ${{ vars.AZURE_CODE_SIGNING_ACCOUNT }}
+          SIGN_PROFILE: ${{ vars.AZURE_CERT_PROFILE }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory signed | Out-Null
+          foreach ($zip in Get-ChildItem upstream -Filter 'tinymist-*-pc-windows-msvc.zip') {
+            $target = $zip.Name -replace '^tinymist-(.+)\.zip$', '$1'
+            Expand-Archive -Path $zip.FullName -DestinationPath "unpacked/$target"
+            $exe = Get-ChildItem "unpacked/$target" -Recurse -Filter tinymist.exe | Select-Object -First 1
+            if (-not $exe) { throw "no tinymist.exe in $($zip.Name)" }
+            Copy-Item $exe.FullName "signed/tinymist-$target.exe"
+          }
+          foreach ($file in Get-ChildItem signed -Filter *.exe) {
+            # the timestamp keeps the signature valid once the three-day certificate lapses
+            Invoke-TrustedSigning -Endpoint $env:SIGN_ENDPOINT -CodeSigningAccountName $env:SIGN_ACCOUNT `
+              -CertificateProfileName $env:SIGN_PROFILE -Files $file.FullName -FileDigest SHA256 `
+              -TimestampRfc3161 'http://timestamp.acs.microsoft.com' -TimestampDigest SHA256
+            $signature = Get-AuthenticodeSignature $file.FullName
+            if ($signature.Status -ne 'Valid' -or -not $signature.TimeStamperCertificate) { throw "$($file.Name): $($signature.Status)" }
+            Write-Host "$($file.Name): $($signature.SignerCertificate.Subject)"
+          }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: signed-windows
+          path: signed/
+          if-no-files-found: error
+
+  sign-mac:
+    needs: fetch
+    # not macos-latest: release.yml's signing keychain would not unlock on its newer image
+    runs-on: macos-15
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: upstream
+          path: upstream
+
+      - name: Sign and notarize tinymist
+        env:
+          CSC_LINK: ${{ secrets.MACOS_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.MACOS_CSC_PASSWORD }}
+          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: |
+          set -euo pipefail
+          keychain="$RUNNER_TEMP/vendor-signing.keychain-db"
+          password="$(openssl rand -hex 24)"
+          echo "$CSC_LINK" | base64 --decode > "$RUNNER_TEMP/developer-id.p12"
+          security create-keychain -p "$password" "$keychain"
+          security set-keychain-settings -lut 3600 "$keychain"
+          security unlock-keychain -p "$password" "$keychain"
+          security import "$RUNNER_TEMP/developer-id.p12" -k "$keychain" -P "$CSC_KEY_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$password" "$keychain" > /dev/null
+          security list-keychains -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+          identity="$(security find-identity -v -p codesigning "$keychain" | awk '/Developer ID Application/ { print $2; exit }')"
+          [ -n "$identity" ] || { echo "::error::MACOS_CSC_LINK holds no Developer ID Application identity"; exit 1; }
+
+          mkdir signed
+          for archive in upstream/tinymist-*-apple-darwin.tar.gz; do
+            target="$(basename "$archive" .tar.gz)"
+            target="${target#tinymist-}"
+            mkdir -p "unpacked/$target"
+            tar -xzf "$archive" -C "unpacked/$target"
+            program="$(find "unpacked/$target" -type f -name tinymist | head -1)"
+            [ -n "$program" ] || { echo "::error::no tinymist in $archive"; exit 1; }
+            cp "$program" "signed/tinymist-$target"
+            # hardened runtime and a secure timestamp: what notarization asks of a program
+            codesign --force --options runtime --timestamp --keychain "$keychain" --sign "$identity" "signed/tinymist-$target"
+            codesign --verify --strict --verbose=2 "signed/tinymist-$target"
+          done
+
+          # a bare program cannot carry a stapled ticket; Gatekeeper looks it up online when it needs to
+          echo "$APPLE_API_KEY_BASE64" | base64 --decode > "$RUNNER_TEMP/apple-api-key.p8"
+          ditto -c -k signed "$RUNNER_TEMP/notarize.zip"
+          result="$(xcrun notarytool submit "$RUNNER_TEMP/notarize.zip" --key "$RUNNER_TEMP/apple-api-key.p8" \
+            --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait --output-format json)"
+          echo "$result"
+          if [ "$(echo "$result" | jq -r .status)" != "Accepted" ]; then
+            xcrun notarytool log "$(echo "$result" | jq -r .id)" --key "$RUNNER_TEMP/apple-api-key.p8" \
+              --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER"
+            echo "::error::notarization was not accepted"
+            exit 1
+          fi
+
+      - name: Remove the signing keychain
+        if: always()
+        run: security delete-keychain "$RUNNER_TEMP/vendor-signing.keychain-db" || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: signed-mac
+          path: signed/
+          if-no-files-found: error
+
+  publish:
+    needs: [fetch, sign-windows, sign-mac]
+    runs-on: ubuntu-latest
+    environment: CICD
+    env:
+      BUCKET: texpile-releases
+      VERSION: ${{ needs.fetch.outputs.version }}
+      OUT: vendor-tinymist-${{ needs.fetch.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: upstream
+          path: upstream
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: signed-*
+          merge-multiple: true
+          path: signed
+
+      - name: Put the signed programs back in their archives
+        run: |
+          set -euo pipefail
+          mkdir "$OUT"
+          for archive in upstream/tinymist-*; do
+            name="$(basename "$archive")"
+            target="${name#tinymist-}"
+            target="${target%.zip}"
+            target="${target%.tar.gz}"
+            work="work/$target"
+            mkdir -p "$work"
+            case "$name" in
+              *-pc-windows-msvc.zip)
+                unzip -q "$archive" -d "$work"
+                cp "signed/tinymist-$target.exe" "$(find "$work" -type f -name tinymist.exe | head -1)"
+                (cd "$work" && zip -q -X -r "$GITHUB_WORKSPACE/$OUT/$name" .)
+                ;;
+              *-apple-darwin.tar.gz)
+                tar -xzf "$archive" -C "$work"
+                program="$(find "$work" -type f -name tinymist | head -1)"
+                cp "signed/tinymist-$target" "$program"
+                chmod 755 "$program"
+                tar -czf "$OUT/$name" -C "$work" --owner=0 --group=0 --numeric-owner $(ls "$work")
+                ;;
+              *)
+                cp "$archive" "$OUT/$name"
+                ;;
+            esac
+          done
+          curl -fsSL -o "$OUT/LICENSE" "https://raw.githubusercontent.com/Myriad-Dreamin/tinymist/v$VERSION/LICENSE"
+          printf 'tinymist %s, from %s\nThe Windows and macOS programs are signed by Texpile LLC. Nothing else is changed.\n' \
+            "$VERSION" "$(jq -r .release vendor/tinymist.json)" > "$OUT/SOURCE"
+          (cd "$OUT" && sha256sum tinymist-* > SHA256SUMS && cat SHA256SUMS)
+
+      - name: Write the hashes the app pins
+        run: |
+          {
+            echo 'For `electron/src/tinymist/tinymistRelease.ts`:'
+            echo '```ts'
+            echo "export const TINYMIST_VERSION = '$VERSION';"
+            echo 'const SHA256_BY_TARGET: Record<string, string> = {'
+            while read -r hash name; do
+              target="${name#tinymist-}"
+              target="${target%.zip}"
+              target="${target%.tar.gz}"
+              echo "	'$target': '$hash',"
+            done < "$OUT/SHA256SUMS"
+            echo '};'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.OUT }}
+          path: ${{ env.OUT }}/
+          if-no-files-found: error
+
+      - name: Upload to dl.texpile.com
+        if: inputs.publish
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          prefix="vendor/tinymist/$VERSION"
+          if npx wrangler@4 r2 object get "$BUCKET/$prefix/SHA256SUMS" --file "$RUNNER_TEMP/published" --remote > /dev/null 2>&1; then
+            echo "::error::$prefix is already published; a new build of it would break the hashes Texpile pins"
+            exit 1
+          fi
+          put() { npx wrangler@4 r2 object put "$BUCKET/$prefix/$1" --file "$OUT/$1" --remote --content-type "$2"; }
+          for file in "$OUT"/tinymist-*; do
+            name="$(basename "$file")"
+            case "$name" in
+              *.zip) put "$name" application/zip ;;
+              *) put "$name" application/gzip ;;
+            esac
+          done
+          put LICENSE 'text/plain; charset=utf-8'
+          put SOURCE 'text/plain; charset=utf-8'
+          put SHA256SUMS 'text/plain; charset=utf-8'

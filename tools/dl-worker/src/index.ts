@@ -27,6 +27,14 @@ interface Env {
 // zip is the mac auto-update artifact (Squirrel.Mac); the others serve both web and updater
 const INSTALLER = /\.(exe|dmg|appimage|deb|zip)$/i;
 
+// vendor/<tool>/<version>/: a tool the app installs for itself (tinymist), signed by us. Not Texpile,
+// so never counted as a download of it, and never overwritten, so cached for good
+const VENDOR = /^vendor\/[^/]+\/[^/]+\//;
+
+function isInstaller(key: string): boolean {
+	return INSTALLER.test(key) && !VENDOR.test(key);
+}
+
 const PLATFORM_ALIAS: Record<string, string> = {
 	windows: 'windows',
 	win: 'windows',
@@ -193,7 +201,7 @@ export default {
 			headers.set('etag', head.httpEtag);
 			headers.set('content-length', String(head.size));
 			headers.set('accept-ranges', 'bytes');
-			if (INSTALLER.test(key)) headers.set('content-disposition', `attachment; filename="${attachmentName(key)}"`);
+			if (isInstaller(key)) headers.set('content-disposition', `attachment; filename="${attachmentName(key)}"`);
 			return new Response(null, { status: 200, headers });
 		}
 
@@ -214,10 +222,10 @@ export default {
 			// the download page fetches these cross-origin; keep them fresh but not hammering
 			headers.set('access-control-allow-origin', '*');
 			headers.set('cache-control', 'public, max-age=300');
-		} else if (/^v\d/.test(key)) {
+		} else if (/^v\d/.test(key) || VENDOR.test(key)) {
 			headers.set('cache-control', 'public, max-age=31536000, immutable'); // versioned copies never change
 		}
-		if (INSTALLER.test(key)) headers.set('content-disposition', `attachment; filename="${attachmentName(key)}"`);
+		if (isInstaller(key)) headers.set('content-disposition', `attachment; filename="${attachmentName(key)}"`);
 
 		// Precondition (If-None-Match) matched: no body comes back.
 		if (!object.body) return new Response(null, { status: 304, headers });
@@ -232,7 +240,7 @@ export default {
 			headers.set('content-length', String(object.size));
 		}
 
-		if (INSTALLER.test(key) && countable(request)) {
+		if (isInstaller(key) && countable(request)) {
 			const ua = request.headers.get('user-agent') ?? '';
 			const country = ((request as unknown as { cf?: { country?: string } }).cf?.country ?? '').toString();
 			// the in-app updater stamps x-texpile-version on every request (electron/src/updates.ts),
