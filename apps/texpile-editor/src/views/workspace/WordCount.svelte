@@ -1,38 +1,30 @@
 <script lang="ts">
-	// the top bar's word count; a LaTeX or Typst document's shows the whole count by part and by file on hover or click
+	// the top bar's word count; hovering it shows the whole paper's, file by file
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { tip } from '$lib/components/tooltip.svelte';
 	import { documentCountStore as c } from '$lib/stores/countStore.svelte';
-	import { tallyTotal, WORD_PARTS, type WordTally } from '$lib/workspace/wordCount/proseWords';
+	import { tallyTotal } from '$lib/workspace/wordCount/proseWords';
 	import type { ProjectWords } from '$lib/workspace/wordCount/projectWords';
-	import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { activeFilePath, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename, relativeInside, samePath } from '$lib/workspace/fileSystem';
-	import { fileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { m } from '$lib/paraglide/messages';
 
-	let { details }: { details?: () => Promise<ProjectWords | null> } = $props();
+	let { details, pickMain }: { details?: () => Promise<ProjectWords | null>; pickMain?: () => void } = $props();
+
+	// without a main file the count starts at the open file, which may be one chapter of the paper
+	const noMain = $derived(!mainFile.current && /\.(tex|typ)$/i.test(activeFilePath.current ?? ''));
 
 	let open = $state(false);
 	let result = $state<ProjectWords | null>(null);
 	let failed = $state(false);
 	let counting = $state(false);
 
+	// a Markdown file shows the main file's paper, which it is no part of, so its own count goes below
+	const outside = $derived(
+		!!result && !!activeFilePath.current && !result.files.some((f) => samePath(f.path, activeFilePath.current ?? ''))
+	);
+
 	function fmt(n: number) {
 		return n.toLocaleString();
-	}
-
-	const PART_NAME: Record<keyof WordTally, () => string> = {
-		body: m.wordcount_part_body,
-		headings: m.wordcount_part_headings,
-		captions: m.wordcount_part_captions,
-		footnotes: m.wordcount_part_footnotes,
-		tables: m.wordcount_part_tables
-	};
-
-	function partsLine(t: WordTally): string {
-		return WORD_PARTS.filter((p) => t[p])
-			.map((p) => `${PART_NAME[p]()} ${fmt(t[p])}`)
-			.join(' · ');
 	}
 
 	function shown(path: string): string {
@@ -53,10 +45,8 @@
 		}
 	}
 
-	const others = $derived(result ? result.files.length - 1 : 0);
-
-	// the tooltip's delay; the close waits so the pointer can cross into the panel and scroll its file list
-	const HOVER_OPEN_MS = 400;
+	// the wait keeps the pointer crossing the top bar from opening it; the close waits so the pointer can cross into the panel
+	const HOVER_OPEN_MS = 150;
 	const HOVER_CLOSE_MS = 200;
 	let hoverTimer: ReturnType<typeof setTimeout> | undefined;
 	let overTrigger = false;
@@ -85,7 +75,7 @@
 	{#if c.selectionWords != null}
 		{m.wordcount_selected({ selection: fmt(c.selectionWords), total: fmt(c.words) })}
 	{:else}
-		{m.wordcount_summary({ words: fmt(c.words), characters: fmt(c.charactersWithSpaces) })}
+		{m.wordcount_words({ words: fmt(c.words) })}
 	{/if}
 {/snippet}
 
@@ -135,44 +125,47 @@
 					{:else if !result}
 						<p class="text-muted text-xs">{m.wordcount_counting()}</p>
 					{:else}
-						{@const main = shown(result.files[0].path)}
-						<p class="text-muted mb-2 text-xs">
-							{others === 0
-								? m.wordcount_scope_alone({ file: main })
-								: others === 1
-									? m.wordcount_scope_one({ file: main })
-									: m.wordcount_scope_other({ file: main, count: others })}
+						{@const characters = fmt(result.characters)}
+						<p class="text-xl font-medium tabular-nums">{m.wordcount_words({ words: fmt(tallyTotal(result.total)) })}</p>
+						<p class="text-muted text-xs tabular-nums">
+							{result.files.length > 1 ? m.wordcount_in_paper({ characters }) : m.wordcount_characters({ characters })}
 						</p>
-						<dl class="grid grid-cols-[1fr_auto] gap-x-4 gap-y-0.5 text-sm tabular-nums">
-							{#each WORD_PARTS as part (part)}
-								<dt class={result.total[part] ? '' : 'text-faint'}>{PART_NAME[part]()}</dt>
-								<dd class="text-right {result.total[part] ? '' : 'text-faint'}">{fmt(result.total[part])}</dd>
-							{/each}
-							<dt class="border-surface-200-800 mt-1 border-t pt-1 font-medium">{m.wordcount_total()}</dt>
-							<dd class="border-surface-200-800 mt-1 border-t pt-1 text-right font-medium">{fmt(tallyTotal(result.total))}</dd>
-						</dl>
-						{#if others > 0}
-							<p class="text-muted mt-3 mb-1 text-xs font-semibold tracking-wide uppercase">{m.wordcount_by_file()}</p>
-							<ul class="max-h-48 overflow-y-auto text-xs tabular-nums">
-								{#each result.files as f (f.path)}
-									<li
-										class="flex items-baseline justify-between gap-3 rounded-base px-1 py-0.5 {activeFilePath.current &&
-										samePath(f.path, activeFilePath.current)
-											? 'bg-primary-tint'
-											: ''}"
-										use:tip={f.missing ? '' : partsLine(f.words)}
+						<ul class="border-surface-200-800 mt-3 max-h-48 overflow-y-auto border-t pt-2 text-xs tabular-nums">
+							{#each result.files as f (f.path)}
+								<li
+									class="rounded-base flex items-baseline justify-between gap-3 px-1.5 py-1 {activeFilePath.current &&
+									samePath(f.path, activeFilePath.current)
+										? 'bg-primary-tint'
+										: ''}"
+								>
+									<span class="min-w-0 truncate font-mono {f.missing ? 'text-faint' : ''}">{shown(f.path)}</span>
+									<span class="shrink-0 {f.missing ? 'text-faint italic' : 'text-muted'}"
+										>{f.missing ? m.wordcount_file_missing() : m.wordcount_words({ words: fmt(tallyTotal(f.words)) })}</span
 									>
-										<span class="min-w-0 truncate font-mono {f.missing ? 'text-faint' : ''}">{shown(f.path)}</span>
-										<span class="shrink-0 {f.missing ? 'text-faint italic' : ''}"
-											>{f.missing ? m.wordcount_file_missing() : fmt(tallyTotal(f.words))}</span
-										>
-									</li>
-								{/each}
-							</ul>
+								</li>
+							{/each}
+						</ul>
+						{#if outside}
+							<div class="border-surface-200-800 mt-2 flex items-baseline justify-between gap-3 border-t px-1.5 pt-2 text-xs tabular-nums">
+								<span class="text-muted">{m.wordcount_in_this_file()}</span>
+								<span class="text-muted shrink-0">{m.wordcount_words({ words: fmt(c.words) })}</span>
+							</div>
 						{/if}
-						<p class="text-faint mt-3 text-xs leading-relaxed">
-							{fileKind(result.files[0].path) === 'typ' ? m.wordcount_note_typst() : m.wordcount_note_latex()}
-						</p>
+						{#if noMain}
+							<div class="border-surface-200-800 mt-2 flex items-baseline justify-between gap-3 border-t px-1.5 pt-2 text-xs">
+								<span class="text-muted">{m.wordcount_no_main()}</span>
+								{#if pickMain}
+									<button
+										type="button"
+										class="text-primary-ink shrink-0 hover:underline"
+										onclick={() => {
+											open = false;
+											pickMain();
+										}}>{m.wsview_pane_pick_main()}</button
+									>
+								{/if}
+							</div>
+						{/if}
 					{/if}
 				</Popover.Content>
 			</Popover.Positioner>

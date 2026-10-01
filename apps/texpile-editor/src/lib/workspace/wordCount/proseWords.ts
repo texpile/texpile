@@ -56,6 +56,16 @@ export function countProse(text: string): ProseCount {
 	return { words, characters, charactersWithSpaces: characters + gaps };
 }
 
+export type FileCount = {
+	words: WordTally;
+	/** with spaces, as the top bar counts them */
+	characters: number;
+};
+
+function fileCount({ text, regions }: { text: string; regions: Region[] }): FileCount {
+	return { words: tally(text, regions), characters: countProse(text).charactersWithSpaces };
+}
+
 const CLOSER: Record<string, string> = { '{': '}', '[': ']', '(': ')' };
 
 function closing(src: string, open: number): number {
@@ -88,9 +98,8 @@ const LATEX_PARTS: [RegExp, Part][] = [
 const TABLE_ENV = /\\begin\{(tabular\*?|tabularx|tabulary|longtable\*?|supertabular|tblr)\}[\s\S]*?\\end\{\1\}/g;
 
 /** `main`: the file with \begin{document}, so only its body counts, plus the \title that \maketitle prints */
-export function latexWords(source: string, main: boolean): WordTally {
-	const { text, regions } = latexText(source, main);
-	return tally(text, regions);
+export function latexCount(source: string, main: boolean): FileCount {
+	return fileCount(latexText(source, main));
 }
 
 export function latexProse(source: string, main: boolean): string {
@@ -134,9 +143,8 @@ function blank(text: string): string {
 	return text.replace(/[^\n]/g, ' ');
 }
 
-export function typstWords(source: string): WordTally {
-	const { text, regions } = typstText(source);
-	return tally(text, regions);
+export function typstCount(source: string): FileCount {
+	return fileCount(typstText(source));
 }
 
 export function typstProse(source: string): string {

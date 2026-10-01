@@ -30,6 +30,7 @@ import { visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
 import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
+import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 import { search } from 'prosemirror-search';
@@ -60,6 +61,7 @@ import { environmentView } from '$lib/languages/latex/visual/extensions/environm
 import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
 import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastNodeViews';
@@ -120,7 +122,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		history(),
 		...createSuggestPlugin(),
 		drawnChipAtomsPlugin(),
-		// before the list keymap, whose Backspace and Delete act at a block edge and would join into the figure first
+		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		inputRules({
@@ -203,6 +206,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		spellChipPlugin,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
+		dragSelectionPlugin(),
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),

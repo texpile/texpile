@@ -21,6 +21,7 @@
 	import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 	import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
 	import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
+	import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 	import { search } from 'prosemirror-search';
 	import { mdSchema } from './schema';
 	import { markdownCopyPlugin } from './clipboard';
@@ -52,6 +53,7 @@
 	import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 	import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 	import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+	import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 	import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 	import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
 	import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastNodeViews';
@@ -173,7 +175,8 @@
 			...createListPlugins({ schema: mdSchema }),
 			listAttrInheritance,
 			history(),
-			// before the list keymap, whose Backspace and Delete act at a block edge and would join into the figure first
+			// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+			keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 			keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 			keymap(listKeymap),
 			inputRules({ rules: [...listInputRules, ...mdInputRules] }),
@@ -223,6 +226,7 @@
 			spellProblemKeymap,
 			createBoundaryClickPlugin(),
 			wordSelectionTrim(),
+			dragSelectionPlugin(),
 			// the Notion-style + / drag / delete gutter, with the markdown insert set
 			createBlockHandlePlugin({ items: MD_BLOCK_INSERT_ITEMS }),
 			wholeBlockDragPlugin(),

@@ -42,4 +42,12 @@ describe('paintRange', () => {
 		// a selection has no such mirror, so the block it crosses is shaded whole
 		expect(classesOf(withCode, thread)).toEqual(['pm-range', 'pm-range pm-range-node']);
 	});
+
+	it('shades a code block a selection covers from its edges, and not one being edited inside', () => {
+		const withCode = doc(para(schema.text('see below')), schema.nodes.code_block.create(null, schema.text('x = 1')));
+		const start = withCode.content.size - withCode.lastChild!.nodeSize;
+		const range = { tint: 'red', key: 'k', reach: 'line' as const, nativeText: true };
+		expect(classesOf(withCode, { ...range, from: start, to: withCode.content.size })).toEqual(['pm-range pm-range-node']);
+		expect(classesOf(withCode, { ...range, from: start + 1, to: withCode.content.size - 1 })).toEqual([]);
+	});
 });

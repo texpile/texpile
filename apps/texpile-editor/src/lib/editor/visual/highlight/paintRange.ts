@@ -80,7 +80,9 @@ export function paintRange(doc: PMNode, r: PaintedRange): Decoration[] {
 		if (!DRAWN_TYPES.has(node.type.name)) return !node.isAtom;
 		if (r.nativeNode && r.from === start && r.to === end) return false;
 		if (r.mirrored && MIRRORING_TYPES.has(node.type.name)) return false;
-		if (ENTERED_TYPES.has(node.type.name) && r.from >= start && r.to <= end) return false;
+		// a range that covers a code block from its outside edges is crossing it; inside means within its text
+		const inside = node.content.size > 0 ? r.from > start && r.to < end : r.from >= start && r.to <= end;
+		if (ENTERED_TYPES.has(node.type.name) && inside) return false;
 		// an inline element's own height is not its line's, so a shade meant to reach the line box
 		// is measured by rangeBands.ts and named here
 		const band = r.reach === 'line' && node.isInline ? { 'data-band': `${r.key}-${start}` } : {};
