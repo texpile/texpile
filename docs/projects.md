@@ -45,7 +45,7 @@ The panel sits under the file explorer whatever file is open, so the explorer ke
 
 ## Word count
 
-Words and characters for the whole document, or for the current selection.
+The top bar shows the words in the open file, or in the selection when there is one. Hover over the count for the whole paper, read from the main file: its words and characters, and the words in each of its files. A Markdown file shows the paper's count too, with its own below. Until a main file is set, the count starts at the open file, and the panel has a button to set one. In LaTeX and Typst, math, citations, references, comments and code are not counted, and in LaTeX neither is the preamble.
 
 ## Templates
 

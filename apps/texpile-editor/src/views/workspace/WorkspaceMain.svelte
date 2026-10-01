@@ -111,6 +111,7 @@
 		outputAvailable={compiler.hasOutput}
 		onShowProblems={actions.showProblems}
 		onCountWords={actions.countWords}
+		{onPickMain}
 		commentCount={panes.comments.filter((t: Any) => !t.resolved && !panes.commentGhosts.has(t.id)).length}
 		onShowComments={actions.showComments}
 		suggesting={suggesting.current}

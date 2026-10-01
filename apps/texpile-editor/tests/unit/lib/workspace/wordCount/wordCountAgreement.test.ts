@@ -9,7 +9,7 @@ import {
 	setSourceSelectionCount,
 	sourceCounting
 } from '$lib/stores/countStore.svelte';
-import { latexProse, latexWords, tallyTotal, typstWords } from '$lib/workspace/wordCount/proseWords';
+import { latexProse, latexCount, tallyTotal, typstCount } from '$lib/workspace/wordCount/proseWords';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 
 function topBar(path: string, text: string): number {
@@ -52,17 +52,21 @@ The end.
 
 describe('the top bar counts a file as the details do', () => {
 	it('leaves out the comma and full stop a citation leaves behind', () => {
-		const details = tallyTotal(latexWords(CITED, true));
+		const details = tallyTotal(latexCount(CITED, true).words);
 		expect(details).toBe(11);
 		expect(topBar('/p/chapters/model.tex', CITED)).toBe(details);
 	});
 
 	it('agrees on a paper with a title, references, a footnote, a caption, maths, a table and a bibliography', () => {
-		expect(topBar('/p/main.tex', PAPER)).toBe(tallyTotal(latexWords(PAPER, true)));
+		const details = latexCount(PAPER, true);
+		expect(topBar('/p/main.tex', PAPER)).toBe(tallyTotal(details.words));
+		expect(documentCountStore.charactersWithSpaces).toBe(details.characters);
 	});
 
 	it('agrees for Typst', () => {
-		expect(topBar('/p/main.typ', TYPST)).toBe(tallyTotal(typstWords(TYPST)));
+		const details = typstCount(TYPST);
+		expect(topBar('/p/main.typ', TYPST)).toBe(tallyTotal(details.words));
+		expect(documentCountStore.charactersWithSpaces).toBe(details.characters);
 	});
 
 	it('counts a new file at once and edits to it once typing settles', () => {

@@ -32,6 +32,7 @@ import {
 } from 'prosemirror-flat-list';
 import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuotes, ellipsis } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
+import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { search } from 'prosemirror-search';
 import { typSchema } from './schema';
@@ -61,6 +62,7 @@ import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/p
 import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
 import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastNodeViews';
@@ -183,7 +185,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		// The picker inserts typ_ref atoms (it keys off the mounted schema)
 		...createSuggestPlugin(),
 		drawnChipAtomsPlugin(),
-		// before the list keymap, whose Backspace and Delete act at a block edge and would join into the figure first
+		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		inputRules({ rules: typInputRules }),
@@ -234,6 +237,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		spellProblemKeymap,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
+		dragSelectionPlugin(),
 		// the Notion-style + / drag / delete gutter, with the typst insert set
 		createBlockHandlePlugin({ items: TYP_BLOCK_INSERT_ITEMS }),
 		wholeBlockDragPlugin(),

@@ -73,8 +73,10 @@
 		onShowOutput: () => void;
 		outputAvailable?: boolean;
 		onShowProblems: () => void;
-		/** the open document's words by part and by file, for the word count's details */
+		/** the paper's words by file, for the word count's panel */
 		onCountWords?: () => Promise<ProjectWords | null>;
+		/** opens the main file chooser, which the word count offers while none is set */
+		onPickMain?: () => void;
 		/** open review threads in the project; 0 hides the badge, like a clean compile hides Problems */
 		commentCount?: number;
 		onShowComments?: () => void;
@@ -120,6 +122,7 @@
 		outputAvailable = false,
 		onShowProblems,
 		onCountWords,
+		onPickMain,
 		commentCount = 0,
 		onShowComments = () => {},
 		suggesting = false,
@@ -214,8 +217,7 @@
 		{/if}
 		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ') && (viewMode === 'visual' || viewMode === 'source')}
 			<!-- hidden, not truncated, once it no longer fits beside the buttons -->
-			<!-- Markdown has no parts to count by -->
-			<span class="shrink-0" use:hideIfCramped><WordCount details={kind === 'md' ? undefined : onCountWords} /></span>
+			<span class="shrink-0" use:hideIfCramped><WordCount details={onCountWords} pickMain={onPickMain} /></span>
 		{/if}
 	</div>
 	<div class="flex items-center gap-2">

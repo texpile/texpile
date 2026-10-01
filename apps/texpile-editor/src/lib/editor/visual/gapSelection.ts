@@ -17,6 +17,11 @@ import type { ResolvedPos } from 'prosemirror-model';
 // reimplementation would drift from whatever the installed plugin actually accepts
 const gapCursorValid = (GapCursor as unknown as { valid($pos: ResolvedPos): boolean }).valid.bind(GapCursor);
 
+/** a gap cursor at `$pos`, when the plugin would accept one there */
+export function gapCursorAt($pos: ResolvedPos): GapCursor | null {
+	return gapCursorValid($pos) ? new GapCursor($pos) : null;
+}
+
 export function gapAwareSelectionNear($pos: ResolvedPos, dir: number): Selection {
-	return gapCursorValid($pos) ? new GapCursor($pos) : Selection.near($pos, dir);
+	return gapCursorAt($pos) ?? Selection.near($pos, dir);
 }
