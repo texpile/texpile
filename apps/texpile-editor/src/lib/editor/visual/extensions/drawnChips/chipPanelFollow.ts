@@ -35,8 +35,8 @@ export function followChip(anchor: HTMLElement) {
 		function onPointerDown(event: PointerEvent): void {
 			const target = event.target as Element;
 			if (card.contains(target) || anchor.contains(target)) return;
-			// the LaTeX field's completion list sits in the body
-			if (target.closest?.('.cm-tooltip')) return;
+			// the LaTeX field's completion list and a field's suggestions sit in the body
+			if (target.closest?.('.cm-tooltip, [data-suggest-list]')) return;
 			closeChipPanel('away');
 		}
 		const resized = new ResizeObserver(place);

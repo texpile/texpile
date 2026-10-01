@@ -3,7 +3,7 @@
 	import type { Snippet } from 'svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronRight } from '@lucide/svelte';
-	import { contentClass, itemClass } from './menuBarStyles';
+	import { menuContentClass, menuBarItemClass } from '$lib/menus/menuStyles';
 
 	type Props = {
 		value: string;
@@ -16,12 +16,12 @@
 </script>
 
 <Menu onSelect={(d) => props.select(d.value)}>
-	<Menu.TriggerItem value={props.value} class={itemClass}>
+	<Menu.TriggerItem value={props.value} class={menuBarItemClass}>
 		<Menu.ItemText>{props.label}</Menu.ItemText><ChevronRight class="size-4 opacity-60" />
 	</Menu.TriggerItem>
 	<Portal>
 		<Menu.Positioner>
-			<Menu.Content class={contentClass}>
+			<Menu.Content class={menuContentClass}>
 				{@render props.children()}
 			</Menu.Content>
 		</Menu.Positioner>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	// the Compile button's chevron menu: actions on the compile's output, then the command itself
 	import { BrushCleaning, FolderOpen, RotateCcw, Settings2 } from '@lucide/svelte';
-	import { separatorClass } from '$lib/chrome/menubar/menuBarStyles';
+	import { menuItemClass, menuPanelClass, separatorClass } from '$lib/menus/menuStyles';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -18,9 +18,7 @@
 	};
 	let { open, onClose, onConfigure, onFromScratch, onCleanAux, latexmkActions, onShowOutput, outputAvailable }: Props = $props();
 
-	// row metrics match the menubar's menus (menuBarStyles.itemClass), icon before the label
-	const ROW =
-		'hover:preset-tonal flex w-full cursor-pointer items-center gap-2 rounded-base px-2.5 py-1 text-left text-sm whitespace-nowrap disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent';
+	const ROW = `${menuItemClass} whitespace-nowrap`;
 	function pick(action: () => void) {
 		onClose();
 		action();
@@ -38,9 +36,7 @@
 {#if open}
 	<!-- click-away layer -->
 	<button class="fixed inset-0 z-1200 cursor-default" onclick={onClose} tabindex="-1" aria-hidden="true"></button>
-	<div
-		class="card bg-surface-50-950 border-surface-200-800 absolute top-full right-0 z-1300 mt-1 flex min-w-48 flex-col border p-1 shadow-xl"
-	>
+	<div class="{menuPanelClass} absolute top-full right-0 z-1300 mt-1 flex min-w-48 flex-col">
 		{#if latexmkActions}
 			<button class={ROW} onclick={() => pick(onFromScratch)}>
 				<RotateCcw class="size-4 shrink-0" />

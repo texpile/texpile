@@ -32,8 +32,10 @@ function strings(value: unknown): string[] {
 	return Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
 }
 
+// a manifest names an author as "Name <email, url or @handle>"
 function authorName(author: string): string {
-	return author.replace(/<[^>]*>/g, '').trim();
+	const contact = author.indexOf('<');
+	return (contact < 0 ? author : author.slice(0, contact)).trim();
 }
 
 /** true when version `a` is newer than `b` (both start X.Y.Z) */

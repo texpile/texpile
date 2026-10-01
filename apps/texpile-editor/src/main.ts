@@ -7,6 +7,7 @@ import '$lib/collab/joinLink.svelte';
 import { mount } from 'svelte';
 import './app.css';
 import '$lib/theme'; // side-effect: applies the saved appearance and watches OS changes
+import '$lib/menus/selectEscape'; // side-effect: Escape in an open select's list closes only the list
 import { loadSettings } from '$lib/settings';
 import { watchWindowGlass } from '$lib/chrome/windowGlass.svelte';
 import { adoptBootOpen, bootOpen } from '$lib/workspace/openWorkspace';

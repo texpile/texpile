@@ -16,7 +16,7 @@
 
 <Panel.Row label={m.drawn_chip_ref_label()}>
 	<div class="flex gap-1.5">
-		<Panel.TextField value={props.value} label={m.drawn_chip_ref_label()} mono autofocus list="drawn-chip-labels" oninput={props.oninput} />
+		<Panel.TextField value={props.value} label={m.drawn_chip_ref_label()} mono autofocus {suggestions} oninput={props.oninput} />
 		<button
 			type="button"
 			class="border-surface-300-700 rounded-base hover:preset-tonal text-surface-700-300 flex size-7 shrink-0 items-center justify-center border"
@@ -26,9 +26,4 @@
 			<ArrowRight class="size-3.5" />
 		</button>
 	</div>
-	<datalist id="drawn-chip-labels">
-		{#each suggestions as label (label)}
-			<option value={label}></option>
-		{/each}
-	</datalist>
 </Panel.Row>

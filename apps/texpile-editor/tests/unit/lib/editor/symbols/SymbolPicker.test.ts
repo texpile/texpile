@@ -20,7 +20,7 @@ let view: EditorView | null = null;
 
 function openEditor(withCaret: string) {
 	const caret = withCaret.indexOf('|');
-	const doc = withCaret.replace('|', '');
+	const doc = withCaret.slice(0, caret) + withCaret.slice(caret + 1);
 	view = new EditorView({
 		state: EditorState.create({ doc, selection: { anchor: caret }, extensions: [typstLanguage()] }),
 		parent: document.body

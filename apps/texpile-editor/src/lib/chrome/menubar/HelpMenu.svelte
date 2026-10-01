@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
-	import { contentClass, itemClass, separatorClass } from './menuBarStyles';
+	import { menuContentClass, menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';
 	import { updateState } from '$lib/updates';
 	import { hasUnseenWhatsNew } from '$lib/whatsNew';
 	import { m } from '$lib/paraglide/messages';
@@ -22,14 +22,14 @@
 	/>
 	<Portal>
 		<Menu.Positioner>
-			<Menu.Content class={contentClass}>
-				<Menu.Item value="shortcuts" class={itemClass}><Menu.ItemText>{m.menubar_keyboard_shortcuts()}</Menu.ItemText></Menu.Item>
-				<Menu.Item value="setup" class={itemClass}><Menu.ItemText>{m.menubar_setup()}</Menu.ItemText></Menu.Item>
+			<Menu.Content class={menuContentClass}>
+				<Menu.Item value="shortcuts" class={menuBarItemClass}><Menu.ItemText>{m.menubar_keyboard_shortcuts()}</Menu.ItemText></Menu.Item>
+				<Menu.Item value="setup" class={menuBarItemClass}><Menu.ItemText>{m.menubar_setup()}</Menu.ItemText></Menu.Item>
 				{#if canTutorial}
-					<Menu.Item value="tutorial" class={itemClass}><Menu.ItemText>{m.menubar_open_tutorial()}</Menu.ItemText></Menu.Item>
+					<Menu.Item value="tutorial" class={menuBarItemClass}><Menu.ItemText>{m.menubar_open_tutorial()}</Menu.ItemText></Menu.Item>
 				{/if}
 				{#if !__WEB__}
-					<Menu.Item value="whatsnew" class={itemClass}>
+					<Menu.Item value="whatsnew" class={menuBarItemClass}>
 						<Menu.ItemText>{m.whatsnew_menu_label()}</Menu.ItemText>
 						{#if hasUnseenWhatsNew.current}
 							<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>
@@ -37,13 +37,13 @@
 					</Menu.Item>
 				{/if}
 				<Menu.Separator class={separatorClass} />
-				<Menu.Item value="docs" class={itemClass}><Menu.ItemText>{m.menubar_documentation()}</Menu.ItemText></Menu.Item>
-				<Menu.Item value="discord" class={itemClass}><Menu.ItemText>{m.menubar_join_discord()}</Menu.ItemText></Menu.Item>
-				<Menu.Item value="support" class={itemClass}><Menu.ItemText>{m.menubar_contact_support()}</Menu.ItemText></Menu.Item>
+				<Menu.Item value="docs" class={menuBarItemClass}><Menu.ItemText>{m.menubar_documentation()}</Menu.ItemText></Menu.Item>
+				<Menu.Item value="discord" class={menuBarItemClass}><Menu.ItemText>{m.menubar_join_discord()}</Menu.ItemText></Menu.Item>
+				<Menu.Item value="support" class={menuBarItemClass}><Menu.ItemText>{m.menubar_contact_support()}</Menu.ItemText></Menu.Item>
 				<!-- a web page updates by reloading; there is no installer to offer -->
 				{#if !__WEB__}
 					<Menu.Separator class={separatorClass} />
-					<Menu.Item value="updates" class={itemClass}>
+					<Menu.Item value="updates" class={menuBarItemClass}>
 						<Menu.ItemText>{m.menubar_check_for_updates()}</Menu.ItemText>
 						{#if updateState.current.phase === 'downloaded'}
 							<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>

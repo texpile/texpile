@@ -30,7 +30,7 @@
 				label={m.drawn_chip_space_length()}
 				mono
 				autofocus
-				list="drawn-chip-typst-lengths"
+				suggestions={SUGGESTIONS}
 				oninput={(amount) => write({ amount })}
 			/>
 		</Panel.Row>
@@ -41,10 +41,5 @@
 			onchange={(keep) => write({ weak: !keep })}
 		/>
 		<p class="text-muted text-xs">{m.drawn_chip_typst_space_hint()}</p>
-		<datalist id="drawn-chip-typst-lengths">
-			{#each SUGGESTIONS as suggestion (suggestion)}
-				<option value={suggestion}></option>
-			{/each}
-		</datalist>
 	</div>
 {/if}

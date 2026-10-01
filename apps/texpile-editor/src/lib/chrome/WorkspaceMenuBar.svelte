@@ -18,7 +18,7 @@
 	import { colorVision, parseColorVisionMode } from '$lib/preview/colorVision/colorVision';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import { whatsNewOpen } from '$lib/whatsNew';
-	import { triggerClass, contentClass } from './menubar/menuBarStyles';
+	import { triggerClass, menuContentClass } from '$lib/menus/menuStyles';
 	import { makeInsertHandlers } from './menubar/menuBarInsert';
 	import { checkUpdates } from './menubar/menuBarUpdates';
 	import FileMenu from './menubar/FileMenu.svelte';
@@ -288,7 +288,7 @@
 				</Menu.Trigger>
 				<Portal>
 					<Menu.Positioner>
-						<Menu.Content class={contentClass}>
+						<Menu.Content class={menuContentClass}>
 							{@render topMenus(true)}
 						</Menu.Content>
 					</Menu.Positioner>

@@ -179,8 +179,7 @@ html.window-glass
 		.z-pdf-viewer,
 		.z-tooltip,
 		.cm-tooltip,
-		.cm-panels,
-		.block-handle-menu
+		.cm-panels
 	) {
 	--color-surface-50: var(--solid-surface-50);
 	--color-surface-100: var(--solid-surface-100);
@@ -446,22 +445,65 @@ html #mathlive-suggestion-popover li a:hover {
 }
 
 /* Skeleton's .input transparent bg leaks the OS-default white on <select> (native form chrome
-   ignores transparent), so the control and its <option> popup get the theme's ground outright;
-   color-scheme is inherited from html, which is what makes the popup follow the mode */
+   ignores transparent), so the control gets the theme's ground outright */
 select.input,
-select,
-select.input option,
-select option {
+select {
+	appearance: base-select;
 	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
 	color: var(--color-surface-950-50);
+}
+
+/* base-select has Chromium draw a select's open list in the page instead of asking the system for one, so it takes the
+   look every list in the app shares (lib/menus/menuStyles.ts): the panel, the rows, the highlight under the pointer and
+   the arrow keys. The select keeps its own keys, typing to jump and what a screen reader hears */
+select::picker(select) {
+	appearance: base-select;
+	margin-block: calc(var(--spacing) * 1);
+	padding: calc(var(--spacing) * 1);
+	border: var(--default-border-width) solid var(--color-surface-200-800);
+	border-radius: var(--radius-container);
+	background-color: var(--color-surface-50-950);
+	color: var(--color-surface-950-50);
+	box-shadow: var(--shadow-xl);
+	font-size: var(--text-sm);
+}
+select option {
+	gap: calc(var(--spacing) * 3);
+	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2.5);
+	border-radius: var(--radius-base);
+	background-color: transparent;
+	cursor: pointer;
+}
+/* preset-tonal's ground */
+select option:is(:hover, :focus-visible) {
+	outline: none;
+	background-color: color-mix(in oklab, light-dark(var(--color-surface-950), var(--color-surface-50)) 10%, transparent);
+}
+select option::checkmark {
+	order: 1;
+	margin-inline-start: auto;
+}
+/* the list is a sheet in the see-through window as the other lists are; apart from their rule above, which a selector
+   Chromium did not know would drop whole */
+html.window-glass select::picker(select) {
+	backdrop-filter: blur(var(--glass-sheet-blur)) url(#glass-opaque);
+}
+html.window-glass:not([data-mode='dark']) select::picker(select) {
+	background-color: color-mix(in oklab, var(--solid-surface-50) var(--glass-sheet-light), transparent);
+}
+html.window-glass[data-mode='dark'] select::picker(select) {
+	background-color: color-mix(in oklab, var(--solid-surface-950) var(--glass-sheet-dark), transparent);
 }
 
 /* Skeleton leaves a select's inline padding and arrow to the browser, which puts both on the
    border; the chevron is drawn here so the text sits where an input's does, and the line-height is
    the field size again because text-sm on the class list stretched the box past a button's */
+select.select::picker-icon,
+select.input::picker-icon {
+	display: none;
+}
 select.select,
 select.input {
-	appearance: none;
 	line-height: var(--field-size);
 	padding-inline: calc((var(--field-size) - var(--spacing) * 0.5) / 2 + var(--spacing)) calc(var(--spacing) * 7);
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237f7f7f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
@@ -496,32 +538,6 @@ select.input {
 	);
 	color: var(--error-ink);
 }
-.block-handle-menu {
-	min-width: calc(var(--spacing) * 44);
-	max-height: 60vh;
-	overflow-y: auto;
-	padding: calc(var(--spacing) * 1);
-	border-radius: var(--radius-base);
-	border: var(--default-border-width) solid var(--color-surface-300-700);
-	background: var(--color-surface-50-950);
-	box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
-}
-.block-handle-menu-item {
-	display: block;
-	width: 100%;
-	padding: 0.3rem 0.55rem;
-	border: none;
-	border-radius: var(--radius-base);
-	background: transparent;
-	text-align: left;
-	font-size: 0.875rem;
-	color: var(--color-surface-800-200);
-	cursor: pointer;
-}
-.block-handle-menu-item:hover {
-	background: var(--color-surface-200-800);
-}
-
 /* first-line indent from the Tab toggle (data-indent). 'noindent' renders flush like 'auto', so it
    gets a label in the left margin to tell the two apart. The block handle shares that margin, so it
    drops a line for these paragraphs (see block-handle-plugin).
