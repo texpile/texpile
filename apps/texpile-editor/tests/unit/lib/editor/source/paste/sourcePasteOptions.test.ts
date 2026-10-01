@@ -40,6 +40,8 @@ describe('source paste', () => {
 
 	it('writes a link’s % and # so LaTeX reads them in any argument, and a picture path with spaces so Markdown reads it', () => {
 		expect(linkSource('https://x.com/a%20b#part', 'the docs', 'latex')).toBe('\\href{https://x.com/a\\%20b\\#part}{the docs}');
+		// a backslash or brace in the URL would end \href's argument early
+		expect(linkSource('https://x.com/a\\b}{c', 'the docs', 'latex')).toBe('\\href{https://x.com/a\\%5Cb\\%7D\\%7Bc}{the docs}');
 		expect(imageSource('figures/My Plot (1).png', 'markdown')).toBe('![](<figures/My Plot (1).png>)');
 		expect(imageSource('figures/plot.png', 'markdown')).toBe('![](figures/plot.png)');
 	});

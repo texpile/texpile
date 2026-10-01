@@ -20,7 +20,7 @@ const SQRT = latexSymbolById('latex2e-OT1-_sqrt{}')!;
 /** `source` with `|` for the caret, after `symbol` is inserted there */
 function insertInSource(source: string, symbol: typeof ALPHA): string {
 	const at = source.indexOf('|');
-	const state = CMState.create({ doc: source.replace('|', ''), selection: EditorSelection.cursor(at) });
+	const state = CMState.create({ doc: source.slice(0, at) + source.slice(at + 1), selection: EditorSelection.cursor(at) });
 	const tr = state.update(computeLatexSymbolInsert(state, symbol));
 	const caret = tr.state.selection.main.head;
 	const text = tr.state.doc.toString();

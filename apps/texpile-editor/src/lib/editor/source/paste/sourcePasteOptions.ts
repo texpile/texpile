@@ -48,8 +48,8 @@ export function pastedUrl(text: string): string | null {
 
 /** `label` linked to `url` in the file's language */
 export function linkSource(url: string, label: string, dialect: PasteDialect): string {
-	// escaped, `%` and `#` survive in another command's argument too
-	if (dialect === 'latex') return `\\href{${url.replace(/[%#]/g, '\\$&')}}{${label}}`;
+	// a backslash or brace would end the argument, so it goes percent-encoded; `%` and `#` escaped survive in another command's argument too
+	if (dialect === 'latex') return `\\href{${url.replace(/[\\{}]/g, encodeURIComponent).replace(/[%#]/g, '\\$&')}}{${label}}`;
 	if (dialect === 'typst') return `#link(${typStr(url)})[${label}]`;
 	return `[${label}](${url})`;
 }
