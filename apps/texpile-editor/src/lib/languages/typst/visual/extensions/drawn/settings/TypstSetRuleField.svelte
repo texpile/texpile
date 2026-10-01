@@ -10,7 +10,6 @@
 	const props: Props = $props();
 
 	const label = $derived(SET_FIELD_LABELS[props.field.name]?.() ?? props.field.name);
-	const listId = $derived(`drawn-chip-typst-${props.field.name}`);
 	const mono = $derived(props.value.code || !['string', 'names', 'content'].includes(props.field.kind));
 </script>
 
@@ -23,16 +22,9 @@
 			{label}
 			{mono}
 			autofocus={props.autofocus}
-			list={props.field.suggestions && !props.value.code ? listId : undefined}
+			suggestions={props.value.code ? undefined : props.field.suggestions}
 			placeholder={props.field.hint ? m.drawn_chip_typst_field_default({ value: props.field.hint }) : undefined}
 			oninput={props.oninput}
 		/>
 	</Panel.Row>
-	{#if props.field.suggestions}
-		<datalist id={listId}>
-			{#each props.field.suggestions as suggestion (suggestion)}
-				<option value={suggestion}></option>
-			{/each}
-		</datalist>
-	{/if}
 {/if}

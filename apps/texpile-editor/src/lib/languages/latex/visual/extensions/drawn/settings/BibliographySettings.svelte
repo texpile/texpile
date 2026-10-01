@@ -9,7 +9,6 @@
 
 	const command = $derived(readBibliography(props.source));
 	const suggestions = $derived(command?.style ? BIB_STYLES : bibFileNames(projectIntelStore.current.bibEntries));
-	const listId = $derived(command?.style ? 'drawn-chip-bib-styles' : 'drawn-chip-bib-files');
 </script>
 
 {#if command}
@@ -24,7 +23,7 @@
 				label={command.style ? m.drawn_chip_bib_style() : m.drawn_chip_bib_files()}
 				mono
 				autofocus
-				list={listId}
+				{suggestions}
 				oninput={(value) => {
 					if (!/[{}]/.test(value)) props.write(writeBibliography(props.source, value));
 				}}
@@ -33,10 +32,5 @@
 		{#if !command.style}
 			<p class="text-muted text-xs">{m.drawn_chip_bib_files_hint()}</p>
 		{/if}
-		<datalist id={listId}>
-			{#each suggestions as suggestion (suggestion)}
-				<option value={suggestion}></option>
-			{/each}
-		</datalist>
 	</div>
 {/if}

@@ -6,6 +6,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { openMenu, closeContextMenu, type ContextMenuItem } from './contextMenu.svelte';
+	import { menuItemClass, menuPanelClass, separatorClass } from './menuStyles';
 
 	const EDGE = 8;
 	// the card's own top padding, so a submenu's first item lines up with the item that opened it
@@ -60,15 +61,13 @@
 {#snippet entries(items: ContextMenuItem[], top: boolean)}
 	{#each items as item, i (i)}
 		{#if 'separator' in item}
-			<div class="border-surface-200-800 my-1 border-t"></div>
+			<div class={separatorClass}></div>
 		{:else}
 			<button
 				type="button"
 				role="menuitem"
 				aria-haspopup={item.submenu ? 'menu' : undefined}
-				class="flex w-full items-center gap-2.5 px-3 py-1.5 text-left disabled:pointer-events-none disabled:opacity-40 {item.danger
-					? 'hover:preset-tonal text-error-ink'
-					: 'hover:preset-tonal'}"
+				class="{menuItemClass} {item.danger ? 'text-error-ink' : ''}"
 				disabled={item.disabled}
 				onclick={(e) => (item.submenu ? hover(item, e.currentTarget) : run(item))}
 				onpointerenter={(e) => top && hover(item, e.currentTarget)}
@@ -101,7 +100,7 @@
 		bind:this={card}
 		role="menu"
 		aria-label={m.tbar_close_menu_aria()}
-		class="bg-surface-50-950 border-surface-300-700 z-dropdown fixed min-w-48 overflow-hidden card border py-1 text-sm shadow-lg"
+		class="{menuPanelClass} z-dropdown fixed min-w-48 overflow-hidden"
 		style="left: {placed?.x ?? menu.x}px; top: {placed?.y ?? menu.y}px; opacity: {placed?.for === menu ? 1 : 0}"
 	>
 		{@render entries(menu.items, true)}
@@ -110,7 +109,7 @@
 		<div
 			bind:this={subCard}
 			role="menu"
-			class="bg-surface-50-950 border-surface-300-700 z-dropdown fixed min-w-44 overflow-hidden card border py-1 text-sm shadow-lg"
+			class="{menuPanelClass} z-dropdown fixed min-w-44 overflow-hidden"
 			style="left: {subPlaced?.x ?? sub.from.right}px; top: {subPlaced?.y ?? sub.from.top}px; opacity: {subPlaced?.for === sub ? 1 : 0}"
 		>
 			{@render entries(sub.items, false)}

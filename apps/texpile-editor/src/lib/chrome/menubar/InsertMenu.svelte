@@ -2,7 +2,7 @@
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
 	import MenuBarSubmenu from './MenuBarSubmenu.svelte';
-	import { contentClass, itemClass, separatorClass } from './menuBarStyles';
+	import { menuContentClass, menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';
 	import { cursorInCm } from '$lib/stores/editorStore';
 	import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -21,7 +21,7 @@
 </script>
 
 {#snippet item(value: string, label: string)}
-	<Menu.Item {value} class={itemClass}><Menu.ItemText>{label}</Menu.ItemText></Menu.Item>
+	<Menu.Item {value} class={menuBarItemClass}><Menu.ItemText>{label}</Menu.ItemText></Menu.Item>
 {/snippet}
 
 <Menu onSelect={(d) => select(d.value)}>
@@ -34,7 +34,7 @@
 	/>
 	<Portal>
 		<Menu.Positioner>
-			<Menu.Content class={contentClass}>
+			<Menu.Content class={menuContentClass}>
 				<MenuBarSubmenu value="math" label={m.menubar_insert_math_menu()} select={mathSelect}>
 					{@render item('inline', m.menubar_inline_equation())}
 					{@render item('display', m.menubar_display_equation())}

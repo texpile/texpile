@@ -6,7 +6,7 @@
 	import { Menu } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronRight } from '@lucide/svelte';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
-	import { triggerClass, itemClass } from './menuBarStyles';
+	import { triggerClass, menuBarItemClass } from '$lib/menus/menuStyles';
 
 	type Props = {
 		id: string;
@@ -23,7 +23,7 @@
 </script>
 
 {#if index >= visible}
-	<Menu.TriggerItem value={id} class={itemClass} {disabled}>
+	<Menu.TriggerItem value={id} class={menuBarItemClass} {disabled}>
 		{#snippet element(attrs)}
 			<div {...attrs} use:tip={title}>
 				<Menu.ItemText>{label}</Menu.ItemText>

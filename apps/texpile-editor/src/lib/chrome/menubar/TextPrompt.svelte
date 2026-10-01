@@ -2,6 +2,7 @@
 	// text prompt dialog, Electron has no window.prompt()
 	import Modal from '$lib/modals/Modal.svelte';
 	import ModalActions from '$lib/modals/ModalActions.svelte';
+	import SuggestInput from '$lib/menus/SuggestInput.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let open = $state(false);
@@ -30,20 +31,16 @@
 {#if open}
 	<Modal onClose={() => close(false)} card="max-h-full max-w-sm overflow-y-auto p-4">
 		<div class="mb-2 text-sm font-medium">{title}</div>
-		<input
-			bind:this={input}
-			bind:value
+		<SuggestInput
+			bind:input
 			class="input w-full"
-			list={suggestions.length ? 'text-prompt-suggestions' : undefined}
+			{value}
+			{suggestions}
+			oninput={(next) => (value = next)}
 			onkeydown={(e) => {
 				if (e.key === 'Enter') close(true);
 			}}
 		/>
-		{#if suggestions.length}
-			<datalist id="text-prompt-suggestions">
-				{#each suggestions as suggestion (suggestion)}<option value={suggestion}></option>{/each}
-			</datalist>
-		{/if}
 		<ModalActions
 			class="mt-4"
 			size="xs"
