@@ -94,6 +94,37 @@ it('keeps the last folder’s threads out of the next folder’s log', async () 
 	expect(foldLog(parseLog(disks['/b/.texpile/comments.jsonl'])).map((t) => t.id)).toEqual(['b1']);
 });
 
+const threadOn = (id: string) =>
+	openEvent({ id, file: 'main.tex', by: 'ana', body: id, anchor: buildAnchor('some text', 0, 4), at: 'now' });
+
+// Discard changes in Source Control, a checkout
+it('lets go of threads taken out of the log on disk', async () => {
+	const committed = JSON.stringify(threadOn('c1')) + '\n';
+	disk = committed;
+	const store = new CommentStore();
+	await store.load('/w');
+	await store.append(threadOn('c2'));
+	disk = committed;
+	await store.reload();
+	expect(store.threads.map((t) => t.id)).toEqual(['c1']);
+
+	await store.append(replyEvent({ id: 'm1', thread: 'c1', by: 'bo', body: 'ok', at: 'now' }));
+	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['c1']);
+});
+
+it('keeps every thread when a read lands short while its own write is under way', async () => {
+	disk = '';
+	const store = new CommentStore();
+	await store.load('/w');
+	await store.append(threadOn('c1'));
+	const writing = store.append(threadOn('c2'));
+	// the file caught half rewritten
+	disk = '';
+	await Promise.all([writing, store.reload()]);
+	expect(store.threads.map((t) => t.id)).toEqual(['c1', 'c2']);
+	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['c1', 'c2']);
+});
+
 /** deterministic PRNG (mulberry32) so a failure reproduces byte-for-byte */
 function rng(seed: number): () => number {
 	let a = seed;

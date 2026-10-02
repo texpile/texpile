@@ -57,6 +57,10 @@ export class CommentStore {
 	private unsaved: string[] = [];
 	private parsed = new Map<string, CommentEvent | null>();
 	private writing: Promise<void> = Promise.resolve();
+	/** the lines this side last read on disk or wrote there */
+	private onDisk = new Set<string>();
+	private writesQueued = 0;
+	private writesDone = 0;
 
 	/** stale-load guard: reloads fire on every save (the fs watcher reports our own writes) and
 	 *  an older read landing after a newer one would publish stale threads */
@@ -78,6 +82,7 @@ export class CommentStore {
 			this.staged = [];
 			this.lines = [];
 			this.events = [];
+			this.onDisk = new Set();
 		}
 		this.root = root;
 		const path = root ? this.path(root) : null;
@@ -86,10 +91,13 @@ export class CommentStore {
 			return;
 		}
 		this.loading = true;
+		// a write of ours under way can make the read come back short, which says nothing about what was taken out
+		const queued = this.writesQueued;
+		const wasOnDisk = queued === this.writesDone ? this.onDisk : null;
 		try {
 			const text = await readTextFile(path);
 			if (my !== this.loadSeq) return;
-			this.adoptLog(text);
+			this.adoptLog(text, queued === this.writesQueued ? wasOnDisk : null);
 		} catch {
 			// no log yet is the normal state for a project nobody has commented on
 			if (my === this.loadSeq) this.adoptLog('');
@@ -184,16 +192,23 @@ export class CommentStore {
 	private write(): Promise<void> {
 		const path = this.root ? this.path(this.root) : null;
 		if (!path) return Promise.resolve();
+		this.writesQueued++;
 		const done = this.writing.then(async () => {
 			await this.ensureIgnore();
-			await writeTextFile(path, this.serialize());
+			const text = this.serialize();
+			await writeTextFile(path, text);
+			if (this.root && this.path(this.root) === path) this.onDisk = new Set(text.split('\n'));
 		});
-		this.writing = done.catch(() => undefined);
+		this.writing = done
+			.catch(() => undefined)
+			.finally(() => {
+				this.writesDone++;
+			});
 		return done;
 	}
 
 	/** a log read from disk; while shared, lines someone added there (a pull, another window) join the session */
-	adoptLog(text: string): void {
+	adoptLog(text: string, wasOnDisk: Set<string> | null = null): void {
 		if (this.share) {
 			const present = new Set(this.share.lines());
 			const added = keptLines(text).filter((line) => !present.has(line));
@@ -203,7 +218,8 @@ export class CommentStore {
 		}
 		const served = keptLines(text);
 		const known = new Set(served);
-		this.lines = [...served, ...this.lines.filter((line) => !known.has(line))];
+		this.lines = [...served, ...this.lines.filter((line) => !known.has(line) && !wasOnDisk?.has(line))];
+		this.onDisk = known;
 		this.events = parseLog(this.lines.join('\n'));
 		this.threads = foldLog([...this.events, ...this.staged]);
 	}
