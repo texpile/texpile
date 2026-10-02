@@ -1,5 +1,6 @@
 // prose word counts of LaTeX and Typst files, by the parts a word limit names
 import { maskTex } from '$lib/editor/spellcheck/texMask';
+import { codeOnly } from '$lib/languages/latex/texCode';
 
 export type WordTally = { body: number; headings: number; captions: number; footnotes: number; tables: number };
 
@@ -111,13 +112,14 @@ function latexText(source: string, main: boolean): { text: string; regions: Regi
 		.replace(ACCENT, (_, braced?: string, bare?: string) => (braced ?? bare ?? '').replace('\\', ''))
 		.replace(LETTER_COMMAND, 'x');
 	if (main) {
-		const begin = /\\begin\s*\{document\}/.exec(src);
+		const code = codeOnly(src);
+		const begin = /\\begin\s*\{document\}/.exec(code);
 		if (begin) {
 			const from = begin.index + begin[0].length;
-			const end = src.indexOf('\\end{document}', from);
+			const end = code.indexOf('\\end{document}', from);
 			const body = src.slice(from, end < 0 ? undefined : end);
 			let preamble = ' '.repeat(from);
-			const title = /\\title\s*(?:\[[^\]]*\])?\s*\{/.exec(src.slice(0, from));
+			const title = /\\title\s*(?:\[[^\]]*\])?\s*\{/.exec(code.slice(0, from));
 			const titleEnd = title ? closing(src, title.index + title[0].length - 1) : -1;
 			if (title && titleEnd > 0 && /\\maketitle\b/.test(body))
 				preamble = preamble.slice(0, title.index) + src.slice(title.index, titleEnd + 1) + preamble.slice(titleEnd + 1);
