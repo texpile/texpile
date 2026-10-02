@@ -8,6 +8,7 @@ import * as path from 'node:path';
 import * as crypto from 'node:crypto';
 import { resolveType1 } from '../fontT1Map';
 import { shellEnvReady } from '../shell/shellEnv';
+import { onToolPathChange } from '../shell/toolDirs';
 
 const BLOCK_TIMEOUT_MS = 6000;
 const OUT_REL = '_draft';
@@ -440,6 +441,9 @@ export async function typesetParagraph(body: {
 	queue = run.catch(() => undefined);
 	return run;
 }
+
+// the next request warms an engine from the TeX the Toolchain folders now put first
+onToolPathChange(() => stopDaemon());
 
 export function stopDaemon(): void {
 	if (idleTimer) {

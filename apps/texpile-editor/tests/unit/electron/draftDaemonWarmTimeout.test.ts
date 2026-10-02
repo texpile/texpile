@@ -7,7 +7,9 @@ import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const spawned = vi.hoisted(() => [] as Array<{ kill: ReturnType<typeof vi.fn> }>);
+const spawned = vi.hoisted(
+	() => [] as Array<{ kill: ReturnType<typeof vi.fn>; stdout: PassThrough; stdin: { write: ReturnType<typeof vi.fn> } }>
+);
 // a program that is not on PATH: Node hands back the child, then emits ENOENT and never 'exit'
 const engine = vi.hoisted(() => ({ missing: false }));
 vi.mock('node:child_process', () => ({
@@ -28,6 +30,7 @@ vi.mock('node:child_process', () => ({
 vi.mock('../../../../../electron/src/shell/shellEnv', () => ({ shellEnvReady: async () => {} }));
 
 import { typesetParagraph } from '../../../../../electron/src/draft/draftDaemon';
+import { applyToolDirs, pathKey, setToolDirs } from '../../../../../electron/src/shell/toolDirs';
 
 afterEach(() => vi.useRealTimers());
 
@@ -56,6 +59,35 @@ describe('draft daemon warm timeout', () => {
 			expect(result).toEqual({ ok: false, error: 'spawn lualatex ENOENT' });
 		} finally {
 			engine.missing = false;
+			rmSync(root, { recursive: true, force: true });
+		}
+	});
+
+	it('warms a new engine once the Toolchain folders change which TeX is first', async () => {
+		const root = mkdtempSync(join(tmpdir(), 'texd-switch-'));
+		writeFileSync(join(root, 'main.tex'), '\\documentclass{article}\n\\begin{document}\nx\n\\end{document}\n');
+		const savedPath = process.env[pathKey()];
+		const body = { root, mainFile: 'main.tex', engineDir: root, text: 'x' };
+		async function typesetOnNextEngine(): Promise<(typeof spawned)[number]> {
+			const before = spawned.length;
+			const request = typesetParagraph(body);
+			await vi.waitFor(() => expect(spawned).toHaveLength(before + 1));
+			const child = spawned[before];
+			child.stdout.write('texpile-warm@@READY 345 550\n');
+			await vi.waitFor(() => expect(child.stdin.write).toHaveBeenCalled());
+			child.stdout.write('texpile-warm@@R {}\ntexpile-warm@@GEND\n');
+			expect((await request).ok).toBe(true);
+			return child;
+		}
+		try {
+			const old = await typesetOnNextEngine();
+			applyToolDirs();
+			setToolDirs(['/usr/local/texlive/2024/bin/x86_64-linux']);
+			expect(old.kill).toHaveBeenCalledWith('SIGKILL');
+			await typesetOnNextEngine();
+		} finally {
+			setToolDirs([]);
+			process.env[pathKey()] = savedPath;
 			rmSync(root, { recursive: true, force: true });
 		}
 	});
