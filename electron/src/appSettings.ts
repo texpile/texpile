@@ -43,6 +43,10 @@ const DEFAULT_SETTINGS = {
 	aiAgent: '',
 	aiAgentCommand: '', // the command line when aiAgent is 'custom'; the prompt goes on its stdin
 	aiAgentModel: '', // a preset's --model, from the list it gives (agentModels.ts); '' = its own default
+	// the agent the panel in the dock talks to over ACP ('' = not chosen yet, a preset, or 'custom'). Here
+	// for the same reason as aiAgent: a project's own config must never pick the program that runs
+	agentPanel: '',
+	agentPanelCommand: '', // the command line when agentPanel is 'custom'; it speaks ACP on stdin and stdout
 	setupSeen: '', // the app version whose welcome screen was finished or skipped (renderer lib/setup)
 	openFolders: [] as string[], // folders open across windows; maintained here for session restore
 	toolDirs: [] as string[], // searched before PATH by every program Texpile starts; see shell/toolDirs.ts

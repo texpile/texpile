@@ -141,7 +141,7 @@ type TexpileNative = {
 	onOpenPath?: (cb: (filePath: string) => void) => () => void;
 	onOpenFolder?: (cb: (root: string) => void) => () => void;
 	onJoinSession?: (cb: (url: string) => void) => () => void;
-	claimWorkspace?: (root: string) => Promise<{ ok: boolean; reason?: string }>;
+	claimWorkspace?: (root: string, kind?: 'file' | 'folder') => Promise<{ ok: boolean; reason?: string }>;
 	releaseWorkspace?: () => Promise<{ ok: boolean }>;
 	newWindow?: () => Promise<void>;
 	toggleDevTools?: () => void;
@@ -246,13 +246,13 @@ export async function pickFolder(): Promise<string | null> {
 	return n ? n.openFolder() : null;
 }
 
-/** registers this window as the folder's owner. { ok:false } means another window already
- *  has it open (that window was focused); the caller should abort its own open. */
-export async function claimWorkspace(root: string): Promise<{ ok: boolean; reason?: string }> {
+/** registers this window as the folder's owner, or with kind 'file' as a lone file's (its folder stays free).
+ *  { ok:false } means another window already has it open (that window was focused); the caller should abort its own open. */
+export async function claimWorkspace(root: string, kind: 'file' | 'folder' = 'folder'): Promise<{ ok: boolean; reason?: string }> {
 	const n = nativeBridge();
 	if (!n?.claimWorkspace) return { ok: true }; // browser dev: single window, nothing to claim
 	try {
-		return await n.claimWorkspace(root);
+		return await n.claimWorkspace(root, kind);
 	} catch {
 		return { ok: true };
 	}

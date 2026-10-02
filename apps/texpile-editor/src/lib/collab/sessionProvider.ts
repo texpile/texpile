@@ -50,7 +50,19 @@ function guestText(path: string): string {
 }
 
 export const sessionProvider: WorkspaceProvider = {
-	caps: { manageTree: true, compile: false, git: false, format: false, search: false, terminal: false },
+	// the project is the host's, shared: a guest reads it, comments on it, and opens no session or agent of its own
+	caps: {
+		manageTree: true,
+		compile: false,
+		git: false,
+		format: false,
+		search: false,
+		terminal: false,
+		share: false,
+		comments: true,
+		agent: false,
+		project: true
+	},
 
 	readText: async (path) => guestText(path),
 	readSource: async (path) => ({ text: guestText(path), encoding: 'utf8' }),

@@ -32,10 +32,12 @@
 		}
 	]);
 
+	// an unnumbered level shows with its star
+	const labels = $derived([m.tbar_heading_normal(), ...LEVELS.flatMap((l) => [l.name(), `${l.name()}*`])]);
 	const label = $derived.by(() => {
 		const l = LEVELS.find((x) => x.level === level);
 		return l ? l.name() + (numbered ? '' : '*') : m.tbar_heading_normal();
 	});
 </script>
 
-<MenuDropdown {groups} {label} onSelect={(value) => onSelect(Number(value.slice(-1)), !value.startsWith('u'))} />
+<MenuDropdown {groups} {label} {labels} onSelect={(value) => onSelect(Number(value.slice(-1)), !value.startsWith('u'))} />

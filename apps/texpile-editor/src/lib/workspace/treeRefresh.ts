@@ -6,6 +6,7 @@
 import { workspaceRoot, fileTree, texFiles } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { refreshGitStatus, takeNoGitHint } from '$lib/workspace/scm/gitStore';
+import { capsOf } from '$lib/workspace/fileMode.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
@@ -30,6 +31,13 @@ export async function refreshTree(deps: TreeRefreshDeps): Promise<void> {
 	const root = workspaceRoot.current;
 	if (!root) return;
 	if (deps.isEditingTree()) return;
+	// a lone file: no tree to show and no repository to follow (auto-fetch, change bars), and its folder may be Downloads.
+	// Cleared rather than skipped, for a window that had a repository open before
+	if (!capsOf(provider).project) {
+		fileTree.current = [];
+		void refreshGitStatus(null);
+		return;
+	}
 
 	try {
 		// one traversal when the provider can (disk); guests fall back to the two reads
@@ -53,7 +61,7 @@ export async function refreshTree(deps: TreeRefreshDeps): Promise<void> {
 
 	// Guests have no disk and no repo, and this runs on every manifest change, so don't spawn git
 	// per remote file op. The refresh is non-blocking and never throws.
-	if (!provider.caps.git) return;
+	if (!capsOf(provider).git) return;
 	void refreshGitStatus(root).then(({ missingGit }) => {
 		if (missingGit && takeNoGitHint()) {
 			toaster.warning({ title: m.wsview_toast_no_git_title(), description: m.wsview_toast_no_git_desc() });

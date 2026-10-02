@@ -148,7 +148,8 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 			run: () => openLocalHistory(open)
 		});
 	const root = workspaceRoot.current;
-	if (a.isHostWorkspace() && canKeepLocalHistory() && root)
+	// a lone file's folder is not this window's to search for lost files
+	if (a.isHostWorkspace() && a.isProject() && canKeepLocalHistory() && root)
 		items.push({
 			id: 'file.restoreDeleted',
 			label: m.palette_history_find(),

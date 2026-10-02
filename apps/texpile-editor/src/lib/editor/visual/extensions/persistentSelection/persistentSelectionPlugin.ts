@@ -3,46 +3,54 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import type { EditorState } from 'prosemirror-state';
 
-const key = new PluginKey<boolean>('persistentSelection');
+/** where the focus is: in the editor, parked in a menu or dialog over it, or anywhere else on the page */
+type Focus = 'editor' | 'overlay' | 'away';
 
-/** focus is parked in a menu or dialog, so the browser is painting neither caret nor selection */
+const key = new PluginKey<Focus>('persistentSelection');
+
+/** focus is outside the editor, so the browser is painting neither caret nor selection */
 export function selectionHeldVisible(state: EditorState): boolean {
-	return key.getState(state) === true;
+	const focus = key.getState(state);
+	return focus === 'overlay' || focus === 'away';
 }
 
-// browsers hide the caret of an unfocused editor, so draw a fake one while focus is parked in a
-// transient overlay ([data-scope] menus/dialogs, or anything with [data-keep-caret]). re-evaluated
-// on every focusin so it disappears the moment focus genuinely leaves the editor's chrome. a range
-// selection is painted by the range painter, which reads the flag above.
+// the browser stops painting an editor's selection once focus leaves it. As in the source editor, a
+// selection stays drawn wherever the focus went: the range painter reads the flag above. A fake caret
+// is drawn only while focus is parked in a transient overlay ([data-scope] menus/dialogs, or anything
+// with [data-keep-caret]), where the reader is still working on the text
 export function createPersistentSelectionPlugin() {
-	return new Plugin<boolean>({
+	return new Plugin<Focus>({
 		key,
 		state: {
-			init: () => false,
-			apply(tr, show) {
-				const meta = tr.getMeta(key);
-				return typeof meta === 'boolean' ? meta : show;
+			init: () => 'editor',
+			apply(tr, focus) {
+				return (tr.getMeta(key) as Focus | undefined) ?? focus;
 			}
 		},
 		view(view) {
-			function evaluate() {
-				const active = document.activeElement as HTMLElement | null;
-				const inEditor = !!active && view.dom.contains(active);
-				const inOverlay = !!active && !!active.closest('[data-scope], [data-keep-caret]');
-				const show = !inEditor && inOverlay; // only the "menu/dialog is open" case
-				if (key.getState(view.state) !== show) view.dispatch(view.state.tr.setMeta(key, show));
+			function set(focus: Focus) {
+				if (key.getState(view.state) !== focus) view.dispatch(view.state.tr.setMeta(key, focus));
+			}
+			function evaluate(active: Element | null) {
+				if (active && view.dom.contains(active)) set('editor');
+				else set(active?.closest('[data-scope], [data-keep-caret]') ? 'overlay' : 'away');
 			}
 			function onFocusIn() {
-				return evaluate();
+				evaluate(document.activeElement);
+			}
+			// focus going to nothing (a click on plain text, a panel's background) brings no focusin. Nor does
+			// the window losing focus, where the browser goes on painting the selection itself
+			function onFocusOut(e: FocusEvent) {
+				if (!e.relatedTarget && document.hasFocus()) evaluate(null);
 			}
 			function onWindowBlur() {
-				if (key.getState(view.state)) view.dispatch(view.state.tr.setMeta(key, false));
+				if (key.getState(view.state) === 'overlay') set('away');
 			}
 			// failsafe: if the user types a printable char while the fake caret shows and focus is on
 			// something non-editable, redirect the keystroke into PM. non-text keys stay with the menu
 			// so keyboard nav still works.
 			function onKeyDown(e: KeyboardEvent) {
-				if (!key.getState(view.state)) return;
+				if (key.getState(view.state) !== 'overlay') return;
 				if (e.ctrlKey || e.metaKey || e.altKey) return; // accelerators / shortcuts
 				if (e.key.length !== 1 || e.key === ' ') return; // only single printable chars, skip space
 				const active = document.activeElement as HTMLElement | null;
@@ -57,11 +65,13 @@ export function createPersistentSelectionPlugin() {
 				view.dispatch(view.state.tr.insertText(e.key));
 			}
 			document.addEventListener('focusin', onFocusIn, true);
+			document.addEventListener('focusout', onFocusOut, true);
 			document.addEventListener('keydown', onKeyDown, true);
 			window.addEventListener('blur', onWindowBlur);
 			return {
 				destroy() {
 					document.removeEventListener('focusin', onFocusIn, true);
+					document.removeEventListener('focusout', onFocusOut, true);
 					document.removeEventListener('keydown', onKeyDown, true);
 					window.removeEventListener('blur', onWindowBlur);
 				}
@@ -69,7 +79,7 @@ export function createPersistentSelectionPlugin() {
 		},
 		props: {
 			decorations(state) {
-				if (!key.getState(state)) return null;
+				if (key.getState(state) !== 'overlay') return null;
 				const sel = state.selection;
 				if (!sel.empty) return null;
 				// use <sup>/<sub> for pending sup/sub marks so the fake caret sits where the real

@@ -6,7 +6,7 @@ import ts from 'typescript-eslint';
 // the main process's mirror of apps/texpile-editor/eslint.config.js: same styles.md rule set,
 // minus everything svelte/browser (this tree is plain node + electron main)
 export default ts.config(
-	{ ignores: ['dist/**', 'lua/**'] },
+	{ ignores: ['dist/**', 'lua/**', 'agents/**'] },
 	js.configs.recommended,
 	...ts.configs.recommended,
 	prettier,

@@ -23,7 +23,6 @@
 
 <div class="border-surface-200-800 border-b py-4 last:border-b-0">
 	<div class="text-sm font-medium">{m.prefs_grammar_rules()}</div>
-	<p class="text-muted mt-1 text-xs leading-relaxed">{m.prefs_grammar_rules_note()}</p>
 	<ul class="mt-2">
 		{#each rules as rule (rule)}
 			<li class="flex items-center justify-between gap-6 py-1">

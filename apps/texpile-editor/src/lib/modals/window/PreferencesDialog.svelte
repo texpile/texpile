@@ -4,7 +4,6 @@
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import Modal from '../Modal.svelte';
 	import { settings, updateSettings, type AppSettings } from '$lib/settings';
-	import { layout, updateLayout } from '$lib/storage/layout';
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
@@ -201,11 +200,6 @@
 						{/each}
 					</select>
 				</div>
-				<!-- the whole of what a "PDF preview" tab held: one switch, and one about how the
-						     document LOOKS, which is the question this tab already answers -->
-				{@render toggleRow(m.prefs_dark_pdf_pages(), m.prefs_dark_pdf_pages_note(), layout.current.pdfDarkPages, (v) =>
-					updateLayout({ pdfDarkPages: v })
-				)}
 			{:else if category === 'editor'}
 				<!-- the settings that belong to neither editor in particular lead, unheaded; the two
 						     that are ABOUT one editor sit under its name below -->

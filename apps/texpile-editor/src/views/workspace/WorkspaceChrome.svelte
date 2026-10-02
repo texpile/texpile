@@ -97,7 +97,7 @@
 			onNewFile={menu.canManageTree ? actions.newFileOfType : undefined}
 			typstProject={menu.typstProject}
 			onOpenFolder={menu.hostMode ? actions.openFolder : undefined}
-			onSaveAsTemplate={menu.hostMode && userTemplatesAvailable() ? actions.saveAsTemplate : undefined}
+			onSaveAsTemplate={menu.hostMode && userTemplatesAvailable() && !fileMode.current ? actions.saveAsTemplate : undefined}
 			onCloneRepository={menu.hostMode && canClone() ? actions.cloneRepository : undefined}
 			onLocalHistory={menu.hostMode && canKeepLocalHistory() ? actions.localHistory : undefined}
 			onRestoreDeleted={menu.hostMode && canKeepLocalHistory() ? actions.restoreDeleted : undefined}

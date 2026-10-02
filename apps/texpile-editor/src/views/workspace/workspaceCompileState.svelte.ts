@@ -4,6 +4,7 @@
 import { withLiveRefs } from '$lib/workspace/document/liveRefDiagnostics';
 import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
 import { untrack } from 'svelte';
+import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { compileLog } from '$lib/stores/compileLogStore';
 import {
 	shareCompileState as shareHostCompileState,
@@ -45,7 +46,8 @@ export class WorkspaceCompileState {
 		// .texpile/config.json: the project's own build settings, adopted on open and written back on
 		// every change. Its compile command needs accepting once per project - see projectConfig.ts.
 		$effect(() => {
-			const root = d.guest() ? null : workspaceRoot.current;
+			// a lone file's folder is no project: its .texpile/config.json, if one is there, is not this file's
+			const root = d.guest() || fileMode.current ? null : workspaceRoot.current;
 			// adopt() writes through workspaceStore, which the live command was ALREADY derived
 			// from when the folder opened - so without re-resolving here the config landed in storage
 			// and the editor went on using whatever it had worked out before reading the file.

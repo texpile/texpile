@@ -26,7 +26,18 @@ import {
 import type { WorkspaceProvider } from './workspaceProvider';
 
 export const diskProvider: WorkspaceProvider = {
-	caps: { manageTree: true, compile: true, git: true, format: true, search: true, terminal: true },
+	caps: {
+		manageTree: true,
+		compile: true,
+		git: true,
+		format: true,
+		search: true,
+		terminal: true,
+		share: true,
+		comments: true,
+		agent: true,
+		project: true
+	},
 	readText: readTextFile,
 	readSource: readSourceFile,
 	probe: probeFile,

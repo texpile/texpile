@@ -2,6 +2,7 @@
 	// Grid placement + drag-resize around BottomDock. Stays mounted while hidden so the shells
 	// survive; shrunk it sits under the editor column so the preview keeps full height.
 	import BottomDock from './BottomDock.svelte';
+	import type { DockView } from './dockView';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
 	import { m } from '$lib/paraglide/messages';
 
@@ -13,7 +14,7 @@
 		cwd: string;
 		pdfPaneOpen: boolean;
 		terminalEnabled?: boolean;
-		view: 'terminal' | 'problems' | 'comments';
+		view: DockView;
 		dock?: BottomDock;
 		onStartResize: (e: MouseEvent) => void;
 		onResizeByKey: (e: KeyboardEvent) => void;

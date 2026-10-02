@@ -71,6 +71,8 @@ export class PDFPageView {
 
 	public renderingState: RenderingState = RenderingStates.INITIAL;
 	private renderTask: ReturnType<PDFPageProxy['render']> | null = null;
+	/** counts the canvases torn down, so layers still on their way for an earlier one stop */
+	private drawing = 0;
 
 	private textLayer: TextLayer | null = null;
 	private textLayerRendered = false;
@@ -168,6 +170,7 @@ export class PDFPageView {
 	private resetCanvas(): void {
 		this.cancelRendering();
 		this.renderingState = RenderingStates.INITIAL;
+		this.drawing++;
 
 		if (this.canvas) {
 			this.canvas.width = 0;
@@ -208,6 +211,7 @@ export class PDFPageView {
 		}
 
 		this.renderingState = RenderingStates.RUNNING;
+		const drawing = this.drawing;
 
 		try {
 			this.canvasWrapper = document.createElement('div');
@@ -237,20 +241,30 @@ export class PDFPageView {
 
 			await this.renderTask.promise;
 			this.renderTask = null;
+		} catch (error) {
+			this.failed(error);
+			return;
+		}
+		// the page's picture is up, so the next page's can start; its text and links follow without holding
+		// that up. It stays RUNNING until they are in, so eviction leaves it alone meanwhile
+		void this.drawLayers(drawing);
+	}
 
-			// a reset()/eviction can land while we await the layers below; bail instead of
-			// resurrecting a torn-down page as FINISHED
-			if ((this.renderingState as RenderingState) !== RenderingStates.RUNNING) return;
-
+	private async drawLayers(drawing: number): Promise<void> {
+		// a reset()/eviction can land while we await the layers below, and the page can be drawn again after it;
+		// bail instead of resurrecting a torn-down page as FINISHED or building a second layer onto the new one
+		const gone = () => drawing !== this.drawing || (this.renderingState as RenderingState) !== RenderingStates.RUNNING;
+		try {
+			if (gone()) return;
 			if (!this.textLayerRendered) {
 				await this.renderTextLayer();
 			}
-			if ((this.renderingState as RenderingState) !== RenderingStates.RUNNING) return;
+			if (gone()) return;
 
 			if (!this.annotationLayerRendered) {
 				await this.renderAnnotationLayer();
 			}
-			if ((this.renderingState as RenderingState) !== RenderingStates.RUNNING) return;
+			if (gone()) return;
 
 			this.renderingState = RenderingStates.FINISHED;
 			this.eventBus.dispatch('pagerendered', {
@@ -258,12 +272,16 @@ export class PDFPageView {
 				source: this
 			});
 		} catch (error) {
-			if ((error as Error).name === 'RenderingCancelledException') {
-				return;
-			}
-			this.renderingState = RenderingStates.INITIAL;
-			console.error('Error rendering page:', error);
+			if (!gone()) this.failed(error);
 		}
+	}
+
+	private failed(error: unknown): void {
+		if ((error as Error).name === 'RenderingCancelledException') {
+			return;
+		}
+		this.renderingState = RenderingStates.INITIAL;
+		console.error('Error rendering page:', error);
 	}
 
 	private async renderTextLayer(): Promise<void> {

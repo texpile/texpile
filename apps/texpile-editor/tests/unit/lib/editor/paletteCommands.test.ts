@@ -18,6 +18,7 @@ function actions(host: boolean): PaletteActions {
 		hasFile: () => true,
 		canManageTree: () => true,
 		isHostWorkspace: () => host,
+		isProject: () => true,
 		canSearch: () => host,
 		hasSidebar: () => true,
 		canFormat: () => host,

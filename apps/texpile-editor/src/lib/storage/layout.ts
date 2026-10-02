@@ -34,8 +34,10 @@ export type LayoutState = {
 	terminalVisible: boolean;
 	terminalHeight: number;
 	terminalShrink: boolean;
-	/** render PDF pages inverted in dark mode */
+	/** PDF pages drawn inverted in dark mode, by the switch on the preview's toolbar */
 	pdfDarkPages: boolean;
+	/** the same switch as set in light mode, kept apart so each theme remembers its own */
+	pdfDarkPagesInLight: boolean;
 	/** editor text zoom (1 = 100%); distinct from settings.uiZoom, the whole-window factor */
 	editorZoom: number;
 	/** render the editor in a paper-like container */
@@ -61,6 +63,7 @@ const DEFAULTS: LayoutState = {
 	terminalHeight: 240,
 	terminalShrink: false,
 	pdfDarkPages: true,
+	pdfDarkPagesInLight: false,
 	editorZoom: 1,
 	pageView: false,
 	previewVisible: true

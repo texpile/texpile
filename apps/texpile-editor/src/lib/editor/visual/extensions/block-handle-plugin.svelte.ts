@@ -11,6 +11,9 @@ export const blockHandlePluginKey = new PluginKey('block-handle');
 // left gutter width: two ~22px buttons plus gap
 const GUTTER_OFFSET_LEFT = 48;
 const GUTTER_OFFSET_RIGHT = 8;
+// one button wide plus the gap to the text: the stacked gutter, while comments crowd the pane (the scroller's
+// data-gutter-stacked, which the comment rail decides)
+const GUTTER_OFFSET_LEFT_STACKED = 30;
 
 // a \noindent paragraph prints its own label in this same left margin, at the block's top edge
 // (app.css). Drop the gutter clear of it rather than have the two draw over each other.
@@ -29,11 +32,12 @@ class BlockHandleView {
 	private view: EditorView;
 	private host: HTMLElement;
 	private component: Record<string, unknown> | null = null;
-	private state = $state<{ visible: boolean; top: number; left: number; right: number; popoverOpen: boolean }>({
+	private state = $state<{ visible: boolean; top: number; left: number; right: number; stacked: boolean; popoverOpen: boolean }>({
 		visible: false,
 		top: 0,
 		left: 0,
 		right: 0,
+		stacked: false,
 		popoverOpen: false
 	});
 	private hoveredPos: number | null = null;
@@ -154,7 +158,9 @@ class BlockHandleView {
 		this.cancelHide();
 		this.state.visible = true;
 		this.state.top = top;
-		this.state.left = containerRect.left - GUTTER_OFFSET_LEFT;
+		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
+		this.state.stacked = stacked;
+		this.state.left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
 	}
 

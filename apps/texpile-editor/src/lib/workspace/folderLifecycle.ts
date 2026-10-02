@@ -52,7 +52,8 @@ export class FolderLifecycle {
 
 	/** re-init the workspace in place: swap the root, rescan, re-derive the project, load its
 	 * first file. Pass a path to skip the picker. */
-	async open(path?: string): Promise<void> {
+	/** `want`: the file to land on, as Open in Workspace from a lone file asks */
+	async open(path?: string, want?: string): Promise<void> {
 		const d = this.deps;
 		const root = path ?? (await pickFolder());
 		if (!root) return;
@@ -60,6 +61,7 @@ export class FolderLifecycle {
 		// the dead path this window's folder, and the swap would leave an empty workspace behind
 		if (!(await statFile(root)).exists) return warnMissingFolder(root);
 		// picking a folder is asking for a workspace, whatever this window was showing before
+		const lone = fileMode.current ? activeFilePath.current : null;
 		fileMode.current = false;
 		const prevRoot = workspaceRoot.current;
 		try {
@@ -67,7 +69,11 @@ export class FolderLifecycle {
 			// claim BEFORE the unsaved prompt so a doomed switch never asks the user to discard.
 			if (!(await claimWorkspace(root)).ok) return;
 			if (!(await d.confirmLeaveUnsaved())) {
-				if (prevRoot) void claimWorkspace(prevRoot); // Cancel: restore this window's claim
+				// Cancel: restore this window's claim, a lone file's by its own path
+				if (lone) {
+					fileMode.current = true;
+					void claimWorkspace(lone, 'file');
+				} else if (prevRoot) void claimWorkspace(prevRoot);
 				return;
 			}
 			// a shared session is tied to THIS folder's doc; swapping the root would leave it sharing
@@ -99,7 +105,7 @@ export class FolderLifecycle {
 			texFiles.current = files;
 			await d.refreshTree();
 			await this.initProject(root);
-			if (workspaceRoot.current === root && !activeFilePath.current) openFile(files[0]?.path ?? null);
+			if (workspaceRoot.current === root && !activeFilePath.current) openFile(want ?? files[0]?.path ?? null);
 		} catch (e) {
 			console.error('Failed to open folder:', e);
 		}

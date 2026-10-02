@@ -10,6 +10,8 @@
 // document is suggest_edit, which goes into the open file as a suggestion the reader decides on. Every
 // path a tool takes is checked against the open workspace. The tools live in tools.ts.
 import { createServer, type Server, type IncomingMessage, type ServerResponse } from 'node:http';
+import type { AddressInfo } from 'node:net';
+import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
@@ -96,8 +98,8 @@ function originOk(req: IncomingMessage): boolean {
  * all pure request/response, so there is nothing worth keeping between calls anyway, and building a
  * server per call is cheap next to the round trip.
  */
-async function handleStateless(req: IncomingMessage, res: ServerResponse): Promise<void> {
-	const server = buildServer(() => host);
+async function handleStateless(req: IncomingMessage, res: ServerResponse, currentHost: () => McpHost | null): Promise<void> {
+	const server = buildServer(currentHost);
 	const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
 	// tear both down when the response ends, however it ends, or each call leaks a transport
 	res.on('close', () => {
@@ -124,7 +126,7 @@ export async function start(h: McpHost): Promise<McpStatus> {
 			return;
 		}
 		h.onConnectionChange?.(String(req.headers['user-agent'] || 'MCP client'));
-		void handleStateless(req, res);
+		void handleStateless(req, res, () => host);
 	});
 
 	try {
@@ -174,4 +176,61 @@ function removeEndpointFile(dir: string): void {
 	} catch {
 		// a leftover file is harmless: nothing is listening on the port it names
 	}
+}
+
+export type PrivateMcp = {
+	url: string;
+	/** a secret for the agent in one window, replacing that window's last one */
+	grant(wcId: number): string;
+	revoke(wcId: number): void;
+	close(): Promise<void>;
+};
+
+/** the host as one window's agent sees it: that window alone, whatever root a tool names */
+function windowScoped(h: McpHost, wcId: number): McpHost {
+	function own() {
+		return h.windowObjects().filter((w) => w.webContents.id === wcId);
+	}
+	return {
+		...h,
+		windows: () => h.windows().filter((w) => w.webContentsId === wcId),
+		windowObjects: own,
+		windowFor: () => {
+			const win = own()[0];
+			return win ? { win, root: h.rootFor(wcId) } : null;
+		}
+	};
+}
+
+/**
+ * The Agent tab's own way in: the same tools, on a port of the system's choosing, behind a secret that
+ * only the agents Texpile starts are told. The server above is the reader's opt-in for any client on the
+ * machine, and stays off until they turn it on; this one is written to no endpoint file and does not
+ * light the topbar indicator, so it opens nothing the reader did not already open by using the tab.
+ */
+export async function startPrivate(h: McpHost): Promise<PrivateMcp> {
+	const grants = new Map<number, Buffer>();
+	const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+		const given = Buffer.from(req.headers.authorization ?? '');
+		const wcId = [...grants].find(([, expected]) => given.length === expected.length && timingSafeEqual(given, expected))?.[0];
+		if (!originOk(req) || wcId === undefined) {
+			res.writeHead(403).end('forbidden');
+			return;
+		}
+		void handleStateless(req, res, () => windowScoped(h, wcId));
+	});
+	await new Promise<void>((resolve, reject) => {
+		server.once('error', reject);
+		server.listen(0, '127.0.0.1', resolve);
+	});
+	return {
+		url: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
+		grant: (wcId) => {
+			const token = randomBytes(32).toString('hex');
+			grants.set(wcId, Buffer.from(`Bearer ${token}`));
+			return token;
+		},
+		revoke: (wcId) => void grants.delete(wcId),
+		close: () => new Promise<void>((r) => server.close(() => r()))
+	};
 }

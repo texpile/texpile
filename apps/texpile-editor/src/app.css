@@ -542,7 +542,7 @@ select.input {
    gets a label in the left margin to tell the two apart. The block handle shares that margin, so it
    drops a line for these paragraphs (see block-handle-plugin).
 
-   Abbreviated, and small, because the margin is 48px (EditorPane's px-12) and that is a hard
+   Abbreviated, and small, because the margin is 48px (VisualEditorHost's pl-12) and that is a hard
    ceiling: on a narrow window the mx-auto centering collapses and there is nothing else. Spelt in
    full at 0.8em the label wanted ~70px and got cut from the LEFT, so \noindent rendered as
    "indent" - the one thing it must never say. max-width pins the failure direction: if it ever
@@ -567,6 +567,11 @@ select.input {
 	white-space: nowrap;
 	user-select: none;
 	pointer-events: none;
+}
+
+/* with the block handles stacked (comments crowding a narrow pane) the margin is 30px: keep the head, \no */
+[data-gutter-stacked] .ProseMirror p[data-indent='noindent']::before {
+	max-width: 1.4rem;
 }
 
 /* in a list the space just left of the paragraph holds the bullet or the number, so the label goes
@@ -954,7 +959,7 @@ html.pm-drop-refused .pm-drop-cursor {
 
 .comment-card {
 	position: absolute;
-	left: calc(18px - var(--comment-card-shift, 0px));
+	left: calc(4px - var(--comment-card-shift, 0px));
 	width: 242px;
 	z-index: 2;
 	padding: 6px 8px 6px 10px;
@@ -975,7 +980,7 @@ html.pm-drop-refused .pm-drop-cursor {
 	content: '';
 	position: absolute;
 	top: 0;
-	left: calc(260px - var(--comment-card-shift, 0px));
+	left: calc(246px - var(--comment-card-shift, 0px));
 	width: var(--comment-rail-tail, 0px);
 	height: 1px;
 }
@@ -993,8 +998,8 @@ html.pm-drop-refused .pm-drop-cursor {
 }
 .comment-card-selected,
 .comment-card-pending {
-	left: calc(6px - var(--comment-card-shift, 0px));
-	width: 254px;
+	left: calc(0px - var(--comment-card-shift, 0px));
+	width: 246px;
 	z-index: 4;
 	border-color: var(--color-surface-300-700);
 	box-shadow: 0 6px 20px color-mix(in srgb, var(--color-surface-950) 22%, transparent);

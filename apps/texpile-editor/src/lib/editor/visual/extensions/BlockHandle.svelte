@@ -11,6 +11,8 @@
 		top: number;
 		left: number;
 		right: number;
+		/** comments crowd the pane: one column on the left, delete included, and no right gutter */
+		stacked: boolean;
 		popoverOpen: boolean;
 	};
 	let {
@@ -32,7 +34,7 @@
 <!-- visibility, not display: Floating-UI anchors the popover to the trigger's rect,
      and display:none would collapse it to (0,0) and pin the popover top-left -->
 <div
-	class="block-handle-gutter fixed z-10 flex items-center gap-0.5"
+	class="block-handle-gutter fixed z-10 flex gap-0.5 {state.stacked ? 'flex-col' : 'items-center'}"
 	style="visibility: {state.visible ? 'visible' : 'hidden'}; pointer-events: {state.visible
 		? 'auto'
 		: 'none'}; top: {state.top}px; left: {state.left}px;"
@@ -81,15 +83,22 @@
 	>
 		<GripVertical class="size-4" />
 	</button>
+	{#if state.stacked}{@render deleteButton()}{/if}
 </div>
 
-<!-- right gutter (delete), same visibility rules as the left -->
-<div
-	class="block-handle-gutter fixed z-10 flex items-center"
-	style="visibility: {state.visible ? 'visible' : 'hidden'}; pointer-events: {state.visible
-		? 'auto'
-		: 'none'}; top: {state.top}px; left: {state.right}px;"
->
+<!-- right gutter (delete), same visibility rules as the left; with the gutters stacked it is in the left one -->
+{#if !state.stacked}
+	<div
+		class="block-handle-gutter fixed z-10 flex items-center"
+		style="visibility: {state.visible ? 'visible' : 'hidden'}; pointer-events: {state.visible
+			? 'auto'
+			: 'none'}; top: {state.top}px; left: {state.right}px;"
+	>
+		{@render deleteButton()}
+	</div>
+{/if}
+
+{#snippet deleteButton()}
 	<button
 		type="button"
 		class="block-handle-btn block-handle-btn-danger"
@@ -103,4 +112,4 @@
 	>
 		<Trash2 class="size-4" />
 	</button>
-</div>
+{/snippet}

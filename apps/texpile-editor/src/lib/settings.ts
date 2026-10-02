@@ -92,6 +92,11 @@ export type AppSettings = {
 	aiAgentCommand: string;
 	/** a preset agent's --model, one of the ids it lists; '' = its own default */
 	aiAgentModel: string;
+	/** the agent the dock's Agent tab talks to over ACP; '' until one is chosen, 'off' hides the tab. Main reads it,
+	 *  see electron/src/ai/acp */
+	agentPanel: '' | 'off' | 'codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom';
+	/** the command line when agentPanel is 'custom'; it speaks ACP on its input and output */
+	agentPanelCommand: string;
 	/** folders searched before PATH; per machine, so never in a project's config */
 	toolDirs: string[];
 	/** look for co-authors' new versions every few minutes while the window is in front (VS Code's
@@ -144,6 +149,8 @@ const DEFAULTS: AppSettings = {
 	aiAgent: '',
 	aiAgentCommand: '',
 	aiAgentModel: '',
+	agentPanel: '',
+	agentPanelCommand: '',
 	toolDirs: [],
 	checkForNewVersions: true,
 	localHistory: true

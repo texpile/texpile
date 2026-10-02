@@ -7,8 +7,8 @@
 	import { scmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
-	import FileIcon from '$lib/filetree/FileIcon.svelte';
-	import { STATUS_COLOR, STATUS_DECOR, STATUS_TITLE } from '$lib/filetree/treeBadges';
+	import { STATUS_COLOR } from '$lib/filetree/treeBadges';
+	import ChangedFileName from './ChangedFileName.svelte';
 	import { badgeOf, gitWriting, isNewFile } from '$lib/workspace/scm/gitStore';
 	import { chooseNote, keepLabel } from '$lib/workspace/wholeFileChoice';
 	import { MENU_CARD, MENU_ITEM, MENU_DANGER, MENU_ICON, MENU_SEPARATOR, MENU_TRIGGER, hoverAction } from './rowMenu';
@@ -80,13 +80,8 @@
 				<span class="text-muted truncate text-xs tabular-nums">{m.vcs_folder_files({ count: c.files.toLocaleString() })}</span>
 			{:else}
 				<!-- the same file reads the same here as under a version in History -->
-				<FileIcon name={baseName(c.path)} class="size-4 shrink-0" />
-				<span
-					class="truncate {STATUS_COLOR[badge]} {STATUS_DECOR[badge] ?? ''} {c.choose ? 'max-w-[60%] shrink-0' : ''}"
-					use:tip={STATUS_TITLE[badge]}>{baseName(c.path)}</span
-				>
+				<ChangedFileName name={baseName(c.path)} dir={dirName(c.path)} {badge} keepName={!!c.choose} />
 			{/if}
-			{#if dirName(c.path) && !c.files}<span class="text-muted truncate text-xs">{dirName(c.path)}</span>{/if}
 			<!-- every marked place in it is chosen: nothing more to do here before Finish -->
 			<!-- notes in gray: the name's color already says conflict, as in the file tree -->
 			{#if locked && c.choose}

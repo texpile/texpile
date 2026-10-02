@@ -71,3 +71,9 @@ export function bundleDir(): string {
 export function luaDir(): string {
 	return isDev ? path.join(__dirname, '..', 'lua') : path.join(process.resourcesPath, 'lua');
 }
+
+// the ACP adapters, bundled by scripts/build-electron.mjs. Outside the asar like the .lua files: Electron
+// runs them as plain Node, by path
+export function agentsDir(): string {
+	return isDev ? path.join(__dirname, '..', 'agents') : path.join(process.resourcesPath, 'agents');
+}

@@ -10,6 +10,7 @@ import { synctex } from '../fs/synctexCli';
 import { formatLatex } from '../fs/formatLatex';
 import { backupForUndo } from '../fs/undoBackup';
 import { resolveRealRelative } from '../fs/resolveRealRelative';
+import { noteOwnWrite } from '../ai/acp/ownWrites';
 import { handleFs } from './ipcResult';
 
 /**
@@ -53,7 +54,11 @@ export function registerFsIpc(): void {
 	handleFs('fs:scan', scan);
 	handleFs('fs:read', fsService.read);
 	handleFs('fs:probe', probe);
-	handleFs('fs:write', fsService.write);
+	// told before the write, so a turn that ends while it lands already knows it as the reader's
+	handleFs('fs:write', (p: string, content: string) => {
+		if (typeof p === 'string' && typeof content === 'string') noteOwnWrite(p, content);
+		return fsService.write(p, content);
+	});
 	handleFs('fs:writeBinary', fsService.writeBinary);
 	handleFs('fs:tree', tree);
 	handleFs('fs:treeScan', treeScan);

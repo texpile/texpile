@@ -3,7 +3,7 @@
 // file access + graphics resolution, Zotero citations, and source-control actions.
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { fileMode } from '$lib/workspace/fileMode.svelte';
+import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
 import { untrack } from 'svelte';
 import { publishWindowState } from '$lib/workspace/mcpPublish';
 import { attachMcpCommands } from '$lib/workspace/mcpCommands';
@@ -19,6 +19,9 @@ import { provideScmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelt
 import { ScmFetch } from '$lib/workspace/scm/remote/scmFetch.svelte';
 import { AutoCheck } from '$lib/workspace/scm/actions/scmAutoCheck.svelte';
 import { LocalHistoryActions, provideLocalHistoryActions } from '$lib/workspace/localHistory/localHistoryActions.svelte';
+import { provideAgentHost } from '$lib/ai/agentPanel/agentHost.svelte';
+import { provideFolderSwitch } from '$lib/workspace/openWorkspace';
+import { agentSession, agentSessionStale } from '$lib/ai/agentPanel/agentSession.svelte';
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { joinPath } from '$lib/workspace/fileSystem';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
@@ -68,6 +71,9 @@ import type { WorkspaceNav } from './workspaceNav.svelte';
 import type { WorkspaceFiles } from './workspaceFiles.svelte';
 import type { WorkspaceCompileState } from './workspaceCompileState.svelte';
 import type { WorkspaceEditFlow } from './workspaceEditFlow.svelte';
+import type { DockView } from '$lib/terminal/dockView';
+import type { WorkspaceComments } from './workspaceComments.svelte';
+import { selectedSpan } from './selectedSpan';
 
 type IntegrationDeps = {
 	provider: WorkspaceProvider;
@@ -82,7 +88,9 @@ type IntegrationDeps = {
 	typstPreview: () => TypstPreviewController;
 	compileSettings: () => CompileSettings;
 	commentsCtl: CommentsController;
-	setDockView: (v: 'terminal' | 'problems' | 'comments') => void;
+	setDockView: (v: DockView) => void;
+	/** for the selection the Agent tab sends */
+	comments: WorkspaceComments;
 };
 
 export class WorkspaceIntegrations {
@@ -160,6 +168,26 @@ export class WorkspaceIntegrations {
 			}
 		});
 		$effect(() => provideLocalHistoryActions(history));
+		// what the Agent tab asks of the open workspace: a file against its text before a turn, a file opened or put back, a
+		// save, the selection
+		$effect(() =>
+			provideAgentHost({
+				openCompareTab: (path, compare) => {
+					const key = tabs.openCompare(path, compare);
+					d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
+				},
+				openFile: (path) => d.nav().openFileAtLine(path, 1),
+				writeText: (p, content) => d.provider.writeText(p, content),
+				flushPendingSave: () => d.editFlow().saver.flushAndWait(),
+				selection: () => selectedSpan({ comments: d.comments, doc: d.wsdoc.doc, modes: d.wsdoc.modes, kind: () => d.wsdoc.doc.kind })
+			})
+		);
+		// Open in Workspace from a lone file: the full folder switch, which claims the folder and sets its project up
+		$effect(() => provideFolderSwitch((root, want) => d.files().folder.open(root, want)));
+		// here, not in the dock: a window turning to a lone file unmounts the dock before it could stop the agent
+		$effect(() => {
+			if (agentSessionStale()) untrack(() => agentSession.close());
+		});
 		const fetcher = new ScmFetch(this.scm);
 		// co-authors' new versions, looked for every few minutes while this project is open
 		const autoCheck = new AutoCheck({ isBusy: () => this.scm.busy, sync: () => void this.scm.sync() });
@@ -355,7 +383,7 @@ export class WorkspaceIntegrations {
 							titles: session.compileIntel.auxTitles
 						}
 					: null;
-			if (fileMode.current) return;
+			if (!capsOf(d.provider).project) return;
 			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux).then(() => {
 				if (live && !guest) d.cc().share();
 			});
@@ -409,6 +437,8 @@ export class WorkspaceIntegrations {
 
 	// entries land in the main file's bibliography, so only a file in the main file's language cites
 	private citesHere(): boolean {
+		// a lone file has no project bibliography: the first references.bib in its folder belongs to some other paper
+		if (!capsOf(this.d.provider).project) return false;
 		const { kind, path } = this.d.wsdoc.doc;
 		if (!path || (kind !== 'tex' && kind !== 'typ')) return false;
 		return !mainFile.current || (this.d.typstPreview().mainIsTypst ? kind === 'typ' : kind === 'tex');

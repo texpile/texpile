@@ -5,6 +5,7 @@
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
 	import { menuContentClass, menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';
 	import { recentFolders } from '$lib/workspace/workspaceStore';
+	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { basename, isDesktop } from '$lib/workspace/fileSystem';
 	import { combo } from '$lib/chrome/shortcutText';
 	import { m } from '$lib/paraglide/messages';
@@ -133,6 +134,11 @@
 					<Menu.Item value="save-as-template" class={menuBarItemClass}
 						><Menu.ItemText>{m.menubar_save_as_template()}</Menu.ItemText></Menu.Item
 					>
+				{:else if fileMode.current}
+					<!-- grayed for a lone file rather than left out, with why -->
+					<Menu.Item value="save-as-template" disabled class={menuBarItemClass}
+						><Menu.ItemText><span use:tip={m.single_file_unavailable()}>{m.menubar_save_as_template()}</span></Menu.ItemText></Menu.Item
+					>
 				{/if}
 				{#if canExportTypst}
 					<Menu.Item value="export-typst" class={menuBarItemClass}><Menu.ItemText>{m.typst_export_menu()}</Menu.ItemText></Menu.Item>
@@ -161,6 +167,10 @@
 				<Menu.Separator class={separatorClass} />
 				{#if canShareSession}
 					<Menu.Item value="share-session" class={menuBarItemClass}><Menu.ItemText>{m.menubar_share_session()}</Menu.ItemText></Menu.Item>
+				{:else if fileMode.current}
+					<Menu.Item value="share-session" disabled class={menuBarItemClass}
+						><Menu.ItemText><span use:tip={m.single_file_unavailable()}>{m.menubar_share_session()}</span></Menu.ItemText></Menu.Item
+					>
 				{/if}
 				<Menu.Item value="preferences" class={menuBarItemClass}>
 					<Menu.ItemText>{m.menubar_preferences()}</Menu.ItemText><span class="opacity-50">{combo(',')}</span>

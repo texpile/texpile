@@ -13,15 +13,22 @@
 		/** its shortcut, as shortcutText writes it */
 		keys?: string;
 	};
-	export type DropdownGroup = { label?: string; options: DropdownOption[] };
+	export type DropdownGroup = {
+		label?: string;
+		options: DropdownOption[];
+		/** the rest of a long list, in a submenu at the group's end */
+		more?: { label: string; options: DropdownOption[] };
+	};
 </script>
 
 <script lang="ts">
 	// a dropdown that picks from a short list, on Skeleton's Menu: arrow keys, typeahead and menu roles, in the look every
 	// list shares (menuStyles.ts)
 	import { Menu, Portal, type MenuTriggerProps } from '@skeletonlabs/skeleton-svelte';
-	import { Check, ChevronDown } from '@lucide/svelte';
-	import { labelTriggerClass, menuContentClass, menuGroupLabelClass, menuItemClass, separatorClass } from './menuStyles';
+	import { ChevronDown } from '@lucide/svelte';
+	import { labelTriggerClass, menuContentClass, menuGroupLabelClass, separatorClass } from './menuStyles';
+	import MenuDropdownOption from './MenuDropdownOption.svelte';
+	import MenuDropdownMore from './MenuDropdownMore.svelte';
 
 	type Props = {
 		groups: DropdownGroup[];
@@ -31,13 +38,17 @@
 		placement?: 'bottom-start' | 'bottom-end';
 		/** what is picked, on the standard trigger */
 		label?: string;
+		/** every label the standard trigger can show, the options' own unless given: it is as wide as the widest */
+		labels?: string[];
 		/** a trigger of the caller's own: spread its `attrs` on the button */
 		trigger?: MenuTriggerProps['element'];
 	};
 
 	const props: Props = $props();
 
-	const marked = $derived(props.groups.some((g) => g.options.some((o) => o.marker !== undefined)));
+	// the trigger keeps one width whatever is picked, so the toolbar after it does not move
+	const reserved = $derived(props.labels ?? props.groups.flatMap((g) => [...g.options, ...(g.more?.options ?? [])].map((o) => o.label)));
+	const marked = $derived(props.groups.some((g) => [...g.options, ...(g.more?.options ?? [])].some((o) => o.marker !== undefined)));
 
 	// the menu hands the focus back to its trigger after a pick, which would undo a pick that focuses the editor
 	function select(value: string) {
@@ -52,7 +63,10 @@
 				{@render props.trigger(attrs)}
 			{:else}
 				<button {...attrs} class={labelTriggerClass}>
-					<span class="min-w-[5.5rem] text-left">{props.label}</span>
+					<span class="grid min-w-[5.5rem] text-left">
+						{#each reserved as l, i (i)}<span class="invisible col-start-1 row-start-1" aria-hidden="true">{l}</span>{/each}
+						<span class="col-start-1 row-start-1">{props.label}</span>
+					</span>
 					<ChevronDown class="text-muted size-4 shrink-0" />
 				</button>
 			{/if}
@@ -66,27 +80,17 @@
 					<Menu.ItemGroup>
 						{#if group.label}<Menu.ItemGroupLabel class={menuGroupLabelClass}>{group.label}</Menu.ItemGroupLabel>{/if}
 						{#each group.options as option (option.value)}
-							<Menu.OptionItem
-								type={props.kind ?? 'radio'}
-								value={option.value}
-								valueText={option.label}
-								checked={option.checked}
-								class={menuItemClass}
-							>
-								{#if option.icon}
-									{@const Icon = option.icon}
-									<Icon class="size-4 shrink-0 {option.checked ? 'text-primary-ink' : 'text-muted'}" />
-								{:else if marked}
-									<span class="text-muted w-10 shrink-0 font-mono text-xs">{option.marker ?? ''}</span>
-								{/if}
-								<span class="min-w-0 flex-1">
-									<Menu.ItemText class="block">{option.label}</Menu.ItemText>
-									{#if option.note}<span class="text-muted block text-xs leading-relaxed">{option.note}</span>{/if}
-								</span>
-								{#if option.keys}<span class="text-muted text-xs">{option.keys}</span>{/if}
-								<Check class="size-4 shrink-0 {option.checked ? '' : 'invisible'}" />
-							</Menu.OptionItem>
+							<MenuDropdownOption {option} kind={props.kind ?? 'radio'} {marked} />
 						{/each}
+						{#if group.more?.options.length}
+							<MenuDropdownMore
+								label={group.more.label}
+								options={group.more.options}
+								kind={props.kind ?? 'radio'}
+								{marked}
+								onSelect={select}
+							/>
+						{/if}
 					</Menu.ItemGroup>
 				{/each}
 			</Menu.Content>

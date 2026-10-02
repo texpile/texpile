@@ -12,7 +12,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { savePdfBytes } from '$lib/workspace/fileSystem';
 	import { resolvedMode } from '$lib/theme';
-	import { layout } from '$lib/storage/layout';
+	import { layout, updateLayout } from '$lib/storage/layout';
 	import { untrack } from 'svelte';
 
 	type Props = {
@@ -136,6 +136,7 @@
 
 {#if pdfSource && !error}
 	{@const dark = resolvedMode.current === 'dark'}
+	{@const inverted = dark ? layout.current.pdfDarkPages : layout.current.pdfDarkPagesInLight}
 	<div class="flex h-full w-full flex-col">
 		<!-- the viewer holds the bytes but not the native bridge, so the save dialog is injected here -->
 		<PdfViewer src={pdfSource} documentKey={docKey} downloadFilename={filename} onSavePdf={savePdfBytes}>
@@ -148,6 +149,8 @@
 				inPopout={placement === 'window'}
 				{findOpen}
 				onToggleFind={() => (findOpen = !findOpen)}
+				{inverted}
+				onToggleInvert={() => updateLayout(dark ? { pdfDarkPages: !inverted } : { pdfDarkPagesInLight: !inverted })}
 			/>
 			<PdfActionsBridge onActions={(a) => (actions = a)} />
 			<!-- darkMode inverts the page canvases; the chrome always follows the app theme via `dark`.
@@ -158,7 +161,7 @@
 				<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
 					<PdfRenderer
 						{onPageClick}
-						darkMode={dark && layout.current.pdfDarkPages}
+						darkMode={inverted}
 						backgroundColor="var(--pdf-page-area-bg)"
 						pageShadow={dark ? '0 2px 8px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4)' : undefined}
 						scrollbarThumbColor="color-mix(in oklab, var(--color-surface-950-50) 30%, transparent)"

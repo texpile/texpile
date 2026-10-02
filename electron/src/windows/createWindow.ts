@@ -230,7 +230,7 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 			.then(({ response }) => {
 				if (win.isDestroyed()) return;
 				if (order.original[response] !== 0) return win.destroy();
-				if (root) pendingOpens.set(wcId, { kind: 'folder', path: root.raw });
+				if (root) pendingOpens.set(wcId, { kind: root.file ? 'file' : 'folder', path: root.raw });
 				win.webContents.reload();
 			});
 	});

@@ -4,10 +4,11 @@ import { BrowserWindow } from 'electron';
 import * as path from 'node:path';
 import { writeSettings } from '../appSettings';
 
-export type WindowRoot = { raw: string; norm: string };
+/** `file`: a single file open on its own, which is no project: nothing else opens into its window, and it is not remembered */
+export type WindowRoot = { raw: string; norm: string; file?: boolean };
 export type PendingOpen = { kind: 'file' | 'folder'; path: string };
 
-/** what each window has open, keyed by webContents id; null = start screen */
+/** what each window has open, keyed by webContents id: a folder, or a lone file; null = start screen */
 export const windowRoots = new Map<number, WindowRoot | null>();
 /** a file/folder a freshly-created window should open once its renderer loads */
 export const pendingOpens = new Map<number, PendingOpen>();
@@ -44,12 +45,18 @@ export function windowFor(wcId: number): BrowserWindow | null {
 export function windowWithRoot(root: string): BrowserWindow | null {
 	const n = normRoot(root);
 	for (const [wcId, r] of windowRoots) {
-		if (r && r.norm === n) {
+		if (r && !r.file && r.norm === n) {
 			const w = windowFor(wcId);
 			if (w) return w;
 		}
 	}
 	return null;
+}
+
+/** the folder a window works in; null for a start screen and for a lone file, which has none */
+export function folderOf(wcId: number): string | null {
+	const r = windowRoots.get(wcId);
+	return r && !r.file ? r.raw : null;
 }
 
 export function focusWindow(w: BrowserWindow): void {
@@ -62,6 +69,6 @@ export function focusWindow(w: BrowserWindow): void {
 export function persistOpenFolders(): void {
 	if (quitting) return;
 	const roots: string[] = [];
-	for (const r of windowRoots.values()) if (r) roots.push(r.raw);
+	for (const r of windowRoots.values()) if (r && !r.file) roots.push(r.raw);
 	writeSettings({ openFolders: roots });
 }

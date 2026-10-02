@@ -7,7 +7,7 @@ import { publishWindowState, type WindowState } from '../mcp/windowState';
 import { deliverResponse } from '../mcp/bridge';
 import { readSettings, writeSettings } from '../appSettings';
 import { devChannel } from '../appIdentity';
-import { windowRoots, windowWithRoot } from '../windows/windowRegistry';
+import { folderOf, windowWithRoot } from '../windows/windowRegistry';
 
 function mcpPort(): number {
 	const configured = Number(readSettings().mcpPort) || 0;
@@ -19,14 +19,15 @@ export function mcpHost(): mcp.McpHost {
 		userDataDir: app.getPath('userData'),
 		port: mcpPort(),
 		windows: () => BrowserWindow.getAllWindows().map((w) => ({ webContentsId: w.webContents.id, focused: w.isFocused() })),
-		rootFor: (wcId) => windowRoots.get(wcId)?.raw ?? null,
+		// a lone file has no workspace for the tools to work in
+		rootFor: (wcId) => folderOf(wcId),
 		windowObjects: () => BrowserWindow.getAllWindows(),
 		windowFor: (root) => {
 			// by root when given: focus follows the user's clicks, so a tool that always used the
 			// focused window would steer whichever project they happened to be looking at
 			const win = root ? windowWithRoot(root) : (BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0] ?? null);
 			if (!win) return null;
-			return { win, root: windowRoots.get(win.webContents.id)?.raw ?? null };
+			return { win, root: folderOf(win.webContents.id) };
 		},
 		onConnectionChange: (client) => {
 			for (const w of BrowserWindow.getAllWindows()) w.webContents.send('mcp:connection', client);

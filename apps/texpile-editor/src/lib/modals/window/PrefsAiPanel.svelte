@@ -1,5 +1,5 @@
 <script lang="ts">
-	// The AI category: the MCP server an assistant connects to, and the agent Refine runs.
+	// The AI category: the MCP server an assistant connects to, the agent Refine runs, and the Agent tab's.
 	import { LoaderCircle } from '@lucide/svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { settings, updateSettings, setMcpEnabled, type AppSettings } from '$lib/settings';
@@ -8,6 +8,7 @@
 	import RadioChoiceList from './RadioChoiceList.svelte';
 	import AgentModelChoice from './AgentModelChoice.svelte';
 	import { AgentTest } from './agentTest.svelte';
+	import AgentPanelPrefs from '$lib/ai/agentPanel/ui/AgentPanelPrefs.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const ROW = 'border-surface-200-800 flex items-start justify-between gap-6 border-b py-4 last:border-b-0';
@@ -142,5 +143,7 @@
 		{/if}
 	</div>
 {/if}
+
+<AgentPanelPrefs />
 
 <McpSetupModal bind:open={setupOpen} port={mcp?.port ?? null} />
