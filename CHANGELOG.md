@@ -16,6 +16,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: `\overline`, `\sqrt`, `\hat` and similar typed in the visual math editor put the caret inside them instead of after an empty box (by @hkarlsen06)
 - feat: shift-enter in a display equation starts a new one of the same kind below it (by @hkarlsen06)
 - feat: significantly improved visual math editing experience for LaTeX and Typst (by @louisqli)
+- feat: Agent tab in the dock to work with Claude, Codex, Gemini, Copilot, OpenCode or a custom agent on your project (by @louisqli)
+- fix: various smaller UX/UI enhancement
 
 ## [1.2.0] - 2026-09-25
 

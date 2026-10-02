@@ -23,7 +23,8 @@
 
 <div class="border-surface-200-800 border-b py-4 last:border-b-0">
 	<div class="text-sm font-medium">{m.prefs_grammar_rules()}</div>
-	<ul class="mt-2">
+	<!-- in under its heading by the step the other sections' rows take (SUB in PreferencesDialog) -->
+	<ul class="mt-2 pl-4">
 		{#each rules as rule (rule)}
 			<li class="flex items-center justify-between gap-6 py-1">
 				<span class="min-w-0 truncate text-sm" use:tip={descriptions[rule] ?? ''}>{ruleName(rule)}</span>
