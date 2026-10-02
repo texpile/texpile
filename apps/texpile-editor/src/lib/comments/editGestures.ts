@@ -39,7 +39,7 @@ export function carryGestures(spans: TextSpan[], before: string, after: string):
 	return out.sort((a, b) => a.from - b.from);
 }
 
-/** `spans` carried through an edit made in several places at once (several cursors, a replace all): one gesture per place */
+/** `spans` carried through an edit whose places the editor reported (several cursors, a replace all, an insertion): one gesture per place */
 export function carryGesturesThrough(spans: TextSpan[], changes: TextChange[]): TextSpan[] {
 	const grown: (TextSpan | null)[] = changes.map((c) => (c.toB - c.fromB <= MAX_GESTURE ? { from: c.fromB, to: c.toB } : null));
 	const out: TextSpan[] = [];

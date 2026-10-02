@@ -60,7 +60,7 @@ export function takeTypedSides(): Record<string, TypingSide> {
 	return out;
 }
 
-/** the source editor's last edit when it changed several places at once; the text alone reads as one */
+/** where the source editor's last edit landed, when the text alone would place it elsewhere: several places, or an insertion */
 export type EditedPlaces = { before: string; after: string; changes: TextChange[] };
 
 let edited: EditedPlaces | null = null;

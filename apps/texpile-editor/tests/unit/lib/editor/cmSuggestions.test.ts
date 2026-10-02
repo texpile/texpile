@@ -101,7 +101,7 @@ it('takes back an undone delete as the words it took, not as typing in front of 
 	view.destroy();
 });
 
-it('reports each place an edit with several cursors changed, and not a collaborator’s edit', () => {
+it('reports where an edit landed, in each place several cursors changed, and not a collaborator’s edit', () => {
 	const doc = 'The colour map.\nA colour bar.';
 	const view = new EditorView({ parent: document.body, state: EditorState.create({ doc, extensions: [cmSuggestions()] }) });
 	takeEditedPlaces();
@@ -114,6 +114,11 @@ it('reports each place an edit with several cursors changed, and not a collabora
 	view.dispatch({
 		changes: [...view.state.doc.toString().matchAll(/color/g)].map((m) => ({ from: m.index!, to: m.index! + 5, insert: 'hue' }))
 	});
+	expect(takeEditedPlaces()).toBeNull();
+	view.dispatch({ changes: { from: 0, insert: 'So ' }, userEvent: 'input.paste' });
+	expect(takeEditedPlaces()?.changes).toEqual([{ fromA: 0, toA: 0, fromB: 0, toB: 3 }]);
+	// a replacement is read off the text, which keeps a wrapper round a long passage one gesture
+	view.dispatch({ changes: { from: 0, to: 2, insert: 'Thus' }, userEvent: 'input.type' });
 	expect(takeEditedPlaces()).toBeNull();
 	view.destroy();
 });

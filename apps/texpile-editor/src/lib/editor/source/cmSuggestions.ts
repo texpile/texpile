@@ -308,7 +308,9 @@ const editedPlaces = EditorView.updateListener.of((u) => {
 	if (!u.docChanged || !u.transactions.some((tr) => tr.annotation(Transaction.userEvent) !== undefined)) return;
 	const changes: TextChange[] = [];
 	u.changes.iterChangedRanges((fromA, toA, fromB, toB) => void changes.push({ fromA, toA, fromB, toB }));
-	if (changes.length > 1) noteEditedPlaces({ before: docText(u.startState.doc), after: docText(u.state.doc), changes });
+	// an insertion too: where it went can read as further left, where the same text stands just before it
+	if (changes.length > 1 || changes[0].fromA === changes[0].toA)
+		noteEditedPlaces({ before: docText(u.startState.doc), after: docText(u.state.doc), changes });
 });
 
 export function cmSuggestions(): Extension {

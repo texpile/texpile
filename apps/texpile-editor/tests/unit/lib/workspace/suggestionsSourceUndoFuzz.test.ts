@@ -1,9 +1,10 @@
 // @vitest-environment jsdom
-// the source editor wired to the controller the way the workspace wires them, undoing what was suggested
+// the source editor wired to the controller the way the workspace wires them
 import { it, expect, vi } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import {
+	copyLineDown,
 	deleteCharBackward,
 	deleteCharForward,
 	deleteGroupBackward,
@@ -54,7 +55,7 @@ function prng(seed: number) {
 	};
 }
 
-async function sourceEditor() {
+async function sourceEditor(doc = DOC) {
 	activeSuggestions.current = [];
 	editMode.current = 'suggesting';
 	const ref: { view?: EditorView } = {};
@@ -75,7 +76,7 @@ async function sourceEditor() {
 	const view = new EditorView({
 		parent: document.body,
 		state: EditorState.create({
-			doc: DOC,
+			doc,
 			extensions: [
 				cmSuggestions(),
 				history(),
@@ -87,8 +88,8 @@ async function sourceEditor() {
 	});
 	ref.view = view;
 	await ctl.load(ROOT);
-	ctl.reanchor(FILE, DOC);
-	ctl.suggestions.textChanged(FILE, DOC);
+	ctl.reanchor(FILE, doc);
+	ctl.suggestions.textChanged(FILE, doc);
 	const placed = () =>
 		(ctl.suggestions as unknown as { states: Map<string, { placed: PlacedSuggestion[] }> }).states.get('main.tex')?.placed ?? [];
 	return {
@@ -182,3 +183,25 @@ it('undoing everything suggested in the source editor leaves the file as it was 
 	}
 	expect(failures).toEqual([]);
 }, 600_000);
+
+// the same text stands on either side of a copied or pasted line; the editor knows which it put in
+it('draws a line Copy Line Down put in as that whole line', async () => {
+	const e = await sourceEditor();
+	const line = e.view.state.doc.line(2);
+	e.view.dispatch({ selection: { anchor: line.from } });
+	copyLineDown(e.view);
+	await e.settle();
+	const text = e.view.state.doc.toString();
+	expect(e.placed().map((s) => [text.slice(s.from, s.to), s.from, s.restore])).toEqual([[`${line.text}\n`, line.from, '']]);
+	e.view.destroy();
+});
+
+it('draws lines pasted at the start of a line where they were pasted', async () => {
+	const e = await sourceEditor();
+	const at = DOC.indexOf('Second');
+	e.view.dispatch({ changes: { from: at, insert: 'A\nB\n' }, userEvent: 'input.paste' });
+	await e.settle();
+	const text = e.view.state.doc.toString();
+	expect(e.placed().map((s) => [text.slice(s.from, s.to), s.from, s.restore])).toEqual([['A\nB\n', at, '']]);
+	e.view.destroy();
+});
