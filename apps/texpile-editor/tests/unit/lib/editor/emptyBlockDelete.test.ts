@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
+import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
 
 function withEmptyFirst(type: 'paragraph' | 'heading') {
 	const { doc } = parseLatexFile('\\section{Introduction}\nSome words.\n');
@@ -41,4 +42,25 @@ describe('an empty block at the start of the document', () => {
 		expect(blocks(state)).toEqual(['paragraph ']);
 		expect(deleteEmptyFirstBlock(state)).toBe(false);
 	});
+});
+
+describe('a figure whose caption is empty', () => {
+	const files: [string, () => import('prosemirror-model').Node][] = [
+		[
+			'latex',
+			() =>
+				parseLatexFile('\\begin{figure}[h]\n\\centering\n\\includegraphics{plot.png}\n\\end{figure}\n\nA paragraph after the figure.\n').doc
+		],
+		['markdown', () => parseMarkdownFile('![](plot.png)\n\nA paragraph after the figure.\n').doc]
+	];
+	for (const [dialect, parse] of files) {
+		it(`stays when Backspace or Delete is pressed in its caption (${dialect})`, () => {
+			const doc = parse();
+			expect(doc.firstChild!.type.name).toBe('image');
+			expect(doc.firstChild!.content.size).toBe(0);
+			const state = EditorState.create({ doc, selection: TextSelection.create(doc, 1) });
+			expect(deleteEmptyFirstBlock(state)).toBe(false);
+			expect(deleteEmptyBlockForward(state)).toBe(false);
+		});
+	}
 });
