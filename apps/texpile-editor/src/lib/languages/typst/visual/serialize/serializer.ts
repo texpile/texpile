@@ -33,6 +33,14 @@ const BODY_START = /(^|[^\\])(\\\\)*\[[ \t]*$/;
 // escapes and whole raw spans: a backtick left after them opens raw text
 const ESCAPES_AND_RAW = /\\[\s\S]|(`{3,})(?!`)[\s\S]*?\1|``|`[^`]*`/g;
 
+// the language picker's names, as the tokens typst's highlighter knows them by
+const RAW_LANGS: Record<string, string> = { 'c++': 'cpp', 'c#': 'cs', 'f#': 'fs' };
+
+// typst reads a raw block's language as one word of letters, digits, `-` and `_`, the rest of its line as code
+function rawLang(infoString: string): string {
+	return RAW_LANGS[infoString.toLowerCase()] ?? infoString.replace(/[^\p{L}\p{N}_-]+/gu, '-');
+}
+
 function declarationLine(line: string): boolean {
 	return /^#(set|let|show|import|include)\b/.test(line);
 }
@@ -141,7 +149,7 @@ const NODES: Record<string, NodeHandler> = {
 	},
 
 	code_block(node) {
-		const infoString = String(node.attrs.args ?? '').trim();
+		const infoString = rawLang(String(node.attrs.args ?? '').trim());
 		const content = node.textContent;
 		const runs = content.match(/`{3,}/g);
 		const fence = '`'.repeat(runs ? Math.max(3, ...runs.map((r) => r.length)) + 1 : 3);
