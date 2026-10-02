@@ -523,8 +523,9 @@ function writeCore(
     // a command MathLive did not know, shown as written
     case 'error':
       if (spelling.name !== undefined) return writeSymbol(atom, spelling);
-      // a rule between an array's rows, which `mat()` draws none of
-      return /^\\[hc](dash)?line$/.test(atom.value ?? '')
+      // a rule between an array's rows, which `mat()` draws none of, and a row's number, which
+      // Typst sets for the whole equation
+      return /^\\([hc](dash)?line|nonumber|notag)$/.test(atom.value ?? '')
         ? ''
         : writeString([atom]);
     case 'operator':

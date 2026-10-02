@@ -152,6 +152,19 @@ describe('typst math in MathLive', () => {
       expect(convertLatexToTypst(latex), latex).toBe(typst);
   });
 
+  it("writes amsmath's dots and row numbering as Typst, not as their names", () => {
+    const cases: [string, string][] = [
+      ['a_1, \\dots, a_n', 'a_1, ..., a_n'],
+      ['a_1 + \\dotsb + a_n', 'a_1 + dots.h.c + a_n'],
+      [
+        '\\begin{align}a &= b \\nonumber \\\\ c &= d \\notag\\end{align}',
+        'a & = b \\\nc & = d',
+      ],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
   it('writes every LaTeX command MathLive draws as Typst that parses', () => {
     for (const { insert } of getMathCommands('latex'))
       for (const arg of ['x', '']) {

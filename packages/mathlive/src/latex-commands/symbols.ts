@@ -757,6 +757,13 @@ defineSymbols(
     ['\\ddots', 0x22f1],
     ['\\ldots', 0x2026],
     ['\\mathellipsis', 0x2026],
+    // amsmath's: low dots between commas, centered ones between operators
+    ['\\dots', 0x2026],
+    ['\\dotsc', 0x2026],
+    ['\\dotso', 0x2026],
+    ['\\dotsb', 0x22ef],
+    ['\\dotsm', 0x22ef],
+    ['\\dotsi', 0x22ef],
   ],
   'minner'
 );
