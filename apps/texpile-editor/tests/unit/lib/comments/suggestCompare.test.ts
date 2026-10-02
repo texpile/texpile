@@ -328,6 +328,26 @@ describe('an edit meeting a suggestion', () => {
 		expect(suggest('- one\n- two\n', '- one\n  - two\n', 'paragraphs')).toEqual([]);
 	});
 
+	// the indent of a paragraph after a list says whether it is the item's second paragraph
+	it('suggests a paragraph moved into or out of the item before it', () => {
+		const suggest = (before: string, after: string) =>
+			compareSuggestions({
+				before,
+				after,
+				pending: [],
+				mode: 'suggesting',
+				author: 'me',
+				newId: () => 'n',
+				whitespace: 'lists'
+			}).placed.map((s) => [after.slice(s.from, s.to), s.restore]);
+		expect(suggest('- first\n\n  more of it\n\nAfter.\n', '- first\n\nmore of it\n\nAfter.\n')).toEqual([['more of it', '  more of it']]);
+		expect(suggest('- first\n\nA paragraph.\n\nAfter.\n', '- first\n\n  A paragraph.\n\nAfter.\n')).toEqual([
+			['  A paragraph.', 'A paragraph.']
+		]);
+		// with no list before it the indent is layout
+		expect(suggest('First.\n\nSecond one.\n', 'First.\n\n  Second one.\n')).toEqual([]);
+	});
+
 	it('keeps a paragraph break that is half a suggestion’s new words afterwards', () => {
 		const before = 'Aa.\n\n\\x{b t}\n\\x{he c}\n\nr.';
 		const after = '\\\n\nr';

@@ -181,15 +181,30 @@ export function whitespaceChange(before: string, h: Hunk, inserted: string): Whi
 // a list item's marker in markdown and typst, and the spaces before it: how deep the item sits
 const ITEM = /^([ \t]*)([-+*]|\d+[.)]|\/)(?=[ \t])/;
 
+// a paragraph right after a list: its indent says whether it belongs to the item
+function opensAfterList(text: string, at: number): boolean {
+	let j = at - 2;
+	while (j >= 0 && /[ \t\r]/.test(text[j])) j--;
+	if (j < 0 || text[j] !== '\n') return false;
+	while (j >= 0 && /\s/.test(text[j])) j--;
+	if (j < 0) return false;
+	const line = text.slice(text.lastIndexOf('\n', j) + 1, j + 1);
+	return ITEM.test(line) || /^[ \t]/.test(line);
+}
+
 function itemDepths(text: string, from: number, to: number): string {
 	const start = text.lastIndexOf('\n', from - 1) + 1;
 	const end = text.indexOf('\n', to);
+	let at = start;
 	return text
 		.slice(start, end < 0 ? text.length : end)
 		.split('\n')
 		.flatMap((line) => {
+			const lineAt = at;
+			at += line.length + 1;
 			const m = ITEM.exec(line);
-			return m ? [`${m[1].replace(/\t/g, '    ').length}${m[2]}`] : [];
+			if (m) return [`${m[1].replace(/\t/g, '    ').length}${m[2]}`];
+			return /\S/.test(line) && opensAfterList(text, lineAt) ? [`${/^[ \t]*/.exec(line)![0].replace(/\t/g, '    ').length}`] : [];
 		})
 		.join(' ');
 }
