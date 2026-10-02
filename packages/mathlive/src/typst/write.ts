@@ -707,6 +707,8 @@ function writeOverUnder(
   );
 }
 
+const MATH_NAME = /^\p{L}[\p{L}\p{N}]*(?:\.[\p{L}\p{N}]+)*$/u;
+
 function writeOperatorName(atom: Atom, spelling: TypstSpelling): string {
   const name = children(atom.body)
     // `\ ` keeps a space in the name, as a no-break one
@@ -716,7 +718,11 @@ function writeOperatorName(atom: Atom, spelling: TypstSpelling): string {
     .join('');
   if (spelling.name === 'op' && spelling.args)
     return writeCall('op', [JSON.stringify(name)], spelling);
-  if (spelling.name !== undefined) return spelling.name;
+  const read = spelling.name;
+  if (read !== undefined && (OPERATOR_TEXT[read] ?? read) === name) return read;
+  // a call's name renamed in the field
+  if (atom.parent?.typstSpelling?.call !== undefined && MATH_NAME.test(name))
+    return name;
   return typstOperator(name, atom.command.endsWith('*'));
 }
 

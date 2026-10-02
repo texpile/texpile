@@ -66,6 +66,17 @@ describe('typst math in MathLive', () => {
     );
   });
 
+  it('writes a call renamed in the field by the name it now has', () => {
+    const root = rootOf('sin(x) + max(a, b)');
+    for (const [from, to] of [
+      ['s', 'c'],
+      ['i', 'o'],
+      ['n', 's'],
+    ])
+      replace(find(root, from), to);
+    expect(atomToTypst(root)).toBe('cos(x) + max(a, b)');
+  });
+
   it('rebuilds an equation from its structure as Typst draws it', () => {
     // each checked against the Typst compiler, which draws the two sides alike
     const cases: [string, string][] = [
