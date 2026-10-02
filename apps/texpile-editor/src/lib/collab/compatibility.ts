@@ -23,6 +23,18 @@ function isAtLeast(version: string, minimum: string): boolean {
 	return true;
 }
 
+/** the range a newcomer must fit to share a session with every one of `peers` too: their oldest version, their newest floor */
+export function commonVersion(mine: SessionVersion, peers: Iterable<Partial<SessionVersion>>): SessionVersion {
+	let { version, oldest } = mine;
+	for (const peer of peers) {
+		const theirs = peer.version ?? UNVERSIONED.version;
+		const floor = peer.oldest ?? UNVERSIONED.oldest;
+		if (!isAtLeast(theirs, version)) version = theirs;
+		if (!isAtLeast(oldest, floor)) oldest = floor;
+	}
+	return { version, oldest };
+}
+
 /** why two peers cannot share a session, or null when they can */
 export function sessionMismatch(
 	mine: SessionVersion,

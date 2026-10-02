@@ -554,6 +554,48 @@ describe('collab session end-to-end', () => {
 		oldHost.session.destroy();
 	});
 
+	it('turns away a guest that cannot share a session with a guest already in it, whichever joins second', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const hostVersion = { version: '1.3.0', oldest: '1.2.0' };
+		const older = { version: '1.2.0', oldest: '1.2.0' };
+		const newer = { version: '1.4.0', oldest: '1.3.0' };
+
+		const hub = new FakeHub();
+		const { fs } = fakeFs({ 'main.tex': 'base' });
+		const host = await makeParty(hub, 'host', 'Host', key, hostVersion);
+		const mat = new HostMaterializer(host.doc, 'root', fs, join);
+		await mat.seed();
+		const a = await makeParty(hub, 'guest', 'A', key, older);
+		await until(() => textOf(a.doc, 'main.tex').toString() === 'base' && host.session.peers.has(a.doc.clientID));
+		const b = await makeParty(hub, 'guest', 'B', key, newer);
+		await until(() => b.events.ended !== undefined);
+		expect([b.events.ended, b.events.endedDetail]).toEqual(['host-outdated', '1.2.0']);
+		// one that takes both still joins, and the rest keep editing together
+		const c = await makeParty(hub, 'guest', 'C', key, hostVersion);
+		await until(() => textOf(c.doc, 'main.tex').toString() === 'base');
+		textOf(a.doc, 'main.tex').insert(4, ' from A');
+		textOf(c.doc, 'main.tex').insert(0, 'C: ');
+		await until(() => [host, a, c].every((p) => textOf(p.doc, 'main.tex').toString() === 'C: base from A'));
+		expect(a.events.ended).toBeUndefined();
+		expect(c.events.ended).toBeUndefined();
+		expect([...host.session.peers.values()].map((p) => p.name).sort()).toEqual(['A', 'C']);
+		mat.destroy();
+		for (const p of [host, a, c]) p.session.destroy();
+
+		const hub2 = new FakeHub();
+		const host2 = await makeParty(hub2, 'host', 'Host', key, hostVersion);
+		const mat2 = new HostMaterializer(host2.doc, 'root', fakeFs({ 'main.tex': 'base' }).fs, join);
+		await mat2.seed();
+		const b2 = await makeParty(hub2, 'guest', 'B', key, newer);
+		await until(() => textOf(b2.doc, 'main.tex').toString() === 'base' && host2.session.peers.has(b2.doc.clientID));
+		const a2 = await makeParty(hub2, 'guest', 'A', key, older);
+		await until(() => a2.events.ended !== undefined);
+		expect([a2.events.ended, a2.events.endedDetail]).toEqual(['app-outdated', '1.3.0']);
+		expect(b2.events.ended).toBeUndefined();
+		mat2.destroy();
+		for (const p of [host2, b2]) p.session.destroy();
+	});
+
 	it('a reconnect re-handshake heals a gap in delivery', async () => {
 		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
 		const hub = new FakeHub();
