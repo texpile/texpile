@@ -5,22 +5,23 @@ import type { CommentsController } from '../commentsController.svelte';
 import { insertedSpans, type TextEdit } from './textEdits';
 import { carriedAnchors } from '../threadPlacement';
 
-/** in suggestion mode the change becomes a suggestion, as in the open file; undoing a replace is a plain edit */
+/** in suggestion mode the change becomes a suggestion, as in the open file; resolves the mode it was carried in */
 export async function carryClosedEdit(
 	ctl: CommentsController,
 	root: string | null,
 	mode: EditMode,
-	change: { path: string; before: string; after: string; edits: TextEdit[]; undoing: boolean }
-): Promise<void> {
-	if (!root || !ctl.store.writable) return;
+	change: { path: string; before: string; after: string; edits: TextEdit[] }
+): Promise<EditMode> {
+	if (!root || !ctl.store.writable) return mode;
 	const file = relativeTo(root, change.path);
-	if (file === ctl.activeFile) return;
+	if (file === ctl.activeFile) return mode;
 	const { before, after, edits } = change;
 	const by = await ctl.author();
-	await ctl.suggestions.remoteEdit(file, before, after, { by, mode: change.undoing ? 'editing' : mode, gestures: insertedSpans(edits) });
+	await ctl.suggestions.remoteEdit(file, before, after, { by, mode, gestures: insertedSpans(edits) });
 	await ctl.suggestions.beforeWrite(file, after);
 	for (const { id, anchor } of carriedAnchors(ctl.store.forFile(file), before, after, edits)) {
 		const thread = ctl.store.threads.find((t) => t.id === id);
 		if (thread) await ctl.moveAnchor(thread, anchor, file, by);
 	}
+	return mode;
 }

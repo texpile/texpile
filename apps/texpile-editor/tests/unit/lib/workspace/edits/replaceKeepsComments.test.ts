@@ -66,7 +66,7 @@ async function setUp() {
 		write: async (p, text) => void (disk[p] = text),
 		encodingError: () => null,
 		changed: () => {},
-		edited: (path, before, after, edits, undoing) => carryClosedEdit(ctl, ROOT, mode, { path, before, after, edits, undoing })
+		edited: (path, before, after, edits, made) => carryClosedEdit(ctl, ROOT, made ?? mode, { path, before, after, edits })
 	};
 	return { ctl, deps };
 }
@@ -123,7 +123,30 @@ describe('replace across files, in a file that is not open', () => {
 		expect(disk[`${ROOT}/.texpile/comments.jsonl`]).not.toContain('"t":"anchor"');
 	});
 
-	it('in suggestion mode, closes the suggestions again when the replace is undone, and redoes them', async () => {
+	it('in suggestion mode, leaves no thread behind when the replace is undone', async () => {
+		mode = 'suggesting';
+		const { ctl, deps } = await setUp();
+		const out = await replaceInFiles([CHAPTER], SPEC, deps);
+		await out.undo!();
+		expect(ctl.threads.filter((t) => t.restore !== undefined).map((t) => t.decision)).toEqual([]);
+	});
+
+	it('undoes and redoes a replace the way it was made, whichever mode the reader is in by then', async () => {
+		mode = 'suggesting';
+		const { ctl, deps } = await setUp();
+		const out = await replaceInFiles([CHAPTER], SPEC, deps);
+		const suggestions = () => ctl.threads.filter((t) => t.restore !== undefined);
+		mode = 'editing';
+		await out.undo!();
+		expect(suggestions()).toEqual([]);
+		await out.redo!();
+		expect(suggestions().map((t) => [t.anchor.quote, t.restore, t.resolved])).toEqual([
+			['sigmoid', 'softmax', false],
+			['sigmoid', 'softmax', false]
+		]);
+	});
+
+	it('in suggestion mode, takes the suggestions away again when the replace is undone, and redoes them', async () => {
 		mode = 'suggesting';
 		const { ctl, deps } = await setUp();
 		const out = await replaceInFiles([CHAPTER], SPEC, deps);

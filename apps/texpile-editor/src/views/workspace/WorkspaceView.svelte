@@ -251,8 +251,7 @@
 		history: () => (files.treeOps.undoable ? files.treeOps.history : null),
 		reloadOpen: () => external.check(),
 		main: () => mainFile.current,
-		editedClosed: (path: string, before: string, after: string, edits: TextEdit[], undoing: boolean) =>
-			commentsW.editClosedFile({ path, before, after, edits, undoing }),
+		editedClosed: (...change: Parameters<WorkspaceComments['editClosedFile']>) => commentsW.editClosedFile(...change),
 		editedOpenVisual: (before: string, after: string, edits: readonly TextEdit[]) => commentsW.editOpenVisual(before, after, edits)
 	};
 	const renameElsewhere = makeRenameElsewhere({ ...replaceWiring, root: () => workspaceRoot.current, search: searchInFolder });

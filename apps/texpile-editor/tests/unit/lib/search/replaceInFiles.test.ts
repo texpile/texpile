@@ -141,12 +141,16 @@ describe('replaceInFiles', () => {
 	it('says what it is about to change in a file that is not open, before writing it, and on undo', async () => {
 		const { disk, deps } = folder({ '/p/a.tex': 'the colour' }, { path: '/p/main.tex', text: 'colour' });
 		const seen: unknown[] = [];
-		deps.edited = vi.fn(async (...args) => void seen.push([...args, disk.get('/p/a.tex')]));
+		deps.edited = vi.fn(async (...args) => {
+			seen.push([...args, disk.get('/p/a.tex')]);
+			return 'suggesting' as const;
+		});
 		const out = await replaceInFiles(['/p/a.tex', '/p/main.tex'], spec, deps);
 		// once, for the file on disk only, while it still held its old text
-		expect(seen).toEqual([['/p/a.tex', 'the colour', 'the color', [{ from: 4, to: 10, insert: 'color' }], false, 'the colour']]);
+		expect(seen).toEqual([['/p/a.tex', 'the colour', 'the color', [{ from: 4, to: 10, insert: 'color' }], 'the colour']]);
 		await out.undo!();
-		expect(seen[1]).toEqual(['/p/a.tex', 'the color', 'the colour', [{ from: 4, to: 9, insert: 'colour' }], true, 'the color']);
+		// with the mode the change was carried in
+		expect(seen[1]).toEqual(['/p/a.tex', 'the color', 'the colour', [{ from: 4, to: 9, insert: 'colour' }], 'suggesting', 'the color']);
 	});
 
 	it('refuses to undo, changing nothing, when a file was edited after the replace', async () => {
