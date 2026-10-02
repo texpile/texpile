@@ -6,12 +6,21 @@ import {
 	StateEffect,
 	StateField,
 	RangeSet,
+	Transaction,
 	type EditorState,
 	type Extension,
-	type Range,
-	type Transaction
+	type Range
 } from '@codemirror/state';
-import { editMode, mapSuggestionEdges, noteTypedSide, typingSide, type SuggestionMark } from '$lib/comments/activeSuggestions.svelte';
+import {
+	editMode,
+	mapSuggestionEdges,
+	noteEditedPlaces,
+	noteTypedSide,
+	typingSide,
+	type SuggestionMark
+} from '$lib/comments/activeSuggestions.svelte';
+import type { TextChange } from '$lib/comments/editGestures';
+import { docText } from './docText';
 import { clickedSide, sideAtOldWords, type CaretSide } from '$lib/comments/oldWordsCaret';
 import type { EditMode, TypingSide } from '$lib/comments/suggestCompare';
 
@@ -294,8 +303,16 @@ const caretControls = [
 	})
 ];
 
+// the reader's own edits only: a collaborator's arrives without a user event
+const editedPlaces = EditorView.updateListener.of((u) => {
+	if (!u.docChanged || !u.transactions.some((tr) => tr.annotation(Transaction.userEvent) !== undefined)) return;
+	const changes: TextChange[] = [];
+	u.changes.iterChangedRanges((fromA, toA, fromB, toB) => void changes.push({ fromA, toA, fromB, toB }));
+	if (changes.length > 1) noteEditedPlaces({ before: docText(u.startState.doc), after: docText(u.state.doc), changes });
+});
+
 export function cmSuggestions(): Extension {
-	return [focused, caretSide, ranges, decorations, caretControls, theme];
+	return [focused, caretSide, ranges, decorations, caretControls, editedPlaces, theme];
 }
 
 const theme = EditorView.baseTheme({

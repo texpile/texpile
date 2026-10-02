@@ -3,7 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as Y from 'yjs';
 import { buildAnchor } from '$lib/comments/anchor';
 import { openEvent, parseLog, serializeLog } from '$lib/comments/log';
-import { activeSuggestions } from '$lib/comments/activeSuggestions.svelte';
+import { activeSuggestions, noteEditedPlaces } from '$lib/comments/activeSuggestions.svelte';
+import type { TextChange } from '$lib/comments/editGestures';
 
 let disk: Record<string, string> = {};
 
@@ -256,6 +257,39 @@ describe('a suggestion in the file', () => {
 		ctl.suggestions.textChanged(FILE, TEXT);
 		await ctl.suggestions.settle();
 		expect(activeSuggestions.current).toEqual([]);
+	});
+
+	// as the source editor reports a key typed with two cursors, with no comparison run between the keys
+	it('makes one suggestion for each place an edit with several cursors changed', async () => {
+		const start = 'The colour map is wide.\nA colour bar sits under it.\n';
+		const { ctl, open, type } = make(start, 'suggesting');
+		await open();
+		ctl.suggestions.textChanged(FILE, start);
+		let now = start;
+		let spots = [...start.matchAll(/colour/g)].map((m) => ({ from: m.index!, to: m.index! + 'colour'.length }));
+		for (const key of 'hue') {
+			let next = '';
+			let at = 0;
+			let delta = 0;
+			const changes: TextChange[] = [];
+			for (const s of spots) {
+				next += now.slice(at, s.from) + key;
+				at = s.to;
+				changes.push({ fromA: s.from, toA: s.to, fromB: s.from + delta, toB: s.from + delta + 1 });
+				delta += 1 - (s.to - s.from);
+			}
+			next += now.slice(at);
+			noteEditedPlaces({ before: now, after: next, changes });
+			now = next;
+			type(now);
+			ctl.suggestions.textChanged(FILE, now);
+			spots = changes.map((c) => ({ from: c.toB, to: c.toB }));
+		}
+		await ctl.suggestions.beforeSave('main.tex', now);
+		expect(logged().flatMap((e) => (e.t === 'open' ? [[e.anchor.quote, e.restore]] : []))).toEqual([
+			['hue', 'colour'],
+			['hue', 'colour']
+		]);
 	});
 
 	it('makes one suggestion of each phrase typed a key at a time, and rejecting them gives the text back', async () => {

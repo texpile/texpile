@@ -4,7 +4,7 @@ import { EditorState } from '@codemirror/state';
 import { Decoration, EditorView } from '@codemirror/view';
 import { history, undo } from '@codemirror/commands';
 import { clearOfOldWords, cmSuggestions, liveSuggestionRanges, setSuggestionRanges } from '$lib/editor/source/cmSuggestions';
-import { editMode, takeTypedSides } from '$lib/comments/activeSuggestions.svelte';
+import { editMode, takeEditedPlaces, takeTypedSides } from '$lib/comments/activeSuggestions.svelte';
 
 it('draws a flag across old words in two pieces', () => {
 	const doc = 'driven by an estimator of the error';
@@ -98,5 +98,22 @@ it('takes back an undone delete as the words it took, not as typing in front of 
 	undo(view);
 	expect(takeTypedSides()).toEqual({});
 	expect(liveSuggestionRanges(view.state).map((r) => view.state.sliceDoc(r.from, r.to))).toEqual([' over']);
+	view.destroy();
+});
+
+it('reports each place an edit with several cursors changed, and not a collaborator’s edit', () => {
+	const doc = 'The colour map.\nA colour bar.';
+	const view = new EditorView({ parent: document.body, state: EditorState.create({ doc, extensions: [cmSuggestions()] }) });
+	takeEditedPlaces();
+	const colour = [...doc.matchAll(/colour/g)].map((m) => ({ from: m.index!, to: m.index! + 6, insert: 'color' }));
+	view.dispatch({ changes: colour, userEvent: 'input.replace.all' });
+	expect(takeEditedPlaces()?.changes).toEqual([
+		{ fromA: 4, toA: 10, fromB: 4, toB: 9 },
+		{ fromA: 18, toA: 24, fromB: 17, toB: 22 }
+	]);
+	view.dispatch({
+		changes: [...view.state.doc.toString().matchAll(/color/g)].map((m) => ({ from: m.index!, to: m.index! + 5, insert: 'hue' }))
+	});
+	expect(takeEditedPlaces()).toBeNull();
 	view.destroy();
 });

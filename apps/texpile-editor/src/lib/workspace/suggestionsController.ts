@@ -10,9 +10,9 @@ import {
 	type WhitespaceChanges
 } from '$lib/comments/suggestCompare';
 import { isOpenSuggestion, suggestionAuthor } from '$lib/comments/suggest';
-import { carryGestures, type TextSpan } from '$lib/comments/editGestures';
+import { carryGestures, carryGesturesThrough, type TextSpan } from '$lib/comments/editGestures';
 import { commonEnds } from '$lib/comments/suggestHunks';
-import { activeSuggestions, takeTypedSides } from '$lib/comments/activeSuggestions.svelte';
+import { activeSuggestions, takeEditedPlaces, takeTypedSides, type EditedPlaces } from '$lib/comments/activeSuggestions.svelte';
 import type { CommentStore } from '$lib/comments/store.svelte';
 import { changeEvents, movedAnchorEvents } from './suggestionEvents';
 import { placedBehind, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
@@ -143,7 +143,8 @@ export class SuggestionsController {
 	textChanged(path: string | null, text: string): void {
 		const same = this.seen && this.seen.path === path;
 		const suggesting = this.deps.mode() === 'suggesting';
-		this.gestures = same && suggesting ? carryGestures(this.gestures, this.seen!.text, text) : [];
+		const places = takeEditedPlaces();
+		this.gestures = !same || !suggesting ? [] : this.carried(places, this.seen!.text, text);
 		this.sides = same ? { ...this.sides, ...takeTypedSides() } : takeTypedSides();
 		this.seen = { path, file: this.deps.activeFile(), text, rewraps: this.deps.rewraps() };
 		if (this.timer) clearTimeout(this.timer);
@@ -154,6 +155,11 @@ export class SuggestionsController {
 			},
 			suggesting && this.onlySpaceSince(text) ? SPACE_WAIT_MS : 0
 		);
+	}
+
+	private carried(places: EditedPlaces | null, before: string, after: string): TextSpan[] {
+		if (places?.before === before && places.after === after) return carryGesturesThrough(this.gestures, places.changes);
+		return carryGestures(this.gestures, before, after);
 	}
 
 	private onlySpaceSince(text: string): boolean {
