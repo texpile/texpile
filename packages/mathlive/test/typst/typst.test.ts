@@ -195,6 +195,20 @@ describe('typst math in MathLive', () => {
       expect(convertLatexToTypst(latex), latex).toBe(typst);
   });
 
+  it('writes what a command placing its argument holds, Typst having no such placement', () => {
+    const cases: [string, string][] = [
+      ['\\sum_{\\mathclap{0 \\le i < n}} a_i', 'sum_(0 <= i < n) a_i'],
+      [
+        '\\begin{multline} a + b \\\\ \\shoveleft{+ c} \\end{multline}',
+        'a + b \\\n+c',
+      ],
+      ['\\lefteqn{a = b} + c', 'a = b + c'],
+      ['\\fbox{x}', 'x'],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
   it('writes the old font switches as the styles they set in math', () => {
     const cases: [string, string][] = [
       ['{\\rm d}x', 'upright(d) x'],

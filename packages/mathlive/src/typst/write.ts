@@ -523,9 +523,12 @@ function writeCore(
     // a command MathLive did not know, shown as written
     case 'error':
       if (spelling.name !== undefined) return writeSymbol(atom, spelling);
-      // a rule between an array's rows, which `mat()` draws none of, and a row's number, which
-      // Typst sets for the whole equation
-      return /^\\([hc](dash)?line|nonumber|notag)$/.test(atom.value ?? '')
+      // a rule between an array's rows, which `mat()` draws none of, a row's number, which
+      // Typst sets for the whole equation, and a placement Typst has none of, whose argument
+      // follows as what it places
+      return /^\\([hc](dash)?line|nonumber|notag|mathclap|lefteqn|shove(left|right)|fbox)$/.test(
+        atom.value ?? ''
+      )
         ? ''
         : writeString([atom]);
     case 'operator':
