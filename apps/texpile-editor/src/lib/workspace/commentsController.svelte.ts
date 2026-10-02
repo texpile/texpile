@@ -557,6 +557,7 @@ export class CommentsController {
 		const from = relativeTo(root, fromAbs);
 		const to = relativeTo(root, toAbs);
 		if (from === to) return;
+		this.suggestions.moved(from, to);
 		if (this.file && (this.file === from || this.file.startsWith(from + '/'))) this.file = to + this.file.slice(from.length);
 		const affected = this.store.threads.some((t) => t.file === from || t.file.startsWith(from + '/'));
 		if (!affected) return;

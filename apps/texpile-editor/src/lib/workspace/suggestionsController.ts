@@ -130,6 +130,16 @@ export class SuggestionsController {
 		return { kept, lost };
 	}
 
+	/** a file or folder renamed in the tree; what is known of the files under it follows */
+	moved(from: string, to: string): void {
+		function renamed(file: string): string {
+			return file === from ? to : file.startsWith(from + '/') ? to + file.slice(from.length) : file;
+		}
+		this.states = new Map([...this.states].map(([file, state]) => [renamed(file), state]));
+		if (this.placedFile) this.placedFile = renamed(this.placedFile);
+		if (this.seen?.file) this.seen = { ...this.seen, file: renamed(this.seen.file) };
+	}
+
 	/** an event from the recorder arrived */
 	answered(): void {
 		if (!this.deps.compares()) this.caughtUp = true;

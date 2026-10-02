@@ -444,6 +444,25 @@ describe('a suggestion in the file', () => {
 		expect(again).toBe(first);
 	});
 
+	it('keeps a saved suggestion placed when the file is renamed with typing beside it not saved yet', async () => {
+		const start = 'We prove the estimator is sharp for smooth solutions of the problem.\n';
+		const { ctl, open, type } = make(start, 'suggesting');
+		await open();
+		const one = start.replace('sharp', 'tight');
+		type(one);
+		ctl.suggestions.textChanged(FILE, one);
+		await ctl.suggestions.beforeSave('main.tex', one);
+		const two = one.replace('smooth', 'rough');
+		type(two);
+		ctl.suggestions.textChanged(FILE, two);
+		await ctl.suggestions.settle();
+
+		await ctl.fileMoved(FILE, `${ROOT}/renamed.tex`);
+		ctl.reanchor(`${ROOT}/renamed.tex`, two);
+		expect(activeSuggestions.current.map((s) => s.restore)).toEqual(['sharp', 'smooth']);
+		expect([...ctl.orphaned]).toEqual([]);
+	});
+
 	it('compares spaces typed in the source editor by the source editor’s rule after a switch to visual', async () => {
 		const { ctl, open, type, setVisual } = make(TEXT, 'suggesting');
 		await open();
