@@ -11,6 +11,7 @@ import { attachSessionHandlers } from '$lib/collab/workspaceSession';
 import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
 import { ScmActions } from '$lib/workspace/scm/actions/scmActions.svelte';
 import { ChangeBaseline } from '$lib/workspace/changeBaseline.svelte';
+import { endMerge } from '$lib/editor/source/cmConflicts';
 import { gitHead, gitHeldBack, gitOperation, gitTracking, isGitRepo } from '$lib/workspace/scm/gitStore';
 import { canSwitchBranch } from '$lib/workspace/scm/branches/gitBranches';
 import { canCombine } from '$lib/workspace/scm/branches/gitCombine';
@@ -41,7 +42,7 @@ import { doiLookupAvailable } from '$lib/cite/citeByDoi';
 import { citeByDoi as citeByDoiDialog } from '$lib/cite/citeByDoiState.svelte';
 import { compileLog } from '$lib/stores/compileLogStore';
 import { pdfStore } from '$lib/stores/pdfStore';
-import { filePathStore } from '$lib/stores/editorStore';
+import { filePathStore, sourceCmView } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
 import { LiveRefChecks } from '$lib/workspace/document/liveRefChecks.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
@@ -133,7 +134,9 @@ export class WorkspaceIntegrations {
 			},
 			openAtLine: (path, line) => d.nav().showSourceLine(path, line),
 			settleConflicts: () => {
-				if (d.wsdoc.doc.leaveConflicts() && modes.mode === 'visual') d.wsdoc.rebuildVisualFromSource();
+				if (!d.wsdoc.doc.leaveConflicts()) return;
+				sourceCmView.current?.dispatch({ effects: endMerge.of(null) });
+				if (modes.mode === 'visual') d.wsdoc.rebuildVisualFromSource();
 			},
 			ignoreLines: () => gitignoreLines(effectiveCompileFormat(mainFile.current)),
 			writeText: (p, content) => d.provider.writeText(p, content),

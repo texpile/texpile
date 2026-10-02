@@ -121,4 +121,16 @@ describe('a marker line left behind', () => {
 		doc.openTex('/p/a.tex', LEFT, '\n');
 		expect(doc.conflicted).toBe(false);
 	});
+
+	// a Markdown heading underlined with seven =, still on screen when Finish combining saves the merge
+	it('lets the file go once git no longer counts it as unmerged', async () => {
+		const { gitChanges } = await import('$lib/workspace/scm/gitStore');
+		const { doc } = setup();
+		gitChanges.current = [{ path: '/p/paper.md', x: 'U', y: 'U' } as (typeof gitChanges.current)[number]];
+		doc.openTex('/p/paper.md', 'Methods\n=======\n\nMy result, and theirs.\n', '\n');
+		expect(doc.strayMarkers).toBe(true);
+		gitChanges.current = [];
+		expect(doc.strayMarkers).toBe(false);
+		expect(doc.leaveConflicts()).toBe(true);
+	});
 });

@@ -89,7 +89,11 @@ export type DocumentBufferDeps = {
  *  is left: reopened after a place was settled by hand with one line missed, it is not done. */
 function inMerge(path: string, text: string): boolean {
 	if (hasConflictMarkers(text)) return true;
-	return hasMarkerLines(text) && gitChanges.current.some((c) => isConflicted(c.x, c.y) && samePath(c.path, path));
+	return hasMarkerLines(text) && unmerged(path);
+}
+
+function unmerged(path: string | null): boolean {
+	return !!path && gitChanges.current.some((c) => isConflicted(c.x, c.y) && samePath(c.path, path));
 }
 
 export class DocumentBuffer {
@@ -109,8 +113,9 @@ export class DocumentBuffer {
 	/** marked places still waiting for a choice, counted only in a file that came in with some */
 	conflictsLeft = $derived(this.conflicted ? findConflicts(this.buffer).length : 0);
 	/** every place chosen, but a marker line left behind (a place settled by hand, one line of it
-	 *  missed): Complete Merge refuses the file, so it is not done here either */
-	strayMarkers = $derived(this.conflicted && this.conflictsLeft === 0 && hasMarkerLines(this.buffer));
+	 *  missed) while git still counts the file unmerged: Complete Merge refuses the file, so it is not
+	 *  done here either. Once the merge is saved, a line like a heading's ======= is the author's */
+	strayMarkers = $derived(this.conflicted && this.conflictsLeft === 0 && hasMarkerLines(this.buffer) && unmerged(this.path));
 
 	/** the whole .tex file, as raw text */
 	texSource = $state('');

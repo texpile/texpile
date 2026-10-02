@@ -9,7 +9,8 @@ import {
 	chooseConflict,
 	chooseAllConflicts,
 	nextConflict,
-	previousConflict
+	previousConflict,
+	endMerge
 } from '$lib/editor/source/cmConflicts';
 
 const DOC = ['Intro.', '<<<<<<< HEAD', 'My line.', '=======', 'Their line.', '>>>>>>> origin/main', 'Outro.', ''].join('\n');
@@ -123,6 +124,16 @@ it('marks a marker line left behind when a place is settled by hand', () => {
 	expect(view.state.field(conflictBlocks)).toHaveLength(0);
 	const stray = [...view.dom.querySelectorAll('.cm-conflict-stray')].map((l) => l.textContent);
 	expect(stray).toEqual(['=======', '>>>>>>> origin/main']);
+});
+
+// Finish combining saved the merge with the file open in the source editor: a Markdown heading's
+// seven = underline is the author's text again
+it('stops marking lines once the merge is saved', () => {
+	const view = mount('Methods\n=======\n\n<<<<<<< HEAD\nMine.\n=======\nTheirs.\n>>>>>>> origin/main\n');
+	view.dispatch(chooseConflict(view.state, view.state.field(conflictBlocks)[0], 'both'));
+	expect([...view.dom.querySelectorAll('.cm-conflict-stray')].map((l) => l.textContent)).toEqual(['=======']);
+	view.dispatch({ effects: endMerge.of(null) });
+	expect(view.dom.querySelectorAll('.cm-conflict-stray')).toHaveLength(0);
 });
 
 it('marks the base marker of a diff3 place left behind', () => {
