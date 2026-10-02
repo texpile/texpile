@@ -431,6 +431,19 @@ describe('a suggestion in the file', () => {
 	});
 
 	// spaces wait a second before they are compared, and a switch to the visual editor can land in that second
+	it('answers an agent that rewrites its own suggestion with that suggestion', async () => {
+		const start = 'Away from a shock a coarse grid resolves the flow well enough for now.\n';
+		const { ctl, open, text } = make(start, 'editing');
+		await open();
+		const words = 'a coarse grid';
+		const from = start.indexOf(words);
+		const first = await ctl.suggestions.suggestAs('Claude', { from, to: from + words.length, insert: 'coarse grids' }, 'plural');
+		const at = text().indexOf('coarse grids');
+		const again = await ctl.suggestions.suggestAs('Claude', { from: at, to: at + 'coarse grids'.length, insert: 'fine grids' }, 'finer');
+		expect(text()).toContain('fine grids');
+		expect(again).toBe(first);
+	});
+
 	it('compares spaces typed in the source editor by the source editor’s rule after a switch to visual', async () => {
 		const { ctl, open, type, setVisual } = make(TEXT, 'suggesting');
 		await open();

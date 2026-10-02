@@ -47,7 +47,7 @@ type UndoableReject = { file: string; thread: CommentThread; open: FileState; re
 /** an Accept the editors' undo can take back */
 type UndoableAccept = { file: string; thread: CommentThread };
 
-/** an edit recorded for someone other than the reader: `gestures` is where it landed, `opened` what it opened */
+/** an edit recorded for someone other than the reader: `gestures` is where it landed, `opened` the suggestions it made or revised */
 type AgentEdit = { by: string; note: string; gestures: TextSpan[]; opened: string[] };
 
 export class SuggestionsController {
@@ -292,7 +292,7 @@ export class SuggestionsController {
 	/**
 	 * An edit made for someone else, an agent: applied to the open file and recorded as a suggestion by
 	 * `by` whatever mode the reader is in, with `note` as its first message. The reader's own typing is
-	 * compared first so it stays theirs. Resolves the new suggestion's id, or null when nothing was made.
+	 * compared first so it stays theirs. Resolves the id of the suggestion it made or revised, or null when nothing was made.
 	 */
 	async suggestAs(by: string, edit: SourceEdit, note = ''): Promise<string | null> {
 		const file = this.deps.activeFile();
@@ -379,7 +379,8 @@ export class SuggestionsController {
 			return;
 		}
 		for (const c of r.changes)
-			if (agent && c.t === 'open' && r.placed.some((s) => s.id === c.id && s.author === author)) agent.opened.push(c.id);
+			if (agent && (c.t === 'open' || c.t === 'revise') && r.placed.some((s) => s.id === c.id && s.author === author))
+				agent.opened.push(c.id);
 		this.stage(changeEvents(file, after, r, author, agent?.note ?? '', this.deps.store.threads));
 		if (file === this.deps.activeFile()) this.show(after, r.placed);
 	}
