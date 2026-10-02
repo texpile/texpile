@@ -257,7 +257,18 @@ function texText(value: string, commands: boolean): string {
  * stays free to be lowered.
  */
 function protectCapitals(title: string): string {
-	return title.replace(/(^|[\s("'])([A-Za-z0-9][\w-]*)/g, (m, lead: string, word: string) =>
+	let out = '';
+	let at = 0;
+	// a formula and the word it is part of ($\Lambda$CDM) whole: a style lower-cases \Lambda too
+	for (const f of title.matchAll(/[^\s$]*\$[^$]*\$[^\s$]*/g)) {
+		out += protectWords(title.slice(at, f.index)) + `{${f[0]}}`;
+		at = (f.index ?? 0) + f[0].length;
+	}
+	return out + protectWords(title.slice(at));
+}
+
+function protectWords(text: string): string {
+	return text.replace(/(^|[\s("'])([A-Za-z0-9][\w-]*)/g, (m, lead: string, word: string) =>
 		word.split('-').some((part) => /^.+[A-Z]/.test(part)) ? `${lead}{${word}}` : m
 	);
 }

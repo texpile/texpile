@@ -107,6 +107,12 @@ describe('workFromBibtex', () => {
 		expect(entryOf(workFromBibtex(DATACITE, vaswani, 'typst', [])!.bib)).toMatchObject({ eprint: '1706.03762', eprinttype: 'arXiv' });
 	});
 
+	it('braces a title formula with the word it is part of, so a sentence-case style keeps its capitals', () => {
+		const src =
+			'@misc{X, title = {Tension with $\\Lambda$CDM and $H_0$ in BERT}, author = {Riess, Adam G.}, year = {2018}, publisher = {arXiv}}';
+		expect(entryOf(workFromBibtex(src, smith, 'bibtex', [])!.bib).title).toBe('Tension with {$\\Lambda$CDM} and {$H_0$} in {BERT}');
+	});
+
 	it('leaves a title the registry already protected as it is', () => {
 		const src = '@article{X_1, title={The {ATLAS} Detector and BERT}, author={Aad, G.}, year={2008}, journal={JINST}}';
 		expect(entryOf(workFromBibtex(src, smith, 'bibtex', [])!.bib).title).toBe('The {ATLAS} Detector and BERT');
