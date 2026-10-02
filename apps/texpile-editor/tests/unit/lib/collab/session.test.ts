@@ -577,4 +577,50 @@ describe('collab session end-to-end', () => {
 		host.session.destroy();
 		guest.session.destroy();
 	});
+
+	it('counts only the first sync after its own reconnect as a catch-up, not a guest who comes back later', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const hub = new FakeHub();
+		const { fs } = fakeFs({ 'main.tex': 'one two three' });
+		const host = await makeParty(hub, 'host', 'Host', key);
+		const mat = new HostMaterializer(host.doc, 'root', fs, join);
+		await mat.seed();
+		const guest = await makeParty(hub, 'guest', 'Guest', key);
+		await until(() => textOf(guest.doc, 'main.tex').toString() === 'one two three' && host.session.peers.has(guest.doc.clientID));
+		const modes: string[] = [];
+		textOf(host.doc, 'main.tex').observe((ev) => {
+			const from = host.session.senderOf(ev.transaction.origin);
+			if (from !== null) modes.push(host.session.authorOf(from).mode);
+		});
+		function away(t: FakeTransport) {
+			t.closed = true;
+			hub.transports.delete(t);
+		}
+		function back(t: FakeTransport) {
+			t.closed = false;
+			hub.transports.add(t);
+			(t.onStatus as (s: TransportStatus) => void)('connected');
+		}
+
+		// the host drops off while the guest edits: its catch-up says nothing of who did what
+		away(host.transport);
+		textOf(guest.doc, 'main.tex').delete(0, 4);
+		await new Promise((r) => setTimeout(r, 50));
+		back(host.transport);
+		await until(() => textOf(host.doc, 'main.tex').toString() === 'two three');
+		await new Promise((r) => setTimeout(r, 50));
+
+		// later the guest, editing, drops off and comes back with an edit of its own
+		away(guest.transport);
+		textOf(guest.doc, 'main.tex').delete(3, 6);
+		await new Promise((r) => setTimeout(r, 50));
+		expect(textOf(host.doc, 'main.tex').toString()).toBe('two three');
+		back(guest.transport);
+		await until(() => textOf(host.doc, 'main.tex').toString() === 'two');
+		expect(modes).toEqual(['suggesting', 'editing']);
+
+		mat.destroy();
+		host.session.destroy();
+		guest.session.destroy();
+	});
 });

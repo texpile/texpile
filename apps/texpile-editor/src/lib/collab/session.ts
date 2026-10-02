@@ -153,6 +153,8 @@ export class CollabSession {
 	// that frame is a catch-up after this side was away, so it can hold anyone's edits
 	private applyingCatchUp = false;
 	private handshakes = 0;
+	// peers whose state came back since this side last connected: only that first step2 is a catch-up
+	private caughtUp = new Set<number>();
 
 	constructor(opts: {
 		doc: Y.Doc;
@@ -286,6 +288,7 @@ export class CollabSession {
 	/** hello + sync step1 + full awareness; runs on every (re)connect. */
 	private handshake(): void {
 		this.handshakes++;
+		this.caughtUp.clear();
 		this.hello(BROADCAST);
 		const enc = encoding.createEncoder();
 		syncProtocol.writeSyncStep1(enc, this.doc);
@@ -343,7 +346,9 @@ export class CollabSession {
 				const dec = decoding.createDecoder(frame.payload);
 				const enc = encoding.createEncoder();
 				this.applyingFrom = frame.from;
-				this.applyingCatchUp = this.handshakes > 1 && decoding.peekVarUint(dec) === syncProtocol.messageYjsSyncStep2;
+				const step2 = decoding.peekVarUint(dec) === syncProtocol.messageYjsSyncStep2;
+				this.applyingCatchUp = this.handshakes > 1 && step2 && !this.caughtUp.has(frame.from);
+				if (step2) this.caughtUp.add(frame.from);
 				try {
 					syncProtocol.readSyncMessage(dec, enc, this.doc, this);
 				} finally {
