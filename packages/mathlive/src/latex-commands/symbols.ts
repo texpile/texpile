@@ -687,6 +687,10 @@ defineSymbols(
 
     ['\\circledS', 0x24c8],
     ['\\circledR', 0x00ae],
+    // text symbols LaTeX sets in math as well
+    ['\\P', 0x00b6],
+    ['\\copyright', 0x00a9],
+    ['\\textregistered', 0x00ae],
     ['\\triangledown', 0x25bd],
     ['\\blacktriangledown', 0x25bc],
     ['\\checkmark', 0x2713],

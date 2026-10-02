@@ -271,6 +271,21 @@ describe('typst math in MathLive', () => {
     );
   });
 
+  it('writes the text symbols LaTeX also sets in math by their Typst names, and back as typed', () => {
+    expect(convertLatexToTypst('\\P \\copyright \\textregistered')).toBe(
+      'pilcrow copyright trademark.registered'
+    );
+    expect(structure(rootOf('pilcrow copyright'))).toBe('\\P\\copyright');
+    const root = new Atom({
+      type: 'root',
+      body: parseLatex('a\\P b\\copyright\\textregistered + y'),
+    });
+    replace(find(root, 'y'), 'z');
+    expect(Atom.serialize(root.body ?? [], { defaultMode: 'math' })).toBe(
+      'a\\P b\\copyright\\textregistered+z'
+    );
+  });
+
   it('writes every LaTeX command MathLive draws as Typst that parses', () => {
     for (const { insert } of getMathCommands('latex'))
       for (const arg of ['x', '']) {
