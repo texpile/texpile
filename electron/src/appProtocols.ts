@@ -98,7 +98,8 @@ async function insideClaimedRoot(p: string): Promise<boolean> {
 	for (const r of windowRoots.values()) {
 		if (!r) continue;
 		try {
-			const rn = normRoot(await fs.promises.realpath(r.raw));
+			// a lone file's window reads beside it too: the images its document shows
+			const rn = normRoot(await fs.promises.realpath(r.file ? path.dirname(r.raw) : r.raw));
 			if (n === rn || n.startsWith(rn + path.sep)) return true;
 		} catch {
 			/* root vanished (unmounted drive): claim is dead, keep looking */

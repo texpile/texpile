@@ -65,6 +65,11 @@ extraResources:
     to: lua
     filter:
       - '**/*.lua'
+  # the ACP adapters (scripts/build-electron.mjs), run by path as plain Node; see appIdentity agentsDir
+  - from: electron/agents
+    to: agents
+    filter:
+      - '*.mjs'
 
 # node-pty is rebuilt for Electron's ABI in the `dist` script (pnpm electron:rebuild), so
 # electron-builder must not try (and overwrite) it here

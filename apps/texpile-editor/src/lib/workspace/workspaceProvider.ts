@@ -18,6 +18,15 @@ export type WorkspaceCapabilities = {
 	search: boolean;
 	/** the shell dock (host only, desktop only). */
 	terminal: boolean;
+	/** host a shared session from this folder (host only). */
+	share: boolean;
+	/** review comments and suggestion mode, kept in the folder's .texpile. */
+	comments: boolean;
+	/** the Agent tab, which works on the whole folder (host only, desktop only). */
+	agent: boolean;
+	/** read the folder as a project: the main file, its .texpile/config.json, citations and labels from the other files,
+	 *  templates made from it. Off for a lone file, whose folder may be Downloads. */
+	project: boolean;
 };
 
 export type WorkspaceProvider = {

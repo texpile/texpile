@@ -12,6 +12,7 @@ import { layout, updateLayout } from '$lib/storage/layout';
 import { gitShowHead, gitShowAt, type GitShowResult } from '$lib/workspace/scm/git';
 import { LOCAL_REF, readLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { gitFileAt } from '$lib/workspace/scm/gitVersion';
+import { AGENT_REF, readBefore } from '$lib/ai/agentPanel/changes/agentBefore';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { VisualParser } from '$lib/workspace/visualParse.svelte';
 import { m } from '$lib/paraglide/messages';
@@ -24,11 +25,16 @@ export type DiffDeps = {
 	getMacros(): string;
 };
 
-/** a git version, or a Local History entry ('local:<id>') compared the same way. A version from
- *  before a rename is read under the name the file had then. */
+/** a git version, a Local History entry ('local:<id>') or the file before an agent's turn changed it
+ *  ('agent:...'), compared the same way. A version from before a rename is read under the name the file
+ *  had then. */
 async function versionText(path: string, ref: { hash: string; path?: string }): Promise<GitShowResult> {
 	const root = workspaceRoot.current;
 	if (ref.path && root) return gitFileAt(root, ref.path, ref.hash);
+	if (ref.hash.startsWith(AGENT_REF)) {
+		const content = readBefore(ref.hash);
+		return content === null ? { ok: false, hasHead: false, error: m.history_entry_gone() } : { ok: true, hasHead: true, content };
+	}
 	if (!ref.hash.startsWith(LOCAL_REF)) return gitShowAt(path, ref.hash);
 	const content = await readLocalHistory(path, ref.hash.slice(LOCAL_REF.length));
 	return content === null ? { ok: false, hasHead: false, error: m.history_entry_gone() } : { ok: true, hasHead: true, content };

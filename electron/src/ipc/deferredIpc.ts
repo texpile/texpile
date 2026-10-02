@@ -10,11 +10,13 @@ import { readSettings } from '../appSettings';
 type Terminal = typeof import('./terminalIpc.js');
 type Daemon = typeof import('../draft/draftDaemon.js');
 type McpServer = typeof import('../mcp/server.js');
+type Acp = typeof import('../ai/acp/acpIpc.js');
 
 // held for the shutdown hooks: what never loaded has nothing to tear down
 let terminal: Terminal | null = null;
 let daemon: Daemon | null = null;
 let mcpServer: McpServer | null = null;
+let acpIpc: Acp | null = null;
 
 let started: Promise<void> | null = null;
 
@@ -38,6 +40,10 @@ const steps: Array<() => Promise<void>> = [
 	async () => (await import('../zotero.js')).registerZotero(),
 	async () => (await import('./doiIpc.js')).registerDoiIpc(),
 	async () => (await import('./agentIpc.js')).registerAgentIpc(),
+	async () => {
+		acpIpc = await import('../ai/acp/acpIpc.js');
+		acpIpc.registerAcpIpc();
+	},
 	async () => {
 		terminal = await import('./terminalIpc.js');
 		terminal.registerTerminalIpc();
@@ -72,6 +78,7 @@ async function load(): Promise<void> {
 /** destructive teardown, for whatever actually loaded */
 export function shutdownDeferred(): void {
 	terminal?.killAllPtys();
+	acpIpc?.closeAllAcp();
 	daemon?.stopDaemon();
 	// takes the endpoint file with it, so a stale port/token is never left on disk for the bridge
 	void mcpServer?.stop();

@@ -1,11 +1,12 @@
 <script lang="ts">
+	import type { DockView } from '$lib/terminal/dockView';
 	import VersionChangesModal from './VersionChangesModal.svelte';
 	import TwoVersionsModal from './TwoVersionsModal.svelte';
 	import LocalHistoryDialog from './LocalHistoryDialog.svelte';
 	import { versionChanges } from '$lib/workspace/versionChanges.svelte';
 	import { twoVersions } from '$lib/workspace/twoVersions.svelte';
 	import { localHistoryDialog } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
-	import { fileMode, NO_PROJECT_CAPS } from '$lib/workspace/fileMode.svelte';
+	import { fileMode, SINGLE_FILE_CAPS } from '$lib/workspace/fileMode.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import WorkspaceModals from '$lib/modals/workspace/WorkspaceModals.svelte';
 	import WorkspaceMain from './WorkspaceMain.svelte';
@@ -55,7 +56,7 @@
 	// the file-access seam: the host gets the disk-backed provider by default; a guest session
 	// mounts this same view with a CRDT-backed one. caps gate the host-only features.
 	let { provider: hostProvider = diskProvider, session = collabHost }: { provider?: WorkspaceProvider; session?: EditSession } = $props();
-	const provider = $derived(fileMode.current ? { ...hostProvider, caps: NO_PROJECT_CAPS } : hostProvider);
+	const provider = $derived(fileMode.current ? { ...hostProvider, caps: SINGLE_FILE_CAPS } : hostProvider);
 	// all file access flows through the provider; these thin delegates keep the existing call sites
 	// (and scan's wrapped {root,...} shape) intact
 	// true for the disk-backed host; false for a guest session. Gates the host-only lifecycle
@@ -173,7 +174,7 @@
 	// popped out counts as "no docked pane": the rail is up and the dock must not run past it
 	const dockShrunk = $derived(termDock.shrink || !layout.pdfPaneOpen || layout.pdfPopout);
 	// bottom dock body: the terminal shells (always mounted) or the Problems list
-	let dockView = $state<'terminal' | 'problems' | 'comments'>('terminal');
+	let dockView = $state<DockView>('terminal');
 	// the compile-side stack (compile-command state, draft controller, typst preview, compile
 	// pipeline, jump router) is built in ./workspacePipelines.svelte.ts
 	const { cc, draftCtl, typstPreview, typstStream, compiler, nav } = createWorkspacePipelines({
@@ -233,7 +234,8 @@
 		typstPreview: () => typstPreview,
 		compileSettings: () => fmt.compileSettings,
 		commentsCtl,
-		setDockView: (v) => (dockView = v)
+		setDockView: (v) => (dockView = v),
+		comments: commentsW
 	});
 	const scm = integrations.scm;
 
@@ -370,7 +372,7 @@
 			// nowhere to put one however good the path looks
 			imageDir: provider.caps.manageTree && doc.path && hasVisualMode(kind) ? dirname(doc.path) : undefined,
 			// never a guest: a guest is IN someone's session, not in a position to open one
-			shareable: isDesktop() && !guest,
+			shareable: isDesktop() && !guest && provider.caps.share,
 			hostMode,
 			canManageTree: provider.caps.manageTree,
 			canFormat: fmt.canFormatDoc(),

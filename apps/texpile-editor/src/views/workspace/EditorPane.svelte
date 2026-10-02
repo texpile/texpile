@@ -289,7 +289,7 @@
 		     and the divider. Each wears the inset on its own scroller instead. -->
 		<div
 			bind:this={scroller}
-			class="h-full w-full overflow-auto {structured && viewMode === 'visual' && !comparing
+			class="group/pane h-full w-full overflow-auto {structured && viewMode === 'visual' && !comparing
 				? '[scrollbar-gutter:stable]'
 				: ''} {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}"
 		>

@@ -5,7 +5,7 @@ import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
 import { forgetSignIns } from '$lib/workspace/forgetSignIns';
 import { focusScmMessage } from '$lib/workspace/scm/actions/scmHandlers.svelte';
-import { fileMode } from '$lib/workspace/fileMode.svelte';
+import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
@@ -50,6 +50,7 @@ import { sourceAnchorFor } from '$lib/editor/visual/extensions/pmComments';
 import type { Node as PMNode } from 'prosemirror-model';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
+import type { DockView } from '$lib/terminal/dockView';
 
 export type ActionSurfaceDeps = {
 	provider: WorkspaceProvider;
@@ -68,8 +69,8 @@ export type ActionSurfaceDeps = {
 	layout: () => PaneLayout;
 	guest: () => boolean;
 	visualCollab: () => { publishCursor(): void } | null;
-	setDockView: (v: 'terminal' | 'problems' | 'comments') => void;
-	getDockView: () => 'terminal' | 'problems' | 'comments';
+	setDockView: (v: DockView) => void;
+	getDockView: () => DockView;
 	setShareModalOpen: (open: boolean) => void;
 	setTutorialModalOpen: (open: boolean) => void;
 	openGlobalSearch: () => void;
@@ -319,6 +320,7 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		hasFile: () => !!d.wsdoc.doc.path,
 		canManageTree: () => d.provider.caps.manageTree,
 		isHostWorkspace: () => !d.guest(),
+		isProject: () => capsOf(d.provider).project,
 		canSearch: () => d.provider.caps.search,
 		canFormat: () => d.fmt.canFormatDoc(),
 		formatTool: () => (d.wsdoc.doc.kind === 'typ' ? 'typstyle' : 'latexindent') as 'typstyle' | 'latexindent',
@@ -337,11 +339,16 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		openPreferences: () => {
 			preferencesOpen.current = true;
 		},
-		// same condition the app-icon menu uses: desktop only, and never for a guest
-		openShareSession: isDesktop() && !d.guest() ? () => d.setShareModalOpen(true) : undefined,
+		// same condition the app-icon menu uses: desktop only, never for a guest, and never a lone file's folder.
+		// Getters: the palette asks when it opens, and a window can turn to a lone file before then
+		get openShareSession() {
+			return isDesktop() && !d.guest() && capsOf(d.provider).share ? () => d.setShareModalOpen(true) : undefined;
+		},
 		newFile: (ext?: string) => d.files().newFileOfType(ext),
 		// the host's own folder, in the desktop app, where the templates folder is
-		saveAsTemplate: userTemplatesAvailable() && !d.guest() ? () => saveAsTemplate(d) : undefined,
+		get saveAsTemplate() {
+			return userTemplatesAvailable() && !d.guest() && capsOf(d.provider).project ? () => saveAsTemplate(d) : undefined;
+		},
 		openFolder: () => void d.files().folder.open(),
 		cloneRepository: canClone() ? () => void startClone((path) => d.files().folder.open(path)) : undefined,
 		forgetSignIns: canClone() ? () => void forgetSignIns() : undefined,

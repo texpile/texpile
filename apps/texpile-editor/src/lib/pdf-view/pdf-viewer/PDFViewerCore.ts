@@ -64,6 +64,8 @@ export class PDFViewerCore {
 	private scrollAbortController: AbortController | null = null;
 	private renderingQueue: Set<number> = new Set();
 	private isRendering = false;
+	private lastScrollTop = 0;
+	private scrollingDown = true;
 	private onPageClick?: (page: number, x: number, y: number, selectText?: string) => void;
 
 	private linkService: SimpleLinkService;
@@ -139,20 +141,22 @@ export class PDFViewerCore {
 		this.scrollAbortController?.abort();
 		this.scrollAbortController = new AbortController();
 
-		let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
-
+		// once a frame while the view moves, as pdf.js's own viewer does. Waiting for the scroll to rest drew
+		// nothing through a fast scroll, and the pages came only after it stopped
+		let frame = 0;
+		const { signal } = this.scrollAbortController;
 		this.container.addEventListener(
 			'scroll',
 			() => {
-				if (scrollTimeout) {
-					clearTimeout(scrollTimeout);
-				}
-				scrollTimeout = setTimeout(() => {
+				if (frame) return;
+				frame = requestAnimationFrame(() => {
+					frame = 0;
 					this.updateVisiblePages();
-				}, 100);
+				});
 			},
-			{ signal: this.scrollAbortController.signal }
+			{ signal }
 		);
+		signal.addEventListener('abort', () => cancelAnimationFrame(frame));
 	}
 
 	// callable repeatedly on the same instance: replaces the current document in place, so on a
@@ -261,13 +265,24 @@ export class PDFViewerCore {
 
 		const startPage = Math.max(0, visible.first - PAGES_TO_PRERENDER);
 		const endPage = Math.min(this.pages.length - 1, visible.last + PAGES_TO_PRERENDER);
+		const top = this.container.scrollTop;
+		if (top !== this.lastScrollTop) this.scrollingDown = top > this.lastScrollTop;
+		this.lastScrollTop = top;
 
-		for (let i = startPage; i <= endPage; i++) {
-			const page = this.pages[i];
-			if (page.renderingState === RenderingStates.INITIAL) {
-				this.renderingQueue.add(i);
-			}
+		// what is on screen first, then the pages ahead in the direction of the scroll, then those behind. Made
+		// anew each time: a page scrolled past before its turn came is dropped, not drawn ahead of these
+		const ahead: number[] = [];
+		const behind: number[] = [];
+		for (let k = 1; k <= PAGES_TO_PRERENDER; k++) {
+			(this.scrollingDown ? ahead : behind).push(visible.last + k);
+			(this.scrollingDown ? behind : ahead).push(visible.first - k);
 		}
+		const onScreen = Array.from({ length: visible.last - visible.first + 1 }, (_, k) => visible.first + k);
+		this.renderingQueue = new Set(
+			[...onScreen, ...ahead, ...behind].filter(
+				(i) => i >= 0 && i < this.pages.length && this.pages[i].renderingState === RenderingStates.INITIAL
+			)
+		);
 
 		this.evictHiddenPages(startPage, endPage);
 		this.processRenderingQueue();

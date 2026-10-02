@@ -2,6 +2,7 @@
 // starter templates, the folder lifecycle, the main-file choice, and the repoint-references
 // offer after a rename.
 import { untrack } from 'svelte';
+import { capsOf } from '$lib/workspace/fileMode.svelte';
 import { moveLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { StarterActions } from '$lib/workspace/starterActions.svelte';
 import { TreeOps } from '$lib/workspace/treeOps';
@@ -186,7 +187,12 @@ export class WorkspaceFiles {
 
 	// citations read through the provider too, so guest sessions resolve \cite keys from the shared doc
 	loadRefs(root: string) {
-		const through = { scan: (r: string, e: string[]) => this.d.provider.scanFiles(r, e), read: (p: string) => this.d.provider.readText(p) };
+		// a lone file's folder is no project: none of its .bib files are this document's (and it may be Downloads)
+		const project = capsOf(this.d.provider).project;
+		const through = {
+			scan: (r: string, e: string[]) => (project ? this.d.provider.scanFiles(r, e) : Promise.resolve([])),
+			read: (p: string) => this.d.provider.readText(p)
+		};
 		// and so do the bibliography editor's reads of what the documents cite
 		readCitationsThrough(through);
 		return loadReferences(root, through, mainFile.current);

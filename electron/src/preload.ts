@@ -83,7 +83,7 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** subscribe to a texpile:// join link the OS handed over; the payload is the raw URL. */
 	onJoinSession: (cb: (url: string) => void) => onJoinSessionBuffered(cb),
 	/** register this window as the folder's owner; { ok:false } means another window has it (and was focused). */
-	claimWorkspace: (root: string) => ipcRenderer.invoke('workspace:claim', root),
+	claimWorkspace: (root: string, kind?: 'file' | 'folder') => ipcRenderer.invoke('workspace:claim', root, kind),
 	/** mark this window as back on the start screen. */
 	releaseWorkspace: () => ipcRenderer.invoke('workspace:release'),
 	/** open an empty new window. */
@@ -534,6 +534,32 @@ contextBridge.exposeInMainWorld('texpileAgent', {
 	/** run the agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
 	run: (id: string, prompt: string, system?: string) => ipcRenderer.invoke('agent:run', { id, prompt, system }),
 	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
+});
+
+// the agent panel's conversation over ACP; main picks the program and the folder, a window only talks
+contextBridge.exposeInMainWorld('texpileAcp', {
+	/** which preset agents are on PATH */
+	detect: () => ipcRenderer.invoke('acp:detect') as Promise<Record<string, boolean>>,
+	/** start the chosen agent in this window's folder, replacing any conversation it had */
+	start: () => ipcRenderer.invoke('acp:start'),
+	/** one turn; resolves when the agent is done, with the files it changed */
+	prompt: (blocks: unknown[]) => ipcRenderer.invoke('acp:prompt', blocks),
+	cancel: () => ipcRenderer.send('acp:cancel'),
+	/** optionId null declines the request */
+	answer: (id: string, optionId: string | null) => ipcRenderer.send('acp:answer', { id, optionId }),
+	setConfig: (configId: string, value: string) => ipcRenderer.invoke('acp:config', { configId, value }),
+	/** the agent's own past chats in this folder; Texpile keeps no copy */
+	chats: () => ipcRenderer.invoke('acp:chats'),
+	/** one of them again, which the agent replays into the window */
+	openChat: (id: string) => ipcRenderer.invoke('acp:openChat', id),
+	close: () => ipcRenderer.send('acp:close'),
+	onEvent: (cb: (event: unknown) => void) => {
+		function h(_e: unknown, event: unknown) {
+			cb(event);
+		}
+		ipcRenderer.on('acp:event', h);
+		return () => ipcRenderer.removeListener('acp:event', h);
+	}
 });
 
 // terminal bridge to the node-pty shells in the main process, keyed by a string `id`

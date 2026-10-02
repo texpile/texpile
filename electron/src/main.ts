@@ -48,7 +48,8 @@ function requestOpenPath(p: string): void {
 	const fileNorm = normRoot(p);
 	for (const [wcId, r] of windowRoots) {
 		if (!r) continue;
-		if (fileNorm === r.norm || fileNorm.startsWith(r.norm + path.sep)) {
+		// a lone file's window takes that file again, and nothing else: it is no project to open files into
+		if (fileNorm === r.norm || (!r.file && fileNorm.startsWith(r.norm + path.sep))) {
 			const w = windowFor(wcId);
 			if (w && !w.webContents.isLoading()) {
 				w.webContents.send('main:open-path', p);

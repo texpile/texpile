@@ -57,6 +57,15 @@ describe('reopening a folder with comparisons open', () => {
 		expect(tabs.list).toEqual([{ path: 'C:\\p\\main.tex' }, { path: 'C:\\p\\ch\\one.tex', compare: V1 }]);
 	});
 
+	it("leaves a comparison against an agent's before text closed: that text was only in memory", () => {
+		tabs.bind('C:\\p', true);
+		tabs.noteOpened('C:\\p\\main.tex');
+		tabs.keep('C:\\p\\main.tex');
+		tabs.openCompare('C:\\p\\main.tex', { hash: 'agent:1:C:\\p\\main.tex', subject: 'Before Codex' });
+		tabs.bind('C:\\p', true);
+		expect(tabs.list).toEqual([{ path: 'C:\\p\\main.tex' }]);
+	});
+
 	it('lands on the focused comparison only while its tab is still there', () => {
 		tabs.bind('C:\\p', true);
 		const key = tabs.openCompare('C:\\p\\main.tex', V1);

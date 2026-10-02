@@ -1,9 +1,10 @@
 <script lang="ts">
-	// Step five: the agent Refine runs, and its model
+	// Step five: the agent Refine runs and its model, then the Agent tab's
 	import { settings, updateSettings } from '$lib/settings';
 	import { agentBridge, isPresetAgent, PRESET_AGENTS, type PresetAgent } from '$lib/ai/selectionRefiner';
 	import AgentModelChoice from '$lib/modals/window/AgentModelChoice.svelte';
 	import SetupChoice from './SetupChoice.svelte';
+	import AgentPanelSetup from '$lib/ai/agentPanel/ui/AgentPanelSetup.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let installed = $state<Record<PresetAgent, boolean> | null>(null);
@@ -24,7 +25,11 @@
 	}
 </script>
 
-<div class="flex flex-col gap-2.5">
+<!-- two questions on one step, so each sits in two columns rather than scrolling -->
+<p class="mb-2 flex flex-wrap items-baseline gap-x-2">
+	<span class="text-sm font-medium">{m.prefs_ai_agent()}</span><span class="text-muted text-xs">{m.setup_agent_refine_note()}</span>
+</p>
+<div class="grid grid-cols-2 gap-2.5">
 	<SetupChoice kind="radio" checked={picked === ''} label={m.prefs_ai_agent_off()} onpick={() => pick('')} />
 	{#each PRESET_AGENTS as a (a)}
 		<SetupChoice
@@ -55,3 +60,7 @@
 	/>
 	<p class="text-muted mt-1.5 text-xs">{m.prefs_ai_agent_command_note()}</p>
 {/if}
+
+<div class="border-surface-200-800 mt-4 border-t pt-3">
+	<AgentPanelSetup />
+</div>

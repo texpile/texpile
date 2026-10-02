@@ -10,7 +10,7 @@ export function registerBootstrapIpc(): void {
 		const pending = pendingOpens.get(wcId) ?? null;
 		if (pending) pendingOpens.delete(wcId);
 		const root = windowRoots.get(wcId);
-		const open = pending ?? (root ? { kind: 'folder' as const, path: root.raw } : null);
+		const open = pending ?? (root ? { kind: root.file ? ('file' as const) : ('folder' as const), path: root.raw } : null);
 		// eslint-disable-next-line no-param-reassign -- returnValue on the event IS how sendSync replies
 		e.returnValue = { open, settings: readSettings() };
 	});

@@ -28,6 +28,8 @@ export type PaletteActions = {
 	 */
 	canManageTree(): boolean;
 	isHostWorkspace(): boolean;
+	/** a folder open as a project, not a lone file */
+	isProject(): boolean;
 	canSearch(): boolean;
 	/** false in single-file mode, where there is no file explorer to show or hide */
 	hasSidebar(): boolean;

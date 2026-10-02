@@ -9,11 +9,18 @@
 	import { compileLog } from '$lib/stores/compileLogStore';
 	import { m } from '$lib/paraglide/messages';
 	import { TerminalShells } from './terminalShells.svelte';
+	import type { DockView } from './dockView';
+	import DockTabCount from './DockTabCount.svelte';
+	import AgentPanel from '$lib/ai/agentPanel/ui/AgentPanel.svelte';
+	import AgentPicker from '$lib/ai/agentPanel/ui/strip/AgentPicker.svelte';
+	import { agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
+	import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
+	import { settings } from '$lib/settings';
 	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal } from '@lucide/svelte';
 
 	let {
 		cwd,
-		view = $bindable<'terminal' | 'problems' | 'comments'>('terminal'),
+		view = $bindable<DockView>('terminal'),
 		pdfPaneOpen = false,
 		shrink = false,
 		terminalEnabled = true,
@@ -36,7 +43,7 @@
 		onCommentAttach
 	}: {
 		cwd: string;
-		view?: 'terminal' | 'problems' | 'comments';
+		view?: DockView;
 		pdfPaneOpen?: boolean;
 		shrink?: boolean;
 		/** false for guests: no shells, the dock is a Problems panel only. */
@@ -62,6 +69,13 @@
 	} = $props();
 
 	const openComments = $derived(comments.filter((c) => !c.resolved).length);
+	// there until turned off; where the agent cannot run (a guest, the browser, a lone file) the tab says why
+	const agentOn = $derived(settings.current.agentPanel !== 'off');
+	const agentBlocked = $derived(agentUnavailable());
+	// turned off from Preferences in any window: the tab goes (the workspace stops the agent behind it)
+	$effect(() => {
+		if (!agentOn && view === 'agent') view = terminalEnabled ? 'terminal' : 'problems';
+	});
 
 	// shells (roster, compile shell, run/reset plumbing) live in terminalShells.svelte.ts
 	const shells = new TerminalShells(() => onClose());
@@ -149,9 +163,9 @@
 		>
 			{m.wsview_problems_label()}
 			{#if compileLog.current && compileLog.current.errors.length > 0}
-				<span class="text-error-ink font-semibold">{compileLog.current.errors.length}</span>
+				<DockTabCount count={compileLog.current.errors.length} tone="error" />
 			{:else if compileLog.current && compileLog.current.warnings.length > 0}
-				<span class="text-warning-ink font-semibold">{compileLog.current.warnings.length}</span>
+				<DockTabCount count={compileLog.current.warnings.length} tone="warning" />
 			{/if}
 		</button>
 		<!-- always present, not only once a thread exists: a tab that appears when there is something
@@ -164,9 +178,24 @@
 		>
 			{m.wsview_comments_label()}
 			{#if openComments > 0}
-				<span class="text-primary-ink font-semibold">{openComments}</span>
+				<DockTabCount count={openComments} tone="primary" />
 			{/if}
 		</button>
+		{#if agentOn}
+			<!-- grayed where it cannot run; it still opens, to say why -->
+			<button
+				class="flex shrink-0 items-center gap-1 rounded-base px-2 py-1 whitespace-nowrap {view === 'agent'
+					? 'preset-tonal'
+					: 'hover:preset-tonal'} {agentBlocked ? 'text-muted' : ''}"
+				onclick={() => (view = 'agent')}
+			>
+				{m.agent_panel_tab()}
+				<!-- a count only while it waits on the reader, as Problems shows one only when there is a problem -->
+				{#if agentSession.asks.length > 0}
+					<DockTabCount count={agentSession.asks.length} tone="warning" />
+				{/if}
+			</button>
+		{/if}
 	</div>
 	<div class="flex shrink-0 items-center gap-0.5">
 		{#if view === 'terminal'}
@@ -237,6 +266,9 @@
 				<Trash2 class="size-3.5" />
 			</button>
 		{/if}
+		{#if view === 'agent'}
+			<AgentPicker disabled={!!agentBlocked} />
+		{/if}
 		{#if pdfPaneOpen}
 			<button
 				class="btn-icon btn-icon-xs hover:preset-tonal"
@@ -262,6 +294,15 @@
 	{#if view === 'problems'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
 			<ProblemsPanel root={cwd} onJump={onProblemJump} />
+		</div>
+	{:else if view === 'agent'}
+		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
+			<AgentPanel
+				onOpenTerminal={() => {
+					view = 'terminal';
+					shells.ensure();
+				}}
+			/>
 		</div>
 	{:else if view === 'comments'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">

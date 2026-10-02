@@ -223,6 +223,8 @@
 	<div class="flex items-center gap-2">
 		{#if onToggleSuggest}
 			<EditModePicker {suggesting} onChange={onToggleSuggest} />
+		{:else if fileMode.current}
+			<EditModePicker suggesting={false} onChange={() => {}} unavailable={m.single_file_unavailable()} />
 		{/if}
 		{#if commentCount > 0}
 			<!-- unresolved review threads, project-wide. Leftmost of the cluster on purpose: the row is

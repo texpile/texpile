@@ -22,8 +22,8 @@ function cmdQuote(arg: string): string {
 	return arg === '' || /[\s"&|<>^()%!,;=]/.test(arg) ? `"${arg.replace(/"/g, '""')}"` : arg;
 }
 
-export function startAgentProcess(program: string, args: string[], cwd: string): ChildProcess {
-	const options = { cwd, windowsHide: true, detached: process.platform !== 'win32' };
+export function startAgentProcess(program: string, args: string[], cwd: string, env?: Record<string, string>): ChildProcess {
+	const options = { cwd, windowsHide: true, detached: process.platform !== 'win32', env: env && { ...process.env, ...env } };
 	// npm and pnpm install command-line tools as .cmd launchers, which only cmd.exe can start
 	if (process.platform === 'win32' && /\.(cmd|bat)$/i.test(program)) {
 		const line = [program, ...args].map(cmdQuote).join(' ');

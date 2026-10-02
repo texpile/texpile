@@ -35,12 +35,14 @@ export function registerWorkspaceWindowIpc(): void {
 	// A folder may be open in exactly one window (two autosavers on the same .tex files would
 	// silently clobber each other). claim() registers the sender as that folder's window; if
 	// another live window already has it, that window is focused instead and the caller aborts.
-	ipcMain.handle('workspace:claim', (e, root: string) => {
+	// kind 'file': a lone file, claimed by its own path, so its folder is not taken for a project
+	ipcMain.handle('workspace:claim', (e, root: string, kind?: unknown) => {
 		const raw = String(root || '');
 		if (!raw) return { ok: false, reason: 'bad-root' };
 		const norm = normRoot(raw);
+		const file = kind === 'file';
 		for (const [wcId, r] of windowRoots) {
-			if (wcId === e.sender.id || !r || r.norm !== norm) continue;
+			if (wcId === e.sender.id || !r || !!r.file !== file || r.norm !== norm) continue;
 			const w = windowFor(wcId);
 			if (w) {
 				focusWindow(w);
@@ -48,9 +50,9 @@ export function registerWorkspaceWindowIpc(): void {
 			}
 			windowRoots.delete(wcId); // stale entry for a dead window
 		}
-		windowRoots.set(e.sender.id, { raw, norm });
+		windowRoots.set(e.sender.id, file ? { raw, norm, file } : { raw, norm });
 		persistOpenFolders();
-		// watch the claimed root so external writes (another editor, git, an AI agent) reach the
+		// watch the claimed root (or the lone file) so external writes (another editor, git, an AI agent) reach the
 		// renderer's conflict machinery now instead of on the next window focus
 		const wcId = e.sender.id;
 		startWorkspaceWatch(String(wcId), raw, () => windowFor(wcId)?.webContents.send('workspace:fs-changed'));
@@ -84,7 +86,7 @@ export function registerWorkspaceWindowIpc(): void {
 	// never from the renderer, so a confused renderer cannot talk this into opening an arbitrary path.
 	ipcMain.on('window:reload-workspace', (e) => {
 		const root = windowRoots.get(e.sender.id);
-		if (root) pendingOpens.set(e.sender.id, { kind: 'folder', path: root.raw });
+		if (root) pendingOpens.set(e.sender.id, { kind: root.file ? 'file' : 'folder', path: root.raw });
 		e.sender.reload();
 	});
 

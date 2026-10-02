@@ -10,7 +10,13 @@
 	import { threadAtPointer } from '$lib/comments/threadAtPointer';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { revealPmComment } from '$lib/editor/visual/extensions/pmComments';
-	import { COMMENT_RAIL_PEEK, COMMENT_RAIL_WIDTH, EDITOR_TEXT_MIN, EDITOR_TEXT_PAD } from '$lib/workspace/paneGeometry';
+	import {
+		COMMENT_RAIL_PEEK,
+		COMMENT_RAIL_WIDTH,
+		EDITOR_TEXT_MIN,
+		EDITOR_TEXT_PAD,
+		EDITOR_TEXT_PAD_STACKED
+	} from '$lib/workspace/paneGeometry';
 	import { RailGeometry } from './railGeometry.svelte';
 	import { RailGlide } from './railGlide.svelte';
 	import { cmTextExtent, measureCmAnchors, measurePmAnchors, PENDING_ANCHOR } from './railAnchors';
@@ -18,6 +24,7 @@
 	import CommentCard from './CommentCard.svelte';
 	import CommentComposerCard from './CommentComposerCard.svelte';
 	import { returnToCmText, returnToPmText } from './returnToText';
+	import { backdrop, clipEdge } from './railEdge';
 	import { m } from '$lib/paraglide/messages';
 
 	let {
@@ -161,17 +168,33 @@
 		return positions.get(id) ?? anchors.get(id) ?? 0;
 	}
 
-	let inflow = $state(COMMENT_RAIL_WIDTH);
+	/** the pane's inner width, and in source the gutters beside the text */
+	let room = $state.raw<{ box: number; gutters: number } | null>(null);
 	let tail = $state(0);
 	let extent = $state.raw({ box: 0, text: 0 });
+	// the column would have to narrow beside the visual editor's usual gutters: the block handles stack on the left and
+	// the right gutter goes. Decided with the usual gutters, so the room that frees cannot turn it back off
+	const stacked = $derived(mode === 'visual' && showing && !!room && room.box - EDITOR_TEXT_MIN - EDITOR_TEXT_PAD < COMMENT_RAIL_WIDTH);
+	// on the scroller, which holds the editor: its padding and the block handle read it (EditorPane's group/pane)
+	$effect(() => {
+		const box = scroller;
+		if (!box || mode !== 'visual') return;
+		box.toggleAttribute('data-gutter-stacked', stacked);
+		return () => box.removeAttribute('data-gutter-stacked');
+	});
+	const inflow = $derived.by(() => {
+		if (!room) return COMMENT_RAIL_WIDTH;
+		const beside = mode === 'visual' ? (stacked ? EDITOR_TEXT_PAD_STACKED : EDITOR_TEXT_PAD) : room.gutters;
+		return Math.max(COMMENT_RAIL_PEEK, Math.min(COMMENT_RAIL_WIDTH, room.box - EDITOR_TEXT_MIN - beside));
+	});
 	const shift = $derived(
 		mode === 'source' && inflow < COMMENT_RAIL_WIDTH ? Math.max(0, Math.min(COMMENT_RAIL_WIDTH - inflow, extent.box - extent.text - 12)) : 0
 	);
 	function measureInflow() {
 		const box = mode === 'visual' ? scroller : cmView?.scrollDOM;
 		if (!box) return;
-		const beside = mode === 'visual' ? EDITOR_TEXT_PAD : (cmView?.dom.querySelector<HTMLElement>('.cm-gutters')?.offsetWidth ?? 0);
-		inflow = Math.max(COMMENT_RAIL_PEEK, Math.min(COMMENT_RAIL_WIDTH, box.clientWidth - EDITOR_TEXT_MIN - beside));
+		const gutters = mode === 'visual' ? 0 : (cmView?.dom.querySelector<HTMLElement>('.cm-gutters')?.offsetWidth ?? 0);
+		if (room?.box !== box.clientWidth || room.gutters !== gutters) room = { box: box.clientWidth, gutters };
 		tail = box.offsetWidth - box.clientWidth;
 	}
 	$effect(() => {
@@ -196,21 +219,6 @@
 		if (right <= edge + 0.5) return void (cut = null);
 		const x = edge - el.getBoundingClientRect().left - el.clientLeft;
 		if (cut?.x !== x) cut = { x, bg: backdrop(box) };
-	}
-	/** a drawn scrollbar clips the content, the empty space of scrollbar-gutter: stable does not */
-	function clipEdge(box: HTMLElement): number {
-		const r = box.getBoundingClientRect();
-		const style = getComputedStyle(box);
-		const bar = style.overflowY === 'scroll' || (style.overflowY === 'auto' && box.scrollHeight > box.clientHeight + 1);
-		return bar ? r.left + box.clientLeft + box.clientWidth : r.right - parseFloat(style.borderRightWidth);
-	}
-	/** the color behind the cards: the first painted background from the scroller out */
-	function backdrop(from: HTMLElement): string {
-		for (let n: HTMLElement | null = from; n; n = n.parentElement) {
-			const bg = getComputedStyle(n).backgroundColor;
-			if (bg && bg !== 'transparent' && !/rgba\(.*,\s*0\)$/.test(bg)) return bg;
-		}
-		return getComputedStyle(document.body).backgroundColor;
 	}
 	$effect(() => {
 		const box = mode === 'visual' ? scroller : cmView?.scrollDOM;

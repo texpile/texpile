@@ -262,6 +262,13 @@
 		white-space: nowrap;
 	}
 
+	/* a row of the "..." that is on says so with a check at its end, as the app's other menus do; the bar's
+	   tint read as a pill inside the menu */
+	.preview-overflow-menu > .preview-toolbar-group > :global(button.menu-item[aria-pressed='true']:not(:hover)) {
+		background-color: transparent;
+		color: inherit;
+	}
+
 	/* a readout beside the controls: 1 / 20, 75% */
 	.preview-toolbar :global(.preview-toolbar-readout) {
 		font-size: 0.8rem;

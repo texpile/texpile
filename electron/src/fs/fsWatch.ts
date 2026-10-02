@@ -18,6 +18,7 @@
 // either way and its module format is no longer this file's problem.
 import { watch, type FSWatcher } from 'chokidar';
 import * as path from 'node:path';
+import { stat } from 'node:fs/promises';
 import { resolveRepoRoot, gitDirsOf } from '../git/gitService';
 
 /**
@@ -108,6 +109,8 @@ export function startWorkspaceWatch(key: string, root: string, onChange: () => v
  *  later (Initialize, or `git init` in the terminal) is picked up the next time it is watched. */
 async function watchGitState(key: string, entry: Entry, root: string, changed: () => void): Promise<void> {
 	try {
+		// a lone file is watched by itself, and follows no repository
+		if (!(await stat(root)).isDirectory()) return;
 		const rr = await resolveRepoRoot(root);
 		if (!rr.repo) return;
 		const { gitDir, commonDir } = await gitDirsOf(rr.repo.root);

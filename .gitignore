@@ -19,6 +19,7 @@ service-account.json
 # electron packaging output
 /release
 electron/dist/
+electron/agents/
 electron/server-dist/
 
 # logs

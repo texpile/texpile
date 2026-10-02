@@ -1,5 +1,6 @@
 // what CompilePipeline needs from the workspace view that wires it
 import type { EditSession } from '$lib/collab/editSession';
+import type { DockView } from '$lib/terminal/dockView';
 
 export type CompileDeps = {
 	getLoadedPath(): string | null;
@@ -21,7 +22,7 @@ export type CompileDeps = {
 	flushSaves(): Promise<void>;
 	refreshTree(): Promise<void>;
 	showTerminal(): void;
-	setDockView(view: 'terminal' | 'problems' | 'comments'): void;
+	setDockView(view: DockView): void;
 	setPdfPaneOpen(open: boolean): void;
 	openCompileModal(): void;
 	openMainConfirm(then?: () => void): void;

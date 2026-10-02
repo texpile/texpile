@@ -52,6 +52,8 @@ async function fill(root: string, want: string | null, compare: CompareRef | nul
 export function adoptBootOpen(open: BootOpen): void {
 	const root = open.kind === 'file' ? dirname(open.path) : open.path;
 	fileMode.current = open.kind === 'file';
+	// a lone file claims itself, so main routes nothing else into this window and does not remember the folder
+	if (open.kind === 'file') void claimWorkspace(open.path, 'file');
 	mark('folder-open');
 	// a document is certain here, so warm the parser alongside the editor chunk
 	latexParserWorker();
@@ -62,11 +64,17 @@ export function adoptBootOpen(open: BootOpen): void {
 
 // Resolves once the workspace is on screen; the scan lands after it, as at launch. Waiting for the
 // scan first put three round trips between the click and anything happening.
-async function open(root: string, want: string | null, compare: CompareRef | null = null): Promise<OpenOutcome> {
+// `lone`: a single file, which claims itself rather than the folder
+async function open(
+	root: string,
+	want: string | null,
+	compare: CompareRef | null = null,
+	lone: string | null = null
+): Promise<OpenOutcome> {
 	mark('folder-open');
 	// together, and both before navigating: claiming does not check the folder is still there, so a
 	// recent-folders entry for a deleted one has to fail here rather than in an empty workspace
-	const [claim, found] = await Promise.all([claimWorkspace(root), statFile(root)]);
+	const [claim, found] = await Promise.all([lone ? claimWorkspace(lone, 'file') : claimWorkspace(root), statFile(root)]);
 	if (!claim.ok) return 'elsewhere';
 	if (!found.exists) {
 		// the claim registered the dead path as this window's folder: hand it back
@@ -104,18 +112,26 @@ export async function projectRootFor(filePath: string): Promise<string> {
 	return first;
 }
 
+/** the open workspace's own folder switch, which claims the folder and sets its project up, as a lone file's window
+ *  never did; the returned function lets go */
+let switchFolder: ((root: string, want: string) => Promise<void>) | null = null;
+export function provideFolderSwitch(fn: (root: string, want: string) => Promise<void>): () => void {
+	switchFolder = fn;
+	return () => {
+		if (switchFolder === fn) switchFolder = null;
+	};
+}
+
 /** re-root on the file's project, then show the chrome */
 export async function openWorkspaceForFile(filePath: string): Promise<OpenOutcome> {
 	const root = await projectRootFor(filePath);
-	if (workspaceRoot.current && samePath(root, workspaceRoot.current)) {
-		fileMode.current = false;
-		return 'opened';
-	}
-	return openFolderInWindow(root, filePath);
+	if (!switchFolder) return openFolderInWindow(root, filePath);
+	await switchFolder(root, filePath);
+	return 'opened';
 }
 
-/** OS "Open With": open the file's folder and land on the file itself */
+/** OS "Open With": the file on its own, claimed by its path so its folder is not taken for a project */
 export function openFileInWindow(filePath: string): Promise<OpenOutcome> {
 	fileMode.current = true;
-	return open(dirname(filePath), filePath);
+	return open(dirname(filePath), filePath, null, filePath);
 }

@@ -15,10 +15,12 @@ import { buildSync } from 'esbuild';
 const dev = process.argv.includes('--dev');
 const ROOT = join(import.meta.dirname, '..');
 const DIST = join(ROOT, 'electron', 'dist');
+const AGENTS = join(ROOT, 'electron', 'agents');
 
 // stale output (including per-file tsc emits from an older checkout) must not linger next to the bundle
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
+rmSync(AGENTS, { recursive: true, force: true });
 
 buildSync({
 	// app.js, not main.js: main.js is the shim below, and the entry script is already compiled by
@@ -46,6 +48,26 @@ buildSync({
 	// node-pty is native, dlopen'd from asar.unpacked at runtime; simple-git is pure JS and bundles in
 	external: ['electron', 'node-pty']
 });
+// The ACP adapters for agents that do not speak it themselves, one file each, run by Electron as plain
+// Node (ai/acp/acpAgents.ts). ESM as published. Each runs the reader's own CLI, named by CODEX_PATH or
+// CLAUDE_CODE_EXECUTABLE, so the copies of those CLIs the packages pull in (hundreds of MB) stay out
+buildSync({
+	entryPoints: {
+		'codex-acp': join(ROOT, 'node_modules', '@agentclientprotocol', 'codex-acp', 'dist', 'index.js'),
+		'claude-agent-acp': join(ROOT, 'node_modules', '@agentclientprotocol', 'claude-agent-acp', 'dist', 'index.js')
+	},
+	outdir: AGENTS,
+	outExtension: { '.js': '.mjs' },
+	bundle: true,
+	platform: 'node',
+	format: 'esm',
+	target: 'node24',
+	minify: !dev,
+	legalComments: 'inline',
+	// bundled CommonJS inside calls require; ESM has none of its own
+	banner: { js: "import { createRequire as __texpileRequire } from 'node:module'; const require = __texpileRequire(import.meta.url);" },
+	external: ['@openai/codex', '@openai/codex-*', '@anthropic-ai/claude-agent-sdk-*']
+});
 // V8 throws away the bytecode it compiled for app.js at exit, so every launch recompiles ~800KB
 // of main-process JS from source. This caches it to disk instead. Its own file because Node
 // compiles the entry script before the entry script can run.
@@ -67,5 +89,5 @@ require('./app.js');
 `
 );
 console.log(
-	`build-electron: bundled ${dev ? 'app.js, preload.js and helperWorker.js (dev: unminified, inline sourcemaps)' : '+ minified app.js, preload.js and helperWorker.js'} + main.js shim`
+	`build-electron: bundled ${dev ? 'app.js, preload.js and helperWorker.js (dev: unminified, inline sourcemaps)' : '+ minified app.js, preload.js and helperWorker.js'} + main.js shim + ACP adapters`
 );

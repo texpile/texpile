@@ -9,6 +9,7 @@ import { paintRange } from '$lib/editor/visual/highlight/paintRange';
 import { rangeBandPainter } from '$lib/editor/visual/highlight/rangeBands';
 import { oldWordsInSelection } from './pmSuggestionsState';
 import { selectionHeldVisible } from './persistentSelection/persistentSelectionPlugin';
+import { pmCommentsKey } from './pmComments';
 
 const CM_NODE_TYPES = new Set(['raw_latex', 'code_block', 'block_math']);
 
@@ -27,6 +28,8 @@ function buildDecorations(state: EditorState, key: string): DecorationSet {
 	// parked in a menu it paints nothing and the words need drawing too, in the same colour either
 	// way. the old opaque Tailwind blue read as patchwork against the native highlight
 	const held = selectionHeldVisible(state);
+	// a comment or Refine being written for a passage paints it in this colour already, and owns it while open
+	if (held && pmCommentsKey.getState(state)?.pending) return DecorationSet.empty;
 	const decos = paintRange(state.doc, {
 		from,
 		to,

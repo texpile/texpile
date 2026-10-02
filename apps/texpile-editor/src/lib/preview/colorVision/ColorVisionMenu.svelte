@@ -31,7 +31,7 @@
 	use:tip={active ? m.color_vision_badge({ mode: colorVisionLabel(colorVision.current) }) : m.color_vision_button()}
 >
 	<Eye size={16} />
-	{#if place === 'menu'}<span class="cap-center">{m.color_vision_button()}</span>{/if}
+	{#if place === 'menu'}<span class="cap-center">{m.color_vision_button()}</span>{#if active}<Check size={14} class="ml-auto" />{/if}{/if}
 </button>
 {#if menu.open}
 	<div bind:this={menu.el} class="color-vision-menu" style={menu.style} role="menu" aria-label={m.color_vision_button()}>

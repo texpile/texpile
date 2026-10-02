@@ -2,6 +2,7 @@
 // carrying out the steer commands. The comment tools (mcpComments.ts) write the comment log only; the one
 // change to a document is suggest_edit (mcpSuggestEdit.ts), which lands as a suggestion.
 import { browser } from '$lib/runtime';
+import { fileMode } from './fileMode.svelte';
 import { workspaceRoot, isDirty, mainFile, texFiles, effectiveCompileFormat } from './workspaceStore';
 import { isGitRepo, refreshGitStatus } from './scm/gitStore';
 import { compileLog } from '$lib/stores/compileLogStore';
@@ -290,6 +291,10 @@ function syncTexPayload(deps: McpCommandDeps, line: unknown) {
 }
 
 /** wire the MCP request/command channels; returns the detach function */
+// a lone file is no project: nothing that reads or changes the folder around it, or compiles it
+const PROJECT_REQUESTS = new Set(['set_output_paths', 'main_file', 'compile', 'show_diff']);
+const LONE_FILE = 'a single file is open in this window, not a folder: open it in a workspace first';
+
 export function attachMcpCommands(deps: McpCommandDeps): () => void {
 	const api = nativeBridge();
 	const offRequest = api?.onMcpRequest?.((req) => {
@@ -297,6 +302,8 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 		function reply(payload: unknown) {
 			return api?.mcpRespond?.(req.id, payload);
 		}
+		if (fileMode.current && (PROJECT_REQUESTS.has(req.kind) || (req.kind === 'view_mode' && a.mode === 'diff')))
+			return reply({ ok: false, reason: LONE_FILE });
 		if (req.kind === 'unsaved') return reply(unsavedPayload(deps));
 		if (req.kind === 'diagnostics') return reply(diagnosticsPayload(deps));
 		if (req.kind === 'synctex') return reply(syncTexPayload(deps, a.line));
@@ -352,6 +359,7 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 		// set_view_mode / show_diff / synctex / compile arrive as REQUESTS, not commands: each can be
 		// refused, and the caller needs to hear that rather than assume it worked.
 		if (kind === 'open_file') {
+			if (fileMode.current) return; // the window holds its one file; the folder around it is not open
 			const rel = typeof cmd.path === 'string' ? cmd.path : '';
 			const abs = resolveInWorkspace(rel);
 			if (!abs) return; // outside the workspace: ignore rather than reach for it
