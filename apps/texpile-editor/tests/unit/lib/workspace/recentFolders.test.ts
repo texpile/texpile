@@ -76,4 +76,25 @@ describe('recentFolders', () => {
 		const { userData } = await load();
 		expect(userData.current.recentFolders).toEqual(['/a', '/b']);
 	});
+
+	// two windows share the blob and each module load is one window's copy of it
+	it('keeps what another window wrote when this one writes', async () => {
+		localStorage.setItem(KEY, JSON.stringify({ v: 1, recentFolders: ['/gone', '/old'], dictionary: [] }));
+		const other = await load();
+		vi.resetModules();
+		const self = await load();
+		self.addRecentFolder('/new');
+		self.updateUserData({ dictionary: ['eigenstrain'] });
+		other.removeRecentFolder('/gone');
+		expect(stored()).toEqual(['/new', '/old']);
+		expect(JSON.parse(localStorage.getItem(KEY)!).dictionary).toEqual(['eigenstrain']);
+	});
+
+	it('shows a folder another window opened', async () => {
+		seed(['/a']);
+		const { userData } = await load();
+		seed(['/b', '/a']);
+		window.dispatchEvent(new StorageEvent('storage', { key: KEY }));
+		expect(userData.current.recentFolders).toEqual(['/b', '/a']);
+	});
 });
