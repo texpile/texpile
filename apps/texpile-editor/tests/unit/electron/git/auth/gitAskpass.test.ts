@@ -61,6 +61,10 @@ describe('reading what git and ssh ask', () => {
 		expect(describePrompt('https', slashed)).toMatchObject({ host: 'evil.example.org' });
 		expect(isGithubHttpsPrompt("Password for 'https://github.com/x@evil.example.org/repo.git': ")).toBe(false);
 		expect(isGithubHttpsPrompt("Password for 'https://ada@github.com/org/thesis.git': ")).toBe(true);
+		// nor an @ in the path, which git puts in the prompt with credential.useHttpPath
+		expect(isGithubHttpsPrompt("Username for 'https://evil.example.org/x@github.com/thesis.git': ")).toBe(false);
+		expect(isGithubHttpsPrompt("Password for 'https://ada@evil.example.org/x@github.com/thesis.git': ")).toBe(false);
+		expect(isGithubHttpsPrompt("Username for 'https://github.com/org/thesis.git': ")).toBe(true);
 	});
 
 	it("reads ssh's passphrase, password and new-host questions", () => {

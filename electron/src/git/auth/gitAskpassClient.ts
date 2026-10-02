@@ -36,10 +36,19 @@ function urlOfPrompt(text: string): URL | null {
 }
 
 /** git asking about https://github.com itself, the one place the GitHub account may answer: not
- *  plain http (the token would cross the network in the clear) and not another port */
+ *  plain http (the token would cross the network in the clear) and not another port. Read as a plain
+ *  address too: with credential.useHttpPath, git before its prompt sanitising writes the path
+ *  unescaped, and an @ in it puts the last @ past the real host */
 export function isGithubHttpsPrompt(prompt: string): boolean {
-	const url = urlOfPrompt(prompt.trim());
-	return !!url && url.protocol === 'https:' && url.hostname === 'github.com' && url.port === '';
+	const text = prompt.trim();
+	const url = urlOfPrompt(text);
+	if (!url || url.protocol !== 'https:' || url.hostname !== 'github.com' || url.port !== '') return false;
+	try {
+		const plain = new URL(GIT_HTTPS_PROMPT.exec(text)?.[1] ?? '');
+		return plain.hostname === 'github.com' && plain.port === '';
+	} catch {
+		return false;
+	}
 }
 
 /**
