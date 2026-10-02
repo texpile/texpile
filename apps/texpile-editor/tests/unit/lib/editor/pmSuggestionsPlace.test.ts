@@ -400,6 +400,29 @@ it('strikes only the Chinese word a change took, and the includes taken with it'
 	expect(doc.textBetween(typed.from, typed.to)).toBe('hello codex');
 });
 
+// a cut from inside a figure into a heading two blocks on: the figure's closing moved past both
+it('strikes the blocks a cut took from after a figure after the figure, where they stood', () => {
+	const source =
+		'\\documentclass{article}\n\\begin{document}\nBefore the figure.\n\n\\begin{figure}[h]\n    \\centering\n    \\includegraphics{a.png}\n' +
+		'\\caption{atting}\n\\end{figure}\n\nCompiling turns this source into a PDF.\n\\end{document}\n';
+	const end = source.indexOf('\\end{figure}');
+	const { doc, ranges } = placed(source, [
+		mark(source, 'caption', 'caption', 'end'),
+		mark(source, 'words', 'atting', 'figure'),
+		mark(source, 'paragraph', '', '\nThe visual editor parses your code.\n\n', end),
+		mark(source, 'section', 'end', 'section', end + 1),
+		mark(source, 'heading', 'figure', 'Compiling and formatting', end + 5)
+	]);
+	let figureEnd = -1;
+	doc.forEach((node, pos) => {
+		if (node.type.name === 'image') figureEnd = pos + node.nodeSize;
+	});
+	expect(ranges.filter((r) => r.gone).map((r) => [r.gone!.blocks.map((b: PMNode) => b.textContent).join(''), r.from])).toEqual([
+		['The visual editor parses your code.', figureEnd],
+		['Compiling and formatting', figureEnd]
+	]);
+});
+
 // most emoji share their first UTF-16 half, so the comparison saw only the second change
 it('draws an emoji replaced by another whole, not half of each', () => {
 	const source = '\\documentclass{article}\n\\begin{document}\nResults look good 😁 overall.\n\\end{document}\n';
