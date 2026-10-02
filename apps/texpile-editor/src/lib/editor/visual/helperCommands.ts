@@ -67,12 +67,19 @@ export function setHeadingLevel(level: number, numbered?: boolean): Command {
 // what one heading alone may carry: LaTeX's short title, a Typst <label> and the line end before it
 const OWN_HEADING_ATTRS = { shortTitle: null, label: null, labelGap: null };
 
-/** Enter inside a heading: the half after the caret takes no short title or label, which would then be written twice */
-export function splitHeadingWithoutDuplicates(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
-	const heading = state.selection.$from.parent;
-	if (heading.type.name !== 'heading' || !(heading.attrs.shortTitle || heading.attrs.label)) return false;
-	const own = Object.fromEntries(Object.entries(OWN_HEADING_ATTRS).filter(([name]) => name in heading.attrs));
-	// at the heading's start the first half is the empty line ProseMirror opens above it, and the heading keeps all it has
+/**
+ * Enter inside a heading or a figure's caption: the half after the caret takes no short title or label, which would
+ * then be written twice, and the words after the caret in a caption go to a paragraph after the figure, not a second one
+ */
+export function splitBlockWithoutDuplicates(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+	const block = state.selection.$from.parent;
+	if (block.type.name === 'image') {
+		const paragraph = state.schema.nodes.paragraph;
+		return splitBlockAs((_node, atEnd, $from) => (atEnd || $from.parentOffset === 0 ? null : { type: paragraph }))(state, dispatch);
+	}
+	if (block.type.name !== 'heading' || !(block.attrs.shortTitle || block.attrs.label)) return false;
+	const own = Object.fromEntries(Object.entries(OWN_HEADING_ATTRS).filter(([name]) => name in block.attrs));
+	// at the start the first half is the empty line ProseMirror opens above the block, which keeps all it has
 	return splitBlockAs((node, atEnd, $from) =>
 		atEnd || $from.parentOffset === 0 ? null : { type: node.type, attrs: { ...node.attrs, ...own } }
 	)(state, dispatch);

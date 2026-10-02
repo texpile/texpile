@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { EditorState, TextSelection, type Command } from 'prosemirror-state';
-import { setHeadingLevel, splitHeadingWithoutDuplicates } from '$lib/editor/visual/helperCommands';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
+import { setHeadingLevel, splitBlockWithoutDuplicates } from '$lib/editor/visual/helperCommands';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 
@@ -31,7 +32,7 @@ describe('the heading picker', () => {
 
 function enter(doc: Node, at: number): Node {
 	let state = EditorState.create({ doc, selection: TextSelection.create(doc, at) });
-	expect(splitHeadingWithoutDuplicates(state, (tr) => (state = state.apply(tr)))).toBe(true);
+	expect(splitBlockWithoutDuplicates(state, (tr) => (state = state.apply(tr)))).toBe(true);
 	return state.doc;
 }
 
@@ -55,5 +56,32 @@ describe('Enter inside a heading with a short title or a label', () => {
 		expect(serializeLatexFile(tex, enter(tex.doc, 1))).toContain('\\section[Short]{Long title words}');
 		const typ = parseTypstFile(typst);
 		expect(serializeTypstFile(typ, enter(typ.doc, 1))).toContain('== Methods used <sec:methods>');
+	});
+});
+
+describe('Enter inside a figure caption', () => {
+	const enterKey = chainCommands(splitBlockWithoutDuplicates, baseKeymap.Enter);
+	function press(doc: Node, at: number): Node {
+		let state = EditorState.create({ doc, selection: TextSelection.create(doc, at) });
+		expect(enterKey(state, (tr) => (state = state.apply(tr)))).toBe(true);
+		return state.doc;
+	}
+	const latex =
+		'\\documentclass{article}\n\\begin{document}\n\\begin{figure}\n\\centering\n\\includegraphics{a.png}\n\\caption{Long caption words}\\label{fig:a}\n\\end{figure}\n\\end{document}\n';
+	const typst = '#figure(image("a.png"), caption: [Long caption words]) <fig:a>\n\nSee @fig:a.\n';
+
+	it('keeps one figure: the words after the caret go to a paragraph after it', () => {
+		const tex = parseLatexFile(latex);
+		const out = serializeLatexFile(tex, press(tex.doc, 1 + 'Long caption'.length));
+		expect(out.split('\\includegraphics').length - 1).toBe(1);
+		expect(out.split('\\label{fig:a}').length - 1).toBe(1);
+		expect(out).toContain('\\caption{Long caption}');
+		const typ = parseTypstFile(typst);
+		const written = serializeTypstFile(typ, press(typ.doc, 1 + 'Long caption'.length));
+		expect(written.split('<fig:a>').length - 1).toBe(1);
+		expect(written).toContain('caption: [Long caption]');
+		const atStart = serializeLatexFile(tex, press(tex.doc, 1));
+		expect(atStart.split('\\label{fig:a}').length - 1).toBe(1);
+		expect(atStart).toContain('\\caption{Long caption words}');
 	});
 });
