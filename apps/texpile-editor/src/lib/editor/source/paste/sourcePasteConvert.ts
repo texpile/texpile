@@ -10,6 +10,7 @@ import { sliceToMarkdown } from '$lib/languages/markdown/visual/clipboard';
 import { cleanPastedHtml } from '$lib/editor/paste/pastedHtmlCleanup';
 import { looksLikeMarkdown, markdownSlice } from '$lib/editor/paste/markdownPaste';
 import { convertPastedMath, schemaMathSyntax } from '$lib/editor/paste/pastedMath';
+import { convertPastedRawBlocks } from '$lib/editor/paste/pastedRawBlocks';
 import { sliceWithKeptImages, type PasteDialect } from '$lib/editor/paste/pastedImages';
 import { tabSeparatedRows, type SourceClipboard } from './sourcePasteOptions';
 
@@ -37,6 +38,7 @@ function htmlSlice(html: string, dialect: PasteDialect): Slice {
 	const body = new DOMParser().parseFromString(cleanPastedHtml(html), 'text/html').body;
 	if (dialect === 'markdown') promoteHeaderRows(body);
 	convertPastedMath(body, schemaMathSyntax(LANGUAGES[dialect].schema));
+	if (dialect !== 'markdown') convertPastedRawBlocks(body, dialect);
 	return PMDOMParser.fromSchema(LANGUAGES[dialect].schema).parseSlice(body);
 }
 
