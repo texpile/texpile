@@ -1,6 +1,7 @@
 // The project's text files as a turn started, so its end can say which files the agent changed and what
 // each held before. Read from disk rather than taken from the agent's reports: a report shows a hunk, not
 // the whole file, and a file changed by a command the agent ran is never reported at all
+import { isUtf8 } from 'node:buffer';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import * as path from 'node:path';
 
@@ -61,7 +62,13 @@ export async function takeSnapshot(root: string, earlier?: TurnSnapshot): Promis
 			const known = earlier?.files.get(rel);
 			if (size > MOST_FILE_BYTES || (!known && total + size > MOST_TOTAL_BYTES)) continue;
 			total += size;
-			const text = known && known.size === size && known.mtimeMs === mtimeMs ? known.text : await readFile(full, 'utf8');
+			let text = known && known.size === size && known.mtimeMs === mtimeMs ? known.text : null;
+			if (text === null) {
+				const bytes = await readFile(full);
+				// Texpile writes UTF-8 only, so text decoded from any other encoding could not be put back
+				if (!isUtf8(bytes)) continue;
+				text = bytes.toString('utf8');
+			}
 			snapshot.files.set(rel, { size, mtimeMs, text });
 		} catch {
 			// gone between the listing and the read: not part of the project as the snapshot saw it
