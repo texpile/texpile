@@ -189,12 +189,11 @@ function writeAtoms(
     }
     let text: string;
     let end = i + 1;
-    if (atom.mode === 'text' && !isCode(atom)) {
+    if (isString(atom)) {
       // a run of text atoms is one string; a string the source started starts a new one
       while (
         end < list.length &&
-        list[end].mode === 'text' &&
-        !isCode(list[end]) &&
+        isString(list[end]) &&
         !list[end].typstSpelling?.str
       )
         end++;
@@ -364,7 +363,7 @@ function isCode(atom: Atom): boolean {
 }
 
 function isString(atom: Atom): boolean {
-  return atom.mode === 'text' && !isCode(atom);
+  return atom.mode === 'text' && !isCode(atom) && atom.command !== '\\emph';
 }
 
 const STRING_ESCAPES: Readonly<Record<string, string>> = {
@@ -548,6 +547,13 @@ function writeCore(
         typstOperator(atom.value ?? '', atom.subsupPlacement === 'over-under')
       );
   }
+  // the italic text LaTeX sets
+  if (command === '\\emph')
+    return writeCall(
+      'italic',
+      [writeBranch(atom.body ?? [], style, true, true)],
+      spelling
+    );
   if (TYPST_ACCENT_NAMES[command])
     return writeCall(
       accentName(command, spelling),

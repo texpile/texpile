@@ -720,10 +720,11 @@ defineFunction('em', '{:rest}', {
     atom.createBox(context, { classes: 'ML__emph', boxType: 'lift' }),
 });
 
-/* Note: in TeX, \emph is restricted to text mode. We extend it to math */
-defineFunction('emph', '{:auto}', {
+/* Note: in TeX, \emph is restricted to text mode. We extend it to math,
+   where its argument is still text, as LaTeX sets it */
+defineFunction('emph', '{:text}', {
   createAtom: (options) =>
-    new Atom({ ...options, body: argAtoms(options.args![1]) }),
+    new Atom({ ...options, body: argAtoms(options.args![0]) }),
   serialize: (atom, options) =>
     options.skipStyles
       ? atom.bodyToLatex(options)

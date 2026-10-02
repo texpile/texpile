@@ -255,6 +255,22 @@ describe('typst math in MathLive', () => {
     }
   });
 
+  it('writes \\emph as the italic text LaTeX sets, and back as typed', () => {
+    expect(convertLatexToTypst('\\emph{if}')).toBe('italic("if")');
+    expect(convertLatexToTypst('\\emph{a b}')).toBe('italic("a b")');
+    expect(convertLatexToTypst('\\text{see \\emph{this} too}')).toBe(
+      '"see "italic("this")" too"'
+    );
+    const root = new Atom({
+      type: 'root',
+      body: parseLatex('\\emph{a b} + y'),
+    });
+    replace(find(root, 'y'), 'z');
+    expect(Atom.serialize(root.body ?? [], { defaultMode: 'math' })).toBe(
+      '\\emph{a b}+z'
+    );
+  });
+
   it('writes every LaTeX command MathLive draws as Typst that parses', () => {
     for (const { insert } of getMathCommands('latex'))
       for (const arg of ['x', '']) {
