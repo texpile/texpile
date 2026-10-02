@@ -83,6 +83,39 @@ export function startFrom(snapshot: TurnSnapshot, rel: string, text: string): vo
 	snapshot.found.add(rel);
 }
 
+/** the files the snapshot has at `rel`, or under it when it is a folder */
+function filesAt(snapshot: TurnSnapshot, rel: string): string[] {
+	return [...snapshot.found].filter((p) => p === rel || p.startsWith(`${rel}/`));
+}
+
+/** what Texpile removed during the turn is not there to begin with */
+export function startWithout(snapshot: TurnSnapshot, rel: string): void {
+	for (const p of filesAt(snapshot, rel)) {
+		snapshot.found.delete(p);
+		snapshot.files.delete(p);
+	}
+}
+
+/** what Texpile renamed during the turn starts under its new name */
+export function startMoved(snapshot: TurnSnapshot, rel: string, to: string): void {
+	for (const p of filesAt(snapshot, rel)) {
+		const file = snapshot.files.get(p);
+		startWithout(snapshot, p);
+		const moved = to + p.slice(rel.length);
+		snapshot.found.add(moved);
+		if (file) snapshot.files.set(moved, file);
+	}
+}
+
+/** what Texpile made, copied in or brought back during the turn starts as the turn left it */
+export function startAdded(snapshot: TurnSnapshot, after: TurnSnapshot, rel: string): void {
+	for (const p of filesAt(after, rel)) {
+		snapshot.found.add(p);
+		const file = after.files.get(p);
+		if (file) snapshot.files.set(p, file);
+	}
+}
+
 export function changesBetween(before: TurnSnapshot, after: TurnSnapshot): TurnChange[] {
 	const changes: TurnChange[] = [];
 	for (const p of after.found) {

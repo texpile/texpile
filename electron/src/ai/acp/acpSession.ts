@@ -8,8 +8,17 @@ import * as acp from '@agentclientprotocol/sdk';
 import { killTree } from '../../shell/killTree';
 import { lastLine, startAgentProcess } from '../agentProcess';
 import { PermissionQueue, type PermissionEvent } from './acpPermissions';
-import { onOwnWrite } from './ownWrites';
-import { changesBetween, startFrom, takeSnapshot, type TurnChange, type TurnSnapshot } from './turnSnapshot';
+import { onOwnFileOp, onOwnWrite, type OwnFileOp } from './ownWrites';
+import {
+	changesBetween,
+	startAdded,
+	startFrom,
+	startMoved,
+	startWithout,
+	takeSnapshot,
+	type TurnChange,
+	type TurnSnapshot
+} from './turnSnapshot';
 
 export type AgentState = 'starting' | 'ready' | 'working' | 'signed-out' | 'failed';
 
@@ -128,11 +137,10 @@ export class AcpSession {
 		this.turning = true;
 		this.stopAsked = false;
 		this.o.emit({ type: 'state', state: 'working' });
-		const saved = new Map<string, string>();
-		const stopListening = onOwnWrite((p, text) => {
-			const rel = path.relative(this.o.root, p);
-			if (rel && !rel.startsWith('..') && !path.isAbsolute(rel)) saved.set(rel.split(path.sep).join('/'), text);
-		});
+		// in the order Texpile made them: a file saved and then renamed starts from the saved text under its new name
+		const own: (OwnFileOp | { kind: 'write'; path: string; text: string })[] = [];
+		const stopWrites = onOwnWrite((p, text) => own.push({ kind: 'write', path: p, text }));
+		const stopFileOps = onOwnFileOp((op) => own.push(op));
 		try {
 			const before = await takeSnapshot(this.o.root, this.known);
 			let outcome: { stopReason: string } | { error: string; signedOut: boolean };
@@ -146,15 +154,26 @@ export class AcpSession {
 			}
 			const after = await takeSnapshot(this.o.root, before);
 			this.known = after;
-			// a file the snapshot skips (.texpile, another extension, too large) has no start for the reader's save to move
-			for (const [rel, text] of saved)
-				if (after.files.has(rel) || (before.found.has(rel) && !after.found.has(rel))) startFrom(before, rel, text);
+			for (const change of own) {
+				const rel = this.relative(change.path);
+				if (rel === null) continue;
+				if (change.kind === 'write') {
+					// a file the snapshot skips (.texpile, another extension, too large) has no start for the reader's save to move
+					if (after.files.has(rel) || (before.found.has(rel) && !after.found.has(rel))) startFrom(before, rel, change.text);
+				} else if (change.kind === 'remove') startWithout(before, rel);
+				else if (change.kind === 'add') startAdded(before, after, rel);
+				else {
+					const to = this.relative(change.to);
+					if (to !== null) startMoved(before, rel, to);
+				}
+			}
 			const changes = changesBetween(before, after).map((c) => ({ ...c, path: path.join(this.o.root, c.path) }));
 			if ('signedOut' in outcome && outcome.signedOut) this.o.emit({ type: 'state', state: 'signed-out' });
 			else if (!this.closing) this.o.emit({ type: 'state', state: 'ready' });
 			return 'stopReason' in outcome ? { ok: true, stopReason: outcome.stopReason, changes } : { ok: false, error: outcome.error, changes };
 		} finally {
-			stopListening();
+			stopWrites();
+			stopFileOps();
 			this.turning = false;
 		}
 	}
@@ -226,6 +245,12 @@ export class AcpSession {
 		this.permissions.cancelAll();
 		this.connection?.close();
 		if (this.child?.pid) killTree(this.child.pid);
+	}
+
+	/** with forward slashes, as the snapshot has it; null outside the folder */
+	private relative(p: string): string | null {
+		const rel = path.relative(this.o.root, p);
+		return rel && !rel.startsWith('..') && !path.isAbsolute(rel) ? rel.split(path.sep).join('/') : null;
 	}
 
 	private failed(detail: string): void {

@@ -1,14 +1,34 @@
-import { it, expect, afterAll } from 'vitest';
+import { it, expect, afterAll, vi } from 'vitest';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { AcpSession, type AcpEvent } from '../../../../../../electron/src/ai/acp/acpSession';
 import { noteOwnWrite } from '../../../../../../electron/src/ai/acp/ownWrites';
+import { registerFsIpc } from '../../../../../../electron/src/ipc/fsIpc';
+
+// the file tree's operations go through the real fs:* handlers; Electron is stood in for
+const h = vi.hoisted(() => ({ handlers: new Map<string, (...args: unknown[]) => Promise<{ ok: boolean }>>(), userData: '' }));
+vi.mock('electron', async () => {
+	const { rm } = await import('node:fs/promises');
+	return {
+		app: { getPath: () => h.userData },
+		BrowserWindow: { fromWebContents: () => null },
+		dialog: {},
+		ipcMain: { handle: (channel: string, fn: (...args: unknown[]) => Promise<{ ok: boolean }>) => h.handlers.set(channel, fn) },
+		shell: { trashItem: (p: string) => rm(p, { recursive: true }) }
+	};
+});
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'texpile acp '));
+h.userData = path.join(dir, 'user data');
+registerFsIpc();
 afterAll(() => fs.rmSync(dir, { recursive: true, force: true }));
 
-// an ACP agent over JSON lines: asks before it edits main.tex in its folder, or wants a sign-in first
+async function fsCall(channel: string, body: unknown): Promise<void> {
+	expect(await h.handlers.get(channel)!({}, body)).toMatchObject({ ok: true });
+}
+
+// an ACP agent over JSON lines: asks before it edits main.tex (and deletes old.tex) in its folder, or wants a sign-in first
 function fakeAgent(name: string, wantsSignIn: boolean): string {
 	const file = path.join(dir, name);
 	fs.writeFileSync(
@@ -30,7 +50,10 @@ function fakeAgent(name: string, wantsSignIn: boolean): string {
 					send({ id: 'ask', method: 'session/request_permission', params: { sessionId: 's1', toolCall: { toolCallId: 't1', title: 'Edit main.tex' },
 						options: [{ optionId: 'yes', name: 'Allow', kind: 'allow_once' }, { optionId: 'no', name: 'Reject', kind: 'reject_once' }] } });
 				} else if (msg.id === 'ask') {
-					if (msg.result.outcome.optionId === 'yes') fs.writeFileSync('main.tex', 'new text');
+					if (msg.result.outcome.optionId === 'yes') {
+						fs.writeFileSync('main.tex', 'new text');
+						fs.rmSync('old.tex', { force: true });
+					}
 					send({ method: 'session/update', params: { sessionId: 's1', update: { sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'Done.' } } } });
 					send({ id: prompt, result: { stopReason: 'end_turn' } });
 				}
@@ -41,7 +64,7 @@ function fakeAgent(name: string, wantsSignIn: boolean): string {
 }
 
 // `whileAsking` runs as the agent waits on its question, in the middle of the turn
-function session(name: string, wantsSignIn: boolean, root: string, events: AcpEvent[], whileAsking = () => {}): AcpSession {
+function session(name: string, wantsSignIn: boolean, root: string, events: AcpEvent[], whileAsking: () => unknown = () => {}): AcpSession {
 	const s: AcpSession = new AcpSession({
 		program: process.execPath,
 		args: [fakeAgent(name, wantsSignIn)],
@@ -52,8 +75,7 @@ function session(name: string, wantsSignIn: boolean, root: string, events: AcpEv
 		emit: (e) => {
 			events.push(e);
 			if (e.type !== 'permission') return;
-			whileAsking();
-			s.answer(e.id, 'yes');
+			void Promise.resolve(whileAsking()).then(() => s.answer(e.id, 'yes'));
 		}
 	});
 	return s;
@@ -128,4 +150,55 @@ it('sends no prompt when Stop comes while the turn is still reading the folder',
 	s.close();
 	expect(result).toEqual({ ok: true, stopReason: 'cancelled', changes: [] });
 	expect(fs.readFileSync(path.join(root, 'main.tex'), 'utf8')).toBe('old text');
+});
+
+function project(name: string, files: Record<string, string>): string {
+	const root = fs.mkdtempSync(path.join(dir, `${name} `));
+	for (const [file, text] of Object.entries({ 'main.tex': 'old text', ...files })) {
+		fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
+		fs.writeFileSync(path.join(root, file), text);
+	}
+	return root;
+}
+
+it('leaves out what the reader deleted from the file tree during the turn, and still lists what the agent deleted', async () => {
+	const root = project('deleted', { 'old.tex': 'the agent deletes this', 'notes.tex': 'n', 'figs.tex': 'f', 'parts/a.tex': 'a' });
+	const s = session('deleted.cjs', false, root, [], async () => {
+		await fsCall('fs:op', { action: 'delete', path: path.join(root, 'notes.tex') });
+		await fsCall('fs:trash', { path: path.join(root, 'figs.tex'), root });
+		await fsCall('fs:op', { action: 'delete', path: path.join(root, 'parts') });
+	});
+	await s.start();
+	const result = await s.prompt([{ type: 'text', text: 'fix it' }]);
+	s.close();
+	expect(result.changes).toEqual([
+		{ path: path.join(root, 'main.tex'), kind: 'modified', before: 'old text' },
+		{ path: path.join(root, 'old.tex'), kind: 'deleted', before: 'the agent deletes this' }
+	]);
+});
+
+it('reads a file or a folder the reader renamed during the turn as neither deleted nor added', async () => {
+	const root = project('renamed', { 'draft.tex': 'd', 'parts/a.tex': 'a' });
+	const s = session('renamed.cjs', false, root, [], async () => {
+		await fsCall('fs:op', { action: 'rename', from: path.join(root, 'draft.tex'), to: path.join(root, 'final.tex') });
+		await fsCall('fs:op', { action: 'rename', from: path.join(root, 'parts'), to: path.join(root, 'chapters') });
+	});
+	await s.start();
+	const result = await s.prompt([{ type: 'text', text: 'fix it' }]);
+	s.close();
+	expect(result.changes).toEqual([{ path: path.join(root, 'main.tex'), kind: 'modified', before: 'old text' }]);
+});
+
+it('reads a file the reader made, copied in or brought back during the turn as theirs, not as added by the agent', async () => {
+	const root = project('added', {});
+	const elsewhere = project('elsewhere', { 'extra/c.tex': 'c', 'backup.tex': 'kept by undo' });
+	const s = session('added.cjs', false, root, [], async () => {
+		await fsCall('fs:op', { action: 'create', path: path.join(root, 'new.tex'), type: 'file', content: '' });
+		await fsCall('fs:op', { action: 'copy', from: path.join(elsewhere, 'extra'), to: path.join(root, 'extra') });
+		await fsCall('fs:op', { action: 'restore', from: path.join(elsewhere, 'backup.tex'), to: path.join(root, 'restored.tex') });
+	});
+	await s.start();
+	const result = await s.prompt([{ type: 'text', text: 'fix it' }]);
+	s.close();
+	expect(result.changes).toEqual([{ path: path.join(root, 'main.tex'), kind: 'modified', before: 'old text' }]);
 });
