@@ -160,8 +160,9 @@ export function isMathLatexEmpty(rawValue: string): boolean {
 	}
 
 	const strippedValue = rawValue
-		// drop envs whose body is only whitespace, &, or \\
-		.replace(/\\begin\{([^}]+)\}[\s&\\]*\\end\{\1\}/g, '')
+		// drop envs whose body is only whitespace, &, or \\ (a name of letters, so `\begin{{` is not
+		// read to the end once for each)
+		.replace(/\\begin\{([a-zA-Z]+\*?)\}[\s&\\]*\\end\{\1\}/g, '')
 		.replace(/&/g, '')
 		.replace(/\\\\/g, '')
 		.trim();

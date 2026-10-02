@@ -10,8 +10,9 @@ import type { MathSyntax } from './mathFieldFactory';
 // `\ ` is a control SYMBOL (a real interword space) and never matches: the class needs a letter
 const CONTROL_WORD_GAP = /(\\[a-zA-Z@]+)[ \t]+/g;
 
-// a slot of a fraction, a matrix or the like left empty; only MathLive knows \placeholder
-const EMPTY_SLOT = /\\placeholder(?:\[[^\]]*\])?\{\}/;
+// a slot of a fraction, a matrix or the like left empty; only MathLive knows \placeholder. Its id
+// stops at a backslash, so a run of unclosed ones is not read to the end once for each
+const EMPTY_SLOT = /\\placeholder(?:\[[^\]\\]*\])?\{\}/;
 
 /** `latex` with its empty slots left empty, a space kept where one would run a control word into a letter */
 export function withoutEmptySlots(latex: string): string {

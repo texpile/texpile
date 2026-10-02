@@ -173,8 +173,9 @@ function readBuiltin(
     const text = sourceOf(r, parts[0][0]).slice(1, -1);
     if (!/^[\w\s.'-]*$/.test(text)) return undefined;
     const limits = isTrue(args.values.limits);
-    // a space in the name is kept, as math would drop a plain one
-    const name = text.replace(/ /g, '\\ ');
+    // a space in the name is kept, as math would drop a plain one (the test above leaves no
+    // backslash or brace to escape)
+    const name = text.split(' ').join('\\ ');
     return parseLatex(`\\operatorname${limits ? '*' : ''}{${name}}`, {
       style: r.style,
     })[0];
