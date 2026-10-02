@@ -255,7 +255,7 @@ export class SuggestionsController {
 	async accept(t: CommentThread): Promise<void> {
 		if (!isOpenSuggestion(t)) return;
 		await this.settle();
-		await this.decide(t, 'accepted');
+		await this.deps.commit(...(await this.anchorNow(t.file, t.id)), await this.decision(t, 'accepted'));
 		this.drop(t.file, t.id);
 		if (t.file !== this.deps.activeFile()) return;
 		this.accepts.set(++this.acceptSeq, { file: t.file, thread: t });
@@ -267,7 +267,8 @@ export class SuggestionsController {
 		const a = this.accepts.get(seq);
 		if (!a) return;
 		await this.settle();
-		await this.deps.commit(await this.decision(a.thread, undone ? undefined : 'accepted'));
+		const moved = undone ? [] : await this.anchorNow(a.file, a.thread.id);
+		await this.deps.commit(...moved, await this.decision(a.thread, undone ? undefined : 'accepted'));
 		if (!undone) return this.drop(a.file, a.thread.id);
 		if (this.states.has(a.file)) this.refit(a.file);
 	}
@@ -435,8 +436,13 @@ export class SuggestionsController {
 		if (events.length) this.deps.store.stage(...events);
 	}
 
-	private async decide(t: CommentThread, decision: SuggestionDecision): Promise<void> {
-		await this.deps.commit(await this.decision(t, decision));
+	// where an accepted suggestion stands as it leaves the file, so an undo of the Accept finds it there again
+	private async anchorNow(file: string, id: string): Promise<CommentEvent[]> {
+		const state = file === this.deps.activeFile() ? this.states.get(file) : undefined;
+		if (!state) return [];
+		const by = await this.deps.author();
+		const moved = movedAnchorEvents(state.text, state.placed, this.deps.store.forFile(file), by);
+		return moved.filter((e) => e.t === 'anchor' && e.thread === id);
 	}
 
 	private async decision(t: CommentThread, decision: SuggestionDecision | undefined): Promise<CommentEvent> {

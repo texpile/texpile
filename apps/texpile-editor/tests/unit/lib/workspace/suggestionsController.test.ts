@@ -199,6 +199,22 @@ describe('a suggestion in the file', () => {
 		]);
 	});
 
+	it('brings an accepted suggestion back placed when the Accept is undone after an unsaved edit beside it', async () => {
+		disk['.texpile/comments.jsonl'] = serializeLog([suggestion('s1', TEXT, 'sharp', 'reliable')]);
+		const { ctl, open, type } = make(TEXT);
+		await open();
+		const edited = TEXT.replace('estimator', 'estimate');
+		type(edited);
+		ctl.suggestions.textChanged(FILE, edited);
+		await ctl.suggestions.settle();
+		const thread = () => ctl.threads.find((t) => t.id === 's1')!;
+		await ctl.suggestions.accept(thread());
+
+		await ctl.suggestions.revisitAccept(1, true);
+		expect(ctl.orphaned.has('s1')).toBe(false);
+		expect(activeSuggestions.current.map((s) => [s.id, edited.slice(s.from, s.to), s.restore])).toEqual([['s1', 'sharp', 'reliable']]);
+	});
+
 	it('keeps what was typed when the folder changes, and drops it when the edit is thrown away', async () => {
 		const after = TEXT.replace('sharp', 'tight');
 		const kept = make(TEXT, 'suggesting');
