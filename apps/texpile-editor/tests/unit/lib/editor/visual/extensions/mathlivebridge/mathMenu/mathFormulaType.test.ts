@@ -95,6 +95,16 @@ describe('setting a LaTeX display', () => {
 		}
 	});
 
+	it('counts the lines of a cases inside an equation set as an align as one line, with one label', () => {
+		const src =
+			'\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\begin{equation}\\label{eq:f}\nf(x) = \\begin{cases} 1 & x > 0 \\\\ 0 & \\text{else} \\end{cases}\n\\end{equation}\n\\end{document}\n';
+		const { source } = edit(latex, src, 'block_math', (state, pos) => setDisplayKind(state, pos, 'align'));
+		const align = /\\begin\{align\}[\s\S]*?\\end\{align\}/.exec(source)![0];
+		// amsmath stops on a second \label in one row
+		expect(align.match(/\\label\{/g)).toHaveLength(1);
+		expect(align).toMatch(/\\end\{cases\} \\label\{eq:f\}/);
+	});
+
 	it('gives a numbered display it sets as one equation a label to be referenced by', () => {
 		const src =
 			'\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\begin{align}\na &= b \\\\ c &= d\n\\end{align}\n\\end{document}\n';

@@ -2,6 +2,7 @@
 // block_math node's attrs follow the latex source as it is edited.
 import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
+import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
 
 const PER_LINE_ENVIRONMENTS = ['align', 'gather', 'alignat', 'eqnarray'] as const;
 export const SINGLE_LABEL_ENVIRONMENTS = ['multline'] as const;
@@ -37,8 +38,10 @@ export function detectMultilineEnvironment(latex: string): EnvironmentDetection 
 }
 
 function countEnvironmentLines(latex: string): number {
-	const matches = latex.match(/\\\\/g);
-	return matches ? matches.length + 1 : 1;
+	const open = /\\begin\{[^}]*\}(\{[^}]*\})?/.exec(latex);
+	const from = open ? open.index + open[0].length : 0;
+	const to = latex.lastIndexOf('\\end{');
+	return (splitRows(latex.slice(from, to > from ? to : latex.length)).length + 1) / 2;
 }
 
 /**
