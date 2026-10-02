@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { EditorState, TextSelection, type Command } from 'prosemirror-state';
-import { setHeadingLevel, splitShortTitledHeading } from '$lib/editor/visual/helperCommands';
+import { setHeadingLevel, splitHeadingWithoutDuplicates } from '$lib/editor/visual/helperCommands';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 
@@ -29,16 +29,31 @@ describe('the heading picker', () => {
 	});
 });
 
-describe('Enter in the middle of a heading with a short title', () => {
-	it('gives the second half no short title of its own', () => {
-		const parsed = parseLatexFile(
-			'\\documentclass{article}\n\\begin{document}\n\\section[Short]{Long title words}\nBody.\n\\end{document}\n'
-		);
-		const at = 1 + 'Long title'.length;
-		let state = EditorState.create({ doc: parsed.doc, selection: TextSelection.create(parsed.doc, at) });
-		expect(splitShortTitledHeading(state, (tr) => (state = state.apply(tr)))).toBe(true);
-		const out = serializeLatexFile(parsed, state.doc);
+function enter(doc: Node, at: number): Node {
+	let state = EditorState.create({ doc, selection: TextSelection.create(doc, at) });
+	expect(splitHeadingWithoutDuplicates(state, (tr) => (state = state.apply(tr)))).toBe(true);
+	return state.doc;
+}
+
+describe('Enter inside a heading with a short title or a label', () => {
+	const latex = '\\documentclass{article}\n\\begin{document}\n\\section[Short]{Long title words}\nBody.\n\\end{document}\n';
+	const typst = '== Methods used <sec:methods>\n\nAs shown in @sec:methods.\n';
+
+	it('gives the half after the caret no short title or label of its own', () => {
+		const tex = parseLatexFile(latex);
+		const out = serializeLatexFile(tex, enter(tex.doc, 1 + 'Long title'.length));
 		expect(out).toContain('\\section[Short]{Long title}');
 		expect(out.split('[Short]').length - 1).toBe(1);
+		const typ = parseTypstFile(typst);
+		const written = serializeTypstFile(typ, enter(typ.doc, 1 + 'Methods'.length));
+		expect(written).toContain('== Methods <sec:methods>');
+		expect(written.split('<sec:methods>').length - 1).toBe(1);
+	});
+
+	it('leaves them on the heading when Enter at its start opens a line above it', () => {
+		const tex = parseLatexFile(latex);
+		expect(serializeLatexFile(tex, enter(tex.doc, 1))).toContain('\\section[Short]{Long title words}');
+		const typ = parseTypstFile(typst);
+		expect(serializeTypstFile(typ, enter(typ.doc, 1))).toContain('== Methods used <sec:methods>');
 	});
 });
