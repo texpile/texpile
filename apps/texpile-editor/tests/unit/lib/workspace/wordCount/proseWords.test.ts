@@ -41,6 +41,16 @@ Three more words.
 		expect(latexCount(tex, true).words).toMatchObject({ body: 5, headings: 0 });
 	});
 
+	it('leaves out the title when the \\maketitle that would print it is commented out', () => {
+		const tex = String.raw`\documentclass{article}
+\title{Deep Residual Learning}
+\begin{document}
+% \maketitle
+Two words.
+\end{document}`;
+		expect(latexCount(tex, true).words).toMatchObject({ body: 2, headings: 0 });
+	});
+
 	it('counts the title \\maketitle prints as a heading', () => {
 		const tex = String.raw`\documentclass{article}
 \title{Deep Residual Learning}

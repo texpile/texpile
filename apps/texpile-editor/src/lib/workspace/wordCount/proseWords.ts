@@ -121,7 +121,7 @@ function latexText(source: string, main: boolean): { text: string; regions: Regi
 			let preamble = ' '.repeat(from);
 			const title = /\\title\s*(?:\[[^\]]*\])?\s*\{/.exec(code.slice(0, from));
 			const titleEnd = title ? closing(src, title.index + title[0].length - 1) : -1;
-			if (title && titleEnd > 0 && /\\maketitle\b/.test(body))
+			if (title && titleEnd > 0 && /\\maketitle\b/.test(code.slice(from, end < 0 ? undefined : end)))
 				preamble = preamble.slice(0, title.index) + src.slice(title.index, titleEnd + 1) + preamble.slice(titleEnd + 1);
 			src = preamble + body;
 		}
