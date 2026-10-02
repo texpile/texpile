@@ -2,7 +2,6 @@
 // file as it was in one, and the two ways a version is written, Save version and Restore. Split
 // from gitService.ts, whose repo-root resolution and command factory it shares; the helper process
 // serves both (helper/helperWorker.ts).
-import { dirname } from 'node:path';
 import type { SimpleGit } from 'simple-git';
 import {
 	git,
@@ -12,6 +11,7 @@ import {
 	resolveRepoRoot,
 	retryLocked,
 	markGitMissing,
+	folderOnDisk,
 	type GitShowResult,
 	type GitOpResult
 } from '../gitService';
@@ -258,7 +258,7 @@ async function showFile(repo: RepoPaths, absPath: string, ref: string): Promise<
 export async function gitShowAt(absPath: string, ref: string): Promise<GitShowResult> {
 	if (!absPath) return { ok: false, hasHead: false, error: 'Missing path' };
 	if (!isShowableRef(ref)) return { ok: false, hasHead: false, error: 'Invalid revision' };
-	const rr = await resolveRepoRoot(dirname(absPath));
+	const rr = await resolveRepoRoot(folderOnDisk(absPath));
 	if (!rr.repo) return { ok: false, hasHead: false, reason: rr.reason };
 	return showFile(rr.repo, absPath, ref);
 }

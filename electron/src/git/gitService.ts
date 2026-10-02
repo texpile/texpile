@@ -374,10 +374,17 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 	}
 }
 
+/** the file's folder, or the nearest above it still on disk: a folder deleted since finds no repository */
+export function folderOnDisk(absPath: string): string {
+	let dir = dirname(absPath);
+	while (!existsSync(dir) && dirname(dir) !== dir) dir = dirname(dir);
+	return dir;
+}
+
 /** committed (HEAD) contents of a file, for diffing against the working copy. */
 export async function gitShowHead(absPath: string): Promise<GitShowResult> {
 	if (!absPath) return { ok: false, hasHead: false, error: 'Missing path' };
-	const rr = await resolveRepoRoot(dirname(absPath));
+	const rr = await resolveRepoRoot(folderOnDisk(absPath));
 	if (!rr.repo) return { ok: false, hasHead: false, reason: rr.reason };
 	const repo = rr.repo;
 	try {
