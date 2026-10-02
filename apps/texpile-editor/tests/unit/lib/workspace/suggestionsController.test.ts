@@ -289,6 +289,31 @@ describe('a suggestion in the file', () => {
 		expect(logged().some((e) => e.t === 'open' && e.restore !== undefined)).toBe(false);
 	});
 
+	it('takes back a suggestion the log took early when the edit is thrown away', async () => {
+		const at = TEXT.indexOf('estimator');
+		disk['.texpile/comments.jsonl'] = serializeLog([
+			openEvent({ id: 'c1', file: 'main.tex', anchor: buildAnchor(TEXT, at, at + 9), body: 'which one?', by: 'mei', at: 'now' })
+		]);
+		const { ctl, open, type } = make(TEXT, 'suggesting');
+		await open();
+		const after = TEXT.replace('sharp', 'tight');
+		type(after);
+		ctl.suggestions.textChanged(FILE, after);
+		await ctl.suggestions.settle();
+		// a reply while the edit is unsaved writes the log, the suggestion with it
+		await ctl.reply(
+			ctl.threads.find((t) => t.id === 'c1')!,
+			'the first'
+		);
+		// Don't Save: the file keeps what is on disk
+		await ctl.suggestions.discardUnsaved('main.tex');
+
+		const again = make(TEXT, 'suggesting');
+		await again.open();
+		expect(again.ctl.threads.filter((t) => t.restore !== undefined && !t.resolved)).toEqual([]);
+		expect(again.ctl.threads.map((t) => t.id)).toEqual(['c1']);
+	});
+
 	it('shows what is typed while suggesting as soon as typing starts', async () => {
 		const { ctl, open, type } = make(TEXT, 'suggesting');
 		await open();

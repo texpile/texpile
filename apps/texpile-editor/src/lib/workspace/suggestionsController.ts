@@ -204,6 +204,7 @@ export class SuggestionsController {
 		await this.chain;
 		await this.recordAnchors(file, content);
 		if (this.deps.store.hasStaged) await this.deps.store.append();
+		this.deps.store.saved(file);
 	}
 
 	/** someone else rejected `id`; the words it puts back arrive as their edit, which is that Reject and not a new change */
@@ -218,23 +219,23 @@ export class SuggestionsController {
 		const state = this.states.get(file);
 		if (state?.text === content && state.placed.length) {
 			const by = await this.deps.author();
-			this.stage(movedAnchorEvents(content, state.placed, this.deps.store.forFile(file), by));
+			this.deps.store.stage(...movedAnchorEvents(content, state.placed, this.deps.store.forFile(file), by));
 		}
 	}
 
 	async adoptDisk(file: string, text: string): Promise<void> {
-		if (this.deps.store.hasStagedFor(file)) {
-			this.discardUnsaved(file);
-			return;
-		}
+		if (this.deps.store.hasStagedFor(file)) return this.discardUnsaved(file);
 		await this.run(file, text, 'editing', 'paragraphs');
 		if (this.deps.store.hasStaged) await this.deps.store.append();
+		this.deps.store.saved(file);
 	}
 
-	discardUnsaved(file: string): void {
+	async discardUnsaved(file: string): Promise<void> {
 		this.deps.store.discardStaged(file);
 		this.states.delete(file);
 		if (this.seen?.file === file) this.gestures = [];
+		const back = this.deps.store.takeBack(file, await this.deps.author());
+		if (back.length) await this.deps.commit(...back);
 	}
 
 	async finish(): Promise<void> {
@@ -394,7 +395,7 @@ export class SuggestionsController {
 		for (const c of r.changes)
 			if (agent && (c.t === 'open' || c.t === 'revise') && r.placed.some((s) => s.id === c.id && s.author === author))
 				agent.opened.push(c.id);
-		this.stage(changeEvents(file, after, r, author, agent?.note ?? '', this.deps.store.threads));
+		this.deps.store.stage(...changeEvents(file, after, r, author, agent?.note ?? '', this.deps.store.threads));
 		if (file === this.deps.activeFile()) this.show(after, r.placed);
 	}
 
@@ -423,7 +424,7 @@ export class SuggestionsController {
 		const now = undone ? r.open : rejectedAgain(state, r.thread.id, after)!;
 		if (!undone) Object.assign(r, { open: state, rejected: now });
 		this.states.set(file, now);
-		this.stage([event]);
+		this.deps.store.stage(event);
 		if (file === this.deps.activeFile()) this.show(now.text, now.placed);
 		return true;
 	}
@@ -434,10 +435,6 @@ export class SuggestionsController {
 		const now = this.states.get(file)!;
 		if (file === this.deps.activeFile()) this.show(now.text, now.placed);
 		this.deps.onLost?.(file, lost);
-	}
-
-	private stage(events: CommentEvent[]): void {
-		if (events.length) this.deps.store.stage(...events);
 	}
 
 	// where an accepted suggestion stands as it leaves the file, so an undo of the Accept finds it there again

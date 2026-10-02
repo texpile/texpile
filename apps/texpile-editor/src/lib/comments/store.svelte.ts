@@ -12,7 +12,7 @@
 import { readTextFile, writeTextFile } from '$lib/workspace/fileSystem';
 import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { foldLog, parseLog, type CommentEvent, type CommentThread } from './log';
-import { collapseStaged } from './stagedEvents';
+import { collapseStaged, thrownBack } from './stagedEvents';
 
 function keptLines(text: string): string[] {
 	return text
@@ -61,6 +61,9 @@ export class CommentStore {
 	private onDisk = new Set<string>();
 	private writesQueued = 0;
 	private writesDone = 0;
+	/** each thread staged since its file was last saved, as it stood before, null for one staging made: a write of
+	 *  the log takes staged events early (a reply), and what of it the typing thrown away had changed goes back */
+	private beforeTyping = new Map<string, CommentThread | null>();
 
 	/** stale-load guard: reloads fire on every save (the fs watcher reports our own writes) and
 	 *  an older read landing after a newer one would publish stale threads */
@@ -83,6 +86,7 @@ export class CommentStore {
 			this.lines = [];
 			this.events = [];
 			this.onDisk = new Set();
+			this.beforeTyping.clear();
 		}
 		this.root = root;
 		const path = root ? this.path(root) : null;
@@ -140,6 +144,8 @@ export class CommentStore {
 
 	stage(...events: CommentEvent[]): void {
 		if (events.length === 0) return;
+		for (const id of events.map(threadOf))
+			if (!this.beforeTyping.has(id)) this.beforeTyping.set(id, this.threads.find((t) => t.id === id) ?? null);
 		if (this.share) return this.stageShared(events);
 		this.staged = [...this.staged, ...events];
 		this.threads = foldLog([...this.events, ...this.staged]);
@@ -149,9 +155,23 @@ export class CommentStore {
 		return this.share ? this.unsaved.length > 0 : this.staged.length > 0;
 	}
 
+	/** staged for `file`, or written early since its last save */
 	hasStagedFor(file: string): boolean {
 		const ids = this.idsOn(file);
-		return this.pending().some((e) => ids.has(threadOf(e)));
+		return [...this.pending().map(threadOf), ...this.beforeTyping.keys()].some((id) => ids.has(id));
+	}
+
+	/** `file` is on disk as it was staged */
+	saved(file: string): void {
+		for (const id of this.idsOn(file)) this.beforeTyping.delete(id);
+	}
+
+	/** what puts back the threads on `file` a write took early of staged events now discarded */
+	takeBack(file: string, by: string): CommentEvent[] {
+		const ids = this.idsOn(file);
+		const before = new Map([...this.beforeTyping].filter(([id]) => ids.has(id)));
+		for (const id of before.keys()) this.beforeTyping.delete(id);
+		return thrownBack(before, this.threads, by);
 	}
 
 	discardStaged(file: string): boolean {

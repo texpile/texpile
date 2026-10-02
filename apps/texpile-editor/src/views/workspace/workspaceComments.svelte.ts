@@ -242,7 +242,7 @@ export class WorkspaceComments {
 
 	discarded(absPath: string): void {
 		const root = workspaceRoot.current;
-		if (root) this.ctl.suggestions.discardUnsaved(relativeTo(root, absPath));
+		if (root) void this.ctl.suggestions.discardUnsaved(relativeTo(root, absPath));
 	}
 
 	async adoptDisk(): Promise<void> {

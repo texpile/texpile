@@ -125,6 +125,32 @@ it('keeps every thread when a read lands short while its own write is under way'
 	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['c1', 'c2']);
 });
 
+// Don't Save after a reply wrote the log while the file had unsaved suggestions
+it('puts back what a write took early of staged events thrown away, and nothing once the file is saved', async () => {
+	const text = 'We prove the estimator is sharp for smooth solutions.';
+	const saved = buildAnchor(text, 26, 31);
+	const open = openEvent({ id: 's', file: 'main.tex', by: 'ana', body: '', anchor: saved, at: 'then', restore: 'blunt' });
+	disk = JSON.stringify(open) + '\n';
+	const store = new CommentStore();
+	await store.load('/w');
+	const typing = () =>
+		store.stage(
+			anchorEvent({ thread: 's', anchor: buildAnchor(text, 26, 35), restore: 'blunt fo', by: 'ana', at: 'now' }),
+			openEvent({ id: 'x', file: 'main.tex', by: 'ana', body: '', anchor: buildAnchor(text, 0, 2), at: 'now', restore: 'Here' })
+		);
+	typing();
+	await store.append(replyEvent({ id: 'm1', thread: 's', by: 'bo', body: 'ok', at: 'now' }));
+	store.discardStaged('main.tex');
+	await store.append(...store.takeBack('main.tex', 'ana'));
+	const back = foldLog(parseLog(disk));
+	expect(back.map((t) => [t.id, t.anchor, t.restore])).toEqual([['s', saved, 'blunt']]);
+
+	typing();
+	await store.append(replyEvent({ id: 'm2', thread: 's', by: 'bo', body: 'ok', at: 'now' }));
+	store.saved('main.tex');
+	expect(store.takeBack('main.tex', 'ana')).toEqual([]);
+});
+
 /** deterministic PRNG (mulberry32) so a failure reproduces byte-for-byte */
 function rng(seed: number): () => number {
 	let a = seed;
