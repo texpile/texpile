@@ -15,7 +15,7 @@ import { commonEnds } from '$lib/comments/suggestHunks';
 import { activeSuggestions, takeEditedPlaces, takeTypedSides, type EditedPlaces } from '$lib/comments/activeSuggestions.svelte';
 import type { CommentStore } from '$lib/comments/store.svelte';
 import { changeEvents, movedAnchorEvents } from './suggestionEvents';
-import { placedBehind, rejectedAgain, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
+import { placedAgain, placedBehind, rejectedAgain, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
 import type { ExpectedReject, FileState, RemoteEdit } from './suggestionStates';
 
 const SPACE_WAIT_MS = 1000;
@@ -44,8 +44,8 @@ const REJECTS_KEPT = 100;
 /** the file just before (`open`) and just after (`rejected`) a Reject */
 type UndoableReject = { file: string; thread: CommentThread; open: FileState; rejected: FileState };
 
-/** an Accept the editors' undo can take back */
-type UndoableAccept = { file: string; thread: CommentThread };
+/** an Accept the editors' undo can take back, and where the suggestion stood */
+type UndoableAccept = { file: string; thread: CommentThread; at?: PlacedSuggestion };
 
 /** an edit recorded for someone other than the reader: `gestures` is where it landed, `opened` the suggestions it made or revised */
 type AgentEdit = { by: string; note: string; gestures: TextSpan[]; opened: string[] };
@@ -255,10 +255,11 @@ export class SuggestionsController {
 	async accept(t: CommentThread): Promise<void> {
 		if (!isOpenSuggestion(t)) return;
 		await this.settle();
+		const at = this.states.get(t.file)?.placed.find((s) => s.id === t.id);
 		await this.deps.commit(...(await this.anchorNow(t.file, t.id)), await this.decision(t, 'accepted'));
 		this.drop(t.file, t.id);
 		if (t.file !== this.deps.activeFile()) return;
-		this.accepts.set(++this.acceptSeq, { file: t.file, thread: t });
+		this.accepts.set(++this.acceptSeq, { file: t.file, thread: t, at });
 		this.deps.markDecision?.(this.acceptSeq);
 	}
 
@@ -267,6 +268,8 @@ export class SuggestionsController {
 		const a = this.accepts.get(seq);
 		if (!a) return;
 		await this.settle();
+		const again = undone ? undefined : placedAgain(this.states.get(a.file), a.thread.id, a.at);
+		if (again) a.thread = this.deps.store.threads.find((t) => t.id === again.id) ?? a.thread;
 		const moved = undone ? [] : await this.anchorNow(a.file, a.thread.id);
 		await this.deps.commit(...moved, await this.decision(a.thread, undone ? undefined : 'accepted'));
 		if (!undone) return this.drop(a.file, a.thread.id);

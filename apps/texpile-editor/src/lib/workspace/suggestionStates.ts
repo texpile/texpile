@@ -34,6 +34,12 @@ export function rejectedAgain(state: FileState, id: string, after: string): File
 	return now?.text === after ? now : null;
 }
 
+/** typing undone and redone makes a suggestion again under a new id: the one standing where `at` stood, while `id` is not placed */
+export function placedAgain(state: FileState | undefined, id: string, at: PlacedSuggestion | undefined): PlacedSuggestion | undefined {
+	if (!state || !at || state.placed.some((s) => s.id === id)) return undefined;
+	return state.placed.find((s) => s.from === at.from && s.to === at.to && s.restore === at.restore);
+}
+
 export function sameMark(a: SuggestionMark, b: SuggestionMark): boolean {
 	return a.id === b.id && a.from === b.from && a.to === b.to && a.restore === b.restore && a.mine === b.mine;
 }

@@ -243,6 +243,29 @@ describe('a suggestion in the file', () => {
 		expect(activeSuggestions.current.map((s) => [s.id, edited.slice(s.from, s.to), s.restore])).toEqual([['s1', 'sharp', 'reliable']]);
 	});
 
+	it('accepts a suggestion again on redo after the typing that made it was undone and redone', async () => {
+		const { ctl, open, type, text, marks } = make(TEXT, 'suggesting');
+		await open();
+		async function goTo(next: string) {
+			type(next);
+			ctl.suggestions.textChanged(FILE, next);
+			await ctl.suggestions.settle();
+		}
+		const typed = TEXT.replace('sharp', 'tight');
+		await goTo(typed);
+		await ctl.suggestions.beforeSave('main.tex', text());
+		const opened = () => ctl.threads.filter((t) => t.restore !== undefined && !t.resolved);
+		await ctl.suggestions.accept(opened()[0]);
+
+		// undo the Accept and the typing, then redo both
+		await ctl.suggestions.revisitAccept(marks[0], true);
+		await goTo(TEXT);
+		await goTo(typed);
+		await ctl.suggestions.revisitAccept(marks[0], false);
+		expect(opened()).toEqual([]);
+		expect(activeSuggestions.current).toEqual([]);
+	});
+
 	it('keeps what was typed when the folder changes, and drops it when the edit is thrown away', async () => {
 		const after = TEXT.replace('sharp', 'tight');
 		const kept = make(TEXT, 'suggesting');
