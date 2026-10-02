@@ -242,14 +242,30 @@ function continuation(_parent: Node, text: string, head: string): string {
 	return text.startsWith('>') ? prefix.replace(/>[ \t]*$/, '') : prefix;
 }
 
+// a character markdown cannot read as part of anything beside it
+const PLAIN_SEAM = /^[\p{L}\p{N} .,;?'"]$/u;
+
 // Markdown is kept at block granularity: an untouched block, at the top level or inside a list
-// item or a quote, is the file's bytes; a block that changed is written whole. No leaf or run
-// inside a changed paragraph is patched in place, since a seam between fresh bytes and the file's
-// (an emphasis delimiter that no longer flanks, a marker at a line start) is where Markdown's
-// loose grammar reads two things as one, and a paragraph written afresh loses nothing but a hand
-// wrap: the format has no comments and no macros to keep
+// item or a quote, is the file's bytes; a block that changed in anything but plain text is written
+// whole. A paragraph written whole respells what the file wrote its own way (a reference link, an
+// entity, _emphasis_), so plain text retyped is patched in place, but only between plain
+// characters: a seam beside a delimiter, an escape or a line start is where Markdown's loose
+// grammar reads two things as one
 const assembly = createBlockAssembly((node, ctx) => serializeMdNode(node, ctx), {
 	mapLeaves: (node, ctx, text) => mdShadow.mapBlockLeaves(serializeMdNode, node, ctx, text),
+	leafBytes: (leaf, parent, atStart, block, ctx) =>
+		leaf.marks.length || parent !== block || ctx?.inTableCell || parent.type.spec.code ? null : escMd(leaf.text ?? '', atStart),
+	keepApart: (bytes, tail, head) => {
+		const word = /\S*$/.exec(head)![0] + bytes + /^\S*/.exec(tail)![0];
+		// a line start, where digits can still become a list's number
+		if (/(^|\n)[ \t>]*\d*$/.test(head) || /[:/@&<]|www\./i.test(word)) return null;
+		const last = (bytes || head).slice(-1);
+		const sides = [head.slice(-1), bytes.slice(0, 1), bytes.slice(-1)].filter(Boolean);
+		if (!sides.every((c) => PLAIN_SEAM.test(c))) return null;
+		// spaces before a line end are a line break
+		if (tail.startsWith('\n')) return /\s/.test(last) ? null : bytes;
+		return tail === '' || PLAIN_SEAM.test(tail[0]) ? bytes : null;
+	},
 	// a task item's box is written with its marker, from the item's attrs: the first block of the
 	// item cannot be rendered on its own inside the item's frame, whose bytes hold the box
 	spliceChild: (parent, index) => !(parent.type.name === 'list' && index === 0 && parent.attrs.kind === 'task'),

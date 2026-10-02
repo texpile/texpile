@@ -88,9 +88,9 @@ function posOf(doc: Node, needle: string): number {
 	return found;
 }
 
-// Markdown is kept at block granularity (see serializer.ts): a block that changed is written
-// whole, wrapped as the file wrapped it, and every other block, at the top level or inside an
-// item or a quote, is the file's bytes
+// Markdown is kept at block granularity (see serializer.ts): a block that changed in more than
+// plain text is written whole, wrapped as the file wrapped it, and every other block, at the top
+// level or inside an item or a quote, is the file's bytes
 describe('markdown: an edit keeps every block but its own', () => {
 	const parsed = parseMarkdownFile(MD);
 
@@ -403,5 +403,32 @@ describe('a delimiter that a seam would leave unable to flank', () => {
 		const doc = new Transform(doc0).replaceWith(at, at, doc0.type.schema.text('- ', doc0.resolve(at).marks())).doc;
 		const out = serializeMarkdownFile(parsed, doc);
 		expect(out).toBe('| a | b |\n| --- | --- |\n| `*x*` | *x-* |\n');
+	});
+});
+
+// written whole, the paragraph would come back respelled by the deterministic rules
+describe('a word retyped in plain text keeps the rest of its paragraph as written', () => {
+	it.each([
+		'See [the docs][docs] for more today.\n\n[docs]: https://example.com\n',
+		'Fish &amp; chips &copy; 2020 today.\n',
+		'Some _emphasised_ and __strong__ words today.\n',
+		'A verse  \nends today.\n'
+	])('%j', (src) => {
+		const parsed = parseMarkdownFile(src);
+		const at = posOf(parsed.doc, 'today') + 2;
+		const doc = new Transform(parsed.doc).replaceWith(at, at, parsed.doc.type.schema.text('X')).doc;
+		const out = serializeMarkdownFile(parsed, doc);
+		expect(out).toBe(src.replace('today', 'toXday'));
+		expect(parseMarkdownFile(out).doc.toString()).toBe(doc.toString());
+	});
+
+	it('writes the paragraph whole where the seam would read as markup', () => {
+		// a dot after the digit starting a line would make it a list's number
+		const src = 'A line wrapped by hand\n1 more line.\n';
+		const parsed = parseMarkdownFile(src);
+		const at = posOf(parsed.doc, '1 more') + 1;
+		const doc = new Transform(parsed.doc).replaceWith(at, at, parsed.doc.type.schema.text('.')).doc;
+		const out = serializeMarkdownFile(parsed, doc);
+		expect(parseMarkdownFile(out).doc.toString()).toBe(doc.toString());
 	});
 });

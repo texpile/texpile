@@ -68,10 +68,11 @@ describe('a paragraph written afresh keeps the wrap of the one it replaces', () 
 	it('markdown: inside a list item, under the marker', () => {
 		const md = `- first\n- ${WRAPPED.replace(/\n/g, '\n  ')}\n- third\n`;
 		const parsed = parseMarkdownFile(md);
-		const doc = retype(parsed.doc, [1, 0], (t) => t.replace('quick', 'QUICK and nimble'));
+		// an ampersand is no plain seam, so the paragraph is written afresh rather than spliced
+		const doc = retype(parsed.doc, [1, 0], (t) => t.replace('quick', 'QUICK & nimble'));
 		const { text, map } = serializeMarkdownFileDetailed(parsed, doc);
 		expect(text).toContain(
-			'- first\n- The QUICK and nimble brown fox\n  jumps over the lazy dog and\n  keeps on running through the\n  field.\n- third\n'
+			'- first\n- The QUICK & nimble brown fox\n  jumps over the lazy dog and\n  keeps on running through the\n  field.\n- third\n'
 		);
 		wordsMap(doc, text, map, ['first', 'QUICK', 'lazy', 'field', 'third']);
 		expect(parseMarkdownFile(text).doc.textContent).toBe(doc.textContent);
