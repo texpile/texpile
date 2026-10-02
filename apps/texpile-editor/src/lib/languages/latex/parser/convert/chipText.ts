@@ -50,6 +50,12 @@ function lineSpace(chip: string, text: string, more: boolean): string | null {
 	return space && (more || space.length < text.length) ? space : null;
 }
 
+/** whether a chip right after `before` sits against a word, whose space after the chip keeps the next word apart from it */
+function againstWord(before: PmNode | undefined): boolean {
+	if (!before || before.type.name === 'hard_break') return false;
+	return !/\s$/.test(before.isText ? (before.text ?? '') : before.textContent);
+}
+
 function withArgumentGroups(nodes: PmNode[]): PmNode[] {
 	const out: PmNode[] = [];
 	for (let i = 0; i < nodes.length; i++) {
@@ -75,7 +81,8 @@ export function bindTextToChips(input: PmNode[]): PmNode[] {
 		const next = nodes[i + 1];
 		const text = next?.text ?? '';
 		const bindable = isChip(chip) && next?.isText && Mark.sameSet(chip.marks, next.marks);
-		const taken = !bindable ? null : (lineSpace(chip.textContent, text, i + 2 < nodes.length) ?? joined(chip.textContent, text));
+		const line = bindable && !againstWord(out[out.length - 1]) ? lineSpace(chip.textContent, text, i + 2 < nodes.length) : null;
+		const taken = !bindable ? null : (line ?? joined(chip.textContent, text));
 		if (!taken) {
 			out.push(chip);
 			continue;
