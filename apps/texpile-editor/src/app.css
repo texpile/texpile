@@ -2334,3 +2334,33 @@ html.pm-drop-refused .pm-drop-cursor {
 		color: var(--error-on-tonal);
 	}
 }
+
+/* a muted or faint icon fades as one piece. Its color is see-through, and an icon draws each stroke
+   apart, so where two cross (a window's title bar meeting its frame) the overlap painted twice and
+   showed lighter. In the utilities layer so a hover:text-* on the icon still outranks it */
+@layer utilities {
+	svg.text-muted {
+		color: inherit;
+		opacity: var(--muted-share);
+	}
+	svg.text-faint {
+		color: inherit;
+		opacity: var(--faint-share);
+	}
+	/* an icon right inside a muted or faint element takes the see-through color from it, overlaps and all:
+	   drawn in that color made solid and faded whole the same way. A parent that brightens on hover gives the
+	   icon its hover color as it is. Left alone where the color changes some other way (group-hover:,
+	   aria-pressed:, data-*:), which a fade set here would not follow */
+	.text-muted:not([class*='group-hover:text-'], [class*='aria-'], [class*='data-']) > svg.lucide-icon:not([class*='text-']) {
+		color: rgb(from currentColor r g b / 1);
+		opacity: var(--muted-share);
+	}
+	.text-faint:not([class*='group-hover:text-'], [class*='aria-'], [class*='data-']) > svg.lucide-icon:not([class*='text-']) {
+		color: rgb(from currentColor r g b / 1);
+		opacity: var(--faint-share);
+	}
+	[class*='hover:text-']:hover > svg.lucide-icon:not([class*='text-']) {
+		color: inherit;
+		opacity: 1;
+	}
+}

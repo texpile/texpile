@@ -11,8 +11,10 @@
 
 html {
 	/* secondary and faint text as a share of the text colour, whatever the theme's scale does */
-	--muted-text: color-mix(in oklab, currentColor 60%, transparent);
-	--faint-text: color-mix(in oklab, currentColor 40%, transparent);
+	--muted-share: 60%;
+	--faint-share: 40%;
+	--muted-text: color-mix(in oklab, currentColor var(--muted-share), transparent);
+	--faint-text: color-mix(in oklab, currentColor var(--faint-share), transparent);
 	/* a theme colour as text or a mark on the ground: its hue and chroma, with the lightness held
 	   at or below 0.5 on a light ground and at or above 0.78 on a dark one, so it reads on any
 	   preset, including one whose whole scale is pastel (Reign's primary never leaves 87-97%) */
