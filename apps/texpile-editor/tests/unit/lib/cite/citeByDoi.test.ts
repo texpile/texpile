@@ -119,7 +119,7 @@ describe('lookUpWork for books and PubMed records', () => {
 
 describe('searchPapers', () => {
 	it('ranks what the sources found and marks the papers the project already cites', async () => {
-		references.current = parseBibtex('@article{resnet, doi = {10.1109/CVPR.2016.90}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{resnet, doi = {10.1109/CVPR.2016.90}}\n`);
 		search.mockResolvedValue({
 			ok: true,
 			hits: [
@@ -141,7 +141,7 @@ describe('searchPapers', () => {
 				}
 			]
 		});
-		const got = await searchPapers('deep residual learning for image recognition');
+		const got = await searchPapers('deep residual learning for image recognition', deps);
 		expect(search).toHaveBeenCalledWith('deep residual learning for image recognition');
 		expect(got.state === 'hits' && got.hits.map((h) => [h.doi, h.citedKey])).toEqual([
 			['10.1109/cvpr.2016.90', 'resnet'],
@@ -149,9 +149,30 @@ describe('searchPapers', () => {
 		]);
 	});
 
+	it('marks no paper cited that only a .bib the document does not read has', async () => {
+		const stray = '@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}';
+		disk.set('/paper/old/draft.bib', stray);
+		references.current = [...references.current, ...parseBibtex(stray)];
+		search.mockResolvedValue({
+			ok: true,
+			hits: [
+				{
+					doi: '10.1038/171737a0',
+					title: 'Molecular Structure of Nucleic Acids',
+					authors: ['Watson'],
+					venue: 'Nature',
+					year: '1953',
+					cites: 1
+				}
+			]
+		});
+		const got = await searchPapers('molecular structure of nucleic acids', deps);
+		expect(got.state === 'hits' && got.hits.map((h) => h.citedKey)).toEqual([undefined]);
+	});
+
 	it('passes a failed search on as it came', async () => {
 		search.mockResolvedValue({ ok: false, reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
-		expect(await searchPapers('anything')).toEqual({ state: 'error', reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
+		expect(await searchPapers('anything', deps)).toEqual({ state: 'error', reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
 	});
 });
 

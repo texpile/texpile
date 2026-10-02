@@ -63,16 +63,17 @@ export async function lookUpWork(id: WorkId, deps: CiteDeps): Promise<Lookup> {
 	return { state: 'found', work, fetched: got.bibtex, bibName: basename(target.path), id };
 }
 
-export async function searchPapers(query: string): Promise<Search> {
+export async function searchPapers(query: string, deps: CiteDeps): Promise<Search> {
 	const bridge = window.texpileDoi;
 	if (!bridge) return { state: 'error', reason: 'failed' };
 	const got = await bridge.search(query);
 	if (!got.ok) return { state: 'error', reason: got.reason, error: got.error };
+	const cited = await documentReferences(mainFile.current, deps);
 	return {
 		state: 'hits',
 		hits: rankHits(query, got.hits).map((hit) => {
 			const id = parseWorkId(hit.doi);
-			const known = id ? findCited(references.current, id) : null;
+			const known = id ? findCited(cited, id) : null;
 			return known ? { ...hit, citedKey: known.key } : hit;
 		})
 	};
