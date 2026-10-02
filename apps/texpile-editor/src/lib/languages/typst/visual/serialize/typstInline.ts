@@ -57,7 +57,7 @@ export function escTypst(str: string, startOfLine = false, extra = ''): string {
 			out += '\\@';
 			continue;
 		}
-		if (ch === '-' && str[i + 1] === '?') {
+		if (ch === '-' && (str[i + 1] === '?' || str[i + 1] === '-')) {
 			out += '\\-';
 			continue;
 		}
