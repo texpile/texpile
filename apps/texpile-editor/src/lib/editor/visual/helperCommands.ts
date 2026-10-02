@@ -6,7 +6,7 @@ import type { Command, EditorState, Transaction } from 'prosemirror-state';
 function headingAttrs(node: Node, level: number, numbered?: boolean): Attrs {
 	const kept: Record<string, unknown> = node.type.name === 'heading' ? { ...node.attrs } : {};
 	if ('command' in kept && kept.level !== level) kept.command = null;
-	const attrs = { ...kept, level, numbered: numbered ?? kept.numbered ?? true };
+	const attrs: Record<string, unknown> = { ...kept, level, numbered: numbered ?? kept.numbered ?? true };
 	if ('shortTitle' in kept && attrs.numbered === false) attrs.shortTitle = null;
 	return attrs;
 }
