@@ -349,6 +349,23 @@ describe('an edit meeting a suggestion', () => {
 		expect(suggest('First.\n\nSecond one.\n', 'First.\n\n  Second one.\n')).toEqual([]);
 	});
 
+	it('suggests a markdown line break of two spaces taken out or put in', () => {
+		const suggest = (before: string, after: string) =>
+			compareSuggestions({
+				before,
+				after,
+				pending: [],
+				mode: 'suggesting',
+				author: 'me',
+				newId: () => 'n',
+				whitespace: 'lists'
+			}).placed.map((s) => [after.slice(s.from, s.to), s.restore]);
+		expect(suggest('A verse  \nand the next.\n', 'A verse\nand the next.\n')).toEqual([['', '  ']]);
+		expect(suggest('A verse\nand the next.\n', 'A verse  \nand the next.\n')).toEqual([['  ', '']]);
+		// before a blank line the spaces break nothing
+		expect(suggest('A verse  \n\nNext one.\n', 'A verse\n\nNext one.\n')).toEqual([]);
+	});
+
 	it('keeps a paragraph break that is half a suggestion’s new words afterwards', () => {
 		const before = 'Aa.\n\n\\x{b t}\n\\x{he c}\n\nr.';
 		const after = '\\\n\nr';

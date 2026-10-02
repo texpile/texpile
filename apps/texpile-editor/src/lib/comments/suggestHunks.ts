@@ -238,12 +238,16 @@ function spaceAround(text: string, from: number, to: number): string {
 	return text.slice(start, end);
 }
 
+// two spaces ending a line, which markdown reads as a line break
+const LINE_BREAK = /^[^\n]*[ \t]{2}\r?\n[^\n]*$/;
+
 /** `lists`: the spaces before a list marker are the item's depth (markdown, typst) */
 export function neutral(before: string, after: string, h: Hunk, lists = false): boolean {
 	const c = whitespaceChange(before, h, after.slice(h.bFrom, h.bTo));
 	if (!c) return false;
 	if (paragraphShape(spaceAround(before, h.aFrom, h.aTo)) !== paragraphShape(spaceAround(after, h.bFrom, h.bTo))) return false;
 	if (lists && movesItem(before, after, h)) return false;
+	if (lists && LINE_BREAK.test(spaceAround(before, h.aFrom, h.aTo)) !== LINE_BREAK.test(spaceAround(after, h.bFrom, h.bTo))) return false;
 	return c.spaced || /\s/.test(before[c.at - 1] ?? ' ') || /\s/.test(before[c.at + c.cut] ?? ' ');
 }
 
