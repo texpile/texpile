@@ -88,12 +88,13 @@ export class SelectionRefiner {
 			return;
 		}
 		const text = this.deps.activeText();
-		const dialect = dialectOfPath(this.deps.path() ?? '');
+		const file = this.deps.path();
+		const dialect = dialectOfPath(file ?? '');
 		const passage = text.slice(span.from, span.to);
 		const anchor = buildAnchor(text, span.from, span.to);
 		const { system, request } = refinePrompt({
 			ask: action.ask,
-			path: this.deps.path() ?? '',
+			path: file ?? '',
 			passage,
 			...contextAround(text, span.from, span.to, action.context)
 		});
@@ -115,8 +116,8 @@ export class SelectionRefiner {
 			const replacement = refinedText(answer.text, passage);
 			if (replacement === passage) return void toaster.info({ title: m.ai_refine_unchanged({ agent }), duration: 5000 });
 			const now = this.deps.activeText();
-			// the reader may have typed on while the agent worked; its answer only fits the words it was given
-			const at = resolveExactly(now, anchor);
+			// the reader may have typed on or switched files while the agent worked; its answer only fits the words it was given
+			const at = this.deps.path() === file ? resolveExactly(now, anchor) : null;
 			if (!at) return void toaster.info({ title: m.ai_refine_moved({ agent }), duration: 6000 });
 			const problem = agentEditProblem(
 				dialect,
