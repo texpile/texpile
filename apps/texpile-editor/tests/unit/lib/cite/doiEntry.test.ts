@@ -178,6 +178,18 @@ describe('workFromBibtex on real registry answers', () => {
 		expect(entryOf(w.bib)).toMatchObject({ author: '{The pandas development team}', doi: '10.5281/zenodo.3509134' });
 	});
 
+	it('keeps a DataCite organisation whose name has an "and" in it one name', () => {
+		const src = `@misc{https://doi.org/10.5281/zenodo.1234567,
+  doi = {10.5281/ZENODO.1234567},
+  author = {Smith, Jane and Food and Agriculture Organization of the United Nations, },
+  title = {FAOSTAT crops and livestock products},
+  publisher = {Zenodo},
+  year = {2023}
+}`;
+		const w = workFromBibtex(src, parseWorkId('10.5281/zenodo.1234567')!, 'bibtex', [])!;
+		expect(entryOf(w.bib).author).toBe('Smith, Jane and {Food and Agriculture Organization of the United Nations}');
+	});
+
 	it('makes an old-style arXiv paper DataCite types as an article a preprint', () => {
 		const src = `@article{https://doi.org/10.48550/arxiv.hep-th/9901001,
   doi = {10.48550/ARXIV.HEP-TH/9901001},

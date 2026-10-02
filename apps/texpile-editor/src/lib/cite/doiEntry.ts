@@ -183,10 +183,21 @@ function escapeRe(s: string): string {
 function nameList(value: string): string {
 	const letters = value.replace(/\sand\s/g, ' ');
 	const shouting = /[A-Z]{2}/.test(letters) && !/[a-z]/.test(letters);
-	return value
-		.split(/\s+and(?:\s+|$)/)
-		.map((n) => n.trim())
-		.filter(Boolean)
+	const names: string[] = [];
+	let pending: string[] = [];
+	for (const n of value.split(/\s+and(?:\s+|$)/).map((part) => part.trim())) {
+		if (!n) continue;
+		// an organisation's own "and" splits it (Food and Agriculture Organization, ), where DataCite
+		// writes every person Family, Given
+		if (/^[^,]*,$/.test(n)) names.push([...pending, n].join(' and '));
+		else if (n.includes(',')) names.push(...pending, n);
+		else {
+			pending.push(n);
+			continue;
+		}
+		pending = [];
+	}
+	return [...names, ...pending]
 		.map((n) => {
 			if (/,$/.test(n)) {
 				const org = n.replace(/,+$/, '').trim();
