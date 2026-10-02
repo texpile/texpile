@@ -18,6 +18,7 @@ import {
 import { literal } from '../gitProcessEnv';
 import { runWithPathspecs } from '../gitCommandLine';
 import { isOutside, type RepoPaths } from '../gitRepoPaths';
+import { statusOf } from '../gitStatusParse';
 
 // ── history ────────────────────────────────────────────────────────────────────
 
@@ -391,7 +392,7 @@ async function rewrittenBy(g: SimpleGit, hash: string, where: string[]): Promise
  *  must not have to be committed for a restore to go ahead (repo-relative) */
 async function restoreBlockers(g: SimpleGit, repo: RepoPaths, changed: GitFileChange[]): Promise<string[]> {
 	const rewritten = new Set(changed.map((c) => c.path));
-	const status = (await g.status(['--untracked-files=no'])).files;
+	const status = (await statusOf(g, ['--untracked-files=no'])).files;
 	return status.filter((f) => rewritten.has(f.path) || (f.index !== ' ' && f.index !== '?' && repo.holds(f.path))).map((f) => f.path);
 }
 

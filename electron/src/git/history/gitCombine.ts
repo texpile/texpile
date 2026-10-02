@@ -18,6 +18,7 @@ import {
 import { literal } from '../gitProcessEnv';
 import { runInChunks } from '../gitCommandLine';
 import { isOutside, type RepoPaths } from '../gitRepoPaths';
+import { statusOf } from '../gitStatusParse';
 import { commitOrFail } from './gitHistory';
 import { OVERWRITE_RE, aheadBehind, mergeBlockers, mergeInProgress, mergeMessage, outputOf, parseBlockingFiles } from '../remote/gitRemote';
 
@@ -53,7 +54,7 @@ export async function gitCombine(workspaceRoot: string, message = ''): Promise<G
 	const g = patientGit(repo.root);
 	try {
 		if (operationIn((await gitDirsOf(repo.root)).gitDir)) return { ok: false, failure: 'busy' };
-		const status = await g.status(['--untracked-files=no']);
+		const status = await statusOf(g, ['--untracked-files=no']);
 		if (!status.current || status.detached || !status.tracking) return { ok: false, failure: 'no-upstream' };
 		const dirty = await mergeBlockers(g, status.tracking);
 		if (dirty.length) return { ok: false, failure: 'dirty', files: absolute(repo, dirty) };
@@ -63,7 +64,7 @@ export async function gitCombine(workspaceRoot: string, message = ''): Promise<G
 		// A conflict exits 1 with its report on stdout, which simple-git resolves rather than throws.
 		const tracking = status.tracking;
 		const msg = await outputOf(retryLocked(() => g.raw(['merge', '--no-edit', ...mergeMessage(message), tracking])));
-		if (await mergeInProgress(g)) return { ok: true, with: status.tracking, conflicts: absolute(repo, (await g.status()).conflicted) };
+		if (await mergeInProgress(g)) return { ok: true, with: status.tracking, conflicts: absolute(repo, (await statusOf(g)).conflicted) };
 		if (OVERWRITE_RE.test(msg)) return { ok: false, failure: 'dirty', files: absolute(repo, parseBlockingFiles(msg)) };
 		const [, behind] = await aheadBehind(g);
 		return behind === 0
@@ -87,7 +88,7 @@ export async function gitFinishCombine(workspaceRoot: string): Promise<GitCombin
 	const g = patientGit(repo.root);
 	try {
 		if (!(await mergeInProgress(g))) return { ok: false, failure: 'not-combining' };
-		const conflicted = (await g.status()).files.filter((f) => isUnmerged(f.index, f.working_dir));
+		const conflicted = (await statusOf(g)).files.filter((f) => isUnmerged(f.index, f.working_dir));
 		const unmerged = conflicted.map((f) => f.path);
 		const marked: string[] = [];
 		for (const f of conflicted) {
@@ -138,7 +139,7 @@ export async function gitKeepSide(workspaceRoot: string, path: string, side: 'mi
 	const [spec] = literal([rel]);
 	try {
 		if (!(await mergeInProgress(g))) return { ok: false, error: 'Nothing is being combined' };
-		const f = (await g.status()).files.find((e) => e.path === rel && isUnmerged(e.index, e.working_dir));
+		const f = (await statusOf(g)).files.find((e) => e.path === rel && isUnmerged(e.index, e.working_dir));
 		if (!f) return { ok: false, error: 'This file is not being combined' };
 		const whole = await wholeFileChoice(f.index, f.working_dir, repo.fromGit(rel));
 		try {

@@ -1,6 +1,6 @@
 // git backing for the Source Control panel. Kept out of fsService.ts so that module stays
 // dependency-free; every function returns { ok, reason|error } and never throws
-import { simpleGit, type SimpleGit, type FileStatusResult } from 'simple-git';
+import { simpleGit, type SimpleGit } from 'simple-git';
 import { dirname, resolve, join, sep } from 'node:path';
 import { existsSync } from 'node:fs';
 import { open, readFile, type FileHandle } from 'node:fs/promises';
@@ -10,6 +10,7 @@ import { hasConflictMarkers } from './history/conflictMarkers';
 import { literal } from './gitProcessEnv';
 import { runInChunks } from './gitCommandLine';
 import { locateRepo, type RepoPaths } from './gitRepoPaths';
+import { statusOf } from './gitStatusParse';
 
 // once git is confirmed missing (ENOENT), stop retrying
 let gitBinaryMissing = false;
@@ -330,12 +331,12 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 	try {
 		const g = git(workspaceRoot);
 		// `.`, the folder: in a larger repository, the rest of it is scanned for nothing
-		const status = await g.status(['--untracked-files=all', '--', '.']);
+		const status = await statusOf(g, ['--untracked-files=all', '--', '.']);
 		// with -q, an unborn HEAD exits non-zero and prints nothing, which simple-git resolves as ''
 		const head = (await g.raw(['rev-parse', '--verify', '-q', 'HEAD'])).trim();
 		const operation = operationIn((await gitDirsOf(repo.root)).gitDir);
 		const entries: GitStatusEntry[] = [];
-		for (const f of status.files as FileStatusResult[]) {
+		for (const f of status.files) {
 			// a repository inside this one (a cloned template or class) is 'dir/': not a file of this
 			// project's, and one git cannot save as a version without making it a submodule
 			if (f.path.endsWith('/') || !repo.holds(f.path)) continue;

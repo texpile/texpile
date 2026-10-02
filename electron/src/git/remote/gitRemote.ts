@@ -4,6 +4,7 @@
 import { simpleGit, type SimpleGit, type SimpleGitOptions } from 'simple-git';
 import { spawn } from 'node:child_process';
 import { git, isMissingGit, errMsg, resolveRepoRoot, retryLocked, upstreamExists, type GitOpResult } from '../gitService';
+import { statusOf } from '../gitStatusParse';
 
 // -- remotes --------------------------------------------------------------------
 
@@ -196,7 +197,7 @@ export async function gitPush(workspaceRoot: string, auth: GitAuthEnv = {}): Pro
 	let remote: string | undefined;
 	try {
 		const g = netGit(rr.repo.root, auth);
-		const status = await g.status();
+		const status = await statusOf(g);
 		// a branch tracking nothing has nowhere to go; giving it somewhere is gitPublish
 		if (!status.tracking || !status.current) return { ok: false, failure: 'no-upstream' };
 		const up = await upstreamOf(g, status.current);
@@ -223,7 +224,7 @@ export async function gitPublish(workspaceRoot: string, remote: string, auth: Gi
 	if (!rr.repo) return { ok: false, reason: rr.reason };
 	try {
 		const g = netGit(rr.repo.root, auth);
-		const status = await g.status();
+		const status = await statusOf(g);
 		if (!status.current || status.detached) return { ok: false, failure: 'other', error: 'There is no branch to publish.', remote };
 		await pushBranch(g, remote, status.current, status.current, ['--set-upstream']);
 		return { ok: true, remote };
@@ -312,7 +313,7 @@ type TakeIn = { ok: true } | { ok: false; failure: SyncFailure; error?: string; 
  * touch it and an abort (reset --merge) keeps it. Repo-relative.
  */
 export async function mergeBlockers(g: SimpleGit, upstream: string): Promise<string[]> {
-	const status = (await g.status(['--untracked-files=no'])).files;
+	const status = (await statusOf(g, ['--untracked-files=no'])).files;
 	const theirs = new Set((await g.raw(['diff', '--name-only', '--no-renames', '-z', `HEAD...${upstream}`])).split('\0'));
 	return status.filter((f) => theirs.has(f.path) || (f.index !== ' ' && f.index !== '?')).map((f) => f.path);
 }
@@ -334,7 +335,7 @@ async function takeIn(g: SimpleGit, diverged: boolean, message: string): Promise
 	// a conflict exits 1 with its report on stdout, which simple-git resolves rather than throws
 	const msg = await outputOf(retryLocked(() => g.raw(['merge', '--no-edit', ...mergeMessage(message), '@{u}'])));
 	if (await mergeInProgress(g)) {
-		const conflicted = (await g.status()).conflicted;
+		const conflicted = (await statusOf(g)).conflicted;
 		await retryLocked(() => g.raw(['merge', '--abort']));
 		return conflicted.length
 			? { ok: false, failure: 'conflict', files: conflicted, error: msg }
@@ -366,7 +367,7 @@ export async function gitSync(workspaceRoot: string, message = '', auth: GitAuth
 	let remote: string | undefined;
 	let stage: 'fetch' | 'merge' | 'push' = 'fetch';
 	try {
-		const status = await g.status();
+		const status = await statusOf(g);
 		if (!status.current || status.detached || !status.tracking) return { ok: false, failure: 'no-upstream' };
 		const up = await upstreamOf(g, status.current);
 		if (!up) return { ok: false, failure: 'no-upstream' };

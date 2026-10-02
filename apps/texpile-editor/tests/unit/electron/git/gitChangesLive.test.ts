@@ -57,6 +57,25 @@ describe.skipIf(!AVAILABLE)('the changes list', () => {
 		expect((await gitStatus(root)).entries?.map((e) => e.path)).toEqual([join(root, 'notes.tex')]);
 	});
 
+	it('lists a name that starts or ends with a space under that name, and saves it', async () => {
+		const root = makeRepo();
+		commit(root, ' notes.tex', 'Notes.\n', 'Notes');
+		writeFileSync(join(root, ' notes.tex'), 'Notes, edited.\n');
+		writeFileSync(join(root, 'draft.tex '), 'Draft.\n');
+		const rows = (await gitStatus(root)).entries ?? [];
+		expect(rows).toEqual([
+			{ path: join(root, ' notes.tex'), x: ' ', y: 'M' },
+			{ path: join(root, 'draft.tex '), x: '?', y: '?' }
+		]);
+		await gitUnstage(root, []);
+		await gitStage(
+			root,
+			rows.map((r) => r.path)
+		);
+		expect((await gitCommit(root, 'Notes and a draft')).ok).toBe(true);
+		expect((await gitStatus(root)).entries).toEqual([]);
+	});
+
 	it('marks a folder row that also holds ignored files, so it is never deleted whole', async () => {
 		const root = makeRepo();
 		writeFileSync(join(root, '.gitignore'), '*.log\n');
