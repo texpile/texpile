@@ -423,6 +423,21 @@ it('strikes the blocks a cut took from after a figure after the figure, where th
 	]);
 });
 
+// one gesture: the first letter made italic, the heading split after the fourth, and a join far enough on for the comparison to merge the first two
+it('draws a heading split in a word whose formatting also changed as a break, not as a format change', () => {
+	const words = 'The first paragraph runs across several lines of the column, so that the page holds ordinary prose above the lines.';
+	const source = `\\documentclass{article}\n\\begin{document}\n\\section{\\textit{P}rob}\n\\section{e}\n${words}A one line paragraph.\n\\end{document}\n`;
+	const from = source.indexOf('\\textit');
+	const quote = source.slice(from, source.indexOf('A one line'));
+	const { doc, ranges } = placed(source, [mark(source, 'gesture', quote, `Probe}\n${words}\n\n`, from)]);
+	const join = doc.child(0).nodeSize + doc.child(1).nodeSize + 1 + words.length;
+	expect(ranges.map((r) => (r.brk ? `${r.brk} ${r.from}` : `${r.format ? 'format' : 'words'} ${doc.textBetween(r.from, r.to)}`))).toEqual([
+		'format P',
+		`added ${doc.child(0).nodeSize - 1}`,
+		`removed ${join}`
+	]);
+});
+
 // most emoji share their first UTF-16 half, so the comparison saw only the second change
 it('draws an emoji replaced by another whole, not half of each', () => {
 	const source = '\\documentclass{article}\n\\begin{document}\nResults look good 😁 overall.\n\\end{document}\n';
