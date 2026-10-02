@@ -174,6 +174,34 @@ describe('a suggestion in the file', () => {
 		expect(activeSuggestions.current).toEqual([]);
 	});
 
+	it('rejects a suggestion again when its Reject is redone after typing before it was undone and redone', async () => {
+		const start = 'We prove the estimator is sharp for smooth solutions.\n\nAway from a shock a coarse grid resolves it.\n';
+		const at = start.indexOf('sharp');
+		disk['.texpile/comments.jsonl'] = serializeLog([
+			openEvent({ id: 'mei1', file: 'main.tex', anchor: buildAnchor(start, at, at), body: '', by: 'mei', at: 'now', restore: 'very ' })
+		]);
+		const { ctl, open, type, text } = make(start, 'suggesting');
+		await open();
+		async function goTo(next: string) {
+			type(next);
+			ctl.suggestions.textChanged(FILE, next);
+			await ctl.suggestions.settle();
+		}
+		const typed = start.replace('coarse', 'fine');
+		await goTo(typed);
+		await ctl.suggestions.beforeSave('main.tex', text());
+		expect(await ctl.suggestions.reject(ctl.threads.find((t) => t.id === 'mei1')!)).toBe(true);
+		const rejected = text();
+
+		// undo the Reject and the typing, then redo both
+		await goTo(typed);
+		await goTo(start);
+		await goTo(typed);
+		await goTo(rejected);
+		expect(ctl.threads.find((t) => t.id === 'mei1')!.decision).toBe('rejected');
+		expect(activeSuggestions.current.map((s) => [text().slice(s.from, s.to), s.restore])).toEqual([['fine', 'coarse']]);
+	});
+
 	// Docs does the same: an Accept is one step of the undo history like any edit
 	it('brings an accepted suggestion back where it stood when the Accept is undone, and accepts it on redo', async () => {
 		disk['.texpile/comments.jsonl'] = serializeLog([suggestion('s1', TEXT, 'sharp', 'reliable')]);

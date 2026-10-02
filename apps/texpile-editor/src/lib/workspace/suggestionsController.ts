@@ -15,7 +15,7 @@ import { commonEnds } from '$lib/comments/suggestHunks';
 import { activeSuggestions, takeEditedPlaces, takeTypedSides, type EditedPlaces } from '$lib/comments/activeSuggestions.svelte';
 import type { CommentStore } from '$lib/comments/store.svelte';
 import { changeEvents, movedAnchorEvents } from './suggestionEvents';
-import { placedBehind, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
+import { placedBehind, rejectedAgain, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
 import type { ExpectedReject, FileState, RemoteEdit } from './suggestionStates';
 
 const SPACE_WAIT_MS = 1000;
@@ -412,12 +412,14 @@ export class SuggestionsController {
 	private async revisitReject(file: string, state: FileState, after: string): Promise<boolean> {
 		const mine = this.rejects.filter((r) => r.file === file);
 		const undo = mine.findLast((r) => after === r.open.text && sameFileState(state, r.rejected));
-		const r = undo ?? mine.findLast((r) => after === r.rejected.text && sameFileState(state, r.open));
+		// by the thread a redo rejects, not by the whole file: typing undone and redone around it gets new ids
+		const r = undo ?? mine.findLast((r) => rejectedAgain(state, r.thread.id, after));
 		if (!r) return false;
 		const undone = r === undo;
 		const event = await this.decision(r.thread, undone ? undefined : 'rejected');
 		if (this.states.get(file) !== state) return true;
-		const now = undone ? r.open : r.rejected;
+		const now = undone ? r.open : rejectedAgain(state, r.thread.id, after)!;
+		if (!undone) Object.assign(r, { open: state, rejected: now });
 		this.states.set(file, now);
 		this.stage([event]);
 		if (file === this.deps.activeFile()) this.show(now.text, now.placed);

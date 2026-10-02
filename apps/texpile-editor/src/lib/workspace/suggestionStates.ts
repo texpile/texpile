@@ -27,6 +27,13 @@ export function withoutRejected(state: FileState, s: PlacedSuggestion, behind = 
 	return { text: state.text.slice(0, s.from) + s.restore + state.text.slice(s.to), placed };
 }
 
+/** the file once the suggestion `id` placed in it is rejected, if that is `after` */
+export function rejectedAgain(state: FileState, id: string, after: string): FileState | null {
+	const s = state.placed.find((x) => x.id === id);
+	const now = s ? withoutRejected(state, s) : null;
+	return now?.text === after ? now : null;
+}
+
 export function sameMark(a: SuggestionMark, b: SuggestionMark): boolean {
 	return a.id === b.id && a.from === b.from && a.to === b.to && a.restore === b.restore && a.mine === b.mine;
 }
