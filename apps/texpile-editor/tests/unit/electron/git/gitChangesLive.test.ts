@@ -90,4 +90,17 @@ describe.skipIf(!AVAILABLE)('the changes list', () => {
 		expect(rows.find((e) => e.path === join(root, 'figures'))).toMatchObject({ files: 200 });
 		expect(rows.find((e) => e.path === join(root, 'figures'))?.ignoredInside).toBeUndefined();
 	});
+
+	it('marks a folder row that holds a repository of its own, so that is never deleted with it', async () => {
+		const root = makeRepo();
+		mkdirSync(join(root, 'vendor'));
+		for (let i = 0; i < 200; i++) writeFileSync(join(root, 'vendor', `f${i}.sty`), `${i}\n`);
+		const inner = join(root, 'vendor', 'theme');
+		mkdirSync(inner);
+		run(inner, 'init', '-q');
+		identify(inner);
+		commit(inner, 'theme.cls', '% work of its own\n', 'Theme');
+		const rows = (await gitStatus(root)).entries ?? [];
+		expect(rows.find((e) => e.path === join(root, 'vendor'))).toMatchObject({ files: 200, ignoredInside: true });
+	});
 });

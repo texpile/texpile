@@ -42,7 +42,8 @@ export type GitStatusEntry = {
 	choose?: WholeFileChoice;
 	/** a rename's old path, absolute: saving the rename takes in both, putting it back restores this */
 	from?: string;
-	/** a folder row that also holds files .gitignore leaves out: never deleted as a whole */
+	/** a folder row that also holds files .gitignore leaves out, or a repository of its own: never
+	 *  deleted as a whole */
 	ignoredInside?: boolean;
 	/** a folder of new files shown as one row (gitStatusLimit.ts): how many files it holds */
 	files?: number;
@@ -293,7 +294,7 @@ export async function stillMarked(g: SimpleGit, rel: string, abs: string): Promi
 
 /** big folders of new files as one row each; git is asked which folders are wholly new only when
  *  there are enough new files for one to qualify */
-async function withFolderRows(g: SimpleGit, workspaceRoot: string, entries: GitStatusEntry[]): Promise<GitStatusEntry[]> {
+async function withFolderRows(g: SimpleGit, workspaceRoot: string, entries: GitStatusEntry[], repos: string[]): Promise<GitStatusEntry[]> {
 	if (entries.filter((e) => e.x === '?').length < FOLDER_ROW_AT) return entries;
 	const raw = await g.raw(['ls-files', '--others', '--exclude-standard', '--directory', '--no-empty-directory', '-z']);
 	const folders = raw
@@ -302,13 +303,14 @@ async function withFolderRows(g: SimpleGit, workspaceRoot: string, entries: GitS
 		.map((p) => join(workspaceRoot, p));
 	const rows = collapseUntracked(entries, folders);
 	if (!rows.some((r) => r.files)) return rows;
-	// git calls a folder wholly new even when it also holds files .gitignore leaves out: the row
-	// says so, and is not offered for deleting, which would take those files too
+	// git calls a folder wholly new even when it also holds files .gitignore leaves out, or a
+	// repository of its own: the row says so, and is not offered for deleting, which would take those too
 	const ignored = (await g.raw(['ls-files', '--others', '--ignored', '--exclude-standard', '--directory', '-z']))
 		.split('\0')
 		.filter(Boolean)
 		.map((p) => join(workspaceRoot, p));
-	return rows.map((r) => (r.files && ignored.some((p) => p.startsWith(r.path + sep)) ? { ...r, ignoredInside: true } : r));
+	const kept = [...ignored, ...repos];
+	return rows.map((r) => (r.files && kept.some((p) => p.startsWith(r.path + sep)) ? { ...r, ignoredInside: true } : r));
 }
 
 /** Whether the upstream branch is still there. One deleted on the remote (a merged pull request's
@@ -336,6 +338,7 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 		const head = (await g.raw(['rev-parse', '--verify', '-q', 'HEAD'])).trim();
 		const operation = operationIn((await gitDirsOf(repo.root)).gitDir);
 		const entries: GitStatusEntry[] = [];
+		const repos = status.files.filter((f) => f.path.endsWith('/') && repo.holds(f.path)).map((f) => repo.fromGit(f.path));
 		for (const f of status.files) {
 			// a repository inside this one (a cloned template or class) is 'dir/': not a file of this
 			// project's, and one git cannot save as a version without making it a submodule
@@ -351,7 +354,7 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 			}
 			entries.push(entry);
 		}
-		const { rows, truncated } = capRows(await withFolderRows(g, workspaceRoot, entries), (e) => isUnmerged(e.x, e.y));
+		const { rows, truncated } = capRows(await withFolderRows(g, workspaceRoot, entries, repos), (e) => isUnmerged(e.x, e.y));
 		return {
 			ok: true,
 			branch: status.current,
