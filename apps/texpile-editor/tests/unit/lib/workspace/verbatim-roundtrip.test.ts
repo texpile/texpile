@@ -430,6 +430,14 @@ wrapped too, 50\\% sure.
 		expect(out).toContain('Intro paragraph wrapped');
 	});
 
+	it('a line break typed after a formula that ends a source line leaves one paragraph', () => {
+		const parsed = parseLatexFile(`${PREAMBLE}\nText ending with $x^2$\ncontinues on the next line.\n\nOutro.\n\\end{document}\n`);
+		const at = posOf(parsed.doc, ' continues');
+		const out = serializeLatexFile(parsed, new Transform(parsed.doc).replaceWith(at, at, schema.nodes.hard_break.create()).doc);
+		expect(out).not.toMatch(/\\\\\n[ \t]*\n/);
+		expect(parseLatexFile(out).doc.childCount).toBe(parsed.doc.childCount);
+	});
+
 	it('a letter typed into a bare url keeps the link', () => {
 		const parsed = parseLatexFile(`${PREAMBLE}\nA bare one: \\url{https://typst.app}.\n\\end{document}\n`);
 		const at = posOf(parsed.doc, 'st.app');
