@@ -28,8 +28,8 @@
 		onShowMore?: () => void;
 		/** read when the version is opened */
 		onLoadChanges: (hash: string) => Promise<GitFileChange[]>;
-		/** open that file as it was in this version */
-		onCompare: (entry: GitLogEntry, path: string) => void;
+		/** open that file as it was in this version, where it was called `from` when renamed since */
+		onCompare: (entry: GitLogEntry, path: string, from?: string) => void;
 		onRestore: (entry: GitLogEntry) => void;
 		baseName: (p: string) => string;
 		dirName: (p: string) => string;
@@ -230,7 +230,7 @@
 				{#each changes as f, fi (f.path)}
 					<button
 						class="hover:preset-tonal flex h-[22px] w-full items-center rounded-base px-1 text-left"
-						onclick={() => onCompare(entry, f.path)}
+						onclick={() => onCompare(entry, f.path, f.from)}
 						use:tip={relPath(f.path)}
 					>
 						<!-- the lane runs past a version's files, which is what makes them read as belonging

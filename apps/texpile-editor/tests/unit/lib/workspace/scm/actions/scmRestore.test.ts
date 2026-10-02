@@ -65,6 +65,7 @@ function makeScm(
 		trash?: (p: string) => Promise<'trashed' | 'kept'>;
 		remove?: (p: string) => Promise<void>;
 		read?: (p: string) => Promise<string | null>;
+		compareTab?: (path: string, compare: { hash: string; subject: string; path?: string }) => void;
 	} = {}
 ) {
 	return new ScmActions({
@@ -78,7 +79,7 @@ function makeScm(
 		loadFile: async () => {},
 		captureDiffSnapshot: () => {},
 		isDiffMode: () => false,
-		openCompareTab: () => {},
+		openCompareTab: opts.compareTab ?? (() => {}),
 		openAtLine: () => {},
 		settleConflicts: () => {},
 		ignoreLines: () => [],
@@ -272,6 +273,14 @@ describe('saving a version, as VS Code would', () => {
 		expect(await makeScm().commit('Notes', ['C:/project/main.tex'])).toBe(true);
 		expect(gitStage.mock.calls.at(-1)?.[1]).toEqual(['C:/project/main.tex', 'C:/project/refs.bib']);
 		gitChanges.current = [];
+	});
+});
+
+describe('comparing with a version', () => {
+	it('reads a file renamed since under the name it had in that version', () => {
+		const tabs: unknown[][] = [];
+		makeScm({ compareTab: (...args) => void tabs.push(args) }).compare(ENTRY, 'C:/project/introduction.tex', 'C:/project/intro.tex');
+		expect(tabs).toEqual([['C:/project/introduction.tex', { ...ENTRY, path: 'C:/project/intro.tex' }]]);
 	});
 });
 

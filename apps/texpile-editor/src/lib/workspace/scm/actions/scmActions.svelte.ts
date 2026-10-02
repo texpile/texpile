@@ -70,7 +70,7 @@ export type ScmDeps = {
 	captureDiffSnapshot(): void;
 	isDiffMode(): boolean;
 	/** open (or focus) a tab comparing `path` against one version. */
-	openCompareTab(path: string, compare: { hash: string; subject: string }): void;
+	openCompareTab(path: string, compare: { hash: string; subject: string; path?: string }): void;
 	/** open a file in the source editor at a 1-based line, whatever view the author has chosen */
 	openAtLine(path: string, line: number): void;
 	/** the merge is saved: the open file, if it held marked places, goes back to the author's view */
@@ -314,9 +314,9 @@ export class ScmActions {
 	};
 
 	/** the panel hands over the file rather than asking the editor what happens to be open */
-	compare = (entry: { hash: string; subject: string }, path: string) => {
+	compare = (entry: { hash: string; subject: string }, path: string, from?: string) => {
 		if (!isGitRepo.current || !path) return;
-		this.deps.openCompareTab(path, { hash: entry.hash, subject: entry.subject });
+		this.deps.openCompareTab(path, { hash: entry.hash, subject: entry.subject, ...(from && { path: from }) });
 	};
 
 	/** VS Code's Publish Branch: give a branch with no upstream one. With exactly one remote there is

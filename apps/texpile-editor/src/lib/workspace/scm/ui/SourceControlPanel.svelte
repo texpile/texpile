@@ -54,7 +54,7 @@
 		onDiscard: (changes: GitStatusEntry[]) => void;
 		onCommit: (message: string, paths: string[]) => Promise<boolean>;
 		onRestore: (entry: GitLogEntry) => void;
-		onCompare: (entry: GitLogEntry, path: string) => void;
+		onCompare: (entry: GitLogEntry, path: string, from?: string) => void;
 		/** what differs between a version and the working copy, read when that version is opened */
 		onLoadChanges: (hash: string) => Promise<GitFileChange[]>;
 		/** the timeline's share of the panel (0..1) */
