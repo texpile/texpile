@@ -11,6 +11,7 @@ import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import { imagePluginKey } from '$lib/editor/visual/extensions/image/imagepluginutils';
 import { sliceWithKeptImages, type PasteDialect } from '$lib/editor/paste/pastedImages';
 import { pasteMarkdownSource, visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
+import { texpileClipboardSerializer } from '$lib/editor/paste/texpileCopy';
 import { settings } from '$lib/settings';
 
 const SOURCES = ['data:image/png;base64,AAAA', 'https://example.org/a.png', 'C:/figures/b.png', 'images/c.png'];
@@ -75,6 +76,26 @@ describe('pasted pictures', () => {
 		expect(sources(failed)).toEqual([PNG]);
 		undo(failed.state, failed.dispatch);
 		expect(sources(failed)).toEqual([PNG]);
+	});
+
+	it('writes the picture a Markdown file holds as a data: URL into the project when it is copied into LaTeX', async () => {
+		const md = mdSchema.node('doc', null, [
+			mdSchema.node('paragraph', null, [mdSchema.text('Plot:')]),
+			mdSchema.nodes.image.create({ src: PNG })
+		]);
+		const copy = document.createElement('div');
+		copy.append(texpileClipboardSerializer(mdSchema).serializeFragment(md.content, { document }));
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('x')])]);
+		const images = new Plugin({ key: imagePluginKey, settings: { uploadFile: async () => 'images/pasted.png' } });
+		const state = EditorState.create({
+			doc,
+			plugins: [visualSmartPaste('latex', schema, () => false), images],
+			selection: TextSelection.atEnd(doc)
+		});
+		const view = new EditorView(document.createElement('div'), { state });
+		view.pasteHTML(copy.innerHTML, pasteEvent(copy.innerHTML, 'Plot:'));
+		await saving();
+		expect(sources(view)).toEqual(['images/pasted.png']);
 	});
 
 	it('writes no file for a copy inside Texpile, or for a paste that goes in as plain text', async () => {
