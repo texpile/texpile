@@ -5,9 +5,9 @@ import { isContainer, type Segment } from '$lib/editor/visual/sourceSpans';
 import { containerOriginsOf, type BlockOrigin } from '$lib/editor/visual/parseOrigins';
 import type { BlockAssemblyOptions } from './blockAssembly';
 
-/** whether the file's line breaks either side of `bytes` meet across them as a blank line */
+/** whether `bytes` between the file's `head` and `tail` leave a blank line: its line ends meeting each other, or one of the bytes */
 export function blankLineAt(head: string, bytes: string, tail: string): boolean {
-	return /\n[ \t]*$/.test(head) && /^[ \t]*$/.test(bytes) && /^[ \t]*\n/.test(tail);
+	return /\n[ \t]*\n/.test(/[ \t\n]*$/.exec(head)![0] + bytes + /^[ \t\n]*/.exec(tail)![0]);
 }
 
 /** the parse's last block, which the body's trailing gap follows */

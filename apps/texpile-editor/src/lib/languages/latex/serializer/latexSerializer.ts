@@ -8,7 +8,7 @@
 import { Fragment, type Node, type Mark } from 'prosemirror-model';
 import { serializeTable, serializeRowCells, serializeCell } from './tableSerializer';
 import { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from '../parser/converter';
-import { createBlockAssembly, type DocSerializeResult } from '$lib/serializer/blockAssembly';
+import { blankLineAt, createBlockAssembly, type DocSerializeResult } from '$lib/serializer/blockAssembly';
 import type { Ctx, NodeHandler } from '$lib/serializer/types';
 import { esc, applyMarks, bareTextString, joinInline, markableMarks, marksKey } from './textEscapes';
 import { blockMath, alignEnvironment } from './mathBlocks';
@@ -200,8 +200,7 @@ const assembly = createBlockAssembly((node, ctx) => serializeNode(node, ctx), {
 	// prose line breaks meeting across the seam (a line taken out, a \\ before the file's own line
 	// end) would make a blank line, a new paragraph
 	keepApart: (bytes, tail, head, _gone, parent) => {
-		const seam = /[ \t\n]*$/.exec(head)![0] + bytes + /^[ \t\n]*/.exec(tail)![0];
-		if (!parent.type.spec.leafText && !parent.type.spec.code && /\n[ \t]*\n/.test(seam)) return null;
+		if (!parent.type.spec.leafText && !parent.type.spec.code && blankLineAt(head, bytes, tail)) return null;
 		return /\\[a-zA-Z@]+$/.test(bytes) && /^[a-zA-Z]/.test(tail) ? bytes + ' ' : bytes;
 	},
 	// a block written afresh inside an environment or an item continues its lines as the file

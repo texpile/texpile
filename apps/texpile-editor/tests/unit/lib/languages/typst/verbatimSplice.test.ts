@@ -417,6 +417,25 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 	});
 });
 
+describe('typst: a line break typed at the end of a source line', () => {
+	for (const [label, item] of [
+		['a formula', '$x^2$'],
+		['a reference', '@sec'],
+		['a call', '#footnote[Note.]']
+	]) {
+		it(`after ${label} leaves one paragraph`, () => {
+			const parsed = parseTypstFile(`= Heading <sec>\n\nText ending with ${item}\ncontinues on the next line.\n\nOutro.\n`);
+			const at = posOf(parsed.doc, ' continues');
+			const out = serializeTypstFile(
+				parsed,
+				new Transform(parsed.doc).replaceWith(at, at, parsed.doc.type.schema.nodes.hard_break.create()).doc
+			);
+			expect(out).not.toMatch(/\\\n[ \t]*\n/);
+			expect(parseTypstFile(out).doc.childCount).toBe(parsed.doc.childCount);
+		});
+	}
+});
+
 describe('typst: markup that a seam would open', () => {
 	const WRAPPED = 'Intro line.\n\nA reference to a section works the\nsame way: @sec:basics.\n\nTail line.\n';
 
