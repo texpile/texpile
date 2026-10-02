@@ -12,7 +12,7 @@ type Token = string | number;
 // Plumbing a block carries from the file, not what it is: a float's raw prefix is re-emitted
 // as it was, never read. Nothing real hides behind it - if the content differs, its own tokens
 // differ.
-const PROVENANCE = new Set(['preBody']);
+const PROVENANCE = new Set(['preBody', 'envKey']);
 
 function contentAttrs(attrs: Record<string, unknown>): string | null {
 	const keys = Object.keys(attrs).filter((k) => !PROVENANCE.has(k));

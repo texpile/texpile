@@ -7,18 +7,41 @@ import { convertNodesToBlocks } from '../converter';
 import { isBlankCellNode } from './tableConvert';
 import { capture, envArgsRawSource, startOf } from './origCapture';
 
+// the keys of the lists being converted, innermost last
+const openLists: string[] = [];
+
+/** the source environment its items came from, which they keep through edits: its kind and text, under the lists around it */
+function listKey(env: Environment, kind: string): string {
+	const text = printRaw(env);
+	let hash = 0x811c9dc5;
+	for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 0x01000193);
+	const own = `${kind}.${(hash >>> 0).toString(36)}`;
+	const around = openLists[openLists.length - 1];
+	return around ? `${around}/${own}` : own;
+}
+
 export function createList(env: Environment, kind: 'bullet' | 'ordered', options: ConversionOptions): PmNode[] {
+	const envKey = listKey(env, kind);
+	openLists.push(envKey);
+	try {
+		return listItems(env, kind, options, envKey);
+	} finally {
+		openLists.pop();
+	}
+}
+
+function listItems(env: Environment, kind: 'bullet' | 'ordered', options: ConversionOptions, envKey: string): PmNode[] {
 	const result: PmNode[] = [];
 	let currentItemContent: Node[] = [];
 	let foundFirstItem = false;
 
 	// content before the first \item (usually whitespace, sometimes real setup like
 	// \setlength\itemsep{0pt}) has nowhere to live in the one-list-node-per-item model; carry it
-	// verbatim as the first emitted node's preBody rather than silently dropping it.
+	// verbatim as every item's preBody rather than silently dropping it.
 	const firstItemIndex = env.content.findIndex((n) => n.type === 'macro' && (n as Macro).content === 'item');
 	const preItemContent = firstItemIndex > 0 ? env.content.slice(0, firstItemIndex) : [];
 	const preBody = preItemContent.some((n) => !isBlankCellNode(n)) ? printRaw(preItemContent).trim() : null;
-	// enumitem options ([resume], [label=(\alph*)], [noitemsep]) ride on the first node too
+	// enumitem options ([resume], [label=(\alph*)], [noitemsep]) ride on every item too
 	const envArgs = env.args && env.args.length ? (envArgsRawSource(env) ?? printRaw(env.args)) : null;
 	const envName = env.env === 'description' ? 'description' : null;
 	// the raw [label] of the item being built, re-emitted as written (the bold text below is
@@ -30,9 +53,10 @@ export function createList(env: Environment, kind: 'bullet' | 'ordered', options
 			order: kind === 'ordered' ? 1 : null,
 			checked: null,
 			collapsed: false,
-			preBody: result.length === 0 ? preBody : null,
-			envArgs: result.length === 0 ? envArgs : null,
+			preBody,
+			envArgs,
 			envName,
+			envKey,
 			itemLabel,
 			...extra
 		};

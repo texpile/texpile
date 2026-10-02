@@ -269,14 +269,16 @@ export const baseNodes = {
 
 // raw LaTeX between \begin{itemize} and the first \item (\setlength\itemsep{0pt} setup is
 // common). the list node models one PM node per \item, so this has nowhere else to live:
-// carried verbatim on the FIRST list node of the group, spliced back after \begin{...}
-// envArgs: the environment's own options (enumitem's [resume], [label=...]), same first-node rule
+// carried verbatim on every list node of the group, spliced back after \begin{...} by the one that opens it
+// envArgs: the environment's own options (enumitem's [resume], [label=...]), on every node too
 // envName: 'description' on every item of one (the editor shows bullets, the file keeps its
-// environment); itemLabel: the raw [label] of \item[label], on that item's node
+// environment); envKey: which source environment the item came from, never written out;
+// itemLabel: the raw [label] of \item[label], on that item's node
 baseNodes.list.attrs = {
 	...(baseNodes.list.attrs ?? {}),
 	preBody: { default: null },
 	envArgs: { default: null },
 	envName: { default: null },
+	envKey: { default: null },
 	itemLabel: { default: null }
 };
