@@ -8,8 +8,10 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const spawned = vi.hoisted(() => [] as Array<{ kill: ReturnType<typeof vi.fn> }>);
+// a program that is not on PATH: Node hands back the child, then emits ENOENT and never 'exit'
+const engine = vi.hoisted(() => ({ missing: false }));
 vi.mock('node:child_process', () => ({
-	spawn: () => {
+	spawn: (cmd: string) => {
 		const child = Object.assign(new EventEmitter(), {
 			stdout: new PassThrough(),
 			stderr: new PassThrough(),
@@ -18,6 +20,7 @@ vi.mock('node:child_process', () => ({
 			pid: 4242
 		});
 		spawned.push(child);
+		if (engine.missing) process.nextTick(() => child.emit('error', Object.assign(new Error(`spawn ${cmd} ENOENT`), { code: 'ENOENT' })));
 		return child;
 	},
 	execFile: vi.fn()
@@ -40,6 +43,19 @@ describe('draft daemon warm timeout', () => {
 			expect(spawned).toHaveLength(1);
 			expect(spawned[0].kill).toHaveBeenCalledWith('SIGKILL');
 		} finally {
+			rmSync(root, { recursive: true, force: true });
+		}
+	});
+
+	it('fails the request at once when the engine cannot be started', async () => {
+		engine.missing = true;
+		const root = mkdtempSync(join(tmpdir(), 'texd-missing-'));
+		writeFileSync(join(root, 'main.tex'), '\\documentclass{article}\n\\begin{document}\nx\n\\end{document}\n');
+		try {
+			const result = await typesetParagraph({ root, mainFile: 'main.tex', engineDir: root, text: 'x' });
+			expect(result).toEqual({ ok: false, error: 'spawn lualatex ENOENT' });
+		} finally {
+			engine.missing = false;
 			rmSync(root, { recursive: true, force: true });
 		}
 	});

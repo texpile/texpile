@@ -180,6 +180,12 @@ async function spawnDaemon(root: string, engineDir: string, preamble: string): P
 			if (daemon === state) daemon = null;
 			if (!ready) reject(new Error(`daemon exited before ready (code ${code})`));
 		});
+		// a lualatex that cannot start (its folder gone from PATH) says so here and never exits
+		child.on('error', (err) => {
+			clearTimeout(warm);
+			if (daemon === state) daemon = null;
+			if (!ready) reject(err);
+		});
 		// an engine still warming after this (a cold font cache runs close to a minute) is
 		// killed, not abandoned: nothing else could ever reach it, and every later request
 		// would spawn another beside it
