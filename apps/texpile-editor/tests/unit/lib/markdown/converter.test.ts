@@ -137,6 +137,16 @@ describe('markdownToProseMirror', () => {
 		expect(href).toBe('docs/café.md');
 	});
 
+	it('keeps the escapes a link’s URL was written with', () => {
+		const { doc } = markdownToProseMirror('[a](https://x.com/100%25-guide) [b](https://x.com/a%20b#c)\n');
+		const hrefs: string[] = [];
+		doc.descendants((node) => {
+			const link = node.marks.find((mark) => mark.type.name === 'link');
+			if (link && !hrefs.includes(link.attrs.href)) hrefs.push(link.attrs.href);
+		});
+		expect(hrefs).toEqual(['https://x.com/100%25-guide', 'https://x.com/a%20b#c']);
+	});
+
 	it('links carry href/title and autolinks are bare', () => {
 		const { doc } = markdownToProseMirror('[x](https://a.example "T") and <https://b.example>\n');
 		const para = doc.child(0);
