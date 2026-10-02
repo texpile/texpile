@@ -46,7 +46,7 @@ function typedInto(doc: Node, words: string[]): Node {
 		const item = out.nodeAt(at)!;
 		const para = item.firstChild!;
 		const edited = item.copy(item.content.replaceChild(0, para.copy(para.content.addToEnd(doc.type.schema.text('!')))));
-		out = out.copy(out.content.replaceChild(out.content.findIndex(at).index, edited));
+		out = out.copy(out.content.replaceChild(out.resolve(at).index(), edited));
 	}
 	return out;
 }
