@@ -180,6 +180,13 @@ function writeAtoms(
   const pieces: Piece[] = [];
   for (let i = 0; i < list.length; i++) {
     const atom = list[i];
+    if (
+      atom.type === 'error' &&
+      UNWRITTEN_WITH_ARGUMENT.test(atom.value ?? '')
+    ) {
+      if (list[i + 1]?.type === 'group') i++;
+      continue;
+    }
     let text: string;
     let end = i + 1;
     if (atom.mode === 'text' && !isCode(atom)) {
@@ -439,6 +446,14 @@ function isCallArgs(previous: Atom | undefined, atom: Atom): boolean {
   );
 }
 
+// LaTeX written as nothing: a rule between an array's rows, which `mat()` draws none of; a row's
+// number or a break hint, which Typst sets for the whole equation; and a placement Typst has none
+// of, whose argument follows as what it places
+const UNWRITTEN =
+  /^\\(h(dash)?line|nonumber|notag|(display|allow|no|line|page|nopage)break|protect|hfill|(big|med|small)skip|mathclap|lefteqn|shove(left|right)|fbox)$/;
+// and with the argument it takes: a row's label or tag, vertical space, a rule under some columns
+const UNWRITTEN_WITH_ARGUMENT = /^\\(label|tag\*?|vspace|c(dash)?line)$/;
+
 /** `next` is the atom written after this one, which scripts it when it is a `subsup` */
 function writeAtom(atom: Atom, style: PrivateStyle, next?: Atom): string {
   if (atom.verbatimTypst !== undefined) return atom.verbatimTypst;
@@ -523,14 +538,7 @@ function writeCore(
     // a command MathLive did not know, shown as written
     case 'error':
       if (spelling.name !== undefined) return writeSymbol(atom, spelling);
-      // a rule between an array's rows, which `mat()` draws none of, a row's number, which
-      // Typst sets for the whole equation, and a placement Typst has none of, whose argument
-      // follows as what it places
-      return /^\\([hc](dash)?line|nonumber|notag|mathclap|lefteqn|shove(left|right)|fbox)$/.test(
-        atom.value ?? ''
-      )
-        ? ''
-        : writeString([atom]);
+      return UNWRITTEN.test(atom.value ?? '') ? '' : writeString([atom]);
     case 'operator':
       // `\Re` and `\smallint` are symbols Typst has a name for
       if ([...(atom.value ?? '')].length === 1)

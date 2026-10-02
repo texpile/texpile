@@ -209,6 +209,26 @@ describe('typst math in MathLive', () => {
       expect(convertLatexToTypst(latex), latex).toBe(typst);
   });
 
+  it('writes nothing for a label, a tag, a break hint or vertical space, which Typst sets otherwise', () => {
+    const cases: [string, string][] = [
+      ['x = 1 \\label{eq:a}', 'x = 1'],
+      ['x = 1 \\tag{3}', 'x = 1'],
+      ['x = 1 \\tag*{A}', 'x = 1'],
+      [
+        '\\begin{align}a &= b \\label{eq:a} \\\\ \\displaybreak c &= d\\end{align}',
+        'a & = b \\\nc & = d',
+      ],
+      ['a \\allowbreak + b \\nobreak + c', 'a + b + c'],
+      ['a \\hfill b \\vspace{2mm} c', 'a b c'],
+      [
+        '\\begin{matrix}a & b \\\\ \\cline{1-2} c & d\\end{matrix}',
+        'mat(delim: #none, a, b; c, d)',
+      ],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
   it('writes the old font switches as the styles they set in math', () => {
     const cases: [string, string][] = [
       ['{\\rm d}x', 'upright(d) x'],
