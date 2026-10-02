@@ -14,6 +14,7 @@ import { relativeTo } from '$lib/workspace/fileSystem';
 import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { sanitizeLabel } from '$lib/editor/visual/label';
 import { renderChildren } from '$lib/languages/latex/serializer/latexSerializer';
+import { typStr } from '$lib/languages/typst/visual/serialize/typstInline';
 import { activeCm, cmApply, cmReplace } from '$lib/chrome/menuBarCommands';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 import { m } from '$lib/paraglide/messages';
@@ -236,7 +237,7 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 			if (value === 'comment') cmAfterLine(cm, '// ');
 			else if (value === 'include') {
 				const path = await askInclude('typ');
-				if (path) cmAfterLine(cm, `#include "${path}"`);
+				if (path) cmAfterLine(cm, `#include ${typStr(path)}`);
 			}
 			return;
 		}

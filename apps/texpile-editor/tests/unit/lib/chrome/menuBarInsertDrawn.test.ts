@@ -2,8 +2,10 @@
 import { it, expect, afterEach } from 'vitest';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
+import { EditorState as CMState } from '@codemirror/state';
+import { EditorView as CMView } from '@codemirror/view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { editorViewStore } from '$lib/stores/editorStore';
+import { editorViewStore, sourceCmView, viewMode } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
 import { makeDrawnInserts } from '$lib/chrome/menubar/menuBarInsertDrawn';
@@ -55,4 +57,19 @@ it('names a .bib in a subfolder by its path from the main file, as BibTeX looks 
 	const chips: string[] = [];
 	view.state.doc.descendants((node) => void (node.type.name === 'inline_latex' && chips.push(node.textContent)));
 	expect(chips).toEqual(['\\bibliographystyle{plain}', '\\bibliography{bib/refs}']);
+});
+
+it('writes a Typst include typed in source mode as a Typst string', async () => {
+	const cm = new CMView({ state: CMState.create({ doc: 'Intro.' }), parent: document.body });
+	sourceCmView.current = cm;
+	viewMode.current = 'source';
+	try {
+		const typst = makeDrawnInserts({ dialect: () => 'typ', askText: async () => 'chapters\\notes "draft".typ' });
+		await typst('include');
+		expect(cm.state.doc.toString()).toBe('Intro.\n#include "chapters\\\\notes \\"draft\\".typ"');
+	} finally {
+		cm.destroy();
+		sourceCmView.current = null;
+		viewMode.current = 'visual';
+	}
 });
