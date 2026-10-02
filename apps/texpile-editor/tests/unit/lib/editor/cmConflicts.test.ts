@@ -124,3 +124,18 @@ it('marks a marker line left behind when a place is settled by hand', () => {
 	const stray = [...view.dom.querySelectorAll('.cm-conflict-stray')].map((l) => l.textContent);
 	expect(stray).toEqual(['=======', '>>>>>>> origin/main']);
 });
+
+it('marks the base marker of a diff3 place left behind', () => {
+	const view = mount('Intro.\n<<<<<<< HEAD\nMine.\n||||||| base\nBase.\n=======\nTheirs.\n>>>>>>> origin/main\n');
+	// mine kept by hand: the <<<<<<< line, and ======= through >>>>>>>, deleted
+	const divider = view.state.doc.line(6);
+	view.dispatch({
+		changes: [
+			{ from: view.state.doc.line(2).from, to: view.state.doc.line(3).from },
+			{ from: divider.from, to: view.state.doc.length }
+		]
+	});
+	expect(view.state.doc.toString()).toBe('Intro.\nMine.\n||||||| base\nBase.\n');
+	const stray = [...view.dom.querySelectorAll('.cm-conflict-stray')].map((l) => l.textContent);
+	expect(stray).toEqual(['||||||| base']);
+});

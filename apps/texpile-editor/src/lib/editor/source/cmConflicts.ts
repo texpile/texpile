@@ -216,7 +216,7 @@ const strayLine = Decoration.line({ class: 'cm-conflict-stray' });
  *  refuses the file while one is there, so it is marked where it is */
 function strayMarkers(state: EditorState, out: Range<Decoration>[]): void {
 	const text = state.doc.toString();
-	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>')) return;
+	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>') && !text.includes('|||||||')) return;
 	const blocks = state.field(conflictBlocks);
 	for (let n = 1; n <= state.doc.lines; n++) {
 		const line = state.doc.line(n);
