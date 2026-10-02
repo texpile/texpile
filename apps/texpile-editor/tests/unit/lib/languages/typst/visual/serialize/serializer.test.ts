@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest';
+import { Transform } from 'prosemirror-transform';
+import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { argsWithLanguage } from '$lib/languages/latex/parser/listingLanguage';
 import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
@@ -33,5 +35,21 @@ describe('an image resized by dragging', () => {
 		const back = typstToProseMirror(dragged('alt: "x, width: y"')).doc.child(0);
 		expect(back.type.name).toBe('image');
 		expect(back.attrs.options).toBe('width: 50%, alt: "x, width: y"');
+	});
+});
+
+describe('a figure table whose caption is empty', () => {
+	it('keeps its caption: [] when the table is written afresh, and gains none it did not have', () => {
+		const src = '#figure(\n  table(\n    columns: 2,\n    [a], [b],\n  ),\n  caption: [],\n) <tab:x>\n';
+		const parsed = parseTypstFile(src);
+		let at = -1;
+		parsed.doc.descendants((n, pos) => {
+			if (at < 0 && n.isText && n.text === 'a') at = pos;
+			return at < 0;
+		});
+		const edited = new Transform(parsed.doc).replaceWith(at, at + 1, S.text('A')).doc;
+		expect(serializeTypstFile(parsed, edited)).toContain('caption: []');
+		expect(serializeToTypst(typstToProseMirror(src).doc)).toContain('caption: []');
+		expect(serializeToTypst(typstToProseMirror(src.replace('  caption: [],\n', '')).doc)).not.toContain('caption');
 	});
 });

@@ -238,7 +238,7 @@ const NODES: Record<string, NodeHandler> = {
 		const cap = captionNode as Node | null;
 		const caption = cap && cap.childCount > 0 ? renderBody(cap) : '';
 		const label = labelOf(node);
-		return `#figure(\n  ${body}${caption ? `,\n  caption: [${caption}]` : ''},\n)${label}\n\n`;
+		return `#figure(\n  ${body}${caption || node.attrs.typCaption ? `,\n  caption: [${caption}]` : ''},\n)${label}\n\n`;
 	},
 
 	block_math(node) {

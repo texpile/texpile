@@ -113,6 +113,8 @@ nodes.heading = { ...base.heading, attrs: { ...base.heading.attrs, label: { defa
 for (const name of ['heading', 'block_math', 'table_wrapper']) {
 	nodes[name] = { ...nodes[name], attrs: { ...nodes[name].attrs, labelGap: { default: null } } };
 }
+// typCaption: the file gave the figure a caption, which stays when its text is empty: typst still draws "Table 1:"
+nodes.table_wrapper = { ...nodes.table_wrapper, attrs: { ...nodes.table_wrapper.attrs, typCaption: { default: false } } };
 // typFile: what the bytes outside the markup looked like (a leading BOM, CRLF line endings)
 nodes.doc = { ...base.doc, attrs: { ...base.doc.attrs, typFile: { default: null } } };
 

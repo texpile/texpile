@@ -58,7 +58,10 @@ function figureParts(call: SyntaxNode, src: string): FigureParts | null {
 }
 
 /** `#figure(table(...), caption: [...])`: the table-figure sibling of figureParts. */
-function tableFigureParts(call: SyntaxNode, src: string): { table: TableParts; captionMarkup: SyntaxNode | null } | null {
+function tableFigureParts(
+	call: SyntaxNode,
+	src: string
+): { table: TableParts; captionMarkup: SyntaxNode | null; captioned: boolean } | null {
 	if (call.name !== 'FuncCall') return null;
 	const ident = call.firstChild;
 	if (!ident || ident.name !== 'Ident' || src.slice(ident.from, ident.to) !== 'figure') return null;
@@ -77,7 +80,7 @@ function tableFigureParts(call: SyntaxNode, src: string): { table: TableParts; c
 		if (!cb) return null;
 		captionMarkup = childOf(cb, 'Markup');
 	}
-	return { table, captionMarkup };
+	return { table, captionMarkup, captioned: real.length === 2 };
 }
 
 /**
@@ -116,7 +119,10 @@ export function figureSeg(kids: SyntaxNode[], i: number, src: string): { seg: Se
 		const table = buildTableNode(tParts!.table);
 		if (!table) return null;
 		const caption = tParts!.captionMarkup ? convertInline(children(tParts!.captionMarkup), src, []) : [];
-		node = buildNode('table_wrapper', { label, labelGap, showNotes: false }, [buildNode('table_caption', null, caption), table]);
+		node = buildNode('table_wrapper', { label, labelGap, showNotes: false, typCaption: tParts!.captioned }, [
+			buildNode('table_caption', null, caption),
+			table
+		]);
 	}
 	const to = (labelNode ?? call).to;
 	return { seg: { blocks: [node], from: hash.from, to }, next: alone.next };
