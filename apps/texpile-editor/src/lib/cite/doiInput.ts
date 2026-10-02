@@ -29,7 +29,7 @@ export function parseWorkId(input: string): WorkId | null {
 	const text = input.trim();
 	if (!text) return null;
 
-	const arxivLink = /arxiv\.org\/(?:abs|pdf)\/(.+?)(?:\.pdf)?\/?(?:[?#].*)?$/i.exec(text);
+	const arxivLink = /arxiv\.org\/(?:abs|pdf|html)\/(.+?)(?:\.pdf)?\/?(?:[?#].*)?$/i.exec(text);
 	if (arxivLink) return arxivId(arxivLink[1]);
 
 	const doi = findDoi(text);
@@ -38,7 +38,8 @@ export function parseWorkId(input: string): WorkId | null {
 		return (viaArxiv && arxivId(viaArxiv[1])) || { kind: 'doi', doi };
 	}
 
-	const arxiv = arxivId(text.replace(/^arxiv:\s*/i, ''));
+	// the brackets and sentence punctuation an ID was quoted with, as a DOI's below
+	const arxiv = arxivId(text.replace(/^[([]?\s*(?:arxiv:\s*)?/i, '').replace(/[.,;:)\]]+$/, ''));
 	if (arxiv) return arxiv;
 
 	// a PubMed ID is a bare number, which a year or a page is too: only its prefix or link says so

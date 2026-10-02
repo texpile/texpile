@@ -70,20 +70,28 @@ describe('parseWorkId: DOIs', () => {
 describe('parseWorkId: arXiv', () => {
 	const vaswani = { kind: 'arxiv', id: '1706.03762', doi: '10.48550/arXiv.1706.03762' };
 
-	it('takes new-style IDs with or without a prefix and version', () => {
-		for (const input of ['1706.03762', 'arXiv:1706.03762', 'arxiv: 1706.03762v5', '1706.03762v7']) {
+	it('takes new-style IDs with or without a prefix, version and the punctuation they were quoted with', () => {
+		for (const input of [
+			'1706.03762',
+			'arXiv:1706.03762',
+			'arxiv: 1706.03762v5',
+			'1706.03762v7',
+			'arXiv:1706.03762.',
+			'(arXiv:1706.03762),'
+		]) {
 			expect(parseWorkId(input), input).toEqual(vaswani);
 		}
 		expect(parseWorkId('2101.00001')).toEqual({ kind: 'arxiv', id: '2101.00001', doi: '10.48550/arXiv.2101.00001' });
 	});
 
-	it('takes abs and pdf links', () => {
+	it('takes abs, pdf and html links', () => {
 		for (const input of [
 			'https://arxiv.org/abs/1706.03762',
 			'https://arxiv.org/abs/1706.03762v5',
 			'https://arxiv.org/pdf/1706.03762v5.pdf',
 			'https://arxiv.org/pdf/1706.03762',
-			'arxiv.org/abs/1706.03762?context=cs'
+			'arxiv.org/abs/1706.03762?context=cs',
+			'https://arxiv.org/html/1706.03762v7'
 		]) {
 			expect(parseWorkId(input), input).toEqual(vaswani);
 		}
