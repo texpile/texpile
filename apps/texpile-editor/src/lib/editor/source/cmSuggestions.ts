@@ -42,6 +42,8 @@ const caretSide = StateField.define<CaretSide | null>({
 });
 
 function typedAtCaret(tr: Transaction): CaretSide | null {
+	// an undo puts the words back where a delete took them, it types nothing beside them
+	if (tr.isUserEvent('undo')) return null;
 	const caret = tr.startState.field(caretSide, false);
 	return caret && tr.changes.mapPos(caret.at, -1) !== tr.changes.mapPos(caret.at, 1) ? caret : null;
 }

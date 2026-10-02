@@ -2,6 +2,7 @@
 import { it, expect } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { Decoration, EditorView } from '@codemirror/view';
+import { history, undo } from '@codemirror/commands';
 import { clearOfOldWords, cmSuggestions, liveSuggestionRanges, setSuggestionRanges } from '$lib/editor/source/cmSuggestions';
 import { editMode, takeTypedSides } from '$lib/comments/activeSuggestions.svelte';
 
@@ -79,5 +80,23 @@ it('puts what is typed in front of old words a delete has just struck out', () =
 	const head = view.state.selection.main.head;
 	view.dispatch({ changes: { from: head, insert: 'x' }, selection: { anchor: head + 1 }, userEvent: 'input.type' });
 	expect(takeTypedSides()).toEqual({ r: 'before' });
+	view.destroy();
+});
+
+it('takes back an undone delete as the words it took, not as typing in front of them', () => {
+	editMode.current = 'suggesting';
+	const doc = 'the fox jumps over the dog';
+	const at = doc.indexOf(' over');
+	const view = new EditorView({ parent: document.body, state: EditorState.create({ doc, extensions: [history(), cmSuggestions()] }) });
+	view.dispatch({ selection: { anchor: at } });
+	const del = () => view.dispatch({ changes: { from: at, to: at + 1 }, userEvent: 'delete.forward' });
+	del();
+	del();
+	// what the comparison makes of it: " over" now reads "ver"
+	view.dispatch({ effects: setSuggestionRanges.of([{ id: 'r', from: at, to: at + 3, restore: ' over', mine: true }]) });
+	takeTypedSides();
+	undo(view);
+	expect(takeTypedSides()).toEqual({});
+	expect(liveSuggestionRanges(view.state).map((r) => view.state.sliceDoc(r.from, r.to))).toEqual([' over']);
 	view.destroy();
 });
