@@ -108,6 +108,8 @@ describe('typst math in MathLive', () => {
     // the text form of ↔ is the arrow MathLive has, `~` a tilde and not a space
     expect(structure(rootOf('arrow.l.r'))).toBe('\\leftrightarrow');
     expect(structure(rootOf('tilde.basic'))).toBe('\\char"7E ');
+    // Typst's `aleph` is the Hebrew letter, which pdflatex takes only as \aleph
+    expect(structure(rootOf('aleph_0 < beth_1'))).toBe('\\aleph_0<\\beth_1');
   });
 
   it('reads what MathLive places or sizes otherwise as the command that does', () => {
