@@ -25,4 +25,5 @@ jobs:
       - run: pnpm --filter texpile-editor lint
       - run: pnpm --filter texpile-editor testonce
       - run: pnpm --filter texpile-typst-syntax-wasm test
+      - run: pnpm --filter mathlive test
       - run: npx tsc -p electron --noEmit

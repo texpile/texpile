@@ -148,7 +148,7 @@
 	<div class="flex items-center gap-1 sm:gap-1.5">
 		<span class="border-surface-300-700 h-6 border-r"></span>
 		<button
-			class="btn-icon btn-icon-xs toolbarButton hover:preset-tonal"
+			class="toolbarButton flex items-center rounded-base p-1 hover:preset-tonal"
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
 			onclick={selectBlockMath}

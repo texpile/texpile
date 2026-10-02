@@ -130,11 +130,6 @@ describe('headings (T18, T20)', () => {
 });
 
 describe('math and strings (T22, T24)', () => {
-	it('theta is theta; theta.alt is vartheta', () => {
-		expect(typstToProseMirror('$ theta $\n').doc.child(0).textContent).toBe('\\theta');
-		expect(typstToProseMirror('$ theta.alt $\n').doc.child(0).textContent).toBe('\\vartheta');
-	});
-
 	it('string escapes in a link target decode once and encode once', () => {
 		const out = regen('#link("https://e.org/\\u{e9}")[q]\n');
 		expect(out).toBe('#link("https://e.org/é")[q]');

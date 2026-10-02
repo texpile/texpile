@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Draws the app's own context menu; contextMenu.svelte.ts decides when. Mounted once, at the
 	// app root, like the tooltip host.
-	import { ChevronRight } from '@lucide/svelte';
+	import { Check, ChevronRight } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -63,18 +63,23 @@
 		{#if 'separator' in item}
 			<div class={separatorClass}></div>
 		{:else}
+			<!-- a disabled item's tip says why, so it still takes the pointer the menu style takes away -->
 			<button
 				type="button"
-				role="menuitem"
+				role={item.checked === undefined ? 'menuitem' : 'menuitemcheckbox'}
+				aria-checked={item.checked}
 				aria-haspopup={item.submenu ? 'menu' : undefined}
 				class="{menuItemClass} {item.danger ? 'text-error-ink' : ''}"
 				disabled={item.disabled}
+				style={item.disabled && item.tip ? 'pointer-events: auto' : undefined}
 				onclick={(e) => (item.submenu ? hover(item, e.currentTarget) : run(item))}
 				onpointerenter={(e) => top && hover(item, e.currentTarget)}
 				onmousedown={(e) => e.preventDefault()}
 				use:tip={item.tip}
 			>
-				{#if item.icon}
+				{#if item.checked}
+					<Check class="size-4 shrink-0" />
+				{:else if item.icon}
 					{@const Icon = item.icon}
 					<Icon class="size-4 shrink-0 {item.danger ? '' : 'text-muted'}" />
 				{:else}

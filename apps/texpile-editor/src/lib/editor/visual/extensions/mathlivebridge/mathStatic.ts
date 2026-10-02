@@ -20,9 +20,10 @@
 // The document's own macros are passed here AND to the live field, from the same dictionary. That
 // is not incidental: give one of them a \newcommand the other lacks and every equation using it
 // would visibly change as it went live, which is the twitch stage 3 exists to avoid.
-import { convertLatexToMarkup } from 'mathlive';
+import { convertLatexToMarkup, convertTypstToMarkup } from 'mathlive';
 import { mathMacros } from './mathMacros.svelte';
 import { themeStaticMarkup } from './themeBlack';
+import type { MathSyntax } from './mathFieldFactory';
 import 'mathlive/static.css';
 
 export const PLACEHOLDER_CLASS = 'math-static-placeholder';
@@ -36,29 +37,30 @@ const latexOf = new WeakMap<HTMLElement, string>();
 const pending = new Set<HTMLElement>();
 let draining = false;
 
-/** Rendered width of a latex fragment in `ch`, roughly: commands collapse to about one glyph, and
- * braces and sub/superscript markers vanish. It only has to be close. Anything within about 1.5
- * screens is upgraded before it is seen, and browser scroll anchoring absorbs the corrections made
- * to content above the viewport. */
-function estimateWidthCh(latex: string): number {
-	const collapsed = latex
-		.replace(/\\[a-zA-Z]+/g, 'x')
+/** Rendered width of a math fragment in `ch`, roughly: commands and names collapse to about one
+ * glyph, and braces and sub/superscript markers vanish. It only has to be close. Anything within
+ * about 1.5 screens is upgraded before it is seen, and browser scroll anchoring absorbs the
+ * corrections made to content above the viewport. */
+function estimateWidthCh(source: string, syntax: MathSyntax): number {
+	const collapsed = (syntax === 'typst' ? source.replace(/\p{L}{2,}(\.\p{L}+)*/gu, 'x') : source.replace(/\\[a-zA-Z]+/g, 'x'))
 		.replace(/[{}$&]/g, '')
 		.replace(/[\^_]/g, '');
 	return Math.max(1, collapsed.length);
 }
 
-function estimateLines(latex: string): number {
-	return (latex.match(/\\\\/g)?.length ?? 0) + 1;
+function estimateLines(source: string, syntax: MathSyntax): number {
+	const breaks = syntax === 'typst' ? /\\(?=\s)/g : /\\\\/g;
+	return (source.match(breaks)?.length ?? 0) + 1;
 }
 
-function applyEstimate(el: HTMLElement, latex: string, isBlock: boolean): void {
+function applyEstimate(el: HTMLElement, source: string, isBlock: boolean): void {
+	const syntax = el.dataset.syntax as MathSyntax;
 	if (isBlock) {
-		el.style.height = `${(estimateLines(latex) * BLOCK_LINE_EM).toFixed(1)}em`;
+		el.style.height = `${(estimateLines(source, syntax) * BLOCK_LINE_EM).toFixed(1)}em`;
 		el.style.width = '100%';
 	} else {
 		el.style.display = 'inline-block';
-		el.style.width = `${estimateWidthCh(latex)}ch`;
+		el.style.width = `${estimateWidthCh(source, syntax)}ch`;
 		el.style.height = '1em';
 	}
 }
@@ -107,7 +109,11 @@ export function typesetNow(budgetMs: number): void {
 function typeset(el: HTMLElement, latex: string): void {
 	try {
 		// 'math' matches MathfieldElement's own default mode; anything else would resize on upgrade
-		el.innerHTML = themeStaticMarkup(convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current }));
+		const markup =
+			el.dataset.syntax === 'typst'
+				? convertTypstToMarkup(latex, { defaultMode: 'math' })
+				: convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current });
+		el.innerHTML = themeStaticMarkup(markup);
 	} catch {
 		// mathlive throws outright on some malformed input. Fall back to the source text so the node
 		// still occupies roughly the right space instead of collapsing to nothing.
@@ -120,9 +126,10 @@ function typeset(el: HTMLElement, latex: string): void {
 }
 
 /** a cheap, roughly-sized stand-in, queued for typesetting once the thread is free */
-export function renderStaticMath(latex: string, isBlock: boolean): HTMLElement {
+export function renderStaticMath(latex: string, isBlock: boolean, syntax: MathSyntax = 'latex'): HTMLElement {
 	const el = document.createElement(isBlock ? 'div' : 'span');
 	el.className = PLACEHOLDER_CLASS;
+	el.dataset.syntax = syntax;
 	// it lives inside prosemirror's contenteditable, and unlike a MathfieldElement it has nothing of
 	// its own guarding the caret, so say plainly that it cannot be typed into
 	el.contentEditable = 'false';

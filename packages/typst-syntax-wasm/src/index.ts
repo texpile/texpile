@@ -10,6 +10,7 @@ import type { Input, NodePropSource, PartialParse, TreeFragment } from '@lezer/c
 import { TypstSyntax } from '../pkg/texpile_typst_syntax_wasm.js';
 
 export { typstHighlight } from './highlight.js';
+export { parseTypstMath, hasTypstError, type TypstMathNode } from './mathTree.js';
 
 export class TypstParser extends Parser {
 	/** the wasm parser, kept across parses so Source::replace can reparse incrementally */

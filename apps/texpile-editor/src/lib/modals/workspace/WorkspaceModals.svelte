@@ -7,6 +7,7 @@
 	import GitDialogsHost from './GitDialogsHost.svelte';
 	import CommandPalette from '$lib/palette/CommandPalette.svelte';
 	import SymbolPicker from '$lib/editor/symbols/SymbolPicker/SymbolPicker.svelte';
+	import MathSearchPanel from '$lib/editor/visual/extensions/mathlivebridge/mathSearch/MathSearchPanel.svelte';
 	import TemplateDetailsDialog from '$lib/workspace/templates/saved/TemplateDetailsDialog.svelte';
 	import TypstExportDialog from '$lib/languages/typst/export/dialog/TypstExportDialog.svelte';
 	import { promptAsk } from '$lib/modals/confirm.svelte';
@@ -162,6 +163,8 @@
 
 <!-- takes no props either: the source toolbar, the Insert menu and the palette open it -->
 <SymbolPicker />
+<!-- Tab in an equation opens it -->
+<MathSearchPanel />
 <TemplateDetailsDialog />
 <TypstExportDialog />
 <!-- who is committing, where to publish, and git's own sign-in questions -->

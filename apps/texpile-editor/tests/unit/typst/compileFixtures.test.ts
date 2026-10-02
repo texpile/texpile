@@ -53,7 +53,9 @@ const COMPANIONS: Record<string, string | Buffer> = {
 const NOT_STANDALONE: Record<string, string> = {
 	// exercises the parser's handling of a dangling reference; typst rejects one at compile time,
 	// which is the point - the editor must not choke on source that does not yet compile
-	refsLabels: 'cites @intro, a label the fixture deliberately never defines'
+	refsLabels: 'cites @intro, a label the fixture deliberately never defines',
+	// the editor must keep an equation the reader is still typing, which typst cannot compile yet
+	eqUnparsed: 'holds an equation with a syntax error, which the editor keeps as written'
 };
 
 let root = '';

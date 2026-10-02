@@ -112,7 +112,7 @@ export function visibleLines(doc: PMNode, format: VisualFormat): string[] {
 		});
 		const lead = kids.findIndex((c) => !(c.type.name === 'inline_latex' && /^\/[/*]/.test(c.textContent)));
 		const [math, label, ...more] = lead < 0 ? [] : kids.slice(lead);
-		if (math?.type.name !== 'inline_math' || !/^\s/.test(String(math.attrs.typst ?? '')) || more.length) return false;
+		if (math?.type.name !== 'inline_math' || !/^\s/.test(math.textContent) || more.length) return false;
 		if (label && !(label.type.name === 'inline_latex' && /^<[^<>]*>$/.test(label.textContent))) return false;
 		const comments = kids.slice(0, lead).map((c) => c.textContent);
 		if (comments.length) push(path, 'raw_latex', comments.join(''));

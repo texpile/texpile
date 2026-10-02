@@ -1,0 +1,110 @@
+// Adapted from https://jakedeichert.com/blog/2020/02/a-super-hacky-alternative-to-import-meta-url/
+function getFileUrl() {
+  const stackTraceFrames = String(new Error().stack)
+    .replace(/^Error.*\n/, '')
+    .split('\n');
+
+  if (stackTraceFrames.length === 0) {
+    console.error(
+      "Can't use relative paths to specify assets location because the source" +
+        'file location could not be determined (unexpected stack trace format' +
+        ` "${new Error().stack}").`
+    );
+    return '';
+  }
+
+  // 0 = this getFileUrl frame (because the Error is created here)
+  // 1 = the caller of getFileUrl (the file path we want to grab)
+  let callerFrame = stackTraceFrames[1];
+
+  // Extract the script's complete url
+  let m = callerFrame.match(/http.*\.ts[\?:]/);
+  if (m) {
+    // This is a Typescript file, therefore there's a source map that's
+    // remapping to the source file. Use an entry further in the stack trace.
+    callerFrame = stackTraceFrames[2];
+  }
+
+  m = callerFrame.match(/(https?:.*):[0-9]+:[0-9]+/);
+  if (!m) {
+    // We might be running under node, in which case we have a file path, not a URL
+    m = callerFrame.match(/at (.*(\.ts))[\?:]/);
+    if (!m) m = callerFrame.match(/at (.*(\.mjs|\.js))[\?:]/);
+  }
+  if (!m) {
+    console.error(stackTraceFrames);
+    console.error(
+      "Can't use relative paths to specify assets location because the source " +
+        'file location could not be determined ' +
+        `(unexpected location "${callerFrame}").`
+    );
+    return '';
+  }
+  return m[1];
+}
+
+// When using a CDN, there might be some indirections (i.e. to deal
+// with version numbers) before finding the actual location of the library.
+// When resolving relative (to find fonts/sounds), we need to have the resolved
+// URL
+let gResolvedScriptUrl: string | null = null;
+
+// The URL of the bundled MathLive library. Used later to locate the `fonts`
+// directory, relative to the library
+
+// If loaded via a <script> tag, `document.currentScript.src` is this location
+// If loaded via a module (e.g. `import ...`),`import.meta.url` is this location.
+// However, `import.meta` is not supported by WebPack. So, use a
+// super-hacky-alternative to get the URL.
+// See https://github.com/webpack/webpack/issues/6719
+
+// Note that in some circumstances, document.currentScript.src can be ""
+// (the empty string). Therefore, use the "||" operator rather than "??"
+// to properly apply the alternative value in this case.
+
+const gScriptUrl =
+  (globalThis?.document?.currentScript as HTMLScriptElement)?.src ||
+  getFileUrl();
+
+export async function resolveUrl(url: string): Promise<string> {
+  // Is  it an absolute URL?
+  if (/^(?:[a-z+]+:)?\/\//i.test(url)) {
+    try {
+      return new URL(url).href;
+    } catch (e) {
+      // Invalid URL format, try with protocol prefix
+    }
+    if (url.startsWith('//')) {
+      // Add the protocol
+      try {
+        return new URL(`${window.location.protocol}${url}`).href;
+      } catch (e) {
+        // Still invalid, return as-is
+      }
+    }
+    return url;
+  }
+
+  // This may be a relative URL
+  if (gResolvedScriptUrl === null) {
+    try {
+      const response = await fetch(gScriptUrl, { method: 'HEAD' });
+      if (response.status === 200) {
+        gResolvedScriptUrl = response.url;
+        // The CDN jsdelivr.net adds a pseudo `/+esm` path to the URL
+        // to indicate that the module version is being used.
+        // Remove it.
+        gResolvedScriptUrl = gResolvedScriptUrl.replace(/\/\+esm$/, '/');
+        // jsdelivr.net does not resolve to a script, but to a pseudo-directory
+        // i.e. https://cdn.jsdelivr.net/npm/mathlive
+        // We need to add a trailing slash to make it a directory
+        if (gResolvedScriptUrl.includes('jsdelivr.net/'))
+          gResolvedScriptUrl += '/';
+      }
+    } catch (e) {
+      console.error(`Invalid URL "${url}" (relative to "${gScriptUrl}")`);
+    }
+  }
+
+  return new URL(url, gResolvedScriptUrl ?? gScriptUrl).href;
+}

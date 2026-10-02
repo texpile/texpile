@@ -167,7 +167,7 @@ export function extractEquationReferences(view: EditorView): ReferenceItem[] {
 		if (typst) {
 			if (node.type.name === 'block_math' && node.attrs.label) {
 				equationCount++;
-				const content = (node.attrs.typst as string) || node.textContent || '';
+				const content = node.textContent || '';
 				const preview = content.length > 50 ? content.substring(0, 50) + '...' : content;
 				equations.push({
 					type: 'equation',

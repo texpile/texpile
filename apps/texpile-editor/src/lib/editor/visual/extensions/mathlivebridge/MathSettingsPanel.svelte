@@ -9,7 +9,7 @@
 	import { generateLabel, isTexpileLabel, sanitizeLabel } from '$lib/editor/visual/label';
 	import { labelTaken } from '$lib/editor/visual/labelTaken';
 	import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
-	import { toggleEnvironmentStar } from './mathEnvironments';
+	import { setDisplayNumbered } from './mathMenu/mathFormulaType';
 	import { equationNumberingChange, equationsNumbered } from '$lib/languages/typst/visual/equationNumbering';
 	import { m } from '$lib/paraglide/messages';
 
@@ -88,45 +88,10 @@
 	}
 
 	function handleNumberedToggle(details: { checked: boolean }) {
-		const newNumbered = details.checked;
-		numberedInput = newNumbered;
-
-		if (hasSpecialEnvironment) {
-			const pos = getPos();
-			if (pos !== undefined) {
-				// the node prop can be stale, read from the live doc
-				const currentNode = view.state.doc.nodeAt(pos);
-				if (!currentNode) return;
-				const currentContent = currentNode.textContent || '';
-
-				// star = unnumbered, so invert
-				const newContent = toggleEnvironmentStar(currentContent, !newNumbered);
-
-				if (newContent !== currentContent) {
-					const tr = view.state.tr;
-					const startPos = pos;
-					const endPos = pos + currentNode.nodeSize;
-					const nodeType = currentNode.type;
-					const newAttrs: Record<string, unknown> = { ...currentNode.attrs, numbered: newNumbered };
-					if (newNumbered && !isPerLineLabelMode && !currentNode.attrs.label) {
-						const newLabel = generateLabel('equation');
-						newAttrs.label = newLabel;
-						labelInput = newLabel;
-					}
-					const textNode = view.state.schema.text(newContent);
-					tr.replaceWith(startPos, endPos, nodeType.create(newAttrs, textNode));
-					view.dispatch(tr);
-					return;
-				}
-			}
-			updateAttrs({ numbered: newNumbered });
-		} else if (newNumbered && !labelInput) {
-			const newLabel = generateLabel('equation');
-			labelInput = newLabel;
-			updateAttrs({ numbered: newNumbered, label: newLabel });
-		} else {
-			updateAttrs({ numbered: newNumbered });
-		}
+		numberedInput = details.checked;
+		const pos = getPos();
+		const tr = pos === undefined ? null : setDisplayNumbered(view.state, pos, details.checked);
+		if (tr) view.dispatch(tr);
 	}
 
 	function handleTypstNumberedToggle(details: { checked: boolean }) {

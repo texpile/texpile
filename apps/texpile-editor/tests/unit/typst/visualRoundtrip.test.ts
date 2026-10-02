@@ -53,6 +53,8 @@ export const CORPUS: Record<string, string> = {
 	// the #set line is not decoration: typst refuses to reference an equation that is not numbered,
 	// so without it this fixture is source no compiler would accept
 	eqLabels: '#set math.equation(numbering: "(1)")\n\n$ E = m c^2 $ <eq:mass>\n\nSee @eq:mass.\n\n$ #calc.pow(2, 3) $ <eq:id>\n',
+	// half typed, so Typst reports an error in it: the editor keeps it as written, label and all
+	eqUnparsed: 'Being typed:\n\n$ x^ $ <eq:draft>\n',
 	figures:
 		'#figure(image("plots/a.png"), caption: [A *bold* caption]) <fig:a>\n\n#figure(image("b.png", width: 70%))\n\n#image("c.svg")\n\n#figure(rect(), caption: [not an image])\n',
 	realWorld:
@@ -278,38 +280,25 @@ describe('converted document shape', () => {
 		expect(doc.child(1).type.name).toBe('term_item');
 	});
 
-	it('translatable equations become math nodes carrying latex + original typst', () => {
-		const doc = docOf('Inline $x^2$ and $sum_(k=1)^n k$ here.\n\n$ integral_0^1 f(x) dif x $\n');
-		const para = doc.child(0);
+	it('equations become math nodes holding their own Typst, padding and code included', () => {
+		const doc = docOf('Inline $x^2$ and $ norm(v) $ here.\n\n$ integral_0^1 f(x) dif x + #calc.pow(2, 3) $\n');
 		const maths: string[] = [];
-		para.forEach((n) => {
-			if (n.type.name === 'inline_math') maths.push(`${n.attrs.typst}=>${n.textContent}`);
+		doc.child(0).forEach((n) => {
+			if (n.type.name === 'inline_math') maths.push(n.textContent);
 		});
-		expect(maths).toEqual(['x^2=>x^2', 'sum_(k=1)^n k=>\\sum_{k = 1}^n k']);
-		const block = doc.child(1);
-		expect(block.type.name).toBe('block_math');
-		expect(block.textContent).toBe('\\int_0^1 f(x) \\mathrm{d} x');
-		expect(block.attrs.typst).toBe('integral_0^1 f(x) dif x');
-	});
-
-	it('spaced fractions translate: the Space nodes around the slash are layout', () => {
-		const doc = docOf('$ (a + b) / 2 $\n\n$ sum_(k=1)^n k = (n (n + 1)) / 2 $\n');
-		expect(doc.child(0).type.name).toBe('block_math');
-		expect(doc.child(0).textContent).toBe('\\frac{a + b}{2}');
+		expect(maths).toEqual(['x^2', ' norm(v) ']);
 		expect(doc.child(1).type.name).toBe('block_math');
+		expect(doc.child(1).textContent).toBe('integral_0^1 f(x) dif x + #calc.pow(2, 3)');
 	});
 
-	it('untranslatable equations stay raw islands', () => {
-		// what cannot be proved, in rising order of durability: a conversion that silently drops
-		// content (norm loses its bars), one MathLive could not render, and typst CODE in math
-		const doc = docOf('has $norm(v)$ and $abs(x)$ and $arrow.r$ inline\n\n$ #calc.pow(2, 3) $\n');
-		const para = doc.child(0);
+	it('equations Typst cannot parse stay raw islands', () => {
+		const doc = docOf('has $x_$ inline\n\n$ a^ $\n');
 		let chips = 0;
-		para.forEach((n) => {
+		doc.child(0).forEach((n) => {
 			if (n.type.name === 'inline_latex') chips++;
 			if (n.type.name === 'inline_math') throw new Error(`unexpected math node for ${n.textContent}`);
 		});
-		expect(chips).toBe(3);
+		expect(chips).toBe(1);
 		expect(doc.child(1).type.name).toBe('raw_latex');
 	});
 
@@ -386,7 +375,7 @@ describe('converted document shape', () => {
 		expect(chips).toEqual(['#text(fill: eastern)[unshared]', '#underline(stroke: red)[fancy]']);
 	});
 
-	it('a labeled equation carries its label; untranslatable ones keep it inside the raw island', () => {
+	it('a labeled equation carries its label; one Typst cannot parse keeps it inside the raw island', () => {
 		const doc = docOf(CORPUS.eqLabels);
 		// found by type, not by index: the fixture opens with a #set line (typst will not reference
 		// an unnumbered equation) and positional assertions would only be measuring that preamble
@@ -394,11 +383,11 @@ describe('converted document shape', () => {
 		doc.forEach((n) => blocks.push(n));
 		const math = blocks.find((n) => n.type.name === 'block_math')!;
 		expect(math.attrs.label).toBe('eq:mass');
-		// the raw island absorbs the label bytes so nothing is lost. Typst CODE in math is the
-		// durable example of untranslatable: no math converter should ever render #calc.pow
-		const island = blocks.find((n) => n.type.name === 'raw_latex' && n.textContent.startsWith('$ #calc'))!;
-		expect(island.textContent).toBe('$ #calc.pow(2, 3) $ <eq:id>');
-		// serializer re-emits the label after the closing dollar (stored typst, latex untouched)
+		// the raw island absorbs the label bytes so nothing is lost
+		const island = docOf(CORPUS.eqUnparsed).child(1);
+		expect(island.type.name).toBe('raw_latex');
+		expect(island.textContent).toBe('$ x^ $ <eq:draft>');
+		// serializer re-emits the label after the closing dollar
 		const out = serializeToTypst(typSchema.nodes.doc.create(null, [math.type.create(math.attrs, math.content)]));
 		expect(out).toBe('$ E = m c^2 $ <eq:mass>');
 	});
@@ -411,6 +400,17 @@ describe('converted document shape', () => {
 		expect(eq.attrs.label).toBeNull();
 		const labeled = typSchema.nodes.doc.create(null, [eq.type.create({ ...eq.attrs, label: 'eq:mass' }, eq.content)]);
 		expect(serializeToTypst(labeled)).toBe('$ E = m c^2 $ <eq:mass>');
+	});
+
+	it('an equation that ends in a comment closes on the next line, not inside the comment', () => {
+		const display = docOf('$ a + b // see (3)\n$ <eq:a>\n').child(0);
+		const inline = typSchema.nodes.inline_math.create(null, typSchema.text('x // the x'));
+		const doc = typSchema.nodes.doc.create(null, [display, typSchema.nodes.paragraph.create(null, [typSchema.text('Then '), inline])]);
+		const out = serializeToTypst(doc);
+		expect(out).toBe('$ a + b // see (3)\n$ <eq:a>\n\nThen $x // the x\n$');
+		const reread = docOf(out);
+		expect(reread.child(0).type.name).toBe('block_math');
+		expect(reread.child(1).child(1).type.name).toBe('inline_math');
 	});
 
 	it('the canonical full-width line is a divider; other lengths stay raw', () => {

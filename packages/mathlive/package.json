@@ -1,0 +1,50 @@
+{
+  "name": "mathlive",
+  "version": "0.110.0",
+  "private": true,
+  "description": "MathLive 0.110.0, forked for Texpile to read and write Typst math",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/mathlive.mjs",
+  "module": "./dist/mathlive.mjs",
+  "types": "./dist/types/mathlive.d.ts",
+  "exports": {
+    "./fonts.css": "./dist/mathlive-fonts.css",
+    "./static.css": "./dist/mathlive-static.css",
+    ".": {
+      "browser": {
+        "types": "./dist/types/mathlive.d.ts",
+        "import": "./dist/mathlive.mjs"
+      },
+      "node": {
+        "types": "./dist/types/mathlive-ssr.d.ts",
+        "import": "./dist/mathlive-ssr.mjs"
+      },
+      "default": {
+        "types": "./dist/types/mathlive.d.ts",
+        "import": "./dist/mathlive.mjs"
+      }
+    },
+    "./ssr": {
+      "types": "./dist/types/mathlive-ssr.d.ts",
+      "import": "./dist/mathlive-ssr.mjs"
+    }
+  },
+  "scripts": {
+    "_comment:sync": "the root postinstall runs every package's sync, so a fresh install builds dist/ before the editor needs it",
+    "sync": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@arnog/esbuild-plugin-less": "^1.1.0",
+    "@cortex-js/compute-engine": "0.58.0",
+    "esbuild": "^0.28.1",
+    "jsdom": "^29.1.1",
+    "less": "^4.2.2",
+    "texpile-typst-syntax-wasm": "workspace:*",
+    "typescript": "~5.8.3",
+    "vite-plugin-wasm": "^3.6.0",
+    "vitest": "^4.1.10"
+  }
+}

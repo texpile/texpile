@@ -116,25 +116,25 @@ describe('the Typst math environments', () => {
 	const { mathSelect } = makeInsertHandlers({ dialect: () => 'typ', askText: async () => null, pickImage: () => {} });
 
 	for (const [env, typst] of [
-		['bmatrix', 'mat(delim: "[", a, b;\nc, d)'],
-		['pmatrix', 'mat(a, b;\nc, d)'],
-		['cases', 'f(x) = cases(x & "if " x >= 0,\n- x & "otherwise")'],
+		['bmatrix', 'mat(delim: "[", a, b; c, d)'],
+		['pmatrix', 'mat(a, b; c, d)'],
+		['cases', 'f(x) = cases(x & "if" x >= 0, -x & "otherwise")'],
 		['aligned', 'a &= b \\\nc &= d']
 	]) {
 		it(`${env} goes in as Typst that reads back as the same equation`, () => {
 			const view = editorWith('Text.', 'Text');
 			mathSelect(env);
-			let latex = '';
+			let content = '';
 			view.state.doc.descendants((node) => {
-				if (node.type.name === 'block_math') latex = node.textContent;
+				if (node.type.name === 'block_math') content = node.textContent;
 			});
-			expect(latex).toContain(`\\begin{${env}}`);
+			expect(content).toBe(typst);
 			const out = serializeToTypst(view.state.doc);
 			expect(out).toContain(`$ ${typst} $`);
 			const reread = typstToProseMirror(out).doc;
-			let back: { type: string; latex: string } | null = null;
+			let back: { type: string; content: string } | null = null;
 			reread.descendants((node) => {
-				if (node.type.name === 'block_math' || node.type.name === 'raw_latex') back = { type: node.type.name, latex: node.textContent };
+				if (node.type.name === 'block_math' || node.type.name === 'raw_latex') back = { type: node.type.name, content: node.textContent };
 			});
 			expect(back).toMatchObject({ type: 'block_math' });
 			expect(serializeToTypst(reread)).toBe(out);

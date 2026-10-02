@@ -33,7 +33,6 @@ import {
 import { runVisualCommand, insertNode, activeCm, cmReplace, cmApply } from '$lib/chrome/menuBarCommands';
 import { makeDrawnInserts } from './menuBarInsertDrawn';
 import { makeTypstInserts } from './menuBarInsertTypst';
-import { latexToTypst } from '$lib/languages/typst/visual/serialize/latexToTypst';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 import type { Node as PMNode } from 'prosemirror-model';
 import { m } from '$lib/paraglide/messages';
@@ -57,14 +56,19 @@ const MATH_ENVS: Record<string, string> = {
 	bmatrix: '\\begin{bmatrix}\na & b \\\\\nc & d\n\\end{bmatrix}',
 	pmatrix: '\\begin{pmatrix}\na & b \\\\\nc & d\n\\end{pmatrix}'
 };
-// the ones a Typst file can hold: written as mat(..), cases(..) and & alignment, they read back as themselves. gather,
-// multline and split have no Typst form tex2typst writes, and align comes back as aligned
-const TYPST_MATH_ENVS = ['aligned', 'cases', 'bmatrix', 'pmatrix'];
+// the ones Typst has a form for, as Typst writes them; gather, multline and split have none
+const TYPST_MATH_ENVS: Record<string, string> = {
+	aligned: 'a &= b \\\nc &= d',
+	cases: 'f(x) = cases(x & "if" x >= 0, -x & "otherwise")',
+	bmatrix: 'mat(delim: "[", a, b; c, d)',
+	pmatrix: 'mat(a, b; c, d)'
+};
 
-function insertMathEnvironment(latex: string) {
+function insertMathEnvironment(content: string, dialect: ReturnType<typeof formatOf>) {
 	const v = editorViewStore.current;
 	if (!v) return;
-	const node = v.state.schema.nodes.block_math.create(computeMathAttrs(latex), v.state.schema.text(latex));
+	const attrs = dialect === 'typ' ? null : computeMathAttrs(content);
+	const node = v.state.schema.nodes.block_math.create(attrs, v.state.schema.text(content));
 	v.dispatch(v.state.tr.replaceSelectionWith(node));
 	v.focus();
 }
@@ -84,13 +88,13 @@ export function makeInsertHandlers(deps: InsertDeps): {
 				else if (dialect === 'typ') cmReplace(cm, '$ ', ' $');
 				else cmReplace(cm, '$$\n', '\n$$');
 			} else if (dialect === 'tex' && MATH_ENVS[value]) cmReplace(cm, MATH_ENVS[value]);
-			else if (dialect === 'typ' && TYPST_MATH_ENVS.includes(value)) cmReplace(cm, `$ ${latexToTypst(MATH_ENVS[value])} $`);
+			else if (dialect === 'typ' && TYPST_MATH_ENVS[value]) cmReplace(cm, `$ ${TYPST_MATH_ENVS[value]} $`);
 			return;
 		}
 		if (value === 'inline') runVisualCommand(createMathField());
 		else if (value === 'display') runVisualCommand(createMathField(true));
-		else if (dialect === 'tex' && MATH_ENVS[value]) insertMathEnvironment(MATH_ENVS[value]);
-		else if (dialect === 'typ' && TYPST_MATH_ENVS.includes(value)) insertMathEnvironment(MATH_ENVS[value]);
+		else if (dialect === 'tex' && MATH_ENVS[value]) insertMathEnvironment(MATH_ENVS[value], dialect);
+		else if (dialect === 'typ' && TYPST_MATH_ENVS[value]) insertMathEnvironment(TYPST_MATH_ENVS[value], dialect);
 	}
 
 	const insertDrawn = makeDrawnInserts(deps);

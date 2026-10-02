@@ -52,7 +52,7 @@ function cellBlocks(blocks: PmNode[]): PmNode[] | null {
 		} else if (b.type.name === 'block_math') {
 			const inner: PmNode[] = [];
 			b.forEach((k) => inner.push(k as PmNode));
-			out.push(buildNode('paragraph', null, [buildNode('inline_math', { typst: b.attrs.typst, latexOrig: b.attrs.latexOrig }, inner)]));
+			out.push(buildNode('paragraph', null, [buildNode('inline_math', null, inner)]));
 		} else {
 			return null;
 		}

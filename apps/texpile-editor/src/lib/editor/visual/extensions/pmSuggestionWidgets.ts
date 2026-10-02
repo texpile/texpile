@@ -2,6 +2,7 @@
 import { DOMSerializer, type Node as PMNode, type Schema } from 'prosemirror-model';
 import type { OldRun } from './pmSuggestionsPlace';
 import { renderStaticMath } from './mathlivebridge/mathStatic';
+import { mathSyntaxOf } from './mathlivebridge/mathFieldFactory';
 import { oldContentSerializer } from './oldContentSerializer';
 import { tintElement } from '$lib/editor/visual/highlight/paintRange';
 
@@ -77,7 +78,7 @@ export function oldNodeElement(node: PMNode, id: string, focused: boolean): HTML
 	tintElement(holder, suggestionTint('old', focused));
 	holder.dataset.comment = id;
 	holder.contentEditable = 'false';
-	if (isMath(node)) holder.appendChild(renderStaticMath(node.textContent, block));
+	if (isMath(node)) holder.appendChild(renderStaticMath(node.textContent, block, mathSyntaxOf(node)));
 	else if (node.content.size === 0) holder.appendChild(oldContentSerializer(node.type.schema).serializeNode(node));
 	else {
 		const code = document.createElement('code');

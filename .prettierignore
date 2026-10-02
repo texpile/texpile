@@ -1,6 +1,12 @@
 # vendored pdf.js modules keep upstream style (see the dir's README.md)
 apps/texpile-editor/src/lib/draft/type1/*.js
 
+# vendored MathLive keeps upstream's formatting so it still diffs cleanly against arnog/mathlive;
+# the fork's own Typst code is formatted, with MathLive's settings (packages/mathlive/.prettierrc.json)
+packages/mathlive/src/**/*.*
+packages/mathlive/css/**/*.*
+!packages/mathlive/src/typst/**/*.ts
+
 # vendored LaTeX Workshop package data keeps upstream bytes (see data/VENDORED-LICENSES.md)
 apps/texpile-editor/src/lib/languages/latex/intellisense/data/packages/*.json
 

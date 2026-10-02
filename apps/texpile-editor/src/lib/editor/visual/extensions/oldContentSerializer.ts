@@ -2,6 +2,7 @@
 // nodes a view draws (a formula, a figure) the same drawing made without one
 import { DOMSerializer, type DOMOutputSpec, type Node as PMNode, type Schema } from 'prosemirror-model';
 import { renderStaticMath } from './mathlivebridge/mathStatic';
+import { mathSyntaxOf } from './mathlivebridge/mathFieldFactory';
 import { localImageUrl } from './image/localImageUrl';
 
 const serializers = new WeakMap<Schema, DOMSerializer>();
@@ -32,8 +33,8 @@ export function oldContentSerializer(schema: Schema): DOMSerializer {
 	if (serializer) return serializer;
 	const base = DOMSerializer.fromSchema(schema);
 	const nodes = { ...base.nodes };
-	if (nodes.block_math) nodes.block_math = (node) => renderStaticMath(node.textContent, true);
-	if (nodes.inline_math) nodes.inline_math = (node) => renderStaticMath(node.textContent, false);
+	if (nodes.block_math) nodes.block_math = (node) => renderStaticMath(node.textContent, true, mathSyntaxOf(node));
+	if (nodes.inline_math) nodes.inline_math = (node) => renderStaticMath(node.textContent, false, mathSyntaxOf(node));
 	if (nodes.image) nodes.image = figureElement;
 	serializer = new DOMSerializer(nodes, base.marks);
 	serializers.set(schema, serializer);

@@ -58,6 +58,9 @@ nodes.raw_latex = {
 	...base.raw_latex,
 	attrs: { ...base.raw_latex.attrs, lang: { default: 'latex' } }
 };
+// `$$` keeps the math and nothing else: no number, label or environment for the equation's menu
+// or settings to set, since none of it would be saved
+nodes.block_math = { ...base.block_math, plainDisplay: true };
 nodes.inline_latex = {
 	...base.inline_latex,
 	attrs: { ...base.inline_latex.attrs, lang: { default: 'latex' } },

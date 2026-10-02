@@ -1,7 +1,7 @@
 // the inline layer: text escaping, mark delimiters, and mark-aware run rendering
 import type { Node, Mark } from 'prosemirror-model';
-import { latexToTypst } from './latexToTypst';
 import { codeEndsBefore } from './codeExtent';
+import { endsInLineComment } from './equationClose';
 import { typRefSpelling } from './refSource';
 import { codeReadsOn, continuesCode, extendsRef, extendsUrl, readsOn } from './readsOn';
 import { createShadow, markupPlaceholder } from '$lib/serializer/shadowLeaves';
@@ -20,23 +20,6 @@ export const typstShadow = createShadow({
 	charEmissions: (ch) => [escTypst(ch), '\\' + ch, ch],
 	isHandlerLeaf: isTypHandlerLeaf
 });
-
-/** a math node's typst: the stored source while its LaTeX is untouched, else MathLive's
- *  conversion, else the stored source again. never the LaTeX: a .typ cannot hold it */
-export function mathTypstOf(node: Node): string {
-	const latex = node.textContent;
-	const typst = typeof node.attrs.typst === 'string' ? node.attrs.typst : null;
-	if (typst != null && latex === node.attrs.latexOrig) return typst;
-	return latexToTypst(latex) ?? typst ?? '';
-}
-
-/** inline math keeps its padding across an edit: `$ x $` mid-paragraph is display math */
-function inlineMathTypst(node: Node): string {
-	const t = mathTypstOf(node);
-	const orig = typeof node.attrs.typst === 'string' ? node.attrs.typst : '';
-	if (t === orig || !/^\s/.test(orig) || !/\s$/.test(orig)) return t;
-	return ` ${t.trim()} `;
-}
 
 /** list/term/heading markers and "1." enum markers bind at line start, indentation included */
 export function escLineStart(str: string): string {
@@ -243,8 +226,10 @@ function buildRuns(parent: Node, startOfLine: boolean, extra: string, singleLine
 				break;
 			}
 			case 'inline_math': {
-				const t = inlineMathTypst(node);
-				runs.push({ content: t.trim() ? typstShadow.shadowed(node, `$${t}$`) : '', marks: orderedMarks(node.marks), kind: 'other' });
+				// the content keeps its padding: `$ x $` mid-paragraph is display math
+				const t = node.textContent;
+				const close = endsInLineComment(t) ? '\n$' : '$';
+				runs.push({ content: t.trim() ? typstShadow.shadowed(node, `$${t}${close}`) : '', marks: orderedMarks(node.marks), kind: 'other' });
 				break;
 			}
 			default:

@@ -7,7 +7,7 @@
 //
 // Deliberately DOM-import-free beyond prosemirror-model: the parse worker loads this module.
 import { updateImageNode, type SchemaImageSettings } from '$lib/editor/visual/extensions/image/updateImageNode';
-import { Schema, type NodeSpec, type MarkSpec } from 'prosemirror-model';
+import { Schema, type NodeSpec, type MarkSpec, type Node as PMNode } from 'prosemirror-model';
 import { baseNodes, baseMarks } from '$lib/editor/visual/schema/basePMSchema';
 
 // mirrors mdSchema: built by hand because the imageplugin.svelte settings creators pull in the DOM (fatal for a
@@ -91,12 +91,18 @@ nodes.table_row = {
 	...base.table_row,
 	attrs: { ...base.table_row.attrs, typRules: { default: [] } }
 };
-// math nodes hold LATEX content (what MathLive edits); `typst` is the original source and
-// `latexOrig` its parse-time translation - while they agree, the serializer re-emits `typst`
-// byte-for-byte and MathLive is never consulted
-const mathAttrs = { typst: { default: null }, latexOrig: { default: null } };
-nodes.inline_math = { ...base.inline_math, attrs: { ...base.inline_math.attrs, ...mathAttrs } };
-nodes.block_math = { ...base.block_math, attrs: { ...base.block_math.attrs, ...mathAttrs } };
+// math nodes hold the equation's Typst, which MathLive reads and writes as Typst; their HTML says
+// so, for a paste into a LaTeX document to rewrite it (see pastedMath.ts)
+nodes.inline_math = {
+	...base.inline_math,
+	mathSyntax: 'typst',
+	toDOM: () => ['span', { class: 'inline-math', 'data-math-syntax': 'typst' }, 0]
+};
+nodes.block_math = {
+	...base.block_math,
+	mathSyntax: 'typst',
+	toDOM: (node: PMNode) => ['div', { class: 'block-math', 'data-label': node.attrs.label, 'data-math-syntax': 'typst' }, 0]
+};
 // typNumber: the explicit "5." an enum item was written with (null for "+"); order stays the
 // display counter flat-list reads
 nodes.list = { ...base.list, attrs: { ...base.list.attrs, typNumber: { default: null } } };
