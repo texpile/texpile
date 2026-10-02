@@ -53,7 +53,7 @@ type AgentEdit = { by: string; note: string; gestures: TextSpan[]; opened: strin
 export class SuggestionsController {
 	private states = new Map<string, FileState>();
 	private placedFile: string | null = null;
-	private seen: { path: string | null; file: string | null; text: string } | null = null;
+	private seen: { path: string | null; file: string | null; text: string; rewraps: boolean } | null = null;
 	private gestures: TextSpan[] = [];
 	private sides: Record<string, TypingSide> = {};
 	private chain: Promise<void> = Promise.resolve();
@@ -145,7 +145,7 @@ export class SuggestionsController {
 		const suggesting = this.deps.mode() === 'suggesting';
 		this.gestures = same && suggesting ? carryGestures(this.gestures, this.seen!.text, text) : [];
 		this.sides = same ? { ...this.sides, ...takeTypedSides() } : takeTypedSides();
-		this.seen = { path, file: this.deps.activeFile(), text };
+		this.seen = { path, file: this.deps.activeFile(), text, rewraps: this.deps.rewraps() };
 		if (this.timer) clearTimeout(this.timer);
 		this.timer = setTimeout(
 			() => {
@@ -299,7 +299,7 @@ export class SuggestionsController {
 		// the edit's own landing, so the change it makes is one suggestion however many words it touches
 		const { start, end } = commonEnds(before, after);
 		const agent: AgentEdit = { by, note, gestures: [{ from: start, to: after.length - end }], opened: [] };
-		this.seen = { path: this.seen?.path ?? null, file, text: after };
+		this.seen = { path: this.seen?.path ?? null, file, text: after, rewraps: this.deps.rewraps() };
 		this.gestures = [];
 		await this.run(file, after, 'suggesting', undefined, agent);
 		return agent.opened[0] ?? null;
@@ -309,7 +309,10 @@ export class SuggestionsController {
 		file: string,
 		after: string,
 		mode: EditMode,
-		whitespace: WhitespaceChanges = this.deps.rewraps() ? 'paragraphs' : 'exact',
+		// the rule of the editor the text was typed in, not of one switched to while the comparison waited
+		whitespace: WhitespaceChanges = (this.seen?.file === file && this.seen.text === after ? this.seen.rewraps : this.deps.rewraps())
+			? 'paragraphs'
+			: 'exact',
 		agent?: AgentEdit
 	): Promise<void> {
 		const active = file === this.deps.activeFile();

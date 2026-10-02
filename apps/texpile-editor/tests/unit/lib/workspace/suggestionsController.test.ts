@@ -54,6 +54,7 @@ function suggestion(id: string, text: string, words: string, restore: string, at
 
 function make(initial: string, mode: 'editing' | 'suggesting' = 'editing', name = 'main.tex') {
 	let text = initial;
+	let visual = false;
 	const edits: { from: number; to: number; insert: string }[] = [];
 	const marks: number[] = [];
 	const ctl = new CommentsController({
@@ -62,6 +63,7 @@ function make(initial: string, mode: 'editing' | 'suggesting' = 'editing', name 
 		openFileAt: () => {},
 		activeText: () => text,
 		mode: () => mode,
+		rewraps: () => visual,
 		applyEdit: async (e) => {
 			edits.push(e);
 			text = text.slice(0, e.from) + e.insert + text.slice(e.to);
@@ -81,7 +83,8 @@ function make(initial: string, mode: 'editing' | 'suggesting' = 'editing', name 
 		open,
 		type: (next: string) => (text = next),
 		text: () => text,
-		setMode: (next: typeof mode) => (mode = next)
+		setMode: (next: typeof mode) => (mode = next),
+		setVisual: (next: boolean) => (visual = next)
 	};
 }
 
@@ -391,6 +394,18 @@ describe('a suggestion in the file', () => {
 		]);
 		expect(await ctl.suggestions.reject(ctl.threads[0])).toBe(true);
 		expect(text()).toBe(typed);
+	});
+
+	// spaces wait a second before they are compared, and a switch to the visual editor can land in that second
+	it('compares spaces typed in the source editor by the source editor’s rule after a switch to visual', async () => {
+		const { ctl, open, type, setVisual } = make(TEXT, 'suggesting');
+		await open();
+		const after = TEXT.replace('We prove ', 'We prove  ');
+		type(after);
+		ctl.suggestions.textChanged(FILE, after);
+		setVisual(true);
+		await ctl.suggestions.settle();
+		expect(activeSuggestions.current.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual([[' ', '']]);
 	});
 
 	it('writes what was typed while suggesting to the log before the file is saved', async () => {
