@@ -1,5 +1,15 @@
 import { lift } from 'prosemirror-commands';
+import type { Attrs, Node } from 'prosemirror-model';
 import type { Command, EditorState, Transaction } from 'prosemirror-state';
+
+// a heading keeps what it carries (a Typst <label>, numbering: none) but a \chapter moved off its level and a short title once unnumbered
+function headingAttrs(node: Node, level: number, numbered?: boolean): Attrs {
+	const kept: Record<string, unknown> = node.type.name === 'heading' ? { ...node.attrs } : {};
+	if ('command' in kept && kept.level !== level) kept.command = null;
+	const attrs = { ...kept, level, numbered: numbered ?? kept.numbered ?? true };
+	if ('shortTitle' in kept && attrs.numbered === false) attrs.shortTitle = null;
+	return attrs;
+}
 
 export function toggleHeading(level: number): Command {
 	return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
@@ -20,7 +30,7 @@ export function toggleHeading(level: number): Command {
 						targetType = state.schema.nodes.heading;
 					}
 
-					const attrs = targetType === state.schema.nodes.heading ? { level, numbered: true } : {};
+					const attrs = targetType === state.schema.nodes.heading ? headingAttrs(node, level) : {};
 					const tr = state.tr.setBlockType(pos, pos + node.nodeSize, targetType, attrs);
 					dispatch(tr);
 				}
@@ -34,7 +44,7 @@ export function toggleHeading(level: number): Command {
 }
 
 /** always sets the block to heading `level` (0 = paragraph), unlike toggleHeading. unnumbered serializes to \section*. */
-export function setHeadingLevel(level: number, numbered = true): Command {
+export function setHeadingLevel(level: number, numbered?: boolean): Command {
 	return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
 		const { from, to } = state.selection;
 		let applied = false;
@@ -44,7 +54,7 @@ export function setHeadingLevel(level: number, numbered = true): Command {
 				if (dispatch) {
 					applied = true;
 					const targetType = level === 0 ? state.schema.nodes.paragraph : state.schema.nodes.heading;
-					const attrs = level === 0 ? {} : { level, numbered };
+					const attrs = level === 0 ? {} : headingAttrs(node, level, numbered);
 					dispatch(state.tr.setBlockType(pos, pos + node.nodeSize, targetType, attrs));
 				}
 				return true;
