@@ -93,7 +93,7 @@
 		scmOpenConflict?: (path: string) => void;
 		scmFinishCombine?: () => void;
 		scmCancelCombine?: () => void;
-		scmCompare: (entry: GitLogEntry, path: string) => void;
+		scmCompare: (entry: GitLogEntry, path: string, from?: string) => void;
 		scmChangesSince: (hash: string) => Promise<GitFileChange[]>;
 		scmOpenDiff: (path: string) => void;
 	};
