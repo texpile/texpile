@@ -20,3 +20,18 @@ describe('a code block whose language was picked from the list', () => {
 		}
 	});
 });
+
+describe('an image resized by dragging', () => {
+	function dragged(options: string): string {
+		const img = S.nodes.image.create({ src: 'a.png', options, numbered: false, showCaption: false, width: 200, maxWidth: 400 });
+		return serializeToTypst(S.nodes.doc.create(null, [img]));
+	}
+
+	it('replaces only its width, an option holding a comma kept whole', () => {
+		expect(dragged('alt: "x, width: y"')).toBe('#image("a.png", width: 50%, alt: "x, width: y")');
+		expect(dragged('width: calc.min(50%, 3cm), fit: "cover"')).toBe('#image("a.png", width: 50%, fit: "cover")');
+		const back = typstToProseMirror(dragged('alt: "x, width: y"')).doc.child(0);
+		expect(back.type.name).toBe('image');
+		expect(back.attrs.options).toBe('width: 50%, alt: "x, width: y"');
+	});
+});

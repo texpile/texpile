@@ -41,6 +41,31 @@ function rawLang(infoString: string): string {
 	return RAW_LANGS[infoString.toLowerCase()] ?? infoString.replace(/[^\p{L}\p{N}_-]+/gu, '-');
 }
 
+/** an argument list cut at its own commas, not those inside a string, a call or a content block */
+function topLevelArgs(list: string): string[] {
+	const args: string[] = [];
+	const open: string[] = [];
+	let quoted = false;
+	let from = 0;
+	for (let i = 0; i < list.length; i++) {
+		const ch = list[i];
+		const markup = open[open.length - 1] === '[';
+		if (quoted) {
+			if (ch === '\\') i++;
+			else if (ch === '"') quoted = false;
+		} else if (ch === '\\' && markup) i++;
+		else if (ch === '"' && !markup) quoted = true;
+		else if ('([{'.includes(ch)) open.push(ch);
+		else if (')]}'.includes(ch)) open.pop();
+		else if (ch === ',' && open.length === 0) {
+			args.push(list.slice(from, i));
+			from = i + 1;
+		}
+	}
+	args.push(list.slice(from));
+	return args;
+}
+
 function declarationLine(line: string): boolean {
 	return /^#(set|let|show|import|include)\b/.test(line);
 }
@@ -173,8 +198,7 @@ const NODES: Record<string, NodeHandler> = {
 		const max = Number(node.attrs.maxWidth);
 		if (Number.isFinite(w) && Number.isFinite(max) && w > 0 && max > 0) {
 			const pct = Math.min(100, Math.max(1, Math.round((w / max) * 100)));
-			const rest = rawOpts
-				.split(',')
+			const rest = topLevelArgs(rawOpts)
 				.map((s) => s.trim())
 				.filter((s) => s && !/^width:/.test(s));
 			optsStr = [`width: ${pct}%`, ...rest].join(', ');
