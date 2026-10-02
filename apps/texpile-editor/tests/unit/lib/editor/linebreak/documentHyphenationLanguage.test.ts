@@ -14,3 +14,10 @@ it('reads polyglossia, Typst and Markdown front matter, and asks for no hyphens 
 	expect(documentHyphenationLanguage('#set text(lang: "pt")')).toBe('none');
 	expect(documentHyphenationLanguage('no language here')).toBeUndefined();
 });
+
+it('reads only the babel line TeX reads, and the class options a bare babel takes its languages from', () => {
+	expect(documentHyphenationLanguage('\\documentclass{article}\n% \\usepackage[ngerman]{babel}\n\\usepackage[english]{babel}\n')).toBe(
+		'en-us'
+	);
+	expect(documentHyphenationLanguage('\\documentclass[a4paper,ngerman,11pt]{scrartcl}\n\\usepackage{babel}\n')).toBe('de-1996');
+});
