@@ -10,8 +10,9 @@ export type WorkId =
 	| { kind: 'isbn'; isbn: string }
 	| { kind: 'pmid'; pmid: string };
 
-// a DOI is 10.<registrant>/<suffix>, and the suffix may hold almost anything but whitespace
-const DOI = /\b(10\.\d{4,9}\/[^\s"<>]+)/i;
+// a DOI is 10.<registrant>/<suffix>, and the suffix may hold almost anything but whitespace; <...>
+// only as a pair with no slash in it, as Wiley's SICI DOIs have (17:8<857::AID-SIM777>3.0.CO;2-E)
+const DOI = /\b(10\.\d{4,9}\/(?:[^\s"<>]|<[^\s"<>/]*>)+)/i;
 // new style YYMM.NNNNN (four digits after the dot until the end of 2014, five since), old style
 // hep-th/9901001 or math.GT/0309136
 const ARXIV_NEW = /^((\d\d)(\d\d)\.(\d{4,5}))(?:v\d+)?$/;

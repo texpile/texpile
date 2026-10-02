@@ -33,6 +33,16 @@ describe('parseWorkId: DOIs', () => {
 		expect(parseWorkId('10.1007/978-3-030-58452-8_13')).toEqual({ kind: 'doi', doi: '10.1007/978-3-030-58452-8_13' });
 	});
 
+	it('keeps a Wiley SICI DOI whole, angle brackets and all, typed or as an encoded link', () => {
+		const sici = '10.1002/(SICI)1097-0258(19980430)17:8<857::AID-SIM777>3.0.CO;2-E';
+		expect(parseWorkId(sici)).toEqual({ kind: 'doi', doi: sici });
+		expect(parseWorkId('https://doi.org/10.1002/(SICI)1097-0258(19980430)17:8%3C857::AID-SIM777%3E3.0.CO;2-E')).toEqual({
+			kind: 'doi',
+			doi: sici
+		});
+		expect(parseWorkId('<a href="x">10.1038/171737a0</a>')).toEqual({ kind: 'doi', doi: '10.1038/171737a0' });
+	});
+
 	it('drops the punctuation a DOI was quoted with', () => {
 		expect(parseWorkId('(see 10.1038/171737a0).')).toEqual({ kind: 'doi', doi: '10.1038/171737a0' });
 		expect(parseWorkId('"10.1038/171737a0",')).toEqual({ kind: 'doi', doi: '10.1038/171737a0' });
