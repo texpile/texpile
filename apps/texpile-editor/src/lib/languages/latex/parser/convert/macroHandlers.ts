@@ -117,7 +117,7 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	},
 	href: (macro, ctx) => {
 		const mandatoryArgs = macro.args?.filter((arg) => arg.openMark === '{') || [];
-		const href = mandatoryArgs[0] ? getTextContent(mandatoryArgs[0].content) : '';
+		const href = mandatoryArgs[0] ? getTextContent(mandatoryArgs[0].content).replace(/\\([%#])/g, '$1') : '';
 		const marks = [...ctx.marks, { type: 'link', attrs: { href, title: null } }];
 		// the text is ordinary inline LaTeX: converted like any other, so \_ comes back as \_
 		// rather than growing an escape on every save

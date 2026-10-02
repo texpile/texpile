@@ -73,7 +73,8 @@ function highlightMark(a: Record<string, unknown>): { open: string; close: strin
 	return c && !c.model ? { open: `{\\sethlcolor{${esc(c.value)}}\\hl{`, close: '}}' } : { open: '\\hl{', close: '}' };
 }
 
-// em is \textit unless the file said \emph; highlight is soul's \hl. href is NOT escaped.
+// em is \textit unless the file said \emph; highlight is soul's \hl. href escapes only % and #, which
+// break it inside another command's argument and which hyperref reads back as themselves
 const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; close: string }> = {
 	strong: () => ({ open: '\\textbf{', close: '}' }),
 	em: (a) => (a.cmd === 'emph' ? { open: '\\emph{', close: '}' } : { open: '\\textit{', close: '}' }),
@@ -81,7 +82,7 @@ const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; 
 	sup: () => ({ open: '\\textsuperscript{', close: '}' }),
 	sub: () => ({ open: '\\textsubscript{', close: '}' }),
 	code: () => ({ open: '\\texttt{', close: '}' }),
-	link: (a) => ({ open: `\\href{${String(a.href ?? '')}}{`, close: '}' }),
+	link: (a) => ({ open: `\\href{${String(a.href ?? '').replace(/(?<!\\)[%#]/g, '\\$&')}}{`, close: '}' }),
 	textcolor: textcolorMark,
 	highlight: highlightMark
 };

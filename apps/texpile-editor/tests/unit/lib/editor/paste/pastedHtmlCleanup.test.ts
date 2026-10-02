@@ -50,6 +50,12 @@ describe('pasted HTML', () => {
 		expect(pastedAsLatex(docs)).toBe('\\begin{itemize}\n\\item a\n\\begin{itemize}\n\\item b\n\\end{itemize}\n\\end{itemize}');
 	});
 
+	it('writes a pasted link’s % and # escaped, so a heading’s argument keeps them', () => {
+		expect(pastedAsLatex('<h2>See <a href="https://x.com/a%20b#x">the docs</a></h2>')).toBe(
+			'\\subsection{See \\href{https://x.com/a\\%20b\\#x}{the docs}}'
+		);
+	});
+
 	it('keeps Word’s outline numbering numbered, and the number a list copied from its middle starts at', () => {
 		const item = (level: number, marker: string, text: string) =>
 			`<p style='mso-list:l0 level${level} lfo1'><span style='mso-list:Ignore'>${marker}<span>&nbsp;</span></span>${text}</p>`;
