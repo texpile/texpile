@@ -303,12 +303,31 @@ function emitBoldRun(run: Atom[], options: ToLatexOptions): string[] {
 
     // Get the content of the run
     const value = joinLatex(x.map((x) => x.value ?? ''));
-    if (/^[a-zA-Z0-9]+$/.test(value))
+    if (/^[a-zA-Z0-9]+$/.test(value) || x.every(isUprightAlnumGroup))
       return latexCommand('\\mathbf', joinLatex(emitVariantRun(x, options)));
 
     // If the run contains a mix of characters, use `\bm`
     return latexCommand('\\bm', joinLatex(emitVariantRun(x, options)));
   });
+}
+
+// a group of upright letters and digits, as Typst's `bold(upright(x))` is read
+function isUprightAlnumGroup(atom: Atom): boolean {
+  if (atom.type !== 'group') return false;
+  const leaves: Atom[] = [];
+  const collect = (atoms: readonly Atom[]): void => {
+    for (const x of atoms) {
+      if (x.type === 'group') collect(x.body ?? []);
+      else if (x.type !== 'first') leaves.push(x);
+    }
+  };
+  collect(atom.body ?? []);
+  return (
+    leaves.length > 0 &&
+    leaves.every(
+      (x) => /^[a-zA-Z0-9]$/.test(x.value ?? '') && x.style.variant === 'normal'
+    )
+  );
 }
 
 function emitVariantRun(

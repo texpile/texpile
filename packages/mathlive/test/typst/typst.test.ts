@@ -124,6 +124,17 @@ describe('typst math in MathLive', () => {
       expect(structure(rootOf(typst)), typst).toBe(latex);
   });
 
+  it('reads bold upright as \\mathbf, which LaTeX sets upright, and bold alone as \\bm', () => {
+    expect(structure(rootOf('bold(upright(v))'))).toBe('\\mathbf{{{v}}}');
+    expect(structure(rootOf('upright(bold(v))'))).toBe(
+      '\\mathrm{{\\mathbf{{v}}}}'
+    );
+    expect(structure(rootOf('bold(v)'))).toBe('\\bm{{v}}');
+    expect(convertLatexToTypst(structure(rootOf('bold(upright(v))')))).toBe(
+      'bold(upright(v))'
+    );
+  });
+
   it('writes LaTeX as the Typst that draws it', () => {
     // each checked against the Typst compiler
     const cases: [string, string][] = [
