@@ -507,43 +507,33 @@ defineFunction('it', '{:rest*}', {
   }),
 });
 
-// The other LaTeX 2.09 font switches; in math mode, the letters of \mathrm,
-// \mathsf, \mathtt and \mathcal
+// The other LaTeX 2.09 font switches, in math mode the letters of \mathrm, \mathsf,
+// \mathtt and \mathcal; in text mode they are left as typed
 defineFunction('rm', '{:rest*}', {
-  applyStyle: (style) => ({
-    ...style,
-    fontSeries: 'm',
-    fontShape: 'n',
-    fontFamily: 'roman',
-    variant: 'normal',
-    variantStyle: 'up',
-  }),
+  ifMode: 'math',
+  applyStyle: (style) => ({ ...style, variant: 'normal', variantStyle: 'up' }),
 });
 
 defineFunction('sf', '{:rest*}', {
+  ifMode: 'math',
   applyStyle: (style) => ({
     ...style,
-    fontSeries: 'm',
-    fontShape: 'n',
-    fontFamily: 'sans-serif',
     variant: 'sans-serif',
     variantStyle: 'up',
   }),
 });
 
 defineFunction('tt', '{:rest*}', {
+  ifMode: 'math',
   applyStyle: (style) => ({
     ...style,
-    fontSeries: 'm',
-    fontShape: 'n',
-    fontFamily: 'monospace',
     variant: 'monospace',
     variantStyle: 'up',
   }),
 });
 
 defineFunction('cal', '{:rest*}', {
-  applyMode: 'math',
+  ifMode: 'math',
   applyStyle: (style) => ({
     ...style,
     variant: 'calligraphic',

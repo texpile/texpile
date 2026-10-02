@@ -242,6 +242,19 @@ describe('typst math in MathLive', () => {
       expect(convertLatexToTypst(latex), latex).toBe(typst);
   });
 
+  it('leaves the old font switches in text as typed when the equation is edited', () => {
+    for (const command of ['\\rm', '\\sf', '\\tt', '\\cal']) {
+      const root = new Atom({
+        type: 'root',
+        body: parseLatex(`\\text{${command} x} + y`),
+      });
+      replace(find(root, 'y'), 'z');
+      expect(Atom.serialize(root.body ?? [], { defaultMode: 'math' })).toBe(
+        `\\text{${command} x}+z`
+      );
+    }
+  });
+
   it('writes every LaTeX command MathLive draws as Typst that parses', () => {
     for (const { insert } of getMathCommands('latex'))
       for (const arg of ['x', '']) {
