@@ -35,14 +35,18 @@ export function commonVersion(mine: SessionVersion, peers: Iterable<Partial<Sess
 	return { version, oldest };
 }
 
-/** why two peers cannot share a session, or null when they can */
+/** why two peers cannot share a session, or null when they can; a host's `hostVersion` tells it apart from its guests */
 export function sessionMismatch(
 	mine: SessionVersion,
-	theirs: Partial<SessionVersion>
-): { outdated: 'them' | 'me'; version: string } | null {
+	theirs: Partial<SessionVersion> & { hostVersion?: string }
+): { outdated: 'them' | 'me' | 'guest'; version: string } | null {
 	const version = theirs.version ?? UNVERSIONED.version;
 	const oldest = theirs.oldest ?? UNVERSIONED.oldest;
-	if (!isAtLeast(version, mine.oldest)) return { outdated: 'them', version };
+	if (!isAtLeast(version, mine.oldest)) {
+		const host = theirs.hostVersion;
+		if (host === undefined) return { outdated: 'them', version };
+		return isAtLeast(host, mine.oldest) ? { outdated: 'guest', version } : { outdated: 'them', version: host };
+	}
 	if (!isAtLeast(mine.version, oldest)) return { outdated: 'me', version: oldest };
 	return null;
 }

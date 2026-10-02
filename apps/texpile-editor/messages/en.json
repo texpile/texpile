@@ -1637,6 +1637,7 @@
 	"session_error_no_session": "No session found for this code. Ask the host if it is still running.",
 	"session_error_host_outdated": "The host is on Texpile {version}, which cannot share a session with this version. Ask the host to update Texpile.",
 	"session_error_app_outdated": "This session needs Texpile {version} or newer. Update Texpile to join.",
+	"session_error_guest_outdated": "A guest in this session is on Texpile {version}, which cannot share a session with this version. Join once they have updated Texpile or left.",
 	"session_web_updated_title": "Texpile was updated",
 	"session_web_updated_description": "Reload to keep working in this session.",
 	"session_web_updated_reload": "Reload",

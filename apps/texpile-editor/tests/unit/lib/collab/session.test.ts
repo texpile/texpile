@@ -569,7 +569,8 @@ describe('collab session end-to-end', () => {
 		await until(() => textOf(a.doc, 'main.tex').toString() === 'base' && host.session.peers.has(a.doc.clientID));
 		const b = await makeParty(hub, 'guest', 'B', key, newer);
 		await until(() => b.events.ended !== undefined);
-		expect([b.events.ended, b.events.endedDetail]).toEqual(['host-outdated', '1.2.0']);
+		// the host itself takes B: what B cannot share with is a guest, and B says so rather than blame the host
+		expect([b.events.ended, b.events.endedDetail]).toEqual(['guest-outdated', '1.2.0']);
 		// one that takes both still joins, and the rest keep editing together
 		const c = await makeParty(hub, 'guest', 'C', key, hostVersion);
 		await until(() => textOf(c.doc, 'main.tex').toString() === 'base');

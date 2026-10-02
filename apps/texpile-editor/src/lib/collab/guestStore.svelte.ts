@@ -167,7 +167,13 @@ class GuestCollabController {
 						this.clearJoinTimer();
 						// a join-time rejection (unknown code, full room) is a join failure, not a
 						// mid-session end — surface it on the join form instead of the goodbye screen
-						if (reason === 'no-session' || reason === 'full' || reason === 'host-outdated' || reason === 'app-outdated') {
+						if (
+							reason === 'no-session' ||
+							reason === 'full' ||
+							reason === 'host-outdated' ||
+							reason === 'guest-outdated' ||
+							reason === 'app-outdated'
+						) {
 							this.joinError = reason === 'full' ? 'session-full' : reason;
 							this.joinErrorVersion = detail ?? '';
 							this.teardown(false);

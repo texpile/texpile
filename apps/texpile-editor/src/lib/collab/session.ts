@@ -39,7 +39,8 @@ export type PeerInfo = {
 	author?: string;
 };
 
-export type SessionEndReason = 'host-ended' | 'relay-closed' | 'quota' | 'error' | 'no-session' | 'full' | 'host-outdated' | 'app-outdated';
+export type SessionEndReason =
+	'host-ended' | 'relay-closed' | 'quota' | 'error' | 'no-session' | 'full' | 'host-outdated' | 'guest-outdated' | 'app-outdated';
 
 // the relay drops any WebSocket message over 1 MiB, which would crash the session into a reconnect
 // loop; stay under it with margin for the seal nonce/tag and the codec byte. Frames still over this
@@ -82,6 +83,8 @@ function closeReason(code?: string): SessionEndReason {
 	if (code === '4003') return 'no-session';
 	return 'relay-closed';
 }
+
+const OUTDATED_REASON = { them: 'host-outdated', guest: 'guest-outdated', me: 'app-outdated' } as const;
 
 export type SessionEvents = {
 	onPeersChange?: (peers: Map<number, PeerInfo>) => void;
@@ -285,7 +288,8 @@ export class CollabSession {
 	};
 
 	private hello(to: number): void {
-		this.post({ type: FrameType.HELLO, from: this.clientId, to, payload: { ...this.user, ...this.sessionVersion(to) } });
+		const own = this.role === 'host' ? { hostVersion: this.version.version } : {};
+		this.post({ type: FrameType.HELLO, from: this.clientId, to, payload: { ...this.user, ...this.sessionVersion(to), ...own } });
 	}
 
 	// what `peer` must fit: a host speaks for every guest it let in, so one that cannot share with them is turned away
@@ -385,7 +389,7 @@ export class CollabSession {
 					this.outdated.add(frame.from);
 					// builds from before the version check still understand a host ending the session
 					if (this.role === 'host') this.sendControl({ kind: 'session-end' }, frame.from);
-					else if (fromHost) this.end(mismatch.outdated === 'them' ? 'host-outdated' : 'app-outdated', mismatch.version);
+					else if (fromHost) this.end(OUTDATED_REASON[mismatch.outdated], mismatch.version);
 					break;
 				}
 				if (this.role === 'host') this.admitted.set(frame.from, { version: frame.payload.version, oldest: frame.payload.oldest });

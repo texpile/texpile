@@ -1637,6 +1637,7 @@
 	"session_error_no_session": "Keine Sitzung mit diesem Code gefunden. Frag den Gastgeber, ob sie noch läuft.",
 	"session_error_host_outdated": "Der Gastgeber nutzt Texpile {version}, das keine Sitzung mit dieser Version teilen kann. Bitte den Gastgeber, Texpile zu aktualisieren.",
 	"session_error_app_outdated": "Diese Sitzung braucht Texpile {version} oder neuer. Aktualisiere Texpile, um beizutreten.",
+	"session_error_guest_outdated": "Ein Gast in dieser Sitzung nutzt Texpile {version}, das keine Sitzung mit dieser Version teilen kann. Tritt bei, sobald er Texpile aktualisiert oder die Sitzung verlassen hat.",
 	"session_web_updated_title": "Texpile wurde aktualisiert",
 	"session_web_updated_description": "Neu laden, um in dieser Sitzung weiterzuarbeiten.",
 	"session_web_updated_reload": "Neu laden",

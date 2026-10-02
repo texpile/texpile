@@ -1637,6 +1637,7 @@
 	"session_error_no_session": "找不到對應的協作。請向主持人確認是否仍在進行。",
 	"session_error_host_outdated": "主持人使用的是 Texpile {version}，無法與目前版本協作。請主持人更新 Texpile。",
 	"session_error_app_outdated": "這次協作需要 Texpile {version} 或更新的版本。請更新 Texpile 後再加入。",
+	"session_error_guest_outdated": "這次協作中有一位訪客使用的是 Texpile {version}，無法與目前版本協作。請等對方更新 Texpile 或離開後再加入。",
 	"session_web_updated_title": "Texpile 已更新",
 	"session_web_updated_description": "重新載入即可繼續這次協作。",
 	"session_web_updated_reload": "重新載入",

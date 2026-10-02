@@ -1637,6 +1637,7 @@
 	"session_error_no_session": "Nenhuma sessão encontrada para este código. Pergunte ao anfitrião se ela ainda está em execução.",
 	"session_error_host_outdated": "O anfitrião está no Texpile {version}, que não pode compartilhar uma sessão com esta versão. Peça ao anfitrião para atualizar o Texpile.",
 	"session_error_app_outdated": "Esta sessão precisa do Texpile {version} ou mais recente. Atualize o Texpile para entrar.",
+	"session_error_guest_outdated": "Um convidado nesta sessão está no Texpile {version}, que não pode compartilhar uma sessão com esta versão. Entre depois que ele atualizar o Texpile ou sair.",
 	"session_web_updated_title": "O Texpile foi atualizado",
 	"session_web_updated_description": "Recarregue para continuar nesta sessão.",
 	"session_web_updated_reload": "Recarregar",
