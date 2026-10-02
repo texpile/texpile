@@ -536,6 +536,31 @@ describe('a suggestion in the file', () => {
 		expect(again).toBe(first);
 	});
 
+	it('takes back a Reject and an Accept made before the file was renamed', async () => {
+		disk['.texpile/comments.jsonl'] = serializeLog([
+			suggestion('s1', TEXT, 'sharp', 'reliable'),
+			suggestion('s2', TEXT, 'smooth', 'regular')
+		]);
+		const { ctl, open, type, text, marks } = make(TEXT);
+		await open();
+		const thread = (id: string) => ctl.threads.find((t) => t.id === id)!;
+		await ctl.suggestions.accept(thread('s2'));
+		expect(await ctl.suggestions.reject(thread('s1'))).toBe(true);
+
+		await ctl.fileMoved(FILE, `${ROOT}/renamed.tex`);
+		ctl.reanchor(`${ROOT}/renamed.tex`, text());
+		// Ctrl+Z twice: the Reject's words, then the Accept
+		type(TEXT);
+		ctl.suggestions.textChanged(`${ROOT}/renamed.tex`, TEXT);
+		await ctl.suggestions.settle();
+		await ctl.suggestions.revisitAccept(marks[0], true);
+		expect([thread('s1').resolved, thread('s2').resolved]).toEqual([false, false]);
+		expect(activeSuggestions.current.map((s) => [s.id, TEXT.slice(s.from, s.to)])).toEqual([
+			['s1', 'sharp'],
+			['s2', 'smooth']
+		]);
+	});
+
 	it('keeps a saved suggestion placed when the file is renamed with typing beside it not saved yet', async () => {
 		const start = 'We prove the estimator is sharp for smooth solutions of the problem.\n';
 		const { ctl, open, type } = make(start, 'suggesting');

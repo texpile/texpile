@@ -138,6 +138,7 @@ export class SuggestionsController {
 		this.states = new Map([...this.states].map(([file, state]) => [renamed(file), state]));
 		if (this.placedFile) this.placedFile = renamed(this.placedFile);
 		if (this.seen?.file) this.seen = { ...this.seen, file: renamed(this.seen.file) };
+		for (const decided of [...this.rejects, ...this.accepts.values(), ...this.expected]) decided.file = renamed(decided.file);
 	}
 
 	/** an event from the recorder arrived */
