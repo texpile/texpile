@@ -37,11 +37,16 @@ export function detectMultilineEnvironment(latex: string): EnvironmentDetection 
 	return null;
 }
 
-function countEnvironmentLines(latex: string): number {
+/** the rows of the environment `latex` is set in, not those of a cases or matrix inside it */
+function environmentRows(latex: string): string[] {
 	const open = /\\begin\{[^}]*\}(\{[^}]*\})?/.exec(latex);
 	const from = open ? open.index + open[0].length : 0;
 	const to = latex.lastIndexOf('\\end{');
-	return (splitRows(latex.slice(from, to > from ? to : latex.length)).length + 1) / 2;
+	return splitRows(latex.slice(from, to > from ? to : latex.length)).filter((_, i) => i % 2 === 0);
+}
+
+function countEnvironmentLines(latex: string): number {
+	return environmentRows(latex).length;
 }
 
 /**
@@ -50,8 +55,7 @@ function countEnvironmentLines(latex: string): number {
  * unlabelled two-row align that the PDF numbered twice.
  */
 export function numberedLineCount(latex: string): number {
-	const body = latex.replace(/^[\s\S]*?\\begin\{[^}]*\}/, '').replace(/\\end\{[^}]*\}[\s\S]*$/, '');
-	const rows = body.split(/\\\\/);
+	const rows = environmentRows(latex);
 	if (rows.length > 1 && !rows[rows.length - 1].trim()) rows.pop(); // a trailing \\ ends the last row
 	return Math.max(1, rows.filter((r) => !/\\(?:nonumber|notag)\b/.test(r)).length);
 }
