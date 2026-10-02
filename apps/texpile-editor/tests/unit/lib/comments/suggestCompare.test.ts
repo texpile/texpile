@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { compareSuggestions, type EditMode, type PlacedSuggestion, type TypingSide } from '$lib/comments/suggestCompare';
+import { carryGestures } from '$lib/comments/editGestures';
 
 function run(before: string, after: string, pending: PlacedSuggestion[], mode: EditMode = 'editing', sides?: Record<string, TypingSide>) {
 	let n = 0;
@@ -474,5 +475,41 @@ describe('an edit meeting a suggestion', () => {
 		const after = '## title 1\n\nNew tle 2\n\nAfter text.\n';
 		const r = run(before, after, [], 'suggesting');
 		expect(r.placed.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual([['', 'line text here.\n\n## Ti']]);
+	});
+
+	it('takes back the second of two forward Deletes when it is undone', () => {
+		const deleted = 'The quick own fox';
+		const undone = 'The quick rown fox';
+		const r = run(deleted, undone, [point(deleted, 'own', 'br', 'me')], 'suggesting');
+		expect(shown(undone, r)).toEqual([['s1', '', 'b', 'me']]);
+		expect(r.placed[0].from).toBe(undone.indexOf('rown'));
+	});
+
+	it('puts a Delete with the deletion it carries on, where the text repeats, and its undo back out of it', () => {
+		const text = 'The quick  fox jumps';
+		const cut = 'The quick  jumps';
+		const deleted = run(text, cut, [point(text, ' fox', 'brown', 'me')], 'suggesting');
+		expect(shown(cut, deleted)).toEqual([['s1', '', 'brown fox', 'me']]);
+		const gestures = carryGestures([], cut, text);
+		const undone = compareSuggestions({
+			before: cut,
+			after: text,
+			pending: deleted.placed,
+			mode: 'suggesting',
+			author: 'me',
+			newId: () => 'n',
+			gestures
+		});
+		expect(shown(text, undone)).toEqual([['s1', '', 'brown', 'me']]);
+	});
+
+	it('withdraws one person’s neighboring suggestions that together change nothing', () => {
+		const pending = [
+			{ id: 'i', from: 0, to: 2, restore: '', author: 'me' },
+			{ id: 'd', from: 2, to: 2, restore: 'ab', author: 'me' }
+		];
+		const r = run('ab cd', 'ab cdx', pending, 'suggesting');
+		expect(shown('ab cdx', r)).toEqual([['n1', 'x', '', 'me']]);
+		expect(r.changes.map((c) => `${c.t}:${c.id}`).sort()).toEqual(['open:n1', 'withdraw:d', 'withdraw:i']);
 	});
 });

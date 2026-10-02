@@ -145,6 +145,15 @@ export function clearOfSuggestions(hunks: Hunk[], before: string, after: string,
 				.filter((k) => covered(h.bFrom - k, h.bTo - k) === best)
 				.sort((x, y) => Number(edges.has(h.aFrom - y)) - Number(edges.has(h.aFrom - x)) || y - x)[0];
 			out = { aFrom: h.aFrom - k, aTo: h.aTo - k, bFrom: h.bFrom - k, bTo: h.bTo - k };
+		} else if (deletion && clear(h.aFrom, h.aTo) && !edges.has(h.aFrom) && !edges.has(h.aTo)) {
+			// the same letters taken out a little further left meet a suggestion: they go with it
+			for (let k = 1; h.aFrom - k >= floor && before.charCodeAt(h.aFrom - k) === before.charCodeAt(h.aTo - k); k++) {
+				if (isLowSurrogate(before.charCodeAt(h.aFrom - k))) continue;
+				if ((edges.has(h.aFrom - k) || edges.has(h.aTo - k)) && clear(h.aFrom - k, h.aTo - k)) {
+					out = { aFrom: h.aFrom - k, aTo: h.aTo - k, bFrom: h.bFrom - k, bTo: h.bTo - k };
+					break;
+				}
+			}
 		} else if ((insertion || deletion) && !clear(h.aFrom, h.aTo)) {
 			const text = insertion ? after : before;
 			const from = insertion ? h.bFrom : h.aFrom;
