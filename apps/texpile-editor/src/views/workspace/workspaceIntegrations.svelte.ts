@@ -21,7 +21,7 @@ import { AutoCheck } from '$lib/workspace/scm/actions/scmAutoCheck.svelte';
 import { LocalHistoryActions, provideLocalHistoryActions } from '$lib/workspace/localHistory/localHistoryActions.svelte';
 import { provideAgentHost } from '$lib/ai/agentPanel/agentHost.svelte';
 import { provideFolderSwitch } from '$lib/workspace/openWorkspace';
-import { agentSession, agentSessionStale } from '$lib/ai/agentPanel/agentSession.svelte';
+import { closeAgentSessionWithWorkspace } from '$lib/ai/agentPanel/agentSession.svelte';
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { joinPath } from '$lib/workspace/fileSystem';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
@@ -185,9 +185,7 @@ export class WorkspaceIntegrations {
 		// Open in Workspace from a lone file: the full folder switch, which claims the folder and sets its project up
 		$effect(() => provideFolderSwitch((root, want) => d.files().folder.open(root, want)));
 		// here, not in the dock: a window turning to a lone file unmounts the dock before it could stop the agent
-		$effect(() => {
-			if (agentSessionStale()) untrack(() => agentSession.close());
-		});
+		closeAgentSessionWithWorkspace();
 		const fetcher = new ScmFetch(this.scm);
 		// co-authors' new versions, looked for every few minutes while this project is open
 		const autoCheck = new AutoCheck({ isBusy: () => this.scm.busy, sync: () => void this.scm.sync() });

@@ -1,5 +1,6 @@
 // The window's conversation with its agent, kept here rather than in the panel: the dock unmounts a tab
 // it is not showing, and the conversation has to outlive that
+import { untrack } from 'svelte';
 import { acpBridge, type AcpBridge } from './acpBridge';
 import { applyUpdate, availableCommands, configOptions, itemId, toolTitle } from './agentItems';
 import { keepBefore } from './changes/agentBefore';
@@ -191,6 +192,15 @@ export async function openAgentSession(root: string): Promise<void> {
 export function agentSessionStale(): boolean {
 	const root = agentSession.root;
 	return !!root && (settings.current.agentPanel === 'off' || agentUnavailable() !== null || root !== workspaceRoot.current);
+}
+
+/** for the workspace view: the conversation ends once stale, and with the view, which Close Folder takes down
+ *  before the stale check can see the folder go */
+export function closeAgentSessionWithWorkspace(): void {
+	$effect(() => {
+		if (agentSessionStale()) untrack(() => agentSession.close());
+	});
+	$effect(() => () => agentSession.close());
 }
 
 /** the agent the tab names: the one running, else the one chosen */
