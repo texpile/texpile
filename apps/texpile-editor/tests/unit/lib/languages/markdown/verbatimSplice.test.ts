@@ -422,6 +422,23 @@ describe('a word retyped in plain text keeps the rest of its paragraph as writte
 		expect(parseMarkdownFile(out).doc.toString()).toBe(doc.toString());
 	});
 
+	it('writes a heading whole when its end is an escape the fresh bytes would take in', () => {
+		const src = '# n macOS} \\#\n\nText.\n';
+		const parsed = parseMarkdownFile(src);
+		const s = parsed.doc.type.schema;
+		const at = posOf(parsed.doc, 'macOS') + 1;
+		const end = posOf(parsed.doc, '#') + 1;
+		// a space typed at its end first, which the file does not keep: the leaf no longer ends where its bytes do
+		const doc = new Transform(parsed.doc).replaceWith(end, end, s.text(' ')).replaceWith(at, at, s.text(',b  ')).doc;
+		const out = serializeMarkdownFile(parsed, doc);
+		const words = (d: Node) => {
+			const blocks: string[] = [];
+			d.forEach((c) => blocks.push(c.textContent.replace(/\s+/g, ' ').trim()));
+			return blocks;
+		};
+		expect(words(parseMarkdownFile(out).doc)).toEqual(words(doc));
+	});
+
 	it('writes the paragraph whole where the seam would read as markup', () => {
 		// a dot after the digit starting a line would make it a list's number
 		const src = 'A line wrapped by hand\n1 more line.\n';

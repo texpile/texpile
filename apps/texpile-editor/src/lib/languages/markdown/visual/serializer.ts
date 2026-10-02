@@ -259,6 +259,8 @@ const assembly = createBlockAssembly((node, ctx) => serializeMdNode(node, ctx), 
 		const word = /\S*$/.exec(head)![0] + bytes + /^\S*/.exec(tail)![0];
 		// a line start, where digits can still become a list's number
 		if (/(^|\n)[ \t>]*\d*$/.test(head) || /[:/@&<]|www\./i.test(word)) return null;
+		// an escape, or anything markdown may read as syntax where the fresh bytes end up (a heading's closing #)
+		if (/[\\!#$%&()*+\-/:<=>@[\]^_`{|}~]/.test(bytes)) return null;
 		const last = (bytes || head).slice(-1);
 		const sides = [head.slice(-1), bytes.slice(0, 1), bytes.slice(-1)].filter(Boolean);
 		if (!sides.every((c) => PLAIN_SEAM.test(c))) return null;
