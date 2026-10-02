@@ -11,26 +11,26 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
 	},
 	"devDependencies": {
-		"@skeletonlabs/skeleton": "^5.0.0",
-		"@skeletonlabs/skeleton-svelte": "^5.0.0",
+		"@skeletonlabs/skeleton": "^5.0.1",
+		"@skeletonlabs/skeleton-svelte": "^5.0.1",
 		"@sveltejs/adapter-static": "^3.0.8",
-		"@sveltejs/kit": "^2.16.0",
-		"@sveltejs/vite-plugin-svelte": "^7.3.0",
+		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
-		"@tailwindcss/vite": "^4.0.0",
-		"markdown-it": "^15.0.0",
-		"shiki": "^4.4.1",
-		"svelte": "^5.56.8",
-		"svelte-check": "^4.7.5",
+		"@tailwindcss/vite": "^4.3.3",
+		"markdown-it": "^15.0.2",
+		"shiki": "^4.4.3",
+		"svelte": "^5.57.1",
+		"svelte-check": "^4.7.6",
 		"tailwindcss": "^4.3.3",
-		"typescript": "^6.0.3",
-		"vite": "^8.2.1"
+		"typescript": "^5.9.3",
+		"vite": "^8.3.1"
 	},
 	"dependencies": {
-		"@fontsource/poppins": "^5.2.7",
-		"@inlang/paraglide-js": "2.22.0",
+		"@fontsource/poppins": "^5.3.0",
+		"@inlang/paraglide-js": "2.25.4",
 		"@lucide/svelte": "^0.562.0",
-		"@plausible-analytics/tracker": "^0.4.5"
+		"@plausible-analytics/tracker": "^0.4.6"
 	}
 }
