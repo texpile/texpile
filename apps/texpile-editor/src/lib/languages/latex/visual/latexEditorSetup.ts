@@ -7,7 +7,7 @@ import { isMac } from '$lib/platform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { undo as historyUndo, redo as historyRedo, history } from 'prosemirror-history';
-import { toggleBlockQuote, toggleHeading, cycleParagraphIndent } from '$lib/editor/visual/helperCommands';
+import { toggleBlockQuote, toggleHeading, cycleParagraphIndent, splitShortTitledHeading } from '$lib/editor/visual/helperCommands';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
 import { selectDocStart, selectDocEnd } from '$lib/editor/visual/selectDocBoundary';
 import { gapCursor } from 'prosemirror-gapcursor';
@@ -163,6 +163,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			'Mod-Alt-2': toggleHeading(2),
 			'Mod-Alt-3': toggleHeading(3),
 			...(isMac ? {} : { 'Mod-Shift-1': toggleHeading(1), 'Mod-Shift-2': toggleHeading(2), 'Mod-Shift-3': toggleHeading(3) }),
+			Enter: splitShortTitledHeading,
 			'Mod-m': createMathField(),
 			'Mod-Shift-m': createMathField(true),
 			// table cell, then list nesting (as markdown and typst do), and only outside both does Tab

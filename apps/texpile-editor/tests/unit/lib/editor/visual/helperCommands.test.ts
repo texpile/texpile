@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { EditorState, TextSelection, type Command } from 'prosemirror-state';
-import { setHeadingLevel } from '$lib/editor/visual/helperCommands';
+import { setHeadingLevel, splitShortTitledHeading } from '$lib/editor/visual/helperCommands';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 
@@ -26,5 +26,19 @@ describe('the heading picker', () => {
 		);
 		const unnumbered = parseTypstFile('#heading(level: 2, numbering: none)[Acknowledgements]\n');
 		expect(serializeTypstFile(unnumbered, run(unnumbered.doc, setHeadingLevel(1)))).toContain('numbering: none');
+	});
+});
+
+describe('Enter in the middle of a heading with a short title', () => {
+	it('gives the second half no short title of its own', () => {
+		const parsed = parseLatexFile(
+			'\\documentclass{article}\n\\begin{document}\n\\section[Short]{Long title words}\nBody.\n\\end{document}\n'
+		);
+		const at = 1 + 'Long title'.length;
+		let state = EditorState.create({ doc: parsed.doc, selection: TextSelection.create(parsed.doc, at) });
+		expect(splitShortTitledHeading(state, (tr) => (state = state.apply(tr)))).toBe(true);
+		const out = serializeLatexFile(parsed, state.doc);
+		expect(out).toContain('\\section[Short]{Long title}');
+		expect(out.split('[Short]').length - 1).toBe(1);
 	});
 });

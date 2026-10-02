@@ -1,4 +1,4 @@
-import { lift } from 'prosemirror-commands';
+import { lift, splitBlockAs } from 'prosemirror-commands';
 import type { Attrs, Node } from 'prosemirror-model';
 import type { Command, EditorState, Transaction } from 'prosemirror-state';
 
@@ -62,6 +62,13 @@ export function setHeadingLevel(level: number, numbered?: boolean): Command {
 		});
 		return applied;
 	};
+}
+
+/** Enter inside a heading with a short title: the half after the caret is a heading without that title */
+export function splitShortTitledHeading(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+	const { $from } = state.selection;
+	if ($from.parent.type.name !== 'heading' || !$from.parent.attrs.shortTitle) return false;
+	return splitBlockAs((node, atEnd) => (atEnd ? null : { type: node.type, attrs: { ...node.attrs, shortTitle: null } }))(state, dispatch);
 }
 
 export function toggleBlockQuote() {
