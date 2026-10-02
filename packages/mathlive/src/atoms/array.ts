@@ -244,8 +244,11 @@ export class ArrayAtom extends Atom {
       'multline',
       'multline*',
       'align',
+      'align*',
+      'aligned',
       'split',
       'gather',
+      'gather*',
       'gathered',
     ].includes(env);
   }
@@ -733,7 +736,16 @@ export class ArrayAtom extends Atom {
     }
 
     for (let row = 0; row < this._rows.length; row++) {
-      for (let col = 0; col < this._rows[row].length; col++) {
+      // the empty cells a short row of lines is padded with are not written
+      let colCount = this._rows[row].length;
+      if (this.isMultiline) {
+        while (
+          colCount > 1 &&
+          isEmptyMultilineCell(this._rows[row][colCount - 1] ?? [])
+        )
+          colCount -= 1;
+      }
+      for (let col = 0; col < colCount; col++) {
         if (col > 0) result.push(' & ');
         result.push(Atom.serialize(this._rows[row][col], options));
       }
