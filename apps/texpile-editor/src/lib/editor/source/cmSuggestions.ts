@@ -224,9 +224,13 @@ export function fitsSuggestion(state: EditorState, s: SuggestionMark): boolean {
 }
 
 export function clearOfOldWords(set: DecorationSet, state: EditorState): DecorationSet {
-	const cuts = liveSuggestionRanges(state)
-		.filter((r) => r.restore)
-		.map((r) => r.from);
+	const cuts = [
+		...new Set(
+			liveSuggestionRanges(state)
+				.filter((r) => r.restore)
+				.map((r) => r.from)
+		)
+	];
 	if (cuts.length === 0 || set.size === 0) return set;
 	const out: Range<Decoration>[] = [];
 	for (let it = set.iter(); it.value; it.next()) {

@@ -20,6 +20,26 @@ it('draws a flag across old words in two pieces', () => {
 	]);
 });
 
+it('draws a flag across two people’s old words at one spot in two pieces', () => {
+	const doc = 'an exampel of it';
+	let state = EditorState.create({ doc, extensions: [cmSuggestions()] });
+	const cut = doc.indexOf('pel');
+	state = state.update({
+		effects: setSuggestionRanges.of([
+			{ id: 'a', from: cut, to: cut, restore: 'x', mine: false },
+			{ id: 'b', from: cut, to: cut, restore: 'y', mine: true }
+		])
+	}).state;
+	const word = doc.indexOf('exampel');
+	const set = Decoration.set([Decoration.mark({ class: 'proofread-spelling' }).range(word, word + 7)]);
+	const pieces: [number, number][] = [];
+	clearOfOldWords(set, state).between(0, doc.length, (from, to) => void pieces.push([from, to]));
+	expect(pieces).toEqual([
+		[word, cut],
+		[cut, word + 7]
+	]);
+});
+
 it('puts what is typed in front of old words when the arrow key put the caret there', () => {
 	editMode.current = 'suggesting';
 	const doc = 'driven by an estimator of the error';
