@@ -1,5 +1,5 @@
 // where the edits since the last comparison landed
-import { commonEnds } from './suggestHunks';
+import { commonEnds, textHunks } from './suggestHunks';
 
 export type TextSpan = { from: number; to: number };
 
@@ -27,6 +27,11 @@ export function carryGestures(spans: TextSpan[], before: string, after: string):
 			grown.to = Math.max(grown.to, g.to + delta);
 		}
 	}
-	if (insertedEnd - p <= MAX_GESTURE) out.push(grown);
+	// a wrapper put round a long passage (bold, a heading) changes a few bytes at each end of it
+	function wrapper() {
+		const hunks = textHunks(before.slice(p, removedEnd), after.slice(p, insertedEnd));
+		return hunks.length <= 2 && hunks.reduce((n, h) => n + (h.aTo - h.aFrom) + (h.bTo - h.bFrom), 0) <= MAX_GESTURE;
+	}
+	if (insertedEnd - p <= MAX_GESTURE || wrapper()) out.push(grown);
 	return out.sort((a, b) => a.from - b.from);
 }
