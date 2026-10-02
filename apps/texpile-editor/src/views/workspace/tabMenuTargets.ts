@@ -21,5 +21,7 @@ export function tabsToClose(scope: CloseScope, tabs: Tab[], target: Tab, active:
 /** the path from the workspace root down, or null when the file is not under it */
 export function relativeTo(root: string | null, path: string): string | null {
 	if (!root || path.length <= root.length || !samePath(path.slice(0, root.length), root)) return null;
-	return path.slice(root.length).replace(/^[\\/]/, '');
+	const rest = path.slice(root.length);
+	if (!/[\\/]$/.test(root) && !/^[\\/]/.test(rest)) return null;
+	return rest.replace(/^[\\/]/, '');
 }
