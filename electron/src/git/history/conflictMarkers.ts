@@ -8,15 +8,17 @@
 const MARKER = /^<{7}\s|^={7}$|^>{7}\s|^\|{7}(\s|$)/;
 const DIVIDER = /^={7}$/;
 
-function dividersIn(text: string): number {
-	return text.split(/\r\n|\r|\n/).filter((line) => DIVIDER.test(line)).length;
+/** each line a side has a lone ======= right under: a Markdown heading, with its underline */
+function headingsIn(text: string): string[] {
+	const lines = text.split(/\r\n|\r|\n/);
+	return lines.flatMap((line, i) => (i > 0 && DIVIDER.test(line) && lines[i - 1].trim() ? [lines[i - 1]] : []));
 }
 
-/** `sides`: the file as each side of the merge has it. A lone ======= as many times as both of them
- *  hold it is the author's own line, a Markdown heading's underline */
+/** `sides`: the file as each side of the merge has it. A lone ======= under a line that one of them
+ *  also has it under is the author's own, a heading's underline */
 export function hasConflictMarkers(text: string, sides: string[] = []): boolean {
 	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>') && !text.includes('|||||||')) return false;
-	const marked = text.split(/\r\n|\r|\n/).filter((line) => MARKER.test(line));
-	const dividers = marked.filter((line) => DIVIDER.test(line)).length;
-	return marked.length > dividers || dividers > (sides.length ? Math.min(...sides.map(dividersIn)) : 0);
+	const headings = new Set(sides.flatMap(headingsIn));
+	const lines = text.split(/\r\n|\r|\n/);
+	return lines.some((line, i) => MARKER.test(line) && !(DIVIDER.test(line) && i > 0 && headings.has(lines[i - 1])));
 }

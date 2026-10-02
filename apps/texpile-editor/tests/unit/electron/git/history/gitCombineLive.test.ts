@@ -192,6 +192,30 @@ describe.skipIf(!AVAILABLE)('combining two lines of work', () => {
 		expect(await gitFinishCombine(root)).toEqual({ ok: true });
 	});
 
+	it('finishes with two different headings underlined with seven =, one from each side', async () => {
+		const { root, other } = await makePublished();
+		const paper = (top: string, result: string, bottom: string) =>
+			`${top}Intro.\n\nOne.\n\nTwo.\n\n${result}\n\nThree.\n\nFour.\n\n${bottom}`;
+		commit(root, 'paper.md', paper('', 'The first result.', ''), 'Paper');
+		run(root, 'push', '-q');
+		run(other, 'pull', '-q');
+		commit(other, 'paper.md', paper('', 'Their result.', 'Results\n=======\n'), 'Their heading');
+		run(other, 'push', '-q');
+		commit(root, 'paper.md', paper('Methods\n=======\n\n', 'My result.', ''), 'My heading');
+		expect(await gitSync(root)).toMatchObject({ ok: false, failure: 'conflict' });
+		expect(await gitCombine(root)).toMatchObject({ ok: true, conflicts: [join(root, 'paper.md')] });
+		const marked = async () => (await gitStatus(root)).entries?.find((e) => e.path === join(root, 'paper.md'))?.markers;
+
+		// both headings kept, and a divider git wrote left behind under the result
+		writeFileSync(join(root, 'paper.md'), paper('Methods\n=======\n\n', 'My result.\n=======', 'Results\n=======\n'));
+		expect(await marked()).toBe(true);
+		expect(await gitFinishCombine(root)).toMatchObject({ ok: false, failure: 'markers' });
+
+		writeFileSync(join(root, 'paper.md'), paper('Methods\n=======\n\n', 'My result, and theirs.', 'Results\n=======\n'));
+		expect(await marked()).toBe(false);
+		expect(await gitFinishCombine(root)).toEqual({ ok: true });
+	});
+
 	it('has nothing to finish when no merge is under way', async () => {
 		const { root } = await makePublished();
 		expect(await gitFinishCombine(root)).toMatchObject({ ok: false, failure: 'not-combining' });
@@ -214,12 +238,13 @@ describe('the marker check on the git side', () => {
 		expect(hasConflictMarkers('plain text\n')).toBe(false);
 	});
 
-	it("takes a lone ======= as often as both sides hold it for the author's own line", () => {
-		const heading = 'Methods\n=======\n\nText.\n';
-		expect(hasConflictMarkers(heading, [heading, heading])).toBe(false);
-		expect(hasConflictMarkers(`${heading}Mine.\n=======\nTheirs.\n`, [heading, heading])).toBe(true);
-		expect(hasConflictMarkers(heading, [heading, 'Text.\n'])).toBe(true);
-		expect(hasConflictMarkers(`${heading}>>>>>>> origin/main\n`, [heading, heading])).toBe(true);
+	it('takes a lone ======= for a heading underline when a side has it under the same line', () => {
+		const ours = 'Methods\n=======\n\nText.\n';
+		const theirs = 'Text.\n\nResults\n=======\n';
+		expect(hasConflictMarkers('Methods\n=======\n\nText.\n\nResults\n=======\n', [ours, theirs])).toBe(false);
+		expect(hasConflictMarkers('Methods\n=======\n\nMine.\n=======\nTheirs.\n', [ours, theirs])).toBe(true);
+		expect(hasConflictMarkers('Methods\n=======\n>>>>>>> origin/main\n', [ours, ours])).toBe(true);
+		expect(hasConflictMarkers('Methods\n=======\n')).toBe(true);
 	});
 });
 
