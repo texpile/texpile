@@ -74,7 +74,11 @@ export class CommentStore {
 	 *  fold replaces them in one step. */
 	async load(root: string | null): Promise<void> {
 		const my = ++this.loadSeq;
-		if (root !== this.root) this.staged = [];
+		if (root !== this.root) {
+			this.staged = [];
+			this.lines = [];
+			this.events = [];
+		}
 		this.root = root;
 		const path = root ? this.path(root) : null;
 		if (!path) {

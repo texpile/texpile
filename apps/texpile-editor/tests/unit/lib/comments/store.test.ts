@@ -78,6 +78,22 @@ it('keeps what this side appended when an older read of the log lands', async ()
 	expect(store.serialize().trim().split('\n')).toHaveLength(2);
 });
 
+// File > Open Folder swaps the root of the same store in place
+it('keeps the last folder’s threads out of the next folder’s log', async () => {
+	const anchor = buildAnchor('some text', 0, 4);
+	disks['/a/.texpile/comments.jsonl'] =
+		JSON.stringify(openEvent({ id: 'a1', file: 'main.tex', by: 'ana', body: 'a', anchor, at: 'now' })) + '\n';
+	disks['/b/.texpile/comments.jsonl'] =
+		JSON.stringify(openEvent({ id: 'b1', file: 'main.tex', by: 'bo', body: 'b', anchor, at: 'now' })) + '\n';
+	const store = new CommentStore();
+	await store.load('/a');
+	await store.load('/b');
+	expect(store.threads.map((t) => t.id)).toEqual(['b1']);
+
+	await store.append(replyEvent({ id: 'm1', thread: 'b1', by: 'bo', body: 'ok', at: 'now' }));
+	expect(foldLog(parseLog(disks['/b/.texpile/comments.jsonl'])).map((t) => t.id)).toEqual(['b1']);
+});
+
 /** deterministic PRNG (mulberry32) so a failure reproduces byte-for-byte */
 function rng(seed: number): () => number {
 	let a = seed;
