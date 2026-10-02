@@ -369,16 +369,32 @@ export function makeEnvironment(
       });
 
     case 'align':
-    case 'align*':
+    case 'align*': {
+      // as many r-l pairs as the widest row has, as amsmath sets them
+      let colCount = 0;
+      for (const row of content) colCount = Math.max(colCount, row.length);
+
+      const columns: ColumnFormat[] = [
+        { gap: 0 },
+        { align: 'r' },
+        { gap: 0.25 },
+        { align: 'l' },
+      ];
+      let i = 2;
+      while (i < colCount) {
+        columns.push({ gap: 1 }, { align: 'r' }, { gap: 0.25 }, { align: 'l' });
+        i += 2;
+      }
+
       return new ArrayAtom(name, content, rowGaps, {
         arraycolsep: 0,
-        columns: [{ gap: 0 }, { align: 'r' }, { gap: 0.25 }, { align: 'l' }],
+        columns,
         minColumns: 2,
-        maxColumns: 2,
         minRows: 1,
         isRoot: true,
         classes: ['ML__align_environment'],
       });
+    }
 
     case 'pmatrix':
     case 'pmatrix*':
