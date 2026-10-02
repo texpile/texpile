@@ -33,6 +33,8 @@ type Daemon = {
 	rl: readline.Interface;
 	hash: string;
 	root: string;
+	/** the Toolchain folders it was spawned under (toolGen) */
+	gen: number;
 	hsize: number;
 	textheight: number;
 	glyphs: Rec[];
@@ -49,6 +51,7 @@ type Daemon = {
 };
 
 let daemon: Daemon | null = null;
+let toolGen = 0;
 let queue: Promise<unknown> = Promise.resolve();
 
 // A daemon nobody has used in a while is 100-300MB of RSS for nothing; stop it and
@@ -108,6 +111,7 @@ async function spawnDaemon(root: string, engineDir: string, preamble: string): P
 		child,
 		rl: null as unknown as readline.Interface,
 		hash: hashOf(preamble),
+		gen: toolGen,
 		root,
 		hsize: 345,
 		textheight: 550,
@@ -204,7 +208,7 @@ async function spawnDaemon(root: string, engineDir: string, preamble: string): P
 
 async function ensureDaemon(root: string, engineDir: string, preamble: string): Promise<Daemon> {
 	const h = hashOf(preamble);
-	if (daemon && daemon.hash === h && daemon.root === root) return daemon;
+	if (daemon && daemon.hash === h && daemon.root === root && daemon.gen === toolGen) return daemon;
 	if (daemon) {
 		try {
 			daemon.child.kill('SIGKILL');
@@ -442,8 +446,11 @@ export async function typesetParagraph(body: {
 	return run;
 }
 
-// the next request warms an engine from the TeX the Toolchain folders now put first
-onToolPathChange(() => stopDaemon());
+// the next request warms an engine from the TeX the Toolchain folders now put first, one still warming included
+onToolPathChange(() => {
+	toolGen++;
+	stopDaemon();
+});
 
 export function stopDaemon(): void {
 	if (idleTimer) {

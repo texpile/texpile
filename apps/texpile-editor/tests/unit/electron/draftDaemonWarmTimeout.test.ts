@@ -91,4 +91,36 @@ describe('draft daemon warm timeout', () => {
 			rmSync(root, { recursive: true, force: true });
 		}
 	});
+
+	it('replaces an engine that was still warming when the Toolchain folders changed', async () => {
+		const root = mkdtempSync(join(tmpdir(), 'texd-switch-warming-'));
+		writeFileSync(join(root, 'main.tex'), '\\documentclass{article}\n\\begin{document}\nx\n\\end{document}\n');
+		const savedPath = process.env[pathKey()];
+		const body = { root, mainFile: 'main.tex', engineDir: root, text: 'x' };
+		function answer(child: (typeof spawned)[number]): void {
+			child.stdout.write('texpile-warm@@READY 345 550\n');
+			void vi
+				.waitFor(() => expect(child.stdin.write).toHaveBeenCalled())
+				.then(() => child.stdout.write('texpile-warm@@R {}\ntexpile-warm@@GEND\n'));
+		}
+		try {
+			const before = spawned.length;
+			const first = typesetParagraph(body);
+			await vi.waitFor(() => expect(spawned).toHaveLength(before + 1));
+			const old = spawned[before];
+			applyToolDirs();
+			setToolDirs(['/usr/local/texlive/2024/bin/x86_64-linux']);
+			answer(old);
+			expect((await first).ok).toBe(true);
+			const next = typesetParagraph(body);
+			await vi.waitFor(() => expect(spawned).toHaveLength(before + 2));
+			expect(old.kill).toHaveBeenCalledWith('SIGKILL');
+			answer(spawned[before + 1]);
+			expect((await next).ok).toBe(true);
+		} finally {
+			setToolDirs([]);
+			process.env[pathKey()] = savedPath;
+			rmSync(root, { recursive: true, force: true });
+		}
+	});
 });
