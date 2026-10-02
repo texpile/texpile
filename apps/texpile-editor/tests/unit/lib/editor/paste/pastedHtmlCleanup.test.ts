@@ -4,6 +4,8 @@
 import { describe, expect, it } from 'vitest';
 import { DOMParser as PMDOMParser, DOMSerializer } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
+import { mdSchema } from '$lib/languages/markdown/visual/schema';
+import { sliceToMarkdown } from '$lib/languages/markdown/visual/clipboard';
 import { sliceToLatex } from '$lib/editor/visual/extensions/latexClipboard';
 import { cleanPastedHtml } from '$lib/editor/paste/pastedHtmlCleanup';
 
@@ -46,6 +48,17 @@ describe('pasted HTML', () => {
 		);
 		const docs = '<ul><li><p>a</p></li><ul><li><p>b</p></li></ul></ul>';
 		expect(pastedAsLatex(docs)).toBe('\\begin{itemize}\n\\item a\n\\begin{itemize}\n\\item b\n\\end{itemize}\n\\end{itemize}');
+	});
+
+	it('keeps Word’s outline numbering numbered, and the number a list copied from its middle starts at', () => {
+		const item = (level: number, marker: string, text: string) =>
+			`<p style='mso-list:l0 level${level} lfo1'><span style='mso-list:Ignore'>${marker}<span>&nbsp;</span></span>${text}</p>`;
+		expect(pastedAsLatex(item(1, '1.', 'One') + item(2, '1.1.', 'Sub') + item(1, '2.', 'Two'))).toBe(
+			'\\begin{enumerate}\n\\item One\n\\begin{enumerate}\n\\item Sub\n\\end{enumerate}\n\\item Two\n\\end{enumerate}'
+		);
+		const dom = document.createElement('div');
+		dom.innerHTML = cleanPastedHtml(item(1, '3.', 'Three') + item(1, '4.', 'Four'));
+		expect(sliceToMarkdown(PMDOMParser.fromSchema(mdSchema).parseSlice(dom))).toBe('3. Three\n4. Four');
 	});
 
 	it('reads underline and monospace runs as marks, and a code editor’s lines as a code block', () => {
