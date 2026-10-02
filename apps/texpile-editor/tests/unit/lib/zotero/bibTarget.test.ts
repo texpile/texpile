@@ -1,39 +1,47 @@
 import { describe, expect, it } from 'vitest';
-import { appendBibEntries, bibPathFromSource, citationTextFor, translatorForSource } from '$lib/zotero/bibTarget';
+import { appendBibEntries, bibPathsFromSource, citationTextFor, translatorForSource } from '$lib/zotero/bibTarget';
 
-describe('bibPathFromSource', () => {
+describe('bibPathsFromSource', () => {
 	it('takes addbibresource as written, options and all', () => {
-		expect(bibPathFromSource('\\addbibresource{refs.bib}', 'tex')).toBe('refs.bib');
-		expect(bibPathFromSource('\\addbibresource[datatype=bibtex]{sub/refs.bib}', 'tex')).toBe('sub/refs.bib');
+		expect(bibPathsFromSource('\\addbibresource{refs.bib}', 'tex')).toEqual(['refs.bib']);
+		expect(bibPathsFromSource('\\addbibresource[datatype=bibtex]{sub/refs.bib}\n\\addbibresource{more.bib}', 'tex')).toEqual([
+			'sub/refs.bib',
+			'more.bib'
+		]);
 	});
 
 	it('appends .bib to extensionless names (both commands)', () => {
-		expect(bibPathFromSource('\\addbibresource{refs}', 'tex')).toBe('refs.bib');
-		expect(bibPathFromSource('\\bibliography{refs}', 'tex')).toBe('refs.bib');
+		expect(bibPathsFromSource('\\addbibresource{refs}', 'tex')).toEqual(['refs.bib']);
+		expect(bibPathsFromSource('\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
 	});
 
-	it('takes the first file of a \\bibliography list', () => {
-		expect(bibPathFromSource('\\bibliography{main, extra}', 'tex')).toBe('main.bib');
+	it('takes every file of a \\bibliography list, in order', () => {
+		expect(bibPathsFromSource('\\bibliography{IEEEabrv, refs}', 'tex')).toEqual(['IEEEabrv.bib', 'refs.bib']);
 	});
 
 	it('prefers addbibresource when both appear', () => {
-		expect(bibPathFromSource('\\bibliography{old}\n\\addbibresource{new.bib}', 'tex')).toBe('new.bib');
+		expect(bibPathsFromSource('\\bibliography{old}\n\\addbibresource{new.bib}', 'tex')).toEqual(['new.bib']);
+	});
+
+	it('ignores a commented-out declaration', () => {
+		expect(bibPathsFromSource('% \\addbibresource{sample.bib}\n\\addbibresource{refs.bib}', 'tex')).toEqual(['refs.bib']);
+		expect(bibPathsFromSource('%\\bibliography{IEEEabrv,../bib/paper}\n\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
 	});
 
 	it('reads typst bibliography calls, including the array form', () => {
-		expect(bibPathFromSource('#bibliography("refs.bib")', 'typ')).toBe('refs.bib');
-		expect(bibPathFromSource('#bibliography(("a.bib", "b.bib"), style: "apa")', 'typ')).toBe('a.bib');
+		expect(bibPathsFromSource('#bibliography("refs.bib")', 'typ')).toEqual(['refs.bib']);
+		expect(bibPathsFromSource('#bibliography(("a.bib", "b.bib"), style: "apa")', 'typ')).toEqual(['a.bib', 'b.bib']);
 	});
 
 	it('never picks a Hayagriva file in a typst list, where BibTeX would break it', () => {
-		expect(bibPathFromSource('#bibliography(("refs.yml", "extra.bib"))', 'typ')).toBe('extra.bib');
-		expect(bibPathFromSource('#bibliography("refs.yml")', 'typ')).toBeNull();
-		expect(bibPathFromSource('#bibliography("refs.yaml")', 'typ')).toBeNull();
+		expect(bibPathsFromSource('#bibliography(("refs.yml", "extra.bib"))', 'typ')).toEqual(['extra.bib']);
+		expect(bibPathsFromSource('#bibliography("refs.yml")', 'typ')).toEqual([]);
+		expect(bibPathsFromSource('#bibliography("refs.yaml")', 'typ')).toEqual([]);
 	});
 
-	it('returns null when nothing is declared', () => {
-		expect(bibPathFromSource('\\documentclass{article}', 'tex')).toBeNull();
-		expect(bibPathFromSource('= Heading', 'typ')).toBeNull();
+	it('returns nothing when nothing is declared', () => {
+		expect(bibPathsFromSource('\\documentclass{article}', 'tex')).toEqual([]);
+		expect(bibPathsFromSource('= Heading', 'typ')).toEqual([]);
 	});
 });
 
@@ -45,6 +53,7 @@ describe('translatorForSource', () => {
 
 	it('classic bibliography gets plain BibTeX; typst always biblatex', () => {
 		expect(translatorForSource('\\bibliography{r}', 'tex')).toBe('Better BibTeX');
+		expect(translatorForSource('%\\usepackage{biblatex}\n\\bibliography{r}', 'tex')).toBe('Better BibTeX');
 		expect(translatorForSource('anything', 'typ')).toBe('Better BibLaTeX');
 	});
 });

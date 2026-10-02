@@ -193,6 +193,13 @@ describe('citeWork', () => {
 		expect(added.journaltitle).toBeUndefined();
 	});
 
+	it("adds to the declared bib the project has, not to IEEEtran's string file listed before it", async () => {
+		disk.set(MAIN, '\\documentclass{IEEEtran}\n\\begin{document}\n\\bibliography{IEEEabrv,refs}\n\\end{document}\n');
+		await citeWork(await lookUpWork(watson, deps), deps);
+		expect(disk.has('/paper/IEEEabrv.bib')).toBe(false);
+		expect(parseBibtex(disk.get(BIB)!).map((r) => r.key)).toEqual(['knuth1984texbook', 'watson1953molecular']);
+	});
+
 	it("writes a Typst project's entry for Typst's bib reader, and cites it there", async () => {
 		const MAIN_TYP = '/paper/main.typ';
 		disk.set(MAIN_TYP, '= Paper\n#bibliography("refs.bib")\n');
