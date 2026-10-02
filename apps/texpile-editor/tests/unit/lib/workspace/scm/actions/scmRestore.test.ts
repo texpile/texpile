@@ -64,6 +64,7 @@ function makeScm(
 		loaded?: string;
 		trash?: (p: string) => Promise<'trashed' | 'kept'>;
 		remove?: (p: string) => Promise<void>;
+		read?: (p: string) => Promise<string | null>;
 	} = {}
 ) {
 	return new ScmActions({
@@ -82,7 +83,7 @@ function makeScm(
 		settleConflicts: () => {},
 		ignoreLines: () => [],
 		writeText: async () => {},
-		readTextIfPresent: async () => null
+		readTextIfPresent: opts.read ?? (async () => null)
 	});
 }
 
@@ -297,6 +298,25 @@ describe('throwing changes away', () => {
 		]);
 		expect(trashed).toEqual(['C:/project/introduction.tex']);
 		expect(gitDiscard.mock.calls.at(-1)?.[1]).toEqual(['C:/project/intro.tex']);
+	});
+
+	// git mv intro.tex introduction.tex, then a new intro.tex started: the checkout of the old name
+	// used to write over it, with no copy in the Trash or in Local History
+	it('moves a new file started at the old name to the Trash before putting the old one back', async () => {
+		const steps: string[] = [];
+		gitDiscard.mockImplementationOnce(async (_root, paths) => (steps.push(`checkout ${paths.join()}`), { ok: true }));
+		await makeScm({
+			trash: async (p) => (steps.push(`trash ${p}`), 'trashed'),
+			read: async (p) => (p === 'C:/project/intro.tex' ? 'A new introduction.\n' : null)
+		}).discard([{ path: 'C:/project/introduction.tex', x: 'R', y: ' ', from: 'C:/project/intro.tex' } as never]);
+		expect(steps).toEqual(['trash C:/project/introduction.tex', 'trash C:/project/intro.tex', 'checkout C:/project/intro.tex']);
+	});
+
+	it('leaves the new file at the old name, and the rename undone only in part, when it may not be deleted', async () => {
+		const scm = makeScm({ trash: async () => 'kept', read: async (p) => (p === 'C:/project/intro.tex' ? 'A new introduction.\n' : null) });
+		confirmAsk.mockResolvedValueOnce(true).mockResolvedValueOnce(false);
+		await scm.discard([{ path: 'C:/project/introduction.tex', x: 'R', y: ' ', from: 'C:/project/intro.tex' } as never]);
+		expect(gitDiscard).not.toHaveBeenCalled();
 	});
 
 	it('asks before deleting outright where there is no Trash, and keeps the file on no', async () => {

@@ -87,7 +87,7 @@ export class ScmDiscard {
 		this.host.busy = true;
 		let err: string | undefined;
 		try {
-			err = await this.#throwAway(root, changes);
+			err = await this.#throwAway(root, changes, kept);
 		} finally {
 			this.host.busy = false;
 		}
@@ -114,11 +114,14 @@ export class ScmDiscard {
 		const kept: { path: string; content: string }[] = [];
 		for (const c of changes) {
 			if (c.files) continue;
-			const content = await this.deps.readTextIfPresent(c.path).catch(() => null);
-			if (content === null) continue;
-			// in LF, as saves are kept; Undo writes it back as it was
-			await addLocalHistory(c.path, toLf(content), 'before-discard');
-			kept.push({ path: c.path, content });
+			// a rename's old name holds a file only when a new one was started there since
+			for (const path of c.from ? [c.path, c.from] : [c.path]) {
+				const content = await this.deps.readTextIfPresent(path).catch(() => null);
+				if (content === null) continue;
+				// in LF, as saves are kept; Undo writes it back as it was
+				await addLocalHistory(path, toLf(content), 'before-discard');
+				kept.push({ path, content });
+			}
 		}
 		return kept;
 	}
@@ -147,10 +150,12 @@ export class ScmDiscard {
 	}
 
 	/** the work itself; resolves to the last failure's words, if any */
-	async #throwAway(root: string, changes: GitStatusEntry[]): Promise<string | undefined> {
+	async #throwAway(root: string, changes: GitStatusEntry[], present: { path: string }[]): Promise<string | undefined> {
 		// new files go to the Trash; tracked files go back to the last version. A rename is both: the
 		// new name is a new file, and the old one comes back.
 		const fresh = changes.filter((c) => isNewFile(c) || c.from);
+		// a file started at a rename's old name since is new work as well, never written over
+		const occupied = fresh.flatMap((c) => (c.from && present.some((k) => k.path === c.from) ? [c.from] : []));
 		const tracked = [...changes.filter((c) => !isNewFile(c) && !c.from).map((c) => c.path), ...fresh.flatMap((c) => c.from ?? [])];
 		let err: string | undefined;
 		// one staged as added (in a terminal, or by a save that stopped half-way) is let go of first
@@ -160,11 +165,13 @@ export class ScmDiscard {
 			if (!res.ok) err = res.error;
 		}
 		const kept: string[] = [];
-		for (const c of fresh) {
+		const left: string[] = [];
+		for (const p of new Set([...fresh.map((c) => c.path), ...occupied])) {
 			try {
-				if ((await this.deps.trashEntry(c.path)) === 'kept') kept.push(c.path);
+				if ((await this.deps.trashEntry(p)) === 'kept') kept.push(p);
 			} catch (e) {
 				err = e instanceof Error ? e.message : String(e);
+				left.push(p);
 			}
 		}
 		if (kept.length && (await this.#deleteOutright(kept))) {
@@ -173,11 +180,13 @@ export class ScmDiscard {
 					await this.deps.removeEntry(p);
 				} catch (e) {
 					err = e instanceof Error ? e.message : String(e);
+					left.push(p);
 				}
 			}
-		}
-		if (tracked.length) {
-			const res = await gitDiscard(root, tracked);
+		} else left.push(...kept);
+		const back = tracked.filter((p) => !left.includes(p));
+		if (back.length) {
+			const res = await gitDiscard(root, back);
 			if (!res.ok) err = res.error;
 		}
 		return err;
