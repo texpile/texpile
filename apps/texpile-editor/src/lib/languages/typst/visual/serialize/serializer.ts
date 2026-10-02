@@ -162,7 +162,7 @@ const NODES: Record<string, NodeHandler> = {
 	},
 
 	heading(node) {
-		const level = Math.min(6, Math.max(1, Number(node.attrs.level ?? 1)));
+		const level = Math.max(1, Number(node.attrs.level ?? 1));
 		const label = labelOf(node);
 		const line = headingLine(node);
 		if (line == null) {

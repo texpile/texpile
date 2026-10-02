@@ -25,7 +25,7 @@ export function labelGapOf(src: string, end: number, labelNode: SyntaxNode | nul
 
 export function headingSeg(k: SyntaxNode, src: string, labelNode: SyntaxNode | null = null): Seg {
 	const marker = childOf(k, 'HeadingMarker');
-	const level = Math.min(6, Math.max(1, marker ? marker.to - marker.from : 1));
+	const level = Math.max(1, marker ? marker.to - marker.from : 1);
 	const markup = childOf(k, 'Markup');
 	const content = markup ? convertInline(children(markup), src, []) : [];
 	const label = labelNode ? src.slice(labelNode.from + 1, labelNode.to - 1) : null;
@@ -58,7 +58,7 @@ export function headingCallSeg(kids: SyntaxNode[], i: number, src: string): { se
 		if (!value) return null;
 		if ((key === 'level' || key === 'depth') && !size && value.name === 'Int') {
 			size = key;
-			level = Math.min(6, Math.max(1, parseInt(src.slice(value.from, value.to), 10) || 1));
+			level = Math.max(1, parseInt(src.slice(value.from, value.to), 10) || 1);
 		} else if (key === 'numbering' && value.name === 'None') unnumbered = true;
 		else return null;
 	}
