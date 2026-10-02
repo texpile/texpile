@@ -178,6 +178,19 @@ describe('typst math in MathLive', () => {
       expect(convertLatexToTypst(latex), latex).toBe(typst);
   });
 
+  it('writes the old font switches as the styles they set in math', () => {
+    const cases: [string, string][] = [
+      ['{\\rm d}x', 'upright(d) x'],
+      ['\\rm d', 'upright(d)'],
+      ['{\\bf v}', 'bold(upright(v))'],
+      ['{\\sf T}', 'sans(upright(T))'],
+      ['{\\tt x}', 'mono(upright(x))'],
+      ['{\\cal L}', 'cal(L)'],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
   it('writes every LaTeX command MathLive draws as Typst that parses', () => {
     for (const { insert } of getMathCommands('latex'))
       for (const arg of ['x', '']) {

@@ -332,6 +332,9 @@ defineFunction('bf', '{:rest*}', {
     fontSeries: 'b',
     fontShape: 'n',
     fontFamily: 'roman',
+    // In math mode, the letters of \mathbf
+    variant: 'normal',
+    variantStyle: 'bold',
   }),
 });
 
@@ -501,6 +504,50 @@ defineFunction('it', '{:rest*}', {
     fontShape: 'it',
     fontFamily: 'roman',
     variantStyle: 'italic', // For math mode
+  }),
+});
+
+// The other LaTeX 2.09 font switches; in math mode, the letters of \mathrm,
+// \mathsf, \mathtt and \mathcal
+defineFunction('rm', '{:rest*}', {
+  applyStyle: (style) => ({
+    ...style,
+    fontSeries: 'm',
+    fontShape: 'n',
+    fontFamily: 'roman',
+    variant: 'normal',
+    variantStyle: 'up',
+  }),
+});
+
+defineFunction('sf', '{:rest*}', {
+  applyStyle: (style) => ({
+    ...style,
+    fontSeries: 'm',
+    fontShape: 'n',
+    fontFamily: 'sans-serif',
+    variant: 'sans-serif',
+    variantStyle: 'up',
+  }),
+});
+
+defineFunction('tt', '{:rest*}', {
+  applyStyle: (style) => ({
+    ...style,
+    fontSeries: 'm',
+    fontShape: 'n',
+    fontFamily: 'monospace',
+    variant: 'monospace',
+    variantStyle: 'up',
+  }),
+});
+
+defineFunction('cal', '{:rest*}', {
+  applyMode: 'math',
+  applyStyle: (style) => ({
+    ...style,
+    variant: 'calligraphic',
+    variantStyle: removeItalic(style.variantStyle),
   }),
 });
 
