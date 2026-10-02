@@ -92,3 +92,26 @@ it('reads an agent that wants a sign-in as signed out, not as failed', async () 
 	s.close();
 	expect(events.filter((e) => e.type === 'state').map((e) => (e as { state: string }).state)).toEqual(['starting', 'signed-out']);
 });
+
+it('leaves out what Texpile saved during the turn in files the snapshot does not read', async () => {
+	const root = fs.mkdtempSync(path.join(dir, 'skipped '));
+	fs.writeFileSync(path.join(root, 'main.tex'), 'old text');
+	const big = 'x'.repeat(2 * 1024 * 1024);
+	fs.writeFileSync(path.join(root, 'thesis.tex'), big);
+	const events: AcpEvent[] = [];
+	// a comment the agent made through Texpile's tools lands in .texpile, and the reader types on in a large file
+	const s = session('skipped.cjs', false, root, events, () => {
+		for (const [file, text] of [
+			['.texpile/comments.jsonl', '{"type":"comment"}\n'],
+			['thesis.tex', `${big} typed`]
+		]) {
+			noteOwnWrite(path.join(root, file), text);
+			fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
+			fs.writeFileSync(path.join(root, file), text);
+		}
+	});
+	await s.start();
+	const result = await s.prompt([{ type: 'text', text: 'fix it' }]);
+	s.close();
+	expect(result.changes).toEqual([{ path: path.join(root, 'main.tex'), kind: 'modified', before: 'old text' }]);
+});

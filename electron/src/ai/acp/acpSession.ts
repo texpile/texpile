@@ -141,7 +141,9 @@ export class AcpSession {
 			}
 			const after = await takeSnapshot(this.o.root, before);
 			this.known = after;
-			for (const [rel, text] of saved) startFrom(before, rel, text);
+			// a file the snapshot skips (.texpile, another extension, too large) has no start for the reader's save to move
+			for (const [rel, text] of saved)
+				if (after.files.has(rel) || (before.found.has(rel) && !after.found.has(rel))) startFrom(before, rel, text);
 			const changes = changesBetween(before, after).map((c) => ({ ...c, path: path.join(this.o.root, c.path) }));
 			if ('signedOut' in outcome && outcome.signedOut) this.o.emit({ type: 'state', state: 'signed-out' });
 			else if (!this.closing) this.o.emit({ type: 'state', state: 'ready' });
