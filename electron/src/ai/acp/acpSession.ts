@@ -67,6 +67,8 @@ export class AcpSession {
 	private mcpServers: acp.McpServer[] = [];
 	private history = false;
 	private permissions: PermissionQueue;
+	/** a Stop pressed while the turn reads the folder, before its prompt has gone to the agent */
+	private stopAsked = false;
 
 	constructor(private o: SessionOptions) {
 		this.permissions = new PermissionQueue((e) => o.emit(e));
@@ -124,6 +126,7 @@ export class AcpSession {
 		if (!this.connection || !this.sessionId) return { ok: false, error: 'not ready', changes: [] };
 		if (this.turning) return { ok: false, error: 'busy', changes: [] };
 		this.turning = true;
+		this.stopAsked = false;
 		this.o.emit({ type: 'state', state: 'working' });
 		const saved = new Map<string, string>();
 		const stopListening = onOwnWrite((p, text) => {
@@ -134,7 +137,9 @@ export class AcpSession {
 			const before = await takeSnapshot(this.o.root, this.known);
 			let outcome: { stopReason: string } | { error: string; signedOut: boolean };
 			try {
-				const r = await this.connection.agent.request(acp.methods.agent.session.prompt, { sessionId: this.sessionId, prompt: blocks });
+				const r = this.stopAsked
+					? { stopReason: 'cancelled' }
+					: await this.connection.agent.request(acp.methods.agent.session.prompt, { sessionId: this.sessionId, prompt: blocks });
 				outcome = { stopReason: r.stopReason };
 			} catch (e) {
 				outcome = { error: message(e), signedOut: authRequired(e) };
@@ -191,6 +196,7 @@ export class AcpSession {
 	}
 
 	cancel(): void {
+		if (this.turning) this.stopAsked = true;
 		this.permissions.cancelAll();
 		if (this.connection && this.sessionId)
 			void this.connection.agent.notify(acp.methods.agent.session.cancel, { sessionId: this.sessionId });

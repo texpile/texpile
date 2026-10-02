@@ -115,3 +115,17 @@ it('leaves out what Texpile saved during the turn in files the snapshot does not
 	s.close();
 	expect(result.changes).toEqual([{ path: path.join(root, 'main.tex'), kind: 'modified', before: 'old text' }]);
 });
+
+it('sends no prompt when Stop comes while the turn is still reading the folder', async () => {
+	const root = fs.mkdtempSync(path.join(dir, 'stop '));
+	fs.writeFileSync(path.join(root, 'main.tex'), 'old text');
+	const events: AcpEvent[] = [];
+	const s = session('stop.cjs', false, root, events);
+	await s.start();
+	const turn = s.prompt([{ type: 'text', text: 'fix it' }]);
+	s.cancel();
+	const result = await turn;
+	s.close();
+	expect(result).toEqual({ ok: true, stopReason: 'cancelled', changes: [] });
+	expect(fs.readFileSync(path.join(root, 'main.tex'), 'utf8')).toBe('old text');
+});

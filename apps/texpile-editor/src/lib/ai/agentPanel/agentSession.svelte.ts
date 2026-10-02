@@ -49,6 +49,8 @@ export class AgentSession {
 	private conversation = 0;
 	/** while the agent replays a chat; a live turn's own message is the one this window sent */
 	private replaying = false;
+	/** a Stop pressed while the save before a turn runs, when main has no turn yet to stop */
+	private stopAsked = false;
 
 	constructor(private bridge: () => AcpBridge | undefined = acpBridge) {}
 
@@ -108,9 +110,14 @@ export class AgentSession {
 		const conversation = this.conversation;
 		// at once: a message sent while the save and main's look at the folder run would start a second turn
 		this.state = 'working';
+		this.stopAsked = false;
 		await agentHost.current?.flushPendingSave();
 		if (conversation !== this.conversation) return;
 		this.items = [...this.items, { kind: 'user', id: itemId(), text, attached }];
+		if (this.stopAsked) {
+			this.state = 'ready';
+			return;
+		}
 		const r = await bridge.prompt([{ type: 'text', text }, ...attachedBlocks(attached)]);
 		if (conversation !== this.conversation) return;
 		// read again: events moved it on while the turn ran. Main moves it on before it answers, so one still
@@ -128,6 +135,7 @@ export class AgentSession {
 	}
 
 	cancel(): void {
+		this.stopAsked = true;
 		this.bridge()?.cancel();
 	}
 
