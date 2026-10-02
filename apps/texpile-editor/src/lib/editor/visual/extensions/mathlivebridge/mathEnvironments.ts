@@ -4,7 +4,7 @@ import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
 import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
 
-const PER_LINE_ENVIRONMENTS = ['align', 'gather', 'alignat', 'eqnarray'] as const;
+const PER_LINE_ENVIRONMENTS = ['align', 'gather', 'alignat', 'flalign', 'eqnarray'] as const;
 export const SINGLE_LABEL_ENVIRONMENTS = ['multline'] as const;
 const MULTILINE_ENVIRONMENTS = [...PER_LINE_ENVIRONMENTS, ...SINGLE_LABEL_ENVIRONMENTS] as const;
 type MultilineEnvironment = (typeof MULTILINE_ENVIRONMENTS)[number];

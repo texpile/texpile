@@ -218,7 +218,7 @@ export function setDisplayNumbered(state: EditorState, pos: number, numbered: bo
 	if (display?.type.name !== 'block_math') return null;
 	const environment = display.attrs.environment as string | null;
 	const attrs: Record<string, unknown> = { ...display.attrs, numbered };
-	const perLine = !!environment && ['align', 'gather', 'alignat', 'eqnarray'].includes(environment);
+	const perLine = !!environment && ['align', 'gather', 'alignat', 'flalign', 'eqnarray'].includes(environment);
 	if (numbered && !perLine && !display.attrs.label) attrs.label = generateLabel('equation');
 	const source = display.textContent;
 	const starred = environment ? toggleEnvironmentStar(source, !numbered) : source;
