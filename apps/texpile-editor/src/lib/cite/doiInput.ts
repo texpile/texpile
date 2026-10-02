@@ -126,8 +126,13 @@ function findDoi(text: string): string | null {
 	const m = DOI.exec(s);
 	if (!m) return null;
 	let doi = m[1];
-	// a link's query or fragment is the page's, never the DOI's
-	if (isLink) doi = doi.replace(/[?#].*$/, '').replace(/\/(?:full|abstract|pdf|epdf|html|meta|fulltext)\/?$/i, '');
+	// what the link adds: the page's query and fragment, the next parameter after ?id=<doi>, .pdf, bioRxiv's v1.full
+	if (isLink)
+		doi = doi
+			.replace(/[?#&].*$/, '')
+			.replace(/\/(?:full|abstract|pdf|epdf|html|meta|fulltext)\/?$/i, '')
+			.replace(/\.pdf$/i, '')
+			.replace(/^(10\.1101\/[\d.]+)v\d+(?:\.(?:full|abstract))?$/i, '$1');
 	// sentence punctuation a DOI was quoted with: a DOI may end in ")" only when it also opened one
 	doi = doi.replace(/[.,;:'"\]}>]+$/, '');
 	while (doi.endsWith(')') && count(doi, '(') < count(doi, ')')) doi = doi.slice(0, -1);

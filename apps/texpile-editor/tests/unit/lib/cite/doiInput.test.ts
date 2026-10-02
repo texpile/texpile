@@ -28,6 +28,24 @@ describe('parseWorkId: DOIs', () => {
 		expect(parseWorkId('https://doi.org/10.1000%2F182?via=home#top')).toEqual({ kind: 'doi', doi: '10.1000/182' });
 	});
 
+	it('leaves out what a PDF, preprint or query link adds to the DOI', () => {
+		expect(parseWorkId('https://link.springer.com/content/pdf/10.1007/s00134-020-06022-5.pdf')).toEqual({
+			kind: 'doi',
+			doi: '10.1007/s00134-020-06022-5'
+		});
+		for (const link of [
+			'https://www.biorxiv.org/content/10.1101/2020.03.22.002386v1',
+			'https://www.biorxiv.org/content/10.1101/2020.03.22.002386v2.full',
+			'https://www.medrxiv.org/content/10.1101/2020.03.22.002386v3.full.pdf'
+		]) {
+			expect(parseWorkId(link), link).toEqual({ kind: 'doi', doi: '10.1101/2020.03.22.002386' });
+		}
+		expect(parseWorkId('https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0230978&type=printable')).toEqual({
+			kind: 'doi',
+			doi: '10.1371/journal.pone.0230978'
+		});
+	});
+
 	it('keeps slashes and brackets that belong to the DOI', () => {
 		expect(parseWorkId('10.1016/S0140-6736(20)30183-5')).toEqual({ kind: 'doi', doi: '10.1016/S0140-6736(20)30183-5' });
 		expect(parseWorkId('10.1007/978-3-030-58452-8_13')).toEqual({ kind: 'doi', doi: '10.1007/978-3-030-58452-8_13' });
