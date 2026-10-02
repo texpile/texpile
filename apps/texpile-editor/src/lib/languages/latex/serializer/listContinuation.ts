@@ -27,19 +27,33 @@ export function continuesList(parent: Node, index: number): boolean {
 	return own === null || own === prevEnv;
 }
 
-/** the environment name a list node carries itself, if any */
+/** the environment name a list node carries itself, if any; an item made numbered is no longer a description's */
 function ownEnvName(node: Node): string | null {
-	return typeof node.attrs.envName === 'string' && node.attrs.envName ? node.attrs.envName : null;
+	return node.attrs.kind === 'bullet' && typeof node.attrs.envName === 'string' && node.attrs.envName ? node.attrs.envName : null;
 }
 
 /** the environment name the first node of this run of list nodes carries, if any */
 export function runEnvName(node: Node, ctx: Pick<Ctx, 'parent' | 'index'>): string | null {
-	if (!ctx.parent) return typeof node.attrs.envName === 'string' ? node.attrs.envName : null;
+	if (!ctx.parent) return ownEnvName(node);
 	const kind = node.attrs.kind;
 	for (let i = ctx.index; i >= 0; i--) {
 		const n = ctx.parent.child(i);
 		if (n.type.name !== 'list' || n.attrs.kind !== kind || (i < ctx.index && !sameSourceList(n, ctx.parent.child(i + 1)))) break;
-		if (typeof n.attrs.envName === 'string' && n.attrs.envName) return n.attrs.envName;
+		const name = ownEnvName(n);
+		if (name) return name;
+	}
+	return null;
+}
+
+/** the first item of the source environment a top-level run of items is, whose options the run opens with once that item is gone */
+export function sourceListHead(parent: Node, index: number): Node | null {
+	if (parent.type.name !== 'doc') return null;
+	const kind = parent.child(index).attrs.kind;
+	for (let i = index; i < parent.childCount && (i === index || continuesList(parent, i)); i++) {
+		const o = blockOriginOf(parent.child(i));
+		if (!o) continue;
+		const head = o.parse.origins[o.index - o.member]?.node;
+		return head?.type.name === 'list' && head.attrs.kind === kind ? head : null;
 	}
 	return null;
 }

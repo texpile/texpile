@@ -14,7 +14,7 @@ import { esc, applyMarks, bareTextString, joinInline, markableMarks, marksKey } 
 import { blockMath, alignEnvironment } from './mathBlocks';
 import { isHandlerLeaf, mapRunLeaves, renderShadowed, shadowed, standIn, withoutShadow } from './latexShadowRun';
 import { buildIncludegraphics } from './includegraphics';
-import { continuesList, runEnvName } from './listContinuation';
+import { continuesList, runEnvName, sourceListHead } from './listContinuation';
 import { dropParagraphEnd, paragraphGap } from './paragraphEnds';
 import { guardItemBody, headsItem, labelKey } from './itemLabels';
 import type { Segment } from '$lib/editor/visual/sourceSpans';
@@ -474,12 +474,13 @@ const NODES: Record<string, NodeHandler> = {
 
 		let out = '';
 		if (!prevSame) {
+			const head = node.attrs.envArgs == null && ctx.parent ? sourceListHead(ctx.parent, ctx.index) : null;
 			// enumitem-style options the source gave the environment; see createList
-			const envArgs = typeof node.attrs.envArgs === 'string' ? node.attrs.envArgs : '';
-			out += `\n\\begin{${env}}${envArgs}\n`;
+			const envArgs = node.attrs.envArgs ?? head?.attrs.envArgs;
+			out += `\n\\begin{${env}}${typeof envArgs === 'string' ? envArgs : ''}\n`;
 			// raw setup content that preceded the first \item in the source; see createList
-			const preBody = typeof node.attrs.preBody === 'string' ? node.attrs.preBody : '';
-			if (preBody) out += preBody + '\n';
+			const preBody = node.attrs.preBody ?? head?.attrs.preBody;
+			if (typeof preBody === 'string' && preBody) out += preBody + '\n';
 		}
 		out += parts.join('');
 		// an item body already ends its line, so a break of our own would open a blank one above \end

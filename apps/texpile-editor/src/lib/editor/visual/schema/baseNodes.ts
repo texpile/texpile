@@ -271,8 +271,8 @@ export const baseNodes = {
 // common). the list node models one PM node per \item, so this has nowhere else to live:
 // carried verbatim on the FIRST list node of the group, spliced back after \begin{...}
 // envArgs: the environment's own options (enumitem's [resume], [label=...]), same first-node rule
-// envName: 'description' when the source environment was one (the editor shows bullets, the file
-// keeps its environment); itemLabel: the raw [label] of \item[label], on that item's node
+// envName: 'description' on every item of one (the editor shows bullets, the file keeps its
+// environment); itemLabel: the raw [label] of \item[label], on that item's node
 baseNodes.list.attrs = {
 	...(baseNodes.list.attrs ?? {}),
 	preBody: { default: null },

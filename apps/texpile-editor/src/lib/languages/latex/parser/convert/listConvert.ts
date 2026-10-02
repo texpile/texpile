@@ -32,7 +32,7 @@ export function createList(env: Environment, kind: 'bullet' | 'ordered', options
 			collapsed: false,
 			preBody: result.length === 0 ? preBody : null,
 			envArgs: result.length === 0 ? envArgs : null,
-			envName: result.length === 0 ? envName : null,
+			envName,
 			itemLabel,
 			...extra
 		};
