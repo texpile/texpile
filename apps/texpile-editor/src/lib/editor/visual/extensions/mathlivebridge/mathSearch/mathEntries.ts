@@ -54,6 +54,15 @@ function sectionOf(syntax: MathSyntax, set: SymbolSet<PickerSymbol>, command: Ma
 	return set.groupLabel(symbol?.group ?? 'other');
 }
 
+function bareName(name: string): string {
+	return name.replace(/^\\begin\{(.*)\}$/, '$1').replace(/^\\/, '');
+}
+
+/** a name of it spelled as typed: `Delta` is Δ, not δ */
+function spelledAs(entry: MathEntry, spelled: string): boolean {
+	return [entry.command.name, ...entry.command.aliases].some((name) => bareName(name) === spelled);
+}
+
 const loaded = new Map<MathSyntax, Promise<MathEntries>>();
 
 export function loadMathEntries(syntax: MathSyntax): Promise<MathEntries> {
@@ -89,12 +98,7 @@ async function buildEntries(syntax: MathSyntax): Promise<MathEntries> {
 			section: sectionOf(syntax, set, command, symbol),
 			glyph: symbol ? set.glyph(symbol) : null,
 			note: noteOf(syntax, command, symbol),
-			names: [command.name, ...command.aliases].map((name) =>
-				name
-					.replace(/^\\begin\{(.*)\}$/, '$1')
-					.replace(/^\\/, '')
-					.toLowerCase()
-			),
+			names: [command.name, ...command.aliases].map((name) => bareName(name).toLowerCase()),
 			symbol
 		};
 	});
@@ -114,7 +118,8 @@ const MAX_FOUND = 200;
  * names it begins, then names it is inside.
  */
 export function searchMathEntries(loaded: MathEntries, query: string): MathEntry[] {
-	const typed = query.trim().toLowerCase().replace(/^\\/, '');
+	const spelled = query.trim().replace(/^\\/, '');
+	const typed = spelled.toLowerCase();
 	if (!typed) return [];
 	const { set, catalog, entries, bySymbol } = loaded;
 	const meaning = new Map<MathEntry, number>();
@@ -126,7 +131,9 @@ export function searchMathEntries(loaded: MathEntries, query: string): MathEntry
 	for (const entry of entries) {
 		const found = meaning.get(entry);
 		const score = entry.names.includes(typed)
-			? 0
+			? spelledAs(entry, spelled)
+				? 0
+				: 0.5
 			: found !== undefined
 				? 1 + found / 10_000
 				: entry.names.some((name) => name.startsWith(typed))
