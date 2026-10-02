@@ -1,6 +1,7 @@
 // where two versions of a text differ, in whole words
 import { diffArrays, diffLines } from 'diff';
 import type { TextSpan } from './editGestures';
+import type { WhitespaceChanges } from './suggestCompare';
 
 export type Hunk = { aFrom: number; aTo: number; bFrom: number; bTo: number };
 
@@ -253,15 +254,23 @@ function inCode(text: string, at: number, lists: boolean): boolean {
 	return open;
 }
 
-/** `lists`: the spaces before a list marker are the item's depth (markdown, typst) */
-export function neutral(before: string, after: string, h: Hunk, lists = false): boolean {
+// markdown and typst read a list item's depth off the spaces before its marker, markdown a line break off two ending a line
+export function dialectWhitespace(file: string, whitespace: WhitespaceChanges): WhitespaceChanges {
+	if (whitespace !== 'paragraphs') return whitespace;
+	if (/\.(md|markdown)$/i.test(file)) return 'markdown';
+	return /\.typ$/i.test(file) ? 'lists' : whitespace;
+}
+
+/** `lists`: the spaces before a list marker are the item's depth (markdown, typst); `markdown` also reads its line breaks */
+export function neutral(before: string, after: string, h: Hunk, lists: boolean | 'markdown' = false): boolean {
 	const c = whitespaceChange(before, h, after.slice(h.bFrom, h.bTo));
 	if (!c) return false;
 	if (paragraphShape(spaceAround(before, h.aFrom, h.aTo)) !== paragraphShape(spaceAround(after, h.bFrom, h.bTo))) return false;
 	if (lists && movesItem(before, after, h)) return false;
-	if (lists && LINE_BREAK.test(spaceAround(before, h.aFrom, h.aTo)) !== LINE_BREAK.test(spaceAround(after, h.bFrom, h.bTo))) return false;
+	if (lists === 'markdown' && LINE_BREAK.test(spaceAround(before, h.aFrom, h.aTo)) !== LINE_BREAK.test(spaceAround(after, h.bFrom, h.bTo)))
+		return false;
 	if (!(c.spaced || /\s/.test(before[c.at - 1] ?? ' ') || /\s/.test(before[c.at + c.cut] ?? ' '))) return false;
-	return !inCode(before, h.aFrom, lists);
+	return !inCode(before, h.aFrom, !!lists);
 }
 
 function wordAround(text: string, pos: number): [number, number] | null {
@@ -285,7 +294,14 @@ function wordAround(text: string, pos: number): [number, number] | null {
 	return [from, to];
 }
 
-export function joinGestures(hunks: Hunk[], before: string, after: string, gestures: TextSpan[], exact = false, lists = false): Hunk[] {
+export function joinGestures(
+	hunks: Hunk[],
+	before: string,
+	after: string,
+	gestures: TextSpan[],
+	exact = false,
+	lists: boolean | 'markdown' = false
+): Hunk[] {
 	if (gestures.length === 0) return hunks;
 	const out: Hunk[] = [];
 	let open: { hunk: Hunk; gesture: TextSpan } | null = null;
@@ -306,7 +322,14 @@ export function joinGestures(hunks: Hunk[], before: string, after: string, gestu
 	return out;
 }
 
-export function snapToWords(hunks: Hunk[], before: string, after: string, spans: SuggestionSpan[], exact = false, lists = false): Hunk[] {
+export function snapToWords(
+	hunks: Hunk[],
+	before: string,
+	after: string,
+	spans: SuggestionSpan[],
+	exact = false,
+	lists: boolean | 'markdown' = false
+): Hunk[] {
 	function touches(from: number, to: number) {
 		return spans.some((s) => s.from <= to && s.to >= from);
 	}

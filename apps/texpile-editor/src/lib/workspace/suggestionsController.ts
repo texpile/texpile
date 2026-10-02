@@ -11,7 +11,7 @@ import {
 } from '$lib/comments/suggestCompare';
 import { isOpenSuggestion, suggestionAuthor } from '$lib/comments/suggest';
 import { carryGestures, carryGesturesThrough, type TextSpan } from '$lib/comments/editGestures';
-import { commonEnds } from '$lib/comments/suggestHunks';
+import { commonEnds, dialectWhitespace } from '$lib/comments/suggestHunks';
 import { activeSuggestions, takeEditedPlaces, takeTypedSides, type EditedPlaces } from '$lib/comments/activeSuggestions.svelte';
 import type { CommentStore } from '$lib/comments/store.svelte';
 import { changeEvents, movedAnchorEvents } from './suggestionEvents';
@@ -380,8 +380,7 @@ export class SuggestionsController {
 			author,
 			gestures,
 			sides,
-			// markdown and typst read a list item's depth off the spaces before its marker
-			whitespace: whitespace === 'paragraphs' && /\.(md|markdown|typ)$/i.test(file) ? 'lists' : whitespace,
+			whitespace: dialectWhitespace(file, whitespace),
 			newId: () => crypto.randomUUID()
 		});
 		this.states.set(file, { text: after, placed: r.placed });

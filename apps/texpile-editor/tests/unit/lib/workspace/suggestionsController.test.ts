@@ -541,6 +541,23 @@ describe('a suggestion in the file', () => {
 		expect(activeSuggestions.current.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual([[' ', '']]);
 	});
 
+	// two spaces ending a line are a line break in markdown and nothing in typst
+	it.each([
+		['notes.md', [['', '  ']]],
+		['notes.typ', []]
+	] as const)('reads two spaces ending a line in %s by the file’s own rule in the visual editor', async (name, want) => {
+		const start = 'A verse  \nand the next one.\n';
+		const { ctl, type, setVisual } = make(start, 'suggesting', name);
+		await ctl.load(ROOT);
+		ctl.reanchor(`${ROOT}/${name}`, start);
+		setVisual(true);
+		const after = start.replace('  \n', '\n');
+		type(after);
+		ctl.suggestions.textChanged(`${ROOT}/${name}`, after);
+		await ctl.suggestions.settle();
+		expect(activeSuggestions.current.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual(want);
+	});
+
 	it('writes what was typed while suggesting to the log before the file is saved', async () => {
 		const { ctl, open, type } = make(TEXT, 'suggesting');
 		await open();

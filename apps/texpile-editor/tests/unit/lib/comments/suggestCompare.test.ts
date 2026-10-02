@@ -368,7 +368,7 @@ describe('an edit meeting a suggestion', () => {
 	});
 
 	it('suggests a markdown line break of two spaces taken out or put in', () => {
-		const suggest = (before: string, after: string) =>
+		const suggest = (before: string, after: string, whitespace: 'markdown' | 'lists' = 'markdown') =>
 			compareSuggestions({
 				before,
 				after,
@@ -376,12 +376,14 @@ describe('an edit meeting a suggestion', () => {
 				mode: 'suggesting',
 				author: 'me',
 				newId: () => 'n',
-				whitespace: 'lists'
+				whitespace
 			}).placed.map((s) => [after.slice(s.from, s.to), s.restore]);
 		expect(suggest('A verse  \nand the next.\n', 'A verse\nand the next.\n')).toEqual([['', '  ']]);
 		expect(suggest('A verse\nand the next.\n', 'A verse  \nand the next.\n')).toEqual([['  ', '']]);
 		// before a blank line the spaces break nothing
 		expect(suggest('A verse  \n\nNext one.\n', 'A verse\n\nNext one.\n')).toEqual([]);
+		// typst has no such break: the spaces there are layout
+		expect(suggest('A verse  \nand the next.\n', 'A verse\nand the next.\n', 'lists')).toEqual([]);
 	});
 
 	it('keeps a paragraph break that is half a suggestion’s new words afterwards', () => {

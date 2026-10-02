@@ -13,8 +13,9 @@ import {
 
 export type EditMode = 'editing' | 'suggesting';
 
-/** `lists` is `paragraphs` where the spaces before a list marker are the item's depth */
-export type WhitespaceChanges = 'exact' | 'paragraphs' | 'lists';
+/** `lists` is `paragraphs` where the spaces before a list marker are the item's depth (typst);
+ *  `markdown` is `lists` where two spaces ending a line are a line break */
+export type WhitespaceChanges = 'exact' | 'paragraphs' | 'lists' | 'markdown';
 
 export type TypingSide = 'before' | 'after';
 
@@ -97,7 +98,7 @@ function cancelledRuns(after: string, placed: { from: number; to: number; restor
 export function compareSuggestions(o: CompareInput): ComparedSuggestions {
 	const { before, after, mode, author: me } = o;
 	const exact = o.whitespace === 'exact';
-	const lists = o.whitespace === 'lists';
+	const lists = o.whitespace === 'markdown' ? 'markdown' : o.whitespace === 'lists';
 	const given = o.pending
 		.filter((s) => s.from >= 0 && s.to >= s.from && s.to <= before.length)
 		.sort((a, b) => a.from - b.from || a.to - b.to);
