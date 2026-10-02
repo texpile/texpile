@@ -22,6 +22,7 @@ const KEYS: Record<string, string> = {
   '←': 'ArrowLeft',
   '⎋': 'Escape',
   '⏎': 'Enter',
+  '⌦': 'Delete',
 };
 
 function field(): MathfieldElement {
@@ -121,6 +122,18 @@ describe('typing in a Typst field', () => {
     expect(typed('& = c', 'a \\ b')).toBe('a \\\nb & = c');
     expect(typed('a &= b & c')).toBe('a & = b & c');
     expect(typed(' + 1', 'a & = b \\ c')).toBe('a & = b \\ c + 1');
+  });
+
+  it('deletes beside an equation of lines from its lines, not the whole of it', () => {
+    // the caret a field gets when it is entered from after the equation, or from before it
+    expect(typed('⌫', 'a &= b \\ &= c')).toBe('a &= b \\ &=');
+    expect(typed('⌫', 'x = 1 \\ y = 2')).toContain('x = 1');
+    const mf = field();
+    mf.setValue('x = 1 \\ y = 2', { format: 'typst' });
+    mf.executeCommand('moveToMathfieldStart');
+    type(mf, '⌦');
+    expect(mf.getValue('typst')).toContain('y = 2');
+    mf.remove();
   });
 
   it('undoes a token at a time, a name and what it became as one', () => {
