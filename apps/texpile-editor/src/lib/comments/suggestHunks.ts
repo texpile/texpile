@@ -241,6 +241,18 @@ function spaceAround(text: string, from: number, to: number): string {
 // two spaces ending a line, which markdown reads as a line break
 const LINE_BREAK = /^[^\n]*[ \t]{2}\r?\n[^\n]*$/;
 
+const FENCE = /^[ \t]*(```|~~~)/gm;
+const VERBATIM = /\\(begin|end)\{(?:verbatim|Verbatim|lstlisting|minted)\*?\}/g;
+
+// a fenced block in markdown or typst, a verbatim environment in latex: spaces there are what it says
+function inCode(text: string, at: number, lists: boolean): boolean {
+	const head = text.slice(0, at);
+	if (lists) return (head.match(FENCE)?.length ?? 0) % 2 === 1;
+	let open = false;
+	for (const m of head.matchAll(VERBATIM)) open = m[1] === 'begin';
+	return open;
+}
+
 /** `lists`: the spaces before a list marker are the item's depth (markdown, typst) */
 export function neutral(before: string, after: string, h: Hunk, lists = false): boolean {
 	const c = whitespaceChange(before, h, after.slice(h.bFrom, h.bTo));
@@ -248,7 +260,8 @@ export function neutral(before: string, after: string, h: Hunk, lists = false): 
 	if (paragraphShape(spaceAround(before, h.aFrom, h.aTo)) !== paragraphShape(spaceAround(after, h.bFrom, h.bTo))) return false;
 	if (lists && movesItem(before, after, h)) return false;
 	if (lists && LINE_BREAK.test(spaceAround(before, h.aFrom, h.aTo)) !== LINE_BREAK.test(spaceAround(after, h.bFrom, h.bTo))) return false;
-	return c.spaced || /\s/.test(before[c.at - 1] ?? ' ') || /\s/.test(before[c.at + c.cut] ?? ' ');
+	if (!(c.spaced || /\s/.test(before[c.at - 1] ?? ' ') || /\s/.test(before[c.at + c.cut] ?? ' '))) return false;
+	return !inCode(before, h.aFrom, lists);
 }
 
 function wordAround(text: string, pos: number): [number, number] | null {

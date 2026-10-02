@@ -349,6 +349,24 @@ describe('an edit meeting a suggestion', () => {
 		expect(suggest('First.\n\nSecond one.\n', 'First.\n\n  Second one.\n')).toEqual([]);
 	});
 
+	it('suggests spaces typed in a code block, where they are its content', () => {
+		const suggest = (before: string, after: string, whitespace: 'lists' | 'paragraphs') =>
+			compareSuggestions({ before, after, pending: [], mode: 'suggesting', author: 'me', newId: () => 'n', whitespace }).placed.map((s) => [
+				after.slice(s.from, s.to),
+				s.restore
+			]);
+		expect(suggest('Intro.\n\n```py\nif x:\nrun()\n```\n', 'Intro.\n\n```py\nif x:\n    run()\n```\n', 'lists')).toEqual([['    ', '']]);
+		expect(
+			suggest(
+				'Intro.\n\n\\begin{verbatim}\nif x:\nrun()\n\\end{verbatim}\n',
+				'Intro.\n\n\\begin{verbatim}\nif x:\n    run()\n\\end{verbatim}\n',
+				'paragraphs'
+			)
+		).toEqual([['    ', '']]);
+		// after the block, spaces are layout again
+		expect(suggest('```\nx\n```\n\nA line\nwrapped.\n', '```\nx\n```\n\nA line wrapped.\n', 'lists')).toEqual([]);
+	});
+
 	it('suggests a markdown line break of two spaces taken out or put in', () => {
 		const suggest = (before: string, after: string) =>
 			compareSuggestions({
