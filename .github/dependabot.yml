@@ -1,0 +1,71 @@
+version: 2
+updates:
+  # the whole pnpm workspace (root, apps, landing, packages), from the root lockfile
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # a release waits a week before a PR proposes it, which keeps out most hijacked versions
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    versioning-strategy: increase
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore
+      include: scope
+    # a dependency goes in the first group that matches it
+    groups:
+      editor:
+        patterns: ['prosemirror-*', '@codemirror/*', '@lezer/*', 'yjs', 'y-*', 'lib0']
+        update-types: [minor, patch]
+      svelte:
+        patterns: ['svelte', 'svelte-check', '@sveltejs/*', 'vite', 'vite-plugin-*', '@skeletonlabs/*', 'tailwindcss', '@tailwindcss/*']
+        update-types: [minor, patch]
+      electron:
+        patterns: ['electron', 'electron-builder', '@electron/*']
+        update-types: [minor, patch]
+      unified-latex:
+        patterns: ['@unified-latex/*']
+      paraglide:
+        patterns: ['@inlang/*']
+      lint-and-test:
+        patterns: ['eslint', 'eslint-*', '@eslint/*', 'typescript-eslint', 'prettier', 'prettier-*', 'vitest', '@vitest/*', '@playwright/*', 'jsdom']
+        update-types: [minor, patch]
+      minor-and-patch:
+        update-types: [minor, patch]
+        exclude-patterns: ['pdfjs-dist']
+    ignore:
+      # kept at the version upstream MathLive builds with
+      - dependency-name: '@cortex-js/compute-engine'
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+      - dependency-name: zod
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: cargo
+    directory: /packages/typst-syntax-wasm
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: chore
+      include: scope
+    ignore:
+      # moves with a Typst release, together with the regenerated symbol tables
+      - dependency-name: typst-syntax
+        update-types: ['version-update:semver-minor', 'version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      actions:
+        patterns: ['*']
