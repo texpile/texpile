@@ -276,13 +276,18 @@ async function looksBinary(abs: string): Promise<boolean> {
 	}
 }
 
-/** a deleted or unreadable file has nothing marked in it */
-export async function stillMarked(abs: string): Promise<boolean> {
+/** a deleted or unreadable file has nothing marked in it. `rel`, repo-relative, reads each side's
+ *  copy of the file (stages 2 and 3) */
+export async function stillMarked(g: SimpleGit, rel: string, abs: string): Promise<boolean> {
+	let text: string;
 	try {
-		return hasConflictMarkers(await readFile(abs, 'utf8'));
+		text = await readFile(abs, 'utf8');
 	} catch {
 		return false;
 	}
+	if (!hasConflictMarkers(text)) return false;
+	const sides = await Promise.all([':2:', ':3:'].map((stage) => g.show([`${stage}${rel}`]).catch(() => '')));
+	return hasConflictMarkers(text, sides);
 }
 
 /** big folders of new files as one row each; git is asked which folders are wholly new only when
@@ -341,7 +346,7 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 				// a whole-file choice is still a choice to make: marked until it is made
 				const choose = await wholeFileChoice(f.index, f.working_dir, path);
 				if (choose) entry.choose = choose;
-				entry.markers = !!choose || (await stillMarked(path));
+				entry.markers = !!choose || (await stillMarked(g, f.path, path));
 			}
 			entries.push(entry);
 		}

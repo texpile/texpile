@@ -93,7 +93,7 @@ export async function gitFinishCombine(workspaceRoot: string): Promise<GitCombin
 		for (const f of conflicted) {
 			const abs = repo.fromGit(f.path);
 			// a place still marked, or a whole file nobody has chosen a side of yet
-			if ((await wholeFileChoice(f.index, f.working_dir, abs)) || (await stillMarked(abs))) marked.push(abs);
+			if ((await wholeFileChoice(f.index, f.working_dir, abs)) || (await stillMarked(g, f.path, abs))) marked.push(abs);
 		}
 		if (marked.length) return { ok: false, failure: 'markers', files: marked };
 		// -A: a file one side deleted is settled by its absence as much as by its presence

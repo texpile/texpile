@@ -6,8 +6,17 @@
 // it, and the rest went into the version - where a stray ======= prints in the PDF.
 
 const MARKER = /^<{7}\s|^={7}$|^>{7}\s|^\|{7}(\s|$)/;
+const DIVIDER = /^={7}$/;
 
-export function hasConflictMarkers(text: string): boolean {
+function dividersIn(text: string): number {
+	return text.split(/\r\n|\r|\n/).filter((line) => DIVIDER.test(line)).length;
+}
+
+/** `sides`: the file as each side of the merge has it. A lone ======= as many times as both of them
+ *  hold it is the author's own line, a Markdown heading's underline */
+export function hasConflictMarkers(text: string, sides: string[] = []): boolean {
 	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>') && !text.includes('|||||||')) return false;
-	return text.split(/\r\n|\r|\n/).some((line) => MARKER.test(line));
+	const marked = text.split(/\r\n|\r|\n/).filter((line) => MARKER.test(line));
+	const dividers = marked.filter((line) => DIVIDER.test(line)).length;
+	return marked.length > dividers || dividers > (sides.length ? Math.min(...sides.map(dividersIn)) : 0);
 }
