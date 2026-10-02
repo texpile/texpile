@@ -23,8 +23,12 @@ export const typstShadow = createShadow({
 
 /** list/term/heading markers and "1." enum markers bind at line start, indentation included */
 export function escLineStart(str: string): string {
-	// `--` and `---` are the dash shorthands, which no list marker begins
-	return str.replace(/^(\s*)(-(?!-)|[+/=])/, '$1\\$2').replace(/^(\s*)(\d+)\./, '$1$2\\.');
+	// `--` and `---` are the dash shorthands, which no list marker begins; after a line's leading
+	// number typst reads `...` as dots, so the ellipsis goes out as itself
+	return str
+		.replace(/^(\s*)(-(?!-)|[+/=])/, '$1\\$2')
+		.replace(/^(\s*)(\d+)\.\.\./, '$1$2\u2026')
+		.replace(/^(\s*)(\d+)\./, '$1$2\\.');
 }
 
 /** the characters typst's `--`, `---` and `...` stand for, written back as those */
@@ -60,6 +64,10 @@ export function escTypst(str: string, startOfLine = false, extra = ''): string {
 		}
 		if (ch === '-' && (str[i + 1] === '?' || str[i + 1] === '-')) {
 			out += '\\-';
+			continue;
+		}
+		if (ch === '.' && str[i + 1] === '.' && str[i + 2] === '.') {
+			out += '\\.';
 			continue;
 		}
 		// the dash and ellipsis characters go out as the shorthand typst sources write them, so a

@@ -30,4 +30,12 @@ describe('text written out reads back as the same characters', () => {
 		const out = serializeToTypst(S.nodes.doc.create(null, [para]));
 		expect(typstToProseMirror(out).doc.child(0).textContent).toBe('Words — and more.');
 	});
+
+	it('an ellipsis after the number opening a line stays one, and typed dots stay dots', () => {
+		expect(reread('2… and counting').textContent).toBe('2… and counting');
+		expect(reread('2... dots').textContent).toBe('2... dots');
+		const para = S.nodes.paragraph.create(null, [S.text('Then '), S.text('3… more', [S.marks.u.create()])]);
+		const out = serializeToTypst(S.nodes.doc.create(null, [para]));
+		expect(typstToProseMirror(out).doc.child(0).textContent).toBe('Then 3… more');
+	});
 });
