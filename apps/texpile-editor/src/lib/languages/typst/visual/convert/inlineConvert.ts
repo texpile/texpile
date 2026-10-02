@@ -1,7 +1,6 @@
 // CST helpers and the inline walker: text, marks, links, shorthands, inline math
 import type { SyntaxNode } from '@lezer/common';
 import { buildNode, textNodes, collapseTextNodes, realMarks, type PmNode, type PmMark } from './builders';
-import { typstMathToLatex } from './mathTranslate';
 import { alignedSpans, bytesSpan, noteSpans, spansOf, standsFor } from '$lib/editor/visual/sourceSpans';
 import { refCallParts, refMarkupParts } from './refConvert';
 import { spelledAs } from '../serialize/refSource';
@@ -69,6 +68,12 @@ export function chip(text: string, marks: PmMark[], from?: number): PmNode[] {
 
 export function rawBlock(text: string, from?: number): PmNode {
 	return buildNode('raw_latex', { lang: 'typst' }, textNodes(text, null, from === undefined ? null : bytesSpan(text.length, from)));
+}
+
+/** true when Typst reports a syntax error inside the node */
+export function hasSyntaxError(node: SyntaxNode): boolean {
+	for (let child = node.firstChild; child; child = child.nextSibling) if (child.name === 'Error' || hasSyntaxError(child)) return true;
+	return false;
 }
 
 /** the source between an Equation's dollar delimiters, exactly as written. */
@@ -334,18 +339,11 @@ export function convertInline(nodes: SyntaxNode[], src: string, marks: PmMark[])
 				break;
 			}
 			case 'Equation': {
-				// fully-translatable equations become MathLive-editable math nodes carrying their
-				// original typst; anything the translator can't prove stays a raw chip
+				// MathLive reads and writes the equation's own Typst; only one Typst cannot parse stays a chip
 				const inner = equationInner(k, src);
-				const latex = typstMathToLatex(inner);
-				if (latex != null) {
-					// the formula stands for its bytes whole: its content is a translation, not the source
-					out.push(
-						withMarks(
-							noteSpans(buildNode('inline_math', { typst: inner, latexOrig: latex }, textNodes(latex)), standsFor(1, k.from, k.to)),
-							marks
-						)
-					);
+				if (inner.trim() && !hasSyntaxError(k)) {
+					// the formula stands for its bytes whole
+					out.push(withMarks(noteSpans(buildNode('inline_math', null, textNodes(inner)), standsFor(1, k.from, k.to)), marks));
 				} else {
 					out.push(...chip(slice, marks, k.from));
 				}

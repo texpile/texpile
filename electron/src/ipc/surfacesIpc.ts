@@ -14,7 +14,8 @@ export type MessageBoxRequest = {
 };
 
 type PopupMenuItem =
-	{ separator: true } | { id: string; label: string; enabled?: boolean; accelerator?: string; submenu?: PopupMenuItem[] };
+	| { separator: true }
+	| { id: string; label: string; enabled?: boolean; checked?: boolean; toolTip?: string; accelerator?: string; submenu?: PopupMenuItem[] };
 
 export type PopupMenuRequest = {
 	items: PopupMenuItem[];
@@ -54,8 +55,16 @@ export function registerSurfacesIpc(): void {
 					'separator' in i
 						? { type: 'separator' }
 						: i.submenu
-							? { label: i.label, enabled: i.enabled !== false, submenu: template(i.submenu) }
-							: { label: i.label, enabled: i.enabled !== false, accelerator: i.accelerator, click: () => settle(i.id) }
+							? { label: i.label, enabled: i.enabled !== false, toolTip: i.toolTip, submenu: template(i.submenu) }
+							: {
+									label: i.label,
+									enabled: i.enabled !== false,
+									// macOS shows it on hover, the reason a disabled item gives for itself
+									toolTip: i.toolTip,
+									accelerator: i.accelerator,
+									...(i.checked === undefined ? {} : { type: 'checkbox' as const, checked: i.checked }),
+									click: () => settle(i.id)
+								}
 				);
 			}
 			// the close callback can land before a chosen item's click, so it yields to it first

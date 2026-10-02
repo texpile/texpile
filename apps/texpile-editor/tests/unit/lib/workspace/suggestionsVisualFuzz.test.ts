@@ -295,9 +295,10 @@ describe('suggestions made in the visual editor', () => {
 			}
 		];
 		for (const f of FORMATS) {
+			// a Typst equation holds its Typst
 			for (const [kind, was] of [
-				['inline_math', f.name === 'typ' ? '\\alpha^2' : '\\alpha^{2}'],
-				['block_math', '\\frac{a}{b} = c']
+				['inline_math', f.name === 'typ' ? 'alpha^2' : '\\alpha^{2}'],
+				['block_math', f.name === 'typ' ? 'a/b = c' : '\\frac{a}{b} = c']
 			]) {
 				const { placed } = await suggestTyping(f, sources[f.name], append(kind));
 				const outline = placed.ranges.find((r) => r.node);

@@ -10,14 +10,23 @@ import MathSettings from './MathSettings.svelte';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
 import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
-import { mathLatexEquivalent } from './mlEquivalent';
+import { mathUnchanged, withoutEmptySlots } from './mlEquivalent';
 import { renderEquationNumbers } from './equationNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
-import { buildMathField, releaseMathField, dropIntlBackslashBinding, type FieldListeners } from './mathFieldFactory';
+import {
+	buildMathField,
+	releaseMathField,
+	dropIntlBackslashBinding,
+	mathFormat,
+	mathSyntaxOf,
+	type FieldListeners,
+	type MathSyntax
+} from './mathFieldFactory';
 import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic';
 import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 import { mathMacros } from './mathMacros.svelte';
 import { observe } from '$lib/runes/observe.svelte';
+import { showMathMenu } from './mathMenu/showMathMenu';
 
 // reactive props stashed on the container so update() can reach the mounted component without a registry.
 type SettingsHost = {
@@ -48,6 +57,7 @@ export class MathLiveView implements NodeView {
 	private isNewlyCreated: boolean = true;
 	private exit: MathFieldExit;
 	private equationNumbersContainer?: HTMLElement;
+	private syntax: MathSyntax;
 
 	constructor(
 		node: Node,
@@ -61,6 +71,7 @@ export class MathLiveView implements NodeView {
 		this.node = node;
 		this.view = view;
 		this.getPos = getPos;
+		this.syntax = mathSyntaxOf(node);
 		this.exit = new MathFieldExit({
 			view,
 			getPos: () => this.getPos(),
@@ -92,10 +103,11 @@ export class MathLiveView implements NodeView {
 		// thousand times at load for math the reader cannot even see yet. Start with a static typeset
 		// instead (~0.4 ms, and correctly sized so nothing reflows later) and build the real field when
 		// the node nears the viewport, or the moment the caret arrives.
-		this.placeholder = renderStaticMath(node.textContent || '', isblock);
+		this.placeholder = renderStaticMath(node.textContent || '', isblock, this.syntax);
 		this.dom.appendChild(this.placeholder);
 
-		if (isblock) {
+		// markdown's $$ saves no number, label or environment, so there is nothing to set
+		if (isblock && node.type.spec.plainDisplay !== true) {
 			this.settingsContainer = document.createElement('div');
 			this.dom.appendChild(this.settingsContainer);
 			// The settings button is opacity:0 until the block is hovered or focused, so mounting the
@@ -141,7 +153,8 @@ export class MathLiveView implements NodeView {
 	 * write it back to the document.
 	 */
 	private applyMacros(): void {
-		if (!this.mathField?.isConnected) return;
+		// \newcommand is LaTeX's; a Typst document's definitions are code the field shows as such
+		if (!this.mathField?.isConnected || this.syntax === 'typst') return;
 		const macros = mathMacros.current;
 		if (Object.keys(macros).length === 0 && !this.macrosApplied) return;
 		this.macrosApplied = true;
@@ -163,14 +176,20 @@ export class MathLiveView implements NodeView {
 		this.dom.setAttribute('data-line-count', String(lineCount));
 		// typst has no live "(1)" (numbering is the template's #set rule), so a labeled
 		// equation shows its <label> where LaTeX shows the number - visible proof that it
-		// exists and is what @ offers (CSS in TypstEditorView). Optional chain: test fakes
-		// construct this view without a full state.
-		if (this.view.state?.schema?.nodes.typ_ref) this.dom.setAttribute('data-typst-label', node.attrs.label || '');
+		// exists and is what @ offers (CSS in TypstEditorView)
+		if (this.syntax === 'typst') this.dom.setAttribute('data-typst-label', node.attrs.label || '');
 	}
 
 	/** the listener set handed to buildMathField, and to releaseMathField in destroy() */
 	private fieldListeners(): FieldListeners {
-		return { input: this.forwardupdate, moveOut: this.mlkeymap, focus: this.handleFocus, blur: this.handleBlur, keydown: this.keydown };
+		return {
+			input: this.forwardupdate,
+			moveOut: this.mlkeymap,
+			focus: this.handleFocus,
+			blur: this.handleBlur,
+			keydown: this.keydown,
+			menu: this.openMenu
+		};
 	}
 
 	/** Replaces the static placeholder with a real MathfieldElement. Runs when the node nears the
@@ -180,7 +199,7 @@ export class MathLiveView implements NodeView {
 		if (this.mathField) return;
 
 		// this.node, not the constructor's node: edits can land while the placeholder is still up
-		const { field, origFocus } = buildMathField(this.node.textContent || '', this.view.editable, this.fieldListeners());
+		const { field, origFocus } = buildMathField(this.node.textContent || '', this.view.editable, this.fieldListeners(), this.syntax);
 		this.mathField = field;
 		this.origFocus = origFocus;
 
@@ -220,6 +239,29 @@ export class MathLiveView implements NodeView {
 
 		this.dom.removeEventListener('pointerenter', this.mountSettings);
 		this.dom.removeEventListener('focusin', this.mountSettings);
+	};
+
+	private openMenu = (event: MouseEvent): void => {
+		event.preventDefault();
+		event.stopPropagation();
+		const field = this.mathField;
+		if (!field) return;
+		// a menu asked for from the keyboard comes with no place of its own
+		const box = field.getBoundingClientRect();
+		const at = event.clientX || event.clientY ? { x: event.clientX, y: event.clientY } : { x: box.left, y: box.bottom };
+		const equation = {
+			view: this.view,
+			pos: this.getPos(),
+			syntax: this.syntax,
+			editable: this.view.editable && !field.readOnly,
+			openSettings: this.openSettings
+		};
+		showMathMenu(field, equation, at);
+	};
+
+	private openSettings = (): void => {
+		this.mountSettings();
+		(this.settingsComponent as { open?: () => void } | undefined)?.open?.();
 	};
 
 	/** per-line envs (align, gather) get JS-rendered line numbers, single-label ones use CSS ::after. */
@@ -262,6 +304,12 @@ export class MathLiveView implements NodeView {
 		applyMathOutline(this.host, isEmpty, this.exit.pendingDelete, focus);
 	}
 
+	/** what the field holds, as its node keeps it: a slot left empty is written as TeX reads one */
+	private contentOf(field: MathfieldElement): string {
+		const value = field.getValue(mathFormat(this.syntax));
+		return this.syntax === 'latex' ? withoutEmptySlots(value) : value;
+	}
+
 	forwardupdate() {
 		const field = this.mathField;
 		// only ever reached from the field's own listeners, so this is a type guard, not a case
@@ -281,11 +329,11 @@ export class MathLiveView implements NodeView {
 		}
 
 		const currentContent = this.node.textContent || '';
-		const newValue = field.getValue('latex-expanded');
-		// mathlive re-prints rather than preserving bytes, so a formula that was only clicked into
-		// comes back respelled. Keeping the source's spelling when the two typeset the same is what
-		// stops a stray click from rewriting the line in the .tex
-		if (!mathLatexEquivalent(currentContent, newValue)) {
+		const newValue = this.contentOf(field);
+		// mathlive re-prints LaTeX rather than preserving bytes, so a formula that was only clicked
+		// into comes back respelled. Keeping the source's spelling when the two typeset the same is
+		// what stops a stray click from rewriting the line in the .tex
+		if (!mathUnchanged(this.syntax, currentContent, newValue)) {
 			const startPos = this.getPos();
 			const endPos = startPos + this.node.nodeSize;
 
@@ -295,7 +343,7 @@ export class MathLiveView implements NodeView {
 				const nodeType = this.node.type;
 
 				// block math: re-detect the multiline env from the new content and sync attrs
-				const newAttrs = this.isblock ? syncBlockMathAttrs(this.node, newValue) : { ...this.node.attrs };
+				const newAttrs = this.isblock && this.syntax === 'latex' ? syncBlockMathAttrs(this.node, newValue) : { ...this.node.attrs };
 
 				tr.replaceWith(startPos, endPos, nodeType.create(newAttrs, this.view.state.schema.text(newValue)));
 				tr.setSelection(TextSelection.create(tr.doc, startPos + 1));
@@ -339,16 +387,14 @@ export class MathLiveView implements NodeView {
 			// reload) is reflected, and so the node keeps the right size for the scrollbar
 			if (this.placeholder) setStaticMath(this.placeholder, newText);
 		} else {
-			// compare expanded latex, same as forwardupdate()
-			const currentText = this.mathField.getValue('latex-expanded');
+			// compare in the same form as forwardupdate()
+			const currentText = this.contentOf(this.mathField);
 
 			// a respelling mathlive itself produced is not a change to push back into the field: the
 			// re-render would fire another input event and start the same round trip again
-			if (!mathLatexEquivalent(newText, currentText)) {
+			if (!mathUnchanged(this.syntax, newText, currentText)) {
 				this.updating = true;
-				this.mathField.setValue(newText, {
-					format: 'latex-expanded'
-				});
+				this.mathField.setValue(newText, { format: mathFormat(this.syntax) });
 				// mathlive fires an async input event after setValue, keep updating set until it lands
 				requestAnimationFrame(() => {
 					this.updating = false;
@@ -381,7 +427,7 @@ export class MathLiveView implements NodeView {
 	private isMathfieldEmpty(): boolean {
 		// before materialize() the node's own text is the source of truth; the field has not been
 		// built to ask, and it would hold exactly this anyway
-		return isMathLatexEmpty(this.mathField ? this.mathField.getValue('latex-expanded') : this.node.textContent || '');
+		return isMathLatexEmpty(this.mathField ? this.mathField.getValue(mathFormat(this.syntax)) : this.node.textContent || '');
 	}
 
 	keydown(event: KeyboardEvent) {

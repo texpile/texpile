@@ -9,18 +9,9 @@ import { blankLineAt, createBlockAssembly, type DocSerializeResult } from '$lib/
 import type { Segment } from '$lib/editor/visual/sourceSpans';
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Ctx } from '$lib/serializer/types';
-import {
-	escLineStart,
-	escTypst,
-	renderInline,
-	renderHeadingLine,
-	renderBody,
-	mathTypstOf,
-	typStr,
-	typstShadow,
-	isTypHandlerLeaf
-} from './typstInline';
+import { escLineStart, escTypst, renderInline, renderHeadingLine, renderBody, typStr, typstShadow, isTypHandlerLeaf } from './typstInline';
 import { cellCall, rowCells, tableBody } from './tableSerializer';
+import { endsInLineComment } from './equationClose';
 import { envSource, ownsLineEnd, type EnvBodyRender } from './envSerializer';
 import { mapToCrlf } from '$lib/editor/visual/sourceSpans';
 export { escTypst, renderInline } from './typstInline';
@@ -219,11 +210,12 @@ const NODES: Record<string, NodeHandler> = {
 	},
 
 	block_math(node) {
-		const inner = mathTypstOf(node).trim();
+		const inner = node.textContent.trim();
 		if (!inner) return '';
 		// the label rides after the closing dollar, where typst attaches it to the equation
 		const label = labelOf(node);
-		return `$ ${inner} $${label}\n\n`;
+		const close = endsInLineComment(inner) ? '\n$' : ' $';
+		return `$ ${inner}${close}${label}\n\n`;
 	},
 
 	blockquote(node) {

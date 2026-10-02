@@ -129,7 +129,8 @@ export type SkeletonResult =
 export type MainSpan = { label: string; at: number; ms: number };
 
 type NativeMenuItem =
-	{ separator: true } | { id: string; label: string; enabled?: boolean; accelerator?: string; submenu?: NativeMenuItem[] };
+	| { separator: true }
+	| { id: string; label: string; enabled?: boolean; checked?: boolean; toolTip?: string; accelerator?: string; submenu?: NativeMenuItem[] };
 
 type TexpileNative = {
 	/** answered synchronously in preload, so the first render already knows what it is opening */

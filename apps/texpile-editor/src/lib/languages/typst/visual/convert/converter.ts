@@ -19,6 +19,7 @@ import {
 	childOf,
 	rawBlock,
 	equationInner,
+	hasSyntaxError,
 	convertInline,
 	linkParts,
 	markCallParts,
@@ -28,7 +29,6 @@ import {
 	DECLARATION_KINDS,
 	EXPRESSION_KINDS
 } from './inlineConvert';
-import { typstMathToLatex } from './mathTranslate';
 import { refCallParts } from './refConvert';
 import {
 	blockSpanOf,
@@ -263,9 +263,8 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 				const after = labelNode ? j + 1 : i + 1;
 				if (isDisplayEquation(k) && buf.length === 0 && restOnlySpace(kids, after)) {
 					const inner = equationInner(k, src).trim();
-					const latex = typstMathToLatex(inner);
 					const to = (labelNode ?? k).to;
-					if (latex != null) {
+					if (inner && !hasSyntaxError(k)) {
 						const equation = buildNode(
 							'block_math',
 							{
@@ -273,16 +272,14 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 								labelGap: labelGapOf(src, k.to, labelNode),
 								numbered: false,
 								environment: null,
-								lineLabels: [],
-								typst: inner,
-								latexOrig: latex
+								lineLabels: []
 							},
-							textNodes(latex)
+							textNodes(inner)
 						);
-						// the formula stands for its bytes whole: its content is a translation, not the source
+						// the formula stands for its bytes whole
 						segs.push({ blocks: [noteSpans(equation, standsFor(1, k.from, to))], from: k.from, to });
 					} else {
-						// untranslatable: the label rides inside the raw island, still byte-exact
+						// unparseable: the label rides inside the raw island, still byte-exact
 						segs.push({ blocks: [rawBlock(src.slice(k.from, to), k.from)], from: k.from, to });
 					}
 					i = after - 1;

@@ -13,6 +13,7 @@ import { keepSavableImages, leavesOutImages, pastedImageSaving, warnImagesLeftOu
 import { looksLikeMarkdown, markdownSlice } from './markdownPaste';
 import { pasteWithoutFormatting } from './visualClipboardPaste';
 import { pasteReadingOfText } from './pasteReadingOfText';
+import { convertPastedMathHtml, schemaMathSyntax } from './pastedMath';
 
 /** reads text in the file's own language into the editor; false when the text is not in it */
 export type SourceTextPaste = (view: EditorView, text: string) => boolean;
@@ -46,7 +47,7 @@ export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSou
 			}),
 			transformPastedHTML(html) {
 				fromTexpile = isTexpileCopy(html);
-				return fromTexpile ? html : cleanPastedHtml(html);
+				return convertPastedMathHtml(fromTexpile ? html : cleanPastedHtml(html), schemaMathSyntax(schema));
 			},
 			transformPasted(slice, view, plain) {
 				leftOut = leavesOutImages(slice, dialect);

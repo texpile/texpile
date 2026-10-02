@@ -19,6 +19,10 @@
 	let { node, view, getPos }: Props = $props();
 
 	let settingsOpen = $state(false);
+
+	export function open(): void {
+		settingsOpen = true;
+	}
 </script>
 
 <div class="math-settings-container">

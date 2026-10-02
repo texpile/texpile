@@ -101,9 +101,13 @@
 	let editorView: EditorView | null = $state(null);
 
 	onMount(async () => {
-		// MathLive edits the math nodes' LaTeX content; the serializer's mathTypstOf round-trips
-		// it back to typst through MathLive's own typst serializer (see latexToTypst.ts)
-		const { mathlivePlugin, mlarrowHandlers } = await import('$lib/editor/visual/extensions/mathlivebridge/mlplugin');
+		// the math fields read and write each equation's Typst, parsed by Typst's own parser
+		const [{ mathlivePlugin, mlarrowHandlers }, { configureTypst }, { parseTypstMath }] = await Promise.all([
+			import('$lib/editor/visual/extensions/mathlivebridge/mlplugin'),
+			import('mathlive'),
+			import('texpile-typst-syntax-wasm')
+		]);
+		configureTypst({ parse: parseTypstMath });
 
 		const plugins = typstEditorPlugins({
 			mathlivePlugin,

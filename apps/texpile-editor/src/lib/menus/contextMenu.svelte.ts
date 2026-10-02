@@ -16,6 +16,8 @@ export type ContextMenuItem =
 			icon?: Component<{ class?: string }>;
 			/** shortcut hint, Kbd syntax ("Mod+C"); shown, not bound */
 			keys?: string;
+			/** a setting the item turns on and off, or one of a set; undefined for an action */
+			checked?: boolean;
 			disabled?: boolean;
 			/** drawn in the error tint: delete and the like */
 			danger?: boolean;
@@ -35,7 +37,9 @@ function accelerator(keys: string): string {
 		.join('+');
 }
 
-type NativeItem = { separator: true } | { id: string; label: string; enabled: boolean; accelerator?: string; submenu?: NativeItem[] };
+type NativeItem =
+	| { separator: true }
+	| { id: string; label: string; enabled: boolean; checked?: boolean; toolTip?: string; accelerator?: string; submenu?: NativeItem[] };
 
 /** a submenu item's id is its path, "2.3" */
 function nativeItems(items: ContextMenuItem[], path = ''): NativeItem[] {
@@ -46,6 +50,8 @@ function nativeItems(items: ContextMenuItem[], path = ''): NativeItem[] {
 					id: path + i,
 					label: it.label,
 					enabled: !it.disabled,
+					checked: it.checked,
+					toolTip: it.tip,
 					accelerator: it.keys ? accelerator(it.keys) : undefined,
 					submenu: it.submenu && nativeItems(it.submenu, path + i + '.')
 				}

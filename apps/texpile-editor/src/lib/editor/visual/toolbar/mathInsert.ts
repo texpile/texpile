@@ -31,10 +31,10 @@ export function liveMathfield(): HTMLElement | null {
 }
 
 /**
- * Insert LaTeX at the caret. Synchronous, so it can run from pointerdown before anything moves
- * focus or takes the button away.
+ * Insert LaTeX, or Typst in a Typst field, at the caret. Synchronous, so it can run from pointerdown
+ * before anything moves focus or takes the button away.
  */
-export function insertSymbol(latex: string): void {
+export function insertSymbol(source: string, format: 'latex' | 'typst' = 'latex'): void {
 	const mf = liveMathfield();
 	if (!(mf && mf instanceof window.MathfieldElement)) {
 		toaster.warning({ title: m.mathtoolbar_insert_no_field(), duration: 4000 });
@@ -59,20 +59,20 @@ export function insertSymbol(latex: string): void {
 		// mode:'math' matters because ModeEditor.insert does `options.mode ?? model.mode`, and
 		// inheriting the model's mode routes the insert to a different ModeEditor after something like
 		// \sin leaves it in LaTeX-command mode.
-		mf.executeCommand(['insert', latex, { focus: true, feedback: true, scrollIntoView: true, mode: 'math', format: 'latex' }]);
+		mf.executeCommand(['insert', source, { focus: true, feedback: true, scrollIntoView: true, mode: 'math', format }]);
 
 		if (vetoed || mf.getValue('latex') === before) {
 			console.warn('[math-toolbar] insert refused', {
-				latex,
+				source,
 				vetoed,
 				reason: vetoed ? 'a beforeinput listener called preventDefault' : 'mathlive declined it'
 			});
-			toaster.warning({ title: m.mathtoolbar_insert_failed({ latex }), duration: 4000 });
+			toaster.warning({ title: m.mathtoolbar_insert_failed({ latex: source }), duration: 4000 });
 		}
 	} catch (err) {
 		// nothing in here may fail quietly
-		console.error('[math-toolbar] insert threw', { latex, err });
-		toaster.warning({ title: m.mathtoolbar_insert_failed({ latex }), duration: 4000 });
+		console.error('[math-toolbar] insert threw', { source, err });
+		toaster.warning({ title: m.mathtoolbar_insert_failed({ latex: source }), duration: 4000 });
 	} finally {
 		mf.removeEventListener('beforeinput', watch);
 	}
