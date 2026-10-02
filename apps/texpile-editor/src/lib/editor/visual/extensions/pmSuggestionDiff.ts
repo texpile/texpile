@@ -301,6 +301,13 @@ function apart(before: PMNode, after: PMNode, stretches: DocChange[]): DocChange
 	return out;
 }
 
+// changeset compares UTF-16 units, and most emoji share their first half
+function midPair(doc: PMNode, pos: number): boolean {
+	if (pos <= 0 || pos >= doc.content.size) return false;
+	const s = doc.textBetween(pos - 1, pos + 1);
+	return s.length === 2 && /[\uD800-\uDBFF]/.test(s[0]) && /[\uDC00-\uDFFF]/.test(s[1]);
+}
+
 /**
  * the changes from `before` to `after`, widened to whole words where a word was partly replaced. Each
  * of `stretches` is compared on its own, where what lies between them reads the same on both sides
@@ -330,7 +337,11 @@ export function diffDocs(before: PMNode, after: PMNode, stretches: DocChange[] =
 		);
 		return slideToEdges(c, before, after, lo, hi);
 	});
-	return wholeWords(slid, after, compared);
+	return wholeWords(slid, after, compared).map((c) => {
+		const lead = midPair(before, c.fromA) || midPair(after, c.fromB) ? 1 : 0;
+		const tail = midPair(before, c.toA) || midPair(after, c.toB) ? 1 : 0;
+		return { fromA: c.fromA - lead, toA: c.toA + tail, fromB: c.fromB - lead, toB: c.toB + tail };
+	});
 }
 
 /** the characters of a range, one placeholder per node that is not text */

@@ -400,6 +400,14 @@ it('strikes only the Chinese word a change took, and the includes taken with it'
 	expect(doc.textBetween(typed.from, typed.to)).toBe('hello codex');
 });
 
+// most emoji share their first UTF-16 half, so the comparison saw only the second change
+it('draws an emoji replaced by another whole, not half of each', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nResults look good 😁 overall.\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [mark(source, 'emoji', '😁', '😀')]);
+	const r = ranges.find((x) => x.id === 'emoji')!;
+	expect([doc.textBetween(r.from, r.to), r.old.map((run) => run.text).join('')]).toEqual(['😁', '😀']);
+});
+
 // "end of a line leaves a wide" less "unlucky ... leaves" also reads as two cuts with the first "a" kept, and
 // did once a change in the next paragraph put both paragraphs in one comparison
 it('strikes one run of words taken out as one run, when its last word also stands after it', () => {
