@@ -10,7 +10,7 @@ import type { Segment } from '$lib/editor/visual/sourceSpans';
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Ctx } from '$lib/serializer/types';
 import { escLineStart, escTypst, renderInline, renderHeadingLine, renderBody, typStr, typstShadow, isTypHandlerLeaf } from './typstInline';
-import { cellCall, rowCells, tableBody } from './tableSerializer';
+import { cellCall, rowCells, tableBody, tableFrame } from './tableSerializer';
 import { endsInLineComment } from './equationClose';
 import { envSource, ownsLineEnd, type EnvBodyRender } from './envSerializer';
 import { mapToCrlf } from '$lib/editor/visual/sourceSpans';
@@ -390,6 +390,8 @@ function continuation(_parent: Node, text: string, head: string): string {
 
 const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx), {
 	boundary: (prev, next, contiguous) => blockGap(prev.node, next.node, contiguous, false),
+	// a table's grid is in the bytes between its cells: columns:, table.header and the commas between rows
+	frameHolds: (node, parsed) => node.type.name !== 'table' || tableFrame(node) === tableFrame(parsed),
 	mapLeaves: (node, ctx, text) => typstShadow.mapBlockLeaves(serializeTypNode, node, ctx, text),
 	continuation,
 	leafBytes,

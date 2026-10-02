@@ -61,6 +61,8 @@ export type BlockAssemblyOptions = {
 	/** in a shadow run, what stands for a child written out as its bytes inside a regenerated
 	 *  block; the bytes themselves otherwise */
 	shadowChunk?: (node: Node, bytes: string) => string;
+	/** whether a container's bytes around its children still hold for it as it is now; false writes it whole */
+	frameHolds?: (node: Node, parsed: Node) => boolean;
 	/** whether a changed child may be rendered on its own inside its container's frame; false
 	 *  for one the container's handler renders together with its frame (an item's label) */
 	spliceChild?: (parent: Node, index: number, was: Node | null) => boolean;

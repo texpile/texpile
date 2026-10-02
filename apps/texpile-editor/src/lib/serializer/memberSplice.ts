@@ -84,6 +84,7 @@ export function createMemberSplice(
 				continue;
 			}
 			if (!isContainer(node) || !node.sameMarkup(origin.node)) return null;
+			if (options.frameHolds && !options.frameHolds(node, origin.node)) return null;
 			const record = containerOriginsOf(origin.node);
 			if (!record || record.origins.length === 0) return null;
 			const parsed = record.origins;
