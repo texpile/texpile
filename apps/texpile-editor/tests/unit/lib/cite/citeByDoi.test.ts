@@ -75,7 +75,7 @@ describe('lookUpWork', () => {
 	});
 
 	it('answers from the project, without the network, for a work it already cites', async () => {
-		references.current = parseBibtex('@article{dna, doi = {10.1038/171737A0}, title = {Molecular Structure}, author = {Watson, J. D.}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{dna, doi = {10.1038/171737A0}, title = {Molecular Structure}, author = {Watson, J. D.}}\n`);
 		expect(await lookUpWork(watson, deps)).toMatchObject({ state: 'cited', key: 'dna', title: 'Molecular Structure' });
 		expect(lookup).not.toHaveBeenCalled();
 	});
@@ -98,7 +98,7 @@ describe('lookUpWork for books and PubMed records', () => {
 	});
 
 	it('finds a PubMed record the project cites by DOI once the DOI is known', async () => {
-		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}\n`);
 		pmid.mockResolvedValue({ ok: true, doi: '10.1038/171737a0' });
 		expect(await lookUpWork(parseWorkId('PMID: 13054692')!, deps)).toMatchObject({ state: 'cited', key: 'dna' });
 		expect(lookup).not.toHaveBeenCalled();
@@ -246,12 +246,21 @@ describe('citeWork', () => {
 	});
 
 	it('only cites a work the project already has', async () => {
-		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{dna, doi = {10.1038/171737a0}}\n`);
 		const before = disk.get(BIB);
 		await citeWork(await lookUpWork(watson, deps), deps);
 		expect(disk.get(BIB)).toBe(before);
 		expect(inserted).toEqual([['dna']]);
 		expect(toasts).toEqual([]);
+	});
+
+	it('adds a work the project has only in a .bib the document does not read', async () => {
+		const stray = '@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}';
+		disk.set('/paper/old/draft.bib', stray);
+		references.current = [...references.current, ...parseBibtex(stray)];
+		await citeWork(await lookUpWork(watson, deps), deps);
+		expect(parseBibtex(disk.get(BIB)!).map((r) => r.key)).toEqual(['knuth1984texbook', 'watson1953molecular']);
+		expect(inserted).toEqual([['watson1953molecular']]);
 	});
 
 	it('creates references.bib beside the main when the project has none, and says nothing reads it yet', async () => {

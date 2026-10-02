@@ -110,11 +110,7 @@ export type BibTarget = {
  * adds it to the `#bibliography` list.
  */
 export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<BibTarget> {
-	// resolved against the main file's folder: latexmk compiles with -cd, and Typst resolves
-	// #bibliography against the file that calls it (and a leading / against the project root)
-	const declared = bibPathsFromSource(mainText, deps.kind).map((rel) =>
-		deps.kind === 'typ' && rel.startsWith('/') ? joinPath(deps.root, rel.slice(1)) : joinPath(dirname(main), rel)
-	);
+	const declared = bibPathsFromSource(mainText, deps.kind).map((rel) => resolveBibPath(main, rel, deps));
 	for (const path of declared) if ((await statFile(path)).exists) return { path, undeclared: false };
 	if (declared.length) return { path: declared[declared.length - 1], undeclared: false };
 	const hayagriva = deps.kind === 'typ' ? typstBibliographyPaths(mainText)[0] : undefined;
@@ -122,6 +118,13 @@ export async function targetBib(main: string, mainText: string, deps: ZoteroInse
 	const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
 	if (preferred) return { path: preferred.path, undeclared: !!hayagriva, hayagriva };
 	return { path: joinPath(dirname(main), 'references.bib'), undeclared: true, hayagriva };
+}
+
+/** a bibliography as the main file names it, where the compile reads it */
+export function resolveBibPath(main: string, rel: string, deps: ZoteroInsertDeps): string {
+	// latexmk compiles with -cd, and Typst resolves #bibliography against the file that calls it
+	// (and a leading / against the project root)
+	return deps.kind === 'typ' && rel.startsWith('/') ? joinPath(deps.root, rel.slice(1)) : joinPath(dirname(main), rel);
 }
 
 /** a bib file the document never references compiles to nothing; say so once, loudly */
