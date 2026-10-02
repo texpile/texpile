@@ -20,35 +20,28 @@ export type AskpassRequest = {
  *  part of `Password for 'https://<user>@<host>':` read as a host it is not. */
 const GIT_HTTPS_PROMPT = /^(?:Username|Password) for '([^']*)':$/i;
 
-/** the address inside git's "Username for 'https://user@example.com:8443':". git writes the user
- *  unescaped when it does not sanitise, and a user of `github.com/` would make a URL parser read
- *  github.com as the host; the host is always what follows the last @ */
+/** the address inside git's "Username for 'https://user@example.com:8443':", or null when its host
+ *  is in doubt. git before its prompt sanitising writes the user and, with credential.useHttpPath,
+ *  the path unescaped: a user of `github.com/` makes a plain reading take github.com for the host,
+ *  and an @ in the path makes the last @ miss it. Only a host both readings agree on is named */
 function urlOfPrompt(text: string): URL | null {
 	const quoted = GIT_HTTPS_PROMPT.exec(text)?.[1];
 	const parts = quoted ? /^([a-z][a-z0-9+.-]*):\/\/(.*)$/i.exec(quoted) : null;
-	if (!parts) return null;
+	if (!quoted || !parts) return null;
 	const rest = parts[2];
 	try {
-		return new URL(`${parts[1]}://${rest.slice(rest.lastIndexOf('@') + 1)}`);
+		const url = new URL(`${parts[1]}://${rest.slice(rest.lastIndexOf('@') + 1)}`);
+		return new URL(quoted).host === url.host ? url : null;
 	} catch {
 		return null;
 	}
 }
 
 /** git asking about https://github.com itself, the one place the GitHub account may answer: not
- *  plain http (the token would cross the network in the clear) and not another port. Read as a plain
- *  address too: with credential.useHttpPath, git before its prompt sanitising writes the path
- *  unescaped, and an @ in it puts the last @ past the real host */
+ *  plain http (the token would cross the network in the clear) and not another port */
 export function isGithubHttpsPrompt(prompt: string): boolean {
-	const text = prompt.trim();
-	const url = urlOfPrompt(text);
-	if (!url || url.protocol !== 'https:' || url.hostname !== 'github.com' || url.port !== '') return false;
-	try {
-		const plain = new URL(GIT_HTTPS_PROMPT.exec(text)?.[1] ?? '');
-		return plain.hostname === 'github.com' && plain.port === '';
-	} catch {
-		return false;
-	}
+	const url = urlOfPrompt(prompt.trim());
+	return !!url && url.protocol === 'https:' && url.hostname === 'github.com' && url.port === '';
 }
 
 /**
