@@ -178,6 +178,23 @@ describe('typst math in MathLive', () => {
       expect(convertLatexToTypst(latex), latex).toBe(typst);
   });
 
+  it('writes alignat and flalign as the lines align sets, without the count of pairs', () => {
+    const cases: [string, string][] = [
+      [
+        '\\begin{alignat}{2} a &= b & c &= d \\\\ e &= f & g &= h \\end{alignat}',
+        'a & = b & c & = d \\\ne & = f & g & = h',
+      ],
+      ['\\begin{alignat*} {2} a &= b \\end{alignat*}', 'a & = b'],
+      [
+        '\\begin{flalign} a &= b \\\\ c &= d \\end{flalign}',
+        'a & = b \\\nc & = d',
+      ],
+      ['\\begin{flalign*} a &= b \\end{flalign*}', 'a & = b'],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
   it('writes the old font switches as the styles they set in math', () => {
     const cases: [string, string][] = [
       ['{\\rm d}x', 'upright(d) x'],
