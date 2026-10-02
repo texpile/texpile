@@ -386,13 +386,13 @@ async function rewrittenBy(g: SimpleGit, hash: string, where: string[]): Promise
 	return parseNameStatus(await g.raw(['diff', '--name-status', '--no-renames', '-z', hash, 'HEAD', ...where]));
 }
 
-/** Uncommitted work the restore would overwrite, and anything staged, which its commit would take
- *  along. Work in any other file stays uncommitted: a file unticked to stay on this computer must
- *  not have to be committed for a restore to go ahead (repo-relative) */
-async function restoreBlockers(g: SimpleGit, changed: GitFileChange[]): Promise<string[]> {
+/** Uncommitted work the restore would overwrite, and anything staged in the folder, which its commit
+ *  would take along. Work in any other file stays uncommitted: a file unticked to stay on this computer
+ *  must not have to be committed for a restore to go ahead (repo-relative) */
+async function restoreBlockers(g: SimpleGit, repo: RepoPaths, changed: GitFileChange[]): Promise<string[]> {
 	const rewritten = new Set(changed.map((c) => c.path));
 	const status = (await g.status(['--untracked-files=no'])).files;
-	return status.filter((f) => rewritten.has(f.path) || (f.index !== ' ' && f.index !== '?')).map((f) => f.path);
+	return status.filter((f) => rewritten.has(f.path) || (f.index !== ' ' && f.index !== '?' && repo.holds(f.path))).map((f) => f.path);
 }
 
 /** what the window has to save as a version before a restore to `hash` can go ahead (absolute) */
@@ -404,7 +404,7 @@ export async function gitRestoreInTheWay(workspaceRoot: string, hash: string): P
 	try {
 		const g = git(repo.root);
 		const where = repo.scope ? ['--', ...literal([repo.scope])] : [];
-		const blocked = await restoreBlockers(g, await rewrittenBy(g, hash, where));
+		const blocked = await restoreBlockers(g, repo, await rewrittenBy(g, hash, where));
 		return { ok: true, files: blocked.map((rel) => repo.fromGit(rel)) };
 	} catch (e) {
 		if (isMissingGit(e)) return { ok: false, reason: 'no-git' };
@@ -423,7 +423,7 @@ export async function gitRestore(workspaceRoot: string, hash: string, message: s
 		const where = repo.scope ? ['--', ...literal([repo.scope])] : [];
 		const changed = await rewrittenBy(g, hash, where);
 		if (!changed.length) return { ok: false, failure: 'same', error: 'That version matches the current one.' };
-		const blocked = await restoreBlockers(g, changed);
+		const blocked = await restoreBlockers(g, repo, changed);
 		if (blocked.length) return { ok: false, error: 'Save a version first: there are unsaved changes.' };
 
 		// a file git does not track now, at a name that version has: checkout would replace it without
@@ -458,7 +458,10 @@ export async function gitRestore(workspaceRoot: string, hash: string, message: s
 			await undoRestore(g, done);
 			throw e;
 		}
-		await commitOrFail(g, ['-m', message]);
+		// as Save version: what is staged outside the folder stays staged, out of this version
+		const only = await onlyInFolder(g, repo);
+		if (!only) await commitOrFail(g, ['-m', message]);
+		else await runWithPathspecs(only, (pathspecArgs) => commitOrFail(g, ['-m', message, '--only', ...pathspecArgs]));
 		return { ok: true };
 	} catch (e) {
 		if (isMissingGit(e)) return { ok: false, reason: 'no-git' };
