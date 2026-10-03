@@ -59,5 +59,8 @@ export default defineConfig({
     include: ['test/**/*.test.ts'],
     globalSetup: ['test/bundle.ts'],
     server: { deps: { inline: ['texpile-typst-syntax-wasm'] } },
+    // the Typst typing test drives a whole mathfield; at vitest's 5s default a loaded machine
+    // failed it, which reads as a code failure
+    testTimeout: 30_000,
   },
 });
