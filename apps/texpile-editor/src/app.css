@@ -155,8 +155,9 @@ html.window-glass .cm-gutters {
 html.window-glass .cm-editor:has(.cm-lineWrapping) .cm-gutters {
 	background-color: transparent;
 }
-/* xterm fills its own viewport from a colour read off the page's root, which stays solid */
-html.window-glass .xterm .xterm-viewport {
+/* xterm fills its own viewport from a colour read off the page's root, which stays solid; xterm 6 also writes it
+   inline on the scrollable wrapper */
+html.window-glass .xterm :is(.xterm-viewport, .xterm-scrollable-element) {
 	background-color: transparent !important;
 }
 /* everything that floats carries a step of the z-index scale below, sits in a Zag positioner, or names its role.
