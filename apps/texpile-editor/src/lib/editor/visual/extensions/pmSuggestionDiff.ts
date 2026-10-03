@@ -75,7 +75,7 @@ function wholeWords(changes: readonly DocChange[], before: PMNode, doc: PMNode, 
 		while (i + 1 < changes.length) {
 			const gapFrom = changes[i].toB;
 			const gapTo = changes[i + 1].fromB;
-			if (gapFrom < gapTo && !wordOver(doc, gapFrom - 1, gapTo)) break;
+			if (gapFrom < gapTo && (gapFrom === 0 || !wordOver(doc, gapFrom - 1, gapTo))) break;
 			if (stretchOf(changes[i + 1]) !== stretch) break;
 			if (onlyBreaks(changes[i], before, doc) || onlyBreaks(changes[i + 1], before, doc)) break;
 			i++;

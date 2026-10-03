@@ -596,6 +596,19 @@ it('strikes two cuts that meet inside a footnote as words, the footnote whole wi
 	]);
 });
 
+it('draws a heading taken out at the start of the body beside words typed further on', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nThe first paragraph.\n\nA second one|x here.\n\\end{document}\n';
+	const { ranges, partial, hidden } = placed(source, [
+		mark(source, 'heading', '', '\\section{Probe}\n', source.indexOf('The first')),
+		mark(source, 'typed', '|x', '')
+	]);
+	expect([...partial, ...hidden]).toEqual([]);
+	expect(ranges.map((r) => [r.id, r.gone?.blocks.map((b) => b.textContent) ?? r.old.map((run) => run.text)])).toEqual([
+		['heading', ['Probe']],
+		['typed', []]
+	]);
+});
+
 it('draws a replacement to its own edges, not the letters typed against it', () => {
 	for (const source of ['\\begin{document}\nThe quickx fox.\n\\end{document}\n', '\\begin{document}\nThe xquick fox.\n\\end{document}\n']) {
 		const { doc, ranges } = placed(source, [mark(source, 's', 'quick', 'lazy')]);
