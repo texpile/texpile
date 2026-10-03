@@ -30,12 +30,12 @@ export function escMd(str: string, startOfLine = false, inTableCell = false): st
 }
 
 /** inline code with a backtick fence longer than any run inside, padded when the ends collide
- *  or when the parser would otherwise strip the span's own edge spaces (markdown-it strips one
- *  from each end of any span of three or more characters that starts and ends with a space) */
+ *  or when the parser would otherwise strip the span's own edge spaces (CommonMark strips one
+ *  from each end of a span that starts and ends with a space, unless it is nothing but spaces) */
 export function codeSpan(text: string, inTableCell = false): string {
 	const runs = text.match(/`+/g);
 	const fence = '`'.repeat(runs ? Math.max(...runs.map((r) => r.length)) + 1 : 1);
-	const spaced = text.startsWith(' ') && text.endsWith(' ') && text.length >= 3;
+	const spaced = text.startsWith(' ') && text.endsWith(' ') && /[^ ]/.test(text);
 	const pad = text.startsWith('`') || text.endsWith('`') || spaced ? ' ' : '';
 	const body = inTableCell ? text.replace(/\n/g, ' ').replace(/\|/g, '\\|') : text;
 	return fence + pad + body + pad + fence;
