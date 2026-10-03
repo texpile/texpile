@@ -319,6 +319,8 @@ export function createCitation(macro: Macro): PmNode[] {
 export type EnvHandler = (env: Environment, ctx: ConversionContext, options: ConversionOptions) => PmNode[];
 
 export function createRef(macro: Macro, refType: string | null): PmNode[] {
+	// \ref* prints the number without a link, which the chip has no word for
+	if (macroHasStar(macro)) return [buildNode('inline_latex', null, [rawTextNode(nodeRawSpan(macro), printRaw(macro))])];
 	const mandatoryArgs = macro.args?.filter((arg) => arg.openMark === '{') || [];
 	// a name with structure in it keeps its source, the way \label's does: flattening dropped the
 	// delimiters from \ref{Remark:$ethf$} and saved a reference that no longer matched its label

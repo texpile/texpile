@@ -48,6 +48,13 @@ describe('a starred citation', () => {
 	);
 });
 
+describe('a starred reference', () => {
+	// hyperref's \ref* prints the number without the link; the chip wrote it back linked
+	it('is written back as it was', () => {
+		expect(rt('See \\ref*{fig:a} here.')).toBe('See \\ref*{fig:a} here.');
+	});
+});
+
 describe('commands whose output only the preamble knows', () => {
 	// \autoref and \cref take their word from \figurename or \crefname, \pageref needs a page
 	// number that exists only after layout, and \footcite does not appear inline at all
