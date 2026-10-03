@@ -61,7 +61,12 @@ export function restoreVisualPosition(v: EditorView, path: string, source: strin
 		v.dispatch(v.state.tr.scrollIntoView().setMeta('addToHistory', false));
 		// a jump's landing gets the amber the SyncTeX and mode-switch flashes use: the reader sees
 		// that the view moved, instead of wondering whether the click did anything
-		if (jumped && selection.$head.depth > 0) flashNodeAt(v, selection.$head.before(1));
+		// the block the jump named, not the one the caret had to settle in beside it (a formula holds no caret)
+		if (jumped) {
+			const named = $target.depth > 0 ? $target.before(1) : $target.nodeAfter ? $target.pos : null;
+			if (named !== null) flashNodeAt(v, named);
+			else if (selection.$head.depth > 0) flashNodeAt(v, selection.$head.before(1));
+		}
 	} catch {
 		/* the document moved under a stored position; leave the caret where it mounted */
 	}
