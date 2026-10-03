@@ -317,6 +317,8 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 	let code = '';
 	// a // comment owns the rest of its line: the next emission starts a new one
 	let lineEnd = false;
+	// where a /* */ comment ended: its closing slash pairs with nothing after it
+	let blockEnd = -1;
 	// the last run written that was not whitespace alone, and where it ended
 	let solid: { run: InlineRun; end: number } | null = null;
 
@@ -348,7 +350,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		if (escapable && /^[\p{L}\p{N}\p{M}\p{Pc}-]/u.test(piece) && /(^|[^\\])(\\\\)*@$/.test(out)) piece = '\\' + piece;
 		// an emphasis delimiter is an identifier character to a reference: the `@` before it is escaped instead
 		if (!escapable && /^[_*]/.test(piece) && /(^|[^\\])(\\\\)*@$/.test(out)) out = out.slice(0, -1) + '\\@';
-		if (/^[/*]/.test(piece) && /(^|[^\\])(\\\\)*\/$/.test(out)) out = out.slice(0, -1) + '\\/';
+		if (/^[/*]/.test(piece) && out.length !== blockEnd && /(^|[^\\])(\\\\)*\/$/.test(out)) out = out.slice(0, -1) + '\\/';
 		else if (piece.startsWith('/') && /(^|[^\\])(\\\\)*\*$/.test(out)) piece = (escapable ? '\\' : ' ') + piece;
 		out += piece;
 	}
@@ -444,6 +446,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		emit(content, run.kind === 'text');
 		if (content.trim()) solid = { run, end: out.length };
 		if (run.kind === 'other' && /^https?:\/\/\S+$/.test(content)) urlEnd = out.length;
+		if (run.kind === 'other' && /^\/\*[\s\S]*\*\/$/.test(content)) blockEnd = out.length;
 		if (run.kind === 'other' && content.startsWith('#')) {
 			codeEnd = out.length;
 			code = content;

@@ -39,3 +39,13 @@ describe('text written out reads back as the same characters', () => {
 		expect(typstToProseMirror(out).doc.child(0).textContent).toBe('Then 3… more');
 	});
 });
+
+describe('a block comment written out with the text after it', () => {
+	it('keeps its closing slash, a star or a slash after it', () => {
+		for (const src of ['Some /* note */*bold* text.\n', 'Some /* note *//x text.\n']) {
+			const doc = typstToProseMirror(src).doc;
+			const out = serializeToTypst(doc);
+			expect(typstToProseMirror(out).doc.toString(), out).toBe(doc.toString());
+		}
+	});
+});
