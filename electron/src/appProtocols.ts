@@ -85,27 +85,35 @@ function fileStream(file: string, range?: { start: number; end: number }): Reada
 	return Readable.toWeb(fs.createReadStream(file, range)) as unknown as ReadableStream;
 }
 
+function under(p: string, root: string): boolean {
+	const n = normRoot(p);
+	const rn = normRoot(root);
+	return n === rn || n.startsWith(rn + path.sep);
+}
+
 // protocol.handle can't see which window sent the request, so the confinement is the union of
 // live claimed roots. realpath both sides: a symlink inside the root must not escape it.
 async function insideClaimedRoot(p: string): Promise<boolean> {
+	const roots: { raw: string; real: string }[] = [];
+	for (const r of windowRoots.values()) {
+		if (!r) continue;
+		// a lone file's window reads beside it too: the images its document shows
+		const raw = r.file ? path.dirname(r.raw) : r.raw;
+		try {
+			roots.push({ raw, real: await fs.promises.realpath(raw) });
+		} catch {
+			/* root vanished (unmounted drive): claim is dead, keep looking */
+		}
+	}
+	// as written first: a path outside them is never touched, and on Windows touching a UNC path dials its server
+	if (!roots.some((root) => under(p, root.raw) || under(p, root.real))) return false;
 	let real: string;
 	try {
 		real = await fs.promises.realpath(p);
 	} catch {
 		return false; // missing file: the handler would 404 anyway
 	}
-	const n = normRoot(real);
-	for (const r of windowRoots.values()) {
-		if (!r) continue;
-		try {
-			// a lone file's window reads beside it too: the images its document shows
-			const rn = normRoot(await fs.promises.realpath(r.file ? path.dirname(r.raw) : r.raw));
-			if (n === rn || n.startsWith(rn + path.sep)) return true;
-		} catch {
-			/* root vanished (unmounted drive): claim is dead, keep looking */
-		}
-	}
-	return false;
+	return roots.some((root) => under(real, root.real));
 }
 
 export function registerProtocolHandlers(): void {
