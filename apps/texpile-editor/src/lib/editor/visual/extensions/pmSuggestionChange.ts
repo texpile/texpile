@@ -151,7 +151,10 @@ export function placeChange(
 		// is that block's own edge, so a block taken out of an item stands in the item
 		const edge =
 			inline || !$from.parent.isTextblock || $from.depth === 0 ? from : $from.parentOffset === 0 ? $from.before() : $from.after();
-		ranges.push({ ...base, from: edge, to: edge, gone: old.gone });
+		// words cut from the start of the block after a join, with nothing of the block before it, stood in that block
+		const into = !$from.parent.isTextblock && !old.gone.head.length && old.gone.tail.length ? textblockBeside(doc, from, 1) : null;
+		const at = into === null ? edge : into + 1;
+		ranges.push({ ...base, from: at, to: at, gone: old.gone });
 	}
 	if (newText !== '' || old.runs.length) {
 		const format = newText !== '' && newText === oldText;

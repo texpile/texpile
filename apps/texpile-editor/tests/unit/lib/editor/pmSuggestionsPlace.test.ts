@@ -609,6 +609,22 @@ it('draws a heading taken out at the start of the body beside words typed furthe
 	]);
 });
 
+// one suggestion: the formula edited and the start of the paragraph after it cut, whose words stood in that paragraph
+it('strikes words cut from the start of the paragraph after a changed formula in that paragraph', () => {
+	const source =
+		'\\documentclass{article}\n\\begin{document}\nBefore the display\n\\[\na^2 = c^2 = 0\n\\]\nwords to finish.\n\\end{document}\n';
+	const at = source.indexOf(' = 0');
+	const { doc, ranges } = placed(source, [
+		mark(source, 'm', source.slice(at, source.indexOf('words')), '\n\\]\nafter the display ordinary ', at)
+	]);
+	const gone = ranges.find((r) => r.gone)!;
+	expect([doc.resolve(gone.from).parent.textContent, doc.resolve(gone.from).parentOffset, gone.gone!.tail.map((run) => run.text)]).toEqual([
+		'words to finish.',
+		0,
+		['after the display ordinary ']
+	]);
+});
+
 it('draws a replacement to its own edges, not the letters typed against it', () => {
 	for (const source of ['\\begin{document}\nThe quickx fox.\n\\end{document}\n', '\\begin{document}\nThe xquick fox.\n\\end{document}\n']) {
 		const { doc, ranges } = placed(source, [mark(source, 's', 'quick', 'lazy')]);
