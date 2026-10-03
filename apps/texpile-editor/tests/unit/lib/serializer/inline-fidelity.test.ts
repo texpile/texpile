@@ -26,7 +26,7 @@ describe('inline fidelity', () => {
 		expect(marks('{\\sethlcolor{green}\\hl{b}}')).toEqual([['highlight', 'green']]);
 	});
 
-	it('\\colorbox stays \\colorbox, model and all, not soul\'s \\hl', () => {
+	it("\\colorbox stays \\colorbox, model and all, not soul's \\hl", () => {
 		expect(rt('a \\colorbox{yellow}{b} c')).toContain('a \\colorbox{yellow}{b} c');
 		expect(rt('a \\colorbox[rgb]{1,0.9,0}{b} c')).toContain('a \\colorbox[rgb]{1,0.9,0}{b} c');
 	});
