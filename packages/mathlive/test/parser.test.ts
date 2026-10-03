@@ -16,3 +16,11 @@ describe('a double prime', () => {
     );
   });
 });
+
+describe('a group under a style set around it', () => {
+  // the group was written back as its own bytes, which hold neither style
+  it('keeps the style when written back', () => {
+    expect(reread('\\color{red}{x}')).toBe('\\textcolor{red}{{x}}');
+    expect(reread('\\mathbf{a{b}c}')).toBe('\\mathbf{a{b}c}');
+  });
+});

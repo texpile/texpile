@@ -1032,6 +1032,8 @@ export class Parser {
     if (body.length === 1 && body[0].type === 'placeholder') return body[0];
 
     const result = new GroupAtom(body, this.parseMode);
+    // a style set around the group (`\color{red}{x}`) is not in its own bytes, so the group carries it
+    result.style = { ...this.style };
     result.verbatimLatex = tokensToString(
       this.tokens.slice(initialIndex, this.index)
     );
