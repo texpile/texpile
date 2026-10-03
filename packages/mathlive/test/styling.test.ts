@@ -56,6 +56,22 @@ describe('the html commands in a formula', () => {
     }
   });
 
+  it('keep the url of a link whose body is edited', () => {
+    const latex = '\\href{https://example.org}{x}';
+    const probe = field(latex);
+    const last = probe.lastOffset;
+    probe.remove();
+    for (let offset = 0; offset <= last; offset++) {
+      const mf = field(latex);
+      mf.position = offset;
+      mf.insert('y');
+      expect(mf.getValue('latex'), String(offset)).toContain(
+        '\\href{https://example.org}{'
+      );
+      mf.remove();
+    }
+  });
+
   it('open no link when the field is clicked', () => {
     const opened = vi.spyOn(window, 'open').mockReturnValue(null);
     const mf = field('\\href{https://evil.example}{x}');

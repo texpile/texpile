@@ -703,6 +703,9 @@ defineFunction(['style', 'htmlStyle'], '{data:string}{content:auto*}', {
 defineFunction('href', '{url:string}{content:auto*}', {
   createAtom: (options: CreateAtomOptions<[string | null, Argument | null]>) =>
     new Atom({ ...options, type: 'mord', body: argAtoms(options.args![1]) }),
+  // the url is the source's own, not a style: it stays when the link's body is edited
+  serialize: (atom, options) =>
+    `\\href{${(atom.args![0] as string) ?? ''}}{${atom.bodyToLatex(options)}}`,
   render: (atom, context) => {
     const box = atom.createBox(context);
     const href = (atom.args![0] as string) ?? '';
