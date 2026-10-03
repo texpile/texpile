@@ -144,7 +144,7 @@ export function typstJobName(main: string | null): string {
 export function buildTypstCommand(main: string | null, outDir = 'output'): string {
 	const job = typstJobName(main);
 	const dir = outDir && outDir !== '.' ? `${outDir.replace(/\\/g, '/').replace(/\/+$/, '')}/` : '';
-	return `tinymist compile --root . {main} ${dir}${job}.pdf 2>${dir}${job}.log`;
+	return `tinymist compile --root . {main} ${shellWord(`${dir}${job}.pdf`)} 2>${shellWord(`${dir}${job}.log`)}`;
 }
 
 /** Absolute PDF path for a Typst command: the explicit output, else typst's own default. */

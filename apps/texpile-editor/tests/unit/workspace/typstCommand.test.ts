@@ -123,6 +123,13 @@ describe('buildTypstCommand', () => {
 		expect(typstLogArg(cmd)).toBe('output/paper.log');
 		expect(typstOutDir(cmd)).toBe('output');
 	});
+
+	it('keeps a main file named with shell syntax one argument of the command line', () => {
+		const cmd = buildTypstCommand('/proj/a;touch pwned;.typ');
+		expect(cmd).toBe("tinymist compile --root . {main} 'output/a;touch pwned;.pdf' 2>'output/a;touch pwned;.log'");
+		expect(typstPdfArg(cmd)).toBe('output/a;touch pwned;.pdf');
+		expect(typstLogArg(cmd)).toBe('output/a;touch pwned;.log');
+	});
 });
 
 describe('typstJobName', () => {
