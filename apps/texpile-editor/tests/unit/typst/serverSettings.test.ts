@@ -5,7 +5,7 @@
 // their defaults), so the assertion that matters is that every push carries every setting.
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { flushSync } from 'svelte';
-import { exportTypstPdf, stopTypstClient, typstClient } from '$lib/languages/typst/intellisense/lspClient';
+import { stopTypstClient, typstClient, typstClientForExport } from '$lib/languages/typst/intellisense/lspClient';
 import { mainFile } from '$lib/workspace/workspaceStore';
 
 type Msg = { id?: number; method?: string; params?: { settings?: Record<string, unknown>; command?: string; arguments?: unknown[] } };
@@ -70,11 +70,11 @@ describe('tinymist settings', () => {
 
 	it('keeps the formatter and the lints in the push an export makes', async () => {
 		await typstClient('/p');
-		await exportTypstPdf('/p', '/p/main.typ', 'build');
+		await typstClientForExport('/p', '/out/thesis');
 		expect(pushes().at(-1)).toEqual({
 			formatterMode: 'typstyle',
 			lint: { enabled: true, when: 'onType' },
-			outputPath: '$root/build/$name'
+			outputPath: '/out/thesis'
 		});
 	});
 

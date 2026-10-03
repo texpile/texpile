@@ -29,7 +29,6 @@
 		draft: DraftController;
 		typstPreviewHost: string | null;
 		typstPreviewWanted: boolean;
-		onSaveTypstPdf: () => Promise<void>;
 		onPdfRef: (ref: { scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number) => void } | undefined) => void;
 		/** the popup is gone - closed by the user, or never opened; the caller re-docks the pane */
 		onClosed: () => void;
@@ -48,7 +47,6 @@
 		draft,
 		typstPreviewHost,
 		typstPreviewWanted,
-		onSaveTypstPdf,
 		onPdfRef,
 		onClosed,
 		onPageClick,
@@ -144,9 +142,6 @@
 				},
 				get typstPreviewWanted() {
 					return typstPreviewWanted;
-				},
-				get onSaveTypstPdf() {
-					return onSaveTypstPdf;
 				},
 				// no splitter can drag over this window, so the freeze never engages
 				paneDragging: false,

@@ -235,7 +235,7 @@
 		     included - so this reads as another piece of chrome rather than prose shoving the document
 		     down. Its rule is an inset shadow, as on the two below and diff/DiffPane.svelte's bars. -->
 		<div
-			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
+			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under"
 			use:tip={m.texpile_managed_note()}
 		>
 			<Info class="text-primary-ink size-3.5 shrink-0" />
@@ -243,10 +243,7 @@
 		</div>
 	{/if}
 	{#if loadedPath && encodingIssue}
-		<div
-			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-			use:tip={encodingIssue}
-		>
+		<div class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under" use:tip={encodingIssue}>
 			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />
 			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
 		</div>
@@ -258,7 +255,7 @@
 	     because it recreates the old name rather than following the rename -->
 	{#if loadedPath && fileDeleted && !comparing}
 		<div
-			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
+			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under"
 			use:tip={m.wsview_file_deleted_note()}
 		>
 			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />

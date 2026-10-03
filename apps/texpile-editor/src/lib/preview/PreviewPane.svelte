@@ -33,8 +33,6 @@
 		 * preview is being prepared - that flash is jarring and looks like a bug.
 		 */
 		typstPreviewWanted: boolean;
-		/** compile the previewed document to a PDF on disk (the preview itself never writes one) */
-		onSaveTypstPdf: () => Promise<void>;
 		/** one-shot jump of the preview to the editor caret; null hides the floating sync button */
 		onSyncToCursor?: (() => void) | null;
 		/** move the preview into its own OS window; undefined hides the chip */
@@ -63,7 +61,6 @@
 		draft,
 		typstPreviewHost,
 		typstPreviewWanted,
-		onSaveTypstPdf,
 		onSyncToCursor = null,
 		onPopout = null,
 		paneDragging,
@@ -121,7 +118,6 @@
 		{draft}
 		{typstPreviewHost}
 		{typstPreviewWanted}
-		{onSaveTypstPdf}
 		{paneDragging}
 		{onPopout}
 		onPdfRef={(r) => (pdfPaneRef = r)}

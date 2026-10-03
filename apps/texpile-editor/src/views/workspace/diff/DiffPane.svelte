@@ -52,9 +52,7 @@
 	     level with the PDF toolbar across the split instead of a few pixels short of it. Its rule is an
 	     inset shadow, not a border, as under the editor's top bar: a border leaves 39px inside, and the
 	     icon centred in that starts half a pixel down, where it and its label round apart -->
-	<div
-		class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-	>
+	<div class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under">
 		<GitCompare class="size-3.5 shrink-0" />
 		<span class="cap-center font-medium">{m.wsview_diff_since()}</span>
 		<!-- naming the version matters more than the word "diff" once this can point at any of them -->
@@ -114,10 +112,7 @@
 		     places anyone ever meets it. -->
 		<!-- same 40px bar as the editor's, so meeting this file in a diff and meeting it in the editor
 		     look like the same notice -->
-		<div
-			class="text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-			use:tip={m.texpile_managed_note()}
-		>
+		<div class="text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under" use:tip={m.texpile_managed_note()}>
 			<Info class="text-primary-ink size-3.5 shrink-0" />
 			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
 		</div>

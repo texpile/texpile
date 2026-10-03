@@ -33,8 +33,13 @@
 </div>
 
 <div class={ROW}>
-	<label class="flex items-center gap-2 text-sm font-medium">
-		<input type="checkbox" class="checkbox" checked={options.pdfUa} onchange={(e) => onchange({ pdfUa: e.currentTarget.checked })} />
+	<label class="flex cursor-pointer items-center gap-1.5 text-sm font-medium">
+		<input
+			type="checkbox"
+			class="checkbox scale-75"
+			checked={options.pdfUa}
+			onchange={(e) => onchange({ pdfUa: e.currentTarget.checked })}
+		/>
 		{m.typst_export_pdf_ua()}
 	</label>
 	{#if uaConflicts(options)}
@@ -45,10 +50,10 @@
 </div>
 
 <div class={ROW}>
-	<label class="flex items-center gap-2 text-sm font-medium">
+	<label class="flex cursor-pointer items-center gap-1.5 text-sm font-medium">
 		<input
 			type="checkbox"
-			class="checkbox"
+			class="checkbox scale-75"
 			checked={options.pdfTagged || forcedTags}
 			disabled={forcedTags}
 			onchange={(e) => onchange({ pdfTagged: e.currentTarget.checked })}

@@ -14,6 +14,7 @@
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
+	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { PatchReq } from './patch/patch.types';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
@@ -33,6 +34,10 @@
 		onSettled?: () => void;
 		/** a compile landed: its log is at this path, for the Problems panel to parse. */
 		onDiagnostics?: (logPath: string) => void;
+		/** Save PDF: the buffer on disk and no debounced pass pending, before its own full pass. */
+		settleEdits?: () => Promise<void>;
+		/** the preview is paused and its engine stopped; a pass it still runs stops the engine again */
+		paused?: boolean;
 		/** docked in the pane, where this row stands in for a tab strip; false in the popped-out window */
 		asTabStrip?: boolean;
 		/** move the preview into its own window; null in the popped-out body, which needs no button */
@@ -46,6 +51,8 @@
 		onInverseSync,
 		onSettled,
 		onDiagnostics,
+		settleEdits,
+		paused = false,
 		asTabStrip = true,
 		onPopout = null
 	}: Props = $props();
@@ -55,7 +62,9 @@
 		mainFile: () => mainFile,
 		onInverseSync: () => onInverseSync,
 		onSettled: () => onSettled,
-		onDiagnostics: () => onDiagnostics
+		onDiagnostics: () => onDiagnostics,
+		settleEdits: () => settleEdits,
+		paused: () => paused
 	});
 	const vp = ctrl.vp;
 	const compiler = ctrl.compiler;
@@ -228,6 +237,7 @@
 			{ id: 'save', render: save }
 		]}
 	/>
+	<ProgressLine active={ctrl.savingPdf && compiler.compiling} label={m.draft_status_compiling_export()} />
 	{#if compiler.busyElsewhere}
 		<div
 			class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded-container border p-3 text-sm"

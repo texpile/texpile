@@ -216,7 +216,7 @@ const serverSettings: {
 	 * `onSave` default the checks would never run at all.
 	 */
 	lint: { enabled: boolean; when: 'onType' };
-	/** where exportPdf writes; set per export (see exportTypstPdf) */
+	/** where an export writes; set per export (see typstClientForExport) */
 	outputPath?: string;
 } = { formatterMode: 'typstyle', lint: { enabled: true, when: 'onType' } };
 
@@ -432,45 +432,17 @@ export async function renameTypstSymbol(
 }
 
 /**
- * Compile the document and write it out as a PDF, returning the written file's absolute path.
- *
- * `tinymist.exportPdf` is the same command tinymist's VS Code extension binds its Export PDF
- * button to. Like the preview, it renders the server's IN-MEMORY document - no save needed.
- * Errors propagate: unlike a follow scroll, a failed export is something the user asked for and
- * must hear about.
- *
- * `outDir` is the ROOT-RELATIVE directory to write into - pass the folder's build directory so
- * this lands where Compile would have put it, not tinymist's default of "next to the entry
- * file". It has to travel as configuration: where to write is the server-level `outputPath`
- * pattern, and the export command has no per-call override. Pushed before every export;
- * idempotent, and the request that follows it on the same pipe is what reads it.
- */
-export async function exportTypstPdf(root: string | null, file: string, outDir?: string | null): Promise<string | null> {
-	const client = await typstClient(root);
-	if (!client) return null;
-	const dir = (outDir ?? '').replace(/\\/g, '/').replace(/\/+$/, '');
-	const pattern = dir && dir !== '.' ? `$root/${dir}/$name` : '$root/$dir/$name';
-	serverSettings.outputPath = pattern;
-	pushSettings(client);
-	client.sync(); // the last keystrokes may still be waiting on a sync debounce
-	const res = await client.request<{ command: string; arguments: unknown[] }, { path?: string | null } | null>('workspace/executeCommand', {
-		command: 'tinymist.exportPdf',
-		arguments: [file]
-	});
-	return res?.path ?? null;
-}
-
-/**
  * The client, with tinymist told to write the next export to `outputPath` and sent the newest text,
- * for the Export dialog (languages/typst/export), whose own request follows. Where to write travels
- * as configuration for the reason exportTypstPdf gives. Null without a server.
+ * for an export (languages/typst/export), whose own request follows. Where to write travels as
+ * configuration: it is the server-level `outputPath` pattern, and the export commands have no
+ * per-call override. Null without a server.
  */
 export async function typstClientForExport(root: string | null, outputPath: string): Promise<LSPClient | null> {
 	const client = await typstClient(root);
 	if (!client) return null;
 	serverSettings.outputPath = outputPath;
 	pushSettings(client);
-	client.sync(); // as exportTypstPdf: the last keystrokes may still be waiting on a sync debounce
+	client.sync(); // the last keystrokes may still be waiting on a sync debounce
 	return client;
 }
 

@@ -238,8 +238,6 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	},
 	/** Save the live preview's reconcile PDF via a save dialog -> { saved, path? }. */
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => invokeFs('draft:savePdf', body),
-	/** Save an already-produced PDF via a save dialog -> { saved, path? }. */
-	savePdfAs: (body: { src: string; defaultPath: string; to?: string }) => invokeFs('shell:savePdfAs', body),
 	/** Save PDF bytes the viewer holds (a guest has no file on disk) -> { saved, path? }. */
 	savePdfBytes: (body: { bytes: Uint8Array; defaultName: string; to?: string }) => invokeFs('shell:savePdfBytes', body),
 	/** Ask where a Typst export goes (a file to save, or a folder for its pages) -> the path, or null. */

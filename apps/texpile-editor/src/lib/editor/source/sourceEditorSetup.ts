@@ -13,7 +13,7 @@ import {
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap, history, historyKeymap, indentWithTab, redo } from '@codemirror/commands';
-import { bracketMatching, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
+import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { searchKeymap } from '@codemirror/search';
@@ -50,9 +50,12 @@ import { cmChangeMarkers } from './cmChangeMarkers';
 import { sourcePaste } from './paste/cmSourcePaste';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 import { dirname } from '$lib/workspace/fileSystem';
+import { foldMemory } from './extensions/fold-memory/foldMemory';
 
 export type SourceSetupDeps = {
 	fileFor: string;
+	/** the file whose folds are remembered, as its place is; none in a shared session, where neither is ours */
+	foldsOf?: string | null;
 	collab: CollabBinding | null;
 	undoManager: Y.UndoManager | null;
 	langConf: Compartment;
@@ -103,6 +106,9 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// saved version's text arrives
 		...(deps.readOnly ? [] : [cmChangeMarkers()]),
 		gutterTheme,
+		// middle dots, which the monospace fonts carry, each centered in its cell; a ⋯ falls back to a font set off center
+		codeFolding({ placeholderText: '···' }),
+		...(deps.foldsOf ? [foldMemory(deps.foldsOf)] : []),
 		highlightActiveLine(),
 		...(collab
 			? [yCollab(collab.ytext, collab.awareness, { undoManager: deps.undoManager! }), yRemoteLayoutFix]
@@ -140,7 +146,15 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
 				? // md chords; $-math, spellcheck and project file paths are dialect-free
-					[mdSourceShortcuts(), mdPathCompletion(), mathPreview(), cmSpellcheck()]
+					// the fold rail as .tex and .typ have it; lang-markdown already folds a heading's section
+					[
+						mdSourceShortcuts(),
+						mdPathCompletion(),
+						mathPreview(),
+						cmSpellcheck(),
+						foldGutter({ markerDOM: foldMarkerDom }),
+						foldMarkerTheme
+					]
 				: /\.bib$/i.test(fileFor)
 					? [latexAutocomplete({ bib: true })]
 					: /\.typ$/i.test(fileFor)

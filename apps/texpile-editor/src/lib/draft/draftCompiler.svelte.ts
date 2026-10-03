@@ -14,6 +14,8 @@ type CompilerHooks = {
 	applyCompiled: (r: any) => Promise<void>;
 	/** compile settled (either way): reconcile bookkeeping, queued edits, diagnostics */
 	afterCompile: () => void;
+	/** the preview is paused, its engine stopped */
+	paused: () => boolean;
 	emit: (kind: string, detail?: unknown) => void;
 };
 
@@ -29,6 +31,7 @@ export class DraftCompiler {
 
 	private warmed = false;
 	private compileToken = 0;
+	private newest: Promise<boolean | null> | null = null;
 	// what asked for the pass, for the landed status: an abandon names its refusal
 	lastReason = '';
 
@@ -95,15 +98,34 @@ export class DraftCompiler {
 		});
 	}
 
-	async compile(reason = 'trigger'): Promise<void> {
+	/** true when the pass landed pages, false when it failed or never ran, null when a newer pass superseded it */
+	compile(reason = 'trigger'): Promise<boolean | null> {
 		const n = nativeBridge();
-		if (!n || !this.hooks.root() || !this.hooks.mainFile()) return;
-		if (this.busyElsewhere) return; // paused: don't fight the owning window on every trigger
+		if (!n || !this.hooks.root() || !this.hooks.mainFile()) return Promise.resolve(false);
+		if (this.busyElsewhere) return Promise.resolve(false); // paused: don't fight the owning window on every trigger
 		// cancel-on-supersede: don't queue behind an in-flight compile -- fire a fresh one. The
 		// service kills the older run's lualatex, so a hung/slow compile never blocks the latest
 		// edit (else the 120s pass timeout would freeze the preview). This run drops its own
 		// result if a still-newer compile started before it returned (token guard).
-		const myToken = ++this.compileToken;
+		const pass = this.runPass(reason, ++this.compileToken);
+		this.newest = pass;
+		return pass;
+	}
+
+	/** a pass whose draft.pdf gets read: a pass that supersedes it owns the file, so that is the one to wait for */
+	async compileToLand(reason: string): Promise<boolean> {
+		let pass = this.compile(reason);
+		let landed = await pass;
+		while (landed === null && this.newest && this.newest !== pass) {
+			pass = this.newest;
+			landed = await pass;
+		}
+		return landed === true;
+	}
+
+	private async runPass(reason: string, myToken: number): Promise<boolean | null> {
+		const n = nativeBridge()!;
+		let landed = false;
 		this.lastReason = reason;
 		this.hooks.emit('compile-start', { reason });
 		this.compiling = true;
@@ -111,18 +133,21 @@ export class DraftCompiler {
 		// keep the "Recompiling (…)…" status the caller set for an abandon; a quiet pass (a
 		// boundary-line edit, or the re-baseline behind an exact patch) announces nothing at
 		// all; only a fresh compile announces "Compiling project…"
-		if (!reason.startsWith('abandon:') && !reason.startsWith('quiet:')) this.status = m.draft_status_compiling();
+		if (!reason.startsWith('abandon:') && !reason.startsWith('quiet:'))
+			this.status = reason === 'save-pdf' ? m.draft_status_compiling_export() : m.draft_status_compiling();
 		this.error = null;
 		this.missingTool = null;
 		try {
 			const r = await n.draftCompile({ root: this.hooks.root(), mainFile: this.hooks.mainFile() });
 			if (myToken !== this.compileToken) {
 				this.hooks.emit('compile-superseded', { reason });
-				return;
+				return null;
 			} // a newer compile owns the state now
 			if (r.ok) {
 				await this.hooks.applyCompiled(r);
-				this.warmDaemon(); // preload the daemon (heavy preambles cost ~1.5s once) so the first edit patches instantly
+				landed = true;
+				// preload the daemon (heavy preambles cost ~1.5s once) so the first edit patches instantly
+				if (!this.hooks.paused()) this.warmDaemon();
 			} else if (!(r as { superseded?: boolean }).superseded) {
 				// svelte-check doesn't reliably narrow this cross-module discriminated union.
 				// A service-side 'superseded' isn't an error -- the newer compile will render.
@@ -147,14 +172,17 @@ export class DraftCompiler {
 				}
 			}
 		} catch (e) {
-			if (myToken !== this.compileToken) return;
+			if (myToken !== this.compileToken) return null;
 			this.error = e instanceof Error ? e.message : String(e);
 			this.status = '';
 		}
 		// a newer compile may have started during the async render above; if so, leave the state
 		// (compiling flag, queued patch) to it so we don't clear its in-flight status early
-		if (myToken !== this.compileToken) return;
+		if (myToken !== this.compileToken) return null;
 		this.compiling = false;
+		// every pass parks a warm lualatex for the next one, and a paused preview stopped the engine on purpose
+		if (this.hooks.paused()) void n.draftStop?.();
 		this.hooks.afterCompile();
+		return landed;
 	}
 }
