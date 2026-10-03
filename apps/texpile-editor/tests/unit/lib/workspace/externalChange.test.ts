@@ -29,6 +29,7 @@ function makeWatcher(over: Partial<ExternalChangeDeps> = {}) {
 		saveNow: () => {},
 		exists: async () => true,
 		setDeleted: () => {},
+		takeSessionWrite: () => null,
 		...over
 	};
 	return new ExternalChangeWatcher(deps);
@@ -53,6 +54,28 @@ describe('ExternalChangeWatcher.check', () => {
 		await w.check();
 		expect(w.conflict?.disk).toBe('theirs');
 		expect(recordDiskStamp).not.toHaveBeenCalled();
+	});
+});
+
+// Hosting, the session writes a guest's words to the open file before the visual editor has taken
+// them in. Read as someone else's write, the reload put that older text back over the shared one and
+// took away what the guest typed since, or asked the host about a conflict with nobody.
+describe('the session writing the open file for a guest', () => {
+	it('takes the write as its own, neither reloading nor asking', async () => {
+		isDirty.current = false;
+		const sessionEdit = vi.fn();
+		const setDiskBaseline = vi.fn();
+		const common = { readText: async () => 'base guest', getDiskBaseline: () => 'base', takeSessionWrite: () => 'base guest' };
+		const idle = makeWatcher({ ...common, getBuffer: () => 'base', sessionEdit, setDiskBaseline });
+		await idle.check();
+		expect(sessionEdit).not.toHaveBeenCalled();
+		expect(setDiskBaseline).toHaveBeenCalledWith('base guest');
+		expect(recordDiskStamp).toHaveBeenCalledWith(PATH);
+
+		isDirty.current = true;
+		const typing = makeWatcher({ ...common, getBuffer: () => 'base host' });
+		await typing.check();
+		expect(typing.conflict).toBeNull();
 	});
 });
 

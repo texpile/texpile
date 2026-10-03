@@ -126,6 +126,7 @@ export class HostMaterializer {
 	onRemoteChange: ((rel: string, before: string, after: string, from: number, spans: TextSpan[]) => void) | null = null;
 	private readonly writeTimers = new Map<string, ReturnType<typeof setTimeout>>();
 	private readonly lastWritten = new Map<string, string>(); // rel -> LF content last synced with disk
+	private readonly wrote = new Map<string, string>(); // rel -> LF content this side last wrote itself
 	private readonly running = new Map<string, string>(); // rel -> LF content as of the last transaction
 	private readonly observers = new Map<string, () => void>();
 	// what this host listed; the manifest is not the authority, since any guest can write to it
@@ -238,6 +239,7 @@ export class HostMaterializer {
 		try {
 			await this.fs.writeText(this.joinPath(this.root, rel), fromLf(content, entry.eol ?? '\n'));
 			this.lastWritten.set(rel, content);
+			this.wrote.set(rel, content);
 		} catch (e) {
 			this.onError?.(rel, e);
 		}
@@ -330,6 +332,13 @@ export class HostMaterializer {
 			this.observe(rel);
 		}
 		return manifestSignature(manifest) !== sigBefore;
+	}
+
+	/** what this side last wrote to the file at rel for the session (LF), once, or null */
+	takeWrite(rel: string): string | null {
+		const content = this.wrote.get(rel) ?? null;
+		this.wrote.delete(rel);
+		return content;
 	}
 
 	/** whether this host shares the file at rel */

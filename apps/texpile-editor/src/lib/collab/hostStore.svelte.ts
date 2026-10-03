@@ -237,6 +237,12 @@ class HostCollabController {
 		if (rel && isShared(rel)) this.materializer?.hostEdit(rel, lf(content), before === undefined ? undefined : lf(before));
 	}
 
+	/** what the session last wrote to this file for the guests (LF), once, or null */
+	takeSessionWrite(absPath: string): string | null {
+		const rel = this.active ? this.rel(absPath) : null;
+		return rel ? (this.materializer?.takeWrite(rel) ?? null) : null;
+	}
+
 	/** flush any pending guest-edit write before the host reads the file from disk. */
 	async beforeOpen(absPath: string): Promise<void> {
 		const rel = this.active ? this.rel(absPath) : null;

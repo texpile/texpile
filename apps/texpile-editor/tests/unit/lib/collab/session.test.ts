@@ -443,6 +443,9 @@ describe('collab session end-to-end', () => {
 		await until(() => textOf(guest.doc, 'win.tex').toString() === 'a\nb\n');
 		textOf(guest.doc, 'win.tex').insert(2, 'x\n');
 		await until(() => disk.get('win.tex')!.content === 'a\r\nx\r\nb\r\n');
+		// what it wrote, in LF, goes once to the host's check for changes made outside
+		expect(mat.takeWrite('win.tex')).toBe('a\nx\nb\n');
+		expect(mat.takeWrite('win.tex')).toBeNull();
 		mat.destroy();
 		host.session.destroy();
 		guest.session.destroy();
