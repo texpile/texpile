@@ -28,6 +28,14 @@ describe('table cells', () => {
 	});
 });
 
+describe('a tabular', () => {
+	// [t] and [b] set where the tabular sits against the line, [l] a longtable's alignment
+	it('keeps its position argument', () => {
+		expect(rt('\\begin{tabular}[t]{ll}\na & b \\\\\n\\end{tabular}')).toContain('\\begin{tabular}[t]{ll}');
+		expect(rt('\\begin{longtable}[l]{ll}\na & b \\\\\n\\end{longtable}')).toContain('\\begin{longtable}[l]{ll}');
+	});
+});
+
 describe('table floats', () => {
 	// a \label ahead of \caption binds to the last counter stepped instead of the table, so \ref
 	// resolves to a list item or a section with no undefined-reference warning to show for it

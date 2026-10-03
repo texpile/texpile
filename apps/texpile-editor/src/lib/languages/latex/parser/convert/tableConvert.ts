@@ -317,6 +317,8 @@ export function createTable(env: Environment): PmNode[] {
 	const tabularxWidth = takesWidth && mandatory.length >= 2 ? printRaw(mandatory[0].content) : null;
 	const colspecArg = takesWidth ? mandatory[1] : mandatory[mandatory.length - 1];
 	const colspec = colspecArg ? printRaw(colspecArg.content) : null;
+	const positionArg = (env.args ?? []).find((a) => a.openMark === '[');
+	const position = positionArg ? printRaw(positionArg.content) : null;
 
 	const rows: PmNode[] = [];
 	// each row's bytes: from its first cell's to its last cell's, the row break left to the frame
@@ -397,7 +399,7 @@ export function createTable(env: Environment): PmNode[] {
 
 	const resolved = resolveSpans(rows);
 	if (resolved.length === rows.length) resolved.forEach((row, i) => noteBlockSpan(row, rowSpans[i]));
-	return [buildNode('table', { env: env.env, colspec, tabularxWidth, bottomRules }, resolved)];
+	return [buildNode('table', { env: env.env, colspec, tabularxWidth, position, bottomRules }, resolved)];
 }
 
 // a node that contributes no cell content (whitespace / comments / empty strings)

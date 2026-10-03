@@ -28,6 +28,8 @@ tableNodeSpecs.table.attrs = {
 	env: { default: null },
 	colspec: { default: null },
 	tabularxWidth: { default: null },
+	// the tabular's [t]/[b] position, a longtable's [l]/[c]/[r]
+	position: { default: null },
 	bottomRules: { default: '' }
 };
 tableNodeSpecs.table_row.attrs = {
