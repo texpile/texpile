@@ -290,6 +290,57 @@ describe('replacing on a drop', () => {
 	});
 });
 
+// A folder dropped from the file manager merges into one of the same name, and a file in it that
+// lands on one already there wrote over it: nothing in the recycle bin, and an undo that took the
+// new file away left nothing at all.
+describe('importing a folder onto files already there', () => {
+	let fs: ReturnType<typeof makeFs>;
+	let ops: TreeOps;
+	let text: Map<string, string>;
+
+	beforeEach(() => {
+		workspaceRoot.current = '/proj';
+		activeFilePath.current = null;
+		replaceAnswer.ok = true;
+		fs = makeFs();
+		ops = new TreeOps(fs.deps);
+		text = new Map([['/proj/figs/plot.tex', 'mine']]);
+		fs.files.add('/proj/figs/plot.tex');
+		const { trash, restore } = fs.deps;
+		fs.deps.writeBinary = async (p, f) => {
+			fs.files.add(p);
+			text.set(p, await f.text());
+		};
+		fs.deps.trash = async (p, root) => {
+			const r = await trash!(p, root);
+			if (r.backup) text.set(r.backup, text.get(p) ?? '');
+			text.delete(p);
+			return r;
+		};
+		fs.deps.restore = async (from, to) => {
+			await restore!(from, to);
+			text.set(to, text.get(from) ?? '');
+		};
+	});
+
+	const dropped = () => [{ relPath: 'figs/plot.tex', file: new File(['theirs'], 'plot.tex') }];
+
+	it('replaces it only when asked, and undo brings it back', async () => {
+		await ops.import(dropped(), '/proj');
+		expect(text.get('/proj/figs/plot.tex')).toBe('theirs');
+		await ops.history.undo();
+		expect(text.get('/proj/figs/plot.tex')).toBe('mine');
+		await ops.history.redo();
+		expect(text.get('/proj/figs/plot.tex')).toBe('theirs');
+	});
+
+	it('leaves it alone when the prompt is declined', async () => {
+		replaceAnswer.ok = false;
+		await ops.import(dropped(), '/proj');
+		expect(text.get('/proj/figs/plot.tex')).toBe('mine');
+	});
+});
+
 // Renaming a file that has unsaved edits must carry them to the new name. VS Code snapshots the
 // dirty model and restores it at the target; here the queued write is repointed instead, and the
 // opener waits for it to land before re-reading, so the edits arrive as the renamed file's content.
