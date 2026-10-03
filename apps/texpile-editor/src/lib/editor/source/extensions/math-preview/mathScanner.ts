@@ -58,7 +58,8 @@ function isLetter(code: number): boolean {
 	return (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
 }
 
-export function findMathRegions(text: string): MathRegion[] {
+/** `comments`: a % starts a comment, as in LaTeX; Markdown reads it as text */
+export function findMathRegions(text: string, comments = true): MathRegion[] {
 	const regions: MathRegion[] = [];
 	const n = text.length;
 	let i = 0;
@@ -77,7 +78,7 @@ export function findMathRegions(text: string): MathRegion[] {
 		const ch = text.charCodeAt(i);
 
 		// comment: skip to end of line. escaped \% never gets here, the backslash handler eats pairs.
-		if (ch === 37 /* % */) {
+		if (comments && ch === 37 /* % */) {
 			while (i < n && text.charCodeAt(i) !== 10) i++;
 			continue;
 		}
