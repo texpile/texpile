@@ -110,10 +110,16 @@ export function serializeBibtex(tokens: BibToken[], refsByKey: Map<string, Bibla
 		if (token.post !== undefined) tail = token.post;
 		let text: string;
 		if (token.kind === 'entry') {
-			const ref = refsByKey.get(token.entry.citationKey);
+			const key = token.entry.citationKey;
+			const ref = refsByKey.get(key);
 			if (!ref) continue; // deleted
+			// a key the file holds twice maps to one reference: an entry that is still the other's twin keeps its own bytes
+			const twin =
+				ref.raw !== undefined &&
+				ref.raw !== token.raw &&
+				tokens.some((t) => t !== token && t.kind === 'entry' && t.entry.citationKey === key && t.raw === ref.raw);
 			// prefer untouched raw so inside-entry formatting round-trips; regenerate once the form edited it
-			text = ref.raw ?? renderReferenceAsBib(ref);
+			text = twin ? token.raw : (ref.raw ?? renderReferenceAsBib(ref));
 		} else {
 			text = token.text;
 		}

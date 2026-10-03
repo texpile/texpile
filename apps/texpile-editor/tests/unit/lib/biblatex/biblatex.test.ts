@@ -293,4 +293,12 @@ Notes kept outside any entry.
 		const out = serializeBibtex(tokens, new Map(edited.map((e) => [e.key, e])));
 		expect(out).toBe(src.replace('@misc{c, title = {C}}', '@misc{c,\n    title = {New}\n}'));
 	});
+
+	it('keeps both entries of a key the file holds twice when another entry is edited', () => {
+		const src = `@article{dup, title = {First}}\n\n@article{dup, title = {Second}}\n\n@misc{z, title = {Z}}\n`;
+		const { tokens, entries } = parseBibtexWithWarnings(src);
+		const edited = entries.map((e): BiblatexReference => (e.key === 'z' ? { ...e, title: 'New', raw: undefined } : e));
+		const out = serializeBibtex(tokens, new Map(edited.map((e) => [e.key, e])));
+		expect(out).toContain('@article{dup, title = {First}}\n\n@article{dup, title = {Second}}');
+	});
 });
