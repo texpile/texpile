@@ -60,11 +60,11 @@ jobs:
               release/latest-linux.yml
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
@@ -144,7 +144,7 @@ jobs:
         if: runner.os == 'Linux'
         run: pnpm dist --config.releaseInfo.releaseNotesFile=release-notes.md
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: texpile-${{ runner.os }}${{ matrix.variant && format('-{0}', matrix.variant) || '' }}-v${{ steps.ver.outputs.v }}
           path: ${{ matrix.artifacts }}
@@ -158,9 +158,9 @@ jobs:
     env:
       BUCKET: texpile-releases # must match the bucket name created in the Cloudflare dashboard
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: texpile-*
           merge-multiple: true
