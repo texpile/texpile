@@ -134,7 +134,7 @@
 	}
 </script>
 
-<div class="@container bg-surface-100-900 text-muted flex h-8 shrink-0 items-center gap-2 px-2 text-xs">
+<div class="bg-surface-100-900 text-muted @container flex h-8 shrink-0 items-center gap-2 px-2 text-xs">
 	<!-- The tabs scroll and the actions never shrink. Both sides used to be shrinkable, so a narrow
 	     dock squeezed each group below its content and the two drew on top of each other - which is
 	     what a dock beside an open PDF preview does routinely. toolbar-hscroll hides the bar; there
@@ -146,7 +146,7 @@
 	<div class="toolbar-hscroll flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
 		{#if terminalEnabled}
 			<button
-				class="shrink-0 rounded-base px-2 py-1 whitespace-nowrap {view === 'terminal' ? 'preset-tonal' : 'hover:preset-tonal'}"
+				class="rounded-base shrink-0 px-2 py-1 whitespace-nowrap {view === 'terminal' ? 'preset-tonal' : 'hover:preset-tonal'}"
 				onclick={() => {
 					view = 'terminal';
 					shells.ensure(); // a fresh shell if the last one was killed, so the pane is never empty
@@ -156,7 +156,7 @@
 			</button>
 		{/if}
 		<button
-			class="flex shrink-0 items-center gap-1 rounded-base px-2 py-1 whitespace-nowrap {view === 'problems'
+			class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'problems'
 				? 'preset-tonal'
 				: 'hover:preset-tonal'}"
 			onclick={() => (view = 'problems')}
@@ -171,7 +171,7 @@
 		<!-- always present, not only once a thread exists: a tab that appears when there is something
 			     in it is a tab nobody finds in the document they actually want to comment on -->
 		<button
-			class="flex shrink-0 items-center gap-1 rounded-base px-2 py-1 whitespace-nowrap {view === 'comments'
+			class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'comments'
 				? 'preset-tonal'
 				: 'hover:preset-tonal'}"
 			onclick={() => (view = 'comments')}
@@ -184,7 +184,7 @@
 		{#if agentOn}
 			<!-- grayed where it cannot run; it still opens, to say why -->
 			<button
-				class="flex shrink-0 items-center gap-1 rounded-base px-2 py-1 whitespace-nowrap {view === 'agent'
+				class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'agent'
 					? 'preset-tonal'
 					: 'hover:preset-tonal'} {agentBlocked ? 'text-muted' : ''}"
 				onclick={() => (view = 'agent')}
@@ -200,7 +200,7 @@
 	<div class="flex shrink-0 items-center gap-0.5">
 		{#if view === 'terminal'}
 			<div class="relative">
-				<button class="hover:preset-tonal flex max-w-40 items-center gap-1.5 rounded-base px-2 py-1" onclick={() => (menuOpen = !menuOpen)}>
+				<button class="hover:preset-tonal rounded-base flex max-w-40 items-center gap-1.5 px-2 py-1" onclick={() => (menuOpen = !menuOpen)}>
 					<SquareTerminal class="size-3.5 shrink-0" />
 					<!-- The first thing to go when the dock narrows, and the right thing: it is the only
 					     label up here that is redundant. The icon still says terminal, the chevron still
@@ -217,7 +217,7 @@
 					<button class="fixed inset-0 z-40 cursor-default" aria-label={m.wsview_close_menu_aria()} onclick={() => (menuOpen = false)}
 					></button>
 					<div
-						class="bg-surface-50-950 border-surface-300-700 absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden card border py-1 shadow-lg"
+						class="bg-surface-50-950 border-surface-300-700 card absolute right-0 bottom-full z-50 mb-1 min-w-52 overflow-hidden border py-1 shadow-lg"
 					>
 						{#each shells.terminals as t (t.id)}
 							<div class="hover:preset-tonal-surface flex items-center">

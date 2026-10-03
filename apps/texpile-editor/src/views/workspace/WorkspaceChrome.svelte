@@ -135,7 +135,7 @@
 	<div class="border-warning-wash bg-warning-tint flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 border-b px-3 py-2 text-xs">
 		<ShieldQuestion class="text-warning-ink size-4 shrink-0" />
 		<span>{m.project_command_prompt()}</span>
-		<code class="bg-surface-200-800 min-w-0 truncate rounded-base px-1.5 py-0.5 font-mono" use:tip={pendingCommand.command}>
+		<code class="bg-surface-200-800 rounded-base min-w-0 truncate px-1.5 py-0.5 font-mono" use:tip={pendingCommand.command}>
 			{pendingCommand.command}
 		</code>
 		<span class="text-muted" use:tip={m.project_command_why()}>({m.project_command_why()})</span>

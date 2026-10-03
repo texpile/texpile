@@ -72,7 +72,7 @@
 	onClose={() => closePublish(false)}
 	onEnter={publish}
 >
-	<div class="border-surface-300-700 divide-surface-200-800 divide-y overflow-hidden rounded-container border" use:focusPicked>
+	<div class="border-surface-300-700 divide-surface-200-800 rounded-container divide-y overflow-hidden border" use:focusPicked>
 		<!-- a div, not a label: a label may hold only the one control it names, and this row holds three -->
 		<div class={row(picked === 'github')}>
 			<input

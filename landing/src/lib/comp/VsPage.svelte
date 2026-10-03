@@ -109,9 +109,9 @@
 
 		<p class="text-surface-500 text-sm">
 			Checked {CHECKED} against
-			<a href={vs.url} target="_blank" rel="noopener noreferrer" class="underline hover:text-surface-700">{vs.name}'s own site</a>.
+			<a href={vs.url} target="_blank" rel="noopener noreferrer" class="hover:text-surface-700 underline">{vs.name}'s own site</a>.
 			Corrections are welcome as an
-			<a href="https://github.com/texpile/texpile/issues" target="_blank" rel="noopener noreferrer" class="underline hover:text-surface-700"
+			<a href="https://github.com/texpile/texpile/issues" target="_blank" rel="noopener noreferrer" class="hover:text-surface-700 underline"
 				>issue on GitHub</a
 			>.
 		</p>
@@ -137,9 +137,9 @@
 			Also:
 			{#each OTHERS.filter((o) => o.href !== vs.path) as o, i (o.href)}
 				{#if i > 0},{/if}
-				<a href={o.href} class="underline hover:text-surface-700">{o.label}</a>
+				<a href={o.href} class="hover:text-surface-700 underline">{o.label}</a>
 			{/each}
-			and <a href="/overleaf-alternatives" class="underline hover:text-surface-700">Overleaf alternatives</a>.
+			and <a href="/overleaf-alternatives" class="hover:text-surface-700 underline">Overleaf alternatives</a>.
 		</p>
 	</div>
 </section>

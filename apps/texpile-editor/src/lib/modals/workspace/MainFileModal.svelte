@@ -21,7 +21,7 @@
 	{#if tooMany}
 		<p class="text-muted text-sm">{m.wsview_mainconfirm_too_many()}</p>
 	{:else}
-		<div class="border-surface-300-700 mb-4 max-h-64 overflow-y-auto rounded-container border">
+		<div class="border-surface-300-700 rounded-container mb-4 max-h-64 overflow-y-auto border">
 			{#each candidates as f (f.path)}
 				<label
 					class="hover:preset-tonal-surface flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm {choice && samePath(choice, f.path)

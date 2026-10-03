@@ -311,7 +311,7 @@
 
 <div class="relative h-full w-full overflow-hidden bg-(--terminal-bg)">
 	{#if status === 'unavailable'}
-		<div class="text-(--terminal-fg) flex h-full items-center justify-center p-4 text-center text-sm">
+		<div class="flex h-full items-center justify-center p-4 text-center text-sm text-(--terminal-fg)">
 			{errorMsg || m.terminal_error_desktop_only()}
 		</div>
 	{:else}

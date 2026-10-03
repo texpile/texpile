@@ -74,7 +74,7 @@
 			>
 			{#if field.type === 'textarea'}
 				<textarea
-					class="textarea mt-1 w-full rounded-container"
+					class="textarea rounded-container mt-1 w-full"
 					rows="3"
 					placeholder={field.placeholder}
 					bind:value={currentReference[field.name]}></textarea>
@@ -108,7 +108,7 @@
 
 	{#if twins.length > 0}
 		<!-- biblatex prints both entries without a word, so this says it -->
-		<div class="bg-surface-100-900 border-surface-200-800 mt-3 flex gap-2.5 rounded-container border px-3 py-2">
+		<div class="bg-surface-100-900 border-surface-200-800 rounded-container mt-3 flex gap-2.5 border px-3 py-2">
 			<TriangleAlert class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
 			<ul class="min-w-0 space-y-0.5 text-xs">
 				{#each twins as twin (twin.key)}
@@ -119,7 +119,7 @@
 	{/if}
 
 	{#if problems.length > 0}
-		<div class="bg-surface-100-900 border-surface-200-800 mt-3 flex gap-2.5 rounded-container border px-3 py-2">
+		<div class="bg-surface-100-900 border-surface-200-800 rounded-container mt-3 flex gap-2.5 border px-3 py-2">
 			<TriangleAlert class="text-warning-ink mt-0.5 size-3.5 shrink-0" />
 			<div class="min-w-0">
 				<p class="text-xs font-medium">{m.bib_warnings_heading()}</p>

@@ -248,7 +248,7 @@
 		<!-- which half matters depends on what you are doing, so it is not the scrollbar's decision -->
 		<div class="flex min-h-0 flex-1 flex-col" bind:this={splitEl}>
 			<div class="flex min-h-0 flex-col" style="flex: 1 1 0%">
-				<div class="scroll-inset-r min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] pb-2">
+				<div class="scroll-inset-r min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto pb-2">
 					{#if changes.length}
 						<!-- The total, then the groups it is made of. Deliberately not a group row itself: no
 						     tick box and no chevron, so a summary cannot be mistaken for what it summarises. -->
@@ -306,7 +306,7 @@
 					<div class="border-surface-200-800 shrink-0 space-y-2 border-t px-2 py-2">
 						<textarea
 							data-scm-message
-							class="textarea resize-none text-sm rounded-container"
+							class="textarea rounded-container resize-none text-sm"
 							rows="2"
 							placeholder={commitOn
 								? m.vcs_commit_placeholder({ combo: combo('Enter'), branch: commitOn })
@@ -347,7 +347,7 @@
 			<div class="border-surface-200-800 flex min-h-0 flex-col border-t" style="flex: 0 1 round({historyFraction * 100}%, 1px)">
 				<!-- the explorer's section heading, so the two sidebars name their parts alike -->
 				<div class="text-faint shrink-0 px-3 py-1 text-xs font-semibold tracking-wide uppercase">{m.vcs_history_heading()}</div>
-				<div class="scroll-inset-r min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] pb-2 pl-1.5">
+				<div class="scroll-inset-r min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto pb-2 pl-1.5">
 					<HistoryTimeline
 						{history}
 						busy={busy || !!operation}

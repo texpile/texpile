@@ -62,7 +62,7 @@
 </script>
 
 {#if refs.length === 0}
-	<li class="text-muted flex h-40 items-center justify-center rounded-container border border-dashed text-sm">
+	<li class="text-muted rounded-container flex h-40 items-center justify-center border border-dashed text-sm">
 		{m.bib_no_references_empty()}
 	</li>
 {:else}
@@ -70,7 +70,7 @@
 		{@const problems = problemsOf(ref)}
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions a11y_click_events_have_key_events -->
 		<li
-			class="mb-2 flex cursor-pointer items-center justify-between gap-2 rounded-container border p-3 transition-colors {ref.key ===
+			class="rounded-container mb-2 flex cursor-pointer items-center justify-between gap-2 border p-3 transition-colors {ref.key ===
 			selectedKey
 				? 'border-primary-500 bg-primary-tint '
 				: 'border-surface-200-800 hover:bg-surface-wash'}"
@@ -84,7 +84,7 @@
 					<!-- date is biblatex's spelling and year the older one; a row showing "No year"
 					     next to date = {1843} was reading only half the document -->
 					<span>{ref.year || ref.date || m.bib_no_year_placeholder()}</span>
-					<span class="chip preset-outlined-surface-400-600 [--chip-size:var(--text-xs)] min-w-0 max-w-full font-mono">
+					<span class="chip preset-outlined-surface-400-600 max-w-full min-w-0 font-mono [--chip-size:var(--text-xs)]">
 						<span class="truncate">{ref.key}</span>
 					</span>
 					{#if problems.length > 0}

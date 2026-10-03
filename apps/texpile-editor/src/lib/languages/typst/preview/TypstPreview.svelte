@@ -298,7 +298,7 @@
 				     muted text was barely legible on it -->
 				<div class="pointer-events-none absolute inset-0 flex items-center justify-center p-6">
 					<div
-						class="bg-surface-100-900 text-surface-700-200 border-surface-300-700 max-w-sm rounded-container border px-4 py-3 text-center text-sm shadow-sm"
+						class="bg-surface-100-900 text-surface-700-200 border-surface-300-700 rounded-container max-w-sm border px-4 py-3 text-center text-sm shadow-sm"
 					>
 						{m.typst_preview_no_document_hint()}
 					</div>

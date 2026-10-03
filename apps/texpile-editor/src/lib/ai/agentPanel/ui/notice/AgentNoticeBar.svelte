@@ -16,7 +16,7 @@
 
 <div class="px-3 pb-2">
 	<div
-		class="border-surface-300-700 bg-surface-100-900 flex min-h-9 flex-wrap items-center gap-x-2 gap-y-1.5 rounded-base border py-1 pr-1 pl-2.5 text-sm"
+		class="border-surface-300-700 bg-surface-100-900 rounded-base flex min-h-9 flex-wrap items-center gap-x-2 gap-y-1.5 border py-1 pr-1 pl-2.5 text-sm"
 	>
 		{#if starting}
 			<LoaderCircle class="text-muted size-4 shrink-0 animate-spin" />

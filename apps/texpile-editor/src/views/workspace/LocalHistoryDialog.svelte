@@ -218,7 +218,7 @@
 			{#each groups as g (g.day)}
 				<li class="text-muted px-2 pt-2 pb-0.5 text-[11px] font-semibold tracking-wide uppercase">{g.day}</li>
 				{#each g.items as e (e.id)}
-					<li class="group relative flex items-center rounded-base {selected?.id === e.id ? 'bg-primary-tint' : 'hover:preset-tonal'}">
+					<li class="group rounded-base relative flex items-center {selected?.id === e.id ? 'bg-primary-tint' : 'hover:preset-tonal'}">
 						{#if renaming === e.id}
 							<input
 								class="input mx-1 my-0.5 h-7 min-w-0 flex-1 text-sm"
@@ -311,7 +311,7 @@
 		<p class="text-muted text-sm">{m.history_deleted_none()}</p>
 	{:else}
 		<div class="flex min-h-0 flex-1 gap-3">
-			<div class="border-surface-200-800 flex w-64 shrink-0 flex-col overflow-hidden rounded-base border">
+			<div class="border-surface-200-800 rounded-base flex w-64 shrink-0 flex-col overflow-hidden border">
 				{#if view.kind === 'deleted'}
 					<div class="border-surface-200-800 flex max-h-[40%] flex-col border-b p-1">
 						<input
@@ -325,7 +325,7 @@
 							{#each shownDeleted as f (f.resource)}
 								<li>
 									<button
-										class="flex w-full items-center gap-1.5 rounded-base px-2 py-1 text-left text-sm {path === f.resource
+										class="rounded-base flex w-full items-center gap-1.5 px-2 py-1 text-left text-sm {path === f.resource
 											? 'bg-primary-tint'
 											: 'hover:preset-tonal'}"
 										onclick={() => pickFile(f)}
@@ -415,7 +415,7 @@
 						<span class="cap-center">{m.history_restore_this()}</span>
 					</button>
 				</div>
-				<div class="border-surface-200-800 min-h-0 flex-1 overflow-hidden rounded-base border">
+				<div class="border-surface-200-800 rounded-base min-h-0 flex-1 overflow-hidden border">
 					{#if selected && path && plain}
 						<div class="flex h-full flex-col">
 							{#if same}<p class="text-muted border-surface-200-800 border-b px-3 py-1.5 text-xs">{m.history_same_as_now()}</p>{/if}

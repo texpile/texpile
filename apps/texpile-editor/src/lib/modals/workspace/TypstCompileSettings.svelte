@@ -36,9 +36,9 @@
 	{#if superseded}
 		<!-- the same dashed slot live mode uses: the command is kept for the folder, it just is not
 		     what Compile runs while Preview is on -->
-		<div class="border-surface-300-700 text-muted mt-3 rounded-base border border-dashed px-3 py-2 text-xs">
+		<div class="border-surface-300-700 text-muted rounded-base mt-3 border border-dashed px-3 py-2 text-xs">
 			{m.wsview_compile_disabled_preview()}
-			<code class="bg-surface-200-800 ml-1 rounded-base px-1 opacity-70">tinymist (built-in)</code>
+			<code class="bg-surface-200-800 rounded-base ml-1 px-1 opacity-70">tinymist (built-in)</code>
 		</div>
 	{/if}
 </div>

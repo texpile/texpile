@@ -141,7 +141,7 @@
 		<!-- "last" means the lane ends here, so a Show-older row below keeps it running -->
 		{@const isLast = i === history.length - 1 && !hasMore}
 		{@const rows = isOpen ? (loading ? 1 : changes.length) : 0}
-		<div class="group hover:preset-tonal flex h-[22px] items-center rounded-base px-1">
+		<div class="group hover:preset-tonal rounded-base flex h-[22px] items-center px-1">
 			<GraphRail above={i > 0} below={!isLast || rows > 0} node={i === 0 ? 'head' : 'version'} merge={entry.parentCount > 1} />
 			<button
 				class="flex h-full min-w-0 flex-1 items-center gap-1.5 text-left"
@@ -229,7 +229,7 @@
 			{:else}
 				{#each changes as f, fi (f.path)}
 					<button
-						class="hover:preset-tonal flex h-[22px] w-full items-center rounded-base px-1 text-left"
+						class="hover:preset-tonal rounded-base flex h-[22px] w-full items-center px-1 text-left"
 						onclick={() => onCompare(entry, f.path, f.from)}
 						use:tip={relPath(f.path)}
 					>
@@ -253,7 +253,7 @@
 		     the beginning. The lane runs INTO this row and stops there, so the history visibly
 		     continues past what is drawn. -->
 		<button
-			class="hover:preset-tonal text-muted flex h-[22px] w-full items-center rounded-base px-1 text-left text-xs"
+			class="hover:preset-tonal text-muted rounded-base flex h-[22px] w-full items-center px-1 text-left text-xs"
 			onclick={onShowMore}
 			disabled={busy}
 		>

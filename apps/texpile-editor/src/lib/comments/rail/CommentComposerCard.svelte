@@ -50,14 +50,14 @@
 </script>
 
 <div
-	class="comment-card comment-card-pending bg-surface-50-950 border-surface-200-800 border text-xs rounded-container"
+	class="comment-card comment-card-pending bg-surface-50-950 border-surface-200-800 rounded-container border text-xs"
 	style="top: {top}px"
 	use:sized={onSize}
 >
 	<span class="text-muted block truncate font-mono" use:tip={quote}>{oneLine(quote)}</span>
 	<textarea
 		bind:this={box}
-		class="textarea mt-1.5 min-h-8 w-full resize-none text-xs rounded-container"
+		class="textarea rounded-container mt-1.5 min-h-8 w-full resize-none text-xs"
 		rows="2"
 		placeholder={m.comments_add()}
 		bind:value={draft}

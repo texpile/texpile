@@ -22,7 +22,7 @@
 		</div>
 		<div class="text-muted flex shrink-0 items-center gap-1.5 text-xs">
 			{m.symbols_inserts()}
-			<code class="bg-surface-200-800 max-w-48 truncate rounded-base px-1.5 py-0.5 font-mono text-sm whitespace-pre"
+			<code class="bg-surface-200-800 rounded-base max-w-48 truncate px-1.5 py-0.5 font-mono text-sm whitespace-pre"
 				>{picker.insertionText(symbol)}</code
 			>
 		</div>

@@ -11,7 +11,7 @@
 </script>
 
 <div
-	class="border-surface-300-700 bg-surface-100-900 mx-3 mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1.5 rounded-base border py-1.5 pr-1.5 pl-2.5 text-sm"
+	class="border-surface-300-700 bg-surface-100-900 rounded-base mx-3 mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1.5 border py-1.5 pr-1.5 pl-2.5 text-sm"
 >
 	<ShieldQuestion class="text-primary-ink size-4 shrink-0" />
 	<span class="cap-center shrink-0 font-medium">{m.agent_panel_asks({ agent: props.agent })}</span>

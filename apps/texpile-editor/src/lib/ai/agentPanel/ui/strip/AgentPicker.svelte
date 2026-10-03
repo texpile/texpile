@@ -47,7 +47,7 @@
 	{#snippet trigger(attrs)}
 		<button
 			{...attrs}
-			class="hover:preset-tonal flex max-w-40 items-center gap-1.5 rounded-base px-2 py-1 disabled:opacity-50 disabled:hover:bg-transparent"
+			class="hover:preset-tonal rounded-base flex max-w-40 items-center gap-1.5 px-2 py-1 disabled:opacity-50 disabled:hover:bg-transparent"
 			disabled={props.disabled}
 		>
 			<Bot class="size-3.5 shrink-0" />

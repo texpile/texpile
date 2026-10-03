@@ -428,7 +428,7 @@
 			></div>
 			<!-- scroll-inset-r moves the scrollbar, not the box, so border-t reaches the divider; whole pixels keep rows on the grid -->
 			<div
-				class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-t p-2"
+				class="border-surface-200-800 scroll-inset-r min-h-0 [scrollbar-gutter:stable] overflow-y-auto border-t p-2"
 				style="flex: 0 1 round({tocFraction * 100}%, 1px)"
 			>
 				<TableOfContents list={toc} onOpenFile={onOpenFileAt} />

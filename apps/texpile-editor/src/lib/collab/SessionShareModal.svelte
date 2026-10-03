@@ -142,11 +142,11 @@
 		<div class="mb-3">
 			<span class="mb-1 block text-sm font-medium">{linkable ? m.share_link_label() : m.share_code_label()}</span>
 			<div class="flex items-stretch gap-2">
-				<code class="bg-surface-200-800 min-w-0 flex-1 truncate rounded-base px-3 py-2 font-mono text-sm tracking-wide select-all">
+				<code class="bg-surface-200-800 rounded-base min-w-0 flex-1 truncate px-3 py-2 font-mono text-sm tracking-wide select-all">
 					{linkable ? joinLinkFor(collabHost.shareCode) : collabHost.shareCode}
 				</code>
 				<button
-					class="preset-tonal flex shrink-0 items-center justify-center rounded-base px-3"
+					class="preset-tonal rounded-base flex shrink-0 items-center justify-center px-3"
 					onclick={linkable ? copyLink : copyCode}
 					use:tip={linkable ? m.share_copy_link() : m.share_copy()}
 					aria-label={linkable ? m.share_copy_link() : m.share_copy()}

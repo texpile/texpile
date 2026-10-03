@@ -223,7 +223,7 @@
 
 <div
 	bind:this={boxElement}
-	class="card border-surface-300-700 bg-surface-50-950 pointer-events-auto fixed z-[999999] min-w-[200px] max-w-[280px] space-y-1.5 border p-2 shadow-2xl"
+	class="card border-surface-300-700 bg-surface-50-950 pointer-events-auto fixed z-[999999] max-w-[280px] min-w-[200px] space-y-1.5 border p-2 shadow-2xl"
 	onclick={handleClick}
 	onkeydown={handleKeydown}
 	role="dialog"
@@ -265,7 +265,7 @@
 			{#if error.text}
 				{@const diffParts = getDiffParts(error.text, error.replacements[0])}
 				<button
-					class="bg-surface-100-900 hover:preset-tonal border-surface-300-700 w-full cursor-pointer rounded-base border px-2 py-1.5 text-left transition-colors"
+					class="bg-surface-100-900 hover:preset-tonal border-surface-300-700 rounded-base w-full cursor-pointer border px-2 py-1.5 text-left transition-colors"
 					onclick={() => handleReplace(error.replacements[0])}
 					use:tip={m.harper_apply_suggestion_title()}
 				>
@@ -285,7 +285,7 @@
 
 			{#if error.replacements.length > 1}
 				<div class="space-y-1">
-					<p class="text-[10px] font-semibold uppercase tracking-wider opacity-60">
+					<p class="text-[10px] font-semibold tracking-wider uppercase opacity-60">
 						{m.harper_additional_suggestions_heading()}
 					</p>
 					<div class="space-y-1">

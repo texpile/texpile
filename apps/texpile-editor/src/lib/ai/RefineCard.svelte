@@ -102,7 +102,7 @@
 {#if refineCard.current}
 	{@const open = refineCard.current}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="fixed inset-0 z-dropdown" onpointerdown={closeRefineCard}></div>
+	<div class="z-dropdown fixed inset-0" onpointerdown={closeRefineCard}></div>
 	<!-- data-keep-caret: the card holds focus while the passage it is about must stay marked, which
 	     is what persistentSelectionPlugin draws once the focus sits in an overlay it knows -->
 	<div
@@ -110,7 +110,7 @@
 		data-keep-caret
 		role="dialog"
 		aria-label={agent ? m.ai_refine_menu({ agent: agentName(agent) }) : m.ai_refine()}
-		class="bg-surface-50-950 border-surface-300-700 z-dropdown fixed w-max min-w-96 max-w-[calc(100vw-16px)] card border shadow-lg"
+		class="bg-surface-50-950 border-surface-300-700 z-dropdown card fixed w-max max-w-[calc(100vw-16px)] min-w-96 border shadow-lg"
 		style="left: {placed?.x ?? open.anchor.left}px; top: {placed?.y ?? open.anchor.bottom}px; opacity: {placed?.for === open ? 1 : 0}"
 	>
 		<div class="flex items-center gap-1 px-2 py-1.5">

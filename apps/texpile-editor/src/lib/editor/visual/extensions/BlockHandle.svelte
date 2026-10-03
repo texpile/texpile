@@ -51,14 +51,14 @@
 		</Popover.Trigger>
 		<Portal>
 			<Popover.Positioner class="z-floating-ui">
-				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 min-w-48 max-w-64 border p-1 shadow-lg">
+				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 max-w-64 min-w-48 border p-1 shadow-lg">
 					<div class="text-muted px-2 py-1 text-[10px] font-semibold tracking-wider uppercase">
 						{m.blockhandle_insert_header()}
 					</div>
 					{#each items as item (item.label)}
 						<button
 							type="button"
-							class="hover:preset-tonal flex w-full items-center gap-2 rounded-base px-2 py-1.5 text-left text-sm"
+							class="hover:preset-tonal rounded-base flex w-full items-center gap-2 px-2 py-1.5 text-left text-sm"
 							onmousedown={(e) => {
 								e.preventDefault();
 								onInsert(item);

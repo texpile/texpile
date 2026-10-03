@@ -105,7 +105,7 @@
 				{/if}
 				{#if editing === msg.id}
 					<textarea
-						class="textarea mt-1 w-full resize-none py-1 text-xs rounded-container"
+						class="textarea rounded-container mt-1 w-full resize-none py-1 text-xs"
 						rows="2"
 						bind:value={editDraft}
 						onkeydown={(e) => {
@@ -169,7 +169,7 @@
 	<div class="space-y-1.5 {dense ? '' : 'pl-7'}">
 		<div class="flex items-start gap-1">
 			<textarea
-				class="textarea min-w-0 flex-1 resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'min-h-0 h-7'} rounded-container"
+				class="textarea min-w-0 flex-1 resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'h-7 min-h-0'} rounded-container"
 				rows="1"
 				placeholder={m.comments_reply_placeholder()}
 				bind:value={draft}

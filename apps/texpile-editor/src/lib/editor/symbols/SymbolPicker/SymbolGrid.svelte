@@ -50,7 +50,7 @@
 	<div
 		bind:this={listbox}
 		{id}
-		class="grid min-h-0 min-w-0 flex-1 auto-rows-max gap-1 overflow-y-auto p-1.5 [scrollbar-gutter:stable]"
+		class="grid min-h-0 min-w-0 flex-1 [scrollbar-gutter:stable] auto-rows-max gap-1 overflow-y-auto p-1.5"
 		style:grid-template-columns="repeat({SYMBOL_COLUMNS}, minmax(0, 1fr))"
 		role="listbox"
 		tabindex="-1"
@@ -62,7 +62,7 @@
 				type="button"
 				id={optionId(i)}
 				role="option"
-				class="tile bg-surface-100-900 flex aspect-square min-w-0 items-center justify-center overflow-hidden rounded-base border text-2xl"
+				class="tile bg-surface-100-900 rounded-base flex aspect-square min-w-0 items-center justify-center overflow-hidden border text-2xl"
 				class:active={i === picker.active}
 				aria-selected={i === picker.active}
 				aria-label={picker.set?.spokenLabel(symbol)}

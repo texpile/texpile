@@ -32,7 +32,7 @@
 	<Modal bind:open onClose={markSeen} title={m.whatsnew_title({ version: newest.version })} card="flex max-h-full max-w-2xl flex-col p-5">
 		<div class="mb-4 min-h-0 overflow-y-auto">
 			{#if video}
-				<video src={video} class="border-surface-300-700 mb-4 w-full rounded-base border" autoplay loop muted playsinline></video>
+				<video src={video} class="border-surface-300-700 rounded-base mb-4 w-full border" autoplay loop muted playsinline></video>
 			{/if}
 			<div class="space-y-3">
 				{#each entries as entry (entry.version)}

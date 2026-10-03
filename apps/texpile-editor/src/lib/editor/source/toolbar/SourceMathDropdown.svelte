@@ -66,7 +66,7 @@
 >
 	<Popover.Trigger>
 		<button
-			class="toolbarButton flex items-center gap-1 rounded-base p-1 hover:preset-tonal"
+			class="toolbarButton rounded-base hover:preset-tonal flex items-center gap-1 p-1"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_math_symbols()}
 			use:tip={m.tbar_math_symbols()}
@@ -101,7 +101,7 @@
 					</div>
 
 					<!-- tabs stay put; only the palette body scrolls -->
-					<div class="max-h-[60vh] overflow-y-auto [scrollbar-gutter:stable]">
+					<div class="max-h-[60vh] [scrollbar-gutter:stable] overflow-y-auto">
 						{#if group.id === 'matrices'}
 							<div class="border-surface-300-700 border-b p-3">
 								<div class="mb-2 text-xs font-medium">{m.tbar_matrix_style()}</div>
@@ -130,7 +130,7 @@
 										{#each Array.from({ length: 6 }) as _, col (col)}
 											<button
 												type="button"
-												class="size-6 rounded-base border text-xs transition-colors"
+												class="rounded-base size-6 border text-xs transition-colors"
 												class:preset-tonal-primary={row < matrixRows && col < matrixCols}
 												class:border-math-key-edge={row < matrixRows && col < matrixCols}
 												class:bg-surface-100-900={!(row < matrixRows && col < matrixCols)}

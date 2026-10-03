@@ -27,7 +27,7 @@
 
 <div class="-mx-2 text-sm">
 	<button
-		class="text-muted hover:preset-tonal flex w-full items-center gap-1.5 rounded-base px-2 py-0.5 text-left"
+		class="text-muted hover:preset-tonal rounded-base flex w-full items-center gap-1.5 px-2 py-0.5 text-left"
 		aria-expanded={open}
 		onclick={() => (open = !open)}
 	>
@@ -37,7 +37,7 @@
 	</button>
 	{#if open}
 		{#each props.files as file (file.path)}
-			<div class="group hover:preset-tonal flex items-center gap-2 rounded-base py-0.5 pr-2 pl-7">
+			<div class="group hover:preset-tonal rounded-base flex items-center gap-2 py-0.5 pr-2 pl-7">
 				<button
 					class="flex min-w-0 flex-1 items-center gap-1.5 text-left disabled:cursor-default"
 					disabled={file.change === 'deleted'}

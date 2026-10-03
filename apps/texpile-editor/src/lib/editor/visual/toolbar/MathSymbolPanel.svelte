@@ -91,7 +91,7 @@
 			<X class="size-4" />
 		</button>
 	</div>
-	<div class="flex-1 overflow-y-auto [scrollbar-gutter:stable]" tabindex="-1" role="presentation" onmousedown={preventFocusLoss}>
+	<div class="flex-1 [scrollbar-gutter:stable] overflow-y-auto" tabindex="-1" role="presentation" onmousedown={preventFocusLoss}>
 		{#if group.id === 'matrices'}
 			<div class="border-surface-300-700 border-b p-3">
 				<div class="mb-2 text-xs font-medium">{m.mathtoolbar_matrix_style_label()}</div>
@@ -120,7 +120,7 @@
 							{#each Array.from({ length: 6 }) as _, col (col)}
 								<button
 									type="button"
-									class="aspect-square w-full rounded-base border text-xs transition-colors"
+									class="rounded-base aspect-square w-full border text-xs transition-colors"
 									class:preset-tonal-primary={row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols}
 									class:border-math-key-edge={row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols}
 									class:bg-surface-100-900={!(row + 1 <= matrixGridHoverRows && col + 1 <= matrixGridHoverCols)}

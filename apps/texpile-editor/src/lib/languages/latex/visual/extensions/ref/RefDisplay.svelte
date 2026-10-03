@@ -45,7 +45,7 @@
      the sentence, the way the citation beside it does. inline, not a button, so the padding cannot
      grow the line box. -->
 <span
-	class="cursor-pointer rounded-base py-0.5 transition-colors"
+	class="rounded-base cursor-pointer py-0.5 transition-colors"
 	class:text-ref-fg={!state.broken}
 	class:hover:bg-ref-bg={!state.broken}
 	class:text-ref-broken-fg={state.broken}

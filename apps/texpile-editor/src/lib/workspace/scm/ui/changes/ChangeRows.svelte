@@ -55,7 +55,7 @@
 {#each changes as c (`${c.x}${c.y}${c.path}`)}
 	{@const badge = badgeOf(c.x, c.y)}
 	{@const row = `${c.x}${c.y}${c.path}`}
-	<div class="group hover:preset-tonal flex items-center gap-2 rounded-base px-2 py-0.5 text-sm">
+	<div class="group hover:preset-tonal rounded-base flex items-center gap-2 px-2 py-0.5 text-sm">
 		<input
 			type="checkbox"
 			class="checkbox border-surface-400-600 accent-primary-500 size-3.5 shrink-0 opacity-70 transition-opacity group-hover:opacity-100 disabled:opacity-40"

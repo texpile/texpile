@@ -71,7 +71,7 @@
 		>
 	</div>
 
-	<div class="border-surface-200-800 mt-2 max-h-44 overflow-y-auto rounded-base border p-2 [scrollbar-gutter:stable]">
+	<div class="border-surface-200-800 rounded-base mt-2 max-h-44 [scrollbar-gutter:stable] overflow-y-auto border p-2">
 		{#if !all.length}
 			<p class="text-muted py-2 text-center text-sm">{m.spelldict_empty_state()}</p>
 		{:else if !found.length}
@@ -83,7 +83,7 @@
 				{#each found.slice(0, SHOWN) as word (word)}
 					<!-- outlined: the typed word is already here, which is why Add stays off -->
 					<li
-						class="bg-surface-100-900 flex max-w-full items-center gap-0.5 rounded-base border py-0.5 pr-0.5 pl-2 text-sm {typed.includes(
+						class="bg-surface-100-900 rounded-base flex max-w-full items-center gap-0.5 border py-0.5 pr-0.5 pl-2 text-sm {typed.includes(
 							word
 						)
 							? 'border-primary-500'
