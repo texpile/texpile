@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { parseTypstMath } from 'texpile-typst-syntax-wasm';
 import type { MathfieldElement } from '../../src/mathlive';
 import { stubBrowser } from '../browser';
@@ -98,6 +98,19 @@ describe('typing in a Typst field', () => {
       ['#h(1em)_2 + #calc.pi ', '#h(1em)_2 + #calc.pi'],
     ];
     for (const [keys, typst] of cases) expect(typed(keys), keys).toBe(typst);
+  });
+
+  it("lets a removed field's suggestions go without reaching for the page", async () => {
+    const mf = field();
+    type(mf, 'al');
+    mf.remove();
+    // the suggestions show a moment later, by when the page may be gone (a window closed, a test file over)
+    vi.stubGlobal('document', undefined);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 60));
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 
   it('keeps a name open through Backspace and the suggestions', () => {
