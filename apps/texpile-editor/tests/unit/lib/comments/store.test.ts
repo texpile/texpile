@@ -4,11 +4,16 @@ import { buildAnchor, type CommentAnchor } from '$lib/comments/anchor';
 import { anchorEvent, deleteEvent, openEvent, replyEvent, resolveEvent, foldLog, parseLog, type CommentEvent } from '$lib/comments/log';
 
 let disk = '';
+/** what a read of the log under /w throws instead, as the fs bridge words it */
+let readError: string | null = null;
 /** per path, for tests that keep more than one log */
 const disks: Record<string, string> = {};
 
 vi.mock('$lib/workspace/fileSystem', () => ({
-	readTextFile: async (path: string) => (path.startsWith('/w/') ? disk : (disks[path] ?? '')),
+	readTextFile: async (path: string) => {
+		if (path.startsWith('/w/') && readError) throw new Error(readError);
+		return path.startsWith('/w/') ? disk : (disks[path] ?? '');
+	},
 	writeTextFile: async (path: string, text: string) => {
 		if (path.startsWith('/w/')) disk = text;
 		else disks[path] = text;
@@ -110,6 +115,25 @@ it('lets go of threads taken out of the log on disk', async () => {
 
 	await store.append(replyEvent({ id: 'm1', thread: 'c1', by: 'bo', body: 'ok', at: 'now' }));
 	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['c1']);
+});
+
+// a checkout of a branch without one, or the file deleted by hand
+it('lets go of the threads of a log deleted on disk, and only of a deleted one', async () => {
+	disk = JSON.stringify(threadOn('c1')) + '\n';
+	const store = new CommentStore();
+	await store.load('/w');
+	readError = 'EBUSY: resource busy or locked, open';
+	await store.reload();
+	expect(store.threads.map((t) => t.id)).toEqual(['c1']);
+	readError = null;
+	await store.reload();
+
+	readError = "ENOENT: no such file or directory, open '/w/.texpile/comments.jsonl'";
+	await store.reload();
+	readError = null;
+	expect(store.threads).toEqual([]);
+	await store.append(threadOn('n1'));
+	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['n1']);
 });
 
 it('keeps every thread when a read lands short while its own write is under way', async () => {

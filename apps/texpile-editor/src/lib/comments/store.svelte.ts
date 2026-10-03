@@ -102,9 +102,10 @@ export class CommentStore {
 			const text = await readTextFile(path);
 			if (my !== this.loadSeq) return;
 			this.adoptLog(text, queued === this.writesQueued ? wasOnDisk : null);
-		} catch {
-			// no log yet is the normal state for a project nobody has commented on
-			if (my === this.loadSeq) this.adoptLog('');
+		} catch (e) {
+			// no log yet is normal for a project nobody has commented on; a log deleted since (a checkout) takes its threads
+			const gone = /ENOENT|no such file/i.test(e instanceof Error ? e.message : String(e));
+			if (my === this.loadSeq) this.adoptLog('', gone && queued === this.writesQueued ? wasOnDisk : null);
 		} finally {
 			if (my === this.loadSeq) this.loading = false;
 		}
