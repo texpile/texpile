@@ -320,7 +320,7 @@
 			onResolve={() => void ctl.setResolved(t, !t.resolved)}
 			onAccept={() => void ctl.suggestions.accept(t)}
 			onReject={() => void reject(t)}
-			onReply={(thread, body) => void ctl.reply(thread, body)}
+			onReply={(thread, body) => ctl.reply(thread, body)}
 			onEditMessage={(msg, body) => void ctl.editMessage(msg, body)}
 			onDeleteMessage={(thread, msg) => void ctl.removeMessage(thread, msg)}
 			onSize={(h) => setHeight(t.id, h)}

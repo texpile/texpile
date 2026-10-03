@@ -43,8 +43,6 @@ export type MenuState = {
 	typstProject?: boolean;
 	/** the main file is Typst and tinymist can export it: File > Export… */
 	canExportTypst?: boolean;
-	/** the previews' color vision simulation ('none' when showing true colors) */
-	colorVision?: string;
 	/** there is a directory to write an image next to (a .tex on a host) */
 	canInsertImage: boolean;
 	/** the workspace may be swapped out. False for a guest: it would abandon the session unleft */
@@ -77,22 +75,6 @@ function label(s: MenuState, key: string, fallback: string): string {
  *  menu bar uses, so the renderer needs one dispatcher rather than two. */
 function fire(win: BrowserWindow | null, action: string): void {
 	win?.webContents.send('main:menu-action', action);
-}
-
-/** the simulations, as radio items; the renderer sends one label per mode as `vision:<mode>`, in order */
-function colorVisionItems(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[] {
-	const modes = Object.keys(s.labels)
-		.filter((key) => key.startsWith('vision:'))
-		.map((key) => key.slice('vision:'.length));
-	return modes.flatMap((mode, i) => [
-		{
-			label: s.labels[`vision:${mode}`],
-			type: 'radio' as const,
-			checked: (s.colorVision ?? 'none') === mode,
-			click: () => fire(win, `view:vision:${mode}`)
-		},
-		...(i === 0 ? [{ type: 'separator' as const }] : [])
-	]);
 }
 
 function recentItems(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[] {
@@ -267,8 +249,6 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{ label: label(s, 'zoomIn', 'Zoom In'), accelerator: 'CmdOrCtrl+Plus', click: () => fire(win, 'view:zoom-in') },
 				{ label: label(s, 'zoomOut', 'Zoom Out'), accelerator: 'CmdOrCtrl+-', click: () => fire(win, 'view:zoom-out') },
 				{ label: label(s, 'zoomReset', 'Reset Zoom'), accelerator: 'CmdOrCtrl+0', click: () => fire(win, 'view:zoom-reset') },
-				{ type: 'separator' },
-				{ label: label(s, 'colorVision', 'Simulate Color Vision'), submenu: colorVisionItems(win, s) },
 				{ type: 'separator' },
 				// Electron's role is a static "Toggle Full Screen"; mac apps say Enter / Exit and flip.
 				// Main can read the state directly, and watchWindowState rebuilds on the transition.

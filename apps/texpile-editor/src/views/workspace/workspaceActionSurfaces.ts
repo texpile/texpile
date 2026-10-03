@@ -51,6 +51,7 @@ import type { Node as PMNode } from 'prosemirror-model';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import type { DockView } from '$lib/terminal/dockView';
+import { ensureName } from '$lib/identity/ownName.svelte';
 
 export type ActionSurfaceDeps = {
 	provider: WorkspaceProvider;
@@ -99,6 +100,11 @@ function saveAsTemplate(d: ActionSurfaceDeps): void {
 }
 
 /** the callback surface WorkspaceMain hands down to the topbar / editor / preview / dock */
+/** a guest has the name it joined with */
+function named(d: ActionSurfaceDeps): Promise<boolean> {
+	return d.guest() ? Promise.resolve(true) : ensureName(workspaceRoot.current);
+}
+
 function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments') {
 	const dock = d.termDock();
 	if (dock.visible && d.getDockView() === view) {
@@ -111,9 +117,10 @@ function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments') {
 
 export function makeMainActions(d: ActionSurfaceDeps) {
 	return {
-		beginComment: (from: number, to: number) => d.commentsCtl.beginAdd(from, to),
+		// a comment is signed: a name is asked for before one is begun, so nothing typed is lost to the question
+		beginComment: (from: number, to: number) => void named(d).then((ok) => ok && d.commentsCtl.beginAdd(from, to)),
 		// same gesture from the visual editor, which brings its own anchor (see beginAddAnchored)
-		beginCommentAnchored: (anchor: CommentAnchor | null) => d.commentsCtl.beginAddAnchored(anchor),
+		beginCommentAnchored: (anchor: CommentAnchor | null) => void named(d).then((ok) => ok && d.commentsCtl.beginAddAnchored(anchor)),
 		attachCommentToSelection: (thread: CommentThread) => {
 			if (d.wsdoc.modes.mode === 'visual') {
 				const view = editorViewStore.current;
@@ -147,7 +154,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			d.commentsCtl.selected = id;
 		},
 		openComment: (t: CommentThread) => d.commentsCtl.open(t),
-		replyToComment: (t: CommentThread, body: string) => void d.commentsCtl.reply(t, body),
+		replyToComment: (t: CommentThread, body: string) => d.commentsCtl.reply(t, body),
 		resolveComment: (t: CommentThread, resolved: boolean) => void d.commentsCtl.setResolved(t, resolved),
 		editCommentMessage: (msg: CommentMessage, body: string) => void d.commentsCtl.editMessage(msg, body),
 		deleteCommentMessage: (t: CommentThread, msg: CommentMessage) => void d.commentsCtl.removeMessage(t, msg),

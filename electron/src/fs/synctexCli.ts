@@ -105,7 +105,7 @@ export async function synctex(body: SynctexBody): Promise<Record<string, unknown
 		return { ok: false, error: 'Unknown action' };
 	} catch (e) {
 		const code = (e as { code?: string })?.code;
-		if (code === 'ENOENT') return { ok: false, error: 'The `synctex` tool was not found on PATH (install a TeX distribution).' };
+		if (code === 'ENOENT') return { ok: false, error: 'synctex was not found on PATH. It ships with TeX distributions.' };
 		return { ok: false, error: e instanceof Error ? e.message : String(e) };
 	}
 }

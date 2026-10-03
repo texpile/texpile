@@ -24,7 +24,6 @@
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="shortcuts" class={menuBarItemClass}><Menu.ItemText>{m.menubar_keyboard_shortcuts()}</Menu.ItemText></Menu.Item>
-				<Menu.Item value="setup" class={menuBarItemClass}><Menu.ItemText>{m.menubar_setup()}</Menu.ItemText></Menu.Item>
 				{#if canTutorial}
 					<Menu.Item value="tutorial" class={menuBarItemClass}><Menu.ItemText>{m.menubar_open_tutorial()}</Menu.ItemText></Menu.Item>
 				{/if}

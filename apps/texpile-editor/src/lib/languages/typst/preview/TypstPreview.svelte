@@ -18,6 +18,7 @@
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
 	import { themeColour } from './themeColour';
+	import { askForProgram, tinymistMissing } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -214,7 +215,9 @@
 			<span class="text-warning-ink truncate text-sm" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
 			<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
 		{:else}
-			<span class="truncate text-sm">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
+			<span class="truncate text-sm"
+				>{frameUrl ? m.typst_preview_live() : tinymistMissing.current ? m.typst_preview_not_running() : m.typst_preview_connecting()}</span
+			>
 		{/if}
 	{/snippet}
 	<!-- zoom is the only viewer control: tinymist's viewer ships no toolbar and its users scroll, so
@@ -301,6 +304,14 @@
 					</div>
 				</div>
 			{/if}
+		{:else if tinymistMissing.current}
+			<!-- not "waiting": with nothing to render it, the first render never comes -->
+			<div class="flex h-full flex-col items-center justify-center gap-3 p-6 text-center">
+				<p class="text-muted max-w-xs text-sm">{m.typst_preview_needs_tinymist()}</p>
+				<button type="button" class="btn btn-sm preset-filled-primary-500" onclick={() => askForProgram('tinymist')}
+					>{m.typst_set_up()}</button
+				>
+			</div>
 		{:else if !error}
 			<div class="text-muted flex h-full items-center justify-center text-center text-sm">
 				{m.typst_preview_waiting()}

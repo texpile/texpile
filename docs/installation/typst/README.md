@@ -14,11 +14,12 @@ Typst needs one program, tinymist. It compiles the document and provides complet
 
 The easiest route, on Windows, macOS, and Linux alike. Wherever Texpile finds no tinymist, it offers Install tinymist:
 
-| Where to find it | Path                                  | Note                                   |
-| ---------------- | ------------------------------------- | -------------------------------------- |
-| Preferences      | Preferences › Toolchain, under Typst  | Also where to reinstall or remove it.  |
-| Welcome screen   | The typesetter step, on the Typst row | When you picked Typst as a format.     |
-| Notice           | Compile could not start               | After a compile or preview found none. |
+| Where to find it | Path                                                | Note                                                   |
+| ---------------- | --------------------------------------------------- | ------------------------------------------------------ |
+| Preferences      | Preferences › Toolchain, under Typst                | Also where to reinstall or remove it.                  |
+| Typst file       | The line over the editor: tinymist is not installed | When a .typ file is open.                              |
+| Typst preview    | Set Up Typst, in the preview pane                   | When the preview has nothing to run it.                |
+| Dialog           | Texpile cannot find tinymist                        | When a compile, export, format, or template needed it. |
 
 Texpile downloads the tinymist release it is tested with from dl.texpile.com, where the Windows and macOS programs are signed by Texpile. It checks the download against the checksum Texpile expects and keeps it in its own data folder. It works straight away: no restart, and open Typst files pick it up. Nothing is downloaded until you click Install tinymist.
 

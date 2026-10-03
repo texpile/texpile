@@ -48,7 +48,7 @@ export function openPreferencesAt(tab: string): void {
 }
 
 /**
- * The shortcut sheet and the welcome screen, for the same reason and then one more.
+ * The shortcut sheet, for the same reason and then one more.
  *
  * These were local state in WorkspaceMenuBar, which also MOUNTED the dialogs - fine while the host
  * menu bar is the only way in. But a guest session renders no menu bar at all, so for a guest the
@@ -56,24 +56,3 @@ export function openPreferencesAt(tab: string): void {
  * The flags live here and WindowDialogs mounts the dialogs for both.
  */
 export const shortcutsOpen = box(false);
-export const setupOpen = box(false);
-
-const REOPEN_SETUP = 'texpile:reopen-setup';
-
-export function markSetupReopen(): void {
-	try {
-		sessionStorage.setItem(REOPEN_SETUP, '1');
-	} catch {
-		return;
-	}
-}
-
-export function takeSetupReopen(): boolean {
-	try {
-		const set = sessionStorage.getItem(REOPEN_SETUP) === '1';
-		sessionStorage.removeItem(REOPEN_SETUP);
-		return set;
-	} catch {
-		return false;
-	}
-}

@@ -49,7 +49,6 @@ The eye button in the PDF toolbar shows the document as a reader with a color vi
 | Where to find it | Path                           | Note                                 |
 | ---------------- | ------------------------------ | ------------------------------------ |
 | Toolbar          | The eye button in the PDF pane | Also in the live and Typst previews. |
-| Menu             | View › Simulate Color Vision   |                                      |
 
 Only the screen changes, never the PDF. While a simulation is on, the button is highlighted and a notice at the bottom of the pane names it, with a button back to true colors. The choice holds for the window until you change it or close it. The simulation follows Machado, Oliveira, and Fernandes (2009).
 

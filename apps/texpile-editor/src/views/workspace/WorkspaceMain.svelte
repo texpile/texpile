@@ -12,6 +12,7 @@
 	import { ChevronLeft } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { activeCompare, setSuggesting, workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { ensureName } from '$lib/identity/ownName.svelte';
 	import { activeSuggestions, suggesting } from '$lib/comments/activeSuggestions.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import type { WorkspaceMainProps } from './workspaceMainProps';
@@ -64,7 +65,9 @@
 	const syncToCursor = $derived(canSync ? (actions.syncForward as () => void) : null);
 	// a lone file has no project to hold the log, so the menus drop their Add comment entry
 	const canComment = $derived(!fileMode.current);
-	function toggleSuggest(next: boolean) {
+	async function toggleSuggest(next: boolean) {
+		// a suggestion carries its author's name: git's, or one asked for now
+		if (next && !session.isGuest && !(await ensureName(workspaceRoot.current))) return;
 		void commentsCtl.suggestions.settle();
 		suggesting.current = next;
 		if (workspaceRoot.current && !session.isGuest) setSuggesting(workspaceRoot.current, next);

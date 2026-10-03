@@ -209,13 +209,9 @@ export function migrateLocalStorage(): void {
 		if (Array.isArray(recents)) u.recentFolders = recents.filter((p): p is string => typeof p === 'string');
 		const usage = readJson<Record<string, unknown>>('texpile:completionUsage');
 		if (isObj(usage)) u.completionUsage = usage;
-		// the web-era preferences blob: its flags are user memory (its layout fields went above)
+		// the web-era preferences blob: its dismissal flag is user memory (its layout fields went above)
 		const prefs = readJson<Record<string, unknown>>('texpile:preferences');
-		if (isObj(prefs)) {
-			if (prefs.onboardingCompleted === true) u.onboardingCompleted = true;
-			if (prefs.tourCompleted === true) u.tourCompleted = true;
-			if (prefs.advancedWarningDismissed === true) u.advancedWarningDismissed = true;
-		}
+		if (isObj(prefs) && prefs.advancedWarningDismissed === true) u.advancedWarningDismissed = true;
 		try {
 			localStorage.setItem('texpile:users', JSON.stringify(u));
 			for (const k of ['texpile:collabName', 'texpile:recentFolders', 'texpile:completionUsage', 'texpile:preferences'])

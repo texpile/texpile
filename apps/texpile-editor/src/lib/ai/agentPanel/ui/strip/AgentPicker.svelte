@@ -6,8 +6,10 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import MenuDropdown from '$lib/menus/MenuDropdown.svelte';
 	import { settings } from '$lib/settings';
-	import { agentLabel, PANEL_PRESETS, runningAgentName } from '../../agentNames';
+	import { openPreferencesAt } from '$lib/stores/dialogStore';
+	import { agentLabel, runningAgentName } from '../../agentNames';
 	import { agentSession, restartAgentSession, shownAgent } from '../../agentSession.svelte';
+	import { panelAgentsTicked } from '../../agentOffer.svelte';
 	import { installedAgents, lookUpAgents } from '../../installedAgents.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import type { PanelAgent } from '../../agentPanel.types';
@@ -19,19 +21,25 @@
 	lookUpAgents();
 
 	const current = $derived(shownAgent());
-	// only what is installed, and the one chosen even when it is not; Preferences lists the rest
-	const choices = $derived<PanelAgent[]>([
-		...PANEL_PRESETS.filter((agent) => !installedAgents.found || installedAgents.found[agent] || agent === current),
-		...(settings.current.agentPanelCommand ? ['custom' as const] : [])
-	]);
+	// the ones ticked in Preferences that can run here, and the one chosen even when it cannot
+	const choices = $derived<PanelAgent[]>(
+		panelAgentsTicked().filter((agent) =>
+			agent === 'custom'
+				? !!settings.current.agentPanelCommand.trim()
+				: !installedAgents.found || installedAgents.found[agent] || agent === current
+		)
+	);
+	const CHOOSE = 'choose-agents';
 	const groups = $derived([
 		{
 			options: choices.map((agent) => ({ value: agent, label: agentLabel(agent), checked: agent === current }))
-		}
+		},
+		{ options: [{ value: CHOOSE, label: m.agent_panel_choose_agents(), checked: false }] }
 	]);
 
 	function switchAgent(agent: string): void {
-		if (agent !== current) void restartAgentSession(agent as PanelAgent);
+		if (agent === CHOOSE) openPreferencesAt('ai');
+		else if (agent !== current) void restartAgentSession(agent as PanelAgent);
 	}
 </script>
 
@@ -45,7 +53,7 @@
 			<Bot class="size-3.5 shrink-0" />
 			<!-- drops out first when the dock narrows, as the shell name does: the icon and chevron still say what it is -->
 			<span class="truncate font-medium @max-[30rem]:hidden"
-				>{current && current !== 'off' ? runningAgentName(current, agentSession.name) : m.agent_panel_choose()}</span
+				>{current ? runningAgentName(current, agentSession.name) : m.agent_panel_choose()}</span
 			>
 			<ChevronDown class="size-3 shrink-0" />
 		</button>

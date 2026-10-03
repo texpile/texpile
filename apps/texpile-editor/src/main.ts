@@ -11,8 +11,6 @@ import '$lib/menus/selectEscape'; // side-effect: Escape in an open select's lis
 import { loadSettings } from '$lib/settings';
 import { watchWindowGlass } from '$lib/chrome/windowGlass.svelte';
 import { adoptBootOpen, bootOpen } from '$lib/workspace/openWorkspace';
-import { setupOwedAtBoot } from '$lib/setup/setupGate';
-import { holdPendingWorkspace } from '$lib/setup/pendingWorkspace';
 import { focusDoctor } from '$lib/debug/focusDoctor';
 import { mark, startupDoctor } from '$lib/debug/startupDoctor';
 import { warmEditor } from '$lib/warmup';
@@ -38,9 +36,7 @@ window.addEventListener('unhandledrejection', (e) => console.error('[client erro
 
 // adopt before mount, or the start screen renders first and is thrown away
 const boot = bootOpen();
-if (boot?.kind === 'folder' && setupOwedAtBoot()) {
-	holdPendingWorkspace(boot.path);
-} else if (boot) {
+if (boot) {
 	// head start only; App's own loader owns the retry and the error path
 	void import('./views/workspace/WorkspaceView.svelte').catch(() => {});
 	adoptBootOpen(boot);

@@ -9,6 +9,7 @@
 	import { joinLinkFor } from '$lib/collab/joinLink.svelte';
 	import Modal from '$lib/modals/Modal.svelte';
 	import ModalActions from '$lib/modals/ModalActions.svelte';
+	import { ensureName } from '$lib/identity/ownName.svelte';
 
 	let {
 		open = $bindable(false),
@@ -32,6 +33,8 @@
 
 	async function start() {
 		if (!root) return;
+		// the guests see the host by name: git's, or one asked for now
+		if (!(await ensureName(root))) return;
 		const trimmed = relayDraft.trim();
 		if (trimmed && trimmed !== settings.current.collabRelayUrl) updateSettings({ collabRelayUrl: trimmed });
 		try {

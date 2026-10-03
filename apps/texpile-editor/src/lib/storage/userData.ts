@@ -1,6 +1,6 @@
 // texpile:users - the user's own data, one versioned blob: identity (session name, comment
-// author), personal word list, the recent-folders MRU, completion frecency, and the onboarding
-// flags. Renderer-only and personal, which is what separates it from settings.json (machine/app
+// author), personal word list, the recent-folders MRU, completion frecency, and a dismissal
+// flag. Renderer-only and personal, which is what separates it from settings.json (machine/app
 // configuration the MAIN process reads) and texpile:layout (how the window looks).
 //
 // Reactive via one svelte store; frecency is the hot writer here (a write per accepted
@@ -23,8 +23,6 @@ export type UserData = {
 	/** the symbol picker's picks by id, most recent first, one list per language */
 	recentTypstSymbols: string[];
 	recentLatexSymbols: string[];
-	onboardingCompleted: boolean;
-	tourCompleted: boolean;
 	advancedWarningDismissed: boolean;
 };
 
@@ -40,8 +38,6 @@ const DEFAULTS: UserData = {
 	completionUsage: {},
 	recentTypstSymbols: [],
 	recentLatexSymbols: [],
-	onboardingCompleted: false,
-	tourCompleted: false,
 	advancedWarningDismissed: false
 };
 

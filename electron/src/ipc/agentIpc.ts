@@ -1,5 +1,6 @@
-// The reader's own agent, run for the renderer: which presets are installed, their models, a run, and its cancel. The command
-// comes from settings.json here in main, never from the request, so a request can only choose the prompt
+// The reader's own agents, run for the renderer: which presets are installed, their models, a run, and its cancel. The
+// command comes from settings.json here in main, never from the request: a request chooses the prompt, and which of the
+// agents ticked in Preferences runs it
 import { app, ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
 import { shellEnvReady } from '../shell/shellEnv';
@@ -10,6 +11,19 @@ import { agentStdio } from '../ai/agentStdio';
 import { listAgentModels } from '../ai/agentModels';
 
 const running = new Map<string, AbortController>();
+
+/** the agents Refine may run, as the renderer's refineAgents.svelte.ts reads them: those ticked, else the presets
+ *  installed */
+function refineAgentsAllowed(s: Record<string, unknown>): string[] {
+	if (Array.isArray(s.refineAgents)) return s.refineAgents.filter((a): a is string => typeof a === 'string');
+	return PRESET_AGENTS.filter((a) => findProgram(a) !== null);
+}
+
+/** a preset's model; '' is its own default */
+function modelOf(s: Record<string, unknown>, agent: string): string {
+	const own = s.aiAgentModels && typeof s.aiAgentModels === 'object' ? (s.aiAgentModels as Record<string, unknown>)[agent] : '';
+	return typeof own === 'string' ? own : '';
+}
 
 export function registerAgentIpc(): void {
 	ipcMain.handle('agent:detect', async () => {
@@ -23,16 +37,19 @@ export function registerAgentIpc(): void {
 			: { ok: false, error: 'bad request' }
 	);
 
-	ipcMain.handle('agent:run', async (_e, req: { id?: unknown; prompt?: unknown; system?: unknown }) => {
-		if (typeof req?.id !== 'string' || typeof req.prompt !== 'string') return { ok: false, error: 'bad request' };
+	ipcMain.handle('agent:run', async (_e, req: { id?: unknown; prompt?: unknown; system?: unknown; agent?: unknown }) => {
+		if (typeof req?.id !== 'string' || typeof req.prompt !== 'string' || typeof req.agent !== 'string')
+			return { ok: false, error: 'bad request' };
 		const system = typeof req.system === 'string' ? req.system : '';
 		const s = readSettings();
-		const argv = agentArgv(s.aiAgent, s.aiAgentCommand, s.aiAgentModel);
+		await shellEnvReady();
+		if (!refineAgentsAllowed(s).includes(req.agent)) return { ok: false, error: 'that agent is not ticked in Preferences' };
+		const argv = agentArgv(req.agent, s.aiAgentCommand, modelOf(s, req.agent));
 		if (!argv) return { ok: false, error: 'no agent is set in Preferences' };
 		const abort = new AbortController();
 		running.set(req.id, abort);
 		try {
-			return await runAgent(argv, { system, request: req.prompt }, abort.signal, agentStdio(s.aiAgent));
+			return await runAgent(argv, { system, request: req.prompt }, abort.signal, agentStdio(req.agent));
 		} finally {
 			running.delete(req.id);
 		}

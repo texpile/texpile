@@ -1,6 +1,6 @@
 // Texpile's own copy of tinymist as every window sees it: the one install under way (whichever
 // window started it), how the last one ended, and what is on disk. Held at module scope so the
-// Toolchain tab, the welcome screen and a tool-missing toast all show the same install.
+// Toolchain tab, the missing-typesetter dialog and the Typst banner all show the same install.
 import { toolchainProbe } from './toolchainProbe.svelte';
 
 function bridge(): TexpileTypstBridge | undefined {

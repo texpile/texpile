@@ -363,7 +363,8 @@ export function syncTypstDocuments(): void {
 /** what `tinymist.doStartPreview` answers with */
 export async function formatTypstDocument(root: string | null, file: string, text: string): Promise<string> {
 	const client = await typstClient(root);
-	if (!client) throw new Error('tinymist is not available');
+	// worded as main words a missing program, so Format offers the install rather than an error
+	if (!client) throw new Error((await tinymistResolved()) ? 'tinymist is not available' : 'tinymist was not found on PATH.');
 	pushSettings(client);
 	const edits = await client.request<
 		{ textDocument: { uri: string }; options: { tabSize: number; insertSpaces: boolean } },
