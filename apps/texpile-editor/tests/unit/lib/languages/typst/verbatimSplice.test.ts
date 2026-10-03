@@ -583,6 +583,16 @@ describe('typst: what is typed beside a call or a marker', () => {
 		expect(parseTypstFile(out).doc.child(1).textContent).toBe(doc.child(1).textContent);
 	});
 
+	it('letters typed after the dot that follows a call are not read as a field of the call', () => {
+		for (const src of ['Intro.\n\nSee#footnote[n]. More.\n', 'Intro.\n\nSome #emph[e]. More.\n']) {
+			const parsed = parseTypstFile(src);
+			const at = posOf(parsed.doc, ' More');
+			const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('x')).doc;
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.child(1).toString(), out).toBe(doc.child(1).toString());
+		}
+	});
+
 	it('a colon typed into a term is escaped, or it would end the term', () => {
 		const src = 'Intro.\n\n/ Another term: a second definition.\n';
 		const parsed = parseTypstFile(src);

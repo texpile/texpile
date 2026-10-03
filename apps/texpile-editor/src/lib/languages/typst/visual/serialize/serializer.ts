@@ -362,6 +362,7 @@ function fuses(bytes: string, tail: string): boolean {
 	if (/(^|[^\\])(\\\\)*\.$/.test(bytes) && /^\./.test(tail)) return true;
 	// a call written for a mark or a reference ends on `]` or `)`: `.`, `(`, `[` or `;` after it go on with it
 	if (/#\S[^\n]*[\])]$/.test(bytes) && /^(?:[([;]|\.[\p{L}_])/u.test(tail)) return true;
+	if (/#\S[^\n]*[\])]\.$/.test(bytes) && /^[\p{L}_]/u.test(tail)) return true;
 	// a line break is a backslash and the whitespace after it; anything else there escapes instead
 	if (/(^|[^\\])(\\\\)*\\$/.test(bytes) && /^\S/.test(tail)) return true;
 	return false;
