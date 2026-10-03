@@ -11,6 +11,7 @@ vi.mock('$lib/storage/userData', () => ({ userData: h.userData, updateUserData: 
 vi.mock('$lib/comments/author', () => ({ folderGitName: async () => null }));
 
 const { ensureName, nameAsk } = await import('$lib/identity/ownName.svelte');
+const { workspaceRoot } = await import('$lib/workspace/workspaceStore');
 const { default: NamePrompt } = await import('$lib/identity/NamePrompt.svelte');
 
 let app: Record<string, unknown> | null = null;
@@ -23,6 +24,7 @@ afterEach(() => {
 	if (app) unmount(app);
 	app = null;
 	nameAsk.answer?.(null);
+	workspaceRoot.current = null;
 	document.body.innerHTML = '';
 });
 
@@ -59,6 +61,17 @@ it('says no when the question goes away unanswered', async () => {
 	const { answer } = await asked();
 	unmount(app!);
 	app = null;
+	expect(await answer).toBe(false);
+	expect(nameAsk.open).toBe(false);
+});
+
+// the window switched folders in place, with the question still up
+it('says no when the folder changes under the question', async () => {
+	workspaceRoot.current = '/p';
+	flushSync();
+	const { answer } = await asked();
+	workspaceRoot.current = '/q';
+	flushSync();
 	expect(await answer).toBe(false);
 	expect(nameAsk.open).toBe(false);
 });

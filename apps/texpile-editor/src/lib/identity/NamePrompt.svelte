@@ -1,9 +1,9 @@
 <script lang="ts">
 	// What to call the reader, asked the first time something needs a name and nothing has one
-	import { onDestroy } from 'svelte';
 	import Modal from '$lib/modals/Modal.svelte';
 	import ModalActions from '$lib/modals/ModalActions.svelte';
 	import { nameAsk } from './ownName.svelte';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { m } from '$lib/paraglide/messages';
 
 	let value = $state('');
@@ -19,8 +19,11 @@
 		nameAsk.answer?.(ok && value.trim() ? value.trim() : null);
 	}
 
-	// gone with its folder: what asked must not go ahead in whichever folder opens next
-	onDestroy(() => nameAsk.answer?.(null));
+	// the folder it was asked in closed or changed: what asked must not go ahead in whichever folder is open next
+	$effect(() => {
+		void workspaceRoot.current;
+		return () => nameAsk.answer?.(null);
+	});
 </script>
 
 {#if nameAsk.open}
