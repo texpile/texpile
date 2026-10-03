@@ -94,9 +94,14 @@ function wholeWords(changes: readonly DocChange[], before: PMNode, doc: PMNode, 
 			fromB = first.fromB - Math.min(first.fromB - fromB, first.fromB - stretch.fromB, first.fromA - stretch.fromA);
 			toB = last.toB + Math.min(toB - last.toB, stretch.toB - last.toB, stretch.toA - last.toA);
 		}
+		// nor past the change beside it: a word that runs on across a break taken out was two words before it
+		const lead = changes[start - 1];
+		const next = changes[i + 1];
+		if (lead) fromB = first.fromB - Math.min(first.fromB - fromB, first.fromB - lead.toB, first.fromA - lead.toA);
+		if (next) toB = last.toB + Math.min(toB - last.toB, next.fromB - last.toB, next.fromA - last.toA);
 		const joined = { fromA: first.fromA - (first.fromB - fromB), toA: last.toA + (toB - last.toB), fromB, toB };
 		const prev = out[out.length - 1];
-		if (prev && prev.toA >= joined.fromA) {
+		if (prev && prev.toA >= joined.fromA && !onlyBreaks(prev, before, doc)) {
 			prev.fromA = Math.min(prev.fromA, joined.fromA);
 			prev.fromB = Math.min(prev.fromB, joined.fromB);
 			prev.toA = Math.max(prev.toA, joined.toA);

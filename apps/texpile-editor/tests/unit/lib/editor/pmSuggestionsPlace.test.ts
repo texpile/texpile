@@ -448,6 +448,19 @@ it('draws a heading split beside a letter taken out as a break', () => {
 	]);
 });
 
+// part of a heading's last word made italic and the paragraph after joined on: the word widened past the join and struck both blocks' words
+it('draws a paragraph joined onto a heading whose last word was restyled as a break beside the restyled word', () => {
+	const source =
+		'\\documentclass{article}\n\\begin{document}\n\\section{What is\\textit{ Texpil}eTexpile is both a visual editor.}\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [
+		mark(source, 'gesture', '\\textit{ Texpil}eTexpile is both a visual editor.}', ' Texpile}\n\nTexpile is both a visual editor.')
+	]);
+	expect(ranges.map((r) => (r.brk ? `${r.brk} ${r.from}` : `${r.format ? 'format' : 'words'} ${doc.textBetween(r.from, r.to)}`))).toEqual([
+		'format  Texpile',
+		`removed ${1 + 'What is Texpile'.length}`
+	]);
+});
+
 // a chip opening a paragraph holds the space after it, and lets it go once the paragraph is joined onto the one before
 it('draws a paragraph that opens with a chip joined onto the one before as one break', () => {
 	const source = '\\documentclass{article}\n\\begin{document}\nWords in the band.\\vspace{10pt} Prose after a space.\n\\end{document}\n';
