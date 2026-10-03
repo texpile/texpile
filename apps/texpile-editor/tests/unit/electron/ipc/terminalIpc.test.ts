@@ -1,4 +1,4 @@
-// A window that closes runs none of its own teardown, so the shells it spawned are main's to end. Electron and
+// A window that closes or reloads runs none of its own teardown, so the shells it spawned are main's to end. Electron and
 // node-pty are stood in for
 import { it, expect, vi, beforeAll } from 'vitest';
 import { EventEmitter } from 'node:events';
@@ -65,9 +65,19 @@ it('ends the shells of a window that closes', async () => {
 	expect(spawned.map((p) => p.killed)).toEqual([true, true]);
 });
 
+it('ends the shells of a window that reloads, and keeps them through a move inside the page', async () => {
+	const wc = window(3);
+	await h.handlers.get('terminal:spawn')!({ sender: wc }, { id: 'term-d' });
+	const shell = spawned[spawned.length - 1];
+	wc.emit('did-start-navigation', { isMainFrame: true, isSameDocument: true });
+	expect(shell.killed).toBe(false);
+	wc.emit('did-start-navigation', { isMainFrame: true, isSameDocument: false });
+	expect(shell.killed).toBe(true);
+});
+
 it('leaves no listener on the window once its shell is gone', async () => {
 	const wc = window(2);
 	await h.handlers.get('terminal:spawn')!({ sender: wc }, { id: 'term-c' });
 	h.handlers.get('terminal:kill')!({ sender: wc }, { id: 'term-c' });
-	expect(wc.listenerCount('destroyed')).toBe(0);
+	expect(wc.listenerCount('destroyed') + wc.listenerCount('did-start-navigation')).toBe(0);
 });
