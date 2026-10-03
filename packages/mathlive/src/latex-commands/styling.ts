@@ -636,7 +636,9 @@ defineFunction(['class', 'htmlClass'], '{name:string}{content:auto*}', {
   },
   render: (atom, context) =>
     atom.createBox(context, {
-      classes: (atom.args![0] as string) ?? '',
+      classes: context.allowHtmlCommands
+        ? ((atom.args![0] as string) ?? '')
+        : '',
       boxType: 'lift',
     }),
 });
@@ -656,7 +658,7 @@ defineFunction(['cssId', 'htmlId'], '{id:string}{content:auto*}', {
   },
   render: (atom, context) => {
     const box = atom.createBox(context);
-    box.cssId = (atom.args![0] as string) ?? '';
+    if (context.allowHtmlCommands) box.cssId = (atom.args![0] as string) ?? '';
     return box;
   },
 });
@@ -673,7 +675,8 @@ defineFunction('htmlData', '{data:string}{content:auto*}', {
   },
   render: (atom, context) => {
     const box = atom.createBox(context);
-    box.htmlData = (atom.args![0] as string) ?? '';
+    if (context.allowHtmlCommands)
+      box.htmlData = (atom.args![0] as string) ?? '';
     return box;
   },
 });
@@ -691,7 +694,8 @@ defineFunction(['style', 'htmlStyle'], '{data:string}{content:auto*}', {
   },
   render: (atom, context) => {
     const box = atom.createBox(context);
-    box.htmlStyle = (atom.args![0] as string) ?? '';
+    if (context.allowHtmlCommands)
+      box.htmlStyle = (atom.args![0] as string) ?? '';
     return box;
   },
 });
@@ -703,7 +707,7 @@ defineFunction('href', '{url:string}{content:auto*}', {
     const box = atom.createBox(context);
     const href = (atom.args![0] as string) ?? '';
 
-    if (href) box.htmlData = `href=${href}`;
+    if (href && context.allowHtmlCommands) box.htmlData = `href=${href}`;
 
     return box;
   },

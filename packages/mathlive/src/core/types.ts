@@ -194,6 +194,8 @@ export interface ContextInterface {
   readonly colorMap: (name: string) => string | undefined;
   readonly backgroundColorMap: (name: string) => string | undefined;
   getMacro(token: string): MacroDefinition | null;
+  // set by MathLive's own markup alone: in a document's math the html commands draw their body
+  readonly allowHtmlCommands?: boolean;
 }
 
 export declare function applyStyle(
