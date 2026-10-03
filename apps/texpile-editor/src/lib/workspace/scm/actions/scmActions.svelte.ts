@@ -298,7 +298,9 @@ export class ScmActions {
 		await this.deps.refreshTree();
 		await refreshGitStatus(root);
 		await refreshGitHistory(root);
-		if (loadedPath) await this.deps.loadFile(loadedPath); // its bytes on disk just changed
+		// typed while git wrote the version: the save guard asks about it, as after a sync
+		if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
+		if (loadedPath && !this.deps.hasPendingSave()) await this.deps.loadFile(loadedPath); // its bytes on disk just changed
 		toaster.success({ title: m.vcs_toast_restored() });
 		return true;
 	};

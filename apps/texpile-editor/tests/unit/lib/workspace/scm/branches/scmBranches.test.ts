@@ -33,7 +33,7 @@ vi.mock('$lib/workspace/scm/gitFailureToast', () => ({ toastGitFailure }));
 const { ScmBranches } = await import('$lib/workspace/scm/branches/scmBranches.svelte');
 const { scmDraftFor } = await import('$lib/workspace/scm/actions/scmDraft.svelte');
 
-function make() {
+function make(over: Record<string, unknown> = {}) {
 	const host = { busy: false, commit: vi.fn(async (_m: string, _p: string[], _root: string) => true) };
 	const deps = {
 		getLoadedPath: () => null,
@@ -43,7 +43,8 @@ function make() {
 		loadFile: async () => {},
 		readTextIfPresent: async () => null,
 		isDiffMode: () => false,
-		captureDiffSnapshot: () => {}
+		captureDiffSnapshot: () => {},
+		...over
 	};
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- only what change() reads
 	return { branches: new ScmBranches(host, deps as any), host };
@@ -101,4 +102,26 @@ it('says why a switch did not happen, in a notice', async () => {
 		{}
 	);
 	expect(success).not.toHaveBeenCalled();
+});
+
+// typed while git rewrote the files: the reload took it out of the editor, and the autosave still
+// queued then wrote it over the other branch's copy
+it('writes what was typed during the switch through the save guard instead of reloading over it', async () => {
+	let pending = false;
+	const loadFile = vi.fn(async (_p: string) => {});
+	const flushPendingSave = vi.fn(async () => {});
+	gitSwitch.mockImplementationOnce(async () => {
+		pending = true;
+		return { ok: true, branch: 'draft' };
+	});
+	const { branches } = make({
+		getLoadedPath: () => '/p/main.tex',
+		readTextIfPresent: async () => 'text',
+		hasPendingSave: () => pending,
+		flushPendingSave,
+		loadFile
+	});
+	await branches.switchTo('draft');
+	expect(flushPendingSave).toHaveBeenCalledOnce();
+	expect(loadFile).not.toHaveBeenCalled();
 });

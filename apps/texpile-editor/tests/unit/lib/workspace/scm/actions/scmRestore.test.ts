@@ -66,17 +66,19 @@ function makeScm(
 		remove?: (p: string) => Promise<void>;
 		read?: (p: string) => Promise<string | null>;
 		compareTab?: (path: string, compare: { hash: string; subject: string; path?: string }) => void;
+		hasPending?: () => boolean;
+		load?: (p: string) => Promise<void>;
 	} = {}
 ) {
 	return new ScmActions({
 		getLoadedPath: () => opts.loaded ?? null,
 		discardPendingSave: discarded,
-		hasPendingSave: () => opts.pending ?? false,
+		hasPendingSave: opts.hasPending ?? (() => opts.pending ?? false),
 		flushPendingSave: flushed,
 		trashEntry: opts.trash ?? (async () => 'trashed' as const),
 		removeEntry: opts.remove ?? (async () => {}),
 		refreshTree: async () => {},
-		loadFile: async () => {},
+		loadFile: opts.load ?? (async () => {}),
 		captureDiffSnapshot: () => {},
 		isDiffMode: () => false,
 		openCompareTab: opts.compareTab ?? (() => {}),
@@ -114,6 +116,24 @@ describe('restoring a version', () => {
 		confirmAsk.mockResolvedValueOnce(false as never);
 		expect(await makeScm().restore(ENTRY)).toBe(false);
 		expect(gitRestore).not.toHaveBeenCalled();
+	});
+});
+
+// typed while the restore ran: the reload took it out of the editor, and the autosave still queued
+// then wrote it over the restored file
+describe('typing while a restore runs', () => {
+	it('is written through the save guard instead of reloaded over', async () => {
+		let pending = false;
+		const load = vi.fn(async (_p: string) => {});
+		flushed.mockClear();
+		gitChanges.current = [];
+		gitRestore.mockImplementationOnce(async () => {
+			pending = true;
+			return { ok: true };
+		});
+		expect(await makeScm({ loaded: 'C:/project/main.tex', hasPending: () => pending, load }).restore(ENTRY)).toBe(true);
+		expect(flushed).toHaveBeenCalledOnce();
+		expect(load).not.toHaveBeenCalled();
 	});
 });
 
