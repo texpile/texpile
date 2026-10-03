@@ -109,6 +109,7 @@
 						rows="2"
 						bind:value={editDraft}
 						onkeydown={(e) => {
+							if (e.isComposing) return;
 							if (e.key === 'Escape') editing = null;
 							else if (e.key === 'Enter' && !e.shiftKey) {
 								e.preventDefault();
@@ -176,7 +177,7 @@
 				onkeydown={(e) => {
 					// Enter sends, Shift+Enter breaks the line: a review reply is one or two
 					// sentences, so reaching for a button every time is the wrong default
-					if (e.key === 'Enter' && !e.shiftKey) {
+					if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
 						e.preventDefault();
 						submit();
 					}

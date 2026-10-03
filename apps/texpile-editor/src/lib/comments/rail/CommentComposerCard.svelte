@@ -62,6 +62,7 @@
 		placeholder={m.comments_add()}
 		bind:value={draft}
 		onkeydown={(e) => {
+			if (e.isComposing) return;
 			if (e.key === 'Escape') {
 				draft = '';
 				onCancel();
