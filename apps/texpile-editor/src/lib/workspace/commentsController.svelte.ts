@@ -476,10 +476,8 @@ export class CommentsController {
 	/** drop one message; the fold drops the thread with it if that was the last of it */
 	async removeMessage(thread: CommentThread, message: CommentMessage): Promise<void> {
 		await this.commit(deleteMessageEvent({ message: message.id, by: await this.author(), at: new Date().toISOString() }));
-		if (thread.messages.length <= 1) {
-			this.ranges = this.ranges.filter((r) => r.id !== thread.id);
-			if (this.selected === thread.id) this.selected = null;
-		}
+		if (thread.messages.length <= 1) this.dropRange(thread.id);
+		if (isSuggestion(thread) && thread.file === this.file) this.resolve();
 	}
 
 	/** reveal a thread: scroll to it here, or open the file it is on and scroll once it lands */

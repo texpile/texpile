@@ -1,8 +1,10 @@
 // @vitest-environment jsdom
-// Revealing a thread from the panel: one on another file is selected once that file is up
+// Revealing a thread from the panel: one on another file is selected once that file is up. And what a message
+// deleted from a suggestion leaves drawn
 import { it, expect, vi, beforeEach } from 'vitest';
 import { buildAnchor } from '$lib/comments/anchor';
 import { openEvent, serializeLog } from '$lib/comments/log';
+import { activeSuggestions } from '$lib/comments/activeSuggestions.svelte';
 
 let disk: Record<string, string> = {};
 
@@ -28,9 +30,9 @@ const ROOT = '/w';
 const MAIN = 'We prove the estimator is sharp for smooth solutions.\n';
 const APPENDIX = 'The appendix holds the longer proof of the bound.\n';
 
-function threadOn(id: string, file: string, text: string, words: string) {
+function threadOn(id: string, file: string, text: string, words: string, restore?: string) {
 	const at = text.indexOf(words);
-	return openEvent({ id, file, anchor: buildAnchor(text, at, at + words.length), body: id, by: 'test', at: 'now' });
+	return openEvent({ id, file, anchor: buildAnchor(text, at, at + words.length), body: id, by: 'test', at: 'now', restore });
 }
 
 let opened: string[] = [];
@@ -40,7 +42,8 @@ beforeEach(() => {
 		'.texpile/comments.jsonl': serializeLog([
 			threadOn('here', 'main.tex', MAIN, 'sharp'),
 			threadOn('appendix', 'appendix.tex', APPENDIX, 'longer proof'),
-			threadOn('gone', 'deleted.tex', 'Words of a file deleted since.', 'deleted')
+			threadOn('gone', 'deleted.tex', 'Words of a file deleted since.', 'deleted'),
+			threadOn('suggested', 'main.tex', MAIN, 'smooth', 'regular')
 		])
 	};
 });
@@ -68,4 +71,12 @@ it('leaves the selection alone after a thread whose file never opened', async ()
 	ctl.open(thread('here'));
 	await ctl.refresh();
 	expect(ctl.selected).toBe('here');
+});
+
+// the thread went with its only message, and its old words stayed struck through in the editor until the file reopened
+it('stops drawing a suggestion whose only message is deleted', async () => {
+	const { ctl, thread } = await openMain();
+	expect(activeSuggestions.current.map((s) => s.id)).toEqual(['suggested']);
+	await ctl.removeMessage(thread('suggested'), thread('suggested').messages[0]);
+	expect(activeSuggestions.current).toEqual([]);
 });
