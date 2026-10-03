@@ -107,10 +107,14 @@ export function registerAcpIpc(): void {
 		if (typeof req?.configId !== 'string' || typeof req.value !== 'string') return;
 		return sessions.get(e.sender.id)?.setConfig(req.configId, req.value);
 	});
-	ipcMain.handle('acp:chats', (e) => sessions.get(e.sender.id)?.listChats() ?? []);
+	ipcMain.handle('acp:chats', (e) => {
+		const session = sessions.get(e.sender.id);
+		return session ? session.listChats() : [];
+	});
 	ipcMain.handle('acp:openChat', (e, id: unknown) => {
 		if (typeof id !== 'string') return { ok: false, error: 'bad request' };
-		return sessions.get(e.sender.id)?.openChat(id) ?? { ok: false, error: 'not ready' };
+		const session = sessions.get(e.sender.id);
+		return session ? session.openChat(id) : { ok: false, error: 'not ready' };
 	});
 	ipcMain.on('acp:close', (e) => closeFor(e.sender.id));
 }
