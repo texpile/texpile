@@ -1,10 +1,14 @@
 // The toolchain probe's results, held at module scope so revisiting the Preferences tab shows
 // what was already found instead of re-spawning every probe process.
+import { tinymistMissing } from './missingProgram/missingProgram.svelte';
+
 class ToolchainProbe {
 	tinymist = $state<TinymistInfo | null | 'unchecked'>('unchecked');
 	probes = $state<ToolProbe[]>([]);
 	distros = $state<ToolDistro[]>([]);
 	probing = $state(false);
+	/** a run has answered, so what is installed is known rather than not yet looked at */
+	checked = $state(false);
 	/** the probe itself could not run - an old main process, or no desktop bridge at all */
 	probeFailed = $state(false);
 	/** the rows that have answered in the run under way; the rest still say Checking */
@@ -30,6 +34,8 @@ class ToolchainProbe {
 			const tm = bridge.resolve().then((t) => {
 				if (runNo !== this.runNo) return t;
 				this.tinymist = t;
+				// found, once installed or pointed at: the bar and the preview pane stop saying it is missing
+				if (t) tinymistMissing.current = false;
 				this.answered = [...this.answered, 'tinymist'];
 				return t;
 			});
@@ -47,7 +53,10 @@ class ToolchainProbe {
 			this.tinymist = null;
 		} finally {
 			off?.();
-			if (runNo === this.runNo) this.probing = false;
+			if (runNo === this.runNo) {
+				this.probing = false;
+				this.checked = true;
+			}
 		}
 	}
 

@@ -1,6 +1,6 @@
 // Editor preferences facade. The old texpile:preferences blob is gone (migrated); its fields now
 // live where they belong - zoom / pageView / previewVisible in texpile:layout (how the window
-// looks), the dismissal and onboarding flags in texpile:users (the user's own memory). The
+// looks), the dismissal flag in texpile:users (the user's own memory). The
 // EditorPreferences shape survives as a facade so the editors keep one object to read and write.
 import { browser } from '$lib/runtime';
 import { layout, updateLayout } from '$lib/storage/layout';
@@ -14,8 +14,6 @@ export type EditorPreferences = {
 	previewVisible: boolean;
 	sidebarOpen: boolean;
 	advancedWarningDismissed: boolean;
-	onboardingCompleted: boolean;
-	tourCompleted: boolean;
 };
 
 function snapshot(): EditorPreferences {
@@ -26,9 +24,7 @@ function snapshot(): EditorPreferences {
 		pageView: l.pageView,
 		previewVisible: l.previewVisible,
 		sidebarOpen: l.sidebarOpen,
-		advancedWarningDismissed: u.advancedWarningDismissed,
-		onboardingCompleted: u.onboardingCompleted,
-		tourCompleted: u.tourCompleted
+		advancedWarningDismissed: u.advancedWarningDismissed
 	};
 }
 
@@ -40,9 +36,7 @@ export const preferences = $state<EditorPreferences>(
 				pageView: false,
 				previewVisible: true,
 				sidebarOpen: true,
-				advancedWarningDismissed: false,
-				onboardingCompleted: false,
-				tourCompleted: false
+				advancedWarningDismissed: false
 			}
 );
 
@@ -55,19 +49,13 @@ $effect.root(() => {
 			pageView: preferences.pageView,
 			previewVisible: preferences.previewVisible,
 			sidebarOpen: preferences.sidebarOpen,
-			advancedWarningDismissed: preferences.advancedWarningDismissed,
-			onboardingCompleted: preferences.onboardingCompleted,
-			tourCompleted: preferences.tourCompleted
+			advancedWarningDismissed: preferences.advancedWarningDismissed
 		};
 		if (!browser) return;
 		if (saveTimeout) clearTimeout(saveTimeout);
 		saveTimeout = setTimeout(() => {
 			updateLayout({ editorZoom: snap.zoom, pageView: snap.pageView, previewVisible: snap.previewVisible, sidebarOpen: snap.sidebarOpen });
-			updateUserData({
-				advancedWarningDismissed: snap.advancedWarningDismissed,
-				onboardingCompleted: snap.onboardingCompleted,
-				tourCompleted: snap.tourCompleted
-			});
+			updateUserData({ advancedWarningDismissed: snap.advancedWarningDismissed });
 		}, 100);
 	});
 });

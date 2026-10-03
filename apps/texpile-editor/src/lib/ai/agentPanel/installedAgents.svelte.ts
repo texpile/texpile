@@ -9,7 +9,7 @@ export const installedAgents = {
 	}
 };
 
-/** `again` for Preferences and the welcome screen, where an agent may just have been installed */
+/** `again` for Preferences, where an agent may just have been installed */
 export function lookUpAgents(again = false): void {
 	if (found && !again) return;
 	void acpBridge()

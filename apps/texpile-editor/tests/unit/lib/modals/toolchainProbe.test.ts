@@ -19,6 +19,8 @@ it('fills in each row as its probe answers instead of waiting for the slowest', 
 	const run = toolchainProbe.run();
 	emit!(fast);
 	expect(toolchainProbe.probing).toBe(true);
+	// one row in is not the answer: the missing-program dialog waits for the whole of it
+	expect(toolchainProbe.checked).toBe(false);
 	expect(toolchainProbe.answered).toContain('bibtex');
 	expect(toolchainProbe.probeFor('bibtex')?.detail).toBe('BibTeX 0.99d');
 	expect(toolchainProbe.probeFor('biber')).toBeUndefined();
@@ -26,6 +28,7 @@ it('fills in each row as its probe answers instead of waiting for the slowest', 
 	finish([fast, slow]);
 	await run;
 	expect(toolchainProbe.probing).toBe(false);
+	expect(toolchainProbe.checked).toBe(true);
 	expect(emit).toBeUndefined();
 	expect(toolchainProbe.probes.map((p) => p.id).sort()).toEqual(['biber', 'bibtex']);
 });

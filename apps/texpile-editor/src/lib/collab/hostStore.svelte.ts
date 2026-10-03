@@ -24,6 +24,8 @@ import {
 import { resolveRealRelative } from '$lib/workspace/realRelative';
 import { settings } from '$lib/settings';
 import { presenceIdentity } from './identity';
+import { folderGitName } from '$lib/comments/author';
+import { typedName } from '$lib/identity/ownName.svelte';
 import { flattenShareManifest } from './shareManifest';
 import { resolveSharedTarget } from './sharedPathGuard';
 
@@ -88,6 +90,7 @@ class HostCollabController {
 		this.status = 'starting';
 		this.lastError = '';
 		try {
+			this.gitUserName = (await folderGitName(root))?.trim() ?? '';
 			const code = generateShareCode();
 			const keys = await deriveSessionKeys(code);
 			const hostKey = generateShareCode(); // second random secret; the relay only ever stores its hash
@@ -105,7 +108,7 @@ class HostCollabController {
 				transport,
 				key: keys.contentKey,
 				role: 'host',
-				user: presenceIdentity('host'),
+				user: this.identity(),
 				events: {
 					onPeersChange: (peers) => {
 						this.peers = [...peers.values()];
@@ -175,7 +178,14 @@ class HostCollabController {
 	}
 
 	refreshIdentity(): void {
-		this.session?.setIdentity(presenceIdentity('host'));
+		this.session?.setIdentity(this.identity());
+	}
+
+	/** the folder's git user.name, which the host goes by when no name is typed in Preferences */
+	private gitUserName = '';
+
+	private identity(): ReturnType<typeof presenceIdentity> {
+		return presenceIdentity('host', 0, typedName() || this.gitUserName);
 	}
 
 	private suggesting = false;

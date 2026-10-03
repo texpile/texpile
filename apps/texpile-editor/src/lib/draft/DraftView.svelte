@@ -18,6 +18,7 @@
 	import { DraftSession } from './draftSession.svelte';
 	import type { PatchReq } from './patch/patch.types';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
+	import { askForProgram } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -251,7 +252,11 @@
 	{#if compiler.missingTool}
 		<div class="text-error-ink bg-surface-50-950 m-3 flex shrink-0 items-center gap-3 rounded-container p-3 text-xs">
 			<span class="min-w-0 flex-1">{compiler.error}</span>
-			<button class="btn btn-sm preset-tonal shrink-0" onclick={openToolchainPrefs}>{m.compile_tool_missing_action()}</button>
+			<button
+				class="btn btn-sm preset-tonal shrink-0"
+				onclick={() => compiler.missingTool && !askForProgram(compiler.missingTool) && openToolchainPrefs()}
+				>{m.compile_tool_missing_action()}</button
+			>
 		</div>
 	{:else if compiler.error}
 		<!-- Now a single line in the normal case (the log tail moved to Problems), but the cap stays

@@ -7,7 +7,7 @@
 import { mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { basename, revealItem, underRoot } from '$lib/workspace/fileSystem';
 import { getFolder, updateFolder } from '$lib/storage/workspaces';
-import { toastMissingTool } from '$lib/workspace/toolMissing';
+import { sayToolMissing } from '$lib/workspace/toolMissing';
 import { observe } from '$lib/runes/observe.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { tinymistResolved, typstBridgeAvailable, typstServerGen } from '../../intellisense/lspClient';
@@ -116,7 +116,7 @@ class TypstExportState {
 			if (outcome.kind === 'failed' && outcome.missingTool) {
 				// nothing in the dialog can fix this; the app's missing-tool toast offers the install
 				this.open = false;
-				await toastMissingTool('tinymist');
+				await sayToolMissing('tinymist');
 			} else if (outcome.kind === 'failed') this.fail(outcome.message);
 			if (outcome.kind !== 'done') return;
 			updateFolder(root, (draft) => {

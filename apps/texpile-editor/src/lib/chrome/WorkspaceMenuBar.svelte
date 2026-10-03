@@ -11,11 +11,10 @@
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { hasVisualMode, isRawTextKind, formatOf, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { editSelect, formatSelect } from './menuBarCommands';
-	import { preferencesOpen, shortcutsOpen, setupOpen, openPreferencesAt } from '$lib/stores/dialogStore';
+	import { preferencesOpen, shortcutsOpen, openPreferencesAt } from '$lib/stores/dialogStore';
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 	import { attachNativeMenu, publishMenuState } from '$lib/workspace/nativeMenu';
 	import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
-	import { colorVision, parseColorVisionMode } from '$lib/preview/colorVision/colorVision';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import { whatsNewOpen } from '$lib/whatsNew';
 	import { triggerClass, menuContentClass } from '$lib/menus/menuStyles';
@@ -151,12 +150,10 @@
 		if (value === 'zoom-in') onZoomIn?.();
 		else if (value === 'zoom-out') onZoomOut?.();
 		else if (value === 'zoom-reset') onZoomReset?.();
-		else if (value.startsWith('vision:')) colorVision.current = parseColorVisionMode(value.slice('vision:'.length)) ?? 'none';
 	}
 
 	function helpSelect(value: string) {
 		if (value === 'shortcuts') shortcutsOpen.current = true;
-		else if (value === 'setup') setupOpen.current = true;
 		else if (value === 'whatsnew') whatsNewOpen.current = true;
 		else if (value === 'docs') window.open('https://texpile.com/docs', '_blank', 'noopener,noreferrer');
 		else if (value === 'discord') window.open('https://discord.gg/7wanVzCBWf', '_blank', 'noopener,noreferrer');
@@ -250,7 +247,6 @@
 			canNewFile: !!onNewFile,
 			typstProject,
 			canExportTypst: typstExport.available,
-			colorVision: colorVision.current,
 			canInsertImage: !!imageDir,
 			canOpenFolder: !!onOpenFolder,
 			canSaveTemplate: !!onSaveAsTemplate,
@@ -334,7 +330,7 @@
 	<!-- zoom is webContents.setZoomFactor, which the browser has its own of; the color vision check
 	     there is the eye on the preview toolbar -->
 	{#if !__WEB__ && showAt(2, overflow)}
-		<ViewMenu index={2} select={viewSelect} {uiZoomPercent} colorVisionMode={colorVision.current} />
+		<ViewMenu index={2} select={viewSelect} {uiZoomPercent} />
 	{/if}
 	{#if showAt(3, overflow)}
 		<InsertMenu index={3} select={(v) => void insertSelect(v)} {mathSelect} {structured} {dialect} canInsertImage={!!imageDir} />

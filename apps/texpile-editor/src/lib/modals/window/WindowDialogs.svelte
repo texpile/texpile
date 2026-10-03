@@ -12,13 +12,12 @@
 	// tangled up with who renders them.
 	import PreferencesDialog from './PreferencesDialog.svelte';
 	import ShortcutsDialog from './ShortcutsDialog.svelte';
-	import SetupDialog from '$lib/setup/SetupDialog.svelte';
-	import { preferencesOpen, setupOpen, takePreferencesReopen, takeSetupReopen } from '$lib/stores/dialogStore';
+	import NamePrompt from '$lib/identity/NamePrompt.svelte';
+	import { preferencesOpen, takePreferencesReopen } from '$lib/stores/dialogStore';
 
 	if (takePreferencesReopen()) preferencesOpen.current = true;
-	if (takeSetupReopen()) setupOpen.current = true;
 </script>
 
 <PreferencesDialog bind:open={preferencesOpen.current} />
 <ShortcutsDialog />
-<SetupDialog />
+<NamePrompt />

@@ -1,19 +1,18 @@
 <script lang="ts">
-	// Step three: whether this computer can build what the reader writes
+	// Whether this computer can build what the reader writes: one row a typesetter, an install where Texpile can do it
 	import { CircleAlert, CircleCheck, LoaderCircle, X } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { toolchainProbe } from '$lib/modals/window/toolchainProbe.svelte';
-	import { toolDirs } from '$lib/modals/window/toolDirs.svelte';
-	import { tinymistInstaller } from '$lib/modals/window/tinymistInstall.svelte';
-	import TinymistInstallProgress from '$lib/modals/window/TinymistInstallProgress.svelte';
-	import { engineRows } from './typesetterStatus.svelte';
-	import type { WritingFormats } from './setupSteps';
+	import { toolchainProbe } from '../toolchainProbe.svelte';
+	import { toolDirs } from '../toolDirs.svelte';
+	import { tinymistInstaller } from '../tinymistInstall.svelte';
+	import TinymistInstallProgress from '../TinymistInstallProgress.svelte';
+	import { engineRows, type Typesetters } from './typesetterStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
 
-	let { formats, openToolchain }: { formats: WritingFormats; openToolchain: () => void } = $props();
+	/** program: the one that was missing, which the LaTeX row is about rather than any engine */
+	let { want, program }: { want: Typesetters; program?: string } = $props();
 
-	void toolchainProbe.run();
-	void toolDirs.refresh();
+	// the probe and the folder list are refreshed by the dialog around it, which waits on what the probe finds
 	void tinymistInstaller.refresh();
 
 	async function addFolder(): Promise<void> {
@@ -21,7 +20,7 @@
 		await toolDirs.add();
 	}
 
-	const engines = $derived(engineRows(formats));
+	const engines = $derived(engineRows(want, program));
 </script>
 
 <!-- each row says its state the way Preferences › Toolchain does, in words and a colored icon, on two
@@ -45,7 +44,7 @@
 					{#if checking}
 						{m.prefs_toolchain_checking()}
 					{:else if e.found}
-						{e.detail || m.setup_found()}
+						{e.detail || m.typesetter_found()}
 					{:else}
 						{m.prefs_toolchain_missing()}
 					{/if}
@@ -102,18 +101,10 @@
 	</div>
 {/if}
 
-<div class="mt-3.5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+<!-- the ways on, as one line of links; Preferences and checking again are in the dialog's own row -->
+<div class="mt-3.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
 	<a class="anchor" href="https://texpile.com/docs/installation" target="_blank" rel="noopener noreferrer">
-		{m.setup_toolchain_install()}
+		{m.typesetter_how_to_install()}
 	</a>
-	<button type="button" class="anchor" onclick={() => void addFolder()} disabled={toolDirs.busy}>{m.setup_toolchain_add_folder()}</button>
-	<button type="button" class="anchor" onclick={openToolchain}>{m.setup_toolchain_link()}</button>
-	<button
-		type="button"
-		class="btn preset-tonal ml-auto shrink-0 text-xs"
-		onclick={() => void toolchainProbe.run()}
-		disabled={toolchainProbe.probing}
-	>
-		{toolchainProbe.probing ? m.prefs_toolchain_checking() : m.prefs_toolchain_recheck()}
-	</button>
+	<button type="button" class="anchor" onclick={() => void addFolder()} disabled={toolDirs.busy}>{m.typesetter_add_folder()}</button>
 </div>

@@ -9,6 +9,7 @@ import { app, ipcMain } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { setToolDirs } from './shell/toolDirs';
+import { upgradeAgentSettings } from './ai/agentSettingsUpgrade';
 
 const DEFAULT_SETTINGS = {
 	v: 1,
@@ -37,17 +38,17 @@ const DEFAULT_SETTINGS = {
 	// 0 = use the channel default (mcp.PORT_DEFAULT / PORT_DEFAULT_DEV). Fixed rather than
 	// ephemeral so a client config keeps working across restarts; overridable for a port clash.
 	mcpPort: 0,
-	// the reader's own command-line agent that Refine runs ('' = none, 'claude', 'codex', 'agy', 'custom'). Kept here and
-	// not in a folder's .texpile/config.json, which travels with the folder: a downloaded project must never pick
-	// the program that runs, and no MCP tool writes this file
-	aiAgent: '',
-	aiAgentCommand: '', // the command line when aiAgent is 'custom'; the prompt goes on its stdin
-	aiAgentModel: '', // a preset's --model, from the list it gives (agentModels.ts); '' = its own default
+	// the reader's own command-line agents that Refine may run: 'claude', 'codex', 'agy', 'custom'; null = the presets
+	// installed. Kept here and not in a folder's .texpile/config.json, which travels with the folder: a downloaded
+	// project must never pick the program that runs, and no MCP tool writes this file. A run names one of these
+	refineAgents: null as string[] | null,
+	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin
+	aiAgentModels: {} as Record<string, string>, // each preset's --model, from the list it gives (agentModels.ts); '' = its own default
 	// the agent the panel in the dock talks to over ACP ('' = not chosen yet, a preset, or 'custom'). Here
-	// for the same reason as aiAgent: a project's own config must never pick the program that runs
+	// for the same reason as refineAgents: a project's own config must never pick the program that runs
 	agentPanel: '',
+	agentPanelAgents: null as string[] | null, // the agents the panel's menu offers; null = the installed ones, [] = off
 	agentPanelCommand: '', // the command line when agentPanel is 'custom'; it speaks ACP on stdin and stdout
-	setupSeen: '', // the app version whose welcome screen was finished or skipped (renderer lib/setup)
 	openFolders: [] as string[], // folders open across windows; maintained here for session restore
 	toolDirs: [] as string[], // searched before PATH by every program Texpile starts; see shell/toolDirs.ts
 	checkForNewVersions: true, // fetch co-authors' versions every few minutes while focused (renderer scmAutoCheck)
@@ -91,11 +92,16 @@ function settingsFile(): string {
 	return path.join(app.getPath('userData'), 'settings.json');
 }
 
+// settings nothing reads any more: left out of what is read, so the next write drops them from the file
+const RETIRED_SETTINGS = ['setupSeen'];
+
 function storedSettings(): Record<string, unknown> {
 	try {
 		// tolerate a UTF-8 BOM (an externally-edited file): JSON.parse rejects it, and the silent
 		// catch below would then reset EVERY setting to defaults
-		return JSON.parse(fs.readFileSync(settingsFile(), 'utf8').replace(/^\uFEFF/, '')) as Record<string, unknown>;
+		const stored = JSON.parse(fs.readFileSync(settingsFile(), 'utf8').replace(/^\uFEFF/, '')) as Record<string, unknown>;
+		for (const k of RETIRED_SETTINGS) delete stored[k];
+		return upgradeAgentSettings(stored);
 	} catch {
 		return {}; // no file yet (genuine first run) or unreadable: fall back to defaults + detection
 	}

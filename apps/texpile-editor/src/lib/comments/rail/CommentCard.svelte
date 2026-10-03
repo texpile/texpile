@@ -34,7 +34,7 @@
 		onResolve: () => void;
 		onAccept: () => void;
 		onReject: () => void;
-		onReply: (thread: CommentThread, body: string) => void;
+		onReply: (thread: CommentThread, body: string) => Promise<string | null> | void;
 		onEditMessage: (message: CommentMessage, body: string) => void;
 		onDeleteMessage: (thread: CommentThread, message: CommentMessage) => void;
 		onSize: (height: number) => void;

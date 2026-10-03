@@ -523,14 +523,15 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 	universeThumbnail: (name: string, version: string) => ipcRenderer.invoke('templates:universeThumbnail', { name, version })
 });
 
-// the reader's own command-line agent (Preferences > AI); main picks the command, a run only carries the prompt
+// the reader's own command-line agents (Preferences > AI); main picks the command, a run carries the prompt and which of
+// the agents ticked there to run
 contextBridge.exposeInMainWorld('texpileAgent', {
 	/** which preset agents are on PATH */
 	detect: () => ipcRenderer.invoke('agent:detect') as Promise<Record<string, boolean>>,
 	/** the models a preset agent offers, asked of the agent */
 	models: (agent: 'claude' | 'codex' | 'agy') => ipcRenderer.invoke('agent:models', agent),
-	/** run the agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
-	run: (id: string, prompt: string, system?: string) => ipcRenderer.invoke('agent:run', { id, prompt, system }),
+	/** run an agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
+	run: (id: string, prompt: string, system: string, agent: string) => ipcRenderer.invoke('agent:run', { id, prompt, system, agent }),
 	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
 });
 

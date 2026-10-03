@@ -33,7 +33,7 @@
 		commentFilesPresent?: Set<string> | null;
 		commentSelected?: string | null;
 		onCommentOpen?: (thread: CommentThread) => void;
-		onCommentReply?: (thread: CommentThread, body: string) => void;
+		onCommentReply?: (thread: CommentThread, body: string) => Promise<string | null> | void;
 		onCommentResolve?: (thread: CommentThread, resolved: boolean) => void;
 		onCommentEditMessage?: (message: CommentMessage, body: string) => void;
 		onCommentDeleteMessage?: (thread: CommentThread, message: CommentMessage) => void;

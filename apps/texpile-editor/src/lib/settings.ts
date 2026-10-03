@@ -47,8 +47,6 @@ export type AppSettings = {
 	transparentWindow: boolean;
 	/** newest changelog version the What's New modal was dismissed for. */
 	whatsNewSeen: string;
-	/** the app version whose welcome screen this reader finished or skipped; see lib/setup/setupGate.ts */
-	setupSeen: string;
 	/** live math preview tooltip in source mode. */
 	mathPreview: boolean;
 	/** the floating Comment button offered over a selection, in BOTH editors. */
@@ -86,15 +84,17 @@ export type AppSettings = {
 	openFolders: string[];
 	/** MCP port override (0 = channel default); a hand-edit escape hatch for port clashes. */
 	mcpPort: number;
-	/** the reader's own command-line agent that Refine runs; main reads it, see electron/src/ai */
-	aiAgent: '' | 'claude' | 'codex' | 'agy' | 'custom';
-	/** the command line when aiAgent is 'custom'; the prompt goes on its stdin */
+	/** the agents Refine offers, each its own menu entry; null = the ones installed. Main reads it, see electron/src/ai */
+	refineAgents: ('claude' | 'codex' | 'agy' | 'custom')[] | null;
+	/** the command line for Refine's custom agent; the prompt goes on its stdin */
 	aiAgentCommand: string;
-	/** a preset agent's --model, one of the ids it lists; '' = its own default */
-	aiAgentModel: string;
-	/** the agent the dock's Agent tab talks to over ACP; '' until one is chosen, 'off' hides the tab. Main reads it,
-	 *  see electron/src/ai/acp */
-	agentPanel: '' | 'off' | 'codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom';
+	/** each preset agent's --model for Refine, one of the ids it lists; missing or '' = its own default */
+	aiAgentModels: Record<string, string>;
+	/** the agent the dock's Agent tab talks to over ACP, of those it offers; '' until one is picked. Main reads it, see
+	 *  electron/src/ai/acp */
+	agentPanel: '' | 'codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom';
+	/** the agents the Agent tab's menu offers; null = the ones installed, [] = the tab turned off */
+	agentPanelAgents: ('codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom')[] | null;
 	/** the command line when agentPanel is 'custom'; it speaks ACP on its input and output */
 	agentPanelCommand: string;
 	/** folders searched before PATH; per machine, so never in a project's config */
@@ -130,7 +130,6 @@ const DEFAULTS: AppSettings = {
 	uiZoom: 1,
 	transparentWindow: false,
 	whatsNewSeen: '',
-	setupSeen: '',
 	mathPreview: true,
 	commentPill: true,
 	sourceLineWrap: true,
@@ -146,10 +145,11 @@ const DEFAULTS: AppSettings = {
 	collabRelayUrl: DEFAULT_COLLAB_RELAY_URL,
 	openFolders: [],
 	mcpPort: 0,
-	aiAgent: '',
+	refineAgents: null,
 	aiAgentCommand: '',
-	aiAgentModel: '',
+	aiAgentModels: {},
 	agentPanel: '',
+	agentPanelAgents: null,
 	agentPanelCommand: '',
 	toolDirs: [],
 	checkForNewVersions: true,

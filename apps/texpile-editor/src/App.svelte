@@ -4,8 +4,6 @@
 	import { nativeBridge, openNewWindow } from '$lib/workspace/fileSystem';
 	import { openFileInWindow, openFolderInWindow } from '$lib/workspace/openWorkspace';
 	import { warnMissingFolder } from '$lib/workspace/missingFolder';
-	import { setupOwed } from '$lib/setup/setupGate';
-	import { holdPendingWorkspace } from '$lib/setup/pendingWorkspace';
 	import { settings, loadSettings } from '$lib/settings';
 	import { checkForUpdate, updateModalOpen } from '$lib/updates';
 	import UpdateAvailableModal from '$lib/modals/window/UpdateAvailableModal.svelte';
@@ -122,10 +120,6 @@
 		const n = nativeBridge();
 		if (!n?.onOpenFolder) return;
 		return n.onOpenFolder((root) => {
-			if (setupOwed() && route.path === '/') {
-				holdPendingWorkspace(root);
-				return;
-			}
 			loadWorkspace(); // stream the workspace chunk while the folder scans
 			// the start screen's native Open Recent lands here: a deleted entry must not do nothing
 			void openFolderInWindow(root).then((r) => (r === 'missing' ? warnMissingFolder(root) : undefined));
@@ -148,6 +142,7 @@
 	import TooltipHost from '$lib/components/TooltipHost.svelte';
 	import ContextMenuHost from '$lib/menus/ContextMenuHost.svelte';
 	import RefineCard from '$lib/ai/RefineCard.svelte';
+	import MissingProgramDialog from '$lib/modals/window/missingProgram/MissingProgramDialog.svelte';
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -182,6 +177,7 @@
 <ConfirmHost />
 <TooltipHost />
 <RefineCard />
+<MissingProgramDialog />
 <ContextMenuHost />
 
 {#if __WEB__}

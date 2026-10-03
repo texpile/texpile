@@ -37,6 +37,8 @@ type Deps = {
 	root: () => string | null;
 	/** the Preferences name; blank falls back to git */
 	preferredAuthor: () => string;
+	/** whether there is a name to sign with, asking for one when there is none; false when the reader would not give one */
+	ensureName?: () => Promise<boolean>;
 	/**
 	 * The open file's CURRENT text. `reanchor` snapshots the text only when a file opens, which is
 	 * fine for re-searching but wrong for building NEW anchors: in a shared session the buffer
@@ -419,6 +421,8 @@ export class CommentsController {
 	/** returns the new message's id, or null if there was nothing to write */
 	async reply(thread: CommentThread, body: string, by?: string): Promise<string | null> {
 		if (!body.trim()) return null;
+		// an MCP client signs with its own name; a new comment asked before it was begun (workspaceActionSurfaces)
+		if (!by && !(await (this.deps.ensureName?.() ?? true))) return null;
 		const id = crypto.randomUUID();
 		await this.commit(replyEvent({ id, thread: thread.id, by: await this.author(by), body: body.trim(), at: new Date().toISOString() }));
 		return id;

@@ -4,6 +4,7 @@ import { updateSettings } from '$lib/settings';
 import { m } from '$lib/paraglide/messages';
 import { tip } from '$lib/components/tooltip.svelte';
 import { agentName, refiner } from '$lib/ai/selectionRefiner';
+import { refineAgentsOffered } from '$lib/ai/refineAgents.svelte';
 import { openRefineCard } from '$lib/ai/refineCardState.svelte';
 
 function svgIcon(body: string) {
@@ -53,7 +54,9 @@ export function selectionToolbarRow(commentLabel: string, comment: () => void, h
 			const r = refiner.current;
 			refine.hidden = !r?.available;
 			refine.disabled = !!r?.busy;
-			const title = m.ai_refine_menu({ agent: agentName() });
+			// named for its agent where there is one; with several, the card asks which
+			const offered = refineAgentsOffered();
+			const title = offered.length === 1 ? m.ai_refine_menu({ agent: agentName(offered[0]) }) : m.ai_refine();
 			refine.setAttribute('aria-label', title);
 			hints.get(refine)?.update(title);
 		}

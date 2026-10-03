@@ -7,6 +7,8 @@ import { openFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { basename, dirname, joinPath, normalizePath, relativeTo, toLf, fromLf, underRoot, type Eol } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
+import { programNotFound } from './toolMissing';
+import { askForProgram } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 
 /** the longest source selection that will seed the Find in Files query */
 const SEED_MAX = 200;
@@ -94,6 +96,8 @@ export async function runFormat(deps: FormatDeps): Promise<void> {
 		deps.applyFormatted(formatted);
 		toaster.success({ title: m.wsview_toast_formatted_title(), description: basename(path) });
 	} catch (e) {
+		const missing = programNotFound(e);
+		if (missing && askForProgram(missing)) return;
 		toaster.error({ title: m.wsview_toast_format_failed_title(), description: e instanceof Error ? e.message : String(e) });
 	} finally {
 		deps.setBusy(false);

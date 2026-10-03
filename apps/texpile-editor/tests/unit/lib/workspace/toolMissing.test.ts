@@ -4,7 +4,7 @@
 // the LINE, not from the command. Matching the command's first word blamed `make` for its child's
 // absence, and stayed silent when the default `latexmk -lualatex` was missing only the engine.
 import { describe, it, expect } from 'vitest';
-import { missingProgram, redirectsStderr } from '$lib/workspace/toolMissing';
+import { missingProgram, programNotFound, redirectsStderr } from '$lib/workspace/toolMissing';
 
 describe('missingProgram', () => {
 	const SHELLS: Record<string, string> = {
@@ -91,5 +91,21 @@ describe('redirectsStderr', () => {
 		expect(redirectsStderr('latexmk -lualatex -output-directory=output {main}')).toBe(false);
 		// a plain stdout redirect still leaves stderr on the terminal
 		expect(redirectsStderr('latexmk {main} >out.txt')).toBe(false);
+	});
+});
+
+describe('programNotFound', () => {
+	it('reads the program out of the way main words one it could not run', () => {
+		expect(
+			programNotFound(new Error('latexindent was not found on PATH. It ships with most LaTeX distributions (TeX Live, MiKTeX).'))
+		).toBe('latexindent');
+		expect(programNotFound('synctex was not found on PATH. It ships with TeX distributions.')).toBe('synctex');
+		expect(programNotFound(new Error('tinymist was not found on PATH.'))).toBe('tinymist');
+	});
+
+	it('leaves any other failure to say itself', () => {
+		expect(programNotFound(new Error('latexindent produced no output.'))).toBeNull();
+		expect(programNotFound(new Error('tinymist is not available'))).toBeNull();
+		expect(programNotFound(undefined)).toBeNull();
 	});
 });
