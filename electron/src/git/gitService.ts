@@ -108,8 +108,12 @@ export function git(baseDir: string, block = 20000): SimpleGit {
 		// git octal-escapes any non-ASCII path it prints, which then matches no file on disk. On the
 		// factory, so it covers the output simple-git parses itself too.
 		// log.showSignature: an author's `true` puts gpg's words ("No signature") in the log's output,
-		// where they parsed as a version of their own
-		config: ['core.quotePath=false', 'log.showSignature=false']
+		// where they parsed as a version of their own.
+		// core.fsmonitor: a project that arrives with its own .git/config can name a program for every
+		// status to run, and opening the folder reads its status; the monitor only ever saves time
+		config: ['core.quotePath=false', 'log.showSignature=false', 'core.fsmonitor=false'],
+		// simple-git refuses any core.fsmonitor, since one naming a program runs it; this one turns it off
+		unsafe: { allowUnsafeFsMonitor: true }
 	});
 }
 

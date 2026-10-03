@@ -105,7 +105,8 @@ export function netGit(baseDir: string, auth: GitAuthEnv = {}, stall = 0): Simpl
 		baseDir,
 		binary: 'git',
 		maxConcurrentProcesses: 1,
-		config: ['core.quotePath=false'],
+		// core.fsmonitor: as in the shared factory, no program the project's own config names
+		config: ['core.quotePath=false', 'core.fsmonitor=false'],
 		unsafe: OWN_ENVIRONMENT,
 		...(stall > 0 && { timeout: { block: stall } })
 	}).env(netEnv(auth));
