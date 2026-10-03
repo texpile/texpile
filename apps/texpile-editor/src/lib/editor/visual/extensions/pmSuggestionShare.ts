@@ -202,12 +202,17 @@ export function shareOut(
 	function clamp(pos: number | null, lo: number, hi: number) {
 		return Math.min(hi, Math.max(lo, pos ?? lo));
 	}
+	// a cut inside a chip goes after it: the chip is struck whole, with the mark it began in
+	function outsideChip(doc: PMNode, pos: number | null) {
+		const around = pos === null ? null : selfRenderedAround(doc, pos);
+		return around && doc.nodeAt(around.from)?.isInline ? around.to : pos;
+	}
 	const out: { mark: SuggestionMark; piece: Piece }[] = [];
 	let prevA = A.from;
 	let prevB = B.from;
 	for (let i = 1; i < involved.length; i++) {
-		const cutA = clamp(regionPos(before, involved[i].a.from, 1), prevA, A.to);
-		const cutB = clamp(regionPos(after, involved[i].b.from, 1), prevB, B.to);
+		const cutA = clamp(outsideChip(before.doc, regionPos(before, involved[i].a.from, 1)), prevA, A.to);
+		const cutB = clamp(outsideChip(after.doc, regionPos(after, involved[i].b.from, 1)), prevB, B.to);
 		out.push({ mark: involved[i - 1].mark, piece: { A: { from: prevA, to: cutA }, B: { from: prevB, to: cutB } } });
 		prevA = cutA;
 		prevB = cutB;

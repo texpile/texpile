@@ -582,6 +582,20 @@ it('draws a split after the space after a chip at the end of the line', () => {
 	}
 });
 
+// the first took out the words and the footnote's first half, the second the rest: drawn as loose text in blocks of their own
+it('strikes two cuts that meet inside a footnote as words, the footnote whole with the first', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nPlain text. He is a link here.\n\\end{document}\n';
+	const at = source.indexOf('He is') + 2;
+	const { ranges } = placed(source, [
+		mark(source, 'first', '', 're is a footnote.\\footnote{The foot', at),
+		mark(source, 'second', '', 'note text.} Here', at)
+	]);
+	expect(ranges.map((r) => [r.id, !!r.gone, r.old.map((run) => run.node?.type.name ?? run.text)])).toEqual([
+		['first', false, ['re is a footnote.', 'inline_latex']],
+		['second', false, [' Here']]
+	]);
+});
+
 it('draws a replacement to its own edges, not the letters typed against it', () => {
 	for (const source of ['\\begin{document}\nThe quickx fox.\n\\end{document}\n', '\\begin{document}\nThe xquick fox.\n\\end{document}\n']) {
 		const { doc, ranges } = placed(source, [mark(source, 's', 'quick', 'lazy')]);
