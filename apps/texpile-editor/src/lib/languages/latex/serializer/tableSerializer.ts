@@ -102,7 +102,7 @@ function wrapper(node: Node, serializeNode: SerializeNodeFn): string {
 		typeof captionNode?.attrs.captionOpt === 'string' && captionNode.attrs.captionOpt ? `[${captionNode.attrs.captionOpt}]` : '';
 	const caption =
 		captionNode && captionNode.childCount > 0
-			? `\\caption${captionNode.attrs.starred ? '*' : ''}${capOpt}{${renderInline(captionNode, serializeNode)}}\\vspace{2mm}\n`
+			? `\\caption${captionNode.attrs.starred ? '*' : ''}${capOpt}{${renderInline(captionNode, serializeNode)}}${typeof node.attrs.captionGap === 'string' ? node.attrs.captionGap : '\\vspace{2mm}'}\n`
 			: '';
 	// extra labels re-emit BEFORE the primary, matching source order (`label` holds the LAST
 	// \label found, so anything in extraLabels came before it).

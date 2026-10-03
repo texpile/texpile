@@ -75,6 +75,22 @@ describe('table floats', () => {
 		expect(out.indexOf('\\caption{Below}')).toBeGreaterThan(out.indexOf('\\end{tabular}'));
 	});
 
+	// every regenerated table gained \vspace{2mm} after its caption: space under a caption below the
+	// tabular, or between caption and tabular the source never had (a real compile moved the page)
+	it('keeps the space the source put after its caption, and adds none it did not have', () => {
+		const table = (cap: string, below = false) =>
+			below
+				? `\\begin{table}\n\\begin{tabular}{l}\na \\\\\n\\end{tabular}\n${cap}\n\\end{table}`
+				: `\\begin{table}\n${cap}\n\\begin{tabular}{l}\na \\\\\n\\end{tabular}\n\\end{table}`;
+		expect(rt(table('\\caption{Below}', true))).not.toContain('\\vspace');
+		expect(rt(table('\\caption{Above}'))).not.toContain('\\vspace');
+		const own = rt(table('\\caption{Above}\\vspace{5mm}'));
+		expect(own).toContain('\\caption{Above}\\vspace{5mm}');
+		expect(count(own, '\\vspace')).toBe(1);
+		// a \label between them sets nothing apart on the page
+		expect(rt(table('\\caption{Above}\n\\label{t}\n\\vspace{1mm}'))).toContain('\\caption{Above}\\vspace{1mm}');
+	});
+
 	it('a short caption survives (40)', () => {
 		const out = rt('\\begin{table}\n\\caption[Short]{Long caption}\n\\begin{tabular}{l}\na \\\\\n\\end{tabular}\n\\end{table}');
 		expect(out).toContain('\\caption[Short]{Long caption}');

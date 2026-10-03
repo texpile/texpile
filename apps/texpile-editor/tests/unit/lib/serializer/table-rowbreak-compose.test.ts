@@ -62,9 +62,8 @@ c & d \\
 // a center-wrapped float used to stay on the generic-environment path to preserve its exact
 // structure, but that path has no caption chrome and no scroll container, so a wide table
 // crushed its last columns (the BERT GLUE table). extractTableComponents now sees through the
-// center env; the wrapper serializer re-emits \centering, and spacing tweaks like \vspace are
-// owned by the wrapper (dropped on parse, its own \vspace{2mm} emitted after the caption) -
-// the same normalization every \centering-style float already gets.
+// center env; the wrapper serializer re-emits \centering. The \vspace following the caption is the
+// caption's gap, written back after it; any other \vspace is dropped on parse.
 describe('center-wrapped table float adopts the table wrapper (center normalized to \\centering)', () => {
 	const SRC = String.raw`\begin{table}[t]\caption{Op complexities.}
 \label{tab:op} \begin{center}\vspace{-1mm}

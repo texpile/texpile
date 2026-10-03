@@ -132,6 +132,8 @@ export const tableFamilyNodes = {
 			// caption above (false) or below (true) the tabular, and the size switch on the notes
 			centering: { default: true },
 			captionBelow: { default: false },
+			// the space the source put after the caption ('' for none); null is a new table's \vspace{2mm}
+			captionGap: { default: null },
 			notesSize: { default: null }
 		},
 		parseDOM: [
