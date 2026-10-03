@@ -292,7 +292,8 @@ const NODES: Record<string, NodeHandler> = {
 
 	heading(node) {
 		if (node.childCount === 0) return '';
-		const text = renderChildren(node, false);
+		// a heading's text is a moving argument: a \footnote joined in from a paragraph stops the compile unless protected
+		const text = renderChildren(node, false).replace(/(?<!\\protect\s*)\\footnote(?![a-zA-Z@])/g, '\\protect\\footnote');
 		// \chapter and \part have no level of their own in the editor; the source command is kept
 		const cmd =
 			typeof node.attrs.command === 'string' && node.attrs.command

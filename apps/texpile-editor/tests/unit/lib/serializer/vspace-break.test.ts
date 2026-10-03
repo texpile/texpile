@@ -109,3 +109,20 @@ describe('a line break opening its line', () => {
 		expect(out).not.toContain('\\mbox');
 	});
 });
+
+// Backspace at the start of a paragraph joins it into the heading above; a footnote it held then sat
+// unprotected in \section{}, a moving argument, and the compile stopped
+describe('a footnote in a heading', () => {
+	it('is protected, once', () => {
+		const joined = schema.nodes.doc.create(null, [
+			schema.nodes.heading.create({ level: 1 }, [
+				schema.text('Probe'),
+				schema.nodes.inline_latex.create(null, schema.text('\\footnote{A note.}'))
+			])
+		]);
+		expect(serializeToLatex(joined).trim()).toBe('\\section{Probe\\protect\\footnote{A note.}}');
+		expect(serializeToLatex(parse(String.raw`\section{Probe\protect\footnote{A note.}}`)).trim()).toBe(
+			'\\section{Probe\\protect\\footnote{A note.}}'
+		);
+	});
+});
