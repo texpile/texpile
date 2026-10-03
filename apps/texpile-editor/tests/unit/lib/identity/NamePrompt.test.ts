@@ -52,3 +52,13 @@ it('leaves the question open on the Enter that ends an input method composition'
 	expect(await answer).toBe(true);
 	expect(h.updateUserData).toHaveBeenCalledWith({ collabName: '山田太郎' });
 });
+
+// the folder closed under the question: it came back in the next folder, and answering it there finished what the
+// last one had asked for (suggest mode turned on in a folder that never asked)
+it('says no when the question goes away unanswered', async () => {
+	const { answer } = await asked();
+	unmount(app!);
+	app = null;
+	expect(await answer).toBe(false);
+	expect(nameAsk.open).toBe(false);
+});
