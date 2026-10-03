@@ -436,6 +436,8 @@ const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx),
 	// the line breaks either side of a line taken out from prose would meet as a blank line, a new paragraph
 	keepApart: (bytes, tail, head, gone, parent) => {
 		if (!parent.type.spec.code && blankLineAt(head, bytes, tail)) return null;
+		// a line comment the file keeps runs on over whatever the seam leaves on its line
+		if (!parent.type.spec.code && /(^|[^:\\])\/\/[^\n]*$/.test(head) && !/^\r?\n/.test(bytes + tail)) return null;
 		if (bytes === '' ? seam(head, tail) : seam(head, bytes) || seam(bytes, tail)) return null;
 		if (unbound(head, bytes, tail, gone)) return null;
 		// code, a chip's source and raw text are written as typed

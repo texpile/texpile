@@ -430,6 +430,23 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 			expect(parseTypstFile(out).doc.textContent, out).toBe(doc.textContent);
 		}
 	});
+
+	it('text put on the line of a line comment the file keeps goes on the next line, the comment whole', () => {
+		const parsed = parseTypstFile('A comment // note\nand more.\n');
+		let end = -1;
+		parsed.doc.descendants((n, pos) => {
+			if (n.type.name === 'inline_latex') end = pos + n.nodeSize;
+			return end < 0;
+		});
+		const typed = new Transform(parsed.doc).insert(end, parsed.doc.type.schema.text('x')).doc;
+		const joined = new Transform(parsed.doc).delete(end, posOf(parsed.doc, 'ore.')).doc;
+		for (const doc of [typed, joined]) {
+			const out = serializeTypstFile(parsed, doc);
+			const back = parseTypstFile(out).doc.child(0);
+			expect(back.child(1).textContent, out).toBe('// note');
+			expect(back.textContent.replace(/\s+/g, ''), out).toBe(doc.textContent.replace(/\s+/g, ''));
+		}
+	});
 });
 
 describe('typst: a line break typed at the end of a source line', () => {
