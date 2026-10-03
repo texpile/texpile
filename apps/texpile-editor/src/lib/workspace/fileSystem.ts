@@ -424,22 +424,7 @@ export async function searchInFolder(
 	}
 }
 
-// the editor works in LF internally; a file's original ending is read on load and
-// re-applied on save so a Windows CRLF file round-trips byte-for-byte
-export type Eol = '\r\n' | '\n';
-
-/** the file's dominant line ending: CRLF if any \r\n is present, else LF. */
-export function detectEol(text: string): Eol {
-	return text.includes('\r\n') ? '\r\n' : '\n';
-}
-
-export function toLf(text: string): string {
-	return text.replace(/\r\n?/g, '\n');
-}
-
-export function fromLf(text: string, eol: Eol): string {
-	return eol === '\r\n' ? text.replace(/\n/g, '\r\n') : text;
-}
+export { detectEol, toLf, fromLf, type Eol } from './edits/lineEndings';
 
 /** basename helper that works for both / and \ separators. */
 export function basename(path: string): string {

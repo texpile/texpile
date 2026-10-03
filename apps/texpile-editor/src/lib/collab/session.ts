@@ -118,8 +118,6 @@ export function textOf(doc: Y.Doc, relPath: string) {
 export type ManifestEntry = {
 	kind: 'text' | 'binary';
 	size: number;
-	/** original on-disk line ending for text files; writes restore it. */
-	eol?: '\r\n' | '\n';
 	/** tombstone: file was deleted on the host. */
 	gone?: boolean;
 	/** binaries only: changes when the bytes do (host mtime), so a guest can drop a stale blob.

@@ -9,6 +9,7 @@ import { LATEX_SIDECAR_RE } from '$lib/workspace/buildArtifacts';
 import { carryGestures, type TextSpan } from '$lib/comments/editGestures';
 import { manifestOf, locksOf, textOf, type ManifestEntry } from './session';
 import { LocalFork } from './localFork';
+import { detectEol, fromLf, toLf, type Eol } from '$lib/workspace/edits/lineEndings';
 
 export type MaterializeFs = {
 	/** raw bytes: both the text/binary classification and the seeded body come from one read */
@@ -71,16 +72,6 @@ const WRITE_DEBOUNCE_MS = 400;
 export const SEED_ORIGIN = 'collab-seed';
 export const EDIT_ORIGIN = 'collab-edit'; // a local editor's fold-in splice (host or guest)
 
-function toLf(s: string) {
-	return s.replace(/\r\n?/g, '\n');
-}
-function detectEol(s: string): '\r\n' | '\n' {
-	return s.includes('\r\n') ? '\r\n' : '\n';
-}
-function fromLf(s: string, eol: '\r\n' | '\n') {
-	return eol === '\r\n' ? s.replace(/\n/g, '\r\n') : s;
-}
-
 // the shared set as a stable string: which paths exist and their kind, ignoring a binary's rev
 // (an image reswap doesn't change any source binding) and lock state (that's a live read-only flip)
 function manifestSignature(manifest: Y.Map<ManifestEntry>): string {
@@ -128,6 +119,7 @@ export class HostMaterializer {
 	private readonly lastWritten = new Map<string, string>(); // rel -> LF content last synced with disk
 	private readonly wrote = new Map<string, string>(); // rel -> LF content this side last wrote itself
 	private readonly running = new Map<string, string>(); // rel -> LF content as of the last transaction
+	private readonly endings = new Map<string, Eol>(); // rel -> how its lines ended on disk when this host read it
 	private readonly observers = new Map<string, () => void>();
 	// what this host listed; the manifest is not the authority, since any guest can write to it
 	private listed = new Set<string>();
@@ -149,7 +141,7 @@ export class HostMaterializer {
 	async seed(): Promise<{ oversizedText: string[] }> {
 		const files = (await this.fs.listFiles(this.root)).filter((f) => isShared(f.rel));
 		this.listed = new Set(files.map((f) => f.rel));
-		const bodies = new Map<string, { text: string; eol: '\r\n' | '\n' }>();
+		const bodies = new Map<string, { text: string; eol: Eol }>();
 		const oversizedText: string[] = [];
 		for (const f of files) {
 			if (isGeneratedArtifact(f.rel)) continue;
@@ -176,7 +168,8 @@ export class HostMaterializer {
 			for (const f of files) {
 				const body = bodies.get(f.rel);
 				if (body) {
-					manifest.set(f.rel, { kind: 'text', size: f.size, eol: body.eol });
+					manifest.set(f.rel, { kind: 'text', size: f.size });
+					this.endings.set(f.rel, body.eol);
 					const t = textOf(this.doc, f.rel);
 					if (t.length > 0) t.delete(0, t.length);
 					t.insert(0, body.text);
@@ -237,7 +230,7 @@ export class HostMaterializer {
 		}
 		if (this.lastWritten.get(rel) === content) return;
 		try {
-			await this.fs.writeText(this.joinPath(this.root, rel), fromLf(content, entry.eol ?? '\n'));
+			await this.fs.writeText(this.joinPath(this.root, rel), fromLf(content, this.endings.get(rel) ?? '\n'));
 			this.lastWritten.set(rel, content);
 			this.wrote.set(rel, content);
 		} catch (e) {
@@ -285,7 +278,7 @@ export class HostMaterializer {
 		this.listed = seen;
 		const sigBefore = manifestSignature(manifest);
 		const newTexts: string[] = [];
-		const bodies = new Map<string, { text: string; eol: '\r\n' | '\n' }>();
+		const bodies = new Map<string, { text: string; eol: Eol }>();
 		for (const f of files) {
 			const existing = manifest.get(f.rel);
 			if (!existing || existing.gone) {
@@ -308,7 +301,8 @@ export class HostMaterializer {
 				const existing = manifest.get(f.rel);
 				const body = bodies.get(f.rel);
 				if (body) {
-					manifest.set(f.rel, { kind: 'text', size: f.size, eol: body.eol });
+					manifest.set(f.rel, { kind: 'text', size: f.size });
+					this.endings.set(f.rel, body.eol);
 					const t = textOf(this.doc, f.rel);
 					if (t.length > 0) t.delete(0, t.length);
 					t.insert(0, body.text);

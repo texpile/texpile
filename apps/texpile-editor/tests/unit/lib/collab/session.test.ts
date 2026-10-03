@@ -451,6 +451,17 @@ describe('collab session end-to-end', () => {
 		guest.session.destroy();
 	});
 
+	it('keeps the endings of the lines an edit left alone in a file that mixes them', async () => {
+		const doc = new Y.Doc();
+		const { disk, fs } = fakeFs({ 'mixed.tex': 'a\r\nb\nc\r\n' });
+		const mat = new HostMaterializer(doc, 'root', fs, join);
+		await mat.seed();
+		textOf(doc, 'mixed.tex').insert(2, 'x\n');
+		await until(() => disk.get('mixed.tex')!.content !== 'a\r\nb\nc\r\n');
+		expect(disk.get('mixed.tex')!.content).toBe('a\r\nx\r\nb\nc\r\n');
+		mat.destroy();
+	});
+
 	it('propagates locks, blobs, and session-end', async () => {
 		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
 		const hub = new FakeHub();

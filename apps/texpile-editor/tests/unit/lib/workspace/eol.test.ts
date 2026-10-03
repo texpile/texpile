@@ -53,3 +53,26 @@ describe('CRLF .tex survives the parse/serialize round-trip', () => {
 		expect(toLf(fileCrlf).includes('\r')).toBe(false);
 	});
 });
+
+describe('a file that mixes CRLF and LF', () => {
+	const mixed = 'one\r\ntwo\nthree\r\nfour\nfive\r\n';
+
+	it('an edit in the middle changes only the edited line', () => {
+		const eol = detectEol(mixed);
+		expect(fromLf(toLf(mixed), eol)).toBe(mixed);
+		expect(fromLf(toLf(mixed).replace('four', 'FOUR'), eol)).toBe('one\r\ntwo\nthree\r\nFOUR\r\nfive\r\n');
+	});
+
+	it('added lines take the ending most of the file uses', () => {
+		const mostlyLf = 'a\nb\r\nc\nd\n';
+		expect(fromLf('a\nb\nnew\nc\nd\nend\n', detectEol(mostlyLf))).toBe('a\nb\r\nnew\nc\nd\nend\n');
+	});
+
+	it('a file with one kind of ending saves as before', () => {
+		for (const eol of ['\r\n', '\n'] as const) {
+			const file = ['x', 'y', 'z', ''].join(eol);
+			expect(detectEol(file)).toBe(eol);
+			expect(fromLf('x\nnew\nz\n', detectEol(file))).toBe(['x', 'new', 'z', ''].join(eol));
+		}
+	});
+});
