@@ -656,6 +656,14 @@ describe('typst: what is typed beside a call or a marker', () => {
 		expect(parseTypstFile(out).doc.lastChild!.toString()).toBe('paragraph("and ends the section.")');
 	});
 
+	it('a space typed at the start of the paragraph after a list leaves the paragraph out of the list', () => {
+		const parsed = parseTypstFile('- first point\n- second point\n\nA closing paragraph.\n');
+		const at = posOf(parsed.doc, 'A closing');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text(' [')).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(parseTypstFile(out).doc.lastChild!.toString(), out).toBe('paragraph("[A closing paragraph.")');
+	});
+
 	it('an at sign ending an emphasis is escaped, or the delimiter would be read as a reference', () => {
 		const parsed = parseTypstFile('Intro.\n\nplain o\\@key text.\n');
 		const s = parsed.doc.type.schema;

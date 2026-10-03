@@ -405,8 +405,9 @@ function atLineStart(head: string, bytes: string, tail: string, code: boolean): 
 	// it, or with the bytes before it taken out
 	const opens = /^(?:[-+/=]|\d+\.)\s/.test(tail) || /^[-+/=]$/.test(tail);
 	const startsLine = /\n[ \t]*$/.test(out) || (bytes === '' && /(^|\n)[ \t]*$/.test(head));
-	// so does a space the kept bytes begin with: it indents the line, and after a list that is more of the item
+	// so does a space the kept bytes begin with, or fresh bytes opening the block: it indents the line, and after a list that is more of the item
 	if ((opens || /^[ \t]/.test(tail)) && startsLine) return null;
+	if (!code && head === '' && /^[ \t]/.test(bytes)) return null;
 	// or begins a content block, what stood before it in the block taken out or made spaces
 	if (bodyStart && /^[ \t]*$/.test(bytes) && /^[ \t]*(?:[-+/=]|\d+\.)\s/.test(tail)) return null;
 	// or a marker the file kept at the start of a line or a content block meets a space typed or left after it
