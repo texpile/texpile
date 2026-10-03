@@ -16,6 +16,7 @@ export function updateImageNode(nodes: Schema['spec']['nodes'], pluginSettings: 
 		.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
 	const attributeKeys = [...Object.keys(extraAttributes), 'src', 'alt', 'label', 'numbered', 'showCaption', 'spanning', 'options'];
+	const flags = new Set(['numbered', 'showCaption', 'spanning']);
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	return nodes.update('image', {
@@ -63,9 +64,10 @@ export function updateImageNode(nodes: Schema['spec']['nodes'], pluginSettings: 
 				getAttrs(dom) {
 					if (typeof dom === 'string') return {};
 					return attributeKeys
-						.map((attrKey) => ({
-							[attrKey]: dom.getAttribute(`imageplugin-${attrKey}`)
-						}))
+						.map((attrKey) => {
+							const value = dom.getAttribute(`imageplugin-${attrKey}`);
+							return { [attrKey]: flags.has(attrKey) && value !== null ? value === 'true' : value };
+						})
 						.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 				}
 			},
