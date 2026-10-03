@@ -306,7 +306,9 @@ export function renderHeadingLine(parent: Node, after: string): string | null {
 export function renderBody(parent: Node): string {
 	const r = render(parent, true, '', false, '');
 	const out = r.out.replace(/^[ \t]+|[ \t]+$/g, '');
-	return r.openComment ? out + '\n' : out;
+	// a line break ending the body is a backslash and the space after it: trimmed, the backslash
+	// would escape the closing `]`
+	return r.openComment || /(^|[^\\])(\\\\)*\\$/.test(out) ? out + '\n' : out;
 }
 
 function render(parent: Node, startOfLine: boolean, extra: string, singleLine: boolean, after: string): RenderedInline {
