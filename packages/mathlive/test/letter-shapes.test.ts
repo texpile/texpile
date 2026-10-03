@@ -11,4 +11,9 @@ describe('letter shapes and font repertoires', () => {
     expect(classesOf('\\alpha', 'α')).toBe('lcGreek ML__mathit');
     expect(classesOf('\\epsilon', 'ϵ')).toBe('lcGreek ML__mathit');
   });
+
+  it('keeps punctuation inside \\mathfrak in the Fraktur font', () => {
+    expect(classesOf('\\mathfrak{!}', '!')).toBe('ML__frak');
+    expect(classesOf('\\mathfrak{]}', ']')).toBe('ML__frak');
+  });
 });

@@ -83,7 +83,7 @@ export const VARIANT_REPERTOIRE = {
   'double-struck': /^[A-Z ]$/,
   'script': /^[A-Z ]$/,
   'calligraphic': /^[\dA-Z ]$/,
-  'fraktur': /^[\dA-Za-z ]$|^[!"#$%&'()*+,\-./:;=?[]^’‘]$/,
+  'fraktur': /^[\dA-Za-z ]$|^[!"#$%&'()*+,\-./:;=?[\]^’‘]$/,
   'monospace':
     /^[\dA-Za-z ]$|^[!"&'()*+,\-./:;=?@[\]^_~\u0131\u0237\u0393\u0394\u0398\u039B\u039E\u03A0\u03A3\u03A5\u03A8\u03A9]$/,
   'sans-serif':
