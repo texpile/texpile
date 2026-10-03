@@ -30,7 +30,7 @@
 			placeholder={m.name_prompt_placeholder()}
 			bind:value
 			onkeydown={(e) => {
-				if (e.key === 'Enter' && value.trim()) close(true);
+				if (e.key === 'Enter' && !e.isComposing && value.trim()) close(true);
 			}}
 		/>
 		<ModalActions
