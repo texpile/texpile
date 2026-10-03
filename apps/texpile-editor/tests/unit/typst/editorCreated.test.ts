@@ -42,6 +42,18 @@ describe('references (T2)', () => {
 		]);
 	});
 
+	it('a dot after a ref, emphasised with it, stays out of its target', () => {
+		const p = para(text('See '), n.typ_ref.create({ target: 'eq:mass' }).mark([m.em.create()]), text('.', ['em']));
+		const src = out(p);
+		// `_` is a character of a label: `@eq:mass._` would refer to `eq:mass._`, its emphasis left open
+		expect(src).toBe('See _@eq:mass\\._');
+		expect(
+			typstToProseMirror(src + '\n')
+				.doc.child(0)
+				.toJSON()
+		).toEqual(p.toJSON());
+	});
+
 	it('an emphasised ref keeps its delimiters outside the marker', () => {
 		const ref = n.typ_ref.create({ target: 'h' }).mark([m.em.create()]);
 		expect(out(para(ref))).toBe('_#ref(<h>)_');

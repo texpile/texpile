@@ -311,6 +311,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 	let active: ActiveMark[] = [];
 	// where the last @ref was written, while the next emission may still extend it
 	let refAt = -1;
+	let refEnd = -1;
 	let refTarget = '';
 	let urlEnd = -1;
 	let codeEnd = -1;
@@ -326,13 +327,19 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		if (!s) return;
 		let piece = s;
 		if (refAt >= 0) {
-			// the call form ends a code expression: `.`, `(` or `[` straight after it would go on with it
-			if (extendsRef(piece)) {
-				out = out.slice(0, refAt) + `#ref(<${refTarget}>)`;
-				codeEnd = out.length;
-				code = '#ref()';
-			}
-			refAt = -1;
+			const since = out.slice(refEnd);
+			if (extendsRef(since + piece)) {
+				// the call form ends a code expression: `.`, `(` or `[` straight after it would go on with it
+				if (since === '') {
+					out = out.slice(0, refAt) + `#ref(<${refTarget}>)`;
+					codeEnd = out.length;
+					code = '#ref()';
+				}
+				// a `.` or `:` written after the marker joins its target once what follows it would
+				// (`@eq:mass._`): escaped, it ends the marker
+				else out = out.slice(0, refEnd) + '\\' + since;
+				refAt = -1;
+			} else if (!/^[.:]*$/.test(since + piece)) refAt = -1;
 		}
 		const escapable = text && !piece.startsWith('u{');
 		if (urlEnd === out.length && extendsUrl(piece)) {
@@ -454,6 +461,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		}
 		if (run.kind === 'ref') {
 			refAt = out.length - content.length;
+			refEnd = out.length;
 			refTarget = content.slice(1);
 		}
 		if (run.kind === 'comment') lineEnd = true;
