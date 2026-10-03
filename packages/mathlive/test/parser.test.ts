@@ -24,3 +24,10 @@ describe('a group under a style set around it', () => {
     expect(reread('\\mathbf{a{b}c}')).toBe('\\mathbf{a{b}c}');
   });
 });
+
+describe('a tie in text', () => {
+  // read as a literal tilde, it came back as \textasciitilde and printed one
+  it('is written back as a tie', () => {
+    expect(reread('\\text{Fig.~1}')).toBe('\\text{Fig.~1}');
+  });
+});

@@ -446,6 +446,8 @@ const TEXT_SYMBOLS: Record<string, number> = {
   '\\rbrace': 0x007d,
   '\\lbrack': 0x005b,
   '\\rbrack': 0x005d,
+  // TeX's tie, a space the line does not break at, not the tilde \textasciitilde prints
+  '~': 0x00a0,
   '\\nobreakspace': 0x00a0,
   '\\ldots': 0x2026,
   '\\textellipsis': 0x2026,
