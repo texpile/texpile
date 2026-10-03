@@ -1,9 +1,20 @@
 // Find and replace over the text the editor actually shows.
-import { getSearchState } from 'prosemirror-search';
+import { getSearchState, SearchQuery } from 'prosemirror-search';
 import { TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
-import type { SearchQuery } from 'prosemirror-search';
 
 type Match = NonNullable<ReturnType<SearchQuery['findNext']>>;
+
+// a regex match of nothing (`a|`, `.*` at a line end) has no text to show or replace, and the search
+// plugin's own scan stands still on one
+export class VisibleTextQuery extends SearchQuery {
+	override findNext(state: EditorState, from = 0, to = state.doc.content.size): Match | null {
+		for (let pos = from; ;) {
+			const next = super.findNext(state, pos, to);
+			if (!next || next.to > next.from) return next;
+			pos = next.from + 1;
+		}
+	}
+}
 
 // A chip keeps its key as node CONTENT, so a plain text search reaches it: \ref{tab:corpus} draws
 // as "1", and replacing "corpus" there rewrote the key and broke the cross-reference with nothing
