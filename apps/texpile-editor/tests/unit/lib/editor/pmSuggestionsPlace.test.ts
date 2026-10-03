@@ -555,6 +555,33 @@ it('draws a split after a space, and escapes typed mid-word, where the editor ho
 	}
 });
 
+// the file writes the chip's last byte right before the space, so the break landed inside the chip's end and stayed before the space
+it('draws a split after the space after a chip at the end of the line', () => {
+	const cases = [
+		[
+			latex,
+			serializeLatexFileDetailed,
+			'\\documentclass{article}\n\\begin{document}\nAn inline \\foo{quotation} sits here.\n\\end{document}\n'
+		],
+		[typst, serializeTypstFileDetailed, 'An inline #quote[quotation] sits here.\n']
+	] as const;
+	for (const [format, serialize, source] of cases) {
+		const parsed = format.parse(source);
+		const start = EditorState.create({ doc: parsed.doc });
+		const split = start.apply(start.tr.split(parsed.doc.child(0).nodeSize - 1 - 'sits here.'.length));
+		const { text, map } = serialize(parsed, split.doc);
+		const from = text.indexOf(' \n\n');
+		const body = { from: bodyOffsetOf(parsed), to: parsed.hadDocumentEnv ? text.length - parsed.postamble.length : text.length };
+		const out = placePmSuggestions(split.doc, [mark(text, 'split', text.slice(from, text.indexOf('sits')), '', from)], {
+			text,
+			map,
+			body,
+			parse: format.region(parsed.preamble)
+		});
+		expect(out.ranges.map((r) => [r.brk, r.from])).toEqual([['added', split.doc.child(0).nodeSize - 1]]);
+	}
+});
+
 it('draws a replacement to its own edges, not the letters typed against it', () => {
 	for (const source of ['\\begin{document}\nThe quickx fox.\n\\end{document}\n', '\\begin{document}\nThe xquick fox.\n\\end{document}\n']) {
 		const { doc, ranges } = placed(source, [mark(source, 's', 'quick', 'lazy')]);
