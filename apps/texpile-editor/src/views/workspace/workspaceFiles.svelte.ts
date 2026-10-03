@@ -253,8 +253,9 @@ export class WorkspaceFiles {
 		return {
 			getLoadedPath: () => doc.path,
 			getSourceText: () => doc.texSource,
+			loadedReadOnly: () => !!doc.encodingIssue,
 			setSourceText: (t: string) => (doc.texSource = t),
-			readText: (p: string) => provider.readText(p),
+			readSource: (p: string) => provider.readSource(p),
 			scanFiles: async (exts: string[]) => (await provider.scanFiles(workspaceRoot.current ?? '', exts)).map((f) => f.path),
 			writeText: (p: string, content: string) => provider.writeText(p, content),
 			onActiveFileEdited: () => {
