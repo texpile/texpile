@@ -1627,7 +1627,8 @@ export class Parser {
     // An unknown command, or a command not available in this mode
     if (!info) {
       if (this.parseMode === 'text') {
-        if (/[a-zA-Z]/.test(this.peek() ?? '')) {
+        // a control symbol (`\ `) ends at its one character and keeps the space after it
+        if (/^\\[a-zA-Z]+$/.test(command) && /[a-zA-Z]/.test(this.peek() ?? '')) {
           // The following character is a letter: insert a space
           // i.e. `\alpha x` -> `\alpha~x`
           // (the spaces are removed by the tokenizer)

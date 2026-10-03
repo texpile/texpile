@@ -31,3 +31,9 @@ describe('a tie in text', () => {
     expect(reread('\\text{Fig.~1}')).toBe('\\text{Fig.~1}');
   });
 });
+
+describe('a control space in text', () => {
+  it('is written back as one space', () => {
+    expect(reread('\\text{a\\ b}')).toBe('\\text{a\\ b}');
+  });
+});
