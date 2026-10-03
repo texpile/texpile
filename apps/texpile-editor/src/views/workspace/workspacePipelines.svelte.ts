@@ -75,9 +75,7 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 		setPreviewSwitch: (root, on) => projectConfig.setTypstPreview(root, on),
 		getDocPath: () => doc.path,
 		getFollow: () => settings.current.typstPreviewFollow === true,
-		getCompileCommand: () => cc.command,
 		getVisualCaretSourcePos: (): { line: number; character: number } | null => nav.visualCaretSourcePos(),
-		refreshTree: () => d.files().refreshTree(),
 		syncJumpToFileLine: (file: string, line: number, column?: number) => nav.syncJumpToFileLine(file, line, undefined, column)
 	});
 	// tinymist's copy of the open .typ, which is what the preview renders, kept equal to the buffer

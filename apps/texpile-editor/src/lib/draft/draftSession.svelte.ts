@@ -23,7 +23,9 @@ import { resetEngineTruth, updateEngineTruth } from './engineTruth';
 import { wordAt } from './draftWordAt';
 import { whyPhrase } from './whyPhrase';
 import { BP2PT } from './texUnits';
-import { nativeBridge } from '$lib/workspace/fileSystem';
+import { saveDraftPdf } from './save/saveDraftPdf';
+import { basename, nativeBridge, revealItem } from '$lib/workspace/fileSystem';
+import { toaster } from '$lib/modals/toaster-svelte';
 import type { DraftPage } from '$lib/workspace/fileSystem';
 import { m } from '$lib/paraglide/messages';
 
@@ -33,6 +35,8 @@ type SessionOpts = {
 	onInverseSync: () => ((file: string, line: number, selectText?: string) => void) | undefined;
 	onSettled: () => (() => void) | undefined;
 	onDiagnostics: () => ((logPath: string) => void) | undefined;
+	settleEdits: () => (() => Promise<void>) | undefined;
+	paused: () => boolean;
 };
 
 export class DraftSession {
@@ -110,6 +114,7 @@ export class DraftSession {
 				// real LaTeX errors reported nothing while the engine still shipped pages.
 				this.opts.onDiagnostics()?.(this.opts.root() + '/_draft/draft.log');
 			},
+			paused: opts.paused,
 			emit: (k, d) => this.ev(k, d)
 		});
 		this.patcher = new DraftPatcher({
@@ -411,30 +416,38 @@ export class DraftSession {
 		}
 	}
 
-	// Save the reconcile PDF (the exact document the canvases mirror). A pending reconcile
-	// or in-flight compile means the PDF is behind the preview: flush/refresh it first so
-	// the saved file never trails the last edit.
 	async savePdf(): Promise<void> {
 		const nat = nativeBridge();
 		if (!nat || this.savingPdf || !this.pages.length) return;
 		this.savingPdf = true;
 		try {
-			if (await this.patcher.flushReconcile()) {
-				await this.compiler.compile('save-pdf');
-			} else if (this.compiler.compiling) {
-				await this.compiler.compile('save-pdf'); // supersedes the in-flight run; this one owns the result
-			}
 			const name =
 				this.opts
 					.mainFile()
 					.split('/')
 					.pop()!
 					.replace(/\.tex$/i, '') + '.pdf';
-			const res = await nat.draftSavePdf({ root: this.opts.root(), defaultName: name });
+			const res = await saveDraftPdf({
+				settleEdits: async () => {
+					await this.patcher.flushReconcile();
+					await this.opts.settleEdits()?.();
+				},
+				compile: () => this.compiler.compileToLand('save-pdf'),
+				save: () => nat.draftSavePdf({ root: this.opts.root(), defaultName: name })
+			});
+			if (!res) return;
 			this.ev('save-pdf', { saved: res.saved, path: res.path });
-			if (res.saved && res.path) this.compiler.status = m.draft_status_pdf_saved({ path: res.path });
+			// a toast, as the Typst preview's save gives: the status line is the preview's, not the file's
+			const path = res.path;
+			if (res.saved && path)
+				toaster.success({
+					title: m.pdf_saved_title(),
+					description: basename(path),
+					duration: 6000,
+					action: { label: m.filetree_menu_reveal(), onClick: () => void revealItem(path) }
+				});
 		} catch (e) {
-			this.compiler.status = m.draft_status_pdf_save_failed({ message: e instanceof Error ? e.message : String(e) });
+			toaster.error({ title: m.pdf_save_failed(), description: e instanceof Error ? e.message : String(e), duration: 8000 });
 		} finally {
 			this.savingPdf = false;
 		}

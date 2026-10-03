@@ -18,6 +18,8 @@
 	} = $props();
 
 	const ordered = $derived(orderButtons(buttons, isWindows ? 'windows' : 'mac'));
+	// no taller than the label's line, so an icon or the busy spinner coming in never makes the button taller
+	const iconSize = $derived(size === 'xs' ? 'size-3' : 'size-4');
 
 	function classes(b: DialogButton): string {
 		// a caller's own preset (a tonal fill, say) replaces the default look rather than fighting it
@@ -37,16 +39,16 @@
 	{#each ordered as b (b.label)}
 		{#if b.href}
 			<a class={classes(b)} href={b.href} target="_blank" rel="noopener noreferrer">
-				{#if b.icon}{@const Icon = b.icon}<Icon class="size-4" />{/if}
+				{#if b.icon}{@const Icon = b.icon}<Icon class={iconSize} />{/if}
 				{b.label}
 			</a>
 		{:else}
 			<button class={classes(b)} type="button" disabled={b.disabled || b.busy} onclick={b.onclick} use:tip={b.tip}>
 				{#if b.busy}
-					<Loader2 class="size-4 animate-spin" />
+					<Loader2 class="{iconSize} animate-spin" />
 				{:else if b.icon}
 					{@const Icon = b.icon}
-					<Icon class="size-4" />
+					<Icon class={iconSize} />
 				{/if}
 				{b.label}
 			</button>

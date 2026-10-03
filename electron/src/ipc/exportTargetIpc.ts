@@ -1,6 +1,5 @@
 // Where a Typst export should land, asked with the platform's own dialogs. Nothing is written here:
-// tinymist writes the files itself, so the answer is a destination, not a copy (unlike
-// shell:savePdfAs, which copies a PDF that already exists).
+// tinymist writes the files itself, so the answer is a destination, not a copy.
 import { BrowserWindow, dialog } from 'electron';
 import { handleFsE } from './ipcResult';
 

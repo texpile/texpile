@@ -28,7 +28,7 @@ export function runningAgentName(agent: string, reported: string): string {
 }
 
 /** what to run in the terminal to sign in; null when the panel cannot know */
-export function signInCommand(agent: PanelAgent | '' | 'off'): string | null {
+export function signInCommand(agent: PanelAgent | ''): string | null {
 	const commands: Record<PanelAgent, string | null> = {
 		codex: 'codex login',
 		claude: 'claude',
@@ -37,5 +37,5 @@ export function signInCommand(agent: PanelAgent | '' | 'off'): string | null {
 		gemini: 'gemini',
 		custom: null
 	};
-	return agent && agent !== 'off' ? commands[agent] : null;
+	return agent ? commands[agent] : null;
 }

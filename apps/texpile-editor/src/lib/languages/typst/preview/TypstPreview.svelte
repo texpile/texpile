@@ -9,15 +9,16 @@
 	// channel between us is postMessage, and the bridge on the far side is one we injected. That is
 	// what lets the zoom control below drive a viewer we cannot otherwise touch.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { ZoomIn, ZoomOut, Crosshair, FileDown, FileOutput, Loader2, PictureInPicture2 } from '@lucide/svelte';
+	import { ZoomIn, ZoomOut, Crosshair, FileOutput, PictureInPicture2 } from '@lucide/svelte';
+	import { typstExport } from '../export/dialog/typstExportState.svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
-	import { typstExport } from '../export/dialog/typstExportState.svelte';
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
 	import { themeColour } from './themeColour';
+	import { askForProgram, tinymistMissing } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -25,26 +26,12 @@
 		host: string | null;
 		/** a splitter is being dragged; hold the frame's size instead of reflowing it every frame */
 		paneDragging: boolean;
-		/** compile the previewed document to a PDF on disk (the preview itself never writes one) */
-		onSaveTypstPdf: () => Promise<void>;
 		/** move the preview into its own OS window; null (already popped out) hides the button */
 		onPopout?: (() => void) | null;
 		/** docked in the pane, where this row stands in for a tab strip; false in the popped-out window */
 		asTabStrip?: boolean;
 	};
-	let { host, paneDragging, onSaveTypstPdf, onPopout = null, asTabStrip = true }: Props = $props();
-
-	/** an export is in flight; the button shows it and refuses a second one */
-	let savingPdf = $state(false);
-	async function saveAsPdf() {
-		if (savingPdf) return;
-		savingPdf = true;
-		try {
-			await onSaveTypstPdf();
-		} finally {
-			savingPdf = false;
-		}
-	}
+	let { host, paneDragging, onPopout = null, asTabStrip = true }: Props = $props();
 
 	let frameBox = $state<HTMLDivElement | null>(null);
 	/**
@@ -228,7 +215,9 @@
 			<span class="text-warning-ink truncate text-sm" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
 			<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
 		{:else}
-			<span class="truncate text-sm">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
+			<span class="truncate text-sm"
+				>{frameUrl ? m.typst_preview_live() : tinymistMissing.current ? m.typst_preview_not_running() : m.typst_preview_connecting()}</span
+			>
 		{/if}
 	{/snippet}
 	<!-- zoom is the only viewer control: tinymist's viewer ships no toolbar and its users scroll, so
@@ -254,19 +243,9 @@
 			<Crosshair size={16} />
 		</button>
 	{/snippet}
-	<!-- the preview never writes a file; this is tinymist.exportPdf, the same command the VS Code
-	     extension's Export PDF runs. Disabled until the preview is live: same server, same
-	     document, so "previewable" and "exportable" are the same condition. -->
+	<!-- the preview never writes a file: Export does, through the same server, so it waits for the preview to be live.
+	     The one way out of a Typst preview, so the PDF options set there apply to every PDF -->
 	{#snippet exportPdf()}
-		<button
-			onclick={saveAsPdf}
-			disabled={!frameUrl || savingPdf}
-			use:tip={m.typst_preview_save_pdf()}
-			aria-label={m.typst_preview_save_pdf()}
-		>
-			{#if savingPdf}<Loader2 size={16} class="animate-spin" />{:else}<FileDown size={16} />{/if}
-		</button>
-		<!-- the other formats and the PDF options, through the same server -->
 		<button
 			onclick={() => typstExport.show()}
 			disabled={!frameUrl || !typstExport.available}
@@ -325,6 +304,14 @@
 					</div>
 				</div>
 			{/if}
+		{:else if tinymistMissing.current}
+			<!-- not "waiting": with nothing to render it, the first render never comes -->
+			<div class="flex h-full flex-col items-center justify-center gap-3 p-6 text-center">
+				<p class="text-muted max-w-xs text-sm">{m.typst_preview_needs_tinymist()}</p>
+				<button type="button" class="btn btn-sm preset-filled-primary-500" onclick={() => askForProgram('tinymist')}
+					>{m.typst_set_up()}</button
+				>
+			</div>
 		{:else if !error}
 			<div class="text-muted flex h-full items-center justify-center text-center text-sm">
 				{m.typst_preview_waiting()}

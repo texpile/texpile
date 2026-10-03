@@ -1,5 +1,5 @@
-// Where the caret and viewport were, per file. Restored when a tab is switched back to, and when
-// the folder is reopened in a later session.
+// Where the caret and viewport were, per file, and what the source editor had folded. Restored when a tab is
+// switched back to, and when the folder is reopened in a later session.
 //
 // Kept for RECENT files, not just open tabs: closing a tab and reopening it later should still land
 // where you were, which is what people mean by "remembers my place". That is why close() is not
@@ -25,9 +25,14 @@ export type DocPosition = {
 	 *  every line it has not measured, so an absolute pixel offset means something different on a
 	 *  fresh mount than it did when it was saved. Relative to a line, the worst case is one line. */
 	offset?: number;
+	/** the source editor's folds (fold-memory/foldMemory.ts) */
+	folds?: SavedFold[];
 	/** last touched, for LRU eviction */
 	at: number;
 };
+
+/** a fold by its first line: the row, and the start of that line's text to find it by once the file has changed */
+export type SavedFold = { row: number; text: string };
 
 function sepOf(p: string) {
 	return p.includes('\\') ? '\\' : '/';
@@ -86,9 +91,25 @@ class DocPositionsStore {
 	set(path: string, pos: Omit<DocPosition, 'at'>, opts?: { jump?: boolean }): void {
 		const rel = this.relOf(path);
 		if (!rel) return;
-		this.byRel.set(rel, { ...pos, at: Date.now() });
+		// the folds are written on their own, and a caret moving keeps them
+		this.byRel.set(rel, { ...pos, folds: this.byRel.get(rel)?.folds, at: Date.now() });
 		// a plain write to the same file supersedes a jump that never got restored
 		this.jumpRel = opts?.jump ? rel : this.jumpRel === rel ? null : this.jumpRel;
+		this.evict();
+		this.persist();
+	}
+
+	/** a file with folds and no place yet starts at its top, as it would with no record */
+	setFolds(path: string, folds: SavedFold[]): void {
+		const rel = this.relOf(path);
+		if (!rel) return;
+		const prev = this.byRel.get(rel);
+		if (!prev && !folds.length) return;
+		this.byRel.set(rel, {
+			...(prev ?? { row: 0, column: 0, firstVisibleLine: 1 }),
+			folds: folds.length ? folds : undefined,
+			at: Date.now()
+		});
 		this.evict();
 		this.persist();
 	}
@@ -136,8 +157,18 @@ class DocPositionsStore {
 function isPosition(v: unknown): v is DocPosition {
 	if (!v || typeof v !== 'object') return false;
 	const p = v as Record<string, unknown>;
-	// offset is optional: entries written before it existed must still load
-	return typeof p.row === 'number' && typeof p.column === 'number' && typeof p.firstVisibleLine === 'number' && typeof p.at === 'number';
+	// offset and folds are optional: entries written before them must still load
+	return (
+		typeof p.row === 'number' &&
+		typeof p.column === 'number' &&
+		typeof p.firstVisibleLine === 'number' &&
+		typeof p.at === 'number' &&
+		(p.folds === undefined || (Array.isArray(p.folds) && p.folds.every(isSavedFold)))
+	);
+}
+
+function isSavedFold(v: unknown): v is SavedFold {
+	return !!v && typeof v === 'object' && typeof (v as SavedFold).row === 'number' && typeof (v as SavedFold).text === 'string';
 }
 
 export const docPositions = new DocPositionsStore();

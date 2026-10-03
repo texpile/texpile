@@ -48,10 +48,10 @@ Comments are pinned to the text they quote, so an assistant that rewrites a comm
 
 ## Refine selected text
 
-Refine rewrites the text you select with an AI agent installed on your computer, such as Claude Code, Codex, or Antigravity CLI, signed in with your own account. It does not need the MCP server. Choose the agent under **Preferences > AI Assistant > Refine with**, then right-click a selection and pick **Refine with** and a task: match the writing style around it, rephrase, shorten, elaborate, make it more formal, fix the grammar, turn it into a list, or summarize it. The Refine button on the selection toolbar opens the same tasks, with a box for an instruction of your own.
+Refine rewrites the text you select with an AI agent installed on your computer, such as Claude Code, Codex, or Antigravity CLI, signed in with your own account. It does not need the MCP server. Refine offers the agents installed; to choose which, tick them under **Preferences > AI Assistant > Refine with**. Right-click a selection and pick **Refine with** an agent and a task, each agent ticked having its own entry: match the writing style around it, rephrase, shorten, elaborate, make it more formal, fix the grammar, turn it into a list, or summarize it. The Refine button on the selection toolbar opens the same tasks, with a box for an instruction of your own and, when several agents are ticked, a menu of them.
 
 The new text appears as a suggestion under the agent's name, with the task as its note, so nothing changes until you accept it. Texpile sends the selected text and the text around it to the service the agent uses. It keeps your text as it was when the answer cites a source your bibliography does not have, removes a label, or when you changed the passage while the agent was working.
 
 For each of those agents, **Model** lists the models the agent offers for your account. Texpile gets the list from the agent itself. **Default** leaves the choice to the agent.
 
-To use another program, choose **Custom command** and enter the program with its options, for example `ollama run llama3.1`. Texpile sends it the request as input and uses what it prints. **Test** sends a one-word request and shows the answer, or why the agent did not answer, so you can check it before you use Refine.
+To use another program, choose **Custom command** and enter the program with its options, for example `ollama run llama3.1`. Texpile sends it the request as input and uses what it prints.

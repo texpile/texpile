@@ -12,6 +12,8 @@ import { compileConfig } from './projectConfigSync.svelte';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
+import { programNotFound } from './toolMissing';
+import { askForProgram } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 
 export type SyncTexDeps = {
 	isGuest(): boolean;
@@ -58,6 +60,8 @@ export class SyncTexNav {
 		const res = await synctexForward(pdf, path, line);
 		console.debug('[synctex] forward', { tex: path, line, pdf, res });
 		if (!res.ok) {
+			const missing = programNotFound(res.error);
+			if (missing && askForProgram(missing)) return;
 			toaster.error({ title: 'SyncTeX', description: res.error ?? m.wsview_toast_synctex_no_match() });
 			return;
 		}

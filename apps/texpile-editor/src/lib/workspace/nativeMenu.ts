@@ -14,7 +14,6 @@
 import { browser } from '$lib/runtime';
 import { isMac } from '$lib/platform';
 import { recentFolders } from './workspaceStore';
-import { COLOR_VISION_MODES, colorVisionLabel, type ColorVisionMode } from '$lib/preview/colorVision/colorVision';
 import { m } from '$lib/paraglide/messages';
 
 type NativeMenuApi = {
@@ -65,8 +64,6 @@ export type MenuStateInput = {
 	typstProject: boolean;
 	/** File > Export… for a Typst main file */
 	canExportTypst: boolean;
-	/** the previews' color vision simulation, checked in View */
-	colorVision: ColorVisionMode;
 	canInsertImage: boolean;
 	canOpenFolder: boolean;
 	/** File > Save as template: a host in the desktop app */
@@ -120,9 +117,6 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		zoomIn: m.menubar_zoom_in(),
 		zoomOut: m.menubar_zoom_out(),
 		zoomReset: m.menubar_zoom_reset(),
-		colorVision: m.color_vision_menu(),
-		// the View submenu is built from these keys, in this order, as the Symbol one is
-		...Object.fromEntries(COLOR_VISION_MODES.map((mode) => [`vision:${mode}`, colorVisionLabel(mode)])),
 		math: m.menubar_insert_math_menu(),
 		mathInline: m.menubar_inline_equation(),
 		mathDisplay: m.menubar_display_equation(),

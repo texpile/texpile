@@ -5,9 +5,9 @@
 // The export runs here rather than in the dialog so that closing the dialog does not lose it: a long
 // image export keeps going, and its result still arrives as a toast.
 import { mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
-import { revealItem, underRoot } from '$lib/workspace/fileSystem';
+import { basename, revealItem, underRoot } from '$lib/workspace/fileSystem';
 import { getFolder, updateFolder } from '$lib/storage/workspaces';
-import { toastMissingTool } from '$lib/workspace/toolMissing';
+import { sayToolMissing } from '$lib/workspace/toolMissing';
 import { observe } from '$lib/runes/observe.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { tinymistResolved, typstBridgeAvailable, typstServerGen } from '../../intellisense/lspClient';
@@ -47,11 +47,15 @@ function runOnServer(root: string, job: TypstExportJob): Promise<unknown> {
 	return untilServerExits(requestTypstExport(root, job, EXPORT_TIMEOUT_MS));
 }
 
-function announce(outcome: Extract<ExportOutcome, { kind: 'done' }>): void {
+function announce(outcome: Extract<ExportOutcome, { kind: 'done' }>, title: string): void {
 	const [first] = outcome.paths;
 	toaster.success({
-		title: m.typst_export_done_title(),
-		description: outcome.paths.length === 1 ? first : m.typst_export_done_files({ count: outcome.paths.length, folder: outcome.dir }),
+		title,
+		// names, not paths: a whole path breaks mid-word in a toast, and Show in Folder gives the place
+		description:
+			outcome.paths.length === 1
+				? basename(first)
+				: m.typst_export_done_files({ count: outcome.paths.length, folder: basename(outcome.dir) }),
 		duration: 6000,
 		action: { label: m.filetree_menu_reveal(), onClick: () => void revealItem(first) }
 	});
@@ -108,29 +112,18 @@ class TypstExportState {
 		this.busy = true;
 		this.error = null;
 		try {
-			const lastDir = memoryLastDir(getFolder(root).typstExport);
-			const outcome = await runTypstExport(options, {
-				root,
-				main,
-				lastDir,
-				pick: pickExportTarget,
-				serverReady: tinymistResolved,
-				flushSaves: context.flushSaves,
-				run: (job) => runOnServer(root, job)
-			});
+			const outcome = await this.exportWith(root, main, context, options);
 			if (outcome.kind === 'failed' && outcome.missingTool) {
 				// nothing in the dialog can fix this; the app's missing-tool toast offers the install
 				this.open = false;
-				await toastMissingTool('tinymist');
+				await sayToolMissing('tinymist');
 			} else if (outcome.kind === 'failed') this.fail(outcome.message);
 			if (outcome.kind !== 'done') return;
 			updateFolder(root, (draft) => {
 				draft.typstExport = optionsToMemory(options, outcome.dir);
 			});
 			this.open = false;
-			announce(outcome);
-			// the workspace that lent the refresh may have closed while the export ran
-			if (this.context === context && outcome.paths.some((p) => underRoot(root, p))) context.refreshTree();
+			this.landed(root, context, outcome, m.typst_export_done_title());
 		} catch (err) {
 			// the platform dialog or the save, not tinymist: runTypstExport words tinymist's own failures
 			console.error('typst export failed:', err);
@@ -138,6 +131,24 @@ class TypstExportState {
 		} finally {
 			this.busy = false;
 		}
+	}
+
+	private exportWith(root: string, main: string, context: TypstExportContext, options: TypstExportOptions): Promise<ExportOutcome> {
+		return runTypstExport(options, {
+			root,
+			main,
+			lastDir: memoryLastDir(getFolder(root).typstExport),
+			pick: pickExportTarget,
+			serverReady: tinymistResolved,
+			flushSaves: context.flushSaves,
+			run: (job) => runOnServer(root, job)
+		});
+	}
+
+	private landed(root: string, context: TypstExportContext, outcome: Extract<ExportOutcome, { kind: 'done' }>, title: string): void {
+		announce(outcome, title);
+		// the workspace that lent the refresh may have closed while the export ran
+		if (this.context === context && outcome.paths.some((p) => underRoot(root, p))) context.refreshTree();
 	}
 
 	/** in the dialog while it is up; a toast once it has been closed, so a failure is never silent */

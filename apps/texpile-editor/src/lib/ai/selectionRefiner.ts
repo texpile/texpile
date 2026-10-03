@@ -10,9 +10,15 @@ import type { SourceEdit } from '$lib/workspace/suggestionsController';
 import { agentEditProblem, knownCiteKeys } from './agentEditGuard';
 import { contextAround, refinedText, refinePrompt } from './refinePrompt';
 import type { RefineAction } from './refineActions';
+import { refineAgentsOffered } from './refineAgents.svelte';
 
 type AgentBridge = {
-	run(id: string, prompt: string, system?: string): Promise<{ ok: true; text: string } | { ok: false; error: string; cancelled?: true }>;
+	run(
+		id: string,
+		prompt: string,
+		system: string,
+		agent: RefineAgent
+	): Promise<{ ok: true; text: string } | { ok: false; error: string; cancelled?: true }>;
 	cancel(id: string): void;
 	detect(): Promise<Record<PresetAgent, boolean>>;
 	models(agent: PresetAgent): Promise<AgentModelList>;
@@ -25,6 +31,9 @@ export const PRESET_AGENTS: PresetAgent[] = ['claude', 'codex', 'agy'];
 export function isPresetAgent(v: string): v is PresetAgent {
 	return PRESET_AGENTS.includes(v as PresetAgent);
 }
+
+/** a preset, or the reader's own command line */
+export type RefineAgent = PresetAgent | 'custom';
 
 /** id '' is the agent's own default */
 export type AgentModel = { id: string; name: string; description: string };
@@ -46,11 +55,11 @@ export type RefinerDeps = {
 };
 
 /** the agent's name as the suggestion's author */
-export function agentName(): string {
-	const { aiAgent, aiAgentCommand } = settings.current;
-	if (aiAgent === 'claude') return 'Claude';
-	if (aiAgent === 'codex') return 'Codex';
-	if (aiAgent === 'agy') return 'Antigravity';
+export function agentName(agent: RefineAgent): string {
+	if (agent === 'claude') return 'Claude';
+	if (agent === 'codex') return 'Codex';
+	if (agent === 'agy') return 'Antigravity';
+	const { aiAgentCommand } = settings.current;
 	// the program a custom command runs, without its folder or extension
 	const program =
 		aiAgentCommand
@@ -71,17 +80,17 @@ export class SelectionRefiner {
 	constructor(private deps: RefinerDeps) {}
 
 	get available(): boolean {
-		return settings.current.aiAgent !== '' && !!agentBridge() && this.deps.canSuggest();
+		return refineAgentsOffered().length > 0 && !!agentBridge() && this.deps.canSuggest();
 	}
 
 	get busy(): boolean {
 		return this.running !== null;
 	}
 
-	async refine(action: RefineAction): Promise<void> {
+	async refine(action: RefineAction, by: RefineAgent): Promise<void> {
 		const bridge = agentBridge();
 		if (!bridge || this.running) return;
-		const agent = agentName();
+		const agent = agentName(by);
 		const span = this.deps.selection();
 		if (!span) {
 			toaster.info({ title: m.ai_refine_no_span(), duration: 5000 });
@@ -107,7 +116,7 @@ export class SelectionRefiner {
 			action: { label: m.ai_refine_cancel(), onClick: () => bridge.cancel(id) }
 		});
 		try {
-			const answer = await bridge.run(id, request, system);
+			const answer = await bridge.run(id, request, system, by);
 			toaster.dismiss(toast);
 			if (!answer.ok) {
 				if (!answer.cancelled) toaster.error({ title: m.ai_refine_failed({ agent }), description: answer.error });

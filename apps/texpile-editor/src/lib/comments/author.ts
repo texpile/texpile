@@ -16,13 +16,18 @@ import { nativeBridge } from '$lib/workspace/fileSystem';
 /** shown when there is no configured name anywhere */
 const UNKNOWN = 'Unknown';
 
-let cache: { root: string | null; name: string } | null = null;
+let cache: { root: string | null; name: string | null } | null = null;
 
 export async function resolveAuthor(root: string | null, preferred: string): Promise<string> {
 	const set = preferred.trim();
 	if (set) return set;
+	return (await folderGitName(root)) ?? UNKNOWN;
+}
+
+/** the folder's git user.name, or null; read once per folder, as above */
+export async function folderGitName(root: string | null): Promise<string | null> {
 	if (cache && cache.root === root) return cache.name;
-	const name = (await gitName(root)) ?? UNKNOWN;
+	const name = await gitName(root);
 	cache = { root, name };
 	return name;
 }

@@ -27,7 +27,7 @@ Install the agent and sign in once in its own program:
 | GitHub Copilot | copilot  | Run `copilot` and follow its sign-in. |
 | Gemini         | gemini   | Run `gemini` and follow its sign-in.  |
 
-Choose an agent on the welcome screen or in Preferences. Until you do, the tab asks for one and starts nothing. To switch agents later, use the menu at the right end of the tab strip. If Texpile does not find an installed agent, add its folder under Toolchain › Folders.
+Pick an agent from the menu at the right end of the tab strip. Until you do, the tab asks for one and starts nothing. The menu offers the agents installed; to choose which ones it offers, tick them under **Preferences > AI Assistant > Agent tab**, or pick **Choose Agents** at the bottom of the menu. Untick them all to remove the tab. If Texpile does not find an installed agent, add its folder under Toolchain › Folders.
 
 Texpile never sees your sign-in. If the agent is not signed in, the tab shows the command to run and a button that opens a terminal.
 

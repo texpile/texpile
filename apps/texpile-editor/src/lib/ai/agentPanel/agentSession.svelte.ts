@@ -9,6 +9,7 @@ import { settings, updateSettingsSettled } from '$lib/settings';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { agentUnavailable } from './agentAvailability';
 import { attachedBlocks } from './attach/attached';
+import { panelTabOff } from './agentOffer.svelte';
 import type {
 	AcpEvent,
 	AgentCommand,
@@ -188,10 +189,13 @@ export async function openAgentSession(root: string): Promise<void> {
 	await agentSession.start(root);
 }
 
-/** a conversation that has to go: the tab turned off, the agent unable to run here, or its folder no longer open */
+/** a conversation that has to go: the tab turned off, its agent unticked, the agent unable to run here, or its folder
+ *  no longer open */
 export function agentSessionStale(): boolean {
 	const root = agentSession.root;
-	return !!root && (settings.current.agentPanel === 'off' || agentUnavailable() !== null || root !== workspaceRoot.current);
+	const ticked = settings.current.agentPanelAgents;
+	const unticked = !!ticked && !!agentSession.agent && !ticked.includes(agentSession.agent);
+	return !!root && (panelTabOff() || unticked || agentUnavailable() !== null || root !== workspaceRoot.current);
 }
 
 /** for the workspace view: the conversation ends once stale, and with the view, which Close Folder takes down
@@ -204,7 +208,7 @@ export function closeAgentSessionWithWorkspace(): void {
 }
 
 /** the agent the tab names: the one running, else the one chosen */
-export function shownAgent(): PanelAgent | '' | 'off' {
+export function shownAgent(): PanelAgent | '' {
 	return agentSession.agent ?? settings.current.agentPanel ?? '';
 }
 

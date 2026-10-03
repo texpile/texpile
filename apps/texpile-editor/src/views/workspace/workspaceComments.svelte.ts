@@ -32,6 +32,7 @@ import type { EditMode } from '$lib/comments/suggestCompare';
 import { carryClosedEdit } from '$lib/workspace/edits/closedFileEdit';
 import { carriedAnchors } from '$lib/workspace/threadPlacement';
 import type { TextEdit } from '$lib/workspace/edits/textEdits';
+import { ensureName } from '$lib/identity/ownName.svelte';
 
 type CommentsDeps = {
 	doc: DocumentBuffer;
@@ -61,6 +62,8 @@ export class WorkspaceComments {
 		this.ctl = new CommentsController({
 			root: () => workspaceRoot.current,
 			preferredAuthor,
+			// a guest has the name it joined with
+			ensureName: () => (d.guest() ? Promise.resolve(true) : ensureName(workspaceRoot.current)),
 			// new anchors and event resolution read the LIVE buffer; the reanchor snapshot goes stale
 			// under remote edits in a shared session (see the controller's activeText comment)
 			activeText: () => this.activeText(),

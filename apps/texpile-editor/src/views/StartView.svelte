@@ -17,17 +17,11 @@
 	import { warnMissingFolder } from '$lib/workspace/missingFolder';
 	import { openTutorialProject } from '$lib/workspace/starters';
 	import { m } from '$lib/paraglide/messages';
-	import { preferencesTab, takePreferencesReopen, takeSetupReopen } from '$lib/stores/dialogStore';
+	import { takePreferencesReopen } from '$lib/stores/dialogStore';
 	import { RecentsFit } from './startRecentsFit.svelte';
-	import WelcomeSetup from '$lib/setup/WelcomeSetup.svelte';
-	import { setupOwed } from '$lib/setup/setupGate';
-	import { takePendingWorkspace } from '$lib/setup/pendingWorkspace';
 	import GitDialogsHost from '$lib/modals/workspace/GitDialogsHost.svelte';
 	import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 	import { canClone } from '$lib/workspace/scm/remote/gitClone';
-
-	// the flag is taken even when the welcome is owed anyway: left set, the workspace opens the welcome a second time
-	let welcome = $state(takeSetupReopen() || setupOwed());
 
 	let busy = $state(false);
 	let error = $state<string | null>(null);
@@ -112,17 +106,6 @@
 				busy = false;
 			}
 		});
-	}
-
-	function afterSetup() {
-		welcome = false;
-		const held = takePendingWorkspace();
-		if (held) void openFolder(held);
-	}
-
-	function toToolchain() {
-		preferencesTab.current = 'toolchain';
-		void showPrefs();
 	}
 
 	// NOTE: session restore no longer lives here. The main process remembers the open folders
@@ -239,9 +222,4 @@
 {/if}
 {#if PrefsDialog}
 	<PrefsDialog bind:open={prefsOpen} />
-{/if}
-{#if welcome}
-	<div class:hidden={prefsOpen}>
-		<WelcomeSetup done={afterSetup} openToolchain={toToolchain} />
-	</div>
 {/if}

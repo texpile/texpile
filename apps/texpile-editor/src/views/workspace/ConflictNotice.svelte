@@ -43,10 +43,7 @@
 </script>
 
 <!-- the rule is an inset shadow, as under the comparison bar (diff/DiffPane.svelte) -->
-<div
-	class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-	role="status"
->
+<div class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under" role="status">
 	<GitMerge class="text-warning-ink size-3.5 shrink-0" />
 	{#if left}
 		<p class="cap-center min-w-0 flex-1 truncate">

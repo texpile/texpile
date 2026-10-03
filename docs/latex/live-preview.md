@@ -29,7 +29,7 @@ Live preview runs its own lualatex pipeline, which differs from Compile in a few
 
 - **lualatex only.** The preview uses lualatex whatever the compile command says. A document that only compiles with pdflatex or xelatex fails in the preview, and the Problems panel says why. Compile still runs your own command.
 - **No shell escape.** Packages that run a program, such as minted or externalized TikZ, do not build in the preview.
-- **Save PDF** in the preview toolbar writes the lualatex render. Compile is the export that follows your command.
+- **Save PDF** in the preview toolbar recompiles the document in full, then writes the lualatex render. Compile is the export that follows your command.
 - **Not while hosting a shared session.** Guests see the compiled PDF instead.
 - **Autosave stays on** while the preview runs.
 - **Battery.** The engine stays running while you type, which can use a lot of battery on a laptop. Turn live mode off when you are not using it.

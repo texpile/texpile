@@ -61,6 +61,9 @@ type Warm = { child: ChildProcess; key: string; hash: string; ready: boolean; de
 
 let warm: Warm | null = null;
 let idleTimer: NodeJS.Timeout | null = null;
+// a stop has to take the engine due a beat after the last compile with it, or it starts after the stop
+let rewarmTimer: NodeJS.Timeout | null = null;
+let stops = 0;
 
 // a warm engine nobody compiles with is ~200MB of RSS for nothing (same policy as the daemon)
 const IDLE_STOP_MS = 10 * 60 * 1000;
@@ -178,17 +181,21 @@ export function rewarmCompiler(root: string, mainFile: string, engineDir: string
 	// and the user's next keystroke wants the daemon -- a lualatex spawning through its
 	// preamble at that moment contends with both, and the warm-up still finishes long
 	// before the next typing pause could ask for it.
-	const t = setTimeout(() => {
+	if (rewarmTimer) clearTimeout(rewarmTimer);
+	rewarmTimer = setTimeout(() => {
+		rewarmTimer = null;
 		const split = splitForWarm(path.join(root, mainFile));
 		if (!split) return;
 		stopWarmCompiler();
 		void spawnWarm(root, engineDir, split.preamble).catch(() => undefined);
 	}, 1200);
-	t.unref?.();
+	rewarmTimer.unref?.();
 }
 
 async function spawnWarm(root: string, engineDir: string, preamble: string): Promise<void> {
+	const since = stops;
 	await shellEnvReady();
+	if (stops !== since) return;
 	const outAbs = path.join(root, OUT);
 	fs.mkdirSync(outAbs, { recursive: true });
 	dropJobFiles(outAbs);
@@ -255,6 +262,11 @@ export function aliasSynctex(outAbs: string, mainRel: string): void {
 onToolPathChange(() => stopWarmCompiler());
 
 export function stopWarmCompiler(): void {
+	stops++;
+	if (rewarmTimer) {
+		clearTimeout(rewarmTimer);
+		rewarmTimer = null;
+	}
 	if (idleTimer) {
 		clearTimeout(idleTimer);
 		idleTimer = null;

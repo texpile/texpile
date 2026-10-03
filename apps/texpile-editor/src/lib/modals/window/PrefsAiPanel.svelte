@@ -1,13 +1,13 @@
 <script lang="ts">
-	// The AI category: the MCP server an assistant connects to, the agent Refine runs, and the Agent tab's.
-	import { LoaderCircle } from '@lucide/svelte';
+	// The AI category: the MCP server an assistant connects to, the agents Refine offers, and the Agent tab's.
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
-	import { settings, updateSettings, setMcpEnabled, type AppSettings } from '$lib/settings';
-	import { agentBridge, isPresetAgent, type PresetAgent } from '$lib/ai/selectionRefiner';
+	import { settings, updateSettings, setMcpEnabled } from '$lib/settings';
+	import { agentName, isPresetAgent, PRESET_AGENTS, type RefineAgent } from '$lib/ai/selectionRefiner';
+	import { lookUpRefineAgents, refineAgentsTicked, refineInstalled, withRefineAgent } from '$lib/ai/refineAgents.svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import McpSetupModal from './McpSetupModal.svelte';
-	import RadioChoiceList from './RadioChoiceList.svelte';
+	import CheckChoiceList from './CheckChoiceList.svelte';
 	import AgentModelChoice from './AgentModelChoice.svelte';
-	import { AgentTest } from './agentTest.svelte';
 	import AgentPanelPrefs from '$lib/ai/agentPanel/ui/AgentPanelPrefs.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -17,7 +17,6 @@
 	let mcp = $state<McpStatus | null>(null);
 	/** the instructions modal, stacked above Preferences */
 	let setupOpen = $state(false);
-	let installed = $state<Record<PresetAgent, boolean> | null>(null);
 
 	function nativeMcp() {
 		return (window as unknown as { texpileNative?: { mcpStatus?: () => Promise<McpStatus> } }).texpileNative;
@@ -32,32 +31,30 @@
 	}
 	// read on every showing: another window may have toggled it, or the port may have been taken since
 	void refreshMcp();
-	void agentBridge()
-		?.detect()
-		.then((found) => (installed = found))
-		.catch(() => undefined);
+	lookUpRefineAgents(true);
 
-	const AGENTS: { value: AppSettings['aiAgent']; label: string }[] = [
-		{ value: '', label: m.prefs_ai_agent_off() },
+	const AGENTS: { value: RefineAgent; label: string }[] = [
 		{ value: 'claude', label: m.prefs_ai_agent_claude() },
 		{ value: 'codex', label: m.prefs_ai_agent_codex() },
 		{ value: 'agy', label: m.prefs_ai_agent_agy() },
 		{ value: 'custom', label: m.prefs_ai_agent_custom() }
 	];
-	const agent = $derived(settings.current.aiAgent ?? '');
+	const installed = $derived(refineInstalled.found);
+	const ticked = $derived(refineAgentsTicked());
 	const agentChoices = $derived(
 		AGENTS.map((a) => {
 			const found = isPresetAgent(a.value) ? installed?.[a.value] : undefined;
-			return found === undefined ? a : { ...a, aside: found ? m.prefs_ai_agent_installed() : m.prefs_ai_agent_not_found(), warn: !found };
+			if (found === undefined) return a;
+			// not found: not to be ticked, though one ticked before it went can still be unticked
+			const aside = found ? m.prefs_ai_agent_installed() : m.prefs_ai_agent_not_found();
+			return { ...a, aside, warn: !found, disabled: !found && !ticked.includes(a.value) };
 		})
 	);
-	const agentLabel = $derived(AGENTS.find((a) => a.value === agent)?.label ?? '');
-	const test = new AgentTest();
+	// a model row for each ticked preset that is here, a way out for each that is not
+	const tickedPresets = $derived(PRESET_AGENTS.filter((a) => ticked.includes(a)));
 
-	function pick(value: AppSettings['aiAgent']): void {
-		// a model belongs to one agent
-		if (value !== agent) updateSettings({ aiAgent: value, aiAgentModel: '' });
-		test.clear();
+	function tick(value: string, on: boolean): void {
+		updateSettings({ refineAgents: withRefineAgent(value as RefineAgent, on) });
 	}
 </script>
 
@@ -66,6 +63,23 @@
 		<div class="text-sm font-medium">{text}</div>
 		{#if hint}<p class="text-muted mt-1 text-xs leading-relaxed">{hint}</p>{/if}
 	</div>
+{/snippet}
+
+<!-- under its own box, as wide as the rows; what the command does is its hover, the example its placeholder -->
+{#snippet customCommand(value: string)}
+	{#if value === 'custom' && ticked.includes('custom')}
+		<div class="px-1.5 pt-0.5 pb-1.5">
+			<input
+				class="input w-full font-mono text-xs"
+				spellcheck="false"
+				aria-label={m.prefs_ai_agent_command()}
+				placeholder={m.prefs_ai_agent_command_placeholder()}
+				use:tip={m.prefs_ai_agent_command_note()}
+				value={settings.current.aiAgentCommand}
+				onchange={(e) => updateSettings({ aiAgentCommand: e.currentTarget.value.trim() })}
+			/>
+		</div>
+	{/if}
 {/snippet}
 
 {#snippet toggle(checked: boolean, onChange: (v: boolean) => void)}
@@ -95,54 +109,20 @@
 
 <div class={ROW}>
 	{@render label(m.prefs_ai_agent(), m.prefs_ai_agent_note())}
-	<RadioChoiceList choices={agentChoices} value={agent} label={m.prefs_ai_agent()} onpick={(v) => pick(v as AppSettings['aiAgent'])} />
+	<CheckChoiceList choices={agentChoices} values={ticked} label={m.prefs_ai_agent()} ontoggle={tick} below={customCommand} />
 </div>
-{#if isPresetAgent(agent) && installed?.[agent]}
-	<div class={ROW}>
-		<AgentModelChoice {agent} onpick={() => test.clear()} />
-	</div>
-{:else if isPresetAgent(agent) && installed}
-	<!-- "Not found" beside the name says nothing about the way out, and the folder list is in another category -->
-	<div class="border-surface-200-800 border-b py-3">
-		<p class="text-muted text-xs leading-relaxed">{m.prefs_ai_agent_elsewhere({ agent: agentLabel })}</p>
-	</div>
-{/if}
-{#if agent === 'custom'}
-	<div class={ROW}>
-		{@render label(m.prefs_ai_agent_command(), m.prefs_ai_agent_command_note())}
-		<input
-			class="input w-56 shrink-0 font-mono text-xs"
-			spellcheck="false"
-			placeholder={m.prefs_ai_agent_command_placeholder()}
-			value={settings.current.aiAgentCommand}
-			onchange={(e) => {
-				updateSettings({ aiAgentCommand: e.currentTarget.value.trim() });
-				test.clear();
-			}}
-		/>
-	</div>
-{/if}
-{#if agent}
-	<div class={ROW}>
-		<div class="min-w-0">
-			{@render label(m.prefs_ai_test(), m.prefs_ai_test_note())}
-			{#if test.result}
-				<p class="mt-1 text-xs [overflow-wrap:anywhere] {test.result.ok ? 'text-success-ink' : 'text-error-ink'}">{test.result.text}</p>
-			{/if}
+{#each tickedPresets as agent (agent)}
+	{#if installed?.[agent]}
+		<div class={ROW}>
+			<AgentModelChoice {agent} />
 		</div>
-		{#if test.running}
-			<button class="btn btn-sm preset-tonal shrink-0" onclick={() => test.cancel()}>
-				<LoaderCircle class="size-4 animate-spin" />{m.ai_refine_cancel()}
-			</button>
-		{:else}
-			<button
-				class="btn btn-sm preset-tonal shrink-0"
-				disabled={agent === 'custom' && !settings.current.aiAgentCommand}
-				onclick={() => void test.run()}>{m.prefs_ai_test_button()}</button
-			>
-		{/if}
-	</div>
-{/if}
+	{:else if installed}
+		<!-- "Not found" beside the name says nothing about the way out, and the folder list is in another category -->
+		<div class="border-surface-200-800 border-b py-3">
+			<p class="text-muted text-xs leading-relaxed">{m.prefs_ai_agent_elsewhere({ agent: agentName(agent) })}</p>
+		</div>
+	{/if}
+{/each}
 
 <AgentPanelPrefs />
 

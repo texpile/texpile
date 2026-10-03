@@ -32,7 +32,7 @@
 		unsure?: boolean;
 		partial?: boolean;
 		dense?: boolean;
-		onReply: (thread: CommentThread, body: string) => void;
+		onReply: (thread: CommentThread, body: string) => Promise<string | null> | void;
 		onEditMessage: (message: CommentMessage, body: string) => void;
 		onDeleteMessage: (thread: CommentThread, message: CommentMessage) => void;
 		onAttach?: (thread: CommentThread) => void;
@@ -49,11 +49,12 @@
 		if (body) onEditMessage(msg, body);
 	}
 
-	function submit() {
+	async function submit() {
 		const body = draft.trim();
 		if (!body) return;
 		draft = '';
-		onReply(thread, body);
+		// not sent, as when the name it needed was not given: the reply goes back in the box, unless more was typed
+		if ((await onReply(thread, body)) === null && !draft) draft = body;
 	}
 </script>
 

@@ -6,7 +6,7 @@
 	import ChangeList from './changes/ChangeList.svelte';
 	import MergeActions from './MergeActions.svelte';
 	import SyncControls from './SyncControls.svelte';
-	import ScmProgress from './ScmProgress.svelte';
+	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
 	import ParentRepoGate from './gates/ParentRepoGate.svelte';
 	import NoRepoGate from './gates/NoRepoGate.svelte';
 	import UnsafeRepoGate from './gates/UnsafeRepoGate.svelte';
@@ -212,7 +212,8 @@
 	<ParentRepoGate repo={parentRepo} {busy} onUse={onUseParentRepo} {onInit} />
 {:else}
 	<div class="flex h-full min-h-0 flex-col">
-		<ScmProgress active={busy || !!gitRunning.current} />
+		<!-- status reads stay out of gitRunning: autosave rereads status after nearly every save, and the line would flicker -->
+		<ProgressLine active={busy || !!gitRunning.current} label={m.vcs_working()} />
 		<!-- refresh belongs beside the branch: both are the state of the repository, and parked above
 		     an unrelated heading it read as a stray duplicate of the file tree's own refresh -->
 		<!-- a container, so in a narrow sidebar Sync and Publish drop their word and Refresh stays in sight -->

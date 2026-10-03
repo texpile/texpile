@@ -10,7 +10,7 @@
 	} from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { TextSelection } from 'prosemirror-state';
-	import { EditorView } from '@codemirror/view';
+	import { glideSourceTo, glideVisualTo } from '$lib/editor/visual/extensions/tableofcontents/tocGlide';
 	import { m } from '$lib/paraglide/messages';
 	import { ChevronDown, ChevronRight } from '@lucide/svelte';
 	import { untrack } from 'svelte';
@@ -89,13 +89,16 @@
 			const view = sourceCmView.current;
 			if (!view) return;
 			const p = Math.min(item.pos, view.state.doc.length);
-			view.dispatch({ selection: { anchor: p }, effects: EditorView.scrollIntoView(p, { y: 'start', yMargin: 20 }) });
+			// the caret first: a heading inside a fold opens, and there is something to glide to
+			view.dispatch({ selection: { anchor: p } });
+			glideSourceTo(view, p);
 			view.focus();
 		} else {
 			const view = editorViewStore.current;
 			if (!view) return;
 			const sel = TextSelection.near(view.state.doc.resolve(Math.min(item.pos + 1, view.state.doc.content.size)));
-			view.dispatch(view.state.tr.setSelection(sel).scrollIntoView());
+			view.dispatch(view.state.tr.setSelection(sel));
+			glideVisualTo(view, item.pos);
 			view.focus();
 		}
 	}

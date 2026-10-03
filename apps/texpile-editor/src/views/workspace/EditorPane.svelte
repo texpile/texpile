@@ -2,9 +2,10 @@
 	// The editor column: the mode toolbar on top and, under it, whichever surface the open file
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
-	import { tip } from '$lib/components/tooltip.svelte';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { Loader2, CircleAlert, FileWarning, Info } from '@lucide/svelte';
+	import TypstMissingBar from '$lib/languages/typst/TypstMissingBar.svelte';
+	import EditorNotice from '$lib/components/EditorNotice.svelte';
 	import ConflictNotice from './ConflictNotice.svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
@@ -231,25 +232,14 @@
 		     open reached it deliberately from Source Control and deserves the warning before they
 		     touch it. One short line everywhere a managed file appears - the same sentence as the
 		     SCM badge tooltip and the diff bar, so the notice reads as one voice. -->
-		<!-- 40px is the app's bar height - the PDF, editor and draft toolbars are all min-h-10, border
-		     included - so this reads as another piece of chrome rather than prose shoving the document
-		     down. Its rule is an inset shadow, as on the two below and diff/DiffPane.svelte's bars. -->
-		<div
-			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-			use:tip={m.texpile_managed_note()}
-		>
-			<Info class="text-primary-ink size-3.5 shrink-0" />
-			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
-		</div>
+		<EditorNotice icon={Info} tone="info" title="{m.vcs_texpile_managed()}." note={m.texpile_managed_note()} />
 	{/if}
 	{#if loadedPath && encodingIssue}
-		<div
-			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-			use:tip={encodingIssue}
-		>
-			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />
-			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.wsview_read_only()}.</span> {encodingIssue}</p>
-		</div>
+		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_read_only()}." note={encodingIssue} />
+	{/if}
+	<!-- a guest's Typst runs on the host's tinymist, and a lone file runs none: no language server, no compile -->
+	{#if loadedPath && kind === 'typ' && !session.isGuest && !fileMode.current && !comparing}
+		<TypstMissingBar />
 	{/if}
 	{#if loadedPath && conflicted && !comparing}
 		<ConflictNotice left={conflictsLeft} stray={conflictStray} onLeave={structured ? onLeaveConflicts : undefined} />
@@ -257,16 +247,7 @@
 	<!-- the buffer is now the only copy, so it stays on screen; what a save will do is spelled out
 	     because it recreates the old name rather than following the rename -->
 	{#if loadedPath && fileDeleted && !comparing}
-		<div
-			class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs shadow-[inset_0_-1px_0_var(--color-surface-200-800)]"
-			use:tip={m.wsview_file_deleted_note()}
-		>
-			<CircleAlert class="text-warning-ink size-3.5 shrink-0" />
-			<p class="cap-center min-w-0 truncate">
-				<span class="font-medium">{m.wsview_file_deleted_title()}.</span>
-				{m.wsview_file_deleted_note()}
-			</p>
-		</div>
+		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_file_deleted_title()}." note={m.wsview_file_deleted_note()} />
 	{/if}
 	{#if loadedPath && comparing && viewMode === 'visual' && structured}
 		<VisualCompareBar

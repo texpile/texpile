@@ -94,9 +94,9 @@ describe('phase A: localStorage from 0.16.1', () => {
 			v: 1,
 			collabName: 'Lee',
 			recentFolders: ['C:/proj'],
-			completionUsage: { '\\cite': { s: 2, t: 5 } },
-			onboardingCompleted: true
+			completionUsage: { '\\cite': { s: 2, t: 5 } }
 		});
+		expect(users.onboardingCompleted).toBeUndefined();
 		for (const k of ['texpile:collabName', 'texpile:recentFolders', 'texpile:completionUsage', 'texpile:preferences'])
 			expect(localStorage.getItem(k), k).toBeNull();
 	});

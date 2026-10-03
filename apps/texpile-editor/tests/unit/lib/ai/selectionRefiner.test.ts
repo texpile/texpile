@@ -25,6 +25,9 @@ it('puts no suggestion in a copy of the file the reader switched to while the ag
 		},
 		reveal: () => {}
 	});
-	await refiner.refine(REFINE_ACTIONS.find((a) => a.id === 'shorten')!);
+	await refiner.refine(
+		REFINE_ACTIONS.find((a) => a.id === 'shorten')!,
+		'claude'
+	);
 	expect(made).toEqual([]);
 });

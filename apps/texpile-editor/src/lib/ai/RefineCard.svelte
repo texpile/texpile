@@ -1,13 +1,14 @@
 <script lang="ts">
 	// The Refine card the selection toolbar opens, laid out like Google Docs': quick actions, More for the rest, and a
-	// box for an instruction of the reader's own. Mounted once, at the app root, before the context menu host so the
-	// More menu opens over it
+	// box for an instruction of the reader's own, and where Refine offers several agents, which one. Mounted once, at the
+	// app root, before the context menu host so the More and agent menus open over it
 	import { untrack } from 'svelte';
-	import { ArrowUp, ChevronDown } from '@lucide/svelte';
+	import { ArrowUp, Check, ChevronDown } from '@lucide/svelte';
 	import { showContextMenu } from '$lib/menus/contextMenu.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { REFINE_ACTIONS, customRefineAction, type RefineAction } from './refineActions';
-	import { agentName, refiner } from './selectionRefiner';
+	import { agentName, refiner, type RefineAgent } from './selectionRefiner';
+	import { refineAgentsOffered } from './refineAgents.svelte';
 	import { closeRefineCard, refineCard } from './refineCardState.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { setPmCommentPending } from '$lib/editor/visual/extensions/pmComments';
@@ -22,6 +23,18 @@
 	let instruction = $state('');
 	// measured before it paints, so it never shows for a frame off-screen
 	let placed = $state.raw<{ x: number; y: number; for: object } | null>(null);
+
+	const offered = $derived(refineAgentsOffered());
+	// the one a menu entry named, else the one used last, else the first
+	let lastUsed = $state<RefineAgent | null>(null);
+	let picked = $state<RefineAgent | null>(null);
+	const agent = $derived.by(() => {
+		const want = picked ?? refineCard.current?.agent ?? lastUsed;
+		return want && offered.includes(want) ? want : offered[0];
+	});
+	$effect(() => {
+		if (!refineCard.current) picked = null;
+	});
 
 	$effect(() => {
 		const open = refineCard.current;
@@ -54,9 +67,20 @@
 
 	function run(action: RefineAction): void {
 		const r = refiner.current;
+		const by = agent;
 		closeRefineCard();
 		instruction = '';
-		if (r) void r.refine(action);
+		if (!r || !by) return;
+		lastUsed = by;
+		void r.refine(action, by);
+	}
+
+	function chooseAgent(button: HTMLElement): void {
+		const box = button.getBoundingClientRect();
+		void showContextMenu(
+			offered.map((a) => ({ label: agentName(a), icon: a === agent ? Check : undefined, onclick: () => (picked = a) })),
+			{ x: box.left, y: box.bottom + 4 }
+		);
 	}
 
 	function more(button: HTMLElement): void {
@@ -85,7 +109,7 @@
 		bind:this={card}
 		data-keep-caret
 		role="dialog"
-		aria-label={m.ai_refine_menu({ agent: agentName() })}
+		aria-label={agent ? m.ai_refine_menu({ agent: agentName(agent) }) : m.ai_refine()}
 		class="bg-surface-50-950 border-surface-300-700 z-dropdown fixed w-max min-w-96 max-w-[calc(100vw-16px)] card border shadow-lg"
 		style="left: {placed?.x ?? open.anchor.left}px; top: {placed?.y ?? open.anchor.bottom}px; opacity: {placed?.for === open ? 1 : 0}"
 	>
@@ -99,6 +123,16 @@
 			<button type="button" class="btn btn-sm hover:preset-tonal gap-1 px-2 text-sm" onclick={(e) => more(e.currentTarget)}>
 				{m.ai_refine_more()}<ChevronDown class="text-muted size-4" />
 			</button>
+			{#if offered.length > 1 && agent}
+				<button
+					type="button"
+					class="btn btn-sm hover:preset-tonal ml-auto gap-1 px-2 text-sm"
+					aria-label={m.ai_refine_choose_agent()}
+					onclick={(e) => chooseAgent(e.currentTarget)}
+				>
+					{agentName(agent)}<ChevronDown class="text-muted size-4" />
+				</button>
+			{/if}
 		</div>
 		<form
 			class="border-surface-200-800 flex items-center gap-2 border-t px-3 py-2"
@@ -109,7 +143,7 @@
 		>
 			<input
 				class="min-w-0 flex-1 bg-transparent text-sm outline-none"
-				placeholder={m.ai_refine_instruction({ agent: agentName() })}
+				placeholder={agent ? m.ai_refine_instruction({ agent: agentName(agent) }) : ''}
 				bind:value={instruction}
 				bind:this={input}
 			/>

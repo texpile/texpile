@@ -206,7 +206,7 @@
 </script>
 
 <!-- an inset shadow, not a border: a border leaves 47px of the 48px bar and centered icons land half a pixel off -->
-<header class="col-span-full flex h-12 items-center justify-between gap-3 px-4 shadow-[inset_0_-1px_0_var(--color-surface-200-800)]">
+<header class="col-span-full flex h-12 items-center justify-between gap-3 px-4 line-under">
 	<!-- the sidebar and preview toggles used to bracket this row. Both moved onto the divider of the
 	     pane they open (WorkspaceChrome / PreviewPane), where the control sits on the boundary it
 	     moves - so this row is only about the document -->

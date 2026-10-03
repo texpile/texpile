@@ -43,7 +43,7 @@
 		filesPresent?: Set<string> | null;
 		selected?: string | null;
 		onOpen: (thread: CommentThread) => void;
-		onReply: (thread: CommentThread, body: string) => void;
+		onReply: (thread: CommentThread, body: string) => Promise<string | null> | void;
 		onResolve: (thread: CommentThread, resolved: boolean) => void;
 		/** one message rather than the whole thread */
 		onEditMessage?: (message: CommentMessage, body: string) => void;

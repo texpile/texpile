@@ -10,12 +10,14 @@ import { openToolchainPrefs } from '$lib/stores/dialogStore';
 import { m } from '$lib/paraglide/messages';
 import { requireTemplatesBridge } from '../templateBridge';
 import type { UniverseTemplate } from '../templateBridge.types';
+import { askForProgram } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 
 /** there is no tinymist to unpack the template with; the picker offers the install instead */
 export class TinymistMissingError extends Error {}
 
-/** the one next step: Texpile's own install where it can do one, the toolchain settings otherwise */
+/** the one next step: the dialog with Texpile's own install where it can do one, the toolchain settings otherwise */
 export async function toastTinymistMissing(): Promise<void> {
+	if (askForProgram('tinymist')) return;
 	if (tinymistInstaller.available) await tinymistInstaller.refresh();
 	toaster.error({
 		title: m.wsview_toast_starter_create_failed_title(),

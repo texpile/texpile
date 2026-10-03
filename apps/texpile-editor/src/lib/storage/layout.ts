@@ -62,7 +62,7 @@ const DEFAULTS: LayoutState = {
 	terminalVisible: false,
 	terminalHeight: 240,
 	terminalShrink: false,
-	pdfDarkPages: true,
+	pdfDarkPages: false,
 	pdfDarkPagesInLight: false,
 	editorZoom: 1,
 	pageView: false,

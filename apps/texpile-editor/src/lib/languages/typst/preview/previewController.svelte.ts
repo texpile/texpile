@@ -7,19 +7,17 @@ import { compileLog } from '$lib/stores/compileLogStore';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { settings } from '$lib/settings';
 import { toaster } from '$lib/modals/toaster-svelte';
-import { toastMissingTool } from '$lib/workspace/toolMissing';
+import { askForProgram, tinymistMissing } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { previewRelay } from '$lib/collab/previewRelay.svelte';
-import { savePdfAs, joinPath } from '$lib/workspace/fileSystem';
-import { isTypstCommand, typstOutDir } from '$lib/workspace/typstCommand';
+import { joinPath } from '$lib/workspace/fileSystem';
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
 import {
 	tinymistResolved,
 	setPreviewJumpHandler,
 	setTypstDiagnosticsHandler,
-	exportTypstPdf,
 	typstServerGen,
 	type TypstDiagnostic
 } from '../intellisense/lspClient';
@@ -42,10 +40,8 @@ export type TypstPreviewHooks = {
 	setPreviewSwitch: (root: string | null, on: boolean) => void;
 	getDocPath: () => string | null;
 	getFollow: () => boolean;
-	getCompileCommand: () => string;
 	/** the visual caret as a zero-based source position, through the view's block map */
 	getVisualCaretSourcePos: () => { line: number; character: number } | null;
-	refreshTree: () => Promise<void> | void;
 	/** inverse-sync landing, shared with SyncTeX: visual stays visual, source jumps the line */
 	syncJumpToFileLine: (file: string, line: number, column?: number) => void;
 };
@@ -59,9 +55,6 @@ export class TypstPreviewController {
 	private starting = false;
 	/** the document the running task was started FOR; a main switch away from it re-attaches */
 	private attachedFile: string | null = null;
-	/** tinymist was not found at the last start. No retry until the preview is switched off and on or the Toolchain
-	 *  folders change: anything the start reads can re-run it (a config re-read after every save did), and each run toasted */
-	private tinymistMissing = $state(false);
 
 	private readonly hooks: TypstPreviewHooks;
 
@@ -98,6 +91,8 @@ export class TypstPreviewController {
 	 * the demand effect noticed.
 	 */
 	enable(): void {
+		// pressed again after tinymist was missing: look again, which says so again if it still is
+		tinymistMissing.current = false;
 		this.hooks.setPreviewSwitch(workspaceRoot.current, true);
 		this.hooks.setPaneOpen(true);
 	}
@@ -112,52 +107,20 @@ export class TypstPreviewController {
 			// we had started a standalone `tinymist preview`, which reads the file instead.
 			const target = await startTypstPreview(root, file);
 			if (!target) {
-				// "tinymist isn't installed" gets the same tool-missing toast the shell compile
-				// shows (name + the install); only a resolved-but-failed start falls through to
-				// the generic failure below
+				// no tinymist: the pane and the bar over a .typ file say so, with the way to get it. Not the dialog: nothing
+				// was asked for. Only a resolved-but-failed start falls through to the generic failure below
 				if (!(await tinymistResolved())) {
-					this.tinymistMissing = true;
-					await toastMissingTool('tinymist');
+					tinymistMissing.current = true;
 					return;
 				}
 				throw new Error('tinymist did not return a preview address');
 			}
+			tinymistMissing.current = false;
 			this.attachedFile = file;
 			this.host = target.host;
 			this.task = target.taskId;
 		} catch (err) {
 			toaster.error({ title: m.typst_preview_failed(), description: err instanceof Error ? err.message : String(err) });
-		}
-	}
-
-	/**
-	 * Compile the previewed document to a PDF and offer it through a native save dialog - the
-	 * same flow as draft mode's Save PDF, since neither live preview writes files on its own.
-	 *
-	 * The export stages through the folder's build directory (where the compile command writes,
-	 * `output/` by default) rather than tinymist's default of "next to the entry file", so the
-	 * staged copy is a build artifact, not clutter in the project root. A cancelled dialog
-	 * leaves it there and says nothing - it is exactly what Compile would have produced.
-	 */
-	async savePdf(): Promise<void> {
-		const root = workspaceRoot.current;
-		const file = this.file;
-		if (!root || !file) return;
-		try {
-			const command = this.hooks.getCompileCommand();
-			const outDir = isTypstCommand(command) ? typstOutDir(command) : 'output';
-			const staged = await exportTypstPdf(root, file, outDir);
-			if (!staged) throw new Error('tinymist did not return a path');
-			void this.hooks.refreshTree(); // the staged copy is real either way; show it in the sidebar
-			const res = await savePdfAs(staged, staged);
-			if (res.saved && res.path) toaster.success({ title: m.typst_pdf_saved_title(), description: res.path, duration: 4000 });
-		} catch (err) {
-			// The reject is tinymist's JSON-RPC error OBJECT, not an Error - String() on it prints
-			// [object Object]. Every failure on this path means the same thing to the user (the
-			// document did not produce a PDF), so the toast says that; the raw error goes to the
-			// console for whoever needs it.
-			console.error('typst pdf export failed:', err);
-			toaster.error({ title: m.typst_pdf_save_failed(), description: m.typst_pdf_save_no_pdf() });
 		}
 	}
 
@@ -251,12 +214,21 @@ export class TypstPreviewController {
 		this.sendVisualCaretScroll(null);
 	}
 
+	/** tinymist there after all: the mark clears, and the demand effect starts the preview */
+	private lookForTinymist(): void {
+		void tinymistResolved().then((found) => {
+			if (found) tinymistMissing.current = false;
+		});
+	}
+
 	/** The rendered sync entry points only exist when a preview target should too, but wanted is
 	 * not attached - tinymist may still be starting or have died - and MCP's syncToLine bypasses
 	 * the gate entirely. Typst has no SyncTeX: only the live preview can resolve a source
 	 * position, so explain the miss instead of silently no-oping. */
 	private syncUnavailable(): boolean {
 		if (this.scrollTarget() !== null) return false;
+		// "turn on Preview" would be wrong advice with Preview on and nothing to run it
+		if (tinymistMissing.current && askForProgram('tinymist')) return true;
 		toaster.info({ title: m.typst_sync_preview_only_title(), description: m.typst_sync_preview_only_desc(), duration: 5000 });
 		return true;
 	}
@@ -348,7 +320,7 @@ export class TypstPreviewController {
 			if (gen === this.seenServerGen) return;
 			this.seenServerGen = gen;
 			// a server that could not start is also tried again this way, once tinymist is installed
-			this.tinymistMissing = false;
+			tinymistMissing.current = false;
 			if (this.host === null) return;
 			this.sendCaretScroll.cancel();
 			this.attachedFile = null;
@@ -389,15 +361,20 @@ export class TypstPreviewController {
 		// what costs (an executeCommand, then the ~1.2MB renderer), so it happens only once the
 		// pane is actually open, and detaching on close frees the server's preview and the wasm
 		// session.
+		let wasWanted = false;
 		$effect(() => {
 			// guests holding the stream keep the task alive with the host's own pane closed; their
 			// demand exists only while hosting, so this never starts a task for a lone workspace
 			const want = this.wanted && (this.hooks.getPaneOpen() || previewRelay.demand > 0);
+			// switched off and on, or the pane reopened: one more look, for a tinymist installed since
+			if (want && !wasWanted && tinymistMissing.current) this.lookForTinymist();
+			wasWanted = want;
 			// tracked: switching the main from one .typ to ANOTHER keeps `want` true, so without
 			// this the task attached to the old document would run - and stream to guests - forever
 			const target = this.hooks.getMainFile();
-			if (!want) this.tinymistMissing = false;
-			if (want && this.host === null && !this.starting && !this.tinymistMissing) {
+			// tinymist known missing holds the start back: anything the start reads can re-run it (a config re-read after
+			// every save did). Whatever finds tinymist again clears it, and this starts
+			if (want && this.host === null && !this.starting && !tinymistMissing.current) {
 				this.starting = true;
 				void this.open().finally(() => (this.starting = false));
 			} else if (this.host !== null && (!want || target !== this.attachedFile)) {
@@ -414,7 +391,7 @@ export class TypstPreviewController {
 			const now = JSON.stringify(settings.current.toolDirs ?? []);
 			if (now === toolDirs) return;
 			toolDirs = now;
-			this.tinymistMissing = false;
+			this.lookForTinymist();
 		});
 
 		// the preview stream's host end

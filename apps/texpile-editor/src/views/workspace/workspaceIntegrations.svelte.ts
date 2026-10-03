@@ -56,10 +56,9 @@ import {
 	isDirty,
 	mainFile,
 	setLastFile,
-	effectiveCompileFormat,
-	savedSuggesting
+	effectiveCompileFormat
 } from '$lib/workspace/workspaceStore';
-import { suggesting } from '$lib/comments/activeSuggestions.svelte';
+import { resumeSuggesting } from '$lib/identity/resumeSuggesting';
 import { settings } from '$lib/settings';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
@@ -341,7 +340,7 @@ export class WorkspaceIntegrations {
 			// untracked: resolveNow reads mainFile/compileConfig, and tracking those would replay
 			// this whole reset (blank PDF, dock steal) on a mere main-file or live-mode change
 			untrack(() => {
-				suggesting.current = !!root && savedSuggesting(root);
+				resumeSuggesting(root);
 				compileLog.current = null;
 				pdfStore.current = null; // initProject's loadExistingPdf refills it for the new folder
 				wsdoc.projectMacros = '';

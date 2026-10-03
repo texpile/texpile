@@ -15,7 +15,7 @@
 	import AgentPicker from '$lib/ai/agentPanel/ui/strip/AgentPicker.svelte';
 	import { agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 	import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
-	import { settings } from '$lib/settings';
+	import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
 	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal } from '@lucide/svelte';
 
 	let {
@@ -60,7 +60,7 @@
 		commentFilesPresent?: Set<string> | null;
 		commentSelected?: string | null;
 		onCommentOpen?: (thread: CommentThread) => void;
-		onCommentReply?: (thread: CommentThread, body: string) => void;
+		onCommentReply?: (thread: CommentThread, body: string) => Promise<string | null> | void;
 		onCommentResolve?: (thread: CommentThread, resolved: boolean) => void;
 		onCommentEditMessage?: (message: CommentMessage, body: string) => void;
 		onCommentDeleteMessage?: (thread: CommentThread, message: CommentMessage) => void;
@@ -70,7 +70,7 @@
 
 	const openComments = $derived(comments.filter((c) => !c.resolved).length);
 	// there until turned off; where the agent cannot run (a guest, the browser, a lone file) the tab says why
-	const agentOn = $derived(settings.current.agentPanel !== 'off');
+	const agentOn = $derived(!panelTabOff());
 	const agentBlocked = $derived(agentUnavailable());
 	// turned off from Preferences in any window: the tab goes (the workspace stops the agent behind it)
 	$effect(() => {

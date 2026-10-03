@@ -29,7 +29,7 @@ jobs:
     outputs:
       version: ${{ steps.pin.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - id: pin
         run: echo "version=$(jq -r .version vendor/tinymist.json)" >> "$GITHUB_OUTPUT"
@@ -46,7 +46,7 @@ jobs:
           done < upstream/pinned.sha256
           (cd upstream && sha256sum --strict -c pinned.sha256)
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: upstream
           path: upstream/
@@ -56,7 +56,7 @@ jobs:
     needs: fetch
     runs-on: windows-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: upstream
           path: upstream
@@ -96,7 +96,7 @@ jobs:
             Write-Host "$($file.Name): $($signature.SignerCertificate.Subject)"
           }
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: signed-windows
           path: signed/
@@ -107,7 +107,7 @@ jobs:
     # not macos-latest: release.yml's signing keychain would not unlock on its newer image
     runs-on: macos-15
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: upstream
           path: upstream
@@ -164,7 +164,7 @@ jobs:
         if: always()
         run: security delete-keychain "$RUNNER_TEMP/vendor-signing.keychain-db" || true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: signed-mac
           path: signed/
@@ -179,14 +179,14 @@ jobs:
       VERSION: ${{ needs.fetch.outputs.version }}
       OUT: vendor-tinymist-${{ needs.fetch.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: upstream
           path: upstream
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: signed-*
           merge-multiple: true
@@ -243,7 +243,7 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ env.OUT }}
           path: ${{ env.OUT }}/

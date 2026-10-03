@@ -88,6 +88,14 @@ describe('docPositions', () => {
 
 	// the landing flash reads this: once, for the restore the jump caused, and never for the
 	// ordinary tab switch that comes after it
+	it('keeps the folds through caret writes and a restart', () => {
+		const folds = [{ row: 9, text: '\\section{Method}' }];
+		docPositions.setFolds(at('main.tex'), folds);
+		docPositions.set(at('main.tex'), pos(30, 2, 20));
+		docPositions.bind(ROOT, true);
+		expect(docPositions.get(at('main.tex'))).toMatchObject({ row: 30, folds });
+	});
+
 	it('hands out a jump marker exactly once', () => {
 		docPositions.set(at('main.tex'), pos(12), { jump: true });
 		expect(docPositions.takeJump(at('main.tex'))).toBe(true);
