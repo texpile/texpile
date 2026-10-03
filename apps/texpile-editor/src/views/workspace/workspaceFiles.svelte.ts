@@ -17,6 +17,7 @@ import { loadReferences } from '$lib/workspace/citations';
 import { readCitationsThrough } from '$lib/workspace/document/citedKeys';
 import { insertIncludeAtCursor, insertTypstIncludeAtCursor } from '$lib/workspace/editorCommands';
 import { retargetDiskStamp } from '$lib/workspace/diskStamp';
+import { scmDraftFor } from '$lib/workspace/scm/actions/scmDraft.svelte';
 import { openFile } from '$lib/workspace/workspaceStore';
 import { confirmAsk } from '$lib/modals/confirm.svelte';
 import { m } from '$lib/paraglide/messages';
@@ -111,6 +112,8 @@ export class WorkspaceFiles {
 			afterPathMoved: (from, to) => {
 				d.commentsFileMoved(from, to);
 				void moveLocalHistory(from, to, (p) => provider.readText(p)); // and so does its Local History
+				const root = workspaceRoot.current;
+				if (root) scmDraftFor(root).moved(from, to); // and whether Source Control leaves it out
 			},
 			retargetPendingSave: (from, to) => {
 				d.saver().retarget(from, to);
