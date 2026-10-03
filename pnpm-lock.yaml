@@ -199,8 +199,8 @@ importers:
         specifier: ^6.3.289
         version: 6.3.289
       prosemirror-changeset:
-        specifier: ^2.4.3
-        version: 2.4.3
+        specifier: 2.4.1
+        version: 2.4.1
       prosemirror-commands:
         specifier: ^1.7.2
         version: 1.7.2
@@ -227,7 +227,7 @@ importers:
         version: 1.25.12
       prosemirror-proofread:
         specifier: ^0.4.0-beta.1
-        version: 0.4.0-beta.1(prosemirror-changeset@2.4.3)(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.5)
+        version: 0.4.0-beta.1(prosemirror-changeset@2.4.1)(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.5)
       prosemirror-search:
         specifier: ^0.1.0
         version: 0.1.0
@@ -3981,8 +3981,8 @@ packages:
   property-information@7.2.0:
     resolution: {integrity: sha512-IAtzIB6sUiWaJYrX9smp3V46pBGbBeLFRGdh25kg1334VcBlD8HzhPeNIWQH9zhGmo2itIe25EHt9dQP7G5hmg==}
 
-  prosemirror-changeset@2.4.3:
-    resolution: {integrity: sha512-J8jqUZ1xybXKY44v3K0c8m8ZTIqJPVT34t2UVyxv4VEWoNd5C9t5Y52GNuMriRJ3IpNxOSE2R60vN4qBrTMcyQ==}
+  prosemirror-changeset@2.4.1:
+    resolution: {integrity: sha512-96WBLhOaYhJ+kPhLg3uW359Tz6I/MfcrQfL4EGv4SrcqKEMC1gmoGrXHecPE8eOwTVCJ4IwgfzM8fFad25wNfw==}
 
   prosemirror-commands@1.7.2:
     resolution: {integrity: sha512-q6Q6szxqdu9Xd6EcdKsqXghu5nQdZTpB4Q9yd04WRc7/jt763e/rT60Owh0L1GYY+T46o5rD+9lEN36dZS43tw==}
@@ -8844,7 +8844,7 @@ snapshots:
 
   property-information@7.2.0: {}
 
-  prosemirror-changeset@2.4.3:
+  prosemirror-changeset@2.4.1:
     dependencies:
       prosemirror-transform: 1.12.1
 
@@ -8899,10 +8899,10 @@ snapshots:
     dependencies:
       orderedmap: 2.1.1
 
-  prosemirror-proofread@0.4.0-beta.1(prosemirror-changeset@2.4.3)(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.5):
+  prosemirror-proofread@0.4.0-beta.1(prosemirror-changeset@2.4.1)(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.5):
     dependencies:
       object-hash: 3.0.0
-      prosemirror-changeset: 2.4.3
+      prosemirror-changeset: 2.4.1
       prosemirror-model: 1.25.12
       prosemirror-state: 1.4.4
       prosemirror-view: 1.42.5
