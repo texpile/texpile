@@ -38,6 +38,16 @@ describe('commands the editor models', () => {
 	);
 });
 
+describe('a starred citation', () => {
+	// read without its star, the star was taken for the key and the key left behind as text
+	it.each(['\\citet*{smith}', '\\citep*[p.~2]{smith}', '\\parencite*{smith}', '\\citeauthor*{smith}'])(
+		'%s is written back as it was',
+		(src) => {
+			expect(rt(`See ${src} here.`)).toBe(`See ${src} here.`);
+		}
+	);
+});
+
 describe('commands whose output only the preamble knows', () => {
 	// \autoref and \cref take their word from \figurename or \crefname, \pageref needs a page
 	// number that exists only after layout, and \footcite does not appear inline at all

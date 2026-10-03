@@ -294,6 +294,8 @@ export function createIncludeDoc(macro: Macro): PmNode[] | null {
 }
 
 export function createCitation(macro: Macro): PmNode[] {
+	// a chip has no word for the star (\citet* lists every author), so a starred call stays as written
+	if (macroHasStar(macro)) return [buildNode('inline_latex', null, [rawTextNode(nodeRawSpan(macro), printRaw(macro))])];
 	const optionalArgs = macro.args?.filter((arg) => arg.openMark === '[') || [];
 	const mandatoryArgs = macro.args?.filter((arg) => arg.openMark === '{') || [];
 
