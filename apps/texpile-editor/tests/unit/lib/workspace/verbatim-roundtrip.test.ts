@@ -1042,13 +1042,18 @@ describe('what is typed at the head of an item stays text', () => {
 \\end{document}
 `;
 
-	it('a body beginning with < or [ gets an empty group in front, so it is not read as an overlay or a label', () => {
-		for (const typed of ['<lab>,', '[x] ']) {
+	// a typed < goes out as \textless{} (the default font encoding draws a bare one as ¡), which no
+	// overlay reads; a [ still needs the empty group
+	it('a body beginning with < or [ is not read as an overlay or a label', () => {
+		for (const [typed, written] of [
+			['<lab>,', '\\textless{}lab\\textgreater{},'],
+			['[x] ', '{}[x] ']
+		]) {
 			const parsed = parseLatexFile(FILE14);
 			const at = posOf(parsed.doc, 'Middle');
 			const doc = new Transform(parsed.doc).replaceWith(at, at, schema.text(typed)).doc;
 			const out = serializeLatexFile(parsed, doc);
-			expect(out).toContain(`\\item {}${typed}Middle bullet.`);
+			expect(out).toContain(`\\item ${written}Middle bullet.`);
 			expect(parseLatexFile(out).doc.toString()).toBe(doc.toString());
 		}
 	});
@@ -1059,7 +1064,7 @@ describe('what is typed at the head of an item stays text', () => {
 		expect(out).toContain('\\item Middle bullet.');
 		const at = posOf(parsed.doc, 'Middle');
 		const doc = new Transform(parsed.doc).replaceWith(at, at, schema.text('<lab>,')).doc;
-		expect(serializeLatexFile(parsed, withoutOrigins(doc))).toContain('\\item {}<lab>,Middle bullet.');
+		expect(serializeLatexFile(parsed, withoutOrigins(doc))).toContain('\\item \\textless{}lab\\textgreater{},Middle bullet.');
 	});
 });
 

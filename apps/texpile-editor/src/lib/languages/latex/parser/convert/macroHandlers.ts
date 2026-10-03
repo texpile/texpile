@@ -155,6 +155,10 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	textbackslash: (_m, ctx) => textNodes('\\', ctx.marks.length > 0 ? ctx.marks : null),
 	textasciitilde: (_m, ctx) => textNodes('~', ctx.marks.length > 0 ? ctx.marks : null),
 	textasciicircum: (_m, ctx) => textNodes('^', ctx.marks.length > 0 ? ctx.marks : null),
+	// what the serializer writes for a typed < > |, which the default font encoding draws as ¡ ¿ and a dash
+	textless: (_m, ctx) => textNodes('<', ctx.marks.length > 0 ? ctx.marks : null),
+	textgreater: (_m, ctx) => textNodes('>', ctx.marks.length > 0 ? ctx.marks : null),
+	textbar: (_m, ctx) => textNodes('|', ctx.marks.length > 0 ? ctx.marks : null),
 	ldots: (_m, ctx) => textNodes('…', ctx.marks.length > 0 ? ctx.marks : null),
 	dots: (_m, ctx) => textNodes('…', ctx.marks.length > 0 ? ctx.marks : null),
 	textendash: (_m, ctx) => textNodes('–', ctx.marks.length > 0 ? ctx.marks : null),
