@@ -454,6 +454,15 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 		}
 	});
 
+	it('a dot typed after a call the kept text then runs on from is not read as a field of the call', () => {
+		const parsed = parseTypstFile('Year #cite(<typst2023>, form: "year") only.\n');
+		const at = posOf(parsed.doc, ' only');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('.')).delete(at + 1, at + 1 + ' onl'.length).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(out).not.toContain(').y');
+		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
+	});
+
 	it('text put on the line of a line comment the file keeps goes on the next line, the comment whole', () => {
 		const parsed = parseTypstFile('A comment // note\nand more.\n');
 		let end = -1;

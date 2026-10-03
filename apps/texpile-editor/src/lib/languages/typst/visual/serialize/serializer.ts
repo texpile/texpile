@@ -446,7 +446,8 @@ const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx),
 		if (!parent.type.spec.code && blankLineAt(head, bytes, tail)) return null;
 		// a line comment the file keeps runs on over whatever the seam leaves on its line
 		if (!parent.type.spec.code && /(^|[^:\\])\/\/[^\n]*$/.test(head) && !/^\r?\n/.test(bytes + tail)) return null;
-		if (bytes === '' ? seam(head, tail) : seam(head, bytes) || seam(bytes, tail)) return null;
+		// whole on either side: what decides a seam may lie past short fresh bytes (`)` + `.` + `y`)
+		if (bytes === '' ? seam(head, tail) : seam(head, bytes + tail) || seam(head + bytes, tail)) return null;
 		if (unbound(head, bytes, tail, gone)) return null;
 		// code, a chip's source and raw text are written as typed
 		const code = !!parent.type.spec.code || /`/.test(head.replace(ESCAPES_AND_RAW, ''));
