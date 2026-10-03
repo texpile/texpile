@@ -47,7 +47,10 @@ const PLATFORM_ALIAS: Record<string, string> = {
 };
 
 function platformOf(key: string): string {
-	const ext = key.toLowerCase().split('.').pop();
+	const lower = key.toLowerCase();
+	// the Windows portable build is a zip too, so it goes by name before the mac zip rule
+	if (lower.endsWith('-portable.zip')) return 'windows-portable';
+	const ext = lower.split('.').pop();
 	return ext === 'exe' ? 'windows' : ext === 'dmg' || ext === 'zip' ? 'mac' : ext === 'appimage' ? 'linux-appimage' : 'linux-deb';
 }
 
@@ -90,6 +93,9 @@ const STATS_QUERIES: Record<string, string> = {
 	// rows written before the channel blob existed have blob7 = '' and show up as 'web' here
 	channels:
 		"SELECT if(blob7 = '', 'web', blob7) AS name, SUM(_sample_interval) AS downloads FROM texpile_downloads GROUP BY name ORDER BY downloads DESC FORMAT JSON",
+	// portable zips written before platformOf knew them carry 'mac'; /_stats moves them across
+	portableAsMac:
+		"SELECT 'windows-portable' AS name, SUM(_sample_interval) AS downloads FROM texpile_downloads WHERE blob2 = 'mac' AND blob1 LIKE '%-portable.zip' FORMAT JSON",
 	daily:
 		"SELECT toStartOfInterval(timestamp, INTERVAL '1' DAY) AS name, SUM(_sample_interval) AS downloads FROM texpile_downloads WHERE timestamp > NOW() - INTERVAL '30' DAY GROUP BY name ORDER BY name FORMAT JSON"
 };
@@ -109,6 +115,17 @@ async function sqlQuery(env: Env, sql: string): Promise<StatRow[]> {
 	if (!res.ok) throw new Error(`SQL API ${res.status}: ${text.slice(0, 200)}`);
 	const parsed = JSON.parse(text) as { data?: { name: string; downloads: number | string }[] };
 	return (parsed.data ?? []).map((r) => ({ name: String(r.name), downloads: Number(r.downloads) }));
+}
+
+function movePortable(platforms: StatRow[], n: number): StatRow[] {
+	if (!n) return platforms;
+	const counts = new Map(platforms.map((r) => [r.name, r.downloads]));
+	counts.set('mac', (counts.get('mac') ?? 0) - n);
+	counts.set('windows-portable', (counts.get('windows-portable') ?? 0) + n);
+	return [...counts]
+		.filter(([, downloads]) => downloads > 0)
+		.map(([name, downloads]) => ({ name, downloads }))
+		.sort((a, b) => b.downloads - a.downloads);
 }
 
 function statsJson(payload: unknown, status = 200): Response {
@@ -134,13 +151,15 @@ async function statsPage(env: Env): Promise<Response> {
 		);
 	}
 	try {
-		const [platforms, versions, agents, channels, daily] = await Promise.all([
+		const [rawPlatforms, portableAsMac, versions, agents, channels, daily] = await Promise.all([
 			sqlQuery(env, STATS_QUERIES.platforms),
+			sqlQuery(env, STATS_QUERIES.portableAsMac).catch(() => []),
 			sqlQuery(env, STATS_QUERIES.versions),
 			sqlQuery(env, STATS_QUERIES.agents),
 			sqlQuery(env, STATS_QUERIES.channels),
 			sqlQuery(env, STATS_QUERIES.daily)
 		]);
+		const platforms = movePortable(rawPlatforms, portableAsMac[0]?.downloads || 0);
 		return statsJson({
 			// Analytics Engine keeps ~92 days of data points
 			retentionDays: 92,
