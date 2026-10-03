@@ -66,9 +66,10 @@ export const BLANK = /\n[ \t]*\n/;
  * keeps the file's shape, so the change reads as the words that changed. A space becomes a line
  * break only before a word that begins with a letter, which no dialect reads as markup at a line
  * start; `breaks` are the offsets of the spaces so replaced. Null when the file's paragraph was
- * one line, or when the fresh text has line breaks of its own (a comment, a forced break)
+ * one line, or when the fresh text has line breaks of its own (a comment, a forced break). A
+ * comment ending the paragraph (`endsLine` of the text before a space) keeps its words on its line
  */
-export function rewrapLike(was: string, fresh: string): { text: string; breaks: number[] } | null {
+export function rewrapLike(was: string, fresh: string, endsLine?: (text: string) => boolean): { text: string; breaks: number[] } | null {
 	if (fresh.includes('\n')) return null;
 	const lines = was.split('\n');
 	if (lines.length < 2) return null;
@@ -83,7 +84,7 @@ export function rewrapLike(was: string, fresh: string): { text: string; breaks: 
 			lineLen = word.length;
 			continue;
 		}
-		if (lineLen > 0 && lineLen + 1 + word.length > width && /^\p{L}/u.test(word)) {
+		if (lineLen > 0 && lineLen + 1 + word.length > width && /^\p{L}/u.test(word) && !endsLine?.(out)) {
 			breaks.push(out.length);
 			out += '\n' + word;
 			lineLen = word.length;

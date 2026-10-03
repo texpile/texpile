@@ -242,7 +242,7 @@ export function createMemberSplice(
 					let core = nested ? part : part.slice(lead, part.length - WS_END.exec(part)![0].length);
 					// a paragraph written afresh keeps the wrap the file gave the one it replaces
 					const wrapWas = nested ? null : wrapsAsFile(child, ref);
-					const rewrapped = wrapWas ? rewrapLike(wrapWas, core) : null;
+					const rewrapped = wrapWas ? rewrapLike(wrapWas, core, options.endsLine) : null;
 					let partLeaves = nested ? nested.leaves : (options.mapLeaves?.(child, childCtx, part) ?? []);
 					if (rewrapped) {
 						part = part.slice(0, lead) + rewrapped.text + part.slice(lead + core.length);

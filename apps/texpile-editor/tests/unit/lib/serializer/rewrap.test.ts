@@ -105,4 +105,17 @@ describe('a paragraph written afresh keeps the wrap of the one it replaces', () 
 		const { text } = serializeLatexFileDetailed(parsed, doc);
 		expect(text).toContain('One line here that is long enough. And more words typed at the end of it.\n');
 	});
+
+	it('typst: does not break a line inside the comment that ends the paragraph', () => {
+		const parsed = parseTypstFile('Intro.\n\nA paragraph with a comment at the end of its line // like this one\nand more.\n');
+		// the line after the comment taken out, and an underscore that writes the paragraph afresh
+		const doc = retype(parsed.doc, [1], (t) => t.replace('end', 'en_d'));
+		const kids: Node[] = [];
+		doc.child(1).forEach((c, _o, i) => {
+			if (i < 2) kids.push(c);
+		});
+		const cut = doc.copy(Fragment.fromArray([doc.child(0), doc.child(1).copy(Fragment.fromArray(kids))]));
+		const { text } = serializeTypstFileDetailed(parsed, cut);
+		expect(parseTypstFile(text).doc.child(1).child(1).textContent, text).toBe('// like this one');
+	});
 });

@@ -319,7 +319,7 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 					const wrapWas = wrapsAsFile(doc.child(i), neighbours[i].was);
 					const from = WS.exec(part)![0].length;
 					const to = part.length - WS_END.exec(part)![0].length;
-					const rewrapped = wrapWas && to > from ? rewrapLike(wrapWas, part.slice(from, to)) : null;
+					const rewrapped = wrapWas && to > from ? rewrapLike(wrapWas, part.slice(from, to), options.endsLine) : null;
 					if (rewrapped) {
 						partLeaves = brokenRuns(
 							leavesOf(doc, i, n, entryAt(i)),
