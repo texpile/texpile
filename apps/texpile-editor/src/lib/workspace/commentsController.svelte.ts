@@ -288,7 +288,8 @@ export class CommentsController {
 		this.weak = weak;
 		this.applyOrphans();
 		void this.verdicts.detached(this.file, lost);
-		if (this.pendingOpen) {
+		// once its own file is up: one that never opens (gone from disk) must not take the selection at every refresh
+		if (this.pendingOpen && this.store.forFile(this.file).some((t) => t.id === this.pendingOpen)) {
 			const target = this.pendingOpen;
 			this.pendingOpen = null;
 			this.selected = target;
