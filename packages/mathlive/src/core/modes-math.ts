@@ -288,27 +288,62 @@ export class MathMode extends Mode {
   }
 }
 
+// the command a bold run was read from, while its letters still have the shape that command
+// gives them: \mathbf upright, the others italic
+function boldSpelling(run: readonly Atom[]): string | undefined {
+  const spelling = run[0].style.verbatimBold;
+  if (!spelling) return undefined;
+  const upright = spelling === '\\mathbf';
+  return run.every(
+    (x) =>
+      x.style.verbatimBold === spelling &&
+      (upright ? x.style.variant === 'normal' : x.style.variant === undefined)
+  )
+    ? spelling
+    : undefined;
+}
+
+// a bold run split where the command it was read from changes
+function bySpelling(run: readonly Atom[]): (readonly Atom[])[] {
+  const result: Atom[][] = [];
+  for (const atom of run) {
+    const last = result[result.length - 1];
+    if (last && last[0].style.verbatimBold === atom.style.verbatimBold)
+      last.push(atom);
+    else result.push([atom]);
+  }
+  return result;
+}
+
 function emitBoldRun(run: Atom[], options: ToLatexOptions): string[] {
-  return getPropertyRuns(run, 'bold').map((x) => {
-    const weight = weightString(x[0]);
-    if (weight !== 'bold') return joinLatex(emitVariantRun(x, options));
+  return getPropertyRuns(run, 'bold').flatMap((bold) => {
+    const weight = weightString(bold[0]);
+    if (weight !== 'bold') return [joinLatex(emitVariantRun(bold, options))];
 
     // If the parent is already bold, don't emit the bold command
-    if (weightString(x[0].parent!) === 'bold')
-      return joinLatex(emitVariantRun(x, options));
+    if (weightString(bold[0].parent!) === 'bold')
+      return [joinLatex(emitVariantRun(bold, options))];
 
-    // Use '\mathbf' if possible, otherwise `\bm`. Note that `\bm` is
-    // not as well supported as `\mathbf` but it can handle more cases
-    // (i.e. greek letters, operators, variants, etc...)
-
-    // Get the content of the run
-    const value = joinLatex(x.map((x) => x.value ?? ''));
-    if (/^[a-zA-Z0-9]+$/.test(value) || x.every(isUprightAlnumGroup))
-      return latexCommand('\\mathbf', joinLatex(emitVariantRun(x, options)));
-
-    // If the run contains a mix of characters, use `\bm`
-    return latexCommand('\\bm', joinLatex(emitVariantRun(x, options)));
+    return bySpelling(bold).map((x) => emitBoldCommand(x, options));
   });
+}
+
+function emitBoldCommand(x: readonly Atom[], options: ToLatexOptions): string {
+  const spelling = boldSpelling(x);
+  if (spelling)
+    return latexCommand(spelling, joinLatex(emitVariantRun(x, options)));
+
+  // Use '\mathbf' if possible, otherwise `\bm`. Note that `\bm` is
+  // not as well supported as `\mathbf` but it can handle more cases
+  // (i.e. greek letters, operators, variants, etc...)
+
+  // Get the content of the run
+  const value = joinLatex(x.map((x) => x.value ?? ''));
+  if (/^[a-zA-Z0-9]+$/.test(value) || x.every(isUprightAlnumGroup))
+    return latexCommand('\\mathbf', joinLatex(emitVariantRun(x, options)));
+
+  // If the run contains a mix of characters, use `\bm`
+  return latexCommand('\\bm', joinLatex(emitVariantRun(x, options)));
 }
 
 // a group of upright letters and digits, as Typst's `bold(upright(x))` is read

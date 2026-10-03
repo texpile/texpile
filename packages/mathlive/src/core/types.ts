@@ -165,6 +165,8 @@ export interface BoxInterface {
 export type PrivateStyle = Style & {
   verbatimColor?: string;
   verbatimBackgroundColor?: string;
+  /** the command a bold run was set with, `\boldsymbol`, `\bm` or `\mathbf` */
+  verbatimBold?: string;
 };
 
 /**

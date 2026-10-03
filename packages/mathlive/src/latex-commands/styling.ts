@@ -341,7 +341,11 @@ defineFunction('bf', '{:rest*}', {
 // In LaTeX, \boldsymbol does not preserve proper kerning between characters
 defineFunction(['boldsymbol', 'bm', 'bold'], '{:math*}', {
   applyMode: 'math',
-  applyStyle: (style) => ({ ...style, variantStyle: 'bold' }),
+  applyStyle: (style, name) => ({
+    ...style,
+    variantStyle: 'bold',
+    verbatimBold: name,
+  }),
 });
 
 defineFunction('bfseries', '{:rest*}', {
@@ -419,10 +423,11 @@ defineFunction('texttt', '{:text*}', {
 // Note: \mathbf is a no-op in text mode
 defineFunction('mathbf', '{:math*}', {
   applyMode: 'math',
-  applyStyle: (style) => ({
+  applyStyle: (style, name) => ({
     ...style,
     variant: 'normal',
     variantStyle: 'bold',
+    verbatimBold: name,
   }),
 });
 
