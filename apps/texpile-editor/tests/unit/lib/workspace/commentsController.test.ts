@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
-// Revealing a thread from the panel: one on another file is selected once that file is up. And what a message
-// deleted from a suggestion leaves drawn
+// Revealing a thread from the panel: one on another file is selected once that file is up. And a suggestion's own
+// message, which only Accept or Reject takes away
 import { it, expect, vi, beforeEach } from 'vitest';
 import { buildAnchor } from '$lib/comments/anchor';
 import { openEvent, serializeLog } from '$lib/comments/log';
@@ -73,10 +73,20 @@ it('leaves the selection alone after a thread whose file never opened', async ()
 	expect(ctl.selected).toBe('here');
 });
 
-// the thread went with its only message, and its old words stayed struck through in the editor until the file reopened
-it('stops drawing a suggestion whose only message is deleted', async () => {
+// the thread and its drawing went with that message while its words stayed: an accept the log never recorded
+it('keeps a suggestion and the log as they were when asked to delete its own message', async () => {
 	const { ctl, thread } = await openMain();
-	expect(activeSuggestions.current.map((s) => s.id)).toEqual(['suggested']);
+	const log = disk['.texpile/comments.jsonl'];
 	await ctl.removeMessage(thread('suggested'), thread('suggested').messages[0]);
-	expect(activeSuggestions.current).toEqual([]);
+	expect(disk['.texpile/comments.jsonl']).toBe(log);
+	expect(thread('suggested').messages.map((msg) => msg.id)).toEqual(['suggested']);
+	expect(activeSuggestions.current.map((s) => s.id)).toEqual(['suggested']);
+});
+
+it('deletes a reply on a suggestion', async () => {
+	const { ctl, thread } = await openMain();
+	const reply = await ctl.reply(thread('suggested'), 'why', 'bo');
+	await ctl.removeMessage(thread('suggested'), thread('suggested').messages[1]);
+	expect(thread('suggested').messages.map((msg) => msg.id)).toEqual(['suggested']);
+	expect(disk['.texpile/comments.jsonl']).toContain(`"message":"${reply}"`);
 });

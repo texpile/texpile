@@ -5,7 +5,7 @@
 	import InitialAvatar from '$lib/components/InitialAvatar.svelte';
 	import type { Snippet } from 'svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
-	import { formatChange, isSuggestion, shownWords, suggestionKind } from '$lib/comments/suggest';
+	import { canDeleteMessage, formatChange, isSuggestion, shownWords, suggestionKind } from '$lib/comments/suggest';
 	import { suggestionLabel } from '$lib/comments/suggestionLabel';
 	import { regionParserForPath } from '$lib/comments/regionParser';
 	import { m } from '$lib/paraglide/messages';
@@ -151,14 +151,16 @@
 					>
 						<Pencil class="size-3" />
 					</button>
-					<button
-						class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
-						use:tip={m.comments_delete_message()}
-						aria-label={m.comments_delete_message()}
-						onclick={() => onDeleteMessage(thread, msg)}
-					>
-						<Trash2 class="size-3" />
-					</button>
+					{#if canDeleteMessage(thread, msg)}
+						<button
+							class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
+							use:tip={m.comments_delete_message()}
+							aria-label={m.comments_delete_message()}
+							onclick={() => onDeleteMessage(thread, msg)}
+						>
+							<Trash2 class="size-3" />
+						</button>
+					{/if}
 				</div>
 			{/if}
 		</div>
