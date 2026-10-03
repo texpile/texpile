@@ -160,7 +160,7 @@ export function insertCitation(keys: string[], kind: 'tex' | 'typ'): void {
 		}
 		const cite = kind === 'tex' ? v.state.schema.nodes.citation : undefined;
 		if (cite) {
-			const node = cite.create({ prenote: '', postnote: '', variant: 'autocite' }, v.state.schema.text(keys.join(',')));
+			const node = cite.create({ prenote: '', postnote: '', variant: 'cite' }, v.state.schema.text(keys.join(',')));
 			v.dispatch(v.state.tr.replaceSelectionWith(node).scrollIntoView());
 			v.focus();
 			return;
