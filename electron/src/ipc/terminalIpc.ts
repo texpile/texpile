@@ -9,6 +9,8 @@ import * as typstService from '../typstService';
 import { withPathDirs } from '../shell/pathDirs';
 import { CWD_LOOKUP_OFF } from '../shell/findProgram';
 import { shellEnvReady } from '../shell/shellEnv';
+import { loginShellStart } from '../shell/loginShellStart';
+import { toolDirsInFront } from '../shell/toolDirs';
 import { killTree } from '../shell/killTree';
 import { windowsPtyFor } from '../shell/windowsPty';
 import { timeSync } from '../startupStats';
@@ -110,12 +112,9 @@ export function registerTerminalIpc(): void {
 		if (ptys.has(id)) return { ok: true, shell, windowsPty };
 		let proc: PtyProcess;
 		try {
-			// macOS: login shell, so /etc/zprofile runs path_helper and picks up /etc/paths.d
-			// (MacTeX registers /Library/TeX/texbin there). A Finder-launched app only has
-			// launchd's bare PATH, and a non-login zsh never repairs it - Terminal.app,
-			// iTerm and VS Code all spawn login shells for the same reason.
+			const start = loginShellStart(shellPath, toolDirsInFront(), path.join(app.getPath('userData'), 'terminal-shell'));
 			proc = timeSync('spawn terminal shell', () =>
-				pty.spawn(shellPath, process.platform === 'darwin' ? ['-l'] : [], {
+				pty.spawn(shellPath, start.args, {
 					name: 'xterm-color',
 					cwd: cwd && fs.existsSync(cwd) ? cwd : app.getPath('home'),
 					cols: Math.max(1, cols! | 0) || 80,
@@ -123,7 +122,7 @@ export function registerTerminalIpc(): void {
 					// the shell must be able to find the tools Preferences says are installed; without this a
 					// configured tinymist works for intellisense and for the Toolchain tab, then fails at the
 					// compile command with "not recognized" (see withPathDirs)
-					env: terminalEnv() as Record<string, string>
+					env: { ...(terminalEnv() as Record<string, string>), ...start.env }
 				})
 			);
 		} catch (err) {
