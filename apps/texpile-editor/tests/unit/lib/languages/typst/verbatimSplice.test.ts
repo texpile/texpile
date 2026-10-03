@@ -266,6 +266,15 @@ After.
 		}
 	});
 
+	it('a cell split after a line break typed at its end keeps its closing bracket', () => {
+		const parsed = parseTypstFile('#table(columns: 2, [Alice], [Paris])\n');
+		const end = posOf(parsed.doc, 'Paris') + 'Paris'.length;
+		const t = new Transform(parsed.doc).insert(end, parsed.doc.type.schema.nodes.hard_break.create());
+		const doc = t.split(posOf(t.doc, 'Paris') + 1).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
+	});
+
 	it('maps the cells of a table one of whose cells changed', () => {
 		const parsed = parseTypstFile(TABLE);
 		const edited = retypeIn(parsed.doc, 'Third', (t) => t.replace('Third', 'THIRD'));

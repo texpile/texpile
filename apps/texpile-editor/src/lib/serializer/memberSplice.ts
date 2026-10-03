@@ -268,8 +268,9 @@ export function createMemberSplice(
 					const after = ref ? gapAfter(ref.index + slot.size - 1) : usualGap;
 					const last = slot === slots[lastEmitted] && m === nodes.length - 1;
 					// a child ending on a comment keeps the line end after it, or the comment would run
-					// on into what follows
-					if (options.endsLine?.(core) && !after.startsWith('\n') && !(last && after === '')) core += '\n';
+					// on into what follows: after the last one, the frame closing the container
+					const follows = last && !ref ? gapAfter(lastPlaced) : after;
+					if (options.endsLine?.(core) && !follows.startsWith('\n') && !(last && follows === '')) core += '\n';
 					if (options.beforeBreak && (last || BLANK.test(after))) {
 						const at2 = slots.indexOf(slot) + 1;
 						const nextSlot = at2 < slots.length ? slots[at2] : null;
