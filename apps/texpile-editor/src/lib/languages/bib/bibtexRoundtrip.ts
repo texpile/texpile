@@ -101,21 +101,27 @@ export function parseSingleEntry(text: string): { entry: BiblatexReference } | {
 /**
  * Emit a .bib from the token stream. Non-entry tokens re-emit verbatim (that's how comments,
  * @Preamble and @String round-trip); entry tokens look up refsByKey, missing means deleted.
- * Tokens are joined by one blank line; spacing between blocks isn't preserved beyond that.
+ * Tokens are joined on the file's own bytes between them; one added since gets a blank line.
  */
 export function serializeBibtex(tokens: BibToken[], refsByKey: Map<string, BiblatexReference>): string {
-	const parts: string[] = [];
+	let out = '';
+	let tail = '\n';
 	for (const token of tokens) {
+		if (token.post !== undefined) tail = token.post;
+		let text: string;
 		if (token.kind === 'entry') {
 			const ref = refsByKey.get(token.entry.citationKey);
 			if (!ref) continue; // deleted
 			// prefer untouched raw so inside-entry formatting round-trips; regenerate once the form edited it
-			parts.push(ref.raw ?? renderReferenceAsBib(ref));
+			text = ref.raw ?? renderReferenceAsBib(ref);
 		} else {
-			parts.push(token.text);
+			text = token.text;
 		}
+		// the file's lead belongs to its first token; nothing goes before another that ends up first
+		const lead = token === tokens[0] ? (token.pre ?? '') : '';
+		out += (out ? (token.pre ?? '\n\n') : lead) + text;
 	}
-	return parts.join('\n\n') + '\n';
+	return out + tail;
 }
 
 /** renders one loose reference as a pretty-printed @type{key, field = {value}, ...} block. */
