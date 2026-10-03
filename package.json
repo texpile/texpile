@@ -40,7 +40,7 @@
 		"chokidar": "^5.0.0",
 		"concurrently": "^9.1.0",
 		"cross-env": "^7.0.3",
-		"electron": "^43.3.0",
+		"electron": "^43.7.5",
 		"electron-builder": "^26.15.3",
 		"electron-updater": "^6.3.9",
 		"esbuild": "^0.28.2",
