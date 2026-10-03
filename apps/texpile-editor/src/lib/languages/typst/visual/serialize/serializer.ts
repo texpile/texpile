@@ -415,6 +415,9 @@ function atLineStart(head: string, bytes: string, tail: string, code: boolean): 
 	return out;
 }
 
+// a term's title is no part of its body's indent: the body goes on two spaces past the marker, as the term handler writes it
+const TERM_HEAD = /^([ \t]*(?:(?:[-+]|\d+\.)[ \t]+)*)\/[ \t](?:\\.|[^:\\\n])*:[ \t]*/;
+
 /** what continues a child's lines inside its container: the indentation of its first line when
  *  it begins one, else the indentation the file gave its second line, else the width of what stood
  *  before its first (a marker becomes spaces) */
@@ -425,7 +428,7 @@ function continuation(_parent: Node, text: string, head: string): string {
 	const nl = text.indexOf('\n');
 	// a first line that opens a bracket goes on inside it: the lines after it are the child's own
 	if (nl >= 0 && !/[[({][ \t]*$/.test(text.slice(0, nl))) return /^[ \t]*/.exec(text.slice(nl + 1))![0];
-	return head.replace(/\S/g, ' ');
+	return head.replace(TERM_HEAD, '$1  ').replace(/\S/g, ' ');
 }
 
 const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx), {
