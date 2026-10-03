@@ -1689,6 +1689,8 @@
 	"compile_tool_missing_title": "編譯無法啟動",
 	"compile_tool_missing_action": "檢查工具鏈",
 	"program_missing_title": "Texpile 找不到 {program}",
+	"program_found_title": "Texpile 已找到 {program}",
+	"program_found_note": "Texpile 現在可以使用它了。",
 	"program_missing_typst": "Typst 文件需要 tinymist 才能編譯、預覽和匯出，自動完成和錯誤檢查也依賴它。Texpile 可以為你安裝。",
 	"program_missing_latex": "{program} 隨 TeX 發行版（如 TeX Live、MiKTeX 或 MacTeX）一起提供。請安裝一個；如果已裝在別處，請加入它的資料夾。",
 	"program_missing_in_distro": "{program} 隨 {distro} 一起提供，但目前的安裝中沒有它。請用該發行版的套件管理員加入它；如果已裝在別處，請加入它的資料夾。",

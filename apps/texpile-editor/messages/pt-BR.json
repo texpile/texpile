@@ -1689,6 +1689,8 @@
 	"compile_tool_missing_title": "Não foi possível iniciar a compilação",
 	"compile_tool_missing_action": "Verificar ferramentas",
 	"program_missing_title": "O Texpile não encontra o {program}",
+	"program_found_title": "O Texpile encontrou o {program}",
+	"program_found_note": "O Texpile já pode usá-lo.",
 	"program_missing_typst": "Documentos Typst precisam do tinymist para compilar, pré-visualizar e exportar, e para o autocompletar e a verificação de erros. O Texpile pode instalá-lo para você.",
 	"program_missing_latex": "O {program} vem com uma distribuição TeX como TeX Live, MiKTeX ou MacTeX. Instale uma ou, se ela estiver instalada em outro lugar, adicione a pasta dela.",
 	"program_missing_in_distro": "O {program} vem com o {distro}, mas esta instalação não o inclui. Adicione-o pelo gerenciador de pacotes da distribuição ou, se ele estiver instalado em outro lugar, adicione a pasta dele.",

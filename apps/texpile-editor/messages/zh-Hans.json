@@ -1689,6 +1689,8 @@
 	"compile_tool_missing_title": "编译无法启动",
 	"compile_tool_missing_action": "检查工具链",
 	"program_missing_title": "Texpile 找不到 {program}",
+	"program_found_title": "Texpile 已找到 {program}",
+	"program_found_note": "Texpile 现在可以使用它了。",
 	"program_missing_typst": "Typst 文档需要 tinymist 才能编译、预览和导出，自动补全和错误检查也依赖它。Texpile 可以为你安装。",
 	"program_missing_latex": "{program} 随 TeX 发行版（如 TeX Live、MiKTeX 或 MacTeX）一起提供。请安装一个；如果已装在别处，请添加它的文件夹。",
 	"program_missing_in_distro": "{program} 随 {distro} 一起提供，但当前安装中没有它。请用该发行版的包管理器添加它；如果已装在别处，请添加它的文件夹。",

@@ -1689,6 +1689,8 @@
 	"compile_tool_missing_title": "Compile could not start",
 	"compile_tool_missing_action": "Check Toolchain",
 	"program_missing_title": "Texpile cannot find {program}",
+	"program_found_title": "Texpile found {program}",
+	"program_found_note": "Texpile can use it now.",
 	"program_missing_typst": "Typst documents need tinymist to compile, preview and export, and for autocomplete and error checking. Texpile can install it for you.",
 	"program_missing_latex": "{program} comes with a TeX distribution such as TeX Live, MiKTeX or MacTeX. Install one, or if it is installed somewhere else, add its folder.",
 	"program_missing_in_distro": "{program} comes with {distro}, but this install left it out. Add it with the distribution's package manager, or if it is installed somewhere else, add its folder.",
