@@ -456,7 +456,9 @@ export class ScmActions {
 				// files changed on disk under the editor: the same reload a restore does
 				const loadedPath = this.deps.getLoadedPath();
 				await this.deps.refreshTree();
-				if (loadedPath) await this.deps.loadFile(loadedPath);
+				// typed while the network was slow: the save guard asks about it once git rewrote the file
+				if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
+				if (loadedPath && !this.deps.hasPendingSave()) await this.deps.loadFile(loadedPath);
 				if (this.deps.isDiffMode()) this.deps.captureDiffSnapshot();
 			}
 			// even a failed sync fetched, so the counts beside the button are news either way
