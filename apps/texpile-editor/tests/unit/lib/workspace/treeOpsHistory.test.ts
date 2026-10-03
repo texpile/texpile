@@ -1,7 +1,11 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { TreeOps, type TreeOpsDeps } from '$lib/workspace/treeOps';
 import { workspaceRoot, activeFilePath } from '$lib/workspace/workspaceStore';
+import { tabs } from '$lib/workspace/tabs.svelte';
+import { SavePipeline, type SaveDeps } from '$lib/workspace/savePipeline.svelte';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
+
+vi.mock('$lib/platform', () => ({ isMac: false, isWindows: false }));
 
 // A fake filesystem: a flat set of paths, with prefix rules for folders. Enough to tell whether an
 // undo actually put something back, which is the only thing these tests are about.
@@ -381,6 +385,22 @@ describe('unsaved edits follow a rename', () => {
 		await ops.rename(dirEntry('/proj/sec'), 'chapters');
 		expect(saveCalls).toEqual(['retarget /proj/sec -> /proj/chapters']);
 		expect(activeFilePath.current).toBe('/proj/chapters/a.tex');
+	});
+
+	it('leaves alone a file whose name differs only in case, on Linux', async () => {
+		const saver = new SavePipeline({} as SaveDeps);
+		fs.deps.retargetPendingSave = (from, to) => saver.retarget(from, to);
+		fs.files.add('/proj/Notes.tex');
+		fs.files.add('/proj/notes.tex');
+		tabs.bind(null, false);
+		tabs.noteOpened('/proj/notes.tex');
+		activeFilePath.current = '/proj/notes.tex';
+		saver.reattach({ path: '/proj/notes.tex', content: 'edited' });
+		await ops.rename(fileEntry('/proj/Notes.tex'), 'Renamed.tex');
+		expect(visible(fs.files)).toEqual(['/proj/Renamed.tex', '/proj/notes.tex']);
+		expect(tabs.list.map((t) => t.path)).toEqual(['/proj/notes.tex']);
+		expect(saver.pending?.path).toBe('/proj/notes.tex');
+		expect(activeFilePath.current).toBe('/proj/notes.tex');
 	});
 });
 

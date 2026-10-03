@@ -1,5 +1,7 @@
-import { it, expect } from 'vitest';
+import { it, expect, vi } from 'vitest';
 import { relativeTo, tabsToClose } from '../../../../src/views/workspace/tabMenuTargets';
+
+vi.mock('$lib/platform', () => ({ isMac: false, isWindows: true }));
 
 const a = { path: 'C:\\p\\a.tex' };
 const b = { path: 'C:\\p\\b.tex' };

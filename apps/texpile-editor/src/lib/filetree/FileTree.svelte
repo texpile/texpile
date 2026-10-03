@@ -88,7 +88,7 @@
 		return e.type === 'file' && /\.(tex|typ)$/i.test(e.name);
 	}
 	function isMain(e: TreeEntry) {
-		return !!mainPath && e.path.replace(/\\/g, '/').toLowerCase() === mainPath.replace(/\\/g, '/').toLowerCase();
+		return !!mainPath && samePath(e.path, mainPath);
 	}
 
 	const sel = new FileTreeState({ tree: () => tree, onOpen: (e) => onOpen(e) });

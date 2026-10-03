@@ -1,7 +1,13 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { noParse } from '$lib/editor/visual/parseOrigins';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+
+const platform = vi.hoisted(() => ({ isMac: false, isWindows: false }));
+vi.mock('$lib/platform', () => platform);
+afterEach(() => {
+	platform.isWindows = false;
+});
 
 function parsed(marker: string): ParsedLatexFile {
 	return {
@@ -34,7 +40,8 @@ describe('visualDocCache', () => {
 		expect(visualDocCache.get('/proj/a.tex', 'hello')).toBeNull();
 	});
 
-	it('matches a path written with either separator or casing', () => {
+	it('matches a path written with either separator or, on Windows, casing', () => {
+		platform.isWindows = true;
 		visualDocCache.set('C:\\proj\\a.tex', 'hello', parsed('a'));
 
 		expect(visualDocCache.get('C:/Proj/A.tex', 'hello')).toEqual(parsed('a'));

@@ -1,5 +1,5 @@
 // the files a document is made of, in the order TeX or Typst reads them
-import { dirname, joinPath, normalizePath, samePath } from '../fileSystem';
+import { dirname, joinPath, normalizePath, pathKey, samePath } from '../fileSystem';
 import { codeOnly } from '$lib/languages/latex/texCode';
 
 export type DocFile = { path: string; text: string; missing?: undefined } | { path: string; text?: undefined; missing: true };
@@ -8,7 +8,7 @@ export type Read = (path: string) => Promise<string>;
 
 /** one file, however its path is spelled (separators, case, dot segments) */
 function fileKey(path: string): string {
-	return normalizePath(path).replace(/\\/g, '/').toLowerCase();
+	return pathKey(normalizePath(path));
 }
 
 const LATEX_INCLUDE = /\\(?:input|include|subfile|subfileinclude)\s*\{([^}]+)\}/g;

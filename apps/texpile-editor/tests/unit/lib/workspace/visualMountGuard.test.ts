@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { noteVisualMount, visualMounted, visualMountDied } from '$lib/workspace/visualMountGuard';
+
+vi.mock('$lib/platform', () => ({ isMac: false, isWindows: true }));
 
 beforeEach(() => localStorage.clear());
 
