@@ -150,10 +150,12 @@ export function syncBlockMathAttrs(node: Node, newValue: string): Attrs {
 		if (detection.supportsPerLineLabels) {
 			const lineCount = countEnvironmentLines(newValue);
 			const existingLabels = (node.attrs.lineLabels as string[]) || [];
-			if (lineCount !== existingLabels.length) {
+			// only a row the edit added is labelled: a row the file left without one stays so
+			const linesBefore = countEnvironmentLines(node.textContent);
+			if (lineCount !== linesBefore) {
 				newAttrs.lineLabels = Array(lineCount)
 					.fill('')
-					.map((_, i) => existingLabels[i] || (shouldBeNumbered ? generateLabel('equation') : ''));
+					.map((_, i) => existingLabels[i] || (shouldBeNumbered && i >= linesBefore ? generateLabel('equation') : ''));
 			}
 		}
 	}

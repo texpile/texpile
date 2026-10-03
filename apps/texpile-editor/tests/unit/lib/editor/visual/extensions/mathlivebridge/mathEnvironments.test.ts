@@ -32,3 +32,11 @@ describe('an edited flalign', () => {
 		expect(out).toMatch(/\\begin\{flalign\}\s*a &= b \+ 1 \\label\{eq:a\} \\\\\s*c &= d \\label\{eq:c\}\s*\\end\{flalign\}/);
 	});
 });
+
+describe('an edited align with rows the file left unlabelled', () => {
+	it('writes back only the edit, with no label of its own on those rows', () => {
+		const src =
+			'\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\begin{align}\na &= b \\label{eq:a} \\\\\nc &= d \\\\\ne &= f\n\\end{align}\n\\end{document}\n';
+		expect(editDisplay(src, (text) => text.replace('= f', '= g'))).toBe(src.replace('= f', '= g'));
+	});
+});
