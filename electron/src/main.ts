@@ -6,6 +6,7 @@ import * as path from 'node:path';
 import { applyAppIdentity, portable } from './appIdentity';
 import { shellEnvReady } from './shell/shellEnv';
 import { setToolDirs } from './shell/toolDirs';
+import { stopCwdProgramLookup } from './shell/findProgram';
 import { registerPrivilegedSchemes, registerProtocolHandlers } from './appProtocols';
 import { readSettings, writeSettings, registerSettingsIpc } from './appSettings';
 import { chromeColors, createWindow, startUrl } from './windows/createWindow';
@@ -23,6 +24,7 @@ import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
 
 applyAppIdentity();
+stopCwdProgramLookup();
 registerPrivilegedSchemes();
 
 // only what a window needs before it can paint; the rest is in deferredIpc

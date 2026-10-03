@@ -7,6 +7,7 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import * as typstService from '../typstService';
 import { withPathDirs } from '../shell/pathDirs';
+import { CWD_LOOKUP_OFF } from '../shell/findProgram';
 import { shellEnvReady } from '../shell/shellEnv';
 import { killTree } from '../shell/killTree';
 import { windowsPtyFor } from '../shell/windowsPty';
@@ -69,7 +70,10 @@ function defaultShell(): string {
  * one-click install finds the copy the install puts there.
  */
 function terminalEnv(): NodeJS.ProcessEnv {
-	return withPathDirs(process.env, [path.dirname(typstService.managedTinymistPath(app.getPath('userData')))], true);
+	const env = withPathDirs(process.env, [path.dirname(typstService.managedTinymistPath(app.getPath('userData')))], true);
+	// a command typed or set for the project may name a script in its folder, which cmd finds there
+	delete env[CWD_LOOKUP_OFF];
+	return env;
 }
 
 type TerminalSpawnOpts = {

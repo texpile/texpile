@@ -33,6 +33,7 @@ class FakePty {
 	}
 }
 const spawned: FakePty[] = [];
+const envs: Record<string, string>[] = [];
 
 beforeAll(async () => {
 	// terminalIpc require()s node-pty, which is native; the stand-in goes where that require looks first
@@ -43,7 +44,8 @@ beforeAll(async () => {
 		filename: resolved,
 		loaded: true,
 		exports: {
-			spawn: () => {
+			spawn: (_file: string, _args: string[], opts: { env: Record<string, string> }) => {
+				envs.push(opts.env);
 				const p = new FakePty();
 				spawned.push(p);
 				return p;
@@ -80,4 +82,16 @@ it('leaves no listener on the window once its shell is gone', async () => {
 	await h.handlers.get('terminal:spawn')!({ sender: wc }, { id: 'term-c' });
 	h.handlers.get('terminal:kill')!({ sender: wc }, { id: 'term-c' });
 	expect(wc.listenerCount('destroyed') + wc.listenerCount('did-start-navigation')).toBe(0);
+});
+
+it('leaves the shell its own lookup of a script in the folder, which main turns off for itself', async () => {
+	const before = process.env.NoDefaultCurrentDirectoryInExePath;
+	process.env.NoDefaultCurrentDirectoryInExePath = '1';
+	try {
+		await h.handlers.get('terminal:spawn')!({ sender: window(4) }, { id: 'term-e' });
+	} finally {
+		if (before === undefined) delete process.env.NoDefaultCurrentDirectoryInExePath;
+		else process.env.NoDefaultCurrentDirectoryInExePath = before;
+	}
+	expect(envs[envs.length - 1]).not.toHaveProperty('NoDefaultCurrentDirectoryInExePath');
 });

@@ -28,3 +28,11 @@ export function findProgram(name: string): string | null {
 	}
 	return null;
 }
+
+/** Windows looks for a bare program name in the working folder before PATH, and that folder is often a project */
+export const CWD_LOOKUP_OFF = 'NoDefaultCurrentDirectoryInExePath';
+
+/** process-wide, before anything is spawned: Node and cmd.exe both honor it */
+export function stopCwdProgramLookup(platform: NodeJS.Platform = process.platform): void {
+	if (platform === 'win32') process.env[CWD_LOOKUP_OFF] = '1';
+}
