@@ -64,7 +64,7 @@ import { isArray } from '../common/types';
 // may include a multi-character sequence, for example 🧑🏻‍🚀
 function isLiteral(token: Token | undefined): boolean {
   if (!token) return false;
-  return !/^(<$$>|<$>|<space>|<{>|<}>|#[0-9\?]|\\.+)$/.test(token);
+  return !/^(<\$\$>|<\$>|<space>|<{>|<}>|#[0-9\?]|\\.+)$/.test(token);
 }
 
 // The `ParsingContext` is the set of properties that get 'reset' when a
