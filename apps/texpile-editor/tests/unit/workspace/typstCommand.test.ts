@@ -8,7 +8,8 @@ import {
 	typstOutDir,
 	typstPdfArg,
 	typstPdfPath,
-	typstLogPath
+	typstLogPath,
+	shellWord
 } from '$lib/workspace/typstCommand';
 import { compileOutDir, detectedPdfPath, detectedLogPath } from '$lib/workspace/compileCommand';
 
@@ -183,5 +184,12 @@ describe('compileCommand dispatches Typst commands', () => {
 		expect(compileOutDir(tex)).toBe('out');
 		expect(detectedPdfPath(tex, ROOT, 'C:/proj/main.tex')).toBe('C:/proj/out/main.pdf');
 		expect(detectedLogPath(tex, ROOT, 'C:/proj/main.tex')).toBe('C:/proj/out/main.log');
+	});
+});
+
+describe('shellWord', () => {
+	it('quotes for cmd.exe on Windows, where a name may hold & but never a double quote', () => {
+		expect(shellWord('a&calc.tex', true)).toBe('"a&calc.tex"');
+		expect(shellWord('sections/main.tex', true)).toBe('sections/main.tex');
 	});
 });
