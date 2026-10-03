@@ -2,6 +2,7 @@
 // The preview's bitmap caches: figure images, tier-2 pixel crops (tikz/rotated material cut
 // out of the reconcile PDF), and the exact-PDF resting rasters. Loading is async; each
 // landed bitmap repaints its page through the hook.
+import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { getPdfDocument } from '$lib/pdf-view';
 import { fileUrl } from '$lib/workspace/fileSystem';
 import type { PaperMetrics } from './locate/locate.types';
@@ -22,7 +23,7 @@ export class DraftBitmaps {
 	private imgCache = new Map<string, Slot>();
 	// tier-2 pixel regions, keyed per page+rect; cleared on every compile success
 	private pixCache = new Map<string, Slot>();
-	private pixDoc: Promise<any> | null = null;
+	private pixDoc: Promise<PDFDocumentProxy> | null = null;
 	private pixGen = 0;
 	// exact-PDF page rasters, keyed page@scale
 	private baseCache = new Map<string, Slot>();
@@ -53,11 +54,11 @@ export class DraftBitmaps {
 		this.pixGen++;
 		this.pixCache.clear();
 		this.baseCache.clear(); // the exact-PDF page rasters come from THIS compile's PDF too
-		this.pixDoc?.then((d) => d.destroy()).catch(() => {});
+		this.pixDoc?.then((d) => d.loadingTask.destroy()).catch(() => {});
 		this.pixDoc = null;
 	}
 
-	private openPdf(): Promise<any> {
+	private openPdf(): Promise<PDFDocumentProxy> {
 		if (!this.pixDoc)
 			this.pixDoc = (async () => {
 				// fetch bytes up front: range requests against a PDF latexmk may be rewriting would tear
@@ -77,7 +78,7 @@ export class DraftBitmaps {
 			try {
 				let bmp: ImageBitmap;
 				if (/\.pdf$/i.test(file)) {
-					// getPdfDocument, not getDocument: doc.destroy() below would otherwise take the shared
+					// getPdfDocument, not getDocument: task.destroy() below would otherwise take the shared
 					// worker down with it, out from under the PDF viewer
 					const task = await getPdfDocument({ url: fileUrl(file) });
 					if (!task) throw new Error('no pdfjs');
@@ -91,7 +92,7 @@ export class DraftBitmaps {
 					c.height = Math.ceil(vp.height);
 					await pg.render({ canvas: c, canvasContext: c.getContext('2d')!, viewport: vp }).promise;
 					bmp = await createImageBitmap(c);
-					void doc.destroy();
+					void task.destroy();
 				} else {
 					const blob = await (await fetch(fileUrl(file), { cache: 'force-cache' })).blob();
 					bmp = await createImageBitmap(blob);

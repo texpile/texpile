@@ -499,7 +499,7 @@ export class PDFViewerCore {
 
 		// free the worker-side resources of the outgoing document; the viewer instance now
 		// outlives many documents (one per recompile), so skipping this would leak per compile
-		void this.pdfDocument?.destroy().catch(() => {});
+		void this.pdfDocument?.loadingTask.destroy().catch(() => {});
 		this.pdfDocument = null;
 	}
 

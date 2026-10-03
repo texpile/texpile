@@ -81,7 +81,7 @@
 		"markdown-it": "^15.0.2",
 		"mathlive": "workspace:*",
 		"opentype.js": "^2.0.0",
-		"pdfjs-dist": "^5.4.394",
+		"pdfjs-dist": "^6.3.289",
 		"prosemirror-changeset": "^2.4.3",
 		"prosemirror-commands": "^1.7.2",
 		"prosemirror-dropcursor": "^1.8.4",
