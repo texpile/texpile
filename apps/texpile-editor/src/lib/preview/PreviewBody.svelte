@@ -62,8 +62,6 @@
 		typstPreviewHost: string | null;
 		/** a Typst preview is what this pane is FOR, even before it has an address */
 		typstPreviewWanted: boolean;
-		/** compile the previewed document to a PDF on disk (the preview itself never writes one) */
-		onSaveTypstPdf: () => Promise<void>;
 		/** a splitter is being dragged; the frame holds its size rather than reflowing every frame */
 		paneDragging: boolean;
 		/** move the preview into its own OS window; null (the popped-out body) hides the button */
@@ -94,7 +92,6 @@
 		draft,
 		typstPreviewHost,
 		typstPreviewWanted,
-		onSaveTypstPdf,
 		paneDragging,
 		onPopout = null,
 		docked = false,
@@ -189,7 +186,7 @@
 			     it is the same document and it is ahead of it, since it needs no save. Rendered on
 			     `wanted` rather than on the host so the PDF never flashes up while it starts. -->
 			{#if TypstPreviewComp}
-				<TypstPreviewComp host={typstPreviewHost} {paneDragging} {onSaveTypstPdf} {onPopout} asTabStrip={docked} />
+				<TypstPreviewComp host={typstPreviewHost} {paneDragging} {onPopout} asTabStrip={docked} />
 			{/if}
 		{:else if body === 'draft'}
 			{#if DraftViewComp}
@@ -204,6 +201,8 @@
 					{onInverseSync}
 					{onSettled}
 					{onDiagnostics}
+					settleEdits={() => draft.settleForSave()}
+					paused={draft.paused}
 				/>
 			{/if}
 		{:else}

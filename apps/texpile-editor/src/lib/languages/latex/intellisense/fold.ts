@@ -1,7 +1,8 @@
-// code folding: \begin{…}/\end{…} environment pairs (depth-matched, same-name only) and section
-// headings (folds a heading down to the next heading of the same or higher level). Both are flat
-// text scans via foldService rather than a language-aware fold prop, since the bundled LaTeX mode
-// is a legacy StreamLanguage with no syntax tree to hang a fold prop on.
+// code folding: \begin{…}/\end{…} environment pairs (depth-matched, same-name only), section
+// headings (folds a heading down to the next heading of the same or higher level), and the preamble
+// (\documentclass down to \begin{document}). All are flat text scans via foldService rather than a
+// language-aware fold prop, since the bundled LaTeX mode is a legacy StreamLanguage with no syntax
+// tree to hang a fold prop on.
 import { foldGutter, foldKeymap, foldService } from '@codemirror/language';
 import { EditorView, keymap } from '@codemirror/view';
 import { mount, unmount, type Component } from 'svelte';
@@ -85,9 +86,27 @@ function sectionFoldRange(state: EditorState, lineStart: number, lineEnd: number
 	return { from: lineEnd, to: lastLine.to };
 }
 
+// a \begin{document} that is code, not one in a comment
+const BEGIN_DOCUMENT_RE = /^[^%\n]*\\begin\{document\}/gm;
+
+/** the preamble folds on the \documentclass line, down to the line before \begin{document} */
+function preambleFoldRange(state: EditorState, lineStart: number, lineEnd: number): { from: number; to: number } | null {
+	// at the line's start only, so a commented-out class is left alone
+	if (!/^\s*\\documentclass\b/.test(state.doc.sliceString(lineStart, lineEnd))) return null;
+	BEGIN_DOCUMENT_RE.lastIndex = lineEnd;
+	const begin = BEGIN_DOCUMENT_RE.exec(docText(state.doc));
+	if (!begin) return null;
+	const prevLine = state.doc.line(state.doc.lineAt(begin.index).number - 1);
+	return prevLine.to > lineEnd ? { from: lineEnd, to: prevLine.to } : null;
+}
+
 /** combined fold-range lookup, exported for unit testing without a DOM-backed EditorView. */
 export function foldRangeAt(state: EditorState, lineStart: number, lineEnd: number): { from: number; to: number } | null {
-	return environmentFoldRange(state, lineStart, lineEnd) ?? sectionFoldRange(state, lineStart, lineEnd);
+	return (
+		preambleFoldRange(state, lineStart, lineEnd) ??
+		environmentFoldRange(state, lineStart, lineEnd) ??
+		sectionFoldRange(state, lineStart, lineEnd)
+	);
 }
 
 // markerDOM runs per visible line, so render each icon once and clone it

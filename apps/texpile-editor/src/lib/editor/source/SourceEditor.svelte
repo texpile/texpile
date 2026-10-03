@@ -177,6 +177,7 @@
 				...(restored ? { selection: { anchor: restored.cursor } } : {}),
 				extensions: buildSourceExtensions({
 					fileFor,
+					foldsOf: collab ? null : docPath,
 					collab,
 					undoManager,
 					langConf,

@@ -12,14 +12,12 @@ import { trailingDebounce } from '$lib/trailingDebounce';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { previewRelay } from '$lib/collab/previewRelay.svelte';
-import { savePdfAs, joinPath } from '$lib/workspace/fileSystem';
-import { isTypstCommand, typstOutDir } from '$lib/workspace/typstCommand';
+import { joinPath } from '$lib/workspace/fileSystem';
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
 import {
 	tinymistResolved,
 	setPreviewJumpHandler,
 	setTypstDiagnosticsHandler,
-	exportTypstPdf,
 	typstServerGen,
 	type TypstDiagnostic
 } from '../intellisense/lspClient';
@@ -42,10 +40,8 @@ export type TypstPreviewHooks = {
 	setPreviewSwitch: (root: string | null, on: boolean) => void;
 	getDocPath: () => string | null;
 	getFollow: () => boolean;
-	getCompileCommand: () => string;
 	/** the visual caret as a zero-based source position, through the view's block map */
 	getVisualCaretSourcePos: () => { line: number; character: number } | null;
-	refreshTree: () => Promise<void> | void;
 	/** inverse-sync landing, shared with SyncTeX: visual stays visual, source jumps the line */
 	syncJumpToFileLine: (file: string, line: number, column?: number) => void;
 };
@@ -127,37 +123,6 @@ export class TypstPreviewController {
 			this.task = target.taskId;
 		} catch (err) {
 			toaster.error({ title: m.typst_preview_failed(), description: err instanceof Error ? err.message : String(err) });
-		}
-	}
-
-	/**
-	 * Compile the previewed document to a PDF and offer it through a native save dialog - the
-	 * same flow as draft mode's Save PDF, since neither live preview writes files on its own.
-	 *
-	 * The export stages through the folder's build directory (where the compile command writes,
-	 * `output/` by default) rather than tinymist's default of "next to the entry file", so the
-	 * staged copy is a build artifact, not clutter in the project root. A cancelled dialog
-	 * leaves it there and says nothing - it is exactly what Compile would have produced.
-	 */
-	async savePdf(): Promise<void> {
-		const root = workspaceRoot.current;
-		const file = this.file;
-		if (!root || !file) return;
-		try {
-			const command = this.hooks.getCompileCommand();
-			const outDir = isTypstCommand(command) ? typstOutDir(command) : 'output';
-			const staged = await exportTypstPdf(root, file, outDir);
-			if (!staged) throw new Error('tinymist did not return a path');
-			void this.hooks.refreshTree(); // the staged copy is real either way; show it in the sidebar
-			const res = await savePdfAs(staged, staged);
-			if (res.saved && res.path) toaster.success({ title: m.typst_pdf_saved_title(), description: res.path, duration: 4000 });
-		} catch (err) {
-			// The reject is tinymist's JSON-RPC error OBJECT, not an Error - String() on it prints
-			// [object Object]. Every failure on this path means the same thing to the user (the
-			// document did not produce a PDF), so the toast says that; the raw error goes to the
-			// console for whoever needs it.
-			console.error('typst pdf export failed:', err);
-			toaster.error({ title: m.typst_pdf_save_failed(), description: m.typst_pdf_save_no_pdf() });
 		}
 	}
 

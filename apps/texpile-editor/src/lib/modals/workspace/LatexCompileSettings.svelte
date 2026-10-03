@@ -106,8 +106,8 @@
 						</button>
 					{/each}
 				</div>
-				<label class="text-muted inline-flex items-center gap-1.5 text-xs">
-					<input type="checkbox" class="checkbox" checked={latexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
+				<label class="text-muted inline-flex cursor-pointer items-center gap-1.5 text-xs">
+					<input type="checkbox" class="checkbox scale-75" checked={latexmk} onchange={(e) => applyLatexmk(e.currentTarget.checked)} />
 					{m.wsview_use_latexmk_label()}
 				</label>
 			</div>

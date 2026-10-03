@@ -122,6 +122,10 @@ html.window-glass
 html.window-glass .TexpileEditor :is(hr, div.abstract, .table-wrapper, .table-header, td, th, .settings-button) {
 	border-color: var(--glass-line);
 }
+/* a bar's line drawn as a shadow, which the border rule above does not reach */
+html.window-glass .line-under {
+	box-shadow: inset 0 -1px 0 var(--glass-line);
+}
 /* scroll-inset-r is a 3px TRANSPARENT border, a spacer that keeps a scrollbar off the divider's handle. The rule above
    colours every side of whatever carries a border utility, and the spacer sits on the same elements */
 html.window-glass .scroll-inset-r {
@@ -1025,8 +1029,33 @@ html.pm-drop-refused .pm-drop-cursor {
 	border-right: 3px solid transparent;
 }
 
+/* the line along the foot of the top bar and the notice bars under the tabs. A shadow, not a border, so it takes none of
+   the bar's height and centered icons stay on whole pixels */
+.line-under {
+	box-shadow: inset 0 -1px 0 var(--color-surface-200-800);
+}
+
 .source-editor .cm-scroller {
 	scrollbar-gutter: stable;
+}
+
+/* what a fold leaves on its line. The dots take the accent and the caret the text color, with nothing drawn behind the
+   dots, so a caret beside them still shows */
+.cm-editor .cm-content .cm-foldPlaceholder {
+	/* padding, never margin: a caret after the dots stands at the box's edge, so a margin would only space their left */
+	margin: 0;
+	padding: 0 0.15em;
+	border: none;
+	border-radius: var(--radius-base);
+	background: none;
+	color: var(--primary-ink);
+	font-weight: 700;
+	cursor: pointer;
+	user-select: none;
+}
+
+.cm-editor .cm-content .cm-foldPlaceholder:hover {
+	background: color-mix(in oklab, var(--primary-ink) 14%, transparent);
 }
 
 /* The visual editor while it builds. VISIBILITY, never display: an element with no box intersects

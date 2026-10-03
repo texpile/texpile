@@ -155,7 +155,6 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		syncForward: () => d.nav.syncForward(),
 		pauseDraft: () => d.draftCtl.pause(),
 		onCaretMove: (line: number, character: number) => d.typstPreview.onCaretMove(line, character),
-		onSaveTypstPdf: () => d.typstPreview.savePdf(),
 		resumeDraft: () => void d.draftCtl.resume(),
 		requestCompile: () => {
 			collabGuest.requestCompile();

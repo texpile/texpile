@@ -29,6 +29,17 @@ describe('folding: environments and sections', () => {
 		expect(foldAtLine(doc, 1)).toBeNull();
 	});
 
+	it('folds the preamble from \\documentclass down to the line before \\begin{document}', () => {
+		const doc = '\\documentclass{article}\n\\usepackage{amsmath}\n% \\begin{document} in a comment\n\\title{T}\n\\begin{document}\nBody';
+		const range = foldAtLine(doc, 1);
+		expect(doc.slice(range!.from, range!.to)).toBe('\n\\usepackage{amsmath}\n% \\begin{document} in a comment\n\\title{T}');
+	});
+
+	it('has no preamble to fold when \\begin{document} follows the class, or the class is commented out', () => {
+		expect(foldAtLine('\\documentclass{article}\n\\begin{document}\nBody', 1)).toBeNull();
+		expect(foldAtLine('% \\documentclass{article}\n\\usepackage{x}\n\\begin{document}', 1)).toBeNull();
+	});
+
 	it('folds a section down to the next same-or-higher-level heading', () => {
 		const doc = '\\section{A}\ntext A\n\\subsection{A1}\ntext A1\n\\section{B}\ntext B';
 		const range = foldAtLine(doc, 1); // the \section{A} line

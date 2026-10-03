@@ -124,16 +124,15 @@ export class DraftPatcher {
 		else void this.instantPatch(q);
 	}
 
-	/** savePdf: flush a pending debounced reconcile right now; true if one was pending */
-	async flushReconcile(): Promise<boolean> {
-		if (!this.reconcileTimer) return false;
+	/** savePdf: run a pending debounced save now; its pass is dropped, the save runs its own */
+	async flushReconcile(): Promise<void> {
+		if (!this.reconcileTimer) return;
 		clearTimeout(this.reconcileTimer);
 		this.reconcileTimer = null;
 		const r = this.pendingSave;
 		this.pendingSave = null;
 		this.pendingReason = null;
 		await r?.();
-		return true;
 	}
 
 	// the same block starting where the engine's stamps say its galley does, or null when that

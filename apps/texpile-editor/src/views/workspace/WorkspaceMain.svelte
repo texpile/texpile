@@ -218,7 +218,6 @@
 				{guestTypstOffered}
 				{mainUnset}
 				{onPickMain}
-				onSaveTypstPdf={actions.onSaveTypstPdf}
 				onSyncToCursor={syncToCursor}
 				onPopout={() => layout.setPdfPopout(true)}
 				paneDragging={layout.paneDragging}
@@ -281,7 +280,6 @@
 				{draft}
 				{typstPreviewHost}
 				{typstPreviewWanted}
-				onSaveTypstPdf={actions.onSaveTypstPdf}
 				onPdfRef={(r) => (pdfPaneRef = r)}
 				onClosed={() => layout.setPdfPopout(false)}
 				onPageClick={actions.onPdfDoubleClick}

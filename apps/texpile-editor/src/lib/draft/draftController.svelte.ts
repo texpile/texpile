@@ -109,6 +109,13 @@ export class DraftController {
 		this.trigger++;
 	}
 
+	/** Save PDF runs its own full pass: it must see the buffer, and no debounced pass may supersede it */
+	async settleForSave() {
+		this.dispatcher.cancel();
+		await this.#deps.flushSaves();
+		this.dispatcher.adoptCurrentAsBaseline();
+	}
+
 	dispose() {
 		this.dispatcher.cancel();
 	}
