@@ -128,3 +128,24 @@ describe('a footnote in a heading', () => {
 		);
 	});
 });
+
+// \\ reads a [ after it as its spacing argument (\\[2ex]), and a real compile stopped on a row or a
+// line typed to begin with one
+describe('a [ right after a line break', () => {
+	it('is kept off the break by an empty group, and reads back as typed', () => {
+		const p = schema.nodes.paragraph.create(null, [
+			schema.text('First'),
+			schema.nodes.hard_break.create({ lineBreak: true }),
+			schema.text('[x] here')
+		]);
+		const out = serializeToLatex(schema.nodes.doc.create(null, [p]));
+		expect(out).toContain('\\\\{}');
+		expect(parse(out).toString()).toBe(schema.nodes.doc.create(null, [p]).toString());
+	});
+
+	it('the same for a table row that begins with one', () => {
+		const out = serializeToLatex(parse('\\begin{tabular}{ll}\na & b \\\\\n{}[Two & c \\\\\n\\end{tabular}'));
+		expect(out).toContain('{}[Two');
+		expect(out).not.toMatch(/\\\\\s*\[/);
+	});
+});

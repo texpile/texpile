@@ -19,6 +19,7 @@ import { dropParagraphEnd, paragraphGap } from './paragraphEnds';
 import { guardItemBody, headsItem, labelKey } from './itemLabels';
 import type { Segment } from '$lib/editor/visual/sourceSpans';
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
+import { afterLead, BRACKET_START, bracketFollows, guardBracket, opensLine } from './lineBreaks';
 export { esc, sanitizeText, type EscMode } from './textEscapes';
 
 export type { DocSerializeResult } from '$lib/serializer/blockAssembly';
@@ -32,21 +33,6 @@ function mapBlockLeaves(block: Node, ctx: Ctx, real: string): Segment[] | null {
  *  its leaves sit in it: what the segment splice writes between the bytes it keeps */
 function inlineRun(block: Node, nodes: Node[]): Node {
 	return block.type.create(block.attrs, Fragment.fromArray(nodes), block.marks);
-}
-
-// the children of the real block before an inline run written on its own (null: not known)
-let runLead: Node[] | null = [];
-
-/** `render` of a run of `block`'s children, knowing what the block holds before them: a break
- *  opening the run opens the line only when nothing drawn comes first */
-function afterLead<T>(block: Node, nodes: Node[], render: () => T): T {
-	const k = block.content.content.indexOf(nodes[0]);
-	runLead = k < 0 ? null : block.content.content.slice(0, k);
-	try {
-		return render();
-	} finally {
-		runLead = [];
-	}
 }
 
 function inlineBytes(block: Node, nodes: Node[], atStart: boolean, ctx: Ctx): string | null {
@@ -216,7 +202,8 @@ const assembly = createBlockAssembly((node, ctx) => serializeNode(node, ctx), {
 	// end) would make a blank line, a new paragraph
 	keepApart: (bytes, tail, head, _gone, parent) => {
 		if (!parent.type.spec.leafText && !parent.type.spec.code && blankLineAt(head, bytes, tail)) return null;
-		return /\\[a-zA-Z@]+$/.test(bytes) && /^[a-zA-Z]/.test(tail) ? bytes + ' ' : bytes;
+		const out = /\\[a-zA-Z@]+$/.test(bytes) && /^[a-zA-Z]/.test(tail) ? bytes + ' ' : bytes;
+		return parent.type.spec.code ? out : guardBracket(head, bytes, tail, out);
 	},
 	// a block written afresh inside an environment or an item continues its lines as the file
 	// indented the block it replaced, else under what stood before it on its first line
@@ -262,7 +249,8 @@ const NODES: Record<string, NodeHandler> = {
 			return (prevSibling(ctx)?.type.name === 'heading' ? '' : '\n') + renderChildren(node, false).trim() + '\n';
 		}
 		const rawContent = renderChildren(node, ctx.inTableCell);
-		if (ctx.inTableCell) return rawContent; // no \par inside table cells
+		// no \par inside table cells; a row opens after \\ (or \toprule), which reads a [ there as its argument
+		if (ctx.inTableCell) return ctx.index === 0 && BRACKET_START.test(rawContent) ? `{}${rawContent}` : rawContent;
 		// \item already opens the paragraph, so a break before it puts the body on its own line and
 		// a \par after it adds a token the source never had. A second paragraph of the same item is
 		// separated by the blank line the list handler puts in front of every continuation block
@@ -319,7 +307,7 @@ const NODES: Record<string, NodeHandler> = {
 		// end, which stops the compile: an empty box gives it one
 		const box = opensLine(ctx) ? '\\mbox{}' : '';
 		if (node.attrs?.command === 'newline' || (ctx.inTableCell && !suffix)) return `${box}\\newline\n`;
-		return `${box}\\\\${suffix}\n`;
+		return `${box}\\\\${suffix}${bracketFollows(ctx) ? '{}' : ''}\n`;
 	},
 
 	block_math(node) {
@@ -572,13 +560,6 @@ function isLabelOnlyParagraph(node: Node): boolean {
 		else sawOther = true;
 	});
 	return sawLabel && !sawOther;
-}
-
-/** whether nothing the page shows comes before this child in its block */
-function opensLine(ctx: Ctx): boolean {
-	if (!ctx.parent || ctx.index === undefined || !runLead) return false;
-	const before = [...runLead, ...Array.from({ length: ctx.index }, (_, i) => ctx.parent!.child(i))];
-	return before.every((c) => (c.isText ? (c.text ?? '').trim() === '' : c.type.name === 'label'));
 }
 
 function isEmptyParagraph(node: Node): boolean {

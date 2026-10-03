@@ -1068,6 +1068,19 @@ describe('what is typed at the head of an item stays text', () => {
 	});
 });
 
+describe('a [ typed at the start of a table row', () => {
+	// the row before it ends on \\, which reads the [ as its spacing argument
+	it('is kept off the row end, whether the cell is written afresh or spliced', () => {
+		const parsed = parseLatexFile(`${PREAMBLE}\n\\begin{tabular}{ll}\na & b \\\\\nTwo & c \\\\\n\\end{tabular}\n\\end{document}\n`);
+		const at = posOf(parsed.doc, 'Two');
+		const doc = new Transform(parsed.doc).replaceWith(at, at, schema.text('[')).doc;
+		for (const out of [serializeLatexFile(parsed, doc), serializeLatexFile(parsed, withoutOrigins(doc))]) {
+			expect(out).toContain('{}[Two');
+			expect(parseLatexFile(out).doc.toString()).toBe(doc.toString());
+		}
+	});
+});
+
 describe('a list run ends where the environment changes', () => {
 	const FILE15 = `${PREAMBLE}
 \\begin{itemize}
