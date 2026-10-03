@@ -76,15 +76,15 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 			const arg = getMacroFirstArg(node as Macro);
 			const captionText = convertNodesToInline(arg, ctx);
 			const optArg = (node as Macro).args?.find((a) => a.openMark === '[');
-			// the caption's bytes are the words inside the braces: \caption{ and } are the float's frame
-			caption = noteBlockSpan(
-				buildNode(
-					'table_caption',
-					{ starred: macroHasStar(node as Macro), captionOpt: optArg ? printRaw(optArg.content) : null },
-					captionText
-				),
-				spanOfNodes(arg)
+			const built = buildNode(
+				'table_caption',
+				{ starred: macroHasStar(node as Macro), captionOpt: optArg ? printRaw(optArg.content) : null },
+				captionText
 			);
+			// the caption's bytes are the words inside the braces: \caption{ and } are the float's frame.
+			// one below the tabular comes after it in the file but before it in the wrapper, and placing
+			// it would leave the tabular unplaced; it rides along in the frame instead
+			caption = sawTabular ? built : noteBlockSpan(built, spanOfNodes(arg));
 			captionBelow = sawTabular;
 		} else if (node.type === 'macro' && node.content === 'label') {
 			const text = getTextContent(getMacroFirstArg(node as Macro));

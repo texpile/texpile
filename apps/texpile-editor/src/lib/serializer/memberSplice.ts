@@ -21,6 +21,10 @@ import {
 	type Spliced
 } from './blockAssemblyUtils';
 
+function unplaced(o: BlockOrigin): boolean {
+	return o.text === undefined || o.srcFrom === undefined || o.srcTo === undefined;
+}
+
 export function createMemberSplice(
 	serializeNode: (node: Node, ctx: Ctx) => string,
 	options: BlockAssemblyOptions,
@@ -88,16 +92,36 @@ export function createMemberSplice(
 			const record = containerOriginsOf(origin.node);
 			if (!record || record.origins.length === 0) return null;
 			const parsed = record.origins;
-			for (const o of parsed) if (o.text === undefined || o.srcFrom === undefined || o.srcTo === undefined) return null;
-			if (parsed[0].srcFrom! < cursor) return null;
+			// a child the parse could not place (a caption set below its tabular, one the file never
+			// had) rides along in the bytes around the placed ones, so it may only stand where it
+			// stood, as it was
+			const placed: number[] = [];
+			parsed.forEach((o, j) => {
+				if (!unplaced(o)) placed.push(j);
+			});
+			if (placed.length === 0) return null;
+			const firstPlaced = placed[0];
+			const lastPlaced = placed[placed.length - 1];
+			if (parsed[firstPlaced].srcFrom! < cursor) return null;
+			function placedBefore(j: number): number {
+				let i = j - 1;
+				while (i >= 0 && unplaced(parsed[i])) i--;
+				return i;
+			}
+			function placedAfter(j: number): number {
+				let i = j + 1;
+				while (i < parsed.length && unplaced(parsed[i])) i++;
+				return i < parsed.length ? i : -1;
+			}
 			// the frame: what opens the container (up to its first child), the gap before each parsed
 			// child, and what closes it; a child that went keeps nothing of its own but the frame
 			// around it stays
 			function gapBefore(j: number): string {
-				return src.slice(parsed[j - 1].srcTo! - base, parsed[j].srcFrom! - base);
+				return src.slice(parsed[placedBefore(j)].srcTo! - base, parsed[j].srcFrom! - base);
 			}
 			function gapAfter(j: number): string {
-				return j + 1 < parsed.length ? gapBefore(j + 1) : m + 1 < nodes.length ? '' : src.slice(parsed[parsed.length - 1].srcTo! - base);
+				const next = placedAfter(j);
+				return next >= 0 ? gapBefore(next) : m + 1 < nodes.length ? '' : src.slice(parsed[lastPlaced].srcTo! - base);
 			}
 			function headOf(j: number): string {
 				const lineStart = src.lastIndexOf('\n', parsed[j].srcFrom! - base - 1) + 1;
@@ -105,10 +129,10 @@ export function createMemberSplice(
 			}
 			// a gap for a child the file never had: the gap before some parsed child that had one, else a
 			// blank line, prefixed as the container continues its lines
-			const p = options.continuation ? (options.continuation(node, parsed[0].text!, headOf(0)) ?? '') : '';
+			const p = options.continuation ? (options.continuation(node, parsed[firstPlaced].text!, headOf(firstPlaced)) ?? '') : '';
 			const blankGap = options.childGap?.(node, p) ?? '\n' + p.replace(/[ \t]+$/, '') + '\n' + p;
 			let usualGap: string | null = null;
-			for (let j = 1; j < parsed.length && usualGap === null; j++) if (parsed[j].member === 0) usualGap = gapBefore(j);
+			for (const j of placed) if (usualGap === null && j > firstPlaced && parsed[j].member === 0) usualGap = gapBefore(j);
 			if (usualGap === null) usualGap = blankGap;
 			// prose after anything needs the blank line, or it reads on as the block before it (a lazy
 			// continuation of an item, one paragraph with the one above); a nested list or environment
@@ -147,7 +171,17 @@ export function createMemberSplice(
 				k++;
 			}
 			if (slots.some((sl) => sl.ref && joinedAround(node, sl.k, sl.k + sl.size))) return null;
-			text += src.slice(cursor - base, parsed[0].srcFrom! - base);
+			if (placed.length < parsed.length) {
+				let at = 0;
+				for (const sl of slots) {
+					if (!sl.ref || sl.ref.index !== at || (unplaced(sl.ref) && !sl.kept)) return null;
+					at += sl.size;
+				}
+				if (at !== parsed.length) return null;
+			}
+			let lastEmitted = slots.length - 1;
+			while (lastEmitted > 0 && slots[lastEmitted].ref && unplaced(slots[lastEmitted].ref!)) lastEmitted--;
+			text += src.slice(cursor - base, parsed[firstPlaced].srcFrom! - base);
 			let childPm = nodePm + 1;
 			let emitted = 0;
 			// the parsed child the last slot stood for, so a pair still the file's pair keeps its gap
@@ -157,6 +191,10 @@ export function createMemberSplice(
 				let groupPm = 0;
 				for (const g of group) groupPm += g.nodeSize;
 				const ref = slot.ref;
+				if (ref && unplaced(ref)) {
+					childPm += groupPm;
+					continue;
+				}
 				const childCtx: Ctx = {
 					parent: node,
 					index: slot.k,
@@ -165,7 +203,11 @@ export function createMemberSplice(
 				};
 				// the gap before: the file's own between a pair still the file's, else the usual one
 				const gap =
-					emitted > 0 ? (ref && ref.index > 0 && prevRef === parsed[ref.index - 1] ? gapBefore(ref.index) : gapFor(group[0])) : '';
+					emitted > 0
+						? ref && placedBefore(ref.index) >= 0 && prevRef === parsed[placedBefore(ref.index)]
+							? gapBefore(ref.index)
+							: gapFor(group[0])
+						: '';
 				prevRef = ref ? parsed[ref.index + slot.size - 1] : null;
 				if (ref && slot.kept && fits(ref, slot.k)) {
 					text += gap;
@@ -213,7 +255,7 @@ export function createMemberSplice(
 					// a child that writes nothing (an emptied paragraph) takes no gap of its own either,
 					// unless the file's bytes around it are its frame (a caption's braces), which stays
 					if (core.trim() === '') {
-						const before = ref && ref.index > 0 ? gapBefore(ref.index) : '';
+						const before = ref && placedBefore(ref.index) >= 0 ? gapBefore(ref.index) : '';
 						const after = ref ? gapAfter(ref.index + slot.size - 1) : '';
 						if (!ref || (/^\s*$/.test(before) && /^\s*$/.test(after))) continue;
 					}
@@ -224,7 +266,7 @@ export function createMemberSplice(
 					// the gap after the child is what separates it from the next; a paragraph ending rule
 					// of the dialect (a \par before a blank line) applies as at the top level
 					const after = ref ? gapAfter(ref.index + slot.size - 1) : usualGap;
-					const last = slot === slots[slots.length - 1] && m === nodes.length - 1;
+					const last = slot === slots[lastEmitted] && m === nodes.length - 1;
 					// a child ending on a comment keeps the line end after it, or the comment would run
 					// on into what follows
 					if (options.endsLine?.(core) && !after.startsWith('\n') && !(last && after === '')) core += '\n';
@@ -264,7 +306,7 @@ export function createMemberSplice(
 				childPm += groupPm;
 				emitted++;
 			}
-			cursor = parsed[parsed.length - 1].srcTo!;
+			cursor = parsed[lastPlaced].srcTo!;
 			nodePm += node.nodeSize;
 		}
 		text += src.slice(cursor - base);
