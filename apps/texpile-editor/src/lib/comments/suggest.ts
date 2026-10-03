@@ -64,8 +64,9 @@ export function isOpenSuggestion(t: CommentThread): boolean {
 	return isSuggestion(t) && !t.resolved;
 }
 
-/** a suggestion's own message goes only with an accept or a reject */
-export function canDeleteMessage(t: CommentThread, msg: CommentMessage): boolean {
+/** a suggestion's own message is neither edited nor deleted: it changes with the document and goes
+ *  with an accept or a reject, as in Google Docs. Replies are ordinary messages */
+export function canChangeMessage(t: CommentThread, msg: CommentMessage): boolean {
 	return !isSuggestion(t) || t.messages[0]?.id !== msg.id;
 }
 

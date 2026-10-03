@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-// The reply box: the Enter an input method takes to end a composition is not a send. And which messages offer Delete
+// The reply box: the Enter an input method takes to end a composition is not a send. And which messages offer Edit and Delete
 import { it, expect, vi, afterEach } from 'vitest';
 import { mount, unmount, flushSync } from 'svelte';
 import CommentThreadConversation from '$lib/comments/CommentThreadConversation.svelte';
@@ -41,29 +41,31 @@ it('sends a reply on Enter, and not on the Enter that ends an input method compo
 	expect(onReply).toHaveBeenCalledWith(thread, 'nihao');
 });
 
-function deleteButtons(shown: CommentThread) {
+/** the ids of the messages that offer Delete, and how many offer Edit */
+function changeButtons(shown: CommentThread): { del: string[]; edits: number } {
 	const onDeleteMessage = vi.fn();
 	app = mount(CommentThreadConversation, {
 		target: document.body.appendChild(document.createElement('div')),
 		props: { thread: shown, fileGone: false, lost: false, hidden: false, onReply: () => {}, onEditMessage: () => {}, onDeleteMessage }
 	});
-	const buttons = [...document.querySelectorAll<HTMLButtonElement>(`button[aria-label="${m.comments_delete_message()}"]`)];
-	return buttons.map((b) => {
+	const del = [...document.querySelectorAll<HTMLButtonElement>(`button[aria-label="${m.comments_delete_message()}"]`)].map((b) => {
 		b.click();
 		return onDeleteMessage.mock.lastCall?.[1].id;
 	});
+	return { del, edits: document.querySelectorAll(`button[aria-label="${m.comments_edit()}"]`).length };
 }
 
-// deleting a suggestion's own message dropped its drawing and kept its words: an accept the log never heard of
-it('offers no Delete on the message a suggestion opens with, only on its replies', () => {
+// deleting a suggestion's own message dropped its drawing and kept its words: an accept the log never heard of.
+// As in Google Docs, it is neither edited nor deleted; it goes with an accept or a reject
+it('offers no Edit or Delete on the message a suggestion opens with, only on its replies', () => {
 	const suggestion: CommentThread = {
 		...thread,
 		restore: 'none',
 		messages: [...thread.messages, { id: 'r1', at: 'now', by: 'bo', body: 'why' }]
 	};
-	expect(deleteButtons(suggestion)).toEqual(['r1']);
+	expect(changeButtons(suggestion)).toEqual({ del: ['r1'], edits: 1 });
 });
 
-it('offers Delete on the message a comment opens with', () => {
-	expect(deleteButtons(thread)).toEqual(['t1']);
+it('offers Edit and Delete on the message a comment opens with', () => {
+	expect(changeButtons(thread)).toEqual({ del: ['t1'], edits: 1 });
 });

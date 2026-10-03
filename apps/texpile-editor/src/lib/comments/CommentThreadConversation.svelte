@@ -5,7 +5,7 @@
 	import InitialAvatar from '$lib/components/InitialAvatar.svelte';
 	import type { Snippet } from 'svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
-	import { canDeleteMessage, formatChange, isSuggestion, shownWords, suggestionKind } from '$lib/comments/suggest';
+	import { canChangeMessage, formatChange, isSuggestion, shownWords, suggestionKind } from '$lib/comments/suggest';
 	import { suggestionLabel } from '$lib/comments/suggestionLabel';
 	import { regionParserForPath } from '$lib/comments/regionParser';
 	import { m } from '$lib/paraglide/messages';
@@ -140,18 +140,18 @@
 			</div>
 			{#if editing !== msg.id}
 				<div class="flex shrink-0 items-center gap-0.5 opacity-0 group-hover/msg:opacity-100">
-					<button
-						class="btn-icon btn-icon-xs hover:preset-tonal"
-						use:tip={m.comments_edit()}
-						aria-label={m.comments_edit()}
-						onclick={() => {
-							editing = msg.id;
-							editDraft = msg.body;
-						}}
-					>
-						<Pencil class="size-3" />
-					</button>
-					{#if canDeleteMessage(thread, msg)}
+					{#if canChangeMessage(thread, msg)}
+						<button
+							class="btn-icon btn-icon-xs hover:preset-tonal"
+							use:tip={m.comments_edit()}
+							aria-label={m.comments_edit()}
+							onclick={() => {
+								editing = msg.id;
+								editDraft = msg.body;
+							}}
+						>
+							<Pencil class="size-3" />
+						</button>
 						<button
 							class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
 							use:tip={m.comments_delete_message()}

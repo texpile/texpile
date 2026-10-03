@@ -23,7 +23,7 @@ import {
 import { lineOf } from '$lib/comments/anchorLocate';
 import { resolveAuthor, forgetAuthor } from '$lib/comments/author';
 import type { CommentRange } from '$lib/editor/visual/extensions/comments';
-import { canDeleteMessage, isSuggestion, touchesSuggestions } from '$lib/comments/suggest';
+import { canChangeMessage, isSuggestion, touchesSuggestions } from '$lib/comments/suggest';
 import { activeSuggestions, suggestionVisibility } from '$lib/comments/activeSuggestions.svelte';
 import type { EditMode } from '$lib/comments/suggestCompare';
 import { SuggestionsController, type SourceEdit } from './suggestionsController';
@@ -470,12 +470,14 @@ export class CommentsController {
 	/** rewrite one message. Not restricted to your own: the log is a file anyone can edit anyway */
 	async editMessage(message: CommentMessage, body: string): Promise<void> {
 		if (!body.trim() || body.trim() === message.body) return;
+		const thread = this.threads.find((t) => t.messages.some((x) => x.id === message.id));
+		if (thread && !canChangeMessage(thread, message)) return;
 		await this.commit(editEvent({ message: message.id, body: body.trim(), by: await this.author(), at: new Date().toISOString() }));
 	}
 
 	/** drop one message; the fold drops the thread with it if that was the last of it */
 	async removeMessage(thread: CommentThread, message: CommentMessage): Promise<void> {
-		if (!canDeleteMessage(thread, message)) return;
+		if (!canChangeMessage(thread, message)) return;
 		await this.commit(deleteMessageEvent({ message: message.id, by: await this.author(), at: new Date().toISOString() }));
 		if (thread.messages.length <= 1) this.dropRange(thread.id);
 	}

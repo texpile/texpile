@@ -83,6 +83,16 @@ it('keeps a suggestion and the log as they were when asked to delete its own mes
 	expect(activeSuggestions.current.map((s) => s.id)).toEqual(['suggested']);
 });
 
+it('keeps the message a suggestion opens with as it was when asked to edit it', async () => {
+	const { ctl, thread } = await openMain();
+	const log = disk['.texpile/comments.jsonl'];
+	await ctl.editMessage(thread('suggested').messages[0], 'rewritten');
+	expect(disk['.texpile/comments.jsonl']).toBe(log);
+	const reply = await ctl.reply(thread('suggested'), 'why', 'bo');
+	await ctl.editMessage(thread('suggested').messages[1], 'why not');
+	expect(thread('suggested').messages.find((msg) => msg.id === reply)?.body).toBe('why not');
+});
+
 it('deletes a reply on a suggestion', async () => {
 	const { ctl, thread } = await openMain();
 	const reply = await ctl.reply(thread('suggested'), 'why', 'bo');
