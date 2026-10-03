@@ -34,6 +34,21 @@ function inlineRun(block: Node, nodes: Node[]): Node {
 	return block.type.create(block.attrs, Fragment.fromArray(nodes), block.marks);
 }
 
+// the children of the real block before an inline run written on its own (null: not known)
+let runLead: Node[] | null = [];
+
+/** `render` of a run of `block`'s children, knowing what the block holds before them: a break
+ *  opening the run opens the line only when nothing drawn comes first */
+function afterLead<T>(block: Node, nodes: Node[], render: () => T): T {
+	const k = block.content.content.indexOf(nodes[0]);
+	runLead = k < 0 ? null : block.content.content.slice(0, k);
+	try {
+		return render();
+	} finally {
+		runLead = [];
+	}
+}
+
 function inlineBytes(block: Node, nodes: Node[], atStart: boolean, ctx: Ctx): string | null {
 	const run = inlineRun(block, nodes);
 	// a comment chip owns its line: it cannot stand mid-line between kept bytes
@@ -42,13 +57,13 @@ function inlineBytes(block: Node, nodes: Node[], atStart: boolean, ctx: Ctx): st
 		if (c.type.name === 'inline_latex' && c.textContent.startsWith('%')) comment = true;
 	});
 	if (comment) return null;
-	const bytes = renderChildren(run, ctx.inTableCell);
+	const bytes = afterLead(block, nodes, () => renderChildren(run, ctx.inTableCell));
 	return atStart && headsItem(ctx) ? guardItemBody(bytes) : bytes;
 }
 
 function mapInlineLeaves(block: Node, nodes: Node[], text: string, _atStart: boolean, ctx: Ctx): Segment[] | null {
 	const run = inlineRun(block, nodes);
-	return mapRunLeaves(run, text, () => renderChildren(run, ctx.inTableCell));
+	return mapRunLeaves(run, text, () => afterLead(block, nodes, () => renderChildren(run, ctx.inTableCell)));
 }
 
 /** the real and shadow runs of one block side by side, for the oracles to say why a block maps no leaves */
@@ -299,8 +314,11 @@ const NODES: Record<string, NodeHandler> = {
 		// legacy lineBreak:false (a blank-line gap) is a semantic no-op: emit nothing
 		if (node.attrs?.lineBreak === false) return '';
 		const suffix = typeof node.attrs?.suffix === 'string' ? node.attrs.suffix : '';
-		if (node.attrs?.command === 'newline' || (ctx.inTableCell && !suffix)) return '\\newline\n';
-		return `\\\\${suffix}\n`;
+		// with nothing drawn before it in its block (an item's start, a \label) a break has no line to
+		// end, which stops the compile: an empty box gives it one
+		const box = opensLine(ctx) ? '\\mbox{}' : '';
+		if (node.attrs?.command === 'newline' || (ctx.inTableCell && !suffix)) return `${box}\\newline\n`;
+		return `${box}\\\\${suffix}\n`;
 	},
 
 	block_math(node) {
@@ -553,6 +571,13 @@ function isLabelOnlyParagraph(node: Node): boolean {
 		else sawOther = true;
 	});
 	return sawLabel && !sawOther;
+}
+
+/** whether nothing the page shows comes before this child in its block */
+function opensLine(ctx: Ctx): boolean {
+	if (!ctx.parent || ctx.index === undefined || !runLead) return false;
+	const before = [...runLead, ...Array.from({ length: ctx.index }, (_, i) => ctx.parent!.child(i))];
+	return before.every((c) => (c.isText ? (c.text ?? '').trim() === '' : c.type.name === 'label'));
 }
 
 function isEmptyParagraph(node: Node): boolean {

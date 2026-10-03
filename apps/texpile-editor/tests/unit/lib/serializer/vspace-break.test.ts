@@ -83,3 +83,29 @@ Professor Name \\
 		expect(twice).toBe(once);
 	});
 });
+
+// a break with nothing drawn before it in its block was written as a bare \\, which stops a real
+// compile ("There's no line here to end"): Shift+Enter at the start of an item, or after a \label
+describe('a line break opening its line', () => {
+	const br = () => schema.nodes.hard_break.create({ lineBreak: true });
+	const item = (content: Node[]) =>
+		schema.nodes.doc.create(null, [schema.nodes.list.create({ kind: 'bullet' }, [schema.nodes.paragraph.create(null, content)])]);
+
+	it('gets an empty box to end, and reads back as the break alone', () => {
+		const doc = item([br(), schema.text('Second.')]);
+		const out = serializeToLatex(doc);
+		expect(out).toContain('\\item \\mbox{}\\\\');
+		expect(parse(out).toString()).toBe(doc.toString());
+		expect(serializeToLatex(parse(out))).toBe(out);
+	});
+
+	it('after a \\label too, which draws nothing', () => {
+		const p = schema.nodes.paragraph.create(null, [schema.nodes.label.create({ name: 'x' }), br(), schema.text('more')]);
+		expect(serializeToLatex(schema.nodes.doc.create(null, [p]))).toContain('\\mbox{}\\\\');
+	});
+
+	it('takes no box after words', () => {
+		const out = serializeToLatex(item([schema.text('First'), br(), schema.text('Second.')]));
+		expect(out).not.toContain('\\mbox');
+	});
+});

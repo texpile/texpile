@@ -74,7 +74,11 @@ function withArgumentGroups(nodes: PmNode[]): PmNode[] {
 }
 
 export function bindTextToChips(input: PmNode[]): PmNode[] {
-	const nodes = withArgumentGroups(input);
+	// an empty \mbox right before a line break is what the serializer writes for a break opening its
+	// line: the editor holds the break alone
+	const nodes = withArgumentGroups(input).filter(
+		(n, i, all) => !(isChip(n) && n.textContent === '\\mbox{}' && all[i + 1]?.type.name === 'hard_break')
+	);
 	const out: PmNode[] = [];
 	for (let i = 0; i < nodes.length; i++) {
 		const chip = nodes[i];
