@@ -186,6 +186,8 @@ export function createMemberSplice(
 			let emitted = 0;
 			// the parsed child the last slot stood for, so a pair still the file's pair keeps its gap
 			let prevRef: BlockOrigin | null = null;
+			// a child ending on a comment whose line end was left to the gap before the next child
+			let owesLineEnd = false;
 			for (const slot of slots) {
 				const group = node.content.content.slice(slot.k, slot.k + slot.size);
 				let groupPm = 0;
@@ -211,6 +213,7 @@ export function createMemberSplice(
 				prevRef = ref ? parsed[ref.index + slot.size - 1] : null;
 				if (ref && slot.kept && fits(ref, slot.k)) {
 					text += gap;
+					owesLineEnd = false;
 					const at = text.length;
 					text += ref.text!;
 					// every member of a construct carries the construct's runs, from its first block's
@@ -276,7 +279,9 @@ export function createMemberSplice(
 					// a child ending on a comment keeps the line end after it, or the comment would run
 					// on into what follows: after the last one, the frame closing the container
 					const follows = last && !ref ? gapAfter(lastPlaced) : after;
-					if (options.endsLine?.(core) && !follows.startsWith('\n') && !(last && follows === '')) core += '\n';
+					const endsLine = !!options.endsLine?.(core);
+					if (endsLine && !follows.startsWith('\n') && !(last && follows === '')) core += '\n';
+					owesLineEnd = endsLine && follows.startsWith('\n');
 					if (options.beforeBreak && (last || BLANK.test(after))) {
 						const at2 = slots.indexOf(slot) + 1;
 						const nextSlot = at2 < slots.length ? slots[at2] : null;
@@ -313,6 +318,9 @@ export function createMemberSplice(
 				childPm += groupPm;
 				emitted++;
 			}
+			// the children after it all wrote nothing (an emptied paragraph), so that gap never came
+			const tail = gapAfter(lastPlaced);
+			if (owesLineEnd && tail !== '' && !tail.startsWith('\n')) text += '\n';
 			cursor = parsed[lastPlaced].srcTo!;
 			nodePm += node.nodeSize;
 		}

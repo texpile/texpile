@@ -275,6 +275,20 @@ After.
 		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
 	});
 
+	it('a retyped cell ending on a line break, then split, keeps its closing bracket', () => {
+		const parsed = parseTypstFile('#table(\n  columns: 2,\n  [Alice], [Paris],\n)\n');
+		const end = posOf(parsed.doc, 'Paris') + 'Paris'.length;
+		const t = new Transform(parsed.doc).insert(end, parsed.doc.type.schema.nodes.hard_break.create({ lineBreak: true }));
+		t.insert(end, parsed.doc.type.schema.text('!'));
+		const doc = t.split(end + 2).doc;
+		const out = serializeTypstFile(parsed, doc);
+		// `\]` would be an escaped bracket, leaving the cell open; the emptied paragraph writes nothing
+		expect(out).not.toContain('\\]');
+		expect(parseTypstFile(out).doc.toString(), out).toBe(
+			'doc(table(table_row(table_cell(paragraph("Alice")), table_cell(paragraph("Paris!", hard_break)))))'
+		);
+	});
+
 	it('maps the cells of a table one of whose cells changed', () => {
 		const parsed = parseTypstFile(TABLE);
 		const edited = retypeIn(parsed.doc, 'Third', (t) => t.replace('Third', 'THIRD'));
