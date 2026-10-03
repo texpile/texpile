@@ -449,6 +449,22 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 	});
 });
 
+describe('typst: inline raw written as a call', () => {
+	it('stays raw text when its text is retyped or its backtick deleted', () => {
+		const parsed = parseTypstFile('Use #raw("x") and #raw("a`b") here.\n');
+		const s = parsed.doc.type.schema;
+		const x = posOf(parsed.doc, 'x');
+		const retyped = new Transform(parsed.doc).replaceWith(x, x + 1, s.text('y', [s.marks.code.create()])).doc;
+		expect(serializeTypstFile(parsed, retyped)).toBe('Use #raw("y") and #raw("a`b") here.\n');
+		const tick = posOf(parsed.doc, '`b');
+		const quoted = new Transform(parsed.doc).replaceWith(x, x + 1, s.text('say "hi"', [s.marks.code.create()])).doc;
+		for (const doc of [new Transform(parsed.doc).delete(tick, tick + 2).doc, quoted]) {
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.child(0).toString(), out).toBe(doc.child(0).toString());
+		}
+	});
+});
+
 describe('typst: a line break typed at the end of a source line', () => {
 	for (const [label, item] of [
 		['a formula', '$x^2$'],

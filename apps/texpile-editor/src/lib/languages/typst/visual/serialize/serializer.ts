@@ -343,7 +343,8 @@ function mapInlineLeaves(block: Node, nodes: Node[], text: string, atStart: bool
 function leafBytes(leaf: Node, parent: Node, atStart: boolean, block: Node): string | null {
 	const text = leaf.text ?? '';
 	if (parent.type.spec.code || parent.type.spec.leafText) return text;
-	if (leaf.marks.some((m) => m.type.name === 'code')) return text.includes('`') ? null : text;
+	// inline raw sits between backticks or in the string of a #raw call
+	if (leaf.marks.some((m) => m.type.name === 'code')) return /[`"\\]/.test(text) ? null : text;
 	// the colon ending a term is structure: the leaf's own block says so, as does the block
 	// spliced when that is the item holding it
 	return escTypst(text, atStart, parent.type.name === 'term_title' || block.type.name === 'term_title' ? ':' : '');
