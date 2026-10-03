@@ -18,11 +18,12 @@
 // per-page CSP because host and guest pages differ in exactly one right: the host's page needs
 // its socket to tinymist, while a guest's page - html that arrived OVER THE WIRE from the host -
 // gets no network at all, so a hostile host cannot use a guest's screen to probe its loopback.
-import { ipcMain } from 'electron';
+import { ipcMain, type WebContents } from 'electron';
 import * as typstPreviewPage from '../typstPreviewPage';
 import * as previewRelay from '../typstPreviewRelay';
 
 const preparedPages = new Map<number, { html: string; csp: string }>();
+const pageHooked = new Set<number>();
 let pageServer: import('node:http').Server | null = null;
 let pageServerPort = 0;
 
@@ -86,6 +87,17 @@ function cssColour(v: unknown): string {
 	return s.length <= 100 && /^[a-zA-Z#][a-zA-Z0-9#(),.%/\s-]*$/.test(s) ? s : '#ffffff';
 }
 
+// once per window, its id read now: a destroyed webContents can no longer be asked for it
+function forgetPageOnClose(sender: WebContents): void {
+	const wcId = sender.id;
+	if (pageHooked.has(wcId)) return;
+	pageHooked.add(wcId);
+	sender.once('destroyed', () => {
+		pageHooked.delete(wcId);
+		preparedPages.delete(wcId);
+	});
+}
+
 export function registerTypstPreviewIpc(): void {
 	ipcMain.handle('typst:preview:prepare', async (e, body: { host: string; background: string; foreground: string }) => {
 		// only ever tinymist's loopback preview server, never an address from anywhere else
@@ -99,7 +111,7 @@ export function registerTypstPreviewIpc(): void {
 				foreground: cssColour(body.foreground)
 			});
 			preparedPages.set(e.sender.id, { html: page, csp: HOST_PAGE_CSP });
-			e.sender.once('destroyed', () => preparedPages.delete(e.sender.id));
+			forgetPageOnClose(e.sender);
 			const port = await ensurePageServer();
 			// one page per window, so the id keeps windows from seeing each other's preview
 			return { ok: true, url: `http://127.0.0.1:${port}/${e.sender.id}` };
@@ -134,7 +146,7 @@ export function registerTypstPreviewIpc(): void {
 				foreground: cssColour(body.foreground)
 			});
 			preparedPages.set(e.sender.id, { html: page, csp: GUEST_PAGE_CSP });
-			e.sender.once('destroyed', () => preparedPages.delete(e.sender.id));
+			forgetPageOnClose(e.sender);
 			const port = await ensurePageServer();
 			return { ok: true, url: `http://127.0.0.1:${port}/${e.sender.id}` };
 		} catch (err) {
