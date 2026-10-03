@@ -44,9 +44,6 @@ export function createSegmentSplice(options: BlockAssemblyOptions): Splice {
 		while (p < a.length && p < b.length && a[p].eq(b[p])) p++;
 		let s = 0;
 		while (s < a.length - p && s < b.length - p && a[a.length - 1 - s].eq(b[b.length - 1 - s])) s++;
-		// plain text bounds the stretch on either side; anything marked or delimited is taken in
-		while (p > 0 && !plain(a[p - 1])) p--;
-		while (s > 0 && !plain(a[a.length - s])) s--;
 		// a plain leaf the change reaches into keeps its unchanged characters at the edge, back to
 		// the word boundary before the change: a mark's delimiter or a line break written mid-word
 		// reads differently, and a stretch of nothing but a break is not written at all. The
