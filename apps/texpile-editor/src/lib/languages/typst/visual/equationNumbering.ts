@@ -9,14 +9,17 @@ import { namedArg, readTypstCall, rewrittenCall, type TypstCall } from './extens
 const NUMBERING = '"(1)"';
 const RULE = `#set math.equation(numbering: ${NUMBERING})`;
 
-type EquationRule = { pos: number; node: Node; call: TypstCall };
+type EquationRule = { pos: number; node: Node; call: TypstCall; end: string };
 
 function equationRules(doc: Node): EquationRule[] {
 	const rules: EquationRule[] = [];
 	doc.forEach((node, pos) => {
 		if (node.type.name !== 'raw_latex') return;
-		const call = readTypstCall(node.textContent);
-		if (call?.form === 'set' && call.name === 'math.equation') rules.push({ pos, node, call });
+		// the semicolon ending a rule that shares its line (`#set ..; #set ..`) is no part of the call
+		const text = node.textContent;
+		const end = text.endsWith(';') ? ';' : '';
+		const call = readTypstCall(text.slice(0, text.length - end.length));
+		if (call?.form === 'set' && call.name === 'math.equation') rules.push({ pos, node, call, end });
 	});
 	return rules;
 }
@@ -66,7 +69,7 @@ export function equationNumberingChange(state: EditorState, numbered: boolean): 
 		// a rule the document has already (numbering: none, or a supplement of its own) takes the numbering
 		const [rule] = rules;
 		const text = rewrittenCall(rule.call, { named: { numbering: NUMBERING } });
-		return tr.replaceWith(rule.pos + 1, rule.pos + rule.node.nodeSize - 1, schema.text(text));
+		return tr.replaceWith(rule.pos + 1, rule.pos + rule.node.nodeSize - 1, schema.text(text + rule.end));
 	}
 	// the last first, so the ones before stay where they were
 	for (const rule of [...rules].reverse()) {
@@ -76,7 +79,7 @@ export function equationNumberingChange(state: EditorState, numbered: boolean): 
 			tr.replaceWith(
 				rule.pos + 1,
 				rule.pos + rule.node.nodeSize - 1,
-				schema.text(rewrittenCall(rule.call, { named: { numbering: null } }))
+				schema.text(rewrittenCall(rule.call, { named: { numbering: null } }) + rule.end)
 			);
 	}
 	return tr.docChanged ? tr : null;
