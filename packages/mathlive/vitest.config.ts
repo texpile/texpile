@@ -22,6 +22,17 @@ const wasmHelper: Plugin = {
     id === '\0wasm-helper' ? `export default ${helper.code}` : undefined,
 };
 
+// vitest 5 hands that helper the .wasm's `?url` import as a /@fs/ path, which Node's fetch cannot
+// read; the module comes inline instead
+const wasmUrl: Plugin = {
+  name: 'wasm-url-inline',
+  enforce: 'pre',
+  load: (id) =>
+    id.endsWith('.wasm?url')
+      ? `export default 'data:application/wasm;base64,${fs.readFileSync(id.slice(0, -'?url'.length)).toString('base64')}'`
+      : undefined,
+};
+
 // upstream imports by path from src/ (its tsconfig's baseUrl): `core/types`, `public/core-types`
 const roots = fs
   .readdirSync(src, { withFileTypes: true })
@@ -30,7 +41,7 @@ const roots = fs
 
 export default defineConfig({
   // Typst's parser is wasm, imported as an ES module
-  plugins: [wasmHelper, wasm()],
+  plugins: [wasmHelper, wasmUrl, wasm()],
   resolve: {
     alias: [
       {
