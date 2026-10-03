@@ -24,7 +24,9 @@
 	// distribution that is there. Each time a program is asked, as one may have been installed since
 	const ready = $derived(family === 'typst' || toolchainProbe.checked);
 	// installed from the dialog itself, or found on a Check Again
-	const found = $derived(!!family && engineRows({ latex: family === 'latex', typst: family === 'typst' }, program ?? undefined).every((e) => e.found));
+	const found = $derived(
+		!!family && engineRows({ latex: family === 'latex', typst: family === 'typst' }, program ?? undefined).every((e) => e.found)
+	);
 	$effect(() => {
 		if (!program) return;
 		untrack(() => {
