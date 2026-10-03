@@ -43,3 +43,16 @@ alpha & beta \\\\
 		expect(serializeLatexFile(parsed, doc)).toBe(file.replace('alpha', ''));
 	});
 });
+
+describe('a word typed in a labelled item', () => {
+	it('changes only that word, the other items and their comments kept', () => {
+		const file = wrap(`\\begin{description}
+	\\item[Term] its definition. % check this
+	\\item[Other] a second definition.
+\\end{description}`);
+		const parsed = parseLatexFile(file);
+		const at = posOf(parsed.doc, 'second');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('much ')).doc;
+		expect(serializeLatexFile(parsed, doc)).toBe(file.replace('a second', 'a much second'));
+	});
+});

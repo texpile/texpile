@@ -1212,7 +1212,7 @@ describe('editing inside a labelled item', () => {
 		const at = posOf(parsed.doc, '(Firs') + 5;
 		const doc = new Transform(parsed.doc).split(at).doc;
 		const out = serializeLatexFile(parsed, doc);
-		expect(out).toContain('\\item[(1)](Firs\n\nt stage estimation) Uses x.\n\\item[(2)] Second one.');
+		expect(out).toContain('\\item[(1)](Firs\n\n      t stage estimation) Uses x.\n\\item[(2)] Second one.');
 		expect(out).not.toContain('\\textbf');
 		expect(parseLatexFile(out).doc.toString()).toBe(doc.toString());
 	});

@@ -221,7 +221,9 @@ export function createMemberSplice(
 				} else {
 					const k = slot.k;
 					const child = group[0];
-					if (options.spliceChild && !options.spliceChild(node, k, ref?.node ?? null)) return null;
+					// a child its container's handler writes with its frame (an item's label) is never written
+					// alone: only its changed letters may be put into its own bytes
+					const alone = !options.spliceChild || options.spliceChild(node, k, ref?.node ?? null);
 					// what stood on the child's line before it: a marker, a quote prefix, indentation; for a
 					// fresh child, what the nearest parsed child had
 					// a fresh child continues its lines as the nearest parsed child did
@@ -231,12 +233,16 @@ export function createMemberSplice(
 					const nested =
 						ref && fits(ref, slot.k)
 							? slot.size === 1
-								? (frameSplice(child, ref, childCtx, head) ??
-									leafSplice(child, ref, childCtx, prefix) ??
-									segmentSplice(child, ref, childCtx, prefix))
-								: spliceMembers(group, parsed.slice(ref.index, ref.index + slot.size), childCtx, head)
+								? alone
+									? (frameSplice(child, ref, childCtx, head) ??
+										leafSplice(child, ref, childCtx, prefix) ??
+										segmentSplice(child, ref, childCtx, prefix))
+									: leafSplice(child, ref, childCtx, prefix)
+								: alone
+									? spliceMembers(group, parsed.slice(ref.index, ref.index + slot.size), childCtx, head)
+									: null
 							: null;
-					if (!nested && slot.size > 1) return null;
+					if (!nested && (slot.size > 1 || !alone)) return null;
 					let part = nested ? nested.text : serializeNode(child, childCtx);
 					const lead = nested ? 0 : WS.exec(part)![0].length;
 					let core = nested ? part : part.slice(lead, part.length - WS_END.exec(part)![0].length);
