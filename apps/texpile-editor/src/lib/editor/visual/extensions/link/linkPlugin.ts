@@ -38,7 +38,7 @@ function linkRanges(doc: Node, linkType: MarkType): LinkRange[] {
 	return out;
 }
 
-const URL_REGEX = /https?:\/\/[^\s<>[\]{}|\\^]+|www\.[^\s<>[\]{}|\\^]+/gi;
+const URL_REGEX = /https?:\/\/[^\s<>[\]{}|\\^]+|www\.[^\s<>[\]{}|\\^]+/i;
 
 function isValidUrl(text: string): boolean {
 	try {
