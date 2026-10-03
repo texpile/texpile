@@ -216,6 +216,28 @@ function sameLetters(c: DocChange, a: Token[], b: Token[]): DocChange[] | null {
 	return out;
 }
 
+// a break at one end of the change is drawn as a break, apart from the letters beside it; a lone space there is the one it replaced
+function breakAtEdge(c: DocChange, a: Token[], b: Token[]): DocChange[] | null {
+	if (!a.some(isLetter) && !b.some(isLetter)) return null;
+	function structure(t: Token[], fromEnd: boolean) {
+		let n = 0;
+		while (n < t.length && !isCharacter(t[fromEnd ? t.length - 1 - n : n])) n++;
+		return n;
+	}
+	for (const fromEnd of [true, false]) {
+		const inA = structure(a, fromEnd);
+		const inB = structure(b, fromEnd);
+		if (inA > 0 === inB > 0) continue;
+		const cutA = fromEnd ? c.toA - inA : c.fromA + inA;
+		const cutB = fromEnd ? c.toB - inB : c.fromB + inB;
+		return [
+			{ fromA: c.fromA, toA: cutA, fromB: c.fromB, toB: cutB },
+			{ fromA: cutA, toA: c.toA, fromB: cutB, toB: c.toB }
+		];
+	}
+	return null;
+}
+
 // prosemirror-changeset reads edits fewer than a couple of tokens apart as one, so a short word left
 // standing between two (a paragraph split after "A", then typed at its start) came out struck and
 // typed again. Words both sides of a small change hold are kept, and the change is what is around them;
@@ -231,7 +253,7 @@ function keptApart(c: DocChange, before: PMNode, after: PMNode): DocChange[] {
 	const regrouped = sameLetters(c, a, b);
 	if (regrouped) return regrouped;
 	const kept = keptRun(c, a, b, before, after);
-	if (!kept) return [c];
+	if (!kept) return breakAtEdge(c, a, b)?.flatMap((x) => keptApart(x, before, after)) ?? [c];
 	const { i, j, len } = kept;
 	const head = { fromA: c.fromA, toA: c.fromA + i, fromB: c.fromB, toB: c.fromB + j };
 	const tail = { fromA: c.fromA + i + len, toA: c.toA, fromB: c.fromB + j + len, toB: c.toB };

@@ -438,6 +438,16 @@ it('draws a heading split in a word whose formatting also changed as a break, no
 	]);
 });
 
+// a letter taken out one letter before the split: the comparison read the two as one change, and the break was lost in it
+it('draws a heading split beside a letter taken out as a break', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\n\\section{Po}\n\\section{be}\nThe first paragraph.\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [mark(source, 'gesture', 'Po}\n\\section{be}', 'Probe}')]);
+	expect(ranges.map((r) => (r.brk ? `${r.brk} ${r.from}` : `${doc.textBetween(r.from, r.to)} was ${oldOf(r)}`))).toEqual([
+		'Po was Pro,',
+		`added ${doc.child(0).nodeSize - 1}`
+	]);
+});
+
 // most emoji share their first UTF-16 half, so the comparison saw only the second change
 it('draws an emoji replaced by another whole, not half of each', () => {
 	const source = '\\documentclass{article}\n\\begin{document}\nResults look good 😁 overall.\n\\end{document}\n';
