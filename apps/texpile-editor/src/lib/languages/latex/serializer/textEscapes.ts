@@ -69,6 +69,10 @@ function textcolorMark(a: Record<string, unknown>): { open: string; close: strin
 
 // \sethlcolor takes a color name, never a model, so a color only a model can say highlights in the default one
 function highlightMark(a: Record<string, unknown>): { open: string; close: string } {
+	if (a.cmd === 'colorbox') {
+		const box = xcolorOf(a.color ?? 'yellow', a.model);
+		if (box) return { open: `\\colorbox${box.model ? `[${box.model}]` : ''}{${esc(box.value)}}{`, close: '}' };
+	}
 	const c = a.color == null ? null : xcolorOf(a.color, null);
 	return c && !c.model ? { open: `{\\sethlcolor{${esc(c.value)}}\\hl{`, close: '}}' } : { open: '\\hl{', close: '}' };
 }

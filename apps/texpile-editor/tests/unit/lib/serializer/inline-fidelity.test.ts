@@ -26,6 +26,11 @@ describe('inline fidelity', () => {
 		expect(marks('{\\sethlcolor{green}\\hl{b}}')).toEqual([['highlight', 'green']]);
 	});
 
+	it('\\colorbox stays \\colorbox, model and all, not soul\'s \\hl', () => {
+		expect(rt('a \\colorbox{yellow}{b} c')).toContain('a \\colorbox{yellow}{b} c');
+		expect(rt('a \\colorbox[rgb]{1,0.9,0}{b} c')).toContain('a \\colorbox[rgb]{1,0.9,0}{b} c');
+	});
+
 	it('a blank line inside an argument or a cell does not fuse the words (47)', () => {
 		expect(rt('\\textbf{first\n\nsecond}')).toMatch(/first second/);
 		expect(rt('\\begin{tabular}{l}\nfirst\n\nsecond \\\\\n\\end{tabular}')).toMatch(/first second/);

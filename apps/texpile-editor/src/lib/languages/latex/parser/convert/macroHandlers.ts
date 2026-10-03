@@ -106,7 +106,9 @@ export const macroHandlers: Record<string, MacroHandler> = {
 		if (mandatoryArgs.length < 2) return null;
 		const color = getTextContent(mandatoryArgs[0].content);
 		const content = mandatoryArgs[1].content;
-		const newCtx = { ...ctx, marks: [...ctx.marks, { type: 'highlight', attrs: { color } }] };
+		const modelArg = macro.args.find((arg) => arg.openMark === '[');
+		const model = modelArg ? printRaw(modelArg.content) : null;
+		const newCtx = { ...ctx, marks: [...ctx.marks, { type: 'highlight', attrs: { color, cmd: 'colorbox', model } }] };
 		return convertNodesToInline(content, newCtx);
 	},
 
