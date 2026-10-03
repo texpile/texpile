@@ -394,7 +394,7 @@ const NODES: Record<string, NodeHandler> = {
 			// a caption added in the editor to a figure that had none has no slot to fill; drop
 			// it in just before \end{figure}.
 			if (showCaption && capContent && !template.includes(FIG_CAP_SLOT)) {
-				out = out.replace(/(\n?)(\\end\{figure\*?\})\s*$/, `\n${caption}\n$2`);
+				out = out.replace(/\n?(\\end\{figure\*?\})\s*$/, (_whole, end: string) => `\n${caption}\n${end}`);
 			}
 			return out.replace(/\s*$/, '') + '\n';
 		}
