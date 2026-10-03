@@ -121,6 +121,8 @@ describe('a footnote in a heading', () => {
 			])
 		]);
 		expect(serializeToLatex(joined).trim()).toBe('\\section{Probe\\protect\\footnote{A note.}}');
+		// and reads back as the footnote alone, so reopening changes nothing
+		expect(parse(serializeToLatex(joined)).toString()).toBe(joined.toString());
 		expect(serializeToLatex(parse(String.raw`\section{Probe\protect\footnote{A note.}}`)).trim()).toBe(
 			'\\section{Probe\\protect\\footnote{A note.}}'
 		);

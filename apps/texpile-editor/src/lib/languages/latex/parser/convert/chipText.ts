@@ -73,12 +73,15 @@ function withArgumentGroups(nodes: PmNode[]): PmNode[] {
 	return out;
 }
 
+function guards(text: string, next: PmNode | undefined): boolean {
+	if (text === '\\mbox{}') return next?.type.name === 'hard_break';
+	return text === '\\protect' && isChip(next) && /^\\footnote(?![a-zA-Z@])/.test(next.textContent);
+}
+
 export function bindTextToChips(input: PmNode[]): PmNode[] {
-	// an empty \mbox right before a line break is what the serializer writes for a break opening its
-	// line: the editor holds the break alone
-	const nodes = withArgumentGroups(input).filter(
-		(n, i, all) => !(isChip(n) && n.textContent === '\\mbox{}' && all[i + 1]?.type.name === 'hard_break')
-	);
+	// guards the serializer writes, which the editor does not hold: an empty \mbox before a line break
+	// that opens its line, a \protect before a heading's \footnote
+	const nodes = withArgumentGroups(input).filter((n, i, all) => !(isChip(n) && guards(n.textContent, all[i + 1])));
 	const out: PmNode[] = [];
 	for (let i = 0; i < nodes.length; i++) {
 		const chip = nodes[i];
