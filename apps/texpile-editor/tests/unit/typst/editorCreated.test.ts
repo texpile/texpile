@@ -133,6 +133,26 @@ describe('line-start markers inside brackets (T11)', () => {
 	});
 });
 
+describe('line-start markers after a block comment', () => {
+	it('a marker typed after a block comment opening the line is escaped, as typst reads past the comment', () => {
+		const comment = n.inline_latex.create({ lang: 'typst' }, typSchema.text('/* c */'));
+		for (const marker of ['-', '+', '=']) {
+			expect(out(para(comment, text(` ${marker} Foo`)))).toBe(`/* c */ \\${marker} Foo`);
+			// the same after a line break, where the paragraph reads back as itself
+			const p = para(text('Text'), n.hard_break.create({ lineBreak: true }), comment, text(` ${marker} Foo`));
+			const src = out(p);
+			expect(src).toBe(`Text\\\n/* c */ \\${marker} Foo`);
+			expect(
+				typstToProseMirror(src + '\n')
+					.doc.child(0)
+					.toJSON()
+			).toEqual(p.toJSON());
+		}
+		// mid-line, after words, a marker is text already
+		expect(out(para(text('x '), comment, text(' - y')))).toBe('x /* c */ - y');
+	});
+});
+
 describe('intraword emphasis (T15)', () => {
 	it('bold on part of a word takes the function form, which typst reads back as strong', () => {
 		const src = out(para(text('un'), text('happy', ['strong']), text('ness')));

@@ -463,6 +463,15 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
 	});
 
+	it('a marker typed after a block comment the file keeps at the start of a line is escaped', () => {
+		const parsed = parseTypstFile('Text after.\n  /* inline */ and more.\n');
+		const at = posOf(parsed.doc, 'and more');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('- Foo ')).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(out).toContain('/* inline */ \\- Foo and more.');
+		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
+	});
+
 	it('text put on the line of a line comment the file keeps goes on the next line, the comment whole', () => {
 		const parsed = parseTypstFile('A comment // note\nand more.\n');
 		let end = -1;

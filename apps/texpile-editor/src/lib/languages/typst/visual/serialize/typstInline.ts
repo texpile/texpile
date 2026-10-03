@@ -21,6 +21,9 @@ export const typstShadow = createShadow({
 	isHandlerLeaf: isTypHandlerLeaf
 });
 
+/** a whole block comment, which typst reads as nothing: what follows one keeps its place on the line */
+const BLOCK_COMMENT = /^\/\*(?:(?!\*\/)[\s\S])*\*\/$/;
+
 /** list/term/heading markers and "1." enum markers bind at line start, indentation included */
 export function escLineStart(str: string): string {
 	// `--` and `---` are the dash shorthands, which no list marker begins; after a line's leading
@@ -222,6 +225,8 @@ function buildRuns(parent: Node, startOfLine: boolean, extra: string, singleLine
 					marks: orderedMarks(node.marks),
 					kind: text.startsWith('//') ? 'comment' : 'other'
 				});
+				// a block comment is nothing to typst: a marker after one that opens a line opens a list
+				if (BLOCK_COMMENT.test(text)) return;
 				break;
 			}
 			case 'typ_ref': {

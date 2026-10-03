@@ -30,6 +30,7 @@ const LINE_END_BLOCKS = new Set(['heading', 'list', 'code_block', 'term_item', '
 // a content block's markup starts afresh: right after its `[` (a table cell, a caption), spaces
 // included, a marker binds as at a line start
 const BODY_START = /(^|[^\\])(\\\\)*\[[ \t]*$/;
+const LINE_HEAD = /(^|\n)(?:[ \t]|\/\*(?:(?!\*\/)[\s\S])*\*\/)*$/;
 // escapes and whole raw spans: a backtick left after them opens raw text
 const ESCAPES_AND_RAW = /\\[\s\S]|(`{3,})(?!`)[\s\S]*?\1|``|`[^`]*`/g;
 
@@ -400,7 +401,8 @@ function unbound(head: string, bytes: string, tail: string, gone: string): boole
 // kept bytes that a fresh line end moves to a line start give the splice up
 function atLineStart(head: string, bytes: string, tail: string, code: boolean): string | null {
 	const bodyStart = !code && BODY_START.test(head);
-	const out = !code && ((/(^|\n)[ \t]*$/.test(head) && head !== '') || bodyStart) ? escLineStart(bytes) : bytes;
+	// block comments before the bytes on their line are nothing to typst: a marker after them opens a list
+	const out = !code && ((LINE_HEAD.test(head) && head !== '') || bodyStart) ? escLineStart(bytes) : bytes;
 	// a marker the file kept mid-line now begins a line: with fresh bytes ending the line above
 	// it, or with the bytes before it taken out
 	const opens = /^(?:[-+/=]|\d+\.)\s/.test(tail) || /^[-+/=]$/.test(tail);
