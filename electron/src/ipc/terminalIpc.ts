@@ -126,6 +126,17 @@ export function registerTerminalIpc(): void {
 			return { ok: false, error: String(err instanceof Error ? err.message : err) };
 		}
 		const wc = e.sender;
+		// a closing window runs none of its own teardown, so its shells end here
+		function endWithWindow(): void {
+			if (id == null || ptys.get(id) !== proc) return;
+			ptys.delete(id);
+			try {
+				proc.kill();
+			} catch {
+				/* already gone */
+			}
+		}
+		wc.once('destroyed', endWithWindow);
 		// coalesce pty output: one renderer message per ~16ms tick (or 64KB burst) instead of
 		// one per chunk -- a fast compile can emit thousands of tiny chunks per second
 		let buf = '';
@@ -146,6 +157,7 @@ export function registerTerminalIpc(): void {
 			else if (!flushTimer) flushTimer = setTimeout(flush, 16);
 		});
 		proc.onExit(({ exitCode }) => {
+			wc.removeListener('destroyed', endWithWindow);
 			ptys.delete(id);
 			flush(); // pending output must land before the exit message, or the tail is lost
 			if (!wc.isDestroyed()) wc.send('terminal:exit', { id, code: exitCode });
