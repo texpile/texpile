@@ -221,7 +221,9 @@ export class Box implements BoxInterface {
     // );
     if (value === undefined) return;
     const v = toString(value, unit);
-    if (v.length > 0) {
+    // a value a formula wrote (an \enclose color or border) ends at `;`: past one it would
+    // open declarations of its own, a full-window overlay among them
+    if (v.length > 0 && !v.includes(';')) {
       if (!this.cssProperties) this.cssProperties = {};
       this.cssProperties[prop] = v;
     }

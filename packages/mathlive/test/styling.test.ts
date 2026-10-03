@@ -72,6 +72,26 @@ describe('the html commands in a formula', () => {
   });
 });
 
+describe('the style of an enclose in a formula', () => {
+  it('opens no declaration of its own', () => {
+    for (const latex of [
+      '\\enclose{box}[mathbackground="red;position:fixed;inset:0"]{x}',
+      '\\enclose{circle}[2px solid red;position:fixed;inset:0]{x}',
+      '\\enclose{circle}[2px;position:fixed;inset:0 solid red]{x}',
+    ]) {
+      const markup = MathLive.convertLatexToMarkup(latex);
+      expect(markup, latex).not.toMatch(/position:\s*fixed|inset/);
+    }
+  });
+
+  it('still draws the colors it names', () => {
+    const markup = MathLive.convertLatexToMarkup(
+      '\\enclose{circle}[mathbackground="red"]{x}'
+    );
+    expect(markup).toContain('background-color:red');
+  });
+});
+
 describe("MathLive's own keycaps", () => {
   it('still mark the box a template puts the selection in', () => {
     const keyboard = window.mathVirtualKeyboard;
