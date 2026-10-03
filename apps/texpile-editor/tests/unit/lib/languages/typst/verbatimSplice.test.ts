@@ -415,6 +415,21 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 		expect(out).toContain('Only #strong[even]s here.');
 		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
 	});
+
+	it('a hyphen or a dot typed beside the ones the file keeps stays itself, not a dash, a soft hyphen or an ellipsis', () => {
+		for (const [src, needle, typed] of [
+			['pages 10-12 here.\n', '10-', '-'],
+			['what? here.\n', 'what', '-'],
+			['a soft-?hyphen here.\n', 'soft', '-'],
+			['x.. here.\n', 'x..', '.']
+		]) {
+			const parsed = parseTypstFile(src);
+			const at = posOf(parsed.doc, needle) + needle.length;
+			const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text(typed)).doc;
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.textContent, out).toBe(doc.textContent);
+		}
+	});
 });
 
 describe('typst: a line break typed at the end of a source line', () => {

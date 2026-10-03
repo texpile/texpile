@@ -357,6 +357,9 @@ function fuses(bytes: string, tail: string): boolean {
 	if (/#[\p{L}\p{N}_.-]*$/u.test(bytes) && /^[\p{L}\p{N}_.([-]/u.test(tail)) return true;
 	if (/https?:\/\/\S*$/.test(bytes) && /^[0-9A-Za-z#$%&*+\-/=@_~[(]/.test(tail)) return true;
 	if (/[/*]$/.test(bytes) && /^[/*]/.test(tail)) return true;
+	// `--`, `-?` and `...` are shorthands: a hyphen or a dot meeting its kind would read as one
+	if (/(^|[^\\])(\\\\)*-$/.test(bytes) && /^[-?]/.test(tail)) return true;
+	if (/(^|[^\\])(\\\\)*\.$/.test(bytes) && /^\./.test(tail)) return true;
 	// a call written for a mark or a reference ends on `]` or `)`: `.`, `(`, `[` or `;` after it go on with it
 	if (/#\S[^\n]*[\])]$/.test(bytes) && /^(?:[([;]|\.[\p{L}_])/u.test(tail)) return true;
 	// a line break is a backslash and the whitespace after it; anything else there escapes instead
