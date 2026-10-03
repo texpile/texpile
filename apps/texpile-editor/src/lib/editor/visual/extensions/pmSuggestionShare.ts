@@ -130,14 +130,15 @@ function movedIntoNode(before: RegionParse, aFrom: number, aTo: number, after: R
 }
 
 // the first edge of a node that draws itself which a range crosses: the node's start when the
-// range takes the node in after words of its own, its end when the range leaves the node
+// range takes the node in after words of its own, its end when the range leaves the node (or ends
+// with it, while the other side goes on past it)
 function crossedEdge(doc: PMNode, from: number, to: number): { pos: number; side: 'start' | 'end' } | null {
 	let found: { pos: number; side: 'start' | 'end' } | null = null;
 	doc.nodesBetween(from, to, (node, pos) => {
 		if (found || node.isLeaf || node.isText || !isSelfRendered(node)) return !found;
 		const end = pos + node.nodeSize;
 		if (pos > from && pos < to) found = { pos, side: 'start' };
-		else if (pos < from && end > from && end < to) found = { pos: end, side: 'end' };
+		else if (pos < from && end > from && end <= to) found = { pos: end, side: 'end' };
 		return false;
 	});
 	return found;
@@ -152,7 +153,7 @@ export function splitAtNodes(changes: DocChange[], before: RegionParse, after: R
 		for (;;) {
 			const a = crossedEdge(before.doc, cur.fromA, cur.toA);
 			const b = crossedEdge(after.doc, cur.fromB, cur.toB);
-			if (!a || !b || a.side !== b.side) break;
+			if (!a || !b || a.side !== b.side || (a.pos === cur.toA && b.pos === cur.toB)) break;
 			out.push({ fromA: cur.fromA, toA: a.pos, fromB: cur.fromB, toB: b.pos });
 			cur = { fromA: a.pos, toA: cur.toA, fromB: b.pos, toB: cur.toB };
 		}

@@ -448,6 +448,17 @@ it('draws a heading split beside a letter taken out as a break', () => {
 	]);
 });
 
+// a chip opening a paragraph holds the space after it, and lets it go once the paragraph is joined onto the one before
+it('draws a paragraph that opens with a chip joined onto the one before as one break', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nWords in the band.\\vspace{10pt} Prose after a space.\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [mark(source, 'join', '', '\n\n', source.indexOf('\\vspace'))]);
+	expect(
+		ranges.map(
+			(r) => r.brk ?? (r.gone ? 'gone' : r.node ? `chip ${r.was?.textContent}` : `words ${JSON.stringify(doc.textBetween(r.from, r.to))}`)
+		)
+	).toEqual(['removed', 'chip \\vspace{10pt} ', 'words " "']);
+});
+
 // most emoji share their first UTF-16 half, so the comparison saw only the second change
 it('draws an emoji replaced by another whole, not half of each', () => {
 	const source = '\\documentclass{article}\n\\begin{document}\nResults look good 😁 overall.\n\\end{document}\n';
