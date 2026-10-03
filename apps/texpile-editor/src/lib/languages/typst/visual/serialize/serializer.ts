@@ -409,6 +409,8 @@ function atLineStart(head: string, bytes: string, tail: string, code: boolean): 
 	if ((opens || /^[ \t]/.test(tail)) && startsLine) return null;
 	// or begins a content block, what stood before it in the block taken out or made spaces
 	if (bodyStart && /^[ \t]*$/.test(bytes) && /^[ \t]*(?:[-+/=]|\d+\.)\s/.test(tail)) return null;
+	// or a marker the file kept at the start of a line or a content block meets a space typed or left after it
+	if (!code && /^\s/.test(bytes || tail) && /(?:^|\n|(?:^|[^\\])(?:\\\\)*\[)[ \t]*(?:[-+/=]|\d+\.)$/.test(head)) return null;
 	return out;
 }
 

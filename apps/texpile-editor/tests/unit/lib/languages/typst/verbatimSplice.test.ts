@@ -528,6 +528,23 @@ describe('typst: markup that a seam would open', () => {
 		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
 	});
 
+	it('a space typed or left after a marker the file kept at the start of a line or a cell is not read as one', () => {
+		const cases: [string, string, number, string][] = [
+			['Text\n-x more\n', '-x', 1, ' '],
+			['Text\n6.1 more\n', '6.1', 2, ' '],
+			['#table(columns: 2, [6.1], [x])\n', '6.1', 2, ' '],
+			['Text\n=x y more\n', 'x y', 0, '']
+		];
+		for (const [block, needle, off, typed] of cases) {
+			const parsed = parseTypstFile(`Intro.\n\n${block}`);
+			const at = posOf(parsed.doc, needle) + off;
+			const t = new Transform(parsed.doc);
+			const doc = (typed ? t.insert(at, parsed.doc.type.schema.text(typed)) : t.delete(at, at + 1)).doc;
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.child(1).toString(), out).toBe(doc.child(1).toString());
+		}
+	});
+
 	const SNAKE = 'Intro line.\n\n== Raw blocks snake_case_words\n<sec:raw>\n\nTail line.\n';
 
 	it('bytes put after an underscore the file keeps inside a word write the block afresh, the underscore escaped', () => {
