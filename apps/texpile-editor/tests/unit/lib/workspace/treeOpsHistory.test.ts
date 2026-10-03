@@ -52,7 +52,7 @@ function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin =
 			copy(from, to);
 		},
 		writeBinary: async (p) => void files.add(p),
-		stat: async (p) => ({ exists: files.has(p) }),
+		stat: async (p) => ({ exists: under(p).length > 0 }),
 		refreshTree: async () => {},
 		loadRefs: () => {},
 		wantsStarter: () => false,
@@ -203,6 +203,16 @@ describe('tree undo/redo', () => {
 		expect(visible(fs.files)).toEqual(['/proj/notes.tex']);
 		await ops.history.undo();
 		expect(visible(fs.files)).toEqual([]);
+	});
+
+	// a folder the tree does not show (.github, one made outside since the last scan) was "created"
+	// again, and taking that create back trashed the folder with everything in it
+	it('refuses a new folder that is already there, so undo cannot take it away', async () => {
+		fs.files.add('/proj/.github/workflows/build.yml');
+		await ops.create('/proj', '.github', 'dir');
+		expect(ops.history.canUndo).toBe(false);
+		await ops.history.undo();
+		expect(visible(fs.files)).toEqual(['/proj/.github/workflows/build.yml']);
 	});
 
 	it('a new operation drops the redo stack', async () => {

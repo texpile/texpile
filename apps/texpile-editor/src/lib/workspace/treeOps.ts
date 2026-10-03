@@ -84,6 +84,8 @@ export class TreeOps {
 			const path = joinPath(parentDir, finalName);
 			const isTex = fsType === 'file' && finalName.toLowerCase().endsWith('.tex');
 			const content = !isInclude && isTex && this.deps.wantsStarter() ? createStarterLatex() : '';
+			// making a folder succeeds over one already there, which the tree may not show (.github)
+			if (fsType === 'dir' && (await this.deps.stat(path)).exists) throw new Error('EEXIST');
 			await this.deps.create(path, fsType, content);
 			// insert the \input into the current doc BEFORE switching away (the switch flushes its save)
 			if (isInclude && !this.deps.insertIncludeAtCursor(path)) {
