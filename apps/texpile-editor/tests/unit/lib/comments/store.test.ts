@@ -102,6 +102,19 @@ it('keeps the last folder’s threads out of the next folder’s log', async () 
 const threadOn = (id: string) =>
 	openEvent({ id, file: 'main.tex', by: 'ana', body: id, anchor: buildAnchor('some text', 0, 4), at: 'now' });
 
+// an agent's comment or a placement record still being written as the window opens another folder
+it('leaves the last folder’s log whole when a write of it lands after the next folder opened', async () => {
+	const a = '/a/.texpile/comments.jsonl';
+	disks[a] = JSON.stringify(threadOn('a1')) + '\n';
+	delete disks['/b/.texpile/comments.jsonl'];
+	const store = new CommentStore();
+	await store.load('/a');
+	const writing = store.append(replyEvent({ id: 'm1', thread: 'a1', by: 'bo', body: 'ok', at: 'now' }));
+	await Promise.all([writing, store.load('/b')]);
+	expect(foldLog(parseLog(disks[a])).map((t) => t.id)).toEqual(['a1']);
+	expect(disks['/b/.texpile/comments.jsonl']).toBeUndefined();
+});
+
 // Discard changes in Source Control, a checkout
 it('lets go of threads taken out of the log on disk', async () => {
 	const committed = JSON.stringify(threadOn('c1')) + '\n';

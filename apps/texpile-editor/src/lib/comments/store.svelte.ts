@@ -204,21 +204,20 @@ export class CommentStore {
 		return ids;
 	}
 
-	/** seeded if absent, never over one the user has edited; shared with the config writer */
-	private async ensureIgnore(): Promise<void> {
-		if (this.root) await ensureTexpileIgnore(this.root);
-	}
-
 	/** one write at a time, each of the log as it is by then, so a slow write never lands over a newer one */
 	private write(): Promise<void> {
-		const path = this.root ? this.path(this.root) : null;
-		if (!path) return Promise.resolve();
+		const root = this.root;
+		const path = root ? this.path(root) : null;
+		if (!root || !path) return Promise.resolve();
 		this.writesQueued++;
 		const done = this.writing.then(async () => {
-			await this.ensureIgnore();
+			// seeded if absent, never over one the user has edited; shared with the config writer
+			await ensureTexpileIgnore(root);
+			// another folder opened meanwhile: what the store holds now is that folder's log
+			if (this.root !== root) return;
 			const text = this.serialize();
 			await writeTextFile(path, text);
-			if (this.root && this.path(this.root) === path) this.onDisk = new Set(text.split('\n'));
+			if (this.root === root) this.onDisk = new Set(text.split('\n'));
 		});
 		this.writing = done
 			.catch(() => undefined)
