@@ -317,7 +317,15 @@ export function getCharacterMetrics(
   //   rebuildMetrics();
 
   if (codepoint === undefined) codepoint = 77; // 'M'
-  const metrics = CHARACTER_METRICS_MAP[fontName][codepoint];
+  const char = String.fromCodePoint(codepoint);
+  // a letter the fonts lack is measured as the one it is drawn like, e.g. Å as A
+  const metrics =
+    CHARACTER_METRICS_MAP[fontName][codepoint] ??
+    (char in EXTRA_CHARACTER_MAP
+      ? CHARACTER_METRICS_MAP[fontName][
+          EXTRA_CHARACTER_MAP[char].codePointAt(0)!
+        ]
+      : undefined);
 
   if (metrics) {
     return {
@@ -342,12 +350,7 @@ export function getCharacterMetrics(
     };
   }
 
-  const char = String.fromCodePoint(codepoint);
-
-  if (char in EXTRA_CHARACTER_MAP)
-    codepoint = EXTRA_CHARACTER_MAP[char].codePointAt(0);
-  else if (CJK_REGEX.test(char)) {
-    codepoint = 77; // 'M'.codepointAt(0);
+  if (CJK_REGEX.test(char)) {
     return {
       defaultMetrics: true,
       depth: 0.2,
