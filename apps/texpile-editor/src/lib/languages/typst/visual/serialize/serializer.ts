@@ -209,7 +209,7 @@ const NODES: Record<string, NodeHandler> = {
 		const caption = showCaption ? renderBody(node) : '';
 		const label = labelOf(node);
 		// a bare #image is one the source never wrapped in a figure; keep it bare
-		if (node.attrs.numbered === false && !caption && !label) return `#${img}\n\n`;
+		if (node.attrs.numbered === false && !caption) return `#${img}${label}\n\n`;
 		// a caption shown empty is written empty, as LaTeX writes \caption{}: typst draws its "Figure 1:" as the editor does
 		return `#figure(${img}${showCaption ? `, caption: [${caption}]` : ''})${label}\n\n`;
 	},

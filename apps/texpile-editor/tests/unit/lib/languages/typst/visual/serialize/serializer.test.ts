@@ -36,6 +36,13 @@ describe('an image resized by dragging', () => {
 		expect(back.type.name).toBe('image');
 		expect(back.attrs.options).toBe('width: 50%, alt: "x, width: y"');
 	});
+
+	it('stays a bare image when it carries a label, as the file wrote it', () => {
+		const src = '#image("a.png") <lbl>\n';
+		const img = typstToProseMirror(src).doc.child(0);
+		const resized = S.nodes.image.create({ ...img.attrs, width: 200, maxWidth: 400 });
+		expect(serializeToTypst(S.nodes.doc.create(null, [resized]))).toBe('#image("a.png", width: 50%) <lbl>');
+	});
 });
 
 describe('a figure table whose caption is empty', () => {
