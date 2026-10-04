@@ -41,6 +41,7 @@
 	"prefs_theme_dark": "Escuro",
 	"prefs_appearance_hint": "A opção Sistema acompanha o tema claro ou escuro do sistema operacional.",
 	"prefs_window_transparency": "Janela transparente",
+	"prefs_window_transparency_unsupported": "Requer macOS ou Windows 11",
 	"prefs_mode": "Modo",
 	"prefs_autosave": "Salvamento automático",
 	"prefs_autosave_hint_live": "O modo ao vivo requer salvamento automático",
@@ -83,6 +84,7 @@
 	"prefs_visual_justify_note": "Isto muda a aparência do editor e não altera o documento compilado.",
 	"prefs_visual_hyphenate": "Hifenizar palavras",
 	"prefs_visual_hyphenate_note": "Os hifens aparecem apenas no editor e não são gravados no arquivo.",
+	"prefs_visual_hyphenate_needs_justify": "Ative Justificar texto para usar",
 	"prefs_mcp_status": "Em execução em {addr}",
 	"prefs_mcp_error": "Inativo: {error}",
 	"prefs_mcp_copy": "Copiar mensagem",
@@ -2245,5 +2247,6 @@
 	"agent_panel_only_desktop_note": "O agente roda como um programa no seu computador.",
 	"agent_panel_no_folder_note": "O agente trabalha numa pasta inteira, e um arquivo avulso não tem pasta própria.",
 	"single_file_unavailable": "Indisponível no modo de arquivo único. Abra no espaço de trabalho para usar.",
+	"unavailable_desktop": "Disponível apenas no Texpile Desktop",
 	"agent_panel_single_file": "A aba Agente não está disponível no modo de arquivo único"
 }

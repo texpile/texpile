@@ -41,6 +41,7 @@
 	"prefs_theme_dark": "Dunkel",
 	"prefs_appearance_hint": "„System“ folgt der Hell- oder Dunkel-Einstellung Ihres Betriebssystems.",
 	"prefs_window_transparency": "Transparentes Fenster",
+	"prefs_window_transparency_unsupported": "Benötigt macOS oder Windows 11",
 	"prefs_mode": "Modus",
 	"prefs_autosave": "Automatisches Speichern",
 	"prefs_autosave_hint_live": "Der Live-Modus erfordert automatisches Speichern",
@@ -83,6 +84,7 @@
 	"prefs_visual_justify_note": "Das ändert die Darstellung im Editor und nicht das kompilierte Dokument.",
 	"prefs_visual_hyphenate": "Silbentrennung",
 	"prefs_visual_hyphenate_note": "Die Trennstriche werden nur im Editor angezeigt und nicht in die Datei geschrieben.",
+	"prefs_visual_hyphenate_needs_justify": "Schalte Blocksatz ein, um es zu nutzen",
 	"prefs_mcp_status": "Empfängt auf {addr}",
 	"prefs_mcp_error": "Nicht aktiv: {error}",
 	"prefs_mcp_copy": "Nachricht kopieren",
@@ -2245,5 +2247,6 @@
 	"agent_panel_only_desktop_note": "Der Agent läuft als Programm auf deinem Computer.",
 	"agent_panel_no_folder_note": "Der Agent arbeitet an einem ganzen Ordner, und eine einzelne Datei hat keinen eigenen.",
 	"single_file_unavailable": "Im Einzeldateimodus nicht verfügbar. Öffne den Arbeitsbereich, um es zu nutzen.",
+	"unavailable_desktop": "Nur in Texpile Desktop verfügbar",
 	"agent_panel_single_file": "Der Agent-Tab ist im Einzeldateimodus nicht verfügbar"
 }

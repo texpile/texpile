@@ -35,8 +35,12 @@
 	type Category = 'appearance' | 'editor' | 'proofing' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
 	// the browser guest has no local toolchain, no Zotero, no MCP server, no folder to reopen and no
-	// copies or versions of its own: five tabs that could only ever report nothing
+	// copies or versions of its own: five tabs that could only ever report nothing, so they are
+	// grayed there with why rather than left out
 	const DESKTOP_ONLY_TABS: Category[] = ['vcs', 'toolchain', 'integrations', 'startup', 'ai'];
+	function tabUnavailable(id: Category): boolean {
+		return __WEB__ && DESKTOP_ONLY_TABS.includes(id);
+	}
 	const ALL_TABS: { id: Category; label: string }[] = [
 		{ id: 'appearance', label: m.prefs_appearance() },
 		// Editing, Source editor and Visual editor were three tabs holding three, two and two rows.
@@ -61,8 +65,9 @@
 		{ id: 'startup', label: m.prefs_group_startup() },
 		{ id: 'ai', label: m.prefs_group_ai() }
 	];
-	const categories = ALL_TABS.filter((c) => !__WEB__ || !DESKTOP_ONLY_TABS.includes(c.id));
-
+	const categories = ALL_TABS.filter((c) => !tabUnavailable(c.id));
+	// the browser has no glass of its own; on the desktop it needs macOS or Windows 11 (windowGlass.ts)
+	const glassUnavailable = $derived(windowGlass.works ? '' : __WEB__ ? m.unavailable_desktop() : m.prefs_window_transparency_unsupported());
 	// Opened to answer a particular question (the compile modal's "your compiler is missing"): land
 	// on that tab, then clear the request. Cleared only when it was SET, or the store write would
 	// re-run this effect forever.
@@ -154,15 +159,26 @@
 				<img src={logoOnDark} alt="" class="hidden h-6 w-auto dark:block" />
 			</button>
 		</div>
-		{#each categories as c (c.id)}
-			<button
-				class="rounded-base mb-0.5 block w-full px-3 py-1.5 text-left text-sm {category === c.id
-					? 'bg-primary-tint font-medium'
-					: 'hover:preset-tonal'}"
-				onclick={() => (category = c.id)}
-			>
-				{c.label}
-			</button>
+		{#each ALL_TABS as c (c.id)}
+			{#if tabUnavailable(c.id)}
+				<!-- aria-disabled, not disabled: a disabled button takes no hover, and the hover is what says why -->
+				<button
+					class="rounded-base mb-0.5 block w-full cursor-default px-3 py-1.5 text-left text-sm opacity-50"
+					aria-disabled="true"
+					use:tip={m.unavailable_desktop()}
+				>
+					{c.label}
+				</button>
+			{:else}
+				<button
+					class="rounded-base mb-0.5 block w-full px-3 py-1.5 text-left text-sm {category === c.id
+						? 'bg-primary-tint font-medium'
+						: 'hover:preset-tonal'}"
+					onclick={() => (category = c.id)}
+				>
+					{c.label}
+				</button>
+			{/if}
 		{/each}
 	</nav>
 
@@ -181,11 +197,14 @@
 					<AppearanceMode />
 				</div>
 				<ThemePicker />
-				{#if windowGlass.works}
-					{@render toggleRow(m.prefs_window_transparency(), '', settings.current.transparentWindow === true, (v) =>
-						updateSettings({ transparentWindow: v })
-					)}
-				{/if}
+				{@render toggleRow(
+					m.prefs_window_transparency(),
+					'',
+					windowGlass.works && settings.current.transparentWindow === true,
+					(v) => updateSettings({ transparentWindow: v }),
+					!!glassUnavailable,
+					glassUnavailable
+				)}
 				<div class={ROW}>
 					<!-- the one setting a user may need to find while the UI is in a language they
 							     cannot read, so it carries an icon the others do not -->
@@ -251,15 +270,15 @@
 					{@render toggleRow(m.prefs_visual_justify(), m.prefs_visual_justify_note(), settings.current.visualJustify !== false, (v) =>
 						updateSettings({ visualJustify: v })
 					)}
-					<!-- only justified text is hyphenated, so the row goes when that is off -->
-					{#if settings.current.visualJustify !== false}
-						{@render toggleRow(
-							m.prefs_visual_hyphenate(),
-							m.prefs_visual_hyphenate_note(),
-							settings.current.visualHyphenate !== false,
-							(v) => updateSettings({ visualHyphenate: v })
-						)}
-					{/if}
+					<!-- only justified text is hyphenated, so the row is grayed with why while that is off -->
+					{@render toggleRow(
+						m.prefs_visual_hyphenate(),
+						m.prefs_visual_hyphenate_note(),
+						settings.current.visualHyphenate !== false,
+						(v) => updateSettings({ visualHyphenate: v }),
+						settings.current.visualJustify === false,
+						settings.current.visualJustify === false ? m.prefs_visual_hyphenate_needs_justify() : ''
+					)}
 				</div>
 			{:else if category === 'proofing'}
 				<!-- all of it stays up with the switch off: the Spelling menu's Edit Dictionary leads here -->

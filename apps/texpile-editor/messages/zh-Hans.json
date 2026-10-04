@@ -41,6 +41,7 @@
 	"prefs_theme_dark": "深色",
 	"prefs_appearance_hint": "“跟随系统”会跟随操作系统的浅色或深色设置。",
 	"prefs_window_transparency": "透明窗口",
+	"prefs_window_transparency_unsupported": "需要 macOS 或 Windows 11",
 	"prefs_mode": "模式",
 	"prefs_autosave": "自动保存",
 	"prefs_autosave_hint_live": "实时模式需要开启自动保存",
@@ -83,6 +84,7 @@
 	"prefs_visual_justify_note": "这只改变编辑器中的显示，不会改变编译出的文档。",
 	"prefs_visual_hyphenate": "自动断字",
 	"prefs_visual_hyphenate_note": "连字符只在编辑器中显示，不会写入文件。",
+	"prefs_visual_hyphenate_needs_justify": "开启“两端对齐”后即可使用",
 	"prefs_mcp_status": "正在监听 {addr}",
 	"prefs_mcp_error": "未运行：{error}",
 	"prefs_mcp_copy": "复制消息",
@@ -2245,5 +2247,6 @@
 	"agent_panel_only_desktop_note": "代理作为程序在你的电脑上运行。",
 	"agent_panel_no_folder_note": "代理面向整个文件夹工作，而单个文件没有自己的文件夹。",
 	"single_file_unavailable": "单文件模式下不可用。在工作区中打开即可使用。",
+	"unavailable_desktop": "仅在 Texpile 桌面版中可用",
 	"agent_panel_single_file": "代理标签页在单文件模式下不可用"
 }
