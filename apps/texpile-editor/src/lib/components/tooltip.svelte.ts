@@ -19,6 +19,8 @@ const OPEN_DELAY = 400;
 // once a hint has been shown the next one follows instantly for a moment: sweeping along a
 // toolbar row should not re-serve the delay at every button
 const WARM_MS = 600;
+// the arrow pointer's height: a card pinned to the pointer starts below it rather than under it
+const POINTER_H = 20;
 
 let timer: ReturnType<typeof setTimeout> | undefined;
 let warmUntil = 0;
@@ -33,14 +35,15 @@ export function hideTip(): void {
 	owner = null;
 }
 
-function tipFor(node: HTMLElement, text: string, above?: boolean): ShownTip {
-	return { text, rect: node.getBoundingClientRect(), win: node.ownerDocument.defaultView ?? window, above };
+/** `at`: where to pin the card instead of the trigger's own box */
+function tipFor(node: HTMLElement, text: string, above?: boolean, at?: DOMRect): ShownTip {
+	return { text, rect: at ?? node.getBoundingClientRect(), win: node.ownerDocument.defaultView ?? window, above };
 }
 
-function show(node: HTMLElement, text: string, above?: boolean): void {
+function show(node: HTMLElement, text: string, above?: boolean, at?: DOMRect): void {
 	armed = null;
 	owner = node;
-	shownTip.current = tipFor(node, text, above);
+	shownTip.current = tipFor(node, text, above, at);
 }
 
 export function tip(node: HTMLElement, text: string | null | undefined, options?: TipOptions) {
@@ -61,12 +64,20 @@ export function tip(node: HTMLElement, text: string | null | undefined, options?
 	}
 	mark(current);
 
+	// a grayed control is often a whole settings row, whose middle can be far from the pointer: its
+	// card is pinned to the pointer and follows it instead
+	let pointer: DOMRect | undefined;
+	function track(e: PointerEvent) {
+		pointer = new DOMRect(e.clientX, e.clientY, 0, POINTER_H);
+		if (owner === node && current) shownTip.current = tipFor(node, current, options?.above, pointer);
+	}
+
 	function open(instant: boolean) {
 		if (!current) return;
 		clearTimeout(timer);
-		if (instant || Date.now() < warmUntil) return show(node, current, options?.above);
+		if (instant || Date.now() < warmUntil) return show(node, current, options?.above, pointer);
 		armed = node;
-		timer = setTimeout(() => show(node, current, options?.above), OPEN_DELAY);
+		timer = setTimeout(() => show(node, current, options?.above, pointer), OPEN_DELAY);
 	}
 
 	function close() {
@@ -78,6 +89,7 @@ export function tip(node: HTMLElement, text: string | null | undefined, options?
 	}
 
 	function onenter(e: PointerEvent) {
+		if (options?.grayed) track(e);
 		return e.pointerType !== 'touch' && open(!!options?.grayed);
 	}
 	// a text field always matches :focus-visible, and a card over the box you are typing in is
@@ -86,11 +98,14 @@ export function tip(node: HTMLElement, text: string | null | undefined, options?
 	function onfocus() {
 		return !typable && node.matches(':focus-visible') && open(true);
 	}
-	function onpress() {
-		return options?.grayed ? open(true) : close();
+	function onpress(e: PointerEvent) {
+		if (!options?.grayed) return close();
+		track(e);
+		open(true);
 	}
 
 	node.addEventListener('pointerenter', onenter);
+	if (options?.grayed) node.addEventListener('pointermove', track);
 	node.addEventListener('pointerleave', close);
 	node.addEventListener('pointerdown', onpress);
 	node.addEventListener('focus', onfocus);
@@ -101,7 +116,7 @@ export function tip(node: HTMLElement, text: string | null | undefined, options?
 			current = next ?? '';
 			mark(current);
 			if (owner !== node) return;
-			if (current) shownTip.current = tipFor(node, current, options?.above);
+			if (current) shownTip.current = tipFor(node, current, options?.above, pointer);
 			else hideTip();
 		},
 		destroy() {
@@ -109,6 +124,7 @@ export function tip(node: HTMLElement, text: string | null | undefined, options?
 			node.removeEventListener('pointerenter', onenter);
 			node.removeEventListener('pointerleave', close);
 			node.removeEventListener('pointerdown', onpress);
+			node.removeEventListener('pointermove', track);
 			node.removeEventListener('focus', onfocus);
 			node.removeEventListener('blur', close);
 		}
