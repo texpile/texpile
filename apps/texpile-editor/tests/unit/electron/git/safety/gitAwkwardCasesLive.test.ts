@@ -8,7 +8,14 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync, chmodSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { gitStage, gitUnstage, gitStatus, isLocked } from '../../../../../../../electron/src/git/gitService';
-import { gitChangesSince, gitCommit, gitFileLog, gitLog, gitRestore } from '../../../../../../../electron/src/git/history/gitHistory';
+import {
+	gitChangesSince,
+	gitCommit,
+	gitFileLog,
+	gitLog,
+	gitRestore,
+	gitRestoreInTheWay
+} from '../../../../../../../electron/src/git/history/gitHistory';
 import { gitClone } from '../../../../../../../electron/src/git/remote/gitClone';
 import { localGitReason } from '$lib/workspace/scm/gitLocalReason';
 import { m } from '$lib/paraglide/messages';
@@ -214,6 +221,27 @@ describe.skipIf(!AVAILABLE)('a project that is one folder of a larger repository
 		expect(res.ok).toBe(false);
 		expect(localGitReason(res.error)).toBe(m.vcs_error_nothing());
 		expect(out(root, 'rev-parse', 'HEAD')).toBe(head);
+	});
+
+	it('restores a version without touching what was staged outside the folder', async () => {
+		const root = makeRepo();
+		mkdirSync(join(root, 'thesis'));
+		mkdirSync(join(root, 'code'));
+		commit(root, 'code/analysis.py', 'print(1)\n', 'Code');
+		commit(root, 'thesis/main.tex', 'First draft.\n', 'First');
+		const first = out(root, 'rev-parse', 'HEAD');
+		writeFileSync(join(root, 'thesis/new.tex'), 'New.\n');
+		commit(root, 'thesis/main.tex', 'Second draft.\n', 'Second');
+		writeFileSync(join(root, 'code/analysis.py'), 'print(2)\n');
+		run(root, 'add', 'code/analysis.py');
+
+		const project = join(root, 'thesis');
+		expect(await gitRestoreInTheWay(project, first)).toEqual({ ok: true, files: [] });
+		expect(await gitRestore(project, first, 'Back to the first draft')).toEqual({ ok: true });
+		expect(readFileSync(join(project, 'main.tex'), 'utf8')).toBe('First draft.\n');
+		expect(existsSync(join(project, 'new.tex'))).toBe(false);
+		expect(out(root, 'show', '--name-only', '--format=', 'HEAD').split('\n')).toEqual(['thesis/main.tex', 'thesis/new.tex']);
+		expect(out(root, 'status', '--porcelain')).toBe('M  code/analysis.py');
 	});
 
 	it('lists only its own changes, a rename inside it among them', async () => {

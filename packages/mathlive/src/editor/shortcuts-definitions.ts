@@ -11,7 +11,7 @@ export const INLINE_SHORTCUTS: InlineShortcutDefinitions = {
 
   // Primes
   // "'": '^{\\prime}', // Conflicts with text zone shortcut
-  "''": '^{\\doubleprime}',
+  "''": '^{\\prime\\prime}',
   "'''": '^{\\prime\\prime\\prime}',
   "''''": '^{\\prime\\prime\\prime\\prime}',
 

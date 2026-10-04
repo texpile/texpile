@@ -65,7 +65,7 @@
 	{#if agentSession.items.length || live}
 		<!-- column-reverse keeps the view on the newest message as the turn grows, with no scrolling code. The gutter on
 		     both sides keeps the column centered where the box below it is, with the scrollbar or without -->
-		<div class="flex min-h-0 flex-1 flex-col-reverse overflow-y-auto pt-2 pb-5 [scrollbar-gutter:stable_both-edges]">
+		<div class="flex min-h-0 flex-1 [scrollbar-gutter:stable_both-edges] flex-col-reverse overflow-y-auto pt-2 pb-5">
 			<!-- one readable column for the conversation, the question and the box, centered however wide the dock is -->
 			<div class="mx-auto flex w-full max-w-3xl flex-col gap-2 px-3">
 				{#if !agentSession.items.length}<p class="text-muted text-sm">{m.agent_panel_empty({ agent })}</p>{/if}

@@ -10,12 +10,12 @@ import {
 	type WhitespaceChanges
 } from '$lib/comments/suggestCompare';
 import { isOpenSuggestion, suggestionAuthor } from '$lib/comments/suggest';
-import { carryGestures, type TextSpan } from '$lib/comments/editGestures';
-import { commonEnds } from '$lib/comments/suggestHunks';
-import { activeSuggestions, takeTypedSides } from '$lib/comments/activeSuggestions.svelte';
+import { carryGestures, carryGesturesThrough, type TextSpan } from '$lib/comments/editGestures';
+import { commonEnds, dialectWhitespace } from '$lib/comments/suggestHunks';
+import { activeSuggestions, takeEditedPlaces, takeTypedSides, type EditedPlaces } from '$lib/comments/activeSuggestions.svelte';
 import type { CommentStore } from '$lib/comments/store.svelte';
 import { changeEvents, movedAnchorEvents } from './suggestionEvents';
-import { placedBehind, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
+import { placedAgain, placedBehind, rejectedAgain, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
 import type { ExpectedReject, FileState, RemoteEdit } from './suggestionStates';
 
 const SPACE_WAIT_MS = 1000;
@@ -44,16 +44,16 @@ const REJECTS_KEPT = 100;
 /** the file just before (`open`) and just after (`rejected`) a Reject */
 type UndoableReject = { file: string; thread: CommentThread; open: FileState; rejected: FileState };
 
-/** an Accept the editors' undo can take back */
-type UndoableAccept = { file: string; thread: CommentThread };
+/** an Accept the editors' undo can take back, and where the suggestion stood */
+type UndoableAccept = { file: string; thread: CommentThread; at?: PlacedSuggestion };
 
-/** an edit recorded for someone other than the reader: `gestures` is where it landed, `opened` what it opened */
+/** an edit recorded for someone other than the reader: `gestures` is where it landed, `opened` the suggestions it made or revised */
 type AgentEdit = { by: string; note: string; gestures: TextSpan[]; opened: string[] };
 
 export class SuggestionsController {
 	private states = new Map<string, FileState>();
 	private placedFile: string | null = null;
-	private seen: { path: string | null; file: string | null; text: string } | null = null;
+	private seen: { path: string | null; file: string | null; text: string; rewraps: boolean } | null = null;
 	private gestures: TextSpan[] = [];
 	private sides: Record<string, TypingSide> = {};
 	private chain: Promise<void> = Promise.resolve();
@@ -130,6 +130,17 @@ export class SuggestionsController {
 		return { kept, lost };
 	}
 
+	/** a file or folder renamed in the tree; what is known of the files under it follows */
+	moved(from: string, to: string): void {
+		function renamed(file: string): string {
+			return file === from ? to : file.startsWith(from + '/') ? to + file.slice(from.length) : file;
+		}
+		this.states = new Map([...this.states].map(([file, state]) => [renamed(file), state]));
+		if (this.placedFile) this.placedFile = renamed(this.placedFile);
+		if (this.seen?.file) this.seen = { ...this.seen, file: renamed(this.seen.file) };
+		for (const decided of [...this.rejects, ...this.accepts.values(), ...this.expected]) decided.file = renamed(decided.file);
+	}
+
 	/** an event from the recorder arrived */
 	answered(): void {
 		if (!this.deps.compares()) this.caughtUp = true;
@@ -143,9 +154,10 @@ export class SuggestionsController {
 	textChanged(path: string | null, text: string): void {
 		const same = this.seen && this.seen.path === path;
 		const suggesting = this.deps.mode() === 'suggesting';
-		this.gestures = same && suggesting ? carryGestures(this.gestures, this.seen!.text, text) : [];
+		const places = takeEditedPlaces();
+		this.gestures = !same || !suggesting ? [] : this.carried(places, this.seen!.text, text);
 		this.sides = same ? { ...this.sides, ...takeTypedSides() } : takeTypedSides();
-		this.seen = { path, file: this.deps.activeFile(), text };
+		this.seen = { path, file: this.deps.activeFile(), text, rewraps: this.deps.rewraps() };
 		if (this.timer) clearTimeout(this.timer);
 		this.timer = setTimeout(
 			() => {
@@ -154,6 +166,11 @@ export class SuggestionsController {
 			},
 			suggesting && this.onlySpaceSince(text) ? SPACE_WAIT_MS : 0
 		);
+	}
+
+	private carried(places: EditedPlaces | null, before: string, after: string): TextSpan[] {
+		if (places?.before === before && places.after === after) return carryGesturesThrough(this.gestures, places.changes);
+		return carryGestures(this.gestures, before, after);
 	}
 
 	private onlySpaceSince(text: string): boolean {
@@ -188,6 +205,7 @@ export class SuggestionsController {
 		await this.chain;
 		await this.recordAnchors(file, content);
 		if (this.deps.store.hasStaged) await this.deps.store.append();
+		this.deps.store.saved(file);
 	}
 
 	/** someone else rejected `id`; the words it puts back arrive as their edit, which is that Reject and not a new change */
@@ -202,23 +220,23 @@ export class SuggestionsController {
 		const state = this.states.get(file);
 		if (state?.text === content && state.placed.length) {
 			const by = await this.deps.author();
-			this.stage(movedAnchorEvents(content, state.placed, this.deps.store.forFile(file), by));
+			this.deps.store.stage(...movedAnchorEvents(content, state.placed, this.deps.store.forFile(file), by));
 		}
 	}
 
 	async adoptDisk(file: string, text: string): Promise<void> {
-		if (this.deps.store.hasStagedFor(file)) {
-			this.discardUnsaved(file);
-			return;
-		}
+		if (this.deps.store.hasStagedFor(file)) return this.discardUnsaved(file);
 		await this.run(file, text, 'editing', 'paragraphs');
 		if (this.deps.store.hasStaged) await this.deps.store.append();
+		this.deps.store.saved(file);
 	}
 
-	discardUnsaved(file: string): void {
+	async discardUnsaved(file: string): Promise<void> {
 		this.deps.store.discardStaged(file);
 		this.states.delete(file);
 		if (this.seen?.file === file) this.gestures = [];
+		const back = this.deps.store.takeBack(file, await this.deps.author());
+		if (back.length) await this.deps.commit(...back);
 	}
 
 	async finish(): Promise<void> {
@@ -239,10 +257,11 @@ export class SuggestionsController {
 	async accept(t: CommentThread): Promise<void> {
 		if (!isOpenSuggestion(t)) return;
 		await this.settle();
-		await this.decide(t, 'accepted');
+		const at = this.states.get(t.file)?.placed.find((s) => s.id === t.id);
+		await this.deps.commit(...(await this.anchorNow(t.file, t.id)), await this.decision(t, 'accepted'));
 		this.drop(t.file, t.id);
 		if (t.file !== this.deps.activeFile()) return;
-		this.accepts.set(++this.acceptSeq, { file: t.file, thread: t });
+		this.accepts.set(++this.acceptSeq, { file: t.file, thread: t, at });
 		this.deps.markDecision?.(this.acceptSeq);
 	}
 
@@ -251,7 +270,10 @@ export class SuggestionsController {
 		const a = this.accepts.get(seq);
 		if (!a) return;
 		await this.settle();
-		await this.deps.commit(await this.decision(a.thread, undone ? undefined : 'accepted'));
+		const again = undone ? undefined : placedAgain(this.states.get(a.file), a.thread.id, a.at);
+		if (again) a.thread = this.deps.store.threads.find((t) => t.id === again.id) ?? a.thread;
+		const moved = undone ? [] : await this.anchorNow(a.file, a.thread.id);
+		await this.deps.commit(...moved, await this.decision(a.thread, undone ? undefined : 'accepted'));
 		if (!undone) return this.drop(a.file, a.thread.id);
 		if (this.states.has(a.file)) this.refit(a.file);
 	}
@@ -286,7 +308,7 @@ export class SuggestionsController {
 	/**
 	 * An edit made for someone else, an agent: applied to the open file and recorded as a suggestion by
 	 * `by` whatever mode the reader is in, with `note` as its first message. The reader's own typing is
-	 * compared first so it stays theirs. Resolves the new suggestion's id, or null when nothing was made.
+	 * compared first so it stays theirs. Resolves the id of the suggestion it made or revised, or null when nothing was made.
 	 */
 	async suggestAs(by: string, edit: SourceEdit, note = ''): Promise<string | null> {
 		const file = this.deps.activeFile();
@@ -299,7 +321,7 @@ export class SuggestionsController {
 		// the edit's own landing, so the change it makes is one suggestion however many words it touches
 		const { start, end } = commonEnds(before, after);
 		const agent: AgentEdit = { by, note, gestures: [{ from: start, to: after.length - end }], opened: [] };
-		this.seen = { path: this.seen?.path ?? null, file, text: after };
+		this.seen = { path: this.seen?.path ?? null, file, text: after, rewraps: this.deps.rewraps() };
 		this.gestures = [];
 		await this.run(file, after, 'suggesting', undefined, agent);
 		return agent.opened[0] ?? null;
@@ -309,7 +331,10 @@ export class SuggestionsController {
 		file: string,
 		after: string,
 		mode: EditMode,
-		whitespace: WhitespaceChanges = this.deps.rewraps() ? 'paragraphs' : 'exact',
+		// the rule of the editor the text was typed in, not of one switched to while the comparison waited
+		whitespace: WhitespaceChanges = (this.seen?.file === file && this.seen.text === after ? this.seen.rewraps : this.deps.rewraps())
+			? 'paragraphs'
+			: 'exact',
 		agent?: AgentEdit
 	): Promise<void> {
 		const active = file === this.deps.activeFile();
@@ -357,8 +382,7 @@ export class SuggestionsController {
 			author,
 			gestures,
 			sides,
-			// markdown and typst read a list item's depth off the spaces before its marker
-			whitespace: whitespace === 'paragraphs' && /\.(md|markdown|typ)$/i.test(file) ? 'lists' : whitespace,
+			whitespace: dialectWhitespace(file, whitespace),
 			newId: () => crypto.randomUUID()
 		});
 		this.states.set(file, { text: after, placed: r.placed });
@@ -370,8 +394,9 @@ export class SuggestionsController {
 			return;
 		}
 		for (const c of r.changes)
-			if (agent && c.t === 'open' && r.placed.some((s) => s.id === c.id && s.author === author)) agent.opened.push(c.id);
-		this.stage(changeEvents(file, after, r, author, agent?.note ?? '', this.deps.store.threads));
+			if (agent && (c.t === 'open' || c.t === 'revise') && r.placed.some((s) => s.id === c.id && s.author === author))
+				agent.opened.push(c.id);
+		this.deps.store.stage(...changeEvents(file, after, r, author, agent?.note ?? '', this.deps.store.threads));
 		if (file === this.deps.activeFile()) this.show(after, r.placed);
 	}
 
@@ -391,14 +416,16 @@ export class SuggestionsController {
 	private async revisitReject(file: string, state: FileState, after: string): Promise<boolean> {
 		const mine = this.rejects.filter((r) => r.file === file);
 		const undo = mine.findLast((r) => after === r.open.text && sameFileState(state, r.rejected));
-		const r = undo ?? mine.findLast((r) => after === r.rejected.text && sameFileState(state, r.open));
+		// by the thread a redo rejects, not by the whole file: typing undone and redone around it gets new ids
+		const r = undo ?? mine.findLast((r) => rejectedAgain(state, r.thread.id, after));
 		if (!r) return false;
 		const undone = r === undo;
 		const event = await this.decision(r.thread, undone ? undefined : 'rejected');
 		if (this.states.get(file) !== state) return true;
-		const now = undone ? r.open : r.rejected;
+		const now = undone ? r.open : rejectedAgain(state, r.thread.id, after)!;
+		if (!undone) Object.assign(r, { open: state, rejected: now });
 		this.states.set(file, now);
-		this.stage([event]);
+		this.deps.store.stage(event);
 		if (file === this.deps.activeFile()) this.show(now.text, now.placed);
 		return true;
 	}
@@ -411,12 +438,13 @@ export class SuggestionsController {
 		this.deps.onLost?.(file, lost);
 	}
 
-	private stage(events: CommentEvent[]): void {
-		if (events.length) this.deps.store.stage(...events);
-	}
-
-	private async decide(t: CommentThread, decision: SuggestionDecision): Promise<void> {
-		await this.deps.commit(await this.decision(t, decision));
+	// where an accepted suggestion stands as it leaves the file, so an undo of the Accept finds it there again
+	private async anchorNow(file: string, id: string): Promise<CommentEvent[]> {
+		const state = file === this.deps.activeFile() ? this.states.get(file) : undefined;
+		if (!state) return [];
+		const by = await this.deps.author();
+		const moved = movedAnchorEvents(state.text, state.placed, this.deps.store.forFile(file), by);
+		return moved.filter((e) => e.t === 'anchor' && e.thread === id);
 	}
 
 	private async decision(t: CommentThread, decision: SuggestionDecision | undefined): Promise<CommentEvent> {

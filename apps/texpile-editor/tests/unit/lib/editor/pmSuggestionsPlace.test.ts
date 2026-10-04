@@ -400,6 +400,86 @@ it('strikes only the Chinese word a change took, and the includes taken with it'
 	expect(doc.textBetween(typed.from, typed.to)).toBe('hello codex');
 });
 
+// a cut from inside a figure into a heading two blocks on: the figure's closing moved past both
+it('strikes the blocks a cut took from after a figure after the figure, where they stood', () => {
+	const source =
+		'\\documentclass{article}\n\\begin{document}\nBefore the figure.\n\n\\begin{figure}[h]\n    \\centering\n    \\includegraphics{a.png}\n' +
+		'\\caption{atting}\n\\end{figure}\n\nCompiling turns this source into a PDF.\n\\end{document}\n';
+	const end = source.indexOf('\\end{figure}');
+	const { doc, ranges } = placed(source, [
+		mark(source, 'caption', 'caption', 'end'),
+		mark(source, 'words', 'atting', 'figure'),
+		mark(source, 'paragraph', '', '\nThe visual editor parses your code.\n\n', end),
+		mark(source, 'section', 'end', 'section', end + 1),
+		mark(source, 'heading', 'figure', 'Compiling and formatting', end + 5)
+	]);
+	let figureEnd = -1;
+	doc.forEach((node, pos) => {
+		if (node.type.name === 'image') figureEnd = pos + node.nodeSize;
+	});
+	expect(ranges.filter((r) => r.gone).map((r) => [r.gone!.blocks.map((b: PMNode) => b.textContent).join(''), r.from])).toEqual([
+		['The visual editor parses your code.', figureEnd],
+		['Compiling and formatting', figureEnd]
+	]);
+});
+
+// one gesture: the first letter made italic, the heading split after the fourth, and a join far enough on for the comparison to merge the first two
+it('draws a heading split in a word whose formatting also changed as a break, not as a format change', () => {
+	const words = 'The first paragraph runs across several lines of the column, so that the page holds ordinary prose above the lines.';
+	const source = `\\documentclass{article}\n\\begin{document}\n\\section{\\textit{P}rob}\n\\section{e}\n${words}A one line paragraph.\n\\end{document}\n`;
+	const from = source.indexOf('\\textit');
+	const quote = source.slice(from, source.indexOf('A one line'));
+	const { doc, ranges } = placed(source, [mark(source, 'gesture', quote, `Probe}\n${words}\n\n`, from)]);
+	const join = doc.child(0).nodeSize + doc.child(1).nodeSize + 1 + words.length;
+	expect(ranges.map((r) => (r.brk ? `${r.brk} ${r.from}` : `${r.format ? 'format' : 'words'} ${doc.textBetween(r.from, r.to)}`))).toEqual([
+		'format P',
+		`added ${doc.child(0).nodeSize - 1}`,
+		`removed ${join}`
+	]);
+});
+
+// a letter taken out one letter before the split: the comparison read the two as one change, and the break was lost in it
+it('draws a heading split beside a letter taken out as a break', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\n\\section{Po}\n\\section{be}\nThe first paragraph.\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [mark(source, 'gesture', 'Po}\n\\section{be}', 'Probe}')]);
+	expect(ranges.map((r) => (r.brk ? `${r.brk} ${r.from}` : `${doc.textBetween(r.from, r.to)} was ${oldOf(r)}`))).toEqual([
+		'Po was Pro,',
+		`added ${doc.child(0).nodeSize - 1}`
+	]);
+});
+
+// part of a heading's last word made italic and the paragraph after joined on: the word widened past the join and struck both blocks' words
+it('draws a paragraph joined onto a heading whose last word was restyled as a break beside the restyled word', () => {
+	const source =
+		'\\documentclass{article}\n\\begin{document}\n\\section{What is\\textit{ Texpil}eTexpile is both a visual editor.}\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [
+		mark(source, 'gesture', '\\textit{ Texpil}eTexpile is both a visual editor.}', ' Texpile}\n\nTexpile is both a visual editor.')
+	]);
+	expect(ranges.map((r) => (r.brk ? `${r.brk} ${r.from}` : `${r.format ? 'format' : 'words'} ${doc.textBetween(r.from, r.to)}`))).toEqual([
+		'format  Texpile',
+		`removed ${1 + 'What is Texpile'.length}`
+	]);
+});
+
+// a chip opening a paragraph holds the space after it, and lets it go once the paragraph is joined onto the one before
+it('draws a paragraph that opens with a chip joined onto the one before as one break', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nWords in the band.\\vspace{10pt} Prose after a space.\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [mark(source, 'join', '', '\n\n', source.indexOf('\\vspace'))]);
+	expect(
+		ranges.map(
+			(r) => r.brk ?? (r.gone ? 'gone' : r.node ? `chip ${r.was?.textContent}` : `words ${JSON.stringify(doc.textBetween(r.from, r.to))}`)
+		)
+	).toEqual(['removed', 'chip \\vspace{10pt} ', 'words " "']);
+});
+
+// most emoji share their first UTF-16 half, so the comparison saw only the second change
+it('draws an emoji replaced by another whole, not half of each', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nResults look good 😁 overall.\n\\end{document}\n';
+	const { doc, ranges } = placed(source, [mark(source, 'emoji', '😁', '😀')]);
+	const r = ranges.find((x) => x.id === 'emoji')!;
+	expect([doc.textBetween(r.from, r.to), r.old.map((run) => run.text).join('')]).toEqual(['😁', '😀']);
+});
+
 // "end of a line leaves a wide" less "unlucky ... leaves" also reads as two cuts with the first "a" kept, and
 // did once a change in the next paragraph put both paragraphs in one comparison
 it('strikes one run of words taken out as one run, when its last word also stands after it', () => {
@@ -473,6 +553,76 @@ it('draws a split after a space, and escapes typed mid-word, where the editor ho
 		});
 		expect(drawn.ranges.map((r) => escaped.doc.textBetween(r.from, r.to))).toEqual([typed[0], typed[1]]);
 	}
+});
+
+// the file writes the chip's last byte right before the space, so the break landed inside the chip's end and stayed before the space
+it('draws a split after the space after a chip at the end of the line', () => {
+	const cases = [
+		[
+			latex,
+			serializeLatexFileDetailed,
+			'\\documentclass{article}\n\\begin{document}\nAn inline \\foo{quotation} sits here.\n\\end{document}\n'
+		],
+		[typst, serializeTypstFileDetailed, 'An inline #quote[quotation] sits here.\n']
+	] as const;
+	for (const [format, serialize, source] of cases) {
+		const parsed = format.parse(source);
+		const start = EditorState.create({ doc: parsed.doc });
+		const split = start.apply(start.tr.split(parsed.doc.child(0).nodeSize - 1 - 'sits here.'.length));
+		const { text, map } = serialize(parsed, split.doc);
+		const from = text.indexOf(' \n\n');
+		const body = { from: bodyOffsetOf(parsed), to: parsed.hadDocumentEnv ? text.length - parsed.postamble.length : text.length };
+		const out = placePmSuggestions(split.doc, [mark(text, 'split', text.slice(from, text.indexOf('sits')), '', from)], {
+			text,
+			map,
+			body,
+			parse: format.region(parsed.preamble)
+		});
+		expect(out.ranges.map((r) => [r.brk, r.from])).toEqual([['added', split.doc.child(0).nodeSize - 1]]);
+	}
+});
+
+// the first took out the words and the footnote's first half, the second the rest: drawn as loose text in blocks of their own
+it('strikes two cuts that meet inside a footnote as words, the footnote whole with the first', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nPlain text. He is a link here.\n\\end{document}\n';
+	const at = source.indexOf('He is') + 2;
+	const { ranges } = placed(source, [
+		mark(source, 'first', '', 're is a footnote.\\footnote{The foot', at),
+		mark(source, 'second', '', 'note text.} Here', at)
+	]);
+	expect(ranges.map((r) => [r.id, !!r.gone, r.old.map((run) => run.node?.type.name ?? run.text)])).toEqual([
+		['first', false, ['re is a footnote.', 'inline_latex']],
+		['second', false, [' Here']]
+	]);
+});
+
+it('draws a heading taken out at the start of the body beside words typed further on', () => {
+	const source = '\\documentclass{article}\n\\begin{document}\nThe first paragraph.\n\nA second one|x here.\n\\end{document}\n';
+	const { ranges, partial, hidden } = placed(source, [
+		mark(source, 'heading', '', '\\section{Probe}\n', source.indexOf('The first')),
+		mark(source, 'typed', '|x', '')
+	]);
+	expect([...partial, ...hidden]).toEqual([]);
+	expect(ranges.map((r) => [r.id, r.gone?.blocks.map((b) => b.textContent) ?? r.old.map((run) => run.text)])).toEqual([
+		['heading', ['Probe']],
+		['typed', []]
+	]);
+});
+
+// one suggestion: the formula edited and the start of the paragraph after it cut, whose words stood in that paragraph
+it('strikes words cut from the start of the paragraph after a changed formula in that paragraph', () => {
+	const source =
+		'\\documentclass{article}\n\\begin{document}\nBefore the display\n\\[\na^2 = c^2 = 0\n\\]\nwords to finish.\n\\end{document}\n';
+	const at = source.indexOf(' = 0');
+	const { doc, ranges } = placed(source, [
+		mark(source, 'm', source.slice(at, source.indexOf('words')), '\n\\]\nafter the display ordinary ', at)
+	]);
+	const gone = ranges.find((r) => r.gone)!;
+	expect([doc.resolve(gone.from).parent.textContent, doc.resolve(gone.from).parentOffset, gone.gone!.tail.map((run) => run.text)]).toEqual([
+		'words to finish.',
+		0,
+		['after the display ordinary ']
+	]);
 });
 
 it('draws a replacement to its own edges, not the letters typed against it', () => {

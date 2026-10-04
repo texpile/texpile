@@ -1,6 +1,6 @@
 // a suggestion is a comment thread carrying the words it took out
 import type { Node as PMNode } from 'prosemirror-model';
-import type { CommentEvent, CommentThread } from './log';
+import type { CommentEvent, CommentMessage, CommentThread } from './log';
 import type { RegionParser } from '$lib/editor/visual/sourceSpans';
 import { m } from '$lib/paraglide/messages';
 
@@ -62,6 +62,12 @@ export function isSuggestion(t: CommentThread): boolean {
 
 export function isOpenSuggestion(t: CommentThread): boolean {
 	return isSuggestion(t) && !t.resolved;
+}
+
+/** a suggestion's own message is neither edited nor deleted: it changes with the document and goes
+ *  with an accept or a reject, as in Google Docs. Replies are ordinary messages */
+export function canChangeMessage(t: CommentThread, msg: CommentMessage): boolean {
+	return !isSuggestion(t) || t.messages[0]?.id !== msg.id;
 }
 
 export function suggestionKind(quote: string, restore: string): SuggestionKind {

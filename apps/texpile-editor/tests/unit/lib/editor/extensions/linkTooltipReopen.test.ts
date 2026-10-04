@@ -88,3 +88,23 @@ describe('a link whose text is its address keeps the two together', () => {
 		place.remove();
 	});
 });
+
+describe('a pasted address links the selection', () => {
+	it('every time, not every other time', () => {
+		const { view, place } = mountEditor();
+		const paste = (from: number, to: number, url: string) => {
+			view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, from, to)));
+			const event = { clipboardData: { getData: (type: string) => (type === 'text/plain' ? url : '') } } as unknown as ClipboardEvent;
+			view.someProp('handlePaste', (f) => f(view, event, view.state.selection.content()));
+		};
+		paste(1, 4, 'https://first.example/long/path');
+		paste(10, 14, 'https://b.example');
+		const hrefs: string[] = [];
+		view.state.doc.descendants((n) => {
+			if (n.isText && n.marks.length) hrefs.push(`${n.text}=${n.marks[0].attrs.href}`);
+		});
+		expect(hrefs).toEqual(['see=https://first.example/long/path', 'docs=https://a.example', 'here=https://b.example']);
+		view.destroy();
+		place.remove();
+	});
+});

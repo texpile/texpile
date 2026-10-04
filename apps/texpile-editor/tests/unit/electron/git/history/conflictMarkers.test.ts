@@ -117,4 +117,13 @@ describe('marker lines left behind', () => {
 		for (const text of [TWO_SIDES, 'Plain.\r\n=======\r\n', 'No markers. ======== eight is not one.\n', '<<<<<<<< eight\n'])
 			expect(hasMarkerLines(text)).toBe(mainHasMarkers(text));
 	});
+
+	// merge.conflictStyle diff3: mine kept the two-way way, the <<<<<<< line and ======= through
+	// >>>>>>> deleted, leaves the base marker and the lines both started from
+	it('counts the base marker of a diff3 place left behind', () => {
+		const handSettled = 'Mine.\n||||||| 2c85319\nBase.\nOutro.\n';
+		expect(findConflicts(handSettled)).toHaveLength(0);
+		expect(hasMarkerLines(handSettled)).toBe(true);
+		expect(mainHasMarkers(handSettled)).toBe(true);
+	});
 });

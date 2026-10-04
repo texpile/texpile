@@ -33,7 +33,7 @@
 </script>
 
 <div class="card bg-surface-50-950 border-surface-300-700 max-h-80 w-96 overflow-hidden border shadow-lg">
-	<div class="max-h-80 overflow-y-auto [scrollbar-gutter:stable]">
+	<div class="max-h-80 [scrollbar-gutter:stable] overflow-y-auto">
 		{#if items.length === 0}
 			<div class="text-muted p-4 text-center text-sm">
 				{#if query}

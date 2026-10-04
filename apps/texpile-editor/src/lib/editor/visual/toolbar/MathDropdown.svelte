@@ -44,7 +44,7 @@
 	positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}
 	autoFocus={false}
 >
-	<Popover.Trigger class="toolbarButton rounded-base p-1 hover:bg-surface-200-800">
+	<Popover.Trigger class="toolbarButton rounded-base hover:bg-surface-200-800 p-1">
 		<button aria-label={m.mathpal_insert_math_aria()} use:tip={m.mathpal_insert_math_aria()} class="flex items-center gap-0.5">
 			<SquareRadical class="h-5 w-5" />
 			<ChevronDown class="size-3 shrink-0" />
@@ -57,7 +57,7 @@
 				{#each mathOptions as option (option.label)}
 					<button
 						type="button"
-						class="hover:preset-tonal flex w-full items-center justify-between gap-3 rounded-base px-3 py-2 text-left"
+						class="hover:preset-tonal rounded-base flex w-full items-center justify-between gap-3 px-3 py-2 text-left"
 						onclick={() => handleInsert(option)}
 					>
 						<span class="text-sm">{option.label()}</span>

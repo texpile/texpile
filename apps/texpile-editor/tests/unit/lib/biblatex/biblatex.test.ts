@@ -275,4 +275,30 @@ describe('serializeBibtex — round-trip', () => {
 		expect(out).toContain('New Title');
 		expect(out).not.toContain('title = {T}');
 	});
+
+	it('changes only the entry an edit reached, the gaps and the loose text between entries kept', () => {
+		const src = `% refs for chapter 2
+@book{b,
+  title = {B}
+}
+@misc{c, title = {C}}
+
+
+Notes kept outside any entry.
+@article{a,
+  title = {A}
+}`;
+		const { tokens, entries } = parseBibtexWithWarnings(src);
+		const edited = entries.map((e): BiblatexReference => (e.key === 'c' ? { ...e, title: 'New', raw: undefined } : e));
+		const out = serializeBibtex(tokens, new Map(edited.map((e) => [e.key, e])));
+		expect(out).toBe(src.replace('@misc{c, title = {C}}', '@misc{c,\n    title = {New}\n}'));
+	});
+
+	it('keeps both entries of a key the file holds twice when another entry is edited', () => {
+		const src = `@article{dup, title = {First}}\n\n@article{dup, title = {Second}}\n\n@misc{z, title = {Z}}\n`;
+		const { tokens, entries } = parseBibtexWithWarnings(src);
+		const edited = entries.map((e): BiblatexReference => (e.key === 'z' ? { ...e, title: 'New', raw: undefined } : e));
+		const out = serializeBibtex(tokens, new Map(edited.map((e) => [e.key, e])));
+		expect(out).toContain('@article{dup, title = {First}}\n\n@article{dup, title = {Second}}');
+	});
 });

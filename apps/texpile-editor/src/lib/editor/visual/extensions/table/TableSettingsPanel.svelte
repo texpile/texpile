@@ -124,7 +124,7 @@
 			{#each colModel.columns as col, i (i)}
 				<div class="mb-1 flex items-center gap-2">
 					<span class="text-faint w-4 text-right text-xs">{i + 1}</span>
-					<div class="border-surface-300-700 flex overflow-hidden rounded-container border">
+					<div class="border-surface-300-700 rounded-container flex overflow-hidden border">
 						{#each ALIGN_ICONS as opt (opt.value)}
 							{#if !opt.tabularx || isTabularx}
 								<button

@@ -67,7 +67,7 @@
 	}
 </script>
 
-<div class="group text-muted hover:preset-tonal flex items-center gap-1.5 rounded-base px-2 py-0.5 text-sm">
+<div class="group text-muted hover:preset-tonal rounded-base flex items-center gap-1.5 px-2 py-0.5 text-sm">
 	<input
 		type="checkbox"
 		class="checkbox border-surface-400-600 accent-primary-500 size-3.5 shrink-0 disabled:opacity-40"

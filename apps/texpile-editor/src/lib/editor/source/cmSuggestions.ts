@@ -6,12 +6,21 @@ import {
 	StateEffect,
 	StateField,
 	RangeSet,
+	Transaction,
 	type EditorState,
 	type Extension,
-	type Range,
-	type Transaction
+	type Range
 } from '@codemirror/state';
-import { editMode, mapSuggestionEdges, noteTypedSide, typingSide, type SuggestionMark } from '$lib/comments/activeSuggestions.svelte';
+import {
+	editMode,
+	mapSuggestionEdges,
+	noteEditedPlaces,
+	noteTypedSide,
+	typingSide,
+	type SuggestionMark
+} from '$lib/comments/activeSuggestions.svelte';
+import type { TextChange } from '$lib/comments/editGestures';
+import { docText } from './docText';
 import { clickedSide, sideAtOldWords, type CaretSide } from '$lib/comments/oldWordsCaret';
 import type { EditMode, TypingSide } from '$lib/comments/suggestCompare';
 
@@ -42,6 +51,8 @@ const caretSide = StateField.define<CaretSide | null>({
 });
 
 function typedAtCaret(tr: Transaction): CaretSide | null {
+	// an undo puts the words back where a delete took them, it types nothing beside them
+	if (tr.isUserEvent('undo')) return null;
 	const caret = tr.startState.field(caretSide, false);
 	return caret && tr.changes.mapPos(caret.at, -1) !== tr.changes.mapPos(caret.at, 1) ? caret : null;
 }
@@ -224,9 +235,13 @@ export function fitsSuggestion(state: EditorState, s: SuggestionMark): boolean {
 }
 
 export function clearOfOldWords(set: DecorationSet, state: EditorState): DecorationSet {
-	const cuts = liveSuggestionRanges(state)
-		.filter((r) => r.restore)
-		.map((r) => r.from);
+	const cuts = [
+		...new Set(
+			liveSuggestionRanges(state)
+				.filter((r) => r.restore)
+				.map((r) => r.from)
+		)
+	];
 	if (cuts.length === 0 || set.size === 0) return set;
 	const out: Range<Decoration>[] = [];
 	for (let it = set.iter(); it.value; it.next()) {
@@ -288,8 +303,18 @@ const caretControls = [
 	})
 ];
 
+// the reader's own edits only: a collaborator's arrives without a user event
+const editedPlaces = EditorView.updateListener.of((u) => {
+	if (!u.docChanged || !u.transactions.some((tr) => tr.annotation(Transaction.userEvent) !== undefined)) return;
+	const changes: TextChange[] = [];
+	u.changes.iterChangedRanges((fromA, toA, fromB, toB) => void changes.push({ fromA, toA, fromB, toB }));
+	// an insertion too: where it went can read as further left, where the same text stands just before it
+	if (changes.length > 1 || changes[0].fromA === changes[0].toA)
+		noteEditedPlaces({ before: docText(u.startState.doc), after: docText(u.state.doc), changes });
+});
+
 export function cmSuggestions(): Extension {
-	return [focused, caretSide, ranges, decorations, caretControls, theme];
+	return [focused, caretSide, ranges, decorations, caretControls, editedPlaces, theme];
 }
 
 const theme = EditorView.baseTheme({

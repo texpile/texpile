@@ -2,7 +2,7 @@
 import { box } from '$lib/runes/box.svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
 import { documentAround } from './documentFiles';
-import { normalizePath, relativeInside, samePath } from '../fileSystem';
+import { normalizePath, pathKey, relativeInside, samePath } from '../fileSystem';
 import { checkRefs, documentFacts, type DocumentFacts, type RefProblem } from '$lib/languages/latex/refCheck';
 
 export type LiveRefProblems = { path: string; text: string; problems: RefProblem[] };
@@ -85,7 +85,7 @@ export class LiveRefChecks {
 		}
 		const doc = this.document && samePath(this.document.path, open.path) ? this.document : null;
 		const files = this.deps.files();
-		const have = new Set(files.map((f) => f.replace(/\\/g, '/').toLowerCase()));
+		const have = new Set(files.map(pathKey));
 		const problems = checkRefs(open.text, {
 			path: open.path,
 			main: doc?.main ?? null,
@@ -93,7 +93,7 @@ export class LiveRefChecks {
 			facts: doc?.facts ?? null,
 			exists: (p) => {
 				const rel = files.length ? relativeInside(root, normalizePath(p)) : null;
-				return rel === null ? null : have.has(rel.toLowerCase());
+				return rel === null ? null : have.has(pathKey(rel));
 			},
 			knownKeys: this.deps.knownKeys(),
 			outDir: this.deps.outDir()

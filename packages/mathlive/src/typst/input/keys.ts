@@ -350,8 +350,16 @@ export function onTypstKeystroke(
       return false;
     }
   }
+  // beside an equation of lines, deleting reaches into them as typing does
+  if (
+    keystroke === '[Delete]' &&
+    model.selectionIsCollapsed &&
+    model.position === 0
+  )
+    intoLines(mf);
   if (keystroke === '[Backspace]' && model.selectionIsCollapsed) {
     typing.spaced = false;
+    if (model.position > 0) intoLines(mf);
     withTyping(mf, '', () => {
       mf.executeCommand('deleteBackward');
       if (naming) typing.name.pop();

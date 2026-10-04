@@ -28,6 +28,8 @@ tableNodeSpecs.table.attrs = {
 	env: { default: null },
 	colspec: { default: null },
 	tabularxWidth: { default: null },
+	// the tabular's [t]/[b] position, a longtable's [l]/[c]/[r]
+	position: { default: null },
 	bottomRules: { default: '' }
 };
 tableNodeSpecs.table_row.attrs = {
@@ -130,6 +132,8 @@ export const tableFamilyNodes = {
 			// caption above (false) or below (true) the tabular, and the size switch on the notes
 			centering: { default: true },
 			captionBelow: { default: false },
+			// the space the source put after the caption ('' for none); null is a new table's \vspace{2mm}
+			captionGap: { default: null },
 			notesSize: { default: null }
 		},
 		parseDOM: [

@@ -123,13 +123,14 @@ export function hasConflictMarkers(text: string): boolean {
 	return findConflicts(text).length > 0;
 }
 
-/** a line git writes as a marker, `<<<<<<< `, a lone `=======` or `>>>>>>> `, whether or not it
- *  is still part of a whole place: the rule Complete Merge checks by (electron/src/git/history/conflictMarkers.ts) */
-export const MARKER_LINE = /^<{7}\s|^={7}$|^>{7}\s/;
+/** a line git writes as a marker, `<<<<<<< `, diff3's `|||||||`, a lone `=======` or `>>>>>>> `,
+ *  whether or not it is still part of a whole place: the rule Complete Merge checks by
+ *  (electron/src/git/history/conflictMarkers.ts) */
+export const MARKER_LINE = /^<{7}\s|^={7}$|^>{7}\s|^\|{7}(\s|$)/;
 
 /** any marker line left, a stray one from a place settled by hand included */
 export function hasMarkerLines(text: string): boolean {
-	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>')) return false;
+	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>') && !text.includes('|||||||')) return false;
 	return text.split(/\r\n|\r|\n/).some((line) => MARKER_LINE.test(line));
 }
 

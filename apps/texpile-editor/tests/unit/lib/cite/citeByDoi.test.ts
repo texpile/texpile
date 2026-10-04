@@ -75,7 +75,7 @@ describe('lookUpWork', () => {
 	});
 
 	it('answers from the project, without the network, for a work it already cites', async () => {
-		references.current = parseBibtex('@article{dna, doi = {10.1038/171737A0}, title = {Molecular Structure}, author = {Watson, J. D.}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{dna, doi = {10.1038/171737A0}, title = {Molecular Structure}, author = {Watson, J. D.}}\n`);
 		expect(await lookUpWork(watson, deps)).toMatchObject({ state: 'cited', key: 'dna', title: 'Molecular Structure' });
 		expect(lookup).not.toHaveBeenCalled();
 	});
@@ -98,7 +98,7 @@ describe('lookUpWork for books and PubMed records', () => {
 	});
 
 	it('finds a PubMed record the project cites by DOI once the DOI is known', async () => {
-		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}\n`);
 		pmid.mockResolvedValue({ ok: true, doi: '10.1038/171737a0' });
 		expect(await lookUpWork(parseWorkId('PMID: 13054692')!, deps)).toMatchObject({ state: 'cited', key: 'dna' });
 		expect(lookup).not.toHaveBeenCalled();
@@ -119,7 +119,7 @@ describe('lookUpWork for books and PubMed records', () => {
 
 describe('searchPapers', () => {
 	it('ranks what the sources found and marks the papers the project already cites', async () => {
-		references.current = parseBibtex('@article{resnet, doi = {10.1109/CVPR.2016.90}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{resnet, doi = {10.1109/CVPR.2016.90}}\n`);
 		search.mockResolvedValue({
 			ok: true,
 			hits: [
@@ -141,7 +141,7 @@ describe('searchPapers', () => {
 				}
 			]
 		});
-		const got = await searchPapers('deep residual learning for image recognition');
+		const got = await searchPapers('deep residual learning for image recognition', deps);
 		expect(search).toHaveBeenCalledWith('deep residual learning for image recognition');
 		expect(got.state === 'hits' && got.hits.map((h) => [h.doi, h.citedKey])).toEqual([
 			['10.1109/cvpr.2016.90', 'resnet'],
@@ -149,9 +149,30 @@ describe('searchPapers', () => {
 		]);
 	});
 
+	it('marks no paper cited that only a .bib the document does not read has', async () => {
+		const stray = '@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}';
+		disk.set('/paper/old/draft.bib', stray);
+		references.current = [...references.current, ...parseBibtex(stray)];
+		search.mockResolvedValue({
+			ok: true,
+			hits: [
+				{
+					doi: '10.1038/171737a0',
+					title: 'Molecular Structure of Nucleic Acids',
+					authors: ['Watson'],
+					venue: 'Nature',
+					year: '1953',
+					cites: 1
+				}
+			]
+		});
+		const got = await searchPapers('molecular structure of nucleic acids', deps);
+		expect(got.state === 'hits' && got.hits.map((h) => h.citedKey)).toEqual([undefined]);
+	});
+
 	it('passes a failed search on as it came', async () => {
 		search.mockResolvedValue({ ok: false, reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
-		expect(await searchPapers('anything')).toEqual({ state: 'error', reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
+		expect(await searchPapers('anything', deps)).toEqual({ state: 'error', reason: 'offline', error: 'net::ERR_INTERNET_DISCONNECTED' });
 	});
 });
 
@@ -191,6 +212,13 @@ describe('citeWork', () => {
 		const added = parseBibtex(disk.get(BIB)!)[1];
 		expect(added.journal).toBe('Nature');
 		expect(added.journaltitle).toBeUndefined();
+	});
+
+	it("adds to the declared bib the project has, not to IEEEtran's string file listed before it", async () => {
+		disk.set(MAIN, '\\documentclass{IEEEtran}\n\\begin{document}\n\\bibliography{IEEEabrv,refs}\n\\end{document}\n');
+		await citeWork(await lookUpWork(watson, deps), deps);
+		expect(disk.has('/paper/IEEEabrv.bib')).toBe(false);
+		expect(parseBibtex(disk.get(BIB)!).map((r) => r.key)).toEqual(['knuth1984texbook', 'watson1953molecular']);
 	});
 
 	it("writes a Typst project's entry for Typst's bib reader, and cites it there", async () => {
@@ -239,12 +267,21 @@ describe('citeWork', () => {
 	});
 
 	it('only cites a work the project already has', async () => {
-		references.current = parseBibtex('@article{dna, doi = {10.1038/171737a0}}');
+		disk.set(BIB, `${disk.get(BIB)}\n@article{dna, doi = {10.1038/171737a0}}\n`);
 		const before = disk.get(BIB);
 		await citeWork(await lookUpWork(watson, deps), deps);
 		expect(disk.get(BIB)).toBe(before);
 		expect(inserted).toEqual([['dna']]);
 		expect(toasts).toEqual([]);
+	});
+
+	it('adds a work the project has only in a .bib the document does not read', async () => {
+		const stray = '@article{dna, doi = {10.1038/171737a0}, title = {Molecular Structure}}';
+		disk.set('/paper/old/draft.bib', stray);
+		references.current = [...references.current, ...parseBibtex(stray)];
+		await citeWork(await lookUpWork(watson, deps), deps);
+		expect(parseBibtex(disk.get(BIB)!).map((r) => r.key)).toEqual(['knuth1984texbook', 'watson1953molecular']);
+		expect(inserted).toEqual([['watson1953molecular']]);
 	});
 
 	it('creates references.bib beside the main when the project has none, and says nothing reads it yet', async () => {

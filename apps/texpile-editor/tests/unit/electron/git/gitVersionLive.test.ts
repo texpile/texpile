@@ -4,7 +4,7 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { gitChangesIn, gitFileAt, gitFileLog, gitShowAt } from '../../../../../../electron/src/git/history/gitHistory';
-import { gitStatus } from '../../../../../../electron/src/git/gitService';
+import { gitShowHead, gitStatus } from '../../../../../../electron/src/git/gitService';
 import { AVAILABLE, run, out, identify, commit, tempDir, removeTempDirs } from './gitLiveFixture';
 
 afterEach(removeTempDirs);
@@ -58,6 +58,9 @@ describe.skipIf(!AVAILABLE)('what a version changed', () => {
 		const hash = out(root, 'rev-parse', 'HEAD');
 		rmSync(join(root, 'chapters'), { recursive: true });
 		expect((await gitFileAt(root, join(root, 'chapters', 'one.tex'), hash)).content).toBe('One.\n');
+		// the deleted row's comparison with the last version, and with a version in History
+		expect(await gitShowHead(join(root, 'chapters', 'one.tex'))).toEqual({ ok: true, hasHead: true, content: 'One.\n' });
+		expect(await gitShowAt(join(root, 'chapters', 'one.tex'), hash)).toEqual({ ok: true, hasHead: true, content: 'One.\n' });
 	});
 
 	it('refuses anything that is not a version hash', async () => {

@@ -266,6 +266,29 @@ After.
 		}
 	});
 
+	it('a cell split after a line break typed at its end keeps its closing bracket', () => {
+		const parsed = parseTypstFile('#table(columns: 2, [Alice], [Paris])\n');
+		const end = posOf(parsed.doc, 'Paris') + 'Paris'.length;
+		const t = new Transform(parsed.doc).insert(end, parsed.doc.type.schema.nodes.hard_break.create());
+		const doc = t.split(posOf(t.doc, 'Paris') + 1).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
+	});
+
+	it('a retyped cell ending on a line break, then split, keeps its closing bracket', () => {
+		const parsed = parseTypstFile('#table(\n  columns: 2,\n  [Alice], [Paris],\n)\n');
+		const end = posOf(parsed.doc, 'Paris') + 'Paris'.length;
+		const t = new Transform(parsed.doc).insert(end, parsed.doc.type.schema.nodes.hard_break.create({ lineBreak: true }));
+		t.insert(end, parsed.doc.type.schema.text('!'));
+		const doc = t.split(end + 2).doc;
+		const out = serializeTypstFile(parsed, doc);
+		// `\]` would be an escaped bracket, leaving the cell open; the emptied paragraph writes nothing
+		expect(out).not.toContain('\\]');
+		expect(parseTypstFile(out).doc.toString(), out).toBe(
+			'doc(table(table_row(table_cell(paragraph("Alice")), table_cell(paragraph("Paris!", hard_break)))))'
+		);
+	});
+
 	it('maps the cells of a table one of whose cells changed', () => {
 		const parsed = parseTypstFile(TABLE);
 		const edited = retypeIn(parsed.doc, 'Third', (t) => t.replace('Third', 'THIRD'));
@@ -415,6 +438,91 @@ describe('typst: bytes written beside the bytes the file keeps', () => {
 		expect(out).toContain('Only #strong[even]s here.');
 		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
 	});
+
+	it('a hyphen or a dot typed beside the ones the file keeps stays itself, not a dash, a soft hyphen or an ellipsis', () => {
+		for (const [src, needle, typed] of [
+			['pages 10-12 here.\n', '10-', '-'],
+			['what? here.\n', 'what', '-'],
+			['a soft-?hyphen here.\n', 'soft', '-'],
+			['x.. here.\n', 'x..', '.']
+		]) {
+			const parsed = parseTypstFile(src);
+			const at = posOf(parsed.doc, needle) + needle.length;
+			const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text(typed)).doc;
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.textContent, out).toBe(doc.textContent);
+		}
+	});
+
+	it('a dot typed after a call the kept text then runs on from is not read as a field of the call', () => {
+		const parsed = parseTypstFile('Year #cite(<typst2023>, form: "year") only.\n');
+		const at = posOf(parsed.doc, ' only');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('.')).delete(at + 1, at + 1 + ' onl'.length).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(out).not.toContain(').y');
+		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
+	});
+
+	it('a marker typed after a block comment the file keeps at the start of a line is escaped', () => {
+		const parsed = parseTypstFile('Text after.\n  /* inline */ and more.\n');
+		const at = posOf(parsed.doc, 'and more');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('- Foo ')).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(out).toContain('/* inline */ \\- Foo and more.');
+		expect(parseTypstFile(out).doc.toString(), out).toBe(doc.toString());
+	});
+
+	it('text put on the line of a line comment the file keeps goes on the next line, the comment whole', () => {
+		const parsed = parseTypstFile('A comment // note\nand more.\n');
+		let end = -1;
+		parsed.doc.descendants((n, pos) => {
+			if (n.type.name === 'inline_latex') end = pos + n.nodeSize;
+			return end < 0;
+		});
+		const typed = new Transform(parsed.doc).insert(end, parsed.doc.type.schema.text('x')).doc;
+		const joined = new Transform(parsed.doc).delete(end, posOf(parsed.doc, 'ore.')).doc;
+		for (const doc of [typed, joined]) {
+			const out = serializeTypstFile(parsed, doc);
+			const back = parseTypstFile(out).doc.child(0);
+			expect(back.child(1).textContent, out).toBe('// note');
+			expect(back.textContent.replace(/\s+/g, ''), out).toBe(doc.textContent.replace(/\s+/g, ''));
+		}
+	});
+});
+
+describe('typst: inline raw written as a call', () => {
+	it('stays raw text when its text is retyped or its backtick deleted', () => {
+		const parsed = parseTypstFile('Use #raw("x") and #raw("a`b") here.\n');
+		const s = parsed.doc.type.schema;
+		const x = posOf(parsed.doc, 'x');
+		const retyped = new Transform(parsed.doc).replaceWith(x, x + 1, s.text('y', [s.marks.code.create()])).doc;
+		expect(serializeTypstFile(parsed, retyped)).toBe('Use #raw("y") and #raw("a`b") here.\n');
+		const tick = posOf(parsed.doc, '`b');
+		const quoted = new Transform(parsed.doc).replaceWith(x, x + 1, s.text('say "hi"', [s.marks.code.create()])).doc;
+		for (const doc of [new Transform(parsed.doc).delete(tick, tick + 2).doc, quoted]) {
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.child(0).toString(), out).toBe(doc.child(0).toString());
+		}
+	});
+});
+
+describe('typst: a line break typed at the end of a source line', () => {
+	for (const [label, item] of [
+		['a formula', '$x^2$'],
+		['a reference', '@sec'],
+		['a call', '#footnote[Note.]']
+	]) {
+		it(`after ${label} leaves one paragraph`, () => {
+			const parsed = parseTypstFile(`= Heading <sec>\n\nText ending with ${item}\ncontinues on the next line.\n\nOutro.\n`);
+			const at = posOf(parsed.doc, ' continues');
+			const out = serializeTypstFile(
+				parsed,
+				new Transform(parsed.doc).replaceWith(at, at, parsed.doc.type.schema.nodes.hard_break.create()).doc
+			);
+			expect(out).not.toMatch(/\\\n[ \t]*\n/);
+			expect(parseTypstFile(out).doc.childCount).toBe(parsed.doc.childCount);
+		});
+	}
 });
 
 describe('typst: markup that a seam would open', () => {
@@ -459,6 +567,23 @@ describe('typst: markup that a seam would open', () => {
 		const out = serializeTypstFile(parsed, doc);
 		expect(out).toContain('[\\- y]');
 		expect(parseTypstFile(out).doc.child(1).toString()).toBe(doc.child(1).toString());
+	});
+
+	it('a space typed or left after a marker the file kept at the start of a line or a cell is not read as one', () => {
+		const cases: [string, string, number, string][] = [
+			['Text\n-x more\n', '-x', 1, ' '],
+			['Text\n6.1 more\n', '6.1', 2, ' '],
+			['#table(columns: 2, [6.1], [x])\n', '6.1', 2, ' '],
+			['Text\n=x y more\n', 'x y', 0, '']
+		];
+		for (const [block, needle, off, typed] of cases) {
+			const parsed = parseTypstFile(`Intro.\n\n${block}`);
+			const at = posOf(parsed.doc, needle) + off;
+			const t = new Transform(parsed.doc);
+			const doc = (typed ? t.insert(at, parsed.doc.type.schema.text(typed)) : t.delete(at, at + 1)).doc;
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.child(1).toString(), out).toBe(doc.child(1).toString());
+		}
 	});
 
 	const SNAKE = 'Intro line.\n\n== Raw blocks snake_case_words\n<sec:raw>\n\nTail line.\n';
@@ -532,6 +657,16 @@ describe('typst: what is typed beside a call or a marker', () => {
 		expect(parseTypstFile(out).doc.child(1).textContent).toBe(doc.child(1).textContent);
 	});
 
+	it('letters typed after the dot that follows a call are not read as a field of the call', () => {
+		for (const src of ['Intro.\n\nSee#footnote[n]. More.\n', 'Intro.\n\nSome #emph[e]. More.\n']) {
+			const parsed = parseTypstFile(src);
+			const at = posOf(parsed.doc, ' More');
+			const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text('x')).doc;
+			const out = serializeTypstFile(parsed, doc);
+			expect(parseTypstFile(out).doc.child(1).toString(), out).toBe(doc.child(1).toString());
+		}
+	});
+
 	it('a colon typed into a term is escaped, or it would end the term', () => {
 		const src = 'Intro.\n\n/ Another term: a second definition.\n';
 		const parsed = parseTypstFile(src);
@@ -560,6 +695,14 @@ describe('typst: what is typed beside a call or a marker', () => {
 		expect(doc.lastChild!.toString()).toBe('paragraph(" and ends the section.")');
 		const out = serializeTypstFile(parsed, doc);
 		expect(parseTypstFile(out).doc.lastChild!.toString()).toBe('paragraph("and ends the section.")');
+	});
+
+	it('a space typed at the start of the paragraph after a list leaves the paragraph out of the list', () => {
+		const parsed = parseTypstFile('- first point\n- second point\n\nA closing paragraph.\n');
+		const at = posOf(parsed.doc, 'A closing');
+		const doc = new Transform(parsed.doc).insert(at, parsed.doc.type.schema.text(' [')).doc;
+		const out = serializeTypstFile(parsed, doc);
+		expect(parseTypstFile(out).doc.lastChild!.toString(), out).toBe('paragraph("[A closing paragraph.")');
 	});
 
 	it('an at sign ending an emphasis is escaped, or the delimiter would be read as a reference', () => {

@@ -139,10 +139,11 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 					)
 				);
 			if (tail.length) words(tail, 4, 'tail');
+			// before the old form of a node that starts there, which stood after them
 			if (blocks.length && !split)
 				decos.push(
 					Decoration.widget(at, () => goneBlocksElement(schema, blocks, id, on), {
-						side: lead ? -1 : 1,
+						side: lead ? -1 : -2,
 						ignoreSelection: true,
 						key: `gone-${id}-${on}-${gone}`
 					})

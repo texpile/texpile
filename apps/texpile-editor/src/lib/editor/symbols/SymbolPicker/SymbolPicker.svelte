@@ -68,7 +68,7 @@
 
 {#if picker.open}
 	<div
-		class="fixed inset-0 z-1300 flex items-start justify-center app-scrim bg-black/40 p-4 [--scrim-top:8vh]"
+		class="app-scrim fixed inset-0 z-1300 flex items-start justify-center bg-black/40 p-4 [--scrim-top:8vh]"
 		role="presentation"
 		onmousedown={(e) => e.target === e.currentTarget && picker.close()}
 	>
@@ -86,7 +86,7 @@
 				<input
 					bind:this={input}
 					use:focusOnOpen
-					class="w-full bg-transparent text-sm outline-none placeholder:text-muted"
+					class="placeholder:text-muted w-full bg-transparent text-sm outline-none"
 					value={picker.query}
 					oninput={(e) => picker.search(e.currentTarget.value)}
 					onkeydown={onInputKeydown}

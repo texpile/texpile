@@ -119,7 +119,7 @@
 			{m.comments_show_resolved()}
 		</label>
 	</div>
-	<div bind:this={list} class="min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable]">
+	<div bind:this={list} class="min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto">
 		{#if shown.length === 0}
 			<div class="text-muted flex flex-1 items-center gap-2 p-4">
 				<MessageSquare class="size-4 shrink-0" />

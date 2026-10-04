@@ -4,6 +4,7 @@
 // what was deleted there.
 import { errMsg, isMissingGit, resolveRepoRoot, upstreamExists } from '../gitService';
 import { aheadBehind, classifyPushError, netGit, upstreamOf, type GitAuthEnv, type PushFailure } from './gitRemote';
+import { statusOf } from '../gitStatusParse';
 
 export type GitFetchResult = {
 	ok: boolean;
@@ -25,7 +26,7 @@ export async function gitFetch(workspaceRoot: string, auth: GitAuthEnv = {}, sta
 	const g = netGit(rr.repo.root, auth, stall);
 	let remote: string | undefined;
 	try {
-		const status = await g.status();
+		const status = await statusOf(g);
 		if (!status.current || status.detached || !status.tracking) return { ok: false, failure: 'no-upstream' };
 		const up = await upstreamOf(g, status.current);
 		if (!up) return { ok: false, failure: 'no-upstream' };

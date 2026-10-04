@@ -1,6 +1,6 @@
 // git backing for the Source Control panel. Kept out of fsService.ts so that module stays
 // dependency-free; every function returns { ok, reason|error } and never throws
-import { simpleGit, type SimpleGit, type FileStatusResult } from 'simple-git';
+import { simpleGit, type SimpleGit } from 'simple-git';
 import { dirname, resolve, join, sep } from 'node:path';
 import { existsSync } from 'node:fs';
 import { open, readFile, type FileHandle } from 'node:fs/promises';
@@ -10,6 +10,7 @@ import { hasConflictMarkers } from './history/conflictMarkers';
 import { literal } from './gitProcessEnv';
 import { runInChunks } from './gitCommandLine';
 import { locateRepo, type RepoPaths } from './gitRepoPaths';
+import { statusOf } from './gitStatusParse';
 
 // once git is confirmed missing (ENOENT), stop retrying
 let gitBinaryMissing = false;
@@ -41,7 +42,8 @@ export type GitStatusEntry = {
 	choose?: WholeFileChoice;
 	/** a rename's old path, absolute: saving the rename takes in both, putting it back restores this */
 	from?: string;
-	/** a folder row that also holds files .gitignore leaves out: never deleted as a whole */
+	/** a folder row that also holds files .gitignore leaves out, or a repository of its own: never
+	 *  deleted as a whole */
 	ignoredInside?: boolean;
 	/** a folder of new files shown as one row (gitStatusLimit.ts): how many files it holds */
 	files?: number;
@@ -106,8 +108,12 @@ export function git(baseDir: string, block = 20000): SimpleGit {
 		// git octal-escapes any non-ASCII path it prints, which then matches no file on disk. On the
 		// factory, so it covers the output simple-git parses itself too.
 		// log.showSignature: an author's `true` puts gpg's words ("No signature") in the log's output,
-		// where they parsed as a version of their own
-		config: ['core.quotePath=false', 'log.showSignature=false']
+		// where they parsed as a version of their own.
+		// core.fsmonitor: a project that arrives with its own .git/config can name a program for every
+		// status to run, and opening the folder reads its status; the monitor only ever saves time
+		config: ['core.quotePath=false', 'log.showSignature=false', 'core.fsmonitor=false'],
+		// simple-git refuses any core.fsmonitor, since one naming a program runs it; this one turns it off
+		unsafe: { allowUnsafeFsMonitor: true }
 	});
 }
 
@@ -276,18 +282,23 @@ async function looksBinary(abs: string): Promise<boolean> {
 	}
 }
 
-/** a deleted or unreadable file has nothing marked in it */
-export async function stillMarked(abs: string): Promise<boolean> {
+/** a deleted or unreadable file has nothing marked in it. `rel`, repo-relative, reads each side's
+ *  copy of the file (stages 2 and 3) */
+export async function stillMarked(g: SimpleGit, rel: string, abs: string): Promise<boolean> {
+	let text: string;
 	try {
-		return hasConflictMarkers(await readFile(abs, 'utf8'));
+		text = await readFile(abs, 'utf8');
 	} catch {
 		return false;
 	}
+	if (!hasConflictMarkers(text)) return false;
+	const sides = await Promise.all([':2:', ':3:'].map((stage) => g.show([`${stage}${rel}`]).catch(() => '')));
+	return hasConflictMarkers(text, sides);
 }
 
 /** big folders of new files as one row each; git is asked which folders are wholly new only when
  *  there are enough new files for one to qualify */
-async function withFolderRows(g: SimpleGit, workspaceRoot: string, entries: GitStatusEntry[]): Promise<GitStatusEntry[]> {
+async function withFolderRows(g: SimpleGit, workspaceRoot: string, entries: GitStatusEntry[], repos: string[]): Promise<GitStatusEntry[]> {
 	if (entries.filter((e) => e.x === '?').length < FOLDER_ROW_AT) return entries;
 	const raw = await g.raw(['ls-files', '--others', '--exclude-standard', '--directory', '--no-empty-directory', '-z']);
 	const folders = raw
@@ -296,13 +307,14 @@ async function withFolderRows(g: SimpleGit, workspaceRoot: string, entries: GitS
 		.map((p) => join(workspaceRoot, p));
 	const rows = collapseUntracked(entries, folders);
 	if (!rows.some((r) => r.files)) return rows;
-	// git calls a folder wholly new even when it also holds files .gitignore leaves out: the row
-	// says so, and is not offered for deleting, which would take those files too
+	// git calls a folder wholly new even when it also holds files .gitignore leaves out, or a
+	// repository of its own: the row says so, and is not offered for deleting, which would take those too
 	const ignored = (await g.raw(['ls-files', '--others', '--ignored', '--exclude-standard', '--directory', '-z']))
 		.split('\0')
 		.filter(Boolean)
 		.map((p) => join(workspaceRoot, p));
-	return rows.map((r) => (r.files && ignored.some((p) => p.startsWith(r.path + sep)) ? { ...r, ignoredInside: true } : r));
+	const kept = [...ignored, ...repos];
+	return rows.map((r) => (r.files && kept.some((p) => p.startsWith(r.path + sep)) ? { ...r, ignoredInside: true } : r));
 }
 
 /** Whether the upstream branch is still there. One deleted on the remote (a merged pull request's
@@ -325,12 +337,13 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 	try {
 		const g = git(workspaceRoot);
 		// `.`, the folder: in a larger repository, the rest of it is scanned for nothing
-		const status = await g.status(['--untracked-files=all', '--', '.']);
+		const status = await statusOf(g, ['--untracked-files=all', '--', '.']);
 		// with -q, an unborn HEAD exits non-zero and prints nothing, which simple-git resolves as ''
 		const head = (await g.raw(['rev-parse', '--verify', '-q', 'HEAD'])).trim();
 		const operation = operationIn((await gitDirsOf(repo.root)).gitDir);
 		const entries: GitStatusEntry[] = [];
-		for (const f of status.files as FileStatusResult[]) {
+		const repos = status.files.filter((f) => f.path.endsWith('/') && repo.holds(f.path)).map((f) => repo.fromGit(f.path));
+		for (const f of status.files) {
 			// a repository inside this one (a cloned template or class) is 'dir/': not a file of this
 			// project's, and one git cannot save as a version without making it a submodule
 			if (f.path.endsWith('/') || !repo.holds(f.path)) continue;
@@ -341,11 +354,11 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 				// a whole-file choice is still a choice to make: marked until it is made
 				const choose = await wholeFileChoice(f.index, f.working_dir, path);
 				if (choose) entry.choose = choose;
-				entry.markers = !!choose || (await stillMarked(path));
+				entry.markers = !!choose || (await stillMarked(g, f.path, path));
 			}
 			entries.push(entry);
 		}
-		const { rows, truncated } = capRows(await withFolderRows(g, workspaceRoot, entries), (e) => isUnmerged(e.x, e.y));
+		const { rows, truncated } = capRows(await withFolderRows(g, workspaceRoot, entries, repos), (e) => isUnmerged(e.x, e.y));
 		return {
 			ok: true,
 			branch: status.current,
@@ -369,10 +382,17 @@ export async function gitStatus(workspaceRoot: string): Promise<GitStatusResult>
 	}
 }
 
+/** the file's folder, or the nearest above it still on disk: a folder deleted since finds no repository */
+export function folderOnDisk(absPath: string): string {
+	let dir = dirname(absPath);
+	while (!existsSync(dir) && dirname(dir) !== dir) dir = dirname(dir);
+	return dir;
+}
+
 /** committed (HEAD) contents of a file, for diffing against the working copy. */
 export async function gitShowHead(absPath: string): Promise<GitShowResult> {
 	if (!absPath) return { ok: false, hasHead: false, error: 'Missing path' };
-	const rr = await resolveRepoRoot(dirname(absPath));
+	const rr = await resolveRepoRoot(folderOnDisk(absPath));
 	if (!rr.repo) return { ok: false, hasHead: false, reason: rr.reason };
 	const repo = rr.repo;
 	try {

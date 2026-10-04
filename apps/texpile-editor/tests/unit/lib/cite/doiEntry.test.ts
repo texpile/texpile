@@ -107,6 +107,12 @@ describe('workFromBibtex', () => {
 		expect(entryOf(workFromBibtex(DATACITE, vaswani, 'typst', [])!.bib)).toMatchObject({ eprint: '1706.03762', eprinttype: 'arXiv' });
 	});
 
+	it('braces a title formula with the word it is part of, so a sentence-case style keeps its capitals', () => {
+		const src =
+			'@misc{X, title = {Tension with $\\Lambda$CDM and $H_0$ in BERT}, author = {Riess, Adam G.}, year = {2018}, publisher = {arXiv}}';
+		expect(entryOf(workFromBibtex(src, smith, 'bibtex', [])!.bib).title).toBe('Tension with {$\\Lambda$CDM} and {$H_0$} in {BERT}');
+	});
+
 	it('leaves a title the registry already protected as it is', () => {
 		const src = '@article{X_1, title={The {ATLAS} Detector and BERT}, author={Aad, G.}, year={2008}, journal={JINST}}';
 		expect(entryOf(workFromBibtex(src, smith, 'bibtex', [])!.bib).title).toBe('The {ATLAS} Detector and BERT');
@@ -176,6 +182,18 @@ describe('workFromBibtex on real registry answers', () => {
 		const w = workFromBibtex(src, parseWorkId('10.5281/zenodo.3509134')!, 'bibtex', [])!;
 		expect(w.key).toBe('pandas2026pandas');
 		expect(entryOf(w.bib)).toMatchObject({ author: '{The pandas development team}', doi: '10.5281/zenodo.3509134' });
+	});
+
+	it('keeps a DataCite organisation whose name has an "and" in it one name', () => {
+		const src = `@misc{https://doi.org/10.5281/zenodo.1234567,
+  doi = {10.5281/ZENODO.1234567},
+  author = {Smith, Jane and Food and Agriculture Organization of the United Nations, },
+  title = {FAOSTAT crops and livestock products},
+  publisher = {Zenodo},
+  year = {2023}
+}`;
+		const w = workFromBibtex(src, parseWorkId('10.5281/zenodo.1234567')!, 'bibtex', [])!;
+		expect(entryOf(w.bib).author).toBe('Smith, Jane and {Food and Agriculture Organization of the United Nations}');
 	});
 
 	it('makes an old-style arXiv paper DataCite types as an article a preprint', () => {

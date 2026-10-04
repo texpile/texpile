@@ -107,12 +107,28 @@ nodes.block_math = {
 // display counter flat-list reads
 nodes.list = { ...base.list, attrs: { ...base.list.attrs, typNumber: { default: null } } };
 // a trailing <label> attaches to the heading in typst, so it lives on the node
-nodes.heading = { ...base.heading, attrs: { ...base.heading.attrs, label: { default: null } } };
+nodes.heading = {
+	...base.heading,
+	attrs: { ...base.heading.attrs, label: { default: null } },
+	// typst nests headings past six where html stops: a deeper one is an h6 holding its level
+	parseDOM: [1, 2, 3, 4, 5, 6].map((level) => ({
+		tag: `h${level}`,
+		getAttrs: (dom: HTMLElement) => ({ level: Number(dom.getAttribute('data-level')) || level })
+	})),
+	toDOM(node) {
+		const level = Number(node.attrs.level);
+		const attrs: Record<string, string> = node.attrs.numbered === false ? { 'data-unnumbered': 'true' } : {};
+		if (level > 6) attrs['data-level'] = String(level);
+		return [`h${Math.min(6, level)}`, attrs, 0];
+	}
+};
 // labelGap: the bytes the source put between a labelled block and its <label> when they held a
 // line end (null = a space, or no label); the serializer writes the label back where it stood
 for (const name of ['heading', 'block_math', 'table_wrapper']) {
 	nodes[name] = { ...nodes[name], attrs: { ...nodes[name].attrs, labelGap: { default: null } } };
 }
+// typCaption: the file gave the figure a caption, which stays when its text is empty: typst still draws "Table 1:"
+nodes.table_wrapper = { ...nodes.table_wrapper, attrs: { ...nodes.table_wrapper.attrs, typCaption: { default: false } } };
 // typFile: what the bytes outside the markup looked like (a leading BOM, CRLF line endings)
 nodes.doc = { ...base.doc, attrs: { ...base.doc.attrs, typFile: { default: null } } };
 

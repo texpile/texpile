@@ -169,6 +169,53 @@ describe.skipIf(!AVAILABLE)('combining two lines of work', () => {
 		expect(await gitCombine(root)).toMatchObject({ ok: false, failure: 'busy' });
 	});
 
+	// a setext heading underline of seven = is also git's divider line, in every copy of the file
+	it('finishes a Markdown file whose heading is underlined with seven =, and still sees a divider left', async () => {
+		const { root, other } = await makePublished();
+		const paper = (result: string) => `Methods\n=======\n\nWe measured things.\n\n${result}\n`;
+		commit(root, 'paper.md', paper('The first result.'), 'Paper');
+		run(root, 'push', '-q');
+		run(other, 'pull', '-q');
+		commit(other, 'paper.md', paper('Their result.'), 'Their result');
+		run(other, 'push', '-q');
+		commit(root, 'paper.md', paper('My result.'), 'My result');
+		expect(await gitSync(root)).toMatchObject({ ok: false, failure: 'conflict' });
+		expect(await gitCombine(root)).toMatchObject({ ok: true, conflicts: [join(root, 'paper.md')] });
+		const marked = async () => (await gitStatus(root)).entries?.find((e) => e.path === join(root, 'paper.md'))?.markers;
+
+		writeFileSync(join(root, 'paper.md'), paper('My result.\n=======\nTheir result.'));
+		expect(await marked()).toBe(true);
+		expect(await gitFinishCombine(root)).toMatchObject({ ok: false, failure: 'markers' });
+
+		writeFileSync(join(root, 'paper.md'), paper('My result, and theirs.'));
+		expect(await marked()).toBe(false);
+		expect(await gitFinishCombine(root)).toEqual({ ok: true });
+	});
+
+	it('finishes with two different headings underlined with seven =, one from each side', async () => {
+		const { root, other } = await makePublished();
+		const paper = (top: string, result: string, bottom: string) =>
+			`${top}Intro.\n\nOne.\n\nTwo.\n\n${result}\n\nThree.\n\nFour.\n\n${bottom}`;
+		commit(root, 'paper.md', paper('', 'The first result.', ''), 'Paper');
+		run(root, 'push', '-q');
+		run(other, 'pull', '-q');
+		commit(other, 'paper.md', paper('', 'Their result.', 'Results\n=======\n'), 'Their heading');
+		run(other, 'push', '-q');
+		commit(root, 'paper.md', paper('Methods\n=======\n\n', 'My result.', ''), 'My heading');
+		expect(await gitSync(root)).toMatchObject({ ok: false, failure: 'conflict' });
+		expect(await gitCombine(root)).toMatchObject({ ok: true, conflicts: [join(root, 'paper.md')] });
+		const marked = async () => (await gitStatus(root)).entries?.find((e) => e.path === join(root, 'paper.md'))?.markers;
+
+		// both headings kept, and a divider git wrote left behind under the result
+		writeFileSync(join(root, 'paper.md'), paper('Methods\n=======\n\n', 'My result.\n=======', 'Results\n=======\n'));
+		expect(await marked()).toBe(true);
+		expect(await gitFinishCombine(root)).toMatchObject({ ok: false, failure: 'markers' });
+
+		writeFileSync(join(root, 'paper.md'), paper('Methods\n=======\n\n', 'My result, and theirs.', 'Results\n=======\n'));
+		expect(await marked()).toBe(false);
+		expect(await gitFinishCombine(root)).toEqual({ ok: true });
+	});
+
 	it('has nothing to finish when no merge is under way', async () => {
 		const { root } = await makePublished();
 		expect(await gitFinishCombine(root)).toMatchObject({ ok: false, failure: 'not-combining' });
@@ -189,6 +236,15 @@ describe('the marker check on the git side', () => {
 		expect(hasConflictMarkers('<<<<<<<< HEAD\nx\n')).toBe(false);
 		expect(hasConflictMarkers('========\n')).toBe(false);
 		expect(hasConflictMarkers('plain text\n')).toBe(false);
+	});
+
+	it('takes a lone ======= for a heading underline when a side has it under the same line', () => {
+		const ours = 'Methods\n=======\n\nText.\n';
+		const theirs = 'Text.\n\nResults\n=======\n';
+		expect(hasConflictMarkers('Methods\n=======\n\nText.\n\nResults\n=======\n', [ours, theirs])).toBe(false);
+		expect(hasConflictMarkers('Methods\n=======\n\nMine.\n=======\nTheirs.\n', [ours, theirs])).toBe(true);
+		expect(hasConflictMarkers('Methods\n=======\n>>>>>>> origin/main\n', [ours, ours])).toBe(true);
+		expect(hasConflictMarkers('Methods\n=======\n')).toBe(true);
 	});
 });
 

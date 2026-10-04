@@ -11,6 +11,15 @@
 // Pure string logic, same as compileCommand.ts.
 
 import { joinPath } from './fileSystem';
+import { isWindows } from '$lib/platform';
+
+/** a path as one literal word to the compile shell: cmd.exe on Windows, a POSIX shell elsewhere */
+export function shellWord(path: string, windows = isWindows): string {
+	// a leading dash reads as an option, latexmk's -pdflatex=COMMAND among them
+	const word = path.startsWith('-') ? `./${path}` : path;
+	if (/^[\p{L}\p{N}_./+,@:-]*$/u.test(word)) return word;
+	return windows ? `"${word}"` : `'${word.replaceAll("'", "'\\''")}'`;
+}
 
 /** true when the command drives Typst rather than a TeX engine. Matches the binary name at the
  * head of the line only: a `--root` pointing at a directory called `typst` must not count. */
@@ -135,7 +144,7 @@ export function typstJobName(main: string | null): string {
 export function buildTypstCommand(main: string | null, outDir = 'output'): string {
 	const job = typstJobName(main);
 	const dir = outDir && outDir !== '.' ? `${outDir.replace(/\\/g, '/').replace(/\/+$/, '')}/` : '';
-	return `tinymist compile --root . {main} ${dir}${job}.pdf 2>${dir}${job}.log`;
+	return `tinymist compile --root . {main} ${shellWord(`${dir}${job}.pdf`)} 2>${shellWord(`${dir}${job}.log`)}`;
 }
 
 /** Absolute PDF path for a Typst command: the explicit output, else typst's own default. */

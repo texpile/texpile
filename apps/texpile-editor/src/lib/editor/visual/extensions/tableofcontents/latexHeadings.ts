@@ -1,5 +1,6 @@
 import type { TocItem } from './tocStore';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { pathKey } from '$lib/workspace/fileSystem';
 
 // mirror the parser's section-level mapping (converter.ts) so the source outline nests the same
 // way the visual one does
@@ -174,10 +175,6 @@ export function latexHeadings(src: string): TocItem[] {
 	return numberOutline(parseOutlineRaw(src));
 }
 
-function normPath(p: string) {
-	return p.replace(/\\/g, '/').toLowerCase();
-}
-
 /**
  * project outline: the active buffer's atoms with \input markers spliced from pre-scanned
  * fragment outlines (cycle-guarded), then numbered as one document. fragment entries keep their
@@ -191,7 +188,7 @@ export function assembleProjectOutline(
 	outlines: Record<string, RawOutlineItem[]>
 ): TocItem[] {
 	const byNorm = new Map<string, { file: string; items: RawOutlineItem[] }>();
-	for (const [file, items] of Object.entries(outlines)) byNorm.set(normPath(file), { file, items });
+	for (const [file, items] of Object.entries(outlines)) byNorm.set(pathKey(file), { file, items });
 
 	function resolve(baseDir: string | null, target: string): { file: string; items: RawOutlineItem[] } | null {
 		const cand = target.replace(/\\/g, '/');
@@ -199,21 +196,21 @@ export function assembleProjectOutline(
 		for (const base of [baseDir, root]) {
 			if (!base) continue;
 			for (const name of names) {
-				const hit = byNorm.get(normPath(base.replace(/\\/g, '/') + '/' + name));
+				const hit = byNorm.get(pathKey(base.replace(/\\/g, '/') + '/' + name));
 				if (hit) return hit;
 			}
 		}
 		return null;
 	}
 
-	const seen = new Set<string>(activeFile ? [normPath(activeFile)] : []);
+	const seen = new Set<string>(activeFile ? [pathKey(activeFile)] : []);
 	function splice(items: RawOutlineItem[], baseDir: string | null, file: string | null, depth: number): RawOutlineItem[] {
 		const out: RawOutlineItem[] = [];
 		for (const item of items) {
 			if (item.kind === 'input' && depth < 6) {
 				const child = resolve(baseDir, item.target);
-				if (child && !seen.has(normPath(child.file))) {
-					seen.add(normPath(child.file));
+				if (child && !seen.has(pathKey(child.file))) {
+					seen.add(pathKey(child.file));
 					const childDir = child.file.replace(/\\/g, '/').replace(/\/[^/]*$/, '');
 					out.push(...splice(child.items, childDir, child.file, depth + 1));
 				}

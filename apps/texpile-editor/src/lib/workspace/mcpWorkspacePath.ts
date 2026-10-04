@@ -1,16 +1,17 @@
 // The containment boundary for every path an MCP caller can name: resolved against the open tree,
 // never the filesystem, so a tool can only ever reach a file this workspace already knows about
 import { workspaceRoot, fileTree } from './workspaceStore';
-import { joinPath, samePath, type TreeEntry } from './fileSystem';
+import { joinPath, normalizePath, samePath, type TreeEntry } from './fileSystem';
 
 /** a workspace-relative path as an absolute one inside the root, or null when it climbs out */
 export function resolveInWorkspace(rel: string): string | null {
 	const root = workspaceRoot.current;
 	if (!root || !rel) return null;
 	if (rel.includes('\0')) return null;
-	const abs = joinPath(root, rel.replace(/\\/g, '/'));
-	// reject anything that climbed out of the root via .. before it reaches an open
-	if (!samePath(abs, root) && !abs.toLowerCase().startsWith(root.toLowerCase())) return null;
+	const posix = rel.replace(/\\/g, '/');
+	// reject anything that climbs out of the root via .. before it reaches an open
+	if (normalizePath(posix.replace(/^\/+/, '')).split('/')[0] === '..') return null;
+	const abs = joinPath(root, posix);
 	// a file that does not exist is left to the opener's normal "cannot load" path rather than
 	// checked here: this function's job is containment, not existence
 	return abs;

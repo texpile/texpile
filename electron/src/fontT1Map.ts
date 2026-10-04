@@ -8,6 +8,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { kpsewhich } from './shell/kpsewhich';
+import { onToolPathChange } from './shell/toolDirs';
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- font records are schemaless engine JSON */
 
@@ -31,6 +32,8 @@ export function isAllowedFontPath(p: string): boolean {
 
 type MapEntry = { pfb: string; enc?: string };
 let mapIndex: Promise<Map<string, MapEntry> | null> | undefined;
+// another TeX first on PATH has its own pdftex.map
+onToolPathChange(() => (mapIndex = undefined));
 function loadMap(): Promise<Map<string, MapEntry> | null> {
 	if (mapIndex !== undefined) return mapIndex;
 	mapIndex = (async () => {

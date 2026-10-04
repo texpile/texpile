@@ -70,6 +70,12 @@ describe('source paste', () => {
 		expect(pasted('typst', typstLanguage(), 'see `the docs`', 5, 13, 'https://x.com')).toBe('see `https://x.com`');
 	});
 
+	it('puts a URL pasted over a link’s URL slot in that slot, as Insert > Link leaves it selected', () => {
+		expect(pasted('latex', latex(), 'see \\href{https://}{text}', 10, 18, 'https://x.com')).toBe('see \\href{https://x.com}{text}');
+		expect(pasted('markdown', markdown(), 'see [text](url)', 11, 14, 'https://x.com')).toBe('see [text](https://x.com)');
+		expect(pasted('markdown', markdown(), 'see ![alt](image.png)', 11, 20, 'https://x.com/a.png')).toBe('see ![alt](https://x.com/a.png)');
+	});
+
 	it('lets a Paste As pick do nothing once the text has changed under it', () => {
 		const view = new EditorView({ state: EditorState.create({ doc: 'Hello world' }), parent: document.body });
 		try {

@@ -44,7 +44,7 @@
 			{#if diffLayout === 'split'}<Rows2 class="size-3.5" />{:else}<Columns2 class="size-3.5" />{/if}
 		</button>
 	</div>
-	<div class="border-surface-200-800 min-h-0 flex-1 overflow-hidden rounded-base border">
+	<div class="border-surface-200-800 rounded-base min-h-0 flex-1 overflow-hidden border">
 		{#if reading}
 			<!-- nothing for the first 300ms, the app's threshold for announcing a wait -->
 			<p class="text-muted reveal-late flex items-center gap-2 p-3 text-sm">

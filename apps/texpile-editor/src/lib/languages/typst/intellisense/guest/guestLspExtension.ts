@@ -1,6 +1,7 @@
 // A guest's .typ editor, wired to the host's tinymist.
 import { LSPClient, LSPPlugin } from '@codemirror/lsp-client';
 import { typstServerExtensions } from '../serverExtensions';
+import { sanitizeDocHtml } from '../lspDocHtml';
 import type { Extension } from '@codemirror/state';
 import { lspHoverTheme } from '../lspClient';
 import { sessionUri } from './sessionUri';
@@ -58,6 +59,7 @@ export async function typstGuestLspExtension(port: SessionLspPort, rel: string):
 		const client = new LSPClient({
 			rootUri: sessionUri(''),
 			extensions: typstServerExtensions(),
+			sanitizeHTML: sanitizeDocHtml,
 			timeout: 12000
 		});
 		client.connect(transport);

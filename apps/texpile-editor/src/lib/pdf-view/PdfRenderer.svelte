@@ -195,10 +195,9 @@
 			if (!loadingTask) return;
 			toDestroy = loadingTask; // if the parse rejects, the task itself still needs freeing
 			const loadedPdfDocument = await loadingTask.promise;
-			toDestroy = loadedPdfDocument; // destroying the doc frees the task too
 			if (gen !== loadGen) {
 				toDestroy = null;
-				void loadedPdfDocument.destroy().catch(() => {});
+				void loadingTask.destroy().catch(() => {});
 				return;
 			}
 
@@ -214,7 +213,7 @@
 			// nulls the viewer. Its cleanup never sees this document, so free it here.
 			if (!viewer) {
 				toDestroy = null;
-				void loadedPdfDocument.destroy().catch(() => {});
+				void loadingTask.destroy().catch(() => {});
 				overlay?.remove();
 				return;
 			}

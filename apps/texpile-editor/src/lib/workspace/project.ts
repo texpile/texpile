@@ -2,7 +2,7 @@
 // include-chain, so fragments can round-trip custom commands whose signatures live in the main
 // file. signature scanning only, never written back to disk. `read` is injectable so a shared
 // session resolves through the workspace provider instead of the disk.
-import { readTextFile, dirname, joinPath, type TexFile } from './fileSystem';
+import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
 import { hasDocumentEnv } from './latexRoundtrip';
 
 type ReadFn = (path: string) => Promise<string>;
@@ -13,10 +13,6 @@ const BEGIN_DOC = /\\begin\s*\{document\}/;
 function preambleOf(text: string): string {
 	const m = BEGIN_DOC.exec(text);
 	return m ? text.slice(0, m.index) : text;
-}
-
-function normPath(p: string) {
-	return p.replace(/\\/g, '/').toLowerCase();
 }
 
 /** picks the main entry .tex: conventional names first, else the shallowest file with a real \begin{document}. */
@@ -124,7 +120,7 @@ export async function gatherProjectMacros(mainFilePath: string, root: string, re
 			// referrer's own dir first, then the project root
 			const got = (await resolveRead(dirname(filePath), ref, exts, read)) ?? (await resolveRead(root, ref, exts, read));
 			if (!got) continue; // standard package or missing file
-			const key = normPath(got.path);
+			const key = pathKey(got.path);
 			if (seen.has(key)) continue;
 			seen.add(key);
 			await walk(got.path, got.text, depth + 1);
@@ -133,7 +129,7 @@ export async function gatherProjectMacros(mainFilePath: string, root: string, re
 
 	try {
 		const text = await read(mainFilePath);
-		seen.add(normPath(mainFilePath));
+		seen.add(pathKey(mainFilePath));
 		await walk(mainFilePath, text, 0);
 	} catch {
 		return ''; // main file unreadable, fall back to per-file preamble scanning

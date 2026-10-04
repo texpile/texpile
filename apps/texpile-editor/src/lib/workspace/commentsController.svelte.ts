@@ -23,7 +23,7 @@ import {
 import { lineOf } from '$lib/comments/anchorLocate';
 import { resolveAuthor, forgetAuthor } from '$lib/comments/author';
 import type { CommentRange } from '$lib/editor/visual/extensions/comments';
-import { isSuggestion, touchesSuggestions } from '$lib/comments/suggest';
+import { canChangeMessage, isSuggestion, touchesSuggestions } from '$lib/comments/suggest';
 import { activeSuggestions, suggestionVisibility } from '$lib/comments/activeSuggestions.svelte';
 import type { EditMode } from '$lib/comments/suggestCompare';
 import { SuggestionsController, type SourceEdit } from './suggestionsController';
@@ -288,7 +288,8 @@ export class CommentsController {
 		this.weak = weak;
 		this.applyOrphans();
 		void this.verdicts.detached(this.file, lost);
-		if (this.pendingOpen) {
+		// once its own file is up: one that never opens (gone from disk) must not take the selection at every refresh
+		if (this.pendingOpen && this.store.forFile(this.file).some((t) => t.id === this.pendingOpen)) {
 			const target = this.pendingOpen;
 			this.pendingOpen = null;
 			this.selected = target;
@@ -469,16 +470,16 @@ export class CommentsController {
 	/** rewrite one message. Not restricted to your own: the log is a file anyone can edit anyway */
 	async editMessage(message: CommentMessage, body: string): Promise<void> {
 		if (!body.trim() || body.trim() === message.body) return;
+		const thread = this.threads.find((t) => t.messages.some((x) => x.id === message.id));
+		if (thread && !canChangeMessage(thread, message)) return;
 		await this.commit(editEvent({ message: message.id, body: body.trim(), by: await this.author(), at: new Date().toISOString() }));
 	}
 
 	/** drop one message; the fold drops the thread with it if that was the last of it */
 	async removeMessage(thread: CommentThread, message: CommentMessage): Promise<void> {
+		if (!canChangeMessage(thread, message)) return;
 		await this.commit(deleteMessageEvent({ message: message.id, by: await this.author(), at: new Date().toISOString() }));
-		if (thread.messages.length <= 1) {
-			this.ranges = this.ranges.filter((r) => r.id !== thread.id);
-			if (this.selected === thread.id) this.selected = null;
-		}
+		if (thread.messages.length <= 1) this.dropRange(thread.id);
 	}
 
 	/** reveal a thread: scroll to it here, or open the file it is on and scroll once it lands */
@@ -561,9 +562,9 @@ export class CommentsController {
 		const from = relativeTo(root, fromAbs);
 		const to = relativeTo(root, toAbs);
 		if (from === to) return;
+		this.suggestions.moved(from, to);
 		if (this.file && (this.file === from || this.file.startsWith(from + '/'))) this.file = to + this.file.slice(from.length);
-		const affected = this.store.threads.some((t) => t.file === from || t.file.startsWith(from + '/'));
-		if (!affected) return;
+		if (!this.store.threads.some((t) => t.file === from || t.file.startsWith(from + '/'))) return;
 		await this.commit(moveEvent({ from, to, by: await this.author(), at: new Date().toISOString() }));
 		this.resolve();
 	}

@@ -165,6 +165,8 @@ export interface BoxInterface {
 export type PrivateStyle = Style & {
   verbatimColor?: string;
   verbatimBackgroundColor?: string;
+  /** the command a bold run was set with, `\boldsymbol`, `\bm` or `\mathbf` */
+  verbatimBold?: string;
 };
 
 /**
@@ -192,6 +194,8 @@ export interface ContextInterface {
   readonly colorMap: (name: string) => string | undefined;
   readonly backgroundColorMap: (name: string) => string | undefined;
   getMacro(token: string): MacroDefinition | null;
+  // set by MathLive's own markup alone: in a document's math the html commands draw their body
+  readonly allowHtmlCommands?: boolean;
 }
 
 export declare function applyStyle(

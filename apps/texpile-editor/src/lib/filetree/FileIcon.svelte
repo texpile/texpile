@@ -26,6 +26,6 @@
 </script>
 
 <!-- eslint-disable svelte/no-at-html-tags -- build-time bundled svg assets, never user content -->
-<span class="{cls} inline-flex items-center justify-center grayscale brightness-75 dark:brightness-150" role="img" aria-label={name}>
+<span class="{cls} inline-flex items-center justify-center brightness-75 grayscale dark:brightness-150" role="img" aria-label={name}>
 	{@html svg}
 </span>

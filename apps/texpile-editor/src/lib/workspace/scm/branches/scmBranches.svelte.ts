@@ -87,8 +87,10 @@ export class ScmBranches {
 			if (!res.ok) return switchReason(res);
 			const loaded = this.deps.getLoadedPath();
 			await this.deps.refreshTree();
+			// typed while git switched: the save guard asks about it, as after a sync
+			if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
 			// a file the other branch does not have is left to the editor's own "deleted on disk" state
-			if (loaded && (await this.deps.readTextIfPresent(loaded)) !== null) await this.deps.loadFile(loaded);
+			if (loaded && !this.deps.hasPendingSave() && (await this.deps.readTextIfPresent(loaded)) !== null) await this.deps.loadFile(loaded);
 			if (this.deps.isDiffMode()) this.deps.captureDiffSnapshot();
 			await refreshGitStatus(root);
 			await refreshGitHistory(root);

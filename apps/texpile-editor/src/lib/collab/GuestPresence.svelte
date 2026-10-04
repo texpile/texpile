@@ -43,7 +43,7 @@
 	{/if}
 
 	<button
-		class="text-error-ink hover:bg-surface-200-800 flex h-[22px] items-center gap-1.5 rounded-base px-2"
+		class="text-error-ink hover:bg-surface-200-800 rounded-base flex h-[22px] items-center gap-1.5 px-2"
 		onclick={() => {
 			collabGuest.leave();
 			navigate('/');

@@ -12,4 +12,4 @@
 	});
 </script>
 
-<p class="bg-surface-200-800 max-w-full truncate rounded-base px-2 py-0.5 font-mono text-xs" use:tip={path}>{shown}</p>
+<p class="bg-surface-200-800 rounded-base max-w-full truncate px-2 py-0.5 font-mono text-xs" use:tip={path}>{shown}</p>

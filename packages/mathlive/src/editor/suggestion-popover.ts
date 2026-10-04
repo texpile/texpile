@@ -89,6 +89,8 @@ export function openSuggestionPopover(mf: _Mathfield, html: string): HTMLElement
   }
 
   setTimeout(() => {
+    // the mathfield was removed before the popover could show
+    if (!mf.element || mf.element.mathfield !== mf) return;
     if (panel && !isSuggestionPopoverVisible()) {
       panel.classList.add('is-visible');
       updateSuggestionPopoverPosition(mf);

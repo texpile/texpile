@@ -96,7 +96,7 @@
 			</div>
 			<!-- svelte-ignore a11y_autofocus -->
 			<textarea
-				class="textarea mt-2 w-full resize-none font-mono text-sm [field-sizing:content] rounded-container"
+				class="textarea rounded-container mt-2 [field-sizing:content] w-full resize-none font-mono text-sm"
 				rows="1"
 				bind:value={command}
 				placeholder={defaultCommand}

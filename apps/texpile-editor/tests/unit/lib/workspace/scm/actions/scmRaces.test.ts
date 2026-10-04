@@ -59,8 +59,9 @@ const toastGitFailure = vi.fn();
 vi.mock('$lib/workspace/scm/gitFailureToast', () => ({ toastGitFailure }));
 
 const { ScmActions } = await import('$lib/workspace/scm/actions/scmActions.svelte');
+type ScmDeps = ConstructorParameters<typeof ScmActions>[0];
 
-function makeScm(opts: { pending?: boolean; loaded?: string } = {}) {
+function makeScm(opts: { pending?: boolean; loaded?: string } = {}, deps: Partial<ScmDeps> = {}) {
 	return new ScmActions({
 		getLoadedPath: () => opts.loaded ?? null,
 		discardPendingSave: () => {},
@@ -77,7 +78,8 @@ function makeScm(opts: { pending?: boolean; loaded?: string } = {}) {
 		settleConflicts: () => {},
 		ignoreLines: () => [],
 		writeText: async () => {},
-		readTextIfPresent: async () => null
+		readTextIfPresent: async () => null,
+		...deps
 	});
 }
 
@@ -135,6 +137,38 @@ describe('a Sync that ends after another folder was opened', () => {
 		// committed where it began, and nothing sent from the folder open now
 		expect(gitCommit.mock.calls[0][0]).toBe('/a');
 		expect(gitSync).toHaveBeenCalledTimes(1);
+	});
+});
+
+// a reload after the pull took the typing out of the editor, and the autosave still queued then
+// wrote it over the versions that came in
+describe('typing while a Sync waits on the network', () => {
+	function typingDuringSync(pulledOverTyping: boolean) {
+		let pending = false;
+		const loadFile = vi.fn(async (_path: string) => {});
+		const flushPendingSave = vi.fn(async () => {
+			// the save guard turns the write away when git rewrote the file under it
+			if (!pulledOverTyping) pending = false;
+		});
+		gitSync.mockImplementationOnce(async () => {
+			pending = true;
+			return { ok: true, remote: 'origin', pulled: 1, pushed: 0 };
+		});
+		const scm = makeScm({ loaded: '/a/main.tex' }, { hasPendingSave: () => pending, flushPendingSave, loadFile });
+		return { scm, loadFile, flushPendingSave };
+	}
+
+	it('writes the typing through the save guard instead of reloading over it', async () => {
+		const { scm, loadFile, flushPendingSave } = typingDuringSync(true);
+		await scm.sync();
+		expect(flushPendingSave).toHaveBeenCalledOnce();
+		expect(loadFile).not.toHaveBeenCalled();
+	});
+
+	it('still reloads the file once the typing is on disk', async () => {
+		const { scm, loadFile } = typingDuringSync(false);
+		await scm.sync();
+		expect(loadFile).toHaveBeenCalledWith('/a/main.tex');
 	});
 });
 

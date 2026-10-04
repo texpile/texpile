@@ -207,9 +207,10 @@ export class WorkspaceComments {
 		return editOpenFile(d, before, next, edit);
 	}
 
-	/** comments and suggestions carried through a change to a file that is not open (a replace across files) */
-	editClosedFile(change: Parameters<typeof carryClosedEdit>[3]): Promise<void> {
-		return carryClosedEdit(this.ctl, workspaceRoot.current, this.mode(), change);
+	/** comments and suggestions carried through a change to a file that is not open (a replace across files);
+	 *  `made` is the mode an undo or a redo of it goes in */
+	editClosedFile(path: string, before: string, after: string, edits: TextEdit[], made?: EditMode): Promise<EditMode> {
+		return carryClosedEdit(this.ctl, workspaceRoot.current, made ?? this.mode(), { path, before, after, edits });
 	}
 
 	/** the visual editor patches whole paragraphs, so a replace there carries comments by their text */
@@ -245,7 +246,7 @@ export class WorkspaceComments {
 
 	discarded(absPath: string): void {
 		const root = workspaceRoot.current;
-		if (root) this.ctl.suggestions.discardUnsaved(relativeTo(root, absPath));
+		if (root) void this.ctl.suggestions.discardUnsaved(relativeTo(root, absPath));
 	}
 
 	async adoptDisk(): Promise<void> {

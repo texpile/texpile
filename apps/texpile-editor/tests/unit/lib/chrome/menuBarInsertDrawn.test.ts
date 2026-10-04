@@ -2,8 +2,12 @@
 import { it, expect, afterEach } from 'vitest';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
+import { EditorState as CMState } from '@codemirror/state';
+import { EditorView as CMView } from '@codemirror/view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { editorViewStore } from '$lib/stores/editorStore';
+import { editorViewStore, sourceCmView, viewMode } from '$lib/stores/editorStore';
+import { projectIntelStore } from '$lib/stores/projectIntel';
+import { activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
 import { makeDrawnInserts } from '$lib/chrome/menubar/menuBarInsertDrawn';
 
 const para = (text: string) => schema.nodes.paragraph.create(null, schema.text(text));
@@ -22,6 +26,9 @@ const insert = makeDrawnInserts({ dialect: () => 'tex', askText: async () => nul
 afterEach(() => {
 	editorViewStore.current?.destroy();
 	editorViewStore.current = null;
+	activeFilePath.current = null;
+	mainFile.current = null;
+	projectIntelStore.current = { ...projectIntelStore.current, bibEntries: [] };
 });
 
 it('keeps a command name from running into the word after it', async () => {
@@ -39,4 +46,30 @@ it('puts a comment after the paragraph instead of through a word', async () => {
 	await insert('comment');
 	const blocks = view.state.doc.content.content.map((node) => `${node.type.name}:${node.textContent}`);
 	expect(blocks).toEqual(['paragraph:A paragraph before the comments.', 'raw_latex:% ']);
+});
+
+it('names a .bib in a subfolder by its path from the main file, as BibTeX looks it up', async () => {
+	activeFilePath.current = '/project/chapters/intro.tex';
+	mainFile.current = '/project/main.tex';
+	projectIntelStore.current = { ...projectIntelStore.current, bibEntries: [{ key: 'a', file: '/project/bib/refs.bib', line: 1 }] };
+	const view = editorWith('Text.', '.');
+	await insert('bibliography');
+	const chips: string[] = [];
+	view.state.doc.descendants((node) => void (node.type.name === 'inline_latex' && chips.push(node.textContent)));
+	expect(chips).toEqual(['\\bibliographystyle{plain}', '\\bibliography{bib/refs}']);
+});
+
+it('writes a Typst include typed in source mode as a Typst string', async () => {
+	const cm = new CMView({ state: CMState.create({ doc: 'Intro.' }), parent: document.body });
+	sourceCmView.current = cm;
+	viewMode.current = 'source';
+	try {
+		const typst = makeDrawnInserts({ dialect: () => 'typ', askText: async () => 'chapters\\notes "draft".typ' });
+		await typst('include');
+		expect(cm.state.doc.toString()).toBe('Intro.\n#include "chapters\\\\notes \\"draft\\".typ"');
+	} finally {
+		cm.destroy();
+		sourceCmView.current = null;
+		viewMode.current = 'visual';
+	}
 });

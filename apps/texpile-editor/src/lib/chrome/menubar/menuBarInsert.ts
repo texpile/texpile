@@ -142,7 +142,7 @@ export function makeInsertHandlers(deps: InsertDeps): {
 					break;
 				case 'citation': {
 					const key = referenceStore.current?.[0]?.key ?? 'key';
-					if (dialect === 'tex') cmReplace(cm, `\\autocite{${key}}`);
+					if (dialect === 'tex') cmReplace(cm, `\\cite{${key}}`);
 					else if (dialect === 'typ') cmReplace(cm, `@${key}`);
 					break;
 				}
@@ -202,7 +202,7 @@ export function makeInsertHandlers(deps: InsertDeps): {
 				insertNode((state) =>
 					state.schema.nodes.typ_ref
 						? state.schema.nodes.typ_ref.create({ target: key })
-						: state.schema.nodes.citation.create({ variant: 'autocite' }, state.schema.text(key))
+						: state.schema.nodes.citation.create({ variant: 'cite' }, state.schema.text(key))
 				);
 				break;
 			}

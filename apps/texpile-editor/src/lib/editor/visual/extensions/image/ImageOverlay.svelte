@@ -41,7 +41,7 @@
 </script>
 
 <div class="image-overlay-wrapper" bind:this={overlayElement}>
-	<div class="pointer-events-auto absolute right-2 top-2">
+	<div class="pointer-events-auto absolute top-2 right-2">
 		<Popover
 			open={settingsOpen}
 			onOpenChange={(e) => (settingsOpen = e.open)}

@@ -20,12 +20,12 @@
 </script>
 
 <span
-	class="border-surface-700 bg-surface-950 text-surface-50 inline-flex h-6 shrink-0 items-center gap-1.5 rounded-base border pr-0.5 pl-2 font-mono text-xs"
+	class="border-surface-700 bg-surface-950 text-surface-50 rounded-base inline-flex h-6 shrink-0 items-center gap-1.5 border pr-0.5 pl-2 font-mono text-xs"
 >
 	<span class="text-surface-400 select-none">$</span>
 	<span class="select-all">{props.command}</span>
 	<button
-		class="hover:bg-surface-800 text-surface-300 flex size-5 items-center justify-center rounded-base"
+		class="hover:bg-surface-800 text-surface-300 rounded-base flex size-5 items-center justify-center"
 		use:tip={copied ? m.menubar_copied() : m.menubar_copy()}
 		aria-label={m.menubar_copy()}
 		onclick={copyCommand}

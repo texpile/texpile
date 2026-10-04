@@ -180,14 +180,20 @@ function writeAtoms(
   const pieces: Piece[] = [];
   for (let i = 0; i < list.length; i++) {
     const atom = list[i];
+    if (
+      atom.type === 'error' &&
+      UNWRITTEN_WITH_ARGUMENT.test(atom.value ?? '')
+    ) {
+      if (list[i + 1]?.type === 'group') i++;
+      continue;
+    }
     let text: string;
     let end = i + 1;
-    if (atom.mode === 'text' && !isCode(atom)) {
+    if (isString(atom)) {
       // a run of text atoms is one string; a string the source started starts a new one
       while (
         end < list.length &&
-        list[end].mode === 'text' &&
-        !isCode(list[end]) &&
+        isString(list[end]) &&
         !list[end].typstSpelling?.str
       )
         end++;
@@ -357,7 +363,7 @@ function isCode(atom: Atom): boolean {
 }
 
 function isString(atom: Atom): boolean {
-  return atom.mode === 'text' && !isCode(atom);
+  return atom.mode === 'text' && !isCode(atom) && atom.command !== '\\emph';
 }
 
 const STRING_ESCAPES: Readonly<Record<string, string>> = {
@@ -438,6 +444,14 @@ function isCallArgs(previous: Atom | undefined, atom: Atom): boolean {
     previous?.parent?.typstSpelling?.call && previous.parent === atom.parent
   );
 }
+
+// LaTeX written as nothing: a rule between an array's rows, which `mat()` draws none of; a row's
+// number or a break hint, which Typst sets for the whole equation; and a placement Typst has none
+// of, whose argument follows as what it places
+const UNWRITTEN =
+  /^\\(h(dash)?line|nonumber|notag|(display|allow|no|line|page|nopage)break|protect|hfill|(big|med|small)skip|mathclap|lefteqn|shove(left|right)|fbox)$/;
+// and with the argument it takes: a row's label or tag, vertical space, a rule under some columns
+const UNWRITTEN_WITH_ARGUMENT = /^\\(label|tag\*?|vspace|c(dash)?line)$/;
 
 /** `next` is the atom written after this one, which scripts it when it is a `subsup` */
 function writeAtom(atom: Atom, style: PrivateStyle, next?: Atom): string {
@@ -523,10 +537,7 @@ function writeCore(
     // a command MathLive did not know, shown as written
     case 'error':
       if (spelling.name !== undefined) return writeSymbol(atom, spelling);
-      // a rule between an array's rows, which `mat()` draws none of
-      return /^\\[hc](dash)?line$/.test(atom.value ?? '')
-        ? ''
-        : writeString([atom]);
+      return UNWRITTEN.test(atom.value ?? '') ? '' : writeString([atom]);
     case 'operator':
       // `\Re` and `\smallint` are symbols Typst has a name for
       if ([...(atom.value ?? '')].length === 1)
@@ -536,6 +547,13 @@ function writeCore(
         typstOperator(atom.value ?? '', atom.subsupPlacement === 'over-under')
       );
   }
+  // the italic text LaTeX sets
+  if (command === '\\emph')
+    return writeCall(
+      'italic',
+      [writeBranch(atom.body ?? [], style, true, true)],
+      spelling
+    );
   if (TYPST_ACCENT_NAMES[command])
     return writeCall(
       accentName(command, spelling),
@@ -707,6 +725,8 @@ function writeOverUnder(
   );
 }
 
+const MATH_NAME = /^\p{L}[\p{L}\p{N}]*(?:\.[\p{L}\p{N}]+)*$/u;
+
 function writeOperatorName(atom: Atom, spelling: TypstSpelling): string {
   const name = children(atom.body)
     // `\ ` keeps a space in the name, as a no-break one
@@ -716,7 +736,11 @@ function writeOperatorName(atom: Atom, spelling: TypstSpelling): string {
     .join('');
   if (spelling.name === 'op' && spelling.args)
     return writeCall('op', [JSON.stringify(name)], spelling);
-  if (spelling.name !== undefined) return spelling.name;
+  const read = spelling.name;
+  if (read !== undefined && (OPERATOR_TEXT[read] ?? read) === name) return read;
+  // a call's name renamed in the field
+  if (atom.parent?.typstSpelling?.call !== undefined && MATH_NAME.test(name))
+    return name;
   return typstOperator(name, atom.command.endsWith('*'));
 }
 

@@ -37,7 +37,7 @@ export function registerAgentIpc(): void {
 			: { ok: false, error: 'bad request' }
 	);
 
-	ipcMain.handle('agent:run', async (_e, req: { id?: unknown; prompt?: unknown; system?: unknown; agent?: unknown }) => {
+	ipcMain.handle('agent:run', async (e, req: { id?: unknown; prompt?: unknown; system?: unknown; agent?: unknown }) => {
 		if (typeof req?.id !== 'string' || typeof req.prompt !== 'string' || typeof req.agent !== 'string')
 			return { ok: false, error: 'bad request' };
 		const system = typeof req.system === 'string' ? req.system : '';
@@ -48,10 +48,16 @@ export function registerAgentIpc(): void {
 		if (!argv) return { ok: false, error: 'no agent is set in Preferences' };
 		const abort = new AbortController();
 		running.set(req.id, abort);
+		// a window that closed can no longer cancel its own run
+		function stop(): void {
+			abort.abort();
+		}
+		e.sender.once('destroyed', stop);
 		try {
 			return await runAgent(argv, { system, request: req.prompt }, abort.signal, agentStdio(req.agent));
 		} finally {
 			running.delete(req.id);
+			e.sender.removeListener('destroyed', stop);
 		}
 	});
 

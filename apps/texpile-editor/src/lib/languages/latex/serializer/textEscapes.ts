@@ -14,6 +14,8 @@ const ESCAPE_MAP: Record<string, string> = {
 	'^': '\\textasciicircum{}'
 };
 
+const TEXT_SYMBOL: Record<string, string> = { '<': '\\textless{}', '>': '\\textgreater{}', '|': '\\textbar{}' };
+
 /** text-mode escaping, single pass (runs per text node on every serialization). */
 export function sanitizeText(text: string): string {
 	return text.replace(ESCAPE_RE, (ch) => ESCAPE_MAP[ch]);
@@ -69,11 +71,16 @@ function textcolorMark(a: Record<string, unknown>): { open: string; close: strin
 
 // \sethlcolor takes a color name, never a model, so a color only a model can say highlights in the default one
 function highlightMark(a: Record<string, unknown>): { open: string; close: string } {
+	if (a.cmd === 'colorbox') {
+		const box = xcolorOf(a.color ?? 'yellow', a.model);
+		if (box) return { open: `\\colorbox${box.model ? `[${box.model}]` : ''}{${esc(box.value)}}{`, close: '}' };
+	}
 	const c = a.color == null ? null : xcolorOf(a.color, null);
 	return c && !c.model ? { open: `{\\sethlcolor{${esc(c.value)}}\\hl{`, close: '}}' } : { open: '\\hl{', close: '}' };
 }
 
-// em is \textit unless the file said \emph; highlight is soul's \hl. href is NOT escaped.
+// em is \textit unless the file said \emph; highlight is soul's \hl. href escapes only % and #, which
+// break it inside another command's argument and which hyperref reads back as themselves
 const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; close: string }> = {
 	strong: () => ({ open: '\\textbf{', close: '}' }),
 	em: (a) => (a.cmd === 'emph' ? { open: '\\emph{', close: '}' } : { open: '\\textit{', close: '}' }),
@@ -81,7 +88,7 @@ const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; 
 	sup: () => ({ open: '\\textsuperscript{', close: '}' }),
 	sub: () => ({ open: '\\textsubscript{', close: '}' }),
 	code: () => ({ open: '\\texttt{', close: '}' }),
-	link: (a) => ({ open: `\\href{${String(a.href ?? '')}}{`, close: '}' }),
+	link: (a) => ({ open: `\\href{${String(a.href ?? '').replace(/(?<!\\)[%#]/g, '\\$&')}}{`, close: '}' }),
 	textcolor: textcolorMark,
 	highlight: highlightMark
 };
@@ -149,6 +156,9 @@ export function bareTextString(text: string, isCode: boolean): string {
 	// MUST run before the no-break space goes back to ~, or it would escape that one too. Code
 	// keeps its literal bytes and never had the tie converted, so it is left alone.
 	if (!isCode) result = result.replace(/~/g, '\\textasciitilde{}');
+	// in LaTeX's default font encoding a bare < > | in text draws as ¡ ¿ and a dash; the text commands
+	// draw the characters in every encoding, and read back as them
+	if (!isCode) result = result.replace(/[<>|]/g, (ch) => TEXT_SYMBOL[ch]);
 	// a no-break space (from a ~ tie) must go back to ~, not a raw U+00A0 byte (renders
 	// differently without inputenc, and is unfaithful to the source either way).
 	result = result.replace(/\u00A0/g, '~');

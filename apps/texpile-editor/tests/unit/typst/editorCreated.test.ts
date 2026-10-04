@@ -42,6 +42,18 @@ describe('references (T2)', () => {
 		]);
 	});
 
+	it('a dot after a ref, emphasised with it, stays out of its target', () => {
+		const p = para(text('See '), n.typ_ref.create({ target: 'eq:mass' }).mark([m.em.create()]), text('.', ['em']));
+		const src = out(p);
+		// `_` is a character of a label: `@eq:mass._` would refer to `eq:mass._`, its emphasis left open
+		expect(src).toBe('See _@eq:mass\\._');
+		expect(
+			typstToProseMirror(src + '\n')
+				.doc.child(0)
+				.toJSON()
+		).toEqual(p.toJSON());
+	});
+
 	it('an emphasised ref keeps its delimiters outside the marker', () => {
 		const ref = n.typ_ref.create({ target: 'h' }).mark([m.em.create()]);
 		expect(out(para(ref))).toBe('_#ref(<h>)_');
@@ -118,6 +130,26 @@ describe('line-start markers inside brackets (T11)', () => {
 			expect(back.type.name).toBe('table');
 			expect(back.child(0).childCount).toBe(2);
 		}
+	});
+});
+
+describe('line-start markers after a block comment', () => {
+	it('a marker typed after a block comment opening the line is escaped, as typst reads past the comment', () => {
+		const comment = n.inline_latex.create({ lang: 'typst' }, typSchema.text('/* c */'));
+		for (const marker of ['-', '+', '=']) {
+			expect(out(para(comment, text(` ${marker} Foo`)))).toBe(`/* c */ \\${marker} Foo`);
+			// the same after a line break, where the paragraph reads back as itself
+			const p = para(text('Text'), n.hard_break.create({ lineBreak: true }), comment, text(` ${marker} Foo`));
+			const src = out(p);
+			expect(src).toBe(`Text\\\n/* c */ \\${marker} Foo`);
+			expect(
+				typstToProseMirror(src + '\n')
+					.doc.child(0)
+					.toJSON()
+			).toEqual(p.toJSON());
+		}
+		// mid-line, after words, a marker is text already
+		expect(out(para(text('x '), comment, text(' - y')))).toBe('x /* c */ - y');
 	});
 });
 

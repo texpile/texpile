@@ -1,7 +1,7 @@
 // CST helpers and the inline walker: text, marks, links, shorthands, inline math
 import type { SyntaxNode } from '@lezer/common';
 import { buildNode, textNodes, collapseTextNodes, realMarks, type PmNode, type PmMark } from './builders';
-import { alignedSpans, bytesSpan, noteSpans, spansOf, standsFor } from '$lib/editor/visual/sourceSpans';
+import { alignedSpans, bytesSpan, noteSpans, spansOf, standsFor, type LeafSpan } from '$lib/editor/visual/sourceSpans';
 import { refCallParts, refMarkupParts } from './refConvert';
 import { spelledAs } from '../serialize/refSource';
 
@@ -120,6 +120,13 @@ export function rawCallText(call: SyntaxNode, src: string): string | null {
 	const parts = singleArgCall(call, src, 'raw');
 	if (!parts || parts.content || parts.arg.name !== 'Str') return null;
 	return unquote(src.slice(parts.arg.from, parts.arg.to));
+}
+
+/** what the text of a raw call stands for: the string between its quotes, a character a byte where nothing in it is escaped */
+function rawCallSpans(call: SyntaxNode, src: string, text: string): LeafSpan[] {
+	const str = singleArgCall(call, src, 'raw')!.arg;
+	const from = str.from + 1;
+	return src.slice(from, str.to - 1) === text ? bytesSpan(text.length, from) : standsFor(text.length, from, str.to - 1);
 }
 
 /** `#link("https://...")` with no body, which the serializer writes for a bare url that the text
@@ -328,7 +335,7 @@ export function convertInline(nodes: SyntaxNode[], src: string, marks: PmMark[])
 					const ref = withMarks(noteSpans(buildNode('typ_ref', refCall), standsFor(1, k.from, next.to)), marks);
 					out.push(spelledAs(ref, src.slice(k.from, next.to)));
 				} else if (rawText != null) {
-					out.push(...textNodes(rawText, [...marks, { type: 'code' }], standsFor(rawText.length, k.from, next.to)));
+					out.push(...textNodes(rawText, [...marks, { type: 'code' }], rawCallSpans(next, src, rawText)));
 				} else {
 					// a terminating semicolon belongs to the expression (`#a; text`)
 					const end = expressionEnd(nodes, i + 1, src);

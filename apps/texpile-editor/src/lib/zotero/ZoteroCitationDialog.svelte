@@ -171,7 +171,7 @@
 				{#if selected.size > 0}
 					<div class="border-surface-200-800 flex flex-wrap gap-1.5 border-b px-3 py-2">
 						{#each [...selected.values()] as hit (hit.citekey)}
-							<span class="preset-tonal flex max-w-60 items-center gap-1 rounded-base px-1.5 py-0.5 text-xs">
+							<span class="preset-tonal rounded-base flex max-w-60 items-center gap-1 px-1.5 py-0.5 text-xs">
 								<span class="truncate">{hit.title || hit.citekey}</span>
 								<button
 									class="hover:text-error-ink shrink-0"
@@ -191,7 +191,7 @@
 						{searched && query.trim() ? m.zotero_dialog_empty() : m.zotero_dialog_type_hint()}
 					</div>
 				{:else}
-					<Combobox.Content class="min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-none bg-transparent p-1.5">
+					<Combobox.Content class="min-h-0 [scrollbar-gutter:stable] overflow-y-auto border-none bg-transparent p-1.5">
 						{#each shown as hit, i (hit.citekey)}
 							{@const header = headerOf(i)}
 							{#if header}

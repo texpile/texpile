@@ -119,18 +119,22 @@ export const MACRO_SIGNATURES: NonNullable<ParseOptions['macros']> = {
 	medskip: { signature: '' },
 	bigskip: { signature: '' },
 
-	// biblatex/natbib citations ([pre][post]{key}), missing from the default DB
-	citep: { signature: 'o o m' },
-	citet: { signature: 'o o m' },
-	parencite: { signature: 'o o m' },
-	textcite: { signature: 'o o m' },
-	autocite: { signature: 'o o m' },
-	footcite: { signature: 'o o m' },
+	// biblatex/natbib citations ([pre][post]{key}), missing from the default DB; the star of
+	// \citet* and \parencite* is read as one, not taken for the key
+	citep: { signature: 's o o m' },
+	citet: { signature: 's o o m' },
+	parencite: { signature: 's o o m' },
+	textcite: { signature: 's o o m' },
+	autocite: { signature: 's o o m' },
+	footcite: { signature: 's o o m' },
+	citeauthor: { signature: 's o o m' },
+	citealt: { signature: 's o o m' },
+	citealp: { signature: 's o o m' },
 	nocite: { signature: 'm' },
 	defbibheading: { signature: 'm m' },
 	addbibresource: { signature: 'm' },
 	// override: natbib \cite takes [pre][post]; the default `o m` allows only one optional.
-	cite: { signature: 'o o m' },
+	cite: { signature: 's o o m' },
 	// override: the default registers no signature; biblatex takes [options].
 	printbibliography: { signature: 'o' },
 	// override: the default `o m` has no star, so \caption*{x} parsed as \caption{*} with x adrift

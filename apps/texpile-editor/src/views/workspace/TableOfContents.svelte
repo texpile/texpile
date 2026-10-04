@@ -124,7 +124,7 @@
 					<!-- the chevron's slot is kept on every row, so a heading's text lines up whether it folds or not -->
 					<div
 						transition:slide={{ duration: SLIDE_MS }}
-						class="hover:preset-tonal flex w-full max-w-full items-center rounded-base transition-colors {item.kind ? 'opacity-80' : ''}"
+						class="hover:preset-tonal rounded-base flex w-full max-w-full items-center transition-colors {item.kind ? 'opacity-80' : ''}"
 						class:bg-primary-tint={i === active}
 						style="padding-left: {(Math.max(1, item.level) - 1) * 0.7}rem"
 					>

@@ -64,25 +64,29 @@ function makeScm(
 		loaded?: string;
 		trash?: (p: string) => Promise<'trashed' | 'kept'>;
 		remove?: (p: string) => Promise<void>;
+		read?: (p: string) => Promise<string | null>;
+		compareTab?: (path: string, compare: { hash: string; subject: string; path?: string }) => void;
+		hasPending?: () => boolean;
+		load?: (p: string) => Promise<void>;
 	} = {}
 ) {
 	return new ScmActions({
 		getLoadedPath: () => opts.loaded ?? null,
 		discardPendingSave: discarded,
-		hasPendingSave: () => opts.pending ?? false,
+		hasPendingSave: opts.hasPending ?? (() => opts.pending ?? false),
 		flushPendingSave: flushed,
 		trashEntry: opts.trash ?? (async () => 'trashed' as const),
 		removeEntry: opts.remove ?? (async () => {}),
 		refreshTree: async () => {},
-		loadFile: async () => {},
+		loadFile: opts.load ?? (async () => {}),
 		captureDiffSnapshot: () => {},
 		isDiffMode: () => false,
-		openCompareTab: () => {},
+		openCompareTab: opts.compareTab ?? (() => {}),
 		openAtLine: () => {},
 		settleConflicts: () => {},
 		ignoreLines: () => [],
 		writeText: async () => {},
-		readTextIfPresent: async () => null
+		readTextIfPresent: opts.read ?? (async () => null)
 	});
 }
 
@@ -112,6 +116,24 @@ describe('restoring a version', () => {
 		confirmAsk.mockResolvedValueOnce(false as never);
 		expect(await makeScm().restore(ENTRY)).toBe(false);
 		expect(gitRestore).not.toHaveBeenCalled();
+	});
+});
+
+// typed while the restore ran: the reload took it out of the editor, and the autosave still queued
+// then wrote it over the restored file
+describe('typing while a restore runs', () => {
+	it('is written through the save guard instead of reloaded over', async () => {
+		let pending = false;
+		const load = vi.fn(async (_p: string) => {});
+		flushed.mockClear();
+		gitChanges.current = [];
+		gitRestore.mockImplementationOnce(async () => {
+			pending = true;
+			return { ok: true };
+		});
+		expect(await makeScm({ loaded: 'C:/project/main.tex', hasPending: () => pending, load }).restore(ENTRY)).toBe(true);
+		expect(flushed).toHaveBeenCalledOnce();
+		expect(load).not.toHaveBeenCalled();
 	});
 });
 
@@ -274,6 +296,14 @@ describe('saving a version, as VS Code would', () => {
 	});
 });
 
+describe('comparing with a version', () => {
+	it('reads a file renamed since under the name it had in that version', () => {
+		const tabs: unknown[][] = [];
+		makeScm({ compareTab: (...args) => void tabs.push(args) }).compare(ENTRY, 'C:/project/introduction.tex', 'C:/project/intro.tex');
+		expect(tabs).toEqual([['C:/project/introduction.tex', { ...ENTRY, path: 'C:/project/intro.tex' }]]);
+	});
+});
+
 describe('throwing changes away', () => {
 	beforeEach(() => {
 		gitDiscard.mockClear();
@@ -297,6 +327,25 @@ describe('throwing changes away', () => {
 		]);
 		expect(trashed).toEqual(['C:/project/introduction.tex']);
 		expect(gitDiscard.mock.calls.at(-1)?.[1]).toEqual(['C:/project/intro.tex']);
+	});
+
+	// git mv intro.tex introduction.tex, then a new intro.tex started: the checkout of the old name
+	// used to write over it, with no copy in the Trash or in Local History
+	it('moves a new file started at the old name to the Trash before putting the old one back', async () => {
+		const steps: string[] = [];
+		gitDiscard.mockImplementationOnce(async (_root, paths) => (steps.push(`checkout ${paths.join()}`), { ok: true }));
+		await makeScm({
+			trash: async (p) => (steps.push(`trash ${p}`), 'trashed'),
+			read: async (p) => (p === 'C:/project/intro.tex' ? 'A new introduction.\n' : null)
+		}).discard([{ path: 'C:/project/introduction.tex', x: 'R', y: ' ', from: 'C:/project/intro.tex' } as never]);
+		expect(steps).toEqual(['trash C:/project/introduction.tex', 'trash C:/project/intro.tex', 'checkout C:/project/intro.tex']);
+	});
+
+	it('leaves the new file at the old name, and the rename undone only in part, when it may not be deleted', async () => {
+		const scm = makeScm({ trash: async () => 'kept', read: async (p) => (p === 'C:/project/intro.tex' ? 'A new introduction.\n' : null) });
+		confirmAsk.mockResolvedValueOnce(true).mockResolvedValueOnce(false);
+		await scm.discard([{ path: 'C:/project/introduction.tex', x: 'R', y: ' ', from: 'C:/project/intro.tex' } as never]);
+		expect(gitDiscard).not.toHaveBeenCalled();
 	});
 
 	it('asks before deleting outright where there is no Trash, and keeps the file on no', async () => {

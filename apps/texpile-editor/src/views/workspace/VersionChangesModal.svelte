@@ -85,7 +85,7 @@
 		<p class="text-muted text-sm">{m.vcs_version_changes_none()}</p>
 	{:else}
 		<div class="flex min-h-0 flex-1 gap-3">
-			<ul class="border-surface-200-800 w-60 shrink-0 overflow-y-auto rounded-base border py-1" aria-label={m.vcs_version_changes_files()}>
+			<ul class="border-surface-200-800 rounded-base w-60 shrink-0 overflow-y-auto border py-1" aria-label={m.vcs_version_changes_files()}>
 				{#each files as f (f.path)}
 					<li>
 						<button
@@ -105,7 +105,7 @@
 				{/each}
 			</ul>
 
-			<div class="border-surface-200-800 flex min-w-0 flex-1 flex-col overflow-hidden rounded-base border">
+			<div class="border-surface-200-800 rounded-base flex min-w-0 flex-1 flex-col overflow-hidden border">
 				<div class="bg-surface-100-900 border-surface-200-800 text-muted flex min-h-8 shrink-0 items-center gap-2 border-b px-3 text-xs">
 					<span class="min-w-0 truncate">{picked ? labels.relPath(picked.path) : ''}</span>
 					<button

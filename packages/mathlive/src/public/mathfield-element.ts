@@ -29,7 +29,7 @@ import {
 } from '../editor-mathfield/options';
 import { _Mathfield } from '../editor-mathfield/mathfield-private';
 import { offsetFromPoint } from '../editor-mathfield/pointer-input';
-import { getElementInfo, getHref } from '../editor-mathfield/utils';
+import { getElementInfo } from '../editor-mathfield/utils';
 import {
   isBrowser,
   isInIframe,
@@ -610,16 +610,6 @@ export class MathfieldElement extends HTMLElement implements Mathfield {
       reloadFonts();
     }
   }
-
-  static openUrl = (href: string): void => {
-    if (!href) return;
-    const url = new URL(href);
-    if (!['http:', 'https:', 'file:'].includes(url.protocol.toLowerCase())) {
-      MathfieldElement.playSound('plonk');
-      return;
-    }
-    window.open(url, '_blank');
-  };
 
   /** @internal */
   get fontsDirectory(): never {
@@ -1390,12 +1380,9 @@ export class MathfieldElement extends HTMLElement implements Mathfield {
             })
           );
 
-          // Check if a \href command was clicked on (or its children)
-          const offset = this.getOffsetFromPoint(evt.clientX, evt.clientY);
-          if (offset >= 0) MathfieldElement.openUrl(getHref(mf, offset));
           // set cursor position if selection is collapsed on touch events
           if (evt.pointerType === 'touch' && this.selectionIsCollapsed)
-            this.position = offset;
+            this.position = this.getOffsetFromPoint(evt.clientX, evt.clientY);
         }
       },
       { once: true }

@@ -18,6 +18,7 @@
 	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 	import { firstRowHeader } from './firstRowHeader';
+	import { tableAlignment } from './tableAlignment';
 	import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 	import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
 	import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
@@ -172,6 +173,7 @@
 			crossBlockEdits,
 			visualSmartPaste('markdown', mdSchema, pasteMarkdownSource),
 			firstRowHeader,
+			tableAlignment,
 			...createListPlugins({ schema: mdSchema }),
 			listAttrInheritance,
 			history(),

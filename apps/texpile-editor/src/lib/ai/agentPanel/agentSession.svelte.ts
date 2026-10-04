@@ -1,5 +1,6 @@
 // The window's conversation with its agent, kept here rather than in the panel: the dock unmounts a tab
 // it is not showing, and the conversation has to outlive that
+import { untrack } from 'svelte';
 import { acpBridge, type AcpBridge } from './acpBridge';
 import { applyUpdate, availableCommands, configOptions, itemId, toolTitle } from './agentItems';
 import { keepBefore } from './changes/agentBefore';
@@ -50,6 +51,8 @@ export class AgentSession {
 	private conversation = 0;
 	/** while the agent replays a chat; a live turn's own message is the one this window sent */
 	private replaying = false;
+	/** a Stop pressed while the save before a turn runs, when main has no turn yet to stop */
+	private stopAsked = false;
 
 	constructor(private bridge: () => AcpBridge | undefined = acpBridge) {}
 
@@ -109,9 +112,14 @@ export class AgentSession {
 		const conversation = this.conversation;
 		// at once: a message sent while the save and main's look at the folder run would start a second turn
 		this.state = 'working';
+		this.stopAsked = false;
 		await agentHost.current?.flushPendingSave();
 		if (conversation !== this.conversation) return;
 		this.items = [...this.items, { kind: 'user', id: itemId(), text, attached }];
+		if (this.stopAsked) {
+			this.state = 'ready';
+			return;
+		}
 		const r = await bridge.prompt([{ type: 'text', text }, ...attachedBlocks(attached)]);
 		if (conversation !== this.conversation) return;
 		// read again: events moved it on while the turn ran. Main moves it on before it answers, so one still
@@ -129,6 +137,7 @@ export class AgentSession {
 	}
 
 	cancel(): void {
+		this.stopAsked = true;
 		this.bridge()?.cancel();
 	}
 
@@ -187,6 +196,15 @@ export function agentSessionStale(): boolean {
 	const ticked = settings.current.agentPanelAgents;
 	const unticked = !!ticked && !!agentSession.agent && !ticked.includes(agentSession.agent);
 	return !!root && (panelTabOff() || unticked || agentUnavailable() !== null || root !== workspaceRoot.current);
+}
+
+/** for the workspace view: the conversation ends once stale, and with the view, which Close Folder takes down
+ *  before the stale check can see the folder go */
+export function closeAgentSessionWithWorkspace(): void {
+	$effect(() => {
+		if (agentSessionStale()) untrack(() => agentSession.close());
+	});
+	$effect(() => () => agentSession.close());
 }
 
 /** the agent the tab names: the one running, else the one chosen */

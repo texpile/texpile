@@ -8,6 +8,7 @@ import { getActiveKeyboardLayout } from '../editor/keyboard-layout';
 import { releaseStylesheet, injectStylesheet } from '../common/stylesheet';
 import { loadFonts } from '../core/fonts';
 import { Context } from '../core/context';
+import { getDefaultContext } from '../core/context-utils';
 
 import { LAYOUTS } from './data';
 import { VirtualKeyboard } from './virtual-keyboard';
@@ -42,7 +43,9 @@ function jsonToCss(json): string {
 function latexToMarkup(latex: string): string {
   if (!latex) return '';
 
-  const context = new Context();
+  const context = new Context({
+    from: { ...getDefaultContext(), allowHtmlCommands: true },
+  });
 
   const root = new Atom({
     mode: 'math',

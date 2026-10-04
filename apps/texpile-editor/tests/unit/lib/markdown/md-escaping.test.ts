@@ -82,6 +82,21 @@ describe('prose escaping', () => {
 		expect(markdownToProseMirror(math('a$b')).doc.child(0).child(0).type.name).toBe('inline_math');
 	});
 
+	it('reads math back after a backslash or ending in an escaped one', () => {
+		const kinds = (out: string) => {
+			const seen: string[] = [];
+			markdownToProseMirror(out)
+				.doc.child(0)
+				.forEach((c) => seen.push(`${c.type.name}:${c.textContent}`));
+			return seen;
+		};
+		const x = mdSchema.nodes.inline_math.create(null, mdSchema.text('x'));
+		expect(kinds(serializeToMarkdown(docOf(para('a\\', x, ' b'))))).toEqual(['text:a\\', 'inline_math:x', 'text: b']);
+		const rows = mdSchema.nodes.inline_math.create(null, mdSchema.text('a\\\\'));
+		expect(kinds(serializeToMarkdown(docOf(para('see ', rows))))).toEqual(['text:see ', 'inline_math:a\\\\']);
+		expect(kinds('\\$x$ and \\\\\\$y$\n')).toEqual(['text:$x$ and \\$y$']);
+	});
+
 	// M3
 	it('escapes pipes inside every kind of table cell content', () => {
 		expect(gen('| a |\n|---|\n| `x\\|y` |\n')).toBe('| a |\n| --- |\n| `x\\|y` |');

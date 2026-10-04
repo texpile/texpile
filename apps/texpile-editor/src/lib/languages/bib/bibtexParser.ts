@@ -10,11 +10,17 @@ export type ParsedBibtexEntry = {
  * File-order token stream from parse(). Comment/preamble/string blocks are verbatim so the
  * serializer can round-trip them; entries carry their raw source range plus hasInlineComment.
  */
-export type BibToken =
+export type BibToken = (
 	| { kind: 'entry'; entry: ParsedBibtexEntry; raw: string; hasInlineComment: boolean }
 	| { kind: 'comment'; text: string } //   `%…\n`  OR  `@Comment{…}`
 	| { kind: 'preamble'; text: string } // `@Preamble{…}`
-	| { kind: 'string'; text: string }; //   `@String{name = "value"}`
+	| { kind: 'string'; text: string } //   `@String{name = "value"}`
+) & {
+	/** the file's bytes between the token before and this one */
+	pre?: string;
+	/** on the file's last token, the bytes after it */
+	post?: string;
+};
 
 class BibtexParser {
 	private months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
@@ -24,6 +30,7 @@ class BibtexParser {
 	private pos = 0;
 	private input = '';
 	private tokens: BibToken[] = [];
+	private lastEnd = 0;
 	private currentEntry: Partial<ParsedBibtexEntry> = {};
 	/** true while parsing an entry body, routes % detection to hasInlineComment. */
 	private insideEntry = false;
@@ -34,6 +41,7 @@ class BibtexParser {
 		this.input = text;
 		this.pos = 0;
 		this.tokens = [];
+		this.lastEnd = 0;
 		this.insideEntry = false;
 		this.currentHasInlineComment = false;
 	}
@@ -44,6 +52,11 @@ class BibtexParser {
 
 	getTokens(): BibToken[] {
 		return this.tokens;
+	}
+
+	private push(token: BibToken, start: number): void {
+		this.tokens.push({ ...token, pre: this.input.substring(this.lastEnd, start) });
+		this.lastEnd = this.pos;
 	}
 
 	private isWhitespace(char: string): boolean {
@@ -82,7 +95,7 @@ class BibtexParser {
 			if (this.input[this.pos] === '%') {
 				const start = this.pos;
 				while (this.pos < this.input.length && this.input[this.pos] !== '\n') this.pos++;
-				this.tokens.push({ kind: 'comment', text: this.input.substring(start, this.pos) });
+				this.push({ kind: 'comment', text: this.input.substring(start, this.pos) }, start);
 			} else {
 				this.pos++;
 			}
@@ -346,29 +359,33 @@ class BibtexParser {
 			if (upper === '@STRING') {
 				this.valueComment();
 				this.closeBlock();
-				this.tokens.push({ kind: 'string', text: this.input.substring(tokStart, this.pos) });
+				this.push({ kind: 'string', text: this.input.substring(tokStart, this.pos) }, tokStart);
 			} else if (upper === '@PREAMBLE') {
 				this.valueComment();
 				this.closeBlock();
-				this.tokens.push({ kind: 'preamble', text: this.input.substring(tokStart, this.pos) });
+				this.push({ kind: 'preamble', text: this.input.substring(tokStart, this.pos) }, tokStart);
 			} else if (upper === '@COMMENT') {
 				this.valueComment();
 				this.closeBlock();
-				this.tokens.push({ kind: 'comment', text: this.input.substring(tokStart, this.pos) });
+				this.push({ kind: 'comment', text: this.input.substring(tokStart, this.pos) }, tokStart);
 			} else {
 				this.insideEntry = true;
 				this.currentHasInlineComment = false;
 				this.entryBody(dir);
 				this.insideEntry = false;
 				this.closeBlock();
-				this.tokens.push({
-					kind: 'entry',
-					entry: this.currentEntry as ParsedBibtexEntry,
-					raw: this.input.substring(tokStart, this.pos),
-					hasInlineComment: this.currentHasInlineComment
-				});
+				this.push(
+					{
+						kind: 'entry',
+						entry: this.currentEntry as ParsedBibtexEntry,
+						raw: this.input.substring(tokStart, this.pos),
+						hasInlineComment: this.currentHasInlineComment
+					},
+					tokStart
+				);
 			}
 		}
+		if (this.tokens.length > 0) this.tokens[this.tokens.length - 1].post = this.input.substring(this.lastEnd);
 
 		this.generateAlternativeCitationKeys();
 		return this.tokens;

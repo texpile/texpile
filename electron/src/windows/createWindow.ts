@@ -8,7 +8,7 @@ import { stopWorkspaceWatch } from '../fs/workspaceWatch';
 import { orderForPlatform } from '../ipc/messageBoxOrder';
 import { forgetWindow } from '../mcp/windowState';
 import { forgetWindowChrome, watchWindowState } from '../windowChrome';
-import { applySavedGlass } from '../windowGlass';
+import { applySavedGlass, GLASS_AT_CREATION } from '../windowGlass';
 import { releaseDraftOwnerFor } from '../ipc/draftIpc';
 import { windowRoots, pendingOpens, pendingCloses, isQuitting, cancelQuit, persistOpenFolders, type PendingOpen } from './windowRegistry';
 
@@ -45,6 +45,7 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 		title: 'Texpile',
 		icon: path.join(__dirname, '..', 'icon.png'),
 		backgroundColor: chromeColors().background,
+		...GLASS_AT_CREATION,
 		// Custom title bar (TitleBar.svelte). Frameless on Windows/Linux so the menus, the app icon
 		// and the window buttons share one row instead of costing two - VS Code's layout, and the
 		// reason its chrome is a third the height of ours was.
@@ -133,7 +134,8 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 					titleBarStyle: 'default',
 					autoHideMenuBar: true,
 					icon: path.join(__dirname, '..', 'icon.png'),
-					backgroundColor: chromeColors().background
+					backgroundColor: chromeColors().background,
+					...GLASS_AT_CREATION
 				}
 			};
 		}

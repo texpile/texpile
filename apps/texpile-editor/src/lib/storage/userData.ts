@@ -45,8 +45,8 @@ function stringsOf(list: unknown): string[] {
 	return Array.isArray(list) ? list.filter((s): s is string => typeof s === 'string') : [];
 }
 
-function read(): UserData {
-	if (typeof localStorage === 'undefined') return { ...DEFAULTS };
+function read(fallback: UserData = DEFAULTS): UserData {
+	if (typeof localStorage === 'undefined') return { ...fallback };
 	try {
 		const raw = JSON.parse(localStorage.getItem(KEY) || 'null') as Partial<UserData> | null;
 		if (raw && raw.v === 1) {
@@ -60,15 +60,21 @@ function read(): UserData {
 	} catch {
 		/* corrupted: defaults */
 	}
-	return { ...DEFAULTS };
+	return { ...fallback };
 }
 
 /** reactive user data, hydrated synchronously at module load. */
 export const userData = box<UserData>(read());
 
+// every window keeps its own copy of the one blob they all write
+if (typeof window !== 'undefined')
+	window.addEventListener('storage', (e) => {
+		if (e.key === KEY) userData.current = read(userData.current);
+	});
+
 /** merge a partial update and persist it. */
 export function updateUserData(partial: Partial<Omit<UserData, 'v'>>): void {
-	const next = { ...userData.current, ...partial, v: 1 as const };
+	const next = { ...read(userData.current), ...partial, v: 1 as const };
 	userData.current = next;
 	if (typeof localStorage === 'undefined') return;
 	try {
@@ -80,12 +86,12 @@ export function updateUserData(partial: Partial<Omit<UserData, 'v'>>): void {
 
 /** move `path` to the front of the recents MRU. */
 export function addRecentFolder(path: string): void {
-	const list = userData.current.recentFolders;
+	const list = read(userData.current).recentFolders;
 	updateUserData({ recentFolders: [path, ...list.filter((p) => p !== path)].slice(0, MAX_RECENT) });
 }
 
 /** drop `path` from the recents MRU (a folder that was moved or deleted). */
 export function removeRecentFolder(path: string): void {
-	const list = userData.current.recentFolders;
+	const list = read(userData.current).recentFolders;
 	if (list.includes(path)) updateUserData({ recentFolders: list.filter((p) => p !== path) });
 }

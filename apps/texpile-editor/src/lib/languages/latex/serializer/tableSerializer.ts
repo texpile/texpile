@@ -102,7 +102,7 @@ function wrapper(node: Node, serializeNode: SerializeNodeFn): string {
 		typeof captionNode?.attrs.captionOpt === 'string' && captionNode.attrs.captionOpt ? `[${captionNode.attrs.captionOpt}]` : '';
 	const caption =
 		captionNode && captionNode.childCount > 0
-			? `\\caption${captionNode.attrs.starred ? '*' : ''}${capOpt}{${renderInline(captionNode, serializeNode)}}\\vspace{2mm}\n`
+			? `\\caption${captionNode.attrs.starred ? '*' : ''}${capOpt}{${renderInline(captionNode, serializeNode)}}${typeof node.attrs.captionGap === 'string' ? node.attrs.captionGap : '\\vspace{2mm}'}\n`
 			: '';
 	// extra labels re-emit BEFORE the primary, matching source order (`label` holds the LAST
 	// \label found, so anything in extraLabels came before it).
@@ -206,7 +206,8 @@ function assembleTable(table: Node, serializeNode: SerializeNodeFn): string {
 			colspec,
 			table.attrs.tabularxWidth as string | null,
 			String(table.attrs.bottomRules ?? ''),
-			serializeNode
+			serializeNode,
+			table.attrs.position as string | null
 		);
 
 	// fallback: an editor-created table with no captured architecture gets a bordered tabular
@@ -228,7 +229,8 @@ function assembleFaithful(
 	colspec: string,
 	width: string | null,
 	bottomRules: string,
-	serializeNode: SerializeNodeFn
+	serializeNode: SerializeNodeFn,
+	position: string | null
 ): string {
 	const coverage = buildRowspanCoverage(table);
 	const lines: string[] = [];
@@ -257,7 +259,8 @@ function assembleFaithful(
 	});
 	if (bottomRules) lines.push(bottomRules);
 	const widthArg = width != null ? `{${width}}` : '';
-	return `\\begin{${env}}${widthArg}{${colspec}}\n${lines.join('\n')}\n\\end{${env}}`;
+	const positionArg = position != null ? `[${position}]` : '';
+	return `\\begin{${env}}${widthArg}${positionArg}{${colspec}}\n${lines.join('\n')}\n\\end{${env}}`;
 }
 
 function placeholderCell(span: { colspan: number }, first: boolean): string {

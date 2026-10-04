@@ -177,10 +177,11 @@ function paragraphContent(inline: Token | undefined, src: SourceLines, first: nu
  *  `raw` is that paragraph's source, so an escaped `\[x\]` is not a box. */
 function detectTask(blocks: PmNode[], raw: string): { blocks: PmNode[]; checked: boolean | null } {
 	const first = blocks[0];
-	if (!/^\[[ xX]\][ \t]/.test(raw) || !first || first.type.name !== 'paragraph' || first.childCount === 0) return { blocks, checked: null };
+	if (!/^\[[ xX]\](?:\s|$)/.test(raw) || !first || first.type.name !== 'paragraph' || first.childCount === 0)
+		return { blocks, checked: null };
 	const lead = first.child(0);
 	if (!lead.isText || !lead.text) return { blocks, checked: null };
-	const m = /^\[([ xX])\][ \t]/.exec(lead.text);
+	const m = /^\[([ xX])\](?:[ \t]|$)/.exec(lead.text);
 	if (!m) return { blocks, checked: null };
 	const rest = lead.text.slice(m[0].length);
 	const kids: PmNode[] = [];

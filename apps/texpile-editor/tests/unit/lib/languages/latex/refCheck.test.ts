@@ -65,6 +65,19 @@ describe('citations', () => {
 \iffalse \label{x}\label{x}\cite{gone} \fi \begin{comment}\cite{gone2}\end{comment}`;
 		expect(kinds(text)).toEqual(['cite-unknown:nokey']);
 	});
+
+	it('reads nothing out of \\verb text, a fancyvrb block, or the comment after a \\\\ line break', () => {
+		const text = String.raw`Cite with \verb|\cite{yourkey}|, label with \verb+\label{x}+ \label{x}, split with \verb|\input{chapter}|.
+\begin{Verbatim}
+\cite{gone}
+\end{Verbatim}
+a & b \\% old row: \cite{dropped2019}
+\verb|%| \cite{nokey}`;
+		const found = checkRefs(text, ctx());
+		expect(found.map((p) => `${p.kind}:${p.name}`)).toEqual(['cite-unknown:nokey']);
+		// blanked, never removed: the one left is marked at its own key
+		expect(text.slice(found[0].at, found[0].at + 5)).toBe('nokey');
+	});
 });
 
 describe('files', () => {

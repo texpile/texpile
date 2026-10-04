@@ -5,7 +5,15 @@
 // Each choice is one transaction and its own undo step. The marker lines stay as text: they are
 // what is in the file, and hiding them would make deleting one by hand a surprise.
 import { Decoration, EditorView, WidgetType, type Command, type DecorationSet } from '@codemirror/view';
-import { EditorSelection, StateField, type EditorState, type Extension, type Range, type TransactionSpec } from '@codemirror/state';
+import {
+	EditorSelection,
+	StateEffect,
+	StateField,
+	type EditorState,
+	type Extension,
+	type Range,
+	type TransactionSpec
+} from '@codemirror/state';
 import { isolateHistory } from '@codemirror/commands';
 import { presentableDiff } from '@codemirror/merge';
 import { scanConflicts, resolveConflict, MARKER_LINE, type ConflictBlock, type ConflictChoice } from '$lib/workspace/scm/conflictMarkers';
@@ -18,11 +26,15 @@ export const conflictBlocks = StateField.define<ConflictBlock[]>({
 	update: (blocks, tr) => (tr.docChanged ? scanConflicts(tr.state.doc.iterLines()) : blocks)
 });
 
-/** Whether the file has held a whole conflict in this editor. Only then is a lone marker line one
- *  git left, the rest of a place settled by hand: elsewhere `=======` is the author's text. */
+/** the merge is saved (Finish combining) with the file still open */
+export const endMerge = StateEffect.define<null>();
+
+/** Whether the file has held a whole conflict in this editor, since the merge was last saved. Only
+ *  then is a lone marker line one git left, the rest of a place settled by hand: elsewhere `=======`
+ *  is the author's text. */
 const mergeFile = StateField.define<boolean>({
 	create: (state) => state.field(conflictBlocks).length > 0,
-	update: (was, tr) => was || tr.state.field(conflictBlocks).length > 0
+	update: (was, tr) => (tr.effects.some((e) => e.is(endMerge)) ? false : was || tr.state.field(conflictBlocks).length > 0)
 });
 
 /** the change that settles one place: the whole block, markers and all, becomes the chosen lines */
@@ -216,7 +228,7 @@ const strayLine = Decoration.line({ class: 'cm-conflict-stray' });
  *  refuses the file while one is there, so it is marked where it is */
 function strayMarkers(state: EditorState, out: Range<Decoration>[]): void {
 	const text = state.doc.toString();
-	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>')) return;
+	if (!text.includes('<<<<<<<') && !text.includes('=======') && !text.includes('>>>>>>>') && !text.includes('|||||||')) return;
 	const blocks = state.field(conflictBlocks);
 	for (let n = 1; n <= state.doc.lines; n++) {
 		const line = state.doc.line(n);
@@ -229,7 +241,7 @@ function strayMarkers(state: EditorState, out: Range<Decoration>[]): void {
 // block widgets have to come from a state field, not a view plugin
 const decorations = StateField.define<DecorationSet>({
 	create: build,
-	update: (set, tr) => (tr.docChanged ? build(tr.state) : set),
+	update: (set, tr) => (tr.docChanged || tr.effects.some((e) => e.is(endMerge)) ? build(tr.state) : set),
 	provide: (f) => EditorView.decorations.from(f)
 });
 

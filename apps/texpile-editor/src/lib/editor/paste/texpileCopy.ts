@@ -2,6 +2,7 @@
 // ProseMirror's slice marker, which every ProseMirror or Tiptap app writes too.
 import { DOMSerializer, type Fragment, type Schema } from 'prosemirror-model';
 import { addCopiedMathLatex } from './pastedMath';
+import { markCopiedRawLanguages } from './pastedRawBlocks';
 
 const COPY_MARK = 'data-texpile-copy';
 
@@ -16,6 +17,7 @@ class MarkingSerializer extends DOMSerializer {
 		if (target) return dom;
 		for (const child of dom.childNodes) if (child.nodeType === 1) (child as Element).setAttribute(COPY_MARK, '');
 		addCopiedMathLatex(dom);
+		markCopiedRawLanguages(fragment, dom);
 		return dom;
 	}
 }

@@ -66,6 +66,17 @@ describe('reopening a folder with comparisons open', () => {
 		expect(tabs.list).toEqual([{ path: 'C:\\p\\main.tex' }]);
 	});
 
+	// a parent repository's file, compared from Source Control; the restore can only join paths under the root
+	it('leaves a tab outside the folder closed rather than reopening it under the folder', () => {
+		tabs.bind('C:\\p', true);
+		tabs.noteOpened('C:\\p\\main.tex');
+		tabs.keep('C:\\p\\main.tex');
+		tabs.openCompare('C:\\shared\\notes.tex', V1);
+		tabs.openCompare('C:\\p2\\other.tex', V1);
+		tabs.bind('C:\\p', true);
+		expect(tabs.list).toEqual([{ path: 'C:\\p\\main.tex' }]);
+	});
+
 	it('lands on the focused comparison only while its tab is still there', () => {
 		tabs.bind('C:\\p', true);
 		const key = tabs.openCompare('C:\\p\\main.tex', V1);

@@ -55,12 +55,20 @@ describe('reading what git and ssh ask', () => {
 		const forged = "Password for 'https://github.com'@evil.example.org': ";
 		expect(isGithubHttpsPrompt(forged)).toBe(false);
 		expect(describePrompt('https', forged)).toMatchObject({ subject: 'password', host: null });
-		// nor a slash: https://github.com%2F@evil.example.org asked about unsanitised
+		// nor a slash: https://github.com%2F@evil.example.org asked about unsanitised, which reads as
+		// github.com as a plain address, so no host is named
 		const slashed = "Password for 'https://github.com/@evil.example.org': ";
 		expect(isGithubHttpsPrompt(slashed)).toBe(false);
-		expect(describePrompt('https', slashed)).toMatchObject({ host: 'evil.example.org' });
+		expect(describePrompt('https', slashed)).toMatchObject({ host: null });
 		expect(isGithubHttpsPrompt("Password for 'https://github.com/x@evil.example.org/repo.git': ")).toBe(false);
 		expect(isGithubHttpsPrompt("Password for 'https://ada@github.com/org/thesis.git': ")).toBe(true);
+		// nor an @ in the path, which git puts in the prompt with credential.useHttpPath; the dialog
+		// does not name github.com for it either
+		expect(isGithubHttpsPrompt("Username for 'https://evil.example.org/x@github.com/thesis.git': ")).toBe(false);
+		expect(describePrompt('https', "Username for 'https://evil.example.org/x@github.com/thesis.git': ")).toMatchObject({ host: null });
+		expect(describePrompt('https', "Password for 'https://ada@github.com/org/thesis.git': ")).toMatchObject({ host: 'github.com' });
+		expect(isGithubHttpsPrompt("Password for 'https://ada@evil.example.org/x@github.com/thesis.git': ")).toBe(false);
+		expect(isGithubHttpsPrompt("Username for 'https://github.com/org/thesis.git': ")).toBe(true);
 	});
 
 	it("reads ssh's passphrase, password and new-host questions", () => {

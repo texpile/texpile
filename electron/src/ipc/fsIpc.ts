@@ -10,7 +10,7 @@ import { synctex } from '../fs/synctexCli';
 import { formatLatex } from '../fs/formatLatex';
 import { backupForUndo } from '../fs/undoBackup';
 import { resolveRealRelative } from '../fs/resolveRealRelative';
-import { noteOwnWrite } from '../ai/acp/ownWrites';
+import { noteOwnFileOp, noteOwnWrite } from '../ai/acp/ownWrites';
 import { handleFs } from './ipcResult';
 
 /**
@@ -62,7 +62,11 @@ export function registerFsIpc(): void {
 	handleFs('fs:writeBinary', fsService.writeBinary);
 	handleFs('fs:tree', tree);
 	handleFs('fs:treeScan', treeScan);
-	handleFs('fs:op', fsService.applyFileOp);
+	handleFs('fs:op', async (body: fsService.FsOpBody) => {
+		const result = await fsService.applyFileOp(body);
+		noteOwnFileOp(body);
+		return result;
+	});
 	handleFs('fs:search', search);
 	handleFs('fs:stat', fsService.statFile);
 	handleFs('fs:realRelative', resolveRealRelative);
@@ -97,6 +101,7 @@ export function registerFsIpc(): void {
 			recycled = false;
 			await fsService.applyFileOp({ action: 'delete', path: body.path });
 		}
+		noteOwnFileOp({ action: 'delete', path: body.path });
 		return { backup, recycled };
 	});
 

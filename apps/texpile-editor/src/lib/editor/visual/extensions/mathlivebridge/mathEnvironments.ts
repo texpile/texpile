@@ -2,8 +2,9 @@
 // block_math node's attrs follow the latex source as it is edited.
 import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
+import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
 
-const PER_LINE_ENVIRONMENTS = ['align', 'gather', 'alignat', 'eqnarray'] as const;
+const PER_LINE_ENVIRONMENTS = ['align', 'gather', 'alignat', 'flalign', 'eqnarray'] as const;
 export const SINGLE_LABEL_ENVIRONMENTS = ['multline'] as const;
 const MULTILINE_ENVIRONMENTS = [...PER_LINE_ENVIRONMENTS, ...SINGLE_LABEL_ENVIRONMENTS] as const;
 type MultilineEnvironment = (typeof MULTILINE_ENVIRONMENTS)[number];
@@ -36,9 +37,17 @@ export function detectMultilineEnvironment(latex: string): EnvironmentDetection 
 	return null;
 }
 
+/** the rows of the environment `latex` is set in, not those of a cases or matrix inside it */
+function environmentRows(latex: string): string[] {
+	// no brace inside a name: [^}]* also ran over '{', so a run of \begin{{ was rescanned from each one
+	const open = /\\begin\{[^{}]*\}(\{[^{}]*\})?/.exec(latex);
+	const from = open ? open.index + open[0].length : 0;
+	const to = latex.lastIndexOf('\\end{');
+	return splitRows(latex.slice(from, to > from ? to : latex.length)).filter((_, i) => i % 2 === 0);
+}
+
 function countEnvironmentLines(latex: string): number {
-	const matches = latex.match(/\\\\/g);
-	return matches ? matches.length + 1 : 1;
+	return environmentRows(latex).length;
 }
 
 /**
@@ -47,8 +56,7 @@ function countEnvironmentLines(latex: string): number {
  * unlabelled two-row align that the PDF numbered twice.
  */
 export function numberedLineCount(latex: string): number {
-	const body = latex.replace(/^[\s\S]*?\\begin\{[^}]*\}/, '').replace(/\\end\{[^}]*\}[\s\S]*$/, '');
-	const rows = body.split(/\\\\/);
+	const rows = environmentRows(latex);
 	if (rows.length > 1 && !rows[rows.length - 1].trim()) rows.pop(); // a trailing \\ ends the last row
 	return Math.max(1, rows.filter((r) => !/\\(?:nonumber|notag)\b/.test(r)).length);
 }
@@ -143,10 +151,12 @@ export function syncBlockMathAttrs(node: Node, newValue: string): Attrs {
 		if (detection.supportsPerLineLabels) {
 			const lineCount = countEnvironmentLines(newValue);
 			const existingLabels = (node.attrs.lineLabels as string[]) || [];
-			if (lineCount !== existingLabels.length) {
+			// only a row the edit added is labelled: a row the file left without one stays so
+			const linesBefore = countEnvironmentLines(node.textContent);
+			if (lineCount !== linesBefore) {
 				newAttrs.lineLabels = Array(lineCount)
 					.fill('')
-					.map((_, i) => existingLabels[i] || (shouldBeNumbered ? generateLabel('equation') : ''));
+					.map((_, i) => existingLabels[i] || (shouldBeNumbered && i >= linesBefore ? generateLabel('equation') : ''));
 			}
 		}
 	}

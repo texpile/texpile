@@ -42,6 +42,6 @@ async function render(url: string): Promise<string | null> {
 		const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
 		return blob ? URL.createObjectURL(blob) : null;
 	} finally {
-		void doc.destroy();
+		void task.destroy();
 	}
 }

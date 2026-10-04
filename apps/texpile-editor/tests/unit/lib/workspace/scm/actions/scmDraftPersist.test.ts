@@ -20,3 +20,15 @@ it('keeps unstaged files and opted-in build output across a restart, per folder'
 	after.clear([]);
 	expect(new ScmDraft('/thesis').excluded).toEqual([]);
 });
+
+// a file unticked to stay on this computer came back ticked once renamed in the tree, and the next
+// Save version took it in
+it('keeps a renamed file unticked, and every file of a renamed folder', () => {
+	const draft = new ScmDraft('/thesis');
+	draft.excluded = ['/thesis/private.tex', '/thesis/notes/a.tex', '/thesis/notes-old.tex'];
+	draft.moved('/thesis/private.tex', '/thesis/private-v2.tex');
+	draft.moved('/thesis/notes', '/thesis/drafts');
+	const kept = ['/thesis/private-v2.tex', '/thesis/drafts/a.tex', '/thesis/notes-old.tex'];
+	expect(draft.excluded).toEqual(kept);
+	expect(new ScmDraft('/thesis').excluded).toEqual(kept);
+});

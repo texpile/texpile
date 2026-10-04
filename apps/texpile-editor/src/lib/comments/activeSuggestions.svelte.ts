@@ -2,6 +2,7 @@
 import { box } from '$lib/runes/box.svelte';
 import type { CommentAnchor } from './anchor';
 import { defaultTypingSide, type EditMode, type TypingSide } from './suggestCompare';
+import type { TextChange } from './editGestures';
 
 export type SuggestionMark = {
 	id: string;
@@ -56,5 +57,20 @@ export function noteTypedSide(id: string, side: TypingSide): void {
 export function takeTypedSides(): Record<string, TypingSide> {
 	const out = typed;
 	typed = {};
+	return out;
+}
+
+/** where the source editor's last edit landed, when the text alone would place it elsewhere: several places, or an insertion */
+export type EditedPlaces = { before: string; after: string; changes: TextChange[] };
+
+let edited: EditedPlaces | null = null;
+
+export function noteEditedPlaces(edit: EditedPlaces): void {
+	edited = edit;
+}
+
+export function takeEditedPlaces(): EditedPlaces | null {
+	const out = edited;
+	edited = null;
 	return out;
 }

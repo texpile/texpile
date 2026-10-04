@@ -72,17 +72,19 @@ export function positionsPlugin(md: MarkdownIt): void {
 	}
 	ruler.__cache__ = null;
 
-	const proto = (md.inline.State as unknown as { prototype: StateInline & { pushPending(): Token } }).prototype;
-	const pushPending = proto.pushPending;
-	proto.pushPending = function (this: StateInline) {
-		const p = pendings.get(this);
-		if (p) catchUp(this, p);
-		const tok = pushPending.call(this);
-		if (p) {
-			stamp(tok, p.from, p.to);
-			p.len = 0;
+	// a class of this instance's own: every markdown-it instance shares the one State it starts with
+	const inline = md.inline;
+	inline.State = class extends inline.State {
+		override pushPending(): Token {
+			const p = pendings.get(this);
+			if (p) catchUp(this, p);
+			const tok = super.pushPending();
+			if (p) {
+				stamp(tok, p.from, p.to);
+				p.len = 0;
+			}
+			return tok;
 		}
-		return tok;
 	};
 
 	// the joins that would merge pieces read from different places: only their other work stays

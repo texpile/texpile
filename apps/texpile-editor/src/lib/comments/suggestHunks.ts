@@ -1,6 +1,7 @@
 // where two versions of a text differ, in whole words
 import { diffArrays, diffLines } from 'diff';
 import type { TextSpan } from './editGestures';
+import type { WhitespaceChanges } from './suggestCompare';
 
 export type Hunk = { aFrom: number; aTo: number; bFrom: number; bTo: number };
 
@@ -145,6 +146,15 @@ export function clearOfSuggestions(hunks: Hunk[], before: string, after: string,
 				.filter((k) => covered(h.bFrom - k, h.bTo - k) === best)
 				.sort((x, y) => Number(edges.has(h.aFrom - y)) - Number(edges.has(h.aFrom - x)) || y - x)[0];
 			out = { aFrom: h.aFrom - k, aTo: h.aTo - k, bFrom: h.bFrom - k, bTo: h.bTo - k };
+		} else if (deletion && clear(h.aFrom, h.aTo) && !edges.has(h.aFrom) && !edges.has(h.aTo)) {
+			// the same letters taken out a little further left meet a suggestion: they go with it
+			for (let k = 1; h.aFrom - k >= floor && before.charCodeAt(h.aFrom - k) === before.charCodeAt(h.aTo - k); k++) {
+				if (isLowSurrogate(before.charCodeAt(h.aFrom - k))) continue;
+				if ((edges.has(h.aFrom - k) || edges.has(h.aTo - k)) && clear(h.aFrom - k, h.aTo - k)) {
+					out = { aFrom: h.aFrom - k, aTo: h.aTo - k, bFrom: h.bFrom - k, bTo: h.bTo - k };
+					break;
+				}
+			}
 		} else if ((insertion || deletion) && !clear(h.aFrom, h.aTo)) {
 			const text = insertion ? after : before;
 			const from = insertion ? h.bFrom : h.aFrom;
@@ -181,15 +191,30 @@ export function whitespaceChange(before: string, h: Hunk, inserted: string): Whi
 // a list item's marker in markdown and typst, and the spaces before it: how deep the item sits
 const ITEM = /^([ \t]*)([-+*]|\d+[.)]|\/)(?=[ \t])/;
 
+// a paragraph right after a list: its indent says whether it belongs to the item
+function opensAfterList(text: string, at: number): boolean {
+	let j = at - 2;
+	while (j >= 0 && /[ \t\r]/.test(text[j])) j--;
+	if (j < 0 || text[j] !== '\n') return false;
+	while (j >= 0 && /\s/.test(text[j])) j--;
+	if (j < 0) return false;
+	const line = text.slice(text.lastIndexOf('\n', j) + 1, j + 1);
+	return ITEM.test(line) || /^[ \t]/.test(line);
+}
+
 function itemDepths(text: string, from: number, to: number): string {
 	const start = text.lastIndexOf('\n', from - 1) + 1;
 	const end = text.indexOf('\n', to);
+	let at = start;
 	return text
 		.slice(start, end < 0 ? text.length : end)
 		.split('\n')
 		.flatMap((line) => {
+			const lineAt = at;
+			at += line.length + 1;
 			const m = ITEM.exec(line);
-			return m ? [`${m[1].replace(/\t/g, '    ').length}${m[2]}`] : [];
+			if (m) return [`${m[1].replace(/\t/g, '    ').length}${m[2]}`];
+			return /\S/.test(line) && opensAfterList(text, lineAt) ? [`${/^[ \t]*/.exec(line)![0].replace(/\t/g, '    ').length}`] : [];
 		})
 		.join(' ');
 }
@@ -214,13 +239,38 @@ function spaceAround(text: string, from: number, to: number): string {
 	return text.slice(start, end);
 }
 
-/** `lists`: the spaces before a list marker are the item's depth (markdown, typst) */
-export function neutral(before: string, after: string, h: Hunk, lists = false): boolean {
+// two spaces ending a line, which markdown reads as a line break
+const LINE_BREAK = /^[^\n]*[ \t]{2}\r?\n[^\n]*$/;
+
+const FENCE = /^[ \t]*(```|~~~)/gm;
+const VERBATIM = /\\(begin|end)\{(?:verbatim|Verbatim|lstlisting|minted)\*?\}/g;
+
+// a fenced block in markdown or typst, a verbatim environment in latex: spaces there are what it says
+function inCode(text: string, at: number, lists: boolean): boolean {
+	const head = text.slice(0, at);
+	if (lists) return (head.match(FENCE)?.length ?? 0) % 2 === 1;
+	let open = false;
+	for (const m of head.matchAll(VERBATIM)) open = m[1] === 'begin';
+	return open;
+}
+
+// markdown and typst read a list item's depth off the spaces before its marker, markdown a line break off two ending a line
+export function dialectWhitespace(file: string, whitespace: WhitespaceChanges): WhitespaceChanges {
+	if (whitespace !== 'paragraphs') return whitespace;
+	if (/\.(md|markdown)$/i.test(file)) return 'markdown';
+	return /\.typ$/i.test(file) ? 'lists' : whitespace;
+}
+
+/** `lists`: the spaces before a list marker are the item's depth (markdown, typst); `markdown` also reads its line breaks */
+export function neutral(before: string, after: string, h: Hunk, lists: boolean | 'markdown' = false): boolean {
 	const c = whitespaceChange(before, h, after.slice(h.bFrom, h.bTo));
 	if (!c) return false;
 	if (paragraphShape(spaceAround(before, h.aFrom, h.aTo)) !== paragraphShape(spaceAround(after, h.bFrom, h.bTo))) return false;
 	if (lists && movesItem(before, after, h)) return false;
-	return c.spaced || /\s/.test(before[c.at - 1] ?? ' ') || /\s/.test(before[c.at + c.cut] ?? ' ');
+	if (lists === 'markdown' && LINE_BREAK.test(spaceAround(before, h.aFrom, h.aTo)) !== LINE_BREAK.test(spaceAround(after, h.bFrom, h.bTo)))
+		return false;
+	if (!(c.spaced || /\s/.test(before[c.at - 1] ?? ' ') || /\s/.test(before[c.at + c.cut] ?? ' '))) return false;
+	return !inCode(before, h.aFrom, !!lists);
 }
 
 function wordAround(text: string, pos: number): [number, number] | null {
@@ -244,7 +294,14 @@ function wordAround(text: string, pos: number): [number, number] | null {
 	return [from, to];
 }
 
-export function joinGestures(hunks: Hunk[], before: string, after: string, gestures: TextSpan[], exact = false, lists = false): Hunk[] {
+export function joinGestures(
+	hunks: Hunk[],
+	before: string,
+	after: string,
+	gestures: TextSpan[],
+	exact = false,
+	lists: boolean | 'markdown' = false
+): Hunk[] {
 	if (gestures.length === 0) return hunks;
 	const out: Hunk[] = [];
 	let open: { hunk: Hunk; gesture: TextSpan } | null = null;
@@ -265,7 +322,14 @@ export function joinGestures(hunks: Hunk[], before: string, after: string, gestu
 	return out;
 }
 
-export function snapToWords(hunks: Hunk[], before: string, after: string, spans: SuggestionSpan[], exact = false, lists = false): Hunk[] {
+export function snapToWords(
+	hunks: Hunk[],
+	before: string,
+	after: string,
+	spans: SuggestionSpan[],
+	exact = false,
+	lists: boolean | 'markdown' = false
+): Hunk[] {
 	function touches(from: number, to: number) {
 		return spans.some((s) => s.from <= to && s.to >= from);
 	}

@@ -9,7 +9,7 @@
 </script>
 
 <div class="text-muted -mx-1 text-xs">
-	<button class="hover:preset-tonal flex items-center gap-1 rounded-base px-1 py-0.5" aria-expanded={open} onclick={() => (open = !open)}>
+	<button class="hover:preset-tonal rounded-base flex items-center gap-1 px-1 py-0.5" aria-expanded={open} onclick={() => (open = !open)}>
 		{#if open}<ChevronDown class="size-3.5" />{:else}<ChevronRight class="size-3.5" />{/if}
 		<span class="cap-center">{m.agent_panel_thinking()}</span>
 	</button>

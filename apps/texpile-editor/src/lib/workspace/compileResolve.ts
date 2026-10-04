@@ -3,7 +3,7 @@
 import { DEFAULT_COMPILE_COMMAND } from '$lib/settings';
 import { compileConfig } from './projectConfigSync.svelte';
 import { effectiveCompileFormat } from './workspaceStore';
-import { buildTypstCommand } from './typstCommand';
+import { buildTypstCommand, shellWord } from './typstCommand';
 
 // a root-relative, forward-slashed path (the form file references take in LaTeX)
 export function relFromRoot(p: string, root: string) {
@@ -58,13 +58,12 @@ export function withCleanAux(cmd: string): string {
 	return cmd.replace(LATEXMK, '$1 -c');
 }
 
-/** expand {main} to the target file's root-relative path, quoted when it holds spaces */
+/** expand {main} to the target file's root-relative path, as one literal word to the shell */
 export function expandMain(cmd: string, root: string | null, target: string | null): string {
 	const rel = root && target ? relFromRoot(target, root) : '';
-	// quote a path containing spaces so the shell keeps it one argument;
-	// a {main} the user already wrapped in quotes stays untouched
-	const quoted = /\s/.test(rel) ? `"${rel}"` : rel;
+	const word = shellWord(rel);
+	// a {main} the user already wrapped in quotes keeps them while the path needs none of its own;
 	// function replacements so a path containing $&, $1, $` etc. is inserted literally, not as a
 	// replacement-pattern reference
-	return cmd.replace(/(["']){main}\1/g, (_m, q: string) => `${q}${rel}${q}`).replaceAll('{main}', () => quoted);
+	return cmd.replace(/(["']){main}\1/g, (_m, q: string) => (word === rel ? `${q}${rel}${q}` : word)).replaceAll('{main}', () => word);
 }

@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { parseTypstMath } from 'texpile-typst-syntax-wasm';
 import type { MathfieldElement } from '../../src/mathlive';
 import { stubBrowser } from '../browser';
@@ -22,6 +22,7 @@ const KEYS: Record<string, string> = {
   '←': 'ArrowLeft',
   '⎋': 'Escape',
   '⏎': 'Enter',
+  '⌦': 'Delete',
 };
 
 function field(): MathfieldElement {
@@ -99,6 +100,19 @@ describe('typing in a Typst field', () => {
     for (const [keys, typst] of cases) expect(typed(keys), keys).toBe(typst);
   });
 
+  it("lets a removed field's suggestions go without reaching for the page", async () => {
+    const mf = field();
+    type(mf, 'al');
+    mf.remove();
+    // the suggestions show a moment later, by when the page may be gone (a window closed, a test file over)
+    vi.stubGlobal('document', undefined);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 60));
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it('keeps a name open through Backspace and the suggestions', () => {
     expect(typed('alpj⌫ha + 1')).toBe('alpha + 1');
     expect(typed('alp⇥ + 1')).toBe('alpha + 1');
@@ -121,6 +135,18 @@ describe('typing in a Typst field', () => {
     expect(typed('& = c', 'a \\ b')).toBe('a \\\nb & = c');
     expect(typed('a &= b & c')).toBe('a & = b & c');
     expect(typed(' + 1', 'a & = b \\ c')).toBe('a & = b \\ c + 1');
+  });
+
+  it('deletes beside an equation of lines from its lines, not the whole of it', () => {
+    // the caret a field gets when it is entered from after the equation, or from before it
+    expect(typed('⌫', 'a &= b \\ &= c')).toBe('a &= b \\ &=');
+    expect(typed('⌫', 'x = 1 \\ y = 2')).toContain('x = 1');
+    const mf = field();
+    mf.setValue('x = 1 \\ y = 2', { format: 'typst' });
+    mf.executeCommand('moveToMathfieldStart');
+    type(mf, '⌦');
+    expect(mf.getValue('typst')).toContain('y = 2');
+    mf.remove();
   });
 
   it('undoes a token at a time, a name and what it became as one', () => {

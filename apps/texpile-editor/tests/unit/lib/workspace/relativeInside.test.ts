@@ -1,7 +1,13 @@
 // An image already inside the folder is referenced where it is, so picking one does not leave two
 // identical files with a generated name on the copy.
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { relativeInside } from '$lib/workspace/fileSystem';
+
+const platform = vi.hoisted(() => ({ isMac: false, isWindows: false }));
+vi.mock('$lib/platform', () => platform);
+afterEach(() => {
+	platform.isWindows = false;
+});
 
 describe('relativeInside', () => {
 	it('writes a path under the root relative, with forward slashes', () => {
@@ -10,6 +16,7 @@ describe('relativeInside', () => {
 	});
 
 	it('ignores separator style and case, as Windows hands both back', () => {
+		platform.isWindows = true;
 		expect(relativeInside('C:/ws/Paper', 'c:\\WS\\paper\\a.png')).toBe('a.png');
 	});
 

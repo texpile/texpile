@@ -165,7 +165,7 @@
 
 {#if commandPalette.open}
 	<div
-		class="fixed inset-0 z-1300 flex items-start justify-center app-scrim bg-black/40 p-4 [--scrim-top:8vh]"
+		class="app-scrim fixed inset-0 z-1300 flex items-start justify-center bg-black/40 p-4 [--scrim-top:8vh]"
 		role="presentation"
 		onmousedown={(e) => e.target === e.currentTarget && commandPalette.hide()}
 	>
@@ -183,7 +183,7 @@
 				<Combobox.Control class="border-surface-200-800 flex items-center gap-2 border-b px-3 py-2">
 					<Search class="text-muted size-4 shrink-0" />
 					<Combobox.Input
-						class="w-full bg-transparent text-sm outline-none placeholder:text-muted"
+						class="placeholder:text-muted w-full bg-transparent text-sm outline-none"
 						placeholder={commandPalette.mode === 'files'
 							? m.palette_placeholder_files()
 							: commandPalette.mode === 'branches'
@@ -205,7 +205,7 @@
 						{/if}
 					</div>
 				{:else}
-					<Combobox.Content class="min-h-0 overflow-y-auto [scrollbar-gutter:stable] border-none bg-transparent p-1.5">
+					<Combobox.Content class="min-h-0 [scrollbar-gutter:stable] overflow-y-auto border-none bg-transparent p-1.5">
 						{#each results as scored, i (scored.item.id)}
 							{@const header = groupOf(i)}
 							{#if header}

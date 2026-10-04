@@ -81,9 +81,11 @@
 	}
 
 	async function search(q: string): Promise<void> {
+		const deps = citeByDoi.deps;
+		if (!deps) return;
 		const my = ++gen;
 		looking = true;
-		const got = await searchPapers(q).catch(failed);
+		const got = await searchPapers(q, deps).catch(failed);
 		if (my !== gen || !citeByDoi.open) return;
 		looking = false;
 		if (got.state === 'hits') {

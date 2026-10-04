@@ -14,7 +14,7 @@
 </script>
 
 <span
-	class="border-surface-300-700 text-surface-700-300 inline-flex h-6 max-w-56 min-w-0 shrink items-center gap-1 rounded-base border pl-1.5 text-xs {props.onDetach
+	class="border-surface-300-700 text-surface-700-300 rounded-base inline-flex h-6 max-w-56 min-w-0 shrink items-center gap-1 border pl-1.5 text-xs {props.onDetach
 		? 'pr-0.5'
 		: 'pr-1.5'}"
 >
@@ -25,7 +25,7 @@
 	</span>
 	{#if props.onDetach}
 		<button
-			class="text-muted hover:bg-surface-200-800 flex size-4.5 shrink-0 items-center justify-center rounded-base transition-colors"
+			class="text-muted hover:bg-surface-200-800 rounded-base flex size-4.5 shrink-0 items-center justify-center transition-colors"
 			aria-label={m.agent_panel_detach()}
 			use:tip={m.agent_panel_detach()}
 			onclick={props.onDetach}

@@ -5,7 +5,7 @@
 	import InitialAvatar from '$lib/components/InitialAvatar.svelte';
 	import type { Snippet } from 'svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
-	import { formatChange, isSuggestion, shownWords, suggestionKind } from '$lib/comments/suggest';
+	import { canChangeMessage, formatChange, isSuggestion, shownWords, suggestionKind } from '$lib/comments/suggest';
 	import { suggestionLabel } from '$lib/comments/suggestionLabel';
 	import { regionParserForPath } from '$lib/comments/regionParser';
 	import { m } from '$lib/paraglide/messages';
@@ -105,10 +105,11 @@
 				{/if}
 				{#if editing === msg.id}
 					<textarea
-						class="textarea mt-1 w-full resize-none py-1 text-xs rounded-container"
+						class="textarea rounded-container mt-1 w-full resize-none py-1 text-xs"
 						rows="2"
 						bind:value={editDraft}
 						onkeydown={(e) => {
+							if (e.isComposing) return;
 							if (e.key === 'Escape') editing = null;
 							else if (e.key === 'Enter' && !e.shiftKey) {
 								e.preventDefault();
@@ -139,25 +140,27 @@
 			</div>
 			{#if editing !== msg.id}
 				<div class="flex shrink-0 items-center gap-0.5 opacity-0 group-hover/msg:opacity-100">
-					<button
-						class="btn-icon btn-icon-xs hover:preset-tonal"
-						use:tip={m.comments_edit()}
-						aria-label={m.comments_edit()}
-						onclick={() => {
-							editing = msg.id;
-							editDraft = msg.body;
-						}}
-					>
-						<Pencil class="size-3" />
-					</button>
-					<button
-						class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
-						use:tip={m.comments_delete_message()}
-						aria-label={m.comments_delete_message()}
-						onclick={() => onDeleteMessage(thread, msg)}
-					>
-						<Trash2 class="size-3" />
-					</button>
+					{#if canChangeMessage(thread, msg)}
+						<button
+							class="btn-icon btn-icon-xs hover:preset-tonal"
+							use:tip={m.comments_edit()}
+							aria-label={m.comments_edit()}
+							onclick={() => {
+								editing = msg.id;
+								editDraft = msg.body;
+							}}
+						>
+							<Pencil class="size-3" />
+						</button>
+						<button
+							class="btn-icon btn-icon-xs hover:preset-tonal hover:text-error-ink"
+							use:tip={m.comments_delete_message()}
+							aria-label={m.comments_delete_message()}
+							onclick={() => onDeleteMessage(thread, msg)}
+						>
+							<Trash2 class="size-3" />
+						</button>
+					{/if}
 				</div>
 			{/if}
 		</div>
@@ -169,14 +172,14 @@
 	<div class="space-y-1.5 {dense ? '' : 'pl-7'}">
 		<div class="flex items-start gap-1">
 			<textarea
-				class="textarea min-w-0 flex-1 resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'min-h-0 h-7'} rounded-container"
+				class="textarea min-w-0 flex-1 resize-none py-1 text-xs {draft.trim() ? 'min-h-14' : 'h-7 min-h-0'} rounded-container"
 				rows="1"
 				placeholder={m.comments_reply_placeholder()}
 				bind:value={draft}
 				onkeydown={(e) => {
 					// Enter sends, Shift+Enter breaks the line: a review reply is one or two
 					// sentences, so reaching for a button every time is the wrong default
-					if (e.key === 'Enter' && !e.shiftKey) {
+					if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
 						e.preventDefault();
 						submit();
 					}

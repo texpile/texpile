@@ -67,12 +67,16 @@
 	{:else}
 		{#if question.github}
 			<!-- VS Code's GitHub account: the browser signs in, and no token is typed or kept by hand -->
-			<!-- tonal: Continue below stays the dialog's one primary, at the dialog's button size -->
-			<button class="btn btn-xs preset-tonal-primary mb-2 w-full gap-1.5" onclick={() => void answerWithGithubSignIn(question)}>
-				<Globe class="size-3.5" />
+			<!-- tonal: Continue below stays the dialog's one primary -->
+			<button class="btn btn-sm preset-tonal-primary w-full gap-1.5" onclick={() => void answerWithGithubSignIn(question)}>
+				<Globe class="size-4" />
 				<span class="cap-center">{m.github_signin_browser()}</span>
 			</button>
-			<p class="text-muted mb-3 text-center text-xs">{m.github_signin_or()}</p>
+			<div class="text-muted my-4 flex items-center gap-3 text-xs">
+				<hr class="border-surface-200-800 flex-1" />
+				{m.github_signin_or()}
+				<hr class="border-surface-200-800 flex-1" />
+			</div>
 		{/if}
 		{#if question.subject === 'password' && github}
 			<p class="text-muted mb-3 text-sm">
@@ -84,8 +88,9 @@
 					rel="noopener noreferrer">{m.vcs_create_token()}</a
 				>
 			</p>
-		{:else if question.subject !== 'other'}
-			<!-- exactly what was asked, so it is plain which account or which key this is for -->
+		{:else if question.subject !== 'other' && !(question.subject === 'username' && question.host)}
+			<!-- exactly what was asked, so it is plain which account or which key this is for; a username's
+			     question names only the host, which the title already does -->
 			<p class="text-muted mb-3 text-xs break-all">{question.prompt}</p>
 		{/if}
 		<label class="block text-sm">

@@ -18,7 +18,7 @@
 	);
 </script>
 
-<div class="border-surface-200-800 bg-surface-100-900 flex h-7 items-center gap-2 rounded-base border px-2 text-sm">
+<div class="border-surface-200-800 bg-surface-100-900 rounded-base flex h-7 items-center gap-2 border px-2 text-sm">
 	<Icon class="text-muted size-3.5 shrink-0" />
 	{#if file}
 		<button class="flex min-w-0 flex-1 items-center gap-1.5 text-left" onclick={() => agentHost.current?.openFile(file)}>

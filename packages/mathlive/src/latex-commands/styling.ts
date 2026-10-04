@@ -332,13 +332,20 @@ defineFunction('bf', '{:rest*}', {
     fontSeries: 'b',
     fontShape: 'n',
     fontFamily: 'roman',
+    // In math mode, the letters of \mathbf
+    variant: 'normal',
+    variantStyle: 'bold',
   }),
 });
 
 // In LaTeX, \boldsymbol does not preserve proper kerning between characters
 defineFunction(['boldsymbol', 'bm', 'bold'], '{:math*}', {
   applyMode: 'math',
-  applyStyle: (style) => ({ ...style, variantStyle: 'bold' }),
+  applyStyle: (style, name) => ({
+    ...style,
+    variantStyle: 'bold',
+    verbatimBold: name,
+  }),
 });
 
 defineFunction('bfseries', '{:rest*}', {
@@ -416,10 +423,11 @@ defineFunction('texttt', '{:text*}', {
 // Note: \mathbf is a no-op in text mode
 defineFunction('mathbf', '{:math*}', {
   applyMode: 'math',
-  applyStyle: (style) => ({
+  applyStyle: (style, name) => ({
     ...style,
     variant: 'normal',
     variantStyle: 'bold',
+    verbatimBold: name,
   }),
 });
 
@@ -501,6 +509,40 @@ defineFunction('it', '{:rest*}', {
     fontShape: 'it',
     fontFamily: 'roman',
     variantStyle: 'italic', // For math mode
+  }),
+});
+
+// The other LaTeX 2.09 font switches, in math mode the letters of \mathrm, \mathsf,
+// \mathtt and \mathcal; in text mode they are left as typed
+defineFunction('rm', '{:rest*}', {
+  ifMode: 'math',
+  applyStyle: (style) => ({ ...style, variant: 'normal', variantStyle: 'up' }),
+});
+
+defineFunction('sf', '{:rest*}', {
+  ifMode: 'math',
+  applyStyle: (style) => ({
+    ...style,
+    variant: 'sans-serif',
+    variantStyle: 'up',
+  }),
+});
+
+defineFunction('tt', '{:rest*}', {
+  ifMode: 'math',
+  applyStyle: (style) => ({
+    ...style,
+    variant: 'monospace',
+    variantStyle: 'up',
+  }),
+});
+
+defineFunction('cal', '{:rest*}', {
+  ifMode: 'math',
+  applyStyle: (style) => ({
+    ...style,
+    variant: 'calligraphic',
+    variantStyle: removeItalic(style.variantStyle),
   }),
 });
 
@@ -594,7 +636,9 @@ defineFunction(['class', 'htmlClass'], '{name:string}{content:auto*}', {
   },
   render: (atom, context) =>
     atom.createBox(context, {
-      classes: (atom.args![0] as string) ?? '',
+      classes: context.allowHtmlCommands
+        ? ((atom.args![0] as string) ?? '')
+        : '',
       boxType: 'lift',
     }),
 });
@@ -614,7 +658,7 @@ defineFunction(['cssId', 'htmlId'], '{id:string}{content:auto*}', {
   },
   render: (atom, context) => {
     const box = atom.createBox(context);
-    box.cssId = (atom.args![0] as string) ?? '';
+    if (context.allowHtmlCommands) box.cssId = (atom.args![0] as string) ?? '';
     return box;
   },
 });
@@ -631,7 +675,8 @@ defineFunction('htmlData', '{data:string}{content:auto*}', {
   },
   render: (atom, context) => {
     const box = atom.createBox(context);
-    box.htmlData = (atom.args![0] as string) ?? '';
+    if (context.allowHtmlCommands)
+      box.htmlData = (atom.args![0] as string) ?? '';
     return box;
   },
 });
@@ -649,7 +694,8 @@ defineFunction(['style', 'htmlStyle'], '{data:string}{content:auto*}', {
   },
   render: (atom, context) => {
     const box = atom.createBox(context);
-    box.htmlStyle = (atom.args![0] as string) ?? '';
+    if (context.allowHtmlCommands)
+      box.htmlStyle = (atom.args![0] as string) ?? '';
     return box;
   },
 });
@@ -657,11 +703,14 @@ defineFunction(['style', 'htmlStyle'], '{data:string}{content:auto*}', {
 defineFunction('href', '{url:string}{content:auto*}', {
   createAtom: (options: CreateAtomOptions<[string | null, Argument | null]>) =>
     new Atom({ ...options, type: 'mord', body: argAtoms(options.args![1]) }),
+  // the url is the source's own, not a style: it stays when the link's body is edited
+  serialize: (atom, options) =>
+    `\\href{${(atom.args![0] as string) ?? ''}}{${atom.bodyToLatex(options)}}`,
   render: (atom, context) => {
     const box = atom.createBox(context);
     const href = (atom.args![0] as string) ?? '';
 
-    if (href) box.htmlData = `href=${href}`;
+    if (href && context.allowHtmlCommands) box.htmlData = `href=${href}`;
 
     return box;
   },
@@ -683,10 +732,11 @@ defineFunction('em', '{:rest}', {
     atom.createBox(context, { classes: 'ML__emph', boxType: 'lift' }),
 });
 
-/* Note: in TeX, \emph is restricted to text mode. We extend it to math */
-defineFunction('emph', '{:auto}', {
+/* Note: in TeX, \emph is restricted to text mode. We extend it to math,
+   where its argument is still text, as LaTeX sets it */
+defineFunction('emph', '{:text}', {
   createAtom: (options) =>
-    new Atom({ ...options, body: argAtoms(options.args![1]) }),
+    new Atom({ ...options, body: argAtoms(options.args![0]) }),
   serialize: (atom, options) =>
     options.skipStyles
       ? atom.bodyToLatex(options)

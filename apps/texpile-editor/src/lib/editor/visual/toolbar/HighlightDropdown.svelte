@@ -50,7 +50,7 @@
 	positioning={{ placement: 'bottom-start', offset: { mainAxis: 4 } }}
 	autoFocus={false}
 >
-	<Popover.Trigger class="toolbarButton rounded-base p-1 hover:bg-surface-200-800">
+	<Popover.Trigger class="toolbarButton rounded-base hover:bg-surface-200-800 p-1">
 		<button aria-label={m.tbar_highlight_aria()} use:tip={m.tbar_highlight_aria()} class="relative flex items-center">
 			<Highlighter class="h-5 w-5" />
 			<!-- active-color bar is absolute so it doesn't add height and lift the icon off center -->
@@ -73,15 +73,15 @@
 				{#each highlightColors as { name, value } (name)}
 					<button
 						type="button"
-						class="hover:preset-tonal flex w-full items-center gap-2 rounded-base px-3 py-2 text-left"
+						class="hover:preset-tonal rounded-base flex w-full items-center gap-2 px-3 py-2 text-left"
 						onclick={() => setHighlight(value)}
 					>
 						{#if value === 'none'}
-							<span class="relative inline-block h-3 w-3 rounded-full border border-surface-300-700 bg-surface-100-900">
-								<span class="absolute inset-0 flex items-center justify-center text-xs text-swatch-clear">✕</span>
+							<span class="border-surface-300-700 bg-surface-100-900 relative inline-block h-3 w-3 rounded-full border">
+								<span class="text-swatch-clear absolute inset-0 flex items-center justify-center text-xs">✕</span>
 							</span>
 						{:else}
-							<span class="inline-block h-3 w-3 rounded-full border border-surface-300-700" style="background-color: {value};"></span>
+							<span class="border-surface-300-700 inline-block h-3 w-3 rounded-full border" style="background-color: {value};"></span>
 						{/if}
 						<span class="text-sm">{name}</span>
 					</button>

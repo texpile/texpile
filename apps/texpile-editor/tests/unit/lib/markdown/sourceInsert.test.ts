@@ -33,6 +33,14 @@ describe('computeToggleDelim', () => {
 		const s = state('**hello** world', 2, 7);
 		expect(apply(s, computeToggleDelim(s, '**'))).toBe('hello world');
 	});
+	it('adds italics to a bold word instead of taking its bold away', () => {
+		const inside = state('a **bold** b', 4, 8);
+		expect(apply(inside, computeToggleDelim(inside, '*'))).toBe('a ***bold*** b');
+		const whole = state('a **bold** b', 2, 10);
+		expect(apply(whole, computeToggleDelim(whole, '*'))).toBe('a ***bold*** b');
+		const both = state('a ***both*** b', 5, 9);
+		expect(apply(both, computeToggleDelim(both, '*'))).toBe('a **both** b');
+	});
 	it('empty cursor inserts a pair, second invoke removes it', () => {
 		const s = state('ab', 1);
 		const once = s.update(computeToggleDelim(s, '*')).state;

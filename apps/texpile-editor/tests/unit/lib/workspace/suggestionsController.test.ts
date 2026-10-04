@@ -3,7 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as Y from 'yjs';
 import { buildAnchor } from '$lib/comments/anchor';
 import { openEvent, parseLog, serializeLog } from '$lib/comments/log';
-import { activeSuggestions } from '$lib/comments/activeSuggestions.svelte';
+import { activeSuggestions, noteEditedPlaces } from '$lib/comments/activeSuggestions.svelte';
+import type { TextChange } from '$lib/comments/editGestures';
 
 let disk: Record<string, string> = {};
 
@@ -54,6 +55,7 @@ function suggestion(id: string, text: string, words: string, restore: string, at
 
 function make(initial: string, mode: 'editing' | 'suggesting' = 'editing', name = 'main.tex') {
 	let text = initial;
+	let visual = false;
 	const edits: { from: number; to: number; insert: string }[] = [];
 	const marks: number[] = [];
 	const ctl = new CommentsController({
@@ -62,6 +64,7 @@ function make(initial: string, mode: 'editing' | 'suggesting' = 'editing', name 
 		openFileAt: () => {},
 		activeText: () => text,
 		mode: () => mode,
+		rewraps: () => visual,
 		applyEdit: async (e) => {
 			edits.push(e);
 			text = text.slice(0, e.from) + e.insert + text.slice(e.to);
@@ -81,7 +84,8 @@ function make(initial: string, mode: 'editing' | 'suggesting' = 'editing', name 
 		open,
 		type: (next: string) => (text = next),
 		text: () => text,
-		setMode: (next: typeof mode) => (mode = next)
+		setMode: (next: typeof mode) => (mode = next),
+		setVisual: (next: boolean) => (visual = next)
 	};
 }
 
@@ -170,6 +174,34 @@ describe('a suggestion in the file', () => {
 		expect(activeSuggestions.current).toEqual([]);
 	});
 
+	it('rejects a suggestion again when its Reject is redone after typing before it was undone and redone', async () => {
+		const start = 'We prove the estimator is sharp for smooth solutions.\n\nAway from a shock a coarse grid resolves it.\n';
+		const at = start.indexOf('sharp');
+		disk['.texpile/comments.jsonl'] = serializeLog([
+			openEvent({ id: 'mei1', file: 'main.tex', anchor: buildAnchor(start, at, at), body: '', by: 'mei', at: 'now', restore: 'very ' })
+		]);
+		const { ctl, open, type, text } = make(start, 'suggesting');
+		await open();
+		async function goTo(next: string) {
+			type(next);
+			ctl.suggestions.textChanged(FILE, next);
+			await ctl.suggestions.settle();
+		}
+		const typed = start.replace('coarse', 'fine');
+		await goTo(typed);
+		await ctl.suggestions.beforeSave('main.tex', text());
+		expect(await ctl.suggestions.reject(ctl.threads.find((t) => t.id === 'mei1')!)).toBe(true);
+		const rejected = text();
+
+		// undo the Reject and the typing, then redo both
+		await goTo(typed);
+		await goTo(start);
+		await goTo(typed);
+		await goTo(rejected);
+		expect(ctl.threads.find((t) => t.id === 'mei1')!.decision).toBe('rejected');
+		expect(activeSuggestions.current.map((s) => [text().slice(s.from, s.to), s.restore])).toEqual([['fine', 'coarse']]);
+	});
+
 	// Docs does the same: an Accept is one step of the undo history like any edit
 	it('brings an accepted suggestion back where it stood when the Accept is undone, and accepts it on redo', async () => {
 		disk['.texpile/comments.jsonl'] = serializeLog([suggestion('s1', TEXT, 'sharp', 'reliable')]);
@@ -195,6 +227,45 @@ describe('a suggestion in the file', () => {
 		]);
 	});
 
+	it('brings an accepted suggestion back placed when the Accept is undone after an unsaved edit beside it', async () => {
+		disk['.texpile/comments.jsonl'] = serializeLog([suggestion('s1', TEXT, 'sharp', 'reliable')]);
+		const { ctl, open, type } = make(TEXT);
+		await open();
+		const edited = TEXT.replace('estimator', 'estimate');
+		type(edited);
+		ctl.suggestions.textChanged(FILE, edited);
+		await ctl.suggestions.settle();
+		const thread = () => ctl.threads.find((t) => t.id === 's1')!;
+		await ctl.suggestions.accept(thread());
+
+		await ctl.suggestions.revisitAccept(1, true);
+		expect(ctl.orphaned.has('s1')).toBe(false);
+		expect(activeSuggestions.current.map((s) => [s.id, edited.slice(s.from, s.to), s.restore])).toEqual([['s1', 'sharp', 'reliable']]);
+	});
+
+	it('accepts a suggestion again on redo after the typing that made it was undone and redone', async () => {
+		const { ctl, open, type, text, marks } = make(TEXT, 'suggesting');
+		await open();
+		async function goTo(next: string) {
+			type(next);
+			ctl.suggestions.textChanged(FILE, next);
+			await ctl.suggestions.settle();
+		}
+		const typed = TEXT.replace('sharp', 'tight');
+		await goTo(typed);
+		await ctl.suggestions.beforeSave('main.tex', text());
+		const opened = () => ctl.threads.filter((t) => t.restore !== undefined && !t.resolved);
+		await ctl.suggestions.accept(opened()[0]);
+
+		// undo the Accept and the typing, then redo both
+		await ctl.suggestions.revisitAccept(marks[0], true);
+		await goTo(TEXT);
+		await goTo(typed);
+		await ctl.suggestions.revisitAccept(marks[0], false);
+		expect(opened()).toEqual([]);
+		expect(activeSuggestions.current).toEqual([]);
+	});
+
 	it('keeps what was typed when the folder changes, and drops it when the edit is thrown away', async () => {
 		const after = TEXT.replace('sharp', 'tight');
 		const kept = make(TEXT, 'suggesting');
@@ -216,6 +287,31 @@ describe('a suggestion in the file', () => {
 		thrown.ctl.suggestions.discardUnsaved('main.tex');
 		await thrown.ctl.store.append();
 		expect(logged().some((e) => e.t === 'open' && e.restore !== undefined)).toBe(false);
+	});
+
+	it('takes back a suggestion the log took early when the edit is thrown away', async () => {
+		const at = TEXT.indexOf('estimator');
+		disk['.texpile/comments.jsonl'] = serializeLog([
+			openEvent({ id: 'c1', file: 'main.tex', anchor: buildAnchor(TEXT, at, at + 9), body: 'which one?', by: 'mei', at: 'now' })
+		]);
+		const { ctl, open, type } = make(TEXT, 'suggesting');
+		await open();
+		const after = TEXT.replace('sharp', 'tight');
+		type(after);
+		ctl.suggestions.textChanged(FILE, after);
+		await ctl.suggestions.settle();
+		// a reply while the edit is unsaved writes the log, the suggestion with it
+		await ctl.reply(
+			ctl.threads.find((t) => t.id === 'c1')!,
+			'the first'
+		);
+		// Don't Save: the file keeps what is on disk
+		await ctl.suggestions.discardUnsaved('main.tex');
+
+		const again = make(TEXT, 'suggesting');
+		await again.open();
+		expect(again.ctl.threads.filter((t) => t.restore !== undefined && !t.resolved)).toEqual([]);
+		expect(again.ctl.threads.map((t) => t.id)).toEqual(['c1']);
 	});
 
 	it('shows what is typed while suggesting as soon as typing starts', async () => {
@@ -253,6 +349,39 @@ describe('a suggestion in the file', () => {
 		ctl.suggestions.textChanged(FILE, TEXT);
 		await ctl.suggestions.settle();
 		expect(activeSuggestions.current).toEqual([]);
+	});
+
+	// as the source editor reports a key typed with two cursors, with no comparison run between the keys
+	it('makes one suggestion for each place an edit with several cursors changed', async () => {
+		const start = 'The colour map is wide.\nA colour bar sits under it.\n';
+		const { ctl, open, type } = make(start, 'suggesting');
+		await open();
+		ctl.suggestions.textChanged(FILE, start);
+		let now = start;
+		let spots = [...start.matchAll(/colour/g)].map((m) => ({ from: m.index!, to: m.index! + 'colour'.length }));
+		for (const key of 'hue') {
+			let next = '';
+			let at = 0;
+			let delta = 0;
+			const changes: TextChange[] = [];
+			for (const s of spots) {
+				next += now.slice(at, s.from) + key;
+				at = s.to;
+				changes.push({ fromA: s.from, toA: s.to, fromB: s.from + delta, toB: s.from + delta + 1 });
+				delta += 1 - (s.to - s.from);
+			}
+			next += now.slice(at);
+			noteEditedPlaces({ before: now, after: next, changes });
+			now = next;
+			type(now);
+			ctl.suggestions.textChanged(FILE, now);
+			spots = changes.map((c) => ({ from: c.toB, to: c.toB }));
+		}
+		await ctl.suggestions.beforeSave('main.tex', now);
+		expect(logged().flatMap((e) => (e.t === 'open' ? [[e.anchor.quote, e.restore]] : []))).toEqual([
+			['hue', 'colour'],
+			['hue', 'colour']
+		]);
 	});
 
 	it('makes one suggestion of each phrase typed a key at a time, and rejecting them gives the text back', async () => {
@@ -391,6 +520,92 @@ describe('a suggestion in the file', () => {
 		]);
 		expect(await ctl.suggestions.reject(ctl.threads[0])).toBe(true);
 		expect(text()).toBe(typed);
+	});
+
+	// spaces wait a second before they are compared, and a switch to the visual editor can land in that second
+	it('answers an agent that rewrites its own suggestion with that suggestion', async () => {
+		const start = 'Away from a shock a coarse grid resolves the flow well enough for now.\n';
+		const { ctl, open, text } = make(start, 'editing');
+		await open();
+		const words = 'a coarse grid';
+		const from = start.indexOf(words);
+		const first = await ctl.suggestions.suggestAs('Claude', { from, to: from + words.length, insert: 'coarse grids' }, 'plural');
+		const at = text().indexOf('coarse grids');
+		const again = await ctl.suggestions.suggestAs('Claude', { from: at, to: at + 'coarse grids'.length, insert: 'fine grids' }, 'finer');
+		expect(text()).toContain('fine grids');
+		expect(again).toBe(first);
+	});
+
+	it('takes back a Reject and an Accept made before the file was renamed', async () => {
+		disk['.texpile/comments.jsonl'] = serializeLog([
+			suggestion('s1', TEXT, 'sharp', 'reliable'),
+			suggestion('s2', TEXT, 'smooth', 'regular')
+		]);
+		const { ctl, open, type, text, marks } = make(TEXT);
+		await open();
+		const thread = (id: string) => ctl.threads.find((t) => t.id === id)!;
+		await ctl.suggestions.accept(thread('s2'));
+		expect(await ctl.suggestions.reject(thread('s1'))).toBe(true);
+
+		await ctl.fileMoved(FILE, `${ROOT}/renamed.tex`);
+		ctl.reanchor(`${ROOT}/renamed.tex`, text());
+		// Ctrl+Z twice: the Reject's words, then the Accept
+		type(TEXT);
+		ctl.suggestions.textChanged(`${ROOT}/renamed.tex`, TEXT);
+		await ctl.suggestions.settle();
+		await ctl.suggestions.revisitAccept(marks[0], true);
+		expect([thread('s1').resolved, thread('s2').resolved]).toEqual([false, false]);
+		expect(activeSuggestions.current.map((s) => [s.id, TEXT.slice(s.from, s.to)])).toEqual([
+			['s1', 'sharp'],
+			['s2', 'smooth']
+		]);
+	});
+
+	it('keeps a saved suggestion placed when the file is renamed with typing beside it not saved yet', async () => {
+		const start = 'We prove the estimator is sharp for smooth solutions of the problem.\n';
+		const { ctl, open, type } = make(start, 'suggesting');
+		await open();
+		const one = start.replace('sharp', 'tight');
+		type(one);
+		ctl.suggestions.textChanged(FILE, one);
+		await ctl.suggestions.beforeSave('main.tex', one);
+		const two = one.replace('smooth', 'rough');
+		type(two);
+		ctl.suggestions.textChanged(FILE, two);
+		await ctl.suggestions.settle();
+
+		await ctl.fileMoved(FILE, `${ROOT}/renamed.tex`);
+		ctl.reanchor(`${ROOT}/renamed.tex`, two);
+		expect(activeSuggestions.current.map((s) => s.restore)).toEqual(['sharp', 'smooth']);
+		expect([...ctl.orphaned]).toEqual([]);
+	});
+
+	it('compares spaces typed in the source editor by the source editor’s rule after a switch to visual', async () => {
+		const { ctl, open, type, setVisual } = make(TEXT, 'suggesting');
+		await open();
+		const after = TEXT.replace('We prove ', 'We prove  ');
+		type(after);
+		ctl.suggestions.textChanged(FILE, after);
+		setVisual(true);
+		await ctl.suggestions.settle();
+		expect(activeSuggestions.current.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual([[' ', '']]);
+	});
+
+	// two spaces ending a line are a line break in markdown and nothing in typst
+	it.each([
+		['notes.md', [['', '  ']]],
+		['notes.typ', []]
+	] as const)('reads two spaces ending a line in %s by the file’s own rule in the visual editor', async (name, want) => {
+		const start = 'A verse  \nand the next one.\n';
+		const { ctl, type, setVisual } = make(start, 'suggesting', name);
+		await ctl.load(ROOT);
+		ctl.reanchor(`${ROOT}/${name}`, start);
+		setVisual(true);
+		const after = start.replace('  \n', '\n');
+		type(after);
+		ctl.suggestions.textChanged(`${ROOT}/${name}`, after);
+		await ctl.suggestions.settle();
+		expect(activeSuggestions.current.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual(want);
 	});
 
 	it('writes what was typed while suggesting to the log before the file is saved', async () => {

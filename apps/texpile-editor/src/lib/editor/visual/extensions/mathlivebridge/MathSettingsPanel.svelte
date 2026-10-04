@@ -56,10 +56,12 @@
 	});
 
 	// multline only has one label, so it uses the single-label UI
-	let isPerLineLabelMode = $derived(environmentInput !== '' && ['align', 'gather', 'alignat', 'eqnarray'].includes(environmentInput));
+	let isPerLineLabelMode = $derived(
+		environmentInput !== '' && ['align', 'gather', 'alignat', 'flalign', 'eqnarray'].includes(environmentInput)
+	);
 
 	let hasSpecialEnvironment = $derived(
-		environmentInput !== '' && ['align', 'gather', 'alignat', 'eqnarray', 'multline'].includes(environmentInput)
+		environmentInput !== '' && ['align', 'gather', 'alignat', 'flalign', 'eqnarray', 'multline'].includes(environmentInput)
 	);
 
 	function isLabelDuplicate(label: string): boolean {

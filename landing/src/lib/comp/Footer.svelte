@@ -63,7 +63,7 @@
 					href="https://github.com/texpile/texpile"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="hover:text-white underline">{m.footer_license_link()}</a
+					class="underline hover:text-white">{m.footer_license_link()}</a
 				>{m.footer_license_post()}
 			</p>
 		</div>

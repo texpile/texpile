@@ -22,6 +22,7 @@ import * as zlib from 'node:zlib';
 import readline from 'node:readline';
 import { jobPrefix, writeHooksFile, OUT } from './compileJob';
 import { shellEnvReady } from '../shell/shellEnv';
+import { onToolPathChange } from '../shell/toolDirs';
 
 export const WARM_BODY = 'texd-body.tex';
 const JOB = 'texd_warm';
@@ -256,6 +257,9 @@ export function aliasSynctex(outAbs: string, mainRel: string): void {
 		/* synctex absent or unreadable: forward sync degrades, records are unaffected */
 	}
 }
+
+// warmed on the TeX that was first on PATH; the next pass compiles cold on the new one
+onToolPathChange(() => stopWarmCompiler());
 
 export function stopWarmCompiler(): void {
 	stops++;

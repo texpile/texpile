@@ -156,7 +156,7 @@
 		</div>
 		{#each categories as c (c.id)}
 			<button
-				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
+				class="rounded-base mb-0.5 block w-full px-3 py-1.5 text-left text-sm {category === c.id
 					? 'bg-primary-tint font-medium'
 					: 'hover:preset-tonal'}"
 				onclick={() => (category = c.id)}

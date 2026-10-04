@@ -234,3 +234,34 @@ it('draws a struck include as the text its chip shows', () => {
 	const blocks = [doc.child(0), doc.child(1)];
 	expect(goneBlocksElement(doc.type.schema, blocks, 'x', false).textContent).toBe('\\input{intro}\\include{related}');
 });
+
+// a paragraph taken out just before a formula that also changed stood before the formula, as it was
+it('stands a block taken out before the formula after it as it was', () => {
+	const source = 'Before.\n\n\\[\nx+1 = 0\n\\]\n';
+	const formula = source.indexOf('\\[');
+	const file = parseLatexFile(source);
+	const quote = source.slice(formula, source.indexOf('\\]') + 2);
+	const s = {
+		id: 'cut',
+		from: formula,
+		to: formula + quote.length,
+		restore: 'Gone words.\n\n\\[\nx+1\n\\]',
+		mine: true,
+		anchor: buildAnchor(source, formula, formula + quote.length)
+	};
+	const { ranges } = placePmSuggestions(file.doc, [s], {
+		text: source,
+		map: file.map,
+		body: { from: 0, to: source.length },
+		parse: (src) => parseLatexRegion(src)
+	});
+	const view = new EditorView(document.body.appendChild(document.createElement('div')), {
+		state: EditorState.create({ doc: file.doc, plugins: [pmSuggestions()] })
+	});
+	setPmSuggestions(view, ranges);
+	const old = [...view.dom.querySelectorAll('.pm-suggest-gone, .pm-suggest-was')];
+	expect(
+		old.map((e) => (e.classList.contains('pm-suggest-gone') ? e.textContent : e.querySelector('[role=math]')?.getAttribute('aria-label')))
+	).toEqual(['Gone words.', 'x+1']);
+	view.destroy();
+});

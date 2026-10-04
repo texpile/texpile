@@ -63,7 +63,8 @@ export function refinePrompt(r: RefineRequest): { system: string; request: strin
 export function refinedText(answer: string, passage: string): string {
 	let text = answer.trim();
 	const fence = /^```[^\n]*\n([\s\S]*?)\n?```$/.exec(text);
-	if (fence) text = fence[1].trim();
+	// a fence around the answer, not one the passage itself has
+	if (fence && !/^\s*```/.test(passage)) text = fence[1].trim();
 	return /^\s*/.exec(passage)![0] + text + /\s*$/.exec(passage)![0];
 }
 

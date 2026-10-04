@@ -28,8 +28,9 @@ describe('inline constructs', () => {
 	it('a code span keeps its edge spaces', () => {
 		expect(gen('`  a  `\n')).toBe('`  a  `');
 		expect(gen('` a` and `a `\n')).toBe('` a` and `a `');
-		// markdown-it reads three spaces as one; the paragraph must still not be dropped as empty
-		expect(gen('`   `\n')).toBe('` `');
+		// a span of nothing but spaces is read whole, so it is written back unpadded and stays that size
+		expect(gen('`   `\n')).toBe('`   `');
+		expect(regen('`   `\n')).toBe('`   `');
 	});
 
 	// M22

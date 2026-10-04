@@ -1,5 +1,7 @@
-import { it, expect } from 'vitest';
+import { it, expect, vi } from 'vitest';
 import { relativeTo, tabsToClose } from '../../../../src/views/workspace/tabMenuTargets';
+
+vi.mock('$lib/platform', () => ({ isMac: false, isWindows: true }));
 
 const a = { path: 'C:\\p\\a.tex' };
 const b = { path: 'C:\\p\\b.tex' };
@@ -22,5 +24,7 @@ it('spells the path from the root down, and not at all for a file outside it', (
 	expect(relativeTo('C:\\p', 'C:\\p\\sub\\a.tex')).toBe('sub\\a.tex');
 	expect(relativeTo('C:\\P', 'c:\\p\\a.tex')).toBe('a.tex');
 	expect(relativeTo('C:\\p', 'D:\\a.tex')).toBeNull();
+	expect(relativeTo('/papers/thesis', '/papers/thesis-common/intro.tex')).toBeNull();
+	expect(relativeTo('C:\\', 'C:\\a.tex')).toBe('a.tex');
 	expect(relativeTo(null, 'C:\\p\\a.tex')).toBeNull();
 });

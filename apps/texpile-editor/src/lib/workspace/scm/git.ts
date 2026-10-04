@@ -23,7 +23,8 @@ export type GitStatusEntry = {
 	choose?: WholeFileChoice;
 	/** a rename's old path: saving the rename takes in both, putting it back restores this */
 	from?: string;
-	/** a folder row that also holds files .gitignore leaves out: never deleted as a whole */
+	/** a folder row that also holds files .gitignore leaves out, or a repository of its own: never
+	 *  deleted as a whole */
 	ignoredInside?: boolean;
 };
 

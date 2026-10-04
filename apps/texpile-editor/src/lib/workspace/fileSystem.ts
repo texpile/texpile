@@ -2,6 +2,7 @@
 // data ops over fs:* IPC, raw file bytes over the texfile:// protocol. no browser transport.
 import type { SourceEncoding, SourceRead } from './sourceEncoding';
 import { browser } from '$lib/runtime';
+import { isMac, isWindows } from '$lib/platform';
 import type { GitStatusResult, GitShowResult, GitOpResult, GitLogResult, GitChangesResult, GitPushResult } from './scm/git';
 import type { GitBridges } from './scm/gitBridges';
 
@@ -423,22 +424,7 @@ export async function searchInFolder(
 	}
 }
 
-// the editor works in LF internally; a file's original ending is read on load and
-// re-applied on save so a Windows CRLF file round-trips byte-for-byte
-export type Eol = '\r\n' | '\n';
-
-/** the file's dominant line ending: CRLF if any \r\n is present, else LF. */
-export function detectEol(text: string): Eol {
-	return text.includes('\r\n') ? '\r\n' : '\n';
-}
-
-export function toLf(text: string): string {
-	return text.replace(/\r\n?/g, '\n');
-}
-
-export function fromLf(text: string, eol: Eol): string {
-	return eol === '\r\n' ? text.replace(/\n/g, '\r\n') : text;
-}
+export { detectEol, toLf, fromLf, type Eol } from './edits/lineEndings';
 
 /** basename helper that works for both / and \ separators. */
 export function basename(path: string): string {
@@ -451,9 +437,14 @@ export function dirname(path: string): string {
 	return parts.join('/');
 }
 
-/** Path equality that ignores separator style and case (Windows paths reach us both ways). */
+/** a path's identity: separators unified, case folded where the file system folds it (NTFS, APFS) */
+export function pathKey(path: string): string {
+	const p = path.replace(/\\/g, '/');
+	return isWindows || isMac ? p.toLowerCase() : p;
+}
+
 export function samePath(a: string, b: string) {
-	return a.replace(/\\/g, '/').toLowerCase() === b.replace(/\\/g, '/').toLowerCase();
+	return pathKey(a) === pathKey(b);
 }
 
 /** `abs` written relative to `root` with forward slashes, or null when it is not under it */
@@ -464,7 +455,7 @@ export function relativeInside(root: string, abs: string): string | null {
 	}
 	const r = norm(root);
 	const a = norm(abs);
-	if (!a.toLowerCase().startsWith(r.toLowerCase() + '/')) return null;
+	if (!pathKey(a).startsWith(pathKey(r) + '/')) return null;
 	return a.slice(r.length + 1);
 }
 
@@ -502,10 +493,10 @@ export function normalizePath(p: string): string {
 	return out.join(sep);
 }
 
-/** is `p` the workspace root or inside it, separator- and case-insensitively */
+/** is `p` the workspace root or inside it */
 export function underRoot(root: string, p: string): boolean {
-	const r = root.replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase();
-	const q = p.replace(/\\/g, '/').toLowerCase();
+	const r = pathKey(root).replace(/\/+$/, '');
+	const q = pathKey(p);
 	return q === r || q.startsWith(r + '/');
 }
 

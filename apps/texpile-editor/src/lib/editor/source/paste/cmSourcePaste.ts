@@ -29,6 +29,8 @@ const LANGUAGE_NAMES: Record<PasteDialect, string> = { latex: 'LaTeX', typst: 'T
 const MARKDOWN_CODE = new Set(['FencedCode', 'CodeBlock', 'InlineCode']);
 const LATEX_VERBATIM = /\\(begin|end)\s*\{(?:verbatim|Verbatim|lstlisting|minted|alltt|filecontents)\*?\}/g;
 const LATEX_WINDOW = 4000;
+// the URL slot of a link, which Insert > Link leaves selected for the paste
+const LINK_DESTINATION = /(?:\\(?:href|url)\{|\]\()$/;
 const HYPERREF = { command: '\\href', package: 'hyperref', fontenc: '' };
 
 const sourcePasteSetup = Facet.define<SourcePasteSetup, SourcePasteSetup | null>({ combine: (values) => values[0] ?? null });
@@ -103,6 +105,7 @@ function takenAsWritten(state: EditorState, pos: number, dialect: PasteDialect):
 function kindsAt(state: EditorState, clip: SourceClipboard, dialect: PasteDialect): SourcePasteKind[] {
 	const { from, to } = state.selection.main;
 	if (takenAsWritten(state, from, dialect) || takenAsWritten(state, to, dialect)) return ['plain'];
+	if (LINK_DESTINATION.test(state.sliceDoc(Math.max(0, from - 6), from))) return ['plain'];
 	const formatted = !!clip.html || (dialect !== 'markdown' && looksLikeMarkdown(clip.text, dialect));
 	return sourcePasteKinds(clip, state.sliceDoc(from, to), formatted);
 }

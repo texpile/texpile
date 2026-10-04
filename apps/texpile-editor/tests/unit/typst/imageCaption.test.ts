@@ -39,6 +39,17 @@ describe('an image figure caption', () => {
 		expect(firstImage(parseTypstFile('#figure(image("a.png"))\n').doc).node.attrs.showCaption).toBe(false);
 	});
 
+	it('ending on a line break and a space keeps its closing bracket', () => {
+		const parsed = parseTypstFile(FIGURE);
+		const { node, pos } = firstImage(parsed.doc);
+		const end = pos + 1 + node.content.size;
+		const t = new Transform(parsed.doc).insert(end, [typSchema.nodes.hard_break.create({ lineBreak: true }), typSchema.text(' ')]);
+		const out = serializeTypstFile(parsed, t.doc);
+		// `\\]` would be an escaped bracket, leaving the caption open
+		expect(out).not.toContain('\\]');
+		expect(firstImage(parseTypstFile(out).doc).node.textContent).toBe('A plot.');
+	});
+
 	it('is written empty for an image the editor adds, and a bare image stays bare', () => {
 		const added = typSchema.nodes.image.create({ src: 'a.png' });
 		expect(serializeToTypst(typSchema.nodes.doc.create(null, [added]))).toBe('#figure(image("a.png"), caption: [])');

@@ -40,7 +40,7 @@
 			<div class="relative">
 				<button
 					type="button"
-					class="border-surface-300-700 relative block size-11 overflow-hidden rounded-base border {active
+					class="border-surface-300-700 rounded-base relative block size-11 overflow-hidden border {active
 						? 'ring-primary-500 ring-offset-surface-50-950 ring-2 ring-offset-2'
 						: 'hover:ring-muted hover:ring-offset-surface-50-950 hover:ring-2 hover:ring-offset-2'}"
 					aria-pressed={active}
@@ -57,7 +57,7 @@
 				</button>
 				{#if active}
 					<span
-						class="bg-primary-500 pointer-events-none absolute -top-1.5 -right-1.5 flex size-4 items-center justify-center rounded-full text-primary-contrast-500"
+						class="bg-primary-500 text-primary-contrast-500 pointer-events-none absolute -top-1.5 -right-1.5 flex size-4 items-center justify-center rounded-full"
 					>
 						<Check class="size-3" />
 					</span>
