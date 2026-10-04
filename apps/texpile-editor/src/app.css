@@ -1961,12 +1961,9 @@ html.pm-drop-refused .pm-drop-cursor {
 .ProseMirror .drawn-chip-line + .ProseMirror-separator + .ProseMirror-trailingBreak {
 	display: none !important;
 }
-/* the outline is the chip's selection, focused or not: the shade a selection held while its panel owns the focus
-   would add (cursor-plugin.ts) goes */
 .ProseMirror .drawn-chip-face.drawn-chip-selected {
 	outline: var(--default-border-width) solid var(--color-primary-500);
 	outline-offset: 1px;
-	background-color: transparent;
 }
 
 /* a panel field's suggestions open from its own chevron; the browser's arrow resists a plain display rule */

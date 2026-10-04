@@ -50,3 +50,14 @@
 	background-color: transparent;
 	box-shadow: 0 0 0 0.3em var(--range-tint);
 }
+
+/* a selected node that outlines itself is shown by its outline alone, as it is while the editor has
+   focus: the shade a selection held while a panel or menu owns the focus would add goes */
+.ProseMirror .ProseMirror-selectednode.pm-range-node,
+.ProseMirror .latex-placeholder-selected.pm-range-node,
+.ProseMirror .drawn-chip-selected.pm-range-node {
+	background-color: transparent;
+}
+.ProseMirror hr.ProseMirror-selectednode.pm-range {
+	box-shadow: none;
+}
