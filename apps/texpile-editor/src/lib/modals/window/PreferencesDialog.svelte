@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tip } from '$lib/components/tooltip.svelte';
+	import { unavailableTip } from '$lib/components/tooltip.svelte';
 	import { X, Languages } from '@lucide/svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import Modal from '../Modal.svelte';
@@ -112,7 +112,8 @@
 {/snippet}
 
 {#snippet toggleRow(text: string, hint: string, checked: boolean, onChange: (v: boolean) => void, disabled = false, title = '', docs = '')}
-	<div class={ROW} use:tip={title}>
+	<!-- title is only ever the reason a row is grayed, so a click shows it as well as a hover -->
+	<div class={ROW} use:unavailableTip={title}>
 		{@render label(text, hint, disabled, docs)}
 		<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
 			<Switch.Control><Switch.Thumb /></Switch.Control>
@@ -165,7 +166,7 @@
 				<button
 					class="rounded-base mb-0.5 block w-full cursor-default px-3 py-1.5 text-left text-sm opacity-50"
 					aria-disabled="true"
-					use:tip={m.unavailable_desktop()}
+					use:unavailableTip={m.unavailable_desktop()}
 				>
 					{c.label}
 				</button>
