@@ -24,10 +24,11 @@
 	import { m } from '$lib/paraglide/messages';
 	import { windowGlass } from '$lib/chrome/windowGlass.svelte';
 
-	// autosave is forced on (shown disabled) while live mode or a hosted session is active, and means
-	// nothing to a guest, whose edits the host saves, or in the browser, which has no files of its own
+	// autosave is forced on (shown disabled) while live mode or a hosted session is active, and shown on
+	// and disabled the same way to a guest, whose edits the host saves, or in the browser, which has no
+	// files of its own
 	const autosaveForced = $derived(compileConfig.current.latex.liveMode || collabHost.active);
-	const autosaveUnavailable = $derived(collabGuest.joined ? m.unavailable_guest() : __WEB__ ? m.unavailable_desktop() : '');
+	const autosaveUnavailable = $derived(collabGuest.joined ? m.unavailable_guest() : __WEB__ ? m.prefs_autosave_desktop_only() : '');
 
 	let { open = $bindable(false) }: { open?: boolean } = $props();
 	const logoSpin = new LogoSpin();
@@ -235,7 +236,7 @@
 						: compileConfig.current.latex.liveMode
 							? m.prefs_autosave_note_live()
 							: m.prefs_autosave_note_off(),
-					!autosaveUnavailable && (autosaveForced || settings.current.autosave),
+					!!autosaveUnavailable || autosaveForced || settings.current.autosave,
 					(v) => updateSettings({ autosave: v }),
 					!!autosaveUnavailable || autosaveForced,
 					autosaveUnavailable || (autosaveForced ? m.prefs_autosave_hint_forced() : '')

@@ -1673,6 +1673,7 @@
 	"session_error_full": "Diese Sitzung ist voll. Bitte den Gastgeber, Platz zu schaffen.",
 	"menubar_sharing_waiting": "Warte auf Gäste",
 	"prefs_autosave_hint_forced": "Automatisches Speichern ist hier erforderlich",
+	"prefs_autosave_desktop_only": "Lässt sich nur in Texpile Desktop ausschalten",
 	"prefs_autosave_note_session": "Bleibt aktiv, solange du eine geteilte Sitzung hältst, damit die Änderungen der Gäste in deinen Dateien landen.",
 	"prefs_mcp_show": "Anleitung anzeigen",
 	"mcpsetup_title": "Assistenten verbinden",

@@ -1673,6 +1673,7 @@
 	"session_error_full": "Esta sessão está cheia. Peça ao anfitrião para abrir espaço.",
 	"menubar_sharing_waiting": "Esperando por convidados",
 	"prefs_autosave_hint_forced": "O salvamento automático é obrigatório aqui",
+	"prefs_autosave_desktop_only": "Só pode ser desativado no Texpile Desktop",
 	"prefs_autosave_note_session": "Fica ativado enquanto você hospeda uma sessão compartilhada, para que as edições dos convidados cheguem aos seus arquivos.",
 	"prefs_mcp_show": "Mostrar instruções",
 	"mcpsetup_title": "Conectar um assistente",

@@ -1673,6 +1673,7 @@
 	"session_error_full": "This session is full. Ask the host to make room.",
 	"menubar_sharing_waiting": "Waiting for guests",
 	"prefs_autosave_hint_forced": "Autosave is required here",
+	"prefs_autosave_desktop_only": "Can only be turned off in Texpile Desktop",
 	"prefs_autosave_note_session": "Stays on while you host a shared session, so guests' edits reach your files.",
 	"prefs_mcp_show": "Show Instructions",
 	"mcpsetup_title": "Connect an Assistant",

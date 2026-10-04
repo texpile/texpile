@@ -1673,6 +1673,7 @@
 	"session_error_full": "该协作人数已满。请主持人腾出名额。",
 	"menubar_sharing_waiting": "等待访客加入",
 	"prefs_autosave_hint_forced": "此处需要自动保存",
+	"prefs_autosave_desktop_only": "仅可在 Texpile 桌面版中关闭",
 	"prefs_autosave_note_session": "你主持共享协作期间保持开启，以便其他协作者的修改保存到你的文件中。",
 	"prefs_mcp_show": "查看说明",
 	"mcpsetup_title": "连接助手",
