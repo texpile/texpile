@@ -43,7 +43,7 @@
 		"typescript-eslint": "^8.70.1",
 		"vite": "^8.3.1",
 		"vite-plugin-wasm": "^3.6.0",
-		"vitest": "^5.0.1"
+		"vitest": "^5.0.2"
 	},
 	"dependencies": {
 		"@codemirror/autocomplete": "^6.18.7",
@@ -76,7 +76,7 @@
 		"diff": "^8.0.2",
 		"esm-env": "^1.2.2",
 		"harper.js": "^2.10.0",
-		"lib0": "^0.2.117",
+		"lib0": "^0.2.118",
 		"linebreak": "^1.1.0",
 		"markdown-it": "^15.0.2",
 		"mathlive": "workspace:*",
@@ -95,8 +95,8 @@
 		"prosemirror-search": "^0.1.0",
 		"prosemirror-state": "^1.4.3",
 		"prosemirror-tables": "^1.4.0",
-		"prosemirror-transform": "^1.12.1",
-		"prosemirror-view": "^1.42.5",
+		"prosemirror-transform": "^1.12.2",
+		"prosemirror-view": "^1.42.6",
 		"texpile-typst-syntax-wasm": "workspace:*",
 		"unified": "^11.0.5",
 		"y-codemirror.next": "^0.3.6",
