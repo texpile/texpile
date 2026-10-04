@@ -73,7 +73,7 @@
 		"@unified-latex/unified-latex-util-visit": "^1.8.0",
 		"@xterm/addon-fit": "^0.11.0",
 		"@xterm/xterm": "^6.0.0",
-		"diff": "^8.0.2",
+		"diff": "^9.0.0",
 		"esm-env": "^1.2.2",
 		"harper.js": "^2.10.0",
 		"lib0": "^0.2.117",
