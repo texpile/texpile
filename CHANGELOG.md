@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-10-04
+
 - feat: more git support coverage (by @louisqli)
 - feat: version history (by @louisqli)
 - feat: push a repo to GitHub (by @louisqli)
