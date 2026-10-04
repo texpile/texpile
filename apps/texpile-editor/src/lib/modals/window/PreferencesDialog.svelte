@@ -118,10 +118,12 @@
 	<!-- title is only ever the reason a row is grayed, so a click shows it as well as a hover -->
 	<div class={ROW} use:unavailableTip={title}>
 		{@render label(text, hint, disabled, docs)}
-		<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
-			<Switch.Control><Switch.Thumb /></Switch.Control>
-			<Switch.HiddenInput />
-		</Switch>
+		<span class="flex" data-tip-anchor>
+			<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
+				<Switch.Control><Switch.Thumb /></Switch.Control>
+				<Switch.HiddenInput />
+			</Switch>
+		</span>
 	</div>
 {/snippet}
 
