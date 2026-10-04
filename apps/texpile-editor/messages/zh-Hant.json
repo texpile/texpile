@@ -2248,5 +2248,6 @@
 	"agent_panel_no_folder_note": "代理面向整個資料夾工作，而單一檔案沒有自己的資料夾。",
 	"single_file_unavailable": "單一檔案模式下無法使用。在工作區中開啟即可使用。",
 	"unavailable_desktop": "僅在 Texpile 桌面版中可用",
+	"unavailable_guest": "僅主持人或獨自工作時可用",
 	"agent_panel_single_file": "代理分頁在單一檔案模式下無法使用"
 }

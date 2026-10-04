@@ -2248,5 +2248,6 @@
 	"agent_panel_no_folder_note": "The agent works on a whole folder, and a single file has none of its own.",
 	"single_file_unavailable": "Not available in single file mode. Open in Workspace to use it.",
 	"unavailable_desktop": "Only available in Texpile Desktop",
+	"unavailable_guest": "Only available to the host, or when you work alone",
 	"agent_panel_single_file": "The Agent tab is not available in single file mode"
 }

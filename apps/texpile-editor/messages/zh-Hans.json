@@ -2248,5 +2248,6 @@
 	"agent_panel_no_folder_note": "代理面向整个文件夹工作，而单个文件没有自己的文件夹。",
 	"single_file_unavailable": "单文件模式下不可用。在工作区中打开即可使用。",
 	"unavailable_desktop": "仅在 Texpile 桌面版中可用",
+	"unavailable_guest": "仅主持人或独自工作时可用",
 	"agent_panel_single_file": "代理标签页在单文件模式下不可用"
 }

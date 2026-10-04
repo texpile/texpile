@@ -7,6 +7,7 @@
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
+	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
 	import PrefsVersionControlPanel from './PrefsVersionControlPanel.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
@@ -23,8 +24,10 @@
 	import { m } from '$lib/paraglide/messages';
 	import { windowGlass } from '$lib/chrome/windowGlass.svelte';
 
-	// autosave is forced on (shown disabled) while live mode or a hosted session is active
+	// autosave is forced on (shown disabled) while live mode or a hosted session is active, and means
+	// nothing to a guest, whose edits the host saves, or in the browser, which has no files of its own
 	const autosaveForced = $derived(compileConfig.current.latex.liveMode || collabHost.active);
+	const autosaveUnavailable = $derived(collabGuest.joined ? m.unavailable_guest() : __WEB__ ? m.unavailable_desktop() : '');
 
 	let { open = $bindable(false) }: { open?: boolean } = $props();
 	const logoSpin = new LogoSpin();
@@ -230,10 +233,10 @@
 						: compileConfig.current.latex.liveMode
 							? m.prefs_autosave_note_live()
 							: m.prefs_autosave_note_off(),
-					autosaveForced || settings.current.autosave,
+					!autosaveUnavailable && (autosaveForced || settings.current.autosave),
 					(v) => updateSettings({ autosave: v }),
-					autosaveForced,
-					autosaveForced ? m.prefs_autosave_hint_forced() : ''
+					!!autosaveUnavailable || autosaveForced,
+					autosaveUnavailable || (autosaveForced ? m.prefs_autosave_hint_forced() : '')
 				)}
 				{@render toggleRow(m.prefs_comment_pill(), m.prefs_comment_pill_note(), settings.current.commentPill !== false, (v) =>
 					updateSettings({ commentPill: v })

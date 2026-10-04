@@ -2248,5 +2248,6 @@
 	"agent_panel_no_folder_note": "Der Agent arbeitet an einem ganzen Ordner, und eine einzelne Datei hat keinen eigenen.",
 	"single_file_unavailable": "Im Einzeldateimodus nicht verfügbar. Öffne den Arbeitsbereich, um es zu nutzen.",
 	"unavailable_desktop": "Nur in Texpile Desktop verfügbar",
+	"unavailable_guest": "Nur für den Host verfügbar oder wenn du allein arbeitest",
 	"agent_panel_single_file": "Der Agent-Tab ist im Einzeldateimodus nicht verfügbar"
 }
