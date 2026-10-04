@@ -1589,6 +1589,7 @@
 	"mathpal_env_split": "Equação repartida",
 	"menubar_new_window": "Nova Janela",
 	"menubar_open_folder_new_window": "Abrir pasta em nova janela…",
+	"menubar_close_window": "Fechar janela",
 	"draft_busy_other_window": "A visualização ao vivo está ativa em outra janela.",
 	"draft_busy_takeover": "Use a visualização ao vivo aqui",
 	"start_new_window": "Nova Janela",

@@ -154,6 +154,7 @@ type TexpileNative = {
 	onWorkspaceFsChanged?: (cb: () => void) => () => void;
 	closeDecision?: (proceed: boolean) => void;
 	setZoomFactor?: (factor: number) => Promise<number>;
+	windowClose?: () => Promise<void>;
 	windowGlassWorks?: () => Promise<boolean>;
 	setWindowGlass?: (on: boolean) => Promise<boolean>;
 	setNativeAppearance?: (choice: 'light' | 'dark' | 'system') => void;

@@ -1589,6 +1589,7 @@
 	"mathpal_env_split": "Geteilte Formel",
 	"menubar_new_window": "Neues Fenster",
 	"menubar_open_folder_new_window": "Ordner in neuem Fenster öffnen…",
+	"menubar_close_window": "Fenster schließen",
 	"draft_busy_other_window": "Die Live-Vorschau ist in einem anderen Fenster aktiv.",
 	"draft_busy_takeover": "Live-Vorschau hier verwenden",
 	"start_new_window": "Neues Fenster",

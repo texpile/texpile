@@ -1589,6 +1589,7 @@
 	"mathpal_env_split": "拆分公式",
 	"menubar_new_window": "新增視窗",
 	"menubar_open_folder_new_window": "在新視窗中開啟資料夾…",
+	"menubar_close_window": "關閉視窗",
 	"draft_busy_other_window": "即時預覽正在另一個視窗中執行。",
 	"draft_busy_takeover": "在此視窗使用即時預覽",
 	"start_new_window": "新增視窗",
