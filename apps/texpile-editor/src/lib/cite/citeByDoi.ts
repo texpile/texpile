@@ -2,11 +2,20 @@
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { references } from '$lib/workspace/citations';
 import { basename, readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
-import { parseBibtex } from '$lib/languages/bib/biblatex';
+import { parseBibtex, parseHayagriva, type BiblatexReference } from '$lib/languages/bib/biblatex';
+import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { appendBibEntries, translatorForSource } from '$lib/zotero/bibTarget';
-import { insertCitation, mainTextOf, targetBib, warnUndeclared, type BibTarget, type ZoteroInsertDeps } from '$lib/zotero/insertFromZotero';
+import { appendBibEntries, bibPathsFromSource, translatorForSource } from '$lib/zotero/bibTarget';
+import {
+	insertCitation,
+	mainTextOf,
+	resolveBibPath,
+	targetBib,
+	warnUndeclared,
+	type BibTarget,
+	type ZoteroInsertDeps
+} from '$lib/zotero/insertFromZotero';
 import { findCited, preview, workFromBibtex, type BibDialect, type Work } from './doiEntry';
 import { parseWorkId, type WorkId } from './doiInput';
 import { rankHits, type SearchHit } from './searchRank';
@@ -33,12 +42,12 @@ export function doiLookupAvailable(): boolean {
 }
 
 export async function lookUpWork(id: WorkId, deps: CiteDeps): Promise<Lookup> {
+	const main = mainFile.current;
 	// most pastes are of a paper the project already cites; those need no network at all
-	const known = findCited(references.current, id);
+	const known = findCited(await documentReferences(main, deps), id);
 	if (known) return { state: 'cited', key: known.key, ...preview(known) };
 
 	const bridge = window.texpileDoi;
-	const main = mainFile.current;
 	if (!bridge || !main) return { state: 'error', reason: 'failed' };
 	const got =
 		id.kind === 'isbn' ? await bridge.isbn(id.isbn) : id.kind === 'pmid' ? await bridge.pmid(id.pmid) : await bridge.lookup(id.doi);
@@ -54,16 +63,17 @@ export async function lookUpWork(id: WorkId, deps: CiteDeps): Promise<Lookup> {
 	return { state: 'found', work, fetched: got.bibtex, bibName: basename(target.path), id };
 }
 
-export async function searchPapers(query: string): Promise<Search> {
+export async function searchPapers(query: string, deps: CiteDeps): Promise<Search> {
 	const bridge = window.texpileDoi;
 	if (!bridge) return { state: 'error', reason: 'failed' };
 	const got = await bridge.search(query);
 	if (!got.ok) return { state: 'error', reason: got.reason, error: got.error };
+	const cited = await documentReferences(mainFile.current, deps);
 	return {
 		state: 'hits',
 		hits: rankHits(query, got.hits).map((hit) => {
 			const id = parseWorkId(hit.doi);
-			const known = id ? findCited(references.current, id) : null;
+			const known = id ? findCited(cited, id) : null;
 			return known ? { ...hit, citedKey: known.key } : hit;
 		})
 	};
@@ -102,6 +112,20 @@ async function landing(main: string, deps: CiteDeps): Promise<BibTarget & { text
 	// Typst's own reader; else the same reading the Zotero export makes of the preamble
 	const dialect = deps.kind === 'typ' ? 'typst' : translatorForSource(mainText, deps.kind) === 'Better BibLaTeX' ? 'biblatex' : 'bibtex';
 	return { ...target, text, dialect };
+}
+
+/** what the bibliographies the main file declares hold, or every one the project has when it has none of them */
+async function documentReferences(main: string | null, deps: CiteDeps): Promise<readonly BiblatexReference[]> {
+	if (!main) return references.current;
+	const mainText = await mainTextOf(main, deps);
+	const named = deps.kind === 'typ' ? typstBibliographyPaths(mainText) : bibPathsFromSource(mainText, deps.kind);
+	const lists: BiblatexReference[][] = [];
+	for (const path of named.map((rel) => resolveBibPath(main, rel, deps))) {
+		if (!(await statFile(path)).exists) continue;
+		const text = await readTextFile(path);
+		lists.push(/\.ya?ml$/i.test(path) ? (parseHayagriva(text) ?? []) : parseBibtex(text));
+	}
+	return lists.length ? lists.flat() : references.current;
 }
 
 function takenKeys(bibText: string): string[] {

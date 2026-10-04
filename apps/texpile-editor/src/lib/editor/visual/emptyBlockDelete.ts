@@ -6,12 +6,15 @@ import type { EditorState, Transaction } from 'prosemirror-state';
 import type { ResolvedPos } from 'prosemirror-model';
 import { gapAwareSelectionNear } from './gapSelection';
 
+// a figure is a text block too, its caption the text: an empty caption is not an empty block
+const REMOVABLE = new Set(['paragraph', 'heading']);
+
 /** the cursor, when it sits in an empty paragraph or heading directly in the document */
 function inEmptyBlock(state: EditorState): ResolvedPos | null {
 	const { $cursor } = state.selection as { $cursor?: ResolvedPos | null };
 	if (!$cursor || $cursor.depth !== 1) return null;
 	const block = $cursor.parent;
-	return block.isTextblock && block.content.size === 0 && !block.type.spec.code ? $cursor : null;
+	return REMOVABLE.has(block.type.name) && block.content.size === 0 ? $cursor : null;
 }
 
 /** the empty block goes and the cursor starts the block that followed it */

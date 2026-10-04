@@ -126,7 +126,7 @@
 	{@const Icon = group.icon}
 	<div>
 		<button
-			class="toolbarButton flex items-center gap-1 rounded-base p-1 hover:preset-tonal"
+			class="toolbarButton rounded-base hover:preset-tonal flex items-center gap-1 p-1"
 			class:preset-tonal-primary={mathToolbarState.openGroup === group.id}
 			aria-label={group.label()}
 			use:tip={group.label()}
@@ -148,7 +148,7 @@
 	<div class="flex items-center gap-1 sm:gap-1.5">
 		<span class="border-surface-300-700 h-6 border-r"></span>
 		<button
-			class="toolbarButton flex items-center rounded-base p-1 hover:preset-tonal"
+			class="toolbarButton rounded-base hover:preset-tonal flex items-center p-1"
 			tabindex="-1"
 			onmousedown={preventFocusLoss}
 			onclick={selectBlockMath}

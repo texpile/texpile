@@ -1,7 +1,7 @@
 // the cross-file scan behind projectIntelStore: reads every project .tex (except the active
 // buffer, whose live text the editor owns), the .bib files, and the main file's .aux, and
 // derives what completion/hover/definition/outline need. see stores/projectIntel.ts for types.
-import { readTextFile, type TexFile } from './fileSystem';
+import { readTextFile, samePath, type TexFile } from './fileSystem';
 import { parseAuxLabels } from './auxLabels';
 import { projectIntelStore, EMPTY_PROJECT_INTEL, type ProjectIntel } from '$lib/stores/projectIntel';
 import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
@@ -11,10 +11,6 @@ import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/l
 
 const MAX_FILES = 300;
 const MAX_FILE_LENGTH = 2_000_000;
-
-function samePath(a: string, b: string) {
-	return a.replace(/\\/g, '/').toLowerCase() === b.replace(/\\/g, '/').toLowerCase();
-}
 
 const LABEL_RE = /\\(?:line)?label\s*\{([^{}]+)\}/g;
 // \newcommand family + the forms LW parses beyond it; group 1 = name, group 2 = optional [argcount]

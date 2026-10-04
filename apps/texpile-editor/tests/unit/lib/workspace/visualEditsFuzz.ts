@@ -198,7 +198,7 @@ export function renderedText(doc: PMNode, drawn: { from: number; to: number; wor
 		else if (node.isInline) chars.push({ ch: '#', pos });
 		return !node.isInline;
 	});
-	for (const r of [...drawn].sort((a, b) => b.from - a.from || b.to - a.to)) {
+	for (const r of [...drawn].sort((a, b) => b.from - a.from)) {
 		const kept = chars.filter((c) => c.old || !(c.pos >= r.from && c.pos < r.to));
 		// past any words already put at this very spot, so two of them keep the order they were given
 		// in: the editor draws them that way, and it is the order the file holds them in

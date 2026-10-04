@@ -103,6 +103,7 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		recent: m.menubar_recent_heading(),
 		newWindow: m.menubar_new_window(),
 		openFolderNewWindow: m.menubar_open_folder_new_window(),
+		closeWindow: m.menubar_close_window(),
 		share: m.menubar_share_session(),
 		save: m.menubar_save(),
 		saveAsTemplate: m.menubar_save_as_template(),

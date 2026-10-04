@@ -111,7 +111,7 @@ export function foldMemory(path: string) {
 					this.pending = null;
 					this.saveLater.cancel();
 					this.save();
-				} else if (u.docChanged && foldedRanges(u.state).size) this.saveLater();
+				} else if (u.docChanged && (foldedRanges(u.state).size || foldedRanges(u.startState).size)) this.saveLater();
 				this.queueRestore();
 			}
 

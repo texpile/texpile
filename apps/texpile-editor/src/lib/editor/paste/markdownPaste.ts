@@ -5,6 +5,7 @@ import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter'
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import type { PasteDialect } from './pastedImages';
 import { convertPastedMath, schemaMathSyntax } from './pastedMath';
+import { convertPastedRawBlocks, markCopiedRawLanguages } from './pastedRawBlocks';
 
 // what only Markdown writes: Typst reads code, raw blocks and `-` lists the same way
 // (not `2**10`, `__init__`, a `>>>` prompt or `handlers[name](event)`, which are code)
@@ -52,6 +53,8 @@ export function markdownSlice(text: string, schema: Schema): Slice | null {
 	if (schema === mdSchema) return Slice.maxOpen(doc.content, false);
 	const dom = document.createElement('div');
 	dom.append(DOMSerializer.fromSchema(mdSchema).serializeFragment(doc.content));
+	markCopiedRawLanguages(doc.content, dom);
+	convertPastedRawBlocks(dom, schemaMathSyntax(schema));
 	convertPastedMath(dom, schemaMathSyntax(schema));
 	return Slice.maxOpen(PMDOMParser.fromSchema(schema).parseSlice(dom).content, false);
 }

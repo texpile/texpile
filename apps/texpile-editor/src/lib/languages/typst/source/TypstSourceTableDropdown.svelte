@@ -45,7 +45,7 @@
 >
 	<Popover.Trigger>
 		<button
-			class="btn-icon btn-icon-xs toolbarButton flex items-center hover:preset-tonal"
+			class="btn-icon btn-icon-xs toolbarButton hover:preset-tonal flex items-center"
 			class:preset-tonal-primary={open}
 			aria-label={m.tbar_insert_table_aria()}
 			use:tip={m.tbar_insert_table_aria()}
@@ -65,7 +65,7 @@
 						{#each cells as cell (`${cell.row}-${cell.col}`)}
 							<button
 								type="button"
-								class="h-6 w-6 rounded-base"
+								class="rounded-base h-6 w-6"
 								class:bg-surface-200-800={!(cell.row <= rows && cell.col <= cols)}
 								class:bg-blue={cell.row <= rows && cell.col <= cols}
 								tabindex="-1"

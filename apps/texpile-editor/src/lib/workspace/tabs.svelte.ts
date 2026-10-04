@@ -4,7 +4,7 @@
 //
 // A tab is a FILE or a COMPARISON of one against a saved version - the same kind of thing, so
 // one strip, and both are persisted. Not the visual/source axis, which stays a preference.
-import { samePath, joinPath } from './fileSystem';
+import { samePath, joinPath, relativeInside } from './fileSystem';
 import { getFolder, updateFolder, savedCompare, type SavedCompare } from '$lib/storage/workspaces';
 import { AGENT_REF } from '$lib/ai/agentPanel/changes/agentBefore';
 
@@ -77,9 +77,9 @@ class TabsStore {
 		if (!this.persistable || !this.root) return;
 		const root = this.root;
 		// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
-		// reopened without it would show the whole file as new
+		// reopened without it would show the whole file as new; one outside the root would come back under it
 		const saved = this.list
-			.filter((t) => !t.compare?.hash.startsWith(AGENT_REF))
+			.filter((t) => !t.compare?.hash.startsWith(AGENT_REF) && relativeInside(root, t.path) !== null)
 			.map((t) => {
 				const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
 				return t.compare ? { path: rel, compare: { ...t.compare } } : rel;

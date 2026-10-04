@@ -2,6 +2,7 @@ import type { EditorView, NodeView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
 import { openFile, texFiles } from '$lib/workspace/workspaceStore';
+import { samePath } from '$lib/workspace/fileSystem';
 import IncludeDocDisplay from './IncludeDocDisplay.svelte';
 
 /**
@@ -56,10 +57,7 @@ export class IncludeDocView implements NodeView {
 		const resolved = resolveIncludePath(this.baseDir(), rawPath, this.node.attrs.command === 'typst' ? '.typ' : '.tex');
 		// prefer the workspace's canonical path (keeps the file-tree highlight in sync);
 		// fall back to the resolved path so a not-yet-scanned file still opens
-		function norm(p: string) {
-			return p.replace(/\\/g, '/').toLowerCase();
-		}
-		const match = texFiles.current.find((f) => norm(f.path) === norm(resolved));
+		const match = texFiles.current.find((f) => samePath(f.path, resolved));
 		openFile(match ? match.path : resolved);
 	}
 

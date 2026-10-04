@@ -24,6 +24,7 @@ const inert = {
 	runCompile: () => {},
 	stopCompile: () => {},
 	openPreferences: () => {},
+	openFolder: () => {},
 	stepDocumentHistory: () => {}
 };
 
@@ -102,5 +103,29 @@ describe('undo and redo', () => {
 		expect(stepDocumentHistory.mock.calls).toEqual([['undo'], ['redo'], ['redo']]);
 		press('z', document.body.appendChild(document.createElement('textarea')));
 		expect(stepDocumentHistory).toHaveBeenCalledTimes(3);
+	});
+});
+
+describe('Ctrl+O', () => {
+	const press = (target: EventTarget) =>
+		({
+			ctrlKey: true,
+			metaKey: false,
+			shiftKey: false,
+			altKey: false,
+			key: 'o',
+			target,
+			preventDefault: () => {}
+		}) as unknown as KeyboardEvent;
+
+	it('opens a folder, but leaves the key to the shell in the terminal', () => {
+		const openFolder = vi.fn();
+		const handle = createKeydownHandler({ ...inert, openFolder });
+		handle(press(document.body));
+		expect(openFolder).toHaveBeenCalledTimes(1);
+		const term = document.body.appendChild(document.createElement('div'));
+		term.className = 'xterm';
+		handle(press(term.appendChild(document.createElement('textarea'))));
+		expect(openFolder).toHaveBeenCalledTimes(1);
 	});
 });

@@ -17,8 +17,8 @@ export type BlockPatch = {
 	nodes: PMNode[];
 };
 
-// parse-time stamps the live doc never sets itself: typst's source gap
-const PARSE_STAMPS = new Set(['typGap']);
+// parse-time stamps the live doc never sets itself: typst's source gap, the source environment of a list item
+const PARSE_STAMPS = new Set(['typGap', 'envKey']);
 
 function attrsEqualExceptStamps(a: Record<string, unknown>, b: Record<string, unknown>): boolean {
 	const ka = Object.keys(a).filter((k) => !PARSE_STAMPS.has(k));

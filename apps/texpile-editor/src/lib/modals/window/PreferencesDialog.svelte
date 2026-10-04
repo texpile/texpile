@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tip } from '$lib/components/tooltip.svelte';
+	import { unavailableTip } from '$lib/components/tooltip.svelte';
 	import { X, Languages } from '@lucide/svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import Modal from '../Modal.svelte';
@@ -7,6 +7,7 @@
 	import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
+	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
 	import PrefsVersionControlPanel from './PrefsVersionControlPanel.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
@@ -23,8 +24,11 @@
 	import { m } from '$lib/paraglide/messages';
 	import { windowGlass } from '$lib/chrome/windowGlass.svelte';
 
-	// autosave is forced on (shown disabled) while live mode or a hosted session is active
+	// autosave is forced on (shown disabled) while live mode or a hosted session is active, and shown on
+	// and disabled the same way to a guest, whose edits the host saves, or in the browser, which has no
+	// files of its own
 	const autosaveForced = $derived(compileConfig.current.latex.liveMode || collabHost.active);
+	const autosaveUnavailable = $derived(collabGuest.joined ? m.unavailable_guest() : __WEB__ ? m.prefs_autosave_desktop_only() : '');
 
 	let { open = $bindable(false) }: { open?: boolean } = $props();
 	const logoSpin = new LogoSpin();
@@ -35,8 +39,12 @@
 	type Category = 'appearance' | 'editor' | 'proofing' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
 	// the browser guest has no local toolchain, no Zotero, no MCP server, no folder to reopen and no
-	// copies or versions of its own: five tabs that could only ever report nothing
+	// copies or versions of its own: five tabs that could only ever report nothing, so they are
+	// grayed there with why rather than left out
 	const DESKTOP_ONLY_TABS: Category[] = ['vcs', 'toolchain', 'integrations', 'startup', 'ai'];
+	function tabUnavailable(id: Category): boolean {
+		return __WEB__ && DESKTOP_ONLY_TABS.includes(id);
+	}
 	const ALL_TABS: { id: Category; label: string }[] = [
 		{ id: 'appearance', label: m.prefs_appearance() },
 		// Editing, Source editor and Visual editor were three tabs holding three, two and two rows.
@@ -61,8 +69,9 @@
 		{ id: 'startup', label: m.prefs_group_startup() },
 		{ id: 'ai', label: m.prefs_group_ai() }
 	];
-	const categories = ALL_TABS.filter((c) => !__WEB__ || !DESKTOP_ONLY_TABS.includes(c.id));
-
+	const categories = ALL_TABS.filter((c) => !tabUnavailable(c.id));
+	// the browser has no glass of its own; on the desktop it needs macOS or Windows 11 (windowGlass.ts)
+	const glassUnavailable = $derived(windowGlass.works ? '' : __WEB__ ? m.unavailable_desktop() : m.prefs_window_transparency_unsupported());
 	// Opened to answer a particular question (the compile modal's "your compiler is missing"): land
 	// on that tab, then clear the request. Cleared only when it was SET, or the store write would
 	// re-run this effect forever.
@@ -107,12 +116,15 @@
 {/snippet}
 
 {#snippet toggleRow(text: string, hint: string, checked: boolean, onChange: (v: boolean) => void, disabled = false, title = '', docs = '')}
-	<div class={ROW} use:tip={title}>
+	<!-- title is only ever the reason a row is grayed, so a click shows it as well as a hover -->
+	<div class={ROW} use:unavailableTip={title}>
 		{@render label(text, hint, disabled, docs)}
-		<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
-			<Switch.Control><Switch.Thumb /></Switch.Control>
-			<Switch.HiddenInput />
-		</Switch>
+		<span class="flex" data-tip-anchor>
+			<Switch {checked} {disabled} onCheckedChange={(d) => onChange(d.checked)}>
+				<Switch.Control><Switch.Thumb /></Switch.Control>
+				<Switch.HiddenInput />
+			</Switch>
+		</span>
 	</div>
 {/snippet}
 
@@ -154,15 +166,26 @@
 				<img src={logoOnDark} alt="" class="hidden h-6 w-auto dark:block" />
 			</button>
 		</div>
-		{#each categories as c (c.id)}
-			<button
-				class="mb-0.5 block w-full rounded-base px-3 py-1.5 text-left text-sm {category === c.id
-					? 'bg-primary-tint font-medium'
-					: 'hover:preset-tonal'}"
-				onclick={() => (category = c.id)}
-			>
-				{c.label}
-			</button>
+		{#each ALL_TABS as c (c.id)}
+			{#if tabUnavailable(c.id)}
+				<!-- aria-disabled, not disabled: a disabled button takes no hover, and the hover is what says why -->
+				<button
+					class="rounded-base mb-0.5 block w-full cursor-default px-3 py-1.5 text-left text-sm opacity-50"
+					aria-disabled="true"
+					use:unavailableTip={m.unavailable_desktop()}
+				>
+					{c.label}
+				</button>
+			{:else}
+				<button
+					class="rounded-base mb-0.5 block w-full px-3 py-1.5 text-left text-sm {category === c.id
+						? 'bg-primary-tint font-medium'
+						: 'hover:preset-tonal'}"
+					onclick={() => (category = c.id)}
+				>
+					{c.label}
+				</button>
+			{/if}
 		{/each}
 	</nav>
 
@@ -181,11 +204,14 @@
 					<AppearanceMode />
 				</div>
 				<ThemePicker />
-				{#if windowGlass.works}
-					{@render toggleRow(m.prefs_window_transparency(), '', settings.current.transparentWindow === true, (v) =>
-						updateSettings({ transparentWindow: v })
-					)}
-				{/if}
+				{@render toggleRow(
+					m.prefs_window_transparency(),
+					'',
+					windowGlass.works && settings.current.transparentWindow === true,
+					(v) => updateSettings({ transparentWindow: v }),
+					!!glassUnavailable,
+					glassUnavailable
+				)}
 				<div class={ROW}>
 					<!-- the one setting a user may need to find while the UI is in a language they
 							     cannot read, so it carries an icon the others do not -->
@@ -210,10 +236,10 @@
 						: compileConfig.current.latex.liveMode
 							? m.prefs_autosave_note_live()
 							: m.prefs_autosave_note_off(),
-					autosaveForced || settings.current.autosave,
+					!!autosaveUnavailable || autosaveForced || settings.current.autosave,
 					(v) => updateSettings({ autosave: v }),
-					autosaveForced,
-					autosaveForced ? m.prefs_autosave_hint_forced() : ''
+					!!autosaveUnavailable || autosaveForced,
+					autosaveUnavailable || (autosaveForced ? m.prefs_autosave_hint_forced() : '')
 				)}
 				{@render toggleRow(m.prefs_comment_pill(), m.prefs_comment_pill_note(), settings.current.commentPill !== false, (v) =>
 					updateSettings({ commentPill: v })
@@ -251,15 +277,15 @@
 					{@render toggleRow(m.prefs_visual_justify(), m.prefs_visual_justify_note(), settings.current.visualJustify !== false, (v) =>
 						updateSettings({ visualJustify: v })
 					)}
-					<!-- only justified text is hyphenated, so the row goes when that is off -->
-					{#if settings.current.visualJustify !== false}
-						{@render toggleRow(
-							m.prefs_visual_hyphenate(),
-							m.prefs_visual_hyphenate_note(),
-							settings.current.visualHyphenate !== false,
-							(v) => updateSettings({ visualHyphenate: v })
-						)}
-					{/if}
+					<!-- only justified text is hyphenated, so the row is grayed with why while that is off -->
+					{@render toggleRow(
+						m.prefs_visual_hyphenate(),
+						m.prefs_visual_hyphenate_note(),
+						settings.current.visualHyphenate !== false,
+						(v) => updateSettings({ visualHyphenate: v }),
+						settings.current.visualJustify === false,
+						settings.current.visualJustify === false ? m.prefs_visual_hyphenate_needs_justify() : ''
+					)}
 				</div>
 			{:else if category === 'proofing'}
 				<!-- all of it stays up with the switch off: the Spelling menu's Edit Dictionary leads here -->

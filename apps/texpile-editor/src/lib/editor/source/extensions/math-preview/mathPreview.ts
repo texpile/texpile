@@ -1,7 +1,7 @@
 // source-mode live math preview: a tooltip above the cursor typesets the math region on every
 // keystroke, rendered with mathlive so it matches what visual mode will show.
 import { EditorView, keymap, showTooltip, type Tooltip, type TooltipView } from '@codemirror/view';
-import { StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
+import { Facet, StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
 import { convertLatexToMarkup } from 'mathlive';
 import 'mathlive/static.css';
 import 'mathlive/fonts.css';
@@ -11,6 +11,7 @@ import { findMathRegions, mathRegionAt, type MathRegion } from './mathScanner';
 import { mathMacrosFor } from './userMacros';
 
 const previewDismissed = StateEffect.define<null>();
+const percentComments = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? true });
 
 /** above this the preview silently disables instead of re-scanning megabytes per keystroke. */
 const MAX_SCAN_LENGTH = 2_000_000;
@@ -29,7 +30,7 @@ const regionsField = StateField.define<RegionCell>({
 
 function scan(state: EditorState): MathRegion[] {
 	if (state.doc.length > MAX_SCAN_LENGTH) return [];
-	return findMathRegions(docText(state.doc));
+	return findMathRegions(docText(state.doc), state.facet(percentComments));
 }
 
 function regionsFor(state: EditorState): MathRegion[] {
@@ -264,8 +265,8 @@ const previewTheme = EditorView.baseTheme({
 	}
 });
 
-/** live typeset preview of the math region under the cursor. latex source mode only. */
-export function mathPreview(): Extension {
+/** live typeset preview of the math region under the cursor; `comments: false` for Markdown, where % is text */
+export function mathPreview({ comments = true }: { comments?: boolean } = {}): Extension {
 	// field order matters: dismissedField must settle before tooltipField reads it
-	return [regionsField, dismissedField, tooltipField, dismissKeymap, previewTheme];
+	return [percentComments.of(comments), regionsField, dismissedField, tooltipField, dismissKeymap, previewTheme];
 }

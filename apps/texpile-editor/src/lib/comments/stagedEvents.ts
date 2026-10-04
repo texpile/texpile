@@ -1,5 +1,6 @@
 // a burst of suggestion events reduced to the lines worth writing
-import type { CommentEvent } from './log';
+import type { CommentAnchor } from './anchor';
+import { anchorEvent, deleteEvent, resolveEvent, type CommentEvent, type CommentThread } from './log';
 
 export function collapseStaged(staged: CommentEvent[]): CommentEvent[] {
 	const withdrawn = new Set(staged.flatMap((e) => (e.t === 'delete' ? [e.thread] : [])));
@@ -34,4 +35,33 @@ export function collapseStaged(staged: CommentEvent[]): CommentEvent[] {
 		lastAnchor.set(e.thread, out.length - 1);
 	}
 	return out.filter((e): e is CommentEvent => e !== null);
+}
+
+/** puts back what a write of the log took early of typing since thrown away: `before` is each thread that typing
+ *  changed as it stood until then, null for one it made */
+export function thrownBack(before: Map<string, CommentThread | null>, threads: CommentThread[], by: string): CommentEvent[] {
+	const at = new Date().toISOString();
+	const out: CommentEvent[] = [];
+	for (const [thread, was] of before) {
+		const now = threads.find((t) => t.id === thread);
+		if (!now) continue;
+		if (!was) {
+			// someone answered it: closed, so the answer stays readable
+			if (now.messages.length <= 1) out.push(deleteEvent({ thread, by, at }));
+			else if (!now.resolved) out.push(resolveEvent({ thread, resolved: true, decision: 'closed', by, at }));
+			continue;
+		}
+		if (!sameAnchor(now.anchor, was.anchor) || now.restore !== was.restore)
+			out.push(anchorEvent({ thread, anchor: was.anchor, restore: was.restore, by, at }));
+		// an Accept changes no words, so throwing the typing away does not take it back
+		if (now.decision !== 'accepted' && (now.resolved !== was.resolved || now.decision !== was.decision))
+			out.push(resolveEvent({ thread, resolved: was.resolved, decision: was.decision, by, at }));
+	}
+	return out;
+}
+
+function sameAnchor(a: CommentAnchor, b: CommentAnchor): boolean {
+	return (
+		a.quote === b.quote && a.prefix === b.prefix && a.suffix === b.suffix && a.start === b.start && a.end === b.end && a.rank === b.rank
+	);
 }

@@ -31,7 +31,10 @@ export class LocalFork {
 	fold(text: Y.Text, content: string, before: string | undefined, origin: unknown): void {
 		const now = text.toString();
 		if (content === now) return this.takeIn(this.held.length);
-		const mine = before === undefined ? null : this.reading(text, before);
+		// the copy can read this text off words since deleted and retyped, so a caught up editor edits the live ones
+		const caughtUp = before === now;
+		if (caughtUp) this.takeIn(this.held.length);
+		const mine = before === undefined || caughtUp ? null : this.reading(text, before);
 		const change = spliceDiff(mine ? before! : now, content);
 		if (!change) return;
 		if (!mine) {

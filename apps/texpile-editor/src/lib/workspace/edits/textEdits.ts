@@ -1,5 +1,5 @@
 // a text change as a list of edits, and positions mapped through it
-import { fromLf, type Eol } from '../fileSystem';
+import { fromLf, type Eol } from './lineEndings';
 
 /** offsets are in the text before any of the edits */
 export type TextEdit = { from: number; to: number; insert: string };
@@ -25,7 +25,8 @@ export function editsOnRaw(raw: string, edits: readonly TextEdit[], eol: Eol): T
 		while (k < dropped.length && dropped[k] < p) k++;
 		return p + k;
 	}
-	return edits.map((e) => ({ from: at(e.from), to: at(e.to), insert: fromLf(e.insert, eol) }));
+	const added = typeof eol === 'string' ? eol : eol.dominant;
+	return edits.map((e) => ({ from: at(e.from), to: at(e.to), insert: fromLf(e.insert, added) }));
 }
 
 export function invertEdits(before: string, edits: readonly TextEdit[]): TextEdit[] {

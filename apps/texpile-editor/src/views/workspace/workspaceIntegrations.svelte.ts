@@ -11,6 +11,7 @@ import { attachSessionHandlers } from '$lib/collab/workspaceSession';
 import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
 import { ScmActions } from '$lib/workspace/scm/actions/scmActions.svelte';
 import { ChangeBaseline } from '$lib/workspace/changeBaseline.svelte';
+import { endMerge } from '$lib/editor/source/cmConflicts';
 import { gitHead, gitHeldBack, gitOperation, gitTracking, isGitRepo } from '$lib/workspace/scm/gitStore';
 import { canSwitchBranch } from '$lib/workspace/scm/branches/gitBranches';
 import { canCombine } from '$lib/workspace/scm/branches/gitCombine';
@@ -21,7 +22,7 @@ import { AutoCheck } from '$lib/workspace/scm/actions/scmAutoCheck.svelte';
 import { LocalHistoryActions, provideLocalHistoryActions } from '$lib/workspace/localHistory/localHistoryActions.svelte';
 import { provideAgentHost } from '$lib/ai/agentPanel/agentHost.svelte';
 import { provideFolderSwitch } from '$lib/workspace/openWorkspace';
-import { agentSession, agentSessionStale } from '$lib/ai/agentPanel/agentSession.svelte';
+import { closeAgentSessionWithWorkspace } from '$lib/ai/agentPanel/agentSession.svelte';
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { joinPath } from '$lib/workspace/fileSystem';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
@@ -41,7 +42,7 @@ import { doiLookupAvailable } from '$lib/cite/citeByDoi';
 import { citeByDoi as citeByDoiDialog } from '$lib/cite/citeByDoiState.svelte';
 import { compileLog } from '$lib/stores/compileLogStore';
 import { pdfStore } from '$lib/stores/pdfStore';
-import { filePathStore } from '$lib/stores/editorStore';
+import { filePathStore, sourceCmView } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
 import { LiveRefChecks } from '$lib/workspace/document/liveRefChecks.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
@@ -132,7 +133,9 @@ export class WorkspaceIntegrations {
 			},
 			openAtLine: (path, line) => d.nav().showSourceLine(path, line),
 			settleConflicts: () => {
-				if (d.wsdoc.doc.leaveConflicts() && modes.mode === 'visual') d.wsdoc.rebuildVisualFromSource();
+				if (!d.wsdoc.doc.leaveConflicts()) return;
+				sourceCmView.current?.dispatch({ effects: endMerge.of(null) });
+				if (modes.mode === 'visual') d.wsdoc.rebuildVisualFromSource();
 			},
 			ignoreLines: () => gitignoreLines(effectiveCompileFormat(mainFile.current)),
 			writeText: (p, content) => d.provider.writeText(p, content),
@@ -184,9 +187,7 @@ export class WorkspaceIntegrations {
 		// Open in Workspace from a lone file: the full folder switch, which claims the folder and sets its project up
 		$effect(() => provideFolderSwitch((root, want) => d.files().folder.open(root, want)));
 		// here, not in the dock: a window turning to a lone file unmounts the dock before it could stop the agent
-		$effect(() => {
-			if (agentSessionStale()) untrack(() => agentSession.close());
-		});
+		closeAgentSessionWithWorkspace();
 		const fetcher = new ScmFetch(this.scm);
 		// co-authors' new versions, looked for every few minutes while this project is open
 		const autoCheck = new AutoCheck({ isBusy: () => this.scm.busy, sync: () => void this.scm.sync() });

@@ -7,7 +7,10 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import * as typstService from '../typstService';
 import { withPathDirs } from '../shell/pathDirs';
+import { CWD_LOOKUP_OFF } from '../shell/findProgram';
 import { shellEnvReady } from '../shell/shellEnv';
+import { loginShellStart } from '../shell/loginShellStart';
+import { toolDirsInFront } from '../shell/toolDirs';
 import { killTree } from '../shell/killTree';
 import { windowsPtyFor } from '../shell/windowsPty';
 import { timeSync } from '../startupStats';
@@ -69,7 +72,10 @@ function defaultShell(): string {
  * one-click install finds the copy the install puts there.
  */
 function terminalEnv(): NodeJS.ProcessEnv {
-	return withPathDirs(process.env, [path.dirname(typstService.managedTinymistPath(app.getPath('userData')))], true);
+	const env = withPathDirs(process.env, [path.dirname(typstService.managedTinymistPath(app.getPath('userData')))], true);
+	// a command typed or set for the project may name a script in its folder, which cmd finds there
+	delete env[CWD_LOOKUP_OFF];
+	return env;
 }
 
 type TerminalSpawnOpts = {
@@ -106,12 +112,9 @@ export function registerTerminalIpc(): void {
 		if (ptys.has(id)) return { ok: true, shell, windowsPty };
 		let proc: PtyProcess;
 		try {
-			// macOS: login shell, so /etc/zprofile runs path_helper and picks up /etc/paths.d
-			// (MacTeX registers /Library/TeX/texbin there). A Finder-launched app only has
-			// launchd's bare PATH, and a non-login zsh never repairs it - Terminal.app,
-			// iTerm and VS Code all spawn login shells for the same reason.
+			const start = loginShellStart(shellPath, toolDirsInFront(), path.join(app.getPath('userData'), 'terminal-shell'));
 			proc = timeSync('spawn terminal shell', () =>
-				pty.spawn(shellPath, process.platform === 'darwin' ? ['-l'] : [], {
+				pty.spawn(shellPath, start.args, {
 					name: 'xterm-color',
 					cwd: cwd && fs.existsSync(cwd) ? cwd : app.getPath('home'),
 					cols: Math.max(1, cols! | 0) || 80,
@@ -119,13 +122,28 @@ export function registerTerminalIpc(): void {
 					// the shell must be able to find the tools Preferences says are installed; without this a
 					// configured tinymist works for intellisense and for the Toolchain tab, then fails at the
 					// compile command with "not recognized" (see withPathDirs)
-					env: terminalEnv() as Record<string, string>
+					env: { ...(terminalEnv() as Record<string, string>), ...start.env }
 				})
 			);
 		} catch (err) {
 			return { ok: false, error: String(err instanceof Error ? err.message : err) };
 		}
 		const wc = e.sender;
+		// a closing or reloading window runs none of its own teardown, so its shells end here
+		function endWithWindow(): void {
+			if (id == null || ptys.get(id) !== proc) return;
+			ptys.delete(id);
+			try {
+				proc.kill();
+			} catch {
+				/* already gone */
+			}
+		}
+		function endOnReload(details: { isMainFrame: boolean; isSameDocument: boolean }): void {
+			if (details.isMainFrame && !details.isSameDocument) endWithWindow();
+		}
+		wc.once('destroyed', endWithWindow);
+		wc.on('did-start-navigation', endOnReload);
 		// coalesce pty output: one renderer message per ~16ms tick (or 64KB burst) instead of
 		// one per chunk -- a fast compile can emit thousands of tiny chunks per second
 		let buf = '';
@@ -146,6 +164,8 @@ export function registerTerminalIpc(): void {
 			else if (!flushTimer) flushTimer = setTimeout(flush, 16);
 		});
 		proc.onExit(({ exitCode }) => {
+			wc.removeListener('destroyed', endWithWindow);
+			wc.removeListener('did-start-navigation', endOnReload);
 			ptys.delete(id);
 			flush(); // pending output must land before the exit message, or the tail is lost
 			if (!wc.isDestroyed()) wc.send('terminal:exit', { id, code: exitCode });

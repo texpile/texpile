@@ -12,7 +12,7 @@
 import { readTextFile, writeTextFile } from '$lib/workspace/fileSystem';
 import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { foldLog, parseLog, type CommentEvent, type CommentThread } from './log';
-import { collapseStaged } from './stagedEvents';
+import { collapseStaged, thrownBack } from './stagedEvents';
 
 function keptLines(text: string): string[] {
 	return text
@@ -57,6 +57,13 @@ export class CommentStore {
 	private unsaved: string[] = [];
 	private parsed = new Map<string, CommentEvent | null>();
 	private writing: Promise<void> = Promise.resolve();
+	/** the lines this side last read on disk or wrote there */
+	private onDisk = new Set<string>();
+	private writesQueued = 0;
+	private writesDone = 0;
+	/** each thread staged since its file was last saved, as it stood before, null for one staging made: a write of
+	 *  the log takes staged events early (a reply), and what of it the typing thrown away had changed goes back */
+	private beforeTyping = new Map<string, CommentThread | null>();
 
 	/** stale-load guard: reloads fire on every save (the fs watcher reports our own writes) and
 	 *  an older read landing after a newer one would publish stale threads */
@@ -74,7 +81,13 @@ export class CommentStore {
 	 *  fold replaces them in one step. */
 	async load(root: string | null): Promise<void> {
 		const my = ++this.loadSeq;
-		if (root !== this.root) this.staged = [];
+		if (root !== this.root) {
+			this.staged = [];
+			this.lines = [];
+			this.events = [];
+			this.onDisk = new Set();
+			this.beforeTyping.clear();
+		}
 		this.root = root;
 		const path = root ? this.path(root) : null;
 		if (!path) {
@@ -82,13 +95,17 @@ export class CommentStore {
 			return;
 		}
 		this.loading = true;
+		// a write of ours under way can make the read come back short, which says nothing about what was taken out
+		const queued = this.writesQueued;
+		const wasOnDisk = queued === this.writesDone ? this.onDisk : null;
 		try {
 			const text = await readTextFile(path);
 			if (my !== this.loadSeq) return;
-			this.adoptLog(text);
-		} catch {
-			// no log yet is the normal state for a project nobody has commented on
-			if (my === this.loadSeq) this.adoptLog('');
+			this.adoptLog(text, queued === this.writesQueued ? wasOnDisk : null);
+		} catch (e) {
+			// no log yet is normal for a project nobody has commented on; a log deleted since (a checkout) takes its threads
+			const gone = /ENOENT|no such file/i.test(e instanceof Error ? e.message : String(e));
+			if (my === this.loadSeq) this.adoptLog('', gone && queued === this.writesQueued ? wasOnDisk : null);
 		} finally {
 			if (my === this.loadSeq) this.loading = false;
 		}
@@ -128,6 +145,8 @@ export class CommentStore {
 
 	stage(...events: CommentEvent[]): void {
 		if (events.length === 0) return;
+		for (const id of events.map(threadOf))
+			if (!this.beforeTyping.has(id)) this.beforeTyping.set(id, this.threads.find((t) => t.id === id) ?? null);
 		if (this.share) return this.stageShared(events);
 		this.staged = [...this.staged, ...events];
 		this.threads = foldLog([...this.events, ...this.staged]);
@@ -137,9 +156,23 @@ export class CommentStore {
 		return this.share ? this.unsaved.length > 0 : this.staged.length > 0;
 	}
 
+	/** staged for `file`, or written early since its last save */
 	hasStagedFor(file: string): boolean {
 		const ids = this.idsOn(file);
-		return this.pending().some((e) => ids.has(threadOf(e)));
+		return [...this.pending().map(threadOf), ...this.beforeTyping.keys()].some((id) => ids.has(id));
+	}
+
+	/** `file` is on disk as it was staged */
+	saved(file: string): void {
+		for (const id of this.idsOn(file)) this.beforeTyping.delete(id);
+	}
+
+	/** what puts back the threads on `file` a write took early of staged events now discarded */
+	takeBack(file: string, by: string): CommentEvent[] {
+		const ids = this.idsOn(file);
+		const before = new Map([...this.beforeTyping].filter(([id]) => ids.has(id)));
+		for (const id of before.keys()) this.beforeTyping.delete(id);
+		return thrownBack(before, this.threads, by);
 	}
 
 	discardStaged(file: string): boolean {
@@ -171,25 +204,31 @@ export class CommentStore {
 		return ids;
 	}
 
-	/** seeded if absent, never over one the user has edited; shared with the config writer */
-	private async ensureIgnore(): Promise<void> {
-		if (this.root) await ensureTexpileIgnore(this.root);
-	}
-
 	/** one write at a time, each of the log as it is by then, so a slow write never lands over a newer one */
 	private write(): Promise<void> {
-		const path = this.root ? this.path(this.root) : null;
-		if (!path) return Promise.resolve();
+		const root = this.root;
+		const path = root ? this.path(root) : null;
+		if (!root || !path) return Promise.resolve();
+		this.writesQueued++;
 		const done = this.writing.then(async () => {
-			await this.ensureIgnore();
-			await writeTextFile(path, this.serialize());
+			// seeded if absent, never over one the user has edited; shared with the config writer
+			await ensureTexpileIgnore(root);
+			// another folder opened meanwhile: what the store holds now is that folder's log
+			if (this.root !== root) return;
+			const text = this.serialize();
+			await writeTextFile(path, text);
+			if (this.root === root) this.onDisk = new Set(text.split('\n'));
 		});
-		this.writing = done.catch(() => undefined);
+		this.writing = done
+			.catch(() => undefined)
+			.finally(() => {
+				this.writesDone++;
+			});
 		return done;
 	}
 
 	/** a log read from disk; while shared, lines someone added there (a pull, another window) join the session */
-	adoptLog(text: string): void {
+	adoptLog(text: string, wasOnDisk: Set<string> | null = null): void {
 		if (this.share) {
 			const present = new Set(this.share.lines());
 			const added = keptLines(text).filter((line) => !present.has(line));
@@ -199,7 +238,8 @@ export class CommentStore {
 		}
 		const served = keptLines(text);
 		const known = new Set(served);
-		this.lines = [...served, ...this.lines.filter((line) => !known.has(line))];
+		this.lines = [...served, ...this.lines.filter((line) => !known.has(line) && !wasOnDisk?.has(line))];
+		this.onDisk = known;
 		this.events = parseLog(this.lines.join('\n'));
 		this.threads = foldLog([...this.events, ...this.staged]);
 	}

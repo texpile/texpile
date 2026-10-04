@@ -7,6 +7,7 @@
 // What is unstaged is also kept across restarts, as git's index keeps it for VS Code: a file left
 // out to stay on this computer came back staged after a restart, and the next Commit & Sync pushed it.
 import { isBuildArtifact } from '../../buildArtifacts';
+import { samePath } from '../../fileSystem';
 import type { GitStatusEntry } from '../git';
 
 /** build output and whole folders of new files start unticked: ticking one is an opt-in */
@@ -73,6 +74,16 @@ export class ScmDraft {
 	 *  a file unstaged to stay on this computer is not committed and pushed behind the author's back */
 	ticked(c: GitStatusEntry): boolean {
 		return optIn(c) ? this.artifactsOptedIn.includes(c.path) : !this.excluded.includes(c.path);
+	}
+
+	/** a file or folder renamed in the tree: what was chosen for it goes along */
+	moved(from: string, to: string): void {
+		const prefix = from + (from.includes('\\') ? '\\' : '/');
+		function renamed(p: string): string {
+			return samePath(p, from) ? to : p.startsWith(prefix) ? to + p.slice(from.length) : p;
+		}
+		if (this.excluded.some((p) => renamed(p) !== p)) this.excluded = this.excluded.map(renamed);
+		if (this.artifactsOptedIn.some((p) => renamed(p) !== p)) this.artifactsOptedIn = this.artifactsOptedIn.map(renamed);
 	}
 
 	/** After a commit: the message is spent. What was left unstaged stays so, as in VS Code; given

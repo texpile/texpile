@@ -13,8 +13,8 @@ import { activeFilePath, mainFile, texFiles } from '$lib/workspace/workspaceStor
 import { relativeTo } from '$lib/workspace/fileSystem';
 import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { sanitizeLabel } from '$lib/editor/visual/label';
-import { bibFileNames } from '$lib/languages/latex/visual/extensions/drawn/settings/bibliographyCommand';
 import { renderChildren } from '$lib/languages/latex/serializer/latexSerializer';
+import { typStr } from '$lib/languages/typst/visual/serialize/typstInline';
 import { activeCm, cmApply, cmReplace } from '$lib/chrome/menuBarCommands';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 import { m } from '$lib/paraglide/messages';
@@ -63,7 +63,16 @@ function crossRefSource(): string {
 
 function bibliographySources(): string[] {
 	if (templateFeaturesStore.current.bibliography === 'biblatex') return ['\\printbibliography'];
-	return ['\\bibliographystyle{plain}', `\\bibliography{${bibFileNames(projectIntelStore.current.bibEntries).join(',')}}`];
+	// bibtex reads the names from the main file's folder, so a .bib in a subfolder keeps its folder
+	const folder = folderOf(mainFile.current ?? activeFilePath.current ?? '');
+	const names = new Set(
+		projectIntelStore.current.bibEntries.map((entry) =>
+			relativeTo(folder, entry.file)
+				.replace(/\\/g, '/')
+				.replace(/\.bib$/i, '')
+		)
+	);
+	return ['\\bibliographystyle{plain}', `\\bibliography{${[...names].join(',')}}`];
 }
 
 export function folderOf(path: string): string {
@@ -228,7 +237,7 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 			if (value === 'comment') cmAfterLine(cm, '// ');
 			else if (value === 'include') {
 				const path = await askInclude('typ');
-				if (path) cmAfterLine(cm, `#include "${path}"`);
+				if (path) cmAfterLine(cm, `#include ${typStr(path)}`);
 			}
 			return;
 		}

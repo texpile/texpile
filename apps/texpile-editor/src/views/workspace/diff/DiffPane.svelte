@@ -52,7 +52,7 @@
 	     level with the PDF toolbar across the split instead of a few pixels short of it. Its rule is an
 	     inset shadow, not a border, as under the editor's top bar: a border leaves 39px inside, and the
 	     icon centred in that starts half a pixel down, where it and its label round apart -->
-	<div class="bg-surface-100-900 text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under">
+	<div class="bg-surface-100-900 text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
 		<GitCompare class="size-3.5 shrink-0" />
 		<span class="cap-center font-medium">{m.wsview_diff_since()}</span>
 		<!-- naming the version matters more than the word "diff" once this can point at any of them -->
@@ -112,14 +112,14 @@
 		     places anyone ever meets it. -->
 		<!-- same 40px bar as the editor's, so meeting this file in a diff and meeting it in the editor
 		     look like the same notice -->
-		<div class="text-muted flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs line-under" use:tip={m.texpile_managed_note()}>
+		<div class="text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs" use:tip={m.texpile_managed_note()}>
 			<Info class="text-primary-ink size-3.5 shrink-0" />
 			<p class="cap-center min-w-0 truncate"><span class="font-medium">{m.vcs_texpile_managed()}.</span> {m.texpile_managed_note()}</p>
 		</div>
 	{/if}
 	<!-- the inset lives here rather than on EditorPane's scroller: only the diff BODY needs to keep
 	     its scrollbar off the divider lozenge, and the bars above must still reach it -->
-	<div class="scroll-inset-r min-h-0 flex-1 overflow-auto [scrollbar-gutter:stable]">
+	<div class="scroll-inset-r min-h-0 flex-1 [scrollbar-gutter:stable] overflow-auto">
 		{#key filename}
 			<DiffPanel bind:this={panel} {filename} {original} {modified} {layout} {loading} {readOnly} {onModifiedInput} />
 		{/key}

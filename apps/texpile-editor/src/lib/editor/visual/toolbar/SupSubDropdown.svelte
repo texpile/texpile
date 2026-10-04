@@ -31,7 +31,7 @@
 	{#snippet trigger(attrs)}
 		<button
 			{...attrs}
-			class="flex h-7 items-center gap-0.5 rounded-base px-1.5 transition-colors {sup || sub
+			class="rounded-base flex h-7 items-center gap-0.5 px-1.5 transition-colors {sup || sub
 				? 'preset-tonal-primary'
 				: 'hover:preset-tonal'}"
 			aria-label={m.tbar_supsub_aria()}

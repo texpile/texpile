@@ -10,8 +10,9 @@ export type WorkId =
 	| { kind: 'isbn'; isbn: string }
 	| { kind: 'pmid'; pmid: string };
 
-// a DOI is 10.<registrant>/<suffix>, and the suffix may hold almost anything but whitespace
-const DOI = /\b(10\.\d{4,9}\/[^\s"<>]+)/i;
+// a DOI is 10.<registrant>/<suffix>, and the suffix may hold almost anything but whitespace; <...>
+// only as a pair with no slash in it, as Wiley's SICI DOIs have (17:8<857::AID-SIM777>3.0.CO;2-E)
+const DOI = /\b(10\.\d{4,9}\/(?:[^\s"<>]|<[^\s"<>/]*>)+)/i;
 // new style YYMM.NNNNN (four digits after the dot until the end of 2014, five since), old style
 // hep-th/9901001 or math.GT/0309136
 const ARXIV_NEW = /^((\d\d)(\d\d)\.(\d{4,5}))(?:v\d+)?$/;
@@ -28,7 +29,7 @@ export function parseWorkId(input: string): WorkId | null {
 	const text = input.trim();
 	if (!text) return null;
 
-	const arxivLink = /arxiv\.org\/(?:abs|pdf)\/(.+?)(?:\.pdf)?\/?(?:[?#].*)?$/i.exec(text);
+	const arxivLink = /arxiv\.org\/(?:abs|pdf|html)\/(.+?)(?:\.pdf)?\/?(?:[?#].*)?$/i.exec(text);
 	if (arxivLink) return arxivId(arxivLink[1]);
 
 	const doi = findDoi(text);
@@ -37,7 +38,8 @@ export function parseWorkId(input: string): WorkId | null {
 		return (viaArxiv && arxivId(viaArxiv[1])) || { kind: 'doi', doi };
 	}
 
-	const arxiv = arxivId(text.replace(/^arxiv:\s*/i, ''));
+	// the brackets and sentence punctuation an ID was quoted with, as a DOI's below
+	const arxiv = arxivId(text.replace(/^[([]?\s*(?:arxiv:\s*)?/i, '').replace(/[.,;:)\]]+$/, ''));
 	if (arxiv) return arxiv;
 
 	// a PubMed ID is a bare number, which a year or a page is too: only its prefix or link says so
@@ -125,8 +127,13 @@ function findDoi(text: string): string | null {
 	const m = DOI.exec(s);
 	if (!m) return null;
 	let doi = m[1];
-	// a link's query or fragment is the page's, never the DOI's
-	if (isLink) doi = doi.replace(/[?#].*$/, '').replace(/\/(?:full|abstract|pdf|epdf|html|meta|fulltext)\/?$/i, '');
+	// what the link adds: the page's query and fragment, the next parameter after ?id=<doi>, .pdf, bioRxiv's v1.full
+	if (isLink)
+		doi = doi
+			.replace(/[?#&].*$/, '')
+			.replace(/\/(?:full|abstract|pdf|epdf|html|meta|fulltext)\/?$/i, '')
+			.replace(/\.pdf$/i, '')
+			.replace(/^(10\.1101\/[\d.]+)v\d+(?:\.(?:full|abstract))?$/i, '$1');
 	// sentence punctuation a DOI was quoted with: a DOI may end in ")" only when it also opened one
 	doi = doi.replace(/[.,;:'"\]}>]+$/, '');
 	while (doi.endsWith(')') && count(doi, '(') < count(doi, ')')) doi = doi.slice(0, -1);

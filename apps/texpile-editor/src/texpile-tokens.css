@@ -49,56 +49,57 @@ html {
 	--error-tint: color-mix(in oklab, var(--color-error-500) 15%, transparent);
 	--error-wash: color-mix(in oklab, var(--color-error-500) 35%, transparent);
 	--error-flood: color-mix(in oklab, var(--color-error-500) 55%, transparent);
-	/* the tonal fill: opaque, the family's hue at the far end for the mode with the chroma eased the
-	   way a scale's own 50 and 950 steps are (Texpile's primary-950 is L .38 C .11 from a 500 of
-	   C .19), computed from the 500 so a pastel scale gets it too. The hover sits one step back */
+	/* the tonal fill: opaque, the family's hue toward the far end for the mode with the chroma eased the
+	   way a scale's own 50 and 950 steps are, computed from the 500 so a pastel scale gets it too. Dark
+	   stops at .46 rather than the 950 step's .38: that is the dark ground's own lightness (surface-950
+	   is .386), so a fill there read as a hole cut in the panel. The hover sits one step on */
 	--primary-tonal: light-dark(
 		oklch(from var(--color-primary-500) max(l, 0.94) calc(c * 0.2) h),
-		oklch(from var(--color-primary-500) min(l, 0.38) calc(c * 0.6) h)
+		oklch(from var(--color-primary-500) min(l, 0.46) calc(c * 0.55) h)
 	);
 	--primary-tonal-hover: light-dark(
 		oklch(from var(--color-primary-500) max(l, 0.87) calc(c * 0.37) h),
-		oklch(from var(--color-primary-500) min(l, 0.44) calc(c * 0.7) h)
+		oklch(from var(--color-primary-500) min(l, 0.52) calc(c * 0.65) h)
 	);
 	--secondary-tonal: light-dark(
 		oklch(from var(--color-secondary-500) max(l, 0.94) calc(c * 0.2) h),
-		oklch(from var(--color-secondary-500) min(l, 0.38) calc(c * 0.6) h)
+		oklch(from var(--color-secondary-500) min(l, 0.46) calc(c * 0.55) h)
 	);
 	--secondary-tonal-hover: light-dark(
 		oklch(from var(--color-secondary-500) max(l, 0.87) calc(c * 0.37) h),
-		oklch(from var(--color-secondary-500) min(l, 0.44) calc(c * 0.7) h)
+		oklch(from var(--color-secondary-500) min(l, 0.52) calc(c * 0.65) h)
 	);
 	--tertiary-tonal: light-dark(
 		oklch(from var(--color-tertiary-500) max(l, 0.94) calc(c * 0.2) h),
-		oklch(from var(--color-tertiary-500) min(l, 0.38) calc(c * 0.6) h)
+		oklch(from var(--color-tertiary-500) min(l, 0.46) calc(c * 0.55) h)
 	);
 	--tertiary-tonal-hover: light-dark(
 		oklch(from var(--color-tertiary-500) max(l, 0.87) calc(c * 0.37) h),
-		oklch(from var(--color-tertiary-500) min(l, 0.44) calc(c * 0.7) h)
+		oklch(from var(--color-tertiary-500) min(l, 0.52) calc(c * 0.65) h)
 	);
 	--success-tonal: light-dark(
 		oklch(from var(--color-success-500) max(l, 0.94) calc(c * 0.2) h),
-		oklch(from var(--color-success-500) min(l, 0.38) calc(c * 0.6) h)
+		oklch(from var(--color-success-500) min(l, 0.46) calc(c * 0.55) h)
 	);
 	--success-tonal-hover: light-dark(
 		oklch(from var(--color-success-500) max(l, 0.87) calc(c * 0.37) h),
-		oklch(from var(--color-success-500) min(l, 0.44) calc(c * 0.7) h)
+		oklch(from var(--color-success-500) min(l, 0.52) calc(c * 0.65) h)
 	);
 	--warning-tonal: light-dark(
 		oklch(from var(--color-warning-500) max(l, 0.94) calc(c * 0.2) h),
-		oklch(from var(--color-warning-500) min(l, 0.38) calc(c * 0.6) h)
+		oklch(from var(--color-warning-500) min(l, 0.46) calc(c * 0.55) h)
 	);
 	--warning-tonal-hover: light-dark(
 		oklch(from var(--color-warning-500) max(l, 0.87) calc(c * 0.37) h),
-		oklch(from var(--color-warning-500) min(l, 0.44) calc(c * 0.7) h)
+		oklch(from var(--color-warning-500) min(l, 0.52) calc(c * 0.65) h)
 	);
 	--error-tonal: light-dark(
 		oklch(from var(--color-error-500) max(l, 0.94) calc(c * 0.2) h),
-		oklch(from var(--color-error-500) min(l, 0.38) calc(c * 0.6) h)
+		oklch(from var(--color-error-500) min(l, 0.46) calc(c * 0.55) h)
 	);
 	--error-tonal-hover: light-dark(
 		oklch(from var(--color-error-500) max(l, 0.87) calc(c * 0.37) h),
-		oklch(from var(--color-error-500) min(l, 0.44) calc(c * 0.7) h)
+		oklch(from var(--color-error-500) min(l, 0.52) calc(c * 0.65) h)
 	);
 	/* text on the tonal fill: the same hue, pulled to the near end for the mode. Its own token, not the
 	   ink, because a theme may set its ink for text on the ground (Texpile's is its 500), which sits

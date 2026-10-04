@@ -77,6 +77,14 @@ describe('markdown paste', () => {
 		view.destroy();
 	});
 
+	it('puts a footnote or link reference definition in as code, not as LaTeX or Typst source', () => {
+		const answer = 'The **mean** is reported[^1].\n\n[^1]: Smith et al., p. 12';
+		expect(sliceToLatex(markdownSlice(answer, schema)!)).toContain('\\begin{verbatim}\n[^1]: Smith et al., p. 12\n\\end{verbatim}');
+		expect(sliceToTypst(markdownSlice('See [the guide][1].\n\n[1]: https://x.com/user_guide', typSchema)!)).toContain(
+			'```\n[1]: https://x.com/user_guide\n```'
+		);
+	});
+
 	it('writes the answer’s formatting and math in the editor’s language', () => {
 		expect(sliceToLatex(markdownSlice(ANSWER, schema)!)).toBe(
 			'\\subsection{Result}\nThe \\textbf{mean} is $\\mu = 3$, see \\href{https://x.com}{docs}.\n\n\\begin{itemize}\n\\item one\n\\item two\n\\end{itemize}'

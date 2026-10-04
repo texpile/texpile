@@ -14,6 +14,8 @@ import type { PrivateMcp } from '../../mcp/server';
 const sessions = new Map<number, AcpSession>();
 /** windows already watched for closing */
 const watched = new Set<number>();
+/** bumped by each start and close of a window's agent, so a start still waiting when either comes starts nothing */
+const generations = new Map<number, number>();
 
 /** Texpile's own tools for every agent the tab starts, from the first until the app quits. Not the MCP
  *  server in Preferences: see startPrivate */
@@ -38,26 +40,29 @@ function send(wc: WebContents, event: AcpEvent): void {
 }
 
 function closeFor(wcId: number): void {
+	generations.set(wcId, (generations.get(wcId) ?? 0) + 1);
 	sessions.get(wcId)?.close();
 	sessions.delete(wcId);
 	privateMcpUp?.revoke(wcId);
 }
 
-/** `agent` is the one started, which a later choice in another window's Preferences does not change */
-type StartResult = { ok: true; agent: PanelAgent } | { ok: false; reason: 'no-folder' | 'unset' | 'missing'; program?: string };
+/** `agent` is the one started, which a later choice in another window's Preferences does not change. `closed`: a close
+ *  or another start came while this one waited, and the window has moved on from it */
+type StartResult = { ok: true; agent: PanelAgent } | { ok: false; reason: 'no-folder' | 'unset' | 'missing' | 'closed'; program?: string };
 
 async function start(wc: WebContents): Promise<StartResult> {
 	closeFor(wc.id);
+	const generation = generations.get(wc.id);
 	const root = folderOf(wc.id);
 	if (!root) return { ok: false, reason: 'no-folder' };
 	await shellEnvReady();
+	if (generations.get(wc.id) !== generation) return { ok: false, reason: 'closed' };
 	const s = readSettings();
 	const launch = agentLaunch(s.agentPanel, s.agentPanelCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
 	if (!launch.ok)
 		return launch.reason === 'missing' ? { ok: false, reason: 'missing', program: launch.program } : { ok: false, reason: 'unset' };
 	const mcp = await agentMcp();
-	// a start that overlapped this one may have put its session in while this one waited
-	closeFor(wc.id);
+	if (generations.get(wc.id) !== generation) return { ok: false, reason: 'closed' };
 	const session = new AcpSession({
 		...launch,
 		root,
@@ -102,10 +107,14 @@ export function registerAcpIpc(): void {
 		if (typeof req?.configId !== 'string' || typeof req.value !== 'string') return;
 		return sessions.get(e.sender.id)?.setConfig(req.configId, req.value);
 	});
-	ipcMain.handle('acp:chats', (e) => sessions.get(e.sender.id)?.listChats() ?? []);
+	ipcMain.handle('acp:chats', (e) => {
+		const session = sessions.get(e.sender.id);
+		return session ? session.listChats() : [];
+	});
 	ipcMain.handle('acp:openChat', (e, id: unknown) => {
 		if (typeof id !== 'string') return { ok: false, error: 'bad request' };
-		return sessions.get(e.sender.id)?.openChat(id) ?? { ok: false, error: 'not ready' };
+		const session = sessions.get(e.sender.id);
+		return session ? session.openChat(id) : { ok: false, error: 'not ready' };
 	});
 	ipcMain.on('acp:close', (e) => closeFor(e.sender.id));
 }

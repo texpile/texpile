@@ -5,6 +5,7 @@
 import { workspaceRoot, texFiles } from '$lib/workspace/workspaceStore';
 import { countFileRefs, replaceFileRefs, refDialectOf, REF_SCAN_EXTS, type RefDialect } from '$lib/workspace/fileRefs';
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
+import { sourceEncodingError, type SourceRead } from '$lib/workspace/sourceEncoding';
 export type RefUpdate = {
 	oldRel: string;
 	newRel: string;
@@ -18,8 +19,10 @@ export type RefUpdateDeps = {
 	getLoadedPath(): string | null;
 	/** the open file's live buffer, which is newer than its on-disk copy */
 	getSourceText(): string;
+	/** the open file is not UTF-8, so it is shown read-only */
+	loadedReadOnly(): boolean;
 	setSourceText(text: string): void;
-	readText(path: string): Promise<string>;
+	readSource(path: string): Promise<SourceRead>;
 	/** every file in the project with one of `exts` (no dots) - the provider's scan, injected so
 	 *  this module stays free of the host/guest split */
 	scanFiles(exts: string[]): Promise<string[]>;
@@ -38,6 +41,13 @@ async function referrers(deps: RefUpdateDeps): Promise<string[]> {
 	}
 }
 
+/** the text to rewrite, or null for a file that would not be written back in its own encoding */
+async function editableText(path: string, deps: RefUpdateDeps): Promise<string | null> {
+	if (path === deps.getLoadedPath()) return deps.loadedReadOnly() ? null : deps.getSourceText();
+	const { text, encoding } = await deps.readSource(path);
+	return sourceEncodingError(encoding) ? null : text;
+}
+
 /** scan for references to the renamed file; null when nothing points at it */
 export async function scanRenamedRefs(oldPath: string, newPath: string, deps: RefUpdateDeps): Promise<RefUpdate | null> {
 	const root = workspaceRoot.current;
@@ -46,14 +56,14 @@ export async function scanRenamedRefs(oldPath: string, newPath: string, deps: Re
 	const newRel = relFromRoot(newPath, root);
 	if (oldRel === newRel) return null;
 
-	const loaded = deps.getLoadedPath();
 	const hits: { path: string; count: number; dialect: RefDialect }[] = [];
 	let total = 0;
 	for (const path of await referrers(deps)) {
 		const dialect = refDialectOf(path);
 		if (!dialect) continue;
 		try {
-			const content = path === loaded ? deps.getSourceText() : await deps.readText(path);
+			const content = await editableText(path, deps);
+			if (content === null) continue;
 			const count = countFileRefs(content, oldRel, dialect);
 			if (count > 0) {
 				hits.push({ path, count, dialect });
@@ -72,11 +82,12 @@ export async function applyRefUpdate(u: RefUpdate, deps: RefUpdateDeps): Promise
 	const loaded = deps.getLoadedPath();
 	for (const h of u.hits) {
 		try {
+			const content = await editableText(h.path, deps);
+			if (content === null) continue;
 			if (h.path === loaded) {
-				deps.setSourceText(replaceFileRefs(deps.getSourceText(), u.oldRel, u.newRel, h.dialect).text);
+				deps.setSourceText(replaceFileRefs(content, u.oldRel, u.newRel, h.dialect).text);
 				deps.onActiveFileEdited();
 			} else {
-				const content = await deps.readText(h.path);
 				await deps.writeText(h.path, replaceFileRefs(content, u.oldRel, u.newRel, h.dialect).text);
 			}
 		} catch (e) {

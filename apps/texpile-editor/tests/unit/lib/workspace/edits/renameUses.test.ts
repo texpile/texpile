@@ -14,6 +14,19 @@ describe('renameSpec: LaTeX labels', () => {
 		});
 	});
 
+	it('renames both ends of a cleveref range, and a \\vpageref after its optional texts', () => {
+		const text = '\\crefrange{fig:a}{fig:c}, \\Crefrange{fig:c}{fig:a} and \\vpageref[above][below]{fig:a}';
+		expect(rename('label', 'fig:a', 'fig:first', 'latex', text)).toEqual({
+			text: '\\crefrange{fig:first}{fig:c}, \\Crefrange{fig:c}{fig:first} and \\vpageref[above][below]{fig:first}',
+			count: 3
+		});
+	});
+
+	it('leaves the link text of \\href and \\hyperref', () => {
+		const text = '\\href{https://example.com}{fig:a} \\hyperref[sec:x]{fig:a}';
+		expect(rename('label', 'fig:a', 'fig:first', 'latex', text)).toEqual({ text, count: 0 });
+	});
+
 	it('leaves a longer label, the definition, and the words in the text', () => {
 		const text = 'Not \\ref{fig:ab}, not \\label{fig:a}, not fig:a.';
 		expect(rename('label', 'fig:a', 'fig:results', 'latex', text)).toEqual({ text, count: 0 });

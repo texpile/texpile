@@ -47,7 +47,7 @@
 	<div
 		bind:this={row}
 		data-path={entry.path}
-		class="group flex rounded-base text-sm transition-colors {editor.renaming === entry.path
+		class="group rounded-base flex text-sm transition-colors {editor.renaming === entry.path
 			? 'flex-col items-stretch'
 			: 'items-center'} {isActive(entry)
 			? `bg-primary-tint font-medium ${focused ? 'text-primary-ink' : ''}`

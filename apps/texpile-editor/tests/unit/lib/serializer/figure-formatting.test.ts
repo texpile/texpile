@@ -41,3 +41,13 @@ describe('figure float formatting', () => {
 		expect(out).not.toContain('TexpileFig');
 	});
 });
+
+describe('a caption typed into a figure that had none', () => {
+	// it went in through a string replace, which read `$1` in it as a back reference
+	it('keeps a dollar amount as typed', () => {
+		const { doc } = LatexParser.latexToProseMirror('\\begin{figure}[h]\n\\centering\n\\includegraphics{a.png}\n\\end{figure}');
+		const kids: Node[] = [];
+		doc.forEach((n) => kids.push(n.type.name === 'image' ? n.type.create(n.attrs, n.type.schema.text('Costs $1 each')) : n));
+		expect(serializeToLatex(doc.type.create(doc.attrs, kids))).toContain('\\caption{Costs \\$1 each}');
+	});
+});

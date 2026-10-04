@@ -6,6 +6,7 @@ import { untrack } from 'svelte';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
 import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
 import { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
+import { collabHost } from '$lib/collab/hostStore.svelte';
 import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
 import { diskChangedSince, recordDiskStamp } from '$lib/workspace/diskStamp';
 import { activeFilePath, activeCompare, isDirty, fileTree } from '$lib/workspace/workspaceStore';
@@ -89,6 +90,7 @@ export class WorkspaceEditFlow {
 			rebuildVisual: () => d.wsdoc.rebuildVisualFromSource(),
 			discardQueuedSave: () => this.saver.discard(),
 			sessionEdit: (path, content) => d.session().edit(path, content),
+			takeSessionWrite: (path) => collabHost.takeSessionWrite(path),
 			saveNow: () => doc.save(true) // force: the user chose "keep mine" knowing disk differs
 		});
 		// unsaved-edit gate for both file switches and workspace-level exits

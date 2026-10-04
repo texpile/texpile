@@ -142,14 +142,15 @@ export function pastedImageSaving(): PluginSpec<UnsavedImage[]> {
 
 /**
  * The pasted slice without the pictures it cannot keep. With `save` (a paste from another app, not
- * a copy or drag inside Texpile) the ones the clipboard holds are saved once the paste puts them in.
+ * a copy or drag inside Texpile) the ones the clipboard holds are saved once the paste puts them in, and
+ * always in LaTeX and Typst, which cannot hold a data: URL the way Markdown can.
  */
 export function keepSavableImages(slice: Slice, view: EditorView, dialect: PasteDialect, save: boolean): Slice {
 	const toSave = new Set<string>();
 	slice.content.descendants((node) => {
 		if (node.type.name === 'image' && imageFate(String(node.attrs.src ?? ''), dialect) === 'save') toSave.add(node.attrs.src);
 	});
-	if (save && toSave.size) unsavedImagesKey.get(view.state)?.spec.expect(toSave);
+	if ((save || dialect !== 'markdown') && toSave.size) unsavedImagesKey.get(view.state)?.spec.expect(toSave);
 	return leavesOutImages(slice, dialect) ? sliceWithKeptImages(slice, dialect, true) : slice;
 }
 

@@ -113,9 +113,24 @@ function mlHorizontalArrowHandler(dir: 'left' | 'right') {
 	};
 }
 
+// prosemirror only steps a shift selection over leaf atoms and math holds text, so the browser got the key and stalled at the field
+function mlShiftArrowHandler(dir: -1 | 1) {
+	return (state: EditorState, dispatch?: (tr: Transaction) => void): boolean => {
+		const sel = state.selection;
+		if (!(sel instanceof TextSelection)) return false;
+		const { $head } = sel;
+		const node = $head.textOffset ? null : dir < 0 ? $head.nodeBefore : $head.nodeAfter;
+		if (node?.type.name !== 'inline_math') return false;
+		dispatch?.(state.tr.setSelection(TextSelection.create(state.doc, sel.anchor, $head.pos + dir * node.nodeSize)));
+		return true;
+	};
+}
+
 const horizontalArrowKeyDown = keydownHandler({
 	ArrowRight: mlHorizontalArrowHandler('right'),
-	ArrowLeft: mlHorizontalArrowHandler('left')
+	ArrowLeft: mlHorizontalArrowHandler('left'),
+	'Shift-ArrowRight': mlShiftArrowHandler(1),
+	'Shift-ArrowLeft': mlShiftArrowHandler(-1)
 });
 
 /** must come before the regular keymap in plugin order. */

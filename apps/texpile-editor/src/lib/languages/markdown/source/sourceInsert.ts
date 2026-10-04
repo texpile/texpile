@@ -10,6 +10,15 @@ function sortedRanges(state: EditorState) {
 	return [...state.selection.ranges].sort((a, b) => b.from - a.from);
 }
 
+function stars(s: string, atEnd: boolean): number {
+	return (atEnd ? /\**$/ : /^\**/).exec(s)![0].length;
+}
+
+// `*` and `**` share a character: a run of two stars is bold, which italics wrap instead of taking away
+function italicHeld(delim: string, before: number, after: number): boolean {
+	return delim !== '*' || Math.min(before, after) % 2 === 1;
+}
+
 /** toggle a symmetric delimiter pair (** * ~~ ` $) around each selection; empty selections get
  * an empty pair with the cursor inside. */
 export function computeToggleDelim(state: EditorState, delim: string): TransactionSpec {
@@ -32,9 +41,18 @@ export function computeToggleDelim(state: EditorState, delim: string): Transacti
 			continue;
 		}
 		const selected = text.slice(range.from, range.to);
-		if (selected.length >= delim.length * 2 && selected.startsWith(delim) && selected.endsWith(delim)) {
+		if (
+			selected.length >= delim.length * 2 &&
+			selected.startsWith(delim) &&
+			selected.endsWith(delim) &&
+			italicHeld(delim, stars(selected, false), stars(selected, true))
+		) {
 			changes.push({ from: range.from, to: range.to, insert: selected.slice(delim.length, -delim.length) });
-		} else if (text.slice(range.from - delim.length, range.from) === delim && text.slice(range.to, range.to + delim.length) === delim) {
+		} else if (
+			text.slice(range.from - delim.length, range.from) === delim &&
+			text.slice(range.to, range.to + delim.length) === delim &&
+			italicHeld(delim, stars(text.slice(Math.max(0, range.from - 3), range.from), true), stars(text.slice(range.to, range.to + 3), false))
+		) {
 			// delimiters sit just OUTSIDE the selection
 			changes.push({ from: range.from - delim.length, to: range.to + delim.length, insert: selected });
 		} else {

@@ -1,7 +1,9 @@
 import { BROWSER } from 'esm-env';
 
 type PdfLib = typeof import('pdfjs-dist/legacy/build/pdf.mjs');
-type DocumentSource = Parameters<PdfLib['getDocument']>[0];
+type DocumentInit = NonNullable<Parameters<PdfLib['getDocument']>[0]>;
+/** a bare url, which pdf.js 6 no longer takes on its own, or the init parameters */
+type DocumentSource = string | URL | DocumentInit;
 type LoadingTask = ReturnType<PdfLib['getDocument']>;
 
 let pdfjsLib: PdfLib | null = null;
@@ -70,15 +72,8 @@ export async function getPdfJs(): Promise<typeof import('pdfjs-dist/legacy/build
 export async function getPdfDocument(src: DocumentSource, ownerDocument?: Document): Promise<LoadingTask | null> {
 	const pdfjs = await getPdfJs();
 	if (!pdfjs || !pdfWorker) return null;
-	// getDocument also accepts a bare url or bare bytes; normalise so there is somewhere to put the
-	// worker. ArrayBuffer.isView covers every TypedArray pdf.js takes.
-	const params =
-		typeof src === 'string' || src instanceof URL
-			? { url: src }
-			: src instanceof ArrayBuffer || ArrayBuffer.isView(src)
-				? // eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
-					{ data: src }
-				: src;
+	// a bare url goes into the init parameters, which is also where the worker has to go
+	const params = typeof src === 'string' || src instanceof URL ? { url: src } : src;
 	return pdfjs.getDocument({ ...params, worker: pdfWorker, ...(ownerDocument ? { ownerDocument } : {}) });
 }
 

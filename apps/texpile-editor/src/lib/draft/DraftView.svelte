@@ -14,6 +14,7 @@
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
+	import { wheelZoomFactor } from '$lib/preview/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { PatchReq } from './patch/patch.types';
@@ -117,7 +118,7 @@
 		function onWheel(e: WheelEvent) {
 			if (!(e.ctrlKey || e.metaKey)) return;
 			e.preventDefault();
-			untrack(() => vp.setZoom(vp.zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1)));
+			untrack(() => vp.setZoom(vp.zoom * wheelZoomFactor(e)));
 		}
 		el.addEventListener('wheel', onWheel, { passive: false });
 		return () => el.removeEventListener('wheel', onWheel);
@@ -241,7 +242,7 @@
 	<ProgressLine active={ctrl.savingPdf && compiler.compiling} label={m.draft_status_compiling_export()} />
 	{#if compiler.busyElsewhere}
 		<div
-			class="border-surface-300-700 bg-surface-50-950 m-3 flex shrink-0 items-center justify-between gap-3 rounded-container border p-3 text-sm"
+			class="border-surface-300-700 bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center justify-between gap-3 border p-3 text-sm"
 		>
 			<span class="text-muted">{m.draft_busy_other_window()}</span>
 			<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => compiler.takeoverEngine()}
@@ -250,7 +251,7 @@
 		</div>
 	{/if}
 	{#if compiler.missingTool}
-		<div class="text-error-ink bg-surface-50-950 m-3 flex shrink-0 items-center gap-3 rounded-container p-3 text-xs">
+		<div class="text-error-ink bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center gap-3 p-3 text-xs">
 			<span class="min-w-0 flex-1">{compiler.error}</span>
 			<button
 				class="btn btn-sm preset-tonal shrink-0"
@@ -264,14 +265,14 @@
 		     scroll a box that is free to grow. Without a height constraint this took its full content
 		     height and the flex-1 scroller below it got whatever was left. -->
 		<pre
-			class="text-error-ink bg-surface-50-950 m-3 max-h-40 shrink-0 overflow-auto [scrollbar-gutter:stable] rounded-container p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
+			class="text-error-ink bg-surface-50-950 rounded-container m-3 max-h-40 shrink-0 [scrollbar-gutter:stable] overflow-auto p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
 	<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
 		<div
 			bind:this={vp.scroller}
 			bind:clientWidth={vp.containerW}
 			onscroll={() => vp.onScroll()}
-			class="flex flex-1 flex-col items-center gap-4 overflow-auto [scrollbar-gutter:stable] p-4"
+			class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center gap-4 overflow-auto p-4"
 		>
 			{#each ctrl.pages as p (p.n)}
 				<div class="relative shadow-lg">
@@ -279,7 +280,7 @@
 					{#if vp.editBand && vp.editBand.page === p.n}
 						<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
 						<div
-							class="pointer-events-none absolute rounded-base bg-draft-band/30"
+							class="rounded-base bg-draft-band/30 pointer-events-none absolute"
 							transition:fade={{ duration: 300 }}
 							style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
 								vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -

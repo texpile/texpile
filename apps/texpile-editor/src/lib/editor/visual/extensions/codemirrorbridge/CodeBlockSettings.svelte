@@ -80,11 +80,11 @@
 						</div>
 						{#if canSet}
 							<input type="text" class="input text-sm" placeholder={m.codeblock_language_search_placeholder()} bind:value={search} />
-							<div class="mt-2 max-h-48 overflow-y-auto [scrollbar-gutter:stable]">
+							<div class="mt-2 max-h-48 [scrollbar-gutter:stable] overflow-y-auto">
 								{#each filtered as name (name)}
 									<button
 										type="button"
-										class="hover:bg-surface-200-800 block w-full rounded-base px-2 py-1 text-left text-sm {name === currentLang
+										class="hover:bg-surface-200-800 rounded-base block w-full px-2 py-1 text-left text-sm {name === currentLang
 											? 'preset-tonal-primary'
 											: ''}"
 										onclick={() => pick(name)}

@@ -88,7 +88,7 @@
 			<AgentCommandMenu id={menuId} commands={slash.matches} picked={slash.picked} onPick={takeCommand} />
 		{/if}
 		<textarea
-			class="field-sizing-content block max-h-32 min-h-5 w-full resize-none bg-transparent text-sm leading-5 outline-none placeholder:text-[var(--field-placeholder)]"
+			class="block field-sizing-content max-h-32 min-h-5 w-full resize-none bg-transparent text-sm leading-5 outline-none placeholder:text-[var(--field-placeholder)]"
 			rows="1"
 			placeholder={m.agent_panel_placeholder({ agent: props.agent })}
 			aria-label={m.agent_panel_placeholder({ agent: props.agent })}
@@ -106,7 +106,7 @@
 					{#snippet trigger(attrs)}
 						<button
 							{...attrs}
-							class="text-muted hover:bg-surface-200-800 flex h-6 shrink-0 items-center gap-0.5 rounded-base px-1.5 text-xs whitespace-nowrap transition-colors"
+							class="text-muted hover:bg-surface-200-800 rounded-base flex h-6 shrink-0 items-center gap-0.5 px-1.5 text-xs whitespace-nowrap transition-colors"
 							aria-label={option.name}
 							use:tip={option.description ?? option.name}
 						>
@@ -118,7 +118,7 @@
 			{/each}
 			{#if props.working}
 				<button
-					class="btn-icon size-6 shrink-0 preset-tonal p-0"
+					class="btn-icon preset-tonal size-6 shrink-0 p-0"
 					use:tip={m.agent_panel_stop()}
 					aria-label={m.agent_panel_stop()}
 					onclick={props.onStop}
@@ -127,7 +127,7 @@
 				</button>
 			{:else}
 				<button
-					class="btn-icon size-6 shrink-0 preset-filled-primary-500 p-0"
+					class="btn-icon preset-filled-primary-500 size-6 shrink-0 p-0"
 					disabled={!text.trim()}
 					use:tip={m.agent_panel_send()}
 					aria-label={m.agent_panel_send()}

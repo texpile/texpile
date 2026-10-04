@@ -8,7 +8,8 @@ import {
 	typstOutDir,
 	typstPdfArg,
 	typstPdfPath,
-	typstLogPath
+	typstLogPath,
+	shellWord
 } from '$lib/workspace/typstCommand';
 import { compileOutDir, detectedPdfPath, detectedLogPath } from '$lib/workspace/compileCommand';
 
@@ -122,6 +123,13 @@ describe('buildTypstCommand', () => {
 		expect(typstLogArg(cmd)).toBe('output/paper.log');
 		expect(typstOutDir(cmd)).toBe('output');
 	});
+
+	it('keeps a main file named with shell syntax one argument of the command line', () => {
+		const cmd = buildTypstCommand('/proj/a;touch pwned;.typ');
+		expect(cmd).toBe("tinymist compile --root . {main} 'output/a;touch pwned;.pdf' 2>'output/a;touch pwned;.log'");
+		expect(typstPdfArg(cmd)).toBe('output/a;touch pwned;.pdf');
+		expect(typstLogArg(cmd)).toBe('output/a;touch pwned;.log');
+	});
 });
 
 describe('typstJobName', () => {
@@ -183,5 +191,12 @@ describe('compileCommand dispatches Typst commands', () => {
 		expect(compileOutDir(tex)).toBe('out');
 		expect(detectedPdfPath(tex, ROOT, 'C:/proj/main.tex')).toBe('C:/proj/out/main.pdf');
 		expect(detectedLogPath(tex, ROOT, 'C:/proj/main.tex')).toBe('C:/proj/out/main.log');
+	});
+});
+
+describe('shellWord', () => {
+	it('quotes for cmd.exe on Windows, where a name may hold & but never a double quote', () => {
+		expect(shellWord('a&calc.tex', true)).toBe('"a&calc.tex"');
+		expect(shellWord('sections/main.tex', true)).toBe('sections/main.tex');
 	});
 });

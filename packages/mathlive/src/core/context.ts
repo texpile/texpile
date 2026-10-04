@@ -73,6 +73,8 @@ export class Context implements ContextInterface {
   // Rendering to construct a phantom: don't bind the box.
   readonly isPhantom: boolean;
 
+  readonly allowHtmlCommands: boolean;
+
   // Inherited from `Style`: size, letterShapeStyle, color and backgroundColor.
   letterShapeStyle: 'tex' | 'french' | 'iso' | 'upright';
   readonly smartFence: boolean;
@@ -128,6 +130,7 @@ export class Context implements ContextInterface {
       this.atomIdsSettings = { ...template.atomIdsSettings };
     this.renderPlaceholder = template.renderPlaceholder;
     this.isPhantom = options?.isPhantom ?? this.parent?.isPhantom ?? false;
+    this.allowHtmlCommands = template.allowHtmlCommands ?? false;
 
     this.letterShapeStyle = template.letterShapeStyle;
     this.minFontScale = template.minFontScale;

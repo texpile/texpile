@@ -7,9 +7,10 @@ import { isSelfRendered } from '../diff/selfRendered';
 /** a range of the document before and the range of the document after it became */
 export type DocChange = { fromA: number; toA: number; fromB: number; toB: number };
 
-// the source gap says where a block came from, the label gap where its label stood, and a display's
-// paragraph flags whether a blank line sat around it: none is what the reader sees change
-const UNSEEN_ATTRS = new Set(['typGap', 'labelGap', 'inParagraph', 'continuesAfter']);
+// the source gap says where a block came from, the label gap where its label stood, a display's
+// paragraph flags whether a blank line sat around it, and a list item's key which environment it
+// was parsed from: none is what the reader sees change
+const UNSEEN_ATTRS = new Set(['typGap', 'labelGap', 'inParagraph', 'continuesAfter', 'envKey']);
 
 function attrsKey(attrs: Attrs): string {
 	const rest = Object.entries(attrs).filter(([name]) => !UNSEEN_ATTRS.has(name));
@@ -52,11 +53,16 @@ function wordOver(doc: PMNode, from: number, to: number): { from: number; to: nu
 	return wordsAround(doc, from).find((w) => w.from <= from && to <= w.to) ?? null;
 }
 
+// a break that came or went is drawn as a break, never as part of the word it fell in
+function onlyBreaks(c: DocChange, before: PMNode, after: PMNode): boolean {
+	return textOf(before, c.fromA, c.toA) === '' && textOf(after, c.fromB, c.toB) === '';
+}
+
 // changes with no word boundary between them are one, and one that both takes out and puts in more than
 // a single character is widened to the words it touches: half a word struck beside the other half is
 // hard to read. Both sides widen alike, since the text around a change is the same in both. Never past
 // the stretch compared, whose edges are a suggestion's own: letters typed against it are not its words
-function wholeWords(changes: readonly DocChange[], doc: PMNode, compared: readonly DocChange[]): DocChange[] {
+function wholeWords(changes: readonly DocChange[], before: PMNode, doc: PMNode, compared: readonly DocChange[]): DocChange[] {
 	function stretchOf(c: DocChange) {
 		return compared.find((s) => s.fromB <= c.fromB && c.toB <= s.toB && s.fromA <= c.fromA && c.toA <= s.toA);
 	}
@@ -69,8 +75,9 @@ function wholeWords(changes: readonly DocChange[], doc: PMNode, compared: readon
 		while (i + 1 < changes.length) {
 			const gapFrom = changes[i].toB;
 			const gapTo = changes[i + 1].fromB;
-			if (gapFrom < gapTo && !wordOver(doc, gapFrom - 1, gapTo)) break;
+			if (gapFrom < gapTo && (gapFrom === 0 || !wordOver(doc, gapFrom - 1, gapTo))) break;
 			if (stretchOf(changes[i + 1]) !== stretch) break;
+			if (onlyBreaks(changes[i], before, doc) || onlyBreaks(changes[i + 1], before, doc)) break;
 			i++;
 			deleted += changes[i].toA - changes[i].fromA;
 			inserted += changes[i].toB - changes[i].fromB;
@@ -87,9 +94,14 @@ function wholeWords(changes: readonly DocChange[], doc: PMNode, compared: readon
 			fromB = first.fromB - Math.min(first.fromB - fromB, first.fromB - stretch.fromB, first.fromA - stretch.fromA);
 			toB = last.toB + Math.min(toB - last.toB, stretch.toB - last.toB, stretch.toA - last.toA);
 		}
+		// nor past the change beside it: a word that runs on across a break taken out was two words before it
+		const lead = changes[start - 1];
+		const next = changes[i + 1];
+		if (lead) fromB = first.fromB - Math.min(first.fromB - fromB, first.fromB - lead.toB, first.fromA - lead.toA);
+		if (next) toB = last.toB + Math.min(toB - last.toB, next.fromB - last.toB, next.fromA - last.toA);
 		const joined = { fromA: first.fromA - (first.fromB - fromB), toA: last.toA + (toB - last.toB), fromB, toB };
 		const prev = out[out.length - 1];
-		if (prev && prev.toA >= joined.fromA) {
+		if (prev && prev.toA >= joined.fromA && !onlyBreaks(prev, before, doc)) {
 			prev.fromA = Math.min(prev.fromA, joined.fromA);
 			prev.fromB = Math.min(prev.fromB, joined.fromB);
 			prev.toA = Math.max(prev.toA, joined.toA);
@@ -175,6 +187,62 @@ function keptRun(c: DocChange, a: Token[], b: Token[], before: PMNode, after: PM
 	return best;
 }
 
+// the same letters in other formatting or other blocks: each restyled run and each break is a change of its own
+function sameLetters(c: DocChange, a: Token[], b: Token[]): DocChange[] | null {
+	function code(t: Token) {
+		return typeof t === 'number' ? t : parseInt(t, 10);
+	}
+	const la = a.filter(isCharacter);
+	const lb = b.filter(isCharacter);
+	if (la.length !== lb.length || la.some((t, k) => code(t) !== code(lb[k]))) return null;
+	const out: DocChange[] = [];
+	function add(fromA: number, toA: number, fromB: number, toB: number) {
+		const prev = out[out.length - 1];
+		if (prev && prev.toA === c.fromA + fromA && prev.toB === c.fromB + fromB) {
+			prev.toA = c.fromA + toA;
+			prev.toB = c.fromB + toB;
+		} else out.push({ fromA: c.fromA + fromA, toA: c.fromA + toA, fromB: c.fromB + fromB, toB: c.fromB + toB });
+	}
+	let i = 0;
+	let j = 0;
+	while (i < a.length || j < b.length) {
+		if (i < a.length && j < b.length && isCharacter(a[i]) && isCharacter(b[j])) {
+			if (a[i] !== b[j]) add(i, i + 1, j, j + 1);
+			i++;
+			j++;
+			continue;
+		}
+		const i0 = i;
+		const j0 = j;
+		while (i < a.length && !isCharacter(a[i])) i++;
+		while (j < b.length && !isCharacter(b[j])) j++;
+		if (a.slice(i0, i).join() !== b.slice(j0, j).join()) add(i0, i, j0, j);
+	}
+	return out;
+}
+
+// a break at one end of the change is drawn as a break, apart from the letters beside it; a lone space there is the one it replaced
+function breakAtEdge(c: DocChange, a: Token[], b: Token[]): DocChange[] | null {
+	if (!a.some(isLetter) && !b.some(isLetter)) return null;
+	function structure(t: Token[], fromEnd: boolean) {
+		let n = 0;
+		while (n < t.length && !isCharacter(t[fromEnd ? t.length - 1 - n : n])) n++;
+		return n;
+	}
+	for (const fromEnd of [true, false]) {
+		const inA = structure(a, fromEnd);
+		const inB = structure(b, fromEnd);
+		if (inA > 0 === inB > 0) continue;
+		const cutA = fromEnd ? c.toA - inA : c.fromA + inA;
+		const cutB = fromEnd ? c.toB - inB : c.fromB + inB;
+		return [
+			{ fromA: c.fromA, toA: cutA, fromB: c.fromB, toB: cutB },
+			{ fromA: cutA, toA: c.toA, fromB: cutB, toB: c.toB }
+		];
+	}
+	return null;
+}
+
 // prosemirror-changeset reads edits fewer than a couple of tokens apart as one, so a short word left
 // standing between two (a paragraph split after "A", then typed at its start) came out struck and
 // typed again. Words both sides of a small change hold are kept, and the change is what is around them;
@@ -187,8 +255,10 @@ function keptApart(c: DocChange, before: PMNode, after: PMNode): DocChange[] {
 	const b = tokensOf(after.content, c.fromB, c.toB);
 	if (!a.every(isCharacter) && !b.every(isCharacter)) return [c];
 	if (touchesSelfRendered(before, c.fromA, c.toA) || touchesSelfRendered(after, c.fromB, c.toB)) return [c];
+	const regrouped = sameLetters(c, a, b);
+	if (regrouped) return regrouped;
 	const kept = keptRun(c, a, b, before, after);
-	if (!kept) return [c];
+	if (!kept) return breakAtEdge(c, a, b)?.flatMap((x) => keptApart(x, before, after)) ?? [c];
 	const { i, j, len } = kept;
 	const head = { fromA: c.fromA, toA: c.fromA + i, fromB: c.fromB, toB: c.fromB + j };
 	const tail = { fromA: c.fromA + i + len, toA: c.toA, fromB: c.fromB + j + len, toB: c.toB };
@@ -301,6 +371,13 @@ function apart(before: PMNode, after: PMNode, stretches: DocChange[]): DocChange
 	return out;
 }
 
+// changeset compares UTF-16 units, and most emoji share their first half
+function midPair(doc: PMNode, pos: number): boolean {
+	if (pos <= 0 || pos >= doc.content.size) return false;
+	const s = doc.textBetween(pos - 1, pos + 1);
+	return s.length === 2 && /[\uD800-\uDBFF]/.test(s[0]) && /[\uDC00-\uDFFF]/.test(s[1]);
+}
+
 /**
  * the changes from `before` to `after`, widened to whole words where a word was partly replaced. Each
  * of `stretches` is compared on its own, where what lies between them reads the same on both sides
@@ -330,7 +407,11 @@ export function diffDocs(before: PMNode, after: PMNode, stretches: DocChange[] =
 		);
 		return slideToEdges(c, before, after, lo, hi);
 	});
-	return wholeWords(slid, after, compared);
+	return wholeWords(slid, before, after, compared).map((c) => {
+		const lead = midPair(before, c.fromA) || midPair(after, c.fromB) ? 1 : 0;
+		const tail = midPair(before, c.toA) || midPair(after, c.toB) ? 1 : 0;
+		return { fromA: c.fromA - lead, toA: c.toA + tail, fromB: c.fromB - lead, toB: c.toB + tail };
+	});
 }
 
 /** the characters of a range, one placeholder per node that is not text */

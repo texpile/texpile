@@ -83,3 +83,69 @@ Professor Name \\
 		expect(twice).toBe(once);
 	});
 });
+
+// a break with nothing drawn before it in its block was written as a bare \\, which stops a real
+// compile ("There's no line here to end"): Shift+Enter at the start of an item, or after a \label
+describe('a line break opening its line', () => {
+	const br = () => schema.nodes.hard_break.create({ lineBreak: true });
+	const item = (content: Node[]) =>
+		schema.nodes.doc.create(null, [schema.nodes.list.create({ kind: 'bullet' }, [schema.nodes.paragraph.create(null, content)])]);
+
+	it('gets an empty box to end, and reads back as the break alone', () => {
+		const doc = item([br(), schema.text('Second.')]);
+		const out = serializeToLatex(doc);
+		expect(out).toContain('\\item \\mbox{}\\\\');
+		expect(parse(out).toString()).toBe(doc.toString());
+		expect(serializeToLatex(parse(out))).toBe(out);
+	});
+
+	it('after a \\label too, which draws nothing', () => {
+		const p = schema.nodes.paragraph.create(null, [schema.nodes.label.create({ name: 'x' }), br(), schema.text('more')]);
+		expect(serializeToLatex(schema.nodes.doc.create(null, [p]))).toContain('\\mbox{}\\\\');
+	});
+
+	it('takes no box after words', () => {
+		const out = serializeToLatex(item([schema.text('First'), br(), schema.text('Second.')]));
+		expect(out).not.toContain('\\mbox');
+	});
+});
+
+// Backspace at the start of a paragraph joins it into the heading above; a footnote it held then sat
+// unprotected in \section{}, a moving argument, and the compile stopped
+describe('a footnote in a heading', () => {
+	it('is protected, once', () => {
+		const joined = schema.nodes.doc.create(null, [
+			schema.nodes.heading.create({ level: 1 }, [
+				schema.text('Probe'),
+				schema.nodes.inline_latex.create(null, schema.text('\\footnote{A note.}'))
+			])
+		]);
+		expect(serializeToLatex(joined).trim()).toBe('\\section{Probe\\protect\\footnote{A note.}}');
+		// and reads back as the footnote alone, so reopening changes nothing
+		expect(parse(serializeToLatex(joined)).toString()).toBe(joined.toString());
+		expect(serializeToLatex(parse(String.raw`\section{Probe\protect\footnote{A note.}}`)).trim()).toBe(
+			'\\section{Probe\\protect\\footnote{A note.}}'
+		);
+	});
+});
+
+// \\ reads a [ after it as its spacing argument (\\[2ex]), and a real compile stopped on a row or a
+// line typed to begin with one
+describe('a [ right after a line break', () => {
+	it('is kept off the break by an empty group, and reads back as typed', () => {
+		const p = schema.nodes.paragraph.create(null, [
+			schema.text('First'),
+			schema.nodes.hard_break.create({ lineBreak: true }),
+			schema.text('[x] here')
+		]);
+		const out = serializeToLatex(schema.nodes.doc.create(null, [p]));
+		expect(out).toContain('\\\\{}');
+		expect(parse(out).toString()).toBe(schema.nodes.doc.create(null, [p]).toString());
+	});
+
+	it('the same for a table row that begins with one', () => {
+		const out = serializeToLatex(parse('\\begin{tabular}{ll}\na & b \\\\\n{}[Two & c \\\\\n\\end{tabular}'));
+		expect(out).toContain('{}[Two');
+		expect(out).not.toMatch(/\\\\\s*\[/);
+	});
+});

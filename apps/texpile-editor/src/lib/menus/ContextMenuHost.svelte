@@ -97,7 +97,7 @@
 	{@const menu = openMenu.current}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
-		class="fixed inset-0 z-dropdown cursor-default"
+		class="z-dropdown fixed inset-0 cursor-default"
 		onpointerdown={closeContextMenu}
 		oncontextmenu={(e) => (e.preventDefault(), closeContextMenu())}
 	></div>

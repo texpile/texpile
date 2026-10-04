@@ -103,7 +103,8 @@ export function placeChange(
 	if (chip) {
 		// a node the change begins inside stood before it and was changed by it; one whose opening is
 		// in the change is new, or stands in place of what the change took out
-		const stood = selfRenderedAround(after.doc, B.from) !== null;
+		const around = selfRenderedAround(after.doc, B.from);
+		const stood = around !== null;
 		// the one it began inside, even when the change runs on past its end (a caption that took in
 		// the heading after it)
 		const inside = stood ? selfRenderedAround(before.doc, A.from) : null;
@@ -112,7 +113,9 @@ export function placeChange(
 		// what the node replaced, when that was not such a node itself: words, or whole blocks
 		const old = was ? { runs: [], gone: null } : oldContent(before.doc, A.from, A.to);
 		const ranges: PmSuggestionRange[] = [];
-		if (old.gone) ranges.push({ ...base, from: chip.from, to: chip.from, gone: old.gone });
+		// a change at the closing of the node that stood took out what stood after it
+		const goneAt = around && B.from === around.to - 1 ? chip.to : chip.from;
+		if (old.gone) ranges.push({ ...base, from: goneAt, to: goneAt, gone: old.gone });
 		ranges.push({ ...base, ...chip, node: true, old: old.runs, ...(was ? { was } : {}) });
 		// what stood after the node it was and is in the change too (the paragraph a figure took
 		// in as its caption): struck after the node, where it stood
@@ -148,7 +151,10 @@ export function placeChange(
 		// is that block's own edge, so a block taken out of an item stands in the item
 		const edge =
 			inline || !$from.parent.isTextblock || $from.depth === 0 ? from : $from.parentOffset === 0 ? $from.before() : $from.after();
-		ranges.push({ ...base, from: edge, to: edge, gone: old.gone });
+		// words cut from the start of the block after a join, with nothing of the block before it, stood in that block
+		const into = !$from.parent.isTextblock && !old.gone.head.length && old.gone.tail.length ? textblockBeside(doc, from, 1) : null;
+		const at = into === null ? edge : into + 1;
+		ranges.push({ ...base, from: at, to: at, gone: old.gone });
 	}
 	if (newText !== '' || old.runs.length) {
 		const format = newText !== '' && newText === oldText;

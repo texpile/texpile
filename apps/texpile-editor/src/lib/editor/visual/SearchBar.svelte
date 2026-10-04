@@ -3,7 +3,13 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { displaySearchBarStore as display, editorViewStore } from '$lib/stores/editorStore';
 	import { setSearchState, SearchQuery } from 'prosemirror-search';
-	import { visibleMatches, replaceAllVisible, replaceNextVisible, stepToMatch } from '$lib/editor/visual/searchVisibleText';
+	import {
+		visibleMatches,
+		replaceAllVisible,
+		replaceNextVisible,
+		stepToMatch,
+		VisibleTextQuery
+	} from '$lib/editor/visual/searchVisibleText';
 	import FindBar from '$lib/editor/find/FindBar.svelte';
 	import { NO_FIND_OPTIONS, toggledFindOption, type FindOptions } from '$lib/editor/find/findOptions';
 
@@ -15,7 +21,7 @@
 	let bar = $state<ReturnType<typeof FindBar>>();
 
 	function searchQuery(): SearchQuery {
-		return new SearchQuery({ search: query, replace: replaceText, ...options });
+		return new VisibleTextQuery({ search: query, replace: replaceText, ...options });
 	}
 
 	function commit(resetPosition = true): void {

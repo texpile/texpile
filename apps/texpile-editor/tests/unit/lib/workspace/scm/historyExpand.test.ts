@@ -56,7 +56,7 @@ afterEach(() => {
 	vi.useRealTimers();
 });
 
-function render() {
+function render(onCompare: (entry: GitLogEntry, path: string, from?: string) => void = () => {}) {
 	app = mount(HistoryTimeline, {
 		target: host,
 		props: {
@@ -67,7 +67,7 @@ function render() {
 				reads.push({ hash, resolve: d.resolve });
 				return d.promise;
 			},
-			onCompare: () => {},
+			onCompare,
 			onRestore: () => {},
 			baseName: (p: string) => p.split('/').pop() ?? p,
 			dirName: () => ''
@@ -169,6 +169,16 @@ describe('opening a version in the timeline', () => {
 		click(versionRow(0));
 		expect(shown()).not.toContain('alpha.tex');
 		expect(reads).toHaveLength(1);
+	});
+
+	it('compares a file renamed since under the name it had in that version', async () => {
+		const compared: unknown[][] = [];
+		render((...args) => void compared.push(args));
+		click(versionRow(0));
+		reads[0].resolve([{ path: '/w/introduction.tex', status: 'R', from: '/w/intro.tex' }]);
+		await settle();
+		click([...host.querySelectorAll('button')].find((b) => b.textContent?.includes('introduction.tex'))!);
+		expect(compared).toEqual([[HISTORY[0], '/w/introduction.tex', '/w/intro.tex']]);
 	});
 
 	it('says so when a version and the working copy agree', async () => {

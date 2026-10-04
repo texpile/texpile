@@ -48,6 +48,11 @@ export function onToolPathChange(fn: (pathValue: string) => void): void {
 	listeners.add(fn);
 }
 
+/** the folders from Preferences, as they go in front of PATH */
+export function toolDirsInFront(): string[] {
+	return configured.map((d) => resolveToolDir(d));
+}
+
 /** PATH without the folders from Preferences */
 export function baselinePath(): string {
 	return baseline ?? process.env[pathKey()] ?? '';

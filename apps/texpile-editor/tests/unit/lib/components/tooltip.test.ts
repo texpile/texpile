@@ -8,7 +8,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount, unmount, flushSync } from 'svelte';
 import TooltipHost from '../../../../src/lib/components/TooltipHost.svelte';
-import { tip, hideTip } from '../../../../src/lib/components/tooltip.svelte';
+import { tip, hideTip, unavailableTip } from '../../../../src/lib/components/tooltip.svelte';
 
 let host: HTMLDivElement;
 let app: Record<string, unknown> | null = null;
@@ -72,5 +72,17 @@ describe('the one tooltip', () => {
 		el.dispatchEvent(new MouseEvent('pointerdown'));
 		flushSync();
 		expect(card()).toBeNull();
+	});
+
+	// a grayed control's hint is its reason: shown at once on hover, and on a click, as someone may just click it
+	it('shows the reason of a grayed control at once, on hover and on a click', () => {
+		const el = document.body.appendChild(document.createElement('button'));
+		unavailableTip(el, 'Only available in Texpile Desktop');
+		enter(el);
+		flushSync();
+		expect(card()?.textContent?.trim()).toBe('Only available in Texpile Desktop');
+		el.dispatchEvent(new MouseEvent('pointerdown'));
+		flushSync();
+		expect(card()?.textContent?.trim()).toBe('Only available in Texpile Desktop');
 	});
 });

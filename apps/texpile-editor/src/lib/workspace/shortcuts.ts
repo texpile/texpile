@@ -8,6 +8,7 @@ import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { settings, updateSettings } from '$lib/settings';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { pdfFindToggle } from '$lib/stores/editorStore';
+import { isMac } from '$lib/platform';
 
 /** where a keystroke is typing, not a command */
 export const TYPING_HOSTS = 'input, textarea, [contenteditable="true"], .xterm';
@@ -43,6 +44,8 @@ export type ShortcutDeps = {
 	runCompile(): void;
 	stopCompile(): void;
 	openPreferences(): void;
+	/** does nothing in a guest's window, which cannot swap its folder out */
+	openFolder(): void;
 	stepDocumentHistory(direction: 'undo' | 'redo'): void;
 };
 
@@ -72,6 +75,13 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 			// (deleted on disk) still has its tab focused while the document buffer holds no path
 			const path = activeFilePath.current;
 			if (path) deps.closeTab({ path, compare: activeCompare.current ?? undefined });
+			// with no tab left, the window, as Cmd+W does in every other Mac app
+			else if (isMac) void nativeBridge()?.windowClose?.();
+		} else if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'o') {
+			// Ctrl+O in the terminal is the shell's
+			if (e.target instanceof Element && e.target.closest('.xterm')) return;
+			e.preventDefault();
+			deps.openFolder();
 		} else if (mod && e.shiftKey && !e.altKey && e.key.toLowerCase() === 't') {
 			e.preventDefault();
 			deps.reopenTab();

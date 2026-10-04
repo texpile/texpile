@@ -185,4 +185,10 @@ describe('the equations switch writes the one rule that numbers them', () => {
 		expect(toggled(src, false)).toBe('#set math.equation(supplement: [Eq.])\n\n' + EQUATION);
 		expect(toggled('#set math.equation(numbering: none)\n\n' + EQUATION, true)).toBe('#set math.equation(numbering: "(1)")\n\n' + EQUATION);
 	});
+
+	it('reads and writes a rule that ends on a semicolon, keeping the semicolon', () => {
+		const src = '#set math.equation(numbering: "(1)", supplement: [Eq.]); #set text(lang: "en")\n\n' + EQUATION;
+		expect(equationsNumbered(typstToProseMirror(src).doc)).toBe(true);
+		expect(toggled(src, false)).toBe('#set math.equation(supplement: [Eq.]);\n#set text(lang: "en")\n\n' + EQUATION);
+	});
 });

@@ -25,6 +25,8 @@ export type HelloPayload = {
 	role: 'host' | 'guest';
 	version?: string;
 	oldest?: string;
+	/** a host's own version, when version and oldest are the range of everyone in its session */
+	hostVersion?: string;
 };
 
 export type BlobChunkPayload = {

@@ -138,6 +138,7 @@
 		if (err === 'no-session') return m.session_error_no_session();
 		if (err === 'session-full') return m.session_error_full();
 		if (err === 'host-outdated') return m.session_error_host_outdated({ version: collabGuest.joinErrorVersion });
+		if (err === 'guest-outdated') return m.session_error_guest_outdated({ version: collabGuest.joinErrorVersion });
 		if (err === 'app-outdated') return m.session_error_app_outdated({ version: collabGuest.joinErrorVersion });
 		return m.session_error_generic({ message: err });
 	}

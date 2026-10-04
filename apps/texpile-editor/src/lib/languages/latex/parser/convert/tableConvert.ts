@@ -63,6 +63,10 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 	let centering = content.some((n) => n.type === 'environment' && (n as Environment).env === 'center' && containsTabular([n]));
 	let captionBelow = false;
 	let notesSize: string | null = null;
+	// the \vspace the source put right after its \caption ('' for none), written back in place of the
+	// gap a new table gets; a \label between them sets nothing apart on the page
+	let captionGap = '';
+	let afterCaption = false;
 
 	// see through the wrappers papers put around the tabular - \begin{center} instead of
 	// \centering, and {\small ...} groups scoping a size switch (BERT-era arXiv especially).
@@ -76,16 +80,17 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 			const arg = getMacroFirstArg(node as Macro);
 			const captionText = convertNodesToInline(arg, ctx);
 			const optArg = (node as Macro).args?.find((a) => a.openMark === '[');
-			// the caption's bytes are the words inside the braces: \caption{ and } are the float's frame
-			caption = noteBlockSpan(
-				buildNode(
-					'table_caption',
-					{ starred: macroHasStar(node as Macro), captionOpt: optArg ? printRaw(optArg.content) : null },
-					captionText
-				),
-				spanOfNodes(arg)
+			const built = buildNode(
+				'table_caption',
+				{ starred: macroHasStar(node as Macro), captionOpt: optArg ? printRaw(optArg.content) : null },
+				captionText
 			);
+			// the caption's bytes are the words inside the braces: \caption{ and } are the float's frame.
+			// one below the tabular comes after it in the file but before it in the wrapper, and placing
+			// it would leave the tabular unplaced; it rides along in the frame instead
+			caption = sawTabular ? built : noteBlockSpan(built, spanOfNodes(arg));
 			captionBelow = sawTabular;
+			afterCaption = true;
 		} else if (node.type === 'macro' && node.content === 'label') {
 			const text = getTextContent(getMacroFirstArg(node as Macro));
 			if (text) labels.push(text);
@@ -107,6 +112,8 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 				centering = true;
 				continue;
 			}
+			// a caption above the tabular has its gap before it, not after the tabular
+			if (afterCaption && (captionBelow || !sawTabular) && node.type === 'macro' && node.content === 'vspace') captionGap += printRaw(node);
 			if (node.type === 'macro' && (node.content === 'vspace' || node.content === 'raggedright')) continue;
 			// the notes wrapper emits its own \par\smallskip; a skip leading the notes would compound
 			if (
@@ -140,6 +147,7 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 				}
 			}
 
+			if (node.type !== 'whitespace' && node.type !== 'comment') afterCaption = false;
 			(sawTabular ? noteNodes : preNodes).push(node);
 		}
 	}
@@ -180,7 +188,7 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 	const label = labels.length > 0 ? labels[labels.length - 1] : null;
 	const extraLabels = labels.length > 1 ? labels.slice(0, -1) : null;
 
-	return { caption, label, extraLabels, tables, notes, preBody, postBody, centering, captionBelow, notesSize };
+	return { caption, label, extraLabels, tables, notes, preBody, postBody, centering, captionBelow, captionGap, notesSize };
 }
 
 /** a bare \vskip, a scoped switch, or a group led by a skip: setup after the tabular, not notes */
@@ -230,10 +238,8 @@ export function containsTabular(nodes: Node[]): boolean {
 }
 
 export function createTableWrapper(env: Environment, ctx: ConversionContext, options: ConversionOptions): PmNode[] {
-	const { caption, label, extraLabels, tables, notes, preBody, postBody, centering, captionBelow, notesSize } = extractTableComponents(
-		env.content,
-		ctx
-	);
+	const { caption, label, extraLabels, tables, notes, preBody, postBody, centering, captionBelow, captionGap, notesSize } =
+		extractTableComponents(env.content, ctx);
 
 	const tableNode = tables[0];
 	// the wrapper models exactly one tabular; a float holding several (side by side, or stacked
@@ -269,6 +275,7 @@ export function createTableWrapper(env: Environment, ctx: ConversionContext, opt
 				placement,
 				centering,
 				captionBelow,
+				captionGap: caption ? captionGap : null,
 				notesSize,
 				hasHeaderRow: true, // simplified assumption
 				hasHeaderColumn: true,
@@ -317,6 +324,8 @@ export function createTable(env: Environment): PmNode[] {
 	const tabularxWidth = takesWidth && mandatory.length >= 2 ? printRaw(mandatory[0].content) : null;
 	const colspecArg = takesWidth ? mandatory[1] : mandatory[mandatory.length - 1];
 	const colspec = colspecArg ? printRaw(colspecArg.content) : null;
+	const positionArg = (env.args ?? []).find((a) => a.openMark === '[');
+	const position = positionArg ? printRaw(positionArg.content) : null;
 
 	const rows: PmNode[] = [];
 	// each row's bytes: from its first cell's to its last cell's, the row break left to the frame
@@ -397,7 +406,7 @@ export function createTable(env: Environment): PmNode[] {
 
 	const resolved = resolveSpans(rows);
 	if (resolved.length === rows.length) resolved.forEach((row, i) => noteBlockSpan(row, rowSpans[i]));
-	return [buildNode('table', { env: env.env, colspec, tabularxWidth, bottomRules }, resolved)];
+	return [buildNode('table', { env: env.env, colspec, tabularxWidth, position, bottomRules }, resolved)];
 }
 
 // a node that contributes no cell content (whitespace / comments / empty strings)

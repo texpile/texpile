@@ -23,8 +23,10 @@ export function rowCells(row: Node, renderBlocks: (parent: Node) => string): str
 	return cells.join(', ');
 }
 
-export function tableBody(node: Node, indent: string, renderBlocks: (parent: Node) => string): string {
-	const rows: { cells: Node[]; isHeader: boolean; rules: unknown }[] = [];
+type TableRow = { cells: Node[]; isHeader: boolean; rules: unknown };
+
+function tableRows(node: Node): TableRow[] {
+	const rows: TableRow[] = [];
 	node.forEach((row) => {
 		if (row.type.name !== 'table_row') return;
 		const cells: Node[] = [];
@@ -35,10 +37,13 @@ export function tableBody(node: Node, indent: string, renderBlocks: (parent: Nod
 		});
 		rows.push({ cells, isHeader, rules: row.attrs.typRules });
 	});
-	if (rows.length === 0) return '';
-	// grid width, not cell count: a colspan'd cell occupies several columns, and a rowspan from an
-	// earlier row occupies one in every row it reaches. Both have to be counted or colspecFor
-	// rejects a perfectly current columns: as stale and reflows the table.
+	return rows;
+}
+
+// grid width, not cell count: a colspan'd cell occupies several columns, and a rowspan from an
+// earlier row occupies one in every row it reaches. Both have to be counted or colspecFor
+// rejects a perfectly current columns: as stale and reflows the table.
+function gridWidth(rows: TableRow[]): number {
 	const covered = new Map<number, number>();
 	let cols = 1;
 	rows.forEach((r, i) => {
@@ -50,12 +55,10 @@ export function tableBody(node: Node, indent: string, renderBlocks: (parent: Nod
 			for (let d = 1; d < rowspan; d++) covered.set(i + d, (covered.get(i + d) ?? 0) + colspan);
 		});
 	});
-	function call(cell: Node) {
-		return cellCall(cell, renderBlocks);
-	}
-	function rowLine(r: { cells: Node[] }) {
-		return `  ${r.cells.map(call).join(', ')},`;
-	}
+	return cols;
+}
+
+function columnsOf(node: Node, rows: TableRow[], cols: number): string {
 	// A drag is detected as "the cells no longer agree with the colspec". Parsing sets colwidth from
 	// the source's own tracks, so the presence of a width proves nothing on its own - without this
 	// comparison a table that merely HAD `(auto, 1fr)` would get its tracks rewritten the moment
@@ -75,20 +78,48 @@ export function tableBody(node: Node, indent: string, renderBlocks: (parent: Nod
 		: tracks
 			? null
 			: toFrTracks(current);
-	const lines = [`  columns: ${dragged ?? colspecFor(node.attrs.colspec, cols)},`];
-	// verbatim align:, under the same staleness rule as colspec - a per-column list that no
-	// longer matches the real column count is dropped rather than silently mis-aligned
+	return dragged ?? colspecFor(node.attrs.colspec, cols);
+}
+
+// verbatim align:, under the same staleness rule as colspec - a per-column list that no
+// longer matches the real column count is dropped rather than silently mis-aligned
+function alignOf(node: Node, cols: number): string | null {
 	const align = typeof node.attrs.typAlign === 'string' ? node.attrs.typAlign.trim() : '';
-	if (align) {
-		const perColumn = align.startsWith('(') && align.endsWith(')') && !/[()]/.test(align.slice(1, -1));
-		const count = perColumn
-			? align
-					.slice(1, -1)
-					.split(',')
-					.filter((s) => s.trim()).length
-			: cols;
-		if (count === cols) lines.push(`  align: ${align},`);
+	if (!align) return null;
+	const perColumn = align.startsWith('(') && align.endsWith(')') && !/[()]/.test(align.slice(1, -1));
+	const count = perColumn
+		? align
+				.slice(1, -1)
+				.split(',')
+				.filter((s) => s.trim()).length
+		: cols;
+	return count === cols ? align : null;
+}
+
+/** what a table's source says around its cells' content: its columns:, its align: and the shape of every row */
+export function tableFrame(node: Node): string {
+	const rows = tableRows(node);
+	const cols = gridWidth(rows);
+	const shapes = rows.map(
+		(r) =>
+			`${r.isHeader ? 'header' : 'body'} ${asStrings(r.rules).join(' ')} ${r.cells.map((c) => `${c.attrs.colspan ?? 1}x${c.attrs.rowspan ?? 1}`).join(',')}`
+	);
+	return [columnsOf(node, rows, cols), alignOf(node, cols) ?? '', ...shapes].join('\n');
+}
+
+export function tableBody(node: Node, indent: string, renderBlocks: (parent: Node) => string): string {
+	const rows = tableRows(node);
+	if (rows.length === 0) return '';
+	const cols = gridWidth(rows);
+	function call(cell: Node) {
+		return cellCall(cell, renderBlocks);
 	}
+	function rowLine(r: { cells: Node[] }) {
+		return `  ${r.cells.map(call).join(', ')},`;
+	}
+	const lines = [`  columns: ${columnsOf(node, rows, cols)},`];
+	const align = alignOf(node, cols);
+	if (align) lines.push(`  align: ${align},`);
 	// stroke:, fill:, gutter: - verbatim, in the order they were written. No staleness rule: unlike
 	// align: these are not required to be per-column, so a column add/delete cannot invalidate them
 	// in a way this can detect, and dropping them would be the more destructive guess.

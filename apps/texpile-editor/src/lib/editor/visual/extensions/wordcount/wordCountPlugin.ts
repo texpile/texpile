@@ -25,6 +25,10 @@ function extractText(doc: Node, from: number, to: number, prose?: RawProse): str
 			return false;
 		}
 		if (!prose && node.type.name === 'raw_latex') return false;
+		if (node.type.name === 'hard_break') {
+			text += ' ';
+			return false;
+		}
 
 		if (node.type.name === 'text' && node.text) {
 			const start = Math.max(0, from - pos);

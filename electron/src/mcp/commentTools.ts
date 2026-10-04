@@ -50,8 +50,8 @@ export function registerCommentTools(server: McpServer, target: TargetWindow): v
 			title: 'Add a review comment',
 			description:
 				'Open a new thread on a quote in a file, as a review note of your own. The quote has to be ' +
-				'found exactly once: it is matched against the editor buffer for the open file and disk ' +
-				'otherwise, and a quote copied across a line wrap still matches. When it appears more than ' +
+				'found once: it is matched exactly, markup included and lines ending in \\n, against the ' +
+				'editor buffer for the open file and disk otherwise. When it appears more than ' +
 				'once the refusal lists the candidate lines; pass prefix, suffix or line to pick one. Refused ' +
 				'rather than guessed when the quote is missing, too short or too common. Not for replacing a ' +
 				'thread you could not reanchor: reply to and resolve that one instead.',

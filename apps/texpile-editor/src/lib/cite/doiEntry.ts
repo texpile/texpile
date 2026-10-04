@@ -183,10 +183,21 @@ function escapeRe(s: string): string {
 function nameList(value: string): string {
 	const letters = value.replace(/\sand\s/g, ' ');
 	const shouting = /[A-Z]{2}/.test(letters) && !/[a-z]/.test(letters);
-	return value
-		.split(/\s+and(?:\s+|$)/)
-		.map((n) => n.trim())
-		.filter(Boolean)
+	const names: string[] = [];
+	let pending: string[] = [];
+	for (const n of value.split(/\s+and(?:\s+|$)/).map((part) => part.trim())) {
+		if (!n) continue;
+		// an organisation's own "and" splits it (Food and Agriculture Organization, ), where DataCite
+		// writes every person Family, Given
+		if (/^[^,]*,$/.test(n)) names.push([...pending, n].join(' and '));
+		else if (n.includes(',')) names.push(...pending, n);
+		else {
+			pending.push(n);
+			continue;
+		}
+		pending = [];
+	}
+	return [...names, ...pending]
 		.map((n) => {
 			if (/,$/.test(n)) {
 				const org = n.replace(/,+$/, '').trim();
@@ -246,7 +257,18 @@ function texText(value: string, commands: boolean): string {
  * stays free to be lowered.
  */
 function protectCapitals(title: string): string {
-	return title.replace(/(^|[\s("'])([A-Za-z0-9][\w-]*)/g, (m, lead: string, word: string) =>
+	let out = '';
+	let at = 0;
+	// a formula and the word it is part of ($\Lambda$CDM) whole: a style lower-cases \Lambda too
+	for (const f of title.matchAll(/[^\s$]*\$[^$]*\$[^\s$]*/g)) {
+		out += protectWords(title.slice(at, f.index)) + `{${f[0]}}`;
+		at = (f.index ?? 0) + f[0].length;
+	}
+	return out + protectWords(title.slice(at));
+}
+
+function protectWords(text: string): string {
+	return text.replace(/(^|[\s("'])([A-Za-z0-9][\w-]*)/g, (m, lead: string, word: string) =>
 		word.split('-').some((part) => /^.+[A-Z]/.test(part)) ? `${lead}{${word}}` : m
 	);
 }

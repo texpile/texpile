@@ -88,7 +88,7 @@
 		return e.type === 'file' && /\.(tex|typ)$/i.test(e.name);
 	}
 	function isMain(e: TreeEntry) {
-		return !!mainPath && e.path.replace(/\\/g, '/').toLowerCase() === mainPath.replace(/\\/g, '/').toLowerCase();
+		return !!mainPath && samePath(e.path, mainPath);
 	}
 
 	const sel = new FileTreeState({ tree: () => tree, onOpen: (e) => onOpen(e) });
@@ -347,7 +347,7 @@
 	bind:this={treeEl}
 	role="presentation"
 	tabindex="-1"
-	class="min-h-full min-w-max rounded-container outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
+	class="rounded-container min-h-full min-w-max outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
 	onfocusin={() => (focused = true)}
 	onfocusout={(e) => {
 		// relatedTarget is where focus is HEADING; moving between two rows must not read as leaving

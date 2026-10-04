@@ -430,6 +430,14 @@ wrapped too, 50\\% sure.
 		expect(out).toContain('Intro paragraph wrapped');
 	});
 
+	it('a line break typed after a formula that ends a source line leaves one paragraph', () => {
+		const parsed = parseLatexFile(`${PREAMBLE}\nText ending with $x^2$\ncontinues on the next line.\n\nOutro.\n\\end{document}\n`);
+		const at = posOf(parsed.doc, ' continues');
+		const out = serializeLatexFile(parsed, new Transform(parsed.doc).replaceWith(at, at, schema.nodes.hard_break.create()).doc);
+		expect(out).not.toMatch(/\\\\\n[ \t]*\n/);
+		expect(parseLatexFile(out).doc.childCount).toBe(parsed.doc.childCount);
+	});
+
 	it('a letter typed into a bare url keeps the link', () => {
 		const parsed = parseLatexFile(`${PREAMBLE}\nA bare one: \\url{https://typst.app}.\n\\end{document}\n`);
 		const at = posOf(parsed.doc, 'st.app');
@@ -1034,13 +1042,18 @@ describe('what is typed at the head of an item stays text', () => {
 \\end{document}
 `;
 
-	it('a body beginning with < or [ gets an empty group in front, so it is not read as an overlay or a label', () => {
-		for (const typed of ['<lab>,', '[x] ']) {
+	// a typed < goes out as \textless{} (the default font encoding draws a bare one as ¡), which no
+	// overlay reads; a [ still needs the empty group
+	it('a body beginning with < or [ is not read as an overlay or a label', () => {
+		for (const [typed, written] of [
+			['<lab>,', '\\textless{}lab\\textgreater{},'],
+			['[x] ', '{}[x] ']
+		]) {
 			const parsed = parseLatexFile(FILE14);
 			const at = posOf(parsed.doc, 'Middle');
 			const doc = new Transform(parsed.doc).replaceWith(at, at, schema.text(typed)).doc;
 			const out = serializeLatexFile(parsed, doc);
-			expect(out).toContain(`\\item {}${typed}Middle bullet.`);
+			expect(out).toContain(`\\item ${written}Middle bullet.`);
 			expect(parseLatexFile(out).doc.toString()).toBe(doc.toString());
 		}
 	});
@@ -1051,7 +1064,20 @@ describe('what is typed at the head of an item stays text', () => {
 		expect(out).toContain('\\item Middle bullet.');
 		const at = posOf(parsed.doc, 'Middle');
 		const doc = new Transform(parsed.doc).replaceWith(at, at, schema.text('<lab>,')).doc;
-		expect(serializeLatexFile(parsed, withoutOrigins(doc))).toContain('\\item {}<lab>,Middle bullet.');
+		expect(serializeLatexFile(parsed, withoutOrigins(doc))).toContain('\\item \\textless{}lab\\textgreater{},Middle bullet.');
+	});
+});
+
+describe('a [ typed at the start of a table row', () => {
+	// the row before it ends on \\, which reads the [ as its spacing argument
+	it('is kept off the row end, whether the cell is written afresh or spliced', () => {
+		const parsed = parseLatexFile(`${PREAMBLE}\n\\begin{tabular}{ll}\na & b \\\\\nTwo & c \\\\\n\\end{tabular}\n\\end{document}\n`);
+		const at = posOf(parsed.doc, 'Two');
+		const doc = new Transform(parsed.doc).replaceWith(at, at, schema.text('[')).doc;
+		for (const out of [serializeLatexFile(parsed, doc), serializeLatexFile(parsed, withoutOrigins(doc))]) {
+			expect(out).toContain('{}[Two');
+			expect(parseLatexFile(out).doc.toString()).toBe(doc.toString());
+		}
 	});
 });
 
@@ -1204,7 +1230,7 @@ describe('editing inside a labelled item', () => {
 		const at = posOf(parsed.doc, '(Firs') + 5;
 		const doc = new Transform(parsed.doc).split(at).doc;
 		const out = serializeLatexFile(parsed, doc);
-		expect(out).toContain('\\item[(1)](Firs\n\nt stage estimation) Uses x.\n\\item[(2)] Second one.');
+		expect(out).toContain('\\item[(1)](Firs\n\n      t stage estimation) Uses x.\n\\item[(2)] Second one.');
 		expect(out).not.toContain('\\textbf');
 		expect(parseLatexFile(out).doc.toString()).toBe(doc.toString());
 	});

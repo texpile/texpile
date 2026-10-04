@@ -2,7 +2,7 @@
 // (every tree-refresh trigger updates it for free) and after each Source Control write.
 import { parentRepoToConfirm, useParentRepo } from '../parentRepo.svelte';
 import { workspaceRoot } from '../workspaceStore';
-import { samePath } from '../fileSystem';
+import { pathKey, samePath } from '../fileSystem';
 import { box } from '$lib/runes/box.svelte';
 import {
 	gitStatus as fetchGitStatus,
@@ -88,7 +88,7 @@ let historyLimit = HISTORY_PAGE;
 
 /** canonical key matching tree paths to badges; guards against separator/casing drift. */
 export function gitKey(path: string): string {
-	return path.replace(/\\/g, '/').toLowerCase();
+	return pathKey(path);
 }
 
 /** a file with no copy in the last version: untracked, or staged as added. Discarding it deletes it. */

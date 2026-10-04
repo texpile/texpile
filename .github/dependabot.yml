@@ -43,6 +43,10 @@ updates:
         update-types: ['version-update:semver-major']
       - dependency-name: zod
         update-types: ['version-update:semver-major']
+      # 2.4.2 gives up on any range over 2500 positions, so comparing or suggesting on a long document
+      # marked all of it as one change
+      - dependency-name: prosemirror-changeset
+        versions: ['>=2.4.2']
 
   - package-ecosystem: cargo
     directory: /packages/typst-syntax-wasm

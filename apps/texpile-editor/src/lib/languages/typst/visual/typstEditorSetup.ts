@@ -40,7 +40,7 @@ import { TypstRefView } from './extensions/ref/typstRefView.svelte';
 import { typstEnvView } from './extensions/env/typstEnvView.svelte';
 import { TYP_BLOCK_INSERT_ITEMS } from './blockInsertItems';
 import { isMac } from '$lib/platform';
-import { toggleHeading } from '$lib/editor/visual/helperCommands';
+import { splitBlockWithoutDuplicates, toggleHeading } from '$lib/editor/visual/helperCommands';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createTypstImageSettings } from './imageSettings.svelte';
@@ -206,6 +206,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			'Mod-Shift-,': toggleMark(typSchema.marks.sub), // Mod-, is Preferences
 			'Mod-`': toggleMark(typSchema.marks.code),
 			'Mod-Shift-`': createCodeBlock(),
+			Enter: splitBlockWithoutDuplicates,
 			'Mod-m': createMathField(),
 			'Mod-Shift-m': createMathField(true),
 			// Word/Docs convention, same as the other editors; typst headings nest to six

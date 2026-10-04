@@ -30,6 +30,27 @@ Trailing notes are not printed.`;
 		expect(latexCount('Two words.', true).words.body).toBe(2);
 	});
 
+	it('finds the body by the \\begin{document} and \\end{document} TeX reads, not ones named in a comment', () => {
+		const tex = String.raw`\documentclass{article}
+% keep every package above \begin{document}
+\author{Ada Lovelace}
+\begin{document}
+Two words. % anything after \end{document} is ignored
+Three more words.
+\end{document}`;
+		expect(latexCount(tex, true).words).toMatchObject({ body: 5, headings: 0 });
+	});
+
+	it('leaves out the title when the \\maketitle that would print it is commented out', () => {
+		const tex = String.raw`\documentclass{article}
+\title{Deep Residual Learning}
+\begin{document}
+% \maketitle
+Two words.
+\end{document}`;
+		expect(latexCount(tex, true).words).toMatchObject({ body: 2, headings: 0 });
+	});
+
 	it('counts the title \\maketitle prints as a heading', () => {
 		const tex = String.raw`\documentclass{article}
 \title{Deep Residual Learning}

@@ -13,8 +13,9 @@ import {
 
 export type EditMode = 'editing' | 'suggesting';
 
-/** `lists` is `paragraphs` where the spaces before a list marker are the item's depth */
-export type WhitespaceChanges = 'exact' | 'paragraphs' | 'lists';
+/** `lists` is `paragraphs` where the spaces before a list marker are the item's depth (typst);
+ *  `markdown` is `lists` where two spaces ending a line are a line break */
+export type WhitespaceChanges = 'exact' | 'paragraphs' | 'lists' | 'markdown';
 
 export type TypingSide = 'before' | 'after';
 
@@ -74,10 +75,30 @@ function sameWords(text: string, s: { from: number; to: number; restore: string 
 	return shape(now) === shape(s.restore);
 }
 
+// how far apart, and how many, neighboring suggestions are read together
+const RUN_GAP = 64;
+const RUN_LENGTH = 8;
+
+/** one author's neighboring suggestions that together give back the words they took, as an undo can leave them */
+function cancelledRuns(after: string, placed: { from: number; to: number; restore: string; author: string }[]): Set<number> {
+	const out = new Set<number>();
+	for (let i = 0; i < placed.length; i++) {
+		let old = placed[i].restore;
+		for (let j = i + 1; j < placed.length && j - i <= RUN_LENGTH; j++) {
+			if (placed[j].author !== placed[i].author || placed[j].from < placed[j - 1].to) break;
+			const gap = after.slice(placed[j - 1].to, placed[j].from);
+			if (gap.length > RUN_GAP) break;
+			old += gap + placed[j].restore;
+			if (after.slice(placed[i].from, placed[j].to) === old) for (let k = i; k <= j; k++) out.add(k);
+		}
+	}
+	return out;
+}
+
 export function compareSuggestions(o: CompareInput): ComparedSuggestions {
 	const { before, after, mode, author: me } = o;
 	const exact = o.whitespace === 'exact';
-	const lists = o.whitespace === 'lists';
+	const lists = o.whitespace === 'markdown' ? 'markdown' : o.whitespace === 'lists';
 	const given = o.pending
 		.filter((s) => s.from >= 0 && s.to >= s.from && s.to <= before.length)
 		.sort((a, b) => a.from - b.from || a.to - b.to);
@@ -217,6 +238,16 @@ export function compareSuggestions(o: CompareInput): ComparedSuggestions {
 				// what is left of it stands after the words that came back, and so do the Deletes stacked after it
 				e.point = h.bTo;
 				for (const i of points) if (i > back && entries[i].from === h.aFrom) entries[i].point = h.bTo;
+				if (!e.restore) e.fate = 'withdraw';
+				return;
+			}
+			// a forward Delete adds to the end of what the spot took, so its undo gives back the end
+			const tail = points.find((i) => entries[i].author === me && entries[i].from === h.aFrom && entries[i].restore.endsWith(inserted));
+			if (tail !== undefined) {
+				const e = entries[tail];
+				e.restore = e.restore.slice(0, e.restore.length - inserted.length);
+				e.point = h.bFrom;
+				for (const i of points) if (i > tail && entries[i].from === h.aFrom) entries[i].point = h.bTo;
 				if (!e.restore) e.fate = 'withdraw';
 				return;
 			}
@@ -382,8 +413,9 @@ export function compareSuggestions(o: CompareInput): ComparedSuggestions {
 	const placed: PlacedSuggestion[] = [];
 	const changes: SuggestionChange[] = [];
 	const was = new Map(given.map((s) => [s.id, s]));
-	for (const s of joined) {
-		if (sameWords(after, s, exact)) {
+	const cancelled = cancelledRuns(after, joined);
+	for (const [n, s] of joined.entries()) {
+		if (cancelled.has(n) || sameWords(after, s, exact)) {
 			if (!s.fresh) gone.set(s.id, 'withdraw');
 			continue;
 		}

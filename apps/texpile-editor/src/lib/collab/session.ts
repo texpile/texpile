@@ -27,7 +27,7 @@ import {
 	type RelayNotice
 } from './protocol';
 import type { Transport, TransportStatus } from './transport';
-import { THIS_VERSION, sessionMismatch, type SessionVersion } from './compatibility';
+import { THIS_VERSION, commonVersion, sessionMismatch, type SessionVersion } from './compatibility';
 
 export type PeerInfo = {
 	name: string;
@@ -39,7 +39,8 @@ export type PeerInfo = {
 	author?: string;
 };
 
-export type SessionEndReason = 'host-ended' | 'relay-closed' | 'quota' | 'error' | 'no-session' | 'full' | 'host-outdated' | 'app-outdated';
+export type SessionEndReason =
+	'host-ended' | 'relay-closed' | 'quota' | 'error' | 'no-session' | 'full' | 'host-outdated' | 'guest-outdated' | 'app-outdated';
 
 // the relay drops any WebSocket message over 1 MiB, which would crash the session into a reconnect
 // loop; stay under it with margin for the seal nonce/tag and the codec byte. Frames still over this
@@ -83,6 +84,8 @@ function closeReason(code?: string): SessionEndReason {
 	return 'relay-closed';
 }
 
+const OUTDATED_REASON = { them: 'host-outdated', guest: 'guest-outdated', me: 'app-outdated' } as const;
+
 export type SessionEvents = {
 	onPeersChange?: (peers: Map<number, PeerInfo>) => void;
 	onControl?: (payload: ControlPayload, from: number) => void;
@@ -115,8 +118,6 @@ export function textOf(doc: Y.Doc, relPath: string) {
 export type ManifestEntry = {
 	kind: 'text' | 'binary';
 	size: number;
-	/** original on-disk line ending for text files; writes restore it. */
-	eol?: '\r\n' | '\n';
 	/** tombstone: file was deleted on the host. */
 	gone?: boolean;
 	/** binaries only: changes when the bytes do (host mtime), so a guest can drop a stale blob.
@@ -141,6 +142,8 @@ export class CollabSession {
 	private readonly version: SessionVersion;
 	// peers on a version this one cannot share a session with; nothing they send is applied
 	private readonly outdated = new Set<number>();
+	// host only: the versions of the guests it let in, which a newcomer must share a session with too
+	private readonly admitted = new Map<number, Partial<SessionVersion>>();
 	private destroyed = false;
 	// the host's clientID, learned ONLY from frames the relay marked host-origin — never from a
 	// peer's self-reported role, so a guest can't impersonate the host
@@ -153,6 +156,8 @@ export class CollabSession {
 	// that frame is a catch-up after this side was away, so it can hold anyone's edits
 	private applyingCatchUp = false;
 	private handshakes = 0;
+	// peers whose state came back since this side last connected: only that first step2 is a catch-up
+	private caughtUp = new Set<number>();
 
 	constructor(opts: {
 		doc: Y.Doc;
@@ -229,7 +234,8 @@ export class CollabSession {
 	// roster is derived from awareness (the reliable presence signal), so departed peers prune
 	// automatically via awareness removals; host role is authoritative (authHostId), never
 	// self-reported, so a guest can't paint itself as the host
-	private rebuildPeers = () => {
+	private rebuildPeers = ({ removed }: { removed: number[] }) => {
+		for (const id of removed) this.admitted.delete(id);
 		this.peers.clear();
 		for (const [id, state] of this.awareness.getStates()) {
 			if (id === this.clientId) continue;
@@ -280,12 +286,22 @@ export class CollabSession {
 	};
 
 	private hello(to: number): void {
-		this.post({ type: FrameType.HELLO, from: this.clientId, to, payload: { ...this.user, ...this.version } });
+		const own = this.role === 'host' ? { hostVersion: this.version.version } : {};
+		this.post({ type: FrameType.HELLO, from: this.clientId, to, payload: { ...this.user, ...this.sessionVersion(to), ...own } });
+	}
+
+	// what `peer` must fit: a host speaks for every guest it let in, so one that cannot share with them is turned away
+	private sessionVersion(peer: number): SessionVersion {
+		return commonVersion(
+			this.version,
+			[...this.admitted].filter(([id]) => id !== peer).map(([, v]) => v)
+		);
 	}
 
 	/** hello + sync step1 + full awareness; runs on every (re)connect. */
 	private handshake(): void {
 		this.handshakes++;
+		this.caughtUp.clear();
 		this.hello(BROADCAST);
 		const enc = encoding.createEncoder();
 		syncProtocol.writeSyncStep1(enc, this.doc);
@@ -343,7 +359,9 @@ export class CollabSession {
 				const dec = decoding.createDecoder(frame.payload);
 				const enc = encoding.createEncoder();
 				this.applyingFrom = frame.from;
-				this.applyingCatchUp = this.handshakes > 1 && decoding.peekVarUint(dec) === syncProtocol.messageYjsSyncStep2;
+				const step2 = decoding.peekVarUint(dec) === syncProtocol.messageYjsSyncStep2;
+				this.applyingCatchUp = this.handshakes > 1 && step2 && !this.caughtUp.has(frame.from);
+				if (step2) this.caughtUp.add(frame.from);
 				try {
 					syncProtocol.readSyncMessage(dec, enc, this.doc, this);
 				} finally {
@@ -364,14 +382,15 @@ export class CollabSession {
 				// forth for good), and always re-offer our state, so a reconnecting peer catches up on edits
 				// made while it was gone (its step2 reply carries what we missed too)
 				if (frame.to === BROADCAST) this.hello(frame.from);
-				const mismatch = sessionMismatch(this.version, frame.payload);
+				const mismatch = sessionMismatch(this.sessionVersion(frame.from), frame.payload);
 				if (mismatch) {
 					this.outdated.add(frame.from);
 					// builds from before the version check still understand a host ending the session
 					if (this.role === 'host') this.sendControl({ kind: 'session-end' }, frame.from);
-					else if (fromHost) this.end(mismatch.outdated === 'them' ? 'host-outdated' : 'app-outdated', mismatch.version);
+					else if (fromHost) this.end(OUTDATED_REASON[mismatch.outdated], mismatch.version);
 					break;
 				}
+				if (this.role === 'host') this.admitted.set(frame.from, { version: frame.payload.version, oldest: frame.payload.oldest });
 				const enc = encoding.createEncoder();
 				syncProtocol.writeSyncStep1(enc, this.doc);
 				this.post({ type: FrameType.SYNC, from: this.clientId, to: frame.from, payload: encoding.toUint8Array(enc) });

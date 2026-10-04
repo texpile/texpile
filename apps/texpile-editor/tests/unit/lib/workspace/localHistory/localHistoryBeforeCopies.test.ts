@@ -135,7 +135,8 @@ it('keeps the unsaved edits before Reload replaces them with what changed on dis
 		sessionEdit: () => {},
 		saveNow: () => {},
 		exists: async () => true,
-		setDeleted: () => {}
+		setDeleted: () => {},
+		takeSessionWrite: () => null
 	});
 	await w.check();
 	w.resolve('reload');

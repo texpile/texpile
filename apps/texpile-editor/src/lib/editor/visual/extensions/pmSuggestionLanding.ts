@@ -51,10 +51,12 @@ function pastUnwritten(doc: PMNode, l: Landing, $pos: ResolvedPos): Landing {
 	const atStart = $pos.parentOffset === 0;
 	const atEnd = $pos.parentOffset === $pos.parent.content.size;
 	if (!$pos.parent.isTextblock || atStart === atEnd) return l;
-	const $l = doc.resolve(l.pos);
+	// at a chip's edge the bytes land inside it, and the textblock's edge is past the chip
+	const pos = atNodeEdge(doc, l.pos, atStart ? 1 : -1);
+	const $l = doc.resolve(pos);
 	if (!$l.parent.isTextblock) return l;
 	const edge = atEnd ? $l.end() : $l.start();
-	const between = doc.textBetween(Math.min(edge, l.pos), Math.max(edge, l.pos), '\n', '￼');
+	const between = doc.textBetween(Math.min(edge, pos), Math.max(edge, pos), '\n', '￼');
 	return between !== '' && between.trim() === '' ? { pos: edge, block: null } : l;
 }
 

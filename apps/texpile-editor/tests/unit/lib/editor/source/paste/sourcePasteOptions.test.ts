@@ -38,6 +38,14 @@ describe('source paste', () => {
 		);
 	});
 
+	it('writes the math of a copy from another Texpile editor in the file’s language', () => {
+		const fromLatex = '<p data-texpile-copy=""><span class="inline-math">\\alpha</span> and <strong>b</strong></p>';
+		expect(formattedSource({ html: fromLatex, text: '$\\alpha$ and \\textbf{b}' }, 'typst')).toBe('$alpha$ and *b*');
+		const fromTypst =
+			'<p data-texpile-copy=""><span class="inline-math" data-math-syntax="typst" data-latex="\\frac{1}{2}">frac(1, 2)</span> and <strong>b</strong></p>';
+		expect(formattedSource({ html: fromTypst, text: '$frac(1, 2)$ and *b*' }, 'latex')).toBe('$\\frac{1}{2}$ and \\textbf{b}');
+	});
+
 	it('writes a link’s % and # so LaTeX reads them in any argument, and a picture path with spaces so Markdown reads it', () => {
 		expect(linkSource('https://x.com/a%20b#part', 'the docs', 'latex')).toBe('\\href{https://x.com/a\\%20b\\#part}{the docs}');
 		// a backslash or brace in the URL would end \href's argument early

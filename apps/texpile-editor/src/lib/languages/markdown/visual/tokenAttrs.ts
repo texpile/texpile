@@ -12,18 +12,20 @@ export function attrStr(tok: Token, name: string): string {
  * A link/image destination as the AUTHOR wrote it.
  *
  * markdown-it percent-encodes every destination it parses (normalizeLink), which is right for a
- * renderer emitting `<img src>` and wrong for us twice over: the src is a path we look up ON DISK,
- * so `images/图片.png` arriving as `images/%E5%9B%BE%E7%89%87.png` finds no file and the image
- * never loads; and it is a value we write BACK to the .md, so editing the block around it rewrote
- * the author's filename into escapes.
+ * renderer emitting `<img src>` and wrong for us: `images/图片.png` arriving as
+ * `images/%E5%9B%BE%E7%89%87.png` finds no file, and editing the block around it rewrote the author's
+ * filename into escapes. Decoding that afterwards read the author's own escapes too, so the engine
+ * leaves destinations unencoded.
  *
- * decodeURI, not decodeURIComponent: it leaves the reserved set (`?#&=+`) alone, so a query string
- * or a `#gh-dark-mode-only` fragment survives intact - the same characters mdurl excludes from the
- * encode this undoes. A destination holding a literal `%` (`100%.png`) is not valid escaping and
- * throws; that one was never encoded, so the raw string is already what the author wrote.
+ * A link is a URL and keeps its escapes: `100%25` stays `100%25`. A picture's path is looked up on disk, so its escapes are
+ * read: `my%20file.png` is the file with the space. decodeURI, not decodeURIComponent: it leaves the
+ * reserved set (`?#&=+`) alone, so a query string or a `#gh-dark-mode-only` fragment survives intact.
+ * A path holding a literal `%` (`100%.png`) is not valid escaping and throws; the raw string is the path.
  */
 export function dest(tok: Token, name: string): string {
 	const raw = attrStr(tok, name);
+	// only the control characters the serializer escapes (encodeControl) are read back
+	if (name === 'href') return raw.replace(/%(?:[01][0-9a-f]|7f)/gi, (e) => String.fromCharCode(parseInt(e.slice(1), 16)));
 	try {
 		return decodeURI(raw);
 	} catch {

@@ -1,4 +1,5 @@
 // the comment log events a comparison stands for
+import { resolveExactly } from '$lib/comments/anchorSearch';
 import { anchorEvent, deleteEvent, openEvent, resolveEvent, type CommentEvent, type CommentThread } from '$lib/comments/log';
 import { spotRanks } from '$lib/comments/suggest';
 import type { ComparedSuggestions, PlacedSuggestion } from '$lib/comments/suggestCompare';
@@ -43,7 +44,9 @@ export function movedAnchorEvents(text: string, placed: PlacedSuggestion[], thre
 	for (const s of placed) {
 		const was = recorded.get(s.id)?.anchor;
 		const now = anchorOf(text, s, ranks);
-		if (was && (was.quote !== now.quote || was.prefix !== now.prefix || was.suffix !== now.suffix || was.rank !== now.rank)) {
+		// by where the recorded anchor lands: another copy of its words can sit nearer its old offset
+		const found = was && resolveExactly(text, was);
+		if (was && (!found || found.from !== s.from || found.to !== s.to || was.rank !== now.rank)) {
 			moved.push(anchorEvent({ thread: s.id, anchor: now, by, at }));
 		}
 	}

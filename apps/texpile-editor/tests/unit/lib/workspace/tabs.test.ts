@@ -5,8 +5,14 @@
 //
 // A tab is now a file OR a comparison of that file against a version, so the store is keyed by
 // tabKey rather than by path. Everything below is the same behaviour expressed through that key.
-import { describe, expect, it, beforeEach } from 'vitest';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import { tabs, tabKey } from '$lib/workspace/tabs.svelte';
+
+const platform = vi.hoisted(() => ({ isMac: false, isWindows: false }));
+vi.mock('$lib/platform', () => platform);
+afterEach(() => {
+	platform.isWindows = false;
+});
 
 /** open a file and edit it: the way a tab becomes permanent */
 function openAndEdit(path: string) {
@@ -19,7 +25,8 @@ const paths = () => tabs.list.map((t) => t.path);
 describe('tabs store', () => {
 	beforeEach(() => tabs.bind(null, false));
 
-	it('dedupes opens case-insensitively and cycles in order', () => {
+	it('dedupes opens case-insensitively on Windows and cycles in order', () => {
+		platform.isWindows = true;
 		openAndEdit('C:\\p\\main.tex');
 		openAndEdit('C:\\p\\intro.tex');
 		tabs.noteOpened('C:\\P\\MAIN.TEX'); // same file, Windows casing

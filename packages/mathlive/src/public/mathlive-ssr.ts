@@ -33,6 +33,7 @@ import '../core/modes';
 import { getDefaultContext } from '../core/context-utils';
 import { readTypst } from '../typst/read/read';
 import { atomToTypst } from '../typst/write';
+import { asTypstAlignments } from '../typst/alignments';
 import { mathCommands } from '../addons/math-commands';
 import { applyInterBoxSpacing } from '../core/inter-box-spacing';
 import { LayoutOptions } from './options';
@@ -187,7 +188,9 @@ export { configureTypst } from '../typst/syntax';
  * @category Conversion
  */
 export function convertLatexToTypst(latex: string): string {
-  return atomToTypst(parseLatex(latex, { context: getDefaultContext() }));
+  return atomToTypst(
+    parseLatex(asTypstAlignments(latex), { context: getDefaultContext() })
+  );
 }
 
 /**

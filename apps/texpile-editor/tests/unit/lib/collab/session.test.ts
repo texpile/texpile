@@ -443,9 +443,23 @@ describe('collab session end-to-end', () => {
 		await until(() => textOf(guest.doc, 'win.tex').toString() === 'a\nb\n');
 		textOf(guest.doc, 'win.tex').insert(2, 'x\n');
 		await until(() => disk.get('win.tex')!.content === 'a\r\nx\r\nb\r\n');
+		// what it wrote, in LF, goes once to the host's check for changes made outside
+		expect(mat.takeWrite('win.tex')).toBe('a\nx\nb\n');
+		expect(mat.takeWrite('win.tex')).toBeNull();
 		mat.destroy();
 		host.session.destroy();
 		guest.session.destroy();
+	});
+
+	it('keeps the endings of the lines an edit left alone in a file that mixes them', async () => {
+		const doc = new Y.Doc();
+		const { disk, fs } = fakeFs({ 'mixed.tex': 'a\r\nb\nc\r\n' });
+		const mat = new HostMaterializer(doc, 'root', fs, join);
+		await mat.seed();
+		textOf(doc, 'mixed.tex').insert(2, 'x\n');
+		await until(() => disk.get('mixed.tex')!.content !== 'a\r\nb\nc\r\n');
+		expect(disk.get('mixed.tex')!.content).toBe('a\r\nx\r\nb\nc\r\n');
+		mat.destroy();
 	});
 
 	it('propagates locks, blobs, and session-end', async () => {
@@ -554,6 +568,49 @@ describe('collab session end-to-end', () => {
 		oldHost.session.destroy();
 	});
 
+	it('turns away a guest that cannot share a session with a guest already in it, whichever joins second', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const hostVersion = { version: '1.3.0', oldest: '1.2.0' };
+		const older = { version: '1.2.0', oldest: '1.2.0' };
+		const newer = { version: '1.4.0', oldest: '1.3.0' };
+
+		const hub = new FakeHub();
+		const { fs } = fakeFs({ 'main.tex': 'base' });
+		const host = await makeParty(hub, 'host', 'Host', key, hostVersion);
+		const mat = new HostMaterializer(host.doc, 'root', fs, join);
+		await mat.seed();
+		const a = await makeParty(hub, 'guest', 'A', key, older);
+		await until(() => textOf(a.doc, 'main.tex').toString() === 'base' && host.session.peers.has(a.doc.clientID));
+		const b = await makeParty(hub, 'guest', 'B', key, newer);
+		await until(() => b.events.ended !== undefined);
+		// the host itself takes B: what B cannot share with is a guest, and B says so rather than blame the host
+		expect([b.events.ended, b.events.endedDetail]).toEqual(['guest-outdated', '1.2.0']);
+		// one that takes both still joins, and the rest keep editing together
+		const c = await makeParty(hub, 'guest', 'C', key, hostVersion);
+		await until(() => textOf(c.doc, 'main.tex').toString() === 'base');
+		textOf(a.doc, 'main.tex').insert(4, ' from A');
+		textOf(c.doc, 'main.tex').insert(0, 'C: ');
+		await until(() => [host, a, c].every((p) => textOf(p.doc, 'main.tex').toString() === 'C: base from A'));
+		expect(a.events.ended).toBeUndefined();
+		expect(c.events.ended).toBeUndefined();
+		expect([...host.session.peers.values()].map((p) => p.name).sort()).toEqual(['A', 'C']);
+		mat.destroy();
+		for (const p of [host, a, c]) p.session.destroy();
+
+		const hub2 = new FakeHub();
+		const host2 = await makeParty(hub2, 'host', 'Host', key, hostVersion);
+		const mat2 = new HostMaterializer(host2.doc, 'root', fakeFs({ 'main.tex': 'base' }).fs, join);
+		await mat2.seed();
+		const b2 = await makeParty(hub2, 'guest', 'B', key, newer);
+		await until(() => textOf(b2.doc, 'main.tex').toString() === 'base' && host2.session.peers.has(b2.doc.clientID));
+		const a2 = await makeParty(hub2, 'guest', 'A', key, older);
+		await until(() => a2.events.ended !== undefined);
+		expect([a2.events.ended, a2.events.endedDetail]).toEqual(['app-outdated', '1.3.0']);
+		expect(b2.events.ended).toBeUndefined();
+		mat2.destroy();
+		for (const p of [host2, b2]) p.session.destroy();
+	});
+
 	it('a reconnect re-handshake heals a gap in delivery', async () => {
 		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
 		const hub = new FakeHub();
@@ -572,6 +629,52 @@ describe('collab session end-to-end', () => {
 		hub.transports.add(guest.transport);
 		(guest.transport.onStatus as (s: TransportStatus) => void)('connected'); // what RelayTransport does on reopen
 		await until(() => textOf(guest.doc, 'main.tex').toString() === 'base + offline host edit');
+
+		mat.destroy();
+		host.session.destroy();
+		guest.session.destroy();
+	});
+
+	it('counts only the first sync after its own reconnect as a catch-up, not a guest who comes back later', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const hub = new FakeHub();
+		const { fs } = fakeFs({ 'main.tex': 'one two three' });
+		const host = await makeParty(hub, 'host', 'Host', key);
+		const mat = new HostMaterializer(host.doc, 'root', fs, join);
+		await mat.seed();
+		const guest = await makeParty(hub, 'guest', 'Guest', key);
+		await until(() => textOf(guest.doc, 'main.tex').toString() === 'one two three' && host.session.peers.has(guest.doc.clientID));
+		const modes: string[] = [];
+		textOf(host.doc, 'main.tex').observe((ev) => {
+			const from = host.session.senderOf(ev.transaction.origin);
+			if (from !== null) modes.push(host.session.authorOf(from).mode);
+		});
+		function away(t: FakeTransport) {
+			t.closed = true;
+			hub.transports.delete(t);
+		}
+		function back(t: FakeTransport) {
+			t.closed = false;
+			hub.transports.add(t);
+			(t.onStatus as (s: TransportStatus) => void)('connected');
+		}
+
+		// the host drops off while the guest edits: its catch-up says nothing of who did what
+		away(host.transport);
+		textOf(guest.doc, 'main.tex').delete(0, 4);
+		await new Promise((r) => setTimeout(r, 50));
+		back(host.transport);
+		await until(() => textOf(host.doc, 'main.tex').toString() === 'two three');
+		await new Promise((r) => setTimeout(r, 50));
+
+		// later the guest, editing, drops off and comes back with an edit of its own
+		away(guest.transport);
+		textOf(guest.doc, 'main.tex').delete(3, 6);
+		await new Promise((r) => setTimeout(r, 50));
+		expect(textOf(host.doc, 'main.tex').toString()).toBe('two three');
+		back(guest.transport);
+		await until(() => textOf(host.doc, 'main.tex').toString() === 'two');
+		expect(modes).toEqual(['suggesting', 'editing']);
 
 		mat.destroy();
 		host.session.destroy();

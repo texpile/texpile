@@ -43,7 +43,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions a11y_click_events_have_key_events -->
 <div
-	class="comment-card bg-surface-50-950 border-surface-200-800 border text-xs rounded-container {selected
+	class="comment-card bg-surface-50-950 border-surface-200-800 rounded-container border text-xs {selected
 		? 'comment-card-selected'
 		: ''} {hovered ? 'comment-card-hovered' : ''}"
 	style="top: {top}px"
@@ -69,7 +69,7 @@
 		{#snippet footer()}
 			{#if isOpenSuggestion(thread)}
 				<button
-					class="text-muted hover:preset-tonal flex h-7 w-7 shrink-0 items-center justify-center rounded-base"
+					class="text-muted hover:preset-tonal rounded-base flex h-7 w-7 shrink-0 items-center justify-center"
 					use:tip={m.suggestmode_accept()}
 					aria-label={m.suggestmode_accept()}
 					onclick={onAccept}
@@ -77,7 +77,7 @@
 					<Check class="size-4" />
 				</button>
 				<button
-					class="text-muted hover:preset-tonal flex h-7 w-7 shrink-0 items-center justify-center rounded-base"
+					class="text-muted hover:preset-tonal rounded-base flex h-7 w-7 shrink-0 items-center justify-center"
 					use:tip={m.suggestmode_reject()}
 					aria-label={m.suggestmode_reject()}
 					onclick={onReject}
@@ -86,7 +86,7 @@
 				</button>
 			{:else}
 				<button
-					class="text-muted hover:preset-tonal flex h-7 w-7 shrink-0 items-center justify-center rounded-base"
+					class="text-muted hover:preset-tonal rounded-base flex h-7 w-7 shrink-0 items-center justify-center"
 					use:tip={m.comments_resolve()}
 					aria-label={m.comments_resolve()}
 					onclick={onResolve}

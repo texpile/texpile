@@ -18,7 +18,9 @@ export function usePattern(kind: UseKind, name: string, lang: UseLanguage): stri
 	if (lang === 'typst') return `(?<=(?<![\\w@])@)${n}(?![\\w:-]|\\.\\w)|(?<=<)${n}(?=>)`;
 	// the name alone in its list: a brace, a comma or a space on either side
 	const alone = `(?<![^{,\\s])${n}(?![^},\\s])`;
-	if (kind === 'label') return `(?<=\\\\[A-Za-z]*ref\\*?\\{[^{}]*?)${alone}|(?<=\\\\hyperref\\[\\s*)${n}(?=\\s*\\])`;
+	// both ends of a range (\crefrange{a}{b}), and \vpageref after its optional texts
+	const refCommand = `\\\\[A-Za-z]*ref(?:range\\*?(?:\\[[^\\]]*\\])*(?:\\{[^{}]*\\})?|\\*?)|\\\\vpageref\\*?(?:\\[[^\\]]*\\])*`;
+	if (kind === 'label') return `(?<=(?:${refCommand})\\{[^{}]*?)${alone}|(?<=\\\\hyperref\\[\\s*)${n}(?=\\s*\\])`;
 	// \Cite, \Citet and the like too, and every key group of a multicite (\cites{a}{b})
 	return `(?<=\\\\[A-Za-z]*[Cc]ite[A-Za-z]*\\*?(?:\\s*\\[[^\\]]*\\]|\\s*\\{[^{}]*\\})*\\s*\\{[^{}]*?)${alone}`;
 }

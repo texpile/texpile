@@ -19,7 +19,7 @@
 <div class="flex flex-col gap-1">
 	{#if done.length}
 		<button
-			class="border-surface-200-800 bg-surface-100-900 hover:preset-tonal flex h-7 items-center gap-2 rounded-base border px-2 text-left text-sm"
+			class="border-surface-200-800 bg-surface-100-900 hover:preset-tonal rounded-base flex h-7 items-center gap-2 border px-2 text-left text-sm"
 			aria-expanded={expanded}
 			onclick={() => (expanded = !expanded)}
 		>

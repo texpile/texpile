@@ -283,7 +283,7 @@
 		role="presentation"
 		onmousedown={(e) => e.target === e.currentTarget && dismissDownloadModal()}
 	>
-		<div class="w-full max-w-sm rounded-lg border border-surface-200 bg-white p-6 text-center shadow-2xl">
+		<div class="border-surface-200 w-full max-w-sm rounded-lg border bg-white p-6 text-center shadow-2xl">
 			<div class="bg-primary-500/10 text-primary-600 mx-auto flex h-12 w-12 items-center justify-center rounded-full">
 				<Download class="h-6 w-6" />
 			</div>

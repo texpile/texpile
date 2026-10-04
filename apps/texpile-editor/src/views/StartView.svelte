@@ -117,8 +117,16 @@
 		mark('start-screen');
 		if (takePreferencesReopen()) void showPrefs();
 	});
+
+	// Ctrl+O off macOS, where no native menu carries it; a Mac's start screen menu takes Cmd+O first
+	function onKeydown(e: KeyboardEvent) {
+		if (!(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey || e.key.toLowerCase() !== 'o' || busy) return;
+		e.preventDefault();
+		void openFolder();
+	}
 </script>
 
+<svelte:window onkeydown={onKeydown} />
 <svelte:head><title>Texpile</title></svelte:head>
 
 <!-- my-auto rather than centering the container: a tall list on a short window would otherwise

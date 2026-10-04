@@ -64,7 +64,7 @@ import { isArray } from '../common/types';
 // may include a multi-character sequence, for example 🧑🏻‍🚀
 function isLiteral(token: Token | undefined): boolean {
   if (!token) return false;
-  return !/^(<$$>|<$>|<space>|<{>|<}>|#[0-9\?]|\\.+)$/.test(token);
+  return !/^(<\$\$>|<\$>|<space>|<{>|<}>|#[0-9\?]|\\.+)$/.test(token);
 }
 
 // The `ParsingContext` is the set of properties that get 'reset' when a
@@ -1032,6 +1032,8 @@ export class Parser {
     if (body.length === 1 && body[0].type === 'placeholder') return body[0];
 
     const result = new GroupAtom(body, this.parseMode);
+    // a style set around the group (`\color{red}{x}`) is not in its own bytes, so the group carries it
+    result.style = { ...this.style };
     result.verbatimLatex = tokensToString(
       this.tokens.slice(initialIndex, this.index)
     );
@@ -1186,19 +1188,10 @@ export class Parser {
 
     while (token === '^' || token === '_' || token === "'") {
       if (this.match("'")) {
-        if (this.match("'")) {
-          // A single quote, twice, is equivalent to '^{\doubleprime}'
-          target.addChild(
-            new Atom({
-              type: 'mord',
-              command: '\\doubleprime',
-              mode: 'math',
-              value: '\u2032\u2032', // "\u2033" displays too high
-            }),
-            'superscript'
-          );
-        } else {
-          // A single quote (prime) is equivalent to '^{\prime}'
+        // A single quote (prime) is equivalent to '^{\prime}', and twice to two of them:
+        // \doubleprime is no LaTeX command
+        const primes = this.match("'") ? 2 : 1;
+        for (let i = 0; i < primes; i++)
           target.addChild(
             new Atom({
               type: 'mord',
@@ -1208,7 +1201,6 @@ export class Parser {
             }),
             'superscript'
           );
-        }
       } else if (this.match('^') || this.match('_')) {
         target.addChildren(
           argAtoms(this.scanArgument('expression')),
@@ -1635,7 +1627,8 @@ export class Parser {
     // An unknown command, or a command not available in this mode
     if (!info) {
       if (this.parseMode === 'text') {
-        if (/[a-zA-Z]/.test(this.peek() ?? '')) {
+        // a control symbol (`\ `) ends at its one character and keeps the space after it
+        if (/^\\[a-zA-Z]+$/.test(command) && /[a-zA-Z]/.test(this.peek() ?? '')) {
           // The following character is a letter: insert a space
           // i.e. `\alpha x` -> `\alpha~x`
           // (the spaces are removed by the tokenizer)

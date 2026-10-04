@@ -7,6 +7,7 @@
 // tinymist's preview is its own private protocol, and would be genuine lock-in.)
 import { LSPClient, LSPPlugin } from '@codemirror/lsp-client';
 import { typstServerExtensions } from './serverExtensions';
+import { sanitizeDocHtml } from './lspDocHtml';
 import type { Transport } from '@codemirror/lsp-client';
 import type { Extension } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
@@ -296,6 +297,7 @@ export async function typstClient(root: string | null): Promise<LSPClient | null
 	const client = new LSPClient({
 		rootUri: root ? fileUri(root) : undefined,
 		extensions: typstServerExtensions(),
+		sanitizeHTML: sanitizeDocHtml,
 		workspace: (c) => new TypstWorkspace(c),
 		notificationHandlers: {
 			// tinymist's click-to-jump: the framed preview reports the span the user clicked over its

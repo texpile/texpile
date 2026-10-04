@@ -1,6 +1,7 @@
 // replace across the folder: the rewrite and the walk over the files
 import { detectEol, fromLf, samePath, toLf, type Eol } from '$lib/workspace/fileSystem';
 import { applyEdits, editsOnRaw, invertEdits, type TextEdit } from '$lib/workspace/edits/textEdits';
+import type { EditMode } from '$lib/comments/suggestCompare';
 
 export type ReplaceSpec = {
 	query: string;
@@ -62,12 +63,21 @@ export type ReplaceDeps = {
 	encodingError(encoding: string): string | null;
 	/** after our own writes: refresh the tree and the references */
 	changed(): void;
-	/** a closed file is about to change: carry its comments and suggestions along; `undoing` puts text back */
-	edited?(path: string, before: string, after: string, edits: TextEdit[], undoing: boolean): Promise<void>;
+	/** a closed file is about to change: carry its comments and suggestions along. Resolves the mode it was carried
+	 *  in, which `made` hands back to its undo and redo so they go the way it went */
+	edited?(path: string, before: string, after: string, edits: TextEdit[], made?: EditMode): Promise<EditMode | void>;
 };
 
 // `raw`: a closed file's own bytes on either side, its line endings as they were
-type Change = { path: string; before: string; after: string; eol: Eol; edits: TextEdit[]; raw?: { before: string; after: string } };
+type Change = {
+	path: string;
+	before: string;
+	after: string;
+	eol: Eol;
+	edits: TextEdit[];
+	raw?: { before: string; after: string };
+	made?: EditMode;
+};
 
 export type ReplaceOutcome = {
 	files: number;
@@ -125,9 +135,9 @@ export async function replaceInFiles(
 			if (!edits.length) continue;
 			const text = applyEdits(before, edits);
 			const raw = { before: read.text, after: applyEdits(read.text, editsOnRaw(read.text, edits, eol)) };
-			await deps.edited?.(path, before, text, edits, false);
+			const made = (await deps.edited?.(path, before, text, edits)) || undefined;
 			await deps.write(path, raw.after);
-			changes.push({ path, before, after: text, eol, edits, raw });
+			changes.push({ path, before, after: text, eol, edits, raw, made });
 			matches += edits.length;
 		} catch {
 			skipped.push({ path, reason: 'failed' });
@@ -168,7 +178,7 @@ async function restore(changes: readonly Change[], from: 'before' | 'after', to:
 			if (!(await deps.applyToOpen(c[from], c[to], edits))) throw new ChangedSinceError(c.path);
 			continue;
 		}
-		await deps.edited?.(c.path, c[from], c[to], edits, undoing);
+		await deps.edited?.(c.path, c[from], c[to], edits, c.made);
 		await deps.write(c.path, c.raw ? c.raw[to] : fromLf(c[to], c.eol));
 	}
 	await deps.flush();

@@ -14,11 +14,12 @@ import { esc, applyMarks, bareTextString, joinInline, markableMarks, marksKey } 
 import { blockMath, alignEnvironment } from './mathBlocks';
 import { isHandlerLeaf, mapRunLeaves, renderShadowed, shadowed, standIn, withoutShadow } from './latexShadowRun';
 import { buildIncludegraphics } from './includegraphics';
-import { continuesList, runEnvName } from './listContinuation';
+import { continuesList, opensItsSourceList, runEnvName } from './listContinuation';
 import { dropParagraphEnd, paragraphGap } from './paragraphEnds';
 import { guardItemBody, headsItem, labelKey } from './itemLabels';
 import type { Segment } from '$lib/editor/visual/sourceSpans';
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
+import { afterLead, BRACKET_START, bracketFollows, guardBracket, opensLine } from './lineBreaks';
 export { esc, sanitizeText, type EscMode } from './textEscapes';
 
 export type { DocSerializeResult } from '$lib/serializer/blockAssembly';
@@ -42,13 +43,13 @@ function inlineBytes(block: Node, nodes: Node[], atStart: boolean, ctx: Ctx): st
 		if (c.type.name === 'inline_latex' && c.textContent.startsWith('%')) comment = true;
 	});
 	if (comment) return null;
-	const bytes = renderChildren(run, ctx.inTableCell);
+	const bytes = afterLead(block, nodes, () => renderChildren(run, ctx.inTableCell));
 	return atStart && headsItem(ctx) ? guardItemBody(bytes) : bytes;
 }
 
 function mapInlineLeaves(block: Node, nodes: Node[], text: string, _atStart: boolean, ctx: Ctx): Segment[] | null {
 	const run = inlineRun(block, nodes);
-	return mapRunLeaves(run, text, () => renderChildren(run, ctx.inTableCell));
+	return mapRunLeaves(run, text, () => afterLead(block, nodes, () => renderChildren(run, ctx.inTableCell)));
 }
 
 /** the real and shadow runs of one block side by side, for the oracles to say why a block maps no leaves */
@@ -197,10 +198,12 @@ const assembly = createBlockAssembly((node, ctx) => serializeNode(node, ctx), {
 	continues: continuesList,
 	standsAlone: (parsed) => !parsed.isTextblock || splitLeadingLabel(parsed) === null,
 	// a control word ending the fresh bytes would fuse with a letter beginning the kept tail, and in
-	// prose the line breaks either side of a line taken out would meet as a blank line, a new paragraph
+	// prose line breaks meeting across the seam (a line taken out, a \\ before the file's own line
+	// end) would make a blank line, a new paragraph
 	keepApart: (bytes, tail, head, _gone, parent) => {
 		if (!parent.type.spec.leafText && !parent.type.spec.code && blankLineAt(head, bytes, tail)) return null;
-		return /\\[a-zA-Z@]+$/.test(bytes) && /^[a-zA-Z]/.test(tail) ? bytes + ' ' : bytes;
+		const out = /\\[a-zA-Z@]+$/.test(bytes) && /^[a-zA-Z]/.test(tail) ? bytes + ' ' : bytes;
+		return parent.type.spec.code ? out : guardBracket(head, bytes, tail, out);
 	},
 	// a block written afresh inside an environment or an item continues its lines as the file
 	// indented the block it replaced, else under what stood before it on its first line
@@ -246,7 +249,8 @@ const NODES: Record<string, NodeHandler> = {
 			return (prevSibling(ctx)?.type.name === 'heading' ? '' : '\n') + renderChildren(node, false).trim() + '\n';
 		}
 		const rawContent = renderChildren(node, ctx.inTableCell);
-		if (ctx.inTableCell) return rawContent; // no \par inside table cells
+		// no \par inside table cells; a row opens after \\ (or \toprule), which reads a [ there as its argument
+		if (ctx.inTableCell) return ctx.index === 0 && BRACKET_START.test(rawContent) ? `{}${rawContent}` : rawContent;
 		// \item already opens the paragraph, so a break before it puts the body on its own line and
 		// a \par after it adds a token the source never had. A second paragraph of the same item is
 		// separated by the blank line the list handler puts in front of every continuation block
@@ -276,7 +280,8 @@ const NODES: Record<string, NodeHandler> = {
 
 	heading(node) {
 		if (node.childCount === 0) return '';
-		const text = renderChildren(node, false);
+		// a heading's text is a moving argument: a \footnote joined in from a paragraph stops the compile unless protected
+		const text = renderChildren(node, false).replace(/(?<!\\protect\s*)\\footnote(?![a-zA-Z@])/g, '\\protect\\footnote');
 		// \chapter and \part have no level of their own in the editor; the source command is kept
 		const cmd =
 			typeof node.attrs.command === 'string' && node.attrs.command
@@ -298,8 +303,11 @@ const NODES: Record<string, NodeHandler> = {
 		// legacy lineBreak:false (a blank-line gap) is a semantic no-op: emit nothing
 		if (node.attrs?.lineBreak === false) return '';
 		const suffix = typeof node.attrs?.suffix === 'string' ? node.attrs.suffix : '';
-		if (node.attrs?.command === 'newline' || (ctx.inTableCell && !suffix)) return '\\newline\n';
-		return `\\\\${suffix}\n`;
+		// with nothing drawn before it in its block (an item's start, a \label) a break has no line to
+		// end, which stops the compile: an empty box gives it one
+		const box = opensLine(ctx) ? '\\mbox{}' : '';
+		if (node.attrs?.command === 'newline' || (ctx.inTableCell && !suffix)) return `${box}\\newline\n`;
+		return `${box}\\\\${suffix}${bracketFollows(ctx) ? '{}' : ''}\n`;
 	},
 
 	block_math(node) {
@@ -393,7 +401,7 @@ const NODES: Record<string, NodeHandler> = {
 			// a caption added in the editor to a figure that had none has no slot to fill; drop
 			// it in just before \end{figure}.
 			if (showCaption && capContent && !template.includes(FIG_CAP_SLOT)) {
-				out = out.replace(/(\n?)(\\end\{figure\*?\})\s*$/, `\n${caption}\n$2`);
+				out = out.replace(/\n?(\\end\{figure\*?\})\s*$/, (_whole, end: string) => `\n${caption}\n${end}`);
 			}
 			return out.replace(/\s*$/, '') + '\n';
 		}
@@ -474,11 +482,12 @@ const NODES: Record<string, NodeHandler> = {
 
 		let out = '';
 		if (!prevSame) {
+			const own = opensItsSourceList(node, ctx.parent);
 			// enumitem-style options the source gave the environment; see createList
-			const envArgs = typeof node.attrs.envArgs === 'string' ? node.attrs.envArgs : '';
+			const envArgs = own && typeof node.attrs.envArgs === 'string' ? node.attrs.envArgs : '';
 			out += `\n\\begin{${env}}${envArgs}\n`;
 			// raw setup content that preceded the first \item in the source; see createList
-			const preBody = typeof node.attrs.preBody === 'string' ? node.attrs.preBody : '';
+			const preBody = own && typeof node.attrs.preBody === 'string' ? node.attrs.preBody : '';
 			if (preBody) out += preBody + '\n';
 		}
 		out += parts.join('');

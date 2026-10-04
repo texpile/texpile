@@ -1,19 +1,16 @@
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+import { pathKey } from '$lib/workspace/fileSystem';
 
 /** well below the tab cap: a parsed paper is tens of thousands of nodes, not a string */
 const MAX_CACHED_DOCUMENTS = 8;
 
 type CacheEntry = { parsed: ParsedLatexFile; source: string };
 
-function keyOf(path: string): string {
-	return path.replace(/\\/g, '/').toLowerCase();
-}
-
 class VisualDocCache {
 	private entries = new Map<string, CacheEntry>();
 
 	get(path: string, source: string): ParsedLatexFile | null {
-		const key = keyOf(path);
+		const key = pathKey(path);
 		const hit = this.entries.get(key);
 		if (!hit) return null;
 		if (hit.source !== source) {
@@ -26,7 +23,7 @@ class VisualDocCache {
 	}
 
 	set(path: string, source: string, parsed: ParsedLatexFile): void {
-		const key = keyOf(path);
+		const key = pathKey(path);
 		this.entries.delete(key);
 		this.entries.set(key, { parsed, source });
 		while (this.entries.size > MAX_CACHED_DOCUMENTS) {
@@ -37,19 +34,19 @@ class VisualDocCache {
 	}
 
 	forget(path: string): void {
-		const prefix = keyOf(path) + '/';
+		const prefix = pathKey(path) + '/';
 		for (const key of [...this.entries.keys()]) {
-			if (key === keyOf(path) || key.startsWith(prefix)) this.entries.delete(key);
+			if (key === pathKey(path) || key.startsWith(prefix)) this.entries.delete(key);
 		}
 	}
 
 	rename(from: string, to: string): void {
-		const fromKey = keyOf(from);
+		const fromKey = pathKey(from);
 		const prefix = fromKey + '/';
 		for (const [key, entry] of [...this.entries]) {
 			if (key !== fromKey && !key.startsWith(prefix)) continue;
 			this.entries.delete(key);
-			this.entries.set(keyOf(to) + key.slice(fromKey.length), entry);
+			this.entries.set(pathKey(to) + key.slice(fromKey.length), entry);
 		}
 	}
 

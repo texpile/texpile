@@ -1,7 +1,11 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { TreeOps, type TreeOpsDeps } from '$lib/workspace/treeOps';
 import { workspaceRoot, activeFilePath } from '$lib/workspace/workspaceStore';
+import { tabs } from '$lib/workspace/tabs.svelte';
+import { SavePipeline, type SaveDeps } from '$lib/workspace/savePipeline.svelte';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
+
+vi.mock('$lib/platform', () => ({ isMac: false, isWindows: false }));
 
 // A fake filesystem: a flat set of paths, with prefix rules for folders. Enough to tell whether an
 // undo actually put something back, which is the only thing these tests are about.
@@ -52,7 +56,7 @@ function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin =
 			copy(from, to);
 		},
 		writeBinary: async (p) => void files.add(p),
-		stat: async (p) => ({ exists: files.has(p) }),
+		stat: async (p) => ({ exists: under(p).length > 0 }),
 		refreshTree: async () => {},
 		loadRefs: () => {},
 		wantsStarter: () => false,
@@ -205,6 +209,16 @@ describe('tree undo/redo', () => {
 		expect(visible(fs.files)).toEqual([]);
 	});
 
+	// a folder the tree does not show (.github, one made outside since the last scan) was "created"
+	// again, and taking that create back trashed the folder with everything in it
+	it('refuses a new folder that is already there, so undo cannot take it away', async () => {
+		fs.files.add('/proj/.github/workflows/build.yml');
+		await ops.create('/proj', '.github', 'dir');
+		expect(ops.history.canUndo).toBe(false);
+		await ops.history.undo();
+		expect(visible(fs.files)).toEqual(['/proj/.github/workflows/build.yml']);
+	});
+
 	it('a new operation drops the redo stack', async () => {
 		fs.files.add('/proj/a.tex');
 		fs.files.add('/proj/b.tex');
@@ -290,6 +304,57 @@ describe('replacing on a drop', () => {
 	});
 });
 
+// A folder dropped from the file manager merges into one of the same name, and a file in it that
+// lands on one already there wrote over it: nothing in the recycle bin, and an undo that took the
+// new file away left nothing at all.
+describe('importing a folder onto files already there', () => {
+	let fs: ReturnType<typeof makeFs>;
+	let ops: TreeOps;
+	let text: Map<string, string>;
+
+	beforeEach(() => {
+		workspaceRoot.current = '/proj';
+		activeFilePath.current = null;
+		replaceAnswer.ok = true;
+		fs = makeFs();
+		ops = new TreeOps(fs.deps);
+		text = new Map([['/proj/figs/plot.tex', 'mine']]);
+		fs.files.add('/proj/figs/plot.tex');
+		const { trash, restore } = fs.deps;
+		fs.deps.writeBinary = async (p, f) => {
+			fs.files.add(p);
+			text.set(p, await f.text());
+		};
+		fs.deps.trash = async (p, root) => {
+			const r = await trash!(p, root);
+			if (r.backup) text.set(r.backup, text.get(p) ?? '');
+			text.delete(p);
+			return r;
+		};
+		fs.deps.restore = async (from, to) => {
+			await restore!(from, to);
+			text.set(to, text.get(from) ?? '');
+		};
+	});
+
+	const dropped = () => [{ relPath: 'figs/plot.tex', file: new File(['theirs'], 'plot.tex') }];
+
+	it('replaces it only when asked, and undo brings it back', async () => {
+		await ops.import(dropped(), '/proj');
+		expect(text.get('/proj/figs/plot.tex')).toBe('theirs');
+		await ops.history.undo();
+		expect(text.get('/proj/figs/plot.tex')).toBe('mine');
+		await ops.history.redo();
+		expect(text.get('/proj/figs/plot.tex')).toBe('theirs');
+	});
+
+	it('leaves it alone when the prompt is declined', async () => {
+		replaceAnswer.ok = false;
+		await ops.import(dropped(), '/proj');
+		expect(text.get('/proj/figs/plot.tex')).toBe('mine');
+	});
+});
+
 // Renaming a file that has unsaved edits must carry them to the new name. VS Code snapshots the
 // dirty model and restores it at the target; here the queued write is repointed instead, and the
 // opener waits for it to land before re-reading, so the edits arrive as the renamed file's content.
@@ -320,6 +385,22 @@ describe('unsaved edits follow a rename', () => {
 		await ops.rename(dirEntry('/proj/sec'), 'chapters');
 		expect(saveCalls).toEqual(['retarget /proj/sec -> /proj/chapters']);
 		expect(activeFilePath.current).toBe('/proj/chapters/a.tex');
+	});
+
+	it('leaves alone a file whose name differs only in case, on Linux', async () => {
+		const saver = new SavePipeline({} as SaveDeps);
+		fs.deps.retargetPendingSave = (from, to) => saver.retarget(from, to);
+		fs.files.add('/proj/Notes.tex');
+		fs.files.add('/proj/notes.tex');
+		tabs.bind(null, false);
+		tabs.noteOpened('/proj/notes.tex');
+		activeFilePath.current = '/proj/notes.tex';
+		saver.reattach({ path: '/proj/notes.tex', content: 'edited' });
+		await ops.rename(fileEntry('/proj/Notes.tex'), 'Renamed.tex');
+		expect(visible(fs.files)).toEqual(['/proj/Renamed.tex', '/proj/notes.tex']);
+		expect(tabs.list.map((t) => t.path)).toEqual(['/proj/notes.tex']);
+		expect(saver.pending?.path).toBe('/proj/notes.tex');
+		expect(activeFilePath.current).toBe('/proj/notes.tex');
 	});
 });
 

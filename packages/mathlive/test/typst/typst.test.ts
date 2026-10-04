@@ -66,6 +66,17 @@ describe('typst math in MathLive', () => {
     );
   });
 
+  it('writes a call renamed in the field by the name it now has', () => {
+    const root = rootOf('sin(x) + max(a, b)');
+    for (const [from, to] of [
+      ['s', 'c'],
+      ['i', 'o'],
+      ['n', 's'],
+    ])
+      replace(find(root, from), to);
+    expect(atomToTypst(root)).toBe('cos(x) + max(a, b)');
+  });
+
   it('rebuilds an equation from its structure as Typst draws it', () => {
     // each checked against the Typst compiler, which draws the two sides alike
     const cases: [string, string][] = [
@@ -97,6 +108,8 @@ describe('typst math in MathLive', () => {
     // the text form of ↔ is the arrow MathLive has, `~` a tilde and not a space
     expect(structure(rootOf('arrow.l.r'))).toBe('\\leftrightarrow');
     expect(structure(rootOf('tilde.basic'))).toBe('\\char"7E ');
+    // Typst's `aleph` is the Hebrew letter, which pdflatex takes only as \aleph
+    expect(structure(rootOf('aleph_0 < beth_1'))).toBe('\\aleph_0<\\beth_1');
   });
 
   it('reads what MathLive places or sizes otherwise as the command that does', () => {
@@ -111,6 +124,17 @@ describe('typst math in MathLive', () => {
     ];
     for (const [typst, latex] of cases)
       expect(structure(rootOf(typst)), typst).toBe(latex);
+  });
+
+  it('reads bold upright as \\mathbf, which LaTeX sets upright, and bold alone as \\bm', () => {
+    expect(structure(rootOf('bold(upright(v))'))).toBe('\\mathbf{{{v}}}');
+    expect(structure(rootOf('upright(bold(v))'))).toBe(
+      '\\mathrm{{\\mathbf{{v}}}}'
+    );
+    expect(structure(rootOf('bold(v)'))).toBe('\\bm{{v}}');
+    expect(convertLatexToTypst(structure(rootOf('bold(upright(v))')))).toBe(
+      'bold(upright(v))'
+    );
   });
 
   it('writes LaTeX as the Typst that draws it', () => {
@@ -139,6 +163,127 @@ describe('typst math in MathLive', () => {
     ];
     for (const [latex, typst] of cases)
       expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
+  it("writes amsmath's dots and row numbering as Typst, not as their names", () => {
+    const cases: [string, string][] = [
+      ['a_1, \\dots, a_n', 'a_1, ..., a_n'],
+      ['a_1 + \\dotsb + a_n', 'a_1 + dots.h.c + a_n'],
+      [
+        '\\begin{align}a &= b \\nonumber \\\\ c &= d \\notag\\end{align}',
+        'a & = b \\\nc & = d',
+      ],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
+  it('writes alignat and flalign as the lines align sets, without the count of pairs', () => {
+    const cases: [string, string][] = [
+      [
+        '\\begin{alignat}{2} a &= b & c &= d \\\\ e &= f & g &= h \\end{alignat}',
+        'a & = b & c & = d \\\ne & = f & g & = h',
+      ],
+      ['\\begin{alignat*} {2} a &= b \\end{alignat*}', 'a & = b'],
+      [
+        '\\begin{flalign} a &= b \\\\ c &= d \\end{flalign}',
+        'a & = b \\\nc & = d',
+      ],
+      ['\\begin{flalign*} a &= b \\end{flalign*}', 'a & = b'],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
+  it('writes what a command placing its argument holds, Typst having no such placement', () => {
+    const cases: [string, string][] = [
+      ['\\sum_{\\mathclap{0 \\le i < n}} a_i', 'sum_(0 <= i < n) a_i'],
+      [
+        '\\begin{multline} a + b \\\\ \\shoveleft{+ c} \\end{multline}',
+        'a + b \\\n+c',
+      ],
+      ['\\lefteqn{a = b} + c', 'a = b + c'],
+      ['\\fbox{x}', 'x'],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
+  it('writes nothing for a label, a tag, a break hint or vertical space, which Typst sets otherwise', () => {
+    const cases: [string, string][] = [
+      ['x = 1 \\label{eq:a}', 'x = 1'],
+      ['x = 1 \\tag{3}', 'x = 1'],
+      ['x = 1 \\tag*{A}', 'x = 1'],
+      [
+        '\\begin{align}a &= b \\label{eq:a} \\\\ \\displaybreak c &= d\\end{align}',
+        'a & = b \\\nc & = d',
+      ],
+      ['a \\allowbreak + b \\nobreak + c', 'a + b + c'],
+      ['a \\hfill b \\vspace{2mm} c', 'a b c'],
+      [
+        '\\begin{matrix}a & b \\\\ \\cline{1-2} c & d\\end{matrix}',
+        'mat(delim: #none, a, b; c, d)',
+      ],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
+  it('writes the old font switches as the styles they set in math', () => {
+    const cases: [string, string][] = [
+      ['{\\rm d}x', 'upright(d) x'],
+      ['\\rm d', 'upright(d)'],
+      ['{\\bf v}', 'bold(upright(v))'],
+      ['{\\sf T}', 'sans(upright(T))'],
+      ['{\\tt x}', 'mono(upright(x))'],
+      ['{\\cal L}', 'cal(L)'],
+    ];
+    for (const [latex, typst] of cases)
+      expect(convertLatexToTypst(latex), latex).toBe(typst);
+  });
+
+  it('leaves the old font switches in text as typed when the equation is edited', () => {
+    for (const command of ['\\rm', '\\sf', '\\tt', '\\cal']) {
+      const root = new Atom({
+        type: 'root',
+        body: parseLatex(`\\text{${command} x} + y`),
+      });
+      replace(find(root, 'y'), 'z');
+      expect(Atom.serialize(root.body ?? [], { defaultMode: 'math' })).toBe(
+        `\\text{${command} x}+z`
+      );
+    }
+  });
+
+  it('writes \\emph as the italic text LaTeX sets, and back as typed', () => {
+    expect(convertLatexToTypst('\\emph{if}')).toBe('italic("if")');
+    expect(convertLatexToTypst('\\emph{a b}')).toBe('italic("a b")');
+    expect(convertLatexToTypst('\\text{see \\emph{this} too}')).toBe(
+      '"see "italic("this")" too"'
+    );
+    const root = new Atom({
+      type: 'root',
+      body: parseLatex('\\emph{a b} + y'),
+    });
+    replace(find(root, 'y'), 'z');
+    expect(Atom.serialize(root.body ?? [], { defaultMode: 'math' })).toBe(
+      '\\emph{a b}+z'
+    );
+  });
+
+  it('writes the text symbols LaTeX also sets in math by their Typst names, and back as typed', () => {
+    expect(convertLatexToTypst('\\P \\copyright \\textregistered')).toBe(
+      'pilcrow copyright trademark.registered'
+    );
+    expect(structure(rootOf('pilcrow copyright'))).toBe('\\P\\copyright');
+    const root = new Atom({
+      type: 'root',
+      body: parseLatex('a\\P b\\copyright\\textregistered + y'),
+    });
+    replace(find(root, 'y'), 'z');
+    expect(Atom.serialize(root.body ?? [], { defaultMode: 'math' })).toBe(
+      'a\\P b\\copyright\\textregistered+z'
+    );
   });
 
   it('writes every LaTeX command MathLive draws as Typst that parses', () => {

@@ -206,7 +206,7 @@
 </script>
 
 <!-- an inset shadow, not a border: a border leaves 47px of the 48px bar and centered icons land half a pixel off -->
-<header class="col-span-full flex h-12 items-center justify-between gap-3 px-4 line-under">
+<header class="line-under col-span-full flex h-12 items-center justify-between gap-3 px-4">
 	<!-- the sidebar and preview toggles used to bracket this row. Both moved onto the divider of the
 	     pane they open (WorkspaceChrome / PreviewPane), where the control sits on the boundary it
 	     moves - so this row is only about the document -->
@@ -279,7 +279,7 @@
 		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ' || (kind === 'bib' && !guest))}
 			<!-- visual/source toggle; for .bib it's the reference editor vs raw BibTeX (BibManager
 			     stays host-only: it isn't wired to the shared doc yet) -->
-			<div class="border-surface-300-700 inline-flex shrink-0 overflow-hidden rounded-base border text-xs">
+			<div class="border-surface-300-700 rounded-base inline-flex shrink-0 overflow-hidden border text-xs">
 				<button
 					class="flex items-center gap-1 px-2.5 py-1 disabled:cursor-not-allowed disabled:opacity-40 {viewMode === 'visual'
 						? 'preset-filled-primary-500'
@@ -331,7 +331,7 @@
 				<!-- border-l-0: the button's right edge already draws the seam, and two hairlines
 				     meeting there would read as a heavier line than the outline itself -->
 				<button
-					class="btn btn-xs {COMPILE_TONE[compile.tone]} rounded-l-none self-stretch border-l-0 px-1"
+					class="btn btn-xs {COMPILE_TONE[compile.tone]} self-stretch rounded-l-none border-l-0 px-1"
 					onclick={() => (compileMenuOpen = !compileMenuOpen)}
 					use:tip={m.wsview_compile_options()}
 					aria-label={m.wsview_compile_options()}

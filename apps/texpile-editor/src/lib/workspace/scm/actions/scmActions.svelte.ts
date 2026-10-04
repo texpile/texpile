@@ -70,7 +70,7 @@ export type ScmDeps = {
 	captureDiffSnapshot(): void;
 	isDiffMode(): boolean;
 	/** open (or focus) a tab comparing `path` against one version. */
-	openCompareTab(path: string, compare: { hash: string; subject: string }): void;
+	openCompareTab(path: string, compare: { hash: string; subject: string; path?: string }): void;
 	/** open a file in the source editor at a 1-based line, whatever view the author has chosen */
 	openAtLine(path: string, line: number): void;
 	/** the merge is saved: the open file, if it held marked places, goes back to the author's view */
@@ -298,7 +298,9 @@ export class ScmActions {
 		await this.deps.refreshTree();
 		await refreshGitStatus(root);
 		await refreshGitHistory(root);
-		if (loadedPath) await this.deps.loadFile(loadedPath); // its bytes on disk just changed
+		// typed while git wrote the version: the save guard asks about it, as after a sync
+		if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
+		if (loadedPath && !this.deps.hasPendingSave()) await this.deps.loadFile(loadedPath); // its bytes on disk just changed
 		toaster.success({ title: m.vcs_toast_restored() });
 		return true;
 	};
@@ -314,9 +316,9 @@ export class ScmActions {
 	};
 
 	/** the panel hands over the file rather than asking the editor what happens to be open */
-	compare = (entry: { hash: string; subject: string }, path: string) => {
+	compare = (entry: { hash: string; subject: string }, path: string, from?: string) => {
 		if (!isGitRepo.current || !path) return;
-		this.deps.openCompareTab(path, { hash: entry.hash, subject: entry.subject });
+		this.deps.openCompareTab(path, { hash: entry.hash, subject: entry.subject, ...(from && { path: from }) });
 	};
 
 	/** VS Code's Publish Branch: give a branch with no upstream one. With exactly one remote there is
@@ -456,7 +458,9 @@ export class ScmActions {
 				// files changed on disk under the editor: the same reload a restore does
 				const loadedPath = this.deps.getLoadedPath();
 				await this.deps.refreshTree();
-				if (loadedPath) await this.deps.loadFile(loadedPath);
+				// typed while the network was slow: the save guard asks about it once git rewrote the file
+				if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
+				if (loadedPath && !this.deps.hasPendingSave()) await this.deps.loadFile(loadedPath);
 				if (this.deps.isDiffMode()) this.deps.captureDiffSnapshot();
 			}
 			// even a failed sync fetched, so the counts beside the button are news either way

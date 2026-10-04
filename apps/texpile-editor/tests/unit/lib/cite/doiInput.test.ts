@@ -28,9 +28,37 @@ describe('parseWorkId: DOIs', () => {
 		expect(parseWorkId('https://doi.org/10.1000%2F182?via=home#top')).toEqual({ kind: 'doi', doi: '10.1000/182' });
 	});
 
+	it('leaves out what a PDF, preprint or query link adds to the DOI', () => {
+		expect(parseWorkId('https://link.springer.com/content/pdf/10.1007/s00134-020-06022-5.pdf')).toEqual({
+			kind: 'doi',
+			doi: '10.1007/s00134-020-06022-5'
+		});
+		for (const link of [
+			'https://www.biorxiv.org/content/10.1101/2020.03.22.002386v1',
+			'https://www.biorxiv.org/content/10.1101/2020.03.22.002386v2.full',
+			'https://www.medrxiv.org/content/10.1101/2020.03.22.002386v3.full.pdf'
+		]) {
+			expect(parseWorkId(link), link).toEqual({ kind: 'doi', doi: '10.1101/2020.03.22.002386' });
+		}
+		expect(parseWorkId('https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0230978&type=printable')).toEqual({
+			kind: 'doi',
+			doi: '10.1371/journal.pone.0230978'
+		});
+	});
+
 	it('keeps slashes and brackets that belong to the DOI', () => {
 		expect(parseWorkId('10.1016/S0140-6736(20)30183-5')).toEqual({ kind: 'doi', doi: '10.1016/S0140-6736(20)30183-5' });
 		expect(parseWorkId('10.1007/978-3-030-58452-8_13')).toEqual({ kind: 'doi', doi: '10.1007/978-3-030-58452-8_13' });
+	});
+
+	it('keeps a Wiley SICI DOI whole, angle brackets and all, typed or as an encoded link', () => {
+		const sici = '10.1002/(SICI)1097-0258(19980430)17:8<857::AID-SIM777>3.0.CO;2-E';
+		expect(parseWorkId(sici)).toEqual({ kind: 'doi', doi: sici });
+		expect(parseWorkId('https://doi.org/10.1002/(SICI)1097-0258(19980430)17:8%3C857::AID-SIM777%3E3.0.CO;2-E')).toEqual({
+			kind: 'doi',
+			doi: sici
+		});
+		expect(parseWorkId('<a href="x">10.1038/171737a0</a>')).toEqual({ kind: 'doi', doi: '10.1038/171737a0' });
 	});
 
 	it('drops the punctuation a DOI was quoted with', () => {
@@ -42,20 +70,28 @@ describe('parseWorkId: DOIs', () => {
 describe('parseWorkId: arXiv', () => {
 	const vaswani = { kind: 'arxiv', id: '1706.03762', doi: '10.48550/arXiv.1706.03762' };
 
-	it('takes new-style IDs with or without a prefix and version', () => {
-		for (const input of ['1706.03762', 'arXiv:1706.03762', 'arxiv: 1706.03762v5', '1706.03762v7']) {
+	it('takes new-style IDs with or without a prefix, version and the punctuation they were quoted with', () => {
+		for (const input of [
+			'1706.03762',
+			'arXiv:1706.03762',
+			'arxiv: 1706.03762v5',
+			'1706.03762v7',
+			'arXiv:1706.03762.',
+			'(arXiv:1706.03762),'
+		]) {
 			expect(parseWorkId(input), input).toEqual(vaswani);
 		}
 		expect(parseWorkId('2101.00001')).toEqual({ kind: 'arxiv', id: '2101.00001', doi: '10.48550/arXiv.2101.00001' });
 	});
 
-	it('takes abs and pdf links', () => {
+	it('takes abs, pdf and html links', () => {
 		for (const input of [
 			'https://arxiv.org/abs/1706.03762',
 			'https://arxiv.org/abs/1706.03762v5',
 			'https://arxiv.org/pdf/1706.03762v5.pdf',
 			'https://arxiv.org/pdf/1706.03762',
-			'arxiv.org/abs/1706.03762?context=cs'
+			'arxiv.org/abs/1706.03762?context=cs',
+			'https://arxiv.org/html/1706.03762v7'
 		]) {
 			expect(parseWorkId(input), input).toEqual(vaswani);
 		}

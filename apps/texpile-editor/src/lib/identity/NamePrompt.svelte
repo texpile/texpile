@@ -3,6 +3,7 @@
 	import Modal from '$lib/modals/Modal.svelte';
 	import ModalActions from '$lib/modals/ModalActions.svelte';
 	import { nameAsk } from './ownName.svelte';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { m } from '$lib/paraglide/messages';
 
 	let value = $state('');
@@ -17,6 +18,12 @@
 	function close(ok: boolean): void {
 		nameAsk.answer?.(ok && value.trim() ? value.trim() : null);
 	}
+
+	// the folder it was asked in closed or changed: what asked must not go ahead in whichever folder is open next
+	$effect(() => {
+		void workspaceRoot.current;
+		return () => nameAsk.answer?.(null);
+	});
 </script>
 
 {#if nameAsk.open}
@@ -30,7 +37,7 @@
 			placeholder={m.name_prompt_placeholder()}
 			bind:value
 			onkeydown={(e) => {
-				if (e.key === 'Enter' && value.trim()) close(true);
+				if (e.key === 'Enter' && !e.isComposing && value.trim()) close(true);
 			}}
 		/>
 		<ModalActions

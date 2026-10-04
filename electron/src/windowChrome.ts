@@ -134,7 +134,10 @@ function homeTemplate(win: BrowserWindow, s: MenuState): MenuItemConstructorOpti
 				...recents,
 				{ type: 'separator' },
 				{ label: label(s, 'newWindow', 'New Window'), accelerator: 'Shift+CmdOrCtrl+N', click: () => homeActions?.newWindow() },
-				{ label: label(s, 'openFolderNewWindow', 'Open Folder in New Window'), click: () => void homeActions?.openFolderNewWindow(win) }
+				{ label: label(s, 'openFolderNewWindow', 'Open Folder in New Window'), click: () => void homeActions?.openFolderNewWindow(win) },
+				{ type: 'separator' },
+				// a project window's Cmd+W closes its tab first (shortcuts.ts); here there is only the window
+				{ role: 'close', label: label(s, 'closeWindow', 'Close Window') }
 			]
 		},
 		{ role: 'editMenu' },
@@ -194,7 +197,10 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 						]
 					: []),
 				...(s.canOpenFolder
-					? [{ label: label(s, 'openFolder', 'Open Folder…'), click: () => fire(win, 'openfolder:newfolder') }, ...recentItems(win, s)]
+					? [
+							{ label: label(s, 'openFolder', 'Open Folder…'), accelerator: 'CmdOrCtrl+O', click: () => fire(win, 'openfolder:newfolder') },
+							...recentItems(win, s)
+						]
 					: []),
 				...(s.canClone ? [{ label: label(s, 'clone', 'Clone Repository…'), click: () => fire(win, 'file:clone') }] : []),
 				{ type: 'separator' },

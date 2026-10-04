@@ -51,9 +51,11 @@
 	}
 </script>
 
-{#each changes as c (c.path)}
+<!-- by status too: `git rm --cached` lists one path twice, as deleted and as new -->
+{#each changes as c (`${c.x}${c.y}${c.path}`)}
 	{@const badge = badgeOf(c.x, c.y)}
-	<div class="group hover:preset-tonal flex items-center gap-2 rounded-base px-2 py-0.5 text-sm">
+	{@const row = `${c.x}${c.y}${c.path}`}
+	<div class="group hover:preset-tonal rounded-base flex items-center gap-2 px-2 py-0.5 text-sm">
 		<input
 			type="checkbox"
 			class="checkbox border-surface-400-600 accent-primary-500 size-3.5 shrink-0 opacity-70 transition-opacity group-hover:opacity-100 disabled:opacity-40"
@@ -108,12 +110,12 @@
 		<!-- one slot, and discard lives inside it rather than beside the row: it is the only action
 		     here that git cannot give back, so it does not sit a hover away from a harmless one -->
 		<Popover
-			open={openMenu === c.path}
-			onOpenChange={(e) => (openMenu = e.open ? c.path : null)}
+			open={openMenu === row}
+			onOpenChange={(e) => (openMenu = e.open ? row : null)}
 			positioning={{ placement: 'bottom-end', offset: { mainAxis: 2 } }}
 			autoFocus={false}
 		>
-			<Popover.Trigger class="{MENU_TRIGGER} {hoverAction(openMenu === c.path)}" aria-label={m.vcs_row_actions()}>
+			<Popover.Trigger class="{MENU_TRIGGER} {hoverAction(openMenu === row)}" aria-label={m.vcs_row_actions()}>
 				{#snippet element(attrs)}
 					<button {...attrs} use:tip={m.vcs_row_actions()}><MoreHorizontal class="size-3.5" /></button>
 				{/snippet}

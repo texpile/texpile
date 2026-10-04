@@ -1,7 +1,7 @@
 // a see-through window: the system blurs what lies behind it (acrylic on Windows 11, vibrancy on macOS) and the page
 // paints its grounds thin enough to let that show. Text and content stay solid, which a window opacity cannot do
 import * as os from 'node:os';
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, ipcMain, type BrowserWindowConstructorOptions } from 'electron';
 import { readSettings } from './appSettings';
 
 let glassOn = false;
@@ -35,9 +35,14 @@ function nudge(win: BrowserWindow): void {
 	}, 100);
 }
 
+/** for new BrowserWindow(): a Mac window given vibrancy only after it exists draws black under any backdrop-filter (the
+ *  frosted popups) once the mode changes, while one created with it can turn it off and on freely */
+export const GLASS_AT_CREATION: BrowserWindowConstructorOptions = process.platform === 'darwin' ? { vibrancy: 'under-window' } : {};
+
 export function applySavedGlass(win: BrowserWindow, solidFill: string): void {
 	glassOn = glassWorks() && readSettings().transparentWindow === true;
 	if (glassOn) setGlass(win, true, solidFill);
+	else if (process.platform === 'darwin') win.setVibrancy(null);
 	win.webContents.on('did-finish-load', () => nudge(win));
 }
 

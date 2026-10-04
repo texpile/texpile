@@ -201,7 +201,7 @@
 
 		<p class="text-surface-500 text-sm">
 			Checked {CHECKED} against each project's own site. Corrections are welcome as an
-			<a href="https://github.com/texpile/texpile/issues" target="_blank" rel="noopener noreferrer" class="underline hover:text-surface-700"
+			<a href="https://github.com/texpile/texpile/issues" target="_blank" rel="noopener noreferrer" class="hover:text-surface-700 underline"
 				>issue on GitHub</a
 			>.
 		</p>

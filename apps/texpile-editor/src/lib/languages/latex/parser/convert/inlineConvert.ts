@@ -141,7 +141,18 @@ export function convertNodesToInline(nodes: Node[], ctx: ConversionContext): PmN
 }
 
 // characters written as control words, which TeX reads the space after as the end of the name
-const CHARACTER_WORDS = new Set(['textbackslash', 'textasciitilde', 'textasciicircum', 'ldots', 'dots', 'textendash', 'textemdash']);
+const CHARACTER_WORDS = new Set([
+	'textbackslash',
+	'textasciitilde',
+	'textasciicircum',
+	'textless',
+	'textgreater',
+	'textbar',
+	'ldots',
+	'dots',
+	'textendash',
+	'textemdash'
+]);
 
 /** the space after such a word is gone from the page (\textbackslash input reads \input), so it is part of the character's bytes */
 export function endsCharacterWord(node: Node, prevAst: Node | null, last: PmNode | undefined): boolean {

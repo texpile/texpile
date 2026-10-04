@@ -10,6 +10,7 @@
 	import { distros } from '../distros.svelte';
 	import { toolDirs } from '../toolDirs.svelte';
 	import { askedProgram, familyOf } from './missingProgram.svelte';
+	import { engineRows } from './typesetterStatus.svelte';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
 	import { m } from '$lib/paraglide/messages';
 
@@ -22,6 +23,10 @@
 	// so a LaTeX program's dialog opens once the first look at what is installed answers, rather than saying to install a
 	// distribution that is there. Each time a program is asked, as one may have been installed since
 	const ready = $derived(family === 'typst' || toolchainProbe.checked);
+	// installed from the dialog itself, or found on a Check Again
+	const found = $derived(
+		!!family && engineRows({ latex: family === 'latex', typst: family === 'typst' }, program ?? undefined).every((e) => e.found)
+	);
 	$effect(() => {
 		if (!program) return;
 		untrack(() => {
@@ -37,13 +42,15 @@
 
 {#if program && family && ready}
 	<Modal onClose={close} z="z-1400" card="flex max-h-full w-full max-w-lg flex-col overflow-y-auto p-5">
-		<div class="text-base font-semibold">{m.program_missing_title({ program })}</div>
+		<div class="text-base font-semibold">{found ? m.program_found_title({ program }) : m.program_missing_title({ program })}</div>
 		<p class="text-muted mt-1.5 mb-4 text-sm leading-relaxed">
-			{family === 'typst'
-				? m.program_missing_typst()
-				: distro
-					? m.program_missing_in_distro({ program, distro: distro.name })
-					: m.program_missing_latex({ program })}
+			{found
+				? m.program_found_note()
+				: family === 'typst'
+					? m.program_missing_typst()
+					: distro
+						? m.program_missing_in_distro({ program, distro: distro.name })
+						: m.program_missing_latex({ program })}
 		</p>
 		<TypesetterPanel want={{ latex: family === 'latex', typst: family === 'typst' }} {program} />
 		<!-- the way to everything else on the left, the dialog's own buttons on the right -->

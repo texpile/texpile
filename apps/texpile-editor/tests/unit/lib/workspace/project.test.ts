@@ -6,6 +6,7 @@ const h = vi.hoisted(() => ({ fs: {} as Record<string, string> }));
 vi.mock('../../../../src/lib/workspace/fileSystem', () => {
 	const norm = (p: string) => p.replace(/\\/g, '/');
 	return {
+		pathKey: norm,
 		readTextFile: async (path: string): Promise<string> => {
 			const want = norm(path).toLowerCase();
 			const hit = Object.keys(h.fs).find((k) => norm(k).toLowerCase() === want);

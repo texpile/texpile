@@ -21,9 +21,17 @@ export const typstShadow = createShadow({
 	isHandlerLeaf: isTypHandlerLeaf
 });
 
+/** a whole block comment, which typst reads as nothing: what follows one keeps its place on the line */
+const BLOCK_COMMENT = /^\/\*(?:(?!\*\/)[\s\S])*\*\/$/;
+
 /** list/term/heading markers and "1." enum markers bind at line start, indentation included */
 export function escLineStart(str: string): string {
-	return str.replace(/^(\s*)([-+/=])/, '$1\\$2').replace(/^(\s*)(\d+)\./, '$1$2\\.');
+	// `--` and `---` are the dash shorthands, which no list marker begins; after a line's leading
+	// number typst reads `...` as dots, so the ellipsis goes out as itself
+	return str
+		.replace(/^(\s*)(-(?!-)|[+/=])/, '$1\\$2')
+		.replace(/^(\s*)(\d+)\.\.\./, '$1$2\u2026')
+		.replace(/^(\s*)(\d+)\./, '$1$2\\.');
 }
 
 /** the characters typst's `--`, `---` and `...` stand for, written back as those */
@@ -57,8 +65,12 @@ export function escTypst(str: string, startOfLine = false, extra = ''): string {
 			out += '\\@';
 			continue;
 		}
-		if (ch === '-' && str[i + 1] === '?') {
+		if (ch === '-' && (str[i + 1] === '?' || str[i + 1] === '-')) {
 			out += '\\-';
+			continue;
+		}
+		if (ch === '.' && str[i + 1] === '.' && str[i + 2] === '.') {
+			out += '\\.';
 			continue;
 		}
 		// the dash and ellipsis characters go out as the shorthand typst sources write them, so a
@@ -213,6 +225,8 @@ function buildRuns(parent: Node, startOfLine: boolean, extra: string, singleLine
 					marks: orderedMarks(node.marks),
 					kind: text.startsWith('//') ? 'comment' : 'other'
 				});
+				// a block comment is nothing to typst: a marker after one that opens a line opens a list
+				if (BLOCK_COMMENT.test(text)) return;
 				break;
 			}
 			case 'typ_ref': {
@@ -292,7 +306,9 @@ export function renderHeadingLine(parent: Node, after: string): string | null {
 export function renderBody(parent: Node): string {
 	const r = render(parent, true, '', false, '');
 	const out = r.out.replace(/^[ \t]+|[ \t]+$/g, '');
-	return r.openComment ? out + '\n' : out;
+	// a line break ending the body is a backslash and the space after it: trimmed, the backslash
+	// would escape the closing `]`
+	return r.openComment || /(^|[^\\])(\\\\)*\\$/.test(out) ? out + '\n' : out;
 }
 
 function render(parent: Node, startOfLine: boolean, extra: string, singleLine: boolean, after: string): RenderedInline {
@@ -302,12 +318,15 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 	let active: ActiveMark[] = [];
 	// where the last @ref was written, while the next emission may still extend it
 	let refAt = -1;
+	let refEnd = -1;
 	let refTarget = '';
 	let urlEnd = -1;
 	let codeEnd = -1;
 	let code = '';
 	// a // comment owns the rest of its line: the next emission starts a new one
 	let lineEnd = false;
+	// where a /* */ comment ended: its closing slash pairs with nothing after it
+	let blockEnd = -1;
 	// the last run written that was not whitespace alone, and where it ended
 	let solid: { run: InlineRun; end: number } | null = null;
 
@@ -315,13 +334,19 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		if (!s) return;
 		let piece = s;
 		if (refAt >= 0) {
-			// the call form ends a code expression: `.`, `(` or `[` straight after it would go on with it
-			if (extendsRef(piece)) {
-				out = out.slice(0, refAt) + `#ref(<${refTarget}>)`;
-				codeEnd = out.length;
-				code = '#ref()';
-			}
-			refAt = -1;
+			const since = out.slice(refEnd);
+			if (extendsRef(since + piece)) {
+				// the call form ends a code expression: `.`, `(` or `[` straight after it would go on with it
+				if (since === '') {
+					out = out.slice(0, refAt) + `#ref(<${refTarget}>)`;
+					codeEnd = out.length;
+					code = '#ref()';
+				}
+				// a `.` or `:` written after the marker joins its target once what follows it would
+				// (`@eq:mass._`): escaped, it ends the marker
+				else out = out.slice(0, refEnd) + '\\' + since;
+				refAt = -1;
+			} else if (!/^[.:]*$/.test(since + piece)) refAt = -1;
 		}
 		const escapable = text && !piece.startsWith('u{');
 		if (urlEnd === out.length && extendsUrl(piece)) {
@@ -339,7 +364,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		if (escapable && /^[\p{L}\p{N}\p{M}\p{Pc}-]/u.test(piece) && /(^|[^\\])(\\\\)*@$/.test(out)) piece = '\\' + piece;
 		// an emphasis delimiter is an identifier character to a reference: the `@` before it is escaped instead
 		if (!escapable && /^[_*]/.test(piece) && /(^|[^\\])(\\\\)*@$/.test(out)) out = out.slice(0, -1) + '\\@';
-		if (/^[/*]/.test(piece) && /(^|[^\\])(\\\\)*\/$/.test(out)) out = out.slice(0, -1) + '\\/';
+		if (/^[/*]/.test(piece) && out.length !== blockEnd && /(^|[^\\])(\\\\)*\/$/.test(out)) out = out.slice(0, -1) + '\\/';
 		else if (piece.startsWith('/') && /(^|[^\\])(\\\\)*\*$/.test(out)) piece = (escapable ? '\\' : ' ') + piece;
 		out += piece;
 	}
@@ -435,6 +460,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		emit(content, run.kind === 'text');
 		if (content.trim()) solid = { run, end: out.length };
 		if (run.kind === 'other' && /^https?:\/\/\S+$/.test(content)) urlEnd = out.length;
+		if (run.kind === 'other' && /^\/\*[\s\S]*\*\/$/.test(content)) blockEnd = out.length;
 		if (run.kind === 'other' && content.startsWith('#')) {
 			codeEnd = out.length;
 			code = content;
@@ -442,6 +468,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		}
 		if (run.kind === 'ref') {
 			refAt = out.length - content.length;
+			refEnd = out.length;
 			refTarget = content.slice(1);
 		}
 		if (run.kind === 'comment') lineEnd = true;

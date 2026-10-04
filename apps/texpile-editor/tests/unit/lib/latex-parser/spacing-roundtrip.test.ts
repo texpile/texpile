@@ -54,6 +54,14 @@ describe('a tilde typed into the visual editor', () => {
 	it('does not swallow a real no-break space sitting beside it', () => {
 		expect(typed('~/docs\u00A0here')).toBe('\\textasciitilde{}/docs~here');
 	});
+
+	// LaTeX's default font encoding draws a bare < > | in text as ¡ ¿ and a dash (a real compile showed it)
+	it('is joined by < > |, written as the text commands that draw them, and read back as typed', () => {
+		const out = typed('a<b>c|d');
+		expect(out).toBe('a\\textless{}b\\textgreater{}c\\textbar{}d');
+		expect(shown(out)).toBe('a<b>c|d');
+		expect(typed('a<b', [schema.marks.code.create()])).toBe('\\texttt{a<b}');
+	});
 });
 
 describe('text-mode spacing macros', () => {

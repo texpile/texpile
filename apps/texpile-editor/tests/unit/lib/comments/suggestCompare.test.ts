@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { compareSuggestions, type EditMode, type PlacedSuggestion, type TypingSide } from '$lib/comments/suggestCompare';
+import { carryGestures } from '$lib/comments/editGestures';
 
 function run(before: string, after: string, pending: PlacedSuggestion[], mode: EditMode = 'editing', sides?: Record<string, TypingSide>) {
 	let n = 0;
@@ -328,6 +329,63 @@ describe('an edit meeting a suggestion', () => {
 		expect(suggest('- one\n- two\n', '- one\n  - two\n', 'paragraphs')).toEqual([]);
 	});
 
+	// the indent of a paragraph after a list says whether it is the item's second paragraph
+	it('suggests a paragraph moved into or out of the item before it', () => {
+		const suggest = (before: string, after: string) =>
+			compareSuggestions({
+				before,
+				after,
+				pending: [],
+				mode: 'suggesting',
+				author: 'me',
+				newId: () => 'n',
+				whitespace: 'lists'
+			}).placed.map((s) => [after.slice(s.from, s.to), s.restore]);
+		expect(suggest('- first\n\n  more of it\n\nAfter.\n', '- first\n\nmore of it\n\nAfter.\n')).toEqual([['more of it', '  more of it']]);
+		expect(suggest('- first\n\nA paragraph.\n\nAfter.\n', '- first\n\n  A paragraph.\n\nAfter.\n')).toEqual([
+			['  A paragraph.', 'A paragraph.']
+		]);
+		// with no list before it the indent is layout
+		expect(suggest('First.\n\nSecond one.\n', 'First.\n\n  Second one.\n')).toEqual([]);
+	});
+
+	it('suggests spaces typed in a code block, where they are its content', () => {
+		const suggest = (before: string, after: string, whitespace: 'lists' | 'paragraphs') =>
+			compareSuggestions({ before, after, pending: [], mode: 'suggesting', author: 'me', newId: () => 'n', whitespace }).placed.map((s) => [
+				after.slice(s.from, s.to),
+				s.restore
+			]);
+		expect(suggest('Intro.\n\n```py\nif x:\nrun()\n```\n', 'Intro.\n\n```py\nif x:\n    run()\n```\n', 'lists')).toEqual([['    ', '']]);
+		expect(
+			suggest(
+				'Intro.\n\n\\begin{verbatim}\nif x:\nrun()\n\\end{verbatim}\n',
+				'Intro.\n\n\\begin{verbatim}\nif x:\n    run()\n\\end{verbatim}\n',
+				'paragraphs'
+			)
+		).toEqual([['    ', '']]);
+		// after the block, spaces are layout again
+		expect(suggest('```\nx\n```\n\nA line\nwrapped.\n', '```\nx\n```\n\nA line wrapped.\n', 'lists')).toEqual([]);
+	});
+
+	it('suggests a markdown line break of two spaces taken out or put in', () => {
+		const suggest = (before: string, after: string, whitespace: 'markdown' | 'lists' = 'markdown') =>
+			compareSuggestions({
+				before,
+				after,
+				pending: [],
+				mode: 'suggesting',
+				author: 'me',
+				newId: () => 'n',
+				whitespace
+			}).placed.map((s) => [after.slice(s.from, s.to), s.restore]);
+		expect(suggest('A verse  \nand the next.\n', 'A verse\nand the next.\n')).toEqual([['', '  ']]);
+		expect(suggest('A verse\nand the next.\n', 'A verse  \nand the next.\n')).toEqual([['  ', '']]);
+		// before a blank line the spaces break nothing
+		expect(suggest('A verse  \n\nNext one.\n', 'A verse\n\nNext one.\n')).toEqual([]);
+		// typst has no such break: the spaces there are layout
+		expect(suggest('A verse  \nand the next.\n', 'A verse\nand the next.\n', 'lists')).toEqual([]);
+	});
+
 	it('keeps a paragraph break that is half a suggestion’s new words afterwards', () => {
 		const before = 'Aa.\n\n\\x{b t}\n\\x{he c}\n\nr.';
 		const after = '\\\n\nr';
@@ -454,5 +512,41 @@ describe('an edit meeting a suggestion', () => {
 		const after = '## title 1\n\nNew tle 2\n\nAfter text.\n';
 		const r = run(before, after, [], 'suggesting');
 		expect(r.placed.map((s) => [after.slice(s.from, s.to), s.restore])).toEqual([['', 'line text here.\n\n## Ti']]);
+	});
+
+	it('takes back the second of two forward Deletes when it is undone', () => {
+		const deleted = 'The quick own fox';
+		const undone = 'The quick rown fox';
+		const r = run(deleted, undone, [point(deleted, 'own', 'br', 'me')], 'suggesting');
+		expect(shown(undone, r)).toEqual([['s1', '', 'b', 'me']]);
+		expect(r.placed[0].from).toBe(undone.indexOf('rown'));
+	});
+
+	it('puts a Delete with the deletion it carries on, where the text repeats, and its undo back out of it', () => {
+		const text = 'The quick  fox jumps';
+		const cut = 'The quick  jumps';
+		const deleted = run(text, cut, [point(text, ' fox', 'brown', 'me')], 'suggesting');
+		expect(shown(cut, deleted)).toEqual([['s1', '', 'brown fox', 'me']]);
+		const gestures = carryGestures([], cut, text);
+		const undone = compareSuggestions({
+			before: cut,
+			after: text,
+			pending: deleted.placed,
+			mode: 'suggesting',
+			author: 'me',
+			newId: () => 'n',
+			gestures
+		});
+		expect(shown(text, undone)).toEqual([['s1', '', 'brown', 'me']]);
+	});
+
+	it('withdraws one person’s neighboring suggestions that together change nothing', () => {
+		const pending = [
+			{ id: 'i', from: 0, to: 2, restore: '', author: 'me' },
+			{ id: 'd', from: 2, to: 2, restore: 'ab', author: 'me' }
+		];
+		const r = run('ab cd', 'ab cdx', pending, 'suggesting');
+		expect(shown('ab cdx', r)).toEqual([['n1', 'x', '', 'me']]);
+		expect(r.changes.map((c) => `${c.t}:${c.id}`).sort()).toEqual(['open:n1', 'withdraw:d', 'withdraw:i']);
 	});
 });

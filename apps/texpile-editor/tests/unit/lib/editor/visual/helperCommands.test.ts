@@ -1,0 +1,87 @@
+import { describe, it, expect } from 'vitest';
+import type { Node } from 'prosemirror-model';
+import { EditorState, TextSelection, type Command } from 'prosemirror-state';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
+import { setHeadingLevel, splitBlockWithoutDuplicates } from '$lib/editor/visual/helperCommands';
+import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
+import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
+
+function run(doc: Node, command: Command): Node {
+	let state = EditorState.create({ doc, selection: TextSelection.create(doc, 2) });
+	expect(command(state, (tr) => (state = state.apply(tr)))).toBe(true);
+	return state.doc;
+}
+
+describe('the heading picker', () => {
+	it('keeps a \\chapter a chapter when it is made unnumbered, and makes it a subsection at level 2', () => {
+		const text = '\\documentclass{report}\n\\begin{document}\n\\chapter{Introduction}\nSome words.\n\\end{document}\n';
+		const parsed = parseLatexFile(text);
+		expect(serializeLatexFile(parsed, run(parsed.doc, setHeadingLevel(1, false)))).toContain('\\chapter*{Introduction}');
+		expect(serializeLatexFile(parsed, run(parsed.doc, setHeadingLevel(2, true)))).toContain('\\subsection{Introduction}');
+	});
+
+	it('keeps a Typst heading its label and its numbering at another level', () => {
+		const labelled = parseTypstFile('== Methods <sec:methods>\n\nAs shown in @sec:methods.\n');
+		expect(serializeTypstFile(labelled, run(labelled.doc, setHeadingLevel(1)))).toBe(
+			'= Methods <sec:methods>\n\nAs shown in @sec:methods.\n'
+		);
+		const unnumbered = parseTypstFile('#heading(level: 2, numbering: none)[Acknowledgements]\n');
+		expect(serializeTypstFile(unnumbered, run(unnumbered.doc, setHeadingLevel(1)))).toContain('numbering: none');
+	});
+});
+
+function enter(doc: Node, at: number): Node {
+	let state = EditorState.create({ doc, selection: TextSelection.create(doc, at) });
+	expect(splitBlockWithoutDuplicates(state, (tr) => (state = state.apply(tr)))).toBe(true);
+	return state.doc;
+}
+
+describe('Enter inside a heading with a short title or a label', () => {
+	const latex = '\\documentclass{article}\n\\begin{document}\n\\section[Short]{Long title words}\nBody.\n\\end{document}\n';
+	const typst = '== Methods used <sec:methods>\n\nAs shown in @sec:methods.\n';
+
+	it('gives the half after the caret no short title or label of its own', () => {
+		const tex = parseLatexFile(latex);
+		const out = serializeLatexFile(tex, enter(tex.doc, 1 + 'Long title'.length));
+		expect(out).toContain('\\section[Short]{Long title}');
+		expect(out.split('[Short]').length - 1).toBe(1);
+		const typ = parseTypstFile(typst);
+		const written = serializeTypstFile(typ, enter(typ.doc, 1 + 'Methods'.length));
+		expect(written).toContain('== Methods <sec:methods>');
+		expect(written.split('<sec:methods>').length - 1).toBe(1);
+	});
+
+	it('leaves them on the heading when Enter at its start opens a line above it', () => {
+		const tex = parseLatexFile(latex);
+		expect(serializeLatexFile(tex, enter(tex.doc, 1))).toContain('\\section[Short]{Long title words}');
+		const typ = parseTypstFile(typst);
+		expect(serializeTypstFile(typ, enter(typ.doc, 1))).toContain('== Methods used <sec:methods>');
+	});
+});
+
+describe('Enter inside a figure caption', () => {
+	const enterKey = chainCommands(splitBlockWithoutDuplicates, baseKeymap.Enter);
+	function press(doc: Node, at: number): Node {
+		let state = EditorState.create({ doc, selection: TextSelection.create(doc, at) });
+		expect(enterKey(state, (tr) => (state = state.apply(tr)))).toBe(true);
+		return state.doc;
+	}
+	const latex =
+		'\\documentclass{article}\n\\begin{document}\n\\begin{figure}\n\\centering\n\\includegraphics{a.png}\n\\caption{Long caption words}\\label{fig:a}\n\\end{figure}\n\\end{document}\n';
+	const typst = '#figure(image("a.png"), caption: [Long caption words]) <fig:a>\n\nSee @fig:a.\n';
+
+	it('keeps one figure: the words after the caret go to a paragraph after it', () => {
+		const tex = parseLatexFile(latex);
+		const out = serializeLatexFile(tex, press(tex.doc, 1 + 'Long caption'.length));
+		expect(out.split('\\includegraphics').length - 1).toBe(1);
+		expect(out.split('\\label{fig:a}').length - 1).toBe(1);
+		expect(out).toContain('\\caption{Long caption}');
+		const typ = parseTypstFile(typst);
+		const written = serializeTypstFile(typ, press(typ.doc, 1 + 'Long caption'.length));
+		expect(written.split('<fig:a>').length - 1).toBe(1);
+		expect(written).toContain('caption: [Long caption]');
+		const atStart = serializeLatexFile(tex, press(tex.doc, 1));
+		expect(atStart.split('\\label{fig:a}').length - 1).toBe(1);
+		expect(atStart).toContain('\\caption{Long caption words}');
+	});
+});

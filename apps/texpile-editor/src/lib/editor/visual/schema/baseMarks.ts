@@ -118,7 +118,10 @@ export const baseMarks = {
 	highlight: {
 		attrs: {
 			// null: the color the document sets itself (a bare \hl in LaTeX)
-			color: { default: 'yellow' }
+			color: { default: 'yellow' },
+			// 'colorbox' when LaTeX's \colorbox wrote it, a box rather than soul's \hl, and its color model
+			cmd: { default: null },
+			model: { default: null }
 		},
 		parseDOM: [
 			{
@@ -135,7 +138,8 @@ export const baseMarks = {
 	} as MarkSpec,
 
 	code: {
-		parseDOM: [{ tag: 'code' }],
+		// an inline raw chip is a <code> too, and mark rules are tried before node rules
+		parseDOM: [{ tag: 'code', getAttrs: (dom: HTMLElement) => (dom.classList.contains('inline-latex') ? false : null) }],
 		toDOM() {
 			return codeDom;
 		}

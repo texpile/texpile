@@ -11,7 +11,7 @@ import { mainFile } from '$lib/workspace/workspaceStore';
 import { readTextFile, writeTextFile, statFile, scanFiles, joinPath, dirname, basename, samePath } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { bibPathFromSource, translatorForSource, appendBibEntries, citationTextFor } from './bibTarget';
+import { bibPathsFromSource, translatorForSource, appendBibEntries, citationTextFor } from './bibTarget';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { zoteroPicker } from './pickerState.svelte';
 
@@ -101,26 +101,30 @@ export type BibTarget = {
 };
 
 /**
- * Where new entries land: the bib the main file declares, else the project's references.bib or
- * first .bib, else a new references.bib beside the main - `undeclared`, since nothing reads it yet.
+ * Where new entries land: the first bib the main file declares that the project has (else the last
+ * one it declares), else the project's references.bib or first .bib, else a new references.bib
+ * beside the main - `undeclared`, since nothing reads it yet.
  *
  * A Typst main that lists only Hayagriva `.yml` files gets a `.bib` all the same: the entries are
  * BibTeX, and appended to a `.yml` they would break it. That `.bib` is undeclared until the user
  * adds it to the `#bibliography` list.
  */
 export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<BibTarget> {
-	const declaredRel = bibPathFromSource(mainText, deps.kind);
-	// resolved against the main file's folder: latexmk compiles with -cd, and Typst resolves
-	// #bibliography against the file that calls it (and a leading / against the project root)
-	if (declaredRel) {
-		const rootRelative = deps.kind === 'typ' && declaredRel.startsWith('/');
-		return { path: rootRelative ? joinPath(deps.root, declaredRel.slice(1)) : joinPath(dirname(main), declaredRel), undeclared: false };
-	}
+	const declared = bibPathsFromSource(mainText, deps.kind).map((rel) => resolveBibPath(main, rel, deps));
+	for (const path of declared) if ((await statFile(path)).exists) return { path, undeclared: false };
+	if (declared.length) return { path: declared[declared.length - 1], undeclared: false };
 	const hayagriva = deps.kind === 'typ' ? typstBibliographyPaths(mainText)[0] : undefined;
 	const found = (await scanFiles(deps.root, ['bib'])).files;
 	const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
 	if (preferred) return { path: preferred.path, undeclared: !!hayagriva, hayagriva };
 	return { path: joinPath(dirname(main), 'references.bib'), undeclared: true, hayagriva };
+}
+
+/** a bibliography as the main file names it, where the compile reads it */
+export function resolveBibPath(main: string, rel: string, deps: ZoteroInsertDeps): string {
+	// latexmk compiles with -cd, and Typst resolves #bibliography against the file that calls it
+	// (and a leading / against the project root)
+	return deps.kind === 'typ' && rel.startsWith('/') ? joinPath(deps.root, rel.slice(1)) : joinPath(dirname(main), rel);
 }
 
 /** a bib file the document never references compiles to nothing; say so once, loudly */
@@ -156,7 +160,7 @@ export function insertCitation(keys: string[], kind: 'tex' | 'typ'): void {
 		}
 		const cite = kind === 'tex' ? v.state.schema.nodes.citation : undefined;
 		if (cite) {
-			const node = cite.create({ prenote: '', postnote: '', variant: 'autocite' }, v.state.schema.text(keys.join(',')));
+			const node = cite.create({ prenote: '', postnote: '', variant: 'cite' }, v.state.schema.text(keys.join(',')));
 			v.dispatch(v.state.tr.replaceSelectionWith(node).scrollIntoView());
 			v.focus();
 			return;

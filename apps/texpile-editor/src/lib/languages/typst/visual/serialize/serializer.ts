@@ -10,7 +10,7 @@ import type { Segment } from '$lib/editor/visual/sourceSpans';
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Ctx } from '$lib/serializer/types';
 import { escLineStart, escTypst, renderInline, renderHeadingLine, renderBody, typStr, typstShadow, isTypHandlerLeaf } from './typstInline';
-import { cellCall, rowCells, tableBody } from './tableSerializer';
+import { cellCall, rowCells, tableBody, tableFrame } from './tableSerializer';
 import { endsInLineComment } from './equationClose';
 import { envSource, ownsLineEnd, type EnvBodyRender } from './envSerializer';
 import { mapToCrlf } from '$lib/editor/visual/sourceSpans';
@@ -30,8 +30,42 @@ const LINE_END_BLOCKS = new Set(['heading', 'list', 'code_block', 'term_item', '
 // a content block's markup starts afresh: right after its `[` (a table cell, a caption), spaces
 // included, a marker binds as at a line start
 const BODY_START = /(^|[^\\])(\\\\)*\[[ \t]*$/;
+const LINE_HEAD = /(^|\n)(?:[ \t]|\/\*(?:(?!\*\/)[\s\S])*\*\/)*$/;
 // escapes and whole raw spans: a backtick left after them opens raw text
 const ESCAPES_AND_RAW = /\\[\s\S]|(`{3,})(?!`)[\s\S]*?\1|``|`[^`]*`/g;
+
+// the language picker's names, as the tokens typst's highlighter knows them by
+const RAW_LANGS: Record<string, string> = { 'c++': 'cpp', 'c#': 'cs', 'f#': 'fs' };
+
+// typst reads a raw block's language as one word of letters, digits, `-` and `_`, the rest of its line as code
+function rawLang(infoString: string): string {
+	return RAW_LANGS[infoString.toLowerCase()] ?? infoString.replace(/[^\p{L}\p{N}_-]+/gu, '-');
+}
+
+/** an argument list cut at its own commas, not those inside a string, a call or a content block */
+function topLevelArgs(list: string): string[] {
+	const args: string[] = [];
+	const open: string[] = [];
+	let quoted = false;
+	let from = 0;
+	for (let i = 0; i < list.length; i++) {
+		const ch = list[i];
+		const markup = open[open.length - 1] === '[';
+		if (quoted) {
+			if (ch === '\\') i++;
+			else if (ch === '"') quoted = false;
+		} else if (ch === '\\' && markup) i++;
+		else if (ch === '"' && !markup) quoted = true;
+		else if ('([{'.includes(ch)) open.push(ch);
+		else if (')]}'.includes(ch)) open.pop();
+		else if (ch === ',' && open.length === 0) {
+			args.push(list.slice(from, i));
+			from = i + 1;
+		}
+	}
+	args.push(list.slice(from));
+	return args;
+}
 
 function declarationLine(line: string): boolean {
 	return /^#(set|let|show|import|include)\b/.test(line);
@@ -129,7 +163,7 @@ const NODES: Record<string, NodeHandler> = {
 	},
 
 	heading(node) {
-		const level = Math.min(6, Math.max(1, Number(node.attrs.level ?? 1)));
+		const level = Math.max(1, Number(node.attrs.level ?? 1));
 		const label = labelOf(node);
 		const line = headingLine(node);
 		if (line == null) {
@@ -141,7 +175,7 @@ const NODES: Record<string, NodeHandler> = {
 	},
 
 	code_block(node) {
-		const infoString = String(node.attrs.args ?? '').trim();
+		const infoString = rawLang(String(node.attrs.args ?? '').trim());
 		const content = node.textContent;
 		const runs = content.match(/`{3,}/g);
 		const fence = '`'.repeat(runs ? Math.max(3, ...runs.map((r) => r.length)) + 1 : 3);
@@ -165,8 +199,7 @@ const NODES: Record<string, NodeHandler> = {
 		const max = Number(node.attrs.maxWidth);
 		if (Number.isFinite(w) && Number.isFinite(max) && w > 0 && max > 0) {
 			const pct = Math.min(100, Math.max(1, Math.round((w / max) * 100)));
-			const rest = rawOpts
-				.split(',')
+			const rest = topLevelArgs(rawOpts)
 				.map((s) => s.trim())
 				.filter((s) => s && !/^width:/.test(s));
 			optsStr = [`width: ${pct}%`, ...rest].join(', ');
@@ -177,7 +210,7 @@ const NODES: Record<string, NodeHandler> = {
 		const caption = showCaption ? renderBody(node) : '';
 		const label = labelOf(node);
 		// a bare #image is one the source never wrapped in a figure; keep it bare
-		if (node.attrs.numbered === false && !caption && !label) return `#${img}\n\n`;
+		if (node.attrs.numbered === false && !caption) return `#${img}${label}\n\n`;
 		// a caption shown empty is written empty, as LaTeX writes \caption{}: typst draws its "Figure 1:" as the editor does
 		return `#figure(${img}${showCaption ? `, caption: [${caption}]` : ''})${label}\n\n`;
 	},
@@ -206,7 +239,7 @@ const NODES: Record<string, NodeHandler> = {
 		const cap = captionNode as Node | null;
 		const caption = cap && cap.childCount > 0 ? renderBody(cap) : '';
 		const label = labelOf(node);
-		return `#figure(\n  ${body}${caption ? `,\n  caption: [${caption}]` : ''},\n)${label}\n\n`;
+		return `#figure(\n  ${body}${caption || node.attrs.typCaption ? `,\n  caption: [${caption}]` : ''},\n)${label}\n\n`;
 	},
 
 	block_math(node) {
@@ -311,7 +344,8 @@ function mapInlineLeaves(block: Node, nodes: Node[], text: string, atStart: bool
 function leafBytes(leaf: Node, parent: Node, atStart: boolean, block: Node): string | null {
 	const text = leaf.text ?? '';
 	if (parent.type.spec.code || parent.type.spec.leafText) return text;
-	if (leaf.marks.some((m) => m.type.name === 'code')) return text.includes('`') ? null : text;
+	// inline raw sits between backticks or in the string of a #raw call
+	if (leaf.marks.some((m) => m.type.name === 'code')) return /[`"\\]/.test(text) ? null : text;
 	// the colon ending a term is structure: the leaf's own block says so, as does the block
 	// spliced when that is the item holding it
 	return escTypst(text, atStart, parent.type.name === 'term_title' || block.type.name === 'term_title' ? ':' : '');
@@ -325,8 +359,12 @@ function fuses(bytes: string, tail: string): boolean {
 	if (/#[\p{L}\p{N}_.-]*$/u.test(bytes) && /^[\p{L}\p{N}_.([-]/u.test(tail)) return true;
 	if (/https?:\/\/\S*$/.test(bytes) && /^[0-9A-Za-z#$%&*+\-/=@_~[(]/.test(tail)) return true;
 	if (/[/*]$/.test(bytes) && /^[/*]/.test(tail)) return true;
+	// `--`, `-?` and `...` are shorthands: a hyphen or a dot meeting its kind would read as one
+	if (/(^|[^\\])(\\\\)*-$/.test(bytes) && /^[-?]/.test(tail)) return true;
+	if (/(^|[^\\])(\\\\)*\.$/.test(bytes) && /^\./.test(tail)) return true;
 	// a call written for a mark or a reference ends on `]` or `)`: `.`, `(`, `[` or `;` after it go on with it
 	if (/#\S[^\n]*[\])]$/.test(bytes) && /^(?:[([;]|\.[\p{L}_])/u.test(tail)) return true;
+	if (/#\S[^\n]*[\])]\.$/.test(bytes) && /^[\p{L}_]/u.test(tail)) return true;
 	// a line break is a backslash and the whitespace after it; anything else there escapes instead
 	if (/(^|[^\\])(\\\\)*\\$/.test(bytes) && /^\S/.test(tail)) return true;
 	return false;
@@ -363,17 +401,24 @@ function unbound(head: string, bytes: string, tail: string, gone: string): boole
 // kept bytes that a fresh line end moves to a line start give the splice up
 function atLineStart(head: string, bytes: string, tail: string, code: boolean): string | null {
 	const bodyStart = !code && BODY_START.test(head);
-	const out = !code && ((/(^|\n)[ \t]*$/.test(head) && head !== '') || bodyStart) ? escLineStart(bytes) : bytes;
+	// block comments before the bytes on their line are nothing to typst: a marker after them opens a list
+	const out = !code && ((LINE_HEAD.test(head) && head !== '') || bodyStart) ? escLineStart(bytes) : bytes;
 	// a marker the file kept mid-line now begins a line: with fresh bytes ending the line above
 	// it, or with the bytes before it taken out
 	const opens = /^(?:[-+/=]|\d+\.)\s/.test(tail) || /^[-+/=]$/.test(tail);
 	const startsLine = /\n[ \t]*$/.test(out) || (bytes === '' && /(^|\n)[ \t]*$/.test(head));
-	// so does a space the kept bytes begin with: it indents the line, and after a list that is more of the item
+	// so does a space the kept bytes begin with, or fresh bytes opening the block: it indents the line, and after a list that is more of the item
 	if ((opens || /^[ \t]/.test(tail)) && startsLine) return null;
+	if (!code && head === '' && /^[ \t]/.test(bytes)) return null;
 	// or begins a content block, what stood before it in the block taken out or made spaces
 	if (bodyStart && /^[ \t]*$/.test(bytes) && /^[ \t]*(?:[-+/=]|\d+\.)\s/.test(tail)) return null;
+	// or a marker the file kept at the start of a line or a content block meets a space typed or left after it
+	if (!code && /^\s/.test(bytes || tail) && /(?:^|\n|(?:^|[^\\])(?:\\\\)*\[)[ \t]*(?:[-+/=]|\d+\.)$/.test(head)) return null;
 	return out;
 }
+
+// a term's title is no part of its body's indent: the body goes on two spaces past the marker, as the term handler writes it
+const TERM_HEAD = /^([ \t]*(?:(?:[-+]|\d+\.)[ \t]+)*)\/[ \t](?:\\.|[^:\\\n])*:[ \t]*/;
 
 /** what continues a child's lines inside its container: the indentation of its first line when
  *  it begins one, else the indentation the file gave its second line, else the width of what stood
@@ -385,11 +430,13 @@ function continuation(_parent: Node, text: string, head: string): string {
 	const nl = text.indexOf('\n');
 	// a first line that opens a bracket goes on inside it: the lines after it are the child's own
 	if (nl >= 0 && !/[[({][ \t]*$/.test(text.slice(0, nl))) return /^[ \t]*/.exec(text.slice(nl + 1))![0];
-	return head.replace(/\S/g, ' ');
+	return head.replace(TERM_HEAD, '$1  ').replace(/\S/g, ' ');
 }
 
 const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx), {
 	boundary: (prev, next, contiguous) => blockGap(prev.node, next.node, contiguous, false),
+	// a table's grid is in the bytes between its cells: columns:, table.header and the commas between rows
+	frameHolds: (node, parsed) => node.type.name !== 'table' || tableFrame(node) === tableFrame(parsed),
 	mapLeaves: (node, ctx, text) => typstShadow.mapBlockLeaves(serializeTypNode, node, ctx, text),
 	continuation,
 	leafBytes,
@@ -399,7 +446,10 @@ const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx),
 	// the line breaks either side of a line taken out from prose would meet as a blank line, a new paragraph
 	keepApart: (bytes, tail, head, gone, parent) => {
 		if (!parent.type.spec.code && blankLineAt(head, bytes, tail)) return null;
-		if (bytes === '' ? seam(head, tail) : seam(head, bytes) || seam(bytes, tail)) return null;
+		// a line comment the file keeps runs on over whatever the seam leaves on its line
+		if (!parent.type.spec.code && /(^|[^:\\])\/\/[^\n]*$/.test(head) && !/^\r?\n/.test(bytes + tail)) return null;
+		// whole on either side: what decides a seam may lie past short fresh bytes (`)` + `.` + `y`)
+		if (bytes === '' ? seam(head, tail) : seam(head, bytes + tail) || seam(head + bytes, tail)) return null;
 		if (unbound(head, bytes, tail, gone)) return null;
 		// code, a chip's source and raw text are written as typed
 		const code = !!parent.type.spec.code || /`/.test(head.replace(ESCAPES_AND_RAW, ''));

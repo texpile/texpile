@@ -294,7 +294,7 @@
 				{m.bib_parse_syntax_error_hint()}
 			</div>
 		</div>
-		<div class="min-h-0 flex-1 overflow-hidden rounded-container border border-surface-200-800">
+		<div class="rounded-container border-surface-200-800 min-h-0 flex-1 overflow-hidden border">
 			<CodeMirrorLatex bind:value={fileRawText} language="bibtex" />
 		</div>
 		{#if fileRawError}
@@ -320,8 +320,8 @@
 				>
 			</div>
 		{/if}
-		<div class="mx-auto flex w-full max-w-7xl min-h-0 flex-1 flex-col gap-4 p-4 @xl:flex-row">
-			<div class="max-h-[40%] min-h-0 shrink-0 overflow-y-auto [scrollbar-gutter:stable] pr-3 @xl:max-h-none @xl:w-1/2">
+		<div class="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col gap-4 p-4 @xl:flex-row">
+			<div class="max-h-[40%] min-h-0 shrink-0 [scrollbar-gutter:stable] overflow-y-auto pr-3 @xl:max-h-none @xl:w-1/2">
 				<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
 					>{m.bib_new_reference_button()}</button
 				>
@@ -337,7 +337,7 @@
 			</div>
 
 			<div
-				class="border-surface-200-800 min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] border-t pt-4 @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
+				class="border-surface-200-800 min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto border-t pt-4 @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
 			>
 				<div class="mb-2 flex items-center gap-2 text-base font-semibold">
 					{#if isEditing}
@@ -345,7 +345,7 @@
 						{m.bib_editing_heading({ key: currentReference.key ?? '' })}
 						{#if editMode === 'raw'}
 							<span
-								class="border-surface-300-700 text-muted ml-1 inline-flex items-center gap-0.5 rounded-base border px-1 py-px text-[10px]"
+								class="border-surface-300-700 text-muted rounded-base ml-1 inline-flex items-center gap-0.5 border px-1 py-px text-[10px]"
 								use:tip={m.bib_raw_badge_edit_tooltip()}
 							>
 								<Code class="size-2.5" />
@@ -356,7 +356,7 @@
 				</div>
 
 				{#if editMode === 'raw'}
-					<div class="border-surface-200-800 min-h-[16rem] overflow-hidden rounded-container border">
+					<div class="border-surface-200-800 rounded-container min-h-[16rem] overflow-hidden border">
 						<CodeMirrorLatex bind:value={rawEntryText} language="bibtex" />
 					</div>
 					{#if rawEntryError}
@@ -382,12 +382,12 @@
 					<div class="border-surface-200-800 mt-4 border-t pt-4">
 						<div class="text-sm font-semibold">{m.bib_paste_bibtex_heading()}</div>
 						<textarea
-							class="textarea mt-1 w-full font-mono text-xs rounded-container"
+							class="textarea rounded-container mt-1 w-full font-mono text-xs"
 							rows="5"
 							bind:value={bibtexContent}
 							placeholder={m.bib_paste_bibtex_placeholder()}></textarea>
 						{#if bibtexWarnings.length}
-							<div class="border-warning-500 bg-warning-tint mt-2 rounded-base border p-2 text-xs">
+							<div class="border-warning-500 bg-warning-tint rounded-base mt-2 border p-2 text-xs">
 								{#each bibtexWarnings as w (w.key)}<div><strong>{w.key}:</strong> {w.issues.join(', ')}</div>{/each}
 							</div>
 						{/if}

@@ -7,8 +7,12 @@ import { scrollParent } from '$lib/editor/visual/scrollParent';
 /** room left above the heading, as the source editor's own scrollIntoView margin */
 const MARGIN = 20;
 
-/** smooth to where `target` says, then exact: lines not drawn yet were only estimated when the glide set off */
-function glide(scroller: HTMLElement, target: () => number): void {
+/** smooth to where `to` says, then exact: lines not drawn yet were only estimated when the glide set off */
+function glide(scroller: HTMLElement, to: () => number): void {
+	// a heading near either end cannot reach the top, and a scroll that cannot move fires no scrollend
+	function target() {
+		return Math.max(0, Math.min(to(), scroller.scrollHeight - scroller.clientHeight));
+	}
 	function settle() {
 		const top = target();
 		if (Math.abs(scroller.scrollTop - top) > 1) scroller.scrollTo({ top });

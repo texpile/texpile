@@ -9,6 +9,8 @@ import { positionsPlugin } from './positions';
 
 export function createMarkdownEngine(): MarkdownIt {
 	const md = markdownit({ html: true, linkify: false, typographer: false });
+	// a destination as the author wrote it, see dest()
+	md.normalizeLink = (url) => url;
 	md.use(mathPlugin);
 	md.use(footnotePlugin);
 	md.use(referenceDefinitionPlugin);

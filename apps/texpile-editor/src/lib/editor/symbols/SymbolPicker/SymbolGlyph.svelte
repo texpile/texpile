@@ -17,7 +17,7 @@
 </script>
 
 {#if glyph.kind === 'label'}
-	<span class="text-muted border-surface-400-600 max-w-full truncate rounded-base border border-dashed px-0.5 font-mono text-xs">
+	<span class="text-muted border-surface-400-600 rounded-base max-w-full truncate border border-dashed px-0.5 font-mono text-xs">
 		{glyph.text}
 	</span>
 {:else if picture}

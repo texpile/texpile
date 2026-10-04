@@ -4,11 +4,16 @@ import { buildAnchor, type CommentAnchor } from '$lib/comments/anchor';
 import { anchorEvent, deleteEvent, openEvent, replyEvent, resolveEvent, foldLog, parseLog, type CommentEvent } from '$lib/comments/log';
 
 let disk = '';
+/** what a read of the log under /w throws instead, as the fs bridge words it */
+let readError: string | null = null;
 /** per path, for tests that keep more than one log */
 const disks: Record<string, string> = {};
 
 vi.mock('$lib/workspace/fileSystem', () => ({
-	readTextFile: async (path: string) => (path.startsWith('/w/') ? disk : (disks[path] ?? '')),
+	readTextFile: async (path: string) => {
+		if (path.startsWith('/w/') && readError) throw new Error(readError);
+		return path.startsWith('/w/') ? disk : (disks[path] ?? '');
+	},
 	writeTextFile: async (path: string, text: string) => {
 		if (path.startsWith('/w/')) disk = text;
 		else disks[path] = text;
@@ -76,6 +81,111 @@ it('keeps what this side appended when an older read of the log lands', async ()
 	store.adoptLog([hostOpen, guestOpen].map((e) => JSON.stringify(e)).join('\n') + '\n');
 	expect(store.threads.map((t) => t.id)).toEqual(['h1', 'g1']);
 	expect(store.serialize().trim().split('\n')).toHaveLength(2);
+});
+
+// File > Open Folder swaps the root of the same store in place
+it('keeps the last folder’s threads out of the next folder’s log', async () => {
+	const anchor = buildAnchor('some text', 0, 4);
+	disks['/a/.texpile/comments.jsonl'] =
+		JSON.stringify(openEvent({ id: 'a1', file: 'main.tex', by: 'ana', body: 'a', anchor, at: 'now' })) + '\n';
+	disks['/b/.texpile/comments.jsonl'] =
+		JSON.stringify(openEvent({ id: 'b1', file: 'main.tex', by: 'bo', body: 'b', anchor, at: 'now' })) + '\n';
+	const store = new CommentStore();
+	await store.load('/a');
+	await store.load('/b');
+	expect(store.threads.map((t) => t.id)).toEqual(['b1']);
+
+	await store.append(replyEvent({ id: 'm1', thread: 'b1', by: 'bo', body: 'ok', at: 'now' }));
+	expect(foldLog(parseLog(disks['/b/.texpile/comments.jsonl'])).map((t) => t.id)).toEqual(['b1']);
+});
+
+const threadOn = (id: string) =>
+	openEvent({ id, file: 'main.tex', by: 'ana', body: id, anchor: buildAnchor('some text', 0, 4), at: 'now' });
+
+// an agent's comment or a placement record still being written as the window opens another folder
+it('leaves the last folder’s log whole when a write of it lands after the next folder opened', async () => {
+	const a = '/a/.texpile/comments.jsonl';
+	disks[a] = JSON.stringify(threadOn('a1')) + '\n';
+	delete disks['/b/.texpile/comments.jsonl'];
+	const store = new CommentStore();
+	await store.load('/a');
+	const writing = store.append(replyEvent({ id: 'm1', thread: 'a1', by: 'bo', body: 'ok', at: 'now' }));
+	await Promise.all([writing, store.load('/b')]);
+	expect(foldLog(parseLog(disks[a])).map((t) => t.id)).toEqual(['a1']);
+	expect(disks['/b/.texpile/comments.jsonl']).toBeUndefined();
+});
+
+// Discard changes in Source Control, a checkout
+it('lets go of threads taken out of the log on disk', async () => {
+	const committed = JSON.stringify(threadOn('c1')) + '\n';
+	disk = committed;
+	const store = new CommentStore();
+	await store.load('/w');
+	await store.append(threadOn('c2'));
+	disk = committed;
+	await store.reload();
+	expect(store.threads.map((t) => t.id)).toEqual(['c1']);
+
+	await store.append(replyEvent({ id: 'm1', thread: 'c1', by: 'bo', body: 'ok', at: 'now' }));
+	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['c1']);
+});
+
+// a checkout of a branch without one, or the file deleted by hand
+it('lets go of the threads of a log deleted on disk, and only of a deleted one', async () => {
+	disk = JSON.stringify(threadOn('c1')) + '\n';
+	const store = new CommentStore();
+	await store.load('/w');
+	readError = 'EBUSY: resource busy or locked, open';
+	await store.reload();
+	expect(store.threads.map((t) => t.id)).toEqual(['c1']);
+	readError = null;
+	await store.reload();
+
+	readError = "ENOENT: no such file or directory, open '/w/.texpile/comments.jsonl'";
+	await store.reload();
+	readError = null;
+	expect(store.threads).toEqual([]);
+	await store.append(threadOn('n1'));
+	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['n1']);
+});
+
+it('keeps every thread when a read lands short while its own write is under way', async () => {
+	disk = '';
+	const store = new CommentStore();
+	await store.load('/w');
+	await store.append(threadOn('c1'));
+	const writing = store.append(threadOn('c2'));
+	// the file caught half rewritten
+	disk = '';
+	await Promise.all([writing, store.reload()]);
+	expect(store.threads.map((t) => t.id)).toEqual(['c1', 'c2']);
+	expect(foldLog(parseLog(disk)).map((t) => t.id)).toEqual(['c1', 'c2']);
+});
+
+// Don't Save after a reply wrote the log while the file had unsaved suggestions
+it('puts back what a write took early of staged events thrown away, and nothing once the file is saved', async () => {
+	const text = 'We prove the estimator is sharp for smooth solutions.';
+	const saved = buildAnchor(text, 26, 31);
+	const open = openEvent({ id: 's', file: 'main.tex', by: 'ana', body: '', anchor: saved, at: 'then', restore: 'blunt' });
+	disk = JSON.stringify(open) + '\n';
+	const store = new CommentStore();
+	await store.load('/w');
+	const typing = () =>
+		store.stage(
+			anchorEvent({ thread: 's', anchor: buildAnchor(text, 26, 35), restore: 'blunt fo', by: 'ana', at: 'now' }),
+			openEvent({ id: 'x', file: 'main.tex', by: 'ana', body: '', anchor: buildAnchor(text, 0, 2), at: 'now', restore: 'Here' })
+		);
+	typing();
+	await store.append(replyEvent({ id: 'm1', thread: 's', by: 'bo', body: 'ok', at: 'now' }));
+	store.discardStaged('main.tex');
+	await store.append(...store.takeBack('main.tex', 'ana'));
+	const back = foldLog(parseLog(disk));
+	expect(back.map((t) => [t.id, t.anchor, t.restore])).toEqual([['s', saved, 'blunt']]);
+
+	typing();
+	await store.append(replyEvent({ id: 'm2', thread: 's', by: 'bo', body: 'ok', at: 'now' }));
+	store.saved('main.tex');
+	expect(store.takeBack('main.tex', 'ana')).toEqual([]);
 });
 
 /** deterministic PRNG (mulberry32) so a failure reproduces byte-for-byte */

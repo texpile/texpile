@@ -95,7 +95,7 @@
 		{#if typstExport.error}
 			<!-- tinymist's own words, reworded where they were a Rust dump; the compiler's source excerpt keeps its layout -->
 			<pre
-				class="text-error-ink bg-surface-100-900 mt-3 max-h-40 overflow-auto rounded-container p-3 font-mono text-xs whitespace-pre-wrap"
+				class="text-error-ink bg-surface-100-900 rounded-container mt-3 max-h-40 overflow-auto p-3 font-mono text-xs whitespace-pre-wrap"
 				role="alert">{typstExport.error}</pre>
 		{/if}
 

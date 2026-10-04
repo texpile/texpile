@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Node } from 'prosemirror-model';
+import { Transform } from 'prosemirror-transform';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { withoutOrigins } from '$lib/editor/visual/parseOrigins';
@@ -39,6 +40,19 @@ describe('text that belongs to the chip before it', () => {
 		expect(chipsOf(source)).toEqual(['\\smallskip ', '\\medskip ', '\\bigskip', '\\bibliographystyle{plain}']);
 		const parsed = parseLatexFile(source);
 		expect(serializeLatexFile(parsed, parsed.doc)).toBe(source);
+	});
+
+	it('leaves the line end after a command written against a word, so deleting the command keeps the words apart', () => {
+		const source = `\\documentclass{article}\n\\begin{document}\nFirst word\\bigskip\nnext words.\n\\end{document}\n`;
+		expect(chipsOf(source)).toEqual(['\\bigskip']);
+		const parsed = parseLatexFile(source);
+		let chip = -1;
+		parsed.doc.descendants((node, pos) => {
+			if (node.type.name === 'inline_latex') chip = pos;
+			return chip < 0;
+		});
+		const doc = new Transform(parsed.doc).delete(chip, chip + parsed.doc.nodeAt(chip)!.nodeSize).doc;
+		expect(serializeLatexFile(parsed, doc)).toContain('First word\nnext words.');
 	});
 
 	it('writes every byte back, verbatim and regenerated, and leaves a symbol ending its paragraph alone', () => {

@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { codeFolding, foldable, foldedRanges, foldEffect, foldService } from '@codemirror/language';
@@ -41,5 +41,23 @@ describe('source fold memory', () => {
 		await Promise.resolve();
 		expect(foldedLines(second)).toEqual(['\\section{Method}']);
 		second.destroy();
+	});
+
+	// closing the window tears nothing down, and the next start folded another line that read the same
+	it('forgets a fold the reader deleted, with the editor still open', () => {
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+		try {
+			const view = open(PAPER);
+			const method = view.state.doc.line(3);
+			view.dispatch({ effects: foldEffect.of(foldable(view.state, method.from, method.to)!) });
+			expect(docPositions.get(FILE)?.folds).toHaveLength(1);
+			view.dispatch({ changes: { from: method.from, to: view.state.doc.line(5).to + 1 }, userEvent: 'delete' });
+			expect(foldedLines(view)).toEqual([]);
+			vi.advanceTimersByTime(1000);
+			expect(docPositions.get(FILE)?.folds).toBeUndefined();
+			view.destroy();
+		} finally {
+			vi.useRealTimers();
+		}
 	});
 });

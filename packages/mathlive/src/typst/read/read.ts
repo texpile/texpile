@@ -224,6 +224,14 @@ export function commandAtom(
 // draws as themselves
 const LITERAL_CHARS = new Set(['~', "'", '`', '"', '*']);
 
+// Typst's `aleph` to `daleth` are Hebrew letters; LaTeX's \aleph to \daleth the letterlike symbols
+const HEBREW_LETTERLIKE: Readonly<Record<string, string>> = {
+  א: 'ℵ',
+  ב: 'ℶ',
+  ג: 'ℷ',
+  ד: 'ℸ',
+};
+
 export function charAtom(r: TypstReader, ch: string): Atom {
   const operator = LARGE_OPERATORS[ch];
   if (operator) return parseLatex(operator, { style: r.style })[0];
@@ -233,9 +241,10 @@ export function charAtom(r: TypstReader, ch: string): Atom {
     literal.value = ch;
     return literal;
   }
+  const letter = HEBREW_LETTERLIKE[ch] ?? ch;
   // MathLive reads − as a command of its own and writes it back bare, which pdflatex rejects; `-`
   // draws the same minus
-  const command = ch === '\u2212' ? '-' : (plainCommand(ch) ?? ch);
+  const command = ch === '\u2212' ? '-' : (plainCommand(letter) ?? letter);
   const atom =
     Mode.createAtom('math', command, r.style) ??
     new Atom({ type: 'mord', mode: 'math', value: ch, style: r.style });
