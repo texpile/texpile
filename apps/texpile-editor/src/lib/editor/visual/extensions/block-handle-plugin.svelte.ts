@@ -14,6 +14,8 @@ const GUTTER_OFFSET_RIGHT = 8;
 // one button wide plus the gap to the text: the stacked gutter, while comments crowd the pane (the scroller's
 // data-gutter-stacked, which the comment rail decides)
 const GUTTER_OFFSET_LEFT_STACKED = 30;
+// one handle button (app.css .block-handle-btn); the side by side gutter is two and a 2px gap
+const HANDLE_W = 22;
 
 // a \noindent paragraph prints its own label in this same left margin, at the block's top edge
 // (app.css). Drop the gutter clear of it rather than have the two draw over each other.
@@ -32,7 +34,14 @@ class BlockHandleView {
 	private view: EditorView;
 	private host: HTMLElement;
 	private component: Record<string, unknown> | null = null;
-	private state = $state<{ visible: boolean; top: number; left: number; right: number; stacked: boolean; popoverOpen: boolean }>({
+	private state = $state<{
+		visible: boolean;
+		top: number;
+		left: number;
+		right: number;
+		stacked: boolean;
+		popoverOpen: boolean;
+	}>({
 		visible: false,
 		top: 0,
 		left: 0,
@@ -143,19 +152,23 @@ class BlockHandleView {
 
 		const rect = dom.getBoundingClientRect();
 		const top = rect.top + (dropsForLabel(dom) ? NOINDENT_LABEL_DROP : 0);
-		// A tall block whose top has scrolled past the editor's visible area would put the gutter
-		// over the toolbar above it, or off-screen entirely. Hidden rather than pinned to the top
-		// edge: the gutter's y IS which block it acts on, and one of these buttons deletes, so a
-		// handle floating away from the block edge it belongs to would be guessing on the user's
-		// behalf. Scroll the block's top back into view and it comes back.
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
 		const containerRect = this.view.dom.getBoundingClientRect();
 		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
 		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
-		// The same while the pane is scrolled sideways to the comment cards: the gutter would sit out
-		// over the sidebar, beside a block whose start is out of view. Scroll back and it returns.
-		if (this.outsideVisibleArea(top, left)) {
+		// null scroller = nothing can scroll, so nothing can be out of view
+		const area = scrollParent(this.view.dom)?.getBoundingClientRect();
+		// A tall block whose top has scrolled past the editor's visible area would put the gutter
+		// over the toolbar above it, or off-screen entirely. Hidden rather than pinned to the top
+		// edge: the gutter's y IS which block it acts on, and one of these buttons deletes, so a
+		// handle floating away from the block edge it belongs to would be guessing on the user's
+		// behalf. Scroll the block's top back into view and it comes back.
+		// Sideways, while the pane is scrolled to the comment cards, it stops at the pane's edge, whole
+		// and grabbable, for as long as it still fits before the text, and goes once it does not.
+		const width = stacked ? HANDLE_W : 2 * HANDLE_W + 2;
+		const pinned = area ? Math.max(left, area.left) : left;
+		if (area && (top < area.top || pinned + width > containerRect.left)) {
 			this.state.visible = false;
 			return;
 		}
@@ -163,16 +176,8 @@ class BlockHandleView {
 		this.state.visible = true;
 		this.state.top = top;
 		this.state.stacked = stacked;
-		this.state.left = left;
+		this.state.left = pinned;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
-	}
-
-	/** null scroller = nothing can scroll, so nothing can be out of view and the check is moot. */
-	private outsideVisibleArea(top: number, left: number): boolean {
-		const scroller = scrollParent(this.view.dom);
-		if (!scroller) return false;
-		const area = scroller.getBoundingClientRect();
-		return top < area.top || left < area.left;
 	}
 
 	private cancelHide = () => {
