@@ -92,7 +92,7 @@
 		"prosemirror-keymap": "^1.2.2",
 		"prosemirror-model": "^1.25.12",
 		"prosemirror-proofread": "^0.4.0-beta.1",
-		"prosemirror-search": "^0.1.0",
+		"prosemirror-search": "^1.1.1",
 		"prosemirror-state": "^1.4.3",
 		"prosemirror-tables": "^1.4.0",
 		"prosemirror-transform": "^1.12.1",
