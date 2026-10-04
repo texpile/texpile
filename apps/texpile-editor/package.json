@@ -76,7 +76,7 @@
 		"diff": "^8.0.2",
 		"esm-env": "^1.2.2",
 		"harper.js": "^2.10.0",
-		"lib0": "^0.2.117",
+		"lib0": "^0.2.118",
 		"linebreak": "^1.1.0",
 		"markdown-it": "^15.0.2",
 		"mathlive": "workspace:*",
