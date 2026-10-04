@@ -10,7 +10,7 @@ import { stopCwdProgramLookup } from './shell/findProgram';
 import { registerPrivilegedSchemes, registerProtocolHandlers } from './appProtocols';
 import { readSettings, writeSettings, registerSettingsIpc } from './appSettings';
 import { chromeColors, createWindow, startUrl } from './windows/createWindow';
-import { windowRoots, pendingOpens, normRoot, windowFor, focusWindow, beginQuit } from './windows/windowRegistry';
+import { windowRoots, pendingOpens, normRoot, windowFor, windowWithRoot, focusWindow, beginQuit } from './windows/windowRegistry';
 import { registerBootstrapIpc } from './ipc/bootstrapIpc';
 import { registerStartupStatsIpc } from './startupStats';
 import { startStartupProfile } from './startupProfile';
@@ -138,10 +138,28 @@ function folderFromArgv(argv: string[]): string | null {
 	return null;
 }
 
-// macOS "Open With" arrives here, possibly before the window (even before ready)
+// a folder macOS hands over before ready; consumed at whenReady like a folder in argv
+let initialOpenFolder: string | null = null;
+
+function requestOpenFolder(dir: string): void {
+	const existing = windowWithRoot(dir);
+	if (existing) focusWindow(existing);
+	else if (app.isReady()) focusWindow(createWindow(startUrl(), { kind: 'folder', path: dir }));
+	else initialOpenFolder = dir;
+}
+
+// macOS "Open With" arrives here, possibly before the window (even before ready). So does a
+// folder given to `open -a`, which read as a file showed EISDIR in a lone-file window
 app.on('open-file', (event, filePath) => {
 	event.preventDefault();
-	requestOpenPath(filePath);
+	let dir = false;
+	try {
+		dir = fs.statSync(filePath).isDirectory();
+	} catch {
+		/* gone already: requestOpenPath reports it */
+	}
+	if (dir) requestOpenFolder(filePath);
+	else requestOpenPath(filePath);
 });
 
 // macOS delivers texpile:// here, possibly before the app is ready
@@ -178,7 +196,7 @@ app.whenReady().then(() => {
 	if (!portable) app.setAsDefaultProtocolClient('texpile');
 	if (!initialOpenPath) initialOpenPath = fileFromArgv(process.argv);
 	if (!initialJoinLink) initialJoinLink = linkFromArgv(process.argv);
-	const argvFolder = folderFromArgv(process.argv);
+	const argvFolder = folderFromArgv(process.argv) ?? initialOpenFolder;
 
 	// Window controls for the custom title bar, plus - on macOS - the native menu bar, built from
 	// what the renderer reports about its own menus. Everywhere else the native menu is removed
