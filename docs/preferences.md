@@ -62,12 +62,12 @@ Settings apply to every folder you open. The compile command and its options are
 | Autofetch    | On by default. When enabled, commits will automatically be fetched from the default remote of the current Git repository every 3 minutes, while Texpile is in front, so Sync shows how many commits there are to pull. The working tree does not change until you Sync. |
 | Git Identity | The user.name and user.email git will use in the open folder. Comments fall back to that name while the display name under Collaboration is blank. Shown read-only: set them with git config in a terminal.                                                             |
 
-### Local History
+### Version History
 
-| Setting            | What it does                                                                                                                                                                        |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Keep local history | On by default. A copy of each file as you save it, kept on this computer for 30 days ([Local history](version-control.md#local-history)). Off records nothing; what was kept stays. |
-| Saved copies       | How much space Local History takes. Open it for Clear Local History…, which deletes every copy of every file.                                                                       |
+| Setting              | What it does                                                                                                                                                                            |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Keep version history | On by default. A copy of each file as you save it, kept on this computer for 30 days ([Version history](version-control.md#version-history)). Off records nothing; what was kept stays. |
+| Saved copies         | How much space Version History takes. Open it for Clear Version History…, which deletes every copy of every file.                                                                       |
 
 ## Collaboration
 

@@ -511,6 +511,35 @@ export class Parser {
   }
 
   /**
+   * The literal tokens, as a string, of a "[...]" for a macro's optional
+   * argument, or null when there is none. As in TeX, it ends at the first "]"
+   * outside braces.
+   */
+  scanOptionalLiteral(): string | null {
+    const start = this.index;
+    this.skipFiller();
+    if (!this.match('[')) {
+      this.index = start;
+      return null;
+    }
+    let result = '';
+    let level = 0;
+    while (!this.end()) {
+      const token = this.get()!;
+      if (token === ']' && level === 0) return result;
+      if (token === '<{>') level += 1;
+      if (token === '<}>') level -= 1;
+      if (/\\[a-zA-Z]+$/.test(result) && /^[a-zA-Z]/.test(token))
+        result += ' ';
+      result +=
+        { '<{>': '{', '<}>': '}', '<space>': ' ', '<$$>': '$$', '<$>': '$' }[
+          token
+        ] ?? token;
+    }
+    return result;
+  }
+
+  /**
    * Return as a number a group of characters representing a
    * numerical quantity.
    *
@@ -1835,6 +1864,10 @@ export class Parser {
     // what the proper parse mode is, so defer parsing till later
     // when invoking `parseLatex`
     for (let i = 1; i <= argCount; i++) {
+      if (i === 1 && def.optional !== undefined) {
+        args[1] = this.scanOptionalLiteral() ?? def.optional;
+        continue;
+      }
       let arg = this.scanLiteralGroup();
       if (!arg) {
         // If the argument wasn't a group ({}), it may have

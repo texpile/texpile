@@ -1,5 +1,5 @@
 /** @vitest-environment jsdom */
-// Which agents Refine offers: the ticked ones, else the ones installed
+// Which agent Refine runs: the one picked, and none before that
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const settings = {
@@ -13,7 +13,7 @@ vi.mock('$lib/settings', () => ({ settings }));
 	detect: async () => ({ claude: true, codex: false, agy: true })
 };
 
-const { lookUpRefineAgents, refineAgentsTicked, refineAgentsOffered, withRefineAgent } = await import('$lib/ai/refineAgents.svelte');
+const { lookUpRefineAgents, refineAgentsTicked, refineAgentsOffered } = await import('$lib/ai/refineAgents.svelte');
 
 beforeEach(async () => {
 	settings.current = { refineAgents: null, aiAgentCommand: '' };
@@ -22,21 +22,25 @@ beforeEach(async () => {
 });
 
 describe('refine agents', () => {
-	it('offers the installed presets until any are ticked', () => {
-		expect(refineAgentsTicked()).toEqual(['claude', 'agy']);
-		expect(refineAgentsOffered()).toEqual(['claude', 'agy']);
-	});
-
-	it('offers only the ticked ones that can run', () => {
-		settings.current.refineAgents = ['codex', 'claude', 'custom'];
+	it('runs none until one is picked, though some are installed', () => {
+		expect(refineAgentsTicked()).toEqual([]);
+		expect(refineAgentsOffered()).toEqual([]);
+		settings.current.refineAgents = ['claude'];
 		expect(refineAgentsOffered()).toEqual(['claude']);
-		settings.current.aiAgentCommand = 'my-agent --quiet';
-		expect(refineAgentsOffered()).toEqual(['claude', 'custom']);
 	});
 
-	it('ticks and unticks in the order Preferences lists them', () => {
-		settings.current.refineAgents = ['agy'];
-		expect(withRefineAgent('claude', true)).toEqual(['claude', 'agy']);
-		expect(withRefineAgent('agy', false)).toEqual([]);
+	it('keeps the first of a list saved when several could be ticked, and offers it only when it can run', () => {
+		settings.current.refineAgents = ['codex', 'claude'];
+		expect(refineAgentsTicked()).toEqual(['codex']);
+		expect(refineAgentsOffered()).toEqual([]);
+		settings.current.refineAgents = ['custom'];
+		expect(refineAgentsOffered()).toEqual([]);
+		settings.current.aiAgentCommand = 'my-agent --quiet';
+		expect(refineAgentsOffered()).toEqual(['custom']);
+	});
+
+	it('is off when None is picked', () => {
+		settings.current.refineAgents = [];
+		expect(refineAgentsOffered()).toEqual([]);
 	});
 });

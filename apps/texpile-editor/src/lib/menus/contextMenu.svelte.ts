@@ -24,7 +24,8 @@ export type ContextMenuItem =
 			tip?: string;
 	  };
 
-export type OpenMenu = { items: ContextMenuItem[]; x: number; y: number; onClose?: () => void };
+/** above: the menu's bottom at y rather than its top, for a button at the foot of a box */
+export type OpenMenu = { items: ContextMenuItem[]; x: number; y: number; above?: boolean; onClose?: () => void };
 
 /** what ContextMenuHost draws; null between menus */
 export const openMenu = box<OpenMenu | null>(null);
@@ -75,7 +76,7 @@ async function showNative(items: ContextMenuItem[], x: number, y: number): Promi
 export async function showContextMenu(
 	items: ContextMenuItem[],
 	at: { x: number; y: number },
-	opts?: { onClose?: () => void }
+	opts?: { onClose?: () => void; above?: boolean }
 ): Promise<void> {
 	if (nativeContextMenus()) {
 		const it = await showNative(items, at.x, at.y);
@@ -89,6 +90,7 @@ export async function showContextMenu(
 			items,
 			x: at.x,
 			y: at.y,
+			above: opts?.above,
 			onClose: () => {
 				opts?.onClose?.();
 				resolve();

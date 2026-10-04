@@ -1,8 +1,9 @@
-// What the Local History dialog does with a copy, as VS Code's local history commands do: Restore,
-// Rename, Delete, and Save a Copy Now (VS Code's Create Entry). A module the workspace provides
-// while it is open, like scmHandlers.svelte.ts: the dialog is drawn apart from the editor it acts on.
+// What Version History does with a copy, as VS Code's local history commands do: show it against the
+// file, Restore, Rename, Delete, and Save a Copy Now (VS Code's Create Entry). A module the workspace
+// provides while it is open, like scmHandlers.svelte.ts: the panel is drawn apart from the editor it acts on.
 import {
 	addLocalHistory,
+	listLocalHistory,
 	readLocalHistory,
 	removeLocalHistory,
 	renameLocalHistory,
@@ -29,9 +30,24 @@ export type LocalHistoryDeps = {
 	/** null when the file is gone */
 	readTextIfPresent(path: string): Promise<string | null>;
 	writeText(path: string, content: string): Promise<void>;
-	loadFile(path: string): Promise<void>;
-	openCompareTab(path: string, compare: { hash: string; subject: string; path?: string }): void;
+	/** the open editor takes what is on disk now, as it takes a change made outside the app */
+	adoptDisk(path: string): Promise<void>;
+	/** how many open suggestions bringing back `after` over `before` rejects (SuggestionsController.droppedBy) */
+	suggestionsDropped(path: string, before: string, after: string): Promise<number>;
+	/** that restore recorded in the comment log, before the editor takes the text */
+	restoreSuggestions(path: string, before: string, after: string): Promise<void>;
+	/** a file not open changed on disk: its suggestions take `text` as an open file's do, which reopens the ones a restore
+	 *  rejected when the Undo on its notice writes the text back */
+	adoptClosed(path: string, text: string): Promise<void>;
+	/** `replacing`: the version a comparison of the file is against now, turned to this one in its own tab */
+	openCompareTab(path: string, compare: { hash: string; subject: string }, replacing?: string): void;
+	/** the comparison against `hash` closed, and the file itself in front */
+	leaveCompareTab(path: string, hash: string): void;
 };
+
+function restoreRejects(count: number): string {
+	return count === 1 ? m.history_restore_rejects_one() : m.history_restore_rejects_other({ count });
+}
 
 /** "5 Mar 2026, 14:02": VS Code's local history date label */
 export function entryDate(timestamp: number): string {
@@ -41,21 +57,47 @@ export function entryDate(timestamp: number): string {
 export class LocalHistoryActions {
 	constructor(private deps: LocalHistoryDeps) {}
 
-	/** the entry against the file as it is now, in a compare tab */
-	compare(path: string, entry: LocalHistoryEntry): void {
-		this.deps.openCompareTab(path, {
-			hash: `${LOCAL_REF}${entry.id}`,
-			subject: `${sourceLabel(entry.source)} · ${entryDate(entry.timestamp)}`
-		});
+	/** Version History on a file: the editor shows what has changed since its newest copy that differs from
+	 *  the file, the one that matches showing nothing to bring back */
+	async open(path: string): Promise<void> {
+		const list = await listLocalHistory(path);
+		if (!list.length) {
+			toaster.info({ title: m.history_none() });
+			return;
+		}
+		const now = await this.currentText(path);
+		for (const e of list) {
+			if ((await readLocalHistory(path, e.id)) !== now) return this.show(path, e);
+		}
+		this.show(path, list[0]);
+	}
+
+	/** the editor's comparison turned to `entry`; `replacing`, the copy it shows now */
+	show(path: string, entry: LocalHistoryEntry, replacing?: string): void {
+		const compare = { hash: `${LOCAL_REF}${entry.id}`, subject: `${sourceLabel(entry.source)} · ${entryDate(entry.timestamp)}` };
+		this.deps.openCompareTab(path, compare, replacing);
+	}
+
+	/** Back to Editing: the file itself, in place of its comparison with `hash` */
+	leave(path: string, hash: string): void {
+		this.deps.leaveCompareTab(path, hash);
 	}
 
 	/** Restore: asked first, then the file becomes the copy, and that is an entry of its own. What it
-	 *  held, unsaved edits included, is kept first as Before Restore, and the notice offers Undo. */
+	 *  held, unsaved edits included, is kept first as Before Restore, and the notice offers Undo. The
+	 *  suggestions it removes are rejected, which the question says and the Undo takes back */
 	async restore(path: string, entry: LocalHistoryEntry): Promise<boolean> {
+		const content = await readLocalHistory(path, entry.id);
+		if (content === null) {
+			toaster.error({ title: m.history_restore_failed({ name: basename(path) }), description: m.history_entry_gone() });
+			return false;
+		}
+		const onDisk = await this.deps.readTextIfPresent(path);
+		const dropped = onDisk === null ? 0 : await this.deps.suggestionsDropped(path, toLf(onDisk), toLf(content));
 		const answer = await promptAsk({
 			title: m.history_restore_title(),
 			message: m.history_restore_message({ name: basename(path) }),
-			detail: m.history_restore_detail(),
+			detail: [m.history_restore_detail(), dropped ? restoreRejects(dropped) : ''].filter(Boolean).join(' '),
 			buttons: [
 				{ id: 'restore', label: m.history_restore(), primary: true },
 				{ id: 'cancel', label: m.vcs_cancel() }
@@ -63,11 +105,6 @@ export class LocalHistoryActions {
 			cancelId: 'cancel'
 		});
 		if (answer !== 'restore') return false;
-		const content = await readLocalHistory(path, entry.id);
-		if (content === null) {
-			toaster.error({ title: m.history_restore_failed({ name: basename(path) }), description: m.history_entry_gone() });
-			return false;
-		}
 		let current: string | null;
 		// samePath: after a rename in the app the editor holds the path with / and Local History hands
 		// it back with \ on Windows, and a miss left the queued save to land on the restored text
@@ -81,6 +118,8 @@ export class LocalHistoryActions {
 			// what the restore replaces, so restoring is undone the same way
 			if (current !== null) await addLocalHistory(path, toLf(current), 'before-restore');
 			if (unsaved) await addLocalHistory(unsaved.path, unsaved.content, 'before-restore');
+			// in the log before the text lands, which the editor would otherwise take as an edit that withdraws them
+			if (current !== null) await this.deps.restoreSuggestions(path, toLf(current), toLf(content));
 			await this.deps.writeText(path, current === null ? content : fromLf(toLf(content), detectEol(current)));
 		} catch (e) {
 			toaster.error({ title: m.history_restore_failed({ name: basename(path) }), description: e instanceof Error ? e.message : String(e) });
@@ -88,7 +127,7 @@ export class LocalHistoryActions {
 		}
 		// a deleted file comes back (its folder too, if that went), and is opened
 		if (current === null) openFile(path);
-		else if (open && loaded) await this.deps.loadFile(loaded);
+		else if (open) await this.deps.adoptDisk(path);
 		await addLocalHistory(path, toLf(content), 'restored');
 		// said, as restoring a version is: the file may not be the one on screen
 		const before = current;
@@ -99,8 +138,9 @@ export class LocalHistoryActions {
 		return true;
 	}
 
-	/** Undo on the notice: the text the file had before, written back. Typing since the restore is
-	 *  saved first, and kept as any save is: queued, it would land on the text Undo brings back */
+	/** Undo on the notice: the text the file had before, written back, and the suggestions the restore
+	 *  rejected open again. Typing since the restore is saved first, and kept as any save is: queued, it
+	 *  would land on the text Undo brings back */
 	private async undoRestore(path: string, before: string): Promise<void> {
 		const loaded = this.deps.getLoadedPath();
 		const open = !!loaded && samePath(loaded, path);
@@ -113,7 +153,8 @@ export class LocalHistoryActions {
 			toaster.error({ title: m.history_restore_failed({ name: basename(path) }), description: e instanceof Error ? e.message : String(e) });
 			return;
 		}
-		if (open && loaded) await this.deps.loadFile(loaded);
+		if (open) await this.deps.adoptDisk(path);
+		else await this.deps.adoptClosed(path, toLf(before));
 	}
 
 	/** The open file's queued save written out and waited for. Resolves to one the save guard turned

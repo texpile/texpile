@@ -1,6 +1,7 @@
 // the pure side of SuggestionsController: a file's text with the suggestions placed on it
 import { buildAnchor, type CommentAnchor } from '$lib/comments/anchor';
-import type { EditMode, PlacedSuggestion } from '$lib/comments/suggestCompare';
+import { compareSuggestions, type ComparedSuggestions, type EditMode, type PlacedSuggestion } from '$lib/comments/suggestCompare';
+import { dialectWhitespace } from '$lib/comments/suggestHunks';
 import type { TextSpan } from '$lib/comments/editGestures';
 import type { SuggestionMark } from '$lib/comments/activeSuggestions.svelte';
 
@@ -58,4 +59,37 @@ export function anchorOf(text: string, s: PlacedSuggestion, ranks: Map<string, n
 	const anchor = buildAnchor(text, s.from, s.to);
 	const rank = ranks.get(s.id);
 	return rank === undefined ? anchor : { ...anchor, rank };
+}
+
+/** `text` over a file as `state`, as an edit in Editing: the suggestions it leaves where they now stand, the changes to
+ *  record for them, and the ones it removes, which a Local History restore rejects rather than withdraws */
+export function restoredOver(file: string, state: FileState, text: string): ComparedSuggestions & { dropped: Set<string> } {
+	const r = compareSuggestions({
+		before: state.text,
+		after: text,
+		pending: state.placed,
+		mode: 'editing',
+		author: '',
+		whitespace: dialectWhitespace(file, 'exact'),
+		newId: () => crypto.randomUUID()
+	});
+	const dropped = new Set(state.placed.filter((s) => !r.placed.some((p) => p.id === s.id)).map((s) => s.id));
+	return { ...r, changes: r.changes.filter((c) => !dropped.has(c.id)), dropped };
+}
+
+/** `file` after `from`, a file or folder, was renamed `to` */
+export function renamedFile(file: string, from: string, to: string): string {
+	return file === from ? to : file.startsWith(from + '/') ? to + file.slice(from.length) : file;
+}
+
+/** the suggestions as the editors draw them; `me` is the reader, whose own are drawn as theirs */
+export function suggestionMarks(text: string, placed: PlacedSuggestion[], me: string | null): SuggestionMark[] {
+	return placed.map((s) => ({
+		id: s.id,
+		from: s.from,
+		to: s.to,
+		restore: s.restore,
+		mine: s.author === me,
+		anchor: buildAnchor(text, s.from, s.to)
+	}));
 }

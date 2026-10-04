@@ -6,6 +6,8 @@ import { projectIntelStore } from '$lib/stores/projectIntel';
 export type MacroDef = {
 	def: string;
 	args?: number;
+	/** the default of #1, which makes it optional: \newcommand{\a}[2][10]{...} */
+	optional?: string;
 };
 
 const MAX_BODY = 500; // a "macro" body longer than this is not something a preview should inline
@@ -24,7 +26,7 @@ export function balancedGroup(text: string, open: number): { body: string; end: 
 }
 
 const NEWCOMMAND =
-	/\\(?:(?:new|renew|provide)command|DeclareRobustCommand)\*?\s*\{?\\([a-zA-Z@]+)\}?\s*(?:\[(\d)\])?\s*(?:\[[^\]]*\]\s*)?(?=\{)/g;
+	/\\(?:(?:new|renew|provide)command|DeclareRobustCommand)\*?\s*\{?\\([a-zA-Z@]+)\}?\s*(?:\[(\d)\])?\s*(?:\[([^\]]*)\]\s*)?(?=\{)/g;
 // \def\name#1#2{...}: the parameters are counted, anything fancier than #1#2... is not a definition to inline
 const DEF = /\\[gex]?def\s*\\([a-zA-Z@]+)\s*((?:#\d)*)\s*(?=\{)/g;
 const MATH_OPERATOR = /\\DeclareMathOperator(\*?)\{\\([a-zA-Z@]+)\}\s*(?=\{)/g;
@@ -37,7 +39,7 @@ export function scanMacroDefinitions(text: string): Record<string, MacroDef> {
 	NEWCOMMAND.lastIndex = 0;
 	for (let m = NEWCOMMAND.exec(text); m; m = NEWCOMMAND.exec(text)) {
 		const group = balancedGroup(text, m.index + m[0].length);
-		if (group) out[m[1]] = { def: group.body, args: m[2] ? +m[2] : 0 };
+		if (group) out[m[1]] = { def: group.body, args: m[2] ? +m[2] : 0, ...(m[2] && m[3] !== undefined ? { optional: m[3] } : {}) };
 	}
 	DEF.lastIndex = 0;
 	for (let m = DEF.exec(text); m; m = DEF.exec(text)) {
@@ -66,7 +68,7 @@ export function mathMacrosFor(docText: string): Record<string, MacroDef> {
 	if (cache && cache.text === docText && cache.intel === intel) return cache.macros;
 	const macros: Record<string, MacroDef> = {};
 	for (const m of intel.macros) {
-		if (m.definition !== undefined) macros[m.name] = { def: m.definition, args: m.argCount ?? 0 };
+		if (m.definition !== undefined) macros[m.name] = { def: m.definition, args: m.argCount ?? 0, optional: m.optional };
 	}
 	Object.assign(macros, scanMacroDefinitions(docText));
 	cache = { text: docText, intel, macros };

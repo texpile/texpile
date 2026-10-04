@@ -9,6 +9,7 @@ import { settings, updateSettingsSettled } from '$lib/settings';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { agentUnavailable } from './agentAvailability';
 import { attachedBlocks } from './attach/attached';
+import { imageBlocks } from './attach/pastedImages';
 import { panelTabOff } from './agentOffer.svelte';
 import type {
 	AcpEvent,
@@ -19,6 +20,7 @@ import type {
 	ChatItem,
 	ConfigOption,
 	PanelAgent,
+	PastedImage,
 	PermissionAsk
 } from './agentPanel.types';
 
@@ -39,6 +41,8 @@ export class AgentSession {
 	commands = $state<AgentCommand[]>([]);
 	/** the agent takes a selection's text with a message, not only a link to its file */
 	takesSelection = $state(false);
+	/** the agent takes images with a message, so a pasted one can go */
+	takesImages = $state(false);
 	/** the folder it runs in; another folder in this window starts a new conversation */
 	root = $state<string | null>(null);
 	/** the agent keeps its chats, so earlier ones can be opened again; Texpile keeps none itself */
@@ -67,6 +71,7 @@ export class AgentSession {
 		this.config = [];
 		this.commands = [];
 		this.takesSelection = false;
+		this.takesImages = false;
 		this.detail = '';
 		this.name = '';
 		this.agent = null;
@@ -92,6 +97,7 @@ export class AgentSession {
 			if (e.chat) this.chat = e.chat;
 			if (e.history !== undefined) this.history = e.history;
 			if (e.takesSelection !== undefined) this.takesSelection = e.takesSelection;
+			if (e.takesImages !== undefined) this.takesImages = e.takesImages;
 			if (e.state === 'failed') this.asks = [];
 			// after a start, a turn or a chat opened: each may have added one to the list
 			if (e.state === 'ready' && this.history) void this.listChats();
@@ -106,21 +112,22 @@ export class AgentSession {
 		}
 	}
 
-	async send(text: string, attached: Attached | null): Promise<void> {
+	async send(text: string, attached: Attached | null, images: PastedImage[] = []): Promise<void> {
 		const bridge = this.bridge();
-		if (!bridge || this.state !== 'ready' || !text.trim()) return;
+		if (!bridge || this.state !== 'ready' || (!text.trim() && !images.length)) return;
 		const conversation = this.conversation;
 		// at once: a message sent while the save and main's look at the folder run would start a second turn
 		this.state = 'working';
 		this.stopAsked = false;
 		await agentHost.current?.flushPendingSave();
 		if (conversation !== this.conversation) return;
-		this.items = [...this.items, { kind: 'user', id: itemId(), text, attached }];
+		this.items = [...this.items, { kind: 'user', id: itemId(), text, attached, images }];
 		if (this.stopAsked) {
 			this.state = 'ready';
 			return;
 		}
-		const r = await bridge.prompt([{ type: 'text', text }, ...attachedBlocks(attached)]);
+		const words = text.trim() ? [{ type: 'text', text }] : [];
+		const r = await bridge.prompt([...words, ...imageBlocks(images), ...attachedBlocks(attached)]);
 		if (conversation !== this.conversation) return;
 		// read again: events moved it on while the turn ran. Main moves it on before it answers, so one still
 		// working is a turn main never began

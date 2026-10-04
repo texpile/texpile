@@ -35,6 +35,8 @@ export type AcpEvent =
 			history?: boolean;
 			/** the agent takes a file's text inside a message, as the selection goes */
 			takesSelection?: boolean;
+			/** the agent takes images inside a message, as a pasted one goes */
+			takesImages?: boolean;
 	  }
 	| { type: 'update'; update: acp.SessionNotification['update'] }
 	| PermissionEvent;
@@ -122,7 +124,8 @@ export class AcpSession {
 				configOptions: session.configOptions ?? [],
 				chat: session.sessionId,
 				history: this.history,
-				takesSelection: !!init.agentCapabilities?.promptCapabilities?.embeddedContext
+				takesSelection: !!init.agentCapabilities?.promptCapabilities?.embeddedContext,
+				takesImages: !!init.agentCapabilities?.promptCapabilities?.image
 			});
 		} catch (e) {
 			if (this.closing) return;

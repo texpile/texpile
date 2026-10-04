@@ -12,11 +12,9 @@ import { listAgentModels } from '../ai/agentModels';
 
 const running = new Map<string, AbortController>();
 
-/** the agents Refine may run, as the renderer's refineAgents.svelte.ts reads them: those ticked, else the presets
- *  installed */
+/** the agent Refine may run, as the renderer's refineAgents.svelte.ts reads it: the one picked, none before that */
 function refineAgentsAllowed(s: Record<string, unknown>): string[] {
-	if (Array.isArray(s.refineAgents)) return s.refineAgents.filter((a): a is string => typeof a === 'string');
-	return PRESET_AGENTS.filter((a) => findProgram(a) !== null);
+	return Array.isArray(s.refineAgents) ? s.refineAgents.filter((a): a is string => typeof a === 'string').slice(0, 1) : [];
 }
 
 /** a preset's model; '' is its own default */

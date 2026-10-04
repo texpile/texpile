@@ -72,6 +72,7 @@ function scanTexIntel(text: string, file: string, draft: ProjectIntel) {
 		if (body) {
 			draft.macros[i].definition = body.def;
 			draft.macros[i].argCount = body.args;
+			draft.macros[i].optional = body.optional;
 		}
 	}
 	ENV_DEF_RE.lastIndex = 0;

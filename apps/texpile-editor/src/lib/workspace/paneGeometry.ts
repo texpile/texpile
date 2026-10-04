@@ -11,6 +11,10 @@ export const SIDEBAR_MAX = 600;
 export const PDF_MIN = 280;
 /** keep this much room for the editor no matter how wide the preview was saved */
 export const EDITOR_RESERVE = 360;
+/** Version History's panel beside the document, which the editor's room holds as well */
+export const HISTORY_PANEL_WIDTH = 256;
+/** the editor's least room beside that panel: the comparison's bar, with Copy and Restore, on one line */
+export const HISTORY_EDITOR_MIN = 520;
 export const COMMENT_RAIL_WIDTH = 258;
 export const COMMENT_RAIL_PEEK = 40;
 export const EDITOR_TEXT_MIN = 440;

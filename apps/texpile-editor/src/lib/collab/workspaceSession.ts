@@ -21,7 +21,7 @@ import {
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import type { EditSession } from '$lib/collab/editSession';
-import type { RemoteEdit } from '$lib/workspace/suggestionStates';
+import type { RemoteEdit } from '$lib/workspace/suggestions/suggestionStates';
 import type { DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
 import type { VisualParser } from '$lib/workspace/visualParse.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';

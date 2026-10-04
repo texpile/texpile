@@ -1,25 +1,27 @@
-// Which Local History dialog is open (LocalHistoryDialog.svelte), drawn by the workspace: one file's
-// copies, from the File menu, a file's or tab's right-click menu and the palette; or the deleted
-// files under a folder with copies left, from Restore Deleted File.
-export type LocalHistoryView = { kind: 'file'; path: string } | { kind: 'deleted'; under: string };
+// How Version History is opened, from the File menu, a file's or tab's right-click menu and the palette:
+// one file's copies in the editor itself (VersionHistoryPanel beside its comparison), or the Restore
+// Deleted File dialog on the files under a folder that are gone but have copies left
+// (RestoreDeletedDialog.svelte, drawn by the workspace).
+import { localHistoryActions } from './localHistoryActions.svelte';
 
-let view = $state<LocalHistoryView | null>(null);
+let under = $state<string | null>(null);
 
-export const localHistoryDialog = {
-	get view(): LocalHistoryView | null {
-		return view;
+export const restoreDeletedDialog = {
+	/** the folder whose deleted files the dialog lists; null when it is closed */
+	get under(): string | null {
+		return under;
 	}
 };
 
 export function openLocalHistory(path: string): void {
-	view = { kind: 'file', path };
+	void localHistoryActions.current?.open(path);
 }
 
-/** `under`: the project, or the folder that was right-clicked */
-export function openRestoreDeleted(under: string): void {
-	view = { kind: 'deleted', under };
+/** `folder`: the project, or the folder that was right-clicked */
+export function openRestoreDeleted(folder: string): void {
+	under = folder;
 }
 
-export function closeLocalHistory(): void {
-	view = null;
+export function closeRestoreDeleted(): void {
+	under = null;
 }

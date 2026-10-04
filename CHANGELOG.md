@@ -7,17 +7,20 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 - feat: more git support coverage (by @louisqli)
 - feat: version history (by @louisqli)
-- feat: push repo to Github by (by @louisqli)
+- feat: push a repo to GitHub (by @louisqli)
 - feat: cite papers by doi/name...etc (by @louisqli)
 - feat: Typst Universe support for templates (by @louisqli)
 - feat: One click Tinymist install (by @louisqli)
 - feat: expanded Typst visual editor coverage (by @louisqli)
-- feat: Advance symbol picker (by @louisqli)
+- feat: Advanced symbol picker (by @louisqli)
 - fix: `\overline`, `\sqrt`, `\hat` and similar typed in the visual math editor put the caret inside them instead of after an empty box (by @hkarlsen06)
 - feat: shift-enter in a display equation starts a new one of the same kind below it (by @hkarlsen06)
 - feat: significantly improved visual math editing experience for LaTeX and Typst (by @louisqli)
 - feat: Agent tab in the dock to work with Claude, Codex, Gemini, Copilot, OpenCode or a custom agent on your project (by @louisqli)
-- fix: various smaller UX/UI enhancement
+- feat: various QOL updates to spelling, grammar, bibliography checks and word count (by @louisqli)
+- feat: save the live preview as a PDF, and source folds are remembered (by @louisqli)
+- feat: removed the welcome screen, setup asks where each choice matters (by @louisqli)
+- fix: various smaller UX/UI enhancements and bugfixes (by @louisqli)
 
 ## [1.2.0] - 2026-09-25
 

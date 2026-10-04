@@ -29,18 +29,13 @@
 			if (!found) void tinymistInstaller.refresh();
 		});
 	});
-
-	// the dialog shows the download as it goes
-	function install(): void {
-		askForProgram('tinymist');
-		if (tinymistInstaller.offered && !tinymistInstaller.busy) void tinymistInstaller.install();
-	}
 </script>
 
 {#if tinymistMissing.current && !dismissed}
 	<EditorNotice icon={CircleAlert} tone="warning" title={m.typst_missing_title()} note={m.typst_missing_body()}>
-		<button type="button" class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={install}>
-			{tinymistInstaller.offered ? m.tinymist_install() : m.typst_set_up()}
+		<!-- the choice, Texpile's install or one already on the computer, is the dialog's -->
+		<button type="button" class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => askForProgram('tinymist')}>
+			{m.typst_set_up()}
 		</button>
 		<button
 			type="button"

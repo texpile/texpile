@@ -2,10 +2,10 @@
 	import type { DockView } from '$lib/terminal/dockView';
 	import VersionChangesModal from './VersionChangesModal.svelte';
 	import TwoVersionsModal from './TwoVersionsModal.svelte';
-	import LocalHistoryDialog from './LocalHistoryDialog.svelte';
+	import RestoreDeletedDialog from './history/RestoreDeletedDialog.svelte';
 	import { versionChanges } from '$lib/workspace/versionChanges.svelte';
 	import { twoVersions } from '$lib/workspace/twoVersions.svelte';
-	import { localHistoryDialog } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
+	import { restoreDeletedDialog } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
 	import { fileMode, SINGLE_FILE_CAPS } from '$lib/workspace/fileMode.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import WorkspaceModals from '$lib/modals/workspace/WorkspaceModals.svelte';
@@ -447,9 +447,9 @@
 	{#if twoVersions.current}
 		<TwoVersionsModal versions={twoVersions.current} />
 	{/if}
-	{#if localHistoryDialog.view && workspaceRoot.current}
-		{#key localHistoryDialog.view}
-			<LocalHistoryDialog root={workspaceRoot.current} view={localHistoryDialog.view} />
+	{#if restoreDeletedDialog.under && workspaceRoot.current}
+		{#key restoreDeletedDialog.under}
+			<RestoreDeletedDialog root={workspaceRoot.current} under={restoreDeletedDialog.under} />
 		{/key}
 	{/if}
 

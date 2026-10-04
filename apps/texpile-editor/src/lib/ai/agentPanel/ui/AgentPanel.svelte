@@ -9,6 +9,7 @@
 	import { LoaderCircle } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import AgentMessage from './conversation/AgentMessage.svelte';
+	import AgentImagePreview from './AgentImagePreview.svelte';
 	import AgentThought from './conversation/AgentThought.svelte';
 	import AgentPlan from './conversation/AgentPlan.svelte';
 	import AgentSteps from './conversation/AgentSteps.svelte';
@@ -60,6 +61,7 @@
 		{@render conversation()}
 	{/if}
 </div>
+<AgentImagePreview />
 
 {#snippet conversation()}
 	{#if agentSession.items.length || live}
@@ -79,7 +81,12 @@
 					{:else if block.kind === 'changes'}
 						<AgentChanges files={block.files} {agent} {labels} />
 					{:else}
-						<AgentMessage kind={block.kind} text={block.text} attached={block.kind === 'user' ? block.attached : null} />
+						<AgentMessage
+							kind={block.kind}
+							text={block.text}
+							attached={block.kind === 'user' ? block.attached : null}
+							images={block.kind === 'user' ? block.images : undefined}
+						/>
 					{/if}
 				{/each}
 				{#if quiet}
@@ -102,7 +109,8 @@
 				config={agentSession.config}
 				commands={agentSession.commands}
 				takesSelection={agentSession.takesSelection}
-				onSend={(text, attached) => void agentSession.send(text, attached)}
+				takesImages={agentSession.takesImages}
+				onSend={(text, attached, images) => void agentSession.send(text, attached, images)}
 				onStop={() => agentSession.cancel()}
 				onConfig={(id, value) => agentSession.setConfig(id, value)}
 			/>

@@ -145,6 +145,8 @@
 				{/if}
 				<!-- under File, where Word and Google Docs keep version history and writers look first -->
 				{#if canLocalHistory}
+					<!-- in groups of their own: saving, history, then closing, rather than one block of six -->
+					<Menu.Separator class={separatorClass} />
 					<Menu.Item value="local-history" class={menuBarItemClass} disabled={!fileOpen}
 						><Menu.ItemText>{m.history_menu_open()}</Menu.ItemText></Menu.Item
 					>
@@ -153,6 +155,7 @@
 					>
 				{/if}
 				{#if canCloseWorkspace}
+					<Menu.Separator class={separatorClass} />
 					<Menu.Item value="close-workspace" class={menuBarItemClass}
 						><Menu.ItemText>{m.menubar_close_workspace()}</Menu.ItemText></Menu.Item
 					>

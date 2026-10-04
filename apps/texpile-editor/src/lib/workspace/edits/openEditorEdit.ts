@@ -2,7 +2,7 @@
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
-import type { SourceEdit } from '$lib/workspace/suggestionsController';
+import type { SourceEdit } from '$lib/workspace/suggestions/suggestionsController';
 import { patchVisualFromSource } from '$lib/workspace/edits/visualSourcePatch';
 import type { OpenTexFile } from '$lib/languages/latex/symbols/latexSymbolPackage';
 

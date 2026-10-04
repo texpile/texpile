@@ -6,6 +6,7 @@ import { tip } from '$lib/components/tooltip.svelte';
 import { agentName, refiner } from '$lib/ai/selectionRefiner';
 import { refineAgentsOffered } from '$lib/ai/refineAgents.svelte';
 import { openRefineCard } from '$lib/ai/refineCardState.svelte';
+import { openPreferencesAt } from '$lib/stores/dialogStore';
 
 function svgIcon(body: string) {
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
@@ -43,7 +44,9 @@ export function selectionToolbarRow(commentLabel: string, comment: () => void, h
 		return b;
 	}
 	button(commentLabel, COMMENT_ICON, '', comment);
-	const refine = button('', REFINE_ICON, '', (b) => openRefineCard(b.getBoundingClientRect()));
+	const refine = button('', REFINE_ICON, '', (b) =>
+		refiner.current?.needsAgent ? openPreferencesAt('ai') : openRefineCard(b.getBoundingClientRect())
+	);
 	button(m.comments_pill_off(), X_ICON, ' cm-comment-add-off', () => {
 		updateSettings({ commentPill: false });
 		hide(); // the setting keeps it off; this is only so it leaves under the pointer
@@ -52,11 +55,11 @@ export function selectionToolbarRow(commentLabel: string, comment: () => void, h
 		dom,
 		sync() {
 			const r = refiner.current;
-			refine.hidden = !r?.available;
+			refine.hidden = !r?.available && !r?.needsAgent;
 			refine.disabled = !!r?.busy;
-			// named for its agent where there is one; with several, the card asks which
+			// named for its agent; without one, for the way to pick it
 			const offered = refineAgentsOffered();
-			const title = offered.length === 1 ? m.ai_refine_menu({ agent: agentName(offered[0]) }) : m.ai_refine();
+			const title = offered.length === 1 ? m.ai_refine_menu({ agent: agentName(offered[0]) }) : m.ai_refine_setup();
 			refine.setAttribute('aria-label', title);
 			hints.get(refine)?.update(title);
 		}

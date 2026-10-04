@@ -215,12 +215,16 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				// under File, where Word and Google Docs keep version history and writers look first
 				...(s.canLocalHistory
 					? [
-							{ label: label(s, 'localHistory', 'Local History…'), enabled: !!s.fileOpen, click: () => fire(win, 'file:local-history') },
+							{ type: 'separator' as const },
+							{ label: label(s, 'localHistory', 'Version History…'), enabled: !!s.fileOpen, click: () => fire(win, 'file:local-history') },
 							{ label: label(s, 'restoreDeleted', 'Restore Deleted File…'), click: () => fire(win, 'file:restore-deleted') }
 						]
 					: []),
 				...(s.canCloseWorkspace
-					? [{ label: label(s, 'closeWorkspace', 'Close Folder'), click: () => fire(win, 'file:close-workspace') }]
+					? [
+							{ type: 'separator' as const },
+							{ label: label(s, 'closeWorkspace', 'Close Folder'), click: () => fire(win, 'file:close-workspace') }
+						]
 					: [])
 				// Preferences and Share session are in the app menu above, not here
 			]

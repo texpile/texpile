@@ -6,7 +6,7 @@ import { m } from '$lib/paraglide/messages';
 import { buildAnchor, dialectOfPath } from '$lib/comments/anchor';
 import { resolveExactly } from '$lib/comments/anchorSearch';
 import { projectIntelStore } from '$lib/stores/projectIntel';
-import type { SourceEdit } from '$lib/workspace/suggestionsController';
+import type { SourceEdit } from '$lib/workspace/suggestions/suggestionsController';
 import { agentEditProblem, knownCiteKeys } from './agentEditGuard';
 import { contextAround, refinedText, refinePrompt } from './refinePrompt';
 import type { RefineAction } from './refineActions';
@@ -81,6 +81,11 @@ export class SelectionRefiner {
 
 	get available(): boolean {
 		return refineAgentsOffered().length > 0 && !!agentBridge() && this.deps.canSuggest();
+	}
+
+	/** Refine could run here but has no agent that can: none picked, or the picked one gone. Its entries open Preferences */
+	get needsAgent(): boolean {
+		return refineAgentsOffered().length === 0 && !!agentBridge() && this.deps.canSuggest();
 	}
 
 	get busy(): boolean {

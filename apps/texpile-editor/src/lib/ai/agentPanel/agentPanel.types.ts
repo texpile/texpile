@@ -24,9 +24,11 @@ export type ChangedFile = {
 export type SelectedLines = { first: number; last: number; text: string };
 /** what goes with a message: the open file, or the lines of it the reader selected */
 export type Attached = { path: string; lines: SelectedLines | null };
+/** an image pasted, dropped or picked, as the base64 of its bytes; size is null where it could not be read */
+export type PastedImage = { name: string; mimeType: string; base64: string; size: { width: number; height: number } | null };
 
 export type ChatItem =
-	| { kind: 'user'; id: string; text: string; attached: Attached | null }
+	| { kind: 'user'; id: string; text: string; attached: Attached | null; images?: PastedImage[] }
 	| { kind: 'agent'; id: string; text: string }
 	| { kind: 'thought'; id: string; text: string }
 	| ToolItem
@@ -62,6 +64,7 @@ export type AcpEvent =
 			chat?: string;
 			history?: boolean;
 			takesSelection?: boolean;
+			takesImages?: boolean;
 	  }
 	| { type: 'update'; update: SessionUpdate }
 	| { type: 'permission'; id: string; toolCall: { title?: string | null }; options: PermissionAsk['options'] }

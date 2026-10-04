@@ -9,7 +9,7 @@ import { browser } from '$lib/runtime';
 import { layout as layoutStore, updateLayout } from '$lib/storage/layout';
 import { startDrag, nudgeOnKey, clampTo, SNAP_SLACK } from '$lib/workspace/paneResize';
 // the launch skeleton lays the same panes out from these, so they live where both can reach them
-import { SIDEBAR_MIN, SIDEBAR_MAX, PDF_MIN, pdfMaxWidth, pdfWidthOf } from '$lib/workspace/paneGeometry';
+import { SIDEBAR_MIN, SIDEBAR_MAX, PDF_MIN, HISTORY_EDITOR_MIN, pdfMaxWidth, pdfWidthOf } from '$lib/workspace/paneGeometry';
 
 const TOC_MIN = 0.1;
 const TOC_MAX = 0.9;
@@ -43,6 +43,12 @@ export class PaneLayout {
 	 * persisted: a restored session must not open a second window before the user asked for one.
 	 */
 	pdfPopout = $state(false);
+	/** a panel docked in the editor column beside the document (Version History), whose width the editor's room holds too */
+	editorAside = $state(0);
+	/** the preview was shut to make room for that panel, not by the reader, and comes back when there is room again */
+	private pdfMadeRoom = false;
+	/** the preview opened or shut on its own rather than at a click, so it slides rather than jumping */
+	pdfSlides = $state(false);
 	/** a splitter is being dragged right now; panes that reflow expensively can freeze while it is true */
 	paneDragging = $state(false);
 
@@ -55,6 +61,8 @@ export class PaneLayout {
 		if (s.historyFraction >= HISTORY_MIN && s.historyFraction <= HISTORY_MAX) this.historyFraction = s.historyFraction;
 		if (browser && typeof window !== 'undefined') this.pdfPaneWidth = pdfWidthOf(s, window.innerWidth);
 		this.pdfPaneOpen = s.pdfPaneOpen;
+		// a session reopened on Version History: the panel took its room before the saved preview came back
+		this.makeRoomForAside();
 	}
 
 	// sidebar
@@ -62,6 +70,7 @@ export class PaneLayout {
 	setSidebarOpen = (open: boolean) => {
 		this.sidebarOpen = open;
 		updateLayout({ sidebarOpen: open });
+		this.makeRoomForAside();
 	};
 
 	toggleSidebar = () => this.setSidebarOpen(!this.sidebarOpen);
@@ -148,14 +157,45 @@ export class PaneLayout {
 	// PDF preview pane
 
 	private pdfMaxWidth(): number {
-		const win = typeof window !== 'undefined' ? window.innerWidth : 1280;
-		return pdfMaxWidth(this.sidebarOpen ? this.sidebarWidth : 0, win);
+		return pdfMaxWidth((this.sidebarOpen ? this.sidebarWidth : 0) + this.editorAside, this.windowWidth());
+	}
+
+	private windowWidth(): number {
+		return typeof window !== 'undefined' ? window.innerWidth : 1280;
+	}
+
+	/** the panel beside the document came or went: `width` 0 when it went */
+	setEditorAside = (width: number) => {
+		this.editorAside = width;
+		this.reclampPdf();
+	};
+
+	/**
+	 * The docked preview shut while the editor and the panel beside it cannot keep their room next to
+	 * it, and opened again once they can. It slides both ways: nobody clicked it, so its going needs to
+	 * be seen. Not persisted, so the next launch opens it as the reader left it.
+	 */
+	private makeRoomForAside(): void {
+		const room = this.windowWidth() - (this.sidebarOpen ? this.sidebarWidth : 0) - this.editorAside - HISTORY_EDITOR_MIN;
+		const fits = !this.editorAside || room >= PDF_MIN;
+		if (!fits && this.pdfPaneOpen && !this.pdfPopout) {
+			this.pdfMadeRoom = true;
+			this.pdfSlides = true;
+			this.pdfPaneOpen = false;
+		} else if (fits && this.pdfMadeRoom) {
+			this.pdfMadeRoom = false;
+			this.pdfSlides = true;
+			this.pdfPaneOpen = true;
+		}
 	}
 
 	clampPdf = (w: number) => Math.min(this.pdfMaxWidth(), Math.max(PDF_MIN, w));
 
 	setPdfPaneOpen = (open: boolean) => {
 		this.pdfPaneOpen = open;
+		// the reader's own choice: it no longer waits to come back, and it jumps as anything clicked does
+		this.pdfMadeRoom = false;
+		this.pdfSlides = false;
 		// closing the pane closes the preview WHEREVER it is: any closer (the Live button, the
 		// divider) that runs while the preview is popped out must not leave the flag armed, or the
 		// next open would fling the pane straight back into a window nobody asked for
@@ -185,6 +225,7 @@ export class PaneLayout {
 
 	/** re-clamp when the window shrinks so the preview can't squeeze the editor out */
 	reclampPdf = () => {
+		this.makeRoomForAside();
 		this.pdfPaneWidth = this.clampPdf(this.pdfPaneWidth);
 	};
 

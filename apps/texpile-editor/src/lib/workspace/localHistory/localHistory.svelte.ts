@@ -71,12 +71,6 @@ export async function listLocalHistory(path: string): Promise<LocalHistoryEntry[
 	return (await attempt(() => nativeBridge()?.localHistoryList?.(path), [] as LocalHistoryEntry[])).slice().reverse();
 }
 
-/** the entry saved just before `id`, in a list newest first as listLocalHistory gives it */
-export function entryBefore(newestFirst: LocalHistoryEntry[], id: string): LocalHistoryEntry | null {
-	const at = newestFirst.findIndex((e) => e.id === id);
-	return at >= 0 ? (newestFirst[at + 1] ?? null) : null;
-}
-
 export function readLocalHistory(path: string, id: string): Promise<string | null> {
 	return attempt(() => nativeBridge()?.localHistoryRead?.(path, id), null);
 }

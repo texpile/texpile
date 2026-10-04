@@ -2,7 +2,7 @@ import { it, expect } from 'vitest';
 import { buildAnchor } from '$lib/comments/anchor';
 import { foldLog, openEvent } from '$lib/comments/log';
 import { resolveExactly } from '$lib/comments/anchorSearch';
-import { movedAnchorEvents } from '$lib/workspace/suggestionEvents';
+import { movedAnchorEvents } from '$lib/workspace/suggestions/suggestionEvents';
 
 const figure = (w: string) => `\\begin{figure}[t]\n\\centering\n\\includegraphics[width=${w}\\textwidth]{plot}\n\\end{figure}\n\n`;
 

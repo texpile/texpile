@@ -24,9 +24,9 @@ describe('scanMacroDefinitions (math preview macro dictionary)', () => {
 		expect(m.bert).toEqual({ def: 'BERT', args: 0 });
 	});
 
-	it('skips the optional-default bracket and unclosed bodies', () => {
+	it('keeps the optional first argument default and skips unclosed bodies', () => {
 		const m = scanMacroDefinitions('\\newcommand{\\greet}[2][world]{hello #1 #2}\n\\newcommand{\\broken}{\\frac{');
-		expect(m.greet).toEqual({ def: 'hello #1 #2', args: 2 });
+		expect(m.greet).toEqual({ def: 'hello #1 #2', args: 2, optional: 'world' });
 		expect(m.broken).toBeUndefined();
 	});
 });

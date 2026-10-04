@@ -16,6 +16,9 @@
 	import { activeSuggestions, suggesting } from '$lib/comments/activeSuggestions.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import type { WorkspaceMainProps } from './workspaceMainProps';
+	import { untrack } from 'svelte';
+	import { LOCAL_REF } from '$lib/workspace/localHistory/localHistory.svelte';
+	import { HISTORY_PANEL_WIDTH } from '$lib/workspace/paneGeometry';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the pipelines are structural here
 	type Any = any;
@@ -62,6 +65,12 @@
 				: kind === 'tex'
 			: (mainIsTypst ? kind === 'typ' && typstPreviewWanted : kind === 'tex') && !activeCompare.current
 	);
+	// Version History's panel takes room in the editor column (EditorPane draws it beside a comparison with a
+	// copy); untracked, as making that room opens or shuts the preview, which would run this again
+	$effect(() => {
+		const width = activeCompare.current?.hash.startsWith(LOCAL_REF) ? HISTORY_PANEL_WIDTH : 0;
+		untrack(() => layout.setEditorAside(width));
+	});
 	const syncToCursor = $derived(canSync ? (actions.syncForward as () => void) : null);
 	// a lone file has no project to hold the log, so the menus drop their Add comment entry
 	const canComment = $derived(!fileMode.current);
@@ -232,6 +241,7 @@
 				onInverseSync={actions.onInverseSync}
 				onSettled={actions.onPreviewSettled}
 				onDiagnostics={actions.onPreviewDiagnostics}
+				slides={layout.pdfSlides}
 			/>
 		{:else if !fileMode.current && (termDock.available || guest || layout.pdfPopout)}
 			<!-- the pane is gone but its divider stays, on the editor's right edge with the chevron

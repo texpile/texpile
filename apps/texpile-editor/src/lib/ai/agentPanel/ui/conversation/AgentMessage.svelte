@@ -4,9 +4,13 @@
 	import { CircleAlert } from '@lucide/svelte';
 	import { renderMarkdown } from '../../agentMarkdown';
 	import AgentFilePill from '../AgentFilePill.svelte';
-	import type { Attached } from '../../agentPanel.types';
+	import { imageUrl } from '../../attach/pastedImages';
+	import { previewedImage } from '../AgentImagePreview.svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
+	import { m } from '$lib/paraglide/messages';
+	import type { Attached, PastedImage } from '../../agentPanel.types';
 
-	type Props = { kind: 'user' | 'agent' | 'error'; text: string; attached?: Attached | null };
+	type Props = { kind: 'user' | 'agent' | 'error'; text: string; attached?: Attached | null; images?: PastedImage[] };
 	const props: Props = $props();
 	const html = $derived(props.kind === 'agent' ? renderMarkdown(props.text) : '');
 </script>
@@ -15,7 +19,27 @@
 	<!-- what it went with above it, as chats show what was attached -->
 	<div class="ml-auto flex max-w-[85%] flex-col items-end gap-1">
 		{#if props.attached}<AgentFilePill attached={props.attached} />{/if}
-		<p class="bg-surface-100-900 rounded-container px-3 py-1.5 text-sm leading-relaxed break-words whitespace-pre-wrap">{props.text}</p>
+		{#if props.images?.length}
+			<div class="flex flex-wrap justify-end gap-1">
+				{#each props.images as image, i (i)}
+					<button
+						type="button"
+						class="cursor-zoom-in"
+						use:tip={m.agent_panel_image_preview()}
+						onclick={() => (previewedImage.current = image)}
+					>
+						<img
+							src={imageUrl(image)}
+							alt={m.agent_panel_image()}
+							class="border-surface-200-800 rounded-container max-h-32 max-w-full border object-contain"
+						/>
+					</button>
+				{/each}
+			</div>
+		{/if}
+		{#if props.text.trim()}
+			<p class="bg-surface-100-900 rounded-container px-3 py-1.5 text-sm leading-relaxed break-words whitespace-pre-wrap">{props.text}</p>
+		{/if}
 	</div>
 {:else if props.kind === 'agent'}
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -- markdown-it with html off: the agent's own HTML stays text -->

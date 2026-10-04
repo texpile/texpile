@@ -23,6 +23,8 @@ export type ProjectDef = {
 	definition?: string;
 	/** argument count for `definition` */
 	argCount?: number;
+	/** the default of #1, when it is optional */
+	optional?: string;
 };
 
 export type ProjectGloss = {

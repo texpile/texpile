@@ -11,6 +11,9 @@
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
 	import DiffPane from './diff/DiffPane.svelte';
 	import VisualCompareBar from './VisualCompareBar.svelte';
+	import VersionHistoryPanel from './history/VersionHistoryPanel.svelte';
+	import VersionHistoryButtons from './history/VersionHistoryButtons.svelte';
+	import { LOCAL_REF } from '$lib/workspace/localHistory/localHistory.svelte';
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
@@ -153,6 +156,12 @@
 	/** independent of viewMode, which says whether the diff is rendered or in source */
 	const comparing = $derived(!!compare);
 
+	/** the file and copy Version History shows: the tab's own file, set with its comparison, not loadedPath, which follows a
+	 *  beat later; with that the copy was looked for among the last file's copies, taken as deleted, and the tab left */
+	const history = $derived(
+		compare?.hash.startsWith(LOCAL_REF) && activeFilePath.current ? { path: activeFilePath.current, hash: compare.hash } : null
+	);
+
 	/** the working side IS the file, so it takes the editor's own handler - split the same way
 	 *  DiffMode's getWorkingText splits it */
 	const onDiffInput = $derived(structured ? onTexInput : onRawInput);
@@ -249,194 +258,206 @@
 	{#if loadedPath && fileDeleted && !comparing}
 		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_file_deleted_title()}." note={m.wsview_file_deleted_note()} />
 	{/if}
-	{#if loadedPath && comparing && viewMode === 'visual' && structured}
-		<VisualCompareBar
-			{compare}
-			{fileDeleted}
-			{versionParsing}
-			versionUnavailable={diffVersionUnavailable}
-			sourceOnly={diffVersionPreamble !== null && !!docMeta && diffVersionPreamble !== docMeta.preamble}
-			onRefresh={onRefreshDiff}
-		/>
-	{/if}
-	<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
-	<div class="relative min-h-0 min-w-0 flex-1">
-		{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing}
-			<SearchBar />
-		{/if}
-		<!-- scroll-inset-r keeps this scrollbar clear of the lozenge on the preview divider. NOT in diff
+	{#snippet historyButtons()}
+		{#if history}<VersionHistoryButtons path={history.path} hash={history.hash} />{/if}
+	{/snippet}
+	<div class="flex min-h-0 min-w-0 flex-1">
+		<div class="flex min-h-0 min-w-0 flex-1 flex-col">
+			{#if loadedPath && comparing && viewMode === 'visual' && structured}
+				<VisualCompareBar
+					{compare}
+					{fileDeleted}
+					{versionParsing}
+					versionUnavailable={diffVersionUnavailable}
+					sourceOnly={diffVersionPreamble !== null && !!docMeta && diffVersionPreamble !== docMeta.preamble}
+					onRefresh={onRefreshDiff}
+					actions={historyButtons}
+				/>
+			{/if}
+			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
+			<div class="relative min-h-0 min-w-0 flex-1">
+				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing}
+					<SearchBar />
+				{/if}
+				<!-- scroll-inset-r keeps this scrollbar clear of the lozenge on the preview divider. NOT in diff
 		     mode or for a .pdf: those are panes, not documents - each fills the height, scrolls inside
 		     itself and draws its own full-width bar, so the 3px showed up as a gap between that bar
 		     and the divider. Each wears the inset on its own scroller instead. -->
-		<div
-			bind:this={scroller}
-			class="group/pane h-full w-full overflow-auto {structured && viewMode === 'visual' && !comparing
-				? '[scrollbar-gutter:stable]'
-				: ''} {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}"
-		>
-			{#if folderEmpty && !activeFilePath.current}
-				<NewDocumentStart onPick={onPickStarter} onBlank={onBlankStarter} onImport={onImportStarter} busy={applyingStarter} />
-			{:else if loadError}
-				<div class="text-error-ink mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
-					<CircleAlert class="size-8" />
-					<p class="text-sm">{loadError}</p>
-				</div>
-			{:else if binaryWarning}
-				<div class="text-muted mx-auto mt-12 flex max-w-md flex-col items-center gap-3 text-center">
-					<FileWarning class="size-8" />
-					<p class="text-sm">{m.wsview_binary_warning_body()}</p>
-					<button type="button" class="btn btn-sm preset-tonal" onclick={() => onOpenAsText?.(binaryWarning.path)}>
-						{m.wsview_binary_open_anyway()}
-					</button>
-				</div>
-			{:else if loadedPath && nameOnly}
-				<div class="text-muted mt-12 text-center text-sm">
-					{m.wsview_shared_name_only({ name: basename(loadedPath) })}
-				</div>
-			{:else if loadedPath && comparing && (viewMode === 'source' || !structured) && (structured || kind === 'bib' || kind === 'text')}
-				<DiffPane
-					filename={loadedPath}
-					original={diffOriginal}
-					modified={diffModified}
-					layout={diffLayout}
-					loading={diffLoading}
-					error={diffError}
-					hasHead={diffHasHead}
-					compareRef={diffCompareRef}
-					{fileDeleted}
-					readOnly={!!session.collabFor(loadedPath) || fileDeleted}
-					onModifiedInput={onDiffInput}
-					onToggleLayout={onToggleDiffLayout}
-					onRefresh={onRefreshDiff}
-				/>
-			{:else if loadedPath && structured && viewMode === 'source'}
-				<div class="flex h-full">
-					<div class="isolate h-full min-w-0 flex-1">
-						{#key sourceKey}
-							<SourceEditor
-								docPath={loadedPath}
-								value={texSource}
-								{changeBaseline}
-								onInput={onTexInput}
-								readOnly={!!encodingIssue}
-								gotoLine={sourceGotoLine}
-								{onSyncToPdf}
-								initialScrollPos={sourceScrollAnchor}
-								onHistoryBoundary={stepHistoryUnlessShared}
-								diagnostics={kind === 'typ' ? undefined : sourceDiagnostics}
-								{onJumpToFile}
-								{onOpenFileAt}
-								{onCaretMove}
-								collab={session.collabFor(loadedPath)}
-								{commentRanges}
-								{selectedComment}
-								{onAddComment}
-								{onInsertCitation}
-								{onCiteByDoi}
-								{onSelectComment}
-							/>
-						{/key}
-					</div>
-					{#if commentsCtl}
-						<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
-					{/if}
-				</div>
-			{:else if loadedPath && structured && visualDoc}
-				<div class="flex min-h-full items-stretch">
-					<div class="isolate min-w-0 flex-1">
-						<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
-						<VisualEditorHost
-							{kind}
-							{loadedPath}
-							{visualDoc}
-							{docMeta}
-							{texSource}
-							{allReferences}
-							{showRenderBar}
-							{onVisualChange}
-							{onVisualSelection}
-							onHistoryBoundary={stepHistoryUnlessShared}
-							{onVisualReady}
-							{onMdLink}
-							{onEditFrontmatter}
-							{commentRanges}
-							{sourceMap}
-							{regionParser}
-							{selectedComment}
-							{onSelectComment}
-							{onAddCommentAnchored}
-							{onInsertCitation}
-							{onCiteByDoi}
-							{onJumpToLabel}
-							{onJumpToDefinition}
-							{onCommentsPlaced}
-							{commentPendingActive}
+				<div
+					bind:this={scroller}
+					class="group/pane h-full w-full overflow-auto {structured && viewMode === 'visual' && !comparing
+						? '[scrollbar-gutter:stable]'
+						: ''} {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}"
+				>
+					{#if folderEmpty && !activeFilePath.current}
+						<NewDocumentStart onPick={onPickStarter} onBlank={onBlankStarter} onImport={onImportStarter} busy={applyingStarter} />
+					{:else if loadError}
+						<div class="text-error-ink mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
+							<CircleAlert class="size-8" />
+							<p class="text-sm">{loadError}</p>
+						</div>
+					{:else if binaryWarning}
+						<div class="text-muted mx-auto mt-12 flex max-w-md flex-col items-center gap-3 text-center">
+							<FileWarning class="size-8" />
+							<p class="text-sm">{m.wsview_binary_warning_body()}</p>
+							<button type="button" class="btn btn-sm preset-tonal" onclick={() => onOpenAsText?.(binaryWarning.path)}>
+								{m.wsview_binary_open_anyway()}
+							</button>
+						</div>
+					{:else if loadedPath && nameOnly}
+						<div class="text-muted mt-12 text-center text-sm">
+							{m.wsview_shared_name_only({ name: basename(loadedPath) })}
+						</div>
+					{:else if loadedPath && comparing && (viewMode === 'source' || !structured) && (structured || kind === 'bib' || kind === 'text')}
+						<DiffPane
+							filename={loadedPath}
+							original={diffOriginal}
+							modified={diffModified}
+							layout={diffLayout}
+							loading={diffLoading}
+							error={diffError}
+							hasHead={diffHasHead}
+							compareRef={diffCompareRef}
+							{fileDeleted}
+							readOnly={!!session.collabFor(loadedPath) || fileDeleted}
+							onModifiedInput={onDiffInput}
+							onToggleLayout={onToggleDiffLayout}
+							onRefresh={onRefreshDiff}
+							actions={historyButtons}
 						/>
-					</div>
-					{#if commentsCtl}
-						<CommentRail ctl={commentsCtl} threads={commentThreads} mode="visual" {scroller} onSelect={(id) => onSelectComment?.(id)} />
-					{/if}
-				</div>
-			{:else if visualPending}
-				<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
-				<VisualLoading phase={parseProgress} format={kind} sizeBytes={texSource.length} {onUseSource} />
-			{:else if loadedPath && rawText}
-				<!-- .typ no longer lands here: it is structured now (typSchema), so its source mode
+					{:else if loadedPath && structured && viewMode === 'source'}
+						<div class="flex h-full">
+							<div class="isolate h-full min-w-0 flex-1">
+								{#key sourceKey}
+									<SourceEditor
+										docPath={loadedPath}
+										value={texSource}
+										{changeBaseline}
+										onInput={onTexInput}
+										readOnly={!!encodingIssue}
+										gotoLine={sourceGotoLine}
+										{onSyncToPdf}
+										initialScrollPos={sourceScrollAnchor}
+										onHistoryBoundary={stepHistoryUnlessShared}
+										diagnostics={kind === 'typ' ? undefined : sourceDiagnostics}
+										{onJumpToFile}
+										{onOpenFileAt}
+										{onCaretMove}
+										collab={session.collabFor(loadedPath)}
+										{commentRanges}
+										{selectedComment}
+										{onAddComment}
+										{onInsertCitation}
+										{onCiteByDoi}
+										{onSelectComment}
+									/>
+								{/key}
+							</div>
+							{#if commentsCtl}
+								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
+							{/if}
+						</div>
+					{:else if loadedPath && structured && visualDoc}
+						<div class="flex min-h-full items-stretch">
+							<div class="isolate min-w-0 flex-1">
+								<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
+								<VisualEditorHost
+									{kind}
+									{loadedPath}
+									{visualDoc}
+									{docMeta}
+									{texSource}
+									{allReferences}
+									{showRenderBar}
+									{onVisualChange}
+									{onVisualSelection}
+									onHistoryBoundary={stepHistoryUnlessShared}
+									{onVisualReady}
+									{onMdLink}
+									{onEditFrontmatter}
+									{commentRanges}
+									{sourceMap}
+									{regionParser}
+									{selectedComment}
+									{onSelectComment}
+									{onAddCommentAnchored}
+									{onInsertCitation}
+									{onCiteByDoi}
+									{onJumpToLabel}
+									{onJumpToDefinition}
+									{onCommentsPlaced}
+									{commentPendingActive}
+								/>
+							</div>
+							{#if commentsCtl}
+								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="visual" {scroller} onSelect={(id) => onSelectComment?.(id)} />
+							{/if}
+						</div>
+					{:else if visualPending}
+						<!-- doc not here yet: the parse runs in a worker and fills this in when it lands -->
+						<VisualLoading phase={parseProgress} format={kind} sizeBytes={texSource.length} {onUseSource} />
+					{:else if loadedPath && rawText}
+						<!-- .typ no longer lands here: it is structured now (typSchema), so its source mode
 				     is the texSource branch above, which carries onCaretMove/onSyncToPdf for the
 				     Typst preview's follow and "Show in preview" -->
-				<!-- guests always co-edit .bib through the Y-bound source editor; BibManager isn't
+						<!-- guests always co-edit .bib through the Y-bound source editor; BibManager isn't
 				     CRDT-bound and would desync or clobber remote edits -->
-				<!-- the rail and the comment props are what make suggest mode real here: without them an
+						<!-- the rail and the comment props are what make suggest mode real here: without them an
 				     edit in suggesting mode still stages a suggestion, drawn nowhere -->
-				<div class="flex h-full">
-					<div class="isolate h-full min-w-0 flex-1">
-						{#key sourceKey}
-							<SourceEditor
-								docPath={loadedPath}
-								value={rawContent}
-								{changeBaseline}
-								onInput={onRawInput}
-								readOnly={!!encodingIssue}
-								filename={loadedPath}
-								gotoLine={sourceGotoLine}
-								collab={session.collabFor(loadedPath)}
-								{commentRanges}
-								{selectedComment}
-								{onAddComment}
-								{onSelectComment}
-							/>
+						<div class="flex h-full">
+							<div class="isolate h-full min-w-0 flex-1">
+								{#key sourceKey}
+									<SourceEditor
+										docPath={loadedPath}
+										value={rawContent}
+										{changeBaseline}
+										onInput={onRawInput}
+										readOnly={!!encodingIssue}
+										filename={loadedPath}
+										gotoLine={sourceGotoLine}
+										collab={session.collabFor(loadedPath)}
+										{commentRanges}
+										{selectedComment}
+										{onAddComment}
+										{onSelectComment}
+									/>
+								{/key}
+							</div>
+							{#if commentsCtl}
+								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
+							{/if}
+						</div>
+					{:else if loadedPath && kind === 'bib'}
+						{#key loadedPath}
+							<BibManager value={rawContent} onInput={onRawInput} suggested={bibSuggested} onShowSource={() => onSetViewMode?.('source')} />
 						{/key}
-					</div>
-					{#if commentsCtl}
-						<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
+					{:else if loadedPath && kind === 'pdf'}
+						<!-- a .pdf opened directly: its own src, independent of the compile-output pane -->
+						<div class="h-full w-full">
+							<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} placement="file" />
+						</div>
+					{:else if loadedPath && kind === 'image'}
+						<div class="flex h-full items-center justify-center p-8">
+							<img src={fileUrl(loadedPath)} alt={basename(loadedPath)} class="max-h-full max-w-full object-contain" />
+						</div>
+					{:else if loadedPath && kind === 'binary'}
+						<div class="text-muted mt-12 text-center text-sm">
+							{m.wsview_binary_file_note({ name: basename(loadedPath) })}
+						</div>
+					{:else if activeFilePath.current}
+						<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
+						<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
+							<Loader2 class="size-4 animate-spin" />
+							{m.wsview_opening()}
+						</div>
+					{:else}
+						<div class="text-muted mt-12 text-center text-sm">{m.wsview_select_file_prompt()}</div>
 					{/if}
 				</div>
-			{:else if loadedPath && kind === 'bib'}
-				{#key loadedPath}
-					<BibManager value={rawContent} onInput={onRawInput} suggested={bibSuggested} onShowSource={() => onSetViewMode?.('source')} />
-				{/key}
-			{:else if loadedPath && kind === 'pdf'}
-				<!-- a .pdf opened directly: its own src, independent of the compile-output pane -->
-				<div class="h-full w-full">
-					<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} placement="file" />
-				</div>
-			{:else if loadedPath && kind === 'image'}
-				<div class="flex h-full items-center justify-center p-8">
-					<img src={fileUrl(loadedPath)} alt={basename(loadedPath)} class="max-h-full max-w-full object-contain" />
-				</div>
-			{:else if loadedPath && kind === 'binary'}
-				<div class="text-muted mt-12 text-center text-sm">
-					{m.wsview_binary_file_note({ name: basename(loadedPath) })}
-				</div>
-			{:else if activeFilePath.current}
-				<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
-				<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
-					<Loader2 class="size-4 animate-spin" />
-					{m.wsview_opening()}
-				</div>
-			{:else}
-				<div class="text-muted mt-12 text-center text-sm">{m.wsview_select_file_prompt()}</div>
-			{/if}
+			</div>
 		</div>
+		{#if history}
+			<VersionHistoryPanel path={history.path} hash={history.hash} />
+		{/if}
 	</div>
 </div>

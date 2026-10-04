@@ -5,6 +5,7 @@
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { stepVisualDiff } from '$lib/editor/visual/diff/stepVisualDiff';
 	import type { CompareRef } from '$lib/workspace/tabs.svelte';
+	import type { Snippet } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type VisualCompareBarProps = {
@@ -15,6 +16,8 @@
 		/** the version's preamble differs, which only the source comparison shows */
 		sourceOnly: boolean;
 		onRefresh: () => void;
+		/** what this comparison offers besides stepping through it, at the bar's end (Version History's Restore) */
+		actions?: Snippet;
 	};
 
 	const props: VisualCompareBarProps = $props();
@@ -31,9 +34,9 @@
 </script>
 
 <!-- the rule is an inset shadow, as under the source comparison's bar (diff/DiffPane.svelte) -->
-<div class="bg-surface-100-900 text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
+<div class="bg-surface-50-900 text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
 	<GitCompare class="size-3.5 shrink-0" />
-	<span class="cap-center font-medium">{m.wsview_diff_since()}</span>
+	<span class="cap-center shrink-0 font-medium whitespace-nowrap">{m.wsview_diff_since()}</span>
 	{#if props.compare}<span class="cap-center text-muted min-w-0 truncate" use:tip={props.compare.hash}>· {props.compare.subject}</span>{/if}
 	<!-- What it cannot show, said out loud: an unmarked document otherwise reads as "nothing
 	     changed". No count - the number would be of source runs, which nothing on screen shows. -->
@@ -62,5 +65,6 @@
 		>
 			<RefreshCw class="size-3.5" />
 		</button>
+		{@render props.actions?.()}
 	</div>
 </div>

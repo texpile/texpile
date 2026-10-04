@@ -128,6 +128,20 @@ class TabsStore {
 		return tabKey(tab);
 	}
 
+	/** the comparison of `path` against `from` turned to another version in its own slot, as picking
+	 *  another copy in Version History does; opened anew when that tab is gone. Returns its key */
+	replaceCompare(path: string, from: string, compare: CompareRef): string {
+		const tab: Tab = { path, compare };
+		const key = tabKey(tab);
+		const old = tabKey({ path, compare: { hash: from, subject: '' } });
+		const at = this.list.findIndex((t) => tabKey(t) === old);
+		if (at < 0) return this.openCompare(path, compare);
+		this.list = this.has(key) ? this.list.filter((_, i) => i !== at) : this.list.map((t, i) => (i === at ? tab : t));
+		if (this.preview === old) this.preview = key;
+		this.persist();
+		return key;
+	}
+
 	find(key: string): Tab | null {
 		return this.list.find((t) => tabKey(t) === key) ?? null;
 	}

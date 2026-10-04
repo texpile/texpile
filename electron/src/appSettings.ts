@@ -38,8 +38,8 @@ const DEFAULT_SETTINGS = {
 	// 0 = use the channel default (mcp.PORT_DEFAULT / PORT_DEFAULT_DEV). Fixed rather than
 	// ephemeral so a client config keeps working across restarts; overridable for a port clash.
 	mcpPort: 0,
-	// the reader's own command-line agents that Refine may run: 'claude', 'codex', 'agy', 'custom'; null = the presets
-	// installed. Kept here and not in a folder's .texpile/config.json, which travels with the folder: a downloaded
+	// the reader's own command-line agent that Refine may run: 'claude', 'codex', 'agy' or 'custom'; null = none chosen
+	// yet. Kept here and not in a folder's .texpile/config.json, which travels with the folder: a downloaded
 	// project must never pick the program that runs, and no MCP tool writes this file. A run names one of these
 	refineAgents: null as string[] | null,
 	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin

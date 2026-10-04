@@ -135,6 +135,16 @@ describe('comparison tabs', () => {
 		expect(tabs.list.filter((t) => t.compare)).toHaveLength(2);
 	});
 
+	it('turns a comparison to another version in its own slot, as picking another copy does', () => {
+		openAndEdit('C:\\p\\main.tex');
+		const k1 = tabs.openCompare('C:\\p\\main.tex', V1);
+		tabs.keep(k1);
+		openAndEdit('C:\\p\\other.tex');
+		const k2 = tabs.replaceCompare('C:\\p\\main.tex', V1.hash, V2);
+		expect(tabs.list.map((t) => t.compare?.hash ?? t.path)).toEqual(['C:\\p\\main.tex', 'bbb222', 'C:\\p\\other.tex']);
+		expect(tabs.find(k2)?.compare).toEqual(V2);
+	});
+
 	it('re-opening the same comparison focuses it instead of duplicating', () => {
 		openAndEdit('C:\\p\\main.tex');
 		tabs.openCompare('C:\\p\\main.tex', V1);

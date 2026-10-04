@@ -4,6 +4,7 @@
 	// with the popped-out preview window (PreviewPopout), which is why none of it lives here.
 	// Renders two grid siblings, so it must sit in a display:contents wrapper on the editor grid.
 	import { ArrowRight, ChevronRight } from '@lucide/svelte';
+	import { slide } from 'svelte/transition';
 	import PaneHandle from '$lib/components/PaneHandle.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
 	import PreviewBody from './PreviewBody.svelte';
@@ -48,6 +49,8 @@
 		onSettled: () => void;
 		/** the finished compile's log path, for the Problems panel */
 		onDiagnostics: (logPath: string) => void;
+		/** it opens or shuts on its own, not at a click (PaneLayout.pdfSlides), so it slides to be seen */
+		slides?: boolean;
 	};
 	let {
 		width,
@@ -72,7 +75,8 @@
 		onPageClick,
 		onInverseSync,
 		onSettled,
-		onDiagnostics
+		onDiagnostics,
+		slides = false
 	}: Props = $props();
 </script>
 
@@ -86,7 +90,11 @@
 	style="grid-column: 2; grid-row: {dockShrunk ? '2 / -1' : '2'}"
 />
 <!-- no border-l: the splitter's own 1px IS the rule now, and a border beside it read as two -->
-<aside class="relative flex shrink-0 flex-col" style="width: {width}px; grid-column: 3; grid-row: {dockShrunk ? '2 / -1' : '2'}">
+<aside
+	class="relative flex shrink-0 flex-col"
+	style="width: {width}px; grid-column: 3; grid-row: {dockShrunk ? '2 / -1' : '2'}"
+	transition:slide|global={{ axis: 'x', duration: slides ? 200 : 0 }}
+>
 	{#if onSyncToCursor && !mainUnset}
 		<!-- forward sync rides the same divider, high and clear of the collapse lozenge. -12.5px
 		     centres a 24px chip on the rule, matching the lozenge below it. This one is wider than

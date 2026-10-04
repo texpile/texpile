@@ -222,6 +222,8 @@ export type MacroDefinition = {
   def: string;
   /** Number of arguments (`#1`, etc...) in the macro definition */
   args?: number;
+  /** The default of `#1`, which makes it optional and given in brackets, as `\newcommand{\a}[2][10]{...}` does */
+  optional?: string;
   /** If `false` elements inside the macro can be selected */
   captureSelection?: boolean;
   /** If `false`, even if `expandMacro` is true, do not expand. */

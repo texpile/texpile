@@ -1,6 +1,7 @@
 <script lang="ts">
-	// Whether this computer can build what the reader writes: one row a typesetter, an install where Texpile can do it
-	import { CircleAlert, CircleCheck, LoaderCircle, X } from '@lucide/svelte';
+	// Whether this computer can build what the reader writes: one row a typesetter, with how far Texpile's own install of
+	// tinymist has got. The install itself, and the guide for what Texpile cannot install, are the dialog's buttons
+	import { CircleAlert, CircleCheck, LoaderCircle, RefreshCw, X } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { toolchainProbe } from '../toolchainProbe.svelte';
 	import { toolDirs } from '../toolDirs.svelte';
@@ -24,14 +25,16 @@
 </script>
 
 <!-- each row says its state the way Preferences › Toolchain does, in words and a colored icon, on two
-     lines so every row is the same height; a button stands at the right only where there is one to press -->
+     lines so every row is the same height; a missing one can be looked for again from its own row -->
 <div class="border-surface-200-800 divide-surface-200-800 rounded-container divide-y border">
 	{#each engines as e (e.kind)}
 		<!-- Typst is the one typesetter Texpile can fetch for the reader: one program, no installer of its own -->
 		{@const installable = e.kind === 'Typst' && !e.found && tinymistInstaller.offered}
-		{@const checking = toolchainProbe.probing && !e.found}
+		<!-- an install under way is the row's state until it ends, whatever a look at the computer says meanwhile -->
+		{@const installing = installable && !!tinymistInstaller.step}
+		{@const checking = toolchainProbe.probing && !e.found && !installing}
 		<div class="flex min-h-16 items-center gap-3 px-4 py-3">
-			{#if checking}
+			{#if checking || installing}
 				<LoaderCircle class="text-muted size-4 shrink-0 animate-spin" />
 			{:else if e.found}
 				<CircleCheck class="text-success-ink size-4 shrink-0" />
@@ -40,39 +43,41 @@
 			{/if}
 			<div class="min-w-0 flex-1">
 				<div class="text-sm font-medium">{e.kind}</div>
-				<div class="text-muted truncate text-xs">
-					{#if checking}
-						{m.prefs_toolchain_checking()}
-					{:else if e.found}
-						{e.detail || m.typesetter_found()}
-					{:else}
-						{m.prefs_toolchain_missing()}
-					{/if}
-				</div>
+				{#if !installing}
+					<div class="text-muted truncate text-xs">
+						{#if checking}
+							{m.prefs_toolchain_checking()}
+						{:else if e.found}
+							{e.detail || m.typesetter_found()}
+						{:else}
+							{m.prefs_toolchain_missing()}
+						{/if}
+					</div>
+				{/if}
 				{#if installable}
 					<TinymistInstallProgress />
 				{/if}
 			</div>
-			{#if installable && !checking}
-				{#if tinymistInstaller.step}
-					<button
-						type="button"
-						class="btn preset-tonal shrink-0 text-xs"
-						onclick={() => tinymistInstaller.cancel()}
-						disabled={tinymistInstaller.step.phase !== 'download'}
-					>
-						{m.tinymist_install_cancel()}
-					</button>
-				{:else}
-					<button
-						type="button"
-						class="btn preset-tonal shrink-0 text-xs"
-						onclick={() => void tinymistInstaller.install()}
-						disabled={tinymistInstaller.busy}
-					>
-						{m.tinymist_install()}
-					</button>
-				{/if}
+			{#if installing}
+				<button
+					type="button"
+					class="btn preset-tonal shrink-0 text-xs"
+					onclick={() => tinymistInstaller.cancel()}
+					disabled={tinymistInstaller.step?.phase !== 'download'}
+				>
+					{m.tinymist_install_cancel()}
+				</button>
+			{:else if !e.found}
+				<button
+					type="button"
+					class="btn-icon btn-icon-sm hover:preset-tonal text-muted shrink-0"
+					aria-label={m.prefs_toolchain_recheck()}
+					use:tip={m.prefs_toolchain_recheck()}
+					onclick={() => void toolchainProbe.run()}
+					disabled={toolchainProbe.probing}
+				>
+					<RefreshCw class="size-4 {checking ? 'animate-spin' : ''}" />
+				</button>
 			{/if}
 		</div>
 	{/each}
@@ -101,10 +106,9 @@
 	</div>
 {/if}
 
-<!-- the ways on, as one line of links; Preferences and checking again are in the dialog's own row -->
-<div class="mt-3.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-	<a class="anchor" href="https://texpile.com/docs/installation" target="_blank" rel="noopener noreferrer">
-		{m.typesetter_how_to_install()}
-	</a>
-	<button type="button" class="anchor" onclick={() => void addFolder()} disabled={toolDirs.busy}>{m.typesetter_add_folder()}</button>
-</div>
+<!-- for one installed where nothing looks: the install and the guide are the dialog's buttons, Preferences its row -->
+{#if engines.some((e) => !e.found)}
+	<div class="mt-3.5 text-xs">
+		<button type="button" class="anchor" onclick={() => void addFolder()} disabled={toolDirs.busy}>{m.typesetter_add_folder()}</button>
+	</div>
+{/if}

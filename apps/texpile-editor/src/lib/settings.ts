@@ -84,7 +84,7 @@ export type AppSettings = {
 	openFolders: string[];
 	/** MCP port override (0 = channel default); a hand-edit escape hatch for port clashes. */
 	mcpPort: number;
-	/** the agents Refine offers, each its own menu entry; null = the ones installed. Main reads it, see electron/src/ai */
+	/** the agent Refine runs, alone in the list; empty or null = none chosen yet. Main reads it, see electron/src/ai */
 	refineAgents: ('claude' | 'codex' | 'agy' | 'custom')[] | null;
 	/** the command line for Refine's custom agent; the prompt goes on its stdin */
 	aiAgentCommand: string;

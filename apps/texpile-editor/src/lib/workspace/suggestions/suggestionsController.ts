@@ -1,6 +1,4 @@
 // turning edits to the open file into suggestions, and accepting or rejecting them
-import { buildAnchor } from '$lib/comments/anchor';
-import { resolveExactly } from '$lib/comments/anchorSearch';
 import { resolveEvent, type CommentEvent, type CommentThread, type SuggestionDecision } from '$lib/comments/log';
 import {
 	compareSuggestions,
@@ -9,13 +7,15 @@ import {
 	type TypingSide,
 	type WhitespaceChanges
 } from '$lib/comments/suggestCompare';
-import { isOpenSuggestion, suggestionAuthor } from '$lib/comments/suggest';
+import { isOpenSuggestion } from '$lib/comments/suggest';
 import { carryGestures, carryGesturesThrough, type TextSpan } from '$lib/comments/editGestures';
 import { commonEnds, dialectWhitespace } from '$lib/comments/suggestHunks';
 import { activeSuggestions, takeEditedPlaces, takeTypedSides, type EditedPlaces } from '$lib/comments/activeSuggestions.svelte';
 import type { CommentStore } from '$lib/comments/store.svelte';
 import { changeEvents, movedAnchorEvents } from './suggestionEvents';
-import { placedAgain, placedBehind, rejectedAgain, sameFileState, sameMark, sameSuggestions, withoutRejected } from './suggestionStates';
+import { fitSuggestions, type Carried } from './suggestionFit';
+import { placedAgain, placedBehind, rejectedAgain, renamedFile, restoredOver } from './suggestionStates';
+import { sameFileState, sameMark, sameSuggestions, suggestionMarks, withoutRejected } from './suggestionStates';
 import type { ExpectedReject, FileState, RemoteEdit } from './suggestionStates';
 
 const SPACE_WAIT_MS = 1000;
@@ -41,8 +41,8 @@ type Deps = {
 // as deep as the editors' own undo history
 const REJECTS_KEPT = 100;
 
-/** the file just before (`open`) and just after (`rejected`) a Reject */
-type UndoableReject = { file: string; thread: CommentThread; open: FileState; rejected: FileState };
+/** the file just before (`open`) and just after (`rejected`) a Reject, or a version from Local History that rejected several */
+type UndoableReject = { file: string; threads: CommentThread[]; open: FileState; rejected: FileState };
 
 /** an Accept the editors' undo can take back, and where the suggestion stood */
 type UndoableAccept = { file: string; thread: CommentThread; at?: PlacedSuggestion };
@@ -87,58 +87,20 @@ export class SuggestionsController {
 		return lost;
 	}
 
-	private fit(file: string, against: string, carried: Map<string, PlacedSuggestion & { i: number }>) {
-		const placed: PlacedSuggestion[] = [];
-		const order = new Map<string, number>();
-		const lost = new Set<string>();
-		const known = new Set<string>();
-		const waiting: string[] = [];
-		for (const t of this.deps.store.forFile(file).filter(isOpenSuggestion)) {
-			known.add(t.id);
-			const base = { id: t.id, restore: t.restore ?? '', author: suggestionAuthor(t) };
-			// a reader who does not record takes the recorder's word for where a suggestion stands, and
-			// only falls back on its own reckoning while that anchor has not caught up with the text
-			const s = carried.get(t.id);
-			const hit = s && this.deps.compares() ? null : resolveExactly(against, t.anchor);
-			if (hit) placed.push({ ...base, from: hit.from, to: hit.to });
-			else if (s) placed.push({ ...base, from: s.from, to: s.to });
-			else waiting.push(t.id);
-			order.set(t.id, s && !hit ? s.i : carried.size + (t.anchor.rank ?? 0));
-		}
-		// and draws its own edits until the recorder's record of them lands on the same words, or an event
-		// from the recorder finds every record in place: a record that cannot be placed yet is of text that
-		// has moved on since, which its own suggestions show. Not by author: two people's edits to one word
-		// can come back as the other's
-		const caughtUp = this.caughtUp && waiting.length === 0;
+	private fit(file: string, against: string, carried: Carried) {
+		const reader = { compares: this.deps.compares(), caughtUp: this.caughtUp, drawnHere: this.drawnHere };
+		const r = fitSuggestions(this.deps.store.forFile(file), against, carried, reader);
 		this.caughtUp = false;
-		const own = caughtUp
-			? []
-			: [...carried.values()].filter((s) => this.drawnHere.has(s.id) && !placed.some((p) => s.from <= p.to && s.to >= p.from));
-		this.drawnHere = new Set(own.map((s) => s.id));
-		for (const s of own) {
-			placed.push({ id: s.id, from: s.from, to: s.to, restore: s.restore, author: s.author });
-			order.set(s.id, s.i);
-		}
-		if (own.length === 0) for (const id of waiting) lost.add(id);
-		placed.sort((a, b) => a.from - b.from || a.to - b.to || order.get(a.id)! - order.get(b.id)!);
-		const kept: PlacedSuggestion[] = [];
-		for (const s of placed) {
-			const prev = kept[kept.length - 1];
-			if (!prev || s.from >= prev.to) kept.push(s);
-			else if (known.has(s.id)) lost.add(s.id);
-		}
-		return { kept, lost };
+		this.drawnHere = r.drawnHere;
+		return r;
 	}
 
 	/** a file or folder renamed in the tree; what is known of the files under it follows */
 	moved(from: string, to: string): void {
-		function renamed(file: string): string {
-			return file === from ? to : file.startsWith(from + '/') ? to + file.slice(from.length) : file;
-		}
-		this.states = new Map([...this.states].map(([file, state]) => [renamed(file), state]));
-		if (this.placedFile) this.placedFile = renamed(this.placedFile);
-		if (this.seen?.file) this.seen = { ...this.seen, file: renamed(this.seen.file) };
-		for (const decided of [...this.rejects, ...this.accepts.values(), ...this.expected]) decided.file = renamed(decided.file);
+		this.states = new Map([...this.states].map(([file, state]) => [renamedFile(file, from, to), state]));
+		if (this.placedFile) this.placedFile = renamedFile(this.placedFile, from, to);
+		if (this.seen?.file) this.seen = { ...this.seen, file: renamedFile(this.seen.file, from, to) };
+		for (const decided of [...this.rejects, ...this.accepts.values(), ...this.expected]) decided.file = renamedFile(decided.file, from, to);
 	}
 
 	/** an event from the recorder arrived */
@@ -231,6 +193,39 @@ export class SuggestionsController {
 		this.deps.store.saved(file);
 	}
 
+	/**
+	 * Bringing back a version of `file` from Local History is an edit in Editing over the file as it is (`before`). The
+	 * suggestions it removes are rejected rather than withdrawn, and kept as a Reject is, so the Undo on its notice,
+	 * which writes `before` back, reopens the same threads, replies and all. In the log at once: the text is on disk
+	 */
+	async droppedBy(file: string, before: string, text: string): Promise<number> {
+		await this.chain;
+		return this.deps.compares() ? restoredOver(file, this.stateOn(file, before), text).dropped.size : 0;
+	}
+
+	async restoreVersion(file: string, before: string, text: string): Promise<void> {
+		await this.chain;
+		if (!this.deps.compares()) return;
+		const open = this.stateOn(file, before);
+		const r = restoredOver(file, open, text);
+		const by = await this.deps.author();
+		const threads = this.deps.store.threads.filter((t) => r.dropped.has(t.id));
+		const rejected = await Promise.all(threads.map((t) => this.decision(t, 'rejected')));
+		this.deps.store.stage(...changeEvents(file, text, r, by, '', this.deps.store.threads), ...rejected);
+		const restored = { text, placed: r.placed };
+		this.states.set(file, restored);
+		if (threads.length) this.rejects = [...this.rejects.slice(1 - REJECTS_KEPT), { file, threads, open, rejected: restored }];
+		if (file === this.deps.activeFile()) this.show(text, r.placed);
+		if (this.deps.store.hasStaged) await this.deps.store.append();
+		this.deps.store.saved(file);
+	}
+
+	/** what is known of `file` when its text is `before`; for a file not open, read from the log's anchors */
+	private stateOn(file: string, before: string): FileState {
+		const known = this.states.get(file);
+		return known?.text === before ? known : { text: before, placed: this.fit(file, before, new Map()).kept };
+	}
+
 	async discardUnsaved(file: string): Promise<void> {
 		this.deps.store.discardStaged(file);
 		this.states.delete(file);
@@ -299,7 +294,7 @@ export class SuggestionsController {
 		await recorded;
 		await this.run(file, this.deps.activeText(), 'editing');
 		const rejected = this.states.get(file);
-		if (rejected) this.rejects = [...this.rejects.slice(1 - REJECTS_KEPT), { file, thread: t, open: state, rejected }];
+		if (rejected) this.rejects = [...this.rejects.slice(1 - REJECTS_KEPT), { file, threads: [t], open: state, rejected }];
 		this.show(this.states.get(file)?.text ?? next, this.states.get(file)?.placed ?? rest);
 		this.deps.saveNow();
 		return true;
@@ -411,21 +406,21 @@ export class SuggestionsController {
 		return true;
 	}
 
-	// an undo of a Reject lands exactly on the file as it was before it, and brings the same thread back
+	// an undo of a Reject lands exactly on the file as it was before it, and brings the same threads back
 	// rather than making the words a new change; a redo lands on the file after it and rejects it again
 	private async revisitReject(file: string, state: FileState, after: string): Promise<boolean> {
 		const mine = this.rejects.filter((r) => r.file === file);
 		const undo = mine.findLast((r) => after === r.open.text && sameFileState(state, r.rejected));
 		// by the thread a redo rejects, not by the whole file: typing undone and redone around it gets new ids
-		const r = undo ?? mine.findLast((r) => rejectedAgain(state, r.thread.id, after));
+		const r = undo ?? mine.findLast((r) => r.threads.length === 1 && rejectedAgain(state, r.threads[0].id, after));
 		if (!r) return false;
 		const undone = r === undo;
-		const event = await this.decision(r.thread, undone ? undefined : 'rejected');
+		const events = await Promise.all(r.threads.map((t) => this.decision(t, undone ? undefined : 'rejected')));
 		if (this.states.get(file) !== state) return true;
-		const now = undone ? r.open : rejectedAgain(state, r.thread.id, after)!;
+		const now = undone ? r.open : rejectedAgain(state, r.threads[0].id, after)!;
 		if (!undone) Object.assign(r, { open: state, rejected: now });
 		this.states.set(file, now);
-		this.deps.store.stage(event);
+		this.deps.store.stage(...events);
 		if (file === this.deps.activeFile()) this.show(now.text, now.placed);
 		return true;
 	}
@@ -468,9 +463,7 @@ export class SuggestionsController {
 	}
 
 	private show(text: string, placed: PlacedSuggestion[]): void {
-		const marks = placed.map((s) => {
-			return { id: s.id, from: s.from, to: s.to, restore: s.restore, mine: s.author === this.me, anchor: buildAnchor(text, s.from, s.to) };
-		});
+		const marks = suggestionMarks(text, placed, this.me);
 		const shown = activeSuggestions.current;
 		if (marks.length === shown.length && marks.every((m, i) => sameMark(m, shown[i]))) return;
 		activeSuggestions.current = marks;

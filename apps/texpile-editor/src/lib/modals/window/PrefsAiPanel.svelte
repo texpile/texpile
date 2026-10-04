@@ -1,9 +1,9 @@
 <script lang="ts">
-	// The AI category: the MCP server an assistant connects to, the agents Refine offers, and the Agent tab's.
+	// The AI category: the MCP server an assistant connects to, the agent Refine runs, and the Agent tab's.
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { settings, updateSettings, setMcpEnabled } from '$lib/settings';
 	import { agentName, isPresetAgent, PRESET_AGENTS, type RefineAgent } from '$lib/ai/selectionRefiner';
-	import { lookUpRefineAgents, refineAgentsTicked, refineInstalled, withRefineAgent } from '$lib/ai/refineAgents.svelte';
+	import { lookUpRefineAgents, refineAgentsTicked, refineInstalled } from '$lib/ai/refineAgents.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import McpSetupModal from './McpSetupModal.svelte';
 	import CheckChoiceList from './CheckChoiceList.svelte';
@@ -33,28 +33,30 @@
 	void refreshMcp();
 	lookUpRefineAgents(true);
 
-	const AGENTS: { value: RefineAgent; label: string }[] = [
+	const AGENTS: { value: RefineAgent | ''; label: string }[] = [
 		{ value: 'claude', label: m.prefs_ai_agent_claude() },
 		{ value: 'codex', label: m.prefs_ai_agent_codex() },
 		{ value: 'agy', label: m.prefs_ai_agent_agy() },
-		{ value: 'custom', label: m.prefs_ai_agent_custom() }
+		{ value: 'custom', label: m.prefs_ai_agent_custom() },
+		// Refine off: nothing in the right-click menu or on the selection toolbar
+		{ value: '', label: m.prefs_ai_agent_none() }
 	];
 	const installed = $derived(refineInstalled.found);
 	const ticked = $derived(refineAgentsTicked());
 	const agentChoices = $derived(
 		AGENTS.map((a) => {
-			const found = isPresetAgent(a.value) ? installed?.[a.value] : undefined;
+			const found = a.value && isPresetAgent(a.value) ? installed?.[a.value] : undefined;
 			if (found === undefined) return a;
 			// not found: not to be ticked, though one ticked before it went can still be unticked
 			const aside = found ? m.prefs_ai_agent_installed() : m.prefs_ai_agent_not_found();
-			return { ...a, aside, warn: !found, disabled: !found && !ticked.includes(a.value) };
+			return { ...a, aside, warn: !found, disabled: !found && !ticked.includes(a.value as RefineAgent) };
 		})
 	);
 	// a model row for each ticked preset that is here, a way out for each that is not
 	const tickedPresets = $derived(PRESET_AGENTS.filter((a) => ticked.includes(a)));
 
-	function tick(value: string, on: boolean): void {
-		updateSettings({ refineAgents: withRefineAgent(value as RefineAgent, on) });
+	function pick(value: string): void {
+		updateSettings({ refineAgents: value ? [value as RefineAgent] : [] });
 	}
 </script>
 
@@ -109,7 +111,14 @@
 
 <div class={ROW}>
 	{@render label(m.prefs_ai_agent(), m.prefs_ai_agent_note())}
-	<CheckChoiceList choices={agentChoices} values={ticked} label={m.prefs_ai_agent()} ontoggle={tick} below={customCommand} />
+	<CheckChoiceList
+		one
+		choices={agentChoices}
+		values={ticked.length ? ticked : ['']}
+		label={m.prefs_ai_agent()}
+		ontoggle={pick}
+		below={customCommand}
+	/>
 </div>
 {#each tickedPresets as agent (agent)}
 	{#if installed?.[agent]}

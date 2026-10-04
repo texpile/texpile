@@ -22,7 +22,7 @@ import { relativeTo } from '$lib/comments/store.svelte';
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
-import type { SourceEdit } from '$lib/workspace/suggestionsController';
+import type { SourceEdit } from '$lib/workspace/suggestions/suggestionsController';
 import { editOpenFile } from '$lib/workspace/edits/openEditorEdit';
 import { onDecisionStep } from '$lib/comments/decisionHistory';
 import { markPmDecision } from '$lib/editor/visual/extensions/pmDecisionStep';

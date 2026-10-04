@@ -4,6 +4,7 @@
 	import { RefreshCw, GitCompare, Info, Columns2, Rows2, ChevronUp, ChevronDown } from '@lucide/svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import DiffPanel from './DiffPanel.svelte';
+	import type { Snippet } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -24,6 +25,8 @@
 		onModifiedInput?: (value: string) => void;
 		onToggleLayout: () => void;
 		onRefresh: () => void;
+		/** what this comparison offers besides stepping through it, at the bar's end (Version History's Restore) */
+		actions?: Snippet;
 	};
 	let {
 		filename,
@@ -38,7 +41,8 @@
 		readOnly = false,
 		onModifiedInput,
 		onToggleLayout,
-		onRefresh
+		onRefresh,
+		actions
 	}: Props = $props();
 
 	// null compareRef means the last saved version, and it still has to be named: the heading no
@@ -52,9 +56,9 @@
 	     level with the PDF toolbar across the split instead of a few pixels short of it. Its rule is an
 	     inset shadow, not a border, as under the editor's top bar: a border leaves 39px inside, and the
 	     icon centred in that starts half a pixel down, where it and its label round apart -->
-	<div class="bg-surface-100-900 text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
+	<div class="bg-surface-50-900 text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
 		<GitCompare class="size-3.5 shrink-0" />
-		<span class="cap-center font-medium">{m.wsview_diff_since()}</span>
+		<span class="cap-center shrink-0 font-medium whitespace-nowrap">{m.wsview_diff_since()}</span>
 		<!-- naming the version matters more than the word "diff" once this can point at any of them -->
 		{#if compareRef}
 			<span class="cap-center text-muted min-w-0 truncate" use:tip={compareRef.hash}>· {versionLabel}</span>
@@ -104,6 +108,7 @@
 			>
 				{#if layout === 'unified'}<Columns2 class="size-3.5" />{:else}<Rows2 class="size-3.5" />{/if}
 			</button>
+			{@render actions?.()}
 		</div>
 	</div>
 	{#if isTexpileManaged(filename)}

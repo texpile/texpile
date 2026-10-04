@@ -25,7 +25,7 @@
 		const { offsetWidth: w, offsetHeight: h } = card;
 		placed = {
 			x: Math.min(menu.x, window.innerWidth - w - EDGE),
-			y: Math.min(menu.y, window.innerHeight - h - EDGE),
+			y: menu.above ? Math.max(EDGE, menu.y - h) : Math.min(menu.y, window.innerHeight - h - EDGE),
 			for: menu
 		};
 	});

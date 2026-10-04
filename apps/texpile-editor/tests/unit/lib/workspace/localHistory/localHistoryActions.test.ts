@@ -4,7 +4,8 @@ import { it, expect, vi, beforeEach } from 'vitest';
 
 const promptAsk = vi.fn(async () => 'restore' as string | null);
 const history = {
-	readLocalHistory: vi.fn(async () => 'Old line.\nSecond.\n' as string | null),
+	readLocalHistory: vi.fn(async (_p: string, _id: string) => 'Old line.\nSecond.\n' as string | null),
+	listLocalHistory: vi.fn(async (_p: string) => [] as { id: string; timestamp: number }[]),
 	addLocalHistory: vi.fn(async () => null),
 	removeLocalHistory: vi.fn(async () => true),
 	renameLocalHistory: vi.fn(async () => true),
@@ -12,7 +13,7 @@ const history = {
 };
 vi.mock('$lib/modals/confirm.svelte', () => ({ promptAsk }));
 const success = vi.fn((_t: { title: string; action?: { label: string; onClick: () => void } }) => {});
-vi.mock('$lib/modals/toaster-svelte', () => ({ toaster: { error: vi.fn(), success } }));
+vi.mock('$lib/modals/toaster-svelte', () => ({ toaster: { error: vi.fn(), success, info: vi.fn() } }));
 vi.mock('$lib/workspace/localHistory/localHistory.svelte', () => ({
 	...history,
 	sourceLabel: (s?: string) => s ?? 'File Saved',
@@ -31,8 +32,12 @@ function make(loaded: string | null) {
 		whenSaved: vi.fn(async () => {}),
 		readTextIfPresent: vi.fn(async () => 'Now.\r\n' as string | null),
 		writeText: vi.fn(async () => {}),
-		loadFile: vi.fn(async () => {}),
-		openCompareTab: vi.fn()
+		adoptDisk: vi.fn(async () => {}),
+		suggestionsDropped: vi.fn(async () => 0),
+		restoreSuggestions: vi.fn(async () => {}),
+		adoptClosed: vi.fn(async () => {}),
+		openCompareTab: vi.fn(),
+		leaveCompareTab: vi.fn()
 	};
 	return { actions: new LocalHistoryActions(deps), deps };
 }
@@ -49,8 +54,22 @@ it('restores in the file’s own line endings, reloads it, and records the resto
 	await actions.restore('/p/main.tex', ENTRY);
 	expect(deps.flushPendingSave).toHaveBeenCalled();
 	expect(deps.writeText).toHaveBeenCalledWith('/p/main.tex', 'Old line.\r\nSecond.\r\n');
-	expect(deps.loadFile).toHaveBeenCalledWith('/p/main.tex');
+	expect(deps.adoptDisk).toHaveBeenCalledWith('/p/main.tex');
 	expect(history.addLocalHistory).toHaveBeenCalledWith('/p/main.tex', 'Old line.\nSecond.\n', 'restored');
+});
+
+it('says what it rejects, records that before the text lands, and the Undo hands the text back to the suggestions', async () => {
+	const { actions, deps } = make(null);
+	deps.suggestionsDropped.mockResolvedValueOnce(2);
+	const order: string[] = [];
+	deps.restoreSuggestions.mockImplementation(async () => void order.push('log'));
+	deps.writeText.mockImplementation(async () => void order.push('text'));
+	await actions.restore('/p/main.tex', ENTRY);
+	expect(deps.suggestionsDropped).toHaveBeenCalledWith('/p/main.tex', 'Now.\n', 'Old line.\nSecond.\n');
+	expect(promptAsk).toHaveBeenCalledWith(expect.objectContaining({ detail: expect.stringContaining('2') }));
+	expect(order).toEqual(['log', 'text']);
+	success.mock.calls[0][0].action!.onClick();
+	await vi.waitFor(() => expect(deps.adoptClosed).toHaveBeenCalledWith('/p/main.tex', 'Now.\n'));
 });
 
 it('changes nothing when the author says no', async () => {
@@ -61,19 +80,22 @@ it('changes nothing when the author says no', async () => {
 	expect(history.addLocalHistory).not.toHaveBeenCalled();
 });
 
-it('opens an entry against the file as a compare tab that reads from the history', () => {
+it('opens on the newest copy that differs from the file, as a compare tab that reads from the history', async () => {
 	const { actions, deps } = make(null);
-	actions.compare('/p/main.tex', ENTRY);
-	expect(deps.openCompareTab).toHaveBeenCalledWith('/p/main.tex', expect.objectContaining({ hash: 'local:aB3d.tex' }));
+	history.listLocalHistory.mockResolvedValueOnce([{ id: 'same.tex', timestamp: 2_000 }, ENTRY]);
+	history.readLocalHistory.mockImplementation(async (_p, id) => (id === 'same.tex' ? 'Now.\n' : 'Old line.\n'));
+	await actions.open('/p/main.tex');
+	expect(deps.openCompareTab).toHaveBeenCalledWith('/p/main.tex', expect.objectContaining({ hash: 'local:aB3d.tex' }), undefined);
+	history.readLocalHistory.mockImplementation(async () => 'Old line.\nSecond.\n');
 });
 
 it('brings back a deleted file as the copy was kept, and opens it', async () => {
 	const { actions, deps } = make(null);
-	deps.readTextIfPresent.mockResolvedValueOnce(null);
+	deps.readTextIfPresent.mockResolvedValue(null);
 	await actions.restore('/p/chapters/methods.tex', ENTRY);
 	expect(deps.writeText).toHaveBeenCalledWith('/p/chapters/methods.tex', 'Old line.\nSecond.\n');
 	expect(openFile).toHaveBeenCalledWith('/p/chapters/methods.tex');
-	expect(deps.loadFile).not.toHaveBeenCalled();
+	expect(deps.adoptDisk).not.toHaveBeenCalled();
 });
 
 /** the open file on a disk of its own, with the save queue and the save guard the editor has */
@@ -105,13 +127,17 @@ function editing(opts: { disk: string; buffer: string; changedOutside?: boolean;
 		whenSaved: () => saver.whenIdle(),
 		readTextIfPresent: async (p) => disk[p] ?? null,
 		writeText: async (p, c) => void (disk[p] = c),
-		// what FileOpener.open does: wait for the queue, read, adopt, stamp
-		loadFile: async (p) => {
+		// what ExternalChange.check does: wait for the queue, read, adopt, stamp
+		adoptDisk: async (p) => {
 			await saver.whenIdle();
 			state.buffer = disk[p];
 			stamp[p] = disk[p];
 		},
-		openCompareTab: () => {}
+		suggestionsDropped: async () => 0,
+		restoreSuggestions: async () => {},
+		adoptClosed: async () => {},
+		openCompareTab: () => {},
+		leaveCompareTab: () => {}
 	});
 	const type = (text: string) => {
 		state.buffer = text;

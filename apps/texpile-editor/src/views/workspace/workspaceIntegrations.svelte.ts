@@ -45,7 +45,7 @@ import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore, sourceCmView } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
 import { LiveRefChecks } from '$lib/workspace/document/liveRefChecks.svelte';
-import { tabs } from '$lib/workspace/tabs.svelte';
+import { tabs, type CompareRef } from '$lib/workspace/tabs.svelte';
 import {
 	workspaceRoot,
 	texFiles,
@@ -66,6 +66,7 @@ import type { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
 import type { CompileSettings } from '$lib/workspace/compileSettings.svelte';
 import type { TypstPreviewController } from '$lib/languages/typst/preview/previewController.svelte';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
+import { localHistorySuggestions } from '$lib/workspace/localHistory/localHistorySuggestions';
 import type { WorkspaceDoc } from './workspaceDoc.svelte';
 import type { WorkspaceNav } from './workspaceNav.svelte';
 import type { WorkspaceFiles } from './workspaceFiles.svelte';
@@ -104,6 +105,11 @@ export class WorkspaceIntegrations {
 	constructor(private d: IntegrationDeps) {
 		const { wsdoc } = d;
 		const { doc, modes } = wsdoc;
+		/** a comparison tab opened and focused; `replacing`: the version one of that file is against now, turned to this one */
+		function openCompareTab(path: string, compare: CompareRef, replacing?: string) {
+			const key = replacing ? tabs.replaceCompare(path, replacing, compare) : tabs.openCompare(path, compare);
+			d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
+		}
 		this.registries = new DocRegistries({
 			getSource: () => doc.texSource,
 			captureHistory: (text) => modes.history.capture(text)
@@ -127,10 +133,7 @@ export class WorkspaceIntegrations {
 			loadFile: (path) => d.wsdoc.loadFile(path),
 			captureDiffSnapshot: () => void d.wsdoc.diff.snapshot(),
 			isDiffMode: () => !!activeCompare.current,
-			openCompareTab: (path, compare) => {
-				const key = tabs.openCompare(path, compare);
-				d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
-			},
+			openCompareTab,
 			openAtLine: (path, line) => d.nav().showSourceLine(path, line),
 			settleConflicts: () => {
 				if (!d.wsdoc.doc.leaveConflicts()) return;
@@ -163,10 +166,13 @@ export class WorkspaceIntegrations {
 				}
 			},
 			writeText: (p, content) => d.provider.writeText(p, content),
-			loadFile: (path) => d.wsdoc.loadFile(path),
-			openCompareTab: (path, compare) => {
-				const key = tabs.openCompare(path, compare);
-				d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
+			adoptDisk: () => d.editFlow().external.check(),
+			...localHistorySuggestions(d.commentsCtl.suggestions),
+			openCompareTab,
+			// the file in front first, so closing the comparison does not move focus to a neighbour
+			leaveCompareTab: (path, hash) => {
+				d.editFlow().activateTab({ path });
+				d.editFlow().closeTab({ path, compare: { hash, subject: '' } });
 			}
 		});
 		$effect(() => provideLocalHistoryActions(history));
@@ -174,10 +180,7 @@ export class WorkspaceIntegrations {
 		// save, the selection
 		$effect(() =>
 			provideAgentHost({
-				openCompareTab: (path, compare) => {
-					const key = tabs.openCompare(path, compare);
-					d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
-				},
+				openCompareTab,
 				openFile: (path) => d.nav().openFileAtLine(path, 1),
 				writeText: (p, content) => d.provider.writeText(p, content),
 				flushPendingSave: () => d.editFlow().saver.flushAndWait(),

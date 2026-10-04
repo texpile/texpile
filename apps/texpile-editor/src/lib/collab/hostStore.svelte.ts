@@ -7,7 +7,7 @@ import { deriveSessionKeys, sha256Hex } from './e2e/keys';
 import { CollabSession, manifestOf, locksOf, metaOf, textOf, type PeerInfo } from './session';
 import type { ControlPayload, PreviewPayload } from './protocol';
 import type { SharedCompileIntel } from './editSession';
-import type { RemoteEdit } from '$lib/workspace/suggestionStates';
+import type { RemoteEdit } from '$lib/workspace/suggestions/suggestionStates';
 import { commentLogOf } from './sharedComments';
 import { HostMaterializer, isShared } from './materialize';
 import { RelayTransport, createRelaySession } from './transport';

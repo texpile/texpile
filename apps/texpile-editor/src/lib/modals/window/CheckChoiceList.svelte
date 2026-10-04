@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	// a short list of choices that are not one of a kind: a box ticked on each that is on
+	// a short list of choices: a box ticked on each that is on, or with `one`, a single choice of the list
 	import type { Snippet } from 'svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 
@@ -15,19 +15,23 @@
 		ontoggle: (value: string, on: boolean) => void;
 		/** what goes under a choice's row, such as the command a custom one runs */
 		below?: Snippet<[value: string]>;
+		/** radio buttons: picking one is the only way to turn another off */
+		one?: boolean;
 	};
 	const props: Props = $props();
+	const name = $props.id();
 </script>
 
-<div class="flex w-56 shrink-0 flex-col" role="group" aria-label={props.label}>
+<div class="flex w-56 shrink-0 flex-col" role={props.one ? 'radiogroup' : 'group'} aria-label={props.label}>
 	{#each props.choices as c (c.value)}
 		<label
 			class="rounded-base flex h-7 items-center gap-2 px-1.5 text-sm {c.disabled ? 'cursor-default' : 'hover:preset-tonal cursor-pointer'}"
 			use:tip={c.tip}
 		>
 			<input
-				type="checkbox"
-				class="checkbox shrink-0 scale-75"
+				type={props.one ? 'radio' : 'checkbox'}
+				class="{props.one ? 'radio' : 'checkbox'} shrink-0 scale-75"
+				name={props.one ? name : undefined}
 				checked={props.values.includes(c.value)}
 				disabled={c.disabled}
 				onchange={(e) => props.ontoggle(c.value, e.currentTarget.checked)}
