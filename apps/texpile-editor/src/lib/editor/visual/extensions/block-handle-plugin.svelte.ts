@@ -148,26 +148,31 @@ class BlockHandleView {
 		// edge: the gutter's y IS which block it acts on, and one of these buttons deletes, so a
 		// handle floating away from the block edge it belongs to would be guessing on the user's
 		// behalf. Scroll the block's top back into view and it comes back.
-		if (this.aboveVisibleArea(top)) {
-			this.state.visible = false;
-			return;
-		}
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
 		const containerRect = this.view.dom.getBoundingClientRect();
+		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
+		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
+		// The same while the pane is scrolled sideways to the comment cards: the gutter would sit out
+		// over the sidebar, beside a block whose start is out of view. Scroll back and it returns.
+		if (this.outsideVisibleArea(top, left)) {
+			this.state.visible = false;
+			return;
+		}
 		this.cancelHide();
 		this.state.visible = true;
 		this.state.top = top;
-		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
 		this.state.stacked = stacked;
-		this.state.left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
+		this.state.left = left;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
 	}
 
 	/** null scroller = nothing can scroll, so nothing can be out of view and the check is moot. */
-	private aboveVisibleArea(top: number): boolean {
+	private outsideVisibleArea(top: number, left: number): boolean {
 		const scroller = scrollParent(this.view.dom);
-		return scroller != null && top < scroller.getBoundingClientRect().top;
+		if (!scroller) return false;
+		const area = scroller.getBoundingClientRect();
+		return top < area.top || left < area.left;
 	}
 
 	private cancelHide = () => {
