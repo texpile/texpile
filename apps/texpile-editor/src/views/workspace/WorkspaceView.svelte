@@ -337,6 +337,7 @@
 		runCompile: () => compiler.runCompile(),
 		stopCompile: () => compiler.stopCompile(),
 		openPreferences: () => (preferencesOpen.current = true),
+		openFolder: () => void (hostMode && files.folder.open()),
 		stepDocumentHistory: (direction) => editSelect(direction)
 	});
 	const onKeydownCapture = createCaptureKeydownHandler({ openSourceControl: () => chromeActions.openSourceControl() });

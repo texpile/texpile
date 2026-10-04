@@ -197,7 +197,10 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 						]
 					: []),
 				...(s.canOpenFolder
-					? [{ label: label(s, 'openFolder', 'Open Folder…'), click: () => fire(win, 'openfolder:newfolder') }, ...recentItems(win, s)]
+					? [
+							{ label: label(s, 'openFolder', 'Open Folder…'), accelerator: 'CmdOrCtrl+O', click: () => fire(win, 'openfolder:newfolder') },
+							...recentItems(win, s)
+						]
 					: []),
 				...(s.canClone ? [{ label: label(s, 'clone', 'Clone Repository…'), click: () => fire(win, 'file:clone') }] : []),
 				{ type: 'separator' },

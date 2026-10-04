@@ -91,9 +91,9 @@
 						<Portal>
 							<Menu.Positioner>
 								<Menu.Content class={menuContentClass}>
-									<Menu.Item value="newfolder" class={menuBarItemClass}
-										><Menu.ItemText>{m.menubar_open_new_folder()}</Menu.ItemText></Menu.Item
-									>
+									<Menu.Item value="newfolder" class={menuBarItemClass}>
+										<Menu.ItemText>{m.menubar_open_new_folder()}</Menu.ItemText><span class="opacity-50">{combo('O')}</span>
+									</Menu.Item>
 									{#if recentFolders.current.length > 0}
 										<Menu.Separator class={separatorClass} />
 										<div class="text-muted px-2.5 py-0.5 text-xs font-semibold tracking-wider uppercase">

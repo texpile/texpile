@@ -44,6 +44,8 @@ export type ShortcutDeps = {
 	runCompile(): void;
 	stopCompile(): void;
 	openPreferences(): void;
+	/** does nothing in a guest's window, which cannot swap its folder out */
+	openFolder(): void;
 	stepDocumentHistory(direction: 'undo' | 'redo'): void;
 };
 
@@ -75,6 +77,11 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 			if (path) deps.closeTab({ path, compare: activeCompare.current ?? undefined });
 			// with no tab left, the window, as Cmd+W does in every other Mac app
 			else if (isMac) void nativeBridge()?.windowClose?.();
+		} else if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'o') {
+			// Ctrl+O in the terminal is the shell's
+			if (e.target instanceof Element && e.target.closest('.xterm')) return;
+			e.preventDefault();
+			deps.openFolder();
 		} else if (mod && e.shiftKey && !e.altKey && e.key.toLowerCase() === 't') {
 			e.preventDefault();
 			deps.reopenTab();
