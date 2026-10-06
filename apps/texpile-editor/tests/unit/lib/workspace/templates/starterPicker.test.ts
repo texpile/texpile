@@ -47,7 +47,8 @@ beforeEach(() => {
 		adopt: vi.fn(),
 		discard: vi.fn(),
 		universeIndex: vi.fn(async () => INDEX),
-		universeThumbnail: vi.fn(async () => ({ ok: false }))
+		universeThumbnail: vi.fn(async () => ({ ok: false })),
+		universeUnpack: vi.fn()
 	};
 	vi.stubGlobal('texpileTemplates', bridge);
 	picked = [];

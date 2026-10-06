@@ -65,4 +65,6 @@ export type TexpileTemplatesBridge = {
 	discard(dir: string): Promise<void>;
 	universeIndex(): Promise<UniverseIndex>;
 	universeThumbnail(name: string, version: string): Promise<UniverseThumbnail>;
+	/** the template's entry file, relative to `dir` */
+	universeUnpack(name: string, version: string, dir: string): Promise<{ entryPath: string }>;
 };

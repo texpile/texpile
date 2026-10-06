@@ -9,7 +9,7 @@ import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-import { selectDocStart, selectDocEnd } from '$lib/editor/visual/selectDocBoundary';
+import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
 import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
@@ -72,6 +72,7 @@ import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cm
 import { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
+import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
 import { typstChipKind } from './extensions/typstChipKind';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { typstFootnoteMarks } from './extensions/drawn/footnoteCall';
@@ -185,6 +186,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		// The picker inserts typ_ref atoms (it keys off the mounted schema)
 		...createSuggestPlugin(),
 		drawnChipAtomsPlugin(),
+		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
@@ -199,6 +201,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			'Mod-a': selectAllScoped,
 			'Mod-Home': selectDocStart,
 			'Mod-End': selectDocEnd,
+			'Shift-Mod-Home': extendToDocStart,
+			'Shift-Mod-End': extendToDocEnd,
 			'Mod-b': toggleMark(typSchema.marks.strong),
 			'Mod-i': toggleMark(typSchema.marks.em),
 			'Mod-u': toggleMark(typSchema.marks.u),

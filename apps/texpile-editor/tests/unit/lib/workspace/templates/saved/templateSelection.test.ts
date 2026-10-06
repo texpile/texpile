@@ -8,7 +8,7 @@ import {
 	templateSizeText,
 	TEMPLATE_WARN_BYTES
 } from '$lib/workspace/templates/saved/templateSelection';
-import { universeSpec, universeFailureText } from '$lib/workspace/templates/universe/universeProject';
+import { universeFailureText } from '$lib/workspace/templates/universe/universeProject';
 import type { UserTemplate } from '$lib/workspace/templates/templateBridge.types';
 
 function survey(paths: Record<string, number>) {
@@ -76,14 +76,9 @@ describe('naming', () => {
 });
 
 describe('Typst Universe', () => {
-	it('pins the package spec to the version the gallery showed', () => {
-		expect(universeSpec({ name: 'charged-ieee', version: '0.1.4' })).toBe('@preview/charged-ieee:0.1.4');
-	});
-
-	it("turns tinymist's download failure into plain words and passes anything else through", () => {
-		const offline =
-			'failed to initialize template: failed to read package manifest (failed to download package (error sending request for url (https://packages.typst.org/preview/x-0.1.0.tar.gz)))';
-		expect(universeFailureText(offline)).not.toContain('tar.gz');
-		expect(universeFailureText('package @preview/x:0.1.0 is not a template')).toBe('package @preview/x:0.1.0 is not a template');
+	it('turns a failed download into plain words and passes anything else through', () => {
+		const offline = 'failed to download package (net::ERR_INTERNET_DISCONNECTED)';
+		expect(universeFailureText(offline)).not.toContain('ERR_');
+		expect(universeFailureText('x is not a template')).toBe('x is not a template');
 	});
 });

@@ -34,7 +34,7 @@
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 	import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-	import { selectDocStart, selectDocEnd } from '$lib/editor/visual/selectDocBoundary';
+	import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
 	import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 	import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
@@ -42,6 +42,7 @@
 	import { createMarkdownImageSettings } from './imageSettings.svelte';
 	import { menuUpdatePlugin } from '$lib/editor/visual/extensions/toolbarlistenerplugin';
 	import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
+	import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
 	import { lineBreakPlugins } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 	import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 	import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
@@ -180,6 +181,7 @@
 			// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
 			keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 			keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
+			shiftArrowsPlugin(),
 			keymap(listKeymap),
 			inputRules({ rules: [...listInputRules, ...mdInputRules] }),
 			keymap({
@@ -191,6 +193,8 @@
 				'Mod-a': selectAllScoped,
 				'Mod-Home': selectDocStart,
 				'Mod-End': selectDocEnd,
+				'Shift-Mod-Home': extendToDocStart,
+				'Shift-Mod-End': extendToDocEnd,
 				'Mod-b': toggleMark(mdSchema.marks.strong),
 				'Mod-i': toggleMark(mdSchema.marks.em),
 				'Mod-`': toggleMark(mdSchema.marks.code),

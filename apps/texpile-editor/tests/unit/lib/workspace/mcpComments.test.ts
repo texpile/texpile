@@ -37,7 +37,9 @@ vi.mock('$lib/workspace/documentBuffer.svelte', () => ({
 	isRawTextKind: (k: string) => k === 'text'
 }));
 
-const { commentsPayload, addCommentPayload } = await import('$lib/workspace/mcpComments');
+vi.mock('$lib/ai/agentPanel/agentSession.svelte', () => ({ agentSession: { name: '' }, shownAgent: () => 'claude' }));
+
+const { commentsPayload, addCommentPayload, authorOf } = await import('$lib/workspace/mcpComments');
 
 const at = DISK.indexOf('fails on long');
 const threads = foldLog([
@@ -80,5 +82,14 @@ describe('the open file resolves against its buffer', () => {
 		const { d } = deps(DISK);
 		const r = await addCommentPayload(d, { path: 'out.pdf', quote: '%PDF-1.7', body: 'x' });
 		expect(r.ok).toBe(false);
+	});
+});
+
+describe('the author a tool writes under', () => {
+	it("is the Agent tab's name for its own agent, whatever name the agent gives, and the caller's own otherwise", () => {
+		expect(authorOf({ ownAgent: true, by: 'Claude Opus' })).toBe('Claude');
+		expect(authorOf({ ownAgent: true })).toBe('Claude');
+		expect(authorOf({ by: 'Cursor' })).toBe('Cursor');
+		expect(authorOf({})).toBe('AI assistant');
 	});
 });

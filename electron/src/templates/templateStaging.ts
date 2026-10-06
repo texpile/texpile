@@ -13,7 +13,7 @@ function stagingRoot(templatesDir: string): string {
 }
 
 /** a folder the renderer handed back, accepted only if it is one of ours */
-function ownStagedDir(templatesDir: string, dir: unknown): string {
+export function ownStagedDir(templatesDir: string, dir: unknown): string {
 	if (typeof dir !== 'string') throw new Error('Unknown staging folder.');
 	const inside = relative(stagingRoot(templatesDir), resolve(dir));
 	if (!inside || inside.startsWith('..') || isAbsolute(inside) || /[\\/]/.test(inside)) throw new Error('Unknown staging folder.');

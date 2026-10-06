@@ -13,8 +13,9 @@ import {
 	updateUserTemplate,
 	type SaveTemplateRequest
 } from '../templates/userTemplates';
-import { adoptStagedDir, createStagedDir, discardStagedDir } from '../templates/templateStaging';
+import { adoptStagedDir, createStagedDir, discardStagedDir, ownStagedDir } from '../templates/templateStaging';
 import { fetchTemplateIndex, fetchThumbnail } from '../templates/typstUniverse';
+import { unpackUniverseTemplate } from '../templates/universeUnpack';
 import { resolveTinymist } from '../typstService';
 
 // past this many files the walk stops: a folder that big is a data dump, not a template
@@ -55,5 +56,14 @@ export function registerTemplatesIpc(): void {
 	});
 	ipcMain.handle('templates:universeThumbnail', (_e, body: { name: unknown; version: unknown }) =>
 		fetchThumbnail((url, init) => net.fetch(url, init), userAgent, body?.name, body?.version)
+	);
+	handleFs('templates:universeUnpack', async (body: { name: unknown; version: unknown; dir: unknown }) =>
+		unpackUniverseTemplate(
+			(url, init) => net.fetch(url, init),
+			userAgent,
+			body?.name,
+			body?.version,
+			ownStagedDir(templatesDir(), body?.dir)
+		)
 	);
 }

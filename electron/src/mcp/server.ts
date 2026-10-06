@@ -34,7 +34,7 @@ export type McpHost = {
 	 * Resolving by root matters more than it looks: focus follows the user's clicks, so a tool that
 	 * always targeted the focused window would steer whichever project they happened to look at.
 	 */
-	windowFor(root?: string): { win: Parameters<typeof snapshotWindows>[0][number]; root: string | null } | null;
+	windowFor(root?: string): { win: Parameters<typeof snapshotWindows>[0][number]; root: string | null; ownAgent?: boolean } | null;
 	/** told when a client connects or the last one goes away, for the topbar indicator */
 	onConnectionChange?(client: string | null): void;
 };
@@ -197,7 +197,8 @@ function windowScoped(h: McpHost, wcId: number): McpHost {
 		windowObjects: own,
 		windowFor: () => {
 			const win = own()[0];
-			return win ? { win, root: h.rootFor(wcId) } : null;
+			// the agent this window's Agent tab started, which signs as the tab names it
+			return win ? { win, root: h.rootFor(wcId), ownAgent: true } : null;
 		}
 	};
 }
