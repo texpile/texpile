@@ -5,6 +5,7 @@
 	import KeyTable from './KeyTable.svelte';
 	import Links from './Links.svelte';
 	import Note from './Note.svelte';
+	import Requires from './Requires.svelte';
 	import Where from './Where.svelte';
 
 	let { blocks }: { blocks: Block[] } = $props();
@@ -15,6 +16,8 @@
 		{@html block.html}
 	{:else if block.kind === 'note'}
 		<Note html={block.html} />
+	{:else if block.kind === 'requires'}
+		<Requires html={block.html} />
 	{:else if block.kind === 'figure'}
 		<Figure items={block.items} narrow={block.narrow} />
 	{:else if block.kind === 'where'}

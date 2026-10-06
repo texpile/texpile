@@ -1,57 +1,60 @@
 ---
-description: Texpile runs your own compile command in a built-in terminal, reads the compile and bibliography logs into a Problems panel, and supports SyncTeX both ways.
-blurb: Your own command, in a real shell, with the log read into a Problems panel.
-icon: play
-order: 2
+description: Compile a LaTeX document to a PDF, read the Problems panel, jump between the source and the PDF, and change the engine or the compile command.
+order: 7
 ---
 
 # Compiling
 
-Texpile runs the compile command you choose, on your computer, and shows what came back.
+Press **Compile**, or Ctrl Alt Enter, to build the PDF from the main file. Texpile saves your files first, and the PDF opens beside the editor.
 
-| Where to find it | Path                                  | Note                                           |
-| ---------------- | ------------------------------------- | ---------------------------------------------- |
-| Menu             | Terminal › Compile                    |                                                |
-| Menu             | Terminal › Configure Compile Command… | The command, the engine, and live mode.        |
-| Menu             | Terminal › New Terminal               | Opens another shell alongside the running one. |
-| Shortcut         | Ctrl+Alt+Enter                        | Start or stop a compile.                       |
-| Panel            | Problems                              | In the dock at the bottom of the window.       |
+## Problems
 
-> [!NOTE]
-> Compiling needs a TeX distribution: TeX Live, MiKTeX, or MacTeX. Editing works without one.
+![The Problems panel listing warnings, each with a plain-words hint](../../landing/src/lib/assets/showcase/docs/latex/problems.png)
 
-## The command
+Errors and warnings from the log, with the file and line. Click a row to jump there. The count also shows next to Compile.
 
-Terminal › Configure Compile Command… sets what runs. Any shell command works, `{main}` expands to your main file, and the command is saved per folder. Use Default puts the default back. Under Advanced: Output Paths you can name the PDF and log file yourself, for a custom `-jobname` or an unusual output layout.
+1. **Hints.** Common messages get a plain-words hint, such as the `\usepackage` line an unknown command needs.
+2. **Boxes** adds overfull and underfull box warnings.
+
+## Jump between the source and the PDF
+
+The arrow on the divider between the editor and the PDF shows the cursor's place in the PDF. In the source editor, right-click › **Show in PDF** does the same. Double-click the PDF to jump back.
+
+## Change the engine or the command
+
+Open the menu next to Compile.
+
+![The Compile menu: Recompile from Scratch, Clean Auxiliary Files, Show Output in Folder and Configure Compile Command](../../landing/src/lib/assets/showcase/docs/latex/compile-menu.png)
+
+1. The menu.
+2. **Recompile from Scratch** deletes the build files and compiles again. Use it when an error stays after you fixed it. **Clean Auxiliary Files** deletes the build files and keeps the PDF.
+
+**Configure Compile Command…** opens the settings:
+
+![The Compile Command dialog with the Engine choices and the command](../../landing/src/lib/assets/showcase/docs/latex/compile-command.png)
+
+1. **Engine.** pdflatex, lualatex or xelatex. With **use latexmk** on, the compile repeats until the references and citations settle.
+2. **Command.** Write your own. `{main}` stands for the main file. **Use Default** puts the default back.
+
+The settings are saved for the folder.
+
+## Shell escape
+
+Packages such as `minted` need `-shell-escape` in the command. It is refused while you host a shared session.
+
+## A project with its own command
+
+A project that sets its own compile command, such as one you cloned, shows "This project is set up to compile with:" above the editor. Compile waits until you click **Use It** or save your own command.
+
+## The default command
 
 ```bash
-latexmk -pdf {main}
+latexmk -cd -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -output-directory=output {main}
 ```
 
-![The compile command dialog: engine picker, the shell command, and the Live mode toggle](../../landing/src/lib/assets/showcase/app/compile-command-modal.png)
-
-## Problems panel
-
-Errors and warnings from the compile and bibliography logs, in plain language. Click one to jump to its line. Open the panel from the Problems tab in the dock, or from the badge beside the Visual / Source toggle.
-
-![The Problems panel listing the warnings from a compile, with the PDF beside the editor](../../landing/src/lib/assets/showcase/app/problems-panel.png)
-
-## SyncTeX
-
-In the source editor, right-click a line and choose Show in PDF, or click the arrow button at the top of the divider between the editor and the PDF. Double-click text in the PDF to jump back to the source.
-
-![The sync-to-PDF arrow button on the divider between the source editor and the PDF](../../landing/src/lib/assets/showcase/app/sync-to-pdf-icon.png)
-
-## Color vision check
-
-The eye button in the PDF toolbar shows the document as a reader with a color vision deficiency sees it: protanopia (red-blind), deuteranopia (green-blind), tritanopia (blue-blind), or achromatopsia (no color). It is a check for figures and charts that rely on color alone.
-
-| Where to find it | Path                           | Note                                 |
-| ---------------- | ------------------------------ | ------------------------------------ |
-| Toolbar          | The eye button in the PDF pane | Also in the live and Typst previews. |
-
-Only the screen changes, never the PDF. While a simulation is on, the button is highlighted and a notice at the bottom of the pane names it, with a button back to true colors. The choice holds for the window until you change it or close it. The simulation follows Machado, Oliveira, and Fernandes (2009).
-
-## Terminal
-
-Compiles run in a terminal named Compile in the dock. Terminal › New Terminal opens another shell beside it.
+| Part                       | What it does                                               |
+| -------------------------- | ---------------------------------------------------------- |
+| `-cd`                      | Runs in the main file's folder, so its includes are found. |
+| `-lualatex`                | The engine. `-pdf` is pdflatex and `-xelatex` is xelatex.  |
+| `-synctex=1`               | Lets you jump between the source and the PDF. Keep it.     |
+| `-output-directory=output` | Puts the PDF, the log and the build files in `output`.     |

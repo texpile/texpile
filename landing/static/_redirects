@@ -17,26 +17,154 @@
 /zh-Hant/docs/installation/macos /zh-Hant/docs/installation 301
 /zh-Hant/docs/installation/linux /zh-Hant/docs/installation 301
 
-# MCP moved under Integrations. Unlike the install pages this one has an exact new home, so it
-# redirects to the page itself rather than to a parent.
-/docs/mcp /docs/integrations/mcp 301
-/zh-Hans/docs/mcp /zh-Hans/docs/integrations/mcp 301
-/zh-Hant/docs/mcp /zh-Hant/docs/integrations/mcp 301
+# MCP moved under Integrations, then with the agent pages under AI Assistant. Each has an exact new
+# home, so it redirects to the page itself rather than to a parent.
+/docs/mcp /docs/ai-assistant/mcp 301
+/zh-Hans/docs/mcp /zh-Hans/docs/ai-assistant/mcp 301
+/zh-Hant/docs/mcp /zh-Hant/docs/ai-assistant/mcp 301
 
 # The LaTeX-only pages moved under a LaTeX chapter when the docs got a chapter per format. Each
 # one has an exact new home.
 /docs/live-preview /docs/latex/live-preview 301
 /docs/compiling /docs/latex/compiling 301
-/docs/intellisense /docs/latex/intellisense 301
-
+/docs/intellisense /docs/latex/source-editor 301
 
 /zh-Hans/docs/live-preview /zh-Hans/docs/latex/live-preview 301
 /zh-Hans/docs/compiling /zh-Hans/docs/latex/compiling 301
-/zh-Hans/docs/intellisense /zh-Hans/docs/latex/intellisense 301
+/zh-Hans/docs/intellisense /zh-Hans/docs/latex/source-editor 301
 
 /zh-Hant/docs/live-preview /zh-Hant/docs/latex/live-preview 301
 /zh-Hant/docs/compiling /zh-Hant/docs/latex/compiling 301
-/zh-Hant/docs/intellisense /zh-Hant/docs/latex/intellisense 301
+/zh-Hant/docs/intellisense /zh-Hant/docs/latex/source-editor 301
+
+# The AI pages left Integrations for their own AI Assistant chapter, the terminal page moved to Build
+# and preview, and LaTeX intellisense became part of the LaTeX source editor page.
+/docs/integrations/mcp /docs/ai-assistant/mcp 301
+/docs/integrations/mcp-tools /docs/ai-assistant/mcp-tools 301
+/docs/integrations/agent-panel /docs/ai-assistant/agent-panel 301
+/docs/integrations/agents /docs/ai-assistant 301
+/docs/integrations/refine /docs/ai-assistant/refine 301
+/docs/integrations/terminal /docs/build-and-preview/terminal 301
+/docs/latex/intellisense /docs/latex/source-editor 301
+
+/zh-Hans/docs/integrations/mcp /zh-Hans/docs/ai-assistant/mcp 301
+/zh-Hans/docs/integrations/mcp-tools /zh-Hans/docs/ai-assistant/mcp-tools 301
+/zh-Hans/docs/integrations/agent-panel /zh-Hans/docs/ai-assistant/agent-panel 301
+/zh-Hans/docs/integrations/agents /zh-Hans/docs/ai-assistant 301
+/zh-Hans/docs/integrations/refine /zh-Hans/docs/ai-assistant/refine 301
+/zh-Hans/docs/integrations/terminal /zh-Hans/docs/build-and-preview/terminal 301
+/zh-Hans/docs/latex/intellisense /zh-Hans/docs/latex/source-editor 301
+
+/zh-Hant/docs/integrations/mcp /zh-Hant/docs/ai-assistant/mcp 301
+/zh-Hant/docs/integrations/mcp-tools /zh-Hant/docs/ai-assistant/mcp-tools 301
+/zh-Hant/docs/integrations/agent-panel /zh-Hant/docs/ai-assistant/agent-panel 301
+/zh-Hant/docs/integrations/agents /zh-Hant/docs/ai-assistant 301
+/zh-Hant/docs/integrations/refine /zh-Hant/docs/ai-assistant/refine 301
+/zh-Hant/docs/integrations/terminal /zh-Hant/docs/build-and-preview/terminal 301
+/zh-Hant/docs/latex/intellisense /zh-Hant/docs/latex/source-editor 301
+
+# Troubleshooting became its own section, one page per area, and the formats page joined the other
+# reference pages. The glossary was dropped; its old URL lands on the reference section.
+/docs/latex/troubleshooting /docs/troubleshooting/latex 301
+/docs/typst/troubleshooting /docs/troubleshooting/typst 301
+/docs/version-control/troubleshooting /docs/troubleshooting/git 301
+/docs/collaboration/troubleshooting /docs/troubleshooting/collaboration 301
+/docs/reference/troubleshooting /docs/troubleshooting 301
+/docs/formats /docs/reference/formats 301
+/docs/reference/glossary /docs/reference 301
+
+/zh-Hans/docs/latex/troubleshooting /zh-Hans/docs/troubleshooting/latex 301
+/zh-Hans/docs/typst/troubleshooting /zh-Hans/docs/troubleshooting/typst 301
+/zh-Hans/docs/version-control/troubleshooting /zh-Hans/docs/troubleshooting/git 301
+/zh-Hans/docs/collaboration/troubleshooting /zh-Hans/docs/troubleshooting/collaboration 301
+/zh-Hans/docs/reference/troubleshooting /zh-Hans/docs/troubleshooting 301
+/zh-Hans/docs/formats /zh-Hans/docs/reference/formats 301
+/zh-Hans/docs/reference/glossary /zh-Hans/docs/reference 301
+
+/zh-Hant/docs/latex/troubleshooting /zh-Hant/docs/troubleshooting/latex 301
+/zh-Hant/docs/typst/troubleshooting /zh-Hant/docs/troubleshooting/typst 301
+/zh-Hant/docs/version-control/troubleshooting /zh-Hant/docs/troubleshooting/git 301
+/zh-Hant/docs/collaboration/troubleshooting /zh-Hant/docs/troubleshooting/collaboration 301
+/zh-Hant/docs/reference/troubleshooting /zh-Hant/docs/troubleshooting 301
+/zh-Hant/docs/formats /zh-Hant/docs/reference/formats 301
+/zh-Hant/docs/reference/glossary /zh-Hant/docs/reference 301
+
+# The Writing pages became each format's own editor pages (they land on the LaTeX one, the
+# format most old links were about), and short pages merged into their chapter's main page.
+/docs/visual-editing /docs/latex/visual-editor 301
+/docs/visual-editing/text-and-structure /docs/latex/visual-editor 301
+/docs/visual-editing/menus /docs/latex/visual-editor 301
+/docs/visual-editing/commands /docs/latex/visual-editor 301
+/docs/visual-editing/pasting /docs/latex/visual-editor 301
+/docs/visual-editing/math /docs/latex/equations 301
+/docs/visual-editing/tables /docs/latex/tables 301
+/docs/visual-editing/images /docs/latex/images 301
+/docs/visual-editing/citations /docs/latex/citations 301
+/docs/visual-editing/smart-selection /docs/typing 301
+/docs/source-editing /docs/latex/source-editor 301
+/docs/format-document /docs/latex/source-editor 301
+/docs/build-and-preview/compile /docs/latex/compiling 301
+/docs/typst/intellisense /docs/typst/source-editor 301
+/docs/reference/settings /docs/preferences 301
+/docs/projects/file-tree /docs/projects 301
+/docs/projects/tabs /docs/projects 301
+/docs/projects/find-in-files /docs/projects 301
+/docs/version-control/workflows /docs/version-control 301
+/docs/comments/placement /docs/comments 301
+/docs/collaboration/hosting /docs/collaboration 301
+/docs/collaboration/joining /docs/collaboration 301
+/docs/collaboration/security /docs/collaboration 301
+/docs/ai-assistant/agents /docs/ai-assistant 301
+
+/zh-Hans/docs/visual-editing /zh-Hans/docs/latex/visual-editor 301
+/zh-Hans/docs/visual-editing/text-and-structure /zh-Hans/docs/latex/visual-editor 301
+/zh-Hans/docs/visual-editing/menus /zh-Hans/docs/latex/visual-editor 301
+/zh-Hans/docs/visual-editing/commands /zh-Hans/docs/latex/visual-editor 301
+/zh-Hans/docs/visual-editing/pasting /zh-Hans/docs/latex/visual-editor 301
+/zh-Hans/docs/visual-editing/math /zh-Hans/docs/latex/equations 301
+/zh-Hans/docs/visual-editing/tables /zh-Hans/docs/latex/tables 301
+/zh-Hans/docs/visual-editing/images /zh-Hans/docs/latex/images 301
+/zh-Hans/docs/visual-editing/citations /zh-Hans/docs/latex/citations 301
+/zh-Hans/docs/visual-editing/smart-selection /zh-Hans/docs/typing 301
+/zh-Hans/docs/source-editing /zh-Hans/docs/latex/source-editor 301
+/zh-Hans/docs/format-document /zh-Hans/docs/latex/source-editor 301
+/zh-Hans/docs/build-and-preview/compile /zh-Hans/docs/latex/compiling 301
+/zh-Hans/docs/typst/intellisense /zh-Hans/docs/typst/source-editor 301
+/zh-Hans/docs/reference/settings /zh-Hans/docs/preferences 301
+/zh-Hans/docs/projects/file-tree /zh-Hans/docs/projects 301
+/zh-Hans/docs/projects/tabs /zh-Hans/docs/projects 301
+/zh-Hans/docs/projects/find-in-files /zh-Hans/docs/projects 301
+/zh-Hans/docs/version-control/workflows /zh-Hans/docs/version-control 301
+/zh-Hans/docs/comments/placement /zh-Hans/docs/comments 301
+/zh-Hans/docs/collaboration/hosting /zh-Hans/docs/collaboration 301
+/zh-Hans/docs/collaboration/joining /zh-Hans/docs/collaboration 301
+/zh-Hans/docs/collaboration/security /zh-Hans/docs/collaboration 301
+/zh-Hans/docs/ai-assistant/agents /zh-Hans/docs/ai-assistant 301
+
+/zh-Hant/docs/visual-editing /zh-Hant/docs/latex/visual-editor 301
+/zh-Hant/docs/visual-editing/text-and-structure /zh-Hant/docs/latex/visual-editor 301
+/zh-Hant/docs/visual-editing/menus /zh-Hant/docs/latex/visual-editor 301
+/zh-Hant/docs/visual-editing/commands /zh-Hant/docs/latex/visual-editor 301
+/zh-Hant/docs/visual-editing/pasting /zh-Hant/docs/latex/visual-editor 301
+/zh-Hant/docs/visual-editing/math /zh-Hant/docs/latex/equations 301
+/zh-Hant/docs/visual-editing/tables /zh-Hant/docs/latex/tables 301
+/zh-Hant/docs/visual-editing/images /zh-Hant/docs/latex/images 301
+/zh-Hant/docs/visual-editing/citations /zh-Hant/docs/latex/citations 301
+/zh-Hant/docs/visual-editing/smart-selection /zh-Hant/docs/typing 301
+/zh-Hant/docs/source-editing /zh-Hant/docs/latex/source-editor 301
+/zh-Hant/docs/format-document /zh-Hant/docs/latex/source-editor 301
+/zh-Hant/docs/build-and-preview/compile /zh-Hant/docs/latex/compiling 301
+/zh-Hant/docs/typst/intellisense /zh-Hant/docs/typst/source-editor 301
+/zh-Hant/docs/reference/settings /zh-Hant/docs/preferences 301
+/zh-Hant/docs/projects/file-tree /zh-Hant/docs/projects 301
+/zh-Hant/docs/projects/tabs /zh-Hant/docs/projects 301
+/zh-Hant/docs/projects/find-in-files /zh-Hant/docs/projects 301
+/zh-Hant/docs/version-control/workflows /zh-Hant/docs/version-control 301
+/zh-Hant/docs/comments/placement /zh-Hant/docs/comments 301
+/zh-Hant/docs/collaboration/hosting /zh-Hant/docs/collaboration 301
+/zh-Hant/docs/collaboration/joining /zh-Hant/docs/collaboration 301
+/zh-Hant/docs/collaboration/security /zh-Hant/docs/collaboration 301
+/zh-Hant/docs/ai-assistant/agents /zh-Hant/docs/ai-assistant 301
 
 # The site before this one had a /learn section. Search engines still list those URLs, and the
 # docs are the nearest thing to what they covered.

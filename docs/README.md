@@ -1,40 +1,55 @@
 ---
-description: How the Texpile editor works, feature by feature: live preview, visual and source editing, intellisense, compiling, projects, git, real-time collaboration, and MCP.
+description: Texpile documentation: install Texpile, write in LaTeX, Typst or Markdown, and work with files, Git, collaborators and AI.
 ---
 
 # Documentation
 
-How Texpile works, feature by feature. Everything described here runs on your own computer, on the files already in your folder.
+Texpile is a desktop editor for LaTeX, Typst and Markdown, with a visual and a source editor for each.
 
 ## Get started
 
 - [Installation](installation/README.md)
 - [Getting started](getting-started.md)
-
-## Editor
-
-- [Visual editing](visual-editing/README.md)
-- [Source editing](source-editing.md)
-- [Spell check](spell-check.md)
-- [Projects and files](projects.md)
-- [Comments](comments.md)
-- [Version control](version-control.md)
-- [Real-time collaboration](collaboration.md)
+- [A tour of the window](tour.md)
+- [Command palette](command-palette.md)
 
 ## Formats
 
-- [Overview](formats.md)
 - [LaTeX](latex/README.md)
 - [Typst](typst/README.md)
-- [Markdown](markdown.md)
+- [Markdown](markdown/README.md)
 
-## Settings
+## Editor tips
 
-- [Themes](themes.md)
-- [Preferences](preferences.md)
-- [Keyboard shortcuts](shortcuts.md)
+- [Typing and selecting](typing.md)
+- [Paste and drop](paste.md)
+- [Spell check](spell-check.md)
+
+## Workflow
+
+- [Build and preview](build-and-preview/README.md)
+- [Projects and files](projects/README.md)
+- [Version control](version-control/README.md)
+
+## Review and collaboration
+
+- [Comments and suggestions](comments/README.md)
+- [Real-time collaboration](collaboration/README.md)
+
+## AI and integrations
+
+- [AI Assistant](ai-assistant/README.md)
 - [Integrations](integrations/README.md)
 
-Texpile is free and open source, for Windows, macOS, and Linux.
+## Customize
+
+- [Preferences](preferences.md)
+- [Themes](themes.md)
+- [Keyboard shortcuts](shortcuts.md)
+
+## Troubleshooting and reference
+
+- [Troubleshooting](troubleshooting/README.md)
+- [Reference](reference/README.md)
 
 [Download](/download)

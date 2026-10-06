@@ -1,23 +1,26 @@
 <script module lang="ts">
+	import { localizeHref } from '$lib/paraglide/runtime';
 	export type Panel = { img: string; alt: string; heading: string; body?: string; points?: string[]; docs: string };
 	export type Section = { heading: string; body: string; img: string; alt: string; docs: string };
-	export type Row = { label: string; cells: string[] };
 	export type Feature = { key: string; icon: Component<{ class?: string; strokeWidth?: number }>; title: string; body: string };
 	import type { Component } from 'svelte';
-	import type { Startup } from '$lib/startup';
 </script>
 
 <script lang="ts">
 	// One editor page (/latex-editor, /typst-editor). Both target one search intent and share the
-	// same shape: the home hero with the format's own shot, two panels for the two ways to write,
-	// two panels for reviews (visual diff, comments), the live preview, collaboration with a
-	// comparison table, the start-up chart, themes, the feature grid, and the download band with
-	// the toolchain line. The route supplies every word and image; what is Texpile-wide (the
-	// start-up numbers, the download band) lives here.
+	// same shape: the home hero playing the format's own scenes, two panels for the two ways to write,
+	// two panels for reviews (visual diff, comments), the live preview, collaboration, AI, themes,
+	// integrations, the feature grid, and the download band with the toolchain line. The route
+	// supplies every word and image; what is Texpile-wide (the download band) lives here.
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import Check from '@lucide/svelte/icons/check';
 	import Download from '@lucide/svelte/icons/download';
 	import Hero from '$lib/comp/Hero.svelte';
+	import { COLLAB_SCENES, PREVIEW_SCENES, type HeroFormat } from '$lib/comp/hero/heroScenes';
+	import SceneLoop from '$lib/comp/hero/SceneLoop.svelte';
+	import IntegrationGrid from '$lib/comp/IntegrationGrid.svelte';
+	import AiSection from '$lib/comp/AiSection.svelte';
+	import { integrationList } from '$lib/integrations';
 	import { m } from '$lib/paraglide/messages';
 	import Alternates, { absolute } from '$lib/comp/Alternates.svelte';
 	import { reveal } from '$lib/reveal';
@@ -28,8 +31,7 @@
 		path,
 		heading,
 		lead,
-		heroShot,
-		heroAlt,
+		format,
 		ways,
 		reviews,
 		preview,
@@ -37,7 +39,6 @@
 		themes,
 		alsoSub,
 		features,
-		startup,
 		needsLine
 	}: {
 		title: string;
@@ -46,23 +47,19 @@
 		path: string;
 		heading: string;
 		lead: string;
-		heroShot: string;
-		heroAlt: string;
+		format: HeroFormat;
 		ways: { sub: string; visual: Panel; source: Panel };
 		reviews: { diff: Panel; comments: Panel };
-		preview: Section;
-		collab: Section & { columns: string[]; rows: Row[] };
+		preview: Omit<Section, 'img'>;
+		collab: Omit<Section, 'img'>;
 		themes: Section;
 		alsoSub: string;
 		features: Feature[];
-		startup: Startup[];
 		needsLine: string;
 	} = $props();
 
 	// self-referencing per locale; the alternates in the head say which language each URL is
 	const canonical = $derived(absolute(path));
-
-	const slowest = $derived(Math.max(...startup.map((s) => s.ms)));
 </script>
 
 <svelte:head>
@@ -81,7 +78,7 @@
 </svelte:head>
 <Alternates {path} />
 
-<Hero {heading} body={lead} shot={heroShot} shotAlt={heroAlt} />
+<Hero {heading} body={lead} {format} />
 
 <section id="editing" class="bg-white py-20 md:py-28">
 	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -118,10 +115,7 @@
 				<p class="mt-6">{@render docsLink(preview.docs)}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<!-- an animated WebP: plays wherever an image does, with no autoplay rules to satisfy -->
-					<img src={preview.img} alt={preview.alt} loading="lazy" draggable="false" class="block w-full" />
-				</div>
+				<SceneLoop scene={PREVIEW_SCENES[format].scene} poster={PREVIEW_SCENES[format].poster} alt={preview.alt} />
 			</div>
 		</div>
 	</div>
@@ -137,79 +131,19 @@
 				<p class="mt-6">{@render docsLink(collab.docs)}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<img src={collab.img} alt={collab.alt} loading="lazy" draggable="false" class="block w-full" />
-				</div>
-			</div>
-		</div>
-
-		<div class="border-surface-200 mt-14 overflow-x-auto rounded-lg border" use:reveal>
-			<table class="w-full min-w-2xl text-left text-sm">
-				<thead class="bg-surface-50 text-surface-700">
-					<tr>
-						<th scope="col" class="px-4 py-3"></th>
-						{#each collab.columns as col, i (col)}
-							<th scope="col" class="px-4 py-3 font-semibold {i === 0 ? 'text-surface-900' : ''}">{col}</th>
-						{/each}
-					</tr>
-				</thead>
-				<tbody class="text-surface-700">
-					{#each collab.rows as row (row.label)}
-						<tr class="border-surface-200 border-t">
-							<th scope="row" class="text-surface-900 px-4 py-3 align-top font-semibold">{row.label}</th>
-							{#each row.cells as cell, i (i)}
-								<td class="px-4 py-3 align-top {i === 0 ? 'text-surface-900' : ''}">{cell}</td>
-							{/each}
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-	</div>
-</section>
-
-<section id="speed" class="border-surface-200 border-t bg-white py-20 md:py-28">
-	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<div class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
-			<div class="lg:col-span-4" use:reveal>
-				<h2 class="display text-surface-950 text-[clamp(2rem,3.4vw,3rem)]">{m.ed_speed_heading()}</h2>
-				<p class="text-surface-600 mt-5 leading-relaxed">{m.ed_speed_body()}</p>
-				<p class="text-surface-500 mt-6 text-sm">* {m.ed_speed_vscode_note()}</p>
-			</div>
-			<div class="lg:col-span-8" use:reveal={90}>
-				<!-- the chart sits in the same frame as the screenshots in the sections around it: one measure
-					 across three editors, as a table with the bar inside the cell, so it also reads as a table -->
-				<div class="border-surface-200 rounded-xl border bg-white p-6 shadow-2xl sm:p-10">
-					<table class="w-full">
-						<tbody>
-							{#each startup as s (s.name)}
-								<tr>
-									<th scope="row" class="text-surface-900 w-44 py-4 pr-4 text-left font-medium whitespace-nowrap">
-										{s.name}{#if s.note}*{/if}
-									</th>
-									<td class="py-4">
-										<div class="bg-surface-100 h-4 overflow-hidden rounded-full">
-											<div
-												class="h-full rounded-full {s.own ? 'bg-primary-500' : 'bg-surface-400'}"
-												style:width="{(s.ms / slowest) * 100}%"
-											></div>
-										</div>
-									</td>
-									<td class="text-surface-900 w-24 py-4 pl-4 text-right font-semibold tabular-nums">{m.ed_ms({ n: s.ms })}</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
+				<SceneLoop scene={COLLAB_SCENES[format].scene} poster={COLLAB_SCENES[format].poster} alt={collab.alt} />
 			</div>
 		</div>
 	</div>
 </section>
+
+<!-- after collaboration, whose picture is on the left: this one goes right -->
+<AiSection {format} alternate={false} />
 
 <section id="themes" class="border-surface-200 border-t bg-white py-20 md:py-28">
 	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
-			<!-- media left, after the chart sat right -->
+			<!-- media left, after the AI picture sat right -->
 			<div class="lg:order-2 lg:col-span-4" use:reveal>
 				<h2 class="display text-surface-950 text-[clamp(2rem,3.4vw,3rem)]">{themes.heading}</h2>
 				<p class="text-surface-600 mt-5 leading-relaxed">{themes.body}</p>
@@ -223,6 +157,8 @@
 		</div>
 	</div>
 </section>
+
+<IntegrationGrid items={integrationList(format)} />
 
 <section id="features" class="border-surface-200 border-t bg-white py-20 md:py-28">
 	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -254,7 +190,7 @@
 			<h2 class="display text-[clamp(2.25rem,4vw,3.5rem)] text-white">{m.download_section_heading()}</h2>
 			<p class="text-surface-300 max-w-xl text-lg">{m.download_section_body()}</p>
 			<a
-				href="/download"
+				href={localizeHref('/download')}
 				class="btn preset-filled-primary-500 rounded-base inline-flex items-center gap-2 px-8 py-3.5 font-semibold text-white"
 			>
 				<Download class="h-5 w-5" />
@@ -291,7 +227,10 @@
 {/snippet}
 
 {#snippet docsLink(href: string)}
-	<a {href} class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors">
+	<a
+		href={localizeHref(href)}
+		class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors"
+	>
 		{m.docs_link_label()}
 		<ArrowRight class="h-4 w-4" />
 	</a>

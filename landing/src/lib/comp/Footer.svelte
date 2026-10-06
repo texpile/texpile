@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { localizeHref } from '$lib/paraglide/runtime';
 	import { m } from '$lib/paraglide/messages';
 	import LogoLight from '$branding/Logo-light.svg';
 </script>
@@ -15,10 +16,10 @@
 				<h4 class="font-semibold text-white">{m.footer_project_heading()}</h4>
 				<ul class="space-y-2">
 					<li>
-						<a href="/docs" class="text-surface-300 hover:text-white">{m.footer_docs()}</a>
+						<a href={localizeHref('/docs')} class="text-surface-300 hover:text-white">{m.footer_docs()}</a>
 					</li>
 					<li>
-						<a href="/download" class="text-surface-300 hover:text-white">{m.footer_download()}</a>
+						<a href={localizeHref('/download')} class="text-surface-300 hover:text-white">{m.footer_download()}</a>
 					</li>
 					<li>
 						<a href="https://github.com/texpile/texpile" target="_blank" rel="noopener noreferrer" class="text-surface-300 hover:text-white"
@@ -32,10 +33,10 @@
 				<h4 class="font-semibold text-white">{m.footer_editors_heading()}</h4>
 				<ul class="space-y-2">
 					<li>
-						<a href="/latex-editor" class="text-surface-300 hover:text-white">{m.footer_latex()}</a>
+						<a href={localizeHref('/latex-editor')} class="text-surface-300 hover:text-white">{m.footer_latex()}</a>
 					</li>
 					<li>
-						<a href="/typst-editor" class="text-surface-300 hover:text-white">{m.footer_typst()}</a>
+						<a href={localizeHref('/typst-editor')} class="text-surface-300 hover:text-white">{m.footer_typst()}</a>
 					</li>
 				</ul>
 			</div>

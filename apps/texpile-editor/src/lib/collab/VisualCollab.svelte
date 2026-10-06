@@ -10,7 +10,7 @@
 	import { setRemoteCursors, type RemotePeerSel } from '$lib/editor/visual/extensions/remoteCursors';
 	import { applyRemotePatch } from './remotePatch';
 	import { computeBlockPatch, protectCaretBlock } from '$lib/editor/visual/blockPatch';
-	import { offsetAtPm, pmAtOffset } from '$lib/editor/visual/sourceMap';
+	import { caretAtOffset, offsetAtPm } from '$lib/editor/visual/sourceMap';
 	import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 	import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/materialize';
@@ -269,8 +269,8 @@
 				drops.push(`${clientId}: relpos resolves off-file`);
 				return;
 			}
-			const anchorPm = pmAtOffset(map, toLocal(lag, ai));
-			const headPm = ai === hi ? anchorPm : pmAtOffset(map, toLocal(lag, hi));
+			const anchorPm = caretAtOffset(map, api.texSource, toLocal(lag, ai));
+			const headPm = ai === hi ? anchorPm : caretAtOffset(map, api.texSource, toLocal(lag, hi));
 			if (anchorPm == null || headPm == null) {
 				drops.push(`${clientId}: offset ${ai} maps to no block (preamble?)`);
 				return;

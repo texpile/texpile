@@ -3,6 +3,7 @@
 	// again whenever one of the other editors changes, and one copy is enough to keep true. Every
 	// claim about another editor comes from that project's own site, and the date at the bottom
 	// says when they were last checked.
+	import { localizeHref } from '$lib/paraglide/runtime';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import Download from '@lucide/svelte/icons/download';
 	import { m } from '$lib/paraglide/messages';
@@ -164,7 +165,7 @@
 				<div>
 					<h3 class="text-surface-900 text-xl font-semibold">
 						{#if e.url.startsWith('/')}
-							<a href={e.url} class="hover:text-primary-600">{e.name}</a>
+							<a href={localizeHref(e.url)} class="hover:text-primary-600">{e.name}</a>
 						{:else}
 							<a href={e.url} target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">{e.name}</a>
 						{/if}
@@ -193,10 +194,10 @@
 		</div>
 
 		<p class="text-surface-600 leading-relaxed">
-			Head to head: <a href="/vs/texstudio" class="text-primary-600 hover:text-primary-700">Texpile vs TeXstudio</a>,
-			<a href="/vs/lyx" class="text-primary-600 hover:text-primary-700">Texpile vs LyX</a>,
-			<a href="/vs/overleaf" class="text-primary-600 hover:text-primary-700">Texpile vs Overleaf</a>, and
-			<a href="/vs/latex-workshop" class="text-primary-600 hover:text-primary-700">Texpile vs LaTeX Workshop</a>.
+			Head to head: <a href={localizeHref('/vs/texstudio')} class="text-primary-600 hover:text-primary-700">Texpile vs TeXstudio</a>,
+			<a href={localizeHref('/vs/lyx')} class="text-primary-600 hover:text-primary-700">Texpile vs LyX</a>,
+			<a href={localizeHref('/vs/overleaf')} class="text-primary-600 hover:text-primary-700">Texpile vs Overleaf</a>, and
+			<a href={localizeHref('/vs/latex-workshop')} class="text-primary-600 hover:text-primary-700">Texpile vs LaTeX Workshop</a>.
 		</p>
 
 		<p class="text-surface-500 text-sm">
@@ -208,14 +209,14 @@
 
 		<div class="flex flex-wrap items-center gap-4">
 			<a
-				href="/download"
+				href={localizeHref('/download')}
 				class="btn preset-filled-primary-500 rounded-base inline-flex items-center gap-2 px-6 py-2.5 font-semibold text-white"
 			>
 				<Download class="h-5 w-5" />
 				{m.notfound_download()}
 			</a>
 			<a
-				href="/latex-editor"
+				href={localizeHref('/latex-editor')}
 				class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors"
 			>
 				{m.footer_latex()}

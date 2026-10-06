@@ -11,7 +11,11 @@
 
 <figure class="not-prose my-6 {items.length > 1 ? 'grid items-start gap-6 sm:grid-cols-2' : ''}">
 	{#each items as item (item.src)}
-		<div class="border-surface-200 mx-auto h-fit w-fit max-w-full overflow-hidden rounded-xl border shadow-lg {narrow ? 'max-w-xl' : ''}">
+		<div
+			class="border-surface-200-800 rounded-container mx-auto h-fit w-fit max-w-full overflow-hidden border shadow-lg {narrow
+				? 'max-w-xl'
+				: ''}"
+		>
 			{#if item.video}
 				<video
 					autoplay
@@ -36,6 +40,6 @@
 		</div>
 	{/each}
 	{#if items.length === 1 && items[0].caption}
-		<figcaption class="text-surface-500 mt-2 text-center text-sm">{items[0].caption}</figcaption>
+		<figcaption class="text-muted mt-2 text-center text-sm">{items[0].caption}</figcaption>
 	{/if}
 </figure>

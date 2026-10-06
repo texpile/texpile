@@ -3,6 +3,7 @@
 // so the same file reads on GitHub:
 //
 //   > [!NOTE] text                       a callout
+//   > [!REQUIRES] git                    a chip naming what a feature needs beyond Texpile
 //   ![alt](../path.png "caption")        a figure; several images in one paragraph make a row;
 //                                        #narrow on the path keeps a small screenshot small
 //   | Where to find it | Path | Note |   the "where to find it" block
@@ -13,10 +14,11 @@
 // Links to other pages are written as paths to the .md file, relative to the current one.
 import MarkdownIt, { type Env as MdEnv, type Token } from 'markdown-it';
 import { posix } from 'node:path';
-import type { Block, CardItem, FigureItem, LinkItem } from './blocks';
+import type { Block, CardItem, FigureItem, LinkItem, TocItem } from './blocks';
 import { DOCS, type Doc } from './content.server';
 import { highlightCode } from './highlight.server';
 import { hrefFor } from './nav';
+import { localizeHref } from '$lib/paraglide/runtime';
 import { tokenize } from './prose';
 
 interface Env extends MdEnv {
@@ -59,8 +61,8 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
 	if (isExternal(href)) {
 		tok.attrSet('target', '_blank');
 		tok.attrSet('rel', 'noopener noreferrer');
-	} else {
-		tok.attrSet('href', resolveHref((env as Env).doc, href));
+	} else if (!href.startsWith('#')) {
+		tok.attrSet('href', localizeHref(resolveHref((env as Env).doc, href)));
 	}
 	return self.renderToken(tokens, idx, options);
 };
@@ -140,10 +142,11 @@ function links(doc: Doc, children: Token[]): Block | null {
 function note(tokens: Token[], env: Env): Block | null {
 	const inline = tokens[2];
 	const first = inline?.children?.[0];
-	const m = first && /^\[!\w+\]\s*/.exec(first.content);
+	const m = first && /^\[!(\w+)\]\s*/.exec(first.content);
 	if (!m) return null;
 	first.content = first.content.slice(m[0].length);
 	if (!first.content && inline.children?.[1]?.type === 'softbreak') inline.children.splice(0, 2);
+	if (m[1] === 'REQUIRES') return { kind: 'requires', html: md.renderer.renderInline(inline.children ?? [], md.options, env) };
 	return { kind: 'note', html: md.renderer.render(tokens.slice(1, -1), md.options, env) };
 }
 
@@ -202,10 +205,24 @@ function special(doc: Doc, tokens: Token[], env: Env): Block | null {
 	return null;
 }
 
-/** the page's lead (the paragraph under the heading) and everything after it */
-export function renderDoc(doc: Doc): { lead: string; blocks: Block[] } {
+/** the page's ## headings, for "On this page" and search */
+function tocOf(tokens: Token[]): TocItem[] {
+	const out: TocItem[] = [];
+	for (let i = 0; i < tokens.length; i++) {
+		if (tokens[i].type === 'heading_open' && tokens[i].tag === 'h2')
+			out.push({ id: attr(tokens[i], 'id'), text: text(tokens[i + 1].children ?? []) });
+	}
+	return out;
+}
+
+/** the ## headings alone, without rendering the page */
+export const headingsOf = (doc: Doc) => tocOf(md.parse(doc.body, { doc }));
+
+/** the page's lead (the paragraph under the heading), everything after it, and its ## headings */
+export function renderDoc(doc: Doc): { lead: string; blocks: Block[]; toc: TocItem[] } {
 	const env: Env = { doc };
 	const tokens = md.parse(doc.body, env);
+	const toc = tocOf(tokens);
 	if (tokens[0]?.type !== 'heading_open' || tokens[0].tag !== 'h1') throw new Error(`docs/${doc.file}: must start with the # heading`);
 	let i = 3;
 	let lead = '';
@@ -230,5 +247,5 @@ export function renderDoc(doc: Doc): { lead: string; blocks: Block[] } {
 		i = end;
 	}
 	flush();
-	return { lead, blocks };
+	return { lead, blocks, toc };
 }

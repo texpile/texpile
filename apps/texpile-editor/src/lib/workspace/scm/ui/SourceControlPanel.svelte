@@ -211,13 +211,17 @@
 {:else if parentRepo}
 	<ParentRepoGate repo={parentRepo} {busy} onUse={onUseParentRepo} {onInit} />
 {:else}
-	<div class="flex h-full min-h-0 flex-col">
-		<!-- status reads stay out of gitRunning: autosave rereads status after nearly every save, and the line would flicker -->
-		<ProgressLine active={busy || !!gitRunning.current} label={m.vcs_working()} />
+	<div class="relative flex h-full min-h-0 flex-col">
+		<!-- status reads stay out of gitRunning: autosave rereads status after nearly every save, and the line would flicker.
+		     Over the top edge rather than above the branch row, which lines up with the editor's tab strip -->
+		<div class="absolute inset-x-0 top-0 z-10">
+			<ProgressLine active={busy || !!gitRunning.current} label={m.vcs_working()} />
+		</div>
 		<!-- refresh belongs beside the branch: both are the state of the repository, and parked above
 		     an unrelated heading it read as a stray duplicate of the file tree's own refresh -->
 		<!-- a container, so in a narrow sidebar Sync and Publish drop their word and Refresh stays in sight -->
-		<div class="text-muted @container flex h-7 shrink-0 items-center gap-1.5 px-3 text-xs">
+		<!-- as tall as the editor's tab strip, rule included, so the two rows line up across the divider -->
+		<div class="text-muted border-surface-200-800 @container flex h-9 shrink-0 items-center gap-1.5 border-b px-3 text-xs">
 			<!-- a label, as on master: switching is Switch branch in the command palette. Detached, git
 			     calls the branch "HEAD", which says nothing; this says what it means and where the way back is -->
 			<GitBranch class="size-3.5 shrink-0" />
@@ -252,7 +256,7 @@
 					{#if changes.length}
 						<!-- The total, then the groups it is made of. Deliberately not a group row itself: no
 						     tick box and no chevron, so a summary cannot be mistaken for what it summarises. -->
-						<div class="border-surface-200-800 text-muted flex items-center gap-2 border-t px-3 py-1 text-xs">
+						<div class="text-muted flex items-center gap-2 px-3 py-1 text-xs">
 							<span class="font-medium">{m.vcs_total_changes()}</span>
 							<span class="tabular-nums">{gitTruncated.current || changes.length}</span>
 						</div>

@@ -1,18 +1,15 @@
 <script lang="ts">
+	import { localizeHref } from '$lib/paraglide/runtime';
 	import { onMount } from 'svelte';
 	import Download from '@lucide/svelte/icons/download';
 	import Github from '@lucide/svelte/icons/github';
-	import HeroShot from './HeroShot.svelte';
+	import HeroScreencast from './hero/HeroScreencast.svelte';
+	import type { HeroFormat } from './hero/heroScenes';
 	import { detectOS, type OS } from '$lib/os';
 	import { m } from '$lib/paraglide/messages';
 
-	// the home page's words by default; the LaTeX page passes its own and keeps the rest
-	let {
-		heading = m.hero_heading(),
-		body = m.hero_body(),
-		shot,
-		shotAlt
-	}: { heading?: string; body?: string; shot?: string; shotAlt?: string } = $props();
+	// the home page's words and both formats by default; an editor page passes its own words and its format
+	let { heading = m.hero_heading(), body = m.hero_body(), format }: { heading?: string; body?: string; format?: HeroFormat } = $props();
 
 	const OS_NAME: Record<OS, string> = {
 		windows: m.word_windows(),
@@ -44,31 +41,28 @@
 				{body}
 			</p>
 
-			<div class="flex flex-col items-center gap-5">
-				<div class="flex flex-wrap items-center justify-center gap-3">
-					<a
-						href="/download"
-						class="btn preset-filled-primary-500 rounded-base inline-flex items-center gap-2 px-7 py-3 font-semibold text-white"
-					>
-						<Download class="h-5 w-5" />
-						{downloadLabel}
-					</a>
-					<a
-						href="https://github.com/texpile/texpile"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="rounded-base inline-flex items-center gap-2 border border-white/15 px-7 py-3 font-semibold text-white transition-colors hover:bg-white/10"
-					>
-						<Github class="h-5 w-5" />
-						{m.hero_cta_github()}
-					</a>
-				</div>
-				<p class="text-surface-400 font-mono text-xs">{m.hero_tagline()}</p>
+			<div class="flex flex-wrap items-center justify-center gap-3">
+				<a
+					href={localizeHref('/download')}
+					class="btn preset-filled-primary-500 rounded-base inline-flex items-center gap-2 px-7 py-3 font-semibold text-white"
+				>
+					<Download class="h-5 w-5" />
+					{downloadLabel}
+				</a>
+				<a
+					href="https://github.com/texpile/texpile"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="rounded-base inline-flex items-center gap-2 border border-white/15 px-7 py-3 font-semibold text-white transition-colors hover:bg-white/10"
+				>
+					<Github class="h-5 w-5" />
+					{m.hero_cta_github()}
+				</a>
 			</div>
 		</div>
 	</div>
 
 	<div class="pb-20 md:pb-28">
-		<HeroShot {shot} alt={shotAlt} />
+		<HeroScreencast formats={format ? [format] : ['latex', 'typst']} />
 	</div>
 </section>

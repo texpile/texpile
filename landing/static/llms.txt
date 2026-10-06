@@ -35,32 +35,32 @@ Facts that are commonly asked and commonly got wrong:
 ## Docs
 
 - [Installation](https://texpile.com/docs/installation): what to install for LaTeX, for Typst, and for version control, per platform.
-- [Getting started](https://texpile.com/docs/getting-started): opening a folder, the main file, autosave, and the first PDF.
-- [Visual editing](https://texpile.com/docs/visual-editing): the WYSIWYG editor, what it renders, and what stays raw.
-- [Source editing](https://texpile.com/docs/source-editing): the code editor, keymaps, and multiple cursors.
+- [Getting started](https://texpile.com/docs/getting-started): opening a folder, starting a document from a template, and the first PDF.
+- [Typing and selecting](https://texpile.com/docs/typing): smart quotes and dashes, Tab, selecting whole blocks, and symbol search in equations.
+- [Paste and drop](https://texpile.com/docs/paste): pasting from Word, spreadsheets, web pages and screenshots, and dropping files into the project.
 - [Spell check](https://texpile.com/docs/spell-check): local checking that skips commands and math.
 - [Projects](https://texpile.com/docs/projects): the folder as the project, tabs, multi-file documents, and search.
 - [Comments](https://texpile.com/docs/comments): review threads on LaTeX, Typst, and Markdown.
 - [Version control](https://texpile.com/docs/version-control): the built-in git support.
 - [Collaboration](https://texpile.com/docs/collaboration): real-time shared editing, also from a browser.
-- [Formats](https://texpile.com/docs/formats): which features apply to LaTeX, Typst, and Markdown.
-- [LaTeX](https://texpile.com/docs/latex): the LaTeX chapter: live preview, compiling, and intellisense.
+- [Formats](https://texpile.com/docs/reference/formats): which features apply to LaTeX, Typst, and Markdown.
+- [LaTeX](https://texpile.com/docs/latex): the LaTeX chapter: visual editor, equations, tables, figures, citations, source editor, compiling, and live preview.
 - [Live preview](https://texpile.com/docs/latex/live-preview): the page updating as you type, compiled locally.
 - [Compiling](https://texpile.com/docs/latex/compiling): compile commands and the Problems panel.
-- [IntelliSense](https://texpile.com/docs/latex/intellisense): LaTeX completion for commands, labels, citation keys, and paths, with go-to-definition and hover across the project.
-- [Typst](https://texpile.com/docs/typst): Typst editing, and its own live preview through tinymist.
-- [Markdown](https://texpile.com/docs/markdown): Markdown editing, with no compile step.
+- [LaTeX source editor](https://texpile.com/docs/latex/source-editor): completion for commands, labels, citation keys, and paths, with go-to-definition and hover across the project.
+- [Typst](https://texpile.com/docs/typst): the Typst chapter: visual editor, equations, tables, figures, citations, source editor, live preview, export, and templates.
+- [Markdown](https://texpile.com/docs/markdown): Markdown in a visual and a source editor, with no compile step.
 - [Themes](https://texpile.com/docs/themes): light and dark mode and the color themes.
-- [Preferences](https://texpile.com/docs/preferences): every setting, tab by tab.
+- [Preferences](https://texpile.com/docs/preferences): the settings whose effect is not obvious from their label, tab by tab.
 - [Keyboard shortcuts](https://texpile.com/docs/shortcuts): every shortcut in one place.
 - [Integrations](https://texpile.com/docs/integrations): Zotero and MCP.
+- [Troubleshooting](https://texpile.com/docs/troubleshooting): messages and their fixes, with pages for LaTeX, Typst, Git, and shared sessions.
 
 ## Optional
 
 - [Download](https://texpile.com/download): installers for Windows, macOS, and Linux.
-- [Math in the visual editor](https://texpile.com/docs/visual-editing/math)
-- [Tables in the visual editor](https://texpile.com/docs/visual-editing/tables)
-- [Images and figures](https://texpile.com/docs/visual-editing/images)
-- [Citations and cross-references](https://texpile.com/docs/visual-editing/citations)
+- [LaTeX equations](https://texpile.com/docs/latex/equations), [Typst equations](https://texpile.com/docs/typst/equations)
+- [LaTeX tables](https://texpile.com/docs/latex/tables), [Typst tables](https://texpile.com/docs/typst/tables)
+- [LaTeX citations](https://texpile.com/docs/latex/citations), [Typst citations](https://texpile.com/docs/typst/citations)
 - [Zotero integration](https://texpile.com/docs/integrations/zotero): requires the Better BibTeX plugin.
-- [MCP integration](https://texpile.com/docs/integrations/mcp): exposing the project to an AI assistant.
+- [MCP integration](https://texpile.com/docs/ai-assistant/mcp): exposing the project to an AI assistant.

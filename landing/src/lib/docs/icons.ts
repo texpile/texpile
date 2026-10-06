@@ -14,6 +14,7 @@ import Image from '@lucide/svelte/icons/image';
 import Keyboard from '@lucide/svelte/icons/keyboard';
 import Layers from '@lucide/svelte/icons/layers';
 import Library from '@lucide/svelte/icons/library';
+import LifeBuoy from '@lucide/svelte/icons/life-buoy';
 import MessageSquare from '@lucide/svelte/icons/message-square';
 import Palette from '@lucide/svelte/icons/palette';
 import PenLine from '@lucide/svelte/icons/pen-line';
@@ -42,6 +43,7 @@ export const ICONS: Record<string, typeof Icon> = {
 	keyboard: Keyboard,
 	layers: Layers,
 	library: Library,
+	'life-buoy': LifeBuoy,
 	'message-square': MessageSquare,
 	palette: Palette,
 	'pen-line': PenLine,

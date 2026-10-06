@@ -6,7 +6,7 @@ import type { EditorView as PMEditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { adoptParse, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
-import { offsetAtPm, pmAtOffset } from '$lib/editor/visual/sourceMap';
+import { caretAtOffset, offsetAtPm } from '$lib/editor/visual/sourceMap';
 import { computeBlockPatch, protectCaretBlock, syncParseAttrs } from '$lib/editor/visual/blockPatch';
 import { carriedOffset, patchAroundCaret } from './caretPatch';
 
@@ -61,7 +61,7 @@ export function applyRemotePatch(
 	}
 	tr.setMeta('addToHistory', false).setMeta('collabRemotePatch', true);
 	if (srcOffset != null) {
-		const pos = pmAtOffset(newMap, srcOffset);
+		const pos = caretAtOffset(newMap, newSource, srcOffset);
 		if (pos != null) tr.setSelection(TextSelection.near(tr.doc.resolve(Math.min(pos, tr.doc.content.size))));
 	}
 	// Hold the view still across the patch: replacing blocks changes heights, and everything

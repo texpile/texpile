@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { localizeHref } from '$lib/paraglide/runtime';
 	import OsLogo from '$lib/comp/OsLogo.svelte';
 	import type { CardItem } from './blocks';
 	import { ICONS } from './icons';
@@ -18,9 +19,12 @@
 
 <div class="not-prose my-6 grid gap-4 {items.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}">
 	{#each items as item (item.href)}
-		<a href={item.href} class="border-surface-200 hover:border-primary-400 group flex flex-col rounded-lg border p-5 transition-colors">
+		<a
+			href={localizeHref(item.href)}
+			class="border-surface-200-800 hover:border-primary-500 group rounded-container flex flex-col border p-5 transition-colors"
+		>
 			{#if item.icon}
-				<span class="bg-primary-500/10 text-primary-600 mb-3 flex h-9 w-9 items-center justify-center rounded-md">
+				<span class="preset-tonal-primary text-primary-ink rounded-base mb-3 flex h-9 w-9 items-center justify-center">
 					{#if isOs(item.icon)}
 						<OsLogo os={item.icon} class="h-4.5 w-4.5" />
 					{:else}
@@ -29,8 +33,8 @@
 					{/if}
 				</span>
 			{/if}
-			<span class="text-surface-900 group-hover:text-primary-600 font-semibold">{item.title}</span>
-			<span class="text-surface-600 mt-1.5 text-sm leading-relaxed">{item.blurb}</span>
+			<span class="text-surface-900 group-hover:text-primary-ink font-semibold">{item.title}</span>
+			<span class="text-muted mt-1.5 text-sm leading-relaxed">{item.blurb}</span>
 		</a>
 	{/each}
 </div>

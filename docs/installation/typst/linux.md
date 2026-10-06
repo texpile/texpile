@@ -8,28 +8,10 @@ order: 3
 
 # Typst on Linux
 
-Texpile can install tinymist for you in one click, see [From Texpile](README.md#from-texpile). To install it yourself: no distribution packages tinymist, so the installer script is the usual route.
-
-## With the installer script
-
-Published with each release. It installs into `~/.local/bin` and adds that directory to your PATH in your shell's init file:
+Install tinymist with its installer script:
 
 ```bash
 curl -LsSf https://github.com/Myriad-Dreamin/tinymist/releases/latest/download/tinymist-installer.sh | sh
 ```
 
-> [!NOTE]
-> This downloads a script from the tinymist project's releases and runs it immediately. Texpile does not control that script or that release. Open the URL in a browser and read it first if you would rather check what it does.
-
-> [!NOTE]
-> The script edits your shell's init file, so a terminal that was already open will not see tinymist. Texpile only looks for programs when it starts, so restart Texpile as well.
-
-## With Homebrew
-
-Homebrew runs on Linux too:
-
-```bash
-brew install tinymist
-```
-
-[Checking the install](README.md)
+Or `brew install tinymist`. Restart Texpile if it is open.

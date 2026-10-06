@@ -60,14 +60,14 @@
 >
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<nav class="relative flex h-16 items-center justify-between">
-			<a href="/" class="flex items-center">
+			<a href={localizeHref('/')} class="flex items-center">
 				<img src={overInk ? LogoLight : LogoDark} alt={m.nav_logo_alt()} class="h-8" />
 			</a>
 
 			<div class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
 				{#each navLinks as link (link.href)}
 					<a
-						href={link.href}
+						href={localizeHref(link.href)}
 						class="font-medium transition-colors {overInk
 							? 'text-surface-200 hover:text-white'
 							: 'text-surface-700 hover:text-primary-600'}"
