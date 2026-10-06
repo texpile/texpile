@@ -11,6 +11,10 @@ export class ScenePlayer {
 	active = $state(0);
 	/** 0 to 1 through the active scene */
 	progress = $state(0);
+	/** the part of a take on screen, for a scene captured as one take in parts */
+	chapter = $state(0);
+	/** 0 to 1 through that part */
+	chapterProgress = $state(0);
 	keys = $state<string[] | null>(null);
 	/** the pointer's place, as fractions of the window; null until the scene first moves it */
 	pointer = $state<[number, number] | null>(null);
@@ -34,6 +38,8 @@ export class ScenePlayer {
 	#keysUntil = 0;
 	#raf = 0;
 	#last = 0;
+	/** a part picked before its scene had loaded */
+	#pendingChapter: number | null = null;
 
 	constructor(scenes: HeroScene[]) {
 		this.scenes = $state.raw(scenes);
@@ -54,6 +60,8 @@ export class ScenePlayer {
 		this.#clock = 0;
 		this.#next = 0;
 		this.progress = 0;
+		this.chapter = 0;
+		this.chapterProgress = 0;
 		this.keys = null;
 		this.pointer = null;
 		this.pointerShown = false;
@@ -62,7 +70,10 @@ export class ScenePlayer {
 			(loaded) => {
 				if (this.scenes[this.active] !== scene) return;
 				this.#scene = loaded;
-				if (this.still) this.#showLast(loaded);
+				const pending = this.#pendingChapter;
+				this.#pendingChapter = null;
+				if (pending !== null) this.seekChapter(pending);
+				else if (this.still) this.#showUntil(loaded, this.#chapterEnd(loaded, 0));
 			},
 			() => {}
 		);
@@ -76,11 +87,56 @@ export class ScenePlayer {
 		this.select(0);
 	}
 
-	#showLast(scene: LoadedScene): void {
+	/** plays the take from the start of part `index`; with reduced motion, shows that part's last frame */
+	seekChapter(index: number): void {
+		const scene = this.#scene;
+		if (!scene || !this.#ctx) {
+			this.#pendingChapter = index;
+			return;
+		}
+		const first = scene.chapters[index] ?? 0;
+		this.chapter = index;
+		this.keys = null;
+		if (this.still) {
+			this.#showUntil(scene, this.#chapterEnd(scene, index));
+			return;
+		}
+		// frames only hold what changed, so the picture before the part is every frame up to it
+		this.pointer = null;
+		this.pointerShown = false;
+		for (let i = 0; i < first; i++) {
+			const f = scene.frames[i];
+			drawFrame(this.#ctx, scene, f);
+			if (f.hide) this.pointerShown = false;
+			if (f.pointer) {
+				this.pointer = f.pointer;
+				this.pointerShown = true;
+			}
+		}
+		this.pointerGlides = false;
+		this.#next = first;
+		this.#clock = this.#chapterStart(scene, index);
+		this.drawn = true;
+	}
+
+	/** when part `index` begins: the moment the frame before it lands */
+	#chapterStart(scene: LoadedScene, index: number): number {
+		const first = scene.chapters[index] ?? 0;
+		return first > 0 ? scene.at[first - 1] : 0;
+	}
+
+	/** the last frame of part `index`, or of the scene when it has no parts */
+	#chapterEnd(scene: LoadedScene, index: number): number {
+		const next = scene.chapters[index + 1];
+		return next === undefined || !scene.chapters.length ? scene.frames.length - 1 : next - 1;
+	}
+
+	#showUntil(scene: LoadedScene, last: number): void {
 		if (!this.#ctx) return;
-		for (const f of scene.frames) drawFrame(this.#ctx, scene, f);
+		for (let i = 0; i <= last; i++) drawFrame(this.#ctx, scene, scene.frames[i]);
 		this.drawn = true;
 		this.progress = 1;
+		this.chapterProgress = 1;
 	}
 
 	#tick = (now: number) => {
@@ -91,11 +147,22 @@ export class ScenePlayer {
 			this.#clock += step;
 			while (this.#next < scene.frames.length && scene.at[this.#next] <= this.#clock) this.#apply(scene, this.#next++);
 			if (this.keys && this.#clock > this.#keysUntil) this.keys = null;
-			this.progress = Math.min(this.#clock / (scene.length + END_HOLD), 1);
-			if (this.#clock >= scene.length + END_HOLD) this.select((this.active + 1) % this.scenes.length);
+			const end = scene.length + END_HOLD;
+			this.progress = Math.min(this.#clock / end, 1);
+			if (scene.chapters.length) this.#trackChapter(scene, end);
+			if (this.#clock >= end) this.select((this.active + 1) % this.scenes.length);
 		}
 		this.#raf = requestAnimationFrame(this.#tick);
 	};
+
+	#trackChapter(scene: LoadedScene, end: number): void {
+		let c = 0;
+		while (c + 1 < scene.chapters.length && this.#chapterStart(scene, c + 1) <= this.#clock) c++;
+		const start = this.#chapterStart(scene, c);
+		const stop = c + 1 < scene.chapters.length ? this.#chapterStart(scene, c + 1) : end;
+		this.chapter = c;
+		this.chapterProgress = Math.min((this.#clock - start) / (stop - start), 1);
+	}
 
 	#apply(scene: LoadedScene, i: number): void {
 		const f = scene.frames[i];

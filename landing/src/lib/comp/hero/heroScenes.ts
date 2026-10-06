@@ -1,11 +1,13 @@
 // the screencasts, per format and in playing order; captured and packed by texpile-tools/hero-screencast
 import { m } from '$lib/paraglide/messages';
-import latexPoster from '$lib/assets/hero/math-poster.webp';
-import typstPoster from '$lib/assets/hero/typst-math-poster.webp';
+import latexPoster from '$lib/assets/hero/tour-poster.webp';
+import typstPoster from '$lib/assets/hero/typst-tour-poster.webp';
 
 export type HeroScene = { name: string; label: () => string; caption: () => string; timeline: string; sprite: string };
 export type HeroFormat = 'latex' | 'typst';
-export type HeroSceneSet = { label: string; poster: string; alt: () => string; scenes: HeroScene[] };
+/** a part of the hero's take, in the order it was captured */
+export type HeroTakePart = { label: () => string; caption: () => string };
+export type HeroSceneSet = { label: string; poster: string; alt: () => string; take: HeroScene; parts: HeroTakePart[] };
 
 const timelines = import.meta.glob<string>('$lib/assets/hero/*.json', { query: '?url', import: 'default', eager: true });
 const sprites = import.meta.glob<string>('$lib/assets/hero/*.webp', { import: 'default', eager: true });
@@ -22,30 +24,29 @@ const scene = (name: string, label: () => string, caption: () => string): HeroSc
 	sprite: asset(sprites, name + '.webp')
 });
 
+const part = (label: () => string, caption: () => string): HeroTakePart => ({ label, caption });
+const partsWith = (source: () => string): HeroTakePart[] => [
+	part(m.hero_scene_math_label, m.hero_scene_math_caption),
+	part(m.hero_scene_cite_label, m.hero_scene_cite_caption),
+	part(m.hero_scene_source_label, source),
+	part(m.hero_scene_git_label, m.hero_scene_git_caption),
+	part(m.hero_scene_collab_label, m.hero_scene_collab_caption)
+];
+
 export const HERO_SETS: Record<HeroFormat, HeroSceneSet> = {
 	latex: {
 		label: 'LaTeX',
 		poster: latexPoster,
 		alt: m.hero_shot_alt,
-		scenes: [
-			scene('math', m.hero_scene_math_label, m.hero_scene_math_caption),
-			scene('citations', m.hero_scene_cite_label, m.hero_scene_cite_caption),
-			scene('source', m.hero_scene_source_label, m.hero_scene_source_caption),
-			scene('git', m.hero_scene_git_label, m.hero_scene_git_caption),
-			scene('collab', m.hero_scene_collab_label, m.hero_scene_collab_caption)
-		]
+		take: scene('tour', m.hero_scenes_label, m.hero_shot_alt),
+		parts: partsWith(m.hero_scene_source_caption)
 	},
 	typst: {
 		label: 'Typst',
 		poster: typstPoster,
 		alt: m.ty_hero_shot_alt,
-		scenes: [
-			scene('typst-math', m.hero_scene_math_label, m.hero_scene_math_caption),
-			scene('typst-citations', m.hero_scene_cite_label, m.hero_scene_cite_caption),
-			scene('typst-source', m.hero_scene_source_label, m.hero_scene_typst_source_caption),
-			scene('typst-git', m.hero_scene_git_label, m.hero_scene_git_caption),
-			scene('typst-collab', m.hero_scene_collab_label, m.hero_scene_collab_caption)
-		]
+		take: scene('typst-tour', m.hero_scenes_label, m.ty_hero_shot_alt),
+		parts: partsWith(m.hero_scene_typst_source_caption)
 	}
 };
 

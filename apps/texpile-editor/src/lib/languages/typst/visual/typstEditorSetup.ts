@@ -18,6 +18,7 @@ import { gapCursor } from 'prosemirror-gapcursor';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
+import { typstHeaderRows } from './extensions/typstHeaderRows';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResizing } from '$lib/editor/visual/extensions/table/columnResizing';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
@@ -176,6 +177,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		columnResizing({ snap: snapWidthToFr, redistribute: true }),
 		captureColumnWidths,
 		tableEditing(),
+		typstHeaderRows,
 		wholeTableEdits,
 		crossBlockEdits,
 		visualSmartPaste('typst', typSchema, pasteTypstSource),

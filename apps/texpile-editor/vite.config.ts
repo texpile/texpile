@@ -31,8 +31,12 @@ const NO_PREBUNDLE = new Set([
 // y-protocols has no "." entry, so pre-bundle its subpaths instead of the bare package
 const prebundle = [...Object.keys(pkg.dependencies ?? {}).filter((d) => !NO_PREBUNDLE.has(d)), 'y-protocols/awareness', 'y-protocols/sync'];
 
-// vite-plugin-wasm's helper fetches the .wasm by its `?url` import, which vitest gives as a /@fs/ path
-// for a file outside the app; Node's fetch reads no such path, so tests get the module inline
+// vite-plugin-wasm names its helper module `/__vite-plugin-wasm-helper`, which vitest's runner takes
+// for a file path: absolute on Linux, a path with no drive on Windows, where no suite loading the
+// Typst parser could even start. In tests the helper gets a virtual id instead
+const WASM_HELPER = '/__vite-plugin-wasm-helper';
+// and in a browser-like suite it fetches the .wasm by its `?url` import, which vitest gives as a /@fs/
+// path for a file outside the app; Node's fetch reads no such path, so those get the module inline
 const wasmUrlInTests: Plugin = {
 	name: 'wasm-url-in-tests',
 	enforce: 'pre',
@@ -41,11 +45,21 @@ const wasmUrlInTests: Plugin = {
 			? `export default 'data:application/wasm;base64,${fs.readFileSync(id.slice(0, -'?url'.length)).toString('base64')}'`
 			: undefined
 };
+const wasmHelperInTests: Plugin = {
+	name: 'wasm-helper-in-tests',
+	enforce: 'pre',
+	resolveId: (id) => (id === WASM_HELPER ? '\0wasm-helper' : undefined),
+	load: (id) => {
+		if (id !== '\0wasm-helper') return undefined;
+		const helper = path.join(path.dirname(require.resolve('vite-plugin-wasm')), '../dist/wasm-helper.js');
+		return `export default ${(require(helper) as { code: string }).code}`;
+	}
+};
 
 export default defineConfig(({ mode }) => ({
 	plugins: [
 		tailwindcss(),
-		...(mode === 'test' ? [wasmUrlInTests] : []),
+		...(mode === 'test' ? [wasmHelperInTests, wasmUrlInTests] : []),
 		// packages/typst-syntax-wasm is Typst's own parser built by wasm-pack; its glue imports the
 		// .wasm as an ES module, which Vite cannot do unaided
 		wasm(),
