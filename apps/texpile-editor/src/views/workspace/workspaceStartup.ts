@@ -104,6 +104,7 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		promptIsOpen: () => !!unsaved.prompt,
 		canCloseSilently: () => editFlow.autosaveActive() || !doc.path || saver.pending?.path !== doc.path,
 		flushSaves: () => saver.flushAndWait(),
+		hasStranded: () => saver.stranded().length > 0,
 		confirmLeaveUnsaved: () => editFlow.confirmLeaveUnsaved()
 	});
 	return () => {

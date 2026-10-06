@@ -81,6 +81,8 @@ export class TextBuffers {
 	private readonly baseline = new Map<string, string>();
 	/** changed since the last write and not yet handed to the chain */
 	private readonly pending = new Set<string>();
+	/** a write found the file changed on disk underneath it; its edits wait for someone to choose */
+	private readonly refused = new Set<string>();
 	private readonly timers = new Map<string, ReturnType<typeof setTimeout>>();
 	private readonly observers = new Map<string, () => void>();
 	private readonly undo = new Map<string, Y.UndoManager>();
@@ -136,8 +138,9 @@ export class TextBuffers {
 		return this.pending.has(rel);
 	}
 
-	get pendingFiles(): string[] {
-		return [...this.pending];
+	/** files whose edits a change on disk keeps from being written */
+	get refusedFiles(): string[] {
+		return [...this.refused];
 	}
 
 	/** the file's text, read from disk the first time; null when it is not lossless UTF-8 text */
@@ -298,6 +301,7 @@ export class TextBuffers {
 			// change. The text keeps the edit, so nothing of this side's is lost either
 			if (!force && (await this.hooks.diskChanged?.(abs))) {
 				this.pending.add(rel);
+				this.refused.add(rel);
 				this.hooks.conflict?.(abs, notify);
 				return false;
 			}
@@ -310,6 +314,7 @@ export class TextBuffers {
 			await this.fs.writeText(abs, fromLf(content, this.eolOf(rel)));
 			await this.hooks.recordStamp?.(abs);
 			this.baseline.set(rel, content);
+			this.refused.delete(rel);
 			this.hooks.afterWrite?.(abs, content);
 			if (notify) this.hooks.saved?.(abs);
 			return true;
@@ -333,6 +338,7 @@ export class TextBuffers {
 		const s = this.seeded.get(rel);
 		if (!s) return;
 		this.discard(rel);
+		this.refused.delete(rel);
 		if (eol) s.eol = eol;
 		this.baseline.set(rel, text);
 		this.fold(rel, text, undefined, DISK_ORIGIN);
@@ -345,6 +351,7 @@ export class TextBuffers {
 		const base = this.baseline.get(rel);
 		if (base == null) return;
 		this.discard(rel);
+		this.refused.delete(rel);
 		this.fold(rel, base, undefined, DISK_ORIGIN);
 	}
 
@@ -402,6 +409,7 @@ export class TextBuffers {
 		if (!s) return;
 		this.cancel(rel);
 		this.pending.delete(rel);
+		this.refused.delete(rel);
 		this.baseline.delete(rel);
 		this.running.delete(rel);
 		this.observers.get(rel)?.();

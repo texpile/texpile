@@ -2253,5 +2253,12 @@
 	"single_file_unavailable": "單一檔案模式下無法使用。在工作區中開啟即可使用。",
 	"unavailable_desktop": "僅在 Texpile 桌面版中可用",
 	"unavailable_guest": "僅主持人或獨自工作時可用",
-	"agent_panel_single_file": "代理分頁在單一檔案模式下無法使用"
+	"agent_panel_single_file": "代理分頁在單一檔案模式下無法使用",
+	"wsview_stranded_title": "修改未儲存",
+	"wsview_stranded_body": "{names} 在此處編輯期間已在磁碟上被修改，因此此處的修改沒有覆寫儲存。",
+	"wsview_stranded_detail": "捨棄將保留磁碟上的版本。若要選擇保留哪個版本，請取消並開啟該檔案。",
+	"wsview_stranded_discard": "捨棄修改",
+	"wsview_stranded_toast_title": "{name} 已在磁碟上被修改",
+	"wsview_stranded_toast_body": "其中有尚未儲存的修改。開啟它以選擇保留哪個版本。",
+	"wsview_stranded_open": "開啟"
 }

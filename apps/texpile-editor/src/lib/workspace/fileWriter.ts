@@ -34,6 +34,21 @@ export class FileWriter {
 		return { path: path!, content: t.files.text(t.rel)!.toString() };
 	}
 
+	/** files other than the open one whose edits wait on a change on disk: nothing on screen asks about them */
+	stranded(): string[] {
+		const files = this.files;
+		if (!files) return [];
+		const loaded = this.deps.getLoadedPath();
+		const open = loaded ? this.deps.relOf(loaded) : null;
+		return files.refusedFiles.filter((rel) => rel !== open).map((rel) => files.abs(rel));
+	}
+
+	/** a write of this file found it changed on disk */
+	isRefused(path: string): boolean {
+		const t = this.target(path);
+		return !!t && t.files.refusedFiles.includes(t.rel);
+	}
+
 	isDirty(path: string): boolean {
 		const t = this.target(path);
 		return !!t && t.files.isDirty(t.rel);

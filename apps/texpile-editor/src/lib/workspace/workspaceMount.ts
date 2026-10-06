@@ -85,6 +85,8 @@ export type CloseGuardDeps = {
 	/** nothing unsaved that needs asking about */
 	canCloseSilently(): boolean;
 	flushSaves(): Promise<void>;
+	/** edits a write was refused for, in files that are not open */
+	hasStranded(): boolean;
 	confirmLeaveUnsaved(): Promise<boolean>;
 };
 
@@ -100,8 +102,10 @@ export function attachCloseGuard(deps: CloseGuardDeps): (() => void) | undefined
 		}
 		if (deps.canCloseSilently()) {
 			await deps.flushSaves();
-			nativeBridge()?.closeDecision?.(true);
-			return;
+			if (!deps.hasStranded()) {
+				nativeBridge()?.closeDecision?.(true);
+				return;
+			}
 		}
 		nativeBridge()?.closeDecision?.(false);
 		if (await deps.confirmLeaveUnsaved()) {

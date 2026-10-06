@@ -47,6 +47,8 @@ export class WorkspaceEditFlow {
 	// When that guard will prompt, the tab must survive until the dialog resolves (the store
 	// reverts to it meanwhile), so the removal is deferred to the held-switch resolution.
 	private pendingTabClose: string | null = null;
+	// files told about once already, so a guest typing on one does not stack toasts
+	private strandedNoted = new Set<string>();
 
 	constructor(private d: EditFlowDeps) {
 		const { doc, modes } = d.wsdoc;
@@ -112,6 +114,11 @@ export class WorkspaceEditFlow {
 				if (root && !guest) collabHost.open(root);
 				else void collabHost.close();
 			});
+		});
+		// a file whose write met a change on disk while it was not open asks once it is
+		$effect(() => {
+			const path = doc.path;
+			if (path && untrack(() => this.saver.isRefused(path))) void untrack(() => this.external.check());
 		});
 		// Every file that opens gains a tab (file tree, SyncTeX jumps, include links, restores).
 		//
@@ -208,10 +215,22 @@ export class WorkspaceEditFlow {
 			// conflict modal; "keep mine" comes back through saveNow with force
 			conflict: (path, deliberate) => {
 				if (open(path)) void this.external.check(deliberate);
+				else this.noteStranded(path);
 			},
 			saved: (path) => toaster.success({ title: m.wsview_toast_saved_title(), description: basename(path), duration: 1200 }),
 			failed: (_path, e) =>
 				toaster.error({ title: m.wsview_toast_save_failed_title(), description: e instanceof Error ? e.message : m.wsview_error_unknown() })
+		});
+	}
+
+	private noteStranded(path: string): void {
+		for (const p of this.strandedNoted) if (!this.saver.isRefused(p)) this.strandedNoted.delete(p);
+		if (this.strandedNoted.has(path)) return;
+		this.strandedNoted.add(path);
+		toaster.warning({
+			title: m.wsview_stranded_toast_title({ name: basename(path) }),
+			description: m.wsview_stranded_toast_body(),
+			action: { label: m.wsview_stranded_open(), onClick: () => this.activateTab({ path }) }
 		});
 	}
 

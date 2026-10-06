@@ -2253,5 +2253,12 @@
 	"single_file_unavailable": "Im Einzeldateimodus nicht verfügbar. Öffne den Arbeitsbereich, um es zu nutzen.",
 	"unavailable_desktop": "Nur in Texpile Desktop verfügbar",
 	"unavailable_guest": "Nur für den Host verfügbar oder wenn du allein arbeitest",
-	"agent_panel_single_file": "Der Agent-Tab ist im Einzeldateimodus nicht verfügbar"
+	"agent_panel_single_file": "Der Agent-Tab ist im Einzeldateimodus nicht verfügbar",
+	"wsview_stranded_title": "Änderungen nicht gespeichert",
+	"wsview_stranded_body": "{names} wurde auf der Festplatte geändert, während es hier bearbeitet wurde. Die Änderungen von hier wurden deshalb nicht darüber gespeichert.",
+	"wsview_stranded_detail": "Beim Verwerfen bleibt die Version auf der Festplatte. Um die Version zu wählen, abbrechen und die Datei öffnen.",
+	"wsview_stranded_discard": "Änderungen verwerfen",
+	"wsview_stranded_toast_title": "{name} wurde auf der Festplatte geändert",
+	"wsview_stranded_toast_body": "Es enthält Änderungen, die noch nicht gespeichert sind. Öffnen, um die Version zu wählen.",
+	"wsview_stranded_open": "Öffnen"
 }

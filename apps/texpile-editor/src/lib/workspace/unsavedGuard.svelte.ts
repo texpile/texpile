@@ -12,6 +12,8 @@ import { activeFilePath } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { basename } from '$lib/workspace/fileSystem';
 import type { FileWriter } from '$lib/workspace/fileWriter';
+import { promptAsk } from '$lib/modals/confirm.svelte';
+import { m } from '$lib/paraglide/messages';
 
 type Choice = 'save' | 'discard' | 'cancel';
 
@@ -68,7 +70,7 @@ export class UnsavedGuard {
 	/** workspace-level guard; resolves true to proceed (Save writes first), false on Cancel */
 	confirmLeave(): Promise<boolean> {
 		const loaded = this.unsaved();
-		if (!loaded) return Promise.resolve(true);
+		if (!loaded) return this.confirmStranded();
 		return new Promise((resolve) => {
 			this.prompt = {
 				name: basename(loaded),
@@ -76,10 +78,30 @@ export class UnsavedGuard {
 				resolve: (choice) => {
 					if (choice === 'cancel') return resolve(false);
 					this.answer(loaded, choice);
-					resolve(true);
+					resolve(this.confirmStranded());
 				}
 			};
 		});
+	}
+
+	/** edits in files that are not open, held back by a change on disk: nothing else on screen asks about them */
+	private async confirmStranded(): Promise<boolean> {
+		await this.deps.writer.flushAndWait();
+		const stranded = this.deps.writer.stranded();
+		if (!stranded.length) return true;
+		const choice = await promptAsk({
+			title: m.wsview_stranded_title(),
+			message: m.wsview_stranded_body({ names: stranded.map(basename).join(', ') }),
+			detail: m.wsview_stranded_detail(),
+			buttons: [
+				{ id: 'discard', label: m.wsview_stranded_discard() },
+				{ id: 'cancel', label: m.wsview_cancel_label(), primary: true }
+			],
+			cancelId: 'cancel'
+		});
+		if (choice !== 'discard') return false;
+		for (const path of stranded) this.deps.writer.revert(path);
+		return true;
 	}
 
 	private answer(path: string, choice: 'save' | 'discard'): void {
