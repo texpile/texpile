@@ -34,7 +34,8 @@ beforeEach(() => {
 		adopt: vi.fn(),
 		discard: vi.fn(),
 		universeIndex: vi.fn(),
-		universeThumbnail: vi.fn()
+		universeThumbnail: vi.fn(),
+		universeUnpack: vi.fn()
 	};
 	vi.stubGlobal('texpileTemplates', bridge);
 	confirmAsk.mockClear().mockResolvedValue(true);

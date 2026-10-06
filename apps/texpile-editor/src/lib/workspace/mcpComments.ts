@@ -13,6 +13,8 @@ import type { CommentsController } from './commentsController.svelte';
 import type { CommentThread } from '$lib/comments/log';
 import { resolveExactly } from '$lib/comments/anchorSearch';
 import { isSuggestion } from '$lib/comments/suggest';
+import { agentSession, shownAgent } from '$lib/ai/agentPanel/agentSession.svelte';
+import { runningAgentName } from '$lib/ai/agentPanel/agentNames';
 
 export type McpCommentDeps = {
 	comments: CommentsController;
@@ -41,7 +43,9 @@ function num(v: unknown): number | undefined {
 export function fail(reason: string, extra: Args = {}): Refusal {
 	return { ok: false, reason, ...extra };
 }
+/** the Agent tab's own agent signs as the tab names it, whatever name it gives itself */
 export function authorOf(a: Args): string {
+	if (a.ownAgent === true) return runningAgentName(shownAgent(), agentSession.name);
 	return str(a.by)?.trim() || DEFAULT_BY;
 }
 

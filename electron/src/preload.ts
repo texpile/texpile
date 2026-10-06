@@ -514,13 +514,15 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 	remove: (id: string) => invokeFs('templates:delete', id),
 	/** copy a template into root, keeping existing files; resolves to the absolute main file */
 	apply: (id: string, root: string) => invokeFs('templates:apply', { id, root }),
-	/** an empty folder for tinymist to unpack a Typst Universe template into */
+	/** an empty folder to unpack a template into before it joins the project */
 	stage: () => invokeFs('templates:stage'),
 	adopt: (dir: string, root: string) => invokeFs('templates:adopt', { dir, root }),
 	discard: (dir: string) => invokeFs('templates:discard', dir),
 	/** goes online: the gallery calls it when opened, never before */
 	universeIndex: () => ipcRenderer.invoke('templates:universeIndex'),
-	universeThumbnail: (name: string, version: string) => ipcRenderer.invoke('templates:universeThumbnail', { name, version })
+	universeThumbnail: (name: string, version: string) => ipcRenderer.invoke('templates:universeThumbnail', { name, version }),
+	/** download a Universe template and copy it into a staged folder -> { entryPath } */
+	universeUnpack: (name: string, version: string, dir: string) => invokeFs('templates:universeUnpack', { name, version, dir })
 });
 
 // the reader's own command-line agents (Preferences > AI); main picks the command, a run carries the prompt and which of

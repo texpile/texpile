@@ -24,3 +24,13 @@ it('keeps no text to go back to for a file that is not UTF-8, rather than its ac
 	fs.writeFileSync(path.join(dir, 'chapter.tex'), 'Résumé réécrit.\n');
 	expect(changesBetween(before, await takeSnapshot(dir, before))).toEqual([]);
 });
+
+it("leaves live preview's _draft folder out, which changes while the agent works but is not its change", async () => {
+	const dir = fs.mkdtempSync(path.join(root, 'live '));
+	fs.mkdirSync(path.join(dir, '_draft'));
+	fs.writeFileSync(path.join(dir, 'main.tex'), 'Before.\n');
+	const before = await takeSnapshot(dir);
+	fs.writeFileSync(path.join(dir, 'main.tex'), 'After.\n');
+	fs.writeFileSync(path.join(dir, '_draft', 'texd-body.tex'), 'After.\n');
+	expect(changesBetween(before, await takeSnapshot(dir, before))).toEqual([{ path: 'main.tex', kind: 'modified', before: 'Before.\n' }]);
+});

@@ -121,6 +121,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	let rootWidth = -1;
 	let checkFrame = 0;
 	let rebreakFrame = 0;
+	let scratchNextFrame = false;
 	let afterComposition = 0;
 	let widthRest = 0;
 	// a splitter drag or a window resize changes the width every frame, and each change would re-break the whole
@@ -152,11 +153,16 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	}
 
 	function rebreakNextFrame(fromScratch: boolean): void {
+		// a width change asking to start over can come after a table cell's resize already asked for less, in the same
+		// round of observers; the frame does the most anyone asked
+		scratchNextFrame ||= fromScratch;
 		// never from inside a resize observer: new breaks change heights, which one may not cause from its own callback
 		if (rebreakFrame) return;
 		rebreakFrame = requestAnimationFrame(() => {
 			rebreakFrame = 0;
-			if (fromScratch) startOver();
+			const scratch = scratchNextFrame;
+			scratchNextFrame = false;
+			if (scratch) startOver();
 			else rebreak();
 			// already inside a frame: the check it asked for would wait for the next one, and this one be drawn spilling
 			if (checkFrame) {

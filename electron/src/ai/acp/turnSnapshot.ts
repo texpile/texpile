@@ -4,11 +4,11 @@
 import { isUtf8 } from 'node:buffer';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import * as path from 'node:path';
+import { skipDir, TREE_IGNORE_DIRS } from '../../fs/walkIgnoreRules';
 
 const TEXT_EXTENSIONS = new Set(
 	'tex ltx sty cls dtx ins bib bst bbx cbx typ md markdown txt csv tsv json yaml yml toml lua py r jl m sh'.split(' ').map((e) => `.${e}`)
 );
-const SKIPPED_FOLDERS = new Set(['.git', 'node_modules', '.texpile']);
 const MOST_FILE_BYTES = 1024 * 1024;
 // entries looked at, not text files found: a single file opened from the home folder makes it the root
 const MOST_ENTRIES = 20000;
@@ -41,7 +41,7 @@ async function listTextFiles(root: string): Promise<{ files: string[]; complete:
 		for (const e of list) {
 			if (++entries > MOST_ENTRIES) return;
 			const full = path.join(dir, e.name);
-			if (e.isDirectory() && !SKIPPED_FOLDERS.has(e.name)) await walk(full);
+			if (e.isDirectory() && !skipDir(e.name, TREE_IGNORE_DIRS)) await walk(full);
 			else if (e.isFile() && TEXT_EXTENSIONS.has(path.extname(e.name).toLowerCase())) files.push(full);
 		}
 	}

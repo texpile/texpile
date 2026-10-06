@@ -1,9 +1,10 @@
 // The Typst Universe template list: packages.typst.org's package index, cut down to the entries
 // that are templates, at the newest version the user's tinymist can compile. Fetched only when the
-// user opens the gallery; the app makes no other request to this host.
+// user opens the gallery; besides it, the app asks this host only for thumbnails and the template picked.
 
 const INDEX_URL = 'https://packages.typst.org/preview/index.json';
 const THUMBNAIL_BASE = 'https://packages.typst.org/preview/thumbnails';
+const PACKAGE_BASE = 'https://packages.typst.org/preview';
 const TIMEOUT_MS = 20_000;
 // the list barely changes within a sitting; reopening the gallery should not download it again
 const INDEX_FRESH_MS = 15 * 60 * 1000;
@@ -122,6 +123,11 @@ export function clearTemplateIndexCache(): void {
 export function thumbnailUrl(name: string, version: string): string | null {
 	if (!PACKAGE_NAME.test(name) || !PACKAGE_VERSION.test(version)) return null;
 	return `${THUMBNAIL_BASE}/${name}-${version}-small.webp`;
+}
+
+export function packageUrl(name: unknown, version: unknown): string | null {
+	if (typeof name !== 'string' || typeof version !== 'string' || !PACKAGE_NAME.test(name) || !PACKAGE_VERSION.test(version)) return null;
+	return `${PACKAGE_BASE}/${name}-${version}.tar.gz`;
 }
 
 /** a template's preview image; the page cannot load it itself, its CSP allows no remote images */

@@ -9,7 +9,7 @@ import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { undo as historyUndo, redo as historyRedo, history } from 'prosemirror-history';
 import { toggleBlockQuote, toggleHeading, cycleParagraphIndent, splitBlockWithoutDuplicates } from '$lib/editor/visual/helperCommands';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-import { selectDocStart, selectDocEnd } from '$lib/editor/visual/selectDocBoundary';
+import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
 import { gapCursor } from 'prosemirror-gapcursor';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
@@ -68,6 +68,7 @@ import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastN
 import { createNodeFlashPlugin } from '$lib/editor/visual/extensions/flash-plugin';
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
+import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
 import { latexChipKind } from '$lib/languages/latex/visual/extensions/drawn/latexChipKind';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { latexFootnoteMarks } from '$lib/languages/latex/visual/extensions/drawn/latexFootnoteMarks';
@@ -122,6 +123,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		history(),
 		...createSuggestPlugin(),
 		drawnChipAtomsPlugin(),
+		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
@@ -146,6 +148,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			'Mod-a': selectAllScoped,
 			'Mod-Home': selectDocStart,
 			'Mod-End': selectDocEnd,
+			'Shift-Mod-Home': extendToDocStart,
+			'Shift-Mod-End': extendToDocEnd,
 			'Mod-b': toggleMark(schema.marks.strong),
 			'Mod-i': toggleMark(schema.marks.em),
 			'Mod-`': toggleMark(schema.marks.code),
