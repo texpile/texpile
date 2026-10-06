@@ -214,7 +214,6 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		},
 		onEditFrontmatter: (kind: string, inner: string) => d.wsdoc.doc.editFrontmatter(kind, inner),
 		syncToPdf: (line: number) => d.nav.syncToLine(line),
-		historyStep: (dir: 'undo' | 'redo') => d.wsdoc.modes.historyStep(dir),
 		jumpToFile: (name: string) => d.nav.jumpToInclude(name),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),
 		jumpToLabel: (name: string) => d.nav.jumpToLabel(name),

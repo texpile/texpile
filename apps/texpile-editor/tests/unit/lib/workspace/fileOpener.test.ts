@@ -11,7 +11,6 @@ import type { VisualParser } from '$lib/workspace/visualParse.svelte';
 function makeOpener(parse: FileOpenerDeps['parse']) {
 	const doc = new DocumentBuffer({
 		scheduleSave: () => {},
-		discardQueuedSave: () => {},
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,
@@ -35,8 +34,6 @@ function makeOpener(parse: FileOpenerDeps['parse']) {
 		beforeOpen: async () => {},
 		parse,
 		fallbackToSource: () => {},
-		openHistory: () => {},
-		disableHistory: () => {},
 		clearPerFileViewState: () => {},
 		captureDiffSnapshot: () => {},
 		closeOpenFile: () => {}

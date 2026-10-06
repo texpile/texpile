@@ -30,15 +30,14 @@ export type FileOpenerDeps = {
 	isDiffMode(): boolean;
 	/** a .bib the host holds in a non-Y-bound editor is host-exclusive while open */
 	claimVisualLock(path: string): void;
-	/** settle pending guest edits onto disk before we read it */
+	/** bring the file's text into the buffers, or up with its disk, before we read it */
 	beforeOpen(path: string): Promise<void>;
+	/** what is on disk as far as the writer knows, when the buffers hold more than the disk */
+	baselineOf?(path: string): string | null;
 	parse(text: string, format: 'tex' | 'md' | 'typ'): Promise<ParseOutcome>;
 	/** the parse failed: drop to source mode with a toast rather than a stuck spinner */
 	fallbackToSource(failure: ParseFailure): void;
-	/** anchors and cross-mode history are keyed to the outgoing file */
-	/** the file being opened owns its own undo stack, kept while its tab is open */
-	openHistory(path: string, text: string): void;
-	disableHistory(): void;
+	/** anchors are keyed to the outgoing file */
 	clearPerFileViewState(): void;
 	captureDiffSnapshot(): void;
 	/** a half-open file must not stay on screen behind the error */
@@ -104,6 +103,14 @@ export class FileOpener {
 		}
 	}
 
+	/** the disk as the writer knows it; the text read can hold edits not written yet */
+	private settleBaseline(path: string, text: string): void {
+		const base = this.deps.baselineOf?.(path) ?? null;
+		if (base === null) void recordDiskStamp(path); // arm the external-write guard: disk is known as of this read
+		this.deps.doc.diskBaseline = base ?? text;
+		isDirty.current = base !== null && base !== text;
+	}
+
 	async open(path: string): Promise<void> {
 		const d = this.deps;
 		try {
@@ -121,7 +128,6 @@ export class FileOpener {
 				if (probe?.binary) {
 					d.doc.openBinaryWarning(path, probe.size);
 					d.clearPerFileViewState();
-					d.disableHistory();
 					isDirty.current = false;
 					return;
 				}
@@ -142,19 +148,15 @@ export class FileOpener {
 
 				d.doc.openTex(path, text, detectEol(raw), issue); // detectEol so a CRLF file isn't rewritten to LF
 				if (cached) d.doc.adoptParsed(cached, text);
-				void recordDiskStamp(path); // arm the external-write guard: disk is known as of this read
 				d.parser.lastParsedSource = cached ? text : null;
-				isDirty.current = false;
-				d.openHistory(path, text); // on-disk content is the floor of a resumed stack too
+				this.settleBaseline(path, text);
 				d.clearPerFileViewState();
 				if (d.isDiffMode()) d.captureDiffSnapshot(); // re-diff the newly-opened file
 			} else if (isRawTextKind(k)) {
 				const { text: raw, encoding } = await this.readWorkingCopy(path);
 				if (!this.current(path)) return;
 				d.doc.openRaw(path, toLf(raw), detectEol(raw), sourceEncodingError(encoding));
-				void recordDiskStamp(path);
-				isDirty.current = false;
-				d.disableHistory(); // no cross-mode history for these kinds
+				this.settleBaseline(path, toLf(raw));
 				d.clearPerFileViewState();
 				if (d.isDiffMode()) d.captureDiffSnapshot();
 			} else {
@@ -162,7 +164,6 @@ export class FileOpener {
 				if (!this.current(path)) return;
 				d.doc.openOpaque(path);
 				d.clearPerFileViewState();
-				d.disableHistory();
 				isDirty.current = false;
 			}
 		} catch (e) {

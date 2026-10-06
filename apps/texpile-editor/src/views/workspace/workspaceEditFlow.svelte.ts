@@ -1,22 +1,26 @@
-// The edit-persistence flow around the open document: the debounced save pipeline, the
-// unsaved-edit gate, on-disk change detection, tab activation/closing, and the load-the-
-// active-file effect that ties them together.
+// The edit-persistence flow around the open document: the writer's hooks, the unsaved-edit gate,
+// on-disk change detection, tab activation/closing, and the load-the-active-file effect that ties
+// them together.
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { untrack } from 'svelte';
+import * as Y from 'yjs';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
-import { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import { FileWriter } from '$lib/workspace/fileWriter';
 import { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
+import { DISK_ORIGIN, EDIT_ORIGIN } from '$lib/collab/sharedFiles';
 import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
 import { diskChangedSince, recordDiskStamp } from '$lib/workspace/diskStamp';
-import { activeFilePath, activeCompare, isDirty, fileTree } from '$lib/workspace/workspaceStore';
+import { toaster } from '$lib/modals/toaster-svelte';
+import { m } from '$lib/paraglide/messages';
+import { activeFilePath, activeCompare, isDirty, fileTree, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { flatFiles } from '$lib/workspace/treeRefresh';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { saveVisualPosition } from '$lib/workspace/visualPositions';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { hasVisualMode, isRawTextKind } from '$lib/workspace/documentBuffer.svelte';
-import { samePath } from '$lib/workspace/fileSystem';
+import { basename, samePath } from '$lib/workspace/fileSystem';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { WorkspaceDoc } from './workspaceDoc.svelte';
@@ -28,8 +32,14 @@ type EditFlowDeps = {
 	wsdoc: WorkspaceDoc;
 };
 
+/** what the workspace adds to a write: the comment log first, the save check, Local History after */
+export type WriteExtras = {
+	verify(path: string, content: string): Promise<string | null>;
+	beforeWrite(path: string, content: string): Promise<void>;
+};
+
 export class WorkspaceEditFlow {
-	readonly saver: SavePipeline;
+	readonly saver: FileWriter;
 	readonly external: ExternalChangeWatcher;
 	readonly unsaved: UnsavedGuard;
 
@@ -40,62 +50,38 @@ export class WorkspaceEditFlow {
 
 	constructor(private d: EditFlowDeps) {
 		const { doc, modes } = d.wsdoc;
-		// debounced autosave + serial write chain live in lib/workspace/savePipeline.svelte.ts
-		this.saver = new SavePipeline({
-			sessionEdit: (path, content, before) => d.session().edit(path, content, before),
-			isGuest: d.guest,
-			autosaveActive: () => this.autosaveActive(),
-			// autosave stands down for this file: writing would recreate a name the user did not ask
-			// for, or re-trip the guard behind a question they postponed
-			clearDeleted: () => (doc.deletedOnDisk = false),
-			writeText: (p, content) => d.provider.writeText(p, content),
-			getEol: () => doc.eol,
+		this.saver = new FileWriter({
 			getLoadedPath: () => doc.path,
-			getLiveContent: () => (hasVisualMode(doc.kind) ? doc.texSource : doc.rawContent),
-			setDiskBaseline: (content) => (doc.diskBaseline = content),
-			setDirty: (dirty) => {
-				isDirty.current = dirty;
-			},
-			diskChanged: diskChangedSince,
-			recordDiskStamp,
-			// the aborted save's content is still the live buffer, so check() sees dirty-and-different
-			// and raises its conflict modal; "keep mine" comes back through saveNow with force
-			raiseConflict: (_path, deliberate) => void this.external.check(deliberate)
+			isGuest: d.guest,
+			files: () => collabHost.files,
+			relOf: (p) => collabHost.relOf(p)
 		});
-		// every save keeps a copy in Local History, as VS Code does; a guest has no disk to keep from
-		if (!d.guest()) this.saver.afterWrite = (path, content) => void addLocalHistory(path, content);
 		// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
 		this.external = new ExternalChangeWatcher({
 			getLoadedPath: () => doc.path,
 			isTextual: () => hasVisualMode(doc.kind) || isRawTextKind(doc.kind),
-			isStructured: () => hasVisualMode(doc.kind),
 			whenIdle: () => this.saver.whenIdle(),
 			readText: (p) => d.provider.readText(p),
 			exists: async (p) => (await d.provider.stat(p)).exists,
-			setDeleted: (v) => (doc.deletedOnDisk = v),
+			setDeleted: (v) => {
+				doc.deletedOnDisk = v;
+				if (!v && doc.path) this.saver.resume(doc.path);
+			},
 			getDiskBaseline: () => doc.diskBaseline,
 			setDiskBaseline: (t) => (doc.diskBaseline = t),
 			getBuffer: () => (hasVisualMode(doc.kind) ? doc.texSource : doc.rawContent),
-			setTexSource: (t) => {
-				doc.texSource = t;
-				doc.noteConflicts(t);
+			hasUnwritten: (path) => this.saver.isDirty(path),
+			adopt: (path, text, eol) => {
+				doc.eol = eol;
+				doc.noteConflicts(text);
+				this.saver.adoptDisk(path, text, eol);
 			},
-			setRawContent: (t) => {
-				doc.rawContent = t;
-				doc.noteConflicts(t);
-			},
-			setEol: (e) => (doc.eol = e),
-			rebuildVisual: () => d.wsdoc.rebuildVisualFromSource(),
-			discardQueuedSave: () => this.saver.discard(),
-			sessionEdit: (path, content) => d.session().edit(path, content),
-			takeSessionWrite: (path) => collabHost.takeSessionWrite(path),
 			saveNow: () => doc.save(true) // force: the user chose "keep mine" knowing disk differs
 		});
 		// unsaved-edit gate for both file switches and workspace-level exits
 		this.unsaved = new UnsavedGuard({
-			saver: () => this.saver,
+			writer: this.saver,
 			getLoadedPath: () => doc.path,
-			getEol: () => doc.eol,
 			autosaveActive: () => this.autosaveActive(),
 			takePendingTabClose: () => {
 				const p = this.pendingTabClose;
@@ -104,7 +90,29 @@ export class WorkspaceEditFlow {
 			},
 			clearPendingTabClose: () => (this.pendingTabClose = null)
 		});
+		// the open file's buffer follows its text: an edit from the disk, an undo or a collaborator. The visual editor
+		// takes those in by its own patch (VisualCollab) and the source editor through its binding
+		collabHost.onTextChange = (path, origin) => {
+			if (!samePath(path, doc.path ?? '') || origin === EDIT_ORIGIN) return;
+			// typing is never back at the saved text often enough to compare each keystroke
+			isDirty.current = origin === DISK_ORIGIN || origin instanceof Y.UndoManager ? this.saver.isDirty(path) : true;
+			if (modes.mode === 'visual' && hasVisualMode(doc.kind)) return;
+			const text = d.session().collabFor(path)?.ytext.toString();
+			if (text === undefined) return;
+			if (hasVisualMode(doc.kind)) {
+				if (doc.texSource !== text) doc.texSource = text;
+			} else if (doc.rawContent !== text) doc.rawContent = text;
+		};
 
+		// the open folder's text buffers, for as long as it is open; a guest's buffers are the session's
+		$effect(() => {
+			const root = workspaceRoot.current;
+			const guest = d.guest();
+			untrack(() => {
+				if (root && !guest) collabHost.open(root);
+				else void collabHost.close();
+			});
+		});
 		// Every file that opens gains a tab (file tree, SyncTeX jumps, include links, restores).
 		//
 		// Skipped while the focused tab is a COMPARISON: activating one already placed its tab, and
@@ -133,7 +141,7 @@ export class WorkspaceEditFlow {
 				untrack(() => {
 					this.cacheOutgoingDoc();
 					const v = editorViewStore.current;
-					if (!v || modes.mode !== 'visual' || !doc.path || d.session().collabFor(doc.path)) return;
+					if (!v || modes.mode !== 'visual' || !doc.path || d.session().active) return;
 					saveVisualPosition(v, doc.path, doc.texSource, doc.sourceMap);
 				})
 			)
@@ -171,6 +179,39 @@ export class WorkspaceEditFlow {
 				if (path) d.wsdoc.loadFile(path);
 				else d.wsdoc.closeOpenFile();
 			});
+		});
+	}
+
+	/** every write of this workspace's files: guarded against changes on disk, checked, recorded */
+	installWriteHooks(extras: WriteExtras): void {
+		const { doc } = this.d.wsdoc;
+		function open(path: string): boolean {
+			return !!doc.path && samePath(path, doc.path);
+		}
+		collabHost.setWriteHooks({
+			diskChanged: diskChangedSince,
+			recordStamp: recordDiskStamp,
+			verify: (path, content) => extras.verify(path, content),
+			beforeWrite: (path, content) => extras.beforeWrite(path, content),
+			afterWrite: (path, content) => {
+				// every save keeps a copy in Local History, as VS Code does
+				void addLocalHistory(path, content);
+				if (!open(path)) return;
+				doc.diskBaseline = content;
+				doc.deletedOnDisk = false; // the bytes are on disk again, whatever happened to the old name
+				if (!this.saver.isDirty(path)) isDirty.current = false;
+			},
+			// autosave stands down for this file: writing would recreate a name the user did not ask
+			// for, or re-trip the guard behind a question they postponed
+			heldOff: (path) => open(path) && !this.autosaveActive(),
+			// the refused content is still the file's text, so check() sees dirty-and-different and raises its
+			// conflict modal; "keep mine" comes back through saveNow with force
+			conflict: (path, deliberate) => {
+				if (open(path)) void this.external.check(deliberate);
+			},
+			saved: (path) => toaster.success({ title: m.wsview_toast_saved_title(), description: basename(path), duration: 1200 }),
+			failed: (_path, e) =>
+				toaster.error({ title: m.wsview_toast_save_failed_title(), description: e instanceof Error ? e.message : m.wsview_error_unknown() })
 		});
 	}
 
@@ -226,8 +267,6 @@ export class WorkspaceEditFlow {
 			if (this.pendingTabClose) return;
 		}
 		tabs.close(key);
-		// a comparison shares the file's tab; only the last real tab for a path ends its history
-		if (!tabs.list.some((t) => samePath(t.path, tab.path))) this.d.wsdoc.modes.history.forget(tab.path);
 	}
 
 	reopenTab(): void {

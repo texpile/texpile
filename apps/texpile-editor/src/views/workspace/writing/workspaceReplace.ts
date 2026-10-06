@@ -14,7 +14,7 @@ import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspac
 import type { TextEdit } from '$lib/workspace/edits/textEdits';
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
-import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import type { FileWriter } from '$lib/workspace/fileWriter';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
 
@@ -24,7 +24,7 @@ export type FolderReplaceDeps = {
 	modes: ViewModeSwitch;
 	kind: () => FileKind;
 	parseVisual: (text: string) => Promise<ParsedLatexFile | null>;
-	saver: () => SavePipeline;
+	saver: () => FileWriter;
 	/** the tree's undo history, or null where nothing can be undone (no trash, a guest) */
 	history: () => FileHistory | null;
 	reloadOpen: () => Promise<void>;

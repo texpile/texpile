@@ -13,7 +13,8 @@ import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '
 import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
-import { undo as historyUndo, redo as historyRedo, history } from 'prosemirror-history';
+import { history } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { gapCursor } from 'prosemirror-gapcursor';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
@@ -142,7 +143,6 @@ export type TypstEditorSetup = {
 	mlarrowHandlers: Plugin;
 	docDir: () => string;
 	placeholder: string;
-	onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 	onOpenLink?: (href: string) => boolean;
 	onSelectComment?: (id: string) => void;
 	onAddComment?: (anchor: CommentAnchor | null) => void;
@@ -152,18 +152,8 @@ export type TypstEditorSetup = {
 };
 
 export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
-	const {
-		mathlivePlugin,
-		mlarrowHandlers,
-		docDir,
-		placeholder,
-		onHistoryBoundary,
-		onOpenLink,
-		onSelectComment,
-		onAddComment,
-		sourceAnchor,
-		addCommentLabel
-	} = setup;
+	const { mathlivePlugin, mlarrowHandlers, docDir, placeholder, onOpenLink, onSelectComment, onAddComment, sourceAnchor, addCommentLabel } =
+		setup;
 	return [
 		parseCarryPlugin,
 		labelRenameUndo,
@@ -195,10 +185,9 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		keymap(listKeymap),
 		inputRules({ rules: typInputRules }),
 		keymap({
-			// PM history first, then the workspace snapshot history (survives mode switches)
-			'Mod-z': (state, dispatch) => historyUndo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('undo'), true) : false),
-			'Mod-y': (state, dispatch) => historyRedo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('redo'), true) : false),
-			'Mod-Shift-z': (state, dispatch) => historyRedo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('redo'), true) : false),
+			'Mod-z': undoVisual,
+			'Mod-y': redoVisual,
+			'Mod-Shift-z': redoVisual,
 			Backspace: undoInputRule,
 			'Mod-a': selectAllScoped,
 			'Mod-Home': selectDocStart,

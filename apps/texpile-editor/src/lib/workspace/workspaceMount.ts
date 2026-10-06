@@ -12,6 +12,8 @@ export type WindowWiringDeps = {
 	/** guests have no on-disk copy to diff against */
 	isHost(): boolean;
 	checkExternalChange(): void;
+	/** every other file the buffers hold catches up with its disk */
+	syncBuffers(): void;
 	runCompile(): void;
 	onWindowResize(): void;
 	/** re-read .texpile/ - the comment log and the compile config - after an outside write */
@@ -26,6 +28,7 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 		deps.refreshTree();
 		if (deps.isHost()) {
 			deps.checkExternalChange();
+			deps.syncBuffers();
 			deps.loadExternalPdf();
 		}
 		deps.reloadReferences();
@@ -36,6 +39,8 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 	function onFsChanged() {
 		deps.refreshTree();
 		deps.reloadReferences();
+		// our own writes outside the buffers too: a replace across files nobody has open
+		if (deps.isHost()) deps.syncBuffers();
 	}
 	function onCompile() {
 		return deps.runCompile();

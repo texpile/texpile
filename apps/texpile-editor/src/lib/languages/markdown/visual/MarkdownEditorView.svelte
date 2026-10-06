@@ -10,7 +10,8 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { keymap } from 'prosemirror-keymap';
 	import { baseKeymap, toggleMark } from 'prosemirror-commands';
-	import { undo as historyUndo, redo as historyRedo, history } from 'prosemirror-history';
+	import { history } from 'prosemirror-history';
+	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 	import { gapCursor } from 'prosemirror-gapcursor';
 	import { dropCursor } from 'prosemirror-dropcursor';
 	import { fixTables, tableEditing, goToNextCell } from 'prosemirror-tables';
@@ -91,7 +92,6 @@
 		imageDir?: string;
 		docPath?: string | null;
 		placeholder?: string;
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		onReady?: () => void;
 		/** the link tooltip's Open action: return true when handled in-app (workspace-relative
 		 * markdown link), false to fall through to the browser. */
@@ -122,7 +122,6 @@
 		imageDir,
 		docPath = null,
 		placeholder = '',
-		onHistoryBoundary,
 		onReady,
 		onOpenLink,
 		commentRanges = [],
@@ -185,10 +184,9 @@
 			keymap(listKeymap),
 			inputRules({ rules: [...listInputRules, ...mdInputRules] }),
 			keymap({
-				// PM history first, then the workspace snapshot history (survives mode switches)
-				'Mod-z': (state, dispatch) => historyUndo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('undo'), true) : false),
-				'Mod-y': (state, dispatch) => historyRedo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('redo'), true) : false),
-				'Mod-Shift-z': (state, dispatch) => historyRedo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('redo'), true) : false),
+				'Mod-z': undoVisual,
+				'Mod-y': redoVisual,
+				'Mod-Shift-z': redoVisual,
 				Backspace: undoInputRule,
 				'Mod-a': selectAllScoped,
 				'Mod-Home': selectDocStart,

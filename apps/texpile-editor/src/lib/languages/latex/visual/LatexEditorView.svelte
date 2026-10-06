@@ -40,8 +40,6 @@
 		// where inserted images go (an images/ subfolder)
 		imageDir?: string;
 		placeholder?: string;
-		/** called when PM undo/redo is exhausted; return true if the workspace snapshot history handled it. */
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		/** Fired once the ProseMirror view exists and is on screen. Building it is a long synchronous
 		 * block on a large document, and it starts only after the dynamic import below resolves - well
 		 * after this component's own mount - so callers cannot infer it from mounting. */
@@ -88,7 +86,6 @@
 		docPath = null,
 		imageDir,
 		placeholder = 'Begin your journey here...',
-		onHistoryBoundary,
 		onReady,
 		commentRanges = [],
 		sourceMap = { leaves: [], blocks: [] },
@@ -124,7 +121,6 @@
 			mlarrowHandlers,
 			imageDir: imageDir === undefined ? undefined : () => imageDir ?? '',
 			placeholder,
-			onHistoryBoundary,
 			onSelectComment,
 			onAddComment,
 			sourceAnchor,

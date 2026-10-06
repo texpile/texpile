@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { TreeOps, type TreeOpsDeps } from '$lib/workspace/treeOps';
 import { workspaceRoot, activeFilePath } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
-import { SavePipeline, type SaveDeps } from '$lib/workspace/savePipeline.svelte';
+import { memoryFs, openMemoryFolder } from './memoryFolder';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
 
 vi.mock('$lib/platform', () => ({ isMac: false, isWindows: false }));
@@ -14,7 +14,7 @@ vi.mock('$lib/platform', () => ({ isMac: false, isWindows: false }));
 // remove the original. `tooBigFor` stands in for the size limit that makes a delete non-undoable.
 // what the "replace what is there?" prompt answers; mutable so a test can say no
 const replaceAnswer = { ok: true };
-// what the save pipeline was told to do with a queued edit during the last operation
+// what the writer was told to do with an unwritten edit during the last operation
 const saveCalls: string[] = [];
 
 function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin = true) {
@@ -356,9 +356,9 @@ describe('importing a folder onto files already there', () => {
 });
 
 // Renaming a file that has unsaved edits must carry them to the new name. VS Code snapshots the
-// dirty model and restores it at the target; here the queued write is repointed instead, and the
-// opener waits for it to land before re-reading, so the edits arrive as the renamed file's content.
-// The failure this guards against is the queue still aimed at the old path, which recreates it.
+// dirty model and restores it at the target; here the file's text moves to the new name with its
+// unwritten edits, so they arrive as the renamed file's content. The failure this guards against is
+// the write still aimed at the old path, which recreates it.
 describe('unsaved edits follow a rename', () => {
 	let fs: ReturnType<typeof makeFs>;
 	let ops: TreeOps;
@@ -371,7 +371,7 @@ describe('unsaved edits follow a rename', () => {
 		ops = new TreeOps(fs.deps);
 	});
 
-	it('repoints the queued write instead of discarding it', async () => {
+	it('repoints the unwritten edit instead of discarding it', async () => {
 		fs.files.add('/proj/a.tex');
 		activeFilePath.current = '/proj/a.tex';
 		await ops.rename(fileEntry('/proj/a.tex'), 'b.tex');
@@ -388,18 +388,23 @@ describe('unsaved edits follow a rename', () => {
 	});
 
 	it('leaves alone a file whose name differs only in case, on Linux', async () => {
-		const saver = new SavePipeline({} as SaveDeps);
-		fs.deps.retargetPendingSave = (from, to) => saver.retarget(from, to);
+		const disk = { '/proj/Notes.tex': 'other', '/proj/notes.tex': 'saved' };
+		const folder = await openMemoryFolder('/proj', memoryFs(disk), {
+			open: ['/proj/Notes.tex', '/proj/notes.tex'],
+			loaded: () => activeFilePath.current
+		});
+		fs.deps.retargetPendingSave = (from, to) => folder.writer.retarget(from, to);
 		fs.files.add('/proj/Notes.tex');
 		fs.files.add('/proj/notes.tex');
 		tabs.bind(null, false);
 		tabs.noteOpened('/proj/notes.tex');
 		activeFilePath.current = '/proj/notes.tex';
-		saver.reattach({ path: '/proj/notes.tex', content: 'edited' });
+		folder.type('/proj/notes.tex', 'edited');
 		await ops.rename(fileEntry('/proj/Notes.tex'), 'Renamed.tex');
 		expect(visible(fs.files)).toEqual(['/proj/Renamed.tex', '/proj/notes.tex']);
 		expect(tabs.list.map((t) => t.path)).toEqual(['/proj/notes.tex']);
-		expect(saver.pending?.path).toBe('/proj/notes.tex');
+		expect(folder.writer.pending).toEqual({ path: '/proj/notes.tex', content: 'edited' });
+		expect(folder.textOf('/proj/Renamed.tex')).toBe('other');
 		expect(activeFilePath.current).toBe('/proj/notes.tex');
 	});
 });

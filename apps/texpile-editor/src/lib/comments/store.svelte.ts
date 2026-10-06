@@ -53,6 +53,8 @@ export class CommentStore {
 	private lines: string[] = [];
 	private staged: CommentEvent[] = [];
 	private share: CommentLogShare | null = null;
+	/** the folder whose log the session follows */
+	private shareRoot: string | null = null;
 	/** while shared: this side's staged events, already in the shared log but not on disk */
 	private unsaved: string[] = [];
 	private parsed = new Map<string, CommentEvent | null>();
@@ -227,12 +229,21 @@ export class CommentStore {
 		return done;
 	}
 
-	/** a log read from disk; while shared, lines someone added there (a pull, another window) join the session */
+	/** a log read from disk: lines someone added there (a pull, another window) join the log, and lines it
+	 *  had and no longer has (a checkout) leave it */
 	adoptLog(text: string, wasOnDisk: Set<string> | null = null): void {
 		if (this.share) {
+			const served = keptLines(text);
+			const known = new Set(served);
 			const present = new Set(this.share.lines());
-			const added = keptLines(text).filter((line) => !present.has(line));
-			if (added.length) this.share.edit([], added);
+			const added = served.filter((line) => !present.has(line));
+			const gone = wasOnDisk ? [...wasOnDisk].filter((line) => line && !known.has(line) && present.has(line)) : [];
+			if (added.length || gone.length)
+				this.share.edit(
+					gone.map((line) => [line, null]),
+					added
+				);
+			this.onDisk = known;
 			this.follow();
 			return;
 		}
@@ -256,6 +267,7 @@ export class CommentStore {
 	 */
 	startSharing(share: CommentLogShare, seed: boolean): void {
 		this.share = share;
+		this.shareRoot = this.root;
 		if (seed) {
 			const present = new Set(share.lines());
 			const staged = collapseStaged(this.staged).map((e) => JSON.stringify(e));
@@ -269,6 +281,13 @@ export class CommentStore {
 	/** back to a log of its own: what the session had, with this side's unsaved lines staged again */
 	stopSharing(): void {
 		if (!this.share) return;
+		// another folder opened since: what the session held is that folder's, written or not
+		if (this.root !== this.shareRoot) {
+			this.share = null;
+			this.unsaved = [];
+			this.parsed.clear();
+			return;
+		}
 		this.staged = this.pending();
 		this.lines = withoutLast(this.lines, this.unsaved);
 		this.events = this.lines.flatMap((line) => this.parse(line) ?? []);

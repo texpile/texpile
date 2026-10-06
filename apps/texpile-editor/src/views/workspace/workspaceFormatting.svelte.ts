@@ -9,7 +9,7 @@ import type { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
 import type { WorkspaceDoc } from './workspaceDoc.svelte';
 import type { WorkspaceCompileState } from './workspaceCompileState.svelte';
 import type { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
-import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import type { FileWriter } from '$lib/workspace/fileWriter';
 
 type FormattingDeps = {
 	provider: WorkspaceProvider;
@@ -17,7 +17,7 @@ type FormattingDeps = {
 	hostMode: () => boolean;
 	cc: () => WorkspaceCompileState;
 	compiler: () => CompilePipeline;
-	saver: () => SavePipeline;
+	saver: () => FileWriter;
 	mainPrompt: () => MainFilePrompt;
 };
 

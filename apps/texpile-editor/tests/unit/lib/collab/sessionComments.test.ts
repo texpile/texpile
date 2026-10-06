@@ -1,12 +1,13 @@
 // @vitest-environment jsdom
 // review comments between a host and a guest through the real session engine: sealed frames over a
-// blind relay, the shared Y.Text, the materializer landing guest edits on the host's disk
+// blind relay, the shared Y.Text, the host's text buffers landing every edit on its disk
 import { it, expect, vi } from 'vitest';
 import * as Y from 'yjs';
 import { deriveSessionKeys } from '$lib/collab/e2e/keys';
 import { generateShareCode } from '$lib/collab/e2e/shareCode';
 import { CollabSession, textOf, type SessionEvents } from '$lib/collab/session';
-import { HostMaterializer, EDIT_ORIGIN, changedSpans } from '$lib/collab/materialize';
+import { EDIT_ORIGIN, changedSpans } from '$lib/collab/sharedFiles';
+import { TextBuffers } from '$lib/buffers/textBuffers';
 import { commentLogOf, shareComments } from '$lib/collab/sharedComments';
 import type { RelayNotice } from '$lib/collab/protocol';
 import type { Transport, TransportStatus } from '$lib/collab/transport';
@@ -86,23 +87,44 @@ async function connect(log: CommentEvent[], hostOpens: string | null = '/w/main.
 	disk = { 'main.tex': TEXT, '.texpile/comments.jsonl': serializeLog(log) };
 	const key = (await deriveSessionKeys(generateShareCode())).contentKey;
 	const hub = new FakeHub();
-	const party = (role: 'host' | 'guest', name: string, events: SessionEvents) => {
-		const doc = new Y.Doc();
+	const party = (role: 'host' | 'guest', name: string, events: SessionEvents, buffers?: TextBuffers) => {
+		const doc = buffers?.shared ?? new Y.Doc();
 		const transport = new FakeTransport(hub, role);
-		const session = new CollabSession({ doc, transport, key, role, user: { name, color: '#123456' }, events });
+		const session = new CollabSession({
+			doc,
+			awareness: buffers?.awareness,
+			transport,
+			key,
+			role,
+			user: { name, color: '#123456' },
+			events
+		});
 		transport.start();
 		return { doc, session };
 	};
 
+	const writes: { tex: string; log: CommentEvent[] }[] = [];
+	const buffers = new TextBuffers(
+		'/w',
+		{
+			readBytes: async (p) => new TextEncoder().encode(disk[p.replace(/^\/w\//, '')]),
+			writeText: async (p, content) => {
+				const rel = p.replace(/^\/w\//, '');
+				if (rel === 'main.tex') writes.push({ tex: content, log: logged() });
+				disk[rel] = content;
+			},
+			listFiles: async () => [{ rel: 'main.tex', size: disk['main.tex'].length }]
+		},
+		(root, rel) => `${root}/${rel}`
+	);
 	let hostText = TEXT;
-	const host = party('host', 'louis', {});
+	const host = party('host', 'louis', {}, buffers);
 	host.session.setSuggesting(false);
-	// the host's editor saves its own edits, then folds them into the doc
+	// the host's editor folds its own edits into the buffer, which writes them
 	const hostEdit = (next: string) => {
 		hostText = next;
 		hostCtl.suggestions.textChanged('/w/main.tex', next);
-		disk['main.tex'] = next;
-		mat.hostEdit('main.tex', next);
+		buffers.fold('main.tex', next);
 	};
 	const hostCtl = new CommentsController({
 		root: () => '/w',
@@ -117,26 +139,16 @@ async function connect(log: CommentEvent[], hostOpens: string | null = '/w/main.
 		},
 		saveNow: () => {}
 	});
-	const writes: { tex: string; log: CommentEvent[] }[] = [];
-	const mat = new HostMaterializer(
-		host.doc,
-		'/w',
-		{
-			readBytes: async (p) => new TextEncoder().encode(disk[p.replace(/^\/w\//, '')]),
-			writeText: async (p, content) => {
-				const rel = p.replace(/^\/w\//, '');
-				if (rel === 'main.tex') writes.push({ tex: content, log: logged() });
-				disk[rel] = content;
-			},
-			listFiles: async () => [{ rel: 'main.tex', size: disk['main.tex'].length }]
-		},
-		(root, rel) => `${root}/${rel}`
-	);
-	mat.onWrite = (rel, content) => hostCtl.beforeRemoteWrite(rel, content);
-	mat.senderOf = (origin) => host.session.senderOf(origin);
-	mat.onRemoteChange = (rel, before, after, from, gestures) =>
+	// as WorkspaceView wires it: the open file records the host's own typing first
+	let hostFile = hostOpens;
+	buffers.hooks.beforeWrite = (path, content) => {
+		const rel = path.replace(/^\/w\//, '');
+		return path === hostFile ? hostCtl.suggestions.beforeSave(rel, content) : hostCtl.beforeRemoteWrite(rel, content);
+	};
+	buffers.senderOf = (origin) => host.session.senderOf(origin);
+	buffers.onRemoteChange = (rel, before, after, from, gestures) =>
 		hostCtl.remoteEdit(rel, before, after, { ...host.session.authorOf(from), gestures });
-	await mat.seed();
+	await buffers.sharing.start();
 	await hostCtl.load('/w');
 	shareComments(hostCtl, commentLogOf(host.doc), 'host');
 	if (hostOpens) {
@@ -211,7 +223,7 @@ async function connect(log: CommentEvent[], hostOpens: string | null = '/w/main.
 		hostCtl,
 		guestCtl: first.ctl,
 		guest: first,
-		mat,
+		buffers,
 		writes,
 		hostText: () => hostText,
 		guestText: first.text,
@@ -223,13 +235,14 @@ async function connect(log: CommentEvent[], hostOpens: string | null = '/w/main.
 		},
 		hostEdit,
 		hostOpen(path: string | null) {
+			hostFile = path;
 			hostText = path ? disk['main.tex'] : '';
 			hostCtl.reanchor(path, hostText);
 		},
 		close() {
-			mat.destroy();
 			host.session.destroy();
 			for (const g of guests) g.close();
+			buffers.destroy();
 		}
 	};
 }

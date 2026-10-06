@@ -94,7 +94,6 @@ export type EditorPaneProps = {
 	onEditFrontmatter: (kind: string, inner: string) => void;
 	/** absent when no preview target can resolve the jump (WorkspaceMain's canSync gate) */
 	onSyncToPdf?: (line: number) => void;
-	onHistoryBoundary: (dir: 'undo' | 'redo') => boolean;
 	onJumpToFile: (name: string) => void;
 	onOpenFileAt: (file: string, line: number, selectText?: string) => void;
 	/** a visual \ref whose label is not drawn in the open document; true when a jump was made */

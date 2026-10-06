@@ -1,9 +1,9 @@
 // Detecting that the open file changed on disk underneath us, and resolving the conflict.
 //
-// If our buffer is clean (or already matches disk) the new bytes are adopted silently. If the
-// user has local edits that differ, we surface a modal and let them pick. Everything waits on the
-// save pipeline going idle first, so we never read our own half-written file and mistake it for
-// an external edit.
+// If our buffer is clean (or already matches disk) the new bytes are taken in silently, as one
+// undoable edit of the file's text that every editor on it follows. If the user has local edits
+// that differ, we surface a modal and let them pick. Everything waits on the writer going idle
+// first, so we never read our own half-written file and mistake it for an external edit.
 import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
 import { toLf, detectEol, type Eol } from '$lib/workspace/fileSystem';
 import { recordDiskStamp } from '$lib/workspace/diskStamp';
@@ -16,8 +16,6 @@ export type ExternalChangeDeps = {
 	getLoadedPath(): string | null;
 	/** only text-ish kinds can meaningfully conflict */
 	isTextual(): boolean;
-	/** structured kinds (tex/md) reload into texSource + a visual rebuild; the rest into rawContent */
-	isStructured(): boolean;
 	/** resolves once every queued write has landed */
 	whenIdle(): Promise<void>;
 	readText(path: string): Promise<string>;
@@ -25,21 +23,14 @@ export type ExternalChangeDeps = {
 	setDiskBaseline(text: string): void;
 	/** the live buffer for the current kind */
 	getBuffer(): string;
-	setTexSource(text: string): void;
-	setRawContent(text: string): void;
-	setEol(eol: Eol): void;
-	/** re-derive docMeta + visualDoc and remount after adopting disk content */
-	rebuildVisual(): void;
-	/** drop any queued autosave of the edits we just replaced */
-	discardQueuedSave(): void;
-	/** fold adopted content into the shared doc so guests see it too */
-	sessionEdit(path: string, content: string): void;
+	/** the file's text holds edits the disk does not have */
+	hasUnwritten(path: string): boolean;
+	/** the file's text takes the disk's content; its editors follow it there */
+	adopt(path: string, text: string, eol: Eol): void;
 	/** is the path still on disk? a failed read alone does not settle it */
 	exists(path: string): Promise<boolean>;
 	/** the open file went missing on disk, or came back */
 	setDeleted(deleted: boolean): void;
-	/** the text (LF) a session this host runs last wrote to `path` for its guests, handed over once, or null */
-	takeSessionWrite(path: string): string | null;
 	/** "keep mine": overwrite disk now. Must FORCE past the save pipeline's external-write guard -
 	 * the guard is what raised this conflict, and by choosing "keep" the user has seen that disk
 	 * differs and decided to overwrite it. An unforced save would just re-trip the guard forever. */
@@ -77,21 +68,14 @@ export class ExternalChangeWatcher {
 		d.setDeleted(false); // it reads, so it is there: an earlier deletion has been undone
 		const disk = toLf(raw); // compare in LF against our LF baseline/buffers
 		if (activeFilePath.current !== path) return;
-		const sessionWrite = d.takeSessionWrite(path);
 		if (disk === d.getDiskBaseline()) {
 			// same bytes, new mtime (touch, a formatter, a checkout and back): nothing to adopt, but
 			// the save guard compares stamps, and without a fresh one every later autosave re-trips it
 			void recordDiskStamp(path);
 			return;
 		}
-		// the session's own write-through: already in the shared text, and the visual editor takes it in from there
-		if (disk === sessionWrite) {
-			d.setDiskBaseline(disk);
-			void recordDiskStamp(path);
-			return;
-		}
 		const eol = detectEol(raw); // the external writer may have changed the ending
-		if (!isDirty.current || d.getBuffer() === disk) return this.applyDiskReload(disk, eol);
+		if (!d.hasUnwritten(path) || d.getBuffer() === disk) return this.applyDiskReload(disk, eol);
 		// already asked about exactly this, and told to wait. Pressing Save is the user revisiting it,
 		// so it asks again rather than leaving the keystroke to do nothing at all
 		if (!deliberate && this.deferred?.path === path && this.deferred.disk === disk) return;
@@ -117,27 +101,13 @@ export class ExternalChangeWatcher {
 	/** adopt the on-disk version into the editor, discarding local edits; disk is LF-normalized */
 	applyDiskReload(disk: string, eol: Eol): void {
 		const d = this.deps;
-		d.setEol(eol);
-		d.setDiskBaseline(disk);
-		if (d.isStructured()) {
-			d.setTexSource(disk);
-			d.rebuildVisual();
-		} else {
-			d.setRawContent(disk);
-		}
-		isDirty.current = false;
-		// the buffer now matches disk: nothing left to postpone, and any queued autosave of the
-		// edits we just replaced has to go, or a later flush would clobber the version they kept
-		this.deferred = null;
-		d.discardQueuedSave();
-		// the host materializer's lastWritten update prevents an echo write back to disk
 		const path = d.getLoadedPath();
-		if (path) {
-			d.sessionEdit(path, disk);
-			// re-stamp alongside the baseline, or the save guard would flag OUR next autosave as an
-			// external write and re-raise the conflict we just resolved
-			void recordDiskStamp(path);
-		}
+		if (!path) return;
+		d.setDiskBaseline(disk);
+		// the buffer now matches disk: nothing left to postpone
+		this.deferred = null;
+		d.adopt(path, disk, eol);
+		isDirty.current = false;
 		this.onAdopted?.();
 	}
 

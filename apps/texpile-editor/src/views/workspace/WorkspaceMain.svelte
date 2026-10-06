@@ -193,7 +193,6 @@
 			onVisualSelection={actions.onVisualSelection}
 			onEditFrontmatter={actions.onEditFrontmatter}
 			onSyncToPdf={canSync ? actions.syncToPdf : undefined}
-			onHistoryBoundary={actions.historyStep}
 			onJumpToFile={actions.jumpToFile}
 			onOpenFileAt={actions.openFileAt}
 			onJumpToLabel={actions.jumpToLabel}

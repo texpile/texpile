@@ -9,9 +9,10 @@ import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { userData } from '$lib/storage/userData';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
+import { samePath } from '$lib/workspace/fileSystem';
 import { isSafeRel } from '$lib/collab/protocol';
 import { shareComments } from '$lib/collab/sharedComments';
-import { changedSpans } from '$lib/collab/materialize';
+import { changedSpans } from '$lib/collab/sharedFiles';
 import type * as Y from 'yjs';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { pmCommentsKey, revealPmComment, sourceAnchorFor } from '$lib/editor/visual/extensions/pmComments';
@@ -25,8 +26,7 @@ import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { SourceEdit } from '$lib/workspace/suggestions/suggestionsController';
 import { editOpenFile } from '$lib/workspace/edits/openEditorEdit';
 import { onDecisionStep } from '$lib/comments/decisionHistory';
-import { markPmDecision } from '$lib/editor/visual/extensions/pmDecisionStep';
-import { markCmDecision } from '$lib/editor/source/extensions/cmDecisionStep';
+import { markDecision } from '$lib/buffers/fileUndo';
 import { editMode, suggesting } from '$lib/comments/activeSuggestions.svelte';
 import type { EditMode } from '$lib/comments/suggestCompare';
 import { carryClosedEdit } from '$lib/workspace/edits/closedFileEdit';
@@ -42,6 +42,8 @@ type CommentsDeps = {
 	jumpToFileLine: (abs: string, line: number) => void;
 	parseVisual: (text: string) => Promise<ParsedLatexFile | null>;
 	flushSave: () => void;
+	/** the open file's undo history, which a decision joins as a step of its own */
+	fileHistory: () => Y.UndoManager | null;
 };
 
 export class WorkspaceComments {
@@ -153,11 +155,12 @@ export class WorkspaceComments {
 			// we are visiting, holding threads that project will never see.
 			void this.ctl.load(d.guest() || fileMode.current ? null : workspaceRoot.current);
 		});
-		// in a session the log is a list in the shared doc, which a guest has from the moment it joins;
-		// the host puts its own log in first and keeps writing the file
+		// the log is a list in the buffers' shared doc, which a guest has from the moment it joins; the host
+		// puts its own log in first and keeps writing the file, shared or not
 		$effect(() => {
 			const guest = d.guest();
-			if (guest ? !collabGuest.joined : !collabHost.active) return;
+			void collabHost.buffersRev;
+			if (guest ? !collabGuest.joined : !collabHost.files || fileMode.current || !workspaceRoot.current) return;
 			// untracked: sharing re-reads the threads it rewrites
 			return untrack(() => {
 				const log = guest ? collabGuest.sharedComments : collabHost.sharedComments;
@@ -227,13 +230,20 @@ export class WorkspaceComments {
 	}
 
 	private markDecision(seq: number): void {
-		if (this.d.modes.mode === 'visual' && hasVisualMode(this.d.kind())) {
-			const v = editorViewStore.current;
-			if (v) markPmDecision(v, seq);
+		const um = this.d.fileHistory();
+		if (um) markDecision(um, seq);
+	}
+
+	/** before a file's text goes to disk: the open file records the reader's own typing first; any other holds only
+	 *  collaborators' edits, recorded as they came */
+	async beforeWrite(absPath: string, content: string): Promise<void> {
+		if (this.d.doc.path && samePath(absPath, this.d.doc.path)) {
+			await this.beforeSave(absPath, content);
+			await this.ctl.syncAnchorsToText(absPath, content);
 			return;
 		}
-		const cm = sourceCmView.current;
-		if (cm) markCmDecision(cm, seq);
+		const rel = collabHost.relOf(absPath);
+		if (rel) await this.ctl.beforeRemoteWrite(rel, content);
 	}
 
 	async beforeSave(absPath: string, content: string): Promise<void> {

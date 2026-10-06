@@ -1,6 +1,6 @@
 // a path a guest named, judged by where it really lands on the host's disk
 import { isSafeRel } from './protocol';
-import { isShared } from './materialize';
+import { isShared } from './sharedFiles';
 
 /** root-relative path to where it really resolves, or null when that is outside the root */
 export type RealRelativeResolver = (root: string, rel: string) => Promise<string | null>;

@@ -21,7 +21,6 @@ import { indexStartingBy, pmToSource, type Segment, type SourceMap } from '../so
 import { threadAtPointer } from '$lib/comments/threadAtPointer';
 import { focusPmSuggestionMeta, pmSuggestions, pmSuggestionsKey } from './pmSuggestions';
 import { refuseDropOnGoneBlocks } from './goneBlocksRefuseDrop';
-import { pmDecisionSteps } from './pmDecisionStep';
 import { pmSelectionToolbar } from './pmSelectionToolbar';
 
 export { flattenDoc, placePmComments, pmRangeOf, type FlatDoc } from './pmCommentsResolve';
@@ -294,7 +293,6 @@ export function pmComments({ onSelect, onAdd, sourceAnchor, addLabel = 'Comment'
 		state,
 		pmSuggestions(),
 		refuseDropOnGoneBlocks(),
-		pmDecisionSteps(),
 		...(onAdd && sourceAnchor ? [pmSelectionToolbar(onAdd, addLabel, sourceAnchor)] : [])
 	];
 }

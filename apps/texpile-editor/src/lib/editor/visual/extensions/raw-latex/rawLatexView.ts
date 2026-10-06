@@ -3,7 +3,7 @@ import { Compartment as CodeMirrorCompartment } from '@codemirror/state';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { exitCode } from 'prosemirror-commands';
-import { undo, redo } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { TextSelection } from 'prosemirror-state';
 import { GapCursor } from 'prosemirror-gapcursor';
 import { gapAwareSelectionNear } from '$lib/editor/visual/gapSelection';
@@ -174,17 +174,17 @@ export class RawLatexView {
 			{
 				key: 'Ctrl-z',
 				mac: 'Cmd-z',
-				run: () => undo(view.state, view.dispatch)
+				run: () => undoVisual()
 			},
 			{
 				key: 'Shift-Ctrl-z',
 				mac: 'Shift-Cmd-z',
-				run: () => redo(view.state, view.dispatch)
+				run: () => redoVisual()
 			},
 			{
 				key: 'Ctrl-y',
 				mac: 'Cmd-y',
-				run: () => redo(view.state, view.dispatch)
+				run: () => redoVisual()
 			},
 			{ key: 'Backspace', run: () => this.maybeDelete() }
 		];

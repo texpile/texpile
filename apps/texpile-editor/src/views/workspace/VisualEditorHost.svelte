@@ -29,7 +29,6 @@
 		showRenderBar,
 		onVisualChange,
 		onVisualSelection,
-		onHistoryBoundary,
 		onVisualReady,
 		onMdLink,
 		onEditFrontmatter,
@@ -55,7 +54,6 @@
 		showRenderBar: boolean;
 		onVisualChange: (doc: PMNode) => void;
 		onVisualSelection?: () => void;
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		onVisualReady: () => void;
 		onMdLink: (href: string) => boolean;
 		onEditFrontmatter: (kind: string, inner: string) => void;
@@ -123,7 +121,6 @@
 				onLocalChange={onVisualChange}
 				onSelectionChange={onVisualSelection}
 				placeholder={m.wsview_editor_placeholder()}
-				{onHistoryBoundary}
 				onReady={onVisualReady}
 				onOpenLink={onMdLink}
 				{commentRanges}
@@ -148,7 +145,6 @@
 				onLocalChange={onVisualChange}
 				onSelectionChange={onVisualSelection}
 				placeholder={m.wsview_editor_placeholder()}
-				{onHistoryBoundary}
 				onReady={onVisualReady}
 				onOpenLink={onMdLink}
 				{commentRanges}
@@ -175,7 +171,6 @@
 				onLocalChange={onVisualChange}
 				onSelectionChange={onVisualSelection}
 				placeholder={m.wsview_editor_placeholder()}
-				{onHistoryBoundary}
 				onReady={onVisualReady}
 				{commentRanges}
 				{sourceMap}

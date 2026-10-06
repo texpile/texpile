@@ -32,7 +32,6 @@
 
 	// gotoLine: token makes repeat jumps to the same line re-fire; selectText anchors against line drift.
 	// initialScrollPos: one-shot mode-switch sync applied at mount.
-	// onHistoryBoundary: called when CM undo/redo is exhausted; return true if the workspace history handled it.
 	let {
 		value = '',
 		onInput,
@@ -41,7 +40,6 @@
 		gotoLine,
 		onSyncToPdf,
 		initialScrollPos = null,
-		onHistoryBoundary,
 		diagnostics = [],
 		onJumpToFile,
 		onOpenFileAt,
@@ -64,7 +62,6 @@
 		gotoLine?: { line: number; token: number; selectText?: string; column?: number; path?: string };
 		onSyncToPdf?: (line: number) => void;
 		initialScrollPos?: { scroll: number | null; cursor: number | null } | null;
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		diagnostics?: SourceDiagnostic[];
 		/** go-to-definition hooks: \input targets and cross-file definition jumps */
 		onJumpToFile?: (name: string) => void;
@@ -162,9 +159,9 @@
 	}
 
 	onMount(() => {
-		// collab mode: the Y.Text is the document, CRDT undo replaces CM history (plain CM undo
-		// would revert other people's edits)
-		undoManager = collab ? new Y.UndoManager(collab.ytext) : null;
+		// the Y.Text is the document, CRDT undo replaces CM history (plain CM undo would revert other
+		// people's edits); the file's own history when the buffers keep one, so it outlives this view
+		undoManager = collab ? (collab.undo ?? new Y.UndoManager(collab.ytext)) : null;
 		const initialDoc = collab ? collab.ytext.toString() : value;
 		// folded into EditorState.create, not dispatched after mount, so the first paint is already
 		// in the right place
@@ -191,7 +188,6 @@
 					onSelectComment,
 					onJumpToFile,
 					onOpenFileAt,
-					onHistoryBoundary,
 					onScroll: () => deferredRememberPosition(),
 					updateListener: onViewUpdate
 				})
@@ -325,8 +321,10 @@
 		// collab teardown: drop our cursor from awareness so peers don't see a ghost, and reap the
 		// undo manager's doc observer before the view goes
 		if (collab) collab.awareness.setLocalStateField('cursor', null);
-		undoManager?.clear();
-		undoManager?.destroy();
+		if (undoManager && undoManager !== collab?.undo) {
+			undoManager.clear();
+			undoManager.destroy();
+		}
 		undoManager = null;
 		view?.destroy();
 		view = null;

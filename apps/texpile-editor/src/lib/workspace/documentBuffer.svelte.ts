@@ -57,20 +57,18 @@ export function isRawTextKind(kind: FileKind): kind is 'text' | 'bib' {
 }
 
 export type DocumentBufferDeps = {
-	/** queue a debounced write of the given content; `before` is the text the change was made to */
+	/** carry an edit into the file's text, which writes it on its own; `before` is the text the change was made to */
 	scheduleSave(path: string | null, content: string, before?: string): void;
-	/** drop a queued write (the buffer already matches disk) */
-	discardQueuedSave(): void;
-	/** hand an edit to a shared session even when it leaves the file as saved */
-	shareEdit?(path: string | null, content: string, before?: string): void;
 	/** write immediately, notifying the user; force bypasses the external-write guard (conflict
 	 * modal's "keep mine", where the user has seen disk differs and chosen to overwrite) */
-	writeNow(path: string, content: string, force?: boolean): void;
+	writeNow(path: string, force?: boolean): void;
 	/** re-parse into the visual doc after a wholesale source replacement */
 	rebuildVisual(): void;
 	isVisualMode(): boolean;
 	/** the doc's parse just went stale; the collab layer re-parses on the lull */
 	noteLocalEdit(): void;
+	/** a visual edit is about to go into the file's text */
+	beforeLocalEdit?(): void;
 	/** the user is typing: a pending mode-switch scroll anchor is moot */
 	clearPendingAnchor(): void;
 	/** macro-defining text from the main file's include chain, as the parse saw it */
@@ -302,18 +300,17 @@ export class DocumentBuffer {
 		if (!this.docMeta || this.visualStale) return;
 		this.lastDoc = doc;
 		const before = this.texSource;
+		this.deps.beforeLocalEdit?.();
 		const { text, map } = this.serializeFile(doc);
 		this.texSource = text;
 		this.sourceMap = map;
 		this.lastDocSource = this.texSource;
 		// nodeviews settling on load (or an edit undone back to the saved bytes) fire a docChanged
-		// transaction that serializes right back to disk: that isn't an unsaved change, so don't
-		// flag the pristine file dirty or queue a no-op save that would nag on the next switch
+		// transaction that serializes right back to disk: that isn't an unsaved change, and the
+		// writer leaves a text equal to disk alone
 		if (this.texSource === this.diskBaseline) {
 			if (isDirty.current) isDirty.current = false;
-			this.deps.discardQueuedSave();
-			// the shared text still holds the edit being undone (a guest's baseline never moves at all)
-			this.deps.shareEdit?.(this.path, this.texSource, before);
+			this.queueSave(this.texSource, before);
 			return;
 		}
 		isDirty.current = true;
@@ -390,10 +387,8 @@ export class DocumentBuffer {
 
 	/** Ctrl/Cmd+S: write now instead of after the autosave delay; image and binary kinds have nothing to write */
 	save(force = false): void {
-		this.deps.discardQueuedSave(); // drop the queued debounce; we're writing the current content now
 		if (!this.path) return;
 		if (this.encodingIssue) return;
-		if (hasVisualMode(this.kind)) this.deps.writeNow(this.path, this.texSource, force);
-		else if (isRawTextKind(this.kind)) this.deps.writeNow(this.path, this.rawContent, force);
+		if (hasVisualMode(this.kind) || isRawTextKind(this.kind)) this.deps.writeNow(this.path, force);
 	}
 }

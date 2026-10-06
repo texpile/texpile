@@ -14,22 +14,16 @@ function makeWatcher(over: Partial<ExternalChangeDeps> = {}) {
 	const deps: ExternalChangeDeps = {
 		getLoadedPath: () => PATH,
 		isTextual: () => true,
-		isStructured: () => true,
 		whenIdle: async () => {},
 		readText: async () => 'same',
 		getDiskBaseline: () => 'same',
 		setDiskBaseline: () => {},
 		getBuffer: () => 'same',
-		setTexSource: () => {},
-		setRawContent: () => {},
-		setEol: () => {},
-		rebuildVisual: () => {},
-		discardQueuedSave: () => {},
-		sessionEdit: () => {},
+		hasUnwritten: () => true,
+		adopt: () => {},
 		saveNow: () => {},
 		exists: async () => true,
 		setDeleted: () => {},
-		takeSessionWrite: () => null,
 		...over
 	};
 	return new ExternalChangeWatcher(deps);
@@ -57,25 +51,25 @@ describe('ExternalChangeWatcher.check', () => {
 	});
 });
 
-// Hosting, the session writes a guest's words to the open file before the visual editor has taken
-// them in. Read as someone else's write, the reload put that older text back over the shared one and
-// took away what the guest typed since, or asked the host about a conflict with nobody.
-describe('the session writing the open file for a guest', () => {
-	it('takes the write as its own, neither reloading nor asking', async () => {
-		isDirty.current = false;
-		const sessionEdit = vi.fn();
-		const setDiskBaseline = vi.fn();
-		const common = { readText: async () => 'base guest', getDiskBaseline: () => 'base', takeSessionWrite: () => 'base guest' };
-		const idle = makeWatcher({ ...common, getBuffer: () => 'base', sessionEdit, setDiskBaseline });
-		await idle.check();
-		expect(sessionEdit).not.toHaveBeenCalled();
-		expect(setDiskBaseline).toHaveBeenCalledWith('base guest');
-		expect(recordDiskStamp).toHaveBeenCalledWith(PATH);
+// the writer, not the dirty flag, says whether there is anything to lose: the flag lags an edit
+// folded into the text by another editor on the file
+describe('adopt or ask', () => {
+	it('takes disk in when the text holds nothing unwritten', async () => {
+		const adopt = vi.fn();
+		const w = makeWatcher({ readText: async () => 'theirs', getBuffer: () => 'mine', hasUnwritten: () => false, adopt });
+		await w.check();
+		expect(w.conflict).toBeNull();
+		expect(adopt).toHaveBeenCalledWith(PATH, 'theirs', '\n');
+		expect(isDirty.current).toBe(false);
+	});
 
-		isDirty.current = true;
-		const typing = makeWatcher({ ...common, getBuffer: () => 'base host' });
-		await typing.check();
-		expect(typing.conflict).toBeNull();
+	it('asks when the text holds unwritten edits, whatever the dirty flag says', async () => {
+		isDirty.current = false;
+		const adopt = vi.fn();
+		const w = makeWatcher({ readText: async () => 'theirs', getBuffer: () => 'mine', adopt });
+		await w.check();
+		expect(w.conflict?.disk).toBe('theirs');
+		expect(adopt).not.toHaveBeenCalled();
 	});
 });
 
@@ -84,17 +78,15 @@ describe('the session writing the open file for a guest', () => {
 describe('ExternalChangeWatcher.resolve', () => {
 	it('defer leaves disk and the buffer exactly as they are', async () => {
 		const saveNow = vi.fn();
-		const setTexSource = vi.fn();
-		const discardQueuedSave = vi.fn();
-		const w = makeWatcher({ readText: async () => 'theirs', getBuffer: () => 'mine', saveNow, setTexSource, discardQueuedSave });
+		const adopt = vi.fn();
+		const w = makeWatcher({ readText: async () => 'theirs', getBuffer: () => 'mine', saveNow, adopt });
 		await w.check();
 		expect(w.conflict).not.toBeNull();
 
 		w.resolve('defer');
 		expect(w.conflict).toBeNull();
 		expect(saveNow).not.toHaveBeenCalled(); // disk keeps their version
-		expect(setTexSource).not.toHaveBeenCalled(); // the buffer keeps mine
-		expect(discardQueuedSave).not.toHaveBeenCalled();
+		expect(adopt).not.toHaveBeenCalled(); // the buffer keeps mine
 		expect(isDirty.current).toBe(true); // still unsaved, so the next save asks again
 	});
 
@@ -139,12 +131,10 @@ describe('the open file going missing', () => {
 	});
 
 	it('leaves the buffer alone: it is the only copy left', async () => {
-		const setTexSource = vi.fn();
-		const discardQueuedSave = vi.fn();
-		const w = makeWatcher({ readText: gone, exists: async () => false, setTexSource, discardQueuedSave });
+		const adopt = vi.fn();
+		const w = makeWatcher({ readText: gone, exists: async () => false, adopt });
 		await w.check();
-		expect(setTexSource).not.toHaveBeenCalled();
-		expect(discardQueuedSave).not.toHaveBeenCalled();
+		expect(adopt).not.toHaveBeenCalled();
 		expect(isDirty.current).toBe(true);
 	});
 });

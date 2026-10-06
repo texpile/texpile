@@ -15,10 +15,12 @@ export type SourceDiagnostic = {
 	token?: string;
 };
 
-// shared-session binding: the Y.Text is the doc (value is ignored), remote cursors render via
+// the file's text binding: the Y.Text is the doc (value is ignored), remote cursors render via
 // awareness, undo becomes CRDT-aware (only your own edits).
 export type CollabBinding = {
 	ytext: Y.Text;
 	awareness: Awareness;
 	readOnly?: boolean;
+	/** the file's own history, outliving this editor; absent, the editor keeps one of its own */
+	undo?: Y.UndoManager;
 };

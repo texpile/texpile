@@ -145,6 +145,8 @@ export class CollabSession {
 	// host only: the versions of the guests it let in, which a newcomer must share a session with too
 	private readonly admitted = new Map<number, Partial<SessionVersion>>();
 	private destroyed = false;
+	/** the awareness came from outside (the workspace's, which outlives the session) */
+	private readonly borrowedAwareness: boolean;
 	// the host's clientID, learned ONLY from frames the relay marked host-origin — never from a
 	// peer's self-reported role, so a guest can't impersonate the host
 	private authHostId: number | null = null;
@@ -167,6 +169,7 @@ export class CollabSession {
 		user: { name: string; color: string };
 		events?: SessionEvents;
 		version?: SessionVersion;
+		awareness?: Awareness;
 	}) {
 		this.doc = opts.doc;
 		this.version = opts.version ?? THIS_VERSION;
@@ -175,7 +178,9 @@ export class CollabSession {
 		this.role = opts.role;
 		this.events = opts.events ?? {};
 		this.user = { ...opts.user, role: opts.role };
-		this.awareness = new Awareness(this.doc);
+		this.borrowedAwareness = !!opts.awareness;
+		this.awareness = opts.awareness ?? new Awareness(this.doc);
+		if (this.awareness.getLocalState() === null) this.awareness.setLocalState({});
 		this.awareness.setLocalStateField('user', opts.user);
 		this.awareness.setLocalStateField('role', opts.role);
 
@@ -473,7 +478,12 @@ export class CollabSession {
 		this.doc.off('update', this.onDocUpdate);
 		this.awareness.off('update', this.onAwarenessUpdate);
 		this.awareness.off('change', this.rebuildPeers);
-		this.awareness.destroy();
+		if (this.borrowedAwareness) {
+			// the peers go, this side's state stays for the editors still bound to it
+			const others = [...this.awareness.getStates().keys()].filter((id) => id !== this.clientId);
+			removeAwarenessStates(this.awareness, others, 'session-end');
+			this.awareness.setLocalState({});
+		} else this.awareness.destroy();
 		this.transport.onMessage = null;
 		this.transport.onNotice = null;
 		this.transport.onStatus = null;

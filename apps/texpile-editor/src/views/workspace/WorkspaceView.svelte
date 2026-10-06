@@ -93,7 +93,8 @@
 		guest: () => guest,
 		jumpToFileLine: (abs, line) => nav.syncJumpToFileLine(abs, line),
 		parseVisual: async (text) => (await wsdoc.tryParseVisual(text)).parsed ?? null,
-		flushSave: () => saver.flush()
+		flushSave: () => saver.flush(),
+		fileHistory: () => session.collabFor(doc.path)?.undo ?? null
 	});
 	const commentsCtl = commentsW.ctl;
 	wireRefiner({ comments: commentsW, doc, modes, kind: () => kind, guest: () => guest });
@@ -101,11 +102,10 @@
 	// rewritten quote badges detached at once rather than at the next mode switch
 	external.onAdopted = () => void commentsW.adoptDisk();
 	unsaved.onDiscard = (path) => commentsW.discarded(path);
-	saver.verify = (path, content) => doc.verifyForWrite(path, content);
-	saver.beforeWrite = async (path, content) => {
-		await commentsW.beforeSave(path, content);
-		await commentsCtl.syncAnchorsToText(path, content);
-	};
+	editFlow.installWriteHooks({
+		verify: (path, content) => doc.verifyForWrite(path, content),
+		beforeWrite: (path, content) => commentsW.beforeWrite(path, content)
+	});
 	modes.beforeSwitch = () => commentsCtl.carryLive();
 
 	const folderEmpty = $derived(texFiles.current.length === 0);
@@ -204,12 +204,12 @@
 
 	// the visual editor's shared-session machinery (remote patches, presence) lives in
 	// VisualCollab; this api hands it doc-state access, the ref carries its editor hooks
-	let visualCollab = $state<{ noteLocalEdit(): void; noteFreshParse(): void; publishCursor(): void } | null>(null);
+	let visualCollab = $state<{ noteLocalEdit(): void; noteFreshParse(): void; publishCursor(): void; beforeLocalEdit(): void } | null>(null);
 	const visualCollabApi = visualCollabBridge({
 		doc,
 		parser,
 		parse: (text) => wsdoc.tryParseVisual(text),
-		scheduleSave: (path, content) => saver.schedule(path, content)
+		scheduleSave: (path, content) => session.edit(path, content)
 	});
 	onDestroy(() => {
 		typstPreview.dispose(); // leaving the workspace must not leave a preview compiling in the server
@@ -474,6 +474,4 @@
 {#if !guest}
 	<SessionShareModal bind:open={shareModalOpen} root={workspaceRoot.current} onBeforeStart={() => saver.flushAndWait()} />
 {/if}
-{#if session.active}
-	<VisualCollab bind:this={visualCollab} {session} path={doc.path} {kind} viewMode={modes.mode} api={visualCollabApi} />
-{/if}
+<VisualCollab bind:this={visualCollab} {session} path={doc.path} {kind} viewMode={modes.mode} api={visualCollabApi} />

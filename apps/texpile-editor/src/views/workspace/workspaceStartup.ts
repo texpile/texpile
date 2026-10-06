@@ -8,6 +8,7 @@ import { initSpellcheckConfig } from '$lib/editor/spellcheck/config/spellcheckCo
 import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
+import { collabHost } from '$lib/collab/hostStore.svelte';
 import { claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
@@ -84,6 +85,7 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		reloadReferences,
 		isHost: () => hostMode,
 		checkExternalChange: () => void editFlow.external.check(),
+		syncBuffers: () => void editFlow.saver.syncFromDisk(),
 		runCompile: () => d.compiler.runCompile(),
 		loadExternalPdf: () => void d.compiler.loadExternalPdf(),
 		onWindowResize: () => {
@@ -108,7 +110,8 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		offBeforeClose?.();
 		detachListeners();
 		d.compiler.dispose();
-		saver.cancelTimer();
+		// the folder's buffers go with the view, everything unwritten written first
+		void collabHost.close();
 		d.draftCtl.dispose();
 	};
 }

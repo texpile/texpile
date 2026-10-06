@@ -35,7 +35,6 @@
 		onLocalChange?: (value: PMNode) => void;
 		onSelectionChange?: () => void;
 		placeholder?: string;
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		onReady?: () => void;
 		/** the link tooltip's Open action: return true when handled in-app, false for the browser. */
 		onOpenLink?: (href: string) => boolean;
@@ -71,7 +70,6 @@
 		onLocalChange,
 		onSelectionChange,
 		placeholder = '',
-		onHistoryBoundary,
 		onReady,
 		onOpenLink,
 		docDir = '',
@@ -114,7 +112,6 @@
 			mlarrowHandlers,
 			docDir: () => docDir,
 			placeholder,
-			onHistoryBoundary,
 			onOpenLink,
 			onSelectComment,
 			onAddComment,

@@ -74,8 +74,8 @@ const MAX_DIAGNOSTICS = 50;
 function unsavedPayload(deps: McpCommandDeps) {
 	const path = deps.getLoadedPath();
 	const root = workspaceRoot.current;
-	// Only the active file has a buffer, so it is the only one that can be dirty. Clean means disk
-	// is authoritative, and saying so explicitly is more useful than an empty string the agent has
+	// the open file, the one an agent is told to check before writing. Clean means disk is
+	// authoritative, and saying so explicitly is more useful than an empty string the agent has
 	// to guess about.
 	if (!path || !isDirty.current) return { dirty: false, content: null, path: path && root ? relativeTo(root, path) : path };
 	return { dirty: true, path: root ? relativeTo(root, path) : path, content: deps.getBuffer() };

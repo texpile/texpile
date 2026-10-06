@@ -28,7 +28,7 @@ import type { DocumentBuffer, FileKind } from '$lib/workspace/documentBuffer.sve
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
-import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import type { FileWriter } from '$lib/workspace/fileWriter';
 
 type FilesDeps = {
 	provider: WorkspaceProvider;
@@ -40,7 +40,7 @@ type FilesDeps = {
 	canTrash: () => boolean;
 	layout: () => PaneLayout;
 	compiler: () => CompilePipeline;
-	saver: () => SavePipeline;
+	saver: () => FileWriter;
 	/** a held draft compile releases when the main-file prompt settles */
 	releaseHeldDraftCompile: () => void;
 	typstProject: () => boolean;
@@ -264,7 +264,7 @@ export class WorkspaceFiles {
 			onActiveFileEdited: () => {
 				if (modes.mode === 'visual') this.d.rebuildVisual();
 				isDirty.current = true;
-				this.d.saver().schedule(doc.path, doc.texSource);
+				if (doc.path) this.d.session().edit(doc.path, doc.texSource);
 			}
 		};
 	}
