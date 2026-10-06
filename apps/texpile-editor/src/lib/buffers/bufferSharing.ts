@@ -66,7 +66,10 @@ export class BufferSharing {
 				if (f.size <= MAX_BINARY_BYTES) manifest.set(f.rel, { kind: 'binary', size: f.size, rev: f.mtimeMs ?? 0 });
 			}
 		}, SEED_ORIGIN);
-		for (const [rel, body] of bodies) b.seedShared(rel, body.text, body.eol, body.size);
+		// one update: a guest that syncs meanwhile gets every file or none
+		b.shared.transact(() => {
+			for (const [rel, body] of bodies) b.seedShared(rel, body.text, body.eol, body.size);
+		}, SEED_ORIGIN);
 		this.on = true;
 		b.track(true);
 		return { oversizedText };
