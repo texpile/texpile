@@ -1116,6 +1116,8 @@
 	"prefs_open_dock_on_compile_note": "Também abre o painel Problemas quando a compilação encontra erros. Se esta opção estiver desativada, o indicador ao lado de Compilar será o único aviso.",
 	"tabs_show_all": "Mostrar os {count} arquivos abertos",
 	"tabs_close": "Fechar",
+	"tabs_split_right": "Dividir editor à direita",
+	"groups_resize_aria": "Redimensionar grupos de editores",
 	"tabs_menu_close_others": "Fechar Outros",
 	"tabs_menu_close_right": "Fechar à Direita",
 	"tabs_menu_close_saved": "Fechar Salvos",

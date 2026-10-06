@@ -9,6 +9,7 @@ import { settings, updateSettings } from '$lib/settings';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { pdfFindToggle } from '$lib/stores/editorStore';
 import { isMac } from '$lib/platform';
+import { editorGroups } from './groups/editorGroups.svelte';
 
 /** where a keystroke is typing, not a command */
 export const TYPING_HOSTS = 'input, textarea, [contenteditable="true"], .xterm';
@@ -85,6 +86,13 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 		} else if (mod && e.shiftKey && !e.altKey && e.key.toLowerCase() === 't') {
 			e.preventDefault();
 			deps.reopenTab();
+		} else if (mod && !e.shiftKey && !e.altKey && e.key === '\\') {
+			e.preventDefault();
+			editorGroups.splitRight();
+		} else if (mod && !e.shiftKey && !e.altKey && /^[1-9]$/.test(e.key)) {
+			e.preventDefault();
+			// VS Code's: the editor group at that place
+			editorGroups.focusAt(Number(e.key) - 1);
 		} else if (mod && !e.shiftKey && !e.altKey && e.key === ',') {
 			// the desktop convention; macOS also has it as a native accelerator (windowChrome.ts)
 			e.preventDefault();

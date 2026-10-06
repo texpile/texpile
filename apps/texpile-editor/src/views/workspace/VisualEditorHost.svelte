@@ -44,7 +44,8 @@
 		onJumpToLabel,
 		onJumpToDefinition,
 		onCommentsPlaced,
-		commentPendingActive
+		commentPendingActive,
+		live = true
 	}: {
 		kind: FileKind;
 		loadedPath: string;
@@ -73,6 +74,8 @@
 		onJumpToDefinition?: (name: string) => boolean;
 		onCommentsPlaced?: (lost: string[]) => void;
 		commentPendingActive: boolean;
+		/** false in a parked editor group */
+		live?: boolean;
 	} = $props();
 
 	// the stretch of texSource the document is
@@ -96,7 +99,7 @@
      click below the last block lands in it -->
 <div
 	class="flex min-h-full flex-col pt-8 pr-7.5 pl-12 group-data-[gutter-stacked]/pane:pr-1 group-data-[gutter-stacked]/pane:pl-7.5"
-	onmousedown={(event) => caretFromMargin(event, editorViewStore.current)}
+	onmousedown={(event) => live && caretFromMargin(event, editorViewStore.current)}
 	role="presentation"
 >
 	<!-- the measure: past it a wide window pads with empty space rather than stretching the line length -->
@@ -116,6 +119,7 @@
 		{/if}
 		{#if kind === 'md'}
 			<MarkdownEditorView
+				{live}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -141,6 +145,7 @@
 			/>
 		{:else if kind === 'typ'}
 			<TypstEditorView
+				{live}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -168,6 +173,7 @@
 			/>
 		{:else}
 			<LatexEditorView
+				{live}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}

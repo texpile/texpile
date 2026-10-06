@@ -1116,6 +1116,8 @@
 	"prefs_open_dock_on_compile_note": "Öffnet bei Fehlern auch die Problemliste. Ausgeschaltet ist das Abzeichen neben Kompilieren das einzige Signal.",
 	"tabs_show_all": "Alle {count} geöffneten Dateien anzeigen",
 	"tabs_close": "Schließen",
+	"tabs_split_right": "Editor rechts teilen",
+	"groups_resize_aria": "Größe der Editorgruppen ändern",
 	"tabs_menu_close_others": "Andere schließen",
 	"tabs_menu_close_right": "Rechts schließen",
 	"tabs_menu_close_saved": "Gespeicherte schließen",

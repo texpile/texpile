@@ -1116,6 +1116,8 @@
 	"prefs_open_dock_on_compile_note": "Also opens Problems when a compile reports errors. Off, the badge next to Compile is the only signal.",
 	"tabs_show_all": "Show all {count} open files",
 	"tabs_close": "Close",
+	"tabs_split_right": "Split editor right",
+	"groups_resize_aria": "Resize editor groups",
 	"tabs_menu_close_others": "Close Others",
 	"tabs_menu_close_right": "Close to the Right",
 	"tabs_menu_close_saved": "Close Saved",

@@ -7,7 +7,7 @@
 	// because both are things you opened and can close; visual/source is a separate axis and
 	// stays a toolbar toggle applying to whichever tab is focused.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { X, ChevronDown, GitCompare, GitMerge } from '@lucide/svelte';
+	import { X, ChevronDown, Columns2, GitCompare, GitMerge } from '@lucide/svelte';
 	import { gitChanges, gitKey, isConflicted } from '$lib/workspace/scm/gitStore';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { basename } from '$lib/workspace/fileSystem';
@@ -27,8 +27,23 @@
 		/** double-click keeps a preview tab (the only way to hold one you never edit, e.g. a PDF). */
 		onKeep?: (tab: Tab) => void;
 		onContextMenu?: (tab: Tab, event: MouseEvent) => void;
+		/** Split Editor Right, at the strip's end as in VS Code */
+		onSplit?: () => void;
+		/** false in a parked editor group, whose active tab is dimmed as VS Code dims it */
+		groupFocused?: boolean;
 	};
-	let { tabs, activeKey, dirty, previewKey = null, onActivate, onClose, onKeep, onContextMenu }: Props = $props();
+	let {
+		tabs,
+		activeKey,
+		dirty,
+		previewKey = null,
+		onActivate,
+		onClose,
+		onKeep,
+		onContextMenu,
+		onSplit,
+		groupFocused = true
+	}: Props = $props();
 
 	/** files both sides changed, by the key the tree's badges use */
 	const conflicted = $derived(new Set(gitChanges.current.filter((c) => isConflicted(c.x, c.y)).map((c) => gitKey(c.path))));
@@ -46,15 +61,16 @@
 	const MIN_TAB_PX = 96;
 	/** the overflow button's own footprint, reserved before dividing up the rest */
 	const OVERFLOW_PX = 44;
+	/** the split button's, which is always there when it is offered */
+	const SPLIT_PX = 36;
 
 	let stripWidth = $state(0);
 
 	/** how many tabs the strip can show without any of them dropping below MIN_TAB_PX. Each tab
 	 *  carries that as its CSS min-width, so this count is exact rather than an estimate. */
+	const room = $derived(stripWidth - (onSplit ? SPLIT_PX : 0));
 	const capacity = $derived(
-		stripWidth === 0 || tabs.length * MIN_TAB_PX <= stripWidth
-			? tabs.length
-			: Math.max(1, Math.floor((stripWidth - OVERFLOW_PX) / MIN_TAB_PX))
+		stripWidth === 0 || tabs.length * MIN_TAB_PX <= room ? tabs.length : Math.max(1, Math.floor((room - OVERFLOW_PX) / MIN_TAB_PX))
 	);
 	const overflowing = $derived(capacity < tabs.length);
 
@@ -92,7 +108,7 @@
 			{@const key = tabKey(tab)}
 			<div
 				class="group border-surface-200-800 flex shrink cursor-pointer items-center gap-1.5 border-r px-3 text-sm {isActive(tab)
-					? 'bg-surface-50-950'
+					? `bg-surface-50-950 ${groupFocused ? '' : 'text-muted'}`
 					: 'text-muted hover:bg-surface-wash'}"
 				style="min-width: {MIN_TAB_PX}px; max-width: 15rem"
 				role="tab"
@@ -192,6 +208,18 @@
 					</Popover.Positioner>
 				</Portal>
 			</Popover>
+		{/if}
+		{#if onSplit}
+			<button
+				type="button"
+				class="text-muted hover:bg-surface-wash flex shrink-0 items-center justify-center px-2.5 {overflowing ? '' : 'ml-auto'}"
+				style="width: {SPLIT_PX}px"
+				aria-label={m.tabs_split_right()}
+				use:tip={m.tabs_split_right()}
+				onclick={onSplit}
+			>
+				<Columns2 class="size-4" />
+			</button>
 		{/if}
 	</div>
 {/if}

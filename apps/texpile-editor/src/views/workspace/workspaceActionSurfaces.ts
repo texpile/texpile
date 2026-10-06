@@ -1,5 +1,6 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
+import { groupHostOf } from './groups/workspaceGroups';
 import type { ReplaceSpec } from '$lib/search/replaceInFiles';
 import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
@@ -176,6 +177,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		countWords: () => countDocumentWords(d.wsdoc.doc, d.provider),
 		save: () => d.wsdoc.save(),
 		activateTab: (t: Tab) => d.editFlow().activateTab(t),
+		groupHost: groupHostOf({ wsdoc: d.wsdoc, editFlow: d.editFlow }),
 		closeTab: (t: Tab) => d.editFlow().closeTab(t),
 		keepTab: (t: Tab) => tabs.keep(tabKey(t)),
 		tabMenu: (t: Tab, e: MouseEvent) => {

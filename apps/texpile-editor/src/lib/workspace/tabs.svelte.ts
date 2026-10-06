@@ -38,7 +38,7 @@ function sepOf(p: string) {
 	return p.includes('\\') ? '\\' : '/';
 }
 
-class TabsStore {
+export class TabsStore {
 	list = $state<Tab[]>([]);
 	/** VS Code style: opening another takes its slot rather than adding a tab, so browsing a tree
 	 *  does not bury the strip. A KEY, so a comparison can hold the slot as a file does. */
@@ -46,9 +46,15 @@ class TabsStore {
 	private closed: Tab[] = [];
 	private root: string | null = null;
 	private persistable = false;
+	/** the other editor groups' tabs, which a rename or a delete in the tree reaches as well */
+	readonly others = new Set<TabsStore>();
+
+	/** goes up each time a folder is opened, so the editor groups start over as one */
+	generation = $state(0);
 
 	/** folder (re)opened: restore the persisted tab set for disk-backed roots. */
 	bind(root: string | null, persist: boolean): void {
+		this.generation++;
 		this.root = root;
 		this.persistable = persist && !!root && typeof localStorage !== 'undefined';
 		this.list = [];
@@ -57,6 +63,24 @@ class TabsStore {
 		if (!this.persistable || !root) return;
 		const saved = getFolder(root).tabs;
 		if (Array.isArray(saved)) this.list = saved.slice(0, MAX_TABS).flatMap((s) => restoredTab(root, s) ?? []);
+	}
+
+	/** another editor group's tabs come into this store, and this one's go to it: the focused group's are always here */
+	exchange(other: TabsStore): void {
+		const mine = this.contents();
+		this.adopt(other.contents());
+		other.adopt(mine);
+		this.persist();
+	}
+
+	private contents(): { list: Tab[]; preview: string | null; closed: Tab[] } {
+		return { list: this.list, preview: this.preview, closed: this.closed };
+	}
+
+	private adopt(c: { list: Tab[]; preview: string | null; closed: Tab[] }): void {
+		this.list = c.list;
+		this.preview = c.preview;
+		this.closed = c.closed;
 	}
 
 	/** for callers that only care about documents (MCP, guards) */
@@ -176,6 +200,7 @@ class TabsStore {
 
 	/** its comparisons go too: nothing left to sit beside */
 	closeFile(path: string): void {
+		for (const o of this.others) o.closeFile(path);
 		this.list = this.list.filter((t) => !samePath(t.path, path));
 		this.dropPreviewIfClosed();
 		this.persist();
@@ -183,6 +208,7 @@ class TabsStore {
 
 	/** a deleted folder takes every tab under it along. */
 	closeUnder(path: string): void {
+		for (const o of this.others) o.closeUnder(path);
 		const prefix = path + sepOf(path);
 		this.list = this.list.filter((t) => !samePath(t.path, path) && !t.path.startsWith(prefix));
 		this.dropPreviewIfClosed();
@@ -191,6 +217,7 @@ class TabsStore {
 
 	/** a rename/move retargets the tab, or every tab under it when a folder moved. */
 	rename(from: string, to: string): void {
+		for (const o of this.others) o.rename(from, to);
 		const prefix = from + sepOf(from);
 		function retarget(p: string) {
 			return samePath(p, from) ? to : p.startsWith(prefix) ? to + p.slice(from.length) : p;
@@ -205,6 +232,7 @@ class TabsStore {
 
 	/** drop tabs whose files no longer exist (tree refreshes, remote deletions). */
 	prune(livePaths: string[]): void {
+		for (const o of this.others) o.prune(livePaths);
 		const next = this.list.filter((t) => livePaths.some((p) => samePath(p, t.path)));
 		if (next.length !== this.list.length) {
 			this.list = next;

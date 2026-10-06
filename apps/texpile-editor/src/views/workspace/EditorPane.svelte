@@ -3,11 +3,8 @@
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
-	import { Loader2, CircleAlert, FileWarning, Info } from '@lucide/svelte';
-	import TypstMissingBar from '$lib/languages/typst/TypstMissingBar.svelte';
-	import EditorNotice from '$lib/components/EditorNotice.svelte';
-	import ConflictNotice from './ConflictNotice.svelte';
-	import { isTexpileManaged } from '$lib/comments/managed';
+	import { Loader2, CircleAlert, FileWarning } from '@lucide/svelte';
+	import EditorNotices from './EditorNotices.svelte';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
 	import DiffPane from './diff/DiffPane.svelte';
 	import VisualCompareBar from './VisualCompareBar.svelte';
@@ -39,6 +36,8 @@
 	import type { EditorPaneProps } from './editorPaneProps';
 
 	let {
+		parked = false,
+		onSplit,
 		loadedPath,
 		openTabs,
 		activeTabKey,
@@ -185,7 +184,7 @@
 	 * on Windows, visibly on macOS - and retrying beats dropping the attach.
 	 */
 	$effect(() => {
-		const view = editorViewStore.current;
+		const view = parked ? null : editorViewStore.current;
 		const wanted = comparing && viewMode === 'visual' && structured && diffVersionDoc ? { oldDoc: diffVersionDoc } : null;
 		if (view) return untrack(() => attachVisualDiffOutsideComposition(view, wanted));
 	});
@@ -207,6 +206,8 @@
 		warmEditor();
 		readyFor = loadedPath;
 		if (loadedPath) visualMounted(loadedPath);
+		// a parked group's editor is not the store's, and it keeps where it was
+		if (parked) return;
 		const v = editorViewStore.current;
 		if (!v || !loadedPath || session.collabFor(loadedPath)) return;
 		restoreVisualPosition(v, loadedPath, texSource, sourceMap);
@@ -219,45 +220,39 @@
 	}
 </script>
 
-<div class="flex min-h-0 min-w-0 flex-col" style="grid-column: 1; grid-row: 2">
+<div class="flex min-h-0 min-w-0 flex-1 flex-col">
 	{#if !fileMode.current}
 		<TabBar
 			tabs={openTabs}
 			activeKey={activeTabKey}
-			dirty={isDirty.current && !session.isGuest}
+			dirty={isDirty.current && !session.isGuest && !parked}
 			previewKey={previewTab}
 			onActivate={onActivateTab}
 			onClose={onCloseTab}
 			onKeep={onKeepTab}
 			onContextMenu={onTabMenu}
+			{onSplit}
+			groupFocused={!parked}
 		/>
 	{/if}
 	{#if loadedPath && structured && !comparing && (viewMode === 'source' || visualDoc)}
-		<EditorToolbarStrip {kind} mode={viewMode === 'visual' ? 'visual' : 'source'} />
+		<!-- a parked group keeps its toolbar, inert: the editor below then stays where it is when focus comes back -->
+		<div class="contents" inert={parked}>
+			<EditorToolbarStrip {kind} mode={viewMode === 'visual' ? 'visual' : 'source'} />
+		</div>
 	{/if}
-	<!-- not in diff mode: DiffPane carries its own, and both rendered gave two stacked banners -->
-	{#if loadedPath && !comparing && isTexpileManaged(loadedPath)}
-		<!-- Above the editor, not in it: .texpile is hidden from the tree, so anyone who has this
-		     open reached it deliberately from Source Control and deserves the warning before they
-		     touch it. One short line everywhere a managed file appears - the same sentence as the
-		     SCM badge tooltip and the diff bar, so the notice reads as one voice. -->
-		<EditorNotice icon={Info} tone="info" title="{m.vcs_texpile_managed()}." note={m.texpile_managed_note()} />
-	{/if}
-	{#if loadedPath && encodingIssue}
-		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_read_only()}." note={encodingIssue} />
-	{/if}
-	<!-- a guest's Typst runs on the host's tinymist, and a lone file runs none: no language server, no compile -->
-	{#if loadedPath && kind === 'typ' && !session.isGuest && !fileMode.current && !comparing}
-		<TypstMissingBar />
-	{/if}
-	{#if loadedPath && conflicted && !comparing}
-		<ConflictNotice left={conflictsLeft} stray={conflictStray} onLeave={structured ? onLeaveConflicts : undefined} />
-	{/if}
-	<!-- the buffer is now the only copy, so it stays on screen; what a save will do is spelled out
-	     because it recreates the old name rather than following the rename -->
-	{#if loadedPath && fileDeleted && !comparing}
-		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_file_deleted_title()}." note={m.wsview_file_deleted_note()} />
-	{/if}
+	<EditorNotices
+		{loadedPath}
+		{comparing}
+		{encodingIssue}
+		{kind}
+		guest={session.isGuest}
+		{conflicted}
+		{conflictsLeft}
+		{conflictStray}
+		onLeaveConflicts={structured ? onLeaveConflicts : undefined}
+		{fileDeleted}
+	/>
 	{#snippet historyButtons()}
 		{#if history}<VersionHistoryButtons path={history.path} hash={history.hash} />{/if}
 	{/snippet}
@@ -276,7 +271,7 @@
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 			<div class="relative min-h-0 min-w-0 flex-1">
-				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing}
+				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
 				{/if}
 				<!-- scroll-inset-r keeps this scrollbar clear of the lozenge on the preview divider. NOT in diff
@@ -319,7 +314,7 @@
 							hasHead={diffHasHead}
 							compareRef={diffCompareRef}
 							{fileDeleted}
-							readOnly={!!session.collabFor(loadedPath) || fileDeleted}
+							readOnly={!!session.collabFor(loadedPath) || fileDeleted || parked}
 							onModifiedInput={onDiffInput}
 							onToggleLayout={onToggleDiffLayout}
 							onRefresh={onRefreshDiff}
@@ -350,10 +345,11 @@
 										{onInsertCitation}
 										{onCiteByDoi}
 										{onSelectComment}
+										live={!parked}
 									/>
 								{/key}
 							</div>
-							{#if commentsCtl}
+							{#if commentsCtl && !parked}
 								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
 							{/if}
 						</div>
@@ -387,9 +383,10 @@
 									{onJumpToDefinition}
 									{onCommentsPlaced}
 									{commentPendingActive}
+									live={!parked}
 								/>
 							</div>
-							{#if commentsCtl}
+							{#if commentsCtl && !parked}
 								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="visual" {scroller} onSelect={(id) => onSelectComment?.(id)} />
 							{/if}
 						</div>
@@ -420,10 +417,11 @@
 										{selectedComment}
 										{onAddComment}
 										{onSelectComment}
+										live={!parked}
 									/>
 								{/key}
 							</div>
-							{#if commentsCtl}
+							{#if commentsCtl && !parked}
 								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
 							{/if}
 						</div>
@@ -456,7 +454,7 @@
 				</div>
 			</div>
 		</div>
-		{#if history}
+		{#if history && !parked}
 			<VersionHistoryPanel path={history.path} hash={history.hash} />
 		{/if}
 	</div>

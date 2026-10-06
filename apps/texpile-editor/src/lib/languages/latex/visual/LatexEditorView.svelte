@@ -8,7 +8,8 @@
 	import { latexEditorPlugins, latexNodeViews } from './latexEditorSetup';
 	import { isLargeDocument } from './largeDocument';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
-	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
+	import { referenceStore } from '$lib/stores/editorStore';
+	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import { fixTables } from 'prosemirror-tables';
@@ -29,6 +30,8 @@
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 
 	type Props = {
+		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
+		live?: boolean;
 		// the document as a ProseMirror Node
 		localValue?: PMNode | null;
 		onLocalChange?: (value: PMNode) => void;
@@ -81,6 +84,7 @@
 	};
 
 	let {
+		live = true,
 		localValue = null,
 		onLocalChange,
 		onSelectionChange,
@@ -114,6 +118,7 @@
 
 	let editor: HTMLElement | null = $state(null);
 	let editorView: EditorView | null = $state(null);
+	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
 	let editorState: EditorState | null = $state(null);
 
 	onMount(async () => {
@@ -150,7 +155,7 @@
 			}),
 			state: editorState,
 			nodeViews: latexNodeViews(() => imageDir ?? '', onJumpToLabel, onJumpToDefinition),
-			editable: () => true,
+			editable: group.editable,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// A plugin that finishes asynchronously can dispatch into a view that was destroyed while
 				// it was working - the spellchecker does exactly this when a tab switch tears the editor
@@ -172,12 +177,12 @@
 			}
 		});
 
-		editorViewStore.current = editorView;
+		group.claim(editorView);
 
 		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
 		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
 		revealBuiltEditor(editor);
-		editorView.focus();
+		if (live) editorView.focus();
 		onReady?.();
 	});
 
@@ -188,9 +193,12 @@
 	 * could snap a range onto another copy of its text. */
 	let docEpoch = $state(0);
 	let remotePatches = $state(0);
+	// an editor group's props arrive spread, so a read of one tracks all of them; only a new document may swap
+	const incomingDoc = $derived(localValue);
+	const incomingPath = $derived(docPath);
 	$effect(() => {
-		const next = localValue;
-		const path = docPath;
+		const next = incomingDoc;
+		const path = incomingPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			// initial doc was installed at construction, just remember it
@@ -242,7 +250,7 @@
 
 	onDestroy(() => {
 		editorView?.destroy();
-		editorViewStore.current = null;
+		group.release(editorView);
 		// don't clear referenceStore here, the workspace owns it; clearing blanked citations
 		// in source mode and across editor remounts
 	});

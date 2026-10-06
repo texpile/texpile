@@ -14,6 +14,10 @@ import type { CommentsController } from '$lib/workspace/commentsController.svelt
 import type { RegionParser, SourceMap } from '$lib/editor/visual/sourceSpans';
 
 export type EditorPaneProps = {
+	/** a parked editor group: drawn as focus left it, with no toolbar, find bar, comments or typing */
+	parked?: boolean;
+	/** VS Code's Split Editor Right, on the tab strip */
+	onSplit?: () => void;
 	loadedPath: string | null;
 	openTabs: Tab[];
 	/** key of the focused tab; a file and a comparison of it are two different keys */

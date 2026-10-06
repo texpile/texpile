@@ -1116,6 +1116,8 @@
 	"prefs_open_dock_on_compile_note": "编译报错时也会打开问题面板。关闭后，仅以编译按钮旁的徽章提示。",
 	"tabs_show_all": "显示全部 {count} 个打开的文件",
 	"tabs_close": "关闭",
+	"tabs_split_right": "向右拆分编辑器",
+	"groups_resize_aria": "调整编辑器组大小",
 	"tabs_menu_close_others": "关闭其他",
 	"tabs_menu_close_right": "关闭右侧",
 	"tabs_menu_close_saved": "关闭已保存",

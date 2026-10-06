@@ -1116,6 +1116,8 @@
 	"prefs_open_dock_on_compile_note": "編譯出錯時也會開啟問題面板。關閉後，僅以編譯按鈕旁的徽章提示。",
 	"tabs_show_all": "顯示全部 {count} 個開啟的檔案",
 	"tabs_close": "關閉",
+	"tabs_split_right": "向右分割編輯器",
+	"groups_resize_aria": "調整編輯器群組大小",
 	"tabs_menu_close_others": "關閉其他",
 	"tabs_menu_close_right": "關閉右側",
 	"tabs_menu_close_saved": "關閉已儲存",

@@ -29,7 +29,8 @@
 	import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 	import { listAttrInheritance } from './listAttrInheritance';
 	import { isMac } from '$lib/platform';
-	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
+	import { referenceStore } from '$lib/stores/editorStore';
+	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
@@ -83,6 +84,8 @@
 	import '$lib/editor/visual/styles/cursor.css';
 
 	type Props = {
+		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
+		live?: boolean;
 		localValue?: PMNode | null;
 		onLocalChange?: (value: PMNode) => void;
 		onSelectionChange?: () => void;
@@ -114,6 +117,7 @@
 	};
 
 	let {
+		live = true,
 		localValue = null,
 		onLocalChange,
 		onSelectionChange,
@@ -144,6 +148,7 @@
 
 	let editor: HTMLElement = $state(null!);
 	let editorView: EditorView | null = $state(null);
+	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
 
 	// markdown-flavored autoformat: # headings, > quotes, ``` fences, --- rules
 	const mdInputRules = [
@@ -258,7 +263,7 @@
 				raw_latex: (node, view, getPos) => new RawLatexView(node, view, getPos as () => number),
 				inline_latex: (node, view, getPos) => new InlineLatexView(node, view, getPos as () => number)
 			},
-			editable: () => true,
+			editable: group.editable,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
 				if (this.isDestroyed) return;
@@ -273,11 +278,11 @@
 			}
 		});
 
-		editorViewStore.current = editorView;
+		group.claim(editorView);
 		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
 		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
 		revealBuiltEditor(editor);
-		editorView.focus();
+		if (live) editorView.focus();
 		onReady?.();
 	});
 
@@ -286,9 +291,12 @@
 	/** bumped only on doc SWAPS (see pmCommentsSync); typing maps ranges instead */
 	let docEpoch = $state(0);
 	let remotePatches = $state(0);
+	// an editor group's props arrive spread, so a read of one tracks all of them; only a new document may swap
+	const incomingDoc = $derived(localValue);
+	const incomingPath = $derived(docPath);
 	$effect(() => {
-		const next = localValue;
-		const path = docPath;
+		const next = incomingDoc;
+		const path = incomingPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			mountedDoc = next;
@@ -328,7 +336,7 @@
 
 	onDestroy(() => {
 		editorView?.destroy();
-		editorViewStore.current = null;
+		group.release(editorView);
 	});
 </script>
 
