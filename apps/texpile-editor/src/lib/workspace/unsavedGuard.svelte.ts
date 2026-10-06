@@ -1,7 +1,7 @@
 // The "you have unsaved changes" gate, used in two shapes that share one modal.
 //
-// 1. File switch: with autosave off, the outgoing file's edit was never written, so we park the
-//    switch and ask first. Save writes it and continues, Discard drops it and continues, Cancel
+// 1. File switch: with autosave held off (the file was deleted on disk, or a conflict was put
+//    off), the outgoing file's edit was never written, so we park the switch and ask first. Save writes it and continues, Discard drops it and continues, Cancel
 //    aborts the switch entirely and leaves the edit intact on the current file.
 // 2. Workspace level (folder switch, workspace close, window close): same modal, but the answer
 //    goes back to the caller as a promise and the file-switch parking machinery is skipped.

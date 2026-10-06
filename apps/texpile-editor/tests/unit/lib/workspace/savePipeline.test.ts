@@ -72,12 +72,6 @@ describe('SavePipeline external-write guard', () => {
 		expect(recordDiskStamp).not.toHaveBeenCalled();
 	});
 
-	it('clears the saving flag after an aborted write', async () => {
-		const { pipeline } = makePipeline({ diskChanged: async () => true });
-		await pipeline.enqueue('/ws/main.tex', 'mine', false);
-		expect(pipeline.saving).toBe(false);
-	});
-
 	it('an aborted write does not break the chain for later writes', async () => {
 		let changed = true;
 		const { pipeline, writes } = makePipeline({ diskChanged: async () => changed });

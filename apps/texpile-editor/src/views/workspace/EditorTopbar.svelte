@@ -1,12 +1,11 @@
 <script lang="ts">
 	// The editor's top bar: sidebar toggle, word count, the visual/source toggle, and the
-	// compile / preview / save controls. Pure chrome driven by props + callbacks. The open-file
+	// compile / preview controls. Pure chrome driven by props + callbacks. The open-file
 	// tabs live on their own strip below (TabBar in EditorPane).
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { openWorkspaceForFile } from '$lib/workspace/openWorkspace';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
-	import { isDirty } from '$lib/workspace/workspaceStore';
 	import { compileLog } from '$lib/stores/compileLogStore';
 	import WordCount from './WordCount.svelte';
 	import { hideIfCramped } from '$lib/components/hideIfCramped';
@@ -28,8 +27,6 @@
 		ChevronDown,
 		CircleAlert,
 		TriangleAlert,
-		Save,
-		Loader2,
 		ShieldQuestion,
 		MessageSquare,
 		FolderOpen,
@@ -55,7 +52,6 @@
 		guestTypstOffered?: boolean;
 		pdfPaneOpen: boolean;
 		draftPaused: boolean;
-		saving: boolean;
 		onSetViewMode: (m: 'visual' | 'source') => void;
 		onStopCompile: () => void;
 		onPauseDraft: () => void;
@@ -83,7 +79,6 @@
 		suggesting?: boolean;
 		onToggleSuggest?: (suggesting: boolean) => void;
 		onTogglePdf: () => void;
-		onSave: () => void;
 		/**
 		 * One-shot sync of the preview to the caret, shown ONLY while the preview is popped out
 		 * into its own window: docked, the chip on the pane divider is that button, and it leaves
@@ -106,7 +101,6 @@
 		guestTypstOffered = false,
 		pdfPaneOpen,
 		draftPaused,
-		saving,
 		onSetViewMode,
 		onStopCompile,
 		onPauseDraft,
@@ -128,7 +122,6 @@
 		suggesting = false,
 		onToggleSuggest,
 		onTogglePdf,
-		onSave,
 		onSyncToCursor = null,
 		syncTargetsPreview = false
 	}: Props = $props();
@@ -365,17 +358,6 @@
 					<span class="cap-center">{m.session_request_compile()}</span>
 				</button>
 			{/if}
-		{/if}
-		{#if !guest}
-			<!-- guests have nothing to save: their edits sync live through the shared doc -->
-			<button
-				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1.5"
-				onclick={onSave}
-				disabled={!loadedPath || saving || !isDirty.current}
-			>
-				{#if saving}<Loader2 class="size-4 animate-spin" />{:else}<Save class="size-4" />{/if}
-				<span class="cap-center">{m.wsview_save_label()}</span>
-			</button>
 		{/if}
 	</div>
 </header>

@@ -33,7 +33,6 @@ export type SaveDeps = {
 };
 
 export class SavePipeline {
-	saving = $state(false);
 	private timer: ReturnType<typeof setTimeout> | null = null;
 	private _pending: { path: string; content: string } | null = null;
 	private chain: Promise<void> = Promise.resolve();
@@ -78,7 +77,7 @@ export class SavePipeline {
 		if (this.deps.isGuest()) return;
 		if (this._pending && this._pending.path !== path) this.flush();
 		this._pending = { path, content };
-		// autosave off: track the edit (so Save / the switch-guard have it) but don't auto-write
+		// autosave held off (the file was deleted on disk, or a conflict was put off): track the edit for Ctrl+S and the switch guard, but do not write it
 		if (!this.deps.autosaveActive()) return;
 		this.cancelTimer();
 		this.timer = setTimeout(() => this.flush(), AUTOSAVE_MS);
@@ -167,7 +166,6 @@ export class SavePipeline {
 	}
 
 	private async write(path: string, queued: string, notify: boolean, eol: Eol, force: boolean): Promise<boolean> {
-		this.saving = true;
 		let content = queued;
 		try {
 			// The point of no return for someone else's edit: writeText below replaces the whole file,
@@ -200,8 +198,6 @@ export class SavePipeline {
 		} catch (e) {
 			toaster.error({ title: m.wsview_toast_save_failed_title(), description: e instanceof Error ? e.message : m.wsview_error_unknown() });
 			return false;
-		} finally {
-			this.saving = false;
 		}
 	}
 }

@@ -84,7 +84,7 @@ export type CloseGuardDeps = {
 };
 
 /** The window close is HELD by the main process until we answer (with a 2s backstop for a hung
- * renderer). Fast path: flush the autosave debounce and proceed. With autosave off and a pending
+ * renderer). Fast path: flush the autosave debounce and proceed. With autosave held off and a pending
  * edit the modal can outlive the hold, so we release the close NOW and re-issue it after the
  * answer, at which point the pending edit is settled and the fast path applies. */
 export function attachCloseGuard(deps: CloseGuardDeps): (() => void) | undefined {

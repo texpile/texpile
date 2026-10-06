@@ -306,7 +306,7 @@ export class WorkspaceDoc {
 		});
 	}
 
-	/** manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest */
+	/** Ctrl/Cmd+S: write now instead of after the autosave delay */
 	save() {
 		return this.doc.save();
 	}

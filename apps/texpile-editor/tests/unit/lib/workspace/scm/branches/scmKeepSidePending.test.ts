@@ -1,5 +1,5 @@
 // Keep mine / Keep theirs for a whole file, with an edit to that file still waiting to be written
-// (autosave off): the edit is dropped, or it would land on top of the side just kept, markers and
+// (autosave held off): the edit is dropped, or it would land on top of the side just kept, markers and
 // all. Real ScmCombine, SavePipeline and diskStamp over an in-memory disk.
 import { it, expect, vi } from 'vitest';
 
@@ -50,7 +50,7 @@ it('Keep theirs is not undone by the edit that was waiting to be saved', async (
 	const saver = new SavePipeline({
 		sessionEdit: () => {},
 		isGuest: () => false,
-		autosaveActive: () => false, // Preferences: autosave off
+		autosaveActive: () => false, // held off, as for a conflict put off
 		clearDeleted: () => {},
 		writeText: async (p, c) => put(p, c),
 		getEol: () => '\n' as const,

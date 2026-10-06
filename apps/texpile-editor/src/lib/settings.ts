@@ -17,8 +17,6 @@ export type AppSettings = {
 	/** settings.json's own shape version; absent means pre-restructure and triggers migration */
 	v: 1;
 	reopenLastFolder: boolean;
-	/** autosave edits (debounced); when off the user is warned before switching files. */
-	autosave: boolean;
 	/** Harper spell-check enabled. */
 	spellcheck: boolean;
 	/** the English that spelling and grammar follow; '' = the system's own */
@@ -121,7 +119,6 @@ export const DEFAULT_COLLAB_RELAY_URL = 'wss://collab.texpile.com';
 const DEFAULTS: AppSettings = {
 	v: 1,
 	reopenLastFolder: true,
-	autosave: true,
 	spellcheck: false,
 	englishVariant: '',
 	grammarRules: {},

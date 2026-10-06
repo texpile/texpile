@@ -392,7 +392,6 @@
 			{parser}
 			{termDock}
 			{compiler}
-			{saver}
 			{session}
 			{guest}
 			{kind}

@@ -16,8 +16,6 @@ import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { saveVisualPosition } from '$lib/workspace/visualPositions';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { hasVisualMode, isRawTextKind } from '$lib/workspace/documentBuffer.svelte';
-import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
-import { settings } from '$lib/settings';
 import { samePath } from '$lib/workspace/fileSystem';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
@@ -161,7 +159,7 @@ export class WorkspaceEditFlow {
 					}
 					return;
 				}
-				// autosave off: the outgoing file's edit wasn't auto-written, so ask BEFORE switching.
+				// autosave held off (the file was deleted on disk, or a conflict was put off): the outgoing file's edit was not written, so ask before switching
 				if (this.unsaved.needsPromptFor(path)) {
 					this.unsaved.beginFileSwitch(path);
 					return;
@@ -193,11 +191,6 @@ export class WorkspaceEditFlow {
 		});
 	}
 
-	// Draft mode leans on the on-disk file staying current: the full compile reads from disk,
-	// Live mode and hosting a session both need current-on-disk content (the draft engine writes
-	// nothing until a recompile; a session's host is the persistence authority). So autosave is
-	// forced effectively on in both, WITHOUT changing the user's setting (it reverts on exit).
-	// The Preferences toggle shows this as forced+disabled.
 	/**
 	 * Autosave writes the open file without being asked, which is only ever right when writing it
 	 * is the obvious thing to do. It is not, for a file that was deleted or renamed from outside
@@ -208,9 +201,7 @@ export class WorkspaceEditFlow {
 	autosaveActive(): boolean {
 		const doc = this.d.wsdoc.doc;
 		// `external` is assigned after the save pipeline, whose deps can ask this during construction
-		if (doc.deletedOnDisk || (doc.path && this.external?.deferred?.path === doc.path)) return false;
-		const s = settings.current;
-		return s.autosave !== false || compileConfig.current.latex.liveMode || (this.d.session().active && !this.d.guest());
+		return !doc.deletedOnDisk && !(doc.path && this.external?.deferred?.path === doc.path);
 	}
 
 	confirmLeaveUnsaved() {

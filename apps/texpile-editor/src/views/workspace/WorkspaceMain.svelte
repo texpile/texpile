@@ -31,7 +31,6 @@
 		parser,
 		termDock = $bindable(),
 		compiler,
-		saver,
 		session,
 		guest,
 		kind,
@@ -107,7 +106,6 @@
 		{guestTypstOffered}
 		pdfPaneOpen={layout.pdfPaneOpen}
 		draftPaused={draft.paused}
-		saving={saver.saving}
 		onSetViewMode={actions.setViewMode}
 		onStopCompile={compiler.stopCompile}
 		onPauseDraft={actions.pauseDraft}
@@ -129,7 +127,6 @@
 		suggesting={suggesting.current}
 		onToggleSuggest={canComment && (!session.isGuest || collabGuest.hostRecords) ? toggleSuggest : undefined}
 		onTogglePdf={layout.togglePdfPane}
-		onSave={actions.save}
 		onSyncToCursor={layout.pdfPopout && !mainUnset ? syncToCursor : null}
 		syncTargetsPreview={guest ? guestTypstOffered : typstPreviewWanted}
 	/>

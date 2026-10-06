@@ -116,7 +116,7 @@ export class FolderLifecycle {
 	 * affects the current session's view. */
 	async close(): Promise<void> {
 		const d = this.deps;
-		if (!(await d.confirmLeaveUnsaved())) return; // autosave off: ask instead of silently force-writing
+		if (!(await d.confirmLeaveUnsaved())) return; // autosave held off: ask instead of silently force-writing
 		await d.flushSavesAndWait();
 		d.resolveMainConfirm(null);
 		releaseWorkspace(); // frees the folder so another window may open it

@@ -388,8 +388,7 @@ export class DocumentBuffer {
 		if (this.deps.isVisualMode()) this.deps.rebuildVisual();
 	}
 
-	/** manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest.
-	 * image / binary kinds have nothing to write. */
+	/** Ctrl/Cmd+S: write now instead of after the autosave delay; image and binary kinds have nothing to write */
 	save(force = false): void {
 		this.deps.discardQueuedSave(); // drop the queued debounce; we're writing the current content now
 		if (!this.path) return;
