@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import Footer from '$lib/comp/Footer.svelte';
 	import Navbar from '$lib/comp/Navbar.svelte';
 	import { initAnalytics } from '$lib/plausible';
@@ -16,5 +17,8 @@
 	<main class="flex flex-1 flex-col">
 		{@render children()}
 	</main>
-	<Footer />
+	<!-- the docs have their own sidebars to the bottom of the window; a footer under them only fought their scrolling -->
+	{#if !page.route.id?.startsWith('/docs')}
+		<Footer />
+	{/if}
 </div>

@@ -1,24 +1,27 @@
 ---
 nav: Zotero
-description: Insert citations from your Zotero library into a LaTeX or Typst document in Texpile. Needs Zotero running with the Better BibTeX plugin.
-blurb: Insert citations from your library. Needs the Better BibTeX plugin.
-icon: library
+description: Insert citations from your Zotero library into a LaTeX or Typst document.
 order: 1
 ---
 
 # Zotero
 
-Search your Zotero library from inside Texpile, pick references, and have them added to your bibliography with the citation inserted at the caret. Works in LaTeX and Typst, in both editors, for the host of a shared session.
+Insert citations from your Zotero library into a LaTeX or Typst document.
 
-| Where to find it | Path                                          | Note                      |
-| ---------------- | --------------------------------------------- | ------------------------- |
-| Editor           | Right-click › Insert Citation from Zotero     | In a LaTeX or Typst file. |
-| Palette          | Insert Citation from Zotero                   |                           |
-| Settings         | Preferences › Integrations › Zotero citations | Off hides the action.     |
+> [!REQUIRES] Zotero with [Better BibTeX](https://retorque.re/zotero-better-bibtex/installation/)
 
-Zotero has to be running, with the Better BibTeX plugin installed. References go into the bibliography your main file declares. If there is none, Texpile finds or creates a .bib file, and you add the bibliography command to your main file yourself. A reference already in the bibliography is not added twice.
+## Cite
 
-[Installing Better BibTeX](https://retorque.re/zotero-better-bibtex/installation/)
+Keep Zotero running and set a main file. Each reference needs a citation key.
 
-> [!NOTE]
-> Better BibTeX is a third-party Zotero plugin. Texpile controls neither it nor Zotero.
+Right-click in the editor › **Insert Citation from Zotero**, tick one or more references, and click **Insert**. Texpile inserts `\cite{key1,key2}` or `@key1 @key2` and copies the references into your bibliography.
+
+![The right-click menu with the two citation actions](../../landing/src/lib/assets/showcase/docs/review/comment-context-menu.png)
+
+Only the Zotero library on your computer is searched. Group libraries that have not synced do not show.
+
+## Which .bib file
+
+New references go into the `.bib` file your main file names. If it names none, Texpile uses `references.bib` or the first `.bib` file in the project, or creates `references.bib` next to the main file. Then add the bibliography command to your main file yourself.
+
+A reference already in the bibliography is not added again, even if it changed in Zotero. To update it, delete the entry from the `.bib` file and insert it again.

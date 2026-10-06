@@ -3,7 +3,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Node as PMNode } from 'prosemirror-model';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
-import { blockAtPm, blockAtSource, offsetAtPm, pmAtOffset } from '$lib/editor/visual/sourceMap';
+import { blockAtPm, blockAtSource, caretAtOffset, offsetAtPm, pmAtOffset } from '$lib/editor/visual/sourceMap';
 import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 
 const SRC = [
@@ -63,6 +63,13 @@ describe('caret positions through the source map', () => {
 		const block = blockAtPm(map, posOf(doc, 'zebra'))!;
 		expect(offsetAtPm(blocksOnly, posOf(doc, 'zebra'))).toBe(block.srcFrom);
 		expect(pmAtOffset(blocksOnly, SRC.indexOf('zebra'))).toBe(block.pmFrom + 1);
+	});
+
+	it('keeps a caret after a trailing space with its paragraph, not the heading below', () => {
+		const typed = SRC.replace('anchor on.', 'anchor on. ');
+		const parsed = parseLatexFile(typed);
+		const end = posOf(parsed.doc, 'anchor on.') + 'anchor on.'.length;
+		expect(caretAtOffset(parsed.map, typed, typed.indexOf('anchor on. ') + 11)).toBe(end);
 	});
 
 	it('has no answer for a document with no map', () => {

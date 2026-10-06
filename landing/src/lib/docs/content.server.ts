@@ -1,3 +1,5 @@
+import { changelogMarkdown } from './changelog.server';
+
 // The docs tree, read from the markdown files under /docs at the repo root. One file is one page,
 // and a folder's README.md is the page for the folder itself, so the same files read on GitHub.
 
@@ -19,8 +21,12 @@ export interface Doc {
 	/** a lucide icon name, or windows / apple / linux for the platform mark */
 	icon?: string;
 	order: number;
+	/** `pager: skip-children` in the front matter: Next goes past this page's children, not into them */
+	skipChildren: boolean;
 	/** the sidebar group; top-level pages only, and every one of them has one */
 	section?: string;
+	/** `overview: <label>` on a chapter that is its own section: its sidebar label, or `none` to leave it out */
+	overview?: string;
 	/** markdown after the front matter */
 	body: string;
 	children: Doc[];
@@ -36,7 +42,8 @@ function parse(file: string, src: string): Doc {
 		const i = line.indexOf(':');
 		if (i > 0) fm[line.slice(0, i).trim()] = line.slice(i + 1).trim();
 	}
-	const body = src.slice(m[0].length);
+	// `<!-- changelog -->` stands for the release notes, so they are kept in CHANGELOG.md only
+	const body = src.slice(m[0].length).replace('<!-- changelog -->', () => changelogMarkdown());
 	const title = /^# (.+)$/m.exec(body)?.[1].trim();
 	if (!title) throw new Error(`docs/${file}: no # heading`);
 	if (!fm.description) throw new Error(`docs/${file}: front matter needs a description`);
@@ -50,7 +57,9 @@ function parse(file: string, src: string): Doc {
 		blurb: fm.blurb || fm.description,
 		icon: fm.icon,
 		order: Number(fm.order ?? 0),
+		skipChildren: fm.pager === 'skip-children',
 		section: fm.section,
+		overview: fm.overview,
 		body,
 		children: []
 	};
@@ -78,10 +87,23 @@ export interface NavNode {
 	title: string;
 	/** top-level nodes only; the sidebar groups consecutive nodes that share one */
 	section?: string;
+	overview?: string;
+	skipChildren?: boolean;
+	icon?: string;
+	blurb: string;
 	children: NavNode[];
 }
 
 /** the sidebar tree: slugs, labels and sections only, small enough to ship with every page */
 export function navTree(docs: Doc[] = DOCS[''].children): NavNode[] {
-	return docs.map((d) => ({ slug: d.slug, title: d.nav, section: d.section, children: navTree(d.children) }));
+	return docs.map((d) => ({
+		slug: d.slug,
+		title: d.nav,
+		section: d.section,
+		overview: d.overview,
+		skipChildren: d.skipChildren,
+		icon: d.icon,
+		blurb: d.blurb,
+		children: navTree(d.children)
+	}));
 }

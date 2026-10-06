@@ -1,6 +1,6 @@
 ---
-description: Open a folder in Texpile, set the main file, switch between the visual and source editors, and produce a PDF.
-blurb: Open a folder, pick a main file, and produce a PDF.
+description: Start Texpile for the first time: open a folder, start a LaTeX, Typst, or Markdown document from a template, and compile it to a PDF.
+blurb: Open a folder, start a document, and produce a PDF.
 icon: rocket
 order: 2
 section: Get started
@@ -8,57 +8,28 @@ section: Get started
 
 # Getting started
 
-Point Texpile at the folder your .tex files are in, and it scans for them.
-
-| Where to find it | Path                                  | Note                                                                                         |
-| ---------------- | ------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Start screen     | Open Folder…                          |                                                                                              |
-| Menu             | File › Open Folder                    | Once you are already in a folder.                                                            |
-| In the editor    | Right-click a file › Set as Main File | In the file explorer.                                                                        |
-| Setting          | Preferences › Autosave                | Preferences opens from the start screen, and from File › Preferences… once a folder is open. |
-
-![The start screen: Open Folder, Join Session, New Window, and Preferences](../landing/src/lib/assets/showcase/app/start-screen.png 'The start screen: Open Folder, Join Session, New Window, and Preferences')
+Open a folder, start a document from a template, and compile it to a PDF.
 
 ## Open a folder
 
-There is no import step and no project format. Choose Open Folder… on the start screen and the file explorer fills with the .tex, .bib, and image files it finds. Folders you have opened before are listed under Recent, and your last folder reopens the next time you launch, on the file you left open.
+Click **Open Folder…** on the start screen, or press Ctrl O (Cmd O on macOS). **New here? Try the tutorial** builds a multi-file example in an empty folder you pick.
 
-> [!NOTE]
-> New to Texpile? The start screen has a "New here? Try the tutorial" link that builds a small worked example in a folder you pick, so you have something to edit.
+![The start screen](../landing/src/lib/assets/showcase/docs/app/start-screen-open.png)
 
-## Opening a single file
+Texpile reopens your folders at the next launch, each on its last file.
 
-A .tex, .typ, or .bib file can also be opened on its own: double-click it in your file manager, or open it with Texpile. The window then shows that file and nothing else. There is no file explorer, no preview pane, and no compile, since those need a folder. An Open in Workspace button in the top right opens the file's folder as a project, with the file still selected.
+## Start a document
 
-## The main file
+In an empty folder, **Start a New Document** offers LaTeX and Typst templates. Click one and Texpile copies its files into the folder.
 
-A multi-file paper has one main .tex holding the preamble and `\begin{document}`. Texpile picks it automatically. Right-click any file in the explorer to set it yourself. The main file is marked with a star and remembered per folder.
+![Start a New Document with the LaTeX templates and a saved template under Your Templates](../landing/src/lib/assets/showcase/docs/app/starter-latex.png)
 
-![Right-clicking a file to set it as the main file, with the current main file starred](../landing/src/lib/assets/showcase/app/set-main-file-menu.png#narrow)
+**Browse Typst Templates…** adds community templates from Typst Universe. File › Save as Template… turns a folder of your own into a template under **Your Templates**.
 
-## Two views of one file
+Markdown has no compile step: File › New › Markdown File.
 
-Every file opens in either the visual editor or the source editor. Switching between them keeps your scroll position, cursor, and undo history.
+## Compile
 
-[Visual editing](visual-editing/README.md)
-[Source editing](source-editing.md)
+Press **Compile** in the top bar, or Ctrl Alt Enter. The PDF and build files go into an `output` folder next to the main file.
 
-## Autosave
-
-Autosave is on by default. Turn it off in Preferences and Texpile saves only when you press Ctrl+S, and warns you before you switch files.
-
-> [!NOTE]
-> Autosave stays on while live preview or a shared session is running.
-
-## Producing a PDF
-
-Press Preview (or Compile, in source mode) and Texpile runs a default command for you: latexmk with lualatex. This needs a TeX distribution installed on your computer.
-
-[Installing TeX Live, MacTeX, or MiKTeX](installation/README.md)
-[Compiling, live preview, and the Problems panel, in full](latex/compiling.md)
-
-## Interface language
-
-Menus, dialogs, and messages come in English, Simplified Chinese (简体中文), Traditional Chinese (繁體中文), German (Deutsch), and Brazilian Portuguese (Português do Brasil). English is the default. Pick another under Preferences › Appearance › Language and the window reloads in it.
-
-This is the language of the interface, not of your document. A LaTeX or Typst document can be written in any language; [spell check](spell-check.md) currently covers English only.
+With several documents and no main file set, Texpile asks once which one to compile. To change it, right-click a file and choose **Set as Main File**.

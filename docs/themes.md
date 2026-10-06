@@ -1,17 +1,15 @@
 ---
-description: Pick a light or dark mode and a color theme for Texpile from Preferences › Appearance.
-blurb: Light or dark mode, and a color theme for the whole window.
+description: Pick a light or dark mode and one of 25 color themes for Texpile, and turn on a transparent window, from Preferences › Appearance.
+blurb: Light or dark mode, 25 color themes, and a transparent window.
 icon: palette
-order: 14
-section: Settings
+order: 34
+section: Customize
 ---
 
 # Themes
 
-Texpile has a light and a dark mode, and a set of color themes. Both are picked in Preferences and apply to the whole window.
+25 color themes, each in light and dark, in Preferences › Appearance.
 
-| Where to find it | Path                     | Note                                                                                         |
-| ---------------- | ------------------------ | -------------------------------------------------------------------------------------------- |
-| Setting          | Preferences › Appearance | Preferences opens from the start screen, and from File › Preferences… once a folder is open. |
+![The Appearance tab in dark mode with the Dracula theme chosen, showing the Mode choice and the Theme grid](../landing/src/lib/assets/showcase/docs/app/preferences-appearance-dark.png)
 
-![Preferences › Appearance: the Mode tiles, the theme tiles, and the language picker](../landing/src/lib/assets/showcase/app/preferences-appearance.png 'Preferences › Appearance: the Mode tiles, the theme tiles, and the language picker')
+**Transparent window** blurs the desktop behind Texpile. Windows 11 and macOS only.

@@ -7,6 +7,9 @@
 @import '@skeletonlabs/skeleton-svelte';
 /* Texpile brand theme (navy #0B2949, blue #0088F7, cyan #00D6F9) */
 @import './texpile-theme.css';
+/* the app's own colour roles (muted text, tonal fills, inks), built from the theme above by the
+   same file the app uses, so the docs draw with the classes the app draws with */
+@import '../../apps/texpile-editor/src/texpile-tokens.css';
 
 /* brand typeface (Poppins), self-hosted. 300 is display-only: Poppins at 700 reads as stock
    marketing copy at hero sizes, so the big type steps DOWN in weight as it steps up in size. */
@@ -27,8 +30,53 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* the app's utility names over those roles (apps/texpile-editor/src/app.css), for the docs */
+@theme inline {
+	--color-muted: var(--muted-text);
+	--color-faint: var(--faint-text);
+	--color-primary-tint: var(--primary-tint);
+	--color-primary-wash: var(--primary-wash);
+	--color-primary-tonal: var(--primary-tonal);
+	--color-primary-tonal-hover: var(--primary-tonal-hover);
+	--color-warning-tonal: var(--warning-tonal);
+	--color-surface-tint: var(--surface-tint);
+	--color-surface-wash: var(--surface-wash);
+	--color-primary-ink: var(--primary-ink);
+	--color-warning-ink: var(--warning-ink);
+	--color-error-ink: var(--error-ink);
+}
+
 html {
 	scroll-behavior: smooth;
+}
+
+/* the docs show the app, so they take the app theme's exact blues and dark greys (texpile-default-theme.css)
+   where the marketing pages use the brand hex values and navy. Poppins stays. */
+.docs-app-colors {
+	--color-primary-50: oklch(93.65% 0.03 243.69deg);
+	--color-primary-100: oklch(86.69% 0.07 243.91deg);
+	--color-primary-200: oklch(79.91% 0.1 243.88deg);
+	--color-primary-300: oklch(73.4% 0.14 246.26deg);
+	--color-primary-400: oklch(67.62% 0.17 248.53deg);
+	--color-primary-500: oklch(62.66% 0.19 252.79deg);
+	--color-primary-600: oklch(57.89% 0.18 252.67deg);
+	--color-primary-700: oklch(53.02% 0.16 252.52deg);
+	--color-primary-800: oklch(48.21% 0.14 251.62deg);
+	--color-primary-900: oklch(43.1% 0.13 251.24deg);
+	--color-primary-950: oklch(37.83% 0.11 250.7deg);
+	--color-secondary-50: oklch(96.07% 0.03 207.96deg);
+	--color-secondary-100: oklch(91.96% 0.07 208.51deg);
+	--color-secondary-200: oklch(88.28% 0.1 209.06deg);
+	--color-secondary-300: oklch(85.19% 0.12 210.25deg);
+	--color-secondary-400: oklch(82.65% 0.14 212.18deg);
+	--color-secondary-500: oklch(80.64% 0.14 215.16deg);
+	--color-secondary-600: oklch(74.37% 0.13 215.38deg);
+	--color-secondary-700: oklch(67.92% 0.12 215deg);
+	--color-secondary-800: oklch(61.61% 0.11 214.39deg);
+	--color-secondary-900: oklch(54.83% 0.1 213.72deg);
+	--color-secondary-950: oklch(47.88% 0.08 213.85deg);
+	--color-surface-900: oklch(43.81% 0.02 248.2deg);
+	--color-surface-950: oklch(38.63% 0.01 243.95deg);
 }
 
 /* Display type: large, light, tightly tracked. One utility so the hero and every section
@@ -83,8 +131,21 @@ html {
 	--tw-prose-td-borders: var(--color-surface-200);
 }
 
+.doc {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+}
+
+.doc :where(h2) {
+	font-size: 1.625rem;
+}
+
 .doc :where(h2, h3) {
 	font-weight: 600;
+}
+
+.doc :where(table) {
+	font-size: 0.9375rem;
 }
 
 .doc :where(a:hover) {
@@ -109,25 +170,49 @@ html {
 	border: 1px solid var(--color-surface-200);
 }
 
-/* a check in place of the bullet, the mark the app itself uses for a feature list */
+/* a plain round bullet, in the brand blue */
 .doc :where(ul) {
 	padding-left: 0;
 }
 
 .doc :where(ul > li) {
 	position: relative;
-	padding-left: 1.75rem;
+	padding-left: 1.25rem;
 	list-style: none;
 }
 
 .doc :where(ul > li)::before {
 	content: '';
 	position: absolute;
-	left: 0;
-	top: 0.35em;
-	width: 1rem;
-	height: 1rem;
+	left: 0.25rem;
+	top: 0.75em;
+	width: 0.375rem;
+	height: 0.375rem;
+	border-radius: 9999px;
 	background-color: var(--color-primary-500);
-	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
-		center / contain no-repeat;
+}
+
+/* links in docs text that sits outside the prose styles: the lead under the title, and notes */
+.doc-links a {
+	color: var(--color-primary-600);
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.doc-links a:hover {
+	color: var(--color-primary-700);
+}
+
+/* the docs' side columns scroll on their own: a thin bar that shows on hover, and a scroll that
+   stops at the column's end instead of carrying on into the page */
+.docs-scroll {
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+}
+
+.docs-scroll:hover,
+.docs-scroll:focus-within {
+	scrollbar-color: var(--color-surface-300) transparent;
 }

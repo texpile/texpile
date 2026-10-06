@@ -102,3 +102,9 @@ export function pmAtOffset(map: SourceMap, offset: number, assoc: Side = 1): num
 	if (pick) return pick === b ? pick.pmTo : pick.pmFrom;
 	return block ? Math.min(block.pmFrom + 1, block.pmTo) : null;
 }
+
+/** a caret's document position: after spaces typed at the end of a line it stays with that line, which the
+ *  document holds without them, rather than jumping to the next block */
+export function caretAtOffset(map: SourceMap, source: string, offset: number): number | null {
+	return pmAtOffset(map, offset, /\S[ \t]+$/.test(source.slice(Math.max(0, offset - 64), offset)) ? -1 : 1);
+}

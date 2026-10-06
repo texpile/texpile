@@ -24,8 +24,25 @@ export interface LinkItem {
 export type Block =
 	| { kind: 'html'; html: string }
 	| { kind: 'note'; html: string }
+	| { kind: 'requires'; html: string }
 	| { kind: 'figure'; items: FigureItem[]; narrow: boolean }
 	| { kind: 'where'; rows: { label: string; value: string; note?: string }[] }
 	| { kind: 'keys'; rows: { keys: string; label: string }[] }
 	| { kind: 'cards'; items: CardItem[] }
 	| { kind: 'links'; items: LinkItem[] };
+
+/** a ## heading, for "On this page" */
+export interface TocItem {
+	id: string;
+	text: string;
+}
+
+/** one page in the search index */
+export interface SearchEntry {
+	href: string;
+	title: string;
+	/** the parent page's title, so two "Live preview" pages can be told apart */
+	parent?: string;
+	description: string;
+	headings: TocItem[];
+}

@@ -1,14 +1,19 @@
 <script lang="ts">
+	import { localizeHref } from '$lib/paraglide/runtime';
 	import Download from '@lucide/svelte/icons/download';
 	import Check from '@lucide/svelte/icons/check';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { tick } from 'svelte';
 	import Hero from '$lib/comp/Hero.svelte';
+	import SceneLoop from '$lib/comp/hero/SceneLoop.svelte';
+	import IntegrationGrid from '$lib/comp/IntegrationGrid.svelte';
+	import AiSection from '$lib/comp/AiSection.svelte';
+	import { integrationList } from '$lib/integrations';
+	import { COLLAB_SCENES, PREVIEW_SCENES } from '$lib/comp/hero/heroScenes';
 	import { featureList } from '$lib/features';
 	import { reveal } from '$lib/reveal';
-	import livePreviewWebp from '$lib/assets/showcase/live-preview.webp';
-	import collabShot from '$lib/assets/showcase/editor-collab.webp';
-	import commentsShot from '$lib/assets/showcase/editor-comments.webp';
+	import commentsShot from '$lib/assets/showcase/review.webp';
+	import historyShot from '$lib/assets/showcase/version-history.webp';
 	// One document (showcase.tex/.typ/.md) captured in both modes, so the toggle reads as one file
 	// in three languages rather than three unrelated screenshots.
 	import latexVisualShot from '$lib/assets/showcase/editor-latex-visual.webp';
@@ -21,6 +26,7 @@
 	import Alternates, { absolute } from '$lib/comp/Alternates.svelte';
 
 	const features = featureList();
+	const integrations = integrationList();
 	// self-referencing per locale; the alternates in the head say which language each URL is
 	const canonical = absolute('/');
 
@@ -226,7 +232,7 @@
 						<span class="text-surface-700 leading-relaxed">{f.visualPoints[0]}</span>
 					</div>
 				{/each}
-				<div class="mt-auto pt-1">{@render docsLink('/docs/visual-editing')}</div>
+				<div class="mt-auto pt-1">{@render docsLink(`/docs/${fmt.key}/visual-editor`)}</div>
 			</div>
 
 			<div id="source-editing" class="flex w-[86%] shrink-0 snap-center flex-col gap-5 sm:w-[65%] lg:w-auto" use:reveal={90}>
@@ -240,7 +246,7 @@
 						<span class="text-surface-700 leading-relaxed">{f.sourcePoints[0]}</span>
 					</div>
 				{/each}
-				<div class="mt-auto pt-1">{@render docsLink('/docs/latex/intellisense')}</div>
+				<div class="mt-auto pt-1">{@render docsLink(`/docs/${fmt.key}/source-editor`)}</div>
 			</div>
 		</div>
 
@@ -250,7 +256,10 @@
 			{#each FORMATS as f (f.key)}
 				<!-- hidden on the wrapper: on the link itself, inline-flex would outrank it -->
 				<div class:hidden={f.key !== fmt.key}>
-					<a href={f.page} class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors">
+					<a
+						href={localizeHref(f.page)}
+						class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors"
+					>
 						{m.editing_more_about({ label: f.label })}
 						<ArrowRight class="h-4 w-4" />
 					</a>
@@ -271,10 +280,7 @@
 				<p class="mt-6">{@render docsLink('/docs/latex/live-preview')}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<!-- an animated WebP: plays wherever an image does, with no autoplay rules to satisfy -->
-					<img src={livePreviewWebp} alt={m.live_preview_video_aria()} loading="lazy" draggable="false" class="block w-full" />
-				</div>
+				<SceneLoop scene={PREVIEW_SCENES.latex.scene} poster={PREVIEW_SCENES.latex.poster} alt={m.live_preview_video_aria()} />
 			</div>
 		</div>
 	</div>
@@ -297,9 +303,7 @@
 				<p class="mt-6">{@render docsLink('/docs/collaboration')}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<img src={collabShot} alt={m.collab_heading()} loading="lazy" draggable="false" class="block w-full" />
-				</div>
+				<SceneLoop scene={COLLAB_SCENES.latex.scene} poster={COLLAB_SCENES.latex.poster} alt={m.collab_heading()} />
 			</div>
 		</div>
 	</div>
@@ -325,6 +329,28 @@
 		</div>
 	</div>
 </section>
+
+<!-- AI, then history: media left, then right, so the asymmetry keeps alternating after comments -->
+<AiSection />
+
+<section id="version-history" class="border-surface-200 border-t bg-white py-20 md:py-28">
+	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
+			<div class="lg:col-span-4" use:reveal>
+				<h2 class="display text-surface-950 text-[clamp(2rem,3.4vw,3rem)]">{m.history_heading()}</h2>
+				<p class="text-surface-600 mt-5 leading-relaxed">{m.history_body()}</p>
+				<p class="mt-6">{@render docsLink('/docs/version-control/local-history')}</p>
+			</div>
+			<div class="lg:col-span-8" use:reveal={90}>
+				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
+					<img src={historyShot} alt={m.history_shot_alt()} loading="lazy" draggable="false" class="block w-full" />
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<IntegrationGrid items={integrations} />
 
 <section id="features" class="border-surface-200 border-t bg-white py-20 md:py-28">
 	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -355,7 +381,7 @@
 			<h2 class="display text-[clamp(2.25rem,4vw,3.5rem)] text-white">{m.download_section_heading()}</h2>
 			<p class="text-surface-300 max-w-xl text-lg">{m.download_section_body()}</p>
 			<a
-				href="/download"
+				href={localizeHref('/download')}
 				class="btn preset-filled-primary-500 rounded-base inline-flex items-center gap-2 px-8 py-3.5 font-semibold text-white"
 			>
 				<Download class="h-5 w-5" />
@@ -378,7 +404,7 @@
 {#snippet docsLink(href: string, ink = false)}
 	<!-- primary-600 is a dark blue: readable on paper, near-invisible on an ink band -->
 	<a
-		{href}
+		href={localizeHref(href)}
 		class="inline-flex items-center gap-1.5 font-medium transition-colors {ink
 			? 'text-secondary-400 hover:text-secondary-300'
 			: 'text-primary-600 hover:text-primary-700'}"
