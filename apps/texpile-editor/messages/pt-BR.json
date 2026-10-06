@@ -1117,6 +1117,8 @@
 	"tabs_show_all": "Mostrar os {count} arquivos abertos",
 	"tabs_close": "Fechar",
 	"tabs_split_right": "Dividir editor à direita",
+	"tabs_menu_split_left": "Dividir à esquerda",
+	"tabs_menu_split_right": "Dividir à direita",
 	"groups_resize_aria": "Redimensionar grupos de editores",
 	"tabs_menu_close_others": "Fechar Outros",
 	"tabs_menu_close_right": "Fechar à Direita",

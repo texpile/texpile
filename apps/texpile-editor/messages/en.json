@@ -1117,6 +1117,8 @@
 	"tabs_show_all": "Show all {count} open files",
 	"tabs_close": "Close",
 	"tabs_split_right": "Split editor right",
+	"tabs_menu_split_left": "Split left",
+	"tabs_menu_split_right": "Split right",
 	"groups_resize_aria": "Resize editor groups",
 	"tabs_menu_close_others": "Close Others",
 	"tabs_menu_close_right": "Close to the Right",

@@ -1,6 +1,7 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
 import { groupHostOf } from './groups/workspaceGroups';
+import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import type { ReplaceSpec } from '$lib/search/replaceInFiles';
 import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
@@ -190,6 +191,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 				root: workspaceRoot.current,
 				close: (x) => d.editFlow().closeTab(x),
 				keep: (x) => tabs.keep(tabKey(x)),
+				split: (x, side) => editorGroups.split(x, side),
 				reveal: isDesktop() && !d.guest() ? (p) => void revealItem(p) : undefined,
 				localHistory: !d.guest() && canKeepLocalHistory() ? (p) => openLocalHistory(p) : undefined,
 				showInTree: (p) => {

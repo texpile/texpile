@@ -5,7 +5,7 @@
 // A tab is a FILE or a COMPARISON of one against a saved version - the same kind of thing, so
 // one strip, and both are persisted. Not the visual/source axis, which stays a preference.
 import { samePath, joinPath, relativeInside } from './fileSystem';
-import { getFolder, updateFolder, savedCompare, type SavedCompare } from '$lib/storage/workspaces';
+import { getFolder, updateFolder, savedCompare, type SavedCompare, type SavedTab } from '$lib/storage/workspaces';
 import { AGENT_REF } from '$lib/ai/agentPanel/changes/agentBefore';
 
 const MAX_TABS = 50;
@@ -17,8 +17,20 @@ export type CompareRef = SavedCompare;
 
 export type Tab = { path: string; compare?: CompareRef };
 
+/** tabs as the folder's entry keeps them, root-relative */
+export function savedTabs(root: string, list: Tab[]): SavedTab[] {
+	// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
+	// reopened without it would show the whole file as new; one outside the root would come back under it
+	return list
+		.filter((t) => !t.compare?.hash.startsWith(AGENT_REF) && relativeInside(root, t.path) !== null)
+		.map((t) => {
+			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
+			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
+		});
+}
+
 /** a saved tab back on the strip, or null for an entry this build cannot read */
-function restoredTab(root: string, saved: unknown): Tab | null {
+export function restoredTab(root: string, saved: unknown): Tab | null {
 	if (typeof saved === 'string') return { path: joinPath(root, saved) };
 	if (!saved || typeof saved !== 'object') return null;
 	const { path, compare } = saved as { path?: unknown; compare?: unknown };
@@ -97,18 +109,15 @@ export class TabsStore {
 		if (this.preview === key) this.preview = null;
 	}
 
+	/** the folder whose tabs these are, when they are kept between sittings */
+	get persistedRoot(): string | null {
+		return this.persistable ? this.root : null;
+	}
+
 	private persist(): void {
 		if (!this.persistable || !this.root) return;
-		const root = this.root;
-		// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
-		// reopened without it would show the whole file as new; one outside the root would come back under it
-		const saved = this.list
-			.filter((t) => !t.compare?.hash.startsWith(AGENT_REF) && relativeInside(root, t.path) !== null)
-			.map((t) => {
-				const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
-				return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
-			});
-		updateFolder(root, (draft) => {
+		const saved = savedTabs(this.root, this.list);
+		updateFolder(this.root, (draft) => {
 			draft.tabs = saved;
 		});
 	}
@@ -168,6 +177,16 @@ export class TabsStore {
 
 	find(key: string): Tab | null {
 		return this.list.find((t) => tabKey(t) === key) ?? null;
+	}
+
+	/** a tab dragged along the strip, to sit at `index` */
+	move(key: string, index: number): void {
+		const tab = this.find(key);
+		if (!tab) return;
+		const rest = this.list.filter((t) => tabKey(t) !== key);
+		const at = Math.max(0, Math.min(index, rest.length));
+		this.list = [...rest.slice(0, at), tab, ...rest.slice(at)];
+		this.persist();
 	}
 
 	/** right neighbour first, then left */

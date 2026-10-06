@@ -38,6 +38,8 @@
 	let {
 		parked = false,
 		onSplit,
+		groupId,
+		onDropTab,
 		loadedPath,
 		openTabs,
 		activeTabKey,
@@ -233,6 +235,8 @@
 			onContextMenu={onTabMenu}
 			{onSplit}
 			groupFocused={!parked}
+			{groupId}
+			{onDropTab}
 		/>
 	{/if}
 	{#if loadedPath && structured && !comparing && (viewMode === 'source' || visualDoc)}

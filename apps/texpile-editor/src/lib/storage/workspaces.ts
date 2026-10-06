@@ -18,9 +18,11 @@ export type FolderEntry = {
 	/** compile commands accepted for this folder, per format - THIS MACHINE's approval record */
 	trusted?: { latex?: string; typst?: string };
 	/** open tabs, in order, root-relative: a file, or a file compared against one of its versions */
-	tabs?: (string | { path: string; compare: SavedCompare })[];
+	tabs?: SavedTab[];
 	/** the version lastFile was left compared against, when the focused tab was a comparison */
 	lastCompare?: SavedCompare;
+	/** the editor groups side by side, VS Code's split, left to right; the focused one's tabs are `tabs` */
+	groups?: SavedGroup[];
 	/** per-file caret + scroll; shape owned and validated by workspace/docPositions.ts */
 	positions?: Record<string, unknown>;
 	/** left in Suggesting; a choice per project and per person, so not in the project's own config */
@@ -29,6 +31,13 @@ export type FolderEntry = {
 	 *  languages/typst/export/exportOptions.ts */
 	typstExport?: Record<string, unknown>;
 };
+
+/** a tab as the entry keeps it: a root-relative file, or one compared against a version */
+export type SavedTab = string | { path: string; compare: SavedCompare };
+
+/** one editor group: its share of the width and, for each but the focused one, its tabs, open tab and mode */
+export type SavedGroup =
+	{ focused: true; share: number } | { focused?: false; share: number; tabs: SavedTab[]; active: number; mode: 'visual' | 'source' };
 
 /** the saved version a comparison tab is against; `path` is the file's name in that version when it had another */
 export type SavedCompare = { hash: string; subject: string; path?: string };

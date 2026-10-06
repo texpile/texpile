@@ -1117,6 +1117,8 @@
 	"tabs_show_all": "显示全部 {count} 个打开的文件",
 	"tabs_close": "关闭",
 	"tabs_split_right": "向右拆分编辑器",
+	"tabs_menu_split_left": "向左拆分",
+	"tabs_menu_split_right": "向右拆分",
 	"groups_resize_aria": "调整编辑器组大小",
 	"tabs_menu_close_others": "关闭其他",
 	"tabs_menu_close_right": "关闭右侧",

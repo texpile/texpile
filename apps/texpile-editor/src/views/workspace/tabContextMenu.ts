@@ -1,4 +1,4 @@
-import { Copy, FolderOpen, FolderTree, History, Pin, X } from '@lucide/svelte';
+import { Columns2, Copy, FolderOpen, FolderTree, History, Pin, X } from '@lucide/svelte';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { relativeTo, tabsToClose, type CloseScope } from './tabMenuTargets';
@@ -19,6 +19,8 @@ export type TabMenuDeps = {
 	showInTree?: (path: string) => void;
 	/** the file's Local History; omitted for a guest, whose files are the host's */
 	localHistory?: (path: string) => void;
+	/** the tab in a new editor group beside this one */
+	split: (tab: Tab, side: 'left' | 'right') => void;
 };
 
 function copy(text: string): void {
@@ -44,6 +46,9 @@ export function openTabContextMenu(event: MouseEvent, tab: Tab, d: TabMenuDeps):
 		{ label: m.tabs_menu_close_right(), disabled: at >= d.tabs.length - 1, onclick: () => closeAll('right') },
 		{ label: m.tabs_menu_close_saved(), disabled: closing('saved').length === 0, onclick: () => closeAll('saved') },
 		{ label: m.tabs_menu_close_all(), onclick: () => closeAll('all') },
+		{ separator: true },
+		{ label: m.tabs_menu_split_left(), onclick: () => d.split(tab, 'left') },
+		{ label: m.tabs_menu_split_right(), icon: Columns2, keys: isActive ? 'Mod+\\' : undefined, onclick: () => d.split(tab, 'right') },
 		{ separator: true },
 		{ label: m.tabs_menu_copy_path(), icon: Copy, onclick: () => copy(tab.path) }
 	];

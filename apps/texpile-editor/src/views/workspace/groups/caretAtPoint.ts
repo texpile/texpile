@@ -3,19 +3,25 @@
 import { TextSelection } from 'prosemirror-state';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 
-export type GroupClick = { x: number; y: number; visual: boolean };
+/** where a click fell, or no point for focus that came from the keyboard */
+export type GroupClick = { x: number; y: number; visual: boolean } | null;
 
 /** false while the group's editor is not the app's yet */
 export function caretAtPoint(click: GroupClick, cell: HTMLElement): boolean {
+	const view = editorViewStore.current;
+	const cm = sourceCmView.current;
+	if (!click) {
+		const editor = view && cell.contains(view.dom) ? view : cm && cell.contains(cm.dom) ? cm : null;
+		editor?.focus();
+		return !!editor;
+	}
 	if (click.visual) {
-		const view = editorViewStore.current;
 		if (!view || !cell.contains(view.dom)) return false;
 		const at = view.posAtCoords({ left: click.x, top: click.y });
 		if (at) view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(at.pos))));
 		view.focus();
 		return true;
 	}
-	const cm = sourceCmView.current;
 	if (!cm || !cell.contains(cm.dom)) return false;
 	const at = cm.posAtCoords({ x: click.x, y: click.y });
 	if (at !== null) cm.dispatch({ selection: { anchor: at } });

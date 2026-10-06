@@ -9,6 +9,7 @@ import type { ImportedFile } from '$lib/workspace/starters';
 import type { StarterChoice } from '$lib/workspace/templates/starterChoice';
 import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { Tab, CompareRef } from '$lib/workspace/tabs.svelte';
+import type { DraggedTab } from '$lib/workspace/groups/tabDrag';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
 import type { RegionParser, SourceMap } from '$lib/editor/visual/sourceSpans';
@@ -18,6 +19,10 @@ export type EditorPaneProps = {
 	parked?: boolean;
 	/** VS Code's Split Editor Right, on the tab strip */
 	onSplit?: () => void;
+	/** the editor group the pane draws, whose tabs can be dragged out of its strip */
+	groupId?: number;
+	/** a tab dropped on the pane's strip */
+	onDropTab?: (drop: DraggedTab, index: number) => void;
 	loadedPath: string | null;
 	openTabs: Tab[];
 	/** key of the focused tab; a file and a comparison of it are two different keys */
