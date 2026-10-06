@@ -26,7 +26,7 @@ export class ScenePlayer {
 	still = $state(false);
 
 	/** the format's scenes, in playing order */
-	scenes = $state.raw<HeroScene[]>([]);
+	scenes: HeroScene[];
 	#ctx: CanvasRenderingContext2D | null = null;
 	#scene: LoadedScene | null = null;
 	#clock = 0;
@@ -36,7 +36,7 @@ export class ScenePlayer {
 	#last = 0;
 
 	constructor(scenes: HeroScene[]) {
-		this.scenes = scenes;
+		this.scenes = $state.raw(scenes);
 	}
 
 	/** starts playing on the canvas; returns the teardown */
