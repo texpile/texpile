@@ -1117,6 +1117,7 @@
 	"tabs_show_all": "顯示全部 {count} 個開啟的檔案",
 	"tabs_close": "關閉",
 	"tabs_split_right": "向右分割編輯器",
+	"filetree_menu_open_to_side": "在側邊開啟",
 	"tabs_menu_split_left": "向左分割",
 	"tabs_menu_split_right": "向右分割",
 	"groups_resize_aria": "調整編輯器群組大小",

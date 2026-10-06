@@ -26,9 +26,12 @@ export async function dropTab(drop: TabDrop, close: (tab: Tab) => void): Promise
 	// a group's only tab split off beside itself would leave the same picture
 	if (side && from === to && own.length === 1) return;
 	const leaving = own.length === 1;
-	editorGroups.focus(from, tab);
-	await editorGroups.whenDrawn();
-	if (!leaving) {
+	const shown = editorGroups.activeOf(from);
+	if (!leaving && (!shown || tabKey(shown) !== key)) editorGroups.removeTab(from, key);
+	else if (!leaving) {
+		// the group shows the tab: it moves on to the one beside it, as closing the tab there would
+		editorGroups.focus(from);
+		await editorGroups.whenDrawn();
 		close(tab);
 		await editorGroups.whenDrawn();
 	}

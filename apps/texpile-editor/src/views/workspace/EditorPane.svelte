@@ -22,8 +22,7 @@
 	import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
-	import { noteVisualMount, visualMounted } from '$lib/workspace/visualMountGuard';
-	import type { Node as PMNode } from 'prosemirror-model';
+	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
 	import { openWorkspaceLink } from '$lib/workspace/openWorkspaceLink';
 	import TabBar from './TabBar.svelte';
 	import EditorToolbarStrip from './EditorToolbarStrip.svelte';
@@ -191,15 +190,15 @@
 		if (view) return untrack(() => attachVisualDiffOutsideComposition(view, wanted));
 	});
 
-	// noted before a file's first build, forgotten in onVisualReady: a build that takes the renderer
-	// down leaves the note behind, and the next open of that file goes to Source (visualMountGuard).
-	// Keyed on the doc, not the path: the path switches a beat before the new doc arrives, and the
-	// old doc under the new path is not a build
-	let notedDoc: PMNode | null = null;
+	// a build that takes the renderer down leaves its note, and that file next opens in Source (visualMountGuard)
+	const mountNote = visualMountNote({
+		doc: () => visualDoc ?? null,
+		path: () => loadedPath,
+		building: () => structured && viewMode === 'visual' && readyFor !== loadedPath
+	});
+	// a parked group's editor already shows its file; going live on it builds nothing, so nothing is noted
 	$effect.pre(() => {
-		if (!visualDoc || !loadedPath || !structured || viewMode !== 'visual' || readyFor === loadedPath || visualDoc === notedDoc) return;
-		notedDoc = visualDoc;
-		noteVisualMount(loadedPath);
+		if (parked && loadedPath) readyFor = loadedPath;
 	});
 
 	/** a callback, not an effect: it dispatches a selection an effect would re-enter on */
@@ -207,7 +206,7 @@
 		mark('editor-ready');
 		warmEditor();
 		readyFor = loadedPath;
-		if (loadedPath) visualMounted(loadedPath);
+		mountNote.ready(loadedPath);
 		// a parked group's editor is not the store's, and it keeps where it was
 		if (parked) return;
 		const v = editorViewStore.current;
@@ -241,9 +240,7 @@
 	{/if}
 	{#if loadedPath && structured && !comparing && (viewMode === 'source' || visualDoc)}
 		<!-- a parked group keeps its toolbar, inert: the editor below then stays where it is when focus comes back -->
-		<div class="contents" inert={parked}>
-			<EditorToolbarStrip {kind} mode={viewMode === 'visual' ? 'visual' : 'source'} />
-		</div>
+		<EditorToolbarStrip {kind} mode={viewMode === 'visual' ? 'visual' : 'source'} inert={parked} />
 	{/if}
 	<EditorNotices
 		{loadedPath}

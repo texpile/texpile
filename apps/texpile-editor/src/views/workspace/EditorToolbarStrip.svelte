@@ -9,10 +9,11 @@
 	import TypstSourceToolbar from '$lib/languages/typst/source/TypstSourceToolbar.svelte';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 
-	let { kind, mode }: { kind: FileKind; mode: 'visual' | 'source' } = $props();
+	/** inert: a parked editor group's, drawn so the editor under it stays put, but taking no clicks */
+	let { kind, mode, inert = false }: { kind: FileKind; mode: 'visual' | 'source'; inert?: boolean } = $props();
 </script>
 
-<div class="border-surface-200-800 @container relative z-20 flex min-h-10 items-center overflow-clip border-b px-2">
+<div class="border-surface-200-800 @container relative z-20 flex min-h-10 items-center overflow-clip border-b px-2" {inert}>
 	{#if mode === 'visual'}
 		{#if kind === 'md'}
 			<MarkdownToolbar />

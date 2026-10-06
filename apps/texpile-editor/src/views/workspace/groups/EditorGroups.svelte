@@ -135,6 +135,9 @@
 	function onCellPointerDown(g: EditorGroup, event: PointerEvent) {
 		if (editorGroups.isFocused(g)) return;
 		const target = event.target instanceof Element ? event.target : null;
+		// the strip's own handlers focus the group as their action needs; focusing it here redraws the strip
+		// under the press, and the click then misses the tab or its close button
+		if (target?.closest('[role=tablist]')) return;
 		const visual = !!target?.closest('.ProseMirror');
 		const inEditor = visual || !!target?.closest('.cm-content');
 		// before the browser handles the press: on the same file the editor takes typing by then, and places
@@ -161,6 +164,13 @@
 		if (!drop || hint?.id !== g.id) return;
 		event.preventDefault();
 		void dropTab({ tab: drop.tab, from: drop.group, to: g.id, side: hint.side, index: null }, (tab) => props.live.onCloseTab(tab));
+	}
+
+	// keyboard focus coming into a parked group (Tab, a button) brings it into focus; the strip again acts itself
+	function onCellFocusIn(g: EditorGroup, event: FocusEvent) {
+		const target = event.target instanceof Element ? event.target : null;
+		if (editorGroups.isFocused(g) || target?.closest('[role=tablist]')) return;
+		editorGroups.focus(g.id);
 	}
 
 	// Ctrl+1 to 9: the group's editor takes the keyboard, as in VS Code
@@ -198,7 +208,7 @@
 			use:cell={g.id}
 			data-editor-group={g.id}
 			onpointerdowncapture={(e) => onCellPointerDown(g, e)}
-			onfocusincapture={() => editorGroups.isFocused(g) || editorGroups.focus(g.id)}
+			onfocusincapture={(e) => onCellFocusIn(g, e)}
 			ondragover={(e) => onCellDragOver(g, e)}
 			ondragleave={(e) => {
 				if (!(e.currentTarget as HTMLElement).contains(e.relatedTarget as Node | null)) dropHint = null;

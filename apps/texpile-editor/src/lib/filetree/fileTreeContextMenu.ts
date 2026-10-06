@@ -12,7 +12,8 @@ import {
 	Redo2,
 	Pencil,
 	Trash2,
-	History
+	History,
+	Columns2
 } from '@lucide/svelte';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
 import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
@@ -47,6 +48,8 @@ export type TreeMenuDeps = {
 	onDelete?: (entry: TreeEntry) => void;
 	/** the menu closed, chosen or not: the tree takes focus back */
 	onClose?: () => void;
+	/** VS Code's Open to the Side */
+	onOpenToSide?: (entry: TreeEntry) => void;
 };
 
 export function openFileTreeContextMenu(event: MouseEvent, at: TreeTarget, d: TreeMenuDeps): void {
@@ -54,6 +57,10 @@ export function openFileTreeContextMenu(event: MouseEvent, at: TreeTarget, d: Tr
 	event.stopPropagation();
 	const { entry, history } = at.entry ? { entry: at.entry, history: d.history } : { entry: null, history: d.history };
 	const items: ContextMenuItem[] = [];
+	if (entry?.type === 'file' && at.selectionCount === 1 && d.onOpenToSide) {
+		const open = d.onOpenToSide;
+		items.push({ label: m.filetree_menu_open_to_side(), icon: Columns2, onclick: () => open(entry) }, { separator: true });
+	}
 	if (!entry || entry.type === 'dir') {
 		items.push(
 			{ label: m.filetree_menu_new_file(), icon: FilePlus, onclick: () => d.onCreate?.(at.createDir, 'file') },

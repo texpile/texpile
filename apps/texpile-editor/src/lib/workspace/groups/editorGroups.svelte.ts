@@ -179,10 +179,30 @@ class EditorGroups {
 		void this.whenDrawn().then(run);
 	}
 
+	/** VS Code's Open to the Side: in the group right of the focused one, or a new one there */
+	openToSide(tab: Tab): void {
+		const at = this.list.findIndex((g) => g.id === this.focusedId);
+		const beside = this.list[at + 1];
+		if (beside) this.focus(beside.id, tab);
+		else this.split(tab, 'right');
+	}
+
 	/** a group's tabs, wherever they are kept */
 	tabsOf(id: number): Tab[] {
 		if (id === this.focusedId) return tabs.list;
 		return this.list.find((g) => g.id === id)?.tabs?.list ?? [];
+	}
+
+	/** the tab a group shows */
+	activeOf(id: number): Tab | null {
+		if (id !== this.focusedId) return this.list.find((g) => g.id === id)?.active ?? null;
+		return this.host?.activeTab() ?? null;
+	}
+
+	/** a tab off a group's strip that the group is not showing, so nothing has to open in its place */
+	removeTab(id: number, key: string): void {
+		const store = id === this.focusedId ? tabs : this.list.find((g) => g.id === id)?.tabs;
+		store?.close(key);
 	}
 
 	/** a tab dragged along its own strip */

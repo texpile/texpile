@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 	import { FileSymlink } from '@lucide/svelte';
 	import { tick, untrack } from 'svelte';
 	import FileIcon from './FileIcon.svelte';
@@ -228,7 +229,8 @@
 			onPaste: pasteClipboard,
 			onRename: (entry) => editor.startRename(entry),
 			onDelete: confirmDelete,
-			onClose: refocusTree
+			onClose: refocusTree,
+			onOpenToSide: (entry) => editorGroups.openToSide({ path: entry.path })
 		});
 	}
 

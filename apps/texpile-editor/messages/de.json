@@ -1117,6 +1117,7 @@
 	"tabs_show_all": "Alle {count} geöffneten Dateien anzeigen",
 	"tabs_close": "Schließen",
 	"tabs_split_right": "Editor rechts teilen",
+	"filetree_menu_open_to_side": "Seitlich öffnen",
 	"tabs_menu_split_left": "Links teilen",
 	"tabs_menu_split_right": "Rechts teilen",
 	"groups_resize_aria": "Größe der Editorgruppen ändern",
