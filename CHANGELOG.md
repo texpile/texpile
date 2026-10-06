@@ -5,6 +5,13 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-10-06
+
+- fix: Shift+arrow selection and Ctrl+Home/End in the visual editor (by @louisqli)
+- fix: Typst Universe templates open on Windows again (by @louisqli)
+- fix: Typst tables with merged header cells now match the PDF, also after table edits (by @louisqli)
+- fix: various smaller bugfixes (by @louisqli)
+
 ## [1.3.0] - 2026-10-04
 
 - feat: more git support coverage (by @louisqli)
