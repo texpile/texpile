@@ -51,7 +51,7 @@ body:
     id: version
     attributes:
       label: Texpile version
-      description: Help > About, or the installer filename
+      description: Shown at the bottom of the Help menu
   - type: input
     id: os
     attributes:

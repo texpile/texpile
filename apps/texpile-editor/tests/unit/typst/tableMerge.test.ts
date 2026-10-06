@@ -68,6 +68,36 @@ describe('merged cells survive a source round trip', () => {
 	}
 });
 
+/** each row's cell texts, header cells marked with a leading `#` */
+function grid(src: string): string[][] {
+	const rows: string[][] = [];
+	typstToProseMirror(src).doc.descendants((n) => {
+		if (n.type.name === 'table_row') rows.push([]);
+		if (n.type.name === 'table_cell' || n.type.name === 'table_header')
+			rows[rows.length - 1].push((n.type.name === 'table_header' ? '#' : '') + n.textContent);
+	});
+	return rows;
+}
+
+describe('a header cell merged down', () => {
+	// typst grows the header to the rows a merged header cell reaches; the cells after table.header go below it
+	it('parses the cells after the header below it, as typst lays them out', () => {
+		const src = '#table(\n  columns: 3,\n  table.header(table.cell(rowspan: 2)[H1], [H2], [H3]),\n  [b], [c],\n  [d], [e], [f],\n)\n';
+		expect(grid(src)).toEqual([
+			['#H1', '#H2', '#H3'],
+			['#', '#'],
+			['b', 'c', 'd'],
+			['e', 'f', '']
+		]);
+	});
+	it('writes the rows it reaches inside table.header', () => {
+		const out = merge(WITH_HEADER, 'any', 0, 2);
+		expect(out).toContain('  table.header(\n    table.cell(rowspan: 2)[');
+		expect(out).toContain('    [b],\n  ),\n  [c], [d],');
+		expect(grid(out)[1]).toEqual(['#b']);
+	});
+});
+
 function hasTinymist(): boolean {
 	try {
 		execFileSync('tinymist', ['--version'], { stdio: 'ignore' });

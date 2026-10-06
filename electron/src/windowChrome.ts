@@ -459,7 +459,7 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{ type: 'separator' },
 				{ label: label(s, 'documentation', 'Documentation'), click: () => fire(win, 'help:docs') },
 				{ label: label(s, 'discord', 'Join Discord'), click: () => fire(win, 'help:discord') },
-				{ label: label(s, 'support', 'Contact Support'), click: () => fire(win, 'help:support') },
+				{ label: label(s, 'report', 'Report a Problem…'), click: () => fire(win, 'help:report') },
 				{ type: 'separator' },
 				// Dev Tools is a command-palette entry now (search "dev"), not a menu item: a diagnostic
 				// does not belong in the menu writers open for tutorials. Still no keyboard accelerator

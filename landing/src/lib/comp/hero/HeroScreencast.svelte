@@ -1,5 +1,5 @@
 <script lang="ts">
-	// the hero's screencast: the app itself, a scene at a time, advancing on its own and looping
+	// the hero's screencast: the app itself in one take, looping, with its parts marked under the window
 	import { untrack } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
 	import HeroFormatSwitch from './HeroFormatSwitch.svelte';
@@ -15,12 +15,12 @@
 	// the first format is the one a page opens on; its first frame is in the HTML
 	const first = untrack(() => props.formats[0]);
 	let format = $state(first);
-	const player = new ScenePlayer(HERO_SETS[first].scenes);
+	const player = new ScenePlayer([HERO_SETS[first].take]);
 
 	function pick(next: HeroFormat) {
 		if (next === format) return;
 		format = next;
-		player.setScenes(HERO_SETS[next].scenes);
+		player.setScenes([HERO_SETS[next].take]);
 	}
 </script>
 
@@ -34,7 +34,7 @@
 	<div class="frame overflow-hidden rounded-lg border border-white/10">
 		<HeroSceneWindow {player} poster={HERO_SETS[first].poster} alt={HERO_SETS[first].alt()} />
 	</div>
-	<HeroSceneGuide {player} />
+	<HeroSceneGuide {player} parts={HERO_SETS[format].parts} />
 </section>
 
 <style>

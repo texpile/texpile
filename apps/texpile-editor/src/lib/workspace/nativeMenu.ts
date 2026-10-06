@@ -178,7 +178,7 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		whatsNew: m.whatsnew_menu_label(),
 		documentation: m.menubar_documentation(),
 		discord: m.menubar_join_discord(),
-		support: m.menubar_contact_support(),
+		report: m.menubar_report_problem(),
 		updates: m.menubar_check_for_updates(),
 		// Roles carry a label of Electron's own, hardcoded English in a table inside Electron, and
 		// macOS never gets asked for its translation - a role only registers the menu, it does not

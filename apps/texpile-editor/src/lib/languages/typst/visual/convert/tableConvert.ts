@@ -177,7 +177,7 @@ export function tableParts(call: SyntaxNode, src: string): TableParts | null {
 	// EARLIER row owns - within-row colspans are handled by advancing the cursor instead, so a
 	// row's width stays sum(colspan) + covered, with nothing counted twice. `table.header(...)`
 	// is walked through the same grid: it may sit at any row boundary and span several rows
-	// (a merged header cell may also reach down into the body), and its cells are header cells.
+	// (as many as its merged cells reach), and its cells are header cells.
 	const covered = new Set<string>();
 	function at(rr: number, cc: number) {
 		return `${rr},${cc}`;
@@ -187,6 +187,8 @@ export function tableParts(call: SyntaxNode, src: string): TableParts | null {
 	let pending: string[] = [];
 	let r = 0;
 	let c = 0;
+	/** the last row the header being walked reaches, through its merged cells */
+	let headerEnd = -1;
 	function advance() {
 		for (;;) {
 			while (c < cols && covered.has(at(r, c))) c++;
@@ -224,6 +226,7 @@ export function tableParts(call: SyntaxNode, src: string): TableParts | null {
 			pending = [];
 		}
 		rows[r].push(cell);
+		if (headerCell) headerEnd = Math.max(headerEnd, r + rowspan - 1);
 		for (let dr = 1; dr < rowspan; dr++) for (let dc = 0; dc < colspan; dc++) covered.add(at(r + dr, c + dc));
 		c += colspan;
 		return true;
@@ -241,11 +244,38 @@ export function tableParts(call: SyntaxNode, src: string): TableParts | null {
 			if (!atRowBoundary()) return null;
 			const hArgs = item.firstChild!.nextSibling;
 			if (!hArgs || hArgs.name !== 'Args') return null;
-			for (const cell of children(hArgs).filter((h) => !ARG_PUNCT.includes(h.name))) if (!place(cell, true)) return null;
+			headerEnd = -1;
+			const headerCells = children(hArgs).filter((h) => !ARG_PUNCT.includes(h.name));
+			for (const cell of headerCells) if (!place(cell, true)) return null;
+			// an empty table.header() is still a header row in typst, of empty cells
+			if (!headerCells.length) {
+				advance();
+				headerEnd = r;
+				while (rows.length <= r) {
+					rows.push([]);
+					rowRules.push([]);
+				}
+				rowRules[r].push(...pending);
+				pending = [];
+			}
 			// a short header is padded out to the grid (the editor's rows are rectangular)
-			while (c > 0 && c < cols) {
+			while ((c > 0 || !headerCells.length) && c < cols) {
 				if (!covered.has(at(r, c))) rows[r].push(buildNode('table_header', null, [buildNode('paragraph')]));
 				c++;
+			}
+			// typst grows the header down to every row its merged cells reach, and the body starts below
+			// it: the cells after table.header never fill the gaps beside a rowspan
+			for (let rr = r + 1; rr <= headerEnd; rr++) {
+				while (rows.length <= rr) {
+					rows.push([]);
+					rowRules.push([]);
+				}
+				for (let cc = 0; cc < cols; cc++)
+					if (!covered.has(at(rr, cc))) rows[rr].push(buildNode('table_header', null, [buildNode('paragraph')]));
+			}
+			if (headerEnd > r) {
+				r = headerEnd;
+				c = cols;
 			}
 			continue;
 		}
@@ -253,13 +283,21 @@ export function tableParts(call: SyntaxNode, src: string): TableParts | null {
 	}
 	if (rows.length === 0) return null;
 
-	// pad the last row so the grid stays rectangular (PM tables need it; typst tolerates it)
+	// typst adds the rows a rowspan reaches past the last one
 	const lastRow = rows.length - 1;
-	if (lastRow >= 0) {
-		let width = rows[lastRow].reduce((w, cell) => w + Number(cell.attrs.colspan ?? 1), 0);
-		for (let cc = 0; cc < cols; cc++) if (covered.has(at(lastRow, cc))) width++;
+	for (const key of covered) {
+		const rr = Number(key.split(',')[0]);
+		while (rows.length <= rr) {
+			rows.push([]);
+			rowRules.push([]);
+		}
+	}
+	// pad the last rows so the grid stays rectangular (PM tables need it; typst tolerates it)
+	for (let rr = lastRow; rr < rows.length; rr++) {
+		let width = rows[rr].reduce((w, cell) => w + Number(cell.attrs.colspan ?? 1), 0);
+		for (let cc = 0; cc < cols; cc++) if (covered.has(at(rr, cc))) width++;
 		while (width < cols) {
-			rows[lastRow].push(buildNode('table_cell', null, [buildNode('paragraph')]));
+			rows[rr].push(buildNode('table_cell', null, [buildNode('paragraph')]));
 			width++;
 		}
 	}

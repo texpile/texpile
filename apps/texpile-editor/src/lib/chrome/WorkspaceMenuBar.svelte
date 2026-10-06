@@ -29,7 +29,7 @@
 	import TerminalMenu from './menubar/TerminalMenu.svelte';
 	import HelpMenu from './menubar/HelpMenu.svelte';
 	import TextPrompt from './menubar/TextPrompt.svelte';
-	import SupportModal from './menubar/SupportModal.svelte';
+	import { reportProblemUrl } from './menubar/reportProblemUrl';
 	import ImagePickerInput from './menubar/ImagePickerInput.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -144,7 +144,6 @@
 
 	let imagePicker: ImagePickerInput;
 	let textPrompt: TextPrompt;
-	let supportModal: SupportModal;
 
 	function viewSelect(value: string) {
 		if (value === 'zoom-in') onZoomIn?.();
@@ -157,7 +156,7 @@
 		else if (value === 'whatsnew') whatsNewOpen.current = true;
 		else if (value === 'docs') window.open('https://texpile.com/docs', '_blank', 'noopener,noreferrer');
 		else if (value === 'discord') window.open('https://discord.gg/7wanVzCBWf', '_blank', 'noopener,noreferrer');
-		else if (value === 'support') supportModal?.show();
+		else if (value === 'report') window.open(reportProblemUrl(__APP_VERSION__), '_blank', 'noopener,noreferrer');
 		else if (value === 'updates') void checkUpdates();
 	}
 
@@ -356,4 +355,3 @@
      a guest session renders no menu bar, and they are window features rather than menu features.
      This file still OPENS them, through dialogStore. -->
 <TextPrompt bind:this={textPrompt} />
-<SupportModal bind:this={supportModal} />

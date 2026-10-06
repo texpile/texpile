@@ -18,6 +18,8 @@ export type LoadedScene = {
 	at: number[];
 	length: number;
 	sprite: HTMLImageElement;
+	/** a take's parts: the frame each one starts on */
+	chapters: number[];
 };
 
 const loads = new Map<HeroScene, Promise<LoadedScene>>();
@@ -32,7 +34,8 @@ export function loadScene(scene: HeroScene): Promise<LoadedScene> {
 			const frames: SceneFrame[] = data.timeline;
 			let t = 0;
 			const at = frames.map((f) => (t += f.delay));
-			return { frames, at, length: t, sprite };
+			const chapters: number[] = (data.chapters ?? []).map((c: { frame: number }) => c.frame);
+			return { frames, at, length: t, sprite, chapters };
 		})();
 		// a failed fetch can be tried again on the next visit to the tab
 		p.catch(() => loads.delete(scene));

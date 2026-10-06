@@ -57,7 +57,9 @@ Your documents stay on your disk. The app's only background network traffic is t
 
 ## Community
 
-Questions, bugs, or feedback? Join the [Discord](https://discord.com/invite/7wanVzCBWf).
+Questions or feedback? Join the [Discord](https://discord.com/invite/7wanVzCBWf). Found a bug? [Open an issue](https://github.com/texpile/texpile/issues/new/choose), or use Help › Report a Problem in the app, which fills in your version and system.
+
+Security issues: email [support@texpile.com](mailto:support@texpile.com) instead of opening a public issue.
 
 ## Acknowledgements
 

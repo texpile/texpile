@@ -3,6 +3,7 @@ import type { Node } from 'prosemirror-model';
 import { renderInline } from './typstInline';
 import { ownsLineEnd } from './envSerializer';
 import { parseTracks, distribute, toFrTracks } from './tracks';
+import { headerRows } from '../extensions/typstHeaderRows';
 
 /** a cell on its own, inside its row's frame: a bare [..], or table.cell(..)[..] for a merged one */
 export function cellCall(cell: Node, renderBlocks: (parent: Node) => string): string {
@@ -27,15 +28,12 @@ type TableRow = { cells: Node[]; isHeader: boolean; rules: unknown };
 
 function tableRows(node: Node): TableRow[] {
 	const rows: TableRow[] = [];
-	node.forEach((row) => {
+	const header = headerRows(node);
+	node.forEach((row, _offset, i) => {
 		if (row.type.name !== 'table_row') return;
 		const cells: Node[] = [];
-		let isHeader = row.childCount > 0;
-		row.forEach((cell) => {
-			if (cell.type.name !== 'table_header') isHeader = false;
-			cells.push(cell);
-		});
-		rows.push({ cells, isHeader, rules: row.attrs.typRules });
+		row.forEach((cell) => cells.push(cell));
+		rows.push({ cells, isHeader: header.has(i), rules: row.attrs.typRules });
 	});
 	return rows;
 }
@@ -139,10 +137,26 @@ export function tableBody(node: Node, indent: string, renderBlocks: (parent: Nod
 		// accepts a header at any row). cellCall, not a bare [..]: a merged header cell used to
 		// lose its span here, so merging two header cells came apart on the next round trip
 		let j = i;
-		while (j + 1 < rows.length && rows[j + 1].isHeader && rows[j + 1].cells.length && asStrings(rows[j + 1].rules).length === 0) j++;
-		const run = rows.slice(i, j + 1);
+		// typst grows a header down to every row its merged cells reach, so those rows go inside it:
+		// written after it, their cells would land below the header instead of beside the merge
+		let reach = i;
+		for (;;) {
+			for (let k = i; k <= j; k++) rows[k].cells.forEach((cell) => (reach = Math.max(reach, k + Number(cell.attrs.rowspan ?? 1) - 1)));
+			if (
+				j + 1 < rows.length &&
+				(j < reach || (rows[j + 1].isHeader && rows[j + 1].cells.length && asStrings(rows[j + 1].rules).length === 0))
+			)
+				j++;
+			else break;
+		}
+		const run = rows.slice(i, j + 1).filter((h) => h.cells.length);
 		if (run.length === 1) lines.push(`  table.header(${run[0].cells.map(call).join(', ')}),`);
-		else lines.push('  table.header(', ...run.map((h) => `    ${h.cells.map(call).join(', ')},`), '  ),');
+		else
+			lines.push(
+				'  table.header(',
+				...run.flatMap((h, k) => [...(k ? asStrings(h.rules).map((rule) => `    ${rule},`) : []), `    ${h.cells.map(call).join(', ')},`]),
+				'  ),'
+			);
 		i = j;
 	}
 	for (const rule of asStrings(node.attrs.typBottomRules)) lines.push(`  ${rule},`);
