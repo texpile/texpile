@@ -20,7 +20,7 @@ import {
 } from '$lib/collab/sharedFiles';
 import { detectEol, fromLf, toLf, type Eol } from '$lib/workspace/edits/lineEndings';
 import type { TextSpan } from '$lib/comments/editGestures';
-import { createFileUndo } from './fileUndo';
+import { createFileUndo, joinLastStep } from './fileUndo';
 import { BufferSharing } from './bufferSharing';
 
 export const AUTOSAVE_MS = 1500;
@@ -307,7 +307,11 @@ export class TextBuffers {
 			}
 			const verified = await this.hooks.verify?.(abs, content).catch(() => null);
 			if (verified != null && verified !== content && this.text(rel) === t) {
-				this.fold(rel, verified, content);
+				const um = this.undo.get(rel);
+				const was = content;
+				// the check's rewrite is how the edit it saves is written, so it undoes with that edit
+				if (um) joinLastStep(um, () => this.fold(rel, verified, was));
+				else this.fold(rel, verified, was);
 				content = verified;
 			}
 			await this.hooks.beforeWrite?.(abs, content);

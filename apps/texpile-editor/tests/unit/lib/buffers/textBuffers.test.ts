@@ -88,6 +88,19 @@ describe('TextBuffers writing', () => {
 		}
 	});
 
+	it('undoes the save check rewrite together with the edit it saved, and keeps a redo waiting', async () => {
+		const { buffers, text, disk } = await open({ 'main.tex': 'one' }, { verify: async (_p, c) => (c === 'two' ? 'TWO' : null) });
+		const um = buffers.undoOf('main.tex')!;
+		buffers.fold('main.tex', 'two');
+		// the write comes after the autosave delay, well past the history's grouping window
+		um.stopCapturing();
+		await buffers.flushAll();
+		expect(disk['main.tex']).toBe('TWO');
+		um.undo();
+		await buffers.flushAll();
+		expect([text.toString(), disk['main.tex'], um.redoStack.length]).toEqual(['one', 'one', 1]);
+	});
+
 	it('writes what the save check hands back, and the text takes it too', async () => {
 		const { buffers, text, disk } = await open({ 'main.tex': 'one' }, { verify: async (_p, c) => c.toUpperCase() });
 		buffers.fold('main.tex', 'two');

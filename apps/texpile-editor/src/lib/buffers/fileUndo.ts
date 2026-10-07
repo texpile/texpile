@@ -34,3 +34,27 @@ export function markDecision(um: Y.UndoManager, seq: number): void {
 	um.undoStack[um.undoStack.length - 1]?.meta.set('decision', seq);
 	um.stopCapturing();
 }
+
+/** a change that settles the last step (the parse tidying an edit) undoes with that step; with no step to join, or a
+ *  redo waiting that a new step would clear, it is no step at all */
+export function joinLastStep(um: Y.UndoManager, change: () => void): void {
+	if (um.undoStack.length && !um.redoStack.length) {
+		/* eslint-disable no-param-reassign -- yjs merges into the last step only while lastChange is recent */
+		const last = um.lastChange;
+		um.lastChange = Date.now();
+		try {
+			change();
+		} finally {
+			um.lastChange = last;
+		}
+		/* eslint-enable no-param-reassign */
+		return;
+	}
+	const tracked = [...um.trackedOrigins];
+	um.trackedOrigins.clear();
+	try {
+		change();
+	} finally {
+		for (const origin of tracked) um.trackedOrigins.add(origin);
+	}
+}

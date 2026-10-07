@@ -1,6 +1,6 @@
 import { it, expect, afterEach } from 'vitest';
 import * as Y from 'yjs';
-import { createFileUndo, markDecision } from '$lib/buffers/fileUndo';
+import { createFileUndo, joinLastStep, markDecision } from '$lib/buffers/fileUndo';
 import { onDecisionStep, type DecisionStep } from '$lib/comments/decisionHistory';
 import { EDIT_ORIGIN } from '$lib/collab/sharedFiles';
 
@@ -29,4 +29,15 @@ it('replays a decision through undo and redo as a step of its own', () => {
 	expect(steps.at(-1)).toEqual({ seq: 7, undone: false });
 	um.undo();
 	expect(steps.at(-1)).toEqual({ seq: 7, undone: true });
+});
+
+// the save check tidying the text just after an undo must not take the redo away
+it('a tidy-up with a redo waiting is no step, and the redo stays', () => {
+	const doc = new Y.Doc();
+	const text = doc.getText('f:main.tex');
+	const um = createFileUndo(text, 'main.tex');
+	doc.transact(() => text.insert(0, 'hi'), EDIT_ORIGIN);
+	um.undo();
+	joinLastStep(um, () => doc.transact(() => text.insert(0, ' '), EDIT_ORIGIN));
+	expect([um.undoStack.length, um.redoStack.length]).toEqual([0, 1]);
 });
