@@ -159,9 +159,8 @@
 	}
 
 	onMount(() => {
-		// the Y.Text is the document, CRDT undo replaces CM history (plain CM undo would revert other
-		// people's edits); the file's own history when the buffers keep one, so it outlives this view
-		undoManager = collab ? (collab.undo ?? new Y.UndoManager(collab.ytext)) : null;
+		// the file's own history, not CM's: CM undo would revert other people's edits
+		undoManager = collab ? collab.undo : null;
 		const initialDoc = collab ? collab.ytext.toString() : value;
 		// folded into EditorState.create, not dispatched after mount, so the first paint is already
 		// in the right place
@@ -318,13 +317,8 @@
 		lsp.release();
 		unbindKeymap?.();
 		unbindKeymap = null;
-		// collab teardown: drop our cursor from awareness so peers don't see a ghost, and reap the
-		// undo manager's doc observer before the view goes
+		// drop our cursor from awareness so peers don't see a ghost
 		if (collab) collab.awareness.setLocalStateField('cursor', null);
-		if (undoManager && undoManager !== collab?.undo) {
-			undoManager.clear();
-			undoManager.destroy();
-		}
 		undoManager = null;
 		view?.destroy();
 		view = null;

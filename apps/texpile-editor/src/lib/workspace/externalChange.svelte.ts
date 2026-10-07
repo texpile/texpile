@@ -46,8 +46,8 @@ export class ExternalChangeWatcher {
 	 * external write is a different question and does get asked.
 	 */
 	deferred = $state<{ path: string; disk: string } | null>(null);
-	/** told after disk content replaced the buffer, for state resolved against the old text */
-	onAdopted: (() => void) | null = null;
+	/** told after disk content replaced the buffer, with that content: the visual editor shows it only after its redraw */
+	onAdopted: ((text: string) => void) | null = null;
 
 	constructor(private deps: ExternalChangeDeps) {}
 
@@ -108,7 +108,7 @@ export class ExternalChangeWatcher {
 		this.deferred = null;
 		d.adopt(path, disk, eol);
 		isDirty.current = false;
-		this.onAdopted?.();
+		this.onAdopted?.(disk);
 	}
 
 	/** 'defer' answers neither: disk keeps its bytes, the buffer keeps its edits and stays dirty.

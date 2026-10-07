@@ -78,7 +78,7 @@ export function buildWindowState(viewMode: ViewMode | null): WindowStatePayload 
 		// the open file's mark is the one the tab bar paints; any other tab's file can hold edits a session wrote into it
 		const dirty = isDirty.current;
 		function unwritten(p: string): boolean {
-			const r = collabHost.relOf(p);
+			const r = collabHost.keyOf(p);
 			return !!r && !!collabHost.files?.isDirty(r);
 		}
 		const list = tabs.paths;

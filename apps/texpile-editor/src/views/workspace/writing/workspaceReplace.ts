@@ -14,7 +14,7 @@ import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspac
 import type { TextEdit } from '$lib/workspace/edits/textEdits';
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
-import type { FileWriter } from '$lib/workspace/fileWriter';
+import type { FileWriter } from '$lib/buffers/fileWriter';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
 

@@ -68,8 +68,10 @@ export class BufferSharing {
 		}, SEED_ORIGIN);
 		// one update: a guest that syncs meanwhile gets every file or none
 		b.shared.transact(() => {
-			for (const [rel, body] of bodies) b.seedShared(rel, body.text, body.eol, body.size);
+			// a file opened while the reads ran holds its edits since; the read is older
+			for (const [rel, body] of bodies) if (!b.has(rel)) b.seedShared(rel, body.text, body.eol, body.size);
 		}, SEED_ORIGIN);
+		b.forgetSharedHistory();
 		this.on = true;
 		b.track(true);
 		return { oversizedText };

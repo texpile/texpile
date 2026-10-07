@@ -74,7 +74,8 @@
 
 	/** WorkspaceView calls this from the visual editor's onChange (a local edit just serialized). */
 	export function noteLocalEdit(): void {
-		if (!active() || !session.collabFor(path)) return;
+		// fresh stamps are for a collaborator's patches; alone it would re-parse a long paper at every pause
+		if (!session.active || !active() || !session.collabFor(path)) return;
 		origStale = true;
 		scheduleRemotePatch(Math.max(800, remoteParseMs * 2));
 	}

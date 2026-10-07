@@ -11,7 +11,7 @@
 import { activeFilePath } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { basename } from '$lib/workspace/fileSystem';
-import type { FileWriter } from '$lib/workspace/fileWriter';
+import type { FileWriter } from '$lib/buffers/fileWriter';
 import { promptAsk } from '$lib/modals/confirm.svelte';
 import { m } from '$lib/paraglide/messages';
 

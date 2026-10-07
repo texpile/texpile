@@ -3,12 +3,11 @@
 // them together.
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { untrack } from 'svelte';
-import * as Y from 'yjs';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
-import { FileWriter } from '$lib/workspace/fileWriter';
+import { FileWriter } from '$lib/buffers/fileWriter';
 import { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
-import { DISK_ORIGIN, EDIT_ORIGIN } from '$lib/collab/sharedFiles';
+import { EDIT_ORIGIN } from '$lib/collab/sharedFiles';
 import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
 import { diskChangedSince, recordDiskStamp } from '$lib/workspace/diskStamp';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -56,7 +55,7 @@ export class WorkspaceEditFlow {
 			getLoadedPath: () => doc.path,
 			isGuest: d.guest,
 			files: () => collabHost.files,
-			relOf: (p) => collabHost.relOf(p)
+			keyOf: (p) => collabHost.keyOf(p)
 		});
 		// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
 		this.external = new ExternalChangeWatcher({
@@ -96,8 +95,7 @@ export class WorkspaceEditFlow {
 		// takes those in by its own patch (VisualCollab) and the source editor through its binding
 		collabHost.onTextChange = (path, origin) => {
 			if (!samePath(path, doc.path ?? '') || origin === EDIT_ORIGIN) return;
-			// typing is never back at the saved text often enough to compare each keystroke
-			isDirty.current = origin === DISK_ORIGIN || origin instanceof Y.UndoManager ? this.saver.isDirty(path) : true;
+			isDirty.current = this.saver.isDirty(path);
 			if (modes.mode === 'visual' && hasVisualMode(doc.kind)) return;
 			const text = d.session().collabFor(path)?.ytext.toString();
 			if (text === undefined) return;

@@ -1,8 +1,6 @@
-// The workspace's hands on the text buffers' writer, in absolute paths. Every edit is already in a
-// file's text the moment it is made (session().edit); this is what flushes, saves, sets aside and
-// takes in from disk around it. A guest has no disk, so all of it does nothing there.
-import type { Eol } from './edits/lineEndings';
-import type { TextBuffers } from '$lib/buffers/textBuffers';
+// the buffers' writer by absolute path, for the workspace; a guest has no disk, so it does nothing there
+import type { Eol } from '$lib/workspace/edits/lineEndings';
+import type { TextBuffers } from './textBuffers';
 
 export type FileWriterDeps = {
 	getLoadedPath(): string | null;
@@ -10,7 +8,7 @@ export type FileWriterDeps = {
 	/** the open folder's buffers, null while none is open */
 	files(): TextBuffers | null;
 	/** the path's place in that folder, or null when it is outside it */
-	relOf(path: string): string | null;
+	keyOf(path: string): string | null;
 };
 
 export class FileWriter {
@@ -22,7 +20,7 @@ export class FileWriter {
 
 	private target(path: string | null): { files: TextBuffers; rel: string } | null {
 		const files = this.files;
-		const rel = files && path ? this.deps.relOf(path) : null;
+		const rel = files && path ? this.deps.keyOf(path) : null;
 		return files && rel && files.has(rel) ? { files, rel } : null;
 	}
 
@@ -34,13 +32,24 @@ export class FileWriter {
 		return { path: path!, content: t.files.text(t.rel)!.toString() };
 	}
 
-	/** files other than the open one whose edits wait on a change on disk: nothing on screen asks about them */
+	/** files whose edits wait on a change on disk, the open one too: leaving the folder asks about them */
 	stranded(): string[] {
 		const files = this.files;
-		if (!files) return [];
-		const loaded = this.deps.getLoadedPath();
-		const open = loaded ? this.deps.relOf(loaded) : null;
-		return files.refusedFiles.filter((rel) => rel !== open).map((rel) => files.abs(rel));
+		return files ? files.refusedFiles.map((rel) => files.abs(rel)) : [];
+	}
+
+	/** something at `path`, or under it, holds edits that are not on disk */
+	unwrittenUnder(path: string): boolean {
+		const files = this.files;
+		const key = files ? this.deps.keyOf(path) : null;
+		return !!key && files!.under(key).some((k) => files!.hasPending(k) || files!.isDirty(k));
+	}
+
+	/** `path` is deleted: what was held of it, and of everything under it, goes */
+	dropUnder(path: string): void {
+		const files = this.files;
+		const key = files ? this.deps.keyOf(path) : null;
+		if (key) for (const k of files!.under(key)) files!.drop(k);
 	}
 
 	/** a write of this file found it changed on disk */
@@ -85,23 +94,11 @@ export class FileWriter {
 		return t ? t.files.save(t.rel, force) : Promise.resolve(false);
 	}
 
-	/** stop a file's pending write (the open one when no path); its text keeps the change */
-	discard(path = this.deps.getLoadedPath()): void {
-		const t = this.target(path);
-		if (t) t.files.discard(t.rel);
-	}
-
 	/** the open file's unwritten change, taken out: its text goes back to what is on disk */
 	detach(): { path: string; content: string } | null {
 		const p = this.pending;
 		if (p) this.revert(p.path);
 		return p;
-	}
-
-	/** a change taken out by detach, put back */
-	reattach(p: { path: string; content: string }): void {
-		const t = this.target(p.path);
-		if (t) t.files.fold(t.rel, p.content);
 	}
 
 	/** drop a file's unwritten change: its text goes back to the disk as last known */
@@ -125,14 +122,14 @@ export class FileWriter {
 	/** catch every other buffered file up with its disk */
 	async syncFromDisk(): Promise<void> {
 		const loaded = this.deps.getLoadedPath();
-		await this.files?.syncFromDisk((loaded && this.deps.relOf(loaded)) || undefined);
+		await this.files?.syncFromDisk((loaded && this.deps.keyOf(loaded)) || undefined);
 	}
 
 	/** a rename moved a file or folder: its text and unwritten edits go along */
 	retarget(from: string, to: string): void {
 		const files = this.files;
-		const a = this.deps.relOf(from);
-		const b = this.deps.relOf(to);
+		const a = this.deps.keyOf(from);
+		const b = this.deps.keyOf(to);
 		if (files && a && b) files.move(a, b);
 	}
 }

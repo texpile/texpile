@@ -16,7 +16,7 @@ import { countOpenFile } from '$lib/stores/countStore.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
-import type { FileWriter } from '$lib/workspace/fileWriter';
+import type { FileWriter } from '$lib/buffers/fileWriter';
 import { fromLf } from '$lib/workspace/edits/lineEndings';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { openTexFileOf } from '$lib/workspace/edits/openEditorEdit';

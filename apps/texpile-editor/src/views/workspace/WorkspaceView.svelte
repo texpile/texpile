@@ -100,7 +100,7 @@
 	wireRefiner({ comments: commentsW, doc, modes, kind: () => kind, guest: () => guest });
 	// an outside write adopted into the open file (an agent, vim) re-places its threads now, so a
 	// rewritten quote badges detached at once rather than at the next mode switch
-	external.onAdopted = () => void commentsW.adoptDisk();
+	external.onAdopted = (text) => void commentsW.adoptDisk(text);
 	unsaved.onDiscard = (path) => commentsW.discarded(path);
 	editFlow.installWriteHooks({
 		verify: (path, content) => doc.verifyForWrite(path, content),

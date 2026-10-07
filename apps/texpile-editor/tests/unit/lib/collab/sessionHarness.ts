@@ -305,11 +305,8 @@ export async function startSession(o: SessionOptions) {
 		},
 		saveNow: () => {}
 	});
-	// as WorkspaceView and hostStore wire it: the open file records the host's own typing first
-	buffers.hooks.beforeWrite = (path, content) => {
-		const rel = path.replace(/^\/w\//, '');
-		return hostEditor && rel === FILE ? hostCtl.suggestions.beforeSave(rel, content) : hostCtl.beforeRemoteWrite(rel, content);
-	};
+	// as WorkspaceView wires it
+	buffers.hooks.beforeWrite = (path, content) => hostCtl.suggestions.beforeSave(path.replace(/^\/w\//, ''), content);
 	buffers.senderOf = (origin) => host.session.senderOf(origin);
 	buffers.onRemoteChange = (rel, before, after, from, gestures) =>
 		hostCtl.remoteEdit(rel, before, after, { ...host.session.authorOf(from), gestures });

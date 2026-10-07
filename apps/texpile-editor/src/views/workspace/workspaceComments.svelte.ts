@@ -9,7 +9,6 @@ import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { userData } from '$lib/storage/userData';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
-import { samePath } from '$lib/workspace/fileSystem';
 import { isSafeRel } from '$lib/collab/protocol';
 import { shareComments } from '$lib/collab/sharedComments';
 import { changedSpans } from '$lib/collab/sharedFiles';
@@ -237,13 +236,8 @@ export class WorkspaceComments {
 	/** before a file's text goes to disk: the open file records the reader's own typing first; any other holds only
 	 *  collaborators' edits, recorded as they came */
 	async beforeWrite(absPath: string, content: string): Promise<void> {
-		if (this.d.doc.path && samePath(absPath, this.d.doc.path)) {
-			await this.beforeSave(absPath, content);
-			await this.ctl.syncAnchorsToText(absPath, content);
-			return;
-		}
-		const rel = collabHost.relOf(absPath);
-		if (rel) await this.ctl.beforeRemoteWrite(rel, content);
+		await this.beforeSave(absPath, content);
+		await this.ctl.syncAnchorsToText(absPath, content);
 	}
 
 	async beforeSave(absPath: string, content: string): Promise<void> {
@@ -259,10 +253,10 @@ export class WorkspaceComments {
 		if (root) void this.ctl.suggestions.discardUnsaved(relativeTo(root, absPath));
 	}
 
-	async adoptDisk(): Promise<void> {
+	async adoptDisk(text: string): Promise<void> {
 		const file = this.ctl.activeFile;
-		if (file) await this.ctl.suggestions.adoptDisk(file, this.activeText());
-		this.reanchorNow();
+		if (file) await this.ctl.suggestions.adoptDisk(file, text);
+		this.ctl.reanchor(this.d.doc.path, text);
 	}
 
 	/** re-search the open file's threads against its text as it is now; see the reanchor effect */

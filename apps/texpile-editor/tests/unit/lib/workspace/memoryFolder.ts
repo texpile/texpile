@@ -1,6 +1,6 @@
 // an open folder on an in-memory disk: its text buffers and the writer the workspace puts over them
 import { TextBuffers, type TextBuffersFs, type WriteHooks } from '$lib/buffers/textBuffers';
-import { FileWriter } from '$lib/workspace/fileWriter';
+import { FileWriter } from '$lib/buffers/fileWriter';
 
 /** absolute path -> file content */
 export type MemoryDisk = Record<string, string>;
@@ -39,7 +39,7 @@ export async function openMemoryFolder(
 	const buffers = new TextBuffers(root, fs, (r, rel) => `${r}/${rel}`);
 	buffers.hooks = opts.hooks ?? {};
 	const relOf = (p: string) => (p.startsWith(root + '/') ? p.slice(root.length + 1) : null);
-	const writer = new FileWriter({ getLoadedPath: opts.loaded ?? (() => null), isGuest: () => false, files: () => buffers, relOf });
+	const writer = new FileWriter({ getLoadedPath: opts.loaded ?? (() => null), isGuest: () => false, files: () => buffers, keyOf: relOf });
 	for (const p of opts.open ?? []) await buffers.ensure(relOf(p)!);
 	return {
 		buffers,

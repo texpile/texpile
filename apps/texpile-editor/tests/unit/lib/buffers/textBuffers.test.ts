@@ -1,6 +1,7 @@
 // The one writer: every change to a file's text reaches disk, never over someone else's write, and what the disk
 // says comes back in as an edit that is undone like any other and never written back.
 import { describe, it, expect, vi } from 'vitest';
+import * as Y from 'yjs';
 import { TextBuffers, type WriteHooks } from '$lib/buffers/textBuffers';
 import { manifestOf } from '$lib/collab/session';
 
@@ -173,5 +174,119 @@ describe('TextBuffers and a session', () => {
 		await buffers.sharing.start();
 		const manifest = manifestOf(buffers.shared);
 		expect([manifest.get('main.tex')?.kind, manifest.get('refs.bib')?.kind, manifest.has('.latexmkrc')]).toEqual(['text', 'text', false]);
+	});
+});
+
+describe('TextBuffers around writes that race', () => {
+	it('holds a file outside the folder by its own path, writes it there and never shares it', async () => {
+		const { buffers, disk } = await open({ 'main.tex': 'one', '/elsewhere/defs.tex': 'defs' });
+		await buffers.ensure('/elsewhere/defs.tex');
+		buffers.fold('/elsewhere/defs.tex', 'defs changed');
+		await buffers.flushAll();
+		expect([disk['/elsewhere/defs.tex'], buffers.inShared('/elsewhere/defs.tex')]).toEqual(['defs changed', false]);
+	});
+
+	it('saves the text when the comment log cannot be written', async () => {
+		const beforeWrite = async () => {
+			throw new Error('read-only .texpile');
+		};
+		const { buffers, disk } = await open({ 'main.tex': 'one' }, { beforeWrite });
+		buffers.fold('main.tex', 'two');
+		await buffers.flushAll();
+		expect(disk['main.tex']).toBe('two');
+	});
+
+	it('does not bring back a file deleted outside on autosave; Ctrl+S does', async () => {
+		const d = fakeDisk({ 'main.tex': 'one' });
+		const buffers = new TextBuffers('root', d.fs, (r, rel) => `${r}/${rel}`);
+		buffers.hooks = { diskChanged: async (p) => (p.replace(/^root\//, '') in d.disk ? false : 'gone') };
+		await buffers.ensure('main.tex');
+		buffers.fold('main.tex', 'two');
+		delete d.disk['main.tex'];
+		await buffers.flushAll();
+		expect('main.tex' in d.disk).toBe(false);
+		await buffers.save('main.tex');
+		expect(d.disk['main.tex']).toBe('two');
+	});
+
+	it('writes nothing over a change on disk made while the save check ran', async () => {
+		const stamped: Record<string, string> = {};
+		const d = fakeDisk({ 'main.tex': 'one' });
+		const rel = (p: string) => p.replace(/^root\//, '');
+		const buffers = new TextBuffers('root', d.fs, (r, x) => `${r}/${x}`);
+		buffers.hooks = {
+			diskChanged: async (p) => p in stamped && d.disk[rel(p)] !== stamped[p],
+			recordStamp: async (p) => void (stamped[p] = d.disk[rel(p)]),
+			verify: async () => {
+				d.disk['main.tex'] = 'theirs';
+				return null;
+			}
+		};
+		await buffers.ensure('main.tex');
+		await Promise.resolve();
+		buffers.fold('main.tex', 'mine');
+		await buffers.flushAll();
+		expect([d.disk['main.tex'], buffers.refusedFiles]).toEqual(['theirs', ['main.tex']]);
+	});
+
+	it('a rename while a write waits on the save check leaves the old name gone', async () => {
+		let release = () => {};
+		let entered = () => {};
+		const checked = new Promise<void>((r) => (release = r));
+		const inCheck = new Promise<void>((r) => (entered = r));
+		const verify = async () => {
+			entered();
+			await checked;
+			return null;
+		};
+		const { buffers, disk } = await open({ 'main.tex': 'one' }, { verify });
+		buffers.fold('main.tex', 'two');
+		const writing = buffers.flushAll();
+		await inCheck;
+		disk['ch.tex'] = disk['main.tex'];
+		delete disk['main.tex'];
+		buffers.move('main.tex', 'ch.tex');
+		release();
+		await writing;
+		await buffers.flushAll();
+		expect(['main.tex' in disk, disk['ch.tex']]).toEqual([false, 'two']);
+	});
+
+	it('keeps a byte order mark through a save', async () => {
+		const { buffers, disk } = await open({ 'main.tex': '﻿one' });
+		buffers.fold('main.tex', buffers.text('main.tex')!.toString() + '!');
+		await buffers.flushAll();
+		expect(disk['main.tex']).toBe('﻿one!');
+	});
+});
+
+describe('TextBuffers when a session starts', () => {
+	it('sends nothing deleted before it started', async () => {
+		const { buffers, text } = await open({ 'main.tex': 'one' });
+		buffers.fold('main.tex', 'one secret words');
+		buffers.undoOf('main.tex')!.stopCapturing();
+		buffers.fold('main.tex', 'one');
+		await buffers.sharing.start();
+		expect([text.toString(), new TextDecoder().decode(Y.encodeStateAsUpdate(buffers.shared)).includes('secret')]).toEqual(['one', false]);
+	});
+
+	it('keeps the edits of a file opened while its files were read', async () => {
+		let release = () => {};
+		const slow = new Promise<void>((r) => (release = r));
+		const { buffers, fs } = await open({ 'main.tex': 'one', 'ch.tex': 'disk' });
+		const read = fs.readBytes;
+		let reads = 0;
+		// the session's read of ch.tex waits; the editor's own read of it does not
+		fs.readBytes = async (p: string) => {
+			if (p === 'root/ch.tex' && reads++ === 0) await slow;
+			return read(p);
+		};
+		const starting = buffers.sharing.start();
+		await new Promise((r) => setTimeout(r, 0));
+		await buffers.ensure('ch.tex');
+		buffers.fold('ch.tex', 'typed meanwhile');
+		release();
+		await starting;
+		expect(buffers.text('ch.tex')!.toString()).toBe('typed meanwhile');
 	});
 });

@@ -139,12 +139,8 @@ async function connect(log: CommentEvent[], hostOpens: string | null = '/w/main.
 		},
 		saveNow: () => {}
 	});
-	// as WorkspaceView wires it: the open file records the host's own typing first
-	let hostFile = hostOpens;
-	buffers.hooks.beforeWrite = (path, content) => {
-		const rel = path.replace(/^\/w\//, '');
-		return path === hostFile ? hostCtl.suggestions.beforeSave(rel, content) : hostCtl.beforeRemoteWrite(rel, content);
-	};
+	// as WorkspaceView wires it
+	buffers.hooks.beforeWrite = (path, content) => hostCtl.suggestions.beforeSave(path.replace(/^\/w\//, ''), content);
 	buffers.senderOf = (origin) => host.session.senderOf(origin);
 	buffers.onRemoteChange = (rel, before, after, from, gestures) =>
 		hostCtl.remoteEdit(rel, before, after, { ...host.session.authorOf(from), gestures });
@@ -235,7 +231,6 @@ async function connect(log: CommentEvent[], hostOpens: string | null = '/w/main.
 		},
 		hostEdit,
 		hostOpen(path: string | null) {
-			hostFile = path;
 			hostText = path ? disk['main.tex'] : '';
 			hostCtl.reanchor(path, hostText);
 		},

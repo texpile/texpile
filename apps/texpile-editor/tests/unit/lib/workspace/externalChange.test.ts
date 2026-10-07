@@ -63,6 +63,15 @@ describe('adopt or ask', () => {
 		expect(isDirty.current).toBe(false);
 	});
 
+	// the visual editor shows the disk text only after its redraw; the comments place against the disk text now
+	it('hands what it took in to whoever re-places against it', async () => {
+		const w = makeWatcher({ readText: async () => 'theirs', getBuffer: () => 'mine', hasUnwritten: () => false });
+		const adopted = vi.fn();
+		w.onAdopted = adopted;
+		await w.check();
+		expect(adopted).toHaveBeenCalledWith('theirs');
+	});
+
 	it('asks when the text holds unwritten edits, whatever the dirty flag says', async () => {
 		isDirty.current = false;
 		const adopt = vi.fn();

@@ -19,7 +19,8 @@ import {
 	trashEntry,
 	scanTree,
 	fileUrl,
-	relativeTo,
+	relativeInside,
+	readSourceFile,
 	joinPath
 } from '$lib/workspace/fileSystem';
 import { resolveRealRelative } from '$lib/workspace/realRelative';
@@ -114,6 +115,12 @@ class HostCollabController {
 			{
 				// texfile:// serves raw bytes with CORS; one read covers both the sniff and the body
 				readBytes: async (p) => {
+					// texfile:// serves only the open folders: a file outside them comes through the bridge, UTF-8 only
+					if (!relativeInside(root, p)) {
+						const { text, encoding } = await readSourceFile(p);
+						if (encoding !== 'utf8' && encoding !== 'utf8bom') throw new Error(`not UTF-8: ${p}`);
+						return new TextEncoder().encode(text);
+					}
 					const res = await fetch(fileUrl(p), { cache: 'no-store' });
 					if (!res.ok) throw new Error(`could not read ${p}`);
 					return new Uint8Array(await res.arrayBuffer());
@@ -137,8 +144,11 @@ class HostCollabController {
 		const buffers = this.buffers;
 		if (!buffers) return;
 		if (this.active) await this.end();
-		this.buffers = null;
-		this.root = null;
+		// a folder opened while the session ended has buffers of its own by now
+		if (this.buffers === buffers) {
+			this.buffers = null;
+			this.root = null;
+		}
 		await buffers.flushAll();
 		buffers.destroy();
 		this.manifestRev++;
@@ -212,7 +222,15 @@ class HostCollabController {
 			buffers.onRemoteChange = (rel, before, after, from, gestures) =>
 				this.onGuestEdit?.(rel, before, after, { ...session.authorOf(from), gestures });
 			session.setSuggesting(this.suggesting);
-			this.oversizedText = (await buffers.sharing.start()).oversizedText;
+			try {
+				this.oversizedText = (await buffers.sharing.start()).oversizedText;
+			} catch (e) {
+				// it is already listening to the buffers, which outlive it
+				session.destroy();
+				buffers.senderOf = null;
+				buffers.onRemoteChange = null;
+				throw e;
+			}
 
 			this.session = session;
 			this.transport = transport;
@@ -275,20 +293,19 @@ class HostCollabController {
 		}
 	}
 
+	/** the path's place in the shared folder, or null outside it */
 	private rel(absPath: string): string | null {
-		if (!this.root) return null;
-		const rel = relativeTo(this.root, absPath).replace(/\\/g, '/');
-		return rel === absPath.replace(/\\/g, '/') ? null : rel; // outside the root
+		return this.root ? relativeInside(this.root, absPath) : null;
 	}
 
-	/** the path's place in the open folder, forward slashes, or null when it is outside it */
-	relOf(absPath: string): string | null {
-		return this.buffers ? this.rel(absPath) : null;
+	/** the file's key in the buffers: its place in the folder, or its own path when it is outside it */
+	keyOf(absPath: string): string | null {
+		return this.buffers && this.root ? (relativeInside(this.root, absPath) ?? absPath) : null;
 	}
 
 	/** every editor edit funnels through here (called per keystroke) */
 	edit(absPath: string, content: string, before?: string): void {
-		const rel = this.relOf(absPath);
+		const rel = this.keyOf(absPath);
 		function lf(s: string) {
 			return s.replace(/\r\n?/g, '\n');
 		}
@@ -298,7 +315,7 @@ class HostCollabController {
 	/** the file is about to open: its text comes into the buffers, or catches up with its disk */
 	async beforeOpen(absPath: string): Promise<void> {
 		const buffers = this.current();
-		const rel = buffers ? this.rel(absPath) : null;
+		const rel = buffers ? this.keyOf(absPath) : null;
 		if (!buffers || !rel) return;
 		const had = buffers.has(rel);
 		await buffers.ensure(rel);
@@ -464,7 +481,7 @@ class HostCollabController {
 	/** the editors' binding to a buffered file's text */
 	collabFor(absPath: string | null): CollabBinding | null {
 		const buffers = this.buffers;
-		const rel = buffers && absPath ? this.rel(absPath) : null;
+		const rel = buffers && absPath ? this.keyOf(absPath) : null;
 		const ytext = rel ? buffers!.text(rel) : null;
 		if (!rel || !ytext) return null;
 		return { ytext, awareness: buffers!.awarenessOf(rel)!, undo: buffers!.undoOf(rel)! };

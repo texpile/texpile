@@ -1,12 +1,8 @@
-// Every text file the workspace has opened, as CRDT text, and the one writer that puts it on disk.
-// Editors bind to the text, so a change from anywhere (a collaborator, the disk, an undo) reaches
-// every editor on the file. A file a session may share lives in the doc a session syncs; the rest
-// (hidden, generated, too big for the relay) in one that never leaves this machine.
-//
-// Injected fs and hooks so the whole thing runs headless in tests.
+// every text file the folder has open, as CRDT text, and the one writer that puts it on disk
 import * as Y from 'yjs';
 import { Awareness } from 'y-protocols/awareness';
-import { LocalFork } from '$lib/collab/localFork';
+import { LocalFork, splice } from '$lib/collab/localFork';
+import { spliceDiff } from '$lib/collab/spliceDiff';
 import { manifestOf, textOf } from '$lib/collab/session';
 import {
 	DISK_ORIGIN,
@@ -20,7 +16,7 @@ import {
 } from '$lib/collab/sharedFiles';
 import { detectEol, fromLf, toLf, type Eol } from '$lib/workspace/edits/lineEndings';
 import type { TextSpan } from '$lib/comments/editGestures';
-import { createFileUndo, joinLastStep } from './fileUndo';
+import { createFileUndo, forgetDeleted, joinLastStep } from './fileUndo';
 import { BufferSharing } from './bufferSharing';
 
 export const AUTOSAVE_MS = 1500;
@@ -36,8 +32,8 @@ export type TextBuffersFs = {
 
 /** what the workspace does around a write; every one optional, so a test needs none */
 export type WriteHooks = {
-	/** someone else wrote the file since this side last read or wrote it */
-	diskChanged?(absPath: string): Promise<boolean>;
+	/** someone else wrote the file since this side last read or wrote it; 'gone' when it was there and is not */
+	diskChanged?(absPath: string): Promise<boolean | 'gone'>;
 	/** the file is known as of now: just read, written or taken in */
 	recordStamp?(absPath: string): Promise<void>;
 	/** the save check: the content to write instead, or null to keep it */
@@ -55,6 +51,10 @@ export type WriteHooks = {
 
 type Seeded = { doc: Y.Doc; eol: Eol };
 
+function outside(key: string): boolean {
+	return /^([\\/]|[A-Za-z]:)/.test(key);
+}
+
 export class TextBuffers {
 	/** what a session syncs: the manifest, the shareable files' text, the comment log */
 	readonly shared = new Y.Doc();
@@ -63,10 +63,7 @@ export class TextBuffers {
 	readonly local = new Y.Doc();
 	readonly awareness = new Awareness(this.shared);
 	private readonly localAwareness = new Awareness(this.local);
-	private readonly forks = new Map<Y.Doc, LocalFork>([
-		[this.shared, new LocalFork(this.shared)],
-		[this.local, new LocalFork(this.local)]
-	]);
+	private readonly fork = new LocalFork(this.shared);
 	hooks: WriteHooks = {};
 	/** a change to a file's text from anywhere but its own seeding */
 	onChange: ((rel: string, origin: unknown) => void) | null = null;
@@ -100,8 +97,9 @@ export class TextBuffers {
 		this.sharing = new BufferSharing(this, root, fs);
 	}
 
+	/** a key is the file's place in the folder, or its own path for a file outside it */
 	abs(rel: string): string {
-		return this.joinPath(this.root, rel);
+		return outside(rel) ? rel : this.joinPath(this.root, rel);
 	}
 
 	has(rel: string): boolean {
@@ -132,6 +130,11 @@ export class TextBuffers {
 	isDirty(rel: string): boolean {
 		const t = this.text(rel);
 		return !!t && t.toString() !== this.baseline.get(rel);
+	}
+
+	/** the files held at `key` or under it, when it is a folder */
+	under(key: string): string[] {
+		return [...this.seeded.keys()].filter((k) => k === key || k.startsWith(key + '/'));
 	}
 
 	hasPending(rel: string): boolean {
@@ -178,7 +181,7 @@ export class TextBuffers {
 	}
 
 	private shareable(rel: string, size: number): boolean {
-		return isShared(rel) && !isGeneratedArtifact(rel) && size <= MAX_TEXT_BYTES;
+		return !outside(rel) && isShared(rel) && !isGeneratedArtifact(rel) && size <= MAX_TEXT_BYTES;
 	}
 
 	private seed(rel: string, text: string, eol: Eol, doc: Y.Doc, size: number): void {
@@ -289,32 +292,27 @@ export class TextBuffers {
 		const t = this.text(rel);
 		if (!t || this.destroyed) return false;
 		const abs = this.abs(rel);
+		// a rename or a drop while a hook ran: this name no longer holds this text
+		const stillHere = () => !this.destroyed && this.text(rel) === t;
 		let content = t.toString();
 		try {
 			if (!notify && content === this.baseline.get(rel)) {
 				// even when the changes cancel out: what they moved is still recorded
-				await this.hooks.beforeWrite?.(abs, content);
+				await this.beforeWrite(abs, content);
 				return true;
 			}
-			// The point of no return for someone else's edit: the write replaces the whole file, so if
-			// disk moved since this side last read or wrote it, writing now would silently destroy that
-			// change. The text keeps the edit, so nothing of this side's is lost either
-			if (!force && (await this.hooks.diskChanged?.(abs))) {
-				this.pending.add(rel);
-				this.refused.add(rel);
-				this.hooks.conflict?.(abs, notify);
-				return false;
-			}
+			if (await this.heldBack(rel, abs, notify, force)) return false;
 			const verified = await this.hooks.verify?.(abs, content).catch(() => null);
-			if (verified != null && verified !== content && this.text(rel) === t) {
-				const um = this.undo.get(rel);
+			if (!stillHere()) return false;
+			if (verified != null && verified !== content) {
 				const was = content;
 				// the check's rewrite is how the edit it saves is written, so it undoes with that edit
-				if (um) joinLastStep(um, () => this.fold(rel, verified, was));
-				else this.fold(rel, verified, was);
+				joinLastStep(this.undoOf(rel)!, () => this.fold(rel, verified, was));
 				content = verified;
 			}
-			await this.hooks.beforeWrite?.(abs, content);
+			await this.beforeWrite(abs, content);
+			// again right before the bytes go: the save check takes a while on a long paper
+			if (!stillHere() || (await this.heldBack(rel, abs, notify, force))) return false;
 			await this.fs.writeText(abs, fromLf(content, this.eolOf(rel)));
 			await this.hooks.recordStamp?.(abs);
 			this.baseline.set(rel, content);
@@ -324,17 +322,38 @@ export class TextBuffers {
 			return true;
 		} catch (e) {
 			// a write that did not land keeps the change pending, so the next flush retries it
-			this.pending.add(rel);
+			if (stillHere()) this.pending.add(rel);
 			this.hooks.failed?.(abs, e);
 			return false;
 		}
+	}
+
+	/** the file changed on disk since this side knew it: the edit waits for someone to choose. A file deleted
+	 *  outside comes back only on Ctrl+S */
+	private async heldBack(rel: string, abs: string, notify: boolean, force: boolean): Promise<boolean> {
+		if (force) return false;
+		const disk = await this.hooks.diskChanged?.(abs);
+		if (!disk || (disk === 'gone' && notify)) return false;
+		this.pending.add(rel);
+		this.refused.add(rel);
+		this.hooks.conflict?.(abs, notify);
+		return true;
+	}
+
+	/** a comment log that cannot be written must not keep the text from being saved */
+	private async beforeWrite(abs: string, content: string): Promise<void> {
+		await this.hooks.beforeWrite?.(abs, content).catch(() => undefined);
 	}
 
 	/** carry an editor's change from `before` to `content` into the file's text; with no `before` it goes in whole */
 	fold(rel: string, content: string, before?: string, origin: unknown = EDIT_ORIGIN): void {
 		const s = this.seeded.get(rel);
 		if (!s) return;
-		this.forks.get(s.doc)!.fold(textOf(s.doc, rel), content, before, origin);
+		const t = textOf(s.doc, rel);
+		if (s.doc === this.shared) return this.fork.fold(t, content, before, origin);
+		// nothing merges into the local doc: the editor's text goes in as it differs from the file's
+		const change = spliceDiff(t.toString(), content);
+		if (change) this.local.transact(() => splice(t, change), origin);
 	}
 
 	/** the file changed on disk: its text takes the new content as one undoable edit, never written back */
@@ -398,7 +417,10 @@ export class TextBuffers {
 			const eol = this.eolOf(rel);
 			const unwritten = this.pending.has(rel) || content !== base;
 			this.drop(rel);
-			this.seed(next, content, eol, this.shareable(next, content.length) ? this.shared : this.local, content.length);
+			// a buffer left at the new name (a file deleted there earlier) has nothing to do with this one
+			this.drop(next);
+			const size = new TextEncoder().encode(content).byteLength;
+			this.seed(next, content, eol, this.shareable(next, size) ? this.shared : this.local, size);
 			this.baseline.set(next, base);
 			if (unwritten) {
 				this.pending.add(next);
@@ -450,6 +472,12 @@ export class TextBuffers {
 		if (on) for (const [rel, s] of this.seeded) if (s.doc === this.shared) this.running.set(rel, textOf(s.doc, rel).toString());
 	}
 
+	/** a session starts: the shared files' histories start over, and the text they kept deleted stays here */
+	forgetSharedHistory(): void {
+		const histories = [...this.seeded].flatMap(([rel, s]) => (s.doc === this.shared && this.undo.get(rel) ? [this.undo.get(rel)!] : []));
+		forgetDeleted(this.shared, histories);
+	}
+
 	/** the file's text lives in the doc a session syncs */
 	inShared(rel: string): boolean {
 		return this.seeded.get(rel)?.doc === this.shared;
@@ -469,7 +497,7 @@ export class TextBuffers {
 		this.observers.clear();
 		for (const um of this.undo.values()) um.destroy();
 		this.undo.clear();
-		for (const fork of this.forks.values()) fork.destroy();
+		this.fork.destroy();
 		this.awareness.destroy();
 		this.localAwareness.destroy();
 		this.shared.destroy();

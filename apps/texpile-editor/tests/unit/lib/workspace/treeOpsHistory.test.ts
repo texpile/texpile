@@ -64,7 +64,7 @@ function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin =
 		insertIncludeAtCursor: () => true,
 		afterRename: () => {},
 		retargetPendingSave: (from, to) => void saveCalls.push(`retarget ${from} -> ${to}`),
-		discardPendingSave: () => void saveCalls.push('discard'),
+		forgetBuffers: (path) => void saveCalls.push(`forget ${path}`),
 		confirmReplace: async () => replaceAnswer.ok
 	};
 	return { files, backups, deps };

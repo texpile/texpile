@@ -574,11 +574,6 @@ export class CommentsController {
 		void this.suggestions.remoteEdit(file, before, after, edit);
 	}
 
-	/** before a collaborator's changes go to disk, so the log never trails the file */
-	async beforeRemoteWrite(file: string, content: string): Promise<void> {
-		if (this.store.writable) await this.suggestions.beforeWrite(file, content);
-	}
-
 	private scrollTo(id: string): void {
 		// The visual editor first, when that is where the reader is: it has already placed this thread
 		// on the exact characters it covers, whereas the line jump below has to push a source line back

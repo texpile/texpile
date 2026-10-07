@@ -11,8 +11,8 @@ export type CollabBinding = {
 	awareness: Awareness;
 	/** the file is held elsewhere (host's visual editor): edit read-only. */
 	readOnly?: boolean;
-	/** the file's own history, kept by the buffers for every editor on it; absent, an editor keeps one of its own */
-	undo?: Y.UndoManager;
+	/** the file's own history, kept by the buffers for every editor on it */
+	undo: Y.UndoManager;
 };
 
 /** one diagnostic from the host's compile, file already root-relative. line is absent for warnings

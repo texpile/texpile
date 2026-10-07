@@ -21,6 +21,6 @@ export type CollabBinding = {
 	ytext: Y.Text;
 	awareness: Awareness;
 	readOnly?: boolean;
-	/** the file's own history, outliving this editor; absent, the editor keeps one of its own */
-	undo?: Y.UndoManager;
+	/** the file's own history, outliving this editor */
+	undo: Y.UndoManager;
 };

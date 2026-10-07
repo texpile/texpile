@@ -20,7 +20,6 @@ import { countDocumentWords } from './writing/workspaceWordCount';
 import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/scm/gitStore';
 import { preferencesOpen } from '$lib/stores/dialogStore';
 import { isDesktop, revealItem, type TreeEntry } from '$lib/workspace/fileSystem';
-import { hasUnsavedUnder } from '$lib/workspace/unsavedPaths';
 import { openSaveAsTemplate } from '$lib/workspace/templates/saved/templateDetails.svelte';
 import { userTemplatesAvailable } from '$lib/workspace/templates/templateBridge';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
@@ -295,12 +294,7 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 		setMain: (entry: TreeEntry) => void d.files().toggleMainFile(entry.path),
 		revealEntry: (entry: TreeEntry) => void revealItem(entry.path),
 		// the file tree asks before deleting something whose edits exist only here
-		hasUnsaved: (path: string) =>
-			hasUnsavedUnder(path, {
-				loaded: d.wsdoc.doc.path,
-				dirty: isDirty.current,
-				pending: d.editFlow().saver.pending?.path ?? null
-			}),
+		hasUnsaved: (path: string) => d.editFlow().saver.unwrittenUnder(path),
 		refreshGit: () =>
 			void toastAfter(m.wsview_toast_git_refreshed(), async () => {
 				await refreshGitStatus(workspaceRoot.current);

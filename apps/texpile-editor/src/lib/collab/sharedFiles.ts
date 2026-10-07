@@ -42,7 +42,8 @@ export function decodeIfText(bytes: Uint8Array): string | null {
 	const probe = Math.min(bytes.length, 8192);
 	for (let i = 0; i < probe; i++) if (bytes[i] === 0) return null;
 	try {
-		return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+		// a BOM stays in the text, so the file is written back with it
+		return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
 	} catch {
 		return null;
 	}
