@@ -46,6 +46,10 @@
 	};
 	let { session, path, kind, viewMode, api }: Props = $props();
 
+	// the editor re-assigns its view on every transaction; effects here want only a new one, or a cursor redraw
+	// (itself a transaction) re-runs them in a loop
+	const mountedView = $derived(editorViewStore.current);
+
 	// all visual dialects share this machinery: the source map and the block patch are format-neutral
 	function active() {
 		return (kind === 'tex' || kind === 'md' || kind === 'typ') && viewMode === 'visual';
@@ -206,7 +210,7 @@
 	// for "clicked out of the editor" wherever the focus sat. The timeout lets focus settle first,
 	// so a hop between two islands (out of one, into the next) does not read as a blur.
 	$effect(() => {
-		const v = editorViewStore.current;
+		const v = mountedView;
 		if (!v) return;
 		const dom = v.dom;
 		const pmView = v;
@@ -338,7 +342,7 @@
 	// blinks our published cursor on every peer's screen
 	$effect(() => {
 		void session.manifestRev;
-		const v = editorViewStore.current; // re-fires when the view mounts, so carets render on entry
+		const v = mountedView; // re-fires when the view mounts, so carets render on entry
 		const binding = active() ? session.collabFor(path) : null;
 		if (!binding || !v) return;
 		function onAwareness() {
