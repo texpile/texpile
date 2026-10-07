@@ -154,8 +154,14 @@ export async function refreshProjectIntel(
 			try {
 				const text = await read(path);
 				BIB_ENTRY_RE.lastIndex = 0;
+				// lines counted on from the last entry: from the top each time took half a minute on a 2 MB .bib
+				let line = 1;
+				let counted = 0;
 				for (let m = BIB_ENTRY_RE.exec(text); m; m = BIB_ENTRY_RE.exec(text)) {
-					into.bibEntries.push({ key: m[1], file: path, line: text.slice(0, m.index).split('\n').length });
+					const at = m.index + m[0].indexOf('@');
+					for (let i = text.indexOf('\n', counted); i !== -1 && i < at; i = text.indexOf('\n', i + 1)) line++;
+					counted = at;
+					into.bibEntries.push({ key: m[1], file: path, line });
 				}
 			} catch {
 				/* unreadable file: skip */
