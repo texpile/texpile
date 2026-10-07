@@ -2255,10 +2255,9 @@
 	"unavailable_guest": "Disponível apenas para o anfitrião ou quando você trabalha sozinho",
 	"agent_panel_single_file": "A aba Agente não está disponível no modo de arquivo único",
 	"wsview_stranded_title": "Alterações não salvas",
-	"wsview_stranded_body": "{names} foi alterado no disco enquanto era editado aqui, por isso as alterações feitas aqui não foram salvas por cima.",
-	"wsview_stranded_detail": "Descartar mantém a versão do disco. Para escolher qual versão manter, cancele e abra o arquivo.",
+	"wsview_stranded_body": "{names} foi alterado no disco.",
 	"wsview_stranded_discard": "Descartar alterações",
 	"wsview_stranded_toast_title": "{name} foi alterado no disco",
-	"wsview_stranded_toast_body": "Ele tem alterações que ainda não foram salvas. Abra-o para escolher qual versão manter.",
+	"wsview_stranded_toast_body": "Alterações não salvas.",
 	"wsview_stranded_open": "Abrir"
 }

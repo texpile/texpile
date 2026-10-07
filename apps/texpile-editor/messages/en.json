@@ -2255,10 +2255,9 @@
 	"unavailable_guest": "Only available to the host, or when you work alone",
 	"agent_panel_single_file": "The Agent tab is not available in single file mode",
 	"wsview_stranded_title": "Edits not saved",
-	"wsview_stranded_body": "{names} changed on disk while it was being edited here, so the edits made here were not saved over it.",
-	"wsview_stranded_detail": "Discarding keeps the version on disk. To choose which version to keep, cancel and open the file.",
+	"wsview_stranded_body": "{names} changed on disk.",
 	"wsview_stranded_discard": "Discard Edits",
 	"wsview_stranded_toast_title": "{name} changed on disk",
-	"wsview_stranded_toast_body": "It has edits that are not saved yet. Open it to choose which version to keep.",
+	"wsview_stranded_toast_body": "Edits not saved.",
 	"wsview_stranded_open": "Open"
 }

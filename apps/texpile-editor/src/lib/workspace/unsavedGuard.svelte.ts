@@ -92,7 +92,6 @@ export class UnsavedGuard {
 		const choice = await promptAsk({
 			title: m.wsview_stranded_title(),
 			message: m.wsview_stranded_body({ names: stranded.map(basename).join(', ') }),
-			detail: m.wsview_stranded_detail(),
 			buttons: [
 				{ id: 'discard', label: m.wsview_stranded_discard() },
 				{ id: 'cancel', label: m.wsview_cancel_label(), primary: true }

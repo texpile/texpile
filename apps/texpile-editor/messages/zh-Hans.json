@@ -2255,10 +2255,9 @@
 	"unavailable_guest": "仅主持人或独自工作时可用",
 	"agent_panel_single_file": "代理标签页在单文件模式下不可用",
 	"wsview_stranded_title": "修改未保存",
-	"wsview_stranded_body": "{names} 在此处编辑期间已在磁盘上被修改，因此此处的修改没有覆盖保存。",
-	"wsview_stranded_detail": "放弃将保留磁盘上的版本。若要选择保留哪个版本，请取消并打开该文件。",
+	"wsview_stranded_body": "{names} 已在磁盘上被修改。",
 	"wsview_stranded_discard": "放弃修改",
 	"wsview_stranded_toast_title": "{name} 已在磁盘上被修改",
-	"wsview_stranded_toast_body": "其中有尚未保存的修改。打开它以选择保留哪个版本。",
+	"wsview_stranded_toast_body": "修改未保存。",
 	"wsview_stranded_open": "打开"
 }
