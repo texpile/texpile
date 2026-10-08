@@ -61,7 +61,8 @@ class BlockHandleView {
 
 		this.host = document.createElement('div');
 		this.host.className = 'block-handle-host';
-		document.body.appendChild(this.host);
+		// the editor's own window, which may be one of its own
+		view.dom.ownerDocument.body.appendChild(this.host);
 		this.component = mount(BlockHandle, {
 			target: this.host,
 			props: {
@@ -79,7 +80,7 @@ class BlockHandleView {
 		this.host.addEventListener('mouseleave', this.scheduleHide);
 		// capture, because scroll does not bubble: this has to catch the editor's scroller and any
 		// nested one (a wide table's wrapper) without knowing which exists
-		document.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
+		view.dom.ownerDocument.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
 
 	private onMouseMove = (event: MouseEvent) => {
@@ -259,7 +260,7 @@ class BlockHandleView {
 		this.view.dom.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);
 		this.host.removeEventListener('mouseleave', this.scheduleHide);
-		document.removeEventListener('scroll', this.onScroll, { capture: true });
+		this.view.dom.ownerDocument.removeEventListener('scroll', this.onScroll, { capture: true });
 		this.cancelHide();
 		if (this.rafId != null) cancelAnimationFrame(this.rafId);
 		if (this.component) unmount(this.component);

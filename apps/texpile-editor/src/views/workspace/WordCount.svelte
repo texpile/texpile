@@ -1,5 +1,5 @@
 <script lang="ts">
-	// the top bar's word count; hovering it shows the whole paper's, file by file
+	// the format bar's word count; hovering it shows the whole paper's, file by file
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { documentCountStore as c } from '$lib/stores/countStore.svelte';
 	import { tallyTotal } from '$lib/workspace/wordCount/proseWords';
@@ -99,7 +99,7 @@
 				<button
 					{...attrs}
 					type="button"
-					class="text-muted hover:text-surface-950-50 rounded-base text-xs whitespace-nowrap tabular-nums select-none"
+					class="toolbarButton hover:preset-tonal rounded-base px-1.5 py-1 text-sm whitespace-nowrap tabular-nums select-none"
 					onpointerenter={(e) => {
 						overTrigger = e.pointerType !== 'touch';
 						hoverIn(e);

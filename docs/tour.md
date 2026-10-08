@@ -23,14 +23,15 @@ A LaTeX project, with the PDF and the bottom panel open.
 
 ## Top bar
 
-![The top bar with six controls marked](../landing/src/lib/assets/showcase/docs/app/tour-topbar.png)
+![The top bar with five controls marked](../landing/src/lib/assets/showcase/docs/app/tour-topbar.png)
 
 1. **Word count.** Select text to count the selection. Hover for the whole paper.
 2. **Editing / Suggesting.** In Suggesting, your edits become suggestions others can accept.
 3. **Visual / Source.** Switch editors.
 4. **Problems.** Errors and warnings from the last compile.
 5. **Compile.** The menu beside it has the compile settings.
-6. **Save.**
+
+Edits save on their own a moment after you stop typing. Ctrl S (Cmd S on macOS) saves right away.
 
 ## Sidebar
 

@@ -134,8 +134,10 @@ function showDropdown(view: EditorView, pos: number, items: ReferenceItem[], sel
 		dropdownContainer.className = 'reference-picker-container';
 		dropdownContainer.style.position = 'fixed';
 		dropdownContainer.style.zIndex = '50';
-		document.body.appendChild(dropdownContainer);
 	}
+	// in the window the editor is in, which may be one of its own
+	const doc = view.dom.ownerDocument;
+	if (dropdownContainer.parentNode !== doc.body) doc.body.appendChild(dropdownContainer);
 
 	if (dropdownComponent) {
 		unmount(dropdownComponent);
@@ -153,8 +155,8 @@ function showDropdown(view: EditorView, pos: number, items: ReferenceItem[], sel
 
 	// coordsAtPos is viewport-relative, so use fixed positioning
 	const coords = view.coordsAtPos(pos);
-	const windowHeight = window.innerHeight;
-	const windowWidth = window.innerWidth;
+	const windowHeight = doc.defaultView?.innerHeight ?? window.innerHeight;
+	const windowWidth = doc.defaultView?.innerWidth ?? window.innerWidth;
 
 	// wait a frame so the dropdown has real dimensions
 	requestAnimationFrame(() => {

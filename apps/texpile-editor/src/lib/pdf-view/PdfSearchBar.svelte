@@ -8,7 +8,7 @@
 
 	let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-	const { state: viewerState, actions } = getPdfViewerContext();
+	const ctx = getPdfViewerContext();
 
 	let bar = $state<ReturnType<typeof FindBar>>();
 	let query = $state('');
@@ -19,12 +19,12 @@
 
 	function commit(value: string): void {
 		query = value;
-		if (value.trim()) void actions.search(value);
-		else actions.clearSearch();
+		if (value.trim()) void ctx.actions.search(value);
+		else ctx.actions.clearSearch();
 	}
 
 	function close(): void {
-		actions.clearSearch();
+		ctx.actions.clearSearch();
 		onClose();
 	}
 </script>
@@ -36,15 +36,15 @@
 			{query}
 			replaceText=""
 			options={NO_FIND_OPTIONS}
-			current={viewerState.searchCurrent}
-			total={viewerState.searchTotal}
+			current={ctx.state.searchCurrent}
+			total={ctx.state.searchTotal}
 			canReplace={false}
 			canToggle={false}
 			onQueryChange={commit}
 			onReplaceTextChange={() => {}}
 			onToggleOption={() => {}}
-			onPrev={() => actions.searchPrevious()}
-			onNext={() => actions.searchNext()}
+			onPrev={() => ctx.actions.searchPrevious()}
+			onNext={() => ctx.actions.searchNext()}
 			onReplaceOne={() => {}}
 			onReplaceAll={() => {}}
 			onClose={close}

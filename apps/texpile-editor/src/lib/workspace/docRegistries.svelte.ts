@@ -12,10 +12,8 @@ const DEBOUNCE_MS = 400;
 
 export type DocRegistryDeps = {
 	/** read LIVE at fire time, never closed over: a file switch blanks the buffer briefly and a
-	 * stale closure would push that transient '' into the label/citation/history state */
+	 * stale closure would push that transient '' into the label/citation state */
 	getSource(): string;
-	/** the cross-mode undo history takes a snapshot on the same lull */
-	captureHistory(text: string): void;
 };
 
 export class DocRegistries {
@@ -49,7 +47,6 @@ export class DocRegistries {
 				labelStore.current = refs.labels;
 				this.bibitemRefs = bibItemsToReferences(refs.bibitems);
 			});
-			this.deps.captureHistory(text);
 		}, DEBOUNCE_MS);
 		return () => clearTimeout(this.timer);
 	}

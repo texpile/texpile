@@ -1,12 +1,16 @@
 <script lang="ts">
-	// Draws the app's own context menu; contextMenu.svelte.ts decides when. Mounted once, at the
-	// app root, like the tooltip host.
+	// Draws the app's own context menu; contextMenu.svelte.ts decides when. Mounted at the app root and in each
+	// window of its own, like the tooltip host; each draws the menus opened in its window.
 	import { Check, ChevronRight } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { openMenu, closeContextMenu, type ContextMenuItem } from './contextMenu.svelte';
 	import { menuItemClass, menuPanelClass, separatorClass } from './menuStyles';
+
+	const props: { win?: Window } = $props();
+	const win = $derived(props.win ?? window);
+	const menu = $derived(openMenu.current && (openMenu.current.win ?? window) === win ? openMenu.current : null);
 
 	const EDGE = 8;
 	// the card's own top padding, so a submenu's first item lines up with the item that opened it
@@ -20,12 +24,11 @@
 	let subPlaced = $state.raw<{ x: number; y: number; for: object } | null>(null);
 
 	$effect(() => {
-		const menu = openMenu.current;
 		if (!menu || !card) return;
 		const { offsetWidth: w, offsetHeight: h } = card;
 		placed = {
-			x: Math.min(menu.x, window.innerWidth - w - EDGE),
-			y: menu.above ? Math.max(EDGE, menu.y - h) : Math.min(menu.y, window.innerHeight - h - EDGE),
+			x: Math.min(menu.x, win.innerWidth - w - EDGE),
+			y: menu.above ? Math.max(EDGE, menu.y - h) : Math.min(menu.y, win.innerHeight - h - EDGE),
 			for: menu
 		};
 	});
@@ -35,10 +38,19 @@
 		const { offsetWidth: w, offsetHeight: h } = subCard;
 		const right = sub.from.right - PAD;
 		subPlaced = {
-			x: right + w > window.innerWidth - EDGE ? Math.max(EDGE, sub.from.left - w + PAD) : right,
-			y: Math.max(EDGE, Math.min(sub.from.top - PAD, window.innerHeight - h - EDGE)),
+			x: right + w > win.innerWidth - EDGE ? Math.max(EDGE, sub.from.left - w + PAD) : right,
+			y: Math.max(EDGE, Math.min(sub.from.top - PAD, win.innerHeight - h - EDGE)),
 			for: sub
 		};
+	});
+
+	$effect(() => {
+		function onKey(e: KeyboardEvent): void {
+			if (menu && e.key === 'Escape') closeContextMenu();
+		}
+		const w = win;
+		w.addEventListener('keydown', onKey);
+		return () => w.removeEventListener('keydown', onKey);
 	});
 
 	function run(item: ContextMenuItem): void {
@@ -50,13 +62,10 @@
 	}
 
 	function hover(item: ContextMenuItem, el: HTMLElement): void {
-		const menu = openMenu.current;
 		if (!menu || 'separator' in item) return;
 		sub = item.submenu && !item.disabled ? { items: item.submenu, from: el.getBoundingClientRect(), for: menu } : null;
 	}
 </script>
-
-<svelte:window onkeydown={(e) => openMenu.current && e.key === 'Escape' && closeContextMenu()} />
 
 {#snippet entries(items: ContextMenuItem[], top: boolean)}
 	{#each items as item, i (i)}
@@ -93,8 +102,7 @@
 	{/each}
 {/snippet}
 
-{#if openMenu.current}
-	{@const menu = openMenu.current}
+{#if menu}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
 		class="z-dropdown fixed inset-0 cursor-default"

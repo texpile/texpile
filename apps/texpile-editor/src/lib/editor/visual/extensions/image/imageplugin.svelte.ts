@@ -8,7 +8,7 @@ import { mount } from 'svelte';
 import ImageOverlay from './ImageOverlay.svelte';
 import { joinPath, relativeInside, pathOfPickedFile } from '$lib/workspace/fileSystem';
 import { editorWriteBinary } from '$lib/editor/visual/fileAccess';
-import { localImageUrl } from './localImageUrl';
+import { knownLocalImageUrl, localImageUrl } from './localImageUrl';
 import { missingImageSvg } from './missingImagePlaceholder';
 
 export const defaultExtraAttributes = {
@@ -167,6 +167,7 @@ export function createLocalImageSettings(imageDir: () => string): ImagePluginSet
 		...sharedImageSettings,
 		uploadFile: (file: File) => uploadLocalImage(file, imageDir()),
 		downloadImage: (src: string) => localImageUrl(src, imageDir),
+		knownImage: (src: string) => knownLocalImageUrl(src, imageDir),
 		deleteSrc: async () => {}
 	} as ImagePluginSettings;
 }

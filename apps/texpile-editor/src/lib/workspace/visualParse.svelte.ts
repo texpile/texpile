@@ -74,15 +74,17 @@ export class VisualParser {
 	}
 
 	/** The failure is RETURNED rather than handled here: only the caller knows whether its parse is
-	 * still the current one, and a superseded parse must not yank the user out of visual mode. */
-	async parse(text: string, format: 'tex' | 'md' | 'typ' = 'tex'): Promise<ParseOutcome> {
+	 * still the current one, and a superseded parse must not yank the user out of visual mode.
+	 * `shown` false: a parked editor's file, whose parse puts up no loading bar */
+	async parse(text: string, format: 'tex' | 'md' | 'typ' = 'tex', shown = true): Promise<ParseOutcome> {
 		mark('parse');
 		if (text.length > MAX_VISUAL_BYTES) return { failure: { timeout: false, tooLarge: text.length, message: 'too-large' } };
-		if (format === 'typ') return this.parseTypst(text);
+		if (format === 'typ') return this.parseTypst(text, shown);
 		try {
 			const timeoutMs = timeoutFor(text);
-			this.progress = 'parsing';
-			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, (p) => (this.progress = p), MAX_VISUAL_NODES, format) };
+			if (shown) this.progress = 'parsing';
+			const progress = shown ? (p: ParsePhase) => (this.progress = p) : undefined;
+			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format) };
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : String(e);
 			// TODO: unified-latex's PEG tokenizer throws "RangeError: Invalid array length" on very
@@ -94,7 +96,7 @@ export class VisualParser {
 			const tooComplex = msg.startsWith(`${PARSE_TOO_COMPLEX}:`) ? Number(msg.slice(PARSE_TOO_COMPLEX.length + 1)) : undefined;
 			return { failure: { timeout, tooComplex, message: msg } };
 		} finally {
-			this.progress = null;
+			if (shown) this.progress = null;
 		}
 	}
 
@@ -103,9 +105,9 @@ export class VisualParser {
 	 * highlighting. The worker exists to sandbox unified-latex's runaway recursive PEG, which has
 	 * no Typst analogue — and a worker build would need its own wasm pipeline for nothing. The
 	 * node-count ceiling still applies: it guards the RENDERER, which is dialect-blind. */
-	private async parseTypst(text: string): Promise<ParseOutcome> {
+	private async parseTypst(text: string, shown: boolean): Promise<ParseOutcome> {
 		try {
-			this.progress = 'parsing';
+			if (shown) this.progress = 'parsing';
 			mark('typst-import');
 			const { parseTypstFile } = await import('$lib/languages/typst/visual/roundtrip');
 			mark('typst-ready');
@@ -122,7 +124,7 @@ export class VisualParser {
 		} catch (e) {
 			return { failure: { timeout: false, message: e instanceof Error ? e.message : String(e) } };
 		} finally {
-			this.progress = null;
+			if (shown) this.progress = null;
 		}
 	}
 }

@@ -11,6 +11,7 @@
 </script>
 
 <script lang="ts">
+	import { inChildWindows, windowOf } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ChevronDown, BoxSelect } from '@lucide/svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
@@ -27,10 +28,12 @@
 	// makes ProseMirror rebuild the math node, which throws away the element this pointed at - after
 	// which every insert targeted a detached field and did nothing at all, silently. Repro was two
 	// symbols in a row: the first worked, the second vanished.
+	function onFocusIn(e: FocusEvent) {
+		if (e.target instanceof window.MathfieldElement) activeMathfieldRef = e.target;
+	}
+	// an editor in a window of its own
+	inChildWindows('focusin', onFocusIn, true);
 	$effect(() => {
-		function onFocusIn(e: FocusEvent) {
-			if (e.target instanceof window.MathfieldElement) activeMathfieldRef = e.target;
-		}
 		document.addEventListener('focusin', onFocusIn, true);
 		if (document.activeElement instanceof window.MathfieldElement) activeMathfieldRef = document.activeElement;
 		return () => document.removeEventListener('focusin', onFocusIn, true);
@@ -97,7 +100,7 @@
 		if (trigger) {
 			const r = trigger.getBoundingClientRect();
 			// clamped so a group near the right edge does not open off-screen
-			anchor = { top: r.bottom + 4, left: Math.max(4, Math.min(r.left, window.innerWidth - 340)) };
+			anchor = { top: r.bottom + 4, left: Math.max(4, Math.min(r.left, windowOf(trigger).innerWidth - 340)) };
 		}
 		// A plain toggle now. The old version captured the mathfield and its caret here because the
 		// popover was about to take focus away; the docked panel never does, so there is nothing to

@@ -1,9 +1,10 @@
 // the cross-file scan behind projectIntelStore: reads every project .tex (except the active
 // buffer, whose live text the editor owns), the .bib files, and the main file's .aux, and
 // derives what completion/hover/definition/outline need. see stores/projectIntel.ts for types.
+import { typstSourceOutline } from '$lib/languages/typst/outline';
 import { readTextFile, samePath, type TexFile } from './fileSystem';
 import { parseAuxLabels } from './auxLabels';
-import { projectIntelStore, EMPTY_PROJECT_INTEL, type ProjectIntel } from '$lib/stores/projectIntel';
+import { projectIntelStore, EMPTY_PROJECT_INTEL, type ProjectIntel, type TypstOutline } from '$lib/stores/projectIntel';
 import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
 import { scanScripts } from '$lib/languages/latex/intellisense/completion/subsuperscript';
 import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
@@ -100,6 +101,18 @@ async function readAux(auxPath: string, draft: ProjectIntel, read: (p: string) =
 	Object.assign(draft.auxTitles, titles);
 }
 
+/** a .typ's headings with the lines a jump into it needs, and its #include spots */
+export async function typstOutlineOf(text: string): Promise<TypstOutline> {
+	const starts = [0];
+	for (let i = text.indexOf('\n'); i !== -1; i = text.indexOf('\n', i + 1)) starts.push(i + 1);
+	function lineAt(pos: number): number {
+		return starts.findLastIndex((s) => s <= pos) + 1;
+	}
+	const items = (await typstSourceOutline(text)).map((i) => ({ ...i, line: lineAt(i.pos) }));
+	const includes = [...text.matchAll(/#include\s+"([^"]+)"/g)].map((m) => ({ pos: m.index ?? 0, target: m[1] }));
+	return { items, includes };
+}
+
 let scanToken = 0;
 
 /**
@@ -136,14 +149,17 @@ export async function refreshProjectIntel(
 		auxPages: {},
 		auxKinds: {},
 		auxTitles: {},
-		outlines: {}
+		outlines: {},
+		typstOutlines: {}
 	};
 
 	const texTargets = texFiles.filter((f) => !activePath || !samePath(f.path, activePath)).slice(0, MAX_FILES);
 	await Promise.all(
 		texTargets.map(async (f) => {
 			try {
-				scanTexIntel(await read(f.path), f.path, into);
+				const text = await read(f.path);
+				scanTexIntel(text, f.path, into);
+				if (/\.typ$/i.test(f.path)) into.typstOutlines[f.path] = await typstOutlineOf(text);
 			} catch {
 				/* unreadable file: skip */
 			}
@@ -154,8 +170,14 @@ export async function refreshProjectIntel(
 			try {
 				const text = await read(path);
 				BIB_ENTRY_RE.lastIndex = 0;
+				// lines counted on from the last entry: from the top each time took half a minute on a 2 MB .bib
+				let line = 1;
+				let counted = 0;
 				for (let m = BIB_ENTRY_RE.exec(text); m; m = BIB_ENTRY_RE.exec(text)) {
-					into.bibEntries.push({ key: m[1], file: path, line: text.slice(0, m.index).split('\n').length });
+					const at = m.index + m[0].indexOf('@');
+					for (let i = text.indexOf('\n', counted); i !== -1 && i < at; i = text.indexOf('\n', i + 1)) line++;
+					counted = at;
+					into.bibEntries.push({ key: m[1], file: path, line });
 				}
 			} catch {
 				/* unreadable file: skip */

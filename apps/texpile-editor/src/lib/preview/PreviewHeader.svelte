@@ -1,12 +1,15 @@
 <script lang="ts">
 	// the pane's row while its body brings no bar of its own: the same shell as the previews, with
-	// nothing but the name and the popout on it
+	// nothing but the name, or the project's controls, and the popout on it
 	import { PictureInPicture2 } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import PreviewToolbar from './PreviewToolbar.svelte';
 
-	let { label, onPopout = null, asTabStrip = true }: { label: string; onPopout?: (() => void) | null; asTabStrip?: boolean } = $props();
+	import type { Snippet } from 'svelte';
+
+	type Props = { label?: string; controls?: Snippet; onPopout?: (() => void) | null; asTabStrip?: boolean };
+	let { label, controls, onPopout = null, asTabStrip = true }: Props = $props();
 </script>
 
 {#snippet leading()}
@@ -21,4 +24,4 @@
 	</button>
 {/snippet}
 
-<PreviewToolbar groups={[]} {leading} trailing={onPopout ? popout : undefined} {asTabStrip} />
+<PreviewToolbar groups={[]} leading={controls ?? leading} trailing={onPopout ? popout : undefined} {asTabStrip} />

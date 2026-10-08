@@ -16,6 +16,9 @@ import { addLocalHistory } from '../../localHistory/localHistory.svelte';
 import { settings } from '$lib/settings';
 import { m } from '$lib/paraglide/messages';
 import type { ScmDeps } from './scmActions.svelte';
+import type { HeldFileDeps } from '$lib/buffers/heldFiles';
+
+export type { HeldFileDeps };
 
 type DiscardDeps = Pick<
 	ScmDeps,
@@ -32,7 +35,8 @@ type DiscardDeps = Pick<
 	| 'captureDiffSnapshot'
 	| 'readTextIfPresent'
 	| 'writeText'
->;
+> &
+	HeldFileDeps;
 
 /** VS Code's question: what is about to happen, and under it what follows from it */
 function question(changes: GitStatusEntry[], allNew: boolean): { message: string; detail: string } {
@@ -77,12 +81,9 @@ export class ScmDiscard {
 		// debounced write cannot land after git reverts and re-create the changes. One the save guard
 		// turned away (the file changed outside) is still queued after the flush: it is kept as a copy
 		// of its own, then dropped
-		if (openAffected) {
-			if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
-			const refused = this.deps.hasPendingSave() ? (this.deps.detachPendingSave?.() ?? null) : null;
-			if (refused) await addLocalHistory(refused.path, toLf(refused.content), 'before-discard');
-			this.deps.discardPendingSave();
-		}
+		// the same for a file open in another editor than the focused one
+		const held = this.deps.heldUnder?.(changes.map((c) => c.path)) ?? [];
+		await this.#settle(openAffected, held, 'before-discard');
 		const kept = await this.#keep(changes);
 		this.host.busy = true;
 		let err: string | undefined;
@@ -103,6 +104,7 @@ export class ScmDiscard {
 		await this.deps.refreshTree();
 		await refreshGitStatus(root);
 		if (openAffected && loadedPath) await this.deps.loadFile(loadedPath); // its on-disk content changed
+		if (held.length) await this.deps.catchUpWithDisk?.();
 		// an open comparison was computed against the changes just thrown away, and went on showing
 		// them as additions and deletions that no longer exist anywhere
 		if (this.deps.isDiffMode()) this.deps.captureDiffSnapshot();
@@ -132,10 +134,8 @@ export class ScmDiscard {
 	async #undo(root: string, kept: { path: string; content: string }[]): Promise<void> {
 		const loaded = this.deps.getLoadedPath();
 		const open = !!loaded && kept.some((k) => samePath(k.path, loaded));
-		if (open) {
-			if (this.deps.hasPendingSave()) await this.deps.flushPendingSave();
-			this.deps.discardPendingSave();
-		}
+		const held = this.deps.heldUnder?.(kept.map((k) => k.path)) ?? [];
+		await this.#settle(open, held, 'before-discard');
 		for (const k of kept) {
 			try {
 				await this.deps.writeText(k.path, k.content);
@@ -147,6 +147,24 @@ export class ScmDiscard {
 		await this.deps.refreshTree();
 		await refreshGitStatus(root);
 		if (open && loaded) await this.deps.loadFile(loaded);
+		if (held.length) await this.deps.catchUpWithDisk?.();
+	}
+
+	/** what the editors hold of files about to be rewritten is written first; an edit the save guard turned away
+	 *  is kept in Local History instead, then dropped, so it cannot land on the rewritten file later */
+	async #settle(open: boolean, held: string[], why: 'before-discard'): Promise<void> {
+		if (open || held.length) {
+			if (this.deps.hasPendingSave() || held.length) await this.deps.flushPendingSave();
+		}
+		if (open) {
+			const refused = this.deps.hasPendingSave() ? (this.deps.detachPendingSave?.() ?? null) : null;
+			if (refused) await addLocalHistory(refused.path, toLf(refused.content), why);
+			this.deps.discardPendingSave();
+		}
+		for (const path of held) {
+			const edit = this.deps.takeHeldEdit?.(path);
+			if (edit) await addLocalHistory(edit.path, toLf(edit.content), why);
+		}
 	}
 
 	/** the work itself; resolves to the last failure's words, if any */

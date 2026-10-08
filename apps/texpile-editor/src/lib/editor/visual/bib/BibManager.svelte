@@ -1,4 +1,4 @@
-<!-- visual .bib editor: reference list + add/edit form. value is the raw .bib text;
+﻿<!-- visual .bib editor: reference list + add/edit form. value is the raw .bib text;
   every change re-serialises and flows back through onInput -->
 <script lang="ts">
 	import { tip } from '$lib/components/tooltip.svelte';
@@ -16,7 +16,7 @@
 		sameWorkAs,
 		isKeyUnique as checkKeyUnique
 	} from '$lib/languages/bib/biblatex';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { citedKeys, loadCitedKeys } from '$lib/workspace/document/citedKeys';
 	import type { ZodIssue } from 'zod';
 	import { referenceStore } from '$lib/stores/editorStore';
@@ -149,6 +149,15 @@
 			(out[(i.path[0] as string) || 'form'] ||= []).push(msg);
 		}
 		return out;
+	}
+
+	// narrow, the form is under the list in the one scroll, out of sight after a click on the list
+	let formPanel = $state<HTMLElement>();
+	async function revealForm() {
+		await tick();
+		const scroller = formPanel?.parentElement;
+		if (!formPanel || !scroller) return;
+		if (formPanel.getBoundingClientRect().top > scroller.getBoundingClientRect().bottom - 120) formPanel.scrollIntoView({ block: 'start' });
 	}
 
 	function resetForm() {
@@ -320,24 +329,35 @@
 				>
 			</div>
 		{/if}
-		<div class="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col gap-4 p-4 @xl:flex-row">
-			<div class="max-h-[40%] min-h-0 shrink-0 [scrollbar-gutter:stable] overflow-y-auto pr-3 @xl:max-h-none @xl:w-1/2">
-				<button class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full" type="button" onclick={resetForm}
-					>{m.bib_new_reference_button()}</button
+		<div
+			class="mx-auto flex min-h-0 w-full max-w-7xl flex-1 [scrollbar-gutter:stable] flex-col gap-4 overflow-y-auto p-4 @xl:flex-row @xl:overflow-hidden"
+		>
+			<div class="shrink-0 @xl:min-h-0 @xl:w-1/2 @xl:[scrollbar-gutter:stable] @xl:overflow-y-auto @xl:pr-3">
+				<button
+					class="btn preset-outlined-surface-200-800 hover:preset-tonal mb-3 w-full"
+					type="button"
+					onclick={() => {
+						resetForm();
+						void revealForm();
+					}}>{m.bib_new_reference_button()}</button
 				>
 				<ul>
 					<BibReferenceList
 						{refs}
 						cited={citedKeys.current}
 						selectedKey={isEditing ? (currentReference.key ?? null) : null}
-						onEdit={editReference}
+						onEdit={(r) => {
+							editReference(r);
+							void revealForm();
+						}}
 						onDelete={deleteReference}
 					/>
 				</ul>
 			</div>
 
 			<div
-				class="border-surface-200-800 min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto border-t pt-4 @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
+				bind:this={formPanel}
+				class="border-surface-200-800 shrink-0 border-t pt-4 @xl:min-h-0 @xl:flex-1 @xl:shrink @xl:[scrollbar-gutter:stable] @xl:overflow-y-auto @xl:border-t-0 @xl:border-l @xl:pt-0 @xl:pr-4 @xl:pl-4"
 			>
 				<div class="mb-2 flex items-center gap-2 text-base font-semibold">
 					{#if isEditing}

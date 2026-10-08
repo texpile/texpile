@@ -1,5 +1,6 @@
 // mounts the link tooltip ONCE and updates it in place: remounting on every change replayed the
 // entrance animation, which read as a flash while typing in a link
+import { activeWindow } from '$lib/childWindows/childWindowRegistry.svelte';
 import { mount, unmount } from 'svelte';
 import LinkTooltip from './LinkTooltip.svelte';
 
@@ -47,7 +48,7 @@ export function createLinkTooltip(options: LinkTooltipOptions): void {
 	container.style.left = '0';
 	container.style.width = '100%';
 	container.style.height = '100%';
-	document.body.appendChild(container);
+	activeWindow().document.body.appendChild(container);
 
 	try {
 		component = mount(LinkTooltip, { target: container, props });

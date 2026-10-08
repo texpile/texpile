@@ -56,7 +56,7 @@
 	// desktop, ConfirmHost on the web. Each fires once per state object; a stale answer (the state
 	// moved on while the box was up) is dropped rather than resolving the newer one.
 
-	// autosave off, switching away from a file with unsaved edits. Three answers, so the X /
+	// autosave held off, switching away from a file with unsaved edits. Three answers, so the X /
 	// Escape / backdrop CANCEL the switch rather than saving it.
 	let askedUnsaved: object | null = null;
 	$effect(() => {

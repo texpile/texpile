@@ -18,9 +18,11 @@ export type FolderEntry = {
 	/** compile commands accepted for this folder, per format - THIS MACHINE's approval record */
 	trusted?: { latex?: string; typst?: string };
 	/** open tabs, in order, root-relative: a file, or a file compared against one of its versions */
-	tabs?: (string | { path: string; compare: SavedCompare })[];
+	tabs?: SavedTab[];
 	/** the version lastFile was left compared against, when the focused tab was a comparison */
 	lastCompare?: SavedCompare;
+	/** the editor layout and its slots; the focused slot's tabs are `tabs` */
+	groups?: SavedEditorLayout;
 	/** per-file caret + scroll; shape owned and validated by workspace/docPositions.ts */
 	positions?: Record<string, unknown>;
 	/** left in Suggesting; a choice per project and per person, so not in the project's own config */
@@ -29,6 +31,16 @@ export type FolderEntry = {
 	 *  languages/typst/export/exportOptions.ts */
 	typstExport?: Record<string, unknown>;
 };
+
+/** a tab as the entry keeps it: a root-relative file, or one compared against a version */
+export type SavedTab = string | { path: string; compare: SavedCompare };
+
+/** one editor slot: for each but the focused one, its tabs, open tab and mode */
+export type SavedSlot =
+	{ focused: true; mode: 'visual' | 'source' } | { focused?: false; tabs: SavedTab[]; active: number; mode: 'visual' | 'source' };
+
+/** the column and row dividers as the first column's and first row's part */
+export type SavedEditorLayout = { layout: string; split: { column: number; row: number }; slots: SavedSlot[] };
 
 /** the saved version a comparison tab is against; `path` is the file's name in that version when it had another */
 export type SavedCompare = { hash: string; subject: string; path?: string };

@@ -155,6 +155,8 @@ type TexpileNative = {
 	closeDecision?: (proceed: boolean) => void;
 	setZoomFactor?: (factor: number) => Promise<number>;
 	windowClose?: () => Promise<void>;
+	/** where the pointer is on the screen */
+	cursorScreenPoint?: () => Promise<{ x: number; y: number }>;
 	windowGlassWorks?: () => Promise<boolean>;
 	setWindowGlass?: (on: boolean) => Promise<boolean>;
 	setNativeAppearance?: (choice: 'light' | 'dark' | 'system') => void;

@@ -1,14 +1,17 @@
 <script lang="ts">
-	import ContextMenu from '$lib/editor/visual/toolbar/ContextMenu.svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import ContextMenu from '$lib/editor/visual/contextMenu/ContextMenu.svelte';
+	import type { ShowInOutput } from '$lib/editor/visual/contextMenu/showInOutput';
+	import { onDestroy, onMount, untrack } from 'svelte';
 	import { EditorState, Transaction } from 'prosemirror-state';
 	import { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 	import { latexEditorPlugins, latexNodeViews } from './latexEditorSetup';
 	import { isLargeDocument } from './largeDocument';
+	import { loadMathlive, mathliveLoaded, type MathlivePlugin } from '$lib/languages/mathliveLoad';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
-	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
+	import { referenceStore } from '$lib/stores/editorStore';
+	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import { fixTables } from 'prosemirror-tables';
@@ -29,6 +32,8 @@
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 
 	type Props = {
+		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
+		live?: boolean;
 		// the document as a ProseMirror Node
 		localValue?: PMNode | null;
 		onLocalChange?: (value: PMNode) => void;
@@ -40,8 +45,6 @@
 		// where inserted images go (an images/ subfolder)
 		imageDir?: string;
 		placeholder?: string;
-		/** called when PM undo/redo is exhausted; return true if the workspace snapshot history handled it. */
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		/** Fired once the ProseMirror view exists and is on screen. Building it is a long synchronous
 		 * block on a large document, and it starts only after the dynamic import below resolves - well
 		 * after this component's own mount - so callers cannot infer it from mounting. */
@@ -67,6 +70,8 @@
 		onInsertCitation?: () => void;
 		/** cite by DOI or arXiv ID, offered in the context menu when present */
 		onCiteByDoi?: () => void;
+		/** Show in PDF from the right-click menu */
+		showInOutput?: ShowInOutput;
 		/** a \ref whose label is not drawn here: the workspace jumps to its \label line */
 		onJumpToLabel?: (name: string) => boolean;
 		/** a drawn call of the paper's own macro: the workspace opens its definition in the source */
@@ -81,6 +86,7 @@
 	};
 
 	let {
+		live = true,
 		localValue = null,
 		onLocalChange,
 		onSelectionChange,
@@ -88,7 +94,6 @@
 		docPath = null,
 		imageDir,
 		placeholder = 'Begin your journey here...',
-		onHistoryBoundary,
 		onReady,
 		commentRanges = [],
 		sourceMap = { leaves: [], blocks: [] },
@@ -101,6 +106,7 @@
 		onAddComment,
 		onInsertCitation,
 		onCiteByDoi,
+		showInOutput,
 		onJumpToLabel,
 		onJumpToDefinition,
 		onCommentsPlaced,
@@ -114,17 +120,24 @@
 
 	let editor: HTMLElement | null = $state(null);
 	let editorView: EditorView | null = $state(null);
+	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
+	const isLive = $derived(live);
 	let editorState: EditorState | null = $state(null);
 
-	onMount(async () => {
-		const { mathlivePlugin, mlarrowHandlers } = await import('$lib/editor/visual/extensions/mathlivebridge/mlplugin');
+	onMount(() => {
+		const mathlive = mathliveLoaded();
+		if (mathlive) build(mathlive);
+		else void loadMathlive().then(build);
+	});
+
+	function build({ mathlivePlugin, mlarrowHandlers }: MathlivePlugin): void {
+		if (!editor) return;
 
 		const plugins = latexEditorPlugins({
 			mathlivePlugin,
 			mlarrowHandlers,
 			imageDir: imageDir === undefined ? undefined : () => imageDir ?? '',
 			placeholder,
-			onHistoryBoundary,
 			onSelectComment,
 			onAddComment,
 			sourceAnchor,
@@ -150,7 +163,7 @@
 			}),
 			state: editorState,
 			nodeViews: latexNodeViews(() => imageDir ?? '', onJumpToLabel, onJumpToDefinition),
-			editable: () => true,
+			editable: group.editable,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// A plugin that finishes asynchronously can dispatch into a view that was destroyed while
 				// it was working - the spellchecker does exactly this when a tab switch tears the editor
@@ -172,25 +185,34 @@
 			}
 		});
 
-		editorViewStore.current = editorView;
+		group.claim(editorView);
 
 		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
 		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
 		revealBuiltEditor(editor);
-		editorView.focus();
+		if (live) editorView.focus();
 		onReady?.();
-	});
+	}
 
 	let mountedDoc: PMNode | null = null;
 	let mountedPath: string | null = null;
+	let wasHeld = false;
+	// its own effect: the swap below must not run again for a change of focus alone
+	$effect(() => {
+		if (!live) wasHeld = true;
+		else queueMicrotask(() => (wasHeld = false));
+	});
 	/** bumped when a doc SWAP lands - the one moment plugin state was rebuilt and comment ranges
 	 * with it. Typing never bumps it: ranges map through transactions and re-searching mid-edit
 	 * could snap a range onto another copy of its text. */
 	let docEpoch = $state(0);
 	let remotePatches = $state(0);
+	// an editor group's props arrive spread, so a read of one tracks all of them; only a new document may swap
+	const incomingDoc = $derived(localValue);
+	const incomingPath = $derived(docPath);
 	$effect(() => {
-		const next = localValue;
-		const path = docPath;
+		const next = incomingDoc;
+		const path = incomingPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			// initial doc was installed at construction, just remember it
@@ -198,6 +220,8 @@
 			mountedPath = path;
 			return;
 		}
+		// a document held still while this one was parsed: it takes the keyboard the way a fresh build does
+		const takesFocus = wasHeld && untrack(() => live);
 		const kind = docSwapKind(next, editorView.state.doc, path, mountedPath);
 		mountedDoc = next;
 		mountedPath = path;
@@ -205,13 +229,19 @@
 		if (kind === 'newFile') swapDocForNewFile(editorView, schema, next);
 		else swapParsedDoc(editorView, schema, next);
 		docEpoch++;
-		if (kind === 'newFile') onReady?.();
+		// another file's formulas drawn in this frame, as a fresh build draws them, not as blanks for one
+		if (kind === 'newFile') {
+			revealBuiltEditor(editor);
+			onReady?.();
+			if (takesFocus) editorView.focus();
+		}
 	});
 
 	// Declared AFTER the swap effect on purpose: effects run in declaration order, so by the time
 	// the sync reads editorView.state.doc the swap has already installed the new document.
 	syncPmComments({
 		view: () => editorView,
+		live: () => isLive,
 		ranges: () => commentRanges,
 		map: () => sourceMap,
 		text: () => texSource,
@@ -242,7 +272,7 @@
 
 	onDestroy(() => {
 		editorView?.destroy();
-		editorViewStore.current = null;
+		group.release(editorView);
 		// don't clear referenceStore here, the workspace owns it; clearing blanked citations
 		// in source mode and across editor remounts
 	});
@@ -252,7 +282,7 @@
      nothing, so the viewport upgrades could not run until after it was already on screen -->
 <main bind:this={editor} class={BUILDING_CLASS}></main>
 
-<ContextMenu {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} />
+<ContextMenu {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} {showInOutput} />
 
 <style lang="postcss">
 	@reference "../../../../app.css";

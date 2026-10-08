@@ -16,13 +16,21 @@
 		title: string;
 		ariaLabel: string;
 		class?: string;
+		style?: string;
+		/** faded out, for a handle that has a twin elsewhere on the divider */
+		hidden?: boolean;
 	};
-	let { icon: Icon, onclick, title, ariaLabel, class: extra = '' }: Props = $props();
+	let { icon: Icon, onclick, title, ariaLabel, class: extra = '', style, hidden = false }: Props = $props();
 </script>
 
 <!-- preventDefault keeps focus on the editor, whose CARET is what the jump reads -->
 <button
 	class="bg-surface-700-300 hover:bg-primary-500 absolute z-30 flex size-6 cursor-pointer items-center justify-center rounded-full text-white opacity-80 shadow-md transition hover:opacity-100 focus-visible:opacity-100 dark:text-black {extra}"
+	class:pointer-events-none={hidden}
+	style:opacity={hidden ? 0 : undefined}
+	{style}
+	aria-hidden={hidden || undefined}
+	tabindex={hidden ? -1 : undefined}
 	onmousedown={(e) => e.preventDefault()}
 	{onclick}
 	use:tip={title}

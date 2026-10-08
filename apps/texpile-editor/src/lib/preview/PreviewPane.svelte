@@ -8,6 +8,7 @@
 	import PaneHandle from '$lib/components/PaneHandle.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
 	import PreviewBody from './PreviewBody.svelte';
+	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 	import type { DraftController } from '$lib/draft/draftController.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -40,7 +41,7 @@
 		onPopout?: (() => void) | null;
 		/** a splitter is being dragged; the frame holds its size rather than reflowing every frame */
 		paneDragging: boolean;
-		pdfPaneRef?: { scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number) => void };
+		pdfPaneRef?: { scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number, view?: number) => void };
 		onStartResize: (e: MouseEvent) => void;
 		onResizeByKey: (e: KeyboardEvent) => void;
 		onClose: () => void;
@@ -101,19 +102,25 @@
 		     the 3px the panes hold clear, so it does cross the scrollbar - it is also the one you
 		     press once and forget, rather than something parked on the line.
 
-		     top-28, not Overleaf's own 68px: their toolbars are not ours. Here the editor's tab
+		     112px down, not Overleaf's own 68px: their toolbars are not ours. Here the editor's tab
 		     strip (h-9) and format toolbar (min-h-10) put a horizontal rule at 76px, and a chip at
 		     68 spans 68-92 - so that rule ran straight through it. 112px clears the toolbar
 		     entirely, which is where this sat before and why. Round rather than a
 		     lozenge because it acts on the document, not on the boundary. The reverse direction
-		     needs no button: a click in the preview is the inverse jump. -->
-		<PaneHandle
-			icon={ArrowRight}
-			class="top-28 -left-[12.5px]"
-			onclick={onSyncToCursor}
-			title={(guest ? guestTypstOffered : typstPreviewWanted) ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
-			ariaLabel={(guest ? guestTypstOffered : typstPreviewWanted) ? m.wsview_sync_to_preview_aria() : m.wsview_sync_to_pdf_aria()}
-		/>
+		     needs no button: a click in the preview is the inverse jump.
+
+		     Editors stacked in two rows give each row its own, shown while an editor in that row has focus -->
+		{#each editorGroups.rowTops as top, row (row)}
+			<PaneHandle
+				icon={ArrowRight}
+				class="-left-[12.5px] duration-300"
+				style="top: {top + 112}px"
+				hidden={row !== editorGroups.focusedRow}
+				onclick={onSyncToCursor}
+				title={(guest ? guestTypstOffered : typstPreviewWanted) ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
+				ariaLabel={(guest ? guestTypstOffered : typstPreviewWanted) ? m.wsview_sync_to_preview_aria() : m.wsview_sync_to_pdf_aria()}
+			/>
+		{/each}
 	{/if}
 	<PreviewBody
 		docked

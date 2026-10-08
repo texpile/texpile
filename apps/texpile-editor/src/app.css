@@ -214,6 +214,7 @@ html.window-glass :is(.shadow-lg, .shadow-xl, .shadow-2xl):is(.bg-surface-50-950
 html.window-glass [data-scope='toast'][data-part='root'],
 html.window-glass .cm-tooltip,
 html.window-glass .cm-comment-add,
+html.window-glass .cm-comment-add-card,
 html.window-glass .settings-button,
 html.window-glass #mathlive-suggestion-popover {
 	--color-surface-300-700: var(--glass-line);
@@ -780,6 +781,39 @@ select.input {
 .cm-comment-add:disabled {
 	opacity: 0.5;
 	cursor: default;
+}
+.cm-comment-add[aria-pressed='true'] {
+	color: var(--primary-ink);
+}
+/* carrying formatting (a split's slot), the row is one card like Word's mini toolbar, not a run of chips */
+.cm-comment-add-card {
+	padding: 2px;
+	border: var(--default-border-width) solid var(--color-surface-300-700);
+	border-radius: calc(var(--radius-base) * 1.5);
+	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
+	box-shadow: 0 2px 6px light-dark(rgb(0 0 0 / 0.16), rgb(0 0 0 / 0.4));
+}
+html .cm-comment-add-card .cm-comment-add {
+	border-color: transparent;
+	box-shadow: none;
+	background-color: transparent;
+	backdrop-filter: none;
+}
+html .cm-comment-add-card .cm-comment-add:hover {
+	background-color: light-dark(var(--color-surface-100), var(--color-surface-800));
+}
+.cm-comment-add-gap {
+	position: relative;
+	margin-left: 7px;
+}
+.cm-comment-add-card .cm-comment-add-gap::before {
+	content: '';
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: -5px;
+	width: var(--default-border-width);
+	background-color: var(--color-surface-300-700);
 }
 /* narrower than the buttons it dismisses: secondary, and it must not read as another action */
 .cm-comment-add-off {
@@ -2393,4 +2427,13 @@ html.pm-drop-refused .pm-drop-cursor {
 		color: inherit;
 		opacity: 1;
 	}
+}
+
+/* the floating format bar sits over the top of the pane: the text starts below it */
+.floating-bar-room .texpile-main-editor {
+	padding-top: 2rem;
+}
+/* the source editor's own lines only: a raw LaTeX block or chip in the visual editor is a CodeMirror too */
+.floating-bar-room .source-editor > .cm-editor > .cm-scroller > .cm-content {
+	padding-top: 4rem !important;
 }

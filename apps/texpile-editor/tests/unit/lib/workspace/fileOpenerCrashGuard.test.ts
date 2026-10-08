@@ -13,7 +13,6 @@ describe('FileOpener after a visual build died', () => {
 		const fallbackToSource = vi.fn();
 		const doc = new DocumentBuffer({
 			scheduleSave: () => {},
-			discardQueuedSave: () => {},
 			writeNow: () => {},
 			rebuildVisual: () => {},
 			isVisualMode: () => true,
@@ -37,8 +36,6 @@ describe('FileOpener after a visual build died', () => {
 				visual = false;
 				fallbackToSource();
 			},
-			openHistory: () => {},
-			disableHistory: () => {},
 			clearPerFileViewState: () => {},
 			captureDiffSnapshot: () => {},
 			closeOpenFile: () => {}

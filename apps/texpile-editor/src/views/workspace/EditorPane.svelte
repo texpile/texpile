@@ -3,11 +3,8 @@
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
-	import { Loader2, CircleAlert, FileWarning, Info } from '@lucide/svelte';
-	import TypstMissingBar from '$lib/languages/typst/TypstMissingBar.svelte';
-	import EditorNotice from '$lib/components/EditorNotice.svelte';
-	import ConflictNotice from './ConflictNotice.svelte';
-	import { isTexpileManaged } from '$lib/comments/managed';
+	import { Loader2 } from '@lucide/svelte';
+	import EditorNotices from './EditorNotices.svelte';
 	import SearchBar from '$lib/editor/visual/SearchBar.svelte';
 	import DiffPane from './diff/DiffPane.svelte';
 	import VisualCompareBar from './VisualCompareBar.svelte';
@@ -25,20 +22,31 @@
 	import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
-	import { noteVisualMount, visualMounted } from '$lib/workspace/visualMountGuard';
-	import type { Node as PMNode } from 'prosemirror-model';
+	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
 	import { openWorkspaceLink } from '$lib/workspace/openWorkspaceLink';
-	import TabBar from './TabBar.svelte';
-	import EditorToolbarStrip from './EditorToolbarStrip.svelte';
+	import EditorPaneHead from './pane/EditorPaneHead.svelte';
+	import FloatingFormatBar from './pane/FloatingFormatBar.svelte';
+	import { heldVisualDoc } from './pane/heldVisualDoc.svelte';
+	import UnreadableFileNote from './pane/UnreadableFileNote.svelte';
+	import { slotDrag } from '$lib/workspace/groups/slotDrag.svelte';
+	import { formatToolbarOf } from './pane/formatToolbar';
 	import VisualEditorHost from './VisualEditorHost.svelte';
 	import CommentRail from '$lib/comments/rail/CommentRail.svelte';
 	import { attachVisualDiffOutsideComposition } from '$lib/editor/visual/diff/attachVisualDiff';
 	import { untrack } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
-
+	import { sourceEditorKey } from './pane/sourceEditorKey';
 	import type { EditorPaneProps } from './editorPaneProps';
 
 	let {
+		parked = false,
+		single = false,
+		onCountWords,
+		onPickMain,
+		emptyNote,
+		groupId,
+		onDropTab,
+		onDropFiles,
 		loadedPath,
 		openTabs,
 		activeTabKey,
@@ -96,7 +104,6 @@
 		onVisualSelection,
 		onEditFrontmatter,
 		onSyncToPdf,
-		onHistoryBoundary,
 		onJumpToFile,
 		onOpenFileAt,
 		onJumpToLabel,
@@ -121,7 +128,7 @@
 	let scroller = $state<HTMLElement | null>(null);
 
 	// remounts the source editor when the file or the session's view of it changes
-	const sourceKey = $derived(`${loadedPath}:${session.active}:${session.manifestRev}`);
+	const sourceKey = $derived(sourceEditorKey(session, loadedPath));
 
 	// Building the visual editor's node views is one long synchronous block - seconds on a large
 	// paper - and it does NOT happen when <LatexEditorView> mounts. That component's onMount awaits a
@@ -156,6 +163,14 @@
 	/** independent of viewMode, which says whether the diff is rendered or in source */
 	const comparing = $derived(!!compare);
 
+	/** the visual editor is wanted, whether or not it has been built yet */
+	const visualPending = $derived(loadedPath && structured && viewMode === 'visual');
+	const held = heldVisualDoc(() => ({ loadedPath, visualDoc, docMeta, texSource, sourceMap, pending: !!visualPending }));
+	const shownDoc = $derived(held.current?.visualDoc ?? null);
+	const formatBar = $derived(
+		formatToolbarOf({ loadedPath, kind, viewMode: requestedViewMode, encodingIssue, conflicted, compare, visualDoc: shownDoc })
+	);
+
 	/** the file and copy Version History shows: the tab's own file, set with its comparison, not loadedPath, which follows a
 	 *  beat later; with that the copy was looked for among the last file's copies, taken as deleted, and the tab left */
 	const history = $derived(
@@ -165,14 +180,6 @@
 	/** the working side IS the file, so it takes the editor's own handler - split the same way
 	 *  DiffMode's getWorkingText splits it */
 	const onDiffInput = $derived(structured ? onTexInput : onRawInput);
-
-	/** md link tooltip Open: real schemes go to the browser, in-doc anchors are swallowed (no
-	 * anchor targets yet), anything path-like opens in the workspace. */
-	function onMdLink(href: string): boolean {
-		return openWorkspaceLink(href, onJumpToFile);
-	}
-	/** the visual editor is wanted, whether or not it has been built yet */
-	const visualPending = $derived(loadedPath && structured && viewMode === 'visual');
 
 	/** unmarked otherwise reads as a version nothing has changed since */
 	const versionParsing = $derived(comparing && viewMode === 'visual' && structured && !diffVersionDoc && !diffVersionUnavailable);
@@ -185,20 +192,20 @@
 	 * on Windows, visibly on macOS - and retrying beats dropping the attach.
 	 */
 	$effect(() => {
-		const view = editorViewStore.current;
+		const view = parked ? null : editorViewStore.current;
 		const wanted = comparing && viewMode === 'visual' && structured && diffVersionDoc ? { oldDoc: diffVersionDoc } : null;
 		if (view) return untrack(() => attachVisualDiffOutsideComposition(view, wanted));
 	});
 
-	// noted before a file's first build, forgotten in onVisualReady: a build that takes the renderer
-	// down leaves the note behind, and the next open of that file goes to Source (visualMountGuard).
-	// Keyed on the doc, not the path: the path switches a beat before the new doc arrives, and the
-	// old doc under the new path is not a build
-	let notedDoc: PMNode | null = null;
+	// a build that takes the renderer down leaves its note, and that file next opens in Source (visualMountGuard)
+	const mountNote = visualMountNote({
+		doc: () => visualDoc ?? null,
+		path: () => loadedPath,
+		building: () => structured && viewMode === 'visual' && readyFor !== loadedPath
+	});
+	// a parked group's editor already shows its file; going live on it builds nothing, so nothing is noted
 	$effect.pre(() => {
-		if (!visualDoc || !loadedPath || !structured || viewMode !== 'visual' || readyFor === loadedPath || visualDoc === notedDoc) return;
-		notedDoc = visualDoc;
-		noteVisualMount(loadedPath);
+		if (parked && loadedPath) readyFor = loadedPath;
 	});
 
 	/** a callback, not an effect: it dispatches a selection an effect would re-enter on */
@@ -206,62 +213,54 @@
 		mark('editor-ready');
 		warmEditor();
 		readyFor = loadedPath;
-		if (loadedPath) visualMounted(loadedPath);
+		mountNote.ready(loadedPath);
+		// a parked group's editor is not the store's, and it keeps where it was
+		if (parked) return;
 		const v = editorViewStore.current;
-		if (!v || !loadedPath || session.collabFor(loadedPath)) return;
+		if (!v || !loadedPath || session.active) return;
 		restoreVisualPosition(v, loadedPath, texSource, sourceMap);
-	}
-
-	// a shared file steps only through its own history: the workspace one swaps in a whole local snapshot, which would
-	// write over everyone else's edits. still consumed, so the browser's own undo never runs
-	function stepHistoryUnlessShared(dir: 'undo' | 'redo'): boolean {
-		return session.collabFor(loadedPath) ? true : onHistoryBoundary(dir);
 	}
 </script>
 
-<div class="flex min-h-0 min-w-0 flex-col" style="grid-column: 1; grid-row: 2">
-	{#if !fileMode.current}
-		<TabBar
-			tabs={openTabs}
-			activeKey={activeTabKey}
-			dirty={isDirty.current && !session.isGuest}
-			previewKey={previewTab}
-			onActivate={onActivateTab}
-			onClose={onCloseTab}
-			onKeep={onKeepTab}
-			onContextMenu={onTabMenu}
-		/>
-	{/if}
-	{#if loadedPath && structured && !comparing && (viewMode === 'source' || visualDoc)}
-		<EditorToolbarStrip {kind} mode={viewMode === 'visual' ? 'visual' : 'source'} />
-	{/if}
-	<!-- not in diff mode: DiffPane carries its own, and both rendered gave two stacked banners -->
-	{#if loadedPath && !comparing && isTexpileManaged(loadedPath)}
-		<!-- Above the editor, not in it: .texpile is hidden from the tree, so anyone who has this
-		     open reached it deliberately from Source Control and deserves the warning before they
-		     touch it. One short line everywhere a managed file appears - the same sentence as the
-		     SCM badge tooltip and the diff bar, so the notice reads as one voice. -->
-		<EditorNotice icon={Info} tone="info" title="{m.vcs_texpile_managed()}." note={m.texpile_managed_note()} />
-	{/if}
-	{#if loadedPath && encodingIssue}
-		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_read_only()}." note={encodingIssue} />
-	{/if}
-	<!-- a guest's Typst runs on the host's tinymist, and a lone file runs none: no language server, no compile -->
-	{#if loadedPath && kind === 'typ' && !session.isGuest && !fileMode.current && !comparing}
-		<TypstMissingBar />
-	{/if}
-	{#if loadedPath && conflicted && !comparing}
-		<ConflictNotice left={conflictsLeft} stray={conflictStray} onLeave={structured ? onLeaveConflicts : undefined} />
-	{/if}
-	<!-- the buffer is now the only copy, so it stays on screen; what a save will do is spelled out
-	     because it recreates the old name rather than following the rename -->
-	{#if loadedPath && fileDeleted && !comparing}
-		<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_file_deleted_title()}." note={m.wsview_file_deleted_note()} />
-	{/if}
+<div class="flex min-h-0 min-w-0 flex-1 flex-col" class:floating-bar-room={!!formatBar}>
+	<EditorPaneHead
+		strip={fileMode.current || single
+			? null
+			: {
+					tabs: openTabs,
+					activeKey: activeTabKey,
+					dirty: isDirty.current && !session.isGuest && !parked,
+					previewKey: previewTab,
+					onActivate: onActivateTab,
+					onClose: onCloseTab,
+					onKeep: onKeepTab,
+					onContextMenu: onTabMenu,
+					groupFocused: !parked,
+					groupId,
+					onDropTab,
+					onDropFiles
+				}}
+		controls={{ loadedPath, kind, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
+	/>
+	<EditorNotices
+		{loadedPath}
+		{comparing}
+		{encodingIssue}
+		{kind}
+		guest={session.isGuest}
+		{conflicted}
+		{conflictsLeft}
+		{conflictStray}
+		onLeaveConflicts={structured ? onLeaveConflicts : undefined}
+		{fileDeleted}
+	/>
 	{#snippet historyButtons()}
 		{#if history}<VersionHistoryButtons path={history.path} hash={history.hash} />{/if}
 	{/snippet}
-	<div class="flex min-h-0 min-w-0 flex-1">
+	<div class="relative flex min-h-0 min-w-0 flex-1">
+		{#if formatBar}
+			<FloatingFormatBar {formatBar} {onCountWords} {onPickMain} shown={!parked} />
+		{/if}
 		<div class="flex min-h-0 min-w-0 flex-1 flex-col">
 			{#if loadedPath && comparing && viewMode === 'visual' && structured}
 				<VisualCompareBar
@@ -276,7 +275,7 @@
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 			<div class="relative min-h-0 min-w-0 flex-1">
-				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing}
+				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
 				{/if}
 				<!-- scroll-inset-r keeps this scrollbar clear of the lozenge on the preview divider. NOT in diff
@@ -289,21 +288,10 @@
 						? '[scrollbar-gutter:stable]'
 						: ''} {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}"
 				>
-					{#if folderEmpty && !activeFilePath.current}
+					{#if folderEmpty && !activeFilePath.current && !parked}
 						<NewDocumentStart onPick={onPickStarter} onBlank={onBlankStarter} onImport={onImportStarter} busy={applyingStarter} />
-					{:else if loadError}
-						<div class="text-error-ink mx-auto mt-12 flex max-w-md flex-col items-center gap-2 text-center">
-							<CircleAlert class="size-8" />
-							<p class="text-sm">{loadError}</p>
-						</div>
-					{:else if binaryWarning}
-						<div class="text-muted mx-auto mt-12 flex max-w-md flex-col items-center gap-3 text-center">
-							<FileWarning class="size-8" />
-							<p class="text-sm">{m.wsview_binary_warning_body()}</p>
-							<button type="button" class="btn btn-sm preset-tonal" onclick={() => onOpenAsText?.(binaryWarning.path)}>
-								{m.wsview_binary_open_anyway()}
-							</button>
-						</div>
+					{:else if loadError || binaryWarning}
+						<UnreadableFileNote {loadError} {binaryWarning} {onOpenAsText} />
 					{:else if loadedPath && nameOnly}
 						<div class="text-muted mt-12 text-center text-sm">
 							{m.wsview_shared_name_only({ name: basename(loadedPath) })}
@@ -319,7 +307,7 @@
 							hasHead={diffHasHead}
 							compareRef={diffCompareRef}
 							{fileDeleted}
-							readOnly={!!session.collabFor(loadedPath) || fileDeleted}
+							readOnly={session.active || fileDeleted || parked}
 							onModifiedInput={onDiffInput}
 							onToggleLayout={onToggleDiffLayout}
 							onRefresh={onRefreshDiff}
@@ -338,7 +326,6 @@
 										gotoLine={sourceGotoLine}
 										{onSyncToPdf}
 										initialScrollPos={sourceScrollAnchor}
-										onHistoryBoundary={stepHistoryUnlessShared}
 										diagnostics={kind === 'typ' ? undefined : sourceDiagnostics}
 										{onJumpToFile}
 										{onOpenFileAt}
@@ -350,39 +337,37 @@
 										{onInsertCitation}
 										{onCiteByDoi}
 										{onSelectComment}
+										live={!parked}
 									/>
 								{/key}
 							</div>
 							{#if commentsCtl}
-								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
+								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" {scroller} onSelect={(id) => onSelectComment?.(id)} />
 							{/if}
 						</div>
-					{:else if loadedPath && structured && visualDoc}
+					{:else if structured && held.current}
 						<div class="flex min-h-full items-stretch">
 							<div class="isolate min-w-0 flex-1">
 								<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
 								<VisualEditorHost
 									{kind}
-									{loadedPath}
-									{visualDoc}
-									{docMeta}
-									{texSource}
+									{...held.current}
+									commentRanges={held.own ? commentRanges : []}
+									live={held.own && !parked}
 									{allReferences}
 									{showRenderBar}
 									{onVisualChange}
 									{onVisualSelection}
-									onHistoryBoundary={stepHistoryUnlessShared}
 									{onVisualReady}
-									{onMdLink}
+									onMdLink={(href: string) => openWorkspaceLink(href, onJumpToFile)}
 									{onEditFrontmatter}
-									{commentRanges}
-									{sourceMap}
 									{regionParser}
 									{selectedComment}
 									{onSelectComment}
 									{onAddCommentAnchored}
 									{onInsertCitation}
 									{onCiteByDoi}
+									{onSyncToPdf}
 									{onJumpToLabel}
 									{onJumpToDefinition}
 									{onCommentsPlaced}
@@ -420,11 +405,12 @@
 										{selectedComment}
 										{onAddComment}
 										{onSelectComment}
+										live={!parked}
 									/>
 								{/key}
 							</div>
 							{#if commentsCtl}
-								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" onSelect={(id) => onSelectComment?.(id)} />
+								<CommentRail ctl={commentsCtl} threads={commentThreads} mode="source" {scroller} onSelect={(id) => onSelectComment?.(id)} />
 							{/if}
 						</div>
 					{:else if loadedPath && kind === 'bib'}
@@ -444,19 +430,23 @@
 						<div class="text-muted mt-12 text-center text-sm">
 							{m.wsview_binary_file_note({ name: basename(loadedPath) })}
 						</div>
-					{:else if activeFilePath.current}
+					{:else if activeFilePath.current && !parked}
 						<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
 						<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
 							<Loader2 class="size-4 animate-spin" />
 							{m.wsview_opening()}
 						</div>
 					{:else}
-						<div class="text-muted mt-12 text-center text-sm">{m.wsview_select_file_prompt()}</div>
+						<div class="text-muted mt-12 text-center text-sm">{emptyNote ?? m.wsview_select_file_prompt()}</div>
 					{/if}
 				</div>
+				{#if slotDrag.current && groupId !== undefined}
+					<!-- VS Code's drop overlay: a dragged tab is the group's to take, so the editor under it draws no drop cursor and takes no drop -->
+					<div class="absolute inset-0 z-50"></div>
+				{/if}
 			</div>
 		</div>
-		{#if history}
+		{#if history && !parked}
 			<VersionHistoryPanel path={history.path} hash={history.hash} />
 		{/if}
 	</div>

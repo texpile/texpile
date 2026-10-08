@@ -82,7 +82,9 @@ function changeNear(
 	oldSource: string,
 	newSource: string
 ): { shift: number; change: NearChange | null } | null {
-	const whole = spliceDiff(oldSource, newSource)!;
+	// a re-parse of the same text (fresh stamps after typing) moves nothing
+	const whole = spliceDiff(oldSource, newSource);
+	if (!whole) return { shift: 0, change: null };
 	const wholeEnd = whole.index + whole.remove;
 	let lo: [number, number] = [0, 0];
 	for (let i = ci - 1; i >= Math.max(0, ci - NEIGHBOURS); i--) {

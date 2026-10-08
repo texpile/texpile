@@ -54,8 +54,13 @@ export class TerminalDockState {
 		if (browser && s.terminalShrink) this.shrink = true;
 	}
 
-	/** reveal the dock WITHOUT creating a shell: a compile opens it for its output, and jumping to
-	 *  Problems opens it for the problem list. Neither is a request for a terminal. */
+	/** the compile's shell lives in the dock, which a compile mounts without showing it */
+	mountHidden() {
+		this.mounted = true;
+	}
+
+	/** reveal the dock WITHOUT creating a shell: jumping to Problems opens it for the problem list,
+	 *  which is not a request for a terminal */
 	show() {
 		this.mounted = true;
 		this.visible = true;

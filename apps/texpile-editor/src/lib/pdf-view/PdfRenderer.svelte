@@ -41,7 +41,9 @@
 	}: Props = $props();
 
 	const context = getPdfViewerContext();
-	const { state: viewerState, _registerRenderer, _setSrcDataForDownload } = context;
+	const view = context._attachView();
+	const viewerState = view.state;
+	const { _setSrcDataForDownload } = context;
 
 	let src = $derived(srcProp ?? context.src);
 
@@ -176,14 +178,14 @@
 				// eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
 				documentSource = { data: arrayBuffer };
 			} else if (source instanceof ArrayBuffer) {
-				// PDF.js detaches what it is given: it gets a copy, so the same bytes draw again (a guest's preview reopened)
+				// PDF.js detaches what it is given: it gets a copy, so the same bytes serve another view and the download
 				_setSrcDataForDownload(source);
 				// eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
 				documentSource = { data: source.slice(0) };
 			} else if (source instanceof Uint8Array) {
 				_setSrcDataForDownload(new Uint8Array(source).buffer.slice(0) as ArrayBuffer); // copy for download
 				// eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
-				documentSource = { data: source };
+				documentSource = { data: new Uint8Array(source) };
 			} else {
 				throw new Error('Invalid PDF source type');
 			}
@@ -310,7 +312,7 @@
 
 			shadowRoot.appendChild(container);
 
-			_registerRenderer(rendererActions);
+			view.register(rendererActions);
 
 			mounted = true;
 		}
@@ -347,6 +349,7 @@
 	});
 
 	onDestroy(() => {
+		view.detach();
 		loadGen++; // invalidate any queued load so it can't touch the destroyed viewer
 		if (viewer) {
 			viewer.destroy();
@@ -358,7 +361,8 @@
 	});
 </script>
 
-<div bind:this={hostEl} class="pdf-renderer-host"></div>
+<!-- a press in this view makes it the one the toolbar works on -->
+<div bind:this={hostEl} class="pdf-renderer-host" onpointerenter={() => view.activate()} role="presentation"></div>
 
 <style>
 	.pdf-renderer-host {

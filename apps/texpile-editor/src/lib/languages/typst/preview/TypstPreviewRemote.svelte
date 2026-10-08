@@ -20,6 +20,7 @@
 	// constructs a new "socket", and that reattach starts over with a whole-document frame.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, PictureInPicture2 } from '@lucide/svelte';
+	import type { Snippet } from 'svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
@@ -38,8 +39,10 @@
 		onPopout?: (() => void) | null;
 		/** docked in the pane, where this row stands in for a tab strip; false in the popped-out window */
 		asTabStrip?: boolean;
+		/** the project's controls, at the start of the bar as on the PDF's; the status then gives way first */
+		controls?: Snippet;
 	};
-	let { paneDragging, onPopout = null, asTabStrip = true }: Props = $props();
+	let { paneDragging, onPopout = null, asTabStrip = true, controls }: Props = $props();
 
 	const CHANNEL = 'texpile-preview';
 	const NET = 'texpile-preview-net';
@@ -249,11 +252,14 @@
 <div class="bg-surface-200-800 flex h-full w-full flex-col">
 	<!-- the local pane's row, minus what a guest cannot do: no Save as PDF (the exporter is the
 	     host's tinymist). Zoom is local to this viewer; follow works (see the toggle below). -->
-	{#snippet status()}
-		{#if error}
-			<span class="text-error-ink truncate text-sm" use:tip={error}>{error}</span>
-		{:else}
-			<span class="truncate text-sm">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
+	<!-- in the "..." it would be a line of text among actions: it gives way instead, unless it is a problem -->
+	{#snippet status(place: PreviewToolbarPlace = 'bar')}
+		{#if place === 'bar'}
+			{#if error}
+				<span class="text-error-ink truncate text-sm" use:tip={error}>{error}</span>
+			{:else}
+				<span class="truncate text-sm">{frameUrl ? m.typst_preview_live() : m.typst_preview_connecting()}</span>
+			{/if}
 		{/if}
 	{/snippet}
 	{#snippet zoomGroup()}
@@ -289,13 +295,15 @@
 		</button>
 	{/snippet}
 	<PreviewToolbar
-		leading={status}
+		leading={controls ?? status}
+		leadIsControls={!!controls}
 		trailing={onPopout ? popout : undefined}
 		{asTabStrip}
 		groups={[
 			{ id: 'zoom', render: zoomGroup },
 			{ id: 'follow', render: follow },
-			{ id: 'vision', render: vision }
+			...(controls ? [{ id: 'status', pinned: !!error, render: status }] : []),
+			{ id: 'vision', inMenu: true, render: vision }
 		]}
 	/>
 

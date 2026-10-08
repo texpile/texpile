@@ -184,10 +184,11 @@ describe('phase B: an unversioned settings.json', () => {
 			'pdfPaneWidth',
 			'pdfPaneOpen',
 			'pdfDarkPages',
-			'draftMode'
+			'draftMode',
+			'autosave'
 		])
 			expect(out, gone).not.toHaveProperty(gone);
-		expect(out).toMatchObject({ autosave: false, spellcheck: true, uiZoom: 1.25, editorKeymap: 'vim', uiLocale: 'de' });
+		expect(out).toMatchObject({ spellcheck: true, uiZoom: 1.25, editorKeymap: 'vim', uiLocale: 'de' });
 	});
 
 	it('folds lastFolder into openFolders for pre-multi-window installs', () => {

@@ -1,6 +1,7 @@
 // The one context menu in the app. A caller describes its items and where the pointer was;
 // this shows them through the OS on macOS and through ContextMenuHost everywhere else
 // (lib/platformSurfaces.ts), and runs whichever item was chosen.
+import { activeWindow } from '$lib/childWindows/childWindowRegistry.svelte';
 import type { Component } from 'svelte';
 import { box } from '$lib/runes/box.svelte';
 import { nativeBridge } from '$lib/workspace/fileSystem';
@@ -25,7 +26,7 @@ export type ContextMenuItem =
 	  };
 
 /** above: the menu's bottom at y rather than its top, for a button at the foot of a box */
-export type OpenMenu = { items: ContextMenuItem[]; x: number; y: number; above?: boolean; onClose?: () => void };
+export type OpenMenu = { items: ContextMenuItem[]; x: number; y: number; above?: boolean; onClose?: () => void; win?: Window };
 
 /** what ContextMenuHost draws; null between menus */
 export const openMenu = box<OpenMenu | null>(null);
@@ -78,7 +79,9 @@ export async function showContextMenu(
 	at: { x: number; y: number },
 	opts?: { onClose?: () => void; above?: boolean }
 ): Promise<void> {
-	if (nativeContextMenus()) {
+	// the window with focus: an editor in a window of its own has its menus drawn there, the OS one is this window's
+	const win = activeWindow();
+	if (nativeContextMenus() && win === window) {
 		const it = await showNative(items, at.x, at.y);
 		opts?.onClose?.();
 		if (it && !('separator' in it)) it.onclick?.();
@@ -91,6 +94,7 @@ export async function showContextMenu(
 			x: at.x,
 			y: at.y,
 			above: opts?.above,
+			win,
 			onClose: () => {
 				opts?.onClose?.();
 				resolve();

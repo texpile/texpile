@@ -103,6 +103,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	windowToggleMaximize: () => ipcRenderer.invoke('window:toggleMaximize'),
 	windowClose: () => ipcRenderer.invoke('window:close'),
 	windowIsMaximized: () => ipcRenderer.invoke('window:isMaximized'),
+	/** where the pointer is on the screen: a tab let go outside every window opens there in one of its own */
+	cursorScreenPoint: () => ipcRenderer.invoke('window:cursorScreenPoint'),
 	/** repaint / resize the Chromium-drawn window controls to match our title bar (not macOS). */
 	windowSetOverlay: (o: { height?: number; color?: string; symbolColor?: string }) => ipcRenderer.send('window:overlay', o),
 	/** subscribe to maximize / full-screen changes, so the title bar can swap its restore icon. */

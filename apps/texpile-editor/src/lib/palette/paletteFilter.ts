@@ -37,6 +37,11 @@ export function fuzzyScore(haystack: string, needle: string): FuzzyMatch | null 
 	if (!needle) return { score: 0, hits: [] };
 	const hay = haystack.toLowerCase();
 	const need = needle.toLowerCase();
+	// a jump to a nicer word start can strand the letters after it; every subsequence still matches
+	return scoreFrom(hay, need, true) ?? scoreFrom(hay, need, false);
+}
+
+function scoreFrom(hay: string, need: string, preferWordStarts: boolean): FuzzyMatch | null {
 	const hits: number[] = [];
 	let score = 0;
 	let at = 0;
@@ -49,7 +54,8 @@ export function fuzzyScore(haystack: string, needle: string): FuzzyMatch | null 
 		// match beat an obvious early one
 		let idx = hay.indexOf(ch, at);
 		if (idx === -1) return null;
-		if (!isWordStart(hay, idx) && run === 0) {
+		// a letter right after the last hit continues it, however the word goes on
+		if (preferWordStarts && !isWordStart(hay, idx) && !(n > 0 && idx === at)) {
 			const better = (() => {
 				for (let i = idx + 1; i < hay.length; i++) if (hay[i] === ch && isWordStart(hay, i)) return i;
 				return -1;

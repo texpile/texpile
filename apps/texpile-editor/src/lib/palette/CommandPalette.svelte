@@ -7,6 +7,7 @@
 	// the same library as the rest of the UI; the filtering, ranking and highlighting are ours.
 	//
 	// No props: the commands come from the palette action registry, which WorkspaceView fills in.
+	import { inChildWindows } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { untrack } from 'svelte';
 	import { Combobox, useListCollection } from '@skeletonlabs/skeleton-svelte';
 	import { Search } from '@lucide/svelte';
@@ -43,6 +44,12 @@
 		query = '';
 		commandPalette.toggle(mode);
 	}
+	// from an editor in its own window, the palette opens here, and this window comes forward with it
+	inChildWindows('keydown', (e) => {
+		if (!paletteChord(e)) return;
+		window.focus();
+		onWindowKeydown(e);
+	});
 
 	/**
 	 * Escape, in the CAPTURE phase.

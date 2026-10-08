@@ -14,7 +14,6 @@ import { upgradeAgentSettings } from './ai/agentSettingsUpgrade';
 const DEFAULT_SETTINGS = {
 	v: 1,
 	reopenLastFolder: true,
-	autosave: true, // off = manual save, warn before switching files
 	spellcheck: false,
 	englishVariant: '', // the English spelling and grammar follow: 'american', 'british', ...; '' = the system's own
 	grammarRules: {} as Record<string, boolean>, // grammar rules turned on or off by hand, over the defaults

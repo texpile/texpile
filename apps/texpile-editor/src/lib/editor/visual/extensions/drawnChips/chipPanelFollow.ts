@@ -5,8 +5,8 @@ import { closeChipPanel } from './chipPanel.svelte';
 import { scrollingPane } from '$lib/editor/visual/scrollingPane';
 
 /** the pane's box as far as the window shows it */
-function paneBox(pane: HTMLElement | null) {
-	const screen = { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+function paneBox(pane: HTMLElement | null, win: Window) {
+	const screen = { left: 0, top: 0, right: win.innerWidth, bottom: win.innerHeight };
 	if (!pane) return screen;
 	const box = pane.getBoundingClientRect();
 	return {
@@ -20,9 +20,12 @@ function paneBox(pane: HTMLElement | null) {
 export function followChip(anchor: HTMLElement) {
 	return (card: HTMLElement) => {
 		const pane = scrollingPane(anchor);
+		// the chip's window, which may be an editor's own
+		const doc = anchor.ownerDocument;
+		const win = doc.defaultView ?? window;
 		function place(): void {
 			if (!anchor.isConnected) return;
-			const box = paneBox(pane);
+			const box = paneBox(pane, win);
 			const chip = anchor.getBoundingClientRect();
 			if (!chipInPane(chip, box)) {
 				closeChipPanel('away');
@@ -42,9 +45,9 @@ export function followChip(anchor: HTMLElement) {
 		const resized = new ResizeObserver(place);
 		resized.observe(anchor);
 		resized.observe(card);
-		document.addEventListener('scroll', place, { capture: true, passive: true });
-		window.addEventListener('resize', place);
-		document.addEventListener('pointerdown', onPointerDown, true);
+		doc.addEventListener('scroll', place, { capture: true, passive: true });
+		win.addEventListener('resize', place);
+		doc.addEventListener('pointerdown', onPointerDown, true);
 		place();
 		queueMicrotask(() => {
 			const first = card.querySelector<HTMLElement>('[data-autofocus]') ?? card.querySelector<HTMLElement>('.cm-content');
@@ -55,9 +58,9 @@ export function followChip(anchor: HTMLElement) {
 		});
 		return () => {
 			resized.disconnect();
-			document.removeEventListener('scroll', place, { capture: true });
-			window.removeEventListener('resize', place);
-			document.removeEventListener('pointerdown', onPointerDown, true);
+			doc.removeEventListener('scroll', place, { capture: true });
+			win.removeEventListener('resize', place);
+			doc.removeEventListener('pointerdown', onPointerDown, true);
 		};
 	};
 }

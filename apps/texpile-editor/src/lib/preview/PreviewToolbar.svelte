@@ -39,10 +39,13 @@
 		trailing,
 		asTabStrip = false,
 		dividers = true,
-		inEditor = false
+		inEditor = false,
+		leadIsControls = false
 	}: {
 		groups: PreviewToolbarGroup[];
 		leading?: Snippet;
+		/** the lead holds buttons, not a name to truncate: it keeps its width and the groups fold first */
+		leadIsControls?: boolean;
 		trailing?: Snippet;
 		asTabStrip?: boolean;
 		dividers?: boolean;
@@ -61,7 +64,7 @@
 
 <div class="preview-toolbar" class:as-tab-strip={asTabStrip} class:dividers class:in-editor={inEditor} bind:this={bar.row}>
 	<!-- the lead zone stays as a spacer with a trailing control alone, so the groups keep their centre -->
-	{#if leading || trailing}<div class="preview-toolbar-lead">
+	{#if leading || trailing}<div class="preview-toolbar-lead" class:keeps={leadIsControls}>
 			{#if leading}{@render leading()}{/if}
 		</div>{/if}
 	{#each groups as group (group.id)}
@@ -101,6 +104,8 @@
 	.preview-toolbar {
 		/* one control square for the buttons, the page box and the zoom trigger */
 		--pdf-ctl: calc(var(--spacing) * 7);
+		/* Compile in the lead drops its label in a narrow pane (CompileButton's @max query) */
+		container-type: inline-size;
 		display: flex;
 		/* the groups and the trailing control pack against the right edge and the lead takes the room;
 		   safe: a row that still overflows aligns from the start, so nothing is clipped past the left
@@ -163,6 +168,9 @@
 	.preview-toolbar-lead {
 		flex: 1 1 0;
 		min-width: 0;
+	}
+	.preview-toolbar-lead.keeps {
+		flex: 1 0 auto;
 	}
 	.preview-toolbar-trail {
 		flex: 0 0 auto;

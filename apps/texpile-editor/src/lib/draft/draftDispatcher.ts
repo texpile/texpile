@@ -43,8 +43,9 @@ function dev(kind: string, detail?: unknown) {
 
 export class DraftDispatcher {
 	private timer: ReturnType<typeof setTimeout> | null = null;
-	private lastSrc = ''; // source at the last full draft compile; the patch baseline
-	private lastPath: string | null = null; // file that source belongs to
+	// per file, its source at the last compile that covered it: the patch baseline. Focus moving between
+	// editor groups on different files changes the loaded path without anyone editing
+	private lastSrc = new Map<string, string>();
 
 	constructor(private deps: DraftDispatchDeps) {}
 
@@ -56,27 +57,25 @@ export class DraftDispatcher {
 		}
 	}
 
-	private async fullRecompile(src: string, quiet = false) {
-		this.lastSrc = src;
-		this.lastPath = this.deps.getLoadedPath();
+	private async fullRecompile(src: string, path: string, quiet = false) {
+		this.lastSrc.set(path, src);
 		await this.deps.flushSaves();
 		if (quiet && this.deps.triggerQuietCompile) this.deps.triggerQuietCompile();
 		else this.deps.triggerFullCompile();
 	}
 
-	private debounceRecompile(src: string, ms = RECOMPILE_DEBOUNCE_MS, quiet = false) {
-		this.timer = setTimeout(() => void this.fullRecompile(src, quiet), ms);
+	private debounceRecompile(src: string, path: string, ms = RECOMPILE_DEBOUNCE_MS, quiet = false) {
+		this.timer = setTimeout(() => void this.fullRecompile(src, path, quiet), ms);
 	}
 
-	private advanceBaseline(src: string) {
-		this.lastSrc = src;
-		this.lastPath = this.deps.getLoadedPath();
+	private advanceBaseline(src: string, path: string | null) {
+		if (path) this.lastSrc.set(path, src);
 	}
 
 	/** an externally triggered full compile already covers the current source; adopt it as the
 	 * baseline so the next decision doesn't redundantly recompile the very same text */
 	adoptCurrentAsBaseline() {
-		this.advanceBaseline(this.deps.getSource());
+		this.advanceBaseline(this.deps.getSource(), this.deps.getLoadedPath());
 	}
 
 	/** one decision point per edit; also re-invoked when a compile settles, so edits typed
@@ -85,23 +84,25 @@ export class DraftDispatcher {
 		const src = this.deps.getSource();
 		const path = this.deps.getLoadedPath();
 		this.cancel();
-		if (!this.deps.isActive() || src === this.lastSrc) return;
+		if (!this.deps.isActive() || !path) return;
+		const base = this.lastSrc.get(path);
+		if (src === base) return;
 
-		// path changed since the last compile (switched files): recompile, don't diff
-		if (path !== this.lastPath || !this.lastSrc) {
-			this.debounceRecompile(src, PATCH_DEBOUNCE_MS);
+		// a file no compile has seen from here yet: recompile, don't diff
+		if (!base) {
+			this.debounceRecompile(src, path, PATCH_DEBOUNCE_MS);
 			return;
 		}
 
 		const root = workspaceRoot.current;
 		const file = root && path ? relFromRoot(path, root) : null;
-		const d = decideEdit(this.lastSrc, src, file ?? undefined);
+		const d = decideEdit(base, src, file ?? undefined);
 		const target = this.deps.getTarget();
 
 		switch (d.kind) {
 			case 'noop':
 				// render-identical edit: no compile, no patch, just advance the baseline
-				this.advanceBaseline(src);
+				this.advanceBaseline(src, path);
 				dev('ws-noop-whitespace', {});
 				return;
 			case 'boundary':
@@ -109,7 +110,7 @@ export class DraftDispatcher {
 				// USUALLY identical, but whether it is stays the engine's call -- run the pass
 				// quietly, holding the current page instead of announcing a compile
 				dev('ws-recompile', { reason: 'boundary-line' });
-				this.debounceRecompile(src, RECOMPILE_DEBOUNCE_MS, true);
+				this.debounceRecompile(src, path, RECOMPILE_DEBOUNCE_MS, true);
 				return;
 			case 'skip-unbalanced':
 				// unrepairable mid-command state: hold the preview until the next keystroke
@@ -117,7 +118,7 @@ export class DraftDispatcher {
 				return;
 			case 'env-body':
 				dev('ws-recompile', { reason: 'env-body:' + d.env });
-				this.debounceRecompile(src);
+				this.debounceRecompile(src, path);
 				return;
 			case 'structural':
 				// heavier change: wait for a pause before recompiling, then land the view on the
@@ -132,7 +133,7 @@ export class DraftDispatcher {
 						text: d.focus.text,
 						listItem: d.focus.listItem
 					});
-				this.debounceRecompile(src);
+				this.debounceRecompile(src, path);
 				return;
 			case 'patch': {
 				// one block changed: patch IMMEDIATELY (no debounce -- instantPatch's in-flight
@@ -155,11 +156,11 @@ export class DraftDispatcher {
 					interiorEdit: d.interiorEdit,
 					onRecompile: async () => {
 						await this.deps.flushSaves();
-						this.advanceBaseline(src);
+						this.advanceBaseline(src, path);
 					},
 					// the patch derived the page's new records itself: no compile is coming, so
 					// the baseline moves here instead, in the same tick as the record store
-					onBaseline: () => this.advanceBaseline(src),
+					onBaseline: () => this.advanceBaseline(src, path),
 					redecide: () => this.run()
 				});
 				return;

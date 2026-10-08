@@ -3,7 +3,7 @@ import { Compartment as CodeMirrorCompartment } from '@codemirror/state';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { exitCode } from 'prosemirror-commands';
-import { undo, redo } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { TextSelection } from 'prosemirror-state';
 import { GapCursor } from 'prosemirror-gapcursor';
 import { gapAwareSelectionNear } from '$lib/editor/visual/gapSelection';
@@ -109,11 +109,16 @@ export class RawLatexView {
 	/** last comment ranges handed to CodeMirror, so a no-op update doesn't dispatch */
 	private lastCommentKey = '[]';
 
+	/** this block is the one the raw-LaTeX bar is up for */
+	private holdsBar = false;
+
 	handleFocus() {
+		this.holdsBar = true;
 		rawEditorActiveStore.current = true; // toolbar swaps to the raw-LaTeX bar
 	}
 
 	handleBlur() {
+		this.holdsBar = false;
 		rawEditorActiveStore.current = false;
 		this.deselectNode();
 	}
@@ -174,17 +179,17 @@ export class RawLatexView {
 			{
 				key: 'Ctrl-z',
 				mac: 'Cmd-z',
-				run: () => undo(view.state, view.dispatch)
+				run: () => undoVisual()
 			},
 			{
 				key: 'Shift-Ctrl-z',
 				mac: 'Shift-Cmd-z',
-				run: () => redo(view.state, view.dispatch)
+				run: () => redoVisual()
 			},
 			{
 				key: 'Ctrl-y',
 				mac: 'Cmd-y',
-				run: () => redo(view.state, view.dispatch)
+				run: () => redoVisual()
 			},
 			{ key: 'Backspace', run: () => this.maybeDelete() }
 		];
@@ -273,6 +278,8 @@ export class RawLatexView {
 	}
 
 	destroy() {
+		// torn down with the focus in it (the block deleted, the tab closed): no blur comes to give the format bar back
+		if (this.holdsBar) rawEditorActiveStore.current = false;
 		this.cm.dom.removeEventListener('focus', this.handleFocus, true);
 		this.cm.dom.removeEventListener('blur', this.handleBlur, true);
 		this.cm.destroy();

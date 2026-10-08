@@ -35,6 +35,8 @@ export type PmCommentsSyncArgs = {
 	/** bumped when a collaborator's change is patched in: marks that came with it were placed on the text before it */
 	patched?: () => number;
 	selected: () => string | null;
+	/** the focused editor's: the suggestion marks are its file's, and so is what the panel says of them */
+	live: () => boolean;
 	/** the threads that could not be drawn in this view, for the panel's "not in this view" */
 	onPlaced?: (lost: string[]) => void;
 	/**
@@ -105,6 +107,7 @@ export function syncPmComments(args: PmCommentsSyncArgs): void {
 	}
 	$effect(() => {
 		const v = args.view();
+		if (!args.live()) return;
 		const marks = activeSuggestions.current;
 		const epoch = args.epoch();
 		const patched = args.patched?.() ?? 0;
@@ -118,9 +121,13 @@ export function syncPmComments(args: PmCommentsSyncArgs): void {
 		if (later) clearTimeout(later);
 		later = setTimeout(() => (v.state.doc === doc ? placeSuggestions(v, marks) : (later = null)), wait);
 	});
-	$effect(() => () => {
-		if (later) clearTimeout(later);
-		suggestionVisibility.current = { partial: new Set(), hidden: new Set() };
+	$effect(() => {
+		if (!args.live()) return;
+		return () => {
+			if (later) clearTimeout(later);
+			lastMarks = null;
+			suggestionVisibility.current = { partial: new Set(), hidden: new Set() };
+		};
 	});
 
 	$effect(() => {

@@ -12,7 +12,9 @@
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { tabKey, type Tab } from '$lib/workspace/tabs.svelte';
+	import { draggedFiles, draggedTab, endTabDrag, startTabDrag, type DraggedTab } from '$lib/workspace/groups/slotDrag.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 
 	type Props = {
 		tabs: Tab[];
@@ -27,11 +29,35 @@
 		/** double-click keeps a preview tab (the only way to hold one you never edit, e.g. a PDF). */
 		onKeep?: (tab: Tab) => void;
 		onContextMenu?: (tab: Tab, event: MouseEvent) => void;
+		/** false in a parked editor group, whose active tab is dimmed as VS Code dims it */
+		groupFocused?: boolean;
+		/** the editor group this strip belongs to, which makes its tabs draggable */
+		groupId?: number;
+		/** a tab dropped on this strip, to sit at `index` */
+		onDropTab?: (drop: DraggedTab, index: number) => void;
+		/** files from the tree dropped on this strip, to open at `index` */
+		onDropFiles?: (paths: string[], index: number) => void;
 	};
-	let { tabs, activeKey, dirty, previewKey = null, onActivate, onClose, onKeep, onContextMenu }: Props = $props();
+	let {
+		tabs,
+		activeKey,
+		dirty,
+		previewKey = null,
+		onActivate,
+		onClose,
+		onKeep,
+		onContextMenu,
+		groupFocused = true,
+		groupId,
+		onDropTab,
+		onDropFiles
+	}: Props = $props();
 
 	/** files both sides changed, by the key the tree's badges use */
 	const conflicted = $derived(new Set(gitChanges.current.filter((c) => isConflicted(c.x, c.y)).map((c) => gitKey(c.path))));
+
+	// lit from the moment focus lands, not once the slot's file is drawn: until then it is still drawn as parked
+	const lit = $derived(groupFocused || (groupId !== undefined && editorGroups.focusedId === groupId));
 
 	function isActive(t: Tab) {
 		return !!activeKey && tabKey(t) === activeKey;
@@ -75,6 +101,38 @@
 
 	const visible = $derived(tabs.slice(windowStart, windowStart + capacity));
 
+	let strip = $state<HTMLElement | null>(null);
+	/** where a dragged tab would go: its place on the strip and the x of the marker drawn there */
+	let insert = $state<{ index: number; x: number } | null>(null);
+	function insertAt(clientX: number): { index: number; x: number } {
+		const box = strip!.getBoundingClientRect();
+		const shown = [...strip!.querySelectorAll<HTMLElement>('[role=tab]')];
+		for (const [i, el] of shown.entries()) {
+			const r = el.getBoundingClientRect();
+			if (clientX < r.left + r.width / 2) return { index: windowStart + i, x: r.left - box.left };
+		}
+		const last = shown.at(-1)?.getBoundingClientRect();
+		return { index: windowStart + shown.length, x: last ? last.right - box.left : 0 };
+	}
+	function onStripDragOver(event: DragEvent) {
+		if (!strip || !((onDropTab && draggedTab(event)) || (onDropFiles && draggedFiles(event)))) return;
+		event.preventDefault();
+		// the strip is the target, not the editor area under it
+		event.stopPropagation();
+		insert = insertAt(event.clientX);
+	}
+	function onStripDrop(event: DragEvent) {
+		const drop = draggedTab(event);
+		const files = draggedFiles(event);
+		const at = insert;
+		insert = null;
+		if (!at || !((onDropTab && drop) || (onDropFiles && files))) return;
+		event.preventDefault();
+		event.stopPropagation();
+		if (drop) onDropTab?.(drop, at.index);
+		else if (files) onDropFiles?.(files, at.index);
+	}
+
 	let menuOpen = $state(false);
 	function chooseFromMenu(tab: Tab) {
 		menuOpen = false;
@@ -86,18 +144,28 @@
 	<div
 		class="bg-surface-100-900 border-surface-200-800 relative z-20 flex h-9 shrink-0 items-stretch overflow-clip border-b"
 		role="tablist"
+		tabindex="-1"
 		bind:clientWidth={stripWidth}
+		bind:this={strip}
+		ondragover={onStripDragOver}
+		ondragleave={(e) => {
+			if (!strip?.contains(e.relatedTarget as Node | null)) insert = null;
+		}}
+		ondrop={onStripDrop}
 	>
 		{#each visible as tab (tabKey(tab))}
 			{@const key = tabKey(tab)}
 			<div
 				class="group border-surface-200-800 flex shrink cursor-pointer items-center gap-1.5 border-r px-3 text-sm {isActive(tab)
-					? 'bg-surface-50-950'
+					? `bg-surface-50-950 ${lit ? '' : 'text-muted'}`
 					: 'text-muted hover:bg-surface-wash'}"
 				style="min-width: {MIN_TAB_PX}px; max-width: 15rem"
 				role="tab"
 				aria-selected={isActive(tab)}
 				tabindex="0"
+				draggable={groupId !== undefined}
+				ondragstart={(e) => groupId !== undefined && startTabDrag(e, tab, groupId)}
+				ondragend={endTabDrag}
 				use:tip={tabTitle(tab)}
 				onclick={() => onActivate(tab)}
 				ondblclick={() => onKeep?.(tab)}
@@ -192,6 +260,9 @@
 					</Popover.Positioner>
 				</Portal>
 			</Popover>
+		{/if}
+		{#if insert}
+			<div class="bg-primary-500 pointer-events-none absolute inset-y-0 z-10 w-0.5" style="left: {Math.max(0, insert.x - 1)}px"></div>
 		{/if}
 	</div>
 {/if}

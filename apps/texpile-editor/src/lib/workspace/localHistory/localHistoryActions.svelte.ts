@@ -1,6 +1,7 @@
 // What Version History does with a copy, as VS Code's local history commands do: show it against the
 // file, Restore, Rename, Delete, and Save a Copy Now (VS Code's Create Entry). A module the workspace
 // provides while it is open, like scmHandlers.svelte.ts: the panel is drawn apart from the editor it acts on.
+import type { HeldFileDeps } from '$lib/buffers/heldFiles';
 import {
 	addLocalHistory,
 	listLocalHistory,
@@ -18,7 +19,7 @@ import { promptAsk } from '$lib/modals/confirm.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 
-export type LocalHistoryDeps = {
+export type LocalHistoryDeps = HeldFileDeps & {
 	getLoadedPath(): string | null;
 	/** write the file's queued autosave now: a restore keeps what it replaces, unsaved edits included */
 	flushPendingSave(): Promise<void>;
@@ -110,8 +111,9 @@ export class LocalHistoryActions {
 		// it back with \ on Windows, and a miss left the queued save to land on the restored text
 		const loaded = this.deps.getLoadedPath();
 		const open = !!loaded && samePath(loaded, path);
+		const held = !open && !!this.deps.heldUnder?.([path]).length;
 		try {
-			const unsaved = open ? await this.settle() : null;
+			const unsaved = open || held ? await this.settle(open ? null : path) : null;
 			await this.deps.whenSaved();
 			// the file's own line endings, whatever the copy was kept with
 			current = await this.deps.readTextIfPresent(path);
@@ -128,6 +130,7 @@ export class LocalHistoryActions {
 		// a deleted file comes back (its folder too, if that went), and is opened
 		if (current === null) openFile(path);
 		else if (open) await this.deps.adoptDisk(path);
+		else if (held) await this.deps.catchUpWithDisk?.();
 		await addLocalHistory(path, toLf(content), 'restored');
 		// said, as restoring a version is: the file may not be the one on screen
 		const before = current;
@@ -144,8 +147,9 @@ export class LocalHistoryActions {
 	private async undoRestore(path: string, before: string): Promise<void> {
 		const loaded = this.deps.getLoadedPath();
 		const open = !!loaded && samePath(loaded, path);
+		const held = !open && !!this.deps.heldUnder?.([path]).length;
 		try {
-			const unsaved = open ? await this.settle() : null;
+			const unsaved = open || held ? await this.settle(open ? null : path) : null;
 			if (unsaved) await addLocalHistory(unsaved.path, unsaved.content, 'before-restore');
 			await this.deps.whenSaved();
 			await this.deps.writeText(path, before);
@@ -155,15 +159,16 @@ export class LocalHistoryActions {
 		}
 		if (open) await this.deps.adoptDisk(path);
 		else await this.deps.adoptClosed(path, toLf(before));
+		if (held) await this.deps.catchUpWithDisk?.();
 	}
 
 	/** The open file's queued save written out and waited for. Resolves to one the save guard turned
 	 *  away (the file changed outside, and the author put off deciding), taken off the queue: its
 	 *  text is on no disk, so the caller keeps it, and queued it would later be written over
 	 *  whatever the caller writes */
-	private async settle(): Promise<{ path: string; content: string } | null> {
+	private async settle(heldPath: string | null): Promise<{ path: string; content: string } | null> {
 		await this.deps.flushPendingSave();
-		return this.deps.detachPendingSave?.() ?? null;
+		return heldPath ? (this.deps.takeHeldEdit?.(heldPath) ?? null) : (this.deps.detachPendingSave?.() ?? null);
 	}
 
 	/** the file as it is on disk now, in LF as the copies are kept; null when it is gone */

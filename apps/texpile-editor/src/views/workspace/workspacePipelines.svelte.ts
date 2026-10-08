@@ -18,7 +18,6 @@ import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 import type { EditSession } from '$lib/collab/editSession';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
-import type { DockView } from '$lib/terminal/dockView';
 
 type PipelineDeps = {
 	provider: WorkspaceProvider;
@@ -29,7 +28,6 @@ type PipelineDeps = {
 	files: () => WorkspaceFiles;
 	layout: () => PaneLayout;
 	termDock: () => TerminalDockState;
-	setDockView: (v: DockView) => void;
 	openCompileModal: () => void;
 };
 
@@ -107,8 +105,7 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 		fileUrl: (p) => d.provider.fileUrl(p),
 		flushSaves: () => d.editFlow().saver.flushAndWait(),
 		refreshTree: () => d.files().refreshTree(),
-		showTerminal: () => d.termDock().show(),
-		setDockView: d.setDockView,
+		mountDock: () => d.termDock().mountHidden(),
 		setPdfPaneOpen: (open: boolean) => d.layout().setPdfPaneOpen(open),
 		openCompileModal: d.openCompileModal,
 		openMainConfirm: (then) => void d.files().mainPrompt.prompt(then),

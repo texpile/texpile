@@ -7,6 +7,7 @@ const NEAR_SCREEN = 600;
 
 /** the editor's top-level blocks on or near the screen, found without reading every block's box */
 function blocksNearScreen(root: HTMLElement): Element[] {
+	const height = (root.ownerDocument.defaultView ?? window).innerHeight;
 	const blocks = root.children;
 	let from = 0;
 	let end = blocks.length;
@@ -18,7 +19,7 @@ function blocksNearScreen(root: HTMLElement): Element[] {
 	const near: Element[] = [];
 	for (let i = from; i < blocks.length; i++) {
 		const box = blocks[i].getBoundingClientRect();
-		if (box.top > window.innerHeight + NEAR_SCREEN) break;
+		if (box.top > height + NEAR_SCREEN) break;
 		if (box.bottom >= -NEAR_SCREEN) near.push(blocks[i]);
 	}
 	return near;
@@ -73,7 +74,7 @@ function textReachRule(view: EditorView): string {
 	const font = getComputedStyle(paragraph);
 	const size = parseFloat(font.fontSize);
 	if (!font.fontFamily || !(size > 0)) return '';
-	const line = document.body.appendChild(document.createElement('div'));
+	const line = view.dom.ownerDocument.body.appendChild(document.createElement('div'));
 	line.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;margin:0;padding:0;border:0';
 	for (const name of ['fontFamily', 'fontWeight', 'fontStyle', 'fontSize', 'lineHeight'] as const) line.style[name] = font[name];
 	const text = line.appendChild(document.createElement('span'));
@@ -95,8 +96,11 @@ export type RangeBandPainter = { repaint(): void; destroy(): void };
 
 /** keeps the rules in step with the selection, the scroll position and the editor's width */
 export function rangeBandPainter(view: EditorView): RangeBandPainter {
-	const style = document.head.appendChild(document.createElement('style'));
-	const metric = document.head.appendChild(document.createElement('style'));
+	// in the editor's own document, which may be a window of its own
+	const doc = view.dom.ownerDocument;
+	const win = doc.defaultView ?? window;
+	const style = doc.head.appendChild(document.createElement('style'));
+	const metric = doc.head.appendChild(document.createElement('style'));
 	let measured = false;
 	function measureText(): void {
 		if (view.isDestroyed) return;
@@ -105,9 +109,9 @@ export function rangeBandPainter(view: EditorView): RangeBandPainter {
 	}
 	// not before the view is on the page, where it has no font yet; again when a font arrives or the theme changes it
 	const firstMeasure = requestAnimationFrame(measureText);
-	document.fonts?.addEventListener('loadingdone', measureText);
+	doc.fonts?.addEventListener('loadingdone', measureText);
 	const themed = new MutationObserver(measureText);
-	themed.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+	themed.observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
 	let frame = 0;
 	function paint(): void {
 		frame = 0;
@@ -120,7 +124,7 @@ export function rangeBandPainter(view: EditorView): RangeBandPainter {
 		// a thread's or a peer's bands with no selection of our own still have to be measured
 		if (!frame && (style.textContent || view.dom.querySelector(BANDED))) frame = requestAnimationFrame(paint);
 	}
-	window.addEventListener('scroll', repaint, { capture: true, passive: true });
+	win.addEventListener('scroll', repaint, { capture: true, passive: true });
 	const resized = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(repaint);
 	resized?.observe(view.dom);
 	return {
@@ -128,8 +132,8 @@ export function rangeBandPainter(view: EditorView): RangeBandPainter {
 		destroy() {
 			if (frame) cancelAnimationFrame(frame);
 			cancelAnimationFrame(firstMeasure);
-			window.removeEventListener('scroll', repaint, { capture: true });
-			document.fonts?.removeEventListener('loadingdone', measureText);
+			win.removeEventListener('scroll', repaint, { capture: true });
+			doc.fonts?.removeEventListener('loadingdone', measureText);
 			themed.disconnect();
 			resized?.disconnect();
 			style.remove();

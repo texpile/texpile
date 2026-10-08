@@ -14,7 +14,7 @@
 	import TextColorDropdown from '$lib/editor/visual/toolbar/TextColorDropdown.svelte';
 	import HighlightDropdown from '$lib/editor/visual/toolbar/HighlightDropdown.svelte';
 	import { markIsActive, activeMarkColor, toggleLinkCommand } from '$lib/editor/visual/toolbar/markState';
-	import { editorViewStore, rawEditorActiveStore } from '$lib/stores/editorStore';
+	import { editorViewStore } from '$lib/stores/editorStore';
 	import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 	import { setHeadingLevel, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 	import HeadingDropdown from '$lib/editor/visual/toolbar/HeadingDropdown.svelte';
@@ -138,18 +138,7 @@
 					<span class="text-sm font-medium">{m.toolbar_read_only()}</span>
 				</div>
 			{:else}
-				{#if rawEditorActiveStore.current}
-					<!-- a raw-LaTeX CM block is focused: prose formatting doesn't apply, show a minimal bar -->
-					<!-- Sheds the hint first, then the whole indicator - icon included. A bare icon left
-					     behind reads as a button you can press, and this is a status label, not a control.
-					     Container queries, not sm:, which measures the WINDOW: a wide window with a narrow
-					     editor pane kept showing the hint and it wrapped onto a second line. -->
-					<div class="text-muted hidden min-h-9 min-w-0 items-center gap-2 text-sm whitespace-nowrap @sm:flex">
-						<Code class="size-4 shrink-0" />
-						<span class="font-medium">{m.toolbar_latex_code()}</span>
-						<span class="text-muted hidden @xl:inline">{m.toolbar_latex_code_hint()}</span>
-					</div>
-				{:else if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
+				{#if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
 					<MathToolbar />
 				{:else}
 					{#snippet tb_heading()}

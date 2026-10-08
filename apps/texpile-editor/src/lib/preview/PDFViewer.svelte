@@ -8,18 +8,22 @@
 	import { pdfStore } from '$lib/stores/pdfStore';
 	import { pdfFindToggle } from '$lib/stores/editorStore';
 	import { PictureInPicture2 } from '@lucide/svelte';
+	import PdfSplitViews from './PdfSplitViews.svelte';
+	import PdfViewScope from '$lib/pdf-view/PdfViewScope.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { savePdfBytes } from '$lib/workspace/fileSystem';
 	import { resolvedMode } from '$lib/theme';
 	import { layout, updateLayout } from '$lib/storage/layout';
-	import { untrack } from 'svelte';
+	import { untrack, type Snippet } from 'svelte';
+	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 
 	type Props = {
 		filename?: string;
 		src?: string | ArrayBuffer;
 		/** SyncTeX inverse search: double-click reports page + position (PDF points) plus the clicked word for anchoring. */
-		onPageClick?: (page: number, x: number, y: number, selectText?: string) => void;
+		/** `view`: which view of a split preview was double-clicked, so the jump lands in the editor beside it */
+		onPageClick?: (page: number, x: number, y: number, selectText?: string, view?: number) => void;
 		/** what the pane is called while there is no document to show; a PDF on screen needs no caption */
 		label?: string;
 		/** move the preview into its own window; null in the popped-out body, which needs no button */
@@ -28,23 +32,47 @@
 		 *  in for a tab strip), a .pdf opened as a file in the editor column (under the tabs, beside the
 		 *  preview divider), or the popped-out window */
 		placement?: 'pane' | 'file' | 'window';
+		/** the project's controls (Compile and the rest), at the start of the top view's bar */
+		controls?: Snippet;
 	};
-	let { filename, src, onPageClick, label, onPopout, placement = 'window' }: Props = $props();
+	let { filename, src, onPageClick, label, onPopout, placement = 'window', controls }: Props = $props();
 	const asTabStrip = $derived(placement === 'pane');
 	const inEditor = $derived(placement === 'file');
+	// the preview splits; a .pdf opened as a tab is a file like any other
+	const splittable = $derived(placement !== 'file');
+	const dark = $derived(resolvedMode.current === 'dark');
+	const inverted = $derived(dark ? layout.current.pdfDarkPages : layout.current.pdfDarkPagesInLight);
 
 	let actions: PdfViewerActions | null = null;
 	/** SyncTeX forward search: scroll to and flash a box. (x, y) is the box origin in PDF points, top-left, y down. */
-	export function scrollToPosition(page: number, x: number, y: number, width?: number, height?: number): void {
-		actions?.scrollToPosition?.(page, x, y, width, height);
+	export function scrollToPosition(page: number, x: number, y: number, width?: number, height?: number, view?: number): void {
+		actions?.scrollToPosition?.(page, x, y, width, height, view);
 	}
 
 	let pdfSource = $state<PdfSource | null>(null);
-	let findOpen = $state(false);
+	// stacked editors and the split preview share one divider
+	const rowLink = {
+		get at() {
+			return (editorGroups.rowTops[1] ?? 1) - 1;
+		},
+		get columnHeight() {
+			return editorGroups.columnHeight;
+		},
+		moveTo: (y: number) => editorGroups.moveRowDividerTo(y),
+		even: () => editorGroups.resizeSplit('row', 0.5),
+		get lit() {
+			return editorGroups.rowDivider;
+		},
+		set lit(state) {
+			editorGroups.rowDivider = state;
+		}
+	};
+	/** each view's find bar, by its place */
+	let finds = $state([false, false]);
 	// as a tab, this viewer is what Ctrl+F means; the pane and the window are never the active tab
 	$effect(() => {
 		if (!inEditor) return;
-		pdfFindToggle.current = () => (findOpen = !findOpen);
+		pdfFindToggle.current = () => (finds[0] = !finds[0]);
 		return () => (pdfFindToggle.current = null);
 	});
 	let loading = $state(false);
@@ -128,56 +156,77 @@
 
 <!-- pinned outside the collapsing groups: the one control that is not a viewer setting must not
      disappear into the "..." when the pane narrows -->
-{#snippet popout()}
-	<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
-		<PictureInPicture2 size={16} />
-	</button>
+{#snippet trailing()}
+	{#if onPopout}
+		<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
+			<PictureInPicture2 size={16} />
+		</button>
+	{/if}
+{/snippet}
+
+<!-- each view's own bar; the top one also carries the project's controls and the popout -->
+{#snippet toolbar(place: number)}
+	<PdfViewScope {place}>
+		<PdfToolbar
+			leading={place > 0 ? undefined : (controls ?? (filename && !inEditor ? leading : undefined))}
+			leadIsControls={place === 0 && !!controls}
+			trailing={place === 0 && onPopout ? trailing : undefined}
+			{asTabStrip}
+			dividers={!inEditor}
+			{inEditor}
+			inPopout={placement === 'window'}
+			documentMenu={place === 0}
+			findOpen={finds[place]}
+			onToggleFind={() => (finds[place] = !finds[place])}
+			{inverted}
+			onToggleInvert={() => updateLayout(dark ? { pdfDarkPages: !inverted } : { pdfDarkPagesInLight: !inverted })}
+		/>
+	</PdfViewScope>
 {/snippet}
 
 {#if pdfSource && !error}
-	{@const dark = resolvedMode.current === 'dark'}
-	{@const inverted = dark ? layout.current.pdfDarkPages : layout.current.pdfDarkPagesInLight}
 	<div class="flex h-full w-full flex-col">
 		<!-- the viewer holds the bytes but not the native bridge, so the save dialog is injected here -->
 		<PdfViewer src={pdfSource} documentKey={docKey} downloadFilename={filename} onSavePdf={savePdfBytes}>
-			<PdfToolbar
-				leading={filename && !inEditor ? leading : undefined}
-				trailing={onPopout ? popout : undefined}
-				{asTabStrip}
-				dividers={!inEditor}
-				{inEditor}
-				inPopout={placement === 'window'}
-				{findOpen}
-				onToggleFind={() => (findOpen = !findOpen)}
-				{inverted}
-				onToggleInvert={() => updateLayout(dark ? { pdfDarkPages: !inverted } : { pdfDarkPagesInLight: !inverted })}
-			/>
+			{@render toolbar(0)}
 			<PdfActionsBridge onActions={(a) => (actions = a)} />
-			<!-- darkMode inverts the page canvases; the chrome always follows the app theme via `dark`.
-			     the scrollbar repeats app.css's, whose rule cannot reach into the shadow DOM -->
-			<!-- the find bar drops over the pages, under the toolbar -->
-			<div class="relative flex min-h-0 flex-1 flex-col">
-				<PdfSearchBar open={findOpen} onClose={() => (findOpen = false)} />
-				<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
-					<PdfRenderer
-						{onPageClick}
-						darkMode={inverted}
-						backgroundColor="var(--pdf-page-area-bg)"
-						pageShadow={dark ? '0 2px 8px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4)' : undefined}
-						scrollbarThumbColor="color-mix(in oklab, var(--color-surface-950-50) 30%, transparent)"
-						scrollbarTrackColor="transparent"
-						scrollbarThumbHoverColor="color-mix(in oklab, var(--color-surface-950-50) 45%, transparent)"
-						scrollbarWidth="10px"
-						scrollInsetRight={inEditor ? '3px' : undefined}
-					/>
-				</ColorVisionFilter>
-			</div>
+			<PdfSplitViews
+				split={splittable && layout.current.pdfSplit}
+				fraction={layout.current.pdfSplitFraction}
+				onResize={(f) => updateLayout({ pdfSplitFraction: f })}
+				link={placement === 'pane' && editorGroups.rowTops.length > 1 ? rowLink : null}
+				edge={asTabStrip ? 36 : 40}
+			>
+				{#snippet view(place)}
+					{#if place > 0}{@render toolbar(place)}{/if}
+					<!-- the find bar drops over the pages, under the toolbar -->
+					<div class="relative flex min-h-0 flex-1 flex-col">
+						<PdfViewScope {place}><PdfSearchBar open={finds[place]} onClose={() => (finds[place] = false)} /></PdfViewScope>
+						<!-- darkMode inverts the page canvases; the chrome always follows the app theme via `dark`.
+						     the scrollbar repeats app.css's, whose rule cannot reach into the shadow DOM -->
+						<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
+							<PdfRenderer
+								onPageClick={(page, x, y, text) =>
+									onPageClick?.(page, x, y, text, splittable && layout.current.pdfSplit ? place : undefined)}
+								darkMode={inverted}
+								backgroundColor="var(--pdf-page-area-bg)"
+								pageShadow={dark ? '0 2px 8px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4)' : undefined}
+								scrollbarThumbColor="color-mix(in oklab, var(--color-surface-950-50) 30%, transparent)"
+								scrollbarTrackColor="transparent"
+								scrollbarThumbHoverColor="color-mix(in oklab, var(--color-surface-950-50) 45%, transparent)"
+								scrollbarWidth="10px"
+								scrollInsetRight={inEditor ? '3px' : undefined}
+							/>
+						</ColorVisionFilter>
+					</div>
+				{/snippet}
+			</PdfSplitViews>
 		</PdfViewer>
 	</div>
 {:else}
 	<!-- the bar is the viewer's; until there is a document the pane still needs its label and popout -->
 	<div class="flex h-full w-full flex-col">
-		{#if label}<PreviewHeader {label} {onPopout} {asTabStrip} />{/if}
+		{#if label || controls}<PreviewHeader {label} {controls} {onPopout} {asTabStrip} />{/if}
 		{#if loading && !pdfSource}
 			<div class="text-muted flex min-h-0 flex-1 items-center justify-center text-sm">Loading PDF…</div>
 		{:else if error}

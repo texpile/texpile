@@ -21,6 +21,9 @@ export type TocList = 'visual' | 'source' | 'none' | 'closed';
 /** Headings of the current document, kept in sync by the TOC plugin (createTocPlugin). Visual mode. */
 export const tocStore = box<TocItem[]>([]);
 
+/** visual mode's list for a file in a paper: the whole paper's headings, the open file's at its editor's positions */
+export const visualProjectTocStore = box<TocItem[] | null>(null);
+
 /** Headings parsed from the raw .tex source; `pos` is a CodeMirror char offset. Source mode. */
 export const sourceTocStore = box<TocItem[]>([]);
 

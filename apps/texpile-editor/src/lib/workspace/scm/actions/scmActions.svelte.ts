@@ -38,7 +38,7 @@ import { askIdentity, askPublish, type PublishChoice } from '../gitDialogs.svelt
 import { ScmCombine } from '../branches/scmCombine.svelte';
 import { ScmBranches } from '../branches/scmBranches.svelte';
 import { ScmIgnore } from './scmIgnore.svelte';
-import { ScmDiscard } from './scmDiscard.svelte';
+import { ScmDiscard, type HeldFileDeps } from './scmDiscard.svelte';
 import { autoCheckDone, resumeAutoCheck } from './scmAutoCheck.svelte';
 import { uploadReason } from '../../uploadReason';
 import { toastGitFailure } from '../gitFailureToast';
@@ -53,8 +53,7 @@ export type ScmDeps = {
 	getLoadedPath(): string | null;
 	/** drop the open file's queued autosave before git rewrites it on disk. */
 	discardPendingSave(): void;
-	/** an edit is typed but not yet on disk. With autosave off that is everything since the last
-	 *  manual save, and git cannot see any of it. */
+	/** an edit is typed but not yet on disk, so git cannot see it */
 	hasPendingSave(): boolean;
 	/** write that edit out and wait for it to land, so git can see it */
 	flushPendingSave(): Promise<void>;
@@ -103,7 +102,7 @@ export class ScmActions {
 	readonly ignore: ScmIgnore;
 	readonly discarder: ScmDiscard;
 
-	constructor(private deps: ScmDeps) {
+	constructor(private deps: ScmDeps & HeldFileDeps) {
 		this.combine = new ScmCombine(this, deps);
 		this.branches = new ScmBranches(this, deps);
 		this.ignore = new ScmIgnore(this, deps);
@@ -238,7 +237,7 @@ export class ScmActions {
 	/** Clears the way for a restore, and asks about it first.
 	 *
 	 *  Returns false when the answer was no, or when saving failed. Nothing is written before the
-	 *  answer: with autosave off, a Restore that was cancelled must not have saved the file as a
+	 *  answer: with autosave held off, a Restore that was cancelled must not have saved the file as a
 	 *  side effect of being considered. */
 	private async saveBeforeRestore(root: string, entry: { hash: string; subject: string }): Promise<boolean> {
 		// only work the restore would overwrite: a file unticked to stay on this computer is left alone

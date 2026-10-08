@@ -2,6 +2,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import {
 		tocStore,
+		visualProjectTocStore,
 		sourceTocStore,
 		tocCaretStore,
 		activeTocIndex,
@@ -28,7 +29,9 @@
 	// A file with neither lists nothing, never the last file's headings.
 	// onOpenFile routes clicks on entries merged in from other files (source-mode project outline).
 	let { list, onOpenFile }: { list: TocList; onOpenFile?: (file: string, line: number) => void } = $props();
-	const items = $derived(list === 'source' ? sourceTocStore.current : list === 'visual' ? tocStore.current : []);
+	const items = $derived(
+		list === 'source' ? sourceTocStore.current : list === 'visual' ? (visualProjectTocStore.current ?? tocStore.current) : []
+	);
 	const emptyText = $derived(list === 'closed' ? m.toc_no_file() : list === 'none' ? m.toc_no_headings_here() : m.toc_empty());
 	// a section folds by its chevron, as an outline does in other editors; a fold is kept by the heading, not its row
 	let folded = $state<ReadonlySet<string>>(new Set());

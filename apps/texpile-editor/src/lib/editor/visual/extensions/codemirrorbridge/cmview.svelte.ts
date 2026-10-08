@@ -1,3 +1,4 @@
+import { rawEditorActiveStore } from '$lib/stores/editorStore';
 import {
 	EditorView as CodeMirrorView,
 	keymap as cmKeymap,
@@ -12,7 +13,7 @@ import { cmCommentHighlights, cmCommentClicks, syncCmCommentHighlights } from '.
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { exitCode } from 'prosemirror-commands';
-import { undo, redo } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { TextSelection } from 'prosemirror-state';
 import { GapCursor } from 'prosemirror-gapcursor';
 import { gapAwareSelectionNear } from '$lib/editor/visual/gapSelection';
@@ -183,8 +184,17 @@ export class CodeBlockView {
 		this.lastCommentKey = syncCmCommentHighlights(this.cm, this.view, this.getPos, this.node, this.lastCommentKey);
 	};
 
-	handleFocus() {}
+	/** this block is the one the format bar is out of the way for */
+	private holdsBar = false;
+
+	// no formatting applies inside a code block: the format bar steps aside while it has the caret
+	handleFocus() {
+		this.holdsBar = true;
+		rawEditorActiveStore.current = true;
+	}
 	handleBlur() {
+		this.holdsBar = false;
+		rawEditorActiveStore.current = false;
 		this.deselectNode();
 	}
 
@@ -250,17 +260,17 @@ export class CodeBlockView {
 			{
 				key: 'Ctrl-z',
 				mac: 'Cmd-z',
-				run: () => undo(view.state, view.dispatch)
+				run: () => undoVisual()
 			},
 			{
 				key: 'Shift-Ctrl-z',
 				mac: 'Shift-Cmd-z',
-				run: () => redo(view.state, view.dispatch)
+				run: () => redoVisual()
 			},
 			{
 				key: 'Ctrl-y',
 				mac: 'Cmd-y',
-				run: () => redo(view.state, view.dispatch)
+				run: () => redoVisual()
 			},
 			{ key: 'Backspace', run: () => this.maybeDelete() }
 		];
@@ -403,6 +413,8 @@ export class CodeBlockView {
 		cancelUpgrade(this.dom);
 		if (this.settingsComponent) unmount(this.settingsComponent);
 		if (!this.cm) return;
+		// torn down with the caret in it: no blur comes to bring the format bar back
+		if (this.holdsBar) rawEditorActiveStore.current = false;
 		this.cm.dom.removeEventListener('focus', this.handleFocus, true);
 		this.cm.dom.removeEventListener('blur', this.handleBlur, true);
 		this.cm.destroy();

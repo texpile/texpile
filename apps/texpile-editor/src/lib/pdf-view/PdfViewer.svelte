@@ -7,13 +7,8 @@
 	import { openPdfContextMenu } from './pdfContextMenu';
 	import { untrack } from 'svelte';
 	import type { Snippet } from 'svelte';
-	import {
-		setPdfViewerContext,
-		PresentationModeState,
-		type PdfViewerState,
-		type PdfViewerActions,
-		type PdfSource
-	} from './pdf-viewer/context';
+	import { setPdfViewerContext, type PdfViewerActions, type PdfSource } from './pdf-viewer/context';
+	import { PdfViews } from './pdfViews.svelte';
 
 	type Props = {
 		/** PDF source - URL string, ArrayBuffer, Uint8Array, or Blob */
@@ -52,22 +47,10 @@
 	// set by PdfRenderer before it hands the data to PDF.js
 	let srcDataForDownload = $state<ArrayBuffer | null>(null);
 
-	let viewerState = $state<PdfViewerState>({
-		loading: true,
-		error: null,
-		totalPages: 0,
-		currentPage: 1,
-		scale: untrack(() => initialScale),
-		rotation: 0,
-		searchQuery: '',
-		searchCurrent: 0,
-		searchTotal: 0,
-		isSearching: false,
-		presentationMode: PresentationModeState.NORMAL,
-		canSavePdf: untrack(() => !!onSavePdf)
-	});
-
-	let rendererActions: PdfViewerActions | null = null;
+	const views = new PdfViews(
+		untrack(() => initialScale),
+		untrack(() => !!onSavePdf)
+	);
 
 	/**
 	 * Hand the PDF to whoever is hosting this viewer. This is a desktop app: the document is
@@ -104,39 +87,34 @@
 	}
 
 	const actions: PdfViewerActions = {
-		zoomIn: () => rendererActions?.zoomIn(),
-		zoomOut: () => rendererActions?.zoomOut(),
-		fitWidth: () => rendererActions?.fitWidth(),
-		fitPage: () => rendererActions?.fitPage(),
-		setScale: (scale: number) => rendererActions?.setScale(scale),
-		rotateClockwise: () => rendererActions?.rotateClockwise(),
-		rotateCounterClockwise: () => rendererActions?.rotateCounterClockwise(),
-		goToPage: (page: number) => rendererActions?.goToPage(page),
-		scrollToPosition: (page, x, y, w, h) => rendererActions?.scrollToPosition?.(page, x, y, w, h),
+		zoomIn: () => views.actions()?.zoomIn(),
+		zoomOut: () => views.actions()?.zoomOut(),
+		fitWidth: () => views.actions()?.fitWidth(),
+		fitPage: () => views.actions()?.fitPage(),
+		setScale: (scale: number) => views.actions()?.setScale(scale),
+		rotateClockwise: () => views.actions()?.rotateClockwise(),
+		rotateCounterClockwise: () => views.actions()?.rotateCounterClockwise(),
+		goToPage: (page: number) => views.actions()?.goToPage(page),
+		scrollToPosition: (page, x, y, w, h, view) => views.jumpIn(view)?.scrollToPosition?.(page, x, y, w, h),
 		search: async (query: string) => {
-			if (rendererActions) {
-				await rendererActions.search(query);
-			}
+			await views.actions()?.search(query);
 		},
-		searchNext: () => rendererActions?.searchNext(),
-		searchPrevious: () => rendererActions?.searchPrevious(),
-		clearSearch: () => rendererActions?.clearSearch(),
+		searchNext: () => views.actions()?.searchNext(),
+		searchPrevious: () => views.actions()?.searchPrevious(),
+		clearSearch: () => views.actions()?.clearSearch(),
 		savePdf,
 		enterPresentationMode: async () => {
-			if (rendererActions) {
-				return rendererActions.enterPresentationMode();
-			}
-			return false;
+			return (await views.actions()?.enterPresentationMode()) ?? false;
 		},
 		exitPresentationMode: async () => {
-			if (rendererActions) {
-				await rendererActions.exitPresentationMode();
-			}
+			await views.actions()?.exitPresentationMode();
 		}
 	};
 
 	setPdfViewerContext({
-		state: viewerState,
+		get state() {
+			return views.state;
+		},
 		actions,
 		get src() {
 			return src;
@@ -144,9 +122,13 @@
 		get documentKey() {
 			return documentKey;
 		},
-		_registerRenderer: (renderer: PdfViewerActions) => {
-			rendererActions = renderer;
+		get views() {
+			return views.list;
 		},
+		get activeView() {
+			return views.active;
+		},
+		_attachView: () => views.attach(),
 		_onerror: untrack(() => onerror),
 		_setSrcDataForDownload: (bytes: ArrayBuffer | null) => {
 			srcDataForDownload = bytes;
@@ -156,10 +138,10 @@
 
 <div class="pdf-viewer-container {className}" oncontextmenu={openPdfContextMenu} role="presentation">
 	<!-- loading is only ever true before the first document lands; reloads swap in place -->
-	{#if viewerState.loading}
+	{#if views.state.loading}
 		<div class="pdf-loading">Loading PDF...</div>
-	{:else if viewerState.error}
-		<div class="pdf-error">Error: {viewerState.error}</div>
+	{:else if views.state.error}
+		<div class="pdf-error">Error: {views.state.error}</div>
 	{/if}
 
 	{#if children}

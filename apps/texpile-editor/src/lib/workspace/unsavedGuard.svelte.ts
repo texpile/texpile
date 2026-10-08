@@ -1,26 +1,26 @@
 // The "you have unsaved changes" gate, used in two shapes that share one modal.
 //
-// 1. File switch: with autosave off, the outgoing file's edit was never written, so we park the
-//    switch and ask first. Save writes it and continues, Discard drops it and continues, Cancel
+// 1. File switch: with autosave held off (the file was deleted on disk, or a conflict was put
+//    off), the outgoing file's edit was never written, so we park the switch and ask first. Save writes it and continues, Discard drops it and continues, Cancel
 //    aborts the switch entirely and leaves the edit intact on the current file.
 // 2. Workspace level (folder switch, workspace close, window close): same modal, but the answer
 //    goes back to the caller as a promise and the file-switch parking machinery is skipped.
 //
 // The distinction is carried by `prompt.resolve` being set; loadFile's effect keys off it to park
-// ALL file switches while a workspace-level prompt is up, otherwise a Ctrl+Tab under the modal
-// would reattach the pending edit against the wrong file.
+// ALL file switches while a workspace-level prompt is up, so the answer applies to the file asked about.
 import { activeFilePath } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
-import { basename, type Eol } from '$lib/workspace/fileSystem';
-import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
+import { basename } from '$lib/workspace/fileSystem';
+import type { FileWriter } from '$lib/buffers/fileWriter';
+import { promptAsk } from '$lib/modals/confirm.svelte';
+import { m } from '$lib/paraglide/messages';
 
 type Choice = 'save' | 'discard' | 'cancel';
 
 export type UnsavedGuardDeps = {
-	/** a getter, not the instance: the guard is constructed before the pipeline exists */
-	saver(): SavePipeline;
+	writer: FileWriter;
 	getLoadedPath(): string | null;
-	getEol(): Eol;
 	autosaveActive(): boolean;
 	/** a tab-close that triggered this switch, cancelled alongside it */
 	takePendingTabClose(): string | null;
@@ -28,11 +28,10 @@ export type UnsavedGuardDeps = {
 };
 
 export class UnsavedGuard {
-	/** the modal's outgoing snapshot; non-null while the dialog is up */
+	/** the file asked about; non-null while the dialog is up */
 	prompt = $state<{
 		name: string;
-		outgoing: { path: string; content: string };
-		eol: Eol;
+		path: string;
 		resolve?: (choice: Choice) => void;
 	} | null>(null);
 
@@ -44,55 +43,73 @@ export class UnsavedGuard {
 
 	constructor(private deps: UnsavedGuardDeps) {}
 
-	private get saver(): SavePipeline {
-		return this.deps.saver();
-	}
-
-	/** true while a workspace-level prompt owns the pending edit */
+	/** true while a workspace-level prompt is up */
 	get parksAllSwitches(): boolean {
 		return !!this.prompt?.resolve;
 	}
 
+	private unsaved(): string | null {
+		const loaded = this.deps.getLoadedPath();
+		return !this.deps.autosaveActive() && loaded && this.deps.writer.isDirty(loaded) ? loaded : null;
+	}
+
 	/** does switching away from the current file need to ask first? */
 	needsPromptFor(nextPath: string | null): boolean {
-		const loaded = this.deps.getLoadedPath();
-		return !this.deps.autosaveActive() && !!loaded && nextPath !== loaded && this.saver.pending?.path === loaded;
+		const loaded = this.unsaved();
+		return !!loaded && nextPath !== loaded;
 	}
 
 	/** park the switch and raise the dialog; the caller has already decided it is needed */
 	beginFileSwitch(target: string | null): void {
 		const loaded = this.deps.getLoadedPath();
 		if (!loaded) return;
-		const eol = this.deps.getEol(); // the outgoing file's EOL, before the switch changes it
-		const outgoing = this.saver.detach()!; // so the new file's queue can't touch it
 		this.held = { target };
 		activeFilePath.current = loaded;
-		this.prompt = { name: basename(loaded), outgoing, eol };
+		this.prompt = { name: basename(loaded), path: loaded };
 	}
 
 	/** workspace-level guard; resolves true to proceed (Save writes first), false on Cancel */
 	confirmLeave(): Promise<boolean> {
-		const loaded = this.deps.getLoadedPath();
-		if (this.deps.autosaveActive() || !loaded || this.saver.pending?.path !== loaded) return Promise.resolve(true);
-		const eol = this.deps.getEol();
-		const outgoing = this.saver.detach()!;
+		const loaded = this.unsaved();
+		if (!loaded) return this.confirmStranded();
 		return new Promise((resolve) => {
 			this.prompt = {
-				name: basename(outgoing.path),
-				outgoing,
-				eol,
+				name: basename(loaded),
+				path: loaded,
 				resolve: (choice) => {
-					if (choice === 'cancel') {
-						this.saver.reattach(outgoing);
-						resolve(false);
-						return;
-					}
-					if (choice === 'save') void this.saver.enqueueWithEol(outgoing.path, outgoing.content, false, eol);
-					else this.onDiscard?.(outgoing.path);
-					resolve(true);
+					if (choice === 'cancel') return resolve(false);
+					this.answer(loaded, choice);
+					resolve(this.confirmStranded());
 				}
 			};
 		});
+	}
+
+	/** edits still not on disk after a flush (held back by a change there, or the write failed): nothing else asks */
+	private async confirmStranded(): Promise<boolean> {
+		await this.deps.writer.flushAndWait();
+		const stranded = this.deps.writer.stranded();
+		if (!stranded.length) return true;
+		const choice = await promptAsk({
+			title: m.wsview_stranded_title(),
+			message: m.wsview_stranded_body({ names: stranded.map(basename).join(', ') }),
+			buttons: [
+				{ id: 'discard', label: m.wsview_stranded_discard() },
+				{ id: 'cancel', label: m.wsview_cancel_label(), primary: true }
+			],
+			cancelId: 'cancel'
+		});
+		if (choice !== 'discard') return false;
+		for (const path of stranded) this.deps.writer.revert(path);
+		return true;
+	}
+
+	private answer(path: string, choice: 'save' | 'discard'): void {
+		if (choice === 'save') void this.deps.writer.save(path);
+		else {
+			this.deps.writer.revert(path);
+			this.onDiscard?.(path);
+		}
 	}
 
 	resolve(choice: Choice): void {
@@ -104,17 +121,19 @@ export class UnsavedGuard {
 			return;
 		}
 		if (choice === 'cancel') {
-			// reattach so the edit is still tracked and re-guarded next time
-			this.saver.reattach(prompt.outgoing);
 			this.deps.clearPendingTabClose();
 			this.held = null;
 			return;
 		}
-		if (choice === 'save') void this.saver.enqueueWithEol(prompt.outgoing.path, prompt.outgoing.content, false, prompt.eol);
-		else this.onDiscard?.(prompt.outgoing.path);
+		this.answer(prompt.path, choice);
 		const closing = this.deps.takePendingTabClose();
-		if (closing) tabs.close(closing);
-		const target = this.held?.target ?? null;
+		const group = editorGroups.focusedId;
+		if (closing) {
+			tabs.close(closing);
+			editorGroups.closeIfEmpty(group);
+		}
+		// the group went with its last tab: the one focus moved to shows its own file, not the closed one's neighbor
+		const target = editorGroups.focusedId === group ? (this.held?.target ?? null) : activeFilePath.current;
 		this.held = null;
 		if (target !== activeFilePath.current) activeFilePath.current = target;
 	}

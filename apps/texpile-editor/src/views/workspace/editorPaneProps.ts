@@ -1,4 +1,5 @@
 // what WorkspaceMain hands EditorPane; a types file so the surface component stays legible
+import type { ProjectWords } from '$lib/workspace/wordCount/projectWords';
 import type { Node as PMNode } from 'prosemirror-model';
 import type { ComponentProps } from 'svelte';
 import type SourceEditor from '$lib/editor/source/SourceEditor.svelte';
@@ -9,11 +10,28 @@ import type { ImportedFile } from '$lib/workspace/starters';
 import type { StarterChoice } from '$lib/workspace/templates/starterChoice';
 import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { Tab, CompareRef } from '$lib/workspace/tabs.svelte';
+import type { DraggedTab } from '$lib/workspace/groups/slotDrag.svelte';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
 import type { RegionParser, SourceMap } from '$lib/editor/visual/sourceSpans';
 
 export type EditorPaneProps = {
+	/** a parked editor group: drawn as focus left it, with no toolbar, find bar, comments or typing */
+	parked?: boolean;
+	/** the paper's words by file, for the word count's panel */
+	onCountWords?: () => Promise<ProjectWords | null>;
+	/** opens the main file chooser, which the word count offers while none is set */
+	onPickMain?: () => void;
+	/** an editor in a window of its own: its one file and no strip */
+	single?: boolean;
+	/** what an editor with no file says; a slot of a split layout invites a drop */
+	emptyNote?: string;
+	/** the editor group the pane draws, whose tabs can be dragged out of its strip */
+	groupId?: number;
+	/** a tab dropped on the pane's strip */
+	onDropTab?: (drop: DraggedTab, index: number) => void;
+	/** files from the tree dropped on the pane's strip */
+	onDropFiles?: (paths: string[], index: number) => void;
 	loadedPath: string | null;
 	openTabs: Tab[];
 	/** key of the focused tab; a file and a comparison of it are two different keys */
@@ -94,7 +112,6 @@ export type EditorPaneProps = {
 	onEditFrontmatter: (kind: string, inner: string) => void;
 	/** absent when no preview target can resolve the jump (WorkspaceMain's canSync gate) */
 	onSyncToPdf?: (line: number) => void;
-	onHistoryBoundary: (dir: 'undo' | 'redo') => boolean;
 	onJumpToFile: (name: string) => void;
 	onOpenFileAt: (file: string, line: number, selectText?: string) => void;
 	/** a visual \ref whose label is not drawn in the open document; true when a jump was made */

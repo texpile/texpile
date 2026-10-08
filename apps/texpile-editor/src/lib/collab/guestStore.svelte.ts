@@ -2,6 +2,7 @@
 // for SessionView. Guests never touch the filesystem — everything lives in the Y.Doc and the
 // blob channel.
 
+import { announceFilesArrived } from '$lib/editor/visual/fileAccess';
 import * as Y from 'yjs';
 import { deriveSessionKeys } from './e2e/keys';
 import { isValidShareCode } from './e2e/shareCode';
@@ -72,7 +73,10 @@ class GuestCollabController {
 	/** the name this guest joined with - the identity peers see, and what comments sign as */
 	selfName = $state('');
 	private previewPageAsked = false;
-	private fileCache = new GuestFileCache(() => this.imageRev++);
+	private fileCache = new GuestFileCache(() => {
+		this.imageRev++;
+		announceFilesArrived();
+	});
 	/** subscribers to host -> guest LSP traffic; a set because each open .typ editor has a transport */
 	private lspHandlers = new Set<(p: ControlPayload) => void>();
 	// intact master; `pdf` is always a copy, because pdf.js detaches the ArrayBuffer it renders and

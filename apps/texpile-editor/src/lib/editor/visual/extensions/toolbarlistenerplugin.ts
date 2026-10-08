@@ -6,7 +6,8 @@ export function menuUpdatePlugin() {
 		view() {
 			return {
 				update: (view) => {
-					editorviewstore.current = view;
+					// a parked editor's view updates too, when its file changes elsewhere: it is not the app's
+					if (view.editable) editorviewstore.current = view;
 				}
 			};
 		}

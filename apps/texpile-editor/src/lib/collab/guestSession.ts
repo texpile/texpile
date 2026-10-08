@@ -1,6 +1,19 @@
+import type * as Y from 'yjs';
 import type { EditSession } from './editSession';
-import { EDIT_ORIGIN } from './materialize';
+import { EDIT_ORIGIN } from './sharedFiles';
 import { collabGuest } from './guestStore.svelte';
+import { createFileUndo } from '$lib/buffers/fileUndo';
+
+// a file's history on this side, for every editor on it; it goes with the session's doc
+const histories = new WeakMap<Y.Text, Y.UndoManager>();
+function historyOf(ytext: Y.Text, path: string): Y.UndoManager {
+	let um = histories.get(ytext);
+	if (!um) {
+		um = createFileUndo(ytext, path);
+		histories.set(ytext, um);
+	}
+	return um;
+}
 
 // adapts the guest controller to the EditSession shape WorkspaceView drives; host-only methods
 // are no-ops (a guest owns no disk, never materializes, never compiles)
@@ -30,7 +43,7 @@ export const guestSession: EditSession = {
 		if (!path) return null;
 		const ytext = collabGuest.ytextFor(path);
 		const awareness = collabGuest.awareness;
-		return ytext && awareness ? { ytext, awareness, readOnly: collabGuest.isLocked(path) } : null;
+		return ytext && awareness ? { ytext, awareness, readOnly: collabGuest.isLocked(path), undo: historyOf(ytext, path) } : null;
 	},
 	// the guest visual editor's write path; the change syncs to the host, whose materializer lands
 	// it on disk. The source editor is Y-bound, so its calls arrive content-equal and change nothing.

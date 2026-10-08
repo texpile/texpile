@@ -38,11 +38,17 @@ export type LayoutState = {
 	pdfDarkPages: boolean;
 	/** the same switch as set in light mode, kept apart so each theme remembers its own */
 	pdfDarkPagesInLight: boolean;
+	/** the preview as two views of the PDF, top and bottom */
+	pdfSplit: boolean;
+	/** the top view's share of the split preview (0..1) */
+	pdfSplitFraction: number;
 	/** editor text zoom (1 = 100%); distinct from settings.uiZoom, the whole-window factor */
 	editorZoom: number;
 	/** render the editor in a paper-like container */
 	pageView: boolean;
 	previewVisible: boolean;
+	/** the floating format bar shows every control on two rows rather than one row and a chevron */
+	formatBarExpanded: boolean;
 };
 
 const KEY = 'texpile:layout';
@@ -64,9 +70,12 @@ const DEFAULTS: LayoutState = {
 	terminalShrink: false,
 	pdfDarkPages: false,
 	pdfDarkPagesInLight: false,
+	pdfSplit: false,
+	pdfSplitFraction: 0.5,
 	editorZoom: 1,
 	pageView: false,
-	previewVisible: true
+	previewVisible: true,
+	formatBarExpanded: false
 };
 
 function read(): LayoutState {

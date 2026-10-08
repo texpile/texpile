@@ -72,3 +72,15 @@ describe('highlightRuns', () => {
 		expect(highlightRuns('Compile', [])).toEqual([{ text: 'Compile', hit: false }]);
 	});
 });
+
+describe('fuzzyScore on a name with a word start further on', () => {
+	it('keeps a run going instead of jumping to the later word', () => {
+		expect(fuzzyScore('math-and-figures.tex', 'math')?.hits).toEqual([0, 1, 2, 3]);
+		expect(fuzzyScore('math-and-figures.tex', 'math-and')).not.toBeNull();
+	});
+
+	it('still matches when a jump would strand the letters after it', () => {
+		expect(fuzzyScore('abc-b', 'abc')).not.toBeNull();
+		expect(fuzzyScore('xa-ay', 'xay')).not.toBeNull();
+	});
+});

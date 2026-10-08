@@ -57,8 +57,12 @@ export const activeFilePath = {
  */
 export const activeCompare = box<CompareRef | null>(null);
 
+/** takes a file that should open somewhere else than the focused editor; true when it did */
+export const openFileElsewhere = box<((path: string) => boolean) | null>(null);
+
 /** open a file by name, leaving any comparison on screen. Only tab activation carries one. */
 export function openFile(path: string | null): void {
+	if (path && openFileElsewhere.current?.(path)) return;
 	activeCompare.current = null;
 	activeFilePath.current = path;
 }

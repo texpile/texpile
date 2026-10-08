@@ -234,7 +234,7 @@ describe('saving a version', () => {
 		gitCommit.mockClear();
 	});
 
-	// with autosave's delay (or autosave off) the last edit is not on disk yet, and the version
+	// within autosave's delay (or while it is held off) the last edit is not on disk yet, and the version
 	// would quietly leave it behind
 	it('writes out an edit still waiting to be saved before building the version', async () => {
 		const order: string[] = [];
