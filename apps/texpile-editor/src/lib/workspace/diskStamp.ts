@@ -22,27 +22,20 @@ export async function recordDiskStamp(path: string): Promise<void> {
 	}
 }
 
-/**
- * True only when we HAVE a stamp and the file demonstrably differs from it.
- *
- * Unknown states all return false, deliberately: no stamp recorded means the guard has nothing to
- * compare (first write into a new file), and exists:false means the file was deleted externally -
- * recreating it on autosave is today's behavior and loses nothing, whereas raising a conflict for
- * a file the conflict modal cannot even read would wedge the save pipeline.
- */
-export async function diskChangedSince(path: string): Promise<boolean> {
+/** the file differs from its stamp, or 'gone' when it was deleted; with no stamp (a new file) nothing has changed */
+export async function diskChangedSince(path: string): Promise<boolean | 'gone'> {
 	const stamp = stamps.get(path);
 	if (!stamp) return false;
 	try {
 		const st = await statFile(path);
-		if (!st.exists) return false;
+		if (!st.exists) return 'gone';
 		return st.mtimeMs !== stamp.mtimeMs || st.size !== stamp.size;
 	} catch {
 		return false;
 	}
 }
 
-/** a rename carries the stamp along, mirroring SavePipeline.retarget */
+/** a rename carries the stamp along */
 export function retargetDiskStamp(from: string, to: string): void {
 	const s = stamps.get(from);
 	stamps.delete(from);

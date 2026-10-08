@@ -77,8 +77,9 @@ export function createCursorPlugin() {
 		},
 		// cursorInCm sync: cheaper as a view() diff than a decorations() rebuild
 		view(view) {
+			// only the focused editor's caret is the menus' business
 			let last = isCursorInCm(view.state);
-			cursorInCm.current = last;
+			if (view.editable) cursorInCm.current = last;
 			let oldWordsShaded = false;
 			const painter = rangeBandPainter(view);
 			return {
@@ -86,7 +87,7 @@ export function createCursorPlugin() {
 					oldWordsShaded = shadeOldWords(v, key, oldWordsShaded);
 					painter.repaint();
 					const cur = isCursorInCm(v.state);
-					if (cur !== last) {
+					if (cur !== last && v.editable) {
 						last = cur;
 						cursorInCm.current = cur;
 					}
@@ -94,7 +95,7 @@ export function createCursorPlugin() {
 				destroy() {
 					painter.destroy();
 					// reset so a stale true doesn't keep the menus disabled
-					cursorInCm.current = false;
+					if (view.editable) cursorInCm.current = false;
 				}
 			};
 		}

@@ -1,5 +1,6 @@
 // The buttons over a selection, the same in both editors: Comment, Refine when an agent is set up, and the control that
-// turns the row off. Each editor places the row itself (cmSelectionToolbar, pmSelectionToolbar)
+// turns the row off; in a split layout the visual editor puts formatting in front. Each editor places the row itself
+// (cmSelectionToolbar, pmSelectionToolbar)
 import { updateSettings } from '$lib/settings';
 import { m } from '$lib/paraglide/messages';
 import { tip } from '$lib/components/tooltip.svelte';
@@ -17,13 +18,23 @@ const REFINE_ICON = svgIcon(
 );
 const X_ICON = svgIcon('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>');
 
+export type SelectionFormatButton = { label: string; svg: string; run: () => void; active: () => boolean };
+
+/** which halves of the row show */
+export type SelectionToolbarParts = { format: boolean; comment: boolean };
+
 export type SelectionToolbarRow = {
 	dom: HTMLDivElement;
 	/** shows Refine when an agent is set up here; called whenever the row is placed */
-	sync(): void;
+	sync(parts?: SelectionToolbarParts): void;
 };
 
-export function selectionToolbarRow(commentLabel: string, comment: () => void, hide: () => void): SelectionToolbarRow {
+export function selectionToolbarRow(
+	commentLabel: string,
+	comment: () => void,
+	hide: () => void,
+	formatting: SelectionFormatButton[] = []
+): SelectionToolbarRow {
 	const dom = document.createElement('div');
 	dom.className = 'cm-comment-add-row';
 	dom.style.display = 'none';
@@ -43,19 +54,27 @@ export function selectionToolbarRow(commentLabel: string, comment: () => void, h
 		};
 		return b;
 	}
-	button(commentLabel, COMMENT_ICON, '', comment);
+	const format = formatting.map((f) => ({ f, b: button(f.label, f.svg, '', () => f.run()) }));
+	const commentButton = button(commentLabel, COMMENT_ICON, '', comment);
 	const refine = button('', REFINE_ICON, '', (b) =>
 		refiner.current?.needsAgent ? openPreferencesAt('ai') : openRefineCard(b.getBoundingClientRect())
 	);
-	button(m.comments_pill_off(), X_ICON, ' cm-comment-add-off', () => {
+	const off = button(m.comments_pill_off(), X_ICON, ' cm-comment-add-off', () => {
 		updateSettings({ commentPill: false });
 		hide(); // the setting keeps it off; this is only so it leaves under the pointer
 	});
 	return {
 		dom,
-		sync() {
+		sync(parts = { format: false, comment: true }) {
+			for (const { f, b } of format) {
+				b.hidden = !parts.format;
+				b.setAttribute('aria-pressed', String(parts.format && f.active()));
+			}
+			commentButton.hidden = off.hidden = !parts.comment;
+			commentButton.classList.toggle('cm-comment-add-gap', parts.format && format.length > 0);
+			dom.classList.toggle('cm-comment-add-card', parts.format && format.length > 0);
 			const r = refiner.current;
-			refine.hidden = !r?.available && !r?.needsAgent;
+			refine.hidden = !parts.comment || (!r?.available && !r?.needsAgent);
 			refine.disabled = !!r?.busy;
 			// named for its agent; without one, for the way to pick it
 			const offered = refineAgentsOffered();

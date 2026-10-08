@@ -41,8 +41,7 @@ function deps(stat: CompileDeps['stat'], record: { onDone?: (out: string) => voi
 		fileUrl: (p: string) => p,
 		flushSaves: () => Promise.resolve(),
 		refreshTree: () => Promise.resolve(),
-		showTerminal: () => {},
-		setDockView: () => {},
+		mountDock: () => {},
 		setPdfPaneOpen: () => {},
 		openCompileModal: () => {},
 		openMainConfirm: () => {},
@@ -102,5 +101,31 @@ describe('a compile that exits without writing anything the app watches', () => 
 			Promise.resolve(p.endsWith('.log') ? { exists: true, mtimeMs: (logMtime += 5), size: 40 } : { exists: false, mtimeMs: 0, size: 0 })
 		);
 		expect(warn).not.toHaveBeenCalled();
+	});
+});
+
+describe('a compile with the dock never opened', () => {
+	it('mounts the dock for its shell and runs, leaving the dock hidden', async () => {
+		let mounted = false;
+		const ran: string[] = [];
+		compiler = new CompilePipeline({
+			...deps(() => Promise.resolve({ exists: false, mtimeMs: 0, size: 0 }), {}),
+			mountDock: () => (mounted = true),
+			getDock: () => (mounted ? { runCommand: (cmd: string) => ran.push(cmd), interrupt: () => {} } : undefined)
+		} as CompileDeps);
+		await compiler.runCompile();
+		await vi.advanceTimersByTimeAsync(100);
+		expect(ran).toHaveLength(1);
+	});
+});
+
+describe('the preview on Compile', () => {
+	// an up-to-date rebuild writes no new PDF, so the pane used to stay hidden and the compile looked broken
+	it('opens a hidden preview when the run starts', async () => {
+		const opened: boolean[] = [];
+		const unchanged = () => Promise.resolve({ exists: true, mtimeMs: 5, size: 100 });
+		compiler = new CompilePipeline({ ...deps(unchanged, {}), setPdfPaneOpen: (open: boolean) => opened.push(open) } as CompileDeps);
+		await compiler.runCompile();
+		expect(opened).toEqual([true]);
 	});
 });

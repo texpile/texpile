@@ -71,7 +71,7 @@ export class LocalFork {
 	}
 }
 
-function splice(t: Y.Text, change: { index: number; remove: number; insert: string }): void {
+export function splice(t: Y.Text, change: { index: number; remove: number; insert: string }): void {
 	if (change.remove > 0) t.delete(change.index, change.remove);
 	if (change.insert) t.insert(change.index, change.insert);
 }

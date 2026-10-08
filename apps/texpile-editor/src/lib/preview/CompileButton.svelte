@@ -43,18 +43,21 @@
 		dot?: boolean;
 		/** greyed and inert; the title says why. Enforcement is in runCompile, not here. */
 		disabled?: boolean;
+		/** the title bar's: the icon alone, at the bar's height */
+		compact?: boolean;
 	};
-	let { tone, label, title, onclick, icon = null, dot = false, disabled = false }: Props = $props();
+	let { tone, label, title, onclick, icon = null, dot = false, disabled = false, compact = false }: Props = $props();
 </script>
 
 <!-- one fixed width for every state: Compile, Preview, Live, Paused and Stop occupy the same
      slot, and a button that resized as the state changed made the whole group jump -->
 <button
-	class="btn btn-xs {COMPILE_TONE[
-		tone
-	]} w-24 justify-center gap-1.5 rounded-r-none whitespace-nowrap disabled:pointer-events-none disabled:opacity-50"
+	class="btn btn-xs {COMPILE_TONE[tone]} {compact
+		? 'h-[22px] px-1.5'
+		: 'w-24 @max-[22rem]:w-auto'} justify-center gap-1.5 rounded-r-none whitespace-nowrap disabled:pointer-events-none disabled:opacity-50"
 	{onclick}
 	use:tip={title}
+	aria-label={label}
 	{disabled}
 >
 	{#if dot}
@@ -66,7 +69,10 @@
 		</span>
 	{:else if icon}
 		{@const Icon = icon}
-		<Icon class="size-4" />
+		<Icon class={compact ? 'size-3.5' : 'size-4'} />
 	{/if}
-	<span class="cap-center">{label}</span>
+	{#if !compact}
+		<!-- only at the narrowest row; the fixed width above is kept until then -->
+		<span class="cap-center @max-[22rem]:hidden">{label}</span>
+	{/if}
 </button>

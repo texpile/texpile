@@ -6,6 +6,8 @@
 	// stays with the docked pane, which is the only place it means anything.
 	import PDFViewer from './PDFViewer.svelte';
 	import PreviewHeader from './PreviewHeader.svelte';
+	import { documentControls } from './documentControls.svelte';
+	import { untrack } from 'svelte';
 	import type DraftView from '$lib/draft/DraftView.svelte';
 	import type { DraftController } from '$lib/draft/draftController.svelte';
 	import type TypstPreview from '$lib/languages/typst/preview/TypstPreview.svelte';
@@ -75,8 +77,10 @@
 		 * (svelte's mount()), where bind: does not exist. The docked pane adapts them back onto its
 		 * own bindable props.
 		 */
-		onPdfRef?: (ref: { scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number) => void } | undefined) => void;
-		onPageClick: (page: number, x: number, y: number, selectText?: string) => void;
+		onPdfRef?: (
+			ref: { scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number, view?: number) => void } | undefined
+		) => void;
+		onPageClick: (page: number, x: number, y: number, selectText?: string, view?: number) => void;
 		onInverseSync: (file: string, line: number, selectText?: string) => void;
 		onSettled: () => void;
 		/** the finished compile's log path, for the Problems panel */
@@ -122,12 +126,22 @@
 	);
 	/** what the bar calls this pane; live mode is a different thing from a compiled PDF */
 	const previewLabel = $derived(!guest && latexLiveMode() ? m.wsview_live_preview_label() : m.wsview_pdf_preview_label());
+	/** docked, every body's bar starts with the project's controls and stands where a tab strip would */
+	const controls = $derived(docked ? (documentControls.current ?? undefined) : undefined);
+	const strip = $derived(docked);
+	$effect(() => {
+		if (!docked) return;
+		untrack(() => documentControls.previewBars++);
+		return () => untrack(() => documentControls.previewBars--);
+	});
 	/** the PDF bar carries the label and the popout itself; Typst brings its own */
 	const ownsItsBar = $derived(body === 'pdf' || body === 'typst' || body === 'typst-remote' || body === 'draft');
 
 	// both PDF lanes (guest pushed, local compiled) are the same viewer; whichever is mounted
 	// is the one sync results scroll
-	let pdfViewer = $state<{ scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number) => void } | undefined>();
+	let pdfViewer = $state<
+		{ scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number, view?: number) => void } | undefined
+	>();
 	$effect(() => {
 		onPdfRef?.(pdfViewer);
 		return () => onPdfRef?.(undefined);
@@ -144,14 +158,14 @@
 
 <div class="relative flex h-full w-full flex-col">
 	{#if !ownsItsBar}
-		<PreviewHeader label={previewLabel} {onPopout} asTabStrip={docked} />
+		<PreviewHeader label={previewLabel} {controls} {onPopout} asTabStrip={strip} />
 	{/if}
 	<div class="min-h-0 flex-1">
 		{#if body === 'typst-remote'}
 			<!-- a streamed Typst preview outranks the pushed PDF for the same reason the local
 			     preview outranks the compiled file: same document, and it is ahead of it -->
 			{#if TypstPreviewRemoteComp}
-				<TypstPreviewRemoteComp {paneDragging} {onPopout} asTabStrip={docked} />
+				<TypstPreviewRemoteComp {paneDragging} {onPopout} asTabStrip={strip} {controls} />
 			{/if}
 		{:else if body === 'pdf' && guest}
 			<!-- the host pushes its compiled PDF over the session; no local compile/synctex -->
@@ -163,6 +177,7 @@
 				{onPopout}
 				{onPageClick}
 				placement={docked ? 'pane' : 'window'}
+				{controls}
 			/>
 		{:else if body === 'waiting'}
 			<div class="text-muted flex h-full items-center justify-center p-6 text-center text-sm">
@@ -186,14 +201,15 @@
 			     it is the same document and it is ahead of it, since it needs no save. Rendered on
 			     `wanted` rather than on the host so the PDF never flashes up while it starts. -->
 			{#if TypstPreviewComp}
-				<TypstPreviewComp host={typstPreviewHost} {paneDragging} {onPopout} asTabStrip={docked} />
+				<TypstPreviewComp host={typstPreviewHost} {paneDragging} {onPopout} asTabStrip={strip} {controls} />
 			{/if}
 		{:else if body === 'draft'}
 			{#if DraftViewComp}
 				<DraftViewComp
 					bind:this={draftView}
-					asTabStrip={docked}
+					asTabStrip={strip}
 					{onPopout}
+					{controls}
 					root={draft.root}
 					mainFile={draft.mainRel}
 					trigger={draft.trigger}
@@ -213,6 +229,7 @@
 				{onPopout}
 				{onPageClick}
 				placement={docked ? 'pane' : 'window'}
+				{controls}
 			/>
 		{/if}
 	</div>

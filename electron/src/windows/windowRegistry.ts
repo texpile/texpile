@@ -12,6 +12,8 @@ export type PendingOpen = { kind: 'file' | 'folder'; path: string };
 export const windowRoots = new Map<number, WindowRoot | null>();
 /** a file/folder a freshly-created window should open once its renderer loads */
 export const pendingOpens = new Map<number, PendingOpen>();
+/** a popup's window (the preview, an editor) by its webContents id: it acts for that window, whose renderer it shares */
+export const childOwners = new Map<number, BrowserWindow>();
 /** closes held open while the renderer flushes/confirms unsaved edits (see createWindow's close) */
 export const pendingCloses = new Map<number, { settle: (proceed: boolean) => void }>();
 

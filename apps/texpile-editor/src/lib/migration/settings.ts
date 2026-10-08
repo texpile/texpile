@@ -12,7 +12,6 @@ import { readMigrationStash, writeMigrationStash, type MigrationStash } from './
 /** the fields a v1 settings.json may hold; everything else is dropped or relocated */
 const V1_SETTINGS_FIELDS = [
 	'reopenLastFolder',
-	'autosave',
 	'spellcheck',
 	'checkForUpdates',
 	'mcpEnabled',

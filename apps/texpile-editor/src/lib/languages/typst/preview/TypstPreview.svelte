@@ -11,6 +11,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ZoomIn, ZoomOut, Crosshair, FileOutput, PictureInPicture2 } from '@lucide/svelte';
 	import { typstExport } from '../export/dialog/typstExportState.svelte';
+	import type { Snippet } from 'svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
@@ -30,8 +31,10 @@
 		onPopout?: (() => void) | null;
 		/** docked in the pane, where this row stands in for a tab strip; false in the popped-out window */
 		asTabStrip?: boolean;
+		/** the project's controls, at the start of the bar as on the PDF's; the status then gives way first */
+		controls?: Snippet;
 	};
-	let { host, paneDragging, onPopout = null, asTabStrip = true }: Props = $props();
+	let { host, paneDragging, onPopout = null, asTabStrip = true, controls }: Props = $props();
 
 	let frameBox = $state<HTMLDivElement | null>(null);
 	/**
@@ -207,17 +210,24 @@
 </script>
 
 <div class="bg-surface-200-800 flex h-full w-full flex-col">
-	{#snippet status()}
-		{#if error}
-			<span class="text-error-ink truncate text-sm" use:tip={error}>{error}</span>
-		{:else if stall && !noDocument}
-			<!-- the no-document stall is NOT repeated here: the frame overlay below already says it -->
-			<span class="text-warning-ink truncate text-sm" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
-			<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
-		{:else}
-			<span class="truncate text-sm"
-				>{frameUrl ? m.typst_preview_live() : tinymistMissing.current ? m.typst_preview_not_running() : m.typst_preview_connecting()}</span
-			>
+	<!-- in the "..." it would be a line of text among actions: it gives way instead, unless it is a problem -->
+	{#snippet status(place: PreviewToolbarPlace = 'bar')}
+		{#if place === 'bar'}
+			{#if error}
+				<span class="text-error-ink truncate text-sm" use:tip={error}>{error}</span>
+			{:else if stall && !noDocument}
+				<!-- the no-document stall is NOT repeated here: the frame overlay below already says it -->
+				<span class="text-warning-ink truncate text-sm" use:tip={`${stall}\n${stallDetail}`}>{stall}</span>
+				<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
+			{:else}
+				<span class="truncate text-sm"
+					>{frameUrl
+						? m.typst_preview_live()
+						: tinymistMissing.current
+							? m.typst_preview_not_running()
+							: m.typst_preview_connecting()}</span
+				>
+			{/if}
 		{/if}
 	{/snippet}
 	<!-- zoom is the only viewer control: tinymist's viewer ships no toolbar and its users scroll, so
@@ -245,14 +255,16 @@
 	{/snippet}
 	<!-- the preview never writes a file: Export does, through the same server, so it waits for the preview to be live.
 	     The one way out of a Typst preview, so the PDF options set there apply to every PDF -->
-	{#snippet exportPdf()}
+	{#snippet exportPdf(place: PreviewToolbarPlace)}
 		<button
+			class:menu-item={place === 'menu'}
 			onclick={() => typstExport.show()}
 			disabled={!frameUrl || !typstExport.available}
 			use:tip={m.typst_export_toolbar()}
 			aria-label={m.typst_export_toolbar()}
 		>
 			<FileOutput size={16} />
+			{#if place === 'menu'}{m.typst_export_toolbar()}{/if}
 		</button>
 	{/snippet}
 	{#snippet vision(place: PreviewToolbarPlace)}
@@ -266,14 +278,16 @@
 		</button>
 	{/snippet}
 	<PreviewToolbar
-		leading={status}
+		leading={controls ?? status}
+		leadIsControls={!!controls}
 		trailing={onPopout ? popout : undefined}
 		{asTabStrip}
 		groups={[
 			{ id: 'zoom', render: zoomGroup },
 			{ id: 'follow', render: follow },
-			{ id: 'vision', render: vision },
-			{ id: 'export', render: exportPdf }
+			...(controls ? [{ id: 'status', pinned: !!error || !!stall, render: status }] : []),
+			{ id: 'vision', inMenu: true, render: vision },
+			{ id: 'export', inMenu: true, render: exportPdf }
 		]}
 	/>
 

@@ -8,6 +8,8 @@
 	import TitleBar from '$lib/chrome/TitleBar.svelte';
 	import WorkspaceMenuBar from '$lib/chrome/WorkspaceMenuBar.svelte';
 	import SessionPresence from '$lib/chrome/SessionPresence.svelte';
+	import LayoutControls from './titlebar/LayoutControls.svelte';
+	import { documentControls } from '$lib/preview/documentControls.svelte';
 	import WorkspaceSidebar from './WorkspaceSidebar.svelte';
 	import GuestPresence from '$lib/collab/GuestPresence.svelte';
 	import WindowDialogs from '$lib/modals/window/WindowDialogs.svelte';
@@ -38,6 +40,7 @@
 		menu,
 		actions,
 		pendingCommand = null,
+		previewSplittable = false,
 		fileTreeRef = $bindable(),
 		globalSearchRef = $bindable()
 	}: {
@@ -69,6 +72,8 @@
 		/** a compile command from .texpile/config.json awaiting acceptance; see projectConfig.ts.
 		 * Window-wide because it gates compiling, not just this file's editor. */
 		pendingCommand?: { command: string } | null;
+		/** the preview is a compiled PDF, the one kind that splits */
+		previewSplittable?: boolean;
 		fileTreeRef: Any;
 		globalSearchRef: GlobalSearch | null;
 	} = $props();
@@ -88,6 +93,11 @@
 		{:else}
 			<SessionPresence onShareSession={menu.shareable ? actions.openShare : undefined} />
 		{/if}
+		{#if documentControls.current && !documentControls.previewBars}
+			<!-- no preview bar to carry them: one place for the project's controls, however the editors are split -->
+			<div class="app-no-drag mr-2 flex items-center self-center">{@render documentControls.current(true)}</div>
+		{/if}
+		<LayoutControls panes={layout} {termDock} project={!fileMode.current} splittable={previewSplittable} />
 	{/snippet}
 	{#snippet menus()}
 		<WorkspaceMenuBar
@@ -210,10 +220,6 @@
 	     the window reopens the sidebar, the other half of drag-to-close - and the chevron turns
 	     round.
 
-	     topInset 48 = EditorTopbar's h-12. This column runs the full height of the window while the
-	     preview's divider starts below that toolbar, so without it the drag zone would reach up
-	     beside the toolbar and the two toggles would sit at different heights.
-
 	     ml-[7px] only once the sidebar is shut, when this becomes the first item in the row and its
 	     rule lands on the window edge: the lozenge is 7px but its chevron is 14px, so the glyph
 	     needs 7px of clearance or the edge cuts it in half. Open, it has panes on both sides and
@@ -221,7 +227,6 @@
 	     is a second instance that only ever exists at the edge. -->
 	{#if !fileMode.current}
 		<PaneSplitter
-			topInset={48}
 			resizable
 			resizeLabel={m.wsview_resize_sidebar_aria()}
 			onStartResize={layout.startSidebarResize}

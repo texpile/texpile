@@ -1,4 +1,4 @@
-import { Copy, FolderOpen, FolderTree, History, Pin, X } from '@lucide/svelte';
+import { AppWindow, Copy, FolderOpen, FolderTree, History, Pin, X } from '@lucide/svelte';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { relativeTo, tabsToClose, type CloseScope } from './tabMenuTargets';
@@ -19,6 +19,8 @@ export type TabMenuDeps = {
 	showInTree?: (path: string) => void;
 	/** the file's Local History; omitted for a guest, whose files are the host's */
 	localHistory?: (path: string) => void;
+	/** the tab in a window of its own; omitted for a comparison */
+	newWindow?: (tab: Tab) => void;
 };
 
 function copy(text: string): void {
@@ -48,6 +50,9 @@ export function openTabContextMenu(event: MouseEvent, tab: Tab, d: TabMenuDeps):
 		{ label: m.tabs_menu_copy_path(), icon: Copy, onclick: () => copy(tab.path) }
 	];
 	if (rel !== null) items.push({ label: m.tabs_menu_copy_relative_path(), onclick: () => copy(rel) });
+	const { newWindow } = d;
+	if (newWindow && !tab.compare)
+		items.push({ separator: true }, { label: m.tabs_menu_new_window(), icon: AppWindow, onclick: () => newWindow(tab) });
 	const { reveal, showInTree, localHistory } = d;
 	if (d.preview === key || reveal || showInTree || localHistory) items.push({ separator: true });
 	if (d.preview === key) items.push({ label: m.tabs_menu_keep_open(), icon: Pin, onclick: () => d.keep(tab) });

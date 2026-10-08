@@ -1,3 +1,11 @@
+<script module lang="ts">
+	import type { Snippet } from 'svelte';
+	/** set by a host that would rather grow the bar to a second row than hide controls in a menu */
+	export const TOOLBAR_HOST = Symbol('toolbar-host');
+	/** `trailing` sits at the bar's right end, before the chevron, and never folds away */
+	export type ToolbarHost = { readonly open: boolean; toggle: () => void; trailing?: Snippet };
+</script>
+
 <script lang="ts">
 	// A toolbar row that collapses into a trailing "..." instead of scrolling out of reach.
 	//
@@ -8,8 +16,9 @@
 	//
 	// The row NEVER scrolls. Collapsing is the only answer to a bar that doesn't fit, so a control is
 	// either on the bar or one click away, never off-screen somewhere you'd have to drag to find.
-	import type { Snippet } from 'svelte';
-	import { MoreHorizontal } from '@lucide/svelte';
+	import { windowOf } from '$lib/childWindows/childWindowRegistry.svelte';
+	import { flushSync, getContext } from 'svelte';
+	import { ChevronDown, ChevronUp, MoreHorizontal } from '@lucide/svelte';
 
 	export type OverflowItem = {
 		id: string;
@@ -27,6 +36,7 @@
 		menuLabel = 'More toolbar actions'
 	}: { items: OverflowItem[]; gapClass?: string; menuLabel?: string } = $props();
 
+	const expander = getContext<ToolbarHost | undefined>(TOOLBAR_HOST);
 	let row = $state<HTMLDivElement>();
 	let menuButton = $state<HTMLButtonElement>();
 	let menuEl = $state<HTMLDivElement>();
@@ -41,7 +51,7 @@
 		if (!menuOpen && menuButton) {
 			const r = menuButton.getBoundingClientRect();
 			// right-anchored so the menu grows inward and cannot run off the window edge
-			menuPos = { top: r.bottom + 4, right: Math.max(4, window.innerWidth - r.right) };
+			menuPos = { top: r.bottom + 4, right: Math.max(4, windowOf(menuButton).innerWidth - r.right) };
 		}
 		menuOpen = !menuOpen;
 	}
@@ -75,20 +85,19 @@
 	}
 
 	function fit(): void {
-		const el = row;
-		if (!el) return;
-		// +1 absorbs sub-pixel rounding, which otherwise reads as a permanent 0.5px overflow
-		const over = el.scrollWidth > el.clientWidth + 1;
-		if (over && collapsed < collapsibleCount) {
-			widthAt[collapsed + 1] = el.clientWidth;
-			collapsed++;
-			schedule(); // one step per frame; re-measure with the item actually gone
-			return;
-		}
-		if (!over && collapsed > 0 && el.clientWidth > (widthAt[collapsed] ?? 0) + 8) {
-			collapsed--;
-			schedule();
-			return;
+		// every step in the same frame, re-measured with the item actually gone: a step a frame drew the controls
+		// coming back one by one after a layout change
+		for (let step = 0; step <= collapsibleCount; step++) {
+			const el = row;
+			if (!el) return;
+			// +1 absorbs sub-pixel rounding, which otherwise reads as a permanent 0.5px overflow
+			const over = el.scrollWidth > el.clientWidth + 1;
+			if (over && collapsed < collapsibleCount) {
+				widthAt[collapsed + 1] = el.clientWidth;
+				collapsed++;
+			} else if (!over && collapsed > 0 && el.clientWidth > (widthAt[collapsed] ?? 0) + 8) collapsed--;
+			else return;
+			flushSync();
 		}
 	}
 
@@ -109,11 +118,13 @@
 		function onKey(e: KeyboardEvent) {
 			if (e.key === 'Escape') menuOpen = false;
 		}
-		window.addEventListener('pointerdown', onDown, true);
-		window.addEventListener('keydown', onKey, true);
+		// the toolbar's own window, which may be an editor's own
+		const win = windowOf(menuButton);
+		win.addEventListener('pointerdown', onDown, true);
+		win.addEventListener('keydown', onKey, true);
 		return () => {
-			window.removeEventListener('pointerdown', onDown, true);
-			window.removeEventListener('keydown', onKey, true);
+			win.removeEventListener('pointerdown', onDown, true);
+			win.removeEventListener('keydown', onKey, true);
 		};
 	});
 
@@ -137,43 +148,71 @@
 	});
 </script>
 
-<div class="flex min-w-0 flex-1 items-center {gapClass}">
-	<div bind:this={row} class="toolbar-fit flex min-w-0 flex-1 items-center {gapClass}">
-		{#each shown as item (item.id)}
-			{@render item.render(item)}
-		{/each}
-	</div>
+{#snippet chevron(up: boolean)}
+	<button
+		class="toolbarButton hover:preset-tonal flex shrink-0 items-center p-1"
+		onclick={() => expander?.toggle()}
+		onmousedown={(e) => e.preventDefault()}
+		aria-label={menuLabel}
+		aria-expanded={up}
+	>
+		{#if up}<ChevronUp class="h-5 w-5" />{:else}<ChevronDown class="h-5 w-5" />{/if}
+	</button>
+{/snippet}
 
-	{#if hidden.length > 0}
-		<div class="shrink-0">
-			<button
-				bind:this={menuButton}
-				class="toolbarButton hover:preset-tonal flex items-center p-1"
-				onclick={toggleMenu}
-				onmousedown={(e) => e.preventDefault()}
-				aria-label={menuLabel}
-				aria-expanded={menuOpen}
-			>
-				<MoreHorizontal class="h-5 w-5" />
-			</button>
-			{#if menuOpen}
-				<!-- fixed, not absolute: every toolbar sits in an overflow container, and an absolutely
+{#if expander?.open}
+	<!-- the chevron stays where it was in the folded bar, so folding back is the same click in the same place -->
+	<div class="flex min-w-0 flex-1 items-start {gapClass}">
+		<div class="flex min-w-0 flex-1 flex-wrap items-center gap-y-1.5 {gapClass}">
+			{#each items as item (item.id)}
+				{@render item.render(item)}
+			{/each}
+		</div>
+		{@render expander.trailing?.()}
+		{@render chevron(true)}
+	</div>
+{:else}
+	<div class="flex min-w-0 flex-1 items-center {gapClass}">
+		<div bind:this={row} class="toolbar-fit flex min-w-0 flex-1 items-center {gapClass}">
+			{#each shown as item (item.id)}
+				{@render item.render(item)}
+			{/each}
+		</div>
+
+		{@render expander?.trailing?.()}
+		{#if hidden.length > 0 && expander}
+			{@render chevron(false)}
+		{:else if hidden.length > 0}
+			<div class="shrink-0">
+				<button
+					bind:this={menuButton}
+					class="toolbarButton hover:preset-tonal flex items-center p-1"
+					onclick={toggleMenu}
+					onmousedown={(e) => e.preventDefault()}
+					aria-label={menuLabel}
+					aria-expanded={menuOpen}
+				>
+					<MoreHorizontal class="h-5 w-5" />
+				</button>
+				{#if menuOpen}
+					<!-- fixed, not absolute: every toolbar sits in an overflow container, and an absolutely
 				     positioned menu hanging below the bar is clipped away by it - the button opened
 				     nothing at all. fixed escapes the clip. -->
-				<div
-					bind:this={menuEl}
-					class="bg-surface-50-950 border-surface-300-700 card fixed z-50 flex max-w-[min(22rem,calc(100vw-1rem))] flex-wrap items-center gap-3 gap-y-2 border p-2 shadow-lg"
-					style="top: {menuPos.top}px; right: {menuPos.right}px"
-					role="group"
-				>
-					{#each hidden as item (item.id)}
-						{@render item.render(item)}
-					{/each}
-				</div>
-			{/if}
-		</div>
-	{/if}
-</div>
+					<div
+						bind:this={menuEl}
+						class="bg-surface-50-950 border-surface-300-700 card fixed z-50 flex max-w-[min(22rem,calc(100vw-1rem))] flex-wrap items-center gap-3 gap-y-2 border p-2 shadow-lg"
+						style="top: {menuPos.top}px; right: {menuPos.right}px"
+						role="group"
+					>
+						{#each hidden as item (item.id)}
+							{@render item.render(item)}
+						{/each}
+					</div>
+				{/if}
+			</div>
+		{/if}
+	</div>
+{/if}
 
 <style>
 	.toolbar-fit {

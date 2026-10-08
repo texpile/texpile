@@ -1,6 +1,5 @@
 // Remote collaborator presence in the visual editor: a caret bar + name label and a selection
-// tint. Positions arrive pre-mapped to PM
-// coordinates (WorkspaceView runs the awareness -> sourceMap chain); this plugin only renders.
+// tint. peersOnText maps the awareness cursors through the source map; the plugin only renders.
 // Every element is layout-inert: zero-width in-flow anchors with out-of-flow bars, tint via
 // background, so a peer's cursor can never move a glyph.
 import { Plugin, PluginKey } from 'prosemirror-state';
@@ -9,6 +8,11 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import { paintRange } from '$lib/editor/visual/highlight/paintRange';
 import type { Node as PMNode } from 'prosemirror-model';
 import { oldWordsBetween } from './pmSuggestionsState';
+import * as Y from 'yjs';
+import type { Awareness } from 'y-protocols/awareness';
+import { caretAtOffset } from '$lib/editor/visual/sourceMap';
+import type { SourceMap } from '$lib/editor/visual/sourceSpans';
+import { lagOf, toLocal } from '$lib/collab/lagOffsets';
 import './remoteCursors.css';
 
 export type RemotePeerSel = {
@@ -139,3 +143,37 @@ export const remoteCursorsPlugin = new Plugin<RemoteCursorsState>({
 		};
 	}
 });
+
+/**
+ * Every collaborator's awareness cursor on this file, as positions in the document `map` was made for:
+ * relative position, then index in the shared text, then the offset in `text` (the text the document is
+ * of, which may not have every shared edit in yet), then the document. Carets on other files, or on a
+ * part of this one the document does not show, are left out
+ */
+export function peersOnText(shared: { ytext: Y.Text; awareness: Awareness }, text: string, map: SourceMap): RemotePeerSel[] {
+	const { ytext, awareness } = shared;
+	const lag = lagOf(text, ytext.toString());
+	function indexOf(rel: unknown): number | null {
+		try {
+			const at = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(rel as object), ytext.doc!);
+			return at && at.type === ytext ? at.index : null;
+		} catch {
+			return null;
+		}
+	}
+	const peers: RemotePeerSel[] = [];
+	awareness.getStates().forEach((state, clientId) => {
+		if (clientId === awareness.clientID) return;
+		const cur = (state as { cursor?: { anchor?: unknown; head?: unknown } }).cursor;
+		const user = (state as { user?: { name?: string; color?: string } }).user ?? {};
+		if (!cur?.anchor || !cur?.head) return;
+		const ai = indexOf(cur.anchor);
+		const hi = indexOf(cur.head);
+		if (ai == null || hi == null) return;
+		const anchor = caretAtOffset(map, text, toLocal(lag, ai));
+		const head = ai === hi ? anchor : caretAtOffset(map, text, toLocal(lag, hi));
+		if (anchor == null || head == null) return;
+		peers.push({ clientId, name: user.name ?? 'Anonymous', color: user.color ?? '#888888', anchor, head });
+	});
+	return peers;
+}

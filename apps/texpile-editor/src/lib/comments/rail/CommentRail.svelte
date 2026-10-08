@@ -1,8 +1,9 @@
 <script lang="ts">
-	// The comment margin: the open file's threads beside the text they are about, scrolling with
+	// The comment margin: the pane's file's threads beside the text they are about, scrolling with
 	import { untrack } from 'svelte';
 	import type { CommentsController } from '$lib/workspace/commentsController.svelte';
 	import type { CommentThread } from '$lib/comments/log';
+	import { sourceEditorIn, visualEditorIn } from '$lib/editor/editorsOnScreen.svelte';
 	import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 	import { liveCommentRanges } from '$lib/editor/visual/extensions/comments';
 	import { liveSuggestionRanges } from '$lib/editor/source/cmSuggestions';
@@ -37,6 +38,7 @@
 		ctl: CommentsController;
 		threads: CommentThread[];
 		mode: 'visual' | 'source';
+		/** the pane's scroll box, which holds its editor: in a split, not the app's focused one */
 		scroller?: HTMLElement | null;
 		onSelect: (id: string) => void;
 	} = $props();
@@ -46,11 +48,14 @@
 	const NOTHING_PLACED = new Map<string, number>();
 
 	let rail = $state<HTMLElement | null>(null);
+	const pmView = $derived(visualEditorIn(scroller));
+	const cmView = $derived(sourceEditorIn(scroller));
+	// a comment being written is the focused editor's: a parked slot's margin draws no composer
+	const pending = $derived(
+		(mode === 'visual' ? !!pmView && pmView === editorViewStore.current : !!cmView && cmView === sourceCmView.current) ? ctl.pending : null
+	);
 	const geometry = new RailGeometry();
 	const anchors = $derived(geometry.anchors);
-
-	const pmView = $derived(editorViewStore.current);
-	const cmView = $derived(sourceCmView.current);
 
 	$effect(() => {
 		const el = rail;
@@ -64,9 +69,9 @@
 				scroll: scroller,
 				// with nothing to place, no layout read on every key and every scroll frame
 				measure: () =>
-					untrack(() => !ctl.pending && activeSuggestions.current.length === 0 && threads.every((t) => t.resolved))
+					untrack(() => !pending && activeSuggestions.current.length === 0 && threads.every((t) => t.resolved))
 						? NOTHING_PLACED
-						: measurePmAnchors(view, el, !!untrack(() => ctl.pending))
+						: measurePmAnchors(view, el, !!untrack(() => pending))
 			});
 		}
 		const view = cmView;
@@ -80,7 +85,7 @@
 				return measureCmAnchors(
 					view,
 					liveCommentRanges(view.state),
-					untrack(() => ctl.pending),
+					untrack(() => pending),
 					el,
 					liveSuggestionRanges(view.state)
 				);
@@ -88,7 +93,7 @@
 		});
 	});
 	$effect(() => {
-		void ctl.pending;
+		void pending;
 		void threads;
 		void activeSuggestions.current;
 		geometry.schedule();
@@ -98,16 +103,13 @@
 		const el = rail;
 		const view = cmView;
 		if (!el || mode !== 'source' || !view) return;
-		const home = el.parentElement;
-		const next = el.nextSibling;
 		view.scrollDOM.appendChild(el);
-		return () => {
-			if (home && el.parentElement === view.scrollDOM) home.insertBefore(el, next && next.parentNode === home ? next : null);
-		};
+		// out, never back home: torn down beside a CodeMirror that stays, a rail put back lived on as a dead copy
+		return () => el.remove();
 	});
 
 	const placed = $derived(threads.filter((t) => !t.resolved && anchors.has(t.id)).sort((a, b) => anchors.get(a.id)! - anchors.get(b.id)!));
-	const composing = $derived(!!ctl.pending && anchors.has(PENDING_ANCHOR));
+	const composing = $derived(!!pending && anchors.has(PENDING_ANCHOR));
 	const glide: RailGlide = new RailGlide(() => ({
 		rail,
 		box: mode === 'visual' ? scroller : (cmView?.scrollDOM ?? null),
@@ -245,7 +247,8 @@
 		void shift;
 		void inflow;
 		void showing;
-		requestAnimationFrame(() => untrack(measureCut));
+		const frame = requestAnimationFrame(() => untrack(measureCut));
+		return () => cancelAnimationFrame(frame);
 	});
 
 	let revealedSeq = 0;
@@ -326,9 +329,9 @@
 			onSize={(h) => setHeight(t.id, h)}
 		/>
 	{/each}
-	{#if composing && ctl.pending}
+	{#if composing && pending}
 		<CommentComposerCard
-			quote={ctl.pending.quote}
+			quote={pending.quote}
 			top={topOf(PENDING_ANCHOR)}
 			onSubmit={(body, keyed) => {
 				void ctl.commitAdd(body);

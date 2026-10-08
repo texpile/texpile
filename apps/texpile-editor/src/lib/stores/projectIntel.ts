@@ -2,6 +2,7 @@
 // sub/superscripts, bib entry positions, and .aux reference numbers gathered from every OTHER
 // project file (the active buffer's own contents stay live in the editor). populated by
 // workspace/projectIntel.ts; consumed by completion/hover/definition and the outline.
+import type { TocItem } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 import { box } from '$lib/runes/box.svelte';
 import type { RawOutlineItem } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 
@@ -58,7 +59,11 @@ export type ProjectIntel = {
 	auxTitles: Record<string, string>;
 	/** per-file raw outline atoms (markers included), for the merged project outline */
 	outlines: Record<string, RawOutlineItem[]>;
+	/** a .typ's headings, each with its line, and where it #includes another file */
+	typstOutlines: Record<string, TypstOutline>;
 };
+
+export type TypstOutline = { items: TocItem[]; includes: { pos: number; target: string }[] };
 
 export const EMPTY_PROJECT_INTEL: ProjectIntel = {
 	labels: [],
@@ -72,7 +77,8 @@ export const EMPTY_PROJECT_INTEL: ProjectIntel = {
 	auxPages: {},
 	auxKinds: {},
 	auxTitles: {},
-	outlines: {}
+	outlines: {},
+	typstOutlines: {}
 };
 
 export const projectIntelStore = box<ProjectIntel>(EMPTY_PROJECT_INTEL);

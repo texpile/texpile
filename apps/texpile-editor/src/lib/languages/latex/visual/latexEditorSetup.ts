@@ -6,7 +6,8 @@ import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { isMac } from '$lib/platform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
-import { undo as historyUndo, redo as historyRedo, history } from 'prosemirror-history';
+import { history } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { toggleBlockQuote, toggleHeading, cycleParagraphIndent, splitBlockWithoutDuplicates } from '$lib/editor/visual/helperCommands';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
 import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
@@ -86,7 +87,6 @@ export type LatexEditorSetup = {
 	mlarrowHandlers: Plugin;
 	imageDir?: () => string;
 	placeholder: string;
-	onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 	onSelectComment?: (id: string) => void;
 	onAddComment?: (anchor: CommentAnchor | null) => void;
 	/** the selection as a range of the file; see pmComments */
@@ -95,17 +95,7 @@ export type LatexEditorSetup = {
 };
 
 export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
-	const {
-		mathlivePlugin,
-		mlarrowHandlers,
-		imageDir,
-		placeholder,
-		onHistoryBoundary,
-		onSelectComment,
-		onAddComment,
-		sourceAnchor,
-		addCommentLabel
-	} = setup;
+	const { mathlivePlugin, mlarrowHandlers, imageDir, placeholder, onSelectComment, onAddComment, sourceAnchor, addCommentLabel } = setup;
 	return [
 		parseCarryPlugin,
 		labelRenameUndo,
@@ -139,11 +129,9 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			] as readonly InputRule[]
 		}),
 		keymap({
-			// PM history first, then the workspace snapshot history (survives mode switches).
-			// consume the key even at the stack edge so the browser's native undo can't fire.
-			'Mod-z': (state, dispatch) => historyUndo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('undo'), true) : false),
-			'Mod-y': (state, dispatch) => historyRedo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('redo'), true) : false),
-			'Mod-Shift-z': (state, dispatch) => historyRedo(state, dispatch) || (onHistoryBoundary ? (onHistoryBoundary('redo'), true) : false),
+			'Mod-z': undoVisual,
+			'Mod-y': redoVisual,
+			'Mod-Shift-z': redoVisual,
 			Backspace: undoInputRule,
 			'Mod-a': selectAllScoped,
 			'Mod-Home': selectDocStart,

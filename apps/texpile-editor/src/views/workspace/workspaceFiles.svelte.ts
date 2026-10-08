@@ -28,7 +28,7 @@ import type { DocumentBuffer, FileKind } from '$lib/workspace/documentBuffer.sve
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
-import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import type { FileWriter } from '$lib/buffers/fileWriter';
 
 type FilesDeps = {
 	provider: WorkspaceProvider;
@@ -40,7 +40,7 @@ type FilesDeps = {
 	canTrash: () => boolean;
 	layout: () => PaneLayout;
 	compiler: () => CompilePipeline;
-	saver: () => SavePipeline;
+	saver: () => FileWriter;
 	/** a held draft compile releases when the main-file prompt settles */
 	releaseHeldDraftCompile: () => void;
 	typstProject: () => boolean;
@@ -119,7 +119,7 @@ export class WorkspaceFiles {
 				d.saver().retarget(from, to);
 				retargetDiskStamp(from, to); // the guard's stamp must follow the rename too
 			},
-			discardPendingSave: () => d.saver().discard(),
+			forgetBuffers: (path) => d.saver().dropUnder(path),
 			confirmReplace: (name) => confirmAsk(m.filetree_confirm_replace({ name }), { confirmLabel: m.filetree_replace(), danger: true }),
 			// the full set-main flow (store + config.json + macros + visual re-derive), so a renamed
 			// main behaves exactly as if the user had starred the new path themselves
@@ -128,7 +128,6 @@ export class WorkspaceFiles {
 		this.folder = new FolderLifecycle({
 			scanTexFiles: async (root) => ({ root, files: await provider.scanTexFiles(root) }),
 			confirmLeaveUnsaved: () => d.confirmLeaveUnsaved(),
-			flushSaves: () => d.saver().flush(),
 			flushSavesAndWait: () => d.saver().flushAndWait(),
 			sessionActive: () => d.session().active,
 			endSession: () => d.session().end(),
@@ -264,7 +263,7 @@ export class WorkspaceFiles {
 			onActiveFileEdited: () => {
 				if (modes.mode === 'visual') this.d.rebuildVisual();
 				isDirty.current = true;
-				this.d.saver().schedule(doc.path, doc.texSource);
+				if (doc.path) this.d.session().edit(doc.path, doc.texSource);
 			}
 		};
 	}

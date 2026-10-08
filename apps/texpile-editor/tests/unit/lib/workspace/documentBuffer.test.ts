@@ -23,17 +23,15 @@ function parsedWith(text: string): ParsedLatexFile {
 
 function makeBuffer() {
 	const scheduleSave = vi.fn();
-	const discardQueuedSave = vi.fn();
 	const buffer = new DocumentBuffer({
 		scheduleSave,
-		discardQueuedSave,
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,
 		noteLocalEdit: () => {},
 		clearPendingAnchor: () => {}
 	});
-	return { buffer, scheduleSave, discardQueuedSave };
+	return { buffer, scheduleSave };
 }
 
 describe('DocumentBuffer.onVisualChange while a re-parse is in flight', () => {
@@ -86,15 +84,12 @@ describe('DocumentBuffer.lastDocSource follows the mounted doc, not the last par
 	});
 });
 
-// a shared session got the edit the moment it was made; the undo that takes it back to the saved
-// text queues no save, so it must still reach the session or everyone else keeps the edit
-it('hands an edit undone back to the saved text to the shared session', () => {
-	const shareEdit = vi.fn();
+// the file's text got the edit the moment it was made; the undo that takes it back to the saved
+// text must reach it too, or the text (and everyone sharing it) keeps the edit
+it('folds an edit undone back to the saved text into the file text', () => {
 	const scheduleSave = vi.fn();
 	const buffer = new DocumentBuffer({
 		scheduleSave,
-		discardQueuedSave: () => {},
-		shareEdit,
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,
@@ -109,10 +104,8 @@ it('hands an edit undone back to the saved text to the shared session', () => {
 	buffer.onVisualChange(parsedWith('edited').doc);
 	const edited = buffer.texSource;
 	expect(scheduleSave).toHaveBeenLastCalledWith('C:/ws/main.tex', edited, saved);
-	scheduleSave.mockClear();
 	buffer.onVisualChange(parsedWith('as saved').doc);
-	expect(scheduleSave).not.toHaveBeenCalled();
-	expect(shareEdit).toHaveBeenLastCalledWith('C:/ws/main.tex', saved, edited);
+	expect(scheduleSave).toHaveBeenLastCalledWith('C:/ws/main.tex', saved, edited);
 });
 
 describe('DocumentBuffer.verifyForWrite', () => {
@@ -122,7 +115,6 @@ describe('DocumentBuffer.verifyForWrite', () => {
 		const noteSaveUnchecked = vi.fn();
 		const buffer = new DocumentBuffer({
 			scheduleSave: () => {},
-			discardQueuedSave: () => {},
 			writeNow: () => {},
 			rebuildVisual: () => {},
 			isVisualMode: () => true,

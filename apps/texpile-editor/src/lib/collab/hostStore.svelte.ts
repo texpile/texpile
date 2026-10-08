@@ -1,15 +1,16 @@
-// Host-side session controller: owns the Y.Doc, the relay connection, and the materializer,
-// and exposes the reactive bits WorkspaceView needs. One shared session per window, host role.
+// Host-side controller: owns the workspace's text buffers for as long as a folder is open, and the
+// relay connection while it is shared, and exposes the reactive bits WorkspaceView needs. One shared
+// session per window, host role.
 
-import * as Y from 'yjs';
+import type * as Y from 'yjs';
 import { generateShareCode } from './e2e/shareCode';
 import { deriveSessionKeys, sha256Hex } from './e2e/keys';
 import { CollabSession, manifestOf, locksOf, metaOf, textOf, type PeerInfo } from './session';
 import type { ControlPayload, PreviewPayload } from './protocol';
-import type { SharedCompileIntel } from './editSession';
+import type { CollabBinding, SharedCompileIntel } from './editSession';
 import type { RemoteEdit } from '$lib/workspace/suggestions/suggestionStates';
 import { commentLogOf } from './sharedComments';
-import { HostMaterializer, isShared } from './materialize';
+import { TextBuffers, type WriteHooks } from '$lib/buffers/textBuffers';
 import { RelayTransport, createRelaySession } from './transport';
 import {
 	writeTextFile,
@@ -18,10 +19,12 @@ import {
 	trashEntry,
 	scanTree,
 	fileUrl,
-	relativeTo,
+	relativeInside,
+	readSourceFile,
 	joinPath
 } from '$lib/workspace/fileSystem';
 import { resolveRealRelative } from '$lib/workspace/realRelative';
+import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { settings } from '$lib/settings';
 import { presenceIdentity } from './identity';
 import { folderGitName } from '$lib/comments/author';
@@ -37,9 +40,11 @@ class HostCollabController {
 	lastError = $state('');
 	// text files too large to co-edit; shared view-only. Surfaced once, after seeding.
 	oversizedText = $state<string[]>([]);
-	// bumped whenever the manifest changes (seed / syncTree); the editor keys its collab binding on
-	// it so a file created/renamed after seed rebinds instead of staying unshared
+	// bumped whenever the set of buffered files changes (a file opened, a session started, syncTree); the
+	// editor keys its binding on it so a file buffered after it mounted rebinds
 	manifestRev = $state(0);
+	/** bumped when a folder's buffers open or close */
+	buffersRev = $state(0);
 	// EditSession: the host is never a guest and shows the compiled PDF from disk, not pushed bytes
 	readonly isGuest = false;
 	readonly guestPdf = null;
@@ -52,8 +57,6 @@ class HostCollabController {
 	onFileOp: (() => void) | null = null;
 	/** a guest's change to a shared file as it applies, with their name and mode, for the host to record */
 	onGuestEdit: ((rel: string, before: string, after: string, edit: RemoteEdit) => void) | null = null;
-	/** awaited before a guest's changes are written to disk, so what they recorded is logged first */
-	beforeGuestWrite: ((rel: string, content: string) => Promise<void>) | null = null;
 	/** one hop of the Typst preview relay from a guest; previewRelay wires this while hosting. */
 	onPreview: ((p: PreviewPayload, from: number) => void) | null = null;
 	/** a guest asked its preview to follow a source position; workspaceSession wires this. */
@@ -77,13 +80,87 @@ class HostCollabController {
 	}
 
 	private session: CollabSession | null = null;
-	private materializer: HostMaterializer | null = null;
+	private buffers: TextBuffers | null = null;
 	private transport: RelayTransport | null = null;
-	private doc: Y.Doc | null = null;
 	private root: string | null = null;
 	private lockedRel: string | null = null;
 	private pdfBytes: Uint8Array | null = null;
 	private pdfRev = 0;
+	/** what the workspace does around every write, kept across folder switches */
+	private writeHooks: WriteHooks = {};
+	/** a buffered file's text changed (absolute path), from anywhere but its seeding */
+	onTextChange: ((absPath: string, origin: unknown) => void) | null = null;
+
+	/** the doc a session shares; null while no folder is open */
+	private get doc(): Y.Doc | null {
+		return this.buffers?.shared ?? null;
+	}
+
+	/** the open folder's text buffers, opened on first use */
+	get files(): TextBuffers | null {
+		return this.buffers;
+	}
+
+	setWriteHooks(hooks: WriteHooks): void {
+		this.writeHooks = hooks;
+		if (this.buffers) this.buffers.hooks = hooks;
+	}
+
+	/** the folder's buffers, made when it opens; a different folder replaces them */
+	open(root: string): TextBuffers {
+		if (this.buffers && this.root === root) return this.buffers;
+		if (this.buffers) void this.close();
+		const buffers = new TextBuffers(
+			root,
+			{
+				// texfile:// serves raw bytes with CORS; one read covers both the sniff and the body
+				readBytes: async (p) => {
+					// texfile:// serves only the open folders: a file outside them comes through the bridge, UTF-8 only
+					if (!relativeInside(root, p)) {
+						const { text, encoding } = await readSourceFile(p);
+						if (encoding !== 'utf8' && encoding !== 'utf8bom') throw new Error(`not UTF-8: ${p}`);
+						return new TextEncoder().encode(text);
+					}
+					const res = await fetch(fileUrl(p), { cache: 'no-store' });
+					if (!res.ok) throw new Error(`could not read ${p}`);
+					return new Uint8Array(await res.arrayBuffer());
+				},
+				writeText: writeTextFile,
+				listFiles: (r) => scanTree(r).then((t) => flattenShareManifest(t.children, r))
+			},
+			joinPath
+		);
+		buffers.hooks = this.writeHooks;
+		buffers.onChange = (rel, origin) => this.onTextChange?.(joinPath(root, rel), origin);
+		this.buffers = buffers;
+		this.root = root;
+		this.manifestRev++;
+		this.buffersRev++;
+		return buffers;
+	}
+
+	/** the folder closed: everything unwritten lands first */
+	async close(): Promise<void> {
+		const buffers = this.buffers;
+		if (!buffers) return;
+		if (this.active) await this.end();
+		// a folder opened while the session ended has buffers of its own by now
+		if (this.buffers === buffers) {
+			this.buffers = null;
+			this.root = null;
+		}
+		await buffers.flushAll();
+		buffers.destroy();
+		this.manifestRev++;
+		this.buffersRev++;
+	}
+
+	/** the buffers of the folder this window has open, whichever that is now */
+	private current(): TextBuffers | null {
+		const root = workspaceRoot.current;
+		if (!root) return null;
+		return this.open(root);
+	}
 
 	async start(root: string): Promise<void> {
 		if (this.active) return;
@@ -101,10 +178,12 @@ class HostCollabController {
 				hostKey
 			});
 
-			const doc = new Y.Doc();
+			const buffers = this.open(root);
+			const doc = buffers.shared;
 			const transport = new RelayTransport(relayUrl, keys.roomId, keys.joinProof, hostKey);
 			const session = new CollabSession({
 				doc,
+				awareness: buffers.awareness,
 				transport,
 				key: keys.contentKey,
 				role: 'host',
@@ -139,33 +218,22 @@ class HostCollabController {
 					onSessionEnd: () => void this.end(false)
 				}
 			});
-			const materializer = new HostMaterializer(
-				doc,
-				root,
-				{
-					// texfile:// serves raw bytes with CORS; one read covers both the sniff and the body
-					readBytes: async (p) => {
-						const res = await fetch(fileUrl(p));
-						if (!res.ok) throw new Error(`could not read ${p}`);
-						return new Uint8Array(await res.arrayBuffer());
-					},
-					writeText: writeTextFile,
-					listFiles: (r) => scanTree(r).then((t) => flattenShareManifest(t.children, r))
-				},
-				joinPath
-			);
-			materializer.onWrite = (rel, content) => this.beforeGuestWrite?.(rel, content) ?? Promise.resolve();
-			materializer.senderOf = (origin) => session.senderOf(origin);
-			materializer.onRemoteChange = (rel, before, after, from, gestures) =>
+			buffers.senderOf = (origin) => session.senderOf(origin);
+			buffers.onRemoteChange = (rel, before, after, from, gestures) =>
 				this.onGuestEdit?.(rel, before, after, { ...session.authorOf(from), gestures });
 			session.setSuggesting(this.suggesting);
-			this.oversizedText = (await materializer.seed()).oversizedText;
+			try {
+				this.oversizedText = (await buffers.sharing.start()).oversizedText;
+			} catch (e) {
+				// it is already listening to the buffers, which outlive it
+				session.destroy();
+				buffers.senderOf = null;
+				buffers.onRemoteChange = null;
+				throw e;
+			}
 
-			this.doc = doc;
 			this.session = session;
-			this.materializer = materializer;
 			this.transport = transport;
-			this.root = root;
 			this.shareCode = code;
 			this.active = true;
 			this.manifestRev++;
@@ -196,57 +264,62 @@ class HostCollabController {
 		this.session?.setSuggesting(on);
 	}
 
-	/** stop sharing; tellGuests=false when the teardown came from the far side. */
+	/** stop sharing; tellGuests=false when the teardown came from the far side. The buffers stay. */
 	async end(tellGuests = true): Promise<void> {
-		const { session, materializer } = this;
+		const { session, buffers } = this;
+		if (!this.active && !session) return;
 		this.session = null;
-		this.materializer = null;
 		this.transport = null;
-		this.doc = null;
-		this.root = null;
 		this.active = false;
 		this.status = 'idle';
 		this.shareCode = '';
 		this.peers = [];
 		this.oversizedText = [];
-		this.lockedRel = null;
 		this.pdfBytes = null;
 		this.pdfRev = 0;
-		// land any queued guest-edit writes on disk before tearing the materializer down
-		await materializer?.flushAll();
-		materializer?.destroy();
+		if (buffers) {
+			buffers.sharing.setHostLock(null, this.lockedRel);
+			buffers.senderOf = null;
+			buffers.onRemoteChange = null;
+			buffers.sharing.stop();
+		}
+		this.lockedRel = null;
+		this.manifestRev++;
+		// land the guests' last edits on disk
+		await buffers?.flushAll();
 		if (session) {
 			if (tellGuests) session.endForEveryone();
 			else session.destroy();
 		}
 	}
 
+	/** the path's place in the shared folder, or null outside it */
 	private rel(absPath: string): string | null {
-		if (!this.root) return null;
-		const rel = relativeTo(this.root, absPath).replace(/\\/g, '/');
-		return rel === absPath.replace(/\\/g, '/') ? null : rel; // outside the root
+		return this.root ? relativeInside(this.root, absPath) : null;
 	}
 
-	/** every host edit funnels through here (called from scheduleSave, per keystroke). */
+	/** the file's key in the buffers: its place in the folder, or its own path when it is outside it */
+	keyOf(absPath: string): string | null {
+		return this.buffers && this.root ? (relativeInside(this.root, absPath) ?? absPath) : null;
+	}
+
+	/** every editor edit funnels through here (called per keystroke) */
 	edit(absPath: string, content: string, before?: string): void {
-		const rel = this.active ? this.rel(absPath) : null;
+		const rel = this.keyOf(absPath);
 		function lf(s: string) {
 			return s.replace(/\r\n?/g, '\n');
 		}
-		// text-or-not is the manifest's call now (hostEdit checks the entry's kind itself)
-		if (rel && isShared(rel)) this.materializer?.hostEdit(rel, lf(content), before === undefined ? undefined : lf(before));
+		if (rel) this.buffers?.fold(rel, lf(content), before === undefined ? undefined : lf(before));
 	}
 
-	/** what the session last wrote to this file for the guests (LF), once, or null */
-	takeSessionWrite(absPath: string): string | null {
-		const rel = this.active ? this.rel(absPath) : null;
-		return rel ? (this.materializer?.takeWrite(rel) ?? null) : null;
-	}
-
-	/** flush any pending guest-edit write before the host reads the file from disk. */
+	/** the file is about to open: its text comes into the buffers, or catches up with its disk */
 	async beforeOpen(absPath: string): Promise<void> {
-		const rel = this.active ? this.rel(absPath) : null;
-		if (rel) await this.materializer?.flush(rel);
+		const buffers = this.current();
+		const rel = buffers ? this.keyOf(absPath) : null;
+		if (!buffers || !rel) return;
+		const had = buffers.has(rel);
+		await buffers.ensure(rel);
+		if (buffers.has(rel) !== had) this.manifestRev++;
 	}
 
 	/**
@@ -258,15 +331,15 @@ class HostCollabController {
 	 * Cheap when idle - only files with a write actually queued do anything.
 	 */
 	async flushPendingWrites(): Promise<void> {
-		if (this.active) await this.materializer?.flushAll();
+		await this.buffers?.flushAll();
 	}
 
 	/** the file the host holds in the visual editor (guests go read-only on it); null clears. */
 	setVisualLock(absPath: string | null): void {
-		if (!this.active || !this.materializer) return;
+		if (!this.active || !this.buffers) return;
 		const rel = absPath ? this.rel(absPath) : null;
 		if (rel === this.lockedRel) return;
-		this.materializer.setHostLock(rel, this.lockedRel);
+		this.buffers.sharing.setHostLock(rel, this.lockedRel);
 		this.lockedRel = rel;
 	}
 
@@ -274,13 +347,13 @@ class HostCollabController {
 	async syncTree(): Promise<void> {
 		if (!this.active) return;
 		// only rebind editors when the shared set actually changed, not on every focus/compile refresh
-		if (await this.materializer?.syncFromTree()) this.manifestRev++;
+		if (await this.buffers?.sharing.syncFromTree()) this.manifestRev++;
 	}
 
 	// serve a file's bytes to a guest that requested it (images the guest editor needs to render)
 	private async serveFile(name: string, rel: string, to: number): Promise<void> {
-		const { root, session, doc, materializer } = this;
-		if (!this.active || !root || !session || !doc || !materializer?.sharesFile(rel)) return;
+		const { root, session, doc, buffers } = this;
+		if (!this.active || !root || !session || !doc || !buffers?.sharing.sharesFile(rel)) return;
 		// a short name like GIT~1 spells .git without saying so
 		if (!(await resolveSharedTarget(root, rel, resolveRealRelative))) return;
 		try {
@@ -311,9 +384,9 @@ class HostCollabController {
 
 	/** a guest's rename/delete, executed against the host's disk after path validation. */
 	private async applyGuestFileOp(p: ControlPayload & { kind: 'file-op' }): Promise<void> {
-		const { root, materializer } = this;
-		if (!this.active || !root || !materializer) return;
-		if (!materializer.sharesFile(p.from) && !materializer.sharesFolder(p.from)) return;
+		const { root, buffers } = this;
+		if (!this.active || !root || !buffers) return;
+		if (!buffers.sharing.sharesFile(p.from) && !buffers.sharing.sharesFolder(p.from)) return;
 		if (!(await resolveSharedTarget(root, p.from, resolveRealRelative))) return;
 		try {
 			if (p.op === 'delete') await trashEntry(joinPath(root, p.from), root);
@@ -405,15 +478,13 @@ class HostCollabController {
 		}
 	}
 
-	/** Y binding for the host's source editor, when the open file is shared. */
-	collabFor(absPath: string | null): { ytext: Y.Text; awareness: CollabSession['awareness'] } | null {
-		if (!this.active || !this.doc || !this.session || !absPath) return null;
-		const rel = this.rel(absPath);
-		if (!rel || !isShared(rel)) return null;
-		// the manifest entry's kind IS the classification; no name-based pre-judgement
-		const entry = manifestOf(this.doc).get(rel);
-		if (!entry || entry.kind !== 'text' || entry.gone) return null;
-		return { ytext: textOf(this.doc, rel), awareness: this.session.awareness };
+	/** the editors' binding to a buffered file's text */
+	collabFor(absPath: string | null): CollabBinding | null {
+		const buffers = this.buffers;
+		const rel = buffers && absPath ? this.keyOf(absPath) : null;
+		const ytext = rel ? buffers!.text(rel) : null;
+		if (!rel || !ytext) return null;
+		return { ytext, awareness: buffers!.awarenessOf(rel)!, undo: buffers!.undoOf(rel)! };
 	}
 
 	/** guests currently holding a cursor in the given file (for a future indicator). */

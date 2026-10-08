@@ -1,5 +1,7 @@
 // Every "jump somewhere" route in the workspace: SyncTeX forward/inverse, the visual-caret
 // source position, include targets, and the PDF pane scroll plumbing.
+import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
+import { previewViewOf } from '$lib/workspace/groups/layouts';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { openFile, activeCompare } from '$lib/workspace/workspaceStore';
 import { Text } from '@codemirror/state';
@@ -53,7 +55,7 @@ type NavDeps = {
 
 export class WorkspaceNav {
 	// ref to the compile-pane PDF viewer, for SyncTeX forward search
-	pdfPaneRef = $state<{ scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number) => void }>();
+	pdfPaneRef = $state<{ scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number, view?: number) => void }>();
 	// a SyncTeX-inverse / Find-in-Files jump. the token distinguishes repeat jumps to the same line
 	// so the editor re-fires; selectText is the word double-clicked in the PDF, anchored on to
 	// correct for line drift (see SourceEditor's gotoLine effect)
@@ -168,7 +170,8 @@ export class WorkspaceNav {
 	/** waits for the PDF pane to mount, then scrolls it to the reported box */
 	jumpPdf(page: number, x: number, y: number, w: number, h: number, tries = 0): void {
 		if (this.pdfPaneRef) {
-			this.pdfPaneRef.scrollToPosition(page, x, y, w, h);
+			const slot = editorGroups.grid.findIndex((g) => g.id === editorGroups.focusedId);
+			this.pdfPaneRef.scrollToPosition(page, x, y, w, h, previewViewOf(editorGroups.layout, slot));
 			return;
 		}
 		if (tries < 30) setTimeout(() => this.jumpPdf(page, x, y, w, h, tries + 1), 30);
@@ -225,8 +228,13 @@ export class WorkspaceNav {
 		else this.forwardToLine(line);
 	}
 
-	onPdfDoubleClick(page: number, x: number, y: number, selectText?: string): void {
-		void this.syncTex.inverseFromClick(page, x, y, selectText);
+	/** a split preview's view stands beside a row (or a column) of editors: the jump lands in that one */
+	onPdfDoubleClick(page: number, x: number, y: number, selectText?: string, view?: number): void {
+		const { grid, layout } = editorGroups;
+		const focused = grid.findIndex((g) => g.id === editorGroups.focusedId);
+		const beside = view === undefined ? -1 : grid.findIndex((_, i) => previewViewOf(layout, i) === view);
+		if (beside < 0 || previewViewOf(layout, focused) === view) void this.syncTex.inverseFromClick(page, x, y, selectText);
+		else editorGroups.focusThen(grid[beside].id, () => void this.syncTex.inverseFromClick(page, x, y, selectText));
 	}
 
 	/** F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added) */

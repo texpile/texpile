@@ -4,6 +4,7 @@
 import type { TreeEntry } from '$lib/workspace/fileSystem';
 import { dropDir, isInside } from './treePaths';
 import { collectDropItems, type ImportItem } from './treeImport';
+import { endSlotDrag, startFileDrag } from '$lib/workspace/groups/slotDrag.svelte';
 
 export const ROOT = '__root__';
 // a tag, not the data: drag payloads are sealed until drop, so only the TYPE is readable on dragover
@@ -43,6 +44,13 @@ export class FileTreeDnd {
 		this.hooks.ensureSelected(entry);
 		this.dragging = entry;
 		this.dragPaths = this.hooks.selectedEntries().map((x) => x.path);
+		// files dropped on an editor slot open there
+		startFileDrag(
+			this.hooks
+				.selectedEntries()
+				.filter((x) => x.type === 'file')
+				.map((x) => x.path)
+		);
 		if (e.dataTransfer) {
 			// move within this window; a drop in another window's tree copies instead
 			e.dataTransfer.effectAllowed = 'copyMove';
@@ -125,6 +133,7 @@ export class FileTreeDnd {
 	}
 
 	onDragEnd(): void {
+		endSlotDrag();
 		this.dragging = null;
 		this.dragPaths = [];
 		this.dropTarget = null;

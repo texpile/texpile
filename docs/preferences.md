@@ -16,7 +16,6 @@ Settings for the whole app. Open it with Ctrl , (Cmd , on macOS) or File › Pre
 | Setting                                     | Note                                                                                                                           |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | Appearance › Language                       | Changes the interface only. Spell check covers English only.                                                                   |
-| Editor › Autosave                           | Always on for LaTeX live mode and while you host a shared session.                                                             |
 | Editor › Open terminal panel when compiling | When off, the badge next to Compile is the only sign of errors.                                                                |
 | Editor › Keybindings                        | Vim and Emacs work in the source editor only.                                                                                  |
 | Editor › Justify text, Hyphenate words      | Change the visual editor only, not the compiled document or the file.                                                          |

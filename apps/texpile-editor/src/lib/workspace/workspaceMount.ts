@@ -12,6 +12,8 @@ export type WindowWiringDeps = {
 	/** guests have no on-disk copy to diff against */
 	isHost(): boolean;
 	checkExternalChange(): void;
+	/** every other file the buffers hold catches up with its disk */
+	syncBuffers(): void;
 	runCompile(): void;
 	onWindowResize(): void;
 	/** re-read .texpile/ - the comment log and the compile config - after an outside write */
@@ -26,6 +28,7 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 		deps.refreshTree();
 		if (deps.isHost()) {
 			deps.checkExternalChange();
+			deps.syncBuffers();
 			deps.loadExternalPdf();
 		}
 		deps.reloadReferences();
@@ -36,6 +39,8 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 	function onFsChanged() {
 		deps.refreshTree();
 		deps.reloadReferences();
+		// our own writes outside the buffers too: a replace across files nobody has open
+		if (deps.isHost()) deps.syncBuffers();
 	}
 	function onCompile() {
 		return deps.runCompile();
@@ -80,11 +85,13 @@ export type CloseGuardDeps = {
 	/** nothing unsaved that needs asking about */
 	canCloseSilently(): boolean;
 	flushSaves(): Promise<void>;
+	/** edits a write was refused for, in files that are not open */
+	hasStranded(): boolean;
 	confirmLeaveUnsaved(): Promise<boolean>;
 };
 
 /** The window close is HELD by the main process until we answer (with a 2s backstop for a hung
- * renderer). Fast path: flush the autosave debounce and proceed. With autosave off and a pending
+ * renderer). Fast path: flush the autosave debounce and proceed. With autosave held off and a pending
  * edit the modal can outlive the hold, so we release the close NOW and re-issue it after the
  * answer, at which point the pending edit is settled and the fast path applies. */
 export function attachCloseGuard(deps: CloseGuardDeps): (() => void) | undefined {
@@ -95,8 +102,10 @@ export function attachCloseGuard(deps: CloseGuardDeps): (() => void) | undefined
 		}
 		if (deps.canCloseSilently()) {
 			await deps.flushSaves();
-			nativeBridge()?.closeDecision?.(true);
-			return;
+			if (!deps.hasStranded()) {
+				nativeBridge()?.closeDecision?.(true);
+				return;
+			}
 		}
 		nativeBridge()?.closeDecision?.(false);
 		if (await deps.confirmLeaveUnsaved()) {

@@ -4,7 +4,7 @@
 import type { Node } from 'prosemirror-model';
 import { NodeSelection, type Selection } from 'prosemirror-state';
 import type { Decoration, DecorationSource, EditorView, NodeView, ViewMutationRecord } from 'prosemirror-view';
-import { undo, redo } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import type { ChipFace, ChipFaceMaker } from './chipFace';
 import type { ChipReparse } from './chipReparse';
 import {
@@ -118,8 +118,8 @@ export class DrawnChipView implements NodeView {
 			jump: this.kind.jump,
 			jumpToDefinition: this.kind.jumpToDefinition,
 			view: this.view,
-			undo: () => undo(this.view.state, this.view.dispatch),
-			redo: () => redo(this.view.state, this.view.dispatch),
+			undo: () => undoVisual(),
+			redo: () => redoVisual(),
 			onClose: (how) => this.panelClosed(how)
 		});
 	}

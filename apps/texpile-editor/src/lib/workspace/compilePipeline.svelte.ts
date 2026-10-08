@@ -6,7 +6,6 @@ import { parseCompileDiagnosticsInWorker } from '$lib/compileLog/parseInWorker';
 import { remapDraftBodyFile } from '$lib/compileLog/draftBodyRemap';
 import { pdfStore } from '$lib/stores/pdfStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
-import { settings } from '$lib/settings';
 import { compileConfig } from './projectConfigSync.svelte';
 import { workspaceRoot, mainFile, texFiles, effectiveCompileFormat, savedMainFile } from './workspaceStore';
 import * as cc from './compileCommand';
@@ -91,8 +90,7 @@ export class CompilePipeline {
 		return expandMain(cmd, workspaceRoot.current, mainFile.current ?? this.deps.getLoadedPath());
 	}
 
-	// show the terminal, wait for mount, then run (the shell queues the command until it has
-	// spawned). onDone fires when the shell reports the line finished (Terminal.run's sentinel echo).
+	// wait for the dock to mount, then run (the shell queues the command until it has spawned). onDone fires when the shell reports the line finished (Terminal.run's sentinel echo).
 	private runInTerminal(cmd: string, onDone?: (output: string) => void, tries = 0) {
 		const dock = this.deps.getDock();
 		if (dock) {
@@ -223,6 +221,8 @@ export class CompilePipeline {
 		// Every early return above is synchronous, and the draft path returns before here and never
 		// sets busy by design, so claiming it at this point needs no unwinding.
 		this.busy = true;
+		// people missed a hidden preview and took the compile for broken; nobody presses Compile not to see the PDF
+		if (mode !== 'clean') this.deps.setPdfPaneOpen(true);
 		// write the buffer to disk BEFORE compiling so SyncTeX indexes exactly what the editor
 		// holds; otherwise reverse search maps PDF clicks into a stale, differently formatted .tex
 		await this.deps.flushSaves();
@@ -232,9 +232,7 @@ export class CompilePipeline {
 		const logBefore = logPath ? (await this.deps.stat(logPath)).mtimeMs : 0;
 		await this.ensureOutputDir(cmd);
 		this.deps.refreshTree(); // the output/ folder may have just been created
-		// opt-out ergonomics: with the dock closed by choice, a compile should not reopen it. The
-		// button's own running state is the progress indicator then (see openDockOnCompile).
-		if (settings.current.openDockOnCompile) this.deps.showTerminal();
+		this.deps.mountDock();
 		// marker off = no end signal from the shell; leave the button as Compile instead of a
 		// Stop that would linger until the log/PDF pollers time out
 		const track = compileConfig.current.completionMarker;
@@ -300,7 +298,7 @@ export class CompilePipeline {
 	// stdout defaults to the last run's, which is right for the compile that produced it. The live
 	// preview's own compile has none, and inheriting a stale one would attribute a previous run's
 	// stdout-only errors to this log -- so that caller passes null explicitly.
-	publishLogDiagnostics = async (logPath: string, mtimeMs: number, quiet = false, stdout: string | null = this.compileStdout || null) => {
+	publishLogDiagnostics = async (logPath: string, mtimeMs: number, stdout: string | null = this.compileStdout || null) => {
 		const blgPath = logPath.replace(/\.log$/i, '.blg');
 		const blgText = (await this.deps.stat(blgPath)).exists ? await this.deps.readText(blgPath) : null;
 		const parsed = await parseCompileDiagnosticsInWorker(await this.deps.readText(logPath), blgText, stdout);
@@ -327,15 +325,6 @@ export class CompilePipeline {
 		}
 		compileLog.current = { ...parsed, logPath, updatedAt: mtimeMs };
 		this.deps.shareCompileState(); // guests get the fresh diagnostics without waiting for the intel rescan
-		// a failed build produces no fresh PDF, so nothing else tells the user: surface the
-		// Problems list. clean/warning-only results never steal the dock. (quiet = a baseline share
-		// on session start, which shouldn't yank the host's dock open.) openDockOnCompile off
-		// silences this too - a chronically-erroring LaTeX doc that still builds would otherwise
-		// have the dock stolen every run; the topbar badge carries the signal instead.
-		if (!quiet && parsed.errors.length > 0 && settings.current.openDockOnCompile) {
-			this.deps.setDockView('problems');
-			this.deps.showTerminal();
-		}
 	};
 
 	// the shell reported the command finished (sentinel echo). the pollers only notice runs that
@@ -435,7 +424,7 @@ export class CompilePipeline {
 		const logPath = this.expectedLogPath();
 		if (logPath) {
 			const s = await this.deps.stat(logPath);
-			if (s.exists && s.size > 0) await this.publishLogDiagnostics(logPath, s.mtimeMs, true);
+			if (s.exists && s.size > 0) await this.publishLogDiagnostics(logPath, s.mtimeMs);
 		}
 	};
 

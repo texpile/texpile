@@ -6,8 +6,8 @@
 // Schema objects, and a MarkType from one must never be dispatched into another.
 import { toggleSearchPanel } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
 import { EditorView as CMView } from '@codemirror/view';
-import { undo as cmUndo, redo as cmRedo } from '@codemirror/commands';
-import { undo, redo } from 'prosemirror-history';
+import { yUndoManagerKeymap, ySyncFacet } from 'y-codemirror.next';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { toggleMark } from 'prosemirror-commands';
 import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 import { editorViewStore, displaySearchBarStore, pdfFindToggle, viewMode, sourceCmView } from '$lib/stores/editorStore';
@@ -91,11 +91,11 @@ export function editSelect(value: string) {
 		if (value === 'find' && !document.activeElement?.closest(TYPING_HOSTS)) pdfFindToggle.current();
 		return;
 	}
-	// source mode: the document history and the search UI are CodeMirror's, not ProseMirror's
+	// source mode: the search UI is CodeMirror's, and the history the file's text binding keeps
 	const cm = activeCm();
 	if (cm) {
-		if (value === 'undo') cmUndo(cm);
-		else if (value === 'redo') cmRedo(cm);
+		const step = value === 'undo' ? yUndoManagerKeymap[0] : value === 'redo' ? yUndoManagerKeymap[2] : null;
+		if (step && cm.state.facet(ySyncFacet)) step.run?.(cm);
 		else if (value === 'find') {
 			toggleSearchPanel(cm); // opens focused, or closes, like the visual editor's bar
 			return;
@@ -103,8 +103,8 @@ export function editSelect(value: string) {
 		cm.focus();
 		return;
 	}
-	if (value === 'undo') runVisualCommand(undo);
-	else if (value === 'redo') runVisualCommand(redo);
+	if (value === 'undo') runVisualCommand(undoVisual);
+	else if (value === 'redo') runVisualCommand(redoVisual);
 	else if (value === 'find') displaySearchBarStore.current = !displaySearchBarStore.current;
 }
 

@@ -1,20 +1,23 @@
 <script lang="ts">
-	// The visual editor's side of a shared session, in one place: consumes collaborators' edits
-	// (debounced re-parse of the shared Y.Text, patched into the mounted view as the smallest
-	// block range), re-parses after local typing lulls so the doc's origins stay fresh, publishes our caret to awareness,
-	// and renders peers' carets through the remote-cursors plugin. Renderless; WorkspaceView
-	// mounts it and hands over doc-state access through `api`.
+	// The visual editor's side of the file's text, in one place: consumes every change it did not make
+	// itself (a collaborator, the disk, an undo: debounced re-parse of the Y.Text, patched into the mounted
+	// view as the smallest block range), re-parses after local typing lulls so the doc's origins stay
+	// fresh, publishes our caret to awareness, and renders peers' carets through the remote-cursors
+	// plugin. Renderless; WorkspaceView mounts it and hands over doc-state access through `api`.
 	import { untrack } from 'svelte';
 	import * as Y from 'yjs';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { setRemoteCursors, type RemotePeerSel } from '$lib/editor/visual/extensions/remoteCursors';
+	import type { Transaction } from 'prosemirror-state';
+	import { undo as pmUndo, redo as pmRedo, undoDepth } from 'prosemirror-history';
+	import { bindVisualUndo } from '$lib/editor/visual/visualUndo';
+	import { peersOnText, setRemoteCursors } from '$lib/editor/visual/extensions/remoteCursors';
 	import { applyRemotePatch } from './remotePatch';
 	import { computeBlockPatch, protectCaretBlock } from '$lib/editor/visual/blockPatch';
-	import { caretAtOffset, offsetAtPm } from '$lib/editor/visual/sourceMap';
+	import { offsetAtPm } from '$lib/editor/visual/sourceMap';
 	import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 	import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
-	import { EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/materialize';
-	import { lagOf, toLocal, toShared } from '$lib/collab/lagOffsets';
+	import { EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/sharedFiles';
+	import { lagOf, toShared } from '$lib/collab/lagOffsets';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import type { EditSession } from '$lib/collab/editSession';
 
@@ -30,6 +33,8 @@
 		adopt(parsed: ParsedLatexFile, liveDoc: PMNode): void;
 		/** the merged content changed: mark dirty and run the save pipeline (no-op splice included). */
 		commit(path: string, content: string): void;
+		/** the file `doc` would be written as */
+		textOf(doc: PMNode): string;
 	};
 
 	type Props = {
@@ -41,9 +46,13 @@
 	};
 	let { session, path, kind, viewMode, api }: Props = $props();
 
+	// the editor re-assigns its view on every transaction; effects here want only a new one, or a cursor redraw
+	// (itself a transaction) re-runs them in a loop
+	const mountedView = $derived(editorViewStore.current);
+
 	// all visual dialects share this machinery: the source map and the block patch are format-neutral
 	function active() {
-		return session.active && (kind === 'tex' || kind === 'md' || kind === 'typ') && viewMode === 'visual';
+		return (kind === 'tex' || kind === 'md' || kind === 'typ') && viewMode === 'visual';
 	}
 
 	// trace the presence pipeline: set window.texpileCursorDebug = true in DevTools
@@ -65,7 +74,8 @@
 
 	/** WorkspaceView calls this from the visual editor's onChange (a local edit just serialized). */
 	export function noteLocalEdit(): void {
-		if (!active() || !session.collabFor(path)) return;
+		// fresh stamps are for a collaborator's patches; alone it would re-parse a long paper at every pause
+		if (!session.active || !active() || !session.collabFor(path)) return;
 		origStale = true;
 		scheduleRemotePatch(Math.max(800, remoteParseMs * 2));
 	}
@@ -76,7 +86,8 @@
 	}
 
 	function scheduleRemotePatch(delay = Math.max(60, remoteParseMs * 2)) {
-		if (remotePatchTimer) return;
+		if (remotePatchTimer && delay > 0) return;
+		if (remotePatchTimer) clearTimeout(remotePatchTimer);
 		remotePatchTimer = setTimeout(() => {
 			remotePatchTimer = null;
 			void runRemotePatch();
@@ -129,6 +140,46 @@
 		if (snapshot !== oldSource) api.commit(p, api.texSource);
 	}
 
+	// The file's history is the one that counts (source mode and the disk share it), and the editor's own usually
+	// holds the same step: it starts a group where the editor does (beforeLocalEdit), so taken from there the step
+	// shows at once. A step it does not hold (the disk's, one from source mode) shows once the text is parsed
+	let seenDepth = 0;
+	let seenView: unknown = null;
+
+	/** a local visual edit is about to go into the text: a new step of the editor's is a new step of the file's */
+	export function beforeLocalEdit(): void {
+		const v = editorViewStore.current;
+		const um = session.collabFor(path)?.undo;
+		if (!v || !um) return;
+		const depth = undoDepth(v.state);
+		if (v === seenView && depth > seenDepth) um.stopCapturing();
+		seenView = v;
+		seenDepth = depth;
+	}
+
+	function step(dir: 'undo' | 'redo'): boolean {
+		const binding = session.collabFor(path);
+		const um = binding?.undo;
+		const v = editorViewStore.current;
+		if (!binding || !um || !v || !active()) return false;
+		if ((dir === 'undo' ? um.undoStack : um.redoStack).length === 0) return false;
+		const mirrored: Transaction[] = [];
+		(dir === 'undo' ? pmUndo : pmRedo)(v.state, (tr) => mirrored.push(tr));
+		if (dir === 'undo') um.undo();
+		else um.redo();
+		const taken = mirrored[0];
+		if (taken && api.textOf(taken.doc) === binding.ytext.toString()) {
+			v.dispatch(taken);
+			seenView = v;
+			seenDepth = undoDepth(v.state);
+		} else scheduleRemotePatch(0);
+		return true;
+	}
+	$effect(() => {
+		bindVisualUndo(step);
+		return () => bindVisualUndo(null);
+	});
+
 	// watch the open file's Y.Text; our own edits carry EDIT_ORIGIN (and seeds SEED_ORIGIN),
 	// everything else is a collaborator
 	$effect(() => {
@@ -160,7 +211,7 @@
 	// for "clicked out of the editor" wherever the focus sat. The timeout lets focus settle first,
 	// so a hop between two islands (out of one, into the next) does not read as a blur.
 	$effect(() => {
-		const v = editorViewStore.current;
+		const v = mountedView;
 		if (!v) return;
 		const dom = v.dom;
 		const pmView = v;
@@ -238,52 +289,8 @@
 		const v = editorViewStore.current;
 		if (!v || v.isDestroyed) return;
 		const binding = session.collabFor(path);
-		if (!binding || !active()) {
-			setRemoteCursors(v, []);
-			return;
-		}
-		const map = api.sourceMap;
-		const boundText = binding.ytext;
-		const lag = lagOf(api.texSource, boundText.toString());
-		const peers: RemotePeerSel[] = [];
-		const drops: string[] = [];
-		binding.awareness.getStates().forEach((state, clientId) => {
-			if (clientId === binding.awareness.clientID) return;
-			const cur = (state as { cursor?: { anchor?: unknown; head?: unknown } }).cursor;
-			const user = (state as { user?: { name?: string; color?: string } }).user ?? {};
-			if (!cur?.anchor || !cur?.head) {
-				drops.push(`${clientId}: no cursor field`);
-				return;
-			}
-			function abs(rel: unknown) {
-				try {
-					const a = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(rel as object), boundText.doc!);
-					return a && a.type === boundText ? a.index : null;
-				} catch {
-					return null;
-				}
-			}
-			const ai = abs(cur.anchor);
-			const hi = abs(cur.head);
-			if (ai == null || hi == null) {
-				drops.push(`${clientId}: relpos resolves off-file`);
-				return;
-			}
-			const anchorPm = caretAtOffset(map, api.texSource, toLocal(lag, ai));
-			const headPm = ai === hi ? anchorPm : caretAtOffset(map, api.texSource, toLocal(lag, hi));
-			if (anchorPm == null || headPm == null) {
-				drops.push(`${clientId}: offset ${ai} maps to no block (preamble?)`);
-				return;
-			}
-			peers.push({
-				clientId,
-				name: user.name ?? 'Anonymous',
-				color: user.color ?? '#888888',
-				anchor: anchorPm,
-				head: headPm
-			});
-		});
-		cdbg('render', binding.awareness.getStates().size - 1, 'peers ->', peers.length, drops.length ? drops : '');
+		const peers = binding && active() ? peersOnText(binding, api.texSource, api.sourceMap) : [];
+		cdbg('render', peers.length, 'peers');
 		setRemoteCursors(v, peers);
 	}
 
@@ -292,7 +299,7 @@
 	// blinks our published cursor on every peer's screen
 	$effect(() => {
 		void session.manifestRev;
-		const v = editorViewStore.current; // re-fires when the view mounts, so carets render on entry
+		const v = mountedView; // re-fires when the view mounts, so carets render on entry
 		const binding = active() ? session.collabFor(path) : null;
 		if (!binding || !v) return;
 		function onAwareness() {

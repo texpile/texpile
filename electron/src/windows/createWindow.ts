@@ -10,7 +10,16 @@ import { forgetWindow } from '../mcp/windowState';
 import { forgetWindowChrome, watchWindowState } from '../windowChrome';
 import { applySavedGlass, GLASS_AT_CREATION } from '../windowGlass';
 import { releaseDraftOwnerFor } from '../ipc/draftIpc';
-import { windowRoots, pendingOpens, pendingCloses, isQuitting, cancelQuit, persistOpenFolders, type PendingOpen } from './windowRegistry';
+import {
+	windowRoots,
+	pendingOpens,
+	pendingCloses,
+	childOwners,
+	isQuitting,
+	cancelQuit,
+	persistOpenFolders,
+	type PendingOpen
+} from './windowRegistry';
 
 export function chromeColors(): { height: number; color: string; symbolColor: string; background: string } {
 	const s = readSettings();
@@ -115,18 +124,19 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 			win.webContents.send(p.kind === 'file' ? 'main:open-path' : 'main:open-folder', p.path);
 		}
 	});
-	// The one window.open the renderer is allowed: the popped-out preview pane, an about:blank
-	// child the opener fills by DOM portal (PreviewPopout.svelte). Same-origin about:blank shares
-	// the opener's renderer process, which is the whole design - the pane's components keep their
-	// stores and sockets. The url check matters: the Typst preview iframe shares this handler, so
-	// without it any framed page could mint a window under our name and navigate it anywhere.
+	// The window.opens the renderer is allowed: the popped-out preview pane and an editor dragged out of the window,
+	// about:blank children the opener fills by DOM portal (lib/childWindows). Same-origin about:blank shares the
+	// opener's renderer process, which is the whole design - the components keep their stores and sockets. The url
+	// check matters: the Typst preview iframe shares this handler, so without it any framed page could mint a window
+	// under our name and navigate it anywhere.
 	win.webContents.setWindowOpenHandler(({ url: target, frameName }) => {
-		if (frameName === 'texpile-preview' && target === 'about:blank') {
+		const preview = frameName === 'texpile-preview';
+		if ((preview || /^texpile-editor-\d+$/.test(frameName)) && target === 'about:blank') {
 			return {
 				action: 'allow',
 				overrideBrowserWindowOptions: {
-					width: 720,
-					height: 960,
+					// an editor opens where it was dropped, at the size the renderer asked for in its features
+					...(preview && { width: 720, height: 960 }),
 					minWidth: 360,
 					minHeight: 400,
 					// a plain framed OS window: the custom title bar machinery stays in the main window
@@ -142,7 +152,7 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 		if (/^https?:/.test(target)) shell.openExternal(target);
 		return { action: 'deny' };
 	});
-	// the preview popup: same guards as the parent (its top frame is about:blank and must stay
+	// a popup (the preview, an editor): same guards as the parent (its top frame is about:blank and must stay
 	// that; its only legitimate subframe is the loopback-served Typst page), the saved zoom, and
 	// a lifetime bounded by its opener - a preview outliving its workspace previews nothing
 	win.webContents.on('did-create-window', (child) => {
@@ -160,7 +170,12 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 			if (!child.isDestroyed()) child.close();
 		}
 		win.on('closed', closeChild);
-		child.on('closed', () => win.removeListener('closed', closeChild));
+		childOwners.set(child.webContents.id, win);
+		const childId = child.webContents.id;
+		child.on('closed', () => {
+			childOwners.delete(childId);
+			win.removeListener('closed', closeChild);
+		});
 	});
 	// the renderer is a single-page app; the top frame must never navigate away from its own origin.
 	// http/https go to the real browser, everything else (file:, data:, javascript:, ...) is dropped.

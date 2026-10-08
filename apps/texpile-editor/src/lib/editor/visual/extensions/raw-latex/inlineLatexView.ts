@@ -3,7 +3,7 @@ import { Compartment as CodeMirrorCompartment, EditorState } from '@codemirror/s
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { cursorLineDown, cursorLineUp } from '@codemirror/commands';
 import { exitCode } from 'prosemirror-commands';
-import { undo, redo } from 'prosemirror-history';
+import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { positionOnAdjacentLine } from '$lib/editor/visual/verticalExit';
 import { TextSelection, Selection } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
@@ -208,9 +208,9 @@ export class InlineLatexView {
 			{ key: 'ArrowDown', run: (cm) => (this.onEdgeLine(1) ? this.escapeVertically(1) : cursorLineDown(cm)) },
 			{ key: 'Enter', run: exit },
 			{ key: 'Ctrl-Enter', mac: 'Cmd-Enter', run: exit },
-			{ key: 'Ctrl-z', mac: 'Cmd-z', run: () => undo(view.state, view.dispatch) },
-			{ key: 'Shift-Ctrl-z', mac: 'Shift-Cmd-z', run: () => redo(view.state, view.dispatch) },
-			{ key: 'Ctrl-y', mac: 'Cmd-y', run: () => redo(view.state, view.dispatch) },
+			{ key: 'Ctrl-z', mac: 'Cmd-z', run: () => undoVisual() },
+			{ key: 'Shift-Ctrl-z', mac: 'Shift-Cmd-z', run: () => redoVisual() },
+			{ key: 'Ctrl-y', mac: 'Cmd-y', run: () => redoVisual() },
 			{ key: 'Backspace', run: () => this.maybeDelete() }
 		];
 	}

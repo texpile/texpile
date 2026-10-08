@@ -4,7 +4,8 @@
 	// makes this splittable at all - the state lives in lib/workspace/*.svelte.ts, not in the view.
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import EditorTopbar from './EditorTopbar.svelte';
-	import EditorPane from './EditorPane.svelte';
+	import EditorGroups from './groups/EditorGroups.svelte';
+	import { livePaneProps } from './livePaneProps';
 	import PreviewPane from '$lib/preview/PreviewPane.svelte';
 	import PreviewPopout from '$lib/preview/PreviewPopout.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
@@ -19,6 +20,7 @@
 	import { untrack } from 'svelte';
 	import { LOCAL_REF } from '$lib/workspace/localHistory/localHistory.svelte';
 	import { HISTORY_PANEL_WIDTH } from '$lib/workspace/paneGeometry';
+	import { documentControls as controlsSlot } from '$lib/preview/documentControls.svelte';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the pipelines are structural here
 	type Any = any;
@@ -31,7 +33,6 @@
 		parser,
 		termDock = $bindable(),
 		compiler,
-		saver,
 		session,
 		guest,
 		kind,
@@ -88,18 +89,60 @@
 				.filter((id: string) => !panes.commentsNotVisible.has(id))
 		)
 	);
+	const livePane = livePaneProps({
+		get doc() {
+			return doc;
+		},
+		get modes() {
+			return modes;
+		},
+		get diff() {
+			return diff;
+		},
+		get parser() {
+			return parser;
+		},
+		get session() {
+			return session;
+		},
+		get kind() {
+			return kind;
+		},
+		get nameOnly() {
+			return nameOnly;
+		},
+		get folderEmpty() {
+			return folderEmpty;
+		},
+		get panes() {
+			return panes;
+		},
+		get actions() {
+			return actions;
+		},
+		get commentsCtl() {
+			return commentsCtl;
+		},
+		get canSync() {
+			return canSync;
+		},
+		get canComment() {
+			return canComment;
+		},
+		get pickMain() {
+			return onPickMain;
+		}
+	});
+	$effect(() => {
+		controlsSlot.current = documentControls;
+		return () => (controlsSlot.current = null);
+	});
 </script>
 
-<main
-	class="grid min-h-0 min-w-0 flex-1"
-	style="grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto minmax(0, 1fr) auto auto"
->
+{#snippet documentControls(compact = false)}
 	<EditorTopbar
 		loadedPath={doc.path}
 		{kind}
-		viewMode={doc.conflicted ? 'source' : modes.mode}
-		encodingIssue={doc.encodingIssue}
-		conflicted={doc.conflictsLeft > 0}
 		{guest}
 		terminalAvailable={termDock.available}
 		compiling={compiler.compiling}
@@ -107,8 +150,6 @@
 		{guestTypstOffered}
 		pdfPaneOpen={layout.pdfPaneOpen}
 		draftPaused={draft.paused}
-		saving={saver.saving}
-		onSetViewMode={actions.setViewMode}
 		onStopCompile={compiler.stopCompile}
 		onPauseDraft={actions.pauseDraft}
 		onResumeDraft={actions.resumeDraft}
@@ -122,101 +163,26 @@
 		onShowOutput={() => void compiler.revealOutput()}
 		outputAvailable={compiler.hasOutput}
 		onShowProblems={actions.showProblems}
-		onCountWords={actions.countWords}
-		{onPickMain}
 		commentCount={panes.comments.filter((t: Any) => !t.resolved && !panes.commentGhosts.has(t.id)).length}
 		onShowComments={actions.showComments}
 		suggesting={suggesting.current}
 		onToggleSuggest={canComment && (!session.isGuest || collabGuest.hostRecords) ? toggleSuggest : undefined}
 		onTogglePdf={layout.togglePdfPane}
-		onSave={actions.save}
 		onSyncToCursor={layout.pdfPopout && !mainUnset ? syncToCursor : null}
 		syncTargetsPreview={guest ? guestTypstOffered : typstPreviewWanted}
+		{compact}
 	/>
+{/snippet}
 
+<main
+	class="grid min-h-0 min-w-0 flex-1"
+	style="grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto minmax(0, 1fr) auto auto"
+>
 	<!-- editor column (toolbar + content) with the PDF pane beside it, so the PDF skips the
 	     toolbar while the header (Compile) stays above it. the wrapper is display:contents so
 	     editor/splitter/preview place themselves on main's grid -->
 	<div class="contents">
-		<EditorPane
-			openTabs={panes.openTabs}
-			activeTabKey={panes.activeTabKey}
-			compare={activeCompare.current}
-			previewTab={panes.previewTab}
-			onActivateTab={actions.activateTab}
-			onCloseTab={actions.closeTab}
-			onKeepTab={actions.keepTab}
-			onTabMenu={actions.tabMenu}
-			loadedPath={doc.path}
-			{kind}
-			{nameOnly}
-			viewMode={modes.mode}
-			{session}
-			{folderEmpty}
-			loadError={doc.loadError}
-			fileDeleted={doc.deletedOnDisk}
-			encodingIssue={doc.encodingIssue}
-			conflicted={doc.conflicted}
-			conflictsLeft={doc.conflictsLeft}
-			conflictStray={doc.strayMarkers}
-			changeBaseline={panes.changeBaseline}
-			onLeaveConflicts={actions.leaveConflicts}
-			binaryWarning={doc.binaryWarning}
-			onOpenAsText={actions.openAsText}
-			applyingStarter={panes.applyingStarter}
-			texSource={doc.texSource}
-			sourceMap={doc.sourceMap}
-			regionParser={doc.regionParser}
-			rawContent={doc.rawContent}
-			visualDoc={doc.visualDoc}
-			parseProgress={parser.progress}
-			onUseSource={actions.useSource}
-			docMeta={doc.docMeta}
-			allReferences={panes.allReferences}
-			sourceGotoLine={panes.sourceGotoLine}
-			sourceScrollAnchor={modes.sourceScrollAnchor}
-			sourceDiagnostics={panes.sourceDiagnostics}
-			diffOriginal={diff.original}
-			diffModified={diff.modified}
-			diffLayout={diff.layout}
-			diffLoading={diff.loading}
-			diffError={diff.error}
-			diffHasHead={diff.hasHead}
-			diffCompareRef={diff.compareRef}
-			diffVersionDoc={diff.versionDoc}
-			diffVersionPreamble={diff.versionPreamble}
-			diffVersionUnavailable={diff.versionUnavailable}
-			fileUrl={panes.fileUrl}
-			onPickStarter={actions.pickStarter}
-			onBlankStarter={actions.newTexFile}
-			onImportStarter={actions.importStarter}
-			onTexInput={actions.onTexInput}
-			onRawInput={actions.onRawInput}
-			onVisualChange={actions.onVisualChange}
-			onVisualSelection={actions.onVisualSelection}
-			onEditFrontmatter={actions.onEditFrontmatter}
-			onSyncToPdf={canSync ? actions.syncToPdf : undefined}
-			onHistoryBoundary={actions.historyStep}
-			onJumpToFile={actions.jumpToFile}
-			onOpenFileAt={actions.openFileAt}
-			onJumpToLabel={actions.jumpToLabel}
-			onJumpToDefinition={actions.jumpToDefinition}
-			onCaretMove={actions.onCaretMove}
-			onToggleDiffLayout={() => diff.toggleLayout()}
-			onRefreshDiff={actions.refreshDiff}
-			commentRanges={panes.commentRanges}
-			commentThreads={commentsCtl.withKnownAnchors(panes.comments.filter((t: Any) => t.file === panes.commentFile))}
-			selectedComment={panes.commentSelected}
-			onAddComment={canComment ? actions.beginComment : undefined}
-			onAddCommentAnchored={canComment ? actions.beginCommentAnchored : undefined}
-			commentPendingActive={!!panes.commentPending}
-			onInsertCitation={panes.zoteroCite ? actions.insertZoteroCitation : undefined}
-			onCiteByDoi={panes.doiCite ? actions.citeByDoi : undefined}
-			onCommentsPlaced={actions.visualCommentsPlaced}
-			onSelectComment={actions.selectComment}
-			commentsCtl={fileMode.current ? undefined : commentsCtl}
-			onSetViewMode={actions.setViewMode}
-		/>
+		<EditorGroups live={livePane} host={actions.groupHost} />
 		{#if !fileMode.current && layout.pdfPaneOpen && !layout.pdfPopout}
 			<PreviewPane
 				width={layout.pdfPaneWidth}

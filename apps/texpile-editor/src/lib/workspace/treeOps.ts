@@ -50,7 +50,8 @@ export type TreeOpsDeps = {
 	 * review-comment threads ride it. */
 	afterPathMoved?(oldPath: string, newPath: string): void;
 	retargetPendingSave(from: string, to: string): void;
-	discardPendingSave(): void;
+	/** a path is deleted: the edits held of it, and of what is under it, go with it */
+	forgetBuffers(path: string): void;
 	/** a drop landed on a name that is taken: replace what is there? */
 	confirmReplace(name: string): Promise<boolean>;
 	/** the main file moved (new path) or was deleted (null): repoint the choice and persist it.
@@ -321,10 +322,9 @@ export class TreeOps {
 		const losingOpenFile = !!active && (samePath(active, path) || active.startsWith(path + sep));
 		// where its tab sat, so a neighbour can take over once the closing has renumbered the list
 		const at = losingOpenFile ? tabs.list.findIndex((t) => samePath(t.path, active)) : -1;
-		if (losingOpenFile) {
-			this.deps.discardPendingSave(); // don't let a queued autosave write the file back after we delete it
-			openFile(null); // clears the editor buffers via the load effect
-		}
+		// a queued write must not bring back what was just deleted
+		this.deps.forgetBuffers(path);
+		if (losingOpenFile) openFile(null); // clears the editor buffers via the load effect
 		// deleting the main file clears the choice: a pointer at a deleted path fails every
 		// compile lane silently, while a cleared one brings the pick-a-main flow back
 		const main = mainFile.current;

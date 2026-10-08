@@ -265,11 +265,11 @@
 
 <!-- no border-r: the splitter beside it draws its own 1px, and a border as well read as two -->
 <aside class="bg-surface-50-950 flex shrink-0 flex-col" style="width: {width}px">
-	<!-- shrink-0: h-12 sets a height, it does not defend one. A flex child shrinks below its height
+	<!-- h-9, the tab strip's height, so the two rows read as one. shrink-0: h-9 sets a height, it does not defend one. A flex child shrinks below its height
 	     whenever the column overflows, so any view below that asks for more room than is left takes
 	     it out of this row - and a title bar that changes height as you switch views reads as the
 	     whole layout twitching. -->
-	<div class="border-surface-200-800 flex h-12 shrink-0 items-center justify-between gap-2 border-b px-3">
+	<div class="border-surface-200-800 flex h-9 shrink-0 items-center justify-between gap-2 border-b px-3">
 		<!-- min-w-0: the name is what gives up room as the sidebar narrows, truncating to a stub before
 		     any action is allowed to collapse into the menu -->
 		<span class="min-w-0 truncate text-sm font-semibold" use:tip={workspaceRoot.current ?? ''}>
@@ -428,7 +428,7 @@
 			></div>
 			<!-- scroll-inset-r moves the scrollbar, not the box, so border-t reaches the divider; whole pixels keep rows on the grid -->
 			<div
-				class="border-surface-200-800 scroll-inset-r min-h-0 [scrollbar-gutter:stable] overflow-y-auto border-t p-2"
+				class="border-surface-200-800 scroll-inset-r min-h-0 overflow-y-auto border-t p-2"
 				style="flex: 0 1 round({tocFraction * 100}%, 1px)"
 			>
 				<TableOfContents list={toc} onOpenFile={onOpenFileAt} />

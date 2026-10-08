@@ -1,6 +1,6 @@
 // Keep mine / Keep theirs for a whole file, with an edit to that file still waiting to be written
-// (autosave off): the edit is dropped, or it would land on top of the side just kept, markers and
-// all. Real ScmCombine, SavePipeline and diskStamp over an in-memory disk.
+// (autosave held off): the edit is dropped, or it would land on top of the side just kept, markers and
+// all. Real ScmCombine, TextBuffers, FileWriter and diskStamp over an in-memory disk.
 import { it, expect, vi } from 'vitest';
 
 const disk = new Map<string, { text: string; mtime: number }>();
@@ -41,46 +41,37 @@ const PARTIAL = 'Intro.\nMine, reworded.\n<<<<<<< HEAD\n=======\nTheirs.\n>>>>>>
 const THEIRS = 'Intro.\nTheirs.\nEnd.\n';
 
 const { ScmCombine } = await import('$lib/workspace/scm/branches/scmCombine.svelte');
-const { SavePipeline } = await import('$lib/workspace/savePipeline.svelte');
+const { openMemoryFolder } = await import('../../memoryFolder');
 const { recordDiskStamp, diskChangedSince } = await import('$lib/workspace/diskStamp');
 
 it('Keep theirs is not undone by the edit that was waiting to be saved', async () => {
 	put('/p/main.tex', MARKED);
-	let buffer = MARKED;
-	const saver = new SavePipeline({
-		sessionEdit: () => {},
-		isGuest: () => false,
-		autosaveActive: () => false, // Preferences: autosave off
-		clearDeleted: () => {},
-		writeText: async (p, c) => put(p, c),
-		getEol: () => '\n' as const,
-		getLoadedPath: () => '/p/main.tex',
-		getLiveContent: () => buffer,
-		setDiskBaseline: () => {},
-		setDirty: () => {},
-		diskChanged: diskChangedSince,
-		recordDiskStamp,
-		raiseConflict: vi.fn()
+	const fs = {
+		readBytes: async (p: string) => new TextEncoder().encode(disk.get(p)!.text),
+		writeText: async (p: string, c: string) => put(p, c),
+		listFiles: async () => []
+	};
+	const folder = await openMemoryFolder('/p', fs, {
+		loaded: () => '/p/main.tex',
+		// held off, as for a conflict put off
+		hooks: { diskChanged: diskChangedSince, recordStamp: recordDiskStamp, heldOff: () => true }
 	});
-	await recordDiskStamp('/p/main.tex'); // the file was opened
-	// the author starts choosing in the editor: an edit, queued, not yet on disk
-	buffer = PARTIAL;
-	saver.schedule('/p/main.tex', PARTIAL);
+	const { writer } = folder;
+	// the file was opened
+	await folder.load('/p/main.tex');
+	// the author starts choosing in the editor: an edit, not yet on disk
+	folder.type('/p/main.tex', PARTIAL);
 
 	const host = { busy: false, ensureIdentity: async () => true, openDiff: () => {} };
 	const combine = new ScmCombine(host, {
 		getLoadedPath: () => '/p/main.tex',
-		discardPendingSave: () => saver.discard(),
-		hasPendingSave: () => !!saver.pending,
-		flushPendingSave: () => saver.flushAndWait(),
+		discardPendingSave: () => writer.revert('/p/main.tex'),
+		hasPendingSave: () => !!writer.pending,
+		flushPendingSave: () => writer.flushAndWait(),
 		trashEntry: async () => 'trashed',
 		removeEntry: async () => {},
 		refreshTree: async () => {},
-		// FileOpener.open: read the file into the buffer, then recordDiskStamp
-		loadFile: async (p: string) => {
-			buffer = disk.get(p)!.text;
-			await recordDiskStamp(p);
-		},
+		loadFile: folder.load,
 		captureDiffSnapshot: () => {},
 		isDiffMode: () => false,
 		openCompareTab: () => {},
@@ -94,7 +85,9 @@ it('Keep theirs is not undone by the edit that was waiting to be saved', async (
 	// the row menu's "Keep theirs" for the whole file
 	await combine.keepSide('/p/main.tex', 'theirs');
 
-	// later: Ctrl+S, a file switch or a compile flushes the queue
-	await saver.flushAndWait();
+	// later: Ctrl+S, a file switch or a compile flushes the writer
+	await writer.flushAndWait();
 	expect(disk.get('/p/main.tex')!.text).toBe(THEIRS);
+	expect(folder.textOf('/p/main.tex')).toBe(THEIRS);
+	expect(writer.pending).toBeNull();
 });

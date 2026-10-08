@@ -1,6 +1,7 @@
 // The workspace's outward integrations: the MCP command surface and window-state cache,
 // shared-session handlers, cross-file project intel, the label/bibitem registries, editor
 // file access + graphics resolution, Zotero citations, and source-control actions.
+import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
@@ -23,8 +24,6 @@ import { LocalHistoryActions, provideLocalHistoryActions } from '$lib/workspace/
 import { provideAgentHost } from '$lib/ai/agentPanel/agentHost.svelte';
 import { provideFolderSwitch } from '$lib/workspace/openWorkspace';
 import { closeAgentSessionWithWorkspace } from '$lib/ai/agentPanel/agentSession.svelte';
-import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
-import { joinPath } from '$lib/workspace/fileSystem';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { trailingDebounce } from '$lib/trailingDebounce';
@@ -111,13 +110,18 @@ export class WorkspaceIntegrations {
 			d.editFlow().activateTab(tabs.find(key) ?? { path, compare });
 		}
 		this.registries = new DocRegistries({
-			getSource: () => doc.texSource,
-			captureHistory: (text) => modes.history.capture(text)
+			getSource: () => doc.texSource
 		});
 		this.scm = new ScmActions({
 			getLoadedPath: () => doc.path,
-			discardPendingSave: () => d.editFlow().saver.discard(),
+			// what git is about to rewrite drops its unwritten edits, so the reload after it takes the disk
+			discardPendingSave: () => {
+				if (doc.path) d.editFlow().saver.revert(doc.path);
+			},
 			detachPendingSave: () => d.editFlow().saver.detach(),
+			heldUnder: (paths) => d.editFlow().saver.heldUnder(paths),
+			takeHeldEdit: (p) => d.editFlow().saver.take(p),
+			catchUpWithDisk: () => d.editFlow().saver.syncFromDisk(),
 			hasPendingSave: () => !!d.editFlow().saver.pending,
 			flushPendingSave: () => d.editFlow().saver.flushAndWait(),
 			// the Trash where there is one: a file never saved as a version has no other copy anywhere
@@ -158,6 +162,9 @@ export class WorkspaceIntegrations {
 			flushPendingSave: () => d.editFlow().saver.flushAndWait(),
 			whenSaved: () => d.editFlow().saver.whenIdle(),
 			detachPendingSave: () => d.editFlow().saver.detach(),
+			heldUnder: (paths) => d.editFlow().saver.heldUnder(paths),
+			takeHeldEdit: (p) => d.editFlow().saver.take(p),
+			catchUpWithDisk: () => d.editFlow().saver.syncFromDisk(),
 			readTextIfPresent: async (p) => {
 				try {
 					return await d.provider.readText(p);
@@ -279,17 +286,10 @@ export class WorkspaceIntegrations {
 				refreshTree: () => void d.files().refreshTree(),
 				expectedPdfPath: () => d.compiler().expectedPdfPath(),
 				recordGuestEdit: (rel, before, after, edit) => d.commentsCtl.remoteEdit(rel, before, after, edit),
-				beforeGuestWrite: async (rel, content) => {
-					await d.commentsCtl.beforeRemoteWrite(rel, content);
-					// what the session writes for guests, kept like a save of the host's own: a guest's edits to a
-					// file the host never opens would otherwise have no copy at all
-					const root = workspaceRoot.current;
-					if (root) void addLocalHistory(joinPath(root, rel), content, 'shared');
-				},
 				typstScrollForGuest: (rel, line, character) => d.typstPreview().scrollForGuest(rel, line, character)
 			})
 		);
-		// keep the label registry, the embedded bibitem refs, and the cross-mode undo history fresh
+		// keep the label registry and the embedded bibitem refs fresh
 		$effect(() => {
 			void doc.texSource; // dependency: re-arm the debounce on every source change
 			return this.registries.schedule();
@@ -333,7 +333,8 @@ export class WorkspaceIntegrations {
 			const root = workspaceRoot.current;
 			const path = activeFilePath.current;
 			const compare = activeCompare.current;
-			if (root && path && !fileMode.current) setLastFile(root, path, compare);
+			// an editor in a window of its own is not where the folder reopens
+			if (root && path && !fileMode.current && !untrack(() => editorGroups.focused.window)) setLastFile(root, path, compare);
 		});
 		// a new folder starts blank: the previous folder's log, PDF and macros are meaningless here
 		// (the switch now flips the root before its scan, so these would otherwise linger on screen)

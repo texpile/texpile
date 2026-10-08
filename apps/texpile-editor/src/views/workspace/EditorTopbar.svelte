@@ -1,51 +1,34 @@
 <script lang="ts">
-	// The editor's top bar: sidebar toggle, word count, the visual/source toggle, and the
-	// compile / preview / save controls. Pure chrome driven by props + callbacks. The open-file
-	// tabs live on their own strip below (TabBar in EditorPane).
+	// The project's controls, on the preview's bar or in the title bar without one: suggest mode, comments, Problems
+	// and the compile / preview controls. Each editor's own sit on its tab strip (EditorStripControls).
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { openWorkspaceForFile } from '$lib/workspace/openWorkspace';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
-	import { isDirty } from '$lib/workspace/workspaceStore';
 	import { compileLog } from '$lib/stores/compileLogStore';
-	import WordCount from './WordCount.svelte';
-	import { hideIfCramped } from '$lib/components/hideIfCramped';
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import type { ComponentProps } from 'svelte';
-	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
-	import type { ProjectWords } from '$lib/workspace/wordCount/projectWords';
 	import { m } from '$lib/paraglide/messages';
 	import { combo } from '$lib/chrome/shortcutText';
+	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import EditModePicker from './EditModePicker.svelte';
 	import {
 		ArrowRight,
-		FileText,
-		Eye,
-		Code,
 		Square,
 		Play,
 		ChevronDown,
 		CircleAlert,
 		TriangleAlert,
-		Save,
-		Loader2,
 		ShieldQuestion,
 		MessageSquare,
 		FolderOpen,
-		GitCompare
+		PanelRight
 	} from '@lucide/svelte';
-	import { scmHandlers } from '$lib/workspace/scm/actions/scmHandlers.svelte';
-	import { gitChanges } from '$lib/workspace/scm/gitStore';
-	import { samePath } from '$lib/workspace/fileSystem';
 
 	type Props = {
 		loadedPath: string | null;
 		kind: FileKind;
-		viewMode: 'visual' | 'source' | 'diff';
-		encodingIssue?: string | null;
-		/** the file holds places a merge marked, which only the source editor offers a choice at */
-		conflicted?: boolean;
 		guest: boolean;
 		terminalAvailable: boolean;
 		compiling: boolean;
@@ -55,8 +38,6 @@
 		guestTypstOffered?: boolean;
 		pdfPaneOpen: boolean;
 		draftPaused: boolean;
-		saving: boolean;
-		onSetViewMode: (m: 'visual' | 'source') => void;
 		onStopCompile: () => void;
 		onPauseDraft: () => void;
 		onResumeDraft: () => void;
@@ -73,17 +54,12 @@
 		onShowOutput: () => void;
 		outputAvailable?: boolean;
 		onShowProblems: () => void;
-		/** the paper's words by file, for the word count's panel */
-		onCountWords?: () => Promise<ProjectWords | null>;
-		/** opens the main file chooser, which the word count offers while none is set */
-		onPickMain?: () => void;
 		/** open review threads in the project; 0 hides the badge, like a clean compile hides Problems */
 		commentCount?: number;
 		onShowComments?: () => void;
 		suggesting?: boolean;
 		onToggleSuggest?: (suggesting: boolean) => void;
 		onTogglePdf: () => void;
-		onSave: () => void;
 		/**
 		 * One-shot sync of the preview to the caret, shown ONLY while the preview is popped out
 		 * into its own window: docked, the chip on the pane divider is that button, and it leaves
@@ -92,13 +68,12 @@
 		onSyncToCursor?: (() => void) | null;
 		/** flavors the sync button's tooltip: live preview wording vs SyncTeX wording */
 		syncTargetsPreview?: boolean;
+		/** in the title bar: icons at the bar's height, no boxes round the counters */
+		compact?: boolean;
 	};
 	let {
 		loadedPath,
 		kind,
-		viewMode,
-		encodingIssue = null,
-		conflicted = false,
 		guest,
 		terminalAvailable,
 		compiling,
@@ -106,8 +81,6 @@
 		guestTypstOffered = false,
 		pdfPaneOpen,
 		draftPaused,
-		saving,
-		onSetViewMode,
 		onStopCompile,
 		onPauseDraft,
 		onResumeDraft,
@@ -121,22 +94,23 @@
 		onShowOutput,
 		outputAvailable = false,
 		onShowProblems,
-		onCountWords,
-		onPickMain,
 		commentCount = 0,
 		onShowComments = () => {},
 		suggesting = false,
 		onToggleSuggest,
 		onTogglePdf,
-		onSave,
 		onSyncToCursor = null,
-		syncTargetsPreview = false
+		syncTargetsPreview = false,
+		compact = false
 	}: Props = $props();
-
-	// saved in a version before, and different now: a new file has nothing to compare against
-	const changedSinceVersion = $derived(
-		!guest && !!loadedPath && gitChanges.current.some((c) => c.x !== '?' && !c.files && samePath(c.path, loadedPath ?? ''))
+	const quiet = $derived(
+		compact
+			? 'btn btn-xs h-[22px] px-1.5 hover:preset-tonal'
+			: 'btn btn-xs preset-outlined-surface-200-800 bg-surface-50-950 hover:preset-tonal'
 	);
+	const solid = $derived(compact ? 'h-[22px] px-1.5' : '');
+	// with the preview closed, Compile's one job is showing the PDF, so the title bar names that instead
+	const showPdf = $derived(compact && !pdfPaneOpen && !fileMode.current);
 
 	let compileMenuOpen = $state(false);
 
@@ -205,140 +179,33 @@
 	});
 </script>
 
-<!-- an inset shadow, not a border: a border leaves 47px of the 48px bar and centered icons land half a pixel off -->
-<header class="line-under col-span-full flex h-12 items-center justify-between gap-3 px-4">
-	<!-- the sidebar and preview toggles used to bracket this row. Both moved onto the divider of the
-	     pane they open (WorkspaceChrome / PreviewPane), where the control sits on the boundary it
-	     moves - so this row is only about the document -->
-	<div class="flex min-w-0 flex-1 items-center gap-2 overflow-clip">
-		{#if !loadedPath}
-			<FileText class="text-faint size-4 shrink-0" />
-			<span class="truncate text-sm font-medium">{m.wsview_no_file()}</span>
-		{/if}
-		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ') && (viewMode === 'visual' || viewMode === 'source')}
-			<!-- hidden, not truncated, once it no longer fits beside the buttons -->
-			<span class="shrink-0" use:hideIfCramped><WordCount details={onCountWords} pickMain={onPickMain} /></span>
-		{/if}
-	</div>
-	<div class="flex items-center gap-2">
-		{#if onToggleSuggest}
-			<EditModePicker {suggesting} onChange={onToggleSuggest} />
-		{:else if fileMode.current}
-			<EditModePicker suggesting={false} onChange={() => {}} unavailable={m.single_file_unavailable()} />
-		{/if}
-		{#if commentCount > 0}
-			<!-- unresolved review threads, project-wide. Leftmost of the cluster on purpose: the row is
-			     right-aligned, so out here the badge's appearance grows into free space instead of
-			     nudging the view toggle - and comments are a document concern, so they sit with the
-			     view controls, away from the compile zone (Problems stays glued to Compile as its
-			     readout). Hidden at zero, like Problems after a clean compile - the badge appearing IS
-			     the notification. -->
-			<!-- outlined, not tonal: a filled gray chip reads as a disabled button, but a bare ghost
-			     floats shapeless in the bar. Border, radius, padding and type size all mirror the
-			     view toggle beside it, so the two read as one family of document controls. -->
-			<button
-				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1"
-				onclick={onShowComments}
-				use:tip={m.wsview_show_comments_title()}
-			>
-				<MessageSquare class="size-3.5" />
-				{commentCount}
-			</button>
-		{/if}
-		{#if onSyncToCursor}
-			<!-- only while the preview is popped out: its window has no divider chip, and the jump
-			     reads the caret in THIS window. With the docked divider gone it joins the quiet
-			     document-side controls before the view toggle, not the compile zone. -->
-			<!-- same chip recipe as the comments badge and view toggle; quiet at rest, primary blue
-			     on hover - the divider chip's gray-until-hover behavior from the docked state -->
-			<button
-				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal"
-				onmousedown={(e) => e.preventDefault()}
-				onclick={onSyncToCursor}
-				use:tip={syncTargetsPreview ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
-				aria-label={syncTargetsPreview ? m.wsview_sync_to_preview_aria() : m.wsview_sync_to_pdf_aria()}
-			>
-				<!-- icon-only: the 1lh wrapper stands in for exactly one text-xs line box - the thing
-				     that gives the neighboring chips their content height (18px in this theme, not
-				     the 16px the Tailwind default would suggest) - while the glyph stays at their 14px -->
-				<span class="flex h-[1lh] items-center"><ArrowRight class="size-3.5" /></span>
-			</button>
-		{/if}
-		{#if loadedPath && changedSinceVersion && scmHandlers.current}
-			<!-- "what did I change in this chapter?" without knowing a palette command's name: only
-			     while there is something to compare, as VS Code's Open Changes in the editor title -->
-			<button
-				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal"
-				onclick={() => scmHandlers.current?.compare(loadedPath)}
-				use:tip={m.wsview_compare_last()}
-				aria-label={m.wsview_compare_last()}
-			>
-				<span class="flex h-[1lh] items-center"><GitCompare class="size-3.5" /></span>
-			</button>
-		{/if}
-		{#if loadedPath && (kind === 'tex' || kind === 'md' || kind === 'typ' || (kind === 'bib' && !guest))}
-			<!-- visual/source toggle; for .bib it's the reference editor vs raw BibTeX (BibManager
-			     stays host-only: it isn't wired to the shared doc yet) -->
-			<div class="border-surface-300-700 rounded-base inline-flex shrink-0 overflow-hidden border text-xs">
-				<button
-					class="flex items-center gap-1 px-2.5 py-1 disabled:cursor-not-allowed disabled:opacity-40 {viewMode === 'visual'
-						? 'preset-filled-primary-500'
-						: 'hover:preset-tonal disabled:hover:bg-transparent'}"
-					onclick={() => onSetViewMode('visual')}
-					disabled={!!encodingIssue || conflicted}
-					use:tip={encodingIssue ?? (conflicted ? m.vcs_conflict_visual_off() : m.wsview_visual_editor_title())}
-				>
-					<Eye class="size-3.5" />
-					<span class="cap-center">{m.wsview_visual_label()}</span>
-				</button>
-				<button
-					class="flex items-center gap-1 px-2.5 py-1 {viewMode === 'source' ? 'preset-filled-primary-500' : 'hover:preset-tonal'}"
-					onclick={() => onSetViewMode('source')}
-					use:tip={kind === 'typ' ? m.wsview_typst_source_title() : m.wsview_latex_source_title()}
-				>
-					<Code class="size-3.5" />
-					<span class="cap-center">{m.wsview_source_label()}</span>
-				</button>
-			</div>
-		{/if}
-		{#if compileLog.current && (compileLog.current.errors.length > 0 || compileLog.current.warnings.length > 0)}
-			<button
-				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1 {compileLog.current.errors.length > 0
-					? 'text-error-ink'
-					: 'text-warning-ink'}"
-				onclick={onShowProblems}
-				use:tip={m.wsview_show_problems_title()}
-			>
-				{#if compileLog.current.errors.length > 0}
-					<CircleAlert class="size-3.5" /> {compileLog.current.errors.length}
-				{/if}
-				{#if compileLog.current.warnings.length > 0}
-					<TriangleAlert class="size-3.5" /> {compileLog.current.warnings.length}
-				{/if}
-			</button>
-		{/if}
+<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
+	<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
+		<!-- Compile first: the end of the bar nearest the editor -->
 		{#if fileMode.current}
-			<button class="btn btn-xs {COMPILE_TONE.primary}" onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}>
-				<FolderOpen class="size-4" />
-				<span class="cap-center">{m.wsview_open_in_workspace()}</span>
+			<button
+				class="btn btn-xs {COMPILE_TONE.primary} {solid}"
+				onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}
+				use:tip={compact ? m.wsview_open_in_workspace() : undefined}
+				aria-label={m.wsview_open_in_workspace()}
+			>
+				<FolderOpen class={compact ? 'size-3.5' : 'size-4'} />
+				{#if !compact}<span class="cap-center">{m.wsview_open_in_workspace()}</span>{/if}
 			</button>
-		{:else if terminalAvailable}
-			<!-- the one-shot sync-to-cursor button used to sit here; it lives on the preview pane's
-			     own header now (PreviewPane / TypstPreview) - and returns beside Compile while the
-			     preview is popped out (see onSyncToCursor above) -->
+		{:else if terminalAvailable && !showPdf}
 			<div class="relative flex items-center">
-				<CompileButton {...compile} />
+				<CompileButton {...compile} {compact} />
 				<!-- border-l-0: the button's right edge already draws the seam, and two hairlines
 				     meeting there would read as a heavier line than the outline itself -->
 				<button
-					class="btn btn-xs {COMPILE_TONE[compile.tone]} self-stretch rounded-l-none border-l-0 px-1"
+					class="btn btn-xs {COMPILE_TONE[compile.tone]} self-stretch rounded-l-none border-l-0 {compact ? 'px-0.5' : 'px-1'}"
 					onclick={() => (compileMenuOpen = !compileMenuOpen)}
 					use:tip={m.wsview_compile_options()}
 					aria-label={m.wsview_compile_options()}
 					aria-haspopup="menu"
 					aria-expanded={compileMenuOpen}
 				>
-					<ChevronDown class="size-3.5 transition-transform {compileMenuOpen ? 'rotate-180' : ''}" />
+					<ChevronDown class="{compact ? 'size-3' : 'size-3.5'} transition-transform {compileMenuOpen ? 'rotate-180' : ''}" />
 				</button>
 				<CompileOptionsMenu
 					open={compileMenuOpen}
@@ -352,7 +219,7 @@
 				/>
 			</div>
 		{/if}
-		{#if guest}
+		{#if guest && !showPdf}
 			<!-- guest: ask the host to compile (its toolchain), in the same spot and style as the
 			     host's Compile so the bar reads the same on both sides. Hidden while the host
 			     streams a live Typst preview: the stream already follows every keystroke, so a
@@ -360,22 +227,64 @@
 			     preview pane there). .typ shows it too - a Typst project compiled by shell (the
 			     Preview switch off) pushes its PDF exactly as a LaTeX one does. -->
 			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
-				<button class="btn btn-xs preset-tonal-primary gap-1.5" onclick={onRequestCompile} use:tip={m.session_request_compile()}>
-					<Play class="size-4" />
-					<span class="cap-center">{m.session_request_compile()}</span>
+				<button
+					class="btn btn-xs preset-tonal-primary {solid} gap-1.5"
+					onclick={onRequestCompile}
+					use:tip={m.session_request_compile()}
+					aria-label={m.session_request_compile()}
+				>
+					<Play class={compact ? 'size-3.5' : 'size-4'} />
+					{#if !compact}<span class="cap-center">{m.session_request_compile()}</span>{/if}
 				</button>
 			{/if}
 		{/if}
-		{#if !guest}
-			<!-- guests have nothing to save: their edits sync live through the shared doc -->
+		{#if compileLog.current && (compileLog.current.errors.length > 0 || compileLog.current.warnings.length > 0)}
 			<button
-				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal gap-1.5"
-				onclick={onSave}
-				disabled={!loadedPath || saving || !isDirty.current}
+				class="{quiet} gap-1 {compileLog.current.errors.length > 0 ? 'text-error-ink' : 'text-warning-ink'}"
+				onclick={onShowProblems}
+				use:tip={m.wsview_show_problems_title()}
 			>
-				{#if saving}<Loader2 class="size-4 animate-spin" />{:else}<Save class="size-4" />{/if}
-				<span class="cap-center">{m.wsview_save_label()}</span>
+				{#if compileLog.current.errors.length > 0}
+					<CircleAlert class="size-3.5" /> {compileLog.current.errors.length}
+				{/if}
+				{#if compileLog.current.warnings.length > 0}
+					<TriangleAlert class="size-3.5" /> {compileLog.current.warnings.length}
+				{/if}
+			</button>
+		{/if}
+		{#if onSyncToCursor}
+			<!-- only while the preview is popped out: its window has no divider chip, and the jump reads the caret in this window -->
+			<button
+				class={quiet}
+				onmousedown={(e) => e.preventDefault()}
+				onclick={onSyncToCursor}
+				use:tip={syncTargetsPreview ? m.wsview_sync_to_preview_title() : m.wsview_sync_to_pdf_title()}
+				aria-label={syncTargetsPreview ? m.wsview_sync_to_preview_aria() : m.wsview_sync_to_pdf_aria()}
+			>
+				<!-- icon-only: the 1lh wrapper stands in for exactly one text-xs line box - the thing
+				     that gives the neighboring chips their content height (18px in this theme, not
+				     the 16px the Tailwind default would suggest) - while the glyph stays at their 14px -->
+				<span class="flex h-[1lh] items-center"><ArrowRight class="size-3.5" /></span>
+			</button>
+		{/if}
+		{#if commentCount > 0}
+			<!-- unresolved review threads, project-wide; hidden at zero, like Problems after a clean compile -->
+			<button class="{quiet} gap-1" onclick={onShowComments} use:tip={m.wsview_show_comments_title()}>
+				<MessageSquare class="size-3.5" />
+				{commentCount}
+			</button>
+		{/if}
+		{#if onToggleSuggest}
+			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} />
+		{:else if fileMode.current}
+			<EditModePicker suggesting={false} onChange={() => {}} unavailable={m.single_file_unavailable()} {compact} />
+		{/if}
+		{#if showPdf}
+			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->
+			<button class="hover:bg-surface-200-800 rounded-base flex h-[22px] items-center gap-1 px-1.5 text-xs" onclick={onTogglePdf}>
+				<PanelRight class="size-3.5" />
+				<span class="cap-center">{m.wsview_show_pdf()}</span>
 			</button>
 		{/if}
 	</div>
-</header>
+</div>

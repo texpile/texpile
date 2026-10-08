@@ -16,7 +16,7 @@
 	import TextColorDropdown from '$lib/editor/visual/toolbar/TextColorDropdown.svelte';
 	import HighlightDropdown from '$lib/editor/visual/toolbar/HighlightDropdown.svelte';
 	import { markIsActive, activeMarkColor, toggleLinkCommand } from '$lib/editor/visual/toolbar/markState';
-	import { editorViewStore, rawEditorActiveStore } from '$lib/stores/editorStore';
+	import { editorViewStore } from '$lib/stores/editorStore';
 	import MathToolbar, { mathToolbarState } from '$lib/editor/visual/toolbar/MathToolbar.svelte';
 	import MathDropdown from '$lib/editor/visual/toolbar/MathDropdown.svelte';
 	import ToolbarOverflow from '$lib/editor/visual/toolbar/ToolbarOverflow.svelte';
@@ -112,13 +112,7 @@
 	<div class="flex min-w-0 flex-1 items-center">
 		<!-- item gaps and divider padding use the same step per breakpoint, so the border sits centered in its gap -->
 		<div class="flex min-h-9 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
-			{#if rawEditorActiveStore.current}
-				<!-- a raw CM island is focused: prose formatting doesn't apply -->
-				<div class="text-muted hidden min-h-9 min-w-0 items-center gap-2 text-sm whitespace-nowrap @sm:flex">
-					<Code class="size-4 shrink-0" />
-					<span class="font-medium">{m.typtoolbar_code()}</span>
-				</div>
-			{:else if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
+			{#if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
 				<MathToolbar />
 			{:else}
 				{#snippet tb_heading()}

@@ -12,7 +12,6 @@ const after = before.replace('sharp', 'blunt');
 it('takes the map of a collaborator’s patch along with its text', () => {
 	const doc = new DocumentBuffer({
 		scheduleSave: () => {},
-		discardQueuedSave: () => {},
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,

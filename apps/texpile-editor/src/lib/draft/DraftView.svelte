@@ -8,7 +8,7 @@
 	// ./patch; the caches, painting, patch lifecycle, and compile lifecycle live in the
 	// session pieces (draftSession and what it composes). This file is the view shell.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { untrack } from 'svelte';
+	import { untrack, type Snippet } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { ZoomIn, ZoomOut, MoveHorizontal, ChevronUp, ChevronDown, Crosshair, Download, PictureInPicture2 } from '@lucide/svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
@@ -44,6 +44,8 @@
 		asTabStrip?: boolean;
 		/** move the preview into its own window; null in the popped-out body, which needs no button */
 		onPopout?: (() => void) | null;
+		/** the project's controls, at the start of the bar as on the PDF's; the status then gives way first */
+		controls?: Snippet;
 	};
 	let {
 		root,
@@ -56,7 +58,8 @@
 		settleEdits,
 		paused = false,
 		asTabStrip = true,
-		onPopout = null
+		onPopout = null,
+		controls
 	}: Props = $props();
 
 	const ctrl = new DraftSession({
@@ -128,11 +131,14 @@
 </script>
 
 <div class="bg-surface-200-800 flex h-full w-full flex-col">
-	{#snippet status()}
-		{#if compiler.error}
-			<span class="text-error-ink shrink-0 text-sm">{m.draft_preview_error_label()}</span>
-		{:else}
-			<span class="truncate text-sm">{compiler.status}</span>
+	<!-- in the "..." it would be a line of text among actions: it gives way instead, unless it is a problem -->
+	{#snippet status(place: PreviewToolbarPlace = 'bar')}
+		{#if place === 'bar'}
+			{#if compiler.error}
+				<span class="text-error-ink shrink-0 text-sm">{m.draft_preview_error_label()}</span>
+			{:else}
+				<span class="truncate text-sm">{compiler.status}</span>
+			{/if}
 		{/if}
 	{/snippet}
 	{#snippet pages()}
@@ -208,14 +214,16 @@
 			<Crosshair size={16} />
 		</button>
 	{/snippet}
-	{#snippet save()}
+	{#snippet save(place: PreviewToolbarPlace)}
 		<button
+			class:menu-item={place === 'menu'}
 			onclick={() => ctrl.savePdf()}
 			disabled={!ctrl.pages.length || ctrl.savingPdf}
 			use:tip={m.draft_toolbar_save_pdf()}
 			aria-label={m.draft_toolbar_save_pdf()}
 		>
 			<Download size={16} />
+			{#if place === 'menu'}{m.draft_toolbar_save_pdf()}{/if}
 		</button>
 	{/snippet}
 	{#snippet vision(place: PreviewToolbarPlace)}
@@ -228,15 +236,17 @@
 	{/snippet}
 	<!-- the same row as the PDF viewer's, with the engine status where the file name would be -->
 	<PreviewToolbar
-		leading={status}
+		leading={controls ?? status}
+		leadIsControls={!!controls}
 		trailing={onPopout ? popout : undefined}
 		{asTabStrip}
 		groups={[
 			...(ctrl.pages.length ? [{ id: 'pages', render: pages }] : []),
 			{ id: 'zoom', render: zoom },
 			{ id: 'follow', render: follow },
-			{ id: 'vision', render: vision },
-			{ id: 'save', render: save }
+			...(controls ? [{ id: 'status', pinned: !!compiler.error, render: status }] : []),
+			{ id: 'vision', inMenu: true, render: vision },
+			{ id: 'save', inMenu: true, render: save }
 		]}
 	/>
 	<ProgressLine active={ctrl.savingPdf && compiler.compiling} label={m.draft_status_compiling_export()} />

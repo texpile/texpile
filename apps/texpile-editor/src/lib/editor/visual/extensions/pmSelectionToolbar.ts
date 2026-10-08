@@ -1,11 +1,54 @@
 // The selection toolbar in the visual editor: the shared row of buttons, floating above the selection
 import { Plugin, TextSelection } from 'prosemirror-state';
+import { toggleMark } from 'prosemirror-commands';
+import type { EditorView } from 'prosemirror-view';
+import { m } from '$lib/paraglide/messages';
+import { markIsActive, toggleLinkCommand } from '../toolbar/markState';
+import type { SelectionFormatButton } from '$lib/editor/selectionToolbarRow';
 import { settings } from '$lib/settings';
 import { observe } from '$lib/runes/observe.svelte';
 import { selectionToolbarRow } from '$lib/editor/selectionToolbarRow';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import { visibleBox } from '../visibleBox';
 import { setPmCommentPending, type SourceAnchorFn } from './pmComments';
+
+function icon(body: string): string {
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+}
+const BOLD = icon('<path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/>');
+const ITALIC = icon('<line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/>');
+const UNDERLINE = icon('<path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/>');
+const CODE = icon('<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>');
+const LINK = icon(
+	'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'
+);
+
+/** the marks a split's slot offers over the selection, since it has no toolbar of its own */
+function formatButtons(view: EditorView): SelectionFormatButton[] {
+	const marks = view.state.schema.marks;
+	const wanted: [string, string, string][] = [
+		['strong', m.toolbar_bold_aria(), BOLD],
+		['em', m.toolbar_italic_aria(), ITALIC],
+		['u', m.toolbar_underline_aria(), UNDERLINE],
+		['code', m.menubar_format_inline_code(), CODE]
+	];
+	const out = wanted
+		.filter(([name]) => marks[name])
+		.map(([name, label, svg]) => ({
+			label,
+			svg,
+			run: () => toggleMark(marks[name])(view.state, view.dispatch),
+			active: () => markIsActive(view.state, marks[name])
+		}));
+	if (marks.link)
+		out.push({
+			label: m.mdtoolbar_link(),
+			svg: LINK,
+			run: () => toggleLinkCommand(marks.link)(view.state, view.dispatch),
+			active: () => markIsActive(view.state, marks.link)
+		});
+	return out;
+}
 
 /** the row fades in rather than flashing under the pointer for every drag it passes through */
 const SHOW_DELAY = 120;
@@ -38,7 +81,8 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 					// selection with it; pin the commented text under a decoration until it closes
 					if (anchor) setPmCommentPending(view, { from: sel.from, to: sel.to });
 				},
-				() => hide()
+				() => hide(),
+				formatButtons(view)
 			);
 			const dom = row.dom;
 			// NEXT TO the editor, never inside it: view.dom is the contenteditable ProseMirror root,
@@ -62,8 +106,11 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 			}
 			function place() {
 				const sel = view.state.selection;
-				// turned off in Preferences: the row never appears, and the plugin costs a boolean
-				if (settings.current.commentPill === false || !(sel instanceof TextSelection) || sel.empty) {
+				// the floating format bar carries the formatting in every layout now
+				const formatting = false;
+				// turned off in Preferences: only the comment half goes
+				const commenting = settings.current.commentPill !== false;
+				if ((!formatting && !commenting) || !(sel instanceof TextSelection) || sel.empty) {
 					hide();
 					return;
 				}
@@ -90,7 +137,7 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 				}
 				// above the line, else below it when the selection starts at the top of the pane
 				const top = anchor.top - HEIGHT - 6 >= pane.top + 4 ? anchor.top - HEIGHT - 6 : anchor.bottom + 6;
-				row.sync();
+				row.sync({ format: formatting, comment: commenting });
 				// display before measuring: offsetWidth is 0 while the row is hidden, and Refine changes its width
 				dom.style.display = 'flex';
 				const half = (dom.offsetWidth || 48) / 2;
@@ -104,7 +151,8 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 					}, SHOW_DELAY);
 				}
 			}
-			window.addEventListener('scroll', place, true);
+			const win = view.dom.ownerDocument.defaultView ?? window;
+			win.addEventListener('scroll', place, true);
 			const ro = new ResizeObserver(place);
 			ro.observe(view.dom);
 			// the toggle has to bite without waiting for the next selection change, in both directions
@@ -115,7 +163,7 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 			return {
 				update: place,
 				destroy() {
-					window.removeEventListener('scroll', place, true);
+					win.removeEventListener('scroll', place, true);
 					ro.disconnect();
 					unsub();
 					if (timer) clearTimeout(timer);

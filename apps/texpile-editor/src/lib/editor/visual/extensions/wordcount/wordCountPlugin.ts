@@ -1,4 +1,5 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Plugin, PluginKey, type EditorState } from 'prosemirror-state';
+import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { documentCountStore } from '$lib/stores/countStore.svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
@@ -65,7 +66,8 @@ function updateDocCount(doc: Node): void {
 	documentCountStore.charactersWithSpaces = charactersWithSpaces;
 }
 
-/** with prose, selections only; the file total comes from source (countOpenFile), since this doc shows a \cref as code */
+/** with prose, selections only; the file total comes from source (countOpenFile), since this doc shows a \cref as code.
+ *  Only the focused editor counts: a parked one shows another slot's file */
 export function createWordCountPlugin(prose?: RawProse) {
 	const deferredDocCount = trailingDebounce(300, updateDocCount);
 	const deferredSelectionCount = trailingDebounce(150, ({ doc, from, to }: { doc: Node; from: number; to: number }) =>
@@ -74,30 +76,32 @@ export function createWordCountPlugin(prose?: RawProse) {
 
 	return new Plugin({
 		key: wordCountKey,
-
-		state: {
-			init(_config, state) {
-				if (!prose) updateDocCount(state.doc);
-				const { from, to } = state.selection;
-				updateSelectionCount(state.doc, from, to, prose);
-				return null;
-			},
-
-			apply(tr) {
-				if (tr.docChanged && !prose) deferredDocCount(tr.doc);
-				// selection can change without a doc change; one debouncer for range counts AND the
-				// collapsed clear, so a pending count can never land after a newer clear
-				const { from, to } = tr.selection;
-				deferredSelectionCount({ doc: tr.doc, from, to });
-				return null;
+		view: (view) => {
+			let counted: Node | null = null;
+			function sync(v: EditorView, before?: EditorState): void {
+				if (!v.editable) {
+					counted = null;
+					return;
+				}
+				const { doc, selection } = v.state;
+				const fresh = counted === null;
+				if (!prose && counted !== doc) (fresh ? updateDocCount : deferredDocCount)(doc);
+				counted = doc;
+				const { from, to } = selection;
+				// one debouncer for range counts AND the collapsed clear, so a pending count can never land after a newer clear
+				if (fresh) updateSelectionCount(doc, from, to, prose);
+				else if (!before || before.doc !== doc || !before.selection.eq(selection)) deferredSelectionCount({ doc, from, to });
 			}
-		},
-		// a timer outliving this editor would overwrite the NEXT document's counts
-		view: () => ({
-			destroy: () => {
-				deferredDocCount.cancel();
-				deferredSelectionCount.cancel();
-			}
-		})
+			sync(view);
+			return {
+				update: sync,
+				// a timer outliving this editor would overwrite the NEXT document's counts
+				destroy: () => {
+					if (!view.editable) return;
+					deferredDocCount.cancel();
+					deferredSelectionCount.cancel();
+				}
+			};
+		}
 	});
 }

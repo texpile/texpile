@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onWindowOf } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import Link2 from '@lucide/svelte/icons/link-2';
 	import ExternalLink from '@lucide/svelte/icons/external-link';
@@ -44,8 +45,8 @@
 	$effect(() => {
 		if (boxElement) {
 			const rect = boxElement.getBoundingClientRect();
-			const viewportWidth = window.innerWidth;
-			const viewportHeight = window.innerHeight;
+			const viewportWidth = (boxElement.ownerDocument.defaultView ?? window).innerWidth;
+			const viewportHeight = (boxElement.ownerDocument.defaultView ?? window).innerHeight;
 
 			let adjustedX = position.x;
 			let adjustedY = position.y + 8;
@@ -135,7 +136,8 @@
 
 	// close on scroll of the editor or any scrollable ancestor
 	$effect(() => {
-		const prosemirror = document.querySelector('.ProseMirror');
+		const doc = boxElement?.ownerDocument ?? document;
+		const prosemirror = doc.querySelector('.ProseMirror');
 		if (prosemirror) {
 			const scrollableElements = [prosemirror];
 			let parent = prosemirror.parentElement;
@@ -160,9 +162,10 @@
 			};
 		}
 	});
+	// in the window the editor is in, which may be one of its own
+	onWindowOf(() => boxElement, 'click', handleWindowClick);
+	onWindowOf(() => boxElement, 'keydown', handleKeydown);
 </script>
-
-<svelte:window onclick={handleWindowClick} onkeydown={handleKeydown} />
 
 <div
 	bind:this={boxElement}

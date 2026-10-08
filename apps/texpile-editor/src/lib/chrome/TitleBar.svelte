@@ -70,6 +70,7 @@
 	const GAP = 12; // clearance between the box and whichever side it is closest to
 	const MIN_W = 200; // narrower than this the field is not worth showing
 	const MAX_W = 460; // a title is short; past this the field is mostly empty however you align it
+	const SHARE = 0.24; // of the window, as VS Code sizes its search, so the menus keep air before it
 	const BADGE_FROM = 320; // below this the Ctrl+K badge is dropped so the title keeps its room
 
 	let winWidth = $state(1280);
@@ -104,11 +105,13 @@
 	});
 
 	// width to actually render at, from the CURRENT left side, so the bar gets the room the overflow
-	// just freed. 0 means it does not fit even with every menu hidden, and it is dropped entirely -
-	// which is the third outcome, and the only one where the command center is not centred: it is gone.
+	// just freed. 0 means it does not fit even with every menu hidden, and it is dropped entirely.
+	// a wide right side (the project's controls with the preview closed) would drop it while the middle stands
+	// empty: it then centres in the space between the two sides instead
+	const offCenter = $derived(winWidth - 2 * Math.max(leftW, rightW) - 2 * GAP < MIN_W);
 	const centerW = $derived.by(() => {
-		const room = winWidth - 2 * Math.max(leftW, rightW) - 2 * GAP;
-		return room >= MIN_W ? Math.min(MAX_W, room) : 0;
+		const room = offCenter ? winWidth - leftW - rightW - 2 * GAP : winWidth - 2 * Math.max(leftW, rightW) - 2 * GAP;
+		return room >= MIN_W ? Math.min(MAX_W, room, Math.max(MIN_W, Math.round(winWidth * SHARE))) : 0;
 	});
 
 	// Mirror the document title rather than take it as a prop: it is already computed (in
@@ -208,7 +211,11 @@
 		     here only because centerW is computed to clear both sides - it is 0, and this renders
 		     nothing, when even a compacted menu bar leaves no room.
 		     The layer stays click-through so the drag region underneath still works. -->
-		<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+		<div
+			class="pointer-events-none absolute inset-0 flex items-center justify-center"
+			style:padding-left={offCenter ? `${leftW}px` : null}
+			style:padding-right={offCenter ? `${rightW}px` : null}
+		>
 			{#if palettable && centerW > 0}
 				<!--
 					h-[22px] in a 32px row, so there is 5px of air above and below rather than the 3px a 26px

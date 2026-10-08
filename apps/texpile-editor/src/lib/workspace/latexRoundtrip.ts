@@ -188,7 +188,7 @@ export function serializeLatexFileDetailed(
 	);
 	// fragment file: body IS the entire file, no synthesized wrapper written back. a protected
 	// tail reproduces the original bytes through EOF, including a missing trailing newline.
-	if (parsed.hadDocumentEnv === false) return { text: tailProtected ? text : text + '\n', map: shiftMap(map, 0, text.length) };
+	if (parsed.hadDocumentEnv === false) return { text: tailProtected ? text : text + (tailGap ?? '\n'), map: shiftMap(map, 0, text.length) };
 	const body = dropParagraphEnd(text, trailingRegenerated?.node ?? null, trailingRegenerated?.was ?? null, 'end');
 	// the gap the file had, not a separator of our own: editing the first or the last block would
 	// otherwise swallow the blank line it sat behind, and that shows up as a suggestion covering the

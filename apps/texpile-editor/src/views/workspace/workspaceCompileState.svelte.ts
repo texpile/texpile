@@ -110,7 +110,7 @@ export class WorkspaceCompileState {
 				void (async () => {
 					const s = await d.statFile(logPath);
 					if (s.exists && s.size > 0 && workspaceRoot.current === root && !compileLog.current) {
-						await d.compiler().publishLogDiagnostics(logPath, s.mtimeMs, true);
+						await d.compiler().publishLogDiagnostics(logPath, s.mtimeMs);
 					}
 				})();
 			});

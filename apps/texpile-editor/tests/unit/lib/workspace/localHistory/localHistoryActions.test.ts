@@ -23,7 +23,7 @@ const openFile = vi.fn();
 vi.mock('$lib/workspace/workspaceStore', () => ({ openFile }));
 
 const { LocalHistoryActions } = await import('$lib/workspace/localHistory/localHistoryActions.svelte');
-const { SavePipeline } = await import('$lib/workspace/savePipeline.svelte');
+const { memoryFs, memoryStamps, openMemoryFolder } = await import('../memoryFolder');
 
 function make(loaded: string | null) {
 	const deps = {
@@ -98,40 +98,30 @@ it('brings back a deleted file as the copy was kept, and opens it', async () => 
 	expect(deps.adoptDisk).not.toHaveBeenCalled();
 });
 
-/** the open file on a disk of its own, with the save queue and the save guard the editor has */
-function editing(opts: { disk: string; buffer: string; changedOutside?: boolean; autosave?: boolean; detach?: boolean }) {
+/** the open file on a disk of its own, with the writer and the save guard the editor has */
+async function editing(opts: { disk: string; changedOutside?: boolean; autosave?: boolean; detach?: boolean }) {
 	const P = '/p/main.tex';
-	const disk: Record<string, string> = { [P]: opts.disk };
-	// what the editor last read or wrote; the file changed outside when disk no longer matches it
-	const stamp: Record<string, string> = { [P]: opts.changedOutside ? 'what was read' : opts.disk };
-	const state = { buffer: opts.buffer };
-	const saver = new SavePipeline({
-		sessionEdit: () => {},
-		isGuest: () => false,
-		autosaveActive: () => opts.autosave ?? true,
-		clearDeleted: () => {},
-		writeText: async (p, c) => void (disk[p] = c),
-		getEol: () => '\n',
-		getLoadedPath: () => P,
-		getLiveContent: () => state.buffer,
-		setDiskBaseline: () => {},
-		setDirty: () => {},
-		diskChanged: async (p) => disk[p] !== stamp[p],
-		recordDiskStamp: async (p) => void (stamp[p] = disk[p]),
-		raiseConflict: () => {}
+	// what the editor read; the file changed outside when disk no longer matches it
+	const disk: Record<string, string> = { [P]: opts.changedOutside ? 'What was read.\n' : opts.disk };
+	const { hooks } = memoryStamps(disk);
+	const folder = await openMemoryFolder('/p', memoryFs(disk), {
+		open: [P],
+		loaded: () => P,
+		hooks: { ...hooks, heldOff: () => !(opts.autosave ?? true) }
 	});
+	disk[P] = opts.disk;
+	const { writer } = folder;
 	const actions = new LocalHistoryActions({
 		getLoadedPath: () => P,
-		flushPendingSave: () => saver.flushAndWait(),
-		...(opts.detach === false ? {} : { detachPendingSave: () => saver.detach() }),
-		whenSaved: () => saver.whenIdle(),
+		flushPendingSave: () => writer.flushAndWait(),
+		...(opts.detach === false ? {} : { detachPendingSave: () => writer.detach() }),
+		whenSaved: () => writer.whenIdle(),
 		readTextIfPresent: async (p) => disk[p] ?? null,
 		writeText: async (p, c) => void (disk[p] = c),
-		// what ExternalChange.check does: wait for the queue, read, adopt, stamp
+		// what ExternalChange.check does: wait for the writer, read, and adopt what nothing unwritten holds back
 		adoptDisk: async (p) => {
-			await saver.whenIdle();
-			state.buffer = disk[p];
-			stamp[p] = disk[p];
+			await writer.whenIdle();
+			if (!writer.isDirty(p)) writer.adoptDisk(p, disk[p]);
 		},
 		suggestionsDropped: async () => 0,
 		restoreSuggestions: async () => {},
@@ -139,26 +129,22 @@ function editing(opts: { disk: string; buffer: string; changedOutside?: boolean;
 		openCompareTab: () => {},
 		leaveCompareTab: () => {}
 	});
-	const type = (text: string) => {
-		state.buffer = text;
-		saver.schedule(P, text);
-	};
-	return { P, disk, state, saver, actions, type };
+	return { P, disk, writer, actions, buffer: () => folder.textOf(P), type: (text: string) => folder.type(P, text) };
 }
 
 it('keeps unsaved edits the save guard turned away, and drops them from the queue, before restoring', async () => {
 	history.readLocalHistory.mockResolvedValueOnce('Restored copy.\n');
 	// the file changed outside and the author said to decide later: autosave cannot write the edits
-	const f = editing({ disk: 'Changed outside.\n', buffer: 'Mine, unsaved.\n', changedOutside: true, autosave: false });
+	const f = await editing({ disk: 'Changed outside.\n', changedOutside: true, autosave: false });
 	f.type('Mine, unsaved.\n');
 	expect(await f.actions.restore(f.P, ENTRY)).toBe(true);
 	expect(history.addLocalHistory).toHaveBeenCalledWith(f.P, 'Changed outside.\n', 'before-restore');
 	expect(history.addLocalHistory).toHaveBeenCalledWith(f.P, 'Mine, unsaved.\n', 'before-restore');
-	expect(f.saver.pending).toBeNull();
-	// a compile or a file switch later flushes the queue: the restored text stays
-	await f.saver.flushAndWait();
+	expect(f.writer.pending).toBeNull();
+	// a compile or a file switch later flushes the writer: the restored text stays
+	await f.writer.flushAndWait();
 	expect(f.disk[f.P]).toBe('Restored copy.\n');
-	expect(f.state.buffer).toBe('Restored copy.\n');
+	expect(f.buffer()).toBe('Restored copy.\n');
 });
 
 it('Undo on the restore notice is not overwritten by typing queued before it', async () => {
@@ -166,7 +152,7 @@ it('Undo on the restore notice is not overwritten by typing queued before it', a
 	try {
 		history.readLocalHistory.mockResolvedValueOnce('Old copy.\n');
 		// as the workspace provides it today, without detachPendingSave
-		const f = editing({ disk: 'Before.\n', buffer: 'Before.\n', detach: false });
+		const f = await editing({ disk: 'Before.\n', detach: false });
 		await f.actions.restore(f.P, ENTRY);
 		expect(f.disk[f.P]).toBe('Old copy.\n');
 		// the author types into the restored text, then presses Undo within the autosave's pause
@@ -174,7 +160,7 @@ it('Undo on the restore notice is not overwritten by typing queued before it', a
 		success.mock.calls[0][0].action!.onClick();
 		await vi.advanceTimersByTimeAsync(2_000);
 		expect(f.disk[f.P]).toBe('Before.\n');
-		expect(f.state.buffer).toBe('Before.\n');
+		expect(f.buffer()).toBe('Before.\n');
 	} finally {
 		vi.useRealTimers();
 	}

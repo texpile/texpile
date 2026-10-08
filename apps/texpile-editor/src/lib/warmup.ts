@@ -5,6 +5,14 @@
 // and cached. Module loading is idempotent, so a click that beats the warm-up loses nothing.
 
 const IDLE_DELAY_MS = 1500;
+const MATH_FONTS = [
+	'1em KaTeX_Main',
+	'italic 1em KaTeX_Main',
+	'italic 1em KaTeX_Math',
+	'1em KaTeX_AMS',
+	'1em KaTeX_Size1',
+	'1em KaTeX_Size2'
+];
 
 let started = false;
 
@@ -25,6 +33,8 @@ export function warmEditor(): void {
 				/* a chunk that fails here fails the same way on open; nothing to report */
 			}
 		}
+		// the first formula on screen otherwise draws blank until its font arrives
+		await Promise.allSettled(MATH_FONTS.map((font) => document.fonts?.load(font)));
 	}
 	const idle =
 		typeof requestIdleCallback === 'function'

@@ -1,6 +1,6 @@
 import { RawLatexView } from './rawLatexView';
 import { joinPath, isRemoteSrc } from '$lib/workspace/fileSystem';
-import { editorFileUrl } from '$lib/editor/visual/fileAccess';
+import { editorFileUrl, FILES_ARRIVED } from '$lib/editor/visual/fileAccess';
 import type { Node } from 'prosemirror-model';
 import type { EditorView as ProseMirrorView } from 'prosemirror-view';
 
@@ -40,6 +40,19 @@ export class RawFigureView extends RawLatexView {
 		// preview goes above the codemirror raw editor
 		this.dom.insertBefore(this.preview, this.dom.firstChild);
 		this.renderPreview(node.textContent);
+		window.addEventListener(FILES_ARRIVED, this.drawAgain);
+	}
+
+	// a guest's picture comes from the host after the preview first drew it missing
+	private drawAgain = (): void => {
+		if (!this.preview.querySelector('[data-missing]')) return;
+		this.shownKey = '\0';
+		this.renderPreview(this.node.textContent);
+	};
+
+	override destroy(): void {
+		window.removeEventListener(FILES_ARRIVED, this.drawAgain);
+		super.destroy();
 	}
 
 	private resolveSrc(src: string): string {
@@ -75,6 +88,7 @@ export class RawFigureView extends RawLatexView {
 		const box = document.createElement('div');
 		box.className = 'text-muted border-surface-300-700 flex h-20 items-center rounded-base border border-dashed px-3 text-xs';
 		box.textContent = `\u{1F5BC} ${src}`;
+		box.dataset.missing = '';
 		return box;
 	}
 

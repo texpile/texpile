@@ -1,4 +1,5 @@
 // mounts the svelte suggestion box for prosemirror-proofread
+import { activeWindow } from '$lib/childWindows/childWindowRegistry.svelte';
 import { mount, unmount } from 'svelte';
 import type { CreateSuggestionBox, Problem as ProofreadProblem } from 'prosemirror-proofread';
 import SuggestionBox from './SuggestionBox.svelte';
@@ -67,7 +68,7 @@ export function createHarperSuggestionBox(options: Parameters<CreateSuggestionBo
 	container.style.left = '0';
 	container.style.width = '100%';
 	container.style.height = '100%';
-	document.body.appendChild(container);
+	activeWindow().document.body.appendChild(container);
 
 	let component: ReturnType<typeof mount> | null = null;
 	try {

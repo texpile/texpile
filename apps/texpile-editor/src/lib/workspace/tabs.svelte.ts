@@ -5,7 +5,7 @@
 // A tab is a FILE or a COMPARISON of one against a saved version - the same kind of thing, so
 // one strip, and both are persisted. Not the visual/source axis, which stays a preference.
 import { samePath, joinPath, relativeInside } from './fileSystem';
-import { getFolder, updateFolder, savedCompare, type SavedCompare } from '$lib/storage/workspaces';
+import { getFolder, updateFolder, savedCompare, type SavedCompare, type SavedTab } from '$lib/storage/workspaces';
 import { AGENT_REF } from '$lib/ai/agentPanel/changes/agentBefore';
 
 const MAX_TABS = 50;
@@ -17,8 +17,20 @@ export type CompareRef = SavedCompare;
 
 export type Tab = { path: string; compare?: CompareRef };
 
+/** tabs as the folder's entry keeps them, root-relative */
+export function savedTabs(root: string, list: Tab[]): SavedTab[] {
+	// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
+	// reopened without it would show the whole file as new; one outside the root would come back under it
+	return list
+		.filter((t) => !t.compare?.hash.startsWith(AGENT_REF) && relativeInside(root, t.path) !== null)
+		.map((t) => {
+			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
+			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
+		});
+}
+
 /** a saved tab back on the strip, or null for an entry this build cannot read */
-function restoredTab(root: string, saved: unknown): Tab | null {
+export function restoredTab(root: string, saved: unknown): Tab | null {
 	if (typeof saved === 'string') return { path: joinPath(root, saved) };
 	if (!saved || typeof saved !== 'object') return null;
 	const { path, compare } = saved as { path?: unknown; compare?: unknown };
@@ -38,7 +50,7 @@ function sepOf(p: string) {
 	return p.includes('\\') ? '\\' : '/';
 }
 
-class TabsStore {
+export class TabsStore {
 	list = $state<Tab[]>([]);
 	/** VS Code style: opening another takes its slot rather than adding a tab, so browsing a tree
 	 *  does not bury the strip. A KEY, so a comparison can hold the slot as a file does. */
@@ -46,9 +58,19 @@ class TabsStore {
 	private closed: Tab[] = [];
 	private root: string | null = null;
 	private persistable = false;
+	/** the other editor groups' tabs, which a rename or a delete in the tree reaches as well */
+	readonly others = new Set<TabsStore>();
+	/** told where each path went after a rename or a delete (null: gone), so the parked slots follow their files */
+	onRetarget: ((where: (path: string) => string | null) => void) | null = null;
+	/** the tabs kept with the folder when they are not these: an editor in a window of its own has these */
+	persistedList: (() => Tab[] | null) | null = null;
+
+	/** goes up each time a folder is opened, so the editor groups start over as one */
+	generation = $state(0);
 
 	/** folder (re)opened: restore the persisted tab set for disk-backed roots. */
 	bind(root: string | null, persist: boolean): void {
+		this.generation++;
 		this.root = root;
 		this.persistable = persist && !!root && typeof localStorage !== 'undefined';
 		this.list = [];
@@ -57,6 +79,24 @@ class TabsStore {
 		if (!this.persistable || !root) return;
 		const saved = getFolder(root).tabs;
 		if (Array.isArray(saved)) this.list = saved.slice(0, MAX_TABS).flatMap((s) => restoredTab(root, s) ?? []);
+	}
+
+	/** another editor group's tabs come into this store, and this one's go to it: the focused group's are always here */
+	exchange(other: TabsStore): void {
+		const mine = this.contents();
+		this.adopt(other.contents());
+		other.adopt(mine);
+		this.persist();
+	}
+
+	private contents(): { list: Tab[]; preview: string | null; closed: Tab[] } {
+		return { list: this.list, preview: this.preview, closed: this.closed };
+	}
+
+	private adopt(c: { list: Tab[]; preview: string | null; closed: Tab[] }): void {
+		this.list = c.list;
+		this.preview = c.preview;
+		this.closed = c.closed;
 	}
 
 	/** for callers that only care about documents (MCP, guards) */
@@ -73,18 +113,15 @@ class TabsStore {
 		if (this.preview === key) this.preview = null;
 	}
 
-	private persist(): void {
+	/** the folder whose tabs these are, when they are kept between sittings */
+	get persistedRoot(): string | null {
+		return this.persistable ? this.root : null;
+	}
+
+	persist(): void {
 		if (!this.persistable || !this.root) return;
-		const root = this.root;
-		// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
-		// reopened without it would show the whole file as new; one outside the root would come back under it
-		const saved = this.list
-			.filter((t) => !t.compare?.hash.startsWith(AGENT_REF) && relativeInside(root, t.path) !== null)
-			.map((t) => {
-				const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
-				return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
-			});
-		updateFolder(root, (draft) => {
+		const saved = savedTabs(this.root, this.persistedList?.() ?? this.list);
+		updateFolder(this.root, (draft) => {
 			draft.tabs = saved;
 		});
 	}
@@ -146,6 +183,24 @@ class TabsStore {
 		return this.list.find((t) => tabKey(t) === key) ?? null;
 	}
 
+	/** a tab dragged along the strip, to sit at `index` */
+	move(key: string, index: number): void {
+		const tab = this.find(key);
+		if (!tab) return;
+		const rest = this.list.filter((t) => tabKey(t) !== key);
+		const at = Math.max(0, Math.min(index, rest.length));
+		this.list = [...rest.slice(0, at), tab, ...rest.slice(at)];
+		this.persist();
+	}
+
+	/** tabs from another strip after this one's own, each at most once */
+	append(more: Tab[]): void {
+		const fresh = more.filter((t, i) => !this.has(tabKey(t)) && more.findIndex((o) => tabKey(o) === tabKey(t)) === i);
+		if (!fresh.length) return;
+		this.list = [...this.list, ...fresh].slice(-MAX_TABS);
+		this.persist();
+	}
+
 	/** right neighbour first, then left */
 	neighborOf(key: string): Tab | null {
 		const i = this.list.findIndex((t) => tabKey(t) === key);
@@ -176,21 +231,26 @@ class TabsStore {
 
 	/** its comparisons go too: nothing left to sit beside */
 	closeFile(path: string): void {
+		for (const o of this.others) o.closeFile(path);
 		this.list = this.list.filter((t) => !samePath(t.path, path));
 		this.dropPreviewIfClosed();
 		this.persist();
+		this.onRetarget?.((p) => (samePath(p, path) ? null : p));
 	}
 
 	/** a deleted folder takes every tab under it along. */
 	closeUnder(path: string): void {
+		for (const o of this.others) o.closeUnder(path);
 		const prefix = path + sepOf(path);
 		this.list = this.list.filter((t) => !samePath(t.path, path) && !t.path.startsWith(prefix));
 		this.dropPreviewIfClosed();
 		this.persist();
+		this.onRetarget?.((p) => (samePath(p, path) || p.startsWith(prefix) ? null : p));
 	}
 
 	/** a rename/move retargets the tab, or every tab under it when a folder moved. */
 	rename(from: string, to: string): void {
+		for (const o of this.others) o.rename(from, to);
 		const prefix = from + sepOf(from);
 		function retarget(p: string) {
 			return samePath(p, from) ? to : p.startsWith(prefix) ? to + p.slice(from.length) : p;
@@ -201,16 +261,19 @@ class TabsStore {
 		this.list = moved;
 		this.preview = at >= 0 ? tabKey(moved[at]) : null;
 		this.persist();
+		this.onRetarget?.(retarget);
 	}
 
 	/** drop tabs whose files no longer exist (tree refreshes, remote deletions). */
 	prune(livePaths: string[]): void {
+		for (const o of this.others) o.prune(livePaths);
 		const next = this.list.filter((t) => livePaths.some((p) => samePath(p, t.path)));
 		if (next.length !== this.list.length) {
 			this.list = next;
 			this.dropPreviewIfClosed();
 			this.persist();
 		}
+		this.onRetarget?.((p) => (livePaths.some((live) => samePath(live, p)) ? p : null));
 	}
 
 	private dropPreviewIfClosed(): void {

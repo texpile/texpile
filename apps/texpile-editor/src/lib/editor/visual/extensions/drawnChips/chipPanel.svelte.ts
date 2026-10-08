@@ -1,5 +1,5 @@
 // the one panel a drawn chip opens under itself, mounted the first time one opens
-import { mount, type Component } from 'svelte';
+import { mount, unmount, type Component } from 'svelte';
 import type { EditorView } from 'prosemirror-view';
 import DrawnChipPanel from './DrawnChipPanel.svelte';
 
@@ -38,15 +38,23 @@ export type ChipPanelRequest = {
 
 export const chipPanel = $state<{ request: ChipPanelRequest | null; source: string }>({ request: null, source: '' });
 
-let mounted = false;
+/** the document the panel is mounted in, and the way out of it: an editor in a window of its own opens it there */
+let mounted: { doc: Document; app: ReturnType<typeof mount> } | null = null;
 
 export function openChipPanel(request: ChipPanelRequest): void {
 	closeChipPanel('away');
 	chipPanel.source = request.source;
 	chipPanel.request = request;
-	if (mounted) return;
-	mounted = true;
-	mount(DrawnChipPanel, { target: document.body });
+	const doc = request.anchor.ownerDocument;
+	if (mounted?.doc === doc) return;
+	if (mounted) {
+		try {
+			void unmount(mounted.app);
+		} catch {
+			/* its window has gone */
+		}
+	}
+	mounted = { doc, app: mount(DrawnChipPanel, { target: doc.body }) };
 }
 
 export function closeChipPanel(how: ChipPanelClose): void {

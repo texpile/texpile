@@ -5,6 +5,7 @@
 	// the equation being edited - and, worse, Zag returns focus to a popover's trigger when it closes
 	// (setFinalFocus), blurring the mathfield after every single insert. As part of the layout it
 	// covers nothing, and there is no trigger for focus to go back to.
+	import { windowOf } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { onMount } from 'svelte';
 	import { X } from '@lucide/svelte';
@@ -66,11 +67,13 @@
 		function onKey(e: KeyboardEvent) {
 			if (e.key === 'Escape') onClose();
 		}
-		window.addEventListener('pointerdown', onDown, true);
-		window.addEventListener('keydown', onKey, true);
+		// the panel's own window, which may be an editor's own
+		const win = windowOf(panelEl);
+		win.addEventListener('pointerdown', onDown, true);
+		win.addEventListener('keydown', onKey, true);
 		return () => {
-			window.removeEventListener('pointerdown', onDown, true);
-			window.removeEventListener('keydown', onKey, true);
+			win.removeEventListener('pointerdown', onDown, true);
+			win.removeEventListener('keydown', onKey, true);
 		};
 	});
 </script>

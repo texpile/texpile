@@ -49,17 +49,33 @@ export type PdfViewerActions = {
 	enterPresentationMode: () => Promise<boolean>;
 	exitPresentationMode: () => Promise<void>;
 	/** SyncTeX forward search: scroll to + briefly highlight a position on a page (PDF points, top-left origin). */
-	scrollToPosition?: (page: number, x: number, y: number, width?: number, height?: number) => void;
+	/** `view`: which of a split preview's views jumps, by its place; otherwise the active one */
+	scrollToPosition?: (page: number, x: number, y: number, width?: number, height?: number, view?: number) => void;
+};
+
+/** one view of the document, with its own page, zoom and find; the toolbar works on the one clicked last */
+export type PdfView = { state: PdfViewerState; actions: PdfViewerActions | null };
+
+/** what a renderer holds of its view */
+export type PdfViewHandle = {
+	state: PdfViewerState;
+	register(actions: PdfViewerActions): void;
+	activate(): void;
+	detach(): void;
 };
 
 export type PdfViewerContext = {
+	/** the active view's, as the toolbar shows it */
 	state: PdfViewerState;
 	actions: PdfViewerActions;
 	src: PdfSource;
 	/** identifies the logical document. When it's unchanged across a src change, the renderer keeps
 	 *  the scroll position (a recompile of the same file); when it changes, it resets to the top. */
 	documentKey?: string | number;
-	_registerRenderer: (renderer: PdfViewerActions) => void;
+	/** every renderer's view, in the order they came; more than one when the document is shown twice */
+	views: readonly PdfView[];
+	activeView: PdfView | null;
+	_attachView: () => PdfViewHandle;
 	_onerror?: (error: string) => void;
 	// internal: stores a copy of binary data for download (PDF.js detaches ArrayBuffers)
 	_setSrcDataForDownload: (bytes: ArrayBuffer | null) => void;

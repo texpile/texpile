@@ -8,7 +8,8 @@ export {
 	PresentationModeState,
 	type PdfViewerState,
 	type PdfViewerActions,
-	type PdfViewerContext
+	type PdfViewerContext,
+	type PdfView
 } from './pdf-viewer/context';
 
 export { getPdfJs, getPdfDocument, destroyPdfJs } from './pdf-viewer/pdfjs-singleton';

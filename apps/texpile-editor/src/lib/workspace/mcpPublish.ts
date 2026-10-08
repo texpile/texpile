@@ -12,6 +12,7 @@ import { compileConfig } from './projectConfigSync.svelte';
 import { tabs } from './tabs.svelte';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { relativeTo } from './fileSystem';
+import { collabHost } from '$lib/collab/hostStore.svelte';
 
 export type ViewMode = 'visual' | 'source' | 'diff';
 
@@ -74,9 +75,12 @@ export function buildWindowState(viewMode: ViewMode | null): WindowStatePayload 
 	return untrack(() => {
 		const root = workspaceRoot.current;
 		const active = activeFilePath.current;
-		// Only the active file has a buffer, so it is the only one that can be dirty: `isDirty` is a
-		// single store and TabBar already paints it on the active tab alone.
+		// the open file's mark is the one the tab bar paints; any other tab's file can hold edits a session wrote into it
 		const dirty = isDirty.current;
+		function unwritten(p: string): boolean {
+			const r = collabHost.keyOf(p);
+			return !!r && !!collabHost.files?.isDirty(r);
+		}
 		const list = tabs.paths;
 		return {
 			mainFile: rel(mainFile.current, root),
@@ -84,7 +88,7 @@ export function buildWindowState(viewMode: ViewMode | null): WindowStatePayload 
 			viewMode,
 			tabs: list.map((p) => ({
 				path: rel(p, root) ?? p,
-				dirty: dirty && !!active && p === active,
+				dirty: !!active && p === active ? dirty : unwritten(p),
 				active: !!active && p === active
 			})),
 			livePreview: compileConfig.current.latex.liveMode,

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // The gate that matters is on the BUFFER, not the editor widget. Hiding the places a user can type
-// is not the same as closing the path that writes: onVisualChange reaches the save pipeline from a
+// is not the same as closing the path that writes: onVisualChange reaches the file text from a
 // load-time transaction, with no keystroke involved. The verdict comes from the main process's byte
 // check (textDecode); here the opener's reason is handed in.
 import { describe, it, expect, beforeEach, vi } from 'vitest';
@@ -30,8 +30,7 @@ let written: string[];
 function buffer() {
 	return new DocumentBuffer({
 		scheduleSave: (_p, content) => scheduled.push(content),
-		discardQueuedSave: () => {},
-		writeNow: (_p, content) => written.push(content),
+		writeNow: (p) => written.push(p),
 		rebuildVisual: () => {},
 		isVisualMode: () => false,
 		noteLocalEdit: () => {},
@@ -102,7 +101,7 @@ describe('a UTF-8 file is untouched by any of this', () => {
 		b.onTexInput('edited');
 		b.save();
 		expect(scheduled).toEqual(['edited']);
-		expect(written).toEqual(['edited']);
+		expect(written).toEqual(['C:/p/main.tex']);
 	});
 
 	// the flag is per-file: a blocked file must not poison the next one opened in the same buffer

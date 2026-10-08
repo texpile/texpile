@@ -13,7 +13,6 @@ function setup() {
 	const rebuildVisual = vi.fn();
 	const doc = new DocumentBuffer({
 		scheduleSave: () => {},
-		discardQueuedSave: () => {},
 		writeNow: () => {},
 		rebuildVisual,
 		isVisualMode: () => modes.mode === 'visual',
@@ -24,7 +23,6 @@ function setup() {
 		getKind: () => doc.kind,
 		getLoadedPath: () => doc.path,
 		getSource: () => doc.texSource,
-		setSource: (t) => (doc.texSource = t),
 		getDocMeta: () => doc.docMeta,
 		getMountedSource: () => doc.lastDocSource,
 		getSourceMap: () => emptyMap(),
@@ -33,8 +31,7 @@ function setup() {
 		leaveConflicts: () => doc.leaveConflicts(),
 		rebuildVisual,
 		startCompare: () => {},
-		captureDiffSnapshot: () => {},
-		scheduleSave: () => {}
+		captureDiffSnapshot: () => {}
 	});
 	return { doc, modes, rebuildVisual };
 }

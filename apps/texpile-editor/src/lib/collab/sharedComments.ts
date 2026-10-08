@@ -3,7 +3,7 @@ import type * as Y from 'yjs';
 import type { CommentLogShare } from '$lib/comments/store.svelte';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
 import { isSafeCommentEvent } from './protocol';
-import { isShared } from './materialize';
+import { isShared } from './sharedFiles';
 
 export function commentLogOf(doc: Y.Doc): Y.Array<string> {
 	return doc.getArray<string>('comments');

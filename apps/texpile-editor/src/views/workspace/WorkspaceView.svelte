@@ -36,14 +36,14 @@
 	import { WorkspaceIntegrations } from './workspaceIntegrations.svelte';
 	import { createWorkspacePipelines } from './workspacePipelines.svelte';
 	import { WorkspaceFormatting } from './workspaceFormatting.svelte';
-	import { attachSourceToc, tocListOf } from './workspaceToc.svelte';
+	import { attachSourceToc, attachVisualProjectToc, tocListOf } from './workspaceToc.svelte';
 	import { startWorkspace } from './workspaceStartup';
-	import { projectConfigSync as projectConfig, compileConfig } from '$lib/workspace/projectConfigSync.svelte';
+	import { projectConfigSync as projectConfig, compileConfig, latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
 	import { setPaletteActions } from '$lib/workspace/commandPalette.svelte';
 	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import { mark } from '$lib/debug/startupDoctor';
-	import { createKeydownHandler, createCaptureKeydownHandler } from '$lib/workspace/shortcuts';
+	import { bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
 	import { workspaceRoot, texFiles, activeCompare, activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
@@ -93,19 +93,19 @@
 		guest: () => guest,
 		jumpToFileLine: (abs, line) => nav.syncJumpToFileLine(abs, line),
 		parseVisual: async (text) => (await wsdoc.tryParseVisual(text)).parsed ?? null,
-		flushSave: () => saver.flush()
+		flushSave: () => saver.flush(),
+		fileHistory: () => session.collabFor(doc.path)?.undo ?? null
 	});
 	const commentsCtl = commentsW.ctl;
 	wireRefiner({ comments: commentsW, doc, modes, kind: () => kind, guest: () => guest });
 	// an outside write adopted into the open file (an agent, vim) re-places its threads now, so a
 	// rewritten quote badges detached at once rather than at the next mode switch
-	external.onAdopted = () => void commentsW.adoptDisk();
+	external.onAdopted = (text) => void commentsW.adoptDisk(text);
 	unsaved.onDiscard = (path) => commentsW.discarded(path);
-	saver.verify = (path, content) => doc.verifyForWrite(path, content);
-	saver.beforeWrite = async (path, content) => {
-		await commentsW.beforeSave(path, content);
-		await commentsCtl.syncAnchorsToText(path, content);
-	};
+	editFlow.installWriteHooks({
+		verify: (path, content) => doc.verifyForWrite(path, content),
+		beforeWrite: (path, content) => commentsW.beforeWrite(path, content)
+	});
 	modes.beforeSwitch = () => commentsCtl.carryLive();
 
 	const folderEmpty = $derived(texFiles.current.length === 0);
@@ -158,6 +158,7 @@
 	// and its scroll; this is the list it shows (workspaceToc.svelte.ts)
 	const toc = $derived(tocListOf(doc, modes.mode, nameOnly));
 	attachSourceToc(wsdoc);
+	attachVisualProjectToc(wsdoc);
 	// dock visibility/height/shrink live in lib/workspace/terminalDockState.svelte.ts
 	let termDock = $state(new TerminalDockState(() => guest));
 	$effect(() => {
@@ -186,7 +187,6 @@
 		files: () => files,
 		layout: () => layout,
 		termDock: () => termDock,
-		setDockView: (v) => (dockView = v),
 		openCompileModal: () => fmt.openCompileModal()
 	});
 	files.draftPaused = () => draftCtl.paused;
@@ -204,12 +204,12 @@
 
 	// the visual editor's shared-session machinery (remote patches, presence) lives in
 	// VisualCollab; this api hands it doc-state access, the ref carries its editor hooks
-	let visualCollab = $state<{ noteLocalEdit(): void; noteFreshParse(): void; publishCursor(): void } | null>(null);
+	let visualCollab = $state<{ noteLocalEdit(): void; noteFreshParse(): void; publishCursor(): void; beforeLocalEdit(): void } | null>(null);
 	const visualCollabApi = visualCollabBridge({
 		doc,
 		parser,
 		parse: (text) => wsdoc.tryParseVisual(text),
-		scheduleSave: (path, content) => saver.schedule(path, content)
+		scheduleSave: (path, content) => session.edit(path, content)
 	});
 	onDestroy(() => {
 		typstPreview.dispose(); // leaving the workspace must not leave a preview compiling in the server
@@ -326,7 +326,7 @@
 
 	const uiZoomPercent = $derived(Math.round((settings.current.uiZoom ?? 1) * 100));
 	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
-	const onKeydown = createKeydownHandler({
+	bindWorkspaceShortcuts({
 		closeTab: (t) => editFlow.closeTab(t),
 		reopenTab: () => editFlow.reopenTab(),
 		isGuest: () => guest,
@@ -338,12 +338,11 @@
 		stopCompile: () => compiler.stopCompile(),
 		openPreferences: () => (preferencesOpen.current = true),
 		openFolder: () => void (hostMode && files.folder.open()),
-		stepDocumentHistory: (direction) => editSelect(direction)
+		stepDocumentHistory: (direction) => editSelect(direction),
+		openSourceControl: () => chromeActions.openSourceControl()
 	});
-	const onKeydownCapture = createCaptureKeydownHandler({ openSourceControl: () => chromeActions.openSourceControl() });
 </script>
 
-<svelte:window onkeydown={onKeydown} onkeydowncapture={onKeydownCapture} />
 <!-- file - folder - app (VS Code's order); the folder segment tells windows apart in the taskbar -->
 <svelte:head
 	><title
@@ -381,6 +380,7 @@
 		}}
 		actions={chromeActions}
 		pendingCommand={projectConfig.pending}
+		previewSplittable={guest ? !collabGuest.typstPreviewOffered : !typstPreview.mainUnset && !typstPreview.wanted && !latexLiveMode()}
 		bind:fileTreeRef={files.fileTreeRef}
 		bind:globalSearchRef
 	>
@@ -392,7 +392,6 @@
 			{parser}
 			{termDock}
 			{compiler}
-			{saver}
 			{session}
 			{guest}
 			{kind}
@@ -475,6 +474,4 @@
 {#if !guest}
 	<SessionShareModal bind:open={shareModalOpen} root={workspaceRoot.current} onBeforeStart={() => saver.flushAndWait()} />
 {/if}
-{#if session.active}
-	<VisualCollab bind:this={visualCollab} {session} path={doc.path} {kind} viewMode={modes.mode} api={visualCollabApi} />
-{/if}
+<VisualCollab bind:this={visualCollab} {session} path={doc.path} {kind} viewMode={modes.mode} api={visualCollabApi} />

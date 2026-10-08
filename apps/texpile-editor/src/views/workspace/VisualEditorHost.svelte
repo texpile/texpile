@@ -16,6 +16,7 @@
 	import { sourceAnchorFor } from '$lib/editor/visual/extensions/pmComments';
 	import { dirname } from '$lib/workspace/fileSystem';
 	import { caretFromMargin } from '$lib/editor/visual/marginClick';
+	import { showInOutputAt } from '$lib/editor/visual/contextMenu/showInOutput';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
 
@@ -29,7 +30,6 @@
 		showRenderBar,
 		onVisualChange,
 		onVisualSelection,
-		onHistoryBoundary,
 		onVisualReady,
 		onMdLink,
 		onEditFrontmatter,
@@ -41,10 +41,12 @@
 		onAddCommentAnchored,
 		onInsertCitation,
 		onCiteByDoi,
+		onSyncToPdf,
 		onJumpToLabel,
 		onJumpToDefinition,
 		onCommentsPlaced,
-		commentPendingActive
+		commentPendingActive,
+		live = true
 	}: {
 		kind: FileKind;
 		loadedPath: string;
@@ -55,7 +57,6 @@
 		showRenderBar: boolean;
 		onVisualChange: (doc: PMNode) => void;
 		onVisualSelection?: () => void;
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		onVisualReady: () => void;
 		onMdLink: (href: string) => boolean;
 		onEditFrontmatter: (kind: string, inner: string) => void;
@@ -69,10 +70,14 @@
 		onAddCommentAnchored?: (anchor: CommentAnchor | null) => void;
 		onInsertCitation?: () => void;
 		onCiteByDoi?: () => void;
+		/** a 1-based line of texSource shown in the PDF, or in the Typst preview */
+		onSyncToPdf?: (line: number) => void;
 		onJumpToLabel?: (name: string) => boolean;
 		onJumpToDefinition?: (name: string) => boolean;
 		onCommentsPlaced?: (lost: string[]) => void;
 		commentPendingActive: boolean;
+		/** false in a parked editor group */
+		live?: boolean;
 	} = $props();
 
 	// the stretch of texSource the document is
@@ -80,6 +85,11 @@
 		docMeta?.hadDocumentEnv
 			? { from: docMeta.preamble.length, to: texSource.length - docMeta.postamble.length }
 			: { from: 0, to: texSource.length }
+	);
+	const showInOutput = $derived(
+		onSyncToPdf && kind !== 'md'
+			? showInOutputAt(kind === 'typ' ? m.tbar_ctx_show_in_preview() : m.tbar_ctx_show_in_pdf(), sourceMap, texSource, onSyncToPdf)
+			: undefined
 	);
 	// a selection in any of the editors, as the range of texSource its characters are
 	function sourceAnchor(doc: PMNode, from: number, to: number): CommentAnchor | null {
@@ -96,7 +106,7 @@
      click below the last block lands in it -->
 <div
 	class="flex min-h-full flex-col pt-8 pr-7.5 pl-12 group-data-[gutter-stacked]/pane:pr-1 group-data-[gutter-stacked]/pane:pl-7.5"
-	onmousedown={(event) => caretFromMargin(event, editorViewStore.current)}
+	onmousedown={(event) => live && caretFromMargin(event, editorViewStore.current)}
 	role="presentation"
 >
 	<!-- the measure: past it a wide window pads with empty space rather than stretching the line length -->
@@ -116,6 +126,7 @@
 		{/if}
 		{#if kind === 'md'}
 			<MarkdownEditorView
+				{live}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -123,7 +134,6 @@
 				onLocalChange={onVisualChange}
 				onSelectionChange={onVisualSelection}
 				placeholder={m.wsview_editor_placeholder()}
-				{onHistoryBoundary}
 				onReady={onVisualReady}
 				onOpenLink={onMdLink}
 				{commentRanges}
@@ -141,6 +151,7 @@
 			/>
 		{:else if kind === 'typ'}
 			<TypstEditorView
+				{live}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -148,7 +159,6 @@
 				onLocalChange={onVisualChange}
 				onSelectionChange={onVisualSelection}
 				placeholder={m.wsview_editor_placeholder()}
-				{onHistoryBoundary}
 				onReady={onVisualReady}
 				onOpenLink={onMdLink}
 				{commentRanges}
@@ -162,12 +172,14 @@
 				onAddComment={onAddCommentAnchored}
 				{onInsertCitation}
 				{onCiteByDoi}
+				{showInOutput}
 				{onCommentsPlaced}
 				{commentPendingActive}
 				addCommentLabel={m.comments_add()}
 			/>
 		{:else}
 			<LatexEditorView
+				{live}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -175,7 +187,6 @@
 				onLocalChange={onVisualChange}
 				onSelectionChange={onVisualSelection}
 				placeholder={m.wsview_editor_placeholder()}
-				{onHistoryBoundary}
 				onReady={onVisualReady}
 				{commentRanges}
 				{sourceMap}
@@ -188,6 +199,7 @@
 				onAddComment={onAddCommentAnchored}
 				{onInsertCitation}
 				{onCiteByDoi}
+				{showInOutput}
 				{onJumpToLabel}
 				{onJumpToDefinition}
 				{onCommentsPlaced}

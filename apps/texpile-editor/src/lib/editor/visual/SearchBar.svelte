@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { inChildWindows } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { slide } from 'svelte/transition';
 	import { onMount, onDestroy } from 'svelte';
 	import { displaySearchBarStore as display, editorViewStore } from '$lib/stores/editorStore';
@@ -88,6 +89,8 @@
 
 	onMount(() => window.addEventListener('keydown', handleKeydown));
 	onDestroy(() => window.removeEventListener('keydown', handleKeydown));
+	// the editor may be in a window of its own
+	inChildWindows('keydown', handleKeydown);
 </script>
 
 {#if display.current}

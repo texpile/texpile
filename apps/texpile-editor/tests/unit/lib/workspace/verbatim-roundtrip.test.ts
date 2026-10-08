@@ -141,6 +141,16 @@ describe('verbatim round-trip (no edits)', () => {
 		expect(reserialize(fragment)).toBe(fragment);
 	});
 
+	it('keeps the comment after the last block of a fragment when that block is edited', () => {
+		const fragment = '\\newcommand{\\R}{\\mathbb{R}} % note\n';
+		const parsed = parseLatexFile(fragment);
+		const block = parsed.doc.child(parsed.doc.childCount - 1);
+		const edited = block.type.create(block.attrs, schema.text('\\newcommand{\\C}{\\mathbb{C}}'));
+		expect(serializeLatexFile(parsed, replaceChild(parsed.doc, parsed.doc.childCount - 1, edited))).toBe(
+			'\\newcommand{\\C}{\\mathbb{C}} % note\n'
+		);
+	});
+
 	it('preserves legacy \\vspace{\\baselineskip} lines verbatim', () => {
 		const file = `${PREAMBLE}\nBefore.\n\n\\vspace{\\baselineskip}\n\nAfter.\n\\end{document}\n`;
 		expect(reserialize(file)).toBe(file);

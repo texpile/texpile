@@ -5,11 +5,11 @@
 	import { getPdfViewerContext } from './pdf-viewer/context';
 	import { AnchoredMenu } from './anchoredMenu.svelte';
 
-	const { state: viewerState, actions } = getPdfViewerContext();
+	const ctx = getPdfViewerContext();
 	const menu = new AnchoredMenu('start');
 
 	const PRESETS = [50, 75, 100, 125, 150, 200];
-	const percent = $derived(Math.round(viewerState.scale * 100));
+	const percent = $derived(Math.round(ctx.state.scale * 100));
 
 	function pick(run: () => void) {
 		menu.close();
@@ -24,17 +24,17 @@
 	</button>
 	{#if menu.open}
 		<div bind:this={menu.el} class="pdf-zoom-menu" style={menu.style} role="menu">
-			<button role="menuitem" onclick={() => pick(actions.fitWidth)}>
+			<button role="menuitem" onclick={() => pick(ctx.actions.fitWidth)}>
 				<MoveHorizontal size={16} />
 				<span>Fit width</span>
 			</button>
-			<button role="menuitem" onclick={() => pick(actions.fitPage)}>
+			<button role="menuitem" onclick={() => pick(ctx.actions.fitPage)}>
 				<Maximize size={16} />
 				<span>Fit page</span>
 			</button>
 			<div class="pdf-zoom-sep" role="separator"></div>
 			{#each PRESETS as p (p)}
-				<button role="menuitem" onclick={() => pick(() => actions.setScale(p / 100))}>
+				<button role="menuitem" onclick={() => pick(() => ctx.actions.setScale(p / 100))}>
 					<span class="pdf-zoom-icon-gap"></span>
 					<span>{p}%</span>
 					{#if p === percent}<Check size={14} class="pdf-zoom-check" />{/if}

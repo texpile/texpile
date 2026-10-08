@@ -11,12 +11,13 @@ import { FileOpener } from '$lib/workspace/fileOpener';
 import { VisualParser, MAX_VISUAL_BYTES, type ParseFailure } from '$lib/workspace/visualParse.svelte';
 import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
 import { workspaceRoot, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
-import { editorViewStore } from '$lib/stores/editorStore';
+import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { countOpenFile } from '$lib/stores/countStore.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
-import type { SavePipeline } from '$lib/workspace/savePipeline.svelte';
+import type { FileWriter } from '$lib/buffers/fileWriter';
+import { fromLf } from '$lib/workspace/edits/lineEndings';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { openTexFileOf } from '$lib/workspace/edits/openEditorEdit';
 import { openTexFile } from '$lib/languages/latex/symbols/latexSymbolPackage';
@@ -26,8 +27,8 @@ type DocDeps = {
 	provider: WorkspaceProvider;
 	session: () => EditSession;
 	guest: () => boolean;
-	visualCollab: () => { noteLocalEdit(): void; noteFreshParse(): void } | null;
-	saver: () => SavePipeline;
+	visualCollab: () => { noteLocalEdit(): void; noteFreshParse(): void; beforeLocalEdit(): void } | null;
+	saver: () => FileWriter;
 	/** a jump asked for the incoming file survives the switch; older ones must not */
 	clearStaleGoto: (loadedPath: string | null) => void;
 	/** compare the open file against the last saved version, in a tab of its own */
@@ -50,15 +51,14 @@ export class WorkspaceDoc {
 	constructor(private d: DocDeps) {
 		// the open file's buffers and edit handlers live in lib/workspace/documentBuffer.svelte.ts
 		this.doc = new DocumentBuffer({
-			scheduleSave: (path, content, before) => d.saver().schedule(path, content, before),
-			discardQueuedSave: () => d.saver().discard(),
-			shareEdit: (path, content, before) => {
+			scheduleSave: (path, content, before) => {
 				if (path) d.session().edit(path, content, before);
 			},
-			writeNow: (path, content, force) => void d.saver().enqueue(path, content, true, force),
+			writeNow: (path, force) => void d.saver().save(path, force),
 			rebuildVisual: () => this.rebuildVisualFromSource(),
 			isVisualMode: () => this.modes.mode === 'visual',
 			noteLocalEdit: () => d.visualCollab()?.noteLocalEdit(),
+			beforeLocalEdit: () => d.visualCollab()?.beforeLocalEdit(),
 			clearPendingAnchor: () => (this.modes.pendingVisualAnchor = null),
 			projectMacros: () => this.projectMacros,
 			reparse: (text, format) => this.parser.reparse(text, format),
@@ -86,7 +86,6 @@ export class WorkspaceDoc {
 			getKind: () => this.doc.kind,
 			getLoadedPath: () => this.doc.path,
 			getSource: () => this.doc.texSource,
-			setSource: (t) => (this.doc.texSource = t),
 			getDocMeta: () => this.doc.docMeta,
 			getMountedSource: () => this.doc.lastDocSource,
 			getSourceMap: () => this.doc.sourceMap,
@@ -95,8 +94,7 @@ export class WorkspaceDoc {
 			leaveConflicts: () => this.doc.leaveConflicts(),
 			rebuildVisual: () => this.rebuildVisualFromSource(),
 			captureDiffSnapshot: () => void this.diff.snapshot(),
-			startCompare: () => d.startCompare(),
-			scheduleSave: (path, text) => d.saver().schedule(path, text)
+			startCompare: () => d.startCompare()
 		});
 		// state and snapshotting live in lib/workspace/diffMode.svelte.ts. The version is
 		// snapshotted, not bound - it is the half that cannot change.
@@ -111,7 +109,13 @@ export class WorkspaceDoc {
 		this.opener = new FileOpener({
 			doc: this.doc,
 			parser: this.parser,
-			readSource: (p) => d.provider.readSource(p),
+			// the host's open file is its buffered text, which can be ahead of the disk; a guest reads the session's
+			readSource: (p) => {
+				const binding = d.guest() ? null : d.session().collabFor(p);
+				if (!binding) return d.provider.readSource(p);
+				return Promise.resolve({ text: fromLf(binding.ytext.toString(), d.saver().eolOf(p)), encoding: 'utf8' });
+			},
+			baselineOf: (p) => d.saver().baselineOf(p),
 			probe: async (p) => (await d.provider.probe?.(p)) ?? null,
 			whenIdle: () => d.saver().whenIdle(),
 			isVisualMode: () => this.modes.mode === 'visual',
@@ -127,8 +131,6 @@ export class WorkspaceDoc {
 			// would parse .tex as markdown (and vice versa)
 			parse: (text, format) => this.parser.parse(text, format),
 			fallbackToSource: (failure) => this.fallbackToSource(failure),
-			openHistory: (path, text) => this.modes.history.open(path, text),
-			disableHistory: () => this.modes.history.disable(),
 			clearPerFileViewState: () => this.clearPerFileViewState(),
 			captureDiffSnapshot: () => void this.diff.snapshot(),
 			closeOpenFile: () => this.closeOpenFile()
@@ -139,6 +141,9 @@ export class WorkspaceDoc {
 		// the top bar's word count
 		$effect(() => countOpenFile(this.doc.path, this.doc.buffer));
 		// the doc.visualDoc dep re-fires this when an async re-parse lands (the doc swap itself is untracked)
+		$effect(() => {
+			if (sourceCmView.current) untrack(() => this.modes.sourceMounted());
+		});
 		$effect(() => {
 			void editorViewStore.current;
 			void this.doc.visualDoc;
@@ -240,13 +245,11 @@ export class WorkspaceDoc {
 	closeOpenFile(): void {
 		this.doc.close();
 		this.clearPerFileViewState();
-		this.modes.history.disable();
 	}
 
 	/** anchors are keyed to the outgoing file's text; a new file must never inherit them */
 	clearPerFileViewState(): void {
-		this.modes.sourceScrollAnchor = null;
-		this.modes.pendingVisualAnchor = null;
+		this.modes.dropAnchors();
 		this.d.clearStaleGoto(this.doc.path);
 	}
 
@@ -306,7 +309,7 @@ export class WorkspaceDoc {
 		});
 	}
 
-	/** manual save (Ctrl/Cmd+S or the Save button); autosave handles the rest */
+	/** Ctrl/Cmd+S: write now instead of after the autosave delay */
 	save() {
 		return this.doc.save();
 	}

@@ -3,6 +3,7 @@ import { TextSelection } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { missingImageSvg } from '../missingImagePlaceholder';
+import { FILES_ARRIVED } from '$lib/editor/visual/fileAccess';
 import { ImagePluginClassName, type ImagePluginSettings } from '../types';
 import { createResizeControls } from './resize/createResizeControls';
 import { getImageDimensions } from './resize/getImageDimensions';
@@ -56,6 +57,9 @@ function getSrc(
 	}
 	return { newSrc: node.attrs.src };
 }
+
+// each url's natural size once drawn, so the same picture built again is drawn at once at its size
+const drawnSizes = new Map<string, { width: number; height: number; completed: boolean }>();
 
 export function imageNodeView(pluginSettings: ImagePluginSettings) {
 	return (node: Node, view: EditorView, getPos: () => number | undefined): NodeView => {
@@ -113,6 +117,24 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		}
 		window.addEventListener('texpile:fs-changed', onFolderChanged);
 		window.addEventListener('focus', onFolderChanged);
+		// a guest's picture comes from the host after the first lookup came up empty
+		async function lookUpAgain(): Promise<void> {
+			if ((!notFound && finalSrc) || !pluginSettings.downloadImage) return;
+			const src = await pluginSettings.downloadImage(node.attrs.src);
+			const size = src && pluginSettings.enableResize ? await getImageDimensions(src) : undefined;
+			if (!src || (size && !size.completed)) return;
+			notFound = false;
+			image.classList.remove('image-not-found');
+			image.title = node.attrs.alt ?? '';
+			finalSrc = src;
+			dimensions = size;
+			image.src = src;
+			updateDom();
+		}
+		function onFilesArrived() {
+			return void lookUpAgain();
+		}
+		window.addEventListener(FILES_ARRIVED, onFilesArrived);
 
 		let dimensions: { width: number; height: number; completed: boolean } | undefined;
 		Object.keys(node.attrs).map((key) => root.setAttribute(`imageplugin-${key}`, node.attrs[key]));
@@ -138,7 +160,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			pluginSettings.updateOverlay(overlay, getPos, view, node);
 		}
 
-		image.alt = node.attrs.alt;
+		image.alt = node.attrs.alt ?? '';
 		let resizeControls: HTMLDivElement | undefined;
 		function updateDom() {
 			if (resizeActive) {
@@ -207,6 +229,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			}
 			if (pluginSettings.enableResize) {
 				dimensions = await getImageDimensions(finalSrc);
+				if (dimensions.completed) drawnSizes.set(finalSrc, dimensions);
 			}
 			image.src = finalSrc;
 			updateDom();
@@ -214,6 +237,17 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			if (!parent || !pluginSettings.enableResize) return;
 			unsubscribeResizeObserver = pluginSettings.resizeCallback(parent, updateDom);
 		})();
+		// the text around it would otherwise be drawn a frame without it, then pushed down; the lookup above still runs
+		const known = pluginSettings.knownImage?.(node.attrs.src) ?? null;
+		const knownSize = known ? drawnSizes.get(known) : undefined;
+		if (known && (knownSize || !pluginSettings.enableResize)) {
+			finalSrc = known;
+			dimensions = knownSize;
+			image.decoding = 'sync';
+			image.src = known;
+			// once ProseMirror has put it on the page, which its width is measured from
+			queueMicrotask(updateDom);
+		}
 		return {
 			...(contentEl
 				? {
@@ -248,6 +282,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			destroy: () => {
 				unsubscribeResizeObserver?.();
 				window.removeEventListener('texpile:fs-changed', onFolderChanged);
+				window.removeEventListener(FILES_ARRIVED, onFilesArrived);
 				window.removeEventListener('focus', onFolderChanged);
 				pluginSettings.deleteSrc(node.attrs.src);
 			}

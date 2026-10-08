@@ -39,3 +39,10 @@ export async function editorWriteBinary(path: string, blob: Blob): Promise<void>
 	if (!writeBinary) throw new Error('No workspace to write to');
 	await writeBinary(path, blob);
 }
+
+// a guest's file arrives from the host after the editor first asked for it: what showed it missing tries again
+export const FILES_ARRIVED = 'texpile:files-arrived';
+
+export function announceFilesArrived(): void {
+	globalThis.dispatchEvent?.(new Event(FILES_ARRIVED));
+}

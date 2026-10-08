@@ -7,7 +7,7 @@ import { settings } from '$lib/settings';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { isLargeDocument } from '$lib/languages/latex/visual/largeDocument';
 import { hasOldWords, pmSuggestionsKey } from '../extensions/pmSuggestionsState';
-import { cssZoomOf } from '../lineBoxes';
+import { contentWidth } from '../lineBoxes';
 import { compositionWrapPlugin } from './compositionWrap';
 import { hyphenSelectionPlugin } from './hyphenSelection';
 import type { DocumentHyphenation } from './documentHyphenationLanguage';
@@ -101,14 +101,13 @@ function plainlyJustified(pos: number, paragraph: PMNode): Decoration {
 	return Decoration.node(pos, pos + paragraph.nodeSize, { class: 'pm-line-justified' }, { holdsParagraph: true });
 }
 
-function px(length: string): number {
-	return parseFloat(length) || 0;
-}
+// the visual editors on the page, each asked whether its width changed
+const widthChecks = new Set<(observed?: boolean) => void>();
 
-function contentWidth(block: HTMLElement): number {
-	const style = getComputedStyle(block);
-	const box = block.getBoundingClientRect().width / cssZoomOf(block);
-	return box - px(style.paddingLeft) - px(style.paddingRight) - px(style.borderLeftWidth) - px(style.borderRightWidth);
+/** after the app changed the editors' widths itself (a layout picked): broken again before the frame is drawn, which
+ *  a resize observer comes too late for */
+export function rebreakResizedEditors(): void {
+	for (const check of widthChecks) check();
 }
 
 function lineBreaker(view: EditorView): { update(view: EditorView, before: EditorState): void; destroy(): void } {
@@ -165,10 +164,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			if (scratch) startOver();
 			else rebreak();
 			// already inside a frame: the check it asked for would wait for the next one, and this one be drawn spilling
-			if (checkFrame) {
-				cancelAnimationFrame(checkFrame);
-				check();
-			}
+			checkNow();
 		});
 	}
 
@@ -242,10 +238,13 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		if (!spilled) return;
 		rebreak();
 		// the retry is checked in this same frame: waiting for the next would draw it, spilling or not yet settled
-		if (checkFrame) {
-			cancelAnimationFrame(checkFrame);
-			check();
-		}
+		checkNow();
+	}
+
+	function checkNow(): void {
+		if (!checkFrame) return;
+		cancelAnimationFrame(checkFrame);
+		check();
 	}
 
 	function rebreak(fromScratch = false): void {
@@ -345,7 +344,8 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		if (!held.native) publish({ ...held, native: true });
 	}
 
-	const resized = new ResizeObserver(() => {
+	// from the observer the break waits a frame: new breaks change heights, which an observer may not cause itself
+	function widthChanged(observed = false): void {
 		const width = view.dom.clientWidth;
 		if (width === rootWidth) return;
 		// an editor built before it had a place on the page has nothing drawn yet, so nothing to hold back
@@ -361,15 +361,19 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		const moving = now - lastWidthChange < WIDTH_REST_MS;
 		lastWidthChange = now;
 		if (!moving && !widthMoving) {
-			rebreakNextFrame(true);
+			if (observed) return rebreakNextFrame(true);
+			startOver();
+			checkNow();
 			return;
 		}
 		widthRest = window.setTimeout(startOver, WIDTH_REST_MS);
 		if (widthMoving) return;
 		widthMoving = true;
 		requestAnimationFrame(wrapNatively);
-	});
+	}
+	const resized = new ResizeObserver(() => widthChanged(true));
 	resized.observe(view.dom);
+	widthChecks.add(widthChanged);
 
 	// a citation that resolves or a formula that gets typeset changes width without a transaction
 	const inlineViews = new MutationObserver((records) => {
@@ -441,6 +445,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			clearTimeout(afterComposition);
 			clearTimeout(widthRest);
 			resized.disconnect();
+			widthChecks.delete(widthChanged);
 			cellSizes.disconnect();
 			inlineBoxes.disconnect();
 			inlineViews.disconnect();

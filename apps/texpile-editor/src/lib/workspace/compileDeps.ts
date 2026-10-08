@@ -1,6 +1,5 @@
 // what CompilePipeline needs from the workspace view that wires it
 import type { EditSession } from '$lib/collab/editSession';
-import type { DockView } from '$lib/terminal/dockView';
 
 export type CompileDeps = {
 	getLoadedPath(): string | null;
@@ -21,8 +20,8 @@ export type CompileDeps = {
 	/** flush the queued autosave and wait for it to land (SyncTeX needs the on-disk copy current). */
 	flushSaves(): Promise<void>;
 	refreshTree(): Promise<void>;
-	showTerminal(): void;
-	setDockView(view: DockView): void;
+	/** the dock holds the compile's shell: mounted, and left as shown or hidden as it was */
+	mountDock(): void;
 	setPdfPaneOpen(open: boolean): void;
 	openCompileModal(): void;
 	openMainConfirm(then?: () => void): void;

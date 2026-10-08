@@ -14,6 +14,7 @@
 	// bar keeps its shape.
 	let {
 		leading,
+		leadIsControls = false,
 		trailing,
 		asTabStrip = false,
 		dividers = true,
@@ -22,9 +23,11 @@
 		findOpen = false,
 		onToggleFind,
 		inverted = false,
-		onToggleInvert
+		onToggleInvert,
+		documentMenu = true
 	}: {
 		leading?: Snippet;
+		leadIsControls?: boolean;
 		trailing?: Snippet;
 		asTabStrip?: boolean;
 		dividers?: boolean;
@@ -36,15 +39,18 @@
 		/** the pages are drawn with their colors inverted; each theme keeps its own choice */
 		inverted?: boolean;
 		onToggleInvert?: () => void;
+		/** the "..." with what applies to the whole document; a split's lower bar leaves it to the top one */
+		documentMenu?: boolean;
 	} = $props();
 
-	const { state: viewerState, actions } = getPdfViewerContext();
+	// read per use: inside a PdfViewScope these are one view's
+	const ctx = getPdfViewerContext();
 
 	function handlePageChange(e: Event) {
 		const input = e.target as HTMLInputElement;
 		const pageNum = parseInt(input.value, 10);
-		if (pageNum >= 1 && pageNum <= viewerState.totalPages) {
-			actions.goToPage(pageNum);
+		if (pageNum >= 1 && pageNum <= ctx.state.totalPages) {
+			ctx.actions.goToPage(pageNum);
 		}
 	}
 </script>
@@ -53,25 +59,25 @@
 	<input
 		type="number"
 		class="page-input"
-		value={viewerState.currentPage}
+		value={ctx.state.currentPage}
 		min="1"
-		max={viewerState.totalPages}
+		max={ctx.state.totalPages}
 		onchange={handlePageChange}
 		aria-label="Current page"
-		style:--digits={String(viewerState.totalPages).length}
+		style:--digits={String(ctx.state.totalPages).length}
 	/>
-	<span class="page-info">/ {viewerState.totalPages}</span>
+	<span class="page-info">/ {ctx.state.totalPages}</span>
 	<button
-		onclick={() => actions.goToPage(viewerState.currentPage - 1)}
-		disabled={viewerState.currentPage <= 1}
+		onclick={() => ctx.actions.goToPage(ctx.state.currentPage - 1)}
+		disabled={ctx.state.currentPage <= 1}
 		aria-label="Previous page"
 		use:tip={'Previous page'}
 	>
 		<ChevronUp size={16} />
 	</button>
 	<button
-		onclick={() => actions.goToPage(viewerState.currentPage + 1)}
-		disabled={viewerState.currentPage >= viewerState.totalPages}
+		onclick={() => ctx.actions.goToPage(ctx.state.currentPage + 1)}
+		disabled={ctx.state.currentPage >= ctx.state.totalPages}
 		aria-label="Next page"
 		use:tip={'Next page'}
 	>
@@ -80,11 +86,11 @@
 {/snippet}
 
 {#snippet zoom()}
-	<button onclick={() => actions.zoomOut()} aria-label="Zoom out" use:tip={'Zoom out'}>
+	<button onclick={() => ctx.actions.zoomOut()} aria-label="Zoom out" use:tip={'Zoom out'}>
 		<ZoomOut size={16} />
 	</button>
 	<PdfZoomMenu />
-	<button onclick={() => actions.zoomIn()} aria-label="Zoom in" use:tip={'Zoom in'}>
+	<button onclick={() => ctx.actions.zoomIn()} aria-label="Zoom in" use:tip={'Zoom in'}>
 		<ZoomIn size={16} />
 	</button>
 {/snippet}
@@ -119,7 +125,7 @@
 {#snippet rotate(place: PreviewToolbarPlace)}
 	<button
 		class:menu-item={place === 'menu'}
-		onclick={() => actions.rotateClockwise()}
+		onclick={() => ctx.actions.rotateClockwise()}
 		aria-label="Rotate clockwise"
 		use:tip={'Rotate clockwise'}
 	>
@@ -131,7 +137,7 @@
 {#snippet present(place: PreviewToolbarPlace)}
 	<button
 		class:menu-item={place === 'menu'}
-		onclick={() => actions.enterPresentationMode()}
+		onclick={() => ctx.actions.enterPresentationMode()}
 		disabled={inPopout}
 		aria-label="Presentation mode"
 		use:tip={inPopout ? 'Presentation mode is not available in a separate window' : 'Presentation mode'}
@@ -144,7 +150,7 @@
 <!-- "Save", not "Download": the PDF is already on this machine (or in memory for a guest), so this
      writes a copy wherever the user picks. -->
 {#snippet save(place: PreviewToolbarPlace)}
-	<button class:menu-item={place === 'menu'} onclick={() => actions.savePdf()} aria-label="Save PDF" use:tip={'Save PDF'}>
+	<button class:menu-item={place === 'menu'} onclick={() => ctx.actions.savePdf()} aria-label="Save PDF" use:tip={'Save PDF'}>
 		<Save size={16} />
 		{#if place === 'menu'}Save PDF{/if}
 	</button>
@@ -152,6 +158,7 @@
 
 <PreviewToolbar
 	{leading}
+	{leadIsControls}
 	{trailing}
 	{asTabStrip}
 	{dividers}
@@ -161,10 +168,14 @@
 		{ id: 'zoom', render: zoom },
 		{ id: 'search', pinned: true, alignEnd: true, render: search },
 		// rarely reached for, so they sit in the ... at every width and the bar stays short
-		{ id: 'rotate', inMenu: true, render: rotate },
-		...(onToggleInvert ? [{ id: 'invert', inMenu: true, render: invert }] : []),
-		{ id: 'vision', inMenu: true, render: vision },
-		{ id: 'present', inMenu: true, render: present },
-		...(viewerState.canSavePdf ? [{ id: 'save', inMenu: true, render: save }] : [])
+		...(documentMenu
+			? [
+					{ id: 'rotate', inMenu: true, render: rotate },
+					...(onToggleInvert ? [{ id: 'invert', inMenu: true, render: invert }] : []),
+					{ id: 'vision', inMenu: true, render: vision },
+					{ id: 'present', inMenu: true, render: present },
+					...(ctx.state.canSavePdf ? [{ id: 'save', inMenu: true, render: save }] : [])
+				]
+			: [])
 	]}
 />

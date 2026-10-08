@@ -4,7 +4,7 @@
 	// state.schema); everything whose editing model is LaTeX-shaped (tables, MathLive, images,
 	// intellisense, citations, the latex clipboard) is deliberately absent — those constructs
 	// live in raw islands until they get typst-aware machinery (see typSchema's comment).
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, untrack } from 'svelte';
 	import { EditorState, type Transaction } from 'prosemirror-state';
 	import { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
@@ -12,11 +12,13 @@
 	import { typSchema } from './schema';
 	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
-	import { editorViewStore, referenceStore } from '$lib/stores/editorStore';
+	import { referenceStore } from '$lib/stores/editorStore';
+	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
-	import ContextMenu from '$lib/editor/visual/toolbar/ContextMenu.svelte';
+	import ContextMenu from '$lib/editor/visual/contextMenu/ContextMenu.svelte';
+	import type { ShowInOutput } from '$lib/editor/visual/contextMenu/showInOutput';
 	import { syncPmComments } from '$lib/editor/visual/extensions/pmCommentsSync.svelte';
 	import type { CommentAnchor } from '$lib/comments/anchor';
 	import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
@@ -31,11 +33,12 @@
 	import '$lib/editor/visual/styles/cursor.css';
 
 	type Props = {
+		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
+		live?: boolean;
 		localValue?: PMNode | null;
 		onLocalChange?: (value: PMNode) => void;
 		onSelectionChange?: () => void;
 		placeholder?: string;
-		onHistoryBoundary?: (dir: 'undo' | 'redo') => boolean;
 		onReady?: () => void;
 		/** the link tooltip's Open action: return true when handled in-app, false for the browser. */
 		onOpenLink?: (href: string) => boolean;
@@ -60,6 +63,8 @@
 		onInsertCitation?: () => void;
 		/** cite by DOI or arXiv ID, offered in the context menu when present */
 		onCiteByDoi?: () => void;
+		/** Show in PDF from the right-click menu */
+		showInOutput?: ShowInOutput;
 		onCommentsPlaced?: (lost: string[]) => void;
 		addCommentLabel?: string;
 		/** a composer is open for a selection here; false clears the pending selection tint */
@@ -67,11 +72,11 @@
 	};
 
 	let {
+		live = true,
 		localValue = null,
 		onLocalChange,
 		onSelectionChange,
 		placeholder = '',
-		onHistoryBoundary,
 		onReady,
 		onOpenLink,
 		docDir = '',
@@ -88,6 +93,7 @@
 		onAddComment,
 		onInsertCitation,
 		onCiteByDoi,
+		showInOutput,
 		onCommentsPlaced,
 		addCommentLabel = 'Comment',
 		commentPendingActive = false
@@ -99,6 +105,8 @@
 
 	let editor: HTMLElement = $state(null!);
 	let editorView: EditorView | null = $state(null);
+	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
+	const isLive = $derived(live);
 
 	onMount(async () => {
 		// the math fields read and write each equation's Typst, parsed by Typst's own parser
@@ -114,7 +122,6 @@
 			mlarrowHandlers,
 			docDir: () => docDir,
 			placeholder,
-			onHistoryBoundary,
 			onOpenLink,
 			onSelectComment,
 			onAddComment,
@@ -130,7 +137,7 @@
 			attributes: { class: 'TexpileEditor TypstEditor', spellcheck: 'false' },
 			state: editorState,
 			nodeViews: typstNodeViews(() => docDir),
-			editable: () => true,
+			editable: group.editable,
 			dispatchTransaction(this: EditorView, transaction: Transaction) {
 				// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
 				if (this.isDestroyed) return;
@@ -144,28 +151,39 @@
 			}
 		});
 
-		editorViewStore.current = editorView;
+		group.claim(editorView);
 		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
 		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
 		revealBuiltEditor(editor);
-		editorView.focus();
+		if (live) editorView.focus();
 		onReady?.();
 	});
 
 	let mountedDoc: PMNode | null = null;
 	let mountedPath: string | null = null;
+	let wasHeld = false;
+	// its own effect: the swap below must not run again for a change of focus alone
+	$effect(() => {
+		if (!live) wasHeld = true;
+		else queueMicrotask(() => (wasHeld = false));
+	});
 	/** bumped only on doc SWAPS (see pmCommentsSync); typing maps ranges instead */
 	let docEpoch = $state(0);
 	let remotePatches = $state(0);
+	// an editor group's props arrive spread, so a read of one tracks all of them; only a new document may swap
+	const incomingDoc = $derived(localValue);
+	const incomingPath = $derived(docPath);
 	$effect(() => {
-		const next = localValue;
-		const path = docPath;
+		const next = incomingDoc;
+		const path = incomingPath;
 		if (!editorView || !next) return;
 		if (mountedDoc === null) {
 			mountedDoc = next;
 			mountedPath = path;
 			return;
 		}
+		// a document held still while this one was parsed: it takes the keyboard the way a fresh build does
+		const takesFocus = wasHeld && untrack(() => live);
 		const kind = docSwapKind(next, editorView.state.doc, path, mountedPath);
 		mountedDoc = next;
 		mountedPath = path;
@@ -173,12 +191,16 @@
 		if (kind === 'newFile') swapDocForNewFile(editorView, typSchema, next);
 		else swapParsedDoc(editorView, typSchema, next);
 		docEpoch++;
-		if (kind === 'newFile') onReady?.();
+		if (kind === 'newFile') {
+			onReady?.();
+			if (takesFocus) editorView.focus();
+		}
 	});
 
 	// after the swap effect, so the sync reads the newly-installed document
 	syncPmComments({
 		view: () => editorView,
+		live: () => isLive,
 		ranges: () => commentRanges,
 		map: () => sourceMap,
 		text: () => texSource,
@@ -199,7 +221,7 @@
 
 	onDestroy(() => {
 		editorView?.destroy();
-		editorViewStore.current = null;
+		group.release(editorView);
 	});
 </script>
 
@@ -207,7 +229,7 @@
      nothing, so the viewport upgrades could not run until after it was already on screen -->
 <main bind:this={editor} class={BUILDING_CLASS}></main>
 
-<ContextMenu dialect="typst" {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} />
+<ContextMenu dialect="typst" {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} {showInOutput} />
 
 <style lang="postcss">
 	@reference "../../../../app.css";

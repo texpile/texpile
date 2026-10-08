@@ -36,6 +36,19 @@ async function urlExists(url: string): Promise<boolean> {
 	}
 }
 
+// what each src last resolved to among the dirs it was looked for in: a view built again draws from it at once
+const resolvedUrls = new Map<string, string>();
+
+function graphicDirs(imageDir?: () => string): string[] {
+	const dirs = editorGraphicDirs();
+	return dirs.length ? dirs : imageDir ? [imageDir()] : [];
+}
+
+/** the url `src` resolved to last time, among the same dirs, if it has been */
+export function knownLocalImageUrl(src: string, imageDir?: () => string): string | null {
+	return resolvedUrls.get(`${src}\n${graphicDirs(imageDir).join('\n')}`) ?? null;
+}
+
 /**
  * The relative path resolved to a served URL; already-resolved local srcs pass through. Extensionless
  * srcs probe like the engine would, and PDF figures render to a bitmap.
@@ -45,12 +58,10 @@ export async function localImageUrl(src: string, imageDir?: () => string): Promi
 	if (!src || isRemoteSrc(src) || /^(data:|blob:|file:)/.test(src)) return src;
 	// the injected dirs carry \graphicspath and the project root; imageDir alone is the
 	// fallback for a workspace that has not published them (a guest, or before first parse)
-	function urlsFor(rel: string) {
-		const dirs = editorGraphicDirs();
-		return (dirs.length ? dirs : imageDir ? [imageDir()] : []).map((d) => editorFileUrl(joinPath(d, rel)));
-	}
-	const { url, isPdf } = await resolveGraphicUrl(src, urlsFor, urlExists);
+	const dirs = graphicDirs(imageDir);
+	const { url, isPdf } = await resolveGraphicUrl(src, (rel) => dirs.map((d) => editorFileUrl(joinPath(d, rel))), urlExists);
 	// failed render falls through to the raw URL, whose <img> error shows not-found
-	if (isPdf) return (await pdfPageImageUrl(url)) ?? url;
-	return url;
+	const shown = isPdf ? ((await pdfPageImageUrl(url)) ?? url) : url;
+	if (shown) resolvedUrls.set(`${src}\n${dirs.join('\n')}`, shown);
+	return shown;
 }

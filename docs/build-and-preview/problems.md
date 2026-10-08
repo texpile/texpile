@@ -9,6 +9,6 @@ The errors and warnings from the last build, with the file and line. Click a row
 
 ![The Problems panel listing the warnings from a compile, with the PDF beside the editor](../../landing/src/lib/assets/showcase/app/problems-panel.png)
 
-- The panel opens after a compile with errors, unless **Open terminal panel when compiling** is off in Preferences › Editor. The badge left of Compile shows the counts.
+- A compile does not open the panel. The badge left of Compile shows the counts, and clicking it opens the panel.
 - **bib** marks a bibliography message. A bibliography warning that names an entry jumps to that entry in the `.bib` file.
 - For Typst, the panel updates as you type while **Preview** is on. Otherwise it shows the last compile.

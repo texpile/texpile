@@ -1,5 +1,8 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
+import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
+import { moveToWindow } from '$lib/workspace/groups/tabMoves';
+import { groupHostOf } from './groups/workspaceGroups';
 import type { ReplaceSpec } from '$lib/search/replaceInFiles';
 import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
@@ -20,7 +23,6 @@ import { countDocumentWords } from './writing/workspaceWordCount';
 import { refreshGitStatus, refreshGitHistory } from '$lib/workspace/scm/gitStore';
 import { preferencesOpen } from '$lib/stores/dialogStore';
 import { isDesktop, revealItem, type TreeEntry } from '$lib/workspace/fileSystem';
-import { hasUnsavedUnder } from '$lib/workspace/unsavedPaths';
 import { openSaveAsTemplate } from '$lib/workspace/templates/saved/templateDetails.svelte';
 import { userTemplatesAvailable } from '$lib/workspace/templates/templateBridge';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
@@ -165,6 +167,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		resumeDraft: () => void d.draftCtl.resume(),
 		requestCompile: () => {
 			collabGuest.requestCompile();
+			d.layout().setPdfPaneOpen(true);
 			toaster.info({ title: m.session_compile_requested(), duration: 2500 });
 		},
 		openCompileModal: () => d.fmt.openCompileModal(),
@@ -176,6 +179,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		countWords: () => countDocumentWords(d.wsdoc.doc, d.provider),
 		save: () => d.wsdoc.save(),
 		activateTab: (t: Tab) => d.editFlow().activateTab(t),
+		groupHost: groupHostOf({ wsdoc: d.wsdoc, editFlow: d.editFlow, provider: d.provider }),
 		closeTab: (t: Tab) => d.editFlow().closeTab(t),
 		keepTab: (t: Tab) => tabs.keep(tabKey(t)),
 		tabMenu: (t: Tab, e: MouseEvent) => {
@@ -190,6 +194,11 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 				keep: (x) => tabs.keep(tabKey(x)),
 				reveal: isDesktop() && !d.guest() ? (p) => void revealItem(p) : undefined,
 				localHistory: !d.guest() && canKeepLocalHistory() ? (p) => openLocalHistory(p) : undefined,
+				// beside this window, as a window opened from a menu has no drop point
+				newWindow: (x) =>
+					void moveToWindow(x, editorGroups.focusedId, { x: window.screenX + 200, y: window.screenY + 120 }, (c) =>
+						d.editFlow().closeTab(c)
+					),
 				showInTree: (p) => {
 					d.layout().setSidebarOpen(true);
 					// eslint-disable-next-line no-param-reassign -- the deps hand over the live controllers this surface drives
@@ -214,13 +223,13 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		},
 		onEditFrontmatter: (kind: string, inner: string) => d.wsdoc.doc.editFrontmatter(kind, inner),
 		syncToPdf: (line: number) => d.nav.syncToLine(line),
-		historyStep: (dir: 'undo' | 'redo') => d.wsdoc.modes.historyStep(dir),
 		jumpToFile: (name: string) => d.nav.jumpToInclude(name),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),
 		jumpToLabel: (name: string) => d.nav.jumpToLabel(name),
 		jumpToDefinition: (name: string) => d.nav.jumpToDefinition(name),
 		refreshDiff: () => void toastAfter(m.wsview_toast_diff_refreshed(), () => void d.wsdoc.diff.snapshot()),
-		onPdfDoubleClick: (page: number, x: number, y: number, selectText?: string) => d.nav.onPdfDoubleClick(page, x, y, selectText),
+		onPdfDoubleClick: (page: number, x: number, y: number, selectText?: string, view?: number) =>
+			d.nav.onPdfDoubleClick(page, x, y, selectText, view),
 		onInverseSync: (file: string, line: number, selectText?: string) => d.nav.syncJumpToFileLine(normSyncPath(file), line, selectText),
 		onPreviewSettled: d.draftCtl.runDecision,
 		// Live mode's compile has its own log, and the normal pipeline never sees it -- that one
@@ -235,7 +244,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			if (!s.exists) return;
 			// the log's OWN mtime, not now(): updatedAt is what tells a reader how old this parse is,
 			// and stamping it with the read time made a day-old log look freshly written
-			await d.compiler.publishLogDiagnostics(logPath, s.mtimeMs, true, null);
+			await d.compiler.publishLogDiagnostics(logPath, s.mtimeMs, null);
 		},
 		toggleTerminalShrink: () => d.termDock().toggleShrink(),
 		toggleTerminal: () => d.termDock().toggle()
@@ -296,12 +305,7 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 		setMain: (entry: TreeEntry) => void d.files().toggleMainFile(entry.path),
 		revealEntry: (entry: TreeEntry) => void revealItem(entry.path),
 		// the file tree asks before deleting something whose edits exist only here
-		hasUnsaved: (path: string) =>
-			hasUnsavedUnder(path, {
-				loaded: d.wsdoc.doc.path,
-				dirty: isDirty.current,
-				pending: d.editFlow().saver.pending?.path ?? null
-			}),
+		hasUnsaved: (path: string) => d.editFlow().saver.unwrittenUnder(path),
 		refreshGit: () =>
 			void toastAfter(m.wsview_toast_git_refreshed(), async () => {
 				await refreshGitStatus(workspaceRoot.current);

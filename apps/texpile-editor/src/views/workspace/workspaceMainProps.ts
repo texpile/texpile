@@ -21,7 +21,6 @@ export type WorkspaceMainProps = {
 	termDock: TerminalDockState;
 	commentsCtl: CommentsController;
 	compiler: Any;
-	saver: Any;
 	session: Any;
 	guest: boolean;
 	kind: FileKind;

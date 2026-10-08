@@ -22,6 +22,8 @@ export type ImagePlaceholderObject = { src?: string; className?: string };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ImagePluginSettings<T = any> = {
 	downloadImage?: (url: string) => Promise<string>;
+	/** what downloadImage gave for this url last time, without waiting */
+	knownImage?: (url: string) => string | null;
 	downloadPlaceholder?: (url: string, view: EditorView) => string | ImagePlaceholderObject;
 	uploadFile: (file: File) => Promise<string>;
 	deleteSrc: (src: string) => Promise<void>;

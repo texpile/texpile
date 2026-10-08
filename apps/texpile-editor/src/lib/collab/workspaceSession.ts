@@ -64,9 +64,10 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 			else doc.restate(liveDoc);
 		},
 		commit(path: string, content: string) {
-			isDirty.current = true;
+			isDirty.current = content !== doc.diskBaseline;
 			deps.scheduleSave(path, content);
-		}
+		},
+		textOf: (pm: PMNode) => doc.textOf(pm)
 	};
 }
 
@@ -79,8 +80,6 @@ export type SessionHandlerDeps = {
 	expectedPdfPath(): string | null;
 	/** a guest's change to a shared file, recorded under their name and mode */
 	recordGuestEdit(rel: string, before: string, after: string, edit: RemoteEdit): void;
-	/** awaited before a guest's changes are written, so the log lands before the file */
-	beforeGuestWrite(rel: string, content: string): Promise<void>;
 	/** resolve a guest's typst src -> preview position through the host's tinymist; no-op when no
 	 *  preview task is running. `rel` is manifest-relative and already validated. */
 	typstScrollForGuest(rel: string, line: number, character: number): void;
@@ -100,7 +99,6 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 	session.onFileOp = () => deps.refreshTree();
 	// straight onto collabHost, not the EditSession interface: only the host records guests' edits
 	collabHost.onGuestEdit = (rel, before, after, edit) => deps.recordGuestEdit(rel, before, after, edit);
-	collabHost.beforeGuestWrite = (rel, content) => deps.beforeGuestWrite(rel, content);
 	session.onSyncRequest = async (payload, from) => {
 		const root = workspaceRoot.current;
 		const pdf = deps.expectedPdfPath();
@@ -165,7 +163,6 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 		session.onSyncRequest = null;
 		session.onFileOp = null;
 		collabHost.onGuestEdit = null;
-		collabHost.beforeGuestWrite = null;
 		collabHost.onTypstScroll = null;
 		collabHost.onLspRequest = null;
 		stopGenWatch();

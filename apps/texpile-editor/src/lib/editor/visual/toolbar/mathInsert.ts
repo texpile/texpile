@@ -3,12 +3,14 @@
 // Shared by the toolbar and the symbol panel, which is why it is here rather than in a component:
 // both need it, and the one thing this must never do is keep its own idea of "the current
 // mathfield". Every version of this that cached an element went stale and inserted into nothing.
+import { activeWindow } from '$lib/childWindows/childWindowRegistry.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 
 /** the deepest focused element, crossing shadow roots (MathLive's deepActiveElement) */
 function deepActiveElement(): Element | null {
-	let el = document.activeElement;
+	// in the window with focus, which may be an editor's own
+	let el = activeWindow().document.activeElement;
 	while (el?.shadowRoot?.activeElement) el = el.shadowRoot.activeElement;
 	return el;
 }

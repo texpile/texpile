@@ -1,6 +1,8 @@
+// @vitest-environment jsdom
 // the top bar used to count words its own way; now it gives the details' number in either view
 import { describe, expect, it, vi } from 'vitest';
 import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import {
 	countOpenFile,
@@ -104,17 +106,18 @@ describe('a selection counts by the same rule', () => {
 		expect(documentCountStore.selectionWords).toBeNull();
 	});
 
-	it('in the visual editor, which leaves the whole file to countOpenFile', () => {
+	it('in the visual editor, which leaves the whole file to countOpenFile', async () => {
+		vi.useFakeTimers();
 		const doc = parseLatexFile(CITED).doc;
 		documentCountStore.words = -1;
 		const state = EditorState.create({ doc, plugins: [createWordCountPlugin((raw) => latexProse(raw, false))] });
+		const view = new EditorView(document.createElement('div'), { state });
 		expect(documentCountStore.words).toBe(-1);
 		// the whole document selected: the same words as the file's count
-		EditorState.create({
-			doc,
-			selection: TextSelection.create(doc, 1, doc.content.size - 1),
-			plugins: state.plugins
-		});
+		view.updateState(state.apply(state.tr.setSelection(TextSelection.create(doc, 1, doc.content.size - 1))));
+		await vi.runAllTimersAsync();
+		vi.useRealTimers();
+		view.destroy();
 		expect(documentCountStore.selectionWords).toBe(11);
 	});
 });

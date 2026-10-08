@@ -31,7 +31,6 @@ export type FolderLifecycleDeps = {
 	scanTexFiles(root: string): Promise<{ files: TexFile[] }>;
 	/** false cancels the whole operation (the user chose Cancel at the unsaved prompt) */
 	confirmLeaveUnsaved(): Promise<boolean>;
-	flushSaves(): void;
 	flushSavesAndWait(): Promise<void>;
 	sessionActive(): boolean;
 	endSession(): Promise<void>;
@@ -80,7 +79,8 @@ export class FolderLifecycle {
 			// the old folder invisibly, so end it before the swap
 			if (d.sessionActive() && root !== prevRoot) await d.endSession();
 			d.resolveMainConfirm(root); // before the stores flip, so the modal effect can't see a stale state
-			d.flushSaves(); // autosave-on: persist the outgoing folder's queued edit before the swap
+			// the outgoing folder's writes land, and record their comments, while it is still the open one
+			await d.flushSavesAndWait();
 			openFile(null); // detach the old file so nothing re-tabs it under the new root
 			// Flip the shell NOW, before the scan: the new workspace renders immediately (empty
 			// explorer, its saved tabs) and the slow parts backfill below. On a big folder the scan
@@ -116,7 +116,7 @@ export class FolderLifecycle {
 	 * affects the current session's view. */
 	async close(): Promise<void> {
 		const d = this.deps;
-		if (!(await d.confirmLeaveUnsaved())) return; // autosave off: ask instead of silently force-writing
+		if (!(await d.confirmLeaveUnsaved())) return; // autosave held off: ask instead of silently force-writing
 		await d.flushSavesAndWait();
 		d.resolveMainConfirm(null);
 		releaseWorkspace(); // frees the folder so another window may open it

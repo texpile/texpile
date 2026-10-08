@@ -172,3 +172,20 @@ export function syncWindowOverlay(el: HTMLElement): () => void {
 		offState?.();
 	};
 }
+
+type ControlsOverlay = EventTarget & { getTitlebarAreaRect(): DOMRect };
+function controlsOverlay(): ControlsOverlay | undefined {
+	return (navigator as Navigator & { windowControlsOverlay?: ControlsOverlay }).windowControlsOverlay;
+}
+
+/** a Linux desktop set to put the window buttons on the left, where the overlay's free area then starts */
+export function windowButtonsAtStart(): boolean {
+	return (controlsOverlay()?.getTitlebarAreaRect().x ?? 0) > 0;
+}
+
+/** the window buttons' strip moved or changed size: a desktop's button layout, full screen */
+export function onWindowButtonsMoved(cb: () => void): () => void {
+	const overlay = controlsOverlay();
+	overlay?.addEventListener('geometrychange', cb);
+	return () => overlay?.removeEventListener('geometrychange', cb);
+}

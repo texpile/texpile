@@ -97,3 +97,9 @@ function inlineBoxes(block: HTMLElement): LineBox[] {
 export function lineBoxesOf(block: HTMLElement): LineBox[] {
 	return linesFromBoxes(inlineBoxes(block));
 }
+
+export function contentWidth(block: HTMLElement): number {
+	const style = getComputedStyle(block);
+	const box = block.getBoundingClientRect().width / cssZoomOf(block);
+	return box - lengths(1, style.paddingLeft, style.paddingRight, style.borderLeftWidth, style.borderRightWidth);
+}

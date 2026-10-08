@@ -187,6 +187,19 @@ export function assembleProjectOutline(
 	root: string | null,
 	outlines: Record<string, RawOutlineItem[]>
 ): TocItem[] {
+	return assembleOutline(activeRaw, activeFile, activeDir, root, outlines, activeFile).items;
+}
+
+/** the outline from `rootFile` down its \input chain; entries of every file but `own` carry their file, and
+ *  `files` is every file the chain reached */
+export function assembleOutline(
+	rootRaw: RawOutlineItem[],
+	rootFile: string | null,
+	rootDir: string | null,
+	root: string | null,
+	outlines: Record<string, RawOutlineItem[]>,
+	own: string | null
+): { items: TocItem[]; files: string[] } {
 	const byNorm = new Map<string, { file: string; items: RawOutlineItem[] }>();
 	for (const [file, items] of Object.entries(outlines)) byNorm.set(pathKey(file), { file, items });
 
@@ -203,23 +216,27 @@ export function assembleProjectOutline(
 		return null;
 	}
 
-	const seen = new Set<string>(activeFile ? [pathKey(activeFile)] : []);
+	const ownKey = own ? pathKey(own) : null;
+	const seen = new Set<string>(rootFile ? [pathKey(rootFile)] : []);
+	const files: string[] = rootFile ? [rootFile] : [];
 	function splice(items: RawOutlineItem[], baseDir: string | null, file: string | null, depth: number): RawOutlineItem[] {
+		const tag = file && pathKey(file) !== ownKey ? file : null;
 		const out: RawOutlineItem[] = [];
 		for (const item of items) {
 			if (item.kind === 'input' && depth < 6) {
 				const child = resolve(baseDir, item.target);
 				if (child && !seen.has(pathKey(child.file))) {
 					seen.add(pathKey(child.file));
+					files.push(child.file);
 					const childDir = child.file.replace(/\\/g, '/').replace(/\/[^/]*$/, '');
 					out.push(...splice(child.items, childDir, child.file, depth + 1));
 				}
 				continue;
 			}
-			out.push(isMarker(item) || file == null ? item : { ...item, file });
+			out.push(isMarker(item) || tag == null ? item : { ...item, file: tag });
 		}
 		return out;
 	}
 
-	return numberOutline(splice(activeRaw, activeDir, null, 0));
+	return { items: numberOutline(splice(rootRaw, rootDir, rootFile, 0)), files };
 }
