@@ -176,9 +176,10 @@
 				// eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
 				documentSource = { data: arrayBuffer };
 			} else if (source instanceof ArrayBuffer) {
-				_setSrcDataForDownload(source.slice(0)); // copy before PDF.js detaches it
+				// PDF.js detaches what it is given: it gets a copy, so the same bytes draw again (a guest's preview reopened)
+				_setSrcDataForDownload(source);
 				// eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
-				documentSource = { data: source };
+				documentSource = { data: source.slice(0) };
 			} else if (source instanceof Uint8Array) {
 				_setSrcDataForDownload(new Uint8Array(source).buffer.slice(0) as ArrayBuffer); // copy for download
 				// eslint-disable-next-line id-denylist -- pdf.js DocumentInitParameters field
