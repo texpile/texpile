@@ -8,7 +8,7 @@ import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem
 
 /**
  * `.texpile/` is closed by default and opens for what the project is meant to share: the comment
- * log and the compile config (both are read on pull - the trust gate in projectConfigSync exists
+ * log, the snippets and the compile config (both are read on pull - the trust gate in projectConfigSync exists
  * precisely because config.json travels with a clone).
  *
  * An allowlist, so the NEXT thing put in here - a cache, per-user layout - arrives ignored and has
@@ -17,11 +17,11 @@ import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem
  *
  * The negations work because `.texpile/` itself is not ignored - only its contents, by this file.
  */
-const IGNORE_BODY = '*\n!.gitignore\n!comments.jsonl\n!config.json\n';
+const IGNORE_BODY = '*\n!.gitignore\n!comments.jsonl\n!config.json\n!snippets.json\n';
 
 /** bodies earlier versions seeded, verbatim: the ONLY contents safe to upgrade over. Anything
  *  else is a user's edit, and editing the file is the supported way to change what gets committed. */
-const STALE_IGNORE_BODIES = ['*\n!.gitignore\n!comments.jsonl\n'];
+const STALE_IGNORE_BODIES = ['*\n!.gitignore\n!comments.jsonl\n', '*\n!.gitignore\n!comments.jsonl\n!config.json\n'];
 
 /**
  * A guest's workspaceRoot is the sentinel 'session', not a path - it addresses the host's files

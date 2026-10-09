@@ -51,6 +51,7 @@ import { sourcePaste } from './paste/cmSourcePaste';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 import { dirname } from '$lib/workspace/fileSystem';
 import { foldMemory } from './extensions/fold-memory/foldMemory';
+import { sourceSnippets } from '$lib/editor/snippets/cmSnippets';
 
 export type SourceSetupDeps = {
 	fileFor: string;
@@ -85,6 +86,7 @@ function pasteDialectOf(fileFor: string): PasteDialect | null {
 export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 	const { fileFor, collab, onAddComment, onSelectComment } = deps;
 	const pasteDialect = pasteDialectOf(fileFor);
+	const snippetOptions = { stopUndoCapture: () => deps.undoManager?.stopCapturing() };
 	return [
 		// gutters render in extension order: lint goes before lineNumbers so it lands on their left
 		...(!fileFor || /\.(tex|typ)$/i.test(fileFor) ? [lintGutter({ hoverTime: 0 })] : []),
@@ -140,7 +142,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					// everywhere except inside a list item and Enter then behaves normally
 					latexListContinuation(),
 					mathPreview(),
-					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost()] : []),
+					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
 					cmSpellcheck(deps.spellLanguage)
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
@@ -149,6 +151,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					[
 						mdSourceShortcuts(),
 						mdPathCompletion(),
+						sourceSnippets('markdown', snippetOptions),
 						mathPreview({ comments: false }),
 						cmSpellcheck(deps.spellLanguage, 'markdown'),
 						foldGutter({ markerDOM: foldMarkerDom }),
@@ -164,6 +167,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								typSourceShortcuts(),
 								// ahead of defaultKeymap below, as latexListContinuation is
 								typstEnterContinuation(),
+								sourceSnippets('typst', snippetOptions),
 								// server-backed, so inert until the LSP extension lands in lspConf
 								typstGoTo({ onOpenFileAt: deps.onOpenFileAt, flash: (pos) => flashLineEffect.of(pos) }),
 								// a guest's missing file would be created on its own disk, not the project's

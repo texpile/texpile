@@ -1,6 +1,7 @@
 // The resolved compile command and everything that follows it around: the project config
 // adopt, the per-engine Problems lane, the shared-session compile intel, and loading an
 // existing log on folder open.
+import { followProjectSnippets } from '$lib/editor/snippets/file/snippetStatus.svelte';
 import { withLiveRefs } from '$lib/workspace/document/liveRefDiagnostics';
 import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
 import { untrack } from 'svelte';
@@ -53,6 +54,8 @@ export class WorkspaceCompileState {
 			// and the editor went on using whatever it had worked out before reading the file.
 			void projectConfig.adopt(root).then(() => this.resolveNow());
 		});
+		// the folder's snippets come from the same .texpile/ and follow the same folder
+		followProjectSnippets(() => (d.guest() || fileMode.current ? null : workspaceRoot.current));
 		// The project scan names the main file after the folder-reset effect has run, so a Typst
 		// project would otherwise sit on the inherited LaTeX command until something else re-resolved
 		// it. Folders with a saved command of their own are unaffected (resolveCompileCommand prefers it).

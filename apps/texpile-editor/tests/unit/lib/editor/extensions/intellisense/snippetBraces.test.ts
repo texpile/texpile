@@ -5,7 +5,10 @@ import { EditorState } from '@codemirror/state';
 import { snippet } from '@codemirror/autocomplete';
 import { LW_MACROS } from '$lib/languages/latex/intellisense/data/lwMacros';
 import { TEX_MACROS } from '$lib/languages/latex/intellisense/data/texMacros';
-import { AT_SUGGESTIONS } from '$lib/languages/latex/intellisense/data/atSuggestions';
+import { BUILTIN_SNIPPETS } from '$lib/editor/snippets/file/builtinSnippets';
+import { toCmTemplate } from '$lib/editor/snippets/expand/bodyTemplate';
+
+const NO_INPUTS = { selection: '', captures: [] };
 
 function inserted(template: string): string {
 	let state = EditorState.create({ doc: '' });
@@ -24,17 +27,14 @@ describe('snippet braces', () => {
 		expect(inserted('\\' + m!.snippet!)).toBe(text);
 	});
 
-	it('the @{ suggestion inserts escaped braces', () => {
-		const s = AT_SUGGESTIONS.find((x) => x.prefix === '{');
-		expect(inserted(s!.body)).toBe('\\left\\{  \\right\\}');
+	it('the @{ snippet inserts escaped braces', () => {
+		const s = BUILTIN_SNIPPETS.find((x) => x.name === '@{');
+		expect(inserted(toCmTemplate(s!.bodies.latex!, NO_INPUTS).template)).toBe('\\left\\{  \\right\\}');
 	});
 
 	it('no template built from the tables carries a brace the parser would strip', () => {
-		// the macro builder prepends the backslash; @-suggestions are used as written
-		const templates = [
-			...[...LW_MACROS, ...TEX_MACROS].filter((x) => x.snippet).map((x) => '\\' + x.snippet),
-			...AT_SUGGESTIONS.map((x) => x.body)
-		];
+		// the macro builder prepends the backslash; built-in snippets escape through toCmTemplate instead
+		const templates = [...LW_MACROS, ...TEX_MACROS].filter((x) => x.snippet).map((x) => '\\' + x.snippet);
 		const stripped = templates.filter((t) => /(?<!\\)\\[{}]/.test(t));
 		expect(stripped).toEqual([]);
 	});

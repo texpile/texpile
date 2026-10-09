@@ -50,6 +50,8 @@ export type AppSettings = {
 	whatsNewSeen: string;
 	/** live math preview tooltip in source mode. */
 	mathPreview: boolean;
+	/** snippets marked auto expand as their trigger is typed; off leaves the popup, shortcuts and Wrap with. */
+	autoSnippets: boolean;
 	/** the floating Comment button offered over a selection, in BOTH editors. */
 	commentPill: boolean;
 	/** soft-wrap long lines in Source mode instead of scrolling horizontally. */
@@ -127,6 +129,7 @@ const DEFAULTS: AppSettings = {
 	transparentWindow: false,
 	whatsNewSeen: '',
 	mathPreview: true,
+	autoSnippets: true,
 	commentPill: true,
 	sourceLineWrap: true,
 	visualJustify: true,

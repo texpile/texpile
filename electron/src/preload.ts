@@ -529,6 +529,14 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 	universeUnpack: (name: string, version: string, dir: string) => invokeFs('templates:universeUnpack', { name, version, dir })
 });
 
+// the global snippet file (see snippetsIpc.ts); a project's own is .texpile/snippets.json, read as any file
+contextBridge.exposeInMainWorld('texpileSnippets', {
+	/** its text, or null while there is none */
+	readGlobal: () => invokeFs('snippets:readGlobal'),
+	/** shows it in the file manager, made empty first if missing; resolves to its path */
+	revealGlobal: () => invokeFs('snippets:revealGlobal')
+});
+
 // the reader's own command-line agents (Preferences > AI); main picks the command, a run carries the prompt and which of
 // the agents ticked there to run
 contextBridge.exposeInMainWorld('texpileAgent', {

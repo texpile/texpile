@@ -29,6 +29,7 @@ export function registerDeferredIpc(): Promise<void> {
 // Templates lead: an empty folder opens on the starter picker, which lists the saved ones at once.
 const steps: Array<() => Promise<void>> = [
 	async () => (await import('./templatesIpc.js')).registerTemplatesIpc(),
+	async () => (await import('./snippetsIpc.js')).registerSnippetsIpc(),
 	async () => (await import('./gitIpc.js')).registerGitIpc(),
 	async () => (await import('./localHistoryIpc.js')).registerLocalHistoryIpc(),
 	async () => (await import('./pdfSaveIpc.js')).registerPdfSaveIpc(),

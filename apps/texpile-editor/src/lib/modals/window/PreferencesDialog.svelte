@@ -240,6 +240,9 @@
 					{@render toggleRow(m.prefs_math_preview(), m.prefs_math_preview_note(), settings.current.mathPreview !== false, (v) =>
 						updateSettings({ mathPreview: v })
 					)}
+					{@render toggleRow(m.prefs_auto_snippets(), m.prefs_auto_snippets_note(), settings.current.autoSnippets !== false, (v) =>
+						updateSettings({ autoSnippets: v })
+					)}
 				</div>
 				{@render sectionHeading(m.prefs_group_visual())}
 				<div class={SUB}>

@@ -13,7 +13,6 @@ import { argumentCompletionSource } from './arguments';
 import { macroOptions } from './macros';
 import { isMathContext, withMathBoost } from './mathContext';
 import { subsuperscriptCompletionSource } from './subsuperscript';
-import { atSuggestionCompletionSource } from './atSuggestions';
 import { bibFileCompletionSource } from './bibFile';
 
 // letters, or the delimiter-macro families (\(, \[, \{, \left(, \bigl[, \Biggm|, \left\|, ...)
@@ -46,7 +45,6 @@ const TEX_SOURCES = [
 	filePathCompletionSource,
 	glossaryCompletionSource,
 	argumentCompletionSource,
-	atSuggestionCompletionSource,
 	macroCompletionSource, // must run near-last: "\" + letters matches almost everything above too
 	subsuperscriptCompletionSource
 ];

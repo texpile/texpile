@@ -1,4 +1,17 @@
-import { AlignLeft, BookMarked, BookPlus, ClipboardPaste, Keyboard, Omega, ArrowDownToLine, ArrowUpToLine, Undo2 } from '@lucide/svelte';
+import {
+	AlignLeft,
+	BookMarked,
+	BookPlus,
+	ClipboardPaste,
+	Keyboard,
+	Omega,
+	ArrowDownToLine,
+	ArrowUpToLine,
+	Undo2,
+	Braces
+} from '@lucide/svelte';
+import { ensureProjectSnippets, revealGlobalSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { changedLines, nextChange, previousChange, revertChange, revertChangeAt } from '$lib/editor/source/cmChangeMarkers';
 import { conflictBlocks, nextConflict, previousConflict } from '$lib/editor/source/cmConflicts';
@@ -109,6 +122,24 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 				}
 			});
 	}
+	const root = workspaceRoot.current;
+	if (root && a.isProject() && a.isHostWorkspace())
+		items.push({
+			id: 'editor.projectSnippets',
+			label: m.palette_project_snippets(),
+			group,
+			keywords: 'snippets snippet trigger expand template shortcut latex suite wrap function texpile',
+			icon: Braces,
+			run: () => void ensureProjectSnippets(root).then((path) => path && a.openFile(path))
+		});
+	items.push({
+		id: 'editor.globalSnippets',
+		label: m.palette_global_snippets(),
+		group,
+		keywords: 'snippets snippet trigger expand template shortcut latex suite wrap function all folders',
+		icon: Braces,
+		run: () => void revealGlobalSnippets()
+	});
 	// keybindings are switched from here rather than only in Preferences: a vim user who lands in a
 	// fresh install wants one keystroke to fix it, not a dialog
 	const current = settings.current.editorKeymap ?? 'default';

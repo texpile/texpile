@@ -12,6 +12,8 @@
 	import LayoutControls from './titlebar/LayoutControls.svelte';
 	import { documentControls } from '$lib/preview/documentControls.svelte';
 	import WorkspaceSidebar from './WorkspaceSidebar.svelte';
+	import SnippetPatternsBar from './SnippetPatternsBar.svelte';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import GuestPresence from '$lib/collab/presence/GuestPresence.svelte';
 	import WindowDialogs from '$lib/modals/window/WindowDialogs.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
@@ -170,6 +172,10 @@
 			<button class="btn btn-xs preset-filled-primary-500" onclick={actions.acceptProjectCommand}>{m.project_command_use()}</button>
 		</div>
 	</div>
+{/if}
+
+{#if !guest && workspaceRoot.current}
+	<SnippetPatternsBar root={workspaceRoot.current} />
 {/if}
 
 <div class="flex min-h-0 flex-1 overflow-clip">
