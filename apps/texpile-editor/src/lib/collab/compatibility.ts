@@ -2,7 +2,7 @@
 
 // raise to the release that changes what collaboration sends in a way older versions cannot handle;
 // scripts/release.mjs warns when collaboration code changed and this did not
-export const COLLAB_OLDEST = '1.2.0';
+export const COLLAB_OLDEST = '1.4.0';
 
 // what a peer from before this check counts as: 1.1.0 or older, and it takes anyone
 const UNVERSIONED = { version: '1.1.0', oldest: '0.0.0' };

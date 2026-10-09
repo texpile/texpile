@@ -5,6 +5,12 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-09
+
+- feat: made interface cleaner (by @louisqli)
+- feat: split editor (by @louisqli)
+- feat: spell check in German, French, Spanish, Italian, Dutch, Portuguese (Brazil and Portugal) and Polish (by @louisqli)
+
 ## [1.3.1] - 2026-10-06
 
 - fix: Shift+arrow selection and Ctrl+Home/End in the visual editor (by @louisqli)
