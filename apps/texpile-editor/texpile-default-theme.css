@@ -268,8 +268,8 @@
 	--syntax-deleted: light-dark(#82071e, #ffa198);
 
 	/* find-in-document matches, both editors */
-	--find-match-bg: light-dark(rgb(255, 237, 153), rgb(102, 77, 3));
-	--find-match-active-bg: light-dark(rgb(255, 213, 79), rgb(161, 123, 5));
+	--find-match-bg: rgba(255, 255, 0, 0.4);
+	--find-match-active-bg: rgba(255, 128, 0, 0.6);
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
 	--proof-default: #14b8a6;

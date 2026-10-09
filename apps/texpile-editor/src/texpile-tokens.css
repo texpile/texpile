@@ -149,8 +149,8 @@ html {
 	--syntax-deleted: var(--error-ink);
 
 	/* find-in-document matches, both editors */
-	--find-match-bg: light-dark(var(--color-warning-200), var(--color-warning-900));
-	--find-match-active-bg: light-dark(var(--color-warning-300), var(--color-warning-700));
+	--find-match-bg: rgba(255, 255, 0, 0.4);
+	--find-match-active-bg: rgba(255, 128, 0, 0.6);
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
 	--proof-default: var(--tertiary-ink);
