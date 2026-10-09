@@ -54,7 +54,7 @@ function defaults(): CompileConfigState {
 /** the adopted state, reactive; defaults between folders and for guests (who never compile). */
 export const compileConfig = box<CompileConfigState>(defaults());
 
-/** the folder's spelling language from Spelling > Document Language; null = what each document names */
+/** the folder's spelling language from Spelling > Folder Language; null = what each document names */
 export const projectSpelling = box<SpellLanguage | null>(null);
 
 /** the folder's live mode where it applies: to a main file that compiles with LaTeX */

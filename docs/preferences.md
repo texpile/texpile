@@ -19,9 +19,10 @@ Settings for the whole app. Open it with Ctrl , (Cmd , on macOS) or File › Pre
 | Editor › Keybindings                       | Vim and Emacs work in the source editor only.                                                                                  |
 | Editor › Justify text, Hyphenate words     | Change the visual editor only, not the compiled document or the file.                                                          |
 | Spelling › Check spelling and grammar      | Off by default.                                                                                                                |
-| Spelling › Spelling language               | For documents that name no language. English by default.                                                                       |
+| Spelling › This folder › Language          | The same choice as Spelling › Folder Language. Needs an open folder.                                                           |
+| Spelling › Default language                | For documents that name no language, in folders set to Automatic. English by default.                                          |
 | Spelling › Custom Dictionary               | One list per language. Separate several words with spaces, commas, or semicolons.                                              |
-| Spelling › Grammar rules                   | All off by default. Shown while Spelling language is English, the one language grammar is checked in.                          |
+| Spelling › Grammar rules                   | All off by default. Shown while English is the default language or the open folder is checked in English.                      |
 | Version Control › Autofetch                | Fetches from the default remote every 3 minutes.                                                                               |
 | Version Control › Git Identity             | Read-only. Change it with `git config` in a terminal.                                                                          |
 | Version Control › Keep version history     | Keeps a copy of each save for 30 days.                                                                                         |

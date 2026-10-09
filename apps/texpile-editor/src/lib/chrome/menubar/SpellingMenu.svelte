@@ -4,7 +4,7 @@
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
 	import MenuBarSubmenu from './MenuBarSubmenu.svelte';
 	import { menuContentClass, menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';
-	import type { DocumentLanguageItem } from '$lib/editor/spellcheck/languages/documentLanguageMenu';
+	import type { FolderLanguageItem } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -12,7 +12,7 @@
 		select: (value: string) => void;
 		editable: boolean;
 		spellcheckOn: boolean;
-		languages: DocumentLanguageItem[];
+		languages: FolderLanguageItem[];
 		/** a guest's: the folder's language is the host's to choose */
 		languagesFixed: boolean;
 	};
@@ -29,7 +29,7 @@
 					<Menu.ItemText>{m.menubar_check_spelling()}</Menu.ItemText>
 					{#if props.spellcheckOn}<Check class="size-4" />{/if}
 				</Menu.Item>
-				<MenuBarSubmenu value="language" label={m.spelling_document_language()} select={(value) => props.select(`lang:${value}`)}>
+				<MenuBarSubmenu value="language" label={m.spelling_folder_language()} select={(value) => props.select(`lang:${value}`)}>
 					{#each props.languages as item, i (item.value)}
 						<Menu.Item value={item.value} class={menuBarItemClass} disabled={props.languagesFixed}>
 							<Menu.ItemText>{item.label}</Menu.ItemText>

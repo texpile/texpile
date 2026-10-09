@@ -27,8 +27,8 @@ A document is checked in the language it names:
 | Typst               | `#set text(lang: "es")`        |
 | Markdown            | `lang: it` in the front matter |
 
-A chapter brought in with `\input` or `#include` follows its main file. A document that names no language is checked in the one under Preferences › Spelling › Spelling language, English unless changed. A document in a language without a dictionary, such as Russian, is not checked.
+A chapter brought in with `\input` or `#include` follows its main file. A document that names no language is checked in Preferences › Spelling › Default language, English unless changed. A document in a language without a dictionary, such as Russian, is not checked.
 
-Spelling › Document Language sets one language for every file in the folder, over what the files name. It is saved in the folder's `.texpile/config.json`, so co-authors get it too. Automatic goes back to what each file names.
+Spelling › Folder Language, or Preferences › Spelling › This folder, sets one language for every file in the folder, over what the files name. It is saved in the folder's `.texpile/config.json`, so co-authors get it too. Automatic goes back to what each file names, and says where its language comes from: the document, or the default.
 
 Each language has its own dictionary: Add to Dictionary on a German word adds it to the German one. Preferences › Spelling › Custom Dictionary shows one language at a time.

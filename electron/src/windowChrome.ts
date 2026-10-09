@@ -33,7 +33,7 @@ export type MenuState = {
 	/** the caret is inside a CodeMirror view, where Insert/Format do not apply */
 	cursorInCm: boolean;
 	spellcheck: boolean;
-	/** Spelling > Document Language, labeled, Automatic first; absent from a renderer predating it */
+	/** Spelling > Folder Language, labeled, Automatic first; absent from a renderer predating it */
 	spellLanguages?: { value: string; label: string; checked: boolean }[];
 	canChooseSpellLanguage?: boolean;
 	terminalAvailable: boolean;
@@ -420,7 +420,7 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					? [
 							{
 								...doc,
-								label: label(s, 'documentLanguage', 'Document Language'),
+								label: label(s, 'folderLanguage', 'Folder Language'),
 								submenu: s.spellLanguages.flatMap((item, i) => [
 									{
 										label: item.label,

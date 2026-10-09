@@ -26,7 +26,7 @@
 	import InsertMenu from './menubar/InsertMenu.svelte';
 	import FormatMenu from './menubar/FormatMenu.svelte';
 	import SpellingMenu from './menubar/SpellingMenu.svelte';
-	import { documentLanguageItems } from '$lib/editor/spellcheck/languages/documentLanguageMenu';
+	import { folderLanguageItems } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 	import type { SpellingChoice } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 	import TerminalMenu from './menubar/TerminalMenu.svelte';
 	import HelpMenu from './menubar/HelpMenu.svelte';
@@ -79,7 +79,7 @@
 		onZoomIn?: () => void;
 		onZoomOut?: () => void;
 		onZoomReset?: () => void;
-		/** the open file's spelling language, for Spelling > Document Language */
+		/** the open file's spelling language, for Spelling > Folder Language */
 		spelling?: SpellingChoice | null;
 		/** absent for a guest: the folder's language is the host's to choose */
 		onSpellLanguage?: (value: string) => void;
@@ -205,7 +205,7 @@
 	}
 
 	const spellcheckOn = $derived(editorConfigStore.current?.spellcheck ?? false);
-	const spellLanguages = $derived(documentLanguageItems(spelling));
+	const spellLanguages = $derived(folderLanguageItems(spelling));
 	function spellcheckSelect(value: string) {
 		if (value === 'toggle') setSpellcheckEnabled(!spellcheckOn);
 		else if (value.startsWith('lang:')) onSpellLanguage?.(value.slice(5));

@@ -8,6 +8,7 @@
 	import { addLanguageWords, languageWords, removeLanguageWord } from '$lib/editor/spellcheck/languages/personalWords';
 	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { settings } from '$lib/settings';
+	import { openSpelling } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 	import { spellLanguageOptions } from '../prefsOptions';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -19,8 +20,8 @@
 	const SHOWN = 150;
 
 	let query = $state('');
-	// each language keeps its own words; English's are Harper's
-	let language = $state<SpellLanguage>(settings.current.spellLanguage);
+	// each language keeps its own words, English's are Harper's; opens on the one the open folder is checked in
+	let language = $state<SpellLanguage>(openSpelling.current?.choice.language ?? settings.current.spellLanguage);
 	const all = $derived(language === 'en' ? (editorConfigStore.current?.dictionary ?? []) : languageWords(language));
 	const found = $derived(matching(all, query));
 	const typed = $derived(wordsIn(query));

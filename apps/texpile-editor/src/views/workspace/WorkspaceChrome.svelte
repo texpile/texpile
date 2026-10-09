@@ -7,7 +7,7 @@
 	import { userTemplatesAvailable } from '$lib/workspace/templates/templateBridge';
 	import TitleBar from '$lib/chrome/TitleBar.svelte';
 	import WorkspaceMenuBar from '$lib/chrome/WorkspaceMenuBar.svelte';
-	import { chooseDocumentLanguage } from '$lib/editor/spellcheck/languages/documentLanguageMenu';
+	import { chooseFolderLanguage, openSpelling } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 	import SessionPresence from '$lib/chrome/SessionPresence.svelte';
 	import LayoutControls from './titlebar/LayoutControls.svelte';
 	import { documentControls } from '$lib/preview/documentControls.svelte';
@@ -80,6 +80,11 @@
 		fileTreeRef: Any;
 		globalSearchRef: GlobalSearch | null;
 	} = $props();
+
+	$effect(() => {
+		openSpelling.current = { choice: menu.spelling, fixed: !menu.hostMode };
+		return () => (openSpelling.current = null);
+	});
 </script>
 
 <!-- One title bar for both roles. A guest used to get a bare one, which meant no menus on Windows
@@ -130,7 +135,7 @@
 			onZoomOut={actions.uiZoomOut}
 			onZoomReset={actions.uiZoomReset}
 			spelling={menu.spelling}
-			onSpellLanguage={menu.hostMode ? chooseDocumentLanguage : undefined}
+			onSpellLanguage={menu.hostMode ? chooseFolderLanguage : undefined}
 		/>
 	{/snippet}
 </TitleBar>
