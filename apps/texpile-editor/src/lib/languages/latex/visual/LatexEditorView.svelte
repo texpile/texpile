@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ContextMenu from '$lib/editor/visual/contextMenu/ContextMenu.svelte';
 	import type { ShowInOutput } from '$lib/editor/visual/contextMenu/showInOutput';
+	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { onDestroy, onMount, untrack } from 'svelte';
 	import { EditorState, Transaction } from 'prosemirror-state';
 	import { EditorView } from 'prosemirror-view';
@@ -72,6 +73,8 @@
 		onCiteByDoi?: () => void;
 		/** Show in PDF from the right-click menu */
 		showInOutput?: ShowInOutput;
+		/** the language this file's spelling is checked in; null checks nothing */
+		spellLanguage?: SpellLanguage | null;
 		/** a \ref whose label is not drawn here: the workspace jumps to its \label line */
 		onJumpToLabel?: (name: string) => boolean;
 		/** a drawn call of the paper's own macro: the workspace opens its definition in the source */
@@ -107,6 +110,7 @@
 		onInsertCitation,
 		onCiteByDoi,
 		showInOutput,
+		spellLanguage = 'en',
 		onJumpToLabel,
 		onJumpToDefinition,
 		onCommentsPlaced,
@@ -141,7 +145,8 @@
 			onSelectComment,
 			onAddComment,
 			sourceAnchor,
-			addCommentLabel
+			addCommentLabel,
+			spellLanguage: () => spellLanguage
 		});
 
 		const initialDoc = localValue ?? undefined;

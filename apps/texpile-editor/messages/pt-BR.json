@@ -2269,5 +2269,14 @@
 	"wsview_stranded_discard": "Descartar alterações",
 	"wsview_stranded_toast_title": "{name} foi alterado no disco",
 	"wsview_stranded_toast_body": "Alterações não salvas.",
-	"wsview_stranded_open": "Abrir"
+	"wsview_stranded_open": "Abrir",
+	"spelling_not_in_dictionary": "Não está no dicionário ({language}).",
+	"spelling_add_to_language_dictionary": "Adicionar '{word}' ao dicionário ({language})",
+	"spelling_document_language": "Idioma do documento",
+	"spelling_automatic": "Automático",
+	"spelling_automatic_named": "Automático ({language})",
+	"spelling_automatic_unchecked": "Automático ({language}, sem verificação)",
+	"prefs_spell_language": "Idioma da verificação ortográfica",
+	"prefs_spell_language_note": "Para documentos que não indicam o idioma. Um documento que indica o seu (babel, polyglossia, lang do Typst, front matter) é verificado nele. A gramática é verificada só em inglês.",
+	"spelldict_language": "Idioma do dicionário"
 }

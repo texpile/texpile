@@ -10,7 +10,9 @@
 	import IconHelpCircle from '@lucide/svelte/icons/help-circle';
 	import IconBookPlus from '@lucide/svelte/icons/book-plus';
 	import IconCircleOff from '@lucide/svelte/icons/circle-off';
-	import { addWordToDocumentDictionary } from '$lib/editor/spellcheck/harper';
+	import { addToDictionary } from '$lib/editor/spellcheck/languages/personalWords';
+	import { spellLanguageName } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
+	import { isDictionaryLanguage, type SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { ruleName, SPELLING_RULE } from '$lib/editor/spellcheck/config/grammarRules';
 	import { setGrammarRule } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { settings } from '$lib/settings';
@@ -29,6 +31,7 @@
 		replacements: string[];
 		text: string; // the error text itself
 		rule?: string; // the Harper rule that found it
+		language?: SpellLanguage; // the language it was checked in
 	};
 
 	type Props = {
@@ -140,7 +143,7 @@
 		console.log('[Harper] Adding word to dictionary:', word);
 
 		try {
-			await addWordToDocumentDictionary(word);
+			await addToDictionary(word, error.language);
 
 			invalidateCache();
 
@@ -311,7 +314,9 @@
 			<button
 				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal flex-1 justify-center gap-1 text-xs"
 				onclick={handleAddToDictionary}
-				use:tip={m.harper_add_to_dictionary_title({ word: error.text })}
+				use:tip={isDictionaryLanguage(error.language)
+					? m.spelling_add_to_language_dictionary({ word: error.text, language: spellLanguageName(error.language) })
+					: m.harper_add_to_dictionary_title({ word: error.text })}
 			>
 				<IconBookPlus size={13} />
 				<span class="cap-center">{m.harper_add_to_dictionary_button()}</span>

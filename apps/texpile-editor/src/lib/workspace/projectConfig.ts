@@ -16,6 +16,7 @@ import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem
 import { ensureTexpileIgnore } from '$lib/workspace/texpileDir';
 import { isSafeRel } from '$lib/collab/protocol';
 import type { CompileOutputs } from '$lib/workspace/workspaceStore';
+import { isSpellLanguage, type SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 
 const CONFIG_PATH = '.texpile/config.json';
 
@@ -38,6 +39,8 @@ export type ProjectConfig = {
 	completionMarker?: boolean;
 	latex?: ProjectFormatConfig;
 	typst?: ProjectFormatConfig;
+	/** the language spelling is checked in, over what the documents name; absent = what they name */
+	spelling?: { language: SpellLanguage };
 };
 
 function configPath(root: string) {
@@ -108,6 +111,8 @@ export async function readProjectConfig(root: string): Promise<ProjectConfig | n
 		if (latex) cfg.latex = latex;
 		const typst = cleanFormat(raw.typst);
 		if (typst) cfg.typst = typst;
+		const spelling = (raw as { spelling?: { language?: unknown } }).spelling?.language;
+		if (isSpellLanguage(spelling)) cfg.spelling = { language: spelling };
 		return cfg;
 	} catch {
 		return null;

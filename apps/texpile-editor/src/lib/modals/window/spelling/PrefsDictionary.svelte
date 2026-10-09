@@ -5,6 +5,10 @@
 	import { addWordsToDocumentDictionary, removeWordFromDocumentDictionary } from '$lib/editor/spellcheck/harper';
 	import { initSpellcheckConfig } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { matching, wordsIn } from '$lib/editor/spellcheck/config/dictionaryWords';
+	import { addLanguageWords, languageWords, removeLanguageWord } from '$lib/editor/spellcheck/languages/personalWords';
+	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
+	import { settings } from '$lib/settings';
+	import { spellLanguageOptions } from '../prefsOptions';
 	import { toaster } from '$lib/modals/toaster-svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -15,7 +19,9 @@
 	const SHOWN = 150;
 
 	let query = $state('');
-	const all = $derived(editorConfigStore.current?.dictionary ?? []);
+	// each language keeps its own words; English's are Harper's
+	let language = $state<SpellLanguage>(settings.current.spellLanguage);
+	const all = $derived(language === 'en' ? (editorConfigStore.current?.dictionary ?? []) : languageWords(language));
 	const found = $derived(matching(all, query));
 	const typed = $derived(wordsIn(query));
 	const toAdd = $derived(typed.filter((w) => !all.includes(w)));
@@ -25,14 +31,21 @@
 		if (!words.length) return;
 		// cleared first, so what is typed during the await is not wiped
 		query = '';
-		await addWordsToDocumentDictionary(words);
+		await addWords(language, words);
+	}
+
+	async function addWords(to: SpellLanguage, words: string[]) {
+		if (to === 'en') await addWordsToDocumentDictionary(words);
+		else addLanguageWords(to, words);
 	}
 
 	async function remove(word: string) {
-		await removeWordFromDocumentDictionary(word);
+		const from = language;
+		if (from === 'en') await removeWordFromDocumentDictionary(word);
+		else removeLanguageWord(from, word);
 		toaster.success({
 			title: m.spelldict_removed({ word }),
-			action: { label: m.menubar_undo(), onClick: () => void addWordsToDocumentDictionary([word]) }
+			action: { label: m.menubar_undo(), onClick: () => void addWords(from, [word]) }
 		});
 	}
 </script>
@@ -40,11 +53,18 @@
 <div class="border-surface-200-800 border-b py-4 last:border-b-0">
 	<div class="flex items-baseline justify-between gap-4">
 		<div class="text-sm font-medium">{m.spelldict_heading()}</div>
-		{#if all.length}
-			<span class="text-muted text-xs tabular-nums"
-				>{all.length === 1 ? m.spelldict_count_one({ count: 1 }) : m.spelldict_count_other({ count: all.length.toLocaleString() })}</span
-			>
-		{/if}
+		<div class="flex items-baseline gap-3">
+			{#if all.length}
+				<span class="text-muted text-xs tabular-nums"
+					>{all.length === 1 ? m.spelldict_count_one({ count: 1 }) : m.spelldict_count_other({ count: all.length.toLocaleString() })}</span
+				>
+			{/if}
+			<select class="select w-auto min-w-32 text-sm" bind:value={language} aria-label={m.spelldict_language()}>
+				{#each spellLanguageOptions() as o (o.value)}
+					<option value={o.value}>{o.label}</option>
+				{/each}
+			</select>
+		</div>
 	</div>
 	<p class="text-muted mt-1 text-xs leading-relaxed">{m.prefs_dictionary_note()}</p>
 

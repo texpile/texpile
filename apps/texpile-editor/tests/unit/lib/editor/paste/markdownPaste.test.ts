@@ -64,7 +64,8 @@ describe('markdown paste', () => {
 			mlarrowHandlers: new Plugin({}),
 			docDir: () => '',
 			placeholder: '',
-			addCommentLabel: ''
+			addCommentLabel: '',
+			spellLanguage: () => 'en'
 		});
 		// the other plugin views measure layout jsdom has none of
 		const state = EditorState.create({ doc, plugins: plugins.filter((plugin) => plugin.props.handlePaste || !plugin.spec.view) });

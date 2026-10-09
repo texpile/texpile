@@ -53,6 +53,9 @@ export type MenuStateInput = {
 	dialect: 'tex' | 'md' | 'typ';
 	cursorInCm: boolean;
 	spellcheck: boolean;
+	/** Spelling > Document Language, labeled; the first is Automatic */
+	spellLanguages: { value: string; label: string; checked: boolean }[];
+	canChooseSpellLanguage: boolean;
 	terminalAvailable: boolean;
 	terminalVisible: boolean;
 	canShare: boolean;
@@ -169,6 +172,7 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		checkSpelling: m.menubar_check_spelling(),
 		dictionary: m.menubar_edit_dictionary(),
 		spellingSettings: m.menubar_spelling_settings(),
+		documentLanguage: m.spelling_document_language(),
 		compile: m.menubar_terminal_compile(),
 		configureCompile: m.menubar_configure_compile_command(),
 		newTerminal: m.menubar_new_terminal(),

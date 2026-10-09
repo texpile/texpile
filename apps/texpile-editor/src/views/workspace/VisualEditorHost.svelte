@@ -19,6 +19,7 @@
 	import { showInOutputAt } from '$lib/editor/visual/contextMenu/showInOutput';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
+	import { spellingFor } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 
 	let {
 		kind,
@@ -91,6 +92,7 @@
 			? showInOutputAt(kind === 'typ' ? m.tbar_ctx_show_in_preview() : m.tbar_ctx_show_in_pdf(), sourceMap, texSource, onSyncToPdf)
 			: undefined
 	);
+	const spelling = $derived(spellingFor(loadedPath, texSource));
 	// a selection in any of the editors, as the range of texSource its characters are
 	function sourceAnchor(doc: PMNode, from: number, to: number): CommentAnchor | null {
 		return sourceAnchorFor(doc, sourceMap, texSource, from, to);
@@ -127,6 +129,7 @@
 		{#if kind === 'md'}
 			<MarkdownEditorView
 				{live}
+				spellLanguage={spelling.language}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -152,6 +155,7 @@
 		{:else if kind === 'typ'}
 			<TypstEditorView
 				{live}
+				spellLanguage={spelling.language}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}
@@ -180,6 +184,7 @@
 		{:else}
 			<LatexEditorView
 				{live}
+				spellLanguage={spelling.language}
 				localValue={visualDoc}
 				docPath={loadedPath}
 				localReferences={allReferences}

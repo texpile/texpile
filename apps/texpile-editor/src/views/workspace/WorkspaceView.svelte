@@ -69,6 +69,7 @@
 	// a guest session: host chrome (compile/terminal/git/file-ops/share) hidden
 	const guest = $derived(session.isGuest);
 	import { hasVisualMode, isRawTextKind } from '$lib/workspace/documentBuffer.svelte';
+	import { spellingFor } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 
 	// the open document, its parse/mode lifecycle, and the edit-persistence flow live in
 	// ./workspaceDoc.svelte.ts and ./workspaceEditFlow.svelte.ts
@@ -376,7 +377,8 @@
 			canManageTree: provider.caps.manageTree,
 			canFormat: fmt.canFormatDoc(),
 			uiZoomPercent,
-			typstProject: cc.typstProject
+			typstProject: cc.typstProject,
+			spelling: spellingFor(doc.path ?? null, hasVisualMode(kind) ? doc.texSource : doc.rawContent)
 		}}
 		actions={chromeActions}
 		pendingCommand={projectConfig.pending}

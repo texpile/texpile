@@ -2269,5 +2269,14 @@
 	"wsview_stranded_discard": "放弃修改",
 	"wsview_stranded_toast_title": "{name} 已在磁盘上被修改",
 	"wsview_stranded_toast_body": "修改未保存。",
-	"wsview_stranded_open": "打开"
+	"wsview_stranded_open": "打开",
+	"spelling_not_in_dictionary": "不在{language}词典中。",
+	"spelling_add_to_language_dictionary": "将“{word}”添加到{language}词典",
+	"spelling_document_language": "文档语言",
+	"spelling_automatic": "自动",
+	"spelling_automatic_named": "自动（{language}）",
+	"spelling_automatic_unchecked": "自动（{language}，不检查）",
+	"prefs_spell_language": "拼写检查语言",
+	"prefs_spell_language_note": "用于未指定语言的文档。指定了语言的文档（babel、polyglossia、Typst 的 lang、front matter）按该语言检查。语法仅检查英语。",
+	"spelldict_language": "词典语言"
 }

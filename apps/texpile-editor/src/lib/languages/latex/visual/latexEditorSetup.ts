@@ -42,6 +42,7 @@ import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/t
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
 import { proofreadPlugin, spellChipPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
+import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
@@ -92,10 +93,22 @@ export type LatexEditorSetup = {
 	/** the selection as a range of the file; see pmComments */
 	sourceAnchor?: SourceAnchorFn;
 	addCommentLabel: string;
+	/** read at each check: the editor's file can change its language */
+	spellLanguage: () => SpellLanguage | null;
 };
 
 export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
-	const { mathlivePlugin, mlarrowHandlers, imageDir, placeholder, onSelectComment, onAddComment, sourceAnchor, addCommentLabel } = setup;
+	const {
+		mathlivePlugin,
+		mlarrowHandlers,
+		imageDir,
+		placeholder,
+		onSelectComment,
+		onAddComment,
+		sourceAnchor,
+		addCommentLabel,
+		spellLanguage
+	} = setup;
 	return [
 		parseCarryPlugin,
 		labelRenameUndo,
@@ -194,7 +207,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		createTocPlugin(),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
-		proofreadPlugin,
+		proofreadPlugin(spellLanguage),
 		spellProblemKeymap,
 		spellChipPlugin,
 		createBoundaryClickPlugin(),

@@ -4,6 +4,7 @@
 </script>
 
 <script lang="ts">
+	import { spellingFor } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { EditorView, type ViewUpdate } from '@codemirror/view';
 	import { EditorState, Compartment } from '@codemirror/state';
@@ -196,6 +197,7 @@
 					onJumpToFile,
 					onOpenFileAt,
 					onScroll: () => deferredRememberPosition(),
+					spellLanguage: (source) => spellingFor(fileFor, source).language,
 					updateListener: onViewUpdate
 				})
 			})

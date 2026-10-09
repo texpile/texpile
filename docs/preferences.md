@@ -15,13 +15,14 @@ Settings for the whole app. Open it with Ctrl , (Cmd , on macOS) or File › Pre
 
 | Setting                                     | Note                                                                                                                           |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Appearance › Language                       | Changes the interface only. Spell check covers English only.                                                                   |
+| Appearance › Language                       | Changes the interface only. Spell check follows each document's own language.                                                  |
 | Editor › Open terminal panel when compiling | When off, the badge next to Compile is the only sign of errors.                                                                |
 | Editor › Keybindings                        | Vim and Emacs work in the source editor only.                                                                                  |
 | Editor › Justify text, Hyphenate words      | Change the visual editor only, not the compiled document or the file.                                                          |
 | Spelling › Check spelling and grammar       | Off by default.                                                                                                                |
-| Spelling › Custom Dictionary                | Separate several words with spaces, commas, or semicolons.                                                                     |
-| Spelling › Grammar rules                    | All off by default.                                                                                                            |
+| Spelling › Spelling language                | For documents that name no language. English by default.                                                                       |
+| Spelling › Custom Dictionary                | One list per language. Separate several words with spaces, commas, or semicolons.                                              |
+| Spelling › Grammar rules                    | All off by default. Shown while Spelling language is English, the one language grammar is checked in.                          |
 | Version Control › Autofetch                 | Fetches from the default remote every 3 minutes.                                                                               |
 | Version Control › Git Identity              | Read-only. Change it with `git config` in a terminal.                                                                          |
 | Version Control › Keep version history      | Keeps a copy of each save for 30 days.                                                                                         |

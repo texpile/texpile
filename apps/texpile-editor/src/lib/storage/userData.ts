@@ -7,6 +7,7 @@
 // completion), which localStorage absorbs without the IPC+disk cost settings.json would pay.
 
 import { box } from '$lib/runes/box.svelte';
+import { isDictionaryLanguage, type DictionaryLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 
 export type UserData = {
 	v: 1;
@@ -16,6 +17,8 @@ export type UserData = {
 	commentAuthor: string;
 	/** spell-check ignore list */
 	dictionary: string[];
+	/** the same for each language checked by a dictionary; dictionary above is English's */
+	languageWords: Partial<Record<DictionaryLanguage, string[]>>;
 	/** most-recent first */
 	recentFolders: string[];
 	/** completion frecency: label -> { s: decayed accept score, t: last accept ms epoch } */
@@ -34,6 +37,7 @@ const DEFAULTS: UserData = {
 	collabName: '',
 	commentAuthor: '',
 	dictionary: [],
+	languageWords: {},
 	recentFolders: [],
 	completionUsage: {},
 	recentTypstSymbols: [],
@@ -43,6 +47,13 @@ const DEFAULTS: UserData = {
 
 function stringsOf(list: unknown): string[] {
 	return Array.isArray(list) ? list.filter((s): s is string => typeof s === 'string') : [];
+}
+
+function wordListsOf(lists: unknown): UserData['languageWords'] {
+	if (typeof lists !== 'object' || lists === null) return {};
+	return Object.fromEntries(
+		Object.entries(lists).flatMap(([language, words]) => (isDictionaryLanguage(language) ? [[language, stringsOf(words)]] : []))
+	);
 }
 
 function read(fallback: UserData = DEFAULTS): UserData {
@@ -55,6 +66,7 @@ function read(fallback: UserData = DEFAULTS): UserData {
 			merged.recentFolders = merged.recentFolders.filter((p): p is string => typeof p === 'string').slice(0, MAX_RECENT);
 			merged.recentTypstSymbols = stringsOf(merged.recentTypstSymbols);
 			merged.recentLatexSymbols = stringsOf(merged.recentLatexSymbols);
+			merged.languageWords = wordListsOf(merged.languageWords);
 			return merged;
 		}
 	} catch {

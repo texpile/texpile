@@ -33,6 +33,9 @@ export type MenuState = {
 	/** the caret is inside a CodeMirror view, where Insert/Format do not apply */
 	cursorInCm: boolean;
 	spellcheck: boolean;
+	/** Spelling > Document Language, labeled, Automatic first; absent from a renderer predating it */
+	spellLanguages?: { value: string; label: string; checked: boolean }[];
+	canChooseSpellLanguage?: boolean;
 	terminalAvailable: boolean;
 	terminalVisible: boolean;
 	canShare: boolean;
@@ -413,6 +416,24 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					checked: s.spellcheck,
 					click: () => fire(win, 'spelling:toggle')
 				},
+				...(s.spellLanguages?.length
+					? [
+							{
+								...doc,
+								label: label(s, 'documentLanguage', 'Document Language'),
+								submenu: s.spellLanguages.flatMap((item, i) => [
+									{
+										label: item.label,
+										type: 'checkbox' as const,
+										checked: item.checked,
+										enabled: s.canChooseSpellLanguage !== false,
+										click: () => fire(win, `spelling:lang:${item.value}`)
+									},
+									...(i === 0 ? [{ type: 'separator' as const }] : [])
+								])
+							}
+						]
+					: []),
 				{ type: 'separator' },
 				{ label: label(s, 'dictionary', 'Edit Dictionary…'), click: () => fire(win, 'spelling:dictionary') },
 				{ label: label(s, 'spellingSettings', 'Spelling and Grammar Settings…'), click: () => fire(win, 'spelling:settings') }

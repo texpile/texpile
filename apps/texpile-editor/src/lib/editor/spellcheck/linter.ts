@@ -6,12 +6,13 @@ import { settings } from '$lib/settings';
 import { observe } from '$lib/runes/observe.svelte';
 import { browser } from '$lib/runtime';
 import { ruleConfig, systemVariant, type EnglishVariant } from './config/grammarRules';
+import type { SpellLanguage } from './languages/spellLanguages';
 
 let linterPromise: Promise<WorkerLinter> | null = null;
 
 let lastLoadedDictionary: string[] = [];
 
-const BASE_WORDS = ['Texpile', 'LaTeX', 'WYSIWYM', 'CTRL', 'CMD', 'ProseMirror', 'WebAssembly', 'TypeScript', 'JavaScript'];
+export const BASE_WORDS = ['Texpile', 'LaTeX', 'WYSIWYM', 'CTRL', 'CMD', 'ProseMirror', 'WebAssembly', 'TypeScript', 'JavaScript'];
 
 /** the app's own words and the custom dictionary, into a checker that has none */
 async function loadWords(linter: WorkerLinter): Promise<void> {
@@ -93,6 +94,11 @@ export function onLintRulesChanged(fn: () => void): () => void {
 	return () => rulesListeners.delete(fn);
 }
 
+/** what was found is out of date everywhere: the words of a dictionary changed */
+export function markLintsStale(): void {
+	rulesListeners.forEach((fn) => fn());
+}
+
 observe(wanted, () => {
 	if (!linterPromise) return;
 	void linterPromise
@@ -106,24 +112,28 @@ export async function getHarperLinter(): Promise<WorkerLinter> {
 	return linterPromise;
 }
 
+export type LintMatch = {
+	offset: number;
+	length: number;
+	message: string;
+	shortMessage?: string;
+	type: { typeName: string };
+	replacements?: string[];
+	/** the Harper rule that found it */
+	rule: string;
+};
+
+export type LintResult = {
+	matches: LintMatch[];
+	/** worker/wasm failure: callers must NOT cache the empty result as "no problems". */
+	failed?: true;
+};
+
 /** lints text, returning matches in prosemirror-proofread format. */
 export async function lintText(
 	text: string,
 	options?: { language?: LintOptions['language']; isStale?: () => boolean }
-): Promise<{
-	matches: Array<{
-		offset: number;
-		length: number;
-		message: string;
-		shortMessage?: string;
-		type: { typeName: string };
-		replacements?: string[];
-		/** the Harper rule that found it */
-		rule: string;
-	}>;
-	/** worker/wasm failure: callers must NOT cache the empty result as "no problems". */
-	failed?: true;
-}> {
+): Promise<LintResult> {
 	try {
 		const linter = await getHarperLinter();
 		// by rule, so a suggestion can offer to turn off the rule that made it
@@ -151,7 +161,7 @@ export async function lintText(
 			// prosemirror-proofread prefixes typeName with 'proofread-' for the css styling
 			const lintKind = lint.lint_kind();
 
-			ruleOfList.set(suggestions, rule);
+			tagReplacements(suggestions, { rule, language: 'en' });
 			const match = {
 				offset: span.start,
 				length: span.end - span.start,
@@ -174,11 +184,17 @@ export async function lintText(
 	}
 }
 
-// prosemirror-proofread drops match fields it does not know but passes the replacements list through as is
-const ruleOfList = new WeakMap<object, string>();
+export type LintOrigin = { rule: string; language: SpellLanguage };
 
-export function ruleOfReplacements(list: unknown): string | null {
-	return (typeof list === 'object' && list !== null && ruleOfList.get(list)) || null;
+// prosemirror-proofread drops match fields it does not know but passes the replacements list through as is
+const originOfList = new WeakMap<object, LintOrigin>();
+
+export function tagReplacements(list: string[], origin: LintOrigin): void {
+	originOfList.set(list, origin);
+}
+
+export function originOfReplacements(list: unknown): LintOrigin | null {
+	return (typeof list === 'object' && list !== null && originOfList.get(list)) || null;
 }
 
 export async function addWordsToDictionary(words: string[]): Promise<void> {

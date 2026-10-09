@@ -16,6 +16,7 @@ const DEFAULT_SETTINGS = {
 	reopenLastFolder: true,
 	spellcheck: false,
 	englishVariant: '', // the English spelling and grammar follow: 'american', 'british', ...; '' = the system's own
+	spellLanguage: 'en', // spelling's language for a document that names none: 'en', 'de', 'pt-BR', ...
 	grammarRules: {} as Record<string, boolean>, // grammar rules turned on or off by hand, over the defaults
 	checkForUpdates: true,
 	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it

@@ -8,7 +8,7 @@
 	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
 	import PrefsVersionControlPanel from './PrefsVersionControlPanel.svelte';
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
-	import { changeUiLocale, englishVariantOptions, keymapOptions, uiLocaleOptions } from './prefsOptions';
+	import { changeUiLocale, englishVariantOptions, keymapOptions, spellLanguageOptions, uiLocaleOptions } from './prefsOptions';
 	import PrefsGrammarRules from './spelling/PrefsGrammarRules.svelte';
 	import PrefsDictionary from './spelling/PrefsDictionary.svelte';
 	import AppearanceMode from './AppearanceMode.svelte';
@@ -261,6 +261,18 @@
 				<!-- all of it stays up with the switch off: the Spelling menu's Edit Dictionary leads here -->
 				{@render toggleRow(m.prefs_spellcheck(), '', settings.current.spellcheck, (v) => setSpellcheckEnabled(v))}
 				<div class={ROW}>
+					{@render label(m.prefs_spell_language(), m.prefs_spell_language_note())}
+					<select
+						class="select w-auto min-w-32 shrink-0 text-sm"
+						value={settings.current.spellLanguage}
+						onchange={(e) => updateSettings({ spellLanguage: e.currentTarget.value as AppSettings['spellLanguage'] })}
+					>
+						{#each spellLanguageOptions() as o (o.value)}
+							<option value={o.value}>{o.label}</option>
+						{/each}
+					</select>
+				</div>
+				<div class={ROW}>
 					{@render label(m.prefs_english_variant(), m.prefs_english_variant_note())}
 					<select
 						class="select w-auto min-w-32 shrink-0 text-sm"
@@ -273,7 +285,10 @@
 					</select>
 				</div>
 				<PrefsDictionary />
-				<PrefsGrammarRules />
+				<!-- grammar is checked in English only -->
+				{#if settings.current.spellLanguage === 'en'}
+					<PrefsGrammarRules />
+				{/if}
 			{:else if category === 'vcs'}
 				<PrefsVersionControlPanel />
 			{:else if category === 'collaboration'}

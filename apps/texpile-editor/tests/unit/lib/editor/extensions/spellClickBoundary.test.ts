@@ -103,8 +103,9 @@ describe('a click on struck words', () => {
 		const oldWords = new Plugin({
 			props: { decorations: (state) => DecorationSet.create(state.doc, [Decoration.widget(FLAG_FROM, struck)]) }
 		});
+		const proofread = proofreadPlugin(() => 'en');
 		const place = document.body.appendChild(document.createElement('div'));
-		const view = new EditorView(place, { state: EditorState.create({ doc, plugins: [oldWords, proofreadPlugin] }) });
+		const view = new EditorView(place, { state: EditorState.create({ doc, plugins: [oldWords, proofread] }) });
 		const error = { from: 6, to: 11, msg: 'Spelling', shortmsg: 'Spelling', type: 'Spelling', replacements: ['Word'], text: 'World' };
 		const flagged = Decoration.inline(FLAG_FROM, FLAG_TO, { class: 'proofread-spelling' }, { errors: [error], keys: ['k'] });
 		const lintState = {
@@ -117,7 +118,7 @@ describe('a click on struck words', () => {
 		const click = new MouseEvent('click');
 		Object.defineProperty(click, 'target', { value: place.querySelector('.pm-suggest-old') });
 		expect(spellClickBoundaryPlugin.props.handleClick!.call(spellClickBoundaryPlugin, view, FLAG_FROM, click)).toBe(false);
-		expect(proofreadPlugin.props.handleClick!.call(proofreadPlugin, view, FLAG_FROM, click)).toBe(false);
+		expect(proofread.props.handleClick!.call(proofread, view, FLAG_FROM, click)).toBe(false);
 		expect(document.getElementById('harper-suggestion-container')).toBeNull();
 		view.destroy();
 		place.remove();

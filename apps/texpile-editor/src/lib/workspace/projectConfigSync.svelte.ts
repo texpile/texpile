@@ -28,6 +28,7 @@ import { ensureTexpileIgnore } from '$lib/workspace/texpileDir';
 import { folderKey } from '$lib/storage/workspaces';
 import { readMigrationStash, writeMigrationStash } from '$lib/migration/migrate';
 import { hasProjectConfig, readProjectConfig, writeProjectConfig, type ProjectConfig } from '$lib/workspace/projectConfig';
+import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 
 export type PendingCommand = {
 	root: string;
@@ -53,6 +54,9 @@ function defaults(): CompileConfigState {
 /** the adopted state, reactive; defaults between folders and for guests (who never compile). */
 export const compileConfig = box<CompileConfigState>(defaults());
 
+/** the folder's spelling language from Spelling > Document Language; null = what each document names */
+export const projectSpelling = box<SpellLanguage | null>(null);
+
 /** the folder's live mode where it applies: to a main file that compiles with LaTeX */
 export function latexLiveMode(): boolean {
 	return compileConfig.current.latex.liveMode && effectiveCompileFormat(mainFile.current) === 'latex';
@@ -66,6 +70,7 @@ export class ProjectConfigSync {
 	reset(): void {
 		this.pending = null;
 		compileConfig.current = defaults();
+		projectSpelling.current = null;
 	}
 
 	/**
@@ -93,6 +98,7 @@ export class ProjectConfigSync {
 			this.pending = null;
 			return;
 		}
+		if ((cfg.spelling?.language ?? null) !== projectSpelling.current) projectSpelling.current = cfg.spelling?.language ?? null;
 		// a project WITH a config must have an ignore that lets it reach git; this also upgrades
 		// the stale seeded allowlist 0.17 shipped (it kept config.json out of git status) without
 		// waiting for the next settings change to write one
@@ -210,6 +216,11 @@ export class ProjectConfigSync {
 		void this.save(root);
 	}
 
+	setSpelling(root: string | null, language: SpellLanguage | null): void {
+		projectSpelling.current = language;
+		void this.save(root);
+	}
+
 	/**
 	 * Write the adopted state back out.
 	 *
@@ -239,6 +250,7 @@ export class ProjectConfigSync {
 			const section = { ...(command ? { command } : {}), ...(hasOutputs ? { outputs } : {}), ...liveMode, ...preview };
 			if (Object.keys(section).length) cfg[lane] = section;
 		}
+		if (projectSpelling.current) cfg.spelling = { language: projectSpelling.current };
 		await writeProjectConfig(root, cfg);
 	}
 }
