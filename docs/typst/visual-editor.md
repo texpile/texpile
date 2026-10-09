@@ -10,7 +10,7 @@ Edit the document as formatted text. Texpile writes the Typst, and the parts you
 ![The visual editor on a Typst paper, with three parts marked](../../landing/src/lib/assets/showcase/docs/typst/visual-editor.png)
 
 1. **Visual / Source.** Switch at any time. Undo works across the switch.
-2. **Toolbar.** Headings, text style, lists, math, tables and code. The Insert and Format menus have the rest.
+2. **Toolbar.** Headings and text style. The arrow at its end shows lists, math, tables and code. The Insert and Format menus have the rest.
 3. **Set rules.** Each shows as one line. Click it to change it.
 
 A reference shows its label, not its number. Click a reference, a label or a code chip to edit it.

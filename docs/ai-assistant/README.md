@@ -3,7 +3,7 @@ nav: AI Assistant
 description: Use an AI agent you install yourself to chat in the Agent tab, rewrite selected text with Refine, or read your editor over MCP.
 blurb: The Agent tab, Refine, and the MCP server.
 icon: bot
-order: 31
+order: 32
 section: AI and integrations
 ---
 

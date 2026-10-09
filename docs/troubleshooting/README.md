@@ -4,7 +4,7 @@ overview: General
 description: Fixes for messages and problems in Texpile, from missing programs to editing, citations, AI and updates.
 blurb: Find the message you see and what to do.
 icon: life-buoy
-order: 36
+order: 37
 section: Troubleshooting
 ---
 

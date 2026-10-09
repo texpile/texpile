@@ -3,10 +3,10 @@
 	import { BrushCleaning, FolderOpen, RotateCcw, Settings2 } from '@lucide/svelte';
 	import { menuItemClass, menuPanelClass, separatorClass } from '$lib/menus/menuStyles';
 	import { m } from '$lib/paraglide/messages';
+	import type { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
 
 	type Props = {
-		open: boolean;
-		onClose: () => void;
+		menu: AnchoredMenu;
 		onConfigure: () => void;
 		/** latexmk -gg and -c (compileResolve); both rows show only when those apply */
 		onFromScratch: () => void;
@@ -16,27 +16,17 @@
 		/** a compiled PDF exists to reveal; the row stays, greyed, so it is discoverable */
 		outputAvailable: boolean;
 	};
-	let { open, onClose, onConfigure, onFromScratch, onCleanAux, latexmkActions, onShowOutput, outputAvailable }: Props = $props();
+	let { menu, onConfigure, onFromScratch, onCleanAux, latexmkActions, onShowOutput, outputAvailable }: Props = $props();
 
 	const ROW = `${menuItemClass} whitespace-nowrap`;
 	function pick(action: () => void) {
-		onClose();
+		menu.close();
 		action();
-	}
-	// the focus stays on the chevron that opened the menu, so the key is heard on the window
-	function closeOnEscape(e: KeyboardEvent) {
-		if (!open || e.key !== 'Escape') return;
-		e.preventDefault();
-		onClose();
 	}
 </script>
 
-<svelte:window onkeydown={closeOnEscape} />
-
-{#if open}
-	<!-- click-away layer -->
-	<button class="fixed inset-0 z-1200 cursor-default" onclick={onClose} tabindex="-1" aria-hidden="true"></button>
-	<div class="{menuPanelClass} absolute top-full right-0 z-1300 mt-1 flex min-w-48 flex-col">
+{#if menu.open}
+	<div bind:this={menu.el} class="{menuPanelClass} fixed z-1300 flex min-w-48 flex-col" style={menu.style} role="menu">
 		{#if latexmkActions}
 			<button class={ROW} onclick={() => pick(onFromScratch)}>
 				<RotateCcw class="size-4 shrink-0" />

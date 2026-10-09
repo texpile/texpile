@@ -2,7 +2,7 @@
 description: Pick a light or dark mode and one of 25 color themes for Texpile, and turn on a transparent window, from Preferences › Appearance.
 blurb: Light or dark mode, 25 color themes, and a transparent window.
 icon: palette
-order: 34
+order: 35
 section: Customize
 ---
 

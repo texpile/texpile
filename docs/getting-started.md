@@ -22,7 +22,7 @@ Texpile reopens your folders at the next launch, each on its last file.
 
 In an empty folder, **Start a New Document** offers LaTeX and Typst templates. Click one and Texpile copies its files into the folder.
 
-![Start a New Document with the LaTeX templates and a saved template under Your Templates](../landing/src/lib/assets/showcase/docs/app/starter-latex.png)
+![Start a New Document with the LaTeX templates](../landing/src/lib/assets/showcase/docs/app/starter-latex.png)
 
 **Browse Typst Templates…** adds community templates from Typst Universe. File › Save as Template… turns a folder of your own into a template under **Your Templates**.
 
@@ -30,6 +30,6 @@ Markdown has no compile step: File › New › Markdown File.
 
 ## Compile
 
-Press **Compile** in the top bar, or Ctrl Alt Enter. The PDF and build files go into an `output` folder next to the main file.
+Press Ctrl Alt Enter, or **Compile** at the top of the PDF (**Show PDF** in the title bar opens it). The PDF and build files go into an `output` folder next to the main file.
 
 With several documents and no main file set, Texpile asks once which one to compile. To change it, right-click a file and choose **Set as Main File**.

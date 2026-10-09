@@ -13,6 +13,7 @@ import {
 } from '$lib/stores/countStore.svelte';
 import { latexProse, latexCount, tallyTotal, typstCount } from '$lib/workspace/wordCount/proseWords';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
+import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
 
 function topBar(path: string, text: string): number {
 	countOpenFile(path, text);
@@ -120,4 +121,44 @@ describe('a selection counts by the same rule', () => {
 		view.destroy();
 		expect(documentCountStore.selectionWords).toBe(11);
 	});
+});
+
+const NOTES = `---
+title: Notes
+---
+# Heat Transfer in Thin Films
+
+Notes for the October group meeting. The paper draft is in \`main.tex\`; this file keeps the plan.
+
+## What we measure
+
+Thin films conduct heat differently from [bulk material](https://example.org/bulk). We compare the result with a model:
+
+$$
+\\frac{\\partial T}{\\partial t} = \\alpha \\, \\nabla^2 T
+$$
+
+where $\\alpha$ is the thermal diffusivity.
+
+| Thickness (nm) | Conductivity (W/mK) |
+| -------------- | ------------------- |
+| 10             | 12.4                |
+
+![Conductivity against film thickness](figures/conductivity.png)
+
+> A quote about **heat**.
+
+- [x] Measure the 50 nm film again
+- [ ] Send the draft by *Friday*
+1. First_step
+`;
+
+// the source view counted the markup too: 154 words against the visual editor's 101 for the same notes
+it('counts a Markdown file the same in the source view as in the visual editor', () => {
+	const { doc } = parseMarkdownFile(NOTES);
+	new EditorView(document.createElement('div'), { state: EditorState.create({ doc, plugins: [createWordCountPlugin()] }) }).destroy();
+	const visual = { words: documentCountStore.words, characters: documentCountStore.characters };
+	expect(sourceCounting('/p/notes.md')).toBe('markdown');
+	setSourceDocCount(NOTES, 'markdown');
+	expect({ words: documentCountStore.words, characters: documentCountStore.characters }).toEqual(visual);
 });

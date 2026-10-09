@@ -4,7 +4,7 @@ overview: none
 description: Look-up pages for Texpile: every limit, supported formats, what goes online, and what changed in each release.
 blurb: Limits, formats, privacy and release notes.
 icon: library
-order: 37
+order: 38
 section: Reference
 ---
 

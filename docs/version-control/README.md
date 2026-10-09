@@ -3,7 +3,7 @@ nav: Version control
 description: Commit and sync your paper with git in the Source Control panel, and keep a copy of every save with Version History.
 blurb: Commit your changes, compare versions, publish to GitHub, and restore older copies.
 icon: git-branch
-order: 28
+order: 29
 section: Workflow
 ---
 

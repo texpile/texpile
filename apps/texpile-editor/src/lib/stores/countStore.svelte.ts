@@ -1,4 +1,4 @@
-import { countProse, latexProse, typstProse, type ProseCount } from '$lib/workspace/wordCount/proseWords';
+import { countProse, latexProse, markdownProse, typstProse, type ProseCount } from '$lib/workspace/wordCount/proseWords';
 import { trailingDebounce } from '$lib/trailingDebounce';
 
 export type DocumentCount = {
@@ -54,17 +54,25 @@ function countText(text: string): { words: number; characters: number } {
 	return { words, characters };
 }
 
-/** how the source view counts a file: LaTeX and Typst by their prose, anything else as it reads */
-export type SourceCounting = 'latex' | 'typst' | 'text';
+/** how the source view counts a file: LaTeX, Typst and Markdown by their prose, anything else as it reads */
+export type SourceCounting = 'latex' | 'typst' | 'markdown' | 'text';
 
 export function sourceCounting(path: string): SourceCounting {
-	return /\.tex$/i.test(path) ? 'latex' : /\.typ$/i.test(path) ? 'typst' : 'text';
+	if (/\.tex$/i.test(path)) return 'latex';
+	if (/\.typ$/i.test(path)) return 'typst';
+	return /\.(md|markdown)$/i.test(path) ? 'markdown' : 'text';
+}
+
+/** Markdown and plain text are counted by the editor showing them; LaTeX and Typst by the workspace, in either view */
+export function countedByEditor(as: SourceCounting): boolean {
+	return as === 'markdown' || as === 'text';
 }
 
 // prose, as the visual editor and the details count, so all agree; main counts only the body of a file that has one
 function sourceCount(text: string, as: SourceCounting, main: boolean): ProseCount {
 	if (as === 'latex') return countProse(latexProse(text, main));
 	if (as === 'typst') return countProse(typstProse(text));
+	if (as === 'markdown') return countProse(markdownProse(text));
 	return { ...countText(text), charactersWithSpaces: text.length };
 }
 
@@ -81,7 +89,7 @@ const deferredOpenCount = trailingDebounce(300, ({ text, as }: { text: string; a
 /** latex and typst only: the editors count any other file, and every selection, themselves */
 export function countOpenFile(path: string | null, text: string): void {
 	const as = path ? sourceCounting(path) : 'text';
-	if (as === 'text') {
+	if (countedByEditor(as)) {
 		countedPath = null;
 		deferredOpenCount.cancel();
 		return;

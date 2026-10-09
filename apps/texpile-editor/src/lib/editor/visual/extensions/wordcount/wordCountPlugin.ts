@@ -1,4 +1,4 @@
-import { Plugin, PluginKey, type EditorState } from 'prosemirror-state';
+import { NodeSelection, Plugin, PluginKey, type EditorState } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { documentCountStore } from '$lib/stores/countStore.svelte';
@@ -46,13 +46,15 @@ function extractText(doc: Node, from: number, to: number, prose?: RawProse): str
 	return text.trim();
 }
 
-function updateSelectionCount(doc: Node, from: number, to: number, prose?: RawProse): void {
-	if (from === to) {
+function updateSelectionCount(doc: Node, from: number, to: number, prose?: RawProse, node = false): void {
+	const counted = from === to ? null : countProse(extractText(doc, from, to, prose));
+	// a Typst paper opens on its first block, a set rule, selected whole: "0 of 114 words" for a selection nobody made
+	if (!counted || (node && counted.words === 0)) {
 		documentCountStore.selectionWords = null;
 		documentCountStore.selectionCharacters = null;
 		documentCountStore.selectionCharactersWithSpaces = null;
 	} else {
-		const { words, characters, charactersWithSpaces } = countProse(extractText(doc, from, to, prose));
+		const { words, characters, charactersWithSpaces } = counted;
 		documentCountStore.selectionWords = words;
 		documentCountStore.selectionCharacters = characters;
 		documentCountStore.selectionCharactersWithSpaces = charactersWithSpaces;
@@ -70,8 +72,8 @@ function updateDocCount(doc: Node): void {
  *  Only the focused editor counts: a parked one shows another slot's file */
 export function createWordCountPlugin(prose?: RawProse) {
 	const deferredDocCount = trailingDebounce(300, updateDocCount);
-	const deferredSelectionCount = trailingDebounce(150, ({ doc, from, to }: { doc: Node; from: number; to: number }) =>
-		updateSelectionCount(doc, from, to, prose)
+	const deferredSelectionCount = trailingDebounce(150, ({ doc, from, to, node }: { doc: Node; from: number; to: number; node: boolean }) =>
+		updateSelectionCount(doc, from, to, prose, node)
 	);
 
 	return new Plugin({
@@ -88,9 +90,10 @@ export function createWordCountPlugin(prose?: RawProse) {
 				if (!prose && counted !== doc) (fresh ? updateDocCount : deferredDocCount)(doc);
 				counted = doc;
 				const { from, to } = selection;
+				const node = selection instanceof NodeSelection;
 				// one debouncer for range counts AND the collapsed clear, so a pending count can never land after a newer clear
-				if (fresh) updateSelectionCount(doc, from, to, prose);
-				else if (!before || before.doc !== doc || !before.selection.eq(selection)) deferredSelectionCount({ doc, from, to });
+				if (fresh) updateSelectionCount(doc, from, to, prose, node);
+				else if (!before || before.doc !== doc || !before.selection.eq(selection)) deferredSelectionCount({ doc, from, to, node });
 			}
 			sync(view);
 			return {

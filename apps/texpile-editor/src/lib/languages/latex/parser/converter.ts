@@ -9,7 +9,7 @@ import { attachMacroArgs } from '@unified-latex/unified-latex-util-arguments';
 import { mergeAdjacentRawBlocks } from '$lib/editor/visual/mergeRawBlocks';
 import { buildNode, textNode, createDefaultContext, collapseTextNodes, type PmNode, type PmMark, type ConversionOptions } from './builders';
 
-import { MACRO_SIGNATURES, ENV_SIGNATURES, stripSamelineComments } from './macros';
+import { MACRO_SIGNATURES, ENV_SIGNATURES, stripSamelineComments, type SameLineCommented } from './macros';
 import {
 	heuristicMarkCommentedMacroCalls,
 	heuristicMarkTexPrimitiveDefs,
@@ -224,7 +224,9 @@ export function convertNodesToBlocks(nodes: Node[], options: ConversionOptions):
 					const rawExt = typeof startOff === 'number' ? { min: startOff, max: startOff + rawText.length } : null;
 					pushBlocks(blockNodes, rawExt);
 				} else {
-					pushBlocks(blockNodes, repairExtentTail(node, nodeExtent(node, cap?.prevEnd ?? 0)));
+					const commented = cap ? withSameLineComment(node, blockNodes, cap.source) : null;
+					if (commented) pushBlocks(commented.blocks, commented.ext);
+					else pushBlocks(blockNodes, repairExtentTail(node, nodeExtent(node, cap?.prevEnd ?? 0)));
 				}
 			}
 		} else if (node.type === 'parbreak' || (node.type === 'macro' && (node as Macro).content === 'par')) {
@@ -293,6 +295,22 @@ export function convertNodesToBlocks(nodes: Node[], options: ConversionOptions):
 		return [noteBlockSpan(buildNode('raw_latex', null, [textNode(raw, null, prefixSpans(raw, span?.srcFrom))]), span)];
 	}
 	return result;
+}
+
+/** a comment typed at the end of a raw chip stays in the chip, or it reopens after it and the save check sees a change */
+function withSameLineComment(node: Node, blocks: PmNode[], source: string): { blocks: PmNode[]; ext: { min: number; max: number } } | null {
+	const comment = (node as SameLineCommented)._sameLineComment;
+	if (!comment || blocks.length !== 1 || blocks[0].type.name !== 'raw_latex') return null;
+	const start = startOf(node);
+	const end = (comment as { position?: { end?: { offset?: number } } }).position?.end?.offset;
+	const chip = blocks[0].textContent;
+	if (start == null || end == null || source.slice(start, start + chip.length) !== chip) return null;
+	const text = source.slice(start, end).replace(/\r?\n$/, '');
+	if (!text.startsWith(chip) || !/^\s*%/.test(text.slice(chip.length))) return null;
+	return {
+		blocks: [buildNode('raw_latex', blocks[0].attrs, [textNode(text, null, prefixSpans(text, start))])],
+		ext: { min: start, max: start + text.length }
+	};
 }
 
 /** the content of \begin{document}...\end{document}, or the whole AST for a fragment. */

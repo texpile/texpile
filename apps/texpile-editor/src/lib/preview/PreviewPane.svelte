@@ -68,7 +68,7 @@
 		onSyncToCursor = null,
 		onPopout = null,
 		paneDragging,
-		// eslint-disable-next-line no-useless-assignment -- argless $bindable() marks the prop bindable; there is no value to read
+		// eslint-disable-next-line no-useless-assignment, @typescript-eslint/no-unused-vars -- argless $bindable() marks the prop bindable; there is no value to read
 		pdfPaneRef = $bindable(),
 		onStartResize,
 		onResizeByKey,

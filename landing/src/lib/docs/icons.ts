@@ -5,6 +5,7 @@ import BookMarked from '@lucide/svelte/icons/book-marked';
 import Bot from '@lucide/svelte/icons/bot';
 import BoxSelect from '@lucide/svelte/icons/box-select';
 import Code from '@lucide/svelte/icons/code';
+import Columns2 from '@lucide/svelte/icons/columns-2';
 import Eye from '@lucide/svelte/icons/eye';
 import Files from '@lucide/svelte/icons/files';
 import FileText from '@lucide/svelte/icons/file-text';
@@ -34,6 +35,7 @@ export const ICONS: Record<string, typeof Icon> = {
 	bot: Bot,
 	'box-select': BoxSelect,
 	code: Code,
+	'columns-2': Columns2,
 	eye: Eye,
 	files: Files,
 	'file-text': FileText,

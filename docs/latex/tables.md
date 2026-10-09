@@ -5,7 +5,7 @@ order: 3
 
 # Tables
 
-Insert a table from the toolbar and edit it like a table in a word processor.
+Insert a table from the toolbar (under the arrow at its end) and edit it like a table in a word processor.
 
 ![The table size grid under the toolbar's table button, with Numbered table on](../../landing/src/lib/assets/showcase/docs/latex/table-insert.png)
 

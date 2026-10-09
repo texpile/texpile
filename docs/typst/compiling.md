@@ -5,7 +5,7 @@ order: 7
 
 # Compiling
 
-A Typst project shows a [live preview](live-preview.md) instead of compiling. **Preview** in the top bar opens it, and **Live** closes it. To save a PDF, [export](export.md) the document.
+A Typst project shows a [live preview](live-preview.md) instead of compiling. **Show PDF** in the title bar opens it, and **Live** at the top of the preview closes it. To save a PDF, [export](export.md) the document.
 
 ## Compile to a PDF file instead
 

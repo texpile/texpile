@@ -3,7 +3,7 @@ nav: Keyboard shortcuts
 description: The keyboard shortcuts specific to Texpile, grouped by where you are.
 blurb: Texpile's own shortcuts, by context.
 icon: keyboard
-order: 35
+order: 36
 section: Customize
 ---
 

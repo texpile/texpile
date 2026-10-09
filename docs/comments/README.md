@@ -2,7 +2,7 @@
 description: Comment on text in LaTeX, Typst and Markdown files, in the visual editor or in source, and fix comments that lost their place.
 blurb: Select text, leave a comment, reply, resolve.
 icon: message-square
-order: 29
+order: 30
 section: Review and collaboration
 ---
 

@@ -30,7 +30,7 @@ In a LaTeX paragraph, Tab changes whether its first line is indented.
 
 ## Select a whole block
 
-Ctrl-click (Cmd-click on macOS) a paragraph, an equation, a table or any other block to select all of it. Ctrl-click again to select the block around it, such as the whole list. The **Select block** button at the right of the toolbar does the same for the block the cursor is in.
+Ctrl-click (Cmd-click on macOS) a paragraph, an equation, a table or any other block to select all of it. Ctrl-click again to select the block around it, such as the whole list. The **Select block** button, under the arrow at the end of the toolbar, does the same for the block the cursor is in.
 
 Ctrl A in a table cell or a caption selects just that field. Press it again for the whole document.
 
