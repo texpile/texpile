@@ -1,4 +1,4 @@
-// prose word counts of LaTeX and Typst files, by the parts a word limit names
+// prose word counts of LaTeX, Typst and Markdown files, by the parts a word limit names
 import { maskTex } from '$lib/editor/spellcheck/texMask';
 import { codeOnly } from '$lib/languages/latex/texCode';
 
@@ -216,4 +216,27 @@ function blankCode(src: string): string {
 		keep.forEach(([a], i) => saved[i].forEach((ch, j) => (out[a + j] = ch)));
 	}
 	return out.join('');
+}
+
+const MD_ESCAPABLE = /\\([\\`*_{}[\]()#+\-.!|~<>$])/g;
+
+/** the text the Markdown visual editor shows: no front matter, code blocks, math, images, link targets or markup */
+export function markdownProse(source: string): string {
+	return source
+		.replace(/^---\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/, blank)
+		.replace(/<!--[\s\S]*?-->/g, blank)
+		.replace(/^([ \t]*)(`{3,}|~{3,})[^\n]*\n[\s\S]*?^[ \t]*\2[ \t]*$/gm, blank)
+		.replace(/\$\$[\s\S]*?\$\$/g, blank)
+		.replace(/(^|[^\\$])\$(?!\s)[^$\n]*?[^\\\s$]\$(?!\d)/g, (m, lead: string) => lead + blank(m.slice(lead.length)))
+		.replace(/!\[[^\]]*\]\([^)]*\)/g, blank)
+		.replace(/^[ \t]*\[[^\]]+\]:[ \t]*\S.*$/gm, blank)
+		.replace(/\[([^\]]*)\]\([^)]*\)/g, ' $1 ')
+		.replace(/<[^>\n]+>/g, blank)
+		.replace(/^[ \t]*\|?[ \t]*:?-{3,}:?[ \t]*(?:\|[ \t]*:?-{3,}:?[ \t]*)*\|?[ \t]*$/gm, blank)
+		.replace(/^[ \t]*(?:[-*_][ \t]*){3,}$/gm, blank)
+		.replace(/^([ \t]*)(?:>[ \t]?)+/gm, '$1')
+		.replace(/^([ \t]*)#{1,6}(?=[ \t])/gm, '$1')
+		.replace(/^([ \t]*)(?:[-*+]|\d+[.)])[ \t]+(?:\[[ xX]\][ \t]+)?/gm, '$1')
+		.replace(MD_ESCAPABLE, '$1')
+		.replace(/[*`|]|~~|(?<![\p{L}\p{N}])_+|_+(?![\p{L}\p{N}])/gu, ' ');
 }

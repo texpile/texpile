@@ -55,9 +55,13 @@ export class CollapsingToolbar {
 			if (!el) return;
 			const ro = new ResizeObserver(this.schedule);
 			ro.observe(el);
+			// a group can grow at the same row width: the live preview's status text arrives after the first fit
+			const mo = new MutationObserver(this.schedule);
+			mo.observe(el, { childList: true, subtree: true, characterData: true });
 			this.schedule();
 			return () => {
 				ro.disconnect();
+				mo.disconnect();
 				if (this.frame) cancelAnimationFrame(this.frame);
 				this.frame = 0;
 			};

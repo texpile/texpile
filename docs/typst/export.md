@@ -8,7 +8,7 @@ order: 9
 
 # Export
 
-Save the main document as a file: File › Export…, or the Export button in the preview.
+Save the main document as a file: File › Export…, or **Export as PDF, PNG, SVG, or HTML…** in the preview's "…" menu.
 
 ![The Export dialog: Format, Pages, Standard, PDF/UA-1 and Tagged PDF](../../landing/src/lib/assets/showcase/docs/typst/export.png)
 

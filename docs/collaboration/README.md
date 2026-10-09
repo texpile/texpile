@@ -2,7 +2,7 @@
 description: Share a folder in Texpile and edit it with other people at the same time, with a code, no account, and end to end encryption.
 blurb: Edit a folder with other people in real time. Guests join with a code, in Texpile or in a browser.
 icon: users
-order: 30
+order: 31
 section: Review and collaboration
 ---
 
@@ -40,7 +40,7 @@ Guests see the compiled PDF, the compile problems, the comments, and every file 
 
 ## What guests cannot do
 
-Guests cannot compile (**Request Compile** in the top bar asks the host), save (the host's machine does), or use Source Control, Format Document, search in files, the terminal, the Agent tab, Refine, Zotero, Cite by title or DOI, or Version History.
+Guests cannot compile (**Request Compile** at the top of the PDF asks the host), save (the host's machine does), or use Source Control, Format Document, search in files, the terminal, the Agent tab, Refine, Zotero, Cite by title or DOI, or Version History.
 
 ## Anyone with the code can edit
 

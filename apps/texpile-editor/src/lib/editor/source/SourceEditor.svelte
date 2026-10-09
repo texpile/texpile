@@ -18,7 +18,7 @@
 	import { sourceCmView } from '$lib/stores/editorStore';
 	import { showSourceEditor } from '$lib/editor/editorsOnScreen.svelte';
 	import { docText } from '$lib/editor/source/docText';
-	import { setSourceDocCount, setSourceSelectionCount, sourceCounting } from '$lib/stores/countStore.svelte';
+	import { countedByEditor, setSourceDocCount, setSourceSelectionCount, sourceCounting } from '$lib/stores/countStore.svelte';
 	import { trailingDebounce } from '$lib/trailingDebounce';
 	import { settings } from '$lib/settings';
 	import * as Y from 'yjs';
@@ -125,7 +125,7 @@
 	const counting = $derived(sourceCounting(fileFor));
 	// a LaTeX or Typst file's whole count comes from the workspace, in either view (countOpenFile)
 	const deferredDocCount = trailingDebounce(300, (text: string) => {
-		if (counting === 'text') setSourceDocCount(text);
+		if (countedByEditor(counting)) setSourceDocCount(text, counting);
 	});
 	// throttle-ish: scrolling and arrow keys fire constantly, and only the resting place matters
 	const deferredRememberPosition = trailingDebounce<void>(400, () => positions.remember(view, docPath, !!collab));
@@ -211,7 +211,7 @@
 		// the file was closed) — hand the truth back so the save pipeline starts aligned
 		if (collab && onInput && collab.ytext.toString() !== value) onInput(collab.ytext.toString());
 		// seed the counts now; the updateListener only fires on later changes
-		if (live && counting === 'text') setSourceDocCount(docText(view.state.doc));
+		if (live && countedByEditor(counting)) setSourceDocCount(docText(view.state.doc), counting);
 		if (live) setSourceSelectionCount(null);
 		if (live && initialScrollPos != null) applyModeSwitchAnchor(view, initialScrollPos);
 		// publish this CM as the source-mode editor so menuBarCommands can route Insert/Format to it

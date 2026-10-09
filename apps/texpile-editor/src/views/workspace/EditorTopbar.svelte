@@ -8,6 +8,7 @@
 	import { compileLog } from '$lib/stores/compileLogStore';
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
+	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
 	import type { ComponentProps } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { combo } from '$lib/chrome/shortcutText';
@@ -112,7 +113,8 @@
 	// with the preview closed, Compile's one job is showing the PDF, so the title bar names that instead
 	const showPdf = $derived(compact && !pdfPaneOpen && !fileMode.current);
 
-	let compileMenuOpen = $state(false);
+	// fixed to the chevron: hung inside the PDF bar, the bar clipped it out of sight
+	const compileMenu = new AnchoredMenu('start');
 
 	// Typst's Preview replaces Compile the way LaTeX's live mode does: same slot, same states.
 	// Driven by the same flag the preview pane branches on - sticky across tabs - so the green
@@ -199,17 +201,17 @@
 				     meeting there would read as a heavier line than the outline itself -->
 				<button
 					class="btn btn-xs {COMPILE_TONE[compile.tone]} self-stretch rounded-l-none border-l-0 {compact ? 'px-0.5' : 'px-1'}"
-					onclick={() => (compileMenuOpen = !compileMenuOpen)}
+					bind:this={compileMenu.button}
+					onclick={compileMenu.toggle}
 					use:tip={m.wsview_compile_options()}
 					aria-label={m.wsview_compile_options()}
 					aria-haspopup="menu"
-					aria-expanded={compileMenuOpen}
+					aria-expanded={compileMenu.open}
 				>
-					<ChevronDown class="{compact ? 'size-3' : 'size-3.5'} transition-transform {compileMenuOpen ? 'rotate-180' : ''}" />
+					<ChevronDown class="{compact ? 'size-3' : 'size-3.5'} transition-transform {compileMenu.open ? 'rotate-180' : ''}" />
 				</button>
 				<CompileOptionsMenu
-					open={compileMenuOpen}
-					onClose={() => (compileMenuOpen = false)}
+					menu={compileMenu}
 					onConfigure={onConfigureCompile}
 					onFromScratch={onCompileFromScratch}
 					{onCleanAux}

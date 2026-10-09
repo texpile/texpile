@@ -6,6 +6,7 @@ import { parseBodyOf, parseLatexFile, serializeLatexFile, serializeLatexFileDeta
 import { pmToSource } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, withoutOrigins } from '$lib/editor/visual/parseOrigins';
 import { padTables } from '$lib/editor/visual/padTables';
+import { reopenDifference } from '$lib/editor/visual/docShape';
 
 // verbatim source preservation: untouched blocks round-trip byte-for-byte through the parse's
 // origins (the source map's block runs, kept by node; the serializer re-emits a block's bytes only
@@ -1434,5 +1435,34 @@ x &= y - \\frac{\\act_i-\\mu_i}{\\sigma_i}\\frac{c}{d}.
 			'paragraph("x &= y - ", inline_latex("\\\\frac{\\\\act_i-\\\\mu_i}{\\\\sigma_i}\\\\frac{c}{d}"), ".")'
 		);
 		expect(serializeLatexFile(parsed, withoutOrigins(parsed.doc))).toContain('y - \\frac{\\act_i-\\mu_i}{\\sigma_i}\\frac{c}{d}.');
+	});
+});
+
+describe('a comment typed at the end of a raw block', () => {
+	// the save check read the comment reopening after the chip as a change, and warned the save was unverified
+	it('reopens inside the block', () => {
+		const src = `${PREAMBLE}
+\\newpage
+
+Text after.
+\\end{document}
+`;
+		const parsed = parseLatexFile(src);
+		const chip = parsed.doc.child(0);
+		expect(chip.type.name).toBe('raw_latex');
+		const doc = new Transform(parsed.doc).insert(1 + chip.content.size, schema.text(' % note')).doc;
+		const again = parseLatexFile(serializeLatexFile(parsed, doc)).doc;
+		expect(again.child(0).textContent).toBe('\\newpage % note');
+		expect(reopenDifference(doc, again, 'tex')).toBeNull();
+	});
+
+	it('leaves a file already written that way as it was', () => {
+		const src = `${PREAMBLE}
+\\maketitle % title page
+\\newpage   %x\r
+Text.
+\\end{document}
+`;
+		expect(reserialize(src)).toBe(src);
 	});
 });

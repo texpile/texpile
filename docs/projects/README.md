@@ -2,7 +2,7 @@
 description: A project is a folder. Set its main file, split it into several files, open a single file, and search across the folder.
 blurb: Open a folder, set the main file, and find your way around the files in it.
 icon: files
-order: 27
+order: 28
 section: Workflow
 ---
 
@@ -26,8 +26,8 @@ Files pulled in with `\input` (LaTeX) or `#include` (Typst) compile as part of t
 
 - **New Include** (right-click in the file tree) creates a file and inserts its `\input` or `#include` line at the cursor.
 - After a rename or move, Texpile offers to update the references to the old name: `\input`, `\includegraphics`, Typst includes and images, and Markdown image links.
-- The word count in the top bar counts the open file. Hover it for the whole document, file by file. Math, citations, references, comments, code and the LaTeX preamble are not counted.
-- **Contents** under the file tree lists the headings, figures, tables and beamer frames of the open file.
+- The word count at the end of the format bar counts the open file. Hover it for the whole document, file by file. Math, citations, references, comments, code and the LaTeX preamble are not counted.
+- **Contents** under the file tree lists the headings, figures, tables and beamer frames of the whole paper, from any file in it.
 
 ## Open a single file
 
@@ -49,7 +49,7 @@ Double-click a `.tex`, `.sty`, `.cls`, `.tikz`, `.typ` or `.bib` file to edit it
 | Ctrl Tab       | Next tab                   |
 | Ctrl Shift Tab | Previous tab               |
 
-On macOS use Cmd, except for Ctrl Tab. A tab in italics is temporary: the next file you click replaces it. Edit the file or double-click the tab to keep it open. There is no split editor.
+On macOS use Cmd, except for Ctrl Tab. A tab in italics is temporary: the next file you click replaces it. Edit the file or double-click the tab to keep it open. To see two files at once, see [Split view](../split-view.md).
 
 ## Find in files
 

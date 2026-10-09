@@ -1,3 +1,5 @@
+import { untrack } from 'svelte';
+
 // A menu hung below a toolbar button. Fixed-positioned in the toolbar's own DOM rather than
 // portalled: this bar can live in the popped-out preview window, and a portal lands in the
 // opener's document. Measured and dismissed against the button's own window for the same reason.
@@ -9,6 +11,7 @@ export class AnchoredMenu {
 
 	constructor(private readonly align: 'start' | 'end' = 'end') {
 		this.attachDismiss();
+		this.keepInWindow();
 	}
 
 	/** inline style for the menu element; `end` anchors its right edge under the button's */
@@ -28,6 +31,20 @@ export class AnchoredMenu {
 	close = () => {
 		this.open = false;
 	};
+
+	// a narrow preview, or the popped-out window, leaves less room than the menu is wide
+	private keepInWindow(): void {
+		$effect(() => {
+			if (!this.open || !this.el) return;
+			const vw = this.el.ownerDocument.defaultView?.innerWidth ?? window.innerWidth;
+			const r = this.el.getBoundingClientRect();
+			if (r.left >= 4 && r.right <= vw - 4) return;
+			const x = Math.max(4, vw - 4 - r.width);
+			untrack(() => {
+				if (this.pos.x !== x) this.pos = { ...this.pos, x };
+			});
+		});
+	}
 
 	private attachDismiss(): void {
 		// Dismiss on any pointer down outside, and on Escape. Not a scrim element: a scrim only

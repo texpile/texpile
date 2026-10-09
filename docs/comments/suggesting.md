@@ -5,7 +5,7 @@ description: Switch to Suggesting mode so your edits become suggestions, and how
 
 # Suggesting changes
 
-Suggesting mode works as in Google Docs: your edits become suggestions that someone accepts or rejects. Switch with the pencil button in the top bar. Texpile remembers the mode per project.
+Suggesting mode works as in Google Docs: your edits become suggestions that someone accepts or rejects. Switch with the pencil button at the top of the PDF, or in the title bar while the PDF is closed. Texpile remembers the mode per project.
 
 ![The Editing and Suggesting menu](../../landing/src/lib/assets/showcase/docs/review/mode-picker.png 'The button turns blue in Suggesting mode.')
 

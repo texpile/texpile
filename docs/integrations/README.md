@@ -3,7 +3,7 @@ nav: Integrations
 description: Cite from Zotero and find papers online by title or DOI. Both are switches in Preferences, under Integrations.
 blurb: Zotero and paper search.
 icon: plug
-order: 32
+order: 33
 section: AI and integrations
 ---
 

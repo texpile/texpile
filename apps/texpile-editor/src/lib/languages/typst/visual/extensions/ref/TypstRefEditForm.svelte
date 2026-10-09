@@ -12,7 +12,7 @@
 		node,
 		onUpdate,
 		onChangeKey,
-		// eslint-disable-next-line no-useless-assignment -- write-only $bindable: the parent reads it
+		// eslint-disable-next-line no-useless-assignment, @typescript-eslint/no-unused-vars -- write-only $bindable: the parent reads it
 		dropdownOpen = $bindable()
 	}: {
 		node: PMNode;

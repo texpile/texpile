@@ -189,6 +189,9 @@ export const ENV_SIGNATURES: NonNullable<ParseOptions['environments']> = {
 	longtable: { signature: 'o m' }
 };
 
+/** the node a stripped trailing comment followed, which a raw block takes back (see convertNodesToBlocks) */
+export type SameLineCommented = Node & { _sameLineComment?: Node };
+
 /**
  * Drop trailing ("sameline") comments from the AST in place: they're dropped on conversion
  * anyway, and removing them lets a command's args attach across them. calls where the comments
@@ -199,6 +202,8 @@ export function stripSamelineComments(nodes: Node[] | undefined): void {
 	for (let i = nodes.length - 1; i >= 0; i--) {
 		const n = nodes[i];
 		if (n.type === 'comment' && n.sameline) {
+			const owner = nodes[i - 1]?.type === 'whitespace' ? nodes[i - 2] : nodes[i - 1];
+			if (owner) (owner as SameLineCommented)._sameLineComment = n;
 			// the tokenizer folds the space before `%` into the comment; TeX keeps that space and
 			// eats the newline, so `A % c` + newline + `B` is "A B", never "AB"
 			const keepsSpace = n.leadingWhitespace && i > 0 && nodes[i - 1].type !== 'whitespace';

@@ -6,9 +6,9 @@ order: 3
 
 # Diffs and the Graph
 
-Click a changed file in Source Control, or **Open Changes** in the top bar, to see what changed since the last commit. The visual editor marks changes word by word, the source editor line by line.
+Click a changed file in Source Control, or **Open Changes** at the right end of the editor's tabs, to see what changed since the last commit. The visual editor marks changes word by word, the source editor line by line.
 
-![The visual editor showing a word changed since the last commit](../../landing/src/lib/assets/showcase/docs/review/diff-view-changes.png)
+![The visual editor showing words added since the last commit](../../landing/src/lib/assets/showcase/docs/review/diff-view-changes.png)
 
 - **Revert Change** beside a change puts back only that change.
 - `Alt F5` and `Shift Alt F5` go to the next and previous change, on macOS too.

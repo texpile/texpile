@@ -139,7 +139,7 @@
 					aria-label={m.pdf_split()}
 					use:tip={props.splittable ? m.pdf_split() : m.pdf_split_unavailable()}
 					aria-disabled={!props.splittable}
-					onclick={() => props.splittable && updateLayout({ pdfSplit: !stored.current.pdfSplit })}
+					onclick={() => props.splittable && toggle(() => updateLayout({ pdfSplit: !stored.current.pdfSplit }))}
 				>
 					<SquareSplitVertical class="size-4" />
 				</button>
@@ -149,7 +149,7 @@
 					aria-checked={props.panes.pdfPopout}
 					aria-label={m.wsview_popout_preview()}
 					use:tip={m.wsview_popout_preview()}
-					onclick={() => props.panes.setPdfPopout(!props.panes.pdfPopout)}
+					onclick={() => toggle(() => props.panes.setPdfPopout(!props.panes.pdfPopout))}
 				>
 					<PictureInPicture2 class="size-4" />
 				</button>
