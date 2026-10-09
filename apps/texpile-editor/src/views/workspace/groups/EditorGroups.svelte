@@ -164,6 +164,8 @@
 	// the content box, not clientWidth: its observer misses a scrollbar going away, and the slots then stay that much short
 	let content = $state<DOMRectReadOnly>();
 	const room = $derived({ width: Math.floor(content?.width ?? 0), height: Math.floor(content?.height ?? 0) });
+	// scrollbar included: a narrow area scrolls sideways, and the preview still stands the same height beside it
+	let outerHeight = $state(0);
 	const tracks = $derived(tracksOf(editorGroups.layout));
 	const sizes = $derived(room.width > 0 && room.height > 0 ? layoutTracks(tracks, editorGroups.split, room) : null);
 	const cells = new Map<number, HTMLElement>();
@@ -192,7 +194,7 @@
 	$effect(() => {
 		editorGroups.rowTops = sizes && tracks.rows > 1 ? [0, sizes.rows[0] + 1].map((top) => top - scrolled) : [0];
 		editorGroups.rowSizes = sizes?.rows ?? [];
-		editorGroups.columnHeight = room.height;
+		editorGroups.columnHeight = outerHeight;
 	});
 	// the slot being typed in stays on screen when the editor area narrows under it (the preview opening).
 	// Not on a click: scrolling under the press would move where its caret lands
@@ -279,6 +281,7 @@
 		class="min-h-0 min-w-0 flex-1 overflow-auto"
 		bind:this={scroller}
 		bind:contentRect={content}
+		bind:offsetHeight={outerHeight}
 		onscroll={() => (scrolled = scroller?.scrollTop ?? 0)}
 	>
 		<div
