@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { readChangelog } from './scripts/changelog.mjs';
+import { spellDictionaries } from './scripts/spellDictionaries';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
 // forces a full page reload (mathlive and the CodeMirror language modes are the usual offenders)
@@ -68,7 +69,9 @@ export default defineConfig(({ mode }) => ({
 			project: './project.inlang',
 			outdir: './src/lib/paraglide',
 			emitTsDeclarations: true
-		})
+		}),
+		// the spelling dictionaries for languages other than English
+		...(mode === 'test' ? [] : [spellDictionaries(__dirname)])
 	],
 
 	// relative asset URLs: the packaged app is served from the app:// scheme (electron/src/main.ts),

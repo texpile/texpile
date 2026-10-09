@@ -2269,5 +2269,14 @@
 	"wsview_stranded_discard": "Discard Edits",
 	"wsview_stranded_toast_title": "{name} changed on disk",
 	"wsview_stranded_toast_body": "Edits not saved.",
-	"wsview_stranded_open": "Open"
+	"wsview_stranded_open": "Open",
+	"spelling_not_in_dictionary": "Not in the {language} dictionary.",
+	"spelling_add_to_language_dictionary": "Add '{word}' to the {language} dictionary",
+	"spelling_document_language": "Document Language",
+	"spelling_automatic": "Automatic",
+	"spelling_automatic_named": "Automatic ({language})",
+	"spelling_automatic_unchecked": "Automatic ({language}, not checked)",
+	"prefs_spell_language": "Spelling language",
+	"prefs_spell_language_note": "For documents that name no language. One that names its language (babel, polyglossia, Typst's lang, front matter) is checked in it. Grammar is checked in English only.",
+	"spelldict_language": "Dictionary language"
 }

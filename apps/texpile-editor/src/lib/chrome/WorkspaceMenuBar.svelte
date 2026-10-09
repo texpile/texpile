@@ -26,6 +26,8 @@
 	import InsertMenu from './menubar/InsertMenu.svelte';
 	import FormatMenu from './menubar/FormatMenu.svelte';
 	import SpellingMenu from './menubar/SpellingMenu.svelte';
+	import { documentLanguageItems } from '$lib/editor/spellcheck/languages/documentLanguageMenu';
+	import type { SpellingChoice } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 	import TerminalMenu from './menubar/TerminalMenu.svelte';
 	import HelpMenu from './menubar/HelpMenu.svelte';
 	import TextPrompt from './menubar/TextPrompt.svelte';
@@ -77,6 +79,10 @@
 		onZoomIn?: () => void;
 		onZoomOut?: () => void;
 		onZoomReset?: () => void;
+		/** the open file's spelling language, for Spelling > Document Language */
+		spelling?: SpellingChoice | null;
+		/** absent for a guest: the folder's language is the host's to choose */
+		onSpellLanguage?: (value: string) => void;
 	};
 	let {
 		disabled = false,
@@ -103,7 +109,9 @@
 		uiZoomPercent = 100,
 		onZoomIn,
 		onZoomOut,
-		onZoomReset
+		onZoomReset,
+		spelling = null,
+		onSpellLanguage
 	}: Props = $props();
 
 	// What the open file supports, not just whether one is open. A PDF or an image has no text
@@ -197,8 +205,10 @@
 	}
 
 	const spellcheckOn = $derived(editorConfigStore.current?.spellcheck ?? false);
+	const spellLanguages = $derived(documentLanguageItems(spelling));
 	function spellcheckSelect(value: string) {
 		if (value === 'toggle') setSpellcheckEnabled(!spellcheckOn);
+		else if (value.startsWith('lang:')) onSpellLanguage?.(value.slice(5));
 		// the dictionary is a section of the Spelling tab
 		else if (value === 'dictionary' || value === 'settings') openPreferencesAt('proofing');
 	}
@@ -238,6 +248,8 @@
 			dialect,
 			cursorInCm: cursorInCm.current,
 			spellcheck: spellcheckOn,
+			spellLanguages,
+			canChooseSpellLanguage: !!onSpellLanguage,
 			terminalAvailable,
 			terminalVisible,
 			canShare: !!onShareSession,
@@ -338,7 +350,14 @@
 		<FormatMenu index={4} select={formatMenuSelect} {structured} {dialect} {fileKind} canFormatDocument={!!onFormatDocument} />
 	{/if}
 	{#if showAt(5, overflow)}
-		<SpellingMenu index={5} select={spellcheckSelect} {editable} {spellcheckOn} />
+		<SpellingMenu
+			index={5}
+			select={spellcheckSelect}
+			{editable}
+			{spellcheckOn}
+			languages={spellLanguages}
+			languagesFixed={!onSpellLanguage}
+		/>
 	{/if}
 	{#if terminalAvailable && showAt(6, overflow)}
 		<TerminalMenu index={6} select={terminalSelect} {terminalVisible} />

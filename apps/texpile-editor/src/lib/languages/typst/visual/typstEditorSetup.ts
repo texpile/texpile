@@ -62,6 +62,7 @@ import { typstProse } from '$lib/workspace/wordCount/proseWords';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
+import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
 import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
@@ -149,11 +150,23 @@ export type TypstEditorSetup = {
 	/** the selection as a range of the file; see pmComments */
 	sourceAnchor?: SourceAnchorFn;
 	addCommentLabel: string;
+	/** read at each check: the editor's file can change its language */
+	spellLanguage: () => SpellLanguage | null;
 };
 
 export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
-	const { mathlivePlugin, mlarrowHandlers, docDir, placeholder, onOpenLink, onSelectComment, onAddComment, sourceAnchor, addCommentLabel } =
-		setup;
+	const {
+		mathlivePlugin,
+		mlarrowHandlers,
+		docDir,
+		placeholder,
+		onOpenLink,
+		onSelectComment,
+		onAddComment,
+		sourceAnchor,
+		addCommentLabel,
+		spellLanguage
+	} = setup;
 	return [
 		parseCarryPlugin,
 		labelRenameUndo,
@@ -229,7 +242,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		createTocPlugin(),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
-		proofreadPlugin,
+		proofreadPlugin(spellLanguage),
 		spellProblemKeymap,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),

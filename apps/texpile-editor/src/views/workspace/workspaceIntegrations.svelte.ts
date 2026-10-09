@@ -1,6 +1,7 @@
 // The workspace's outward integrations: the MCP command surface and window-state cache,
 // shared-session handlers, cross-file project intel, the label/bibitem registries, editor
 // file access + graphics resolution, Zotero citations, and source-control actions.
+import { refreshMainFileLanguage } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -388,6 +389,7 @@ export class WorkspaceIntegrations {
 						}
 					: null;
 			if (!capsOf(d.provider).project) return;
+			void refreshMainFileLanguage(main, (p) => d.provider.readText(p));
 			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux).then(() => {
 				if (live && !guest) d.cc().share();
 			});

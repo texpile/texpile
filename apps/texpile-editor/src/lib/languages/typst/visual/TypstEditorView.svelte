@@ -19,6 +19,7 @@
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import ContextMenu from '$lib/editor/visual/contextMenu/ContextMenu.svelte';
 	import type { ShowInOutput } from '$lib/editor/visual/contextMenu/showInOutput';
+	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { syncPmComments } from '$lib/editor/visual/extensions/pmCommentsSync.svelte';
 	import type { CommentAnchor } from '$lib/comments/anchor';
 	import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
@@ -65,6 +66,8 @@
 		onCiteByDoi?: () => void;
 		/** Show in PDF from the right-click menu */
 		showInOutput?: ShowInOutput;
+		/** the language this file's spelling is checked in; null checks nothing */
+		spellLanguage?: SpellLanguage | null;
 		onCommentsPlaced?: (lost: string[]) => void;
 		addCommentLabel?: string;
 		/** a composer is open for a selection here; false clears the pending selection tint */
@@ -94,6 +97,7 @@
 		onInsertCitation,
 		onCiteByDoi,
 		showInOutput,
+		spellLanguage = 'en',
 		onCommentsPlaced,
 		addCommentLabel = 'Comment',
 		commentPendingActive = false
@@ -126,7 +130,8 @@
 			onSelectComment,
 			onAddComment,
 			sourceAnchor,
-			addCommentLabel
+			addCommentLabel,
+			spellLanguage: () => spellLanguage
 		});
 
 		let editorState = EditorState.create({ schema: typSchema, plugins, doc: localValue ?? undefined });

@@ -1,8 +1,10 @@
-import { Plugin, TextSelection, type Command } from 'prosemirror-state';
+import { Plugin, TextSelection, type Command, type EditorState } from 'prosemirror-state';
 import { keymap } from 'prosemirror-keymap';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import { createProofreadPlugin, createSpellCheckEnabledStore, invalidateProofreadCache } from 'prosemirror-proofread';
-import { lintText, onLintRulesChanged, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
+import { onLintRulesChanged, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
+import { proofreadIn } from '$lib/editor/spellcheck/languages/proofreadIn';
+import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { blockSpellText, chipLetters, harperReading } from '$lib/editor/spellcheck/blockSpellText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { nextProblem } from './problemNav';
@@ -111,44 +113,63 @@ function sleep(ms: number) {
  * mid-composition; stalling the result defers the whole dispatch chain to after compositionend.
  * Capped so a stuck composing flag cannot dam the linter forever.
  */
-async function lintTextAfterComposition(block: string) {
-	const reading = harperReading(block);
-	const res = reading.text.trim() ? await lintText(reading.text) : { matches: [] };
+async function lintTextAfterComposition(block: string, language: SpellLanguage | null) {
+	// harper reads a chip as a formula; a dictionary splits words at the markers, so its offsets are the block's
+	const reading = language === 'en' ? harperReading(block) : null;
+	const text = reading?.text ?? block;
+	const res = text.trim() ? await proofreadIn(language, text) : { matches: [] };
 	for (let i = 0; i < 100 && editorViewStore.current?.composing; i++) await sleep(150);
-	return { ...res, matches: res.matches.map((match) => ({ ...match, ...reading.blockSpan(match.offset, match.length) })) };
+	return reading ? { ...res, matches: res.matches.map((match) => ({ ...match, ...reading.blockSpan(match.offset, match.length) })) } : res;
 }
 
-const libraryPlugin = createProofreadPlugin(
-	500,
-	lintTextAfterComposition,
-	createHarperSuggestionBox,
-	spellcheckenabled,
-	blockSpellText,
-	true // useCustomCSS: enables the proofread-* class naming
-);
+const proofreadPlugins = new WeakSet<Plugin>();
 
-// the library's own spec and key, with its click kept off struck words
-export const proofreadPlugin = new Plugin({
-	...libraryPlugin.spec,
-	view(view) {
-		const inner = libraryPlugin.spec.view?.(view);
-		// another English or another set of rules: what was found is out of date
-		const stopRules = onLintRulesChanged(() => invalidateProofreadCache(view));
-		return {
-			...inner,
-			destroy() {
-				stopRules();
-				inner?.destroy?.();
+function proofreadOf(state: EditorState): Plugin | undefined {
+	return state.plugins.find((plugin) => proofreadPlugins.has(plugin));
+}
+
+/** one per editor: the library debounces per instance, and each editor's file has its own language */
+export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
+	const libraryPlugin = createProofreadPlugin(
+		500,
+		(block: string) => lintTextAfterComposition(block, language()),
+		createHarperSuggestionBox,
+		spellcheckenabled,
+		blockSpellText,
+		true // useCustomCSS: enables the proofread-* class naming
+	);
+	// the library's own spec and key, with its click kept off struck words
+	const plugin: Plugin = new Plugin({
+		...libraryPlugin.spec,
+		view(view) {
+			const inner = libraryPlugin.spec.view?.(view);
+			// another English, another set of rules or another language: what was found is out of date
+			const stopRules = onLintRulesChanged(() => invalidateProofreadCache(view));
+			let checkedIn = language();
+			const stopLanguage = observe(language, (now) => {
+				if (now === checkedIn) return;
+				checkedIn = now;
+				invalidateProofreadCache(view);
+			});
+			return {
+				...inner,
+				destroy() {
+					stopRules();
+					stopLanguage();
+					inner?.destroy?.();
+				}
+			};
+		},
+		props: {
+			...libraryPlugin.spec.props,
+			handleClick(view, pos, event) {
+				return !onOldWords(event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 			}
-		};
-	},
-	props: {
-		...libraryPlugin.spec.props,
-		handleClick(view, pos, event) {
-			return !onOldWords(event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 		}
-	}
-});
+	});
+	proofreadPlugins.add(plugin);
+	return plugin;
+}
 
 const chipSquiggles = new WeakMap<DecorationSet, DecorationSet>();
 
@@ -156,7 +177,7 @@ const chipSquiggles = new WeakMap<DecorationSet, DecorationSet>();
 export const spellChipPlugin = new Plugin({
 	props: {
 		decorations(state) {
-			const squiggles: DecorationSet | undefined = proofreadPlugin.getState(state)?.decor;
+			const squiggles: DecorationSet | undefined = proofreadOf(state)?.getState(state)?.decor;
 			if (!squiggles || squiggles === DecorationSet.empty) return null;
 			let drawn = chipSquiggles.get(squiggles);
 			if (drawn) return drawn;
@@ -179,7 +200,7 @@ export const spellChipPlugin = new Plugin({
 
 function jumpToProblem(dir: 1 | -1): Command {
 	return (state, dispatch) => {
-		const squiggles: DecorationSet | undefined = proofreadPlugin.getState(state)?.decor;
+		const squiggles: DecorationSet | undefined = proofreadOf(state)?.getState(state)?.decor;
 		const target = nextProblem(squiggles?.find() ?? [], state.selection, dir);
 		if (!target) return false;
 		dispatch?.(state.tr.setSelection(TextSelection.create(state.doc, target.from, target.to)).scrollIntoView());

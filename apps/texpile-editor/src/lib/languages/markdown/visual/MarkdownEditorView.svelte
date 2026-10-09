@@ -56,6 +56,7 @@
 	import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 	import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 	import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
+	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 	import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
 	import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
@@ -95,6 +96,8 @@
 		localReferences?: BiblatexReference[];
 		imageDir?: string;
 		docPath?: string | null;
+		/** the language this file's spelling is checked in; null checks nothing */
+		spellLanguage?: SpellLanguage | null;
 		placeholder?: string;
 		onReady?: () => void;
 		/** the link tooltip's Open action: return true when handled in-app (workspace-relative
@@ -126,6 +129,7 @@
 		localReferences = [],
 		imageDir,
 		docPath = null,
+		spellLanguage = 'en',
 		placeholder = '',
 		onReady,
 		onOpenLink,
@@ -239,7 +243,7 @@
 			createTocPlugin(),
 			createPersistentSelectionPlugin(),
 			spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
-			proofreadPlugin,
+			proofreadPlugin(() => spellLanguage),
 			spellProblemKeymap,
 			createBoundaryClickPlugin(),
 			wordSelectionTrim(),

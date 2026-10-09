@@ -4,7 +4,9 @@ import { mount, unmount } from 'svelte';
 import type { CreateSuggestionBox, Problem as ProofreadProblem } from 'prosemirror-proofread';
 import SuggestionBox from './SuggestionBox.svelte';
 import { readableSpellText } from './blockSpellText';
-import { ruleOfReplacements } from './linter';
+import { originOfReplacements } from './linter';
+import { suggestSpellings } from './languages/dictionaryClient';
+import { isDictionaryLanguage, type SpellLanguage } from './languages/spellLanguages';
 
 // shapes match prosemirror-proofread
 type Position = {
@@ -27,6 +29,8 @@ export type Problem = {
 	text: string; // the error text itself
 	/** the Harper rule that found it */
 	rule?: string;
+	/** the language it was checked in; English is Harper's */
+	language?: SpellLanguage;
 };
 
 export type SuggestionBoxOptions = {
@@ -44,10 +48,12 @@ let currentCleanup: (() => void) | null = null;
 // the lib allows { value } objects in replacements; harper hands us plain strings, normalize anyway.
 // a word too far from anything known comes with no list at all, and the box still has to open
 // for it: ignore and add-to-dictionary are what it is there for
-function normalizeProblem(p: ProofreadProblem & { rule?: string }): Problem {
+function normalizeProblem(p: ProofreadProblem & { rule?: string; language?: SpellLanguage }): Problem {
+	const origin = originOfReplacements(p.replacements);
 	return {
 		...p,
-		rule: p.rule ?? ruleOfReplacements(p.replacements) ?? undefined,
+		rule: p.rule ?? origin?.rule,
+		language: p.language ?? origin?.language,
 		text: readableSpellText(p.text),
 		replacements: (p.replacements ?? []).map((r) => (typeof r === 'string' ? r : r.value))
 	};
@@ -71,30 +77,44 @@ export function createHarperSuggestionBox(options: Parameters<CreateSuggestionBo
 	activeWindow().document.body.appendChild(container);
 
 	let component: ReturnType<typeof mount> | null = null;
-	try {
-		component = mount(SuggestionBox, {
-			target: container,
-			props: {
-				error: normalizeProblem(options.error),
-				errors: (options.errors || [options.error]).map(normalizeProblem),
-				position: options.position,
-				onReplace: (value: string) => {
-					options.onReplace(value);
-					destroy();
-				},
-				onIgnore: () => {
-					options.onIgnore();
-					destroy();
-				},
-				onClose: () => {
-					options.onClose();
-					destroy();
-				},
-				invalidateCache: options.invalidateCache
-			}
+	const error = normalizeProblem(options.error);
+	const errors = (options.errors || [options.error]).map(normalizeProblem);
+	// a dictionary's suggestions are found when asked for, not with every word it flags
+	const language = error.language;
+	if (isDictionaryLanguage(language) && !error.replacements.length && error.text)
+		void suggestSpellings(language, error.text).then((found) => {
+			if (!container.parentNode) return;
+			error.replacements = found;
+			mountBox();
 		});
-	} catch (error) {
-		console.error('[Harper] Error mounting component:', error);
+	else mountBox();
+
+	function mountBox() {
+		try {
+			component = mount(SuggestionBox, {
+				target: container,
+				props: {
+					error,
+					errors,
+					position: options.position,
+					onReplace: (value: string) => {
+						options.onReplace(value);
+						destroy();
+					},
+					onIgnore: () => {
+						options.onIgnore();
+						destroy();
+					},
+					onClose: () => {
+						options.onClose();
+						destroy();
+					},
+					invalidateCache: options.invalidateCache
+				}
+			});
+		} catch (error) {
+			console.error('[Harper] Error mounting component:', error);
+		}
 	}
 
 	function destroy() {

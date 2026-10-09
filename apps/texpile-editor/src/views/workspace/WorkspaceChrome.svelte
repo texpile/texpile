@@ -7,6 +7,7 @@
 	import { userTemplatesAvailable } from '$lib/workspace/templates/templateBridge';
 	import TitleBar from '$lib/chrome/TitleBar.svelte';
 	import WorkspaceMenuBar from '$lib/chrome/WorkspaceMenuBar.svelte';
+	import { chooseDocumentLanguage } from '$lib/editor/spellcheck/languages/documentLanguageMenu';
 	import SessionPresence from '$lib/chrome/SessionPresence.svelte';
 	import LayoutControls from './titlebar/LayoutControls.svelte';
 	import { documentControls } from '$lib/preview/documentControls.svelte';
@@ -67,6 +68,8 @@
 			uiZoomPercent: number;
 			/** the compile target is Typst; New-file menus offer .typ instead of .tex/.cls/.sty */
 			typstProject: boolean;
+			/** the open file's spelling language */
+			spelling: import('$lib/editor/spellcheck/languages/spellingLanguage.svelte').SpellingChoice;
 		};
 		actions: Any;
 		/** a compile command from .texpile/config.json awaiting acceptance; see projectConfig.ts.
@@ -126,6 +129,8 @@
 			onZoomIn={actions.uiZoomIn}
 			onZoomOut={actions.uiZoomOut}
 			onZoomReset={actions.uiZoomReset}
+			spelling={menu.spelling}
+			onSpellLanguage={menu.hostMode ? chooseDocumentLanguage : undefined}
 		/>
 	{/snippet}
 </TitleBar>

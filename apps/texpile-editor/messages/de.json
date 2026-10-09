@@ -2269,5 +2269,14 @@
 	"wsview_stranded_discard": "Änderungen verwerfen",
 	"wsview_stranded_toast_title": "{name} wurde auf der Festplatte geändert",
 	"wsview_stranded_toast_body": "Änderungen nicht gespeichert.",
-	"wsview_stranded_open": "Öffnen"
+	"wsview_stranded_open": "Öffnen",
+	"spelling_not_in_dictionary": "Nicht im Wörterbuch ({language}).",
+	"spelling_add_to_language_dictionary": "„{word}“ zum Wörterbuch ({language}) hinzufügen",
+	"spelling_document_language": "Sprache des Dokuments",
+	"spelling_automatic": "Automatisch",
+	"spelling_automatic_named": "Automatisch ({language})",
+	"spelling_automatic_unchecked": "Automatisch ({language}, nicht geprüft)",
+	"prefs_spell_language": "Sprache der Rechtschreibprüfung",
+	"prefs_spell_language_note": "Für Dokumente, die keine Sprache angeben. Ein Dokument, das seine Sprache angibt (babel, polyglossia, lang in Typst, Front Matter), wird in dieser geprüft. Grammatik wird nur auf Englisch geprüft.",
+	"spelldict_language": "Sprache des Wörterbuchs"
 }

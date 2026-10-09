@@ -2,26 +2,42 @@
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Check } from '@lucide/svelte';
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
+	import MenuBarSubmenu from './MenuBarSubmenu.svelte';
 	import { menuContentClass, menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';
+	import type { DocumentLanguageItem } from '$lib/editor/spellcheck/languages/documentLanguageMenu';
 	import { m } from '$lib/paraglide/messages';
 
-	let {
-		index,
-		select,
-		editable,
-		spellcheckOn
-	}: { index: number; select: (value: string) => void; editable: boolean; spellcheckOn: boolean } = $props();
+	type Props = {
+		index: number;
+		select: (value: string) => void;
+		editable: boolean;
+		spellcheckOn: boolean;
+		languages: DocumentLanguageItem[];
+		/** a guest's: the folder's language is the host's to choose */
+		languagesFixed: boolean;
+	};
+
+	const props: Props = $props();
 </script>
 
-<Menu onSelect={(d) => select(d.value)}>
-	<MenuBarTrigger id="spelling" {index} label={m.menubar_menu_spelling()} disabled={!editable} />
+<Menu onSelect={(d) => props.select(d.value)}>
+	<MenuBarTrigger id="spelling" index={props.index} label={m.menubar_menu_spelling()} disabled={!props.editable} />
 	<Portal>
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="toggle" class={menuBarItemClass}>
 					<Menu.ItemText>{m.menubar_check_spelling()}</Menu.ItemText>
-					{#if spellcheckOn}<Check class="size-4" />{/if}
+					{#if props.spellcheckOn}<Check class="size-4" />{/if}
 				</Menu.Item>
+				<MenuBarSubmenu value="language" label={m.spelling_document_language()} select={(value) => props.select(`lang:${value}`)}>
+					{#each props.languages as item, i (item.value)}
+						<Menu.Item value={item.value} class={menuBarItemClass} disabled={props.languagesFixed}>
+							<Menu.ItemText>{item.label}</Menu.ItemText>
+							{#if item.checked}<Check class="size-4" />{/if}
+						</Menu.Item>
+						{#if i === 0}<Menu.Separator class={separatorClass} />{/if}
+					{/each}
+				</MenuBarSubmenu>
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="dictionary" class={menuBarItemClass}><Menu.ItemText>{m.menubar_edit_dictionary()}</Menu.ItemText></Menu.Item>
 				<Menu.Item value="settings" class={menuBarItemClass}><Menu.ItemText>{m.menubar_spelling_settings()}</Menu.ItemText></Menu.Item>

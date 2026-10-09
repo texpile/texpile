@@ -12,6 +12,7 @@ import { box } from '$lib/runes/box.svelte';
 import { setLocale as setParaglideLocale } from '$lib/paraglide/runtime';
 import { migrateSettingsObject } from '$lib/migration/settings';
 import type { EnglishVariant } from '$lib/editor/spellcheck/config/grammarRules';
+import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 
 export type AppSettings = {
 	/** settings.json's own shape version; absent means pre-restructure and triggers migration */
@@ -21,6 +22,8 @@ export type AppSettings = {
 	spellcheck: boolean;
 	/** the English that spelling and grammar follow; '' = the system's own */
 	englishVariant: '' | EnglishVariant;
+	/** the language spelling is checked in when a document names none and its folder chose none */
+	spellLanguage: SpellLanguage;
 	/** grammar rules the user turned on or off; a rule not here follows its default (grammarRules.ts) */
 	grammarRules: Record<string, boolean>;
 	/** check the update feed (updates.texpile.com) for a newer version on launch; downloads stay click-only. */
@@ -116,6 +119,7 @@ const DEFAULTS: AppSettings = {
 	reopenLastFolder: true,
 	spellcheck: false,
 	englishVariant: '',
+	spellLanguage: 'en',
 	grammarRules: {},
 	checkForUpdates: true,
 	mcpEnabled: false,

@@ -29,6 +29,7 @@ import { typstColorSwatches } from '$lib/languages/typst/intellisense/actions/co
 import { guestSession } from '$lib/collab/guestSession';
 import { mdPathCompletion } from '$lib/languages/markdown/pathCompletion';
 import { cmSpellcheck } from '$lib/editor/spellcheck/cmSpellcheck';
+import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { lintGutter } from '@codemirror/lint';
 import { comments, commentGutterHandlers } from '$lib/editor/visual/extensions/comments';
 import { mathPreview } from '$lib/editor/source/extensions/math-preview/mathPreview';
@@ -64,6 +65,8 @@ export type SourceSetupDeps = {
 	keymapConf: Compartment;
 	lineWrap: boolean;
 	readOnly?: boolean;
+	/** the language the file's text is checked in; read at each check, as the text can change it */
+	spellLanguage: (source: string) => SpellLanguage | null;
 	onAddComment?: (from: number, to: number) => void;
 	onSelectComment?: (id: string) => void;
 	/** the thread behind a comment id, for the hover card over its text and line number */
@@ -138,7 +141,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					latexListContinuation(),
 					mathPreview(),
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost()] : []),
-					cmSpellcheck()
+					cmSpellcheck(deps.spellLanguage)
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
 				? // md chords; $-math, spellcheck and project file paths are dialect-free
@@ -147,7 +150,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						mdSourceShortcuts(),
 						mdPathCompletion(),
 						mathPreview({ comments: false }),
-						cmSpellcheck(),
+						cmSpellcheck(deps.spellLanguage, 'markdown'),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme
 					]
@@ -166,7 +169,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								// a guest's missing file would be created on its own disk, not the project's
 								typstQuickFix({ onCreateFile: guestSession.active ? undefined : createProjectFile }),
 								typstColorSwatches(),
-								cmSpellcheck('typst'),
+								cmSpellcheck(deps.spellLanguage, 'typst'),
 								foldGutter({ markerDOM: foldMarkerDom }),
 								foldMarkerTheme
 							]

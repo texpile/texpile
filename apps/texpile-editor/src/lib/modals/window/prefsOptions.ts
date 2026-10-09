@@ -4,6 +4,8 @@ import { LOCALE_META } from '$lib/localeMeta';
 import { markPreferencesReopen } from '$lib/stores/dialogStore';
 import { m } from '$lib/paraglide/messages';
 import { ENGLISH_VARIANTS, systemVariant, type EnglishVariant } from '$lib/editor/spellcheck/config/grammarRules';
+import { SPELL_LANGUAGES, type SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
+import { spellLanguageName } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 
 // source-editor keybindings; Vim and Emacs are names, so they are not translated
 export function keymapOptions(): { value: AppSettings['editorKeymap']; label: string }[] {
@@ -40,4 +42,9 @@ export function englishVariantOptions(): { value: AppSettings['englishVariant'];
 		{ value: '', label: m.prefs_english_system({ variant: names[systemVariant(navigator.languages)] }) },
 		...ENGLISH_VARIANTS.map((v) => ({ value: v, label: names[v] }))
 	];
+}
+
+/** the languages spelling can be checked in, each named in the reading language */
+export function spellLanguageOptions(): { value: SpellLanguage; label: string }[] {
+	return SPELL_LANGUAGES.map((value) => ({ value, label: spellLanguageName(value) }));
 }
