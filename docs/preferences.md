@@ -18,6 +18,7 @@ Settings for the whole app. Open it with Ctrl , (Cmd , on macOS) or File › Pre
 | Appearance › Language                      | Changes the interface only. Spell check follows each document's own language.                                                  |
 | Editor › Keybindings                       | Vim and Emacs work in the source editor only.                                                                                  |
 | Editor › Justify text, Hyphenate words     | Change the visual editor only, not the compiled document or the file.                                                          |
+| Editor › Expand snippets automatically     | Turns off only the snippets that expand on their own. See [Snippets](snippets.md).                                             |
 | Spelling › Check spelling and grammar      | Off by default.                                                                                                                |
 | Spelling › This folder › Language          | The same choice as Spelling › Folder Language. Needs an open folder.                                                           |
 | Spelling › Default language                | For documents that name no language, in folders set to Automatic. English by default.                                          |

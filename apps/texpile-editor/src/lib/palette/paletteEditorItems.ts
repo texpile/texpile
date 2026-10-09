@@ -11,6 +11,7 @@ import {
 	Braces
 } from '@lucide/svelte';
 import { ensureProjectSnippets, revealGlobalSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { changedLines, nextChange, previousChange, revertChange, revertChangeAt } from '$lib/editor/source/cmChangeMarkers';
@@ -122,6 +123,16 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 				}
 			});
 	}
+	if (view && !view.state.selection.main.empty)
+		for (const c of wrapSnippetsFor(view.state))
+			items.push({
+				id: `editor.wrap.${c.snippet.name}`,
+				label: m.wrap_with_item({ name: c.snippet.name }),
+				group,
+				keywords: `wrap function call snippet selection ${c.snippet.wrap ?? ''}`,
+				icon: Braces,
+				run: () => wrapSelection(view, c)
+			});
 	const root = workspaceRoot.current;
 	if (root && a.isProject() && a.isHostWorkspace())
 		items.push({

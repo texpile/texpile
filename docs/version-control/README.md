@@ -21,7 +21,7 @@ section: Workflow
 
 - Files the build makes, such as `.aux` and `.log`, are listed under **Build** and left out of commits. **Add to .gitignore** on the group tells git to ignore them for good. Your PDF is not in this group.
 - A file you untick stays out of commits until it has no changes, even after a restart.
-- Files under `.texpile/` show **Managed by Texpile**. Do not edit them by hand.
+- Files under `.texpile/` show **Managed by Texpile**. Do not edit them by hand. The exception is `snippets.json`, which is yours to edit.
 - If git has no name and email yet, the first commit asks for them and saves them for every project on this computer.
 - **Discard Changes** keeps a copy in Version History first and offers **Undo**. A new file that was never committed goes to the Trash.
 

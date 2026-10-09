@@ -8,7 +8,7 @@ import { ensureSyntaxTree } from '@codemirror/language';
 import { CompletionContext, type Completion } from '@codemirror/autocomplete';
 import { typstLanguage } from '$lib/languages/typst/source/typstLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
-import { snippetCompletionSource, sourceSnippets } from '$lib/editor/snippets/cmSnippets';
+import { snippetCompletionSource, sourceSnippets, wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { setSnippetLayers } from '$lib/editor/snippets/file/snippetRegistry';
 import type { SnippetLanguage } from '$lib/editor/snippets/file/snippetTypes';
@@ -27,6 +27,8 @@ const GLOBAL = `{
 		"Contour integral": { "prefix": "oint", "context": "math", "auto": true, "body": { "typst": "integral.cont" } },
 		"Subscript": { "prefix": "([A-Za-z])(\\\\d)", "regex": true, "auto": true, "context": "math", "body": { "latex": "[[0]]_{[[1]]}", "typst": "[[0]]_[[1]]" } },
 		"Display only": { "prefix": "dd", "context": "display-math", "auto": true, "body": "D" },
+		"Open point": { "scope": "typst", "wrap": "offen" },
+		"Emphasis": { "scope": "latex", "wrap": "emph" },
 	}
 }`;
 
@@ -35,11 +37,12 @@ let undoBoundaries: string[] = [];
 
 function editor(lang: SnippetLanguage, withCaret: string): EditorView {
 	const at = withCaret.indexOf('|');
-	const doc = withCaret.replace('|', '');
+	const end = withCaret.indexOf('|', at + 1);
+	const doc = withCaret.replaceAll('|', '');
 	view = new EditorView({
 		state: EditorState.create({
 			doc,
-			selection: { anchor: at },
+			selection: { anchor: at, head: end < 0 ? at : end - 1 },
 			extensions: [
 				lang === 'typst' ? typstLanguage() : latex(),
 				sourceSnippets(lang, { stopUndoCapture: () => undoBoundaries.push(view!.state.doc.toString()) })
@@ -111,5 +114,20 @@ describe('typing a trigger', () => {
 		const option = result!.options.find((o) => o.label === '@/') as Completion & { apply: (...a: unknown[]) => void };
 		option.apply(v, option, result!.from, v.state.selection.main.head);
 		expect(shown(v)).toBe('$\\frac{|}{}$');
+	});
+});
+
+describe('wrapping the selection', () => {
+	it.each<[string, SnippetLanguage, string, string]>([
+		['a Typst call in markup takes its #', 'typst', 'Check |this part| now.', 'Check #offen[this part]| now.'],
+		['a Typst call in code goes without one', 'typst', '#{ let x = |[draft]| }', '#{ let x = offen[[draft]]| }'],
+		['a LaTeX command', 'latex', 'Check |this part| now.', 'Check \\emph{this part}| now.'],
+		['refused when it would split a piece of markup', 'typst', 'Check *bo|ld* and| more.', 'Check *bo|ld* and| more.'],
+		['refused when it would split a brace group', 'latex', '\\textbf{bo|ld} and| more.', '\\textbf{bo|ld} and| more.']
+	])('%s', (_, lang, before, after) => {
+		const v = editor(lang, before);
+		const [entry] = wrapSnippetsFor(v.state);
+		wrapSelection(v, entry);
+		expect(shown(v)).toBe(after);
 	});
 });

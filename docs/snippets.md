@@ -1,0 +1,112 @@
+---
+nav: Snippets
+description: Write your own snippets for LaTeX, Typst and Markdown in Texpile, expand them as you type in math or text, and wrap a selection in a function.
+blurb: Your own triggers, expanded as you type.
+icon: code
+order: 26.5
+section: Editor tips
+---
+
+# Snippets
+
+A snippet turns a short trigger into longer text with places to fill in. Type `dint` in an equation and it becomes `\int_{0}^{1} \, \mathrm{d}x`, with Tab moving through the limits, the integrand and the variable. Snippets work in the source editor.
+
+| Where to find it          | Path                                                 | Note                                                   |
+| ------------------------- | ---------------------------------------------------- | ------------------------------------------------------ |
+| This folder's snippets    | Command palette › Edit Project Snippets              | Opens `.texpile/snippets.json`, made empty if missing. |
+| Snippets for every folder | Command palette › Edit Global Snippets               | Shows `snippets.json` in Texpile's own data folder.    |
+| Expanding as you type     | Preferences › Editor › Expand snippets automatically | On by default.                                         |
+
+A folder's snippets replace global ones of the same name, and global ones replace the built-in ones. The folder's file is shared through Git with the rest of the project.
+
+## A snippet file
+
+```json
+{
+	"v": 1,
+	"snippets": {
+		"Definite integral": {
+			"prefix": "dint",
+			"context": "math",
+			"auto": true,
+			"body": {
+				"latex": "\\int_{${1:0}}^{${2:1}} $3 \\, \\mathrm{d}${4:x}$0",
+				"typst": "integral_(${1:0})^(${2:1}) $3 dif ${4:x}$0"
+			}
+		}
+	}
+}
+```
+
+Each entry is named, and the name is what the popup and the menus show. A snippet file from VS Code can be used as it is: its entries go at the top level, without `v` and `snippets`. Comments and trailing commas are allowed.
+
+| Field         | What it does                                                                                          |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| `prefix`      | The trigger, or a list of triggers.                                                                   |
+| `body`        | The text inserted. One text for every language, or `latex`, `typst` and `markdown` each with its own. |
+| `description` | Shown in the popup.                                                                                   |
+| `scope`       | The languages it applies to, such as `"latex,typst"`. All three when left out.                        |
+| `context`     | `math`, `inline-math`, `display-math`, `text`, `code` (Typst only) or `any`. `any` when left out.     |
+| `auto`        | `true` expands as soon as the trigger is typed. Otherwise it waits in the popup for Enter.            |
+| `word`        | `true` fires only at the start of a word. On for Typst snippets that expand on their own.             |
+| `regex`       | `true` reads the prefix as a regular expression. See below.                                           |
+| `flags`       | Regular expression flags: `i`, `u`.                                                                   |
+| `priority`    | When several snippets match, the higher one wins. 0 when left out.                                    |
+| `key`         | A keyboard shortcut that runs the snippet, such as `Mod-Shift-o`. `Mod` is Ctrl, or Cmd on macOS.     |
+| `disabled`    | `true` turns off the snippet of the same name from the global file or the built-in ones.              |
+| `wrap`        | A function name. The snippet wraps the selection in a call to it. See below.                          |
+| `args`        | Extra arguments for `wrap`, such as `fill: red`.                                                      |
+
+## In the body
+
+| Write                 | To get                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------ |
+| `$1`, `$2`            | Places Tab moves through, in order. The same number twice is filled in once.         |
+| `${1:text}`           | A place that starts with `text` selected.                                            |
+| `$0`                  | Where the cursor ends. The end of the body when left out.                            |
+| `${1\|one,two\|}`     | A place with a list to pick from.                                                    |
+| `${TM_SELECTED_TEXT}` | The selected text.                                                                   |
+| `\\$`                 | A `$` sign. LaTeX and Typst use `$` for math, so a body that inserts `$…$` needs it. |
+
+In the JSON file, each backslash in LaTeX is written twice: `"\\frac"` inserts `\frac`.
+
+> [!NOTE]
+> Typst equations already use words such as `dif`, `Re` and `oo`. A Typst snippet that expands on its own with one of these as its trigger expands every time the word is typed, so Texpile warns about it when it reads the file.
+
+## Triggers from a pattern
+
+With `"regex": true` the prefix is a regular expression matched against the text just typed, up to the cursor. `[[0]]`, `[[1]]` in the body insert what its groups matched.
+
+```json
+"Subscript": {
+	"prefix": "([A-Za-z])(\\d)",
+	"regex": true,
+	"auto": true,
+	"context": "math",
+	"body": { "latex": "[[0]]_{[[1]]}", "typst": "[[0]]_[[1]]" }
+}
+```
+
+`${NAME}` inside a pattern stands for a list named under `"variables"` at the top of the file. `${GREEK}` and `${SYMBOL}` are built in.
+
+A pattern is tested on every keystroke. Patterns in a folder's file therefore wait until you press **Allow** in the bar that appears at the top of the window, once per folder on this computer.
+
+## Wrap with
+
+Select text, right-click, and pick a snippet under **Wrap With**. An entry with `"wrap": "offen"` turns the selection into `#offen[selected text]` in Typst, without the `#` inside code, and into `\offen{selected text}` in LaTeX. Any snippet whose body uses `${TM_SELECTED_TEXT}` is listed too. The same entries are in the command palette while text is selected.
+
+```json
+"Open point": { "scope": "typst", "wrap": "offen", "key": "Mod-Shift-o" }
+```
+
+A selection that starts or ends inside a piece of markup, such as half of a `*bold*` run, is not wrapped.
+
+## Built-in snippets
+
+Typing `@` in math offers the built-in ones: `@a` for alpha, `@/` for a fraction, `@sum`, `@int`, and others, with Typst equivalents where Typst has the symbol. Turn one off with `{ "disabled": true }` under its name, such as `"@a"`.
+
+## When a snippet does not load
+
+An entry Texpile cannot read is skipped, and a note says which one and why. The rest of the file still loads.
+
+[Typing and selecting](typing.md) [Preferences](preferences.md)

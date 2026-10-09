@@ -18,7 +18,7 @@ The main file is the one Texpile compiles and the preview follows. Right-click a
 
 ![The menu on a file, with Unset Main File, Copy, Show in Folder, Version History, Rename, and Delete](../../landing/src/lib/assets/showcase/docs/app/file-tree-context-menu.png 'The menu on the main file.')
 
-Texpile saves the choice, the build settings and the comments in a hidden `.texpile` folder inside the project, so they travel with the folder, Git included.
+Texpile saves the choice, the build settings and the comments in a hidden `.texpile` folder inside the project, so they travel with the folder, Git included. The folder's [snippets](../snippets.md) live there too.
 
 ## Multi-file projects
 

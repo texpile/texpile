@@ -9,6 +9,10 @@ import {
 import { Compartment, EditorState, Facet, Prec, type Extension } from '@codemirror/state';
 import { EditorView, keymap, ViewPlugin, type EditorView as CMView } from '@codemirror/view';
 import { settings } from '$lib/settings';
+import { toaster } from '$lib/modals/toaster-svelte';
+import { m } from '$lib/paraglide/messages';
+import { usesSelection } from './expand/bodyTemplate';
+import { cutsThroughSyntax, wrapBodyFor } from './expand/wrapBody';
 import { choiceCompletionSource, choiceFieldAt, choiceFields } from './expand/choiceFields';
 import { expandSnippet } from './expand/expandSnippet';
 import { autoMatches, popupCandidates, type CompiledSnippet } from './expand/matchSnippets';
@@ -40,11 +44,11 @@ export function snippetCompletionSource(ctx: CompletionContext): CompletionResul
 		.filter(({ compiled }) => contextAllows(compiled.snippet.context, zone))
 		.map(({ compiled, prefix }) => ({
 			label: prefix,
-			detail: compiled.snippet.description || previewOf(compiled.body),
+			detail: compiled.snippet.description || previewOf(wrapBodyFor(compiled, zone)),
 			type: 'text',
 			boost: Math.max(-99, Math.min(99, compiled.snippet.priority)),
 			apply: (view: CMView, _c: Completion, from: number, to: number) =>
-				expandSnippet(view, compiled.body, from, to, { selection: '', captures: [] })
+				expandSnippet(view, wrapBodyFor(compiled, zone), from, to, { selection: '', captures: [] })
 		}));
 	return options.length ? { from: candidates.from, options } : null;
 }
@@ -58,21 +62,43 @@ function autoExpansion(stopUndoCapture: () => void): Extension {
 		if (!list.length || to > line.to || text.includes('\n')) return false;
 		const before = line.text.slice(0, from - line.from) + text;
 		for (const match of autoMatches(list, before, line.from)) {
-			if (!contextAllows(match.compiled.snippet.context, snippetZoneAt(view.state, Math.min(match.from, from), lang))) continue;
+			const zone = snippetZoneAt(view.state, Math.min(match.from, from), lang);
+			if (!contextAllows(match.compiled.snippet.context, zone)) continue;
 			// the character goes in on its own first, so one undo gives back what was typed
 			view.dispatch({ changes: { from, to, insert: text }, selection: { anchor: from + text.length }, userEvent: 'input.type' });
 			stopUndoCapture();
-			expandSnippet(view, match.compiled.body, match.from, from + text.length, { selection: '', captures: match.captures });
+			expandSnippet(view, wrapBodyFor(match.compiled, zone), match.from, from + text.length, { selection: '', captures: match.captures });
 			return true;
 		}
 		return false;
 	});
 }
 
+/** the "Wrap with" entries for where the selection is */
+export function wrapSnippetsFor(state: EditorState): CompiledSnippet[] {
+	const lang = languageOf(state);
+	if (!lang) return [];
+	const zone = snippetZoneAt(state, state.selection.main.from, lang);
+	return snippetRegistry().languages[lang].wraps.filter((c) => contextAllows(c.snippet.context, zone));
+}
+
+/** the selection, wrapped; refused with a note when that would split a construct in two */
+export function wrapSelection(view: CMView, compiled: CompiledSnippet): void {
+	const { from, to } = view.state.selection.main;
+	if (cutsThroughSyntax(view.state, from, to, compiled.lang)) {
+		toaster.info({ title: m.wrap_refused_title(), description: m.wrap_refused_desc() });
+		return;
+	}
+	const body = wrapBodyFor(compiled, snippetZoneAt(view.state, from, compiled.lang));
+	expandSnippet(view, body, from, to, { selection: view.state.sliceDoc(from, to), captures: [] });
+	view.focus();
+}
+
 function runKeyed(view: CMView, compiled: CompiledSnippet): boolean {
 	const sel = view.state.selection.main;
 	if (!contextAllows(compiled.snippet.context, snippetZoneAt(view.state, sel.from, compiled.lang))) return false;
-	expandSnippet(view, compiled.body, sel.from, sel.to, { selection: view.state.sliceDoc(sel.from, sel.to), captures: [] });
+	if (compiled.snippet.wrap || usesSelection(compiled.body)) wrapSelection(view, compiled);
+	else expandSnippet(view, compiled.body, sel.from, sel.to, { selection: view.state.sliceDoc(sel.from, sel.to), captures: [] });
 	return true;
 }
 
