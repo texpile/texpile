@@ -24,5 +24,5 @@
 	<LayoutMenu panes={props.panes} termDock={props.termDock} project={props.project} splittable={props.splittable} />
 </div>
 {#if divided}
-	<div class="bg-surface-300-700 mx-2 h-4 w-px shrink-0 self-center"></div>
+	<div class="border-surface-300-700 mx-2 h-4 w-px shrink-0 self-center border-l"></div>
 {/if}

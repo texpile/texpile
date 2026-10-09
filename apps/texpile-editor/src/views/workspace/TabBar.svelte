@@ -142,7 +142,7 @@
 
 {#if tabs.length > 0}
 	<div
-		class="bg-surface-100-900 border-surface-200-800 relative z-20 flex h-9 shrink-0 items-stretch overflow-clip border-b"
+		class="bg-surface-100-900 relative z-20 flex h-full shrink-0 items-stretch overflow-clip"
 		role="tablist"
 		tabindex="-1"
 		bind:clientWidth={stripWidth}

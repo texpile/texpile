@@ -62,7 +62,7 @@
 	}
 </script>
 
-<div class="bg-surface-200-800 relative z-30" style={props.style}>
+<div class="border-surface-200-800 relative z-30 {across ? 'border-l' : 'border-t'}" style={props.style}>
 	<!-- a focusable separator is the ARIA pattern for a splitter; svelte counts it as non-interactive -->
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
 	<div

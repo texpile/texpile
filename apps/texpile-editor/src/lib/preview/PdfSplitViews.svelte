@@ -111,7 +111,7 @@
 		{@render props.view(0)}
 	</div>
 	{#if props.split}
-		<div class="bg-surface-200-800 relative z-30 h-px shrink-0">
+		<div class="border-surface-200-800 relative z-30 h-px shrink-0 border-t">
 			<!-- a focusable separator is the ARIA pattern for a splitter; svelte counts it as non-interactive -->
 			<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
 			<div
