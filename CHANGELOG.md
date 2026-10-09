@@ -5,6 +5,10 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-10-09
+
+- fix: search bar overlapping (by @louisqli)
+
 ## [1.4.0] - 2026-10-09
 
 - feat: made interface cleaner (by @louisqli)
