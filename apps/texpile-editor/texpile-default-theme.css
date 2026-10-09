@@ -270,10 +270,6 @@
 	/* find-in-document matches, both editors */
 	--find-match-bg: light-dark(rgb(255, 237, 153), rgb(102, 77, 3));
 	--find-match-active-bg: light-dark(rgb(255, 213, 79), rgb(161, 123, 5));
-	--find-match-border: rgb(255, 213, 79);
-	--find-match-active-border: rgb(255, 179, 0);
-	--find-match-active-fg: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));
-	--find-match-dark-fg: rgb(255, 255, 255);
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
 	--proof-default: #14b8a6;

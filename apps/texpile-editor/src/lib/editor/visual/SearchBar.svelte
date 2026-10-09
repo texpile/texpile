@@ -127,16 +127,8 @@
 <style lang="postcss">
 	:global(.ProseMirror .ProseMirror-search-match) {
 		background-color: var(--find-match-bg) !important;
-		border-bottom: 2px solid var(--find-match-border) !important;
 	}
 	:global(.ProseMirror .ProseMirror-active-search-match) {
 		background-color: var(--find-match-active-bg) !important;
-		color: var(--find-match-active-fg) !important;
-		border-bottom: 2px solid var(--find-match-active-border) !important;
-		font-weight: 500 !important;
-	}
-	/* light leaves the text colour alone; dark lifts it */
-	:global(.dark .ProseMirror .ProseMirror-search-match) {
-		color: var(--find-match-dark-fg) !important;
 	}
 </style>
