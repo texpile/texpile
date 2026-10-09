@@ -9,28 +9,12 @@ import { scanGlossary } from '$lib/languages/latex/intellisense/completion/gloss
 import { scanScripts } from '$lib/languages/latex/intellisense/completion/subsuperscript';
 import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
+import { macroDefinitionsIn } from '$lib/languages/latex/macroDefinitions';
 
 const MAX_FILES = 300;
 const MAX_FILE_LENGTH = 2_000_000;
 
 const LABEL_RE = /\\(?:line)?label\s*\{([^{}]+)\}/g;
-// \newcommand family + the forms LW parses beyond it; group 1 = name, group 2 = optional [argcount]
-const DEF_RES: Array<{ re: RegExp; sig: (m: RegExpExecArray) => string }> = [
-	{
-		re: /\\(?:new|renew|provide)command\*?\s*\{?\\([a-zA-Z@]+)\}?(?:\[(\d)\])?/g,
-		sig: (m) => 'm '.repeat(+(m[2] ?? 0)).trim()
-	},
-	{
-		re: /\\(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand\s*\{?\\([a-zA-Z@]+)\}?\s*\{([^{}]*)\}/g,
-		sig: (m) => m[2].trim()
-	},
-	{ re: /\\DeclareMathOperator\*?\{\\([a-zA-Z@]+)\}/g, sig: () => '' },
-	{ re: /\\DeclarePairedDelimiter(?:XPP|X)?\{?\\([a-zA-Z@]+)\}?/g, sig: () => 'm' },
-	{
-		re: /\\(?:(?:re)?newrobustcmd|DeclareRobustCommand)\*?\s*\{\\([a-zA-Z@]+)\}(?:\[(\d)\])?/g,
-		sig: (m) => 'm '.repeat(+(m[2] ?? 0)).trim()
-	}
-];
 const ENV_DEF_RE = /\\(?:(?:re)?newenvironment|NewDocumentEnvironment|newtheorem)\*?\s*\{([a-zA-Z][^{}\s]*)\}/g;
 const BIB_ENTRY_RE = /^\s*@[a-zA-Z]+\s*\{\s*([^\s,{}]+)\s*,/gm;
 
@@ -60,12 +44,7 @@ function scanTexIntel(text: string, file: string, draft: ProjectIntel) {
 		draft.labels.push({ name: m[1].trim(), file, line: lineOf(m.index), context: contextAt(m.index) });
 	}
 	const firstMacro = draft.macros.length;
-	for (const { re, sig } of DEF_RES) {
-		re.lastIndex = 0;
-		for (let m = re.exec(text); m; m = re.exec(text)) {
-			draft.macros.push({ name: m[1], signature: sig(m), file, line: lineOf(m.index) });
-		}
-	}
+	for (const d of macroDefinitionsIn(text)) draft.macros.push({ name: d.name, signature: d.signature, file, line: lineOf(d.index) });
 	// replacement bodies for this file's macros, so math previews can expand them cross-file
 	const bodies = scanMacroDefinitions(text);
 	for (let i = firstMacro; i < draft.macros.length; i++) {

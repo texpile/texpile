@@ -4,8 +4,13 @@
 // session resolves through the workspace provider instead of the disk.
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
 import { hasDocumentEnv } from './latexRoundtrip';
+import { installedPackageDefinitions, type ReadInstalledPackage } from '$lib/languages/latex/installedPackages';
 
 type ReadFn = (path: string) => Promise<string>;
+
+async function readTexPackage(file: string): Promise<string | null> {
+	return (await globalThis.window?.texpileTypst?.texPackage?.(file)) ?? null;
+}
 
 const BEGIN_DOC = /\\begin\s*\{document\}/;
 
@@ -102,9 +107,15 @@ async function resolveRead(baseDir: string, ref: string, exts: string[], read: R
  * would drag in whole sections); fragments are scanned whole. Over-gathering is harmless,
  * the result feeds signature scanning only.
  */
-export async function gatherProjectMacros(mainFilePath: string, root: string, read: ReadFn = readTextFile): Promise<string> {
+export async function gatherProjectMacros(
+	mainFilePath: string,
+	root: string,
+	read: ReadFn = readTextFile,
+	readInstalled: ReadInstalledPackage = readTexPackage
+): Promise<string> {
 	const seen = new Set<string>();
 	const chunks: string[] = [];
+	const installed = new Set<string>();
 
 	async function walk(filePath: string, text: string, depth: number): Promise<void> {
 		// fragments have no \begin{document}, so preambleOf returns the whole file
@@ -119,7 +130,10 @@ export async function gatherProjectMacros(mainFilePath: string, root: string, re
 		for (const { ref, exts } of refs) {
 			// referrer's own dir first, then the project root
 			const got = (await resolveRead(dirname(filePath), ref, exts, read)) ?? (await resolveRead(root, ref, exts, read));
-			if (!got) continue; // standard package or missing file
+			if (!got) {
+				if (exts[0] === '.sty') installed.add(ref.trim());
+				continue;
+			}
 			const key = pathKey(got.path);
 			if (seen.has(key)) continue;
 			seen.add(key);
@@ -134,5 +148,8 @@ export async function gatherProjectMacros(mainFilePath: string, root: string, re
 	} catch {
 		return ''; // main file unreadable, fall back to per-file preamble scanning
 	}
+	// last, so the project's own definitions win
+	const definitions = await installedPackageDefinitions(installed, readInstalled);
+	if (definitions) chunks.push(definitions);
 	return chunks.join('\n');
 }

@@ -21,6 +21,12 @@ export function registerToolchainIpc(): void {
 		const found = await kpsewhich(name);
 		return found ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
 	});
+	// a package's own .sty, for the parser's argument signatures; a bare name only
+	ipcMain.handle('toolchain:texPackage', async (_e, name: unknown) => {
+		if (typeof name !== 'string' || !/^[\w.+-]+\.sty$/i.test(name)) return null;
+		const found = await kpsewhich(name);
+		return found ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
+	});
 	ipcMain.handle('toolchain:dirForms', (_e, entry: unknown) => {
 		// an AppImage on a stick is as portable as the Windows zip; its launcher says so in the environment
 		const f = dirForms(typeof entry === 'string' ? entry : '.', portable || !!process.env.APPIMAGE);

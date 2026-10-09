@@ -29,6 +29,11 @@ export type PackageData = {
 const modules = import.meta.glob<{ default: PackageData }>('../data/packages/*.json');
 const cache = new Map<string, Promise<PackageData | null>>();
 
+/** whether Texpile ships data for the package, without loading it */
+export function isBundledPackage(name: string): boolean {
+	return `../data/packages/${name}.json` in modules;
+}
+
 export function loadPackage(name: string): Promise<PackageData | null> {
 	let entry = cache.get(name);
 	if (!entry) {
