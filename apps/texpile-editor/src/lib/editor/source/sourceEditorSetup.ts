@@ -150,7 +150,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						mdSourceShortcuts(),
 						mdPathCompletion(),
 						mathPreview({ comments: false }),
-						cmSpellcheck(deps.spellLanguage),
+						cmSpellcheck(deps.spellLanguage, 'markdown'),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme
 					]

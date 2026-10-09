@@ -7,6 +7,7 @@ import { onLintRulesChanged, type LintMatch } from '$lib/editor/spellcheck/linte
 import { proofreadIn } from '$lib/editor/spellcheck/languages/proofreadIn';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { typstProse } from '$lib/workspace/wordCount/proseWords';
+import { maskMarkdown } from '$lib/editor/spellcheck/languages/markdownMask';
 import { createHarperSuggestionBox, type Problem } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { observe } from '$lib/runes/observe.svelte';
@@ -16,15 +17,18 @@ import { clearOfOldWords, liveSuggestionRanges } from '$lib/editor/source/cmSugg
 import { nextProblem, type Span } from './problemNav';
 import './suggestion.css';
 
+type SpellMarkup = 'plaintext' | 'markdown' | 'typst';
+
 /**
  * Which markup Harper should parse the text as.
  *
  * 'plaintext' is the default because LaTeX has no Harper parser: texMask strips the markup first
  * and hands over the prose that survives. Harper DOES parse Typst natively, so a .typ file passes
  * 'typst' instead and skips the mask entirely — masking Typst with LaTeX rules would leave `#let`,
- * `$...$` and `@refs` in the text for the grammar checker to complain about.
+ * `$...$` and `@refs` in the text for the grammar checker to complain about. Markdown reaches Harper
+ * as plaintext too; a dictionary also gets its code and link addresses blanked (maskMarkdown).
  */
-export const spellMarkup = Facet.define<'plaintext' | 'typst', 'plaintext' | 'typst'>({
+export const spellMarkup = Facet.define<SpellMarkup, SpellMarkup>({
 	combine: (values) => values[0] ?? 'plaintext'
 });
 
@@ -211,7 +215,12 @@ class SpellPlugin {
 			// would blank out constructs by LaTeX's rules and leave Typst's own markup behind; a
 			// dictionary reads no markup, so it gets the word count's prose
 			const typst = spelling === 'en' ? src : typstProse(src);
-			this.masked = markup === 'typst' ? { text: typst, spans: [] } : maskTex(src);
+			const tex = markup === 'typst' ? null : maskTex(src);
+			this.masked = tex
+				? markup === 'markdown' && spelling !== 'en'
+					? { text: maskMarkdown(tex.text), spans: tex.spans }
+					: tex
+				: { text: typst, spans: [] };
 			this.maskedFor = src;
 			this.maskedIn = spelling;
 		}
@@ -234,7 +243,10 @@ class SpellPlugin {
 				size += stale[i].text.length + 2;
 				batch.push(stale[i++]);
 			} while (i < stale.length && size + stale[i].text.length + 2 <= CHUNK_CHARS);
-			const res = await proofreadIn(spelling, batch.map((p) => p.text).join('\n\n'), { markup, isStale });
+			const res = await proofreadIn(spelling, batch.map((p) => p.text).join('\n\n'), {
+				markup: markup === 'typst' ? 'typst' : 'plaintext',
+				isStale
+			});
 			// a newer edit or a disable landed while the worker ran
 			if (isStale()) return;
 			// transient worker failure: abort without caching, or these paragraphs would be
@@ -353,6 +365,6 @@ const problemKeymap = keymap.of([
 
 /** proofreading for source mode in the language `spelling` names; obeys the shared spell-check setting */
 /** `markup` selects Harper's parser; omit it for LaTeX/plain prose (see spellMarkup). */
-export function cmSpellcheck(spelling: SpellingOf, markup?: 'plaintext' | 'typst') {
+export function cmSpellcheck(spelling: SpellingOf, markup?: SpellMarkup) {
 	return [spellPlugin, problemKeymap, spelledIn.of(spelling), ...(markup ? [spellMarkup.of(markup)] : [])];
 }
