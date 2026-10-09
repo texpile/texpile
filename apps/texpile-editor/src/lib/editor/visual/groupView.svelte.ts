@@ -23,6 +23,10 @@ export function groupView(o: GroupViewOptions) {
 		const followed = path;
 		if (!v) return;
 		return untrack(() => {
+			// ProseMirror reads a read-only editor's DOM selection too, and Chrome collapses it as editing turns off:
+			// the slot's range would come back a caret. The range stays drawn (persistentSelection)
+			const domSelection = v.dom.ownerDocument.getSelection();
+			if (!live && domSelection?.anchorNode && v.dom.contains(domSelection.anchorNode)) domSelection.removeAllRanges();
 			// re-reads `editable`, which flips contenteditable
 			v.setProps({});
 			if (live) {
