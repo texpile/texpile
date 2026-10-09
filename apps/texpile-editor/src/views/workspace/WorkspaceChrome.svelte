@@ -12,7 +12,7 @@
 	import LayoutControls from './titlebar/LayoutControls.svelte';
 	import { documentControls } from '$lib/preview/documentControls.svelte';
 	import WorkspaceSidebar from './WorkspaceSidebar.svelte';
-	import GuestPresence from '$lib/collab/GuestPresence.svelte';
+	import GuestPresence from '$lib/collab/presence/GuestPresence.svelte';
 	import WindowDialogs from '$lib/modals/window/WindowDialogs.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
 	import { ChevronLeft, ChevronRight, ShieldQuestion } from '@lucide/svelte';
