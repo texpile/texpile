@@ -309,6 +309,8 @@
 		untrack(() => {
 			cdbg('presence bind', path, 'states', binding.awareness.getStates().size);
 			scheduleRemoteCursorRender(); // peers may already be mid-file
+			// a refocused editor group keeps its own selection, and no selection change announces it
+			publishCursor();
 		});
 		return () => {
 			binding.awareness.off('change', onAwareness);
