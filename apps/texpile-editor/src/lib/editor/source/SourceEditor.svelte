@@ -377,10 +377,10 @@
 	.source-editor :global(.cm-panels.cm-panels-top) {
 		position: absolute;
 		top: var(--find-top, calc(var(--spacing) * 3)) !important;
-		right: calc(var(--spacing) * 3);
+		right: var(--find-right);
 		left: auto;
 		width: max-content;
-		max-width: calc(100% - 1.5rem);
+		max-width: calc(100% - var(--find-right) - var(--spacing) * 3);
 		background: none;
 		border: none;
 		z-index: 20;

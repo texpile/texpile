@@ -95,7 +95,10 @@
 
 {#if display.current}
 	<!-- anchored to the editor pane's top-right (the WorkspaceView wrapper is relative), matching the source editor's search panel -->
-	<div transition:slide={{ duration: 180 }} class="absolute top-(--find-top,calc(var(--spacing)*3)) right-3 z-20 max-w-[calc(100%-1.5rem)]">
+	<div
+		transition:slide={{ duration: 180 }}
+		class="absolute top-(--find-top,calc(var(--spacing)*3)) right-(--find-right) z-20 max-w-[calc(100%-var(--find-right)-var(--spacing)*3)]"
+	>
 		<FindBar
 			bind:this={bar}
 			{query}

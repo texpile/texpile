@@ -1117,8 +1117,13 @@ html.pm-drop-refused .pm-drop-cursor {
 }
 /* shared by three surfaces, two of which are not Svelte components. Skeleton pairs and presets do
    not resolve in @apply, hence the raw variables. */
+:root {
+	--find-widget-width: 360px;
+	/* an editor's find box from the pane's right edge */
+	--find-right: 20px;
+}
 .find-widget {
-	width: 360px;
+	width: var(--find-widget-width);
 	max-width: 100%;
 	border-radius: var(--radius-container);
 	padding: calc(var(--spacing) * 1.25);
