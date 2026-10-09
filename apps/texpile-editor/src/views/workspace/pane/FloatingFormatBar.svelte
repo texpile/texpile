@@ -14,6 +14,7 @@
 	import { layout, updateLayout } from '$lib/storage/layout';
 	import WordCount from '../WordCount.svelte';
 	import type { FormatToolbar } from './formatToolbar';
+	import { hangFindBelow } from './hangFindBelow';
 	import type { EditorPaneProps } from '../editorPaneProps';
 
 	type Props = {
@@ -44,6 +45,7 @@
 <!-- local: a global fade kept a slot that went from the layout on the page, held there by its bar -->
 {#if props.shown && !(mode === 'visual' && rawEditorActiveStore.current)}
 	<div
+		{@attach hangFindBelow}
 		transition:fade={{ duration: 200 }}
 		class="bg-surface-50-950 border-surface-200-800 rounded-container @container absolute top-3 left-1/2 z-20 flex w-[min(40rem,calc(100%-1.5rem))] -translate-x-1/2 items-center border px-2 py-0.5 shadow-lg"
 	>

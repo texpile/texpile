@@ -1118,7 +1118,8 @@ html.pm-drop-refused .pm-drop-cursor {
 /* shared by three surfaces, two of which are not Svelte components. Skeleton pairs and presets do
    not resolve in @apply, hence the raw variables. */
 .find-widget {
-	width: 419px;
+	width: 360px;
+	max-width: 100%;
 	border-radius: var(--radius-container);
 	padding: calc(var(--spacing) * 1.25);
 }

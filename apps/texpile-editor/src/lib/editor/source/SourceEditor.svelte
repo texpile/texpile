@@ -373,10 +373,10 @@
 	}
 	/* position only: FindBar brings the card, and .cm-panels paints one behind it. !important on top:
 	   CodeMirror writes top: 0 inline on the container it creates, which beat this rule and left the
-	   panel hugging the editor edge while the visual and PDF bars sit 12px down */
+	   panel hugging the editor edge */
 	.source-editor :global(.cm-panels.cm-panels-top) {
 		position: absolute;
-		top: calc(var(--spacing) * 3) !important;
+		top: var(--find-top, calc(var(--spacing) * 3)) !important;
 		right: calc(var(--spacing) * 3);
 		left: auto;
 		width: max-content;
