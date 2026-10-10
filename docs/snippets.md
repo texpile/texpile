@@ -101,7 +101,7 @@ Select text, right-click, and pick a snippet under **Wrap With**. An entry with 
 
 A selection that starts or ends inside a piece of markup, such as half of a `*bold*` run, is not wrapped.
 
-In the visual editor of a Typst file, **Wrap With** lists the `wrap` entries, and a call to any of their functions shows as text underlined with its function's name. The text stays editable, and saving writes the call back as `#offen[…]`.
+In the visual editor of a Typst file, **Wrap With** lists the `wrap` entries and their keys work, and a call to any of their functions shows as text underlined with its function's name. The text stays editable, and saving writes the call back as `#offen[…]`.
 
 ## In visual text
 

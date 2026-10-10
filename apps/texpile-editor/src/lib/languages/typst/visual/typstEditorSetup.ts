@@ -36,6 +36,7 @@ import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuot
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
+import { visualWrapKeys } from '$lib/editor/snippets/visual/visualWrap';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { search } from 'prosemirror-search';
 import { typSchema } from './schema';
@@ -201,6 +202,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		visualTextSnippets('typst', typstSourceSlice),
+		visualWrapKeys('typst'),
 		inputRules({ rules: typInputRules }),
 		keymap({
 			'Mod-z': undoVisual,
