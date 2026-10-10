@@ -26,7 +26,7 @@ import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin'
 import { lineBreakPlugins } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors';
 import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
-import { latexClipboardPlugin, pasteLatexText } from '$lib/editor/visual/extensions/latexClipboard';
+import { latexClipboardPlugin, latexSourceSlice, pasteLatexText } from '$lib/editor/visual/extensions/latexClipboard';
 import { visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
 import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
@@ -46,6 +46,7 @@ import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLangua
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
+import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { tableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
@@ -131,6 +132,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
+		visualTextSnippets('latex', latexSourceSlice),
 		inputRules({
 			rules: [
 				...listInputRules.map(listRuleWithoutIndent),

@@ -50,6 +50,8 @@
 	import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 	import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
 	import { pasteMarkdownSource, visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
+	import { markdownSlice } from '$lib/editor/paste/markdownPaste';
+	import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
 	import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 	import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 	import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
@@ -199,6 +201,7 @@
 			keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 			shiftArrowsPlugin(),
 			keymap(listKeymap),
+			visualTextSnippets('markdown', (text) => markdownSlice(text, mdSchema)),
 			inputRules({ rules: [...listInputRules, ...mdInputRules] }),
 			keymap({
 				'Mod-z': undoVisual,

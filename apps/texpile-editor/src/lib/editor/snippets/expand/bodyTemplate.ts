@@ -230,3 +230,30 @@ export function toPlainText(body: string): string {
 	const inputs: BodyInputs = { selection: '', captures: [] };
 	return plainText(new BodyReader(body, inputs).readNodes(false), inputs);
 }
+
+/** where the caret lands in visual text: around the first stop, the default selected */
+export const VISUAL_CARET = { start: '\ue0fb', end: '\ue0fc' } as const;
+
+/** the body as visual text takes it: stops at their defaults, the caret markers around the first stop */
+export function toVisualText(body: string, captures: readonly string[]): string {
+	const inputs: BodyInputs = { selection: '', captures };
+	const nodes = new BodyReader(body, inputs).readNodes(false);
+	const numbers = [...fieldNumbers(nodes)];
+	const later = numbers.filter((n) => n > 0);
+	const first = later.length ? Math.min(...later) : numbers.includes(0) ? 0 : -1;
+	let placed = false;
+	function render(list: BodyNode[]): string {
+		return list
+			.map((node) => {
+				if (node.kind === 'text') return node.value;
+				if (node.kind === 'variable') return variableText(node, inputs);
+				const inner = node.kind === 'choice' ? (node.options[0] ?? '') : render(node.children);
+				if (node.n !== first || placed) return inner;
+				placed = true;
+				return `${VISUAL_CARET.start}${inner}${VISUAL_CARET.end}`;
+			})
+			.join('');
+	}
+	const text = render(nodes);
+	return placed ? text : `${text}${VISUAL_CARET.start}${VISUAL_CARET.end}`;
+}

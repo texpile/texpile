@@ -9,7 +9,7 @@ section: Editor tips
 
 # Snippets
 
-A snippet turns a short trigger into longer text with places to fill in. Type `dint` in an equation and it becomes `\int_{0}^{1} \, \mathrm{d}x`, with Tab moving through the limits, the integrand and the variable. Snippets work in the source editor, and in the visual editor's equations.
+A snippet turns a short trigger into longer text with places to fill in. Type `dint` in an equation and it becomes `\int_{0}^{1} \, \mathrm{d}x`, with Tab moving through the limits, the integrand and the variable. Snippets work in the source editor, and in the visual editor's text and equations.
 
 | Where to find it          | Path                                                 | Note                                                   |
 | ------------------------- | ---------------------------------------------------- | ------------------------------------------------------ |
@@ -102,6 +102,10 @@ Select text, right-click, and pick a snippet under **Wrap With**. An entry with 
 A selection that starts or ends inside a piece of markup, such as half of a `*bold*` run, is not wrapped.
 
 In the visual editor of a Typst file, **Wrap With** lists the `wrap` entries, and a call to any of their functions shows as text underlined with its function's name. The text stays editable, and saving writes the call back as `#offen[…]`.
+
+## In visual text
+
+In a paragraph or heading of the visual editor, a `text` or `any` snippet that expands on its own does so as you type its trigger. Any other one expands when Tab is pressed right after its trigger. The body is read as the file's own language, so `\\emph{$1}` in LaTeX or `_$1_` in Typst and Markdown goes in as emphasized text with the cursor inside. Other places to fill in keep their defaults, and only the first is selected.
 
 ## In visual equations
 

@@ -35,6 +35,7 @@ import {
 import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuotes, ellipsis } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { search } from 'prosemirror-search';
 import { typSchema } from './schema';
@@ -110,19 +111,22 @@ const typInputRules = [
 // nothing of this document, so the pasted blocks carry no origins and are always written out afresh.
 function pasteTypstSource(view: EditorView, text: string): boolean {
 	if (!/(^|\n)(={1,6} |[-+] |\/ |```|#[a-zA-Z])|\*[^\s*][^*]*\*|_[^\s_][^_]*_/.test(text)) return false;
+	const slice = typstSourceSlice(text);
+	if (slice) pasteReadingOfText(view, text, slice);
+	return slice !== null;
+}
+
+/** Typst as the editor takes it in: a single paragraph open, so it merges into the one at the caret */
+function typstSourceSlice(text: string): Slice | null {
 	try {
 		const { doc } = typstToProseMirror(text);
 		const blocks: PmNode[] = [];
 		doc.forEach((c) => blocks.push(c));
-		if (blocks.length === 0) return false;
-		const frag = Fragment.fromArray(blocks);
-		// a single pasted paragraph merges inline into the current one; anything more
-		// structured inserts as whole blocks
+		if (blocks.length === 0) return null;
 		const open = blocks.length === 1 && blocks[0].type.name === 'paragraph' ? 1 : 0;
-		pasteReadingOfText(view, text, new Slice(frag, open, open));
-		return true;
+		return new Slice(Fragment.fromArray(blocks), open, open);
 	} catch {
-		return false; // unparsable clipboard: let the plain-text path have it
+		return null;
 	}
 }
 
@@ -196,6 +200,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
+		visualTextSnippets('typst', typstSourceSlice),
 		inputRules({ rules: typInputRules }),
 		keymap({
 			'Mod-z': undoVisual,
