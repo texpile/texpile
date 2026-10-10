@@ -183,14 +183,15 @@ export class WorkspaceDoc {
 			openTexFile.current = openTexFileOf({ doc: this.doc, mode: () => this.modes.mode, kind: () => this.doc.kind, parseVisual });
 			return () => (openTexFile.current = null);
 		});
-		// a wrapper named or dropped in a snippet file changes what a Typst call parses to
+		// a wrapper given a look or dropped in a snippet file changes what a call parses to
 		let wrappersSeen = snippetStatus.wrappers;
 		$effect(() => {
 			const now = snippetStatus.wrappers;
 			if (now === wrappersSeen) return;
 			wrappersSeen = now;
 			untrack(() => {
-				if (this.doc.path && this.doc.kind === 'typ' && this.modes.mode === 'visual') this.rebuildVisualFromSource(true);
+				if (this.doc.path && (this.doc.kind === 'typ' || this.doc.kind === 'tex') && this.modes.mode === 'visual')
+					this.rebuildVisualFromSource(true);
 			});
 		});
 		// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go

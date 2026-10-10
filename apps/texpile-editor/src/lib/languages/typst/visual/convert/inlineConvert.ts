@@ -1,5 +1,5 @@
 // CST helpers and the inline walker: text, marks, links, shorthands, inline math
-import { isCallWrapper } from '../callWrappers';
+import { isCallWrapper } from '$lib/editor/snippets/visual/callWrappers';
 import type { SyntaxNode } from '@lezer/common';
 import { buildNode, textNodes, collapseTextNodes, realMarks, type PmNode, type PmMark } from './builders';
 import { alignedSpans, bytesSpan, noteSpans, spansOf, standsFor, type LeafSpan } from '$lib/editor/visual/sourceSpans';
@@ -251,7 +251,7 @@ export function markCallParts(call: SyntaxNode, src: string): { mark: PmMark; ma
 		return color && markup ? { mark: { type: 'textcolor', attrs: { color } }, markup } : null;
 	}
 	// a wrapper the snippet files name: its content last, anything before it kept as written
-	if (isCallWrapper(name) && real.length >= 1) {
+	if (isCallWrapper('typst', name) && real.length >= 1) {
 		const markup = contentMarkup(real[real.length - 1]);
 		const args = real.length > 1 ? src.slice(real[0].from, real[real.length - 2].to) : '';
 		return markup ? { mark: { type: 'call', attrs: { name, args } }, markup } : null;

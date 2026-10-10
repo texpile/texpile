@@ -47,6 +47,7 @@ import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/edi
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
 import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
+import { visualWrapKeys } from '$lib/editor/snippets/visual/visualWrap';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { tableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
@@ -193,6 +194,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		mlarrowHandlers,
 		mathlivePlugin,
 		keymap(baseKeymap),
+		// below every editor shortcut, as in the source editor
+		visualWrapKeys('latex'),
 		imagePlugin(imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings()),
 		menuUpdatePlugin(),
 		createCursorPlugin(),

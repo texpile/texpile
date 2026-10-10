@@ -3,7 +3,8 @@
 // real typst on the clipboard so pasting into source mode, a terminal, or another editor yields
 // working markup; PM's own HTML format rides alongside, so visual->visual paste is untouched.
 import { Plugin } from 'prosemirror-state';
-import { Slice, Fragment } from 'prosemirror-model';
+import { Slice, Fragment, type Node as PmNode } from 'prosemirror-model';
+import { typstToProseMirror } from './convert/converter';
 import { typSchema } from './schema';
 import { serializeToTypst } from './serialize/serializer';
 
@@ -29,3 +30,17 @@ export const typstCopyPlugin = new Plugin({
 		}
 	}
 });
+
+/** Typst as the editor takes it in: a single paragraph open, so it merges into the one at the caret */
+export function typstSourceSlice(text: string): Slice | null {
+	try {
+		const { doc } = typstToProseMirror(text);
+		const blocks: PmNode[] = [];
+		doc.forEach((c) => blocks.push(c));
+		if (blocks.length === 0) return null;
+		const open = blocks.length === 1 && blocks[0].type.name === 'paragraph' ? 1 : 0;
+		return new Slice(Fragment.fromArray(blocks), open, open);
+	} catch {
+		return null;
+	}
+}

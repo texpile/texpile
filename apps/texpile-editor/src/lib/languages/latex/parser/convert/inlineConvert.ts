@@ -5,7 +5,7 @@ import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 import { getMacroFirstArg, getTextContent, type RawStamped } from '../ast-utils';
 import { buildNode, textNode, textNodes, collapseTextNodes, realMarks, type PmNode, type ConversionContext } from '../builders';
 import { ignoredMacros, SCOPED_SWITCHES } from '../macros';
-import { macroHandlers } from './macroHandlers';
+import { macroHandlers, takesWrapperCall, wrapperCall } from './macroHandlers';
 import { schema } from '../../schema/latexPMSchema';
 import { containsTabular } from './tableConvert';
 import { isBlockNode } from './blockKinds';
@@ -215,7 +215,7 @@ export function convertNodeToInline(node: Node, ctx: ConversionContext): PmNode[
 				return [buildNode('inline_latex', null, [textNode(raw, null, prefixSpans(raw, startOf(macro)))])];
 			}
 			if (ignoredMacros.has(macro.content)) return null;
-			const handler = macroHandlers[macro.content];
+			const handler = macroHandlers[macro.content] ?? (takesWrapperCall(macro) ? wrapperCall : undefined);
 			if (handler) {
 				const result = handler(macro, ctx);
 				// inline context can only host inline nodes: a handler returning a block here

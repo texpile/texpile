@@ -90,7 +90,8 @@ const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; 
 	code: () => ({ open: '\\texttt{', close: '}' }),
 	link: (a) => ({ open: `\\href{${String(a.href ?? '').replace(/(?<!\\)[%#]/g, '\\$&')}}{`, close: '}' }),
 	textcolor: textcolorMark,
-	highlight: highlightMark
+	highlight: highlightMark,
+	call: (a) => ({ open: `\\${String(a.name)}${a.args ? `[${String(a.args)}]` : ''}{`, close: '}' })
 };
 
 /**
@@ -176,4 +177,19 @@ export function bareTextString(text: string, isCode: boolean): string {
 			.replace(/\u2026/g, '\\ldots{}');
 	}
 	return result;
+}
+
+/** a call's whole run, written as one call with the formatting and atoms inside it */
+export function callRun(children: readonly Node[], start: number): { mark: Mark; end: number; inner: Node } | null {
+	let best: { mark: Mark; end: number } | null = null;
+	for (const mark of children[start].marks) {
+		if (mark.type.name !== 'call') continue;
+		let end = start + 1;
+		while (end < children.length && mark.isInSet(children[end].marks)) end++;
+		if (!best || end > best.end) best = { mark, end };
+	}
+	if (!best) return null;
+	const run = children.slice(start, best.end);
+	const stripped = run.map((child) => child.mark(best.mark.removeFromSet(child.marks)));
+	return { ...best, inner: children[start].type.schema.nodes.paragraph.create(null, stripped) };
 }

@@ -2,8 +2,6 @@
 // TypstEditorView.svelte mounts it
 import { Plugin } from 'prosemirror-state';
 import type { EditorProps, EditorView } from 'prosemirror-view';
-import { Fragment, Slice, type Node as PmNode } from 'prosemirror-model';
-import { typstToProseMirror } from './convert/converter';
 import { typstCopyPlugin } from './clipboard';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
@@ -36,6 +34,7 @@ import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuot
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
+import { typstSourceSlice } from './clipboard';
 import { visualWrapKeys } from '$lib/editor/snippets/visual/visualWrap';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { search } from 'prosemirror-search';
@@ -117,20 +116,6 @@ function pasteTypstSource(view: EditorView, text: string): boolean {
 	return slice !== null;
 }
 
-/** Typst as the editor takes it in: a single paragraph open, so it merges into the one at the caret */
-function typstSourceSlice(text: string): Slice | null {
-	try {
-		const { doc } = typstToProseMirror(text);
-		const blocks: PmNode[] = [];
-		doc.forEach((c) => blocks.push(c));
-		if (blocks.length === 0) return null;
-		const open = blocks.length === 1 && blocks[0].type.name === 'paragraph' ? 1 : 0;
-		return new Slice(Fragment.fromArray(blocks), open, open);
-	} catch {
-		return null;
-	}
-}
-
 // html-flavored pastes keep ProseMirror's own path; smart paste reads a code editor's copy itself
 const pasteTypstPlugin = new Plugin({
 	props: {
@@ -202,7 +187,6 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		visualTextSnippets('typst', typstSourceSlice),
-		visualWrapKeys('typst'),
 		inputRules({ rules: typInputRules }),
 		keymap({
 			'Mod-z': undoVisual,
@@ -236,6 +220,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		mlarrowHandlers,
 		mathlivePlugin,
 		keymap(baseKeymap),
+		// below every editor shortcut, as in the source editor
+		visualWrapKeys('typst'),
 		imagePlugin(createTypstImageSettings(docDir)),
 		menuUpdatePlugin(),
 		createCursorPlugin(),

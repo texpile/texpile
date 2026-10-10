@@ -8,6 +8,23 @@ export type SnippetContext = 'math' | 'inline-math' | 'display-math' | 'text' | 
 /** later layers replace earlier ones by snippet name */
 export type SnippetLayer = 'builtin' | 'global' | 'project';
 
+export const CALL_COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'gray'] as const;
+export type CallColor = (typeof CALL_COLORS)[number];
+
+export const CALL_FONTS = ['bold', 'italic', 'smallcaps', 'underline', 'strike'] as const;
+export type CallFont = (typeof CALL_FONTS)[number];
+
+/** how the visual editor draws a call to a wrap snippet's function; without one the call stays a raw chip */
+export type CallLook = {
+	/** inline: the words in line with a style; box: framed, for notes */
+	look: 'inline' | 'box';
+	label: string;
+	color?: CallColor;
+	background?: CallColor;
+	font: CallFont[];
+	spellcheck: boolean;
+};
+
 export type Snippet = {
 	name: string;
 	layer: SnippetLayer;
@@ -27,6 +44,7 @@ export type Snippet = {
 	/** a function name: the snippet wraps the selection in a call to it */
 	wrap?: string;
 	args?: string;
+	visual?: CallLook;
 };
 
 export type SnippetVariables = Record<string, Partial<Record<SnippetLanguage, string>>>;

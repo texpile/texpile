@@ -1,7 +1,7 @@
 // a call wrapping content, standing alone (`#theorem[...]`, `#align(center)[...]`): the typst
 // counterpart of a LaTeX environment. The body holds full markup, so this module and the markup
 // walker in converter.ts are mutually recursive; ESM live bindings make the circular import safe.
-import { isCallWrapper } from '../callWrappers';
+import { isCallWrapper } from '$lib/editor/snippets/visual/callWrappers';
 import type { SyntaxNode } from '@lezer/common';
 import { buildNode } from './builders';
 import { children, childOf } from './inlineConvert';
@@ -67,7 +67,7 @@ function envCallParts(call: SyntaxNode, src: string): { name: string; args: stri
 	if (!callee || !args || args.name !== 'Args' || args.nextSibling) return null;
 	const name = calleeName(callee, src);
 	// a wrapper from the snippet files is formatted text, alone on its line or not
-	if (!name || NOT_CONTAINERS.has(name.slice(name.lastIndexOf('.') + 1)) || isCallWrapper(name)) return null;
+	if (!name || NOT_CONTAINERS.has(name.slice(name.lastIndexOf('.') + 1)) || isCallWrapper('typst', name)) return null;
 	const kids = children(args);
 	const body = kids[kids.length - 1];
 	if (!body || body.name !== 'ContentBlock' || body.firstChild?.name !== 'LeftBracket' || body.lastChild?.name !== 'RightBracket')

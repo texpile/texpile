@@ -56,6 +56,7 @@ Each entry is named, and the name is what the popup and the menus show. A snippe
 | `disabled`    | `true` turns off the snippet of the same name from the global file or the built-in ones.              |
 | `wrap`        | A function name. The snippet wraps the selection in a call to it. See below.                          |
 | `args`        | Extra arguments for `wrap`, such as `fill: red`.                                                      |
+| `visual`      | How the visual editor draws a call to the `wrap` function. See below.                                 |
 
 ## In the body
 
@@ -101,7 +102,35 @@ Select text, right-click, and pick a snippet under **Wrap With**. An entry with 
 
 A selection that starts or ends inside a piece of markup, such as half of a `*bold*` run, is not wrapped.
 
-In the visual editor of a Typst file, **Wrap With** lists the `wrap` entries and their keys work, and a call to any of their functions shows as text underlined with its function's name. The text stays editable, and saving writes the call back as `#offen[…]`.
+**Wrap With** and the keys work in the visual editor too.
+
+## Drawing a function in the visual editor
+
+The visual editor cannot know what a function of your own does, so a call to one shows as raw code. A `wrap` entry can say how to draw it instead. The words inside then stay ordinary text you can edit, and saving writes the call back.
+
+```json
+"Open point": {
+	"scope": "typst",
+	"wrap": "offen",
+	"visual": { "label": "xxx", "background": "yellow" }
+},
+"Revised": {
+	"scope": "latex",
+	"wrap": "rev",
+	"visual": { "look": "box", "label": "Rev", "color": "red" }
+}
+```
+
+| Field        | What it does                                                                                   |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| `look`       | `inline` keeps the words in the line, `box` draws a frame around them. `inline` when left out. |
+| `label`      | A short text drawn before the words, such as `TODO`.                                           |
+| `color`      | The color of the words: `red`, `orange`, `yellow`, `green`, `blue`, `purple` or `gray`.        |
+| `background` | A fill behind the words, from the same colors.                                                 |
+| `font`       | One or more of `bold`, `italic`, `smallcaps`, `underline` and `strike`.                        |
+| `spellcheck` | `false` leaves the words out of spell check. `true` when left out.                             |
+
+Commands Texpile already draws, such as `\emph` or `\hl`, keep their own look. A function whose argument is not words, such as a label or a file name, is best left without `visual`, so it stays code.
 
 ## In visual text
 

@@ -11,6 +11,7 @@ import {
 	type SnippetVariables
 } from './snippetTypes';
 import { usesSelection } from '../expand/bodyTemplate';
+import { readCallLook } from './readCallLook';
 
 const CONTEXTS: readonly SnippetContext[] = ['math', 'inline-math', 'display-math', 'text', 'code', 'any'];
 const LANGUAGE_IDS: Record<string, SnippetLanguage> = {
@@ -98,6 +99,13 @@ function readEntry(name: string, raw: unknown, layer: SnippetLayer): EntryResult
 		return { problem: 'prefix is not text' };
 	}
 	const key = raw.key;
+	let visual: Snippet['visual'];
+	if (raw.visual !== undefined) {
+		if (!wrap) return { problem: 'visual needs wrap' };
+		const read = readCallLook(raw.visual);
+		if (typeof read === 'string') return { problem: read };
+		visual = read;
+	}
 	const wraps = !!wrap || Object.values(bodies).some(usesSelection);
 	if (!prefixes?.length && !wraps && typeof key !== 'string') return { problem: 'has no prefix' };
 
@@ -133,7 +141,8 @@ function readEntry(name: string, raw: unknown, layer: SnippetLayer): EntryResult
 			priority: (raw.priority as number | undefined) ?? 0,
 			key: key as string | undefined,
 			wrap: wrap as string | undefined,
-			args: raw.args as string | undefined
+			args: raw.args as string | undefined,
+			visual
 		}
 	};
 }

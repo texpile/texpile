@@ -3,6 +3,7 @@
 // structured-clone, so the doc crosses as toJSON() and the client rehydrates via nodeFromJSON.
 import { parseLatexFile } from './latexRoundtrip';
 import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
+import { setCallWrappers } from '$lib/editor/snippets/visual/callWrappers';
 
 type ParseRequest = {
 	id: number;
@@ -12,10 +13,13 @@ type ParseRequest = {
 	maxNodes?: number;
 	/** source dialect; defaults to LaTeX. */
 	format?: 'tex' | 'md';
+	/** the macros a snippet file gives a look; the worker has no snippet files of its own */
+	callWrappers?: string[];
 };
 
 self.onmessage = (event: MessageEvent<ParseRequest>) => {
-	const { id, source, projectMacros, maxNodes, format } = event.data;
+	const { id, source, projectMacros, maxNodes, format, callWrappers } = event.data;
+	setCallWrappers('latex', callWrappers ?? []);
 	// keep it a call ON self: an unbound postMessage reference throws "Illegal invocation"
 	function post(m: unknown) {
 		return (self as unknown as { postMessage: (m: unknown) => void }).postMessage(m);
