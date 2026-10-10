@@ -14,6 +14,8 @@ import { ensureProjectSnippets, revealGlobalSnippets } from '$lib/editor/snippet
 import { wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
 import { savePackageFile } from '$lib/editor/snippets/file/savePackageFile';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { importLatexSuite } from '$lib/editor/snippets/import/importLatexSuite';
+import { nativeBridge } from '$lib/workspace/fileSystem';
 import { detectedPackages, isBundledPackage } from '$lib/languages/latex/intellisense/completion/packageData';
 import { userPackage } from '$lib/languages/latex/intellisense/userPackages';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -147,6 +149,15 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			keywords: 'snippets snippet trigger expand template shortcut latex suite wrap function texpile',
 			icon: Braces,
 			run: () => void ensureProjectSnippets(root).then((path) => path && a.openFile(path))
+		});
+	if (root && a.isProject() && a.isHostWorkspace() && nativeBridge()?.pickFile)
+		items.push({
+			id: 'editor.importLatexSuite',
+			label: m.palette_import_latex_suite(),
+			group,
+			keywords: 'snippets import latex suite obsidian convert',
+			icon: Braces,
+			run: () => void importLatexSuite(root, (path) => a.openFile(path))
 		});
 	// a package Texpile has no data for gets a starting file drafted from its .sty
 	if (view && root && a.isProject() && a.isHostWorkspace())

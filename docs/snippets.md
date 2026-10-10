@@ -113,6 +113,22 @@ In a LaTeX equation in the visual editor, a snippet that expands on its own does
 
 In a Typst equation, a trigger made of letters expands when it is typed as a whole name, so `point` never expands `oint`. The snippet goes in as its Typst body with its defaults filled in, and the cursor ends after it: Typst has no empty slot to stop at.
 
+## From LaTeX Suite
+
+Snippets written for the LaTeX Suite plugin of Obsidian come over with **Import LaTeX Suite Snippets** in the command palette. Pick the snippets file, and its entries are added at the top of the folder's `.texpile/snippets.json`, which then opens. An entry the file already has by the same name is kept.
+
+| In LaTeX Suite                   | Becomes                                                                                 |
+| -------------------------------- | --------------------------------------------------------------------------------------- |
+| `t`, `m`, `M`, `n`               | `context`: `text`, `math`, `display-math`, `inline-math`                                |
+| `A`, `r`, `w`                    | `auto`, `regex`, `word`                                                                 |
+| `v` with `${VISUAL}`             | An entry under **Wrap With**, using `${TM_SELECTED_TEXT}`                               |
+| `$0`, `$1` in the replacement    | `$1`, `$2`: the first place is still visited first                                      |
+| A replacement that is a function | Left out, with a note: only Obsidian can run it                                         |
+| `c` or `C` alone                 | Left out: Texpile has no snippets for code blocks                                       |
+| `T` alone                        | Left out: Texpile reads `\text{}` in math as text, so it cannot keep these to `\text{}` |
+
+Pattern triggers wait for **Allow** like any others in a folder's file.
+
 ## Math typing helpers
 
 Three helpers in the source editor work on the formula around the cursor. Each has its own switch in Preferences › Snippets.

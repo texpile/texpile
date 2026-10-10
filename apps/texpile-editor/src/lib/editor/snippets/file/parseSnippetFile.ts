@@ -10,6 +10,7 @@ import {
 	type SnippetProblem,
 	type SnippetVariables
 } from './snippetTypes';
+import { usesSelection } from '../expand/bodyTemplate';
 
 const CONTEXTS: readonly SnippetContext[] = ['math', 'inline-math', 'display-math', 'text', 'code', 'any'];
 const LANGUAGE_IDS: Record<string, SnippetLanguage> = {
@@ -97,7 +98,8 @@ function readEntry(name: string, raw: unknown, layer: SnippetLayer): EntryResult
 		return { problem: 'prefix is not text' };
 	}
 	const key = raw.key;
-	if (!prefixes?.length && !wrap && typeof key !== 'string') return { problem: 'has no prefix' };
+	const wraps = !!wrap || Object.values(bodies).some(usesSelection);
+	if (!prefixes?.length && !wraps && typeof key !== 'string') return { problem: 'has no prefix' };
 
 	const context = raw.context ?? 'any';
 	if (!CONTEXTS.includes(context as SnippetContext))
