@@ -28,7 +28,7 @@
 	}
 
 	function keyOf(result: MathSearchResult): string {
-		return `${result.section} ${result.kind === 'structure' ? result.structure.latex : result.entry.key}`;
+		return `${result.section} ${result.kind === 'structure' ? `${result.structure.label} ${result.structure.latex}` : result.entry.key}`;
 	}
 
 	// the highlighted row stays in sight as the arrow keys move it
