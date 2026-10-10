@@ -25,13 +25,15 @@
 		{#if skipped.length}
 			<button
 				type="button"
-				class="btn btn-xs hover:preset-tonal text-warning-ink shrink-0"
+				class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal shrink-0"
 				use:tip={skipped.map(describeSnippetProblem).join('\n')}
 				onclick={() => openPreferencesAt('snippets')}
 			>
 				{m.snippet_bar_skipped({ count: skipped.length })}
 			</button>
 		{/if}
-		<a class="btn btn-xs hover:preset-tonal shrink-0" href={help} target="_blank" rel="noopener noreferrer">{m.snippet_bar_help()}</a>
+		<a class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal shrink-0" href={help} target="_blank" rel="noopener noreferrer"
+			>{m.snippet_bar_help()}</a
+		>
 	</EditorNotice>
 {/if}
