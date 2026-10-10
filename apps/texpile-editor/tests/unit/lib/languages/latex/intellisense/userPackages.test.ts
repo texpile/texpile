@@ -35,7 +35,7 @@ describe('package files', () => {
 
 	it('drafts a file from a .sty that reads back with the arguments of each command', () => {
 		const sty =
-			'\\newcommand{\\hlnote}[2][red]{#2}\n\\NewDocumentCommand{\\pt}{s m}{}\n\\newcommand{\\in@ner}{}\n\\newenvironment{todo}{}{}';
+			'\\newcommand{\\hlnote}[2][red]{#2}\n\\NewDocumentCommand{\\pt}{s m}{}\n\\newcommand{\\in@ner}{}\n\\newenvironment{todo}{}{}\n\\newenvironment{wrap#2}{}{}';
 		const { contents, problem } = parsePackageFile(JSON.stringify(packageFileFrom(sty)));
 		expect(problem).toBeNull();
 		expect(contents!.macros).toEqual([{ name: 'hlnote', arg: { format: '[]{}', snippet: 'hlnote[${1}]{${2}}' } }, { name: 'pt' }]);

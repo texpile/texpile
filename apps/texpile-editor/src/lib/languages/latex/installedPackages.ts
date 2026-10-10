@@ -45,7 +45,8 @@ function fileDefinitions(contents: PackageData): string {
 	return [...lines.values()].join('\n');
 }
 
-const ENVIRONMENT = /\\(?:new|New(?:Document)?)environment\*?\s*\{([a-zA-Z][^{}\s]*)\}/g;
+// a name built from a parameter (wrapfig's wrap#2) or an internal one (with @) is no environment to offer
+const ENVIRONMENT = /\\(?:new|New(?:Document)?)environment\*?\s*\{([a-zA-Z][a-zA-Z0-9-]*\*?)\}/g;
 
 /** a starting package file from a .sty: its commands with their arguments, and its environments */
 export function packageFileFrom(source: string): PackageData {
