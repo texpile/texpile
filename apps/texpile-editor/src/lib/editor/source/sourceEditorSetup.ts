@@ -12,7 +12,8 @@ import {
 } from '@codemirror/view';
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, type Compartment, type Extension } from '@codemirror/state';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap } from '@codemirror/commands';
+import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
@@ -194,7 +195,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			// the file's history, which the visual editor and the disk share; a view with no text binding is read-only
 			...(collab ? yUndoManagerKeymap : []),
 			...searchKeymap,
-			indentWithTab
+			tabIndentBinding
 		]),
 		deps.wrapConf.of(deps.lineWrap ? EditorView.lineWrapping : []),
 		// opt-in diagnostic for "the caret moved and I didn't move it"; see caretDoctor

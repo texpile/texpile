@@ -73,7 +73,7 @@ const ghostTheme = EditorView.baseTheme({
 
 /** ghost-text starter skeleton for an empty .tex, accepted with Tab. */
 export function starterGhost(): Extension {
-	// Prec.high so Tab reaches us before indentWithTab; acceptStarter returns false when there's
+	// Prec.high so Tab reaches us before tabIndentBinding; acceptStarter returns false when there's
 	// no ghost, so indentation still works everywhere else.
 	return [ghostField, ghostTheme, Prec.high(keymap.of([{ key: 'Tab', run: acceptStarter }]))];
 }

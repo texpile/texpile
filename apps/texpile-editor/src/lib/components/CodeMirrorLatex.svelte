@@ -2,7 +2,8 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { EditorView, keymap, drawSelection, placeholder as cmPlaceholder, type KeyBinding } from '@codemirror/view';
 	import { EditorState, Compartment, type Extension } from '@codemirror/state';
-	import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+	import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
 	import { foldGutter, indentOnInput, bracketMatching, foldKeymap } from '@codemirror/language';
 	import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 	import { latexAutocomplete } from '$lib/languages/latex/intellisense/intellisense';
@@ -86,7 +87,7 @@
 					...foldKeymap,
 					...closeBracketsKeymap,
 					...searchKeymap,
-					indentWithTab
+					tabIndentBinding
 				]),
 				history(),
 				drawSelection(),
