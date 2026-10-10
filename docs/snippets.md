@@ -101,6 +101,8 @@ Select text, right-click, and pick a snippet under **Wrap With**. An entry with 
 
 A selection that starts or ends inside a piece of markup, such as half of a `*bold*` run, is not wrapped.
 
+In the visual editor of a Typst file, **Wrap With** lists the `wrap` entries, and a call to any of their functions shows as text underlined with its function's name. The text stays editable, and saving writes the call back as `#offen[…]`.
+
 ## In visual equations
 
 In a LaTeX equation in the visual editor, a snippet that expands on its own does so as you type its trigger, and every other math snippet is listed when Tab opens the math search. Each place to fill in becomes an empty slot, and Tab moves to the next slot before it opens the search. Defaults are left out, and the slots are visited in the order the equation editor keeps them, so an integral's upper limit comes before its lower one. Pattern triggers work in the source editor only.

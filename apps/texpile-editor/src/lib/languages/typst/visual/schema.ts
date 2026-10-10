@@ -237,6 +237,14 @@ for (const name of Object.keys(nodes)) {
 
 const marks: Record<string, MarkSpec> = {};
 for (const name of TYP_MARKS) marks[name] = (baseMarks as Record<string, MarkSpec>)[name];
+// a call to a function the snippet files name as a wrapper (callWrappers.ts); two may nest
+marks.call = {
+	attrs: { name: {}, args: { default: '' } },
+	inclusive: false,
+	excludes: '',
+	parseDOM: [{ tag: 'span[data-call]', getAttrs: (dom: HTMLElement) => ({ name: dom.dataset.call, args: dom.dataset.callArgs ?? '' }) }],
+	toDOM: (mark) => ['span', { 'data-call': mark.attrs.name, ...(mark.attrs.args ? { 'data-call-args': mark.attrs.args } : {}) }, 0]
+};
 
 // two-pass, same as latexPMSchema/mdSchema: updateImageNode needs the node present in an OrderedMap
 // first. numbered stays true (typst figures number themselves), unlike markdown's false.

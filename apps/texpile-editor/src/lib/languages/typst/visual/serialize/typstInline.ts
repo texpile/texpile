@@ -169,11 +169,12 @@ const MARK_DELIMS: Record<string, (attrs: Record<string, unknown>) => MarkDelims
 	textcolor: (a) => {
 		const t = typColor(String(a.color ?? ''));
 		return t ? { open: `#text(fill: ${t})[`, close: ']' } : { open: '', close: '' };
-	}
+	},
+	call: (a) => ({ open: `#${String(a.name)}${a.args ? `(${String(a.args)})` : ''}[`, close: ']' })
 };
 
 // canonical nesting order (outermost first); code is innermost and handled inside run content
-const MARK_ORDER = ['textcolor', 'highlight', 'u', 'sup', 'sub', 'link', 'strong', 'em'];
+const MARK_ORDER = ['call', 'textcolor', 'highlight', 'u', 'sup', 'sub', 'link', 'strong', 'em'];
 
 function orderedMarks(marks: readonly Mark[]): Mark[] {
 	return marks

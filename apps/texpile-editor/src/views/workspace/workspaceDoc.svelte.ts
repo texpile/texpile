@@ -22,6 +22,7 @@ import { toaster } from '$lib/modals/toaster-svelte';
 import { openTexFileOf } from '$lib/workspace/edits/openEditorEdit';
 import { openTexFile } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { m } from '$lib/paraglide/messages';
+import { snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
 
 type DocDeps = {
 	provider: WorkspaceProvider;
@@ -181,6 +182,16 @@ export class WorkspaceDoc {
 			const parseVisual = async (text: string) => (await this.tryParseVisual(text)).parsed ?? null;
 			openTexFile.current = openTexFileOf({ doc: this.doc, mode: () => this.modes.mode, kind: () => this.doc.kind, parseVisual });
 			return () => (openTexFile.current = null);
+		});
+		// a wrapper named or dropped in a snippet file changes what a Typst call parses to
+		let wrappersSeen = snippetStatus.wrappers;
+		$effect(() => {
+			const now = snippetStatus.wrappers;
+			if (now === wrappersSeen) return;
+			wrappersSeen = now;
+			untrack(() => {
+				if (this.doc.path && this.doc.kind === 'typ' && this.modes.mode === 'visual') this.rebuildVisualFromSource(true);
+			});
 		});
 		// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go
 		// read-only), else concurrent guest edits to that file's Y.Text would be clobbered.

@@ -12,6 +12,7 @@
 	import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { refineMenuItems } from '$lib/ai/refineMenu';
+	import { visualWrapItems } from '$lib/editor/snippets/visual/visualWrap';
 	import type { ShowInOutput } from './showInOutput';
 
 	type Props = {
@@ -136,6 +137,7 @@
 		const items: ContextMenuItem[] = menuItems.map(entry);
 		const refine = refineMenuItems(hasTextSelection);
 		if (refine.length) items.push({ separator: true }, ...refine);
+		items.push(...visualWrapItems(editorViewStore.current!, dialect, hasTextSelection));
 		if (onAddComment) {
 			// the same gesture the floating tooltip offers, for people who reach for the menu;
 			// disabled rather than hidden with nothing selected, so it is discoverable

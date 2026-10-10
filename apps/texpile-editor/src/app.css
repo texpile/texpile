@@ -553,6 +553,19 @@ select.input {
    full at 0.8em the label wanted ~70px and got cut from the LEFT, so \noindent rendered as
    "indent" - the one thing it must never say. max-width pins the failure direction: if it ever
    doesn't fit, the tail goes, not the head. */
+/* a call to a function a snippet file names as a wrapper: the text stays editable, its function a small tag before it */
+.ProseMirror span[data-call] {
+	border-bottom: 1px dashed var(--color-primary-500);
+}
+.ProseMirror span[data-call]::before {
+	content: attr(data-call);
+	margin-right: 0.2em;
+	font-size: 0.65em;
+	vertical-align: 0.3em;
+	color: var(--color-primary-500);
+	font-family: var(--font-mono, monospace);
+}
+
 .ProseMirror p[data-indent='indent'] {
 	text-indent: 1.5em;
 }
