@@ -18,6 +18,7 @@ import { expandSnippet } from './expand/expandSnippet';
 import { autoMatches, popupCandidates, type CompiledSnippet } from './expand/matchSnippets';
 import { contextAllows, snippetZoneAt } from './expand/snippetZone';
 import { onSnippetRegistry, snippetRegistry } from './file/snippetRegistry';
+import { mathKeys } from './math/mathKeys';
 import type { SnippetLanguage } from './file/snippetTypes';
 
 const snippetLanguage = Facet.define<SnippetLanguage, SnippetLanguage | null>({ combine: (v) => v[0] ?? null });
@@ -142,6 +143,7 @@ export function sourceSnippets(lang: SnippetLanguage, options: SourceSnippetOpti
 		snippetLanguage.of(lang),
 		choiceFields,
 		autoExpansion(options.stopUndoCapture ?? (() => {})),
+		mathKeys(lang, options.stopUndoCapture ?? (() => {})),
 		keyedSnippets(lang),
 		openChoices,
 		// Typst's completion is otherwise tinymist's alone, and absent while it is missing

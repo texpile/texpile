@@ -65,3 +65,17 @@ export function contextAllows(context: SnippetContext, zone: SnippetZone | null)
 			return zone.zone === context;
 	}
 }
+
+export type MathBounds = { innerTo: number; to: number };
+
+/** the end of the formula `pos` is in: where its content stops, and past its closing delimiter */
+export function mathBoundsAt(state: EditorState, pos: number, lang: SnippetLanguage): MathBounds | null {
+	if (lang !== 'typst') {
+		const region = mathRegionAt(regionsOf(state.doc, lang === 'latex'), pos);
+		return region && pos >= region.innerFrom && pos <= region.innerTo ? { innerTo: region.innerTo, to: region.to } : null;
+	}
+	for (let node = syntaxTree(state).resolveInner(pos, -1); node.parent; node = node.parent) {
+		if (node.name === 'Equation') return { innerTo: node.to - 1, to: node.to };
+	}
+	return null;
+}

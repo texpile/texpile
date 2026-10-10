@@ -243,6 +243,15 @@
 					{@render toggleRow(m.prefs_auto_snippets(), m.prefs_auto_snippets_note(), settings.current.autoSnippets !== false, (v) =>
 						updateSettings({ autoSnippets: v })
 					)}
+					{@render toggleRow(m.prefs_auto_fraction(), m.prefs_auto_fraction_note(), settings.current.autoFraction === true, (v) =>
+						updateSettings({ autoFraction: v })
+					)}
+					{@render toggleRow(m.prefs_tab_out(), m.prefs_tab_out_note(), settings.current.tabOut !== false, (v) =>
+						updateSettings({ tabOut: v })
+					)}
+					{@render toggleRow(m.prefs_matrix_keys(), m.prefs_matrix_keys_note(), settings.current.matrixKeys !== false, (v) =>
+						updateSettings({ matrixKeys: v })
+					)}
 				</div>
 				{@render sectionHeading(m.prefs_group_visual())}
 				<div class={SUB}>

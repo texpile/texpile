@@ -23,6 +23,9 @@ const DEFAULT_SETTINGS = {
 	transparentWindow: false, // the window's grounds let the blurred desktop through (windowGlass.ts)
 	mathPreview: true, // live math preview tooltip in source mode
 	autoSnippets: true, // snippets marked auto expand as their trigger is typed
+	autoFraction: false, // in source math, a/ becomes \frac{a}{}
+	tabOut: true, // in source math, Tab moves past the next closing bracket, then out of the formula
+	matrixKeys: true, // in source matrices, Tab adds a column and Shift+Enter a row
 	sourceLineWrap: true, // soft-wrap long lines in Source mode
 	visualJustify: true, // paragraphs in the visual editor fill the column edge to edge
 	visualHyphenate: true, // long words may split at line ends in justified text

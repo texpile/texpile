@@ -1,6 +1,7 @@
 // VS Code snippet syntax -> CodeMirror's snippet() template. CodeMirror reads only ${n} and
 // ${n:text} and cannot hold a brace or a line break in a default, so a default it cannot hold, and a
-// choice, goes in as a marker the expansion swaps for the text
+// choice, goes in as a marker the expansion swaps for the text. Literal braces go in as markers
+// too: CodeMirror 6.20 misplaces a stop that follows several escaped ones (\{\}\{${1}\})
 
 export type BodyInputs = {
 	/** the selection, for ${TM_SELECTED_TEXT} */
@@ -154,18 +155,19 @@ function fieldNumbers(nodes: BodyNode[], out = new Set<number>()): Set<number> {
 	return out;
 }
 
-/** CodeMirror template text: braces escaped, since only ${n} and #{n} are its fields */
-function literal(text: string): string {
-	return text.replace(/[{}]/g, (b) => `\\${b}`);
-}
+const BRACE_MARKERS: Record<string, string> = { '{': '\ue0fe', '}': '\ue0ff' };
 
 export function toCmTemplate(body: string, inputs: BodyInputs): CmTemplate {
 	const nodes = new BodyReader(body, inputs).readNodes(false);
 	const numbers = fieldNumbers(nodes);
 	const last = Math.max(0, ...numbers) + 1;
-	const fills = new Map<string, string>();
+	const fills = new Map<string, string>(Object.entries(BRACE_MARKERS).map(([brace, marker]) => [marker, brace]));
 	const choices = new Map<string, string[]>();
 	const markers = new Map<number, string>();
+
+	function literal(text: string): string {
+		return text.replace(/[{}]/g, (b) => BRACE_MARKERS[b]);
+	}
 
 	function markerFor(n: number): string {
 		let marker = markers.get(n);

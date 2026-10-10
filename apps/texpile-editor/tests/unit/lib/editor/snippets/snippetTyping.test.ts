@@ -101,6 +101,13 @@ describe('typing a trigger', () => {
 		expect(shown(v)).toBe(after);
 	});
 
+	it('Tab reaches each later stop, past the braces before it', () => {
+		const v = editor('latex', '$|$');
+		type(v, 'dint');
+		v.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+		expect(shown(v)).toBe('$\\int_{0}^{|1|}  \\, \\mathrm{d}x$');
+	});
+
 	it('ends an undo step on the typed trigger, so one undo gives it back', () => {
 		const v = editor('latex', '$|$');
 		type(v, 'dint');

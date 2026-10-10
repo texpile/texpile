@@ -29,7 +29,8 @@ describe('snippet braces', () => {
 
 	it('the @{ snippet inserts escaped braces', () => {
 		const s = BUILTIN_SNIPPETS.find((x) => x.name === '@{');
-		expect(inserted(toCmTemplate(s!.bodies.latex!, NO_INPUTS).template)).toBe('\\left\\{  \\right\\}');
+		const { template, fills } = toCmTemplate(s!.bodies.latex!, NO_INPUTS);
+		expect([...inserted(template)].map((c) => fills.get(c) ?? c).join('')).toBe('\\left\\{  \\right\\}');
 	});
 
 	it('no template built from the tables carries a brace the parser would strip', () => {

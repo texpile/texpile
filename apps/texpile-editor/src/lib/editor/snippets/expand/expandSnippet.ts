@@ -8,9 +8,8 @@ import { addChoiceFields, choiceFieldAt, type ChoiceField } from './choiceFields
 export function expandSnippet(view: CMView, body: string, from: number, to: number, inputs: BodyInputs): void {
 	const { template, fills, choices } = toCmTemplate(body, inputs);
 	snippet(template)(view, null, from, to);
-	if (!fills.size) return;
 
-	// the defaults CodeMirror could not hold went in as markers; the text goes in their place
+	// what CodeMirror could not hold went in as markers; the text goes in their place
 	const state = view.state;
 	const inserted = state.sliceDoc(from, Math.min(state.doc.length, from + template.length));
 	const specs: ChangeSpec[] = [];
@@ -21,6 +20,7 @@ export function expandSnippet(view: CMView, body: string, from: number, to: numb
 		specs.push({ from: from + i, to: from + i + 1, insert: fill });
 		markerAt.push({ pos: from + i, marker: inserted[i] });
 	}
+	if (!specs.length) return;
 	const changes = state.changes(specs);
 	const main = state.selection.main;
 	const onMarker = markerAt.some((m) => m.pos === main.from && main.to === m.pos + 1);

@@ -101,6 +101,16 @@ Select text, right-click, and pick a snippet under **Wrap With**. An entry with 
 
 A selection that starts or ends inside a piece of markup, such as half of a `*bold*` run, is not wrapped.
 
+## Math typing helpers
+
+Three helpers in the source editor work on the formula around the cursor. Each has its own switch in Preferences › Editor.
+
+| Helper              | What it does                                                                                                                                                       | Default |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| Auto-fraction       | In LaTeX and Markdown math, `a/` becomes `\frac{a}{}` with the cursor below. `x^2/`, `\alpha/` and `(a+b)/` work the same way. A second `/` takes it back to `a/`. | Off     |
+| Tab out of brackets | In math, Tab moves past the next `)`, `]` or `}`, then out of the formula. At the start of a line Tab still indents.                                               | On      |
+| Matrix keys         | In `matrix`, `pmatrix`, `array`, `align` and similar environments, Tab adds `&` and Shift+Enter starts a row. In a Typst `mat(…)`, they add `, ` and `; `.         | On      |
+
 ## Built-in snippets
 
 Typing `@` in math offers the built-in ones: `@a` for alpha, `@/` for a fraction, `@sum`, `@int`, and others, with Typst equivalents where Typst has the symbol. Turn one off with `{ "disabled": true }` under its name, such as `"@a"`.
