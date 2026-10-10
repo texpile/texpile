@@ -4,7 +4,7 @@
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { isDesktop } from '$lib/workspace/fileSystem';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
-	import { ensureProjectSnippets, revealGlobalSnippets } from '$lib/editor/snippets/file/snippetLoader';
+	import { ensureGlobalSnippets, ensureProjectSnippets } from '$lib/editor/snippets/file/snippetLoader';
 	import { describeSnippetProblem, snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -13,8 +13,8 @@
 	const actions = $derived(commandPalette.actions);
 	const root = $derived(actions?.isProject() && actions.isHostWorkspace() ? workspaceRoot.current : null);
 
-	async function editProjectSnippets(): Promise<void> {
-		const path = root && (await ensureProjectSnippets(root));
+	async function edit(file: Promise<string | null>): Promise<void> {
+		const path = await file;
 		if (!path || !actions) return;
 		actions.openFile(path);
 		preferencesOpen.current = false;
@@ -37,15 +37,15 @@
 	m.prefs_snippets_project(),
 	m.prefs_snippets_project_note(),
 	m.prefs_snippets_edit(),
-	() => void editProjectSnippets(),
+	() => void edit(root ? ensureProjectSnippets(root) : Promise.resolve(null)),
 	root ? '' : m.prefs_snippets_project_none()
 )}
 {@render fileRow(
 	m.prefs_snippets_global(),
 	m.prefs_snippets_global_note(),
-	m.prefs_snippets_show(),
-	() => void revealGlobalSnippets(),
-	isDesktop() ? '' : m.unavailable_desktop()
+	m.prefs_snippets_edit(),
+	() => void edit(ensureGlobalSnippets()),
+	!isDesktop() ? m.unavailable_desktop() : actions ? '' : m.prefs_snippets_global_none()
 )}
 {#if snippetStatus.problems.length}
 	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{m.prefs_snippets_problems()}</h3>

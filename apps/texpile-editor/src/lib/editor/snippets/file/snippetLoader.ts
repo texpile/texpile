@@ -4,11 +4,15 @@ import { getFolder, updateFolder } from '$lib/storage/workspaces';
 import { parseSnippetFile } from './parseSnippetFile';
 import { setSnippetLayers } from './snippetRegistry';
 import { adoptPackageFiles, type PackageTexts } from './packageFiles';
+import type { SnippetFileList } from './snippetFiles';
 
 type SnippetsBridge = {
 	readGlobal(): Promise<string | null>;
-	revealGlobal(): Promise<string>;
+	ensureGlobal(): Promise<string>;
+	locations(): Promise<{ snippets: string; packages: string }>;
+	onGlobalChanged(cb: () => void): () => void;
 	readPackages(root: string | null): Promise<PackageTexts>;
+	texPackage(name: string): Promise<string | null>;
 };
 
 function bridge(): SnippetsBridge | undefined {
@@ -23,6 +27,13 @@ async function readProjectFile(root: string | null): Promise<string | null> {
 
 const NO_PACKAGES: PackageTexts = { global: {}, project: {} };
 let loaded: string | null = null;
+let locations: Promise<{ snippets: string; packages: string } | null> | null = null;
+let files: SnippetFileList = { global: null, globalPackages: null, packages: { project: [], global: [] } };
+
+/** the files the last reload read */
+export function snippetFiles(): SnippetFileList {
+	return files;
+}
 
 /** read the snippet and package files again; a guest or a lone file passes no root and gets the global ones alone */
 export async function reloadSnippets(root: string | null): Promise<void> {
@@ -35,6 +46,16 @@ export async function reloadSnippets(root: string | null): Promise<void> {
 			?.readPackages(root)
 			.catch(() => NO_PACKAGES) ?? NO_PACKAGES
 	]);
+	locations ??=
+		bridge()
+			?.locations()
+			.catch(() => null) ?? Promise.resolve(null);
+	const where = await locations;
+	files = {
+		global: where?.snippets ?? null,
+		globalPackages: where?.packages ?? null,
+		packages: { project: Object.keys(packages.project), global: Object.keys(packages.global) }
+	};
 	const key = JSON.stringify({ root, global, project, packages });
 	if (key === loaded) return;
 	// a file made by hand still has to reach git: an older ignore rule kept it out
@@ -69,6 +90,17 @@ export async function ensureProjectSnippets(root: string): Promise<string | null
 	return path;
 }
 
-export function revealGlobalSnippets(): Promise<string | null> {
-	return bridge()?.revealGlobal() ?? Promise.resolve(null);
+/** the global snippet file, made empty first if missing; its path */
+export function ensureGlobalSnippets(): Promise<string | null> {
+	return bridge()?.ensureGlobal() ?? Promise.resolve(null);
+}
+
+/** the global file or a global package file changed; returns the unsubscribe */
+export function onGlobalSnippetsChanged(cb: () => void): () => void {
+	return bridge()?.onGlobalChanged(cb) ?? (() => {});
+}
+
+/** a .sty from the TeX installation by file name; null when it has none */
+export async function readTexPackage(file: string): Promise<string | null> {
+	return (await bridge()?.texPackage(file)) ?? null;
 }

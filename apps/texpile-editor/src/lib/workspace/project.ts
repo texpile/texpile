@@ -5,12 +5,9 @@
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
 import { hasDocumentEnv } from './latexRoundtrip';
 import { installedPackageDefinitions, type ReadInstalledPackage } from '$lib/languages/latex/installedPackages';
+import { readTexPackage } from '$lib/editor/snippets/file/snippetLoader';
 
 type ReadFn = (path: string) => Promise<string>;
-
-async function readTexPackage(file: string): Promise<string | null> {
-	return (await globalThis.window?.texpileTypst?.texPackage?.(file)) ?? null;
-}
 
 const BEGIN_DOC = /\\begin\s*\{document\}/;
 

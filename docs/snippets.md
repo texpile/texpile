@@ -14,10 +14,10 @@ A snippet turns a short trigger into longer text with places to fill in. Type `d
 | Where to find it          | Path                                                                      | Note                                                   |
 | ------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------ |
 | This folder's snippets    | Command palette › Edit Project Snippets, or Preferences › Snippets › Edit | Opens `.texpile/snippets.json`, made empty if missing. |
-| Snippets for every folder | Command palette › Edit Global Snippets, or Preferences › Snippets › Show  | Shows `snippets.json` in Texpile's own data folder.    |
+| Snippets for every folder | Command palette › Edit Global Snippets, or Preferences › Snippets › Edit  | Opens `snippets.json` in Texpile's own data folder.    |
 | Expanding as you type     | Preferences › Snippets › Expand snippets automatically                    | On by default.                                         |
 
-A folder's snippets replace global ones of the same name, and global ones replace the built-in ones. The folder's file is shared through Git with the rest of the project.
+A folder's snippets replace global ones of the same name, and global ones replace the built-in ones. The folder's file is shared through Git with the rest of the project. A bar above an open snippet file names which one it is, says how many entries were skipped, and links back to this page.
 
 ## A snippet file
 
@@ -181,7 +181,7 @@ A package file is `.texpile/packages/<name>.json` in the folder, or `packages/<n
 }
 ```
 
-To start one, open a document that loads the package and run **Save Package File for <name>** from the command palette. Texpile drafts the file from the package's own `.sty` in your TeX installation. Check it before relying on it: the draft lists the commands the package defines with `\newcommand` and similar, which can include some that are meant for internal use, and misses those it builds in other ways.
+To start one, open a document that loads the package and run **Save Package File for <name>** from the command palette. **Edit Package File for <name>** opens one that exists, and **Edit Global Package File for <name>** one in Texpile's own data folder. Texpile drafts the file from the package's own `.sty` in your TeX installation. Check it before relying on it: the draft lists the commands the package defines with `\newcommand` and similar, which can include some that are meant for internal use, and misses those it builds in other ways.
 
 Without a package file, Texpile still reads the arguments of an installed package's commands from its `.sty`, so the visual editor keeps them attached, but it does not offer the commands for completion.
 

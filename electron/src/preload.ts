@@ -1,11 +1,6 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
-
-/** unwraps the { ok, value | error } results from main.ts handleFs back into throw semantics. */
-async function invokeFs(channel: string, ...args: unknown[]): Promise<unknown> {
-	const r = (await ipcRenderer.invoke(channel, ...args)) as { ok: boolean; value?: unknown; error?: string };
-	if (r && r.ok) return r.value;
-	throw new Error(r?.error ?? 'Unknown error');
-}
+import { invokeFs } from './preloadIpc';
+import './preloadSnippets';
 
 // main pushes open-path/open-folder on did-finish-load, which can beat the renderer's
 // subscription (mount waits on the settings IPC; the route-split boot is fast enough to lose
@@ -419,8 +414,6 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 	distros: () => ipcRenderer.invoke('toolchain:distros'),
 	/** a .bib from the TeX installation by bare name, as text; null when it has none */
 	texBib: (name: string) => ipcRenderer.invoke('toolchain:texBib', name),
-	/** a .sty from the TeX installation by bare name, as text; null when it has none */
-	texPackage: (name: string) => ipcRenderer.invoke('toolchain:texPackage', name),
 	/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
 	dirForms: (entry: string) => ipcRenderer.invoke('toolchain:dirForms', entry),
 	/** Texpile's own copy of tinymist: the pinned release, whether this machine has a build, what is installed */
@@ -527,16 +520,6 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 	universeThumbnail: (name: string, version: string) => ipcRenderer.invoke('templates:universeThumbnail', { name, version }),
 	/** download a Universe template and copy it into a staged folder -> { entryPath } */
 	universeUnpack: (name: string, version: string, dir: string) => invokeFs('templates:universeUnpack', { name, version, dir })
-});
-
-// the global snippet file (see snippetsIpc.ts); a project's own is .texpile/snippets.json, read as any file
-contextBridge.exposeInMainWorld('texpileSnippets', {
-	/** its text, or null while there is none */
-	readGlobal: () => invokeFs('snippets:readGlobal'),
-	/** shows it in the file manager, made empty first if missing; resolves to its path */
-	revealGlobal: () => invokeFs('snippets:revealGlobal'),
-	/** { global, project }: each package file's name and text */
-	readPackages: (root: string | null) => invokeFs('snippets:readPackages', root)
 });
 
 // the reader's own command-line agents (Preferences > AI); main picks the command, a run carries the prompt and which of

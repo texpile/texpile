@@ -1,6 +1,8 @@
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { reloadSnippets } from './snippetLoader';
+import { onGlobalSnippetsChanged, reloadSnippets, snippetFiles } from './snippetLoader';
+import { snippetFileAt, type SnippetFileList } from './snippetFiles';
+import { allowTabsOutsideRoot } from '$lib/workspace/tabs.svelte';
 import { onSnippetRegistry, snippetRegistry } from './snippetRegistry';
 import type { SnippetProblem } from './snippetTypes';
 import { setCallLooks, type CallDialect } from '../visual/callWrappers';
@@ -11,7 +13,8 @@ export const snippetStatus = $state({
 	pendingPatterns: null as string | null,
 	problems: [] as SnippetProblem[],
 	/** counts changes to the declared wrap names, which change what a call parses to */
-	wrappers: 0
+	wrappers: 0,
+	files: snippetFiles() as SnippetFileList
 });
 
 /** a problem as one line: the file, the entry and why */
@@ -25,6 +28,9 @@ onSnippetRegistry(() => {
 	const { pendingPatterns, problems, languages } = snippetRegistry();
 	snippetStatus.pendingPatterns = pendingPatterns;
 	snippetStatus.problems = problems;
+	const files = snippetFiles();
+	snippetStatus.files = files;
+	allowTabsOutsideRoot((path) => snippetFileAt(path, null, files)?.layer === 'global');
 	let reparse = false;
 	for (const dialect of ['latex', 'typst'] as CallDialect[]) {
 		const looks = new Map<string, CallLook>(
@@ -46,4 +52,5 @@ export function followProjectSnippets(root: () => string | null): void {
 	$effect(() => {
 		void reloadSnippets(root());
 	});
+	$effect(() => onGlobalSnippetsChanged(() => void reloadSnippets(root())));
 }

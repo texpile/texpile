@@ -10,7 +10,8 @@ import {
 	Undo2,
 	Braces
 } from '@lucide/svelte';
-import { ensureProjectSnippets, revealGlobalSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { ensureGlobalSnippets, ensureProjectSnippets, snippetFiles } from '$lib/editor/snippets/file/snippetLoader';
+import { packageFilePath } from '$lib/editor/snippets/file/snippetFiles';
 import { wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
 import { savePackageFile } from '$lib/editor/snippets/file/savePackageFile';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
@@ -181,8 +182,25 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 		group,
 		keywords: 'snippets snippet trigger expand template shortcut latex suite wrap function all folders',
 		icon: Braces,
-		run: () => void revealGlobalSnippets()
+		run: () => void ensureGlobalSnippets().then((path) => path && a.openFile(path))
 	});
+	const files = snippetFiles();
+	const editable = [
+		...(root && a.isProject() && a.isHostWorkspace() ? files.packages.project.map((name) => ({ name, layer: 'project' as const })) : []),
+		...files.packages.global.map((name) => ({ name, layer: 'global' as const }))
+	];
+	for (const { name, layer } of editable) {
+		const path = packageFilePath(layer, name, root, files);
+		if (!path) continue;
+		items.push({
+			id: `editor.editPackageFile.${layer}.${name}`,
+			label: layer === 'project' ? m.palette_edit_package_file({ name }) : m.palette_edit_global_package_file({ name }),
+			group,
+			keywords: 'package completion intellisense commands json latex workshop',
+			icon: Braces,
+			run: () => a.openFile(path)
+		});
+	}
 	// keybindings are switched from here rather than only in Preferences: a vim user who lands in a
 	// fresh install wants one keystroke to fix it, not a dialog
 	const current = settings.current.editorKeymap ?? 'default';

@@ -6,7 +6,7 @@
 // A tab is now a file OR a comparison of that file against a version, so the store is keyed by
 // tabKey rather than by path. Everything below is the same behaviour expressed through that key.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
-import { tabs, tabKey } from '$lib/workspace/tabs.svelte';
+import { tabs, tabKey, allowTabsOutsideRoot } from '$lib/workspace/tabs.svelte';
 
 const platform = vi.hoisted(() => ({ isMac: false, isWindows: false }));
 vi.mock('$lib/platform', () => platform);
@@ -191,5 +191,14 @@ describe('reopening closed tabs', () => {
 		expect(paths()).toEqual(['C:\\p\\b.tex', 'C:\\p\\a.tex']);
 		expect(tabs.isPreview('C:\\p\\a.tex')).toBe(false);
 		expect(tabs.reopen(() => true)).toBeNull();
+	});
+
+	it("keeps a tab on Texpile's own file outside the folder, which the tree never lists", () => {
+		allowTabsOutsideRoot((p) => p === '/data/snippets.json');
+		openAndEdit('/data/snippets.json');
+		openAndEdit('/p/main.tex');
+		tabs.prune(['/p/main.tex']);
+		expect(paths()).toEqual(['/data/snippets.json', '/p/main.tex']);
+		allowTabsOutsideRoot(() => false);
 	});
 });
