@@ -14,6 +14,7 @@ import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
 import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
@@ -141,6 +142,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					// everywhere except inside a list item and Enter then behaves normally
 					latexListContinuation(),
 					mathPreview(),
+					sourceMathSearch(),
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost()] : []),
 					cmSpellcheck(deps.spellLanguage)
 				]
@@ -151,6 +153,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						mdSourceShortcuts(),
 						mdPathCompletion(),
 						mathPreview({ comments: false }),
+						sourceMathSearch(),
 						cmSpellcheck(deps.spellLanguage, 'markdown'),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme

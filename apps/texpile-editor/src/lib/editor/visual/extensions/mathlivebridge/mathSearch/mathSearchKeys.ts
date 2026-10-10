@@ -1,10 +1,11 @@
-// Tab in an equation opens the math search, and Shift+Tab does nothing: the arrow keys move between
-// a fraction's or a matrix's slots. While the search is open the equation keeps the focus, so the
-// keys typed are taken here, before MathLive sees them, and go to the search instead.
+// Tab in an equation opens the math search and Tab again closes it; Shift+Tab does nothing, as the
+// arrow keys move between a fraction's or a matrix's slots. While the search is open the equation keeps
+// the focus, so the keys typed are taken here, before MathLive sees them, and go to the search instead.
+// The source editor sends its keys through takeSearchKey too (sourceMathSearch.ts).
 import type { MathfieldElement } from 'mathlive';
 import { mathSearch } from './mathSearch.svelte';
 
-const MODIFIERS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'AltGraph']);
+export const MODIFIERS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'AltGraph']);
 // about as many rows as the panel shows
 const PAGE = 8;
 
@@ -28,9 +29,10 @@ function isShiftTab(event: KeyboardEvent): boolean {
 }
 
 /** whether the open search takes the key; any other key closes it and goes on to the equation */
-function takeSearchKey(event: KeyboardEvent): boolean {
+export function takeSearchKey(event: KeyboardEvent): boolean {
 	switch (event.key) {
 		case 'Escape':
+		case 'Tab':
 			mathSearch.close();
 			return true;
 		case 'ArrowDown':
@@ -46,7 +48,6 @@ function takeSearchKey(event: KeyboardEvent): boolean {
 			mathSearch.move(-PAGE);
 			return true;
 		case 'Enter':
-		case 'Tab':
 			mathSearch.pick();
 			return true;
 		case 'Backspace':

@@ -33,6 +33,15 @@ function scan(state: EditorState): MathRegion[] {
 	return findMathRegions(docText(state.doc), state.facet(percentComments));
 }
 
+/** the math the caret sits in, between its delimiters; null outside math or in an editor without the preview */
+export function mathAtCaret(state: EditorState): MathRegion | null {
+	const cell = state.field(regionsField, false);
+	if (!cell) return null;
+	const head = state.selection.main.head;
+	const region = mathRegionAt((cell.regions ??= scan(state)), head);
+	return region && head >= region.innerFrom && head <= region.innerTo ? region : null;
+}
+
 function regionsFor(state: EditorState): MathRegion[] {
 	if (settings.current.mathPreview === false) return []; // preview off: never pay for a scan
 	const cell = state.field(regionsField);

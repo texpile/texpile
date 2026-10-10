@@ -1169,6 +1169,7 @@
 	"mathsearch_functions": "函数",
 	"mathsearch_environments": "环境",
 	"mathsearch_matches": "匹配项",
+	"mathsearch_insert_tab": "插入缩进",
 	"mathpanel_close_aria": "关闭符号面板",
 	"mathtoolbar_virtual_keyboard_title": "虚拟键盘",
 	"mathtoolbar_select_block_aria": "选择区块",

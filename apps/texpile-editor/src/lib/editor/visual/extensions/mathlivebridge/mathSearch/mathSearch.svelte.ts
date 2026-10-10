@@ -2,6 +2,9 @@
 // MathLive has for the equation's syntax. The equation keeps the focus throughout, so a pick goes in
 // at its caret.
 import type { MathfieldElement } from 'mathlive';
+import type { EditorView as CMView } from '@codemirror/view';
+import { indentAtCaret } from '$lib/editor/source/extensions/keybindings/cmTabKey';
+import { insertIntoSource } from '$lib/editor/source/extensions/math-search/sourceMathInsert';
 import { insertSymbol } from '$lib/editor/visual/toolbar/mathInsert';
 import { offerPackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import type { LatexSymbol } from '$lib/languages/latex/symbols/latexSymbol.types';
@@ -11,7 +14,10 @@ import { mathStructures, searchStructures, type MathStructure } from './mathStru
 import { loadMathEntries, searchMathEntries, type MathEntries, type MathEntry } from './mathEntries';
 
 export type MathSearchResult = { section: string } & (
-	{ kind: 'structure'; structure: MathStructure } | { kind: 'entry'; entry: MathEntry }
+	| { kind: 'structure'; structure: MathStructure }
+	| { kind: 'entry'; entry: MathEntry }
+	/** the source editor's way to the indent Tab no longer types inside math */
+	| { kind: 'tab' }
 );
 
 /** where the panel sits: under the caret, or above it when there is no room below */
@@ -28,6 +34,8 @@ function entryIn(section: string, entry: MathEntry): MathSearchResult {
 
 class MathSearchState {
 	field = $state.raw<MathfieldElement | null>(null);
+	/** the source editor it was opened in, when it was not an equation's field */
+	source = $state.raw<CMView | null>(null);
 	syntax = $state<MathSyntax>('latex');
 	query = $state('');
 	active = $state(0);
@@ -42,8 +50,9 @@ class MathSearchState {
 			structure,
 			section: m.mathsearch_structures()
 		}));
+		const tab: MathSearchResult[] = this.source && !query ? [{ kind: 'tab', section: '' }] : [];
 		const loaded = this.loaded;
-		if (!loaded) return found;
+		if (!loaded) return [...tab, ...found];
 		if (query) return [...found, ...searchMathEntries(loaded, query).map((e) => entryIn(m.mathsearch_matches(), e))];
 		// with nothing typed: what was picked lately, then everything there is
 		const recent = loaded.set
@@ -51,27 +60,45 @@ class MathSearchState {
 			.map((id) => loaded.bySymbol.get(id))
 			.filter((e): e is MathEntry => e !== undefined)
 			.map((e) => entryIn(m.symbols_group_recent(), e));
-		return [...recent, ...found, ...loaded.entries.map((e) => entryIn(e.section, e))];
+		return [...tab, ...recent, ...found, ...loaded.entries.map((e) => entryIn(e.section, e))];
 	});
+
+	get showing(): boolean {
+		return (this.field !== null || this.source !== null) && this.place !== null;
+	}
 
 	open(field: MathfieldElement, syntax: MathSyntax): void {
 		this.field = field;
+		this.start(syntax, placeUnder(field));
+		field.addEventListener('blur', this.close, { once: true });
+	}
+
+	/** from Tab inside math in the source editor, which is LaTeX or Markdown's LaTeX math */
+	openSource(view: CMView): void {
+		this.source = view;
+		const caret = view.coordsAtPos(view.state.selection.main.head);
+		this.start('latex', caret ? placeAt(caret.left, caret.top, caret.bottom) : null);
+		view.contentDOM.addEventListener('blur', this.close, { once: true });
+	}
+
+	private start(syntax: MathSyntax, place: MathSearchPlace | null): void {
 		this.syntax = syntax;
 		this.query = '';
 		this.active = 0;
-		this.place = placeUnder(field);
+		this.place = place;
 		this.loaded = this.ready.get(syntax) ?? null;
 		if (!this.loaded)
 			void loadMathEntries(syntax).then((loaded) => {
 				this.ready.set(syntax, loaded);
-				if (this.field === field) this.loaded = loaded;
+				if (this.syntax === syntax) this.loaded = loaded;
 			});
-		field.addEventListener('blur', this.close, { once: true });
 	}
 
 	close = (): void => {
 		this.field?.removeEventListener('blur', this.close);
+		this.source?.contentDOM.removeEventListener('blur', this.close);
 		this.field = null;
+		this.source = null;
 		this.place = null;
 	};
 
@@ -95,9 +122,11 @@ class MathSearchState {
 
 	pick(index = this.active): void {
 		const result = this.results[index];
-		const { field, syntax, loaded } = this;
+		const { field, source, syntax, loaded } = this;
 		this.close();
-		if (!result || !field) return;
+		if (!result) return;
+		if (source) return pickInSource(source, result, loaded);
+		if (!field || result.kind === 'tab') return;
 		if (result.kind === 'structure') {
 			insertSymbol(result.structure.latex);
 			return;
@@ -113,13 +142,31 @@ class MathSearchState {
 	}
 }
 
+function pickInSource(view: CMView, result: MathSearchResult, loaded: MathEntries | null): void {
+	if (result.kind === 'tab') {
+		indentAtCaret(view);
+		return;
+	}
+	if (result.kind === 'structure') return insertIntoSource(view, result.structure.latex);
+	insertIntoSource(view, result.entry.command.insert);
+	const { symbol } = result.entry;
+	if (!symbol || !loaded) return;
+	loaded.set.remember(symbol.id);
+	offerPackageFor(symbol as LatexSymbol);
+}
+
 function placeUnder(field: MathfieldElement): MathSearchPlace {
 	const box = field.getBoundingClientRect();
 	// MathLive draws its caret in the field's own tree and has no public way to say where it is
 	const caret = field.shadowRoot?.querySelector('.ML__caret')?.getBoundingClientRect();
-	const left = Math.max(8, Math.min((caret?.left ?? box.left) - 16, window.innerWidth - PANEL_WIDTH - 8));
-	if (window.innerHeight - box.bottom >= PANEL_ROOM || box.top < PANEL_ROOM) return { left, top: box.bottom + 4 };
-	return { left, bottom: window.innerHeight - box.top + 4 };
+	return placeAt(caret?.left ?? box.left, box.top, box.bottom);
+}
+
+/** under the line from `top` to `bottom`, or above it when there is no room below */
+function placeAt(caretLeft: number, top: number, bottom: number): MathSearchPlace {
+	const left = Math.max(8, Math.min(caretLeft - 16, window.innerWidth - PANEL_WIDTH - 8));
+	if (window.innerHeight - bottom >= PANEL_ROOM || top < PANEL_ROOM) return { left, top: bottom + 4 };
+	return { left, bottom: window.innerHeight - top + 4 };
 }
 
 export const mathSearch = new MathSearchState();
