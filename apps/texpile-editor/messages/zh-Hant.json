@@ -1186,6 +1186,7 @@
 	"mathtoolbar_insert_no_field": "請先點擊進入公式",
 	"mathsearch_placeholder": "搜尋符號、分數、矩陣",
 	"mathsearch_structures": "結構",
+	"mathsearch_snippets": "程式碼片段",
 	"mathsearch_commands": "命令",
 	"mathsearch_functions": "函式",
 	"mathsearch_environments": "環境",

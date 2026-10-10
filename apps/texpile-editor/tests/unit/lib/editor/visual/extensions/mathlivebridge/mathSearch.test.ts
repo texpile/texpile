@@ -17,9 +17,17 @@ const { mathSearch } = await import('$lib/editor/visual/extensions/mathlivebridg
 const { mathSearchKeydown } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathSearchKeys');
 const { searchMathEntries } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathEntries');
 
-/** an element standing in for a math field: what the keys read of one */
-function fakeField(mode: string): MathfieldElement {
-	const field = Object.assign(document.createElement('div'), { mode, syntax: 'typst', readOnly: false });
+/** an element standing in for a math field: what the keys read of one; `after` is its LaTeX past the caret */
+function fakeField(mode: string, after = ''): MathfieldElement {
+	const field = Object.assign(document.createElement('div'), {
+		mode,
+		syntax: 'typst',
+		readOnly: false,
+		selection: { ranges: [[0, 0]] },
+		lastOffset: 1,
+		getValue: () => after,
+		executeCommand: vi.fn()
+	});
 	field.addEventListener('keydown', mathSearchKeydown, { capture: true });
 	document.body.append(field);
 	return field as unknown as MathfieldElement;
@@ -86,6 +94,13 @@ describe('the math search', () => {
 		expect(mathSearch.field).toBe(null);
 		press(field, 'Tab');
 		expect(press(field, 'ArrowLeft').defaultPrevented).toBe(false);
+		expect(mathSearch.field).toBe(null);
+	});
+
+	it('moves to an empty slot on Tab before it opens anything', () => {
+		const field = fakeField('math', '\\frac{x}{\\placeholder{}}');
+		expect(press(field, 'Tab').defaultPrevented).toBe(true);
+		expect(field.executeCommand).toHaveBeenCalledWith('moveToNextPlaceholder');
 		expect(mathSearch.field).toBe(null);
 	});
 });

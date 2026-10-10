@@ -1186,6 +1186,7 @@
 	"mathtoolbar_insert_no_field": "Click into an equation first",
 	"mathsearch_placeholder": "Search symbols, fractions, matrices",
 	"mathsearch_structures": "Structures",
+	"mathsearch_snippets": "Snippets",
 	"mathsearch_commands": "Commands",
 	"mathsearch_functions": "Functions",
 	"mathsearch_environments": "Environments",

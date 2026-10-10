@@ -208,3 +208,19 @@ export function toCmTemplate(body: string, inputs: BodyInputs): CmTemplate {
 export function usesSelection(body: string): boolean {
 	return /\$\{?(TM_SELECTED_TEXT|SELECTION)\b/.test(body);
 }
+
+/** the body as MathLive inserts it: each stop an empty #? slot, a choice its first option */
+export function toMathLiveLatex(body: string): string {
+	const inputs: BodyInputs = { selection: '', captures: [] };
+	function render(list: BodyNode[]): string {
+		return list
+			.map((node) => {
+				if (node.kind === 'text') return node.value;
+				if (node.kind === 'field') return node.n === 0 ? '' : '#?';
+				if (node.kind === 'choice') return node.options[0] ?? '';
+				return variableText(node, inputs);
+			})
+			.join('');
+	}
+	return render(new BodyReader(body, inputs).readNodes(false));
+}
