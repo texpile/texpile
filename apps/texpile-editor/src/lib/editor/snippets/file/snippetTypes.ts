@@ -31,7 +31,8 @@ export type Snippet = {
 
 export type SnippetVariables = Record<string, Partial<Record<SnippetLanguage, string>>>;
 
-export type SnippetProblem = { layer: SnippetLayer; name: string; reason: string };
+/** `file` names the file when it is not the layer's snippet file */
+export type SnippetProblem = { layer: SnippetLayer; name: string; reason: string; file?: string };
 
 export type SnippetFile = {
 	snippets: Snippet[];

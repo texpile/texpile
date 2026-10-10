@@ -4,6 +4,7 @@
 // offers keyvals after the package is detected in the include tree.
 import { snippetCompletion, type Completion } from '@codemirror/autocomplete';
 import { PKG_OF_MACRO, PKG_OF_ENV } from '../data/packages/index';
+import { mergePackages, userPackage, userPackageNames } from '../userPackages';
 
 type PkgArg = {
 	format: string;
@@ -11,7 +12,7 @@ type PkgArg = {
 	keys?: string[];
 	keyPos?: number;
 };
-type PkgEntry = {
+export type PkgEntry = {
 	name: string;
 	arg?: PkgArg;
 	unusual?: boolean;
@@ -34,7 +35,12 @@ export function isBundledPackage(name: string): boolean {
 	return `../data/packages/${name}.json` in modules;
 }
 
-export function loadPackage(name: string): Promise<PackageData | null> {
+/** Texpile's data for the package, under the user's own file for it */
+export async function loadPackage(name: string): Promise<PackageData | null> {
+	return mergePackages(await loadBundled(name), userPackage(name));
+}
+
+function loadBundled(name: string): Promise<PackageData | null> {
 	let entry = cache.get(name);
 	if (!entry) {
 		const loader = modules[`../data/packages/${name}.json`];
@@ -49,7 +55,7 @@ export function loadPackage(name: string): Promise<PackageData | null> {
 }
 
 // VS Code snippet syntax -> CodeMirror: choice lists keep their first choice, hint markers drop
-function toCmSnippet(body: string): string {
+export function toCmSnippet(body: string): string {
 	return body
 		.replace(/\$\{(\d+)\|([^|}]*)\|\}/g, (_, n: string, choices: string) => `\${${n}:${choices.split(',')[0]}}`)
 		.replace(/%(?:keyvals|plain)\b/g, '')
@@ -67,6 +73,12 @@ function dedupe(keys: string[]): Completion[] {
 	return [...new Set(keys)].map(keyOption);
 }
 
+/** the bundled packages that define a name, and the user's own files that do */
+function withUserPackages(bundled: string[] | undefined, defines: (pkg: PackageData) => boolean): string[] {
+	const own = userPackageNames().filter((n) => defines(userPackage(n)!));
+	return [...new Set([...(bundled ?? []), ...own])];
+}
+
 function orderByDetected(pkgs: string[], detected: Set<string>): string[] {
 	return [...pkgs].sort((a, b) => Number(detected.has(b)) - Number(detected.has(a)));
 }
@@ -80,8 +92,8 @@ function formatMatches(format: string, argIndex: number, open: '[' | '{'): boole
 
 /** keyval completions for \name's argIndex-th bracket group (0-based, counting all groups). */
 export async function keysForMacro(name: string, argIndex: number, open: '[' | '{', detected: Set<string>): Promise<Completion[] | null> {
-	const pkgs = PKG_OF_MACRO[name];
-	if (!pkgs) return null;
+	const pkgs = withUserPackages(PKG_OF_MACRO[name], (d) => d.macros.some((m) => m.name === name));
+	if (!pkgs.length) return null;
 	for (const pkg of orderByDetected(pkgs, detected)) {
 		const pkgData = await loadPackage(pkg);
 		if (!pkgData) continue;
@@ -103,8 +115,8 @@ export async function keysForMacro(name: string, argIndex: number, open: '[' | '
 
 /** keyval completions for \begin{env}'s bracket groups; argIndex counts {env} as group 0. */
 export async function keysForEnv(env: string, argIndex: number, open: '[' | '{', detected: Set<string>): Promise<Completion[] | null> {
-	const pkgs = PKG_OF_ENV[env];
-	if (!pkgs) return null;
+	const pkgs = withUserPackages(PKG_OF_ENV[env], (d) => d.envs.some((e) => e.name === env));
+	if (!pkgs.length) return null;
 	for (const pkg of orderByDetected(pkgs, detected)) {
 		const pkgData = await loadPackage(pkg);
 		if (!pkgData) continue;

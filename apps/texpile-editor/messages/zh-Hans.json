@@ -115,6 +115,8 @@
 	"snippets_patterns_allow": "允许",
 	"palette_project_snippets": "编辑项目代码片段",
 	"palette_global_snippets": "编辑全局代码片段",
+	"palette_save_package_file": "保存 {name} 的宏包文件",
+	"package_file_missing": "TeX 发行版中没有 {name}.sty",
 	"wrap_with": "包裹为",
 	"wrap_with_item": "包裹为 {name}",
 	"wrap_refused_title": "未包裹",

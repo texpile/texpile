@@ -12,6 +12,11 @@ import {
 } from '@lucide/svelte';
 import { ensureProjectSnippets, revealGlobalSnippets } from '$lib/editor/snippets/file/snippetLoader';
 import { wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
+import { savePackageFile } from '$lib/editor/snippets/file/savePackageFile';
+import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { detectedPackages, isBundledPackage } from '$lib/languages/latex/intellisense/completion/packageData';
+import { userPackage } from '$lib/languages/latex/intellisense/userPackages';
+import { toaster } from '$lib/modals/toaster-svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { changedLines, nextChange, previousChange, revertChange, revertChangeAt } from '$lib/editor/source/cmChangeMarkers';
@@ -143,6 +148,22 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			icon: Braces,
 			run: () => void ensureProjectSnippets(root).then((path) => path && a.openFile(path))
 		});
+	// a package Texpile has no data for gets a starting file drafted from its .sty
+	if (view && root && a.isProject() && a.isHostWorkspace())
+		for (const name of [...detectedPackages(view.state.doc.toString())].filter((n) => !isBundledPackage(n) && !userPackage(n)).slice(0, 10))
+			items.push({
+				id: `editor.packageFile.${name}`,
+				label: m.palette_save_package_file({ name }),
+				group,
+				keywords: 'package completion intellisense commands sty usepackage json latex workshop',
+				icon: Braces,
+				run: () =>
+					void savePackageFile(root, name).then((path) => {
+						if (!path) return toaster.info({ title: m.package_file_missing({ name }) });
+						void reloadSnippets(root);
+						a.openFile(path);
+					})
+			});
 	items.push({
 		id: 'editor.globalSnippets',
 		label: m.palette_global_snippets(),

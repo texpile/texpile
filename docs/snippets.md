@@ -111,6 +111,23 @@ Three helpers in the source editor work on the formula around the cursor. Each h
 | Tab out of brackets | In math, Tab moves past the next `)`, `]` or `}`, then out of the formula. At the start of a line Tab still indents.                                               | On      |
 | Matrix keys         | In `matrix`, `pmatrix`, `array`, `align` and similar environments, Tab adds `&` and Shift+Enter starts a row. In a Typst `mat(…)`, they add `, ` and `; `.         | On      |
 
+## Commands of other packages
+
+Texpile knows the commands of a few hundred LaTeX packages. For one it does not know, a package file adds them: its commands and environments then complete in documents that load the package, and the visual editor keeps their arguments attached.
+
+A package file is `.texpile/packages/<name>.json` in the folder, or `packages/<name>.json` in Texpile's own data folder for every folder. It uses the package format of LaTeX Workshop, so files written for it work unchanged.
+
+```json
+{
+	"macros": [{ "name": "offen", "arg": { "format": "[]{}", "snippet": "offen[${1:who}]{${2:text}}" }, "doc": "Open point" }],
+	"envs": [{ "name": "reviewbox" }]
+}
+```
+
+To start one, open a document that loads the package and run **Save Package File for <name>** from the command palette. Texpile drafts the file from the package's own `.sty` in your TeX installation. Check it before relying on it: the draft lists the commands the package defines with `\newcommand` and similar, which can include some that are meant for internal use, and misses those it builds in other ways.
+
+Without a package file, Texpile still reads the arguments of an installed package's commands from its `.sty`, so the visual editor keeps them attached, but it does not offer the commands for completion.
+
 ## Built-in snippets
 
 Typing `@` in math offers the built-in ones: `@a` for alpha, `@/` for a fraction, `@sum`, `@int`, and others, with Typst equivalents where Typst has the symbol. Turn one off with `{ "disabled": true }` under its name, such as `"@a"`.

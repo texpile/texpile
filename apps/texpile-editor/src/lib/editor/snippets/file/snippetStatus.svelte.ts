@@ -7,7 +7,7 @@ import type { SnippetProblem } from './snippetTypes';
 export const snippetStatus = $state({ pendingPatterns: null as string | null, problems: [] as SnippetProblem[] });
 
 function describe(p: SnippetProblem): string {
-	const file = p.layer === 'project' ? '.texpile/snippets.json' : m.snippets_global_file();
+	const file = p.file ?? (p.layer === 'project' ? '.texpile/snippets.json' : m.snippets_global_file());
 	return p.name ? `${file}: "${p.name}" ${p.reason}` : `${file} ${p.reason}`;
 }
 

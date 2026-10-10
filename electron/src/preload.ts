@@ -534,7 +534,9 @@ contextBridge.exposeInMainWorld('texpileSnippets', {
 	/** its text, or null while there is none */
 	readGlobal: () => invokeFs('snippets:readGlobal'),
 	/** shows it in the file manager, made empty first if missing; resolves to its path */
-	revealGlobal: () => invokeFs('snippets:revealGlobal')
+	revealGlobal: () => invokeFs('snippets:revealGlobal'),
+	/** { global, project }: each package file's name and text */
+	readPackages: (root: string | null) => invokeFs('snippets:readPackages', root)
 });
 
 // the reader's own command-line agents (Preferences > AI); main picks the command, a run carries the prompt and which of

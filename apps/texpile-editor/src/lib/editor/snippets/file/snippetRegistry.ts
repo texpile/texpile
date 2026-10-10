@@ -27,7 +27,13 @@ export type SnippetRegistry = {
 	pendingPatterns: string | null;
 };
 
-export type SnippetLayers = { global: SnippetFile | null; project: SnippetFile | null; allowedPatterns: string | null };
+export type SnippetLayers = {
+	global: SnippetFile | null;
+	project: SnippetFile | null;
+	allowedPatterns: string | null;
+	/** the package files' problems, shown with the snippet files' */
+	packageProblems?: SnippetProblem[];
+};
 
 function mergeVariables(...sets: SnippetVariables[]): SnippetVariables {
 	const out: SnippetVariables = {};
@@ -59,7 +65,7 @@ function compilePatterns(s: Snippet, lang: SnippetLanguage, variables: SnippetVa
 }
 
 export function compileSnippets(layers: SnippetLayers): SnippetRegistry {
-	const problems: SnippetProblem[] = [];
+	const problems: SnippetProblem[] = [...(layers.packageProblems ?? [])];
 	const merged = new Map<string, Snippet>(BUILTIN_SNIPPETS.map((s) => [s.name, s]));
 	let pendingPatterns: string | null = null;
 	for (const file of [layers.global, layers.project]) {

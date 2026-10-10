@@ -115,6 +115,8 @@
 	"snippets_patterns_allow": "Allow",
 	"palette_project_snippets": "Edit Project Snippets",
 	"palette_global_snippets": "Edit Global Snippets",
+	"palette_save_package_file": "Save Package File for {name}",
+	"package_file_missing": "{name}.sty is not in the TeX installation",
 	"wrap_with": "Wrap With",
 	"wrap_with_item": "Wrap With {name}",
 	"wrap_refused_title": "Not wrapped",

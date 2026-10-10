@@ -3,8 +3,13 @@ import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { getFolder, updateFolder } from '$lib/storage/workspaces';
 import { parseSnippetFile } from './parseSnippetFile';
 import { setSnippetLayers } from './snippetRegistry';
+import { adoptPackageFiles, type PackageTexts } from './packageFiles';
 
-type SnippetsBridge = { readGlobal(): Promise<string | null>; revealGlobal(): Promise<string> };
+type SnippetsBridge = {
+	readGlobal(): Promise<string | null>;
+	revealGlobal(): Promise<string>;
+	readPackages(root: string | null): Promise<PackageTexts>;
+};
 
 function bridge(): SnippetsBridge | undefined {
 	return (globalThis.window as unknown as { texpileSnippets?: SnippetsBridge } | undefined)?.texpileSnippets;
@@ -16,24 +21,30 @@ async function readProjectFile(root: string | null): Promise<string | null> {
 	return readTextFile(path).catch(() => null);
 }
 
-let loaded: { root: string | null; global: string | null; project: string | null } | null = null;
+const NO_PACKAGES: PackageTexts = { global: {}, project: {} };
+let loaded: string | null = null;
 
-/** read both files again; a guest or a lone file passes no root and gets the global file alone */
+/** read the snippet and package files again; a guest or a lone file passes no root and gets the global ones alone */
 export async function reloadSnippets(root: string | null): Promise<void> {
-	const [global, project] = await Promise.all([
+	const [global, project, packages] = await Promise.all([
 		bridge()
 			?.readGlobal()
 			.catch(() => null) ?? null,
-		readProjectFile(root)
+		readProjectFile(root),
+		bridge()
+			?.readPackages(root)
+			.catch(() => NO_PACKAGES) ?? NO_PACKAGES
 	]);
-	if (loaded && loaded.root === root && loaded.global === global && loaded.project === project) return;
+	const key = JSON.stringify({ root, global, project, packages });
+	if (key === loaded) return;
 	// a file made by hand still has to reach git: an older ignore rule kept it out
-	if (root && project !== null && loaded?.project !== project) void ensureTexpileIgnore(root);
-	loaded = { root, global, project };
+	if (root && (project !== null || Object.keys(packages.project).length)) void ensureTexpileIgnore(root);
+	loaded = key;
 	setSnippetLayers({
 		global: global === null ? null : parseSnippetFile(global, 'global'),
 		project: project === null ? null : parseSnippetFile(project, 'project'),
-		allowedPatterns: root ? (getFolder(root).allowedSnippetPatterns ?? null) : null
+		allowedPatterns: root ? (getFolder(root).allowedSnippetPatterns ?? null) : null,
+		packageProblems: adoptPackageFiles(packages)
 	});
 }
 
