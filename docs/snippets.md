@@ -11,11 +11,11 @@ section: Editor tips
 
 A snippet turns a short trigger into longer text with places to fill in. Type `dint` in an equation and it becomes `\int_{0}^{1} \, \mathrm{d}x`, with Tab moving through the limits, the integrand and the variable. Snippets work in the source editor, and in the visual editor's text and equations.
 
-| Where to find it          | Path                                                 | Note                                                   |
-| ------------------------- | ---------------------------------------------------- | ------------------------------------------------------ |
-| This folder's snippets    | Command palette › Edit Project Snippets              | Opens `.texpile/snippets.json`, made empty if missing. |
-| Snippets for every folder | Command palette › Edit Global Snippets               | Shows `snippets.json` in Texpile's own data folder.    |
-| Expanding as you type     | Preferences › Editor › Expand snippets automatically | On by default.                                         |
+| Where to find it          | Path                                                                      | Note                                                   |
+| ------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------ |
+| This folder's snippets    | Command palette › Edit Project Snippets, or Preferences › Snippets › Edit | Opens `.texpile/snippets.json`, made empty if missing. |
+| Snippets for every folder | Command palette › Edit Global Snippets, or Preferences › Snippets › Show  | Shows `snippets.json` in Texpile's own data folder.    |
+| Expanding as you type     | Preferences › Snippets › Expand snippets automatically                    | On by default.                                         |
 
 A folder's snippets replace global ones of the same name, and global ones replace the built-in ones. The folder's file is shared through Git with the rest of the project.
 
@@ -115,7 +115,7 @@ In a Typst equation, a trigger made of letters expands when it is typed as a who
 
 ## Math typing helpers
 
-Three helpers in the source editor work on the formula around the cursor. Each has its own switch in Preferences › Editor.
+Three helpers in the source editor work on the formula around the cursor. Each has its own switch in Preferences › Snippets.
 
 | Helper              | What it does                                                                                                                                                       | Default |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
@@ -146,6 +146,6 @@ Typing `@` in math offers the built-in ones: `@a` for alpha, `@/` for a fraction
 
 ## When a snippet does not load
 
-An entry Texpile cannot read is skipped, and a note says which one and why. The rest of the file still loads.
+An entry Texpile cannot read is skipped, and a note says which one and why. The rest of the file still loads. Preferences › Snippets lists every skipped entry.
 
 [Typing and selecting](typing.md) [Preferences](preferences.md)

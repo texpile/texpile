@@ -12,7 +12,8 @@ export const snippetStatus = $state({
 	wrappers: 0
 });
 
-function describe(p: SnippetProblem): string {
+/** a problem as one line: the file, the entry and why */
+export function describeSnippetProblem(p: SnippetProblem): string {
 	const file = p.file ?? (p.layer === 'project' ? '.texpile/snippets.json' : m.snippets_global_file());
 	return p.name ? `${file}: "${p.name}" ${p.reason}` : `${file} ${p.reason}`;
 }
@@ -24,9 +25,9 @@ onSnippetRegistry(() => {
 	snippetStatus.problems = problems;
 	if (setCallWrappers(languages.typst.wraps.flatMap((c) => c.snippet.wrap ?? []))) snippetStatus.wrappers++;
 	// once per new set of problems, not on every reload that finds the same ones
-	const key = problems.map(describe).join('\n');
+	const key = problems.map(describeSnippetProblem).join('\n');
 	if (key && key !== shown)
-		toaster.warning({ title: m.snippets_problems_title({ count: problems.length }), description: describe(problems[0]) });
+		toaster.warning({ title: m.snippets_problems_title({ count: problems.length }), description: describeSnippetProblem(problems[0]) });
 	shown = key;
 });
 

@@ -10,6 +10,7 @@
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
 	import { changeUiLocale, keymapOptions, uiLocaleOptions } from './prefsOptions';
 	import PrefsSpellingPanel from './spelling/PrefsSpellingPanel.svelte';
+	import PrefsSnippetsPanel from './snippets/PrefsSnippetsPanel.svelte';
 	import AppearanceMode from './AppearanceMode.svelte';
 	import ThemePicker from './ThemePicker.svelte';
 	import { preferencesTab } from '$lib/stores/dialogStore';
@@ -26,7 +27,8 @@
 	// One category on screen at a time, rather than every setting in one scroll. The list had grown
 	// past the point where "wrap long lines" and "editor width" could be told apart at a glance -
 	// which editor, and which of them, was only answerable by reading the hint under each.
-	type Category = 'appearance' | 'editor' | 'proofing' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
+	type Category =
+		'appearance' | 'editor' | 'snippets' | 'proofing' | 'vcs' | 'collaboration' | 'toolchain' | 'integrations' | 'startup' | 'ai';
 	let category = $state<Category>('appearance');
 	// the browser guest has no local toolchain, no Zotero, no MCP server, no folder to reopen and no
 	// copies or versions of its own: five tabs that could only ever report nothing, so they are
@@ -42,6 +44,7 @@
 		// editor, and which of them - and a heading inside one tab answers that just as well as a
 		// sidebar entry did, without making the reader guess which of three tabs a setting is in.
 		{ id: 'editor', label: m.prefs_group_editor() },
+		{ id: 'snippets', label: m.prefs_group_snippets() },
 		// its own tab, as it was the bulk of Editor; named as the Spelling menu, which leads here
 		{ id: 'proofing', label: m.prefs_group_proofing() },
 		// Git's settings and Local History, in Git's and VS Code's words
@@ -240,18 +243,6 @@
 					{@render toggleRow(m.prefs_math_preview(), m.prefs_math_preview_note(), settings.current.mathPreview !== false, (v) =>
 						updateSettings({ mathPreview: v })
 					)}
-					{@render toggleRow(m.prefs_auto_snippets(), m.prefs_auto_snippets_note(), settings.current.autoSnippets !== false, (v) =>
-						updateSettings({ autoSnippets: v })
-					)}
-					{@render toggleRow(m.prefs_auto_fraction(), m.prefs_auto_fraction_note(), settings.current.autoFraction === true, (v) =>
-						updateSettings({ autoFraction: v })
-					)}
-					{@render toggleRow(m.prefs_tab_out(), m.prefs_tab_out_note(), settings.current.tabOut !== false, (v) =>
-						updateSettings({ tabOut: v })
-					)}
-					{@render toggleRow(m.prefs_matrix_keys(), m.prefs_matrix_keys_note(), settings.current.matrixKeys !== false, (v) =>
-						updateSettings({ matrixKeys: v })
-					)}
 				</div>
 				{@render sectionHeading(m.prefs_group_visual())}
 				<div class={SUB}>
@@ -266,6 +257,23 @@
 						(v) => updateSettings({ visualHyphenate: v }),
 						settings.current.visualJustify === false,
 						settings.current.visualJustify === false ? m.prefs_visual_hyphenate_needs_justify() : ''
+					)}
+				</div>
+			{:else if category === 'snippets'}
+				{@render toggleRow(m.prefs_auto_snippets(), m.prefs_auto_snippets_note(), settings.current.autoSnippets !== false, (v) =>
+					updateSettings({ autoSnippets: v })
+				)}
+				<PrefsSnippetsPanel />
+				{@render sectionHeading(m.prefs_group_source())}
+				<div class={SUB}>
+					{@render toggleRow(m.prefs_auto_fraction(), m.prefs_auto_fraction_note(), settings.current.autoFraction === true, (v) =>
+						updateSettings({ autoFraction: v })
+					)}
+					{@render toggleRow(m.prefs_tab_out(), m.prefs_tab_out_note(), settings.current.tabOut !== false, (v) =>
+						updateSettings({ tabOut: v })
+					)}
+					{@render toggleRow(m.prefs_matrix_keys(), m.prefs_matrix_keys_note(), settings.current.matrixKeys !== false, (v) =>
+						updateSettings({ matrixKeys: v })
 					)}
 				</div>
 			{:else if category === 'proofing'}
