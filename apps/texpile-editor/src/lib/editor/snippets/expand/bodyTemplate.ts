@@ -224,3 +224,9 @@ export function toMathLiveLatex(body: string): string {
 	}
 	return render(new BodyReader(body, inputs).readNodes(false));
 }
+
+/** the body with every stop at its default and every choice at its first option: what a Typst equation takes */
+export function toPlainText(body: string): string {
+	const inputs: BodyInputs = { selection: '', captures: [] };
+	return plainText(new BodyReader(body, inputs).readNodes(false), inputs);
+}

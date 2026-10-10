@@ -1,5 +1,6 @@
 import type { _Mathfield } from '../../editor-mathfield/mathfield-private';
 import { requestUpdate } from '../../editor-mathfield/render';
+import { ModeEditor } from '../../editor-mathfield/mode-editor';
 import { hideSuggestionPopover } from '../../editor/suggestion-popover';
 import {
   isFunctionName,
@@ -97,6 +98,28 @@ function namesFor(mf: _Mathfield, typing: TypstTyping): string[] {
     return [];
   const text = nameText(typing.name);
   return text.length < 2 ? [] : typstNamesStartingWith(text).slice(0, SHOWN);
+}
+
+/**
+ * A name typed whole that is one of the field's Typst shortcuts becomes what it
+ * maps to, its first slot selected. True when it did.
+ */
+export function expandShortcut(mf: _Mathfield, typing: TypstTyping): boolean {
+  const shortcut = mf.options.typstShortcuts[nameText(typing.name)];
+  if (!shortcut || !isAtCaret(mf, typing.name)) return false;
+  const atoms = typing.name;
+  typing.name = [];
+  const { model } = mf;
+  const start = model.offsetOf(atoms[0]) - 1;
+  model.deleteAtoms([start, model.offsetOf(atoms[atoms.length - 1])]);
+  model.position = start;
+  hideSuggestionPopover(mf);
+  ModeEditor.insert(model, shortcut.value, {
+    format: shortcut.format,
+    mode: 'math',
+    selectionMode: 'placeholder',
+  });
+  return true;
 }
 
 /** takes the highlighted suggestion in place of what was typed */

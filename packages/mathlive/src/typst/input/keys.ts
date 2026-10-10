@@ -15,6 +15,7 @@ import { closeCall, nextArgument } from './calls';
 import {
   acceptSuggestion,
   continuesName,
+  expandShortcut,
   resolveName,
   suggestNames,
   typeIntoName,
@@ -123,6 +124,7 @@ function typeChar(
   if (typing.name.length > 0) {
     if (continuesName(typing, c)) {
       typeIntoName(mf, typing, c);
+      expandShortcut(mf, typing);
       return;
     }
     if (resolveName(mf, typing, c)) return;
@@ -139,6 +141,7 @@ function typeChar(
 
   if (/^[a-zA-Z]$/.test(c)) {
     typeIntoName(mf, typing, c);
+    expandShortcut(mf, typing);
     return;
   }
   switch (c) {

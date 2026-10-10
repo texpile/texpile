@@ -38,7 +38,7 @@ class MathSearchState {
 
 	readonly results = $derived.by((): MathSearchResult[] => {
 		const query = this.query.trim();
-		const snippets = this.syntax === 'latex' ? snippetStructures() : [];
+		const snippets = snippetStructures(this.syntax);
 		const found = [
 			...searchStructures(snippets, query).map((structure): MathSearchResult => ({
 				kind: 'structure',
@@ -108,7 +108,7 @@ class MathSearchState {
 		this.close();
 		if (!result || !field) return;
 		if (result.kind === 'structure') {
-			insertSymbol(result.structure.latex);
+			insertSymbol(result.structure.latex, result.structure.format);
 			return;
 		}
 		const { command, symbol } = result.entry;

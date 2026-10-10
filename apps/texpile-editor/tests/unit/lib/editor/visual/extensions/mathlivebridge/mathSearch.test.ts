@@ -71,7 +71,7 @@ describe('the math search', () => {
 		expect(mathSearch.query).toBe('frac');
 		press(field, 'Enter');
 		expect(mathSearch.field).toBe(null);
-		expect(insertSymbol).toHaveBeenCalledWith('\\frac{#@}{#0}');
+		expect(insertSymbol).toHaveBeenCalledWith('\\frac{#@}{#0}', undefined);
 	});
 
 	it('types a Typst call after a space, which ends a name typed before the search opened', () => {

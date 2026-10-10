@@ -215,10 +215,22 @@ export class MathLiveView implements NodeView {
 
 		// the field is in the document now, which is the earliest mathlive will accept macros
 		this.applyMacros();
-		if (this.syntax === 'latex')
-			this.unwatchSnippets = followSnippetShortcuts(field.inlineShortcuts, (shortcuts) => {
-				if (field.isConnected) field.inlineShortcuts = shortcuts;
-			});
+		this.unwatchSnippets = followSnippetShortcuts(
+			this.syntax === 'typst'
+				? {
+						syntax: 'typst',
+						set: (shortcuts) => {
+							if (field.isConnected) field.typstShortcuts = shortcuts;
+						}
+					}
+				: {
+						syntax: 'latex',
+						defaults: field.inlineShortcuts,
+						set: (shortcuts) => {
+							if (field.isConnected) field.inlineShortcuts = shortcuts;
+						}
+					}
+		);
 
 		this.removeSelection();
 		this.updateOutline(false);

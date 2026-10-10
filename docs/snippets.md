@@ -9,7 +9,7 @@ section: Editor tips
 
 # Snippets
 
-A snippet turns a short trigger into longer text with places to fill in. Type `dint` in an equation and it becomes `\int_{0}^{1} \, \mathrm{d}x`, with Tab moving through the limits, the integrand and the variable. Snippets work in the source editor, and in the visual editor's LaTeX equations.
+A snippet turns a short trigger into longer text with places to fill in. Type `dint` in an equation and it becomes `\int_{0}^{1} \, \mathrm{d}x`, with Tab moving through the limits, the integrand and the variable. Snippets work in the source editor, and in the visual editor's equations.
 
 | Where to find it          | Path                                                 | Note                                                   |
 | ------------------------- | ---------------------------------------------------- | ------------------------------------------------------ |
@@ -104,6 +104,8 @@ A selection that starts or ends inside a piece of markup, such as half of a `*bo
 ## In visual equations
 
 In a LaTeX equation in the visual editor, a snippet that expands on its own does so as you type its trigger, and every other math snippet is listed when Tab opens the math search. Each place to fill in becomes an empty slot, and Tab moves to the next slot before it opens the search. Defaults are left out, and the slots are visited in the order the equation editor keeps them, so an integral's upper limit comes before its lower one. Pattern triggers work in the source editor only.
+
+In a Typst equation, a trigger made of letters expands when it is typed as a whole name, so `point` never expands `oint`. The snippet goes in as its Typst body with its defaults filled in, and the cursor ends after it: Typst has no empty slot to stop at.
 
 ## Math typing helpers
 

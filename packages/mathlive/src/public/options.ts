@@ -262,10 +262,19 @@ export type KeyboardOptions = {
   keybindings: readonly Keybinding[];
 };
 
+/**
+ * What a name typed whole in a Typst field becomes: LaTeX, whose `#?` are slots
+ * Tab moves to, or Typst source.
+ */
+export type TypstShortcut = { value: string; format: 'latex' | 'typst' };
+
 /** @internal */
 export type InlineShortcutsOptions = {
   inlineShortcuts: InlineShortcutDefinitions;
   inlineShortcutTimeout: number;
+  /** a Typst field's own shortcuts, by the name that triggers them; its
+   * inline shortcuts are LaTeX's and do not apply there */
+  typstShortcuts: Readonly<Record<string, TypstShortcut>>;
 };
 
 /** @internal */
