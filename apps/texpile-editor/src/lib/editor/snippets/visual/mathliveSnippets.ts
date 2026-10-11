@@ -1,7 +1,5 @@
 // equation snippets: auto ones as MathLive shortcuts, the rest in the math search
 import type { InlineShortcutDefinitions, MathfieldElement, TypstShortcut } from 'mathlive';
-import { settings } from '$lib/settings';
-import { observe } from '$lib/runes/observe.svelte';
 import type { MathStructure } from '$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathStructures';
 import type { MathSyntax } from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
 import { toMathLiveLatex, toPlainText } from '../expand/bodyTemplate';
@@ -58,17 +56,11 @@ export type SnippetShortcutTarget =
 
 export function followSnippetShortcuts(target: SnippetShortcutTarget): () => void {
 	function apply() {
-		const on = settings.current.autoSnippets !== false;
-		if (target.syntax === 'typst') target.set(on ? typstShortcuts() : {});
-		else target.set(on ? { ...target.defaults, ...mathLiveShortcuts() } : target.defaults);
+		if (target.syntax === 'typst') target.set(typstShortcuts());
+		else target.set({ ...target.defaults, ...mathLiveShortcuts() });
 	}
-	const offRegistry = onSnippetRegistry(apply);
-	// fires now too, which is the first apply
-	const offSetting = observe(() => settings.current.autoSnippets, apply);
-	return () => {
-		offRegistry();
-		offSetting();
-	};
+	apply();
+	return onSnippetRegistry(apply);
 }
 
 /** MathLive's own Tab leaves the equation when no #? slot follows */

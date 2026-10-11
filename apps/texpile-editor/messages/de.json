@@ -100,8 +100,6 @@
 	"prefs_grammar_rules": "Grammatikregeln",
 	"prefs_math_preview": "Formelvorschau",
 	"prefs_math_preview_note": "Live gesetzte Vorschau der Formel an der Cursorposition im Quellcode-Modus.",
-	"prefs_auto_snippets": "Snippets automatisch erweitern",
-	"prefs_auto_snippets_note": "Als automatisch markierte Snippets werden erweitert, sobald ihr Auslöser getippt ist. Vorschlagsliste, Snippet-Tasten und „Einfassen mit“ funktionieren in beiden Fällen.",
 	"prefs_auto_fraction": "Automatische Brüche",
 	"prefs_auto_fraction_note": "In LaTeX- und Markdown-Formeln macht ein / nach einem Term einen Bruch daraus. Ein zweites / macht daraus wieder einen einfachen Schrägstrich.",
 	"prefs_tab_out": "Mit Tab aus Klammern",

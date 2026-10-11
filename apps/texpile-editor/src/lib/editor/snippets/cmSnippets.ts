@@ -8,7 +8,6 @@ import {
 } from '@codemirror/autocomplete';
 import { Compartment, EditorState, Facet, Prec, type Extension } from '@codemirror/state';
 import { EditorView, keymap, ViewPlugin, type EditorView as CMView } from '@codemirror/view';
-import { settings } from '$lib/settings';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { usesSelection } from './expand/bodyTemplate';
@@ -56,7 +55,7 @@ export function snippetCompletionSource(ctx: CompletionContext): CompletionResul
 function autoExpansion(stopUndoCapture: () => void): Extension {
 	return EditorView.inputHandler.of((view, from, to, text) => {
 		const lang = languageOf(view.state);
-		if (!lang || settings.current.autoSnippets === false || view.composing || view.state.selection.ranges.length > 1) return false;
+		if (!lang || view.composing || view.state.selection.ranges.length > 1) return false;
 		const list = snippetRegistry().languages[lang].auto;
 		const line = view.state.doc.lineAt(from);
 		if (!list.length || to > line.to || text.includes('\n')) return false;

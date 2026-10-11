@@ -55,7 +55,7 @@ function tabOut(lang: SnippetLanguage) {
 	return (view: CMView): boolean => {
 		const { state } = view;
 		const sel = state.selection.main;
-		if (settings.current.tabOut === false || !sel.empty || hasNextSnippetField(state) || onlyIndentBefore(state, sel.head)) return false;
+		if (settings.current.tabOut !== true || !sel.empty || hasNextSnippetField(state) || onlyIndentBefore(state, sel.head)) return false;
 		const bounds = inMath(state, sel.head, lang) ? mathBoundsAt(state, sel.head, lang) : null;
 		if (!bounds) return false;
 		const rest = state.sliceDoc(sel.head, bounds.innerTo);
@@ -87,7 +87,7 @@ function inTypstMatrix(state: EditorState, pos: number): boolean {
 }
 
 function inMatrix(state: EditorState, pos: number, lang: SnippetLanguage): boolean {
-	if (settings.current.matrixKeys === false || !inMath(state, pos, lang)) return false;
+	if (settings.current.matrixKeys !== true || !inMath(state, pos, lang)) return false;
 	if (lang === 'typst') return inTypstMatrix(state, pos);
 	const env = openEnvironment(state, pos);
 	return !!env && MATRIX_ENV.test(env);

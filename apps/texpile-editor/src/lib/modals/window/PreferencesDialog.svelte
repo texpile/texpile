@@ -243,6 +243,15 @@
 					{@render toggleRow(m.prefs_math_preview(), m.prefs_math_preview_note(), settings.current.mathPreview !== false, (v) =>
 						updateSettings({ mathPreview: v })
 					)}
+					{@render toggleRow(m.prefs_auto_fraction(), m.prefs_auto_fraction_note(), settings.current.autoFraction === true, (v) =>
+						updateSettings({ autoFraction: v })
+					)}
+					{@render toggleRow(m.prefs_tab_out(), m.prefs_tab_out_note(), settings.current.tabOut === true, (v) =>
+						updateSettings({ tabOut: v })
+					)}
+					{@render toggleRow(m.prefs_matrix_keys(), m.prefs_matrix_keys_note(), settings.current.matrixKeys === true, (v) =>
+						updateSettings({ matrixKeys: v })
+					)}
 				</div>
 				{@render sectionHeading(m.prefs_group_visual())}
 				<div class={SUB}>
@@ -260,22 +269,7 @@
 					)}
 				</div>
 			{:else if category === 'snippets'}
-				{@render toggleRow(m.prefs_auto_snippets(), m.prefs_auto_snippets_note(), settings.current.autoSnippets !== false, (v) =>
-					updateSettings({ autoSnippets: v })
-				)}
 				<PrefsSnippetsPanel />
-				{@render sectionHeading(m.prefs_group_source())}
-				<div class={SUB}>
-					{@render toggleRow(m.prefs_auto_fraction(), m.prefs_auto_fraction_note(), settings.current.autoFraction === true, (v) =>
-						updateSettings({ autoFraction: v })
-					)}
-					{@render toggleRow(m.prefs_tab_out(), m.prefs_tab_out_note(), settings.current.tabOut !== false, (v) =>
-						updateSettings({ tabOut: v })
-					)}
-					{@render toggleRow(m.prefs_matrix_keys(), m.prefs_matrix_keys_note(), settings.current.matrixKeys !== false, (v) =>
-						updateSettings({ matrixKeys: v })
-					)}
-				</div>
 			{:else if category === 'proofing'}
 				<!-- all of it stays up with the switch off: the Spelling menu's Edit Dictionary leads here -->
 				{@render toggleRow(m.prefs_spellcheck(), '', settings.current.spellcheck, (v) => setSpellcheckEnabled(v))}

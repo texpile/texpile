@@ -15,7 +15,6 @@ A snippet turns a short trigger into longer text with places to fill in. Type `d
 | ------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------ |
 | This folder's snippets    | Command palette › Edit Project Snippets, or Preferences › Snippets › Edit | Opens `.texpile/snippets.json`, made empty if missing. |
 | Snippets for every folder | Command palette › Edit Global Snippets, or Preferences › Snippets › Edit  | Opens `snippets.json` in Texpile's own data folder.    |
-| Expanding as you type     | Preferences › Snippets › Expand snippets automatically                    | On by default.                                         |
 
 A folder's snippets replace global ones of the same name, and global ones replace the built-in ones. The folder's file is shared through Git with the rest of the project. A bar above an open snippet file names which one it is, says how many entries were skipped, and links back to this page.
 
@@ -162,13 +161,13 @@ Pattern triggers wait for **Allow** like any others in a folder's file.
 
 ## Math typing helpers
 
-Three helpers in the source editor work on the formula around the cursor. Each has its own switch in Preferences › Snippets.
+Three helpers in the source editor work on the formula around the cursor. They are not snippets, and are off until turned on in Preferences › Editor › Source editor.
 
 | Helper              | What it does                                                                                                                                                       | Default |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
 | Auto-fraction       | In LaTeX and Markdown math, `a/` becomes `\frac{a}{}` with the cursor below. `x^2/`, `\alpha/` and `(a+b)/` work the same way. A second `/` takes it back to `a/`. | Off     |
-| Tab out of brackets | In math, Tab moves past the next `)`, `]` or `}`, then out of the formula. At the start of a line Tab still indents.                                               | On      |
-| Matrix keys         | In `matrix`, `pmatrix`, `array`, `align` and similar environments, Tab adds `&` and Shift+Enter starts a row. In a Typst `mat(…)`, they add `, ` and `; `.         | On      |
+| Tab out of brackets | In math, Tab moves past the next `)`, `]` or `}`, then out of the formula. At the start of a line Tab still indents.                                               | Off     |
+| Matrix keys         | In `matrix`, `pmatrix`, `array`, `align` and similar environments, Tab adds `&` and Shift+Enter starts a row. In a Typst `mat(…)`, they add `, ` and `; `.         | Off     |
 
 ## Commands of other packages
 

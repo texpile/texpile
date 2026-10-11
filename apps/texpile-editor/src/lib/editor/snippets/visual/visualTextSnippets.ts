@@ -2,7 +2,6 @@ import { Plugin, TextSelection, type EditorState, type Transaction } from 'prose
 import { closeHistory } from 'prosemirror-history';
 import type { Mark, Slice } from 'prosemirror-model';
 import type { EditorView as PMView } from 'prosemirror-view';
-import { settings } from '$lib/settings';
 import { toVisualText, VISUAL_CARET } from '../expand/bodyTemplate';
 import { autoMatches, type CompiledSnippet, type SnippetMatch } from '../expand/matchSnippets';
 import { contextAllows } from '../expand/snippetZone';
@@ -67,7 +66,7 @@ export function visualTextSnippets(lang: SnippetLanguage, read: ReadSourceText):
 	return new Plugin({
 		props: {
 			handleTextInput(view, from, to, text) {
-				if (settings.current.autoSnippets === false || from !== to || view.composing) return false;
+				if (from !== to || view.composing) return false;
 				const at = textBefore(view.state, from);
 				const list = textSnippets(snippetRegistry().languages[lang].auto);
 				if (!at || !list.length) return false;
