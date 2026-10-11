@@ -50,6 +50,8 @@ export type AppSettings = {
 	whatsNewSeen: string;
 	/** live math preview tooltip in source mode. */
 	mathPreview: boolean;
+	/** load the snippets.json in Texpile's data folder */
+	globalSnippets: boolean;
 	/** in source math, `a/` becomes \frac{a}{} (LaTeX and Markdown) */
 	autoFraction: boolean;
 	/** in source math, Tab moves past the next closing bracket, then out of the formula */
@@ -133,6 +135,7 @@ const DEFAULTS: AppSettings = {
 	transparentWindow: false,
 	whatsNewSeen: '',
 	mathPreview: true,
+	globalSnippets: true,
 	autoFraction: false,
 	tabOut: false,
 	matrixKeys: false,

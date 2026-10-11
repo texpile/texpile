@@ -9,6 +9,7 @@ import {
 	type Snippet,
 	type SnippetFile,
 	type SnippetLanguage,
+	type SnippetLayer,
 	type SnippetProblem,
 	type SnippetVariables
 } from './snippetTypes';
@@ -25,6 +26,8 @@ export type SnippetRegistry = {
 	problems: SnippetProblem[];
 	/** the project's regex triggers waiting to be allowed, as one text */
 	pendingPatterns: string | null;
+	/** entries in use from each file, null with no file; globalReplaced: global ones a folder entry replaces */
+	loaded: { global: number | null; project: number | null; globalReplaced: number };
 };
 
 export type SnippetLayers = {
@@ -143,7 +146,16 @@ export function compileSnippets(layers: SnippetLayers): SnippetRegistry {
 		const key = `${p.layer}\n${p.name}\n${p.reason}`;
 		return !seen.has(key) && !!seen.add(key);
 	});
-	return { languages, problems: unique, pendingPatterns };
+	function inUse(layer: SnippetLayer): number {
+		return [...merged.values()].filter((s) => s.layer === layer).length;
+	}
+	const folderNames = new Set(layers.project?.snippets.map((s) => s.name));
+	const loaded = {
+		global: layers.global ? inUse('global') : null,
+		project: layers.project ? inUse('project') : null,
+		globalReplaced: layers.global?.snippets.filter((s) => folderNames.has(s.name)).length ?? 0
+	};
+	return { languages, problems: unique, pendingPatterns, loaded };
 }
 
 let layers: SnippetLayers = { global: null, project: null, allowedPatterns: null };

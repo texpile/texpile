@@ -19,6 +19,8 @@ export type FolderEntry = {
 	trusted?: { latex?: string; typst?: string };
 	/** project snippet regex triggers this machine allowed, keyed as compileSnippets does */
 	allowedSnippetPatterns?: string;
+	/** this machine skips the folder's snippet file */
+	snippetsOff?: boolean;
 	/** open tabs, in order, root-relative: a file, or a file compared against one of its versions */
 	tabs?: SavedTab[];
 	/** the version lastFile was left compared against, when the focused tab was a comparison */

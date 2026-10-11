@@ -1,6 +1,7 @@
 import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
 import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { getFolder, updateFolder } from '$lib/storage/workspaces';
+import { settings, updateSettings } from '$lib/settings';
 import { parseSnippetFile } from './parseSnippetFile';
 import { setSnippetLayers } from './snippetRegistry';
 import { adoptPackageFiles, type PackageTexts } from './packageFiles';
@@ -44,8 +45,17 @@ export function folderSnippetText(): string | null {
 	return folderText;
 }
 
+let lastSource: [string | null, string | null] = [null, null];
+let switches = { global: true, folder: true };
+
+/** whether each file is loaded, as of the last reload */
+export function snippetSwitches(): { global: boolean; folder: boolean } {
+	return switches;
+}
+
 /** a guest passes the host's text and no root; a lone file passes neither */
 export async function reloadSnippets(root: string | null, hostFolderText: string | null = null): Promise<void> {
+	lastSource = [root, hostFolderText];
 	const [global, project, packages] = await Promise.all([
 		bridge()
 			?.readGlobal()
@@ -65,7 +75,8 @@ export async function reloadSnippets(root: string | null, hostFolderText: string
 		globalPackages: where?.packages ?? null,
 		packages: { project: Object.keys(packages.project), global: Object.keys(packages.global) }
 	};
-	const key = JSON.stringify({ root, global, project, packages });
+	const on = { global: settings.current.globalSnippets !== false, folder: !root || getFolder(root).snippetsOff !== true };
+	const key = JSON.stringify({ root, global, project, packages, on });
 	if (key === loaded) return;
 	// hand made files must reach git, an older ignore rule kept them out
 	if (root && (project !== null || Object.keys(packages.project).length)) void ensureTexpileIgnore(root);
@@ -74,13 +85,28 @@ export async function reloadSnippets(root: string | null, hostFolderText: string
 	const packagesKey = JSON.stringify(packages);
 	const packagesChanged = packagesKey !== loadedPackages;
 	loadedPackages = packagesKey;
+	switches = on;
 	setSnippetLayers({
-		global: global === null ? null : parseSnippetFile(global, 'global'),
-		project: project === null ? null : parseSnippetFile(project, 'project'),
+		global: global === null || !on.global ? null : parseSnippetFile(global, 'global'),
+		project: project === null || !on.folder ? null : parseSnippetFile(project, 'project'),
 		allowedPatterns: root ? (getFolder(root).allowedSnippetPatterns ?? null) : sessionAllowedPatterns,
 		packageProblems: adoptPackageFiles(packages)
 	});
 	if (packagesChanged) for (const cb of packageListeners) cb();
+}
+
+export function setGlobalSnippetsOn(on: boolean): void {
+	updateSettings({ globalSnippets: on });
+	void reloadSnippets(...lastSource);
+}
+
+/** kept on this machine, not in the folder: whether to load a project's snippets is one person's choice */
+export function setFolderSnippetsOn(root: string, on: boolean): void {
+	updateFolder(root, (draft) => {
+		if (on) delete draft.snippetsOff;
+		else draft.snippetsOff = true;
+	});
+	void reloadSnippets(...lastSource);
 }
 
 /** package files change the macro signatures a parse reads */

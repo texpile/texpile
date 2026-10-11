@@ -1,7 +1,14 @@
 import { untrack } from 'svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { folderSnippetText, onGlobalSnippetsChanged, onPackageFilesChanged, reloadSnippets, snippetFiles } from './snippetLoader';
+import {
+	snippetSwitches,
+	folderSnippetText,
+	onGlobalSnippetsChanged,
+	onPackageFilesChanged,
+	reloadSnippets,
+	snippetFiles
+} from './snippetLoader';
 import { snippetFileAt, type SnippetFileList } from './snippetFiles';
 import { allowTabsOutsideRoot } from '$lib/workspace/tabs.svelte';
 import { onSnippetRegistry, snippetRegistry } from './snippetRegistry';
@@ -13,6 +20,9 @@ import type { CallLooks } from '$lib/collab/parse/parseContext';
 
 export const snippetStatus = $state({
 	pendingPatterns: null as string | null,
+	loaded: snippetRegistry().loaded,
+	/** whether each file is loaded */
+	switches: snippetSwitches(),
 	problems: [] as SnippetProblem[],
 	/** bumped when wrap names change, which changes how calls parse */
 	wrappers: 0,
@@ -51,8 +61,10 @@ onPackageFilesChanged(() => snippetStatus.packages++);
 
 let shown = '';
 onSnippetRegistry(() => {
-	const { pendingPatterns, problems, languages } = snippetRegistry();
+	const { pendingPatterns, problems, languages, loaded } = snippetRegistry();
 	snippetStatus.pendingPatterns = pendingPatterns;
+	snippetStatus.loaded = loaded;
+	snippetStatus.switches = snippetSwitches();
 	snippetStatus.problems = problems;
 	const files = snippetFiles();
 	snippetStatus.files = files;

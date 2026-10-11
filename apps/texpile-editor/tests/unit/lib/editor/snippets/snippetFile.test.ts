@@ -66,4 +66,10 @@ describe('snippet files', () => {
 			expect.objectContaining({ name: 'Differential', reason: expect.stringContaining('"dif" is already a Typst name') })
 		);
 	});
+
+	it('counts what each file has in use, and the global entries a folder entry of the same name replaces', () => {
+		const global = parseSnippetFile('{ "Set": { "prefix": "st", "body": "x" }, "Own": { "prefix": "own", "body": "y" } }', 'global');
+		const { loaded } = compileSnippets({ global, project, allowedPatterns: null });
+		expect(loaded).toEqual({ global: 1, project: 2, globalReplaced: 1 });
+	});
 });

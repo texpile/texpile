@@ -22,6 +22,7 @@ const DEFAULT_SETTINGS = {
 	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
 	transparentWindow: false, // the window's grounds let the blurred desktop through (windowGlass.ts)
 	mathPreview: true, // live math preview tooltip in source mode
+	globalSnippets: true, // load the snippets.json in the data folder
 	autoFraction: false, // in source math, a/ becomes \frac{a}{}
 	tabOut: false, // in source math, Tab moves past the next closing bracket, then out of the formula
 	matrixKeys: false, // in source matrices, Tab adds a column and Shift+Enter a row
