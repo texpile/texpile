@@ -1,7 +1,4 @@
-// Tab in an equation moves to the next empty slot, or opens the math search when there is none, and
-// Shift+Tab does nothing: the arrow keys move between a fraction's or a matrix's slots. While the
-// search is open the equation keeps the focus, so the keys typed are taken here, before MathLive
-// sees them, and go to the search instead.
+// Tab goes to the next empty slot or opens math search; an open search gets keys before MathLive
 import type { MathfieldElement } from 'mathlive';
 import { mathSearch } from './mathSearch.svelte';
 import { placeholderAhead } from '$lib/editor/snippets/visual/mathliveSnippets';
@@ -70,7 +67,6 @@ export function mathSearchKeydown(event: KeyboardEvent): void {
 		// a modifier on its own is the start of a key, not one
 		if (MODIFIERS.has(event.key) || !takeSearchKey(event)) return;
 	} else if (opensSearch(event, field)) {
-		// a snippet's or a structure's empty slots come first: Tab fills them in order, as in the source editor
 		if (placeholderAhead(field)) field.executeCommand('moveToNextPlaceholder');
 		else mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex');
 	} else if (!isShiftTab(event)) return;

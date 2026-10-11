@@ -160,7 +160,6 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			icon: Braces,
 			run: () => void importLatexSuite(root, (path) => a.openFile(path))
 		});
-	// a package Texpile has no data for gets a starting file drafted from its .sty
 	if (view && root && a.isProject() && a.isHostWorkspace())
 		for (const name of [...detectedPackages(view.state.doc.toString())].filter((n) => !isBundledPackage(n) && !userPackage(n)).slice(0, 10))
 			items.push({

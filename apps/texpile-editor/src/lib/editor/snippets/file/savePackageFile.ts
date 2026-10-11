@@ -3,7 +3,7 @@ import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { packageFileFrom } from '$lib/languages/latex/installedPackages';
 import { readTexPackage } from './snippetLoader';
 
-/** a package file for an installed package, drafted from its .sty; its path, or null when TeX has no such package */
+/** drafted from the installed .sty; null when TeX has no such package */
 export async function savePackageFile(root: string, name: string): Promise<string | null> {
 	const path = texpilePath(root, `packages/${name}.json`);
 	if (!path) return null;

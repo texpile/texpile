@@ -1,5 +1,4 @@
-// a snippet file: { v: 1, variables?, snippets: {...} }, or a bare VS Code snippet file. read as
-// JSONC, as VS Code reads its own; nothing that fails a check is ever written back corrected
+// { v: 1, variables?, snippets } or a bare VS Code snippet file, read as JSONC
 import {
 	SNIPPET_LANGUAGES,
 	type Snippet,
@@ -23,7 +22,6 @@ const LANGUAGE_IDS: Record<string, SnippetLanguage> = {
 };
 export const FUNCTION_NAME = /^[\p{L}_][\p{L}\p{N}_.-]*$/u;
 
-/** comments and trailing commas out, strings left alone */
 export function stripJsonc(text: string): string {
 	let out = '';
 	for (let i = 0; i < text.length; i++) {
@@ -39,7 +37,6 @@ export function stripJsonc(text: string): string {
 			const end = text.indexOf('*/', i + 2);
 			i = end < 0 ? text.length : end + 1;
 		} else {
-			// a trailing comma: the text before a closer ends in one only outside a string, which ends in a quote
 			if (c === '}' || c === ']') out = out.replace(/,(\s*)$/, '$1');
 			out += c;
 		}
@@ -57,7 +54,7 @@ function textOf(v: unknown): string | null {
 	return null;
 }
 
-/** languages a scope names; null when it names none of ours, which is a file for other editors */
+/** null: a scope for other editors only */
 function scopeOf(v: unknown): SnippetLanguage[] | null {
 	if (v === undefined) return [...SNIPPET_LANGUAGES];
 	if (typeof v !== 'string') return null;
@@ -178,7 +175,6 @@ export function parseSnippetFile(text: string, layer: SnippetLayer): SnippetFile
 		file.problems.push({ layer, name: '', reason: 'is not a JSON object' });
 		return file;
 	}
-	// a wrapper is told apart from a bare VS Code file by its snippets map
 	const wrapped = isObject(parsed.snippets) && !('body' in parsed.snippets);
 	if (wrapped && parsed.v !== undefined && parsed.v !== 1) {
 		file.problems.push({ layer, name: '', reason: `is version ${String(parsed.v)}, which this Texpile cannot read` });

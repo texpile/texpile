@@ -250,7 +250,7 @@ export function markCallParts(call: SyntaxNode, src: string): { mark: PmMark; ma
 		const markup = contentMarkup(real[1]);
 		return color && markup ? { mark: { type: 'textcolor', attrs: { color } }, markup } : null;
 	}
-	// a wrapper the snippet files name: its content last, anything before it kept as written
+	// a snippet-file wrapper: content last, earlier args kept as written
 	if (isCallWrapper('typst', name) && real.length >= 1) {
 		const markup = contentMarkup(real[real.length - 1]);
 		const args = real.length > 1 ? src.slice(real[0].from, real[real.length - 2].to) : '';

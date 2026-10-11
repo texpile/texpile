@@ -17,7 +17,7 @@ const { mathSearch } = await import('$lib/editor/visual/extensions/mathlivebridg
 const { mathSearchKeydown } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathSearchKeys');
 const { searchMathEntries } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathEntries');
 
-/** an element standing in for a math field: what the keys read of one; `after` is its LaTeX past the caret */
+/** `after` is the field's LaTeX past the caret */
 function fakeField(mode: string, after = ''): MathfieldElement {
 	const field = Object.assign(document.createElement('div'), {
 		mode,

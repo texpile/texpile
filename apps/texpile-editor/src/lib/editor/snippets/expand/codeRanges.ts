@@ -18,7 +18,7 @@ function lineEndAfter(text: string, at: number): number {
 	return (end < 0 ? text.length : end) + 1;
 }
 
-/** \verb|x|, \lstinline[opts]{x} and \mintinline[opts]{lang}|x|: closed by their delimiter on the same line */
+/** \verb|x|, \lstinline[opts]{x} and \mintinline[opts]{lang}|x|, closed within the line */
 function inlineVerbatimEnd(text: string, at: number, command: InlineVerbatim): number {
 	const unclosed = lineEndAfter(text, at);
 	let i = at;
@@ -38,7 +38,7 @@ export function latexCodeRanges(text: string): CodeRange[] {
 		if (m[1]) {
 			const close = text.indexOf(`\\end{${m[1]}}`, LATEX_CODE.lastIndex);
 			to = close < 0 ? text.length + 1 : close + m[1].length + 6;
-		} else if (m[2]) to = inlineVerbatimEnd(text, LATEX_CODE.lastIndex, m[2].replace('*', '') as InlineVerbatim);
+		} else if (m[2]) to = inlineVerbatimEnd(text, LATEX_CODE.lastIndex, m[2].replace(/\*$/, '') as InlineVerbatim);
 		else continue;
 		ranges.push({ from: m.index, to });
 		LATEX_CODE.lastIndex = to;
@@ -46,7 +46,6 @@ export function latexCodeRanges(text: string): CodeRange[] {
 	return ranges;
 }
 
-/** code spans: a run of backticks closed by the next run as long, within the paragraph */
 function codeSpans(text: string, from: number, to: number): CodeRange[] {
 	const spans: CodeRange[] = [];
 	const runs = [...text.slice(from, to).matchAll(/`+/g)].map((m) => ({ at: from + m.index, length: m[0].length }));
@@ -77,7 +76,7 @@ function closesLinkText(text: string, from: number, close: number): boolean {
 	return false;
 }
 
-/** past the ) of a link's (dest "title"), or -1 where the parenthesis makes no link */
+/** past the ) of a link's (dest "title"), or -1 when it makes no link */
 function linkTailEnd(text: string, at: number, to: number): number {
 	let i = at;
 	while (text[i] === ' ' || text[i] === '\t') i++;
@@ -103,7 +102,6 @@ function linkTailEnd(text: string, at: number, to: number): number {
 	return i < to && text[i] === ')' ? i + 1 : -1;
 }
 
-/** [text](dest "title") and ![alt](dest): the parenthesized part, the text stays text */
 function linkDestinations(text: string, from: number, to: number): CodeRange[] {
 	const destinations: CodeRange[] = [];
 	for (let at = text.indexOf('](', from); at >= 0 && at < to; at = text.indexOf('](', at + 1)) {
@@ -135,7 +133,7 @@ export function markdownCodeRanges(text: string): CodeRange[] {
 	let paragraph = -1;
 	let fence: { from: number; mark: string } | null = null;
 	let indented: CodeRange | null = null;
-	// from a list item until a paragraph starts at the margin: an indented line there continues the item
+	// an indented line inside a list continues the item, so it is not code
 	let inList = false;
 	let pos = 0;
 	function endParagraph(end: number): void {
@@ -192,7 +190,7 @@ export function insideCode(ranges: readonly CodeRange[], pos: number): boolean {
 	return false;
 }
 
-/** the text with its code turned to spaces, newlines kept, so no $ inside reads as math */
+/** code blanked to spaces, so no $ inside it reads as math */
 export function blankCode(text: string, ranges: readonly CodeRange[]): string {
 	let out = '';
 	let at = 0;

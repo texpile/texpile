@@ -1,5 +1,4 @@
-// the snippets in force: built-in, then the global file, then the project's, later replacing
-// earlier by name. editors read it on each keystroke and re-read it when it changes
+// the snippets in force: built-in, then global, then project
 import { m } from '$lib/paraglide/messages';
 import { usesSelection } from '../expand/bodyTemplate';
 import type { CompiledSnippet } from '../expand/matchSnippets';
@@ -24,7 +23,7 @@ export type LanguageSnippets = {
 export type SnippetRegistry = {
 	languages: Record<SnippetLanguage, LanguageSnippets>;
 	problems: SnippetProblem[];
-	/** the project's regex triggers, while they wait to be allowed; the text they are allowed by */
+	/** the project's regex triggers waiting to be allowed, as one text */
 	pendingPatterns: string | null;
 };
 
@@ -32,7 +31,6 @@ export type SnippetLayers = {
 	global: SnippetFile | null;
 	project: SnippetFile | null;
 	allowedPatterns: string | null;
-	/** the package files' problems, shown with the snippet files' */
 	packageProblems?: SnippetProblem[];
 };
 
@@ -44,7 +42,7 @@ function mergeVariables(...sets: SnippetVariables[]): SnippetVariables {
 
 const VARIABLE = /\$\{([A-Za-z_][A-Za-z0-9_]*)\}/g;
 
-/** the prefix with each `${NAME}` the set defines for `lang` put in; `missing` is the first it does not */
+/** `missing` is the first name with no value for `lang` */
 function expandVariables(prefix: string, lang: SnippetLanguage, variables: SnippetVariables): { source: string; missing: string } {
 	let missing = '';
 	const source = prefix.replace(VARIABLE, (whole, name: string) => {
@@ -73,7 +71,7 @@ function compilePatterns(s: Snippet, lang: SnippetLanguage, variables: SnippetVa
 	return patterns;
 }
 
-// what the project's file puts into this pattern: all of it when the snippet is the project's, else its variables
+// the pattern text the project controls: the whole prefix, or only its variables
 function projectPatternLines(s: Snippet, projectVariables: SnippetVariables): string[] {
 	const lines: string[] = [];
 	for (const lang of Object.keys(s.bodies) as SnippetLanguage[]) {
@@ -100,8 +98,7 @@ export function compileSnippets(layers: SnippetLayers): SnippetRegistry {
 		problems.push({ layer: s.layer, name: s.name, reason: m.snippets_pattern_needs_auto() });
 		merged.delete(s.name);
 	}
-	// a project's patterns run on every keystroke, so a cloned one waits until it is allowed here, and
-	// so does any pattern the project's variables change
+	// a cloned project's patterns run on every keystroke, so they wait to be allowed here
 	const projectVariables = layers.project?.variables ?? {};
 	const held = [...merged.values()]
 		.filter((s) => s.regex && s.auto)

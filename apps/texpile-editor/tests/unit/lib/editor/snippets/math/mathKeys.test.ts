@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-// The math typing helpers, checked by typing and by key presses. `|` marks the caret.
+// `|` marks the caret
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
@@ -17,7 +17,7 @@ function editor(lang: SnippetLanguage, withCaret: string): EditorView {
 	const at = withCaret.indexOf('|');
 	view = new EditorView({
 		state: EditorState.create({
-			doc: withCaret.replace('|', ''),
+			doc: withCaret.slice(0, at) + withCaret.slice(at + 1),
 			selection: { anchor: at },
 			extensions: [lang === 'typst' ? typstLanguage() : latex(), sourceSnippets(lang), keymap.of([...defaultKeymap, indentWithTab])]
 		}),

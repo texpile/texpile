@@ -19,7 +19,6 @@ describe("a guest's folder snippets", () => {
 		expect(pending).toBeTruthy();
 		allowProjectSnippetPatterns(null, pending!);
 		expect(snippetRegistry().pendingPatterns).toBeNull();
-		// a change to the body alone leaves the patterns as they were allowed
 		await reloadSnippets(null, hostFile('[[0]]_[[1]]'));
 		expect(snippetRegistry().pendingPatterns).toBeNull();
 	});

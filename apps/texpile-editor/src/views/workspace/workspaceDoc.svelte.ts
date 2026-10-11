@@ -184,7 +184,7 @@ export class WorkspaceDoc {
 			openTexFile.current = openTexFileOf({ doc: this.doc, mode: () => this.modes.mode, kind: () => this.doc.kind, parseVisual });
 			return () => (openTexFile.current = null);
 		});
-		// a wrapper given a look or dropped in a snippet file changes what a call parses to
+		// adding or dropping a wrapper in a snippet file changes how calls parse
 		let wrappersSeen = snippetStatus.wrappers;
 		$effect(() => {
 			const now = snippetStatus.wrappers;
@@ -204,15 +204,13 @@ export class WorkspaceDoc {
 			if (!session.active) return;
 			session.setVisualLock(this.hostHoldsExclusively(this.doc.kind, this.modes.mode, this.doc.path) ? this.doc.path : null);
 		});
-		// a guest parses with what the host parses with, so a call or a command's arguments read the same on both sides
 		followParseContext({
 			session: d.session,
 			guest: d.guest,
 			macros: () => this.projectMacros,
 			adoptMacros: (macros) => this.adoptProjectMacros(macros)
 		});
-		// a package file names the arguments of its commands and loads after the folder opens, and a pull can
-		// bring another main file in .texpile/config.json
+		// package files load after the folder opens, and a pull can change the main file
 		let packagesSeen = snippetStatus.packages;
 		let mainSeen = mainFile.current;
 		$effect(() => {
@@ -230,7 +228,6 @@ export class WorkspaceDoc {
 		});
 	}
 
-	/** new signatures make every doc parsed without them stale */
 	private adoptProjectMacros(macros: string): void {
 		if (macros === this.projectMacros) return;
 		this.projectMacros = macros;

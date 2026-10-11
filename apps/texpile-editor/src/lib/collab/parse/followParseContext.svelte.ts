@@ -1,4 +1,4 @@
-// keeps a session's parse context: the host publishes its own, a guest parses with the host's
+// the host publishes its parse context, a guest parses with the host's
 import { snippetStatus, useSessionCallLooks } from '$lib/editor/snippets/file/snippetStatus.svelte';
 import type { EditSession } from '../editSession';
 import type { CallLooks } from './parseContext';
@@ -6,9 +6,9 @@ import type { CallLooks } from './parseContext';
 export type ParseContextDeps = {
 	session(): EditSession;
 	guest(): boolean;
-	/** the signatures this side gathered from its main file, TeX and package files */
+	/** signatures gathered from the main file, TeX and package files */
 	macros(): string;
-	/** a guest's signatures, the host's */
+	/** guest: take the host's signatures */
 	adoptMacros(macros: string): void;
 };
 

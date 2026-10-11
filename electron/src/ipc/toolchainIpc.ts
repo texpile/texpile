@@ -23,7 +23,7 @@ export function registerToolchainIpc(): void {
 		const found = await kpsewhich(name);
 		return found ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
 	});
-	// a package's own .sty, for the parser's argument signatures; a bare name only
+	// a package's .sty, read for the parser's argument signatures
 	ipcMain.handle('toolchain:texPackage', async (_e, name: unknown) => {
 		if (typeof name !== 'string' || !/^[\w.+-]+\.sty$/i.test(name)) return null;
 		const found = await kpsewhich(name);
@@ -32,7 +32,7 @@ export function registerToolchainIpc(): void {
 			(s) => s.size,
 			() => Infinity
 		);
-		// a generated .sty can run to megabytes; its definitions are not worth the read
+		// a generated .sty can run to megabytes
 		return size <= MAX_PACKAGE_BYTES ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
 	});
 	ipcMain.handle('toolchain:dirForms', (_e, entry: unknown) => {

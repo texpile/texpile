@@ -5,7 +5,6 @@ import { ensureProjectSnippets, reloadSnippets } from '../file/snippetLoader';
 import { convertLatexSuite, type SuiteConversion } from './latexSuite';
 import { insertSnippetEntries } from './insertSnippetEntries';
 
-/** picks a LaTeX Suite snippets file and adds what carries over to the folder's snippets */
 export async function importLatexSuite(root: string, openFile: (path: string) => void): Promise<void> {
 	const picked = await nativeBridge()?.pickFile?.(m.import_latex_suite_pick());
 	if (!picked) return;

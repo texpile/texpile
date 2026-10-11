@@ -12,7 +12,7 @@
 </script>
 
 {#if pending}
-	<!-- the snippet file's patterns run on every keystroke, so a cloned project's wait for a yes, as its compile command does -->
+	<!-- a cloned project's patterns run on every keystroke, so they wait for a yes like its compile command -->
 	<div class="border-warning-wash bg-warning-tint flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 border-b px-3 py-2 text-xs">
 		<ShieldQuestion class="text-warning-ink size-4 shrink-0" />
 		<span>{m.snippets_patterns_prompt({ count: pending.split('\n').length })}</span>

@@ -31,7 +31,6 @@ function previewOf(body: string): string {
 	return body.split('\n')[0].replace(/\$\{\d+(?::([^}]*))?\}|\$\d+/g, (_, d: string | undefined) => d ?? '…');
 }
 
-/** the popup's snippet entries, and the options of a choice stop the cursor is on */
 export function snippetCompletionSource(ctx: CompletionContext): CompletionResult | null {
 	const lang = languageOf(ctx.state);
 	if (!lang) return null;
@@ -75,7 +74,6 @@ function autoExpansion(stopUndoCapture: () => void): Extension {
 	});
 }
 
-/** the "Wrap with" entries for where the selection is */
 export function wrapSnippetsFor(state: EditorState): CompiledSnippet[] {
 	const lang = languageOf(state);
 	if (!lang) return [];
@@ -83,7 +81,6 @@ export function wrapSnippetsFor(state: EditorState): CompiledSnippet[] {
 	return snippetRegistry().languages[lang].wraps.filter((c) => contextAllows(c.snippet.context, zone));
 }
 
-/** the selection, wrapped; refused with a note when that would split a construct in two */
 export function wrapSelection(view: CMView, compiled: CompiledSnippet): void {
 	const { from, to } = view.state.selection.main;
 	if (cutsThroughSyntax(view.state, from, to, compiled.lang)) {
@@ -125,7 +122,6 @@ function keyedSnippets(lang: SnippetLanguage): Extension {
 	];
 }
 
-// landing on a choice stop by Tab opens its list
 const openChoices = EditorView.updateListener.of((update) => {
 	if (!update.selectionSet || update.docChanged || completionStatus(update.state) !== null) return;
 	const sel = update.state.selection.main;
@@ -133,11 +129,11 @@ const openChoices = EditorView.updateListener.of((update) => {
 });
 
 export type SourceSnippetOptions = {
-	/** ends the undo step, so an expansion and the trigger it replaced undo separately */
+	/** so an expansion and its trigger undo separately */
 	stopUndoCapture?: () => void;
 };
 
-/** snippets in a source editor; LaTeX and Markdown take snippetCompletionSource into their own completion */
+/** latex and markdown take snippetCompletionSource into their own completion */
 export function sourceSnippets(lang: SnippetLanguage, options: SourceSnippetOptions = {}): Extension {
 	return [
 		snippetLanguage.of(lang),
@@ -146,7 +142,7 @@ export function sourceSnippets(lang: SnippetLanguage, options: SourceSnippetOpti
 		mathKeys(lang, options.stopUndoCapture ?? (() => {})),
 		keyedSnippets(lang),
 		openChoices,
-		// Typst's completion is otherwise tinymist's alone, and absent while it is missing
+		// typst completion otherwise comes from tinymist alone
 		lang === 'typst' ? [autocompletion(), EditorState.languageData.of(() => [{ autocomplete: snippetCompletionSource }])] : []
 	];
 }

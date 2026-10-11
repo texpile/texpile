@@ -14,14 +14,13 @@ import type { CallLooks } from '$lib/collab/parse/parseContext';
 export const snippetStatus = $state({
 	pendingPatterns: null as string | null,
 	problems: [] as SnippetProblem[],
-	/** counts changes to the declared wrap names, which change what a call parses to */
+	/** bumped when wrap names change, which changes how calls parse */
 	wrappers: 0,
-	/** counts changes to the package files in force, which change the signatures a parse reads */
+	/** bumped when package files change */
 	packages: 0,
 	files: snippetFiles() as SnippetFileList,
-	/** the folder's snippet file as last read, which a host sends its guests */
 	folderText: null as string | null,
-	/** the looks this side's snippet files declare, which a host shares with its guests */
+	/** this side's own looks, which a host shares with guests */
 	looks: { latex: new Map(), typst: new Map() } as CallLooks
 });
 
@@ -37,13 +36,12 @@ function applyCallLooks(looks: CallLooks): void {
 	if (reparse) snippetStatus.wrappers++;
 }
 
-/** the host's looks while joined to its session; null goes back to this side's own */
+/** null goes back to this side's own looks */
 export function useSessionCallLooks(looks: CallLooks | null): void {
 	sessionLooks = looks;
 	applyCallLooks(looks ?? snippetStatus.looks);
 }
 
-/** a problem as one line: the file, the entry and why */
 export function describeSnippetProblem(p: SnippetProblem): string {
 	const file = p.file ?? (p.layer === 'project' ? '.texpile/snippets.json' : m.snippets_global_file());
 	return p.name ? `${file}: "${p.name}" ${p.reason}` : `${file} ${p.reason}`;
@@ -67,17 +65,14 @@ onSnippetRegistry(() => {
 	}
 	snippetStatus.looks = { latex: looksOf('latex'), typst: looksOf('typst') };
 	applyCallLooks(sessionLooks ?? snippetStatus.looks);
-	// once per new set of problems, not on every reload that finds the same ones
 	const key = problems.map(describeSnippetProblem).join('\n');
 	if (key && key !== shown)
 		toaster.warning({ title: m.snippets_problems_title({ count: problems.length }), description: describeSnippetProblem(problems[0]) });
 	shown = key;
 });
 
-/** where the folder's snippets come from: the open folder, the host's file for a guest, neither for a lone file */
 export type FolderSnippetsSource = { root: string | null; hostText: string | null };
 
-/** the folder's snippets follow the open folder, or a guest's host */
 export function followProjectSnippets(source: () => FolderSnippetsSource): void {
 	$effect(() => {
 		const { root, hostText } = source();

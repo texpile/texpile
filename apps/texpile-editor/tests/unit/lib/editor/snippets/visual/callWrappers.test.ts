@@ -1,5 +1,3 @@
-// a call to a function the snippet files name as a wrapper reads as tagged text, and writes back
-// as the call; any other call stays a raw chip
 import { afterEach, describe, expect, it } from 'vitest';
 import { EditorState } from 'prosemirror-state';
 import type { Node as PMNode } from 'prosemirror-model';
@@ -29,7 +27,7 @@ describe('wrapper calls in the visual Typst editor', () => {
 		const src = 'Check #offen(fill: red)[this part] now, #note[x] too.\n';
 		const parsed = parseTypstFile(src);
 		expect(callsIn(parsed.doc)).toEqual(['offen(fill: red):this part']);
-		// an edit inside the wrapped text, so the paragraph is written from the document, not kept as it was read
+		// an edit, so the paragraph is regenerated rather than kept verbatim
 		let at = 0;
 		parsed.doc.descendants((node, pos) => {
 			if (node.text === 'this part') at = pos + 4;
@@ -63,7 +61,7 @@ describe('wrapper calls in the visual LaTeX editor', () => {
 		const state = EditorState.create({ doc: parsed.doc });
 		const edited = state.apply(state.tr.insertText('!', at)).doc;
 		expect(serializeLatexFile(parsed, edited)).toBe('Check \\offen[who]{this! \\textbf{part} \\cite{k}} now, \\note{x} too.\n');
-		// written afresh, as a pasted paragraph is: still one call around the bold and the citation
+		// regenerated from scratch, as a pasted paragraph is
 		expect(serializeToLatex(schema.nodeFromJSON(edited.toJSON()))).toContain('\\offen[who]{this! \\textbf{part} \\cite{k}}');
 	});
 

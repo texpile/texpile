@@ -126,7 +126,7 @@ function typeChar(
       typeIntoName(mf, typing, c);
       return;
     }
-    // a shortcut waits for its name to end, `limsup` is not `lim`, and the key that ended it follows
+    // expands once the name ends (`limsup` is not `lim`), then the ending key is typed
     if (expandShortcut(mf, typing)) {
       typeChar(mf, typing, c, fence);
       return;

@@ -1,10 +1,6 @@
-// VS Code snippet syntax -> CodeMirror's snippet() template. CodeMirror reads only ${n} and
-// ${n:text} and cannot hold a brace or a line break in a default, so a default it cannot hold, and a
-// choice, goes in as a marker the expansion swaps for the text. Literal braces go in as markers
-// too: CodeMirror 6.20 misplaces a stop that follows several escaped ones (\{\}\{${1}\})
+// vs code snippet syntax to codemirror's snippet() template
 
 export type BodyInputs = {
-	/** the selection, for ${TM_SELECTED_TEXT} */
 	selection: string;
 	/** a regex trigger's groups, for [[0]], [[1]], ... */
 	captures: readonly string[];
@@ -12,9 +8,9 @@ export type BodyInputs = {
 
 export type CmTemplate = {
 	template: string;
-	/** marker -> the text it stands for */
+	/** marker to the text it stands for */
 	fills: Map<string, string>;
-	/** marker -> the options of a ${n|a,b|} choice; the first is filled in */
+	/** marker to the options of a ${n|a,b|} choice */
 	choices: Map<string, string[]>;
 };
 
@@ -34,7 +30,6 @@ class BodyReader {
 		readonly inputs: BodyInputs
 	) {}
 
-	/** nodes up to an unescaped `}` when nested, or the end */
 	readNodes(nested: boolean): BodyNode[] {
 		const nodes: BodyNode[] = [];
 		let text = '';
@@ -75,7 +70,6 @@ class BodyReader {
 		return nodes;
 	}
 
-	/** a tab stop, placeholder, choice or variable at `$`; null leaves the `$` as text */
 	readDollar(): BodyNode | null {
 		const start = this.pos;
 		const rest = this.src.slice(this.pos);
@@ -155,6 +149,7 @@ function fieldNumbers(nodes: BodyNode[], out = new Set<number>()): Set<number> {
 	return out;
 }
 
+// literal braces as markers too: codemirror 6.20 misplaces a stop after several escaped ones
 const BRACE_MARKERS: Record<string, string> = { '{': '\ue0fe', '}': '\ue0ff' };
 
 export function toCmTemplate(body: string, inputs: BodyInputs): CmTemplate {
@@ -178,6 +173,7 @@ export function toCmTemplate(body: string, inputs: BodyInputs): CmTemplate {
 		return marker;
 	}
 
+	// codemirror cannot hold a brace or line break in a default, so those and choices go in as markers
 	function field(n: number, text: string, options?: string[]): string {
 		const seq = n === 0 ? last : n;
 		if (!options && !/[{}\n]/.test(text)) return text ? `\${${seq}:${text}}` : `\${${seq}}`;
@@ -204,12 +200,11 @@ export function toCmTemplate(body: string, inputs: BodyInputs): CmTemplate {
 	return { template, fills, choices };
 }
 
-/** whether the body takes the selection, which makes it a "Wrap with" entry */
+/** a body that takes the selection is a "Wrap with" entry */
 export function usesSelection(body: string): boolean {
 	return /\$\{?(TM_SELECTED_TEXT|SELECTION)\b/.test(body);
 }
 
-/** the body as MathLive inserts it: each stop an empty #? slot, a choice its first option */
 export function toMathLiveLatex(body: string): string {
 	const inputs: BodyInputs = { selection: '', captures: [] };
 	function render(list: BodyNode[]): string {
@@ -225,16 +220,14 @@ export function toMathLiveLatex(body: string): string {
 	return render(new BodyReader(body, inputs).readNodes(false));
 }
 
-/** the body with every stop at its default and every choice at its first option: what a Typst equation takes */
 export function toPlainText(body: string): string {
 	const inputs: BodyInputs = { selection: '', captures: [] };
 	return plainText(new BodyReader(body, inputs).readNodes(false), inputs);
 }
 
-/** where the caret lands in visual text: around the first stop, the default selected */
+/** wraps the first stop in visual text, where the caret lands */
 export const VISUAL_CARET = { start: '\ue0fb', end: '\ue0fc' } as const;
 
-/** the body as visual text takes it: stops at their defaults, the caret markers around the first stop */
 export function toVisualText(body: string, captures: readonly string[]): string {
 	const inputs: BodyInputs = { selection: '', captures };
 	const nodes = new BodyReader(body, inputs).readNodes(false);

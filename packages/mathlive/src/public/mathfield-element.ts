@@ -2722,7 +2722,7 @@ mf.macros = {
   }
 
   /**
-   * What a name typed whole in a Typst field becomes, by the name.
+   * Shortcuts a Typst field expands when their name is typed whole.
    * @category Keyboard Shortcuts
    */
   get typstShortcuts(): Readonly<Record<string, TypstShortcut>> {

@@ -1,6 +1,4 @@
-// argument signatures for the packages a document loads: from the user's package file for one, else
-// from the installed .sty of one Texpile has no contents for. main .sty and \newcommand family only:
-// \def and the package's other files brought in too many internals (texpile-tools package-scan)
+// argument signatures for loaded packages, from the user's package file or the installed .sty
 import { macroInfo } from '@unified-latex/unified-latex-ctan';
 import { MACRO_SIGNATURES } from './parser/macros';
 import { isBundledPackage, type PackageData, type PkgEntry } from './intellisense/completion/packageData';
@@ -20,7 +18,7 @@ function definitionLine(name: string, signature: string): string {
 	return `\\NewDocumentCommand{\\${name}}{${signature}}{}`;
 }
 
-/** what a package's .sty defines and a reader would type: its own \newcommand family, internals left out */
+/** a .sty's own \newcommand family only; \def and its other files brought in too many internals */
 function publicDefinitions(source: string): Map<string, string> {
 	const found = new Map<string, string>();
 	for (const d of macroDefinitionsIn(source)) {
@@ -34,7 +32,6 @@ function definitionsOf(source: string): string {
 	return [...publicDefinitions(source)].map(([name, signature]) => definitionLine(name, signature)).join('\n');
 }
 
-// a package file names each command's arguments as a format; those the parser can read stand in for the .sty
 function fileDefinitions(contents: PackageData): string {
 	const lines = new Map<string, string>();
 	for (const m of contents.macros) {
@@ -45,14 +42,14 @@ function fileDefinitions(contents: PackageData): string {
 	return [...lines.values()].join('\n');
 }
 
-// a name built from a parameter (wrapfig's wrap#2) or an internal one (with @) is no environment to offer
+// leaves out names built from a parameter (wrapfig's wrap#2) and internal ones with @
 const ENVIRONMENT = /\\(?:new|New(?:Document)?)environment\*?\s*\{([a-zA-Z][a-zA-Z0-9-]*\*?)\}/g;
 
-/** a starting package file from a .sty: its commands with their arguments, and its environments */
+/** a starting package file drafted from a .sty */
 export function packageFileFrom(source: string): PackageData {
 	const macros: PkgEntry[] = [...publicDefinitions(source)].map(([name, signature]) => {
 		const args = signature.split(/\s+/).filter(Boolean);
-		// a spec past [] and {} (a star, a default, a delimited one) has no format to say it
+		// a package file format has only [] and {}
 		if (!args.length || args.some((a) => a !== 'm' && a !== 'o')) return { name };
 		const format = args.map((a) => (a === 'o' ? '[]' : '{}')).join('');
 		const snippet = name + args.map((a, i) => (a === 'o' ? `[\${${i + 1}}]` : `{\${${i + 1}}}`)).join('');
@@ -62,7 +59,7 @@ export function packageFileFrom(source: string): PackageData {
 	return { macros, envs, keys: {} };
 }
 
-/** empty definitions standing in for what the named packages define, for the parser's signature scan */
+/** stub definitions of the packages' commands, for the parser's signature scan */
 export async function installedPackageDefinitions(names: Iterable<string>, read: ReadInstalledPackage): Promise<string> {
 	const wanted = [...new Set(names)].filter((n) => PACKAGE_NAME.test(n));
 	const found = await Promise.all(

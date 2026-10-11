@@ -11,7 +11,6 @@ const STARTER = `{
 }
 `;
 
-// one package file per package; more than this is not a folder of package files
 const MAX_PACKAGE_FILES = 500;
 const MAX_PACKAGE_BYTES = 2_000_000;
 
@@ -23,7 +22,6 @@ function packagesDir(): string {
 	return join(app.getPath('userData'), 'packages');
 }
 
-/** name -> text of the <name>.json files in a folder; none when it is missing */
 async function readPackageDir(dir: string): Promise<Record<string, string>> {
 	const out: Record<string, string> = {};
 	const names = await fs.promises.readdir(dir).catch(() => [] as string[]);
@@ -46,7 +44,7 @@ function announceChange(): void {
 	}, 200);
 }
 
-// the files are edited in a Texpile tab or anywhere else, and neither is under a workspace's watch
+// outside any workspace, so no workspace watcher sees them change
 function watchGlobalFiles(): void {
 	let packagesWatch: fs.FSWatcher | null = null;
 	function watchPackages(): void {
@@ -55,7 +53,7 @@ function watchGlobalFiles(): void {
 		try {
 			packagesWatch = fs.watch(packagesDir(), announceChange);
 		} catch {
-			// no folder yet: the watch on userData sees it made
+			// no folder yet, the userData watch sees it made
 		}
 	}
 	watchPackages();
@@ -68,19 +66,17 @@ function watchGlobalFiles(): void {
 			}
 		});
 	} catch {
-		// an unwatchable data folder: the files are read again when a window takes focus
+		// unwatchable, the files are read again on window focus
 	}
 }
 
 export function registerSnippetsIpc(): void {
 	handleFs('snippets:readGlobal', () => fs.promises.readFile(globalPath(), 'utf8').catch(() => null));
-	// the package files: the global folder's, and a project's under .texpile/packages
 	handleFs('snippets:readPackages', async (root: unknown) => ({
 		global: await readPackageDir(packagesDir()),
 		project: typeof root === 'string' && isAbsolute(root) ? await readPackageDir(join(root, '.texpile', 'packages')) : {}
 	}));
 	handleFs('snippets:locations', async () => ({ snippets: globalPath(), packages: packagesDir() }));
-	// made on first use, so there is a file to open
 	handleFs('snippets:ensureGlobal', async () => {
 		const path = globalPath();
 		await fs.promises.writeFile(path, STARTER, { flag: 'wx' }).catch(() => {});

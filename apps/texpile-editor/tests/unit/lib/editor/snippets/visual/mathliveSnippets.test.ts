@@ -1,5 +1,3 @@
-// snippets as the visual editor's LaTeX equations take them: each stop an empty slot, the auto ones
-// as inline shortcuts, and every one a row of the math search
 import { describe, expect, it } from 'vitest';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { setSnippetLayers } from '$lib/editor/snippets/file/snippetRegistry';

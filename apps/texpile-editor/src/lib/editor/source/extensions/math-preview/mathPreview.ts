@@ -45,7 +45,7 @@ function regionsFor(state: EditorState): MathRegion[] {
 const LATEX_DELIMITERS = /[\\$]/;
 // plus what bounds Markdown code: backticks, tilde fences, link destinations, autolinks
 const MARKDOWN_DELIMITERS = /[\\$`~\]<]/;
-// indentation and a list marker decide whether this line and the indented ones after it are code
+// indentation and list markers decide whether a line is code
 const MARKDOWN_LINE_PREFIX = /^[ \t]*(?:[-+*]|\d{1,9}[.)]?)?[ \t]*/;
 
 // a full rescan is O(doc), so when a change is provably inert — stays on one line, no `\` or `$`

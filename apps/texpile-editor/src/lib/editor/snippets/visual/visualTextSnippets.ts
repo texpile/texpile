@@ -9,12 +9,11 @@ import { contextAllows } from '../expand/snippetZone';
 import { snippetRegistry } from '../file/snippetRegistry';
 import type { SnippetLanguage } from '../file/snippetTypes';
 
-/** the file's language read into the editor's nodes; null when it does not read */
 export type ReadSourceText = (text: string) => Slice | null;
 
 const TEXT_ZONE = { zone: 'text', display: false } as const;
 const WORD_CHAR = /[\p{L}\p{N}_]/u;
-// code, and a link, whose text is often its address
+// a link's text is often its address
 const NO_SNIPPET_MARKS = new Set(['code', 'link']);
 
 type TextBefore = { before: string; start: number };
@@ -63,7 +62,7 @@ function expandMatch(view: PMView, read: ReadSourceText, match: SnippetMatch, to
 	return true;
 }
 
-/** text snippets in a visual editor: auto ones as their trigger is typed, the rest on Tab after it */
+/** auto snippets expand as typed, the rest on Tab */
 export function visualTextSnippets(lang: SnippetLanguage, read: ReadSourceText): Plugin {
 	return new Plugin({
 		props: {

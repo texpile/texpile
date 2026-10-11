@@ -7,7 +7,6 @@ export class JsRegex {
 	) {}
 }
 
-/** a function or any other expression; only its text is kept */
 export class JsExpression {
 	constructor(readonly text: string) {}
 }
@@ -62,7 +61,6 @@ class LiteralReader {
 		if (c === '"' || c === "'" || c === '`') {
 			const start = this.pos;
 			const text = this.readString();
-			// a template with ${...} in it is an expression
 			return text === null ? this.readExpression(start) : text;
 		}
 		if (c === '/') return this.readRegex();
@@ -118,7 +116,7 @@ class LiteralReader {
 		return name[0];
 	}
 
-	/** the string's text; null for a template that interpolates */
+	/** null for a template that interpolates */
 	readString(): string | null {
 		const quote = this.src[this.pos++];
 		let out = '';
@@ -163,7 +161,6 @@ class LiteralReader {
 		return new JsRegex(source, flags);
 	}
 
-	/** an arrow function or anything else: up to the , or bracket that ends it */
 	readExpression(start: number): JsExpression {
 		this.pos = start;
 		this.skipCode(',]}');
@@ -224,7 +221,6 @@ class LiteralReader {
 		this.fail('unclosed template');
 	}
 
-	/** past comments, strings and code to the first [ or { */
 	skipToLiteral(): void {
 		for (;;) {
 			this.skipSpace();
@@ -238,7 +234,6 @@ class LiteralReader {
 	}
 }
 
-/** the first array or object literal in a file, as data */
 export function readJsLiteral(src: string): JsValue {
 	const reader = new LiteralReader(src);
 	reader.skipToLiteral();

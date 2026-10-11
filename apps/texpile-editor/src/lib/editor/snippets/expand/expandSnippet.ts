@@ -4,12 +4,11 @@ import type { EditorView as CMView } from '@codemirror/view';
 import { toCmTemplate, type BodyInputs } from './bodyTemplate';
 import { addChoiceFields, choiceFieldAt, type ChoiceField } from './choiceFields';
 
-/** replace from..to with the body, its first stop selected */
 export function expandSnippet(view: CMView, body: string, from: number, to: number, inputs: BodyInputs): void {
 	const { template, fills, choices } = toCmTemplate(body, inputs);
 	snippet(template)(view, null, from, to);
 
-	// what CodeMirror could not hold went in as markers; the text goes in their place
+	// swap the markers for the text codemirror could not hold
 	const state = view.state;
 	const inserted = state.sliceDoc(from, Math.min(state.doc.length, from + template.length));
 	const specs: ChangeSpec[] = [];

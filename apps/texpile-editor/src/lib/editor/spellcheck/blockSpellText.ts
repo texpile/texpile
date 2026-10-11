@@ -23,7 +23,6 @@ export function chipLetters(node: PmNode): string | null {
 	return letters.length <= node.nodeSize ? letters : null;
 }
 
-// false for a call whose look says its words are not prose
 function callSpellchecked(mark: Mark): boolean {
 	return callLookOf(mark.type.spec.dialect as CallDialect, mark.attrs.name as string)?.spellcheck !== false;
 }

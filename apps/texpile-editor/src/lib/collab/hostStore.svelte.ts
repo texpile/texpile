@@ -79,7 +79,6 @@ class HostCollabController {
 		if (!this.active || !this.doc) return;
 		metaOf(this.doc).set('compileIntel', JSON.stringify(intel));
 	}
-	/** guests read it as the compile products are, from doc state */
 	readonly parseContext = null;
 	shareParseContext(context: SharedParseContext): void {
 		if (!this.active || !this.doc) return;

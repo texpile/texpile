@@ -66,7 +66,7 @@ function envCallParts(call: SyntaxNode, src: string): { name: string; args: stri
 	const args = callee?.nextSibling;
 	if (!callee || !args || args.name !== 'Args' || args.nextSibling) return null;
 	const name = calleeName(callee, src);
-	// a wrapper from the snippet files is formatted text, alone on its line or not
+	// a snippet-file wrapper is formatted text, even alone on its line
 	if (!name || NOT_CONTAINERS.has(name.slice(name.lastIndexOf('.') + 1)) || isCallWrapper('typst', name)) return null;
 	const kids = children(args);
 	const body = kids[kids.length - 1];

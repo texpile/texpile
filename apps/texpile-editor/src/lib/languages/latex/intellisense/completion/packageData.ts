@@ -30,12 +30,11 @@ export type PackageData = {
 const modules = import.meta.glob<{ default: PackageData }>('../data/packages/*.json');
 const cache = new Map<string, Promise<PackageData | null>>();
 
-/** whether Texpile ships data for the package, without loading it */
 export function isBundledPackage(name: string): boolean {
 	return `../data/packages/${name}.json` in modules;
 }
 
-/** Texpile's data for the package, under the user's own file for it */
+/** bundled data with the user's own package file on top */
 export async function loadPackage(name: string): Promise<PackageData | null> {
 	return mergePackages(await loadBundled(name), userPackage(name));
 }
@@ -73,7 +72,6 @@ function dedupe(keys: string[]): Completion[] {
 	return [...new Set(keys)].map(keyOption);
 }
 
-/** the bundled packages that define a name, and the user's own files that do */
 function withUserPackages(bundled: string[] | undefined, defines: (pkg: PackageData) => boolean): string[] {
 	const own = userPackageNames().filter((n) => defines(userPackage(n)!));
 	return [...new Set([...(bundled ?? []), ...own])];

@@ -25,18 +25,18 @@ function markChip(chip: PmNode, ctx: ConversionContext): PmNode {
 	return ctx.marks.length > 0 ? chip.mark(realMarks(ctx.marks)) : chip;
 }
 
-/** a call to a function a snippet file gives a look: the braced last argument is its text, the optional one its args */
+/** the last braced argument is the call's text, the optional one its args */
 export function wrapperCall(macro: Macro, ctx: ConversionContext): PmNode[] {
 	const args = macro.args ?? [];
 	const optional = args.find((a) => a.openMark === '[');
 	const attrs = { name: macro.content, args: optional ? printRaw(optional.content) : '' };
 	const nodes = convertNodesToInline(args[args.length - 1].content, { ...ctx, marks: [...ctx.marks, { type: 'call', attrs }] });
-	// a citation or a chip inside takes no mark from the context, and outside the call it would split it in two
+	// atoms take no context marks, but need the call mark or they split the call
 	const [call] = realMarks([{ type: 'call', attrs }]);
 	return nodes.map((node) => node.mark(call.addToSet(node.marks)));
 }
 
-/** a braced argument for wrapperCall to take; without one the call stays a chip */
+/** without a braced argument the call stays a chip */
 export function takesWrapperCall(macro: Macro): boolean {
 	const last = macro.args?.[macro.args.length - 1];
 	return isCallWrapper('latex', macro.content) && last?.openMark === '{';

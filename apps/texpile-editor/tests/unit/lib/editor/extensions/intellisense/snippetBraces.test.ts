@@ -34,7 +34,7 @@ describe('snippet braces', () => {
 	});
 
 	it('no template built from the tables carries a brace the parser would strip', () => {
-		// the macro builder prepends the backslash; built-in snippets escape through toCmTemplate instead
+		// the macro builder prepends the backslash
 		const templates = [...LW_MACROS, ...TEX_MACROS].filter((x) => x.snippet).map((x) => '\\' + x.snippet);
 		const stripped = templates.filter((t) => /(?<!\\)\\[{}]/.test(t));
 		expect(stripped).toEqual([]);

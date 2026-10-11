@@ -13,7 +13,7 @@ type ParseRequest = {
 	maxNodes?: number;
 	/** source dialect; defaults to LaTeX. */
 	format?: 'tex' | 'md';
-	/** the macros a snippet file gives a look; the worker has no snippet files of its own */
+	/** macros a snippet file gives a look; the worker cannot read snippet files */
 	callWrappers?: string[];
 };
 

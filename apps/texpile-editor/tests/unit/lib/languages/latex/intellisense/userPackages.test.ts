@@ -1,5 +1,3 @@
-// a package file of the user's own: its commands complete where the package is loaded, the parser
-// takes their arguments from it, and a file drafted from a .sty reads back as one
 import { afterEach, describe, expect, it } from 'vitest';
 import { macroOptions } from '$lib/languages/latex/intellisense/completion/macros';
 import { parsePackageFile, setUserPackages } from '$lib/languages/latex/intellisense/userPackages';

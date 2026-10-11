@@ -5,7 +5,6 @@ export type ChoiceField = { from: number; to: number; options: string[] };
 
 export const addChoiceFields = StateEffect.define<ChoiceField[]>();
 
-/** the ${n|a,b|} stops of the snippet being filled in; gone with the snippet */
 export const choiceFields = StateField.define<ChoiceField[]>({
 	create: () => [],
 	update(fields, tr) {

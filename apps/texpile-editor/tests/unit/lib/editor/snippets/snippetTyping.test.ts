@@ -1,6 +1,5 @@
 // @vitest-environment jsdom
-// Snippets checked by typing: the keys go in one at a time through the editor's input handlers, as
-// a keyboard's do. `|` marks the caret before, and the selection's ends after (`|x|` = x selected).
+// `|` marks the caret before, and the selection's ends after (`|x|` = x selected)
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';

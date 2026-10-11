@@ -64,11 +64,11 @@ export type EditSession = {
 	readonly compileIntel: SharedCompileIntel | null;
 	/** host: publish what it parses files with to guests. No-op on the guest side. */
 	shareParseContext(context: SharedParseContext): void;
-	/** guest: what the host parses files with; null for the host, or before the host has said */
+	/** guest: what the host parses files with; null for the host or until it says */
 	readonly parseContext: SharedParseContext | null;
-	/** host: send the folder's snippet file, which a session's files leave out with the rest of .texpile/ */
+	/** host: send the folder snippet file, since a session leaves .texpile/ out */
 	shareFolderSnippets(text: string | null): void;
-	/** guest: the host's folder snippet file; null for the host, or when the folder has none */
+	/** guest: the host's folder snippet file */
 	readonly folderSnippets: string | null;
 	collabFor(path: string | null): CollabBinding | null;
 	/** fold the local editor's serialized content into the shared doc (the visual editor's write

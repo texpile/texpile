@@ -1,8 +1,7 @@
 const OPENER: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
-// what ends a term on its left: space, a relation or operator, a column, or a bracket left open
 const TERM_STOP = /[\s+\-=<>,;&$([{]/;
 
-/** where the term ending at the end of `text` starts: `x^2`, `\alpha`, `(a+b)`, `\sqrt{x}` */
+/** start of the term ending the text, like x^2, \alpha, (a+b), \sqrt{x} */
 export function termStart(text: string): number {
 	let i = text.length;
 	while (i > 0) {
@@ -26,7 +25,7 @@ export function termStart(text: string): number {
 	return i;
 }
 
-/** the term as a numerator: `(a+b)` loses the brackets it was grouped with */
+/** (a+b) loses its grouping brackets */
 export function numeratorOf(term: string): string {
 	if (!term.startsWith('(') || !term.endsWith(')')) return term;
 	let depth = 0;

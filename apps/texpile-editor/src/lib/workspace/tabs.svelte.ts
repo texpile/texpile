@@ -10,7 +10,7 @@ import { AGENT_REF } from '$lib/ai/agentPanel/changes/agentBefore';
 
 const MAX_TABS = 50;
 
-// Texpile's own files a tab may hold from outside the folder (the global snippet file); they are not in its tree
+// files outside the folder a tab may still hold, like the global snippet file
 const outsideRoot: { allowed: (path: string) => boolean } = { allowed: () => false };
 
 export function allowTabsOutsideRoot(allowed: (path: string) => boolean): void {

@@ -4,7 +4,7 @@ import type { SnippetProblem } from './snippetTypes';
 
 export type PackageTexts = { global: Record<string, string>; project: Record<string, string> };
 
-/** the package files in force, a project's entries over the global folder's; what could not be read */
+/** project entries over global ones; returns what could not be read */
 export function adoptPackageFiles(texts: PackageTexts): SnippetProblem[] {
 	const problems: SnippetProblem[] = [];
 	function read(layer: 'global' | 'project', name: string, text: string): PackageData | null {

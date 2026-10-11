@@ -55,7 +55,7 @@ export function pasteLatexText(view: EditorView, text: string): boolean {
 	return true;
 }
 
-/** LaTeX as the editor takes it in: a single paragraph open, so it merges into the one at the caret */
+/** a lone paragraph stays open, so it merges into the one at the caret */
 export function latexSourceSlice(text: string): Slice | null {
 	const frag = parseLatexFragment(text);
 	if (!frag) return null;

@@ -1,5 +1,4 @@
-// what the host parses a file with besides the file: the signatures it read from its TeX and package
-// files, and the functions its snippet files give a look. guests parse with the host's, so both agree
+// what a file parses with besides its text; guests use the host's so both sides agree
 import { FUNCTION_NAME } from '$lib/editor/snippets/file/parseSnippetFile';
 import { readCallLook } from '$lib/editor/snippets/file/readCallLook';
 import type { CallLook } from '$lib/editor/snippets/file/snippetTypes';
@@ -14,7 +13,6 @@ export function encodeParseContext(context: SharedParseContext): string {
 	return JSON.stringify({ macros: context.macros, looks: Object.fromEntries(DIALECTS.map((d) => [d, [...context.looks[d]]])) });
 }
 
-/** null when there is nothing readable */
 export function decodeParseContext(raw: unknown): SharedParseContext | null {
 	if (typeof raw !== 'string') return null;
 	let value: unknown;

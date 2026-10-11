@@ -35,7 +35,7 @@ function rules(selector: string, look: CallLook, dark: boolean): string {
 	if (look.font.includes('smallcaps')) decl.push('font-variant: small-caps');
 	const lines = [look.font.includes('underline') && 'underline', look.font.includes('strike') && 'line-through'].filter(Boolean);
 	if (lines.length) decl.push(`text-decoration: ${lines.join(' ')}`);
-	// nothing declared but the name: a dotted line, so the call can still be told from the text around it
+	// a bare look still gets a dotted underline, to set the call apart
 	if (!look.color && !look.background && !look.font.length && look.look === 'inline') decl.push('text-decoration: underline dotted');
 	if (look.look === 'box') decl.push('padding: 0 0.25em', 'border-radius: 3px');
 	else if (look.background) decl.push('padding: 0 1px', 'border-radius: 2px');
@@ -46,7 +46,6 @@ function rules(selector: string, look: CallLook, dark: boolean): string {
 	].join('\n');
 }
 
-/** the stylesheet drawing each declared call, light and dark */
 export function callLookCss(dialect: CallDialect, looks: ReadonlyMap<string, CallLook>): string {
 	const out: string[] = [];
 	for (const [name, look] of looks) {
@@ -56,7 +55,6 @@ export function callLookCss(dialect: CallDialect, looks: ReadonlyMap<string, Cal
 	return out.filter(Boolean).join('\n');
 }
 
-/** puts the dialect's stylesheet in the page, replacing the one before */
 export function applyCallLookStyles(dialect: CallDialect, css: string): void {
 	const id = `texpile-call-looks-${dialect}`;
 	let style = document.getElementById(id);

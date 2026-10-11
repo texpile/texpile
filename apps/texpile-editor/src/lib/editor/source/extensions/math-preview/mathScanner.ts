@@ -49,7 +49,7 @@ type OpenRegion = {
 	env?: string;
 	/** same-name env nesting depth, so an inner \begin{x} doesn't close the outer. */
 	depth: number;
-	/** pandoc's $: where it closes, or -1 when nothing does and it ends with its line */
+	/** pandoc $ only: index of its closer, -1 when it ends with the line */
 	closeAt?: number;
 };
 

@@ -66,7 +66,7 @@ describe('typing in a Typst field', () => {
     type(mf, 'point ');
     const longer = mf.getValue('typst');
     mf.setValue('', { format: 'typst' });
-    // a LaTeX body's #? are slots, the first selected: MathLive keeps a superscript before a subscript
+    // the 1 fills the first slot, and MathLive takes the superscript as the first
     type(mf, 'lint1');
     const slot = mf.getValue('typst');
     mf.remove();

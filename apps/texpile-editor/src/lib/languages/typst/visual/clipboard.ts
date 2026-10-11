@@ -31,7 +31,7 @@ export const typstCopyPlugin = new Plugin({
 	}
 });
 
-/** Typst as the editor takes it in: a single paragraph open, so it merges into the one at the caret */
+/** a lone paragraph stays open, so it merges into the one at the caret */
 export function typstSourceSlice(text: string): Slice | null {
 	try {
 		const { doc } = typstToProseMirror(text);

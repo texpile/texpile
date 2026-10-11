@@ -2,7 +2,7 @@ export type SnippetLanguage = 'latex' | 'typst' | 'markdown';
 
 export const SNIPPET_LANGUAGES: readonly SnippetLanguage[] = ['latex', 'typst', 'markdown'];
 
-/** where a trigger works; `math` covers inline and display, `code` is Typst only */
+/** `math` covers inline and display; `code` is Typst only */
 export type SnippetContext = 'math' | 'inline-math' | 'display-math' | 'text' | 'code' | 'any';
 
 /** later layers replace earlier ones by snippet name */
@@ -14,7 +14,7 @@ export type CallColor = (typeof CALL_COLORS)[number];
 export const CALL_FONTS = ['bold', 'italic', 'smallcaps', 'underline', 'strike'] as const;
 export type CallFont = (typeof CALL_FONTS)[number];
 
-/** how the visual editor draws a call to a wrap snippet's function; without one the call stays a raw chip */
+/** how the visual editor draws a call to a wrap function; none means a raw chip */
 export type CallLook = {
 	/** inline: the words in line with a style; box: framed, for notes */
 	look: 'inline' | 'box';
@@ -29,7 +29,7 @@ export type Snippet = {
 	name: string;
 	layer: SnippetLayer;
 	prefixes: string[];
-	/** VS Code snippet syntax, per language it applies to */
+	/** VS Code snippet syntax */
 	bodies: Partial<Record<SnippetLanguage, string>>;
 	description: string;
 	context: SnippetContext;

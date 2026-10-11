@@ -167,10 +167,6 @@ function projectMacroOptions(): Completion[] {
 	return intelCache.options;
 }
 
-/** static + user-defined (buffer and project-wide) macro completions, frecency-boosted.
- * buffer definitions are served from the last finished worker scan, so after an edit they can
- * lag by the debounce plus parse time; static/project options are always current. */
-/** the commands of the packages this file loads that have a package file of the user's own */
 function userPackageMacroOptions(text: string): Completion[] {
 	const options: Completion[] = [];
 	for (const pkg of detectedPackages(text)) {
@@ -183,6 +179,9 @@ function userPackageMacroOptions(text: string): Completion[] {
 	return options;
 }
 
+/** static + user-defined (buffer and project-wide) macro completions, frecency-boosted.
+ * buffer definitions are served from the last finished worker scan, so after an edit they can
+ * lag by the debounce plus parse time; static/project options are always current. */
 export function macroOptions(text: string): Completion[] {
 	if (cache?.text !== text) scheduleRefresh(text); // docText makes this a reference compare
 	const buffer = cache?.options ?? [];

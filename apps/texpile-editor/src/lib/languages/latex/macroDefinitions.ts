@@ -3,12 +3,11 @@ export type MacroDefinition = {
 	/** xparse-style argument spec: `m m`, `o m`, or empty */
 	signature: string;
 	index: number;
-	/** \renewcommand and the like: changes a command that exists, defines nothing new */
+	/** \renewcommand and the like */
 	redefines: boolean;
 };
 
-// \newcommand family + the forms LaTeX Workshop parses beyond it. `\newcommand{\x}[2][d]` makes
-// the first of its two arguments optional, so the default's bracket is captured too
+// \newcommand family plus the forms LaTeX Workshop parses; a [default] makes the first argument optional
 const DEFINITION_FORMS: Array<{ re: RegExp; sig: (m: RegExpExecArray) => string }> = [
 	{
 		re: /\\(new|renew|provide)command\*?\s*\{?\\([a-zA-Z@]+)\}?(?:\s*\[(\d)\](\s*\[)?)?/g,
@@ -36,7 +35,6 @@ function argSpec(count: number, firstOptional: boolean): string {
 	return args.join(' ');
 }
 
-/** the commands a TeX source defines, in the order of the forms above */
 export function macroDefinitionsIn(text: string): MacroDefinition[] {
 	const out: MacroDefinition[] = [];
 	for (const { re, sig } of DEFINITION_FORMS) {

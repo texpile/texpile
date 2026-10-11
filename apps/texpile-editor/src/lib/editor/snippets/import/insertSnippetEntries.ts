@@ -1,6 +1,6 @@
 import type { SnippetEntry } from './latexSuite';
 
-/** where entries go: the start of "snippets", or of the whole object in a bare VS Code file */
+/** the start of "snippets", or of the object in a bare vs code file */
 function insertionPoint(text: string): { at: number; indent: string } {
 	let depth = 0;
 	let top = -1;
@@ -33,7 +33,7 @@ function insertionPoint(text: string): { at: number; indent: string } {
 	return { at: top + 1, indent: '\t' };
 }
 
-/** the file with the entries added at the top, so the ones already there win a clash of names */
+/** at the top, so existing entries win a name clash */
 export function insertSnippetEntries(text: string, entries: readonly [string, SnippetEntry][]): string {
 	if (!text.trim()) return insertSnippetEntries('{\n\t"v": 1,\n\t"snippets": {\n\t}\n}\n', entries);
 	const { at, indent } = insertionPoint(text);

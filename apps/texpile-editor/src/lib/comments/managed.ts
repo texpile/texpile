@@ -7,7 +7,7 @@
 /** workspace-relative or absolute; separators either way */
 export function isTexpileManaged(path: string): boolean {
 	const p = path.replace(/\\/g, '/');
-	// the files in there people write: theirs, not kept on their behalf
+	// written by people, not by Texpile
 	if (/(^|\/)\.texpile\/(snippets\.json$|packages\/)/.test(p)) return false;
 	return p === '.texpile' || p.startsWith('.texpile/') || p.includes('/.texpile/');
 }

@@ -1,6 +1,6 @@
 import type { MarkSpec } from 'prosemirror-model';
 
-/** a call to a function a snippet file gives a look (snippets/visual/callWrappers.ts); two may nest */
+/** a call to a function a snippet file gives a look, see callWrappers.ts */
 export function callMark(dialect: 'latex' | 'typst'): MarkSpec {
 	return {
 		attrs: { name: {}, args: { default: '' } },

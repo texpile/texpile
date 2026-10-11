@@ -179,7 +179,7 @@ export function bareTextString(text: string, isCode: boolean): string {
 	return result;
 }
 
-/** a call's whole run, written as one call with the formatting and atoms inside it */
+/** the run one call mark covers, written as a single call */
 export function callRun(children: readonly Node[], start: number): { mark: Mark; end: number; inner: Node } | null {
 	let best: { mark: Mark; end: number } | null = null;
 	for (const mark of children[start].marks) {

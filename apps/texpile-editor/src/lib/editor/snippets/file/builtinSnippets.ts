@@ -1,8 +1,7 @@
-// the built-in layer: LaTeX Workshop's "@" mnemonics, with a Typst body where Typst has the symbol.
-// a user file turns one off with { "disabled": true } under its name
+// LaTeX Workshop's @ mnemonics, with a Typst body where Typst has the symbol
 import type { Snippet, SnippetVariables } from './snippetTypes';
 
-// [mnemonic, LaTeX body, Typst body or null]. bodies are VS Code snippet syntax: $0 is the last stop
+// [mnemonic, LaTeX body, Typst body or null]
 const AT_MNEMONICS: readonly (readonly [string, string, string | null])[] = [
 	['.', '\\cdot', 'dot.op'],
 	['*', '\\times', 'times'],

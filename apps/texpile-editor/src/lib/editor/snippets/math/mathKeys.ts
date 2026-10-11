@@ -1,5 +1,4 @@
-// LaTeX Suite's typing helpers that need the structure around the cursor, which a snippet pattern
-// cannot see: auto-fraction, Tab out of brackets and formulas, and matrix keys
+// latex suite keys a snippet pattern cannot do: auto-fraction, tab out, matrix keys
 import { hasNextSnippetField } from '@codemirror/autocomplete';
 import { syntaxTree } from '@codemirror/language';
 import { Prec, type EditorState, type Extension } from '@codemirror/state';
@@ -13,7 +12,7 @@ import { numeratorOf, termStart } from './mathTerm';
 const MATRIX_ENV = /^(?:[pbBvV]?matrix|smallmatrix|array|align\*?|aligned|alignat\*?|alignedat|split|cases|dcases|eqnarray\*?)$/;
 const ENV_EDGE = /\\(begin|end)\s*\{([^{}]+)\}/g;
 const MATRIX_WINDOW = 20000;
-// the fraction an earlier / made, still empty below
+// a fraction an earlier / made, its denominator still empty
 const FRESH_FRACTION = /\\frac\{((?:[^{}]|\{[^{}]*\})*)\}\{$/;
 
 function inMath(state: EditorState, pos: number, lang: SnippetLanguage): boolean {
@@ -66,7 +65,6 @@ function tabOut(lang: SnippetLanguage) {
 	};
 }
 
-/** the innermost LaTeX environment open at `pos` */
 function openEnvironment(state: EditorState, pos: number): string | null {
 	const text = state.sliceDoc(Math.max(0, pos - MATRIX_WINDOW), pos);
 	const open: string[] = [];
@@ -100,7 +98,7 @@ function matrixKey(lang: SnippetLanguage, insert: (state: EditorState, pos: numb
 		const { state } = view;
 		const sel = state.selection.main;
 		if (hasNextSnippetField(state) || !inMatrix(state, sel.from, lang)) return false;
-		// Tab over a selection or at the start of a line indents, as it does outside a matrix
+		// tab over a selection or at a line start still indents
 		if (indents && (state.selection.ranges.some((r) => !r.empty) || onlyIndentBefore(state, sel.head))) return false;
 		const text = insert(state, sel.from);
 		view.dispatch(state.replaceSelection(text), { userEvent: 'input' });
@@ -115,11 +113,10 @@ function newRow(lang: SnippetLanguage) {
 	};
 }
 
-/** auto-fraction (LaTeX and Markdown), Tab out and matrix keys for a source editor */
 export function mathKeys(lang: SnippetLanguage, stopUndoCapture: () => void): Extension {
 	return [
 		lang === 'typst' ? [] : autoFraction(lang, stopUndoCapture),
-		// above indentWithTab; the snippet keymap is above this while a snippet has stops left
+		// above indentWithTab, below the snippet keymap while a snippet has stops
 		Prec.high(
 			keymap.of([
 				{ key: 'Tab', run: matrixKey(lang, () => (lang === 'typst' ? ', ' : ' & '), true) },

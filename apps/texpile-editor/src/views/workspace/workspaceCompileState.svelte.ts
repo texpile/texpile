@@ -54,8 +54,7 @@ export class WorkspaceCompileState {
 			// and the editor went on using whatever it had worked out before reading the file.
 			void projectConfig.adopt(root).then(() => this.resolveNow());
 		});
-		// the folder's snippets come from the same .texpile/ and follow the same folder; a session never shares
-		// .texpile/, so a host sends its guests the snippet file on its own
+		// a session never shares .texpile/, so the host sends guests the snippet file itself
 		followProjectSnippets(() => {
 			if (d.guest()) return { root: null, hostText: d.session().folderSnippets };
 			return { root: fileMode.current ? null : workspaceRoot.current, hostText: null };

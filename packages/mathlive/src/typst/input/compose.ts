@@ -100,10 +100,6 @@ function namesFor(mf: _Mathfield, typing: TypstTyping): string[] {
   return text.length < 2 ? [] : typstNamesStartingWith(text).slice(0, SHOWN);
 }
 
-/**
- * A name typed whole that is one of the field's Typst shortcuts becomes what it
- * maps to, its first slot selected. True when it did.
- */
 export function expandShortcut(mf: _Mathfield, typing: TypstTyping): boolean {
   const shortcut = mf.options.typstShortcuts[nameText(typing.name)];
   if (!shortcut || !isAtCaret(mf, typing.name)) return false;

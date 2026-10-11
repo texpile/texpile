@@ -10,7 +10,6 @@ import type { SnippetContext, SnippetLanguage } from '../file/snippetTypes';
 
 export type SnippetZone = { zone: 'math' | 'text' | 'code'; display: boolean };
 
-// one scan per document version: a trigger asks on the keystroke, and the popup on the next
 const scanCache = new WeakMap<Text, SourceMathScan>();
 
 function scanOf(doc: Text, markdown: boolean): SourceMathScan {
@@ -49,7 +48,7 @@ function typstZone(state: EditorState, pos: number): SnippetZone | null {
 	return { zone: 'math', display: false };
 }
 
-/** what `pos` sits in; null where no snippet may fire: a comment, a string, LaTeX or Markdown code, a parser not yet loaded */
+/** null where no snippet may fire */
 export function snippetZoneAt(state: EditorState, pos: number, lang: SnippetLanguage): SnippetZone | null {
 	if (lang === 'typst') return typstZone(state, pos);
 	return texZone(state, pos, lang === 'markdown');
@@ -73,7 +72,6 @@ export function contextAllows(context: SnippetContext, zone: SnippetZone | null)
 
 export type MathBounds = { innerTo: number; to: number };
 
-/** the end of the formula `pos` is in: where its content stops, and past its closing delimiter */
 export function mathBoundsAt(state: EditorState, pos: number, lang: SnippetLanguage): MathBounds | null {
 	if (lang !== 'typst') {
 		const region = mathRegionAt(scanOf(state.doc, lang === 'markdown').math, pos);

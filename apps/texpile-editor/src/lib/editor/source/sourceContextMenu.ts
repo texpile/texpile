@@ -45,7 +45,7 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 	];
 	const refine = refineMenuItems(!!selection);
 	if (refine.length) items.push({ separator: true }, ...refine);
-	// only where some snippet wraps; disabled rather than hidden with nothing selected, as Add comment is
+	// only when a snippet wraps; disabled rather than hidden with nothing selected
 	const wraps = wrapSnippetsFor(view.state);
 	if (wraps.length)
 		items.push(

@@ -12,7 +12,6 @@ import type { CallDialect } from './callWrappers';
 import { latexSourceSlice, sliceToLatex } from '$lib/editor/visual/extensions/latexClipboard';
 import { sliceToTypst, typstSourceSlice } from '$lib/languages/typst/visual/clipboard';
 
-/** the wrap snippets for a visual editor's language */
 export function visualWraps(dialect: Dialect): CompiledSnippet[] {
 	return dialect === 'markdown' ? [] : snippetRegistry().languages[dialect].wraps.filter((c) => c.snippet.wrap);
 }
@@ -23,7 +22,7 @@ function callSource(dialect: CallDialect, compiled: CompiledSnippet, inner: stri
 	return `#${wrap}${args ? `(${args})` : ''}[${inner}]`;
 }
 
-// a Typst call on a line of its own reads as a block, so it is read inside a sentence and the sentence cut away
+// a Typst call alone on a line reads as a block, so parse it mid sentence
 const EDGE = '\ue0fd';
 
 function readInline(dialect: CallDialect, source: string): Slice | null {
@@ -34,8 +33,6 @@ function readInline(dialect: CallDialect, source: string): Slice | null {
 	return new Slice(Fragment.from(para.copy(para.content.cut(1, para.content.size - 1))), 1, 1);
 }
 
-/** the selection inside a call to the snippet's function, read back as the file's language reads it:
- *  drawn when a snippet gives the function a look, formatting when Texpile knows it, else a raw chip */
 export function wrapVisualSelection(view: PMView, compiled: CompiledSnippet, dialect: CallDialect): boolean {
 	const { from, to, empty, $from, $to } = view.state.selection;
 	if (empty || !$from.sameParent($to) || !$from.parent.isTextblock) return false;
@@ -49,7 +46,6 @@ export function wrapVisualSelection(view: PMView, compiled: CompiledSnippet, dia
 	return true;
 }
 
-/** "Wrap With" for the visual editor's menu; none where no snippet wraps */
 export function visualWrapItems(view: PMView, dialect: Dialect, hasSelection: boolean): ContextMenuItem[] {
 	const wraps = visualWraps(dialect);
 	if (!wraps.length) return [];
@@ -64,7 +60,7 @@ export function visualWrapItems(view: PMView, dialect: Dialect, hasSelection: bo
 	];
 }
 
-/** a wrap snippet's key wraps the selection here too; the key names are the source editor's */
+/** wrap keys, in the source editor's key names */
 export function visualWrapKeys(dialect: Dialect): Plugin {
 	let builtFor: SnippetRegistry | null = null;
 	let handler: ReturnType<typeof keydownHandler> | null = null;

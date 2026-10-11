@@ -1,5 +1,4 @@
-// where the TeX installation keeps a file, by name; async, a spawn takes 50 to 200 ms, so the names
-// asked for in one turn share one
+// where the TeX installation keeps a file, by name; async, a spawn takes 50 to 200 ms, so one turn's names share one
 import { execFile } from 'node:child_process';
 import path from 'node:path';
 import { shellEnvReady } from './shellEnv';
@@ -42,7 +41,7 @@ export function kpsewhich(file: string): Promise<string | null> {
 		cache.set(file, p);
 		if (!batch) {
 			const lookups: Lookup[] = (batch = []);
-			// each IPC ask is its own task, so the batch waits a moment for the rest
+			// each IPC call is its own task, so wait a moment for the rest
 			void shellEnvReady().then(() =>
 				setTimeout(() => {
 					batch = null;

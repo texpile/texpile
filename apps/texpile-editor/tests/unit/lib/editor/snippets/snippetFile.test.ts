@@ -1,5 +1,3 @@
-// what a snippet file contributes once read: comments and trailing commas allowed, a later layer
-// over an earlier one, a cloned project's patterns held back, a Typst name warned about
 import { describe, expect, it } from 'vitest';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { compileSnippets } from '$lib/editor/snippets/file/snippetRegistry';
@@ -35,7 +33,6 @@ describe('snippet files', () => {
 		const allowed = compileSnippets({ global: null, project, allowedPatterns: held.pendingPatterns });
 		expect(allowed.pendingPatterns).toBeNull();
 		expect(names(allowed.languages.latex.auto)).toContain('Subscript');
-		// the same patterns from the global file need no allowing
 		const global = parseSnippetFile(PROJECT, 'global');
 		expect(names(compileSnippets({ global, project: null, allowedPatterns: null }).languages.latex.auto)).toContain('Subscript');
 	});

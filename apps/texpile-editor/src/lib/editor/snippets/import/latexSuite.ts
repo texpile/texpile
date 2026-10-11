@@ -11,7 +11,6 @@ function isObject(v: JsValue): v is SuiteObject {
 	return typeof v === 'object' && v !== null && !Array.isArray(v) && !(v instanceof JsRegex) && !(v instanceof JsExpression);
 }
 
-/** LaTeX Suite's mode letters as a context, or why the snippet has no place here */
 function contextOf(options: string): SnippetContext | { reason: string } {
 	const text = options.includes('t');
 	const display = options.includes('M') || options.includes('m');
@@ -23,7 +22,7 @@ function contextOf(options: string): SnippetContext | { reason: string } {
 	return /[cC]/.test(options) ? { reason: 'works in code blocks only' } : 'any';
 }
 
-/** LaTeX Suite's replacement as a snippet body: its stops start at $0, and a backslash is LaTeX */
+/** suite stops start at $0, and its backslashes are latex */
 export function suiteBody(text: string): string {
 	let out = '';
 	for (let i = 0; i < text.length; i++) {
@@ -77,7 +76,7 @@ function entryOf(raw: SuiteObject): SnippetEntry | string {
 		const flags = [...trigger.flags].filter((f) => f === 'i' || f === 'u').join('');
 		if (flags) entry.flags = flags;
 	} else return trigger instanceof JsExpression ? 'its trigger is code, which only Obsidian can run' : 'has no trigger';
-	// a visual snippet runs on the selection: here that is Wrap With, so it needs no trigger
+	// a visual snippet becomes a Wrap With entry, which needs no trigger
 	if (options.includes('v')) delete entry.prefix;
 	else if (options.includes('A')) entry.auto = true;
 	else if (entry.regex) return 'has a regex trigger without the A option, and Texpile runs regex triggers only automatically';
@@ -87,7 +86,6 @@ function entryOf(raw: SuiteObject): SnippetEntry | string {
 	return entry;
 }
 
-/** a LaTeX Suite snippets file as snippet entries; what cannot carry over is listed with why */
 export function convertLatexSuite(source: string): SuiteConversion {
 	const list = readJsLiteral(source);
 	if (!Array.isArray(list)) throw new Error('the file holds no list of snippets');

@@ -1,5 +1,4 @@
-// package files people write, in LaTeX Workshop's package JSON: .texpile/packages/<name>.json and
-// the global folder's. they add to (or stand in for) the contents Texpile ships for a package
+// user package files in LaTeX Workshop's JSON: .texpile/packages/<name>.json and the global folder's
 import { stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
 import type { PackageData, PkgEntry } from './completion/packageData';
 
@@ -38,7 +37,6 @@ function entryOf(raw: unknown): PkgEntry | null {
 	return entry;
 }
 
-/** a package file's contents, with the entries that are not the right shape counted out */
 export function parsePackageFile(text: string): { contents: PackageData | null; problem: string | null } {
 	let raw: unknown;
 	try {
@@ -66,7 +64,7 @@ export function parsePackageFile(text: string): { contents: PackageData | null; 
 	return { contents, problem: dropped ? `has ${dropped} entries that are not the right shape` : null };
 }
 
-/** `over`'s entries in place of `base`'s of the same name */
+/** `over` wins on a shared name */
 export function mergePackages(base: PackageData | null, over: PackageData | null): PackageData | null {
 	if (!base || !over) return over ?? base;
 	function merge(a: PkgEntry[], b: PkgEntry[]): PkgEntry[] {
@@ -81,7 +79,7 @@ export function mergePackages(base: PackageData | null, over: PackageData | null
 	};
 }
 
-/** an argument format such as `[]{}` as the parser's signature `o m`; null past a group it cannot read */
+/** a format such as `[]{}` as the signature `o m`; null for () or <> */
 export function signatureOfFormat(format: string): string | null {
 	const groups = format.match(/\[\]|\{\}|\(\)|<>/g) ?? [];
 	if (groups.join('') !== format.replace(/\s/g, '') || groups.some((g) => g === '()' || g === '<>')) return null;

@@ -5,7 +5,7 @@ import { SYMBOL_GROUPS, symbolTooltip } from '$lib/editor/visual/toolbar/mathSym
 export type MathStructure = {
 	/** the template the toolbar inserts, holes marked as MathLive marks them */
 	latex: string;
-	/** a Typst snippet's body is Typst source, not LaTeX */
+	/** a Typst snippet's body is Typst source */
 	format?: 'latex' | 'typst';
 	label: string;
 	/** what its row draws: the template filled in */

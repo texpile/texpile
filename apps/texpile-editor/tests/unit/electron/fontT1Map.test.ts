@@ -1,12 +1,12 @@
 import { it, expect, vi, afterAll } from 'vitest';
-import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const tex = vi.hoisted(() => ({ year: '2025', maps: {} as Record<string, string> }));
 vi.mock('node:child_process', () => ({
 	execFile: (_cmd: string, args: string[], _opts: unknown, cb: (err: unknown, stdout: string) => void) =>
-		cb(null, args[0] === 'pdftex.map' ? tex.maps[tex.year] : `/texlive/${tex.year}/fonts/${args[0]}`)
+		cb(null, args.map((a) => (a === 'pdftex.map' ? tex.maps[tex.year] : `/texlive/${tex.year}/fonts/${a}`)).join('\n'))
 }));
 vi.mock('../../../../../electron/src/shell/shellEnv', () => ({ shellEnvReady: async () => {} }));
 
@@ -22,7 +22,8 @@ afterAll(() => {
 });
 
 function map(year: string, pfb: string): void {
-	tex.maps[year] = join(dir, `pdftex-${year}.map`);
+	mkdirSync(join(dir, year), { recursive: true });
+	tex.maps[year] = join(dir, year, 'pdftex.map');
 	writeFileSync(tex.maps[year], `ptmr8r Times-Roman " TeXBase1Encoding ReEncodeFont " <8r.enc <${pfb}\n`);
 }
 
