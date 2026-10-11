@@ -23,3 +23,12 @@ describe("a guest's folder snippets", () => {
 		expect(snippetRegistry().pendingPatterns).toBeNull();
 	});
 });
+
+describe('a snippet file saved half typed', () => {
+	it('keeps its last version that loaded, and says so', async () => {
+		await reloadSnippets(null, hostFile('[[0]]_{[[1]]}'));
+		await reloadSnippets(null, '{ "v": 1, "snippets": { "Revised": { "scope": "latex" "wrap": "rev" } } }');
+		expect(snippetRegistry().languages.latex.wraps.map((c) => c.snippet.wrap)).toContain('rev');
+		expect(snippetRegistry().problems).toEqual([expect.objectContaining({ layer: 'project', whole: true, kept: true })]);
+	});
+});

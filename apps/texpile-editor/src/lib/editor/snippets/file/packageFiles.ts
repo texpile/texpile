@@ -10,7 +10,13 @@ export function adoptPackageFiles(texts: PackageTexts): SnippetProblem[] {
 	function read(layer: 'global' | 'project', name: string, text: string): PackageData | null {
 		const { contents, problem } = parsePackageFile(text);
 		if (problem)
-			problems.push({ layer, name: '', reason: problem, file: `${layer === 'project' ? '.texpile/' : ''}packages/${name}.json` });
+			problems.push({
+				layer,
+				name: '',
+				reason: problem,
+				file: `${layer === 'project' ? '.texpile/' : ''}packages/${name}.json`,
+				whole: contents === null
+			});
 		return contents;
 	}
 	const merged = new Map<string, PackageData>();

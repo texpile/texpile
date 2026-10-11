@@ -31,13 +31,18 @@ export function stripJsonc(text: string): string {
 			for (i++; i < text.length && text[i] !== '"'; i++) if (text[i] === '\\') i++;
 			out += text.slice(start, i + 1);
 		} else if (c === '/' && text[i + 1] === '/') {
-			while (i < text.length && text[i] !== '\n') i++;
-			out += '\n';
+			const end = text.indexOf('\n', i);
+			const stop = end < 0 ? text.length : end;
+			out += ' '.repeat(stop - i);
+			i = stop - 1;
 		} else if (c === '/' && text[i + 1] === '*') {
 			const end = text.indexOf('*/', i + 2);
-			i = end < 0 ? text.length : end + 1;
+			const stop = end < 0 ? text.length : end + 2;
+			out += text.slice(i, stop).replace(/[^\n]/g, ' ');
+			i = stop - 1;
 		} else {
-			if (c === '}' || c === ']') out = out.replace(/,(\s*)$/, '$1');
+			// blanked rather than cut, so a JSON error's position is the file's
+			if (c === '}' || c === ']') out = out.replace(/,(\s*)$/, ' $1');
 			out += c;
 		}
 	}
@@ -162,22 +167,32 @@ function readVariables(raw: unknown, layer: SnippetLayer, problems: SnippetProbl
 	return out;
 }
 
+/** a JSON.parse message with its character offset as a line and column of `text` */
+export function jsonErrorAt(text: string, message: string): string {
+	const at = /\s*in JSON at position (\d+)(?: \(line \d+ column \d+\))?/.exec(message);
+	if (!at) return message;
+	const before = text.slice(0, Number(at[1]));
+	const line = before.split('\n').length;
+	const column = before.length - before.lastIndexOf('\n');
+	return `line ${line}, column ${column}: ${message.slice(0, at.index)}${message.slice(at.index + at[0].length)}`;
+}
+
 export function parseSnippetFile(text: string, layer: SnippetLayer): SnippetFile {
 	const file: SnippetFile = { snippets: [], disabled: [], variables: {}, problems: [] };
 	let parsed: unknown;
 	try {
 		parsed = JSON.parse(stripJsonc(text));
 	} catch (e) {
-		file.problems.push({ layer, name: '', reason: `is not valid JSON: ${(e as Error).message}` });
+		file.problems.push({ layer, name: '', reason: `is not valid JSON: ${jsonErrorAt(text, (e as Error).message)}`, whole: true });
 		return file;
 	}
 	if (!isObject(parsed)) {
-		file.problems.push({ layer, name: '', reason: 'is not a JSON object' });
+		file.problems.push({ layer, name: '', reason: 'is not a JSON object', whole: true });
 		return file;
 	}
 	const wrapped = isObject(parsed.snippets) && !('body' in parsed.snippets);
 	if (wrapped && parsed.v !== undefined && parsed.v !== 1) {
-		file.problems.push({ layer, name: '', reason: `is version ${String(parsed.v)}, which this Texpile cannot read` });
+		file.problems.push({ layer, name: '', reason: `is version ${String(parsed.v)}, which this Texpile cannot read`, whole: true });
 		return file;
 	}
 	const entries = (wrapped ? parsed.snippets : parsed) as Record<string, unknown>;

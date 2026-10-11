@@ -9,7 +9,8 @@ import {
 	reloadSnippets,
 	snippetFiles
 } from './snippetLoader';
-import { snippetFileAt, type SnippetFileList } from './snippetFiles';
+import { problemsIn, snippetFileAt, type SnippetFileList } from './snippetFiles';
+import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { allowTabsOutsideRoot } from '$lib/workspace/tabs.svelte';
 import { onSnippetRegistry, snippetRegistry } from './snippetRegistry';
 import type { SnippetProblem } from './snippetTypes';
@@ -77,9 +78,12 @@ onSnippetRegistry(() => {
 	}
 	snippetStatus.looks = { latex: looksOf('latex'), typst: looksOf('typst') };
 	applyCallLooks(sessionLooks ?? snippetStatus.looks);
-	const key = problems.map(describeSnippetProblem).join('\n');
+	// the file open in the editor has its own bar saying what failed, and changes on every autosave
+	const open = activeFilePath.current ? snippetFileAt(activeFilePath.current, workspaceRoot.current, files) : null;
+	const told = open ? problems.filter((p) => !problemsIn(open, [p]).length) : problems;
+	const key = told.map(describeSnippetProblem).join('\n');
 	if (key && key !== shown)
-		toaster.warning({ title: m.snippets_problems_title({ count: problems.length }), description: describeSnippetProblem(problems[0]) });
+		toaster.warning({ title: m.snippets_problems_title({ count: told.length }), description: describeSnippetProblem(told[0]) });
 	shown = key;
 });
 

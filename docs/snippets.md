@@ -90,7 +90,7 @@ With `"regex": true` the prefix is a regular expression matched against the text
 
 `${NAME}` inside a pattern stands for a list named under `"variables"` at the top of the file. `${GREEK}` and `${SYMBOL}` are built in.
 
-A pattern is tested on every keystroke. Patterns in a folder's file therefore wait until you press **Allow** in the bar that appears at the top of the window, once per folder on this computer. So does any pattern that uses one of the folder's variables, and the bar asks again when the folder's patterns or variables change. A pattern without `auto` is skipped with a note, as patterns only expand as they are typed.
+A pattern is tested on every keystroke, and a badly written one can freeze the editor. Patterns in a folder's file therefore wait until you press **Allow** in the bar that appears at the top of the window, once per folder on this computer. One **Allow** covers all of them; hover the pattern in the bar to see the rest. So does any pattern that uses one of the folder's variables, and the bar asks again when the folder's patterns or variables change. A pattern without `auto` is skipped with a note, as patterns only expand as they are typed.
 
 ## Wrap with
 

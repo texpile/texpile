@@ -29,6 +29,18 @@
 		return replaced ? `${count}, ${m.prefs_snippets_replaced({ count: replaced })}` : count;
 	}
 
+	// what failed in one snippet file, the package files left to their own list
+	function warningOf(layer: 'project' | 'global'): string {
+		const own = snippetStatus.problems.filter((p) => p.layer === layer && !p.file);
+		const whole = own.find((p) => p.whole);
+		if (whole) return (whole.kept ? m.prefs_snippets_kept : m.prefs_snippets_not_loaded)({ reason: whole.reason });
+		if (!own.length) return '';
+		return own.length === 1 ? m.snippet_bar_failed_one() : m.snippet_bar_failed_other({ count: own.length });
+	}
+
+	// a snippet file that did not load at all says so on its own row
+	const entryProblems = $derived(snippetStatus.problems.filter((p) => !(p.whole && !p.file)));
+
 	async function edit(file: Promise<string | null>): Promise<void> {
 		const path = await file;
 		if (!path || !actions) return;
@@ -41,6 +53,7 @@
 	text: string,
 	hint: string,
 	count: string,
+	warning: string,
 	action: string,
 	run: () => void,
 	why: string,
@@ -51,7 +64,8 @@
 		<div class="min-w-0">
 			<div class="text-sm font-medium">{text}</div>
 			<p class="text-muted mt-1 text-xs leading-relaxed">{hint}</p>
-			{#if count}<p class="text-muted text-xs leading-relaxed">{count}</p>{/if}
+			{#if warning}<p class="text-warning-ink text-xs leading-relaxed">{warning}</p>
+			{:else if count}<p class="text-muted text-xs leading-relaxed">{count}</p>{/if}
 		</div>
 		<span class="flex shrink-0 items-center gap-3" use:unavailableTip={why} data-tip-anchor>
 			<button type="button" class="btn preset-tonal btn-sm" disabled={!!why} onclick={run}>{action}</button>
@@ -67,6 +81,7 @@
 	m.prefs_snippets_project(),
 	m.prefs_snippets_project_note(),
 	root ? countOf(switches.folder, loaded.project) : '',
+	root && switches.folder ? warningOf('project') : '',
 	m.prefs_snippets_edit(),
 	() => void edit(root ? ensureProjectSnippets(root) : Promise.resolve(null)),
 	root ? '' : m.prefs_snippets_project_none(),
@@ -79,16 +94,17 @@
 	m.prefs_snippets_global(),
 	m.prefs_snippets_global_note(),
 	countOf(switches.global, loaded.global, loaded.globalReplaced),
+	switches.global ? warningOf('global') : '',
 	m.prefs_snippets_edit(),
 	() => void edit(ensureGlobalSnippets()),
 	!isDesktop() ? m.unavailable_desktop() : actions ? '' : m.prefs_snippets_global_none(),
 	switches.global,
 	setGlobalSnippetsOn
 )}
-{#if snippetStatus.problems.length}
+{#if entryProblems.length}
 	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{m.prefs_snippets_problems()}</h3>
 	<ul class="text-muted space-y-1 py-2 text-xs leading-relaxed">
-		{#each snippetStatus.problems as problem, i (i)}
+		{#each entryProblems as problem, i (i)}
 			<li>{describeSnippetProblem(problem)}</li>
 		{/each}
 	</ul>

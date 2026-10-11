@@ -72,4 +72,11 @@ describe('snippet files', () => {
 		const { loaded } = compileSnippets({ global, project, allowedPatterns: null });
 		expect(loaded).toEqual({ global: 1, project: 2, globalReplaced: 1 });
 	});
+
+	it('says where broken JSON breaks, as a line and column of the file, comments and all', () => {
+		const broken = parseSnippetFile('{\n\t// mine\n\t"A": { "prefix": "a" "body": "x" }\n}', 'global');
+		expect(broken.problems).toHaveLength(1);
+		expect(broken.problems[0]).toMatchObject({ whole: true });
+		expect(broken.problems[0].reason).toMatch(/^is not valid JSON: line 3, column \d+: /);
+	});
 });

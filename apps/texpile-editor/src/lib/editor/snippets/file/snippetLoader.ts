@@ -6,6 +6,7 @@ import { parseSnippetFile } from './parseSnippetFile';
 import { setSnippetLayers } from './snippetRegistry';
 import { adoptPackageFiles, type PackageTexts } from './packageFiles';
 import type { SnippetFileList } from './snippetFiles';
+import type { SnippetFile } from './snippetTypes';
 
 type SnippetsBridge = {
 	readGlobal(): Promise<string | null>;
@@ -46,6 +47,21 @@ export function folderSnippetText(): string | null {
 }
 
 let lastSource: [string | null, string | null] = [null, null];
+// the last version of each file that loaded, and the folder it came from
+const lastGood: Record<'global' | 'project', { owner: string; file: SnippetFile } | null> = { global: null, project: null };
+
+/** a file broken mid edit keeps its last version that loaded, so an autosave of half a line does not switch it off */
+function layerOf(text: string | null, layer: 'global' | 'project', on: boolean, owner: string): SnippetFile | null {
+	if (text === null) lastGood[layer] = null;
+	if (text === null || !on) return null;
+	const fresh = parseSnippetFile(text, layer);
+	const last = lastGood[layer]?.owner === owner ? lastGood[layer].file : null;
+	if (!fresh.problems.some((p) => p.whole)) {
+		lastGood[layer] = { owner, file: fresh };
+		return fresh;
+	}
+	return last ? { ...last, problems: fresh.problems.map((p) => (p.whole ? { ...p, kept: true } : p)) } : fresh;
+}
 let switches = { global: true, folder: true };
 
 /** whether each file is loaded, as of the last reload */
@@ -87,8 +103,8 @@ export async function reloadSnippets(root: string | null, hostFolderText: string
 	loadedPackages = packagesKey;
 	switches = on;
 	setSnippetLayers({
-		global: global === null || !on.global ? null : parseSnippetFile(global, 'global'),
-		project: project === null || !on.folder ? null : parseSnippetFile(project, 'project'),
+		global: layerOf(global, 'global', on.global, ''),
+		project: layerOf(project, 'project', on.folder, root ?? ''),
 		allowedPatterns: root ? (getFolder(root).allowedSnippetPatterns ?? null) : sessionAllowedPatterns,
 		packageProblems: adoptPackageFiles(packages)
 	});

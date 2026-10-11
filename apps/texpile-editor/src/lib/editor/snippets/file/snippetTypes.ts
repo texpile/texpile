@@ -50,7 +50,8 @@ export type Snippet = {
 export type SnippetVariables = Record<string, Partial<Record<SnippetLanguage, string>>>;
 
 /** `file` names the file when it is not the layer's snippet file */
-export type SnippetProblem = { layer: SnippetLayer; name: string; reason: string; file?: string };
+/** `whole`: the file did not load at all; `kept`: so its last version that loaded is still in use */
+export type SnippetProblem = { layer: SnippetLayer; name: string; reason: string; file?: string; whole?: boolean; kept?: boolean };
 
 export type SnippetFile = {
 	snippets: Snippet[];

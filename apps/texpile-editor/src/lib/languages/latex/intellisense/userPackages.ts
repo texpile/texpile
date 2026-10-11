@@ -1,5 +1,5 @@
 // user package files in LaTeX Workshop's JSON: .texpile/packages/<name>.json and the global folder's
-import { stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
+import { jsonErrorAt, stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
 import type { PackageData, PkgEntry } from './completion/packageData';
 
 const packages = new Map<string, PackageData>();
@@ -42,7 +42,7 @@ export function parsePackageFile(text: string): { contents: PackageData | null; 
 	try {
 		raw = JSON.parse(stripJsonc(text));
 	} catch (e) {
-		return { contents: null, problem: `is not valid JSON: ${(e as Error).message}` };
+		return { contents: null, problem: `is not valid JSON: ${jsonErrorAt(text, (e as Error).message)}` };
 	}
 	if (!isObject(raw)) return { contents: null, problem: 'is not a JSON object' };
 	let dropped = 0;
