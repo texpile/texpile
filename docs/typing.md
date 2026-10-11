@@ -36,7 +36,7 @@ Ctrl A in a table cell or a caption selects just that field. Press it again for 
 
 ## In an equation
 
-Press Tab to find a symbol by its name or by what it means, such as `not eq` or `arrow right`. Enter inserts it.
+Press Tab or Ctrl Space to find a symbol by its name or by what it means, such as `not eq` or `arrow right`. Enter inserts it.
 
 ## Delete a figure or an equation
 

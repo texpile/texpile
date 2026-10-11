@@ -1,6 +1,7 @@
 import { EditorView as CodeMirrorView, keymap as cmKeymap, drawSelection, type ViewUpdate, type KeyBinding } from '@codemirror/view';
 import { Compartment as CodeMirrorCompartment } from '@codemirror/state';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap } from '@codemirror/commands';
+import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { exitCode } from 'prosemirror-commands';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
@@ -39,7 +40,7 @@ export class RawLatexView {
 			doc: this.node.textContent,
 			extensions: [
 				cmKeymap.of([...this.codeMirrorKeymap(), ...defaultKeymap]),
-				cmKeymap.of([indentWithTab]),
+				cmKeymap.of([tabIndentBinding]),
 				drawSelection(),
 				// wrap long lines instead of scrolling horizontally
 				CodeMirrorView.lineWrapping,

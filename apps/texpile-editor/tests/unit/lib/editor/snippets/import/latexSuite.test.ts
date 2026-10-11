@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { convertLatexSuite, suiteBody } from '$lib/editor/snippets/import/latexSuite';
 import { insertSnippetEntries } from '$lib/editor/snippets/import/insertSnippetEntries';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
-import { toPlainText } from '$lib/editor/snippets/expand/bodyTemplate';
+import { toPlainText } from '$lib/editor/snippets/expand/body/mathliveBody';
 
 // the shape of LaTeX Suite's own default snippets
 const SUITE = String.raw`[
@@ -43,7 +43,7 @@ describe('importing LaTeX Suite snippets', () => {
 		const { entries, skipped } = convertLatexSuite('[{trigger: "x(\\\\d)", replacement: "x_[[0]]", options: "rm"}]');
 		expect(entries).toEqual([]);
 		expect(skipped).toEqual([
-			{ name: 'x(\\d)', reason: 'has a regex trigger without the A option, and Texpile runs regex triggers only automatically' }
+			{ name: 'x(\\d)', reason: 'is a regex snippet without the A option, and Texpile only runs regex snippets as they are typed' }
 		]);
 	});
 

@@ -1,6 +1,6 @@
 // the snippets in force: built-in, then global, then project
 import { m } from '$lib/paraglide/messages';
-import { usesSelection } from '../expand/bodyTemplate';
+import { usesSelection } from '../expand/body/bodyNodes';
 import type { CompiledSnippet } from '../expand/matchSnippets';
 import { BUILTIN_SNIPPETS, BUILTIN_VARIABLES } from './builtinSnippets';
 import { TYPST_MATH_NAMES } from './typstNames';
@@ -61,13 +61,21 @@ function compilePatterns(s: Snippet, lang: SnippetLanguage, variables: SnippetVa
 	for (const prefix of s.prefixes) {
 		const { source, missing } = expandVariables(prefix, lang, variables);
 		if (missing) {
-			problems.push({ layer: s.layer, name: s.name, reason: `uses \${${missing}}, which no variables entry defines for ${lang}` });
+			problems.push({
+				layer: s.layer,
+				name: s.name,
+				reason: `The pattern uses \${${missing}}, but "variables" has no ${missing} for ${lang}. Add it there, or take it out of the pattern.`
+			});
 			return null;
 		}
 		try {
 			patterns.push(new RegExp(`(?:${source})$`, s.flags));
 		} catch (e) {
-			problems.push({ layer: s.layer, name: s.name, reason: `prefix is not a valid regular expression: ${(e as Error).message}` });
+			problems.push({
+				layer: s.layer,
+				name: s.name,
+				reason: `The "prefix" pattern is not a valid regular expression (${(e as Error).message}).`
+			});
 			return null;
 		}
 	}
@@ -136,7 +144,8 @@ export function compileSnippets(layers: SnippetLayers): SnippetRegistry {
 					problems.push({
 						layer: s.layer,
 						name: s.name,
-						reason: `"${clash}" is already a Typst name, so typing it in an equation expands it`
+						reason: `"${clash}" is already a word in Typst math, so with this snippet a plain ${clash} can no longer be typed in an equation. Pick another trigger.`,
+						warning: true
 					});
 			}
 		}

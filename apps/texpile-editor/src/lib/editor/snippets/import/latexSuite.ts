@@ -79,7 +79,7 @@ function entryOf(raw: SuiteObject): SnippetEntry | string {
 	// a visual snippet becomes a Wrap With entry, which needs no trigger
 	if (options.includes('v')) delete entry.prefix;
 	else if (options.includes('A')) entry.auto = true;
-	else if (entry.regex) return 'has a regex trigger without the A option, and Texpile runs regex triggers only automatically';
+	else if (entry.regex) return 'is a regex snippet without the A option, and Texpile only runs regex snippets as they are typed';
 	if (options.includes('w')) entry.word = true;
 	if (typeof raw.description === 'string' && raw.description) entry.description = raw.description;
 	if (typeof raw.priority === 'number' && raw.priority) entry.priority = raw.priority;

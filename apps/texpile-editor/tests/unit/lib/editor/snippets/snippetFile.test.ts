@@ -60,11 +60,12 @@ describe('snippet files', () => {
 		expect(problems).toContainEqual(expect.objectContaining({ name: 'Lazy', reason: expect.stringContaining('"auto": true') }));
 	});
 
-	it('warns when a Typst auto trigger is already a Typst name', () => {
-		const { problems } = compileSnippets({ global: null, project, allowedPatterns: null });
+	it('warns, and still loads, a Typst auto trigger that is already a word of Typst math', () => {
+		const { problems, languages } = compileSnippets({ global: null, project, allowedPatterns: null });
 		expect(problems).toContainEqual(
-			expect.objectContaining({ name: 'Differential', reason: expect.stringContaining('"dif" is already a Typst name') })
+			expect.objectContaining({ name: 'Differential', warning: true, reason: expect.stringContaining('"dif"') })
 		);
+		expect(languages.typst.auto.map((c) => c.snippet.name)).toContain('Differential');
 	});
 
 	it('counts what each file has in use, and the global entries a folder entry of the same name replaces', () => {
@@ -77,6 +78,6 @@ describe('snippet files', () => {
 		const broken = parseSnippetFile('{\n\t// mine\n\t"A": { "prefix": "a" "body": "x" }\n}', 'global');
 		expect(broken.problems).toHaveLength(1);
 		expect(broken.problems[0]).toMatchObject({ whole: true });
-		expect(broken.problems[0].reason).toMatch(/^is not valid JSON: line 3, column \d+: /);
+		expect(broken.problems[0].reason).toMatch(/^The file is not valid JSON: line 3, column \d+ \(/);
 	});
 });

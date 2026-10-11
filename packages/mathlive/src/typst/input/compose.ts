@@ -113,8 +113,11 @@ export function expandShortcut(mf: _Mathfield, typing: TypstTyping): boolean {
   ModeEditor.insert(model, shortcut.value, {
     format: shortcut.format,
     mode: 'math',
-    selectionMode: 'placeholder',
+    // with no slot to select, the caret goes after it rather than into an empty body
+    selectionMode: shortcut.value.includes('#?') ? 'placeholder' : 'after',
   });
+  // its own step whatever it ends with, so undo gives back what was typed, as an inline shortcut does
+  recordTyping(mf, 'insert-shortcut');
   return true;
 }
 

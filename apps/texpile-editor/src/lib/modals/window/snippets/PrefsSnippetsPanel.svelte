@@ -34,12 +34,15 @@
 		const own = snippetStatus.problems.filter((p) => p.layer === layer && !p.file);
 		const whole = own.find((p) => p.whole);
 		if (whole) return (whole.kept ? m.prefs_snippets_kept : m.prefs_snippets_not_loaded)({ reason: whole.reason });
+		const failed = own.filter((p) => !p.warning).length;
+		if (failed) return failed === 1 ? m.snippet_bar_failed_one() : m.snippet_bar_failed_other({ count: failed });
 		if (!own.length) return '';
-		return own.length === 1 ? m.snippet_bar_failed_one() : m.snippet_bar_failed_other({ count: own.length });
+		return own.length === 1 ? m.snippet_bar_warned_one() : m.snippet_bar_warned_other({ count: own.length });
 	}
 
 	// a snippet file that did not load at all says so on its own row
-	const entryProblems = $derived(snippetStatus.problems.filter((p) => !(p.whole && !p.file)));
+	const entryProblems = $derived(snippetStatus.problems.filter((p) => !(p.whole && !p.file) && !p.warning));
+	const warnings = $derived(snippetStatus.problems.filter((p) => p.warning));
 
 	async function edit(file: Promise<string | null>): Promise<void> {
 		const path = await file;
@@ -105,6 +108,14 @@
 	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{m.prefs_snippets_problems()}</h3>
 	<ul class="text-muted space-y-1 py-2 text-xs leading-relaxed">
 		{#each entryProblems as problem, i (i)}
+			<li>{describeSnippetProblem(problem)}</li>
+		{/each}
+	</ul>
+{/if}
+{#if warnings.length}
+	<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{m.prefs_snippets_warnings()}</h3>
+	<ul class="text-muted space-y-1 py-2 text-xs leading-relaxed">
+		{#each warnings as problem, i (i)}
 			<li>{describeSnippetProblem(problem)}</li>
 		{/each}
 	</ul>

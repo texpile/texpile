@@ -67,6 +67,8 @@ export class TabsStore {
 	private persistable = false;
 	/** the other editor groups' tabs, which a rename or a delete in the tree reaches as well */
 	readonly others = new Set<TabsStore>();
+	/** outside-folder tabs held while no folder is open */
+	private carried: Tab[] = [];
 	/** told where each path went after a rename or a delete (null: gone), so the parked slots follow their files */
 	onRetarget: ((where: (path: string) => string | null) => void) | null = null;
 	/** the tabs kept with the folder when they are not these: an editor in a window of its own has these */
@@ -77,15 +79,19 @@ export class TabsStore {
 
 	/** folder (re)opened: restore the persisted tab set for disk-backed roots. */
 	bind(root: string | null, persist: boolean): void {
+		// a file outside every folder, like the global snippet file, is the window's: it stays until closed
+		const carried = [...this.carried, ...this.list].filter((t) => outsideRoot.allowed(t.path));
 		this.generation++;
 		this.root = root;
 		this.persistable = persist && !!root && typeof localStorage !== 'undefined';
 		this.list = [];
 		this.preview = null;
 		this.closed = [];
-		if (!this.persistable || !root) return;
-		const saved = getFolder(root).tabs;
+		this.carried = root ? [] : carried;
+		if (!root) return;
+		const saved = this.persistable ? getFolder(root).tabs : null;
 		if (Array.isArray(saved)) this.list = saved.slice(0, MAX_TABS).flatMap((s) => restoredTab(root, s) ?? []);
+		for (const t of carried) if (!this.list.some((o) => tabKey(o) === tabKey(t))) this.list.push(t);
 	}
 
 	/** another editor group's tabs come into this store, and this one's go to it: the focused group's are always here */

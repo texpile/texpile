@@ -6,7 +6,7 @@ import { snippet } from '@codemirror/autocomplete';
 import { LW_MACROS } from '$lib/languages/latex/intellisense/data/lwMacros';
 import { TEX_MACROS } from '$lib/languages/latex/intellisense/data/texMacros';
 import { BUILTIN_SNIPPETS } from '$lib/editor/snippets/file/builtinSnippets';
-import { toCmTemplate } from '$lib/editor/snippets/expand/bodyTemplate';
+import { toCmInsertion } from '$lib/editor/snippets/expand/body/cmInsertion';
 
 const NO_INPUTS = { selection: '', captures: [] };
 
@@ -29,8 +29,7 @@ describe('snippet braces', () => {
 
 	it('the @{ snippet inserts escaped braces', () => {
 		const s = BUILTIN_SNIPPETS.find((x) => x.name === '@{');
-		const { template, fills } = toCmTemplate(s!.bodies.latex!, NO_INPUTS);
-		expect([...inserted(template)].map((c) => fills.get(c) ?? c).join('')).toBe('\\left\\{  \\right\\}');
+		expect(toCmInsertion(s!.bodies.latex!, NO_INPUTS, { base: '', unit: '  ' }).text).toBe('\\left\\{  \\right\\}');
 	});
 
 	it('no template built from the tables carries a brace the parser would strip', () => {

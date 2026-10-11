@@ -7,5 +7,5 @@ it('a label from a shared snippet file stays inside its CSS string', () => {
 	const look = readCallLook({ label: 'x" } body { display: none } "', background: 'yellow' }) as CallLook;
 	const css = callLookCss('typst', new Map([['offen', look]]));
 	expect(css).toContain('content: "x\\" } body { display: none } \\""');
-	expect(readCallLook({ color: 'teal' })).toBe('visual.color is not one of red, orange, yellow, green, blue, purple, gray');
+	expect(readCallLook({ color: 'teal' })).toContain('"color" needs to be one of "red"');
 });

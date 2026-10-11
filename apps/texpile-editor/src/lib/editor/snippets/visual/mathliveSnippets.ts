@@ -2,62 +2,66 @@
 import type { InlineShortcutDefinitions, MathfieldElement, TypstShortcut } from 'mathlive';
 import type { MathStructure } from '$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathStructures';
 import type { MathSyntax } from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
-import { toMathLiveLatex, toPlainText } from '../expand/bodyTemplate';
+import { toMathLiveLatex, toTypstSlots } from '../expand/body/mathliveBody';
 import type { CompiledSnippet } from '../expand/matchSnippets';
+import { contextAllows } from '../expand/snippetZone';
 import { onSnippetRegistry, snippetRegistry } from '../file/snippetRegistry';
 
-const MATH_CONTEXTS = new Set(['math', 'inline-math', 'display-math', 'any']);
 // a Typst equation reads a trigger as a name, so letters only
 const TYPST_NAME = /^[a-zA-Z]+$/;
 
-function inEquations(c: CompiledSnippet): boolean {
-	return !c.patterns && !c.snippet.wrap && MATH_CONTEXTS.has(c.snippet.context);
+function inEquation(c: CompiledSnippet, display: boolean): boolean {
+	return !c.patterns && !c.snippet.wrap && contextAllows(c.snippet.context, { zone: 'math', display });
 }
 
-// typst source has no #? slot, so stops become their defaults
 function insertedIn(syntax: MathSyntax, c: CompiledSnippet): string {
-	return syntax === 'typst' ? toPlainText(c.body) : toMathLiveLatex(c.body);
+	return syntax === 'typst' ? toTypstSlots(c.body) : toMathLiveLatex(c.body);
 }
 
-export function mathLiveShortcuts(): Record<string, string> {
+export function mathLiveShortcuts(display: boolean): Record<string, string> {
 	const shortcuts: Record<string, string> = {};
-	for (const c of snippetRegistry().languages.latex.auto.filter(inEquations))
+	for (const c of snippetRegistry().languages.latex.auto.filter((c) => inEquation(c, display)))
 		for (const prefix of c.snippet.prefixes) shortcuts[prefix] ??= insertedIn('latex', c);
 	return shortcuts;
 }
 
-export function typstShortcuts(): Record<string, TypstShortcut> {
+export function typstShortcuts(display: boolean): Record<string, TypstShortcut> {
 	const shortcuts: Record<string, TypstShortcut> = {};
-	for (const c of snippetRegistry().languages.typst.auto.filter(inEquations))
+	for (const c of snippetRegistry().languages.typst.auto.filter((c) => inEquation(c, display)))
 		for (const prefix of c.snippet.prefixes.filter((p) => TYPST_NAME.test(p)))
 			shortcuts[prefix] ??= { value: insertedIn('typst', c), format: 'typst' };
 	return shortcuts;
 }
 
 /** math search rows for the snippets an equation can take */
-export function snippetStructures(syntax: MathSyntax): MathStructure[] {
+export function snippetStructures(syntax: MathSyntax, display: boolean): MathStructure[] {
 	const { auto, popup } = snippetRegistry().languages[syntax];
-	return [...auto, ...popup].filter(inEquations).map((c) => {
-		const latex = insertedIn(syntax, c);
-		const words = `${c.snippet.prefixes.join(' ')} ${c.snippet.name} ${c.snippet.description}`.toLowerCase().split(/[^\p{L}\p{N}]+/u);
-		return {
-			latex,
-			format: syntax,
-			label: `${c.snippet.prefixes[0] ?? c.snippet.name}  ${c.snippet.description || c.snippet.name}`,
-			display: latex,
-			words: words.filter(Boolean)
-		};
-	});
+	return [...auto, ...popup]
+		.filter((c) => inEquation(c, display))
+		.map((c) => {
+			const latex = insertedIn(syntax, c);
+			const words = `${c.snippet.prefixes.join(' ')} ${c.snippet.name} ${c.snippet.description}`.toLowerCase().split(/[^\p{L}\p{N}]+/u);
+			return {
+				latex,
+				format: syntax,
+				source: c.body,
+				label: `${c.snippet.prefixes[0] ?? c.snippet.name}  ${c.snippet.description || c.snippet.name}`,
+				// a typst slot is drawn as the empty string it is saved as
+				display: syntax === 'typst' ? latex.split('#?').join('""') : latex,
+				words: words.filter(Boolean)
+			};
+		});
 }
 
-export type SnippetShortcutTarget =
+export type SnippetShortcutTarget = { display: boolean } & (
 	| { syntax: 'latex'; defaults: InlineShortcutDefinitions; set: (shortcuts: InlineShortcutDefinitions) => void }
-	| { syntax: 'typst'; set: (shortcuts: Record<string, TypstShortcut>) => void };
+	| { syntax: 'typst'; set: (shortcuts: Record<string, TypstShortcut>) => void }
+);
 
 export function followSnippetShortcuts(target: SnippetShortcutTarget): () => void {
 	function apply() {
-		if (target.syntax === 'typst') target.set(typstShortcuts());
-		else target.set({ ...target.defaults, ...mathLiveShortcuts() });
+		if (target.syntax === 'typst') target.set(typstShortcuts(target.display));
+		else target.set({ ...target.defaults, ...mathLiveShortcuts(target.display) });
 	}
 	apply();
 	return onSnippetRegistry(apply);

@@ -7,6 +7,7 @@ import { requestUpdate } from './render';
 import { LEFT_DELIM } from '../core/delimiters';
 import { parseLatex } from '../core/parser';
 import { readTypst } from '../typst/read/read';
+import { markTypstSlots, placeTypstSlots } from '../typst/read/slots';
 import { fromJson } from '../core/atom';
 import { Atom } from '../core/atom-class';
 import { ArrayAtom } from '../atoms/array';
@@ -382,7 +383,8 @@ export class MathModeEditor extends ModeEditor {
       ) {
         // the whole equation as written, and what Typst leaves outside its content: the
         // padding, and the comments at either end
-        parent.verbatimTypst = input;
+        // a slot has no source
+        if (!input.includes('#?')) parent.verbatimTypst = input;
         parent.typstSpelling = {
           open: padding?.lead ?? '',
           close: padding?.trail ?? '',
@@ -482,8 +484,12 @@ function convertStringToAtoms(
     )
       result = result.map((x) => removeExtraneousParenthesis(x));
   } else if (typeof s === 'string' && options.format === 'typst') {
-    const { atoms, lead, trail } = readTypst(s);
-    [format, result, padding] = ['typst', atoms, { lead, trail }];
+    const { atoms, lead, trail } = readTypst(markTypstSlots(s));
+    [format, result, padding] = [
+      'typst',
+      placeTypstSlots(atoms),
+      { lead, trail },
+    ];
     // what goes in beside existing atoms is spaced as typed, not as the source started
     if (result[0]) result[0].typstLead = undefined;
   } else if (options.format === 'auto' || options.format?.startsWith('latex')) {

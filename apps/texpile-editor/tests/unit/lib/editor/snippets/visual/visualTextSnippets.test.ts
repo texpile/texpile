@@ -4,19 +4,24 @@ import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { history, undo } from 'prosemirror-history';
 import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
-import { latexSourceSlice } from '$lib/editor/visual/extensions/latexClipboard';
+import { latexSourceSlice, sliceToLatex } from '$lib/editor/visual/extensions/latexClipboard';
 import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { setSnippetLayers } from '$lib/editor/snippets/file/snippetRegistry';
 
-const GLOBAL = `{
-	"v": 1,
-	"snippets": {
-		"For example": { "prefix": "eg", "context": "text", "auto": true, "body": "for example" },
-		"Emphasis": { "prefix": "em", "context": "text", "body": { "latex": "\\\\emph{$1}" } },
-		"Integral": { "prefix": "dint", "context": "math", "auto": true, "body": "\\\\int" }
+const text = (prefix: string, latex: string, auto = true) => ({ prefix, context: 'text', auto, body: { latex } });
+const GLOBAL = JSON.stringify({
+	v: 1,
+	snippets: {
+		'For example': text('eg', 'for example'),
+		Emphasis: text('em', '\\emph{$1}', false),
+		Integral: { prefix: 'dint', context: 'math', auto: true, body: '\\int' },
+		Theorem: text(';th', '\\begin{${1|theorem,lemma|}}$0\\end{$1}'),
+		Link: text(';hr', '\\href{${1:https://x.org}}{${2:text}}'),
+		Heading: text(';cm', '\\\\${1|section,subsection|}{$2}'),
+		Bold: { prefix: '(\\S+)!!', regex: true, auto: true, context: 'text', body: { latex: '\\textbf{[[0]]}' } }
 	}
-}`;
+});
 
 let view: EditorView | null = null;
 
@@ -33,6 +38,10 @@ function type(v: EditorView, keys: string): void {
 		const { from, to } = v.state.selection;
 		if (!v.someProp('handleTextInput', (f) => f(v, from, to, ch, () => v.state.tr))) v.dispatch(v.state.tr.insertText(ch, from, to));
 	}
+}
+
+function source(v: EditorView): string {
+	return sliceToLatex(v.state.doc.slice(0, v.state.doc.content.size));
 }
 
 function pressTab(v: EditorView): boolean {
@@ -77,5 +86,33 @@ describe('text snippets in the visual editor', () => {
 		const v = editor('See');
 		type(v, ' dint');
 		expect(v.state.doc.textContent).toBe('See dint');
+	});
+
+	it('a place used twice starts with the same text in both copies', () => {
+		const v = editor('See');
+		type(v, ' ;th');
+		type(v, 'Q');
+		expect(source(v)).toContain('\\begin{theorem}\nQ\n\\end{theorem}');
+	});
+
+	it('a first place in a link address leaves nothing in the file, and the link text is selected', () => {
+		const v = editor('See');
+		type(v, ' ;hr');
+		expect(source(v)).toBe('See \\href{https://x.org}{text}');
+		const { from, to } = v.state.selection;
+		expect(v.state.doc.textBetween(from, to)).toBe('text');
+	});
+
+	it('a first place in a command name still reads as that command', () => {
+		const v = editor('See');
+		type(v, ' ;cm');
+		type(v, 'Q');
+		expect(source(v)).toBe('See\n\n\\section{Q}');
+	});
+
+	it('a pattern capture goes in as the text it was typed as', () => {
+		const v = editor('See');
+		type(v, ' 50%!!');
+		expect(source(v)).toBe('See \\textbf{50\\%}');
 	});
 });

@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 // `|` marks the caret before, and the selection's ends after (`|x|` = x selected)
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { EditorState } from '@codemirror/state';
+import { EditorSelection, EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { ensureSyntaxTree } from '@codemirror/language';
-import { CompletionContext, type Completion } from '@codemirror/autocomplete';
+import { CompletionContext, snippet, type Completion } from '@codemirror/autocomplete';
 import { typstLanguage } from '$lib/languages/typst/source/typstLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { snippetCompletionSource, sourceSnippets, wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
@@ -28,6 +28,8 @@ const GLOBAL = `{
 		"Display only": { "prefix": "dd", "context": "display-math", "auto": true, "body": "D" },
 		"Open point": { "scope": "typst", "wrap": "offen" },
 		"Emphasis": { "scope": "latex", "wrap": "emph" },
+		"Theorem": { "prefix": "thm", "context": "text", "auto": true, "body": { "latex": "\\\\begin{\${1|theorem,lemma|}}\\n$0\\n\\\\end{$1}" } },
+		"Pair": { "prefix": "pr", "context": "text", "auto": true, "body": { "latex": "\${1:a}-$1" } },
 	}
 }`;
 
@@ -43,6 +45,7 @@ function editor(lang: SnippetLanguage, withCaret: string): EditorView {
 			doc,
 			selection: { anchor: at, head: end < 0 ? at : end - 1 },
 			extensions: [
+				EditorState.allowMultipleSelections.of(true),
 				lang === 'typst' ? typstLanguage() : latex(),
 				sourceSnippets(lang, { stopUndoCapture: () => undoBoundaries.push(view!.state.doc.toString()) })
 			]
@@ -107,6 +110,17 @@ describe('typing a trigger', () => {
 		expect(shown(v)).toBe('$\\int_{0}^{|1|}  \\, \\mathrm{d}x$');
 	});
 
+	it.each([
+		['a choice', 'thm', '\\begin{theorem}\n\n\\end{theorem}', 'lemma', '\\begin{lemma}\n\n\\end{lemma}'],
+		['a default', 'pr', 'a-a', 'b', 'b-b']
+	])('a place used twice starts with %s in both, and what is typed goes in both', (_, keys, expanded, typed, after) => {
+		const v = editor('latex', '|');
+		type(v, keys);
+		expect(v.state.doc.toString()).toBe(expanded);
+		v.dispatch(v.state.replaceSelection(typed));
+		expect(v.state.doc.toString()).toBe(after);
+	});
+
 	it('ends an undo step on the typed trigger, so one undo gives it back', () => {
 		const v = editor('latex', '$|$');
 		type(v, 'dint');
@@ -120,6 +134,15 @@ describe('typing a trigger', () => {
 		const option = result!.options.find((o) => o.label === '@/') as Completion & { apply: (...a: unknown[]) => void };
 		option.apply(v, option, result!.from, v.state.selection.main.head);
 		expect(shown(v)).toBe('$\\frac{|}{}$');
+	});
+
+	it('ends an undo step on the prefix before a snippet from the popup goes in', () => {
+		const v = editor('latex', '$|$');
+		type(v, '@/');
+		const result = snippetCompletionSource(new CompletionContext(v.state, v.state.selection.main.head, true));
+		const option = result!.options.find((o) => o.label === '@/') as Completion & { apply: (...a: unknown[]) => void };
+		option.apply(v, option, result!.from, v.state.selection.main.head);
+		expect(undoBoundaries).toEqual(['$@/$']);
 	});
 });
 
@@ -135,5 +158,19 @@ describe('wrapping the selection', () => {
 		const [entry] = wrapSnippetsFor(v.state);
 		wrapSelection(v, entry);
 		expect(shown(v)).toBe(after);
+	});
+
+	it("Tab still moves through codemirror's own completion snippets, which keep their own session", () => {
+		const v = editor('latex', '|');
+		snippet('\\begin{${1:env}}\n${2}\n\\end{${1:env}}')(v, null, 0, 0);
+		v.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+		expect(shown(v)).toBe('\\begin{env}\n|\n\\end{env}');
+	});
+
+	it('wraps every selection', () => {
+		const v = editor('latex', '|aa| bb cc');
+		v.dispatch({ selection: EditorSelection.create([EditorSelection.range(0, 2), EditorSelection.range(6, 8)]) });
+		wrapSelection(v, wrapSnippetsFor(v.state)[0]);
+		expect(v.state.doc.toString()).toBe('\\emph{aa} bb \\emph{cc}');
 	});
 });

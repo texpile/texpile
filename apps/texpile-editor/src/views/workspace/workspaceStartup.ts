@@ -7,8 +7,9 @@ import { docPositions } from '$lib/workspace/docPositions';
 import { initSpellcheckConfig } from '$lib/editor/spellcheck/config/spellcheckConfig';
 import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
-import { workspaceRoot } from '$lib/workspace/workspaceStore';
+import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { setSnippetEnvironment } from '$lib/editor/snippets/expand/body/bodyVariables';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
@@ -71,6 +72,7 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 	files.loadRefs(root);
 	void files.refreshTree();
 	initSpellcheckConfig(); // seed editorConfigStore so the spell-check toggle works
+	setSnippetEnvironment(() => ({ filePath: activeFilePath.current, folder: workspaceRoot.current }));
 
 	layout.restore(); // loadExistingPdf refills the preview if it was open last
 	termDock.restore();

@@ -10,10 +10,11 @@ import { Compartment, EditorState, Facet, Prec, type Extension } from '@codemirr
 import { EditorView, keymap, ViewPlugin, type EditorView as CMView } from '@codemirror/view';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { usesSelection } from './expand/bodyTemplate';
+import { usesSelection } from './expand/body/bodyNodes';
 import { cutsThroughSyntax, wrapBodyFor } from './expand/wrapBody';
 import { choiceCompletionSource, choiceFieldAt, choiceFields } from './expand/choiceFields';
-import { expandSnippet } from './expand/expandSnippet';
+import { expandSnippet, type SnippetSpot } from './expand/expandSnippet';
+import { snippetSession } from './expand/snippetSession';
 import { autoMatches, popupCandidates, type CompiledSnippet } from './expand/matchSnippets';
 import { contextAllows, snippetZoneAt } from './expand/snippetZone';
 import { onSnippetRegistry, snippetRegistry } from './file/snippetRegistry';
@@ -21,6 +22,7 @@ import { mathKeys } from './math/mathKeys';
 import type { SnippetLanguage } from './file/snippetTypes';
 
 const snippetLanguage = Facet.define<SnippetLanguage, SnippetLanguage | null>({ combine: (v) => v[0] ?? null });
+const undoStop = Facet.define<() => void, () => void>({ combine: (v) => v[0] ?? (() => {}) });
 
 function languageOf(state: EditorState): SnippetLanguage | null {
 	return state.facet(snippetLanguage);
@@ -46,8 +48,11 @@ export function snippetCompletionSource(ctx: CompletionContext): CompletionResul
 			detail: compiled.snippet.description || previewOf(wrapBodyFor(compiled, zone)),
 			type: 'text',
 			boost: Math.max(-99, Math.min(99, compiled.snippet.priority)),
-			apply: (view: CMView, _c: Completion, from: number, to: number) =>
-				expandSnippet(view, wrapBodyFor(compiled, zone), from, to, { selection: '', captures: [] })
+			apply: (view: CMView, _c: Completion, from: number, to: number) => {
+				// the prefix was typed before the popup, so one undo gives it back
+				view.state.facet(undoStop)();
+				expandSnippet(view, [{ body: wrapBodyFor(compiled, zone), from, to, selection: '' }]);
+			}
 		}));
 	return options.length ? { from: candidates.from, options } : null;
 }
@@ -66,7 +71,11 @@ function autoExpansion(stopUndoCapture: () => void): Extension {
 			// the character goes in on its own first, so one undo gives back what was typed
 			view.dispatch({ changes: { from, to, insert: text }, selection: { anchor: from + text.length }, userEvent: 'input.type' });
 			stopUndoCapture();
-			expandSnippet(view, wrapBodyFor(match.compiled, zone), match.from, from + text.length, { selection: '', captures: match.captures });
+			expandSnippet(
+				view,
+				[{ body: wrapBodyFor(match.compiled, zone), from: match.from, to: from + text.length, selection: '' }],
+				match.captures
+			);
 			return true;
 		}
 		return false;
@@ -80,14 +89,20 @@ export function wrapSnippetsFor(state: EditorState): CompiledSnippet[] {
 	return snippetRegistry().languages[lang].wraps.filter((c) => contextAllows(c.snippet.context, zone));
 }
 
+function spotsOf(state: EditorState, bodyAt: (from: number) => string): SnippetSpot[] {
+	return state.selection.ranges.map(({ from, to }) => ({ body: bodyAt(from), from, to, selection: state.sliceDoc(from, to) }));
+}
+
 export function wrapSelection(view: CMView, compiled: CompiledSnippet): void {
-	const { from, to } = view.state.selection.main;
-	if (cutsThroughSyntax(view.state, from, to, compiled.lang)) {
+	const { state } = view;
+	if (state.selection.ranges.some(({ from, to }) => cutsThroughSyntax(state, from, to, compiled.lang))) {
 		toaster.info({ title: m.wrap_refused_title(), description: m.wrap_refused_desc() });
 		return;
 	}
-	const body = wrapBodyFor(compiled, snippetZoneAt(view.state, from, compiled.lang));
-	expandSnippet(view, body, from, to, { selection: view.state.sliceDoc(from, to), captures: [] });
+	expandSnippet(
+		view,
+		spotsOf(state, (from) => wrapBodyFor(compiled, snippetZoneAt(state, from, compiled.lang)))
+	);
 	view.focus();
 }
 
@@ -95,7 +110,11 @@ function runKeyed(view: CMView, compiled: CompiledSnippet): boolean {
 	const sel = view.state.selection.main;
 	if (!contextAllows(compiled.snippet.context, snippetZoneAt(view.state, sel.from, compiled.lang))) return false;
 	if (compiled.snippet.wrap || usesSelection(compiled.body)) wrapSelection(view, compiled);
-	else expandSnippet(view, compiled.body, sel.from, sel.to, { selection: view.state.sliceDoc(sel.from, sel.to), captures: [] });
+	else
+		expandSnippet(
+			view,
+			spotsOf(view.state, () => compiled.body)
+		);
 	return true;
 }
 
@@ -134,11 +153,14 @@ export type SourceSnippetOptions = {
 
 /** latex and markdown take snippetCompletionSource into their own completion */
 export function sourceSnippets(lang: SnippetLanguage, options: SourceSnippetOptions = {}): Extension {
+	const stopUndoCapture = options.stopUndoCapture ?? (() => {});
 	return [
 		snippetLanguage.of(lang),
+		undoStop.of(stopUndoCapture),
+		snippetSession,
 		choiceFields,
-		autoExpansion(options.stopUndoCapture ?? (() => {})),
-		mathKeys(lang, options.stopUndoCapture ?? (() => {})),
+		autoExpansion(stopUndoCapture),
+		mathKeys(lang, stopUndoCapture),
 		keyedSnippets(lang),
 		openChoices,
 		// typst completion otherwise comes from tinymist alone

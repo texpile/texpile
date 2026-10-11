@@ -10,7 +10,8 @@ import {
 } from '@codemirror/view';
 import { Compartment as CodeMirrorCompartment, EditorState as CodeMirrorState } from '@codemirror/state';
 import { cmCommentHighlights, cmCommentClicks, syncCmCommentHighlights } from './cmComments';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap } from '@codemirror/commands';
+import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { exitCode } from 'prosemirror-commands';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
@@ -132,7 +133,7 @@ export class CodeBlockView {
 			doc: this.node.textContent,
 			extensions: [
 				cmKeymap.of([...this.codeMirrorKeymap(), ...defaultKeymap]),
-				cmKeymap.of([indentWithTab]),
+				cmKeymap.of([tabIndentBinding]),
 				drawSelection(),
 				// Multiple cursors, same as the source editor. forwardUpdate only mirrors the MAIN range
 				// back to ProseMirror - a PM selection cannot hold more than one range - but the edits

@@ -201,4 +201,17 @@ describe('reopening closed tabs', () => {
 		expect(paths()).toEqual(['/data/snippets.json', '/p/main.tex']);
 		allowTabsOutsideRoot(() => false);
 	});
+
+	it('keeps that tab open across a switch to another folder, and through the start screen', () => {
+		allowTabsOutsideRoot((p) => p === '/data/snippets.json');
+		tabs.bind('/p', false);
+		openAndEdit('/data/snippets.json');
+		openAndEdit('/p/main.tex');
+		tabs.bind('/q', false);
+		expect(paths()).toEqual(['/data/snippets.json']);
+		tabs.bind(null, false);
+		tabs.bind('/r', false);
+		expect(paths()).toEqual(['/data/snippets.json']);
+		allowTabsOutsideRoot(() => false);
+	});
 });

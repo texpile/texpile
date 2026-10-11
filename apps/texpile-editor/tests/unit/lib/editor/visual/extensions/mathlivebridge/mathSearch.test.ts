@@ -97,6 +97,16 @@ describe('the math search', () => {
 		expect(mathSearch.field).toBe(null);
 	});
 
+	it('opens on Ctrl+Space too, even with an empty slot ahead, and closes on it again', () => {
+		const field = fakeField('math', '\\frac{x}{\\placeholder{}}');
+		const ctrlSpace = () => new KeyboardEvent('keydown', { key: ' ', ctrlKey: true, bubbles: true, cancelable: true });
+		field.dispatchEvent(ctrlSpace());
+		expect(field.executeCommand).not.toHaveBeenCalled();
+		expect(mathSearch.field).toBe(field);
+		field.dispatchEvent(ctrlSpace());
+		expect(mathSearch.field).toBe(null);
+	});
+
 	it('moves to an empty slot on Tab before it opens anything', () => {
 		const field = fakeField('math', '\\frac{x}{\\placeholder{}}');
 		expect(press(field, 'Tab').defaultPrevented).toBe(true);

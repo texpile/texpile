@@ -1,5 +1,5 @@
 // user package files in LaTeX Workshop's JSON: .texpile/packages/<name>.json and the global folder's
-import { jsonErrorAt, stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
+import { notJson, stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
 import type { PackageData, PkgEntry } from './completion/packageData';
 
 const packages = new Map<string, PackageData>();
@@ -42,9 +42,9 @@ export function parsePackageFile(text: string): { contents: PackageData | null; 
 	try {
 		raw = JSON.parse(stripJsonc(text));
 	} catch (e) {
-		return { contents: null, problem: `is not valid JSON: ${jsonErrorAt(text, (e as Error).message)}` };
+		return { contents: null, problem: notJson(text, e) };
 	}
-	if (!isObject(raw)) return { contents: null, problem: 'is not a JSON object' };
+	if (!isObject(raw)) return { contents: null, problem: 'The file needs to start with { and end with }.' };
 	let dropped = 0;
 	function list(v: unknown): PkgEntry[] {
 		return (Array.isArray(v) ? v : []).flatMap((item) => {
@@ -61,7 +61,7 @@ export function parsePackageFile(text: string): { contents: PackageData | null; 
 		}
 	const contents: PackageData = { macros: list(raw.macros), envs: list(raw.envs), keys };
 	if (Array.isArray(raw.args) && raw.args.every((a) => typeof a === 'string')) contents.args = raw.args as string[];
-	return { contents, problem: dropped ? `has ${dropped} entries that are not the right shape` : null };
+	return { contents, problem: dropped ? `${dropped} of its entries are not in the package file format, so they were left out.` : null };
 }
 
 /** `over` wins on a shared name */

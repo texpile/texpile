@@ -2,7 +2,10 @@
 // MathLive has for the equation's syntax. The equation keeps the focus throughout, so a pick goes in
 // at its caret.
 import type { MathfieldElement } from 'mathlive';
+import type { EditorView as CMView } from '@codemirror/view';
+import { insertIntoSource } from '$lib/editor/source/extensions/math-search/sourceMathInsert';
 import { insertSymbol } from '$lib/editor/visual/toolbar/mathInsert';
+import { expandSnippet } from '$lib/editor/snippets/expand/expandSnippet';
 import { offerPackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import type { LatexSymbol } from '$lib/languages/latex/symbols/latexSymbol.types';
 import { m } from '$lib/paraglide/messages';
@@ -29,7 +32,10 @@ function entryIn(section: string, entry: MathEntry): MathSearchResult {
 
 class MathSearchState {
 	field = $state.raw<MathfieldElement | null>(null);
+	/** the source editor it was opened in, when it was not an equation's field */
+	source = $state.raw<CMView | null>(null);
 	syntax = $state<MathSyntax>('latex');
+	display = $state(false);
 	query = $state('');
 	active = $state(0);
 	place = $state<MathSearchPlace | null>(null);
@@ -38,7 +44,7 @@ class MathSearchState {
 
 	readonly results = $derived.by((): MathSearchResult[] => {
 		const query = this.query.trim();
-		const snippets = snippetStructures(this.syntax);
+		const snippets = snippetStructures(this.syntax, this.display);
 		const found = [
 			...searchStructures(snippets, query).map((structure): MathSearchResult => ({
 				kind: 'structure',
@@ -63,24 +69,46 @@ class MathSearchState {
 		return [...recent, ...found, ...loaded.entries.map((e) => entryIn(e.section, e))];
 	});
 
-	open(field: MathfieldElement, syntax: MathSyntax): void {
+	get showing(): boolean {
+		return (this.field !== null || this.source !== null) && this.place !== null;
+	}
+
+	open(field: MathfieldElement, syntax: MathSyntax, display: boolean): void {
 		this.field = field;
+		this.start(syntax, display, placeUnder(field));
+		field.addEventListener('blur', this.close, { once: true });
+		// placed at the caret, so a click elsewhere in the equation closes it
+		field.addEventListener('selection-change', this.close, { once: true });
+	}
+
+	/** from Ctrl+Space inside math in the source editor, which is LaTeX or Markdown's LaTeX math */
+	openSource(view: CMView, display: boolean): void {
+		this.source = view;
+		const caret = view.coordsAtPos(view.state.selection.main.head);
+		this.start('latex', display, caret ? placeAt(caret.left, caret.top, caret.bottom) : null);
+		view.contentDOM.addEventListener('blur', this.close, { once: true });
+	}
+
+	private start(syntax: MathSyntax, display: boolean, place: MathSearchPlace | null): void {
 		this.syntax = syntax;
+		this.display = display;
 		this.query = '';
 		this.active = 0;
-		this.place = placeUnder(field);
+		this.place = place;
 		this.loaded = this.ready.get(syntax) ?? null;
 		if (!this.loaded)
 			void loadMathEntries(syntax).then((loaded) => {
 				this.ready.set(syntax, loaded);
-				if (this.field === field) this.loaded = loaded;
+				if (this.syntax === syntax) this.loaded = loaded;
 			});
-		field.addEventListener('blur', this.close, { once: true });
 	}
 
 	close = (): void => {
 		this.field?.removeEventListener('blur', this.close);
+		this.field?.removeEventListener('selection-change', this.close);
+		this.source?.contentDOM.removeEventListener('blur', this.close);
 		this.field = null;
+		this.source = null;
 		this.place = null;
 	};
 
@@ -104,9 +132,11 @@ class MathSearchState {
 
 	pick(index = this.active): void {
 		const result = this.results[index];
-		const { field, syntax, loaded } = this;
+		const { field, source, syntax, loaded } = this;
 		this.close();
-		if (!result || !field) return;
+		if (!result) return;
+		if (source) return pickInSource(source, result, loaded);
+		if (!field) return;
 		if (result.kind === 'structure') {
 			insertSymbol(result.structure.latex, result.structure.format);
 			return;
@@ -122,13 +152,34 @@ class MathSearchState {
 	}
 }
 
+function pickInSource(view: CMView, result: MathSearchResult, loaded: MathEntries | null): void {
+	if (result.kind === 'structure') {
+		const { from, to } = view.state.selection.main;
+		const { source } = result.structure;
+		if (source) expandSnippet(view, [{ body: source, from, to, selection: '' }]);
+		else insertIntoSource(view, result.structure.latex);
+		view.focus();
+		return;
+	}
+	insertIntoSource(view, result.entry.command.insert);
+	const { symbol } = result.entry;
+	if (!symbol || !loaded) return;
+	loaded.set.remember(symbol.id);
+	offerPackageFor(symbol as LatexSymbol);
+}
+
 function placeUnder(field: MathfieldElement): MathSearchPlace {
 	const box = field.getBoundingClientRect();
 	// MathLive draws its caret in the field's own tree and has no public way to say where it is
 	const caret = field.shadowRoot?.querySelector('.ML__caret')?.getBoundingClientRect();
-	const left = Math.max(8, Math.min((caret?.left ?? box.left) - 16, window.innerWidth - PANEL_WIDTH - 8));
-	if (window.innerHeight - box.bottom >= PANEL_ROOM || box.top < PANEL_ROOM) return { left, top: box.bottom + 4 };
-	return { left, bottom: window.innerHeight - box.top + 4 };
+	return placeAt(caret?.left ?? box.left, box.top, box.bottom);
+}
+
+/** under the line from `top` to `bottom`, or above it when there is no room below */
+function placeAt(caretLeft: number, top: number, bottom: number): MathSearchPlace {
+	const left = Math.max(8, Math.min(caretLeft - 16, window.innerWidth - PANEL_WIDTH - 8));
+	if (window.innerHeight - bottom >= PANEL_ROOM || top < PANEL_ROOM) return { left, top: bottom + 4 };
+	return { left, bottom: window.innerHeight - top + 4 };
 }
 
 export const mathSearch = new MathSearchState();

@@ -128,7 +128,9 @@ function typeChar(
     }
     // expands once the name ends (`limsup` is not `lim`), then the ending key is typed
     if (expandShortcut(mf, typing)) {
-      typeChar(mf, typing, c, fence);
+      // a space only ended the name, and would delete the slot the shortcut selected
+      if (c !== ' ' || !model.selectionIsPlaceholder)
+        typeChar(mf, typing, c, fence);
       return;
     }
     if (resolveName(mf, typing, c)) return;

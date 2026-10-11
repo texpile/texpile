@@ -6,6 +6,7 @@
 	import { problemsIn, snippetFileAt } from '../file/snippetFiles';
 	import { describeSnippetProblem, snippetStatus } from '../file/snippetStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import type { SnippetProblem } from '../file/snippetTypes';
 
 	type Props = { path: string; root: string | null };
 	const props: Props = $props();
@@ -17,12 +18,22 @@
 		if (file.kind === 'package') return m.snippet_bar_package({ name: file.name });
 		return file.layer === 'project' ? m.snippet_bar_project() : m.snippet_bar_global();
 	});
+	// the bar already names the file
+	function inThisFile(p: SnippetProblem): string {
+		return p.name ? `"${p.name}": ${p.reason}` : p.reason;
+	}
+
 	const warning = $derived.by(() => {
 		if (!problems.length) return '';
 		const whole = problems.find((p) => p.whole);
-		if (whole) return `${whole.kept ? m.snippet_bar_kept() : m.snippet_bar_not_loaded()} ${describeSnippetProblem(whole)}`;
-		const count = problems.length === 1 ? m.snippet_bar_failed_one() : m.snippet_bar_failed_other({ count: problems.length });
-		return `${count} ${describeSnippetProblem(problems[0])}`;
+		if (whole) return `${whole.kept ? m.snippet_bar_kept() : m.snippet_bar_not_loaded()} ${whole.reason}`;
+		const failed = problems.filter((p) => !p.warning);
+		if (failed.length) {
+			const count = failed.length === 1 ? m.snippet_bar_failed_one() : m.snippet_bar_failed_other({ count: failed.length });
+			return `${count} ${inThisFile(failed[0])}`;
+		}
+		const count = problems.length === 1 ? m.snippet_bar_warned_one() : m.snippet_bar_warned_other({ count: problems.length });
+		return `${count} ${inThisFile(problems[0])}`;
 	});
 	// the bar's text is muted, its buttons are not, or they read as disabled
 	const BUTTON = 'btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal text-surface-950-50 shrink-0';
@@ -30,7 +41,12 @@
 </script>
 
 {#if file}
-	<EditorNotice icon={warning ? CircleAlert : Braces} tone={warning ? 'warning' : 'info'} {title} note={warning}>
+	<EditorNotice
+		icon={warning ? CircleAlert : Braces}
+		tone={warning ? 'warning' : 'info'}
+		title={warning ? `${title}.` : title}
+		note={warning}
+	>
 		{#if problems.length > 1}
 			<button
 				type="button"

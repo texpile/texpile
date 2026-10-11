@@ -9,7 +9,7 @@ import {
 	type SnippetProblem,
 	type SnippetVariables
 } from './snippetTypes';
-import { usesSelection } from '../expand/bodyTemplate';
+import { usesSelection } from '../expand/body/bodyNodes';
 import { readCallLook } from './readCallLook';
 
 const CONTEXTS: readonly SnippetContext[] = ['math', 'inline-math', 'display-math', 'text', 'code', 'any'];
@@ -73,56 +73,60 @@ function scopeOf(v: unknown): SnippetLanguage[] | null {
 type EntryResult = { snippet: Snippet } | { disabled: true } | { problem: string } | { skip: true };
 
 function readEntry(name: string, raw: unknown, layer: SnippetLayer): EntryResult {
-	if (!isObject(raw)) return { problem: 'is not an object' };
+	if (!isObject(raw)) return { problem: 'Each entry needs to be in { }, like "Name": { "prefix": "ff", "body": "text" }.' };
 	if (raw.disabled === true) return { disabled: true };
 	const scope = scopeOf(raw.scope);
-	if (!scope) return typeof raw.scope === 'string' ? { skip: true } : { problem: 'scope is not a string' };
+	if (!scope)
+		return typeof raw.scope === 'string' ? { skip: true } : { problem: '"scope" needs to be text naming languages, like "latex,typst".' };
 
 	const wrap = raw.wrap;
-	if (wrap !== undefined && (typeof wrap !== 'string' || !FUNCTION_NAME.test(wrap))) return { problem: 'wrap is not a function name' };
+	if (wrap !== undefined && (typeof wrap !== 'string' || !FUNCTION_NAME.test(wrap)))
+		return { problem: '"wrap" needs to be just a function name, like "rev", without a backslash or #.' };
 
 	const bodies: Snippet['bodies'] = {};
 	if (isObject(raw.body)) {
 		for (const [lang, body] of Object.entries(raw.body)) {
 			const id = LANGUAGE_IDS[lang.toLowerCase()];
 			const text = textOf(body);
-			if (!id) return { problem: `body names an unknown language "${lang}"` };
-			if (text === null) return { problem: `body.${lang} is not text` };
+			if (!id) return { problem: `"body" has "${lang}", which is not a language. Use "latex", "typst" or "markdown".` };
+			if (text === null) return { problem: `The ${lang} "body" needs to be text in quotes.` };
 			if (scope.includes(id)) bodies[id] = text;
 		}
 	} else if (raw.body !== undefined) {
 		const text = textOf(raw.body);
-		if (text === null) return { problem: 'body is not text' };
+		if (text === null) return { problem: '"body" needs to be text in quotes, or one text each for "latex", "typst" and "markdown".' };
 		for (const lang of scope) bodies[lang] = text;
-	} else if (!wrap) return { problem: 'has no body' };
+	} else if (!wrap) return { problem: 'Has no "body", the text it inserts.' };
 
 	const prefixes = typeof raw.prefix === 'string' ? [raw.prefix] : raw.prefix;
 	if (prefixes !== undefined && (!Array.isArray(prefixes) || !prefixes.every((p) => typeof p === 'string' && p))) {
-		return { problem: 'prefix is not text' };
+		return { problem: '"prefix" needs to be text in quotes, or a list of them in [ ].' };
 	}
 	const key = raw.key;
 	let visual: Snippet['visual'];
 	if (raw.visual !== undefined) {
-		if (!wrap) return { problem: 'visual needs wrap' };
+		if (!wrap) return { problem: '"visual" only works together with "wrap", the function whose calls it draws.' };
 		const read = readCallLook(raw.visual);
 		if (typeof read === 'string') return { problem: read };
 		visual = read;
 	}
 	const wraps = !!wrap || Object.values(bodies).some(usesSelection);
-	if (!prefixes?.length && !wraps && typeof key !== 'string') return { problem: 'has no prefix' };
+	if (!prefixes?.length && !wraps && typeof key !== 'string') return { problem: 'Has no "prefix", the text you type to use it.' };
 
 	const context = raw.context ?? 'any';
 	if (!CONTEXTS.includes(context as SnippetContext))
-		return { problem: `context "${String(context)}" is not one of ${CONTEXTS.join(', ')}` };
+		return { problem: `"context" needs to be one of ${CONTEXTS.map((c) => `"${c}"`).join(', ')}.` };
 	for (const flag of ['auto', 'word', 'regex'] as const) {
-		if (raw[flag] !== undefined && typeof raw[flag] !== 'boolean') return { problem: `${flag} is not true or false` };
+		if (raw[flag] !== undefined && typeof raw[flag] !== 'boolean')
+			return { problem: `"${flag}" needs to be true or false, without quotes.` };
 	}
 	const flags = raw.flags ?? '';
-	if (typeof flags !== 'string' || !/^[iu]*$/.test(flags)) return { problem: 'flags may only be i and u' };
-	if (raw.priority !== undefined && typeof raw.priority !== 'number') return { problem: 'priority is not a number' };
-	if (key !== undefined && typeof key !== 'string') return { problem: 'key is not text' };
-	if (raw.args !== undefined && typeof raw.args !== 'string') return { problem: 'args is not text' };
-	if (raw.description !== undefined && typeof raw.description !== 'string') return { problem: 'description is not text' };
+	if (typeof flags !== 'string' || !/^[iu]*$/.test(flags)) return { problem: '"flags" can only hold i (ignore case) and u (Unicode).' };
+	if (raw.priority !== undefined && typeof raw.priority !== 'number')
+		return { problem: '"priority" needs to be a number, without quotes.' };
+	if (key !== undefined && typeof key !== 'string') return { problem: '"key" needs to be text, like "Mod-Shift-o".' };
+	if (raw.args !== undefined && typeof raw.args !== 'string') return { problem: '"args" needs to be text, like "fill: red".' };
+	if (raw.description !== undefined && typeof raw.description !== 'string') return { problem: '"description" needs to be text in quotes.' };
 
 	const langs = wrap ? scope.filter((l) => l !== 'markdown') : (Object.keys(bodies) as SnippetLanguage[]);
 	if (!langs.length) return { skip: true };
@@ -153,7 +157,7 @@ function readVariables(raw: unknown, layer: SnippetLayer, problems: SnippetProbl
 	const out: SnippetVariables = {};
 	if (raw === undefined) return out;
 	if (!isObject(raw)) {
-		problems.push({ layer, name: 'variables', reason: 'is not an object' });
+		problems.push({ layer, name: 'variables', reason: 'Needs to be in { }, with a named list in each entry.' });
 		return out;
 	}
 	for (const [name, value] of Object.entries(raw)) {
@@ -162,9 +166,14 @@ function readVariables(raw: unknown, layer: SnippetLayer, problems: SnippetProbl
 			out[name] = Object.fromEntries(
 				Object.entries(value).flatMap(([lang, v]) => (LANGUAGE_IDS[lang.toLowerCase()] ? [[LANGUAGE_IDS[lang.toLowerCase()], v]] : []))
 			);
-		} else problems.push({ layer, name: `variables.${name}`, reason: 'is not text' });
+		} else problems.push({ layer, name: `variables.${name}`, reason: 'Needs to be text, or one text per language.' });
 	}
 	return out;
+}
+
+/** why `text` is not JSON, and where */
+export function notJson(text: string, error: unknown): string {
+	return `The file is not valid JSON: ${jsonErrorAt(text, (error as Error).message)}.`;
 }
 
 /** a JSON.parse message with its character offset as a line and column of `text` */
@@ -174,7 +183,7 @@ export function jsonErrorAt(text: string, message: string): string {
 	const before = text.slice(0, Number(at[1]));
 	const line = before.split('\n').length;
 	const column = before.length - before.lastIndexOf('\n');
-	return `line ${line}, column ${column}: ${message.slice(0, at.index)}${message.slice(at.index + at[0].length)}`;
+	return `line ${line}, column ${column} (${message.slice(0, at.index)}${message.slice(at.index + at[0].length)})`;
 }
 
 export function parseSnippetFile(text: string, layer: SnippetLayer): SnippetFile {
@@ -183,16 +192,21 @@ export function parseSnippetFile(text: string, layer: SnippetLayer): SnippetFile
 	try {
 		parsed = JSON.parse(stripJsonc(text));
 	} catch (e) {
-		file.problems.push({ layer, name: '', reason: `is not valid JSON: ${jsonErrorAt(text, (e as Error).message)}`, whole: true });
+		file.problems.push({ layer, name: '', reason: notJson(text, e), whole: true });
 		return file;
 	}
 	if (!isObject(parsed)) {
-		file.problems.push({ layer, name: '', reason: 'is not a JSON object', whole: true });
+		file.problems.push({ layer, name: '', reason: 'The file needs to start with { and end with }.', whole: true });
 		return file;
 	}
 	const wrapped = isObject(parsed.snippets) && !('body' in parsed.snippets);
 	if (wrapped && parsed.v !== undefined && parsed.v !== 1) {
-		file.problems.push({ layer, name: '', reason: `is version ${String(parsed.v)}, which this Texpile cannot read`, whole: true });
+		file.problems.push({
+			layer,
+			name: '',
+			reason: `Unsupported file version ("v": ${String(parsed.v)}).`,
+			whole: true
+		});
 		return file;
 	}
 	const entries = (wrapped ? parsed.snippets : parsed) as Record<string, unknown>;

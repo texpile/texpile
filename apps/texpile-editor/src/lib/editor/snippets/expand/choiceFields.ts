@@ -1,4 +1,5 @@
-import { hasNextSnippetField, hasPrevSnippetField, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
+import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
+import { inSnippet } from './snippetSession';
 import { StateEffect, StateField, type EditorState } from '@codemirror/state';
 
 export type ChoiceField = { from: number; to: number; options: string[] };
@@ -10,7 +11,7 @@ export const choiceFields = StateField.define<ChoiceField[]>({
 	update(fields, tr) {
 		let next = tr.docChanged ? fields.map((f) => ({ ...f, from: tr.changes.mapPos(f.from, -1), to: tr.changes.mapPos(f.to, 1) })) : fields;
 		for (const e of tr.effects) if (e.is(addChoiceFields)) next = [...next, ...e.value];
-		if (next.length && !hasNextSnippetField(tr.state) && !hasPrevSnippetField(tr.state)) return [];
+		if (next.length && !inSnippet(tr.state)) return [];
 		return next;
 	}
 });

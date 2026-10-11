@@ -7,13 +7,18 @@ import type { ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { m } from '$lib/paraglide/messages';
 import type { Dialect } from '$lib/editor/visual/dialect';
 import type { CompiledSnippet } from '../expand/matchSnippets';
+import { contextAllows } from '../expand/snippetZone';
+import { toVisualText } from '../expand/body/visualBody';
+import { insertVisualBody, TEXT_ZONE, textToSource } from './visualTextSnippets';
 import { snippetRegistry, type SnippetRegistry } from '../file/snippetRegistry';
 import type { CallDialect } from './callWrappers';
 import { latexSourceSlice, sliceToLatex } from '$lib/editor/visual/extensions/latexClipboard';
 import { sliceToTypst, typstSourceSlice } from '$lib/languages/typst/visual/clipboard';
 
 export function visualWraps(dialect: Dialect): CompiledSnippet[] {
-	return dialect === 'markdown' ? [] : snippetRegistry().languages[dialect].wraps.filter((c) => c.snippet.wrap);
+	return dialect === 'markdown'
+		? []
+		: snippetRegistry().languages[dialect].wraps.filter((c) => contextAllows(c.snippet.context, TEXT_ZONE));
 }
 
 function callSource(dialect: CallDialect, compiled: CompiledSnippet, inner: string): string {
@@ -37,9 +42,14 @@ export function wrapVisualSelection(view: PMView, compiled: CompiledSnippet, dia
 	const { from, to, empty, $from, $to } = view.state.selection;
 	if (empty || !$from.sameParent($to) || !$from.parent.isTextblock) return false;
 	const selected = view.state.doc.slice(from, to);
-	const source =
-		dialect === 'latex' ? callSource(dialect, compiled, sliceToLatex(selected)) : callSource(dialect, compiled, sliceToTypst(selected));
-	const read = readInline(dialect, source);
+	const selection = dialect === 'latex' ? sliceToLatex(selected) : sliceToTypst(selected);
+	if (!compiled.snippet.wrap) {
+		const body = toVisualText(compiled.body, { selection, captures: [] }, textToSource(dialect, view.state.schema));
+		const done = insertVisualBody(view, dialect === 'latex' ? latexSourceSlice : typstSourceSlice, body, from, to);
+		if (done) view.focus();
+		return done;
+	}
+	const read = readInline(dialect, callSource(dialect, compiled, selection));
 	if (!read) return false;
 	view.dispatch(view.state.tr.replaceRange(from, to, read).scrollIntoView());
 	view.focus();

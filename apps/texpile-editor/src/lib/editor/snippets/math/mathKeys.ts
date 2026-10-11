@@ -1,5 +1,5 @@
 // latex suite keys a snippet pattern cannot do: auto-fraction, tab out, matrix keys
-import { hasNextSnippetField } from '@codemirror/autocomplete';
+import { hasNextPlace } from '../expand/snippetSession';
 import { syntaxTree } from '@codemirror/language';
 import { Prec, type EditorState, type Extension } from '@codemirror/state';
 import { EditorView, keymap, type EditorView as CMView } from '@codemirror/view';
@@ -41,7 +41,7 @@ function autoFraction(lang: SnippetLanguage, stopUndoCapture: () => void): Exten
 		view.dispatch({ changes: { from, insert: '/' }, selection: { anchor: from + 1 }, userEvent: 'input.type' });
 		stopUndoCapture();
 		const numerator = numeratorOf(before.slice(start));
-		expandSnippet(view, '\\\\frac{${TM_SELECTED_TEXT}}{$1}$0', line.from + start, from + 1, { selection: numerator, captures: [] });
+		expandSnippet(view, [{ body: '\\\\frac{${TM_SELECTED_TEXT}}{$1}$0', from: line.from + start, to: from + 1, selection: numerator }]);
 		return true;
 	});
 }
@@ -55,7 +55,7 @@ function tabOut(lang: SnippetLanguage) {
 	return (view: CMView): boolean => {
 		const { state } = view;
 		const sel = state.selection.main;
-		if (settings.current.tabOut !== true || !sel.empty || hasNextSnippetField(state) || onlyIndentBefore(state, sel.head)) return false;
+		if (settings.current.tabOut !== true || !sel.empty || hasNextPlace(state) || onlyIndentBefore(state, sel.head)) return false;
 		const bounds = inMath(state, sel.head, lang) ? mathBoundsAt(state, sel.head, lang) : null;
 		if (!bounds) return false;
 		const rest = state.sliceDoc(sel.head, bounds.innerTo);
@@ -97,7 +97,7 @@ function matrixKey(lang: SnippetLanguage, insert: (state: EditorState, pos: numb
 	return (view: CMView): boolean => {
 		const { state } = view;
 		const sel = state.selection.main;
-		if (hasNextSnippetField(state) || !inMatrix(state, sel.from, lang)) return false;
+		if (hasNextPlace(state) || !inMatrix(state, sel.from, lang)) return false;
 		// tab over a selection or at a line start still indents
 		if (indents && (state.selection.ranges.some((r) => !r.empty) || onlyIndentBefore(state, sel.head))) return false;
 		const text = insert(state, sel.from);

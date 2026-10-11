@@ -262,7 +262,7 @@ export type KeyboardOptions = {
   keybindings: readonly Keybinding[];
 };
 
-/** a Typst field shortcut; a LaTeX value's `#?` are Tab stops */
+/** a Typst field shortcut; the `#?` in its value are slots, in either format */
 export type TypstShortcut = { value: string; format: 'latex' | 'typst' };
 
 /** @internal */

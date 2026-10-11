@@ -77,6 +77,37 @@ describe('typing in a Typst field', () => {
     ]);
   });
 
+  it('makes the `#?` of a Typst shortcut slots, the first one taking what is typed next', () => {
+    const mf = field();
+    mf.typstShortcuts = {
+      fr: { value: 'frac(#?, #?)', format: 'typst' },
+      paren: { value: 'lr(( #? ))', format: 'typst' },
+      col: { value: 'vec(#?) + x', format: 'typst' },
+    };
+    const results = ['fr a⇥b', 'paren Q', 'fr+', 'col 1'].map((keys) => {
+      mf.setValue('', { format: 'typst' });
+      type(mf, keys);
+      return mf.getValue('typst');
+    });
+    mf.remove();
+    expect(results).toEqual([
+      'frac(a, b)',
+      'lr(( Q ))',
+      'frac(+, "")',
+      'vec(1) + x',
+    ]);
+  });
+
+  it('undoes a shortcut back to the letters typed, whatever it ends with', () => {
+    const mf = field();
+    mf.typstShortcuts = { pair: { value: 'x+x', format: 'typst' } };
+    type(mf, 'a + pair ');
+    mf.executeCommand('undo');
+    const undone = mf.getValue('typst');
+    mf.remove();
+    expect(undone).toBe('a + p a i r');
+  });
+
   it('waits for a name to end before it expands a shortcut', () => {
     const mf = field();
     mf.typstShortcuts = {

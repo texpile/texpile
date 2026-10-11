@@ -1,9 +1,10 @@
-// Tab goes to the next empty slot or opens math search; an open search gets keys before MathLive
+// Tab goes to the next empty slot or opens math search, Ctrl+Space opens it as in the source editor, and either
+// again closes it; an open search gets keys before MathLive, and before the source editor (sourceMathSearch.ts)
 import type { MathfieldElement } from 'mathlive';
 import { mathSearch } from './mathSearch.svelte';
 import { placeholderAhead } from '$lib/editor/snippets/visual/mathliveSnippets';
 
-const MODIFIERS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'AltGraph']);
+export const MODIFIERS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'AltGraph']);
 // about as many rows as the panel shows
 const PAGE = 8;
 
@@ -17,8 +18,17 @@ function plain(event: KeyboardEvent): boolean {
 	return !event.ctrlKey && !event.metaKey && !event.altKey;
 }
 
+/** Ctrl+Space, Control on macOS too, as codemirror's own key for suggestions */
+export function isSearchKey(event: KeyboardEvent): boolean {
+	return event.key === ' ' && event.ctrlKey && !event.shiftKey && !event.altKey && !event.metaKey;
+}
+
+function isTab(event: KeyboardEvent): boolean {
+	return event.key === 'Tab' && !event.shiftKey && plain(event);
+}
+
 function opensSearch(event: KeyboardEvent, field: MathfieldElement): boolean {
-	return event.key === 'Tab' && !event.shiftKey && plain(event) && field.mode === 'math' && !field.readOnly && !suggestionsShowing();
+	return (isTab(event) || isSearchKey(event)) && field.mode === 'math' && !field.readOnly && !suggestionsShowing();
 }
 
 /** kept from MathLive, which would go back a slot, and from the browser, which would leave the equation */
@@ -27,9 +37,14 @@ function isShiftTab(event: KeyboardEvent): boolean {
 }
 
 /** whether the open search takes the key; any other key closes it and goes on to the equation */
-function takeSearchKey(event: KeyboardEvent): boolean {
+export function takeSearchKey(event: KeyboardEvent): boolean {
+	if (isSearchKey(event)) {
+		mathSearch.close();
+		return true;
+	}
 	switch (event.key) {
 		case 'Escape':
+		case 'Tab':
 			mathSearch.close();
 			return true;
 		case 'ArrowDown':
@@ -45,7 +60,6 @@ function takeSearchKey(event: KeyboardEvent): boolean {
 			mathSearch.move(-PAGE);
 			return true;
 		case 'Enter':
-		case 'Tab':
 			mathSearch.pick();
 			return true;
 		case 'Backspace':
@@ -67,8 +81,8 @@ export function mathSearchKeydown(event: KeyboardEvent): void {
 		// a modifier on its own is the start of a key, not one
 		if (MODIFIERS.has(event.key) || !takeSearchKey(event)) return;
 	} else if (opensSearch(event, field)) {
-		if (placeholderAhead(field)) field.executeCommand('moveToNextPlaceholder');
-		else mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex');
+		if (isTab(event) && placeholderAhead(field)) field.executeCommand('moveToNextPlaceholder');
+		else mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex', field.closest('.block-math-container') !== null);
 	} else if (!isShiftTab(event)) return;
 	event.preventDefault();
 	event.stopImmediatePropagation();

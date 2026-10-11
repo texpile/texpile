@@ -12,7 +12,9 @@ import {
 } from '@codemirror/view';
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, type Compartment, type Extension } from '@codemirror/state';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap } from '@codemirror/commands';
+import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
@@ -143,6 +145,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					latexListContinuation(),
 					mathPreview(),
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
+					sourceMathSearch(),
 					cmSpellcheck(deps.spellLanguage)
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
@@ -153,6 +156,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						mdPathCompletion(),
 						sourceSnippets('markdown', snippetOptions),
 						mathPreview({ markdown: true }),
+						sourceMathSearch(),
 						cmSpellcheck(deps.spellLanguage, 'markdown'),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme
@@ -198,7 +202,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			// the file's history, which the visual editor and the disk share; a view with no text binding is read-only
 			...(collab ? yUndoManagerKeymap : []),
 			...searchKeymap,
-			indentWithTab
+			tabIndentBinding
 		]),
 		deps.wrapConf.of(deps.lineWrap ? EditorView.lineWrapping : []),
 		// opt-in diagnostic for "the caret moved and I didn't move it"; see caretDoctor

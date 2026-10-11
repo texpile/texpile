@@ -18,7 +18,7 @@ afterEach(() => setUserPackages(new Map()));
 describe('package files', () => {
 	it('completes the commands only where the package is loaded', () => {
 		const { contents, problem } = parsePackageFile(FILE);
-		expect(problem).toBe('has 2 entries that are not the right shape');
+		expect(problem).toMatch(/^2 of its entries/);
 		setUserPackages(new Map([['review', contents!]]));
 		const labels = (text: string) => macroOptions(text).map((o) => o.label);
 		expect(labels('\\usepackage{review}\n')).toContain('\\offen');

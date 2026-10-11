@@ -39,7 +39,7 @@
 
 	// the panel is placed once, so it goes when what it was placed against moves
 	$effect(() => {
-		if (!mathSearch.field) return;
+		if (!mathSearch.showing) return;
 		const close = mathSearch.close;
 		function onScroll(e: Event) {
 			if (!(e.target instanceof Node && panel?.contains(e.target))) close();
@@ -53,7 +53,7 @@
 	});
 </script>
 
-{#if mathSearch.field && mathSearch.place}
+{#if mathSearch.showing && mathSearch.place}
 	{@const place = mathSearch.place}
 	<Portal>
 		<div
@@ -73,7 +73,7 @@
 			</div>
 			<ul bind:this={list} class="min-h-0 overflow-y-auto" role="listbox" aria-label={m.symbols_results_aria()} onscroll={onListScroll}>
 				{#each rows as result, i (keyOf(result))}
-					{#if i === 0 || rows[i - 1].section !== result.section}
+					{#if result.section && (i === 0 || rows[i - 1].section !== result.section)}
 						<li class={menuGroupLabelClass} role="presentation">{result.section}</li>
 					{/if}
 					<!-- the keys reach the rows through the equation, which keeps the focus -->

@@ -55,7 +55,7 @@ export function useSessionCallLooks(looks: CallLooks | null): void {
 
 export function describeSnippetProblem(p: SnippetProblem): string {
 	const file = p.file ?? (p.layer === 'project' ? '.texpile/snippets.json' : m.snippets_global_file());
-	return p.name ? `${file}: "${p.name}" ${p.reason}` : `${file} ${p.reason}`;
+	return p.name ? `${file}, "${p.name}": ${p.reason}` : `${file}: ${p.reason}`;
 }
 
 onPackageFilesChanged(() => snippetStatus.packages++);
@@ -80,7 +80,8 @@ onSnippetRegistry(() => {
 	applyCallLooks(sessionLooks ?? snippetStatus.looks);
 	// the file open in the editor has its own bar saying what failed, and changes on every autosave
 	const open = activeFilePath.current ? snippetFileAt(activeFilePath.current, workspaceRoot.current, files) : null;
-	const told = open ? problems.filter((p) => !problemsIn(open, [p]).length) : problems;
+	// a warning is for when the file is open: its snippet still works
+	const told = problems.filter((p) => !p.warning && !(open && problemsIn(open, [p]).length));
 	const key = told.map(describeSnippetProblem).join('\n');
 	if (key && key !== shown)
 		toaster.warning({ title: m.snippets_problems_title({ count: told.length }), description: describeSnippetProblem(told[0]) });

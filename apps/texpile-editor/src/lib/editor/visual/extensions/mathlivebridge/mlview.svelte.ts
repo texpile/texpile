@@ -219,12 +219,14 @@ export class MathLiveView implements NodeView {
 			this.syntax === 'typst'
 				? {
 						syntax: 'typst',
+						display: this.isblock,
 						set: (shortcuts) => {
 							if (field.isConnected) field.typstShortcuts = shortcuts;
 						}
 					}
 				: {
 						syntax: 'latex',
+						display: this.isblock,
 						defaults: field.inlineShortcuts,
 						set: (shortcuts) => {
 							if (field.isConnected) field.inlineShortcuts = shortcuts;

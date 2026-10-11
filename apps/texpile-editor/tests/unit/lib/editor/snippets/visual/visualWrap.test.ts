@@ -3,7 +3,8 @@ import { afterEach, expect, it } from 'vitest';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { parseTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { visualWrapKeys } from '$lib/editor/snippets/visual/visualWrap';
+import { visualWrapKeys, visualWraps, wrapVisualSelection } from '$lib/editor/snippets/visual/visualWrap';
+import { sliceToTypst } from '$lib/languages/typst/visual/clipboard';
 import { setCallWrappers } from '$lib/editor/snippets/visual/callWrappers';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { setSnippetLayers } from '$lib/editor/snippets/file/snippetRegistry';
@@ -43,4 +44,20 @@ it('a wrap key in the visual editor draws the call when a snippet gives it a loo
 
 it('a wrap key in the visual editor makes a raw chip of the call when nothing gives it a look', () => {
 	expect(pressWrapKey()).toEqual(['chip:#offen[this part]']);
+});
+
+it('a snippet that takes the selection is a Wrap With entry in the visual editor too', () => {
+	setSnippetLayers({
+		global: parseSnippetFile('{ "Strong": { "scope": "typst", "body": "*${TM_SELECTED_TEXT}*" } }', 'global'),
+		project: null,
+		allowedPatterns: null
+	});
+	const [entry] = visualWraps('typst');
+	expect(entry?.snippet.name).toBe('Strong');
+	const { doc } = parseTypstFile('Check this part now.\n');
+	const from = 1 + 'Check '.length;
+	const state = EditorState.create({ doc });
+	view = new EditorView(document.body, { state: state.apply(state.tr.setSelection(TextSelection.create(doc, from, from + 9))) });
+	expect(wrapVisualSelection(view, entry, 'typst')).toBe(true);
+	expect(sliceToTypst(view.state.doc.slice(0, view.state.doc.content.size))).toBe('Check *this part* now.');
 });
