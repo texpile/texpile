@@ -154,3 +154,18 @@ describe('cross-file macros make a fragment round-trip its custom command', () =
 		expect(chipsWith(FRAGMENT, '', '[Important]')).toBe(0);
 	});
 });
+
+describe('an installed package gives the parser its commands', () => {
+	const STY =
+		'\\newcommand{\\hlnote}[2][TODO]{\\textbf{#1}: #2}\n\\renewcommand{\\section}{x}\n\\newcommand{\\pkg@inner}{}\n\\newcommand{\\textbf}{}\n';
+	const MAIN = '\\documentclass{article}\n\\usepackage{reviewnotes}\n\\begin{document}\n\\end{document}';
+
+	it('passes on what the package defines, and nothing it redefines or keeps internal', async () => {
+		h.fs = { '/proj/main.tex': MAIN };
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (f) => (f === 'reviewnotes.sty' ? STY : null));
+		expect(macros).toContain('\\NewDocumentCommand{\\hlnote}{o m}{}');
+		expect(macros).not.toMatch(/section|pkg@inner|textbf/);
+		const { doc } = LatexParser.latexToProseMirror('Intro \\hlnote [Important]{check this} outro.', { preamble: macros });
+		expect(serializeToLatex(doc)).toContain('[Important]{check this}');
+	});
+});

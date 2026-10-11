@@ -16,12 +16,30 @@ import {
 import { convertNodesToInline } from './inlineConvert';
 import { plainArgText } from './plainArgText';
 import { nodeRawSpan, rawTextNode } from './origCapture';
+import { isCallWrapper } from '$lib/editor/snippets/visual/callWrappers';
 
 export type MacroHandler = (macro: Macro, ctx: ConversionContext) => PmNode[] | null;
 
 /** a chip under \textbf{...} has no text child to carry the mark, so it wears it itself */
 function markChip(chip: PmNode, ctx: ConversionContext): PmNode {
 	return ctx.marks.length > 0 ? chip.mark(realMarks(ctx.marks)) : chip;
+}
+
+/** a call to a function a snippet file gives a look: the braced last argument is its text, the optional one its args */
+export function wrapperCall(macro: Macro, ctx: ConversionContext): PmNode[] {
+	const args = macro.args ?? [];
+	const optional = args.find((a) => a.openMark === '[');
+	const attrs = { name: macro.content, args: optional ? printRaw(optional.content) : '' };
+	const nodes = convertNodesToInline(args[args.length - 1].content, { ...ctx, marks: [...ctx.marks, { type: 'call', attrs }] });
+	// a citation or a chip inside takes no mark from the context, and outside the call it would split it in two
+	const [call] = realMarks([{ type: 'call', attrs }]);
+	return nodes.map((node) => node.mark(call.addToSet(node.marks)));
+}
+
+/** a braced argument for wrapperCall to take; without one the call stays a chip */
+export function takesWrapperCall(macro: Macro): boolean {
+	const last = macro.args?.[macro.args.length - 1];
+	return isCallWrapper('latex', macro.content) && last?.openMark === '{';
 }
 
 export const macroHandlers: Record<string, MacroHandler> = {

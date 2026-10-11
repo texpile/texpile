@@ -13,6 +13,8 @@ import { withFrecency } from './frecency';
 import { ENV_AS_MACRO_OPTIONS } from './environments';
 import { LW_MACROS, type LwMacro } from '../data/lwMacros';
 import { TEX_MACROS } from '../data/texMacros';
+import { userPackage } from '../userPackages';
+import { detectedPackages, toCmSnippet } from './packageData';
 
 type InfoMap = Record<string, Record<string, { signature?: string }>>;
 
@@ -168,12 +170,26 @@ function projectMacroOptions(): Completion[] {
 /** static + user-defined (buffer and project-wide) macro completions, frecency-boosted.
  * buffer definitions are served from the last finished worker scan, so after an edit they can
  * lag by the debounce plus parse time; static/project options are always current. */
+/** the commands of the packages this file loads that have a package file of the user's own */
+function userPackageMacroOptions(text: string): Completion[] {
+	const options: Completion[] = [];
+	for (const pkg of detectedPackages(text)) {
+		for (const m of userPackage(pkg)?.macros ?? []) {
+			if (m.unusual || STATIC_NAMES.has(m.name)) continue;
+			const base = { label: '\\' + m.name, type: 'function', detail: m.detail ?? pkg, info: m.doc };
+			options.push(m.arg?.snippet ? snippetCompletion('\\' + toCmSnippet(m.arg.snippet), base) : base);
+		}
+	}
+	return options;
+}
+
 export function macroOptions(text: string): Completion[] {
 	if (cache?.text !== text) scheduleRefresh(text); // docText makes this a reference compare
 	const buffer = cache?.options ?? [];
 	const bufferNames = new Set(buffer.map((o) => o.label));
 	const project = projectMacroOptions().filter((o) => !bufferNames.has(o.label));
-	return withFrecency([...STATIC_MACRO_OPTIONS, ...buffer, ...project]);
+	const packages = userPackageMacroOptions(text).filter((o) => !bufferNames.has(o.label));
+	return withFrecency([...STATIC_MACRO_OPTIONS, ...buffer, ...project, ...packages]);
 }
 
 /** looks up a macro's completion by name, for hover. null means "not a recognized macro". */

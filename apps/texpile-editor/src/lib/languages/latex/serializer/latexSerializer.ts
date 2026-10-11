@@ -10,7 +10,7 @@ import { serializeTable, serializeRowCells, serializeCell } from './tableSeriali
 import { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from '../parser/converter';
 import { blankLineAt, createBlockAssembly, type DocSerializeResult } from '$lib/serializer/blockAssembly';
 import type { Ctx, NodeHandler } from '$lib/serializer/types';
-import { esc, applyMarks, bareTextString, joinInline, markableMarks, marksKey } from './textEscapes';
+import { esc, applyMarks, bareTextString, callRun, joinInline, markableMarks, marksKey } from './textEscapes';
 import { blockMath, alignEnvironment } from './mathBlocks';
 import { isHandlerLeaf, mapRunLeaves, renderShadowed, shadowed, standIn, withoutShadow } from './latexShadowRun';
 import { buildIncludegraphics } from './includegraphics';
@@ -84,6 +84,12 @@ export function renderChildren(node: Node, inTableCell: boolean): string {
 	let pieces: string[] = [];
 	let i = 0;
 	while (i < children.length) {
+		const call = callRun(children, i);
+		if (call) {
+			pieces.push(applyMarks(renderChildren(call.inner, inTableCell), [call.mark]));
+			i = call.end;
+			continue;
+		}
 		const marks = markableMarks(children[i]);
 		let j = i + 1;
 		if (marks && marks.length > 0) {

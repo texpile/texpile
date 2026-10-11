@@ -4,9 +4,12 @@ const tex = vi.hoisted(() => ({ reachable: false, year: '2025', calls: 0 }));
 vi.mock('node:child_process', () => ({
 	execFile: (_cmd: string, args: string[], _opts: unknown, cb: (err: unknown, stdout: string) => void) => {
 		tex.calls++;
-		if (!tex.reachable) cb(Object.assign(new Error('spawn kpsewhich ENOENT'), { code: 'ENOENT' }), '');
-		else if (args[0] === 'missing.bib') cb(Object.assign(new Error('exit 1'), { code: 1 }), '');
-		else cb(null, `/usr/local/texlive/${tex.year}/texmf-dist/${args[0]}\n`);
+		if (!tex.reachable) return cb(Object.assign(new Error('spawn kpsewhich ENOENT'), { code: 'ENOENT' }), '');
+		const stdout = args
+			.filter((a) => !a.startsWith('missing'))
+			.map((a) => `/usr/local/texlive/${tex.year}/texmf-dist/${a}\n`)
+			.join('');
+		cb(args.some((a) => a.startsWith('missing')) ? Object.assign(new Error('exit 1'), { code: 1 }) : null, stdout);
 	}
 }));
 vi.mock('../../../../../electron/src/shell/shellEnv', () => ({ shellEnvReady: async () => {} }));
@@ -37,4 +40,12 @@ it('asks the TeX that a change to the Toolchain folders put first', async () => 
 	setToolDirs(['/usr/local/texlive/2024/bin/x86_64-linux']);
 	expect(await kpsewhich('pdftex.map')).toBe('/usr/local/texlive/2024/texmf-dist/pdftex.map');
 	setToolDirs([]);
+});
+
+it('asks for the names wanted together in one run, and a miss among them leaves the others found', async () => {
+	tex.reachable = true;
+	const calls = tex.calls;
+	const found = await Promise.all(['a.sty', 'missing.sty', 'b.sty'].map((f) => kpsewhich(f)));
+	expect(found).toEqual(['/usr/local/texlive/2024/texmf-dist/a.sty', null, '/usr/local/texlive/2024/texmf-dist/b.sty']);
+	expect(tex.calls).toBe(calls + 1);
 });

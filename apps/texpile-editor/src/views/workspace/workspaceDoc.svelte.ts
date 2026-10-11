@@ -9,8 +9,9 @@ import { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import { DiffMode } from '$lib/workspace/diffMode.svelte';
 import { FileOpener } from '$lib/workspace/fileOpener';
 import { VisualParser, MAX_VISUAL_BYTES, type ParseFailure } from '$lib/workspace/visualParse.svelte';
-import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
-import { workspaceRoot, activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
+import { followParseContext } from '$lib/collab/parse/followParseContext.svelte';
+import { gatherProjectMacros } from '$lib/workspace/project';
+import { activeCompare, activeFilePath, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { countOpenFile } from '$lib/stores/countStore.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
@@ -22,6 +23,7 @@ import { toaster } from '$lib/modals/toaster-svelte';
 import { openTexFileOf } from '$lib/workspace/edits/openEditorEdit';
 import { openTexFile } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { m } from '$lib/paraglide/messages';
+import { snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
 
 type DocDeps = {
 	provider: WorkspaceProvider;
@@ -182,6 +184,19 @@ export class WorkspaceDoc {
 			openTexFile.current = openTexFileOf({ doc: this.doc, mode: () => this.modes.mode, kind: () => this.doc.kind, parseVisual });
 			return () => (openTexFile.current = null);
 		});
+		// a wrapper given a look or dropped in a snippet file changes what a call parses to
+		let wrappersSeen = snippetStatus.wrappers;
+		$effect(() => {
+			const now = snippetStatus.wrappers;
+			if (now === wrappersSeen) return;
+			wrappersSeen = now;
+			untrack(() => {
+				visualDocCache.clear();
+				this.parser.lastParsedSource = '';
+				if (this.doc.path && (this.doc.kind === 'typ' || this.doc.kind === 'tex') && this.modes.mode === 'visual')
+					this.rebuildVisualFromSource(true);
+			});
+		});
 		// shared session: a file the host holds in a NON-Y-bound editor is host-exclusive (guests go
 		// read-only), else concurrent guest edits to that file's Y.Text would be clobbered.
 		$effect(() => {
@@ -189,29 +204,39 @@ export class WorkspaceDoc {
 			if (!session.active) return;
 			session.setVisualLock(this.hostHoldsExclusively(this.doc.kind, this.modes.mode, this.doc.path) ? this.doc.path : null);
 		});
-		// guests: resolve the main file + cross-file macro context from the shared doc (the host-only
-		// initProject never runs for them), re-gathered when the shared file set changes, so visual
-		// parses see the project's custom macro signatures and can't mis-serialize a guest edit
-		$effect(() => {
-			if (!d.guest() || !d.session().active) return;
-			void d.session().manifestRev;
-			const root = workspaceRoot.current;
-			if (!root) return;
-			void (async () => {
-				try {
-					const files = await d.provider.scanTexFiles(root);
-					const main = await detectMainFile(files, d.provider.readText);
-					const macros = main ? await gatherProjectMacros(main, root, d.provider.readText) : '';
-					if (macros === this.projectMacros) return;
-					this.projectMacros = macros;
-					// signatures changed: a doc parsed without them is stale, re-derive the open one
-					this.parser.lastParsedSource = '';
-					if (this.doc.path && this.doc.kind === 'tex' && this.modes.mode === 'visual') this.rebuildVisualFromSource(true);
-				} catch {
-					this.projectMacros = '';
-				}
-			})();
+		// a guest parses with what the host parses with, so a call or a command's arguments read the same on both sides
+		followParseContext({
+			session: d.session,
+			guest: d.guest,
+			macros: () => this.projectMacros,
+			adoptMacros: (macros) => this.adoptProjectMacros(macros)
 		});
+		// a package file names the arguments of its commands and loads after the folder opens, and a pull can
+		// bring another main file in .texpile/config.json
+		let packagesSeen = snippetStatus.packages;
+		let mainSeen = mainFile.current;
+		$effect(() => {
+			const now = snippetStatus.packages;
+			const main = mainFile.current;
+			if (now === packagesSeen && main === mainSeen) return;
+			packagesSeen = now;
+			mainSeen = main;
+			const root = untrack(() => workspaceRoot.current);
+			if (untrack(d.guest) || !root) return;
+			if (!main) return this.adoptProjectMacros('');
+			void gatherProjectMacros(main, root).then((macros) => {
+				if (mainFile.current === main) this.adoptProjectMacros(macros);
+			});
+		});
+	}
+
+	/** new signatures make every doc parsed without them stale */
+	private adoptProjectMacros(macros: string): void {
+		if (macros === this.projectMacros) return;
+		this.projectMacros = macros;
+		visualDocCache.clear();
+		this.parser.lastParsedSource = '';
+		if (this.doc.path && this.doc.kind === 'tex' && this.modes.mode === 'visual') this.rebuildVisualFromSource(true);
 	}
 
 	tryParseVisual(text: string) {

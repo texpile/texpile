@@ -7,6 +7,8 @@ import { detectDistros } from '../shell/distros';
 import * as toolchain from '../toolchain';
 import { kpsewhich } from '../shell/kpsewhich';
 
+const MAX_PACKAGE_BYTES = 2 * 1024 * 1024;
+
 export function registerToolchainIpc(): void {
 	// tinymist is not in this list: typst:resolve answers for it, with more detail
 	ipcMain.handle('toolchain:probe', (e) =>
@@ -20,6 +22,18 @@ export function registerToolchainIpc(): void {
 		if (typeof name !== 'string' || !/^[\w.+-]+\.bib$/i.test(name)) return null;
 		const found = await kpsewhich(name);
 		return found ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
+	});
+	// a package's own .sty, for the parser's argument signatures; a bare name only
+	ipcMain.handle('toolchain:texPackage', async (_e, name: unknown) => {
+		if (typeof name !== 'string' || !/^[\w.+-]+\.sty$/i.test(name)) return null;
+		const found = await kpsewhich(name);
+		if (!found) return null;
+		const size = await fs.promises.stat(found).then(
+			(s) => s.size,
+			() => Infinity
+		);
+		// a generated .sty can run to megabytes; its definitions are not worth the read
+		return size <= MAX_PACKAGE_BYTES ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
 	});
 	ipcMain.handle('toolchain:dirForms', (_e, entry: unknown) => {
 		// an AppImage on a stick is as portable as the Windows zip; its launcher says so in the environment

@@ -8,6 +8,7 @@ import type { LatexSymbol } from '$lib/languages/latex/symbols/latexSymbol.types
 import { m } from '$lib/paraglide/messages';
 import type { MathSyntax } from '../mathFieldFactory';
 import { mathStructures, searchStructures, type MathStructure } from './mathStructures';
+import { snippetStructures } from '$lib/editor/snippets/visual/mathliveSnippets';
 import { loadMathEntries, searchMathEntries, type MathEntries, type MathEntry } from './mathEntries';
 
 export type MathSearchResult = { section: string } & (
@@ -37,11 +38,19 @@ class MathSearchState {
 
 	readonly results = $derived.by((): MathSearchResult[] => {
 		const query = this.query.trim();
-		const found = searchStructures((structures ??= mathStructures()), query).map((structure): MathSearchResult => ({
-			kind: 'structure',
-			structure,
-			section: m.mathsearch_structures()
-		}));
+		const snippets = snippetStructures(this.syntax);
+		const found = [
+			...searchStructures(snippets, query).map((structure): MathSearchResult => ({
+				kind: 'structure',
+				structure,
+				section: m.mathsearch_snippets()
+			})),
+			...searchStructures((structures ??= mathStructures()), query).map((structure): MathSearchResult => ({
+				kind: 'structure',
+				structure,
+				section: m.mathsearch_structures()
+			}))
+		];
 		const loaded = this.loaded;
 		if (!loaded) return found;
 		if (query) return [...found, ...searchMathEntries(loaded, query).map((e) => entryIn(m.mathsearch_matches(), e))];
@@ -99,7 +108,7 @@ class MathSearchState {
 		this.close();
 		if (!result || !field) return;
 		if (result.kind === 'structure') {
-			insertSymbol(result.structure.latex);
+			insertSymbol(result.structure.latex, result.structure.format);
 			return;
 		}
 		const { command, symbol } = result.entry;

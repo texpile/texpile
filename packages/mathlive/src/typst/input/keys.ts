@@ -15,6 +15,7 @@ import { closeCall, nextArgument } from './calls';
 import {
   acceptSuggestion,
   continuesName,
+  expandShortcut,
   resolveName,
   suggestNames,
   typeIntoName,
@@ -123,6 +124,11 @@ function typeChar(
   if (typing.name.length > 0) {
     if (continuesName(typing, c)) {
       typeIntoName(mf, typing, c);
+      return;
+    }
+    // a shortcut waits for its name to end, `limsup` is not `lim`, and the key that ended it follows
+    if (expandShortcut(mf, typing)) {
+      typeChar(mf, typing, c, fence);
       return;
     }
     if (resolveName(mf, typing, c)) return;

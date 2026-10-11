@@ -1,6 +1,7 @@
 # Vendored completion data
 
-The data files in this directory (`lwMacros.ts`, `texMacros.ts`, `atSuggestions.ts` additions,
+The data files in this directory (`lwMacros.ts`, `texMacros.ts`, the "@" mnemonics now in
+`editor/snippets/file/builtinSnippets.ts`,
 `classnames.ts`, `packagenames.ts`, `bibEntries.ts`, and everything under `packages/`) are
 vendored or generated from the [LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop)
 VS Code extension (v10.16.1), distributed under the MIT license:

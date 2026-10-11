@@ -50,6 +50,14 @@ export type AppSettings = {
 	whatsNewSeen: string;
 	/** live math preview tooltip in source mode. */
 	mathPreview: boolean;
+	/** snippets marked auto expand as their trigger is typed; off leaves the popup, shortcuts and Wrap with. */
+	autoSnippets: boolean;
+	/** in source math, `a/` becomes \frac{a}{} (LaTeX and Markdown) */
+	autoFraction: boolean;
+	/** in source math, Tab moves past the next closing bracket, then out of the formula */
+	tabOut: boolean;
+	/** in source matrices and aligned equations, Tab adds a column and Shift+Enter a row */
+	matrixKeys: boolean;
 	/** the floating Comment button offered over a selection, in BOTH editors. */
 	commentPill: boolean;
 	/** soft-wrap long lines in Source mode instead of scrolling horizontally. */
@@ -127,6 +135,10 @@ const DEFAULTS: AppSettings = {
 	transparentWindow: false,
 	whatsNewSeen: '',
 	mathPreview: true,
+	autoSnippets: true,
+	autoFraction: false,
+	tabOut: true,
+	matrixKeys: true,
 	commentPill: true,
 	sourceLineWrap: true,
 	visualJustify: true,

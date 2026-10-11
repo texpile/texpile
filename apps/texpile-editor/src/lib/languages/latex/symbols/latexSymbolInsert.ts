@@ -59,7 +59,7 @@ function inlineDollar(state: EditorState, pos: number, side: -1 | 1): boolean {
 }
 
 /** true when `pos` is in a text argument (`\text{...}`) still open before it, looking back to the formula's start */
-function inTextArgument(state: EditorState, pos: number): boolean {
+export function inTextArgument(state: EditorState, pos: number): boolean {
 	const text = state.sliceDoc(Math.max(0, pos - TEXT_ARGUMENT_WINDOW), pos);
 	let depth = 0;
 	for (let i = text.length - 1; i >= 0; i--) {

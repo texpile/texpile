@@ -9,6 +9,13 @@ import { getFolder, updateFolder, savedCompare, type SavedCompare, type SavedTab
 import { AGENT_REF } from '$lib/ai/agentPanel/changes/agentBefore';
 
 const MAX_TABS = 50;
+
+// Texpile's own files a tab may hold from outside the folder (the global snippet file); they are not in its tree
+const outsideRoot: { allowed: (path: string) => boolean } = { allowed: () => false };
+
+export function allowTabsOutsideRoot(allowed: (path: string) => boolean): void {
+	outsideRoot.allowed = allowed;
+}
 const REOPEN_DEPTH = 20;
 
 /** the saved version a comparison tab is against; `path` is the file's path in that version when
@@ -152,7 +159,7 @@ export class TabsStore {
 		// only: guest paths are manifest-relative (no root prefix) and never persist anyway.
 		if (this.root && this.persistable) {
 			const prefix = this.root + sepOf(this.root);
-			if (!samePath(path.slice(0, prefix.length), prefix)) return;
+			if (!samePath(path.slice(0, prefix.length), prefix) && !outsideRoot.allowed(path)) return;
 		}
 		if (this.hasFile(path)) return;
 		this.add({ path });
@@ -267,13 +274,16 @@ export class TabsStore {
 	/** drop tabs whose files no longer exist (tree refreshes, remote deletions). */
 	prune(livePaths: string[]): void {
 		for (const o of this.others) o.prune(livePaths);
-		const next = this.list.filter((t) => livePaths.some((p) => samePath(p, t.path)));
+		function live(path: string): boolean {
+			return outsideRoot.allowed(path) || livePaths.some((p) => samePath(p, path));
+		}
+		const next = this.list.filter((t) => live(t.path));
 		if (next.length !== this.list.length) {
 			this.list = next;
 			this.dropPreviewIfClosed();
 			this.persist();
 		}
-		this.onRetarget?.((p) => (livePaths.some((live) => samePath(live, p)) ? p : null));
+		this.onRetarget?.((p) => (live(p) ? p : null));
 	}
 
 	private dropPreviewIfClosed(): void {

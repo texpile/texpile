@@ -1,5 +1,6 @@
 // The text spell check reads for one block, one character per document position so a lint maps back by offset.
-import type { Node as PmNode } from 'prosemirror-model';
+import type { Mark, Node as PmNode } from 'prosemirror-model';
+import { callLookOf, type CallDialect } from '$lib/editor/snippets/visual/callWrappers';
 import { readTexCharacter } from '$lib/languages/latex/texCharacters';
 
 /** a position that reads as nothing: the rest of a chip drawn as a letter */
@@ -22,6 +23,11 @@ export function chipLetters(node: PmNode): string | null {
 	return letters.length <= node.nodeSize ? letters : null;
 }
 
+// false for a call whose look says its words are not prose
+function callSpellchecked(mark: Mark): boolean {
+	return callLookOf(mark.type.spec.dialect as CallDialect, mark.attrs.name as string)?.spellcheck !== false;
+}
+
 /** link text is blanked (an address, or a label the link tooltip owns), and so is a source block, drawn or in CodeMirror */
 export function blockSpellText(node: PmNode): string {
 	if (node.type.spec.code) return ' '.repeat(node.content.size);
@@ -30,7 +36,8 @@ export function blockSpellText(node: PmNode): string {
 	node.content.forEach((child) => {
 		if (child.isText) {
 			const t = child.text ?? '';
-			text += linkType && child.marks.some((mk) => mk.type === linkType) ? ' '.repeat(t.length) : t;
+			const blank = child.marks.some((mk) => mk.type === linkType || (mk.type.name === 'call' && !callSpellchecked(mk)));
+			text += blank ? ' '.repeat(t.length) : t;
 		} else if (child.isLeaf) {
 			text += child.type.name === 'hard_break' ? '\n' : OPAQUE;
 		} else {

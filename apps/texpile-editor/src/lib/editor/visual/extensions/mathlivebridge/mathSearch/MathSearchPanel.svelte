@@ -28,7 +28,7 @@
 	}
 
 	function keyOf(result: MathSearchResult): string {
-		return `${result.section} ${result.kind === 'structure' ? result.structure.latex : result.entry.key}`;
+		return `${result.section} ${result.kind === 'structure' ? `${result.structure.label} ${result.structure.latex}` : result.entry.key}`;
 	}
 
 	// the highlighted row stays in sight as the arrow keys move it
@@ -89,7 +89,7 @@
 					>
 						<span class="flex h-8 w-12 shrink-0 items-center justify-center overflow-hidden text-xs">
 							{#if result.kind === 'structure'}
-								<span use:drawMath={{ source: result.structure.display, syntax: 'latex' }}></span>
+								<span use:drawMath={{ source: result.structure.display, syntax: result.structure.format ?? 'latex' }}></span>
 							{:else if result.entry.glyph}
 								<SymbolGlyph glyph={result.entry.glyph} size={18} />
 							{:else}

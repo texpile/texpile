@@ -8,6 +8,7 @@ import { initSpellcheckConfig } from '$lib/editor/spellcheck/config/spellcheckCo
 import { attachWindowListeners, attachCloseGuard } from '$lib/workspace/workspaceMount';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
+import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
@@ -93,8 +94,9 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 			termDock.reclamp();
 		},
 		reloadProjectState: () => {
-			// both live in .texpile/ and both are committed, so both arrive by pull
+			// all live in .texpile/ and all are committed, so all arrive by pull
 			void d.commentsCtl.refresh();
+			void reloadSnippets(guest || fileMode.current ? null : workspaceRoot.current);
 			void projectConfig.refresh(guest ? null : workspaceRoot.current).then(() => {
 				d.cc.resolveNow();
 			});

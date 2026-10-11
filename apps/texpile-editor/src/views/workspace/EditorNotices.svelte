@@ -1,9 +1,11 @@
 <script lang="ts">
-	// the notices over the editor: a managed file, an unreadable encoding, Typst without tinymist, places a
-	// merge marked, a file deleted on disk
+	// the notices over the editor: a managed file, a snippet file, an unreadable encoding, Typst without tinymist,
+	// places a merge marked, a file deleted on disk
 	import { CircleAlert, Info } from '@lucide/svelte';
 	import EditorNotice from '$lib/components/EditorNotice.svelte';
 	import TypstMissingBar from '$lib/languages/typst/TypstMissingBar.svelte';
+	import SnippetFileBar from '$lib/editor/snippets/ui/SnippetFileBar.svelte';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import ConflictNotice from './ConflictNotice.svelte';
 	import { isTexpileManaged } from '$lib/comments/managed';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
@@ -32,6 +34,9 @@
 	     touch it. One short line everywhere a managed file appears - the same sentence as the
 	     SCM badge tooltip and the diff bar, so the notice reads as one voice. -->
 	<EditorNotice icon={Info} tone="info" title="{m.vcs_texpile_managed()}." note={m.texpile_managed_note()} />
+{/if}
+{#if props.loadedPath && !props.comparing && !props.guest}
+	<SnippetFileBar path={props.loadedPath} root={workspaceRoot.current} />
 {/if}
 {#if props.loadedPath && props.encodingIssue}
 	<EditorNotice icon={CircleAlert} tone="warning" title="{m.wsview_read_only()}." note={props.encodingIssue} />

@@ -49,13 +49,18 @@ export function parseLatexFragment(text: string): Fragment | null {
  *  plain text */
 export function pasteLatexText(view: EditorView, text: string): boolean {
 	if (!text || !looksLikeLatex(text)) return false;
-	const frag = parseLatexFragment(text);
-	if (!frag) return false;
-	// a single paragraph pastes open (merges into the paragraph at the caret); anything
-	// heavier inserts as blocks
-	const open = frag.childCount === 1 && frag.firstChild!.type.name === 'paragraph' ? 1 : 0;
-	pasteReadingOfText(view, text, regenerateCopiedLabels(new Slice(frag, open, open)));
+	const slice = latexSourceSlice(text);
+	if (!slice) return false;
+	pasteReadingOfText(view, text, regenerateCopiedLabels(slice));
 	return true;
+}
+
+/** LaTeX as the editor takes it in: a single paragraph open, so it merges into the one at the caret */
+export function latexSourceSlice(text: string): Slice | null {
+	const frag = parseLatexFragment(text);
+	if (!frag) return null;
+	const open = frag.childCount === 1 && frag.firstChild!.type.name === 'paragraph' ? 1 : 0;
+	return new Slice(frag, open, open);
 }
 
 export const latexClipboardPlugin = new Plugin({

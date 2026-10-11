@@ -2,8 +2,6 @@
 // TypstEditorView.svelte mounts it
 import { Plugin } from 'prosemirror-state';
 import type { EditorProps, EditorView } from 'prosemirror-view';
-import { Fragment, Slice, type Node as PmNode } from 'prosemirror-model';
-import { typstToProseMirror } from './convert/converter';
 import { typstCopyPlugin } from './clipboard';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
@@ -35,6 +33,9 @@ import {
 import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuotes, ellipsis } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
+import { typstSourceSlice } from './clipboard';
+import { visualWrapKeys } from '$lib/editor/snippets/visual/visualWrap';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { search } from 'prosemirror-search';
 import { typSchema } from './schema';
@@ -110,20 +111,9 @@ const typInputRules = [
 // nothing of this document, so the pasted blocks carry no origins and are always written out afresh.
 function pasteTypstSource(view: EditorView, text: string): boolean {
 	if (!/(^|\n)(={1,6} |[-+] |\/ |```|#[a-zA-Z])|\*[^\s*][^*]*\*|_[^\s_][^_]*_/.test(text)) return false;
-	try {
-		const { doc } = typstToProseMirror(text);
-		const blocks: PmNode[] = [];
-		doc.forEach((c) => blocks.push(c));
-		if (blocks.length === 0) return false;
-		const frag = Fragment.fromArray(blocks);
-		// a single pasted paragraph merges inline into the current one; anything more
-		// structured inserts as whole blocks
-		const open = blocks.length === 1 && blocks[0].type.name === 'paragraph' ? 1 : 0;
-		pasteReadingOfText(view, text, new Slice(frag, open, open));
-		return true;
-	} catch {
-		return false; // unparsable clipboard: let the plain-text path have it
-	}
+	const slice = typstSourceSlice(text);
+	if (slice) pasteReadingOfText(view, text, slice);
+	return slice !== null;
 }
 
 // html-flavored pastes keep ProseMirror's own path; smart paste reads a code editor's copy itself
@@ -196,6 +186,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
+		visualTextSnippets('typst', typstSourceSlice),
 		inputRules({ rules: typInputRules }),
 		keymap({
 			'Mod-z': undoVisual,
@@ -229,6 +220,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		mlarrowHandlers,
 		mathlivePlugin,
 		keymap(baseKeymap),
+		// below every editor shortcut, as in the source editor
+		visualWrapKeys('typst'),
 		imagePlugin(createTypstImageSettings(docDir)),
 		menuUpdatePlugin(),
 		createCursorPlugin(),

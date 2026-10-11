@@ -195,6 +195,7 @@ export function getDefault(): Required<_MathfieldOptions> {
 
     inlineShortcuts: INLINE_SHORTCUTS,
     inlineShortcutTimeout: 0,
+    typstShortcuts: {},
 
     mathVirtualKeyboardPolicy: 'auto',
 

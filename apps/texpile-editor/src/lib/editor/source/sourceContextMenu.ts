@@ -3,7 +3,8 @@
 import type { EditorView as CMView } from '@codemirror/view';
 import { selectAll } from '@codemirror/commands';
 import { openSearchPanel } from '@codemirror/search';
-import { ArrowRight, BookMarked, BookPlus, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
+import { ArrowRight, BookMarked, BookPlus, Braces, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
+import { wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
 import { copySelection, cutSelection, pasteAtCursor } from '$lib/editor/source/cmClipboardUtils';
 import { hasSourcePaste, pasteIntoSource } from '$lib/editor/source/paste/cmSourcePaste';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
@@ -44,6 +45,22 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 	];
 	const refine = refineMenuItems(!!selection);
 	if (refine.length) items.push({ separator: true }, ...refine);
+	// only where some snippet wraps; disabled rather than hidden with nothing selected, as Add comment is
+	const wraps = wrapSnippetsFor(view.state);
+	if (wraps.length)
+		items.push(
+			{ separator: true },
+			{
+				label: m.wrap_with(),
+				icon: Braces,
+				disabled: !selection,
+				submenu: wraps.map((c) => ({
+					label: c.snippet.name,
+					keys: c.snippet.key?.replace(/-(?=.)/g, '+'),
+					onclick: () => wrapSelection(view, c)
+				}))
+			}
+		);
 	// the same gesture the margin pill offers, for people who reach for the menu instead; disabled
 	// rather than hidden with nothing selected, so it is discoverable
 	if (deps.onAddComment) {

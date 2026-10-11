@@ -1,6 +1,7 @@
 // main-thread client for the parser worker: hard wall-clock timeout, terminate on
 // overrun (a runaway sync parse can't be cancelled any other way), fresh worker next call
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
+import { callWrapperNames } from '$lib/editor/snippets/visual/callWrappers';
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import type { Node as PMNode } from 'prosemirror-model';
 import { latexParserWorker, resetLatexParserWorker } from './latexParserWorker';
@@ -132,6 +133,6 @@ export function parseLatexFileAsync(
 			reject(new Error(PARSE_TIMEOUT));
 		}, timeoutMs);
 		pending.set(id, { resolve, reject, timeoutId, onProgress, format, source });
-		w.postMessage({ id, source, projectMacros, maxNodes, format });
+		w.postMessage({ id, source, projectMacros, maxNodes, format, callWrappers: callWrapperNames('latex') });
 	});
 }

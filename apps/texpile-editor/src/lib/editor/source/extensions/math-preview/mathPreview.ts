@@ -7,11 +7,12 @@ import 'mathlive/static.css';
 import 'mathlive/fonts.css';
 import { settings, updateSettings } from '$lib/settings';
 import { docText } from '$lib/editor/source/docText';
-import { findMathRegions, mathRegionAt, type MathRegion } from './mathScanner';
+import { mathRegionAt, type MathRegion } from './mathScanner';
+import { scanSourceMath } from './sourceMath';
 import { mathMacrosFor } from './userMacros';
 
 const previewDismissed = StateEffect.define<null>();
-const percentComments = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? true });
+const markdownSource = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? false });
 
 /** above this the preview silently disables instead of re-scanning megabytes per keystroke. */
 const MAX_SCAN_LENGTH = 2_000_000;
@@ -24,13 +25,14 @@ const regionsField = StateField.define<RegionCell>({
 	create: () => ({ regions: null }),
 	update(value, tr) {
 		if (!tr.docChanged) return value;
-		return { regions: value.regions === null ? null : updateRegions(value.regions, tr) };
+		const markdown = tr.state.facet(markdownSource);
+		return { regions: value.regions === null ? null : updateRegions(value.regions, tr, markdown) };
 	}
 });
 
 function scan(state: EditorState): MathRegion[] {
 	if (state.doc.length > MAX_SCAN_LENGTH) return [];
-	return findMathRegions(docText(state.doc), state.facet(percentComments));
+	return scanSourceMath(docText(state.doc), state.facet(markdownSource)).math;
 }
 
 function regionsFor(state: EditorState): MathRegion[] {
@@ -40,19 +42,28 @@ function regionsFor(state: EditorState): MathRegion[] {
 	return cell.regions;
 }
 
+const LATEX_DELIMITERS = /[\\$]/;
+// plus what bounds Markdown code: backticks, tilde fences, link destinations, autolinks
+const MARKDOWN_DELIMITERS = /[\\$`~\]<]/;
+// indentation and a list marker decide whether this line and the indented ones after it are code
+const MARKDOWN_LINE_PREFIX = /^[ \t]*(?:[-+*]|\d{1,9}[.)]?)?[ \t]*/;
+
 // a full rescan is O(doc), so when a change is provably inert — stays on one line, no `\` or `$`
 // on that line or its neighbors, at least a line away from every region — just shift the old
-// regions through the edit. Anything else returns null = lazy full rescan. Known blind spot: a
-// \verb whose span crosses lines (invalid latex the scanner tolerates) hides its delimiter from
-// the line check.
-function updateRegions(regions: MathRegion[], tr: Transaction): MathRegion[] | null {
+// regions through the edit. Anything else returns null = lazy full rescan.
+function updateRegions(regions: MathRegion[], tr: Transaction, markdown: boolean): MathRegion[] | null {
+	const delimiters = markdown ? MARKDOWN_DELIMITERS : LATEX_DELIMITERS;
 	let inert = true;
 	tr.changes.iterChanges((fromA, toA, fromB, _toB, inserted) => {
 		if (!inert) return;
 		const oldDoc = tr.startState.doc;
 		const lineA = oldDoc.lineAt(fromA);
 		// inserted or deleted newlines move blank-line clamps and comment/line boundaries
-		if (inserted.lines > 1 || toA > lineA.to || /[\\$]/.test(oldDoc.sliceString(fromA, toA))) {
+		if (inserted.lines > 1 || toA > lineA.to || delimiters.test(oldDoc.sliceString(fromA, toA))) {
+			inert = false;
+			return;
+		}
+		if (markdown && fromA <= lineA.from + (MARKDOWN_LINE_PREFIX.exec(lineA.text)?.[0].length ?? 0)) {
 			inert = false;
 			return;
 		}
@@ -60,7 +71,7 @@ function updateRegions(regions: MathRegion[], tr: Transaction): MathRegion[] | n
 		const lineB = newDoc.lineAt(fromB);
 		const ctxFrom = lineB.number > 1 ? newDoc.line(lineB.number - 1).from : lineB.from;
 		const ctxTo = lineB.number < newDoc.lines ? newDoc.line(lineB.number + 1).to : lineB.to;
-		if (/[\\$]/.test(newDoc.sliceString(ctxFrom, ctxTo))) {
+		if (delimiters.test(newDoc.sliceString(ctxFrom, ctxTo))) {
 			inert = false;
 			return;
 		}
@@ -265,8 +276,8 @@ const previewTheme = EditorView.baseTheme({
 	}
 });
 
-/** live typeset preview of the math region under the cursor; `comments: false` for Markdown, where % is text */
-export function mathPreview({ comments = true }: { comments?: boolean } = {}): Extension {
+/** live typeset preview of the math region under the cursor; `markdown`: % is text, and $ follows pandoc */
+export function mathPreview({ markdown = false }: { markdown?: boolean } = {}): Extension {
 	// field order matters: dismissedField must settle before tooltipField reads it
-	return [percentComments.of(comments), regionsField, dismissedField, tooltipField, dismissKeymap, previewTheme];
+	return [markdownSource.of(markdown), regionsField, dismissedField, tooltipField, dismissKeymap, previewTheme];
 }

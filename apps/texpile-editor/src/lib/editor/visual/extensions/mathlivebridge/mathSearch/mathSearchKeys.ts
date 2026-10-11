@@ -1,8 +1,10 @@
-// Tab in an equation opens the math search, and Shift+Tab does nothing: the arrow keys move between
-// a fraction's or a matrix's slots. While the search is open the equation keeps the focus, so the
-// keys typed are taken here, before MathLive sees them, and go to the search instead.
+// Tab in an equation moves to the next empty slot, or opens the math search when there is none, and
+// Shift+Tab does nothing: the arrow keys move between a fraction's or a matrix's slots. While the
+// search is open the equation keeps the focus, so the keys typed are taken here, before MathLive
+// sees them, and go to the search instead.
 import type { MathfieldElement } from 'mathlive';
 import { mathSearch } from './mathSearch.svelte';
+import { placeholderAhead } from '$lib/editor/snippets/visual/mathliveSnippets';
 
 const MODIFIERS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'AltGraph']);
 // about as many rows as the panel shows
@@ -67,8 +69,11 @@ export function mathSearchKeydown(event: KeyboardEvent): void {
 	if (mathSearch.field === field) {
 		// a modifier on its own is the start of a key, not one
 		if (MODIFIERS.has(event.key) || !takeSearchKey(event)) return;
-	} else if (opensSearch(event, field)) mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex');
-	else if (!isShiftTab(event)) return;
+	} else if (opensSearch(event, field)) {
+		// a snippet's or a structure's empty slots come first: Tab fills them in order, as in the source editor
+		if (placeholderAhead(field)) field.executeCommand('moveToNextPlaceholder');
+		else mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex');
+	} else if (!isShiftTab(event)) return;
 	event.preventDefault();
 	event.stopImmediatePropagation();
 }

@@ -10,6 +10,7 @@ import { mergeAdjacentRawBlocks } from '$lib/editor/visual/mergeRawBlocks';
 import { buildNode, textNode, createDefaultContext, collapseTextNodes, type PmNode, type PmMark, type ConversionOptions } from './builders';
 
 import { MACRO_SIGNATURES, ENV_SIGNATURES, stripSamelineComments, type SameLineCommented } from './macros';
+import { callWrapperNames } from '$lib/editor/snippets/visual/callWrappers';
 import {
 	heuristicMarkCommentedMacroCalls,
 	heuristicMarkTexPrimitiveDefs,
@@ -330,7 +331,11 @@ function extractContent(ast: Root): Node[] {
 // call dominated large projects. single slot, latest wins; a timed-out worker is rebooted,
 // which clears it for free.
 export function latexToProseMirror(latex: string, options: ConversionOptions = {}): { doc: PmNode; ast: Root } {
-	const parseOptions: ParseOptions = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES };
+	const wrappers = callWrapperNames('latex').filter((name) => !MACRO_SIGNATURES[name]);
+	const macros = wrappers.length
+		? { ...MACRO_SIGNATURES, ...Object.fromEntries(wrappers.map((name) => [name, { signature: 'o m' }])) }
+		: MACRO_SIGNATURES;
+	const parseOptions: ParseOptions = { macros, environments: ENV_SIGNATURES };
 
 	const ast = parseLatex(maskUrlSpecials(latex), parseOptions);
 	unmaskUrlSpecials(ast);

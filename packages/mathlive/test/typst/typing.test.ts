@@ -53,6 +53,45 @@ function typed(keys: string, value = ''): string {
 }
 
 describe('typing in a Typst field', () => {
+  it('turns a name typed whole into its shortcut, and leaves one inside a longer name alone', () => {
+    const mf = field();
+    mf.typstShortcuts = {
+      dint: { value: 'integral_(0)^(1) dif x', format: 'typst' },
+      oint: { value: 'integral.cont', format: 'typst' },
+      lint: { value: '\\int_{#?}^{#?}', format: 'latex' },
+    };
+    type(mf, 'dint ');
+    const typstBody = mf.getValue('typst');
+    mf.setValue('', { format: 'typst' });
+    type(mf, 'point ');
+    const longer = mf.getValue('typst');
+    mf.setValue('', { format: 'typst' });
+    // a LaTeX body's #? are slots, the first selected: MathLive keeps a superscript before a subscript
+    type(mf, 'lint1');
+    const slot = mf.getValue('typst');
+    mf.remove();
+    expect([typstBody, longer, slot]).toEqual([
+      'integral_(0)^(1) dif x',
+      'p o i n t',
+      'integral_""^1',
+    ]);
+  });
+
+  it('waits for a name to end before it expands a shortcut', () => {
+    const mf = field();
+    mf.typstShortcuts = {
+      dot: { value: 'dot.c', format: 'typst' },
+      lim: { value: 'lim_(x -> 0)', format: 'typst' },
+    };
+    const results = ['dot.op ', 'limsup ', 'lim x'].map((keys) => {
+      mf.setValue('', { format: 'typst' });
+      type(mf, keys);
+      return mf.getValue('typst');
+    });
+    mf.remove();
+    expect(results).toEqual(['dot.op', 'limsup', 'lim_(x -> 0) x']);
+  });
+
   it('reads what is typed the way Typst reads its source', () => {
     const cases: [string, string][] = [
       ['alpha + beta ', 'alpha + beta'],

@@ -8,7 +8,7 @@
 // Deliberately DOM-import-free beyond prosemirror-model: the parse worker loads this module.
 import { updateImageNode, type SchemaImageSettings } from '$lib/editor/visual/extensions/image/updateImageNode';
 import { Schema, type NodeSpec, type MarkSpec, type Node as PMNode } from 'prosemirror-model';
-import { baseNodes, baseMarks } from '$lib/editor/visual/schema/basePMSchema';
+import { baseNodes, baseMarks, callMark } from '$lib/editor/visual/schema/basePMSchema';
 
 // mirrors mdSchema: built by hand because the imageplugin.svelte settings creators pull in the DOM (fatal for a
 // worker), and the image node must stay a block figure
@@ -237,6 +237,7 @@ for (const name of Object.keys(nodes)) {
 
 const marks: Record<string, MarkSpec> = {};
 for (const name of TYP_MARKS) marks[name] = (baseMarks as Record<string, MarkSpec>)[name];
+marks.call = callMark('typst');
 
 // two-pass, same as latexPMSchema/mdSchema: updateImageNode needs the node present in an OrderedMap
 // first. numbered stays true (typst figures number themselves), unlike markdown's false.

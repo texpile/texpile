@@ -17,6 +17,7 @@ import type {
 import type { InsertStyleHook, Mathfield } from './mathfield';
 import type {
   InlineShortcutDefinitions,
+  TypstShortcut,
   Keybinding,
   MathfieldOptions,
 } from './options';
@@ -2718,6 +2719,19 @@ mf.macros = {
   set inlineShortcuts(value: InlineShortcutDefinitions) {
     if (!this._mathfield) throw new Error('Mathfield not mounted');
     this._setOptions({ inlineShortcuts: value });
+  }
+
+  /**
+   * What a name typed whole in a Typst field becomes, by the name.
+   * @category Keyboard Shortcuts
+   */
+  get typstShortcuts(): Readonly<Record<string, TypstShortcut>> {
+    if (!this._mathfield) throw new Error('Mathfield not mounted');
+    return this._getOption('typstShortcuts');
+  }
+  set typstShortcuts(value: Record<string, TypstShortcut>) {
+    if (!this._mathfield) throw new Error('Mathfield not mounted');
+    this._setOptions({ typstShortcuts: value });
   }
 
   /**
