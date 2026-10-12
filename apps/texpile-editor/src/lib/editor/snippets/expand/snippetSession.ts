@@ -3,13 +3,14 @@
 import { hasNextSnippetField, hasPrevSnippetField } from '@codemirror/autocomplete';
 import {
 	EditorSelection,
+	EditorState,
 	MapMode,
 	Prec,
 	StateEffect,
 	StateField,
 	type ChangeDesc,
-	type EditorState,
-	type Extension
+	type Extension,
+	type Text
 } from '@codemirror/state';
 import { Decoration, EditorView, keymap, WidgetType, type Command, type DecorationSet } from '@codemirror/view';
 import { applyTransform, type SnippetTransform } from './body/bodyTransform';
@@ -23,12 +24,12 @@ export class SnippetFieldRange {
 		readonly transform?: SnippetTransform
 	) {}
 
-	map(changes: ChangeDesc): SnippetFieldRange {
-		const from = changes.mapPos(this.from, -1, MapMode.TrackDel);
-		const to = changes.mapPos(this.to, 1, MapMode.TrackDel);
+	map(changes: ChangeDesc, fromSide: -1 | 1 = -1, toSide: -1 | 1 = 1): SnippetFieldRange {
+		const from = changes.mapPos(this.from, fromSide, MapMode.TrackDel);
+		const to = changes.mapPos(this.to, toSide, MapMode.TrackDel);
 		// cut out with the text around it, as a place inside a place typed over
 		if (from === null || to === null) {
-			const at = changes.mapPos(this.from, -1);
+			const at = changes.mapPos(this.from, fromSide);
 			return new SnippetFieldRange(this.field, at, at, this.authored, this.transform);
 		}
 		return new SnippetFieldRange(this.field, from, to, this.authored, this.transform);
@@ -53,7 +54,11 @@ class Session {
 	readonly deco: DecorationSet;
 	constructor(
 		readonly ranges: readonly SnippetFieldRange[],
-		readonly active: number
+		readonly active: number,
+		/** how many places the snippet went in at once, each with its own cursor */
+		readonly spots: number,
+		/** the text before the snippet went in */
+		readonly before: Text
 	) {
 		this.deco = Decoration.set(
 			ranges.map((r) => (r.from === r.to ? emptyPlace : filledPlace).range(r.from, r.to)),
@@ -61,10 +66,23 @@ class Session {
 		);
 	}
 
+	// as vs code: the place being filled and those around it grow when typed at their edges, the others never do,
+	// an empty one staying on its side of the place being filled
 	map(changes: ChangeDesc): Session {
+		const filling = this.ranges.filter((r) => r.field === this.active);
 		return new Session(
-			this.ranges.map((r) => r.map(changes)),
-			this.active
+			this.ranges.map((r, i) => {
+				if (r.field === this.active || filling.some((f) => r.from <= f.from && r.to >= f.to && r.to - r.from > f.to - f.from))
+					return r.map(changes);
+				const side = (pos: number, otherwise: -1 | 1): -1 | 1 => {
+					const k = this.ranges.findIndex((f) => f.field === this.active && (f.from === pos || f.to === pos));
+					return k < 0 ? otherwise : k < i ? 1 : -1;
+				};
+				return r.from === r.to ? r.map(changes, side(r.from, -1), side(r.from, -1)) : r.map(changes, side(r.from, 1), side(r.to, -1));
+			}),
+			this.active,
+			this.spots,
+			this.before
 		);
 	}
 
@@ -85,9 +103,11 @@ const setSession = StateEffect.define<Session | null>({ map: (session, changes) 
 
 const sessionField = StateField.define<Session | null>({
 	create: () => null,
-	update(before, tr) {
+	update(current, tr) {
 		for (const e of tr.effects) if (e.is(setSession)) return e.value;
-		const session = before && tr.docChanged ? before.map(tr.changes) : before;
+		// as vs code: an undo back to before the snippet ends it
+		if (current && tr.docChanged && tr.newDoc.eq(current.before)) return null;
+		const session = current && tr.docChanged ? current.map(tr.changes) : current;
 		// moving out of the place ends it, as in codemirror's own snippets
 		return session && tr.selection && !session.holds(tr.selection) ? null : session;
 	},
@@ -120,18 +140,31 @@ function moveField(dir: 1 | -1): Command {
 		view.dispatch({
 			changes,
 			selection: moved.selection(next),
-			effects: setSession.of(dir > 0 && next === last ? null : new Session(moved.ranges, next)),
+			effects: setSession.of(dir > 0 && next === last ? null : new Session(moved.ranges, next, session.spots, session.before)),
 			scrollIntoView: true
 		});
 		return true;
 	};
 }
 
+// as vs code: Escape leaves with one cursor
 function endSession(view: EditorView): boolean {
-	if (!view.state.field(sessionField, false)) return false;
-	view.dispatch({ effects: setSession.of(null) });
+	const { state } = view;
+	if (!state.field(sessionField, false)) return false;
+	view.dispatch({ effects: setSession.of(null), selection: EditorSelection.create([state.selection.main]) });
 	return true;
 }
+
+// moving out of a place used twice drops the cursor the snippet put in the copy; vs code keeps it until Escape,
+// texstudio and overleaf never show one
+const dropCopyCursors = EditorState.transactionFilter.of((tr) => {
+	const session = tr.startState.field(sessionField, false);
+	if (!session || session.spots !== 1 || !tr.selection || tr.effects.some((e) => e.is(setSession))) return tr;
+	const count = tr.selection.ranges.length;
+	if (count < 2 || count !== tr.startState.selection.ranges.length || !session.holds(tr.startState.selection)) return tr;
+	if ((tr.docChanged ? session.map(tr.changes) : session).holds(tr.selection)) return tr;
+	return [tr, { selection: EditorSelection.create([tr.selection.main]), sequential: true }];
+});
 
 // a click into another place goes there, as in codemirror's own snippets
 const clickIntoPlace = EditorView.domEventHandlers({
@@ -143,7 +176,7 @@ const clickIntoPlace = EditorView.domEventHandlers({
 		if (!hit || hit.field === session.active) return false;
 		view.dispatch({
 			selection: session.selection(hit.field),
-			effects: setSession.of(hit.field < session.last ? new Session(session.ranges, hit.field) : null),
+			effects: setSession.of(hit.field < session.last ? new Session(session.ranges, hit.field, session.spots, session.before) : null),
 			scrollIntoView: true
 		});
 		return true;
@@ -166,6 +199,7 @@ const placeTheme = EditorView.baseTheme({
 /** the session, its keys over everything but codemirror's own snippet keys, which only act on their own session */
 export const snippetSession: Extension = [
 	sessionField,
+	dropCopyCursors,
 	Prec.highest(
 		keymap.of([
 			{ key: 'Tab', run: moveField(1), shift: moveField(-1) },
@@ -176,8 +210,8 @@ export const snippetSession: Extension = [
 	placeTheme
 ];
 
-export function startSnippetSession(state: EditorState, ranges: SnippetFieldRange[]): StateEffect<unknown>[] {
-	const effects: StateEffect<unknown>[] = [setSession.of(new Session(ranges, 0))];
+export function startSnippetSession(state: EditorState, ranges: SnippetFieldRange[], spots: number): StateEffect<unknown>[] {
+	const effects: StateEffect<unknown>[] = [setSession.of(new Session(ranges, 0, spots, state.doc))];
 	if (state.field(sessionField, false) === undefined) effects.push(StateEffect.appendConfig.of(snippetSession));
 	return effects;
 }

@@ -49,24 +49,32 @@ function markersInText(slice: Slice): boolean {
 	);
 }
 
+const EMPTY_PLACE = VISUAL_CARET.start + VISUAL_CARET.end;
+// a letter in an empty place, as markdown reads _ _ round nothing as two underscores
+const STAND_IN = 'x';
+
+function withoutMarkers(text: string): string {
+	return text.replace(EMPTY_PLACE, STAND_IN).replace(MARKERS, '');
+}
+
 function stripMarkers(fragment: Fragment): Fragment {
 	const nodes: PMNode[] = [];
 	fragment.forEach((node) => {
-		const text = node.isText ? node.text!.replace(MARKERS, '') : null;
+		const text = node.isText ? withoutMarkers(node.text!) : null;
 		if (text === null) nodes.push(node.copy(stripMarkers(node.content)));
 		else if (text) nodes.push(node.type.schema.text(text, node.marks));
 	});
 	return Fragment.fromArray(nodes);
 }
 
+/** the reading with the caret's markers, when they change nothing else about it */
 function readBody(read: ReadSourceText, body: VisualBody): Slice | null {
-	const plain = read(body.plain);
-	if (!plain) return null;
 	for (const text of body.marked) {
 		const slice = read(text);
-		if (slice && markersInText(slice) && new Slice(stripMarkers(slice.content), slice.openStart, slice.openEnd).eq(plain)) return slice;
+		const unmarked = slice && markersInText(slice) ? read(withoutMarkers(text)) : null;
+		if (slice && unmarked && new Slice(stripMarkers(slice.content), slice.openStart, slice.openEnd).eq(unmarked)) return slice;
 	}
-	return plain;
+	return read(body.plain);
 }
 
 function placeCaret(tr: Transaction, from: number, to: number): void {

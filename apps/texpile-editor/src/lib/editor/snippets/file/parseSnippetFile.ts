@@ -127,6 +127,9 @@ function readEntry(name: string, raw: unknown, layer: SnippetLayer): EntryResult
 	if (key !== undefined && typeof key !== 'string') return { problem: '"key" needs to be text, like "Mod-Shift-o".' };
 	if (raw.args !== undefined && typeof raw.args !== 'string') return { problem: '"args" needs to be text, like "fill: red".' };
 	if (raw.description !== undefined && typeof raw.description !== 'string') return { problem: '"description" needs to be text in quotes.' };
+	// markdown math is latex, as the built-in @ snippets have it
+	if ((context as SnippetContext).includes('math') && bodies.latex !== undefined && scope.includes('markdown'))
+		bodies.markdown ??= bodies.latex;
 
 	const langs = wrap ? scope.filter((l) => l !== 'markdown') : (Object.keys(bodies) as SnippetLanguage[]);
 	if (!langs.length) return { skip: true };

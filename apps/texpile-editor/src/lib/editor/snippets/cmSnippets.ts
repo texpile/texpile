@@ -43,17 +43,24 @@ export function snippetCompletionSource(ctx: CompletionContext): CompletionResul
 	const zone = snippetZoneAt(ctx.state, candidates.from, lang);
 	const options: Completion[] = candidates.items
 		.filter(({ compiled }) => contextAllows(compiled.snippet.context, zone))
-		.map(({ compiled, prefix }) => ({
-			label: prefix,
-			detail: compiled.snippet.description || previewOf(wrapBodyFor(compiled, zone)),
-			type: 'text',
-			boost: Math.max(-99, Math.min(99, compiled.snippet.priority)),
-			apply: (view: CMView, _c: Completion, from: number, to: number) => {
-				// the prefix was typed before the popup, so one undo gives it back
-				view.state.facet(undoStop)();
-				expandSnippet(view, [{ body: wrapBodyFor(compiled, zone), from, to, selection: '' }]);
-			}
-		}));
+		.map(({ compiled, prefix }) => {
+			const { name, description } = compiled.snippet;
+			const about = description || previewOf(wrapBodyFor(compiled, zone));
+			// as vs code: the name beside the trigger, the description beside the list
+			return {
+				label: prefix,
+				detail: name === prefix ? about : name,
+				// eslint-disable-next-line id-denylist -- `info` is codemirror's Completion field
+				...(name === prefix ? {} : { info: about }),
+				type: 'text',
+				boost: Math.max(-99, Math.min(99, compiled.snippet.priority)),
+				apply: (view: CMView, _c: Completion, from: number, to: number) => {
+					// the prefix was typed before the popup, so one undo gives it back
+					view.state.facet(undoStop)();
+					expandSnippet(view, [{ body: wrapBodyFor(compiled, zone), from, to, selection: '' }]);
+				}
+			};
+		});
 	return options.length ? { from: candidates.from, options } : null;
 }
 

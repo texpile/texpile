@@ -26,6 +26,15 @@ describe('snippet files', () => {
 		expect(names(languages.latex.popup)).toContain('@b');
 	});
 
+	it('gives a math snippet without a markdown body its latex one in Markdown, and a text one none', () => {
+		const file = parseSnippetFile(
+			'{ "v": 1, "snippets": { "M": { "prefix": "m", "context": "math", "body": { "latex": "\\\\frac", "typst": "frac" } }, "T": { "prefix": "t", "context": "text", "body": { "latex": "\\\\emph" } } } }',
+			'global'
+		);
+		expect(file.snippets.find((s) => s.name === 'M')?.bodies.markdown).toBe('\\frac');
+		expect(file.snippets.find((s) => s.name === 'T')?.bodies.markdown).toBeUndefined();
+	});
+
 	it('holds a project pattern back until this machine allows it as it stands', () => {
 		const held = compileSnippets({ global: null, project, allowedPatterns: null });
 		expect(held.pendingPatterns).toBe('([a-z])(\\d)');

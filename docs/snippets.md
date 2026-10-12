@@ -39,23 +39,23 @@ A folder's snippets replace global ones of the same name, and global ones replac
 
 Each entry is named, and the name is what the popup and the menus show. A snippet file from VS Code can be used as it is: its entries go at the top level, without `v` and `snippets`. Comments and trailing commas are allowed.
 
-| Field         | What it does                                                                                          |
-| ------------- | ----------------------------------------------------------------------------------------------------- |
-| `prefix`      | The trigger, or a list of triggers.                                                                   |
-| `body`        | The text inserted. One text for every language, or `latex`, `typst` and `markdown` each with its own. |
-| `description` | Shown in the popup.                                                                                   |
-| `scope`       | The languages it applies to, such as `"latex,typst"`. All three when left out.                        |
-| `context`     | `math`, `inline-math`, `display-math`, `text`, `code` (Typst only) or `any`. `any` when left out.     |
-| `auto`        | `true` expands as soon as the trigger is typed. Otherwise it waits in the popup for Enter.            |
-| `word`        | `true` fires only at the start of a word. On for Typst snippets that expand on their own.             |
-| `regex`       | `true` reads the prefix as a regular expression. See below.                                           |
-| `flags`       | Regular expression flags: `i`, `u`.                                                                   |
-| `priority`    | When several snippets match, the higher one wins. 0 when left out.                                    |
-| `key`         | A keyboard shortcut that runs the snippet, such as `Mod-Shift-o`. `Mod` is Ctrl, or Cmd on macOS.     |
-| `disabled`    | `true` turns off the snippet of the same name from the global file or the built-in ones.              |
-| `wrap`        | A function name. The snippet wraps the selection in a call to it. See below.                          |
-| `args`        | Extra arguments for `wrap`, such as `fill: red`.                                                      |
-| `visual`      | How the visual editor draws a call to the `wrap` function. See below.                                 |
+| Field         | What it does                                                                                                                                                                           |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `prefix`      | The trigger, or a list of triggers.                                                                                                                                                    |
+| `body`        | The text inserted. One text for every language, or `latex`, `typst` and `markdown` each with its own. In Markdown math, a math snippet without a `markdown` body uses its `latex` one. |
+| `description` | Shown in the popup.                                                                                                                                                                    |
+| `scope`       | The languages it applies to, such as `"latex,typst"`. All three when left out.                                                                                                         |
+| `context`     | `math`, `inline-math`, `display-math`, `text`, `code` (Typst only) or `any`. `any` when left out.                                                                                      |
+| `auto`        | `true` expands as soon as the trigger is typed. Otherwise it waits in the popup for Enter.                                                                                             |
+| `word`        | `true` fires only at the start of a word. On for Typst snippets that expand on their own.                                                                                              |
+| `regex`       | `true` reads the prefix as a regular expression. See below.                                                                                                                            |
+| `flags`       | Regular expression flags: `i`, `u`.                                                                                                                                                    |
+| `priority`    | When several snippets match, the higher one wins. 0 when left out.                                                                                                                     |
+| `key`         | A keyboard shortcut that runs the snippet, such as `Mod-Shift-o`. `Mod` is Ctrl, or Cmd on macOS.                                                                                      |
+| `disabled`    | `true` turns off the snippet of the same name from the global file or the built-in ones.                                                                                               |
+| `wrap`        | A function name. The snippet wraps the selection in a call to it. See below.                                                                                                           |
+| `args`        | Extra arguments for `wrap`, such as `fill: red`.                                                                                                                                       |
+| `visual`      | How the visual editor draws a call to the `wrap` function. See below.                                                                                                                  |
 
 ## In the body
 

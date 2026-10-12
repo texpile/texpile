@@ -40,12 +40,15 @@ export function snippetStructures(syntax: MathSyntax, display: boolean): MathStr
 		.filter((c) => inEquation(c, display))
 		.map((c) => {
 			const latex = insertedIn(syntax, c);
-			const words = `${c.snippet.prefixes.join(' ')} ${c.snippet.name} ${c.snippet.description}`.toLowerCase().split(/[^\p{L}\p{N}]+/u);
+			const { name, prefixes, description } = c.snippet;
+			const trigger = prefixes[0] ?? name;
+			const words = `${prefixes.join(' ')} ${name} ${description}`.toLowerCase().split(/[^\p{L}\p{N}]+/u);
 			return {
 				latex,
 				format: syntax,
 				source: c.body,
-				label: `${c.snippet.prefixes[0] ?? c.snippet.name}  ${c.snippet.description || c.snippet.name}`,
+				// the name beside the trigger, as the source editor's popup has it
+				label: `${trigger}  ${name === trigger ? description || name : name}`,
 				// a typst slot is drawn as the empty string it is saved as
 				display: syntax === 'typst' ? latex.split('#?').join('""') : latex,
 				words: words.filter(Boolean)

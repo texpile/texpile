@@ -56,7 +56,10 @@ export function expandSnippet(view: CMView, spots: readonly SnippetSpot[], captu
 	view.dispatch({
 		changes,
 		selection: EditorSelection.create(cursors),
-		effects: [...(order.length > 1 ? startSnippetSession(state, ranges) : []), ...(choices.length ? [addChoiceFields.of(choices)] : [])],
+		effects: [
+			...(order.length > 1 ? startSnippetSession(state, ranges, spots.length) : []),
+			...(choices.length ? [addChoiceFields.of(choices)] : [])
+		],
 		scrollIntoView: true
 	});
 	const sel = view.state.selection.main;

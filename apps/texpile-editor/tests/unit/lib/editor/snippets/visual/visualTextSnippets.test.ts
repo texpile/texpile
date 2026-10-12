@@ -8,13 +8,16 @@ import { latexSourceSlice, sliceToLatex } from '$lib/editor/visual/extensions/la
 import { visualTextSnippets } from '$lib/editor/snippets/visual/visualTextSnippets';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { setSnippetLayers } from '$lib/editor/snippets/file/snippetRegistry';
+import { markdownSlice } from '$lib/editor/paste/markdownPaste';
+import { mdSchema } from '$lib/languages/markdown/visual/schema';
+import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
 
 const text = (prefix: string, latex: string, auto = true) => ({ prefix, context: 'text', auto, body: { latex } });
 const GLOBAL = JSON.stringify({
 	v: 1,
 	snippets: {
 		'For example': text('eg', 'for example'),
-		Emphasis: text('em', '\\emph{$1}', false),
+		Emphasis: { prefix: 'em', context: 'text', body: { latex: '\\emph{$1}', markdown: '_$1_' } },
 		Integral: { prefix: 'dint', context: 'math', auto: true, body: '\\int' },
 		Theorem: text(';th', '\\begin{${1|theorem,lemma|}}$0\\end{$1}'),
 		Link: text(';hr', '\\href{${1:https://x.org}}{${2:text}}'),
@@ -68,6 +71,19 @@ describe('text snippets in the visual editor', () => {
 
 	it('Tab after a trigger reads the body as LaTeX, the caret inside the emphasis', () => {
 		const v = editor('See');
+		type(v, ' em');
+		expect(pressTab(v)).toBe(true);
+		type(v, 'this');
+		const para = v.state.doc.firstChild!;
+		expect(para.textContent).toBe('See this');
+		expect(para.child(1).marks.map((mk) => mk.type.name)).toEqual(['em']);
+	});
+
+	it('a Markdown body reads as Markdown, an empty place inside _ _ still emphasis', () => {
+		const { doc } = markdownToProseMirror('See\n');
+		const state = EditorState.create({ doc, plugins: [history(), visualTextSnippets('markdown', (t) => markdownSlice(t, mdSchema))] });
+		const v = (view = new EditorView(document.body, { state }));
+		v.dispatch(v.state.tr.setSelection(TextSelection.atEnd(v.state.doc)));
 		type(v, ' em');
 		expect(pressTab(v)).toBe(true);
 		type(v, 'this');

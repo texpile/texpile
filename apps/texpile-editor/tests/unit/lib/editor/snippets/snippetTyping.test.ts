@@ -5,9 +5,12 @@ import { EditorSelection, EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { ensureSyntaxTree } from '@codemirror/language';
 import { CompletionContext, snippet, type Completion } from '@codemirror/autocomplete';
+import { cursorCharRight, cursorLineDown } from '@codemirror/commands';
 import { typstLanguage } from '$lib/languages/typst/source/typstLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { snippetCompletionSource, sourceSnippets, wrapSelection, wrapSnippetsFor } from '$lib/editor/snippets/cmSnippets';
+import { expandSnippet } from '$lib/editor/snippets/expand/expandSnippet';
+import { inSnippet } from '$lib/editor/snippets/expand/snippetSession';
 import { parseSnippetFile } from '$lib/editor/snippets/file/parseSnippetFile';
 import { setSnippetLayers } from '$lib/editor/snippets/file/snippetRegistry';
 import type { SnippetLanguage } from '$lib/editor/snippets/file/snippetTypes';
@@ -119,6 +122,49 @@ describe('typing a trigger', () => {
 		expect(v.state.doc.toString()).toBe(expanded);
 		v.dispatch(v.state.replaceSelection(typed));
 		expect(v.state.doc.toString()).toBe(after);
+	});
+
+	it.each([
+		['moving out of it', (v: EditorView) => cursorCharRight(v) && cursorCharRight(v)],
+		[
+			'Escape',
+			(v: EditorView) => v.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))
+		]
+	])('a place used twice leaves one cursor on %s', (_, leave) => {
+		const v = editor('latex', '|');
+		type(v, 'thm');
+		expect(v.state.selection.ranges).toHaveLength(2);
+		leave(v);
+		expect(v.state.selection.ranges).toHaveLength(1);
+	});
+
+	it('Tab out of a place leaves the cursor after a transformed copy at the end, not on it', () => {
+		const v = editor('latex', '|');
+		expandSnippet(v, [{ body: '[$1]${1/(.*)/${1:?full:empty}/}', from: 0, to: 0, selection: '' }]);
+		v.dispatch(v.state.replaceSelection('a'));
+		v.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+		expect(shown(v)).toBe('[a]full|');
+	});
+
+	it('ends the snippet when an undo takes it back out, as vs code does', () => {
+		const v = editor('latex', '|');
+		type(v, 'pr');
+		v.dispatch({ changes: { from: 0, to: v.state.doc.length, insert: 'pr' }, selection: { anchor: 2 } });
+		expect(inSnippet(v.state)).toBe(false);
+	});
+
+	it('keeps a cursor at each spot a snippet went in at, as vs code does', () => {
+		const v = editor('latex', '|');
+		v.dispatch({
+			changes: { from: 0, insert: '\n' },
+			selection: EditorSelection.create([EditorSelection.cursor(0), EditorSelection.cursor(1)])
+		});
+		expandSnippet(
+			v,
+			[0, 1].map((from) => ({ body: '${1:a}-$1', from, to: from, selection: '' }))
+		);
+		cursorLineDown(v);
+		expect(v.state.selection.ranges.length).toBeGreaterThan(1);
 	});
 
 	it('ends an undo step on the typed trigger, so one undo gives it back', () => {
