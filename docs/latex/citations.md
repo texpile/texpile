@@ -21,7 +21,7 @@ Click a citation to change the work or add page numbers. **Advanced Options** ad
 
 Click a `\ref` or `\eqref` to jump to what it points to.
 
-`\cref`, `\Cref`, `\autoref`, `\pageref` and `\nameref` open a panel instead, where **Shows as** switches the command. It offers only the commands your preamble supports:
+`\cref`, `\Cref`, `\autoref`, `\pageref` and `\nameref` open a panel instead, where **Shows as** switches the command. It lists the commands your preamble supports:
 
 | Shows as              | Command    | Needs      |
 | --------------------- | ---------- | ---------- |

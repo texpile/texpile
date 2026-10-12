@@ -11,7 +11,7 @@ Press **Compile**, or Ctrl Alt Enter, to build the PDF from the main file. Texpi
 
 ![The Problems panel listing warnings, each with a plain-words hint](../../landing/src/lib/assets/showcase/docs/latex/problems.png)
 
-Errors and warnings from the log, with the file and line. Click a row to jump there. The count also shows next to Compile.
+The Problems panel lists the errors and warnings from the log, with the file and line. Click a row to jump there. The count also shows next to Compile.
 
 1. **Hints.** Common messages get a plain-words hint, such as the `\usepackage` line an unknown command needs.
 2. **Boxes** adds overfull and underfull box warnings.
@@ -40,7 +40,7 @@ The settings are saved for the folder.
 
 ## Shell escape
 
-Packages such as `minted` need `-shell-escape` in the command. It is refused while you host a shared session.
+Packages such as `minted` need `-shell-escape` in the command. Texpile refuses it while you host a shared session.
 
 ## A project with its own command
 

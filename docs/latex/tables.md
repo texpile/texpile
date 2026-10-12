@@ -10,7 +10,7 @@ Insert a table from the toolbar (under the arrow at its end) and edit it like a 
 ![The table size grid under the toolbar's table button, with Numbered table on](../../landing/src/lib/assets/showcase/docs/latex/table-insert.png)
 
 1. **Insert table.** Move over the grid to pick a size, up to 10 by 10.
-2. **Numbered table.** A numbered table gets a caption and a label you can reference. Decide before inserting: it cannot be changed later.
+2. **Numbered table.** A numbered table gets a caption and a label you can reference. Decide before inserting: the choice is final.
 
 ## Edit
 

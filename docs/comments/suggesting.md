@@ -17,14 +17,14 @@ In the source editor, spaces and line breaks are suggested like any other text. 
 
 ## Accept or reject
 
-Accept or reject each suggestion on its card. There is no Accept All or Reject All.
+Accept or reject suggestions one at a time, each on its own card.
 
 ![A Delete card and a Replace card, each with Accept and Reject](../../landing/src/lib/assets/showcase/docs/review/suggestion-card-delete-replace.png)
 
 - Suggestions cover whole words. Fixing a typo replaces the word.
 - In Editing mode, typing inside a suggestion splits it around your words, and replacing all of it closes it as **Closed by an edit**.
 - [Refine](../ai-assistant/refine.md) and AI assistants connected over MCP leave suggestions under their own name.
-- Suggesting needs the whole folder open, not a single file on its own.
+- Suggesting needs the whole folder open. It is off for a single file opened on its own.
 
 ## Changes the visual editor cannot show
 

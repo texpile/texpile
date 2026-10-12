@@ -21,4 +21,4 @@ Write Typst in the visual editor or as source, and watch the preview update as y
 
 ## The main file
 
-The preview always shows the main file, not the file you have open. In a folder with several `.typ` files, Texpile asks once which one it is. To change it, right-click a file and choose **Set as Main File**.
+The preview always shows the main file, whichever file you have open. In a folder with several `.typ` files, Texpile asks once which one it is. To change it, right-click a file and choose **Set as Main File**.

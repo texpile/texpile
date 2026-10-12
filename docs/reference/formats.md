@@ -19,7 +19,7 @@ order: 4
 
 The main file sets the format: a `.typ` main file compiles with Typst, any other with LaTeX. Markdown has no compile step.
 
-A `.tex`, `.sty`, `.cls`, `.tikz`, `.typ` or `.bib` file opened from your file manager opens without its folder, so without compile, Git, terminal, search in files, comments, sharing or the Agent tab. Click **Open in Workspace** to get them.
+A `.tex`, `.sty`, `.cls`, `.tikz`, `.typ` or `.bib` file opened from your file manager opens on its own. Compile, Git, the terminal, search in files, comments, sharing and the Agent tab need its folder: click **Open in Workspace** to get them.
 
 ## Where the formats differ
 

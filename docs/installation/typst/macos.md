@@ -12,7 +12,7 @@ order: 2
 brew install tinymist
 ```
 
-Without Homebrew, use the installer script:
+Or use the installer script:
 
 ```bash
 curl -LsSf https://github.com/Myriad-Dreamin/tinymist/releases/latest/download/tinymist-installer.sh | sh

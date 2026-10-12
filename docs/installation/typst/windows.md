@@ -14,7 +14,7 @@ Install tinymist with winget:
 winget install Myriad-Dreamin.Tinymist
 ```
 
-Without winget, use the installer script:
+Or use the installer script:
 
 ```powershell
 powershell -c "irm https://github.com/Myriad-Dreamin/tinymist/releases/latest/download/tinymist-installer.ps1 | iex"

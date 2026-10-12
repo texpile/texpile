@@ -31,8 +31,9 @@ const NO_PACKAGES: PackageTexts = { global: {}, project: {} };
 let loaded: string | null = null;
 let loadedPackages = JSON.stringify(NO_PACKAGES);
 let folderText: string | null = null;
-// a guest has no folder to store the allowance in, so it lasts until the app closes
+// a guest has no folder to store the allowance or the switch in, so they last until the app closes
 let sessionAllowedPatterns: string | null = null;
+let sessionFolderOff = false;
 const packageListeners = new Set<() => void>();
 let locations: Promise<{ snippets: string; packages: string } | null> | null = null;
 let files: SnippetFileList = { global: null, globalPackages: null, packages: { project: [], global: [] } };
@@ -91,7 +92,7 @@ export async function reloadSnippets(root: string | null, hostFolderText: string
 		globalPackages: where?.packages ?? null,
 		packages: { project: Object.keys(packages.project), global: Object.keys(packages.global) }
 	};
-	const on = { global: settings.current.globalSnippets !== false, folder: !root || getFolder(root).snippetsOff !== true };
+	const on = { global: settings.current.globalSnippets !== false, folder: root ? getFolder(root).snippetsOff !== true : !sessionFolderOff };
 	const key = JSON.stringify({ root, global, project, packages, on });
 	if (key === loaded) return;
 	// hand made files must reach git, an older ignore rule kept them out
@@ -116,12 +117,15 @@ export function setGlobalSnippetsOn(on: boolean): void {
 	void reloadSnippets(...lastSource);
 }
 
-/** kept on this machine, not in the folder: whether to load a project's snippets is one person's choice */
-export function setFolderSnippetsOn(root: string, on: boolean): void {
-	updateFolder(root, (draft) => {
-		if (on) delete draft.snippetsOff;
-		else draft.snippetsOff = true;
-	});
+/** kept on this machine, not in the folder: whether to load a project's snippets is one person's choice; a guest
+ *  passes no root, for the host's */
+export function setFolderSnippetsOn(root: string | null, on: boolean): void {
+	if (root)
+		updateFolder(root, (draft) => {
+			if (on) delete draft.snippetsOff;
+			else draft.snippetsOff = true;
+		});
+	else sessionFolderOff = !on;
 	void reloadSnippets(...lastSource);
 }
 

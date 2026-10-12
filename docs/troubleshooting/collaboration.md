@@ -12,8 +12,8 @@ order: 4
 | "No session found for this code."                                       | The session ended or the code is wrong. Check with the host, and use the same **Relay Server** as the host. |
 | "…cannot share a session with this version", "needs Texpile … or newer" | Whoever is on the older version updates Texpile. The browser version is always current.                     |
 | "If Texpile did not open"                                               | Click **Continue in Browser**. In the portable version, enter the code on its start screen instead.         |
-| **Shared Session** is greyed out                                        | Open the folder as a project. The web version cannot host.                                                  |
-| "Too large to co-edit, shared view-only"                                | Files over 2 MiB. Guests can read them but not edit them.                                                   |
+| **Shared Session** is grayed out                                        | Open the folder as a project. Only Texpile Desktop can host.                                                |
+| "Too large to co-edit, shared view-only"                                | Files over 2 MiB are shared for reading only.                                                               |
 | A file does not appear for guests                                       | See [what is shared](../collaboration/README.md#what-is-shared).                                            |
 | A guest's compile request does nothing                                  | A compile is running. Ask again after it ends.                                                              |
 | "Reconnecting...", "The host lost connection"                           | Wait. Edits merge when the connection is back.                                                              |

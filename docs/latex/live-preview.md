@@ -28,7 +28,7 @@ Live mode is saved for the folder. Close the PDF pane to stop the preview.
 ## Limits
 
 - **lualatex only.** A document that needs pdflatex or xelatex fails here. Use Compile.
-- **No shell escape.** Packages such as `minted` do not build here. Use Compile.
+- **No shell escape.** Packages such as `minted` build with Compile only.
 - **Not while you host a shared session.** Guests see the compiled PDF.
 - **One window at a time.** **Use Live Preview Here** moves it to the window you are in.
-- **Battery.** The engine runs while you type. It stops after 10 minutes without use.
+- **Battery.** The engine runs while you type. It stops after 10 minutes idle.

@@ -20,7 +20,7 @@ Layout › **Split the preview** shows the PDF twice, one view above the other. 
 
 ## Color vision check
 
-"…" › **Simulate color vision** shows the page as seen with protanopia, deuteranopia, tritanopia or achromatopsia. Only the screen changes, never the PDF. Works in the PDF pane, the LaTeX live preview and the Typst preview.
+"…" › **Simulate color vision** shows the page as seen with protanopia, deuteranopia, tritanopia or achromatopsia. Only the screen changes. The PDF file stays the same. Works in the PDF pane, the LaTeX live preview and the Typst preview.
 
 ## A PDF built outside Texpile
 

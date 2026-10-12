@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { allowProjectSnippetPatterns, reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { allowProjectSnippetPatterns, reloadSnippets, setFolderSnippetsOn } from '$lib/editor/snippets/file/snippetLoader';
 import { snippetRegistry } from '$lib/editor/snippets/file/snippetRegistry';
 
 const hostFile = (body: string) =>
@@ -21,6 +21,16 @@ describe("a guest's folder snippets", () => {
 		expect(snippetRegistry().pendingPatterns).toBeNull();
 		await reloadSnippets(null, hostFile('[[0]]_[[1]]'));
 		expect(snippetRegistry().pendingPatterns).toBeNull();
+	});
+
+	it('can be turned off by the guest, and on again', async () => {
+		await reloadSnippets(null, hostFile('[[0]]_{[[1]]}'));
+		setFolderSnippetsOn(null, false);
+		await new Promise((r) => setTimeout(r));
+		expect(snippetRegistry().languages.latex.wraps.map((c) => c.snippet.wrap)).not.toContain('rev');
+		setFolderSnippetsOn(null, true);
+		await new Promise((r) => setTimeout(r));
+		expect(snippetRegistry().languages.latex.wraps.map((c) => c.snippet.wrap)).toContain('rev');
 	});
 });
 

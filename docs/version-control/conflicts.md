@@ -12,7 +12,7 @@ When Sync finds that both sides changed the same lines, choose **Merge** and res
 
 - The visual editor is off for a file until its conflicts are resolved.
 - Pick a side with the buttons above each conflict, or edit the lines yourself. A conflict is resolved when its `<<<<<<<`, `=======` and `>>>>>>>` lines are gone.
-- A conflict over a deleted file, or a file that is not text such as an image, is listed in Source Control instead. Click it to keep one version.
+- A conflict over a deleted file, or over an image or another binary file, is listed in Source Control instead. Click it to keep one version.
 
 ## Finish or abort
 

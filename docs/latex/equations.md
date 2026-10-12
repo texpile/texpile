@@ -18,7 +18,7 @@ Press Ctrl M for an inline equation, or Ctrl Shift M for a display equation.
 
 Type a command and press Space: `\frac` becomes a fraction with places to fill. Your own `\newcommand` macros show as they print.
 
-If a symbol needs a package your document does not load yet, click **Add to Preamble**.
+If a symbol needs a package missing from your preamble, click **Add to Preamble**.
 
 ## Number and label
 

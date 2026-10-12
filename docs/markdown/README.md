@@ -9,16 +9,16 @@ section: Markdown
 
 # Markdown
 
-Edit `.md` files visually or as source. The file stays plain Markdown. There is no PDF: the visual editor is the preview.
+Texpile edits `.md` files visually or as source, and saves them as plain Markdown. The visual editor is the preview, in place of a PDF.
 
 ![A Markdown file in the visual editor, with three parts marked](../../landing/src/lib/assets/showcase/docs/markdown/overview.png)
 
 1. **Visual / Source.** Switch editors at any time.
-2. **Toolbar.** Adds strikethrough and task lists. Underline, color, superscript and subscript are not in Markdown.
+2. **Toolbar.** Adds strikethrough and task lists, and leaves out underline, color, superscript and subscript, which Markdown lacks.
 3. **Contents.** The headings of the file. Click one to go there.
 
 Start a file with File › New › Markdown File.
 
 ## Not in Markdown
 
-No citations, cross-references, or equation, figure and table numbers. Comments and suggestions work.
+Citations, cross-references, and equation, figure and table numbers are LaTeX and Typst features. Comments and suggestions work in Markdown too.

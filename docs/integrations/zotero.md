@@ -18,10 +18,10 @@ Right-click in the editor › **Insert Citation from Zotero**, tick one or more 
 
 ![The right-click menu with the two citation actions](../../landing/src/lib/assets/showcase/docs/review/comment-context-menu.png)
 
-Only the Zotero library on your computer is searched. Group libraries that have not synced do not show.
+Texpile searches the Zotero library on your computer. A group library shows once it has synced.
 
 ## Which .bib file
 
-New references go into the `.bib` file your main file names. If it names none, Texpile uses `references.bib` or the first `.bib` file in the project, or creates `references.bib` next to the main file. Then add the bibliography command to your main file yourself.
+New references go into the `.bib` file your main file names. Otherwise, Texpile uses `references.bib` or the first `.bib` file in the project, or creates `references.bib` next to the main file. Then add the bibliography command to your main file yourself.
 
-A reference already in the bibliography is not added again, even if it changed in Zotero. To update it, delete the entry from the `.bib` file and insert it again.
+A reference already in the bibliography keeps its entry, even if it changed in Zotero. To update it, delete the entry from the `.bib` file and insert it again.

@@ -18,6 +18,8 @@
 
 	const actions = $derived(commandPalette.actions);
 	const root = $derived(actions?.isProject() && actions.isHostWorkspace() ? workspaceRoot.current : null);
+	// a guest can still turn off the host's snippets for themselves
+	const guest = $derived(!!actions && !actions.isHostWorkspace());
 
 	const loaded = $derived(snippetStatus.loaded);
 	const switches = $derived(snippetStatus.switches);
@@ -61,7 +63,8 @@
 	run: () => void,
 	why: string,
 	on: boolean,
-	setOn: (on: boolean) => void
+	setOn: (on: boolean) => void,
+	switchWhy: string = why
 )}
 	<div class={ROW}>
 		<div class="min-w-0">
@@ -72,7 +75,7 @@
 		</div>
 		<span class="flex shrink-0 items-center gap-3" use:unavailableTip={why} data-tip-anchor>
 			<button type="button" class="btn preset-tonal btn-sm" disabled={!!why} onclick={run}>{action}</button>
-			<Switch checked={on} disabled={!!why} onCheckedChange={(d) => setOn(d.checked)}>
+			<Switch checked={on} disabled={!!switchWhy} onCheckedChange={(d) => setOn(d.checked)}>
 				<Switch.Control><Switch.Thumb /></Switch.Control>
 				<Switch.HiddenInput />
 			</Switch>
@@ -83,15 +86,16 @@
 {@render fileRow(
 	m.prefs_snippets_project(),
 	m.prefs_snippets_project_note(),
-	root ? countOf(switches.folder, loaded.project) : '',
-	root && switches.folder ? warningOf('project') : '',
+	root || guest ? countOf(switches.folder, loaded.project) : '',
+	(root || guest) && switches.folder ? warningOf('project') : '',
 	m.prefs_snippets_edit(),
 	() => void edit(root ? ensureProjectSnippets(root) : Promise.resolve(null)),
-	root ? '' : m.prefs_snippets_project_none(),
+	root ? '' : guest ? m.unavailable_guest() : m.prefs_snippets_project_none(),
 	switches.folder,
 	(on) => {
-		if (root) setFolderSnippetsOn(root, on);
-	}
+		if (root || guest) setFolderSnippetsOn(root, on);
+	},
+	root || guest ? '' : m.prefs_snippets_project_none()
 )}
 {@render fileRow(
 	m.prefs_snippets_global(),

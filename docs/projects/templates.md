@@ -16,7 +16,7 @@ Set the main file, then **File › Save as Template…**. The template appears u
 
 The template leaves out the compiled PDF, files the build makes such as `.aux` and `.log`, build and `_draft` folders, and hidden folders such as `.git` and `.texpile`.
 
-If the project is on GitHub or another Git server, **Save** offers **Git Remote**. That template keeps only the address: each project made from it downloads the newest version, without its history.
+If the project is on GitHub or another Git server, **Save** offers **Git Remote**. That template stores the address alone, and each project made from it downloads only the newest version of the files.
 
 ## Import Your Own
 

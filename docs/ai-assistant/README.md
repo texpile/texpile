@@ -28,6 +28,6 @@ Install the agent and sign in outside Texpile, then pick it in `Preferences › 
 
 You can also enter your own command. For the Agent tab it must speak the Agent Client Protocol, such as `opencode acp`. For Refine it reads a request and prints the new text, such as `ollama run llama3.1`.
 
-**Not found** means Texpile cannot find the agent. Add its folder in `Preferences › Toolchain › Folders`, then reopen Preferences.
+If an agent shows **Not found**, add its folder in `Preferences › Toolchain › Folders`, then reopen Preferences.
 
 What each feature sends is in [Privacy](../reference/privacy.md).

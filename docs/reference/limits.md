@@ -6,7 +6,7 @@ order: 2
 
 # Limits
 
-The visual editor cannot open files over 800 KB. They open in the source editor.
+Files over 800 KB open in the source editor only.
 
 | Limit                      | Value | What happens                                                              |
 | -------------------------- | ----- | ------------------------------------------------------------------------- |
@@ -19,4 +19,4 @@ The visual editor cannot open files over 800 KB. They open in the source editor.
 
 Every saved copy is kept for 7 days, then the last copy of each day for up to 30 days. Copies saved within 5 minutes of each other merge into one. Named copies, and the newest copy of each file, stay until you delete them.
 
-Files over 1 MB get no copies. History uses up to 300 MB, and the oldest copies go first.
+History skips files over 1 MB and uses up to 300 MB, and the oldest copies go first.

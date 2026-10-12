@@ -16,7 +16,7 @@ Click a changed file in Source Control, or **Open Changes** at the right end of 
 
 ## The Graph
 
-The commits, newest first, below the changes list. Click a commit to compare it with your files.
+Commits are listed newest first, below the changes list. Click a commit to compare it with your files.
 
 ![The menu on a commit in the Graph with Open Commit and Restore](../../landing/src/lib/assets/showcase/docs/review/graph-commit-menu.png)
 

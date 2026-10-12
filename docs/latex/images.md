@@ -14,4 +14,4 @@ Drag an image onto the editor, paste one, or use Insert › Image…. PNG, JPEG,
 
 Type @ anywhere to reference a numbered figure. Drag the handles of a selected image to resize it.
 
-A PDF figure shows its first page. An image from a web address does not show: save it in the project instead.
+A PDF figure shows its first page. To show an image from a web address, save it in the project.

@@ -14,7 +14,7 @@ Texpile underlines spelling problems in English, German, French, Spanish, Italia
 
 Click an underlined word for suggestions. F8 and Shift F8 jump to the next and previous problem.
 
-A grammar problem offers **Turn Off Rule** instead of Add to Dictionary. It stops that rule in every file. Preferences › Spelling turns it back on, and holds the English variant and your dictionary.
+For a grammar problem, the box swaps Add to Dictionary for **Turn Off Rule**, which stops that rule in every file. Preferences › Spelling turns it back on, and holds the English variant and your dictionary.
 
 ## Languages
 
@@ -27,7 +27,7 @@ A document is checked in the language it names:
 | Typst               | `#set text(lang: "es")`        |
 | Markdown            | `lang: it` in the front matter |
 
-A chapter brought in with `\input` or `#include` follows its main file. A document that names no language is checked in Preferences › Spelling › Default language, English unless changed. A document in a language without a dictionary, such as Russian, is not checked.
+A chapter brought in with `\input` or `#include` follows its main file. Any other document is checked in Preferences › Spelling › Default language, which starts as English. Only the languages above have dictionaries, so a document in another language, such as Russian, is skipped.
 
 Spelling › Folder Language, or Preferences › Spelling › This folder, sets one language for every file in the folder, over what the files name. It is saved in the folder's `.texpile/config.json`, so co-authors get it too. Automatic goes back to what each file names, and says where its language comes from: the document, or the default.
 
