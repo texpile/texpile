@@ -9,7 +9,7 @@ section: Editor tips
 
 # Paste and drop
 
-Bring in content from other apps without retyping it.
+Paste content from other apps into the editor, and drop files into the project.
 
 ## Paste into the editor
 

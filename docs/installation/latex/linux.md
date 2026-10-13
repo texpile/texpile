@@ -16,7 +16,7 @@ TeX Live from apt, or the current release from upstream.
 sudo apt install texlive-full
 ```
 
-Smaller, builds most papers (add `biber` for biblatex):
+A smaller set that builds most papers (add `biber` for biblatex):
 
 ```bash
 sudo apt install texlive-latex-recommended texlive-latex-extra latexmk

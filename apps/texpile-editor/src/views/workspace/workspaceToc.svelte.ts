@@ -15,8 +15,10 @@ import {
 	guessedTypstMain,
 	latexProjectOutline,
 	typstProjectOutline,
+	visualFloats,
 	withVisualHeadings
 } from '$lib/editor/visual/extensions/tableofcontents/projectOutline';
+import { editorViewStore } from '$lib/stores/editorStore';
 import { typstOutlineOf } from '$lib/workspace/projectIntel';
 import type { TypstOutline } from '$lib/stores/projectIntel';
 import { parseOutlineRaw, assembleProjectOutline, type RawOutlineItem } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
@@ -58,7 +60,7 @@ function projectOf(doc: Pick<DocumentBuffer, 'path' | 'texSource'>) {
 	const paper = { open: doc.path, openSource: doc.texSource, root: workspaceRoot.current, outlines };
 	// a guess only shows, the main file stays unchosen until the first compile asks
 	const main = mainFile.current ?? guessedLatexMain(paper);
-	return main ? latexProjectOutline({ ...paper, main }) : null;
+	return main ? latexProjectOutline({ ...paper, main, compiled: projectIntelStore.current.auxContents }) : null;
 }
 
 /** the same for a .typ, from its outline as its editor has it now */
@@ -80,8 +82,8 @@ export function attachVisualProjectToc(wsdoc: WorkspaceDoc): void {
 	// a second at most, the list shown stays rather than falling back to the editor's last headings for a moment
 	let holdUntil = 0;
 	let holdEnd = 0;
-	function settle(paper: TocItem[] | null): void {
-		const lined = paper && withVisualHeadings(paper, tocStore.current);
+	function settle(paper: TocItem[] | null, floats: TocItem[] = []): void {
+		const lined = paper && withVisualHeadings(paper, tocStore.current, floats);
 		if (paper && !lined && visualProjectTocStore.current && performance.now() < holdUntil) return;
 		holdUntil = 0;
 		visualProjectTocStore.current = lined;
@@ -96,7 +98,9 @@ export function attachVisualProjectToc(wsdoc: WorkspaceDoc): void {
 			});
 			return;
 		}
-		settle(visual && doc.kind === 'tex' ? projectOf(doc) : null);
+		const tex = visual && doc.kind === 'tex';
+		const view = editorViewStore.current;
+		settle(tex ? projectOf(doc) : null, tex && view ? visualFloats(view.state.doc) : []);
 	}
 	const deferred = trailingDebounce<void>(300, publish);
 	let shown: string | null = null;

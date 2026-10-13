@@ -18,6 +18,18 @@ export function tocHasChildren(items: TocItem[]): boolean[] {
 	return items.map((item, i) => i + 1 < items.length && items[i + 1].level > item.level);
 }
 
+/** the whole paper's rows with nothing of the open file under them: folded until the reader opens one, so the open
+ *  file's part stands out and the rest reads as the paper's chapters. The open file's own rows carry no `file` */
+export function tocElsewhere(items: TocItem[], keys: string[], parents: boolean[]): Set<string> {
+	const out = new Set<string>();
+	items.forEach((item, i) => {
+		if (!parents[i] || !item.file) return;
+		for (let j = i + 1; j < items.length && items[j].level > item.level; j++) if (!items[j].file) return;
+		out.add(keys[i]);
+	});
+	return out;
+}
+
 /** a folded row hides everything deeper after it, up to the next row at its level or above */
 export function tocVisible(items: TocItem[], keys: string[], folded: ReadonlySet<string>): boolean[] {
 	const out: boolean[] = [];

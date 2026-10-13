@@ -26,7 +26,7 @@ In an empty folder, **Start a New Document** offers LaTeX and Typst templates. C
 
 **Browse Typst Templates…** adds community templates from Typst Universe. File › Save as Template… turns a folder of your own into a template under **Your Templates**.
 
-Markdown has no compile step: File › New › Markdown File.
+For Markdown, choose File › New › Markdown File. Markdown has no compile step.
 
 ## Compile
 

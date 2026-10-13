@@ -22,22 +22,22 @@ When something fails, **Show Command Output** shows what git said.
 | You see                              | Fix                                                                                                     |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | "There are no changes to commit."    | Stage at least one file.                                                                                |
-| "Failed to sign the commit."         | Fix commit signing in your git settings. Texpile has none of its own.                                   |
+| "Failed to sign the commit."         | Commit signing comes from your git settings. Fix it there.                                              |
 | "There are merge conflicts…"         | See [Merge conflicts](../version-control/conflicts.md).                                                 |
 | "Too many changes were detected…"    | Add large folders to `.gitignore`.                                                                      |
-| A folder shows **N untracked files** | Folders with 200 or more new files are not staged for you. Add the folder to `.gitignore`, or leave it. |
+| A folder shows **N untracked files** | Folders with 200 or more new files stay unstaged. Add the folder to `.gitignore`, or leave it as it is. |
 
 ## Sync and push
 
-| You see                                             | Fix                                                                                                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| "Your local changes would be overwritten by merge." | Choose **Commit & Sync**.                                                                                         |
-| "The branch "…" has no remote branch."              | Choose **Publish Branch**.                                                                                        |
-| **HEAD detached at …** and Sync is off              | Pick a branch with Checkout to… in the [command palette](../command-palette.md).                                  |
-| "Failed to authenticate to git remote"              | Sign in again. See [GitHub](../version-control/github.md).                                                        |
-| "…rejected because the branch is protected."        | Texpile cannot create branches. Push to another branch from the terminal, or ask the owner for access.            |
-| "…push protection found secrets in…"                | Remove the secret from the commit, not only from the file. If it is not a secret, **Open on GitHub** to allow it. |
-| Autofetch stopped                                   | Sync or Fetch once and sign in.                                                                                   |
+| You see                                             | Fix                                                                                                                          |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| "Your local changes would be overwritten by merge." | Choose **Commit & Sync**.                                                                                                    |
+| "The branch "…" has no remote branch."              | Choose **Publish Branch**.                                                                                                   |
+| **HEAD detached at …** and Sync is off              | Pick a branch with Checkout to… in the [command palette](../command-palette.md).                                             |
+| "Failed to authenticate to git remote"              | Sign in again. See [GitHub](../version-control/github.md).                                                                   |
+| "…rejected because the branch is protected."        | Texpile cannot create branches. Push to another branch from the terminal, or ask the owner for access.                       |
+| "…push protection found secrets in…"                | Remove the secret from the commit as well as the file. If GitHub flagged something harmless, **Open on GitHub** to allow it. |
+| Autofetch stopped                                   | Sync or Fetch once and sign in.                                                                                              |
 
 ## Publish and clone
 
@@ -45,7 +45,7 @@ When something fails, **Show Command Output** shows what git said.
 | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | "The GitHub token is missing the "repo" scope…"                       | Make a token with the `repo` scope. A fine-grained token needs the Administration permission. |
 | "The "…" repository was created on GitHub, but the push to it failed" | Choose **Publish Branch** again and pick that remote.                                         |
-| "Clone succeeded, but checkout failed"                                | A file has a name your system does not allow, or a Git LFS file did not download.             |
+| "Clone succeeded, but checkout failed"                                | A file has a name your system forbids, or a Git LFS file failed to download.                  |
 | "A submodule could not be cloned"                                     | The rest was cloned. Texpile does not manage submodules.                                      |
 
 ## Branches

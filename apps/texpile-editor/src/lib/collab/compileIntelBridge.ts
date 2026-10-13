@@ -41,6 +41,7 @@ export function shareCompileState(session: EditSession, isGuest: boolean): void 
 		auxPages: intel.auxPages,
 		auxKinds: intel.auxKinds,
 		auxTitles: intel.auxTitles,
+		auxContents: intel.auxContents,
 		log: entries
 	});
 }

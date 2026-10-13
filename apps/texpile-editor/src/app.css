@@ -269,6 +269,10 @@ html.window-glass .cm-tooltip .cm-completionInfo {
    prefers-color-scheme fallbacks, which track the OS rather than the app toggle) */
 math-field {
 	--caret-color: var(--color-surface-950-50);
+	/* the editor's selection, so selected symbols keep their own color */
+	--selection-background-color: var(--editor-selection);
+	--selection-color: currentColor;
+	--contains-highlight-background-color: transparent;
 }
 
 /* no focus outlines app-wide: the browser ring stacked on components' own borders and read
@@ -442,12 +446,12 @@ html #mathlive-suggestion-popover li.is-active {
 }
 /* after the hover rule: the tie-break keeps the selection tinted while hovered */
 html #mathlive-suggestion-popover li.ML__popover__current {
-	background: light-dark(var(--color-primary-100), color-mix(in oklab, var(--color-primary-500) 30%, transparent));
+	background: var(--primary-tint);
 	color: inherit;
 }
 html #mathlive-suggestion-popover li a,
 html #mathlive-suggestion-popover li a:hover {
-	color: light-dark(var(--color-primary-500), var(--color-primary-300));
+	color: var(--primary-ink);
 }
 
 /* Skeleton's .input transparent bg leaks the OS-default white on <select> (native form chrome
@@ -2285,7 +2289,10 @@ html.pm-drop-refused .pm-drop-cursor {
    duration tracks FLASH_MS in synctexFlash.ts. */
 @keyframes synctex-flash {
 	from {
-		background-color: color-mix(in srgb, var(--jump-flash) 50%, transparent);
+		background-color: light-dark(
+			color-mix(in srgb, var(--jump-flash) 50%, transparent),
+			color-mix(in srgb, var(--jump-flash) 30%, transparent)
+		);
 	}
 	to {
 		background-color: transparent;

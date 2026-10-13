@@ -8,7 +8,7 @@ order: 5
 
 A command line in your project folder, under **Terminal** in the bottom panel. Desktop app only.
 
-- Compiles run in a terminal tab of their own, named **Compile**, never in yours. **Stop** stops only the compile.
+- Compiles run in a separate terminal tab named **Compile**. **Stop** stops only the compile.
 - The terminal is your computer's usual shell, and it finds the programs in your [Toolchain](toolchain.md) folders.
 - Opening another folder closes the old terminals.
 

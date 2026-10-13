@@ -50,6 +50,14 @@ export type AppSettings = {
 	whatsNewSeen: string;
 	/** live math preview tooltip in source mode. */
 	mathPreview: boolean;
+	/** load the snippets.json in Texpile's data folder */
+	globalSnippets: boolean;
+	/** in source math, `a/` becomes \frac{a}{} (LaTeX and Markdown) */
+	autoFraction: boolean;
+	/** in source math, Tab moves past the next closing bracket, then out of the formula */
+	tabOut: boolean;
+	/** in source matrices and aligned equations, Tab adds a column and Shift+Enter a row */
+	matrixKeys: boolean;
 	/** the floating Comment button offered over a selection, in BOTH editors. */
 	commentPill: boolean;
 	/** soft-wrap long lines in Source mode instead of scrolling horizontally. */
@@ -80,7 +88,9 @@ export type AppSettings = {
 	openFolders: string[];
 	/** MCP port override (0 = channel default); a hand-edit escape hatch for port clashes. */
 	mcpPort: number;
-	/** the agent Refine runs, alone in the list; empty or null = none chosen yet. Main reads it, see electron/src/ai */
+	/** Preferences › AI Assistant's switch: Refine and the Agent tab gone, the MCP server stopped, whatever is picked below it */
+	aiOff: boolean;
+	/** the agent Refine runs, alone in the list; null = none chosen yet, empty = None, Refine off. Main reads it, see electron/src/ai */
 	refineAgents: ('claude' | 'codex' | 'agy' | 'custom')[] | null;
 	/** the command line for Refine's custom agent; the prompt goes on its stdin */
 	aiAgentCommand: string;
@@ -127,6 +137,10 @@ const DEFAULTS: AppSettings = {
 	transparentWindow: false,
 	whatsNewSeen: '',
 	mathPreview: true,
+	globalSnippets: true,
+	autoFraction: false,
+	tabOut: false,
+	matrixKeys: false,
 	commentPill: true,
 	sourceLineWrap: true,
 	visualJustify: true,
@@ -140,6 +154,7 @@ const DEFAULTS: AppSettings = {
 	collabRelayUrl: DEFAULT_COLLAB_RELAY_URL,
 	openFolders: [],
 	mcpPort: 0,
+	aiOff: false,
 	refineAgents: null,
 	aiAgentCommand: '',
 	aiAgentModels: {},

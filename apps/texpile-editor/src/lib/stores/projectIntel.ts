@@ -5,6 +5,7 @@
 import type { TocItem } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 import { box } from '$lib/runes/box.svelte';
 import type { RawOutlineItem } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
+import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
 
 export type ProjectLabel = {
 	name: string;
@@ -57,6 +58,8 @@ export type ProjectIntel = {
 	auxKinds: Record<string, string>;
 	/** the titles hyperref recorded, for \nameref */
 	auxTitles: Record<string, string>;
+	/** the headings, figures and tables the last compile numbered, for the Contents */
+	auxContents: CompiledEntry[];
 	/** per-file raw outline atoms (markers included), for the merged project outline */
 	outlines: Record<string, RawOutlineItem[]>;
 	/** a .typ's headings, each with its line, and where it #includes another file */
@@ -77,6 +80,7 @@ export const EMPTY_PROJECT_INTEL: ProjectIntel = {
 	auxPages: {},
 	auxKinds: {},
 	auxTitles: {},
+	auxContents: [],
 	outlines: {},
 	typstOutlines: {}
 };

@@ -17,4 +17,6 @@ The preview renders the main file as you type, in the visual and the source edit
 3. **"…".** **Export as PDF, PNG, SVG, or HTML…** saves the document. See [Export](export.md).
 4. **Own window.** Moves the preview to a window of its own.
 
+Pinch on a trackpad, or scroll with Ctrl held, to zoom around the pointer.
+
 The preview shows the main file, even when another file is open.

@@ -3,12 +3,12 @@
 	// focus, so the query shown here is typed through it (mathSearchKeys.ts) and a click on a row is
 	// taken before it can move the focus away.
 	import { Portal } from '@skeletonlabs/skeleton-svelte';
-	import { Search } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { menuGroupLabelClass, menuItemClass, menuPanelClass } from '$lib/menus/menuStyles';
 	import SymbolGlyph from '$lib/editor/symbols/SymbolPicker/SymbolGlyph.svelte';
 	import { mathSearch, type MathSearchResult } from './mathSearch.svelte';
 	import { drawMath } from './mathPreview';
+	import MathSearchQuery from './query/MathSearchQuery.svelte';
 
 	let panel = $state<HTMLDivElement>();
 	let list = $state<HTMLUListElement>();
@@ -28,7 +28,7 @@
 	}
 
 	function keyOf(result: MathSearchResult): string {
-		return `${result.section} ${result.kind === 'structure' ? result.structure.latex : result.entry.key}`;
+		return `${result.section} ${result.kind === 'structure' ? `${result.structure.label} ${result.structure.latex}` : result.entry.key}`;
 	}
 
 	// the highlighted row stays in sight as the arrow keys move it
@@ -37,23 +37,23 @@
 		list?.querySelector(`[data-index="${mathSearch.active}"]`)?.scrollIntoView({ block: 'nearest' });
 	});
 
-	// the panel is placed once, so it goes when what it was placed against moves
+	// a keystroke near the window's edge scrolls the editor right as the panel opens, so it follows rather than closes
 	$effect(() => {
-		if (!mathSearch.field) return;
-		const close = mathSearch.close;
+		if (!mathSearch.showing) return;
+		const follow = mathSearch.follow;
 		function onScroll(e: Event) {
-			if (!(e.target instanceof Node && panel?.contains(e.target))) close();
+			if (!(e.target instanceof Node && panel?.contains(e.target))) follow();
 		}
-		window.addEventListener('resize', close);
+		window.addEventListener('resize', follow);
 		window.addEventListener('scroll', onScroll, true);
 		return () => {
-			window.removeEventListener('resize', close);
+			window.removeEventListener('resize', follow);
 			window.removeEventListener('scroll', onScroll, true);
 		};
 	});
 </script>
 
-{#if mathSearch.field && mathSearch.place}
+{#if mathSearch.showing && mathSearch.place}
 	{@const place = mathSearch.place}
 	<Portal>
 		<div
@@ -63,17 +63,10 @@
 			onpointerdown={(e) => e.preventDefault()}
 			role="presentation"
 		>
-			<div class="border-surface-200-800 mb-1 flex items-center gap-2 border-b px-2 pt-1 pb-2">
-				<Search class="text-muted size-4 shrink-0" />
-				<span class="min-w-0 flex-1 truncate">
-					{#if mathSearch.query}{mathSearch.query}{/if}<span class="math-search-caret"></span>{#if !mathSearch.query}<span
-							class="text-muted">{m.mathsearch_placeholder()}</span
-						>{/if}
-				</span>
-			</div>
+			<MathSearchQuery />
 			<ul bind:this={list} class="min-h-0 overflow-y-auto" role="listbox" aria-label={m.symbols_results_aria()} onscroll={onListScroll}>
 				{#each rows as result, i (keyOf(result))}
-					{#if i === 0 || rows[i - 1].section !== result.section}
+					{#if result.section && (i === 0 || rows[i - 1].section !== result.section)}
 						<li class={menuGroupLabelClass} role="presentation">{result.section}</li>
 					{/if}
 					<!-- the keys reach the rows through the equation, which keeps the focus -->
@@ -89,7 +82,7 @@
 					>
 						<span class="flex h-8 w-12 shrink-0 items-center justify-center overflow-hidden text-xs">
 							{#if result.kind === 'structure'}
-								<span use:drawMath={{ source: result.structure.display, syntax: 'latex' }}></span>
+								<span use:drawMath={{ source: result.structure.display, syntax: result.structure.format ?? 'latex' }}></span>
 							{:else if result.entry.glyph}
 								<SymbolGlyph glyph={result.entry.glyph} size={18} />
 							{:else}
@@ -114,21 +107,3 @@
 		</div>
 	</Portal>
 {/if}
-
-<style>
-	/* where the typed query goes on: the equation has the real caret, so this one only shows it */
-	.math-search-caret {
-		display: inline-block;
-		width: 1px;
-		height: 1.1em;
-		margin-right: 1px;
-		vertical-align: text-bottom;
-		background: currentColor;
-		animation: math-search-blink 1s steps(1) infinite;
-	}
-	@keyframes math-search-blink {
-		50% {
-			opacity: 0;
-		}
-	}
-</style>

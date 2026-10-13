@@ -22,6 +22,10 @@ const DEFAULT_SETTINGS = {
 	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
 	transparentWindow: false, // the window's grounds let the blurred desktop through (windowGlass.ts)
 	mathPreview: true, // live math preview tooltip in source mode
+	globalSnippets: true, // load the snippets.json in the data folder
+	autoFraction: false, // in source math, a/ becomes \frac{a}{}
+	tabOut: false, // in source math, Tab moves past the next closing bracket, then out of the formula
+	matrixKeys: false, // in source matrices, Tab adds a column and Shift+Enter a row
 	sourceLineWrap: true, // soft-wrap long lines in Source mode
 	visualJustify: true, // paragraphs in the visual editor fill the column edge to edge
 	visualHyphenate: true, // long words may split at line ends in justified text
@@ -41,6 +45,7 @@ const DEFAULT_SETTINGS = {
 	// the reader's own command-line agent that Refine may run: 'claude', 'codex', 'agy' or 'custom'; null = none chosen
 	// yet. Kept here and not in a folder's .texpile/config.json, which travels with the folder: a downloaded
 	// project must never pick the program that runs, and no MCP tool writes this file. A run names one of these
+	aiOff: false, // Preferences › AI Assistant's switch: no agent runs while it is on, whatever is ticked
 	refineAgents: null as string[] | null,
 	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin
 	aiAgentModels: {} as Record<string, string>, // each preset's --model, from the list it gives (agentModels.ts); '' = its own default

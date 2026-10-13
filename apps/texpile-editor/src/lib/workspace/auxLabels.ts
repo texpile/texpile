@@ -12,7 +12,7 @@ export type AuxLabels = {
 };
 
 /** the brace groups in `aux` from `at` (just inside an opening brace) to its close, as their inner text */
-function groupsFrom(aux: string, at: number): string[] {
+export function groupsFrom(aux: string, at: number): string[] {
 	const groups: string[] = [];
 	let depth = 0;
 	let start = -1;

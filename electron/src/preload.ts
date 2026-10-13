@@ -1,11 +1,6 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
-
-/** unwraps the { ok, value | error } results from main.ts handleFs back into throw semantics. */
-async function invokeFs(channel: string, ...args: unknown[]): Promise<unknown> {
-	const r = (await ipcRenderer.invoke(channel, ...args)) as { ok: boolean; value?: unknown; error?: string };
-	if (r && r.ok) return r.value;
-	throw new Error(r?.error ?? 'Unknown error');
-}
+import { invokeFs } from './preloadIpc';
+import './preloadSnippets';
 
 // main pushes open-path/open-folder on did-finish-load, which can beat the renderer's
 // subscription (mount waits on the settings IPC; the route-split boot is fast enough to lose

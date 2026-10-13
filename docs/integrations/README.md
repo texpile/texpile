@@ -9,4 +9,4 @@ section: AI and integrations
 
 # Integrations
 
-Two ways to add a reference without typing it: from your [Zotero](zotero.md) library, or by looking up a paper's [title or DOI](cite-by-doi.md) online. Both work in LaTeX and Typst projects in the desktop app, and can be turned off in `Preferences › Integrations`.
+Integrations fill in a reference for you, from your [Zotero](zotero.md) library or from a paper's [title or DOI](cite-by-doi.md) looked up online. Both work in LaTeX and Typst projects in the desktop app, and each has a switch in `Preferences › Integrations`.

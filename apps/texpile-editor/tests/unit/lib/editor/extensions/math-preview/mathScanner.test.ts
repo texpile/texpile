@@ -75,18 +75,6 @@ describe('findMathRegions', () => {
 		expect(regions[0].unclosed).toBeUndefined();
 	});
 
-	it('ignores \\verb content', () => {
-		const text = '\\verb|$x$| then $y$';
-		const regions = findMathRegions(text);
-		expect(outer(text, regions)).toEqual(['$y$']);
-	});
-
-	it('ignores verbatim-like environments (blank lines and all)', () => {
-		const text = '\\begin{verbatim}\n$a$\n\n$b$\n\\end{verbatim}\n$c$';
-		const regions = findMathRegions(text);
-		expect(outer(text, regions)).toEqual(['$c$']);
-	});
-
 	it('keeps a $…$ region open across a single newline', () => {
 		const text = '$a +\nb$';
 		const regions = findMathRegions(text);

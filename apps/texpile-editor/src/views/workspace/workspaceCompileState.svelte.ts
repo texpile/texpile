@@ -1,6 +1,7 @@
 // The resolved compile command and everything that follows it around: the project config
 // adopt, the per-engine Problems lane, the shared-session compile intel, and loading an
 // existing log on folder open.
+import { followProjectSnippets, snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
 import { withLiveRefs } from '$lib/workspace/document/liveRefDiagnostics';
 import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
 import { untrack } from 'svelte';
@@ -52,6 +53,15 @@ export class WorkspaceCompileState {
 			// from when the folder opened - so without re-resolving here the config landed in storage
 			// and the editor went on using whatever it had worked out before reading the file.
 			void projectConfig.adopt(root).then(() => this.resolveNow());
+		});
+		// a session never shares .texpile/, so the host sends guests the snippet file itself
+		followProjectSnippets(() => {
+			if (d.guest()) return { root: null, hostText: d.session().folderSnippets };
+			return { root: fileMode.current ? null : workspaceRoot.current, hostText: null };
+		});
+		$effect(() => {
+			const session = d.session();
+			if (session.active && !d.guest()) session.shareFolderSnippets(snippetStatus.folderText);
 		});
 		// The project scan names the main file after the folder-reset effect has run, so a Typst
 		// project would otherwise sit on the inherited LaTeX command until something else re-resolved

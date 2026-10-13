@@ -16,17 +16,17 @@ html {
 	--muted-text: color-mix(in oklab, currentColor var(--muted-share), transparent);
 	--faint-text: color-mix(in oklab, currentColor var(--faint-share), transparent);
 	/* a theme colour as text or a mark on the ground: its hue and chroma, with the lightness held
-	   at or below 0.5 on a light ground and at or above 0.78 on a dark one, so it reads on any
+	   at or below 0.5 on a light ground and at or above 0.85 on a dark one, so it reads on any
 	   preset, including one whose whole scale is pastel (Reign's primary never leaves 87-97%) */
-	--primary-ink: light-dark(oklch(from var(--color-primary-500) min(l, 0.5) c h), oklch(from var(--color-primary-500) max(l, 0.78) c h));
+	--primary-ink: light-dark(oklch(from var(--color-primary-500) min(l, 0.5) c h), oklch(from var(--color-primary-500) max(l, 0.85) c h));
 	--secondary-ink: light-dark(
 		oklch(from var(--color-secondary-500) min(l, 0.5) c h),
-		oklch(from var(--color-secondary-500) max(l, 0.78) c h)
+		oklch(from var(--color-secondary-500) max(l, 0.85) c h)
 	);
-	--tertiary-ink: light-dark(oklch(from var(--color-tertiary-500) min(l, 0.5) c h), oklch(from var(--color-tertiary-500) max(l, 0.78) c h));
-	--success-ink: light-dark(oklch(from var(--color-success-500) min(l, 0.5) c h), oklch(from var(--color-success-500) max(l, 0.78) c h));
-	--warning-ink: light-dark(oklch(from var(--color-warning-500) min(l, 0.5) c h), oklch(from var(--color-warning-500) max(l, 0.78) c h));
-	--error-ink: light-dark(oklch(from var(--color-error-500) min(l, 0.5) c h), oklch(from var(--color-error-500) max(l, 0.78) c h));
+	--tertiary-ink: light-dark(oklch(from var(--color-tertiary-500) min(l, 0.5) c h), oklch(from var(--color-tertiary-500) max(l, 0.85) c h));
+	--success-ink: light-dark(oklch(from var(--color-success-500) min(l, 0.5) c h), oklch(from var(--color-success-500) max(l, 0.85) c h));
+	--warning-ink: light-dark(oklch(from var(--color-warning-500) min(l, 0.5) c h), oklch(from var(--color-warning-500) max(l, 0.85) c h));
+	--error-ink: light-dark(oklch(from var(--color-error-500) min(l, 0.5) c h), oklch(from var(--color-error-500) max(l, 0.85) c h));
 	/* a theme colour over the ground: tint at rest, wash on hover and for hairlines, flood for a pressed
 	   or selected state. Tokens rather than bg-primary-500/15 because Tailwind bakes an alpha-modified
 	   family colour to Skeleton's base placeholder, a grey that never changes with the theme */
@@ -149,8 +149,8 @@ html {
 	--syntax-deleted: var(--error-ink);
 
 	/* find-in-document matches, both editors */
-	--find-match-bg: rgba(255, 255, 0, 0.4);
-	--find-match-active-bg: rgba(255, 128, 0, 0.6);
+	--find-match-bg: light-dark(rgba(255, 255, 0, 0.4), rgba(255, 255, 0, 0.25));
+	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
 	--proof-default: var(--tertiary-ink);
@@ -188,9 +188,9 @@ html {
 	--git-renamed: var(--secondary-ink);
 
 	/* math symbol keys */
-	--math-key-hover: light-dark(var(--color-primary-100), var(--color-primary-900));
+	--math-key-hover: var(--primary-tint);
 	--math-key-edge: var(--color-primary-400);
-	--math-key-down: light-dark(var(--color-primary-200), var(--color-primary-800));
+	--math-key-down: color-mix(in oklab, var(--color-primary-500) 25%, transparent);
 
 	/* the colour picker's clear mark */
 	--swatch-clear: var(--color-error-500);

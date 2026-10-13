@@ -1,5 +1,6 @@
-import { it, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import {
+	tocElsewhere,
 	tocFoldedNow,
 	tocHasChildren,
 	tocKeys,
@@ -38,4 +39,27 @@ it("opens the reader's folds the caret is in only while it is there, unless fold
 	expect([...tocFoldedNow(folded, inExecutable, new Set([keys[2]]))]).toEqual([keys[2]]);
 	// the caret gone on to Results: both are folded again
 	expect([...tocFoldedNow(folded, [keys[5]], new Set())]).toEqual([keys[1], keys[2]]);
+});
+
+describe('the whole paper around the open file', () => {
+	const row = (level: number, text: string, file?: string) => ({ level, text, pos: 0, ...(file ? { file } : {}) });
+
+	it('folds the sections of other files, and only those', () => {
+		const items = [
+			row(1, 'First', 'ch1.tex'),
+			row(2, 'A', 'ch1.tex'),
+			row(1, 'Second'),
+			row(2, 'C'),
+			row(1, 'Third', 'ch3.tex'),
+			row(2, 'D', 'ch3.tex')
+		];
+		const keys = tocKeys(items);
+		expect([...tocElsewhere(items, keys, tocHasChildren(items))]).toEqual([keys[0], keys[4]]);
+	});
+
+	it('keeps a chapter of the main file open when the open file is inside it', () => {
+		const items = [row(1, 'Part', 'main.tex'), row(2, 'Mine'), row(1, 'Other', 'main.tex'), row(2, 'Theirs', 'ch2.tex')];
+		const keys = tocKeys(items);
+		expect([...tocElsewhere(items, keys, tocHasChildren(items))]).toEqual([keys[2]]);
+	});
 });

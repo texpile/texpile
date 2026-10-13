@@ -16,6 +16,7 @@ import { RelayTransport } from './transport';
 import { forgetJoinCode, rememberJoinCode } from './joinLink.svelte';
 import { commentLogOf } from './sharedComments';
 import type { SharedCompileIntel } from './editSession';
+import { decodeParseContext, type SharedParseContext } from './parse/parseContext';
 import type { ControlPayload, PreviewPayload } from './protocol';
 import { settings } from '$lib/settings';
 
@@ -61,6 +62,9 @@ class GuestCollabController {
 	imageRev = $state(0);
 	// the host's parsed compile products (aux numbers + diagnostics), from the session meta map
 	compileIntel = $state<SharedCompileIntel | null>(null);
+	parseContext = $state.raw<SharedParseContext | null>(null);
+	folderSnippets = $state<string | null>(null);
+	private parseContextRaw: unknown = null;
 	/** the host is streaming a live Typst preview; the pane shows it instead of the pushed PDF */
 	typstPreviewOffered = $state(false);
 	/** the raw preview page the host shipped (blob 'typst-page'); null until asked for and answered */
@@ -312,6 +316,13 @@ class GuestCollabController {
 				/* a malformed payload just means no shared numbers */
 			}
 		}
+		const snippets = metaOf(this.doc).get('folderSnippets');
+		this.folderSnippets = typeof snippets === 'string' && snippets ? snippets : null;
+		const context = metaOf(this.doc).get('parseContext');
+		if (context !== this.parseContextRaw) {
+			this.parseContextRaw = context;
+			this.parseContext = decodeParseContext(context);
+		}
 	}
 
 	private clearJoinTimer(): void {
@@ -454,6 +465,9 @@ class GuestCollabController {
 		this.pdfName = '';
 		this.hostOnline = true;
 		this.compileIntel = null;
+		this.parseContext = null;
+		this.folderSnippets = null;
+		this.parseContextRaw = null;
 		this.typstPreviewOffered = false;
 		this.previewPage = null;
 		this.previewPageAsked = false;

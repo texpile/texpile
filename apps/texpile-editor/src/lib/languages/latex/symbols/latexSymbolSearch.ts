@@ -1,4 +1,6 @@
 import type { LatexSymbol } from './latexSymbol.types';
+import { LATEX_MEANING_WORDS, meaningfulTerms } from '$lib/editor/symbols/symbolMeanings';
+import { isTypoOf } from '$lib/editor/symbols/typoMatch';
 
 // LaTeX names are short or run together ("neq", "subsetneq"). These are the words someone
 // searching by meaning types for one; a word inside a name ("arrow" in `\leftarrow`) is found as is
@@ -117,6 +119,8 @@ const NAME_INSIDE_WEIGHT = 15;
 const WORD_WEIGHT = 20;
 const NAME_PART_WEIGHT = 12;
 const PACKAGE_WEIGHT = 6;
+// below every exact and prefix match, so a slip only adds what nothing spelled right found
+const TYPO_WEIGHT = 5;
 const EXACT_NAME_BONUS = 60;
 const SAME_CASE_BONUS = 10;
 // a query in small letters means `\rightarrow` before `\Rightarrow`
@@ -146,7 +150,7 @@ function nameOf(command: string): string {
 
 function indexSymbol(symbol: LatexSymbol, names: ReadonlySet<string>): IndexedSymbol {
 	const name = nameOf(symbol.command);
-	const words = [...(COMMAND_WORDS[name] ?? []), ...(GREEK.test(name) ? ['greek'] : [])];
+	const words = [...(COMMAND_WORDS[name] ?? []), ...(LATEX_MEANING_WORDS.get(name) ?? []), ...(GREEK.test(name) ? ['greek'] : [])];
 	const negated = name.startsWith('not') || (name.startsWith('n') && names.has(name.slice(1)));
 	return { symbol, name, lower: name.toLowerCase(), words, pkg: symbol.package.toLowerCase(), negated };
 }
@@ -174,6 +178,7 @@ function termScore(entry: IndexedSymbol, term: string): number {
 	if ((NAME_PARTS[term] ?? []).some((part) => entry.lower.includes(part))) best = Math.max(best, NAME_PART_WEIGHT);
 	if (term === 'not' && entry.negated) best = Math.max(best, NAME_PART_WEIGHT);
 	if (entry.pkg && entry.pkg.startsWith(term)) best = Math.max(best, PACKAGE_WEIGHT);
+	if (best === 0 && (isTypoOf(term, entry.lower) || entry.words.some((word) => isTypoOf(term, word)))) best = TYPO_WEIGHT;
 	return best;
 }
 
@@ -201,7 +206,7 @@ function scoreSymbol(entry: IndexedSymbol, raw: string, terms: readonly string[]
 export function searchLatexSymbols(symbols: readonly LatexSymbol[], query: string, recent: readonly string[] = []): LatexSymbol[] {
 	const raw = nameOf(query.trim());
 	if (!raw) return [];
-	const terms = raw.toLowerCase().split(/\s+/).map(nameOf).filter(Boolean);
+	const terms = meaningfulTerms(raw.toLowerCase().split(/\s+/).map(nameOf).filter(Boolean));
 	const recentRank = new Map(recent.map((id, i) => [id, i]));
 	const scored: { symbol: LatexSymbol; score: number; order: number }[] = [];
 	indexOf(symbols).forEach((entry, order) => {

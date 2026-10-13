@@ -9,6 +9,7 @@
 	import CheckChoiceList from './CheckChoiceList.svelte';
 	import AgentModelChoice from './AgentModelChoice.svelte';
 	import AgentPanelPrefs from '$lib/ai/agentPanel/ui/AgentPanelPrefs.svelte';
+	import { setAiOff } from '$lib/ai/aiSwitch';
 	import { m } from '$lib/paraglide/messages';
 
 	const ROW = 'border-surface-200-800 flex items-start justify-between gap-6 border-b py-4 last:border-b-0';
@@ -55,6 +56,11 @@
 	// a model row for each ticked preset that is here, a way out for each that is not
 	const tickedPresets = $derived(PRESET_AGENTS.filter((a) => ticked.includes(a)));
 
+	async function onAiOff(off: boolean) {
+		await setAiOff(off);
+		await refreshMcp();
+	}
+
 	function pick(value: string): void {
 		updateSettings({ refineAgents: value ? [value as RefineAgent] : [] });
 	}
@@ -92,47 +98,55 @@
 {/snippet}
 
 <div class={ROW}>
-	<!-- persisted through the main process, not updateSettings: flipping this also has to start or stop the
-	     loopback server, and main owns it -->
-	{@render label(m.prefs_mcp(), m.prefs_mcp_note())}
-	{@render toggle(settings.current.mcpEnabled === true, (v) => void onMcpToggle(v))}
+	{@render label(m.prefs_ai_off(), m.prefs_ai_off_note())}
+	{@render toggle(settings.current.aiOff === true, (v) => void onAiOff(v))}
 </div>
-{#if settings.current.mcpEnabled === true && mcp}
-	<div class="border-surface-200-800 flex items-center justify-between gap-3 border-b py-3">
-		{#if mcp.running && mcp.port}
-			<span class="text-muted text-xs">{m.prefs_mcp_status({ addr: `127.0.0.1:${mcp.port}` })}</span>
-			<!-- the command lives in its own modal: it is long, and read once -->
-			<button class="btn btn-xs preset-tonal shrink-0 text-xs" onclick={() => (setupOpen = true)}>{m.prefs_mcp_show()}</button>
-		{:else}
-			<span class="text-error-ink text-xs">{m.prefs_mcp_error({ error: mcp.error ?? '' })}</span>
-		{/if}
-	</div>
-{/if}
 
-<div class={ROW}>
-	{@render label(m.prefs_ai_agent(), m.prefs_ai_agent_note())}
-	<CheckChoiceList
-		one
-		choices={agentChoices}
-		values={ticked.length ? ticked : ['']}
-		label={m.prefs_ai_agent()}
-		ontoggle={pick}
-		below={customCommand}
-	/>
-</div>
-{#each tickedPresets as agent (agent)}
-	{#if installed?.[agent]}
-		<div class={ROW}>
-			<AgentModelChoice {agent} />
-		</div>
-	{:else if installed}
-		<!-- "Not found" beside the name says nothing about the way out, and the folder list is in another category -->
-		<div class="border-surface-200-800 border-b py-3">
-			<p class="text-muted text-xs leading-relaxed">{m.prefs_ai_agent_elsewhere({ agent: agentName(agent) })}</p>
+<!-- what the switch turns off stays in sight, as it was picked, for when it is turned back on -->
+<div class:opacity-50={settings.current.aiOff} inert={settings.current.aiOff}>
+	<div class={ROW}>
+		<!-- persisted through the main process, not updateSettings: flipping this also has to start or stop the
+	     loopback server, and main owns it -->
+		{@render label(m.prefs_mcp(), m.prefs_mcp_note())}
+		{@render toggle(settings.current.mcpEnabled === true, (v) => void onMcpToggle(v))}
+	</div>
+	{#if settings.current.mcpEnabled === true && mcp}
+		<div class="border-surface-200-800 flex items-center justify-between gap-3 border-b py-3">
+			{#if mcp.running && mcp.port}
+				<span class="text-muted text-xs">{m.prefs_mcp_status({ addr: `127.0.0.1:${mcp.port}` })}</span>
+				<!-- the command lives in its own modal: it is long, and read once -->
+				<button class="btn btn-xs preset-tonal shrink-0 text-xs" onclick={() => (setupOpen = true)}>{m.prefs_mcp_show()}</button>
+			{:else}
+				<span class="text-error-ink text-xs">{m.prefs_mcp_error({ error: mcp.error ?? '' })}</span>
+			{/if}
 		</div>
 	{/if}
-{/each}
 
-<AgentPanelPrefs />
+	<div class={ROW}>
+		{@render label(m.prefs_ai_agent(), m.prefs_ai_agent_note())}
+		<CheckChoiceList
+			one
+			choices={agentChoices}
+			values={ticked.length ? ticked : settings.current.refineAgents ? [''] : []}
+			label={m.prefs_ai_agent()}
+			ontoggle={pick}
+			below={customCommand}
+		/>
+	</div>
+	{#each tickedPresets as agent (agent)}
+		{#if installed?.[agent]}
+			<div class={ROW}>
+				<AgentModelChoice {agent} />
+			</div>
+		{:else if installed}
+			<!-- "Not found" beside the name says nothing about the way out, and the folder list is in another category -->
+			<div class="border-surface-200-800 border-b py-3">
+				<p class="text-muted text-xs leading-relaxed">{m.prefs_ai_agent_elsewhere({ agent: agentName(agent) })}</p>
+			</div>
+		{/if}
+	{/each}
+
+	<AgentPanelPrefs />
+</div>
 
 <McpSetupModal bind:open={setupOpen} port={mcp?.port ?? null} />

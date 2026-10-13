@@ -19,6 +19,8 @@ import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { EventBus } from './EventBus';
 import { PDFPageView, RenderingStates } from './PDFPageView';
 import { SimpleLinkService } from './SimpleLinkService';
+import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
+import { keepPointUnder } from '$lib/preview/zoom/zoomAnchor';
 
 export type PDFViewerOptions = {
 	container: HTMLElement;
@@ -66,6 +68,7 @@ export class PDFViewerCore {
 	private isRendering = false;
 	private lastScrollTop = 0;
 	private scrollingDown = true;
+	private pinchTimer: ReturnType<typeof setTimeout> | null = null;
 	private onPageClick?: (page: number, x: number, y: number, selectText?: string) => void;
 
 	private linkService: SimpleLinkService;
@@ -87,6 +90,20 @@ export class PDFViewerCore {
 
 		this.setupScrollListener();
 		this.setupInverseClick();
+		this.setupPinchZoom();
+	}
+
+	// a trackpad pinch arrives as ctrl+wheel
+	private setupPinchZoom(): void {
+		this.container.addEventListener(
+			'wheel',
+			(e) => {
+				if (!(e.ctrlKey || e.metaKey) || !this.pages.length) return;
+				e.preventDefault();
+				this.zoomAt(this.currentScale * wheelZoomFactor(e), e.clientX, e.clientY);
+			},
+			{ passive: false, signal: this.scrollAbortController!.signal }
+		);
 	}
 
 	// SyncTeX inverse search: a double-click on a page reports its position in PDF points
@@ -376,6 +393,34 @@ export class PDFViewerCore {
 		}
 	}
 
+	/** a pinch: the pages resize around the point at once, and are drawn sharp once it pauses */
+	zoomAt(value: number, x: number, y: number): void {
+		const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, value));
+		if (newScale === this.currentScale) return;
+		keepPointUnder(
+			this.container,
+			this.pages.map((p) => p.div),
+			x,
+			y,
+			() => {
+				this.currentScale = newScale;
+				for (const page of this.pages) page.stretch(newScale);
+			}
+		);
+		this.eventBus.dispatch('scalechanged', { scale: newScale });
+		if (this.pinchTimer) clearTimeout(this.pinchTimer);
+		this.pinchTimer = setTimeout(() => this.settlePinch(), 150);
+	}
+
+	private settlePinch(): void {
+		this.pinchTimer = null;
+		const visible = this.getVisiblePages();
+		const start = Math.max(0, visible.first - PAGES_TO_PRERENDER);
+		const end = Math.min(this.pages.length - 1, visible.last + PAGES_TO_PRERENDER);
+		this.pages.forEach((page, i) => page.settle(i < start || i > end));
+		this.updateVisiblePages();
+	}
+
 	zoomIn(): void {
 		this.scale = this.currentScale + DEFAULT_SCALE_DELTA;
 	}
@@ -504,6 +549,7 @@ export class PDFViewerCore {
 	}
 
 	destroy(): void {
+		if (this.pinchTimer) clearTimeout(this.pinchTimer);
 		this.scrollAbortController?.abort();
 		this.cleanup();
 		this.eventBus.destroy();

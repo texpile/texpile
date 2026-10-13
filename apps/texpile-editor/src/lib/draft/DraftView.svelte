@@ -14,7 +14,7 @@
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
-	import { wheelZoomFactor } from '$lib/preview/wheelZoom';
+	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { PatchReq } from './patch/patch.types';
@@ -121,7 +121,7 @@
 		function onWheel(e: WheelEvent) {
 			if (!(e.ctrlKey || e.metaKey)) return;
 			e.preventDefault();
-			untrack(() => vp.setZoom(vp.zoom * wheelZoomFactor(e)));
+			untrack(() => vp.zoomAt(vp.zoom * wheelZoomFactor(e), e.clientX, e.clientY));
 		}
 		el.addEventListener('wheel', onWheel, { passive: false });
 		return () => el.removeEventListener('wheel', onWheel);
@@ -282,7 +282,7 @@
 			bind:this={vp.scroller}
 			bind:clientWidth={vp.containerW}
 			onscroll={() => vp.onScroll()}
-			class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center gap-4 overflow-auto p-4"
+			class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-4"
 		>
 			{#each ctrl.pages as p (p.n)}
 				<div class="relative shadow-lg">

@@ -262,10 +262,15 @@ export type KeyboardOptions = {
   keybindings: readonly Keybinding[];
 };
 
+/** a Typst field shortcut; the `#?` in its value are slots, in either format */
+export type TypstShortcut = { value: string; format: 'latex' | 'typst' };
+
 /** @internal */
 export type InlineShortcutsOptions = {
   inlineShortcuts: InlineShortcutDefinitions;
   inlineShortcutTimeout: number;
+  /** shortcuts for Typst fields, where the LaTeX inline shortcuts do not apply */
+  typstShortcuts: Readonly<Record<string, TypstShortcut>>;
 };
 
 /** @internal */

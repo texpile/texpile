@@ -14,6 +14,7 @@ const running = new Map<string, AbortController>();
 
 /** the agent Refine may run, as the renderer's refineAgents.svelte.ts reads it: the one picked, none before that */
 function refineAgentsAllowed(s: Record<string, unknown>): string[] {
+	if (s.aiOff === true) return [];
 	return Array.isArray(s.refineAgents) ? s.refineAgents.filter((a): a is string => typeof a === 'string').slice(0, 1) : [];
 }
 

@@ -2,7 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const settings = {
-	current: { agentPanelAgents: null as string[] | null, agentPanelCommand: '' }
+	current: { agentPanelAgents: null as string[] | null, agentPanelCommand: '', aiOff: false }
 };
 vi.mock('$lib/settings', () => ({ settings }));
 vi.mock('$lib/ai/agentPanel/installedAgents.svelte', () => ({
@@ -13,7 +13,7 @@ vi.mock('$lib/paraglide/messages', () => ({ m: {} }));
 const { panelAgentsTicked, panelTabOff, withPanelAgent } = await import('$lib/ai/agentPanel/agentOffer.svelte');
 
 beforeEach(() => {
-	settings.current = { agentPanelAgents: null, agentPanelCommand: '' };
+	settings.current = { agentPanelAgents: null, agentPanelCommand: '', aiOff: false };
 });
 
 describe('Agent tab agents', () => {
@@ -28,6 +28,12 @@ describe('Agent tab agents', () => {
 		settings.current.agentPanelAgents = ['claude'];
 		expect(panelAgentsTicked()).toEqual(['claude']);
 		settings.current.agentPanelAgents = [];
+		expect(panelTabOff()).toBe(true);
+	});
+
+	it('hides the tab while all AI is off, whatever is ticked', () => {
+		settings.current.agentPanelAgents = ['claude'];
+		settings.current.aiOff = true;
 		expect(panelTabOff()).toBe(true);
 	});
 

@@ -26,9 +26,13 @@ Hovering shows the citation's entry, the image of an `\includegraphics`, or the 
 
 The equation under the cursor shows typeset above it. Esc hides it.
 
+Inside math, Ctrl Space opens the symbol search the visual editor's equations have, with your math snippets in it. With Emacs keys, Ctrl Space sets the mark instead.
+
 ## Symbols
 
 Insert › Symbol… finds a symbol by command (`subsetneq`), by meaning (`not equal`) or by package. It shows the `\usepackage` line the symbol needs and offers to add it.
+
+A meaning can also be what a letter stands for in a field: `stress` finds σ and τ, and `learning rate` finds η. A word with a small typo, such as `lamda`, still finds its symbol. The math search inside an equation finds symbols the same way.
 
 ## Format Document
 
@@ -40,7 +44,7 @@ On macOS, use Cmd for Ctrl. For Vim or Emacs keys, see File › Preferences… �
 
 | Shortcut      | Action                                          |
 | ------------- | ----------------------------------------------- |
-| Ctrl Space    | Show suggestions                                |
+| Ctrl Space    | Show suggestions, or the symbol search in math  |
 | F12           | Go to definition                                |
 | Ctrl D        | Select the next match                           |
 | Ctrl Alt Up   | Add a cursor above                              |

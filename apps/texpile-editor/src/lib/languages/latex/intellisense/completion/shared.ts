@@ -42,7 +42,11 @@ export function withAutoChain(completion: Completion): Completion {
 					annotations: pickedCompletion.of(comp) // keep the frecency tracker seeing this accept
 				});
 			// let the insert transaction settle before reopening, same tick would race CM's own state update
-			setTimeout(() => startCompletion(view), 0);
+			setTimeout(() => {
+				// caret still right after the name (\[ lands inside \[\]): reopening offers the same item, and Enter takes it again forever
+				const head = view.state.selection.main.head;
+				if (view.state.sliceDoc(head - comp.label.length, head) !== comp.label) startCompletion(view);
+			}, 0);
 		}
 	};
 }

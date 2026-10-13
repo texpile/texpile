@@ -14,7 +14,8 @@
 
 	// absolute hrefs so they resolve from any route, not just the home page
 	const navLinks = [
-		{ href: '/#features', label: m.nav_features() },
+		{ href: '/latex-editor', label: m.nav_latex() },
+		{ href: '/typst-editor', label: m.nav_typst() },
 		{ href: '/docs', label: m.nav_docs() },
 		{ href: '/download', label: m.nav_download() }
 	];

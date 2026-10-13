@@ -26,20 +26,20 @@ On macOS, use Cmd for Ctrl and Option for Alt, unless a row says otherwise.
 
 ## Formatting
 
-| Shortcut           | Action                                                                                           |
-| ------------------ | ------------------------------------------------------------------------------------------------ |
-| Ctrl \`            | Inline code                                                                                      |
-| Ctrl Shift \`      | Code block                                                                                       |
-| Ctrl M             | Inline math                                                                                      |
-| Ctrl Shift M       | Display math                                                                                     |
-| Ctrl .             | Superscript (LaTeX, Typst)                                                                       |
-| Ctrl Shift ,       | Subscript (LaTeX, Typst)                                                                         |
-| Ctrl Shift X       | Strikethrough (Markdown)                                                                         |
-| Ctrl Shift B       | Block quote (LaTeX, Markdown; Typst in the source editor only)                                   |
-| Ctrl Alt 1, 2, 3   | Heading 1, 2, 3 (`\section` to `\subsubsection` in the LaTeX source editor)                      |
-| Ctrl Alt 4, 5, 6   | Heading 4, 5, 6 (Typst, Markdown)                                                                |
-| Ctrl Shift 1, 2, 3 | Heading 1, 2, 3 in the visual editor, for layouts where Ctrl Alt types a character. Not on macOS |
-| Ctrl Alt 0         | Back to a paragraph (visual editor; Typst and Markdown source)                                   |
+| Shortcut           | Action                                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| Ctrl \`            | Inline code                                                                                           |
+| Ctrl Shift \`      | Code block                                                                                            |
+| Ctrl M             | Inline math                                                                                           |
+| Ctrl Shift M       | Display math                                                                                          |
+| Ctrl .             | Superscript (LaTeX, Typst)                                                                            |
+| Ctrl Shift ,       | Subscript (LaTeX, Typst)                                                                              |
+| Ctrl Shift X       | Strikethrough (Markdown)                                                                              |
+| Ctrl Shift B       | Block quote (LaTeX, Markdown; Typst in the source editor only)                                        |
+| Ctrl Alt 1, 2, 3   | Heading 1, 2, 3 (`\section` to `\subsubsection` in the LaTeX source editor)                           |
+| Ctrl Alt 4, 5, 6   | Heading 4, 5, 6 (Typst, Markdown)                                                                     |
+| Ctrl Shift 1, 2, 3 | Heading 1, 2, 3 in the visual editor, for layouts where Ctrl Alt types a character. Windows and Linux |
+| Ctrl Alt 0         | Back to a paragraph (visual editor; Typst and Markdown source)                                        |
 
 ## Visual editor
 
@@ -56,7 +56,7 @@ On macOS, use Cmd for Ctrl and Option for Alt, unless a row says otherwise.
 | F12          | Go to the definition of a label, macro, citation, or `\input` (also Ctrl click) |
 | F2           | Rename a Typst symbol in every file                                             |
 | Alt Enter    | Quick fixes (Typst)                                                             |
-| Ctrl Space   | Open suggestions (Control Space on macOS)                                       |
+| Ctrl Space   | Open suggestions, or the symbol search inside math (Control Space on macOS)     |
 | Tab          | Accept the starter text in an empty .tex file                                   |
 | Esc          | Hide the math preview until the cursor leaves the math                          |
 | Alt F5       | Next change since the last commit                                               |

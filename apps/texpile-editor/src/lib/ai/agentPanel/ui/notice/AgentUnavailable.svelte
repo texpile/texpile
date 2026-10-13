@@ -1,6 +1,5 @@
 <script lang="ts">
 	// what the Agent tab says where it cannot work, in place of the conversation
-	import { Download, FolderOpen } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
 	import { openWorkspaceForFile } from '$lib/workspace/openWorkspace';
@@ -30,12 +29,12 @@
 	<p class="text-muted max-w-md text-xs leading-relaxed">{note}</p>
 	{#if props.reason === 'desktop'}
 		<a class="btn btn-sm preset-filled-primary-500 mt-2" href="https://texpile.com/download" target="_blank" rel="noopener noreferrer"
-			><Download class="size-4" />{m.session_download()}</a
+			>{m.session_download()}</a
 		>
 	{:else if props.reason === 'folder' && activeFilePath.current}
 		{@const file = activeFilePath.current}
 		<button class="btn btn-sm preset-filled-primary-500 mt-2" onclick={() => void openWorkspaceForFile(file)}
-			><FolderOpen class="size-4" />{m.wsview_open_in_workspace()}</button
+			>{m.wsview_open_in_workspace()}</button
 		>
 	{/if}
 </div>

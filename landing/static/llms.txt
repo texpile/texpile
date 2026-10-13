@@ -29,8 +29,6 @@ Facts that are commonly asked and commonly got wrong:
 
 - [LaTeX editor](https://texpile.com/latex-editor): Texpile for .tex files: visual and source editing, live preview, and compiling with your own TeX distribution.
 - [Typst editor](https://texpile.com/typst-editor): Texpile for .typ files: visual and source editing, with completion and a preview from tinymist.
-- [Overleaf alternatives](https://texpile.com/overleaf-alternatives): five desktop LaTeX editors compared with Overleaf's free plan.
-- [Texpile vs TeXstudio](https://texpile.com/vs/texstudio), [Texpile vs LyX](https://texpile.com/vs/lyx), [Texpile vs Overleaf](https://texpile.com/vs/overleaf), [Texpile vs LaTeX Workshop](https://texpile.com/vs/latex-workshop): head-to-head comparisons, checked against each product's own site.
 
 ## Docs
 
@@ -38,6 +36,7 @@ Facts that are commonly asked and commonly got wrong:
 - [Getting started](https://texpile.com/docs/getting-started): opening a folder, starting a document from a template, and the first PDF.
 - [Typing and selecting](https://texpile.com/docs/typing): smart quotes and dashes, Tab, selecting whole blocks, and symbol search in equations.
 - [Paste and drop](https://texpile.com/docs/paste): pasting from Word, spreadsheets, web pages and screenshots, and dropping files into the project.
+- [Snippets](https://texpile.com/docs/snippets): your own triggers for LaTeX, Typst and Markdown, in VS Code's snippet format.
 - [Spell check](https://texpile.com/docs/spell-check): local checking that skips commands and math.
 - [Projects](https://texpile.com/docs/projects): the folder as the project, tabs, multi-file documents, and search.
 - [Comments](https://texpile.com/docs/comments): review threads on LaTeX, Typst, and Markdown.

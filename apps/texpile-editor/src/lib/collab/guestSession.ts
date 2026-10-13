@@ -35,6 +35,14 @@ export const guestSession: EditSession = {
 	get compileIntel() {
 		return collabGuest.compileIntel;
 	},
+	shareParseContext() {},
+	shareFolderSnippets() {},
+	get folderSnippets() {
+		return collabGuest.folderSnippets;
+	},
+	get parseContext() {
+		return collabGuest.parseContext;
+	},
 	sharedKindOf(path) {
 		if (!path) return null;
 		return collabGuest.files.find((f) => f.rel === path)?.kind ?? null;

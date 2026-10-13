@@ -58,9 +58,8 @@ export function drawMath(el: HTMLElement, preview: Preview): ActionReturn<Previe
 	return {
 		update(next) {
 			current = next;
-			// eslint-disable-next-line no-param-reassign -- an action draws into the element it is given
-			el.innerHTML = '';
-			watch(el, draw);
+			// a row already drawn keeps its drawing until the next is ready, as From your words changes while typing
+			if (!waiting.has(el)) draw();
 		},
 		destroy() {
 			forget(el);

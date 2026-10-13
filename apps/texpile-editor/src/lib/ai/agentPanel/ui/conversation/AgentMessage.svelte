@@ -77,4 +77,21 @@
 		padding: 0;
 		background: none;
 	}
+	.agent-markdown :global(.agent-table) {
+		margin: 0.25rem 0 0.5rem;
+		overflow-x: auto;
+	}
+	.agent-markdown :global(table) {
+		border-collapse: collapse;
+	}
+	.agent-markdown :global(:is(th, td)) {
+		padding: 0.25rem 0.6rem;
+		border: 1px solid color-mix(in oklab, currentColor 18%, transparent);
+		text-align: start;
+		vertical-align: top;
+	}
+	.agent-markdown :global(th) {
+		font-weight: 600;
+		background-color: color-mix(in oklab, currentColor 7%, transparent);
+	}
 </style>

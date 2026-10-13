@@ -25,6 +25,7 @@ Texpile is a desktop editor for LaTeX, Typst and Markdown, with a visual and a s
 - [Paste and drop](paste.md)
 - [Spell check](spell-check.md)
 - [Split view](split-view.md)
+- [Snippets](snippets.md)
 
 ## Workflow
 

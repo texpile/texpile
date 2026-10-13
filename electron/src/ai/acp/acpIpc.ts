@@ -58,6 +58,7 @@ async function start(wc: WebContents): Promise<StartResult> {
 	await shellEnvReady();
 	if (generations.get(wc.id) !== generation) return { ok: false, reason: 'closed' };
 	const s = readSettings();
+	if (s.aiOff === true) return { ok: false, reason: 'unset' };
 	const launch = agentLaunch(s.agentPanel, s.agentPanelCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
 	if (!launch.ok)
 		return launch.reason === 'missing' ? { ok: false, reason: 'missing', program: launch.program } : { ok: false, reason: 'unset' };

@@ -1,4 +1,4 @@
-import { Plugin, PluginKey, type PluginSpec } from 'prosemirror-state';
+import { Plugin, PluginKey, TextSelection, type PluginSpec } from 'prosemirror-state';
 import { EditorView, type NodeViewConstructor } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { MathLiveView } from './mlview.svelte';
@@ -22,6 +22,15 @@ const mathPluginSpec: PluginSpec<MathLivePluginState> = {
 				prevCursorPos: oldState.selection.from
 			};
 		}
+	},
+	// the browser's own moves (End after a trailing equation) could leave the caret in an equation's text, where typing
+	// went nowhere and Ctrl+M threw; unless its field is being edited, the caret goes beside the equation
+	appendTransaction(trs, _old, state) {
+		const { selection } = state;
+		if (!trs.some((tr) => tr.selectionSet) || !(selection instanceof TextSelection) || !selection.empty) return null;
+		const $caret = selection.$from;
+		if ($caret.parent.type.name !== 'inline_math' || document.activeElement?.tagName === 'MATH-FIELD') return null;
+		return state.tr.setSelection(TextSelection.create(state.doc, $caret.parentOffset === 0 ? $caret.before() : $caret.after()));
 	},
 	props: {
 		nodeViews: {
@@ -59,7 +68,7 @@ export function createMathView(displayMode: boolean): NodeViewConstructor {
 }
 
 import { keydownHandler } from 'prosemirror-keymap';
-import { NodeSelection, TextSelection, EditorState, Transaction } from 'prosemirror-state';
+import { NodeSelection, EditorState, Transaction } from 'prosemirror-state';
 import { verticalArrowKeyDown, verticalArrowsAfterUpdate, verticalArrowsMouseDown } from './mlVerticalArrows';
 
 // selects an adjacent mathfield on left/right when there is no text node between it and the cursor.

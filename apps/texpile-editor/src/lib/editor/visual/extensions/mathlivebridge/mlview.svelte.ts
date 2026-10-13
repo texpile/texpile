@@ -26,6 +26,7 @@ import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic'
 import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 import { mathMacros } from './mathMacros.svelte';
 import { observe } from '$lib/runes/observe.svelte';
+import { followSnippetShortcuts } from '$lib/editor/snippets/visual/mathliveSnippets';
 import { showMathMenu } from './mathMenu/showMathMenu';
 
 // reactive props stashed on the container so update() can reach the mounted component without a registry.
@@ -51,6 +52,7 @@ export class MathLiveView implements NodeView {
 	private settingsContainer?: HTMLElement;
 	private settingsComponent?: ReturnType<typeof mount>;
 	private unwatchMacros?: () => void;
+	private unwatchSnippets?: () => void;
 	private macrosApplied = false;
 	private isblock: boolean;
 	// no user input yet: skip auto-delete on first blur (focus race when created via shortcut)
@@ -213,6 +215,24 @@ export class MathLiveView implements NodeView {
 
 		// the field is in the document now, which is the earliest mathlive will accept macros
 		this.applyMacros();
+		this.unwatchSnippets = followSnippetShortcuts(
+			this.syntax === 'typst'
+				? {
+						syntax: 'typst',
+						display: this.isblock,
+						set: (shortcuts) => {
+							if (field.isConnected) field.typstShortcuts = shortcuts;
+						}
+					}
+				: {
+						syntax: 'latex',
+						display: this.isblock,
+						defaults: field.inlineShortcuts,
+						set: (shortcuts) => {
+							if (field.isConnected) field.inlineShortcuts = shortcuts;
+						}
+					}
+		);
 
 		this.removeSelection();
 		this.updateOutline(false);
@@ -491,6 +511,7 @@ export class MathLiveView implements NodeView {
 	}
 	destroy() {
 		this.unwatchMacros?.();
+		this.unwatchSnippets?.();
 		cancelUpgrade(this.dom);
 		if (this.placeholder) cancelStaticMath(this.placeholder);
 		if (this.mathField) {

@@ -8,6 +8,7 @@ import { deriveSessionKeys, sha256Hex } from './e2e/keys';
 import { CollabSession, manifestOf, locksOf, metaOf, textOf, type PeerInfo } from './session';
 import type { ControlPayload, PreviewPayload } from './protocol';
 import type { CollabBinding, SharedCompileIntel } from './editSession';
+import { encodeParseContext, type SharedParseContext } from './parse/parseContext';
 import type { RemoteEdit } from '$lib/workspace/suggestions/suggestionStates';
 import { commentLogOf } from './sharedComments';
 import { TextBuffers, type WriteHooks } from '$lib/buffers/textBuffers';
@@ -77,6 +78,17 @@ class HostCollabController {
 	shareCompileIntel(intel: SharedCompileIntel): void {
 		if (!this.active || !this.doc) return;
 		metaOf(this.doc).set('compileIntel', JSON.stringify(intel));
+	}
+	readonly parseContext = null;
+	shareParseContext(context: SharedParseContext): void {
+		if (!this.active || !this.doc) return;
+		const raw = encodeParseContext(context);
+		if (metaOf(this.doc).get('parseContext') !== raw) metaOf(this.doc).set('parseContext', raw);
+	}
+	readonly folderSnippets = null;
+	shareFolderSnippets(text: string | null): void {
+		if (!this.active || !this.doc) return;
+		if ((metaOf(this.doc).get('folderSnippets') ?? '') !== (text ?? '')) metaOf(this.doc).set('folderSnippets', text ?? '');
 	}
 
 	private session: CollabSession | null = null;

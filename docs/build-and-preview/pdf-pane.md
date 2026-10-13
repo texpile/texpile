@@ -9,6 +9,7 @@ The compiled PDF beside the editor. **Show PDF** in the title bar opens the pane
 
 ![The PDF Preview pane before the first compile, saying Compile to preview the PDF](../../landing/src/lib/assets/showcase/docs/app/pdf-pane-empty.png)
 
+- Pinch on a trackpad, or scroll with Ctrl held, to zoom around the pointer.
 - The "…" menu holds the zoom, **Rotate**, **Invert colors**, **Simulate color vision**, **Presentation** and **Save PDF**.
 - **Invert colors** changes the screen only. The dark and light themes each remember their own choice.
 - In presentation mode, click for the next page and Shift click or right-click for the previous one.
@@ -20,7 +21,7 @@ Layout › **Split the preview** shows the PDF twice, one view above the other. 
 
 ## Color vision check
 
-"…" › **Simulate color vision** shows the page as seen with protanopia, deuteranopia, tritanopia or achromatopsia. Only the screen changes, never the PDF. Works in the PDF pane, the LaTeX live preview and the Typst preview.
+"…" › **Simulate color vision** shows the page as seen with protanopia, deuteranopia, tritanopia or achromatopsia. Only the screen changes. The PDF file stays the same. Works in the PDF pane, the LaTeX live preview and the Typst preview.
 
 ## A PDF built outside Texpile
 

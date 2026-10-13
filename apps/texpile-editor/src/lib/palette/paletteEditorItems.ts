@@ -1,4 +1,23 @@
-import { AlignLeft, BookMarked, BookPlus, ClipboardPaste, Keyboard, Omega, ArrowDownToLine, ArrowUpToLine, Undo2 } from '@lucide/svelte';
+import {
+	AlignLeft,
+	BookMarked,
+	BookPlus,
+	ClipboardPaste,
+	Keyboard,
+	Omega,
+	ArrowDownToLine,
+	ArrowUpToLine,
+	Undo2,
+	Braces
+} from '@lucide/svelte';
+import { ensureGlobalSnippets, ensureProjectSnippets, snippetFiles } from '$lib/editor/snippets/file/snippetLoader';
+import { packageFilePath } from '$lib/editor/snippets/file/snippetFiles';
+import { savePackageFile } from '$lib/editor/snippets/file/savePackageFile';
+import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
+import { detectedPackages, isBundledPackage } from '$lib/languages/latex/intellisense/completion/packageData';
+import { userPackage } from '$lib/languages/latex/intellisense/userPackages';
+import { toaster } from '$lib/modals/toaster-svelte';
+import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { changedLines, nextChange, previousChange, revertChange, revertChangeAt } from '$lib/editor/source/cmChangeMarkers';
 import { conflictBlocks, nextConflict, previousConflict } from '$lib/editor/source/cmConflicts';
@@ -108,6 +127,56 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 					view.focus();
 				}
 			});
+	}
+	const root = workspaceRoot.current;
+	if (root && a.isProject() && a.isHostWorkspace())
+		items.push({
+			id: 'editor.projectSnippets',
+			label: m.palette_project_snippets(),
+			group,
+			keywords: 'snippets snippet trigger expand template shortcut latex suite texpile',
+			icon: Braces,
+			run: () => void ensureProjectSnippets(root).then((path) => path && a.openFile(path))
+		});
+	if (view && root && a.isProject() && a.isHostWorkspace())
+		for (const name of [...detectedPackages(view.state.doc.toString())].filter((n) => !isBundledPackage(n) && !userPackage(n)).slice(0, 10))
+			items.push({
+				id: `editor.packageFile.${name}`,
+				label: m.palette_save_package_file({ name }),
+				group,
+				keywords: 'package completion intellisense commands sty usepackage json latex workshop',
+				icon: Braces,
+				run: () =>
+					void savePackageFile(root, name).then((path) => {
+						if (!path) return toaster.info({ title: m.package_file_missing({ name }) });
+						void reloadSnippets(root);
+						a.openFile(path);
+					})
+			});
+	items.push({
+		id: 'editor.globalSnippets',
+		label: m.palette_global_snippets(),
+		group,
+		keywords: 'snippets snippet trigger expand template shortcut latex suite all folders',
+		icon: Braces,
+		run: () => void ensureGlobalSnippets().then((path) => path && a.openFile(path))
+	});
+	const files = snippetFiles();
+	const editable = [
+		...(root && a.isProject() && a.isHostWorkspace() ? files.packages.project.map((name) => ({ name, layer: 'project' as const })) : []),
+		...files.packages.global.map((name) => ({ name, layer: 'global' as const }))
+	];
+	for (const { name, layer } of editable) {
+		const path = packageFilePath(layer, name, root, files);
+		if (!path) continue;
+		items.push({
+			id: `editor.editPackageFile.${layer}.${name}`,
+			label: layer === 'project' ? m.palette_edit_package_file({ name }) : m.palette_edit_global_package_file({ name }),
+			group,
+			keywords: 'package completion intellisense commands json latex workshop',
+			icon: Braces,
+			run: () => a.openFile(path)
+		});
 	}
 	// keybindings are switched from here rather than only in Preferences: a vim user who lands in a
 	// fresh install wants one keystroke to fix it, not a dialog

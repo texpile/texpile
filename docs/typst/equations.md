@@ -10,7 +10,7 @@ Type math as you would in Typst and see it typeset as you go.
 ![An equation being edited, with the math toolbar and the symbol search open](../../landing/src/lib/assets/showcase/docs/typst/math-toolbar.png)
 
 1. **Math toolbar.** Shows while the cursor is in an equation: roots and fractions, Greek letters, operators, arrows, brackets, accents, matrices and more.
-2. **Symbol search.** Press Tab in an equation and type a name or what the symbol means, such as `arrow r double` or `not eq`.
+2. **Symbol search.** Press Tab or Ctrl Space in an equation and type a name or what the symbol means, such as `arrow r double` or `not eq`. With an empty slot ahead, such as a fraction's denominator, Tab moves to that slot first.
 
 ## Insert an equation
 
@@ -31,10 +31,11 @@ The switch applies to every equation in the document. A reference to an equation
 
 On macOS, use Cmd for Ctrl.
 
-| Shortcut     | Action                                      |
-| ------------ | ------------------------------------------- |
-| Ctrl M       | Inline equation                             |
-| Ctrl Shift M | Display equation                            |
-| Tab          | Symbol search, inside an equation           |
-| Esc          | Type the Typst directly, inside an equation |
-| Shift Enter  | A new equation below, inside a display one  |
+| Shortcut     | Action                                                |
+| ------------ | ----------------------------------------------------- |
+| Ctrl M       | Inline equation                                       |
+| Ctrl Shift M | Display equation                                      |
+| Tab          | Next empty slot, or symbol search, inside an equation |
+| Ctrl Space   | Symbol search, inside an equation                     |
+| Esc          | Type the Typst directly, inside an equation           |
+| Shift Enter  | A new equation below, inside a display one            |

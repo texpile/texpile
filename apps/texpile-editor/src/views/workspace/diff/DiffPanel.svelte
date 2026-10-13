@@ -10,7 +10,8 @@
 	import { joinCollapsedBars } from './diffCollapsedBars';
 	import { EditorView, lineNumbers, keymap, drawSelection } from '@codemirror/view';
 	import { EditorState, type Extension } from '@codemirror/state';
-	import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+	import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
 	import { LanguageDescription } from '@codemirror/language';
 	import { languages as cmlangdata } from '@codemirror/language-data';
 	import { unifiedMergeView, MergeView, goToNextChunk, goToPreviousChunk } from '@codemirror/merge';
@@ -155,7 +156,7 @@
 			...sharedExts(),
 			history(),
 			STEP_KEYS,
-			keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab]),
+			keymap.of([...defaultKeymap, ...historyKeymap, tabIndentBinding]),
 			EditorView.updateListener.of((u) => {
 				if (u.docChanged) emit(u.state.doc.toString());
 			})

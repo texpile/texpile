@@ -33,8 +33,9 @@ export function createMathField(createblock = false) {
 			}
 		} else {
 			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(' '));
+			const $from = state.doc.resolve(from);
 
-			if (newNode) {
+			if ($from.parent.canReplaceWith($from.index(), $from.index(), newNode.type)) {
 				const tr = state.tr.insert(from, newNode);
 				const nodeSelection = NodeSelection.create(tr.doc, from);
 				tr.setSelection(nodeSelection);

@@ -3,6 +3,7 @@
 // sync click mark).
 import { tick } from 'svelte';
 import type { PaperMetrics } from './locate/locate.types';
+import { keepPointUnder } from '$lib/preview/zoom/zoomAnchor';
 
 // 100% == actual physical size on a 96dpi display (matches the PDF viewer's zoom)
 export const PT2PX = 96 / 72.27;
@@ -132,6 +133,20 @@ export class DraftViewport {
 	setZoom(z: number): void {
 		this.fitMode = false;
 		this.zoom = this.clampZoom(z);
+	}
+	/** a pinch or ctrl+wheel: the point under the pointer stays where it is */
+	zoomAt(z: number, x: number, y: number): void {
+		const s = this.scroller;
+		if (!s) return this.setZoom(z);
+		const pages: HTMLElement[] = [];
+		for (let n = 1; n <= this.hooks.pageCount(); n++) {
+			const cv = this.hooks.canvas(n);
+			if (cv) pages.push(cv);
+		}
+		keepPointUnder(s, pages, x, y, () => {
+			this.setZoom(z);
+			this.applyCssSizes();
+		});
 	}
 	zoomIn(): void {
 		this.setZoom(this.zoom * 1.2);

@@ -62,6 +62,10 @@ export class PDFPageView {
 	public div: HTMLDivElement;
 	private canvas: HTMLCanvasElement | null = null;
 	private canvasWrapper: HTMLDivElement | null = null;
+	/** a pinch's last picture, shown under the new one until that is drawn */
+	private staleWrapper: HTMLDivElement | null = null;
+	/** the picture is scaled from another zoom, not drawn at this one */
+	private stretched = false;
 	private textLayerDiv: HTMLDivElement | null = null;
 	private selectionAbort: AbortController | null = null;
 
@@ -142,6 +146,8 @@ export class PDFPageView {
 			this.rotation = rotation;
 		}
 		this.updateViewport();
+		this.stretched = false;
+		this.dropStale();
 
 		// off-screen page: drop the stale raster (cancelling any in-flight render) and let the
 		// viewer re-draw it lazily when it scrolls back in; the sized div stays so layout holds
@@ -167,6 +173,57 @@ export class PDFPageView {
 		}
 	}
 
+	/** a pinch under way: the box and its picture take the new size now, and settle() draws it sharp */
+	stretch(scale: number): void {
+		this.scale = scale;
+		this.updateViewport();
+		// laying the text out again on every step of a pinch is the costly part, so it waits for settle()
+		if (this.textLayerDiv) this.textLayerDiv.hidden = true;
+		if (this.annotationLayerBuilder?.div) this.annotationLayerBuilder.div.hidden = true;
+		const width = `${Math.floor(this.viewport.width)}px`;
+		const height = `${Math.floor(this.viewport.height)}px`;
+		for (const canvas of [this.canvas, this.staleWrapper?.querySelector('canvas')]) {
+			if (!canvas) continue;
+			canvas.style.width = width;
+			canvas.style.height = height;
+			this.stretched = true;
+		}
+	}
+
+	/** the pinch has paused: the picture is drawn again at its size, with the stretched one shown until it is */
+	settle(lazy: boolean): void {
+		const stretched = this.stretched;
+		this.stretched = false;
+		if (lazy) {
+			if (this.renderingState !== RenderingStates.INITIAL) this.reset();
+			return;
+		}
+		if (this.textLayer && this.textLayerRendered) this.textLayer.update({ viewport: this.viewport });
+		if (this.textLayerDiv) this.textLayerDiv.hidden = false;
+		if (this.annotationLayerBuilder && this.annotationLayerRendered) this.annotationLayerBuilder.update(this.viewport);
+		if (this.annotationLayerBuilder?.div) this.annotationLayerBuilder.div.hidden = false;
+		if (!stretched) return;
+		if (this.renderingState !== RenderingStates.FINISHED) {
+			this.reset();
+			return;
+		}
+		// a draw from an earlier pause still under way: its picture is unfinished, the older one is the one to keep
+		if (this.staleWrapper) this.canvasWrapper?.remove();
+		else this.staleWrapper = this.canvasWrapper;
+		this.canvas = null;
+		this.canvasWrapper = null;
+		this.resetCanvas();
+		const drawing = this.drawing;
+		void this.draw(true).finally(() => {
+			if (drawing === this.drawing) this.dropStale();
+		});
+	}
+
+	private dropStale(): void {
+		this.staleWrapper?.remove();
+		this.staleWrapper = null;
+	}
+
 	private resetCanvas(): void {
 		this.cancelRendering();
 		this.renderingState = RenderingStates.INITIAL;
@@ -186,6 +243,8 @@ export class PDFPageView {
 
 	reset(): void {
 		this.resetCanvas();
+		this.dropStale();
+		this.stretched = false;
 
 		this.selectionAbort?.abort();
 		this.selectionAbort = null;
@@ -205,7 +264,8 @@ export class PDFPageView {
 		this.annotationLayerRendered = false;
 	}
 
-	async draw(): Promise<void> {
+	/** `offstage` puts the picture in only once it is drawn: pdf.js paints the page white first, which would hide a stale one */
+	async draw(offstage = false): Promise<void> {
 		if (!this.pdfPage || this.renderingState !== RenderingStates.INITIAL) {
 			return;
 		}
@@ -216,7 +276,7 @@ export class PDFPageView {
 		try {
 			this.canvasWrapper = document.createElement('div');
 			this.canvasWrapper.className = 'canvasWrapper';
-			this.div.appendChild(this.canvasWrapper);
+			if (!offstage) this.div.appendChild(this.canvasWrapper);
 
 			this.canvas = document.createElement('canvas');
 			this.canvas.className = 'pdf-canvas';
@@ -241,6 +301,7 @@ export class PDFPageView {
 
 			await this.renderTask.promise;
 			this.renderTask = null;
+			if (offstage && drawing === this.drawing && this.canvasWrapper) this.div.prepend(this.canvasWrapper);
 		} catch (error) {
 			this.failed(error);
 			return;

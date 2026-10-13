@@ -289,6 +289,20 @@ export class CompilePipeline {
 		return cc.expectedLogPath(cmd, root, main, compileConfig.current[effectiveCompileFormat(main)].outputs);
 	};
 
+	// live mode builds in its own folder under its own name, so its .aux is _draft/draft.aux
+	expectedAuxPath = (cmd = this.deps.getCompileCommand()): string | null => {
+		if (compileConfig.current.latex.liveMode && !isTypstCommand(cmd)) {
+			const base = this.compileBaseDir(cmd);
+			return base ? joinPath(base, '_draft/draft.aux') : null;
+		}
+		return this.expectedLogPath(cmd)?.replace(/\.log$/i, '.aux') ?? null;
+	};
+
+	/** a live pass landed: it rewrote _draft/draft.aux as a shell compile rewrites its own */
+	liveRunFinished(): void {
+		this.runsFinished++;
+	}
+
 	// the directory the command runs in; differs from the root only under latexmk -cd
 	private compileBaseDir = (cmd = this.deps.getCompileCommand()): string | null =>
 		cc.compileBaseDir(cmd, workspaceRoot.current, mainFile.current ?? this.deps.getLoadedPath());

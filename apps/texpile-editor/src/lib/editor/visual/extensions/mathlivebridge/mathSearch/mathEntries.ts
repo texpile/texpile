@@ -1,6 +1,7 @@
 // What the math search lists in each syntax: every command, symbol and environment MathLive has
 // for it, each drawn, described and found by meaning from the symbol picker's own table where that
 // table has it.
+import { isTypoOf } from '$lib/editor/symbols/typoMatch';
 import type { MathCommand } from 'mathlive';
 import type { PickerSymbol, SymbolCatalog, SymbolGlyph, SymbolSet } from '$lib/editor/symbols/symbolPicker.types';
 import { latexSymbolSet } from '$lib/languages/latex/symbols/latexSymbolSet';
@@ -113,6 +114,18 @@ async function buildEntries(syntax: MathSyntax): Promise<MathEntries> {
 // past this the matches are too loose to be worth scrolling through, as in the symbol picker
 const MAX_FOUND = 200;
 
+/** lower is better: a name it is, its place in what the picker found by meaning, a name it begins or is inside,
+ *  then a name it is with a slip; null when nothing finds it */
+function entryScore(entry: MathEntry, typed: string, spelled: string, byMeaning: number | undefined): number | null {
+	const tiebreak = entry.names[0].length / 1000;
+	if (entry.names.includes(typed)) return spelledAs(entry, spelled) ? 0 : 0.5;
+	if (byMeaning !== undefined) return 1 + byMeaning / 10_000;
+	if (entry.names.some((name) => name.startsWith(typed))) return 2 + tiebreak;
+	if (entry.names.some((name) => name.includes(typed))) return 3 + tiebreak;
+	if (entry.names.some((name) => isTypoOf(typed, name))) return 4 + tiebreak;
+	return null;
+}
+
 /**
  * The entries `query` finds, best first: a name it is, then what the picker finds by meaning, then
  * names it begins, then names it is inside.
@@ -129,18 +142,7 @@ export function searchMathEntries(loaded: MathEntries, query: string): MathEntry
 	});
 	const scored: { entry: MathEntry; score: number }[] = [];
 	for (const entry of entries) {
-		const found = meaning.get(entry);
-		const score = entry.names.includes(typed)
-			? spelledAs(entry, spelled)
-				? 0
-				: 0.5
-			: found !== undefined
-				? 1 + found / 10_000
-				: entry.names.some((name) => name.startsWith(typed))
-					? 2 + entry.names[0].length / 1000
-					: entry.names.some((name) => name.includes(typed))
-						? 3 + entry.names[0].length / 1000
-						: null;
+		const score = entryScore(entry, typed, spelled, meaning.get(entry));
 		if (score !== null) scored.push({ entry, score });
 	}
 	scored.sort((a, b) => a.score - b.score);

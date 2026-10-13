@@ -8,7 +8,7 @@ section: Workflow
 
 # Projects and files
 
-A project is a folder. There is no project file to create. A folder opens in one window at a time.
+A project is a folder, and opening the folder is all the setup it needs. A folder opens in one window at a time.
 
 ![The sidebar with the file tree and Contents, and the word count tooltip showing words, characters, and words per file](../../landing/src/lib/assets/showcase/docs/app/contents-word-count.png)
 
@@ -18,7 +18,7 @@ The main file is the one Texpile compiles and the preview follows. Right-click a
 
 ![The menu on a file, with Unset Main File, Copy, Show in Folder, Version History, Rename, and Delete](../../landing/src/lib/assets/showcase/docs/app/file-tree-context-menu.png 'The menu on the main file.')
 
-Texpile saves the choice, the build settings and the comments in a hidden `.texpile` folder inside the project, so they travel with the folder, Git included.
+Texpile saves the choice, the build settings and the comments in a hidden `.texpile` folder inside the project, so they travel with the folder, Git included. The folder's [snippets](../snippets.md) live there too.
 
 ## Multi-file projects
 
@@ -26,12 +26,12 @@ Files pulled in with `\input` (LaTeX) or `#include` (Typst) compile as part of t
 
 - **New Include** (right-click in the file tree) creates a file and inserts its `\input` or `#include` line at the cursor.
 - After a rename or move, Texpile offers to update the references to the old name: `\input`, `\includegraphics`, Typst includes and images, and Markdown image links.
-- The word count at the end of the format bar counts the open file. Hover it for the whole document, file by file. Math, citations, references, comments, code and the LaTeX preamble are not counted.
+- The word count at the end of the format bar counts the open file. Hover it for the whole document, file by file. The count leaves out math, citations, references, comments, code and the LaTeX preamble.
 - **Contents** under the file tree lists the headings, figures, tables and beamer frames of the whole paper, from any file in it.
 
 ## Open a single file
 
-Double-click a `.tex`, `.sty`, `.cls`, `.tikz`, `.typ` or `.bib` file to edit it on its own, without its folder. A file opened this way has no file tree, Find in Files, Compile, Source Control, Comments, Shared Session, Agent tab or Save as Template. **Open in Workspace** in the top bar opens the file's folder with all of them.
+Double-click a `.tex`, `.sty`, `.cls`, `.tikz`, `.typ` or `.bib` file to edit it on its own. The file tree, Find in Files, Compile, Source Control, Comments, Shared Session, the Agent tab and Save as Template need its folder: **Open in Workspace** in the top bar opens the folder with all of them.
 
 ## Files
 
@@ -57,4 +57,4 @@ On macOS use Cmd, except for Ctrl Tab. A tab in italics is temporary: the next f
 
 ![Find in Files showing six results for heat in one file, with the match highlighted in each line](../../landing/src/lib/assets/showcase/docs/app/find-in-files.png)
 
-Files over 2 MB, folders whose names start with a dot, and `_draft`, `build`, `dist`, `out` and `output` folders are not searched. Undo a replace with **Undo** in the "Replaced…" message, or `Ctrl Z` in the file tree.
+The search skips files over 2 MB, folders whose names start with a dot, and `_draft`, `build`, `dist`, `out` and `output` folders. Undo a replace with **Undo** in the "Replaced…" message, or `Ctrl Z` in the file tree.

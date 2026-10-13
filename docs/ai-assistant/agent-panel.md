@@ -10,18 +10,18 @@ Chat with an AI agent that reads and edits files in the open folder and runs com
 
 > [!REQUIRES] an [AI agent](README.md#set-up-an-agent) installed outside Texpile
 
-![The Agent tab before an agent is chosen, with the agent menu open](../../landing/src/lib/assets/showcase/docs/review/agent-tab-choose.png)
+![The Agent tab before an agent is chosen, with Open Preferences, Disable All AI and the agent menu open](../../landing/src/lib/assets/showcase/docs/review/agent-tab-choose.png)
 
-- The open file, or the selected lines, go with each message. Click **Leave out of the message** to send without them.
+- The open file, or the selected lines, go with each message. Click **Leave out of the message** to send your text alone.
 - Paste or drop an image (PNG, JPEG, GIF or WebP) if the agent takes images.
-- Type `/` at the start of the box for the agent's own commands. A command runs only when the message holds nothing else.
+- Type `/` at the start of the box for the agent's own commands. A command runs when it is the whole message.
 - Changing folder starts a new chat.
 
 ## Review and revert
 
 When a turn ends, **Changed by {agent}** lists the changed files, including changes from commands the agent ran. Click a file to see its changes in the editor. **Revert Change** undoes one change. **Revert to Before {agent}**, in the row's menu, undoes the whole file.
 
-Files over 1 MB and binary files cannot be reverted. Revert works until you close the window.
+Revert covers text files up to 1 MB and works until you close the window.
 
 ## Messages
 

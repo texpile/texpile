@@ -5,7 +5,7 @@ order: 1
 
 # Visual editor
 
-Edit the document as formatted text. Texpile writes the LaTeX, and the parts you do not touch stay exactly as they were.
+Edit the document as formatted text. Texpile writes the LaTeX, and the parts you leave alone stay exactly as they were.
 
 ![The visual editor on a LaTeX paper, with three parts marked](../../landing/src/lib/assets/showcase/docs/latex/visual-editor.png)
 
@@ -15,7 +15,7 @@ Edit the document as formatted text. Texpile writes the LaTeX, and the parts you
 
 Click a citation, a label or any other command to edit it.
 
-The visual editor cannot open files over 800 KB. They open in the source editor.
+Files over 800 KB open in the source editor.
 
 ## Headings
 
@@ -35,7 +35,7 @@ Besides text, headings and lists, the menu adds an Abstract, a Table, a Math Blo
 
 ## Anything else
 
-Commands the editor does not draw stay in the file as LaTeX, shown as a chip you can edit. To add your own, use Insert › LaTeX Source:
+Any other command stays in the file as LaTeX and shows as a chip you can edit. To add your own, use Insert › LaTeX Source:
 
 - **Environment…** adds an environment by name, such as `center`.
 - **LaTeX Code** and **Inline LaTeX** add raw LaTeX as a block or inside a line.

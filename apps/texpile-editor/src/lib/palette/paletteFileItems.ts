@@ -109,7 +109,7 @@ export function fileItems(a: PaletteActions): PaletteItem[] {
 	if (a.isHostWorkspace())
 		items.push({
 			id: 'file.openFolder',
-			label: m.menubar_open_new_folder(),
+			label: m.start_open_folder(),
 			group,
 			keywords: 'project workspace directory',
 			icon: FolderOpen,

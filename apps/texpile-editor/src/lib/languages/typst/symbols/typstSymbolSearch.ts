@@ -1,4 +1,6 @@
 import type { TypstSymbol } from './typstSymbol.types';
+import { TYPST_MEANING_WORDS, meaningfulTerms } from '$lib/editor/symbols/symbolMeanings';
+import { isTypoOf } from '$lib/editor/symbols/typoMatch';
 
 // Typst spells its names short. These are the words someone searching by meaning types for one
 // ("arrow right double", "not equal"); Unicode's character names cover the rest ("rightwards")
@@ -53,6 +55,8 @@ const CATEGORY_WEIGHT = 3;
 const EXACT_WORD_BONUS = 3;
 const EXACT_NAME_BONUS = 40;
 const SAME_CASE_BONUS = 5;
+// a query in small letters means `lambda` before `Lambda`
+const SMALL_LETTER_BONUS = 1;
 const DOTTED_PREFIX_BONUS = 15;
 const EXACT_UNICODE_NAME_BONUS = 30;
 // "dot" means `dot.op` before `plus.dot`, "less equal" `lt.eq` before `eq.lt`
@@ -65,6 +69,8 @@ const PER_PART_PENALTY = 1.5;
 // `arrow` means the math arrow far more often than the emoji
 const EMOJI_PENALTY = 3;
 const RECENT_BONUS = 12;
+// below every exact and prefix match, so a slip only adds what nothing spelled right found
+const TYPO_SCORE = 2;
 const PRESENTATION = /[︎️]/g;
 
 /** a word a query can match, and which part of the name it came from (-1: not the name) */
@@ -88,6 +94,7 @@ function indexSymbol(symbol: TypstSymbol): IndexedSymbol {
 		...parts.map((word, part) => ({ word, weight: NAME_WEIGHT, part })),
 		...parts.flatMap((name, part) => (NAME_WORDS[name] ?? []).map((word) => ({ word, weight: NAME_WORD_WEIGHT, part }))),
 		...(NAME_ALIASES[symbol.name] ?? []).map((word) => ({ word, weight: NAME_WORD_WEIGHT, part: -1 })),
+		...(TYPST_MEANING_WORDS.get(symbol.path) ?? []).map((word) => ({ word, weight: NAME_WORD_WEIGHT, part: -1 })),
 		...symbol.unicodeName
 			.split(/[\s-]+/)
 			.filter(Boolean)
@@ -115,7 +122,9 @@ function matchTerm(term: string, words: IndexedWord[]): TermMatch | null {
 		else if (word.startsWith(term)) score = weight * (0.5 + (0.5 * term.length) / word.length);
 		if (score > (best?.score ?? 0)) best = { score, part };
 	}
-	return best;
+	if (best) return best;
+	const slip = words.find(({ word }) => isTypoOf(term, word));
+	return slip ? { score: TYPO_SCORE, part: slip.part } : null;
 }
 
 /** a query of punctuation or a pasted glyph: `=>`, `!=`, `⇒` */
@@ -143,6 +152,7 @@ function wordScore(entry: IndexedSymbol, raw: string, query: string, terms: stri
 	let score = matches.reduce((sum, match) => sum + match.score, 0);
 	if (path === query || symbol.name.toLowerCase() === query) score += EXACT_NAME_BONUS;
 	if (symbol.path === raw || symbol.name === raw) score += SAME_CASE_BONUS;
+	if (raw === query && /^[a-z]/.test(symbol.path)) score += SMALL_LETTER_BONUS;
 	if (query.includes('.') && (path.startsWith(query) || symbol.name.toLowerCase().startsWith(query))) score += DOTTED_PREFIX_BONUS;
 	if (symbol.unicodeName === query) score += EXACT_UNICODE_NAME_BONUS;
 	if (terms.includes(parts[0])) score += BASE_NAME_BONUS;
@@ -170,7 +180,7 @@ export function searchTypstSymbols(symbols: readonly TypstSymbol[], query: strin
 	if (!raw) return [];
 	const lower = raw.toLowerCase();
 	// only words are split on dots: `...` and `.` are shorthands, not an empty name
-	const terms = /[\p{L}\p{N}]/u.test(raw) ? lower.split(/[\s.]+/).filter((t) => /[\p{L}\p{N}]/u.test(t)) : [];
+	const terms = /[\p{L}\p{N}]/u.test(raw) ? meaningfulTerms(lower.split(/[\s.]+/).filter((t) => /[\p{L}\p{N}]/u.test(t))) : [];
 	const recentRank = new Map(recent.map((name, i) => [name, i]));
 	const scored: { symbol: TypstSymbol; score: number; order: number }[] = [];
 	indexOf(symbols).forEach((entry, order) => {

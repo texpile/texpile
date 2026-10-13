@@ -13,13 +13,14 @@ import { argumentCompletionSource } from './arguments';
 import { macroOptions } from './macros';
 import { isMathContext, withMathBoost } from './mathContext';
 import { subsuperscriptCompletionSource } from './subsuperscript';
-import { atSuggestionCompletionSource } from './atSuggestions';
 import { bibFileCompletionSource } from './bibFile';
 
 // letters, or the delimiter-macro families (\(, \[, \{, \left(, \bigl[, \Biggm|, \left\|, ...)
 // mirroring LW's trigger so non-letter macro names stay reachable while typing
 const MACRO_TRIGGER = /\\(?:[a-zA-Z]*|(?:left|[Bb]ig{1,2}[lmr]?)?(?:[({[|]|\\[{|])?)$/;
 const NON_LETTER_END = /[({[|]$/;
+const UNESCAPED_OPENER = /[a-zA-Z][({[]$/;
+const CLOSER: Record<string, string> = { '(': ')', '[': ']', '{': '}' };
 
 // fires on the bare backslash too: LaTeX Workshop registers "\" as a trigger character
 function macroCompletionSource(ctx: CompletionContext): CompletionResult | null {
@@ -33,7 +34,12 @@ function macroCompletionSource(ctx: CompletionContext): CompletionResult | null 
 	if (NON_LETTER_END.test(macro.text)) {
 		// delimiter names aren't letter-filterable by the widget; offer only the exact match (LW does the same)
 		const exact = options.filter((o) => o.label === macro.text);
-		return exact.length ? { from: macro.from, options: exact, validFor: /^$/ } : null;
+		if (!exact.length) return null;
+		// \left( gets its ) from the bracket auto-close, and the snippet brings \right) as well
+		const closer = UNESCAPED_OPENER.test(macro.text) ? CLOSER[macro.text.slice(-1)] : undefined;
+		const to = closer && ctx.state.sliceDoc(ctx.pos, ctx.pos + 1) === closer ? ctx.pos + 1 : ctx.pos;
+		// filter off: the widget would match the label against the text up to `to`, closer and all
+		return { from: macro.from, to, options: exact, validFor: /^$/, filter: false };
 	}
 	return { from: macro.from, options, validFor: /^\\[a-zA-Z]*$/ };
 }
@@ -46,7 +52,6 @@ const TEX_SOURCES = [
 	filePathCompletionSource,
 	glossaryCompletionSource,
 	argumentCompletionSource,
-	atSuggestionCompletionSource,
 	macroCompletionSource, // must run near-last: "\" + letters matches almost everything above too
 	subsuperscriptCompletionSource
 ];

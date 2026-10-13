@@ -1,5 +1,5 @@
 <script lang="ts">
-	// Shared-session presence for the title bar: a live dot, the guests' faces and how many. Click opens the share
+	// Shared-session presence for the title bar: the guests' faces and how many. Click opens the share
 	// dialog. The same shape and weight as the guest's (GuestPresence) and the title bar's own buttons.
 	//
 	// It lives in the title bar's RIGHT block, beside the window buttons, not with the menus. Two
@@ -26,7 +26,7 @@
 		onclick={() => onShareSession?.()}
 		use:tip={m.menubar_share_session()}
 	>
-		<SessionFaces live peers={collabHost.peers} />
+		<SessionFaces peers={collabHost.peers} />
 		<span class="cap-center whitespace-nowrap">{summary}</span>
 	</button>
 {/if}

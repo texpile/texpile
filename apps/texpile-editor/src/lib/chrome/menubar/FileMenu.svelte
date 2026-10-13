@@ -92,7 +92,7 @@
 							<Menu.Positioner>
 								<Menu.Content class={menuContentClass}>
 									<Menu.Item value="newfolder" class={menuBarItemClass}>
-										<Menu.ItemText>{m.menubar_open_new_folder()}</Menu.ItemText><span class="opacity-50">{combo('O')}</span>
+										<Menu.ItemText>{m.menubar_choose_folder()}</Menu.ItemText><span class="opacity-50">{combo('O')}</span>
 									</Menu.Item>
 									{#if recentFolders.current.length > 0}
 										<Menu.Separator class={separatorClass} />

@@ -17,9 +17,17 @@ const { mathSearch } = await import('$lib/editor/visual/extensions/mathlivebridg
 const { mathSearchKeydown } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathSearchKeys');
 const { searchMathEntries } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathEntries');
 
-/** an element standing in for a math field: what the keys read of one */
-function fakeField(mode: string): MathfieldElement {
-	const field = Object.assign(document.createElement('div'), { mode, syntax: 'typst', readOnly: false });
+/** `after` is the field's LaTeX past the caret */
+function fakeField(mode: string, after = ''): MathfieldElement {
+	const field = Object.assign(document.createElement('div'), {
+		mode,
+		syntax: 'typst',
+		readOnly: false,
+		selection: { ranges: [[0, 0]] },
+		lastOffset: 1,
+		getValue: () => after,
+		executeCommand: vi.fn()
+	});
 	field.addEventListener('keydown', mathSearchKeydown, { capture: true });
 	document.body.append(field);
 	return field as unknown as MathfieldElement;
@@ -63,7 +71,7 @@ describe('the math search', () => {
 		expect(mathSearch.query).toBe('frac');
 		press(field, 'Enter');
 		expect(mathSearch.field).toBe(null);
-		expect(insertSymbol).toHaveBeenCalledWith('\\frac{#@}{#0}');
+		expect(insertSymbol).toHaveBeenCalledWith('\\frac{#@}{#0}', undefined);
 	});
 
 	it('types a Typst call after a space, which ends a name typed before the search opened', () => {
@@ -85,7 +93,36 @@ describe('the math search', () => {
 		expect(press(field, 'Escape').defaultPrevented).toBe(true);
 		expect(mathSearch.field).toBe(null);
 		press(field, 'Tab');
-		expect(press(field, 'ArrowLeft').defaultPrevented).toBe(false);
+		// the arrows move the box's own caret now; Ctrl+Z it leaves to the equation
+		const undo = new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true });
+		field.dispatchEvent(undo);
+		expect(undo.defaultPrevented).toBe(false);
+		expect(mathSearch.field).toBe(null);
+	});
+
+	it('keeps the search open on the arrows, which move its caret', () => {
+		const field = fakeField('math');
+		press(field, 'Tab');
+		for (const key of 'ab') press(field, key);
+		expect(press(field, 'ArrowLeft').defaultPrevented).toBe(true);
+		expect(mathSearch.field).toBe(field);
+		expect(mathSearch.box).toEqual({ text: 'ab', anchor: 1, head: 1 });
+	});
+
+	it('opens on Ctrl+Space too, even with an empty slot ahead, and closes on it again', () => {
+		const field = fakeField('math', '\\frac{x}{\\placeholder{}}');
+		const ctrlSpace = () => new KeyboardEvent('keydown', { key: ' ', ctrlKey: true, bubbles: true, cancelable: true });
+		field.dispatchEvent(ctrlSpace());
+		expect(field.executeCommand).not.toHaveBeenCalled();
+		expect(mathSearch.field).toBe(field);
+		field.dispatchEvent(ctrlSpace());
+		expect(mathSearch.field).toBe(null);
+	});
+
+	it('moves to an empty slot on Tab before it opens anything', () => {
+		const field = fakeField('math', '\\frac{x}{\\placeholder{}}');
+		expect(press(field, 'Tab').defaultPrevented).toBe(true);
+		expect(field.executeCommand).toHaveBeenCalledWith('moveToNextPlaceholder');
 		expect(mathSearch.field).toBe(null);
 	});
 });

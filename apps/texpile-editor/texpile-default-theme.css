@@ -268,8 +268,8 @@
 	--syntax-deleted: light-dark(#82071e, #ffa198);
 
 	/* find-in-document matches, both editors */
-	--find-match-bg: rgba(255, 255, 0, 0.4);
-	--find-match-active-bg: rgba(255, 128, 0, 0.6);
+	--find-match-bg: light-dark(rgba(255, 255, 0, 0.4), rgba(255, 255, 0, 0.25));
+	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
 	--proof-default: #14b8a6;
@@ -297,7 +297,7 @@
 	/* \ref and \cite chips */
 	--ref-fg: light-dark(oklch(54.6% 0.245 262.881), oklch(70.7% 0.165 254.624));
 	--ref-bg: light-dark(oklch(97% 0.014 254.604), oklch(28.2% 0.091 267.935));
-	--ref-broken-fg: light-dark(oklch(57.7% 0.245 27.325), oklch(70.4% 0.191 22.216));
+	--ref-broken-fg: light-dark(oklch(50.5% 0.213 27.518), oklch(70.4% 0.191 22.216));
 	--ref-broken-bg: light-dark(oklch(97.1% 0.013 17.38), oklch(25.8% 0.092 26.042));
 
 	/* git status, carried by the file name's colour */
@@ -307,9 +307,7 @@
 	--git-renamed: oklch(60.6% 0.25 292.717);
 
 	/* math symbol keys */
-	--math-key-hover: oklch(88.2% 0.059 254.128);
 	--math-key-edge: oklch(70.7% 0.165 254.624);
-	--math-key-down: oklch(80.9% 0.105 251.813);
 
 	/* the colour picker's clear mark */
 	--swatch-clear: oklch(63.7% 0.237 25.331);
@@ -327,13 +325,6 @@
 	/* the image resize frame */
 	--image-frame: light-dark(#000, #fff);
 	/* the terminal; xterm reads these through themeColour() */
-	/* theme colours as text on the ground (the ink tokens, see src/texpile-tokens.css) */
-	--primary-ink: var(--color-primary-500);
-	--secondary-ink: var(--color-secondary-500);
-	--tertiary-ink: var(--color-tertiary-500);
-	--success-ink: light-dark(var(--color-success-600), var(--color-success-400));
-	--warning-ink: light-dark(var(--color-warning-600), var(--color-warning-400));
-	--error-ink: var(--color-error-500);
 	--terminal-bg: light-dark(var(--color-surface-50), var(--color-surface-950));
 	--terminal-fg: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */

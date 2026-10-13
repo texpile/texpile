@@ -202,6 +202,31 @@ function injection(opts: PreparePageOptions): string {
 			zoom: zoomPercent()
 		};
 	}
+	// tinymist takes one zoom step per 20px of ctrl+wheel, and a trackpad pinch covers one of its steps in about 13px,
+	// so the pinch reaches it scaled up and the zoom follows the fingers. A mouse notch is one step either way
+	var passingPinch = false;
+	window.addEventListener('wheel', function (e) {
+		if (passingPinch || !e.ctrlKey || e.deltaMode !== 0 || Math.abs(e.deltaY) >= 20) return;
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		passingPinch = true;
+		try {
+			e.target.dispatchEvent(new WheelEvent('wheel', {
+				deltaY: e.deltaY * 1.5, deltaMode: 0, ctrlKey: true,
+				clientX: e.clientX, clientY: e.clientY, screenX: e.screenX, screenY: e.screenY,
+				bubbles: true, cancelable: true
+			}));
+		} finally {
+			passingPinch = false;
+		}
+	}, { capture: true, passive: false });
+	// a pinch or ctrl+wheel zooms the viewer by its own handler; the toolbar's readout follows it
+	var wheelZoomReport = 0;
+	window.addEventListener('wheel', function (e) {
+		if (!e.ctrlKey && !e.metaKey) return;
+		clearTimeout(wheelZoomReport);
+		wheelZoomReport = setTimeout(function () { reply('zoom', zoomPercent()); }, 50);
+	}, { capture: true, passive: true });
 	window.addEventListener('message', function (e) {
 		var m = e.data;
 		if (!m || typeof m !== 'object' || m.channel !== CHANNEL) return;

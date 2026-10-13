@@ -6,7 +6,7 @@ order: 5
 
 # MCP tools
 
-The tools an assistant gets from the [MCP server](mcp.md). Every tool except `get_editor_state` takes an optional `root`, the project folder to act on. Without it, the tool acts on the window you last focused.
+The tools an assistant gets from the [MCP server](mcp.md). Every tool except `get_editor_state` takes an optional `root`, the project folder to act on. By default, the tool acts on the window you last focused.
 
 | Tool                 | What it does                                                                                                     |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -18,10 +18,10 @@ The tools an assistant gets from the [MCP server](mcp.md). Every tool except `ge
 | `show_diff`          | The Diff view against the last commit, in a git repository.                                                      |
 | `set_view_mode`      | `visual`, `source` or `diff`.                                                                                    |
 | `synctex_to_line`    | Shows where a line appears in the PDF. For Typst, moves the live preview, which must be running.                 |
-| `set_main_file`      | Sets the main file (`.tex` or `.typ`). Without `path`, clears it.                                                |
+| `set_main_file`      | Sets the main file (`.tex` or `.typ`), or clears it when `path` is left out.                                     |
 | `compile`            | Starts a compile and returns at once. Poll `get_diagnostics` until it finishes.                                  |
 | `set_output_paths`   | Changes the output folder, PDF path or log path. An empty string clears one.                                     |
-| `get_comments`       | Comment threads with the line each sits on. A thread whose text cannot be found reads as detached.               |
+| `get_comments`       | Comment threads with the line each sits on. A thread whose text is gone from the file reads as detached.         |
 | `add_comment`        | Adds a thread on a quote that appears exactly once in the file.                                                  |
 | `reply_to_comment`   | Replies to a thread.                                                                                             |
 | `resolve_comment`    | Resolves a thread. `resolved: false` reopens it.                                                                 |
@@ -30,4 +30,4 @@ The tools an assistant gets from the [MCP server](mcp.md). Every tool except `ge
 
 Comment tools take `by`, the author name, default "AI assistant". `prefix`, `suffix` and `line` pick between copies of a quote.
 
-`suggest_edit` is refused when the file is not the one open in the editor, the quote does not match exactly once (markup included), the replacement equals the quote, or you host a shared session. In LaTeX it is also refused if the new text cites a key your bibliography lacks or removes a `\label`.
+`suggest_edit` works on the file open in the editor, with a quote that matches exactly once (markup included) and a replacement that differs from it. It is refused while you host a shared session. In LaTeX it is also refused if the new text cites a key your bibliography lacks or removes a `\label`.

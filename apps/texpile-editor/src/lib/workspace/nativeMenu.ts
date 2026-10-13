@@ -99,7 +99,7 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		newMd: m.menubar_new_md(),
 		newCls: m.menubar_new_cls(),
 		newSty: m.menubar_new_sty(),
-		openFolder: m.menubar_open_new_folder(),
+		openFolder: m.start_open_folder(),
 		clone: m.menubar_clone_repository(),
 		localHistory: m.history_menu_open(),
 		restoreDeleted: m.history_menu_restore_deleted(),

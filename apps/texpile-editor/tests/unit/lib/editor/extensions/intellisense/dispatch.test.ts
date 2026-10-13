@@ -35,6 +35,13 @@ describe('latex completion source', () => {
 		expect(pm?.detail).toContain('defs.tex');
 	});
 
+	it('takes in the bracket the editor closed after \\left(', async () => {
+		const state = EditorState.create({ doc: '$\\left()$' });
+		const r = await latexCompletionSource(new CompletionContext(state, 7, false));
+		expect(labels(r)).toEqual(['\\left(']);
+		expect(r?.to).toBe(8);
+	});
+
 	it('completes commands after a backslash + letter', async () => {
 		const r = await completeAt('\\sec');
 		expect(r?.from).toBe(0); // replaces from the backslash

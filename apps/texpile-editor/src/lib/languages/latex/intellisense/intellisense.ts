@@ -1,6 +1,7 @@
 // public entry point for the intellisense module: completion, keyboard shortcuts, hover, folding,
 // and go-to-definition, composed for either a .tex buffer or a .bib buffer.
 import { autocompletion, completionStatus, startCompletion } from '@codemirror/autocomplete';
+import { snippetCompletionSource } from '$lib/editor/snippets/cmSnippets';
 import { EditorView, tooltips } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { latexCompletionSource, bibFileCompletionSource } from './completion/dispatch';
@@ -44,7 +45,7 @@ function reactivate(context: RegExp): Extension {
 export function latexAutocomplete(opts: IntellisenseOptions = {}): Extension {
 	const source = opts.bib ? bibFileCompletionSource : latexCompletionSource;
 	const ext: Extension[] = [
-		autocompletion({ override: [source], activateOnTyping: true, icons: false }),
+		autocompletion({ override: [source, snippetCompletionSource], activateOnTyping: true, icons: false }),
 		reactivate(opts.bib ? BIB_CONTEXT : TEX_CONTEXT),
 		frecencyTracker()
 	];

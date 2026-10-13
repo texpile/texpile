@@ -14,7 +14,7 @@ Install Texpile, then the compiler for the format you write in.
 
 ## 1. Install Texpile
 
-- **Windows:** run the installer. The portable zip on the [downloads page](/download) does not update itself.
+- **Windows:** run the installer. The [downloads page](/download) also has a portable zip, which you update by hand.
 - **macOS:** open the .dmg and drag Texpile to Applications.
 - **Debian and Ubuntu:** install the .deb with apt. Keep the leading `./`.
 

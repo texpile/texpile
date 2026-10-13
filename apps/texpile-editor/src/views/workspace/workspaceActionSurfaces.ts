@@ -245,6 +245,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			// the log's OWN mtime, not now(): updatedAt is what tells a reader how old this parse is,
 			// and stamping it with the read time made a day-old log look freshly written
 			await d.compiler.publishLogDiagnostics(logPath, s.mtimeMs, null);
+			d.compiler.liveRunFinished();
 		},
 		toggleTerminalShrink: () => d.termDock().toggleShrink(),
 		toggleTerminal: () => d.termDock().toggle()

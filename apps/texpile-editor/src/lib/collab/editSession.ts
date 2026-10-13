@@ -2,9 +2,11 @@
 // guest adapter, so WorkspaceView drives either one identically. Host-only methods are no-ops on
 // the guest side.
 
+import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
 import type * as Y from 'yjs';
 import type { Awareness } from 'y-protocols/awareness';
 import type { ControlPayload } from './protocol';
+import type { SharedParseContext } from './parse/parseContext';
 
 export type CollabBinding = {
 	ytext: Y.Text;
@@ -38,6 +40,8 @@ export type SharedCompileIntel = {
 	/** absent when the host runs a version from before these were shared */
 	auxKinds?: Record<string, string>;
 	auxTitles?: Record<string, string>;
+	/** what the compile numbered, for the Contents */
+	auxContents?: CompiledEntry[];
 	log: SharedDiagnostic[];
 };
 
@@ -61,6 +65,14 @@ export type EditSession = {
 	shareCompileIntel(intel: SharedCompileIntel): void;
 	/** guest: the host's shared compile products; null for the host (it has the real thing). */
 	readonly compileIntel: SharedCompileIntel | null;
+	/** host: publish what it parses files with to guests. No-op on the guest side. */
+	shareParseContext(context: SharedParseContext): void;
+	/** guest: what the host parses files with; null for the host or until it says */
+	readonly parseContext: SharedParseContext | null;
+	/** host: send the folder snippet file, since a session leaves .texpile/ out */
+	shareFolderSnippets(text: string | null): void;
+	/** guest: the host's folder snippet file */
+	readonly folderSnippets: string | null;
 	collabFor(path: string | null): CollabBinding | null;
 	/** fold the local editor's serialized content into the shared doc (the visual editor's write
 	 *  path on both sides; a no-op when the source editor is Y-bound). `before` is the text the

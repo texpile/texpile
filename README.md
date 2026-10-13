@@ -16,6 +16,9 @@ A modern, desktop editor for LaTeX, Typst, and Markdown. For Windows, macOS, and
 
 </div>
 
+> [!NOTE]
+> Want to help us verify and translate the app? Check [Translation.md](Translation.md) and open an [issue](https://github.com/texpile/texpile/issues/new).
+
 ---
 
 ![Texpile editing a LaTeX project, with the PDF preview and comments open](docs/images/overview.webp)

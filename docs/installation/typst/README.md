@@ -8,7 +8,7 @@ order: 2
 
 # Typst
 
-Texpile compiles and previews Typst with tinymist. You do not need the typst program itself.
+Texpile compiles and previews Typst with tinymist, so the typst program itself is optional.
 
 ## From Texpile
 

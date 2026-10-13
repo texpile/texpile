@@ -12,7 +12,9 @@ import {
 } from '@codemirror/view';
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, type Compartment, type Extension } from '@codemirror/state';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap } from '@codemirror/commands';
+import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { languages as cmlangdata } from '@codemirror/language-data';
@@ -51,6 +53,8 @@ import { sourcePaste } from './paste/cmSourcePaste';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 import { dirname } from '$lib/workspace/fileSystem';
 import { foldMemory } from './extensions/fold-memory/foldMemory';
+import { sourceTooltipSpace } from './toolbar/tooltipSpace';
+import { sourceSnippets } from '$lib/editor/snippets/cmSnippets';
 
 export type SourceSetupDeps = {
 	fileFor: string;
@@ -85,6 +89,7 @@ function pasteDialectOf(fileFor: string): PasteDialect | null {
 export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 	const { fileFor, collab, onAddComment, onSelectComment } = deps;
 	const pasteDialect = pasteDialectOf(fileFor);
+	const snippetOptions = { stopUndoCapture: () => deps.undoManager?.stopCapturing() };
 	return [
 		// gutters render in extension order: lint goes before lineNumbers so it lands on their left
 		...(!fileFor || /\.(tex|typ)$/i.test(fileFor) ? [lintGutter({ hoverTime: 0 })] : []),
@@ -119,7 +124,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		drawSelection(),
 		// tooltips fit in the editor, not the window: tinymist's hover sits above its line and otherwise
 		// covered the toolbar, under the toolbar's own layer
-		tooltips({ tooltipSpace: (view) => view.scrollDOM.getBoundingClientRect() }),
+		tooltips({ tooltipSpace: sourceTooltipSpace }),
 		// multiple cursors: the keymaps already bind the commands, but every transaction is
 		// normalized down to one range until the state allows extra ones
 		EditorState.allowMultipleSelections.of(true),
@@ -140,7 +145,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					// everywhere except inside a list item and Enter then behaves normally
 					latexListContinuation(),
 					mathPreview(),
-					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost()] : []),
+					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
+					sourceMathSearch(),
 					cmSpellcheck(deps.spellLanguage)
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
@@ -149,7 +155,9 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					[
 						mdSourceShortcuts(),
 						mdPathCompletion(),
-						mathPreview({ comments: false }),
+						sourceSnippets('markdown', snippetOptions),
+						mathPreview({ markdown: true }),
+						sourceMathSearch(),
 						cmSpellcheck(deps.spellLanguage, 'markdown'),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme
@@ -164,6 +172,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								typSourceShortcuts(),
 								// ahead of defaultKeymap below, as latexListContinuation is
 								typstEnterContinuation(),
+								sourceSnippets('typst', snippetOptions),
 								// server-backed, so inert until the LSP extension lands in lspConf
 								typstGoTo({ onOpenFileAt: deps.onOpenFileAt, flash: (pos) => flashLineEffect.of(pos) }),
 								// a guest's missing file would be created on its own disk, not the project's
@@ -194,7 +203,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			// the file's history, which the visual editor and the disk share; a view with no text binding is read-only
 			...(collab ? yUndoManagerKeymap : []),
 			...searchKeymap,
-			indentWithTab
+			tabIndentBinding
 		]),
 		deps.wrapConf.of(deps.lineWrap ? EditorView.lineWrapping : []),
 		// opt-in diagnostic for "the caret moved and I didn't move it"; see caretDoctor

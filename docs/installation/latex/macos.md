@@ -8,6 +8,6 @@ order: 2
 
 # LaTeX on macOS
 
-Install [MacTeX](https://www.tug.org/mactex/mactex-download.html). No setup afterward.
+Install [MacTeX](https://www.tug.org/mactex/mactex-download.html). Texpile uses it as installed.
 
-BasicTeX is a smaller download but can lack programs Texpile uses, such as `latexindent` or `biber`. Add them with `tlmgr`.
+BasicTeX is a smaller download that can lack programs Texpile uses, such as `latexindent` or `biber`. Add them with `tlmgr`.

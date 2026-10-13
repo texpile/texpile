@@ -8,7 +8,7 @@ section: Customize
 
 # Themes
 
-25 color themes, each in light and dark, in Preferences › Appearance.
+Preferences › Appearance has 25 color themes, each in light and dark.
 
 ![The Appearance tab in dark mode with the Dracula theme chosen, showing the Mode choice and the Theme grid](../landing/src/lib/assets/showcase/docs/app/preferences-appearance-dark.png)
 

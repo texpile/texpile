@@ -174,3 +174,12 @@
 # English page, and the browser then follows any rule above for a page that has moved.
 /de / 301
 /de/* /:splat 301
+
+# The comparison pages were taken down. They were in the sitemap, so each lands on the home page
+# rather than a 404.
+/overleaf-alternatives / 301
+/vs/* / 301
+/zh-Hans/overleaf-alternatives /zh-Hans 301
+/zh-Hans/vs/* /zh-Hans 301
+/zh-Hant/overleaf-alternatives /zh-Hant 301
+/zh-Hant/vs/* /zh-Hant 301

@@ -54,7 +54,7 @@ The number on the Source Control button is how many files changed. Esc returns f
 
 ![The bottom panel open on Problems](../landing/src/lib/assets/showcase/docs/app/tour-bottom.png)
 
-The Agent tab is a chat with an AI agent on your computer. It is hidden when every agent is turned off in Preferences › AI Assistant.
+The Agent tab is a chat with an AI agent on your computer. It shows while at least one agent is turned on in Preferences › AI Assistant and Disable all AI integrations is off.
 
 ## Menus
 

@@ -5,7 +5,7 @@ order: 1
 
 # Visual editor
 
-Edit the file as formatted text. Texpile writes the Markdown, and keeps the parts you do not touch as you wrote them.
+The visual editor shows the file as formatted text. Texpile writes the Markdown for your edits and keeps every other part as you wrote it.
 
 Things that work differently from a word processor:
 

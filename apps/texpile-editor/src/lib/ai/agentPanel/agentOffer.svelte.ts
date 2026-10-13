@@ -14,9 +14,9 @@ export function panelAgentsTicked(): PanelAgent[] {
 	return ORDER.filter((a) => (a === 'custom' ? !!agentPanelCommand.trim() : !!found?.[a]));
 }
 
-/** the tab hidden: everything unticked */
+/** the tab hidden: everything unticked, or all AI turned off */
 export function panelTabOff(): boolean {
-	return settings.current.agentPanelAgents?.length === 0;
+	return settings.current.aiOff || settings.current.agentPanelAgents?.length === 0;
 }
 
 /** the ticked list with one agent ticked or not, in the order Preferences lists them */

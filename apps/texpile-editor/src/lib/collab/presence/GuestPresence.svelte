@@ -1,38 +1,43 @@
 <script lang="ts">
 	// A guest's session state, in the title bar's trailing slot next to the window buttons - the same
 	// place, shape and weight as the host's SessionPresence, so the two roles read the same way round.
-	//
-	// This used to be a full-width bar of its own below the title bar. That cost a row of vertical
-	// space to hold one label and one button, and it meant a guest window had no command field and
-	// no drag strip while a host's did. Compile and PDF controls were already in EditorTopbar, so
-	// the row was carrying nothing else.
+	// Leave is rare, so it waits in this menu rather than standing in the bar as a button of its own.
+	import { LogOut } from '@lucide/svelte';
+	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { navigate } from '$lib/router.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
+	import { menuContentClass, menuItemClass } from '$lib/menus/menuStyles';
 	import SessionFaces from './SessionFaces.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import { LogOut } from '@lucide/svelte';
 
 	const online = $derived(collabGuest.status === 'online' && collabGuest.hostOnline);
 	// only said when something is off (reconnecting, host gone); a healthy session needs nothing beside "Collaborating"
 	const label = $derived(
 		online ? m.session_collaborating() : !collabGuest.hostOnline ? m.session_host_gone() : m.session_status_reconnecting()
 	);
+
+	function leave() {
+		collabGuest.leave();
+		navigate('/');
+	}
 </script>
 
-<div class="app-no-drag mr-1 flex shrink-0 items-center gap-1 self-center text-xs">
-	<span class="flex h-[22px] items-center gap-1.5 px-1.5">
-		<SessionFaces live={online} peers={collabGuest.peers} />
-		<span class="cap-center whitespace-nowrap">{label}</span>
-	</span>
-	<!-- red only under the pointer: leaving is rare, and a red word was the loudest thing in the bar -->
-	<button
-		class="hover:bg-surface-200-800 hover:text-error-ink rounded-base flex h-[22px] items-center gap-1 px-1.5"
-		onclick={() => {
-			collabGuest.leave();
-			navigate('/');
-		}}
+<Menu onSelect={(d) => d.value === 'leave' && leave()}>
+	<Menu.Trigger
+		class="app-no-drag hover:bg-surface-200-800 rounded-base mr-1 flex h-[22px] shrink-0 items-center gap-1.5 self-center px-1.5 text-xs"
 	>
-		<LogOut class="size-3.5 shrink-0" />
-		<span class="cap-center whitespace-nowrap">{m.session_leave()}</span>
-	</button>
-</div>
+		<SessionFaces peers={collabGuest.peers} />
+		<span class="cap-center whitespace-nowrap" class:text-warning-ink={!online}>{label}</span>
+	</Menu.Trigger>
+	<Portal>
+		<Menu.Positioner>
+			<Menu.Content class={menuContentClass}>
+				<Menu.Item value="leave" class="{menuItemClass} text-error-ink">
+					<span class="flex items-center gap-2.5">
+						<LogOut class="size-4 shrink-0" /><Menu.ItemText class="cap-center">{m.session_leave()}</Menu.ItemText>
+					</span>
+				</Menu.Item>
+			</Menu.Content>
+		</Menu.Positioner>
+	</Portal>
+</Menu>

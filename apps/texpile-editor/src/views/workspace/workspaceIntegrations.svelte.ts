@@ -370,11 +370,10 @@ export class WorkspaceIntegrations {
 			// from it. Without this they would show the previous compile's numbering until the file
 			// list happened to change.
 			void d.compiler().runsFinished;
-			// the .aux sits next to the log (output/aux dirs included); fall back to a main-sibling .aux.
-			// untracked: expectedLogPath reads compileConfig, and a config edit alone (output dir,
-			// live-mode toggle) must not trigger a full intel rescan - the deps named above cover it
-			const aux =
-				untrack(() => d.compiler().expectedLogPath())?.replace(/\.log$/i, '.aux') ?? (main ? main.replace(/\.tex$/i, '.aux') : null);
+			// the .aux sits next to the log (output/aux dirs included), or in _draft/ in live mode; fall back to a
+			// main-sibling .aux. untracked: it reads compileConfig, and a config edit alone (output dir, live-mode
+			// toggle) must not trigger a full intel rescan - the next run does
+			const aux = untrack(() => d.compiler().expectedAuxPath()) ?? (main ? main.replace(/\.tex$/i, '.aux') : null);
 			// a guest has no aux on disk; the host's shared parse fills the numbers in (and re-runs
 			// this when a fresh compile lands). Reading session.active also seeds the host's share
 			// when a session starts against an already-compiled project.
@@ -385,7 +384,8 @@ export class WorkspaceIntegrations {
 							numbers: session.compileIntel.auxNumbers,
 							pages: session.compileIntel.auxPages,
 							kinds: session.compileIntel.auxKinds,
-							titles: session.compileIntel.auxTitles
+							titles: session.compileIntel.auxTitles,
+							contents: session.compileIntel.auxContents
 						}
 					: null;
 			if (!capsOf(d.provider).project) return;

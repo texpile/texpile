@@ -6,6 +6,7 @@
 // do not share is the TRIGGER: the LaTeX source looks for \includegraphics{…, and this looks for an
 // unclosed link target. So the trigger is the only thing written here.
 import { autocompletion, completionStatus, startCompletion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
+import { snippetCompletionSource } from '$lib/editor/snippets/cmSnippets';
 import { EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { filePathStore } from '$lib/stores/editorStore';
@@ -56,7 +57,10 @@ function reactivateOnDelete(): Extension {
 	});
 }
 
-/** path completion for markdown links and images; the whole of md source-mode completion today. */
+/** path completion for markdown links and images, plus snippets: the whole of md source-mode completion. */
 export function mdPathCompletion(): Extension {
-	return [autocompletion({ override: [mdPathCompletionSource], activateOnTyping: true, icons: false }), reactivateOnDelete()];
+	return [
+		autocompletion({ override: [mdPathCompletionSource, snippetCompletionSource], activateOnTyping: true, icons: false }),
+		reactivateOnDelete()
+	];
 }

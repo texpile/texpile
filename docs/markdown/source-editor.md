@@ -5,7 +5,7 @@ order: 2
 
 # Source editor
 
-Edit the Markdown directly. The toolbar and the shortcuts write the markup for you.
+The source editor shows the Markdown as plain text. The toolbar and the shortcuts write the markup for you.
 
 ![The source editor on a Markdown file, with its toolbar](../../landing/src/lib/assets/showcase/docs/markdown/source-editor.png)
 

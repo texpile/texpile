@@ -17,6 +17,7 @@
 	import { untrack } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import {
+		tocElsewhere,
 		tocFoldedNow,
 		tocHasChildren,
 		tocKeys,
@@ -49,7 +50,10 @@
 			if ([...shut].some((k) => !here.includes(k))) shut = new Set([...shut].filter((k) => here.includes(k)));
 		});
 	});
-	const foldedNow = $derived(tocFoldedNow(folded, caretIn, shut));
+	// other files' sections start folded; `opened` are those the reader opened anyway
+	let opened = $state<ReadonlySet<string>>(new Set());
+	const elsewhere = $derived(tocElsewhere(items, keys, parents));
+	const foldedNow = $derived(tocFoldedNow(new Set([...folded, ...[...elsewhere].filter((k) => !opened.has(k))]), caretIn, shut));
 	const visible = $derived(tocVisible(items, keys, foldedNow));
 	const active = $derived(tocShownActive(items, visible, caretAt));
 	let rows = $state<HTMLButtonElement[]>([]);
@@ -77,8 +81,10 @@
 		if (foldedNow.has(key)) {
 			folded = new Set([...folded].filter((k) => k !== key));
 			shut = new Set([...shut].filter((k) => k !== key));
+			if (elsewhere.has(key)) opened = new Set([...opened, key]);
 		} else {
 			folded = new Set([...folded, key]);
+			opened = new Set([...opened].filter((k) => k !== key));
 			if (caretIn.includes(key)) shut = new Set([...shut, key]);
 		}
 	}
@@ -108,8 +114,11 @@
 
 	function display(item: TocItem): string {
 		const text = (item.text || '').slice(0, 80);
-		if (item.kind === 'figure') return `${m.toc_label_figure()} ${item.number ?? ''}${text ? `: ${text}` : ''}`;
-		if (item.kind === 'table') return `${m.toc_label_table()} ${item.number ?? ''}${text ? `: ${text}` : ''}`;
+		// numbered once compiled: "Fig. 2.1: Results", and "Fig.: Results" before
+		if (item.kind === 'figure' || item.kind === 'table') {
+			const label = item.kind === 'figure' ? m.toc_label_figure() : m.toc_label_table();
+			return `${label}${item.number ? ` ${item.number}` : ''}${text ? `: ${text}` : ''}`;
+		}
 		if (item.kind === 'frame') return text || m.toc_label_frame();
 		return item.number ? `${item.number}  ${text || m.toc_label_untitled()}` : text || m.toc_label_untitled();
 	}

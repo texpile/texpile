@@ -21,17 +21,7 @@ const docSlugs = (dir = DOCS_DIR) =>
 const DOC_SLUGS = docSlugs();
 const NON_BASE_LOCALES = ['zh-Hans', 'zh-Hant'];
 // the Svelte routes outside /docs
-const PAGES = [
-	'',
-	'/download',
-	'/latex-editor',
-	'/typst-editor',
-	'/overleaf-alternatives',
-	'/vs/texstudio',
-	'/vs/overleaf',
-	'/vs/latex-workshop',
-	'/vs/lyx'
-];
+const PAGES = ['', '/download', '/latex-editor', '/typst-editor'];
 const localizedDocs = NON_BASE_LOCALES.flatMap((l) => DOC_SLUGS.map((s) => `/${l}/docs${s}`));
 
 /** @type {import('@sveltejs/kit').Config} */

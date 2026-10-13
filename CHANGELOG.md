@@ -5,6 +5,14 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: snippets (by @louisqli)
+- feat: optional built-in helpers such as auto fractions (by @louisqli)
+- feat: improved math search in equations (Ctrl+Space in a math field) (by @louisqli)
+- feat: Contents shows numbers from the last compile (LaTeX) (by @louisqli)
+- feat: pinch to zoom in the PDF and preview (by @louisqli)
+- fix: refined Brazilian Portuguese translation (by @ale4-dev)
+- fix: various smaller bugfixes (by @louisqli)
+
 ## [1.4.1] - 2026-10-09
 
 - fix: search bar overlapping (by @louisqli)

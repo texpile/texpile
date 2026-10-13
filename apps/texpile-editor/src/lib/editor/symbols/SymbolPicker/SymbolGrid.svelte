@@ -62,7 +62,7 @@
 				type="button"
 				id={optionId(i)}
 				role="option"
-				class="tile bg-surface-100-900 rounded-base flex aspect-square min-w-0 items-center justify-center overflow-hidden border text-2xl"
+				class="tile bg-surface-100-900 rounded-base flex aspect-square min-w-0 items-center justify-center overflow-hidden text-2xl"
 				class:active={i === picker.active}
 				aria-selected={i === picker.active}
 				aria-label={picker.set?.spokenLabel(symbol)}
@@ -77,16 +77,8 @@
 {/if}
 
 <style>
-	.tile {
-		border-color: transparent;
-		transition:
-			background-color 0.15s,
-			border-color 0.15s;
-	}
-
 	.tile.active {
 		background: var(--math-key-hover);
-		border-color: var(--math-key-edge);
 	}
 
 	.tile:active {

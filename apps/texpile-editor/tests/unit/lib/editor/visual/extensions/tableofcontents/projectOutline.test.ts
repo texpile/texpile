@@ -18,15 +18,25 @@ const outlines = { [main]: parseOutlineRaw(mainText), '/w/b.tex': parseOutlineRa
 describe('project outline', () => {
 	it('lists the paper around a fragment, its own entries untagged, the rest with their file', () => {
 		const items = latexProjectOutline({ main, open: '/w/a.tex', openSource: aText, root: '/w', outlines })!;
-		expect(items.map((i) => `${i.number} ${i.text} ${i.file ?? 'here'}`)).toEqual([
-			'1 Intro /w/main.tex',
-			'2 Method here',
-			'2.1 Setup here',
-			'3 Results /w/b.tex',
-			'4 End /w/main.tex'
+		expect(items.map((i) => `${i.text} ${i.file ?? 'here'}`)).toEqual([
+			'Intro /w/main.tex',
+			'Method here',
+			'Setup here',
+			'Results /w/b.tex',
+			'End /w/main.tex'
 		]);
 		// its own entries are positions in its own text, for the editor to jump to
 		expect(items[1].pos).toBe(aText.indexOf('\\section{Method}'));
+	});
+
+	it("is found from a guest's relative paths, a fragment in a folder included", () => {
+		const guest = {
+			'main.tex': parseOutlineRaw(mainText.replace('\\input{b}', '\\input{parts/b}')),
+			'parts/b.tex': parseOutlineRaw('\\input{c}\n')
+		};
+		const paper = { open: 'a.tex', openSource: aText, root: 'session', outlines: { ...guest, 'parts/c.tex': parseOutlineRaw(bText) } };
+		expect(guessedLatexMain(paper)).toBe('main.tex');
+		expect(latexProjectOutline({ ...paper, main: 'main.tex' })!.map((i) => i.text)).toEqual(['Intro', 'Method', 'Setup', 'Results', 'End']);
 	});
 
 	it('is nothing for a file the paper never reaches', () => {
@@ -47,6 +57,35 @@ describe('project outline', () => {
 			'End'
 		]);
 		expect(withVisualHeadings(items, visual.slice(0, 1))).toBeNull();
+	});
+
+	it("keeps figures and tables in visual mode, the open file's at the editor's positions", () => {
+		const floatText = '\\section{Method}\n\\begin{figure}\\caption{Plot}\\end{figure}\n\\begin{table}\\caption{Data}\\end{table}\n';
+		const withB = { ...outlines, '/w/b.tex': parseOutlineRaw('\\section{Results}\n\\begin{figure}\\caption{Other}\\end{figure}\n') };
+		const items = latexProjectOutline({ main, open: '/w/a.tex', openSource: floatText, root: '/w', outlines: withB })!;
+		const shown = (list: ReturnType<typeof withVisualHeadings>) => list?.map((i) => (i.file ? i.text : `${i.text}@${i.pos}`));
+		const floats = [
+			{ level: 0, kind: 'figure' as const, text: 'Plot', pos: 12 },
+			{ level: 0, kind: 'table' as const, text: 'Data', pos: 30 }
+		];
+		expect(shown(withVisualHeadings(items, [{ level: 1, text: 'Method', pos: 0 }], floats))).toEqual([
+			'Intro',
+			'Method@0',
+			'Plot@12',
+			'Data@30',
+			'Results',
+			'Other',
+			'End'
+		]);
+		// an editor that kept the figure as raw LaTeX has no place for it, and the rest still lines up
+		expect(shown(withVisualHeadings(items, [{ level: 1, text: 'Method', pos: 0 }], floats.slice(1)))).toEqual([
+			'Intro',
+			'Method@0',
+			'Data@30',
+			'Results',
+			'Other',
+			'End'
+		]);
 	});
 
 	it('places a Typst file between the headings around its #include', () => {

@@ -1,17 +1,17 @@
 import type { TocItem } from './tocStore';
 import { codeOnly } from '$lib/languages/latex/texCode';
-import { pathKey } from '$lib/workspace/fileSystem';
+import { dirname, pathKey } from '$lib/workspace/fileSystem';
+import { withCompiledNumbers, type CompiledEntry } from './compiled/compiledNumbers';
 
-// mirror the parser's section-level mapping (converter.ts) so the source outline nests the same
-// way the visual one does
-const HEADING_LEVEL: Record<string, number> = {
-	part: 1,
+// LaTeX's own sectioning depths, which numberOutline turns into nesting levels for the whole paper
+const SECTION_DEPTH: Record<string, number> = {
+	part: 0,
 	chapter: 1,
-	section: 1,
-	subsection: 2,
-	subsubsection: 3,
-	paragraph: 4,
-	subparagraph: 5
+	section: 2,
+	subsection: 3,
+	subsubsection: 4,
+	paragraph: 5,
+	subparagraph: 6
 };
 
 // read from the '{' at `open` to its matching '}', returning the inner text and the index past '}'
@@ -39,12 +39,12 @@ function cleanTitle(s: string): string {
 		.trim();
 }
 
-/** raw outline atoms: TocItems plus the structural markers numbering/merging consume. */
-export type RawOutlineItem =
-	(TocItem & { starred?: boolean }) | { kind: 'input'; pos: number; target: string } | { kind: 'appendix'; pos: number };
+/** raw outline atoms: TocItems plus the \input markers merging consumes. `short` is the title in [ ], which the
+ *  compile writes in place of the full one */
+export type RawOutlineItem = (TocItem & { starred?: boolean; short?: string }) | { kind: 'input'; pos: number; target: string };
 
 const SCAN_RE =
-	/\\(part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\s*(?:\[[^\]]*\])?\s*\{|\\begin\{(figure|table)\*?\}|\\begin\{frame\}|\\appendix\b|\\(?:input|include|subfile)\s*\{([^}]+)\}/g;
+	/\\(part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\s*(?:\[([^\]]*)\])?\s*\{|\\begin\{(figure|table)\*?\}|\\begin\{frame\}|\\(?:input|include|subfile)\s*\{([^}]+)\}/g;
 
 // one newline index + binary search per parse (a slice+split per item is O(file) each,
 // quadratic across a big outline)
@@ -65,12 +65,10 @@ function lineAt(starts: number[], pos: number): number {
 	return lo + 1;
 }
 
-/** parses one file's outline atoms: headings, floats with captions, beamer frames, \appendix and
- *  \input markers. `pos` is a char offset into `src` (LF-normalized, 1:1 with CodeMirror). */
+/** parses one file's outline atoms: headings, floats with captions, beamer frames and \input markers. `pos` is a char offset into `src` (LF-normalized, 1:1 with CodeMirror). */
 export function parseOutlineRaw(src: string): RawOutlineItem[] {
 	const lineStarts = buildLineIndex(src);
 	const items: RawOutlineItem[] = [];
-	let lastHeadingLevel = 0;
 	// what TeX skips (a comment, \iffalse, a comment environment) is no part of the outline
 	const code = codeOnly(src);
 	SCAN_RE.lastIndex = 0;
@@ -80,25 +78,25 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 		if (m[1]) {
 			const braceOpen = SCAN_RE.lastIndex - 1;
 			const { inner, end } = readGroup(src, braceOpen);
-			const level = HEADING_LEVEL[m[1]] ?? 1;
-			lastHeadingLevel = level;
 			items.push({
-				level,
+				level: SECTION_DEPTH[m[1]],
 				text: cleanTitle(inner) || m[1],
 				pos: m.index,
 				line: lineAt(lineStarts, m.index),
-				starred: /\*\s*(?:\[[^\]]*\])?\s*\{$/.test(m[0])
+				starred: /\*\s*(?:\[[^\]]*\])?\s*\{$/.test(m[0]),
+				...(m[2] ? { short: cleanTitle(m[2]) } : {})
 			});
 			SCAN_RE.lastIndex = end; // resume past the title so braces inside it don't re-trigger
-		} else if (m[2]) {
-			const envName = m[2];
+		} else if (m[3]) {
+			const envName = m[3];
 			const bodyEnd = src.indexOf(`\\end{${envName}`, SCAN_RE.lastIndex);
 			const body = src.slice(SCAN_RE.lastIndex, bodyEnd === -1 ? SCAN_RE.lastIndex + 4000 : bodyEnd);
-			const cap = /\\caption\s*(?:\[[^\]]*\])?\s*\{/.exec(body);
+			const cap = /\\caption\s*(?:\[([^\]]*)\])?\s*\{/.exec(body);
 			const caption = cap ? cleanTitle(readGroup(body, cap.index + cap[0].length - 1).inner) : '';
 			items.push({
-				level: Math.min(6, lastHeadingLevel + 1),
+				level: 0,
 				text: caption,
+				...(cap?.[1] ? { short: cleanTitle(cap[1]) } : {}),
 				pos: m.index,
 				line: lineAt(lineStarts, m.index),
 				kind: envName as 'figure' | 'table'
@@ -116,63 +114,46 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 				if (ft) title = cleanTitle(readGroup(body, ft.index + ft[0].length - 1).inner);
 			}
 			items.push({
-				level: Math.min(6, lastHeadingLevel + 1),
+				level: 0,
 				text: title,
 				pos: m.index,
 				line: lineAt(lineStarts, m.index),
 				kind: 'frame'
 			});
-		} else if (m[0] === '\\appendix') {
-			items.push({ kind: 'appendix', pos: m.index });
-		} else if (m[3]) {
-			items.push({ kind: 'input', pos: m.index, target: m[3].trim() });
+		} else if (m[4]) {
+			items.push({ kind: 'input', pos: m.index, target: m[4].trim() });
 		}
 	}
 	return items;
 }
 
 function isMarker(i: RawOutlineItem): i is Exclude<RawOutlineItem, TocItem> {
-	return i.kind === 'input' || i.kind === 'appendix';
+	return i.kind === 'input';
 }
 
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function isHeading(item: RawOutlineItem): item is TocItem & { starred?: boolean; short?: string } {
+	return !isMarker(item) && !item.kind;
+}
 
-/** numbers headings (1.2.3, appendix A/B), figures and tables (own counters); drops markers. */
-export function numberOutline(items: RawOutlineItem[]): TocItem[] {
-	const counters = [0, 0, 0, 0, 0, 0, 0];
-	let appendix = false;
-	let fig = 0;
-	let tab = 0;
-	const out: TocItem[] = [];
+/** nests the paper from its highest heading, so a book's chapters and an article's sections both sit at the left,
+ *  and gives each entry the number the last compile printed for it (none before a compile). Drops markers */
+export function numberOutline(items: RawOutlineItem[], compiled: CompiledEntry[] = []): TocItem[] {
+	const depths = items.filter(isHeading).map((i) => i.level);
+	const shift = depths.length ? Math.min(...depths) - 1 : 0;
+	let level = 1;
+	const nested: (TocItem & { short?: string })[] = [];
 	for (const item of items) {
-		if (isMarker(item)) {
-			if (item.kind === 'appendix') {
-				appendix = true;
-				counters[1] = 0;
-			}
-			continue;
-		}
-		const { starred, ...entry } = item as TocItem & { starred?: boolean };
-		if (entry.kind === 'figure') {
-			entry.number = String(++fig);
-		} else if (entry.kind === 'table') {
-			entry.number = String(++tab);
-		} else if (entry.kind !== 'frame' && !starred && entry.level <= 3) {
-			counters[entry.level]++;
-			for (let l = entry.level + 1; l < counters.length; l++) counters[l] = 0;
-			const parts: string[] = [];
-			for (let l = 1; l <= entry.level; l++)
-				parts.push(l === 1 && appendix ? (letters[(counters[1] - 1) % 26] ?? String(counters[1])) : String(counters[l]));
-			entry.number = parts.join('.');
-		}
-		out.push(entry);
+		if (isMarker(item)) continue;
+		const { starred: _starred, ...entry } = item as TocItem & { starred?: boolean; short?: string };
+		entry.level = isHeading(item) ? (level = entry.level - shift) : Math.min(6, level + 1);
+		nested.push(entry);
 	}
-	return out;
+	return withCompiledNumbers(nested, compiled);
 }
 
 /** single-file outline: parse + number (the pre-merge behavior every existing caller expects). */
-export function latexHeadings(src: string): TocItem[] {
-	return numberOutline(parseOutlineRaw(src));
+export function latexHeadings(src: string, compiled: CompiledEntry[] = []): TocItem[] {
+	return numberOutline(parseOutlineRaw(src), compiled);
 }
 
 /**
@@ -185,9 +166,10 @@ export function assembleProjectOutline(
 	activeFile: string | null,
 	activeDir: string | null,
 	root: string | null,
-	outlines: Record<string, RawOutlineItem[]>
+	outlines: Record<string, RawOutlineItem[]>,
+	compiled: CompiledEntry[] = []
 ): TocItem[] {
-	return assembleOutline(activeRaw, activeFile, activeDir, root, outlines, activeFile).items;
+	return assembleOutline(activeRaw, activeFile, activeDir, root, outlines, activeFile, compiled).items;
 }
 
 /** the outline from `rootFile` down its \input chain; entries of every file but `own` carry their file, and
@@ -198,7 +180,8 @@ export function assembleOutline(
 	rootDir: string | null,
 	root: string | null,
 	outlines: Record<string, RawOutlineItem[]>,
-	own: string | null
+	own: string | null,
+	compiled: CompiledEntry[] = []
 ): { items: TocItem[]; files: string[] } {
 	const byNorm = new Map<string, { file: string; items: RawOutlineItem[] }>();
 	for (const [file, items] of Object.entries(outlines)) byNorm.set(pathKey(file), { file, items });
@@ -206,10 +189,11 @@ export function assembleOutline(
 	function resolve(baseDir: string | null, target: string): { file: string; items: RawOutlineItem[] } | null {
 		const cand = target.replace(/\\/g, '/');
 		const names = /\.[a-z]+$/i.test(cand) ? [cand] : [cand + '.tex', cand];
+		// an empty folder is a guest's top level, whose paths are relative
 		for (const base of [baseDir, root]) {
-			if (!base) continue;
+			if (base === null) continue;
 			for (const name of names) {
-				const hit = byNorm.get(pathKey(base.replace(/\\/g, '/') + '/' + name));
+				const hit = byNorm.get(pathKey(base ? base.replace(/\\/g, '/') + '/' + name : name));
 				if (hit) return hit;
 			}
 		}
@@ -228,8 +212,7 @@ export function assembleOutline(
 				if (child && !seen.has(pathKey(child.file))) {
 					seen.add(pathKey(child.file));
 					files.push(child.file);
-					const childDir = child.file.replace(/\\/g, '/').replace(/\/[^/]*$/, '');
-					out.push(...splice(child.items, childDir, child.file, depth + 1));
+					out.push(...splice(child.items, dirname(child.file), child.file, depth + 1));
 				}
 				continue;
 			}
@@ -238,5 +221,5 @@ export function assembleOutline(
 		return out;
 	}
 
-	return { items: numberOutline(splice(rootRaw, rootDir, rootFile, 0)), files };
+	return { items: numberOutline(splice(rootRaw, rootDir, rootFile, 0), compiled), files };
 }

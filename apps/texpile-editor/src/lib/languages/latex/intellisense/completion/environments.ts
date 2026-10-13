@@ -1,6 +1,8 @@
 // environment name completion inside \begin{…}/\end{…}, plus two LaTeX-Workshop-style extras:
 // "ForBegin" (accepting a fresh \begin{name} immediately builds the whole block + matching \end)
 // and close-environment (finishing \begin{name} by hand offers the matching \end{name} next).
+import { userPackage } from '../userPackages';
+import { detectedPackages } from './packageData';
 import { snippetCompletion, type Completion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
 import { environmentInfo } from '@unified-latex/unified-latex-ctan';
 import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -147,10 +149,16 @@ export function environmentCompletionSource(ctx: CompletionContext): CompletionR
 	const fromProject = [...new Set(projectIntelStore.current.envs.map((e) => e.name))].filter(
 		(n) => !ENV_SIGNATURE_MAP.has(n) && !bufferSet.has(n)
 	);
+	const fromPackages = [...detectedPackages(text)].flatMap((pkg) =>
+		(userPackage(pkg)?.envs ?? [])
+			.filter((e) => !e.unusual && !ENV_SIGNATURE_MAP.has(e.name) && !bufferSet.has(e.name))
+			.map((e) => (isFresh ? forBeginOption(e.name, e.detail ?? pkg) : asNameOption(e.name, e.detail ?? pkg)))
+	);
 	let options = [
 		...(isFresh ? FOR_BEGIN_OPTIONS : AS_NAME_OPTIONS),
 		...fromBuffer.map((n) => (isFresh ? forBeginOption(n, 'in this file') : asNameOption(n, 'in this file'))),
-		...fromProject.map((n) => (isFresh ? forBeginOption(n, 'in this project') : asNameOption(n, 'in this project')))
+		...fromProject.map((n) => (isFresh ? forBeginOption(n, 'in this project') : asNameOption(n, 'in this project'))),
+		...fromPackages
 	];
 	if (!isBegin) {
 		const open = openEnvName(text.slice(0, match.from));

@@ -10,7 +10,7 @@ import type { SourceEdit } from '$lib/workspace/suggestions/suggestionsControlle
 import { agentEditProblem, knownCiteKeys } from './agentEditGuard';
 import { contextAround, refinedText, refinePrompt } from './refinePrompt';
 import type { RefineAction } from './refineActions';
-import { refineAgentsOffered } from './refineAgents.svelte';
+import { refineAgentsOffered, refineTurnedOff } from './refineAgents.svelte';
 
 type AgentBridge = {
 	run(
@@ -83,9 +83,9 @@ export class SelectionRefiner {
 		return refineAgentsOffered().length > 0 && !!agentBridge() && this.deps.canSuggest();
 	}
 
-	/** Refine could run here but has no agent that can: none picked, or the picked one gone. Its entries open Preferences */
+	/** Refine could run here but has no agent that can: none picked yet, or the picked one gone. Its entries open Preferences */
 	get needsAgent(): boolean {
-		return refineAgentsOffered().length === 0 && !!agentBridge() && this.deps.canSuggest();
+		return refineAgentsOffered().length === 0 && !refineTurnedOff() && !!agentBridge() && this.deps.canSuggest();
 	}
 
 	get busy(): boolean {

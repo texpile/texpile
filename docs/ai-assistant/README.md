@@ -15,7 +15,7 @@ Texpile includes no AI. It works with an agent you install and sign in to yourse
 
 Install the agent and sign in outside Texpile, then pick it in `Preferences › AI Assistant`. The Agent tab and Refine each have their own choice.
 
-![Preferences, AI Assistant, with the Refine with and Agent tab choices](../../landing/src/lib/assets/showcase/docs/review/prefs-ai-assistant.png)
+![Preferences, AI Assistant, with Disable all AI integrations at the top and the Refine with and Agent tab choices](../../landing/src/lib/assets/showcase/docs/review/prefs-ai-assistant.png)
 
 | Agent           | Agent tab | Refine | Sign in from a terminal |
 | --------------- | --------- | ------ | ----------------------- |
@@ -28,6 +28,10 @@ Install the agent and sign in outside Texpile, then pick it in `Preferences › 
 
 You can also enter your own command. For the Agent tab it must speak the Agent Client Protocol, such as `opencode acp`. For Refine it reads a request and prints the new text, such as `ollama run llama3.1`.
 
-**Not found** means Texpile cannot find the agent. Add its folder in `Preferences › Toolchain › Folders`, then reopen Preferences.
+If an agent shows **Not found**, add its folder in `Preferences › Toolchain › Folders`, then reopen Preferences.
+
+## Turn off AI
+
+**Disable all AI integrations in Texpile**, at the top of `Preferences › AI Assistant`, turns off Refine, the Agent tab and the MCP server. Until you pick an agent, the Agent tab also offers it as a **Disable All AI** button. Turn the switch off to bring back Refine and the Agent tab with your earlier choices. The MCP server stays off until you turn it on again.
 
 What each feature sends is in [Privacy](../reference/privacy.md).

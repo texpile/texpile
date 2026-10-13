@@ -227,16 +227,11 @@
 		width: 100%;
 		padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
 		border-radius: var(--radius-base);
-		border: var(--default-border-width) solid transparent;
 		text-align: left;
-		transition:
-			background-color 0.15s,
-			border-color 0.15s;
 	}
 
 	.env-btn:hover {
 		background: var(--math-key-hover);
-		border-color: var(--math-key-edge);
 	}
 
 	.env-btn:active {
@@ -262,10 +257,6 @@
 		width: calc(var(--spacing) * 20);
 		height: calc(var(--spacing) * 20);
 		border-radius: var(--radius-base);
-		border: var(--default-border-width) solid transparent;
-		transition:
-			background-color 0.15s,
-			border-color 0.15s;
 		overflow: hidden;
 	}
 
@@ -300,7 +291,6 @@
 
 	.symbol-btn:hover {
 		background: var(--math-key-hover);
-		border-color: var(--math-key-edge);
 	}
 
 	.symbol-btn:active {

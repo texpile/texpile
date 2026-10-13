@@ -6,7 +6,7 @@ order: 4
 
 # MCP server
 
-Lets an AI assistant such as Claude Code read your editor and leave comments and suggestions. Off until you turn it on.
+Lets an AI assistant such as Claude Code read your editor and leave comments and suggestions. Off by default.
 
 > [!REQUIRES] an AI assistant that supports MCP
 
@@ -15,7 +15,7 @@ Lets an AI assistant such as Claude Code read your editor and leave comments and
 
 ![The Connect an Assistant dialog, with a message to paste into your assistant](../../landing/src/lib/assets/showcase/app/mcp-modal.png)
 
-If the assistant cannot add it, add a server named `texpile` at `http://127.0.0.1:7317` in its MCP settings. Agents in the [Agent tab](agent-panel.md) get the same tools without the server.
+To add it by hand, add a server named `texpile` at `http://127.0.0.1:7317` in the assistant's MCP settings. Agents in the [Agent tab](agent-panel.md) get the same tools with the server off.
 
 The assistant changes your text only through [suggestions](../comments/suggesting.md). While the server is on, any program on your computer can connect without a password.
 

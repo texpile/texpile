@@ -1,6 +1,6 @@
 // single-pass scanner for math regions ($…$, $$…$$, \(…\), \[…\], amsmath envs) in raw latex,
 // used by the source-mode math preview. open regions clamp at the first blank line, so a lone $
-// mid-edit can never swallow the rest of the file.
+// mid-edit can never swallow the rest of the file. verbatim and other code is blanked first, see sourceMath
 
 export type MathRegionKind = 'inline' | 'display';
 
@@ -40,9 +40,6 @@ const MATH_ENVS = new Set([
 	'dmath*'
 ]);
 
-/** literal-text envs, no math delimiters apply inside. */
-const SKIP_ENVS = new Set(['verbatim', 'verbatim*', 'lstlisting', 'minted', 'comment', 'filecontents', 'filecontents*']);
-
 type OpenRegion = {
 	from: number;
 	innerFrom: number;
@@ -52,14 +49,35 @@ type OpenRegion = {
 	env?: string;
 	/** same-name env nesting depth, so an inner \begin{x} doesn't close the outer. */
 	depth: number;
+	/** pandoc $ only: index of its closer, -1 when it ends with the line */
+	closeAt?: number;
 };
+
+export type DollarRule = 'tex' | 'pandoc';
 
 function isLetter(code: number): boolean {
 	return (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
 }
 
-/** `comments`: a % starts a comment, as in LaTeX; Markdown reads it as text */
-export function findMathRegions(text: string, comments = true): MathRegion[] {
+function blankLineAfter(text: string, newline: number): boolean {
+	let j = newline + 1;
+	while (j < text.length && (text[j] === ' ' || text[j] === '\t' || text[j] === '\r')) j++;
+	return j >= text.length || text[j] === '\n';
+}
+
+// pandoc: a closing $ has no space on its left and no digit on its right, in the same paragraph
+function pandocCloser(text: string, from: number): number {
+	for (let i = from; i < text.length; i++) {
+		const c = text[i];
+		if (c === '\\') i++;
+		else if (c === '\n' && blankLineAfter(text, i)) return -1;
+		else if (c === '$' && !/\s/.test(text[i - 1]) && !/\d/.test(text[i + 1] ?? '')) return i;
+	}
+	return -1;
+}
+
+/** `comments`: a % starts a comment, as in LaTeX; Markdown reads it as text. `dollars`: pandoc's rule for a single $ */
+export function findMathRegions(text: string, comments = true, dollars: DollarRule = 'tex'): MathRegion[] {
 	const regions: MathRegion[] = [];
 	const n = text.length;
 	let i = 0;
@@ -85,6 +103,7 @@ export function findMathRegions(text: string, comments = true): MathRegion[] {
 
 		// math can't contain a paragraph break, so clamp any open region at a blank line
 		if (ch === 10 /* \n */) {
+			if (open?.closeAt === -1) close(i, i, true);
 			if (open) {
 				let j = i + 1;
 				let c = j < n ? text.charCodeAt(j) : -1;
@@ -133,12 +152,6 @@ export function findMathRegions(text: string, comments = true): MathRegion[] {
 							const env = text.slice(k + 1, brace);
 							const after = brace + 1;
 							if (name === 'begin') {
-								if (!open && SKIP_ENVS.has(env)) {
-									const endTok = `\\end{${env}}`;
-									const idx = text.indexOf(endTok, after);
-									i = idx < 0 ? n : idx + endTok.length;
-									continue;
-								}
 								if (open && open.env === env) open.depth++;
 								else if (!open && MATH_ENVS.has(env)) {
 									open = {
@@ -161,18 +174,6 @@ export function findMathRegions(text: string, comments = true): MathRegion[] {
 					i = j;
 					continue;
 				}
-				if (name === 'verb') {
-					// \verb|…| / \verb*|…|: the next char is the delimiter, verbatim until it repeats
-					let k = j;
-					if (k < n && text[k] === '*') k++;
-					if (k < n) {
-						const end = text.indexOf(text[k], k + 1);
-						i = end < 0 ? n : end + 1;
-					} else {
-						i = k;
-					}
-					continue;
-				}
 				i = j;
 				continue;
 			}
@@ -190,7 +191,7 @@ export function findMathRegions(text: string, comments = true): MathRegion[] {
 						i += 2;
 						continue;
 					}
-				} else if (open.close === '$') {
+				} else if (open.close === '$' && (open.closeAt === undefined || open.closeAt === i)) {
 					close(i, i + 1);
 					i++;
 					continue;
@@ -204,7 +205,15 @@ export function findMathRegions(text: string, comments = true): MathRegion[] {
 				i += 2;
 				continue;
 			}
-			open = { from: i, innerFrom: i + 1, kind: 'inline', close: '$', depth: 0 };
+			if (dollars === 'pandoc') {
+				// a $ before a space opens nothing, and neither does an unclosed one before a digit: a price
+				const closeAt = pandocCloser(text, i + 1);
+				if (/\s/.test(text[i + 1] ?? ' ') || (closeAt < 0 && /\d/.test(text[i + 1]))) {
+					i++;
+					continue;
+				}
+				open = { from: i, innerFrom: i + 1, kind: 'inline', close: '$', depth: 0, closeAt };
+			} else open = { from: i, innerFrom: i + 1, kind: 'inline', close: '$', depth: 0 };
 			i++;
 			continue;
 		}

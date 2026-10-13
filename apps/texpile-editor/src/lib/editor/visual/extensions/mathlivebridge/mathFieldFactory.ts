@@ -43,8 +43,6 @@ export function buildMathField(
 	field.style.border = 'none';
 	field.style.outline = 'none';
 	field.style.backgroundColor = 'transparent';
-	// highlight when the cursor is inside the field
-	field.style.setProperty('--contains-highlight-background-color', 'hsla(210, 100%, 85%, 0.4)');
 	field.colorMap = themeColorMap;
 	field.syntax = syntax;
 

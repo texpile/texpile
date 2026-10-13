@@ -12,6 +12,10 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
 	return defaultLinkOpen(tokens, idx, options, env, self);
 };
 
+// a table wider than the panel scrolls on its own instead of widening the conversation
+md.renderer.rules.table_open = () => '<div class="agent-table"><table>\n';
+md.renderer.rules.table_close = () => '</table></div>\n';
+
 export function renderMarkdown(text: string): string {
 	return md.render(text);
 }

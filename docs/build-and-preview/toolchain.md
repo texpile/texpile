@@ -9,13 +9,13 @@ order: 1
 
 ![The Toolchain tab of Preferences with Check Again, Folders, and the LaTeX programs marked Found or Not found](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
 
-Only the programs your commands call are needed. The default compile command needs latexmk and lualatex. Live preview needs lualatex, **Format Document** needs latexindent, and jumping between the text and the PDF needs synctex.
+Texpile needs only the programs your commands call. The default compile command needs latexmk and lualatex. Live preview needs lualatex, **Format Document** needs latexindent, and jumping between the text and the PDF needs synctex.
 
 Texpile reads your PATH once, when it starts: restart it after you change PATH. Folders you add here apply at once.
 
 ## The Set Up dialog
 
-**Set Up LaTeX** or **Set Up Typst** opens when a compile, a jump, Format Document or the live preview needs a program Texpile cannot find.
+**Set Up LaTeX** or **Set Up Typst** opens when a compile, a jump, Format Document or the live preview needs a program that is missing.
 
 ![The Set Up LaTeX dialog saying latexindent is not found, with Installed elsewhere, More in Preferences, Close, and How to install one](../../landing/src/lib/assets/showcase/docs/app/set-up-latex-dialog.png)
 
@@ -37,4 +37,4 @@ With more than one TeX Live or MiKTeX installed, pick one under **Distribution**
 
 A tinymist on PATH or in **Folders** comes first. To use Texpile's copy, pick **Texpile's copy** under **Distribution**.
 
-If Texpile's copy cannot run on your computer, [install tinymist yourself](../installation/typst/README.md).
+If Texpile's copy fails to run on your computer, [install tinymist yourself](../installation/typst/README.md).
