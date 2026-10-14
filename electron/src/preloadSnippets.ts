@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld('texpileSnippets', {
 	},
 	/** { global, project }, each a name to text map */
 	readPackages: (root: string | null) => invokeFs('snippets:readPackages', root),
-	/** a .sty's text from the TeX installation, by bare name */
-	texPackage: (name: string) => ipcRenderer.invoke('toolchain:texPackage', name)
+	/** the commands an installed package defines, as the reader's TeX reports them */
+	probePackage: (name: string, options: string, classOptions: string) =>
+		ipcRenderer.invoke('toolchain:probePackage', name, options, classOptions)
 });

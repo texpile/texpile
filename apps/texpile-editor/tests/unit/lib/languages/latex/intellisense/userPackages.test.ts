@@ -25,18 +25,32 @@ describe('package files', () => {
 		expect(labels('\\usepackage{other}\n')).not.toContain('\\offen');
 	});
 
-	it('gives the parser the arguments the file names, over the .sty', async () => {
+	it('gives the parser the arguments the file names, over what TeX reports', async () => {
 		setUserPackages(new Map([['review', parsePackageFile(FILE).contents!]]));
-		const defs = await installedPackageDefinitions(['review'], async () => '\\newcommand{\\offen}[1]{}');
+		const defs = await installedPackageDefinitions([{ name: 'review', options: '' }], '', async () => ({
+			commands: [{ name: 'offen', spec: 'm' }]
+		}));
 		expect(defs).toBe('\\NewDocumentCommand{\\offen}{o m}{}');
 	});
 
-	it('drafts a file from a .sty that reads back with the arguments of each command', () => {
-		const sty =
-			'\\newcommand{\\hlnote}[2][red]{#2}\n\\NewDocumentCommand{\\pt}{s m}{}\n\\newcommand{\\in@ner}{}\n\\newenvironment{todo}{}{}\n\\newenvironment{wrap#2}{}{}';
-		const { contents, problem } = parsePackageFile(JSON.stringify(packageFileFrom(sty)));
+	it('drafts a file from what TeX reports for the package itself, environments apart', () => {
+		const probe = {
+			commands: [
+				{ name: 'hlnote', spec: 'o m', own: true },
+				{ name: 'pt', spec: 'X s m', own: true },
+				{ name: 'celsius', spec: '', own: true },
+				{ name: 'todo', spec: 'm', own: true },
+				{ name: 'endtodo', spec: '', own: true },
+				{ name: 'tikzset', spec: 'm' }
+			]
+		};
+		const { contents, problem } = parsePackageFile(JSON.stringify(packageFileFrom(probe)));
 		expect(problem).toBeNull();
-		expect(contents!.macros).toEqual([{ name: 'hlnote', arg: { format: '[]{}', snippet: 'hlnote[${1}]{${2}}' } }, { name: 'pt' }]);
-		expect(contents!.envs).toEqual([{ name: 'todo' }]);
+		expect(contents!.macros).toEqual([
+			{ name: 'celsius' },
+			{ name: 'hlnote', arg: { format: '[]{}', snippet: 'hlnote[${1}]{${2}}' } },
+			{ name: 'pt', arg: { format: '{}', snippet: 'pt{${1}}' } }
+		]);
+		expect(contents!.envs).toEqual([{ name: 'todo', arg: { format: '{}', snippet: '{${1}}' } }]);
 	});
 });

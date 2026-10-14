@@ -4,8 +4,8 @@
 // session resolves through the workspace provider instead of the disk.
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
 import { hasDocumentEnv } from './latexRoundtrip';
-import { installedPackageDefinitions, type ReadInstalledPackage } from '$lib/languages/latex/installedPackages';
-import { readTexPackage } from '$lib/editor/snippets/file/snippetLoader';
+import { installedPackageDefinitions, type ProbeInstalledPackage } from '$lib/languages/latex/installedPackages';
+import { probeTexPackage } from '$lib/editor/snippets/file/snippetLoader';
 
 type ReadFn = (path: string) => Promise<string>;
 
@@ -80,7 +80,8 @@ export async function findDocRoots(files: TexFile[]): Promise<Set<string>> {
 // macro-bearing refs followed out of a preamble; a standard package won't resolve
 // to a project-local file and is skipped
 const INCLUDE_RE = /\\(?:input|include|subfile|subfileinclude)\s*\{([^}]+)\}/g;
-const PKG_RE = /\\(?:usepackage|RequirePackage)\s*(?:\[[^\]]*\])?\s*\{([^}]+)\}/g;
+const PKG_RE = /\\(?:usepackage|RequirePackage)\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\}/g;
+const CLASS_OPTIONS_RE = /\\documentclass\s*\[([^\]]*)\]/;
 
 /** resolves a reference against a base dir, trying extensions; the first that reads wins. */
 async function resolveRead(baseDir: string, ref: string, exts: string[], read: ReadFn): Promise<{ path: string; text: string } | null> {
@@ -108,11 +109,13 @@ export async function gatherProjectMacros(
 	mainFilePath: string,
 	root: string,
 	read: ReadFn = readTextFile,
-	readInstalled: ReadInstalledPackage = readTexPackage
+	probeInstalled: ProbeInstalledPackage = probeTexPackage
 ): Promise<string> {
 	const seen = new Set<string>();
 	const chunks: string[] = [];
-	const installed = new Set<string>();
+	// the options the document loads each package with, which decide what some packages define (babel)
+	const installed = new Map<string, string>();
+	let classOptions = '';
 
 	async function walk(filePath: string, text: string, depth: number): Promise<void> {
 		// fragments have no \begin{document}, so preambleOf returns the whole file
@@ -120,15 +123,17 @@ export async function gatherProjectMacros(
 		chunks.push(scan);
 		if (depth >= 6) return;
 
-		const refs: { ref: string; exts: string[] }[] = [];
+		if (depth === 0) classOptions = CLASS_OPTIONS_RE.exec(scan)?.[1].trim() ?? '';
+		const refs: { ref: string; exts: string[]; options?: string }[] = [];
 		for (const m of scan.matchAll(INCLUDE_RE)) refs.push({ ref: m[1], exts: ['.tex'] });
-		for (const m of scan.matchAll(PKG_RE)) for (const name of m[1].split(',')) refs.push({ ref: name, exts: ['.sty', '.cls'] });
+		for (const m of scan.matchAll(PKG_RE))
+			for (const name of m[2].split(',')) refs.push({ ref: name, exts: ['.sty', '.cls'], options: m[1]?.trim() ?? '' });
 
-		for (const { ref, exts } of refs) {
+		for (const { ref, exts, options } of refs) {
 			// referrer's own dir first, then the project root
 			const got = (await resolveRead(dirname(filePath), ref, exts, read)) ?? (await resolveRead(root, ref, exts, read));
 			if (!got) {
-				if (exts[0] === '.sty') installed.add(ref.trim());
+				if (exts[0] === '.sty' && !installed.has(ref.trim())) installed.set(ref.trim(), options ?? '');
 				continue;
 			}
 			const key = pathKey(got.path);
@@ -146,7 +151,8 @@ export async function gatherProjectMacros(
 		return ''; // main file unreadable, fall back to per-file preamble scanning
 	}
 	// last, so the project's own definitions win
-	const definitions = await installedPackageDefinitions(installed, readInstalled);
+	const packages = [...installed].map(([name, options]) => ({ name, options }));
+	const definitions = await installedPackageDefinitions(packages, classOptions, probeInstalled);
 	if (definitions) chunks.push(definitions);
 	return chunks.join('\n');
 }

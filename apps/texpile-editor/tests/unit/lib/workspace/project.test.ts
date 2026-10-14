@@ -156,15 +156,29 @@ describe('cross-file macros make a fragment round-trip its custom command', () =
 });
 
 describe('an installed package gives the parser its commands', () => {
-	const STY =
-		'\\newcommand{\\hlnote}[2][TODO]{\\textbf{#1}: #2}\n\\renewcommand{\\section}{x}\n\\newcommand{\\pkg@inner}{}\n\\newcommand{\\textbf}{}\n';
-	const MAIN = '\\documentclass{article}\n\\usepackage{reviewnotes}\n\\begin{document}\n\\end{document}';
+	// what the reader's TeX reports: no arguments for commands that read theirs as they run
+	const PROBE = {
+		commands: [
+			{ name: 'hlnote', spec: 'o m' },
+			{ name: 'qtyof', spec: 'X O{}m>{\\TrimSpaces }m' },
+			{ name: 'cites', spec: '' },
+			{ name: 'section', spec: 'm' },
+			{ name: 'verbish', spec: 'X v' }
+		]
+	};
+	const MAIN = '\\documentclass[12pt]{article}\n\\usepackage[draft]{reviewnotes}\n\\begin{document}\n\\end{document}';
 
-	it('passes on what the package defines, and nothing it redefines or keeps internal', async () => {
+	it("passes on what TeX reports with arguments, loaded with the document's options", async () => {
 		h.fs = { '/proj/main.tex': MAIN };
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (f) => (f === 'reviewnotes.sty' ? STY : null));
+		const asked: string[][] = [];
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (...args) => {
+			asked.push(args);
+			return args[0] === 'reviewnotes' ? PROBE : null;
+		});
+		expect(asked).toEqual([['reviewnotes', 'draft', '12pt']]);
 		expect(macros).toContain('\\NewDocumentCommand{\\hlnote}{o m}{}');
-		expect(macros).not.toMatch(/section|pkg@inner|textbf/);
+		expect(macros).toContain('\\NewDocumentCommand{\\qtyof}{o m m}{}');
+		expect(macros).not.toMatch(/cites|section|verbish/);
 		const { doc } = LatexParser.latexToProseMirror('Intro \\hlnote [Important]{check this} outro.', { preamble: macros });
 		expect(serializeToLatex(doc)).toContain('[Important]{check this}');
 	});

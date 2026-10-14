@@ -21,7 +21,7 @@ Texpile by default supports a wide range of completion for LaTeX packages. Howev
 
 Folder package files are stored in the `.texpile` folder and are shared with collaborators through Git and real-time collaboration. Global package files are your own, and work in every folder.
 
-With **Save Package File for …**, Texpile will automatically scan the `.sty` file in your TeX installation and draft one. However, in many cases, this first draft might not be reliable and will require double checking.
+With **Save Package File for …**, Texpile will automatically load the package with your TeX installation and draft one. However, in many cases, this first draft might not be reliable and will require double checking.
 
 ## An example of a package file
 
