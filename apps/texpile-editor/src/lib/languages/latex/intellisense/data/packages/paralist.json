@@ -1,0 +1,44 @@
+{
+	"macros": [
+		{"name":"defaultenum","arg":{"format":"{}{}{}{}","snippet":"defaultenum{${1:level 1}}{${2:level 2}}{${3:level 3}}{${4:level 4}}"},"unusual":true},
+		{"name":"defaultitem","arg":{"format":"{}{}{}{}","snippet":"defaultitem{${1:level 1}}{${2:level 2}}{${3:level 3}}{${4:level 4}}"},"unusual":true},
+		{"name":"defaultleftmargin","arg":{"format":"{}{}{}{}","snippet":"defaultleftmargin{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"paradescriptionlabel","arg":{"format":"{}","snippet":"paradescriptionlabel{${1}}"}},
+		{"name":"plitemsep","doc":"Space between successive items."},
+		{"name":"plparsep","doc":"Space between paragraphs within an item – the \\parskip for this environment."},
+		{"name":"plpartopsep","doc":"Extra space added to \\topsep when environment starts a new paragraph (is called in vmode)."},
+		{"name":"pltopsep","doc":"Space between first item and preceding paragraph."},
+		{"name":"pointedenum","doc":"The option pointedenum and the macro \\pointedenum format the labels as in “1.”, “1.1.”, “1.1.1.” and “1.1.1.1.” and the references without the trailing point."},
+		{"name":"pointlessenum"},
+		{"name":"setdefaultenum","arg":{"format":"{}{}{}{}","snippet":"setdefaultenum{${1:level 1 label}}{${2:level 2 label}}{${3:level 3 label}}{${4:level 4 label}}"},"doc":"The labels of enumerated lists are formatted with \\setdefaultenum using the mechanism described in Section 3."},
+		{"name":"setdefaultitem","arg":{"format":"{}{}{}{}","snippet":"setdefaultitem{${1:level 1 label}}{${2:level 2 label}}{${3:level 3 label}}{${4:level 4 label}}"},"doc":"The default labels of itemized environments can be set by using the macro \\setdefaultitem which needs four arguments."},
+		{"name":"setdefaultleftmargin","arg":{"format":"{}{}{}{}{}{}","snippet":"setdefaultleftmargin{${1:level 1}}{${2:level 2}}{${3:level 3}}{${4:level 4}}{${5:level 5}}{${6:level 6}}"},"doc":"To change the left margin of the lists, use \\setdefaultleftmargin."}
+	],
+	"envs": [
+		{"name":"asparablank","if":"defblank"},
+		{"name":"asparadesc"},
+		{"name":"asparaenum","arg":{"format":"[][]","snippet":"[${1:label format}][${2:widest label number}]"}},
+		{"name":"asparaenum"},
+		{"name":"asparaitem","arg":{"format":"[]","snippet":"[${1:label}]"}},
+		{"name":"asparaitem"},
+		{"name":"compactdesc"},
+		{"name":"compactenum","arg":{"format":"[][]","snippet":"[${1:label format}][${2:widest label number}]"}},
+		{"name":"compactenum"},
+		{"name":"compactitem","arg":{"format":"[]","snippet":"[${1:label}]"}},
+		{"name":"compactitem"},
+		{"name":"enumerate","arg":{"format":"[][]","snippet":"[${1:label format}][${2:widest label number}]"}},
+		{"name":"enumerate"},
+		{"name":"inparablank","if":"defblank","doc":"The items are set just as regular text."},
+		{"name":"inparadesc"},
+		{"name":"inparaenum","arg":{"format":"[][]","snippet":"[${1:label format}][${2:widest label number}]"},"doc":"The inparaenum environment formats an enumerated list within a paragraph, just like the one in the introduction."},
+		{"name":"inparaenum","doc":"The inparaenum environment formats an enumerated list within a paragraph, just like the one in the introduction."},
+		{"name":"inparaitem","arg":{"format":"[]","snippet":"[${1:label}]"}},
+		{"name":"inparaitem"},
+		{"name":"itemize","arg":{"format":"[]","snippet":"[${1:label}]"}},
+		{"name":"itemize"}
+	],
+	"keys": {
+		"\\usepackage/paralist#c": ["alwaysadjust","cfg","defblank","flushleft","flushright","increaseonly","neveradjust","neverdecrease","newenum","newitem","nocfg","oldenum","olditem","pointedenum","pointlessenum"]
+	},
+	"args": ["\\usepackage/paralist#c"]
+}

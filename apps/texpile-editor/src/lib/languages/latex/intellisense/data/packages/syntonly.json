@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"syntaxonly","doc":"The \\syntaxonly macro sets up everything for syntax checking."}
+	],
+	"envs": [],
+	"keys": {}
+}

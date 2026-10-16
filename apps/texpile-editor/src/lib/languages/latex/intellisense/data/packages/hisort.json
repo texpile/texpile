@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"histrings"}],
+	"macros": [
+		{"name":"AddToList","arg":{"format":"{}{}","snippet":"AddToList{${1:list}}{${2:element}}"},"doc":"\\AddToList{⟨list⟩}element adds an element to a list."},
+		{"name":"CompReversefalse"},
+		{"name":"CompReversetrue"},
+		{"name":"ifCompReverse","unusual":true},
+		{"name":"IfEmptyList","arg":{"format":"{}{}{}","snippet":"IfEmptyList{${1:list}}{${2:true}}{${3:false}}"},"unusual":true},
+		{"name":"IfKnownList","arg":{"format":"{}{}{}","snippet":"IfKnownList{${1:list}}{${2:true}}{${3:false}}"},"unusual":true},
+		{"name":"IfListContains","arg":{"format":"{}{}{}{}","snippet":"IfListContains{${1:list}}{${2:element}}{${3:true}}{${4:false}}"},"unusual":true},
+		{"name":"ListElementsMustBeUnique","arg":{"format":"{}","snippet":"ListElementsMustBeUnique{${1:list}}"}},
+		{"name":"ListInclusionMacro","arg":{"format":"{}{}","snippet":"ListInclusionMacro{${1:list}}{${2:inclusion test}}"}},
+		{"name":"NewSortedList","arg":{"format":"{}{}{}","snippet":"NewSortedList{${1:list}}{${2:sort function}}{${3:key definition}}"}},
+		{"name":"NoSort","arg":{"format":"{}{}","snippet":"NoSort{${1}}{${2}}"},"doc":"performs no sorting, meaning that elements are listed in reverse order of addition."},
+		{"name":"ReverseSort","arg":{"format":"{}{}{}","snippet":"ReverseSort{${1:test}}{${2:first element}}{${3:second element}}"},"doc":"performs ⟨test⟩ on the list elements and gives the reverse result."},
+		{"name":"ShowList","arg":{"format":"{}{}","snippet":"ShowList{${1:list}}{${2:callback}}"},"doc":"The \\ShowList{⟨list⟩}{⟨callback⟩} macro executes ⟨callback⟩ on every item of the list, in order."},
+		{"name":"SortAlpha","arg":{"format":"{}{}","snippet":"SortAlpha{${1}}{${2}}"},"doc":"sorts elements alphabetically, after they have been stripped of nonalphabetical characters."},
+		{"name":"SortEasyAlpha","arg":{"format":"{}{}","snippet":"SortEasyAlpha{${1}}{${2}}"},"doc":"sorts simple text elements alphabetically."},
+		{"name":"SortLen","arg":{"format":"{}{}","snippet":"SortLen{${1}}{${2}}"},"doc":"sorts elements by their length, counted by number of tokens."},
+		{"name":"SortNum","arg":{"format":"{}{}","snippet":"SortNum{${1}}{${2}}"},"doc":"sorts elements numerically; all elements must be numbers."},
+		{"name":"StripForAlpha","arg":{"format":"{}{}","snippet":"StripForAlpha{${1:text}}{${2:callback}}"},"doc":"\\StripForAlpha{⟨text⟩}{⟨callback⟩} is a helpful function to precede alphabetical sorting. It takes ⟨text⟩, uppercases it, and removes all non-alphabetical characters from it."}
+	],
+	"envs": [],
+	"keys": {}
+}

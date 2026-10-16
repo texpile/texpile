@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"},{"name":"xkeyval"},{"name":"xparse"}],
+	"macros": [
+		{"name":"AddNumber","arg":{"format":"{}{}","snippet":"AddNumber{${1:number}}{${2:position}}"}},
+		{"name":"AddString","arg":{"format":"{}{}","snippet":"AddString{${1:text}}{${2:position}}"}},
+		{"name":"includespread","arg":{"format":"[]","snippet":"includespread[${1:options}]","keys":["keyval:includespread"],"keyPos":0}},
+		{"name":"includespread"},
+		{"name":"includespread*","arg":{"format":"[]","snippet":"includespread*[${1:options}]","keys":["keyval:includespread"],"keyPos":0}},
+		{"name":"includespread*"},
+		{"name":"loadodsfile","arg":{"format":"[]{}","snippet":"loadodsfile[${1:options}]{${2:file name}}","keys":["keyval:includespread"],"keyPos":0}},
+		{"name":"loadodsfile","arg":{"format":"{}","snippet":"loadodsfile{${1:file name}}"}},
+		{"name":"OdsLastNl"},
+		{"name":"odslink","arg":{"format":"{}{}","snippet":"odslink{${1}}{${2}}"},"unusual":true},
+		{"name":"OdsNl"},
+		{"name":"savespreadsheet","doc":"For saving spreadsheets modified with AddRow, you can use \\savespreadsheet."},
+		{"name":"tabletemplate","arg":{"format":"{}{}","snippet":"tabletemplate{${1:template name}}{${2:template code}}"}}
+	],
+	"envs": [
+		{"name":"AddRow","arg":{"format":"[]","snippet":"[${1:row number}]"}},
+		{"name":"AddRow"}
+	],
+	"keys": {
+		"keyval:includespread": ["celltemplate=","coltypes=","columnbreak=","file=","lastnewline=","multicoltemplate=","newline=","range=","rowtemplate=","save=","sheet=","template=","columns=${1|head,top|}","debug=${1|false,true|}","escape=${1|true,false|}","rowseparator=${1|tableline,hline,newline|}"]
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"checkoddpage","doc":"This macro checks if the current page is odd or even by placing a label to the auxiliary file and reading it back in."},
+		{"name":"ifoddpage","doc":"This TeX conditional is set (locally) by \\checkoddpage. It is true if the current page is odd, or false if it is even."},
+		{"name":"ifoddpageoroneside"},
+		{"name":"oddpagefalse","unusual":true},
+		{"name":"oddpageoronesidefalse","unusual":true},
+		{"name":"oddpageoronesidetrue","unusual":true},
+		{"name":"oddpagetrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"changepage","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"changepage{${1:text height}}{${2:text width}}{${3:even-side margin}}{${4:odd-side margin}}{${5:column sep.}}{${6:topmargin}}{${7:headheight}}{${8:headsep}}{${9:footskip}}"}},
+		{"name":"changetext","arg":{"format":"{}{}{}{}{}","snippet":"changetext{${1:text height}}{${2:text width}}{${3:even-side margin}}{${4:odd-side margin}}{${5:column sep.}}"}},
+		{"name":"checkoddpage"},
+		{"name":"cplabel"},
+		{"name":"easypagecheck"},
+		{"name":"ifoddpage"},
+		{"name":"ifstrictpagecheck","unusual":true},
+		{"name":"oddpagefalse","unusual":true},
+		{"name":"oddpagetrue","unusual":true},
+		{"name":"strictpagecheck"},
+		{"name":"strictpagecheckfalse","unusual":true},
+		{"name":"strictpagechecktrue","unusual":true}
+	],
+	"envs": [
+		{"name":"adjustwidth","arg":{"format":"{}{}","snippet":"{${1:leftmargin}}{${2:rightmargin}}"}},
+		{"name":"adjustwidth*","arg":{"format":"{}{}","snippet":"{${1:leftmargin}}{${2:rightmargin}}"}}
+	],
+	"keys": {
+		"\\usepackage/changepage#c": ["strict"]
+	},
+	"args": ["\\usepackage/changepage#c"]
+}

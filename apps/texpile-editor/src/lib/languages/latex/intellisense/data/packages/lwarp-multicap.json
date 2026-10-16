@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"abvmcapskip"},
+		{"name":"blwmcapskip"},
+		{"name":"mfcaption","arg":{"format":"[]{}","snippet":"mfcaption[${1}]{${2}}"}},
+		{"name":"mfcaption","arg":{"format":"{}","snippet":"mfcaption{${1}}"}},
+		{"name":"mtcaption","arg":{"format":"[]{}","snippet":"mtcaption[${1}]{${2}}"}},
+		{"name":"mtcaption","arg":{"format":"{}","snippet":"mtcaption{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

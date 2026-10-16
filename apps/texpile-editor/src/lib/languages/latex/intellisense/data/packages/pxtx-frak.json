@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"frakdotlessi"},
+		{"name":"frakdotlessj"},
+		{"name":"mathbfrak","arg":{"format":"{}","snippet":"mathbfrak{${1}}"}},
+		{"name":"mathfrak","arg":{"format":"{}","snippet":"mathfrak{${1}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

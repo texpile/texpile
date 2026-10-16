@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"Isosign","arg":{"format":"[]{}","snippet":"Isosign[${1}]{${2}}"}},
+		{"name":"Isosign","arg":{"format":"{}","snippet":"Isosign{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

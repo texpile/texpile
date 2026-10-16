@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"kinig","arg":{"format":"{}","snippet":"kinig{${1:initial}}"}},
+		{"name":"Kinigcapfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

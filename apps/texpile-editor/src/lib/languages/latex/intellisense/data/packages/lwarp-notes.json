@@ -1,0 +1,9 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"importantnote"},
+		{"name":"informationnote"},
+		{"name":"warningnote"}
+	],
+	"keys": {}
+}

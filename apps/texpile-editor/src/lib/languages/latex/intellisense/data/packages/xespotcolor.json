@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"iftex"},{"name":"graphics"},{"name":"trig"},{"name":"color","if":"!xcolor"},{"name":"xcolor","if":"xcolor"}],
+	"macros": [
+		{"name":"AddSpotColor","arg":{"format":"{}{}{}{}","snippet":"AddSpotColor{${1:color space}}{${2:color name}}{${3:PDF name}}{${4:CMYK values}}"},"doc":"The \\AddSpotColor macro should be used to introduce a new spot color."},
+		{"name":"NewSpotColorSpace","arg":{"format":"{}","snippet":"NewSpotColorSpace{${1:color space}}"},"doc":"The \\NewSpotColorSpace command should be used to define a new color space for spot colors."},
+		{"name":"SetPageColorResource","arg":{"format":"{}","snippet":"SetPageColorResource{${1}}"},"unusual":true},
+		{"name":"SetPageColorSpace","arg":{"format":"{}","snippet":"SetPageColorSpace{${1:color space}}"}},
+		{"name":"SpotColor","arg":{"format":"{}{}","snippet":"SpotColor{${1:color name}}{${2:tint}}"}},
+		{"name":"SpotSpace","doc":"Macro \\SpotSpace is used to introduce blanks in names."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/xespotcolor#c": ["hks","pantone","xcolor"]
+	},
+	"args": ["\\usepackage/xespotcolor#c"]
+}

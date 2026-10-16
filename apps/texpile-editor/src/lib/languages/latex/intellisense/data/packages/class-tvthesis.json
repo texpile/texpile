@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"class-book"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"ifxetex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"inputenc","engines":["pdflatex","lualatex"]},{"name":"textcomp","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"libertine","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"ifluatex","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"fontaxes","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"figureversions","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"cantarell","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"inconsolata","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"libertinust1math","if":"!nodefaultfont","engines":["pdflatex","lualatex"]},{"name":"etoolbox"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"color"},{"name":"booktabs"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"setspace"},{"name":"microtype"},{"name":"titlesec"},{"name":"enumitem"},{"name":"caption"},{"name":"caption3"},{"name":"floatrow"},{"name":"fancyhdr"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"backref"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bigintcalc"},{"name":"url"},{"name":"bitset"},{"name":"fontspec","if":"!nodefaultfont","engines":["lualatex"]},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-luatex","if":"!nodefaultfont","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"AcademicYear","arg":{"format":"{}","snippet":"AcademicYear{${1:year}}"},"doc":"The academic year (e.g. 2024/2025)."},
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1:name}}"}},
+		{"name":"alttitle","arg":{"format":"{}","snippet":"alttitle{${1:text}}"},"doc":"An alternative title (e.g. translation)."},
+		{"name":"authoraddress","arg":{"format":"{}","snippet":"authoraddress{${1:text}}"}},
+		{"name":"authoremail","arg":{"format":"{}","snippet":"authoremail{${1:email}}"},"doc":"Author’s e-mail (shown on the address page)."},
+		{"name":"coadvisor","arg":{"format":"{}","snippet":"coadvisor{${1:name}}"}},
+		{"name":"committeemember","arg":{"format":"{}","snippet":"committeemember{${1:name}}"}},
+		{"name":"course","arg":{"format":"{}","snippet":"course{${1:text}}"},"doc":"The degree programme."},
+		{"name":"courseorganizer","arg":{"format":"{}","snippet":"courseorganizer{${1:text}}"}},
+		{"name":"customadvisorlabel","arg":{"format":"{}","snippet":"customadvisorlabel{${1:text}}"},"doc":"Overrides both singular and plural advisor labels."},
+		{"name":"customcoadvisorlabel","arg":{"format":"{}","snippet":"customcoadvisorlabel{${1:text}}"},"doc":"Overrides both singular and plural co-advisor labels."},
+		{"name":"customdirectorlabel","arg":{"format":"{}","snippet":"customdirectorlabel{${1:text}}"},"doc":"Overrides both singular and plural director labels."},
+		{"name":"cycle","arg":{"format":"{}","snippet":"cycle{${1:roman numeral}}"},"doc":"The cycle number in Roman numerals (e.g. XXXVIII)."},
+		{"name":"dedication","arg":{"format":"{}","snippet":"dedication{${1:text}}"},"doc":"\\dedication{⟨text⟩} produces a right-aligned dedication page."},
+		{"name":"director","arg":{"format":"{}","snippet":"director{${1}}"},"unusual":true},
+		{"name":"doctorate","arg":{"format":"{}","snippet":"doctorate{${1:field}}"},"doc":"The doctoral programme (e.g. Computer Science)."},
+		{"name":"IDnumber","arg":{"format":"{}","snippet":"IDnumber{${1:id}}"},"doc":"Student ID number (matricola)."},
+		{"name":"maketitle"},
+		{"name":"remove","arg":{"format":"{}","snippet":"remove{${1:text}}"},"doc":"\\remove{⟨text⟩} swallows its argument (useful for commenting out blocks of text)."},
+		{"name":"reviewer","arg":{"format":"{}","snippet":"reviewer{${1:name}}"},"doc":"An external reviewer. Can be called multiple times."},
+		{"name":"submitdate","arg":{"format":"{}","snippet":"submitdate{${1}}"},"unusual":true},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:text}}"},"doc":"An optional subtitle."},
+		{"name":"thesissubject","arg":{"format":"{}","snippet":"thesissubject{${1:text}}"}},
+		{"name":"tower"},
+		{"name":"website","arg":{"format":"{}","snippet":"website{${1:url}}"}}
+	],
+	"envs": [
+		{"name":"abstract","arg":{"format":"[]","snippet":"[${1:title}]"},"doc":"The abstract environment typesets a titled abstract page."},
+		{"name":"abstract","doc":"The abstract environment typesets a titled abstract page."},
+		{"name":"acknowledgments","arg":{"format":"[]","snippet":"[${1:title}]"},"doc":"The acknowledgments environment typesets a titled acknowledgments page."},
+		{"name":"acknowledgments","doc":"The acknowledgments environment typesets a titled acknowledgments page."}
+	],
+	"keys": {}
+}

@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"duck","arg":{"format":"[]","snippet":"duck[${1:keys}]"}},
+		{"name":"duck"},
+		{"name":"duckpathbill"},
+		{"name":"duckpathbody"},
+		{"name":"duckpathcape"},
+		{"name":"duckpathcrazyhair"},
+		{"name":"duckpathcrown"},
+		{"name":"duckpathdarthvader"},
+		{"name":"duckpathgrumpybill"},
+		{"name":"duckpathhorsetail"},
+		{"name":"duckpathjacket"},
+		{"name":"duckpathkingcrown"},
+		{"name":"duckpathlonghair"},
+		{"name":"duckpathmohican"},
+		{"name":"duckpathmullet"},
+		{"name":"duckpathqueencrown"},
+		{"name":"duckpathrecedinghair"},
+		{"name":"duckpathshorthair"},
+		{"name":"duckpathtowel"},
+		{"name":"duckpathtshirt"},
+		{"name":"picduck"},
+		{"name":"randuck","arg":{"format":"[]","snippet":"randuck[${1:keys}]"}},
+		{"name":"randuck"},
+		{"name":"stripes","arg":{"format":"[]","snippet":"stripes[${1:keys}]"}},
+		{"name":"stripes"}
+	],
+	"envs": [],
+	"keys": {}
+}

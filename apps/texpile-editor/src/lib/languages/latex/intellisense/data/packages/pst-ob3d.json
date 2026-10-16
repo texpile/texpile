@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"PstCube","arg":{"format":"[]{}{}{}","snippet":"PstCube[${1}]{${2}}{${3}}{${4}}"},"doc":"Two macros are currently defined: \\PstCube to draw a cube and \\PstDie to draw a die (which is only a cube with dots on it faces)."},
+		{"name":"PstCube","arg":{"format":"{}{}{}","snippet":"PstCube{${1}}{${2}}{${3}}"},"doc":"Two macros are currently defined: \\PstCube to draw a cube and \\PstDie to draw a die (which is only a cube with dots on it faces)."},
+		{"name":"PstDie","arg":{"format":"[]","snippet":"PstDie[${1}]"},"doc":"Two macros are currently defined: \\PstCube to draw a cube and \\PstDie to draw a die (which is only a cube with dots on it faces)."},
+		{"name":"PstDie","doc":"Two macros are currently defined: \\PstCube to draw a cube and \\PstDie to draw a die (which is only a cube with dots on it faces)."}
+	],
+	"envs": [],
+	"keys": {}
+}

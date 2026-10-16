@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"luatexja"},{"name":"luatexja-core"},{"name":"luatexbase"},{"name":"iftex"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"everyhook"},{"name":"svn-prov"},{"name":"lltjdefs"},{"name":"lltjcore"},{"name":"lltjp-geometry"},{"name":"ifluatex"},{"name":"luatexja-compat"}],
+	"macros": [
+		{"name":"kenten","arg":{"format":"[]{}","snippet":"kenten[${1:options}]{${2:base text}}"}},
+		{"name":"kenten","arg":{"format":"{}","snippet":"kenten{${1:base text}}"}},
+		{"name":"ltjkenten","arg":{"format":"[]{}","snippet":"ltjkenten[${1:options}]{${2:base text}}"}},
+		{"name":"ltjkenten","arg":{"format":"{}","snippet":"ltjkenten{${1:base text}}"}},
+		{"name":"ltjruby","arg":{"format":"[]{}{}","snippet":"ltjruby[${1:options}]{${2:base text}}{${3:ruby text}}"}},
+		{"name":"ltjruby","arg":{"format":"{}{}","snippet":"ltjruby{${1:base text}}{${2:ruby text}}"}},
+		{"name":"ltjsetruby","arg":{"format":"{}","snippet":"ltjsetruby{${1:options}}"}},
+		{"name":"ruby","arg":{"format":"[]{}{}","snippet":"ruby[${1:options}]{${2:base text}}{${3:ruby text}}"}},
+		{"name":"ruby","arg":{"format":"{}{}","snippet":"ruby{${1:base text}}{${2:ruby text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

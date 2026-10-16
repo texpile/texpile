@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"centeredline","arg":{"format":"{}","snippet":"centeredline{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

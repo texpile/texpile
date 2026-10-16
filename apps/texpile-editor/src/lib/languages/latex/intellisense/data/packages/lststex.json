@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"listings"},{"name":"keyval"}],
+	"macros": [
+		{"name":"stexcodeinline","arg":{"format":"[]{}","snippet":"stexcodeinline[${1:keys}]{${2:code}}"}},
+		{"name":"stexcodeinline","arg":{"format":"{}","snippet":"stexcodeinline{${1:code}}"}}
+	],
+	"envs": [
+		{"name":"stexcode","arg":{"format":"[]","snippet":"[${1:keys}]"}},
+		{"name":"stexcode"}
+	],
+	"keys": {}
+}

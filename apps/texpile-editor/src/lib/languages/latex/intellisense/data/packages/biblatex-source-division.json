@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

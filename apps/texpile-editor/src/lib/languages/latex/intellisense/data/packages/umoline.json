@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"Midline","arg":{"format":"{}","snippet":"Midline{${1:text}}"}},
+		{"name":"MidlineChar","arg":{"format":"{}","snippet":"MidlineChar{${1:reference character}}"}},
+		{"name":"MidlineHeight"},
+		{"name":"Overline","arg":{"format":"{}","snippet":"Overline{${1:text}}"}},
+		{"name":"OverlineHeight"},
+		{"name":"UMOline","arg":{"format":"{}{}","snippet":"UMOline{${1:height}}{${2:text}}"}},
+		{"name":"UMOlineThickness"},
+		{"name":"UMOnewline","doc":"Terminate a line simply leaving space."},
+		{"name":"UMOnewline*","doc":"Terminate a line simply leaving space."},
+		{"name":"UMOspace","arg":{"format":"{}[]","snippet":"UMOspace{${1:length}}[${2:penalty}]"}},
+		{"name":"UMOspace","arg":{"format":"{}","snippet":"UMOspace{${1:length}}"}},
+		{"name":"UMOspace*","arg":{"format":"{}[]","snippet":"UMOspace*{${1:length}}[${2:penalty}]"}},
+		{"name":"UMOspace*","arg":{"format":"{}","snippet":"UMOspace*{${1:length}}"}},
+		{"name":"Underline","arg":{"format":"{}","snippet":"Underline{${1:text}}"}},
+		{"name":"UnderlineDepth"}
+	],
+	"envs": [],
+	"keys": {}
+}

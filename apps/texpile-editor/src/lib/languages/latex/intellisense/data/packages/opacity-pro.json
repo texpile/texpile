@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"settransparency","arg":{"format":"[]{}{}[]{}","snippet":"settransparency[${1:blend mode}]{${2:ca}}{${3:CA}}[${4:PDF key-value pairs}]{${5:content}}"},"doc":"The opacity-pro package defines the \\settransparency command and the settransparency environment. These allow the document to set the blend mode and opacity of \\LaTeX objects."},
+		{"name":"settransparency","arg":{"format":"{}{}{}","snippet":"settransparency{${1:ca}}{${2:CA}}{${3:content}}"},"doc":"The opacity-pro package defines the \\settransparency command and the settransparency environment. These allow the document to set the blend mode and opacity of \\LaTeX objects."},
+		{"name":"settransparency*","arg":{"format":"[]{}{}[]{}","snippet":"settransparency*[${1:blend mode}]{${2:ca}}{${3:CA}}[${4:PDF key-value pairs}]{${5:content}}"},"doc":"The opacity-pro package defines the \\settransparency command and the settransparency environment. These allow the document to set the blend mode and opacity of \\LaTeX objects."},
+		{"name":"settransparency*","arg":{"format":"{}{}{}","snippet":"settransparency*{${1:ca}}{${2:CA}}{${3:content}}"},"doc":"The opacity-pro package defines the \\settransparency command and the settransparency environment. These allow the document to set the blend mode and opacity of \\LaTeX objects."}
+	],
+	"envs": [],
+	"keys": {}
+}

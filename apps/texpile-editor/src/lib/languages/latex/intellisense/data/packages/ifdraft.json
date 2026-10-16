@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"ifdraft","arg":{"format":"{}{}","snippet":"ifdraft{${1:draft case}}{${2:final case}}"}},
+		{"name":"ifoptiondraft","arg":{"format":"{}{}","snippet":"ifoptiondraft{${1:option draft is given}}{${2:option draft is not given}}"}},
+		{"name":"ifoptionfinal","arg":{"format":"{}{}","snippet":"ifoptionfinal{${1:option final is given}}{${2:option final is not given}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ifdraft#c": ["draft","final"]
+	},
+	"args": ["\\usepackage/ifdraft#c"]
+}

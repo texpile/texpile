@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"biglogo","arg":{"format":"[]{}","snippet":"biglogo[${1:options}]{${2:logo file}}"},"doc":"We define the command \\biglogo to specify the logo that needs to be displayed on the title frame."},
+		{"name":"biglogo","arg":{"format":"{}","snippet":"biglogo{${1:logo file}}"},"doc":"We define the command \\biglogo to specify the logo that needs to be displayed on the title frame."},
+		{"name":"leftColorTriangle","arg":{"format":"{}{}{}","snippet":"leftColorTriangle{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"leftTriangle","arg":{"format":"{}{}","snippet":"leftTriangle{${1}}{${2}}"},"unusual":true},
+		{"name":"rightColorTriangle","arg":{"format":"{}{}{}","snippet":"rightColorTriangle{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"rightTriangle","arg":{"format":"{}{}","snippet":"rightTriangle{${1}}{${2}}"},"unusual":true},
+		{"name":"sectionframe"},
+		{"name":"titleframe"},
+		{"name":"topColorTriangle","arg":{"format":"{}{}{}","snippet":"topColorTriangle{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"topTriangle","arg":{"format":"{}{}","snippet":"topTriangle{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

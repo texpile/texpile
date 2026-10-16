@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"psElectrolysisA","arg":{"format":"[]","snippet":"psElectrolysisA[${1}]"}},
+		{"name":"psElectrolysisA"},
+		{"name":"psElectrolysisB","arg":{"format":"[]","snippet":"psElectrolysisB[${1}]"}},
+		{"name":"psElectrolysisB"},
+		{"name":"psElectrolysisC","arg":{"format":"[]","snippet":"psElectrolysisC[${1}]"}},
+		{"name":"psElectrolysisC"},
+		{"name":"psElectrolysisD","arg":{"format":"[]","snippet":"psElectrolysisD[${1}]"}},
+		{"name":"psElectrolysisD"}
+	],
+	"envs": [],
+	"keys": {}
+}

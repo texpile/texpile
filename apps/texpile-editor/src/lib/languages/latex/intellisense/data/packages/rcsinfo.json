@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"fancyhdr","if":"!nofancy"},{"name":"fancyheadings","if":"fancy"}],
+	"macros": [
+		{"name":"rcsInfo"},
+		{"name":"rcsInfoDate","doc":"The date in the form YYYY/MM/DD, when the file was checked out."},
+		{"name":"rcsInfoDay","doc":"The day DD of \\rcsInfoDate."},
+		{"name":"rcsInfoFile"},
+		{"name":"rcsInfoLocker","doc":"If the file is locked, the user name of the locker. If the file is not locked: --not-locked--."},
+		{"name":"rcsInfoLongDate"},
+		{"name":"rcsInfoMonth","doc":"The month MM of \\rcsInfoDate."},
+		{"name":"rcsInfoOwner","doc":"The user name of the file owner."},
+		{"name":"rcsInfoRevision","doc":"The RCS revision number, of the checked out file."},
+		{"name":"rcsInfoStatus","doc":"The stautus of the file, e.g. Exp."},
+		{"name":"rcsInfoTime","doc":"The time, when the file was checked out."},
+		{"name":"rcsInfoYear","doc":"The year YYYY of \\rcsInfoDate."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/rcsinfo#c": ["datehyphen","fancy","fancyhdr","long","nofancy","notoday","scrpage2","short","today"]
+	},
+	"args": ["\\usepackage/rcsinfo#c"]
+}

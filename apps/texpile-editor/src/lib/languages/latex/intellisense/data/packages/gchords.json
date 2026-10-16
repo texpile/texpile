@@ -1,0 +1,27 @@
+{
+	"macros": [
+		{"name":"chord","arg":{"format":"{}{}{}","snippet":"chord{${1:modifiers}}{${2:strings}}{${3:name}}"}},
+		{"name":"chords","arg":{"format":"{}","snippet":"chords{${1:chords}}"},"doc":"For a row of diagrams, the shortcut \\chords{ chords} may be used (where chords is a sequence of chord macros)."},
+		{"name":"chordsize"},
+		{"name":"chtext","arg":{"format":"{}","snippet":"chtext{${1}}"},"unusual":true},
+		{"name":"dampsymbol"},
+		{"name":"fatfingsiz"},
+		{"name":"fatsiz"},
+		{"name":"fingerfont"},
+		{"name":"fingsiz"},
+		{"name":"fretposfont"},
+		{"name":"mediumchords"},
+		{"name":"namefont"},
+		{"name":"normalsiz"},
+		{"name":"numfrets"},
+		{"name":"opensymbol","unusual":true},
+		{"name":"smallchords"},
+		{"name":"strings"},
+		{"name":"topfretsiz"},
+		{"name":"upchord","arg":{"format":"{}","snippet":"upchord{${1:chord}}"},"doc":"You can also typeset chords above lyrics by using the \\upchord command, provided by Yotam Medini."},
+		{"name":"xoff"},
+		{"name":"yoff"}
+	],
+	"envs": [],
+	"keys": {}
+}

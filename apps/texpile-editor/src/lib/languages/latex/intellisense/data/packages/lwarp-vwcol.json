@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"vwcol","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"vwcol"}
+	],
+	"keys": {}
+}

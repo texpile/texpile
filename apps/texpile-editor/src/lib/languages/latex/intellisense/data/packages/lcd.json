@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"DefineLCDchar","arg":{"format":"{}{}","snippet":"DefineLCDchar{${1:char}}{${2:charmatrix}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"LCD","arg":{"format":"{}{}","snippet":"LCD{${1:lines}}{${2:columns}}"}},
+		{"name":"LCDcolors","arg":{"format":"[]{}{}","snippet":"LCDcolors[${1:framecolor}]{${2:foregroundcolor}}{${3:backgroundcolor}}"}},
+		{"name":"LCDcolors","arg":{"format":"{}{}","snippet":"LCDcolors{${1:foregroundcolor}}{${2:backgroundcolor}}"}},
+		{"name":"LCDframe"},
+		{"name":"LCDnoframe"},
+		{"name":"LCDunitlength"},
+		{"name":"textLCD","arg":{"format":"[]{}","snippet":"textLCD[${1:correction}]{${2:columns}}"},"doc":"the package calculates the size for LCDtext in normal text (\\textLCD) automaticly."},
+		{"name":"textLCD","arg":{"format":"{}","snippet":"textLCD{${1:columns}}"},"doc":"the package calculates the size for LCDtext in normal text (\\textLCD) automaticly."},
+		{"name":"textLCDcorr"}
+	],
+	"envs": [],
+	"keys": {}
+}

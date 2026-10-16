@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"insertFillPages"},
+		{"name":"pagesDivisibleBy","arg":{"format":"{}[]","snippet":"pagesDivisibleBy{${1:number}}[${2:offset}]"},"doc":"This defines the number the page number must be divisible by (default = 4)."},
+		{"name":"pagesDivisibleBy","arg":{"format":"{}","snippet":"pagesDivisibleBy{${1:number}}"},"doc":"This defines the number the page number must be divisible by (default = 4)."},
+		{"name":"setDefaultFillPage","arg":{"format":"{}","snippet":"setDefaultFillPage{${1:content}}"}},
+		{"name":"setFillPage","arg":{"format":"{}{}","snippet":"setFillPage{${1:pagenumber}}{${2:content}}"},"doc":"This creates a custom page, which will be used, if needed. By default all inserted pages are white, but if they shouldn’t be white, you can define a content."}
+	],
+	"envs": [],
+	"keys": {}
+}

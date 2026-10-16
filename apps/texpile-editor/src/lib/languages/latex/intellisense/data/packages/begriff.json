@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"BGafterlen"},
+		{"name":"BGall","arg":{"format":"{}","snippet":"BGall{${1:variable}}"}},
+		{"name":"BGassert"},
+		{"name":"BGbeforelen"},
+		{"name":"BGbracket","arg":{"format":"{}","snippet":"BGbracket{${1:expression}}"}},
+		{"name":"BGconditional","arg":{"format":"{}{}","snippet":"BGconditional{${1:antecedent}}{${2:consequent}}"}},
+		{"name":"BGcontent"},
+		{"name":"BGif","arg":{"format":"{}{}","snippet":"BGif{${1:antecedent}}{${2:consequent}}"}},
+		{"name":"BGifb","arg":{"format":"{}{}","snippet":"BGifb{${1:antecedent}}{${2:consequent}}"}},
+		{"name":"BGifc","arg":{"format":"{}{}","snippet":"BGifc{${1:antecedent}}{${2:consequent}}"}},
+		{"name":"BGifp","arg":{"format":"{}{}","snippet":"BGifp{${1:antecedent}}{${2:consequent}}"}},
+		{"name":"BGlinewidth"},
+		{"name":"BGneg"},
+		{"name":"BGnot"},
+		{"name":"BGquant","arg":{"format":"{}","snippet":"BGquant{${1:variable}}"}},
+		{"name":"BGspace"},
+		{"name":"BGstem","arg":{"format":"{}","snippet":"BGstem{${1:maths}}"}},
+		{"name":"BGterm","arg":{"format":"{}","snippet":"BGterm{${1:terminal}}"}},
+		{"name":"BGthickness"}
+	],
+	"envs": [],
+	"keys": {}
+}

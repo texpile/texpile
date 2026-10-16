@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"accentedsymbol","arg":{"format":"{}{}","snippet":"accentedsymbol{${1:command}}{${2:symbol}}"}},
+		{"name":"spbreve"},
+		{"name":"spcheck"},
+		{"name":"spdddot"},
+		{"name":"spddot"},
+		{"name":"spdot"},
+		{"name":"sphat"},
+		{"name":"sptilde"}
+	],
+	"envs": [],
+	"keys": {}
+}

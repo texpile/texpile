@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"fnbreaklabel"},
+		{"name":"fnbreaknolabel"},
+		{"name":"fnbreaknonverbose"},
+		{"name":"fnbreakverbose"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fnbreak#c": ["label","nolabel","nonverbose","verbose"]
+	},
+	"args": ["\\usepackage/fnbreak#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"iftex"}],
+	"macros": [],
+	"envs": [
+		{"name":"docstrip-luacode","arg":{"format":"{}","snippet":"{${1:name}}"},"unusual":true}
+	],
+	"keys": {}
+}

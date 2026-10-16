@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"qauthor","arg":{"format":"{}","snippet":"qauthor{${1:author}}"}},
+		{"name":"qauthorfont"},
+		{"name":"qsetcnfont","arg":{"format":"{}","snippet":"qsetcnfont{${1:font family}}"}},
+		{"name":"quotefont"}
+	],
+	"envs": [
+		{"name":"savequote","arg":{"format":"[]","snippet":"[${1:width}]"}},
+		{"name":"savequote"}
+	],
+	"keys": {}
+}

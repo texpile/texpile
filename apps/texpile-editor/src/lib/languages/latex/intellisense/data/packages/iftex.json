@@ -1,153 +1,54 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "ifpdftex",
-      "unusual": true
-    },
-    {
-      "name": "ifPDFTeX"
-    },
-    {
-      "name": "ifxetex",
-      "unusual": true
-    },
-    {
-      "name": "ifXeTeX"
-    },
-    {
-      "name": "ifluatex",
-      "unusual": true
-    },
-    {
-      "name": "ifLuaTeX"
-    },
-    {
-      "name": "ifetex",
-      "unusual": true
-    },
-    {
-      "name": "ifeTeX"
-    },
-    {
-      "name": "ifluahbtex",
-      "unusual": true
-    },
-    {
-      "name": "ifLuaHBTeX"
-    },
-    {
-      "name": "ifptex",
-      "unusual": true
-    },
-    {
-      "name": "ifpTeX"
-    },
-    {
-      "name": "ifuptex",
-      "unusual": true
-    },
-    {
-      "name": "ifupTeX"
-    },
-    {
-      "name": "ifptexng",
-      "unusual": true
-    },
-    {
-      "name": "ifpTeXng"
-    },
-    {
-      "name": "ifvtex",
-      "unusual": true
-    },
-    {
-      "name": "ifVTeX"
-    },
-    {
-      "name": "ifalephtex",
-      "unusual": true
-    },
-    {
-      "name": "ifAlephTeX"
-    },
-    {
-      "name": "iftutex",
-      "unusual": true
-    },
-    {
-      "name": "ifTUTeX"
-    },
-    {
-      "name": "iftexpadtex",
-      "unusual": true
-    },
-    {
-      "name": "ifTexpadTeX"
-    },
-    {
-      "name": "ifhint",
-      "unusual": true
-    },
-    {
-      "name": "ifHINT"
-    },
-    {
-      "name": "else"
-    },
-    {
-      "name": "fi"
-    },
-    {
-      "name": "RequireeTeX"
-    },
-    {
-      "name": "RequirePDFTeX"
-    },
-    {
-      "name": "RequireXeTeX"
-    },
-    {
-      "name": "RequireLuaTeX"
-    },
-    {
-      "name": "RequireLuaHBTeX"
-    },
-    {
-      "name": "RequirepTeX"
-    },
-    {
-      "name": "RequireupTeX"
-    },
-    {
-      "name": "RequirepTeXng"
-    },
-    {
-      "name": "RequireVTeX"
-    },
-    {
-      "name": "RequireAlephTeX"
-    },
-    {
-      "name": "RequireTUTeX"
-    },
-    {
-      "name": "RequireTexpadTeX"
-    },
-    {
-      "name": "RequireHINT"
-    },
-    {
-      "name": "ifpdf"
-    },
-    {
-      "name": "pdftrue"
-    },
-    {
-      "name": "pdffalse"
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"ifalephtex","doc":"True if Aleph is in use."},
+		{"name":"ifAlephTeX","doc":"True if Aleph is in use."},
+		{"name":"ifetex","doc":"True if an eTEX enabled format is in use."},
+		{"name":"ifeTeX","doc":"True if an eTEX enabled format is in use."},
+		{"name":"ifhint","doc":"True if HiTEX (HINT output format) is in use."},
+		{"name":"ifHINT","doc":"True if HiTEX (HINT output format) is in use."},
+		{"name":"ifluahbtex"},
+		{"name":"ifLuaHBTeX"},
+		{"name":"ifluametatex","doc":"True if LuaMetaTEX is in use."},
+		{"name":"ifLuaMetaTeX","doc":"True if LuaMetaTEX is in use."},
+		{"name":"ifluatex","doc":"True if LuaTEX and extensions such as LuaHBTEX or LuaMetaTEX are in use."},
+		{"name":"ifLuaTeX","doc":"True if LuaTEX and extensions such as LuaHBTEX or LuaMetaTEX are in use."},
+		{"name":"ifpdf","doc":"This package also provides an \\ifpdf conditional that is true if the format is set up to output in PDF mode rather than DVI."},
+		{"name":"ifpdftex","doc":"True if PDFTEX is in use (whether writing PDF or DVI), so this is true for documents processed with both the latex and pdflatex commands."},
+		{"name":"ifPDFTeX","doc":"True if PDFTEX is in use (whether writing PDF or DVI), so this is true for documents processed with both the latex and pdflatex commands."},
+		{"name":"ifprote","doc":"True if a Prote engine is in use."},
+		{"name":"ifProte","doc":"True if a Prote engine is in use."},
+		{"name":"ifptex","doc":"True if any of the pTEX variants are in use."},
+		{"name":"ifpTeX","doc":"True if any of the pTEX variants are in use."},
+		{"name":"ifptexng","doc":"True if pTEX-ng (Asiatic pTEX) is in use."},
+		{"name":"ifpTeXng","doc":"True if pTEX-ng (Asiatic pTEX) is in use."},
+		{"name":"iftexpadtex","doc":"True if TexpadTEX is in use."},
+		{"name":"ifTexpadTeX","doc":"True if TexpadTEX is in use."},
+		{"name":"iftutex"},
+		{"name":"ifTUTeX"},
+		{"name":"ifuptex","doc":"True if any of the upTEX variants are in use."},
+		{"name":"ifupTeX","doc":"True if any of the upTEX variants are in use."},
+		{"name":"ifvtex","doc":"True if VTEX is in use."},
+		{"name":"ifVTeX","doc":"True if VTEX is in use."},
+		{"name":"ifxetex","doc":"True if XeTEX is in use."},
+		{"name":"ifXeTeX","doc":"True if XeTEX is in use."},
+		{"name":"pdffalse"},
+		{"name":"pdftrue"},
+		{"name":"RequireAlephTeX"},
+		{"name":"RequireeTeX"},
+		{"name":"RequireHINT"},
+		{"name":"RequireLuaHBTeX"},
+		{"name":"RequireLuaMetaTeX"},
+		{"name":"RequireLuaTeX"},
+		{"name":"RequirePDFTeX"},
+		{"name":"RequireProte"},
+		{"name":"RequirepTeX"},
+		{"name":"RequirepTeXng"},
+		{"name":"RequireTexpadTeX"},
+		{"name":"RequireTUTeX"},
+		{"name":"RequireupTeX"},
+		{"name":"RequireVTeX"},
+		{"name":"RequireXeTeX"}
+	],
+	"envs": [],
+	"keys": {}
 }

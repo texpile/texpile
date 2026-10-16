@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"bsl"},
+		{"name":"bul"},
+		{"name":"cir"},
+		{"name":"cwm"},
+		{"name":"lara","arg":{"format":"{}","snippet":"lara{${1:text}}"}},
+		{"name":"ldq"},
+		{"name":"lsq"},
+		{"name":"mdash"},
+		{"name":"ndash","doc":"These are short forms for \\textemdash and \\textendash, recommended instead of the more usual --- and -- notation."},
+		{"name":"pdc"},
+		{"name":"q","arg":{"format":"{}","snippet":"q{${1:text}}"}},
+		{"name":"qd"},
+		{"name":"qq","arg":{"format":"{}","snippet":"qq{${1:text}}"}},
+		{"name":"rdq"},
+		{"name":"rsq"},
+		{"name":"supsize","unusual":true},
+		{"name":"textprimechar","unusual":true},
+		{"name":"til"},
+		{"name":"tprime"},
+		{"name":"tsub","arg":{"format":"{}","snippet":"tsub{${1:text}}"}},
+		{"name":"tsup","arg":{"format":"{}","snippet":"tsup{${1:text}}"}},
+		{"name":"vrt"},
+		{"name":"vsp"},
+		{"name":"xd"}
+	],
+	"envs": [],
+	"keys": {}
+}

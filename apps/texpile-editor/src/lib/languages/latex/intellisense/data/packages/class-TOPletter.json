@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"color"},{"name":"helvet"},{"name":"changepage"},{"name":"setspace"},{"name":"fancyhdr"},{"name":"inputenc"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"babel"},{"name":"iflang"}],
+	"macros": [
+		{"name":"blue","arg":{"format":"{}","snippet":"blue{${1}}"},"unusual":true},
+		{"name":"cond","arg":{"format":"{}","snippet":"cond{${1}}"},"unusual":true},
+		{"name":"condb","arg":{"format":"{}","snippet":"condb{${1}}"},"unusual":true},
+		{"name":"data","arg":{"format":"{}","snippet":"data{${1:date}}"}},
+		{"name":"destinatario","arg":{"format":"{}","snippet":"destinatario{${1:recipient}}"},"doc":"\\destinatario{⟨recipient⟩} defines the recipient of the letter, if no recipient is provided the letter will be addressed to ”To whom it may concern” (or ”A chi di competenza” if the languaga is italian)."},
+		{"name":"dipartimentoDi","arg":{"format":"{}","snippet":"dipartimentoDi{${1:department name}}"},"doc":"The name of the department can be specified using the \\dipartimentoDi{⟨department name⟩} macro."},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email}}"}},
+		{"name":"esoggetto","arg":{"format":"{}","snippet":"esoggetto{${1:label}}"},"doc":"\\esoggetto{⟨label⟩} changes the word that precedes the subject topic, replaces the default ”Subject:”."},
+		{"name":"fax","arg":{"format":"{}","snippet":"fax{${1:fax}}"},"doc":"\\fax{⟨fax⟩} defines the (optional) fax number."},
+		{"name":"firma","arg":{"format":"{}","snippet":"firma{${1:image file}}"},"doc":"\\firma{⟨image file⟩} defines an image file (typically a PNG) that contains a scanned signature of the person."},
+		{"name":"homepage","arg":{"format":"{}","snippet":"homepage{${1:url}}"},"doc":"\\homepage{⟨url⟩} defines the (optional) URL of the personal home page."},
+		{"name":"logo","arg":{"format":"{}","snippet":"logo{${1:image file}}"},"doc":"\\logo{⟨image file⟩} defines the image file containing the logo used in the header of the letter."},
+		{"name":"luogo","arg":{"format":"{}","snippet":"luogo{${1:place}}"}},
+		{"name":"nome","arg":{"format":"{}","snippet":"nome{${1:name and surname}}"}},
+		{"name":"orange","arg":{"format":"{}","snippet":"orange{${1}}"},"unusual":true},
+		{"name":"protocollo","arg":{"format":"{}","snippet":"protocollo{${1:label}}"}},
+		{"name":"red","arg":{"format":"{}","snippet":"red{${1}}"},"unusual":true},
+		{"name":"ruolo","arg":{"format":"{}","snippet":"ruolo{${1:role}}"},"doc":"\\ruolo{⟨role⟩} defines the role of the person, e.g. Full Professor."},
+		{"name":"soggetto","arg":{"format":"{}","snippet":"soggetto{${1:subject}}"},"doc":"\\soggetto{⟨subject⟩} defines the subject of the letter, that will appear, at the top of the letter preceded by the word ”Subject:” (or ”Soggetto:” if the language is italian)."},
+		{"name":"struttura","arg":{"format":"{}","snippet":"struttura{${1:structure type}}"},"doc":"By default the organizational unit is a department, but it is possible to set the type of the organizational unit using \\struttura{⟨structure type⟩} macro."},
+		{"name":"telefono","arg":{"format":"{}","snippet":"telefono{${1:phone number}}"},"doc":"\\telefono{⟨phone number⟩} defines the office phone number."},
+		{"name":"toplData","unusual":true},
+		{"name":"toplDest","unusual":true},
+		{"name":"toplLogo","unusual":true},
+		{"name":"toplLuogo","unusual":true},
+		{"name":"toplSubjectLabel","unusual":true},
+		{"name":"toplTipoStruttura","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/TOPletter#c": ["english","italian"]
+	},
+	"args": ["\\documentclass/TOPletter#c"]
+}

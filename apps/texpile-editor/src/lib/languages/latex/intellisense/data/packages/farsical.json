@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"iftex"},{"name":"luabidi","engines":["lualatex"]},{"name":"calc"},{"name":"arabicnumbers"},{"name":"bidi","engines":["xelatex"]},{"name":"biditools","engines":["xelatex"]},{"name":"zref-base","engines":["xelatex"]},{"name":"kvsetkeys","engines":["xelatex"]},{"name":"etexcmds","engines":["xelatex"]},{"name":"auxhook","engines":["xelatex"]}],
+	"macros": [
+		{"name":"Jalalimonth","arg":{"format":"{}","snippet":"Jalalimonth{${1}}"},"unusual":true},
+		{"name":"JalalimonthEnglish","arg":{"format":"{}","snippet":"JalalimonthEnglish{${1}}"},"unusual":true},
+		{"name":"Jalalitoday"}
+	],
+	"envs": [],
+	"keys": {}
+}

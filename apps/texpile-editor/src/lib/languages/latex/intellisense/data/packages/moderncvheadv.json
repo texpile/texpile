@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"quotewidth"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/moderncvheadv#c": ["details","nodetails"]
+	},
+	"args": ["\\usepackage/moderncvheadv#c"]
+}

@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"bcell","arg":{"format":"{}","snippet":"bcell{${1:text}}"}},
+		{"name":"bigcell","arg":{"format":"{}{}","snippet":"bigcell{${1:size}}{${2:text}}"}},
+		{"name":"bstackbottom"},
+		{"name":"bstacktop","arg":{"format":"{}","snippet":"bstacktop{${1:label}}"}},
+		{"name":"cell","arg":{"format":"[]{}","snippet":"cell[${1:style}]{${2:text}}"}},
+		{"name":"cell","arg":{"format":"{}","snippet":"cell{${1:text}}"}},
+		{"name":"cellcom","arg":{"format":"{}","snippet":"cellcom{${1:text}}"}},
+		{"name":"cellcomL","arg":{"format":"{}","snippet":"cellcomL{${1:text}}"}},
+		{"name":"cellptr","arg":{"format":"{}","snippet":"cellptr{${1:text}}"}},
+		{"name":"cellptrnext","arg":{"format":"{}","snippet":"cellptrnext{${1:text}}"}},
+		{"name":"cellround","arg":{"format":"{}","snippet":"cellround{${1:text}}"}},
+		{"name":"drawstruct","arg":{"format":"{}","snippet":"drawstruct{${1:position}}"}},
+		{"name":"ebp"},
+		{"name":"esp"},
+		{"name":"finishframe","arg":{"format":"{}","snippet":"finishframe{${1:frame name}}"}},
+		{"name":"llcell","arg":{"format":"{}{}{}","snippet":"llcell{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"llstructcell","arg":{"format":"{}{}{}","snippet":"llstructcell{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"padding","arg":{"format":"{}{}","snippet":"padding{${1:size}}{${2:text}}"}},
+		{"name":"separator","arg":{"format":"[]","snippet":"separator[${1:style}]"}},
+		{"name":"separator"},
+		{"name":"stackbottom","arg":{"format":"[]","snippet":"stackbottom[${1:style}]"}},
+		{"name":"stackbottom"},
+		{"name":"stackframe","arg":{"format":"{}{}{}","snippet":"stackframe{${1:from}}{${2:to}}{${3:text}}"}},
+		{"name":"stacktop","arg":{"format":"[]{}","snippet":"stacktop[${1:style}]{${2:label}}"}},
+		{"name":"stacktop","arg":{"format":"{}","snippet":"stacktop{${1:label}}"}},
+		{"name":"startframe"},
+		{"name":"structcell","arg":{"format":"[]{}","snippet":"structcell[${1:style}]{${2:text}}"}},
+		{"name":"structcell","arg":{"format":"{}","snippet":"structcell{${1:text}}"}},
+		{"name":"structname","arg":{"format":"{}","snippet":"structname{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"drawstack","arg":{"format":"[]","snippet":"[${1:TikZ options}]"}},
+		{"name":"drawstack"}
+	],
+	"keys": {
+		"\\usepackage/drawstack#c": ["nocolor"]
+	},
+	"args": ["\\usepackage/drawstack#c"]
+}

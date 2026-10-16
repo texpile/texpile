@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"captionof","arg":{"format":"{}[]{}","snippet":"captionof{${1:type}}[${2:list entry}]{${3:caption}}"},"doc":"This package defines an alternative command, \\captionof, which sets things up so that \\caption will work outside of a float."},
+		{"name":"captionof","arg":{"format":"{}{}","snippet":"captionof{${1:type}}{${2:caption}}"},"doc":"This package defines an alternative command, \\captionof, which sets things up so that \\caption will work outside of a float."}
+	],
+	"envs": [],
+	"keys": {}
+}

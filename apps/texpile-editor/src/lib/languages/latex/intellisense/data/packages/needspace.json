@@ -1,29 +1,9 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "Needspace",
-      "arg": {
-        "format": "{}",
-        "snippet": "Needspace{${1:length}}"
-      }
-    },
-    {
-      "name": "Needspace*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Needspace*{${1:length}}"
-      }
-    },
-    {
-      "name": "needspace",
-      "arg": {
-        "format": "{}",
-        "snippet": "needspace{${1:length}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"needspace","arg":{"format":"{}","snippet":"needspace{${1}}"},"doc":"The \\needspace⟨length⟩ macro reserves an approximate amount of space ⟨length⟩ for the material following to be kept on the same page."},
+		{"name":"Needspace","arg":{"format":"{}","snippet":"Needspace{${1}}"}},
+		{"name":"Needspace*","arg":{"format":"{}","snippet":"Needspace*{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
 }

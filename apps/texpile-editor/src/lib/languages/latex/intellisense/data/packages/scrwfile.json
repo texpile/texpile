@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"iftex"}],
+	"macros": [
+		{"name":"TOCclone","arg":{"format":"[]{}{}","snippet":"TOCclone[${1}]{${2}}{${3}}"}},
+		{"name":"TOCclone","arg":{"format":"{}{}","snippet":"TOCclone{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

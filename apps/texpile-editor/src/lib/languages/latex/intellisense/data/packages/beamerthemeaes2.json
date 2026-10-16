@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"miniframesoff","doc":"To exclude a group of slide from the progress blocks on top of the presentation, use \\miniframesoff."},
+		{"name":"miniframeson"},
+		{"name":"questionframe"},
+		{"name":"setlogo","arg":{"format":"{}","snippet":"setlogo{${1:file}}"},"doc":"Using \\setlogo{file} changes the logo in the bottom right."},
+		{"name":"setstylecolor","arg":{"format":"{}","snippet":"setstylecolor{${1:R,G,B}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

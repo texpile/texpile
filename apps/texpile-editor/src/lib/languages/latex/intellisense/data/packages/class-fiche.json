@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"class-article"},{"name":"mafr"},{"name":"a4wide"},{"name":"a4"},{"name":"babel"}],
+	"macros": [
+		{"name":"droite"},
+		{"name":"entete","arg":{"format":"{}{}{}","snippet":"entete{${1:top left}}{${2:top right}}{${3:centered title}}"}},
+		{"name":"exe"},
+		{"name":"qsq"},
+		{"name":"que"},
+		{"name":"squ"}
+	],
+	"envs": [
+		{"name":"juxtapose","arg":{"format":"[]","snippet":"[${1:left width}]"},"doc":"Afin de juxtaposer aisément un texte et une figure, la classe fiche fourni également un environnement juxtapose."},
+		{"name":"juxtapose","doc":"Afin de juxtaposer aisément un texte et une figure, la classe fiche fourni également un environnement juxtapose."}
+	],
+	"keys": {}
+}

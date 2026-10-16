@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"calc"}],
+	"macros": [
+		{"name":"artdecoframe","arg":{"format":"[]{}","snippet":"artdecoframe[${1:width}]{${2:text}}"}},
+		{"name":"artdecoframe","arg":{"format":"{}","snippet":"artdecoframe{${1:text}}"}},
+		{"name":"curlyframe","arg":{"format":"[]{}","snippet":"curlyframe[${1:width}]{${2:text}}"}},
+		{"name":"curlyframe","arg":{"format":"{}","snippet":"curlyframe{${1:text}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"generalframe","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"generalframe{${1:top left corner}}{${2:top leader}}{${3:top right corner}}{${4:left leader}}{${5:right leader}}{${6:bottom left corner}}{${7:bottom leader}}{${8:bottom right corner}}{${9:text}}"},"doc":"The package also defines a more general macro called \\generalframe to allow control over the symbols which are used to build the frame."},
+		{"name":"niceframe","arg":{"format":"[]{}","snippet":"niceframe[${1:width}]{${2:text}}"}},
+		{"name":"niceframe","arg":{"format":"{}","snippet":"niceframe{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

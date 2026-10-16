@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"blog"},{"name":"fifinddo"},{"name":"stacklet"},{"name":"actcodes"},{"name":"dowith"},{"name":"texlinks"},{"name":"domore"},{"name":"langcode"}],
+	"macros": [
+		{"name":"deepfalse","unusual":true},
+		{"name":"deeptrue"},
+		{"name":"headskip","arg":{"format":"{}","snippet":"headskip{${1}}"}},
+		{"name":"headtitle","arg":{"format":"{}{}","snippet":"headtitle{${1}}{${2}}"}},
+		{"name":"headuseskiptitle","arg":{"format":"{}{}{}","snippet":"headuseskiptitle{${1}}{${2}}{${3}}"}},
+		{"name":"httptipref","arg":{"format":"{}{}{}","snippet":"httptipref{${1:tip}}{${2:www}}{${3:text}}"}},
+		{"name":"ifdeep","unusual":true},
+		{"name":"iftight","unusual":true},
+		{"name":"inclgrfref","arg":{"format":"{}{}{}{}{}{}{}","snippet":"inclgrfref{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"}},
+		{"name":"includegraphic","arg":{"format":"{}{}{}{}{}{}","snippet":"includegraphic{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"IncludeGrf","arg":{"format":"{}{}","snippet":"IncludeGrf{${1}}{${2}}"}},
+		{"name":"insertgraphic","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"insertgraphic{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}{${9}}"}},
+		{"name":"PAGEEND"},
+		{"name":"PAGEFOOT"},
+		{"name":"PAGEHEAD","doc":"\\PAGEHEAD opens the head row and a single cell that will span the two columns of the second row."},
+		{"name":"PAGEMAIN"},
+		{"name":"PAGEMAINvar","arg":{"format":"{}","snippet":"PAGEMAINvar{${1}}"},"doc":"\\PAGEMAINvar{⟨width⟩} closes the navigation column and opens the “main content” column."},
+		{"name":"PAGENAVI","doc":"\\PAGENAVI closes the head row and opens the “navigation” column, actually including an {itemize} environment."},
+		{"name":"simpleinclgrf","arg":{"format":"{}","snippet":"simpleinclgrf{${1}}"},"doc":"\\simpleinclgrf{⟨file⟩} embeds a graphic file ⟨file⟩ without the tricks of the remaining commands."},
+		{"name":"tablehspace","arg":{"format":"{}","snippet":"tablehspace{${1}}"}},
+		{"name":"tightfalse","unusual":true},
+		{"name":"tighttrue"},
+		{"name":"wikitipref","arg":{"format":"{}{}{}","snippet":"wikitipref{${1:language code}}{${2:lemma}}{${3:text}}"}}
+	],
+	"envs": [
+		{"name":"FixedWidthCell","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"}},
+		{"name":"hiddencells","doc":"The {hiddencells} einvironment contains cells that do not align with other cells in the surrounding table."},
+		{"name":"pagehiddencells"},
+		{"name":"spancolscell","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"}}
+	],
+	"keys": {}
+}

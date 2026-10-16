@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"}],
+	"macros": [
+		{"name":"setGammaCorrection","arg":{"format":"{}","snippet":"setGammaCorrection{${1:gamma}}"}},
+		{"name":"setMaxVisibleWavelength","arg":{"format":"{}","snippet":"setMaxVisibleWavelength{${1:wavelength}}"}},
+		{"name":"setMinVisibleWavelength","arg":{"format":"{}","snippet":"setMinVisibleWavelength{${1:wavelength}}"}},
+		{"name":"setUnitsE","arg":{"format":"{}","snippet":"setUnitsE{${1:power of ten}}"}},
+		{"name":"storeRGBofWavelength","arg":{"format":"{}{}{}{}","snippet":"storeRGBofWavelength{${1:R value command}}{${2:G value command}}{${3:B value command}}{${4:wavelength}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

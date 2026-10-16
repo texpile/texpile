@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"ExampleSet","unusual":true},
+		{"name":"ExampleVerb","unusual":true},
+		{"name":"ExampleWidth"}
+	],
+	"envs": [
+		{"name":"example"}
+	],
+	"keys": {}
+}

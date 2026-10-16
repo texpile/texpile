@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"algorithmicx"}],
+	"macros": [
+		{"name":"Asm"},
+		{"name":"Begin"},
+		{"name":"Else"},
+		{"name":"End"},
+		{"name":"For","arg":{"format":"{}{}","snippet":"For{${1:assign}}{${2:expr}}"}},
+		{"name":"Function"},
+		{"name":"If","arg":{"format":"{}","snippet":"If{${1:expression}}"}},
+		{"name":"Procedure","doc":"\\Procedure just writes the “procedure” word on a new line..."},
+		{"name":"Repeat"},
+		{"name":"textkeyword","unusual":true},
+		{"name":"Until","arg":{"format":"{}","snippet":"Until{${1:expression}}"}},
+		{"name":"While","arg":{"format":"{}","snippet":"While{${1:expression}}"}},
+		{"name":"With","arg":{"format":"{}","snippet":"With{${1:record}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

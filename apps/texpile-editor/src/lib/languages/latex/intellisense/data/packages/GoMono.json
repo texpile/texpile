@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"gomonolgr","doc":"Commands \\golgr and \\gomonolgr allow for localized use of LGR-encoded type1 fonts."}
+	],
+	"envs": [],
+	"keys": {}
+}

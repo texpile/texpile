@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"hkl","arg":{"format":"[]","snippet":"hkl[${1}]"}},
+		{"name":"hkl"},
+		{"name":"millerminus"},
+		{"name":"millerskip"}
+	],
+	"envs": [],
+	"keys": {}
+}

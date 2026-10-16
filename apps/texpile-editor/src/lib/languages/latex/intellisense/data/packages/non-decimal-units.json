@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"nduFactor","arg":{"format":"{}{}","snippet":"nduFactor{${1:unit name}}{${2:unit name}}"},"doc":"Expands to the conversion between two base units."},
+		{"name":"nduHeader","arg":{"format":"{}[]","snippet":"nduHeader{${1:unit group}}[${2:options}]"},"doc":"Convenient header showing the unit symbols."},
+		{"name":"nduHeader","arg":{"format":"{}","snippet":"nduHeader{${1:unit group}}"},"doc":"Convenient header showing the unit symbols."},
+		{"name":"nduKeys","arg":{"format":"{}","snippet":"nduKeys{${1:options}}"},"doc":"Can be used to set options globally (in the preamble) or locally (in a group)."},
+		{"name":"nduMath","arg":{"format":"{}[]{}{}{}","snippet":"nduMath{${1:unit group}}[${2:options}]{${3:variable}}{${4:operator}}{${5:value}}"}},
+		{"name":"nduMath","arg":{"format":"{}{}{}{}","snippet":"nduMath{${1:unit group}}{${2:variable}}{${3:operator}}{${4:value}}"}},
+		{"name":"nduNewBaseUnit","arg":{"format":"{}{}","snippet":"nduNewBaseUnit{${1:unit name}}{${2:key/value pairs}}"},"doc":"Creates a new base unit."},
+		{"name":"nduNewUnitGroup","arg":{"format":"{}[]{}[]","snippet":"nduNewUnitGroup{${1:group name}}[${2:key/value pairs}]{${3:ordered base units}}[${4:control sequence}]"}},
+		{"name":"nduNewUnitGroup","arg":{"format":"{}{}","snippet":"nduNewUnitGroup{${1:group name}}{${2:ordered base units}}"}},
+		{"name":"nduNormalize","arg":{"format":"{}[]{}{}","snippet":"nduNormalize{${1:unit group}}[${2:options}]{${3:amount}}{${4:unit}}"}},
+		{"name":"nduNormalize","arg":{"format":"{}{}{}","snippet":"nduNormalize{${1:unit group}}{${2:amount}}{${3:unit}}"}},
+		{"name":"nduResult","arg":{"format":"{}[]{}","snippet":"nduResult{${1:unit group}}[${2:options}]{${3:variable}}"}},
+		{"name":"nduResult","arg":{"format":"{}{}","snippet":"nduResult{${1:unit group}}{${2:variable}}"}},
+		{"name":"nduSymbol","arg":{"format":"{}","snippet":"nduSymbol{${1:unit name}}"},"doc":"Expands to the symbol of the given base unit."},
+		{"name":"nduValue","arg":{"format":"{}[]{}","snippet":"nduValue{${1:unit group}}[${2:options}]{${3:value}}"}},
+		{"name":"nduValue","arg":{"format":"{}{}","snippet":"nduValue{${1:unit group}}{${2:value}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

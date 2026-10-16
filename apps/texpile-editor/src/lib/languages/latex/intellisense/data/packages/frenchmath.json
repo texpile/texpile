@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"amsopn"},{"name":"xspace"},{"name":"etoolbox"},{"name":"decimalcomma"},{"name":"icomma"},{"name":"ibrackets","if":"!noibrackets"}],
+	"macros": [
+		{"name":"AMSvarnothing","doc":"Afin de récupérer le symbole de amssymb, sans être obligé de charger cette extension, nous proposons la commande \\AMSvarnothing, à placer dans le préambule, après l’appel de unicode-math."},
+		{"name":"apply","arg":{"format":"{}{}","snippet":"apply{${1:command}}{${2:list}}"}},
+		{"name":"card"},
+		{"name":"Card"},
+		{"name":"ch"},
+		{"name":"cmod","arg":{"format":"{}","snippet":"cmod{${1:modulus}}"},"doc":"La macro \\cmod, copiée du \\pod de amsmath (depuis v2.11), permet de gérer différemment l’espacement en mode « mathématiques centrées » (hors-ligne) ou en mode « en ligne »."},
+		{"name":"cosec"},
+		{"name":"cosech"},
+		{"name":"curs"},
+		{"name":"DeclareMathUp","arg":{"format":"{}","snippet":"DeclareMathUp{${1:letter}}"},"doc":"Sauf si l’on a invoqué l’option capsup=false (ou capsit), on redéfinit toutes les lettres majuscules du mode mathématique grâce à la commande \\DeclareMathUp."},
+		{"name":"geqslant","math":true,"detail":"⩾","doc":"greater-than or slanted equal to"},
+		{"name":"Hom"},
+		{"name":"ijk"},
+		{"name":"infeg","doc":"Les relations ⩽ et ⩾ s’obtiennent avec les commandes \\infeg et \\supeg et diffèrent des versions anglaises de \\leq (≤) et \\geq (≥)."},
+		{"name":"Ker"},
+		{"name":"leqslant","math":true,"detail":"⩽","doc":"less-than or slanted equal to"},
+		{"name":"Oij"},
+		{"name":"Oij*"},
+		{"name":"Oijk"},
+		{"name":"Oijk*"},
+		{"name":"Ouv"},
+		{"name":"Ouv*"},
+		{"name":"paral"},
+		{"name":"pgcd"},
+		{"name":"ppcm"},
+		{"name":"rg"},
+		{"name":"sh"},
+		{"name":"ssi","doc":"La commande \\ssi produit le texte « si, et seulement si, »."},
+		{"name":"supeg","doc":"Les relations ⩽ et ⩾ s’obtiennent avec les commandes \\infeg et \\supeg et diffèrent des versions anglaises de \\leq (≤) et \\geq (≥)."},
+		{"name":"varnothing","math":true,"detail":"∅","doc":"circle, slash"},
+		{"name":"Vect"},
+		{"name":"vide"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/frenchmath#c": ["capsit","noibrackets"]
+	},
+	"args": ["\\usepackage/frenchmath#c"]
+}

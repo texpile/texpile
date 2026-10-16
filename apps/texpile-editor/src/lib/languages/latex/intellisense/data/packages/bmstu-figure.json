@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"float"},{"name":"wrapfig"},{"name":"tikzscale"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"xparse"},{"name":"letltxmacro"},{"name":"xstring"},{"name":"pgfplots"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"includeimage","arg":{"format":"{}{}{}{}{}","snippet":"includeimage{${1:file name}}{${2:wrap (f or w)}}{${3:position}}{${4:width}}{${5:caption}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

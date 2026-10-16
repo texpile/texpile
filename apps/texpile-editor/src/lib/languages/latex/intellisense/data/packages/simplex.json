@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"eachwordone"},
+		{"name":"eachwordthree"},
+		{"name":"eachwordtwo"},
+		{"name":"glend"},
+		{"name":"gll"},
+		{"name":"glll"},
+		{"name":"gln"},
+		{"name":"glossglue","doc":"The inter-word spacing in gloss blocks is controlled by the skip register \\glossglue, whose default value is 5pt plus 2pt minus 1pt."},
+		{"name":"glt","doc":"\\glt closes the aligned gloss block and introduces a free translation."},
+		{"name":"ifnotdone","unusual":true},
+		{"name":"notdonefalse","unusual":true},
+		{"name":"notdonetrue","unusual":true}
+	],
+	"envs": [
+		{"name":"example","arg":{"format":"[]","snippet":"[${1:label}]"},"doc":"The example environment is like shortexample except that the label appears on a separate line above the example content, separated by a small vertical skip."},
+		{"name":"example","doc":"The example environment is like shortexample except that the label appears on a separate line above the example content, separated by a small vertical skip."},
+		{"name":"shortexample","arg":{"format":"[]","snippet":"[${1:label}]"},"doc":"The shortexample environment produces a numbered example whose optional label appears on the same line as the number."},
+		{"name":"shortexample","doc":"The shortexample environment produces a numbered example whose optional label appears on the same line as the number."},
+		{"name":"unlabeledexample","doc":"The unlabeledexample environment produces a numbered example with no label."}
+	],
+	"keys": {}
+}

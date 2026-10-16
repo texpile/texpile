@@ -1,428 +1,106 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "citet",
-      "arg": {
-        "format": "{}",
-        "snippet": "citet{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citet",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "citet[${2:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citep",
-      "arg": {
-        "format": "{}",
-        "snippet": "citep{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citep",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "citep[${2:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citep",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "citep[${2:prefix}][${3:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "cite",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "cite[${2:prefix}][${3:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citet*",
-      "arg": {
-        "format": "{}",
-        "snippet": "citet*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citep*",
-      "arg": {
-        "format": "{}",
-        "snippet": "citep*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citealt",
-      "arg": {
-        "format": "{}",
-        "snippet": "citealt{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citealt*",
-      "arg": {
-        "format": "{}",
-        "snippet": "citealt*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citealp",
-      "arg": {
-        "format": "{}",
-        "snippet": "citealp{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citealp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "citealp*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citealp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "citealp[${2:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citenum",
-      "arg": {
-        "format": "{}",
-        "snippet": "citenum{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citetext",
-      "arg": {
-        "format": "{}",
-        "snippet": "citetext{${1:text}}"
-      }
-    },
-    {
-      "name": "citeauthor",
-      "arg": {
-        "format": "{}",
-        "snippet": "citeauthor{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citeauthor*",
-      "arg": {
-        "format": "{}",
-        "snippet": "citeauthor*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citefullauthor",
-      "arg": {
-        "format": "{}",
-        "snippet": "citefullauthor{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citeyearpar",
-      "arg": {
-        "format": "{}",
-        "snippet": "citeyearpar{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citet",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citet{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citet",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Citet[${2:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citep",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citep{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citep",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Citep[${2:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citep",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "Citep[${2:prefix}][${3:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citet*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citet*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citep*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citep*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citealt",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citealt{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citealt*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citealt*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citealp",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citealp{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citealp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citealp*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citealp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Citealp[${2:postfix}]{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citeauthor",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citeauthor{${1:keylist}}"
-      }
-    },
-    {
-      "name": "Citeauthor*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Citeauthor*{${1:keylist}}"
-      }
-    },
-    {
-      "name": "defcitealias",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "defcitealias{${1:keylist}}{${2:alias}}"
-      }
-    },
-    {
-      "name": "citetalias",
-      "arg": {
-        "format": "{}",
-        "snippet": "citetalias{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citepalias",
-      "arg": {
-        "format": "{}",
-        "snippet": "citepalias{${1:keylist}}"
-      }
-    },
-    {
-      "name": "setcitestyle",
-      "arg": {
-        "format": "{}",
-        "snippet": "setcitestyle{${1:options%keyvals}}",
-        "keys": [
-          "\\setcitestyle"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "bibpunct",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}{}{}",
-        "snippet": "bibpunct{${1:open}}{${2:close}}{${3:multpunct}}{${4:letter}}{${5:authoryearpunct}}{${6:yearspunct}}"
-      }
-    },
-    {
-      "name": "bibpunct",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}{}{}{}{}{}",
-        "snippet": "bibpunct[${7:char}]{${1:open}}{${2:close}}{${3:multpunct}}{${4:letter}}{${5:authoryearpunct}}{${6:yearspunct}}"
-      }
-    },
-    {
-      "name": "shortcites",
-      "arg": {
-        "format": "{}",
-        "snippet": "shortcites{${1:keylist}}"
-      }
-    },
-    {
-      "name": "citestyle",
-      "arg": {
-        "format": "{}",
-        "snippet": "citestyle{${1:style%keyvals}}",
-        "keys": [
-          "\\citestyle#c"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "bibcleanup",
-      "unusual": true
-    },
-    {
-      "name": "bibfont",
-      "unusual": true
-    },
-    {
-      "name": "bibhang",
-      "unusual": true
-    },
-    {
-      "name": "bibname",
-      "unusual": true
-    },
-    {
-      "name": "bibnumfmt",
-      "unusual": true
-    },
-    {
-      "name": "bibpostamble",
-      "unusual": true
-    },
-    {
-      "name": "bibpreamble",
-      "unusual": true
-    },
-    {
-      "name": "bibsection",
-      "unusual": true
-    },
-    {
-      "name": "bibsep",
-      "unusual": true
-    },
-    {
-      "name": "citeindexfalse",
-      "unusual": true
-    },
-    {
-      "name": "citeindextrue",
-      "unusual": true
-    },
-    {
-      "name": "citeindextype",
-      "unusual": true
-    },
-    {
-      "name": "citenumfont",
-      "unusual": true
-    },
-    {
-      "name": "ifciteindex",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/natbib#c": [
-      "round",
-      "square",
-      "curly",
-      "angle",
-      "semicolon",
-      "colon",
-      "comma",
-      "authoryear",
-      "numbers",
-      "super",
-      "sort",
-      "sort&compress",
-      "compress",
-      "longnamesfirst",
-      "sectionbib",
-      "nonamebreak",
-      "merge",
-      "elide",
-      "mcite"
-    ],
-    "\\setcitestyle": [
-      "authoryear",
-      "numbers",
-      "super",
-      "round",
-      "square",
-      "angle",
-      "curly",
-      "open={${1:char}}",
-      "close={${1:char}}",
-      "semicolon",
-      "colon",
-      "comma",
-      "citesep={${1:char}}",
-      "aysep={${1:char}}",
-      "yysep={${1:char}}",
-      "notesep={${1:text}}"
-    ],
-    "\\citestyle#c": [
-      "aa",
-      "abbrv",
-      "abbrvnat",
-      "agsm",
-      "agu",
-      "alpha",
-      "anngeo",
-      "chicago",
-      "copernicus",
-      "cospar",
-      "dcu",
-      "egs",
-      "egu",
-      "esa",
-      "kluwer",
-      "named",
-      "nature",
-      "nlinproc",
-      "pass",
-      "plain",
-      "plainnat",
-      "unsrt",
-      "unsrtnat"
-    ]
-  },
-  "args": [
-    "\\usepackage/natbib#c"
-  ]
+	"macros": [
+		{"name":"astroncite","arg":{"format":"{}{}","snippet":"astroncite{${1:authors}}{${2:year}}"},"unusual":true},
+		{"name":"betweenauthors","unusual":true},
+		{"name":"bibcleanup","unusual":true},
+		{"name":"bibfield","unusual":true},
+		{"name":"bibfont"},
+		{"name":"bibhang","doc":"The amount of hanging indentation in the list of references can be redefined via the length command \\bibhang."},
+		{"name":"bibinfo","arg":{"format":"{}","snippet":"bibinfo{${1}}"},"unusual":true},
+		{"name":"BibitemOpen","unusual":true},
+		{"name":"BibitemShut","arg":{"format":"{}","snippet":"BibitemShut{${1}}"},"unusual":true},
+		{"name":"bibname","unusual":true},
+		{"name":"bibnumfmt","arg":{"format":"{}","snippet":"bibnumfmt{${1}}"},"doc":"The redefined \\bibnumfmt command specifies how the reference numbers are to be formatted in the list of references itself."},
+		{"name":"bibpostamble","unusual":true},
+		{"name":"bibpreamble","doc":"A preamble appearing after the \\bibsection heading may be inserted before the actual list of references by redefining \\bibpreamble."},
+		{"name":"bibpunct","arg":{"format":"[]{}{}{}{}{}{}","snippet":"bibpunct[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"}},
+		{"name":"bibpunct","arg":{"format":"{}{}{}{}{}{}","snippet":"bibpunct{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"bibsection"},
+		{"name":"bibsep","doc":"The vertical spacing between references in the list, whether author–year or numerical, is controlled by the length \\bibsep."},
+		{"name":"cite","arg":{"format":"[][]{}","snippet":"cite[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"cite","arg":{"format":"{}","snippet":"cite{${1:keys}}"}},
+		{"name":"cite*","arg":{"format":"[][]{}","snippet":"cite*[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"cite*","arg":{"format":"{}","snippet":"cite*{${1:keys}}"}},
+		{"name":"citealp","arg":{"format":"[][]{}","snippet":"citealp[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"\\citealp is \\citep without parentheses."},
+		{"name":"citealp","arg":{"format":"{}","snippet":"citealp{${1:keys}}"},"doc":"\\citealp is \\citep without parentheses."},
+		{"name":"citealp*","arg":{"format":"[][]{}","snippet":"citealp*[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"\\citealp is \\citep without parentheses."},
+		{"name":"citealp*","arg":{"format":"{}","snippet":"citealp*{${1:keys}}"},"doc":"\\citealp is \\citep without parentheses."},
+		{"name":"Citealp","arg":{"format":"[][]{}","snippet":"Citealp[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"Citealp","arg":{"format":"{}","snippet":"Citealp{${1:keys}}"}},
+		{"name":"Citealp*","arg":{"format":"[][]{}","snippet":"Citealp*[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"Citealp*","arg":{"format":"{}","snippet":"Citealp*{${1:keys}}"}},
+		{"name":"citealt","arg":{"format":"[][]{}","snippet":"citealt[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"As an alternative form of citation, \\citealt is the same as \\citet but without parentheses."},
+		{"name":"citealt","arg":{"format":"{}","snippet":"citealt{${1:keys}}"},"doc":"As an alternative form of citation, \\citealt is the same as \\citet but without parentheses."},
+		{"name":"citealt*","arg":{"format":"[][]{}","snippet":"citealt*[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"As an alternative form of citation, \\citealt is the same as \\citet but without parentheses."},
+		{"name":"citealt*","arg":{"format":"{}","snippet":"citealt*{${1:keys}}"},"doc":"As an alternative form of citation, \\citealt is the same as \\citet but without parentheses."},
+		{"name":"Citealt","arg":{"format":"[][]{}","snippet":"Citealt[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"Citealt","arg":{"format":"{}","snippet":"Citealt{${1:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"Citealt*","arg":{"format":"[][]{}","snippet":"Citealt*[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"Citealt*","arg":{"format":"{}","snippet":"Citealt*{${1:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"citeauthor","arg":{"format":"[][]{}","snippet":"citeauthor[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citeauthor","arg":{"format":"{}","snippet":"citeauthor{${1:keys}}"}},
+		{"name":"citeauthor*","arg":{"format":"[][]{}","snippet":"citeauthor*[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citeauthor*","arg":{"format":"{}","snippet":"citeauthor*{${1:keys}}"}},
+		{"name":"Citeauthor","arg":{"format":"[][]{}","snippet":"Citeauthor[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"Citeauthor","arg":{"format":"{}","snippet":"Citeauthor{${1:keys}}"}},
+		{"name":"Citeauthor*","arg":{"format":"[][]{}","snippet":"Citeauthor*[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"Citeauthor*","arg":{"format":"{}","snippet":"Citeauthor*{${1:keys}}"}},
+		{"name":"citeauthoryear","arg":{"format":"{}{}{}","snippet":"citeauthoryear{${1:full authors}}{${2:short authors}}{${3:year}}"},"unusual":true},
+		{"name":"citeends","unusual":true},
+		{"name":"citefullauthor","arg":{"format":"[][]{}","snippet":"citefullauthor[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citefullauthor","arg":{"format":"{}","snippet":"citefullauthor{${1:keys}}"}},
+		{"name":"citeindexfalse"},
+		{"name":"citeindextrue","doc":"If one wishes to have the citations entered in the .idx indexing file, it is only necessary to issue \\citeindextrue at any point in the document."},
+		{"name":"citeindextype"},
+		{"name":"citename","arg":{"format":"{}","snippet":"citename{${1:authors}}"},"unusual":true},
+		{"name":"citenum","arg":{"format":"{}","snippet":"citenum{${1:keys}}"},"doc":"Add \\citenum{key} to print the number, even in author-year mode."},
+		{"name":"citenumfont"},
+		{"name":"citep","arg":{"format":"[][]{}","snippet":"citep[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"The natbib package has two basic citation commands, \\citet and \\citep for textual and parenthetical citations, respectively."},
+		{"name":"citep","arg":{"format":"{}","snippet":"citep{${1:keys}}"},"doc":"The natbib package has two basic citation commands, \\citet and \\citep for textual and parenthetical citations, respectively."},
+		{"name":"citep*","arg":{"format":"[][]{}","snippet":"citep*[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"The natbib package has two basic citation commands, \\citet and \\citep for textual and parenthetical citations, respectively."},
+		{"name":"citep*","arg":{"format":"{}","snippet":"citep*{${1:keys}}"},"doc":"The natbib package has two basic citation commands, \\citet and \\citep for textual and parenthetical citations, respectively."},
+		{"name":"Citep","arg":{"format":"[][]{}","snippet":"Citep[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"Citep","arg":{"format":"{}","snippet":"Citep{${1:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"Citep*","arg":{"format":"[][]{}","snippet":"Citep*[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"Citep*","arg":{"format":"{}","snippet":"Citep*{${1:keys}}"},"doc":"\\Citet, \\Citep, \\Citealp, \\Citealt, \\Citeauthor capitalize first letter of first author's name in case it begins with von or de and comes at the start of a sentence."},
+		{"name":"citepalias","arg":{"format":"[][]{}","snippet":"citepalias[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citepalias","arg":{"format":"{}","snippet":"citepalias{${1:keys}}"}},
+		{"name":"citestarts","unusual":true},
+		{"name":"citestyle","arg":{"format":"{}","snippet":"citestyle{${1}}","keys":["natbib:predefined style"],"keyPos":0},"doc":"If a particular set of citation punctuations is commonly used, it is possible to store it in the local natbib.cfg and to recall it with \\citestyle{name}."},
+		{"name":"citet","arg":{"format":"[][]{}","snippet":"citet[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citet","arg":{"format":"{}","snippet":"citet{${1:keys}}"}},
+		{"name":"citet*","arg":{"format":"[][]{}","snippet":"citet*[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citet*","arg":{"format":"{}","snippet":"citet*{${1:keys}}"}},
+		{"name":"Citet","arg":{"format":"[][]{}","snippet":"Citet[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"One can force the first letter to be in upper case with the command \\Citet instead."},
+		{"name":"Citet","arg":{"format":"{}","snippet":"Citet{${1:keys}}"},"doc":"One can force the first letter to be in upper case with the command \\Citet instead."},
+		{"name":"Citet*","arg":{"format":"[][]{}","snippet":"Citet*[${1:pre-note}][${2:post-note}]{${3:keys}}"},"doc":"One can force the first letter to be in upper case with the command \\Citet instead."},
+		{"name":"Citet*","arg":{"format":"{}","snippet":"Citet*{${1:keys}}"},"doc":"One can force the first letter to be in upper case with the command \\Citet instead."},
+		{"name":"citetalias","arg":{"format":"[][]{}","snippet":"citetalias[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citetalias","arg":{"format":"{}","snippet":"citetalias{${1:keys}}"}},
+		{"name":"citetext","arg":{"format":"{}","snippet":"citetext{${1}}"},"doc":"The \\citetext command allows arbitrary text to be placed in the current citation parentheses."},
+		{"name":"citeyear","arg":{"format":"[][]{}","snippet":"citeyear[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citeyear","arg":{"format":"{}","snippet":"citeyear{${1:keys}}"}},
+		{"name":"citeyearpar","arg":{"format":"[][]{}","snippet":"citeyearpar[${1:pre-note}][${2:post-note}]{${3:keys}}"}},
+		{"name":"citeyearpar","arg":{"format":"{}","snippet":"citeyearpar{${1:keys}}"}},
+		{"name":"defcitealias","arg":{"format":"{}{}","snippet":"defcitealias{${1}}{${2}}"}},
+		{"name":"harvardand","unusual":true},
+		{"name":"harvarditem","arg":{"format":"[]{}{}{}","snippet":"harvarditem[${1}]{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"harvarditem","arg":{"format":"{}{}{}","snippet":"harvarditem{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"harvardleft","unusual":true},
+		{"name":"harvardright","unusual":true},
+		{"name":"harvardurl","arg":{"format":"{}","snippet":"harvardurl{${1}}"},"unusual":true},
+		{"name":"harvardyearleft","unusual":true},
+		{"name":"harvardyearright","unusual":true},
+		{"name":"ifciteindex","unusual":true},
+		{"name":"natexlab","arg":{"format":"{}","snippet":"natexlab{${1}}"},"unusual":true},
+		{"name":"setcitestyle","arg":{"format":"{}","snippet":"setcitestyle{${1}}","keys":["natbib:citation style"],"keyPos":0}},
+		{"name":"shortcites","arg":{"format":"{}","snippet":"shortcites{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/natbib#c": ["angle","authoryear","colon","comma","compress","curly","elide","longnamesfirst","mcite","merge","nonamebreak","numbers","openbib","round","sectionbib","semicolon","sort","sort&compress","square","super"],
+		"natbib:citation style": ["authoryear","numbers","super","round","square","angle","curly","open={${1:char}}","close={${1:char}}","semicolon","colon","comma","citesep={${1:char}}","aysep={${1:char}}","yysep={${1:char}}","notesep={${1:text}}"],
+		"natbib:predefined style": ["aa","abbrv","abbrvnat","agsm","agu","alpha","anngeo","chicago","copernicus","cospar","dcu","egs","egu","esa","kluwer","named","nature","nlinproc","pass","plain","plainnat","unsrt","unsrtnat"]
+	},
+	"args": ["\\usepackage/natbib#c"]
 }

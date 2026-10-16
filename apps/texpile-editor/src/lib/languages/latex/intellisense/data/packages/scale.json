@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/scale#c": ["magstep2","sqrt2"]
+	},
+	"args": ["\\usepackage/scale#c"]
+}

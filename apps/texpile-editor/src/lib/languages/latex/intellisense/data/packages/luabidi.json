@@ -1,0 +1,42 @@
+{
+	"macros": [
+		{"name":"autofootnoterule"},
+		{"name":"Footnote","arg":{"format":"[]{}","snippet":"Footnote[${1}]{${2}}"},"unusual":true},
+		{"name":"Footnote","arg":{"format":"{}","snippet":"Footnote{${1}}"},"unusual":true},
+		{"name":"footnoterulewidth"},
+		{"name":"hboxL","arg":{"format":"{}","snippet":"hboxL{${1:material}}"},"unusual":true},
+		{"name":"hboxR","arg":{"format":"{}","snippet":"hboxR{${1:material}}"},"unusual":true},
+		{"name":"leftfootnoterule"},
+		{"name":"localnumeral","arg":{"format":"{}","snippet":"localnumeral{${1:number}}"},"unusual":true},
+		{"name":"localnumeral*","arg":{"format":"{}","snippet":"localnumeral*{${1:number}}"},"unusual":true},
+		{"name":"LR","arg":{"format":"{}","snippet":"LR{${1:text}}"}},
+		{"name":"LRE","arg":{"format":"{}","snippet":"LRE{${1:text}}"}},
+		{"name":"LTRfootnote","arg":{"format":"[]{}","snippet":"LTRfootnote[${1:number}]{${2:text}}"}},
+		{"name":"LTRfootnote","arg":{"format":"{}","snippet":"LTRfootnote{${1:text}}"}},
+		{"name":"rightfootnoterule"},
+		{"name":"RL","arg":{"format":"{}","snippet":"RL{${1:text}}"}},
+		{"name":"RLE","arg":{"format":"{}","snippet":"RLE{${1:text}}"}},
+		{"name":"RTLfootnote","arg":{"format":"[]{}","snippet":"RTLfootnote[${1:number}]{${2:text}}"},"doc":"\\RTLfootnote always places it on the right side."},
+		{"name":"RTLfootnote","arg":{"format":"{}","snippet":"RTLfootnote{${1:text}}"},"doc":"\\RTLfootnote always places it on the right side."},
+		{"name":"setLR"},
+		{"name":"setLTR"},
+		{"name":"setRL"},
+		{"name":"setRTL"},
+		{"name":"setRTLmain"},
+		{"name":"textwidthfootnoterule"},
+		{"name":"unsetLTR"},
+		{"name":"unsetRTL"},
+		{"name":"vboxL","arg":{"format":"{}","snippet":"vboxL{${1:material}}"},"unusual":true},
+		{"name":"vboxR","arg":{"format":"{}","snippet":"vboxR{${1:material}}"},"unusual":true},
+		{"name":"vtopL","arg":{"format":"{}","snippet":"vtopL{${1:material}}"},"unusual":true},
+		{"name":"vtopR","arg":{"format":"{}","snippet":"vtopR{${1:material}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"LTR"},
+		{"name":"RTL"}
+	],
+	"keys": {
+		"\\usepackage/luabidi#c": ["arabmaths","autofootnoterule","textwidthfootnoterule"]
+	},
+	"args": ["\\usepackage/luabidi#c"]
+}

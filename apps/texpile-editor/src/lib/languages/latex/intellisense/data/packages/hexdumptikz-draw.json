@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"pgfkeys"},{"name":"hexdumptikz-common"},{"name":"hexdumptikz-selector"},{"name":"hexdumptikz-addrcalc"},{"name":"hexdumptikz-parser"},{"name":"hexdumptikz-parser-hd"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

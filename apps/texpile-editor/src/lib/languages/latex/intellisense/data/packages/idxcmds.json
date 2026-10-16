@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"pgfopts"},{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"newidxcmd","arg":{"format":"[]{}{}[]","snippet":"newidxcmd[${1:index cs}]{${2:cs}}{${3:formatting specs}}[${4:append}]"}},
+		{"name":"newidxcmd","arg":{"format":"{}{}","snippet":"newidxcmd{${1:cs}}{${2:formatting specs}}"}},
+		{"name":"newsubidxcmd","arg":{"format":"[]{}{}{}[]","snippet":"newsubidxcmd[${1:index cs}]{${2:cs}}{${3:main entry}}{${4:form. specs}}[${5:append}]"}},
+		{"name":"newsubidxcmd","arg":{"format":"{}{}{}","snippet":"newsubidxcmd{${1:cs}}{${2:main entry}}{${3:form. specs}}"}},
+		{"name":"newsubidxcmd*","arg":{"format":"[]{}{}{}[]","snippet":"newsubidxcmd*[${1:index cs}]{${2:cs}}{${3:main entry}}{${4:form. specs}}[${5:append}]"}},
+		{"name":"newsubidxcmd*","arg":{"format":"{}{}{}","snippet":"newsubidxcmd*{${1:cs}}{${2:main entry}}{${3:form. specs}}"}},
+		{"name":"newsubmainidxcmd","arg":{"format":"[]{}{}[]","snippet":"newsubmainidxcmd[${1:index cs}]{${2:cs}}{${3:form. specs}}[${4:append}]"}},
+		{"name":"newsubmainidxcmd","arg":{"format":"{}{}","snippet":"newsubmainidxcmd{${1:cs}}{${2:form. specs}}"}},
+		{"name":"setidxcmds","arg":{"format":"{}","snippet":"setidxcmds{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"class-standalone"},{"name":"shellesc"},{"name":"ifluatex"},{"name":"iftex"},{"name":"xkeyval"},{"name":"class-article"},{"name":"wargame"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"alphalph"},{"name":"intcalc"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"battlemarkers","arg":{"format":"[][]{}","snippet":"battlemarkers[${1:styles}][${2:category}]{${3:number of markers}}"}},
+		{"name":"battlemarkers","arg":{"format":"{}","snippet":"battlemarkers{${1:number of markers}}"}},
+		{"name":"chitimages","arg":{"format":"[][]{}","snippet":"chitimages[${1:subcategory}][${2:tikz options}]{${3:chit list}}"}},
+		{"name":"chitimages","arg":{"format":"{}","snippet":"chitimages{${1:chit list}}"}},
+		{"name":"commonicons","arg":{"format":"[]{}{}","snippet":"commonicons[${1:tikz options}]{${2:color}}{${3:second color}}"}},
+		{"name":"commonicons","arg":{"format":"{}{}","snippet":"commonicons{${1:color}}{${2:second color}}"}},
+		{"name":"dice","arg":{"format":"[][]{}{}{}","snippet":"dice[${1:tikz options}][${2:node options}]{${3:name}}{${4:shape}}{${5:value list}}"}},
+		{"name":"dice","arg":{"format":"{}{}{}","snippet":"dice{${1:name}}{${2:shape}}{${3:value list}}"}},
+		{"name":"doublechitimages","arg":{"format":"[][]{}","snippet":"doublechitimages[${1:subcategory}][${2:tikz options}]{${3:chit list}}"}},
+		{"name":"doublechitimages","arg":{"format":"{}","snippet":"doublechitimages{${1:chit list}}"}},
+		{"name":"endinfo","unusual":true},
+		{"name":"info","arg":{"format":"{}{}{}","snippet":"info{${1:name}}{${2:category}}{${3:subcategory}}"}},
+		{"name":"info*","arg":{"format":"{}{}{}","snippet":"info*{${1:name}}{${2:category}}{${3:subcategory}}"}},
+		{"name":"oddsmarkers","arg":{"format":"[][]{}","snippet":"oddsmarkers[${1:styles}][${2:category}]{${3:marker list}}"}},
+		{"name":"oddsmarkers","arg":{"format":"{}","snippet":"oddsmarkers{${1:marker list}}"}},
+		{"name":"resultmarkers","arg":{"format":"[][]{}","snippet":"resultmarkers[${1:styles}][${2:category}]{${3:result list}}"}},
+		{"name":"resultmarkers","arg":{"format":"{}","snippet":"resultmarkers{${1:result list}}"}}
+	],
+	"envs": [
+		{"name":"boardimage","arg":{"format":"[]{}{}","snippet":"[${1:category}]{${2:name}}{${3:subcategory}}"}},
+		{"name":"boardimage","arg":{"format":"{}{}","snippet":"{${1:name}}{${2:subcategory}}"}},
+		{"name":"imagelist","arg":{"format":"[]","snippet":"[${1:file name}]"}},
+		{"name":"imagelist"}
+	],
+	"keys": {
+		"\\documentclass/wgexport#c": ["noterrainpic","terrainpic"]
+	},
+	"args": ["\\documentclass/wgexport#c"]
+}

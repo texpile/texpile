@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"ifpgfluamathenableTeXfallback","unusual":true},
+		{"name":"ifpgfluamathshowerrormessage","unusual":true},
+		{"name":"ifpgfluamathusedTeXfallback","unusual":true},
+		{"name":"pgfluamathenableTeXfallbackfalse","unusual":true},
+		{"name":"pgfluamathenableTeXfallbacktrue","unusual":true},
+		{"name":"pgfluamathparse","arg":{"format":"{}","snippet":"pgfluamathparse{${1:expression}}"}},
+		{"name":"pgfluamathshowerrormessagefalse","unusual":true},
+		{"name":"pgfluamathshowerrormessagetrue","unusual":true},
+		{"name":"pgfluamathusedTeXfallbackfalse","unusual":true},
+		{"name":"pgfluamathusedTeXfallbacktrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

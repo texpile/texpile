@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"pmdBrick","arg":{"format":"[]{}{}{}","snippet":"pmdBrick[${1:options}]{${2:upper edges}}{${3:lower edges}}{${4:transversal edges}}"},"doc":"\\pmdBrick is simply a wrapper for a single brick that calls \\pmdDiagram with no diagram options."},
+		{"name":"pmdBrick","arg":{"format":"{}{}{}","snippet":"pmdBrick{${1:upper edges}}{${2:lower edges}}{${3:transversal edges}}"},"doc":"\\pmdBrick is simply a wrapper for a single brick that calls \\pmdDiagram with no diagram options."},
+		{"name":"pmdDiagram","arg":{"format":"[]{}","snippet":"pmdDiagram[${1:options}]{${2:bricks}}"}},
+		{"name":"pmdDiagram","arg":{"format":"{}","snippet":"pmdDiagram{${1:bricks}}"}},
+		{"name":"pmdEmpty"},
+		{"name":"pmdEquiv","arg":{"format":"[]{}","snippet":"pmdEquiv[${1:options}]{${2:E bricks}}"},"doc":"draws an equivalence relation determined by arbitrarily many equivalence bricks separated by dots."},
+		{"name":"pmdEquiv","arg":{"format":"{}","snippet":"pmdEquiv{${1:E bricks}}"},"doc":"draws an equivalence relation determined by arbitrarily many equivalence bricks separated by dots."},
+		{"name":"pmdProduct","arg":{"format":"[]{}{}{}","snippet":"pmdProduct[${1:options}]{${2:added edges}}{${3:top bricks}}{${4:bottom bricks}}"}},
+		{"name":"pmdProduct","arg":{"format":"{}{}{}","snippet":"pmdProduct{${1:added edges}}{${2:top bricks}}{${3:bottom bricks}}"}},
+		{"name":"pmdProductTriple","arg":{"format":"[]{}{}{}{}{}","snippet":"pmdProductTriple[${1:options}]{${2:top added edges}}{${3:bottom added edges}}{${4:top bricks}}{${5:middle bricks}}{${6:bottom bricks}}"}},
+		{"name":"pmdProductTriple","arg":{"format":"{}{}{}{}{}","snippet":"pmdProductTriple{${1:top added edges}}{${2:bottom added edges}}{${3:top bricks}}{${4:middle bricks}}{${5:bottom bricks}}"}},
+		{"name":"pmdSetDefault","arg":{"format":"{}","snippet":"pmdSetDefault{${1:keys}}"},"doc":"sets the default style of all diagrams and has the syntax \\pmdSetDefault{<keys>}, where the input keys are one of the following: • brick – see Section 5.1, • NTedges – non-transversal edges, see Section 5.2.1, • Tedges – transversal edges, see Section 5.2.2, • brace – see Section 5.3, • bracket – see Section 5.4, • diagram – see Section 5.5."},
+		{"name":"pmdSetToOriginalDefault","doc":"sets the style of all diagrams to the default original style of the package."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,304 +1,56 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "vref",
-      "arg": {
-        "format": "{}",
-        "snippet": "vref{${1:label}}"
-      }
-    },
-    {
-      "name": "vref*",
-      "arg": {
-        "format": "{}",
-        "snippet": "vref*{${1:label}}"
-      }
-    },
-    {
-      "name": "vpageref",
-      "arg": {
-        "format": "{}",
-        "snippet": "vpageref{${1:label}}"
-      }
-    },
-    {
-      "name": "vpageref*",
-      "arg": {
-        "format": "{}",
-        "snippet": "vpageref*{${1:label}}"
-      }
-    },
-    {
-      "name": "vpageref",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "vpageref[${2:samepage}]{${1:label}}"
-      }
-    },
-    {
-      "name": "vpageref*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "vpageref*[${2:samepage}]{${1:label}}"
-      }
-    },
-    {
-      "name": "vpageref",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "vpageref[${2:samepage}][${3:otherpage}]{${1:label}}"
-      }
-    },
-    {
-      "name": "vpageref*",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "vpageref*[${2:samepage}][${3:otherpage}]{${1:label}}"
-      }
-    },
-    {
-      "name": "vrefrange",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "vrefrange{${1:fromlabel%ref}}{${2:tolabel%ref}}"
-      }
-    },
-    {
-      "name": "vrefrange",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "vrefrange[${3:same page text}]{${1:fromlabel%ref}}{${2:tolabel%ref}}"
-      }
-    },
-    {
-      "name": "vpagerefrange",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "vpagerefrange{${1:fromlabel%ref}}{${2:tolabel%ref}}"
-      }
-    },
-    {
-      "name": "vpagerefrange*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "vpagerefrange*{${1:fromlabel%ref}}{${2:tolabel%ref}}"
-      }
-    },
-    {
-      "name": "vpagerefrange",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "vpagerefrange[${3:same page text}]{${1:fromlabel%ref}}{${2:tolabel%ref}}"
-      }
-    },
-    {
-      "name": "vpagerefrange*",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "vpagerefrange*[${3:same page text}]{${1:fromlabel%ref}}{${2:tolabel%ref}}"
-      }
-    },
-    {
-      "name": "vrefpagenum",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "vrefpagenum{${1:cmd}}{${2:label%ref}}"
-      }
-    },
-    {
-      "name": "vpagerefcompare",
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "vpagerefcompare{${1:label1%ref}}{${2:label2%ref}}{${3:true}}{${4:false}}"
-      }
-    },
-    {
-      "name": "vpagerefnearby",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "vpagerefnearby{${1:label}}{${2:true}}{${3:false}}"
-      }
-    },
-    {
-      "name": "labelformat",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "labelformat{${1:counter}}{${2:argument}}"
-      }
-    },
-    {
-      "name": "Vref",
-      "arg": {
-        "format": "{}",
-        "snippet": "Vref{${1:label}}"
-      }
-    },
-    {
-      "name": "Vref*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Vref*{${1:label}}"
-      }
-    },
-    {
-      "name": "Ref",
-      "arg": {
-        "format": "{}",
-        "snippet": "Ref{${1:label}}"
-      }
-    },
-    {
-      "name": "thevpagerefnum"
-    },
-    {
-      "name": "reftextbefore"
-    },
-    {
-      "name": "reftextfacebefore"
-    },
-    {
-      "name": "reftextafter"
-    },
-    {
-      "name": "reftextfaceafter"
-    },
-    {
-      "name": "reftextcurrent"
-    },
-    {
-      "name": "reftextfaraway",
-      "arg": {
-        "format": "{}",
-        "snippet": "reftextfaraway{${1:label}}"
-      }
-    },
-    {
-      "name": "reftextvario",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "reftextvario{${1:text1}}{${2:text2}}"
-      }
-    },
-    {
-      "name": "reftextpagerange",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "reftextpagerange{${1:label1%ref}}{${2:label2%ref}}"
-      }
-    },
-    {
-      "name": "reftextlabelrange",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "reftextlabelrange{${1:label1%ref}}{${2:label2%ref}}"
-      }
-    },
-    {
-      "name": "vrefformat",
-      "unusual": true
-    },
-    {
-      "name": "Vrefformat",
-      "unusual": true
-    },
-    {
-      "name": "vrefrangeformat",
-      "unusual": true
-    },
-    {
-      "name": "fullrefformat",
-      "unusual": true
-    },
-    {
-      "name": "vrefdefaultformat",
-      "unusual": true
-    },
-    {
-      "name": "Vrefdefaultformat",
-      "unusual": true
-    },
-    {
-      "name": "vrefrangedefaultformat",
-      "unusual": true
-    },
-    {
-      "name": "fullrefdefaultformat",
-      "unusual": true
-    },
-    {
-      "name": "vrefwarning"
-    },
-    {
-      "name": "vrefshowerrors"
-    },
-    {
-      "name": "fullref",
-      "arg": {
-        "format": "{}",
-        "snippet": "fullref{${1:label}}"
-      }
-    },
-    {
-      "name": "vpagerefcomparenearby",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "vpagerefcomparenearby{${1:label1%ref}}{${2:label2%ref}}{${3:true}}{${4:false}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/varioref#c": [
-      "afrikaans",
-      "american",
-      "arabic",
-      "austrian",
-      "naustrian",
-      "basque",
-      "bahasam",
-      "brazil",
-      "breton",
-      "bulgarian",
-      "catalan",
-      "croatian",
-      "czech",
-      "danish",
-      "dutch",
-      "english",
-      "esperanto",
-      "finnish",
-      "french",
-      "galician",
-      "german",
-      "ngerman",
-      "greek",
-      "icelandic",
-      "italian",
-      "japanese",
-      "magyar",
-      "norsk",
-      "nynorsk",
-      "polish",
-      "portuges",
-      "romanian",
-      "russian",
-      "slovak",
-      "slovene",
-      "spanish",
-      "swedish",
-      "turkish",
-      "ukrainian",
-      "francais",
-      "germanb",
-      "draft",
-      "final",
-      "space",
-      "nospace"
-    ]
-  },
-  "args": [
-    "\\usepackage/varioref#c"
-  ]
+	"macros": [
+		{"name":"aza","arg":{"format":"{}","snippet":"aza{${1}}"},"unusual":true},
+		{"name":"DeclareVrefOptions","arg":{"format":"{}{}","snippet":"DeclareVrefOptions{${1}}{${2}}"},"unusual":true},
+		{"name":"fullref","arg":{"format":"{}","snippet":"fullref{${1}}"}},
+		{"name":"fullrefdefaultformat","arg":{"format":"{}","snippet":"fullrefdefaultformat{${1}}"},"unusual":true},
+		{"name":"fullrefformat","arg":{"format":"{}","snippet":"fullrefformat{${1}}"},"unusual":true},
+		{"name":"labelformat","arg":{"format":"{}{}","snippet":"labelformat{${1:counter}}{${2:format}}"}},
+		{"name":"Ref","arg":{"format":"{}","snippet":"Ref{${1:label}}"}},
+		{"name":"reftextafter"},
+		{"name":"reftextbefore"},
+		{"name":"reftextcurrent"},
+		{"name":"reftextfaceafter"},
+		{"name":"reftextfacebefore"},
+		{"name":"reftextfaraway","arg":{"format":"{}","snippet":"reftextfaraway{${1}}"}},
+		{"name":"reftextlabelrange","arg":{"format":"{}{}","snippet":"reftextlabelrange{${1}}{${2}}"},"doc":"This macro produces text that describes the range of figures, tables, or whatever the labels refer to, the default for English is “\\ref{#1} to~\\ref{#2}”."},
+		{"name":"reftextpagerange","arg":{"format":"{}{}","snippet":"reftextpagerange{${1}}{${2}}"},"doc":"This macro produces text that describes the page range of the two labels, e.g., the default for English is “on pages~\\pageref{#1}--\\pageref{#2}}”."},
+		{"name":"reftextvario","arg":{"format":"{}{}","snippet":"reftextvario{${1}}{${2}}"},"doc":"To allow a bit random variation in the generated strings one can use the command \\reftextvario inside the string macros. It takes two arguments and selects one or the other for printing depending on the number of already seen \\vref or \\vpageref commands."},
+		{"name":"thevpagerefnum"},
+		{"name":"vpageref","arg":{"format":"[][]{}","snippet":"vpageref[${1:same page text}][${2:other page text}]{${3:label}}"},"doc":"The command \\vpageref is a variation to \\pageref with a similar functionality."},
+		{"name":"vpageref","arg":{"format":"{}","snippet":"vpageref{${1:label}}"},"doc":"The command \\vpageref is a variation to \\pageref with a similar functionality."},
+		{"name":"vpageref*","arg":{"format":"[][]{}","snippet":"vpageref*[${1:same page text}][${2:other page text}]{${3:label}}"},"doc":"The command \\vpageref is a variation to \\pageref with a similar functionality."},
+		{"name":"vpageref*","arg":{"format":"{}","snippet":"vpageref*{${1:label}}"},"doc":"The command \\vpageref is a variation to \\pageref with a similar functionality."},
+		{"name":"vpagerefcompare","arg":{"format":"{}{}{}{}","snippet":"vpagerefcompare{${1:label1}}{${2:label2}}{${3:true}}{${4:false}}"}},
+		{"name":"vpagerefcomparenearby","arg":{"format":"{}{}{}{}","snippet":"vpagerefcomparenearby{${1:label1}}{${2:label2}}{${3:true}}{${4:false}}"},"unusual":true},
+		{"name":"vpagerefnearby","arg":{"format":"{}{}{}","snippet":"vpagerefnearby{${1:label}}{${2:true}}{${3:false}}"},"doc":"Test if \\vpageref is going to be at most ±1 off from current page."},
+		{"name":"vpagerefrange","arg":{"format":"[]{}{}","snippet":"vpagerefrange[${1}]{${2}}{${3}}"},"doc":"This command is similar to \\vpageref but takes two mandatory arguments which are two labels denoting a range."},
+		{"name":"vpagerefrange","arg":{"format":"{}{}","snippet":"vpagerefrange{${1}}{${2}}"},"doc":"This command is similar to \\vpageref but takes two mandatory arguments which are two labels denoting a range."},
+		{"name":"vpagerefrange*","arg":{"format":"[]{}{}","snippet":"vpagerefrange*[${1}]{${2}}{${3}}"},"doc":"This command is similar to \\vpageref but takes two mandatory arguments which are two labels denoting a range."},
+		{"name":"vpagerefrange*","arg":{"format":"{}{}","snippet":"vpagerefrange*{${1}}{${2}}"},"doc":"This command is similar to \\vpageref but takes two mandatory arguments which are two labels denoting a range."},
+		{"name":"vref","arg":{"format":"[]{}","snippet":"vref[${1:same page text}]{${2:label}}"},"doc":"\\vref is similar to \\ref but adds an additional page reference, like ‘on the facing page’ or ‘on page 27’ whenever the corresponding \\label is not on the same page."},
+		{"name":"vref","arg":{"format":"{}","snippet":"vref{${1:label}}"},"doc":"\\vref is similar to \\ref but adds an additional page reference, like ‘on the facing page’ or ‘on page 27’ whenever the corresponding \\label is not on the same page."},
+		{"name":"vref*","arg":{"format":"[]{}","snippet":"vref*[${1:same page text}]{${2:label}}"},"doc":"\\vref is similar to \\ref but adds an additional page reference, like ‘on the facing page’ or ‘on page 27’ whenever the corresponding \\label is not on the same page."},
+		{"name":"vref*","arg":{"format":"{}","snippet":"vref*{${1:label}}"},"doc":"\\vref is similar to \\ref but adds an additional page reference, like ‘on the facing page’ or ‘on page 27’ whenever the corresponding \\label is not on the same page."},
+		{"name":"Vref","arg":{"format":"[]{}","snippet":"Vref[${1:same page text}]{${2:label}}"}},
+		{"name":"Vref","arg":{"format":"{}","snippet":"Vref{${1:label}}"}},
+		{"name":"Vref*","arg":{"format":"[]{}","snippet":"Vref*[${1:same page text}]{${2:label}}"}},
+		{"name":"Vref*","arg":{"format":"{}","snippet":"Vref*{${1:label}}"}},
+		{"name":"vrefdefaultformat","arg":{"format":"{}{}","snippet":"vrefdefaultformat{${1}}{${2}}"},"unusual":true},
+		{"name":"Vrefdefaultformat","arg":{"format":"{}{}","snippet":"Vrefdefaultformat{${1}}{${2}}"},"unusual":true},
+		{"name":"vrefformat","arg":{"format":"{}{}","snippet":"vrefformat{${1}}{${2}}"},"unusual":true},
+		{"name":"Vrefformat","arg":{"format":"{}{}","snippet":"Vrefformat{${1}}{${2}}"},"unusual":true},
+		{"name":"vrefpagenum","arg":{"format":"{}{}","snippet":"vrefpagenum{${1}}{${2}}"}},
+		{"name":"vrefrange","arg":{"format":"[]{}{}","snippet":"vrefrange[${1:same page text}]{${2:first label}}{${3:last label}}"},"doc":"This command is similar to \\vref but it takes two mandatory arguments denoting a range to refer to (e.g., a sequence of figures or a sequence of equations, etc.)."},
+		{"name":"vrefrange","arg":{"format":"{}{}","snippet":"vrefrange{${1:first label}}{${2:last label}}"},"doc":"This command is similar to \\vref but it takes two mandatory arguments denoting a range to refer to (e.g., a sequence of figures or a sequence of equations, etc.)."},
+		{"name":"vrefrangedefaultformat","arg":{"format":"{}{}{}","snippet":"vrefrangedefaultformat{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"vrefrangeformat","arg":{"format":"{}{}{}","snippet":"vrefrangeformat{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"vrefshowerrors","doc":"\\vrefshowerrors ensures that varioref stops when detecting a possible loop."},
+		{"name":"vrefwarning"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/varioref#c": ["afrikaans","american","arabic","austrian","bahasam","basque","brazil","breton","bulgarian","catalan","chinese","croatian","czech","danish","draft","dutch","english","esperanto","final","finnish","francais","french","galician","german","germanb","greek","hungarian","icelandic","italian","japanese","magyar","naustrian","ngerman","norsk","nospace","nswissgerman","nynorsk","polish","portuges","romanian","russian","slovak","slovene","space","spanish","swedish","swissgerman","turkish","ukrainian"]
+	},
+	"args": ["\\usepackage/varioref#c"]
 }

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xparse"}],
+	"macros": [
+		{"name":"rorlink","arg":{"format":"[]{}","snippet":"rorlink[${1:option}]{${2:ror link}}"},"doc":"Use the command to create a small ROR symbol which is linked to the given ROR-URL."},
+		{"name":"rorlink","arg":{"format":"{}","snippet":"rorlink{${1:ror link}}"},"doc":"Use the command to create a small ROR symbol which is linked to the given ROR-URL."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/rorlink#c": ["blackwhite"]
+	},
+	"args": ["\\usepackage/rorlink#c"]
+}

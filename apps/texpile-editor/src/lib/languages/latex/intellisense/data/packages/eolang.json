@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"stmaryrd"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"upgreek"},{"name":"fancyvrb"},{"name":"keyval"},{"name":"iexec"},{"name":"shellesc"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"ifluatex"},{"name":"ifxetex"},{"name":"xcolor"},{"name":"xstring"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"trimclip"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"eoAnon","arg":{"format":"[]{}","snippet":"eoAnon[${1:substitute}]{${2:content}}"}},
+		{"name":"eoAnon","arg":{"format":"{}","snippet":"eoAnon{${1:content}}"}},
+		{"name":"eolang","doc":"A no-argument command \\eolang is also provided for printing the name of the EO language."},
+		{"name":"phic"},
+		{"name":"phiContextualize","arg":{"format":"[]","snippet":"phiContextualize[${1:subscript}]"}},
+		{"name":"phiContextualize"},
+		{"name":"phiDataize","arg":{"format":"[]","snippet":"phiDataize[${1:subscript}]"}},
+		{"name":"phiDataize"},
+		{"name":"phiDotted"},
+		{"name":"phiEOL","unusual":true},
+		{"name":"phiEvaluate"},
+		{"name":"phiMany","arg":{"format":"{}{}{}","snippet":"phiMany{${1:arrow}}{${2:text beneath}}{${3:text above}}"}},
+		{"name":"phiMorph","arg":{"format":"[]","snippet":"phiMorph[${1:subscript}]"}},
+		{"name":"phiMorph"},
+		{"name":"phiNormalize","arg":{"format":"[]","snippet":"phiNormalize[${1:subscript}]"}},
+		{"name":"phiNormalize"},
+		{"name":"phiOset","arg":{"format":"{}{}","snippet":"phiOset{${1:text above}}{${2:arrow}}"}},
+		{"name":"phiq","arg":{"format":"{}","snippet":"phiq{${1:formula}}"},"doc":"The \\phiq command permits the inlining of φ-calculus expressions in the same simple plain-text notation."},
+		{"name":"phiSaveTo","arg":{"format":"{}","snippet":"phiSaveTo{${1:file}}"}},
+		{"name":"phiSlot","arg":{"format":"{}","snippet":"phiSlot{${1:label}}"}},
+		{"name":"phiTerminal","arg":{"format":"{}","snippet":"phiTerminal{${1:symbol}}"}},
+		{"name":"phiUset","arg":{"format":"{}{}","snippet":"phiUset{${1:text beneath}}{${2:arrow}}"}},
+		{"name":"phiWave"},
+		{"name":"sodgSaveTo","arg":{"format":"{}","snippet":"sodgSaveTo{${1:file}}"}},
+		{"name":"xmir","doc":"The \\xmir macro prints “XMIR”."}
+	],
+	"envs": [
+		{"name":"phiquation","doc":"The phiquation environment treats line endings as signals to begin new lines within the formula."},
+		{"name":"phiquation*","doc":"The phiquation environment treats line endings as signals to begin new lines within the formula."},
+		{"name":"sodg"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"tikz","if":"!usetikz=false"},{"name":"pgf","if":"!usetikz=false"},{"name":"pgfrcs","if":"!usetikz=false"},{"name":"pgfcore","if":"!usetikz=false"},{"name":"graphicx","if":"!usetikz=false"},{"name":"keyval","if":"!usetikz=false"},{"name":"graphics","if":"!usetikz=false"},{"name":"trig","if":"!usetikz=false"},{"name":"pgfsys","if":"!usetikz=false"},{"name":"xcolor","if":"!usetikz=false"},{"name":"pgfcomp-version-0-65","if":"!usetikz=false"},{"name":"pgfcomp-version-1-18","if":"!usetikz=false"},{"name":"pgffor","if":"!usetikz=false"},{"name":"pgfkeys","if":"!usetikz=false"},{"name":"pgfmath","if":"!usetikz=false"}],
+	"macros": [
+		{"name":"hideinsoup","arg":{"format":"{}{}{}{}[]","snippet":"hideinsoup{${1}}{${2}}{${3}}{${4}}[${5}]"},"doc":"Given a starting coordinate, a direction, a comma-separated list of symbols, and an optional clue, set the appropriate coordinates to these symbols."},
+		{"name":"hideinsoup","arg":{"format":"{}{}{}{}","snippet":"hideinsoup{${1}}{${2}}{${3}}{${4}}"},"doc":"Given a starting coordinate, a direction, a comma-separated list of symbols, and an optional clue, set the appropriate coordinates to these symbols."},
+		{"name":"hideinsoup*","arg":{"format":"{}{}{}{}[]","snippet":"hideinsoup*{${1}}{${2}}{${3}}{${4}}[${5}]"},"doc":"Given a starting coordinate, a direction, a comma-separated list of symbols, and an optional clue, set the appropriate coordinates to these symbols."},
+		{"name":"hideinsoup*","arg":{"format":"{}{}{}{}","snippet":"hideinsoup*{${1}}{${2}}{${3}}{${4}}"},"doc":"Given a starting coordinate, a direction, a comma-separated list of symbols, and an optional clue, set the appropriate coordinates to these symbols."},
+		{"name":"highlightinsoup","arg":{"format":"{}{}{}{}","snippet":"highlightinsoup{${1}}{${2}}{${3}}{${4}}"},"doc":"Highlights the word (or sequence of symbols) between (⟨x1⟩,⟨y1⟩) and (⟨x2⟩,⟨y2⟩), where (1,1) is the top left of the soup grid, (2,1) is to the right of the top left, and (1,2) is the first symbol in the second row."},
+		{"name":"listofclues","arg":{"format":"[]","snippet":"listofclues[${1}]"},"doc":"Display the list of clues."},
+		{"name":"listofclues","doc":"Display the list of clues."},
+		{"name":"theclue"}
+	],
+	"envs": [
+		{"name":"alphabetsoup","arg":{"format":"[][][]","snippet":"[${1}][${2}][${3}]"}},
+		{"name":"alphabetsoup"},
+		{"name":"alphabetsoup*","arg":{"format":"[][][]","snippet":"[${1}][${2}][${3}]"}},
+		{"name":"alphabetsoup*"},
+		{"name":"Alphabetsoup","arg":{"format":"[][][]","snippet":"[${1}][${2}][${3}]"},"doc":"An alphabetsoup environment will build a grid of letters using lowercase Latin a– z, weighted for their frequence in English words. The Alphabetsoup environment uses uppercase A–Z."},
+		{"name":"Alphabetsoup","doc":"An alphabetsoup environment will build a grid of letters using lowercase Latin a– z, weighted for their frequence in English words. The Alphabetsoup environment uses uppercase A–Z."},
+		{"name":"Alphabetsoup*","arg":{"format":"[][][]","snippet":"[${1}][${2}][${3}]"},"doc":"An alphabetsoup environment will build a grid of letters using lowercase Latin a– z, weighted for their frequence in English words. The Alphabetsoup environment uses uppercase A–Z."},
+		{"name":"Alphabetsoup*","doc":"An alphabetsoup environment will build a grid of letters using lowercase Latin a– z, weighted for their frequence in English words. The Alphabetsoup environment uses uppercase A–Z."},
+		{"name":"homemadesoup","arg":{"format":"[][]{}[]","snippet":"[${1}][${2}]{${3}}[${4}]"}},
+		{"name":"homemadesoup","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"homemadesoup*","arg":{"format":"[][]{}[]","snippet":"[${1}][${2}]{${3}}[${4}]"}},
+		{"name":"homemadesoup*","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"numbersoup","arg":{"format":"[][]{}[][]","snippet":"[${1}][${2}]{${3}}[${4}][${5}]"}},
+		{"name":"numbersoup","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"numbersoup*","arg":{"format":"[][]{}[][]","snippet":"[${1}][${2}]{${3}}[${4}][${5}]"}},
+		{"name":"numbersoup*","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

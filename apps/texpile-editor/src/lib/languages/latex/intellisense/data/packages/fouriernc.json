@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"fourier"},{"name":"iftex"},{"name":"textcomp"},{"name":"fourier-orns"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fouriernc#c": ["sloped"]
+	},
+	"args": ["\\usepackage/fouriernc#c"]
+}

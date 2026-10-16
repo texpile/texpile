@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"xspace"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"epsfig"},{"name":"eurosym"}],
+	"macros": [
+		{"name":"aes"},
+		{"name":"aeskwadraat","arg":{"format":"{}","snippet":"aeskwadraat{${1:suffix}}"}},
+		{"name":"aeskwadraatroots"},
+		{"name":"aeslogo","arg":{"format":"[]","snippet":"aeslogo[${1:width}]"}},
+		{"name":"aeslogo"},
+		{"name":"aeslogogrijs","arg":{"format":"[]","snippet":"aeslogogrijs[${1:width}]"}},
+		{"name":"aeslogogrijs"},
+		{"name":"aesnaam","arg":{"format":"{}","snippet":"aesnaam{${1:suffix}}"},"doc":"\\aesnaam{} outputs the name of the study association, A–Eskwadraat."},
+		{"name":"aesroots"},
+		{"name":"axicie"},
+		{"name":"bbcie","arg":{"format":"[]","snippet":"bbcie[${1:height}]"}},
+		{"name":"bbcie"},
+		{"name":"BBCie","arg":{"format":"[]","snippet":"BBCie[${1:height}]"}},
+		{"name":"BBCie"},
+		{"name":"blokjes","arg":{"format":"{}","snippet":"blokjes{${1:fontsize}}"}},
+		{"name":"btw"},
+		{"name":"eaes"},
+		{"name":"hektex"},
+		{"name":"TbC"},
+		{"name":"texnicie"},
+		{"name":"TeXniCie"}
+	],
+	"envs": [],
+	"keys": {}
+}

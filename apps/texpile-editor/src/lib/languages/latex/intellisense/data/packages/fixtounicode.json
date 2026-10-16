@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"fixtounicode","arg":{"format":"{}","snippet":"fixtounicode{${1:key-values}}","keys":["l3keys:fixtounicode"],"keyPos":0},"doc":"Add tounicode mappings for TeX/type1 fonts which lack them."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:fixtounicode": ["default=","glyphs=","mappings=","pfb=","tfm=","unicodes="],
+		"\\usepackage/fixtounicode#c": ["debug=${1|true,false|}","dingbats=${1|true,false|}"]
+	},
+	"args": ["\\usepackage/fixtounicode#c"]
+}

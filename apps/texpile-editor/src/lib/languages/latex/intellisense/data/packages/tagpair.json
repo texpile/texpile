@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"varwidth"}],
+	"macros": [
+		{"name":"bottomline","arg":{"format":"{}","snippet":"bottomline{${1:bottom text}}"}},
+		{"name":"pairing","arg":{"format":"{}{}","snippet":"pairing{${1:upper text}}{${2:lower text}}"}}
+	],
+	"envs": [
+		{"name":"pairingline","doc":"For pairing lines, the package provides the pairingline environment, which should contain one or more \\pairing commands."},
+		{"name":"taggedline","arg":{"format":"[]{}","snippet":"[${1:width factor}]{${2:tag}}"}},
+		{"name":"taggedline","arg":{"format":"{}","snippet":"{${1:tag}}"}}
+	],
+	"keys": {}
+}

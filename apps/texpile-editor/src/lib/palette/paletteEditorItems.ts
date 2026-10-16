@@ -14,7 +14,8 @@ import { ensureGlobalSnippets, ensureProjectSnippets, snippetFiles } from '$lib/
 import { packageFilePath } from '$lib/editor/snippets/file/snippetFiles';
 import { savePackageFile } from '$lib/editor/snippets/file/savePackageFile';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
-import { detectedPackages, isBundledPackage } from '$lib/languages/latex/intellisense/completion/packageData';
+import { isBundledPackage } from '$lib/languages/latex/intellisense/packages/packageData';
+import { packageUsesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { userPackage } from '$lib/languages/latex/intellisense/userPackages';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
@@ -139,7 +140,15 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			run: () => void ensureProjectSnippets(root).then((path) => path && a.openFile(path))
 		});
 	if (view && root && a.isProject() && a.isHostWorkspace())
-		for (const name of [...detectedPackages(view.state.doc.toString())].filter((n) => !isBundledPackage(n) && !userPackage(n)).slice(0, 10))
+		for (const name of [
+			...new Set(
+				packageUsesIn(view.state.doc.toString())
+					.filter((u) => u.file?.endsWith('.sty'))
+					.map((u) => u.name)
+			)
+		]
+			.filter((n) => !isBundledPackage(n) && !userPackage(n))
+			.slice(0, 10))
 			items.push({
 				id: `editor.packageFile.${name}`,
 				label: m.palette_save_package_file({ name }),

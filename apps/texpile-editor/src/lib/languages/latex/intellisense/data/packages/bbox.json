@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"bbbottom","arg":{"format":"{}","snippet":"bbbottom{${1:glyph}}"}},
+		{"name":"bbleft","arg":{"format":"{}","snippet":"bbleft{${1:glyph}}"}},
+		{"name":"bbright","arg":{"format":"{}","snippet":"bbright{${1:glyph}}"}},
+		{"name":"bbtop","arg":{"format":"{}","snippet":"bbtop{${1:glyph}}"}},
+		{"name":"resetglyphbb","arg":{"format":"{}{}{}{}{}","snippet":"resetglyphbb{${1:glyph}}{${2:left}}{${3:bottom}}{${4:right}}{${5:top}}"}},
+		{"name":"setglyphbb","arg":{"format":"{}{}{}{}{}","snippet":"setglyphbb{${1:glyph}}{${2:left}}{${3:bottom}}{${4:right}}{${5:top}}"}},
+		{"name":"unsetglyphbb","arg":{"format":"{}","snippet":"unsetglyphbb{${1:glyph}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

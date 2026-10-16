@@ -1,468 +1,72 @@
 {
-  "deps": [
-    {
-      "name": "tikz"
-    },
-    {
-      "name": "tikzlibrarycalc"
-    },
-    {
-      "name": "tikzlibrarybackgrounds"
-    },
-    {
-      "name": "tikzlibrarydecorations.pathmorphing"
-    },
-    {
-      "name": "environ"
-    }
-  ],
-  "macros": [
-    {
-      "name": "texttiming",
-      "arg": {
-        "format": "{}",
-        "snippet": "texttiming{${1:characters}}"
-      }
-    },
-    {
-      "name": "texttiming",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "texttiming[${2:init char/TikZ keys}]{${1:characters}}"
-      }
-    },
-    {
-      "name": "timing"
-    },
-    {
-      "name": "timing",
-      "arg": {
-        "format": "[]",
-        "snippet": "timing[${1:TikZ options}]"
-      }
-    },
-    {
-      "name": "extracode"
-    },
-    {
-      "name": "extracode",
-      "arg": {
-        "format": "[]",
-        "snippet": "extracode[${1:TikZ keys}]"
-      }
-    },
-    {
-      "name": "endextracode"
-    },
-    {
-      "name": "tablegrid"
-    },
-    {
-      "name": "tablegrid",
-      "arg": {
-        "format": "[]",
-        "snippet": "tablegrid[${1:TikZ keys}]"
-      }
-    },
-    {
-      "name": "tablegrid*"
-    },
-    {
-      "name": "tablegrid*",
-      "arg": {
-        "format": "[]",
-        "snippet": "tablegrid*[${1:TikZ keys}]"
-      }
-    },
-    {
-      "name": "fulltablegrid"
-    },
-    {
-      "name": "fulltablegrid",
-      "arg": {
-        "format": "[]",
-        "snippet": "fulltablegrid[${1:TikZ keys}]"
-      }
-    },
-    {
-      "name": "nrows",
-      "unusual": true
-    },
-    {
-      "name": "rowdist",
-      "unusual": true
-    },
-    {
-      "name": "coldist",
-      "unusual": true
-    },
-    {
-      "name": "twidth",
-      "unusual": true
-    },
-    {
-      "name": "horlines",
-      "arg": {
-        "format": "{}",
-        "snippet": "horlines{${1:list}}"
-      }
-    },
-    {
-      "name": "horlines",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "horlines[${2:TikZ keys}]{${1:list}}"
-      }
-    },
-    {
-      "name": "vertlines",
-      "arg": {
-        "format": "{}",
-        "snippet": "vertlines{${1:list}}"
-      }
-    },
-    {
-      "name": "vertlines",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "vertlines[${2:TikZ keys}]{${1:list}}"
-      }
-    },
-    {
-      "name": "tableheader",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tableheader{${1:description title%text}}{${2:signal title%text}}"
-      }
-    },
-    {
-      "name": "tableheader",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "tableheader[${3:TikZ keys}]{${1:description title%text}}{${2:signal title%text}}"
-      }
-    },
-    {
-      "name": "tablerules"
-    },
-    {
-      "name": "tablerules",
-      "arg": {
-        "format": "[]",
-        "snippet": "tablerules[${1:TikZ keys}]"
-      }
-    },
-    {
-      "name": "background",
-      "unusual": true
-    },
-    {
-      "name": "endbackground",
-      "unusual": true
-    },
-    {
-      "name": "tikztimingsetwscale",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "tikztimingsetwscale{${1:math expr}}"
-      }
-    },
-    {
-      "name": "setwscale",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "setwscale{${1:math expr}}"
-      }
-    },
-    {
-      "name": "wscale",
-      "unusual": true
-    },
-    {
-      "name": "xunit",
-      "unusual": true
-    },
-    {
-      "name": "yunit",
-      "unusual": true
-    },
-    {
-      "name": "slope",
-      "unusual": true
-    },
-    {
-      "name": "lslope",
-      "unusual": true
-    },
-    {
-      "name": "zslope",
-      "unusual": true
-    },
-    {
-      "name": "dslope",
-      "unusual": true
-    },
-    {
-      "name": "tikztimingmetachar",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztimingmetachar{${1:meta char}}{${2:char group}}"
-      }
-    },
-    {
-      "name": "tikztimingmetachar",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "tikztimingmetachar{${1:meta char}}[${3:args}]{${2:char group}}"
-      }
-    },
-    {
-      "name": "usetikztiminglibrary",
-      "arg": {
-        "format": "{}",
-        "snippet": "usetikztiminglibrary{${1:libraries%keyvals}}",
-        "keys": [
-          "\\usetikztiminglibrary"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "usetikztiminglibrary",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "usetikztiminglibrary[${2:options}]{${1:libraries%keyvals}}",
-        "keys": [
-          "\\usetikztiminglibrary"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "usetikztiminglibrary",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}[]",
-        "snippet": "usetikztiminglibrary[${2:options}]{${1:libraries%keyvals}}[${3:date}]",
-        "keys": [
-          "\\usetikztiminglibrary"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "tikztimingcounter",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "tikztimingcounter{${1:char}}"
-      }
-    },
-    {
-      "name": "tikztimingsetcounter",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztimingsetcounter{${1:char}}{${2:pgfmath expr}}"
-      }
-    },
-    {
-      "name": "tikztimingwidth",
-      "unusual": true
-    },
-    {
-      "name": "timingwidth",
-      "unusual": true
-    },
-    {
-      "name": "timingheight",
-      "unusual": true
-    },
-    {
-      "name": "charc",
-      "unusual": true
-    },
-    {
-      "name": "charb",
-      "unusual": true
-    },
-    {
-      "name": "abc",
-      "unusual": true
-    },
-    {
-      "name": "list",
-      "unusual": true
-    },
-    {
-      "name": "fwidth",
-      "unusual": true
-    },
-    {
-      "name": "gslope",
-      "unusual": true
-    },
-    {
-      "name": "style",
-      "unusual": true
-    },
-    {
-      "name": "bgstyle",
-      "unusual": true
-    },
-    {
-      "name": "nstyle",
-      "unusual": true
-    },
-    {
-      "name": "newdraw",
-      "unusual": true
-    },
-    {
-      "name": "newdraw",
-      "unusual": true,
-      "arg": {
-        "format": "[]",
-        "snippet": "newdraw[${1:TikZ options}]"
-      }
-    },
-    {
-      "name": "newdrawns",
-      "unusual": true
-    },
-    {
-      "name": "newdrawns",
-      "unusual": true,
-      "arg": {
-        "format": "[]",
-        "snippet": "newdrawns[${1:TikZ options}]"
-      }
-    },
-    {
-      "name": "code",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "code{${1:code}}"
-      }
-    },
-    {
-      "name": "tikztimingsetslope",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "tikztimingsetslope{${1:value}}"
-      }
-    },
-    {
-      "name": "tikztimingsetdslope",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "tikztimingsetdslope{${1:value}}"
-      }
-    },
-    {
-      "name": "tikztimingsetzslope",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "tikztimingsetzslope{${1:value}}"
-      }
-    },
-    {
-      "name": "tikztiminguse",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztiminguse{${1:char}}{${2:code}}"
-      }
-    },
-    {
-      "name": "tikztimingdef",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztimingdef{${1:char}}{${2:code}}"
-      }
-    },
-    {
-      "name": "tikztimingcpy",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztimingcpy{${1:char1}}{${2:char2}}"
-      }
-    },
-    {
-      "name": "tikztiminglet",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztiminglet{${1:char1}}{${2:char2}}"
-      }
-    },
-    {
-      "name": "tikztimingchar",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "tikztimingchar{${1:char}}{${2:code1}}{${3:code2}}"
-      }
-    },
-    {
-      "name": "tikztimingecopy",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "tikztimingecopy{${1:char1}}{${2:char2}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "tikztimingtable"
-    },
-    {
-      "name": "extracode"
-    },
-    {
-      "name": "extracode",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:TikZ keys}]"
-      }
-    },
-    {
-      "name": "background"
-    },
-    {
-      "name": "background",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:TikZ keys}]"
-      }
-    }
-  ],
-  "keys": {
-    "\\usetikztiminglibrary": [
-      "arrows",
-      "either",
-      "overlays",
-      "clockarrows",
-      "columntype",
-      "nicetabs",
-      "counters",
-      "advnodes",
-      "ifsym",
-      "interval",
-      "beamer"
-    ]
-  },
-  "args": []
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"environ"}],
+	"macros": [
+		{"name":"coldist","unusual":true},
+		{"name":"dslope"},
+		{"name":"endextracode","doc":"it is possible to add further timing rows after an extracode section by using \\endextracode."},
+		{"name":"extracode","arg":{"format":"[]","snippet":"extracode[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0}},
+		{"name":"extracode"},
+		{"name":"fulltablegrid","arg":{"format":"[]","snippet":"fulltablegrid[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"After \\extracode this macro draws a big grid over all rows in the background of the table."},
+		{"name":"fulltablegrid","doc":"After \\extracode this macro draws a big grid over all rows in the background of the table."},
+		{"name":"horlines","arg":{"format":"[]{}","snippet":"horlines[${1:TikZ keys}]{${2:list}}","keys":["pgfkeys:/tikz"],"keyPos":0}},
+		{"name":"horlines","arg":{"format":"{}","snippet":"horlines{${1:list}}"}},
+		{"name":"lslope","doc":"Returns the current logic slope, i.e. the slope between L and H levels."},
+		{"name":"nrows","unusual":true},
+		{"name":"rowdist","unusual":true},
+		{"name":"setwscale","arg":{"format":"{}","snippet":"setwscale{${1:math expression}}"},"doc":"This macro , which can be called \\setwscale for short inside modifier code, sets the wscale value."},
+		{"name":"slope","doc":"Returns the current logic slope, i.e. the slope between L and H levels."},
+		{"name":"tablegrid","arg":{"format":"[]","snippet":"tablegrid[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"After \\extracode this macro draws a grid in the background of the table."},
+		{"name":"tablegrid","doc":"After \\extracode this macro draws a grid in the background of the table."},
+		{"name":"tablegrid*","arg":{"format":"[]","snippet":"tablegrid*[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"After \\extracode this macro draws a grid in the background of the table."},
+		{"name":"tablegrid*","doc":"After \\extracode this macro draws a grid in the background of the table."},
+		{"name":"tableheader","arg":{"format":"[]{}{}","snippet":"tableheader[${1:TikZ keys}]{${2:label header keys}}{${3:description title}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"This macro adds a table head row on top of the table."},
+		{"name":"tableheader","arg":{"format":"{}{}","snippet":"tableheader{${1:label header keys}}{${2:description title}}"},"doc":"This macro adds a table head row on top of the table."},
+		{"name":"tablerules","arg":{"format":"[]","snippet":"tablerules[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"This macro adds top and bottom rules to the table in the same (or at least very similar) way as the booktabs package is doing it for normal tabulars."},
+		{"name":"tablerules","doc":"This macro adds top and bottom rules to the table in the same (or at least very similar) way as the booktabs package is doing it for normal tabulars."},
+		{"name":"texttiming","arg":{"format":"[]{}","snippet":"texttiming[${1:initial character/TikZ keys}]{${2:characters}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"This macro places a single timing diagram line into the current text."},
+		{"name":"texttiming","arg":{"format":"{}","snippet":"texttiming{${1:characters}}"},"doc":"This macro places a single timing diagram line into the current text."},
+		{"name":"texttimingafter","unusual":true},
+		{"name":"texttimingbefore","unusual":true},
+		{"name":"texttiminggrid","unusual":true},
+		{"name":"tikztimingchar","arg":{"format":"{}{}{}","snippet":"tikztimingchar{${1:character}}{${2:start code}}{${3:end code}}"},"unusual":true},
+		{"name":"tikztimingcounter","arg":{"format":"{}","snippet":"tikztimingcounter{${1:char}}"}},
+		{"name":"tikztimingcpy","arg":{"format":"{}{}","snippet":"tikztimingcpy{${1:new characters}}{${2:source characters}}"},"unusual":true},
+		{"name":"tikztimingdef","arg":{"format":"{}{}","snippet":"tikztimingdef{${1:characters}}{${2:definition code}}"},"unusual":true},
+		{"name":"tikztimingecopy","arg":{"format":"{}{}","snippet":"tikztimingecopy{${1:new character}}{${2:original character}}"},"unusual":true},
+		{"name":"tikztiminglet","arg":{"format":"{}{}","snippet":"tikztiminglet{${1:original characters}}{${2:new characters}}"},"unusual":true},
+		{"name":"tikztimingmetachar","arg":{"format":"{}[]{}","snippet":"tikztimingmetachar{${1:meta-character}}[${2:number of arguments}]{${3:character group}}"},"doc":"This macro defines the given hmeta-character i to be identical to the given hcharacter groupi."},
+		{"name":"tikztimingmetachar","arg":{"format":"{}{}","snippet":"tikztimingmetachar{${1:meta-character}}{${2:character group}}"},"doc":"This macro defines the given hmeta-character i to be identical to the given hcharacter groupi."},
+		{"name":"tikztimingsetcounter","arg":{"format":"{}{}","snippet":"tikztimingsetcounter{${1:char}}{${2:pgfmath expression}}"},"doc":"The value of counter hchar i can be read or set using this macros."},
+		{"name":"tikztimingsetdslope","arg":{"format":"{}","snippet":"tikztimingsetdslope{${1:slope value}}"},"unusual":true},
+		{"name":"tikztimingsetslope","arg":{"format":"{}","snippet":"tikztimingsetslope{${1:slope value}}"},"unusual":true},
+		{"name":"tikztimingsetwscale","arg":{"format":"{}","snippet":"tikztimingsetwscale{${1:math expression}}"},"doc":"This macro , which can be called \\setwscale for short inside modifier code, sets the wscale value."},
+		{"name":"tikztimingsetzslope","arg":{"format":"{}","snippet":"tikztimingsetzslope{${1:slope value}}"},"unusual":true},
+		{"name":"tikztiminguse","arg":{"format":"{}{}","snippet":"tikztiminguse{${1:characters}}{${2:argument}}"},"unusual":true},
+		{"name":"timing","arg":{"format":"[]","snippet":"timing[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0}},
+		{"name":"timing"},
+		{"name":"timingdslope","unusual":true},
+		{"name":"timingheight","unusual":true},
+		{"name":"timingslope","unusual":true},
+		{"name":"timingwidth","unusual":true},
+		{"name":"timingzslope","unusual":true},
+		{"name":"twidth","unusual":true},
+		{"name":"usetikztiminglibrary","arg":{"format":"[]{}[]","snippet":"usetikztiminglibrary[${1:options}]{${2:libraries}}[${3:date}]","keys":["tikz-timing:library"],"keyPos":1}},
+		{"name":"usetikztiminglibrary","arg":{"format":"{}","snippet":"usetikztiminglibrary{${1:libraries}}","keys":["tikz-timing:library"],"keyPos":0}},
+		{"name":"vertlines","arg":{"format":"[]{}","snippet":"vertlines[${1:TikZ keys}]{${2:list}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"Like \\horlines but draws vertical lines and the listed numbers a relative to the basic width."},
+		{"name":"vertlines","arg":{"format":"{}","snippet":"vertlines{${1:list}}"},"doc":"Like \\horlines but draws vertical lines and the listed numbers a relative to the basic width."},
+		{"name":"wscale","doc":"Returns the current width scaling ‘wscale’ value."},
+		{"name":"xunit","doc":"Sets the x-unitlength (\\xunit) for the timing diagrams."},
+		{"name":"yunit","doc":"Sets the y-unitlength (\\yunit) for the timing diagrams."},
+		{"name":"zslope","doc":"Returns the current Z slope."}
+	],
+	"envs": [
+		{"name":"background","arg":{"format":"[]","snippet":"[${1:TikZ keys}]","keys":["pgfkeys:/tikz"],"keyPos":0}},
+		{"name":"background"},
+		{"name":"tikztimingtable","arg":{"format":"[]","snippet":"[${1:TikZ settings for whole table}]","keys":["pgfkeys:/tikz"],"keyPos":0}},
+		{"name":"tikztimingtable"}
+	],
+	"keys": {
+		"pgfkeys:/tikz": ["timing/debug/markcmd=","timing/debug/node=","timing/debug/nodes=","timing/debug/scope=","timing=${1|C,D,E,G,H,L,M,T,U,X,Z,after table,after text,after,before table,before text,before,c,coldist,coord,d,draw grid,dslope,e,every bg,every char,expand count,font,g,grid,h,initchar,inline node,intext,l,lslope,m,metachar,name,no grid,nooptions,option,outer sep,outer xsep,outer ysep,picture,popoptions,pushoptions,restore,rowdist,save,slope,t,table,text format,u,unit,wscale,x,xunit,yunit,z,zslope|}","timing","timing/after","timing/after table","timing/after text","timing/before","timing/before table","timing/before text","timing/c","timing/coldist=","timing/d","timing/d/background","timing/d/text","timing/debug/node","timing/debug/nodes","timing/debug/scope","timing/draw grid","timing/dslope=","timing/e","timing/e/background","timing/every bg","timing/every char","timing/expand count=","timing/font=","timing/g","timing/grid","timing/initchar=","timing/inline node","timing/intext","timing/lslope=","timing/m","timing/metachar=","timing/name","timing/no grid","timing/outer sep=","timing/outer xsep=","timing/outer ysep=","timing/picture","timing/rowdist=","timing/slope=","timing/t","timing/table","timing/table/grid","timing/table/header","timing/table/label header","timing/table/lines","timing/table/midrules","timing/table/row header","timing/table/rules","timing/text format=","timing/u","timing/u/background","timing/unit=","timing/wscale=","timing/x","timing/xunit=","timing/yunit=","timing/z","timing/zslope="],
+		"tikz-timing:library": ["arrows","either","overlays","clockarrows","columntype","nicetabs","counters","advnodes","ifsym","interval","beamer"]
+	}
 }

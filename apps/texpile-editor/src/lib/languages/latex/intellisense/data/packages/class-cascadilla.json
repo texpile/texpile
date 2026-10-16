@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyhdr"},{"name":"titlesec"},{"name":"natbib"},{"name":"caption"},{"name":"caption3"}],
+	"macros": [
+		{"name":"cascadillabibliography","arg":{"format":"{}","snippet":"cascadillabibliography{${1}}"}},
+		{"name":"completed","arg":{"format":"{}","snippet":"completed{${1}}"}},
+		{"name":"copyrightyear","arg":{"format":"{}","snippet":"copyrightyear{${1}}"}},
+		{"name":"immedsubsection","arg":{"format":"{}","snippet":"immedsubsection{${1}}"}},
+		{"name":"immedsubsubsection","arg":{"format":"{}","snippet":"immedsubsubsection{${1}}"}},
+		{"name":"institution","arg":{"format":"{}","snippet":"institution{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/cascadilla#c": ["a4paper","hyphenate","nocopyright","nosignature","notimes","pagenums"]
+	},
+	"args": ["\\documentclass/cascadilla#c"]
+}

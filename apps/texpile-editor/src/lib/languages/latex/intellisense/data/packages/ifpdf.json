@@ -1,11 +1,6 @@
 {
-  "deps": [
-    {
-      "name": "iftex"
-    }
-  ],
-  "macros": [],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"iftex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
 }

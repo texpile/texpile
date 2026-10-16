@@ -1,0 +1,44 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"babel"},{"name":"isodate"},{"name":"ifthen"},{"name":"substr"},{"name":"inputenc"},{"name":"array"},{"name":"etoolbox"},{"name":"forloop"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"letltxmacro"},{"name":"newpxtext"},{"name":"xpatch"},{"name":"xparse"},{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"xstring"},{"name":"scalefnt"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"newpxmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"centernot"},{"name":"totcount"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"class-exam"},{"name":"class-article"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"calculatorsallowed"},
+		{"name":"calculatorsfalse","unusual":true},
+		{"name":"calculatorstrue","unusual":true},
+		{"name":"engATypeText","unusual":true},
+		{"name":"engBTypeText","unusual":true},
+		{"name":"engCTypeText","unusual":true},
+		{"name":"engTypeText","unusual":true},
+		{"name":"examperiod","arg":{"format":"{}","snippet":"examperiod{${1:resit|s1|s2}}"},"doc":"Specifies the period of the exam, s1 for January/End of Semester 1, s2 for May/End of Semester 2, or resit for Supplementary exams (Summer Resits)."},
+		{"name":"guidance","arg":{"format":"{}","snippet":"guidance{${1:guidance text}}"},"doc":"Sets a ’guidance’ paragraph on the cover page."},
+		{"name":"guidancea","arg":{"format":"{}","snippet":"guidancea{${1:guidance text}}"},"doc":"Sets a ’guidance’ paragraph at the start of section A only."},
+		{"name":"guidanceb","arg":{"format":"{}","snippet":"guidanceb{${1:guidance text}}"},"doc":"Sets a ’guidance’ paragraph at the start of section B only."},
+		{"name":"ifcalculators","unusual":true},
+		{"name":"ifnotes","unusual":true},
+		{"name":"module","arg":{"format":"{}{}","snippet":"module{${1:code}}{${2:full name}}"},"doc":"The code (including the 3-letter prefix) and full name of the module."},
+		{"name":"nfrom","arg":{"format":"{}","snippet":"nfrom{${1:number}}"},"doc":"The number of compulsory questions from the selection available in the options part of the exam."},
+		{"name":"notesallowed","arg":{"format":"{}","snippet":"notesallowed{${1:pages}}"},"doc":"Marks the exam as allowing notes."},
+		{"name":"notesfalse","unusual":true},
+		{"name":"notestrue","unusual":true},
+		{"name":"pointsdec","arg":{"format":"{}","snippet":"pointsdec{${1:description}}"}},
+		{"name":"school","arg":{"format":"{}{}","snippet":"school{${1:English name}}{${2:Welsh name}}"},"doc":"The name of the school setting this exam, provided in both English and Welsh."},
+		{"name":"sectiona","doc":"Only applies when class option ab is active. Begins the compulsory Section A."},
+		{"name":"sectionAHeader","unusual":true},
+		{"name":"sectionAOnlyHeader","unusual":true},
+		{"name":"sectionb","doc":"Only applies when class option ab is active. Begins the student-choice Section B."},
+		{"name":"sectionBHeader","unusual":true},
+		{"name":"timeallowed","arg":{"format":"{}","snippet":"timeallowed{${1:hours}}"},"doc":"The amount of time allowed in hours."},
+		{"name":"version","unusual":true},
+		{"name":"welATypeText","unusual":true},
+		{"name":"welBTypeText","unusual":true},
+		{"name":"welCTypeText","unusual":true},
+		{"name":"welTypeText","unusual":true}
+	],
+	"envs": [
+		{"name":"horizontalcheckboxes"},
+		{"name":"horizontalchoices","doc":"The choices environment presents one choice per line, whereas the horizontalchoices environment lays out choices in a single paragraph, wrapping lines wherever necessary."}
+	],
+	"keys": {
+		"\\documentclass/bangorexam#c": ["ab","answers","aonly","draft","nfrom","twofour","welsh"]
+	},
+	"args": ["\\documentclass/bangorexam#c"]
+}

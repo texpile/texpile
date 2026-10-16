@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"xparse"}],
+	"macros": [
+		{"name":"newUOLdecorator","arg":{"format":"{}{}","snippet":"newUOLdecorator{${1}}{${2}}"}},
+		{"name":"UOLaugment","arg":{"format":"{}","snippet":"UOLaugment{${1}}"}},
+		{"name":"UOLoverbrace","arg":{"format":"{}[]","snippet":"UOLoverbrace{${1:non-overlapping content}}[${2:overlapping content}]"}},
+		{"name":"UOLoverbrace","arg":{"format":"{}","snippet":"UOLoverbrace{${1:non-overlapping content}}"}},
+		{"name":"UOLoverline","arg":{"format":"{}[]","snippet":"UOLoverline{${1:non-overlapping content}}[${2:overlapping content}]"}},
+		{"name":"UOLoverline","arg":{"format":"{}","snippet":"UOLoverline{${1:non-overlapping content}}"}},
+		{"name":"UOLunaugment","arg":{"format":"{}","snippet":"UOLunaugment{${1}}"}},
+		{"name":"UOLunderbrace","arg":{"format":"{}[]","snippet":"UOLunderbrace{${1:non-overlapping content}}[${2:overlapping content}]"}},
+		{"name":"UOLunderbrace","arg":{"format":"{}","snippet":"UOLunderbrace{${1:non-overlapping content}}"}},
+		{"name":"UOLunderline","arg":{"format":"{}[]","snippet":"UOLunderline{${1:non-overlapping content}}[${2:overlapping content}]"}},
+		{"name":"UOLunderline","arg":{"format":"{}","snippet":"UOLunderline{${1:non-overlapping content}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"FlushFootnote"},
+		{"name":"Footnote","arg":{"format":"[]{}","snippet":"Footnote[${1:options}]{${2:content}}"}},
+		{"name":"Footnote","arg":{"format":"{}","snippet":"Footnote{${1:content}}"}},
+		{"name":"FootnoteParagraph","arg":{"format":"{}","snippet":"FootnoteParagraph{${1:content}}"}},
+		{"name":"footnoteSetup","arg":{"format":"{}","snippet":"footnoteSetup{${1:options}}"}},
+		{"name":"ResetFootnoteCounter"},
+		{"name":"脚注","arg":{"format":"[]{}","snippet":"脚注[${1:options}]{${2:content}}"}},
+		{"name":"脚注","arg":{"format":"{}","snippet":"脚注{${1:content}}"}},
+		{"name":"脚注段落","arg":{"format":"{}","snippet":"脚注段落{${1:content}}"}},
+		{"name":"脚注设置","arg":{"format":"{}","snippet":"脚注设置{${1:options}}"}},
+		{"name":"腳注","arg":{"format":"[]{}","snippet":"腳注[${1:options}]{${2:content}}"}},
+		{"name":"腳注","arg":{"format":"{}","snippet":"腳注{${1:content}}"}},
+		{"name":"腳注段落","arg":{"format":"{}","snippet":"腳注段落{${1:content}}"}},
+		{"name":"腳注設置","arg":{"format":"{}","snippet":"腳注設置{${1:options}}"}},
+		{"name":"輸出腳注"},
+		{"name":"输出脚注"},
+		{"name":"重置脚注计数"},
+		{"name":"重置腳注計數"}
+	],
+	"envs": [],
+	"keys": {}
+}

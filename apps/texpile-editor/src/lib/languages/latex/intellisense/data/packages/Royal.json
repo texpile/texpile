@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"royal","arg":{"format":"{}","snippet":"royal{${1:initial}}"}},
+		{"name":"Royal"}
+	],
+	"envs": [],
+	"keys": {}
+}

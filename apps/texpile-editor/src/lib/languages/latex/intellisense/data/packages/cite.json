@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"citedash"},
+		{"name":"citeform","arg":{"format":"{}","snippet":"citeform{${1:number}}"}},
+		{"name":"citeleft"},
+		{"name":"citemid"},
+		{"name":"citemidpenalty"},
+		{"name":"CiteMoveChars","doc":"The punctuation characters that will migrate before superscript cites are listed in the macro \\CiteMoveChars, which you can redefine (using \\renewcommand)."},
+		{"name":"citen","arg":{"format":"{}","snippet":"citen{${1:keys}}"},"doc":"The command \\citen is provided to give just the citation number(s) without the brackets or superscript and other formatting."},
+		{"name":"citenum","arg":{"format":"{}","snippet":"citenum{${1:keys}}"}},
+		{"name":"citeonline","arg":{"format":"{}","snippet":"citeonline{${1:keys}}"}},
+		{"name":"citeprepenalty"},
+		{"name":"citepunct"},
+		{"name":"citepunctpenalty"},
+		{"name":"citeright"},
+		{"name":"OverciteFont"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/cite#c": ["adjust","biblabel","compress","move","noadjust","nobreak","nocompress","nomove","nosort","nospace","ref","sort","space","super","superscript","verbose"]
+	},
+	"args": ["\\usepackage/cite#c"]
+}

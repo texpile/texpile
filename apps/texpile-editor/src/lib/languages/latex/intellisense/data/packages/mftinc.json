@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"rawfonts"},{"name":"somedefs"},{"name":"keyval"},{"name":"chngpage"},{"name":"lineno"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"fonttable","arg":{"format":"[]{}","snippet":"fonttable[${1:options}]{${2:font name}}","keys":["keyval:mft"],"keyPos":0},"doc":"\\fonttable normally shows only nonempty rows of characters."},
+		{"name":"fonttable","arg":{"format":"{}","snippet":"fonttable{${1:font name}}"},"doc":"\\fonttable normally shows only nonempty rows of characters."},
+		{"name":"mfcomment"},
+		{"name":"mftinput","arg":{"format":"{}","snippet":"mftinput{${1:file name}}"}},
+		{"name":"setmftdefaults","arg":{"format":"{}","snippet":"setmftdefaults{${1:options}}","keys":["keyval:mft"],"keyPos":0},"doc":"Rather than repeatedly specify the same optional arguments, one can use \\setmftdefaults to specify default values for all mftinc macros and environments that take optional arguments."}
+	],
+	"envs": [
+		{"name":"explaincode","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:mft"],"keyPos":0}},
+		{"name":"explaincode"},
+		{"name":"wrapcomment"}
+	],
+	"keys": {
+		"keyval:mft": ["bottomrule=","charrange=","tablewidth=","toprule="]
+	}
+}

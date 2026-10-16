@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"udesoftec-bibcommon"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"regexpatch"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"hyphenat"},{"name":"uri"},{"name":"xstring"},{"name":"babel"},{"name":"datetime2"},{"name":"tracklang"},{"name":"xkeyval"},{"name":"biblatex"},{"name":"logreq"},{"name":"ifthen"},{"name":"blx-case-expl3"}],
+	"macros": [
+		{"name":"documentIsFinalfalse","unusual":true},
+		{"name":"documentIsFinaltrue","unusual":true},
+		{"name":"ifdocumentIsFinal","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

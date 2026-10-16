@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"hexdumptikz-common"},{"name":"pgfkeys"},{"name":"hexdumptikz-addrcalc"}],
+	"macros": [
+		{"name":"hexdumptikzIterDump","unusual":true},
+		{"name":"hexdumptikzMatchRow","arg":{"format":"{}{}{}","snippet":"hexdumptikzMatchRow{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"hexdumptikzMatchStyle","arg":{"format":"{}{}{}","snippet":"hexdumptikzMatchStyle{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"hexdumptikzParseDump","unusual":true},
+		{"name":"hexdumptikzParseRow","arg":{"format":"{}","snippet":"hexdumptikzParseRow{${1}}"},"unusual":true},
+		{"name":"hexdumptikzReset","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

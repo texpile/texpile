@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"l3keys2e"},{"name":"class-scrbook"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"roboto"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"sourceserifpro"},{"name":"sourceserif"},{"name":"geometry"},{"name":"ifvtex"},{"name":"ragged2e"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"biblatex-chicago"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"xstring"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"doclicense"},{"name":"xifthen"},{"name":"calc"},{"name":"xspace"},{"name":"verbatim"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"ccicons"},{"name":"bookmark"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"addarticletocentry","arg":{"format":"{}{}","snippet":"addarticletocentry{${1}}{${2}}"},"unusual":true},
+		{"name":"article","arg":{"format":"[]{}","snippet":"article[${1:short title}]{${2:title}}"},"unusual":true},
+		{"name":"article","arg":{"format":"{}","snippet":"article{${1:title}}"},"unusual":true},
+		{"name":"article*","arg":{"format":"[]{}","snippet":"article*[${1:short title}]{${2:title}}"},"unusual":true},
+		{"name":"article*","arg":{"format":"{}","snippet":"article*{${1:title}}"},"unusual":true},
+		{"name":"Article","arg":{"format":"[]{}","snippet":"Article[${1:keys}]{${2:title}}"},"doc":"The \\Article macro is starting a new chapter and adding additional data fields to provide imprint data."},
+		{"name":"Article","arg":{"format":"{}","snippet":"Article{${1:title}}"},"doc":"The \\Article macro is starting a new chapter and adding additional data fields to provide imprint data."},
+		{"name":"articleformat","unusual":true},
+		{"name":"articlemarkformat","unusual":true},
+		{"name":"edition","arg":{"format":"{}","snippet":"edition{${1:edition}}"}},
+		{"name":"HUGE","unusual":true},
+		{"name":"insertauthor"},
+		{"name":"insertdate"},
+		{"name":"insertedition"},
+		{"name":"insertpublishers"},
+		{"name":"insertpublishersaddress"},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords}}"},"if":"collection=true"},
+		{"name":"listofauthors"},
+		{"name":"publishersaddress","arg":{"format":"{}","snippet":"publishersaddress{${1:address}}"}}
+	],
+	"envs": [
+		{"name":"abstract","arg":{"format":"[]","snippet":"[${1:language}]"},"if":"collection=true","doc":"The abstract environment allows to select a language to allow the addition of a german as well as an english abstract."},
+		{"name":"abstract","if":"collection=true","doc":"The abstract environment allows to select a language to allow the addition of a german as well as an english abstract."}
+	],
+	"keys": {}
+}

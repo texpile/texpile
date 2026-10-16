@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"eledmac"},{"name":"xkeyval"},{"name":"xargs"},{"name":"etoolbox"},{"name":"suffix"},{"name":"xstring"},{"name":"iftex"},{"name":"ragged2e"}],
+	"macros": [
+		{"name":"manposition","arg":{"format":"{}","snippet":"manposition{${1:position}}"}},
+		{"name":"manuscript","arg":{"format":"{}","snippet":"manuscript{${1:list}}"}},
+		{"name":"manvarseparator","arg":{"format":"{}","snippet":"manvarseparator{${1:separator}}"}},
+		{"name":"omitposition","arg":{"format":"{}","snippet":"omitposition{${1:position}}"}},
+		{"name":"omittext","arg":{"format":"{}","snippet":"omittext{${1:text}}"}},
+		{"name":"var","arg":{"format":"[]{}{}{}[]","snippet":"var[${1:short}]{${2:lemma}}{${3:del}}{${4:variants}}[${5:other}]"}},
+		{"name":"var","arg":{"format":"{}{}{}","snippet":"var{${1:lemma}}{${2:del}}{${3:variants}}"}},
+		{"name":"varseparator","arg":{"format":"{}","snippet":"varseparator{${1:separator}}"}},
+		{"name":"varseries","arg":{"format":"{}","snippet":"varseries{${1:letter}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

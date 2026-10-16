@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"gmacroswap","arg":{"format":"{}{}","snippet":"gmacroswap{${1}}{${2}}"},"doc":"Given the name of two macros, swap their definitions."},
+		{"name":"macroswap","arg":{"format":"{}{}","snippet":"macroswap{${1}}{${2}}"},"doc":"Given the name of two macros, swap their definitions."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"grabbox","arg":{"format":"[]{}[]{}[]{}","snippet":"grabbox[${1:inject pre pre}]{${2:box register}}[${3:inject pre}]{${4:box type}}[${5:inject post}]{${6:afterwards}}"},"doc":"This package provides \\grabbox to grab an argument inside of a box."},
+		{"name":"grabbox","arg":{"format":"{}{}{}","snippet":"grabbox{${1:box register}}{${2:box type}}{${3:afterwards}}"},"doc":"This package provides \\grabbox to grab an argument inside of a box."},
+		{"name":"grabbox*","arg":{"format":"[]{}[]{}[]{}","snippet":"grabbox*[${1:inject pre pre}]{${2:box register}}[${3:inject pre}]{${4:box type}}[${5:inject post}]{${6:afterwards}}"},"doc":"This package provides \\grabbox to grab an argument inside of a box."},
+		{"name":"grabbox*","arg":{"format":"{}{}{}","snippet":"grabbox*{${1:box register}}{${2:box type}}{${3:afterwards}}"},"doc":"This package provides \\grabbox to grab an argument inside of a box."}
+	],
+	"envs": [],
+	"keys": {}
+}

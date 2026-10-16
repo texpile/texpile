@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"exam-zh-counter"},{"name":"xparse"},{"name":"exam-zh-circlednumber"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tabularray"},{"name":"ninecolors"},{"name":"varwidth"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"wrapstuff"}],
+	"macros": [
+		{"name":"AddCalculationsCounter","arg":{"format":"{}{}","snippet":"AddCalculationsCounter{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"calculations","arg":{"format":"[][]","snippet":"[${1:key-value list}][${2:tblr settings}]"}},
+		{"name":"calculations"}
+	],
+	"keys": {}
+}

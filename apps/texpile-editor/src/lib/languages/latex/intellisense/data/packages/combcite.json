@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"cite"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/combcite#c": ["super","superscript"]
+	},
+	"args": ["\\usepackage/combcite#c"]
+}

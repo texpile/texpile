@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"HeblatexEncoding","unusual":true},
+		{"name":"HeblatexEncodingFile","unusual":true},
+		{"name":"textclas","arg":{"format":"{}","snippet":"textclas{${1:text}}"}},
+		{"name":"textcrml","arg":{"format":"{}","snippet":"textcrml{${1:text}}"}},
+		{"name":"textfr","arg":{"format":"{}","snippet":"textfr{${1:text}}"}},
+		{"name":"textredis","arg":{"format":"{}","snippet":"textredis{${1:text}}"}},
+		{"name":"textshold","arg":{"format":"{}","snippet":"textshold{${1:text}}"}},
+		{"name":"textshscr","arg":{"format":"{}","snippet":"textshscr{${1:text}}"}},
+		{"name":"textshstk","arg":{"format":"{}","snippet":"textshstk{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/culmus#c": ["small-size","use-david"]
+	},
+	"args": ["\\usepackage/culmus#c"]
+}

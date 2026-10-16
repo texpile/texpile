@@ -2,9 +2,8 @@
 // (the stex StreamLanguage tree has no math scope to ask), tracking $/$$, \(/\), \[/\] and math
 // environments. boosts math-flagged macros inside math and sinks them slightly outside; never
 // filters, so a wrong guess degrades to LaTeX Workshop's flat ordering instead of a missing entry.
-import type { Completion } from '@codemirror/autocomplete';
 import type { EditorState } from '@codemirror/state';
-import { MATH_MACRO_LABELS } from './macros';
+import type { MacroCompletion } from '../packages/packageCompletions';
 
 const WINDOW = 4000;
 const MATH_ENVS =
@@ -42,7 +41,7 @@ const IN_MATH_BOOST = 12;
 const OUT_OF_MATH_SINK = -6;
 
 /** re-ranks math-flagged macro completions for the given context; composes with frecency boosts. */
-export function withMathBoost(options: Completion[], inMath: boolean): Completion[] {
+export function withMathBoost(options: MacroCompletion[], inMath: boolean): MacroCompletion[] {
 	const delta = inMath ? IN_MATH_BOOST : OUT_OF_MATH_SINK;
-	return options.map((o) => (MATH_MACRO_LABELS.has(o.label) ? { ...o, boost: (o.boost ?? 0) + delta } : o));
+	return options.map((o) => (o.math ? { ...o, boost: (o.boost ?? 0) + delta } : o));
 }

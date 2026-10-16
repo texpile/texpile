@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"fullyconnectednnInoutfalse","unusual":true},
+		{"name":"fullyconnectednnInouttrue","unusual":true},
+		{"name":"iffullyconnectednnInout","unusual":true},
+		{"name":"ifnnlayerHasBias","unusual":true},
+		{"name":"nnlayer","arg":{"format":"[]{}","snippet":"nnlayer[${1:options}]{${2:neurons}}"}},
+		{"name":"nnlayer","arg":{"format":"{}","snippet":"nnlayer{${1:neurons}}"}},
+		{"name":"nnlayerHasBiasfalse","unusual":true},
+		{"name":"nnlayerHasBiastrue","unusual":true},
+		{"name":"thelastnnsize","unusual":true},
+		{"name":"thenninputlayer","unusual":true},
+		{"name":"thenumlayers","unusual":true}
+	],
+	"envs": [
+		{"name":"fullyconnectednn","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"fullyconnectednn"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"DefineTagFilter","arg":{"format":"{}{}{}","snippet":"DefineTagFilter{${1}}{${2}}{${3}}"}},
+		{"name":"SetTagFilter","arg":{"format":"[]{}","snippet":"SetTagFilter[${1}]{${2}}"}},
+		{"name":"SetTagFilter","arg":{"format":"{}","snippet":"SetTagFilter{${1}}"}},
+		{"name":"UseTagFilter","arg":{"format":"{}","snippet":"UseTagFilter{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

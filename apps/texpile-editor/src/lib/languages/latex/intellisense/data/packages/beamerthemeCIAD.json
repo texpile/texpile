@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"beamerbasethemeCIAD"},{"name":"relsize"},{"name":"hyphenat"},{"name":"xspace"},{"name":"pifont"},{"name":"tikz"},{"name":"pgf"},{"name":"pgffor"},{"name":"environ"},{"name":"textcomp"},{"name":"colortbl"},{"name":"array"},{"name":"stringstrings"},{"name":"textcase"},{"name":"tabularx"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"hyphsubst"},{"name":"beamercolorthemeCIAD"},{"name":"beamerinnerthemeCIAD"},{"name":"beamerouterthemeCIAD"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"trimclip"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"xkeyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

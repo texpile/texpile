@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"bar","math":true,"detail":"̄","doc":"macron"},
+		{"name":"bcbox","arg":{"format":"{}","snippet":"bcbox{${1:digits}}"}},
+		{"name":"bcboxdepth"},
+		{"name":"bdbox","arg":{"format":"{}","snippet":"bdbox{${1:digits}}"}},
+		{"name":"bebox","arg":{"format":"{}","snippet":"bebox{${1:digits}}"}},
+		{"name":"cdb"},
+		{"name":"codexichecksumkfalse"},
+		{"name":"codxi","arg":{"format":"{}","snippet":"codxi{${1:digits}}"}},
+		{"name":"codxxxix","arg":{"format":"{}","snippet":"codxxxix{${1:text}}"}},
+		{"name":"cxxviii","arg":{"format":"{}","snippet":"cxxviii{${1:text}}"}},
+		{"name":"CXXVIII"},
+		{"name":"ean","arg":{"format":"{}","snippet":"ean{${1:coded EAN string}}"}},
+		{"name":"eanfont"},
+		{"name":"ifcodexichecksumk","unusual":true},
+		{"name":"itf"},
+		{"name":"XCIII","arg":{"format":"{}","snippet":"XCIII{${1:coded text}}"}},
+		{"name":"xlix"}
+	],
+	"envs": [],
+	"keys": {}
+}

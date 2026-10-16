@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"enumitem"},{"name":"xparse"},{"name":"array"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"AutoSubpartsAligned","arg":{"format":"{}","snippet":"AutoSubpartsAligned{${1:items separated by ;}}"}},
+		{"name":"enumsub","arg":{"format":"{}","snippet":"enumsub{${1:items separated by ;}}"}},
+		{"name":"inlineparts","arg":{"format":"{}","snippet":"inlineparts{${1:items separated by ;}}"}},
+		{"name":"setenumsubitemwidth","arg":{"format":"{}","snippet":"setenumsubitemwidth{${1:width}}"}},
+		{"name":"setenumsublabelwidth","arg":{"format":"{}","snippet":"setenumsublabelwidth{${1:width}}"}},
+		{"name":"subparts","arg":{"format":"{}","snippet":"subparts{${1:items separated by ;}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/enumsub#c": ["alpha","arabic","roman"]
+	},
+	"args": ["\\usepackage/enumsub#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"closing","arg":{"format":"{}","snippet":"closing{${1}}"}},
+		{"name":"opening","arg":{"format":"{}","snippet":"opening{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

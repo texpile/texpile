@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"pifont"},{"name":"keyval"}],
+	"macros": [
+		{"name":"dsaeronautical"},
+		{"name":"dsagricultural"},
+		{"name":"dsarchitectural"},
+		{"name":"dsbiological"},
+		{"name":"dschemical"},
+		{"name":"dscommercial"},
+		{"name":"dsheraldical"},
+		{"name":"dsjuridical"},
+		{"name":"dsliterary"},
+		{"name":"dsmathematical"},
+		{"name":"dsmedical"},
+		{"name":"dsmilitary"},
+		{"name":"dsrailways"},
+		{"name":"dstechnical"}
+	],
+	"envs": [],
+	"keys": {}
+}

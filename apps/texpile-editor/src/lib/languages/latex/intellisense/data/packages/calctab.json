@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"alphalph"},{"name":"intcalc"},{"name":"booktabs"},{"name":"eurosym"},{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"numprint"},{"name":"xkeyval"},{"name":"ifthen"},{"name":"fltpoint"},{"name":"xstring"}],
+	"macros": [
+		{"name":"add","arg":{"format":"[]{}","snippet":"add[${1:key-value list}]{${2:description}}"}},
+		{"name":"add","arg":{"format":"{}","snippet":"add{${1:description}}"}},
+		{"name":"amount","arg":{"format":"[]{}{}","snippet":"amount[${1:id=rowID}]{${2:description}}{${3:value}}"}},
+		{"name":"amount","arg":{"format":"{}{}","snippet":"amount{${1:description}}{${2:value}}"}},
+		{"name":"ctcurrency","arg":{"format":"{}","snippet":"ctcurrency{${1:text}}"}},
+		{"name":"ctdescription","arg":{"format":"{}","snippet":"ctdescription{${1:text}}"},"doc":"The title of description column, that can be modify by the user with the command \\ctdescription, and the title of economic column that describe currency, set by the command \\ctcurrency."},
+		{"name":"ctheaderone","arg":{"format":"{}","snippet":"ctheaderone{${1:first header}}"}},
+		{"name":"ctheadertwo","arg":{"format":"{}","snippet":"ctheadertwo{${1:second header}}"}},
+		{"name":"ctontraslation","arg":{"format":"{}","snippet":"ctontraslation{${1:on translation}}"}},
+		{"name":"ctsep","doc":"The width of the calctab table can be adjust via a standard LaTeX length called \\ctsep (default value is 8mm)."},
+		{"name":"inrule"},
+		{"name":"perc","arg":{"format":"[]{}{}","snippet":"perc[${1:key-value list}]{${2:description}}{${3:percentage}}"}},
+		{"name":"perc","arg":{"format":"{}{}","snippet":"perc{${1:description}}{${2:percentage}}"}}
+	],
+	"envs": [
+		{"name":"calctab","arg":{"format":"[]","snippet":"[${1:description paragraph}]"},"doc":"The calctab environments manages all the table format elements such as the rows color, the rules, the columns header description text, etc. Furthermore, the code executes the data numeric formatting, the font family selection and more."},
+		{"name":"calctab","doc":"The calctab environments manages all the table format elements such as the rows color, the rules, the columns header description text, etc. Furthermore, the code executes the data numeric formatting, the font family selection and more."},
+		{"name":"xcalctab","arg":{"format":"[]","snippet":"[${1:description paragraph}]"}},
+		{"name":"xcalctab"}
+	],
+	"keys": {}
+}

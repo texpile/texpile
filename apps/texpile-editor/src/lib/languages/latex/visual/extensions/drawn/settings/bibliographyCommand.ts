@@ -1,5 +1,4 @@
 // \bibliographystyle or \bibliography as its one setting, the style or the .bib files, changed in place
-import { detectedPackages } from '$lib/languages/latex/intellisense/completion/packageData';
 
 export type BibliographyCommand = { style: boolean; value: string };
 
@@ -35,7 +34,7 @@ export function writeBibliography(source: string, value: string): string {
 }
 
 /** how the preamble prints its bibliography: biblatex's \printbibliography, or BibTeX's style and files. undefined = no preamble seen */
-export function bibliographyKindFor(preamble: string): 'biblatex' | 'bibtex' | undefined {
+export function bibliographyKindFor(preamble: string, packages: ReadonlySet<string>): 'biblatex' | 'bibtex' | undefined {
 	if (!/\\documentclass/.test(preamble)) return undefined;
-	return detectedPackages(preamble).has('biblatex') ? 'biblatex' : 'bibtex';
+	return packages.has('biblatex') ? 'biblatex' : 'bibtex';
 }

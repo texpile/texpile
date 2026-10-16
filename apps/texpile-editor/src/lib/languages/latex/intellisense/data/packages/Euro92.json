@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"abstsize","unusual":true},
+		{"name":"affiliation","arg":{"format":"{}","snippet":"affiliation{${1:affiliation}}"}},
+		{"name":"affilsize","unusual":true},
+		{"name":"at"},
+		{"name":"authorhead","arg":{"format":"{}","snippet":"authorhead{${1:author names}}"}},
+		{"name":"authsize","unusual":true},
+		{"name":"boi"},
+		{"name":"captsize","unusual":true},
+		{"name":"circonflexe"},
+		{"name":"DateC","arg":{"format":"{}","snippet":"DateC{${1}}"},"unusual":true},
+		{"name":"degre"},
+		{"name":"listelabel","unusual":true},
+		{"name":"NoC","arg":{"format":"{}","snippet":"NoC{${1}}"},"unusual":true},
+		{"name":"sectsize","unusual":true},
+		{"name":"subsectsize","unusual":true},
+		{"name":"tild"},
+		{"name":"titlehead","arg":{"format":"{}","snippet":"titlehead{${1:short title}}"}},
+		{"name":"titlesize","unusual":true}
+	],
+	"envs": [
+		{"name":"abst"},
+		{"name":"enumeration"},
+		{"name":"keywords"},
+		{"name":"liste"},
+		{"name":"resume","arg":{"format":"{}","snippet":"{${1:title}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"pdflscape-nometadata"},{"name":"iftex"},{"name":"lscape"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

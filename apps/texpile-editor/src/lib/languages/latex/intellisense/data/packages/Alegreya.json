@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"iftex"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"Alegreya"},
+		{"name":"AlegreyaBlack"},
+		{"name":"AlegreyaExtraBold"},
+		{"name":"Alegreyafamily","unusual":true},
+		{"name":"AlegreyaLF","doc":"Commands \\AlegreyaLF, \\AlegreyaOsF, \\AlegreyaTLF, and \\AlegreyaTOsF allow for localized use of non-default figures."},
+		{"name":"AlegreyaMedium"},
+		{"name":"AlegreyaOsF","doc":"Commands \\AlegreyaLF, \\AlegreyaOsF, \\AlegreyaTLF, and \\AlegreyaTOsF allow for localized use of non-default figures."},
+		{"name":"AlegreyaTLF","doc":"Commands \\AlegreyaLF, \\AlegreyaOsF, \\AlegreyaTLF, and \\AlegreyaTOsF allow for localized use of non-default figures."},
+		{"name":"AlegreyaTOsF","doc":"Commands \\AlegreyaLF, \\AlegreyaOsF, \\AlegreyaTLF, and \\AlegreyaTOsF allow for localized use of non-default figures."},
+		{"name":"infigures"},
+		{"name":"sufigures"},
+		{"name":"textin","arg":{"format":"{}","snippet":"textin{${1}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1}}"}},
+		{"name":"useosf","doc":"Command \\useosf switches the default figure style to old-style figures; this is primarily for use after calling a math package with lining figures as the default."}
+	],
+	"envs": [],
+	"keys": {}
+}

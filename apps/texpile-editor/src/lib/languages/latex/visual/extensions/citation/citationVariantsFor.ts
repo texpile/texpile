@@ -1,7 +1,6 @@
-import { detectedPackages } from '$lib/languages/latex/intellisense/completion/packageData';
-
 /**
- * The citation commands a document can actually compile, read from what its preamble loads.
+ * The citation commands a document can actually compile, from what it loads (`packages`: its class, its packages and
+ * what they load in turn, as filePackageNames gives them).
  *
  * The menu used to be a fixed biblatex list for everyone, so picking "Parenthetical" in a natbib
  * document wrote \parencite - an undefined command and a failed build. The same three options are
@@ -16,10 +15,8 @@ import { detectedPackages } from '$lib/languages/latex/intellisense/completion/p
  * document without packages. Narrowing there would collapse the menu in every multi-file project,
  * so the caller keeps offering what it offered before.
  */
-export function citationVariantsFor(preamble: string): string[] | undefined {
+export function citationVariantsFor(preamble: string, packages: ReadonlySet<string>): string[] | undefined {
 	if (!/\\documentclass/.test(preamble)) return undefined;
-
-	const packages = detectedPackages(preamble);
 	if (packages.has('biblatex')) return ['cite', 'parencite', 'textcite'];
 	if (packages.has('natbib')) return ['cite', 'citep', 'citet'];
 	// plain bibtex defines exactly one citation command, so there is no choice to offer

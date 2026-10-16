@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"array"},{"name":"varwidth"},{"name":"dashrule"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xparse"},{"name":"etoolbox"},{"name":"calc"},{"name":"forloop"},{"name":"ifthen"},{"name":"alphalph"},{"name":"intcalc"}],
+	"macros": [
+		{"name":"forceRowHeight","arg":{"format":"{}","snippet":"forceRowHeight{${1:value}}"},"doc":"\\forceRowHeight{value} enforce current row minimum height to value."},
+		{"name":"lb","arg":{"format":"[]","snippet":"lb[${1:priority}]"},"doc":"Line break in table cell can be do with \\lb (shortcut for \\linebreak), \\linebreak or \\newline."},
+		{"name":"lb","doc":"Line break in table cell can be do with \\lb (shortcut for \\linebreak), \\linebreak or \\newline."},
+		{"name":"nextRow","arg":{"format":"[]","snippet":"nextRow[${1:space}]"},"doc":"Each row (even last) MUST be ended with \\nextRow command (insted of \\\\ or \\tabularnewline)."},
+		{"name":"nextRow","doc":"Each row (even last) MUST be ended with \\nextRow command (insted of \\\\ or \\tabularnewline)."},
+		{"name":"setMultiColRow","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"setMultiColRow{${1:col num}}{${2:row num}}{${3:max width}}{${4:min width}}{${5:hmode}}{${6:vmode}}{${7:left sep}}{${8:right sep}}{${9:text}}"}},
+		{"name":"setMultiColumn","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"setMultiColumn{${1:col num}}{${2:max width}}{${3:min width}}{${4:hmode}}{${5:vmode}}{${6:left sep}}{${7:right sep}}{${8:text}}"},"doc":"\\setMultiColumn{col num}{max width}{min width}{hmode}{vmode}{left sep}{right sep}{text} command allow create multi column cell."},
+		{"name":"setMultiRow","arg":{"format":"{}[]{}[]","snippet":"setMultiRow{${1:row num}}[${2:minimal height}]{${3:text}}[${4:col span}]"},"doc":"\\setMultiRow{col num}[minimal height]{text} command allow create multi row cell."},
+		{"name":"setMultiRow","arg":{"format":"{}{}","snippet":"setMultiRow{${1:row num}}{${2:text}}"},"doc":"\\setMultiRow{col num}[minimal height]{text} command allow create multi row cell."},
+		{"name":"tableFormatedCell","arg":{"format":"{}[]{}{}","snippet":"tableFormatedCell{${1:max width}}[${2:min width}]{${3:hmode}}{${4:vmode}}"},"doc":"\\tableFormatedCell{max width}[min width]{hmode}{vmode} command allow change formatting for single cell."},
+		{"name":"tableFormatedCell","arg":{"format":"{}{}{}","snippet":"tableFormatedCell{${1:max width}}{${2:hmode}}{${3:vmode}}"},"doc":"\\tableFormatedCell{max width}[min width]{hmode}{vmode} command allow change formatting for single cell."}
+	],
+	"envs": [],
+	"keys": {}
+}

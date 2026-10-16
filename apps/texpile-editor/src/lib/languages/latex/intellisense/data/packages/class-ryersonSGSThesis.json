@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"class-report"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"float"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"cite"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"verbatim"},{"name":"lmodern"},{"name":"setspace"},{"name":"longtable"},{"name":"array"},{"name":"ragged2e"},{"name":"appendix"},{"name":"listings"},{"name":"algpseudocode"},{"name":"ifthen"},{"name":"algorithmicx"},{"name":"algorithm"},{"name":"xcolor"},{"name":"colortbl"},{"name":"todonotes"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"},{"name":"makeidx"},{"name":"subfiles"},{"name":"import"},{"name":"blindtext"},{"name":"xspace"},{"name":"glossaries"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"caption"},{"name":"caption3"},{"name":"ltcaption"},{"name":"subcaption"},{"name":"IEEEtrantools"},{"name":"sectsty"},{"name":"csquotes"},{"name":"titlesec"}],
+	"macros": [
+		{"name":"B"},
+		{"name":"backmatter"},
+		{"name":"define","arg":{"format":"{}","snippet":"define{${1:term}}"}},
+		{"name":"frontmatter"},
+		{"name":"indexText","arg":{"format":"{}","snippet":"indexText{${1:term}}"}},
+		{"name":"mainmatter"},
+		{"name":"setAbstract","arg":{"format":"{}","snippet":"setAbstract{${1:abstract text}}"}},
+		{"name":"setAcknowledgements","arg":{"format":"{}","snippet":"setAcknowledgements{${1:acknowledgements text}}"}},
+		{"name":"setAuthor","arg":{"format":"{}","snippet":"setAuthor{${1:author}}"}},
+		{"name":"setAuthorsDeclaration","arg":{"format":"{}","snippet":"setAuthorsDeclaration{${1:declaration text}}"}},
+		{"name":"setDedication","arg":{"format":"{}","snippet":"setDedication{${1:dedication text}}"}},
+		{"name":"setDepartment","arg":{"format":"{}","snippet":"setDepartment{${1:department}}"}},
+		{"name":"setLocation","arg":{"format":"{}","snippet":"setLocation{${1:location}}"}},
+		{"name":"setPastDegreeA","arg":{"format":"{}","snippet":"setPastDegreeA{${1:past degree}}"}},
+		{"name":"setPastDegreeB","arg":{"format":"{}","snippet":"setPastDegreeB{${1:past degree}}"}},
+		{"name":"setPastDegreeC","arg":{"format":"{}","snippet":"setPastDegreeC{${1:past degree}}"}},
+		{"name":"setPastDegreeD","arg":{"format":"{}","snippet":"setPastDegreeD{${1:past degree}}"}},
+		{"name":"setThesisDegree","arg":{"format":"{}","snippet":"setThesisDegree{${1:degree}}"}},
+		{"name":"setThesisYear","arg":{"format":"{}","snippet":"setThesisYear{${1:year}}"}},
+		{"name":"setTitle","arg":{"format":"{}","snippet":"setTitle{${1:title}}"}},
+		{"name":"setUniversity","arg":{"format":"{}","snippet":"setUniversity{${1:university}}"}},
+		{"name":"T"}
+	],
+	"envs": [
+		{"name":"ryersonSGSThesis"}
+	],
+	"keys": {}
+}

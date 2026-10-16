@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"qrcode"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"quotewidth","doc":"The width of the quote can be adjusted by setting \\quotewidth."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/moderncvheadvii#c": ["details","left","nodetails","noqr","noseparator","qr","right","separator"]
+	},
+	"args": ["\\usepackage/moderncvheadvii#c"]
+}

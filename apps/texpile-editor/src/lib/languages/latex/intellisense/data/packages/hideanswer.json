@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"color"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xparse"}],
+	"macros": [
+		{"name":"hideanswer","arg":{"format":"{}","snippet":"hideanswer{${1:text}}"},"doc":"<text> is hidden. In \\hideanswer*{<text>}, the hidden and visible parts are reversed."},
+		{"name":"hideanswer*","arg":{"format":"{}","snippet":"hideanswer*{${1:text}}"},"doc":"<text> is hidden. In \\hideanswer*{<text>}, the hidden and visible parts are reversed."},
+		{"name":"hidegraphics","arg":{"format":"[]{}","snippet":"hidegraphics[${1:includegraphics options}]{${2:file}}"}},
+		{"name":"hidegraphics","arg":{"format":"{}","snippet":"hidegraphics{${1:file}}"}},
+		{"name":"hidegraphics*","arg":{"format":"[]{}","snippet":"hidegraphics*[${1:includegraphics options}]{${2:file}}"}},
+		{"name":"hidegraphics*","arg":{"format":"{}","snippet":"hidegraphics*{${1:file}}"}},
+		{"name":"sethideanswer","doc":"After this command, the answer is hidden."},
+		{"name":"smashanswer","arg":{"format":"{}","snippet":"smashanswer{${1:text}}"}},
+		{"name":"smashanswer*","arg":{"format":"{}","snippet":"smashanswer*{${1:text}}"}},
+		{"name":"smashgraphics","arg":{"format":"[]{}","snippet":"smashgraphics[${1:includegraphics options}]{${2:file}}"}},
+		{"name":"smashgraphics","arg":{"format":"{}","snippet":"smashgraphics{${1:file}}"}},
+		{"name":"smashgraphics*","arg":{"format":"[]{}","snippet":"smashgraphics*[${1:includegraphics options}]{${2:file}}"}},
+		{"name":"smashgraphics*","arg":{"format":"{}","snippet":"smashgraphics*{${1:file}}"}},
+		{"name":"switchanswer","arg":{"format":"{}{}","snippet":"switchanswer{${1:text under unsethide}}{${2:text under sethide}}"}},
+		{"name":"switchanswer*","arg":{"format":"{}{}","snippet":"switchanswer*{${1:text under unsethide}}{${2:text under sethide}}"}},
+		{"name":"unsethideanswer","doc":"After this command, the answer appears."}
+	],
+	"envs": [
+		{"name":"hideanswerdiv"},
+		{"name":"hideanswerdiv*"},
+		{"name":"smashanswerdiv"},
+		{"name":"smashanswerdiv*"}
+	],
+	"keys": {}
+}

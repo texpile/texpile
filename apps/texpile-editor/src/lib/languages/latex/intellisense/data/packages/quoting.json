@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"quotingfont"},
+		{"name":"quotingsetup","arg":{"format":"{}","snippet":"quotingsetup{${1:options}}","keys":["keyval:quo"],"keyPos":0}}
+	],
+	"envs": [
+		{"name":"quoting","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:quo"],"keyPos":0},"doc":"As an alternative to quotation and quote, the quoting package provides a consolidated environment for displayed text."},
+		{"name":"quoting","doc":"As an alternative to quotation and quote, the quoting package provides a consolidated environment for displayed text."}
+	],
+	"keys": {
+		"keyval:quo": ["begintext=","endtext=","font+=","font=","leftmargin=","listvskip","noorphanafter","noorphanfirst","noorphans","rightmargin=","vskip=","indentfirst=${1|auto,true,false|}"],
+		"\\usepackage/quoting#c": ["begintext=","endtext=","font+=","font=","indentfirst=${1|auto,true,false|}","leftmargin=","listvskip","noorphanafter","noorphanfirst","noorphans","rightmargin=","vskip="]
+	},
+	"args": ["\\usepackage/quoting#c"]
+}

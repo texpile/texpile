@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"babel"},{"name":"etoolbox","if":"italian"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"DeclareTextMathSymbol","arg":{"format":"{}{}{}{}{}","snippet":"DeclareTextMathSymbol{${1:command}}{${2:encoding}}{${3:math type}}{${4:symbol font}}{${5:slot}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/mathtext#c": ["warn"]
+	},
+	"args": ["\\usepackage/mathtext#c"]
+}

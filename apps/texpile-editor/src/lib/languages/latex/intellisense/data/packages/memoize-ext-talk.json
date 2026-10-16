@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"memoize-ext-tag"},{"name":"memoize-ext"},{"name":"memoize"},{"name":"etoolbox"},{"name":"iftex"},{"name":"advice"},{"name":"collargs"},{"name":"pgfkeys"},{"name":"xparse"}],
+	"macros": [
+		{"name":"mmzSingleExternDriver","arg":{"format":"{}","snippet":"mmzSingleExternDriver{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

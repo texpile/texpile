@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"lngxamericanlogo"},
+		{"name":"lngxbaselogo"},
+		{"name":"lngxbritishlogo"},
+		{"name":"lngxenglishlogo"},
+		{"name":"lngxexampleslogo"},
+		{"name":"lngxfixpexlogo"},
+		{"name":"lngxfontslogo"},
+		{"name":"lngxglossinglogo"},
+		{"name":"lngxgreeklogo"},
+		{"name":"lngxipalogo"},
+		{"name":"lngxlanguageslogo"},
+		{"name":"lngxleipziglogo"},
+		{"name":"lngxlogo","arg":{"format":"[]","snippet":"lngxlogo[${1}]"},"doc":"The logo of the ⟨package name⟩ from the LinguisTiX bundle is printed with this command, e.g., \\lngxlogo[fonts] ⟶ LinguisTiX-fonts."},
+		{"name":"lngxlogo","doc":"The logo of the ⟨package name⟩ from the LinguisTiX bundle is printed with this command, e.g., \\lngxlogo[fonts] ⟶ LinguisTiX-fonts."},
+		{"name":"lngxlogoslogo"},
+		{"name":"lngxmalayalamlogo"},
+		{"name":"lngxmarathilogo"},
+		{"name":"lngxnfsslogo"},
+		{"name":"lngxpkg","unusual":true},
+		{"name":"lngxrussianlogo"}
+	],
+	"envs": [],
+	"keys": {}
+}

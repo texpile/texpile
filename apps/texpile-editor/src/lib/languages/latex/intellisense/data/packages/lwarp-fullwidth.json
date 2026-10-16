@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"fullwidth","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"fullwidth"}
+	],
+	"keys": {}
+}

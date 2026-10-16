@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"SIunits"},{"name":"amstext"},{"name":"lwarp-cleveref"},{"name":"cleveref"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

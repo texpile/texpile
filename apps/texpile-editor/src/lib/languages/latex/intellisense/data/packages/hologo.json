@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"kvsetkeys"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"}],
+	"macros": [
+		{"name":"hologo","arg":{"format":"{}","snippet":"hologo{${1}}"},"doc":"Macro \\hologo sets the logo with name ⟨name⟩."},
+		{"name":"Hologo","arg":{"format":"{}","snippet":"Hologo{${1}}"},"doc":"Macro \\Hologo starts the logo ⟨name⟩ with an uppercase letter."},
+		{"name":"hologoDriver","unusual":true},
+		{"name":"hologoDriverSetup","arg":{"format":"{}","snippet":"hologoDriverSetup{${1:driver option}}"},"doc":"The driver can also be configured after package loading using \\hologoDriverSetup, also the way for plain TeX to setup the driver."},
+		{"name":"hologoFontSetup","arg":{"format":"{}","snippet":"hologoFontSetup{${1:key value list}}"},"doc":"Macro \\hologoFontSetup sets the fonts for all logos."},
+		{"name":"hologoList","doc":"Macro \\hologoList contains all logos that are provided by the package including variants."},
+		{"name":"hologoLogoFontSetup","arg":{"format":"{}{}","snippet":"hologoLogoFontSetup{${1:logo}}{${2:key value list}}"}},
+		{"name":"hologoLogoSetup","arg":{"format":"{}{}","snippet":"hologoLogoSetup{${1:logo}}{${2:key value list}}"}},
+		{"name":"hologorobust","arg":{"format":"{}","snippet":"hologorobust{${1}}"},"unusual":true},
+		{"name":"hologoRobust","arg":{"format":"{}","snippet":"hologoRobust{${1}}"}},
+		{"name":"HologoRobust","arg":{"format":"{}","snippet":"HologoRobust{${1}}"}},
+		{"name":"hologoSetup","arg":{"format":"{}","snippet":"hologoSetup{${1:key value list}}"},"doc":"Macro \\hologoSetup sets global options."},
+		{"name":"hologoVariant","arg":{"format":"{}{}","snippet":"hologoVariant{${1}}{${2}}"},"doc":"Logo ⟨name⟩ is set using ⟨variant⟩ that specifies explicitly which variant of the macro is used."},
+		{"name":"HologoVariant","arg":{"format":"{}{}","snippet":"HologoVariant{${1}}{${2}}"},"doc":"\\HologoVariant is used if the logo is set in a context that needs an uppercase first letter (beginning of a sentence, . . . )."},
+		{"name":"hologoVariantRobust","arg":{"format":"{}{}","snippet":"hologoVariantRobust{${1}}{${2}}"}},
+		{"name":"HologoVariantRobust","arg":{"format":"{}{}","snippet":"HologoVariantRobust{${1}}{${2}}"}},
+		{"name":"logofamily","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

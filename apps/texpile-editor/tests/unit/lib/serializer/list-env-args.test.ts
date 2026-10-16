@@ -163,3 +163,12 @@ describe('lists keep the environments the file wrote them in through edits', () 
 		expect(serializeLatexFile(parsed, state.doc)).toContain('\\item one\n\\begin{enumerate}\n\\item two\n\\end{enumerate}');
 	});
 });
+
+describe('a list that starts with a skip', () => {
+	it('opens with \\smallskip and a blank line before the first \\item', () => {
+		const src = '\\begin{enumerate}\n\\smallskip\n\n\\item one\n\\end{enumerate}';
+		expect(() => rt(src)).not.toThrow();
+		expect(rt(src)).toContain('\\smallskip');
+		expect(parseLatexFile(`\\documentclass{article}\n\\begin{document}\n${src}\n\\end{document}\n`).doc.textContent).toContain('one');
+	});
+});

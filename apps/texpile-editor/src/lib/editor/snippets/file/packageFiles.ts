@@ -1,5 +1,5 @@
 import { mergePackages, parsePackageFile, setUserPackages } from '$lib/languages/latex/intellisense/userPackages';
-import type { PackageData } from '$lib/languages/latex/intellisense/completion/packageData';
+import type { PackageData } from '$lib/languages/latex/intellisense/packages/packageData';
 import type { SnippetProblem } from './snippetTypes';
 
 export type PackageTexts = { global: Record<string, string>; project: Record<string, string> };

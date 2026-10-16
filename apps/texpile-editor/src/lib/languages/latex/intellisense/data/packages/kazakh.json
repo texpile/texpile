@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"babel"}],
+	"macros": [
+		{"name":"captionskazakh","unusual":true},
+		{"name":"extraskazakh","unusual":true},
+		{"name":"noextraskazakh","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

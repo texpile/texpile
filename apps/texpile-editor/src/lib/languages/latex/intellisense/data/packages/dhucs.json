@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"kotexutf","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"kolabels-utf"},{"name":"kosections-utf","if":"hangul|hanja","engines":["pdflatex"]},{"name":"konames-utf","if":"hangul|hanja"},{"name":"luatexko","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"xetexko","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"circemph","arg":{"format":"{}","snippet":"circemph{${1:text}}"},"if":"hangul|hanja"},
+		{"name":"DeclareUnicodeCharacter","arg":{"format":"{}{}","snippet":"DeclareUnicodeCharacter{${1}}{${2}}"},"unusual":true},
+		{"name":"disablehangulfontspec","unusual":true},
+		{"name":"disablehangullinebreak","unusual":true},
+		{"name":"regremph"},
+		{"name":"SetAdhocFonts","arg":{"format":"{}{}","snippet":"SetAdhocFonts{${1:hangul}}{${2:hanja}}"}},
+		{"name":"SetHangulFonts","arg":{"format":"{}{}{}","snippet":"SetHangulFonts{${1:myeongjo}}{${2:gothic}}{${3:typewriter}}"},"doc":"기본 글꼴을 설정한다. 세 개의 인자는 각각 명조/고딕/타자에 해당한다."},
+		{"name":"SetHanjaFonts","arg":{"format":"{}{}{}","snippet":"SetHanjaFonts{${1:myeongjo}}{${2:gothic}}{${3:typewriter}}"},"doc":"기본 글꼴을 설정한다. 세 개의 인자는 각각 명조/고딕/타자에 해당한다."},
+		{"name":"setInterHangulSkip","arg":{"format":"{}","snippet":"setInterHangulSkip{${1:skip}}"}},
+		{"name":"SetSansFonts","arg":{"format":"{}{}","snippet":"SetSansFonts{${1:hangul}}{${2:hanja}}"}},
+		{"name":"SetSerifFonts","arg":{"format":"{}{}","snippet":"SetSerifFonts{${1:hangul}}{${2:hanja}}"}},
+		{"name":"ungremph"},
+		{"name":"usehangulfontspec","arg":{"format":"{}","snippet":"usehangulfontspec{${1:spec}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/dhucs#c": ["finemath","hangul","hanja","nonfrench","nounfonts"]
+	},
+	"args": ["\\usepackage/dhucs#c"]
+}

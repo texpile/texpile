@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"class-article"},{"name":"lmodern"},{"name":"mathpazo"},{"name":"microtype"},{"name":"keyval"},{"name":"etoolbox"},{"name":"textcomp"},{"name":"color"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"abstract","arg":{"format":"{}","snippet":"abstract{${1:abstract}}"}},
+		{"name":"addinfo","arg":{"format":"[]{}","snippet":"addinfo[${1}]{${2}}"}},
+		{"name":"addinfo","arg":{"format":"{}","snippet":"addinfo{${1}}"}},
+		{"name":"addinfospace","arg":{"format":"{}","snippet":"addinfospace{${1}}"},"doc":"If you wish to add some vertical space after the previous item in the front matter, the \\addinfospace{⟨height⟩} command will insert some."},
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1:address}}"}},
+		{"name":"BibTeX"},
+		{"name":"clearinfo","doc":"If you don’t like the ordering of the information blocks or you wish to edit the formatting of the current setup, the \\clearinfo command allows you to start fresh and redefine the info blocks however you may wish."},
+		{"name":"ConTeXt"},
+		{"name":"ctanfile","arg":{"format":"{}","snippet":"ctanfile{${1}}"}},
+		{"name":"ctanloc","arg":{"format":"{}","snippet":"ctanloc{${1}}"}},
+		{"name":"dash"},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email address}}"}},
+		{"name":"emailname"},
+		{"name":"ExTeX"},
+		{"name":"hyperlinkemail","doc":"The \\hyperlinkemail command defines \\typesetemail to use the hyperref package’s facilities to create a hyperlink email address in the output document."},
+		{"name":"license","arg":{"format":"{}","snippet":"license{${1}}"}},
+		{"name":"MF"},
+		{"name":"MP"},
+		{"name":"newinfo","arg":{"format":"{}[]{}","snippet":"newinfo{${1:macro}}[${2:format}]{${3:title}}"}},
+		{"name":"newinfo","arg":{"format":"{}{}","snippet":"newinfo{${1:macro}}{${2:title}}"}},
+		{"name":"noabstract","doc":"Should you have a reason for not having an abstract, this may be signified by declaring \\noabstract instead."},
+		{"name":"note","arg":{"format":"{}","snippet":"note{${1}}"}},
+		{"name":"obfuscateemail"},
+		{"name":"pdfLaTeX"},
+		{"name":"pdfTeX"},
+		{"name":"PracTeX"},
+		{"name":"PS"},
+		{"name":"TPJ"},
+		{"name":"TPJcopyright","arg":{"format":"{}","snippet":"TPJcopyright{${1}}"},"unusual":true},
+		{"name":"TPJissue","arg":{"format":"{}{}","snippet":"TPJissue{${1}}{${2}}"},"unusual":true},
+		{"name":"TPJrevision","arg":{"format":"{}{}{}","snippet":"TPJrevision{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"typesetemail","arg":{"format":"{}","snippet":"typesetemail{${1}}"},"unusual":true},
+		{"name":"website","arg":{"format":"{}","snippet":"website{${1:web address}}"}},
+		{"name":"XeTeX"}
+	],
+	"envs": [
+		{"name":"itemise"}
+	],
+	"keys": {}
+}

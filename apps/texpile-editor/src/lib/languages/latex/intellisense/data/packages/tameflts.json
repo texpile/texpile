@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"releasefloats"},
+		{"name":"tamefloats"}
+	],
+	"envs": [],
+	"keys": {}
+}

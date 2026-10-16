@@ -1,0 +1,40 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"xspace"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"datetime","if":"!macrosonly"},{"name":"etoolbox","if":"!macrosonly"},{"name":"fmtcount","if":"!macrosonly"},{"name":"ifthen","if":"!macrosonly"},{"name":"xkeyval","if":"!macrosonly"},{"name":"fcprefix","if":"!macrosonly"},{"name":"datetime-defaults","if":"!macrosonly"},{"name":"caption","if":"!macrosonly"},{"name":"caption3","if":"!macrosonly"},{"name":"tocloft","if":"!macrosonly"},{"name":"cite","if":"!macrosonly"},{"name":"color","if":"!macrosonly"},{"name":"microtype","if":"!macrosonly"},{"name":"manyfoot","if":"!macrosonly"},{"name":"nccfoots","if":"!macrosonly"},{"name":"footmisc","if":"!macrosonly"},{"name":"geometry","if":"!macrosonly"},{"name":"ifvtex","if":"!macrosonly"},{"name":"iftex","if":"!macrosonly"},{"name":"hyperref","if":"!macrosonly"},{"name":"pdfescape","if":"!macrosonly"},{"name":"nameref","if":"!macrosonly"},{"name":"refcount","if":"!macrosonly"},{"name":"gettitlestring","if":"!macrosonly"},{"name":"stringenc","if":"!macrosonly"},{"name":"intcalc","if":"!macrosonly"},{"name":"url","if":"!macrosonly"},{"name":"bitset","if":"!macrosonly"},{"name":"bigintcalc","if":"!macrosonly"},{"name":"rerunfilecheck","if":"!macrosonly"},{"name":"uniquecounter","if":"!macrosonly"},{"name":"mciteplus","if":"mcite"}],
+	"macros": [
+		{"name":"abstract","arg":{"format":"{}","snippet":"abstract{${1:abstract}}"}},
+		{"name":"ack","arg":{"format":"{}","snippet":"ack{${1:text}}"}},
+		{"name":"affiliation","arg":{"format":"{}","snippet":"affiliation{${1:affiliation}}"}},
+		{"name":"draftmode"},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:address}}"}},
+		{"name":"emails","arg":{"format":"{}","snippet":"emails{${1:addresses}}"}},
+		{"name":"emailV","arg":{"format":"{}","snippet":"emailV{${1:address}}"},"doc":"The command \\emailV{} is also available to be used when emails are to be displayed as vertically justified footnotes (one below the other) rather than in the same line."},
+		{"name":"eqn","arg":{"format":"{}[]","snippet":"eqn{${1:equation}}[${2:label}]"}},
+		{"name":"eqn","arg":{"format":"{}","snippet":"eqn{${1:equation}}"}},
+		{"name":"eqna","arg":{"format":"{}[]","snippet":"eqna{${1:equation}}[${2:label}]"},"doc":"For aligned equations with one number in the vertical middle use the command \\eqna{}[]."},
+		{"name":"eqna","arg":{"format":"{}","snippet":"eqna{${1:equation}}"},"doc":"For aligned equations with one number in the vertical middle use the command \\eqna{}[]."},
+		{"name":"foot","arg":{"format":"[]{}","snippet":"foot[${1:number}]{${2:text}}"}},
+		{"name":"foot","arg":{"format":"{}","snippet":"foot{${1:text}}"}},
+		{"name":"fourseqn","arg":{"format":"{}[]{}[]{}[]{}[][]","snippet":"fourseqn{${1:equation 1}}[${2:label 1}]{${3:equation 2}}[${4:label 2}]{${5:equation 3}}[${6:label 3}]{${7:equation 4}}[${8:label 4}][${9:overall label}]"}},
+		{"name":"fourseqn","arg":{"format":"{}{}{}{}","snippet":"fourseqn{${1:equation 1}}{${2:equation 2}}{${3:equation 3}}{${4:equation 4}}"}},
+		{"name":"newsec","arg":{"format":"{}[]","snippet":"newsec{${1:title}}[${2:label}]"},"doc":"Sections start with the command \\newsec{}[]. The first argument is the name of the section, while the second provides the label."},
+		{"name":"newsec","arg":{"format":"{}","snippet":"newsec{${1:title}}"},"doc":"Sections start with the command \\newsec{}[]. The first argument is the name of the section, while the second provides the label."},
+		{"name":"preprint","arg":{"format":"{}","snippet":"preprint{${1:id}}"}},
+		{"name":"rcite","arg":{"format":"[]{}","snippet":"rcite[${1:text}]{${2:keys}}"},"doc":"To cite a paper use the command \\rcite{}."},
+		{"name":"rcite","arg":{"format":"{}","snippet":"rcite{${1:keys}}"},"doc":"To cite a paper use the command \\rcite{}."},
+		{"name":"subsec","arg":{"format":"{}[]","snippet":"subsec{${1:title}}[${2:label}]"}},
+		{"name":"subsec","arg":{"format":"{}","snippet":"subsec{${1:title}}"}},
+		{"name":"subsubsec","arg":{"format":"{}[]","snippet":"subsubsec{${1:title}}[${2:label}]"}},
+		{"name":"subsubsec","arg":{"format":"{}","snippet":"subsubsec{${1:title}}"}},
+		{"name":"threeseqn","arg":{"format":"{}[]{}[]{}[][]","snippet":"threeseqn{${1:equation 1}}[${2:label 1}]{${3:equation 2}}[${4:label 2}]{${5:equation 3}}[${6:label 3}][${7:overall label}]"}},
+		{"name":"threeseqn","arg":{"format":"{}{}{}","snippet":"threeseqn{${1:equation 1}}{${2:equation 2}}{${3:equation 3}}"}},
+		{"name":"titlemath","arg":{"format":"{}","snippet":"titlemath{${1:math}}"}},
+		{"name":"toc"},
+		{"name":"twoseqn","arg":{"format":"{}[]{}[][]","snippet":"twoseqn{${1:equation 1}}[${2:label 1}]{${3:equation 2}}[${4:label 2}][${5:overall label}]"}},
+		{"name":"twoseqn","arg":{"format":"{}{}","snippet":"twoseqn{${1:equation 1}}{${2:equation 2}}"}}
+	],
+	"envs": [
+		{"name":"acknowledgments","unusual":true},
+		{"name":"appendices"}
+	],
+	"keys": {}
+}

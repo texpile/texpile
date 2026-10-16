@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"sitem","arg":{"format":"[]","snippet":"sitem[${1}]"}},
+		{"name":"sitem"}
+	],
+	"envs": [],
+	"keys": {}
+}

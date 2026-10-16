@@ -24,6 +24,9 @@ type Positioned = { position?: Position; content?: unknown; args?: unknown[] };
 export type MacrosAndEnvironmentsOptions = {
 	macros: Record<string, Ast.MacroInfo>;
 	environments: Record<string, Ast.EnvInfo>;
+	/** commands that take their arguments in math only: an argument the parser reads as text (\begin{numcases}{\dot m_x})
+	 * would give \dot the word m_ */
+	mathCommands?: Record<string, Ast.MacroInfo>;
 };
 
 /** the bytes `nodes` cover, from the positions they and their descendants carry */
@@ -87,7 +90,12 @@ function reparsedAsMath(nodes: Ast.Node[], source: string | undefined): Ast.Node
 function processEnvironment(env: Ast.Environment, envInfo: Ast.EnvInfo): void {
 	if (envInfo.signature && env.args == null) env.args = gobbleArguments(env.content, envInfo.signature).args;
 	if (envInfo.renderInfo != null) env._renderInfo = { ...(env._renderInfo || {}), ...envInfo.renderInfo };
-	if (typeof envInfo.processContent === 'function') env.content = envInfo.processContent(env.content);
+	if (typeof envInfo.processContent !== 'function') return;
+	// upstream's list cleanup throws on an empty `args` before a blank line (\smallskip ahead of the first \item)
+	const bare = env.content.filter((node): node is Ast.Macro => match.anyMacro(node) && node.args?.length === 0);
+	for (const macro of bare) delete macro.args;
+	env.content = envInfo.processContent(env.content);
+	for (const macro of bare) macro.args ??= [];
 }
 
 function mathOnly<T extends { renderInfo?: { inMathMode?: boolean } }>(table: Record<string, T>): Record<string, T> {
@@ -95,7 +103,7 @@ function mathOnly<T extends { renderInfo?: { inMathMode?: boolean } }>(table: Re
 }
 
 export function processMacrosAndEnvironments(options: MacrosAndEnvironmentsOptions): Transformer<Ast.Root, Ast.Root> {
-	const { environments, macros } = options;
+	const { environments, macros, mathCommands = {} } = options;
 	const mathMacros = mathOnly(macros);
 	const mathEnvs = mathOnly(environments);
 	const isMathEnvironment = match.createEnvironmentMatcher(Object.keys(mathEnvs));
@@ -132,6 +140,16 @@ export function processMacrosAndEnvironments(options: MacrosAndEnvironmentsOptio
 				if (match.anyEnvironment(node) && !wasParsedInMathMode(node.content)) node.content = reparsedAsMath(node.content, source);
 			},
 			{ test: (node) => isMathEnvironment(node) || isMathMacro(node) }
+		);
+		// before ^ and _ attach, so they take \dot{x} whole
+		visit(
+			tree,
+			{
+				enter: (nodes, visited) => {
+					if (Array.isArray(nodes) && visited.context.inMathMode) attachMacroArgsInArray(nodes, mathCommands);
+				}
+			},
+			{ includeArrays: true }
 		);
 		visit(
 			tree,

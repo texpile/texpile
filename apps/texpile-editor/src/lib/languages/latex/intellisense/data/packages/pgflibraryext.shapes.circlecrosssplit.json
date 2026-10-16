@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"ifpgfextcirclecrosssplitcustomfill","unusual":true},
+		{"name":"pgfextcirclecrosssplitcustomfilltrue","unusual":true},
+		{"name":"pgfextset","arg":{"format":"{}","snippet":"pgfextset{${1:options}}"}},
+		{"name":"tikzextset","arg":{"format":"{}","snippet":"tikzextset{${1:options}}"}},
+		{"name":"tikzextversion","unusual":true},
+		{"name":"tikzextversionnumber","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

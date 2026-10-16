@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"luatex-cn-core-base"},{"name":"luatexbase"},{"name":"enumitem"}],
+	"macros": [
+		{"name":"enableLayoutExport","arg":{"format":"[]","snippet":"enableLayoutExport[${1:options}]"}},
+		{"name":"enableLayoutExport"},
+		{"name":"开启排版导出","arg":{"format":"[]","snippet":"开启排版导出[${1}]"}},
+		{"name":"开启排版导出"}
+	],
+	"envs": [],
+	"keys": {}
+}

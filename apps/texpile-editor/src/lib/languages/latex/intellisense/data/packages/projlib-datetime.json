@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"relsize"}],
+	"macros": [
+		{"name":"ProjLibdate","arg":{"format":"[]{}[]","snippet":"ProjLibdate[${1:options}]{${2:date}}[${3:options}]"}},
+		{"name":"ProjLibdate","arg":{"format":"{}","snippet":"ProjLibdate{${1:date}}"}},
+		{"name":"ProjLibDate","arg":{"format":"[]{}[]","snippet":"ProjLibDate[${1:options}]{${2:date}}[${3:options}]"}},
+		{"name":"ProjLibDate","arg":{"format":"{}","snippet":"ProjLibDate{${1:date}}"}},
+		{"name":"ProjLibSetDatetimeInputFormat","arg":{"format":"{}","snippet":"ProjLibSetDatetimeInputFormat{${1:input format}}"}},
+		{"name":"ProjLibtoday","arg":{"format":"[]","snippet":"ProjLibtoday[${1:options}]"}},
+		{"name":"ProjLibtoday"},
+		{"name":"ProjLibToday","arg":{"format":"[]","snippet":"ProjLibToday[${1:options}]"}},
+		{"name":"ProjLibToday"},
+		{"name":"SetDatetimeInputFormat","arg":{"format":"{}","snippet":"SetDatetimeInputFormat{${1:input format}}"}},
+		{"name":"Thedate","arg":{"format":"[]{}[]","snippet":"Thedate[${1:options}]{${2:date}}[${3:options}]"}},
+		{"name":"Thedate","arg":{"format":"{}","snippet":"Thedate{${1:date}}"}},
+		{"name":"TheDate","arg":{"format":"[]{}[]","snippet":"TheDate[${1:options}]{${2:date}}[${3:options}]"}},
+		{"name":"TheDate","arg":{"format":"{}","snippet":"TheDate{${1:date}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

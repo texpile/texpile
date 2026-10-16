@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"pstricks-add"},{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-plot"},{"name":"pst-xkey"},{"name":"multido"},{"name":"pst-node"},{"name":"pst-3d"},{"name":"pst-math"},{"name":"pst-calculate"},{"name":"xparse"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"amstext"},{"name":"array"},{"name":"ifluatex"},{"name":"xstring"},{"name":"calc"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"barbil","arg":{"format":"[]{}{}","snippet":"barbil[${1:start}]{${2:rod number}}{${3:bead position}}"}},
+		{"name":"barbil","arg":{"format":"{}{}","snippet":"barbil{${1:rod number}}{${2:bead position}}"}},
+		{"name":"barres","arg":{"format":"[]{}","snippet":"barres[${1:start}]{${2:number of rods}}"}},
+		{"name":"barres","arg":{"format":"{}","snippet":"barres{${1:number of rods}}"}},
+		{"name":"binoire","arg":{"format":"[]{}{}{}","snippet":"binoire[${1:start}]{${2:rod number}}{${3:bead position}}{${4:color}}"}},
+		{"name":"binoire","arg":{"format":"{}{}{}","snippet":"binoire{${1:rod number}}{${2:bead position}}{${3:color}}"}},
+		{"name":"cadre","arg":{"format":"[]{}","snippet":"cadre[${1:start}]{${2:number of rods}}"}},
+		{"name":"cadre","arg":{"format":"{}","snippet":"cadre{${1:number of rods}}"}},
+		{"name":"colbil"},
+		{"name":"coltig"},
+		{"name":"tige","arg":{"format":"[]{}{}{}","snippet":"tige[${1:start}]{${2:rod number}}{${3:value}}{${4:dot}}"},"doc":"To draw a rod, one uses the command \\tige."},
+		{"name":"tige","arg":{"format":"{}{}{}","snippet":"tige{${1:rod number}}{${2:value}}{${3:dot}}"},"doc":"To draw a rod, one uses the command \\tige."}
+	],
+	"envs": [],
+	"keys": {}
+}

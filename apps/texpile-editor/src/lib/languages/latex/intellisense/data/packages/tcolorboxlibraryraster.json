@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"tcbitem","arg":{"format":"[]","snippet":"tcbitem[${1:options}]"}},
+		{"name":"tcbitem"},
+		{"name":"theHtcbrasternum","unusual":true},
+		{"name":"thetcbrasternum"}
+	],
+	"envs": [
+		{"name":"tcbitemize","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"tcbitemize"},
+		{"name":"tcboxeditemize","arg":{"format":"[]{}","snippet":"[${1:raster options}]{${2:box options}}"}},
+		{"name":"tcboxeditemize","arg":{"format":"{}","snippet":"{${1:box options}}"}},
+		{"name":"tcboxedraster","arg":{"format":"[]{}","snippet":"[${1:raster options}]{${2:box options}}"}},
+		{"name":"tcboxedraster","arg":{"format":"{}","snippet":"{${1:box options}}"}},
+		{"name":"tcbraster","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"tcbraster"}
+	],
+	"keys": {}
+}

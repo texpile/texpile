@@ -140,6 +140,22 @@ function labelPreview(name: string, sourceText: string): { html: string; from?: 
 	return { html: heading + `<pre>${escapeHtml(context)}</pre>`, from };
 }
 
+async function macroHover(view: EditorView, token: Token, at: { pos: number; end: number; above: boolean }): Promise<Tooltip | null> {
+	const found = await macroLookup(docText(view.state.doc), token.value);
+	if (!found) return null; // unrecognized macro: no hover, matching LaTeX Workshop
+	// `detail` is an argument shape for most entries ({text}, [opt]), a full form for the LaTeX Workshop forms
+	// (\left( ... \right)), a symbol's glyph, or prose (Begin a new environment); only a shape belongs glued to the name
+	const detail = found.detail ?? '';
+	const isForm = detail.length > 1 && detail.startsWith('\\');
+	const isShape = /^(?:\[\]|\{\}|\(\)|<>|\*)+$/.test(detail);
+	const code = isForm ? detail : `\\${token.value}${isShape ? detail : ''}`;
+	const notes = [isForm || isShape ? '' : detail, found.info ?? '']
+		.filter(Boolean)
+		.map((t) => `<div class="text-xs opacity-80">${escapeHtml(t)}</div>`)
+		.join('');
+	return { ...at, create: () => ({ dom: dom(`<code>${escapeHtml(code)}</code>${notes}`) }) };
+}
+
 const CITE_FIELDS = ['author', 'title', 'journal', 'journaltitle', 'booktitle', 'publisher', 'year', 'date', 'doi', 'url'] as const;
 
 // the tooltip chrome brings border and background; the inset is the card's own, shared with the
@@ -150,28 +166,13 @@ const hoverCardTheme = EditorView.baseTheme({ '.cm-tooltip-latex-hover': { paddi
 export function latexHover(): Extension {
 	return [
 		hoverCardTheme,
-		hoverTooltip((view, pos): Tooltip | null => {
+		hoverTooltip((view, pos): Tooltip | null | Promise<Tooltip | null> => {
 			const line = view.state.doc.lineAt(pos);
 			const token = tokenAt(line.text, line.from, pos);
 			if (!token) return null;
 			const at = { pos: token.from, end: token.to, above: true };
 
-			if (token.kind === 'macro') {
-				const found = macroLookup(docText(view.state.doc), token.value);
-				if (!found) return null; // unrecognized macro: no hover, matching LaTeX Workshop
-				// `detail` is an argument shape for most entries ({text}, [opt]), but the LaTeX Workshop
-				// table also uses it for a full form (\left( ... \right)) and for plain prose (Begin a
-				// new environment); only a shape belongs glued to the name
-				const detail = found.detail ?? '';
-				const isForm = detail.startsWith('\\');
-				const isShape = /^[{[(<*]/.test(detail);
-				const code = isForm ? detail : `\\${token.value}${isShape ? detail : ''}`;
-				const notes = [isForm || isShape ? '' : detail, found.info ?? '']
-					.filter(Boolean)
-					.map((t) => `<div class="text-xs opacity-80">${escapeHtml(t)}</div>`)
-					.join('');
-				return { ...at, create: () => ({ dom: dom(`<code>${escapeHtml(code)}</code>${notes}`) }) };
-			}
+			if (token.kind === 'macro') return macroHover(view, token, at);
 			if (token.kind === 'package' || token.kind === 'class') {
 				const pkgInfo = (token.kind === 'package' ? PACKAGE_INFO : CLASS_INFO).get(token.value);
 				if (!pkgInfo?.detail && !pkgInfo?.url) return null;

@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"class-article"}],
+	"macros": [
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:short author}]{${2:authors}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:authors}}"}},
+		{"name":"context","unusual":true},
+		{"name":"conTeXt","unusual":true},
+		{"name":"Context"},
+		{"name":"ConTeXt"},
+		{"name":"eurotex"},
+		{"name":"euroTex","unusual":true},
+		{"name":"euroTeX","unusual":true},
+		{"name":"Eurotex","unusual":true},
+		{"name":"EuroTex","unusual":true},
+		{"name":"EuroTeX"},
+		{"name":"ifpdf","unusual":true},
+		{"name":"initial","arg":{"format":"{}{}","snippet":"initial{${1:lines}}{${2:letter}}"}},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords}}"}},
+		{"name":"logo","arg":{"format":"{}","snippet":"logo{${1}}"},"unusual":true},
+		{"name":"midornament"},
+		{"name":"pdffalse","unusual":true},
+		{"name":"pdftrue","unusual":true},
+		{"name":"title","arg":{"format":"[]{}","snippet":"title[${1:short title}]{${2:title}}"}},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:title}}"}},
+		{"name":"titleornament","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/europroc#c": ["pagebounds"]
+	},
+	"args": ["\\documentclass/europroc#c"]
+}

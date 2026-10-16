@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"iflang"},{"name":"iftex"}],
+	"macros": [
+		{"name":"hpnumber","arg":{"format":"[][]{}","snippet":"hpnumber[${1:parameter 1}][${2:parameter 2}]{${3:statement number}}"}},
+		{"name":"hpnumber","arg":{"format":"{}","snippet":"hpnumber{${1:statement number}}"}},
+		{"name":"hpsetup","arg":{"format":"{}","snippet":"hpsetup{${1:key-val list}}","keys":["l3keys:hpstatement"],"keyPos":0}},
+		{"name":"hpstatement","arg":{"format":"[][]{}","snippet":"hpstatement[${1:parameter 1}][${2:parameter 2}]{${3:statement number}}"},"doc":"\\hpstatement inserts the statement’s text, \\hpnumber its formatted number."},
+		{"name":"hpstatement","arg":{"format":"{}","snippet":"hpstatement{${1:statement number}}"},"doc":"\\hpstatement inserts the statement’s text, \\hpnumber its formatted number."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:hpstatement": ["date="],
+		"\\usepackage/hpstatement#c": ["date="]
+	},
+	"args": ["\\usepackage/hpstatement#c"]
+}

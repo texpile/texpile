@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"pgfpathsvg","arg":{"format":"{}","snippet":"pgfpathsvg{${1:path}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

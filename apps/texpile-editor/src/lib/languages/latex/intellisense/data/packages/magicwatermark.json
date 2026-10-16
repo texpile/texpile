@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"MagicWatermark","arg":{"format":"{}","snippet":"MagicWatermark{${1:setup rules}}","keys":["l3keys:mw"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:mw": ["setup=","setup/pages=","setup/content=","setup/style=","setup/is append=${1|true,false|}","setup/tikz=${1|true,false|}"]
+	}
+}

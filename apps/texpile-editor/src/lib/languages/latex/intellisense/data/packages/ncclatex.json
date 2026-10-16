@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"nccdefaults"},{"name":"afterpackage"},{"name":"dcounter"},{"name":"desclist"},{"name":"extdash"},{"name":"nccmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"nccsect"},{"name":"ncctheorems","if":"!minimize"},{"name":"nccthm","if":"!minimize"},{"name":"nccboxes","if":"!minimize"},{"name":"nccfoots","if":"!minimize"},{"name":"nccpic","if":"!minimize"},{"name":"graphicx","if":"!minimize"},{"name":"keyval","if":"!minimize"},{"name":"graphics","if":"!minimize"},{"name":"trig","if":"!minimize"},{"name":"nccfloats","if":"!minimize"},{"name":"babel","if":"russian"}],
+	"macros": [
+		{"name":"acknow","doc":"\\acknow starts a new paragraph with the Acknowledgements title."},
+		{"name":"acknowname"},
+		{"name":"arcctg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."},
+		{"name":"arctg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."},
+		{"name":"cref","arg":{"format":"{}","snippet":"cref{${1:citelabel}}"},"doc":"\\cref{citelabel} produces a citation without brackets to the specified citelabel."},
+		{"name":"ctg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."},
+		{"name":"mop","arg":{"format":"{}","snippet":"mop{${1:name}}"},"doc":"\\mop{name} is used for coding new math operations like sin."},
+		{"name":"mop*","arg":{"format":"{}","snippet":"mop*{${1:name}}"},"doc":"\\mop{name} is used for coding new math operations like sin."},
+		{"name":"NCC"},
+		{"name":"No","doc":"\\No produces the numero symbol."},
+		{"name":"tg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ncclatex#c": ["T2A","T2B","T2C","minimize","russian","small"]
+	},
+	"args": ["\\usepackage/ncclatex#c"]
+}

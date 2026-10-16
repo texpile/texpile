@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"CurrentInput"},
+		{"name":"ifSRCOK","unusual":true},
+		{"name":"Input","arg":{"format":"{}","snippet":"Input{${1:filename}}"}},
+		{"name":"MainFile"},
+		{"name":"srcIncludeHook","arg":{"format":"{}","snippet":"srcIncludeHook{${1:file name}}"}},
+		{"name":"srcInputHook","arg":{"format":"{}","snippet":"srcInputHook{${1:file name}}"}},
+		{"name":"SRCOKfalse"},
+		{"name":"SRCOKtrue"}
+	],
+	"envs": [],
+	"keys": {}
+}

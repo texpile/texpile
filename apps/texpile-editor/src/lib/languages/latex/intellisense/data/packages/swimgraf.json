@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"mathpazo"},{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pstcol"},{"name":"pst-plot"},{"name":"pst-xkey"},{"name":"multido"}],
+	"macros": [
+		{"name":"swimgraph","arg":{"format":"[]{}{}{}{}{}","snippet":"swimgraph[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"swimgraph","arg":{"format":"{}{}{}{}{}","snippet":"swimgraph{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"swimtext","arg":{"format":"[]{}{}","snippet":"swimtext[${1}]{${2}}{${3}}"}},
+		{"name":"swimtext","arg":{"format":"{}{}","snippet":"swimtext{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/swimgraf#c": ["a","b","c","d","e","f","j","landgraph","n","w","x","y","z"]
+	},
+	"args": ["\\usepackage/swimgraf#c"]
+}

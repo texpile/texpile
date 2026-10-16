@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"scrtime","if":"scrtime"},{"name":"scrkbase","if":"scrtime"},{"name":"scrbase","if":"scrtime"},{"name":"scrlfile","if":"scrtime"},{"name":"scrlfile-hook","if":"scrtime"},{"name":"scrlogo","if":"scrtime"},{"name":"keyval","if":"scrtime"}],
+	"macros": [
+		{"name":"PrelimText"},
+		{"name":"PrelimTextStyle","doc":"The style of the Text can be controlled by \\PrelimTextStyle."},
+		{"name":"PrelimWords"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/prelim2e#c": ["danish","draft","english","final","french","german","italian","norsk","scrtime","time"]
+	},
+	"args": ["\\usepackage/prelim2e#c"]
+}

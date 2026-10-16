@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"pdfcomment"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"datetime2"},{"name":"tracklang"},{"name":"zref-savepos"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"auxhook"},{"name":"refcount"},{"name":"ifthen"},{"name":"calc"},{"name":"marginnote"},{"name":"soulpos"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"luatex85","engines":["lualatex"]}],
+	"macros": [
+		{"name":"FXLayoutPDFNote","arg":{"format":"{}{}{}","snippet":"FXLayoutPDFNote{${1:type}}{${2:annotation}}{${3:author}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

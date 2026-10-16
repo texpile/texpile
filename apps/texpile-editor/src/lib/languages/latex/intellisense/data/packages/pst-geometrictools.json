@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"psCompass","arg":{"format":"[]{}()","snippet":"psCompass[${1}]{${2}}(${3})"}},
+		{"name":"psCompass","arg":{"format":"{}()","snippet":"psCompass{${1}}(${2})"}},
+		{"name":"psParallels","arg":{"format":"[]()()()","snippet":"psParallels[${1}](${2})(${3})(${4})"},"doc":"The command \\psParallels[DistCoeff=1](A)(B)(C){angle} allows to draw a parallel through the point C with the help of a ruler and protractor."},
+		{"name":"psParallels","arg":{"format":"()()()","snippet":"psParallels(${1})(${2})(${3})"},"doc":"The command \\psParallels[DistCoeff=1](A)(B)(C){angle} allows to draw a parallel through the point C with the help of a ruler and protractor."},
+		{"name":"psPencil","arg":{"format":"[]{}()","snippet":"psPencil[${1}]{${2}}(${3})"}},
+		{"name":"psPencil","arg":{"format":"{}()","snippet":"psPencil{${1}}(${2})"}},
+		{"name":"psProtractor","arg":{"format":"[]{}()","snippet":"psProtractor[${1}]{${2}}(${3})"}},
+		{"name":"psProtractor","arg":{"format":"{}()","snippet":"psProtractor{${1}}(${2})"}},
+		{"name":"psRuler","arg":{"format":"[]{}()","snippet":"psRuler[${1}]{${2}}(${3})"}},
+		{"name":"psRuler","arg":{"format":"{}()","snippet":"psRuler{${1}}(${2})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"tcbvignette","arg":{"format":"{}","snippet":"tcbvignette{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

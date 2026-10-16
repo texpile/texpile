@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"}],
+	"macros": [
+		{"name":"autofootnoterule"},
+		{"name":"debugfootnotedirection"},
+		{"name":"leftfootnoterule"},
+		{"name":"LTRfootnote","arg":{"format":"[]{}","snippet":"LTRfootnote[${1:number}]{${2:text}}"}},
+		{"name":"LTRfootnote","arg":{"format":"{}","snippet":"LTRfootnote{${1:text}}"}},
+		{"name":"LTRfootnotetext","arg":{"format":"[]{}","snippet":"LTRfootnotetext[${1:number}]{${2:text}}"}},
+		{"name":"LTRfootnotetext","arg":{"format":"{}","snippet":"LTRfootnotetext{${1:text}}"}},
+		{"name":"LTRthanks","arg":{"format":"{}","snippet":"LTRthanks{${1}}"}},
+		{"name":"rightfootnoterule"},
+		{"name":"RTLfootnote","arg":{"format":"[]{}","snippet":"RTLfootnote[${1:number}]{${2:text}}"}},
+		{"name":"RTLfootnote","arg":{"format":"{}","snippet":"RTLfootnote{${1:text}}"}},
+		{"name":"RTLfootnotetext","arg":{"format":"[]{}","snippet":"RTLfootnotetext[${1:number}]{${2:text}}"}},
+		{"name":"RTLfootnotetext","arg":{"format":"{}","snippet":"RTLfootnotetext{${1:text}}"}},
+		{"name":"RTLthanks","arg":{"format":"{}","snippet":"RTLthanks{${1}}"}},
+		{"name":"SplitFootnoteRule"},
+		{"name":"textwidthfootnoterule"}
+	],
+	"envs": [],
+	"keys": {}
+}

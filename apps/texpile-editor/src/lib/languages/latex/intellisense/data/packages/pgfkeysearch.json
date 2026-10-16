@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"pkginfograb"}],
+	"macros": [
+		{"name":"pgfkeyget","arg":{"format":"{}{}{}","snippet":"pgfkeyget{${1}}{${2}}{${3}}"}},
+		{"name":"pgfkeygetTF","arg":{"format":"{}{}{}{}{}","snippet":"pgfkeygetTF{${1:single-path}}{${2:key}}{${3:macro}}{${4:if-found}}{${5:if-not}}"}},
+		{"name":"pgfkeygetvalueof","arg":{"format":"{}{}{}","snippet":"pgfkeygetvalueof{${1}}{${2}}{${3}}"}},
+		{"name":"pgfkeygetvalueofTF","arg":{"format":"{}{}{}{}{}","snippet":"pgfkeygetvalueofTF{${1:single-path}}{${2:key}}{${3:macro}}{${4:if-found}}{${5:if-not}}"}},
+		{"name":"pgfkeysearch","arg":{"format":"{}{}{}","snippet":"pgfkeysearch{${1}}{${2}}{${3}}"}},
+		{"name":"pgfkeysearchsettings","arg":{"format":"{}","snippet":"pgfkeysearchsettings{${1}}","keys":["l3keys:pgfkeysearch"],"keyPos":0}},
+		{"name":"pgfkeysearchTF","arg":{"format":"{}{}{}{}{}","snippet":"pgfkeysearchTF{${1:path-list}}{${2:key}}{${3:macro}}{${4:if-found}}{${5:if-not}}"}},
+		{"name":"pgfkeysearchvalueof","arg":{"format":"{}{}{}","snippet":"pgfkeysearchvalueof{${1}}{${2}}{${3}}"}},
+		{"name":"pgfkeysearchvalueofTF","arg":{"format":"{}{}{}{}{}","snippet":"pgfkeysearchvalueofTF{${1:path-list}}{${2:key}}{${3:macro}}{${4:if-found}}{${5:if-not}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:pgfkeysearch": ["key=${1|value,macro|}","root search=${1|true,false|}","settings=${1|new,old|}"],
+		"\\usepackage/pgfkeysearch#c": ["key=${1|value,macro|}","root search=${1|true,false|}","settings=${1|new,old|}"]
+	},
+	"args": ["\\usepackage/pgfkeysearch#c"]
+}

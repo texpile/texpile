@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xcolor"}],
+	"macros": [
+		{"name":"xkcdcolorsversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

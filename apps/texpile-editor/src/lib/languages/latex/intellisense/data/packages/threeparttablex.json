@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"threeparttable"},{"name":"environ"}],
+	"macros": [
+		{"name":"insertTableNotes","doc":"\\insertTableNotes use this macro to insert the table notes inside the longtable."},
+		{"name":"note","arg":{"format":"[]","snippet":"note[${1:title}]"},"doc":"inside the tablenotes environment, the macros \\note and \\source can be used to specify general notes and a source reference for the table data."},
+		{"name":"note","doc":"inside the tablenotes environment, the macros \\note and \\source can be used to specify general notes and a source reference for the table data."},
+		{"name":"setTableNoteFont","arg":{"format":"{}","snippet":"setTableNoteFont{${1}}"},"doc":"\\setTableNoteFont{⟨font commands⟩} can be used to set the font inside tables notes."},
+		{"name":"source","arg":{"format":"[]","snippet":"source[${1:title}]"},"doc":"inside the tablenotes environment, the macros \\note and \\source can be used to specify general notes and a source reference for the table data."},
+		{"name":"source","doc":"inside the tablenotes environment, the macros \\note and \\source can be used to specify general notes and a source reference for the table data."},
+		{"name":"tnotex","arg":{"format":"{}","snippet":"tnotex{${1:label}}"},"if":"referable","doc":"Instead of manually keeping track of all the \\tnote arguments in the table you can now do \\tnotex{tn:a} to get \\tnote{\\ref{tn:a}}."},
+		{"name":"tnotex*","arg":{"format":"{}","snippet":"tnotex*{${1:label}}"},"if":"referable","doc":"Instead of manually keeping track of all the \\tnote arguments in the table you can now do \\tnotex{tn:a} to get \\tnote{\\ref{tn:a}}."},
+		{"name":"TPTLnotename","if":"referable","doc":"The macros \\TPTLnotename \\TPTLsourcename holds the title names for \\note and \\source (default: »Note« and »Source«)."},
+		{"name":"TPTLnotesnamefontcommand","arg":{"format":"{}","snippet":"TPTLnotesnamefontcommand{${1:text}}"},"if":"referable"},
+		{"name":"TPTLsourcename","if":"referable","doc":"The macros \\TPTLnotename \\TPTLsourcename holds the title names for \\note and \\source (default: »Note« and »Source«)."}
+	],
+	"envs": [
+		{"name":"TableNotes","arg":{"format":"[]","snippet":"[${1}]"},"doc":"an environment taking the same options as the normal tablenotes environment, write the table notes in this environment."},
+		{"name":"TableNotes","doc":"an environment taking the same options as the normal tablenotes environment, write the table notes in this environment."},
+		{"name":"ThreePartTable","doc":"a very simple wrapper environment that should wrap around the entire longtable."}
+	],
+	"keys": {
+		"\\usepackage/threeparttablex#c": ["referable"]
+	},
+	"args": ["\\usepackage/threeparttablex#c"]
+}

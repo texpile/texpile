@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"appendsubframes","doc":"To append the subframes, the macro \\appendsubframes must be called before \\end{document}."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ifappend","arg":{"format":"{}{}","snippet":"ifappend{${1:material for append mode}}{${2:material for embed mode}}"},"doc":"The macro \\ifappend simply expands to its first argument in append mode and to its second in embed mode."},
+		{"name":"ifsubframe","arg":{"format":"{}{}","snippet":"ifsubframe{${1:material for subframes}}{${2:material for normal frames}}"},"unusual":true},
+		{"name":"inserttotalframenumberwithsub","unusual":true},
+		{"name":"subslideentry","arg":{"format":"{}{}{}{}{}{}","snippet":"subslideentry{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"lastframe","arg":{"format":"<>[][]{}{}","snippet":"<${1:overlay specification}>[${2:default overlay specification}][${3:options}]{${4:title}}{${5:subtitle}}"},"doc":"Using the lastframe environment, the navigation has the same appearance as on the title frame."},
+		{"name":"lastframe","arg":{"format":"<>{}{}","snippet":"<${1:overlay specification}>{${2:title}}{${3:subtitle}}"},"doc":"Using the lastframe environment, the navigation has the same appearance as on the title frame."},
+		{"name":"subframe","arg":{"format":"<>[][]{}{}","snippet":"<${1:overlay specification}>[${2:default overlay specification}][${3:options}]{${4:title}}{${5:subtitle}}"},"doc":"For frames which should be embedded or appended contitionally (i.e. frames with details), the subframe environment must be used instead of the frame environment. Basically, it works the same way as the frame environment, i.e. it has the same options and arguments."},
+		{"name":"subframe","arg":{"format":"<>{}{}","snippet":"<${1:overlay specification}>{${2:title}}{${3:subtitle}}"},"doc":"For frames which should be embedded or appended contitionally (i.e. frames with details), the subframe environment must be used instead of the frame environment. Basically, it works the same way as the frame environment, i.e. it has the same options and arguments."}
+	],
+	"keys": {}
+}

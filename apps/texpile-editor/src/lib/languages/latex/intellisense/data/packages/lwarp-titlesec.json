@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"lwarp-titleps"}],
+	"macros": [
+		{"name":"assignpagestyle","arg":{"format":"{}{}","snippet":"assignpagestyle{${1}}{${2}}"}},
+		{"name":"chaptertitlename"},
+		{"name":"filcenter"},
+		{"name":"filinner"},
+		{"name":"fillast"},
+		{"name":"filleft"},
+		{"name":"filouter"},
+		{"name":"filright"},
+		{"name":"iftitlemeasuring","arg":{"format":"{}{}","snippet":"iftitlemeasuring{${1}}{${2}}"}},
+		{"name":"titleclass","arg":{"format":"{}[]{}[]","snippet":"titleclass{${1}}[${2}]{${3}}[${4}]"}},
+		{"name":"titleclass","arg":{"format":"{}{}","snippet":"titleclass{${1}}{${2}}"}},
+		{"name":"titleformat","arg":{"format":"{}[]{}{}{}{}[]","snippet":"titleformat{${1:command}}[${2:shape}]{${3:format}}{${4:label}}{${5:sep}}{${6:before-code}}[${7:after-code}]"}},
+		{"name":"titleformat","arg":{"format":"{}{}{}{}{}","snippet":"titleformat{${1:command}}{${2:format}}{${3:label}}{${4:sep}}{${5:before-code}}"}},
+		{"name":"titleformat*","arg":{"format":"{}[]{}{}{}{}[]","snippet":"titleformat*{${1:command}}[${2:shape}]{${3:format}}{${4:label}}{${5:sep}}{${6:before-code}}[${7:after-code}]"}},
+		{"name":"titleformat*","arg":{"format":"{}{}{}{}{}","snippet":"titleformat*{${1:command}}{${2:format}}{${3:label}}{${4:sep}}{${5:before-code}}"}},
+		{"name":"titlelabel","arg":{"format":"{}","snippet":"titlelabel{${1}}"}},
+		{"name":"titleline","arg":{"format":"[]{}","snippet":"titleline[${1}]{${2}}"}},
+		{"name":"titleline","arg":{"format":"{}","snippet":"titleline{${1}}"}},
+		{"name":"titleline*","arg":{"format":"[]{}","snippet":"titleline*[${1}]{${2}}"}},
+		{"name":"titleline*","arg":{"format":"{}","snippet":"titleline*{${1}}"}},
+		{"name":"titlerule","arg":{"format":"[]","snippet":"titlerule[${1}]"}},
+		{"name":"titlerule"},
+		{"name":"titlerule*","arg":{"format":"[]","snippet":"titlerule*[${1}]"}},
+		{"name":"titlerule*"},
+		{"name":"titlespacing","arg":{"format":"{}{}{}{}[]","snippet":"titlespacing{${1}}{${2}}{${3}}{${4}}[${5}]"}},
+		{"name":"titlespacing","arg":{"format":"{}{}{}{}","snippet":"titlespacing{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"titlespacing*","arg":{"format":"{}{}{}{}[]","snippet":"titlespacing*{${1}}{${2}}{${3}}{${4}}[${5}]"}},
+		{"name":"titlespacing*","arg":{"format":"{}{}{}{}","snippet":"titlespacing*{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"wordsep"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/lwarp-titlesec#c": ["pagestyles"]
+	},
+	"args": ["\\usepackage/lwarp-titlesec#c"]
+}

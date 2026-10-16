@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"pgfspectra","arg":{"format":"[]","snippet":"pgfspectra[${1}]"},"doc":"This package provides the \\pgfspectra[<options>] command which draws continuous and emission or absorption spectra for 98 elements and their ions."},
+		{"name":"pgfspectra","doc":"This package provides the \\pgfspectra[<options>] command which draws continuous and emission or absorption spectra for 98 elements and their ions."},
+		{"name":"pgfspectradata","arg":{"format":"[]{}","snippet":"pgfspectradata[${1:name of data set}]{${2:keys}}"}},
+		{"name":"pgfspectradata","arg":{"format":"{}","snippet":"pgfspectradata{${1:keys}}"}},
+		{"name":"pgfspectraplotmap","arg":{"format":"[]{}","snippet":"pgfspectraplotmap[${1:l|h}]{${2:name}}"}},
+		{"name":"pgfspectraplotmap","arg":{"format":"{}","snippet":"pgfspectraplotmap{${1:name}}"}},
+		{"name":"pgfspectraplotshade","arg":{"format":"[]{}","snippet":"pgfspectraplotshade[${1:options}]{${2:name}}"}},
+		{"name":"pgfspectraplotshade","arg":{"format":"{}","snippet":"pgfspectraplotshade{${1:name}}"}},
+		{"name":"pgfspectrarainbow","arg":{"format":"[](){}","snippet":"pgfspectrarainbow[${1:tikz options}](${2:rainbow options}){${3:radius}}"},"doc":"This library provides the command \\pgfspectrarainbow[tikz options](rainbow options){radius} that allows you to draw a rainbow with or without options."},
+		{"name":"pgfspectrarainbow","arg":{"format":"(){}","snippet":"pgfspectrarainbow(${1:rainbow options}){${2:radius}}"},"doc":"This library provides the command \\pgfspectrarainbow[tikz options](rainbow options){radius} that allows you to draw a rainbow with or without options."},
+		{"name":"pgfspectrashade","arg":{"format":"[](){}","snippet":"pgfspectrashade[${1:h|v}](${2:start,end}){${3:name}}"}},
+		{"name":"pgfspectrashade","arg":{"format":"(){}","snippet":"pgfspectrashade(${1:start,end}){${2:name}}"}},
+		{"name":"pgfspectraStyle","arg":{"format":"[]","snippet":"pgfspectraStyle[${1}]"}},
+		{"name":"pgfspectraStyle"},
+		{"name":"pgfspectraStyleReset"},
+		{"name":"pgfspectratable","arg":{"format":"[]{}","snippet":"pgfspectratable[${1:table options}]{${2:name(s) of data set(s)}}"},"doc":"\\pgfspectratable displays loaded data in a table."},
+		{"name":"pgfspectratable","arg":{"format":"{}","snippet":"pgfspectratable{${1:name(s) of data set(s)}}"},"doc":"\\pgfspectratable displays loaded data in a table."},
+		{"name":"pgfspectrawrite","arg":{"format":"[]{}","snippet":"pgfspectrawrite[${1:filename}]{${2:name(s) of data set(s)}}"}},
+		{"name":"pgfspectrawrite","arg":{"format":"{}","snippet":"pgfspectrawrite{${1:name(s) of data set(s)}}"}},
+		{"name":"tempercolor","arg":{"format":"{}","snippet":"tempercolor{${1:Kelvin}}"},"doc":"This library provides the command \\tempercolor{Kelvin} that uses the CIE 1964 10-degree color matching function to convert a given temperature, in Kelvin (1000 K ≤ T ≤ 40000 K), to the respective correlated color."},
+		{"name":"usepgfspectralibrary","arg":{"format":"{}","snippet":"usepgfspectralibrary{${1}}"},"doc":"Use this command to load pgf-spectra libraries anywhere in the document."},
+		{"name":"wlcolor","arg":{"format":"{}","snippet":"wlcolor{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pgf-spectra#c": ["LSE","NIST"]
+	},
+	"args": ["\\usepackage/pgf-spectra#c"]
+}

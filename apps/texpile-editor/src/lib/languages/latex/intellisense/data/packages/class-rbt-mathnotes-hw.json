@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"class-rbt-mathnotes"},{"name":"class-memoir"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"dcolumn"},{"name":"delarray"},{"name":"tabularx"},{"name":"booktabs"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"verbatim"},{"name":"shortvrb"},{"name":"rbt-mathnotes"},{"name":"xkeyval"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"stix2"},{"name":"textcomp"},{"name":"enumitem"},{"name":"xcolor"},{"name":"ntheorem"},{"name":"ifthen"},{"name":"mdframed"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"chapter","arg":{"format":"()[][]{}","snippet":"chapter(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"chapter","arg":{"format":"(){}","snippet":"chapter(${1:number}){${2:title}}"}},
+		{"name":"chapter*","arg":{"format":"()[][]{}","snippet":"chapter*(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"chapter*","arg":{"format":"(){}","snippet":"chapter*(${1:number}){${2:title}}"}},
+		{"name":"paragraph","arg":{"format":"()[][]{}","snippet":"paragraph(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"paragraph","arg":{"format":"(){}","snippet":"paragraph(${1:number}){${2:title}}"}},
+		{"name":"paragraph*","arg":{"format":"()[][]{}","snippet":"paragraph*(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"paragraph*","arg":{"format":"(){}","snippet":"paragraph*(${1:number}){${2:title}}"}},
+		{"name":"prob","arg":{"format":"[]{}","snippet":"prob[${1:number or options}]{${2:text}}"}},
+		{"name":"prob","arg":{"format":"{}","snippet":"prob{${1:text}}"}},
+		{"name":"section","arg":{"format":"()[][]{}","snippet":"section(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"section","arg":{"format":"(){}","snippet":"section(${1:number}){${2:title}}"}},
+		{"name":"section*","arg":{"format":"()[][]{}","snippet":"section*(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"section*","arg":{"format":"(){}","snippet":"section*(${1:number}){${2:title}}"}},
+		{"name":"subparagraph","arg":{"format":"()[][]{}","snippet":"subparagraph(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"subparagraph","arg":{"format":"(){}","snippet":"subparagraph(${1:number}){${2:title}}"}},
+		{"name":"subparagraph*","arg":{"format":"()[][]{}","snippet":"subparagraph*(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"subparagraph*","arg":{"format":"(){}","snippet":"subparagraph*(${1:number}){${2:title}}"}},
+		{"name":"subsection","arg":{"format":"()[][]{}","snippet":"subsection(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"subsection","arg":{"format":"(){}","snippet":"subsection(${1:number}){${2:title}}"}},
+		{"name":"subsection*","arg":{"format":"()[][]{}","snippet":"subsection*(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"subsection*","arg":{"format":"(){}","snippet":"subsection*(${1:number}){${2:title}}"}},
+		{"name":"subsubsection","arg":{"format":"()[][]{}","snippet":"subsubsection(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"subsubsection","arg":{"format":"(){}","snippet":"subsubsection(${1:number}){${2:title}}"}},
+		{"name":"subsubsection*","arg":{"format":"()[][]{}","snippet":"subsubsection*(${1:number})[${2:toc title}][${3:header title}]{${4:title}}"}},
+		{"name":"subsubsection*","arg":{"format":"(){}","snippet":"subsubsection*(${1:number}){${2:title}}"}}
+	],
+	"envs": [
+		{"name":"problem","arg":{"format":"[]","snippet":"[${1:number or options}]"}},
+		{"name":"problem"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"endLFfirsthead"},
+		{"name":"endLFfoot"},
+		{"name":"endLFhead"},
+		{"name":"endLFlastfoot"},
+		{"name":"LFcapwidth"},
+		{"name":"LFchunksize"},
+		{"name":"LFcounter","unusual":true},
+		{"name":"LFleft"},
+		{"name":"LFpost"},
+		{"name":"LFpre"},
+		{"name":"LFreset","unusual":true},
+		{"name":"LFright"}
+	],
+	"envs": [
+		{"name":"longfigure","arg":{"format":"[]{}","snippet":"[${1:position}]{${2:column spec}}"}},
+		{"name":"longfigure","arg":{"format":"{}","snippet":"{${1:column spec}}"}}
+	],
+	"keys": {}
+}

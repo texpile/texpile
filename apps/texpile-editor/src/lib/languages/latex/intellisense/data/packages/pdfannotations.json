@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"listings"},{"name":"xparse"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

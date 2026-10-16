@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"goudyin","arg":{"format":"{}","snippet":"goudyin{${1:initial}}"}},
+		{"name":"GoudyInfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

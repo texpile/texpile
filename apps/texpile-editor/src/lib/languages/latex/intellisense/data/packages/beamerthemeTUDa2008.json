@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"beamerfontthemeTUDa2008"},{"name":"tudafonts"},{"name":"XCharter","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"textcomp"},{"name":"xstring","engines":["pdflatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"scalefnt","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"microtype","engines":["pdflatex"]},{"name":"roboto"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"roboto-mono"},{"name":"beamerouterthemeTUDa2008"},{"name":"xparse"},{"name":"beamerinnerthemeTUDa"},{"name":"trimclip"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

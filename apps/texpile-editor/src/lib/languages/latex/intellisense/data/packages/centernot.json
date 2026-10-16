@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"centernot","arg":{"format":"{}","snippet":"centernot{${1:relation}}"},"doc":"This package provides \\centernot that prints the symbol \\not on the following argument."}
+	],
+	"envs": [],
+	"keys": {}
+}

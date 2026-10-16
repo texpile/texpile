@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"CDashfalse"},
+		{"name":"CDashtrue"},
+		{"name":"CDfatfalse"},
+		{"name":"CDfattrue","doc":"Double arrows are obtained by inserting \\CDfattrue into the diagram before, i.e., to the immediate left of, the arrow that you wish to be doubled."},
+		{"name":"CDlor","arg":{"format":"{}","snippet":"CDlor{${1:color}}"},"doc":"The color, a defined xcolor color name, can be added to an arrow by inserting \\CDlor{<color >} into the diagram before, i.e., to the immediate left of, the arrow that you wish to color."},
+		{"name":"ifCDash","unusual":true},
+		{"name":"ifCDfat","unusual":true},
+		{"name":"iflyx","unusual":true},
+		{"name":"lyxfalse","unusual":true},
+		{"name":"lyxtrue","unusual":true},
+		{"name":"minCDarrowwidth"}
+	],
+	"envs": [
+		{"name":"CD","doc":"The amscd package provides a CD environment that emulates the commutative diagram capabilities of AMS-TeX version 2.x."}
+	],
+	"keys": {
+		"\\usepackage/amscdx#c": ["lyx"]
+	},
+	"args": ["\\usepackage/amscdx#c"]
+}

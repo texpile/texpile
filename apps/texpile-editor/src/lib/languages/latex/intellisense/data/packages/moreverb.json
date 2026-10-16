@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"verbatim"}],
+	"macros": [
+		{"name":"listinginput","arg":{"format":"[]{}{}","snippet":"listinginput[${1:interval}]{${2:start line}}{${3:file name}}"}},
+		{"name":"listinginput","arg":{"format":"{}{}","snippet":"listinginput{${1:start line}}{${2:file name}}"}},
+		{"name":"listinglabel","arg":{"format":"{}","snippet":"listinglabel{${1:line counter}}"},"doc":"The style in which the label is set can be altered by re-defining \\listinglabel."},
+		{"name":"listingoffset"},
+		{"name":"verbatimtabinput","arg":{"format":"[]{}","snippet":"verbatimtabinput[${1:tab width}]{${2:file name}}"}},
+		{"name":"verbatimtabinput","arg":{"format":"{}","snippet":"verbatimtabinput{${1:file name}}"}},
+		{"name":"verbatimtabsize","doc":"The size of the tabs is stored in \\verbatimtabsize, and persists between uses of the environments."}
+	],
+	"envs": [
+		{"name":"boxedverbatim","doc":"\\begin{boxedverbatim} puts the contents of a verbatim environment in a framing box."},
+		{"name":"listing","arg":{"format":"[]{}","snippet":"[${1:interval}]{${2:start line}}"}},
+		{"name":"listing","arg":{"format":"{}","snippet":"{${1:start line}}"}},
+		{"name":"listing*","arg":{"format":"[]{}","snippet":"[${1:interval}]{${2:start line}}"}},
+		{"name":"listing*","arg":{"format":"{}","snippet":"{${1:start line}}"}},
+		{"name":"listingcont","doc":"\\begin{listingcont} continues from the place where the last listing left off."},
+		{"name":"listingcont*","doc":"\\begin{listingcont} continues from the place where the last listing left off."},
+		{"name":"verbatimtab","arg":{"format":"[]","snippet":"[${1:tab width}]"}},
+		{"name":"verbatimtab"},
+		{"name":"verbatimwrite","arg":{"format":"{}","snippet":"{${1:file name}}"}}
+	],
+	"keys": {}
+}

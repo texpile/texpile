@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"etexcmds"},{"name":"iftex"},{"name":"pdftexcmds"}],
+	"macros": [
+		{"name":"stackbin","arg":{"format":"[]{}{}","snippet":"stackbin[${1:subscript}]{${2:superscript}}{${3:bin}}"}},
+		{"name":"stackbin","arg":{"format":"{}{}","snippet":"stackbin{${1:superscript}}{${2:bin}}"}},
+		{"name":"stackrel","arg":{"format":"[]{}{}","snippet":"stackrel[${1:subscript}]{${2:superscript}}{${3:rel}}"},"doc":"extends the syntax of \\stackrel by adding an optional argument for the subscript position.","math":true},
+		{"name":"stackrel","arg":{"format":"{}{}","snippet":"stackrel{${1:superscript}}{${2:rel}}"},"doc":"extends the syntax of \\stackrel by adding an optional argument for the subscript position.","math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"etoolbox"},{"name":"lmodern"},{"name":"class-article"},{"name":"geometry"},{"name":"ifvtex"},{"name":"fancyhdr"},{"name":"titling"},{"name":"totpages"},{"name":"everyshi"},{"name":"array"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"concmath","if":"concrete"},{"name":"cmbright","if":"sans"},{"name":"sfmath","if":"sans"},{"name":"roboto","if":"slab"},{"name":"ifxetex","if":"slab"},{"name":"ifluatex","if":"slab"},{"name":"xkeyval","if":"slab"},{"name":"textcomp","if":"slab"},{"name":"fontaxes","if":"slab","engines":["pdflatex"]},{"name":"figureversions","if":"slab","engines":["pdflatex"]},{"name":"fontspec","if":"slab","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","if":"slab","engines":["lualatex"]},{"name":"fontspec-xetex","if":"slab","engines":["xelatex"]}],
+	"macros": [
+		{"name":"authoremail","arg":{"format":"{}","snippet":"authoremail{${1}}"}},
+		{"name":"contributors","arg":{"format":"{}","snippet":"contributors{${1}}"}},
+		{"name":"course","arg":{"format":"{}","snippet":"course{${1}}"}},
+		{"name":"institute","arg":{"format":"{}","snippet":"institute{${1}}"}},
+		{"name":"maintainer","arg":{"format":"{}","snippet":"maintainer{${1}}"}},
+		{"name":"module","arg":{"format":"{}","snippet":"module{${1}}"}},
+		{"name":"semester","arg":{"format":"{}","snippet":"semester{${1}}"}},
+		{"name":"theauthoremail"},
+		{"name":"thecontributors"},
+		{"name":"thecourse"},
+		{"name":"theinstitute"},
+		{"name":"themaintainer"},
+		{"name":"themodule"},
+		{"name":"thesemester"}
+	],
+	"envs": [],
+	"keys": {}
+}

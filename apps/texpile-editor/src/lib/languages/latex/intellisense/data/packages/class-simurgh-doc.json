@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"class-ltxdoc"},{"name":"class-article"},{"name":"doc"},{"name":"multicol"},{"name":"xcolor"},{"name":"minted"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"iftex"},{"name":"etoolbox"},{"name":"fvextra"},{"name":"fancyvrb"},{"name":"keyval"},{"name":"upquote"},{"name":"textcomp"},{"name":"lineno"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"latex2pydata"},{"name":"pgfkeys"},{"name":"pgfopts"},{"name":"shellesc"},{"name":"float"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"geometry"},{"name":"ifvtex"},{"name":"makeidx"},{"name":"microtype"},{"name":"hypdoc"},{"name":"atveryend-ltx"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"declare","arg":{"format":"{}","snippet":"declare{${1:text}}"}},
+		{"name":"defaultkeyval"},
+		{"name":"example"},
+		{"name":"itemoption","arg":{"format":"{}","snippet":"itemoption{${1}}"},"unusual":true},
+		{"name":"myprintocmmand","arg":{"format":"{}","snippet":"myprintocmmand{${1:command name}}"}},
+		{"name":"noindexing","unusual":true},
+		{"name":"ooarg","arg":{"format":"{}","snippet":"ooarg{${1:argument name}}"}},
+		{"name":"opt","arg":{"format":"{}","snippet":"opt{${1:value}}"}},
+		{"name":"pdf"},
+		{"name":"simurgh"},
+		{"name":"smplfile","arg":{"format":"{}","snippet":"smplfile{${1:file name}}"}}
+	],
+	"envs": [
+		{"name":"command","arg":{"format":"{}","snippet":"{${1:command synopsis}}"}},
+		{"name":"filedescription","arg":{"format":"{}","snippet":"{${1:file name}}"}},
+		{"name":"package","arg":{"format":"{}","snippet":"{${1:package name}}"}},
+		{"name":"packageoption","arg":{"format":"{}","snippet":"{${1:option}}"}},
+		{"name":"textoken","arg":{"format":"{}","snippet":"{${1}}"},"unusual":true}
+	],
+	"keys": {}
+}

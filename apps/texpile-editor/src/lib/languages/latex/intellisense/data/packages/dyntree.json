@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"coollist"},{"name":"ifthen"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"coolstr"},{"name":"forloop"},{"name":"calc"},{"name":"epic"},{"name":"eepic"}],
+	"macros": [
+		{"name":"dynbox","arg":{"format":"{}{}","snippet":"dynbox{${1:cartan coefficients}}{${2:descendant root list}}"}},
+		{"name":"finish","arg":{"format":"{}","snippet":"finish{${1:dyntree}}"}},
+		{"name":"lend"},
+		{"name":"start","arg":{"format":"{}{}","snippet":"start{${1:dyntree}}{${2:num roots}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"luatexbase"}],
+	"macros": [
+		{"name":"autodelimiters","arg":{"format":"{}","snippet":"autodelimiters{${1:delimiter sample}}"}},
+		{"name":"delimiterprefix","arg":{"format":"{}","snippet":"delimiterprefix{${1:prefix}}"}},
+		{"name":"delimiterscale"},
+		{"name":"ignorelimits"},
+		{"name":"includelimits"},
+		{"name":"lleft"},
+		{"name":"longmathlinesep"},
+		{"name":"mleft"},
+		{"name":"mmbin"},
+		{"name":"mmiddle"},
+		{"name":"mmop"},
+		{"name":"mmord"},
+		{"name":"mmpunct"},
+		{"name":"mmrel"},
+		{"name":"mright"},
+		{"name":"pulldelimiter","doc":"inserts an invisible opening delimiter with the previously generated tag."},
+		{"name":"pushdelimiter","doc":"inserts an invisible closing delimiter with an automatically generated unique tag."},
+		{"name":"rright"}
+	],
+	"envs": [
+		{"name":"longmath","arg":{"format":"[]{}","snippet":"[${1:align}]{${2:width}}"}},
+		{"name":"longmath","arg":{"format":"{}","snippet":"{${1:width}}"}},
+		{"name":"longmath*","arg":{"format":"[]{}","snippet":"[${1:align}]{${2:width}}"}},
+		{"name":"longmath*","arg":{"format":"{}","snippet":"{${1:width}}"}}
+	],
+	"keys": {}
+}

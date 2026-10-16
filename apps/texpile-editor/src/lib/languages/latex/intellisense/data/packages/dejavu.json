@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"DejaVuSansMono"},{"name":"keyval"},{"name":"DejaVuSans"},{"name":"DejaVuSerif"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

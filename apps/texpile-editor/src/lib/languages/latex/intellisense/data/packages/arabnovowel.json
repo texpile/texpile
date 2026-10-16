@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"ArabiStrut","unusual":true},
+		{"name":"ifVocalize","unusual":true},
+		{"name":"Novocalize"},
+		{"name":"Vocalize"},
+		{"name":"Vocalizefalse","unusual":true},
+		{"name":"Vocalizetrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

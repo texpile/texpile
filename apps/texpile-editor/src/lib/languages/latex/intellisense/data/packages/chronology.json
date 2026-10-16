@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"calc"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xparse"}],
+	"macros": [
+		{"name":"decimaldate","arg":{"format":"{}{}{}","snippet":"decimaldate{${1}}{${2}}{${3}}"}},
+		{"name":"event","arg":{"format":"[]{}{}","snippet":"event[${1}]{${2}}{${3}}"}},
+		{"name":"event","arg":{"format":"{}{}","snippet":"event{${1}}{${2}}"}},
+		{"name":"eventpoint","arg":{"format":"{}{}[][][]","snippet":"eventpoint{${1}}{${2}}[${3}][${4}][${5}]"}},
+		{"name":"eventpoint","arg":{"format":"{}{}","snippet":"eventpoint{${1}}{${2}}"}},
+		{"name":"eventspan","arg":{"format":"{}{}{}[][][][]","snippet":"eventspan{${1}}{${2}}{${3}}[${4}][${5}][${6}][${7}]"}},
+		{"name":"eventspan","arg":{"format":"{}{}{}","snippet":"eventspan{${1}}{${2}}{${3}}"}},
+		{"name":"thedeltayears","unusual":true},
+		{"name":"thestep","unusual":true},
+		{"name":"thestepstart","unusual":true},
+		{"name":"thestepstop","unusual":true},
+		{"name":"theyearstart","unusual":true},
+		{"name":"theyearstop","unusual":true}
+	],
+	"envs": [
+		{"name":"chronology","arg":{"format":"[]{}{}{}[]","snippet":"[${1:step}]{${2:year start}}{${3:year stop}}{${4:timeline width}}[${5:scaling}]"}},
+		{"name":"chronology","arg":{"format":"{}{}{}","snippet":"{${1:year start}}{${2:year stop}}{${3:timeline width}}"}},
+		{"name":"chronology*","arg":{"format":"[]{}{}{}[]","snippet":"[${1:step}]{${2:year start}}{${3:year stop}}{${4:timeline width}}[${5:scaling}]"}},
+		{"name":"chronology*","arg":{"format":"{}{}{}","snippet":"{${1:year start}}{${2:year stop}}{${3:timeline width}}"}}
+	],
+	"keys": {}
+}

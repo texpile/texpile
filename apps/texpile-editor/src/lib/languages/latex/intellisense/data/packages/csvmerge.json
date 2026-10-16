@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"stringstrings"},{"name":"ifthen"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"Field","arg":{"format":"{}","snippet":"Field{${1:field-name}}"},"doc":"\\Field{field-name} expands to the current value of the field-name-macro."},
+		{"name":"ifFieldEmpty","arg":{"format":"{}{}{}","snippet":"ifFieldEmpty{${1:field-name}}{${2:do if empty}}{${3:do if not}}"},"doc":"\\ifFieldEmpty takes three arguments. The first argument is a field-name and if the content of the corresponding macro is empty then the second argument is executed: otherwise the third argument is executed."},
+		{"name":"makeMePublic"},
+		{"name":"mergeFields","arg":{"format":"{}","snippet":"mergeFields{${1:tex={tex-file} csv={csv-file} tmp={tmp-file}}}"},"doc":"When \\mergeFields has read a row and set the field-name-macros the tex-file is read and the TeX code evaluated."},
+		{"name":"setDelimitersCommaQuote"},
+		{"name":"setDelimitersTabQuote"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xstring"},{"name":"simplekv"}],
+	"macros": [
+		{"name":"ceicon","arg":{"format":"[]<>{}","snippet":"ceicon[${1:options}]<${2:includegraphics options}>{${3:name}}"}},
+		{"name":"ceicon","arg":{"format":"<>{}","snippet":"ceicon<${1:includegraphics options}>{${2:name}}"}},
+		{"name":"ceiconbadgeai","arg":{"format":"[]<>{}","snippet":"ceiconbadgeai[${1:options}]<${2:includegraphics options}>{${3:level}}"}},
+		{"name":"ceiconbadgeai","arg":{"format":"<>{}","snippet":"ceiconbadgeai<${1:includegraphics options}>{${2:level}}"}},
+		{"name":"ceiconbadgeia","arg":{"format":"[]<>{}","snippet":"ceiconbadgeia[${1:options}]<${2:includegraphics options}>{${3:niveau}}"}},
+		{"name":"ceiconbadgeia","arg":{"format":"<>{}","snippet":"ceiconbadgeia<${1:includegraphics options}>{${2:niveau}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

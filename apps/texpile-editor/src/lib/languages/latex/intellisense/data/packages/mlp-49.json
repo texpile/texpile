@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"german"}],
+	"macros": [
+		{"name":"beginlanguage"}
+	],
+	"envs": [
+		{"name":"german"}
+	],
+	"keys": {
+		"\\usepackage/mlp-49#c": ["german"]
+	},
+	"args": ["\\usepackage/mlp-49#c"]
+}

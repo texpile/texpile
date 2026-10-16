@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"environ"}],
+	"macros": [],
+	"envs": [
+		{"name":"EmptySinglePage","arg":{"format":"[]","snippet":"[${1:additional options}]"}},
+		{"name":"EmptySinglePage"},
+		{"name":"SinglePage","arg":{"format":"[]","snippet":"[${1:additional options}]"}},
+		{"name":"SinglePage"}
+	],
+	"keys": {}
+}

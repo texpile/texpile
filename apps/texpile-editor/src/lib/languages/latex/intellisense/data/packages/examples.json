@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"bgcolour","arg":{"format":"{}","snippet":"bgcolour{${1:color}}"}},
+		{"name":"latexstyle"},
+		{"name":"pythonstyle"}
+	],
+	"envs": [
+		{"name":"latex"}
+	],
+	"keys": {}
+}

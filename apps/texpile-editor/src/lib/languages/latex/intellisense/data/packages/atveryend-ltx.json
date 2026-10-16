@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"AfterLastShipout","arg":{"format":"{}","snippet":"AfterLastShipout{${1:code}}"}},
+		{"name":"AtEndAfterFileList","arg":{"format":"{}","snippet":"AtEndAfterFileList{${1:code}}"}},
+		{"name":"AtVeryEndDocument","arg":{"format":"{}","snippet":"AtVeryEndDocument{${1:code}}"}},
+		{"name":"AtVeryVeryEnd","arg":{"format":"{}","snippet":"AtVeryVeryEnd{${1:code}}"}},
+		{"name":"BeforeClearDocument","arg":{"format":"{}","snippet":"BeforeClearDocument{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

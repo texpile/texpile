@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"nlq"},
+		{"name":"nrq"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/nestquot#c": ["dq","french","german","guillemet"]
+	},
+	"args": ["\\usepackage/nestquot#c"]
+}

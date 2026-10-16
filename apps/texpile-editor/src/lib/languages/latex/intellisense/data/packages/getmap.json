@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"stringenc"},{"name":"pdfescape"},{"name":"iftex"},{"name":"ifthen"},{"name":"shellesc"}],
+	"macros": [
+		{"name":"getmap","arg":{"format":"[]{}","snippet":"getmap[${1:options}]{${2:address}}","keys":["keyval:getmap"],"keyPos":0},"doc":"With the \\getmap command you can download a map, if you enable \\write18 (TeXLive: -shell-escape, MiKTeX: --enable-write18)."},
+		{"name":"getmap","arg":{"format":"{}","snippet":"getmap{${1:address}}"},"doc":"With the \\getmap command you can download a map, if you enable \\write18 (TeXLive: -shell-escape, MiKTeX: --enable-write18)."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:getmap": ["color=","file=","fov=","heading=","imagetype=","inputencoding=","key=","language=","markers=","number=","path=","pathfile=","pitch=","scale=","type=","visible=","xsize=","ysize=","zoom=","mode=${1|osm,gm,gsv|}","overwrite=${1|false,true|}"],
+		"\\usepackage/getmap#c": ["color=","file=","fov=","heading=","imagetype=","inputencoding=","key=","language=","markers=","mode=${1|osm,gm,gsv|}","number=","overwrite","overwrite=${1|false,true|}","path=","pathfile=","pitch=","scale=","type=","visible=","xsize=","ysize=","zoom="]
+	},
+	"args": ["\\usepackage/getmap#c"]
+}

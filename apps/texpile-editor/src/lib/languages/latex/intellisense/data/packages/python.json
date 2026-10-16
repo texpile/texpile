@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"python","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"python"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"undolabl"},{"name":"alphalph"},{"name":"intcalc"}],
+	"macros": [
+		{"name":"lastpageref","arg":{"format":"{}","snippet":"lastpageref{${1:label}}"}},
+		{"name":"lastpageref*","arg":{"format":"{}","snippet":"lastpageref*{${1:label}}"}},
+		{"name":"lastpages","arg":{"format":"{}{}","snippet":"lastpages{${1:page numbering scheme}}{${2:number}}"}},
+		{"name":"theCurrentPage","unusual":true},
+		{"name":"theCurrentPageLocal","doc":"\\theCurrentPageLocal gives the current (arabic) number of pages in the current page numbering scheme."}
+	],
+	"envs": [],
+	"keys": {}
+}

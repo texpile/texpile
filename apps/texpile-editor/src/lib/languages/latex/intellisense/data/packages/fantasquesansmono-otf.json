@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"fantasquesansmono"},
+		{"name":"fantasquesansmonocode"}
+	],
+	"envs": [],
+	"keys": {}
+}

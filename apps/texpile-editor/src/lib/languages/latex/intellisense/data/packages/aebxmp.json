@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"insdljs"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"Authors","arg":{"format":"{}","snippet":"Authors{${1:authors}}"},"doc":"aebxmp defines the \\Authors command for setting multiple authors, the authors are accessible separately using Doc.info.Authors."},
+		{"name":"authortitle","arg":{"format":"{}","snippet":"authortitle{${1:text}}"},"doc":"\\authortitle{⟨text⟩}: The ⟨text⟩ appears in the Author Title line on the Additional Metadata dialog box."},
+		{"name":"authorTitle","arg":{"format":"{}","snippet":"authorTitle{${1:text}}"}},
+		{"name":"copyrightInfoURL","arg":{"format":"{}","snippet":"copyrightInfoURL{${1:URL}}"}},
+		{"name":"copyrightNotice","arg":{"format":"{}","snippet":"copyrightNotice{${1:text}}"}},
+		{"name":"copyrightStatus","arg":{"format":"{}","snippet":"copyrightStatus{${1:True|False}}"},"doc":"\\copyrightStatus{True|False}: If True, Copyright Status is set to Copyrighted; if False, Copyright Status is set to Public Domain. If left empty, the status is set to Unknown."},
+		{"name":"customProperties","arg":{"format":"{}","snippet":"customProperties{${1:properties}}"},"doc":"You can define custom properties using the \\customProperties command."},
+		{"name":"descriptionwriter","arg":{"format":"{}","snippet":"descriptionwriter{${1:text}}"},"doc":"\\descriptionwriter{⟨text⟩}: The ⟨text⟩ appears in the Description Writer line on the Additional Metadata dialog box."},
+		{"name":"descriptionWriter","arg":{"format":"{}","snippet":"descriptionWriter{${1:text}}"}},
+		{"name":"Keywords","arg":{"format":"{}","snippet":"Keywords{${1:keywords}}"},"doc":"The command takes each comma-delimited list of keywords and inserts each into the dc:subject part of the metadata."},
+		{"name":"metaLang","arg":{"format":"{}","snippet":"metaLang{${1:languages}}"},"doc":"The \\metaLang command allows you to document the languages used in the metadata. Multiple languages may be specified."},
+		{"name":"sourceFile","arg":{"format":"{}","snippet":"sourceFile{${1:file}}"}},
+		{"name":"Subject","arg":{"format":"{}","snippet":"Subject{${1:subjects}}"}},
+		{"name":"Title","arg":{"format":"{}","snippet":"Title{${1:titles}}"}},
+		{"name":"xmpDoNotInsKWScript"}
+	],
+	"envs": [],
+	"keys": {}
+}

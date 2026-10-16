@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"getintercharclass","arg":{"format":"[]{}{}","snippet":"getintercharclass[${1}]{${2}}{${3}}"},"doc":"\\getintercharclass[⟨scheme⟩]{⟨char-code⟩}{\\cs} gets the class number of the specified character in the specified scheme, and stores the result in \\cs."},
+		{"name":"getintercharclass","arg":{"format":"{}{}","snippet":"getintercharclass{${1}}{${2}}"},"doc":"\\getintercharclass[⟨scheme⟩]{⟨char-code⟩}{\\cs} gets the class number of the specified character in the specified scheme, and stores the result in \\cs."},
+		{"name":"getintercharstate","arg":{"format":"[]{}","snippet":"getintercharstate[${1}]{${2}}"},"doc":"\\getintercharstate[⟨scheme⟩]{\\cs} gets current state of the specified scheme and store the state code in \\cs."},
+		{"name":"getintercharstate","arg":{"format":"{}","snippet":"getintercharstate{${1}}"},"doc":"\\getintercharstate[⟨scheme⟩]{\\cs} gets current state of the specified scheme and store the state code in \\cs."},
+		{"name":"getinterchartoks","arg":{"format":"[]{}{}{}","snippet":"getinterchartoks[${1}]{${2}}{${3}}{${4}}"},"doc":"\\getinterchartoks[⟨scheme⟩]{⟨char-class-1⟩}{⟨char-class-2⟩}{\\cs} gets the tokens to be inserted between ⟨char-class-1⟩ and ⟨char-class-2⟩ in the specified scheme, and stores the result in \\cs."},
+		{"name":"getinterchartoks","arg":{"format":"{}{}{}","snippet":"getinterchartoks{${1}}{${2}}{${3}}"},"doc":"\\getinterchartoks[⟨scheme⟩]{⟨char-class-1⟩}{⟨char-class-2⟩}{\\cs} gets the tokens to be inserted between ⟨char-class-1⟩ and ⟨char-class-2⟩ in the specified scheme, and stores the result in \\cs."},
+		{"name":"intercharclass","arg":{"format":"[]{}{}","snippet":"intercharclass[${1}]{${2}}{${3}}"},"doc":"\\intercharclass[⟨scheme⟩]{⟨char-range⟩}{⟨char-class⟩} moves all characters within ⟨char-range⟩ to the class ⟨char-class⟩ in the specified scheme."},
+		{"name":"intercharclass","arg":{"format":"{}{}","snippet":"intercharclass{${1}}{${2}}"},"doc":"\\intercharclass[⟨scheme⟩]{⟨char-range⟩}{⟨char-class⟩} moves all characters within ⟨char-range⟩ to the class ⟨char-class⟩ in the specified scheme."},
+		{"name":"intercharstate","arg":{"format":"[]{}","snippet":"intercharstate[${1}]{${2}}"}},
+		{"name":"intercharstate","arg":{"format":"{}","snippet":"intercharstate{${1}}"}},
+		{"name":"interchartoks","arg":{"format":"[]{}{}{}","snippet":"interchartoks[${1}]{${2}}{${3}}{${4}}"},"doc":"\\interchartoks[⟨scheme⟩]{⟨char-class-1⟩}{⟨char-class-2⟩}{⟨tokens⟩} defines tokens to be inserted between ⟨char-class-1⟩ and ⟨char-class-2⟩ (in that order) in the specified scheme."},
+		{"name":"interchartoks","arg":{"format":"{}{}{}","snippet":"interchartoks{${1}}{${2}}{${3}}"},"doc":"\\interchartoks[⟨scheme⟩]{⟨char-class-1⟩}{⟨char-class-2⟩}{⟨tokens⟩} defines tokens to be inserted between ⟨char-class-1⟩ and ⟨char-class-2⟩ (in that order) in the specified scheme."},
+		{"name":"newintercharclass","arg":{"format":"[]{}","snippet":"newintercharclass[${1}]{${2}}"},"doc":"\\newintercharclass[⟨scheme⟩]{\\cs} creates a new char class in the specified scheme and stores the class number in \\cs."},
+		{"name":"newintercharclass","arg":{"format":"{}","snippet":"newintercharclass{${1}}"},"doc":"\\newintercharclass[⟨scheme⟩]{\\cs} creates a new char class in the specified scheme and stores the class number in \\cs."},
+		{"name":"newintercharscheme","arg":{"format":"{}","snippet":"newintercharscheme{${1}}"},"doc":"\\newintercharscheme{⟨scheme⟩} creates a new char class scheme."},
+		{"name":"NewIntercharScheme","arg":{"format":"{}","snippet":"NewIntercharScheme{${1:scheme}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"mathbold","arg":{"format":"{}","snippet":"mathbold{${1:letters}}"}},
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	],
+	"envs": [],
+	"keys": {}
+}

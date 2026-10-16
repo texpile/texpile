@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"ifthen","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"includexmp","arg":{"format":"{}","snippet":"includexmp{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

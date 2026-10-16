@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"listings"},{"name":"stringenc","engines":["pdflatex"]},{"name":"pdfescape","engines":["pdflatex"]},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"debate","arg":{"format":"[]{}","snippet":"debate[${1:reviewer}]{${2:text}}"}},
+		{"name":"debate","arg":{"format":"{}","snippet":"debate{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

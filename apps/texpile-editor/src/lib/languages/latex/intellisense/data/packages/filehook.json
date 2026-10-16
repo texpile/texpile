@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"filehook-2020"}],
+	"macros": [
+		{"name":"AfterIncludeFile","arg":{"format":"{}{}","snippet":"AfterIncludeFile{${1:file name}}{${2:TeX code}}"}},
+		{"name":"AfterIncludes","arg":{"format":"{}","snippet":"AfterIncludes{${1:TeX code}}"}},
+		{"name":"AtBeginOfClassFile","arg":{"format":"{}{}","snippet":"AtBeginOfClassFile{${1:class name}}{${2:TeX code}}"},"doc":"This macros install the given 〈TeX code〉 in the ‘AtBegin’ and ‘AtEnd’ hooks of the given class file."},
+		{"name":"AtBeginOfClassFile*","arg":{"format":"{}{}","snippet":"AtBeginOfClassFile*{${1:class name}}{${2:TeX code}}"},"doc":"This macros install the given 〈TeX code〉 in the ‘AtBegin’ and ‘AtEnd’ hooks of the given class file."},
+		{"name":"AtBeginOfEveryFile","arg":{"format":"{}","snippet":"AtBeginOfEveryFile{${1:TeX code}}"}},
+		{"name":"AtBeginOfFile","arg":{"format":"{}{}","snippet":"AtBeginOfFile{${1:file name}}{${2:TeX code}}"}},
+		{"name":"AtBeginOfFiles","arg":{"format":"{}","snippet":"AtBeginOfFiles{${1:TeX code}}"}},
+		{"name":"AtBeginOfIncludeFile","arg":{"format":"{}{}","snippet":"AtBeginOfIncludeFile{${1:file name}}{${2:TeX code}}"},"doc":"The 〈code〉 is only executed for the file with the given 〈file name〉 and only if it is read using \\include."},
+		{"name":"AtBeginOfIncludes","arg":{"format":"{}","snippet":"AtBeginOfIncludes{${1:TeX code}}"}},
+		{"name":"AtBeginOfInputFile","arg":{"format":"{}{}","snippet":"AtBeginOfInputFile{${1:file name}}{${2:TeX code}}"}},
+		{"name":"AtBeginOfInputs","arg":{"format":"{}","snippet":"AtBeginOfInputs{${1:TeX code}}"}},
+		{"name":"AtBeginOfPackageFile","arg":{"format":"{}{}","snippet":"AtBeginOfPackageFile{${1:package name}}{${2:TeX code}}"}},
+		{"name":"AtBeginOfPackageFile*","arg":{"format":"{}{}","snippet":"AtBeginOfPackageFile*{${1:package name}}{${2:TeX code}}"}},
+		{"name":"AtEndOfClassFile","arg":{"format":"{}{}","snippet":"AtEndOfClassFile{${1:class name}}{${2:TeX code}}"}},
+		{"name":"AtEndOfClassFile*","arg":{"format":"{}{}","snippet":"AtEndOfClassFile*{${1:class name}}{${2:TeX code}}"}},
+		{"name":"AtEndOfEveryFile","arg":{"format":"{}","snippet":"AtEndOfEveryFile{${1:TeX code}}"},"doc":"Sometime certain code should be executed at the begin and end of every read file, e.g. pushing and popping a file stack."},
+		{"name":"AtEndOfFile","arg":{"format":"{}{}","snippet":"AtEndOfFile{${1:file name}}{${2:TeX code}}"}},
+		{"name":"AtEndOfFiles","arg":{"format":"{}","snippet":"AtEndOfFiles{${1:TeX code}}"}},
+		{"name":"AtEndOfIncludeFile","arg":{"format":"{}{}","snippet":"AtEndOfIncludeFile{${1:file name}}{${2:TeX code}}"},"doc":"The 〈code〉 is only executed for the file with the given 〈file name〉 and only if it is read using \\include."},
+		{"name":"AtEndOfIncludes","arg":{"format":"{}","snippet":"AtEndOfIncludes{${1:TeX code}}"}},
+		{"name":"AtEndOfInputFile","arg":{"format":"{}{}","snippet":"AtEndOfInputFile{${1:file name}}{${2:TeX code}}"}},
+		{"name":"AtEndOfInputs","arg":{"format":"{}","snippet":"AtEndOfInputs{${1:TeX code}}"}},
+		{"name":"AtEndOfPackageFile","arg":{"format":"{}{}","snippet":"AtEndOfPackageFile{${1:package name}}{${2:TeX code}}"}},
+		{"name":"AtEndOfPackageFile*","arg":{"format":"{}{}","snippet":"AtEndOfPackageFile*{${1:package name}}{${2:TeX code}}"}},
+		{"name":"ClearHook","doc":"Clears the hook by temporary redefining the prefix and append macros to do a simple definition to empty."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/filehook#c": ["force"]
+	},
+	"args": ["\\usepackage/filehook#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"arrowlength","arg":{"format":"{}","snippet":"arrowlength{${1}}"},"doc":"A new command which specifies the size of the arrowhead drawn by the \\vector and \\Vector commands."},
+		{"name":"Curve","arg":{"format":"(){}","snippet":"Curve(${1:x2,y2}){${2:m}}"}},
+		{"name":"Line","arg":{"format":"()","snippet":"Line(${1:x2,y2})"}},
+		{"name":"oval","arg":{"format":"[]()[]","snippet":"oval[${1:radius}](${2:width,height})[${3:part}]"}},
+		{"name":"oval","arg":{"format":"()","snippet":"oval(${1:width,height})"}},
+		{"name":"Vector","arg":{"format":"()","snippet":"Vector(${1:x2,y2})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

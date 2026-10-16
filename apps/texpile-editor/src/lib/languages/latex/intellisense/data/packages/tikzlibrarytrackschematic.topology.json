@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"bufferstop","arg":{"format":"[]()","snippet":"bufferstop[${1:options}](${2:coordinate})"}},
+		{"name":"bufferstop","arg":{"format":"()","snippet":"bufferstop(${1:coordinate})"}},
+		{"name":"crossing","arg":{"format":"[]()()","snippet":"crossing[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"crossing","arg":{"format":"()()","snippet":"crossing(${1:coordinate})(${2:label})"}},
+		{"name":"derailer","arg":{"format":"[]()()","snippet":"derailer[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"derailer","arg":{"format":"()()","snippet":"derailer(${1:coordinate})(${2:label})"}},
+		{"name":"maintrack"},
+		{"name":"secondarytrack"},
+		{"name":"sidetrack"},
+		{"name":"slipturnout","arg":{"format":"[]()()()","snippet":"slipturnout[${1:options}](${2:coordinate})(${3:label 1})(${4:label 2})"}},
+		{"name":"slipturnout","arg":{"format":"()()()","snippet":"slipturnout(${1:coordinate})(${2:label 1})(${3:label 2})"}},
+		{"name":"trackclosure","arg":{"format":"()","snippet":"trackclosure(${1:coordinate})"}},
+		{"name":"tracklabel","arg":{"format":"()()","snippet":"tracklabel(${1:coordinate})(${2:label})"}},
+		{"name":"turnout","arg":{"format":"[]()()","snippet":"turnout[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"turnout","arg":{"format":"()()","snippet":"turnout(${1:coordinate})(${2:label})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

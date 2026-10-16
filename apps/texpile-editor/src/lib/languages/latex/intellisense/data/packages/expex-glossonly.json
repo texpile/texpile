@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"calc"},{"name":"expex"},{"name":"xkeyval"},{"name":"covington","if":"covington"},{"name":"iftex","if":"covington"},{"name":"varwidth","if":"covington"},{"name":"gb4e","if":"gb4e"},{"name":"cgloss4e","if":"gb4e|linguex"},{"name":"linguex","if":"linguex"},{"name":"xspace","if":"linguex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

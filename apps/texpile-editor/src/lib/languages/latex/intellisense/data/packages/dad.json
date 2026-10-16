@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"luatex85"}],
+	"macros": [
+		{"name":"arab","arg":{"format":"{}","snippet":"arab{${1:text}}"},"doc":"To typeset in Arabic, one uses the command \\arab (which is “long”: paragraph changes are allowed in its argument)."},
+		{"name":"arabdottedcircle"},
+		{"name":"arabtt","arg":{"format":"{}","snippet":"arabtt{${1:text}}"}},
+		{"name":"arabttexample","arg":{"format":"{}","snippet":"arabttexample{${1}}"},"unusual":true},
+		{"name":"arabttsep","arg":{"format":"{}{}","snippet":"arabttsep{${1}}{${2}}"},"unusual":true},
+		{"name":"kesh"},
+		{"name":"دائرة"},
+		{"name":"لله","arg":{"format":"{}","snippet":"لله{${1:vowel}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

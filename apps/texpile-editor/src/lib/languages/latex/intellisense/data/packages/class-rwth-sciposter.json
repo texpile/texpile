@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"iftex"},{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"rwth-fonts"},{"name":"arimo"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"rwth-colors"},{"name":"xcolor"},{"name":"geometry"},{"name":"ifvtex"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"tikzfill.image"},{"name":"qrcode"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"addressdata","arg":{"format":"{}","snippet":"addressdata{${1:address data}}"}},
+		{"name":"authorandname","unusual":true},
+		{"name":"contactinfo","arg":{"format":"{}","snippet":"contactinfo{${1:contact info}}"}},
+		{"name":"footerqrcode","arg":{"format":"{}","snippet":"footerqrcode{${1:URL or citekey}}"},"doc":"Create a QRcode to be placed in the footer."},
+		{"name":"footerqrcode*","arg":{"format":"{}","snippet":"footerqrcode*{${1:URL or citekey}}"},"doc":"Create a QRcode to be placed in the footer."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"bcbar","arg":{"format":"[]{}","snippet":"bcbar[${1:options}]{${2:value}}","keys":["keyval:bcbar"],"keyPos":0}},
+		{"name":"bcbar","arg":{"format":"{}","snippet":"bcbar{${1:value}}"}},
+		{"name":"bcbarcolor","unusual":true},
+		{"name":"bcbarlabel","unusual":true},
+		{"name":"bcbartext","unusual":true},
+		{"name":"bcbarvalue","unusual":true},
+		{"name":"bcfontstyle"},
+		{"name":"bclabel","arg":{"format":"{}","snippet":"bclabel{${1:label}}"}},
+		{"name":"bcmax","unusual":true},
+		{"name":"bcmin","unusual":true},
+		{"name":"bcplainbar","unusual":true},
+		{"name":"bcplainchart","unusual":true},
+		{"name":"bcscale","unusual":true},
+		{"name":"bcskip","arg":{"format":"[]{}","snippet":"bcskip[${1:options}]{${2:length}}","keys":["keyval:bcskip"],"keyPos":0}},
+		{"name":"bcskip","arg":{"format":"{}","snippet":"bcskip{${1:length}}"}},
+		{"name":"bcskiplabel","unusual":true},
+		{"name":"bcstep","unusual":true},
+		{"name":"bcsteps","unusual":true},
+		{"name":"bcunit","unusual":true},
+		{"name":"bcwidth","unusual":true},
+		{"name":"bcxlabel","arg":{"format":"{}","snippet":"bcxlabel{${1:label}}"}},
+		{"name":"bigskip","arg":{"format":"[]","snippet":"bigskip[${1:options}]","keys":["keyval:bcskip"],"keyPos":0}},
+		{"name":"bigskip"},
+		{"name":"medskip","arg":{"format":"[]","snippet":"medskip[${1:options}]","keys":["keyval:bcskip"],"keyPos":0}},
+		{"name":"medskip"},
+		{"name":"smallskip","arg":{"format":"[]","snippet":"smallskip[${1:options}]","keys":["keyval:bcskip"],"keyPos":0}},
+		{"name":"smallskip"}
+	],
+	"envs": [
+		{"name":"bchart","arg":{"format":"[]","snippet":"[${1}]","keys":["keyval:bchart"],"keyPos":0},"doc":"Charts are created with the bchart-environment."},
+		{"name":"bchart","doc":"Charts are created with the bchart-environment."}
+	],
+	"keys": {
+		"keyval:bcbar": ["color=","label=","plain","text=","value="],
+		"keyval:bchart": ["max=","min=","plain","scale=","step=","steps=","unit=","width="],
+		"keyval:bcskip": ["label="]
+	}
+}

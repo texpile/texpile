@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"showlabelfont"},
+		{"name":"showlabelrefline"},
+		{"name":"showlabels","arg":{"format":"[]{}","snippet":"showlabels[${1:format}]{${2:command}}"}},
+		{"name":"showlabels","arg":{"format":"{}","snippet":"showlabels{${1:command}}"}},
+		{"name":"showlabelsetlabel","arg":{"format":"{}","snippet":"showlabelsetlabel{${1:label}}"}},
+		{"name":"showlabelsinline"}
+	],
+	"envs": [],
+	"keys": {}
+}

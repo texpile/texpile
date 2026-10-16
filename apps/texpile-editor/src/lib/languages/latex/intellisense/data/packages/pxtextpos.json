@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"textpos"},{"name":"keyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

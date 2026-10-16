@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"keyval"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"epic"}],
+	"macros": [
+		{"name":"setOverpic","arg":{"format":"{}","snippet":"setOverpic{${1:options}}","keys":["keyval:OVP"],"keyPos":0},"doc":"Sets new default values."}
+	],
+	"envs": [
+		{"name":"overpic","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:filename}}","keys":["keyval:OVP"],"keyPos":0},"doc":"The overpic environment is a combination between the LaTeX picture environment and another LaTeX object like an image used with the command \\includegraphics of graphicx or a tabular."},
+		{"name":"overpic","arg":{"format":"{}","snippet":"{${1:filename}}"},"doc":"The overpic environment is a combination between the LaTeX picture environment and another LaTeX object like an image used with the command \\includegraphics of graphicx or a tabular."},
+		{"name":"Overpic","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:TeX code}}","keys":["keyval:OVP"],"keyPos":0}},
+		{"name":"Overpic","arg":{"format":"{}","snippet":"{${1:TeX code}}"}}
+	],
+	"keys": {
+		"keyval:OVP": ["abs","percent","permil","rel=","tics=","unit=","grid=${1|false,true|}"],
+		"\\usepackage/overpic#c": ["abs","percent","permil"]
+	},
+	"args": ["\\usepackage/overpic#c"]
+}

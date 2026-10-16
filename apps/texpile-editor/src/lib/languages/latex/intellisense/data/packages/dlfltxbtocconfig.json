@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"cftsetindentsalt","arg":{"format":"{}{}","snippet":"cftsetindentsalt{${1:level}}{${2:numwidth}}"},"unusual":true},
+		{"name":"cftsetindenttoedge","arg":{"format":"{}{}","snippet":"cftsetindenttoedge{${1:level}}{${2:numwidth}}"},"unusual":true},
+		{"name":"felineEmulSubSubSec","unusual":true},
+		{"name":"MakeNormalToC"},
+		{"name":"MakeShortToC"},
+		{"name":"memRetrieveStored","arg":{"format":"{}","snippet":"memRetrieveStored{${1:key}}"},"unusual":true},
+		{"name":"memRetrieveStoredInto","arg":{"format":"{}{}","snippet":"memRetrieveStoredInto{${1:macro}}{${2:key}}"},"unusual":true},
+		{"name":"memStoreValue","arg":{"format":"{}{}","snippet":"memStoreValue{${1:key}}{${2:value}}"},"unusual":true},
+		{"name":"NormalTocPartFont","unusual":true},
+		{"name":"NormalTocPartPrefix","unusual":true},
+		{"name":"RedofelineEmulSubSubSec","unusual":true},
+		{"name":"shortcontentsname"},
+		{"name":"specialpart","arg":{"format":"{}","snippet":"specialpart{${1:title}}"},"unusual":true},
+		{"name":"ToCSubsectionIndentsBackToNormal"},
+		{"name":"ToCSubsectionIndentsPullBack"}
+	],
+	"envs": [],
+	"keys": {}
+}

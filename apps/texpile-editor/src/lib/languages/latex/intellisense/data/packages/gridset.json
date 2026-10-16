@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"gridbase"},
+		{"name":"gridinterval","doc":"\\gridinterval is a integer number representing the distance of two grid lines."},
+		{"name":"newpos","arg":{"format":"{}{}{}{}{}{}","snippet":"newpos{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true},
+		{"name":"savepos","arg":{"format":"{}","snippet":"savepos{${1:unique name}}"},"unusual":true},
+		{"name":"SavePos","arg":{"format":"{}","snippet":"SavePos{${1}}"}},
+		{"name":"thegridcnt","unusual":true},
+		{"name":"thegridinfo","arg":{"format":"{}","snippet":"thegridinfo{${1}}"}},
+		{"name":"theposinfo","arg":{"format":"{}","snippet":"theposinfo{${1}}"}},
+		{"name":"theypos","arg":{"format":"{}","snippet":"theypos{${1}}"},"doc":"\\theypos{⟨name⟩} outputs the y-coordinate of the named position."},
+		{"name":"vskipnextgrid","doc":"This command moves to the next grid position."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"euro","doc":"euro activates the mathdesign version of the euro currency symbol (\\euro (€)).","math":true,"detail":"€"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"notomono","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notomonofamily","unusual":true},
+		{"name":"notomonolgr","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notosans","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notosansfamily","unusual":true},
+		{"name":"notosanslgr","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notoserif","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notoseriffamily","unusual":true},
+		{"name":"notoseriflgr","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"},"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	],
+	"envs": [],
+	"keys": {}
+}

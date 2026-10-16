@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"class-article"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"euclideangeometry"},{"name":"curve2e"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"color"},{"name":"pict2e"},{"name":"xparse"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"bilinear"},
+		{"name":"customcode","arg":{"format":"[]{}","snippet":"customcode[${1:erase after use (0/1)}]{${2:picture environment commands}}"},"doc":"\\customcode accepts all the commands accepted by the picture environment. This snippet of code is inserted inside the picture environment used to draw the subsequent graph paper."},
+		{"name":"customcode","arg":{"format":"{}","snippet":"customcode{${1:picture environment commands}}"},"doc":"\\customcode accepts all the commands accepted by the picture environment. This snippet of code is inserted inside the picture environment used to draw the subsequent graph paper."},
+		{"name":"loglog","arg":{"format":"[]{}{}","snippet":"loglog[${1:same decade length (0/1)}]{${2:decades along x}}{${3:decades along y}}"},"doc":"The optional parameter in the \\loglog command chooses wether the decade length along the abscissa and ordinate axes must have the same dimension."},
+		{"name":"loglog","arg":{"format":"{}{}","snippet":"loglog{${1:decades along x}}{${2:decades along y}}"},"doc":"The optional parameter in the \\loglog command chooses wether the decade length along the abscissa and ordinate axes must have the same dimension."},
+		{"name":"logpolar","arg":{"format":"{}","snippet":"logpolar{${1:decades along radius}}"},"doc":"The commadns \\polar, \\logpolar, \\smith are used to plot polar, logpolar, and Smith chart graph papers."},
+		{"name":"polar","doc":"The commadns \\polar, \\logpolar, \\smith are used to plot polar, logpolar, and Smith chart graph papers."},
+		{"name":"semilogx","arg":{"format":"{}","snippet":"semilogx{${1:decades along x}}"}},
+		{"name":"semilogy","arg":{"format":"{}","snippet":"semilogy{${1:decades along y}}"}},
+		{"name":"setgridcolor","arg":{"format":"{}","snippet":"setgridcolor{${1:color}}"},"doc":"\\setgridcolor sets the color of the grid."},
+		{"name":"setmajorlinethickness","arg":{"format":"{}","snippet":"setmajorlinethickness{${1:length}}"}},
+		{"name":"setmediumlinethickness","arg":{"format":"{}","snippet":"setmediumlinethickness{${1:length}}"}},
+		{"name":"setminimumdistance","arg":{"format":"{}","snippet":"setminimumdistance{${1:length}}"},"doc":"\\setminimumdistance specifies the minimal optical distance between two lines."},
+		{"name":"setminorlinethickness","arg":{"format":"{}","snippet":"setminorlinethickness{${1:length}}"}},
+		{"name":"setxside","arg":{"format":"{}","snippet":"setxside{${1:length}}"},"doc":"\\setxside and \\setyside allow to specify the dimensions of the rectangle of the grid."},
+		{"name":"setyside","arg":{"format":"{}","snippet":"setyside{${1:length}}"},"doc":"\\setxside and \\setyside allow to specify the dimensions of the rectangle of the grid."},
+		{"name":"smith","doc":"The commadns \\polar, \\logpolar, \\smith are used to plot polar, logpolar, and Smith chart graph papers."}
+	],
+	"envs": [],
+	"keys": {}
+}

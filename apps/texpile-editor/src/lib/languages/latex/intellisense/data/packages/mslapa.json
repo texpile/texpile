@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"bibhang","unusual":true},
+		{"name":"cite","arg":{"format":"()[]{}","snippet":"cite(${1:prenote})[${2:note}]{${3:keys}}"}},
+		{"name":"cite","arg":{"format":"(){}","snippet":"cite(${1:prenote}){${2:keys}}"}},
+		{"name":"citeyear","arg":{"format":"()[]{}","snippet":"citeyear(${1:prenote})[${2:note}]{${3:keys}}"}},
+		{"name":"citeyear","arg":{"format":"(){}","snippet":"citeyear(${1:prenote}){${2:keys}}"}},
+		{"name":"fullcite","arg":{"format":"()[]{}","snippet":"fullcite(${1:prenote})[${2:note}]{${3:keys}}"}},
+		{"name":"fullcite","arg":{"format":"(){}","snippet":"fullcite(${1:prenote}){${2:keys}}"}},
+		{"name":"fullciteA","arg":{"format":"()[]{}","snippet":"fullciteA(${1:prenote})[${2:note}]{${3:keys}}"}},
+		{"name":"fullciteA","arg":{"format":"(){}","snippet":"fullciteA(${1:prenote}){${2:keys}}"}},
+		{"name":"shortcite","arg":{"format":"()[]{}","snippet":"shortcite(${1:prenote})[${2:note}]{${3:keys}}"},"doc":"\\shortcite will use ‘et al.’ for all citations of 3 or more authors."},
+		{"name":"shortcite","arg":{"format":"(){}","snippet":"shortcite(${1:prenote}){${2:keys}}"},"doc":"\\shortcite will use ‘et al.’ for all citations of 3 or more authors."},
+		{"name":"shortciteA","arg":{"format":"()[]{}","snippet":"shortciteA(${1:prenote})[${2:note}]{${3:keys}}"}},
+		{"name":"shortciteA","arg":{"format":"(){}","snippet":"shortciteA(${1:prenote}){${2:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

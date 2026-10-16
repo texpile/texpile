@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"iftex"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"merriweather","doc":"Commands \\merriweather and \\merriweathersans select the Merriweather and MerriweatherSans families, respectively."},
+		{"name":"merriweatherblack"},
+		{"name":"merriweatherlight"},
+		{"name":"merriweathersans","doc":"Commands \\merriweather and \\merriweathersans select the Merriweather and MerriweatherSans families, respectively."},
+		{"name":"merriweathersansblack"},
+		{"name":"merriweathersanslight"},
+		{"name":"merriweathersffamily","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

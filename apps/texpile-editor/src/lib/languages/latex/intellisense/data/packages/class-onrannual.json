@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"mathptmx"},{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"authblk"},{"name":"parskip"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"etoolbox"},{"name":"caption"},{"name":"caption3"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"awardnumber","arg":{"format":"{}","snippet":"awardnumber{${1}}"},"doc":"The \\awardnumber{N00014-000-0000} macro is used to define the award number, and the optional \\projecturl{\\url{http://foo.edu}} is used to define a project URL in the title block."},
+		{"name":"distribution","arg":{"format":"{}","snippet":"distribution{${1}}"}},
+		{"name":"projecturl","arg":{"format":"{}","snippet":"projecturl{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

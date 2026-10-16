@@ -1,68 +1,31 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "svnInfoFile"
-    },
-    {
-      "name": "svnInfoRevision"
-    },
-    {
-      "name": "svnInfoMinRevision"
-    },
-    {
-      "name": "svnInfoMaxRevision"
-    },
-    {
-      "name": "svnInfoDate"
-    },
-    {
-      "name": "svnInfoTime"
-    },
-    {
-      "name": "svnInfoOwner"
-    },
-    {
-      "name": "svnInfoYear"
-    },
-    {
-      "name": "svnInfoMonth"
-    },
-    {
-      "name": "svnInfoDay"
-    },
-    {
-      "name": "svnInfoLongDate"
-    },
-    {
-      "name": "svnId"
-    },
-    {
-      "name": "svnToday"
-    },
-    {
-      "name": "svnInfoMaxToday"
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/svninfo#c": [
-      "svk",
-      "today",
-      "notoday",
-      "revrange",
-      "fancyhdr",
-      "nofancy",
-      "scrpage",
-      "eso-foot",
-      "margin",
-      "long",
-      "short",
-      "final",
-      "draft"
-    ]
-  },
-  "args": [
-    "\\usepackage/svninfo#c"
-  ]
+	"deps": [{"name":"fancyhdr","if":"!eso-foot+!final+!nofancy"},{"name":"ifthen"},{"name":"eso-pic","if":"eso-foot"},{"name":"keyval","if":"eso-foot"},{"name":"xcolor","if":"eso-foot"},{"name":"fancyheadings","if":"fancy"}],
+	"macros": [
+		{"name":"svnId"},
+		{"name":"svnInfo"},
+		{"name":"svnInfoDate","doc":"The date in the form YYYY-MM-DD, when the file was checked out."},
+		{"name":"svnInfoDay"},
+		{"name":"svnInfoFile","doc":"The name of the source file."},
+		{"name":"svnInfoHeadURL"},
+		{"name":"svnInfoLongDate","doc":"The date in the form of \\today when the file was checked out."},
+		{"name":"svnInfoMaxDay"},
+		{"name":"svnInfoMaxMonth"},
+		{"name":"svnInfoMaxRevision","doc":"The maximum revision number of multi-file documents."},
+		{"name":"svnInfoMaxToday","doc":"The date obtained from the latest Subversion revision in the format \\today is using."},
+		{"name":"svnInfoMaxYear"},
+		{"name":"svnInfoMinRevision","doc":"The minimum revision number of multi-file documents."},
+		{"name":"svnInfoMonth","doc":"The month MM of \\svnInfoDate."},
+		{"name":"svnInfoOwner","doc":"The user name of the file owner."},
+		{"name":"svnInfoRevision"},
+		{"name":"svnInfoTime","doc":"The time, when the file was checked out."},
+		{"name":"svnInfoYear","doc":"The year YYYY of \\svnInfoDate."},
+		{"name":"svnKeyword"},
+		{"name":"svnMaxToday","unusual":true},
+		{"name":"svnToday","doc":"The date obtained from the Subversion information in the format \\today is using."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/svninfo#c": ["draft","eso-foot","fancyhdr","final","long","margin","nofancy","notoday","revrange","scrpage","short","svk","today"]
+	},
+	"args": ["\\usepackage/svninfo#c"]
 }

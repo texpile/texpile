@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"gothamreset","arg":{"format":"{}","snippet":"gothamreset{${1}}"}},
+		{"name":"gothamset","arg":{"format":"{}","snippet":"gothamset{${1:options}}"}},
+		{"name":"mreducelistspacing"}
+	],
+	"envs": [],
+	"keys": {}
+}

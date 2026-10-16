@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"fonctionSinus","arg":{"format":"{}{}","snippet":"fonctionSinus{${1}}{${2}}"}},
+		{"name":"psthick","arg":{"format":"[]{}{}{}","snippet":"psthick[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"psthick","arg":{"format":"{}{}{}","snippet":"psthick{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

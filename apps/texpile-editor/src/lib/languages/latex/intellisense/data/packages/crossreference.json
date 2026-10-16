@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"addxref","arg":{"format":"{}","snippet":"addxref{${1:label}}"},"doc":"The command \\addxref will add a a line to the crossreference table containing the number, label and section label."},
+		{"name":"crossreferences"},
+		{"name":"docdate","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"xref","arg":{"format":"{}","snippet":"xref{${1:label}}"},"doc":"The command \\xref can be used to refer to an item that has been added to the crossreference table."}
+	],
+	"envs": [],
+	"keys": {}
+}

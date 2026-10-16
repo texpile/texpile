@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"axiom"},
+		{"name":"texttag","arg":{"format":"{}{}","snippet":"texttag{${1:label}}{${2:tag}}"}},
+		{"name":"theaxiom","unusual":true},
+		{"name":"xlabel","arg":{"format":"{}{}","snippet":"xlabel{${1:label}}{${2:text}}"}}
+	],
+	"envs": [
+		{"name":"axiomlist","arg":{"format":"[]{}","snippet":"[${1:start index}]{${2:axiom letters}}"}},
+		{"name":"axiomlist","arg":{"format":"{}","snippet":"{${1:axiom letters}}"}},
+		{"name":"axiomlist*","arg":{"format":"[]{}","snippet":"[${1:start index}]{${2:axiom letters}}"}},
+		{"name":"axiomlist*","arg":{"format":"{}","snippet":"{${1:axiom letters}}"}}
+	],
+	"keys": {}
+}

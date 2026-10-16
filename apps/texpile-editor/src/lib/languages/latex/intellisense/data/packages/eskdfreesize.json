@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"eskdstamp"},{"name":"calc"},{"name":"keyval"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"eskdfont"},{"name":"eskdlang"},{"name":"babel"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"everyshi"},{"name":"chngpage"},{"name":"eskdinfo"}],
+	"macros": [
+		{"name":"ESKDdrawColumnXXXIIfree","unusual":true},
+		{"name":"ESKDdrawFrameFree","unusual":true},
+		{"name":"ESKDfreeSize","arg":{"format":"{}{}{}","snippet":"ESKDfreeSize{${1:width}}{${2:height}}{${3:content}}"},"doc":"Первые 2 аргумента — размеры листа в единицах, понятных LaTeX. Третий аргумент — содержимое, которое необходимо разместить на данном листе."},
+		{"name":"ESKDlandscapeAI","arg":{"format":"{}","snippet":"ESKDlandscapeAI{${1:content}}"}},
+		{"name":"ESKDlandscapeAII","arg":{"format":"{}","snippet":"ESKDlandscapeAII{${1:content}}"}},
+		{"name":"ESKDlandscapeAIII","arg":{"format":"{}","snippet":"ESKDlandscapeAIII{${1:content}}"}},
+		{"name":"ESKDlandscapeAZERO","arg":{"format":"{}","snippet":"ESKDlandscapeAZERO{${1:content}}"}},
+		{"name":"ESKDlandscapeBanner","arg":{"format":"{}","snippet":"ESKDlandscapeBanner{${1:content}}"}},
+		{"name":"ESKDportraitAI","arg":{"format":"{}","snippet":"ESKDportraitAI{${1:content}}"}},
+		{"name":"ESKDportraitAII","arg":{"format":"{}","snippet":"ESKDportraitAII{${1:content}}"}},
+		{"name":"ESKDportraitAIII","arg":{"format":"{}","snippet":"ESKDportraitAIII{${1:content}}"}},
+		{"name":"ESKDportraitAZERO","arg":{"format":"{}","snippet":"ESKDportraitAZERO{${1:content}}"}},
+		{"name":"ESKDtheColumnXXXIIfree"}
+	],
+	"envs": [],
+	"keys": {}
+}

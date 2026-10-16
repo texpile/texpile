@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"weekday","arg":{"format":"{}{}{}","snippet":"weekday{${1:year}}{${2:month}}{${3:day}}"}},
+		{"name":"weekdaydate","arg":{"format":"{}{}{}","snippet":"weekdaydate{${1:year}}{${2:month}}{${3:day}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

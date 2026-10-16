@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"ifpgfarrowroundcap","unusual":true},
+		{"name":"ifpgfarrowroundjoin","unusual":true},
+		{"name":"pgfarrowarc","unusual":true},
+		{"name":"pgfarrowinset","unusual":true},
+		{"name":"pgfarrowlength","unusual":true},
+		{"name":"pgfarrowlinewidth","unusual":true},
+		{"name":"pgfarrown","unusual":true},
+		{"name":"pgfarrowroundcapfalse","unusual":true},
+		{"name":"pgfarrowroundcaptrue","unusual":true},
+		{"name":"pgfarrowroundjoinfalse","unusual":true},
+		{"name":"pgfarrowroundjointrue","unusual":true},
+		{"name":"pgfarrowwidth","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

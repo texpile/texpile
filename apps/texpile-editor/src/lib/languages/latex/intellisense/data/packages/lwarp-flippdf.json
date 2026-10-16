@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"FlipPDF"},
+		{"name":"UnFlipPDF"}
+	],
+	"envs": [],
+	"keys": {}
+}

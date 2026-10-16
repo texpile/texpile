@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"stripsep"}
+	],
+	"envs": [
+		{"name":"strip","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"strip"}
+	],
+	"keys": {}
+}

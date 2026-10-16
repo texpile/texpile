@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"xparse"},{"name":"class-memoir"},{"name":"xpatch"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"dcolumn"},{"name":"delarray"},{"name":"tabularx"},{"name":"booktabs"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"verbatim"},{"name":"shortvrb"},{"name":"memhangul-ucs","if":"!nokorean"},{"name":"dhucs","if":"!nokorean"},{"name":"kotexutf","if":"!nokorean"},{"name":"inputenc","if":"!nokorean"},{"name":"kolabels-utf","if":"!nokorean"},{"name":"memhangul-common","if":"!nokorean"},{"name":"hologo","if":"!nokorean"},{"name":"pdftexcmds","if":"!nokorean"},{"name":"obchapterstyles","if":"!nokorean"},{"name":"memucs-interword","if":"!nokorean"},{"name":"memucs-setspace","if":"!nokorean"},{"name":"nanumfontsel","if":"!nokorean"},{"name":"dhucs-cmap","if":"!nokorean"},{"name":"hyperref","if":"!lyxhyper+!nokorean"},{"name":"pdfescape","if":"!lyxhyper+!nokorean"},{"name":"stringenc","if":"!lyxhyper+!nokorean"},{"name":"intcalc","if":"!lyxhyper+!nokorean"},{"name":"url","if":"!lyxhyper+!nokorean"},{"name":"bitset","if":"!lyxhyper+!nokorean"},{"name":"bigintcalc","if":"!lyxhyper+!nokorean"},{"name":"rerunfilecheck","if":"!lyxhyper+!nokorean"},{"name":"uniquecounter","if":"!lyxhyper+!nokorean"},{"name":"ob-koreanappendix","if":"!nokorean"},{"name":"10_5","if":"10.5pt"},{"name":"type1ec","if":"10.5pt"},{"name":"amsmath","if":"amsmath"},{"name":"amstext","if":"amsmath"},{"name":"amsbsy","if":"amsmath"},{"name":"amsopn","if":"amsmath"},{"name":"amssymb","if":"amsmath"},{"name":"amsfonts","if":"amsmath"},{"name":"microtype","if":"microtype"},{"name":"moreverb","if":"moreverb"}],
+	"macros": [
+		{"name":"AppendixTitle"},
+		{"name":"AppendixTitleToToc"},
+		{"name":"appref","arg":{"format":"{}","snippet":"appref{${1:label}}"}},
+		{"name":"AttachAppendixTitleToSecnum"},
+		{"name":"CallHyperref","unusual":true},
+		{"name":"ensp"},
+		{"name":"hyperrefwithlyxfalse","unusual":true},
+		{"name":"hyperrefwithlyxtrue","unusual":true},
+		{"name":"ifhyperrefwithlyx","unusual":true},
+		{"name":"ifkosection","unusual":true},
+		{"name":"ifnobookmarks","unusual":true},
+		{"name":"ifnokorean","unusual":true},
+		{"name":"ifopenrightdoc","unusual":true},
+		{"name":"iftwosidedoc","unusual":true},
+		{"name":"kosectionfalse","unusual":true},
+		{"name":"kosectiontrue","unusual":true},
+		{"name":"MarkDocTitle"},
+		{"name":"nobookmarksfalse","unusual":true},
+		{"name":"nobookmarkstrue","unusual":true},
+		{"name":"nokoreanfalse","unusual":true},
+		{"name":"nokoreantrue","unusual":true},
+		{"name":"oblivoirchapterstyle","arg":{"format":"{}","snippet":"oblivoirchapterstyle{${1:chapter style}}"},"if":"chapter"},
+		{"name":"openrightdocfalse","unusual":true},
+		{"name":"openrightdoctrue","unusual":true},
+		{"name":"twosidedocfalse","unusual":true},
+		{"name":"twosidedoctrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

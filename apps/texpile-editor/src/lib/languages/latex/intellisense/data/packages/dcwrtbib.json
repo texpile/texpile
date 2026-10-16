@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"afterpage"}],
+	"macros": [
+		{"name":"bibwrite","arg":{"format":"{}","snippet":"bibwrite{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

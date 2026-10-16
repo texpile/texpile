@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"keyval"},{"name":"kvoptions"}],
+	"macros": [
+		{"name":"zexternaldocument","arg":{"format":"[]{}[]","snippet":"zexternaldocument[${1:prefix}]{${2:external document}}[${3:url}]"}},
+		{"name":"zexternaldocument","arg":{"format":"{}","snippet":"zexternaldocument{${1:external document}}"}},
+		{"name":"zexternaldocument*","arg":{"format":"[]{}[]","snippet":"zexternaldocument*[${1:prefix}]{${2:external document}}[${3:url}]"}},
+		{"name":"zexternaldocument*","arg":{"format":"{}","snippet":"zexternaldocument*{${1:external document}}"}},
+		{"name":"zref@xr@ext","unusual":true},
+		{"name":"zxrsetup","arg":{"format":"{}","snippet":"zxrsetup{${1:key=value list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

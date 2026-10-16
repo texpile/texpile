@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"Yautoscale","arg":{"format":"{}","snippet":"Yautoscale{${1}}"}},
+		{"name":"Yboxdim","arg":{"format":"{}","snippet":"Yboxdim{${1}}"}},
+		{"name":"Yinterspace","arg":{"format":"{}","snippet":"Yinterspace{${1}}"},"doc":"To give the Young-Tableaux extra-space (before and after) \\y@interspace can be set to more than 0pt by calling \\Yinterspace."},
+		{"name":"Ylinethick","arg":{"format":"{}","snippet":"Ylinethick{${1}}"}},
+		{"name":"yng","arg":{"format":"()","snippet":"yng(${1:boxes per row, comma separated})"}},
+		{"name":"young","arg":{"format":"()","snippet":"young(${1:letters per row, comma separated})"}},
+		{"name":"Ystdtext","arg":{"format":"{}","snippet":"Ystdtext{${1}}"},"doc":"Use either the option stdtext to the \\usepackage command to switch to roman letters or use the macro \\Ystdtext with an argument of 1: \\Ystdtext1."},
+		{"name":"Yvcentermath","arg":{"format":"{}","snippet":"Yvcentermath{${1}}"},"doc":"Say \\Yvcentermath1 if you want vertical centering and \\Yvcentermath0 to switch it off."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/youngtab#c": ["enableskew","noautoscale","stdtext","vcentermath"]
+	},
+	"args": ["\\usepackage/youngtab#c"]
+}

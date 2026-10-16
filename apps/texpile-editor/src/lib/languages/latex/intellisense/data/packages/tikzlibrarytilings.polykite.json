@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"DefinePolykiteTile","arg":{"format":"{}{}{}","snippet":"DefinePolykiteTile{${1:name}}{${2:a}}{${3:b}}"}},
+		{"name":"DefinePolykiteTile*","arg":{"format":"{}{}{}","snippet":"DefinePolykiteTile*{${1:name}}{${2:a}}{${3:b}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

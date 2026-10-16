@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"iftex"},{"name":"class-ctexbook"},{"name":"class-book"},{"name":"CJKutf8","engines":["pdflatex"]},{"name":"ifpdf","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"CJK","engines":["pdflatex"]},{"name":"MULEenc","engines":["pdflatex"]},{"name":"CJKpunct","engines":["pdflatex"]},{"name":"CJKspace","engines":["pdflatex"]},{"name":"zhnumber"},{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"etoolbox"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"url"},{"name":"xstring"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"silence"},{"name":"bicaption"},{"name":"caption"},{"name":"caption3"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"fancyhdr"},{"name":"titlesec"},{"name":"booktabs"},{"name":"titletoc"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"chartnote","arg":{"format":"{}","snippet":"chartnote{${1:note}}"}},
+		{"name":"keywordscn","arg":{"format":"{}","snippet":"keywordscn{${1:Chinese keywords}}"}},
+		{"name":"keywordsen","arg":{"format":"{}","snippet":"keywordsen{${1:English keywords}}"}}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {}
+}

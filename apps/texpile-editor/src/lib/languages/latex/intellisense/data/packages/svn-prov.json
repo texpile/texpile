@@ -1,0 +1,26 @@
+{
+	"macros": [
+		{"name":"DefineFileInfoSVN","arg":{"format":"[]","snippet":"DefineFileInfoSVN[${1}]"},"doc":"Defined a set of macros which provide the information collected by a previous \\Provides... macro."},
+		{"name":"DefineFileInfoSVN","doc":"Defined a set of macros which provide the information collected by a previous \\Provides... macro."},
+		{"name":"filebase","doc":"File base name (file name without extension)."},
+		{"name":"filedate","doc":"File date (in the format YYYY/MM/DD)."},
+		{"name":"fileext","doc":"File extension (without leading dot)."},
+		{"name":"fileinfo","doc":"The macros \\fileversion and \\fileinfo hold the file version and description taken from optional argument of the \\Provide...SVN macro."},
+		{"name":"filename"},
+		{"name":"filerev","doc":"File revision, like \\rev."},
+		{"name":"filetoday","doc":"The \\filetoday macro generates a text representation of the \\filedate using the \\today macro."},
+		{"name":"fileversion","doc":"The macros \\fileversion and \\fileinfo hold the file version and description taken from optional argument of the \\Provide...SVN macro."},
+		{"name":"GetFileInfoSVN","arg":{"format":"{}","snippet":"GetFileInfoSVN{${1}}"}},
+		{"name":"ProvidesClassSVN","arg":{"format":"[]{}[][]","snippet":"ProvidesClassSVN[${1:file name}]{${2:Id keyword}}[${3:version and/or description}][${4:description}]"}},
+		{"name":"ProvidesClassSVN","arg":{"format":"{}","snippet":"ProvidesClassSVN{${1:Id keyword}}"}},
+		{"name":"ProvidesFileSVN","arg":{"format":"[]{}[][]","snippet":"ProvidesFileSVN[${1:file name}]{${2:Id keyword}}[${3:version and/or description}][${4:description}]"}},
+		{"name":"ProvidesFileSVN","arg":{"format":"{}","snippet":"ProvidesFileSVN{${1:Id keyword}}"}},
+		{"name":"ProvidesPackageSVN","arg":{"format":"[]{}[][]","snippet":"ProvidesPackageSVN[${1:file name}]{${2:Id keyword}}[${3:version and/or description}][${4:description}]"}},
+		{"name":"ProvidesPackageSVN","arg":{"format":"{}","snippet":"ProvidesPackageSVN{${1:Id keyword}}"}},
+		{"name":"rev"},
+		{"name":"Rev","doc":"File revision followed by a space."},
+		{"name":"revinfo"}
+	],
+	"envs": [],
+	"keys": {}
+}

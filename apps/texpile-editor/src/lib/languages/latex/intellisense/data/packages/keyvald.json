@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"setkeys","arg":{"format":"{}{}","snippet":"setkeys{${1:family}}{${2:key=value list}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

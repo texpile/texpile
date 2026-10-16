@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"wrapoverhang"}
+	],
+	"envs": [
+		{"name":"wrapfigure","arg":{"format":"[]{}[]{}","snippet":"[${1:lines}]{${2:placement}}[${3:overhang}]{${4:width}}"}},
+		{"name":"wrapfigure","arg":{"format":"{}{}","snippet":"{${1:placement}}{${2:width}}"}},
+		{"name":"wrapfloat","arg":{"format":"{}[]{}[]{}","snippet":"{${1:float name}}[${2:lines}]{${3:placement}}[${4:overhang}]{${5:width}}"}},
+		{"name":"wrapfloat","arg":{"format":"{}{}{}","snippet":"{${1:float name}}{${2:placement}}{${3:width}}"}},
+		{"name":"wraptable","arg":{"format":"[]{}[]{}","snippet":"[${1:lines}]{${2:placement}}[${3:overhang}]{${4:width}}"}},
+		{"name":"wraptable","arg":{"format":"{}{}","snippet":"{${1:placement}}{${2:width}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"chapterheadfmt","arg":{"format":"[]","snippet":"chapterheadfmt[${1}]"},"unusual":true},
+		{"name":"chapterheadfmt","unusual":true},
+		{"name":"restorechapapp"},
+		{"name":"txichapter","arg":{"format":"[]","snippet":"txichapter[${1:format}]"}},
+		{"name":"txichapter"},
+		{"name":"txichapterdelim","arg":{"format":"[]","snippet":"txichapterdelim[${1:code}]"}},
+		{"name":"txichapterdelim"},
+		{"name":"txisection","arg":{"format":"{}{}","snippet":"txisection{${1:section level}}{${2:format}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

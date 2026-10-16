@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"refcount"},{"name":"hyperref","if":"backref=true"},{"name":"iftex","if":"backref=true"},{"name":"keyval","if":"backref=true"},{"name":"kvsetkeys","if":"backref=true"},{"name":"pdfescape","if":"backref=true"},{"name":"nameref","if":"backref=true"},{"name":"gettitlestring","if":"backref=true"},{"name":"kvoptions","if":"backref=true"},{"name":"etoolbox","if":"backref=true"},{"name":"stringenc","if":"backref=true"},{"name":"intcalc","if":"backref=true"},{"name":"url","if":"backref=true"},{"name":"bitset","if":"backref=true"},{"name":"bigintcalc","if":"backref=true"},{"name":"rerunfilecheck","if":"backref=true"},{"name":"uniquecounter","if":"backref=true"}],
+	"macros": [
+		{"name":"footnotenumber","arg":{"format":"[]","snippet":"footnotenumber[${1:label}]"}},
+		{"name":"footnotenumber"},
+		{"name":"footnotenumbermanual","arg":{"format":"[]","snippet":"footnotenumbermanual[${1:label}]"}},
+		{"name":"footnotenumbermanual"},
+		{"name":"footnotetag","arg":{"format":"{}","snippet":"footnotetag{${1:tag}}"}},
+		{"name":"footnotetagmanual","arg":{"format":"{}","snippet":"footnotetagmanual{${1:tag}}"}},
+		{"name":"multifootnote","arg":{"format":"[]{}","snippet":"multifootnote[${1:labels or tag}]{${2:footnote text}}"}},
+		{"name":"multifootnote","arg":{"format":"{}","snippet":"multifootnote{${1:footnote text}}"}},
+		{"name":"multifootnotemanual","arg":{"format":"[]{}","snippet":"multifootnotemanual[${1:labels or tag}]{${2:footnote text}}"}},
+		{"name":"multifootnotemanual","arg":{"format":"{}","snippet":"multifootnotemanual{${1:footnote text}}"}},
+		{"name":"multifootnotemark","arg":{"format":"[]","snippet":"multifootnotemark[${1:label}]"},"doc":"This command is for producing the footnote marks."},
+		{"name":"multifootnotemark","doc":"This command is for producing the footnote marks."},
+		{"name":"multifootnotemarkmanual","arg":{"format":"[]","snippet":"multifootnotemarkmanual[${1:label}]"}},
+		{"name":"multifootnotemarkmanual"},
+		{"name":"multifootnotetag","arg":{"format":"{}","snippet":"multifootnotetag{${1:tag}}"},"doc":"This command is for producing the footnote marks."},
+		{"name":"multifootnotetagmanual","arg":{"format":"{}","snippet":"multifootnotetagmanual{${1:tag}}"}},
+		{"name":"multifootnotetagtext","arg":{"format":"[]{}","snippet":"multifootnotetagtext[${1:tag}]{${2:footnote text}}"},"doc":"This command is for producing the footnote text."},
+		{"name":"multifootnotetagtext","arg":{"format":"{}","snippet":"multifootnotetagtext{${1:footnote text}}"},"doc":"This command is for producing the footnote text."},
+		{"name":"multifootnotetagtextmanual","arg":{"format":"[]{}","snippet":"multifootnotetagtextmanual[${1:tag}]{${2:footnote text}}"}},
+		{"name":"multifootnotetagtextmanual","arg":{"format":"{}","snippet":"multifootnotetagtextmanual{${1:footnote text}}"}},
+		{"name":"multifootnotetext","arg":{"format":"[]{}","snippet":"multifootnotetext[${1:labels}]{${2:footnote text}}"},"doc":"This command is for producing the footnote text."},
+		{"name":"multifootnotetext","arg":{"format":"{}","snippet":"multifootnotetext{${1:footnote text}}"},"doc":"This command is for producing the footnote text."},
+		{"name":"multifootnotetextmanual","arg":{"format":"[]{}","snippet":"multifootnotetextmanual[${1:labels}]{${2:footnote text}}"}},
+		{"name":"multifootnotetextmanual","arg":{"format":"{}","snippet":"multifootnotetextmanual{${1:footnote text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"class-scrreprt"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"inputenc"},{"name":"schulealt"},{"name":"etex"},{"name":"babel"},{"name":"ifthen"},{"name":"xifthen"},{"name":"calc"},{"name":"xspace"},{"name":"tabularx"},{"name":"array"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ragged2e"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"paralist"},{"name":"textcomp"},{"name":"xmpincl"},{"name":"ifpdf"},{"name":"iftex"},{"name":"wrapfig"},{"name":"eurosym"},{"name":"multirow"},{"name":"multicol"},{"name":"ccicons"},{"name":"xkeyval"},{"name":"svn-multi"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"currfile"},{"name":"cancel"},{"name":"varwidth"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"mdframed"},{"name":"xparse"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"xargs"}],
+	"macros": [
+		{"name":"AufgabeHinweis","arg":{"format":"[]{}","snippet":"AufgabeHinweis[${1}]{${2}}"}},
+		{"name":"AufgabeHinweis","arg":{"format":"{}","snippet":"AufgabeHinweis{${1}}"}},
+		{"name":"AufgabeLoesung","arg":{"format":"[]{}","snippet":"AufgabeLoesung[${1}]{${2}}"}},
+		{"name":"AufgabeLoesung","arg":{"format":"{}","snippet":"AufgabeLoesung{${1}}"}},
+		{"name":"AufgabenHinweis","arg":{"format":"{}","snippet":"AufgabenHinweis{${1}}"}},
+		{"name":"AufgabenLoesung","arg":{"format":"{}","snippet":"AufgabenLoesung{${1}}"}},
+		{"name":"headingpar","unusual":true},
+		{"name":"hinweisBild"},
+		{"name":"hinweiszeigen"},
+		{"name":"loesungzeigen"},
+		{"name":"TextFeld","arg":{"format":"{}","snippet":"TextFeld{${1}}"},"doc":"Erstellt ein Formularfeld mit der angegebenen Höhe und der aktuellen Spaltenbreite."},
+		{"name":"thehinweisnr","unusual":true},
+		{"name":"theloesungnr","unusual":true},
+		{"name":"thezeigenr","unusual":true},
+		{"name":"uebungBild","doc":"Erstellt ein Symbol für eine Übung, dass allen Aufgaben innerhalb eines Leitprogramms vorangestellt wird."}
+	],
+	"envs": [
+		{"name":"Aufgabe"},
+		{"name":"Aufgaben","arg":{"format":"[][]","snippet":"[${1}][${2}]"}},
+		{"name":"Aufgaben"},
+		{"name":"greyFrame","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"unusual":true},
+		{"name":"Hinweis"}
+	],
+	"keys": {}
+}

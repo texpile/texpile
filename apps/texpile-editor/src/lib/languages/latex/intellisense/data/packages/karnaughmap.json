@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xkeyval"},{"name":"ifthen"},{"name":"xstring"}],
+	"macros": [
+		{"name":"karnaughmap","arg":{"format":"[]{}","snippet":"karnaughmap[${1:key=value}]{${2:entries}}","keys":["keyval:karnaughmap"],"keyPos":0},"doc":"Use this macro inside of a tikzpicture-environment to typeset a Karnaugh map of a corresponding truth table."},
+		{"name":"karnaughmap","arg":{"format":"{}","snippet":"karnaughmap{${1:entries}}"},"doc":"Use this macro inside of a tikzpicture-environment to typeset a Karnaugh map of a corresponding truth table."},
+		{"name":"karnaughmapcolorfield","arg":{"format":"[]{}{}{}","snippet":"karnaughmapcolorfield[${1:key=value}]{${2:map size}}{${3:field string}}{${4:color}}","keys":["keyval:karnaughmap"],"keyPos":0}},
+		{"name":"karnaughmapcolorfield","arg":{"format":"{}{}{}","snippet":"karnaughmapcolorfield{${1:map size}}{${2:field string}}{${3:color}}"}},
+		{"name":"setkarnaughmap","arg":{"format":"[]","snippet":"setkarnaughmap[${1:key=value}]","keys":["keyval:karnaughmap"],"keyPos":0},"doc":"This is the interface function for setting the keys."},
+		{"name":"setkarnaughmap","doc":"This is the interface function for setting the keys."},
+		{"name":"thekarnaughmapIdxCounter","unusual":true},
+		{"name":"thekarnaughmapStrCounter","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:karnaughmap": ["color","dontcare","draw","function","labelcolor","opacity","variables","xshift","yshift","omitzeros=${1|true,false|}","omitones=${1|true,false|}","omitdontcares=${1|true,false|}","omitbinaries=${1|true,false|}","omitvariables=${1|true,false|}","omitidx=${1|true,false|}","binaryidx=${1|true,false|}","omitnegated=${1|true,false|}","outline=${1|true,false|}","fill=${1|true,false|}","defaultmap=${1|4,8,16|}"]
+	}
+}

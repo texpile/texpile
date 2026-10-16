@@ -1,0 +1,32 @@
+{
+	"macros": [
+		{"name":"defpair","arg":{"format":"{}","snippet":"defpair{${1:token pairs}}"}},
+		{"name":"foreachitem"},
+		{"name":"gitemtomacro","arg":{"format":"{}[]{}","snippet":"gitemtomacro{${1:macro-list}}[${2:index}]{${3:macro}}"}},
+		{"name":"gitemtomacro","arg":{"format":"{}{}","snippet":"gitemtomacro{${1:macro-list}}{${2:macro}}"}},
+		{"name":"greadlist","arg":{"format":"{}{}","snippet":"greadlist{${1:macro-list}}{${2:list}}"},"doc":"The macro \\greadlist makes global assignments and therefore, enables the use of ⟨macro-list⟩ outside of the group where \\greadlist has been executed."},
+		{"name":"greadlist*","arg":{"format":"{}{}","snippet":"greadlist*{${1:macro-list}}{${2:list}}"},"doc":"The macro \\greadlist makes global assignments and therefore, enables the use of ⟨macro-list⟩ outside of the group where \\greadlist has been executed."},
+		{"name":"ignoreemptyitems","doc":"For empty items of the list (i.e., those list items defined by two consecutive parsing delimiters) to be ignored, we must, before invoking \\readlist, execute the macro \\ignoreemptyitems ."},
+		{"name":"insidepair","arg":{"format":"{}{}{}{}","snippet":"insidepair{${1:tok1}}{${2:tok2}}{${3:expression}}{${4:macro}}"}},
+		{"name":"itemtomacro","arg":{"format":"{}[]{}","snippet":"itemtomacro{${1:macro-list}}[${2:index}]{${3:macro}}"},"doc":"The \\itemtomacro⟨macro-list⟩[index]⟨macro⟩ assigns to the ⟨macro⟩ the item designated by ⟨macro-list⟩[index]. The ⟨macro⟩ thus defined is purely expandable provided that the tokens in the items are expandable."},
+		{"name":"itemtomacro","arg":{"format":"{}{}","snippet":"itemtomacro{${1:macro-list}}{${2:macro}}"},"doc":"The \\itemtomacro⟨macro-list⟩[index]⟨macro⟩ assigns to the ⟨macro⟩ the item designated by ⟨macro-list⟩[index]. The ⟨macro⟩ thus defined is purely expandable provided that the tokens in the items are expandable."},
+		{"name":"listlen","arg":{"format":"{}[]","snippet":"listlen{${1:macro-list}}[${2:index}]"},"doc":"The macro \\listlen⟨macro-list⟩[⟨index⟩] requires 2 expansions in order to give the number of items in the list specified by the ⟨index⟩."},
+		{"name":"listlen","arg":{"format":"{}","snippet":"listlen{${1:macro-list}}"},"doc":"The macro \\listlen⟨macro-list⟩[⟨index⟩] requires 2 expansions in order to give the number of items in the list specified by the ⟨index⟩."},
+		{"name":"loidate","unusual":true},
+		{"name":"loiname","unusual":true},
+		{"name":"loiver","unusual":true},
+		{"name":"nestdepth","doc":"The ⟨depth⟩ of nesting is contained in the purely expandable macro \\nestdepth."},
+		{"name":"reademptyitems"},
+		{"name":"readlist","arg":{"format":"{}{}","snippet":"readlist{${1:macro-list}}{${2:list}}"},"doc":"To read the list of items, the \\readlist⟨macro-list⟩{⟨list⟩} should be called. In so doing, the ⟨list⟩ is read and the items are stored in a macro, denoted ⟨macro-list⟩ which therefore acts as a table with the items of the ⟨list⟩."},
+		{"name":"readlist*","arg":{"format":"{}{}","snippet":"readlist*{${1:macro-list}}{${2:list}}"},"doc":"To read the list of items, the \\readlist⟨macro-list⟩{⟨list⟩} should be called. In so doing, the ⟨list⟩ is read and the items are stored in a macro, denoted ⟨macro-list⟩ which therefore acts as a table with the items of the ⟨list⟩."},
+		{"name":"setsepchar","arg":{"format":"[]{}","snippet":"setsepchar[${1:delimiter}]{${2:separators}}"},"doc":"The default parsing separator is the comma and if we want change it, we must do so before reading a list of items, with the definition \\setsepchar{⟨parsing-separator⟩}."},
+		{"name":"setsepchar","arg":{"format":"{}","snippet":"setsepchar{${1:separators}}"},"doc":"The default parsing separator is the comma and if we want change it, we must do so before reading a list of items, with the definition \\setsepchar{⟨parsing-separator⟩}."},
+		{"name":"showitems","arg":{"format":"{}[]","snippet":"showitems{${1:macro-list}}[${2:index}]"},"doc":"For purposes of debugging, the macro \\showitems⟨macro-list⟩ includes all items from a list, while the star version displays these items “detokenized.”"},
+		{"name":"showitems","arg":{"format":"{}","snippet":"showitems{${1:macro-list}}"},"doc":"For purposes of debugging, the macro \\showitems⟨macro-list⟩ includes all items from a list, while the star version displays these items “detokenized.”"},
+		{"name":"showitems*","arg":{"format":"{}[]","snippet":"showitems*{${1:macro-list}}[${2:index}]"},"doc":"For purposes of debugging, the macro \\showitems⟨macro-list⟩ includes all items from a list, while the star version displays these items “detokenized.”"},
+		{"name":"showitems*","arg":{"format":"{}","snippet":"showitems*{${1:macro-list}}"},"doc":"For purposes of debugging, the macro \\showitems⟨macro-list⟩ includes all items from a list, while the star version displays these items “detokenized.”"},
+		{"name":"showitemsmacro","arg":{"format":"{}","snippet":"showitemsmacro{${1:item}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

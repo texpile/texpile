@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pictex"}],
+	"macros": [
+		{"name":"putanyline"},
+		{"name":"setanyline"}
+	],
+	"envs": [],
+	"keys": {}
+}

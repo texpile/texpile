@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"berth","arg":{"format":"[]()()","snippet":"berth[${1:options}](${2:coordinate})(${3:usable length})"}},
+		{"name":"berth","arg":{"format":"()()","snippet":"berth(${1:coordinate})(${2:usable length})"}},
+		{"name":"hectometer","arg":{"format":"[]()()","snippet":"hectometer[${1:options}](${2:coordinate})(${3:mileage})"}},
+		{"name":"hectometer","arg":{"format":"()()","snippet":"hectometer(${1:coordinate})(${2:mileage})"}},
+		{"name":"measureline"},
+		{"name":"trackdistance","arg":{"format":"()()()","snippet":"trackdistance(${1:coordinate 1})(${2:coordinate 2})(${3:distance})"}},
+		{"name":"trackmarking","arg":{"format":"[]","snippet":"trackmarking[${1:color}]"}},
+		{"name":"trackmarking"}
+	],
+	"envs": [],
+	"keys": {}
+}

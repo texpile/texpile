@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"BracketedLips","unusual":true},
+		{"name":"lips"},
+		{"name":"Lips","unusual":true},
+		{"name":"LPNobreakList"},
+		{"name":"olips","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/lwarp-lips#c": ["mla"]
+	},
+	"args": ["\\usepackage/lwarp-lips#c"]
+}

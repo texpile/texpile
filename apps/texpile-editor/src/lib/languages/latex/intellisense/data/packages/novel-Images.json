@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"wrapfig"},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"FloatImage","arg":{"format":"[]{}","snippet":"FloatImage[${1:floatmethod,xoffset,yoffset}]{${2:image file}}"}},
+		{"name":"FloatImage","arg":{"format":"{}","snippet":"FloatImage{${1:image file}}"}},
+		{"name":"imageheight"},
+		{"name":"imagewidth"},
+		{"name":"InlineImage","arg":{"format":"[]{}","snippet":"InlineImage[${1:hoffset,voffset}]{${2:image file}}"}},
+		{"name":"InlineImage","arg":{"format":"{}","snippet":"InlineImage{${1:image file}}"}},
+		{"name":"InlineImage*","arg":{"format":"[]{}","snippet":"InlineImage*[${1:hoffset,voffset}]{${2:image file}}"}},
+		{"name":"InlineImage*","arg":{"format":"{}","snippet":"InlineImage*{${1:image file}}"}},
+		{"name":"ScriptCoverImage","arg":{"format":"{}","snippet":"ScriptCoverImage{${1}}"},"unusual":true},
+		{"name":"SetKnownGoodImages","arg":{"format":"{}","snippet":"SetKnownGoodImages{${1:image files}}"}},
+		{"name":"wrapimage","arg":{"format":"[]{}","snippet":"wrapimage[${1:position}]{${2:image file}}"},"unusual":true},
+		{"name":"wrapimage","arg":{"format":"{}","snippet":"wrapimage{${1:image file}}"},"unusual":true},
+		{"name":"WrapImage","arg":{"format":"[]{}","snippet":"WrapImage[${1:position}]{${2:image file}}"}},
+		{"name":"WrapImage","arg":{"format":"{}","snippet":"WrapImage{${1:image file}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

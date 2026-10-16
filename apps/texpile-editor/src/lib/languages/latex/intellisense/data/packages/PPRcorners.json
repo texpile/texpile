@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"},{"name":"semhelv"}],
+	"macros": [
+		{"name":"ifLastPageAlreadyDefined","unusual":true},
+		{"name":"iftheCartouche","unusual":true},
+		{"name":"ifthePages","unusual":true},
+		{"name":"ifThereAreStillOverlays","unusual":true},
+		{"name":"LastPageAlreadyDefinedfalse","unusual":true},
+		{"name":"LastPageAlreadyDefinedtrue","unusual":true},
+		{"name":"NothingLeftPastThisPoint"},
+		{"name":"slideCaptionLeft","arg":{"format":"{}","snippet":"slideCaptionLeft{${1}}"}},
+		{"name":"slidetitle","arg":{"format":"{}","snippet":"slidetitle{${1}}"},"unusual":true},
+		{"name":"theCartouchefalse","unusual":true},
+		{"name":"theCartouchetrue","unusual":true},
+		{"name":"thePagesfalse","unusual":true},
+		{"name":"thePagestrue","unusual":true},
+		{"name":"ThereAreStillOverlaysfalse","unusual":true},
+		{"name":"ThereAreStillOverlaystrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

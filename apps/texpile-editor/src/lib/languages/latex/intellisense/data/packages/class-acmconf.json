@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"class-article"},{"name":"flushend"}],
+	"macros": [
+		{"name":"AcceptText","arg":{"format":"{}","snippet":"AcceptText{${1}}"}},
+		{"name":"Address","arg":{"format":"{}","snippet":"Address{${1:address}}"}},
+		{"name":"Author","arg":{"format":"{}","snippet":"Author{${1:author}}"}},
+		{"name":"ConferenceName","arg":{"format":"{}","snippet":"ConferenceName{${1}}"}},
+		{"name":"ConferenceShortName","arg":{"format":"{}","snippet":"ConferenceShortName{${1}}"}},
+		{"name":"CopyrightText","arg":{"format":"{}","snippet":"CopyrightText{${1}}"}},
+		{"name":"Email","arg":{"format":"{}","snippet":"Email{${1:email}}"}},
+		{"name":"IfAccept","arg":{"format":"{}{}","snippet":"IfAccept{${1}}{${2}}"}},
+		{"name":"IfPrepare","arg":{"format":"{}{}","snippet":"IfPrepare{${1}}{${2}}"}},
+		{"name":"IfPrint","arg":{"format":"{}{}","snippet":"IfPrint{${1}}{${2}}"}},
+		{"name":"IfPublish","arg":{"format":"{}{}","snippet":"IfPublish{${1}}{${2}}"}},
+		{"name":"IfSubmit","arg":{"format":"{}{}","snippet":"IfSubmit{${1}}{${2}}"}},
+		{"name":"Phone","arg":{"format":"{}","snippet":"Phone{${1:phone}}"}},
+		{"name":"PrepareText","arg":{"format":"{}","snippet":"PrepareText{${1}}"}},
+		{"name":"PrintText","arg":{"format":"{}","snippet":"PrintText{${1}}"}},
+		{"name":"PublishedPageFrom","arg":{"format":"{}","snippet":"PublishedPageFrom{${1}}"}},
+		{"name":"PublishedPageTo","arg":{"format":"{}","snippet":"PublishedPageTo{${1}}"}},
+		{"name":"SubmitText","arg":{"format":"{}","snippet":"SubmitText{${1}}"}},
+		{"name":"subsubsubsection","arg":{"format":"[]{}","snippet":"subsubsubsection[${1:short title}]{${2:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsection","arg":{"format":"{}","snippet":"subsubsubsection{${1:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsection*","arg":{"format":"[]{}","snippet":"subsubsubsection*[${1:short title}]{${2:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsection*","arg":{"format":"{}","snippet":"subsubsubsection*{${1:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsubsection","arg":{"format":"[]{}","snippet":"subsubsubsubsection[${1:short title}]{${2:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsubsection","arg":{"format":"{}","snippet":"subsubsubsubsection{${1:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsubsection*","arg":{"format":"[]{}","snippet":"subsubsubsubsection*[${1:short title}]{${2:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsubsection*","arg":{"format":"{}","snippet":"subsubsubsubsection*{${1:title}}"},"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"TheConferenceName"},
+		{"name":"TheConferenceShortName"},
+		{"name":"thesubsubsubsection","unusual":true},
+		{"name":"thesubsubsubsubsection","unusual":true}
+	],
+	"envs": [
+		{"name":"keywords","doc":"The keywords environment has no parameters and should follow the abstract environment. It is used to give some keywords of the article."}
+	],
+	"keys": {
+		"\\documentclass/acmconf#c": ["10pt","11pt","12pt","accept","box","landscape","nobox","prepare","print","publish","submit"]
+	},
+	"args": ["\\documentclass/acmconf#c"]
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"mathbcal"},
+		{"name":"TXUprCalScale"}
+	],
+	"envs": [],
+	"keys": {}
+}

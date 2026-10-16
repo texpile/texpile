@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"auxhook"}],
+	"macros": [
+		{"name":"archive","arg":{"format":"[]{}{}{}","snippet":"archive[${1:options}]{${2:name}}{${3:comment}}{${4:children}}"},"doc":"\\archive is shape-identical to \\dir (takes a children block, accepts the same per-entry override keys) but renders its name without the trailing /."},
+		{"name":"archive","arg":{"format":"{}{}{}","snippet":"archive{${1:name}}{${2:comment}}{${3:children}}"},"doc":"\\archive is shape-identical to \\dir (takes a children block, accepts the same per-entry override keys) but renders its name without the trailing /."},
+		{"name":"dir","arg":{"format":"[]{}{}{}","snippet":"dir[${1:options}]{${2:name}}{${3:comment}}{${4:children}}"}},
+		{"name":"dir","arg":{"format":"{}{}{}","snippet":"dir{${1:name}}{${2:comment}}{${3:children}}"}},
+		{"name":"DirtreexFormatName","arg":{"format":"{}","snippet":"DirtreexFormatName{${1:index}}"},"doc":"The public hook \\DirtreexFormatName controls how each entry’s name is typeset."},
+		{"name":"DirtreexGetField","arg":{"format":"{}{}","snippet":"DirtreexGetField{${1:index}}{${2:field}}"}},
+		{"name":"file","arg":{"format":"[]{}{}","snippet":"file[${1:options}]{${2:name}}{${3:comment}}"}},
+		{"name":"file","arg":{"format":"{}{}","snippet":"file{${1:name}}{${2:comment}}"}},
+		{"name":"verbarchive","arg":{"format":"[]{}{}{}","snippet":"verbarchive[${1:options}]{${2:name}}{${3:comment}}{${4:children}}"},"doc":"\\verbarchive is the verbatim sibling of \\archive — container-shaped (children block, no trailing /), but with the path read at catcode 12."},
+		{"name":"verbarchive","arg":{"format":"{}{}{}","snippet":"verbarchive{${1:name}}{${2:comment}}{${3:children}}"},"doc":"\\verbarchive is the verbatim sibling of \\archive — container-shaped (children block, no trailing /), but with the path read at catcode 12."},
+		{"name":"verbdir","arg":{"format":"[]{}{}{}","snippet":"verbdir[${1:options}]{${2:name}}{${3:comment}}{${4:children}}"}},
+		{"name":"verbdir","arg":{"format":"{}{}{}","snippet":"verbdir{${1:name}}{${2:comment}}{${3:children}}"}},
+		{"name":"verbfile","arg":{"format":"[]{}{}","snippet":"verbfile[${1:options}]{${2:name}}{${3:comment}}"}},
+		{"name":"verbfile","arg":{"format":"{}{}","snippet":"verbfile{${1:name}}{${2:comment}}"}}
+	],
+	"envs": [
+		{"name":"dirtreex","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"dirtreex"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,26 @@
+{
+	"macros": [
+		{"name":"bottomcaption","arg":{"format":"[]{}","snippet":"bottomcaption[${1}]{${2}}"}},
+		{"name":"bottomcaption","arg":{"format":"{}","snippet":"bottomcaption{${1}}"}},
+		{"name":"shrinkheight","arg":{"format":"{}","snippet":"shrinkheight{${1:length}}"}},
+		{"name":"tablecaption","arg":{"format":"[]{}","snippet":"tablecaption[${1}]{${2}}"}},
+		{"name":"tablecaption","arg":{"format":"{}","snippet":"tablecaption{${1}}"}},
+		{"name":"tablefirsthead","arg":{"format":"{}","snippet":"tablefirsthead{${1:head}}"}},
+		{"name":"tablehead","arg":{"format":"{}","snippet":"tablehead{${1:head}}"}},
+		{"name":"tablelasttail","arg":{"format":"{}","snippet":"tablelasttail{${1:tail}}"}},
+		{"name":"tabletail","arg":{"format":"{}","snippet":"tabletail{${1:tail}}"}},
+		{"name":"topcaption","arg":{"format":"[]{}","snippet":"topcaption[${1}]{${2}}"}},
+		{"name":"topcaption","arg":{"format":"{}","snippet":"topcaption{${1}}"}}
+	],
+	"envs": [
+		{"name":"mpsupertabular","arg":{"format":"[]{}","snippet":"[${1:position}]{${2:columns}}"}},
+		{"name":"mpsupertabular","arg":{"format":"{}","snippet":"{${1:columns}}"}},
+		{"name":"mpsupertabular*","arg":{"format":"{}[]{}","snippet":"{${1:width}}[${2:position}]{${3:columns}}"}},
+		{"name":"mpsupertabular*","arg":{"format":"{}{}","snippet":"{${1:width}}{${2:columns}}"}},
+		{"name":"supertabular","arg":{"format":"[]{}","snippet":"[${1:position}]{${2:columns}}"}},
+		{"name":"supertabular","arg":{"format":"{}","snippet":"{${1:columns}}"}},
+		{"name":"supertabular*","arg":{"format":"{}[]{}","snippet":"{${1:width}}[${2:position}]{${3:columns}}"}},
+		{"name":"supertabular*","arg":{"format":"{}{}","snippet":"{${1:width}}{${2:columns}}"}}
+	],
+	"keys": {}
+}

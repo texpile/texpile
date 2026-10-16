@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"options"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"longbox"},{"name":"footnote"},{"name":"pict2e"},{"name":"trig"},{"name":"ellipse"}],
+	"macros": [
+		{"name":"fboxset","arg":{"format":"{}","snippet":"fboxset{${1:options}}"},"doc":"Options can be set for the current scope through this declaration."},
+		{"name":"lfbox","arg":{"format":"[]{}","snippet":"lfbox[${1:options}]{${2:content}}"}},
+		{"name":"lfbox","arg":{"format":"{}","snippet":"lfbox{${1:content}}"}},
+		{"name":"newfboxstyle","arg":{"format":"{}{}","snippet":"newfboxstyle{${1:name}}{${2:options}}"},"doc":"Defines a new style that can be used to specify commonly used options."}
+	],
+	"envs": [
+		{"name":"longfbox","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The longfbox environment sets the content in a long vertical box and can break content over multiple columns or pages."},
+		{"name":"longfbox","doc":"The longfbox environment sets the content in a long vertical box and can break content over multiple columns or pages."}
+	],
+	"keys": {}
+}

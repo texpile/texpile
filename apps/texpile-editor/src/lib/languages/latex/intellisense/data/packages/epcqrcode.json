@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"qrcode"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"xstring"},{"name":"calculator"}],
+	"macros": [
+		{"name":"epcqr","arg":{"format":"{}","snippet":"epcqr{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

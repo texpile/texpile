@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"DeclareTcbTheorem","arg":{"format":"[]{}{}{}{}","snippet":"DeclareTcbTheorem[${1:init options}]{${2:name}}{${3:display name}}{${4:options}}{${5:prefix}}"}},
+		{"name":"DeclareTcbTheorem","arg":{"format":"{}{}{}{}","snippet":"DeclareTcbTheorem{${1:name}}{${2:display name}}{${3:options}}{${4:prefix}}"}},
+		{"name":"newtcbtheorem","arg":{"format":"[]{}{}{}{}","snippet":"newtcbtheorem[${1:init options}]{${2:name}}{${3:display name}}{${4:options}}{${5:prefix}}"}},
+		{"name":"newtcbtheorem","arg":{"format":"{}{}{}{}","snippet":"newtcbtheorem{${1:name}}{${2:display name}}{${3:options}}{${4:prefix}}"}},
+		{"name":"NewTcbTheorem","arg":{"format":"[]{}{}{}{}","snippet":"NewTcbTheorem[${1:init options}]{${2:name}}{${3:display name}}{${4:options}}{${5:prefix}}"}},
+		{"name":"NewTcbTheorem","arg":{"format":"{}{}{}{}","snippet":"NewTcbTheorem{${1:name}}{${2:display name}}{${3:options}}{${4:prefix}}"}},
+		{"name":"ProvideTcbTheorem","arg":{"format":"[]{}{}{}{}","snippet":"ProvideTcbTheorem[${1:init options}]{${2:name}}{${3:display name}}{${4:options}}{${5:prefix}}"}},
+		{"name":"ProvideTcbTheorem","arg":{"format":"{}{}{}{}","snippet":"ProvideTcbTheorem{${1:name}}{${2:display name}}{${3:options}}{${4:prefix}}"}},
+		{"name":"renewtcbtheorem","arg":{"format":"[]{}{}{}{}","snippet":"renewtcbtheorem[${1:init options}]{${2:name}}{${3:display name}}{${4:options}}{${5:prefix}}"}},
+		{"name":"renewtcbtheorem","arg":{"format":"{}{}{}{}","snippet":"renewtcbtheorem{${1:name}}{${2:display name}}{${3:options}}{${4:prefix}}"}},
+		{"name":"RenewTcbTheorem","arg":{"format":"[]{}{}{}{}","snippet":"RenewTcbTheorem[${1:init options}]{${2:name}}{${3:display name}}{${4:options}}{${5:prefix}}"}},
+		{"name":"RenewTcbTheorem","arg":{"format":"{}{}{}{}","snippet":"RenewTcbTheorem{${1:name}}{${2:display name}}{${3:options}}{${4:prefix}}"}},
+		{"name":"tcbhighmath","arg":{"format":"[]{}","snippet":"tcbhighmath[${1:options}]{${2:mathematical box content}}"}},
+		{"name":"tcbhighmath","arg":{"format":"{}","snippet":"tcbhighmath{${1:mathematical box content}}"}},
+		{"name":"tcboxmath","arg":{"format":"[]{}","snippet":"tcboxmath[${1:options}]{${2:mathematical box content}}"}},
+		{"name":"tcboxmath","arg":{"format":"{}","snippet":"tcboxmath{${1:mathematical box content}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

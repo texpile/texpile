@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/lmodern#c": ["lighttt","nomath","variablett"]
+	},
+	"args": ["\\usepackage/lmodern#c"]
+}

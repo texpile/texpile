@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"eforms"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"calc"},{"name":"hyperref"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"insdljs"},{"name":"xkeyval"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]},{"name":"taborder"},{"name":"icon-appr"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"datatool"},{"name":"ifthen"},{"name":"xfor"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"multido"}],
+	"macros": [
+		{"name":"appendClearSortJS","arg":{"format":"{}","snippet":"appendClearSortJS{${1}}"}},
+		{"name":"appendStartSortJS","arg":{"format":"{}","snippet":"appendStartSortJS{${1}}"}},
+		{"name":"appendStopSortJS","arg":{"format":"{}","snippet":"appendStopSortJS{${1}}"}},
+		{"name":"asEmbedTiles","arg":{"format":"[]{}{}{}","snippet":"asEmbedTiles[${1}]{${2}}{${3}}{${4}}"},"doc":"\\asEmbedTiles puts the base graphic file in a box and measures its dimensions; the format for the base graphic must be in a format that \\includegraphics supports, for whatever PDF creator you are using."},
+		{"name":"asEmbedTiles","arg":{"format":"{}{}{}","snippet":"asEmbedTiles{${1}}{${2}}{${3}}"},"doc":"\\asEmbedTiles puts the base graphic file in a box and measures its dimensions; the format for the base graphic must be in a format that \\includegraphics supports, for whatever PDF creator you are using."},
+		{"name":"asIconPic","arg":{"format":"[]{}{}{}","snippet":"asIconPic[${1}]{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"asIconPic","arg":{"format":"{}{}{}","snippet":"asIconPic{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"astileKVs","arg":{"format":"{}","snippet":"astileKVs{${1}}"},"unusual":true},
+		{"name":"ClearSort","arg":{"format":"[]{}{}{}","snippet":"ClearSort[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"ClearSort","arg":{"format":"{}{}{}","snippet":"ClearSort{${1}}{${2}}{${3}}"}},
+		{"name":"customFinishJS","arg":{"format":"{}","snippet":"customFinishJS{${1}}"}},
+		{"name":"customStartJS","arg":{"format":"{}","snippet":"customStartJS{${1}}"},"doc":"Inserts ⟨script⟩ into the beginning of the \\StartSort command."},
+		{"name":"insertTiles","arg":{"format":"{}{}{}{}","snippet":"insertTiles{${1}}{${2}}{${3}}{${4}}"},"doc":"Command for placing the tiles of a picture."},
+		{"name":"isPackage"},
+		{"name":"sortCustomFinishJS","unusual":true},
+		{"name":"sortCustomStartJS","unusual":true},
+		{"name":"StartSort","arg":{"format":"[]{}{}{}","snippet":"StartSort[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"StartSort","arg":{"format":"{}{}{}","snippet":"StartSort{${1}}{${2}}{${3}}"}},
+		{"name":"StopSort","arg":{"format":"[]{}{}","snippet":"StopSort[${1}]{${2}}{${3}}"}},
+		{"name":"StopSort","arg":{"format":"{}{}","snippet":"StopSort{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

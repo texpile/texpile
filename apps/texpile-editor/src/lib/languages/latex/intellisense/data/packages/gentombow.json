@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"hour","unusual":true},
+		{"name":"iftombow","unusual":true},
+		{"name":"iftombowdate","unusual":true},
+		{"name":"maketombowbox","unusual":true},
+		{"name":"minute","unusual":true},
+		{"name":"settombowbanner","arg":{"format":"{}","snippet":"settombowbanner{${1:text}}"},"doc":"Using \\settombowbanner, you can set the banner content."},
+		{"name":"settombowbannerfont","arg":{"format":"{}","snippet":"settombowbannerfont{${1:font}}"},"doc":"Using \\settombowbannerfont, you can change the font with which the banner is printed."},
+		{"name":"settombowbleed","arg":{"format":"{}","snippet":"settombowbleed{${1:length}}"}},
+		{"name":"settombowcolor","arg":{"format":"{}","snippet":"settombowcolor{${1:color code}}"}},
+		{"name":"settombowwidth","arg":{"format":"{}","snippet":"settombowwidth{${1:length}}"}},
+		{"name":"tombowdatefalse","unusual":true},
+		{"name":"tombowdatetrue","unusual":true},
+		{"name":"tombowfalse","unusual":true},
+		{"name":"tombowtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/gentombow#c": ["dvipdfmx","dvips","luatex","mentuke","mentuke-a0","mentuke-a1","mentuke-a10","mentuke-a2","mentuke-a3","mentuke-a4","mentuke-a4j","mentuke-a4var","mentuke-a5","mentuke-a5j","mentuke-a6","mentuke-a7","mentuke-a8","mentuke-a9","mentuke-b0","mentuke-b1","mentuke-b10","mentuke-b2","mentuke-b3","mentuke-b4","mentuke-b4j","mentuke-b5","mentuke-b5j","mentuke-b5var","mentuke-b6","mentuke-b7","mentuke-b8","mentuke-b9","mentuke-c0","mentuke-c1","mentuke-c10","mentuke-c2","mentuke-c3","mentuke-c4","mentuke-c5","mentuke-c6","mentuke-c7","mentuke-c8","mentuke-c9","mentuke-executive","mentuke-hagaki","mentuke-legal","mentuke-letter","notombowbanner","notombowdate","pdfbox","pdftex","tombo","tombo-a0","tombo-a1","tombo-a10","tombo-a2","tombo-a3","tombo-a4","tombo-a4j","tombo-a4var","tombo-a5","tombo-a5j","tombo-a6","tombo-a7","tombo-a8","tombo-a9","tombo-b0","tombo-b1","tombo-b10","tombo-b2","tombo-b3","tombo-b4","tombo-b4j","tombo-b5","tombo-b5j","tombo-b5var","tombo-b6","tombo-b7","tombo-b8","tombo-b9","tombo-c0","tombo-c1","tombo-c10","tombo-c2","tombo-c3","tombo-c4","tombo-c5","tombo-c6","tombo-c7","tombo-c8","tombo-c9","tombo-executive","tombo-hagaki","tombo-legal","tombo-letter","tombow","tombow-a0","tombow-a1","tombow-a10","tombow-a2","tombow-a3","tombow-a4","tombow-a4j","tombow-a4var","tombow-a5","tombow-a5j","tombow-a6","tombow-a7","tombow-a8","tombow-a9","tombow-b0","tombow-b1","tombow-b10","tombow-b2","tombow-b3","tombow-b4","tombow-b4j","tombow-b5","tombow-b5j","tombow-b5var","tombow-b6","tombow-b7","tombow-b8","tombow-b9","tombow-c0","tombow-c1","tombow-c10","tombow-c2","tombow-c3","tombow-c4","tombow-c5","tombow-c6","tombow-c7","tombow-c8","tombow-c9","tombow-executive","tombow-hagaki","tombow-legal","tombow-letter","tombowbanner","tombowdate","xetex"]
+	},
+	"args": ["\\usepackage/gentombow#c"]
+}

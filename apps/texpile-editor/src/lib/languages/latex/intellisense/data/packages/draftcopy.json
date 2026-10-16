@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"draftcopyBottomTransform","arg":{"format":"{}","snippet":"draftcopyBottomTransform{${1:PostScript}}"}},
+		{"name":"draftcopyBottomX","arg":{"format":"{}","snippet":"draftcopyBottomX{${1:x}}"}},
+		{"name":"draftcopyBottomY","arg":{"format":"{}","snippet":"draftcopyBottomY{${1:y}}"}},
+		{"name":"draftcopyFirstPage","arg":{"format":"{}","snippet":"draftcopyFirstPage{${1:page}}"},"doc":"The argument specifies the first page onto which DRAFT will be printed."},
+		{"name":"draftcopyLastPage","arg":{"format":"{}","snippet":"draftcopyLastPage{${1:page}}"},"doc":"The argument specifies the last page onto which DRAFT will be printed."},
+		{"name":"draftcopyName","arg":{"format":"{}{}","snippet":"draftcopyName{${1:word}}{${2:scale}}"},"doc":"The first argument specifies the word to be printed instead of DRAFT, the second, gives the scale factor for the font to be used."},
+		{"name":"draftcopyPageTransform","arg":{"format":"{}","snippet":"draftcopyPageTransform{${1:PostScript}}"}},
+		{"name":"draftcopyPageX","arg":{"format":"{}","snippet":"draftcopyPageX{${1:x}}"}},
+		{"name":"draftcopyPageY","arg":{"format":"{}","snippet":"draftcopyPageY{${1:y}}"}},
+		{"name":"draftcopySetGrey","arg":{"format":"{}","snippet":"draftcopySetGrey{${1:gray value}}"},"doc":"Set the intensity of the gray, values range from 0.0 to 1.0, where the smaller values darker."},
+		{"name":"draftcopySetScale","arg":{"format":"{}","snippet":"draftcopySetScale{${1:scale}}"},"doc":"Set the size (scale) of the word DRAFT."},
+		{"name":"draftcopySetScaleFactor","arg":{"format":"{}","snippet":"draftcopySetScaleFactor{${1:factor}}"},"doc":"Set the scale muliplier of the scale."},
+		{"name":"draftcopyVersion","arg":{"format":"{}","snippet":"draftcopyVersion{${1:version text}}"},"doc":"The argument is printed together with the timestamp."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/draftcopy#c": ["all","american","austrian","bahasa","bottom","bottomafter","brazil","brazilian","breton","british","catalan","conditional","croatian","czech","danish","dark","draft","dutch","dvi2ps","dvialw","dvilaser","dvips","dvipsone","dvitops","dviwin","dviwindo","emtex","english","esperanto","estonian","final","finnish","first","firsttwo","francais","french","galician","german","germanb","greek","hungarian","icelandic","irish","italian","landscape","light","ln","lowersorbian","magyar","none","norsk","nynorsk","outline","oztex","pctexhp","pctexps","pctexwin","polish","portrait","portuges","portuguese","psprint","pubps","romanian","scottish","slovak","slovene","spanish","swedish","textures","timestamp","turkish","uppersorbian","vtex","xdvi"]
+	},
+	"args": ["\\usepackage/draftcopy#c"]
+}

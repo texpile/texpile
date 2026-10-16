@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"aksharPackageDate","unusual":true},
+		{"name":"aksharPackageDescription","unusual":true},
+		{"name":"aksharPackageName","unusual":true},
+		{"name":"aksharPackageVersion","unusual":true},
+		{"name":"aksharStrChar","arg":{"format":"{}{}","snippet":"aksharStrChar{${1:token list}}{${2:n}}"}},
+		{"name":"aksharStrHead","arg":{"format":"{}","snippet":"aksharStrHead{${1:token list}}"},"doc":"Return the first character of the string."},
+		{"name":"aksharStrLen","arg":{"format":"{}","snippet":"aksharStrLen{${1:token list}}"},"doc":"Return the number of Devanagari characters in the ⟨token list⟩ ."},
+		{"name":"aksharStrRemove","arg":{"format":"{}{}","snippet":"aksharStrRemove{${1:tl 1}}{${2:tl 2}}"},"doc":"Remove all occurences of ⟨tl 2⟩ in ⟨tl 1⟩ , and leaves the modified ⟨tl 1⟩ in the input stream."},
+		{"name":"aksharStrRemove*","arg":{"format":"{}{}","snippet":"aksharStrRemove*{${1:tl 1}}{${2:tl 2}}"},"doc":"Remove all occurences of ⟨tl 2⟩ in ⟨tl 1⟩ , and leaves the modified ⟨tl 1⟩ in the input stream."},
+		{"name":"aksharStrReplace","arg":{"format":"{}{}{}","snippet":"aksharStrReplace{${1:tl 1}}{${2:tl 2}}{${3:tl 3}}"},"doc":"Replace all occurences of ⟨tl 2⟩ in ⟨tl 1⟩ with ⟨tl 3⟩ , and leaves the modified ⟨tl 1⟩ in the input stream."},
+		{"name":"aksharStrReplace*","arg":{"format":"{}{}{}","snippet":"aksharStrReplace*{${1:tl 1}}{${2:tl 2}}{${3:tl 3}}"},"doc":"Replace all occurences of ⟨tl 2⟩ in ⟨tl 1⟩ with ⟨tl 3⟩ , and leaves the modified ⟨tl 1⟩ in the input stream."},
+		{"name":"aksharStrTail","arg":{"format":"{}","snippet":"aksharStrTail{${1:token list}}"},"doc":"Return the last character of the string."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"bridge","arg":{"format":"[]()","snippet":"bridge[${1:options}](${2:coordinate})"}},
+		{"name":"bridge","arg":{"format":"()","snippet":"bridge(${1:coordinate})"}},
+		{"name":"hump","arg":{"format":"()","snippet":"hump(${1:coordinate})"}},
+		{"name":"interlocking","arg":{"format":"()","snippet":"interlocking(${1:coordinate})"}},
+		{"name":"levelcrossing","arg":{"format":"[]()","snippet":"levelcrossing[${1:options}](${2:coordinate})"}},
+		{"name":"levelcrossing","arg":{"format":"()","snippet":"levelcrossing(${1:coordinate})"}},
+		{"name":"platform","arg":{"format":"[]()","snippet":"platform[${1:options}](${2:coordinate})"}},
+		{"name":"platform","arg":{"format":"()","snippet":"platform(${1:coordinate})"}},
+		{"name":"pylon","arg":{"format":"[]()","snippet":"pylon[${1:options}](${2:coordinate})"}},
+		{"name":"pylon","arg":{"format":"()","snippet":"pylon(${1:coordinate})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

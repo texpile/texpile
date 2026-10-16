@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"everypage"},{"name":"afterpage"}],
+	"macros": [
+		{"name":"backgroundsetup","arg":{"format":"{}","snippet":"backgroundsetup{${1:options}}"}},
+		{"name":"BgMaterial"},
+		{"name":"BgThispage","doc":"This command permits to select particular pages in which the background material will be displayed (see example 3)."},
+		{"name":"NoBgThispage","doc":"This command will prevent the background material to be displayed in the page where it was issued."},
+		{"name":"SetBgAnchor","arg":{"format":"{}","snippet":"SetBgAnchor{${1}}"},"unusual":true},
+		{"name":"SetBgAngle","arg":{"format":"{}","snippet":"SetBgAngle{${1}}"},"unusual":true},
+		{"name":"SetBgColor","arg":{"format":"{}","snippet":"SetBgColor{${1}}"},"unusual":true},
+		{"name":"SetBgContents","arg":{"format":"{}","snippet":"SetBgContents{${1}}"},"unusual":true},
+		{"name":"SetBgHshift","arg":{"format":"{}","snippet":"SetBgHshift{${1}}"},"unusual":true},
+		{"name":"SetBgOpacity","arg":{"format":"{}","snippet":"SetBgOpacity{${1}}"},"unusual":true},
+		{"name":"SetBgPosition","arg":{"format":"{}","snippet":"SetBgPosition{${1}}"},"unusual":true},
+		{"name":"SetBgScale","arg":{"format":"{}","snippet":"SetBgScale{${1}}"},"unusual":true},
+		{"name":"SetBgVshift","arg":{"format":"{}","snippet":"SetBgVshift{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

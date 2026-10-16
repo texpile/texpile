@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"xstring"}],
+	"macros": [
+		{"name":"backtick","doc":"If you need a literal backtick, you may in any case use the macro \\backtick."},
+		{"name":"paren","doc":"It handles a parenthetic expression including parsing matching delimiters and adjusting their sizing."},
+		{"name":"parenMakeBacktickActiveParen","doc":"You may use the command \\parenMakeBacktickActiveParen to enable the backtick shorthand at any time in the document."},
+		{"name":"parenMakeNormalBacktick","doc":"The command \\parenMakeNormalBacktick changes the behavior of the backtick character in math mode to be a normal backtick char (“‘”)."},
+		{"name":"parenRegister","arg":{"format":"{}{}{}{}{}","snippet":"parenRegister{${1:internal name}}{${2:open parse delimiter}}{${3:close parse delimiter}}{${4:open display delimiter}}{${5:close display delimiter}}"},"doc":"Register a new delimiter type with \\parenRegister."},
+		{"name":"parenRegisterDefaults"},
+		{"name":"parenRegisterSimpleBraces","arg":{"format":"{}","snippet":"parenRegisterSimpleBraces{${1:internal name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

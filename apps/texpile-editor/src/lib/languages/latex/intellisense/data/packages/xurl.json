@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"url"}],
+	"macros": [
+		{"name":"useOriginalUrlSetting"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/xurl#c": ["nobiblatex"]
+	},
+	"args": ["\\usepackage/xurl#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"resetslot","arg":{"format":"{}","snippet":"resetslot{${1:glyph name}}"}},
+		{"name":"unsetslot","arg":{"format":"{}","snippet":"unsetslot{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

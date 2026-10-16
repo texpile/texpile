@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"hexdumptikz-selector"},{"name":"hexdumptikz-parser"},{"name":"hexdumptikz-parser-hd"}],
+	"macros": [
+		{"name":"hexdumptikzAddrToCol","arg":{"format":"{}","snippet":"hexdumptikzAddrToCol{${1}}"}},
+		{"name":"hexdumptikzAddrToNodename","arg":{"format":"{}","snippet":"hexdumptikzAddrToNodename{${1}}"}},
+		{"name":"hexdumptikzAddrToRow","arg":{"format":"{}","snippet":"hexdumptikzAddrToRow{${1}}"}},
+		{"name":"hexdumptikzIterDump","unusual":true},
+		{"name":"hexdumptikzLabelBytes","arg":{"format":"[]{}{}","snippet":"hexdumptikzLabelBytes[${1}]{${2}}{${3}}"},"doc":"Label/Highlight a sequence of bytes in the hexdump."},
+		{"name":"hexdumptikzLabelBytes","arg":{"format":"{}{}","snippet":"hexdumptikzLabelBytes{${1}}{${2}}"},"doc":"Label/Highlight a sequence of bytes in the hexdump."},
+		{"name":"hexdumptikzLabelBytesFallback","arg":{"format":"[]{}{}","snippet":"hexdumptikzLabelBytesFallback[${1}]{${2}}{${3}}"}},
+		{"name":"hexdumptikzLabelBytesFallback","arg":{"format":"{}{}","snippet":"hexdumptikzLabelBytesFallback{${1}}{${2}}"}},
+		{"name":"hexdumptikzMatchRow","arg":{"format":"{}{}{}","snippet":"hexdumptikzMatchRow{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"hexdumptikzMatchStyle","arg":{"format":"{}{}{}","snippet":"hexdumptikzMatchStyle{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"hexdumptikzParseDump","unusual":true},
+		{"name":"hexdumptikzParserDbg","arg":{"format":"{}","snippet":"hexdumptikzParserDbg{${1}}"},"unusual":true},
+		{"name":"hexdumptikzParseRow","arg":{"format":"{}","snippet":"hexdumptikzParseRow{${1}}"},"unusual":true},
+		{"name":"hexdumptikzPrint","arg":{"format":"[]{}","snippet":"hexdumptikzPrint[${1}]{${2}}"}},
+		{"name":"hexdumptikzPrint","arg":{"format":"{}","snippet":"hexdumptikzPrint{${1}}"}},
+		{"name":"hexdumptikzReset","unusual":true}
+	],
+	"envs": [
+		{"name":"hexdumptikz","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"hexdumptikz","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

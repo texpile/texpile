@@ -1,0 +1,26 @@
+{
+	"macros": [
+		{"name":"ComplexNumbers","arg":{"format":"[]","snippet":"ComplexNumbers[${1:options}]","keys":["l3keys:numberset"],"keyPos":0}},
+		{"name":"ComplexNumbers"},
+		{"name":"DeclareNumberSetCommand","arg":{"format":"{}{}","snippet":"DeclareNumberSetCommand{${1:command}}{${2:symbol}}"},"doc":"This command defines a new number set command."},
+		{"name":"DeclareNumberSetStyle","arg":{"format":"{}{}","snippet":"DeclareNumberSetStyle{${1:style}}{${2:command}}"},"doc":"This command defines a new style for number sets."},
+		{"name":"Integers","arg":{"format":"[]","snippet":"Integers[${1:options}]","keys":["l3keys:numberset"],"keyPos":0}},
+		{"name":"Integers"},
+		{"name":"NaturalNumbers","arg":{"format":"[]","snippet":"NaturalNumbers[${1:options}]","keys":["l3keys:numberset"],"keyPos":0}},
+		{"name":"NaturalNumbers"},
+		{"name":"NumberSet","arg":{"format":"[]{}","snippet":"NumberSet[${1:options}]{${2:symbol}}","keys":["l3keys:numberset"],"keyPos":0},"doc":"This command displays the specified number set with the typeface defined by the style option."},
+		{"name":"NumberSet","arg":{"format":"{}","snippet":"NumberSet{${1:symbol}}"},"doc":"This command displays the specified number set with the typeface defined by the style option."},
+		{"name":"RationalNumbers","arg":{"format":"[]","snippet":"RationalNumbers[${1:options}]","keys":["l3keys:numberset"],"keyPos":0}},
+		{"name":"RationalNumbers"},
+		{"name":"RealNumbers","arg":{"format":"[]","snippet":"RealNumbers[${1:options}]","keys":["l3keys:numberset"],"keyPos":0}},
+		{"name":"RealNumbers"},
+		{"name":"SetupNumberSetsOptions","arg":{"format":"{}","snippet":"SetupNumberSetsOptions{${1:options}}","keys":["l3keys:numbersets"],"keyPos":0},"doc":"Changes the global options for the numbersets package, which can be applied after the package import or at any point in the document."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:numberset": ["style=${1|bb,bfup,bfit|}"],
+		"l3keys:numbersets": ["style=${1|bb,bfup,bfit|}"],
+		"\\usepackage/numbersets#c": ["style=${1|bb,bfup,bfit|}"]
+	},
+	"args": ["\\usepackage/numbersets#c"]
+}

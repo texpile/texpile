@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"etoolbox"},{"name":"xstring"},{"name":"ifthen"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"lfstyle"},
+		{"name":"osfstyle"},
+		{"name":"sufigures"},
+		{"name":"textde","arg":{"format":"{}","snippet":"textde{${1:text}}"}},
+		{"name":"textdenominators","arg":{"format":"{}","snippet":"textdenominators{${1}}"}},
+		{"name":"textfrac","arg":{"format":"[]{}{}","snippet":"textfrac[${1:integer}]{${2:numerator}}{${3:denominator}}"}},
+		{"name":"textfrac","arg":{"format":"{}{}","snippet":"textfrac{${1:numerator}}{${2:denominator}}"}},
+		{"name":"textlf","arg":{"format":"{}","snippet":"textlf{${1:text}}"}},
+		{"name":"textosf","arg":{"format":"{}","snippet":"textosf{${1:text}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"}},
+		{"name":"textsuperior","arg":{"format":"{}","snippet":"textsuperior{${1}}"}},
+		{"name":"texttlf","arg":{"format":"{}","snippet":"texttlf{${1:text}}"}},
+		{"name":"texttosf","arg":{"format":"{}","snippet":"texttosf{${1:text}}"}},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf","doc":"The package defines two macros, \\useosf and \\useproportional, useable only in the preamble, which determine the default figure style in text."},
+		{"name":"useproportional"}
+	],
+	"envs": [],
+	"keys": {}
+}

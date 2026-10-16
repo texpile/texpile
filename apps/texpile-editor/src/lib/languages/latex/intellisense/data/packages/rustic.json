@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"rustfamily"},
+		{"name":"textrust","arg":{"format":"{}","snippet":"textrust{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

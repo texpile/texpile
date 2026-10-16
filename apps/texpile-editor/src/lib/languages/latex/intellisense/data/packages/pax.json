@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"kvsetkeys"},{"name":"kvoptions"},{"name":"auxhook"},{"name":"etexcmds"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

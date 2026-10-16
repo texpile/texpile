@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"amssubj","arg":{"format":"{}","snippet":"amssubj{${1:classifications}}"}},
+		{"name":"amssubjname"},
+		{"name":"authorfnname"},
+		{"name":"authorfootnote","arg":{"format":"{}","snippet":"authorfootnote{${1:text}}"}},
+		{"name":"footnotecomma"},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords}}"}},
+		{"name":"keywordsname"},
+		{"name":"runningtitle","arg":{"format":"{}","snippet":"runningtitle{${1:running title}}"}},
+		{"name":"runningtitlename"},
+		{"name":"unmarkedfntext","arg":{"format":"{}","snippet":"unmarkedfntext{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

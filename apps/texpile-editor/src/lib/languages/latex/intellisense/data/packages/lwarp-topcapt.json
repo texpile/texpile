@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"topcaption","arg":{"format":"[]{}","snippet":"topcaption[${1:short}]{${2:caption}}"}},
+		{"name":"topcaption","arg":{"format":"{}","snippet":"topcaption{${1:caption}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

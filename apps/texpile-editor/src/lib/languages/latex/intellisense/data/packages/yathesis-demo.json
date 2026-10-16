@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"xstring"},{"name":"letltxmacro"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"zref"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-user"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

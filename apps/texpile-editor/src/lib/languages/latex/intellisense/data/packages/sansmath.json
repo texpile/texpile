@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"mathsfbf","arg":{"format":"{}","snippet":"mathsfbf{${1:math}}"},"unusual":true},
+		{"name":"mathsfsl","arg":{"format":"{}","snippet":"mathsfsl{${1:math}}"},"unusual":true},
+		{"name":"sansmath","doc":"When a \\sansmath declaration is in effect, math characters will be taken from the text sans-serif family as much as possible."},
+		{"name":"sansmathencoding"},
+		{"name":"sfbf","unusual":true},
+		{"name":"sfsl","unusual":true},
+		{"name":"unsansmath"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/sansmath#c": ["EULERGREEK","T1","eulergreek"]
+	},
+	"args": ["\\usepackage/sansmath#c"]
+}

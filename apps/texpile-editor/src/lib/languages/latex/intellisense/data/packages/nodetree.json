@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"nodetreeoption","arg":{"format":"[]{}","snippet":"nodetreeoption[${1}]{${2}}"},"unusual":true},
+		{"name":"nodetreeoption","arg":{"format":"{}","snippet":"nodetreeoption{${1}}"},"unusual":true},
+		{"name":"nodetreeregister","arg":{"format":"{}","snippet":"nodetreeregister{${1}}"},"unusual":true},
+		{"name":"NodetreeRegisterCallback","arg":{"format":"{}","snippet":"NodetreeRegisterCallback{${1:callbacks}}"}},
+		{"name":"nodetreereset","unusual":true},
+		{"name":"NodetreeReset","doc":"Globally reset multiple options to their default values."},
+		{"name":"NodetreeResetOption","arg":{"format":"{}","snippet":"NodetreeResetOption{${1:option}}"}},
+		{"name":"nodetreeset","arg":{"format":"{}","snippet":"nodetreeset{${1}}"},"unusual":true},
+		{"name":"NodetreeSet","arg":{"format":"{}","snippet":"NodetreeSet{${1:key-value options}}","keys":["keyval:NT"],"keyPos":0},"doc":"Globally set multiple options at once."},
+		{"name":"NodetreeSetOption","arg":{"format":"[]{}","snippet":"NodetreeSetOption[${1:option}]{${2:value}}"}},
+		{"name":"NodetreeSetOption","arg":{"format":"{}","snippet":"NodetreeSetOption{${1:value}}"}},
+		{"name":"nodetreeunregister","arg":{"format":"{}","snippet":"nodetreeunregister{${1}}"},"unusual":true},
+		{"name":"NodetreeUnregisterCallback","arg":{"format":"{}","snippet":"NodetreeUnregisterCallback{${1:callbacks}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:NT": ["callback=","channel=${1|term,log,tex|}","color=${1|colored,no|}","decimalplaces=","unit=${1|pt,pc,in,bp,cm,mm,dd,cc,sp,ex,em|}","verbosity=${1|0,1,2,3|}"],
+		"\\usepackage/nodetree#c": ["callback=","channel=${1|term,log,tex|}","color=${1|colored,no|}","decimalplaces=","unit=${1|pt,pc,in,bp,cm,mm,dd,cc,sp,ex,em|}","verbosity=${1|0,1,2,3|}"]
+	},
+	"args": ["\\usepackage/nodetree#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"thepdfnumber","arg":{"format":"{}","snippet":"thepdfnumber{${1:number}}"},"doc":"Macro \\thepdfnumber takes a number as argument and expands to a minimal representation of that number."},
+		{"name":"thepdfnumberNormZeroOne","arg":{"format":"{}","snippet":"thepdfnumberNormZeroOne{${1:number}}"},"doc":"There are various places in the PDF specification where the number is in the domain 0.0 upto 1.0. Macro thepdfnumberNormZeroOne automatically adjusts the number to fit into that range."}
+	],
+	"envs": [],
+	"keys": {}
+}

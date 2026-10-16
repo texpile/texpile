@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"class-book"},{"name":"ifthen"},{"name":"fancyhdr"},{"name":"extramarks"},{"name":"needspace"},{"name":"changepage"},{"name":"parskip"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"act","doc":"If you are numbering acts, use \\act before each act to place act headers."},
+		{"name":"actname"},
+		{"name":"addcharacter","arg":{"format":"{}{}","snippet":"addcharacter{${1:name}}{${2:description}}"},"doc":"Use \\addcharacter to add characters to the cast page."},
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1:address}}"},"doc":"\\address blocks your address on the lower left of the title page."},
+		{"name":"castname"},
+		{"name":"charsd","arg":{"format":"{}","snippet":"charsd{${1:direction}}"},"doc":"Use \\charsd for intra-dialogue stage directions."},
+		{"name":"continuedname"},
+		{"name":"dialog","arg":{"format":"{}{}","snippet":"dialog{${1:character}}{${2:speech}}"},"doc":"\\dialog sets off speeches with the appropriate formatting."},
+		{"name":"dialogue","arg":{"format":"{}{}","snippet":"dialogue{${1:character}}{${2:speech}}"}},
+		{"name":"initsd","arg":{"format":"{}","snippet":"initsd{${1}}"},"unusual":true},
+		{"name":"introduce","arg":{"format":"{}","snippet":"introduce{${1:character}}"},"doc":"This command sets the character’s name in smallcaps when they are first introduced in stage directions."},
+		{"name":"open","arg":{"format":"{}","snippet":"open{${1:direction}}"}},
+		{"name":"opensd","arg":{"format":"{}","snippet":"opensd{${1:direction}}"}},
+		{"name":"paren","arg":{"format":"{}","snippet":"paren{${1:direction}}"}},
+		{"name":"pause","doc":"Provided for convenience, this inserts a (Pause) stage direction for those of us who overuse them."},
+		{"name":"scene","doc":"If you are numbering scenes, use \\scene before each scene to place scene headers."},
+		{"name":"scenename"},
+		{"name":"stage","arg":{"format":"{}","snippet":"stage{${1:direction}}"},"doc":"Use \\stage for inter-dialogue stage directions."},
+		{"name":"theendname"}
+	],
+	"envs": [
+		{"name":"castpage","doc":"To create a page for your cast of characters, use the castpage environment."}
+	],
+	"keys": {}
+}

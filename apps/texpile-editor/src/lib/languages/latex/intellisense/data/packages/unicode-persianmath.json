@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"AutoDisplayMathDigits","unusual":true},
+		{"name":"AutoInlineMathDigits","unusual":true},
+		{"name":"AutoMathDigits"},
+		{"name":"DefaultDisplayMathDigits","unusual":true},
+		{"name":"DefaultInlineMathDigits","unusual":true},
+		{"name":"DefaultMathDigits"},
+		{"name":"PersianDisplayMathDigits","unusual":true},
+		{"name":"PersianInlineMathDigits","unusual":true},
+		{"name":"PersianMathDigits"},
+		{"name":"setmathdigitfont","arg":{"format":"[]{}[]","snippet":"setmathdigitfont[${1:options}]{${2:font name}}[${3:options}]"}},
+		{"name":"setmathdigitfont","arg":{"format":"{}","snippet":"setmathdigitfont{${1:font name}}"}},
+		{"name":"setmathsfdigitfont","arg":{"format":"[]{}[]","snippet":"setmathsfdigitfont[${1:options}]{${2:font name}}[${3:options}]"}},
+		{"name":"setmathsfdigitfont","arg":{"format":"{}","snippet":"setmathsfdigitfont{${1:font name}}"}},
+		{"name":"setmathttdigitfont","arg":{"format":"[]{}[]","snippet":"setmathttdigitfont[${1:options}]{${2:font name}}[${3:options}]"}},
+		{"name":"setmathttdigitfont","arg":{"format":"{}","snippet":"setmathttdigitfont{${1:font name}}"}},
+		{"name":"SwitchToDefaultMathDigits","unusual":true},
+		{"name":"SwitchToPersianMathDigits","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

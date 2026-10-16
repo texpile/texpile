@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"0"},
+		{"name":"1","arg":{"format":"[]","snippet":"1[${1:label}]"},"doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"1","doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"2","arg":{"format":"[]","snippet":"2[${1:label}]"}},
+		{"name":"2"},
+		{"name":"3","arg":{"format":"[]","snippet":"3[${1:label}]"},"doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"3","doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"4","arg":{"format":"[]","snippet":"4[${1:label}]"},"doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"4","doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"outlinei"},
+		{"name":"outlineii"},
+		{"name":"outlineiii"},
+		{"name":"outlineiiii"}
+	],
+	"envs": [
+		{"name":"outline","arg":{"format":"[]","snippet":"[${1}]"},"doc":"produces an outline region, with a hierarchy of items up to four levels deep. The outline is formatted according to style, which must be the name of a LaTeX list environment."},
+		{"name":"outline","doc":"produces an outline region, with a hierarchy of items up to four levels deep. The outline is formatted according to style, which must be the name of a LaTeX list environment."}
+	],
+	"keys": {}
+}

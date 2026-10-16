@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"scrletter"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"scrextend"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"rwth-colors"},{"name":"xcolor"},{"name":"rwth-fonts"},{"name":"iftex"},{"name":"arimo"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"geometry"},{"name":"ifvtex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"TaxIdName","unusual":true},
+		{"name":"VatIdName","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"thm-patch"},{"name":"parseargs"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"ignoretheorems","arg":{"format":"{}","snippet":"ignoretheorems{${1}}"},"doc":"\\ignoretheorems{remark,example,...} can be used to suppress some types of theorem from the LoTh."},
+		{"name":"listoftheorems","arg":{"format":"[]","snippet":"listoftheorems[${1}]","keys":["keyval:thmt-listof"],"keyPos":0}},
+		{"name":"listoftheorems"},
+		{"name":"listtheoremname","doc":"The heading name is stored in the macro \\listtheoremname and is “List of Theorems” by default."},
+		{"name":"onlynamedtheorems","arg":{"format":"{}","snippet":"onlynamedtheorems{${1}}"},"unusual":true},
+		{"name":"setlisttheoremstyle","arg":{"format":"{}","snippet":"setlisttheoremstyle{${1}}","keys":["keyval:thmt-listof"],"keyPos":0},"unusual":true},
+		{"name":"showtheorems","arg":{"format":"{}","snippet":"showtheorems{${1}}"},"unusual":true},
+		{"name":"thmtformatoptarg","arg":{"format":"{}","snippet":"thmtformatoptarg{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:thmt-listof": ["ignore","ignoreall","numwidth=","onlynamed","show","showall","title=","swapnumber=${1|true,false|}"]
+	}
+}

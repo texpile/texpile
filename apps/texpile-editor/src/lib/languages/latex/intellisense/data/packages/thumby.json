@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"perltex"},{"name":"bophook"}],
+	"macros": [
+		{"name":"thumbyBackground","arg":{"format":"{}","snippet":"thumbyBackground{${1:color}}"},"doc":"The background color of each thumb index."},
+		{"name":"thumbyForeground","arg":{"format":"{}","snippet":"thumbyForeground{${1:color}}"},"doc":"The foreground color of each thumb index."},
+		{"name":"thumbyNumberFormat","arg":{"format":"{}","snippet":"thumbyNumberFormat{${1:format}}"}},
+		{"name":"thumbyPageHeight","arg":{"format":"{}","snippet":"thumbyPageHeight{${1:points}}"},"doc":"The height of each page, in points."},
+		{"name":"thumbySetup","doc":"This command must follow the rest of the \\thumby commands. It will use the values provided by the other commands to make all calculations necessary for Thumby to do its magic."},
+		{"name":"thumbySides","arg":{"format":"{}","snippet":"thumbySides{${1:sides}}"}},
+		{"name":"thumbyThumbWidth","arg":{"format":"{}","snippet":"thumbyThumbWidth{${1:points}}"},"doc":"The width of each thumb index, in points."},
+		{"name":"thumbyTotalChapters","arg":{"format":"{}","snippet":"thumbyTotalChapters{${1:integer}}"},"doc":"The total number of chapters in your document. Thumby will divide the page height by the total number of chapters to get the height of each thumb index."}
+	],
+	"envs": [],
+	"keys": {}
+}

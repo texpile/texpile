@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"Footnote","arg":{"format":"{}{}","snippet":"Footnote{${1:marker}}{${2:text}}"}},
+		{"name":"Footnotemark","arg":{"format":"{}","snippet":"Footnotemark{${1}}"}},
+		{"name":"Footnotetext","arg":{"format":"{}{}","snippet":"Footnotetext{${1:marker}}{${2:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

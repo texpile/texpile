@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"luamplib"}],
+	"macros": [
+		{"name":"luaplot","arg":{"format":"[]{}","snippet":"luaplot[${1:options}]{${2:functions}}","keys":["keyval:someop"],"keyPos":0}},
+		{"name":"luaplot","arg":{"format":"{}","snippet":"luaplot{${1:functions}}"}},
+		{"name":"luatikzpath","arg":{"format":"{}{}{}{}","snippet":"luatikzpath{${1:function}}{${2:xmin}}{${3:xmax}}{${4:plot points}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:someop": ["clr=","hor=","plotoptions=","plotpts=","plotsty=","ver=","xmax=","xmin=","ymax=","ymin="]
+	}
+}

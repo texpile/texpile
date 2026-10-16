@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"interval","arg":{"format":"[]{}{}","snippet":"interval[${1}]{${2}}{${3}}"}},
+		{"name":"interval","arg":{"format":"{}{}","snippet":"interval{${1}}{${2}}"}},
+		{"name":"intervalconfig","arg":{"format":"{}","snippet":"intervalconfig{${1}}"}},
+		{"name":"INTVversion","unusual":true},
+		{"name":"linterval","arg":{"format":"[]{}{}","snippet":"linterval[${1}]{${2}}{${3}}"}},
+		{"name":"linterval","arg":{"format":"{}{}","snippet":"linterval{${1}}{${2}}"}},
+		{"name":"ointerval","arg":{"format":"[]{}{}","snippet":"ointerval[${1}]{${2}}{${3}}"}},
+		{"name":"ointerval","arg":{"format":"{}{}","snippet":"ointerval{${1}}{${2}}"}},
+		{"name":"rinterval","arg":{"format":"[]{}{}","snippet":"rinterval[${1}]{${2}}{${3}}"}},
+		{"name":"rinterval","arg":{"format":"{}{}","snippet":"rinterval{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

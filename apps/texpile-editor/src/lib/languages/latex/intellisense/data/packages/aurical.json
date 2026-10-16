@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"Fontamici"},
+		{"name":"Fontauri"},
+		{"name":"Fontlukas"},
+		{"name":"Fontskrivan"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/aurical#c": ["backslant"]
+	},
+	"args": ["\\usepackage/aurical#c"]
+}

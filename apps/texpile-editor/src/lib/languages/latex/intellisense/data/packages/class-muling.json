@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"class-book"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"keyval"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"forest"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"elocalloc"},{"name":"environ"},{"name":"inlinedef"},{"name":"forest-lib-linguistics"},{"name":"tipa"},{"name":"leipzig"},{"name":"glossaries"},{"name":"xkeyval"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"glossary-mcols"},{"name":"multicol"},{"name":"glossary-inline"},{"name":"expex"},{"name":"fancyhdr"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"iflof","unusual":true},
+		{"name":"loffalse","unusual":true},
+		{"name":"loftrue","unusual":true},
+		{"name":"maketitle"},
+		{"name":"shorttitle","arg":{"format":"{}","snippet":"shorttitle{${1:short title}}"},"doc":"The short title is printed on the top right corner of the page with the year of submission."},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"},"doc":"The subtitle is printed exactly under the title on the title-page."},
+		{"name":"supervisor","arg":{"format":"{}","snippet":"supervisor{${1:name of the supervisor}}"},"doc":"Name of the supervisor is printed on the title-page, in the declaration text and under the name of the supervisor for the signature."}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/muling#c": ["digital","lof"]
+	},
+	"args": ["\\documentclass/muling#c"]
+}

@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"eqlistauto","arg":{"format":"{}","snippet":"eqlistauto{${1:maximal length}}"}},
+		{"name":"eqlistinit"},
+		{"name":"eqlistinitpar"},
+		{"name":"eqlistlabel","arg":{"format":"{}","snippet":"eqlistlabel{${1:label}}"}},
+		{"name":"eqlistnoauto"},
+		{"name":"eqliststarinit"},
+		{"name":"longitem","arg":{"format":"[]","snippet":"longitem[${1:label}]"}},
+		{"name":"longitem"}
+	],
+	"envs": [
+		{"name":"eqlist","arg":{"format":"[]","snippet":"[${1:optional modifications}]"}},
+		{"name":"eqlist"},
+		{"name":"eqlist*","arg":{"format":"[]","snippet":"[${1:optional modifications}]"}},
+		{"name":"eqlist*"},
+		{"name":"Eqlist","arg":{"format":"[]{}","snippet":"[${1:optional modifications}]{${2:tag}}"}},
+		{"name":"Eqlist","arg":{"format":"{}","snippet":"{${1:tag}}"}},
+		{"name":"Eqlist*","arg":{"format":"[]{}","snippet":"[${1:optional modifications}]{${2:tag}}"}},
+		{"name":"Eqlist*","arg":{"format":"{}","snippet":"{${1:tag}}"}}
+	],
+	"keys": {}
+}

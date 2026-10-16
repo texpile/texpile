@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"zref"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"auxhook"},{"name":"zref-savepos"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"kvoptions"}],
+	"macros": [
+		{"name":"masume","arg":{"format":"{}[]","snippet":"masume{${1:lines}}[${2:options}]"}},
+		{"name":"masume","arg":{"format":"{}","snippet":"masume{${1:lines}}"}},
+		{"name":"masume*","arg":{"format":"{}[]","snippet":"masume*{${1:lines}}[${2:options}]"}},
+		{"name":"masume*","arg":{"format":"{}","snippet":"masume*{${1:lines}}"}},
+		{"name":"masumefill","arg":{"format":"[]","snippet":"masumefill[${1:options}]"}},
+		{"name":"masumefill"},
+		{"name":"masumefill*","arg":{"format":"[]","snippet":"masumefill*[${1:options}]"}},
+		{"name":"masumefill*"},
+		{"name":"note","arg":{"format":"{}[]","snippet":"note{${1:lines}}[${2:options}]"},"doc":"\\note draws a block with the specified number of lines."},
+		{"name":"note","arg":{"format":"{}","snippet":"note{${1:lines}}"},"doc":"\\note draws a block with the specified number of lines."},
+		{"name":"notefill","arg":{"format":"[]","snippet":"notefill[${1:options}]"},"doc":"\\notefill automatically fills the remaining vertical space."},
+		{"name":"notefill","doc":"\\notefill automatically fills the remaining vertical space."},
+		{"name":"SetKeisenNote","arg":{"format":"[]","snippet":"SetKeisenNote[${1:key=value}]"}},
+		{"name":"SetKeisenNote"}
+	],
+	"envs": [],
+	"keys": {}
+}

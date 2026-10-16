@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"memoize-ext"},{"name":"memoize"},{"name":"etoolbox"},{"name":"iftex"},{"name":"advice"},{"name":"collargs"},{"name":"pgfkeys"},{"name":"xparse"},{"name":"memoize-ext-expl3"},{"name":"memoize-ext-expl3-common"}],
+	"macros": [
+		{"name":"AdviceCollectDrawArguments"}
+	],
+	"envs": [],
+	"keys": {}
+}

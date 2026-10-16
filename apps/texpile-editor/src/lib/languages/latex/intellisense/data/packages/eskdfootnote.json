@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"zref-perpage"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"auxhook"}],
+	"macros": [
+		{"name":"fnasterisk","arg":{"format":"{}","snippet":"fnasterisk{${1:counter}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/eskdfootnote#c": ["footnotearabic","footnoteasterisk"]
+	},
+	"args": ["\\usepackage/eskdfootnote#c"]
+}

@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"astrut","unusual":true},
+		{"name":"Connverses","arg":{"format":"{}{}{}","snippet":"Connverses{${1:first half-verse}}{${2:connection}}{${3:second half-verse}}"}},
+		{"name":"Halfverses","arg":{"format":"{}{}","snippet":"Halfverses{${1:first half-verse}}{${2:second half-verse}}"}},
+		{"name":"setversedim","arg":{"format":"{}{}","snippet":"setversedim{${1:half-verse length}}{${2:separation}}"}},
+		{"name":"Spreadbox","arg":{"format":"{}{}","snippet":"Spreadbox{${1:width}}{${2:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

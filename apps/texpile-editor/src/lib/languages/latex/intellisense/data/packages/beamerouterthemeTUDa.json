@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"logo","arg":{"format":"{}","snippet":"logo{${1:logo}}"}},
+		{"name":"logo*","arg":{"format":"{}","snippet":"logo*{${1:logo}}"}},
+		{"name":"setupTUDaFrame","arg":{"format":"{}","snippet":"setupTUDaFrame{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

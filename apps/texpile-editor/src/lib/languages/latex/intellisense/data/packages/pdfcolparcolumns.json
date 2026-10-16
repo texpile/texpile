@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"parcolumns"},{"name":"processkv"},{"name":"keyval"},{"name":"pdfcol"},{"name":"iftex"},{"name":"color","engines":["pdflatex","lualatex"]},{"name":"etoolbox","engines":["pdflatex","lualatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

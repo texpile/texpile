@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"setspace"},{"name":"insdljs"},{"name":"xkeyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]},{"name":"xparse"}],
+	"macros": [
+		{"name":"ErrorField","doc":"This command adds a Readonly Textfield with the ⟨unique identifier⟩ ’errorField’."},
+		{"name":"SimpleButtonPOST","arg":{"format":"[]{}{}{}{}{}{}","snippet":"SimpleButtonPOST[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"},"unusual":true},
+		{"name":"SimpleButtonPOST","arg":{"format":"{}{}{}{}{}{}","snippet":"SimpleButtonPOST{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true},
+		{"name":"SimpleClosure","arg":{"format":"{}{}{}","snippet":"SimpleClosure{${1:id}}{${2:label}}{${3:closure}}"}},
+		{"name":"SimpleGET","arg":{"format":"{}{}{}{}[]","snippet":"SimpleGET{${1:unique identifier}}{${2:label}}{${3:URL}}{${4:keypath}}[${5:target}]"},"doc":"If you want to get information from the internet, use this command. This command adds a button that contains the text specified in ⟨label⟩."},
+		{"name":"SimpleGET","arg":{"format":"{}{}{}{}","snippet":"SimpleGET{${1:unique identifier}}{${2:label}}{${3:URL}}{${4:keypath}}"},"doc":"If you want to get information from the internet, use this command. This command adds a button that contains the text specified in ⟨label⟩."},
+		{"name":"SimplePOST","arg":{"format":"{}{}{}{}{}{}[]","snippet":"SimplePOST{${1:id}}{${2:label}}{${3:URL}}{${4:keypath}}{${5:factory}}{${6:errors}}[${7:target}]"},"doc":"If you need to post information to the internet, then use this command."},
+		{"name":"SimplePOST","arg":{"format":"{}{}{}{}{}{}","snippet":"SimplePOST{${1:id}}{${2:label}}{${3:URL}}{${4:keypath}}{${5:factory}}{${6:errors}}"},"doc":"If you need to post information to the internet, then use this command."},
+		{"name":"SimpleTextField","arg":{"format":"{}","snippet":"SimpleTextField{${1:unique identifier}}"},"doc":"Adds a writable textfield to the document."},
+		{"name":"SimpleTextFieldMultilineReadonly","arg":{"format":"{}","snippet":"SimpleTextFieldMultilineReadonly{${1:unique identifier}}"},"doc":"A readonly textfield does not accept user input."},
+		{"name":"SimpleTextFieldReadonly","arg":{"format":"{}","snippet":"SimpleTextFieldReadonly{${1:unique identifier}}"},"doc":"A readonly textfield does not accept user input."},
+		{"name":"SimpleTextFieldShortReadonly","arg":{"format":"{}","snippet":"SimpleTextFieldShortReadonly{${1:unique identifier}}"},"doc":"A readonly textfield does not accept user input."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"iftex"},{"name":"xkeyval"},{"name":"pst-3d","if":"PS|ps"},{"name":"pstricks","if":"PS|ps"},{"name":"xcolor","if":"PS|TikZ|ps|tikz"},{"name":"pgffor","if":"PS|TikZ|ps|tikz"},{"name":"pgfrcs","if":"PS|TikZ|ps|tikz"},{"name":"pgfkeys","if":"PS|TikZ|ps|tikz"},{"name":"pgfmath","if":"PS|TikZ|ps|tikz"},{"name":"tikz","if":"TikZ|tikz"},{"name":"pgf","if":"TikZ|tikz"},{"name":"pgfcore","if":"TikZ|tikz"},{"name":"graphicx","if":"TikZ|tikz"},{"name":"graphics","if":"TikZ|tikz"},{"name":"trig","if":"TikZ|tikz"},{"name":"pgfsys","if":"TikZ|tikz"},{"name":"pgfcomp-version-0-65","if":"TikZ|tikz"},{"name":"pgfcomp-version-1-18","if":"TikZ|tikz"},{"name":"fontspec","if":"!PS+!TikZ+!l3draw+!ps+!tikz","engines":["lualatex"]},{"name":"fontspec-luatex","if":"!PS+!TikZ+!l3draw+!ps+!tikz","engines":["lualatex"]}],
+	"macros": [
+		{"name":"negslantcontext","doc":"Name of the microtype context used when typesetting backward slanted text."},
+		{"name":"slantcontext","doc":"Name of the microtype context used when typesetting forward slanted text."},
+		{"name":"synthnegslant","doc":"Slant value used by \\textsynthuprightitalic."},
+		{"name":"synthslant","doc":"Slant value used by \\textsynthslant."},
+		{"name":"synthslantbox","arg":{"format":"{}{}","snippet":"synthslantbox{${1}}{${2}}"},"doc":"Slant ⟨text⟩ (forward or backward) by ⟨slant⟩ ."},
+		{"name":"textsynthslant","arg":{"format":"{}","snippet":"textsynthslant{${1}}"},"doc":"Forward slant roman, i. e., upright ⟨text⟩ ."},
+		{"name":"textsynthuprightitalic","arg":{"format":"{}","snippet":"textsynthuprightitalic{${1}}"},"doc":"Backward slant italic ⟨text⟩ ."}
+	],
+	"envs": [
+		{"name":"negslantenvironment","doc":"Wrapper around \\synthslantbox when slanting backward with \\textsynthuprightitalic."},
+		{"name":"slantenvironment","doc":"Wrapper around \\synthslantbox when slanting forward with \\textsynthslant."}
+	],
+	"keys": {}
+}

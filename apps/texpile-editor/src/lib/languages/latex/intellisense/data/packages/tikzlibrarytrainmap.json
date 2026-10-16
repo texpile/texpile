@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"addinterchange","arg":{"format":"[]{}","snippet":"addinterchange[${1:keys}]{${2:name}}"}},
+		{"name":"addinterchange","arg":{"format":"{}","snippet":"addinterchange{${1:name}}"}},
+		{"name":"addstation","arg":{"format":"[]{}","snippet":"addstation[${1:keys}]{${2:name}}"}},
+		{"name":"addstation","arg":{"format":"{}","snippet":"addstation{${1:name}}"}},
+		{"name":"addterminal","arg":{"format":"[]{}{}","snippet":"addterminal[${1:keys}]{${2:name}}{${3:line code}}"}},
+		{"name":"addterminal","arg":{"format":"{}{}","snippet":"addterminal{${1:name}}{${2:line code}}"}},
+		{"name":"branch","arg":{"format":"[]{}{}{}","snippet":"branch[${1:options}]{${2:from}}{${3:to}}{${4:color}}"}},
+		{"name":"branch","arg":{"format":"{}{}{}","snippet":"branch{${1:from}}{${2:to}}{${3:color}}"}},
+		{"name":"forkdown","arg":{"format":"[]{}{}{}","snippet":"forkdown[${1:options}]{${2:from}}{${3:to}}{${4:color}}"}},
+		{"name":"forkdown","arg":{"format":"{}{}{}","snippet":"forkdown{${1:from}}{${2:to}}{${3:color}}"}},
+		{"name":"forkline","arg":{"format":"[]{}{}{}","snippet":"forkline[${1:options}]{${2:from}}{${3:to}}{${4:color}}"}},
+		{"name":"forkline","arg":{"format":"{}{}{}","snippet":"forkline{${1:from}}{${2:to}}{${3:color}}"}},
+		{"name":"forkup","arg":{"format":"[]{}{}{}","snippet":"forkup[${1:options}]{${2:from}}{${3:to}}{${4:color}}"}},
+		{"name":"forkup","arg":{"format":"{}{}{}","snippet":"forkup{${1:from}}{${2:to}}{${3:color}}"}},
+		{"name":"joinline","arg":{"format":"[]{}{}{}","snippet":"joinline[${1:options}]{${2:from}}{${3:to}}{${4:color}}"}},
+		{"name":"joinline","arg":{"format":"{}{}{}","snippet":"joinline{${1:from}}{${2:to}}{${3:color}}"}},
+		{"name":"settrunk","arg":{"format":"{}","snippet":"settrunk{${1:y/color list}}"}},
+		{"name":"tmlastx"},
+		{"name":"tmlasty"},
+		{"name":"track","arg":{"format":"[]{}{}{}","snippet":"track[${1:options}]{${2:from}}{${3:to}}{${4:color}}"}},
+		{"name":"track","arg":{"format":"{}{}{}","snippet":"track{${1:from}}{${2:to}}{${3:color}}"}}
+	],
+	"envs": [
+		{"name":"trainmap","arg":{"format":"[]","snippet":"[${1:keys}]"}},
+		{"name":"trainmap"}
+	],
+	"keys": {}
+}

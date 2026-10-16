@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-article"},{"name":"mathptmx"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"titlesec"},{"name":"titletoc"},{"name":"caption"},{"name":"caption3"},{"name":"newfloat"}],
+	"macros": [
+		{"name":"Affiliation","arg":{"format":"{}","snippet":"Affiliation{${1:affiliation}}"}},
+		{"name":"Author","arg":{"format":"{}","snippet":"Author{${1:authors}}"}},
+		{"name":"Email","arg":{"format":"{}","snippet":"Email{${1:email address}}"}},
+		{"name":"FirstPage","arg":{"format":"{}","snippet":"FirstPage{${1:first page}}"}},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords}}"},"doc":"The abstract also displays a short list of keywords, separated by commas, which are inserted with \\keywords command."},
+		{"name":"Number","arg":{"format":"{}","snippet":"Number{${1:issue number}}"}},
+		{"name":"shortauthor","arg":{"format":"{}","snippet":"shortauthor{${1:author list for the running heads}}"}},
+		{"name":"shorttitle","arg":{"format":"{}","snippet":"shorttitle{${1:short title}}"}},
+		{"name":"Title","arg":{"format":"{}","snippet":"Title{${1:title}}"}},
+		{"name":"Volume","arg":{"format":"{}","snippet":"Volume{${1:volume in Roman numerals}}"},"doc":"The volume number, e.g. “III”, has to be inserted by the user directly in Roman capital letters, using the \\Volume command."},
+		{"name":"Year","arg":{"format":"{}","snippet":"Year{${1:year}}"},"doc":"The year of publication of the article is then inserted with the \\Year command."}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {}
+}

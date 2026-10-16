@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyvrb"}],
+	"macros": [
+		{"name":"BOP"},
+		{"name":"CAD"},
+		{"name":"cs","arg":{"format":"{}","snippet":"cs{${1}}"}},
+		{"name":"DescribeEnv","arg":{"format":"{}","snippet":"DescribeEnv{${1}}"}},
+		{"name":"DescribeMacro","arg":{"format":"{}","snippet":"DescribeMacro{${1:macro}}"}},
+		{"name":"DescribeOption","arg":{"format":"{}","snippet":"DescribeOption{${1}}"}},
+		{"name":"DescribePoundMacro","arg":{"format":"{}","snippet":"DescribePoundMacro{${1:letter}}"}},
+		{"name":"docdate","unusual":true},
+		{"name":"GetFileInfo","arg":{"format":"{}","snippet":"GetFileInfo{${1}}"}},
+		{"name":"marg","arg":{"format":"{}","snippet":"marg{${1}}"}},
+		{"name":"meta","arg":{"format":"{}","snippet":"meta{${1}}"}},
+		{"name":"NOUVEAU","arg":{"format":"{}","snippet":"NOUVEAU{${1}}"}},
+		{"name":"oarg","arg":{"format":"{}","snippet":"oarg{${1}}"}},
+		{"name":"Option","arg":{"format":"{}","snippet":"Option{${1}}"}},
+		{"name":"parg","arg":{"format":"{}","snippet":"parg{${1}}"}},
+		{"name":"Pkg","arg":{"format":"{}","snippet":"Pkg{${1}}"}},
+		{"name":"PrintDescribeMacro","arg":{"format":"{}","snippet":"PrintDescribeMacro{${1}}"},"unusual":true},
+		{"name":"PrintDescribePoundMacro","arg":{"format":"{}","snippet":"PrintDescribePoundMacro{${1}}"},"unusual":true},
+		{"name":"Sourire"},
+		{"name":"TF"},
+		{"name":"TO"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"catchfile"},{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"listings"}],
+	"macros": [
+		{"name":"bash","arg":{"format":"[]","snippet":"bash[${1:options}]"},"doc":"The \\bash command, offered by this package, takes all subsequent lines, stopping at the closing \\END, places these in a file, and then lets the bash shell interpreter execute this file."},
+		{"name":"bash","doc":"The \\bash command, offered by this package, takes all subsequent lines, stopping at the closing \\END, places these in a file, and then lets the bash shell interpreter execute this file."},
+		{"name":"bashStderr"},
+		{"name":"bashStdout","doc":"After each execution of \\bash, the macro \\bashStdout is defined to entire contents of the standard output of the executed script."},
+		{"name":"END"},
+		{"name":"splice","arg":{"format":"{}","snippet":"splice{${1:shell command}}"},"doc":"Shell commands passed to the \\splice macro are executed in a similar fashion to commands enclosed between \\bash and \\END, but, in addition to this execution, bashful incorporates the standard output into the main file."}
+	],
+	"envs": [],
+	"keys": {}
+}

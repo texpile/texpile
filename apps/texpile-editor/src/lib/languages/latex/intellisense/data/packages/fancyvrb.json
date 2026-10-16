@@ -1,678 +1,110 @@
 {
-  "deps": [
-    {
-      "name": "keyval"
-    }
-  ],
-  "macros": [
-    {
-      "name": "Verb",
-      "arg": {
-        "format": "||",
-        "snippet": "Verb|${1:code}|"
-      }
-    },
-    {
-      "name": "Verb",
-      "arg": {
-        "format": "[]||",
-        "snippet": "Verb[${1:options}]|${2:code}|",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "Verb*",
-      "arg": {
-        "format": "||",
-        "snippet": "Verb*|${1:code}|"
-      }
-    },
-    {
-      "name": "Verb*",
-      "arg": {
-        "format": "[]||",
-        "snippet": "Verb*[${1:options}]|${2:code}|",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "VerbatimFootnotes"
-    },
-    {
-      "name": "DefineShortVerb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DefineShortVerb{${1:\\character}}"
-      }
-    },
-    {
-      "name": "DefineShortVerb",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "DefineShortVerb[${2:options}]{${1:\\character}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "UndefineShortVerb",
-      "arg": {
-        "format": "{}",
-        "snippet": "UndefineShortVerb{${1:\\character}}"
-      }
-    },
-    {
-      "name": "fvset",
-      "arg": {
-        "format": "{}",
-        "snippet": "fvset{${1:options%keyvals}}",
-        "keys": [
-          "\\SaveVerb,\\SaveVerb*,\\fvset",
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "DefineVerbatimEnvironment",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DefineVerbatimEnvironment{${1:envname}}{${2:env type}}{${3:options%keyvals}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 2
-      }
-    },
-    {
-      "name": "CustomVerbatimEnvironment",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "CustomVerbatimEnvironment{${1:envname}}{${2:env type}}{${3:options%keyvals}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 2
-      }
-    },
-    {
-      "name": "RecustomVerbatimEnvironment",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "RecustomVerbatimEnvironment{${1:envname}}{${2:env type}}{${3:options%keyvals}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 2
-      }
-    },
-    {
-      "name": "CustomVerbatimCommand",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "CustomVerbatimCommand{${1:command}}{${2:cmd type}}{${3:options%keyvals}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 2
-      }
-    },
-    {
-      "name": "RecustomVerbatimCommand",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "RecustomVerbatimCommand{${1:command}}{${2:cmd type}}{${3:options%keyvals}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 2
-      }
-    },
-    {
-      "name": "SaveVerb",
-      "arg": {
-        "format": "{}||",
-        "snippet": "SaveVerb{${1:name}}|${2:code}|"
-      }
-    },
-    {
-      "name": "SaveVerb",
-      "arg": {
-        "format": "[]{}||",
-        "snippet": "SaveVerb[${2:options}]{${1:name}}|${3:code}|",
-        "keys": [
-          "\\SaveVerb,\\SaveVerb*,\\fvset",
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "SaveVerb*",
-      "unusual": true,
-      "arg": {
-        "format": "{}||",
-        "snippet": "SaveVerb*{${1:name}}|${2:code}|"
-      }
-    },
-    {
-      "name": "SaveVerb*",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}||",
-        "snippet": "SaveVerb*[${2:options}]{${1:name}}|${3:code}|",
-        "keys": [
-          "\\SaveVerb,\\SaveVerb*,\\fvset",
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "UseVerb",
-      "arg": {
-        "format": "{}",
-        "snippet": "UseVerb{${1:name}}"
-      }
-    },
-    {
-      "name": "UseVerb",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "UseVerb[${2:options%keyvals}]{${1:name}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "UseVerb*",
-      "arg": {
-        "format": "{}",
-        "snippet": "UseVerb*{${1:name}}"
-      }
-    },
-    {
-      "name": "UseVerb*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "UseVerb*[${2:options%keyvals}]{${1:name}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "UseVerbatim",
-      "arg": {
-        "format": "{}",
-        "snippet": "UseVerbatim{${1:name}}"
-      }
-    },
-    {
-      "name": "UseVerbatim",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "UseVerbatim[${2:options%keyvals}]{${1:name}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "UseVerbatim*",
-      "arg": {
-        "format": "{}",
-        "snippet": "UseVerbatim*{${1:name}}"
-      }
-    },
-    {
-      "name": "UseVerbatim*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "UseVerbatim*[${2:options%keyvals}]{${1:name}}"
-      }
-    },
-    {
-      "name": "BUseVerbatim",
-      "arg": {
-        "format": "{}",
-        "snippet": "BUseVerbatim{${1:name}}"
-      }
-    },
-    {
-      "name": "BUseVerbatim",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "BUseVerbatim[${2:options%keyvals}]{${1:name}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "BUseVerbatim*",
-      "arg": {
-        "format": "{}",
-        "snippet": "BUseVerbatim*{${1:name}}"
-      }
-    },
-    {
-      "name": "BUseVerbatim*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "BUseVerbatim*[${2:options%keyvals}]{${1:name}}"
-      }
-    },
-    {
-      "name": "LUseVerbatim",
-      "arg": {
-        "format": "{}",
-        "snippet": "LUseVerbatim{${1:name}}"
-      }
-    },
-    {
-      "name": "LUseVerbatim",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "LUseVerbatim[${2:options%keyvals}]{${1:name}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "LUseVerbatim*",
-      "arg": {
-        "format": "{}",
-        "snippet": "LUseVerbatim*{${1:name}}"
-      }
-    },
-    {
-      "name": "LUseVerbatim*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "LUseVerbatim*[${2:options%keyvals}]{${1:name}}"
-      }
-    },
-    {
-      "name": "VerbatimInput",
-      "arg": {
-        "format": "{}",
-        "snippet": "VerbatimInput{${1:file}}"
-      }
-    },
-    {
-      "name": "VerbatimInput",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "VerbatimInput[${2:options%keyvals}]{${1:file}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "VerbatimInput*",
-      "arg": {
-        "format": "{}",
-        "snippet": "VerbatimInput*{${1:file}}"
-      }
-    },
-    {
-      "name": "VerbatimInput*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "VerbatimInput*[${2:options%keyvals}]{${1:file}}"
-      }
-    },
-    {
-      "name": "BVerbatimInput",
-      "arg": {
-        "format": "{}",
-        "snippet": "BVerbatimInput{${1:file}}"
-      }
-    },
-    {
-      "name": "BVerbatimInput",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "BVerbatimInput[${2:options%keyvals}]{${1:file}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "BVerbatimInput*",
-      "arg": {
-        "format": "{}",
-        "snippet": "BVerbatimInput*{${1:file}}"
-      }
-    },
-    {
-      "name": "BVerbatimInput*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "BVerbatimInput*[${2:options%keyvals}]{${1:file}}"
-      }
-    },
-    {
-      "name": "LVerbatimInput",
-      "arg": {
-        "format": "{}",
-        "snippet": "LVerbatimInput{${1:file}}"
-      }
-    },
-    {
-      "name": "LVerbatimInput",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "LVerbatimInput[${2:options%keyvals}]{${1:file}}"
-      }
-    },
-    {
-      "name": "LVerbatimInput*",
-      "arg": {
-        "format": "{}",
-        "snippet": "LVerbatimInput*{${1:file}}"
-      }
-    },
-    {
-      "name": "LVerbatimInput*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "LVerbatimInput*[${2:options%keyvals}]{${1:file}}"
-      }
-    },
-    {
-      "name": "FancyVerbAfterSave",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbCodes",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbDefineActive",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbFileExtension",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbFillColor",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbFormatCom",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbFormatLine",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbGetLine",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbGetVerb",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbHFuzz",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbRuleColor",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbSpace",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbStartNum",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbStartString",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbStopNum",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbStopString",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbTab",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbTabSize",
-      "unusual": true
-    },
-    {
-      "name": "FancyVerbVspace",
-      "unusual": true
-    },
-    {
-      "name": "pUseMVerb",
-      "unusual": true
-    },
-    {
-      "name": "SaveGVerb",
-      "unusual": true
-    },
-    {
-      "name": "SaveMVerb",
-      "unusual": true
-    },
-    {
-      "name": "theFancyVerbLine",
-      "unusual": true
-    },
-    {
-      "name": "UseMVerb",
-      "unusual": true
-    },
-    {
-      "name": "VerbatimEnvironment",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "Verbatim"
-    },
-    {
-      "name": "Verbatim",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options%keyvals}]",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "Verbatim*"
-    },
-    {
-      "name": "Verbatim*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options%keyvals}]",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "BVerbatim"
-    },
-    {
-      "name": "BVerbatim",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options%keyvals}]",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "BVerbatim*"
-    },
-    {
-      "name": "BVerbatim*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options%keyvals}]",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput",
-          "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "LVerbatim"
-    },
-    {
-      "name": "LVerbatim",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options%keyvals}]",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "LVerbatim*"
-    },
-    {
-      "name": "LVerbatim*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options%keyvals}]",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "SaveVerbatim",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:name}}"
-      }
-    },
-    {
-      "name": "SaveVerbatim",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:options%keyvals}]{${1:name}}",
-        "keys": [
-          "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "VerbatimOut",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:file name%file}}"
-      }
-    }
-  ],
-  "keys": {
-    "\\SaveVerb,\\SaveVerb*,\\fvset": [
-      "aftersave={${1:code}}"
-    ],
-    "\\Verb,\\Verb*,\\DefineShortVerb,\\begin{Verbatim},\\begin{Verbatim*},\\begin{BVerbatim},\\begin{BVerbatim*},\\begin{LVerbatim},\\begin{LVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\CustomVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\SaveVerb,\\SaveVerb*,\\UseVerb,\\UseVerb*,\\begin{SaveVerbatim},\\UseVerbatim,\\BUseVerbatim,\\LUseVerbatim,\\VerbatimInput,\\BVerbatimInput,\\LLVerbatimInput": [
-      "commentchar=${1:single char}",
-      "gobble=${1:integer}",
-      "formatcom=${1:commands}",
-      "formatcom*=${1:commands}",
-      "fontfamily=${1:family}",
-      "fontsize=${1:size macro}",
-      "fontshape=${1:shape}",
-      "fontseries=${1:series}",
-      "frame=${1|none,leftline,topline,bottomline,lines,single|}",
-      "framerule=",
-      "framesep=",
-      "rulecolor=${1:color cmd}",
-      "fillcolor=${1:color cmd}",
-      "label=${1:label text}",
-      "labelposition=${1|none,topline,bottomline,all|}",
-      "numbers=${1|none,left,right|}",
-      "numbersep=",
-      "firstnumber=${1:auto|last|<integer>}",
-      "stepnumber=${1:integer}",
-      "numberblanklines",
-      "firstline=${1:integer}",
-      "lastline=${1:integer}",
-      "showspaces",
-      "showtabs",
-      "obeytabs",
-      "tabsize=${1:integer}",
-      "baselinestretch=${1:factor}",
-      "commandchars=${1:three chars}",
-      "xleftmargin=",
-      "xrightmargin=",
-      "resetmargins",
-      "hfuzz=",
-      "samepage",
-      "codes={${1:code}}",
-      "codes*={${1:code}}",
-      "defineactive={${1:code}}",
-      "defineactive*={${1:code}}",
-      "reflabel=",
-      "fileext=${1:extension}",
-      "vspace=",
-      "listparameters={${1:code}}"
-    ],
-    "\\begin{BVerbatim},\\begin{BVerbatim*},\\fvset,\\DefineVerbatimEnvironment,\\RecustomVerbatimEnvironment,\\CustomVerbatimCommand,\\RecustomVerbatimCommand,\\BUseVerbatim,\\BVerbatimInput": [
-      "boxwidth=",
-      "baseline=${1|b,c,t|}"
-    ]
-  },
-  "args": []
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"BUseVerbatim","arg":{"format":"[]{}","snippet":"BUseVerbatim[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"BUseVerbatim","arg":{"format":"{}","snippet":"BUseVerbatim{${1:name}}"}},
+		{"name":"BUseVerbatim*","arg":{"format":"[]{}","snippet":"BUseVerbatim*[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"BUseVerbatim*","arg":{"format":"{}","snippet":"BUseVerbatim*{${1:name}}"}},
+		{"name":"BVerbatimInput","arg":{"format":"[]{}","snippet":"BVerbatimInput[${1:options}]{${2:file}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"BVerbatimInput","arg":{"format":"{}","snippet":"BVerbatimInput{${1:file}}"}},
+		{"name":"BVerbatimInput*","arg":{"format":"[]{}","snippet":"BVerbatimInput*[${1:options}]{${2:file}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"BVerbatimInput*","arg":{"format":"{}","snippet":"BVerbatimInput*{${1:file}}"}},
+		{"name":"CustomVerbatimCommand","arg":{"format":"{}{}{}","snippet":"CustomVerbatimCommand{${1:command}}{${2:base command}}{${3:options}}","keys":["keyval:FV"],"keyPos":2}},
+		{"name":"CustomVerbatimEnvironment","arg":{"format":"{}{}{}","snippet":"CustomVerbatimEnvironment{${1:envname}}{${2:base env}}{${3:options}}","keys":["keyval:FV"],"keyPos":2}},
+		{"name":"DefineShortVerb","arg":{"format":"[]{}","snippet":"DefineShortVerb[${1:options}]{${2:\\character}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"DefineShortVerb","arg":{"format":"{}","snippet":"DefineShortVerb{${1:\\character}}"}},
+		{"name":"DefineShortVerb*","arg":{"format":"[]{}","snippet":"DefineShortVerb*[${1:options}]{${2:\\character}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"DefineShortVerb*","arg":{"format":"{}","snippet":"DefineShortVerb*{${1:\\character}}"}},
+		{"name":"DefineVerbatimEnvironment","arg":{"format":"{}{}{}","snippet":"DefineVerbatimEnvironment{${1:envname}}{${2:base env}}{${3:options}}","keys":["keyval:FV"],"keyPos":2}},
+		{"name":"FancyVerbAfterSave","unusual":true},
+		{"name":"FancyVerbCodes","unusual":true},
+		{"name":"FancyVerbDefineActive","unusual":true},
+		{"name":"FancyVerbFileExtension","unusual":true},
+		{"name":"FancyVerbFormatCom","unusual":true},
+		{"name":"FancyVerbFormatLine","arg":{"format":"{}","snippet":"FancyVerbFormatLine{${1:line}}"},"doc":"The macro \\FancyVerbFormatLine defines the way each line is formatted."},
+		{"name":"FancyVerbHFuzz","unusual":true},
+		{"name":"FancyVerbSpace","unusual":true},
+		{"name":"FancyVerbStartNum","unusual":true},
+		{"name":"FancyVerbStartString"},
+		{"name":"FancyVerbStopNum","unusual":true},
+		{"name":"FancyVerbStopString"},
+		{"name":"FancyVerbTab","unusual":true},
+		{"name":"FancyVerbTabSize","unusual":true},
+		{"name":"FancyVerbVspace","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"fvset","arg":{"format":"{}","snippet":"fvset{${1:options}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LUseVerbatim","arg":{"format":"[]{}","snippet":"LUseVerbatim[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LUseVerbatim","arg":{"format":"{}","snippet":"LUseVerbatim{${1:name}}"}},
+		{"name":"LUseVerbatim*","arg":{"format":"[]{}","snippet":"LUseVerbatim*[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LUseVerbatim*","arg":{"format":"{}","snippet":"LUseVerbatim*{${1:name}}"}},
+		{"name":"LVerbatimInput","arg":{"format":"[]{}","snippet":"LVerbatimInput[${1:options}]{${2:file}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LVerbatimInput","arg":{"format":"{}","snippet":"LVerbatimInput{${1:file}}"}},
+		{"name":"LVerbatimInput*","arg":{"format":"[]{}","snippet":"LVerbatimInput*[${1:options}]{${2:file}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LVerbatimInput*","arg":{"format":"{}","snippet":"LVerbatimInput*{${1:file}}"}},
+		{"name":"myFont","unusual":true},
+		{"name":"RecustomVerbatimCommand","arg":{"format":"{}{}{}","snippet":"RecustomVerbatimCommand{${1:command}}{${2:base command}}{${3:options}}","keys":["keyval:FV"],"keyPos":2}},
+		{"name":"RecustomVerbatimEnvironment","arg":{"format":"{}{}{}","snippet":"RecustomVerbatimEnvironment{${1:envname}}{${2:base env}}{${3:options}}","keys":["keyval:FV"],"keyPos":2}},
+		{"name":"SaveGVerb","arg":{"format":"[]{}","snippet":"SaveGVerb[${1:options}]{${2:name}}"},"unusual":true},
+		{"name":"SaveGVerb","arg":{"format":"{}","snippet":"SaveGVerb{${1:name}}"},"unusual":true},
+		{"name":"SaveGVerb*","arg":{"format":"[]{}","snippet":"SaveGVerb*[${1:options}]{${2:name}}"},"unusual":true},
+		{"name":"SaveGVerb*","arg":{"format":"{}","snippet":"SaveGVerb*{${1:name}}"},"unusual":true},
+		{"name":"SaveMVerb","arg":{"format":"[]{}","snippet":"SaveMVerb[${1:options}]{${2:name}}"},"unusual":true},
+		{"name":"SaveMVerb","arg":{"format":"{}","snippet":"SaveMVerb{${1:name}}"},"unusual":true},
+		{"name":"SaveMVerb*","arg":{"format":"[]{}","snippet":"SaveMVerb*[${1:options}]{${2:name}}"},"unusual":true},
+		{"name":"SaveMVerb*","arg":{"format":"{}","snippet":"SaveMVerb*{${1:name}}"},"unusual":true},
+		{"name":"SaveVerb","arg":{"format":"[]{}","snippet":"SaveVerb[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"SaveVerb","arg":{"format":"{}","snippet":"SaveVerb{${1:name}}"},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"SaveVerb*","arg":{"format":"[]{}","snippet":"SaveVerb*[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"SaveVerb*","arg":{"format":"{}","snippet":"SaveVerb*{${1:name}}"},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"theFancyVerbLine","unusual":true},
+		{"name":"UndefineShortVerb","arg":{"format":"{}","snippet":"UndefineShortVerb{${1:\\character}}"}},
+		{"name":"UseMVerb","arg":{"format":"[]{}","snippet":"UseMVerb[${1:options}]{${2:name}}"},"unusual":true},
+		{"name":"UseMVerb","arg":{"format":"{}","snippet":"UseMVerb{${1:name}}"},"unusual":true},
+		{"name":"UseMVerb*","arg":{"format":"[]{}","snippet":"UseMVerb*[${1:options}]{${2:name}}"},"unusual":true},
+		{"name":"UseMVerb*","arg":{"format":"{}","snippet":"UseMVerb*{${1:name}}"},"unusual":true},
+		{"name":"UseVerb","arg":{"format":"[]{}","snippet":"UseVerb[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"UseVerb","arg":{"format":"{}","snippet":"UseVerb{${1:name}}"},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"UseVerb*","arg":{"format":"[]{}","snippet":"UseVerb*[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"UseVerb*","arg":{"format":"{}","snippet":"UseVerb*{${1:name}}"},"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"UseVerbatim","arg":{"format":"[]{}","snippet":"UseVerbatim[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"UseVerbatim","arg":{"format":"{}","snippet":"UseVerbatim{${1:name}}"}},
+		{"name":"UseVerbatim*","arg":{"format":"[]{}","snippet":"UseVerbatim*[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"UseVerbatim*","arg":{"format":"{}","snippet":"UseVerbatim*{${1:name}}"}},
+		{"name":"Verb","arg":{"format":"[]","snippet":"Verb[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"Verb"},
+		{"name":"Verb*","arg":{"format":"[]","snippet":"Verb*[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"Verb*"},
+		{"name":"VerbatimEnvironment","unusual":true},
+		{"name":"VerbatimFootnotes"},
+		{"name":"VerbatimInput","arg":{"format":"[]{}","snippet":"VerbatimInput[${1:options}]{${2:file}}","keys":["keyval:FV"],"keyPos":0},"doc":"The command \\VerbatimInput (the variants \\BVerbatimInput and \\LVerbatimInput also exist) allows inclusion of the contents of a file with verbatim formatting."},
+		{"name":"VerbatimInput","arg":{"format":"{}","snippet":"VerbatimInput{${1:file}}"},"doc":"The command \\VerbatimInput (the variants \\BVerbatimInput and \\LVerbatimInput also exist) allows inclusion of the contents of a file with verbatim formatting."},
+		{"name":"VerbatimInput*","arg":{"format":"[]{}","snippet":"VerbatimInput*[${1:options}]{${2:file}}","keys":["keyval:FV"],"keyPos":0},"doc":"The command \\VerbatimInput (the variants \\BVerbatimInput and \\LVerbatimInput also exist) allows inclusion of the contents of a file with verbatim formatting."},
+		{"name":"VerbatimInput*","arg":{"format":"{}","snippet":"VerbatimInput*{${1:file}}"},"doc":"The command \\VerbatimInput (the variants \\BVerbatimInput and \\LVerbatimInput also exist) allows inclusion of the contents of a file with verbatim formatting."}
+	],
+	"envs": [
+		{"name":"BVerbatim","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"BVerbatim"},
+		{"name":"BVerbatim*","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"BVerbatim*"},
+		{"name":"LVerbatim","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LVerbatim"},
+		{"name":"LVerbatim*","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"LVerbatim*"},
+		{"name":"SaveVerbatim","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"SaveVerbatim","arg":{"format":"{}","snippet":"{${1:name}}"}},
+		{"name":"SaveVerbatim*","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:name}}","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"SaveVerbatim*","arg":{"format":"{}","snippet":"{${1:name}}"}},
+		{"name":"Verbatim","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"Verbatim"},
+		{"name":"Verbatim*","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:FV"],"keyPos":0}},
+		{"name":"Verbatim*"},
+		{"name":"VerbatimOut","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:file}}"}},
+		{"name":"VerbatimOut","arg":{"format":"{}","snippet":"{${1:file}}"}},
+		{"name":"VerbatimOut*","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:file}}"}},
+		{"name":"VerbatimOut*","arg":{"format":"{}","snippet":"{${1:file}}"}}
+	],
+	"keys": {
+		"keyval:FV": ["aftersave=","baseline=","baselinestretch","boxwidth","codes","codes*=","commandchars","commentchar","defineactive","defineactive*=","fillcolor=","firstline","firstnumber","fontfamily=","fontseries=","fontshape=","fontsize","formatcom","formatcom*=","frame","framerule","framesep","gobble","hfuzz=","label=","labelposition","lastline","listparameters=","numberblanklines","numbers","numbersep=","obeytabs","reflabel=","resetmargins","rulecolor=","samepage","showspaces","showtabs","stepnumber","tabsize=","vspace","xleftmargin=","xrightmargin=","fileext=${1:extension}"]
+	}
 }

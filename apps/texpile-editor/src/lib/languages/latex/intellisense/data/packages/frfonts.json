@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"ffreefalse","unusual":true},
+		{"name":"ffreetrue","unusual":true},
+		{"name":"fmscorefalse","unusual":true},
+		{"name":"fmscoretrue","unusual":true},
+		{"name":"ifffree","unusual":true},
+		{"name":"iffmscore","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/frfonts#c": ["free","mscore"]
+	},
+	"args": ["\\usepackage/frfonts#c"]
+}

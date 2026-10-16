@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"iftex"},{"name":"cu-num"},{"name":"cu-calendar"},{"name":"intcalc"},{"name":"etoolbox"},{"name":"cu-kinovar"},{"name":"xcolor"},{"name":"cu-kruk"},{"name":"keyval"},{"name":"luacolor","engines":["lualatex"]}],
+	"macros": [
+		{"name":"cuMarginMark","arg":{"format":"{}","snippet":"cuMarginMark{${1}}"}},
+		{"name":"cuMarginMarkSkip"},
+		{"name":"cuMarginMarkText","arg":{"format":"{}","snippet":"cuMarginMarkText{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/churchslavonic#c": ["autocolormarks","noautocolormarks"]
+	},
+	"args": ["\\usepackage/churchslavonic#c"]
+}

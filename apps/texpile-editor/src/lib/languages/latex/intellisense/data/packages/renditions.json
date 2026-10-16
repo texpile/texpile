@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"comment"}],
+	"macros": [
+		{"name":"rendition","arg":{"format":"{}","snippet":"rendition{${1}}"},"doc":"A convenience macro for setting the current renditions."},
+		{"name":"thisrendition"}
+	],
+	"envs": [],
+	"keys": {}
+}

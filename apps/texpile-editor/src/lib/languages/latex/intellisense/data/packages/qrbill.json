@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"iftex"},{"name":"l3keys2e"},{"name":"fontspec","if":"!font=custom+!qrscheme=epc"},{"name":"fontspec-luatex","if":"!font=custom+!qrscheme=epc","engines":["lualatex"]},{"name":"qrcode","if":"!qrmode=lua"},{"name":"xcolor","if":"!qrmode=lua"},{"name":"xkeyval","if":"!qrmode=lua"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"numprint"},{"name":"array"},{"name":"keyval","if":"qrmode=lua"},{"name":"marvosym","if":"separate=symbol|vrule=symbol"},{"name":"fontspec-xetex","if":"!font=custom+!qrscheme=epc","engines":["xelatex"]}],
+	"macros": [
+		{"name":"insertcreditor"},
+		{"name":"insertcurrency","unusual":true},
+		{"name":"insertdebtor"},
+		{"name":"QRbill","arg":{"format":"[]","snippet":"QRbill[${1}]"},"doc":"The macro \\QRbill creates a box of 210 mm × 105 mm size."},
+		{"name":"QRbill","doc":"The macro \\QRbill creates a box of 210 mm × 105 mm size."},
+		{"name":"QRbill*","arg":{"format":"[]","snippet":"QRbill*[${1}]"},"doc":"The macro \\QRbill creates a box of 210 mm × 105 mm size."},
+		{"name":"QRbill*","doc":"The macro \\QRbill creates a box of 210 mm × 105 mm size."},
+		{"name":"qrbillacceptantname","unusual":true},
+		{"name":"qrbillaccountname","unusual":true},
+		{"name":"QRbillAddCustomReplacement","arg":{"format":"{}{}","snippet":"QRbillAddCustomReplacement{${1}}{${2}}"}},
+		{"name":"qrbilladdinfoname","unusual":true},
+		{"name":"qrbillamountname","unusual":true},
+		{"name":"qrbillcurrencyname","unusual":true},
+		{"name":"qrbilldebtoraddrname","unusual":true},
+		{"name":"qrbilldebtorname","unusual":true},
+		{"name":"qrbillfont"},
+		{"name":"qrbillfurtherinfoname","unusual":true},
+		{"name":"qrbillinfavourofname","unusual":true},
+		{"name":"QRbillParseDate","arg":{"format":"{}{}{}","snippet":"QRbillParseDate{${1}}{${2}}{${3}}"}},
+		{"name":"qrbillpaymentpartname","unusual":true},
+		{"name":"qrbillreceiptname","unusual":true},
+		{"name":"qrbillreferencename","unusual":true},
+		{"name":"qrbillseparatename","unusual":true},
+		{"name":"qrbillsetdata","arg":{"format":"{}","snippet":"qrbillsetdata{${1}}"}},
+		{"name":"qrbillsetdata*","arg":{"format":"{}","snippet":"qrbillsetdata*{${1}}"}},
+		{"name":"qrbillsetup","arg":{"format":"{}","snippet":"qrbillsetup{${1}}","keys":["l3keys:qrbill"],"keyPos":0}},
+		{"name":"SetBillingInfoScheme","arg":{"format":"{}","snippet":"SetBillingInfoScheme{${1}}"},"unusual":true},
+		{"name":"SetQrScheme","arg":{"format":"{}","snippet":"SetQrScheme{${1}}"},"unusual":true},
+		{"name":"SetStaticData","arg":{"format":"{}","snippet":"SetStaticData{${1}}"},"unusual":true},
+		{"name":"SetupQrBill","arg":{"format":"{}","snippet":"SetupQrBill{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:qrbill": ["creditorprefix=","debtorprefix=","ibanseparator=","iconwidth=","ignore-if-empty=","qrsize=","referenceseparator=","sep-iban=","sep-reference=","billinginfo=${1|true,false|}","data-to-string=${1|true,false|}","font=${1|Frutiger,Arial,Helvetica,Liberation Sans,custom|}","frame=${1|true,false,top,bottom,none|}","icon=${1|swiss-cross|}","qrmode=${1|package,lua|}","qrscheme=${1|swiss,epc|}","replace-tilde=${1|true,false|}","replace-umlauts=${1|true,false|}","separate=${1|text,symbol,false|}","vrule=${1|true,false,symbol|}"],
+		"\\usepackage/qrbill#c": ["billinginfo=${1|true,false|}","creditorprefix=","data-to-string=${1|true,false|}","debtorprefix=","font=${1|Frutiger,Arial,Helvetica,Liberation Sans,custom|}","frame=${1|true,false,top,bottom,none|}","ibanseparator=","icon=${1|swiss-cross|}","iconwidth=","ignore-if-empty=","qrmode=${1|package,lua|}","qrscheme=${1|swiss,epc|}","qrsize=","referenceseparator=","replace-tilde=${1|true,false|}","replace-umlauts=${1|true,false|}","sep-iban=","sep-reference=","separate=${1|text,symbol,false|}","vrule=${1|true,false,symbol|}"]
+	},
+	"args": ["\\usepackage/qrbill#c"]
+}

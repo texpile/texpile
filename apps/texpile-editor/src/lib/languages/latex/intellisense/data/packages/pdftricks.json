@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"color"},{"name":"moreverb"},{"name":"verbatim"}],
+	"macros": [
+		{"name":"configure","arg":{"format":"[][]","snippet":"configure[${1:family}][${2:options}]"}},
+		{"name":"configure"},
+		{"name":"endPShook","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ifmiktex","unusual":true},
+		{"name":"ifnoprocess","unusual":true},
+		{"name":"ifPDFTnopdf","unusual":true},
+		{"name":"ifPDFTshell","unusual":true},
+		{"name":"miktexfalse","unusual":true},
+		{"name":"miktextrue","unusual":true},
+		{"name":"NoProcess","arg":{"format":"[]","snippet":"NoProcess[${1:figure ranges}]"}},
+		{"name":"NoProcess"},
+		{"name":"noprocessfalse","unusual":true},
+		{"name":"noprocesstrue","unusual":true},
+		{"name":"PDFTnopdffalse","unusual":true},
+		{"name":"PDFTnopdftrue","unusual":true},
+		{"name":"PDFTshellfalse","unusual":true},
+		{"name":"PDFTshelltrue","unusual":true},
+		{"name":"thepsfig","unusual":true}
+	],
+	"envs": [
+		{"name":"pdfdisplay","doc":"An environment to enclose the pstricks code, which will write out stand alone *.tex files and create pdf graphics."},
+		{"name":"pdfinline","doc":"An environment for inline pstricks graphics."},
+		{"name":"pdfpic"},
+		{"name":"psinputs"}
+	],
+	"keys": {
+		"\\usepackage/pdftricks#c": ["debug","miktex","noshell","shell"]
+	},
+	"args": ["\\usepackage/pdftricks#c"]
+}

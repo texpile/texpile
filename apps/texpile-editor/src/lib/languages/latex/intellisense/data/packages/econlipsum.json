@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"econ","arg":{"format":"[][]","snippet":"econ[${1:paragraph range}][${2:sentence range}]"}},
+		{"name":"econ"},
+		{"name":"econ*","arg":{"format":"[][]","snippet":"econ*[${1:paragraph range}][${2:sentence range}]"}},
+		{"name":"econ*"},
+		{"name":"econdef","arg":{"format":"{}{}[]","snippet":"econdef{${1:control sequence}}{${2:paragraph}}[${3:sentence range}]"},"doc":"This command takes two arguments, a control sequence and an integer; the call \\econdef{\\mytext}{200} will store in \\mytext the 200th paragraph of pseudomascettian text provided by this package."},
+		{"name":"econdef","arg":{"format":"{}{}","snippet":"econdef{${1:control sequence}}{${2:paragraph}}"},"doc":"This command takes two arguments, a control sequence and an integer; the call \\econdef{\\mytext}{200} will store in \\mytext the 200th paragraph of pseudomascettian text provided by this package."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/econlipsum#c": ["index","nopar","numbers","par"]
+	},
+	"args": ["\\usepackage/econlipsum#c"]
+}

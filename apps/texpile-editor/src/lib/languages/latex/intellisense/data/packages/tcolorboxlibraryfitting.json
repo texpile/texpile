@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"DeclareTCBoxFit","arg":{"format":"[]{}{}{}","snippet":"DeclareTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"DeclareTCBoxFit","arg":{"format":"{}{}{}","snippet":"DeclareTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"DeclareTotalTCBoxFit","arg":{"format":"[]{}{}{}{}","snippet":"DeclareTotalTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}{${5:content}}"}},
+		{"name":"DeclareTotalTCBoxFit","arg":{"format":"{}{}{}{}","snippet":"DeclareTotalTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}{${4:content}}"}},
+		{"name":"newtcboxfit","arg":{"format":"[]{}[][]{}","snippet":"newtcboxfit[${1:init options}]{${2:\\name}}[${3:number}][${4:default}]{${5:options}}"}},
+		{"name":"newtcboxfit","arg":{"format":"{}{}","snippet":"newtcboxfit{${1:\\name}}{${2:options}}"}},
+		{"name":"NewTCBoxFit","arg":{"format":"[]{}{}{}","snippet":"NewTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"NewTCBoxFit","arg":{"format":"{}{}{}","snippet":"NewTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"NewTotalTCBoxFit","arg":{"format":"[]{}{}{}{}","snippet":"NewTotalTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}{${5:content}}"}},
+		{"name":"NewTotalTCBoxFit","arg":{"format":"{}{}{}{}","snippet":"NewTotalTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}{${4:content}}"}},
+		{"name":"ProvideTCBoxFit","arg":{"format":"[]{}{}{}","snippet":"ProvideTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"ProvideTCBoxFit","arg":{"format":"{}{}{}","snippet":"ProvideTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"ProvideTotalTCBoxFit","arg":{"format":"[]{}{}{}{}","snippet":"ProvideTotalTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}{${5:content}}"}},
+		{"name":"ProvideTotalTCBoxFit","arg":{"format":"{}{}{}{}","snippet":"ProvideTotalTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}{${4:content}}"}},
+		{"name":"renewtcboxfit","arg":{"format":"[]{}[][]{}","snippet":"renewtcboxfit[${1:init options}]{${2:\\name}}[${3:number}][${4:default}]{${5:options}}"}},
+		{"name":"renewtcboxfit","arg":{"format":"{}{}","snippet":"renewtcboxfit{${1:\\name}}{${2:options}}"}},
+		{"name":"RenewTCBoxFit","arg":{"format":"[]{}{}{}","snippet":"RenewTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"RenewTCBoxFit","arg":{"format":"{}{}{}","snippet":"RenewTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"RenewTotalTCBoxFit","arg":{"format":"[]{}{}{}{}","snippet":"RenewTotalTCBoxFit[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}{${5:content}}"}},
+		{"name":"RenewTotalTCBoxFit","arg":{"format":"{}{}{}{}","snippet":"RenewTotalTCBoxFit{${1:\\name}}{${2:specification}}{${3:options}}{${4:content}}"}},
+		{"name":"tcbfitdim"},
+		{"name":"tcbfontsize","arg":{"format":"{}","snippet":"tcbfontsize{${1:factor}}"}},
+		{"name":"tcboxfit","arg":{"format":"[]{}","snippet":"tcboxfit[${1:options}]{${2:box content}}"}},
+		{"name":"tcboxfit","arg":{"format":"{}","snippet":"tcboxfit{${1:box content}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

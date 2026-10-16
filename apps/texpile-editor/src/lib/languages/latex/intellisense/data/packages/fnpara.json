@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"footglue","unusual":true},
+		{"name":"footnotebaselineskip","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

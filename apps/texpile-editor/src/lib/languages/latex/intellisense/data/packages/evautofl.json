@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"lscape"},{"name":"graphics"},{"name":"trig"},{"name":"keyval"}],
+	"macros": [
+		{"name":"quadruplecolumn","unusual":true}
+	],
+	"envs": [
+		{"name":"autofilo","arg":{"format":"{}","snippet":"{${1:options}}"}}
+	],
+	"keys": {}
+}

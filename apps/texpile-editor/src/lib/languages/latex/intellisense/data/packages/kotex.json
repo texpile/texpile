@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"kotexutf","if":"!cjk","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"kolabels-utf"},{"name":"cjkutf8-ko","if":"cjk","engines":["pdflatex"]},{"name":"CJKutf8","if":"cjk","engines":["pdflatex"]},{"name":"ifpdf","if":"cjk","engines":["pdflatex"]},{"name":"iftex","if":"cjk","engines":["pdflatex"]},{"name":"CJK","if":"cjk","engines":["pdflatex"]},{"name":"MULEenc","if":"cjk","engines":["pdflatex"]},{"name":"cjkutf8-josa","if":"cjk","engines":["pdflatex"]},{"name":"luatexko","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"xetexko","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"gtfamily"},
+		{"name":"textgt","arg":{"format":"{}","snippet":"textgt{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/kotex#c": ["cjk","euc","utf"]
+	},
+	"args": ["\\usepackage/kotex#c"]
+}

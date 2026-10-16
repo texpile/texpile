@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"l3keys2e"},{"name":"luatexja"},{"name":"luatexja-core"},{"name":"luatexbase"},{"name":"iftex"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"everyhook"},{"name":"svn-prov"},{"name":"lltjdefs"},{"name":"lltjcore"},{"name":"lltjp-geometry"},{"name":"ifluatex"},{"name":"luatexja-compat"},{"name":"luatexja-fontspec","if":"!fontspec=false+!nfssonly=true"},{"name":"fontspec","if":"!fontspec=false+!nfssonly=true"},{"name":"fontspec-luatex","if":"!fontspec=false+!nfssonly=true"},{"name":"lltjp-fontspec","if":"!fontspec=false+!nfssonly=true"},{"name":"luatexja-fontspec-29e","if":"!fontspec=false+!nfssonly=true"},{"name":"regexpatch","if":"!fontspec=false+!nfssonly=true"},{"name":"xparse","if":"!fontspec=false+!nfssonly=true"}],
+	"macros": [
+		{"name":"ebseries","if":"deluxe"},
+		{"name":"ltjapplypreset","arg":{"format":"{}","snippet":"ltjapplypreset{${1:name}}"},"doc":"Set Japanese font families using preset ⟨name⟩."},
+		{"name":"ltjnewpreset","arg":{"format":"{}{}","snippet":"ltjnewpreset{${1:name}}{${2:specification}}"},"doc":"Define new preset ⟨name⟩."},
+		{"name":"ltjnewpreset*","arg":{"format":"{}{}","snippet":"ltjnewpreset*{${1:name}}{${2:specification}}"},"doc":"Define new preset ⟨name⟩."},
+		{"name":"ltseries","if":"deluxe"},
+		{"name":"mgfamily","if":"deluxe"},
+		{"name":"rubyfamily","if":"expert"},
+		{"name":"textmg","arg":{"format":"{}","snippet":"textmg{${1:text}}"},"if":"deluxe"}
+	],
+	"envs": [],
+	"keys": {}
+}

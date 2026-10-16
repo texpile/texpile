@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"rcsinfo","if":"!subversion+!svn"},{"name":"ltxtable"},{"name":"tabularx"},{"name":"array"},{"name":"longtable"},{"name":"svninfo","if":"subversion|svn"},{"name":"ifthen","if":"subversion|svn"}],
+	"macros": [
+		{"name":"dateName"},
+		{"name":"descriptionName"},
+		{"name":"fileListName"},
+		{"name":"fileListPreamble"},
+		{"name":"fileNameName"},
+		{"name":"mainFileToList"},
+		{"name":"pageName"},
+		{"name":"printFileList","arg":{"format":"[]","snippet":"printFileList[${1:sectioning command}]"}},
+		{"name":"printFileList"},
+		{"name":"ProvideFileInfos","arg":{"format":"{}{}","snippet":"ProvideFileInfos{${1:id-string}}{${2:short description}}"}},
+		{"name":"verName"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/dateiliste#c": ["addmain","cat12","cvs","noaddmain","nocat12","noshowpages","rcs","showpages","subversion","svn"]
+	},
+	"args": ["\\usepackage/dateiliste#c"]
+}

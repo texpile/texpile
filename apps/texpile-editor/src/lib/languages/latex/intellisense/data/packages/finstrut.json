@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/finstrut#c": ["argdelim","dptest","full","fullpar","par","show","v"]
+	},
+	"args": ["\\usepackage/finstrut#c"]
+}

@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"yquant"},{"name":"etoolbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"dmeter","arg":{"format":"{}","snippet":"dmeter{${1:content}}"}},
+		{"name":"dmeterwide","arg":{"format":"{}{}","snippet":"dmeterwide{${1:width}}{${2:content}}"}},
+		{"name":"m","arg":{"format":"{}","snippet":"m{${1:matrix entries}}"},"doc":"The default qasm style defines several macros that can be used in gates. yquant makes \\m (matrix; requires amsmath) and \\txt (switch to text mode) available within the qasm environment."},
+		{"name":"meter"},
+		{"name":"qasmimport","arg":{"format":"{}","snippet":"qasmimport{${1}}"}},
+		{"name":"txt","arg":{"format":"{}","snippet":"txt{${1:text}}"},"doc":"The default qasm style defines several macros that can be used in gates. yquant makes \\m (matrix; requires amsmath) and \\txt (switch to text mode) available within the qasm environment."}
+	],
+	"envs": [
+		{"name":"qasm","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"qasm"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"atveryend-ltx"}],
+	"macros": [
+		{"name":"propag","arg":{"format":"[]","snippet":"propag[${1}]"},"doc":"You can draw propagators between vertices with FeynHand’s \\propag command, whose long version \\propagator also works."},
+		{"name":"propag","doc":"You can draw propagators between vertices with FeynHand’s \\propag command, whose long version \\propagator also works."},
+		{"name":"propagator","arg":{"format":"[]","snippet":"propagator[${1}]"}},
+		{"name":"propagator"},
+		{"name":"tikzfeynhandset","arg":{"format":"{}","snippet":"tikzfeynhandset{${1}}"}},
+		{"name":"vertex","arg":{"format":"[]","snippet":"vertex[${1}]"}},
+		{"name":"vertex"}
+	],
+	"envs": [],
+	"keys": {}
+}

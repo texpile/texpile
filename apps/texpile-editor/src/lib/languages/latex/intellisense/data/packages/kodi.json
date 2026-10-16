@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"commutative-diagrams"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [],
+	"envs": [
+		{"name":"kodi","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"kodi"}
+	],
+	"keys": {}
+}

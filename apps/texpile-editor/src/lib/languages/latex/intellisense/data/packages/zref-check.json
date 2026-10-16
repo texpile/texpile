@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"zref-user"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-abspage"},{"name":"ifdraft"}],
+	"macros": [
+		{"name":"zcheck","arg":{"format":"[]{}{}","snippet":"zcheck[${1}]{${2}}{${3}}"},"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
+		{"name":"zcheck","arg":{"format":"{}{}","snippet":"zcheck{${1}}{${2}}"},"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
+		{"name":"zcheck*","arg":{"format":"[]{}{}","snippet":"zcheck*[${1}]{${2}}{${3}}"},"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
+		{"name":"zcheck*","arg":{"format":"{}{}","snippet":"zcheck*{${1}}{${2}}"},"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
+		{"name":"zctarget","arg":{"format":"{}{}","snippet":"zctarget{${1}}{${2}}"}},
+		{"name":"zrefchecksetup","arg":{"format":"{}","snippet":"zrefchecksetup{${1}}"}}
+	],
+	"envs": [
+		{"name":"zcregion","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

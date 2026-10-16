@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"demo","arg":{"format":"[]{}","snippet":"demo[${1:shape}]{${2:title}}"}},
+		{"name":"demo","arg":{"format":"{}","snippet":"demo{${1:title}}"}},
+		{"name":"ignore"},
+		{"name":"ignoreenv","arg":{"format":"{}","snippet":"ignoreenv{${1}}"}},
+		{"name":"listing"},
+		{"name":"listingindent","doc":"The amount by which the listing text is indented is controlled by the \\listingindent length parameter."},
+		{"name":"listingsize","doc":"The text size used in the listing environment is set by the \\listingsize command."},
+		{"name":"matcher","arg":{"format":"{}{}{}","snippet":"matcher{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"settabwidth","doc":"The tabs used by our tabbed verbatim environments are set up by this routine. It sets the tab width parameter \\svtab to 8 times the width of a \\tt space."},
+		{"name":"svtab"},
+		{"name":"unignoreenv","arg":{"format":"{}","snippet":"unignoreenv{${1}}"}},
+		{"name":"verbinput","arg":{"format":"{}","snippet":"verbinput{${1}}"},"doc":"You can input a pre-prepared text file exactly as it is in the input using the \\verbinput command."}
+	],
+	"envs": [
+		{"name":"demo*","arg":{"format":"{}[]{}","snippet":"{${1:end text}}[${2:shape}]{${3:title}}"}},
+		{"name":"demo*","arg":{"format":"{}{}","snippet":"{${1:end text}}{${2:title}}"}},
+		{"name":"listing*","arg":{"format":"{}","snippet":"{${1:end text}}"}},
+		{"name":"listinglist","unusual":true},
+		{"name":"verbwrite","arg":{"format":"{}","snippet":"{${1}}"},"doc":"You can write verbatim text to a file using the verbwrite environment."},
+		{"name":"verbwrite*","arg":{"format":"{}{}","snippet":"{${1:end text}}{${2:file name}}"}}
+	],
+	"keys": {}
+}

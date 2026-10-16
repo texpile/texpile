@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"fancyheadings"},{"name":"fancyhdr"},{"name":"class-book"}],
+	"macros": [
+		{"name":"abstractname"},
+		{"name":"assessorname"},
+		{"name":"droptnm","unusual":true},
+		{"name":"dsp"},
+		{"name":"HUGE","unusual":true},
+		{"name":"ssp"},
+		{"name":"supervisorname"},
+		{"name":"thesisassessor","arg":{"format":"{}","snippet":"thesisassessor{${1:assessor}}"}},
+		{"name":"thesisauthor","arg":{"format":"{}","snippet":"thesisauthor{${1:author}}"}},
+		{"name":"thesisdate","arg":{"format":"{}","snippet":"thesisdate{${1:date}}"}},
+		{"name":"thesisdegree","arg":{"format":"{}","snippet":"thesisdegree{${1:degree}}"}},
+		{"name":"thesisschool","arg":{"format":"{}","snippet":"thesisschool{${1:school}}"}},
+		{"name":"thesissupervisor","arg":{"format":"{}","snippet":"thesissupervisor{${1:supervisor}}"}},
+		{"name":"thesistitle","arg":{"format":"{}","snippet":"thesistitle{${1:title}}"}},
+		{"name":"thesisuni","arg":{"format":"{}","snippet":"thesisuni{${1:university}}"}}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"spacing"},
+		{"name":"sspacing"}
+	],
+	"keys": {}
+}

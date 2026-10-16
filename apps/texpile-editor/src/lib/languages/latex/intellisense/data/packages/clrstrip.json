@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"expkv"}],
+	"macros": [
+		{"name":"colorstripSet","arg":{"format":"{}","snippet":"colorstripSet{${1:key=value}}"}}
+	],
+	"envs": [
+		{"name":"colorstrip","arg":{"format":"[]{}[]","snippet":"[${1:color model}]{${2:color}}[${3:key=value}]"},"doc":"This package provides the colorstrip environment, that places its contents into a full page width colour strip."},
+		{"name":"colorstrip","arg":{"format":"{}","snippet":"{${1:color}}"},"doc":"This package provides the colorstrip environment, that places its contents into a full page width colour strip."}
+	],
+	"keys": {}
+}

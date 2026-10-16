@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"class-ctexbook"},{"name":"class-book"},{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"zhnumber"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyhdr"},{"name":"footmisc"},{"name":"perpage"},{"name":"unicode-math"},{"name":"unicode-math-xetex"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"caption"},{"name":"caption3"},{"name":"xcolor"},{"name":"bookmark"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"emptypage","if":"!oneside"},{"name":"sysuvisual"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"maketitle","arg":{"format":"[]","snippet":"maketitle[${1:pages}]"}},
+		{"name":"maketitle"},
+		{"name":"sysusetup","arg":{"format":"[]{}","snippet":"sysusetup[${1:group}]{${2:key-value settings}}"}},
+		{"name":"sysusetup","arg":{"format":"{}","snippet":"sysusetup{${1:key-value settings}}"}}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"acknowledgements"},
+		{"name":"assumption","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"assumption"},
+		{"name":"corollary","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"corollary"},
+		{"name":"definition","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"definition"},
+		{"name":"example","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"example"},
+		{"name":"lemma","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"lemma"},
+		{"name":"proposition","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"proposition"},
+		{"name":"remark","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"remark"},
+		{"name":"theorem","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"theorem"}
+	],
+	"keys": {}
+}

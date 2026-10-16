@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"at"},
+		{"name":"atallowdigits","doc":"The \\atallowdigits command allows digits to be used as letters; \\atdisallowdigits prevents this."},
+		{"name":"atdef","arg":{"format":"{}{}","snippet":"atdef{${1:name}}{${2:definition}}"}},
+		{"name":"atdisallowdigits","doc":"The \\atallowdigits command allows digits to be used as letters; \\atdisallowdigits prevents this."},
+		{"name":"atlet"},
+		{"name":"atoff"},
+		{"name":"aton"},
+		{"name":"atshow","arg":{"format":"{}","snippet":"atshow{${1}}"}},
+		{"name":"newatcommand","arg":{"format":"{}[][]{}","snippet":"newatcommand{${1:name}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"doc":"The \\newatcommand command will define a new @-command using a syntax similar to \\newcommand."},
+		{"name":"newatcommand","arg":{"format":"{}{}","snippet":"newatcommand{${1:name}}{${2:definition}}"},"doc":"The \\newatcommand command will define a new @-command using a syntax similar to \\newcommand."},
+		{"name":"provideatcommand","arg":{"format":"{}[][]{}","snippet":"provideatcommand{${1:name}}[${2:number of arguments}][${3:default}]{${4:definition}}"}},
+		{"name":"provideatcommand","arg":{"format":"{}{}","snippet":"provideatcommand{${1:name}}{${2:definition}}"}},
+		{"name":"renewatcommand","arg":{"format":"{}[][]{}","snippet":"renewatcommand{${1:name}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"doc":"A \\renewatcommand is also provided to redefine existing commands, should the need arise."},
+		{"name":"renewatcommand","arg":{"format":"{}{}","snippet":"renewatcommand{${1:name}}{${2:definition}}"},"doc":"A \\renewatcommand is also provided to redefine existing commands, should the need arise."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/at#c": ["digits","nodigits"]
+	},
+	"args": ["\\usepackage/at#c"]
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"cmbright"}],
+	"macros": [
+		{"name":"comment","arg":{"format":"{}","snippet":"comment{${1:text}}"}},
+		{"name":"maketitleslide","doc":"Style packages for the talk class should define a \\maketitleslide command which generates the title slide using the information specified with the \\title, \\author and \\date (and possibly some other) commands."},
+		{"name":"titlecolor","arg":{"format":"{}","snippet":"titlecolor{${1:red,green,blue}}"}},
+		{"name":"titlelogo","arg":{"format":"{}","snippet":"titlelogo{${1:logo}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

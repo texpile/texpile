@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"ebook"},
+		{"name":"pagefill","arg":{"format":"[]","snippet":"pagefill[${1}]"}},
+		{"name":"pagefill"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xparse"},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"l3keys2e"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"etoolbox"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"blacksquare"},
+		{"name":"bm","arg":{"format":"{}","snippet":"bm{${1}}"},"math":true},
+		{"name":"checkmark","math":true,"detail":"✓","doc":"tick, check mark"},
+		{"name":"square"}
+	],
+	"envs": [],
+	"keys": {}
+}

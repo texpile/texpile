@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"konames-utf"}],
+	"macros": [
+		{"name":"circemph","arg":{"format":"{}","snippet":"circemph{${1:text}}"}},
+		{"name":"circemphchar","unusual":true},
+		{"name":"dotemph","arg":{"format":"{}","snippet":"dotemph{${1:text}}"},"doc":"\\dotemph가 드러냄표를 식자하는 명령이다."},
+		{"name":"dotemphchar","unusual":true},
+		{"name":"raisedotdim","unusual":true},
+		{"name":"TEXTsubscript","arg":{"format":"{}","snippet":"TEXTsubscript{${1}}"},"unusual":true},
+		{"name":"useremph","arg":{"format":"{}","snippet":"useremph{${1}}"},"unusual":true},
+		{"name":"useremphchar","unusual":true},
+		{"name":"useremphraisedim","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

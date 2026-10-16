@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"stmaryrd"},{"name":"mathrsfs"},{"name":"tikz-cd"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"textcomp"},{"name":"gensymb"}],
+	"macros": [
+		{"name":"1"},
+		{"name":"Aut"},
+		{"name":"fint","math":true,"detail":"⨏","doc":"integral average with slash"},
+		{"name":"Hom"},
+		{"name":"ran"},
+		{"name":"Sha"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"environ"}],
+	"macros": [
+		{"name":"arxiv","arg":{"format":"{}","snippet":"arxiv{${1:arXiv number}}"}},
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:affiliation label}]{${2:name}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:name}}"}},
+		{"name":"email","arg":{"format":"[]{}","snippet":"email[${1:label}]{${2:email}}"}},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email}}"}},
+		{"name":"orcmail","arg":{"format":"{}{}","snippet":"orcmail{${1:orcid}}{${2:email}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

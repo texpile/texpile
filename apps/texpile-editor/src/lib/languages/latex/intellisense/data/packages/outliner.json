@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"DecreaseBaseLevel","arg":{"format":"{}","snippet":"DecreaseBaseLevel{${1}}"}},
+		{"name":"ifOutlineTrace","unusual":true},
+		{"name":"IncreaseBaseLevel","arg":{"format":"{}","snippet":"IncreaseBaseLevel{${1}}"}},
+		{"name":"Level","arg":{"format":"{}{}","snippet":"Level{${1:level}}{${2:title}}"}},
+		{"name":"NextLevel","unusual":true},
+		{"name":"OutlineLevelCont","arg":{"format":"{}{}","snippet":"OutlineLevelCont{${1:level}}{${2:code}}"}},
+		{"name":"OutlineLevelEnd","arg":{"format":"{}{}","snippet":"OutlineLevelEnd{${1:level}}{${2:code}}"}},
+		{"name":"OutlineLevelStart","arg":{"format":"{}{}","snippet":"OutlineLevelStart{${1:level}}{${2:code}}"}},
+		{"name":"OutlinePageBreaks","arg":{"format":"{}","snippet":"OutlinePageBreaks{${1}}"}},
+		{"name":"OutlineTracefalse","unusual":true},
+		{"name":"OutlineTracetrue","unusual":true},
+		{"name":"RenewOutlineLevelCont","arg":{"format":"{}{}","snippet":"RenewOutlineLevelCont{${1:level}}{${2:code}}"}},
+		{"name":"SameLevel","unusual":true},
+		{"name":"SaveLevel","arg":{"format":"{}","snippet":"SaveLevel{${1}}"},"unusual":true},
+		{"name":"SetBaseLevel","arg":{"format":"{}","snippet":"SetBaseLevel{${1}}"}},
+		{"name":"UseLevel","arg":{"format":"{}","snippet":"UseLevel{${1}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"Outline"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xstring"}],
+	"macros": [
+		{"name":"aaz","arg":{"format":"{}","snippet":"aaz{${1}}"},"doc":"The \\aaz command outputs “a” or “az”, depending on the argument."},
+		{"name":"Aaz","arg":{"format":"{}","snippet":"Aaz{${1}}"},"doc":"The \\Aaz command outputs “A” or “Az”, depending on the argument."},
+		{"name":"aazt","arg":{"format":"{}","snippet":"aazt{${1}}"}},
+		{"name":"Aazt","arg":{"format":"{}","snippet":"Aazt{${1}}"}},
+		{"name":"aazx","arg":{"format":"{}{}{}","snippet":"aazx{${1}}{${2}}{${3}}"},"doc":"The \\aazx command is the extended version of \\aaz taking 3 parameters: the second and third parameters will be put in the output before and after the reference."},
+		{"name":"Aazx","arg":{"format":"{}{}{}","snippet":"Aazx{${1}}{${2}}{${3}}"},"doc":"The equivalent of \\aazx for the beginning of a sentence."}
+	],
+	"envs": [],
+	"keys": {}
+}

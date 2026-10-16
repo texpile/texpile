@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"lscape"}],
+	"macros": [
+		{"name":"clockwise","doc":"The command \\clockwise sets the following rotations to be clockwise for positive angles."},
+		{"name":"controtcaption","arg":{"format":"{}","snippet":"controtcaption{${1:caption}}"}},
+		{"name":"counterclockwise","doc":"The command \\counterclockwise sets the following rotations to be counterclockwise for positive angles."},
+		{"name":"figuresleft"},
+		{"name":"figuresright"},
+		{"name":"ifinfloat","unusual":true},
+		{"name":"infloatfalse","unusual":true},
+		{"name":"infloattrue","unusual":true},
+		{"name":"rotatedirection","arg":{"format":"{}","snippet":"rotatedirection{${1}}"},"unusual":true},
+		{"name":"rotcapfont"},
+		{"name":"rotcaption","arg":{"format":"[]{}","snippet":"rotcaption[${1:short caption}]{${2:caption}}"},"doc":"The command \\rotcaption is analogous to the normal \\caption command, and inserts the caption rotated by 90 degrees."},
+		{"name":"rotcaption","arg":{"format":"{}","snippet":"rotcaption{${1:caption}}"},"doc":"The command \\rotcaption is analogous to the normal \\caption command, and inserts the caption rotated by 90 degrees."},
+		{"name":"rotdriver","arg":{"format":"{}","snippet":"rotdriver{${1:driver}}"}},
+		{"name":"turnbox","arg":{"format":"{}{}","snippet":"turnbox{${1:angle}}{${2:text}}"}}
+	],
+	"envs": [
+		{"name":"rotate","arg":{"format":"{}","snippet":"{${1:angle}}"},"doc":"The \\begin{rotate}{<angle>} environment rotates the contents by the given number of degrees in the direction specified by the most recent of the \\clockwise or \\counterclockwise commands, but no arrangements are made for leaving space for the result."},
+		{"name":"sideways","doc":"The sideways environment rotates the contents of the environment by 90 degrees counterclockwise, and leaves space for the result."},
+		{"name":"sidewaysfigure","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"sidewaysfigure"},
+		{"name":"sidewaysfigure*","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"sidewaysfigure*"},
+		{"name":"sidewaystable","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"sidewaystable"},
+		{"name":"sidewaystable*","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"sidewaystable*"},
+		{"name":"turn","arg":{"format":"{}","snippet":"{${1:angle}}"},"doc":"The \\begin{turn}{<angle>} environment rotates the contents by the given number of degrees in the direction specified by the most recent of the \\clockwise or \\counterclockwise commands, leaving space for the result."}
+	],
+	"keys": {
+		"\\usepackage/isorot#c": ["debugshow","errorshow"]
+	},
+	"args": ["\\usepackage/isorot#c"]
+}

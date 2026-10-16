@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"skeyval"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pdftexcmds","engines":["lualatex"]},{"name":"iftex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"currfboxrule","unusual":true},
+		{"name":"mpaction","unusual":true},
+		{"name":"mpbodyscale","unusual":true},
+		{"name":"mpbodytextstyle","unusual":true},
+		{"name":"mpfalign","unusual":true},
+		{"name":"mptitle","unusual":true},
+		{"name":"mptitlescale","unusual":true},
+		{"name":"mptitletextstyle","unusual":true},
+		{"name":"mpwidth","unusual":true},
+		{"name":"newcitation","arg":{"format":"[]{}","snippet":"newcitation[${1:keys}]{${2:text}}"}},
+		{"name":"newcitation","arg":{"format":"{}","snippet":"newcitation{${1:text}}"}},
+		{"name":"newshadowbox","arg":{"format":"[]{}","snippet":"newshadowbox[${1:keys}]{${2:text}}"}},
+		{"name":"newshadowbox","arg":{"format":"{}","snippet":"newshadowbox{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"collectbody","arg":{"format":"[]","snippet":"[${1:keys}]"}},
+		{"name":"collectbody"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"pgfextset","arg":{"format":"{}","snippet":"pgfextset{${1:options}}"}},
+		{"name":"pgfmathextanglebetween","arg":{"format":"{}{}","snippet":"pgfmathextanglebetween{${1:p1}}{${2:p2}}"}},
+		{"name":"pgfmathextatanXY","arg":{"format":"{}{}","snippet":"pgfmathextatanXY{${1:x}}{${2:y}}"}},
+		{"name":"pgfmathextatanYX","arg":{"format":"{}{}","snippet":"pgfmathextatanYX{${1:y}}{${2:x}}"}},
+		{"name":"pgfmathextdistancebetween","arg":{"format":"{}{}","snippet":"pgfmathextdistancebetween{${1:p1}}{${2:p2}}"}},
+		{"name":"pgfmathextisEmpty","arg":{"format":"{}","snippet":"pgfmathextisEmpty{${1:Text}}"}},
+		{"name":"pgfmathextisInString","arg":{"format":"{}{}","snippet":"pgfmathextisInString{${1:String}}{${2:Text}}"}},
+		{"name":"pgfmathextqanglebetween","arg":{"format":"{}","snippet":"pgfmathextqanglebetween{${1:p}}"}},
+		{"name":"pgfmathextqdistancebetween","arg":{"format":"{}","snippet":"pgfmathextqdistancebetween{${1:p}}"}},
+		{"name":"pgfmathextstrcat","arg":{"format":"{}","snippet":"pgfmathextstrcat{${1:Texts}}"}},
+		{"name":"pgfmathextstrrepeat","arg":{"format":"{}{}","snippet":"pgfmathextstrrepeat{${1:Text}}{${2:x}}"}},
+		{"name":"tikzextset","arg":{"format":"{}","snippet":"tikzextset{${1:options}}"}},
+		{"name":"tikzextversion","unusual":true},
+		{"name":"tikzextversionnumber","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

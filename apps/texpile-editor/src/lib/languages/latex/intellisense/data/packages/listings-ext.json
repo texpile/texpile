@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"lstcheck","arg":{"format":"{}{}","snippet":"lstcheck{${1}}{${2}}"}},
+		{"name":"lstdef","arg":{"format":"{}{}{}","snippet":"lstdef{${1}}{${2}}{${3}}"}},
+		{"name":"lstuse","arg":{"format":"[]{}","snippet":"lstuse[${1}]{${2}}"},"doc":"includes the source code which is referenced by ⟨identifier⟩ by (internally) calling \\lstinputlisting of the package listings [HM07], the way of formatting can be influenced by ⟨options⟩."},
+		{"name":"lstuse","arg":{"format":"{}","snippet":"lstuse{${1}}"},"doc":"includes the source code which is referenced by ⟨identifier⟩ by (internally) calling \\lstinputlisting of the package listings [HM07], the way of formatting can be influenced by ⟨options⟩."}
+	],
+	"envs": [],
+	"keys": {}
+}

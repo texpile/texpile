@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"ampchr","unusual":true},
+		{"name":"bslchr","unusual":true},
+		{"name":"dlrchr"},
+		{"name":"ervwrite","arg":{"format":"{}{}","snippet":"ervwrite{${1}}{${2}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"Filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"Fileversion","unusual":true},
+		{"name":"hshchr","unusual":true},
+		{"name":"lbrchr","unusual":true},
+		{"name":"newrvwrite","arg":{"format":"{}","snippet":"newrvwrite{${1}}"}},
+		{"name":"rbrchr","unusual":true},
+		{"name":"rvwrite","arg":{"format":"{}{}","snippet":"rvwrite{${1}}{${2}}"},"doc":"\\rvwrite Macro to mark-up strings meant for writing out."},
+		{"name":"tldchr","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

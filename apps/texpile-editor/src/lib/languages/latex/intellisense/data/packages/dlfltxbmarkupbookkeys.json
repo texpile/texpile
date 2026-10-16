@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"felinenameuse","arg":{"format":"{}","snippet":"felinenameuse{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

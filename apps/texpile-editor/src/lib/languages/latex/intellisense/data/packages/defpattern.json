@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"defpattern","arg":{"format":"{}[]{}","snippet":"defpattern{${1:macro}}[${2:pattern}]{${3:action}}"},"unusual":true},
+		{"name":"defpattern","arg":{"format":"{}{}","snippet":"defpattern{${1:macro}}{${2:action}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

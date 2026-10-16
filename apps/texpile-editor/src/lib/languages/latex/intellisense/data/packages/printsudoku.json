@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"cellsize","arg":{"format":"{}","snippet":"cellsize{${1}}"}},
+		{"name":"cluefont","arg":{"format":"{}","snippet":"cluefont{${1}}"},"doc":"The clues are typeset using the \\cluefont font."},
+		{"name":"puzzlefile"},
+		{"name":"sudoku","arg":{"format":"{}","snippet":"sudoku{${1}}"}},
+		{"name":"sudpuzznewline","doc":"\\sudpuzznewline provides a \\newline macro for use in a comment being written to a puzzle file."},
+		{"name":"writepuzzle","arg":{"format":"{}{}{}{}{}{}{}{}{}[]","snippet":"writepuzzle{${1:line 1}}{${2:line 2}}{${3:line 3}}{${4:line 4}}{${5:line 5}}{${6:line 6}}{${7:line 7}}{${8:line 8}}{${9:line 9}}[${10:comment}]"},"doc":"\\writepuzzle takes nine arguments — the nine lines specifying a puzzle — and writes them to the \\puzzlefile file."},
+		{"name":"writepuzzle","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"writepuzzle{${1:line 1}}{${2:line 2}}{${3:line 3}}{${4:line 4}}{${5:line 5}}{${6:line 6}}{${7:line 7}}{${8:line 8}}{${9:line 9}}"},"doc":"\\writepuzzle takes nine arguments — the nine lines specifying a puzzle — and writes them to the \\puzzlefile file."}
+	],
+	"envs": [],
+	"keys": {}
+}

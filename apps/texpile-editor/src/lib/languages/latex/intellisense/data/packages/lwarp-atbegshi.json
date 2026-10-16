@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"AtBeginShipout","arg":{"format":"{}","snippet":"AtBeginShipout{${1}}"}},
+		{"name":"AtBeginShipoutAddToBox","arg":{"format":"{}","snippet":"AtBeginShipoutAddToBox{${1}}"}},
+		{"name":"AtBeginShipoutAddToBoxForeground","arg":{"format":"{}","snippet":"AtBeginShipoutAddToBoxForeground{${1}}"}},
+		{"name":"AtBeginShipoutBox"},
+		{"name":"AtBeginShipoutBoxDepth"},
+		{"name":"AtBeginShipoutBoxHeight"},
+		{"name":"AtBeginShipoutBoxWidth"},
+		{"name":"AtBeginShipoutDiscard"},
+		{"name":"AtBeginShipoutFirst","arg":{"format":"{}","snippet":"AtBeginShipoutFirst{${1}}"}},
+		{"name":"AtBeginShipoutInit"},
+		{"name":"AtBeginShipoutNext","arg":{"format":"{}","snippet":"AtBeginShipoutNext{${1}}"}},
+		{"name":"AtBeginShipoutOriginalShipout"},
+		{"name":"AtBeginShipoutUpperLeft","arg":{"format":"{}","snippet":"AtBeginShipoutUpperLeft{${1}}"}},
+		{"name":"AtBeginShipoutUpperLeftForeground","arg":{"format":"{}","snippet":"AtBeginShipoutUpperLeftForeground{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

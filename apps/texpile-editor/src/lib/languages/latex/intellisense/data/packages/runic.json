@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"Fng"},
+		{"name":"Fthorn"},
+		{"name":"futfamily"},
+		{"name":"textfut","arg":{"format":"{}","snippet":"textfut{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

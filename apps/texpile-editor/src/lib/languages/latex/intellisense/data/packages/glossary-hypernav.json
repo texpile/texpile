@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"glshypernavsep","doc":"The default definition is \\space\\textbar\\space which creates a vertical bar with a space on either side."},
+		{"name":"glsnavhypergroupdotarget","arg":{"format":"{}{}{}","snippet":"glsnavhypergroupdotarget{${1:glossary label}}{${2:group label}}{${3:group title}}"}},
+		{"name":"glsnavhyperlink","arg":{"format":"[]{}{}","snippet":"glsnavhyperlink[${1:glossary label}]{${2:group label}}{${3:group title}}"}},
+		{"name":"glsnavhyperlink","arg":{"format":"{}{}","snippet":"glsnavhyperlink{${1:group label}}{${2:group title}}"}},
+		{"name":"glsnavhyperlinkname","arg":{"format":"{}{}","snippet":"glsnavhyperlinkname{${1:glossary label}}{${2:group label}}"},"doc":"Expands to the hypertarget name."},
+		{"name":"glsnavhypertarget","arg":{"format":"[]{}{}","snippet":"glsnavhypertarget[${1:glossary label}]{${2:group label}}{${3:group title}}"},"doc":"Creates a hyper target for a group."},
+		{"name":"glsnavhypertarget","arg":{"format":"{}{}","snippet":"glsnavhypertarget{${1:group label}}{${2:group title}}"},"doc":"Creates a hyper target for a group."},
+		{"name":"glsnavigation","doc":"The \\glsnavigation command displays a simple glossary group navigation."},
+		{"name":"glsnavigationitem","arg":{"format":"{}","snippet":"glsnavigationitem{${1:group label}}"}},
+		{"name":"glssymbolnav","doc":"The \\glssymbolnav produces a simple navigation set of links for just the symbol and number groups."}
+	],
+	"envs": [],
+	"keys": {}
+}

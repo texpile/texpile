@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"iftex"}],
+	"macros": [],
+	"envs": [
+		{"name":"errorbox","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"errorbox"},
+		{"name":"notebox","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"notebox"},
+		{"name":"successbox","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"successbox"},
+		{"name":"warningbox","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"warningbox"}
+	],
+	"keys": {}
+}

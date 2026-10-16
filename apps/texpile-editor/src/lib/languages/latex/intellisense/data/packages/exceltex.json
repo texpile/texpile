@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"ulem"},{"name":"color"}],
+	"macros": [
+		{"name":"exceltexVersion","unusual":true},
+		{"name":"inccell","arg":{"format":"{}","snippet":"inccell{${1:file!sheet!cell}}"}},
+		{"name":"inctab","arg":{"format":"{}","snippet":"inctab{${1:file!sheet!from!to}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/exceltex#c": ["cellrefs"]
+	},
+	"args": ["\\usepackage/exceltex#c"]
+}

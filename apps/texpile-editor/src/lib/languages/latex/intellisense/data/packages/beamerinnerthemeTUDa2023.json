@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"beamerinnerthemeTUDa"},{"name":"trimclip"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"xkeyval"},{"name":"multicol"}],
+	"macros": [
+		{"name":"partnerlogo","arg":{"format":"{}","snippet":"partnerlogo{${1:logo}}"}},
+		{"name":"partnerlogo*","arg":{"format":"{}","snippet":"partnerlogo*{${1:logo}}"}},
+		{"name":"sublogo","arg":{"format":"{}","snippet":"sublogo{${1:logo}}"}},
+		{"name":"sublogo*","arg":{"format":"{}","snippet":"sublogo*{${1:logo}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

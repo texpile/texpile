@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"xparse"},{"name":"letltxmacro"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"blindduck","arg":{"format":"[]","snippet":"blindduck[${1:key=value}]"},"doc":"Produces one paragraph of dummy content."},
+		{"name":"blindduck","doc":"Produces one paragraph of dummy content."},
+		{"name":"duckdescription","doc":"Abbreviation for \\ducklist{description}."},
+		{"name":"duckenumerate","doc":"Abbreviation for \\ducklist{enumerate}."},
+		{"name":"duckitemize"},
+		{"name":"ducklist","arg":{"format":"{}","snippet":"ducklist{${1:environment}}"}},
+		{"name":"ducklist*","arg":{"format":"{}","snippet":"ducklist*{${1:environment}}"}},
+		{"name":"ducklistlist","arg":{"format":"{}","snippet":"ducklistlist{${1:list}}"}},
+		{"name":"ducklistlist*","arg":{"format":"{}","snippet":"ducklistlist*{${1:list}}"}},
+		{"name":"duckument","arg":{"format":"[]","snippet":"duckument[${1:key=value}]"},"doc":"Produces a duckument with one sectioning entry of each level starting at \\chapter (if available) and two variants of the list environment itemize, enumerate, and description, one only at top level and one with 4 environments nested."},
+		{"name":"duckument","doc":"Produces a duckument with one sectioning entry of each level starting at \\chapter (if available) and two variants of the list environment itemize, enumerate, and description, one only at top level and one with 4 environments nested."},
+		{"name":"duckumentsCreateExampleFiles","doc":"Creates the files example-image-duck.tex and example-image-duck-portrait.tex in the current working directory."},
+		{"name":"duckumentsDrawRandomDucks","arg":{"format":"[]","snippet":"duckumentsDrawRandomDucks[${1:count}]"}},
+		{"name":"duckumentsDrawRandomDucks"},
+		{"name":"duckumentsDrawRandomDucks*","arg":{"format":"[]","snippet":"duckumentsDrawRandomDucks*[${1:count}]"}},
+		{"name":"duckumentsDrawRandomDucks*"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"footerLink","arg":{"format":"{}","snippet":"footerLink{${1:link}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

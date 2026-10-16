@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"labeloutlni","unusual":true},
+		{"name":"labeloutlnii","unusual":true},
+		{"name":"labeloutlniii","unusual":true},
+		{"name":"labeloutlniv","unusual":true},
+		{"name":"labeloutlnv","unusual":true},
+		{"name":"labeloutlnvi","unusual":true},
+		{"name":"theoutlni","unusual":true},
+		{"name":"theoutlnii","unusual":true},
+		{"name":"theoutlniii","unusual":true},
+		{"name":"theoutlniv","unusual":true},
+		{"name":"theoutlnv","unusual":true},
+		{"name":"theoutlnvi","unusual":true}
+	],
+	"envs": [
+		{"name":"outline","doc":"Create six-level list environment {outline} for making outlines; mark each outline topic with \\item."}
+	],
+	"keys": {}
+}

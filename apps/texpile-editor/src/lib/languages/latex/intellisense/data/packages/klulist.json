@@ -1,0 +1,33 @@
+{
+	"macros": [
+		{"name":"acknowledgementsname"},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"kapenumargs","unusual":true},
+		{"name":"kapitemargs","unusual":true},
+		{"name":"multiplevitaename"},
+		{"name":"nmc","arg":{"format":"{}","snippet":"nmc{${1}}"}},
+		{"name":"notesname"},
+		{"name":"offprintsaddress"},
+		{"name":"quoteskip","unusual":true},
+		{"name":"splitnomen"},
+		{"name":"Vauthor","arg":{"format":"{}","snippet":"Vauthor{${1}}"}},
+		{"name":"vitaename"}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"ao"},
+		{"name":"enumerate","arg":{"format":"[]","snippet":"[${1:widest label}]"}},
+		{"name":"enumerate"},
+		{"name":"frontmatter"},
+		{"name":"itemize","arg":{"format":"[]","snippet":"[${1:default label}]"}},
+		{"name":"itemize"},
+		{"name":"notes"},
+		{"name":"thenomenclature"},
+		{"name":"vitae"}
+	],
+	"keys": {
+		"\\usepackage/klulist#c": ["kaplist","margspec"]
+	},
+	"args": ["\\usepackage/klulist#c"]
+}

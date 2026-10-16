@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"class-book"}],
+	"macros": [
+		{"name":"act"},
+		{"name":"act*"},
+		{"name":"actname"},
+		{"name":"directionfont"},
+		{"name":"longdirection","arg":{"format":"{}","snippet":"longdirection{${1:direction}}"}},
+		{"name":"phantomline","arg":{"format":"{}","snippet":"phantomline{${1:text of the line}}"}},
+		{"name":"scene"},
+		{"name":"scene*"},
+		{"name":"scenename"},
+		{"name":"setting","arg":{"format":"{}","snippet":"setting{${1:setting}}"}},
+		{"name":"shortdirection","arg":{"format":"{}","snippet":"shortdirection{${1:direction}}"}},
+		{"name":"shortdirectionclose"},
+		{"name":"shortdirectionopen"},
+		{"name":"speaker","arg":{"format":"{}","snippet":"speaker{${1:character}}"}},
+		{"name":"speakerdelim"},
+		{"name":"speakerfont"},
+		{"name":"theact","unusual":true},
+		{"name":"theline","unusual":true},
+		{"name":"thescene","unusual":true},
+		{"name":"typeline"}
+	],
+	"envs": [
+		{"name":"play"},
+		{"name":"thesetting"},
+		{"name":"verseplay","arg":{"format":"[]","snippet":"[${1:name box width}]"}},
+		{"name":"verseplay"}
+	],
+	"keys": {
+		"\\documentclass/play#c": ["lineno"]
+	},
+	"args": ["\\documentclass/play#c"]
+}

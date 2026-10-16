@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"iftex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

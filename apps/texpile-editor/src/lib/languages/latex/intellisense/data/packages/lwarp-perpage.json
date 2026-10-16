@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"AddAbsoluteCounter","arg":{"format":"{}","snippet":"AddAbsoluteCounter{${1:counter}}"}},
+		{"name":"MakePerPage","arg":{"format":"[]{}","snippet":"MakePerPage[${1:start value}]{${2:counter}}"}},
+		{"name":"MakePerPage","arg":{"format":"{}","snippet":"MakePerPage{${1:counter}}"}},
+		{"name":"MakeSorted","arg":{"format":"{}","snippet":"MakeSorted{${1:counter}}"}},
+		{"name":"MakeSortedPerPage","arg":{"format":"[]{}","snippet":"MakeSortedPerPage[${1:start value}]{${2:counter}}"},"doc":"The footnotes are reset when they are printed, according to section level as set by FootnoteDepth, which is not necessarily by HTML page."},
+		{"name":"MakeSortedPerPage","arg":{"format":"{}","snippet":"MakeSortedPerPage{${1:counter}}"},"doc":"The footnotes are reset when they are printed, according to section level as set by FootnoteDepth, which is not necessarily by HTML page."},
+		{"name":"theabspage","unusual":true},
+		{"name":"theperpage"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -15,13 +15,23 @@ import { basename, relativeTo, samePath, type Eol } from '$lib/workspace/fileSys
 import { citationVariantsFor } from '$lib/languages/latex/visual/extensions/citation/citationVariantsFor';
 import { refCommandsFor } from '$lib/languages/latex/visual/extensions/drawn/settings/refCommandsFor';
 import { bibliographyKindFor } from '$lib/languages/latex/visual/extensions/drawn/settings/bibliographyCommand';
-import { templateFeaturesStore } from '$lib/stores/editorStore';
+import { templateFeaturesStore, type TemplateFeatures } from '$lib/stores/editorStore';
+import { filePackageNames, filePackageNamesNow } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { documentHyphenationLanguage } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
 import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
 import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { findConflicts, hasConflictMarkers, hasMarkerLines } from '$lib/workspace/scm/conflictMarkers';
 import { gitChanges, isConflicted } from '$lib/workspace/scm/gitStore';
 import type { Node as PMNode } from 'prosemirror-model';
+
+// what the menus offer from the packages the document loads; unnarrowed until those are known
+function packageFeatures(preamble: string, packages: ReadonlySet<string> | null): Partial<TemplateFeatures> {
+	return {
+		citationVariants: packages ? citationVariantsFor(preamble, packages) : undefined,
+		refCommands: packages ? refCommandsFor(preamble, packages) : undefined,
+		bibliography: packages ? bibliographyKindFor(preamble, packages) : undefined
+	};
+}
 
 export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
 export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
@@ -286,13 +296,20 @@ export class DocumentBuffer {
 		// undefined command in the source. Merged, not replaced: the other features have owners.
 		templateFeaturesStore.current = {
 			...templateFeaturesStore.current,
-			citationVariants: citationVariantsFor(parsed.preamble),
 			hyphenationLanguage: documentHyphenationLanguage(source),
 			crossRefNames: crossRefNamesFromPreamble(parsed.preamble),
-			refCommands: refCommandsFor(parsed.preamble),
-			bibliography: bibliographyKindFor(parsed.preamble),
 			macros: scanMacroDefinitions(source)
 		};
+		this.narrowMenus();
+	}
+
+	/** the menus offer what the preamble's packages define, read again from the preamble as it is once those load */
+	private narrowMenus(): void {
+		const preamble = this.docMeta?.preamble;
+		if (preamble == null) return;
+		const packages = filePackageNamesNow(preamble);
+		templateFeaturesStore.current = { ...templateFeaturesStore.current, ...packageFeatures(preamble, packages) };
+		if (!packages) void filePackageNames(preamble).then(() => this.narrowMenus());
 	}
 
 	/** a visual edit serializes straight into texSource, then saves */

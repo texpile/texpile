@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"enumitem"}],
+	"macros": [
+		{"name":"definition","arg":{"format":"{}{}","snippet":"definition{${1:term}}{${2:definition}}"}}
+	],
+	"envs": [
+		{"name":"abbreviations"},
+		{"name":"definitions"}
+	],
+	"keys": {}
+}

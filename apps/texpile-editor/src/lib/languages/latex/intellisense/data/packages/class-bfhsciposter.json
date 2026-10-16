@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"bfhfonts"},{"name":"iftex"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"nunito","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"textcomp","engines":["pdflatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"sourceserif"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"tikzfill.image"},{"name":"geometry"},{"name":"ifvtex"},{"name":"xparse"},{"name":"bfhcolors"},{"name":"qrcode"},{"name":"bfhmodule"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"authorandname","unusual":true},
+		{"name":"footer","arg":{"format":"{}","snippet":"footer{${1:footer text}}"}},
+		{"name":"footergraphics","arg":{"format":"{}","snippet":"footergraphics{${1:logos}}"}},
+		{"name":"footerhsep","doc":"Der Abstand zwischen Logo und den Inhalten des Fußes, sowie zu den Logos und dem QRcode im Fuß wird über die Länge \\footerhsep gesteuert."},
+		{"name":"footerqrcode","arg":{"format":"{}","snippet":"footerqrcode{${1:url}}"}},
+		{"name":"footerqrcode*","arg":{"format":"{}","snippet":"footerqrcode*{${1:url}}"}},
+		{"name":"inst","arg":{"format":"{}","snippet":"inst{${1:affiliation mark}}"}},
+		{"name":"institute","arg":{"format":"{}","snippet":"institute{${1:institute}}"}},
+		{"name":"raggedfooter","unusual":true},
+		{"name":"raggedtitle","unusual":true},
+		{"name":"titlegraphic","arg":{"format":"{}","snippet":"titlegraphic{${1:graphic}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

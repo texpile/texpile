@@ -1,258 +1,43 @@
 {
-  "deps": [
-    {
-      "name": "enumerate"
-    }
-  ],
-  "macros": [
-    {
-      "name": "frametitle",
-      "arg": {
-        "format": "{}",
-        "snippet": "frametitle{${1:title}}"
-      }
-    },
-    {
-      "name": "frametitle",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "frametitle[${2:short title}]{${1:title}}"
-      }
-    },
-    {
-      "name": "frametitle<overlay specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "frametitle<overlay specification>{${1:title}}"
-      }
-    },
-    {
-      "name": "frametitle<overlay specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "frametitle<overlay specification>[${2:short title}]{${1:title}}"
-      }
-    },
-    {
-      "name": "insertframetitle",
-      "unusual": true
-    },
-    {
-      "name": "insertshortframetitle",
-      "unusual": true
-    },
-    {
-      "name": "insertshortframetitle",
-      "unusual": true,
-      "arg": {
-        "format": "[]",
-        "snippet": "insertshortframetitle[${1:options%keyvals}]"
-      }
-    },
-    {
-      "name": "framesubtitle",
-      "arg": {
-        "format": "{}",
-        "snippet": "framesubtitle{${1:title}}"
-      }
-    },
-    {
-      "name": "framesubtitle<overlay specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "framesubtitle<overlay specification>{${1:title}}"
-      }
-    },
-    {
-      "name": "insertframesubtitle",
-      "unusual": true
-    },
-    {
-      "name": "alert",
-      "arg": {
-        "format": "{}",
-        "snippet": "alert{${1:highlighted text%text}}"
-      }
-    },
-    {
-      "name": "alert<overlay specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "alert<overlay specification>{${1:highlighted text%text}}"
-      }
-    },
-    {
-      "name": "structure",
-      "arg": {
-        "format": "{}",
-        "snippet": "structure{${1:text}}"
-      }
-    },
-    {
-      "name": "structure<overlay specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "structure<overlay specification>{${1:text}}"
-      }
-    },
-    {
-      "name": "insertblocktitle",
-      "unusual": true
-    },
-    {
-      "name": "insertenumlabel",
-      "unusual": true
-    },
-    {
-      "name": "insertsubenumlabel",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsubenumlabel",
-      "unusual": true
-    },
-    {
-      "name": "insertdescriptionitem",
-      "unusual": true
-    },
-    {
-      "name": "bibitem<overlay specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "bibitem<overlay specification>[${2:citation text}]{${1:citekey}}"
-      }
-    },
-    {
-      "name": "bibitem<overlay specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "bibitem<overlay specification>{${1:citekey}}"
-      }
-    },
-    {
-      "name": "insertbiblabel",
-      "unusual": true
-    },
-    {
-      "name": "insertcaptionname",
-      "unusual": true
-    },
-    {
-      "name": "insertcaptionnumber",
-      "unusual": true
-    },
-    {
-      "name": "insertcaption",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "alertenv"
-    },
-    {
-      "name": "alertenv",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:overlay specification}>"
-      }
-    },
-    {
-      "name": "structureenv"
-    },
-    {
-      "name": "structureenv",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:overlay specification}>"
-      }
-    },
-    {
-      "name": "block",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:title%text}}"
-      }
-    },
-    {
-      "name": "block",
-      "arg": {
-        "format": "<>{}",
-        "snippet": "<${2:action specification}>{${1:title%text}}"
-      }
-    },
-    {
-      "name": "block",
-      "unusual": true,
-      "arg": {
-        "format": "{}<>",
-        "snippet": "{${1:title%text}}<${2:action specification}>"
-      }
-    },
-    {
-      "name": "alertblock",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:title%text}}"
-      }
-    },
-    {
-      "name": "alertblock",
-      "arg": {
-        "format": "<>{}",
-        "snippet": "<${2:action specification}>{${1:title%text}}"
-      }
-    },
-    {
-      "name": "alertblock",
-      "arg": {
-        "format": "{}<>",
-        "snippet": "{${1:title%text}}<${2:action specification}>"
-      }
-    },
-    {
-      "name": "exampleblock",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:title%text}}"
-      }
-    },
-    {
-      "name": "exampleblock",
-      "arg": {
-        "format": "<>{}<>",
-        "snippet": "<${2:action specification}>{${1:title%text}}<${3:overlay specification}>"
-      }
-    },
-    {
-      "name": "abstract",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:action specification}>"
-      }
-    },
-    {
-      "name": "verse",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:action specification}>"
-      }
-    },
-    {
-      "name": "quotation",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:action specification}>"
-      }
-    },
-    {
-      "name": "quote",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:action specification}>"
-      }
-    }
-  ],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"enumerate"}],
+	"macros": [
+		{"name":"alert","arg":{"format":"<>{}","snippet":"alert<${1:overlay specification}>{${2:highlighted text}}"},"doc":"The given text is highlighted, typically by coloring the text red."},
+		{"name":"bibitem","arg":{"format":"<>[]{}","snippet":"bibitem<${1:overlay specification}>[${2:citation text}]{${3:label name}}"},"doc":"The ⟨citation text⟩ is inserted into the text when the item is cited using \\cite{⟨label name⟩} in the main presentation text."},
+		{"name":"bibitem","arg":{"format":"<>{}","snippet":"bibitem<${1:overlay specification}>{${2:label name}}"},"doc":"The ⟨citation text⟩ is inserted into the text when the item is cited using \\cite{⟨label name⟩} in the main presentation text."},
+		{"name":"framesubtitle","arg":{"format":"<>{}","snippet":"framesubtitle<${1:overlay specification}>{${2:frame subtitle text}}"},"doc":"If present, a subtitle will be shown in a smaller font below the main title."},
+		{"name":"frametitle","arg":{"format":"<>[]{}","snippet":"frametitle<${1:overlay specification}>[${2:short frame title}]{${3:frame title text}}"}},
+		{"name":"frametitle","arg":{"format":"<>{}","snippet":"frametitle<${1:overlay specification}>{${2:frame title text}}"}},
+		{"name":"insertbiblabel","doc":"\\insertbiblabel inserts the current citation label."},
+		{"name":"insertblocktitle"},
+		{"name":"insertcaption"},
+		{"name":"insertcaptionname"},
+		{"name":"insertcaptionnumber"},
+		{"name":"insertdescriptionitem","doc":"\\insertdescriptionitem inserts the text of the current description item."},
+		{"name":"insertenumlabel","doc":"\\insertenumlabel inserts the current number of the top-level enumeration (as an Arabic number)."},
+		{"name":"insertframesubtitle"},
+		{"name":"insertframetitle","doc":"\\insertframetitle yields the frame title. • \\insertframesubtitle yields the frame subtitle."},
+		{"name":"insertshortframetitle","arg":{"format":"[]","snippet":"insertshortframetitle[${1}]"}},
+		{"name":"insertshortframetitle"},
+		{"name":"insertsubenumlabel"},
+		{"name":"insertsubsubenumlabel"},
+		{"name":"structure","arg":{"format":"<>{}","snippet":"structure<${1:overlay specification}>{${2:text}}"},"doc":"The given text is marked as part of the structure, that is, it is supposed to help the audience see the structure of your presentation."}
+	],
+	"envs": [
+		{"name":"abstract","arg":{"format":"<>","snippet":"<${1:action specification}>"},"doc":"You can use this environment to typeset an abstract."},
+		{"name":"alertblock","arg":{"format":"<>{}<>","snippet":"<${1:action specification}>{${2:block title}}<${3:action specification}>"},"doc":"Inserts a block whose title is highlighting."},
+		{"name":"alertenv","arg":{"format":"<>","snippet":"<${1:overlay specification}>"}},
+		{"name":"block","arg":{"format":"<>{}<>","snippet":"<${1:action specification}>{${2:block title}}<${3:action specification}>"}},
+		{"name":"description","arg":{"format":"[][]","snippet":"[${1:default overlay specification}][${2:long text}]"}},
+		{"name":"description"},
+		{"name":"enumerate","arg":{"format":"[][]","snippet":"[${1:default overlay specification}][${2:mini template}]"}},
+		{"name":"enumerate"},
+		{"name":"exampleblock","arg":{"format":"<>{}<>","snippet":"<${1:action specification}>{${2:block title}}<${3:action specification}>"},"doc":"Inserts a block that is supposed to be an example."},
+		{"name":"itemize","arg":{"format":"[]","snippet":"[${1:default overlay specification}]"}},
+		{"name":"itemize"},
+		{"name":"quotation","arg":{"format":"<>","snippet":"<${1:action specification}>"}},
+		{"name":"quote","arg":{"format":"<>","snippet":"<${1:action specification}>"},"doc":"Use this environment to typeset a single-paragraph quotation."},
+		{"name":"structureenv","arg":{"format":"<>","snippet":"<${1:overlay specification}>"}},
+		{"name":"verse","arg":{"format":"<>","snippet":"<${1:action specification}>"},"doc":"You can use this environment to typeset a verse."}
+	],
+	"keys": {}
 }

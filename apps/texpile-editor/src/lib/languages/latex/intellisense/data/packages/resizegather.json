@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"resizegathersetup","arg":{"format":"{}","snippet":"resizegathersetup{${1}}","keys":["keyval:resizegather"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:resizegather": ["disable","displaymath","enable","equation","equations","warningthreshold="],
+		"\\usepackage/resizegather#c": ["disable","displaymath","enable","equation","equations","warningthreshold="]
+	},
+	"args": ["\\usepackage/resizegather#c"]
+}

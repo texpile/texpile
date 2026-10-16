@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"numodel"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"xfrac"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"array"},{"name":"float"},{"name":"tabularray"},{"name":"ninecolors"},{"name":"numodel-plot"},{"name":"pgfplots"},{"name":"pdfrender"},{"name":"kvsetkeys"},{"name":"embedfile"},{"name":"pdfescape"}],
+	"macros": [
+		{"name":"coachinstructiontext","arg":{"format":"[]","snippet":"coachinstructiontext[${1:options}]"}},
+		{"name":"coachinstructiontext"},
+		{"name":"coachmodel","arg":{"format":"[]{}","snippet":"coachmodel[${1:options}]{${2:name}}"},"doc":"\\coachmodel[⟨options⟩]{⟨name⟩} writes the model with the current prefix to ⟨name⟩.cma7 (no extension is added when ⟨name⟩ has one)."},
+		{"name":"coachmodel","arg":{"format":"{}","snippet":"coachmodel{${1:name}}"},"doc":"\\coachmodel[⟨options⟩]{⟨name⟩} writes the model with the current prefix to ⟨name⟩.cma7 (no extension is added when ⟨name⟩ has one)."},
+		{"name":"coachsetup","arg":{"format":"{}","snippet":"coachsetup{${1:options}}"}}
+	],
+	"envs": [
+		{"name":"coachinstruction","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"coachinstruction"}
+	],
+	"keys": {}
+}

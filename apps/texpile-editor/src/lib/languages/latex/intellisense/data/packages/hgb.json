@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"hgbdict"},{"name":"lmodern"},{"name":"cmap"},{"name":"inputenc"},{"name":"babel"},{"name":"xstring"},{"name":"datetime2"},{"name":"tracklang"},{"name":"etoolbox"},{"name":"xkeyval"},{"name":"iftex"},{"name":"datetime2-calc"},{"name":"pgfkeys"},{"name":"pgfcalendar"},{"name":"pgfrcs"},{"name":"textcomp"},{"name":"marvosym"},{"name":"soul"},{"name":"soul-ori"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"overpic"},{"name":"epic"},{"name":"pict2e"},{"name":"xcolor"},{"name":"url"},{"name":"verbatim"},{"name":"moreverb"},{"name":"epstopdf","engines":["pdflatex","lualatex"]},{"name":"grfext","engines":["pdflatex","lualatex"]},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"epstopdf-base","engines":["pdflatex","lualatex"]},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"hypcap"},{"name":"letltxmacro"},{"name":"float"},{"name":"caption"},{"name":"caption3"},{"name":"enumitem"},{"name":"lengthconvert"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"tocbasic"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"pdfpages"},{"name":"eso-pic"},{"name":"booktabs"},{"name":"longtable"},{"name":"multirow"},{"name":"csquotes","if":"smartquotes"},{"name":"keyval","if":"smartquotes"},{"name":"breakurl","engines":["xelatex"]}],
+	"macros": [
+		{"name":"calibrationbox","arg":{"format":"{}{}","snippet":"calibrationbox{${1:width}}{${2:height}}"}},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:e-mail address}}"}},
+		{"name":"euro","math":true,"detail":"€","doc":"euro sign"},
+		{"name":"fitem","arg":{"format":"{}","snippet":"fitem{${1:file name}}"},"unusual":true},
+		{"name":"getcurrentlabel"},
+		{"name":"hgbDate"},
+		{"name":"Messbox","arg":{"format":"{}{}","snippet":"Messbox{${1:width}}{${2:height}}"},"unusual":true},
+		{"name":"SetLanguage","arg":{"format":"{}","snippet":"SetLanguage{${1:language}}"}},
+		{"name":"ShowParameter","arg":{"format":"{}","snippet":"ShowParameter{${1:parameter}}"},"unusual":true},
+		{"name":"SmartQuotesActive","unusual":true},
+		{"name":"trennstrich","unusual":true}
+	],
+	"envs": [
+		{"name":"block"},
+		{"name":"english"},
+		{"name":"FileList","arg":{"format":"{}","snippet":"{${1:path}}"},"unusual":true},
+		{"name":"german"},
+		{"name":"NarrowList","unusual":true},
+		{"name":"nowidows","unusual":true},
+		{"name":"program","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"program"},
+		{"name":"SwitchLanguage","arg":{"format":"{}","snippet":"{${1:language}}"}}
+	],
+	"keys": {
+		"\\usepackage/hgb#c": ["english","german","ngerman","noUpdateCheck","smartquotes"]
+	},
+	"args": ["\\usepackage/hgb#c"]
+}

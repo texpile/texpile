@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"arrayextrasep"},
+		{"name":"coldef","arg":{"format":"[]{}{}","snippet":"coldef[${1:column set}]{${2:column name}}{${3:definition}}"}},
+		{"name":"coldef","arg":{"format":"{}{}","snippet":"coldef{${1:column name}}{${2:definition}}"}},
+		{"name":"collet","arg":{"format":"[]{}[]{}","snippet":"collet[${1:column set}]{${2:column name}}[${3:source column set}]{${4:source column name}}"}},
+		{"name":"collet","arg":{"format":"{}{}","snippet":"collet{${1:column name}}{${2:source column name}}"}},
+		{"name":"colpop"},
+		{"name":"colpush","arg":{"format":"{}","snippet":"colpush{${1:column set}}"}},
+		{"name":"colset","arg":{"format":"{}","snippet":"colset{${1:column set}}"}},
+		{"name":"doafter","arg":{"format":"{}{}","snippet":"doafter{${1:token}}{${2:group}}"},"unusual":true},
+		{"name":"extrarowheight","unusual":true},
+		{"name":"hlx","arg":{"format":"{}","snippet":"hlx{${1}}"}},
+		{"name":"hlxdef","arg":{"format":"{}{}","snippet":"hlxdef{${1:letter}}{${2:definition}}"},"unusual":true},
+		{"name":"ifinrange","arg":{"format":"{}{}{}{}","snippet":"ifinrange{${1:number}}{${2:range list}}{${3:then}}{${4:else}}"},"unusual":true},
+		{"name":"newcolumntype","arg":{"format":"{}[][]{}","snippet":"newcolumntype{${1:column name}}[${2:number of arguments}][${3:default}]{${4:definition}}"}},
+		{"name":"newcolumntype","arg":{"format":"{}{}","snippet":"newcolumntype{${1:column name}}{${2:definition}}"}},
+		{"name":"ranges","arg":{"format":"{}{}","snippet":"ranges{${1}}{${2}}"},"unusual":true},
+		{"name":"showcol","arg":{"format":"{}","snippet":"showcol{${1}}"},"unusual":true},
+		{"name":"showpream","arg":{"format":"{}","snippet":"showpream{${1}}"},"unusual":true},
+		{"name":"smarraycolsep"},
+		{"name":"smarrayextrasep"},
+		{"name":"spewnotes","unusual":true},
+		{"name":"tabcoltype","arg":{"format":"{}{}","snippet":"tabcoltype{${1}}{${2}}"}},
+		{"name":"tabextrasep"},
+		{"name":"tabpause","arg":{"format":"{}","snippet":"tabpause{${1:text}}"}},
+		{"name":"tabruletype","arg":{"format":"{}","snippet":"tabruletype{${1}}"}},
+		{"name":"tabspctype","arg":{"format":"{}","snippet":"tabspctype{${1}}"}},
+		{"name":"tabstyle","doc":"A command executed at the beginning of a tabular or tabular∗ environment."},
+		{"name":"tabuserposttype","arg":{"format":"{}","snippet":"tabuserposttype{${1}}"}},
+		{"name":"tabuserpretype","arg":{"format":"{}","snippet":"tabuserpretype{${1}}"}},
+		{"name":"vgap","arg":{"format":"[]{}","snippet":"vgap[${1:columns}]{${2:length}}"}},
+		{"name":"vgap","arg":{"format":"{}","snippet":"vgap{${1:length}}"}},
+		{"name":"vline","arg":{"format":"[]","snippet":"vline[${1:width}]"},"doc":"The \\vline command draws a vertical rule the height of the current table cell (unless the current cell is being typeset in paragraph mode – it only works in the simple LR-mode table cells, or in ‘@’ or ‘!’ modifiers)."},
+		{"name":"vline","doc":"The \\vline command draws a vertical rule the height of the current table cell (unless the current cell is being typeset in paragraph mode – it only works in the simple LR-mode table cells, or in ‘@’ or ‘!’ modifiers)."}
+	],
+	"envs": [
+		{"name":"savenotes","unusual":true},
+		{"name":"smarray","arg":{"format":"[]{}","snippet":"[${1:position}]{${2:preamble}}"},"doc":"The smarray environment produces a ‘small’ array, with script size cells rather than the normal full text size cells."},
+		{"name":"smarray","arg":{"format":"{}","snippet":"{${1:preamble}}"},"doc":"The smarray environment produces a ‘small’ array, with script size cells rather than the normal full text size cells."}
+	],
+	"keys": {}
+}

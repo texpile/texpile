@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ulem","if":"!nosout"},{"name":"marginnote","if":"arrows|pdfcomment"},{"name":"pdfcomment","if":"pdfcomment"},{"name":"xkeyval","if":"pdfcomment"},{"name":"etoolbox","if":"pdfcomment"},{"name":"datetime2","if":"pdfcomment"},{"name":"tracklang","if":"pdfcomment"},{"name":"zref-savepos","if":"pdfcomment"},{"name":"zref-base","if":"pdfcomment"},{"name":"kvsetkeys","if":"pdfcomment"},{"name":"iftex","if":"pdfcomment"},{"name":"auxhook","if":"pdfcomment"},{"name":"refcount","if":"pdfcomment"},{"name":"ifthen","if":"pdfcomment"},{"name":"calc","if":"pdfcomment"},{"name":"soulpos","if":"pdfcomment"},{"name":"hyperref","if":"pdfcomment"},{"name":"pdfescape","if":"pdfcomment"},{"name":"nameref","if":"pdfcomment"},{"name":"gettitlestring","if":"pdfcomment"},{"name":"kvoptions","if":"pdfcomment"},{"name":"stringenc","if":"pdfcomment"},{"name":"intcalc","if":"pdfcomment"},{"name":"url","if":"pdfcomment"},{"name":"bitset","if":"pdfcomment"},{"name":"bigintcalc","if":"pdfcomment"},{"name":"rerunfilecheck","if":"pdfcomment"},{"name":"uniquecounter","if":"pdfcomment"},{"name":"luatex85","if":"pdfcomment","engines":["lualatex"]}],
+	"macros": [
+		{"name":"defineEdit","arg":{"format":"{}{}{}","snippet":"defineEdit{${1:name}}{${2:style of deleted text}}{${3:style of inserted text}}"}},
+		{"name":"draftnote","arg":{"format":"{}","snippet":"draftnote{${1:note}}"}},
+		{"name":"makeeditreport","doc":"Creates a summary of which page edits appear on (at the point that the command is called)."},
+		{"name":"setnotestyle","arg":{"format":"{}","snippet":"setnotestyle{${1:style}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ezedits#c": ["accept","arrows","nosout","pdfcomment"]
+	},
+	"args": ["\\usepackage/ezedits#c"]
+}

@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"insertsubsectionnavigationwithminiframe","arg":{"format":"{}","snippet":"insertsubsectionnavigationwithminiframe{${1:width}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

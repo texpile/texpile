@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"fontawesome"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"longtable"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"xspace"},{"name":"ifthen"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"0"},
+		{"name":"bild","arg":{"format":"[]{}","snippet":"bild[${1:Skalierungsfaktor}]{${2:Inhalt}}"}},
+		{"name":"bild","arg":{"format":"{}","snippet":"bild{${1:Inhalt}}"}},
+		{"name":"blockhspace","unusual":true},
+		{"name":"blockvspace","unusual":true},
+		{"name":"boolbox","arg":{"format":"[]{}","snippet":"boolbox[${1}]{${2}}"}},
+		{"name":"boolbox","arg":{"format":"{}","snippet":"boolbox{${1}}"}},
+		{"name":"dropdown","arg":{"format":"{}","snippet":"dropdown{${1:Dropdown}}"}},
+		{"name":"einruecken","arg":{"format":"{}","snippet":"einruecken{${1:nodes}}"}},
+		{"name":"emptyled","doc":"\\emptyled setzt eine 5 × 5 LED-Matrix, bei der alle LEDs ausgeschaltet sind."},
+		{"name":"farbe","arg":{"format":"{}","snippet":"farbe{${1:color}}"}},
+		{"name":"fullled","doc":"\\fullled setzt eine 5 × 5 LED-Matrix, bei der alle LEDs angeschaltet sind."},
+		{"name":"ifthenblocks","arg":{"format":"[]{}{}{}","snippet":"ifthenblocks[${1:TikZ-Stile}]{${2:Bedingung}}{${3:Anweisung}}{${4:Nodename}}"}},
+		{"name":"ifthenblocks","arg":{"format":"{}{}{}","snippet":"ifthenblocks{${1:Bedingung}}{${2:Anweisung}}{${3:Nodename}}"}},
+		{"name":"ifthenelseblocks","arg":{"format":"[]{}{}{}{}","snippet":"ifthenelseblocks[${1:TikZ-Stile}]{${2:Bedingung}}{${3:Dann-Anweisung}}{${4:Sonst-Anweisung}}{${5:Nodename}}"}},
+		{"name":"ifthenelseblocks","arg":{"format":"{}{}{}{}","snippet":"ifthenelseblocks{${1:Bedingung}}{${2:Dann-Anweisung}}{${3:Sonst-Anweisung}}{${4:Nodename}}"}},
+		{"name":"intbox","arg":{"format":"[]{}","snippet":"intbox[${1}]{${2}}"}},
+		{"name":"intbox","arg":{"format":"{}","snippet":"intbox{${1}}"}},
+		{"name":"loopblocks","arg":{"format":"[]{}{}{}{}","snippet":"loopblocks[${1:TikZ-Stile}]{${2:PRE}}{${3:COND}}{${4:INST}}{${5:NAME}}"}},
+		{"name":"loopblocks","arg":{"format":"{}{}{}{}","snippet":"loopblocks{${1:PRE}}{${2:COND}}{${3:INST}}{${4:NAME}}"}},
+		{"name":"moveindent","arg":{"format":"{}","snippet":"moveindent{${1:nodes}}"}},
+		{"name":"schleife","arg":{"format":"[]{}{}{}{}","snippet":"schleife[${1:TikZ-Stile}]{${2:Für/solange}}{${3:Bedingung}}{${4:Anweisung}}{${5:Nodename}}"}},
+		{"name":"schleife","arg":{"format":"{}{}{}{}","snippet":"schleife{${1:Für/solange}}{${2:Bedingung}}{${3:Anweisung}}{${4:Nodename}}"}},
+		{"name":"setcolor","arg":{"format":"{}{}","snippet":"setcolor{${1:Farbreferenz}}{${2:Hexfarbcode}}"}},
+		{"name":"stringbox","arg":{"format":"[]{}","snippet":"stringbox[${1}]{${2}}"}},
+		{"name":"stringbox","arg":{"format":"{}","snippet":"stringbox{${1}}"}},
+		{"name":"usb"},
+		{"name":"wenndann","arg":{"format":"[]{}{}{}","snippet":"wenndann[${1:TikZ-Stile}]{${2:Bedingung}}{${3:Anweisung}}{${4:Nodename}}"}},
+		{"name":"wenndann","arg":{"format":"{}{}{}","snippet":"wenndann{${1:Bedingung}}{${2:Anweisung}}{${3:Nodename}}"}},
+		{"name":"wenndannsonst","arg":{"format":"[]{}{}{}{}","snippet":"wenndannsonst[${1:TikZ-Stile}]{${2:Bedingung}}{${3:Dann-Anweisung}}{${4:Sonst-Anweisung}}{${5:Nodename}}"}},
+		{"name":"wenndannsonst","arg":{"format":"{}{}{}{}","snippet":"wenndannsonst{${1:Bedingung}}{${2:Dann-Anweisung}}{${3:Sonst-Anweisung}}{${4:Nodename}}"}},
+		{"name":"X"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/tikzcodeblocks#c": ["print"]
+	},
+	"args": ["\\usepackage/tikzcodeblocks#c"]
+}

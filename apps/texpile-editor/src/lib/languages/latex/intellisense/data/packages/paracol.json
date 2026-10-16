@@ -1,411 +1,77 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "switchcolumn"
-    },
-    {
-      "name": "switchcolumn",
-      "arg": {
-        "format": "[]",
-        "snippet": "switchcolumn[${1:column}]"
-      }
-    },
-    {
-      "name": "switchcolumn*",
-      "arg": {
-        "format": "[]",
-        "snippet": "switchcolumn*[${1:text}]"
-      }
-    },
-    {
-      "name": "switchcolumn",
-      "arg": {
-        "format": "[]*[]",
-        "snippet": "switchcolumn[${1:column}]*[${2:text}]"
-      }
-    },
-    {
-      "name": "thecolumn"
-    },
-    {
-      "name": "definecolumnpreamble",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "definecolumnpreamble{${1:column}}{${2:preamble}}"
-      }
-    },
-    {
-      "name": "ensurevspace",
-      "arg": {
-        "format": "{}",
-        "snippet": "ensurevspace{${1:length}}"
-      }
-    },
-    {
-      "name": "columnratio",
-      "arg": {
-        "format": "{}",
-        "snippet": "columnratio{${1:ratio 0,...,ratio k}}"
-      }
-    },
-    {
-      "name": "columnratio",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "columnratio{${1:ratio 0,...,ratio k}}[${2:ratio' 0,...,ratio' k}]"
-      }
-    },
-    {
-      "name": "setcolumnwidth",
-      "arg": {
-        "format": "{}",
-        "snippet": "setcolumnwidth{${1:gap 0,...,gap k}}"
-      }
-    },
-    {
-      "name": "setcolumnwidth",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "setcolumnwidth{${1:gap 0,...,gap k}}[${2:gap' 0,...,gap' k}]"
-      }
-    },
-    {
-      "name": "twosided"
-    },
-    {
-      "name": "twosided",
-      "arg": {
-        "format": "[]",
-        "snippet": "twosided[${1:t1t2...tk}]"
-      }
-    },
-    {
-      "name": "marginparthreshold",
-      "arg": {
-        "format": "{}",
-        "snippet": "marginparthreshold{${1:columns}}"
-      }
-    },
-    {
-      "name": "marginparthreshold",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "marginparthreshold{${1:columns}}[${2:columns'}]"
-      }
-    },
-    {
-      "name": "globalcounter",
-      "arg": {
-        "format": "{}",
-        "snippet": "globalcounter{${1:counter}}"
-      }
-    },
-    {
-      "name": "globalcounter*"
-    },
-    {
-      "name": "localcounter",
-      "arg": {
-        "format": "{}",
-        "snippet": "localcounter{${1:counter}}"
-      }
-    },
-    {
-      "name": "definethecounter",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "definethecounter{${1:counter}}{${2:column}}{${3:definition}}"
-      }
-    },
-    {
-      "name": "synccounter",
-      "arg": {
-        "format": "{}",
-        "snippet": "synccounter{${1:counter}}"
-      }
-    },
-    {
-      "name": "syncallcounters"
-    },
-    {
-      "name": "footnotelayout",
-      "arg": {
-        "format": "{}",
-        "snippet": "footnotelayout{${1:layout}}"
-      }
-    },
-    {
-      "name": "footnote*",
-      "arg": {
-        "format": "{}",
-        "snippet": "footnote*{${1:text}}"
-      }
-    },
-    {
-      "name": "footnote*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "footnote*[${2:number}]{${1:text}}"
-      }
-    },
-    {
-      "name": "footnotemark*",
-      "unusual": true
-    },
-    {
-      "name": "footnotemark*",
-      "unusual": true,
-      "arg": {
-        "format": "[]",
-        "snippet": "footnotemark*[${1:number}]"
-      }
-    },
-    {
-      "name": "footnotetext*",
-      "arg": {
-        "format": "{}",
-        "snippet": "footnotetext*{${1:text}}"
-      }
-    },
-    {
-      "name": "footnotetext*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "footnotetext*[${2:number}]{${1:text}}"
-      }
-    },
-    {
-      "name": "fncounteradjustment"
-    },
-    {
-      "name": "nofncounteradjustment"
-    },
-    {
-      "name": "belowfootnoteskip"
-    },
-    {
-      "name": "columncolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "columncolor{${1:color}}"
-      }
-    },
-    {
-      "name": "columncolor",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "columncolor{${1:color}}[${2:column}]"
-      }
-    },
-    {
-      "name": "columncolor",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "columncolor[${2:mode}]{${1:color}}"
-      }
-    },
-    {
-      "name": "columncolor",
-      "arg": {
-        "format": "[]{}[]",
-        "snippet": "columncolor[${2:mode}]{${1:color}}[${3:column}]"
-      }
-    },
-    {
-      "name": "normalcolumncolor"
-    },
-    {
-      "name": "normalcolumncolor",
-      "arg": {
-        "format": "[]",
-        "snippet": "normalcolumncolor[${1:column}]"
-      }
-    },
-    {
-      "name": "coloredwordhyphenated"
-    },
-    {
-      "name": "nocoloredwordhyphenated"
-    },
-    {
-      "name": "colseprulecolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "colseprulecolor{${1:color}}"
-      }
-    },
-    {
-      "name": "colseprulecolor",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "colseprulecolor{${1:color}}[${2:column}]"
-      }
-    },
-    {
-      "name": "colseprulecolor",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "colseprulecolor[${2:mode}]{${1:color}}"
-      }
-    },
-    {
-      "name": "colseprulecolor",
-      "arg": {
-        "format": "[]{}[]",
-        "snippet": "colseprulecolor[${2:mode}]{${1:color}}[${3:column}]"
-      }
-    },
-    {
-      "name": "normalcolseprulecolor"
-    },
-    {
-      "name": "normalcolseprulecolor",
-      "arg": {
-        "format": "[]",
-        "snippet": "normalcolseprulecolor[${1:column}]"
-      }
-    },
-    {
-      "name": "backgroundcolor",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "backgroundcolor{${1:region}}{${2:color}}"
-      }
-    },
-    {
-      "name": "backgroundcolor",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "backgroundcolor{${1:region}}[${3:mode}]{${2:color}}"
-      }
-    },
-    {
-      "name": "nobackgroundcolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "nobackgroundcolor{${1:region}}"
-      }
-    },
-    {
-      "name": "resetbackgroundcolor"
-    },
-    {
-      "name": "pagerim"
-    },
-    {
-      "name": "addcontentsonly",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "addcontentsonly{${1:file%keyvals}}{${2:column}}",
-        "keys": [
-          "\\addcontentsonly"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "flushpage"
-    }
-  ],
-  "envs": [
-    {
-      "name": "paracol",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:number}}"
-      }
-    },
-    {
-      "name": "paracol",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "{${1:number}}[${2:text}]"
-      }
-    },
-    {
-      "name": "paracol",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:numleft}]{${1:number}}"
-      }
-    },
-    {
-      "name": "paracol",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}[]",
-        "snippet": "[${2:numleft}]{${1:number}}[${3:text}]"
-      }
-    },
-    {
-      "name": "column"
-    },
-    {
-      "name": "column*"
-    },
-    {
-      "name": "column*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:text}]"
-      }
-    },
-    {
-      "name": "nthcolumn",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:column}}"
-      }
-    },
-    {
-      "name": "nthcolumn*",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:column}}"
-      }
-    },
-    {
-      "name": "nthcolumn*",
-      "arg": {
-        "format": "{}[]",
-        "snippet": "{${1:column}}[${2:text}]"
-      }
-    },
-    {
-      "name": "leftcolumn"
-    },
-    {
-      "name": "leftcolumn*"
-    },
-    {
-      "name": "leftcolumn*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:text}]"
-      }
-    },
-    {
-      "name": "rightcolumn"
-    },
-    {
-      "name": "rightcolumn*"
-    },
-    {
-      "name": "rightcolumn*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:text}]"
-      }
-    }
-  ],
-  "keys": {
-    "\\addcontentsonly": [
-      "toc",
-      "lof",
-      "lot"
-    ]
-  },
-  "args": []
+	"macros": [
+		{"name":"addcontentsonly","arg":{"format":"{}{}","snippet":"addcontentsonly{${1}}{${2}}","keys":["paracol:contents"],"keyPos":0}},
+		{"name":"backgroundcolor","arg":{"format":"{}[]{}","snippet":"backgroundcolor{${1:region}}[${2:mode}]{${3:color}}"},"doc":"The command declares that background painting of region is performed with color or what it specifies by the combination of the optional mode."},
+		{"name":"backgroundcolor","arg":{"format":"{}{}","snippet":"backgroundcolor{${1:region}}{${2:color}}"},"doc":"The command declares that background painting of region is performed with color or what it specifies by the combination of the optional mode."},
+		{"name":"belowfootnoteskip","doc":"The typesetting parameter specifies the amount of the space inserted below footnotes of single-column pre-environment stuff if it does not have bottom floats."},
+		{"name":"coloredwordhyphenated","unusual":true},
+		{"name":"colseprulecolor","arg":{"format":"[]{}[]","snippet":"colseprulecolor[${1:model}]{${2:color}}[${3:column}]"}},
+		{"name":"colseprulecolor","arg":{"format":"{}","snippet":"colseprulecolor{${1:color}}"}},
+		{"name":"columncolor","arg":{"format":"[]{}[]","snippet":"columncolor[${1:model}]{${2:color}}[${3:column}]"},"doc":"The command \\columncolor declares that the default color of a column is color or what it specifies by the combination with the optional mode."},
+		{"name":"columncolor","arg":{"format":"{}","snippet":"columncolor{${1:color}}"},"doc":"The command \\columncolor declares that the default color of a column is color or what it specifies by the combination with the optional mode."},
+		{"name":"columnratio","arg":{"format":"{}[]","snippet":"columnratio{${1:ratios}}[${2:ratios in right pages}]"},"doc":"The command defines the width of each column by the fraction ri to specify the portion which i-th (i = 0 for the leftmost) column occupies."},
+		{"name":"columnratio","arg":{"format":"{}","snippet":"columnratio{${1:ratios}}"},"doc":"The command defines the width of each column by the fraction ri to specify the portion which i-th (i = 0 for the leftmost) column occupies."},
+		{"name":"definecolumnpreamble","arg":{"format":"{}{}","snippet":"definecolumnpreamble{${1}}{${2}}"},"doc":"The command is to define the column preamble pream for the column col , which is inserted at every column-switching to the column."},
+		{"name":"definethecounter","arg":{"format":"{}{}{}","snippet":"definethecounter{${1}}{${2}}{${3}}"},"doc":"The command defines \\thectr being {rep} for the local use in the column col ."},
+		{"name":"ensurevspace","arg":{"format":"{}","snippet":"ensurevspace{${1}}"},"doc":"The command tells the first synchronizing column-switching command (i.e., \\switchcolumn[col ]*) or environment (i.e., column*, etc.) following this command that the page must be broken before synchronization unless the synchronization point has the space of len or more below it in the page."},
+		{"name":"flushpage","doc":"The command flushes pages up to the top page in which the leading column resides."},
+		{"name":"fncounteradjustment","doc":"The command \\fncounteradjustment is to let \\end{paracol} adjust the value of the counter based on its value at \\begin{paracol} and the number of footnote commands in the environment."},
+		{"name":"footnote*","arg":{"format":"[]{}","snippet":"footnote*[${1:number}]{${2:text}}"},"doc":"The command is similar to its non-starred counterpart but the explicit numbering with the optional argument is done in self-relative or base-displacement style."},
+		{"name":"footnote*","arg":{"format":"{}","snippet":"footnote*{${1:text}}"},"doc":"The command is similar to its non-starred counterpart but the explicit numbering with the optional argument is done in self-relative or base-displacement style."},
+		{"name":"footnotelayout","arg":{"format":"{}","snippet":"footnotelayout{${1}}"}},
+		{"name":"footnotemark*","arg":{"format":"[]","snippet":"footnotemark*[${1:number}]"}},
+		{"name":"footnotemark*"},
+		{"name":"footnoteplacement","arg":{"format":"{}","snippet":"footnoteplacement{${1}}"}},
+		{"name":"footnotetext*","arg":{"format":"[]{}","snippet":"footnotetext*[${1:number}]{${2:text}}"},"doc":"Without the optional argument [[+-]disp], this command does what \\footnotetext{text} does but in addition increments footnote counter before that."},
+		{"name":"footnotetext*","arg":{"format":"{}","snippet":"footnotetext*{${1:text}}"},"doc":"Without the optional argument [[+-]disp], this command does what \\footnotetext{text} does but in addition increments footnote counter before that."},
+		{"name":"globalcounter","arg":{"format":"{}","snippet":"globalcounter{${1:counter}}"},"doc":"The command \\globalcounter{ctr } declares that the counter ctr is global to all columns, while \\globalcounter* does so for all counters."},
+		{"name":"globalcounter*","doc":"The command \\globalcounter{ctr } declares that the counter ctr is global to all columns, while \\globalcounter* does so for all counters."},
+		{"name":"localcounter","arg":{"format":"{}","snippet":"localcounter{${1}}"}},
+		{"name":"marginparthreshold","arg":{"format":"{}[]","snippet":"marginparthreshold{${1:column}}[${2:column in right pages}]"},"doc":"The command specifies the minimum ordinal k of columns whose marginal notes are placed in right margin."},
+		{"name":"marginparthreshold","arg":{"format":"{}","snippet":"marginparthreshold{${1:column}}"},"doc":"The command specifies the minimum ordinal k of columns whose marginal notes are placed in right margin."},
+		{"name":"mergedfootnotes","unusual":true},
+		{"name":"multicolumnfootnotes","unusual":true},
+		{"name":"nobackgroundcolor","arg":{"format":"{}","snippet":"nobackgroundcolor{${1}}"},"doc":"The command \\nobackgroundcolor declares that the background of region is not painted, where region is one of legitimate region specifiers of \\backgroundcolor."},
+		{"name":"nocoloredwordhyphenated","unusual":true},
+		{"name":"nofncounteradjustment"},
+		{"name":"normalcolseprulecolor","arg":{"format":"[]","snippet":"normalcolseprulecolor[${1:column}]"},"doc":"The command \\normalcolseprulecolor declares the color of rules is what \\normalcolor specifies, i.e., black usually."},
+		{"name":"normalcolseprulecolor","doc":"The command \\normalcolseprulecolor declares the color of rules is what \\normalcolor specifies, i.e., black usually."},
+		{"name":"normalcolumncolor","arg":{"format":"[]","snippet":"normalcolumncolor[${1:column}]"},"doc":"The command \\normalcolumncolor declares the default color is what \\normalcolor specifies, i.e., black usually."},
+		{"name":"normalcolumncolor","doc":"The command \\normalcolumncolor declares the default color is what \\normalcolor specifies, i.e., black usually."},
+		{"name":"noswapcolumninevenpages","unusual":true},
+		{"name":"pagerim","doc":"The API \\dimen register \\pagerim has the size of page rims specified by users."},
+		{"name":"resetbackgroundcolor"},
+		{"name":"setcolumnwidth","arg":{"format":"{}[]","snippet":"setcolumnwidth{${1:widths}}[${2:widths in right pages}]"}},
+		{"name":"setcolumnwidth","arg":{"format":"{}","snippet":"setcolumnwidth{${1:widths}}"}},
+		{"name":"singlecolumnfootnotes","unusual":true},
+		{"name":"swapcolumninevenpages","unusual":true},
+		{"name":"switchcolumn","arg":{"format":"[]","snippet":"switchcolumn[${1:column}]"}},
+		{"name":"switchcolumn"},
+		{"name":"switchcolumn*","arg":{"format":"[]","snippet":"switchcolumn*[${1:spanning text}]"},"doc":"The starred version of \\switchcolumn may have an optional argument to specify a single-column spanning text whose bottom is the vertical alignment point of columns."},
+		{"name":"switchcolumn*","doc":"The starred version of \\switchcolumn may have an optional argument to specify a single-column spanning text whose bottom is the vertical alignment point of columns."},
+		{"name":"syncallcounters","doc":"The command broadcasts the values of all local counters in the column in which the command appears to the values in all other columns."},
+		{"name":"synccounter","arg":{"format":"{}","snippet":"synccounter{${1:counter}}"},"doc":"The command broadcasts the value of the local counter ctr in the column in which the command appears to the values in all other columns."},
+		{"name":"thecolumn","doc":"The command gives you the zero-origin ordinal of the column in which this command appears."},
+		{"name":"twosided","arg":{"format":"[]","snippet":"twosided[${1}]"}},
+		{"name":"twosided"}
+	],
+	"envs": [
+		{"name":"column","doc":"The environment column contains body for the column next to what we are in just before \\begin{column}."},
+		{"name":"column*","arg":{"format":"[]","snippet":"[${1:spanning text}]"},"doc":"The column* environment is also available for the column synchronization and may have an optional argument for spanning text."},
+		{"name":"column*","doc":"The column* environment is also available for the column synchronization and may have an optional argument for spanning text."},
+		{"name":"leftcolumn","doc":"The environment leftcolumn contains body for the leftmost column 0, while rightcolumn for the column 1 being the right column in two-column typesetting."},
+		{"name":"leftcolumn*","arg":{"format":"[]","snippet":"[${1:spanning text}]"}},
+		{"name":"leftcolumn*"},
+		{"name":"nthcolumn","arg":{"format":"{}","snippet":"{${1:column}}"},"doc":"The environment nthcolumn contains body for the column col ."},
+		{"name":"nthcolumn*","arg":{"format":"{}[]","snippet":"{${1:column}}[${2:spanning text}]"}},
+		{"name":"nthcolumn*","arg":{"format":"{}","snippet":"{${1:column}}"}},
+		{"name":"paracol","arg":{"format":"[]{}[]","snippet":"[${1:columns on the left}]{${2:columns}}[${3:spanning text}]"}},
+		{"name":"paracol","arg":{"format":"{}","snippet":"{${1:columns}}"}},
+		{"name":"rightcolumn"},
+		{"name":"rightcolumn*","arg":{"format":"[]","snippet":"[${1:spanning text}]"}},
+		{"name":"rightcolumn*"}
+	],
+	"keys": {
+		"paracol:contents": ["toc","lof","lot"]
+	}
 }

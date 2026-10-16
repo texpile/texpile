@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"NimbusSansscale","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

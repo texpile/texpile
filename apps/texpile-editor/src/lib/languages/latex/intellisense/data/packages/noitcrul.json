@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"robustcommand"}],
+	"macros": [
+		{"name":"noitUnderline","arg":{"format":"{}","snippet":"noitUnderline{${1:formula}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

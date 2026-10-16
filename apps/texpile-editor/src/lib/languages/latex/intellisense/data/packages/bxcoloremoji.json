@@ -1,0 +1,51 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"keyval"},{"name":"graphicx","engines":["pdflatex"]},{"name":"graphicx","if":"!nodvidriver","engines":["lualatex","xelatex"]},{"name":"graphics","engines":["pdflatex"]},{"name":"graphics","if":"!nodvidriver","engines":["lualatex","xelatex"]},{"name":"trig","engines":["pdflatex"]},{"name":"trig","if":"!nodvidriver","engines":["lualatex","xelatex"]},{"name":"color","engines":["pdflatex"]},{"name":"color","if":"!nodvidriver","engines":["lualatex","xelatex"]},{"name":"twemojis","engines":["pdflatex"]},{"name":"twemojis","if":"!nodvidriver","engines":["lualatex","xelatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"ifthen","if":"!nodvidriver","engines":["lualatex","xelatex"]}],
+	"macros": [
+		{"name":"bxcoloremojiDeclareOrder","arg":{"format":"{}","snippet":"bxcoloremojiDeclareOrder{${1}}"},"unusual":true},
+		{"name":"bxcoloremojiTestOrder","arg":{"format":"{}{}","snippet":"bxcoloremojiTestOrder{${1}}{${2}}"},"unusual":true},
+		{"name":"bxcoloremojiUndeclareOrder","arg":{"format":"{}","snippet":"bxcoloremojiUndeclareOrder{${1}}"},"unusual":true},
+		{"name":"coloremoji","arg":{"format":"[]{}","snippet":"coloremoji[${1:parameters}]{${2:string}}"},"doc":"Outputs the argument string as color emojis."},
+		{"name":"coloremoji","arg":{"format":"{}","snippet":"coloremoji{${1:string}}"},"doc":"Outputs the argument string as color emojis."},
+		{"name":"coloremoji*","arg":{"format":"[]{}","snippet":"coloremoji*[${1:parameters}]{${2:string}}"},"doc":"Outputs the argument string as color emojis."},
+		{"name":"coloremoji*","arg":{"format":"{}","snippet":"coloremoji*{${1:string}}"},"doc":"Outputs the argument string as color emojis."},
+		{"name":"coloremojicode","arg":{"format":"[]{}","snippet":"coloremojicode[${1:parameters}]{${2:code value list}}"}},
+		{"name":"coloremojicode","arg":{"format":"{}","snippet":"coloremojicode{${1:code value list}}"}},
+		{"name":"coloremojicode*","arg":{"format":"[]{}","snippet":"coloremojicode*[${1:parameters}]{${2:code value list}}"}},
+		{"name":"coloremojicode*","arg":{"format":"{}","snippet":"coloremojicode*{${1:code value list}}"}},
+		{"name":"coloremojicodefill","arg":{"format":"{}","snippet":"coloremojicodefill{${1:code value list}}"}},
+		{"name":"coloremojicodeline","arg":{"format":"{}","snippet":"coloremojicodeline{${1:code value list}}"}},
+		{"name":"coloremojidir","unusual":true},
+		{"name":"coloremojifill","arg":{"format":"{}","snippet":"coloremojifill{${1:string}}"},"doc":"A filler command (like \\dotfill) that fills a line by arranging multiple outputs of \\coloremoji{⟨string⟩}."},
+		{"name":"coloremojikeycap","arg":{"format":"[]{}","snippet":"coloremojikeycap[${1:parameters}]{${2:counter name}}"}},
+		{"name":"coloremojikeycap","arg":{"format":"{}","snippet":"coloremojikeycap{${1:counter name}}"}},
+		{"name":"coloremojikeycap*","arg":{"format":"[]{}","snippet":"coloremojikeycap*[${1:parameters}]{${2:counter name}}"}},
+		{"name":"coloremojikeycap*","arg":{"format":"{}","snippet":"coloremojikeycap*{${1:counter name}}"}},
+		{"name":"coloremojikeycapof","arg":{"format":"[]{}","snippet":"coloremojikeycapof[${1:parameters}]{${2:number}}"}},
+		{"name":"coloremojikeycapof","arg":{"format":"{}","snippet":"coloremojikeycapof{${1:number}}"}},
+		{"name":"coloremojikeycapof*","arg":{"format":"[]{}","snippet":"coloremojikeycapof*[${1:parameters}]{${2:number}}"}},
+		{"name":"coloremojikeycapof*","arg":{"format":"{}","snippet":"coloremojikeycapof*{${1:number}}"}},
+		{"name":"coloremojiline","arg":{"format":"{}","snippet":"coloremojiline{${1:string}}"},"doc":"Outputs a decorative border using emojis."},
+		{"name":"coloremojiLoadNames","arg":{"format":"{}","snippet":"coloremojiLoadNames{${1}}"},"unusual":true},
+		{"name":"coloremojiSetAbsolutePath","arg":{"format":"{}{}","snippet":"coloremojiSetAbsolutePath{${1:family}}{${2:directory}}"}},
+		{"name":"coloremojisetup","arg":{"format":"{}","snippet":"coloremojisetup{${1:parameters}}"}},
+		{"name":"coloremojiucs","arg":{"format":"[]{}","snippet":"coloremojiucs[${1:parameters}]{${2:code value list}}"},"unusual":true},
+		{"name":"coloremojiucs","arg":{"format":"{}","snippet":"coloremojiucs{${1:code value list}}"},"unusual":true},
+		{"name":"coloremojiucs*","arg":{"format":"[]{}","snippet":"coloremojiucs*[${1:parameters}]{${2:code value list}}"},"unusual":true},
+		{"name":"coloremojiucs*","arg":{"format":"{}","snippet":"coloremojiucs*{${1:code value list}}"},"unusual":true},
+		{"name":"coloremojiucsfill","arg":{"format":"{}","snippet":"coloremojiucsfill{${1:code value list}}"},"unusual":true},
+		{"name":"coloremojiucsline","arg":{"format":"{}","snippet":"coloremojiucsline{${1:code value list}}"},"unusual":true},
+		{"name":"coloremojiZWJSymbolColor","unusual":true}
+	],
+	"envs": [
+		{"name":"coloremojiautolist","arg":{"format":"{}","snippet":"{${1:string}}"}},
+		{"name":"coloremojicodeautolist","arg":{"format":"{}","snippet":"{${1:code value list}}"}},
+		{"name":"coloremojicodelist","arg":{"format":"{}","snippet":"{${1:code value list}}"}},
+		{"name":"coloremojilist","arg":{"format":"{}","snippet":"{${1:string}}"}},
+		{"name":"coloremojiucsautolist","arg":{"format":"{}","snippet":"{${1}}"},"unusual":true},
+		{"name":"coloremojiucslist","arg":{"format":"{}","snippet":"{${1}}"},"unusual":true}
+	],
+	"keys": {
+		"\\usepackage/bxcoloremoji#c": ["nodvidriver","resetdvidriver"]
+	},
+	"args": ["\\usepackage/bxcoloremoji#c"]
+}

@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"atveryend-ltx"},{"name":"ifthen"},{"name":"xcolor"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"datatool"},{"name":"xfor"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"}],
+	"macros": [
+		{"name":"atitlepart"},
+		{"name":"atitlesec"},
+		{"name":"atitlessec"},
+		{"name":"atitlesssec"},
+		{"name":"btitlepart"},
+		{"name":"btitlesec"},
+		{"name":"btitlessec"},
+		{"name":"btitlesssec"},
+		{"name":"flinepart"},
+		{"name":"flinesec"},
+		{"name":"flinessec"},
+		{"name":"flinesssec"},
+		{"name":"fontlinepart"},
+		{"name":"fontlinesec"},
+		{"name":"fontlinessec"},
+		{"name":"fontlinesssec"},
+		{"name":"fonttitlepart"},
+		{"name":"fonttitlesec"},
+		{"name":"fonttitlessec"},
+		{"name":"fonttitlesssec"},
+		{"name":"partnam","unusual":true},
+		{"name":"slinepart"},
+		{"name":"slinesec"},
+		{"name":"slinessec"},
+		{"name":"slinesssec"}
+	],
+	"envs": [],
+	"keys": {}
+}

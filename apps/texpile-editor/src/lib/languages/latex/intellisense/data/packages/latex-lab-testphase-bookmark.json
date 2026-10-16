@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"bookmark","arg":{"format":"[]{}","snippet":"bookmark[${1:options}]{${2:title}}"}},
+		{"name":"bookmark","arg":{"format":"{}","snippet":"bookmark{${1:title}}"}},
+		{"name":"bookmarkget","arg":{"format":"{}","snippet":"bookmarkget{${1:option}}"}},
+		{"name":"bookmarksetup","arg":{"format":"{}","snippet":"bookmarksetup{${1:options}}"}},
+		{"name":"bookmarksetupnext","arg":{"format":"{}","snippet":"bookmarksetupnext{${1:options}}"}},
+		{"name":"ltlabbookmarkdate","unusual":true},
+		{"name":"ltlabbookmarkversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -34,9 +34,22 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 		expect(labels(r).some((l) => l.startsWith('colorlinks'))).toBe(true);
 	});
 
+	it('offers keys LaTeX Workshop gave that the scan confirmed (\\fxsetup)', async () => {
+		expect(labels(await completeAt('\\fxsetup{inl'))).toContain('inline');
+	});
+
 	it('offers env option keyvals inside \\begin{env}[...]', async () => {
 		const r = await completeAt('\\begin{lstlisting}[');
 		expect(labels(r).length).toBeGreaterThan(0);
+	});
+
+	it('skips the optional groups the writer left out', async () => {
+		expect(labels(await completeAt('\\newtcolorbox{mybox}[1]{col'))).toContain('colback=');
+		expect(labels(await completeAt('\\babelfont{rm}[Sca'))).toContain('Scale=');
+	});
+
+	it('counts an overlay group the writer left out (beamer)', async () => {
+		expect(labels(await completeAt('\\begin{column}['))).toContain('T');
 	});
 
 	it('gates \\usepackage[...] options on the package name being on the line', async () => {

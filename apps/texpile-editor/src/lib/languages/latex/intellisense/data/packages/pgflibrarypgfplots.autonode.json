@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"pgfplotsautonode","arg":{"format":"[]{}","snippet":"pgfplotsautonode[${1:label options}]{${2:text}}"}},
+		{"name":"pgfplotsautonode","arg":{"format":"{}","snippet":"pgfplotsautonode{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

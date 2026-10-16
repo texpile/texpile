@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"shellesc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"fancyvrb"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"MermaidAdjustBoxOpts","arg":{"format":"{}","snippet":"MermaidAdjustBoxOpts{${1}}"}},
+		{"name":"mermaidfile","arg":{"format":"[]{}","snippet":"mermaidfile[${1}]{${2}}"},"doc":"The `\\mermaidfile[<includegraphics options>]{filename}` command renders Mermaid source from an external `.mmd` file and includes the resulting PDF."},
+		{"name":"mermaidfile","arg":{"format":"{}","snippet":"mermaidfile{${1}}"},"doc":"The `\\mermaidfile[<includegraphics options>]{filename}` command renders Mermaid source from an external `.mmd` file and includes the resulting PDF."},
+		{"name":"MermaidGraphicsOpts","arg":{"format":"{}","snippet":"MermaidGraphicsOpts{${1}}"}},
+		{"name":"MermaidNoPdfFit"},
+		{"name":"MermaidRendererOptions","arg":{"format":"{}","snippet":"MermaidRendererOptions{${1}}"}}
+	],
+	"envs": [
+		{"name":"mermaid","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"mermaid"}
+	],
+	"keys": {}
+}

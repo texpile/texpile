@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"euros"},
+		{"name":"wesa"}
+	],
+	"envs": [],
+	"keys": {}
+}

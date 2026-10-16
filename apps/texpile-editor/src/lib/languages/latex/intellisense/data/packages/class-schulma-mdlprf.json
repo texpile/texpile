@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"babel"},{"name":"datetime2"},{"name":"tracklang"},{"name":"etoolbox"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"schulma"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"autoaligne"},{"name":"pgfplots"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"icomma"},{"name":"schulma-physik"},{"name":"siunitx"},{"name":"translations"},{"name":"pdftexcmds"},{"name":"array"}],
+	"macros": [
+		{"name":"Aufgabe","arg":{"format":"{}","snippet":"Aufgabe{${1:task text}}"},"doc":"Der Befehl leitet eine Aufgabe innerhalb der Umgebung Aufgaben ein."},
+		{"name":"Datum","arg":{"format":"{}","snippet":"Datum{${1:date}}"},"doc":"Gibt das Datum der Prüfung an."},
+		{"name":"Erwartungshorizont","arg":{"format":"{}","snippet":"Erwartungshorizont{${1:solution}}"},"doc":"Legt den Erwartungshorizont der Prüfungsaufgabe fest."},
+		{"name":"Fach","arg":{"format":"{}","snippet":"Fach{${1:subject}}"},"doc":"Gibt das geprüfte Unterrichtsfach an."},
+		{"name":"Hilfsmittel","arg":{"format":"{}","snippet":"Hilfsmittel{${1:allowed aids}}"},"doc":"Legt die zulässigen Hilfsmittel bei der Bearbeitung der Prüfungsaufgabe fest."},
+		{"name":"PNummer","arg":{"format":"{}","snippet":"PNummer{${1:number}}"},"doc":"Gibt die Nummer des Prüfungsfachs an."},
+		{"name":"Pruefer","arg":{"format":"{}","snippet":"Pruefer{${1:name}}"},"doc":"Gibt den Namen des Prüfers an."},
+		{"name":"Pruefung","arg":{"format":"{}{}","snippet":"Pruefung{${1:name}}{${2:time}}"},"doc":"Gibt eine einzelne Prüfung mit Erwartungshorizont aus."},
+		{"name":"Pruefungsraum","arg":{"format":"{}","snippet":"Pruefungsraum{${1:room}}"},"doc":"Gibt den Prüfungsraum an."},
+		{"name":"Schule","arg":{"format":"{}","snippet":"Schule{${1:school name}}"},"doc":"Gibt den Namen der Schule an."},
+		{"name":"Vorbereitungsraum","arg":{"format":"{}","snippet":"Vorbereitungsraum{${1:room}}"},"doc":"Gibt den Vorbereitungsraum für die Prüfung an."},
+		{"name":"Vorbereitungszeit","arg":{"format":"{}","snippet":"Vorbereitungszeit{${1:minutes}}"},"doc":"Gibt die Vorbereitungszeit in Minuten an."},
+		{"name":"WeitereThemen","arg":{"format":"{}","snippet":"WeitereThemen{${1:topics}}"},"doc":"Legt als Ergänzung des Erwartungshorizonts zur Prüfungsaufgabe die möglichen Themen des weiteren Prüfungsgesprächs fest."}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/schulma-mdlprf#c": ["AT","Prueferin"]
+	},
+	"args": ["\\documentclass/schulma-mdlprf#c"]
+}

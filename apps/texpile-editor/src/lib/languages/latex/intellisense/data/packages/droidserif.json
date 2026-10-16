@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"droidserif","doc":"The package supplies the \\droidserif command to switch the current font to Droid Serif."},
+		{"name":"droidseriffamily","unusual":true},
+		{"name":"fdrfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

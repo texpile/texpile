@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"ffmfamily"},
+		{"name":"ffmwfamily","doc":"This is the declarative font changing command for the script font family."},
+		{"name":"MF"},
+		{"name":"MP"},
+		{"name":"MT"},
+		{"name":"textffm","arg":{"format":"{}","snippet":"textffm{${1:text}}"}},
+		{"name":"textffmw","arg":{"format":"{}","snippet":"textffmw{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

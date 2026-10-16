@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"}],
+	"macros": [
+		{"name":"includestamp","arg":{"format":"[]{}","snippet":"includestamp[${1}]{${2}}","keys":["keyval:postage"],"keyPos":0}},
+		{"name":"includestamp","arg":{"format":"{}","snippet":"includestamp{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:postage": ["column=","compact","normal","page=","row=","style=${1|normal,compact|}"]
+	}
+}

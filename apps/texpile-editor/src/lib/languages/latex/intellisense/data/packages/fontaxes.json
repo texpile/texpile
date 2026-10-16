@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"figureversions"}],
+	"macros": [
+		{"name":"fontprimaryshape","arg":{"format":"{}","snippet":"fontprimaryshape{${1}}"},"unusual":true},
+		{"name":"fontsecondaryshape","arg":{"format":"{}","snippet":"fontsecondaryshape{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

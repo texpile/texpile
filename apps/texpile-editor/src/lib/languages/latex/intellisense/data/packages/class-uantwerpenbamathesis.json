@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"class-scrbook"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"xparse"},{"name":"xstring"},{"name":"etoolbox"},{"name":"ifthen"},{"name":"shellesc"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"graphbox"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"color"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"eso-pic"},{"name":"zref-totpages"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"auxhook"},{"name":"zref-abspage"},{"name":"zref-lastpage"},{"name":"fancyhdr"}],
+	"macros": [
+		{"name":"academicyear","arg":{"format":"{}","snippet":"academicyear{${1:academic year}}"},"doc":"Use this macro to specify the academic year in full, i.e. in the form XXXX-YYYY."},
+		{"name":"bamadegree","arg":{"format":"{}","snippet":"bamadegree{${1:degree code}}"},"doc":"This allows to specify the official degree through an abbreviation."},
+		{"name":"bamadoctype","arg":{"format":"{}","snippet":"bamadoctype{${1:document type}}"},"doc":"This allows to set the nature of the thesis."},
+		{"name":"companylogo","arg":{"format":"{}","snippet":"companylogo{${1:logo}}"},"doc":"This macro sets the \\@companylogo tag that later will be used on the title page."},
+		{"name":"cosupervisor","arg":{"format":"{}{}","snippet":"cosupervisor{${1:name}}{${2:affiliation}}"}},
+		{"name":"cosupervisorsname","arg":{"format":"{}","snippet":"cosupervisorsname{${1}}"},"unusual":true},
+		{"name":"degree","arg":{"format":"{}","snippet":"degree{${1:degree}}"},"doc":"This is the official degree name (in the appropriate language, possibly mixed “dutch (english)”)."},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:department}}"},"doc":"The department sets the department’s name tag \\@department that is used in the title page information."},
+		{"name":"diploma","arg":{"format":"{}","snippet":"diploma{${1}}"},"unusual":true},
+		{"name":"disclaimer","arg":{"format":"{}","snippet":"disclaimer{${1}}"},"unusual":true},
+		{"name":"extsupervisor","arg":{"format":"{}{}","snippet":"extsupervisor{${1:name}}{${2:affiliation}}"}},
+		{"name":"extsupervisorsname","arg":{"format":"{}","snippet":"extsupervisorsname{${1}}"},"unusual":true},
+		{"name":"facultyacronym","arg":{"format":"{}","snippet":"facultyacronym{${1}}"},"unusual":true},
+		{"name":"iconfile","unusual":true},
+		{"name":"insetquote","arg":{"format":"{}","snippet":"insetquote{${1:quote}}"}},
+		{"name":"insettext","arg":{"format":"{}","snippet":"insettext{${1:text}}"}},
+		{"name":"jointcosupervisors","arg":{"format":"{}{}","snippet":"jointcosupervisors{${1}}{${2}}"},"unusual":true},
+		{"name":"jointcosupervisorswithaffiliation","arg":{"format":"{}{}","snippet":"jointcosupervisorswithaffiliation{${1}}{${2}}"},"unusual":true},
+		{"name":"jointextsupervisors","arg":{"format":"{}{}","snippet":"jointextsupervisors{${1}}{${2}}"},"unusual":true},
+		{"name":"jointextsupervisorswithaffiliation","arg":{"format":"{}{}","snippet":"jointextsupervisorswithaffiliation{${1}}{${2}}"},"unusual":true},
+		{"name":"jointsupervisors","arg":{"format":"{}{}","snippet":"jointsupervisors{${1}}{${2}}"},"unusual":true},
+		{"name":"jointsupervisorswithaffiliation","arg":{"format":"{}{}","snippet":"jointsupervisorswithaffiliation{${1}}{${2}}"},"unusual":true},
+		{"name":"logomonowhite","unusual":true},
+		{"name":"logoneg","unusual":true},
+		{"name":"logopos","unusual":true},
+		{"name":"makefinalpage"},
+		{"name":"supervisor","arg":{"format":"{}{}","snippet":"supervisor{${1:name}}{${2:affiliation}}"},"doc":"Specifies the person(s) that promote(s)/supervise(s) the thesis."},
+		{"name":"supervisorsname","arg":{"format":"{}","snippet":"supervisorsname{${1}}"},"unusual":true},
+		{"name":"uantwerpendocsdegree","arg":{"format":"{}","snippet":"uantwerpendocsdegree{${1}}"},"unusual":true},
+		{"name":"uantwerpendocsdoctype","arg":{"format":"{}","snippet":"uantwerpendocsdoctype{${1}}"},"unusual":true},
+		{"name":"uantwerpendocsprop","arg":{"format":"{}","snippet":"uantwerpendocsprop{${1}}"}},
+		{"name":"uantwerpendocsPROP","arg":{"format":"{}","snippet":"uantwerpendocsPROP{${1}}"},"unusual":true},
+		{"name":"uantwerpendocspropread","arg":{"format":"{}","snippet":"uantwerpendocspropread{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/uantwerpenbamathesis#c": ["be","cmyk","fbd","filled","ggw","iob","lw","neutralcolors","ow","re","rgb","sw","ti","we"]
+	},
+	"args": ["\\documentclass/uantwerpenbamathesis#c"]
+}

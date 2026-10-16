@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"adots","math":true,"detail":"⋰","doc":"three dots, ascending"},
+		{"name":"ring","arg":{"format":"{}","snippet":"ring{${1:symbol}}"}},
+		{"name":"wideparen","arg":{"format":"{}","snippet":"wideparen{${1:symbols}}"}},
+		{"name":"widering","arg":{"format":"{}","snippet":"widering{${1}}"}},
+		{"name":"widetriangle","arg":{"format":"{}","snippet":"widetriangle{${1:symbols}}"}}
+	],
+	"envs": [
+		{"name":"amatrix"}
+	],
+	"keys": {
+		"\\usepackage/yhmath#c": ["full","minimal","nowidering"]
+	},
+	"args": ["\\usepackage/yhmath#c"]
+}

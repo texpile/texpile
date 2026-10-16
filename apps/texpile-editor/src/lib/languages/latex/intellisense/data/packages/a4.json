@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"WideMargins"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/a4#c": ["widemargins"]
+	},
+	"args": ["\\usepackage/a4#c"]
+}

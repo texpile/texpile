@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"AfterPackage","arg":{"format":"{}{}","snippet":"AfterPackage{${1:package name}}{${2:commands}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

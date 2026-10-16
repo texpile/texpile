@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"plautopatchdisable","arg":{"format":"{}","snippet":"plautopatchdisable{${1:original package}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

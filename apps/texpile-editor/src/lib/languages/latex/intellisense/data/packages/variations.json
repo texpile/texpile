@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"bvariations"},
+		{"name":"evariations"}
+	],
+	"envs": [
+		{"name":"variations"}
+	],
+	"keys": {}
+}

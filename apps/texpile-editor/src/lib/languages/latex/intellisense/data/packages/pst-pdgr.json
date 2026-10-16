@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"affectedbgcolor","unusual":true},
+		{"name":"affectedfgcolor","unusual":true},
+		{"name":"affectedstyle","unusual":true},
+		{"name":"ncAngles","unusual":true},
+		{"name":"pstAbortion","arg":{"format":"[]{}","snippet":"pstAbortion[${1:options}]{${2:id}}"},"doc":"The command \\pstAbortion is used to draw a pregnancy not carried to term: spontaneous abortions or terminated pregnancies."},
+		{"name":"pstAbortion","arg":{"format":"{}","snippet":"pstAbortion{${1:id}}"},"doc":"The command \\pstAbortion is used to draw a pregnancy not carried to term: spontaneous abortions or terminated pregnancies."},
+		{"name":"pstChildless","arg":{"format":"[]{}","snippet":"pstChildless[${1}]{${2}}"}},
+		{"name":"pstChildless","arg":{"format":"{}","snippet":"pstChildless{${1}}"}},
+		{"name":"pstDescent","arg":{"format":"[]{}{}","snippet":"pstDescent[${1:options}]{${2:parent}}{${3:child}}"}},
+		{"name":"pstDescent","arg":{"format":"{}{}","snippet":"pstDescent{${1:parent}}{${2:child}}"}},
+		{"name":"PSTPedigreeLoaded","unusual":true},
+		{"name":"pstPerson","arg":{"format":"[]{}","snippet":"pstPerson[${1:options}]{${2:id}}"},"doc":"The main command in the package is \\pstPerson. It draws one person, which is a PSTricks node."},
+		{"name":"pstPerson","arg":{"format":"{}","snippet":"pstPerson{${1:id}}"},"doc":"The main command in the package is \\pstPerson. It draws one person, which is a PSTricks node."},
+		{"name":"pstRelationship","arg":{"format":"[]{}{}","snippet":"pstRelationship[${1:options}]{${2:node A}}{${3:node B}}"}},
+		{"name":"pstRelationship","arg":{"format":"{}{}","snippet":"pstRelationship{${1:node A}}{${2:node B}}"}},
+		{"name":"pstTwins","arg":{"format":"[]{}{}{}{}","snippet":"pstTwins[${1:options}]{${2:parent}}{${3:twin node}}{${4:left twin}}{${5:right twin}}"}},
+		{"name":"pstTwins","arg":{"format":"{}{}{}{}","snippet":"pstTwins{${1:parent}}{${2:twin node}}{${3:left twin}}{${4:right twin}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

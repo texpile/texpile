@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"accsupp"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"swungdash"},
+		{"name":"swungdashversionnumber","unusual":true},
+		{"name":"thetilde"},
+		{"name":"twiddle"}
+	],
+	"envs": [],
+	"keys": {}
+}

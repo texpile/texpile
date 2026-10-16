@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"hunclfamily"},
+		{"name":"texthuncl","arg":{"format":"{}","snippet":"texthuncl{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

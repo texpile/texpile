@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"stackengine"},{"name":"etoolbox"},{"name":"listofitems"},{"name":"calc"}],
+	"macros": [
+		{"name":"mahjong","arg":{"format":"[][]{}","snippet":"mahjong[${1}][${2}]{${3}}"}},
+		{"name":"mahjong","arg":{"format":"{}","snippet":"mahjong{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

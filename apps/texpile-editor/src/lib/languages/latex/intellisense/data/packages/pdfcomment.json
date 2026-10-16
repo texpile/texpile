@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"etoolbox"},{"name":"datetime2"},{"name":"tracklang"},{"name":"zref-savepos"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"refcount"},{"name":"ifthen"},{"name":"calc"},{"name":"marginnote"},{"name":"ifpdf"},{"name":"ifluatex"},{"name":"soulpos"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"luatex85","engines":["lualatex"]}],
+	"macros": [
+		{"name":"defineavatar","arg":{"format":"{}{}","snippet":"defineavatar{${1}}{${2}}"}},
+		{"name":"defineliststyle","arg":{"format":"{}{}","snippet":"defineliststyle{${1}}{${2}}"}},
+		{"name":"definestyle","arg":{"format":"{}{}","snippet":"definestyle{${1}}{${2}}"}},
+		{"name":"listofpdfcomments","arg":{"format":"[]","snippet":"listofpdfcomments[${1}]"}},
+		{"name":"listofpdfcomments"},
+		{"name":"lpcname"},
+		{"name":"pdfcirclecomment","arg":{"format":"[]{}","snippet":"pdfcirclecomment[${1}]{${2}}"}},
+		{"name":"pdfcirclecomment","arg":{"format":"{}","snippet":"pdfcirclecomment{${1}}"}},
+		{"name":"pdfcomment","arg":{"format":"[]{}","snippet":"pdfcomment[${1}]{${2}}"}},
+		{"name":"pdfcomment","arg":{"format":"{}","snippet":"pdfcomment{${1}}"}},
+		{"name":"pdfcommentsetup","arg":{"format":"[]{}","snippet":"pdfcommentsetup[${1}]{${2}}"}},
+		{"name":"pdfcommentsetup","arg":{"format":"{}","snippet":"pdfcommentsetup{${1}}"}},
+		{"name":"pdffreetextcomment","arg":{"format":"[]{}","snippet":"pdffreetextcomment[${1}]{${2}}"}},
+		{"name":"pdffreetextcomment","arg":{"format":"{}","snippet":"pdffreetextcomment{${1}}"}},
+		{"name":"pdflinecomment","arg":{"format":"[]{}","snippet":"pdflinecomment[${1}]{${2}}"}},
+		{"name":"pdflinecomment","arg":{"format":"{}","snippet":"pdflinecomment{${1}}"}},
+		{"name":"pdfmargincomment","arg":{"format":"[]{}","snippet":"pdfmargincomment[${1}]{${2}}"}},
+		{"name":"pdfmargincomment","arg":{"format":"{}","snippet":"pdfmargincomment{${1}}"}},
+		{"name":"pdfmarkupcomment","arg":{"format":"[]{}{}","snippet":"pdfmarkupcomment[${1}]{${2}}{${3}}"}},
+		{"name":"pdfmarkupcomment","arg":{"format":"{}{}","snippet":"pdfmarkupcomment{${1}}{${2}}"}},
+		{"name":"pdfreply","arg":{"format":"[]{}","snippet":"pdfreply[${1}]{${2}}"},"doc":"\\pdfreply will add a comment as a reply to an existing comment."},
+		{"name":"pdfreply","arg":{"format":"{}","snippet":"pdfreply{${1}}"},"doc":"\\pdfreply will add a comment as a reply to an existing comment."},
+		{"name":"pdfsquarecomment","arg":{"format":"[]{}","snippet":"pdfsquarecomment[${1}]{${2}}"}},
+		{"name":"pdfsquarecomment","arg":{"format":"{}","snippet":"pdfsquarecomment{${1}}"}},
+		{"name":"pdfsquaretooltip","arg":{"format":"[]{}{}","snippet":"pdfsquaretooltip[${1}]{${2}}{${3}}"}},
+		{"name":"pdfsquaretooltip","arg":{"format":"{}{}","snippet":"pdfsquaretooltip{${1}}{${2}}"}},
+		{"name":"pdftooltip","arg":{"format":"[]{}{}","snippet":"pdftooltip[${1}]{${2}}{${3}}"},"doc":"With the command \\pdftooltip you can annotate any object with a tooltip provided the the object can be set into a box to measure its size."},
+		{"name":"pdftooltip","arg":{"format":"{}{}","snippet":"pdftooltip{${1}}{${2}}"},"doc":"With the command \\pdftooltip you can annotate any object with a tooltip provided the the object can be set into a box to measure its size."},
+		{"name":"setliststyle","arg":{"format":"{}","snippet":"setliststyle{${1}}"}}
+	],
+	"envs": [
+		{"name":"pdfsidelinecomment","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"},"doc":"With the environment pdfsidelinecomment you can comment complete parts of a page in the form of two lines in the margins."},
+		{"name":"pdfsidelinecomment","arg":{"format":"{}","snippet":"{${1}}"},"doc":"With the environment pdfsidelinecomment you can comment complete parts of a page in the form of two lines in the margins."}
+	],
+	"keys": {}
+}

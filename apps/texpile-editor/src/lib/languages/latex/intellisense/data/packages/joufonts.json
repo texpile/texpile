@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"xeCJK"},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]}],
+	"macros": [
+		{"name":"JOUCoverHei","unusual":true},
+		{"name":"JOUCoverKai","unusual":true},
+		{"name":"JOUFang","unusual":true},
+		{"name":"JOUFontMode","unusual":true},
+		{"name":"JOUHei","unusual":true},
+		{"name":"JOUKai","unusual":true},
+		{"name":"JOULishu","unusual":true},
+		{"name":"JOUOpenSourceFontDir","unusual":true},
+		{"name":"JOUProprietaryFontDir","unusual":true},
+		{"name":"JOUSong","unusual":true},
+		{"name":"JOUWindowsFontDir","unusual":true},
+		{"name":"JOUWPSFontDir","unusual":true},
+		{"name":"JOUXiaobiaoSong","unusual":true},
+		{"name":"JOUXingkai","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/joufonts#c": ["strictfonts"]
+	},
+	"args": ["\\usepackage/joufonts#c"]
+}

@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"bysame","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

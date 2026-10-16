@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"soul"},{"name":"soul-ori"},{"name":"iftex"},{"name":"xcolor"},{"name":"todonotes"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"}],
+	"macros": [
+		{"name":"add","arg":{"format":"{}","snippet":"add{${1}}"}},
+		{"name":"addColor"},
+		{"name":"alert","arg":{"format":"{}","snippet":"alert{${1}}"}},
+		{"name":"alertColor"},
+		{"name":"comment","arg":{"format":"{}{}","snippet":"comment{${1}}{${2}}"}},
+		{"name":"highlight","arg":{"format":"{}","snippet":"highlight{${1}}"}},
+		{"name":"ifistoreview","unusual":true},
+		{"name":"istoreviewfalse","unusual":true},
+		{"name":"istoreviewtrue","unusual":true},
+		{"name":"remove","arg":{"format":"{}","snippet":"remove{${1}}"}},
+		{"name":"removeColor"},
+		{"name":"replace","arg":{"format":"{}{}","snippet":"replace{${1}}{${2}}"}},
+		{"name":"setreviewsoff"},
+		{"name":"setreviewson"},
+		{"name":"substitute","arg":{"format":"{}{}","snippet":"substitute{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

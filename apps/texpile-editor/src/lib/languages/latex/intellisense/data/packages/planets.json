@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xstring"}],
+	"macros": [
+		{"name":"axisfalse","unusual":true},
+		{"name":"axistrue","unusual":true},
+		{"name":"equatorfalse","unusual":true},
+		{"name":"equatortrue","unusual":true},
+		{"name":"ifaxis","unusual":true},
+		{"name":"ifequator","unusual":true},
+		{"name":"ifretrograde","unusual":true},
+		{"name":"ifrings","unusual":true},
+		{"name":"ifrotation","unusual":true},
+		{"name":"planet","arg":{"format":"[]","snippet":"planet[${1}]"}},
+		{"name":"planet"},
+		{"name":"retrogradefalse","unusual":true},
+		{"name":"retrogradetrue","unusual":true},
+		{"name":"ringsfalse","unusual":true},
+		{"name":"ringstrue","unusual":true},
+		{"name":"rotationfalse","unusual":true},
+		{"name":"rotationtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-xkey"}],
+	"macros": [
+		{"name":"psVenn","arg":{"format":"[]()()(){}{}","snippet":"psVenn[${1:options}](${2:O1})(${3:O2})(${4:O3}){${5:radius}}{${6:segments}}"}},
+		{"name":"psVenn","arg":{"format":"()()(){}{}","snippet":"psVenn(${1:O1})(${2:O2})(${3:O3}){${4:radius}}{${5:segments}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

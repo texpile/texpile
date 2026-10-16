@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"commaform","arg":{"format":"{}","snippet":"commaform{${1:counter}}"},"doc":"Adds a new possibility for printing counter values in addition to \\arabic, \\roman, etc. \\commaform inserts a comma every three digits, as in 12,345."},
+		{"name":"commaformtoken"}
+	],
+	"envs": [],
+	"keys": {}
+}

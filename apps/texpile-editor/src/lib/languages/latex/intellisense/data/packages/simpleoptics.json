@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"biconcavelens","arg":{"format":"{}{}{}{}{}","snippet":"biconcavelens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"biconvexlens","arg":{"format":"{}{}{}{}{}","snippet":"biconvexlens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"concaveconvexlens","arg":{"format":"{}{}{}{}{}","snippet":"concaveconvexlens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"convexconcavelens","arg":{"format":"{}{}{}{}{}","snippet":"convexconcavelens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"leftplanoconcavelens","arg":{"format":"{}{}{}{}{}","snippet":"leftplanoconcavelens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"leftplanoconvexlens","arg":{"format":"{}{}{}{}{}","snippet":"leftplanoconvexlens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"mirror","arg":{"format":"{}{}{}{}","snippet":"mirror{${1}}{${2}}{${3}}{${4}}"},"doc":"Mirrors can be drawn using the \\mirror macro."},
+		{"name":"rightplanoconcavelens","arg":{"format":"{}{}{}{}{}","snippet":"rightplanoconcavelens{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"rightplanoconvexlens","arg":{"format":"{}{}{}{}{}","snippet":"rightplanoconvexlens{${1}}{${2}}{${3}}{${4}}{${5}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

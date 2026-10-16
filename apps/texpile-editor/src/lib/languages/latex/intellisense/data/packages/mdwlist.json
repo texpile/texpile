@@ -1,69 +1,27 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "desclabelstyle",
-      "arg": {
-        "format": "{}",
-        "snippet": "desclabelstyle{${1:style}}"
-      }
-    },
-    {
-      "name": "desclabelwidth",
-      "arg": {
-        "format": "{}",
-        "snippet": "desclabelwidth{${1:length}}"
-      }
-    },
-    {
-      "name": "multilinelabel"
-    },
-    {
-      "name": "nextlinelabel"
-    },
-    {
-      "name": "pushlabel"
-    },
-    {
-      "name": "resume",
-      "arg": {
-        "format": "{}",
-        "snippet": "resume{${1:envname}}"
-      }
-    },
-    {
-      "name": "resume",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "resume[${2:magicname}]{${1:envname}}"
-      }
-    },
-    {
-      "name": "suspend",
-      "arg": {
-        "format": "{}",
-        "snippet": "suspend{${1:envname}}"
-      }
-    },
-    {
-      "name": "suspend",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "suspend[${2:magicname}]{${1:envname}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "description*"
-    },
-    {
-      "name": "enumerate*"
-    },
-    {
-      "name": "itemize*"
-    }
-  ],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"defaultdesc","doc":"To allow document designers to control the global appearance of description lists, the \\defaultdesc command may be redefined; it is called while setting up a new basedescript list, before performing the user’s declarations."},
+		{"name":"desclabelstyle","arg":{"format":"{}","snippet":"desclabelstyle{${1}}"}},
+		{"name":"desclabelwidth","arg":{"format":"{}","snippet":"desclabelwidth{${1}}"}},
+		{"name":"makecompactlist","arg":{"format":"{}{}","snippet":"makecompactlist{${1}}{${2}}"}},
+		{"name":"multilinelabel","doc":"The label is typeset in a parbox with the appropriate width; if it won’t fit on one line, then the text will be split onto subsequent lines."},
+		{"name":"nextlinelabel","doc":"If the label is too wide to fit next to the first line of text, then it is placed on a line by itself; the main text is started on the next line with the usual indentation."},
+		{"name":"pushlabel"},
+		{"name":"resume","arg":{"format":"[]{}[]","snippet":"resume[${1:name}]{${2:environment}}[${3:arguments}]"},"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."},
+		{"name":"resume","arg":{"format":"{}","snippet":"resume{${1:environment}}"},"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."},
+		{"name":"suspend","arg":{"format":"[]{}","snippet":"suspend[${1}]{${2}}"},"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."},
+		{"name":"suspend","arg":{"format":"{}","snippet":"suspend{${1}}"},"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."}
+	],
+	"envs": [
+		{"name":"basedescript","arg":{"format":"{}","snippet":"{${1}}"},"doc":"The basedescript environment acts as a ‘skeleton’ for description environments."},
+		{"name":"description*","arg":{"format":"[]","snippet":"[${1:arguments}]"}},
+		{"name":"description*"},
+		{"name":"enumerate*","arg":{"format":"[]","snippet":"[${1:arguments}]"}},
+		{"name":"enumerate*"},
+		{"name":"itemize*","arg":{"format":"[]","snippet":"[${1:arguments}]"}},
+		{"name":"itemize*"},
+		{"name":"note","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"note"}
+	],
+	"keys": {}
 }

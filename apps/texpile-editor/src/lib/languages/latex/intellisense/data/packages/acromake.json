@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xspace"}],
+	"macros": [
+		{"name":"ACRcnta"},
+		{"name":"ACRcntb"},
+		{"name":"acromake","arg":{"format":"{}{}{}","snippet":"acromake{${1}}{${2}}{${3}}"}},
+		{"name":"theutil","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"bxorigcaptDeprecateCommand","arg":{"format":"{}","snippet":"bxorigcaptDeprecateCommand{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bxorigcapt#c": ["main","nowarn","warn"]
+	},
+	"args": ["\\usepackage/bxorigcapt#c"]
+}

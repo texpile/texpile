@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"float"},{"name":"caption"},{"name":"caption3"},{"name":"keyval"},{"name":"mdframed"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"etoolbox"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"relsize"},{"name":"stringstrings"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"listofsh"},
+		{"name":"shautoformat","arg":{"format":"{}","snippet":"shautoformat{${1:true or false}}"}},
+		{"name":"shautopath","arg":{"format":"{}","snippet":"shautopath{${1:true or false}}"}},
+		{"name":"shautoread","arg":{"format":"{}{}","snippet":"shautoread{${1:command}}{${2:file}}"}},
+		{"name":"shautorun","arg":{"format":"{}","snippet":"shautorun{${1:command}}"},"doc":"Just like \\shrun, \\shautorun lets the user execute a shell command and typeset its output."},
+		{"name":"shchange","arg":{"format":"{}{}","snippet":"shchange{${1:name}}{${2:value}}"}},
+		{"name":"shchangecolor","arg":{"format":"{}{}","snippet":"shchangecolor{${1:name}}{${2:color}}"}},
+		{"name":"shchangesymbol","arg":{"format":"{}{}","snippet":"shchangesymbol{${1:name}}{${2:symbol}}"}},
+		{"name":"shclearfiles","doc":"\\shclearfiles removes all the temporary files by calling the shell command ’rm’."},
+		{"name":"shfloatname","arg":{"format":"{}","snippet":"shfloatname{${1:caption name}}"}},
+		{"name":"shline","arg":{"format":"{}{}","snippet":"shline{${1:path}}{${2:command}}"}},
+		{"name":"shlistname","arg":{"format":"{}","snippet":"shlistname{${1:list title}}"},"doc":"One can use \\shlistname to change the title of the sessions list."},
+		{"name":"shmachine","arg":{"format":"{}","snippet":"shmachine{${1:machine name}}"}},
+		{"name":"shoutput","arg":{"format":"{}{}","snippet":"shoutput{${1:option}}{${2:output text}}"}},
+		{"name":"shpath","doc":"\\shpath prints the current path by capturing the output of the Linux-specific print working directory ’pwd’ command."},
+		{"name":"shpreset","arg":{"format":"{}","snippet":"shpreset{${1:preset name}}"}},
+		{"name":"shpresetdef","arg":{"format":"{}{}","snippet":"shpresetdef{${1:preset name}}{${2:definition}}"},"doc":"Most of the time, users might want to create their own styles, which can be achieved by defining a new preset via \\shpresetdef{h<name> i}{h<def> i}."},
+		{"name":"shread","arg":{"format":"{}{}","snippet":"shread{${1:command}}{${2:file}}"}},
+		{"name":"shrun","arg":{"format":"{}","snippet":"shrun{${1:command}}"},"doc":"The \\shrun macro takes the shell command, passes it to the system shell and captures its output in a file called shrun.tmp."},
+		{"name":"shuser","arg":{"format":"{}","snippet":"shuser{${1:user name}}"}},
+		{"name":"theshlinenumber","unusual":true}
+	],
+	"envs": [
+		{"name":"sh","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"sh"},
+		{"name":"shbox","arg":{"format":"[]","snippet":"[${1:mdframed options}]"}},
+		{"name":"shbox"}
+	],
+	"keys": {}
+}

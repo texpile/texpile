@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"class-beamer"},{"name":"beamerbasemodes"},{"name":"etoolbox"},{"name":"iftex"},{"name":"beamerbaseoptions"},{"name":"keyval"},{"name":"geometry"},{"name":"ifvtex"},{"name":"pgfmath"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"xxcolor"},{"name":"atbegshi-ltx"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"beamerbasecompatibility"},{"name":"beamerbasefont"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"beamerbasetranslator"},{"name":"translator"},{"name":"beamerbasemisc"},{"name":"beamerbasetwoscreens"},{"name":"beamerbaseoverlay"},{"name":"beamerbasetitle"},{"name":"beamerbasesection"},{"name":"beamerbaseframe"},{"name":"beamerbaseverbatim"},{"name":"beamerbaseframesize"},{"name":"beamerbaseframecomponents"},{"name":"beamerbasecolor"},{"name":"beamerbasenotes"},{"name":"beamerbasetoc"},{"name":"beamerbaseboxes"},{"name":"beamerbaselocalstructure"},{"name":"enumerate"},{"name":"beamerbasenavigation"},{"name":"beamerbasetheorems"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"beamerbasethemes"},{"name":"beamerinnerthemedefault"},{"name":"sourceserifpro","if":"!fonts=none"},{"name":"ifxetex","if":"!fonts=none"},{"name":"ifluatex","if":"!fonts=none"},{"name":"xkeyval"},{"name":"sourceserif","if":"!fonts=none"},{"name":"sourcesanspro","if":"!fonts=none"},{"name":"sourcesans","if":"!fonts=none"},{"name":"sourcecodepro","if":"!fonts=none"},{"name":"tcolorbox","if":"!tcolorbox=false"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"verbatim","if":"!tcolorbox=false"},{"name":"environ","if":"!tcolorbox=false"},{"name":"caption","if":"!caption=false"},{"name":"caption3","if":"!caption=false"},{"name":"babel"},{"name":"biblatex","engines":["pdflatex"]},{"name":"biblatex","if":"!biblatex=false","engines":["lualatex","xelatex"]},{"name":"logreq","engines":["pdflatex"]},{"name":"logreq","if":"!biblatex=false","engines":["lualatex","xelatex"]},{"name":"ifthen"},{"name":"blx-case-expl3","engines":["pdflatex"]},{"name":"blx-case-expl3","if":"!biblatex=false","engines":["lualatex","xelatex"]},{"name":"xparse","engines":["pdflatex"]},{"name":"xparse","if":"!biblatex=false","engines":["lualatex","xelatex"]},{"name":"array"},{"name":"microtype","if":"!microtype=false"},{"name":"csquotes"},{"name":"covington","if":"!covington=false"},{"name":"varwidth","if":"!covington=false"},{"name":"tikzpagenodes"},{"name":"ifoddpage"},{"name":"beamerposter"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"draftwatermark","if":"draftmark=true"},{"name":"fontspec","if":"!fonts=none","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","if":"!fonts=none","engines":["lualatex"]},{"name":"tikzfill.image","if":"all","engines":["lualatex","xelatex"]},{"name":"pdfcol","if":"all","engines":["lualatex","xelatex"]},{"name":"minted","if":"all","engines":["lualatex","xelatex"]},{"name":"catchfile","if":"all","engines":["lualatex","xelatex"]},{"name":"etexcmds","if":"all","engines":["lualatex","xelatex"]},{"name":"fvextra","if":"all","engines":["lualatex","xelatex"]},{"name":"fancyvrb","if":"all","engines":["lualatex","xelatex"]},{"name":"upquote","if":"all","engines":["lualatex","xelatex"]},{"name":"textcomp","if":"all","engines":["lualatex","xelatex"]},{"name":"lineno","if":"all","engines":["lualatex","xelatex"]},{"name":"latex2pydata","if":"all","engines":["lualatex","xelatex"]},{"name":"pgfopts","if":"all","engines":["lualatex","xelatex"]},{"name":"shellesc","if":"all","engines":["lualatex","xelatex"]},{"name":"float","if":"all","engines":["lualatex","xelatex"]},{"name":"listings","if":"all","engines":["lualatex","xelatex"]},{"name":"makeidx","if":"all","engines":["lualatex","xelatex"]},{"name":"marginnote","if":"all","engines":["lualatex","xelatex"]},{"name":"fontspec-xetex","if":"!fonts=none","engines":["xelatex"]}],
+	"macros": [
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:name in footline}]{${2:name in title}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:name in title}}"}},
+		{"name":"Bibheading","arg":{"format":"{}","snippet":"Bibheading{${1:title}}"}},
+		{"name":"Concept","arg":{"format":"{}","snippet":"Concept{${1:text}}"},"doc":"To mark concepts. Typeset in small capitals."},
+		{"name":"date","arg":{"format":"[]{}","snippet":"date[${1:short date}]{${2:date}}"},"doc":"Date of the poster presentation (printed in the foot line)."},
+		{"name":"date","arg":{"format":"{}","snippet":"date{${1:date}}"},"doc":"Date of the poster presentation (printed in the foot line)."},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:name}}"}},
+		{"name":"eventdate","arg":{"format":"{}","snippet":"eventdate{${1:date}}"}},
+		{"name":"eventlocation","arg":{"format":"{}","snippet":"eventlocation{${1:location}}"},"doc":"Location of the event where the poster is presented."},
+		{"name":"eventlogo","arg":{"format":"{}","snippet":"eventlogo{${1:logo data}}"},"doc":"Logo of the event."},
+		{"name":"eventtitle","arg":{"format":"{}","snippet":"eventtitle{${1:title}}"},"doc":"Title of the event where the poster is presented."},
+		{"name":"Expression","arg":{"format":"{}","snippet":"Expression{${1:text}}"}},
+		{"name":"Meaning","arg":{"format":"{}","snippet":"Meaning{${1:text}}"},"doc":"To mark meaning. Typeset in ‘single quotation marks’."},
+		{"name":"restspace","arg":{"format":"[]","snippet":"restspace[${1:label}]"}},
+		{"name":"restspace"},
+		{"name":"SetURLDate","arg":{"format":"{}","snippet":"SetURLDate{${1:date}}"}},
+		{"name":"subtitle","arg":{"format":"[]{}","snippet":"subtitle[${1:short subtitle}]{${2:subtitle}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}},
+		{"name":"title","arg":{"format":"[]{}","snippet":"title[${1:short title}]{${2:title}}"}},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:title}}"}},
+		{"name":"urldate","arg":{"format":"{}","snippet":"urldate{${1:date}}"},"doc":"To output the date information only, you can use the macro \\urldate{<date>}."},
+		{"name":"weblink","arg":{"format":"{}[]","snippet":"weblink{${1:URL}}[${2:date}]"}},
+		{"name":"weblink","arg":{"format":"{}","snippet":"weblink{${1:URL}}"}}
+	],
+	"envs": [
+		{"name":"bluebox","arg":{"format":"{}","snippet":"{${1:box title}}"}},
+		{"name":"blueframedbox","arg":{"format":"{}","snippet":"{${1:box title}}"}},
+		{"name":"greenbox","arg":{"format":"{}","snippet":"{${1:box title}}"}},
+		{"name":"greenframedbox","arg":{"format":"{}","snippet":"{${1:box title}}"}},
+		{"name":"redbox","arg":{"format":"{}","snippet":"{${1:box title}}"}},
+		{"name":"redframedbox","arg":{"format":"{}","snippet":"{${1:box title}}"}}
+	],
+	"keys": {}
+}

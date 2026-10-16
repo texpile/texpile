@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"mathcomma","doc":"The original math comma is saved in the \\mathcomma macro.","math":true,"detail":","},
+		{"name":"ordcommalist","doc":"The list of decimal characters is saved in the \\ordcommalist."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"multiply"}],
+	"macros": [
+		{"name":"cbezier","arg":{"format":"[]()()()()","snippet":"cbezier[${1:N}](${2:p0})(${3:p1})(${4:p2})(${5:p3})"},"doc":"The user command for drawing a cubic Bezier curve as represented by equation (5)."},
+		{"name":"cbezier","arg":{"format":"()()()()","snippet":"cbezier(${1:p0})(${2:p1})(${3:p2})(${4:p3})"},"doc":"The user command for drawing a cubic Bezier curve as represented by equation (5)."},
+		{"name":"lbezier","arg":{"format":"[]()()","snippet":"lbezier[${1:N}](${2:p0})(${3:p1})"}},
+		{"name":"lbezier","arg":{"format":"()()","snippet":"lbezier(${1:p0})(${2:p1})"}},
+		{"name":"resetweightscale","doc":"The \\resetweightscale command resets the scale factor to its default value, which is currently 10000 (ten thousand)."},
+		{"name":"rqbezier","arg":{"format":"[]()()()()","snippet":"rqbezier[${1:N}](${2:p0})(${3:p1})(${4:p2})(${5:W})"}},
+		{"name":"rqbezier","arg":{"format":"()()()()","snippet":"rqbezier(${1:p0})(${2:p1})(${3:p2})(${4:W})"}},
+		{"name":"setweightscale","arg":{"format":"{}","snippet":"setweightscale{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

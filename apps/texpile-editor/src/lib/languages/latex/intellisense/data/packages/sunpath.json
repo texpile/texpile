@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"altmapping","unusual":true},
+		{"name":"spaltitudecircle","arg":{"format":"{}[]","snippet":"spaltitudecircle{${1:range}}[${2:style}]"},"doc":"Draws altitude circle given by {⟨range⟩}. The argument {⟨range⟩} must be a valid TikZ-range, which can be used in \\foreach."},
+		{"name":"spaltitudecircle","arg":{"format":"{}","snippet":"spaltitudecircle{${1:range}}"},"doc":"Draws altitude circle given by {⟨range⟩}. The argument {⟨range⟩} must be a valid TikZ-range, which can be used in \\foreach."},
+		{"name":"spaltitudelabel","arg":{"format":"{}[][]","snippet":"spaltitudelabel{${1:range}}[${2:azimuth}][${3:style}]"},"doc":"Draws the labels of altitude circles given by {⟨range⟩}."},
+		{"name":"spaltitudelabel","arg":{"format":"{}","snippet":"spaltitudelabel{${1:range}}"},"doc":"Draws the labels of altitude circles given by {⟨range⟩}."},
+		{"name":"spazimuthlabel","arg":{"format":"{}[]","snippet":"spazimuthlabel{${1:range}}[${2:style}]"}},
+		{"name":"spazimuthlabel","arg":{"format":"{}","snippet":"spazimuthlabel{${1:range}}"}},
+		{"name":"spazimuthline","arg":{"format":"{}{}{}","snippet":"spazimuthline{${1:range}}{${2:start altitude}}{${3:end altitude}}"}},
+		{"name":"spazimuthtick","arg":{"format":"[][][]","snippet":"spazimuthtick[${1:major}][${2:minor}][${3:mid}]"},"doc":"Draws ticks along and outside the horizon circle."},
+		{"name":"spazimuthtick","doc":"Draws ticks along and outside the horizon circle."},
+		{"name":"spcrosshair","arg":{"format":"[]","snippet":"spcrosshair[${1:style}]"},"doc":"Draws a thin line from North to South and a thin line from East to West."},
+		{"name":"spcrosshair","doc":"Draws a thin line from North to South and a thin line from East to West."},
+		{"name":"spgeodirection","arg":{"format":"[][]","snippet":"spgeodirection[${1:offset}][${2:style}]"},"doc":"Puts four geographic directions North, East, South, West around the horinzon line. [⟨offset⟩] is the distance from horizon to the TikZ node of the directions."},
+		{"name":"spgeodirection","doc":"Puts four geographic directions North, East, South, West around the horinzon line. [⟨offset⟩] is the distance from horizon to the TikZ node of the directions."},
+		{"name":"spradius","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

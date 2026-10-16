@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"luatexbase"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

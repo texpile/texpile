@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"babel"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

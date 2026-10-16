@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"tikzdeclarepattern","arg":{"format":"{}","snippet":"tikzdeclarepattern{${1:config}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

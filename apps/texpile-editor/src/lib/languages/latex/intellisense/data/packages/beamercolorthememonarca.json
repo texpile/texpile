@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/beamercolorthememonarca#c": ["overlystylish"]
+	},
+	"args": ["\\usepackage/beamercolorthememonarca#c"]
+}

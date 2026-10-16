@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"B","arg":{"format":"{}","snippet":"B{${1:text}}"}},
+		{"name":"Doc"},
+		{"name":"eDoc"},
+		{"name":"eFig"},
+		{"name":"eItemz"},
+		{"name":"eMinipg"},
+		{"name":"eQuickTable"},
+		{"name":"eTable"},
+		{"name":"eTabular"},
+		{"name":"Fig","arg":{"format":"{}","snippet":"Fig{${1:par}}"}},
+		{"name":"I","arg":{"format":"{}","snippet":"I{${1:text}}"}},
+		{"name":"IB","arg":{"format":"{}","snippet":"IB{${1:text}}"}},
+		{"name":"Itemz"},
+		{"name":"Minipg","arg":{"format":"{}","snippet":"Minipg{${1:width}}"}},
+		{"name":"QT"},
+		{"name":"QuickTable","arg":{"format":"{}{}{}","snippet":"QuickTable{${1:caption}}{${2:par1}}{${3:par2}}"},"doc":"Creates a basic centred table, containing a caption. par1 is a parameter for the location of the table (eg. h), and par2 is a parameter for the Tabular environment (eg. cccc)."},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1}}"},"unusual":true},
+		{"name":"Table","arg":{"format":"[]","snippet":"Table[${1}]"}},
+		{"name":"Table"},
+		{"name":"Tabular","arg":{"format":"{}","snippet":"Tabular{${1:par}}"}},
+		{"name":"TitlePage","arg":{"format":"{}{}{}{}","snippet":"TitlePage{${1:title}}{${2:subtitle}}{${3:date}}{${4:author}}"},"doc":"Creates a basic title page, containing a title, subtitle, date, and author."},
+		{"name":"TitlePageGraphic","arg":{"format":"{}{}{}{}{}{}","snippet":"TitlePageGraphic{${1:title}}{${2:subtitle}}{${3:date}}{${4:author}}{${5:graphic}}{${6:par}}"},"doc":"Creates title page with graphic."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"multicol"}],
+	"macros": [
+		{"name":"glsmcols","doc":"Define macro in which to store the number of columns."},
+		{"name":"GlsMcolTreeSetup","arg":{"format":"{}","snippet":"GlsMcolTreeSetup{${1:key=value list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

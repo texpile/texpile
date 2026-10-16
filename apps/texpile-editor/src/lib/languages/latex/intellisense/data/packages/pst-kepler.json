@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-eucl"},{"name":"pst-node"},{"name":"pst-tools"},{"name":"pst-calculate"},{"name":"xparse"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"amstext"},{"name":"array"},{"name":"hvextern"},{"name":"shellesc"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"comment"},{"name":"fancyvrb"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"listings"},{"name":"ifplatform"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"ifluatex"},{"name":"ifoddpage"},{"name":"filemod"},{"name":"filemod-expmin"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"minted-code"},{"name":"minted"},{"name":"fvextra"},{"name":"lineno"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"latex2pydata"},{"name":"pgfopts"},{"name":"float"},{"name":"pdfcol"},{"name":"xint"},{"name":"xintcore"},{"name":"xintkernel"},{"name":"xintexpr"},{"name":"xintfrac"},{"name":"xinttools"},{"name":"xintbinhex"},{"name":"poormanlog"},{"name":"animate"},{"name":"ifthen"},{"name":"ifdraft"},{"name":"calc"},{"name":"zref-base"},{"name":"auxhook"},{"name":"textcomp","engines":["lualatex","xelatex"]}],
+	"macros": [
+		{"name":"psKeplerAnimate","doc":"The macro \\psKeplerAnimate creates an inline PDF-animation which can only be viewed with the AdobeReader."},
+		{"name":"psKeplerModel","arg":{"format":"[]()","snippet":"psKeplerModel[${1}](${2})"}},
+		{"name":"psKeplerModel","arg":{"format":"()","snippet":"psKeplerModel(${1})"}},
+		{"name":"psKeplerShow","arg":{"format":"[]()","snippet":"psKeplerShow[${1}](${2})"}},
+		{"name":"psKeplerShow","arg":{"format":"()","snippet":"psKeplerShow(${1})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

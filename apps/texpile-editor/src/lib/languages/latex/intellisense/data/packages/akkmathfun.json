@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"latexsym"}],
+	"macros": [
+		{"name":"fn","arg":{"format":"{}{}","snippet":"fn{${1:function}}{${2:domain}}"}},
+		{"name":"fnd","arg":{"format":"{}{}{}{}","snippet":"fnd{${1:function}}{${2:domain}}{${3:codomain}}{${4:variable}}"}},
+		{"name":"fnm","arg":{"format":"{}{}{}{}","snippet":"fnm{${1:function}}{${2:domain}}{${3:codomain}}{${4:variable}}"}},
+		{"name":"id"},
+		{"name":"longto"},
+		{"name":"sfn","arg":{"format":"{}{}","snippet":"sfn{${1:function}}{${2:domain}}"}},
+		{"name":"sfnd","arg":{"format":"{}{}{}{}","snippet":"sfnd{${1:function}}{${2:domain}}{${3:codomain}}{${4:variable}}"}},
+		{"name":"sfnm","arg":{"format":"{}{}{}{}","snippet":"sfnm{${1:function}}{${2:domain}}{${3:codomain}}{${4:variable}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

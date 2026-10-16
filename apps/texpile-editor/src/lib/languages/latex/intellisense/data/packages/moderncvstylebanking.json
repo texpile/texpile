@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"moderncvstylebodyoptions","unusual":true},
+		{"name":"moderncvstyleheadoptions","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/moderncvstylebanking#c": ["center","details","fullrules","left","mixedrules","nodetails","norules","nosymbols","right","shortrules","symbols"]
+	},
+	"args": ["\\usepackage/moderncvstylebanking#c"]
+}

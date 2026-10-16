@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"blockmargin","arg":{"format":"[]","snippet":"blockmargin[${1:position}]"}},
+		{"name":"blockmargin"},
+		{"name":"clearmargin"},
+		{"name":"extendmargin","arg":{"format":"{}","snippet":"extendmargin{${1:length}}"}},
+		{"name":"marginheightadjustment"},
+		{"name":"marginphantom","arg":{"format":"[]{}","snippet":"marginphantom[${1:position}]{${2:size}}"}},
+		{"name":"marginphantom","arg":{"format":"{}","snippet":"marginphantom{${1:size}}"}},
+		{"name":"marginposadjustment"},
+		{"name":"marginskip","arg":{"format":"{}","snippet":"marginskip{${1:length}}"}},
+		{"name":"mparshift","arg":{"format":"{}","snippet":"mparshift{${1:length}}"}},
+		{"name":"softclearmargin"},
+		{"name":"unblockmargin","arg":{"format":"[]","snippet":"unblockmargin[${1:position}]"}},
+		{"name":"unblockmargin"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"g_xpeek_ignorelist_tl"},
+		{"name":"g_xpeek_matchlist_tl"},
+		{"name":"xpeek_after:nw","arg":{"format":"{}","snippet":"xpeek_after:nw{${1:code}}"}},
+		{"name":"xpeek_collect_do:nn","arg":{"format":"{}{}","snippet":"xpeek_collect_do:nn{${1:ignore list}}{${2:operation}}"}},
+		{"name":"xpeek_if_in:NNTF","arg":{"format":"{}{}{}{}","snippet":"xpeek_if_in:NNTF{${1:haystack}}{${2:needle}}{${3:true}}{${4:false}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

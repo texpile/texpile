@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"backmatter"},
+		{"name":"backmatter*"},
+		{"name":"frontmatter"},
+		{"name":"ifWithinFrontmatter","unusual":true},
+		{"name":"ifWithinMainmatter","unusual":true},
+		{"name":"mainmatter"},
+		{"name":"SetFontSize","arg":{"format":"{}","snippet":"SetFontSize{${1:length}}"}},
+		{"name":"SetLinesPerPage","arg":{"format":"{}","snippet":"SetLinesPerPage{${1:integer}}"}},
+		{"name":"SetMargins","arg":{"format":"{}{}{}{}","snippet":"SetMargins{${1:top}}{${2:outer}}{${3:bottom}}{${4:inner}}"}},
+		{"name":"SetMediaSize","arg":{"format":"{}{}","snippet":"SetMediaSize{${1:width}}{${2:height}}"}},
+		{"name":"SetTrimSize","arg":{"format":"{}{}","snippet":"SetTrimSize{${1:width}}{${2:height}}"}},
+		{"name":"SetUnsafeZone","arg":{"format":"{}{}{}{}","snippet":"SetUnsafeZone{${1:top}}{${2:outer}}{${3:bottom}}{${4:inner}}"}},
+		{"name":"SetUnsafeZones","arg":{"format":"{}{}{}{}","snippet":"SetUnsafeZones{${1:top}}{${2:outer}}{${3:bottom}}{${4:inner}}"},"unusual":true},
+		{"name":"WithinFrontmatterfalse","unusual":true},
+		{"name":"WithinFrontmattertrue","unusual":true},
+		{"name":"WithinMainmatterfalse","unusual":true},
+		{"name":"WithinMainmattertrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

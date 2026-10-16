@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-node"}],
+	"macros": [
+		{"name":"coverable","arg":{"format":"[]{}","snippet":"coverable[${1:options}]{${2:material}}"}},
+		{"name":"coverable","arg":{"format":"{}","snippet":"coverable{${1:material}}"}},
+		{"name":"pcarrowC","arg":{"format":"[]{}()(){}","snippet":"pcarrowC[${1:options}]{${2:arrows}}(${3:x1,y1})(${4:x2,y2}){${5:material}}"}},
+		{"name":"pcarrowC","arg":{"format":"{}()(){}","snippet":"pcarrowC{${1:arrows}}(${2:x1,y1})(${3:x2,y2}){${4:material}}"}},
+		{"name":"pclineover","arg":{"format":"[]{}()(){}","snippet":"pclineover[${1:options}]{${2:arrows}}(${3:x1,y1})(${4:x2,y2}){${5:material}}"}},
+		{"name":"pclineover","arg":{"format":"{}()(){}","snippet":"pclineover{${1:arrows}}(${2:x1,y1})(${3:x2,y2}){${4:material}}"}},
+		{"name":"rputover","arg":{"format":"[]{}()(){}","snippet":"rputover[${1:options}]{${2:angle}}(${3:x0,y0})(${4:x1,y1}){${5:material}}"}},
+		{"name":"rputover","arg":{"format":"{}()(){}","snippet":"rputover{${1:angle}}(${2:x0,y0})(${3:x1,y1}){${4:material}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

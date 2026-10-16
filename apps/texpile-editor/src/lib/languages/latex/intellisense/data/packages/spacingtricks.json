@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"xspace"},{"name":"centeredline"},{"name":"pifont","if":"pifont"}],
+	"macros": [
+		{"name":"arrowsymb","if":"pifont"},
+		{"name":"aster"},
+		{"name":"bul"},
+		{"name":"centered","arg":{"format":"{}","snippet":"centered{${1:text}}"},"doc":"The \\centered{⟨text⟩} command yields a centered line without vertical spacing."},
+		{"name":"checksymb","if":"pifont"},
+		{"name":"compactlistindent","doc":"Indentation length is set by \\compactlistindent (fixed at 0.5 em by default) and can be modified with \\setlength."},
+		{"name":"cstrut","arg":{"format":"{}","snippet":"cstrut{${1:height}}"},"doc":"The \\cstrut macro is a alternative of \\vstrut that adds a symmetric strut in height and depth relative to the mathematical center line, which is halfway the height of an ‘x’."},
+		{"name":"dash"},
+		{"name":"ddash"},
+		{"name":"dualboxes","arg":{"format":"[]{}{}","snippet":"dualboxes[${1:pos}]{${2:left}}{${3:right}}"}},
+		{"name":"dualboxes","arg":{"format":"{}{}","snippet":"dualboxes{${1:left}}{${2:right}}"}},
+		{"name":"dualboxes*","arg":{"format":"[]{}{}","snippet":"dualboxes*[${1:pos}]{${2:left}}{${3:right}}"}},
+		{"name":"dualboxes*","arg":{"format":"{}{}","snippet":"dualboxes*{${1:left}}{${2:right}}"}},
+		{"name":"eg"},
+		{"name":"footnoteindent"},
+		{"name":"footnotespace"},
+		{"name":"hand","if":"pifont"},
+		{"name":"ie"},
+		{"name":"juxbottomskip"},
+		{"name":"juxsepspace"},
+		{"name":"juxtopskip"},
+		{"name":"otherside"},
+		{"name":"parindentlength"},
+		{"name":"vstrut","arg":{"format":"[]{}","snippet":"vstrut[${1:depth}]{${2:height}}"},"doc":"The command \\vstrut[⟨depth⟩]{⟨height⟩} produces a strut with a variable height or depth, allowing you to increase the line’s height above the baseline or its depth below (optional)."},
+		{"name":"vstrut","arg":{"format":"{}","snippet":"vstrut{${1:height}}"},"doc":"The command \\vstrut[⟨depth⟩]{⟨height⟩} produces a strut with a variable height or depth, allowing you to increase the line’s height above the baseline or its depth below (optional)."}
+	],
+	"envs": [
+		{"name":"compactlist","arg":{"format":"[]","snippet":"[${1:symbol}]"},"doc":"As the name suggests, the compactlist environment allows you to create a “compact” list, meaning it has no vertical space above or between items."},
+		{"name":"compactlist","doc":"As the name suggests, the compactlist environment allows you to create a “compact” list, meaning it has no vertical space above or between items."},
+		{"name":"indentblock","arg":{"format":"[]","snippet":"[${1:indentation}]"},"doc":"The indentblock environment facilitates the indentation of an entire block of lines."},
+		{"name":"indentblock","doc":"The indentblock environment facilitates the indentation of an entire block of lines."},
+		{"name":"juxtapose","arg":{"format":"[]","snippet":"[${1:left ratio}]"}},
+		{"name":"juxtapose"}
+	],
+	"keys": {
+		"\\usepackage/spacingtricks#c": ["pifont"]
+	},
+	"args": ["\\usepackage/spacingtricks#c"]
+}

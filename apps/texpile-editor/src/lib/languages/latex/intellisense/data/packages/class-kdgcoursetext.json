@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"class-book"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"ifxetex"},{"name":"cmbright"},{"name":"ifthen","engines":["pdflatex","lualatex"]},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"eso-pic"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"fancyhdr"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"academicyear","arg":{"format":"{}","snippet":"academicyear{${1:academic year}}"},"doc":"Use this macro to specify the academicyear in full, i.e. in the form XXXX-YYYY."},
+		{"name":"copyrightnotices","arg":{"format":"{}","snippet":"copyrightnotices{${1:notices}}"},"doc":"Use this macro to specify additional copyright notice messages to appear in het copyright notice on the bottom of page 2 of your course text."},
+		{"name":"coursecode","arg":{"format":"{}","snippet":"coursecode{${1:course code}}"}},
+		{"name":"coursecodei","arg":{"format":"{}","snippet":"coursecodei{${1:course code}}"}},
+		{"name":"coursecodeii","arg":{"format":"{}","snippet":"coursecodeii{${1:course code}}"}},
+		{"name":"coursecodeiii","arg":{"format":"{}","snippet":"coursecodeiii{${1:course code}}"}},
+		{"name":"coursecodeiv","arg":{"format":"{}","snippet":"coursecodeiv{${1:course code}}"}},
+		{"name":"courseversion","arg":{"format":"{}","snippet":"courseversion{${1:version identifier}}"},"doc":"This macro indicates which version of the course this is."},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:department name}}"},"doc":"This macro sets the department name."},
+		{"name":"departmentacronym","arg":{"format":"{}","snippet":"departmentacronym{${1:acronym}}"},"doc":"This macro sets the acronym of the department."},
+		{"name":"maketitle","doc":"The title page is generated using the \\maketitle command."},
+		{"name":"professor","arg":{"format":"{}","snippet":"professor{${1:professor}}"},"doc":"This is the name of the person that actually teaches the course (in Dutch: titularis)."},
+		{"name":"professori","arg":{"format":"{}","snippet":"professori{${1:professor}}"}},
+		{"name":"professorii","arg":{"format":"{}","snippet":"professorii{${1:professor}}"}},
+		{"name":"professoriii","arg":{"format":"{}","snippet":"professoriii{${1:professor}}"}},
+		{"name":"professoriv","arg":{"format":"{}","snippet":"professoriv{${1:professor}}"}},
+		{"name":"programme","arg":{"format":"{}","snippet":"programme{${1:programme}}"},"doc":"Code of the subject you are teaching."},
+		{"name":"selectverdanabold"},
+		{"name":"selectverdananormal"},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"},"doc":"This macro sets the \\@subtitle tag that later will be used on the title page, in the header/footer and to set the appropriate hyperref tag."},
+		{"name":"titlepagepicture","arg":{"format":"{}","snippet":"titlepagepicture{${1:image file}}"},"doc":"Specify the filename of a picture you want to appear on your titlepage."},
+		{"name":"versioncomment","arg":{"format":"{}","snippet":"versioncomment{${1:comment}}"},"doc":"This macro sets the \\@versioncomment tag that later will be used on the title page and in the copyright message."},
+		{"name":"versionyear","arg":{"format":"{}","snippet":"versionyear{${1:publication date}}"},"doc":"This is to be the year in which you published the current version of the course in the form YYYY."}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/kdgcoursetext#c": ["copyright"]
+	},
+	"args": ["\\documentclass/kdgcoursetext#c"]
+}

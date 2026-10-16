@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"class-book"},{"name":"babel"},{"name":"pslatex"},{"name":"inputenc"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"physics"},{"name":"xparse"},{"name":"subcaption"},{"name":"caption"},{"name":"caption3"},{"name":"multirow"},{"name":"booktabs"},{"name":"xcolor"},{"name":"longtable"},{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"etoolbox"},{"name":"setspace"},{"name":"microtype"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"csquotes"},{"name":"listingsutf8"},{"name":"listings"},{"name":"stringenc"},{"name":"pdfescape"},{"name":"inconsolata"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"fancyhdr"},{"name":"titlesec"},{"name":"hyperref"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"asesor","arg":{"format":"{}","snippet":"asesor{${1:advisor}}"}},
+		{"name":"campoconocimiento","arg":{"format":"{}","snippet":"campoconocimiento{${1:field of knowledge}}"}},
+		{"name":"campodisciplinario","arg":{"format":"{}","snippet":"campodisciplinario{${1:discipline}}"}},
+		{"name":"escudofacultad","arg":{"format":"{}","snippet":"escudofacultad{${1:faculty crest path}}"}},
+		{"name":"escudouniversidad","arg":{"format":"{}","snippet":"escudouniversidad{${1:university crest path}}"}},
+		{"name":"facultad","arg":{"format":"{}","snippet":"facultad{${1:faculty}}"}},
+		{"name":"fechaexamen","arg":{"format":"{}","snippet":"fechaexamen{${1:date}}"}},
+		{"name":"grado","arg":{"format":"{}","snippet":"grado{${1:degree}}"}},
+		{"name":"instituto","arg":{"format":"{}","snippet":"instituto{${1:institute}}"}},
+		{"name":"lugar","arg":{"format":"{}","snippet":"lugar{${1:place}}"}},
+		{"name":"maketitle"},
+		{"name":"mdv","arg":{"format":"{}{}","snippet":"mdv{${1:quantity}}{${2:variable}}"}},
+		{"name":"presidente","arg":{"format":"{}","snippet":"presidente{${1:chair}}"}},
+		{"name":"primersuplente","arg":{"format":"{}","snippet":"primersuplente{${1:first alternate}}"}},
+		{"name":"programaestudio","arg":{"format":"{}","snippet":"programaestudio{${1:program}}"}},
+		{"name":"secretario","arg":{"format":"{}","snippet":"secretario{${1:secretary}}"}},
+		{"name":"segundosuplente","arg":{"format":"{}","snippet":"segundosuplente{${1:second alternate}}"}},
+		{"name":"tema","arg":{"format":"{}","snippet":"tema{${1:topic}}"}},
+		{"name":"tipotrabajo","arg":{"format":"{}","snippet":"tipotrabajo{${1:type}}"}},
+		{"name":"universidad","arg":{"format":"{}","snippet":"universidad{${1:university}}"}},
+		{"name":"vocal","arg":{"format":"{}","snippet":"vocal{${1:member}}"}}
+	],
+	"envs": [
+		{"name":"unacolumna","unusual":true}
+	],
+	"keys": {}
+}

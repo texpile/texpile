@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"ancholinea","unusual":true},
+		{"name":"bColorB","arg":{"format":"{}","snippet":"bColorB{${1}}"}},
+		{"name":"bColorL","arg":{"format":"{}","snippet":"bColorL{${1}}"}},
+		{"name":"bColorT","arg":{"format":"{}","snippet":"bColorT{${1}}"}},
+		{"name":"bCrossGain","arg":{"format":"{}{}{}","snippet":"bCrossGain{${1}}{${2}}{${3}}"}},
+		{"name":"bEnd","arg":{"format":"{}","snippet":"bEnd{${1}}"}},
+		{"name":"bFeedBack","arg":{"format":"{}{}","snippet":"bFeedBack{${1}}{${2}}"}},
+		{"name":"bGain","arg":{"format":"{}","snippet":"bGain{${1}}"}},
+		{"name":"bGainMinus","arg":{"format":"{}{}","snippet":"bGainMinus{${1}}{${2}}"}},
+		{"name":"bGainPlus","arg":{"format":"{}{}","snippet":"bGainPlus{${1}}{${2}}"}},
+		{"name":"bMarkNode","arg":{"format":"{}","snippet":"bMarkNode{${1}}"}},
+		{"name":"bMarkNodeDown","arg":{"format":"{}","snippet":"bMarkNodeDown{${1}}"}},
+		{"name":"bMarkNodeUp","arg":{"format":"{}","snippet":"bMarkNodeUp{${1}}"}},
+		{"name":"bMinusDown","arg":{"format":"{}","snippet":"bMinusDown{${1}}"}},
+		{"name":"bMinusF","arg":{"format":"{}","snippet":"bMinusF{${1}}"}},
+		{"name":"bMinusUp","arg":{"format":"{}","snippet":"bMinusUp{${1}}"}},
+		{"name":"bNewStart","arg":{"format":"{}{}","snippet":"bNewStart{${1}}{${2}}"}},
+		{"name":"bPlusDown","arg":{"format":"{}","snippet":"bPlusDown{${1}}"}},
+		{"name":"bPlusF","arg":{"format":"{}","snippet":"bPlusF{${1}}"}},
+		{"name":"bPlusUp","arg":{"format":"{}","snippet":"bPlusUp{${1}}"}},
+		{"name":"bShadow"},
+		{"name":"bStart","arg":{"format":"{}","snippet":"bStart{${1}}"}},
+		{"name":"minaltura","unusual":true},
+		{"name":"tamano","unusual":true},
+		{"name":"xdistancia","unusual":true},
+		{"name":"ydistance","arg":{"format":"{}","snippet":"ydistance{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

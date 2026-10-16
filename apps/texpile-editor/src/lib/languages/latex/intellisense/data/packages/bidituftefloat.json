@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"ragged2e"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"changepage"},{"name":"optparams"},{"name":"placeins"},{"name":"fancyhdr"}],
+	"macros": [
+		{"name":"bidituftefloatRecalculate","unusual":true},
+		{"name":"caption","arg":{"format":"[][]{}","snippet":"caption[${1:short caption}][${2:offset}]{${3:long caption}}"}},
+		{"name":"caption","arg":{"format":"{}","snippet":"caption{${1:long caption}}"}},
+		{"name":"floatalignment","unusual":true},
+		{"name":"forcerectofloat"},
+		{"name":"forceversofloat"},
+		{"name":"gsetlength","arg":{"format":"{}{}","snippet":"gsetlength{${1}}{${2}}"},"unusual":true},
+		{"name":"morefloats"},
+		{"name":"newlinetospace","arg":{"format":"{}","snippet":"newlinetospace{${1}}"},"unusual":true},
+		{"name":"setcaptionfont","arg":{"format":"{}","snippet":"setcaptionfont{${1:font commands}}"}},
+		{"name":"setfloatalignment","arg":{"format":"{}","snippet":"setfloatalignment{${1:position}}"}}
+	],
+	"envs": [
+		{"name":"fullwidth"},
+		{"name":"marginfigure","arg":{"format":"[]","snippet":"[${1:offset}]"}},
+		{"name":"marginfigure"},
+		{"name":"margintable","arg":{"format":"[]","snippet":"[${1:offset}]"}},
+		{"name":"margintable"}
+	],
+	"keys": {
+		"\\usepackage/bidituftefloat#c": ["a4paper","b5paper","oneside","reversegeometry","twoside"]
+	},
+	"args": ["\\usepackage/bidituftefloat#c"]
+}

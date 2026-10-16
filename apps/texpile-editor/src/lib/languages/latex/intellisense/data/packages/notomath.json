@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"fontaxes"},{"name":"figureversions"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"noto-serif"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"noto-sans"},{"name":"newtxmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"centernot"},{"name":"noto-mono","if":"mono"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

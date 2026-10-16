@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"pageperchapter"},
+		{"name":"ppc","arg":{"format":"{}{}","snippet":"ppc{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

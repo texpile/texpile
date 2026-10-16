@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"ulem"},{"name":"stackengine"},{"name":"etoolbox"},{"name":"listofitems"},{"name":"calc"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"documentmeta","arg":{"format":"{}{}{}{}","snippet":"documentmeta{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"fixunderline","arg":{"format":"{}{}{}","snippet":"fixunderline{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"longunderline","arg":{"format":"{}","snippet":"longunderline{${1}}"},"unusual":true},
+		{"name":"makecourseworktitle","arg":{"format":"{}{}{}{}{}{}","snippet":"makecourseworktitle{${1:faculty}}{${2:department}}{${3:topic}}{${4:student/group}}{${5:supervisor}}{${6:consultants}}"}},
+		{"name":"makereporttitle","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"makereporttitle{${1:faculty}}{${2:department}}{${3:work}}{${4:course}}{${5:topic}}{${6:variant}}{${7:student/group}}{${8:teacher}}"}},
+		{"name":"makeresearchtitle","arg":{"format":"{}{}{}{}{}{}","snippet":"makeresearchtitle{${1:faculty}}{${2:department}}{${3:topic}}{${4:student/group}}{${5:supervisor}}{${6:consultants}}"}},
+		{"name":"makethesistitle","arg":{"format":"{}{}{}{}{}{}{}","snippet":"makethesistitle{${1:faculty}}{${2:department}}{${3:topic}}{${4:student/group}}{${5:supervisor}}{${6:consultants}}{${7:standards inspector}}"}},
+		{"name":"vhrulefill","arg":{"format":"{}","snippet":"vhrulefill{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"xtemplate"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"}],
+	"macros": [
+		{"name":"AfterEveryEndnotesList","arg":{"format":"{}","snippet":"AfterEveryEndnotesList{${1}}"}},
+		{"name":"AfterEveryListSplit","arg":{"format":"{}","snippet":"AfterEveryListSplit{${1}}"}},
+		{"name":"AfterNextEndnotesList","arg":{"format":"{}","snippet":"AfterNextEndnotesList{${1}}"}},
+		{"name":"AtEveryEndnotesList","arg":{"format":"{}","snippet":"AtEveryEndnotesList{${1}}"}},
+		{"name":"AtEveryListSplit","arg":{"format":"{}","snippet":"AtEveryListSplit{${1}}"}},
+		{"name":"AtNextEndnotesList","arg":{"format":"{}","snippet":"AtNextEndnotesList{${1}}"}},
+		{"name":"endnote","arg":{"format":"[]{}","snippet":"endnote[${1:mark}]{${2:text}}"},"doc":"Add an endnote in the text."},
+		{"name":"endnote","arg":{"format":"{}","snippet":"endnote{${1:text}}"},"doc":"Add an endnote in the text."},
+		{"name":"endnotemark","arg":{"format":"[]","snippet":"endnotemark[${1:mark}]"}},
+		{"name":"endnotemark"},
+		{"name":"endnotetext","arg":{"format":"[]{}","snippet":"endnotetext[${1:mark}]{${2:text}}"}},
+		{"name":"endnotetext","arg":{"format":"{}","snippet":"endnotetext{${1:text}}"}},
+		{"name":"enmark","arg":{"format":"{}","snippet":"enmark{${1}}"}},
+		{"name":"enmarkstyle"},
+		{"name":"EnotezCurrentSplitTitle"},
+		{"name":"enotezdisable","unusual":true},
+		{"name":"enotezlistheading","unusual":true},
+		{"name":"enotezsplitlistheading","unusual":true},
+		{"name":"enotezwritemark","arg":{"format":"{}","snippet":"enotezwritemark{${1}}"},"doc":"The marks of the endnotes in the running text are printed through the command \\enotezwritemark which defaults to \\textsuperscript."},
+		{"name":"NewSplitTitleTag","arg":{"format":"{}{}","snippet":"NewSplitTitleTag{${1}}{${2}}"}},
+		{"name":"printendnotes","arg":{"format":"[]","snippet":"printendnotes[${1}]"},"doc":"Print the list of endnotes."},
+		{"name":"printendnotes","doc":"Print the list of endnotes."},
+		{"name":"printendnotes*","arg":{"format":"[]","snippet":"printendnotes*[${1}]"},"doc":"Print the list of endnotes."},
+		{"name":"printendnotes*","doc":"Print the list of endnotes."},
+		{"name":"setenotez","arg":{"format":"{}","snippet":"setenotez{${1}}","keys":["l3keys:enotez"],"keyPos":0}},
+		{"name":"theendnote","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:enotez": ["list-heading=","list-name=","list-postamble-skip=","list-preamble-skip=","list-style=","mark-cs=","mark-format=","split-heading=","split-title=","backref=${1|false,true|}","counter-format=${1|Alph,Roman,alph,arabic,roman,symbols|}","reset=${1|false,true|}","split=${1|chapter,false,section|}","totoc=${1|auto,chapter,false,part,section,subsection|}"]
+	}
+}

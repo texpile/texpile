@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"addthumb","arg":{"format":"{}{}{}{}","snippet":"addthumb{${1:title}}{${2:text}}{${3:text color}}{${4:background color}}"}},
+		{"name":"addthumbsoverviewtocontents","arg":{"format":"{}{}","snippet":"addthumbsoverviewtocontents{${1:level}}{${2:text}}"}},
+		{"name":"addtitlethumb","arg":{"format":"{}{}{}{}{}","snippet":"addtitlethumb{${1:title}}{${2:text}}{${3:text color}}{${4:background color}}{${5:label}}"}},
+		{"name":"continuethumb"},
+		{"name":"stopthumb"},
+		{"name":"thumbnewcolumn"},
+		{"name":"thumbsnophantom"},
+		{"name":"thumbsoverview","arg":{"format":"{}","snippet":"thumbsoverview{${1:header mark}}"}},
+		{"name":"thumbsoverviewback","arg":{"format":"{}","snippet":"thumbsoverviewback{${1:header mark}}"}},
+		{"name":"thumbsoverviewdouble","arg":{"format":"{}","snippet":"thumbsoverviewdouble{${1:header mark}}"}},
+		{"name":"thumbsoverviewverso","arg":{"format":"{}","snippet":"thumbsoverviewverso{${1:header mark}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

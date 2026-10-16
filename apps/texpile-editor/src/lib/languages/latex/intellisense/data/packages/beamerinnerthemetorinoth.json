@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"assistantsupervisor","arg":{"format":"{}","snippet":"assistantsupervisor{${1:name-surname}}"}},
+		{"name":"ateneo","arg":{"format":"[]{}","snippet":"ateneo[${1:short name}]{${2:university}}"}},
+		{"name":"ateneo","arg":{"format":"{}","snippet":"ateneo{${1:university}}"}},
+		{"name":"insertateneo","unusual":true},
+		{"name":"rel","arg":{"format":"{}","snippet":"rel{${1:name-surname}}"}},
+		{"name":"secondassistantsupervisor","arg":{"format":"{}","snippet":"secondassistantsupervisor{${1:name-surname}}"}},
+		{"name":"secondcandidate","arg":{"format":"{}","snippet":"secondcandidate{${1:name-surname}}"}},
+		{"name":"secondsupervisor","arg":{"format":"{}","snippet":"secondsupervisor{${1:name-surname}}"}},
+		{"name":"setassistentsupervisorlabel","arg":{"format":"{}","snippet":"setassistentsupervisorlabel{${1:label}}"}},
+		{"name":"setcandidatelabel","arg":{"format":"{}","snippet":"setcandidatelabel{${1:label}}"}},
+		{"name":"setrellabel","arg":{"format":"{}","snippet":"setrellabel{${1:label}}"}},
+		{"name":"titlepagesecondlogo","arg":{"format":"{}","snippet":"titlepagesecondlogo{${1:name-logo}}"}},
+		{"name":"titlepagethirdlogo","arg":{"format":"{}","snippet":"titlepagethirdlogo{${1:name-logo}}"}}
+	],
+	"envs": [
+		{"name":"adv"},
+		{"name":"disadv"}
+	],
+	"keys": {}
+}

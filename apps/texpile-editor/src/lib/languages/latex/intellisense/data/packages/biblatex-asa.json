@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"biblatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/biblatex-asa#c": ["backend=biber","backend=bibtex","giveninits","nogiveninits"]
+	},
+	"args": ["\\usepackage/biblatex-asa#c"]
+}

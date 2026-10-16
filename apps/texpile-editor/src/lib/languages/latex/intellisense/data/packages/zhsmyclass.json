@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"zhsusefulmacros"}],
+	"macros": [
+		{"name":"appendinterclasstoks","arg":{"format":"{}{}{}","snippet":"appendinterclasstoks{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"copyinterclasstoks","arg":{"format":"{}{}{}{}","snippet":"copyinterclasstoks{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"getbaseclass","arg":{"format":"{}{}","snippet":"getbaseclass{${1}}{${2}}"},"unusual":true},
+		{"name":"getclassnum","arg":{"format":"{}","snippet":"getclassnum{${1}}"},"unusual":true},
+		{"name":"getinterclasstoks","arg":{"format":"{}{}","snippet":"getinterclasstoks{${1}}{${2}}"},"unusual":true},
+		{"name":"newclass","arg":{"format":"[]{}","snippet":"newclass[${1}]{${2}}"},"unusual":true},
+		{"name":"newclass","arg":{"format":"{}","snippet":"newclass{${1}}"},"unusual":true},
+		{"name":"prependinterclasstoks","arg":{"format":"{}{}{}","snippet":"prependinterclasstoks{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"registerXeTeXclasstoks","unusual":true},
+		{"name":"setclassnum","arg":{"format":"{}{}","snippet":"setclassnum{${1}}{${2}}"},"unusual":true},
+		{"name":"setinterclasstoks","arg":{"format":"{}{}{}","snippet":"setinterclasstoks{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"showallinterclasstoks","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

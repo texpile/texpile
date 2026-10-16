@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pgfplots"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplotstable"},{"name":"array"}],
+	"macros": [
+		{"name":"addviolinplot","arg":{"format":"[]{}","snippet":"addviolinplot[${1:options}]{${2:filename}}"}},
+		{"name":"addviolinplot","arg":{"format":"{}","snippet":"addviolinplot{${1:filename}}"}},
+		{"name":"violinplot","arg":{"format":"[]{}","snippet":"violinplot[${1:options}]{${2:filename}}"}},
+		{"name":"violinplot","arg":{"format":"{}","snippet":"violinplot{${1:filename}}"}},
+		{"name":"violinplotsset","arg":{"format":"[]{}","snippet":"violinplotsset[${1:package-specific options}]{${2:pgfplots general options}}"},"doc":"To set the general options, the command \\violinplotsset is provided, and may be invoked before plotting the datasets."},
+		{"name":"violinplotsset","arg":{"format":"{}","snippet":"violinplotsset{${1:pgfplots general options}}"},"doc":"To set the general options, the command \\violinplotsset is provided, and may be invoked before plotting the datasets."},
+		{"name":"violinplotwholefile","arg":{"format":"[]{}","snippet":"violinplotwholefile[${1:options}]{${2:filename}}"}},
+		{"name":"violinplotwholefile","arg":{"format":"{}","snippet":"violinplotwholefile{${1:filename}}"}},
+		{"name":"violinsetoptions","arg":{"format":"[]{}","snippet":"violinsetoptions[${1}]{${2}}"},"unusual":true},
+		{"name":"violinsetoptions","arg":{"format":"{}","snippet":"violinsetoptions{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,14 +1,15 @@
-// argument/keyval completion. package-dependent slots resolve through the vendored LW package
-// data (packageData.ts: \usepackage options, \documentclass options incl class-specific sets,
-// macro/env keyvals with keyPos); the few hand rules left below cover kernel values LW's data
-// doesn't carry (pagestyle/pagenumbering, fontenc encodings, colors, bib styles).
+// argument/keyval completion. package-dependent slots resolve through the bundled package data
+// (packageData.ts: \usepackage options, \documentclass options, macro/env keyvals with keyPos); the
+// few hand rules left below cover values it doesn't carry (pagestyle/pagenumbering, fontenc
+// encodings, colors, bib styles).
 import { snippetCompletion, type Completion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
 import { ARG_KEY_RULES } from '../data/argKeys';
 import { FONT_ENCODINGS } from '../data/encodings';
 import { COLOR_NAMES } from '../data/colornames';
 import { BIB_STYLES } from '../data/bibstyles';
 import { lastListToken } from './shared';
-import { detectedPackages, keysForEnv, keysForMacro, packageOptions } from './packageData';
+import { keysForEnv, keysForMacro, packageOptions } from '../packages/packageData';
+import { documentPackageNames } from '../packages/loadedPackages';
 
 const COLOR_TRIGGERS: RegExp[] = [
 	/\\(?:textcolor|color|pagecolor|normalcolor)\*?\{[^{}]*$/,
@@ -31,18 +32,15 @@ const DOCUMENTCLASS_NAME_ON_LINE = /\\documentclass(?:\[[^\]{}]*\]?)?\{([^{}]+)\
 // LW's argument trigger: macro name + its completed argument groups + the open group being typed
 const KEYVAL_BEFORE = /\\([a-zA-Z]+)\*?((?:\[[^[\]{}]*\]|\{[^[\]{}]*\})*)([[{])[^[\]{}]*$/;
 
-const DEFAULT_CLASSES = new Set(['article', 'report', 'book']);
+// most classes hand options they do not know to the standard class they build on
+const STANDARD_CLASSES = new Set(['article', 'report', 'book']);
 
 function toCompletion(value: string): Completion {
 	return { label: value, type: 'constant' };
 }
 
-function countArgGroups(groups: string): number {
-	return groups.match(/\[[^\]]*\]|\{[^}]*\}/g)?.length ?? 0;
-}
-
 export function argumentCompletionSource(ctx: CompletionContext): CompletionResult | Promise<CompletionResult | null> | null {
-	// kernel-value rules LW's package data doesn't carry
+	// kernel-value rules the package data doesn't carry
 	for (const rule of ARG_KEY_RULES) {
 		const match = ctx.matchBefore(rule.trigger);
 		if (match) return lastListToken(match, rule.options.map(toCompletion), { lenient: true });
@@ -84,8 +82,8 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 	const documentclass = ctx.matchBefore(DOCUMENTCLASS_OPTIONS_TRIGGER);
 	if (documentclass) {
 		const cls = DOCUMENTCLASS_NAME_ON_LINE.exec(line)?.[1]?.trim();
-		// class-specific option set when LW ships one, the standard-class set otherwise
-		const sources = cls && !DEFAULT_CLASSES.has(cls) ? [`class-${cls}`, 'latex-document'] : ['latex-document'];
+		const own = cls ? [`class-${cls}`] : [];
+		const sources = cls && STANDARD_CLASSES.has(cls) ? own : [...own, 'class-article'];
 		return packageOptions(sources).then((options) => (options ? lastListToken(documentclass, options, { lenient: true }) : null));
 	}
 
@@ -94,14 +92,12 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 		const m = KEYVAL_BEFORE.exec(keyval.text);
 		if (!m) return null;
 		const [, name, groups, open] = m;
-		const bracket = open as '[' | '{';
-		const argIndex = countArgGroups(groups);
-		const detected = detectedPackages(ctx.state.doc.toString());
-		const lookup =
-			name === 'begin'
-				? keysForEnv(/^\{([^{}]*)\}/.exec(groups)?.[1] ?? '', argIndex, bracket, detected)
-				: keysForMacro(name, argIndex, bracket, detected);
-		return lookup.then((options) => (options ? lastListToken(keyval, options, { lenient: true }) : null));
+		const typed = [...(groups.match(/\[[^\]]*\]|\{[^}]*\}/g) ?? []), open].map((g) => (g[0] === '[' ? '[]' : '{}'));
+		return documentPackageNames(ctx.state.doc.toString())
+			.then((loaded) =>
+				name === 'begin' ? keysForEnv(/^\{([^{}]*)\}/.exec(groups)?.[1] ?? '', typed.slice(1), loaded) : keysForMacro(name, typed, loaded)
+			)
+			.then((options) => (options ? lastListToken(keyval, options, { lenient: true }) : null));
 	}
 	return null;
 }

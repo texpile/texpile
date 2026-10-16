@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"moreverb"},{"name":"verbatim"},{"name":"ifthen"},{"name":"catchfile"},{"name":"iftex"}],
+	"macros": [
+		{"name":"cleanuptrue","unusual":true},
+		{"name":"gnuplotexe"},
+		{"name":"gnuplotloadfile","arg":{"format":"[]{}","snippet":"gnuplotloadfile[${1:options}]{${2:file}}","keys":["keyval:pic"],"keyPos":0}},
+		{"name":"gnuplotloadfile","arg":{"format":"{}","snippet":"gnuplotloadfile{${1:file}}"}},
+		{"name":"ifcleanup","unusual":true},
+		{"name":"ifmiktex","unusual":true},
+		{"name":"ifShellEscape","unusual":true},
+		{"name":"ifusesiunitx","unusual":true},
+		{"name":"ifusesubfolder","unusual":true},
+		{"name":"miktexfalse","unusual":true},
+		{"name":"miktextrue","unusual":true},
+		{"name":"ShellEscapefalse","unusual":true},
+		{"name":"ShellEscapetrue","unusual":true},
+		{"name":"usesiunitxtrue","unusual":true},
+		{"name":"usesubfoldertrue","unusual":true}
+	],
+	"envs": [
+		{"name":"gnuplot","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:pic"],"keyPos":0}},
+		{"name":"gnuplot"}
+	],
+	"keys": {
+		"keyval:pic": ["terminaloptions=","scale=","terminal=${1|latex,epslatex,cairolatex,tikz,eepic,emtex,pstricks,pslatex,pstex,jpeg,pdf|}"],
+		"\\usepackage/gnuplottex#c": ["cleanup","miktex","noshell","shell","siunitx","subfolder"]
+	},
+	"args": ["\\usepackage/gnuplottex#c"]
+}

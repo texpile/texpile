@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"excludeonly","arg":{"format":"{}","snippet":"excludeonly{${1:file list}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/excludeonly#c": ["only"]
+	},
+	"args": ["\\usepackage/excludeonly#c"]
+}

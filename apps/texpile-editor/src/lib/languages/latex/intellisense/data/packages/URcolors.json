@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"URoptions"},{"name":"URspecialopts"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

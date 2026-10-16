@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"xparse"},{"name":"etoolbox"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"kotex"},{"name":"luatexko"},{"name":"kolabels-utf"},{"name":"ob-unfontsdefault"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"compressbnms"},
+		{"name":"setkomainfont","arg":{"format":"[]()()()[][]()()()[]","snippet":"setkomainfont[${1:base name}](${2:regular})(${3:bold})(${4:italic})[${5:hangul features}][${6:hanja base name}](${7:hanja regular})(${8:hanja bold})(${9:hanja italic})[${10:hanja features}]"}},
+		{"name":"setkomainfont","arg":{"format":"()()()()()()","snippet":"setkomainfont(${1:regular})(${2:bold})(${3:italic})(${4:hanja regular})(${5:hanja bold})(${6:hanja italic})"}},
+		{"name":"setkomonofont","arg":{"format":"[]()()()[][]()()()[]","snippet":"setkomonofont[${1:base name}](${2:regular})(${3:bold})(${4:italic})[${5:hangul features}][${6:hanja base name}](${7:hanja regular})(${8:hanja bold})(${9:hanja italic})[${10:hanja features}]"}},
+		{"name":"setkomonofont","arg":{"format":"()()()()()()","snippet":"setkomonofont(${1:regular})(${2:bold})(${3:italic})(${4:hanja regular})(${5:hanja bold})(${6:hanja italic})"}},
+		{"name":"setkormainfont","arg":{"format":"()(){}","snippet":"setkormainfont(${1:bold})(${2:italic}){${3:regular}}"},"unusual":true},
+		{"name":"setkormainfont*","arg":{"format":"()(){}","snippet":"setkormainfont*(${1:bold})(${2:italic}){${3:regular}}"},"unusual":true},
+		{"name":"setkormonofont","arg":{"format":"()(){}","snippet":"setkormonofont(${1:bold})(${2:italic}){${3:regular}}"},"unusual":true},
+		{"name":"setkormonofont*","arg":{"format":"()(){}","snippet":"setkormonofont*(${1:bold})(${2:italic}){${3:regular}}"},"unusual":true},
+		{"name":"setkorsansfont","arg":{"format":"()(){}","snippet":"setkorsansfont(${1:bold})(${2:italic}){${3:regular}}"},"unusual":true},
+		{"name":"setkorsansfont*","arg":{"format":"()(){}","snippet":"setkorsansfont*(${1:bold})(${2:italic}){${3:regular}}"},"unusual":true},
+		{"name":"setkosansfont","arg":{"format":"[]()()()[][]()()()[]","snippet":"setkosansfont[${1:base name}](${2:regular})(${3:bold})(${4:italic})[${5:hangul features}][${6:hanja base name}](${7:hanja regular})(${8:hanja bold})(${9:hanja italic})[${10:hanja features}]"}},
+		{"name":"setkosansfont","arg":{"format":"()()()()()()","snippet":"setkosansfont(${1:regular})(${2:bold})(${3:italic})(${4:hanja regular})(${5:hanja bold})(${6:hanja italic})"}},
+		{"name":"setmonoscale","arg":{"format":"{}","snippet":"setmonoscale{${1:scale}}"}},
+		{"name":"setobmainfont","arg":{"format":"[]()()()[]","snippet":"setobmainfont[${1:base name}](${2:regular})(${3:bold})(${4:italic})[${5:features}]"}},
+		{"name":"setobmainfont","arg":{"format":"()()()","snippet":"setobmainfont(${1:regular})(${2:bold})(${3:italic})"}},
+		{"name":"setobmonofont","arg":{"format":"[]()()()[]","snippet":"setobmonofont[${1:base name}](${2:regular})(${3:bold})(${4:italic})[${5:features}]"}},
+		{"name":"setobmonofont","arg":{"format":"()()()","snippet":"setobmonofont(${1:regular})(${2:bold})(${3:italic})"}},
+		{"name":"setobsansfont","arg":{"format":"[]()()()[]","snippet":"setobsansfont[${1:base name}](${2:regular})(${3:bold})(${4:italic})[${5:features}]"}},
+		{"name":"setobsansfont","arg":{"format":"()()()","snippet":"setobsansfont(${1:regular})(${2:bold})(${3:italic})"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/xob-font#c": ["gremph","hcr","itemph","latinquote","nanum","nanumx","nounfonts","nowinname","oldhangul","unfonts"]
+	},
+	"args": ["\\usepackage/xob-font#c"]
+}

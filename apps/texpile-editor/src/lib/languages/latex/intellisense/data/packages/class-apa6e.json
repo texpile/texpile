@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"class-article"},{"name":"mathptmx"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"ragged2e"},{"name":"footmisc"},{"name":"fancyhdr"},{"name":"float"},{"name":"caption"},{"name":"caption3"},{"name":"ifthen"},{"name":"endfloat","if":"!leavefloats"},{"name":"endnotes","if":"endnotes"}],
+	"macros": [
+		{"name":"abstract","arg":{"format":"{}","snippet":"abstract{${1:abstract text}}"}},
+		{"name":"authornote","arg":{"format":"{}","snippet":"authornote{${1:author note}}"}},
+		{"name":"maketitle"},
+		{"name":"mspart","arg":{"format":"[]{}","snippet":"mspart[${1:short title}]{${2:title}}"},"doc":"\\mspart is a new sectioning command, designed to format the header at the beginning of each APA manuscript ‘part’ — e.g., the abstract, the main body, the references, etc. The syntax is exactly the same as for \\section and friends, e.g.: \\mspart{Abstract}."},
+		{"name":"mspart","arg":{"format":"{}","snippet":"mspart{${1:title}}"},"doc":"\\mspart is a new sectioning command, designed to format the header at the beginning of each APA manuscript ‘part’ — e.g., the abstract, the main body, the references, etc. The syntax is exactly the same as for \\section and friends, e.g.: \\mspart{Abstract}."},
+		{"name":"mspart*","arg":{"format":"[]{}","snippet":"mspart*[${1:short title}]{${2:title}}"},"doc":"\\mspart is a new sectioning command, designed to format the header at the beginning of each APA manuscript ‘part’ — e.g., the abstract, the main body, the references, etc. The syntax is exactly the same as for \\section and friends, e.g.: \\mspart{Abstract}."},
+		{"name":"mspart*","arg":{"format":"{}","snippet":"mspart*{${1:title}}"},"doc":"\\mspart is a new sectioning command, designed to format the header at the beginning of each APA manuscript ‘part’ — e.g., the abstract, the main body, the references, etc. The syntax is exactly the same as for \\section and friends, e.g.: \\mspart{Abstract}."},
+		{"name":"paragraph","arg":{"format":"{}","snippet":"paragraph{${1:title}}"}},
+		{"name":"shorttitle","arg":{"format":"{}","snippet":"shorttitle{${1:short title}}"}},
+		{"name":"subparagraph","arg":{"format":"{}","snippet":"subparagraph{${1:title}}"}},
+		{"name":"subsubsection","arg":{"format":"{}","snippet":"subsubsection{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/apa6e#c": ["endnotes","floatmarkers","leavefloats"]
+	},
+	"args": ["\\documentclass/apa6e#c"]
+}

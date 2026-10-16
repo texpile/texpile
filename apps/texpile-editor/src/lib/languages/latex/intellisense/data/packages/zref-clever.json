@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-user"},{"name":"zref-abspage"},{"name":"ifdraft"}],
+	"macros": [
+		{"name":"zcDeclareLanguage","arg":{"format":"[]{}","snippet":"zcDeclareLanguage[${1}]{${2}}"},"doc":"Declare a new language for use with zref-clever."},
+		{"name":"zcDeclareLanguage","arg":{"format":"{}","snippet":"zcDeclareLanguage{${1}}"},"doc":"Declare a new language for use with zref-clever."},
+		{"name":"zcDeclareLanguageAlias","arg":{"format":"{}{}","snippet":"zcDeclareLanguageAlias{${1}}{${2}}"}},
+		{"name":"zcLanguageSetup","arg":{"format":"{}{}","snippet":"zcLanguageSetup{${1}}{${2}}"},"doc":"Sets language-specific reference format options for ⟨language⟩ (see Section 8), be they type-specific or not. ⟨language⟩ must be already known to zref-clever."},
+		{"name":"zcpageref","arg":{"format":"[]{}","snippet":"zcpageref[${1}]{${2}}"}},
+		{"name":"zcpageref","arg":{"format":"{}","snippet":"zcpageref{${1}}"}},
+		{"name":"zcpageref*","arg":{"format":"[]{}","snippet":"zcpageref*[${1}]{${2}}"}},
+		{"name":"zcpageref*","arg":{"format":"{}","snippet":"zcpageref*{${1}}"}},
+		{"name":"zcref","arg":{"format":"[]{}","snippet":"zcref[${1}]{${2}}"},"doc":"\\zcref can automatically compress a set of references of the same type into a range, when they occur in immediate sequence."},
+		{"name":"zcref","arg":{"format":"{}","snippet":"zcref{${1}}"},"doc":"\\zcref can automatically compress a set of references of the same type into a range, when they occur in immediate sequence."},
+		{"name":"zcref*","arg":{"format":"[]{}","snippet":"zcref*[${1}]{${2}}"},"doc":"\\zcref can automatically compress a set of references of the same type into a range, when they occur in immediate sequence."},
+		{"name":"zcref*","arg":{"format":"{}","snippet":"zcref*{${1}}"},"doc":"\\zcref can automatically compress a set of references of the same type into a range, when they occur in immediate sequence."},
+		{"name":"zcRefTypeSetup","arg":{"format":"{}{}","snippet":"zcRefTypeSetup{${1}}{${2}}"},"doc":"Sets type-specific reference format options (see Section 8)."},
+		{"name":"zcsetup","arg":{"format":"{}","snippet":"zcsetup{${1}}"},"doc":"Sets zref-clever’s general options (see Sections 6 and 8)."}
+	],
+	"envs": [],
+	"keys": {}
+}

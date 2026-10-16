@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"forloop"},{"name":"ifthen"},{"name":"textcomp"},{"name":"xparse"}],
+	"macros": [
+		{"name":"amxassociate","arg":{"format":"{}{}","snippet":"amxassociate{${1:column key}}{${2:row key}}"}},
+		{"name":"amxcol","arg":{"format":"{}{}","snippet":"amxcol{${1:key}}{${2:text}}"}},
+		{"name":"amxcols"},
+		{"name":"amxcoltext","arg":{"format":"{}","snippet":"amxcoltext{${1:key}}"}},
+		{"name":"amxDate","unusual":true},
+		{"name":"amxgenerate","arg":{"format":"[]","snippet":"amxgenerate[${1:row}]"},"doc":"Generates the full table incorporating the previously registered data."},
+		{"name":"amxgenerate","doc":"Generates the full table incorporating the previously registered data."},
+		{"name":"amxReset","doc":"Clears all internal data structures and customisations for the package, allowing the user to later typeset a different, independent matrix."},
+		{"name":"amxrow","arg":{"format":"{}{}","snippet":"amxrow{${1:key}}{${2:text}}"},"doc":"Registers the row entry named <key> with the given <text>."},
+		{"name":"amxrows"},
+		{"name":"amxrowtext","arg":{"format":"{}","snippet":"amxrowtext{${1:key}}"}},
+		{"name":"amxsetColumnHeading","arg":{"format":"{}","snippet":"amxsetColumnHeading{${1:render-command}}"},"doc":"Sets the rendered table’s top row’s cells to be rendered via passing the column heading’s text (see Section 2.2) to the given <render-command>."},
+		{"name":"amxsetIndicator","arg":{"format":"{}","snippet":"amxsetIndicator{${1:indicator}}"},"doc":"Sets the indicators of association in the matrix in non-highlighting mode to the result of the <indicator>."},
+		{"name":"amxsetIndicatorHighlighted","arg":{"format":"{}{}","snippet":"amxsetIndicatorHighlighted{${1:hl-indicator}}{${2:ot-indicator}}"},"doc":"Sets the indicators of association in the matrix in highlighting mode to the result of the <hl-indicator> for the highlighted row and <ot-indicator> for every other row."},
+		{"name":"amxsetRowFormat","arg":{"format":"{}","snippet":"amxsetRowFormat{${1:render-command}}"}},
+		{"name":"amxsetRowFormatHighlighted","arg":{"format":"{}","snippet":"amxsetRowFormatHighlighted{${1:render-command}}"}},
+		{"name":"amxsetTopCorner","arg":{"format":"{}","snippet":"amxsetTopCorner{${1:new-heading}}"}},
+		{"name":"amxVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"hexdumptikz-common"},{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"hexdumptikzParserDbg","arg":{"format":"{}","snippet":"hexdumptikzParserDbg{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

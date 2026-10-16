@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"ctxlisting","unusual":true},
+		{"name":"ctxlistingtotal","arg":{"format":"{}","snippet":"ctxlistingtotal{${1}}"},"unusual":true},
+		{"name":"ctxscript"},
+		{"name":"ctxuselistings","doc":"\\ctxuselistings switches subsequent includes to listings output (syntax highlighting, line breaking, the full \\lstset vocabulary); \\ctxuseverbatim switches back."},
+		{"name":"ctxuseverbatim"},
+		{"name":"includebash","arg":{"format":"{}","snippet":"includebash{${1:file}}"},"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."},
+		{"name":"includelua","arg":{"format":"{}","snippet":"includelua{${1:file}}"},"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."},
+		{"name":"includemake","arg":{"format":"{}","snippet":"includemake{${1:file}}"},"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."},
+		{"name":"includeyaml","arg":{"format":"{}","snippet":"includeyaml{${1:file}}"},"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."}
+	],
+	"envs": [],
+	"keys": {}
+}

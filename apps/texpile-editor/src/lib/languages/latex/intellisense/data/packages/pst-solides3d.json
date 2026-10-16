@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"addtosolideslistobject","arg":{"format":"{}","snippet":"addtosolideslistobject{${1}}"}},
+		{"name":"axesIIID","arg":{"format":"[]()()","snippet":"axesIIID[${1}](${2})(${3})"}},
+		{"name":"axesIIID","arg":{"format":"()()","snippet":"axesIIID(${1})(${2})"}},
+		{"name":"codejps","arg":{"format":"{}","snippet":"codejps{${1}}"}},
+		{"name":"gridIIID","arg":{"format":"[]()()","snippet":"gridIIID[${1}](${2})(${3})"}},
+		{"name":"gridIIID","arg":{"format":"()()","snippet":"gridIIID(${1})(${2})"}},
+		{"name":"psPoint","arg":{"format":"[](){}","snippet":"psPoint[${1}](${2}){${3}}"}},
+		{"name":"psPoint","arg":{"format":"(){}","snippet":"psPoint(${1}){${2}}"}},
+		{"name":"psTransformPoint","arg":{"format":"[]()(){}","snippet":"psTransformPoint[${1}](${2})(${3}){${4}}"}},
+		{"name":"psTransformPoint","arg":{"format":"()(){}","snippet":"psTransformPoint(${1})(${2}){${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

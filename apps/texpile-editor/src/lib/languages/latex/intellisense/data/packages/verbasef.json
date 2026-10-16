@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"vrbexin"},{"name":"verbatim"},{"name":"here"},{"name":"float"}],
+	"macros": [
+		{"name":"VautoLines","arg":{"format":"[]{}","snippet":"VautoLines[${1:lines on first page}]{${2:lines per page}}"}},
+		{"name":"VautoLines","arg":{"format":"{}","snippet":"VautoLines{${1:lines per page}}"}},
+		{"name":"VautoPl","arg":{"format":"{}","snippet":"VautoPl{${1:placement}}"}},
+		{"name":"VautoSfFont","arg":{"format":"[]{}","snippet":"VautoSfFont[${1:line number font}]{${2:text font}}"}},
+		{"name":"VautoSfFont","arg":{"format":"{}","snippet":"VautoSfFont{${1:text font}}"}},
+		{"name":"VautoSubF","arg":{"format":"[]{}{}{}{}{}","snippet":"VautoSubF[${1:line step}]{${2:first line}}{${3:last line}}{${4:file}}{${5:caption}}{${6:label}}"},"doc":"Input lines 〈#2〉 to 〈#3〉 of file 〈#4〉."},
+		{"name":"VautoSubF","arg":{"format":"{}{}{}{}{}","snippet":"VautoSubF{${1:first line}}{${2:last line}}{${3:file}}{${4:caption}}{${5:label}}"},"doc":"Input lines 〈#2〉 to 〈#3〉 of file 〈#4〉."}
+	],
+	"envs": [],
+	"keys": {}
+}

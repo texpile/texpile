@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"dhucs"},{"name":"kotexutf","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"kolabels-utf"},{"name":"verbatim"},{"name":"luatexko","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"xetexko","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"interhchar","arg":{"format":"{}","snippet":"interhchar{${1:skip}}"}},
+		{"name":"interHchar","arg":{"format":"{}","snippet":"interHchar{${1}}"},"unusual":true},
+		{"name":"interhword","arg":{"format":"[]{}{}{}","snippet":"interhword[${1:xspaceskip factor}]{${2:space factor}}{${3:stretch factor}}{${4:shrink factor}}"},"doc":"\\interhword 매크로 어간을 임의로 설정하게 한다."},
+		{"name":"interhword","arg":{"format":"{}{}{}","snippet":"interhword{${1:space factor}}{${2:stretch factor}}{${3:shrink factor}}"},"doc":"\\interhword 매크로 어간을 임의로 설정하게 한다."}
+	],
+	"envs": [
+		{"name":"engtext","unusual":true},
+		{"name":"engtxt","unusual":true}
+	],
+	"keys": {
+		"\\usepackage/dhucs-interword#c": ["HWP","default","narrower","nonfrench","wider"]
+	},
+	"args": ["\\usepackage/dhucs-interword#c"]
+}

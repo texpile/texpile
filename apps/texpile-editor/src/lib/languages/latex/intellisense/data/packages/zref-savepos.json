@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"}],
+	"macros": [
+		{"name":"zposx","arg":{"format":"{}","snippet":"zposx{${1}}"}},
+		{"name":"zposy","arg":{"format":"{}","snippet":"zposy{${1}}"}},
+		{"name":"zref@savepos","unusual":true},
+		{"name":"zsavepos","arg":{"format":"{}","snippet":"zsavepos{${1:refname}}"},"doc":"The current location is stored in a reference with the given name."},
+		{"name":"zsaveposx","arg":{"format":"{}","snippet":"zsaveposx{${1:refname}}"}},
+		{"name":"zsaveposy","arg":{"format":"{}","snippet":"zsaveposy{${1:refname}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

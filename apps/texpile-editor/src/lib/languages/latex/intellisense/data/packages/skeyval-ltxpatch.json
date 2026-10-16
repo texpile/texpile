@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"breakkerpaloopfalse","unusual":true},
+		{"name":"breakkerpalooptrue","unusual":true},
+		{"name":"ifbreakkerpaloop","unusual":true},
+		{"name":"kerpaloop","arg":{"format":"{}{}{}","snippet":"kerpaloop{${1:parser}}{${2:list}}{${3:callback}}"}},
+		{"name":"kerpaloop*","arg":{"format":"{}{}{}","snippet":"kerpaloop*{${1:parser}}{${2:list}}{${3:callback}}"}},
+		{"name":"skvltxploggingall","unusual":true},
+		{"name":"skvltxptracingall","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

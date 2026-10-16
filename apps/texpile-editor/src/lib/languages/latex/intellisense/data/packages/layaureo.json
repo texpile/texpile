@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"calc"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

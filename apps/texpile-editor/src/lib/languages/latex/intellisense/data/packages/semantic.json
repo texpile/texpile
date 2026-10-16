@@ -1,0 +1,40 @@
+{
+	"deps": [{"name":"ligature","if":"!inference+!reserved+!tdiagram"},{"name":"tdiagram","if":"!inference+!ligature+!reserved+!shorthand"}],
+	"macros": [
+		{"name":"comp","arg":{"format":"[]{}{}","snippet":"comp[${1}]{${2}}{${3}}"},"doc":"To support writing denotational, semantics the commands \\comp and \\eval are provided to describe the evaluation of programs respectively expressions."},
+		{"name":"comp","arg":{"format":"{}{}","snippet":"comp{${1}}{${2}}"},"doc":"To support writing denotational, semantics the commands \\comp and \\eval are provided to describe the evaluation of programs respectively expressions."},
+		{"name":"compiler","arg":{"format":"{}","snippet":"compiler{${1}}"}},
+		{"name":"compsymbol","arg":{"format":"[]","snippet":"compsymbol[${1}]"}},
+		{"name":"compsymbol"},
+		{"name":"eval","arg":{"format":"[]{}{}","snippet":"eval[${1}]{${2}}{${3}}"}},
+		{"name":"eval","arg":{"format":"{}{}","snippet":"eval{${1}}{${2}}"}},
+		{"name":"evalsymbol","arg":{"format":"[]","snippet":"evalsymbol[${1}]"}},
+		{"name":"evalsymbol"},
+		{"name":"exe","arg":{"format":"{}[]{}","snippet":"exe{${1}}[${2}]{${3}}"}},
+		{"name":"exe","arg":{"format":"{}{}","snippet":"exe{${1}}{${2}}"}},
+		{"name":"inference"},
+		{"name":"inference*"},
+		{"name":"interpreter","arg":{"format":"{}","snippet":"interpreter{${1}}"}},
+		{"name":"machine","arg":{"format":"{}","snippet":"machine{${1}}"}},
+		{"name":"mathlig","arg":{"format":"{}{}","snippet":"mathlig{${1:character sequence}}{${2:ligature commands}}"}},
+		{"name":"mathligprotect","arg":{"format":"{}","snippet":"mathligprotect{${1}}"}},
+		{"name":"mathligsoff","doc":"By default, math ligatures are in effect when the mathligs package is loaded, but this can be turned off and on by using the commands \\mathligsoff and \\mathligson."},
+		{"name":"mathligson","doc":"By default, math ligatures are in effect when the mathligs package is loaded, but this can be turned off and on by using the commands \\mathligsoff and \\mathligson."},
+		{"name":"predicate","arg":{"format":"{}","snippet":"predicate{${1}}"}},
+		{"name":"predicatebegin"},
+		{"name":"predicateend"},
+		{"name":"program","arg":{"format":"{}","snippet":"program{${1}}"}},
+		{"name":"reservestyle","arg":{"format":"[]{}{}","snippet":"reservestyle[${1}]{${2}}{${3}}"}},
+		{"name":"reservestyle","arg":{"format":"{}{}","snippet":"reservestyle{${1}}{${2}}"}},
+		{"name":"semanticDate","unusual":true},
+		{"name":"semanticVersion","unusual":true},
+		{"name":"setnamespace","arg":{"format":"{}","snippet":"setnamespace{${1}}"}},
+		{"name":"setpremisesend","arg":{"format":"{}","snippet":"setpremisesend{${1}}"}},
+		{"name":"setpremisesspace","arg":{"format":"{}","snippet":"setpremisesspace{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/semantic#c": ["inference","ligature","reserved","shorthand","tdiagram"]
+	},
+	"args": ["\\usepackage/semantic#c"]
+}

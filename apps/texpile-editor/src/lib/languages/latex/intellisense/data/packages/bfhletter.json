@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"scrletter"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"scrextend"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"bfhcolors"},{"name":"xcolor"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"},{"name":"geometry"},{"name":"ifvtex"},{"name":"bfhfonts"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"nunito","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"textcomp","engines":["pdflatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"sourceserif"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

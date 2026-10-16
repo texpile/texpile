@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"vv","arg":{"format":"{}","snippet":"vv{${1:arg}}"}},
+		{"name":"vv*","arg":{"format":"{}","snippet":"vv*{${1:arg}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/esvect#c": ["a","b","c","d","e","f","g","h"]
+	},
+	"args": ["\\usepackage/esvect#c"]
+}

@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"classname","doc":"the control sequence \\classname will hold the name of the current class."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"docdate","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"flushcolumns"},
+		{"name":"multicolbaselineskip"},
+		{"name":"multicolpretolerance"},
+		{"name":"multicolsep"},
+		{"name":"multicoltolerance"},
+		{"name":"postmulticols"},
+		{"name":"premulticols"},
+		{"name":"raggedcolumns"},
+		{"name":"setemergencystretch","arg":{"format":"{}{}","snippet":"setemergencystretch{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"multicols","arg":{"format":"{}[][]","snippet":"{${1:columns}}[${2:header text}][${3:space needed}]"}},
+		{"name":"multicols","arg":{"format":"{}","snippet":"{${1:columns}}"}}
+	],
+	"keys": {}
+}

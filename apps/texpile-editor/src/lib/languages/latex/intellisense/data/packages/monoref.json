@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xparse"}],
+	"macros": [
+		{"name":"lastpage","doc":"Prints the total number of body pages (front matter excluded)."},
+		{"name":"monorefcitetemplate"},
+		{"name":"monorefpagetemplate","doc":"\\monorefpagetemplate (default 000) sizes \\pageref and \\lastpage slots."},
+		{"name":"monorefreftemplate"},
+		{"name":"monorefslotwidth","doc":"Setting the length \\monorefslotwidth to a positive value overrides both templates with a fixed width."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/monoref#c": ["nobib","notoc"]
+	},
+	"args": ["\\usepackage/monoref#c"]
+}

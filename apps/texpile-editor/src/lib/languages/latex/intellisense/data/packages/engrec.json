@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"amstext"},{"name":"upgreek","if":"upgreek"}],
+	"macros": [
+		{"name":"Alpha"},
+		{"name":"Beta"},
+		{"name":"Chi"},
+		{"name":"engrec","arg":{"format":"{}","snippet":"engrec{${1:counter}}"},"doc":"Two macros \\engrec and \\EnGrec to enumerate, for example some lists, with lower case or upper case greek letters."},
+		{"name":"EnGrec","arg":{"format":"{}","snippet":"EnGrec{${1:counter}}"},"doc":"Two macros \\engrec and \\EnGrec to enumerate, for example some lists, with lower case or upper case greek letters."},
+		{"name":"Epsilon"},
+		{"name":"Eta"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileinfo","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"Iota"},
+		{"name":"Kappa"},
+		{"name":"Mu"},
+		{"name":"Nu"},
+		{"name":"omicron"},
+		{"name":"Omicron"},
+		{"name":"PackageName","unusual":true},
+		{"name":"Rho"},
+		{"name":"Tau"},
+		{"name":"upomicron"},
+		{"name":"Zeta"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/engrec#c": ["epsilon","phi","pi","rho","sigma","slgreek","sloped","theta","upgreek","upright","varepsilon","varphi","varpi","varrho","varsigma","vartheta"]
+	},
+	"args": ["\\usepackage/engrec#c"]
+}

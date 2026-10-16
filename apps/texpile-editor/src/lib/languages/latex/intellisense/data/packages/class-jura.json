@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"class-report"},{"name":"alphanum"}],
+	"macros": [
+		{"name":"backmatter"},
+		{"name":"frontmatter"},
+		{"name":"mainmatter"}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/jura#c": ["draft","normalfront","spacedfn","tightfn","twoside","widefront"]
+	},
+	"args": ["\\documentclass/jura#c"]
+}

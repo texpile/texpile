@@ -1,0 +1,27 @@
+{
+	"macros": [
+		{"name":"checkforlandscape"},
+		{"name":"ifprintoption","unusual":true},
+		{"name":"ifsidebyside","unusual":true},
+		{"name":"ifuselandscape","unusual":true},
+		{"name":"magstepminus","arg":{"format":"{}","snippet":"magstepminus{${1}}"}},
+		{"name":"pageseplength"},
+		{"name":"pagesepoffset"},
+		{"name":"pagesepwidth"},
+		{"name":"pagespersignature","arg":{"format":"{}","snippet":"pagespersignature{${1}}"}},
+		{"name":"printoptionfalse","unusual":true},
+		{"name":"printoptiontrue","unusual":true},
+		{"name":"setdvipstargetpages"},
+		{"name":"setpdftargetpages"},
+		{"name":"sidebysidefalse","unusual":true},
+		{"name":"sidebysidetrue","unusual":true},
+		{"name":"source","arg":{"format":"{}{}{}","snippet":"source{${1}}{${2}}{${3}}"}},
+		{"name":"target","arg":{"format":"{}{}{}","snippet":"target{${1}}{${2}}{${3}}"}},
+		{"name":"twoupclearpage"},
+		{"name":"twoupemptypage"},
+		{"name":"uselandscapefalse","unusual":true},
+		{"name":"uselandscapetrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

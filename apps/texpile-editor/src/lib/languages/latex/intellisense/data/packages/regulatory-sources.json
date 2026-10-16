@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"regulatory-struct"},{"name":"ifthen"},{"name":"xcolor"},{"name":"enumitem"},{"name":"fmtcount"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"scrextend"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"zref"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-user"},{"name":"zref-xr"},{"name":"kvoptions"},{"name":"zref-clever"},{"name":"ifdraft"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"translations"},{"name":"titlesec"}],
+	"macros": [
+		{"name":"ifsourceexists","arg":{"format":"{}{}{}","snippet":"ifsourceexists{${1:key}}{${2:true}}{${3:false}}"}},
+		{"name":"loadsources","arg":{"format":"{}","snippet":"loadsources{${1:file}}"}},
+		{"name":"newsource","arg":{"format":"{}{}{}","snippet":"newsource{${1:key}}{${2:type}}{${3:fields}}"}},
+		{"name":"newsourcedeterminer","arg":{"format":"{}{}{}","snippet":"newsourcedeterminer{${1:register}}{${2:kind}}{${3:article}}"},"unusual":true},
+		{"name":"newsourcefieldalias","arg":{"format":"{}{}","snippet":"newsourcefieldalias{${1:alias}}{${2:field}}"},"unusual":true},
+		{"name":"newsourceregister","arg":{"format":"{}{}{}","snippet":"newsourceregister{${1:name}}{${2:full}}{${3:short}}"},"unusual":true},
+		{"name":"newsourcetype","arg":{"format":"{}{}{}","snippet":"newsourcetype{${1:type}}{${2:required fields}}{${3:register}}"},"unusual":true},
+		{"name":"newsourcetypealias","arg":{"format":"{}{}","snippet":"newsourcetypealias{${1:alias}}{${2:type}}"},"unusual":true},
+		{"name":"sourcedate","arg":{"format":"{}","snippet":"sourcedate{${1:YYYY-MM-DD}}"}},
+		{"name":"srcfield","arg":{"format":"{}{}","snippet":"srcfield{${1:key}}{${2:field}}"}},
+		{"name":"srcref","arg":{"format":"[]{}","snippet":"srcref[${1:provision}]{${2:key}}"}},
+		{"name":"srcref","arg":{"format":"{}","snippet":"srcref{${1:key}}"}},
+		{"name":"srcref*","arg":{"format":"[]{}","snippet":"srcref*[${1:provision}]{${2:key}}"}},
+		{"name":"srcref*","arg":{"format":"{}","snippet":"srcref*{${1:key}}"}},
+		{"name":"srctype","arg":{"format":"{}","snippet":"srctype{${1:key}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"DefineIwonaMathVersion","arg":{"format":"{}","snippet":"DefineIwonaMathVersion{${1}}"},"doc":"The main function of the package, \\DefineIwonaMathVersion defines a new math version based on Iwona fonts."},
+		{"name":"lVert"},
+		{"name":"rVert"}
+	],
+	"envs": [],
+	"keys": {}
+}

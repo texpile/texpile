@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"scrextend"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"}],
+	"macros": [
+		{"name":"generatefontfile","arg":{"format":"{}[]{}","snippet":"generatefontfile{${1:base name}}[${2:baseline skip}]{${3:font size}}"}},
+		{"name":"generatefontfile","arg":{"format":"{}{}","snippet":"generatefontfile{${1:base name}}{${2:font size}}"}},
+		{"name":"KOMAScriptVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

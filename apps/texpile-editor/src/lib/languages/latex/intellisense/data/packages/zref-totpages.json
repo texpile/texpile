@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-abspage"},{"name":"zref-lastpage"}],
+	"macros": [
+		{"name":"ztotpages","doc":"Macro \\ztotpages contains the number of pages."}
+	],
+	"envs": [],
+	"keys": {}
+}

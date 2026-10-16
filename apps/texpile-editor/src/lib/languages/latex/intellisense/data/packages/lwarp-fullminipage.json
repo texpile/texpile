@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"fullminipage","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"fullminipage"}
+	],
+	"keys": {}
+}

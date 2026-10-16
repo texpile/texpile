@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"float"},{"name":"rotating"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

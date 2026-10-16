@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

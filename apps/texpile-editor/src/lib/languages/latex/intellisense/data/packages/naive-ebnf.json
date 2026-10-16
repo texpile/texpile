@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"EbnfNonTerminal","arg":{"format":"{}","snippet":"EbnfNonTerminal{${1:name}}"}},
+		{"name":"EbnfRegex","arg":{"format":"{}","snippet":"EbnfRegex{${1:expression}}"}},
+		{"name":"EbnfSpecial","arg":{"format":"{}","snippet":"EbnfSpecial{${1:text}}"}},
+		{"name":"EbnfTerminal","arg":{"format":"{}","snippet":"EbnfTerminal{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"ebnf","arg":{"format":"[]","snippet":"[${1:left-hand width}]"},"doc":"The ebnf environment doesn’t add any formatting to the paragraph, but only replaces the plain text symbols, such as “:=” and “<Var>” with proper LaTeX commands."},
+		{"name":"ebnf","doc":"The ebnf environment doesn’t add any formatting to the paragraph, but only replaces the plain text symbols, such as “:=” and “<Var>” with proper LaTeX commands."}
+	],
+	"keys": {}
+}

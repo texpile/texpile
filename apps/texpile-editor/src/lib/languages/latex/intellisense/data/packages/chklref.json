@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"afterpackage"},{"name":"auxhook"},{"name":"currfile"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"filehook"},{"name":"filehook-2020"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

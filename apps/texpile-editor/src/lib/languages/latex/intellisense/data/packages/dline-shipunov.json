@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"lineno"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [],
+	"envs": [
+		{"name":"dline","doc":"Double line on the left of text."}
+	],
+	"keys": {}
+}

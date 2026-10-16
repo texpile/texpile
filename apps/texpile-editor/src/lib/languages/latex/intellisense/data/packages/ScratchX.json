@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"calc"},{"name":"xstring"},{"name":"ifsym"},{"name":"ifthen"},{"name":"multido"},{"name":"xargs"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"beginbox","arg":{"format":"{}","snippet":"beginbox{${1:text}}"}},
+		{"name":"blank"},
+		{"name":"blocbox","arg":{"format":"{}","snippet":"blocbox{${1:text}}"}},
+		{"name":"boucle","arg":{"format":"{}{}{}","snippet":"boucle{${1:text}}{${2:number of blocks inside}}{${3:type}}"}},
+		{"name":"cb","arg":{"format":"[]{}","snippet":"cb[${1:color}]{${2:text}}"}},
+		{"name":"cb","arg":{"format":"{}","snippet":"cb{${1:text}}"}},
+		{"name":"hb","arg":{"format":"[]{}","snippet":"hb[${1:color}]{${2:text}}"}},
+		{"name":"hb","arg":{"format":"{}","snippet":"hb{${1:text}}"}},
+		{"name":"kbox","arg":{"format":"{}","snippet":"kbox{${1:text}}"}},
+		{"name":"rb","arg":{"format":"[]{}","snippet":"rb[${1:color}]{${2:text}}"}},
+		{"name":"rb","arg":{"format":"{}","snippet":"rb{${1:text}}"}},
+		{"name":"rbb","arg":{"format":"[]{}","snippet":"rbb[${1:color}]{${2:text}}"}},
+		{"name":"rbb","arg":{"format":"{}","snippet":"rbb{${1:text}}"}},
+		{"name":"sailors","arg":{"format":"{}{}","snippet":"sailors{${1:text}}{${2:number of blocks inside}}"}},
+		{"name":"scbox","arg":{"format":"{}{}","snippet":"scbox{${1:text}}{${2:color}}"}},
+		{"name":"Scratchy","arg":{"format":"[][]","snippet":"Scratchy[${1:scale}][${2:lines width}]"}},
+		{"name":"Scratchy"},
+		{"name":"simenon","arg":{"format":"{}","snippet":"simenon{${1:number of blocks inside}}"}},
+		{"name":"sqb","arg":{"format":"{}","snippet":"sqb{${1:color}}"}},
+		{"name":"thedecalageX","unusual":true},
+		{"name":"thedecalageY","unusual":true},
+		{"name":"theNbrCptrAlors","unusual":true},
+		{"name":"theNbrCptrLoupe","unusual":true},
+		{"name":"turnbox","arg":{"format":"{}{}","snippet":"turnbox{${1:orientation}}{${2:angle}}"}}
+	],
+	"envs": [
+		{"name":"Scratch","arg":{"format":"[]","snippet":"[${1:scale}]"}},
+		{"name":"Scratch"}
+	],
+	"keys": {}
+}

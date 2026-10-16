@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"regulatory-ref"},{"name":"regulatory-struct"},{"name":"ifthen"},{"name":"xcolor"},{"name":"enumitem"},{"name":"fmtcount"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"scrextend"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"zref"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-user"},{"name":"zref-xr"},{"name":"kvoptions"},{"name":"zref-clever"},{"name":"ifdraft"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"translations"},{"name":"titlesec"},{"name":"xstring"},{"name":"regulatory-defs"},{"name":"glossaries"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"glossaries-extra"},{"name":"glossaries-extra-bib2gls"}],
+	"macros": [
+		{"name":"artifactsubject","arg":{"format":"{}","snippet":"artifactsubject{${1:label}}"}},
+		{"name":"artifacturl","arg":{"format":"{}","snippet":"artifacturl{${1}}"},"unusual":true},
+		{"name":"attachdocument","arg":{"format":"[]{}{}","snippet":"attachdocument[${1:description}]{${2:filename}}{${3:link text}}"}},
+		{"name":"attachdocument","arg":{"format":"{}{}","snippet":"attachdocument{${1:filename}}{${2:link text}}"}},
+		{"name":"documentattachment","arg":{"format":"{}{}","snippet":"documentattachment{${1:label}}{${2:link text}}"}},
+		{"name":"documentfootnote","arg":{"format":"[]{}","snippet":"documentfootnote[${1:link text}]{${2:label}}"}},
+		{"name":"documentfootnote","arg":{"format":"{}","snippet":"documentfootnote{${1:label}}"}},
+		{"name":"documentlabel","arg":{"format":"{}","snippet":"documentlabel{${1:label}}"}},
+		{"name":"loadextdefs","arg":{"format":"[]{}","snippet":"loadextdefs[${1:category}]{${2:src}}"},"unusual":true},
+		{"name":"loadextdefs","arg":{"format":"{}","snippet":"loadextdefs{${1:src}}"},"unusual":true},
+		{"name":"masterdocument","arg":{"format":"[]{}{}","snippet":"masterdocument[${1:prefix}]{${2:name}}{${3:opts}}"}},
+		{"name":"masterdocument","arg":{"format":"{}{}","snippet":"masterdocument{${1:name}}{${2:opts}}"}},
+		{"name":"newartifact","arg":{"format":"{}{}","snippet":"newartifact{${1:name}}{${2:fields}}"}},
+		{"name":"refdocument","arg":{"format":"[]{}{}","snippet":"refdocument[${1:prefix}]{${2:name}}{${3:opts}}"}},
+		{"name":"refdocument","arg":{"format":"{}{}","snippet":"refdocument{${1:name}}{${2:opts}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

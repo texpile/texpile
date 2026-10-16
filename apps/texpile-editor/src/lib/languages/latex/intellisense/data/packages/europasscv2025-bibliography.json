@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"biblatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"}],
+	"macros": [
+		{"name":"ecvpublications","arg":{"format":"[]{}","snippet":"ecvpublications[${1:entry type}]{${2:section title}}"},"doc":"Use \\ecvpublications if you want continuous numbering."},
+		{"name":"ecvpublications","arg":{"format":"{}","snippet":"ecvpublications{${1:section title}}"},"doc":"Use \\ecvpublications if you want continuous numbering."}
+	],
+	"envs": [],
+	"keys": {}
+}

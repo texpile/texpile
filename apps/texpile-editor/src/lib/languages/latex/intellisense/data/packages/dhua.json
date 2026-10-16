@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"xspace","if":"xspace"}],
+	"macros": [
+		{"name":"abkii","arg":{"format":"{}{}","snippet":"abkii{${1:letter-1}}{${2:letter-2}}"}},
+		{"name":"dh"},
+		{"name":"dhuaspace","unusual":true},
+		{"name":"DhuaSpace"},
+		{"name":"dhuaxspace","unusual":true},
+		{"name":"DhuaXspace","unusual":true},
+		{"name":"idR"},
+		{"name":"newdhua","arg":{"format":"{}{}","snippet":"newdhua{${1:new-macro}}{${2:replace}}"},"doc":"The syntax \\newdhua{⟨new-macro⟩}{⟨replace⟩} is the same as for LaTeX’s standard ‘\\newcommand’ etc. defining user macros without parameters."},
+		{"name":"newtwopartdhua","arg":{"format":"{}{}{}","snippet":"newtwopartdhua{${1:new}}{${2:letter-1}}{${3:letter-2}}"}},
+		{"name":"oae"},
+		{"name":"so"},
+		{"name":"su"},
+		{"name":"ua"},
+		{"name":"uae"},
+		{"name":"vglo"},
+		{"name":"vglu"},
+		{"name":"zB"},
+		{"name":"zT"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/dhua#c": ["web","xspace"]
+	},
+	"args": ["\\usepackage/dhua#c"]
+}

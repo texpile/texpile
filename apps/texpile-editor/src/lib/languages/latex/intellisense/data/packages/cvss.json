@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"xparse"},{"name":"xstring"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"category","arg":{"format":"{}","snippet":"category{${1:CVSS score}}"}},
+		{"name":"cvssFrame","arg":{"format":"{}","snippet":"cvssFrame{${1:CVSS level}}"},"doc":"This macro will output a CVSS tag based on a CVSS level passed as argument."},
+		{"name":"cvssLevel","arg":{"format":"{}","snippet":"cvssLevel{${1:CVSS string}}"},"doc":"This macro will output the CVSS level from an {⟨input vector⟩} (without CVSS3.1/), for example Info."},
+		{"name":"cvssLevelpretty","arg":{"format":"{}","snippet":"cvssLevelpretty{${1:CVSS string}}"},"doc":"This macro will output the colored CVSS level from an {⟨input vector⟩} (without CVSS3.1/)."},
+		{"name":"cvssPrint","arg":{"format":"{}","snippet":"cvssPrint{${1:CVSS string}}"},"doc":"This macro will print all details of a CVSS string: colored level, score, and hyperlink to FIRST calculator, from an {⟨input vector⟩} (without CVSS3.1/)."},
+		{"name":"cvssScore","arg":{"format":"{}","snippet":"cvssScore{${1:CVSS string}}"},"doc":"This is the main macro of this package, responsible for computing the base CVSS 3.1 score of an {⟨input vector⟩} (without CVSS3.1/)."},
+		{"name":"cvssScorepretty","arg":{"format":"{}","snippet":"cvssScorepretty{${1:CVSS string}}"}},
+		{"name":"cvssTag","arg":{"format":"{}","snippet":"cvssTag{${1:CVSS string}}"},"doc":"This macro will output a colored tag with the CVSS level inside, from an {⟨input vector⟩} (without CVSS3.1/)."},
+		{"name":"scoreCrit","unusual":true},
+		{"name":"scoreHigh","unusual":true},
+		{"name":"scoreLow","unusual":true},
+		{"name":"scoreMed","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

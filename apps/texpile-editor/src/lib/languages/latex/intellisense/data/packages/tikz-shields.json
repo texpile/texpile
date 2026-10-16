@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"xkeyval"},{"name":"ifthen"},{"name":"fontawesome"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"arxivBadge","arg":{"format":"[][]{}","snippet":"arxivBadge[${1:options}][${2:left text}]{${3:id}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"arxivBadge","arg":{"format":"{}","snippet":"arxivBadge{${1:id}}"}},
+		{"name":"doiBadge","arg":{"format":"[][]{}","snippet":"doiBadge[${1:options}][${2:left text}]{${3:id}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"doiBadge","arg":{"format":"{}","snippet":"doiBadge{${1:id}}"}},
+		{"name":"drawBadge","arg":{"format":"[]{}{}","snippet":"drawBadge[${1:options}]{${2:left text}}{${3:right text}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"drawBadge","arg":{"format":"{}{}","snippet":"drawBadge{${1:left text}}{${2:right text}}"}},
+		{"name":"forgeBadge","arg":{"format":"[][]{}","snippet":"forgeBadge[${1:options}][${2:left text}]{${3:repo path}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"forgeBadge","arg":{"format":"{}","snippet":"forgeBadge{${1:repo path}}"}},
+		{"name":"githubBadge","arg":{"format":"[][]{}","snippet":"githubBadge[${1:options}][${2:left text}]{${3:repo path}}","keys":["keyval:badge"],"keyPos":0},"doc":"The \\githubBadge command creates a badge showing path to a given repository."},
+		{"name":"githubBadge","arg":{"format":"{}","snippet":"githubBadge{${1:repo path}}"},"doc":"The \\githubBadge command creates a badge showing path to a given repository."},
+		{"name":"gitlabBadge","arg":{"format":"[][]{}","snippet":"gitlabBadge[${1:options}][${2:left text}]{${3:repo path}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"gitlabBadge","arg":{"format":"{}","snippet":"gitlabBadge{${1:repo path}}"}},
+		{"name":"halBadge","arg":{"format":"[][]{}","snippet":"halBadge[${1:options}][${2:left text}]{${3:id}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"halBadge","arg":{"format":"{}","snippet":"halBadge{${1:id}}"}},
+		{"name":"licenseBadge","arg":{"format":"[][]{}","snippet":"licenseBadge[${1:options}][${2:left text}]{${3:license name}}","keys":["keyval:badge"],"keyPos":0},"doc":"The \\licenseBadge command creates a badge displaying a license name, optionally with custom options and left-side text."},
+		{"name":"licenseBadge","arg":{"format":"{}","snippet":"licenseBadge{${1:license name}}"},"doc":"The \\licenseBadge command creates a badge displaying a license name, optionally with custom options and left-side text."},
+		{"name":"pubmedBadge","arg":{"format":"[][]{}","snippet":"pubmedBadge[${1:options}][${2:left text}]{${3:id}}","keys":["keyval:badge"],"keyPos":0}},
+		{"name":"pubmedBadge","arg":{"format":"{}","snippet":"pubmedBadge{${1:id}}"}},
+		{"name":"tikzshieldGithub"},
+		{"name":"tikzshieldGitlab"},
+		{"name":"tikzshieldLicence"}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:badge": ["baseline=","color=","colorLeft=","colorRight=","font=","labelColor=","link=","logo=","logoColor=","showlink=${1|false,true|}","style=${1|flat,flat-square,plastic,for-the-badge,social|}"],
+		"\\usepackage/tikz-shields#c": ["color","colorLeft","colorRight","fa=${1|0,1,5,6,7|}","font","labelColor","logoColor","style=${1|flat,flat-square,plastic,for-the-badge,social|}"]
+	},
+	"args": ["\\usepackage/tikz-shields#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"fhjcommon"},{"name":"xstring"},{"name":"ifthen"},{"name":"calc"},{"name":"etoolbox"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"}],
+	"macros": [
+		{"name":"authorsaffiliations","arg":{"format":"{}","snippet":"authorsaffiliations{${1:affiliations}}"}},
+		{"name":"authorsnames","arg":{"format":"[]{}","snippet":"authorsnames[${1:superscripts}]{${2:author names}}"},"doc":"\\authorsnames [⟨comma separated list of superscripts⟩] {⟨comma separated list of authors name(s)⟩}: Authors names Where {⟨authors names⟩} is a comma separated list of authors in display order and [⟨superscripts⟩] is an optional comma separated list of affiliation superscripts."},
+		{"name":"authorsnames","arg":{"format":"{}","snippet":"authorsnames{${1:author names}}"},"doc":"\\authorsnames [⟨comma separated list of superscripts⟩] {⟨comma separated list of authors name(s)⟩}: Authors names Where {⟨authors names⟩} is a comma separated list of authors in display order and [⟨superscripts⟩] is an optional comma separated list of affiliation superscripts."},
+		{"name":"shorttitle","arg":{"format":"{}","snippet":"shorttitle{${1:short title}}"},"doc":"This optional command defines the short title of your document which is used in the footer."},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:title}}"},"doc":"This command defines the title of your document and is placed on top of the first page on the according position."}
+	],
+	"envs": [],
+	"keys": {}
+}

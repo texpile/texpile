@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"columncolor","arg":{"format":"[]{}[][]","snippet":"columncolor[${1}]{${2}}[${3}][${4}]"}},
+		{"name":"columncolor","arg":{"format":"{}","snippet":"columncolor{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

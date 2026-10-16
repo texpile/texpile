@@ -1,22 +1,8 @@
 {
-  "deps": [
-    {
-      "name": "longtable"
-    },
-    {
-      "name": "tabularx"
-    }
-  ],
-  "macros": [
-    {
-      "name": "LTXtable",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "LTXtable{${1:width}}{${2:file}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"tabularx"},{"name":"array"},{"name":"longtable"}],
+	"macros": [
+		{"name":"LTXtable","arg":{"format":"{}{}","snippet":"LTXtable{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
 }

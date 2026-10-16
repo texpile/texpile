@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"brandstyle","arg":{"format":"{}","snippet":"brandstyle{${1:organisation}}"},"doc":"\\brandstyle Loads brand styles."}
+	],
+	"envs": [],
+	"keys": {}
+}

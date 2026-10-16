@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"acontracted","arg":{"format":"[]{}{}{}{}","snippet":"acontracted[${1}]{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"acontracted","arg":{"format":"{}{}{}{}","snippet":"acontracted{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"acontraction","arg":{"format":"[]{}{}{}{}","snippet":"acontraction[${1:height}]{${2:text before}}{${3:start}}{${4:bridged text}}{${5:end}}"}},
+		{"name":"acontraction","arg":{"format":"{}{}{}{}","snippet":"acontraction{${1:text before}}{${2:start}}{${3:bridged text}}{${4:end}}"}},
+		{"name":"bcontracted","arg":{"format":"[]{}{}{}{}","snippet":"bcontracted[${1}]{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"bcontracted","arg":{"format":"{}{}{}{}","snippet":"bcontracted{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"bcontraction","arg":{"format":"[]{}{}{}{}","snippet":"bcontraction[${1:height}]{${2:text before}}{${3:start}}{${4:bridged text}}{${5:end}}"}},
+		{"name":"bcontraction","arg":{"format":"{}{}{}{}","snippet":"bcontraction{${1:text before}}{${2:start}}{${3:bridged text}}{${4:end}}"}},
+		{"name":"contraction","arg":{"format":"[]{}{}{}{}","snippet":"contraction[${1:height}]{${2:text before}}{${3:start}}{${4:bridged text}}{${5:end}}"}},
+		{"name":"contraction","arg":{"format":"{}{}{}{}","snippet":"contraction{${1:text before}}{${2:start}}{${3:bridged text}}{${4:end}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"nomathglue","arg":{"format":"{}","snippet":"nomathglue{${1:math}}"}},
+		{"name":"simplewickcontact","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"keyval"},{"name":"color"}],
+	"macros": [],
+	"envs": [
+		{"name":"fullminipage","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:fullminipage"],"keyPos":0},"doc":"The environment fullminipage generates a new page with page style empty, which is spanned by a minipage."},
+		{"name":"fullminipage","doc":"The environment fullminipage generates a new page with page style empty, which is spanned by a minipage."}
+	],
+	"keys": {
+		"keyval:fullminipage": ["background=","bgcolor","bottom=","left=","pagebreak=","right=","top=","alignment=${1|t,c,b|}"]
+	}
+}

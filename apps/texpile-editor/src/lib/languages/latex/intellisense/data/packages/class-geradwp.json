@@ -1,0 +1,45 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"class-article"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"latexsym"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"mathrsfs"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyhdr"},{"name":"booktabs"},{"name":"multirow"},{"name":"array"},{"name":"caption"},{"name":"caption3"},{"name":"xcolor"},{"name":"enumitem"},{"name":"float","if":"gdminitabs"}],
+	"macros": [
+		{"name":"GDabstracts","doc":"This command marks the beginning of the “content” section, beginning with the English and French abstracts."},
+		{"name":"GDaffilitem","arg":{"format":"{}{}","snippet":"GDaffilitem{${1:label}}{${2:affiliation}}"}},
+		{"name":"GDannee","arg":{"format":"{}","snippet":"GDannee{${1}}"},"unusual":true},
+		{"name":"GDarticlestart","doc":"The working paper begins with this command. It handles some final fine-tuning of the formatting settings."},
+		{"name":"GDauteursCopyright","arg":{"format":"{}","snippet":"GDauteursCopyright{${1}}"},"unusual":true},
+		{"name":"GDauteursCourts","arg":{"format":"{}","snippet":"GDauteursCourts{${1}}"},"unusual":true},
+		{"name":"GDauthitem","arg":{"format":"{}","snippet":"GDauthitem{${1:author}}"}},
+		{"name":"GDauthorsCopyright","arg":{"format":"{}","snippet":"GDauthorsCopyright{${1:author last names}}"},"doc":"List of the authors’ last names for the authors’ copyright notice at the bottom of the title page."},
+		{"name":"GDauthorsShort","arg":{"format":"{}","snippet":"GDauthorsShort{${1:short author list}}"},"doc":"List of authors, formatted as [First initial]. [Last name] (e.g.: B. Hamel, K. Hébert)."},
+		{"name":"GDcoverpage","doc":"The entire cover page is generated with this command."},
+		{"name":"GDcoverpagewhitespace","arg":{"format":"{}","snippet":"GDcoverpagewhitespace{${1:length}}"}},
+		{"name":"GDemailitem","arg":{"format":"{}","snippet":"GDemailitem{${1:email}}"}},
+		{"name":"GDmois","arg":{"format":"{}{}","snippet":"GDmois{${1}}{${2}}"},"unusual":true},
+		{"name":"GDmonth","arg":{"format":"{}{}","snippet":"GDmonth{${1:French month}}{${2:English month}}"},"doc":"Publication month of the working paper in both French and English."},
+		{"name":"GDnumber","arg":{"format":"{}","snippet":"GDnumber{${1:number}}"},"doc":"Number assigned to the working paper by the GERAD team."},
+		{"name":"GDnumero","arg":{"format":"{}","snippet":"GDnumero{${1}}"},"unusual":true},
+		{"name":"GDpageCouverture","unusual":true},
+		{"name":"GDpostpubcitation","arg":{"format":"{}{}","snippet":"GDpostpubcitation{${1:citation}}{${2:URL}}"}},
+		{"name":"GDrefsep"},
+		{"name":"GDrevised","arg":{"format":"{}{}{}","snippet":"GDrevised{${1:French month}}{${2:English month}}{${3:year}}"},"doc":"When a working paper is revised by its authors, this command is used to display the revision date on the cover page."},
+		{"name":"GDsupplementname","arg":{"format":"{}","snippet":"GDsupplementname{${1:supplement name}}"},"doc":"If you write extra research data or an appendix using the geradwp template and the gdsupplement option (see subsection 2.1), the \\GDsupplementname command will serve as place holder for the supplement’s name and the class will output it on the title pages and on page headers."},
+		{"name":"GDtitle","arg":{"format":"{}","snippet":"GDtitle{${1:title}}"},"doc":"Title of the working paper."},
+		{"name":"GDtitre","arg":{"format":"{}","snippet":"GDtitre{${1}}"},"unusual":true},
+		{"name":"GDyear","arg":{"format":"{}","snippet":"GDyear{${1:year}}"},"doc":"The year the paper was published, formatted as YYYY."}
+	],
+	"envs": [
+		{"name":"GDabstract","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"GDacknowledgements"},
+		{"name":"GDaffillist","arg":{"format":"[]","snippet":"[${1}]"},"doc":"The GDaffillist environment is a customized list of all the authors’ affiliations, in no predefined order of importance."},
+		{"name":"GDaffillist","doc":"The GDaffillist environment is a customized list of all the authors’ affiliations, in no predefined order of importance."},
+		{"name":"GDauthlist","arg":{"format":"[]","snippet":"[${1}]"},"doc":"The GDauthlist environment is a customized list in which the authors enter their full name using the \\GDauthitem command (NB: one author per line)."},
+		{"name":"GDauthlist","doc":"The GDauthlist environment is a customized list in which the authors enter their full name using the \\GDauthitem command (NB: one author per line)."},
+		{"name":"GDemaillist","arg":{"format":"[]","snippet":"[${1}]"},"doc":"The final customized list created for the title page of a Cahier is the GDemaillist environment, where the authors’ email addresses are listed, with one email address per \\GDemailitem command."},
+		{"name":"GDemaillist","doc":"The final customized list created for the title page of a Cahier is the GDemaillist environment, where the authors’ email addresses are listed, with one email address per \\GDemailitem command."},
+		{"name":"GDpagetitre","unusual":true},
+		{"name":"GDtitlepage"}
+	],
+	"keys": {
+		"\\documentclass/geradwp#c": ["gdfinal","gdminitabs","gdpaper","gdplain","gdpostpub","gdrevised","gdsmallhead","gdsupplement","gdweb"]
+	},
+	"args": ["\\documentclass/geradwp#c"]
+}

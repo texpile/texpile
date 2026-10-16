@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"pgfrcs"},{"name":"pgf"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"}],
+	"macros": [
+		{"name":"pgfsetstatecircledistance","arg":{"format":"{}","snippet":"pgfsetstatecircledistance{${1}}"},"unusual":true},
+		{"name":"pgfsetstatelabeldistance","arg":{"format":"{}","snippet":"pgfsetstatelabeldistance{${1}}"},"unusual":true},
+		{"name":"pgfsetstatemooreradius","arg":{"format":"{}","snippet":"pgfsetstatemooreradius{${1}}"},"unusual":true},
+		{"name":"pgfsetstateradius","arg":{"format":"{}","snippet":"pgfsetstateradius{${1}}"},"unusual":true},
+		{"name":"pgfstateaccepting","arg":{"format":"{}{}{}","snippet":"pgfstateaccepting{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"pgfstateconnect","arg":{"format":"{}{}[]{}","snippet":"pgfstateconnect{${1}}{${2}}[${3}]{${4}}"},"unusual":true},
+		{"name":"pgfstateconnect","arg":{"format":"{}{}{}","snippet":"pgfstateconnect{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"pgfstateconnectrotated","arg":{"format":"{}{}[]{}","snippet":"pgfstateconnectrotated{${1}}{${2}}[${3}]{${4}}"},"unusual":true},
+		{"name":"pgfstateconnectrotated","arg":{"format":"{}{}{}","snippet":"pgfstateconnectrotated{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"pgfstatecurve","arg":{"format":"{}{}{}{}","snippet":"pgfstatecurve{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"pgfstatefinal","arg":{"format":"{}[]{}","snippet":"pgfstatefinal{${1}}[${2}]{${3}}"},"unusual":true},
+		{"name":"pgfstatefinal","arg":{"format":"{}{}","snippet":"pgfstatefinal{${1}}{${2}}"},"unusual":true},
+		{"name":"pgfstateinitial","arg":{"format":"{}[]{}","snippet":"pgfstateinitial{${1}}[${2}]{${3}}"},"unusual":true},
+		{"name":"pgfstateinitial","arg":{"format":"{}{}","snippet":"pgfstateinitial{${1}}{${2}}"},"unusual":true},
+		{"name":"pgfstateloop","arg":{"format":"{}{}{}","snippet":"pgfstateloop{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"pgfstatemoore","arg":{"format":"{}{}{}{}","snippet":"pgfstatemoore{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"pgfstaterejecting","arg":{"format":"{}{}{}","snippet":"pgfstaterejecting{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"pgfstaterelative","arg":{"format":"{}[]{}","snippet":"pgfstaterelative{${1}}[${2}]{${3}}"},"unusual":true},
+		{"name":"pgfstaterelative","arg":{"format":"{}{}","snippet":"pgfstaterelative{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"pgfautomaton","unusual":true}
+	],
+	"keys": {}
+}

@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"multicol"},{"name":"multirow"},{"name":"lmodern"},{"name":"textcomp"},{"name":"inputenc"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"glossaries"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"listings"},{"name":"spverbatim"},{"name":"csvsimple"},{"name":"csvsimple-l3"},{"name":"enumitem"},{"name":"makecell"},{"name":"tabularx"},{"name":"pdfpages"},{"name":"calc"},{"name":"eso-pic"},{"name":"pgf-pie"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"scalefnt"},{"name":"pdflscape"},{"name":"pdflscape-nometadata"},{"name":"lscape"},{"name":"appendix"},{"name":"todonotes"},{"name":"tocloft"},{"name":"fancyhdr"},{"name":"titling"},{"name":"catchfile"},{"name":"etexcmds"}],
+	"macros": [
+		{"name":"ER"},
+		{"name":"inputIfExists","arg":{"format":"{}","snippet":"inputIfExists{${1:file name}}"}},
+		{"name":"tlcBeginLandscape"},
+		{"name":"tlcDarkblue","arg":{"format":"{}","snippet":"tlcDarkblue{${1:text}}"}},
+		{"name":"tlcDebug"},
+		{"name":"tlcEndLandscape"},
+		{"name":"tlcGetEnvironmentVariable","arg":{"format":"[]{}","snippet":"tlcGetEnvironmentVariable[${1:target macro}]{${2:variable name}}"}},
+		{"name":"tlcGetEnvironmentVariable","arg":{"format":"{}","snippet":"tlcGetEnvironmentVariable{${1:variable name}}"}},
+		{"name":"tlcIsDefined","arg":{"format":"{}","snippet":"tlcIsDefined{${1:file name}}"},"unusual":true},
+		{"name":"tlcTitlePageAndTableOfContents","arg":{"format":"{}{}{}","snippet":"tlcTitlePageAndTableOfContents{${1:title}}{${2:author}}{${3:abstract}}"}},
+		{"name":"tlcVersionPart","arg":{"format":"{}","snippet":"tlcVersionPart{${1:column name}}"},"unusual":true},
+		{"name":"tlcVspace"},
+		{"name":"useDefaultHeaderFooter","unusual":true},
+		{"name":"useLogoFile","unusual":true},
+		{"name":"useRuler","unusual":true},
+		{"name":"useTitle","unusual":true},
+		{"name":"useVersionFile","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

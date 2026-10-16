@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"abc"},{"name":"iftex"},{"name":"verbatim"},{"name":"keyval"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"shellesc","engines":["lualatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

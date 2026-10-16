@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"bgfalse","unusual":true},
+		{"name":"bgtrue","unusual":true},
+		{"name":"custompalette","arg":{"format":"{}{}{}{}","snippet":"custompalette{${1:element}}{${2:r}}{${3:g}}{${4:b}}"}},
+		{"name":"geosection"},
+		{"name":"geosubsec"},
+		{"name":"geotitle"},
+		{"name":"highpolyfalse","unusual":true},
+		{"name":"highpolytrue","unusual":true},
+		{"name":"ifbg","unusual":true},
+		{"name":"ifhighpoly","unusual":true},
+		{"name":"iflowpoly","unusual":true},
+		{"name":"ifultralowpoly","unusual":true},
+		{"name":"lowpolyfalse","unusual":true},
+		{"name":"lowpolytrue","unusual":true},
+		{"name":"ultralowpolyfalse","unusual":true},
+		{"name":"ultralowpolytrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/beamertheme-geode#c": ["amethyst","citrine","diamond","highpoly","lowpoly","obs","phos","pquartz","ultralowpoly"]
+	},
+	"args": ["\\usepackage/beamertheme-geode#c"]
+}

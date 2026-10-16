@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ifpdf","if":"!disable+!enable"},{"name":"iftex","if":"!disable+!enable"},{"name":"collectbox"}],
+	"macros": [
+		{"name":"ifstorebox","unusual":true},
+		{"name":"newstorebox","arg":{"format":"{}","snippet":"newstorebox{${1}}"}},
+		{"name":"storebox","arg":{"format":"{}{}","snippet":"storebox{${1}}{${2}}"}},
+		{"name":"usestorebox","arg":{"format":"{}","snippet":"usestorebox{${1}}"},"doc":"This macro typesets the stored content at the current position (as horizontal box in horizontal mode)."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/storebox#c": ["delayed","disable","enable","immediate"]
+	},
+	"args": ["\\usepackage/storebox#c"]
+}

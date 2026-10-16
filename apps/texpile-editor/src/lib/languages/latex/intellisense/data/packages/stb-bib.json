@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"natbib"}],
+	"macros": [
+		{"name":"AorE","arg":{"format":"{}{}","snippet":"AorE{${1:Afrikaans text}}{${2:English text}}"},"doc":"The command \\AorE{〈Afrikaans teks〉}{〈English text 〉} is provided that types the specific language text depending on whether Afrikaans was selected as the current active language or not."},
+		{"name":"BIBand"},
+		{"name":"bibfnamefont","arg":{"format":"{}","snippet":"bibfnamefont{${1}}"},"doc":"The format of an author’s first names in the reference list may be may be printed in a different font by redefining \\bibfnamefont."},
+		{"name":"bibnamefont","arg":{"format":"{}","snippet":"bibnamefont{${1}}"}},
+		{"name":"citenamefont","arg":{"format":"{}","snippet":"citenamefont{${1}}"},"doc":"Author names in citations may be printed in a different font by redefining \\citenamefont."},
+		{"name":"InBibliography","arg":{"format":"{}{}","snippet":"InBibliography{${1:text in bibliography}}{${2:text in citation}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

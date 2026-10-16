@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"cuNum","arg":{"format":"{}","snippet":"cuNum{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

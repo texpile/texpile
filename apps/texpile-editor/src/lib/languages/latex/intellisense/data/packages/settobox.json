@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"depth"},
+		{"name":"height"},
+		{"name":"setboxdepth","arg":{"format":"{}{}","snippet":"setboxdepth{${1}}{${2}}"}},
+		{"name":"setboxheight","arg":{"format":"{}{}","snippet":"setboxheight{${1}}{${2}}"}},
+		{"name":"setboxlower","arg":{"format":"{}{}","snippet":"setboxlower{${1}}{${2}}"}},
+		{"name":"setboxmoveleft","arg":{"format":"{}{}","snippet":"setboxmoveleft{${1}}{${2}}"}},
+		{"name":"setboxmoveright","arg":{"format":"{}{}","snippet":"setboxmoveright{${1}}{${2}}"}},
+		{"name":"setboxraise","arg":{"format":"{}{}","snippet":"setboxraise{${1}}{${2}}"}},
+		{"name":"setboxwidth","arg":{"format":"{}{}","snippet":"setboxwidth{${1}}{${2}}"}},
+		{"name":"settoboxdepth","arg":{"format":"{}{}","snippet":"settoboxdepth{${1}}{${2}}"}},
+		{"name":"settoboxheight","arg":{"format":"{}{}","snippet":"settoboxheight{${1}}{${2}}"}},
+		{"name":"settoboxtotalheight","arg":{"format":"{}{}","snippet":"settoboxtotalheight{${1}}{${2}}"}},
+		{"name":"settoboxwidth","arg":{"format":"{}{}","snippet":"settoboxwidth{${1}}{${2}}"}},
+		{"name":"totalheight"},
+		{"name":"width"}
+	],
+	"envs": [],
+	"keys": {}
+}

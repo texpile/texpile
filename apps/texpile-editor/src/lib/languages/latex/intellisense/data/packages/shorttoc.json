@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"anothertableofcontents","arg":{"format":"[]{}{}{}","snippet":"anothertableofcontents[${1:suffix}]{${2:document}}{${3:title}}{${4:depth}}"}},
+		{"name":"anothertableofcontents","arg":{"format":"{}{}{}","snippet":"anothertableofcontents{${1:document}}{${2:title}}{${3:depth}}"}},
+		{"name":"anothertoc","arg":{"format":"[]{}{}{}","snippet":"anothertoc[${1:suffix}]{${2:document}}{${3:title}}{${4:depth}}"}},
+		{"name":"anothertoc","arg":{"format":"{}{}{}","snippet":"anothertoc{${1:document}}{${2:title}}{${3:depth}}"}},
+		{"name":"shorttableofcontents","arg":{"format":"{}{}","snippet":"shorttableofcontents{${1:title}}{${2:depth}}"}},
+		{"name":"shorttoc","arg":{"format":"{}{}","snippet":"shorttoc{${1:title}}{${2:depth}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/shorttoc#c": ["loose","tight"]
+	},
+	"args": ["\\usepackage/shorttoc#c"]
+}

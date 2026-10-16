@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xparse"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"hfsetbordercolor","arg":{"format":"{}","snippet":"hfsetbordercolor{${1:color}}"},"if":"customcolors"},
+		{"name":"hfsetfillcolor","arg":{"format":"{}","snippet":"hfsetfillcolor{${1:color}}"},"if":"customcolors"},
+		{"name":"tikzmarkend","arg":{"format":"[]{}","snippet":"tikzmarkend[${1:tikz code}]{${2:marker-id}}"}},
+		{"name":"tikzmarkend","arg":{"format":"{}","snippet":"tikzmarkend{${1:marker-id}}"}},
+		{"name":"tikzmarkin","arg":{"format":"[]{}()()","snippet":"tikzmarkin[${1:options}]{${2:marker-id}}(${3:below right offset})(${4:above left offset})"}},
+		{"name":"tikzmarkin","arg":{"format":"{}()()","snippet":"tikzmarkin{${1:marker-id}}(${2:below right offset})(${3:above left offset})"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hf-tikz#c": ["beamer","customcolors","markings","nofill","norndcorners","shade"]
+	},
+	"args": ["\\usepackage/hf-tikz#c"]
+}

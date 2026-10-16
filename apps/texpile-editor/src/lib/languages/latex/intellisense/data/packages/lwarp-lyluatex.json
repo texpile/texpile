@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"LyluatexImageAltText","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

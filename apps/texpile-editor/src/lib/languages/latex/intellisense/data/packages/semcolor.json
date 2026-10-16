@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"pst-ovl"},{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"leftsliderotation","arg":{"format":"{}","snippet":"leftsliderotation{${1:text}}"},"unusual":true},
+		{"name":"rightsliderotation","arg":{"format":"{}","snippet":"rightsliderotation{${1:text}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

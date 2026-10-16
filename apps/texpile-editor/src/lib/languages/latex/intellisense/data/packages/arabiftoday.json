@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"farsimonth","arg":{"format":"{}","snippet":"farsimonth{${1:month number}}"}},
+		{"name":"ftoday"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"amsrefs"},{"name":"url"},{"name":"pcatcode"},{"name":"ifoption"},{"name":"rkeyval"},{"name":"textcmds"},{"name":"mathscinet"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"writebib","arg":{"format":"{}{}","snippet":"writebib{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

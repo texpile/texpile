@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"rubydefault","unusual":true},
+		{"name":"rubyfamily","unusual":true},
+		{"name":"rubykatuji","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

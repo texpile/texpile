@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"intquotient"},
+		{"name":"modulo","arg":{"format":"{}{}","snippet":"modulo{${1}}{${2}}"}},
+		{"name":"quotient","arg":{"format":"{}{}","snippet":"quotient{${1}}{${2}}"}},
+		{"name":"remainder"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"amsthm"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"prettyref"},{"name":"ifluatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"newstatementsp","arg":{"format":"{}{}{}{}","snippet":"newstatementsp{${1:prefix}}{${2:display name}}{${3:text color}}{${4:box color}}"},"doc":"Define a new statement environment using the `\\newstatementsp` command."},
+		{"name":"refcallsp","arg":{"format":"{}","snippet":"refcallsp{${1:prefix:label}}"},"doc":"The \\refcallsp{prefix:label} command allows you to display a statement box anywhere in your document."},
+		{"name":"refnamesp","arg":{"format":"{}","snippet":"refnamesp{${1:prefix:label}}"},"doc":"If you provided a specific name for the statement (e.g., “Fermat’s Last Theorem”), you can use the \\refnamesp command to reference both the number and the name together."},
+		{"name":"refsp","arg":{"format":"{}","snippet":"refsp{${1:prefix:label}}"},"doc":"`\\refsp{prefix:label}`: Displays the statement type and its number (e.g., Theorem 1.1). - `\\refnamesp{prefix:label}`: Displays the statement type, number, and its specific name (e.g., Theorem 1.1:(Fermat's Last Theorem))."}
+	],
+	"envs": [
+		{"name":"statementsp","arg":{"format":"<>[]()","snippet":"<${1:prefix}>[${2:label}](${3:Statement Name})"},"doc":"You can use the `statementsp` environment for numbered boxes and `statementsp*` for unnumbered boxes."},
+		{"name":"statementsp","arg":{"format":"<>()","snippet":"<${1:prefix}>(${2:Statement Name})"},"doc":"You can use the `statementsp` environment for numbered boxes and `statementsp*` for unnumbered boxes."},
+		{"name":"statementsp*","arg":{"format":"<>[]()","snippet":"<${1:prefix}>[${2:label}](${3:Statement Name})"},"doc":"You can use the `statementsp` environment for numbered boxes and `statementsp*` for unnumbered boxes."},
+		{"name":"statementsp*","arg":{"format":"<>()","snippet":"<${1:prefix}>(${2:Statement Name})"},"doc":"You can use the `statementsp` environment for numbered boxes and `statementsp*` for unnumbered boxes."}
+	],
+	"keys": {}
+}

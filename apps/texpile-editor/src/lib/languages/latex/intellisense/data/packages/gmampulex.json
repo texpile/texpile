@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"gmcommand"},{"name":"gmbase"},{"name":"xparse"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"ampulexdef","arg":{"format":"{}[][]{}{}{}","snippet":"ampulexdef{${1:macro to be redefined}}[${2:def parameters}][${3:body parameters}]{${4:start tokens}}{${5:end tokens}}{${6:replacement}}"}},
+		{"name":"ampulexdef","arg":{"format":"{}{}{}{}","snippet":"ampulexdef{${1:macro to be redefined}}{${2:start tokens}}{${3:end tokens}}{${4:replacement}}"}},
+		{"name":"ampulexlet","arg":{"format":"{}{}[][]{}{}{}","snippet":"ampulexlet{${1:macro to be let to}}{${2:macro providing the definition}}[${3:def parameters}][${4:body parameters}]{${5:start tokens}}{${6:end tokens}}{${7:replacement}}"}},
+		{"name":"ampulexlet","arg":{"format":"{}{}{}{}{}","snippet":"ampulexlet{${1:macro to be let to}}{${2:macro providing the definition}}{${3:start tokens}}{${4:end tokens}}{${5:replacement}}"}},
+		{"name":"defENumLoop","arg":{"format":"{}{}","snippet":"defENumLoop{${1:loop macro name}}{${2:replacement of gmu@tempa}}"}},
+		{"name":"GenericInfoToTerminal"}
+	],
+	"envs": [],
+	"keys": {}
+}

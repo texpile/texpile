@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"biblatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"}],
+	"macros": [
+		{"name":"arabdocbibdate","unusual":true},
+		{"name":"arabdocbibtitle","arg":{"format":"{}","snippet":"arabdocbibtitle{${1:title}}"}},
+		{"name":"arabdocbibversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

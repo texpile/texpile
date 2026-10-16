@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"versolayout"},
+		{"name":"versoleftmargin"},
+		{"name":"versonote","arg":{"format":"{}","snippet":"versonote{${1:text}}"}},
+		{"name":"versotextwidth"}
+	],
+	"envs": [],
+	"keys": {}
+}

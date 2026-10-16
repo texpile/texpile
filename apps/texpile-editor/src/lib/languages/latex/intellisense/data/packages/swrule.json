@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"swrule","arg":{"format":"{}{}","snippet":"swrule{${1:length}}{${2:maximum width}}"}},
+		{"name":"swrulecount"},
+		{"name":"swrulex","arg":{"format":"{}{}{}","snippet":"swrulex{${1:length}}{${2:minimum width}}{${3:maximum width}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

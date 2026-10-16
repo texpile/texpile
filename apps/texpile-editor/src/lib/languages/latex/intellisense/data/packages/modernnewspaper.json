@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"multicol"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"setspace"},{"name":"polyglossia"},{"name":"bidi"},{"name":"biditools"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"etexcmds"},{"name":"auxhook"}],
+	"macros": [
+		{"name":"ArabicFont"},
+		{"name":"article"},
+		{"name":"ArticleImage","arg":{"format":"{}{}{}","snippet":"ArticleImage{${1}}{${2}}{${3}}"}},
+		{"name":"BeginNewsColumns","arg":{"format":"{}","snippet":"BeginNewsColumns{${1}}"}},
+		{"name":"byline","arg":{"format":"{}","snippet":"byline{${1}}"}},
+		{"name":"bylinestyle","unusual":true},
+		{"name":"CJKFont"},
+		{"name":"dateline","arg":{"format":"{}","snippet":"dateline{${1}}"}},
+		{"name":"datelinestyle","unusual":true},
+		{"name":"DevaFont"},
+		{"name":"DisableRTL"},
+		{"name":"DropCap","arg":{"format":"{}","snippet":"DropCap{${1}}"}},
+		{"name":"EnableRTL"},
+		{"name":"EndNewsColumns"},
+		{"name":"headline","arg":{"format":"{}","snippet":"headline{${1}}"}},
+		{"name":"headlinestyle","unusual":true},
+		{"name":"MakePaperHeader"},
+		{"name":"MyanmarFont"},
+		{"name":"SetByWord","arg":{"format":"{}","snippet":"SetByWord{${1}}"}},
+		{"name":"SetPaperDate","arg":{"format":"{}","snippet":"SetPaperDate{${1}}"}},
+		{"name":"SetPaperIssue","arg":{"format":"{}","snippet":"SetPaperIssue{${1}}"}},
+		{"name":"SetPaperLocation","arg":{"format":"{}","snippet":"SetPaperLocation{${1}}"}},
+		{"name":"SetPaperName","arg":{"format":"{}","snippet":"SetPaperName{${1}}"}},
+		{"name":"SetPaperSlogan","arg":{"format":"{}","snippet":"SetPaperSlogan{${1}}"}},
+		{"name":"SetPaperVolume","arg":{"format":"{}","snippet":"SetPaperVolume{${1}}"}},
+		{"name":"SetPaperWebsite","arg":{"format":"{}","snippet":"SetPaperWebsite{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

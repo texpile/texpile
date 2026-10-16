@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"}],
+	"macros": [
+		{"name":"luapackageloaderpkgdate","unusual":true},
+		{"name":"luapackageloaderversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

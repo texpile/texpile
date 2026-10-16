@@ -1,68 +1,17 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "newfloat",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "newfloat{${1:float type%envname}}{${2:placement}}{${3:ext}}"
-      }
-    },
-    {
-      "name": "newfloat",
-      "arg": {
-        "format": "{}{}{}[]",
-        "snippet": "newfloat{${1:float type%envname}}{${2:placement}}{${3:ext}}[${4:within}]"
-      }
-    },
-    {
-      "name": "floatstyle",
-      "arg": {
-        "format": "{}",
-        "snippet": "floatstyle{${1:default style%keyvals}}",
-        "keys": [
-          "\\floatstyle"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "floatname",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "floatname{${1:float type}}{${2:name}}"
-      }
-    },
-    {
-      "name": "floatplacement",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "floatplacement{${1:float type}}{${2:default placement}}"
-      }
-    },
-    {
-      "name": "restylefloat",
-      "arg": {
-        "format": "{}",
-        "snippet": "restylefloat{${1:float type}}"
-      }
-    },
-    {
-      "name": "listof",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "listof{${1:float type}}{${2:title}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\floatstyle": [
-      "plain",
-      "plaintop",
-      "boxed",
-      "ruled"
-    ]
-  },
-  "args": []
+	"macros": [
+		{"name":"floatevery","arg":{"format":"{}{}","snippet":"floatevery{${1:float type}}{${2:code}}"},"unusual":true},
+		{"name":"floatname","arg":{"format":"{}{}","snippet":"floatname{${1:float type}}{${2:name}}"},"doc":"The \\floatname command lets you define the float name that LaTeX uses in the caption of a float, i.e., ‘Figure’ for a figure and so on."},
+		{"name":"floatplacement","arg":{"format":"{}{}","snippet":"floatplacement{${1:float type}}{${2:placement}}"},"doc":"The \\floatplacement command resets the default placement specifier of a class of floats."},
+		{"name":"floatstyle","arg":{"format":"{}","snippet":"floatstyle{${1:style}}","keys":["float:style"],"keyPos":0},"doc":"The \\floatstyle command sets a default float style."},
+		{"name":"listof","arg":{"format":"{}{}","snippet":"listof{${1:float type}}{${2:title}}"},"doc":"The \\listof command produces a list of all the floats of a given class."},
+		{"name":"newfloat","arg":{"format":"{}{}{}[]","snippet":"newfloat{${1:type}}{${2:placement}}{${3:ext}}[${4:within}]"},"doc":"New kinds of floats may be defined using a \\newfloat command analogous to \\newtheorem."},
+		{"name":"newfloat","arg":{"format":"{}{}{}","snippet":"newfloat{${1:type}}{${2:placement}}{${3:ext}}"},"doc":"New kinds of floats may be defined using a \\newfloat command analogous to \\newtheorem."},
+		{"name":"restylefloat","arg":{"format":"{}","snippet":"restylefloat{${1:float type}}"},"doc":"The \\restylefloat command is necessary to change styles for the standard float types figure and table."},
+		{"name":"restylefloat*","arg":{"format":"{}","snippet":"restylefloat*{${1:float type}}"},"doc":"The \\restylefloat command is necessary to change styles for the standard float types figure and table."}
+	],
+	"envs": [],
+	"keys": {
+		"float:style": ["plain","plaintop","boxed","ruled"]
+	}
 }

@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"diagonalsquare","arg":{"format":"[]{}{}{}{}","snippet":"diagonalsquare[${1:shift}]{${2:north east}}{${3:north west}}{${4:south west}}{${5:south east}}"},"doc":"The command \\diagonalsquare can be used to draw a square tile that is half white and half black along a diagonal."},
+		{"name":"diagonalsquare","arg":{"format":"{}{}{}{}","snippet":"diagonalsquare{${1:north east}}{${2:north west}}{${3:south west}}{${4:south east}}"},"doc":"The command \\diagonalsquare can be used to draw a square tile that is half white and half black along a diagonal."},
+		{"name":"tileA","arg":{"format":"[]","snippet":"tileA[${1:shift}]"}},
+		{"name":"tileA"},
+		{"name":"tileB","arg":{"format":"[]","snippet":"tileB[${1:shift}]"}},
+		{"name":"tileB"},
+		{"name":"tileC","arg":{"format":"[]","snippet":"tileC[${1:shift}]"}},
+		{"name":"tileC"},
+		{"name":"tileD","arg":{"format":"[]","snippet":"tileD[${1:shift}]"}},
+		{"name":"tileD"},
+		{"name":"truchetcube","arg":{"format":"[]{}{}{}{}{}{}","snippet":"truchetcube[${1:shift}]{${2:bottom}}{${3:front}}{${4:right}}{${5:back}}{${6:left}}{${7:top}}"},"doc":"The command \\truchetcube can be used to draw Cubes with differently coloured faces."},
+		{"name":"truchetcube","arg":{"format":"{}{}{}{}{}{}","snippet":"truchetcube{${1:bottom}}{${2:front}}{${3:right}}{${4:back}}{${5:left}}{${6:top}}"},"doc":"The command \\truchetcube can be used to draw Cubes with differently coloured faces."},
+		{"name":"truchethex","arg":{"format":"[]{}{}{}{}{}{}{}","snippet":"truchethex[${1:shift}]{${2:centre colour}}{${3:corner 1}}{${4:corner 2}}{${5:corner 3}}{${6:corner 4}}{${7:corner 5}}{${8:corner 6}}"}},
+		{"name":"truchethex","arg":{"format":"{}{}{}{}{}{}{}","snippet":"truchethex{${1:centre colour}}{${2:corner 1}}{${3:corner 2}}{${4:corner 3}}{${5:corner 4}}{${6:corner 5}}{${7:corner 6}}"}},
+		{"name":"truchetsplithex","arg":{"format":"[]","snippet":"truchetsplithex[${1:shift}]"}},
+		{"name":"truchetsplithex"},
+		{"name":"truchetsquare","arg":{"format":"[]{}{}{}{}{}","snippet":"truchetsquare[${1:shift}]{${2:centre colour}}{${3:north east}}{${4:north west}}{${5:south west}}{${6:south east}}"},"doc":"You can draw square Truchet tile using the command \\truchetsquare."},
+		{"name":"truchetsquare","arg":{"format":"{}{}{}{}{}","snippet":"truchetsquare{${1:centre colour}}{${2:north east}}{${3:north west}}{${4:south west}}{${5:south east}}"},"doc":"You can draw square Truchet tile using the command \\truchetsquare."}
+	],
+	"envs": [
+		{"name":"rotatehex","arg":{"format":"{}","snippet":"{${1:angle in degrees}}"},"doc":"The environment rotatehex can be used to rotate a hexagonal tile about its centre."}
+	],
+	"keys": {}
+}

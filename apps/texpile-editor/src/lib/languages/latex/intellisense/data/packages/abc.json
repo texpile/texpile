@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"iftex"},{"name":"verbatim"},{"name":"keyval"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"shellesc","engines":["lualatex"]}],
+	"macros": [
+		{"name":"abcinput","arg":{"format":"[]{}","snippet":"abcinput[${1}]{${2}}"}},
+		{"name":"abcinput","arg":{"format":"{}","snippet":"abcinput{${1}}"}},
+		{"name":"abcwidth"},
+		{"name":"mupinput","arg":{"format":"[]{}","snippet":"mupinput[${1:options}]{${2:name}}"},"if":"mup"},
+		{"name":"mupinput","arg":{"format":"{}","snippet":"mupinput{${1:name}}"},"if":"mup"},
+		{"name":"mupwidth"},
+		{"name":"normalabcoutputfile"}
+	],
+	"envs": [
+		{"name":"abc","arg":{"format":"[]","snippet":"[${1:keyword=value,...}]"}},
+		{"name":"abc"},
+		{"name":"mup","arg":{"format":"[]","snippet":"[${1:keyword=value,...}]"},"if":"mup"},
+		{"name":"mup","if":"mup"}
+	],
+	"keys": {
+		"\\usepackage/abc#c": ["generate","mup","nogenerate","nosaveall","noshellescape","ps2eps","ps2epsi","ps2epsidos","saveall","shellescape"]
+	},
+	"args": ["\\usepackage/abc#c"]
+}

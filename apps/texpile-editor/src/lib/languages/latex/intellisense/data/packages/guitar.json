@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"toolbox"}],
+	"macros": [
+		{"name":"guitarAccord","unusual":true},
+		{"name":"guitarBox","unusual":true},
+		{"name":"guitarCalcDim"},
+		{"name":"guitarChord","arg":{"format":"{}{}","snippet":"guitarChord{${1:chord}}{${2:text}}"}},
+		{"name":"guitarChord*","arg":{"format":"{}{}","snippet":"guitarChord*{${1:chord}}{${2:text}}"}},
+		{"name":"guitarCrOff"},
+		{"name":"guitarCrOffHook","unusual":true},
+		{"name":"guitarCrOn"},
+		{"name":"guitarCrOnHook","unusual":true},
+		{"name":"guitarDim","unusual":true},
+		{"name":"guitarEndDoublePar"},
+		{"name":"guitarEndLine"},
+		{"name":"guitarEndPar"},
+		{"name":"guitarFirstFlush"},
+		{"name":"guitarFirstLeft"},
+		{"name":"guitarFlat"},
+		{"name":"guitarMagicOff"},
+		{"name":"guitarMagicOffHook","unusual":true},
+		{"name":"guitarMagicOn"},
+		{"name":"guitarMagicOnHook","unusual":true},
+		{"name":"guitarNoChord"},
+		{"name":"guitarOff"},
+		{"name":"guitarOn"},
+		{"name":"guitarPreAccord","doc":"By default, this command contains a \\strut which ensures that the lines with chords usually all have the same height."},
+		{"name":"guitarPut","arg":{"format":"{}","snippet":"guitarPut{${1}}"},"unusual":true},
+		{"name":"guitarPutDist","arg":{"format":"{}","snippet":"guitarPutDist{${1:text}}"},"unusual":true},
+		{"name":"guitarPutMerge","arg":{"format":"{}","snippet":"guitarPutMerge{${1:text}}"},"unusual":true},
+		{"name":"guitarPutOnSpace","unusual":true},
+		{"name":"guitarSharp"},
+		{"name":"guitarSplitDist","arg":{"format":"{}{}{}","snippet":"guitarSplitDist{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"guitarSplitMerge","arg":{"format":"{}{}{}","snippet":"guitarSplitMerge{${1}}{${2}}{${3}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"guitar"},
+		{"name":"guitarCr"},
+		{"name":"guitarMagic"}
+	],
+	"keys": {}
+}

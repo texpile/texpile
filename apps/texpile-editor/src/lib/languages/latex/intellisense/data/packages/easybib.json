@@ -1,0 +1,45 @@
+{
+	"deps": [{"name":"easy"}],
+	"macros": [
+		{"name":"bibdefinestyles","arg":{"format":"{}","snippet":"bibdefinestyles{${1:style}}"}},
+		{"name":"bibsetfmt","arg":{"format":"[]{}{}{}","snippet":"bibsetfmt[${1:group,item}]{${2:punctuation}}{${3:begin commands}}{${4:end commands}}"}},
+		{"name":"bibsetfmt","arg":{"format":"{}{}{}","snippet":"bibsetfmt{${1:punctuation}}{${2:begin commands}}{${3:end commands}}"}},
+		{"name":"bookinfo"},
+		{"name":"booklist"},
+		{"name":"bookref","arg":{"format":"[]{}","snippet":"bookref[${1:display label}]{${2:label}}"}},
+		{"name":"bookref","arg":{"format":"{}","snippet":"bookref{${1:label}}"}},
+		{"name":"by"},
+		{"name":"bysame"},
+		{"name":"citestyle","arg":{"format":"{}","snippet":"citestyle{${1:A, B or C}}"}},
+		{"name":"eds"},
+		{"name":"endref","arg":{"format":"[]","snippet":"endref[${1:punctuation}]"}},
+		{"name":"endref"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"finalinfo"},
+		{"name":"inbook"},
+		{"name":"jour"},
+		{"name":"lang"},
+		{"name":"moreref","arg":{"format":"[]{}","snippet":"moreref[${1:punctuation}]{${2:book or paper}}"}},
+		{"name":"moreref","arg":{"format":"{}","snippet":"moreref{${1:book or paper}}"}},
+		{"name":"pages"},
+		{"name":"paperlist"},
+		{"name":"paperref","arg":{"format":"[]{}","snippet":"paperref[${1:display label}]{${2:label}}"}},
+		{"name":"paperref","arg":{"format":"{}","snippet":"paperref{${1:label}}"}},
+		{"name":"publ"},
+		{"name":"publaddr"},
+		{"name":"refstyle","arg":{"format":"{}","snippet":"refstyle{${1:A, B or C}}"}},
+		{"name":"toappear"},
+		{"name":"transl"},
+		{"name":"vol"},
+		{"name":"yr"}
+	],
+	"envs": [
+		{"name":"thebibliography","arg":{"format":"[](){}","snippet":"[${1}](${2}){${3}}"},"if":"definethebibliography"},
+		{"name":"thebibliography","arg":{"format":"(){}","snippet":"(${1}){${2}}"},"if":"definethebibliography"}
+	],
+	"keys": {
+		"\\usepackage/easybib#c": ["definethebibliography"]
+	},
+	"args": ["\\usepackage/easybib#c"]
+}

@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:ignored short name}]{${2:name}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:name}}"}},
+		{"name":"copyrightholder","arg":{"format":"{}","snippet":"copyrightholder{${1}}"}},
+		{"name":"degree","arg":{"format":"{}","snippet":"degree{${1}}"}},
+		{"name":"degreeabbrev","arg":{"format":"{}","snippet":"degreeabbrev{${1}}"}},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1}}"}},
+		{"name":"director","arg":{"format":"{}","snippet":"director{${1}}"}},
+		{"name":"directortitle","arg":{"format":"{}","snippet":"directortitle{${1}}"}},
+		{"name":"major","arg":{"format":"{}","snippet":"major{${1}}"}},
+		{"name":"spaced","arg":{"format":"{}","snippet":"spaced{${1}}"},"unusual":true},
+		{"name":"thesis","arg":{"format":"{}","snippet":"thesis{${1}}"}},
+		{"name":"title","arg":{"format":"[]{}","snippet":"title[${1:ignored short title}]{${2:title}}"}},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"},{"name":"simplekv"},{"name":"xintexpr"},{"name":"xintfrac"},{"name":"xint"},{"name":"xintcore"},{"name":"xintkernel"},{"name":"xinttools"},{"name":"xintbinhex"},{"name":"poormanlog"},{"name":"listofitems"},{"name":"fontawesome5","if":"!fa6+!fa7+!nofa+!nonfa"},{"name":"l3keys2e","if":"!nofa+!nonfa"},{"name":"xparse","if":"!nofa+!nonfa"},{"name":"ifthen"},{"name":"fontawesome6","if":"fa6"},{"name":"fontawesome7","if":"fa7"},{"name":"fontawesome5-utex-helper","if":"!fa6+!fa7+!nofa+!nonfa","engines":["lualatex","xelatex"]},{"name":"luatexbase","if":"!nofa+!nonfa","engines":["lualatex"]},{"name":"fontawesome6-utex-helper","if":"fa6","engines":["lualatex","xelatex"]},{"name":"fontawesome7-utex-helper","if":"fa7","engines":["lualatex","xelatex"]}],
+	"macros": [
+		{"name":"BoardTrivialPursuit","arg":{"format":"[]<>","snippet":"BoardTrivialPursuit[${1:keys}]<${2:tikz options}>"}},
+		{"name":"BoardTrivialPursuit","arg":{"format":"<>","snippet":"BoardTrivialPursuit<${1:tikz options}>"}},
+		{"name":"CardTrivialRecto","arg":{"format":"[]{}{}{}{}{}{}{}","snippet":"CardTrivialRecto[${1:tikzpicture options}]{${2:Q1}}{${3:Q2}}{${4:Q3}}{${5:Q4}}{${6:Q5}}{${7:Q6}}{${8:card number}}"}},
+		{"name":"CardTrivialRecto","arg":{"format":"{}{}{}{}{}{}{}","snippet":"CardTrivialRecto{${1:Q1}}{${2:Q2}}{${3:Q3}}{${4:Q4}}{${5:Q5}}{${6:Q6}}{${7:card number}}"}},
+		{"name":"CardTrivialVerso","arg":{"format":"[]{}{}{}{}{}{}{}","snippet":"CardTrivialVerso[${1:tikzpicture options}]{${2:A1}}{${3:A2}}{${4:A3}}{${5:A4}}{${6:A5}}{${7:A6}}{${8:card number}}"}},
+		{"name":"CardTrivialVerso","arg":{"format":"{}{}{}{}{}{}{}","snippet":"CardTrivialVerso{${1:A1}}{${2:A2}}{${3:A3}}{${4:A4}}{${5:A5}}{${6:A6}}{${7:card number}}"}},
+		{"name":"categtrivialpursuit"},
+		{"name":"intcategcardtrivial","unusual":true},
+		{"name":"intfontlabelcardtrivial","unusual":true},
+		{"name":"intfontnumbercardtrivial","unusual":true},
+		{"name":"intfontqrcardtrivial","unusual":true},
+		{"name":"intlogocardrectotrivial"},
+		{"name":"intlogocardversotrivial"},
+		{"name":"PlateauTrivialPursuit","arg":{"format":"[]<>","snippet":"PlateauTrivialPursuit[${1:keys}]<${2:tikz options}>"}},
+		{"name":"PlateauTrivialPursuit","arg":{"format":"<>","snippet":"PlateauTrivialPursuit<${1:tikz options}>"}},
+		{"name":"SetParamsCardTrivial","arg":{"format":"{}","snippet":"SetParamsCardTrivial{${1:keys}}"}},
+		{"name":"TPColorsA"},
+		{"name":"TPColorsB"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/TrivialPursuit#c": ["fa6","fa7","nofa","nonfa"]
+	},
+	"args": ["\\usepackage/TrivialPursuit#c"]
+}

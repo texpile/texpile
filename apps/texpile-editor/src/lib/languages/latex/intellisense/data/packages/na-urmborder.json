@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"background"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"everypage"},{"name":"afterpage"},{"name":"niceframe"},{"name":"calc"}],
+	"macros": [
+		{"name":"border","arg":{"format":"{}{}","snippet":"border{${1}}{${2}}"}},
+		{"name":"borderKA"},
+		{"name":"borderKB"},
+		{"name":"borderKC"},
+		{"name":"borderKD"},
+		{"name":"borderKE"},
+		{"name":"borderKF"},
+		{"name":"borderKG"},
+		{"name":"borderKH"}
+	],
+	"envs": [],
+	"keys": {}
+}

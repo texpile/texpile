@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"color"}],
+	"macros": [
+		{"name":"FXEnvLayoutColorSigBegin","arg":{"format":"{}{}","snippet":"FXEnvLayoutColorSigBegin{${1:type}}{${2:author}}"}},
+		{"name":"FXEnvLayoutColorSigEnd","arg":{"format":"{}{}","snippet":"FXEnvLayoutColorSigEnd{${1:type}}{${2:author}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

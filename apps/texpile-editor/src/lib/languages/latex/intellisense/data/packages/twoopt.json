@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"newcommandtwoopt","arg":{"format":"{}[][][]{}","snippet":"newcommandtwoopt{${1:cmd}}[${2:num}][${3:default1}][${4:default2}]{${5:definition}}"}},
+		{"name":"newcommandtwoopt","arg":{"format":"{}{}","snippet":"newcommandtwoopt{${1:cmd}}{${2:definition}}"}},
+		{"name":"newcommandtwoopt*","arg":{"format":"{}[][][]{}","snippet":"newcommandtwoopt*{${1:cmd}}[${2:num}][${3:default1}][${4:default2}]{${5:definition}}"}},
+		{"name":"newcommandtwoopt*","arg":{"format":"{}{}","snippet":"newcommandtwoopt*{${1:cmd}}{${2:definition}}"}},
+		{"name":"providecommandtwoopt","arg":{"format":"{}[][][]{}","snippet":"providecommandtwoopt{${1:cmd}}[${2:num}][${3:default1}][${4:default2}]{${5:definition}}"}},
+		{"name":"providecommandtwoopt","arg":{"format":"{}{}","snippet":"providecommandtwoopt{${1:cmd}}{${2:definition}}"}},
+		{"name":"providecommandtwoopt*","arg":{"format":"{}[][][]{}","snippet":"providecommandtwoopt*{${1:cmd}}[${2:num}][${3:default1}][${4:default2}]{${5:definition}}"}},
+		{"name":"providecommandtwoopt*","arg":{"format":"{}{}","snippet":"providecommandtwoopt*{${1:cmd}}{${2:definition}}"}},
+		{"name":"renewcommandtwoopt","arg":{"format":"{}[][][]{}","snippet":"renewcommandtwoopt{${1:cmd}}[${2:num}][${3:default1}][${4:default2}]{${5:definition}}"}},
+		{"name":"renewcommandtwoopt","arg":{"format":"{}{}","snippet":"renewcommandtwoopt{${1:cmd}}{${2:definition}}"}},
+		{"name":"renewcommandtwoopt*","arg":{"format":"{}[][][]{}","snippet":"renewcommandtwoopt*{${1:cmd}}[${2:num}][${3:default1}][${4:default2}]{${5:definition}}"}},
+		{"name":"renewcommandtwoopt*","arg":{"format":"{}{}","snippet":"renewcommandtwoopt*{${1:cmd}}{${2:definition}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

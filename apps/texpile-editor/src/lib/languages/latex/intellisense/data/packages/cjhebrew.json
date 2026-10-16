@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"iftex"},{"name":"luabidi","engines":["lualatex"]}],
+	"macros": [
+		{"name":"<"},
+		{"name":"cjhebfamily","unusual":true},
+		{"name":"cjLR","arg":{"format":"{}","snippet":"cjLR{${1:text}}"}},
+		{"name":"cjRL","arg":{"format":"{}","snippet":"cjRL{${1:Hebrew text}}"}},
+		{"name":"dottedcircle","math":true,"detail":"◌","doc":"dotted circle"},
+		{"name":"endofword"},
+		{"name":"textcjheb","arg":{"format":"{}","snippet":"textcjheb{${1:Hebrew text}}"}},
+		{"name":"zeronojoin"}
+	],
+	"envs": [
+		{"name":"cjhebrew"}
+	],
+	"keys": {}
+}

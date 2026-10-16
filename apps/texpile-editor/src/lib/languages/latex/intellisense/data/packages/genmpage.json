@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"defineMPstyle","arg":{"format":"{}{}","snippet":"defineMPstyle{${1:style}}{${2:definitions}}","keys":["keyval:GenMP"],"keyPos":1}}
+	],
+	"envs": [
+		{"name":"minipage","arg":{"format":"[]{}[]","snippet":"[${1:position}]{${2:height}}[${3:inner position}]","keys":["keyval:GenMP"],"keyPos":2},"doc":"the minipage environment as redefined by the genmpage package takes another optional argument which contains the new parameter settings."},
+		{"name":"minipage","arg":{"format":"{}","snippet":"{${1:height}}"},"doc":"the minipage environment as redefined by the genmpage package takes another optional argument which contains the new parameter settings."}
+	],
+	"keys": {
+		"keyval:GenMP": ["RaggedRight","center","ffamily=","flush","fseries=","fshape=","height=","heightarg","innerarg","keepparindent","outerarg","parindent=","plain","raggedleft","raggedright","resetfont","width=","widtharg","fsize=${1|tiny,scriptsize,footnotesize,small,normalsize,large,Large,LARGE,huge,Huge|}","inner=${1|c,t,b,s|}","outer=${1|t,c,b,T,B|}"]
+	}
+}

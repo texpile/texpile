@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"luacode"},{"name":"iftex"},{"name":"luatexbase"},{"name":"etoolbox"},{"name":"enumitem","if":"!noenumitem"}],
+	"macros": [
+		{"name":"APomit","doc":"Used in an \\item to signify that that item should not be automatically punctuated, and not be counted."},
+		{"name":"APpass"},
+		{"name":"disableAPautopassnest"},
+		{"name":"disableAPprotectnest"},
+		{"name":"enableAPautopassnest","doc":"Automatically put an \\APpass on items that introduce a nested list."},
+		{"name":"enableAPprotectnest"},
+		{"name":"setAPall","arg":{"format":"{}","snippet":"setAPall{${1:punctuation}}"},"doc":"Set all punctuation points the same."},
+		{"name":"setAPdef","arg":{"format":"{}","snippet":"setAPdef{${1:punctuation}}"}},
+		{"name":"setAPeach","arg":{"format":"{}{}{}","snippet":"setAPeach{${1:default}}{${2:second last}}{${3:last}}"},"doc":"Set the default, second last, and last punctuation point in that order."},
+		{"name":"setAPlast","arg":{"format":"{}","snippet":"setAPlast{${1:punctuation}}"}},
+		{"name":"setAPseclast","arg":{"format":"{}","snippet":"setAPseclast{${1:punctuation}}"}}
+	],
+	"envs": [
+		{"name":"AutoPuncItems"},
+		{"name":"AutoPuncItemsE"},
+		{"name":"AutoPuncItemsO"},
+		{"name":"AutoPuncTabular","unusual":true}
+	],
+	"keys": {
+		"\\usepackage/autopuncitems#c": ["noenumitem"]
+	},
+	"args": ["\\usepackage/autopuncitems#c"]
+}

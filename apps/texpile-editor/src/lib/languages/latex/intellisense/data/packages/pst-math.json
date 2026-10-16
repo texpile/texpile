@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"multido"},{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-calculate"},{"name":"xparse"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"amstext"},{"name":"array"},{"name":"ifluatex"},{"name":"xstring"}],
+	"macros": [
+		{"name":"defineRandIntervall","arg":{"format":"(){}","snippet":"defineRandIntervall(${1:min,max}){${2:maxNo}}"}},
+		{"name":"getNumberFromList","arg":{"format":"{}","snippet":"getNumberFromList{${1}}"}},
+		{"name":"makeRandomNumberList"},
+		{"name":"makeSimpleRandomNumberList"},
+		{"name":"pstPI","arg":{"format":"{}","snippet":"pstPI{${1:1 to 4}}"}},
+		{"name":"RandomNumbers","doc":"The list of the random numbers is \\RandomNumbers , a comma separated list of the values."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"amstext"}],
+	"macros": [
+		{"name":"mathcomma","math":true,"detail":",","doc":"comma"},
+		{"name":"textualicommafont","arg":{"format":"{}","snippet":"textualicommafont{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/textualicomma#c": ["sffamily","ttfamily"]
+	},
+	"args": ["\\usepackage/textualicomma#c"]
+}

@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"appdef","arg":{"format":"{}{}","snippet":"appdef{${1:macro}}{${2:tokens}}"},"unusual":true},
+		{"name":"botrule"},
+		{"name":"colrule"},
+		{"name":"doi","arg":{"format":"{}","snippet":"doi{${1:DOI}}"}},
+		{"name":"doibase","unusual":true},
+		{"name":"flushing"},
+		{"name":"fullinterlineskip"},
+		{"name":"gappdef","arg":{"format":"{}{}","snippet":"gappdef{${1:macro}}{${2:tokens}}"},"unusual":true},
+		{"name":"href","arg":{"format":"{}{}","snippet":"href{${1:URL}}{${2:text}}"}},
+		{"name":"intertabularlinepenalty"},
+		{"name":"loopuntil","arg":{"format":"{}","snippet":"loopuntil{${1}}"},"unusual":true},
+		{"name":"loopwhile","arg":{"format":"{}","snippet":"loopwhile{${1}}"},"unusual":true},
+		{"name":"prepdef","arg":{"format":"{}{}","snippet":"prepdef{${1:macro}}{${2:tokens}}"},"unusual":true},
+		{"name":"say","arg":{"format":"{}","snippet":"say{${1:macro}}"},"unusual":true},
+		{"name":"saythe","arg":{"format":"{}","snippet":"saythe{${1:register}}"},"unusual":true},
+		{"name":"toprule"},
+		{"name":"traceoutput","unusual":true},
+		{"name":"tracingplain","unusual":true},
+		{"name":"url","arg":{"format":"{}","snippet":"url{${1:URL}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

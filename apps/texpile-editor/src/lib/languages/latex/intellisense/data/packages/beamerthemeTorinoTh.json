@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"iftex"},{"name":"pifont"},{"name":"inputenc","engines":["pdflatex","lualatex"]},{"name":"babel","engines":["pdflatex","lualatex"]},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"graphicx","engines":["xelatex"]},{"name":"keyval","engines":["xelatex"]},{"name":"graphics","engines":["xelatex"]},{"name":"trig","engines":["xelatex"]},{"name":"xltxtra","engines":["xelatex"]},{"name":"realscripts","engines":["xelatex"]},{"name":"metalogo","engines":["xelatex"]},{"name":"xkeyval","engines":["xelatex"]},{"name":"polyglossia","engines":["xelatex"]},{"name":"etoolbox","engines":["xelatex"]}],
+	"macros": [
+		{"name":"highlight","arg":{"format":"{}","snippet":"highlight{${1:text}}"}},
+		{"name":"highlightbf","arg":{"format":"{}","snippet":"highlightbf{${1:text}}"}},
+		{"name":"setsubject","arg":{"format":"{}","snippet":"setsubject{${1:subject}}"}},
+		{"name":"titlepageframe"}
+	],
+	"envs": [
+		{"name":"tframe","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"typearea"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"iftex"}],
+	"macros": [
+		{"name":"blowUp","arg":{"format":"{}","snippet":"blowUp{${1}}"},"doc":"This package only defines the user-level macro \\blowUp, which can be used to scale all pages of a document up or down."},
+		{"name":"oPaperHeight","unusual":true},
+		{"name":"oPaperWidth","unusual":true},
+		{"name":"tPaperHeight","unusual":true},
+		{"name":"tPaperWidth","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

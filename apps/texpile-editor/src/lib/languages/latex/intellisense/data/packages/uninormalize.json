@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"luatexbase"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

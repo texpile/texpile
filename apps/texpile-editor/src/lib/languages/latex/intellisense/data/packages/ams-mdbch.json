@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"}],
+	"macros": [
+		{"name":"digammait"},
+		{"name":"digammaup"},
+		{"name":"dtimes"},
+		{"name":"udtimes"},
+		{"name":"utimes"},
+		{"name":"varkappait"},
+		{"name":"varkappaup"}
+	],
+	"envs": [],
+	"keys": {}
+}

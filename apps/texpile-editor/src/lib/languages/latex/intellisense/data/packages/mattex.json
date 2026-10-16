@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"pgfkeys"},{"name":"xstring"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"amstext"},{"name":"array"},{"name":"xparse"},{"name":"collcell"},{"name":"color"}],
+	"macros": [
+		{"name":"header","doc":"Starts the header in a tabular environment."},
+		{"name":"M","arg":{"format":"{}","snippet":"M{${1:name}}"},"unusual":true},
+		{"name":"Merr","arg":{"format":"{}","snippet":"Merr{${1:name}}"},"doc":"Gives you the same as \\Mval but returns the uncertainty estimate instead, \\Merr{e} results in 11."},
+		{"name":"Merrlit","arg":{"format":"{}","snippet":"Merrlit{${1:name}}"},"unusual":true},
+		{"name":"Mnum","arg":{"format":"{}","snippet":"Mnum{${1:name}}"}},
+		{"name":"Mset","arg":{"format":"{}{}{}{}","snippet":"Mset{${1:name}}{${2:significand}}{${3:error}}{${4:exponent}}"}},
+		{"name":"MSI","arg":{"format":"{}{}","snippet":"MSI{${1:name}}{${2:unit}}"}},
+		{"name":"mtdirectory","unusual":true},
+		{"name":"Mval","arg":{"format":"{}","snippet":"Mval{${1:name}}"}},
+		{"name":"Mvallit","arg":{"format":"{}","snippet":"Mvallit{${1:name}}"},"unusual":true},
+		{"name":"noheader","doc":"Stops the header in a tabular environment."},
+		{"name":"preparematrix","arg":{"format":"[]{}{}{}","snippet":"preparematrix[${1:after each row}]{${2:name}}{${3:rows}}{${4:columns}}"}},
+		{"name":"preparematrix","arg":{"format":"{}{}{}","snippet":"preparematrix{${1:name}}{${2:rows}}{${3:columns}}"}},
+		{"name":"usematrix"}
+	],
+	"envs": [],
+	"keys": {}
+}

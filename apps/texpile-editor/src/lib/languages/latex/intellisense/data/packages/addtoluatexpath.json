@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"luacode"},{"name":"iftex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"addtoluatexpath","arg":{"format":"{}","snippet":"addtoluatexpath{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

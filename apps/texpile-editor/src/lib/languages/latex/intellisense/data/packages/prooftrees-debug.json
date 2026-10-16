@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"forest"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"etoolbox"},{"name":"elocalloc"},{"name":"environ"},{"name":"xparse"},{"name":"inlinedef"}],
+	"macros": [
+		{"name":"linenumberstyle","arg":{"format":"{}","snippet":"linenumberstyle{${1:number}}"}}
+	],
+	"envs": [
+		{"name":"prooftree","arg":{"format":"{}","snippet":"{${1:tree preamble}}"}},
+		{"name":"tableau","arg":{"format":"{}","snippet":"{${1:tree preamble}}"},"if":"tableaux"},
+		{"name":"tableau","arg":{"format":"{}","snippet":"{${1:tree preamble}}"},"if":"tableau"}
+	],
+	"keys": {
+		"\\usepackage/prooftrees-debug#c": ["tableau","tableaux"]
+	},
+	"args": ["\\usepackage/prooftrees-debug#c"]
+}

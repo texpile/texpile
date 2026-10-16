@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-article"},{"name":"epsfig"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"maketitle"},
+		{"name":"slidedivider"}
+	],
+	"envs": [
+		{"name":"doubleitem","arg":{"format":"[]{}","snippet":"[${1:left column width}]{${2:slide title}}"}},
+		{"name":"doubleitem","arg":{"format":"{}","snippet":"{${1:slide title}}"}},
+		{"name":"doubleslide","arg":{"format":"[]{}","snippet":"[${1:left column width}]{${2:slide title}}"}},
+		{"name":"doubleslide","arg":{"format":"{}","snippet":"{${1:slide title}}"}},
+		{"name":"itemslide","arg":{"format":"{}","snippet":"{${1:slide title}}"}},
+		{"name":"leftitem","arg":{"format":"[]{}","snippet":"[${1:left column width}]{${2:slide title}}"}},
+		{"name":"leftitem","arg":{"format":"{}","snippet":"{${1:slide title}}"}},
+		{"name":"rightitem","arg":{"format":"[]{}","snippet":"[${1:left column width}]{${2:slide title}}"}},
+		{"name":"rightitem","arg":{"format":"{}","snippet":"{${1:slide title}}"}},
+		{"name":"slide","arg":{"format":"{}","snippet":"{${1:slide title}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"nolbreaks","arg":{"format":"{}","snippet":"nolbreaks{${1:text}}"}},
+		{"name":"nolbreaks*","arg":{"format":"{}","snippet":"nolbreaks*{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

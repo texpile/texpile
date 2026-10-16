@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"fp-basic"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"initviewport","arg":{"format":"{}{}{}{}{}","snippet":"initviewport{${1:scale}}{${2:llx}}{${3:lly}}{${4:w}}{${5:h}}"}},
+		{"name":"origpgcmd"},
+		{"name":"origpgnum"},
+		{"name":"scanpage","arg":{"format":"[]{}","snippet":"scanpage[${1:key=value options}]{${2:file}}"}},
+		{"name":"scanpage","arg":{"format":"{}","snippet":"scanpage{${1:file}}"}},
+		{"name":"whitecirc","arg":{"format":"(){}[]","snippet":"whitecirc(${1:x,y}){${2:scale}}[${3:height scale}]"}},
+		{"name":"whitecirc","arg":{"format":"(){}","snippet":"whitecirc(${1:x,y}){${2:scale}}"}},
+		{"name":"whitesq","arg":{"format":"(){}[]","snippet":"whitesq(${1:x,y}){${2:scale}}[${3:height scale}]"}},
+		{"name":"whitesq","arg":{"format":"(){}","snippet":"whitesq(${1:x,y}){${2:scale}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

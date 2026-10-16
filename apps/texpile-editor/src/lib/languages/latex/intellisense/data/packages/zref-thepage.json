@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-abspage"}],
+	"macros": [
+		{"name":"zthepage","arg":{"format":"{}","snippet":"zthepage{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"class-article"},{"name":"natbib"}],
+	"macros": [
+		{"name":"balance"},
+		{"name":"journal","arg":{"format":"{}","snippet":"journal{${1:journal}}"}},
+		{"name":"keywordsname","unusual":true}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"keywords"}
+	],
+	"keys": {}
+}

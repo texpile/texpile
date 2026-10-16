@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"newpsbarstyle","arg":{"format":"{}{}","snippet":"newpsbarstyle{${1}}{${2}}"}},
+		{"name":"psbarchart","arg":{"format":"[]{}","snippet":"psbarchart[${1}]{${2}}"}},
+		{"name":"psbarchart","arg":{"format":"{}","snippet":"psbarchart{${1}}"}},
+		{"name":"psbarlabel","arg":{"format":"{}","snippet":"psbarlabel{${1}}"},"doc":"By default, \\psbarlabel sets the column label in the current text font."},
+		{"name":"psbarlabelsep","doc":"To adjust the spacing between the bars and the column labels, redefine \\psbarlabelsep ."},
+		{"name":"psbarscale","arg":{"format":"(){}","snippet":"psbarscale(${1}){${2}}"},"doc":"The data are scaled by the value in parentheses and may be further manipulated with Postscript code."},
+		{"name":"readpsbardata","arg":{"format":"[]{}{}","snippet":"readpsbardata[${1}]{${2}}{${3}}"}},
+		{"name":"readpsbardata","arg":{"format":"{}{}","snippet":"readpsbardata{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

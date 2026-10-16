@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"}],
+	"macros": [
+		{"name":"defaultsignificant"},
+		{"name":"defaultunit"},
+		{"name":"printlen","arg":{"format":"[][]{}","snippet":"printlen[${1:significant digits}][${2:unit}]{${3:length}}"},"doc":"This package defines a command, \\printlen, to print lengths in a variety of units."},
+		{"name":"printlen","arg":{"format":"{}","snippet":"printlen{${1:length}}"},"doc":"This package defines a command, \\printlen, to print lengths in a variety of units."}
+	],
+	"envs": [],
+	"keys": {}
+}

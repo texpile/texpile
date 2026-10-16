@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"xcolor"}],
+	"macros": [
+		{"name":"definecolorspace","arg":{"format":"{}{}{}","snippet":"definecolorspace{${1:latex-name}}{${2:type}}{${3:color list}}"}},
+		{"name":"definecolorspace*","arg":{"format":"{}{}{}","snippet":"definecolorspace*{${1:latex-name}}{${2:type}}{${3:color list}}"}},
+		{"name":"definespotcolor","arg":{"format":"{}{}[]{}","snippet":"definespotcolor{${1:latex-name}}{${2:PDF-name}}[${3:model}]{${4:equivalent}}"}},
+		{"name":"definespotcolor","arg":{"format":"{}{}{}","snippet":"definespotcolor{${1:latex-name}}{${2:PDF-name}}{${3:equivalent}}"}},
+		{"name":"overprintstate","arg":{"format":"{}","snippet":"overprintstate{${1:state}}"},"if":"overprint|knockout|opm=0"},
+		{"name":"pagecolorspace","arg":{"format":"{}","snippet":"pagecolorspace{${1:color list}}"}},
+		{"name":"resetpagecolorspace","doc":"To return to the default color space, which contains all the defined spot colors, use \\resetpagecolorspace."},
+		{"name":"textoverprint","arg":{"format":"[]{}","snippet":"textoverprint[${1:state}]{${2:text}}"},"if":"overprint|knockout|opm=0"},
+		{"name":"textoverprint","arg":{"format":"{}","snippet":"textoverprint{${1:text}}"},"if":"overprint|knockout|opm=0"},
+		{"name":"overprintstate","arg":{"format":"{}","snippet":"overprintstate{${1:state}}"},"if":"overprint"},
+		{"name":"textoverprint","arg":{"format":"[]{}","snippet":"textoverprint[${1:state}]{${2:text}}"},"if":"overprint"},
+		{"name":"textoverprint","arg":{"format":"{}","snippet":"textoverprint{${1:text}}"},"if":"overprint"},
+		{"name":"overprintstate","arg":{"format":"{}","snippet":"overprintstate{${1:state}}"},"if":"opm=0"},
+		{"name":"textoverprint","arg":{"format":"[]{}","snippet":"textoverprint[${1:state}]{${2:text}}"},"if":"opm=0"},
+		{"name":"textoverprint","arg":{"format":"{}","snippet":"textoverprint{${1:text}}"},"if":"opm=0"},
+		{"name":"overprintstate","arg":{"format":"{}","snippet":"overprintstate{${1:state}}"},"if":"knockout"},
+		{"name":"textoverprint","arg":{"format":"[]{}","snippet":"textoverprint[${1:state}]{${2:text}}"},"if":"knockout"},
+		{"name":"textoverprint","arg":{"format":"{}","snippet":"textoverprint{${1:text}}"},"if":"knockout"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/colorspace#c": ["illuminant=a","illuminant=c","illuminant=d50","illuminant=d55","illuminant=d65","illuminant=d75","illuminant=e","knockout","opm=0","opm=1","overprint"]
+	},
+	"args": ["\\usepackage/colorspace#c"]
+}

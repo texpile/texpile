@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"url"}],
+	"macros": [
+		{"name":"authors","unusual":true},
+		{"name":"shortauthors","unusual":true},
+		{"name":"shorttitle","unusual":true},
+		{"name":"smfinclude","arg":{"format":"{}","snippet":"smfinclude{${1:file}}"}},
+		{"name":"smftableofabstracts","if":"master"},
+		{"name":"smftableofcontents","if":"master"},
+		{"name":"smftableofresumes","if":"master"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/smfmulti#c": ["master","slave"]
+	},
+	"args": ["\\usepackage/smfmulti#c"]
+}

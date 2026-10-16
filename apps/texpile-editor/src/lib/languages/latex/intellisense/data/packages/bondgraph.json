@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"bgComponent","arg":{"format":"{}{}{}{}{}{}","snippet":"bgComponent{${1:node style}}{${2:reference}}{${3:name}}{${4:position}}{${5:position reference}}{${6:bond style}}"}},
+		{"name":"bgComponentNoBond","arg":{"format":"{}{}","snippet":"bgComponentNoBond{${1:reference}}{${2:name}}"}},
+		{"name":"bgComponentWithBondLabel","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"bgComponentWithBondLabel{${1:node style}}{${2:reference}}{${3:name}}{${4:position}}{${5:position reference}}{${6:bond style}}{${7:label style}}{${8:effort label}}{${9:flow label}}"}},
+		{"name":"bgComponentWithBondMarkup","arg":{"format":"{}{}{}{}{}{}{}","snippet":"bgComponentWithBondMarkup{${1:node style}}{${2:reference}}{${3:name}}{${4:position}}{${5:position reference}}{${6:bond style}}{${7:markup style}}"}},
+		{"name":"bgComponentWithBondMarkupTagged","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"bgComponentWithBondMarkupTagged{${1:node style}}{${2:reference}}{${3:name}}{${4:position}}{${5:position reference}}{${6:bond style}}{${7:markup style}}{${8:tag}}"}},
+		{"name":"bgComponentWithPosBondLabel","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"bgComponentWithPosBondLabel{${1:node style}}{${2:reference}}{${3:name}}{${4:position}}{${5:position reference}}{${6:bond style}}{${7:label style}}{${8:label position}}{${9:label}}"}},
+		{"name":"bondleft","arg":{"format":"{}{}","snippet":"bondleft{${1:above}}{${2:below}}"}},
+		{"name":"bondlefte","arg":{"format":"{}{}","snippet":"bondlefte{${1:above}}{${2:below}}"}},
+		{"name":"bondleftf","arg":{"format":"{}{}","snippet":"bondleftf{${1:above}}{${2:below}}"}},
+		{"name":"bondright","arg":{"format":"{}{}","snippet":"bondright{${1:above}}{${2:below}}"}},
+		{"name":"bondrighte","arg":{"format":"{}{}","snippet":"bondrighte{${1:above}}{${2:below}}"}},
+		{"name":"bondrightf","arg":{"format":"{}{}","snippet":"bondrightf{${1:above}}{${2:below}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

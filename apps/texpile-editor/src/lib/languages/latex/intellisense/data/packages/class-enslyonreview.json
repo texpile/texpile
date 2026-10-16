@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"class-article"},{"name":"ifthen"},{"name":"calc"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"inputenc"},{"name":"newtxtext","if":"!palatino+!stix"},{"name":"xpatch","if":"!palatino+!stix"},{"name":"xparse"},{"name":"etoolbox"},{"name":"iftex"},{"name":"xkeyval","if":"!palatino+!stix"},{"name":"textcomp","if":"!palatino"},{"name":"xstring","if":"!palatino+!stix"},{"name":"scalefnt","if":"!palatino+!stix"},{"name":"fontaxes","if":"!palatino+!stix","engines":["pdflatex"]},{"name":"figureversions","if":"!palatino+!stix","engines":["pdflatex"]},{"name":"newtxmath","if":"!palatino+!stix"},{"name":"centernot","if":"!palatino+!stix"},{"name":"helvet"},{"name":"babel"},{"name":"csquotes"},{"name":"geometry"},{"name":"ifvtex"},{"name":"caption"},{"name":"caption3"},{"name":"fancyhdr"},{"name":"titlesec"},{"name":"enumitem"},{"name":"booktabs"},{"name":"tabularx"},{"name":"multirow"},{"name":"ragged2e"},{"name":"float"},{"name":"stfloats"},{"name":"balance"},{"name":"mhchem"},{"name":"l3keys2e"},{"name":"chemgreek"},{"name":"siunitx"},{"name":"translations"},{"name":"pdftexcmds"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"cleveref"},{"name":"biblatex"},{"name":"logreq"},{"name":"blx-case-expl3"},{"name":"mathpazo","if":"palatino"},{"name":"stix2","if":"stix"},{"name":"fontspec","if":"!palatino+!stix","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","if":"!palatino+!stix","engines":["lualatex"]},{"name":"fontspec-xetex","if":"!palatino+!stix","engines":["xelatex"]}],
+	"macros": [
+		{"name":"bibdoi","arg":{"format":"{}","snippet":"bibdoi{${1:doi}}"}},
+		{"name":"bibpmcid","arg":{"format":"{}","snippet":"bibpmcid{${1:PMCID}}"}},
+		{"name":"bibpmid","arg":{"format":"{}","snippet":"bibpmid{${1:PMID}}"}},
+		{"name":"bibref","arg":{"format":"{}{}{}{}{}{}","snippet":"bibref{${1:authors}}{${2:title}}{${3:journal}}{${4:year}}{${5:volume}}{${6:pages}}"}},
+		{"name":"crefcolor","arg":{"format":"{}","snippet":"crefcolor{${1:label}}"}},
+		{"name":"Crefcolor","arg":{"format":"{}","snippet":"Crefcolor{${1:label}}"}},
+		{"name":"noreflegend"},
+		{"name":"ofoutstandinginterest","arg":{"format":"{}","snippet":"ofoutstandinginterest{${1:annotation}}"}},
+		{"name":"ofspecialinterest","arg":{"format":"{}","snippet":"ofspecialinterest{${1:annotation}}"}},
+		{"name":"referencesname","unusual":true},
+		{"name":"refoutstandinginterest","arg":{"format":"{}{}","snippet":"refoutstandinginterest{${1:citation key}}{${2:annotation}}"}},
+		{"name":"refspecialinterest","arg":{"format":"{}{}","snippet":"refspecialinterest{${1:citation key}}{${2:annotation}}"}},
+		{"name":"reviewabstract","arg":{"format":"{}","snippet":"reviewabstract{${1:abstract}}"}},
+		{"name":"reviewaffiliation","arg":{"format":"{}","snippet":"reviewaffiliation{${1:affiliation}}"}},
+		{"name":"reviewauthor","arg":{"format":"{}","snippet":"reviewauthor{${1:authors}}"},"doc":"\\reviewauthor{}, \\reviewaffiliation{} et \\reviewdate{} Les trois s’affichent ensemble dans le même bandeau pêche sous le titre — le nom en gras en première ligne, puis affiliation et date."},
+		{"name":"reviewauthorshort","arg":{"format":"{}","snippet":"reviewauthorshort{${1:short authors}}"}},
+		{"name":"reviewboxautorefname","unusual":true},
+		{"name":"reviewdate","arg":{"format":"{}","snippet":"reviewdate{${1:date}}"}},
+		{"name":"reviewkeywords","arg":{"format":"{}","snippet":"reviewkeywords{${1:keywords}}"}},
+		{"name":"reviewnote","arg":{"format":"{}{}","snippet":"reviewnote{${1:letter}}{${2:text}}"},"doc":"Plusieurs \\reviewnote à la suite empilent plusieurs notes lettrées (a, b, c. . .)."},
+		{"name":"reviewshorttitle","arg":{"format":"{}","snippet":"reviewshorttitle{${1:short title}}"}},
+		{"name":"reviewtitle","arg":{"format":"{}","snippet":"reviewtitle{${1:title}}"}},
+		{"name":"thereviewbox","unusual":true}
+	],
+	"envs": [
+		{"name":"references"},
+		{"name":"reviewbox","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"reviewbox"},
+		{"name":"reviewbox*","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"reviewbox*"}
+	],
+	"keys": {
+		"\\documentclass/enslyonreview#c": ["amber","azure","blue","brown","crimson","cyan","forest","gold","gray","green","indigo","lime","midnight","navy","orange","orangeens","palatino","pink","purple","red","slate","stix","teal","violet","wine","xcharter"]
+	},
+	"args": ["\\documentclass/enslyonreview#c"]
+}

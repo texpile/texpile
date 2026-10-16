@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"ABNTEXabrev","arg":{"format":"{}","snippet":"ABNTEXabrev{${1}}"},"unusual":true},
+		{"name":"ABNTEXabrevp","arg":{"format":"{}","snippet":"ABNTEXabrevp{${1}}"},"unusual":true},
+		{"name":"abrev","arg":{"format":"{}","snippet":"abrev{${1}}"}},
+		{"name":"Abrev","arg":{"format":"{}","snippet":"Abrev{${1}}"}},
+		{"name":"abrevending","unusual":true},
+		{"name":"NoAbrevending","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

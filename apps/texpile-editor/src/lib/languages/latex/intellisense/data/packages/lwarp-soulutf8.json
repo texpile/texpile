@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"soul"},{"name":"soul-ori"},{"name":"iftex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"fixtounicode"}],
+	"macros": [
+		{"name":"adfbullet","arg":{"format":"{}","snippet":"adfbullet{${1:number 1-52}}"},"doc":"There are 52 bullets in BulletsADF which can be produced by feeding the relevant number between 1 and 52 to \\adfbullet{}."}
+	],
+	"envs": [],
+	"keys": {}
+}

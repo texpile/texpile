@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"captcont","arg":{"format":"[]{}","snippet":"captcont[${1:list entry}]{${2:caption}}"},"doc":"The \\captcont and \\captcont* commands are just like the corresponding \\caption and \\caption* command, except that they do not cause the figure or table counters to be incremented."},
+		{"name":"captcont","arg":{"format":"{}","snippet":"captcont{${1:caption}}"},"doc":"The \\captcont and \\captcont* commands are just like the corresponding \\caption and \\caption* command, except that they do not cause the figure or table counters to be incremented."},
+		{"name":"captcont*","arg":{"format":"[]{}","snippet":"captcont*[${1:list entry}]{${2:caption}}"},"doc":"The \\captcont and \\captcont* commands are just like the corresponding \\caption and \\caption* command, except that they do not cause the figure or table counters to be incremented."},
+		{"name":"captcont*","arg":{"format":"{}","snippet":"captcont*{${1:caption}}"},"doc":"The \\captcont and \\captcont* commands are just like the corresponding \\caption and \\caption* command, except that they do not cause the figure or table counters to be incremented."},
+		{"name":"caption","arg":{"format":"[]{}","snippet":"caption[${1:list entry}]{${2:caption}}"}},
+		{"name":"caption","arg":{"format":"{}","snippet":"caption{${1:caption}}"}},
+		{"name":"caption*","arg":{"format":"[]{}","snippet":"caption*[${1:list entry}]{${2:caption}}"}},
+		{"name":"caption*","arg":{"format":"{}","snippet":"caption*{${1:caption}}"}},
+		{"name":"figuretopcapfalse","unusual":true},
+		{"name":"figuretopcaptrue","unusual":true},
+		{"name":"iffiguretopcap","unusual":true},
+		{"name":"iftabletopcap","unusual":true},
+		{"name":"tabletopcapfalse","unusual":true},
+		{"name":"tabletopcaptrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/captcont#c": ["figbotcap","figtopcap","tabbotcap","tabtopcap"]
+	},
+	"args": ["\\usepackage/captcont#c"]
+}

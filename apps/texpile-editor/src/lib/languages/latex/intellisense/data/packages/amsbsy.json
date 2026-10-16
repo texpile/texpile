@@ -1,26 +1,8 @@
 {
-  "deps": [
-    {
-      "name": "amsgen"
-    }
-  ],
-  "macros": [
-    {
-      "name": "boldsymbol",
-      "arg": {
-        "format": "{}",
-        "snippet": "boldsymbol{${1:symbol}}"
-      }
-    },
-    {
-      "name": "pmb",
-      "arg": {
-        "format": "{}",
-        "snippet": "pmb{${1:symbol}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"boldsymbol","arg":{"format":"{}","snippet":"boldsymbol{${1:symbol}}"},"doc":"This command will internally switch to the corresponding ‘bold’ math version typeset its argument in this version.","math":true},
+		{"name":"pmb","arg":{"format":"{}","snippet":"pmb{${1:symbol}}"}}
+	],
+	"envs": [],
+	"keys": {}
 }

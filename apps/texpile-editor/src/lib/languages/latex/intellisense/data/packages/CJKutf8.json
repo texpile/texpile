@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"},{"name":"inputenc"},{"name":"CJK"},{"name":"MULEenc"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

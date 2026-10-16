@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"atbegshi-ltx"},{"name":"everyshi"},{"name":"atveryend-ltx"},{"name":"picture"}],
+	"macros": [
+		{"name":"turnthepage"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/turnpagewoetex#c": ["deutsch","english","francais","nederlands","short"]
+	},
+	"args": ["\\usepackage/turnpagewoetex#c"]
+}

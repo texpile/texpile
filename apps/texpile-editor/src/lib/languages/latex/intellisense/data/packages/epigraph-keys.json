@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"enumitem"},{"name":"pgfkeys"},{"name":"conditionals"},{"name":"microtype"},{"name":"keyval"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"afterepigraphskip","unusual":true},
+		{"name":"beforeepigraphskip","unusual":true},
+		{"name":"epigraph","arg":{"format":"[]{}","snippet":"epigraph[${1:keys}]{${2:text}}"}},
+		{"name":"epigraph","arg":{"format":"{}","snippet":"epigraph{${1:text}}"}},
+		{"name":"epigraphauthorsourceindent","unusual":true},
+		{"name":"epigraphdash","unusual":true},
+		{"name":"epigraphquotefont","unusual":true},
+		{"name":"epigraphstyle","unusual":true},
+		{"name":"epigraphtextindent","unusual":true},
+		{"name":"epigraphtextwidth","unusual":true},
+		{"name":"epigraphtranslationfont","unusual":true},
+		{"name":"qitem","arg":{"format":"[]{}","snippet":"qitem[${1:keys}]{${2:text}}"}},
+		{"name":"qitem","arg":{"format":"{}","snippet":"qitem{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"epigraphs"}
+	],
+	"keys": {}
+}

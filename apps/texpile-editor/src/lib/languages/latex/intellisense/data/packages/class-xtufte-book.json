@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"hardwrap"},{"name":"ifplatform"},{"name":"shellesc"},{"name":"pdftexcmds"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"ifluatex"},{"name":"ifxetex"},{"name":"class-book"},{"name":"mathtools"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse"},{"name":"l3keys2e"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"lualatex-math","engines":["lualatex"]},{"name":"etoolbox"},{"name":"juliamono"},{"name":"xcolor"},{"name":"titlesec"},{"name":"titletoc"},{"name":"ragged2e"},{"name":"geometry"},{"name":"ifvtex"},{"name":"changepage"},{"name":"paralist"},{"name":"microtype","engines":["lualatex"]},{"name":"setspace"},{"name":"biblatex"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"optparams"},{"name":"placeins"},{"name":"fancyhdr"},{"name":"multicol"},{"name":"makeidx"},{"name":"hyperref","if":"!nohyperref"},{"name":"pdfescape","if":"!nohyperref"},{"name":"nameref","if":"!nohyperref"},{"name":"refcount","if":"!nohyperref"},{"name":"gettitlestring","if":"!nohyperref"},{"name":"stringenc","if":"!nohyperref"},{"name":"intcalc","if":"!nohyperref"},{"name":"bitset","if":"!nohyperref"},{"name":"bigintcalc","if":"!nohyperref"},{"name":"rerunfilecheck","if":"!nohyperref"},{"name":"uniquecounter","if":"!nohyperref"},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"bibentry","if":"nobib","engines":["xelatex"]}],
+	"macros": [
+		{"name":"allcaps","arg":{"format":"{}","snippet":"allcaps{${1:text}}"}},
+		{"name":"forcerectofloat"},
+		{"name":"forceversofloat"},
+		{"name":"LuaLaTeX","unusual":true},
+		{"name":"margincite","arg":{"format":"[]{}","snippet":"margincite[${1:postnote}]{${2:keys}}"}},
+		{"name":"margincite","arg":{"format":"{}","snippet":"margincite{${1:keys}}"}},
+		{"name":"marginnote","arg":{"format":"[]{}","snippet":"marginnote[${1:offset}]{${2:text}}"}},
+		{"name":"marginnote","arg":{"format":"{}","snippet":"marginnote{${1:text}}"}},
+		{"name":"morefloats"},
+		{"name":"newthought","arg":{"format":"{}","snippet":"newthought{${1:text}}"}},
+		{"name":"nohyphenation"},
+		{"name":"nohyphens","arg":{"format":"{}","snippet":"nohyphens{${1:text}}"}},
+		{"name":"publisher","arg":{"format":"[]{}","snippet":"publisher[${1:plain text}]{${2:publisher}}"}},
+		{"name":"publisher","arg":{"format":"{}","snippet":"publisher{${1:publisher}}"}},
+		{"name":"setcaptionfont","arg":{"format":"{}","snippet":"setcaptionfont{${1:font commands}}"}},
+		{"name":"setcitationfont","arg":{"format":"{}","snippet":"setcitationfont{${1:font commands}}"}},
+		{"name":"setfloatalignment","arg":{"format":"{}","snippet":"setfloatalignment{${1:pos}}"}},
+		{"name":"setmarginnotefont","arg":{"format":"{}","snippet":"setmarginnotefont{${1:font commands}}"}},
+		{"name":"setsidenotefont","arg":{"format":"{}","snippet":"setsidenotefont{${1:font commands}}"}},
+		{"name":"sidenote","arg":{"format":"[][]{}","snippet":"sidenote[${1:number}][${2:offset}]{${3:text}}"}},
+		{"name":"sidenote","arg":{"format":"{}","snippet":"sidenote{${1:text}}"}},
+		{"name":"smallcaps","arg":{"format":"{}","snippet":"smallcaps{${1:text}}"}},
+		{"name":"thanklessauthor","unusual":true},
+		{"name":"thanklesspublisher","unusual":true},
+		{"name":"thanklesstitle","unusual":true},
+		{"name":"XeLaTeX","unusual":true}
+	],
+	"envs": [
+		{"name":"fullwidth"},
+		{"name":"marginfigure","arg":{"format":"[]","snippet":"[${1:offset}]"}},
+		{"name":"marginfigure"},
+		{"name":"margintable","arg":{"format":"[]","snippet":"[${1:offset}]"}},
+		{"name":"margintable"}
+	],
+	"keys": {}
+}

@@ -1,39 +1,11 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "framezoom<button overlay specification><zoomed overlay specification>",
-      "arg": {
-        "format": "()()",
-        "snippet": "framezoom<button overlay specification><zoomed overlay specification>(${1:upper left x},${2:upper left y})(${3:zoom area width},${4:zoom area depth})"
-      }
-    },
-    {
-      "name": "framezoom<button overlay specification><zoomed overlay specification>",
-      "arg": {
-        "format": "[]()()",
-        "snippet": "framezoom<button overlay specification><zoomed overlay specification>[${1:options%keyvals}](${2:upper left x},${3:upper left y})(${4:zoom area width},${5:zoom area depth})"
-      }
-    },
-    {
-      "name": "insertcontinuationcount",
-      "unusual": true
-    },
-    {
-      "name": "insertcontinuationcountroman",
-      "unusual": true
-    },
-    {
-      "name": "insertcontinuationtext",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\framezoom": [
-      "border",
-      "border=${1:width in pixels}"
-    ]
-  },
-  "args": []
+	"macros": [
+		{"name":"framezoom","arg":{"format":"<><>[]()()","snippet":"framezoom<${1:button overlay specification}><${2:zoomed overlay specification}>[${3:options}](${4:upper left x,y})(${5:width,depth})"}},
+		{"name":"framezoom","arg":{"format":"<><>()()","snippet":"framezoom<${1:button overlay specification}><${2:zoomed overlay specification}>(${3:upper left x,y})(${4:width,depth})"}},
+		{"name":"insertcontinuationcount","doc":"\\insertcontinuationcount inserts the current page of the frame as an arabic number. – \\insertcontinuationcountroman inserts the current page of the frame as an (uppercase) Roman number. – \\insertcontinuationtext just inserts the text (cont.) or, possibly, a translation thereof (like (Forts.) in German)."},
+		{"name":"insertcontinuationcountroman"},
+		{"name":"insertcontinuationtext"}
+	],
+	"envs": [],
+	"keys": {}
 }

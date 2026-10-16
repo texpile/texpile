@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"complexpolyquotient","arg":{"format":"{}","snippet":"complexpolyquotient{${1:quotient}}"},"doc":"The control sequence \\complexpolyquotient typesets ⟨quotient⟩."}
+	],
+	"envs": [
+		{"name":"complexpolylongdiv","arg":{"format":"[]","snippet":"[${1:pos}]"},"doc":"The package provides the environment complexpolylongdiv and the control sequence \\complexpolyquotient for typesetting (complex) polynomial long division."},
+		{"name":"complexpolylongdiv","doc":"The package provides the environment complexpolylongdiv and the control sequence \\complexpolyquotient for typesetting (complex) polynomial long division."}
+	],
+	"keys": {}
+}

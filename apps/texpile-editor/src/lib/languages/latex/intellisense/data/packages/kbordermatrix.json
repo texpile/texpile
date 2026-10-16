@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ifkbalignright","unusual":true},
+		{"name":"kbalignrighttrue","unusual":true},
+		{"name":"kbcolsep"},
+		{"name":"kbcolstyle"},
+		{"name":"kbldelim","unusual":true},
+		{"name":"kbordermatrix","arg":{"format":"{}","snippet":"kbordermatrix{${1:matrix}}"}},
+		{"name":"kbrdelim","unusual":true},
+		{"name":"kbrowsep"},
+		{"name":"kbrowstyle","doc":"You can change the style of the border row and column column entries by redefining \\kbrowstyle and \\kbcolstyle , which are by default set to \\scriptstyle ."}
+	],
+	"envs": [],
+	"keys": {}
+}

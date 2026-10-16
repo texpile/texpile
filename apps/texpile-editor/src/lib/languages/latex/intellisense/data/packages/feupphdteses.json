@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"iftex"},{"name":"inputenc"},{"name":"babel"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"xcolor"},{"name":"mathptmx"},{"name":"couriers"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplots"},{"name":"url"},{"name":"setspace"},{"name":"makeidx"},{"name":"caption"},{"name":"caption3"},{"name":"multirow"},{"name":"eurosym"},{"name":"array"},{"name":"tabularx"},{"name":"tabulary"},{"name":"longtable"},{"name":"lineno"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"siunitx"},{"name":"translations"},{"name":"float"},{"name":"subcaption"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"enumitem"},{"name":"placeins"},{"name":"booktabs"},{"name":"pgfgantt"},{"name":"pgfcalendar"},{"name":"pdflscape-nometadata"},{"name":"lscape"},{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"listings"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"fancyhdr"},{"name":"natbib"},{"name":"backref","if":"backrefs"}],
+	"macros": [
+		{"name":"additionalfronttext","arg":{"format":"{}","snippet":"additionalfronttext{${1:text}}"}},
+		{"name":"bstctlcite","arg":{"format":"[]{}","snippet":"bstctlcite[${1:aux file}]{${2:key}}"}},
+		{"name":"bstctlcite","arg":{"format":"{}","snippet":"bstctlcite{${1:key}}"}},
+		{"name":"citeauthorlist","arg":{"format":"{}","snippet":"citeauthorlist{${1:keys}}"}},
+		{"name":"citetlist","arg":{"format":"{}","snippet":"citetlist{${1:keys}}"}},
+		{"name":"clearemptydoublepage"},
+		{"name":"committeemember","arg":{"format":"{}{}","snippet":"committeemember{${1:role}}{${2:name}}"}},
+		{"name":"committeepage","unusual":true},
+		{"name":"committeetext","arg":{"format":"{}","snippet":"committeetext{${1:text}}"}},
+		{"name":"compressitem"},
+		{"name":"copyrightnotice","arg":{"format":"{}","snippet":"copyrightnotice{${1:notice}}"}},
+		{"name":"degree","arg":{"format":"{}","snippet":"degree{${1:degree}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"LastSep","unusual":true},
+		{"name":"MidSep","unusual":true},
+		{"name":"permission","arg":{"format":"{}","snippet":"permission{${1:text}}"}},
+		{"name":"PrintIndex"},
+		{"name":"school","arg":{"format":"{}","snippet":"school{${1:school}}"}},
+		{"name":"signature"},
+		{"name":"StartBody"},
+		{"name":"supervisor","arg":{"format":"{}{}","snippet":"supervisor{${1:role}}{${2:name}}"}},
+		{"name":"thesisdate","arg":{"format":"{}","snippet":"thesisdate{${1:date}}"},"doc":"Date of your thesis."}
+	],
+	"envs": [
+		{"name":"Prolog"}
+	],
+	"keys": {
+		"\\usepackage/feupphdteses#c": ["backrefs","final","jury","libre","linenum","onpaper","pdeec","pdeqb","prodeb","prodef"]
+	},
+	"args": ["\\usepackage/feupphdteses#c"]
+}

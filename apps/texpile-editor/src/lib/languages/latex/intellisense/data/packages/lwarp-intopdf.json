@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"attachandlink","arg":{"format":"[]{}[]{}{}","snippet":"attachandlink[${1:file spec}]{${2:file name}}[${3:mime type}]{${4:description}}{${5:link text}}"}},
+		{"name":"attachandlink","arg":{"format":"{}{}{}","snippet":"attachandlink{${1:file name}}{${2:description}}{${3:link text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

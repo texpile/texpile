@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"now","doc":"The time package defines a command \\now which typesets the current time in twelve-hour format."}
+	],
+	"envs": [],
+	"keys": {}
+}

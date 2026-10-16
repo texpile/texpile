@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"xcolor"}],
+	"macros": [
+		{"name":"caps","arg":{"format":"{}","snippet":"caps{${1:text}}"}},
+		{"name":"capsdef","arg":{"format":"{}{}{}{}{}","snippet":"capsdef{${1:font description}}{${2:font commands}}{${3:inter-letter space}}{${4:inner space}}{${5:outer space}}"}},
+		{"name":"capsreset"},
+		{"name":"capssave","arg":{"format":"{}","snippet":"capssave{${1:name}}"}},
+		{"name":"capsselect","arg":{"format":"{}","snippet":"capsselect{${1:name}}"}},
+		{"name":"hl","arg":{"format":"{}","snippet":"hl{${1:text}}"}},
+		{"name":"resetso"},
+		{"name":"resetul"},
+		{"name":"sethlcolor","arg":{"format":"{}","snippet":"sethlcolor{${1:color}}"}},
+		{"name":"setstcolor","arg":{"format":"{}","snippet":"setstcolor{${1:color}}"}},
+		{"name":"setul","arg":{"format":"{}{}","snippet":"setul{${1:underline depth}}{${2:underline thickness}}"}},
+		{"name":"setulcolor","arg":{"format":"{}","snippet":"setulcolor{${1:color}}"}},
+		{"name":"setuldepth","arg":{"format":"{}","snippet":"setuldepth{${1:text}}"}},
+		{"name":"setuloverlap","arg":{"format":"{}","snippet":"setuloverlap{${1:dimension}}"}},
+		{"name":"sloppyword","arg":{"format":"{}","snippet":"sloppyword{${1:text}}"}},
+		{"name":"so","arg":{"format":"{}","snippet":"so{${1:text}}"}},
+		{"name":"sodef","arg":{"format":"{}{}{}{}{}","snippet":"sodef{${1:command}}{${2:font}}{${3:inter-letter space}}{${4:inner space}}{${5:outer space}}"}},
+		{"name":"soulaccent","arg":{"format":"{}","snippet":"soulaccent{${1:accent command}}"}},
+		{"name":"soulregister","arg":{"format":"{}{}","snippet":"soulregister{${1:command name}}{${2:number of arguments}}"}},
+		{"name":"st","arg":{"format":"{}","snippet":"st{${1:text}}"}},
+		{"name":"ul","arg":{"format":"{}","snippet":"ul{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

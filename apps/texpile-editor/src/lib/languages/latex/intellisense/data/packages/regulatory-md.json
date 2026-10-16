@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"regulatory-struct"},{"name":"ifthen"},{"name":"xcolor"},{"name":"enumitem"},{"name":"fmtcount"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"scrextend"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"zref"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-user"},{"name":"zref-xr"},{"name":"kvoptions"},{"name":"zref-clever"},{"name":"ifdraft"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"translations"},{"name":"titlesec"},{"name":"regulatory-defs"},{"name":"glossaries"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"glossaries-extra"},{"name":"glossaries-extra-bib2gls"},{"name":"markdown"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"csvsimple"},{"name":"csvsimple-l3"},{"name":"fancyvrb"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"autocitedefs"}
+	],
+	"envs": [],
+	"keys": {}
+}

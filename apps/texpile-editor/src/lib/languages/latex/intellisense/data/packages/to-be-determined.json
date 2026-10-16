@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"xcolor"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"tbd","arg":{"format":"{}","snippet":"tbd{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

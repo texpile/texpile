@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"sidenotename","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

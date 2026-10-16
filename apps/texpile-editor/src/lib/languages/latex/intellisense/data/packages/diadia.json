@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"pgfplots"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplotstable"},{"name":"array"},{"name":"pgfcalendar"},{"name":"tabularx"},{"name":"booktabs"},{"name":"colortbl"},{"name":"ifthen"},{"name":"calc"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"pdfcol"},{"name":"multicol"},{"name":"amssymb"},{"name":"amsfonts"}],
+	"macros": [
+		{"name":"annotation","arg":{"format":"[]{}{}{}","snippet":"annotation[${1:Tikz options}]{${2:x}}{${3:y}}{${4:text}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"The \\annotation command allows you to annotate your plot values."},
+		{"name":"annotation","arg":{"format":"{}{}{}","snippet":"annotation{${1:x}}{${2:y}}{${3:text}}"},"doc":"The \\annotation command allows you to annotate your plot values."},
+		{"name":"diadiaaddplot","arg":{"format":"{}{}{}","snippet":"diadiaaddplot{${1:options}}{${2:addplot options}}{${3:key mappings}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"The \\diadiaaddplot command adds a data plot to the basic frame."},
+		{"name":"diadiaaddplot*","arg":{"format":"{}{}{}","snippet":"diadiaaddplot*{${1:options}}{${2:addplot options}}{${3:key mappings}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"The \\diadiaaddplot command adds a data plot to the basic frame."},
+		{"name":"diadiatab","arg":{"format":"[]{}{}","snippet":"diadiatab[${1:options}]{${2:pgfplotstable options}}{${3:file}}","keys":["keyval:diadia"],"keyPos":0},"doc":"The \\diadiatab command allows you to typeset your data in a formatted table."},
+		{"name":"diadiatab","arg":{"format":"{}{}","snippet":"diadiatab{${1:pgfplotstable options}}{${2:file}}"},"doc":"The \\diadiatab command allows you to typeset your data in a formatted table."},
+		{"name":"infobox","arg":{"format":"{}{}{}","snippet":"infobox{${1:tcolorbox options}}{${2:date}}{${3:info}}","keys":["pgfkeys:/tcb"],"keyPos":0}},
+		{"name":"mcentry","arg":{"format":"{}{}{}{}{}{}","snippet":"mcentry{${1:pharmaceutical}}{${2:morning}}{${3:noon}}{${4:evening}}{${5:night}}{${6:note}}"},"doc":"The \\mcentry command provides a simple interface for a six column tabular entry needed inside a medicationchart environment."},
+		{"name":"setlimit","arg":{"format":"[]{}","snippet":"setlimit[${1:Tikz options}]{${2:limits}}","keys":["pgfkeys:/tikz"],"keyPos":0},"doc":"With the \\setlimit command, you can set general and/or individual limits agreed with your doctor."},
+		{"name":"setlimit","arg":{"format":"{}","snippet":"setlimit{${1:limits}}"},"doc":"With the \\setlimit command, you can set general and/or individual limits agreed with your doctor."}
+	],
+	"envs": [
+		{"name":"diadiaplot","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:pgfplots options}}","keys":["pgfkeys:/pgfplots"],"keyPos":1},"doc":"The diadiaplot environment provides a typical plot structure, where you can add elements like plots, annotations or a legend."},
+		{"name":"diadiaplot","arg":{"format":"{}","snippet":"{${1:pgfplots options}}","keys":["pgfkeys:/pgfplots"],"keyPos":0},"doc":"The diadiaplot environment provides a typical plot structure, where you can add elements like plots, annotations or a legend."},
+		{"name":"diadiasidebyside","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:diadia"],"keyPos":0},"doc":"The diadiasidebyside environment allows you to typeset (narrow) tables and plots sidebyside."},
+		{"name":"diadiasidebyside","doc":"The diadiasidebyside environment allows you to typeset (narrow) tables and plots sidebyside."},
+		{"name":"medicationchart","arg":{"format":"[]{}{}","snippet":"[${1}]{${2}}{${3}}","keys":["pgfkeys:/tcb"],"keyPos":1},"doc":"The medicationchart environment allows you to typeset a medication chart."},
+		{"name":"medicationchart","arg":{"format":"{}{}","snippet":"{${1}}{${2}}","keys":["pgfkeys:/tcb"],"keyPos":0},"doc":"The medicationchart environment allows you to typeset a medication chart."}
+	],
+	"keys": {
+		"keyval:diadia": ["columnsep=","columnseprule=","columnseprulecolor=","mcnotewidth=","plotclosedcycle=","plotstyle=","tabcolor=","tabstyle=","plotclosedcycle=${1|false,true|}","plotstyle=${1|none,bloodsugar,bloodpressure,insulin,weight,cu,pulse,hbaonec|}","tabstyle=${1|simple,advanced|}"],
+		"pgfkeys:/pgfplots": ["date ZERO=","date coordinates default inverse=","date default inv/x=","date default inv/y=","date default inv/z=","ddpbloodpressure=","ddpbloodsugar=","ddpcu=","ddpdefault=","ddphbaonec=","ddpinsulin=","ddppulse=","ddpuser=","ddpweight=","ddpweightplot=","nomarks=","table/columns/avg07=","table/columns/avg14=","table/columns/avg30=","table/columns/avg60=","table/columns/avg90=","table/columns/bpd=","table/columns/bps=","table/columns/bsl1=","table/columns/bsl2=","table/columns/bsl3=","table/columns/cu=","table/columns/date=","table/columns/hba1c=","table/columns/id1=","table/columns/id2=","table/columns/id3=","table/columns/pul=","table/columns/value=","table/columns/weight=","ddpbloodpressure","ddpbloodsugar","ddpcu","ddpdefault","ddphbaonec","ddpinsulin","ddppulse","ddpuser","ddpweight","ddpweightplot","nomarks"],
+		"pgfkeys:/tcb": ["ddboxdefault=","infobox=","medicationchart=","ddboxdefault","infobox","medicationchart"],
+		"pgfkeys:/tikz": ["ddaddplotfill=","ddpannotation=","plot1=","plot2=","plot3=","plot4=","setlimit=","ddaddplotfill","ddpannotation","plot1","plot2","plot3","plot4","setlimit"],
+		"\\usepackage/diadia#c": ["columnsep=","columnseprule=","columnseprulecolor=","mcnotewidth=","plotclosedcycle=${1|false,true|}","plotstyle=${1|none,bloodsugar,bloodpressure,insulin,weight,cu,pulse,hbaonec|}","tabcolor=","tabstyle=${1|simple,advanced|}"]
+	},
+	"args": ["\\usepackage/diadia#c"]
+}

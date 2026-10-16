@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"doafter","arg":{"format":"{}{}","snippet":"doafter{${1:token}}{${2:group}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

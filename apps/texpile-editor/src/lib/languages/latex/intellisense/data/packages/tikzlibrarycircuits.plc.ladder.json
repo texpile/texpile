@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"ifpgfnormallyclosednegated","unusual":true},
+		{"name":"ladderpowerrails"},
+		{"name":"ladderrungend","arg":{"format":"{}","snippet":"ladderrungend{${1:number}}"}},
+		{"name":"ladderskip"}
+	],
+	"envs": [],
+	"keys": {}
+}

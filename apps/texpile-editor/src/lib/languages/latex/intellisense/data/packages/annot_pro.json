@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"trig"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"calc"},{"name":"aeb_mlink"},{"name":"ifpdf"},{"name":"ifxetex"},{"name":"eforms"},{"name":"ifluatex"},{"name":"insdljs"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]},{"name":"taborder"}],
+	"macros": [
+		{"name":"annotpro","arg":{"format":"[]{}","snippet":"annotpro[${1:KV-pairs}]{${2:content}}"}},
+		{"name":"annotpro","arg":{"format":"{}","snippet":"annotpro{${1:content}}"}},
+		{"name":"annotpro*","arg":{"format":"[]{}","snippet":"annotpro*[${1:KV-pairs}]{${2:content}}"}},
+		{"name":"annotpro*","arg":{"format":"{}","snippet":"annotpro*{${1:content}}"}},
+		{"name":"apContText"},
+		{"name":"currentAnnotName","doc":"The macro \\currentAnnotName contains the internal name of the most recent annot created."},
+		{"name":"defaultStampHeight","unusual":true},
+		{"name":"defaultStampWidth","unusual":true},
+		{"name":"defineAPath","arg":{"format":"{}","snippet":"defineAPath{${1:path macro}}"},"doc":"I’ve devised a helper command \\defineAPath that can be used to define the path to your file."},
+		{"name":"ifpreview","unusual":true},
+		{"name":"ifuseAAXdim","unusual":true},
+		{"name":"makeStamp","arg":{"format":"{}{}{}","snippet":"makeStamp{${1:bounding box}}{${2:name}}{${3:operators}}"}},
+		{"name":"margintextformat","arg":{"format":"{}","snippet":"margintextformat{${1:formatting}}"}},
+		{"name":"previewfalse","unusual":true},
+		{"name":"previewOff"},
+		{"name":"previewOn"},
+		{"name":"previewtrue","unusual":true},
+		{"name":"setAnnotOptions","arg":{"format":"{}","snippet":"setAnnotOptions{${1:KV-pairs}}"},"doc":"You can use \\setAnnotOptions to globally set the title of each annotation, perhaps using your name."},
+		{"name":"useAAXdimfalse","unusual":true},
+		{"name":"useAAXdimtrue","unusual":true}
+	],
+	"envs": [
+		{"name":"textboxpara"}
+	],
+	"keys": {}
+}

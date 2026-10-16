@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/amstex#c": ["?","alignedleftspaceno","alignedleftspaceyes","alignedleftspaceyesifneg","centertags","cmex10","fleqn","intlimits","leqno","namelimits","nointlimits","nonamelimits","nosumlimits","reqno","sumlimits","tbtags"]
+	},
+	"args": ["\\usepackage/amstex#c"]
+}

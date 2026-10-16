@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"fonetika","arg":{"format":"{}","snippet":"fonetika{${1:text}}"}},
+		{"name":"fonetikafamily"},
+		{"name":"fonetikasans","arg":{"format":"{}","snippet":"fonetikasans{${1:text}}"}},
+		{"name":"fonetikasansfamily"},
+		{"name":"fonetikaserif","arg":{"format":"{}","snippet":"fonetikaserif{${1:text}}"}},
+		{"name":"fonetikaseriffamily"},
+		{"name":"fonetikashape","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fonetika#c": ["sans","serif"]
+	},
+	"args": ["\\usepackage/fonetika#c"]
+}

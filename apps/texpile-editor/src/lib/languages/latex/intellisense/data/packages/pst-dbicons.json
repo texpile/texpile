@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"annote","arg":{"format":"{}{}()","snippet":"annote{${1:id}}{${2:text}}(${3:distance,angle})"}},
+		{"name":"attrdist","arg":{"format":"{}","snippet":"attrdist{${1}}"}},
+		{"name":"attribute","arg":{"format":"[]{}[]","snippet":"attribute[${1:property}]{${2:id}}[${3:text}]"}},
+		{"name":"attribute","arg":{"format":"{}","snippet":"attribute{${1:id}}"}},
+		{"name":"attributeof","arg":{"format":"{}[]{}[]{}[]","snippet":"attributeof{${1:id}}[${2:dist}]{${3:angle}}[${4:property}]{${5:id2}}[${6:text}]"}},
+		{"name":"attributeof","arg":{"format":"{}{}{}","snippet":"attributeof{${1:id}}{${2:angle}}{${3:id2}}"}},
+		{"name":"basename","unusual":true},
+		{"name":"cardpos","arg":{"format":"{}","snippet":"cardpos{${1:number}}"}},
+		{"name":"database","arg":{"format":"[]{}{}[]{}[]","snippet":"database[${1:pos}]{${2:width}}{${3:height}}[${4:graph params}]{${5:text}}[${6:id}]"}},
+		{"name":"database","arg":{"format":"{}{}{}","snippet":"database{${1:width}}{${2:height}}{${3:text}}"}},
+		{"name":"docdate","unusual":true},
+		{"name":"entity","arg":{"format":"[]{}[]","snippet":"entity[${1:property}]{${2:id}}[${3:text}]"},"doc":"an entity type is set as a rectangular node."},
+		{"name":"entity","arg":{"format":"{}","snippet":"entity{${1:id}}"},"doc":"an entity type is set as a rectangular node."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"inrelationship","arg":{"format":"[]{}()[]{}[]()","snippet":"inrelationship[${1:property}]{${2:entity-id}}(${3:role})[${4:card}]{${5:relationship-id}}[${6:relationship-name}](${7:distance,angle})"}},
+		{"name":"inrelationship","arg":{"format":"{}(){}()","snippet":"inrelationship{${1:entity-id}}(${2:role}){${3:relationship-id}}(${4:distance,angle})"}},
+		{"name":"nodeconnections","arg":{"format":"{}","snippet":"nodeconnections{${1}}"}},
+		{"name":"relationship","arg":{"format":"[]{}[]","snippet":"relationship[${1:property}]{${2:id}}[${3:text}]"}},
+		{"name":"relationship","arg":{"format":"{}","snippet":"relationship{${1:id}}"}},
+		{"name":"relationshipbetween","arg":{"format":"[]{}()[]{}()[]{}[]()","snippet":"relationshipbetween[${1:property}]{${2:entity-id1}}(${3:role1})[${4:card1}]{${5:entity-id2}}(${6:role2})[${7:card2}]{${8:relationship-id}}[${9:relationship-name}](${10:placement ratio})"}},
+		{"name":"relationshipbetween","arg":{"format":"{}(){}(){}()","snippet":"relationshipbetween{${1:entity-id1}}(${2:role1}){${3:entity-id2}}(${4:role2}){${5:relationship-id}}(${6:placement ratio})"}},
+		{"name":"rolepos","arg":{"format":"{}","snippet":"rolepos{${1:number}}"}},
+		{"name":"seticonparams","arg":{"format":"{}{}","snippet":"seticonparams{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

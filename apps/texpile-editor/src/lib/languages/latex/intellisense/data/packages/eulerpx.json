@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"xkeyval"},{"name":"newpxmath","if":"!nonpxmath"},{"name":"etoolbox","if":"!nonpxmath"},{"name":"centernot","if":"!nonpxmath"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"varaleph"},
+		{"name":"varmathfrak","arg":{"format":"{}","snippet":"varmathfrak{${1:letters}}"}},
+		{"name":"varmathscr","arg":{"format":"{}","snippet":"varmathscr{${1:letters}}"}},
+		{"name":"varsum"}
+	],
+	"envs": [],
+	"keys": {}
+}

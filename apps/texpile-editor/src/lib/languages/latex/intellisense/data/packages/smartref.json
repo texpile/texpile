@@ -1,0 +1,38 @@
+{
+	"deps": [{"name":"byname","if":"byname"}],
+	"macros": [
+		{"name":"addtoreflist","arg":{"format":"{}","snippet":"addtoreflist{${1}}"}},
+		{"name":"chapterref","arg":{"format":"{}","snippet":"chapterref{${1}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"schapterref","arg":{"format":"{}","snippet":"schapterref{${1}}"}},
+		{"name":"smartref","arg":{"format":"{}","snippet":"smartref{${1}}"},"if":"chapter"},
+		{"name":"srefchapterref","arg":{"format":"{}","snippet":"srefchapterref{${1}}"}},
+		{"name":"ifpagechanged","unusual":true,"if":"page"},
+		{"name":"ispagechanged","arg":{"format":"{}","snippet":"ispagechanged{${1:label}}"},"if":"page"},
+		{"name":"sgetpageval","arg":{"format":"{}{}","snippet":"sgetpageval{${1:variable}}{${2:label}}"},"if":"page"},
+		{"name":"shortpagename","if":"page"},
+		{"name":"spageref","arg":{"format":"{}","snippet":"spageref{${1:label}}"},"if":"page"},
+		{"name":"srefpageref","arg":{"format":"{}","snippet":"srefpageref{${1:label}}"},"if":"page"},
+		{"name":"chapterref","arg":{"format":"{}","snippet":"chapterref{${1:label}}"},"if":"chapter"},
+		{"name":"ifchapterchanged","unusual":true,"if":"chapter"},
+		{"name":"ischapterchanged","arg":{"format":"{}","snippet":"ischapterchanged{${1:label}}"},"if":"chapter"},
+		{"name":"schapterref","arg":{"format":"{}","snippet":"schapterref{${1:label}}"},"if":"chapter"},
+		{"name":"sgetchapterval","arg":{"format":"{}{}","snippet":"sgetchapterval{${1:variable}}{${2:label}}"},"if":"chapter"},
+		{"name":"shortchaptername","if":"chapter"},
+		{"name":"srefchapterref","arg":{"format":"{}","snippet":"srefchapterref{${1:label}}"},"if":"chapter"},
+		{"name":"ifpartchanged","unusual":true,"if":"part"},
+		{"name":"ispartchanged","arg":{"format":"{}","snippet":"ispartchanged{${1:label}}"},"if":"part"},
+		{"name":"partref","arg":{"format":"{}","snippet":"partref{${1:label}}"},"if":"part"},
+		{"name":"sgetpartval","arg":{"format":"{}{}","snippet":"sgetpartval{${1:variable}}{${2:label}}"},"if":"part"},
+		{"name":"shortpartname","if":"part"},
+		{"name":"smartref","arg":{"format":"{}","snippet":"smartref{${1:label}}"},"if":"part"},
+		{"name":"spartref","arg":{"format":"{}","snippet":"spartref{${1:label}}"},"if":"part"},
+		{"name":"srefpartref","arg":{"format":"{}","snippet":"srefpartref{${1:label}}"},"if":"part"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/smartref#c": ["byname","chapter","page","part"]
+	},
+	"args": ["\\usepackage/smartref#c"]
+}

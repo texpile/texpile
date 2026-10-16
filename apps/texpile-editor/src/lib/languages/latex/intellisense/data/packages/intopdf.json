@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xparse"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"attachandlink","arg":{"format":"[]{}[]{}{}","snippet":"attachandlink[${1:filespec}]{${2:filename}}[${3:mime-type}]{${4:description}}{${5:link text}}"}},
+		{"name":"attachandlink","arg":{"format":"{}{}{}","snippet":"attachandlink{${1:filename}}{${2:description}}{${3:link text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

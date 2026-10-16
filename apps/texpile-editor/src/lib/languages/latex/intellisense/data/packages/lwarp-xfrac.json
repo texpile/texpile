@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"xfracHTMLfontsize","doc":"User-redefinable macro which controls the font size of the fraction."}
+	],
+	"envs": [],
+	"keys": {}
+}

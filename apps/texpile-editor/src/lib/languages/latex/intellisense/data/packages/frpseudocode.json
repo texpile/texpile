@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"algpseudocode"},{"name":"ifthen"},{"name":"algorithmicx"}],
+	"macros": [
+		{"name":"algorithmicdom","unusual":true},
+		{"name":"algorithmicelsif","unusual":true},
+		{"name":"algorithmicform","unusual":true},
+		{"name":"algorithmicfrom","unusual":true},
+		{"name":"algorithmicifm","unusual":true},
+		{"name":"algorithmicto","unusual":true},
+		{"name":"algorithmicwhilem","unusual":true},
+		{"name":"ForFT","arg":{"format":"{}{}{}","snippet":"ForFT{${1:variable}}{${2:from}}{${3:to}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

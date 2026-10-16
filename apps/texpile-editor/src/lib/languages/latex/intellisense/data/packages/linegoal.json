@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"etex","engines":["pdflatex","xelatex"]},{"name":"zref","engines":["pdflatex","xelatex"]},{"name":"zref-base","engines":["pdflatex","xelatex"]},{"name":"kvsetkeys","engines":["pdflatex","xelatex"]},{"name":"iftex","engines":["pdflatex","xelatex"]},{"name":"auxhook","engines":["pdflatex","xelatex"]},{"name":"zref-savepos","engines":["pdflatex","xelatex"]}],
+	"macros": [
+		{"name":"linegoal"}
+	],
+	"envs": [],
+	"keys": {}
+}

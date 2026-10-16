@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"bibpesBody"},
+		{"name":"readbackDefFile"},
+		{"name":"reportOnBibPes"}
+	],
+	"envs": [],
+	"keys": {}
+}

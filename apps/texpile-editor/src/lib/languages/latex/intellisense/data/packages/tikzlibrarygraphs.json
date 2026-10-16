@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"tikzgraphforeachcolorednode","arg":{"format":"{}{}","snippet":"tikzgraphforeachcolorednode{${1}}{${2}}"}},
+		{"name":"tikzgraphleftanchor","unusual":true},
+		{"name":"tikzgraphnodefullname"},
+		{"name":"tikzgraphnodename"},
+		{"name":"tikzgraphnodepath"},
+		{"name":"tikzgraphnodetext"},
+		{"name":"tikzgraphpreparecolor","arg":{"format":"{}{}{}","snippet":"tikzgraphpreparecolor{${1}}{${2}}{${3}}"}},
+		{"name":"tikzgraphrightanchor","unusual":true},
+		{"name":"tikzgraphsset","arg":{"format":"{}","snippet":"tikzgraphsset{${1:options}}"}},
+		{"name":"tikzgraphV","unusual":true},
+		{"name":"tikzgraphVnum","unusual":true},
+		{"name":"tikzgraphW","unusual":true},
+		{"name":"tikzgraphWnum","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

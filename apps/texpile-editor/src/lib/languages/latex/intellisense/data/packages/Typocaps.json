@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"typocap","arg":{"format":"{}","snippet":"typocap{${1:initial}}"}},
+		{"name":"Typocapsfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

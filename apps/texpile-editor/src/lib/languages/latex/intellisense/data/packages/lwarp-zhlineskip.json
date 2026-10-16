@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"RestoreMathEnvironmentLeading","arg":{"format":"{}","snippet":"RestoreMathEnvironmentLeading{${1:environment names}}"}},
+		{"name":"RestoreTextEnvironmentLeading","arg":{"format":"{}","snippet":"RestoreTextEnvironmentLeading{${1:environment names}}"}},
+		{"name":"SetMathEnvironmentSinglespace","arg":{"format":"{}","snippet":"SetMathEnvironmentSinglespace{${1:factor}}"}},
+		{"name":"SetTextEnvironmentSinglespace","arg":{"format":"{}","snippet":"SetTextEnvironmentSinglespace{${1:factor}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

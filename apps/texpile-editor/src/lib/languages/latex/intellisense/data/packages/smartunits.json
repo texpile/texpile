@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"amstext"},{"name":"array"},{"name":"pgfmath"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"color"}],
+	"macros": [
+		{"name":"SmartUnit","arg":{"format":"{}","snippet":"SmartUnit{${1:options}}"}},
+		{"name":"SmartUnitSettings","arg":{"format":"{}","snippet":"SmartUnitSettings{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

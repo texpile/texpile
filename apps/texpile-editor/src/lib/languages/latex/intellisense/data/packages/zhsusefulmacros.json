@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"futurenonspacelet","arg":{"format":"{}","snippet":"futurenonspacelet{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

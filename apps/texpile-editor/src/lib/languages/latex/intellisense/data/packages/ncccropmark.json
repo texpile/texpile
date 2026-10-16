@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ncccropbox"},{"name":"tocenter"}],
+	"macros": [
+		{"name":"cropmark","arg":{"format":"[]{}{}{}{}{}","snippet":"cropmark[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"Implements the \\cropmark command producing crop box around page text area (header area, footer area and marginal notes are optionally taken into consideration)."},
+		{"name":"cropmark","arg":{"format":"{}{}{}{}{}","snippet":"cropmark{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Implements the \\cropmark command producing crop box around page text area (header area, footer area and marginal notes are optionally taken into consideration)."}
+	],
+	"envs": [],
+	"keys": {}
+}

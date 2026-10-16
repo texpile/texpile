@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"bra"},
+		{"name":"braket","arg":{"format":"<>","snippet":"braket<${1:subformula}>"}},
+		{"name":"ket"},
+		{"name":"ketbra"}
+	],
+	"envs": [],
+	"keys": {}
+}

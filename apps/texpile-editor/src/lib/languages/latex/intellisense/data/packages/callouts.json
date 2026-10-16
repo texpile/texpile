@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"arcol","unusual":true},
+		{"name":"arrow","arg":{"format":"{}{}","snippet":"arrow{${1}}{${2}}"}},
+		{"name":"bgcol","unusual":true},
+		{"name":"callout","arg":{"format":"{}{}{}","snippet":"callout{${1}}{${2}}{${3}}"}},
+		{"name":"focol","unusual":true},
+		{"name":"helpgrid","arg":{"format":"[]","snippet":"helpgrid[${1}]"},"doc":"With \\helpgrid, a grid is drawn."},
+		{"name":"helpgrid","doc":"With \\helpgrid, a grid is drawn."},
+		{"name":"note","arg":{"format":"{}{}","snippet":"note{${1}}{${2}}"}}
+	],
+	"envs": [
+		{"name":"annotate","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"}}
+	],
+	"keys": {}
+}

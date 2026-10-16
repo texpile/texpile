@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"odiadigits","arg":{"format":"{}","snippet":"odiadigits{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

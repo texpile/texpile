@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"pdftexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"ifwritexviii","unusual":true},
+		{"name":"writexviiifalse","unusual":true},
+		{"name":"writexviiitrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

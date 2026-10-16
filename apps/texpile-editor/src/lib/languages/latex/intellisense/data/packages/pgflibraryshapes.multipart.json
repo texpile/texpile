@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"ifpgfrectanglesplitdrawsplits","unusual":true},
+		{"name":"ifpgfrectanglesplithorizontal","unusual":true},
+		{"name":"ifpgfrectanglesplitignoreemptyparts","unusual":true},
+		{"name":"ifpgfrectanglesplitusecustomfill","unusual":true},
+		{"name":"pgfnodepartfourbox"},
+		{"name":"pgfnodepartfourthbox","unusual":true},
+		{"name":"pgfnodepartlowerbox"},
+		{"name":"pgfnodepartonebox"},
+		{"name":"pgfnodepartsecondbox","unusual":true},
+		{"name":"pgfnodepartthirdbox","unusual":true},
+		{"name":"pgfnodepartthreebox"},
+		{"name":"pgfnodeparttwobox"},
+		{"name":"pgfrectanglesplitdrawsplitstrue","unusual":true},
+		{"name":"pgfrectanglesplitusecustomfilltrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

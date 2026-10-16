@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"catchfile"},{"name":"etexcmds"},{"name":"iftex"},{"name":"color"},{"name":"ifpdf"},{"name":"ifplatform"},{"name":"shellesc"},{"name":"pdftexcmds"},{"name":"ifluatex"},{"name":"filemod"},{"name":"filemod-expmin"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"psfrag"},{"name":"suffix"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"EndPreamble"},
+		{"name":"psfragfig","arg":{"format":"[]{}","snippet":"psfragfig[${1:options}]{${2:filename}}","keys":["keyval:pstool.sty"],"keyPos":0},"doc":"This package defines the \\psfragfig user command for including eps files that use psfrag features in a pdfLaTeX document."},
+		{"name":"psfragfig","arg":{"format":"{}","snippet":"psfragfig{${1:filename}}"},"doc":"This package defines the \\psfragfig user command for including eps files that use psfrag features in a pdfLaTeX document."},
+		{"name":"psfragfig*","arg":{"format":"[]{}","snippet":"psfragfig*[${1:options}]{${2:filename}}","keys":["keyval:pstool.sty"],"keyPos":0},"doc":"This package defines the \\psfragfig user command for including eps files that use psfrag features in a pdfLaTeX document."},
+		{"name":"psfragfig*","arg":{"format":"{}","snippet":"psfragfig*{${1:filename}}"},"doc":"This package defines the \\psfragfig user command for including eps files that use psfrag features in a pdfLaTeX document."},
+		{"name":"pstool","arg":{"format":"[]{}{}","snippet":"pstool[${1:options}]{${2:filename}}{${3:input definitions}}","keys":["keyval:pstool.sty"],"keyPos":0}},
+		{"name":"pstool","arg":{"format":"{}{}","snippet":"pstool{${1:filename}}{${2:input definitions}}"}},
+		{"name":"pstool*","arg":{"format":"[]{}{}","snippet":"pstool*[${1:options}]{${2:filename}}{${3:input definitions}}","keys":["keyval:pstool.sty"],"keyPos":0}},
+		{"name":"pstool*","arg":{"format":"{}{}","snippet":"pstool*{${1:filename}}{${2:input definitions}}"}},
+		{"name":"pstoolsetup","arg":{"format":"{}","snippet":"pstoolsetup{${1:pstool settings}}","keys":["keyval:pstool.sty"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:pstool.sty": ["bitmap=${1|auto,lossless,lossy|}","cleanup=","crop=${1|pdfcrop,preview|}","crossref=${1|false,true|}","dvips-options=","latex-options=","macro-file=","mode=${1|batch,errorstop,nonstop|}","pdfcrop-options=","process=${1|all,auto,none|}","ps2pdf-options=","suffix="],
+		"\\usepackage/pstool#c": ["bitmap=${1|auto,lossless,lossy|}","cleanup=","crop=${1|pdfcrop,preview|}","crossref=${1|false,true|}","dvips-options=","latex-options=","macro-file=","mode=${1|batch,errorstop,nonstop|}","pdfcrop-options=","process=${1|all,auto,none|}","ps2pdf-options=","suffix="]
+	},
+	"args": ["\\usepackage/pstool#c"]
+}

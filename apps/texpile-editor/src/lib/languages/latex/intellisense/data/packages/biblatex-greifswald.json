@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"biblatex-ext-tabular"},{"name":"longtable"}],
+	"macros": [
+		{"name":"greifswaldcolsep"},
+		{"name":"greifswalddatesep"},
+		{"name":"greifswalddatewidth"},
+		{"name":"greifswaldindent"}
+	],
+	"envs": [],
+	"keys": {}
+}

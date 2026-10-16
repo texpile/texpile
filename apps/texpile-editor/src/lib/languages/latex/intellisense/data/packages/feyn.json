@@ -1,0 +1,36 @@
+{
+	"macros": [
+		{"name":"annotate","arg":{"format":"{}{}{}","snippet":"annotate{${1:x}}{${2:y}}{${3:text}}"},"doc":"\\annotate{x}{y}{text} Puts the text, between dollars, in a zero width box at offset (x, y) modules from the position of the \\annotate command (which is generally the first command(s) after entering math-mode)."},
+		{"name":"belowl","arg":{"format":"{}","snippet":"belowl{${1:propagator}}"},"doc":"\\belowl{} A common pattern in diagrams is to have a pair of incoming or outgoing propagators. If the lower one of this pair is enclosed within \\belowl{...}, then it is set so that it occupies zero horizontal space, and moved leftwards and downwards, to fit under the upper of the pair of propagators."},
+		{"name":"belowr","arg":{"format":"{}","snippet":"belowr{${1:propagator}}"}},
+		{"name":"bigbosonloop","unusual":true},
+		{"name":"bigbosonloopA","unusual":true},
+		{"name":"bigbosonloopV","unusual":true},
+		{"name":"Diagram","arg":{"format":"[]{}","snippet":"Diagram[${1:position}]{${2:rows}}"},"doc":"\\Diagram{} This is for building more complicated diagrams. It takes one argument, which is like the contents of an {array} environment—a series of formulae separated by &’s and \\\\."},
+		{"name":"Diagram","arg":{"format":"{}","snippet":"Diagram{${1:rows}}"},"doc":"\\Diagram{} This is for building more complicated diagrams. It takes one argument, which is like the contents of an {array} environment—a series of formulae separated by &’s and \\\\."},
+		{"name":"DIAGRAM","arg":{"format":"[]{}","snippet":"DIAGRAM[${1:position}]{${2:rows}}"}},
+		{"name":"DIAGRAM","arg":{"format":"{}","snippet":"DIAGRAM{${1:rows}}"}},
+		{"name":"feyn","arg":{"format":"{}","snippet":"feyn{${1:diagram}}"},"doc":"\\feyn Selects the diagram font, in display style – that is, suitable for a displayed equation."},
+		{"name":"Feyn","arg":{"format":"{}","snippet":"Feyn{${1:diagram}}"},"doc":"\\Feyn selects the textstyle diagram font."},
+		{"name":"FEYN","arg":{"format":"{}","snippet":"FEYN{${1:diagram}}"}},
+		{"name":"feynstrut","arg":{"format":"{}{}","snippet":"feynstrut{${1:height}}{${2:depth}}"},"doc":"\\feynstrut{h}{d} For use within an (eqn)array environment, or the like. It modifies the control sequence \\strut to be a strut of height h and depth d modules, which can therefore be used to space the array out."},
+		{"name":"gvcropped","unusual":true},
+		{"name":"hfermion","unusual":true},
+		{"name":"maxis","arg":{"format":"{}","snippet":"maxis{${1:formula}}"},"doc":"\\maxis Raises a formula to the math-axis, which is occasionally useful within intext equations: eg $\\Feyn{fglf} - \\maxis{\\Feyn{faf}}$ produces fyf − faf."},
+		{"name":"momentum","arg":{"format":"[]{}{}","snippet":"momentum[${1:position}]{${2:character}}{${3:text}}"},"doc":"\\momentum{ch}{text} sets the character ‘ch’, which may be a ligature, and puts the given text at the recommended annotation position for that character."},
+		{"name":"momentum","arg":{"format":"{}{}","snippet":"momentum{${1:character}}{${2:text}}"},"doc":"\\momentum{ch}{text} sets the character ‘ch’, which may be a ligature, and puts the given text at the recommended annotation position for that character."},
+		{"name":"shfermion","unusual":true},
+		{"name":"smallbosonloop","unusual":true},
+		{"name":"smallbosonloopA","unusual":true},
+		{"name":"smallbosonloopV","unusual":true},
+		{"name":"tannotate","arg":{"format":"{}{}{}","snippet":"tannotate{${1:x}}{${2:y}}{${3:text}}"}},
+		{"name":"vertexlabel","arg":{"format":"{}{}","snippet":"vertexlabel{${1:^ or _}}{${2:text}}"},"doc":"\\vertexlabel{p}{text} Allows you to label a vertex."},
+		{"name":"wfermion","unusual":true},
+		{"name":"whfermion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/feyn#c": ["globalbang","noglobalbang"]
+	},
+	"args": ["\\usepackage/feyn#c"]
+}

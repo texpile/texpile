@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"tagmcbegin","arg":{"format":"{}","snippet":"tagmcbegin{${1:key-val-list}}"},"doc":"These commands insert the begin of the marked content code in the PDF."},
+		{"name":"tagmcend"},
+		{"name":"tagmcuse","arg":{"format":"{}","snippet":"tagmcuse{${1:label}}"},"doc":"These commands allow you to record a marked content that you stashed away into the current structure."},
+		{"name":"tagpdfparaOff"},
+		{"name":"tagpdfparaOn"},
+		{"name":"tagpdfsetup","arg":{"format":"{}","snippet":"tagpdfsetup{${1:key-val-list}}"},"doc":"This command sets up the general behavior of the package."},
+		{"name":"tagstart","unusual":true},
+		{"name":"tagstop","unusual":true},
+		{"name":"tagstructbegin","arg":{"format":"{}","snippet":"tagstructbegin{${1:key-val-list}}"},"doc":"These commands start a new structure."},
+		{"name":"tagstructend","doc":"These commands end a structure."},
+		{"name":"tagstructuse","arg":{"format":"{}","snippet":"tagstructuse{${1:label}}"},"doc":"These commands insert a structure previously stashed away as kid into the currently active structure."},
+		{"name":"tagtool","arg":{"format":"{}","snippet":"tagtool{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

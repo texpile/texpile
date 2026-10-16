@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"mathbold","arg":{"format":"{}","snippet":"mathbold{${1:text}}"}},
+		{"name":"upDelta"},
+		{"name":"upGamma"},
+		{"name":"upLambda"},
+		{"name":"upOmega"},
+		{"name":"upPhi"},
+		{"name":"upPi"},
+		{"name":"upPsi"},
+		{"name":"upSigma"},
+		{"name":"upTheta"},
+		{"name":"upUpsilon"},
+		{"name":"upXi"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/cmbright#c": ["enlarged-baselineskips","slantedGreek","standard-baselineskips"]
+	},
+	"args": ["\\usepackage/cmbright#c"]
+}

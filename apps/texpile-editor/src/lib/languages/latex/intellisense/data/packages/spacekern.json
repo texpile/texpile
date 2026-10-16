@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"semicolon","doc":"This macro allows the user to typeset consecutive semicolons."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/spacekern#c": ["noiwkern","noredef"]
+	},
+	"args": ["\\usepackage/spacekern#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"AtNextSelectfont","arg":{"format":"{}","snippet":"AtNextSelectfont{${1:code}}"},"doc":"\\AtNextSelectfont{⟨code⟩} declares ⟨code⟩ that is saved internally and executed just after and only the next \\selectfont."},
+		{"name":"EverySelectfont","arg":{"format":"{}","snippet":"EverySelectfont{${1:code}}"},"doc":"\\EverySelectfont{⟨code⟩} declares ⟨code⟩ that is saved internally and executed just after each \\selectfont."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"verbatim"},{"name":"readarray"},{"name":"forloop"},{"name":"ifthen"},{"name":"listofitems"}],
+	"macros": [
+		{"name":"addvbuffer","arg":{"format":"[]{}","snippet":"addvbuffer[${1:length}]{${2:object}}"},"doc":"The \\addvbuffer command, while supporting this package, also provides a flexible way to add vertical buffer space above and below most LaTeX objects, which can be handy in a variety of applications."},
+		{"name":"addvbuffer","arg":{"format":"{}","snippet":"addvbuffer{${1:object}}"},"doc":"The \\addvbuffer command, while supporting this package, also provides a flexible way to add vertical buffer space above and below most LaTeX objects, which can be handy in a variety of applications."},
+		{"name":"boxbottomsep"},
+		{"name":"boxtopsep"},
+		{"name":"theverbbox","arg":{"format":"[]","snippet":"theverbbox[${1:t}]"},"doc":"the \\theverbbox command is issued to recall the contents of a box created by either the verbbox environment or the \\verbfilebox command."},
+		{"name":"theverbbox","doc":"the \\theverbbox command is issued to recall the contents of a box created by either the verbbox environment or the \\verbfilebox command."},
+		{"name":"verbatimboxVersionNumber","unusual":true},
+		{"name":"verbfilebox","arg":{"format":"[]{}","snippet":"verbfilebox[${1:pre-commands}]{${2:filename}}"}},
+		{"name":"verbfilebox","arg":{"format":"{}","snippet":"verbfilebox{${1:filename}}"}},
+		{"name":"verbfilenobox","arg":{"format":"[]{}","snippet":"verbfilenobox[${1:pre-commands}]{${2:filename}}"}},
+		{"name":"verbfilenobox","arg":{"format":"{}","snippet":"verbfilenobox{${1:filename}}"}}
+	],
+	"envs": [
+		{"name":"myverbbox","arg":{"format":"[]{}","snippet":"[${1:pre-commands}]{${2:token}}"}},
+		{"name":"myverbbox","arg":{"format":"{}","snippet":"{${1:token}}"}},
+		{"name":"verbbox","arg":{"format":"[]","snippet":"[${1:pre-commands}]"},"doc":"The verbbox environment places the content of the environment into a verbatim box."},
+		{"name":"verbbox","doc":"The verbbox environment places the content of the environment into a verbatim box."},
+		{"name":"verbnobox","arg":{"format":"[]","snippet":"[${1:pre-commands}]"}},
+		{"name":"verbnobox"}
+	],
+	"keys": {}
+}

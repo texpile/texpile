@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"calc"},{"name":"bxcalcux"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"usepTeXunits"}
+	],
+	"envs": [],
+	"keys": {}
+}

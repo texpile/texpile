@@ -1,0 +1,38 @@
+{
+	"macros": [
+		{"name":"aggregation","arg":{"format":"[]{}{}{}{}","snippet":"aggregation[${1:options}]{${2:class 1}}{${3:role}}{${4:multiplicity}}{${5:class 2}}"}},
+		{"name":"aggregation","arg":{"format":"{}{}{}{}","snippet":"aggregation{${1:class 1}}{${2:role}}{${3:multiplicity}}{${4:class 2}}"}},
+		{"name":"association","arg":{"format":"[]{}{}{}{}{}{}","snippet":"association[${1:options}]{${2:class 1}}{${3:role 1}}{${4:multiplicity 1}}{${5:class 2}}{${6:multiplicity 2}}{${7:role 2}}"}},
+		{"name":"association","arg":{"format":"{}{}{}{}{}{}","snippet":"association{${1:class 1}}{${2:role 1}}{${3:multiplicity 1}}{${4:class 2}}{${5:multiplicity 2}}{${6:role 2}}"}},
+		{"name":"attribute","arg":{"format":"{}","snippet":"attribute{${1:text}}"}},
+		{"name":"composition","arg":{"format":"[]{}{}{}{}","snippet":"composition[${1:options}]{${2:class 1}}{${3:role}}{${4:multiplicity}}{${5:class 2}}"}},
+		{"name":"composition","arg":{"format":"{}{}{}{}","snippet":"composition{${1:class 1}}{${2:role}}{${3:multiplicity}}{${4:class 2}}"}},
+		{"name":"implement","arg":{"format":"{}","snippet":"implement{${1:interface}}"}},
+		{"name":"inherit","arg":{"format":"{}","snippet":"inherit{${1:class}}"}},
+		{"name":"instanceOf","arg":{"format":"{}","snippet":"instanceOf{${1:class}}"}},
+		{"name":"operation","arg":{"format":"[]{}","snippet":"operation[${1:virtual (0)}]{${2:text}}"}},
+		{"name":"operation","arg":{"format":"{}","snippet":"operation{${1:text}}"}},
+		{"name":"switchUmlcdSchool"},
+		{"name":"umldrawcolor"},
+		{"name":"umlfillcolor"},
+		{"name":"umlnote","arg":{"format":"[]","snippet":"umlnote[${1:style}]"}},
+		{"name":"umlnote"},
+		{"name":"umltextcolor"},
+		{"name":"unidirectionalAssociation","arg":{"format":"[]{}{}{}{}","snippet":"unidirectionalAssociation[${1:options}]{${2:class 1}}{${3:role}}{${4:multiplicity}}{${5:class 2}}"}},
+		{"name":"unidirectionalAssociation","arg":{"format":"{}{}{}{}","snippet":"unidirectionalAssociation{${1:class 1}}{${2:role}}{${3:multiplicity}}{${4:class 2}}"}}
+	],
+	"envs": [
+		{"name":"abstractclass","arg":{"format":"[]{}{}","snippet":"[${1:options}]{${2:name}}{${3:position}}"}},
+		{"name":"abstractclass","arg":{"format":"{}{}","snippet":"{${1:name}}{${2:position}}"}},
+		{"name":"class","arg":{"format":"[]{}{}","snippet":"[${1:options}]{${2:name}}{${3:position}}"}},
+		{"name":"class","arg":{"format":"{}{}","snippet":"{${1:name}}{${2:position}}"}},
+		{"name":"interface","arg":{"format":"[]{}{}","snippet":"[${1:options}]{${2:name}}{${3:position}}"}},
+		{"name":"interface","arg":{"format":"{}{}","snippet":"{${1:name}}{${2:position}}"}},
+		{"name":"object","arg":{"format":"[]{}{}","snippet":"[${1:options}]{${2:name}}{${3:position}}"}},
+		{"name":"object","arg":{"format":"{}{}","snippet":"{${1:name}}{${2:position}}"}},
+		{"name":"package","arg":{"format":"{}","snippet":"{${1:name}}"}},
+		{"name":"staticclass","arg":{"format":"[]{}{}","snippet":"[${1:options}]{${2:name}}{${3:position}}"},"unusual":true},
+		{"name":"staticclass","arg":{"format":"{}{}","snippet":"{${1:name}}{${2:position}}"},"unusual":true}
+	],
+	"keys": {}
+}

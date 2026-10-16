@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xkeyval","if":"!disabled+!nodvidriver"},{"name":"iftex","if":"!disabled+!nodvidriver"},{"name":"ifvtex","if":"!disabled+!nodvidriver"},{"name":"ifptex","if":"!disabled+!nodvidriver"},{"name":"atbegshi-ltx","if":"!disabled+!nodvidriver"}],
+	"macros": [
+		{"name":"bxpapersizesetup","arg":{"format":"{}","snippet":"bxpapersizesetup{${1:key=value list}}"},"doc":"The comamnd `\\bxpapersizesetup` is a synonym for `\\papersizesetup`, so as to cope with command name conflict."},
+		{"name":"papersizesetup","arg":{"format":"{}","snippet":"papersizesetup{${1:key=value list}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bxpapersize#c": ["autodvidriver","disabled","dvipdfmx","dvips","dvisvgm","nodvidriver","olddvips","resetdvidriver"]
+	},
+	"args": ["\\usepackage/bxpapersize#c"]
+}

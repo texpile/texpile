@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"inputenc"},{"name":"kvsetkeys"},{"name":"stringenc"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"}],
+	"macros": [
+		{"name":"SelectInputEncodingList","arg":{"format":"{}","snippet":"SelectInputEncodingList{${1:encoding list}}"}},
+		{"name":"SelectInputMappings","arg":{"format":"{}","snippet":"SelectInputMappings{${1:mapping pairs}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

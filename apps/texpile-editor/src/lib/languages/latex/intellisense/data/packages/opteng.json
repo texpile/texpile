@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"overcite"},{"name":"cite"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"fancybox"},{"name":"pstricks"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"acksect","arg":{"format":"[]{}","snippet":"acksect[${1:short title}]{${2:title}}"}},
+		{"name":"acksect","arg":{"format":"{}","snippet":"acksect{${1:title}}"}},
+		{"name":"acksect*","arg":{"format":"[]{}","snippet":"acksect*[${1:short title}]{${2:title}}"}},
+		{"name":"acksect*","arg":{"format":"{}","snippet":"acksect*{${1:title}}"}},
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1}}"}},
+		{"name":"doi","arg":{"format":"{}","snippet":"doi{${1}}"}},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1}}"}},
+		{"name":"loginfo","arg":{"format":"{}","snippet":"loginfo{${1}}"}},
+		{"name":"SPIEmember"},
+		{"name":"subjterm","arg":{"format":"{}","snippet":"subjterm{${1}}"},"doc":"The copyright is automatically generated, but the user can specify the digital object identifier \\doi, subject terms \\subjterm, and the submission/acceptance date \\loginfo."}
+	],
+	"envs": [
+		{"name":"biography","arg":{"format":"[]{}","snippet":"[${1:photograph file}]{${2:name}}"}},
+		{"name":"biography","arg":{"format":"{}","snippet":"{${1:name}}"}},
+		{"name":"eqnfloat","unusual":true}
+	],
+	"keys": {
+		"\\usepackage/opteng#c": ["optengjnl","optenglett","optengsubmit"]
+	},
+	"args": ["\\usepackage/opteng#c"]
+}

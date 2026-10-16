@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"iftex"}],
+	"macros": [
+		{"name":"EndKanbun","doc":"Write the annotated kanbun between the commands \\Kanbun and \\EndKanbun, and it will be processed and saved, ready to be used later."},
+		{"name":"furiokuri","arg":{"format":"{}{}","snippet":"furiokuri{${1:furigana}}{${2:okurigana}}"}},
+		{"name":"kaeriten","arg":{"format":"{}","snippet":"kaeriten{${1}}"},"unusual":true},
+		{"name":"Kanbun","doc":"Write the annotated kanbun between the commands \\Kanbun and \\EndKanbun, and it will be processed and saved, ready to be used later."},
+		{"name":"kanbunfont","doc":"Sets the font size of kanji."},
+		{"name":"kanjiunit","arg":{"format":"{}{}{}{}{}{}","snippet":"kanjiunit{${1:right furigana and okurigana}}{${2:left punctuation}}{${3:kanji}}{${4:other punctuation}}{${5:kaeriten}}{${6:left furigana and okurigana}}"}},
+		{"name":"multifuriokuri","arg":{"format":"[]{}{}","snippet":"multifuriokuri[${1:raise length}]{${2:furigana}}{${3:okurigana}}"}},
+		{"name":"multifuriokuri","arg":{"format":"{}{}","snippet":"multifuriokuri{${1:furigana}}{${2:okurigana}}"}},
+		{"name":"ninojiten","unusual":true},
+		{"name":"printkanbun"},
+		{"name":"printkanbuncode"},
+		{"name":"printkanbunnopar"},
+		{"name":"printkanbunnoparcode"},
+		{"name":"setkanbun","arg":{"format":"{}","snippet":"setkanbun{${1:options}}","keys":["l3keys:kanbun"],"keyPos":0}},
+		{"name":"tateten","unusual":true}
+	],
+	"envs": [
+		{"name":"kanjipar","unusual":true}
+	],
+	"keys": {
+		"l3keys:kanbun": ["fontcmd=","okuriintrusion=","rubyfontcmd=","scale=","tateaki=","unit=","yokoaki=","aki","beta","kumi=${1|aki,beta|}"],
+		"\\usepackage/kanbun#c": ["aki","beta","fontcmd=","kumi=${1|aki,beta|}","okuriintrusion=","rubyfontcmd=","scale=","tateaki=","unit=","yokoaki="]
+	},
+	"args": ["\\usepackage/kanbun#c"]
+}

@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-article"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"titlesec"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"inputenc"},{"name":"tabularx"},{"name":"array"},{"name":"multicol"},{"name":"ragged2e"},{"name":"paralist"},{"name":"makecell"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"currfile"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"currfile-abspath"},{"name":"wrapfig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"titling"},{"name":"svg"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"pdftexcmds"},{"name":"shellesc"},{"name":"transparent"},{"name":"transparent-nometadata"},{"name":"auxhook","engines":["pdflatex","lualatex"]},{"name":"libertine"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"microtype"},{"name":"etoolbox"},{"name":"footmisc"},{"name":"enumitem"},{"name":"textpos"},{"name":"datetime"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"fcprefix"},{"name":"datetime-defaults"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"biblatex"},{"name":"logreq"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"caption"},{"name":"caption3"},{"name":"float"},{"name":"setspace"},{"name":"fancyhdr"},{"name":"changepage"},{"name":"helvet","if":"boring"},{"name":"fontsize","if":"slides"}],
+	"macros": [
+		{"name":"nospell","arg":{"format":"{}","snippet":"nospell{${1}}"},"unusual":true},
+		{"name":"PrintBibliography"},
+		{"name":"PrintCrumb","arg":{"format":"{}{}","snippet":"PrintCrumb{${1:label}}{${2:text}}"}},
+		{"name":"PrintDisclaimer"},
+		{"name":"PrintFirstPage","arg":{"format":"{}","snippet":"PrintFirstPage{${1:image file}}"},"doc":"It is recommended to use \\PrintFirstPage for rendering the first page in landscape document, for example a project charter. The only argument of the commmand is the name of an image to render at the right bottom corner."},
+		{"name":"PrintLastPage"},
+		{"name":"PrintThankYouPage","doc":"\\PrintThankYouPage prints the last page with a \"Thank You\" message in the center."},
+		{"name":"theauthor"},
+		{"name":"thecompany","unusual":true},
+		{"name":"theid","doc":"\\theid is the internal ID of the author, if it’s applicable."},
+		{"name":"thesecurity"},
+		{"name":"thesubtitle"},
+		{"name":"thetitle"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"array"},{"name":"longtable"},{"name":"hhline"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"fixedsesheadfalse","unusual":true},
+		{"name":"fixedsesheadtrue","unusual":true},
+		{"name":"iffixedseshead","unusual":true},
+		{"name":"jsemailheader"},
+		{"name":"jsmidheader"},
+		{"name":"jsmnameheader"},
+		{"name":"jsmsession"},
+		{"name":"jsmsessionheader"},
+		{"name":"jssigheader"},
+		{"name":"makemembertable","arg":{"format":"{}","snippet":"makemembertable{${1:number of blank rows}}"}},
+		{"name":"makeprestable","arg":{"format":"[]{}","snippet":"makeprestable[${1:number of sessions}]{${2:number of blank rows}}"}},
+		{"name":"makeprestable","arg":{"format":"{}","snippet":"makeprestable{${1:number of blank rows}}"}},
+		{"name":"makeprestable*","arg":{"format":"[]{}","snippet":"makeprestable*[${1:number of sessions}]{${2:number of blank rows}}"}},
+		{"name":"makeprestable*","arg":{"format":"{}","snippet":"makeprestable*{${1:number of blank rows}}"}},
+		{"name":"thesession","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

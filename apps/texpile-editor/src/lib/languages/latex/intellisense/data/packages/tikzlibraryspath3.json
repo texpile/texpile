@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"getComponentOf","arg":{"format":"{}{}","snippet":"getComponentOf{${1:macro}}{${2:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

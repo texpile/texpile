@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"beginpgfgraphicnamed","arg":{"format":"{}","snippet":"beginpgfgraphicnamed{${1:file name}}"},"doc":"This command indicates that everything up to the next call of \\endpgfgraphicnamed is part of a graphic that should be placed in a file named ⟨file name prefix⟩.⟨suffix⟩, where the ⟨suffix⟩ depends on your backend driver."},
+		{"name":"endpgfgraphicnamed","doc":"This command just marks the end of the graphic that should be externalized."},
+		{"name":"pgfincludeexternalgraphics","arg":{"format":"{}","snippet":"pgfincludeexternalgraphics{${1}}"},"unusual":true},
+		{"name":"pgfkeys","arg":{"format":"{}","snippet":"pgfkeys{${1}}"}},
+		{"name":"pgfqkeys","arg":{"format":"{}{}","snippet":"pgfqkeys{${1}}{${2}}"}},
+		{"name":"tikz","arg":{"format":"[]{}","snippet":"tikz[${1:options}]{${2:path commands}}"},"doc":"This command places the ⟨path commands⟩ inside a {tikzpicture} environment."},
+		{"name":"tikz","arg":{"format":"{}","snippet":"tikz{${1:path commands}}"},"doc":"This command places the ⟨path commands⟩ inside a {tikzpicture} environment."},
+		{"name":"tikzappendtofigurename","arg":{"format":"{}","snippet":"tikzappendtofigurename{${1}}"},"doc":"Appends ⟨suffix⟩ to the actual value of figure name."},
+		{"name":"tikzexternalize","arg":{"format":"[]","snippet":"tikzexternalize[${1}]"},"doc":"This command activates the externalization."},
+		{"name":"tikzexternalize","doc":"This command activates the externalization."},
+		{"name":"tikzifinpicture","arg":{"format":"{}{}","snippet":"tikzifinpicture{${1}}{${2}}"},"unusual":true},
+		{"name":"tikzset","arg":{"format":"{}","snippet":"tikzset{${1}}"},"doc":"This command will process the ⟨options⟩ using the \\pgfkeys command, documented in detail in Section 87, with the default path set to /tikz."},
+		{"name":"tikzsetexternalprefix","arg":{"format":"{}","snippet":"tikzsetexternalprefix{${1}}"},"doc":"Assigns a common prefix used by all file names."},
+		{"name":"tikzsetfigurename","arg":{"format":"{}","snippet":"tikzsetfigurename{${1}}"},"doc":"Changes the names of all following figures."},
+		{"name":"tikzsetnextfilename","arg":{"format":"{}","snippet":"tikzsetnextfilename{${1}}"},"doc":"Sets the file name for the next TikZ picture or \\tikz short command."}
+	],
+	"envs": [
+		{"name":"tikzpicture","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"tikzpicture"}
+	],
+	"keys": {}
+}

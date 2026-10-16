@@ -1,0 +1,38 @@
+{
+	"deps": [{"name":"inputenc","engines":["pdflatex"]},{"name":"lmodern"},{"name":"hyperref","if":"black|color|gray"},{"name":"iftex","if":"black|color|gray","engines":["pdflatex","xelatex"]},{"name":"iftex","engines":["lualatex"]},{"name":"keyval","if":"black|color|gray","engines":["pdflatex","lualatex"]},{"name":"keyval","engines":["xelatex"]},{"name":"kvsetkeys","if":"black|color|gray"},{"name":"pdfescape","if":"black|color|gray"},{"name":"nameref","if":"black|color|gray"},{"name":"refcount","if":"black|color|gray"},{"name":"gettitlestring","if":"black|color|gray"},{"name":"kvoptions","if":"black|color|gray"},{"name":"etoolbox","if":"black|color|gray","engines":["pdflatex","xelatex"]},{"name":"etoolbox","if":"black|color|gray|italian","engines":["lualatex"]},{"name":"stringenc","if":"black|color|gray"},{"name":"intcalc","if":"black|color|gray"},{"name":"url","if":"black|color|gray"},{"name":"bitset","if":"black|color|gray"},{"name":"bigintcalc","if":"black|color|gray"},{"name":"rerunfilecheck","if":"black|color|gray"},{"name":"uniquecounter","if":"black|color|gray"},{"name":"luainputenc","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"babel","if":"english|french|german|italian","engines":["lualatex"]},{"name":"scalefnt","if":"french","engines":["lualatex"]},{"name":"graphicx","engines":["xelatex"]},{"name":"graphics","engines":["xelatex"]},{"name":"trig","engines":["xelatex"]}],
+	"macros": [
+		{"name":"authorname"},
+		{"name":"bsc","arg":{"format":"{}","snippet":"bsc{${1:text}}"},"doc":"\\bsc means ‘boxed small caps’ and is a non breaking version of \\textsc."},
+		{"name":"ccname","if":"german|french|italian|english"},
+		{"name":"conc","arg":{"format":"[]{}","snippet":"conc[${1:position}]{${2:object}}"}},
+		{"name":"conc","arg":{"format":"{}","snippet":"conc{${1:object}}"}},
+		{"name":"datename"},
+		{"name":"enclname","if":"german|french|italian|english"},
+		{"name":"ier","doc":"\\ier is the formal abbreviation of french “premier”."},
+		{"name":"no","doc":"\\no is the formal abreviation of french “numéro”."},
+		{"name":"rmosfamily","doc":"\\rmosfamily, \\sfosfamily and ttosfamily are the respective oldstyle numbers counterparts of \\rmfamily, sffamily and ttfamily."},
+		{"name":"sfosfamily"},
+		{"name":"sishape","doc":"The macros \\sishape and \\textsi are defined for direct output of slanted small caps."},
+		{"name":"textrmos","arg":{"format":"{}","snippet":"textrmos{${1:text}}"}},
+		{"name":"textsfos","arg":{"format":"{}","snippet":"textsfos{${1:text}}"}},
+		{"name":"textsi","arg":{"format":"{}","snippet":"textsi{${1:text}}"},"doc":"The macros \\sishape and \\textsi are defined for direct output of slanted small caps."},
+		{"name":"textttos","arg":{"format":"{}","snippet":"textttos{${1:text}}"}},
+		{"name":"titlename"},
+		{"name":"ttosfamily"},
+		{"name":"up","arg":{"format":"{}","snippet":"up{${1:text}}"},"doc":"\\up is a shortcut for \\textsuperscript."},
+		{"name":"ccname","if":"german"},
+		{"name":"enclname","if":"german"},
+		{"name":"ccname","if":"french"},
+		{"name":"enclname","if":"french"},
+		{"name":"up","arg":{"format":"{}","snippet":"up{${1:text}}"},"if":"french"},
+		{"name":"ccname","if":"italian"},
+		{"name":"enclname","if":"italian"},
+		{"name":"ccname","if":"english"},
+		{"name":"enclname","if":"english"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/chextras#c": ["black","color","english","french","german","gray","italian","lighttt","nomath","oldstyle","stddimen","stdfield","stditems","stdlabel","stdlists","stdmgpar","stdnotes","stdparis","stdrules","stdshape","stdskips","stdspace","variablett"]
+	},
+	"args": ["\\usepackage/chextras#c"]
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"definePrintColor","arg":{"format":"{}{}{}{}{}{}","snippet":"definePrintColor{${1:name}}{${2:RGB}}{${3:CMYK}}{${4:gray}}{${5:HSB}}{${6:Lab}}"},"doc":"The core of this package is the \\definePrintColor macro. It allows you to specify exact, manual values for a single color across all supported color spaces."},
+		{"name":"rangeGray","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

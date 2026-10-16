@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"addtomakeheaddetails","arg":{"format":"[]{}","snippet":"addtomakeheaddetails[${1}]{${2}}"},"unusual":true},
+		{"name":"addtomakeheaddetails","arg":{"format":"{}","snippet":"addtomakeheaddetails{${1}}"},"unusual":true},
+		{"name":"quotewidth","doc":"The width of the quote can be adjusted by setting \\quotewidth."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/moderncvheadii#c": ["alternate","details","left","nodetails","right"]
+	},
+	"args": ["\\usepackage/moderncvheadii#c"]
+}

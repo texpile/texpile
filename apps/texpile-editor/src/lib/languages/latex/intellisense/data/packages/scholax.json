@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"ifthen"},{"name":"xstring"},{"name":"scalefnt"},{"name":"etoolbox"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"destyle","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"infigures"},
+		{"name":"lfstyle"},
+		{"name":"nustyle","unusual":true},
+		{"name":"osfstyle"},
+		{"name":"sufigures"},
+		{"name":"textfrac","arg":{"format":"[]{}{}","snippet":"textfrac[${1:integer part}]{${2:numerator}}{${3:denominator}}"},"doc":"The \\textfrac constructs fractions using \\textsu and \\textin, raising the result to align with the text baseline."},
+		{"name":"textfrac","arg":{"format":"{}{}","snippet":"textfrac{${1:numerator}}{${2:denominator}}"},"doc":"The \\textfrac constructs fractions using \\textsu and \\textin, raising the result to align with the text baseline."},
+		{"name":"textin","arg":{"format":"{}","snippet":"textin{${1:text}}"}},
+		{"name":"textinferior","arg":{"format":"{}","snippet":"textinferior{${1}}"},"unusual":true},
+		{"name":"textlf","arg":{"format":"{}","snippet":"textlf{${1:text}}"}},
+		{"name":"textosf","arg":{"format":"{}","snippet":"textosf{${1:text}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"}},
+		{"name":"textsuperior","arg":{"format":"{}","snippet":"textsuperior{${1}}"},"unusual":true},
+		{"name":"texttlf","arg":{"format":"{}","snippet":"texttlf{${1:text}}"}},
+		{"name":"texttosf","arg":{"format":"{}","snippet":"texttosf{${1:text}}"}},
+		{"name":"thdefault","unusual":true},
+		{"name":"thfamily"},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf"},
+		{"name":"useproportional"}
+	],
+	"envs": [],
+	"keys": {}
+}

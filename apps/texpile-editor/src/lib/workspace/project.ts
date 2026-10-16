@@ -3,18 +3,18 @@
 // file. signature scanning only, never written back to disk. `read` is injectable so a shared
 // session resolves through the workspace provider instead of the disk.
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
-import { hasDocumentEnv } from './latexRoundtrip';
+import { documentStart, hasDocumentEnv } from './latexRoundtrip';
 import { installedPackageDefinitions, type ProbeInstalledPackage } from '$lib/languages/latex/installedPackages';
 import { probeTexPackage } from '$lib/editor/snippets/file/snippetLoader';
+import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { isBundledPackage } from '$lib/languages/latex/intellisense/packages/packageData';
 
 type ReadFn = (path: string) => Promise<string>;
 
-const BEGIN_DOC = /\\begin\s*\{document\}/;
-
 /** everything before \begin{document}; the whole string if there is none. */
 function preambleOf(text: string): string {
-	const m = BEGIN_DOC.exec(text);
-	return m ? text.slice(0, m.index) : text;
+	const at = documentStart(text);
+	return at >= 0 ? text.slice(0, at) : text;
 }
 
 /** picks the main entry .tex: conventional names first, else the shallowest file with a real \begin{document}. */
@@ -81,7 +81,7 @@ export async function findDocRoots(files: TexFile[]): Promise<Set<string>> {
 // to a project-local file and is skipped
 const INCLUDE_RE = /\\(?:input|include|subfile|subfileinclude)\s*\{([^}]+)\}/g;
 const PKG_RE = /\\(?:usepackage|RequirePackage)\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\}/g;
-const CLASS_OPTIONS_RE = /\\documentclass\s*\[([^\]]*)\]/;
+const CLASS_RE = /\\documentclass\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\}/;
 
 /** resolves a reference against a base dir, trying extensions; the first that reads wins. */
 async function resolveRead(baseDir: string, ref: string, exts: string[], read: ReadFn): Promise<{ path: string; text: string } | null> {
@@ -123,13 +123,24 @@ export async function gatherProjectMacros(
 		chunks.push(scan);
 		if (depth >= 6) return;
 
-		if (depth === 0) classOptions = CLASS_OPTIONS_RE.exec(scan)?.[1].trim() ?? '';
+		const code = withoutComments(scan);
 		const refs: { ref: string; exts: string[]; options?: string }[] = [];
-		for (const m of scan.matchAll(INCLUDE_RE)) refs.push({ ref: m[1], exts: ['.tex'] });
-		for (const m of scan.matchAll(PKG_RE))
+		const documentClass = depth === 0 ? CLASS_RE.exec(code) : null;
+		if (documentClass) {
+			classOptions = documentClass[1]?.trim() ?? '';
+			// a class the project ships is never read: whole classes (IEEEtran.cls, 6,000 lines) stall the preamble scan
+			installed.set(`class-${documentClass[2].trim()}`, classOptions);
+		}
+		for (const m of code.matchAll(INCLUDE_RE)) refs.push({ ref: m[1], exts: ['.tex'] });
+		for (const m of code.matchAll(PKG_RE))
 			for (const name of m[2].split(',')) refs.push({ ref: name, exts: ['.sty', '.cls'], options: m[1]?.trim() ?? '' });
 
 		for (const { ref, exts, options } of refs) {
+			// a copy of a package with data is read from the data (algorithmic.sty stalls the preamble scan)
+			if (exts[0] === '.sty' && isBundledPackage(ref.trim())) {
+				if (!installed.has(ref.trim())) installed.set(ref.trim(), options ?? '');
+				continue;
+			}
 			// referrer's own dir first, then the project root
 			const got = (await resolveRead(dirname(filePath), ref, exts, read)) ?? (await resolveRead(root, ref, exts, read));
 			if (!got) {

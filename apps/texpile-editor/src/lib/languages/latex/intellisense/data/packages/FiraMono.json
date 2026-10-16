@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"firamonolgr","doc":"Commands \\firalgr and \\firamonolgr allow for localized use of LGR-encoded type1 fonts."},
+		{"name":"firamonolining"},
+		{"name":"firamonomedium"},
+		{"name":"firamonooldstyle"},
+		{"name":"sufigures","doc":"Superior numbers are available using \\sufigures."}
+	],
+	"envs": [],
+	"keys": {}
+}

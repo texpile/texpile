@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"expkv-pop"},{"name":"expkv"}],
+	"macros": [
+		{"name":"ekvdDate","unusual":true},
+		{"name":"ekvdefinekeys","arg":{"format":"{}{}","snippet":"ekvdefinekeys{${1:set}}{${2:key=value list}}"},"doc":"In ⟨set⟩, define ⟨key⟩ to have definition ⟨value⟩."},
+		{"name":"ekvdVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

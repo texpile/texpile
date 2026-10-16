@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"aeb_pro"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"xkeyval"},{"name":"insdljs"},{"name":"ifluatex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]},{"name":"aeb-comment"},{"name":"calc"},{"name":"eso-pic"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"makeStamps","arg":{"format":"{}","snippet":"makeStamps{${1:list of {name=...,page=...}}}"},"doc":"The \\makeStamps command is the one that describes the images to be imported into the document as stamps."},
+		{"name":"setStampPath","arg":{"format":"{}","snippet":"setStampPath{${1:absolute_path}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

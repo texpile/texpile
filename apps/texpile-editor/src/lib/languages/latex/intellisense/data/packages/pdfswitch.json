@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ae"},{"name":"aeguill"},{"name":"ifthen"},{"name":"iftex"},{"name":"etoolbox"},{"name":"hyperref"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"xcolor"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"thumbpdf"},{"name":"backref","if":"backref|pagebackref"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pdfswitch#c": ["backref","noborder","nocolor","pagebackref","plainpages"]
+	},
+	"args": ["\\usepackage/pdfswitch#c"]
+}

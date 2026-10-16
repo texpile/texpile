@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"crimsonpro"},
+		{"name":"crimsonproLF"},
+		{"name":"crimsonproOsF"},
+		{"name":"crimsonproproportional"},
+		{"name":"crimsonprotabular"},
+		{"name":"infigures"},
+		{"name":"proportionalnums","arg":{"format":"{}","snippet":"proportionalnums{${1}}"}},
+		{"name":"sufigures"},
+		{"name":"tabularnums","arg":{"format":"{}","snippet":"tabularnums{${1}}"}},
+		{"name":"textinf","arg":{"format":"{}","snippet":"textinf{${1}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

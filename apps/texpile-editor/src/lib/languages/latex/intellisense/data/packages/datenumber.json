@@ -1,0 +1,37 @@
+{
+	"macros": [
+		{"name":"datedate","doc":"\\datedate: typesets the date, corresponding to the counters dateyear, datemonth, dateday."},
+		{"name":"datedayname","doc":"\\datedayname: typesets the weekday (see section 3.4)."},
+		{"name":"datemonthname","doc":"The command \\datemonthname typesets the month."},
+		{"name":"dateselectlanguage","arg":{"format":"{}","snippet":"dateselectlanguage{${1:language}}"},"doc":"Say \\dateselectlanguage{language} to select a language."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ifleapyear","arg":{"format":"{}","snippet":"ifleapyear{${1:year}}"}},
+		{"name":"ifvaliddate","arg":{"format":"{}{}{}","snippet":"ifvaliddate{${1:year}}{${2:month}}{${3:day}}"}},
+		{"name":"mynextdate","arg":{"format":"{}{}{}","snippet":"mynextdate{${1:yearcount}}{${2:monthcount}}{${3:daycount}}"},"doc":"\\mynextdate{yearcount}{monthcount}{daycount}: Sets the counters yearcount, monthcount, and daycount to the next date."},
+		{"name":"myprevdate","arg":{"format":"{}{}{}","snippet":"myprevdate{${1:yearcount}}{${2:monthcount}}{${3:daycount}}"}},
+		{"name":"nextdate","doc":"\\nextdate: Sets the counters dateyear, datemonth, and dateday to the next date."},
+		{"name":"prevdate","doc":"\\prevdate: Sets the counters dateyear, datemonth, and dateday to the previous date."},
+		{"name":"setdate","arg":{"format":"{}{}{}","snippet":"setdate{${1:year}}{${2:month}}{${3:day}}"},"doc":"\\setdate{year}{month}{day}: Sets the counters dateyear, datemonth, and dateday to year, month, and day."},
+		{"name":"setdatebynumber","arg":{"format":"{}","snippet":"setdatebynumber{${1:number}}"},"doc":"\\setdatebynumber{number}: Sets the counters dateyear, datemonth, and dateday to values, which corresponds to the number."},
+		{"name":"setdatenumber","arg":{"format":"{}{}{}","snippet":"setdatenumber{${1:year}}{${2:month}}{${3:day}}"},"doc":"\\setdatenumber{year}{month}{day}: Sets the counter datenumber to a value, which corresponds to the date."},
+		{"name":"setdatetoday","doc":"\\setdatetoday: Sets the counters dateyear, datemonth, and dateday to the current date."},
+		{"name":"setdayname","arg":{"format":"{}","snippet":"setdayname{${1:number}}"}},
+		{"name":"setdaynamebynumber","arg":{"format":"{}","snippet":"setdaynamebynumber{${1:number}}"}},
+		{"name":"setmonthname","arg":{"format":"{}","snippet":"setmonthname{${1:number}}"}},
+		{"name":"setmydatebynumber","arg":{"format":"{}{}{}{}","snippet":"setmydatebynumber{${1:number}}{${2:yearcount}}{${3:monthcount}}{${4:daycount}}"},"doc":"\\setmydatebynumber{number}{yearcount}{monthcount}{daycount}: Sets the counters yearcount, monthcount, and daycount to values, which corresponds to the number."},
+		{"name":"setmydatenumber","arg":{"format":"{}{}{}{}","snippet":"setmydatenumber{${1:numbercount}}{${2:year}}{${3:month}}{${4:day}}"},"doc":"\\setmydatenumber{numbercount}{year}{month}{day}: Sets the counter numbercount to a value, which corresponds to the date."},
+		{"name":"setstartyear","arg":{"format":"{}","snippet":"setstartyear{${1:year}}"},"doc":"The start of the counting is determined with \\setstartyear{year} (standard 1800)."},
+		{"name":"thedateday","unusual":true},
+		{"name":"thedatedayname","unusual":true},
+		{"name":"thedatemonth","unusual":true},
+		{"name":"thedatenumber","unusual":true},
+		{"name":"thedateyear","unusual":true},
+		{"name":"thestartyear"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/datenumber#c": ["USenglish","english","french","german","italian","ngerman","spanish"]
+	},
+	"args": ["\\usepackage/datenumber#c"]
+}

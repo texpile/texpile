@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"BFHBeamerSetup","arg":{"format":"[]{}","snippet":"BFHBeamerSetup[${1:key path}]{${2:options}}"}},
+		{"name":"BFHBeamerSetup","arg":{"format":"{}","snippet":"BFHBeamerSetup{${1:options}}"}},
+		{"name":"inserttotalpagenumber","unusual":true},
+		{"name":"thepagenumber","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

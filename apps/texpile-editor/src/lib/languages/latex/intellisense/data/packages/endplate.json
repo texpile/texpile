@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"AtBeginDelayedFloats","unusual":true},
+		{"name":"AtBeginPlates","arg":{"format":"{}","snippet":"AtBeginPlates{${1:actions}}"}},
+		{"name":"docdate","unusual":true},
+		{"name":"dofiglist","unusual":true},
+		{"name":"efloatseparator"},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"markersintext","unusual":true},
+		{"name":"nofiglist","unusual":true},
+		{"name":"nomarkersintext","unusual":true},
+		{"name":"platename","unusual":true},
+		{"name":"plateplace","unusual":true},
+		{"name":"platesection","unusual":true},
+		{"name":"processotherdelayedfloats","unusual":true},
+		{"name":"thepostfig","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/endplate#c": ["fighead","figlist","heads","lists","markers","nofighead","nofiglist","noheads","nolists","nomarkers","platesfirst"]
+	},
+	"args": ["\\usepackage/endplate#c"]
+}

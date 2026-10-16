@@ -1,234 +1,27 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "framelatex",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "framelatex{${1:contents%text}}"
-      }
-    },
-    {
-      "name": "refcounter",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "refcounter{${1:counter}}"
-      }
-    },
-    {
-      "name": "thesubsectionslide",
-      "unusual": true
-    },
-    {
-      "name": "insertframetitle",
-      "unusual": true
-    },
-    {
-      "name": "insertframesubtitle",
-      "unusual": true
-    },
-    {
-      "name": "resetcounteronoverlays",
-      "arg": {
-        "format": "{}",
-        "snippet": "resetcounteronoverlays{${1:counter}}"
-      }
-    },
-    {
-      "name": "resetcountonoverlays",
-      "arg": {
-        "format": "{}",
-        "snippet": "resetcountonoverlays{${1:count register}}"
-      }
-    },
-    {
-      "name": "framewidth",
-      "unusual": true
-    },
-    {
-      "name": "beamerclosesubstitutedenvironement",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "beamerclosesubstitutedenvironement{${1:envname}}"
-      }
-    },
-    {
-      "name": "includeonlyframes",
-      "arg": {
-        "format": "{}",
-        "snippet": "includeonlyframes{${1:frame label list}}"
-      }
-    },
-    {
-      "name": "theframenumber",
-      "unusual": true
-    },
-    {
-      "name": "insertframenumber",
-      "unusual": true
-    },
-    {
-      "name": "insertslidenumber",
-      "unusual": true
-    },
-    {
-      "name": "insertoverlaynumber",
-      "unusual": true
-    },
-    {
-      "name": "pagebreak<overlay specifications>"
-    },
-    {
-      "name": "nopagebreak<overlay specifications>"
-    },
-    {
-      "name": "framebreak"
-    },
-    {
-      "name": "noframebreak"
-    },
-    {
-      "name": "againframe",
-      "arg": {
-        "format": "{}",
-        "snippet": "againframe{${1:name}}"
-      }
-    },
-    {
-      "name": "againframe<overlay specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "againframe<overlay specification>{${1:name}}"
-      }
-    },
-    {
-      "name": "againframe<overlay specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "againframe<overlay specification>[${2:options}]{${1:name}}"
-      }
-    },
-    {
-      "name": "againframe",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "againframe[${2:options}]{${1:name}}"
-      }
-    },
-    {
-      "name": "againframe",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "againframe[${2:<default overlay specification>}][${3:options}]{${1:name}}"
-      }
-    },
-    {
-      "name": "againframe<overlay specification>",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "againframe<overlay specification>[${2:<default overlay specification>}][${3:options}]{${1:name}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "frame"
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "<>",
-        "snippet": "<${1:overlay specification}>"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "<>[]",
-        "snippet": "<${2:overlay specification}>[${1:<default overlay specification>}]"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "<>[][]",
-        "snippet": "<${3:overlay specification}>[${1:<default overlay specification>}][${2:options}]"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "<>[][]{}",
-        "snippet": "<${4:overlay specification}>[${2:<default overlay specification>}][${3:options}]{${1:title}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "<>[][]{}{}",
-        "snippet": "<${5:overlay specification}>[${3:<default overlay specification>}][${4:options}]{${1:title}}{${2:subtitle}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:<default overlay specification>}]"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[][]",
-        "snippet": "[${1:<default overlay specification>}][${2:options}]"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "[${2:<default overlay specification>}][${3:options}]{${1:title}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[][]{}{}",
-        "snippet": "[${3:<default overlay specification>}][${4:options}]{${1:title}}{${2:subtitle}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:options}]"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:options}]{${1:title}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "[${3:options}]{${1:title}}{${2:subtitle}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:title}}"
-      }
-    }
-  ],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"againframe","arg":{"format":"<>[][]{}","snippet":"againframe<${1:overlay specification}>[${2:default overlay specification}][${3:options}]{${4:name}}"},"doc":"Resumes a frame that was previously created using \\frame with the option label=⟨name⟩."},
+		{"name":"againframe","arg":{"format":"<>{}","snippet":"againframe<${1:overlay specification}>{${2:name}}"},"doc":"Resumes a frame that was previously created using \\frame with the option label=⟨name⟩."},
+		{"name":"beamerclosesubstitutedenvironement","arg":{"format":"{}","snippet":"beamerclosesubstitutedenvironement{${1}}"},"unusual":true},
+		{"name":"framebreak","doc":"The command \\framebreak is a shorthand for \\pagebreak<presentation> and \\noframebreak is a shorthand for \\nopagebreak<presentation>."},
+		{"name":"framelatex","arg":{"format":"{}","snippet":"framelatex{${1}}"},"unusual":true},
+		{"name":"framewidth","unusual":true},
+		{"name":"includeonlyframes","arg":{"format":"{}","snippet":"includeonlyframes{${1}}"},"doc":"This command behaves a little bit like the \\includeonly command: Only the frames mentioned in the list are included."},
+		{"name":"insertframenumber"},
+		{"name":"insertoverlaynumber"},
+		{"name":"insertslidenumber"},
+		{"name":"noframebreak","doc":"The command \\framebreak is a shorthand for \\pagebreak<presentation> and \\noframebreak is a shorthand for \\nopagebreak<presentation>."},
+		{"name":"nopagebreak","arg":{"format":"<>[]","snippet":"nopagebreak<${1:overlay specification}>[${2:priority}]"}},
+		{"name":"nopagebreak","arg":{"format":"<>","snippet":"nopagebreak<${1:overlay specification}>"}},
+		{"name":"pagebreak","arg":{"format":"<>[]","snippet":"pagebreak<${1:overlay specification}>[${2:priority}]"}},
+		{"name":"pagebreak","arg":{"format":"<>","snippet":"pagebreak<${1:overlay specification}>"}},
+		{"name":"resetcounteronoverlays","arg":{"format":"{}","snippet":"resetcounteronoverlays{${1}}"},"doc":"After you have invoked this command, the value of the specified counter will be the same on all slides of every frame."},
+		{"name":"resetcountonoverlays","arg":{"format":"{}","snippet":"resetcountonoverlays{${1}}"}},
+		{"name":"thesubsectionslide","unusual":true}
+	],
+	"envs": [
+		{"name":"frame","arg":{"format":"<>[][]{}{}","snippet":"<${1:overlay specification}>[${2:default overlay specification}][${3:options}]{${4:title}}{${5:subtitle}}"}},
+		{"name":"frame","arg":{"format":"<>{}{}","snippet":"<${1:overlay specification}>{${2:title}}{${3:subtitle}}"}}
+	],
+	"keys": {}
 }

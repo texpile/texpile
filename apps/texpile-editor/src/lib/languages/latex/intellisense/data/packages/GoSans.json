@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"gobold"},
+		{"name":"golgr","doc":"Commands \\golgr and \\gomonolgr allow for localized use of LGR-encoded type1 fonts."},
+		{"name":"gomedium"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-thepage"},{"name":"zref-abspage"}],
+	"macros": [
+		{"name":"zlistpagelayout","doc":"At the end of document the page layout parameter for each page are printed into the .log file if macro \\zlistpagelayout is called before \\end{document} (preamble is a good place)."}
+	],
+	"envs": [],
+	"keys": {}
+}

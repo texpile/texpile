@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyhdr"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"helvet","if":"11pt|12pt"}],
+	"macros": [
+		{"name":"piname","arg":{"format":"{}","snippet":"piname{${1:principal investigator name}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/nih#c": ["11pt","12pt","kk","nihblank"]
+	},
+	"args": ["\\documentclass/nih#c"]
+}

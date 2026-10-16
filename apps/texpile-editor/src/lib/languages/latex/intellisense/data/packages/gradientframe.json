@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"color"},{"name":"keyval"}],
+	"macros": [
+		{"name":"gradientframe","arg":{"format":"[]{}","snippet":"gradientframe[${1:options}]{${2:object}}","keys":["keyval:gradientframe"],"keyPos":0},"doc":"This command draws the grayscale gradient frame around objects."},
+		{"name":"gradientframe","arg":{"format":"{}","snippet":"gradientframe{${1:object}}"},"doc":"This command draws the grayscale gradient frame around objects."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:gradientframe": ["linewidth=","padding="]
+	}
+}

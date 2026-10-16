@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xstring"},{"name":"filemod"},{"name":"filemod-expmin"},{"name":"letltxmacro"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfmath"},{"name":"ifplatform"},{"name":"shellesc"},{"name":"iftex"},{"name":"catchfile"}],
+	"macros": [
+		{"name":"includegraphics","arg":{"format":"[]{}","snippet":"includegraphics[${1:options}]{${2:file}}","keys":["pgfkeys:/graphicscache"],"keyPos":0}},
+		{"name":"includegraphics","arg":{"format":"{}","snippet":"includegraphics{${1:file}}"}},
+		{"name":"includegraphicscache","arg":{"format":"[]{}{}","snippet":"includegraphicscache[${1:graphicx options}]{${2:graphicscache options}}{${3:file}}","keys":["pgfkeys:/graphicscache"],"keyPos":1}},
+		{"name":"includegraphicscache","arg":{"format":"{}{}","snippet":"includegraphicscache{${1:graphicscache options}}{${2:file}}","keys":["pgfkeys:/graphicscache"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/graphicscache": ["angle=","cachedir=","dpi=","frame=","height=","origin=","page=","qfactor=","raise=","scale=","trim=","valign=","width=","clip","compress=${1|false,flat,jpeg|}","keepaspectratio","listing=${1|false,true|}","render=${1|false,true|}"],
+		"\\usepackage/graphicscache#c": ["angle=","cachedir=","clip","compress=${1|false,flat,jpeg|}","dpi=","frame=","height=","keepaspectratio","listing=${1|false,true|}","origin=","page=","qfactor=","raise=","render=${1|false,true|}","scale=","trim=","valign=","width="]
+	},
+	"args": ["\\usepackage/graphicscache#c"]
+}

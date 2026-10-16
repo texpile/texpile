@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pkginfograb"}],
+	"macros": [
+		{"name":"location","arg":{"format":"{}{}","snippet":"location{${1}}{${2}}"}},
+		{"name":"MakeCoverPages","arg":{"format":"{}","snippet":"MakeCoverPages{${1}}"}},
+		{"name":"reportclass","arg":{"format":"{}{}","snippet":"reportclass{${1}}{${2}}"},"unusual":true},
+		{"name":"reportdescription","arg":{"format":"{}","snippet":"reportdescription{${1}}"},"unusual":true},
+		{"name":"SetCoverFields","arg":{"format":"{}{}{}","snippet":"SetCoverFields{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

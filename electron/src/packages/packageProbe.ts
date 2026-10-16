@@ -3,7 +3,7 @@
 import { spawn } from 'node:child_process';
 import * as fs from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { luaDir } from '../appIdentity';
 import { killTree } from '../shell/killTree';
 import { kpsewhich } from '../shell/kpsewhich';
@@ -12,7 +12,7 @@ import { onToolPathChange } from '../shell/toolDirs';
 import { cachedProbe, storeProbe } from './probeCache';
 
 /** spec: m/o tokens for a plain macro, or "X <xparse spec>" for a \NewDocumentCommand; own: defined while the package
- * itself loaded and named in its .sty, so not a command of a package it loads; redefined: it existed before */
+ * itself loaded and named in its own files, so not a command of a package it loads; redefined: it existed before */
 export type ProbedCommand = { name: string; spec: string; own?: boolean; redefined?: boolean };
 export type PackageProbe = { commands: ProbedCommand[] };
 
@@ -102,17 +102,35 @@ async function run(sty: string, name: string, options: string, classOptions: str
 		const text = await fs.promises.readFile(join(dir, 'probe.probe'), 'utf8').catch(() => null);
 		if (text === null) return null;
 		const probe = parseProbe(text);
-		const size = await fs.promises.stat(sty).then(
-			(st) => st.size,
-			() => Infinity
-		);
-		const source = size <= MAX_STY_BYTES ? await fs.promises.readFile(sty, 'latin1').catch(() => '') : '';
-		// TikZ reads its libraries with a plain \input that LaTeX's file hooks never see, so the name must occur in the .sty too
-		for (const c of probe.commands) c.own = !!c.own && source.includes(c.name);
+		// TikZ and babel read files with a plain \input that LaTeX's file hooks never see, so the name must be a word of the package's own files too
+		const words = new Set((await ownSource(sty, name)).match(/[A-Za-z]+/g));
+		// \newif\iffoo names \footrue and \foofalse only as it runs
+		function named(n: string): boolean {
+			return words.has(n) || words.has(`if${n.replace(/(?:true|false)$/, '')}`);
+		}
+		for (const c of probe.commands) c.own = !!c.own && named(c.name);
 		return probe;
 	} finally {
 		void fs.promises.rm(dir, { recursive: true, force: true }).catch(() => {});
 	}
+}
+
+// the .sty and the files beside it named like it (soul.sty loads soul-ori.sty), which the probe counts as the package's own
+async function ownSource(sty: string, name: string): Promise<string> {
+	const dir = dirname(sty);
+	const siblings = await fs.promises.readdir(dir).catch((): string[] => []);
+	let text = '';
+	// a dated file is an old release (\DeclareRelease), not part of this one
+	const own = siblings.filter((f) => f !== basename(sty) && f.startsWith(name) && !/-\d{4}-\d{2}-\d{2}\./.test(f));
+	for (const file of [basename(sty), ...own]) {
+		const size = await fs.promises.stat(join(dir, file)).then(
+			(st) => (st.isFile() ? st.size : Infinity),
+			() => Infinity
+		);
+		if (text.length + size > MAX_STY_BYTES) continue;
+		text += await fs.promises.readFile(join(dir, file), 'latin1').catch(() => '');
+	}
+	return text;
 }
 
 export async function probePackage(name: string, options = '', classOptions = ''): Promise<PackageProbe | null> {

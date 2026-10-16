@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"ShowCharInBox","arg":{"format":"{}","snippet":"ShowCharInBox{${1}}"},"doc":"This will show ⟨charcter⟩ inside a box showing its height, depth, and width information."}
+	],
+	"envs": [],
+	"keys": {}
+}

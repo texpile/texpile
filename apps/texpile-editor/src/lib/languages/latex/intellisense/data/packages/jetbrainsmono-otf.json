@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"jetbrainscode"},
+		{"name":"jetbrainscodeextralight"},
+		{"name":"jetbrainscodelight"},
+		{"name":"jetbrainscodemedium"},
+		{"name":"jetbrainscodethin"},
+		{"name":"jetbrainsmono"},
+		{"name":"jetbrainsmonoextralight"},
+		{"name":"jetbrainsmonolight"},
+		{"name":"jetbrainsmonomedium"},
+		{"name":"jetbrainsmonothin"}
+	],
+	"envs": [],
+	"keys": {}
+}

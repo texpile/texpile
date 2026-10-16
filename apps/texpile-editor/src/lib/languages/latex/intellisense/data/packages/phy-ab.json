@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"aab","arg":{"format":"[]{}","snippet":"aab[${1:size}]{${2:subformula}}"}},
+		{"name":"aab","arg":{"format":"{}","snippet":"aab{${1:subformula}}"}},
+		{"name":"aab*","arg":{"format":"[]{}","snippet":"aab*[${1:size}]{${2:subformula}}"}},
+		{"name":"aab*","arg":{"format":"{}","snippet":"aab*{${1:subformula}}"}},
+		{"name":"ab","doc":"The \\ab command, as a shorthand of “automatic braces”, would specify the size of the following pair of delimiters."},
+		{"name":"bab","arg":{"format":"[]{}","snippet":"bab[${1:size}]{${2:subformula}}"}},
+		{"name":"bab","arg":{"format":"{}","snippet":"bab{${1:subformula}}"}},
+		{"name":"bab*","arg":{"format":"[]{}","snippet":"bab*[${1:size}]{${2:subformula}}"}},
+		{"name":"bab*","arg":{"format":"{}","snippet":"bab*{${1:subformula}}"}},
+		{"name":"Bab","arg":{"format":"[]{}","snippet":"Bab[${1:size}]{${2:subformula}}"}},
+		{"name":"Bab","arg":{"format":"{}","snippet":"Bab{${1:subformula}}"}},
+		{"name":"Bab*","arg":{"format":"[]{}","snippet":"Bab*[${1:size}]{${2:subformula}}"}},
+		{"name":"Bab*","arg":{"format":"{}","snippet":"Bab*{${1:subformula}}"}},
+		{"name":"pab","arg":{"format":"[]{}","snippet":"pab[${1:size}]{${2:subformula}}"}},
+		{"name":"pab","arg":{"format":"{}","snippet":"pab{${1:subformula}}"}},
+		{"name":"pab*","arg":{"format":"[]{}","snippet":"pab*[${1:size}]{${2:subformula}}"}},
+		{"name":"pab*","arg":{"format":"{}","snippet":"pab*{${1:subformula}}"}},
+		{"name":"vab","arg":{"format":"[]{}","snippet":"vab[${1:size}]{${2:subformula}}"}},
+		{"name":"vab","arg":{"format":"{}","snippet":"vab{${1:subformula}}"}},
+		{"name":"vab*","arg":{"format":"[]{}","snippet":"vab*[${1:size}]{${2:subformula}}"}},
+		{"name":"vab*","arg":{"format":"{}","snippet":"vab*{${1:subformula}}"}},
+		{"name":"Vab","arg":{"format":"[]{}","snippet":"Vab[${1:size}]{${2:subformula}}"}},
+		{"name":"Vab","arg":{"format":"{}","snippet":"Vab{${1:subformula}}"}},
+		{"name":"Vab*","arg":{"format":"[]{}","snippet":"Vab*[${1:size}]{${2:subformula}}"}},
+		{"name":"Vab*","arg":{"format":"{}","snippet":"Vab*{${1:subformula}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

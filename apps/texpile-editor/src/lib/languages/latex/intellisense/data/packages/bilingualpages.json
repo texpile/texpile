@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"paracol"}],
+	"macros": [
+		{"name":"leftpage"},
+		{"name":"rightpage"}
+	],
+	"envs": [
+		{"name":"bilingualpages"}
+	],
+	"keys": {}
+}

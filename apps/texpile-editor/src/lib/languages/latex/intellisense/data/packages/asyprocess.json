@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"ifplatform"},{"name":"shellesc"},{"name":"pdftexcmds"},{"name":"ifluatex"},{"name":"color"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"preview"},{"name":"luatex85"}],
+	"macros": [
+		{"name":"ProcessAsy"},
+		{"name":"ShowAsy"}
+	],
+	"envs": [],
+	"keys": {}
+}

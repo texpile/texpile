@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"pgfmath"},{"name":"pgfrcs"},{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"pgfmxfpDate","unusual":true},
+		{"name":"pgfmxfpdeclarefunction","arg":{"format":"{}{}[]{}","snippet":"pgfmxfpdeclarefunction{${1}}{${2}}[${3}]{${4}}"}},
+		{"name":"pgfmxfpdeclarefunction","arg":{"format":"{}{}{}","snippet":"pgfmxfpdeclarefunction{${1}}{${2}}{${3}}"}},
+		{"name":"pgfmxfpVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

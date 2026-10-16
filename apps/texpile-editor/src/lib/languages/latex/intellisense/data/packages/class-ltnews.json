@@ -1,0 +1,48 @@
+{
+	"deps": [{"name":"class-article"},{"name":"url"},{"name":"hyperref","engines":["pdflatex","lualatex"]},{"name":"iftex","engines":["pdflatex","lualatex"]},{"name":"keyval","engines":["pdflatex","lualatex"]},{"name":"kvsetkeys","engines":["pdflatex","lualatex"]},{"name":"pdfescape","engines":["pdflatex","lualatex"]},{"name":"pdftexcmds","engines":["pdflatex","lualatex"]},{"name":"nameref","engines":["pdflatex","lualatex"]},{"name":"refcount","engines":["pdflatex","lualatex"]},{"name":"gettitlestring","engines":["pdflatex","lualatex"]},{"name":"kvoptions","engines":["pdflatex","lualatex"]},{"name":"etoolbox","engines":["pdflatex","lualatex"]},{"name":"stringenc","engines":["pdflatex","lualatex"]},{"name":"intcalc","engines":["pdflatex","lualatex"]},{"name":"bitset","engines":["pdflatex","lualatex"]},{"name":"bigintcalc","engines":["pdflatex","lualatex"]},{"name":"rerunfilecheck","engines":["pdflatex","lualatex"]},{"name":"uniquecounter","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"AmS","unusual":true},
+		{"name":"AmSLaTeX"},
+		{"name":"AW"},
+		{"name":"babel"},
+		{"name":"class","arg":{"format":"{}","snippet":"class{${1:class name}}"}},
+		{"name":"cmssLaTeX","unusual":true},
+		{"name":"cmssTeX","unusual":true},
+		{"name":"cs","arg":{"format":"{}","snippet":"cs{${1:command name}}"}},
+		{"name":"ctan"},
+		{"name":"ctanhttp"},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:address}}"}},
+		{"name":"eTeX"},
+		{"name":"file","arg":{"format":"{}","snippet":"file{${1:file name}}"}},
+		{"name":"indicia","arg":{"format":"{}","snippet":"indicia{${1:footer text}}"}},
+		{"name":"issuename","unusual":true},
+		{"name":"LaTeXNews"},
+		{"name":"ltnewssectformat","unusual":true},
+		{"name":"NFSS"},
+		{"name":"package","arg":{"format":"{}","snippet":"package{${1:package name}}"}},
+		{"name":"phvLaTeX","unusual":true},
+		{"name":"phvTeX","unusual":true},
+		{"name":"pkg","arg":{"format":"{}","snippet":"pkg{${1:package name}}"}},
+		{"name":"pplLaTeX","unusual":true},
+		{"name":"pplTeX","unusual":true},
+		{"name":"PSNFSS"},
+		{"name":"publicationdate","unusual":true},
+		{"name":"publicationday","arg":{"format":"{}","snippet":"publicationday{${1:day}}"}},
+		{"name":"publicationissue","arg":{"format":"{}","snippet":"publicationissue{${1:issue number}}"}},
+		{"name":"publicationmonth","arg":{"format":"{}","snippet":"publicationmonth{${1:month}}"}},
+		{"name":"publicationyear","arg":{"format":"{}","snippet":"publicationyear{${1:year}}"}},
+		{"name":"putLaTeX","unusual":true},
+		{"name":"putTeX","unusual":true},
+		{"name":"raisefirstsection"},
+		{"name":"SLiTeX"},
+		{"name":"ugqLaTeX","unusual":true},
+		{"name":"ugqTeX","unusual":true}
+	],
+	"envs": [
+		{"name":"citations"}
+	],
+	"keys": {
+		"\\documentclass/ltnews#c": ["a4paper","a5paper","b5paper","executivepaper","landscape","legalpaper","letterpaper","lw35fonts","onecolumn","titlepage","twoside","type1fonts"]
+	},
+	"args": ["\\documentclass/ltnews#c"]
+}

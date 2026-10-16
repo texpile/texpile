@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"gridbase"},
+		{"name":"gridinterval"},
+		{"name":"savepos","arg":{"format":"{}","snippet":"savepos{${1:unique name}}"},"unusual":true},
+		{"name":"SavePos","arg":{"format":"{}","snippet":"SavePos{${1:unique name}}"}},
+		{"name":"thegridinfo","arg":{"format":"{}","snippet":"thegridinfo{${1:name}}"}},
+		{"name":"theposinfo","arg":{"format":"{}","snippet":"theposinfo{${1:name}}"}},
+		{"name":"theypos","arg":{"format":"{}","snippet":"theypos{${1:name}}"}},
+		{"name":"vskipnextgrid"}
+	],
+	"envs": [],
+	"keys": {}
+}

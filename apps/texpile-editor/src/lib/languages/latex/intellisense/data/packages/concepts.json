@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"etextools"},{"name":"etex"},{"name":"etoolbox"},{"name":"letltxmacro"},{"name":"nth"},{"name":"xspace"},{"name":"xparse"},{"name":"ltxkeys"},{"name":"catoptions"},{"name":"xstring"},{"name":"iftex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"ConceptName","arg":{"format":"{}","snippet":"ConceptName{${1:concept key}}"}},
+		{"name":"ConceptName*","arg":{"format":"{}","snippet":"ConceptName*{${1:concept key}}"}},
+		{"name":"ConceptNameAndSymbols","arg":{"format":"{}[][]{}","snippet":"ConceptNameAndSymbols{${1:concept key}}[${2:separator}][${3:last separator}]{${4:symbol indices}}"}},
+		{"name":"ConceptNameAndSymbols","arg":{"format":"{}{}","snippet":"ConceptNameAndSymbols{${1:concept key}}{${2:symbol indices}}"}},
+		{"name":"ConceptOption","arg":{"format":"{}{}","snippet":"ConceptOption{${1:concept key}}{${2:option key}}"}},
+		{"name":"ConceptSymbol","arg":{"format":"{}[]","snippet":"ConceptSymbol{${1:concept key}}[${2:symbol index}]"},"doc":"This command typesets a specific symbol associated with a a given concept."},
+		{"name":"ConceptSymbol","arg":{"format":"{}","snippet":"ConceptSymbol{${1:concept key}}"},"doc":"This command typesets a specific symbol associated with a a given concept."},
+		{"name":"ConceptSymbols","arg":{"format":"{}[][]{}","snippet":"ConceptSymbols{${1:concept key}}[${2:separator}][${3:last separator}]{${4:symbol indices}}"}},
+		{"name":"ConceptSymbols","arg":{"format":"{}{}","snippet":"ConceptSymbols{${1:concept key}}{${2:symbol indices}}"}},
+		{"name":"NewConcept","arg":{"format":"{}{}","snippet":"NewConcept{${1:concept key}}{${2:options}}"},"doc":"Every concept first has to be declared using the \\NewConcept macro."}
+	],
+	"envs": [],
+	"keys": {}
+}

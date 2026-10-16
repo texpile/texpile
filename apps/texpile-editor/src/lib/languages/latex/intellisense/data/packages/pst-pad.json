@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"PstFlattenedSphere","arg":{"format":"[]()","snippet":"PstFlattenedSphere[${1}](${2})"}},
+		{"name":"PstFlattenedSphere","arg":{"format":"()","snippet":"PstFlattenedSphere(${1})"}},
+		{"name":"PstFluid","arg":{"format":"[]()","snippet":"PstFluid[${1}](${2})"}},
+		{"name":"PstFluid","arg":{"format":"()","snippet":"PstFluid(${1})"}},
+		{"name":"PstPad","arg":{"format":"[]()","snippet":"PstPad[${1}](${2})"}},
+		{"name":"PstPad","arg":{"format":"()","snippet":"PstPad(${1})"}},
+		{"name":"PstSphere","arg":{"format":"[]()","snippet":"PstSphere[${1}](${2})"}},
+		{"name":"PstSphere","arg":{"format":"()","snippet":"PstSphere(${1})"}},
+		{"name":"PstSphereToWall","arg":{"format":"[]()","snippet":"PstSphereToWall[${1}](${2})"}},
+		{"name":"PstSphereToWall","arg":{"format":"()","snippet":"PstSphereToWall(${1})"}},
+		{"name":"PstWall","arg":{"format":"[]()","snippet":"PstWall[${1}](${2})"}},
+		{"name":"PstWall","arg":{"format":"()","snippet":"PstWall(${1})"}},
+		{"name":"PstWallToWall","arg":{"format":"[]()","snippet":"PstWallToWall[${1}](${2})"}},
+		{"name":"PstWallToWall","arg":{"format":"()","snippet":"PstWallToWall(${1})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

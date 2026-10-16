@@ -1,0 +1,28 @@
+{
+	"macros": [
+		{"name":"SBabovesepwidth","doc":"Width of lines for the “rules” style."},
+		{"name":"SBalias","arg":{"format":"{}","snippet":"SBalias{${1:alias}}"}},
+		{"name":"SBbelowsepwidth","doc":"Width of lines for the “rules” style."},
+		{"name":"SBcomment","arg":{"format":"{}","snippet":"SBcomment{${1:comment}}"},"doc":"Command \\SBcomment allows you to put a comment at the beginning of each category."},
+		{"name":"SBentries","arg":{"format":"[]{}","snippet":"SBentries[${1:alias}]{${2:entry keys}}"},"doc":"Within a category, command \\SBentries defines the entries that should appear in that category."},
+		{"name":"SBentries","arg":{"format":"{}","snippet":"SBentries{${1:entry keys}}"},"doc":"Within a category, command \\SBentries defines the entries that should appear in that category."},
+		{"name":"SBlongestlabel"},
+		{"name":"SBmiscprefix"},
+		{"name":"SBmisctitle"},
+		{"name":"SBsubtitle","arg":{"format":"{}{}","snippet":"SBsubtitle{${1}}{${2}}"}},
+		{"name":"SBsubtitlefont","arg":{"format":"{}","snippet":"SBsubtitlefont{${1}}"}},
+		{"name":"SBsubtitlestyle","arg":{"format":"{}","snippet":"SBsubtitlestyle{${1:style}}"}},
+		{"name":"SBtitle","arg":{"format":"{}","snippet":"SBtitle{${1}}"}},
+		{"name":"SBtitlefont","arg":{"format":"{}","snippet":"SBtitlefont{${1}}"}},
+		{"name":"SBtitlestyle","arg":{"format":"{}","snippet":"SBtitlestyle{${1:style}}"}},
+		{"name":"theSBresetdepth","unusual":true}
+	],
+	"envs": [
+		{"name":"category","arg":{"format":"[]{}","snippet":"[${1:label prefix}]{${2:title}}"},"doc":"Defining categories is achieved with a category environment. The argument of this environment defines the title of that new category."},
+		{"name":"category","arg":{"format":"{}","snippet":"{${1:title}}"},"doc":"Defining categories is achieved with a category environment. The argument of this environment defines the title of that new category."}
+	],
+	"keys": {
+		"\\usepackage/splitbib#c": ["export","keeporder","newchap","newsec","noexport","nonewchap","nonewsec","nonstrict","reorder","strict"]
+	},
+	"args": ["\\usepackage/splitbib#c"]
+}

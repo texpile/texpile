@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-3dplot"},{"name":"pst-3d"},{"name":"pst-plot"},{"name":"pst-xkey"},{"name":"multido"},{"name":"pst-node"}],
+	"macros": [
+		{"name":"psdiffractionCircular","arg":{"format":"[]","snippet":"psdiffractionCircular[${1}]"}},
+		{"name":"psdiffractionCircular"},
+		{"name":"psdiffractionRectangle","arg":{"format":"[]","snippet":"psdiffractionRectangle[${1}]"}},
+		{"name":"psdiffractionRectangle"},
+		{"name":"psdiffractionTriangle","arg":{"format":"[]","snippet":"psdiffractionTriangle[${1}]"}},
+		{"name":"psdiffractionTriangle"}
+	],
+	"envs": [],
+	"keys": {}
+}

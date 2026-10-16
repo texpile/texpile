@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xstring"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"addenergyscale","arg":{"format":"{}","snippet":"addenergyscale{${1}}"},"unusual":true},
+		{"name":"addEnergyScale","arg":{"format":"{}","snippet":"addEnergyScale{${1:offset}}"}},
+		{"name":"addlabel","arg":{"format":"{}{}","snippet":"addlabel{${1}}{${2}}"},"unusual":true},
+		{"name":"addLabel","arg":{"format":"{}{}","snippet":"addLabel{${1:text}}{${2:offset}}"}},
+		{"name":"addOrbital","arg":{"format":"{}","snippet":"addOrbital{${1:attributes}}"}},
+		{"name":"columndistance"},
+		{"name":"connectorbital","arg":{"format":"{}{}{}{}{}","snippet":"connectorbital{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"degenerate","arg":{"format":"{}{}{}","snippet":"degenerate{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"diagrammode"},
+		{"name":"electroncolor"},
+		{"name":"fragment","arg":{"format":"{}","snippet":"fragment{${1:code}}"},"doc":"The \\fragment command builds a new column into your diagram."},
+		{"name":"nondegenerate","arg":{"format":"{}{}{}{}","snippet":"nondegenerate{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"orbital","arg":{"format":"{}{}{}{}","snippet":"orbital{${1:x}}{${2:y}}{${3:label}}{${4:spin}}"}},
+		{"name":"overlapp","arg":{"format":"{}{}{}","snippet":"overlapp{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"showEnergyDifference","arg":{"format":"{}{}{}","snippet":"showEnergyDifference{${1:energy1, energy2}}{${2:offset}}{${3:text}}"}},
+		{"name":"tripledegenerate","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"tripledegenerate{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"},"unusual":true},
+		{"name":"twicedegenerate","arg":{"format":"{}{}{}{}{}{}","snippet":"twicedegenerate{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"mohelper","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"mohelper"}
+	],
+	"keys": {}
+}

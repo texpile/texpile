@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"mathbfrak","arg":{"format":"{}","snippet":"mathbfrak{${1:text}}"}},
+		{"name":"mathfrak","arg":{"format":"{}","snippet":"mathfrak{${1:text}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

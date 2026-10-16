@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"gettitlestring"},{"name":"enumitem"},{"name":"zref"},{"name":"zref-base"},{"name":"iftex"},{"name":"auxhook"},{"name":"zref-user"},{"name":"engrec","if":"greek","engines":["pdflatex","xelatex"]},{"name":"amstext","if":"greek","engines":["pdflatex","xelatex"]},{"name":"alphalph","if":"greek|greekctr","engines":["pdflatex","xelatex"]},{"name":"intcalc","if":"greek|greekctr","engines":["pdflatex","xelatex"]},{"name":"greekctr","if":"greekctr","engines":["pdflatex","xelatex"]}],
+	"macros": [
+		{"name":"refitem","arg":{"format":"{}[]","snippet":"refitem{${1:reference}}[${2:properties to display}]"}},
+		{"name":"refitem","arg":{"format":"{}","snippet":"refitem{${1:reference}}"}},
+		{"name":"refitem*","arg":{"format":"{}[]","snippet":"refitem*{${1:reference}}[${2:properties to display}]"}},
+		{"name":"refitem*","arg":{"format":"{}","snippet":"refitem*{${1:reference}}"}},
+		{"name":"zeninfo","arg":{"format":"[]","snippet":"zeninfo[${1}]"}},
+		{"name":"zeninfo"}
+	],
+	"envs": [],
+	"keys": {}
+}

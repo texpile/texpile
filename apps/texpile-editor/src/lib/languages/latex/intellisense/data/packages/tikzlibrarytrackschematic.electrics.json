@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"distantpantographdown","arg":{"format":"[]()()","snippet":"distantpantographdown[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"distantpantographdown","arg":{"format":"()()","snippet":"distantpantographdown(${1:coordinate})(${2:label})"}},
+		{"name":"distantpoweroff","arg":{"format":"[]()()","snippet":"distantpoweroff[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"distantpoweroff","arg":{"format":"()()","snippet":"distantpoweroff(${1:coordinate})(${2:label})"}},
+		{"name":"pantographdown","arg":{"format":"[]()()","snippet":"pantographdown[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"pantographdown","arg":{"format":"()()","snippet":"pantographdown(${1:coordinate})(${2:label})"}},
+		{"name":"pantographup","arg":{"format":"[]()()","snippet":"pantographup[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"pantographup","arg":{"format":"()()","snippet":"pantographup(${1:coordinate})(${2:label})"}},
+		{"name":"poweroff","arg":{"format":"[]()()","snippet":"poweroff[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"poweroff","arg":{"format":"()()","snippet":"poweroff(${1:coordinate})(${2:label})"}},
+		{"name":"poweron","arg":{"format":"[]()()","snippet":"poweron[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"poweron","arg":{"format":"()()","snippet":"poweron(${1:coordinate})(${2:label})"}},
+		{"name":"wirelimit","arg":{"format":"[]()()","snippet":"wirelimit[${1:options}](${2:coordinate})(${3:label})"}},
+		{"name":"wirelimit","arg":{"format":"()()","snippet":"wirelimit(${1:coordinate})(${2:label})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

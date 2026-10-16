@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"fiverm","unusual":true},
+		{"name":"Linethickness","arg":{"format":"{}","snippet":"Linethickness{${1}}"}},
+		{"name":"mathsPIC"},
+		{"name":"MathsPIC"},
+		{"name":"mathsPICp"},
+		{"name":"MathsPICp"},
+		{"name":"mathsPICperl"},
+		{"name":"MathsPICperl"}
+	],
+	"envs": [],
+	"keys": {}
+}

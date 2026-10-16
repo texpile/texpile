@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"xtemplate"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

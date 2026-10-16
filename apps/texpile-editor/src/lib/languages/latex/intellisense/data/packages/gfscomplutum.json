@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"taualt"},
+		{"name":"textcomplutum","arg":{"format":"{}","snippet":"textcomplutum{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"complutum"}
+	],
+	"keys": {
+		"\\usepackage/gfscomplutum#c": ["default"]
+	},
+	"args": ["\\usepackage/gfscomplutum#c"]
+}

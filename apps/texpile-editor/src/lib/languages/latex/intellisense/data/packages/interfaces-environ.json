@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"interfaces-base"},{"name":"etex"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"interfaces-etoolbox"},{"name":"interfaces-pgfkeys"},{"name":"interfaces-tikz"}],
+	"macros": [
+		{"name":"ReNewEnviron","arg":{"format":"{}[][]{}[]","snippet":"ReNewEnviron{${1:name}}[${2:number of args}][${3:default of first arg}]{${4:macro code}}[${5:final code}]"}},
+		{"name":"ReNewEnviron","arg":{"format":"{}{}","snippet":"ReNewEnviron{${1:name}}{${2:macro code}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

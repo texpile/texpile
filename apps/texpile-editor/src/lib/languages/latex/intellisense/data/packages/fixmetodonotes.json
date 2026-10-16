@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"color"},{"name":"transparent"},{"name":"transparent-nometadata"},{"name":"iftex"},{"name":"auxhook","engines":["pdflatex","lualatex"]},{"name":"watermark","if":"!nowatermark"},{"name":"ulem"},{"name":"tocloft"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"CITE","arg":{"format":"{}","snippet":"CITE{${1:text}}"}},
+		{"name":"defnote","arg":{"format":"{}{}{}","snippet":"defnote{${1:name}}{${2:margin or inline}}{${3:marker}}"},"doc":"It is possible to add declare new kinds of notes using the `\\defnote` command."},
+		{"name":"FIXME","arg":{"format":"{}","snippet":"FIXME{${1:text}}"}},
+		{"name":"listnotesname"},
+		{"name":"listofnotes","doc":"The list of notes will be shown like a table of content or a list of figures."},
+		{"name":"TODO","arg":{"format":"{}","snippet":"TODO{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fixmetodonotes#c": ["disabled","enabled","nowatermark","watermark"]
+	},
+	"args": ["\\usepackage/fixmetodonotes#c"]
+}

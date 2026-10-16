@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"genrule"},
+		{"name":"gentuple","arg":{"format":"{}","snippet":"gentuple{${1}}"},"doc":"To generate a tuple, we can use the expandable macro \\gentuple which is intended to be called in the 2nd argument of \\newtuple."},
+		{"name":"newtuple","arg":{"format":"{}{}","snippet":"newtuple{${1:name}}{${2:list of numbers}}"}},
+		{"name":"tpldate","unusual":true},
+		{"name":"tplexe","arg":{"format":"{}","snippet":"tplexe{${1:tuple.method}}"}},
+		{"name":"tplformat","arg":{"format":"{}{}","snippet":"tplformat{${1}}{${2}}"}},
+		{"name":"tplfpcompare","arg":{"format":"{}{}{}{}","snippet":"tplfpcompare{${1:number}}{${2:number}}{${3:if true}}{${4:if false}}"}},
+		{"name":"tplname","unusual":true},
+		{"name":"tplsep"},
+		{"name":"tplsetmode","arg":{"format":"{}","snippet":"tplsetmode{${1:mode}}"}},
+		{"name":"tplversion","unusual":true},
+		{"name":"until"},
+		{"name":"while"}
+	],
+	"envs": [],
+	"keys": {}
+}

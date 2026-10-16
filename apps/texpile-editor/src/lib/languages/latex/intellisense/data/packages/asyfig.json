@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"asyalign"},{"name":"iftex"},{"name":"color"},{"name":"ifplatform"},{"name":"shellesc"},{"name":"catchfile"},{"name":"import"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"suffix"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"asyfig","arg":{"format":"{}","snippet":"asyfig{${1:graphic name}}"},"doc":"This suite of packages provides an alternate method of including standalone Aymptote figures within LaTeX documents via the \\asyfig command."},
+		{"name":"asyfig*","arg":{"format":"{}","snippet":"asyfig*{${1:graphic name}}"},"doc":"This suite of packages provides an alternate method of including standalone Aymptote figures within LaTeX documents via the \\asyfig command."},
+		{"name":"asypath","arg":{"format":"{}","snippet":"asypath{${1:path}}"},"doc":"If all of your .asy files take a common path prefix (such as ./figures/asy/), this can be defined with the \\asypath{⟨path⟩} command."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"macrolist"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"activesuite","arg":{"format":"{}{}","snippet":"activesuite{${1}}{${2}}"}},
+		{"name":"addsymboltotheme","arg":{"format":"{}{}","snippet":"addsymboltotheme{${1}}{${2}}"},"doc":"To add a symbol symbol to theme theme, write \\addsymboltotheme{theme}{symbol}."},
+		{"name":"newsuite","arg":{"format":"{}{}","snippet":"newsuite{${1}}{${2}}"},"doc":"To create a new suite suite based on theme theme, write \\newsuite{theme}{suite}."},
+		{"name":"newsuitetheme","arg":{"format":"{}","snippet":"newsuitetheme{${1}}"},"doc":"To create a new suite theme called theme, write \\newsuitetheme{theme}."},
+		{"name":"printsymbol","arg":{"format":"{}{}","snippet":"printsymbol{${1}}{${2}}"}},
+		{"name":"setsuitesymbol","arg":{"format":"{}{}{}{}","snippet":"setsuitesymbol{${1}}{${2}}{${3}}{${4}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

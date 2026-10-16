@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"dofilebyline","arg":{"format":"{}","snippet":"dofilebyline{${1:file name}}"},"doc":"Expands the macro \\do on each line of a given file."},
+		{"name":"dofilebyline*","arg":{"format":"{}","snippet":"dofilebyline*{${1:file name}}"},"doc":"Expands the macro \\do on each line of a given file."},
+		{"name":"row"}
+	],
+	"envs": [
+		{"name":"parse lines","arg":{"format":"[]{}","snippet":"[${1:initialisation}]{${2:replacement text with #1}}"}},
+		{"name":"parse lines","arg":{"format":"{}","snippet":"{${1:replacement text with #1}}"}}
+	],
+	"keys": {}
+}

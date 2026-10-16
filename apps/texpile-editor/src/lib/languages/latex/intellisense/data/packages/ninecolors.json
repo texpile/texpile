@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"xparse"}],
+	"macros": [
+		{"name":"NineColors","arg":{"format":"{}","snippet":"NineColors{${1}}","keys":["l3keys:ninecolors"],"keyPos":0},"doc":"You can change the saturation of colors by \\NineColors command."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:ninecolors": ["saturation=${1|high,low,medium|}","saturation=${1|low,medium,high|}"]
+	}
+}

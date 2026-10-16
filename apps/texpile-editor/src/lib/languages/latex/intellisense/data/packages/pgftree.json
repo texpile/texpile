@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfsubpic"}],
+	"macros": [
+		{"name":"drawedge"},
+		{"name":"drawnode","arg":{"format":"{}","snippet":"drawnode{${1:node content}}"}},
+		{"name":"leveldirection","unusual":true},
+		{"name":"levelsep"},
+		{"name":"pgfsubtree","arg":{"format":"{}{}","snippet":"pgfsubtree{${1:root}}{${2:subtrees}}"}},
+		{"name":"pgftree","arg":{"format":"{}","snippet":"pgftree{${1:subtree}}"}},
+		{"name":"siblingdirection","unusual":true},
+		{"name":"subtreeof","arg":{"format":"{}","snippet":"subtreeof{${1:node name}}"}},
+		{"name":"subtreesep"}
+	],
+	"envs": [],
+	"keys": {}
+}

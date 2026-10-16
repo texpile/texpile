@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xy"},{"name":"ifpdf"},{"name":"iftex"}],
+	"macros": [
+		{"name":"arrow","arg":{"format":"[]","snippet":"arrow[${1:hops}]"}},
+		{"name":"arrow"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"abs","arg":{"format":"[]{}","snippet":"abs[${1:size}]{${2:subformula}}"}},
+		{"name":"abs","arg":{"format":"{}","snippet":"abs{${1:subformula}}"}},
+		{"name":"abs*","arg":{"format":"[]{}","snippet":"abs*[${1:size}]{${2:subformula}}"}},
+		{"name":"abs*","arg":{"format":"{}","snippet":"abs*{${1:subformula}}"}},
+		{"name":"beval","arg":{"format":"[]{}","snippet":"beval[${1:size}]{${2:subformula}}"}},
+		{"name":"beval","arg":{"format":"{}","snippet":"beval{${1:subformula}}"}},
+		{"name":"beval*","arg":{"format":"[]{}","snippet":"beval*[${1:size}]{${2:subformula}}"}},
+		{"name":"beval*","arg":{"format":"{}","snippet":"beval*{${1:subformula}}"}},
+		{"name":"eval","arg":{"format":"[]{}","snippet":"eval[${1:size}]{${2:subformula}}"}},
+		{"name":"eval","arg":{"format":"{}","snippet":"eval{${1:subformula}}"}},
+		{"name":"eval*","arg":{"format":"[]{}","snippet":"eval*[${1:size}]{${2:subformula}}"}},
+		{"name":"eval*","arg":{"format":"{}","snippet":"eval*{${1:subformula}}"}},
+		{"name":"norm","arg":{"format":"[]{}","snippet":"norm[${1:size}]{${2:subformula}}"}},
+		{"name":"norm","arg":{"format":"{}","snippet":"norm{${1:subformula}}"}},
+		{"name":"norm*","arg":{"format":"[]{}","snippet":"norm*[${1:size}]{${2:subformula}}"}},
+		{"name":"norm*","arg":{"format":"{}","snippet":"norm*{${1:subformula}}"}},
+		{"name":"order","arg":{"format":"[]{}","snippet":"order[${1:size}]{${2:subformula}}"}},
+		{"name":"order","arg":{"format":"{}","snippet":"order{${1:subformula}}"}},
+		{"name":"order*","arg":{"format":"[]{}","snippet":"order*[${1:size}]{${2:subformula}}"}},
+		{"name":"order*","arg":{"format":"{}","snippet":"order*{${1:subformula}}"}},
+		{"name":"peval","arg":{"format":"[]{}","snippet":"peval[${1:size}]{${2:subformula}}"}},
+		{"name":"peval","arg":{"format":"{}","snippet":"peval{${1:subformula}}"}},
+		{"name":"peval*","arg":{"format":"[]{}","snippet":"peval*[${1:size}]{${2:subformula}}"}},
+		{"name":"peval*","arg":{"format":"{}","snippet":"peval*{${1:subformula}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

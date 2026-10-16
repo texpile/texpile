@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"multido"}],
+	"macros": [
+		{"name":"pstwlfiledate","unusual":true},
+		{"name":"pstwlfileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

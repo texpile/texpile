@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"mathbcal","arg":{"format":"{}","snippet":"mathbcal{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

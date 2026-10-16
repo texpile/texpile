@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"NewPangramClass","arg":{"format":"{}{}","snippet":"NewPangramClass{${1}}{${2}}"}},
+		{"name":"pangram","arg":{"format":"[]","snippet":"pangram[${1}]","keys":["l3keys:pangram"],"keyPos":0}},
+		{"name":"pangram"},
+		{"name":"PangramSetup","arg":{"format":"{}","snippet":"PangramSetup{${1}}","keys":["l3keys:pangram"],"keyPos":0},"doc":"Set up the package in preamble."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:pangram": ["after=","before=","font=","sizes=","linegap=","tagfont=","tagskip=","textclass=${1|default,glass,uppercase|}"]
+	}
+}

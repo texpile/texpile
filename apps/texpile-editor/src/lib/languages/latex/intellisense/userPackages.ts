@@ -1,9 +1,11 @@
 // user package files in LaTeX Workshop's JSON: .texpile/packages/<name>.json and the global folder's
 import { notJson, notObject, stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
 import { m } from '$lib/paraglide/messages';
-import type { PackageData, PkgEntry } from './completion/packageData';
+import type { PackageData, PkgEntry } from './packages/packageData';
+import { isEngine } from '$lib/workspace/compileCommand';
 
 const packages = new Map<string, PackageData>();
+let version = 0;
 
 export function userPackage(name: string): PackageData | null {
 	return packages.get(name) ?? null;
@@ -13,7 +15,14 @@ export function userPackageNames(): string[] {
 	return [...packages.keys()];
 }
 
+/** changes whenever the package files do */
+export function userPackagesVersion(): number {
+	return version;
+}
+
 export function setUserPackages(next: Map<string, PackageData>): void {
+	if (JSON.stringify([...next]) === JSON.stringify([...packages])) return;
+	version++;
 	packages.clear();
 	for (const [name, contents] of next) packages.set(name, contents);
 }
@@ -34,7 +43,9 @@ function entryOf(raw: unknown): PkgEntry | null {
 	}
 	if (typeof raw.detail === 'string') entry.detail = raw.detail;
 	if (typeof raw.doc === 'string') entry.doc = raw.doc;
+	if (typeof raw.if === 'string') entry.if = raw.if;
 	if (raw.unusual === true) entry.unusual = true;
+	if (raw.math === true) entry.math = true;
 	return entry;
 }
 
@@ -61,6 +72,17 @@ export function parsePackageFile(text: string): { contents: PackageData | null; 
 			else dropped++;
 		}
 	const contents: PackageData = { macros: list(raw.macros), envs: list(raw.envs), keys };
+	if (Array.isArray(raw.deps))
+		contents.deps = raw.deps
+			.filter((d) => isObject(d) && typeof d.name === 'string')
+			.flatMap((d) => {
+				const { engines } = d;
+				if (engines !== undefined && !(Array.isArray(engines) && engines.length && engines.every(isEngine))) {
+					dropped++;
+					return [];
+				}
+				return [{ name: d.name as string, ...(typeof d.if === 'string' ? { if: d.if } : {}), ...(engines ? { engines } : {}) }];
+			});
 	if (Array.isArray(raw.args) && raw.args.every((a) => typeof a === 'string')) contents.args = raw.args as string[];
 	return { contents, problem: dropped ? m.package_file_entries_dropped({ count: dropped }) : null };
 }
@@ -76,13 +98,7 @@ export function mergePackages(base: PackageData | null, over: PackageData | null
 		macros: merge(base.macros, over.macros),
 		envs: merge(base.envs, over.envs),
 		keys: { ...base.keys, ...over.keys },
-		args: over.args ?? base.args
+		args: over.args ?? base.args,
+		deps: over.deps ?? base.deps
 	};
-}
-
-/** a format such as `[]{}` as the signature `o m`; null for () or <> */
-export function signatureOfFormat(format: string): string | null {
-	const groups = format.match(/\[\]|\{\}|\(\)|<>/g) ?? [];
-	if (groups.join('') !== format.replace(/\s/g, '') || groups.some((g) => g === '()' || g === '<>')) return null;
-	return groups.map((g) => (g === '[]' ? 'o' : 'm')).join(' ');
 }

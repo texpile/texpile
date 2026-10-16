@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"hopatch@AfterPackage","arg":{"format":"{}{}","snippet":"hopatch@AfterPackage{${1:package}}{${2:patch code}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

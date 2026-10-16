@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"simplekv"},{"name":"xstring"},{"name":"setspace"}],
+	"macros": [
+		{"name":"ColGgurvan"},
+		{"name":"EcrireLigneGurvan","arg":{"format":"[]<>{}","snippet":"EcrireLigneGurvan[${1:keys}]<${2:alignment}>{${3:text}}"}},
+		{"name":"EcrireLigneGurvan","arg":{"format":"<>{}","snippet":"EcrireLigneGurvan<${1:alignment}>{${2:text}}"}},
+		{"name":"GurvanCoulBarre","unusual":true},
+		{"name":"GurvanEchelle","unusual":true},
+		{"name":"GurvanElar","unusual":true},
+		{"name":"GurvanFullCoulLgn","unusual":true},
+		{"name":"GurvanFullFondClair","unusual":true},
+		{"name":"GurvanFullFondFonce","unusual":true},
+		{"name":"GurvanFullInter","unusual":true},
+		{"name":"GurvanFullMarges","unusual":true},
+		{"name":"GurvanFullPapier","unusual":true},
+		{"name":"GurvanInterligne","unusual":true},
+		{"name":"GurvanLigne","unusual":true},
+		{"name":"GurvanLigneCouleur","unusual":true},
+		{"name":"GurvanLigneDecalBord","unusual":true},
+		{"name":"GurvanLigneEchelle","unusual":true},
+		{"name":"GurvanNbCar","unusual":true},
+		{"name":"GurvanParBaseline","unusual":true},
+		{"name":"GurvanParCouleur","unusual":true},
+		{"name":"GurvanParDecalBord","unusual":true},
+		{"name":"GurvanParEchelle","unusual":true},
+		{"name":"GurvanParLgn","unusual":true},
+		{"name":"LigneGurvan","arg":{"format":"[]<>(){}","snippet":"LigneGurvan[${1:keys}]<${2:alignment}>(${3:offset}){${4:text}}"}},
+		{"name":"LigneGurvan","arg":{"format":"<>(){}","snippet":"LigneGurvan<${1:alignment}>(${2:offset}){${3:text}}"}},
+		{"name":"PapierGurvan","arg":{"format":"[]<>","snippet":"PapierGurvan[${1:keys}]<${2:colors}>"}},
+		{"name":"PapierGurvan","arg":{"format":"<>","snippet":"PapierGurvan<${1:colors}>"}},
+		{"name":"ParagrapheGurvan","arg":{"format":"[]<>(){}","snippet":"ParagrapheGurvan[${1:keys}]<${2:alignment}>(${3:offset}){${4:text}}"}},
+		{"name":"ParagrapheGurvan","arg":{"format":"<>(){}","snippet":"ParagrapheGurvan<${1:alignment}>(${2:offset}){${3:text}}"}},
+		{"name":"PasseLigneGurvan"},
+		{"name":"thelggurvan","unusual":true}
+	],
+	"envs": [
+		{"name":"EnvGurvan","arg":{"format":"[]<>","snippet":"[${1:keys}]<${2:colors}>"}},
+		{"name":"EnvGurvan","arg":{"format":"<>","snippet":"<${1:colors}>"}},
+		{"name":"PleinePageGurvan","arg":{"format":"[]","snippet":"[${1:keys}]"}},
+		{"name":"PleinePageGurvan"}
+	],
+	"keys": {}
+}

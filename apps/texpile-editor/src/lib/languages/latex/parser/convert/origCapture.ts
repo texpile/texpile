@@ -31,6 +31,9 @@ export function extentOf(n: unknown, floor: number): { min: number; max: number 
 	if (p) {
 		if (typeof p.start?.offset === 'number' && p.start.offset >= floor) min = p.start.offset;
 		if (typeof p.end?.offset === 'number') max = p.end.offset;
+		// a call kept verbatim for its comment holds the groups after it in its span
+		const raw = (n as { _raw?: unknown })._raw;
+		if (typeof raw === 'string' && typeof p.start?.offset === 'number') max = Math.max(max, p.start.offset + raw.length);
 	}
 	for (const kids of [node.content, node.args]) {
 		if (!Array.isArray(kids)) continue;
@@ -88,8 +91,25 @@ function braceDebt(s: string): number {
  * repaired end offset, or null when the source disagrees (caller falls back to printRaw).
  */
 export function repairArgTail(node: Node, src: string, endIn: number): number | null {
-	const args = (node as Macro).args as { openMark: string; closeMark: string; content: Node[] }[] | undefined;
-	if (!args || args.length === 0) return endIn;
+	if (!(node as Macro).args?.length) return endIn;
+	let end = endIn;
+	for (const { mark, nested } of closersAfter(node)) {
+		// lexical whitespace skip; which closers to expect came from the AST args above
+		let at = end;
+		while (at < src.length && /[ \t\r\n]/.test(src[at])) at++;
+		if (src[at] === mark) end = at + 1;
+		else if (!nested) return null;
+	}
+	return end;
+}
+
+type ArgShape = { openMark: string; closeMark: string; content: Node[] };
+
+// the delimiters after a call's last positioned byte: those of a call its last argument ends in (\item[\x] inside
+// {\item[\x]} ends in `]` before the `}`), then its own. A nested call's are there only when the source braced its
+// argument: unified-latex records {} around a bare token argument too (\delta \right] taken as \delta{\right}])
+function closersAfter(node: Node, nested = false): { mark: string; nested: boolean }[] {
+	const args = ((node as Macro).args ?? []) as ArgShape[];
 	let last = -1;
 	for (let k = args.length - 1; k >= 0; k--) {
 		const maxEnd = Math.max(-Infinity, ...args[k].content.map((c) => extentOf(c, 0).max));
@@ -98,20 +118,22 @@ export function repairArgTail(node: Node, src: string, endIn: number): number | 
 			break;
 		}
 	}
-	const expectTail: string[] = [];
-	if (last >= 0 && args[last].closeMark) expectTail.push(args[last].closeMark);
+	const tail: { mark: string; nested: boolean }[] = [];
+	function push(mark: string): void {
+		if (mark) tail.push({ mark, nested });
+	}
+	if (last >= 0) {
+		const content = args[last].content;
+		const inner = content.reduce<Node | null>((best, c) => (best && extentOf(best, 0).max >= extentOf(c, 0).max ? best : c), null);
+		if (inner?.type === 'macro' && (inner as Macro).args?.length && inner === content[content.length - 1])
+			tail.push(...closersAfter(inner, true));
+		push(args[last].closeMark);
+	}
 	for (let k = last + 1; k < args.length; k++) {
-		if (args[k].openMark) expectTail.push(args[k].openMark);
-		if (args[k].closeMark) expectTail.push(args[k].closeMark);
+		push(args[k].openMark);
+		push(args[k].closeMark);
 	}
-	let end = endIn;
-	for (const ch of expectTail) {
-		// lexical whitespace skip; which closers to expect came from the AST args above
-		while (end < src.length && /[ \t\r\n]/.test(src[end])) end++;
-		if (src[end] !== ch) return null;
-		end++;
-	}
-	return end;
+	return tail;
 }
 
 /**

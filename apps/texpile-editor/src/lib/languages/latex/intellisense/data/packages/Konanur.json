@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"konanur","arg":{"format":"{}","snippet":"konanur{${1:initial}}"}},
+		{"name":"Konanurfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

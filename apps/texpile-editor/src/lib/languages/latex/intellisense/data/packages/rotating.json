@@ -1,105 +1,28 @@
 {
-  "deps": [
-    {
-      "name": "graphicx"
-    },
-    {
-      "name": "ifthen"
-    }
-  ],
-  "macros": [
-    {
-      "name": "turnbox",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "turnbox{${1:angle}}{${2:contents}}"
-      }
-    },
-    {
-      "name": "rotFPtop",
-      "unusual": true
-    },
-    {
-      "name": "rotFPbot",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "sidewaystable"
-    },
-    {
-      "name": "sidewaystable*"
-    },
-    {
-      "name": "sidewaysfigure"
-    },
-    {
-      "name": "sidewaysfigure*"
-    },
-    {
-      "name": "sideways"
-    },
-    {
-      "name": "turn",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:angle}}"
-      }
-    },
-    {
-      "name": "rotate",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:angle}}"
-      }
-    }
-  ],
-  "keys": {
-    "\\usepackage/rotating#c": [
-      "clockwise",
-      "counterclockwise",
-      "anticlockwise",
-      "figuresleft",
-      "figuresright",
-      "quiet",
-      "log",
-      "chatter",
-      "unknownkeysallowed",
-      "draft",
-      "final",
-      "hiresbb",
-      "demo",
-      "setpagesize",
-      "nosetpagesize",
-      "dvips",
-      "xdvi",
-      "dvipdf",
-      "dvipdfm",
-      "dvipdfmx",
-      "xetex",
-      "pdftex",
-      "luatex",
-      "dvisvgm",
-      "dvipsone",
-      "dviwindo",
-      "emtex",
-      "dviwin",
-      "oztex",
-      "textures",
-      "pctexps",
-      "pctexwin",
-      "pctexhp",
-      "pctex32",
-      "truetex",
-      "tcidvi",
-      "vtex",
-      "debugshow",
-      "hiderotate",
-      "hidescale"
-    ]
-  },
-  "args": [
-    "\\usepackage/rotating#c"
-  ]
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"rotcaption","arg":{"format":"[]{}","snippet":"rotcaption[${1:short caption}]{${2:caption}}"},"doc":"Here we offer a suggestion for a \\rotcaption command, which inserts the caption rotated by 90 degrees."},
+		{"name":"rotcaption","arg":{"format":"{}","snippet":"rotcaption{${1:caption}}"},"doc":"Here we offer a suggestion for a \\rotcaption command, which inserts the caption rotated by 90 degrees."},
+		{"name":"rotdriver","arg":{"format":"{}","snippet":"rotdriver{${1}}"}},
+		{"name":"rotFPbot","doc":"The skips, \\rotFPtop and \\rotFPbot, are initialized from the standard LaTeX (internal) \\@fptop and \\@fpbot skips. As a result, by default, rotated floats appear horizontally centered on their float pages."},
+		{"name":"rotFPtop"},
+		{"name":"turnbox","arg":{"format":"{}{}","snippet":"turnbox{${1}}{${2}}"},"doc":"A macro version of the ‘rotate’ environment."}
+	],
+	"envs": [
+		{"name":"rotate","arg":{"format":"{}","snippet":"{${1}}"},"doc":"Rotate the contents of the environment, leaving no space."},
+		{"name":"sideways","doc":"Environment to turn the contents through 90 degrees."},
+		{"name":"sidewaysfigure","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaysfigure","doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaysfigure*","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaysfigure*","doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaystable","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaystable","doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaystable*","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaystable*","doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"turn","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {
+		"\\usepackage/rotating#c": ["anticlockwise","chatter","clockwise","counterclockwise","debugshow","demo","draft","dvipdf","dvipdfm","dvipdfmx","dvips","dvipsone","dvisvgm","dviwin","dviwindo","emtex","figuresleft","figuresright","final","hiderotate","hidescale","hiresbb","log","luatex","nosetpagesize","oztex","pctex32","pctexhp","pctexps","pctexwin","pdftex","quiet","setpagesize","tcidvi","textures","truetex","unknownkeysallowed","vtex","xdvi","xetex"]
+	},
+	"args": ["\\usepackage/rotating#c"]
 }

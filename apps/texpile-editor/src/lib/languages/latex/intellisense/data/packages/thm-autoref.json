@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"thm-patch"},{"name":"parseargs"},{"name":"keyval"}],
+	"macros": [
+		{"name":"Autoref","arg":{"format":"{}","snippet":"Autoref{${1:label}}"}},
+		{"name":"Autoref*","arg":{"format":"{}","snippet":"Autoref*{${1:label}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

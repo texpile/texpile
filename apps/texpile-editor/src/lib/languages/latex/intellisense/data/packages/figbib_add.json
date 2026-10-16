@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"figbib"},{"name":"epsfig"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"fbEntry","arg":{"format":"{}","snippet":"fbEntry{${1:figbib key}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/figbib_add#c": ["nocaptionlist"]
+	},
+	"args": ["\\usepackage/figbib_add#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"hyperref","if":"hyperref","engines":["pdflatex"]},{"name":"iftex","if":"hyperref","engines":["pdflatex"]},{"name":"keyval","if":"hyperref","engines":["pdflatex"]},{"name":"kvsetkeys","if":"hyperref","engines":["pdflatex"]},{"name":"pdfescape","if":"hyperref","engines":["pdflatex"]},{"name":"pdftexcmds","if":"hyperref","engines":["pdflatex"]},{"name":"nameref","if":"hyperref","engines":["pdflatex"]},{"name":"refcount","if":"hyperref","engines":["pdflatex"]},{"name":"gettitlestring","if":"hyperref","engines":["pdflatex"]},{"name":"kvoptions","if":"hyperref","engines":["pdflatex"]},{"name":"etoolbox","if":"hyperref","engines":["pdflatex"]},{"name":"stringenc","if":"hyperref","engines":["pdflatex"]},{"name":"intcalc","if":"hyperref","engines":["pdflatex"]},{"name":"url","if":"hyperref","engines":["pdflatex"]},{"name":"bitset","if":"hyperref","engines":["pdflatex"]},{"name":"bigintcalc","if":"hyperref","engines":["pdflatex"]},{"name":"rerunfilecheck","if":"hyperref","engines":["pdflatex"]},{"name":"uniquecounter","if":"hyperref","engines":["pdflatex"]}],
+	"macros": [
+		{"name":"DeclareUnicodeCharacter","arg":{"format":"{}{}","snippet":"DeclareUnicodeCharacter{${1:code}}{${2:macro}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

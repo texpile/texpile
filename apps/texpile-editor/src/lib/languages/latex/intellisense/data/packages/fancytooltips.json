@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xkeyval"},{"name":"atbegshi-ltx"}],
+	"macros": [
+		{"name":"delayinterval","doc":"The delay between two frames is \\delayinterval milliseconds."},
+		{"name":"fancytooltipsdebugmsg","unusual":true},
+		{"name":"keytip","arg":{"format":"{}","snippet":"keytip{${1}}"}},
+		{"name":"tooltip","arg":{"format":"{}{}","snippet":"tooltip{${1:text}}{${2:keyword or page number}}"},"doc":"The text {⟨stuff⟩} is inserted in \\hbox by \\tooltip."},
+		{"name":"tooltip*","arg":{"format":"{}{}","snippet":"tooltip*{${1:text}}{${2:keyword or page number}}"},"doc":"The text {⟨stuff⟩} is inserted in \\hbox by \\tooltip."},
+		{"name":"tooltipanim","arg":{"format":"{}{}{}","snippet":"tooltipanim{${1:text}}{${2:start}}{${3:end}}"}},
+		{"name":"tooltipanim*","arg":{"format":"{}{}{}","snippet":"tooltipanim*{${1:text}}{${2:start}}{${3:end}}"}},
+		{"name":"TooltipExtratext"},
+		{"name":"TooltipRefmark"}
+	],
+	"envs": [],
+	"keys": {}
+}

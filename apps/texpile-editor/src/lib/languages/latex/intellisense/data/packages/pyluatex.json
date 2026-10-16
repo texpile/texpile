@@ -1,0 +1,33 @@
+{
+	"macros": [
+		{"name":"py","arg":{"format":"[]{}","snippet":"py[${1:options}]{${2:code}}"},"doc":"Executes (object-like) <code> and writes its string representation to the document."},
+		{"name":"py","arg":{"format":"{}","snippet":"py{${1:code}}"},"doc":"Executes (object-like) <code> and writes its string representation to the document."},
+		{"name":"pyc","arg":{"format":"[]{}","snippet":"pyc[${1:options}]{${2:code}}"}},
+		{"name":"pyc","arg":{"format":"{}","snippet":"pyc{${1:code}}"}},
+		{"name":"pycq","arg":{"format":"[]{}","snippet":"pycq[${1:options}]{${2:code}}"}},
+		{"name":"pycq","arg":{"format":"{}","snippet":"pycq{${1:code}}"}},
+		{"name":"pyfile","arg":{"format":"[]{}","snippet":"pyfile[${1:options}]{${2:path}}"},"doc":"Executes the Python file specified by <path>."},
+		{"name":"pyfile","arg":{"format":"{}","snippet":"pyfile{${1:path}}"},"doc":"Executes the Python file specified by <path>."},
+		{"name":"pyfileq","arg":{"format":"[]{}","snippet":"pyfileq[${1:options}]{${2:path}}"},"doc":"Executes the Python file specified by <path>. Any output to the document is suppressed."},
+		{"name":"pyfileq","arg":{"format":"{}","snippet":"pyfileq{${1:path}}"},"doc":"Executes the Python file specified by <path>. Any output to the document is suppressed."},
+		{"name":"pyfilerepl","arg":{"format":"[]{}","snippet":"pyfilerepl[${1:options}]{${2:path}}"},"unusual":true},
+		{"name":"pyfilerepl","arg":{"format":"{}","snippet":"pyfilerepl{${1:path}}"},"unusual":true},
+		{"name":"pyif","arg":{"format":"[]{}{}{}","snippet":"pyif[${1:options}]{${2:test}}{${3:then clause}}{${4:else clause}}"},"doc":"Evaluates the Python boolean expression <test>, and then executes either the LaTeX code in <then clause> or the LaTeX code in <else clause>."},
+		{"name":"pyif","arg":{"format":"{}{}{}","snippet":"pyif{${1:test}}{${2:then clause}}{${3:else clause}}"},"doc":"Evaluates the Python boolean expression <test>, and then executes either the LaTeX code in <then clause> or the LaTeX code in <else clause>."},
+		{"name":"PyLTVerbatimEnv"},
+		{"name":"pyoption","arg":{"format":"{}{}","snippet":"pyoption{${1}}{${2}}"},"doc":"Assigns <value> to the option <option> globally."},
+		{"name":"pyoptions","arg":{"format":"{}","snippet":"pyoptions{${1}}"},"doc":"Sets options globally."},
+		{"name":"pyq","arg":{"format":"[]{}","snippet":"pyq[${1:options}]{${2:code}}"},"doc":"Executes (object-like) <code>. Any output to the document is suppressed."},
+		{"name":"pyq","arg":{"format":"{}","snippet":"pyq{${1:code}}"},"doc":"Executes (object-like) <code>. Any output to the document is suppressed."},
+		{"name":"pysession","arg":{"format":"{}","snippet":"pysession{${1}}"},"doc":"Sets <name> globally as Python session for subsequent Python code."}
+	],
+	"envs": [
+		{"name":"python","arg":{"format":"[]","snippet":"[${1}]"},"doc":"Executes the provided block of Python code."},
+		{"name":"python","doc":"Executes the provided block of Python code."},
+		{"name":"pythonq","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"pythonq"},
+		{"name":"pythonrepl","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"pythonrepl"}
+	],
+	"keys": {}
+}

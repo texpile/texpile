@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"index"},{"name":"harvard"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"citationformat","arg":{"format":"[]{}","snippet":"citationformat[${1:author format}]{${2:page number format}}"},"doc":"Use \\citationformat to control the format of the page numbers appearing in the index."},
+		{"name":"citationformat","arg":{"format":"{}","snippet":"citationformat{${1:page number format}}"},"doc":"Use \\citationformat to control the format of the page numbers appearing in the index."},
+		{"name":"citationindex","arg":{"format":"{}","snippet":"citationindex{${1:index tag}}"}},
+		{"name":"docdate","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"harvarditem","arg":{"format":"[]{}{}{}{}","snippet":"harvarditem[${1:short author}]{${2:authors}}{${3:year}}{${4:key}}{${5:index authors}}"},"unusual":true},
+		{"name":"harvarditem","arg":{"format":"{}{}{}{}","snippet":"harvarditem{${1:authors}}{${2:year}}{${3:key}}{${4:index authors}}"},"unusual":true},
+		{"name":"icite","arg":{"format":"[]{}","snippet":"icite[${1:text}]{${2:key}}"}},
+		{"name":"icite","arg":{"format":"{}","snippet":"icite{${1:key}}"}},
+		{"name":"iciteaffixed","arg":{"format":"[]{}","snippet":"iciteaffixed[${1:text}]{${2:key}}"}},
+		{"name":"iciteaffixed","arg":{"format":"{}","snippet":"iciteaffixed{${1:key}}"}},
+		{"name":"iciteasnoun","arg":{"format":"[]{}","snippet":"iciteasnoun[${1:text}]{${2:key}}"}},
+		{"name":"iciteasnoun","arg":{"format":"{}","snippet":"iciteasnoun{${1:key}}"}},
+		{"name":"icitename","arg":{"format":"[]{}","snippet":"icitename[${1:text}]{${2:key}}"}},
+		{"name":"icitename","arg":{"format":"{}","snippet":"icitename{${1:key}}"}},
+		{"name":"iciteyear","arg":{"format":"[]{}","snippet":"iciteyear[${1:text}]{${2:key}}"}},
+		{"name":"iciteyear","arg":{"format":"{}","snippet":"iciteyear{${1:key}}"}},
+		{"name":"indexcite","arg":{"format":"[]{}","snippet":"indexcite[${1:text}]{${2:key}}"},"doc":"\\indexcite acts exactly like the \\cite command except that it causes author index entries to be generated instead of a citation."},
+		{"name":"indexcite","arg":{"format":"{}","snippet":"indexcite{${1:key}}"},"doc":"\\indexcite acts exactly like the \\cite command except that it causes author index entries to be generated instead of a citation."},
+		{"name":"ipossessivecite","arg":{"format":"[]{}","snippet":"ipossessivecite[${1:text}]{${2:key}}"}},
+		{"name":"ipossessivecite","arg":{"format":"{}","snippet":"ipossessivecite{${1:key}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

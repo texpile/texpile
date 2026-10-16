@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"hminfamily"},
+		{"name":"texthmin","arg":{"format":"{}","snippet":"texthmin{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"Chapter","arg":{"format":"{}[]{}","snippet":"Chapter{${1:quote}}[${2:short title}]{${3:title}}"}},
+		{"name":"Chapter","arg":{"format":"{}{}","snippet":"Chapter{${1:quote}}{${2:title}}"}},
+		{"name":"fancychapsep"},
+		{"name":"fancychapwidth"}
+	],
+	"envs": [],
+	"keys": {}
+}

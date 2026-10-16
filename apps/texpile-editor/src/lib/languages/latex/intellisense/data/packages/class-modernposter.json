@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"class-a0poster"},{"name":"class-article"},{"name":"xcolor"},{"name":"pgfkeys"},{"name":"pgfopts"},{"name":"relsize"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"enumitem"},{"name":"fontawesome"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"sfmath"},{"name":"FiraSans","if":"!helvet"},{"name":"xkeyval","if":"!helvet"},{"name":"textcomp","if":"!helvet"},{"name":"fontaxes","if":"!helvet","engines":["pdflatex"]},{"name":"figureversions","if":"!helvet","engines":["pdflatex"]},{"name":"etoolbox"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"environ"},{"name":"helvet","if":"helvet"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"doubleposterbox","arg":{"format":"[]{}{}{}{}","snippet":"doubleposterbox[${1:height}]{${2:title 1}}{${3:content 1}}{${4:title 2}}{${5:content 2}}"},"doc":"This command can be used within a postercolumn environment to place two text boxes."},
+		{"name":"doubleposterbox","arg":{"format":"{}{}{}{}","snippet":"doubleposterbox{${1:title 1}}{${2:content 1}}{${3:title 2}}{${4:content 2}}"},"doc":"This command can be used within a postercolumn environment to place two text boxes."},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email address}}"}},
+		{"name":"highlight","arg":{"format":"{}","snippet":"highlight{${1:text}}"}},
+		{"name":"maketitle"},
+		{"name":"posterbox","arg":{"format":"[]{}{}","snippet":"posterbox[${1:height}]{${2:title}}{${3:content}}"},"doc":"This command can be used within a postercolumn environment to place a text box within a column."},
+		{"name":"posterbox","arg":{"format":"{}{}","snippet":"posterbox{${1:title}}{${2:content}}"},"doc":"This command can be used within a postercolumn environment to place a text box within a column."}
+	],
+	"envs": [
+		{"name":"postercolumn","doc":"This environment represents a column."}
+	],
+	"keys": {}
+}

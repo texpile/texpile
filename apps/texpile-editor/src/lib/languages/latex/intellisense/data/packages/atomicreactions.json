@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xparse"}],
+	"macros": [
+		{"name":"atomDI","arg":{"format":"[]","snippet":"atomDI[${1:scale}]"}},
+		{"name":"atomDI"},
+		{"name":"atomDR","arg":{"format":"[]","snippet":"atomDR[${1:scale}]"}},
+		{"name":"atomDR"},
+		{"name":"atomEA","arg":{"format":"[]","snippet":"atomEA[${1:scale}]"}},
+		{"name":"atomEA"},
+		{"name":"atomEMPTY","arg":{"format":"[]","snippet":"atomEMPTY[${1:scale}]"}},
+		{"name":"atomEMPTY"},
+		{"name":"atomIA","arg":{"format":"[]","snippet":"atomIA[${1:scale}]"}},
+		{"name":"atomIA"},
+		{"name":"atomISHAU","arg":{"format":"[]","snippet":"atomISHAU[${1:scale}]"}},
+		{"name":"atomISHAU"},
+		{"name":"atomRE","arg":{"format":"[]","snippet":"atomRE[${1:scale}]"}},
+		{"name":"atomRE"},
+		{"name":"atomREDA","arg":{"format":"[][]","snippet":"atomREDA[${1:scale}][${2:text size}]"}},
+		{"name":"atomREDA"},
+		{"name":"atomRES","arg":{"format":"[]","snippet":"atomRES[${1:scale}]"}},
+		{"name":"atomRES"},
+		{"name":"atomTC","arg":{"format":"[]","snippet":"atomTC[${1:scale}]"}},
+		{"name":"atomTC"},
+		{"name":"atomTR","arg":{"format":"[]","snippet":"atomTR[${1:scale}]"}},
+		{"name":"atomTR"},
+		{"name":"bohrModel","arg":{"format":"{}{}{}","snippet":"bohrModel{${1:element name}}{${2:charge}}{${3:shell occupation}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

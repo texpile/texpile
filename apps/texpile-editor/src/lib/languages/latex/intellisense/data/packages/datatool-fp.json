@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"datatool"},{"name":"ifthen"},{"name":"xfor"},{"name":"etoolbox"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

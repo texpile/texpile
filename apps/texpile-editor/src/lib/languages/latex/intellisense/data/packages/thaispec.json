@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"ucharclasses"},{"name":"ifxetex"},{"name":"iftex"},{"name":"setspace"},{"name":"polyglossia"},{"name":"etoolbox"},{"name":"xstring"},{"name":"xpatch"},{"name":"xparse"},{"name":"mathtools","if":"math"},{"name":"calc","if":"math"},{"name":"mhsetup","if":"math"},{"name":"amsmath","if":"math"},{"name":"amstext","if":"math"},{"name":"amsbsy","if":"math"},{"name":"amsopn","if":"math"},{"name":"amssymb","if":"math"},{"name":"amsfonts","if":"math"},{"name":"amsthm","if":"math"},{"name":"mathspec","if":"math"},{"name":"xkeyval","if":"math"}],
+	"macros": [
+		{"name":"thaialph","arg":{"format":"{}","snippet":"thaialph{${1:counter}}"}},
+		{"name":"thaifont"},
+		{"name":"thainum","arg":{"format":"{}","snippet":"thainum{${1:counter}}"}},
+		{"name":"thaispecver","unusual":true}
+	],
+	"envs": [
+		{"name":"axiom","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"axiom","if":"math"},
+		{"name":"corollary","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"corollary","if":"math"},
+		{"name":"definition","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"definition","if":"math"},
+		{"name":"example","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"example","if":"math"},
+		{"name":"lemma","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"lemma","if":"math"},
+		{"name":"note","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"note","if":"math"},
+		{"name":"proposition","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"proposition","if":"math"},
+		{"name":"remark","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"remark","if":"math"},
+		{"name":"thailang","unusual":true},
+		{"name":"theorem","arg":{"format":"[]","snippet":"[${1}]"},"if":"math"},
+		{"name":"theorem","if":"math"}
+	],
+	"keys": {}
+}

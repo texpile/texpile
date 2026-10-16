@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"cmap","engines":["pdflatex"]},{"name":"iftex","engines":["pdflatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

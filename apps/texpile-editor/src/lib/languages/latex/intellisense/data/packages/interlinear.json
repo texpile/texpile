@@ -1,0 +1,38 @@
+{
+	"deps": [{"name":"marginnote"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"xparse"},{"name":"etoolbox"},{"name":"enumitem"}],
+	"macros": [
+		{"name":"ct"},
+		{"name":"DeclareInterlinearStyle","arg":{"format":"{}{}","snippet":"DeclareInterlinearStyle{${1}}{${2}}","keys":["keyval:interlinear"],"keyPos":1}},
+		{"name":"ft"},
+		{"name":"gj"},
+		{"name":"gl"},
+		{"name":"ifnoglosslines","unusual":true},
+		{"name":"ifnotdone","unusual":true},
+		{"name":"interlinearstyle","arg":{"format":"{}","snippet":"interlinearstyle{${1}}","keys":["keyval:interlinear"],"keyPos":0},"doc":"The \\interlinearstyle command redefines the default values for the specified options."},
+		{"name":"li"},
+		{"name":"lt"},
+		{"name":"mb"},
+		{"name":"noglosslinesfalse","unusual":true},
+		{"name":"noglosslinestrue","unusual":true},
+		{"name":"notdonefalse","unusual":true},
+		{"name":"notdonetrue","unusual":true},
+		{"name":"nt"},
+		{"name":"ot"},
+		{"name":"ps"},
+		{"name":"rf"},
+		{"name":"switchlwsyntaxoff","unusual":true},
+		{"name":"switchlwsyntaxon","unusual":true},
+		{"name":"tx"},
+		{"name":"usedoublespacing","unusual":true},
+		{"name":"UseInterlinearStyle","arg":{"format":"{}","snippet":"UseInterlinearStyle{${1}}"}},
+		{"name":"useonehalfspacing","unusual":true},
+		{"name":"usesinglespacing","unusual":true}
+	],
+	"envs": [
+		{"name":"interlinear","arg":{"format":"[]","snippet":"[${1}]","keys":["keyval:interlinear"],"keyPos":0},"doc":"The main feature of interlinear is the interlinear environment. This environment allows you to structure interlinear texts using markers."},
+		{"name":"interlinear","doc":"The main feature of interlinear is the interlinear environment. This environment allows you to structure interlinear texts using markers."}
+	],
+	"keys": {
+		"keyval:interlinear": ["contextmarker=","contextname=","contextnameformat=","contextvoffset=","exformat=","extranoteformat=","extranoteleftpunct=","extranotemarker=","extranoterightpunct=","freetranslationmarker=","glossmarker=","gramjudgmarker=","languageinfomarker=","linefourformat=","lineoneformat=","linethreeformat=","linetwoformat=","literaltranslationmarker=","morphbreakmarker=","partofspeechmarker=","referencemarker=","textmarker=","linesnumber=${1|0,2,3,4|}","nointerlinear=${1|false,true|}","languageinfopos=${1|head,margin|}","style=${1|default,gsr,gsrnointerlinear,nointerlinear|}"]
+	}
+}

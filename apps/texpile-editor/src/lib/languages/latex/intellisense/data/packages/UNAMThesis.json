@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"setspace"}],
+	"macros": [
+		{"name":"academictitle","doc":"The \\academictitle optional command enables to switch from 'grado' to 'título' for undergraduate programs requiring it."},
+		{"name":"city","arg":{"format":"{}","snippet":"city{${1}}"}},
+		{"name":"degree","arg":{"format":"{}","snippet":"degree{${1}}"}},
+		{"name":"degreemonth","arg":{"format":"{}","snippet":"degreemonth{${1}}"}},
+		{"name":"degreeyear","arg":{"format":"{}","snippet":"degreeyear{${1}}"}},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:department or program name}}"}},
+		{"name":"faculty","arg":{"format":"{}","snippet":"faculty{${1:faculty name}}"}},
+		{"name":"institute","arg":{"format":"{}","snippet":"institute{${1:institute name}}"}},
+		{"name":"logoinstitute","arg":{"format":"{}","snippet":"logoinstitute{${1:path file}}"},"doc":"You may customize the logos using the \\logounam{path file} and \\logoinstitute{path file} commands in the preamble to define the files location and name."},
+		{"name":"logounam","arg":{"format":"{}","snippet":"logounam{${1:path file}}"},"doc":"You may customize the logos using the \\logounam{path file} and \\logoinstitute{path file} commands in the preamble to define the files location and name."},
+		{"name":"makeacknowledgements","arg":{"format":"{}","snippet":"makeacknowledgements{${1}}"}},
+		{"name":"makededication","arg":{"format":"{}","snippet":"makededication{${1}}"}},
+		{"name":"makeforeword","arg":{"format":"{}","snippet":"makeforeword{${1}}"}},
+		{"name":"makeresumen","arg":{"format":"{}","snippet":"makeresumen{${1}}"}},
+		{"name":"prevdegrees","arg":{"format":"{}","snippet":"prevdegrees{${1}}"}},
+		{"name":"rcenter","arg":{"format":"{}","snippet":"rcenter{${1:research center name}}"}},
+		{"name":"school","arg":{"format":"{}","snippet":"school{${1:school name}}"}},
+		{"name":"supervisor","arg":{"format":"{}","snippet":"supervisor{${1}}"}},
+		{"name":"Unam","unusual":true},
+		{"name":"UNAM","unusual":true},
+		{"name":"university","arg":{"format":"{}","snippet":"university{${1:university name}}"},"doc":"The \\university{university name} command allows you to customize the university name, which defaults to ’Universidad Nacional Autónoma de México’."}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"dedication","doc":"The style implements environments for dedication, acknowledgements, foreword, resumen and abstract."},
+		{"name":"foreword"},
+		{"name":"quotenat"},
+		{"name":"resumen"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"suffix"}],
+	"macros": [
+		{"name":"loadCAScmykcolors"},
+		{"name":"loadCAScmykcolors*"},
+		{"name":"loadCASrgbcolors"},
+		{"name":"loadCASrgbcolors*"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/cncolours#c": ["cas-cmyk","cas-cmyk*","cas-rgb","cas-rgb*"]
+	},
+	"args": ["\\usepackage/cncolours#c"]
+}

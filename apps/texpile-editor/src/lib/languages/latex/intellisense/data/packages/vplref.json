@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"LineWithPage","arg":{"format":"{}","snippet":"LineWithPage{${1:label}}"}},
+		{"name":"vpagelineref","arg":{"format":"{}","snippet":"vpagelineref{${1:label}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

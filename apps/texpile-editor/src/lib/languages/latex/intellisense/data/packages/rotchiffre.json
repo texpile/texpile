@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"EdefRot","arg":{"format":"{}{}{}","snippet":"EdefRot{${1:type}}{${2:cmd}}{${3:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

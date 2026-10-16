@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"calc"}],
+	"macros": [
+		{"name":"currentfolio","doc":"Gives the unformatted and non-styled version of the current folio number."},
+		{"name":"currentfoliowithsides","doc":"Gives the unformatted and non-styled version of the current folio number with the side indicator (r or v) added to its end."},
+		{"name":"currentfoliowithstyles","doc":"Gives the current folio number formatted the same way as it is added to the page by \\folionumber."},
+		{"name":"folionofont","arg":{"format":"{}","snippet":"folionofont{${1:FontName}}"},"doc":"Sets the font that is used to folio numbers to the fontspec font fontId."},
+		{"name":"folionofontcolor","arg":{"format":"{}","snippet":"folionofontcolor{${1:color}}"},"doc":"Sets the folio number font color to color."},
+		{"name":"folionofontsize","arg":{"format":"{}","snippet":"folionofontsize{${1:size}}"},"doc":"Sets the size of the folio number font to points."},
+		{"name":"folionoindex","arg":{"format":"{}","snippet":"folionoindex{${1:text}}"},"doc":"This adds text as an index entry where the page number is replaced with unformatted current folio number."},
+		{"name":"folionoindexwithstyles","arg":{"format":"{}","snippet":"folionoindexwithstyles{${1:text}}"},"doc":"This adds text as an index entry where the page number is replaced with styled current folio number."},
+		{"name":"folionolabel","arg":{"format":"{}","snippet":"folionolabel{${1:label}}"},"doc":"Adds a label that can be accessed with the \\ref command."},
+		{"name":"folionolabelwithstyles","arg":{"format":"{}","snippet":"folionolabelwithstyles{${1:label}}"},"doc":"Adds a label whose reference text contains all the styles and formatting of the current folio number."},
+		{"name":"folionoprefix","arg":{"format":"{}","snippet":"folionoprefix{${1:text}}"},"doc":"Sets the folio counter prefix to text."},
+		{"name":"folionoquirefolios","arg":{"format":"{}","snippet":"folionoquirefolios{${1:number}}"},"doc":"Sets the size of quires to folioNo folios."},
+		{"name":"folionoseparator","arg":{"format":"{}","snippet":"folionoseparator{${1:text}}"},"doc":"Sets the separator that is placed between quire and folio numbers to text."},
+		{"name":"folionostyle","arg":{"format":"{}","snippet":"folionostyle{${1:commands}}"}},
+		{"name":"folionosuffix","arg":{"format":"{}","snippet":"folionosuffix{${1:text}}"},"doc":"Sets the folio number suffix to text."},
+		{"name":"folionumber","doc":"Sets both the formatted and styled folio number to the page and it also keeps track of the quire and folio counters as well as the recto and verso sides on the document."},
+		{"name":"quirenoprefix","arg":{"format":"{}","snippet":"quirenoprefix{${1:text}}"},"doc":"Sets a prefix of the quire number to be text."},
+		{"name":"quirenostyle","arg":{"format":"{}","snippet":"quirenostyle{${1:commands}}"}},
+		{"name":"quirenosuffix","arg":{"format":"{}","snippet":"quirenosuffix{${1:text}}"},"doc":"Sets the quire number suffix to text."},
+		{"name":"setfoliono","arg":{"format":"{}{}","snippet":"setfoliono{${1:quireNo}}{${2:folioNo}}"},"doc":"Sets the quire counter to quireNo and the folio counter to folioNo."},
+		{"name":"stepfolio","doc":"Moves the folio number to the next folio."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/foliono#c": ["AllQuires","ArabicNumbers","LowerCase","NoQuires","OnlyQuire","SheetNumbers","ShowSides","SkipEnd","SkipFirst"]
+	},
+	"args": ["\\usepackage/foliono#c"]
+}

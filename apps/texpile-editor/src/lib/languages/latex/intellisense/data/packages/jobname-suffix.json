@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"IfSuffixF","arg":{"format":"[]{}","snippet":"IfSuffixF[${1}]{${2}}"}},
+		{"name":"IfSuffixF","arg":{"format":"{}","snippet":"IfSuffixF{${1}}"}},
+		{"name":"IfSuffixT","arg":{"format":"[]{}","snippet":"IfSuffixT[${1:suffixes}]{${2:true code}}"}},
+		{"name":"IfSuffixT","arg":{"format":"{}","snippet":"IfSuffixT{${1:true code}}"}},
+		{"name":"IfSuffixTF","arg":{"format":"[]{}{}","snippet":"IfSuffixTF[${1}]{${2}}{${3}}"}},
+		{"name":"IfSuffixTF","arg":{"format":"{}{}","snippet":"IfSuffixTF{${1}}{${2}}"}},
+		{"name":"JobnameSuffix"},
+		{"name":"OverrideSuffix","arg":{"format":"{}","snippet":"OverrideSuffix{${1}}"}}
+	],
+	"envs": [
+		{"name":"IfSuffix","arg":{"format":"[]","snippet":"[${1:suffixes}]"}},
+		{"name":"IfSuffix"}
+	],
+	"keys": {}
+}

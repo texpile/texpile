@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"amssymb"},{"name":"amsfonts"}],
+	"macros": [
+		{"name":"euflag","arg":{"format":"[]","snippet":"euflag[${1:vertical offset}]"},"doc":"This package provides a command \\euflag for reproducing the flag of the European Union."},
+		{"name":"euflag","doc":"This package provides a command \\euflag for reproducing the flag of the European Union."},
+		{"name":"eustar","unusual":true},
+		{"name":"makestars","doc":"Separate the making of the ring of stars from the flag itself so that the ring of stars can be used separately."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/euflag#c": ["baseline"]
+	},
+	"args": ["\\usepackage/euflag#c"]
+}

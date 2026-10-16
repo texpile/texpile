@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"etex"},{"name":"etoolbox"},{"name":"catchfile"},{"name":"iftex"}],
+	"macros": [
+		{"name":"CatchFileBetweenDelims","arg":{"format":"{}{}{}{}[]","snippet":"CatchFileBetweenDelims{${1:cs-name}}{${2:file-name}}{${3:start-delimiter}}{${4:stop-delimiter}}[${5:setup}]"}},
+		{"name":"CatchFileBetweenDelims","arg":{"format":"{}{}{}{}","snippet":"CatchFileBetweenDelims{${1:cs-name}}{${2:file-name}}{${3:start-delimiter}}{${4:stop-delimiter}}"}},
+		{"name":"CatchFileBetweenTags","arg":{"format":"{}{}{}[]","snippet":"CatchFileBetweenTags{${1:cs-name}}{${2:file-name}}{${3:tag}}[${4:setup}]"}},
+		{"name":"CatchFileBetweenTags","arg":{"format":"{}{}{}","snippet":"CatchFileBetweenTags{${1:cs-name}}{${2:file-name}}{${3:tag}}"}},
+		{"name":"ExecuteMetaData","arg":{"format":"[]{}","snippet":"ExecuteMetaData[${1:filename}]{${2:tag}}"}},
+		{"name":"ExecuteMetaData","arg":{"format":"{}","snippet":"ExecuteMetaData{${1:tag}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

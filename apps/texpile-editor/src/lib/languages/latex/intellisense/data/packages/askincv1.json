@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"infile","arg":{"format":"{}","snippet":"infile{${1:file}}"},"doc":"In the body of the root source document, use the command \\infile{<file>} for each <file> that comprises the document."}
+	],
+	"envs": [],
+	"keys": {}
+}

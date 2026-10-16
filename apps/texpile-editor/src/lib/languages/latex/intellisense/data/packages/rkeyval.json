@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"pcatcode"}],
+	"macros": [
+		{"name":"DefineAdditiveKey","arg":{"format":"{}{}{}","snippet":"DefineAdditiveKey{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"DefineDummyKey","arg":{"format":"{}{}","snippet":"DefineDummyKey{${1}}{${2}}"},"unusual":true},
+		{"name":"DefineSimpleKey","arg":{"format":"{}{}","snippet":"DefineSimpleKey{${1}}{${2}}"},"unusual":true},
+		{"name":"DefineSupersedingKey","arg":{"format":"{}{}","snippet":"DefineSupersedingKey{${1}}{${2}}"},"unusual":true},
+		{"name":"RestrictedSetKeys","arg":{"format":"{}{}{}{}","snippet":"RestrictedSetKeys{${1:setup code}}{${2:group}}{${3:code}}{${4:key={val},...}}"},"unusual":true},
+		{"name":"rkvIfAdditive","arg":{"format":"{}{}{}","snippet":"rkvIfAdditive{${1:key macro}}{${2:true}}{${3:false}}"},"unusual":true},
+		{"name":"rkvIfEmpty","arg":{"format":"{}{}{}{}","snippet":"rkvIfEmpty{${1:group}}{${2:key}}{${3:true}}{${4:false}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

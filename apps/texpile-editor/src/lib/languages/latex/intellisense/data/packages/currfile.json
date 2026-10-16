@@ -1,219 +1,52 @@
 {
-  "deps": [
-    {
-      "name": "kvoptions"
-    },
-    {
-      "name": "filehook"
-    },
-    {
-      "name": "currfile-abspath",
-      "if": "abspath"
-    },
-    {
-      "name": "currfile-abspath",
-      "if": "abspath=true"
-    },
-    {
-      "name": "currfile-abspath",
-      "if": "realmainfile"
-    },
-    {
-      "name": "currfile-abspath",
-      "if": "realmainfile=true"
-    }
-  ],
-  "macros": [
-    {
-      "name": "currfiledir",
-      "unusual": true
-    },
-    {
-      "name": "currfilebase",
-      "unusual": true
-    },
-    {
-      "name": "currfileext",
-      "unusual": true
-    },
-    {
-      "name": "currfilename",
-      "unusual": true
-    },
-    {
-      "name": "currfilepath",
-      "unusual": true
-    },
-    {
-      "name": "ifcurrfiledir",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "ifcurrfiledir{${1:text}}{${2:true}}{${3:false}}"
-      }
-    },
-    {
-      "name": "ifcurrfilebase",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "ifcurrfilebase{${1:text}}{${2:true}}{${3:false}}"
-      }
-    },
-    {
-      "name": "ifcurrfileext",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "ifcurrfileext{${1:text}}{${2:true}}{${3:false}}"
-      }
-    },
-    {
-      "name": "ifcurrfilename",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "ifcurrfilename{${1:text}}{${2:true}}{${3:false}}"
-      }
-    },
-    {
-      "name": "ifcurrfilepath",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "ifcurrfilepath{${1:text}}{${2:true}}{${3:false}}"
-      }
-    },
-    {
-      "name": "ifcurrfile",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "ifcurrfile{${1:macro or text}}{${2:text}}{${3:true}}{${4:false}}"
-      }
-    },
-    {
-      "name": "parentfiledir",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "parentfilebase",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "parentfileext",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "parentfilename",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "parentfilepath",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "parentfileabsdir",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "parentfileabspath",
-      "if": "parent",
-      "unusual": true
-    },
-    {
-      "name": "currfilegetparents",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilediri",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfiledirii",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilebasei",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilebaseii",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfileexti",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfileextii",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilenamei",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilenameii",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilepathi",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfilepathii",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfileabsdiri",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfileabsdirii",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfileabspathi",
-      "if": "parents",
-      "unusual": true
-    },
-    {
-      "name": "parentfileabspathii",
-      "if": "parents",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/currfile#c": [
-      "mainext=${1:extension}",
-      "maindir=${1:directory}",
-      "fink",
-      "abspath",
-      "realmainfile"
-    ]
-  },
-  "args": [
-    "\\usepackage/currfile#c"
-  ]
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"currfile-abspath","if":"abspath|realmainfile"}],
+	"macros": [
+		{"name":"currfileabsdir"},
+		{"name":"currfileabspath"},
+		{"name":"currfilebase"},
+		{"name":"currfiledir"},
+		{"name":"currfileext","doc":"The directory, base (name without extension), extension (without dot), name (=base+‘.’+ext) and path (=dir+name) of the current file are provided by these macros."},
+		{"name":"currfilegetparents","if":"parents"},
+		{"name":"currfilename"},
+		{"name":"currfilepath","doc":"The directory, base (name without extension), extension (without dot), name (=base+‘.’+ext) and path (=dir+name) of the current file are provided by these macros."},
+		{"name":"finkbase","unusual":true,"if":"fink"},
+		{"name":"finkdir","unusual":true,"if":"fink"},
+		{"name":"finkext","unusual":true,"if":"fink"},
+		{"name":"finkfile","unusual":true,"if":"fink"},
+		{"name":"finkpath","unusual":true,"if":"fink"},
+		{"name":"ifcurrfile","arg":{"format":"{}{}{}{}","snippet":"ifcurrfile{${1:currfile macro or text}}{${2:text}}{${3:true}}{${4:false}}"},"doc":"Compares the given 〈currfile macro or text〉 with 〈text〉."},
+		{"name":"ifcurrfileabsdir","arg":{"format":"{}{}{}","snippet":"ifcurrfileabsdir{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"ifcurrfileabspath","arg":{"format":"{}{}{}","snippet":"ifcurrfileabspath{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"ifcurrfilebase","arg":{"format":"{}{}{}","snippet":"ifcurrfilebase{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"ifcurrfiledir","arg":{"format":"{}{}{}","snippet":"ifcurrfiledir{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"ifcurrfileext","arg":{"format":"{}{}{}","snippet":"ifcurrfileext{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"ifcurrfilename","arg":{"format":"{}{}{}","snippet":"ifcurrfilename{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"ifcurrfilepath","arg":{"format":"{}{}{}","snippet":"ifcurrfilepath{${1:text}}{${2:true}}{${3:false}}"}},
+		{"name":"parentfileabsdir","if":"parent+abspath"},
+		{"name":"parentfileabsdiri"},
+		{"name":"parentfileabsdirii"},
+		{"name":"parentfileabspath","if":"parent+abspath"},
+		{"name":"parentfileabspathi"},
+		{"name":"parentfileabspathii"},
+		{"name":"parentfilebase","if":"parent"},
+		{"name":"parentfilebasei"},
+		{"name":"parentfilebaseii"},
+		{"name":"parentfiledir","if":"parent"},
+		{"name":"parentfilediri"},
+		{"name":"parentfiledirii"},
+		{"name":"parentfileext","if":"parent"},
+		{"name":"parentfileexti"},
+		{"name":"parentfileextii"},
+		{"name":"parentfilename","if":"parent"},
+		{"name":"parentfilenamei"},
+		{"name":"parentfilenameii"},
+		{"name":"parentfilepath","if":"parent"},
+		{"name":"parentfilepathi"},
+		{"name":"parentfilepathii"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/currfile#c": ["abspath","fink","maindir=","mainext=","parent","parents","realmainfile"]
+	},
+	"args": ["\\usepackage/currfile#c"]
 }

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"caption"},{"name":"caption3"},{"name":"keyval"},{"name":"cmap","if":"!nopalatino"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fithesis-mu-base#c": ["10pt","11pt","12pt","color","colorbold","cover","digital","draft","final","lof","lot","microtype","monochrome","neuehaas","nocolorbold","nocover","nolof","nolot","nomicrotype","noneuehaas","nopalatino","nosansbold","oldtable","onecolumn","oneside","palatino","printed","sansbold","table","twocolumn","twoside"]
+	},
+	"args": ["\\usepackage/fithesis-mu-base#c"]
+}

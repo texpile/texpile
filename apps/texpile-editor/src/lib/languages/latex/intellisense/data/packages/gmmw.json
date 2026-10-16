@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"gmcommand"},{"name":"gmbase"},{"name":"xparse"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

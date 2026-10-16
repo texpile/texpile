@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"pifont"},{"name":"calc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tabularx"},{"name":"array"},{"name":"ragged2e"},{"name":"helvet"}],
+	"macros": [
+		{"name":"fachbereich","arg":{"format":"{}","snippet":"fachbereich{${1}}"}},
+		{"name":"framelogo","arg":{"format":"{}","snippet":"framelogo{${1}}"}},
+		{"name":"insertfachbereich","unusual":true},
+		{"name":"insertframelogo","unusual":true},
+		{"name":"insertinstitute","unusual":true},
+		{"name":"insertsubtitle","unusual":true},
+		{"name":"inserttitlegraphic","unusual":true},
+		{"name":"inserttitlelogo","unusual":true},
+		{"name":"inst","arg":{"format":"{}","snippet":"inst{${1}}"}},
+		{"name":"institute","arg":{"format":"{}","snippet":"institute{${1}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1}}"}},
+		{"name":"titlegraphic","arg":{"format":"[]{}","snippet":"titlegraphic[${1}]{${2}}"}},
+		{"name":"titlegraphic","arg":{"format":"{}","snippet":"titlegraphic{${1}}"}},
+		{"name":"titlelogo","arg":{"format":"{}","snippet":"titlelogo{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

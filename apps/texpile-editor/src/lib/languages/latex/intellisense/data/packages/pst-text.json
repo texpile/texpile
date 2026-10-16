@@ -1,179 +1,23 @@
 {
-  "deps": [
-    {
-      "name": "pstricks"
-    }
-  ],
-  "macros": [
-    {
-      "name": "pstextpath",
-      "arg": {
-        "format": "[](){}{}",
-        "snippet": "pstextpath[${3:pos}](${4:x},${5:y}){${1:graphics object}}{${2:text}}"
-      }
-    },
-    {
-      "name": "pstextpath",
-      "arg": {
-        "format": "(){}{}",
-        "snippet": "pstextpath(${3:x},${4:y}){${1:graphics object}}{${2:text}}"
-      }
-    },
-    {
-      "name": "pscharpath",
-      "arg": {
-        "format": "{}",
-        "snippet": "pscharpath{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharpath",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "pscharpath[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharpath*",
-      "arg": {
-        "format": "{}",
-        "snippet": "pscharpath*{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharpath*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "pscharpath*[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "pscharclip{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "pscharclip[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip*",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "pscharclip*{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip*",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "pscharclip*[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "endpscharclip",
-      "unusual": true
-    },
-    {
-      "name": "psCircleText",
-      "arg": {
-        "format": "{}",
-        "snippet": "psCircleText{${1:text}}"
-      }
-    },
-    {
-      "name": "psCircleText",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "psCircleText[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "psCircleText",
-      "arg": {
-        "format": "(){}",
-        "snippet": "psCircleText(${2:x},${3:y}){${1:text}}"
-      }
-    },
-    {
-      "name": "psCircleText",
-      "arg": {
-        "format": "[](){}",
-        "snippet": "psCircleText[${2:options%keyvals}](${3:x},${4:y}){${1:text}}"
-      }
-    },
-    {
-      "name": "psWarp",
-      "arg": {
-        "format": "{}",
-        "snippet": "psWarp{${1:text}}"
-      }
-    },
-    {
-      "name": "psWarp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "psWarp[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "psWarp",
-      "arg": {
-        "format": "(){}",
-        "snippet": "psWarp(${2:x},${3:y}){${1:text}}"
-      }
-    },
-    {
-      "name": "psWarp",
-      "arg": {
-        "format": "[](){}",
-        "snippet": "psWarp[${2:options%keyvals}](${3:x},${4:y}){${1:text}}"
-      }
-    },
-    {
-      "name": "TPoffset",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "pscharclip",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:options%keyvals}]{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip*",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:text}}"
-      }
-    },
-    {
-      "name": "pscharclip*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:options%keyvals}]{${1:text}}"
-      }
-    }
-  ],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"endpscharclip"},
+		{"name":"pscharclip","arg":{"format":"[]{}","snippet":"pscharclip[${1:options}]{${2:text}}"},"doc":"\\pscharclip is practically identical to \\pscharpath with the only difference being that it sets the clipping path to the current path."},
+		{"name":"pscharclip","arg":{"format":"{}","snippet":"pscharclip{${1:text}}"},"doc":"\\pscharclip is practically identical to \\pscharpath with the only difference being that it sets the clipping path to the current path."},
+		{"name":"pscharclip*","arg":{"format":"[]{}","snippet":"pscharclip*[${1:options}]{${2:text}}"},"doc":"\\pscharclip is practically identical to \\pscharpath with the only difference being that it sets the clipping path to the current path."},
+		{"name":"pscharclip*","arg":{"format":"{}","snippet":"pscharclip*{${1:text}}"},"doc":"\\pscharclip is practically identical to \\pscharpath with the only difference being that it sets the clipping path to the current path."},
+		{"name":"pscharpath","arg":{"format":"[]{}","snippet":"pscharpath[${1:options}]{${2:text}}"}},
+		{"name":"pscharpath","arg":{"format":"{}","snippet":"pscharpath{${1:text}}"}},
+		{"name":"pscharpath*","arg":{"format":"[]{}","snippet":"pscharpath*[${1:options}]{${2:text}}"}},
+		{"name":"pscharpath*","arg":{"format":"{}","snippet":"pscharpath*{${1:text}}"}},
+		{"name":"psCircleText","arg":{"format":"[](){}","snippet":"psCircleText[${1:options}](${2:x,y}){${3:text}}"}},
+		{"name":"psCircleText","arg":{"format":"(){}","snippet":"psCircleText(${1:x,y}){${2:text}}"}},
+		{"name":"pstextpath","arg":{"format":"[](){}{}","snippet":"pstextpath[${1:position}](${2:x,y}){${3:graphic object}}{${4:text}}"}},
+		{"name":"pstextpath","arg":{"format":"(){}{}","snippet":"pstextpath(${1:x,y}){${2:graphic object}}{${3:text}}"}},
+		{"name":"psWarp","arg":{"format":"[](){}","snippet":"psWarp[${1:options}](${2:x,y}){${3:text}}"}},
+		{"name":"psWarp","arg":{"format":"(){}","snippet":"psWarp(${1:x,y}){${2:text}}"}},
+		{"name":"TPoffset"}
+	],
+	"envs": [],
+	"keys": {}
 }

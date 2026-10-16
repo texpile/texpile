@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"keyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"filerevision","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ProductBoxSet","arg":{"format":"{}","snippet":"ProductBoxSet{${1:options}}","keys":["keyval:ProductBox"],"keyPos":0},"doc":"The macro \\ProductBoxSet modifies the global setting of the product box style."},
+		{"name":"ProductBoxThreeDEndHook","doc":"A hook to add some code at the end."},
+		{"name":"ProductBoxThreeDStartHook","doc":"A hook to add some code at the beginning."}
+	],
+	"envs": [
+		{"name":"Back","doc":"The environment Back is used to define the content of the back face."},
+		{"name":"BackFace","arg":{"format":"[]","snippet":"[${1:TikZ fill options}]"},"doc":"The environment BackFace is used to define the content of the back face."},
+		{"name":"BackFace","doc":"The environment BackFace is used to define the content of the back face."},
+		{"name":"Bottom"},
+		{"name":"BottomFace","arg":{"format":"[]","snippet":"[${1:TikZ fill options}]"},"doc":"The environment BottomFace is used to define the content of the bottom face."},
+		{"name":"BottomFace","doc":"The environment BottomFace is used to define the content of the bottom face."},
+		{"name":"Front"},
+		{"name":"FrontFace","arg":{"format":"[]","snippet":"[${1:TikZ fill options}]"}},
+		{"name":"FrontFace"},
+		{"name":"Left"},
+		{"name":"LeftFace","arg":{"format":"[]","snippet":"[${1:TikZ fill options}]"},"doc":"The environment LeftFace is used to define the content of the left face."},
+		{"name":"LeftFace","doc":"The environment LeftFace is used to define the content of the left face."},
+		{"name":"ProductBox","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:ProductBox"],"keyPos":0}},
+		{"name":"ProductBox"},
+		{"name":"Right","doc":"The environment Right is used to define the content of the right face, i.e. the face right to the front page."},
+		{"name":"RightFace","arg":{"format":"[]","snippet":"[${1:TikZ fill options}]"},"doc":"The environment RightFace is used to define the content of the right face."},
+		{"name":"RightFace","doc":"The environment RightFace is used to define the content of the right face."},
+		{"name":"Top","doc":"The environment Top is used to define the content of the top face."},
+		{"name":"TopFace","arg":{"format":"[]","snippet":"[${1:TikZ fill options}]"},"doc":"The environment TopFace is used to define the content of the top face."},
+		{"name":"TopFace","doc":"The environment TopFace is used to define the content of the top face."}
+	],
+	"keys": {
+		"keyval:ProductBox": ["3D","3d","back","bottom","depth=","earSize=","edgeColor=","empty","faceSep=","flareDiameter=","flat","fold","foldLine=","foldOpacity=","front","height=","left","right","scale=","threeD","top","width=","clean=${1|false,true|}","flare=${1|false,true|}","mirror=${1|false,true|}","shadow=${1|false,true|}","style=${1|3D,3d,back,bottom,empty,flat,fold,front,left,right,threeD,top|}","view=${1|1,2,3|}"]
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"atkinson"},
+		{"name":"atkinsonfamily"},
+		{"name":"atkinsonlf","arg":{"format":"{}","snippet":"atkinsonlf{${1:text}}"}},
+		{"name":"atkinsontlf","arg":{"format":"{}","snippet":"atkinsontlf{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

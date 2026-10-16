@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"ar","arg":{"format":"[]","snippet":"ar[${1:options}]"}},
+		{"name":"ar"},
+		{"name":"arrow","arg":{"format":"[]","snippet":"arrow[${1:options}]"}},
+		{"name":"arrow"},
+		{"name":"dar","arg":{"format":"[]","snippet":"dar[${1:options}]"}},
+		{"name":"dar"},
+		{"name":"dlar","arg":{"format":"[]","snippet":"dlar[${1:options}]"}},
+		{"name":"dlar"},
+		{"name":"drar","arg":{"format":"[]","snippet":"drar[${1:options}]"}},
+		{"name":"drar"},
+		{"name":"lar","arg":{"format":"[]","snippet":"lar[${1:options}]"}},
+		{"name":"lar"},
+		{"name":"rar","arg":{"format":"[]","snippet":"rar[${1:options}]"}},
+		{"name":"rar"},
+		{"name":"tikzcdset","arg":{"format":"{}","snippet":"tikzcdset{${1:options}}"}},
+		{"name":"uar","arg":{"format":"[]","snippet":"uar[${1:options}]"}},
+		{"name":"uar"},
+		{"name":"ular","arg":{"format":"[]","snippet":"ular[${1:options}]"}},
+		{"name":"ular"},
+		{"name":"urar","arg":{"format":"[]","snippet":"urar[${1:options}]"}},
+		{"name":"urar"}
+	],
+	"envs": [
+		{"name":"tikzcd","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"tikzcd"}
+	],
+	"keys": {}
+}

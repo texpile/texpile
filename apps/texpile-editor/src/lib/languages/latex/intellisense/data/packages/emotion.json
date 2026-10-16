@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex"}],
+	"macros": [
+		{"name":"emotion","arg":{"format":"{}","snippet":"emotion{${1:emoji or id}}"}},
+		{"name":"emotiondef","arg":{"format":"{}{}","snippet":"emotiondef{${1:id}}{${2:emoji}}"}},
+		{"name":"emotionsetup","arg":{"format":"{}","snippet":"emotionsetup{${1:font name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

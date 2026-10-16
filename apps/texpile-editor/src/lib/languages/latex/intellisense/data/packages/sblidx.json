@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"imakeidx"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"multicol"},{"name":"idxlayout"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"ragged2e"}],
+	"macros": [
+		{"name":"SBLFootnoteIndex","arg":{"format":"[]{}","snippet":"SBLFootnoteIndex[${1}]{${2}}"},"unusual":true},
+		{"name":"SBLFootnoteIndex","arg":{"format":"{}","snippet":"SBLFootnoteIndex{${1}}"},"unusual":true},
+		{"name":"SBLPageWithNote","arg":{"format":"{}{}","snippet":"SBLPageWithNote{${1:comma separated list of notes}}{${2:page}}"},"doc":"Output page with note number using n. or nn. depending on how many notes there are."},
+		{"name":"SBLPrintIndices","doc":"This command prints one or more indices depending on which are enabled with the ancient sources, modern authors and subject options."},
+		{"name":"SBLProcessIndexPages","arg":{"format":"{}","snippet":"SBLProcessIndexPages{${1:list of pages}}"},"unusual":true},
+		{"name":"SBLSetMaxRomanPage","arg":{"format":"{}","snippet":"SBLSetMaxRomanPage{${1:page}}"},"doc":"Set the maximum Roman page number (as an integer, not in Roman format) in the document in case automatic detection fails."},
+		{"name":"see","arg":{"format":"{}{}","snippet":"see{${1:index entry}}{${2:page number}}"},"doc":"\\see and \\seealso are used for index cross-references."},
+		{"name":"seealso","arg":{"format":"{}{}","snippet":"seealso{${1:index entry}}{${2:page number}}"},"doc":"\\see and \\seealso are used for index cross-references."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"adadi","arg":{"format":"{}","snippet":"adadi{${1:counter}}"}},
+		{"name":"adadinumeral","arg":{"format":"{}","snippet":"adadinumeral{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

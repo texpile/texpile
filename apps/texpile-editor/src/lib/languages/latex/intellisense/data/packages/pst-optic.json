@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"beamLight","arg":{"format":"[]","snippet":"beamLight[${1}]"}},
+		{"name":"beamLight"},
+		{"name":"lens","arg":{"format":"[]","snippet":"lens[${1}]"}},
+		{"name":"lens"},
+		{"name":"lensCVG","doc":"The two macros \\lensCVG and \\lensDVG draw some more rays as the main macro \\lens with the setting lensType=CVG|DVG."},
+		{"name":"lensDVG","doc":"The two macros \\lensCVG and \\lensDVG draw some more rays as the main macro \\lens with the setting lensType=CVG|DVG."},
+		{"name":"lensSPH","arg":{"format":"[]","snippet":"lensSPH[${1}]"}},
+		{"name":"lensSPH"},
+		{"name":"mirrorCVGRay","arg":{"format":"[]","snippet":"mirrorCVGRay[${1}]"}},
+		{"name":"mirrorCVGRay"},
+		{"name":"mirrorDVGRay","arg":{"format":"[]()()()","snippet":"mirrorDVGRay[${1}](${2})(${3})(${4})"}},
+		{"name":"mirrorDVGRay","arg":{"format":"()()()","snippet":"mirrorDVGRay(${1})(${2})(${3})"}},
+		{"name":"nodeBetween","arg":{"format":"()(){}","snippet":"nodeBetween(${1})(${2}){${3}}"}},
+		{"name":"planMirrorRay","arg":{"format":"()()(){}","snippet":"planMirrorRay(${1})(${2})(${3}){${4}}"},"doc":"The \\planMirrorRay-Macro caculates the coordinates of a mirrored point."},
+		{"name":"psBeforeLine","arg":{"format":"[]()(){}","snippet":"psBeforeLine[${1}](${2})(${3}){${4}}"}},
+		{"name":"psBeforeLine","arg":{"format":"()(){}","snippet":"psBeforeLine(${1})(${2}){${3}}"}},
+		{"name":"pslensCVG","arg":{"format":"[]{}{}","snippet":"pslensCVG[${1}]{${2}}{${3}}"}},
+		{"name":"pslensCVG","arg":{"format":"{}{}","snippet":"pslensCVG{${1}}{${2}}"}},
+		{"name":"pslensDVG","arg":{"format":"[]{}{}","snippet":"pslensDVG[${1}]{${2}}{${3}}"}},
+		{"name":"pslensDVG","arg":{"format":"{}{}","snippet":"pslensDVG{${1}}{${2}}"}},
+		{"name":"psprism","arg":{"format":"[]","snippet":"psprism[${1}]"}},
+		{"name":"psprism"},
+		{"name":"rayInterLens","arg":{"format":"()(){}{}","snippet":"rayInterLens(${1})(${2}){${3}}{${4}}"}},
+		{"name":"telescope","arg":{"format":"[]","snippet":"telescope[${1}]"}},
+		{"name":"telescope"}
+	],
+	"envs": [],
+	"keys": {}
+}

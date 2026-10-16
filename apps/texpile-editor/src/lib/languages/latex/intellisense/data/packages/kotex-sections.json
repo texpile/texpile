@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"konames-utf"}],
+	"macros": [
+		{"name":"kosecldim","unusual":true},
+		{"name":"kscntformat","arg":{"format":"{}{}{}","snippet":"kscntformat{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

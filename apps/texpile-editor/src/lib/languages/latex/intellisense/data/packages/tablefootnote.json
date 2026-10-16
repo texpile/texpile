@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"letltxmacro"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"tablefootnote","arg":{"format":"[]{}","snippet":"tablefootnote[${1:footnote number}]{${2:footnote text}}"},"doc":"This LaTeX package provides the command \\tablefootnote{...} to be used in a table or sidewaystable environment."},
+		{"name":"tablefootnote","arg":{"format":"{}","snippet":"tablefootnote{${1:footnote text}}"},"doc":"This LaTeX package provides the command \\tablefootnote{...} to be used in a table or sidewaystable environment."}
+	],
+	"envs": [],
+	"keys": {}
+}

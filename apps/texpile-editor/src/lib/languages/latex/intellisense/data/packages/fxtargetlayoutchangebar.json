@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"changebar"}],
+	"macros": [
+		{"name":"FXTargetLayoutChangeBar","arg":{"format":"{}{}","snippet":"FXTargetLayoutChangeBar{${1:type}}{${2:target}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

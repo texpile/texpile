@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"ifthen"},{"name":"setspace"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"amscd"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"cmap","if":"cmbright|fourier"},{"name":"cmbright","if":"cmbright"},{"name":"microtype","if":"cmbright|fourier"},{"name":"etoolbox","if":"cmbright|fourier"},{"name":"fancyhdr","if":"fancyhdr"},{"name":"fourier","if":"fourier"},{"name":"textcomp","if":"fourier"},{"name":"fourier-orns","if":"fourier"}],
+	"macros": [
+		{"name":"declaration","arg":{"format":"{}","snippet":"declaration{${1:text}}"},"doc":"While using \\declaration{} will give you a stock declaration page, in most cases this will need tailoring to the specific of your thesis per university requirements."},
+		{"name":"dedication","arg":{"format":"{}","snippet":"dedication{${1:text}}"}},
+		{"name":"degreetext"},
+		{"name":"shorttitle","arg":{"format":"{}","snippet":"shorttitle{${1:short title}}"},"if":"fancyhdr"},
+		{"name":"stretchfactor"},
+		{"name":"yfourdeclaration","arg":{"format":"{}","snippet":"yfourdeclaration{${1:degree}}"},"doc":"When using the y4project option, the command \\yfourdeclaration{...} can be used right after the abstract to print a declaration at the bottom of that page; the argument of this command is the name of the particular degree."}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"laysummary"}
+	],
+	"keys": {
+		"\\usepackage/edmaths#c": ["cmbright","colour","comicsans","double","fancyhdr","firstyear","fourier","hyperref","masterph","mastersc","mmath","onehalf","phd","secondyear","single","thirdyear","y4project"]
+	},
+	"args": ["\\usepackage/edmaths#c"]
+}

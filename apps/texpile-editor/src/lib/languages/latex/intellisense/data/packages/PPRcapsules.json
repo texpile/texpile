@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathpazo"}],
+	"macros": [
+		{"name":"colA","unusual":true},
+		{"name":"colB","unusual":true},
+		{"name":"slidetitle","arg":{"format":"{}","snippet":"slidetitle{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

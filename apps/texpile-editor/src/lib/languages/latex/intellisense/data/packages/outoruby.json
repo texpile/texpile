@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pxrubrica"},{"name":"keyval"}],
+	"macros": [
+		{"name":"outoruby","arg":{"format":"[][][][]{}{}","snippet":"outoruby[${1:option 1}][${2:option 2}][${3:pre-space}][${4:post-space}]{${5:body}}{${6:ruby}}"},"doc":"This package provides the `\\outoruby` command, which supports line breaks when typesetting ruby anotations."},
+		{"name":"outoruby","arg":{"format":"{}{}","snippet":"outoruby{${1:body}}{${2:ruby}}"},"doc":"This package provides the `\\outoruby` command, which supports line breaks when typesetting ruby anotations."},
+		{"name":"outorubyhyphenbreakable","arg":{"format":"[]","snippet":"outorubyhyphenbreakable[${1:penalty}]"}},
+		{"name":"outorubyhyphenbreakable"},
+		{"name":"outorubysetup","arg":{"format":"{}","snippet":"outorubysetup{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

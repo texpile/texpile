@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"class-standalone"},{"name":"shellesc"},{"name":"ifluatex"},{"name":"iftex"},{"name":"xkeyval"},{"name":"class-article"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"tikz"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"luatex85","engines":["lualatex"]},{"name":"pdftexcmds","engines":["lualatex"]}],
+	"macros": [
+		{"name":"animaBoardDimension","arg":{"format":"{}{}","snippet":"animaBoardDimension{${1:width}}{${2:height}}"},"doc":"\\animaBoardDimension{⟨w⟩}{⟨h⟩} With the command \\animaBoardDimension{⟨w⟩}{⟨h⟩}, it is possible to modify the dimensions of the presentation."},
+		{"name":"animaColor","arg":{"format":"{}","snippet":"animaColor{${1:palette}}"},"doc":"This command internally uses the \\animaColorTheme command to provide color palette options for slide presentations using the anima class."},
+		{"name":"animaColorTheme","arg":{"format":"{}{}{}{}{}{}","snippet":"animaColorTheme{${1:board color}}{${2:text color}}{${3:block color}}{${4:alert block color}}{${5:example block color}}{${6:other block color}}"},"doc":"\\animaColorTheme{⟨c1⟩}...{⟨c6⟩} The command \\animaColorTheme{⟨c1⟩}...{⟨c6⟩} defines the color palette for the slide presentation."},
+		{"name":"animaExemplo","unusual":true},
+		{"name":"animaFormatText","doc":"The command \\animaFormatText{⟨conf⟩} is used to modify the formatting of the block titles."},
+		{"name":"animaFormatTitle","doc":"The command \\animaFormatTitle{⟨conf⟩} is used to modify the formatting of the block content texts."},
+		{"name":"animaFrameTitle","arg":{"format":"{}{}{}{}","snippet":"animaFrameTitle{${1:title}}{${2:name}}{${3:city}}{${4:year}}"},"doc":"The command \\animaFrameTitle{⟨t⟩}{⟨n⟩}{⟨c⟩}{⟨y⟩} can be used to create a title slide for the presentation."},
+		{"name":"animaStyle","arg":{"format":"{}","snippet":"animaStyle{${1:style}}"},"doc":"This command provides style options for slide presentations using the anima class."},
+		{"name":"animaTheme","arg":{"format":"{}","snippet":"animaTheme{${1:theme}}"},"doc":"This command provides theme options for slide presentations using the anima class."},
+		{"name":"nFrame","doc":"The command \\nFrame is the counter that indicates which frame of the animation is currently being displayed."},
+		{"name":"um"},
+		{"name":"uns","arg":{"format":"[][]{}{}{}","snippet":"uns[${1:r}][${2:s}]{${3:a}}{${4:b}}{${5:c}}"},"doc":"This command is a function that divides the interval [0, 1] into three parts proportional to the ratio a:b:c and performs the animation in the intermediate part."},
+		{"name":"uns","arg":{"format":"{}{}{}","snippet":"uns{${1:a}}{${2:b}}{${3:c}}"},"doc":"This command is a function that divides the interval [0, 1] into three parts proportional to the ratio a:b:c and performs the animation in the intermediate part."},
+		{"name":"uns*","arg":{"format":"[][]{}{}{}","snippet":"uns*[${1:r}][${2:s}]{${3:a}}{${4:b}}{${5:c}}"},"doc":"This command is a function that divides the interval [0, 1] into three parts proportional to the ratio a:b:c and performs the animation in the intermediate part."},
+		{"name":"uns*","arg":{"format":"{}{}{}","snippet":"uns*{${1:a}}{${2:b}}{${3:c}}"},"doc":"This command is a function that divides the interval [0, 1] into three parts proportional to the ratio a:b:c and performs the animation in the intermediate part."},
+		{"name":"zero","doc":"This command is defined as 1-\\um."},
+		{"name":"zeros","arg":{"format":"{}{}{}","snippet":"zeros{${1:a}}{${2:b}}{${3:c}}"},"doc":"The command \\zeros is defined as 1-\\uns."}
+	],
+	"envs": [
+		{"name":"alertblock","arg":{"format":"[]{}[][][]","snippet":"[${1:position}]{${2:title}}[${3:width}][${4:title node options}][${5:text node options}]"}},
+		{"name":"alertblock","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"anima","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
+		{"name":"anima","unusual":true},
+		{"name":"anotherblock","arg":{"format":"[]{}[][][]","snippet":"[${1:position}]{${2:title}}[${3:width}][${4:title node options}][${5:text node options}]"}},
+		{"name":"anotherblock","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"block","arg":{"format":"[]{}[][][]","snippet":"[${1:position}]{${2:title}}[${3:width}][${4:title node options}][${5:text node options}]"}},
+		{"name":"block","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"exampleblock","arg":{"format":"[]{}[][][]","snippet":"[${1:position}]{${2:title}}[${3:width}][${4:title node options}][${5:text node options}]"}},
+		{"name":"exampleblock","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"frame","arg":{"format":"[]","snippet":"[${1:number of frames}]"},"doc":"Like the beamer class, the anima class uses the frame environment to create slide presentations."},
+		{"name":"frame","doc":"Like the beamer class, the anima class uses the frame environment to create slide presentations."},
+		{"name":"notitleblock","arg":{"format":"[][][]","snippet":"[${1:position}][${2:width}][${3:node options}]"}},
+		{"name":"notitleblock"}
+	],
+	"keys": {}
+}

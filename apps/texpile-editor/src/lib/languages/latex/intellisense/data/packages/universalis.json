@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"univrs","doc":"Commands \\univrs and \\univrscondensed may be used to select the standard and condensed variants, respectively, for localized use."},
+		{"name":"univrscondensed","doc":"Commands \\univrs and \\univrscondensed may be used to select the standard and condensed variants, respectively, for localized use."}
+	],
+	"envs": [],
+	"keys": {}
+}

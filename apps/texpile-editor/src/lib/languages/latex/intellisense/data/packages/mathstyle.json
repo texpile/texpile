@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"binom","arg":{"format":"{}{}","snippet":"binom{${1:top}}{${2:bottom}}"},"math":true},
+		{"name":"currentmathstyle","doc":"The command \\currentmathstyle can be used to switch to the mode currently active."},
+		{"name":"dbinom","arg":{"format":"{}{}","snippet":"dbinom{${1:top}}{${2:bottom}}"},"math":true},
+		{"name":"dfrac","arg":{"format":"{}{}","snippet":"dfrac{${1:numerator}}{${2:denominator}}"},"math":true},
+		{"name":"fracstyle","unusual":true},
+		{"name":"genfrac","arg":{"format":"{}{}{}{}{}{}","snippet":"genfrac{${1:left delimiter}}{${2:right delimiter}}{${3:thickness}}{${4:style}}{${5:numerator}}{${6:denominator}}"}},
+		{"name":"mathstyle","unusual":true},
+		{"name":"mathsub","arg":{"format":"{}","snippet":"mathsub{${1:subscript}}"},"unusual":true},
+		{"name":"mathsup","arg":{"format":"{}","snippet":"mathsup{${1:superscript}}"},"unusual":true},
+		{"name":"tbinom","arg":{"format":"{}{}","snippet":"tbinom{${1:top}}{${2:bottom}}"},"math":true},
+		{"name":"tfrac","arg":{"format":"{}{}","snippet":"tfrac{${1:numerator}}{${2:denominator}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/mathstyle#c": ["activechars","mathactivechars","noactivechars"]
+	},
+	"args": ["\\usepackage/mathstyle#c"]
+}

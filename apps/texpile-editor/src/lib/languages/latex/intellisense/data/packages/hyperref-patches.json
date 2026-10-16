@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hyperref-patches#c": ["nofoiltex","nolisting","nolistings","norevtex"]
+	},
+	"args": ["\\usepackage/hyperref-patches#c"]
+}

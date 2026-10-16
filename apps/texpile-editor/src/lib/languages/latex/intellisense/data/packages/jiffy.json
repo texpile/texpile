@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"nextpage"},{"name":"iftex"},{"name":"pgfopts"},{"name":"pdflscape-nometadata"},{"name":"lscape"}],
+	"macros": [
+		{"name":"jiffy","doc":"\\jiffy Generates the diagnostic pages appropriate to the document’s sidedness."}
+	],
+	"envs": [],
+	"keys": {}
+}

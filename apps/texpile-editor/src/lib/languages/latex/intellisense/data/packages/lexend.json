@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"LexendDeca","arg":{"format":"{}","snippet":"LexendDeca{${1:text}}"}},
+		{"name":"LexendExa","arg":{"format":"{}","snippet":"LexendExa{${1:text}}"}},
+		{"name":"LexendGiga","arg":{"format":"{}","snippet":"LexendGiga{${1:text}}"}},
+		{"name":"LexendMega","arg":{"format":"{}","snippet":"LexendMega{${1:text}}"}},
+		{"name":"LexendPeta","arg":{"format":"{}","snippet":"LexendPeta{${1:text}}"}},
+		{"name":"LexendTera","arg":{"format":"{}","snippet":"LexendTera{${1:text}}"}},
+		{"name":"LexendVariants","doc":"This command is just a list containing all variants of the Lexend font collection."},
+		{"name":"LexendZetta","arg":{"format":"{}","snippet":"LexendZetta{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

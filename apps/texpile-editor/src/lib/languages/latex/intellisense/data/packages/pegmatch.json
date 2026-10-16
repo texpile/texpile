@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"ExtractSpeg","arg":{"format":"{}{}{}","snippet":"ExtractSpeg{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"IfSpegExtractF","arg":{"format":"{}{}{}{}","snippet":"IfSpegExtractF{${1:speg}}{${2:string}}{${3:seq}}{${4:false code}}"}},
+		{"name":"IfSpegExtractT","arg":{"format":"{}{}{}{}","snippet":"IfSpegExtractT{${1:speg}}{${2:string}}{${3:seq}}{${4:true code}}"}},
+		{"name":"IfSpegExtractTF","arg":{"format":"{}{}{}{}{}","snippet":"IfSpegExtractTF{${1:speg}}{${2:string}}{${3:seq}}{${4:true code}}{${5:false code}}"}},
+		{"name":"IfSpegMatchF","arg":{"format":"{}{}{}","snippet":"IfSpegMatchF{${1:speg}}{${2:string}}{${3:false code}}"}},
+		{"name":"IfSpegMatchT","arg":{"format":"{}{}{}","snippet":"IfSpegMatchT{${1:speg}}{${2:string}}{${3:true code}}"}},
+		{"name":"IfSpegMatchTF","arg":{"format":"{}{}{}{}","snippet":"IfSpegMatchTF{${1:speg}}{${2:string}}{${3:true code}}{${4:false code}}"}},
+		{"name":"LogSpeg","arg":{"format":"{}","snippet":"LogSpeg{${1}}"},"unusual":true},
+		{"name":"lSpegTmpaSeq"},
+		{"name":"lSpegTmpbSeq"},
+		{"name":"lTmpaSpeg","doc":"There are two predefined scratch speg variables for setting speg patterns: \\lTmpaSpeg and \\lTmpbSpeg."},
+		{"name":"lTmpbSpeg","doc":"There are two predefined scratch speg variables for setting speg patterns: \\lTmpaSpeg and \\lTmpbSpeg."},
+		{"name":"MapSpegSeqInline","arg":{"format":"{}{}","snippet":"MapSpegSeqInline{${1}}{${2}}"}},
+		{"name":"MatchSpeg","arg":{"format":"{}{}","snippet":"MatchSpeg{${1}}{${2}}"},"unusual":true},
+		{"name":"NewSpeg","arg":{"format":"{}","snippet":"NewSpeg{${1}}"}},
+		{"name":"SetSpeg","arg":{"format":"{}{}","snippet":"SetSpeg{${1}}{${2}}"},"doc":"In using \\SetSpeg command to set a speg variable with a pattern expression, you can use other speg variables."},
+		{"name":"SetSpegTracing","arg":{"format":"{}","snippet":"SetSpegTracing{${1}}"},"unusual":true},
+		{"name":"SpegC","arg":{"format":"{}","snippet":"SpegC{${1:pattern}}"}},
+		{"name":"SpegCp"},
+		{"name":"SpegP","arg":{"format":"{}","snippet":"SpegP{${1:string}}"},"doc":"The pattern \\SpegP{abc} matches the string abc literally."},
+		{"name":"SpegQ","arg":{"format":"{}","snippet":"SpegQ{${1:n}}"}},
+		{"name":"SpegR","arg":{"format":"{}","snippet":"SpegR{${1:ranges}}"}},
+		{"name":"SpegS","arg":{"format":"{}","snippet":"SpegS{${1:characters}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

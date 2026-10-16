@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"annotationfont","unusual":true},
+		{"name":"arrowdistance","unusual":true},
+		{"name":"arrowthickness","unusual":true},
+		{"name":"borderthickness","unusual":true},
+		{"name":"coordinatelabelback","unusual":true},
+		{"name":"coordinatelabelfont","unusual":true},
+		{"name":"coordinatelabelsep","unusual":true},
+		{"name":"coordinatelabeltext","unusual":true},
+		{"name":"finegridcolor","unusual":true},
+		{"name":"imagelabelback","unusual":true},
+		{"name":"imagelabelfont","unusual":true},
+		{"name":"imagelabelsep","unusual":true},
+		{"name":"imagelabelset","arg":{"format":"{}","snippet":"imagelabelset{${1:key=value list}}","keys":["pgfkeys:/imagelabels"],"keyPos":0},"doc":"Various options, like font size and so on, can be configured with the \\imagelabelset macro."},
+		{"name":"imagelabeltext","unusual":true},
+		{"name":"labeloutersep","unusual":true},
+		{"name":"maingridcolor","unusual":true},
+		{"name":"tipsize","unusual":true}
+	],
+	"envs": [
+		{"name":"annotationimage","arg":{"format":"[]{}{}","snippet":"[${1:grid}]{${2:image options}}{${3:file name}}"},"doc":"To include an image, the annotationimage environment is used."},
+		{"name":"annotationimage","arg":{"format":"{}{}","snippet":"{${1:image options}}{${2:file name}}"},"doc":"To include an image, the annotationimage environment is used."}
+	],
+	"keys": {
+		"pgfkeys:/imagelabels": ["annotation font=","arrow distance=","arrow thickness=","border thickness=","coarse grid color=","coordinate label back=","coordinate label distance=","coordinate label font=","coordinate label text=","fine grid color=","image label back=","image label distance=","image label font=","image label text=","outer dist=","tip size=","annotation above={${1:text} at ${2:position}}","annotation below={${1:text} at ${2:position}}","annotation left={${1:text} at ${2:position}}","annotation right={${1:text} at ${2:position}}","image label={${1:text} at ${2|north west,north,north east,east,south east,south,south west,west,center|}}","coordinate label={${1:text} at (${2:coordinate})}"]
+	}
+}

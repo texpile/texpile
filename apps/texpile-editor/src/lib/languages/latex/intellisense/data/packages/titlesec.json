@@ -1,348 +1,60 @@
 {
-  "deps": [
-    {
-      "name": "titleps",
-      "if": "pagestyles"
-    }
-  ],
-  "macros": [
-    {
-      "name": "titlelabel",
-      "arg": {
-        "format": "{}",
-        "snippet": "titlelabel{${1:label-format}}"
-      }
-    },
-    {
-      "name": "thetitle"
-    },
-    {
-      "name": "titleformat*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "titleformat*{${1:command%plain}}{${2:format}}"
-      }
-    },
-    {
-      "name": "titleformat",
-      "arg": {
-        "format": "{}{}{}{}{}",
-        "snippet": "titleformat{${1:command%plain}}{${2:format}}{${3:label}}{${4:sep%l}}{${5:before-code}}"
-      }
-    },
-    {
-      "name": "titleformat",
-      "arg": {
-        "format": "{}[]{}{}{}{}",
-        "snippet": "titleformat{${1:command%plain}}[${6:shape%keyvals}]{${2:format}}{${3:label}}{${4:sep%l}}{${5:before-code}}",
-        "keys": [
-          "\\titleformat#c"
-        ],
-        "keyPos": 1
-      }
-    },
-    {
-      "name": "titleformat",
-      "arg": {
-        "format": "{}[]{}{}{}{}[]",
-        "snippet": "titleformat{${1:command%plain}}[${6:shape%keyvals}]{${2:format}}{${3:label}}{${4:sep%l}}{${5:before-code}}[${7:after-code}]",
-        "keys": [
-          "\\titleformat#c"
-        ],
-        "keyPos": 1
-      }
-    },
-    {
-      "name": "chaptertitlename",
-      "unusual": true
-    },
-    {
-      "name": "titlespacing",
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "titlespacing{${1:command%plain}}{${2:left%l}}{${3:before-sep%l}}{${4:after-sep%l}}"
-      }
-    },
-    {
-      "name": "titlespacing",
-      "arg": {
-        "format": "{}{}{}{}[]",
-        "snippet": "titlespacing{${1:command%plain}}{${2:left%l}}{${3:before-sep%l}}{${4:after-sep%l}}[${5:right-sep%l}]"
-      }
-    },
-    {
-      "name": "titlespacing*",
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "titlespacing*{${1:command%plain}}{${2:left%l}}{${3:before-sep%l}}{${4:after-sep%l}}"
-      }
-    },
-    {
-      "name": "titlespacing*",
-      "arg": {
-        "format": "{}{}{}{}[]",
-        "snippet": "titlespacing*{${1:command%plain}}{${2:left%l}}{${3:before-sep%l}}{${4:after-sep%l}}[${5:right-sep%l}]"
-      }
-    },
-    {
-      "name": "beforetitleunit",
-      "unusual": true
-    },
-    {
-      "name": "aftertitleunit",
-      "unusual": true
-    },
-    {
-      "name": "filright"
-    },
-    {
-      "name": "filcenter"
-    },
-    {
-      "name": "filleft"
-    },
-    {
-      "name": "fillast"
-    },
-    {
-      "name": "filinner"
-    },
-    {
-      "name": "filouter"
-    },
-    {
-      "name": "wordsep",
-      "unusual": true
-    },
-    {
-      "name": "bottomtitlespace",
-      "unusual": true
-    },
-    {
-      "name": "nostruts",
-      "unusual": true
-    },
-    {
-      "name": "titleline",
-      "arg": {
-        "format": "{}",
-        "snippet": "titleline{${1:horizontal material%text}}"
-      }
-    },
-    {
-      "name": "titleline",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "titleline[${2:align%keyvals}]{${1:horizontal material%text}}",
-        "keys": [
-          "\\titleline,\\titleline*"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "titleline*",
-      "if": "calcwidth",
-      "arg": {
-        "format": "{}",
-        "snippet": "titleline*{${1:horizontal material%text}}"
-      }
-    },
-    {
-      "name": "titleline*",
-      "if": "calcwidth",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "titleline*[${2:align%keyvals}]{${1:horizontal material%text}}",
-        "keys": [
-          "\\titleline,\\titleline*"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "titlerule"
-    },
-    {
-      "name": "titlerule",
-      "arg": {
-        "format": "[]",
-        "snippet": "titlerule[${1:height}]"
-      }
-    },
-    {
-      "name": "titlerule*",
-      "arg": {
-        "format": "{}",
-        "snippet": "titlerule*{${1:text}}"
-      }
-    },
-    {
-      "name": "titlerule*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "titlerule*[${2:width}]{${1:text}}"
-      }
-    },
-    {
-      "name": "titlewidth",
-      "unusual": true
-    },
-    {
-      "name": "titlewidthfirst",
-      "unusual": true
-    },
-    {
-      "name": "titlewidthlast",
-      "unusual": true
-    },
-    {
-      "name": "iftitlemeasuring",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "iftitlemeasuring{${1:true}}{${2:false}}"
-      }
-    },
-    {
-      "name": "assignpagestyle",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "assignpagestyle{${1:command%plain}}{${2:pagestyle}}"
-      }
-    },
-    {
-      "name": "sectionbreak",
-      "unusual": true
-    },
-    {
-      "name": "subsectionbreak",
-      "unusual": true
-    },
-    {
-      "name": "subsubsectionbreak",
-      "unusual": true
-    },
-    {
-      "name": "paragraphbreak",
-      "unusual": true
-    },
-    {
-      "name": "subparagraphbreak",
-      "unusual": true
-    },
-    {
-      "name": "chaptertolists",
-      "unusual": true
-    },
-    {
-      "name": "titleclass",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "titleclass{${1:name%cmd}}{${2:class%keyvals}}",
-        "keys": [
-          "\\titleclass"
-        ],
-        "keyPos": 1
-      }
-    },
-    {
-      "name": "titleclass",
-      "arg": {
-        "format": "{}{}[]",
-        "snippet": "titleclass{${1:name%cmd}}{${2:class%keyvals}}[${3:super-level-cmd}]",
-        "keys": [
-          "\\titleclass"
-        ],
-        "keyPos": 1
-      }
-    },
-    {
-      "name": "titleclass",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "titleclass{${1:name%cmd}}[${3:start-level-num}]{${2:class%keyvals}}",
-        "keys": [
-          "\\titleclass"
-        ],
-        "keyPos": 2
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/titlesec#c": [
-      "rm",
-      "sf",
-      "tt",
-      "md",
-      "bf",
-      "up",
-      "it",
-      "sl",
-      "sc",
-      "big",
-      "medium",
-      "small",
-      "tiny",
-      "raggedleft",
-      "center",
-      "raggedright",
-      "compact",
-      "uppercase",
-      "indentafter",
-      "noindentafter",
-      "rigidchapters",
-      "rubberchapters",
-      "bottomtitles",
-      "nobottomtitles",
-      "nobottomtitles*",
-      "aftersep",
-      "largestsep",
-      "pageatnewline",
-      "nostruts",
-      "calcwidth",
-      "explicit",
-      "oldparttoc",
-      "newparttoc",
-      "clearempty",
-      "toctitles",
-      "newlinetospace",
-      "notocpart*",
-      "loadonly",
-      "pagestyles",
-      "floatps",
-      "psfloats",
-      "extramarks",
-      "outermarks",
-      "topmarks",
-      "botmarks",
-      "innermarks",
-      "footmarks"
-    ],
-    "\\titleformat#c": [
-      "hang",
-      "block",
-      "display",
-      "runin",
-      "leftmargin",
-      "rightmargin",
-      "drop",
-      "wrap",
-      "frame"
-    ],
-    "\\titleline,\\titleline*": [
-      "l",
-      "c",
-      "r"
-    ],
-    "\\titleclass": [
-      "page",
-      "top",
-      "straight"
-    ]
-  },
-  "args": [
-    "\\usepackage/titlesec#c"
-  ]
+	"deps": [{"name":"titleps","if":"pagestyles"}],
+	"macros": [
+		{"name":"aftertitleunit"},
+		{"name":"assignpagestyle","arg":{"format":"{}{}","snippet":"assignpagestyle{${1}}{${2}}"}},
+		{"name":"beforetitleunit","doc":"The lengths \\beforetitleunit and \\aftertitleunit are used as units in the * settings and you can change them if you do not like the predefined values (or for slight changes in the makeup, for example)."},
+		{"name":"bottomtitlespace"},
+		{"name":"chaptertitlename"},
+		{"name":"filcenter"},
+		{"name":"filinner","doc":"\\filinner and \\filouter are \\filleft or \\filright depending on the page."},
+		{"name":"fillast"},
+		{"name":"filleft"},
+		{"name":"filouter","doc":"\\filinner and \\filouter are \\filleft or \\filright depending on the page."},
+		{"name":"filright"},
+		{"name":"iftitlemeasuring","arg":{"format":"{}{}","snippet":"iftitlemeasuring{${1}}{${2}}"},"doc":"When the title is being measured (first pass), the ⟨true⟩ branch is used, and when the title is actually typeset (second pass) the ⟨false⟩ branch is used."},
+		{"name":"newpagestyle","arg":{"format":"{}[]{}","snippet":"newpagestyle{${1:name}}[${2:global style}]{${3:commands}}"}},
+		{"name":"newpagestyle","arg":{"format":"{}{}","snippet":"newpagestyle{${1:name}}{${2:commands}}"}},
+		{"name":"nostruts"},
+		{"name":"partmark","arg":{"format":"{}","snippet":"partmark{${1}}"},"unusual":true},
+		{"name":"renewpagestyle","arg":{"format":"{}[]{}","snippet":"renewpagestyle{${1:name}}[${2:global style}]{${3:commands}}"}},
+		{"name":"renewpagestyle","arg":{"format":"{}{}","snippet":"renewpagestyle{${1:name}}{${2:commands}}"}},
+		{"name":"thetitle"},
+		{"name":"titleclass","arg":{"format":"{}{}[]","snippet":"titleclass{${1:name}}{${2:class}}[${3:super-level command}]","keys":["titlesec:class"],"keyPos":1}},
+		{"name":"titleclass","arg":{"format":"{}{}","snippet":"titleclass{${1:name}}{${2:class}}","keys":["titlesec:class"],"keyPos":1}},
+		{"name":"titleclass","arg":{"format":"{}[]{}","snippet":"titleclass{${1}}[${2}]{${3}}","keys":["titlesec:class"],"keyPos":2}},
+		{"name":"titleformat","arg":{"format":"{}[]{}{}{}{}[]","snippet":"titleformat{${1:command}}[${2:shape}]{${3:format}}{${4:label}}{${5:sep}}{${6:before-code}}[${7:after-code}]","keys":["titlesec:shape"],"keyPos":1}},
+		{"name":"titleformat","arg":{"format":"{}{}{}{}{}","snippet":"titleformat{${1:command}}{${2:format}}{${3:label}}{${4:sep}}{${5:before-code}}"}},
+		{"name":"titleformat*","arg":{"format":"{}[]{}{}{}{}[]","snippet":"titleformat*{${1:command}}[${2:shape}]{${3:format}}{${4:label}}{${5:sep}}{${6:before-code}}[${7:after-code}]","keys":["titlesec:shape"],"keyPos":1}},
+		{"name":"titleformat*","arg":{"format":"{}{}{}{}{}","snippet":"titleformat*{${1:command}}{${2:format}}{${3:label}}{${4:sep}}{${5:before-code}}"}},
+		{"name":"titlelabel","arg":{"format":"{}","snippet":"titlelabel{${1}}"}},
+		{"name":"titleline","arg":{"format":"[]{}","snippet":"titleline[${1:align}]{${2:horizontal material}}","keys":["titlesec:align"],"keyPos":0},"doc":"The \\titleline command allows inserting a line, which may contain text and other “horizontal” material."},
+		{"name":"titleline","arg":{"format":"{}","snippet":"titleline{${1:horizontal material}}"},"doc":"The \\titleline command allows inserting a line, which may contain text and other “horizontal” material."},
+		{"name":"titleline*","arg":{"format":"[]{}","snippet":"titleline*[${1:align}]{${2:horizontal material}}","keys":["titlesec:align"],"keyPos":0},"doc":"The \\titleline command allows inserting a line, which may contain text and other “horizontal” material."},
+		{"name":"titleline*","arg":{"format":"{}","snippet":"titleline*{${1:horizontal material}}"},"doc":"The \\titleline command allows inserting a line, which may contain text and other “horizontal” material."},
+		{"name":"titlerule","arg":{"format":"[]","snippet":"titlerule[${1}]"},"doc":"The \\titlerule command, which is enclosed automatically in \\titleline if necessary, can be used to build rules and fillers."},
+		{"name":"titlerule","doc":"The \\titlerule command, which is enclosed automatically in \\titleline if necessary, can be used to build rules and fillers."},
+		{"name":"titlerule*","arg":{"format":"[]","snippet":"titlerule*[${1}]"},"doc":"The \\titlerule command, which is enclosed automatically in \\titleline if necessary, can be used to build rules and fillers."},
+		{"name":"titlerule*","doc":"The \\titlerule command, which is enclosed automatically in \\titleline if necessary, can be used to build rules and fillers."},
+		{"name":"titlespacing","arg":{"format":"{}{}{}{}[]","snippet":"titlespacing{${1:command}}{${2:left}}{${3:before-sep}}{${4:after-sep}}[${5:right-sep}]"}},
+		{"name":"titlespacing","arg":{"format":"{}{}{}{}","snippet":"titlespacing{${1:command}}{${2:left}}{${3:before-sep}}{${4:after-sep}}"}},
+		{"name":"titlespacing*","arg":{"format":"{}{}{}{}[]","snippet":"titlespacing*{${1:command}}{${2:left}}{${3:before-sep}}{${4:after-sep}}[${5:right-sep}]"}},
+		{"name":"titlespacing*","arg":{"format":"{}{}{}{}","snippet":"titlespacing*{${1:command}}{${2:left}}{${3:before-sep}}{${4:after-sep}}"}},
+		{"name":"titlewidth"},
+		{"name":"titlewidthfirst"},
+		{"name":"titlewidthlast"},
+		{"name":"widenhead","arg":{"format":"[][]{}{}","snippet":"widenhead[${1:even left}][${2:even right}]{${3:odd left}}{${4:odd right}}"}},
+		{"name":"widenhead","arg":{"format":"{}{}","snippet":"widenhead{${1:odd left}}{${2:odd right}}"}},
+		{"name":"widenhead*","arg":{"format":"[][]{}{}","snippet":"widenhead*[${1:even left}][${2:even right}]{${3:odd left}}{${4:odd right}}"}},
+		{"name":"widenhead*","arg":{"format":"{}{}","snippet":"widenhead*{${1:odd left}}{${2:odd right}}"}},
+		{"name":"wordsep"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/titlesec#c": ["aftersep","bf","big","botmarks","bottomtitles","calcwidth","center","clearempty","compact","explicit","extramarks","indentafter","innermarks","it","largestsep","loadonly","md","medium","newlinetospace","newparttoc","nobottomtitles","nobottomtitles*","noindentafter","nostruts","notocpart*","oldparttoc","outermarks","pageatnewline","pagestyles","psfloats","raggedleft","raggedright","rigidchapters","rm","rubberchapters","sc","sf","sl","small","tiny","toctitles","topmarks","tt","up","uppercase"],
+		"titlesec:shape": ["hang","block","display","runin","leftmargin","rightmargin","drop","wrap","frame"],
+		"titlesec:align": ["l","c","r"],
+		"titlesec:class": ["page","top","straight"]
+	},
+	"args": ["\\usepackage/titlesec#c"]
 }

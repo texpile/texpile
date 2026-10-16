@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"newpsfamily","arg":{"format":"[]{}{}","snippet":"newpsfamily[${1:scaling}]{${2:family}}{${3:series, shape, file list}}"}},
+		{"name":"newpsfamily","arg":{"format":"{}{}","snippet":"newpsfamily{${1:family}}{${2:series, shape, file list}}"}},
+		{"name":"newpsfont","arg":{"format":"[]{}{}{}{}","snippet":"newpsfont[${1:scaling}]{${2:family}}{${3:series}}{${4:shape}}{${5:file name}}"}},
+		{"name":"newpsfont","arg":{"format":"{}{}{}{}","snippet":"newpsfont{${1:family}}{${2:series}}{${3:shape}}{${4:file name}}"}},
+		{"name":"showxheight","arg":{"format":"{}","snippet":"showxheight{${1:file name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

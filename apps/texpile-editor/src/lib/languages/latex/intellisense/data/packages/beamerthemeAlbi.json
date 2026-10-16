@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"etoolbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"Albikeys","arg":{"format":"{}","snippet":"Albikeys{${1:keys}}"}},
+		{"name":"Albiotherlogoslist","arg":{"format":"{}","snippet":"Albiotherlogoslist{${1:image/width list}}"}},
+		{"name":"Albisetlogofilename","arg":{"format":"{}","snippet":"Albisetlogofilename{${1:logo file}}"}},
+		{"name":"HUGE"},
+		{"name":"semitiny"}
+	],
+	"envs": [],
+	"keys": {}
+}

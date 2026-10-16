@@ -1,0 +1,33 @@
+{
+	"macros": [
+		{"name":"ESKDtheTitleFieldI"},
+		{"name":"ESKDtheTitleFieldII"},
+		{"name":"ESKDtheTitleFieldIII"},
+		{"name":"ESKDtheTitleFieldIV"},
+		{"name":"ESKDtheTitleFieldIX"},
+		{"name":"ESKDtheTitleFieldV"},
+		{"name":"ESKDtheTitleFieldVI"},
+		{"name":"ESKDtheTitleFieldVII"},
+		{"name":"ESKDtheTitleFieldVIII"},
+		{"name":"ESKDtheTitleFieldX"},
+		{"name":"ESKDtitleAgreedBy","arg":{"format":"{}{}","snippet":"ESKDtitleAgreedBy{${1:post}}{${2:name}}"},"doc":"размещает гриф согласования в левой части поля 3."},
+		{"name":"ESKDtitleApprovedBy","arg":{"format":"{}{}","snippet":"ESKDtitleApprovedBy{${1:post}}{${2:name}}"}},
+		{"name":"ESKDtitleApprovingSheet","arg":{"format":"{}","snippet":"ESKDtitleApprovingSheet{${1:designation}}"}},
+		{"name":"ESKDtitleDesignedBy","arg":{"format":"{}{}","snippet":"ESKDtitleDesignedBy{${1:post}}{${2:name}}"}},
+		{"name":"ESKDtitleFontI"},
+		{"name":"ESKDtitleFontII"},
+		{"name":"ESKDtitleFontIII"},
+		{"name":"ESKDtitleFontIV"},
+		{"name":"ESKDtitleFontIX"},
+		{"name":"ESKDtitleFontV"},
+		{"name":"ESKDtitleFontVI"},
+		{"name":"ESKDtitleFontVII"},
+		{"name":"ESKDtitleFontVIII"},
+		{"name":"ESKDtitleFontX"},
+		{"name":"ESKDtitleMakeStamp","arg":{"format":"{}{}","snippet":"ESKDtitleMakeStamp{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"ESKDtitlePage","unusual":true}
+	],
+	"keys": {}
+}

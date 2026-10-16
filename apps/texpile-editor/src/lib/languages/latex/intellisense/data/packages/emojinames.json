@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"emoji","arg":{"format":"{}","snippet":"emoji{${1}}"}},
+		{"name":"emojiDefine","arg":{"format":"{}{}","snippet":"emojiDefine{${1}}{${2}}"},"unusual":true},
+		{"name":"EmojiFont"}
+	],
+	"envs": [],
+	"keys": {}
+}

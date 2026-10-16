@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"moreverb"},{"name":"verbatim"}],
+	"macros": [
+		{"name":"ifmiktex","unusual":true},
+		{"name":"ifpdf","unusual":true},
+		{"name":"ifShellEscape","unusual":true},
+		{"name":"miktexfalse","unusual":true},
+		{"name":"miktextrue","unusual":true},
+		{"name":"pdffalse","unusual":true},
+		{"name":"pdftrue","unusual":true},
+		{"name":"ShellEscapefalse","unusual":true},
+		{"name":"ShellEscapetrue","unusual":true}
+	],
+	"envs": [
+		{"name":"dotpic","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:pic"],"keyPos":0}},
+		{"name":"dotpic"},
+		{"name":"neatopic","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:pic"],"keyPos":0}},
+		{"name":"neatopic"}
+	],
+	"keys": {
+		"keyval:pic": ["height=","width="],
+		"\\usepackage/dottex#c": ["miktex","noshell","pdf","shell"]
+	},
+	"args": ["\\usepackage/dottex#c"]
+}

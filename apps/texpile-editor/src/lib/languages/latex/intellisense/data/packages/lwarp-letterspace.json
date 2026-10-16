@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"lslig","arg":{"format":"{}","snippet":"lslig{${1:text}}"}},
+		{"name":"lsstyle"},
+		{"name":"textls","arg":{"format":"[]{}","snippet":"textls[${1:amount}]{${2:text}}"}},
+		{"name":"textls","arg":{"format":"{}","snippet":"textls{${1:text}}"}},
+		{"name":"textls*","arg":{"format":"[]{}","snippet":"textls*[${1:amount}]{${2:text}}"}},
+		{"name":"textls*","arg":{"format":"{}","snippet":"textls*{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

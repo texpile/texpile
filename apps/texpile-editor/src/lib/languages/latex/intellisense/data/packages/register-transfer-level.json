@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"circuitikz"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"createDemux","arg":{"format":"[]{}(){}","snippet":"createDemux[${1:style}]{${2:node name}}(${3:coordinates}){${4:output labels}}"}},
+		{"name":"createDemux","arg":{"format":"{}(){}","snippet":"createDemux{${1:node name}}(${2:coordinates}){${3:output labels}}"}},
+		{"name":"createHierLevel","arg":{"format":"[]{}{}{}{}{}{}","snippet":"createHierLevel[${1:style}]{${2:start node}}{${3:target coordinate}}{${4:container name}}{${5:width}}{${6:height}}{${7:image path}}"},"doc":"The \\createHierLevel command is designed to automate the \"zoom-in\" effect from a high-level block to a detailed schematic."},
+		{"name":"createHierLevel","arg":{"format":"{}{}{}{}{}{}","snippet":"createHierLevel{${1:start node}}{${2:target coordinate}}{${3:container name}}{${4:width}}{${5:height}}{${6:image path}}"},"doc":"The \\createHierLevel command is designed to automate the \"zoom-in\" effect from a high-level block to a detailed schematic."},
+		{"name":"createMux","arg":{"format":"[]{}(){}","snippet":"createMux[${1:style}]{${2:node name}}(${3:coordinates}){${4:input labels}}"}},
+		{"name":"createMux","arg":{"format":"{}(){}","snippet":"createMux{${1:node name}}(${2:coordinates}){${3:input labels}}"}},
+		{"name":"routeU","arg":{"format":"[]{}{}{}{}","snippet":"routeU[${1:style}]{${2:start}}{${3:x space}}{${4:y height}}{${5:end}}"}},
+		{"name":"routeU","arg":{"format":"{}{}{}{}","snippet":"routeU{${1:start}}{${2:x space}}{${3:y height}}{${4:end}}"}},
+		{"name":"routeZ","arg":{"format":"[]{}{}{}","snippet":"routeZ[${1:style}]{${2:start}}{${3:kink x}}{${4:end}}"}},
+		{"name":"routeZ","arg":{"format":"{}{}{}","snippet":"routeZ{${1:start}}{${2:kink x}}{${3:end}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

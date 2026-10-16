@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ltlabfirstaiddate","unusual":true},
+		{"name":"ltlabfirstaidversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

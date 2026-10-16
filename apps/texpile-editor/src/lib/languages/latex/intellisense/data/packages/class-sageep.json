@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"class-article"},{"name":"mathptmx"},{"name":"helvet"},{"name":"keyval"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"caption"},{"name":"caption3"},{"name":"natbib"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\documentclass/sageep#c": ["10pt","11pt","12pt","8pt","9pt"]
+	},
+	"args": ["\\documentclass/sageep#c"]
+}

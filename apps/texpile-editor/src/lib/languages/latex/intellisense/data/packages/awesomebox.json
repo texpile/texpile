@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"xcolor"},{"name":"array"},{"name":"ifthen"},{"name":"fontawesome5-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"abIconCertificate","unusual":true},
+		{"name":"abIconCheck","unusual":true},
+		{"name":"abIconCogs","unusual":true},
+		{"name":"abIconExclamationCircle","unusual":true},
+		{"name":"abIconExclamationTriangle","unusual":true},
+		{"name":"abIconFire","unusual":true},
+		{"name":"abIconGithub","unusual":true},
+		{"name":"abIconInfoCircle","unusual":true},
+		{"name":"abIconLightBulb","unusual":true},
+		{"name":"abIconThumbsDown","unusual":true},
+		{"name":"abIconThumbsUp","unusual":true},
+		{"name":"abIconTwitter","unusual":true},
+		{"name":"abLongLine"},
+		{"name":"abShortLine"},
+		{"name":"aweboxcontentwidth"},
+		{"name":"aweboxleftmargin"},
+		{"name":"aweboxrulewidth"},
+		{"name":"aweboxsignraise"},
+		{"name":"aweboxvskip"},
+		{"name":"awesomebox","arg":{"format":"[][][]{}{}{}{}","snippet":"awesomebox[${1:vrulecolor}][${2:hrule}][${3:title}]{${4:vrulewidth}}{${5:icon}}{${6:iconcolor}}{${7:content}}"}},
+		{"name":"awesomebox","arg":{"format":"{}{}{}{}","snippet":"awesomebox{${1:vrulewidth}}{${2:icon}}{${3:iconcolor}}{${4:content}}"}},
+		{"name":"cautionbox","arg":{"format":"{}","snippet":"cautionbox{${1:text}}"}},
+		{"name":"importantbox","arg":{"format":"{}","snippet":"importantbox{${1:text}}"}},
+		{"name":"notebox","arg":{"format":"{}","snippet":"notebox{${1:text}}"}},
+		{"name":"tipbox","arg":{"format":"{}","snippet":"tipbox{${1:text}}"}},
+		{"name":"warningbox","arg":{"format":"{}","snippet":"warningbox{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"awesomeblock","arg":{"format":"[][][]{}{}{}","snippet":"[${1:vrulecolor}][${2:hrule}][${3:title}]{${4:vrulewidth}}{${5:icon}}{${6:iconcolor}}"}},
+		{"name":"awesomeblock","arg":{"format":"{}{}{}","snippet":"{${1:vrulewidth}}{${2:icon}}{${3:iconcolor}}"}},
+		{"name":"cautionblock"},
+		{"name":"importantblock"},
+		{"name":"noteblock"},
+		{"name":"tipblock"},
+		{"name":"warningblock"}
+	],
+	"keys": {}
+}

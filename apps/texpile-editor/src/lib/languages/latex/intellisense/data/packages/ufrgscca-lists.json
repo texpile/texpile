@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"pkginfograb"},{"name":"newfloat"},{"name":"keyval"},{"name":"listings"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"DeclareNewFloat","arg":{"format":"{}{}{}{}","snippet":"DeclareNewFloat{${1}}{${2}}{${3}}{${4}}"},"doc":"A new float environment, named env-name, will be created."},
+		{"name":"listingname"},
+		{"name":"listlistingname"},
+		{"name":"listofcodelist"}
+	],
+	"envs": [
+		{"name":"codelist","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"codelist"}
+	],
+	"keys": {}
+}

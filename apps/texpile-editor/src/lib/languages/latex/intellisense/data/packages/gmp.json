@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"iftex"},{"name":"environ"}],
+	"macros": [
+		{"name":"btex"},
+		{"name":"gmpoptions","arg":{"format":"{}","snippet":"gmpoptions{${1:options}}","keys":["keyval:ggmp"],"keyPos":0}},
+		{"name":"mpdim","arg":{"format":"{}","snippet":"mpdim{${1:dimen expression}}"},"doc":"The command \\mpdim takes as an argument a length (rigid or rubber) and transforms it into a dimension understood by METAPOST (i.e., it strips off possible ‘plus’ and ‘minus’ specifications)."},
+		{"name":"mpxcommands","arg":{"format":"{}","snippet":"mpxcommands{${1:commands}}"},"doc":"With this command you can add LaTeX commands to be executed for every run of METAPOST, when typesetting labels; for instance, your favorite definitions."},
+		{"name":"resetmpxcommands","doc":"This command resets the list of commands to empty, obeying to the normal scoping rules."},
+		{"name":"resetmpxpackages","doc":"This command resets to empty the list of packages to be loaded, obeying to the normal scoping rules."},
+		{"name":"usempost","arg":{"format":"[]{}","snippet":"usempost[${1:options}]{${2:name}}"},"doc":"This command takes as its argument a string already assigned as a name to a METAPOST object. Its effect is to place the graphic object where the command appears."},
+		{"name":"usempost","arg":{"format":"{}","snippet":"usempost{${1:name}}"},"doc":"This command takes as its argument a string already assigned as a name to a METAPOST object. Its effect is to place the graphic object where the command appears."},
+		{"name":"usempxclass","arg":{"format":"[]{}","snippet":"usempxclass[${1:options}]{${2:class}}"},"doc":"This has the same syntax as \\documentclass. Its purpose is to declare the class used for the runs of TeX or LaTeX for preparing the mpx files which METAPOST needs to draw the text labels."},
+		{"name":"usempxclass","arg":{"format":"{}","snippet":"usempxclass{${1:class}}"},"doc":"This has the same syntax as \\documentclass. Its purpose is to declare the class used for the runs of TeX or LaTeX for preparing the mpx files which METAPOST needs to draw the text labels."},
+		{"name":"usempxpackage","arg":{"format":"[]{}","snippet":"usempxpackage[${1:options}]{${2:package(s)}}"}},
+		{"name":"usempxpackage","arg":{"format":"{}","snippet":"usempxpackage{${1:package(s)}}"}},
+		{"name":"verbatimtex"}
+	],
+	"envs": [
+		{"name":"mpost","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:gmp"],"keyPos":0}},
+		{"name":"mpost"},
+		{"name":"mpost*","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:gmp"],"keyPos":0}},
+		{"name":"mpost*"}
+	],
+	"keys": {
+		"keyval:ggmp": ["latex","noshellescape","nowrite","shellescape","tex","write","clean=${1|none,aux,mp|}","envname=","everymp={${1:statements}}","extension=","postrmcommand=","rmcommand="],
+		"keyval:gmp": ["mpmem=","mpsettings=","mpxcommands=","runs=","mpxprogram=${1|tex,latex|}","name=","use","use=${1|true,false|}"],
+		"\\usepackage/gmp#c": ["clean=${1|none,aux,mp|}","envname=","everymp={${1:statements}}","extension=","latex","noshellescape","nowrite","postrmcommand=","rmcommand=","shellescape","tex","write"]
+	},
+	"args": ["\\usepackage/gmp#c"]
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"latexsym"}],
+	"macros": [
+		{"name":"deutsch","arg":{"format":"{}","snippet":"deutsch{${1:symbol}}"}},
+		{"name":"normalschrift"},
+		{"name":"schreibschrift","arg":{"format":"{}","snippet":"schreibschrift{${1:font command}}"}},
+		{"name":"thisfont"}
+	],
+	"envs": [],
+	"keys": {}
+}

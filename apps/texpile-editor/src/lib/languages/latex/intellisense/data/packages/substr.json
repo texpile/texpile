@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"BeforeSubString","arg":{"format":"{}{}","snippet":"BeforeSubString{${1}}{${2}}"}},
+		{"name":"BehindSubString","arg":{"format":"{}{}","snippet":"BehindSubString{${1}}{${2}}"}},
+		{"name":"CountSubStrings","arg":{"format":"{}{}","snippet":"CountSubStrings{${1}}{${2}}"}},
+		{"name":"IfBeforeSubStringEmpty","arg":{"format":"{}{}{}{}","snippet":"IfBeforeSubStringEmpty{${1:substring}}{${2:string}}{${3:true part}}{${4:false part}}"}},
+		{"name":"IfBehindSubStringEmpty","arg":{"format":"{}{}{}{}","snippet":"IfBehindSubStringEmpty{${1:substring}}{${2:string}}{${3:true part}}{${4:false part}}"}},
+		{"name":"IfCharInString","arg":{"format":"{}{}{}{}","snippet":"IfCharInString{${1:substring}}{${2:string}}{${3:true part}}{${4:false part}}"}},
+		{"name":"IfSubStringInString","arg":{"format":"{}{}{}{}","snippet":"IfSubStringInString{${1:substring}}{${2:string}}{${3:true part}}{${4:false part}}"}},
+		{"name":"SubStringsToCounter","arg":{"format":"{}{}{}","snippet":"SubStringsToCounter{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

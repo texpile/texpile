@@ -1,0 +1,40 @@
+{
+	"deps": [{"name":"amstext"},{"name":"marginalia"},{"name":"transparent"},{"name":"transparent-nometadata"},{"name":"iftex"},{"name":"auxhook"},{"name":"luacode"},{"name":"ifluatex"},{"name":"luatexbase"},{"name":"xcolor"},{"name":"footnote","if":"footnote=true"},{"name":"footnotehyper","if":"footnotehyper=true"}],
+	"macros": [
+		{"name":"DeclarePitonEnvironment","arg":{"format":"{}{}{}{}","snippet":"DeclarePitonEnvironment{${1:name}}{${2:argument spec}}{${3:begin code}}{${4:end code}}"}},
+		{"name":"NewPitonEnvironment","arg":{"format":"{}{}{}{}","snippet":"NewPitonEnvironment{${1:name}}{${2:argument spec}}{${3:begin code}}{${4:end code}}"}},
+		{"name":"NewPitonLanguage","arg":{"format":"[]{}{}","snippet":"NewPitonLanguage[${1:dialect}]{${2:name}}{${3:keys}}","keys":["l3keys:NewPitonLanguage"],"keyPos":2},"doc":"The package piton provides a command \\NewPitonLanguage to define new languages (available in \\piton, {Piton}, etc.) with a syntax which is almost the same as the syntax of \\lstdefinelanguage."},
+		{"name":"NewPitonLanguage","arg":{"format":"{}{}","snippet":"NewPitonLanguage{${1:name}}{${2:keys}}","keys":["l3keys:NewPitonLanguage"],"keyPos":1},"doc":"The package piton provides a command \\NewPitonLanguage to define new languages (available in \\piton, {Piton}, etc.) with a syntax which is almost the same as the syntax of \\lstdefinelanguage."},
+		{"name":"piton","arg":{"format":"{}","snippet":"piton{${1:code}}"}},
+		{"name":"PitonClearUserFunctions","arg":{"format":"[]","snippet":"PitonClearUserFunctions[${1:languages}]"}},
+		{"name":"PitonClearUserFunctions"},
+		{"name":"PitonFileDate","unusual":true},
+		{"name":"PitonFileVersion","unusual":true},
+		{"name":"PitonInputFile","arg":{"format":"<>[]{}","snippet":"PitonInputFile<${1:overlay}>[${2:options}]{${3:file}}","keys":["l3keys:PitonOptions"],"keyPos":1}},
+		{"name":"PitonInputFile","arg":{"format":"<>{}","snippet":"PitonInputFile<${1:overlay}>{${2:file}}"}},
+		{"name":"PitonInputFileF","arg":{"format":"<>[]{}{}","snippet":"PitonInputFileF<${1:overlay}>[${2:options}]{${3:file}}{${4:code if not found}}","keys":["l3keys:PitonOptions"],"keyPos":1}},
+		{"name":"PitonInputFileF","arg":{"format":"<>{}{}","snippet":"PitonInputFileF<${1:overlay}>{${2:file}}{${3:code if not found}}"}},
+		{"name":"PitonInputFileT","arg":{"format":"<>[]{}{}","snippet":"PitonInputFileT<${1:overlay}>[${2:options}]{${3:file}}{${4:code if found}}","keys":["l3keys:PitonOptions"],"keyPos":1}},
+		{"name":"PitonInputFileT","arg":{"format":"<>{}{}","snippet":"PitonInputFileT<${1:overlay}>{${2:file}}{${3:code if found}}"}},
+		{"name":"PitonInputFileTF","arg":{"format":"<>[]{}{}{}","snippet":"PitonInputFileTF<${1:overlay}>[${2:options}]{${3:file}}{${4:code if found}}{${5:code if not found}}","keys":["l3keys:PitonOptions"],"keyPos":1},"doc":"The extension piton also provides the commands \\PitonInputFileT , \\PitonInputFileF and \\PitonInputFileTF with supplementary arguments corresponding to the letters T and F. Those arguments will be executed if the file to include has been found (letter T) or not found (letter F)."},
+		{"name":"PitonInputFileTF","arg":{"format":"<>{}{}{}","snippet":"PitonInputFileTF<${1:overlay}>{${2:file}}{${3:code if found}}{${4:code if not found}}"},"doc":"The extension piton also provides the commands \\PitonInputFileT , \\PitonInputFileF and \\PitonInputFileTF with supplementary arguments corresponding to the letters T and F. Those arguments will be executed if the file to include has been found (letter T) or not found (letter F)."},
+		{"name":"PitonOptions","arg":{"format":"{}","snippet":"PitonOptions{${1:keys}}","keys":["l3keys:PitonOptions"],"keyPos":0}},
+		{"name":"PitonStyle","arg":{"format":"{}{}","snippet":"PitonStyle{${1:style}}{${2:text}}"},"doc":"The command \\PitonStyle takes in as argument the name of a style and allows to retrieve the value (as a list of LaTeX instructions) of that style."},
+		{"name":"ProvidePitonEnvironment","arg":{"format":"{}{}{}{}","snippet":"ProvidePitonEnvironment{${1:name}}{${2:argument spec}}{${3:begin code}}{${4:end code}}"}},
+		{"name":"RenewPitonEnvironment","arg":{"format":"{}{}{}{}","snippet":"RenewPitonEnvironment{${1:name}}{${2:argument spec}}{${3:begin code}}{${4:end code}}"}},
+		{"name":"SetPitonIdentifier","arg":{"format":"[]{}{}","snippet":"SetPitonIdentifier[${1:language}]{${2:identifiers}}{${3:style}}"},"doc":"The command \\SetPitonIdentifier allows to automatically change the formatting of some identifiers."},
+		{"name":"SetPitonIdentifier","arg":{"format":"{}{}","snippet":"SetPitonIdentifier{${1:identifiers}}{${2:style}}"},"doc":"The command \\SetPitonIdentifier allows to automatically change the formatting of some identifiers."},
+		{"name":"SetPitonStyle","arg":{"format":"[]{}","snippet":"SetPitonStyle[${1:language}]{${2:styles}}"},"doc":"The package piton provides the command \\SetPitonStyle to customize the different styles used to format the syntactic elements of the computer listings."},
+		{"name":"SetPitonStyle","arg":{"format":"{}","snippet":"SetPitonStyle{${1:styles}}"},"doc":"The package piton provides the command \\SetPitonStyle to customize the different styles used to format the syntactic elements of the computer listings."}
+	],
+	"envs": [
+		{"name":"Piton","arg":{"format":"[]","snippet":"[${1:options}]","keys":["l3keys:PitonOptions"],"keyPos":0}},
+		{"name":"Piton"}
+	],
+	"keys": {
+		"l3keys:NewPitonLanguage": ["alsodigit=","alsoletter=","alsoother=","keywordsprefix=","morecomment=","moredelim=","moredirectives=","morekeywords=","morestring=","moretexcs=","otherkeywords=","tag=","sensitive=${1|true,false|}"],
+		"l3keys:PitonOptions": ["add-to-split-separation=","after-begin-escape=","background-color=","before-end-escape=","begin-escape-math=","begin-escape=","begin-range=","comment-latex=","continuation-symbol-on-indentation=","continuation-symbol=","detected-beamer-commands=","detected-beamer-environments=","detected-commands=","end-escape-math=","end-escape=","end-of-broken-line=","end-range=","env-used-by-split=","first-line=","font-command +=","font-command+=","font-command=","gobble","join=","language=","last-line=","left-margin=","max-width=","path-write=","path=","prompt-background-color=","range=","raw-detected-commands=","right-margin=","rounded-corners","split-separation +=","split-separation+=","split-separation=","splittable","tab-size=","vertical-detected-commands=","width=","write=","annotation=${1|true,false|}","box=${1|c,t,b|}","break-lines-in-Piton=${1|true,false|}","break-lines-in-piton=${1|true,false|}","break-numbers-anywhere=${1|true,false|}","break-strings-anywhere=${1|true,false|}","indent-broken-lines=${1|true,false|}","indentations-for-Foxit=${1|true,false|}","label-as-zlabel=${1|true,false|}","math-comments=${1|true,false|}","print=${1|true,false|}","split-on-empty-lines=${1|true,false|}","splittable-on-empty-lines=${1|true,false|}","tcolorbox=${1|true,false|}","auto-gobble","env-gobble","tabs-auto-gobble","break-lines","no-join","no-write","resume","show-spaces","show-spaces-in-strings","paperclip","line-numbers","line-numbers/absolute","line-numbers/format=","line-numbers/format+=","line-numbers/label-empty-lines=${1|true,false|}","line-numbers/lmmono10-drawn=${1|true,false|}","line-numbers/position=${1|left,right|}","line-numbers/resume","line-numbers/sep=","line-numbers/skip-empty-lines=${1|true,false|}","line-numbers/start=","line-numbers/step=","marker/beginning=","marker/end=","marker/include-lines=${1|true,false|}"],
+		"\\usepackage/piton#c": ["beamer=${1|true,false|}","footnote=${1|true,false|}","footnotehyper=${1|true,false|}"]
+	},
+	"args": ["\\usepackage/piton#c"]
+}

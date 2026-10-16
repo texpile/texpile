@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"qs"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"aboveglftskip"},
+		{"name":"aboveglskip"},
+		{"name":"betweenglskip"},
+		{"name":"everygla","unusual":true},
+		{"name":"everyglb","unusual":true},
+		{"name":"ft","arg":{"format":"{}","snippet":"ft{${1:translation}}"}},
+		{"name":"gl","arg":{"format":"{}{}","snippet":"gl{${1:words}}{${2:glosses}}"},"doc":"The \\gl macro takes two arguments. It treats each argument as a list of (spacedelimited) items, and aligns the items from the first argument atop the items from the second."},
+		{"name":"glescape","doc":"If you want to change the escape character, redefine \\glescape."},
+		{"name":"glhangindent","unusual":true},
+		{"name":"glossword","arg":{"format":"{}{}","snippet":"glossword{${1}}{${2}}"},"unusual":true},
+		{"name":"glspace"},
+		{"name":"ifspecial","unusual":true},
+		{"name":"lb","arg":{"format":"{}","snippet":"lb{${1:label}}"},"doc":"The \\lb macro gives you a “label” — a bit of text set on the same line as what came before (if there’s room) but pushed right to the end of the line."},
+		{"name":"makeglshortcut","arg":{"format":"{}{}","snippet":"makeglshortcut{${1:character}}{${2:code}}"},"doc":"To define a new shortcut along the lines of / and [, use the command \\makeglshortcut. It takes two arguments — the first is the character you want to turn into a shortcut, the second is the macro code that will be executed when that character is encountered."},
+		{"name":"makeglsurround","arg":{"format":"{}{}{}","snippet":"makeglsurround{${1:left delimiter}}{${2:right delimiter}}{${3:code}}"},"doc":"To define a new shortcut along the lines of * — a set of delimiters which can surround multiple words of glossed text and “take scope” over them — use the command \\makeglsurround. It takes three arguments: the left-hand delimiter, the right-hand delimiter, and the code that will be executed when they’re encountered."},
+		{"name":"noglstrut"},
+		{"name":"specialfalse","unusual":true},
+		{"name":"specialtrue","unusual":true},
+		{"name":"withinglskip","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

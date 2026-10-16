@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"stacklet"},{"name":"dowith"}],
+	"macros": [
+		{"name":"delangcodeextras"},
+		{"name":"demonthname","arg":{"format":"{}","snippet":"demonthname{${1:month number}}"}},
+		{"name":"depardash"},
+		{"name":"deqtd","arg":{"format":"{}","snippet":"deqtd{${1:text}}"}},
+		{"name":"dqtd","arg":{"format":"{}","snippet":"dqtd{${1:text}}"}},
+		{"name":"enlangcodeextras"},
+		{"name":"enmonthname","arg":{"format":"{}","snippet":"enmonthname{${1:month number}}"}},
+		{"name":"enpardash"},
+		{"name":"enqtd","arg":{"format":"{}","snippet":"enqtd{${1:text}}"}},
+		{"name":"langcode"},
+		{"name":"langcodeadjust","arg":{"format":"{}","snippet":"langcodeadjust{${1:macro}}"}},
+		{"name":"langcodedependent"},
+		{"name":"langcodeextras","unusual":true},
+		{"name":"lastrev","unusual":true},
+		{"name":"monthname","arg":{"format":"{}","snippet":"monthname{${1:month number}}"}},
+		{"name":"pardash"},
+		{"name":"qtd","arg":{"format":"{}","snippet":"qtd{${1:text}}"}},
+		{"name":"totopofpage","unusual":true},
+		{"name":"uselangcode","arg":{"format":"{}","snippet":"uselangcode{${1:language code}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

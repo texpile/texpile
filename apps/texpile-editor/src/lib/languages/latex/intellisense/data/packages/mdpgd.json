@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"euro","math":true,"detail":"€","doc":"euro sign"}
+	],
+	"envs": [],
+	"keys": {}
+}

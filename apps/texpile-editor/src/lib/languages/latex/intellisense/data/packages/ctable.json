@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"iftex"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"array"},{"name":"tabularx"},{"name":"booktabs"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"transparent","engines":["pdflatex","lualatex"]},{"name":"transparent-nometadata","engines":["pdflatex","lualatex"]},{"name":"auxhook","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"ctable","arg":{"format":"[]{}{}{}","snippet":"ctable[${1:options}]{${2:coldefs}}{${3:foottable}}{${4:rows}}","keys":["keyval:CT"],"keyPos":0}},
+		{"name":"ctable","arg":{"format":"{}{}{}","snippet":"ctable{${1:coldefs}}{${2:foottable}}{${3:rows}}"}},
+		{"name":"FL","arg":{"format":"[]","snippet":"FL[${1:rule width}]"},"doc":"\\FL First Line, generates a new line and a thick rule with some extra space under it."},
+		{"name":"FL","doc":"\\FL First Line, generates a new line and a thick rule with some extra space under it."},
+		{"name":"LL","arg":{"format":"[]","snippet":"LL[${1:rule width}]"},"doc":"\\LL Last Line: generates a new line and a thick rule with some extra space over it."},
+		{"name":"LL","doc":"\\LL Last Line: generates a new line and a thick rule with some extra space over it."},
+		{"name":"ML","arg":{"format":"[]","snippet":"ML[${1:rule width}]"},"doc":"\\ML Middle Line: generates a new line and a thin rule with some extra space over and under it."},
+		{"name":"ML","doc":"\\ML Middle Line: generates a new line and a thin rule with some extra space over and under it."},
+		{"name":"NN","arg":{"format":"[]","snippet":"NN[${1:extra space}]"}},
+		{"name":"NN"},
+		{"name":"setupctable","arg":{"format":"{}","snippet":"setupctable{${1:options}}","keys":["keyval:suCT"],"keyPos":0},"doc":"\\setupctable can set the defaults for all options except (of course) caption, cap, and label."},
+		{"name":"tmark","arg":{"format":"[]","snippet":"tmark[${1:marker}]"}},
+		{"name":"tmark"},
+		{"name":"tnote","arg":{"format":"[]{}","snippet":"tnote[${1:marker}]{${2:note}}"}},
+		{"name":"tnote","arg":{"format":"{}","snippet":"tnote{${1:note}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:CT": ["bgopacity=","botcap","cap=","caption=","captionskip=","center","continued","doinside=","figure","footerwidth","framebg=","framefg=","framerule=","framesep=","label=","left","maxwidth=","mincapwidth=","nonotespar","nosideways","nostar","nosuper","notespar","pos=","right","sidecap","sideways","star","super","table","topcap","width="],
+		"keyval:suCT": ["bgopacity=","botcap","captionsinside","captionskip=","captionsleft","captionsright","center","continued=","doinside=","figure","footerwidth","framebg=","framefg=","framerule=","framesep=","left","maxwidth=","mincapwidth=","nonotespar","nosideways","nostar","nosuper","notespar","pos=","right","sideways","star","super","table","topcap","width="]
+	}
+}

@@ -1,0 +1,52 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"etoolbox"},{"name":"environ"},{"name":"newfile"},{"name":"verbatim"},{"name":"enumitem"},{"name":"longtable"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xstring"}],
+	"macros": [
+		{"name":"answer","arg":{"format":"[]","snippet":"answer[${1:mark}]"},"doc":"The \\answer{n}{answer } sets the answer itself which is assigned number n. It is mandatory to use all numbers between 1 and the total number of answers."},
+		{"name":"answer","doc":"The \\answer{n}{answer } sets the answer itself which is assigned number n. It is mandatory to use all numbers between 1 and the total number of answers."},
+		{"name":"answernum","arg":{"format":"{}","snippet":"answernum{${1:n}}"},"doc":"The \\answernum{n} simply typesets the answer number n in the correct format (see section 5.2)."},
+		{"name":"mcanswerlabelfmt","arg":{"format":"{}","snippet":"mcanswerlabelfmt{${1:counter}}"}},
+		{"name":"mcexamoptions","arg":{"format":"{}","snippet":"mcexamoptions{${1:keys}}","keys":["keyval:mcexam.sty"],"keyPos":0},"doc":"The package also defines the \\mcexamoptions{key=value,...} command which can also be used to set or change the package options after the package has been loaded."},
+		{"name":"mcifoutput","arg":{"format":"[]{}{}","snippet":"mcifoutput[${1:versions}]{${2:output types}}{${3:text}}"}},
+		{"name":"mcifoutput","arg":{"format":"{}{}","snippet":"mcifoutput{${1:output types}}{${2:text}}"}},
+		{"name":"mcquestionlabelfmt","arg":{"format":"{}","snippet":"mcquestionlabelfmt{${1:counter}}"}},
+		{"name":"mcsetupAnalysis","arg":{"format":"{}","snippet":"mcsetupAnalysis{${1:keys}}"}},
+		{"name":"mcsetupAnswers","arg":{"format":"{}","snippet":"mcsetupAnswers{${1:keys}}"}},
+		{"name":"mcsetupConcept","arg":{"format":"{}","snippet":"mcsetupConcept{${1:keys}}"}},
+		{"name":"mcsetupExam","arg":{"format":"{}","snippet":"mcsetupExam{${1:keys}}"}},
+		{"name":"mcsetupKey","arg":{"format":"{}","snippet":"mcsetupKey{${1:keys}}"}},
+		{"name":"mctheversion","doc":"The package also defines the command \\mctheversion which can be used to print the version number on the document in the correct format (see section 5.2)."},
+		{"name":"mcversionlabelfmt","arg":{"format":"{}","snippet":"mcversionlabelfmt{${1:counter}}"}},
+		{"name":"question","arg":{"format":"[]","snippet":"question[${1:follow}]"}},
+		{"name":"question"}
+	],
+	"envs": [
+		{"name":"mcanswers","arg":{"format":"[]","snippet":"[${1:permutation}]"},"doc":"By default, all answers are randomly shuffled within the mcanswerslist and mcanswers environments."},
+		{"name":"mcanswers","doc":"By default, all answers are randomly shuffled within the mcanswerslist and mcanswers environments."},
+		{"name":"mcanswerslist","arg":{"format":"[]","snippet":"[${1:permutation}]"}},
+		{"name":"mcanswerslist"},
+		{"name":"mcexplanation","doc":"The mcexplanation enviromnent should be used to store an explanation of the question and the right answer."},
+		{"name":"mcnotes"},
+		{"name":"mcquestioninstruction","doc":"The mcquestioninstruction environment is used for general instructions about the next question or group of questions (using the follow option of the \\question command)."},
+		{"name":"mcquestions","arg":{"format":"[]","snippet":"[${1:R file name}]"}},
+		{"name":"mcquestions"},
+		{"name":"setmcansweranalysistable","unusual":true},
+		{"name":"setmcanswerpermutationtable","unusual":true},
+		{"name":"setmcanswers","unusual":true},
+		{"name":"setmcanswerslist","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
+		{"name":"setmcanswerslist","unusual":true},
+		{"name":"setmckeytable","unusual":true},
+		{"name":"setmcquestion","unusual":true},
+		{"name":"setmcquestionanalysistable","unusual":true},
+		{"name":"setmcquestioninfo","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
+		{"name":"setmcquestioninfo","unusual":true},
+		{"name":"setmcquestioninstruction","unusual":true},
+		{"name":"setmcquestionpermutationtable","unusual":true},
+		{"name":"setmcquestions","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
+		{"name":"setmcquestions","unusual":true}
+	],
+	"keys": {
+		"keyval:mcexam.sty": ["numberofversions=","output=${1|concept,exam,key,answers,analysis|}","randomizeanswers=${1|true,false|}","randomizequestions=${1|true,false|}","seed=","version=","writeRfile=${1|true,false|}"],
+		"\\usepackage/mcexam#c": ["numberofversions=","output=${1|concept,exam,key,answers,analysis|}","randomizeanswers=${1|true,false|}","randomizequestions=${1|true,false|}","seed=","version=","writeRfile=${1|true,false|}"]
+	},
+	"args": ["\\usepackage/mcexam#c"]
+}

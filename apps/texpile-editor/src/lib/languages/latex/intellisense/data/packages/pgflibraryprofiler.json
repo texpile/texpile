@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"pgfprofilecs","unusual":true},
+		{"name":"pgfprofileend","arg":{"format":"{}","snippet":"pgfprofileend{${1:profiler entry name}}"}},
+		{"name":"pgfprofileenv","unusual":true},
+		{"name":"pgfprofileifisrunning","arg":{"format":"{}{}{}","snippet":"pgfprofileifisrunning{${1:profiler entry name}}{${2:true code}}{${3:false code}}"}},
+		{"name":"pgfprofilenew","arg":{"format":"{}","snippet":"pgfprofilenew{${1:name}}"}},
+		{"name":"pgfprofilenewforcommand","arg":{"format":"[]{}{}","snippet":"pgfprofilenewforcommand[${1:profiler entry name}]{${2:macro}}{${3:arguments}}"}},
+		{"name":"pgfprofilenewforcommand","arg":{"format":"{}{}","snippet":"pgfprofilenewforcommand{${1:macro}}{${2:arguments}}"}},
+		{"name":"pgfprofilenewforcommandpattern","arg":{"format":"[]{}{}{}","snippet":"pgfprofilenewforcommandpattern[${1:profiler entry name}]{${2:macro}}{${3:argument pattern}}{${4:invocation pattern}}"}},
+		{"name":"pgfprofilenewforcommandpattern","arg":{"format":"{}{}{}","snippet":"pgfprofilenewforcommandpattern{${1:macro}}{${2:argument pattern}}{${3:invocation pattern}}"}},
+		{"name":"pgfprofilenewforenvironment","arg":{"format":"[]{}","snippet":"pgfprofilenewforenvironment[${1:profiler entry name}]{${2:environment name}}"}},
+		{"name":"pgfprofilenewforenvironment","arg":{"format":"{}","snippet":"pgfprofilenewforenvironment{${1:environment name}}"}},
+		{"name":"pgfprofilepostprocess"},
+		{"name":"pgfprofilesetrel","arg":{"format":"{}","snippet":"pgfprofilesetrel{${1:profiler entry name}}"}},
+		{"name":"pgfprofileshowinvocationsexpandedfor","arg":{"format":"{}","snippet":"pgfprofileshowinvocationsexpandedfor{${1:profiler entry name}}"}},
+		{"name":"pgfprofileshowinvocationsfor","arg":{"format":"{}","snippet":"pgfprofileshowinvocationsfor{${1:profiler entry name}}"}},
+		{"name":"pgfprofilestart","arg":{"format":"{}","snippet":"pgfprofilestart{${1:profiler entry name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

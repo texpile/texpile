@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"class-memoir"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"dcolumn"},{"name":"delarray"},{"name":"tabularx"},{"name":"booktabs"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"verbatim"},{"name":"shortvrb"},{"name":"microtype"},{"name":"inputenc","engines":["pdflatex"]},{"name":"natbib","if":"!nonatbib"},{"name":"babel","if":"!nobabel"},{"name":"numprint","if":"!nobabel"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"hyperref","engines":["pdflatex"]},{"name":"hyperref","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"pdfescape","engines":["pdflatex"]},{"name":"pdfescape","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"pdftexcmds","engines":["pdflatex"]},{"name":"pdftexcmds","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"stringenc","engines":["pdflatex"]},{"name":"stringenc","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"intcalc","engines":["pdflatex"]},{"name":"intcalc","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"url","engines":["pdflatex"]},{"name":"url","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"bitset","engines":["pdflatex"]},{"name":"bitset","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"bigintcalc","engines":["pdflatex"]},{"name":"bigintcalc","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"rerunfilecheck","engines":["pdflatex"]},{"name":"rerunfilecheck","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"uniquecounter","engines":["pdflatex"]},{"name":"uniquecounter","if":"!nohyperref","engines":["lualatex","xelatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"annee","arg":{"format":"{}","snippet":"annee{${1:year}}"},"doc":"La commande \\annee spécifie l’année du dépôt final de la thèse ou du mémoire."},
+		{"name":"auteur","arg":{"format":"{}","snippet":"auteur{${1:author name}}"},"doc":"La commande \\auteur permet de saisir le nom complet de l’auteur de la thèse ou du mémoire, sous la forme Prénom Nom avec seulement des majuscules initiales."},
+		{"name":"codirection","arg":{"format":"{}","snippet":"codirection{${1:co-director}}"}},
+		{"name":"dedicace","arg":{"format":"{}","snippet":"dedicace{${1:dedication}}"},"doc":"La commande \\dedicace permet d’insérer une dédicace (« À mes parents », « À Camille ») à l’endroit où elle apparait dans le code source."},
+		{"name":"direction","arg":{"format":"{}","snippet":"direction{${1:director}}"},"doc":"La commande \\direction sert à spécifier le nom complet du directeur ou de la directrice de recherche, sous la forme Prénom Nom avec seulement des majuscules initiales, suivi d’une virgule et de la mention « directeur de recherche » ou « directrice de recherche »."},
+		{"name":"epigraphe","arg":{"format":"{}{}","snippet":"epigraphe{${1:quotation}}{${2:source}}"},"doc":"La commande \\epigraphe permet d’insérer une épigraphe au début du document."},
+		{"name":"faculteUdeS","arg":{"format":"{}","snippet":"faculteUdeS{${1:faculty}}"},"doc":"La commande \\faculteUdeS spécifie le nom de la faculté de l’Université de Sherbrooke hébergeant la thèse en extension."},
+		{"name":"faculteUL","arg":{"format":"{}","snippet":"faculteUL{${1:faculty}}"}},
+		{"name":"faculteUQAC","arg":{"format":"{}","snippet":"faculteUQAC{${1:faculty}}"},"doc":"La commande \\faculteUQAC spécifie le nom de la faculté de l’Université du Québec à Chicoutimi hébergeant le mémoire en extension."},
+		{"name":"faculteUQO","arg":{"format":"{}","snippet":"faculteUQO{${1:faculty}}"},"doc":"La commande \\faculteUQO spécifie le nom de la faculté de l’Université du Québec en Outaouais hébergeant la thèse en extension."},
+		{"name":"frontispice","doc":"La commande \\frontispice crée la page frontispice à l’endroit où elle apparait dans le code source."},
+		{"name":"gradebidiplomation","arg":{"format":"{}","snippet":"gradebidiplomation{${1:degree}}"}},
+		{"name":"gradecotutelle","arg":{"format":"{}","snippet":"gradecotutelle{${1:degree}}"}},
+		{"name":"pagetitre","doc":"La commande \\pagetitre crée la page de titre à l’endroit où elle apparait dans le code source."},
+		{"name":"programme","arg":{"format":"{}","snippet":"programme{${1:program}}"},"doc":"La commande \\programme sert à spécifier le nom complet officiel du programme d’études comme « Doctorat en informatique » ou « Maîtrise en mathématiques »."},
+		{"name":"soustitre","arg":{"format":"{}","snippet":"soustitre{${1:subtitle}}"},"doc":"La commande \\soustitre sert à spécifier le sous-titre du manuscrit, le cas échéant."},
+		{"name":"titre","arg":{"format":"{}","snippet":"titre{${1:title}}"},"doc":"La commande \\titre sert à spécifier le titre principal du manuscrit."},
+		{"name":"univbidiplomation","arg":{"format":"{}","snippet":"univbidiplomation{${1:university}}"}},
+		{"name":"univcotutelle","arg":{"format":"{}","snippet":"univcotutelle{${1:university}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/ulthese#c": ["10pt","11pt","12pt","DMus","DPsy","DThP","LLD","LLM","MA","MATDR","MArch","MErg","MMus","MPsEd","MSc","MScGeogr","MServSoc","MTravSoc","PhD","bidiplomation","cotutelle","essai","examen","extensionUQAC","extensionUQO","extensionUdeS","multifacultaire","nobabel","nohyperref","nonatbib","projet","stage"]
+	},
+	"args": ["\\documentclass/ulthese#c"]
+}

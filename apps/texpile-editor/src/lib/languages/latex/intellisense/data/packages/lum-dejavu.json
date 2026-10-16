@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"lua-unicode-math"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

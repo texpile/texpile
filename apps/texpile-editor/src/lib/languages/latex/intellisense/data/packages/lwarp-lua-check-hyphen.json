@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"LuaCheckHyphen","arg":{"format":"{}","snippet":"LuaCheckHyphen{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

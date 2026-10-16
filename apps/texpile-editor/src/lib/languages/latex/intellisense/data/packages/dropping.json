@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"bigdrop","arg":{"format":"{}{}{}{}","snippet":"bigdrop{${1:len}}{${2:numb}}{${3:font}}{${4:text}}"}},
+		{"name":"dropping","arg":{"format":"[]{}{}","snippet":"dropping[${1:len}]{${2:numb}}{${3:text}}"},"doc":"The package defines one command, `\\dropping', which drops the first character(s) of a paragraph."},
+		{"name":"dropping","arg":{"format":"{}{}","snippet":"dropping{${1:numb}}{${2:text}}"},"doc":"The package defines one command, `\\dropping', which drops the first character(s) of a paragraph."},
+		{"name":"ifstrtcmmnd","unusual":true},
+		{"name":"strtcmmndfalse","unusual":true},
+		{"name":"strtcmmndtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

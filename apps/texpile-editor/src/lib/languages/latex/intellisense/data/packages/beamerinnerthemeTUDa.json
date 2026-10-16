@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"trimclip"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"xkeyval"},{"name":"beamerinnerthemeTUDa2023","if":"!design=2008"},{"name":"multicol","if":"!design=2008"}],
+	"macros": [
+		{"name":"partnerlogo","arg":{"format":"{}","snippet":"partnerlogo{${1:logo}}"}},
+		{"name":"partnerlogo*","arg":{"format":"{}","snippet":"partnerlogo*{${1:logo}}"}},
+		{"name":"sublogo","arg":{"format":"{}","snippet":"sublogo{${1:logo}}"}},
+		{"name":"sublogo*","arg":{"format":"{}","snippet":"sublogo*{${1:logo}}"}},
+		{"name":"titlegraphic","arg":{"format":"{}","snippet":"titlegraphic{${1:image}}"}},
+		{"name":"titlegraphic*","arg":{"format":"{}","snippet":"titlegraphic*{${1:image}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

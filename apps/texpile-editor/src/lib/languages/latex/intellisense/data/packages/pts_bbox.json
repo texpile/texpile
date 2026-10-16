@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"laemu"}],
+	"macros": [
+		{"name":"graphicPmeta","arg":{"format":"{}{}{}{}{}{}","snippet":"graphicPmeta{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

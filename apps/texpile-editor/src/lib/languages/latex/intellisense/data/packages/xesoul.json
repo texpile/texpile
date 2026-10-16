@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"iftex"},{"name":"soul","engines":["xelatex"]},{"name":"soul-ori","engines":["xelatex"]},{"name":"etexcmds","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

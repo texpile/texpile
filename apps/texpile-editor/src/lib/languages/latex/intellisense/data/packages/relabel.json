@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"bare","doc":"You can access the bare (unprefixed) form with \\bare\\ref{myfirst} unless you issue the document class option nobare."},
+		{"name":"conduselabel","arg":{"format":"{}","snippet":"conduselabel{${1}}"},"unusual":true},
+		{"name":"defprefix","arg":{"format":"{}{}","snippet":"defprefix{${1:counter}}{${2:prefix}}"}},
+		{"name":"defprefixcond","arg":{"format":"{}{}","snippet":"defprefixcond{${1}}{${2}}"},"unusual":true},
+		{"name":"Iflabelchanged","arg":{"format":"{}{}","snippet":"Iflabelchanged{${1}}{${2}}"},"unusual":true},
+		{"name":"iflonglabel","unusual":true},
+		{"name":"ifshortlabel","unusual":true},
+		{"name":"Label","arg":{"format":"{}{}","snippet":"Label{${1:key}}{${2:label template}}"}},
+		{"name":"longlabelfalse","unusual":true},
+		{"name":"longlabeltrue","unusual":true},
+		{"name":"modify","arg":{"format":"{}","snippet":"modify{${1}}"},"unusual":true},
+		{"name":"quiet","unusual":true},
+		{"name":"revert","unusual":true},
+		{"name":"setcurrentlabel","arg":{"format":"{}","snippet":"setcurrentlabel{${1}}"},"unusual":true},
+		{"name":"short","doc":"You can force the short form: \\short\\ref{lemma:1} yields (i), or the whole form: \\whole\\ref{lemma:1} yields Lemma 3.3(i)."},
+		{"name":"shortlabelfalse","unusual":true},
+		{"name":"shortlabeltrue","unusual":true},
+		{"name":"uselabel","arg":{"format":"{}","snippet":"uselabel{${1}}"},"unusual":true},
+		{"name":"useprefix","arg":{"format":"{}","snippet":"useprefix{${1}}"},"unusual":true},
+		{"name":"whole"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/relabel#c": ["bare","nobare","noprefixes","prefixes"]
+	},
+	"args": ["\\usepackage/relabel#c"]
+}

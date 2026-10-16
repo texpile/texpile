@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"complexRound","arg":{"format":"{}{}","snippet":"complexRound{${1}}{${2}}"},"doc":"It rounds off a complex number to a specified number of decimal places."},
+		{"name":"imUnit","doc":"The package has a command \\imUnit which provides typesetting for the imaginary unit."},
+		{"name":"luaChkeqnum","arg":{"format":"{}{}","snippet":"luaChkeqnum{${1}}{${2}}"},"doc":"It returns true if x = y, otherwise returns false."},
+		{"name":"mathAbs","arg":{"format":"{}","snippet":"mathAbs{${1}}"},"doc":"Gives the absolute value of a real number."},
+		{"name":"mathAcos","arg":{"format":"{}","snippet":"mathAcos{${1}}"},"doc":"Gives the arc cosine of a real number in radians."},
+		{"name":"mathAsin","arg":{"format":"{}","snippet":"mathAsin{${1}}"},"doc":"Gives the arc sine of a real number in radians."},
+		{"name":"mathAtan","arg":{"format":"{}","snippet":"mathAtan{${1}}"},"doc":"Gives the arc tangent of a real number in radians."},
+		{"name":"mathCeil","arg":{"format":"{}","snippet":"mathCeil{${1}}"},"doc":"Gives the smallest integer greater than or equal to a real number."},
+		{"name":"mathCos","arg":{"format":"{}","snippet":"mathCos{${1}}"},"doc":"Gives the cosine of a real number.Here the number is in radians."},
+		{"name":"mathExp","arg":{"format":"{}","snippet":"mathExp{${1}}"}},
+		{"name":"mathFloor","arg":{"format":"{}","snippet":"mathFloor{${1}}"}},
+		{"name":"mathInf"},
+		{"name":"mathLog","arg":{"format":"{}","snippet":"mathLog{${1}}"},"doc":"Calculates log x. Here the logarithm is to the natural base e."},
+		{"name":"mathMax","arg":{"format":"{}","snippet":"mathMax{${1}}"}},
+		{"name":"mathMin","arg":{"format":"{}","snippet":"mathMin{${1}}"}},
+		{"name":"mathOp","arg":{"format":"{}","snippet":"mathOp{${1}}"},"doc":"Evaluates mathematical expression."},
+		{"name":"mathPi","doc":"Gives the numeric value of the constant π."},
+		{"name":"mathRad","arg":{"format":"{}","snippet":"mathRad{${1}}"},"doc":"Converts degrees into radians."},
+		{"name":"mathRandom","arg":{"format":"{}","snippet":"mathRandom{${1:range}}"},"doc":"Generates a random number between 0 and 1."},
+		{"name":"mathRound","arg":{"format":"{}{}","snippet":"mathRound{${1}}{${2}}"},"doc":"It rounds off a real number to a specified number of decimal places."},
+		{"name":"mathSin","arg":{"format":"{}","snippet":"mathSin{${1}}"},"doc":"Gives the sine of a real number."},
+		{"name":"mathSqrt","arg":{"format":"{}","snippet":"mathSqrt{${1}}"},"doc":"Gives the non-negative square root of a nonnegative real number."},
+		{"name":"mathTan","arg":{"format":"{}","snippet":"mathTan{${1}}"},"doc":"Gives the tangent of a real number."}
+	],
+	"envs": [],
+	"keys": {}
+}

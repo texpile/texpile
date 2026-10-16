@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"physicsstringoverpulley","arg":{"format":"[]{}{}{}","snippet":"physicsstringoverpulley[${1:options}]{${2:start}}{${3:pulley}}{${4:end}}"}},
+		{"name":"physicsstringoverpulley","arg":{"format":"{}{}{}","snippet":"physicsstringoverpulley{${1:start}}{${2:pulley}}{${3:end}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"labels"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"plant","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"plant{${1:columns of labels}}{${2:rows of labels}}{${3:number of labels}}{${4:plant name}}{${5:price}}{${6:currency}}{${7:temperature}}{${8:substratum}}{${9:picture}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

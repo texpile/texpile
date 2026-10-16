@@ -1,0 +1,9 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"VerbWrite","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"WAux"},
+		{"name":"WFile","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

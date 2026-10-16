@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"forest"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"etoolbox"},{"name":"elocalloc"},{"name":"environ"},{"name":"xparse"},{"name":"inlinedef"}],
+	"macros": [
+		{"name":"index","arg":{"format":"()[]{}","snippet":"index(${1:early options})[${2:options}]{${3:keys}}"}},
+		{"name":"index","arg":{"format":"(){}","snippet":"index(${1:early options}){${2:keys}}"}},
+		{"name":"indexdef","arg":{"format":"[]{}","snippet":"indexdef[${1:options}]{${2:keys}}"}},
+		{"name":"indexdef","arg":{"format":"{}","snippet":"indexdef{${1:keys}}"}},
+		{"name":"indexex","arg":{"format":"[]{}","snippet":"indexex[${1:options}]{${2:keys}}"}},
+		{"name":"indexex","arg":{"format":"{}","snippet":"indexex{${1:keys}}"}},
+		{"name":"indexitem","arg":{"format":"()[]{}","snippet":"indexitem(${1:default})[${2:options}]{${3:keys}}"}},
+		{"name":"indexitem","arg":{"format":"(){}","snippet":"indexitem(${1:default}){${2:keys}}"}},
+		{"name":"indexset","arg":{"format":"[]{}","snippet":"indexset[${1:options}]{${2:keys}}"}},
+		{"name":"indexset","arg":{"format":"{}","snippet":"indexset{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

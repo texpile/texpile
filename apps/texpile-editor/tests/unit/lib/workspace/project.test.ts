@@ -178,8 +178,53 @@ describe('an installed package gives the parser its commands', () => {
 		expect(asked).toEqual([['reviewnotes', 'draft', '12pt']]);
 		expect(macros).toContain('\\NewDocumentCommand{\\hlnote}{o m}{}');
 		expect(macros).toContain('\\NewDocumentCommand{\\qtyof}{o m m}{}');
-		expect(macros).not.toMatch(/cites|section|verbish/);
+		expect(macros).not.toMatch(/\{\\(?:cites|section|verbish)\}/);
 		const { doc } = LatexParser.latexToProseMirror('Intro \\hlnote [Important]{check this} outro.', { preamble: macros });
 		expect(serializeToLatex(doc)).toContain('[Important]{check this}');
+	});
+});
+
+describe('the packages a paper loads reach the parser', () => {
+	const noTeX = async () => null;
+
+	it('past a commented \\begin{document}', async () => {
+		h.fs = {
+			'/proj/main.tex':
+				'\\documentclass{article}\n%% the \\begin{document} command.\n\\usepackage{marginnote}\n\\begin{document}\n\\end{document}'
+		};
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
+		expect(macros).toContain('\\NewDocumentCommand{\\marginnote}{o m o}{}');
+	});
+
+	it('from the data for a copy of a package the paper ships', async () => {
+		h.fs = {
+			'/proj/main.tex': '\\documentclass{article}\n\\usepackage{marginnote}\n\\begin{document}\n\\end{document}',
+			'/proj/marginnote.sty': '\\newcommand{\\shippedonly}{x}'
+		};
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
+		expect(macros).not.toContain('shippedonly');
+		expect(macros).toContain('\\NewDocumentCommand{\\marginnote}{o m o}{}');
+	});
+});
+
+describe('the document class gives the parser its commands', () => {
+	const noTeX = async () => {
+		throw new Error('a class is not asked of TeX');
+	};
+
+	it('from the bundled class data', async () => {
+		h.fs = { '/proj/main.tex': '\\documentclass[aps]{revtex4-2}\n\\begin{document}\n\\end{document}' };
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
+		expect(macros).toContain('\\NewDocumentCommand{\\altaffiliation}{o m}{}');
+	});
+
+	it('and never from a class file the project ships', async () => {
+		h.fs = {
+			'/proj/main.tex': '\\documentclass{revtex4-2}\n\\begin{document}\n\\end{document}',
+			'/proj/revtex4-2.cls': '\\newcommand{\\venue}[1]{#1}'
+		};
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
+		expect(macros).not.toContain('\\venue');
+		expect(macros).toContain('\\NewDocumentCommand{\\altaffiliation}{o m}{}');
 	});
 });

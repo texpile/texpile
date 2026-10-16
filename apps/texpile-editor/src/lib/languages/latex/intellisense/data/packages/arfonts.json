@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"freefalse","unusual":true},
+		{"name":"freetrue","unusual":true},
+		{"name":"iffree","unusual":true},
+		{"name":"ifmixed","unusual":true},
+		{"name":"ifmscore","unusual":true},
+		{"name":"mixedfalse","unusual":true},
+		{"name":"mixedtrue","unusual":true},
+		{"name":"mscorefalse","unusual":true},
+		{"name":"mscoretrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/arfonts#c": ["free","mixed","mscore"]
+	},
+	"args": ["\\usepackage/arfonts#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"relsize"}],
+	"macros": [
+		{"name":"birm"}
+	],
+	"envs": [],
+	"keys": {}
+}

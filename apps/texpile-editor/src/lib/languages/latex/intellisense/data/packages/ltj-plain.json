@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"gt","unusual":true},
+		{"name":"mc","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

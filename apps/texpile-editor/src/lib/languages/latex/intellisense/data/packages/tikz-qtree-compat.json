@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"tikz-qtree"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgftree"},{"name":"pgfsubpic"}],
+	"macros": [
+		{"name":"0"},
+		{"name":"1"},
+		{"name":"2"},
+		{"name":"automath"},
+		{"name":"faketreewidth","arg":{"format":"{}","snippet":"faketreewidth{${1}}"},"unusual":true},
+		{"name":"noautomath"},
+		{"name":"qbalance","unusual":true},
+		{"name":"qframesubtree","unusual":true},
+		{"name":"qroof","arg":{"format":"{}","snippet":"qroof{${1:words}}"}},
+		{"name":"qsetw","arg":{"format":"{}","snippet":"qsetw{${1}}"},"unusual":true},
+		{"name":"qtreeprimes"}
+	],
+	"envs": [],
+	"keys": {}
+}

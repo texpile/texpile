@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"ushort"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"dcdot","doc":"Double scalar product."},
+		{"name":"matr","arg":{"format":"{}","snippet":"matr{${1:symbol}}"}},
+		{"name":"origvec","unusual":true},
+		{"name":"tens","arg":{"format":"{}{}","snippet":"tens{${1:symbol}}{${2:step}}"}},
+		{"name":"trans"},
+		{"name":"vec","arg":{"format":"{}","snippet":"vec{${1:symbol}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hhtensor#c": ["arrow","bold","uline"]
+	},
+	"args": ["\\usepackage/hhtensor#c"]
+}

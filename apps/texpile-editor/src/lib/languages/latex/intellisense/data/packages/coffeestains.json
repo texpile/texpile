@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"coffeestainA","arg":{"format":"{}{}{}{}{}","snippet":"coffeestainA{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"coffeestainB","arg":{"format":"{}{}{}{}{}","snippet":"coffeestainB{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"coffeestainC","arg":{"format":"{}{}{}{}{}","snippet":"coffeestainC{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"coffeestainD","arg":{"format":"{}{}{}{}{}","snippet":"coffeestainD{${1}}{${2}}{${3}}{${4}}{${5}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"addtofooter","arg":{"format":"[]{}","snippet":"addtofooter[${1:symbol}]{${2:text}}"}},
+		{"name":"addtofooter","arg":{"format":"{}","snippet":"addtofooter{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

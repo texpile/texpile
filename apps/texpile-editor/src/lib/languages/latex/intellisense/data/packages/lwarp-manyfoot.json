@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"nccfoots"}],
+	"macros": [
+		{"name":"DeclareNewFootnote","arg":{"format":"[]{}[]","snippet":"DeclareNewFootnote[${1:footnote style}]{${2:suffix}}[${3:enumeration style}]"}},
+		{"name":"DeclareNewFootnote","arg":{"format":"{}","snippet":"DeclareNewFootnote{${1:suffix}}"}},
+		{"name":"defaultfootnoterule"},
+		{"name":"extrafootnoterule"},
+		{"name":"ExtraParaSkip","arg":{"format":"{}","snippet":"ExtraParaSkip{${1:space}}"}},
+		{"name":"footnoterulepriority"},
+		{"name":"newfootnote","arg":{"format":"[]{}","snippet":"newfootnote[${1:footnote style}]{${2:suffix}}"}},
+		{"name":"newfootnote","arg":{"format":"{}","snippet":"newfootnote{${1:suffix}}"}},
+		{"name":"SelectFootnoteRule","arg":{"format":"[]{}[]","snippet":"SelectFootnoteRule[${1:priority}]{${2:rule name}}[${3:action}]"}},
+		{"name":"SelectFootnoteRule","arg":{"format":"{}","snippet":"SelectFootnoteRule{${1:rule name}}"}},
+		{"name":"SetFootnoteHook","arg":{"format":"{}","snippet":"SetFootnoteHook{${1:text}}"}},
+		{"name":"SplitNote"}
+	],
+	"envs": [],
+	"keys": {}
+}

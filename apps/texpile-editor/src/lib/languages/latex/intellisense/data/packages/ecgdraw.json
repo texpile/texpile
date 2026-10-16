@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xparse"}],
+	"macros": [
+		{"name":"ECG","arg":{"format":"[](){}","snippet":"ECG[${1:TikZ options}](${2:vertical position}){${3:ECG waves}}"},"doc":"This package provides the \\ECG{<code>} command which draws ECG."},
+		{"name":"ECG","arg":{"format":"(){}","snippet":"ECG(${1:vertical position}){${2:ECG waves}}"},"doc":"This package provides the \\ECG{<code>} command which draws ECG."},
+		{"name":"nuovoECG","arg":{"format":"{}[]{}","snippet":"nuovoECG{${1:wave name}}[${2:options}]{${3:wave code}}"}},
+		{"name":"nuovoECG","arg":{"format":"{}{}","snippet":"nuovoECG{${1:wave name}}{${2:wave code}}"}}
+	],
+	"envs": [
+		{"name":"ecg","arg":{"format":"[]","snippet":"[${1:TikZ options}]"}},
+		{"name":"ecg"}
+	],
+	"keys": {}
+}

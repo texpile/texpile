@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"algorithm2e"},{"name":"ifthen"},{"name":"ifoddpage"},{"name":"xspace"},{"name":"relsize"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

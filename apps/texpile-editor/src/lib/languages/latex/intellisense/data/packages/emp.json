@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"graphics"},{"name":"trig"},{"name":"verbatim"}],
+	"macros": [
+		{"name":"empaddtoprelude","arg":{"format":"{}","snippet":"empaddtoprelude{${1:METAPOST code}}"}},
+		{"name":"empaddtoTeX","arg":{"format":"{}","snippet":"empaddtoTeX{${1:LaTeX code}}"}},
+		{"name":"empprelude","arg":{"format":"{}","snippet":"empprelude{${1:METAPOST prelude}}"},"doc":"Define a LaTeX prelude to be written to the top of every METAPOST file."},
+		{"name":"empTeX","arg":{"format":"{}","snippet":"empTeX{${1:LaTeX prelude}}"}},
+		{"name":"empuse","arg":{"format":"{}","snippet":"empuse{${1:name}}"},"doc":"Reuse a previously defined figure."},
+		{"name":"empwrite","arg":{"format":"{}","snippet":"empwrite{${1}}"},"unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"filemaintainer","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"filerevision","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [
+		{"name":"emp","arg":{"format":"[]()","snippet":"[${1}](${2})"},"doc":"The emp environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"emp","arg":{"format":"()","snippet":"(${1})"},"doc":"The emp environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"empcmds"},
+		{"name":"empdef","arg":{"format":"[]()","snippet":"[${1}](${2})"},"doc":"The empdef environment is similar to emp, but the figure is not drawn."},
+		{"name":"empdef","arg":{"format":"()","snippet":"(${1})"},"doc":"The empdef environment is similar to emp, but the figure is not drawn."},
+		{"name":"empfile","arg":{"format":"[]","snippet":"[${1:METAPOST-file}]"}},
+		{"name":"empfile"},
+		{"name":"empgraph","arg":{"format":"[]()","snippet":"[${1}](${2})"},"doc":"The empgraph environment contains the description of a graph that will be placed a the location of the environment."},
+		{"name":"empgraph","arg":{"format":"()","snippet":"(${1})"},"doc":"The empgraph environment contains the description of a graph that will be placed a the location of the environment."}
+	],
+	"keys": {}
+}

@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"multido"}],
+	"macros": [
+		{"name":"autosetScreensizeWithMargins","arg":{"format":"{}{}{}{}{}{}","snippet":"autosetScreensizeWithMargins{${1:n_rows}}{${2:n_cols}}{${3:lm}}{${4:rm}}{${5:tm}}{${6:bm}}"}},
+		{"name":"disableTiling"},
+		{"name":"enableTiling","doc":"When you execute \\enableTiling, the graphic tile currently defined will be used."},
+		{"name":"maxiterations","arg":{"format":"{}","snippet":"maxiterations{${1:number}}"}},
+		{"name":"placeTilesinLayers","arg":{"format":"[]{}","snippet":"placeTilesinLayers[${1:name}]{${2:KV-pairs}}"},"doc":"To get the tiles to appear in their a layer (all in the same layer), use the aeb_tilebg \\placeTilesinLayers command."},
+		{"name":"placeTilesinLayers","arg":{"format":"{}","snippet":"placeTilesinLayers{${1:KV-pairs}}"},"doc":"To get the tiles to appear in their a layer (all in the same layer), use the aeb_tilebg \\placeTilesinLayers command."},
+		{"name":"setTileBgGraphic","arg":{"format":"[]{}","snippet":"setTileBgGraphic[${1:key_values}]{${2:filename}}"}},
+		{"name":"setTileBgGraphic","arg":{"format":"{}","snippet":"setTileBgGraphic{${1:filename}}"}},
+		{"name":"switchtoLLTiling"},
+		{"name":"switchtoULTiling"}
+	],
+	"envs": [],
+	"keys": {}
+}

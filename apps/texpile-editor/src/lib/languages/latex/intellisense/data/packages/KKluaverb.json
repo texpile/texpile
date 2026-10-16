@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"luatexbase"},{"name":"luacode"},{"name":"iftex"},{"name":"pgfkeys"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"KKcodeE","doc":"\\KKcodeS and \\KKcodeE provide an environment-like output which is very close to the lstlisting."},
+		{"name":"KKcodeS","doc":"\\KKcodeS and \\KKcodeE provide an environment-like output which is very close to the lstlisting."},
+		{"name":"KKlvStart","unusual":true},
+		{"name":"KKlvStart*","unusual":true},
+		{"name":"KKvClearMapTeX","arg":{"format":"{}","snippet":"KKvClearMapTeX{${1:character}}"},"doc":"\\KKvClearMapTeX{<char>} removes the TeX-command mapping for a character and restores the default behaviour (for space: reverts to non-breaking space)."},
+		{"name":"KKverb","doc":"The KKluaverb is a LaTeX package which provides a Lua-enhanced \\verb command, \\KKverb."},
+		{"name":"KKvLNChange","arg":{"format":"{}","snippet":"KKvLNChange{${1:options}}","keys":["pgfkeys:/kklvlinenumber"],"keyPos":0}},
+		{"name":"KKvOpChange","arg":{"format":"{}","snippet":"KKvOpChange{${1:options}}","keys":["pgfkeys:/kklv"],"keyPos":0},"doc":"\\KKvOpChange can change font and color of the output of \\KKverb."},
+		{"name":"KKvScanOff"},
+		{"name":"KKvScanOn"},
+		{"name":"KKvSetCodeEscape","arg":{"format":"{}","snippet":"KKvSetCodeEscape{${1:character}}"},"doc":"The escape character can be changed by \\KKvSetCodeEscape{<character>}."},
+		{"name":"KKvSetDelims","arg":{"format":"{}{}","snippet":"KKvSetDelims{${1:start delimiter}}{${2:end delimiter}}"}},
+		{"name":"KKvSetMap","arg":{"format":"{}{}","snippet":"KKvSetMap{${1:from}}{${2:to}}"},"doc":"\\KKvSetMap replaces a character with another character."},
+		{"name":"KKvSetMapTeX","arg":{"format":"{}{}","snippet":"KKvSetMapTeX{${1:from}}{${2:TeX command}}"}},
+		{"name":"KKvSpaceForce"},
+		{"name":"KKvSpaceVisible","doc":"\\KKvSpaceVisible is a convenience wrapper for \\KKvSetMapTeX{ }{\\textvisiblespace}."},
+		{"name":"KKvUsePreset","arg":{"format":"{}","snippet":"KKvUsePreset{${1:style name}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/kklv": ["color=","font=","wrapindent=","enabled=${1|true,false|}","wrap=${1|true,false|}"],
+		"pgfkeys:/kklvlinenumber": ["color=","font=","size=","start=","style=${1|0,1,2|}"]
+	}
+}

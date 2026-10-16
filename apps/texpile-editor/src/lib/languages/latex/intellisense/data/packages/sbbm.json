@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"Lbrack"},
+		{"name":"Lparen"},
+		{"name":"mathbb","arg":{"format":"{}","snippet":"mathbb{${1}}"},"math":true},
+		{"name":"Rbrack"},
+		{"name":"Rparen"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/sbbm#c": ["rm","sf","sl","tt","up"]
+	},
+	"args": ["\\usepackage/sbbm#c"]
+}

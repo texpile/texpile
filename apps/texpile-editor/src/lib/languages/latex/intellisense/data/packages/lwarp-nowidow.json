@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"noclub","arg":{"format":"[]","snippet":"noclub[${1:number of lines}]"}},
+		{"name":"noclub"},
+		{"name":"nowidow","arg":{"format":"[]","snippet":"nowidow[${1:number of lines}]"}},
+		{"name":"nowidow"},
+		{"name":"setnoclub","arg":{"format":"[]","snippet":"setnoclub[${1:number of lines}]"}},
+		{"name":"setnoclub"},
+		{"name":"setnowidow","arg":{"format":"[]","snippet":"setnowidow[${1:number of lines}]"}},
+		{"name":"setnowidow"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -9,6 +9,12 @@ export type ParseOptions = {
 
 	environments?: Ast.EnvInfoRecord;
 
+	/** what the document and its packages define, over the table's own entry for a command it has */
+	documentMacros?: Ast.MacroInfoRecord;
+
+	/** the document loads beamer, whose overlay arguments (\item<2>) apply only there */
+	beamer?: boolean;
+
 	flags?: {
 		/** parse @ as a letter, as if \makeatletter is set. */
 		atLetter?: boolean;

@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"fnfixbottomfalse"},
+		{"name":"fnfixbottomtrue"},
+		{"name":"iffnfixbottom","unusual":true},
+		{"name":"iftombow","unusual":true},
+		{"name":"iftombowdate","unusual":true},
+		{"name":"tombowdatefalse","unusual":true},
+		{"name":"tombowdatetrue","unusual":true},
+		{"name":"tombowfalse","unusual":true},
+		{"name":"tombowtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

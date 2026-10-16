@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"everyshi"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"basepageargs","arg":{"format":"{}","snippet":"basepageargs{${1:includegraphics options}}"}},
+		{"name":"basepageboxwidth","doc":"The width of the box with the base page is \\basepageboxwidth."},
+		{"name":"CommentedEditionfalse","unusual":true},
+		{"name":"CommentedEditiontrue","unusual":true},
+		{"name":"commentscolSheight"},
+		{"name":"commentscolskip","doc":"The length \\commentscolskip is the distance between comment columns."},
+		{"name":"commentscolTheight"},
+		{"name":"commentscolwidth","doc":"The length \\commentscolwidth is the width of the comment columns."},
+		{"name":"commentsContinuationPageSetup","arg":{"format":"{}","snippet":"commentsContinuationPageSetup{${1:number of columns}}"}},
+		{"name":"commentsEvenPageSetup","arg":{"format":"{}{}{}","snippet":"commentsEvenPageSetup{${1:left tall columns}}{${2:short columns}}{${3:right tall columns}}"}},
+		{"name":"commentsflushbottom","doc":"The commands \\commentsraggedbottom and \\commentsflushbottom produce either columns of comments with no stretchability, or with aligned last lines."},
+		{"name":"commentsHook","arg":{"format":"{}","snippet":"commentsHook{${1:code}}"}},
+		{"name":"commentsOddPageSetup","arg":{"format":"{}{}{}","snippet":"commentsOddPageSetup{${1:left tall columns}}{${2:short columns}}{${3:right tall columns}}"}},
+		{"name":"commentsraggedbottom","doc":"The commands \\commentsraggedbottom and \\commentsflushbottom produce either columns of comments with no stretchability, or with aligned last lines."},
+		{"name":"ifCommentedEdition","unusual":true},
+		{"name":"typesetComments","arg":{"format":"{}","snippet":"typesetComments{${1}}"},"unusual":true},
+		{"name":"typesetContinuation","unusual":true}
+	],
+	"envs": [
+		{"name":"commeditComments"},
+		{"name":"commeditPreamble","arg":{"format":"{}","snippet":"{${1:filename}}"}},
+		{"name":"commeditText","doc":"Normal pages in the commented edition are set up with the environment commeditText."},
+		{"name":"commentsBox","unusual":true}
+	],
+	"keys": {}
+}

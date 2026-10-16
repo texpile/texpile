@@ -1,11 +1,6 @@
 {
-  "deps": [
-    {
-      "name": "translator"
-    }
-  ],
-  "macros": [],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"translator"},{"name":"keyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
 }

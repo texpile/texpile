@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"ctex"},{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"zhnumber"},{"name":"xcolor"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"listings"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"ac","arg":{"format":"{}","snippet":"ac{${1}}"}},
+		{"name":"ansicolor","arg":{"format":"{}","snippet":"ansicolor{${1}}"}},
+		{"name":"ansireset"},
+		{"name":"iftermcodelight","unusual":true},
+		{"name":"tctheme","arg":{"format":"{}","snippet":"tctheme{${1}}"}},
+		{"name":"termcodefileinput","arg":{"format":"[]{}{}","snippet":"termcodefileinput[${1}]{${2}}{${3}}"}},
+		{"name":"termcodefileinput","arg":{"format":"{}{}","snippet":"termcodefileinput{${1}}{${2}}"}},
+		{"name":"termcodelightfalse","unusual":true},
+		{"name":"termcodelighttrue","unusual":true},
+		{"name":"terminalcodetheme","arg":{"format":"{}","snippet":"terminalcodetheme{${1}}"}},
+		{"name":"terminput","arg":{"format":"[]{}{}","snippet":"terminput[${1}]{${2}}{${3}}"}},
+		{"name":"terminput","arg":{"format":"{}{}","snippet":"terminput{${1}}{${2}}"}}
+	],
+	"envs": [
+		{"name":"termcode","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"termcode","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

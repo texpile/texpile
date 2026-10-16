@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"resizegathersetup","arg":{"format":"{}","snippet":"resizegathersetup{${1:option list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

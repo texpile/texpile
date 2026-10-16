@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"cxkvsetkeys","arg":{"format":"[]{}[]{}","snippet":"cxkvsetkeys[${1:prefix}]{${2:families}}[${3:na}]{${4:keys}}"}},
+		{"name":"cxkvsetkeys","arg":{"format":"{}{}","snippet":"cxkvsetkeys{${1:families}}{${2:keys}}"}},
+		{"name":"cxkvsetkeys*","arg":{"format":"[]{}[]{}","snippet":"cxkvsetkeys*[${1:prefix}]{${2:families}}[${3:na}]{${4:keys}}"}},
+		{"name":"cxkvsetkeys*","arg":{"format":"{}{}","snippet":"cxkvsetkeys*{${1:families}}{${2:keys}}"}},
+		{"name":"DeclareDelimiter","arg":{"format":"{}{}","snippet":"DeclareDelimiter{${1:name}}{${2:delimiter}}"},"doc":"In the preamble, we declare the delimiter to be used."},
+		{"name":"usekvdelim","arg":{"format":"{}","snippet":"usekvdelim{${1:name}}"},"doc":"Use \\usekvdelim to display delimiter, as associated with the argument #1."}
+	],
+	"envs": [],
+	"keys": {}
+}

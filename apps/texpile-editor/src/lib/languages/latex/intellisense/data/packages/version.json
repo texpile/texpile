@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"excludeversion","arg":{"format":"[]{}","snippet":"excludeversion[${1}]{${2}}"}},
+		{"name":"excludeversion","arg":{"format":"{}","snippet":"excludeversion{${1}}"}},
+		{"name":"includeversion","arg":{"format":"{}","snippet":"includeversion{${1}}"}}
+	],
+	"envs": [
+		{"name":"comment"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"cncolours"},{"name":"suffix"},{"name":"pgfornament-han"},{"name":"xpatch"},{"name":"xparse"},{"name":"pgfornament"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfopts"},{"name":"calc"},{"name":"relsize"},{"name":"unicode-math"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"textpos"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"l3keys2e","engines":["lualatex","xelatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"TQBottomDecoOpacity"},
+		{"name":"TQBottomDecoWidth"},
+		{"name":"TQTopDecoOpacity"},
+		{"name":"TQTopDecoWidth"}
+	],
+	"envs": [],
+	"keys": {}
+}

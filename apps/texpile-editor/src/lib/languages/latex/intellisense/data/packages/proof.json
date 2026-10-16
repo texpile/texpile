@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"deduce","arg":{"format":"[]{}{}","snippet":"deduce[${1:proof}]{${2:lower}}{${3:uppers}}"},"doc":"\\deduce{〈Lower 〉}{〈Uppers〉} draws an inference without a rule."},
+		{"name":"deduce","arg":{"format":"{}{}","snippet":"deduce{${1:lower}}{${2:uppers}}"},"doc":"\\deduce{〈Lower 〉}{〈Uppers〉} draws an inference without a rule."},
+		{"name":"infer","arg":{"format":"[]{}{}","snippet":"infer[${1:label}]{${2:lower}}{${3:uppers}}"},"doc":"\\infer{〈Lower 〉}{〈Uppers〉} draws an inference."},
+		{"name":"infer","arg":{"format":"{}{}","snippet":"infer{${1:lower}}{${2:uppers}}"},"doc":"\\infer{〈Lower 〉}{〈Uppers〉} draws an inference."},
+		{"name":"infer*","arg":{"format":"[]{}{}","snippet":"infer*[${1:label}]{${2:lower}}{${3:uppers}}"},"doc":"\\infer{〈Lower 〉}{〈Uppers〉} draws an inference."},
+		{"name":"infer*","arg":{"format":"{}{}","snippet":"infer*{${1:lower}}{${2:uppers}}"},"doc":"\\infer{〈Lower 〉}{〈Uppers〉} draws an inference."},
+		{"name":"inferLabelSkip","unusual":true},
+		{"name":"inferLineSkip","unusual":true},
+		{"name":"inferTabSkip","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

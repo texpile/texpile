@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"babel"},{"name":"class-article"},{"name":"newtxtext"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"xstring"},{"name":"scalefnt"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"newtxmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"centernot"},{"name":"microtype"},{"name":"authblk"},{"name":"caption"},{"name":"caption3"},{"name":"newfloat"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"citeA","arg":{"format":"{}","snippet":"citeA{${1:key}}"}},
+		{"name":"citeN","arg":{"format":"{}","snippet":"citeN{${1:key}}"}},
+		{"name":"citeNP","arg":{"format":"{}","snippet":"citeNP{${1:key}}"}},
+		{"name":"citeyear","arg":{"format":"{}","snippet":"citeyear{${1:key}}"}},
+		{"name":"citeyearNP","arg":{"format":"[]{}","snippet":"citeyearNP[${1:note}]{${2:key}}"},"unusual":true},
+		{"name":"citeyearNP","arg":{"format":"{}","snippet":"citeyearNP{${1:key}}"},"unusual":true},
+		{"name":"KeyWordName","unusual":true},
+		{"name":"KeyWords","arg":{"format":"{}","snippet":"KeyWords{${1:key words}}"},"doc":"The command \\KeyWords{<your key words>} can be used to produce a labeled list of key words."},
+		{"name":"NameTag","arg":{"format":"{}","snippet":"NameTag{${1:name}}"}},
+		{"name":"ptsize","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/ascelike#c": ["10pt","11pt","12pt","BackFigs","DoubleSpace","InsideFigs","Journal","LineNumbers","NewProceedings","NoLineNumbers","NoLists","NoPageNumbers","Preprint","Proceedings","SectionNumbers","SingleSpace","fleqn","landscape","leqno","openbib","titlepage"]
+	},
+	"args": ["\\documentclass/ascelike#c"]
+}

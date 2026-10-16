@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"xparse"},{"name":"etoolbox"},{"name":"float"},{"name":"xcolor"},{"name":"pict2e"},{"name":"trig"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"Frame","arg":{"format":"{}{}{}","snippet":"Frame{${1}}{${2}}{${3}}"}},
+		{"name":"Frame*","arg":{"format":"{}{}{}","snippet":"Frame*{${1}}{${2}}{${3}}"}},
+		{"name":"framedbox","arg":{"format":"{}{}{}[]{}","snippet":"framedbox{${1}}{${2}}{${3}}[${4}]{${5}}"}},
+		{"name":"framedbox","arg":{"format":"{}{}{}{}","snippet":"framedbox{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"ifWFfive","unusual":true},
+		{"name":"ifWFnew","unusual":true},
+		{"name":"includeframedtext","arg":{"format":"[]{}[][]","snippet":"includeframedtext[${1}]{${2}}[${3}][${4}]"}},
+		{"name":"includeframedtext","arg":{"format":"{}","snippet":"includeframedtext{${1}}"}},
+		{"name":"setfontsize","arg":{"format":"[]{}","snippet":"setfontsize[${1}]{${2}}"}},
+		{"name":"setfontsize","arg":{"format":"{}","snippet":"setfontsize{${1}}"}},
+		{"name":"SetWFbgd","arg":{"format":"{}","snippet":"SetWFbgd{${1}}"}},
+		{"name":"SetWFfrm","arg":{"format":"{}","snippet":"SetWFfrm{${1}}"}},
+		{"name":"SetWFtxt","arg":{"format":"{}","snippet":"SetWFtxt{${1}}"}},
+		{"name":"WFclear","unusual":true},
+		{"name":"WFfivefalse","unusual":true},
+		{"name":"WFfivetrue","unusual":true},
+		{"name":"WFnewfalse","unusual":true},
+		{"name":"WFnewtrue","unusual":true},
+		{"name":"WFscalefactor","unusual":true},
+		{"name":"wrapoverhang"}
+	],
+	"envs": [
+		{"name":"wrapfigure","arg":{"format":"[]{}[]{}","snippet":"[${1:indented lines number}]{${2:location}}[${3:overhang}]{${4:width}}"}},
+		{"name":"wrapfigure","arg":{"format":"{}{}","snippet":"{${1:location}}{${2:width}}"}},
+		{"name":"wrapfloat","arg":{"format":"{}[]{}[]{}","snippet":"{${1:object name}}[${2:line number}]{${3:location}}[${4:overhang}]{${5:width}}"}},
+		{"name":"wrapfloat","arg":{"format":"{}{}{}","snippet":"{${1:object name}}{${2:location}}{${3:width}}"}},
+		{"name":"wraptable","arg":{"format":"[]{}[]{}","snippet":"[${1:indented lines number}]{${2:location}}[${3:overhang}]{${4:width}}"}},
+		{"name":"wraptable","arg":{"format":"{}{}","snippet":"{${1:location}}{${2:width}}"}},
+		{"name":"wraptext","arg":{"format":"[]{}[]{}","snippet":"[${1:indented lines correction}]{${2:location}}[${3:overhang}]{${4:width}}"}},
+		{"name":"wraptext","arg":{"format":"{}{}","snippet":"{${1:location}}{${2:width}}"}}
+	],
+	"keys": {
+		"\\usepackage/wrapfig2#c": ["WFfive","WFold","verbose"]
+	},
+	"args": ["\\usepackage/wrapfig2#c"]
+}

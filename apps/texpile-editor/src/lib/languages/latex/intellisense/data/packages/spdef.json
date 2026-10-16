@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"expexe","arg":{"format":"{}","snippet":"expexe{${1:code}}"}},
+		{"name":"ifsmartphone","unusual":true},
+		{"name":"ifsp","arg":{"format":"{}{}","snippet":"ifsp{${1:if smartphone}}{${2:otherwise}}"}},
+		{"name":"smartphonefalse","unusual":true},
+		{"name":"smartphonetrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

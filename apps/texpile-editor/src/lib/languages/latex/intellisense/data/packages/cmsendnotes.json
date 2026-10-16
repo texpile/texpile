@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"endnotes"},{"name":"etoolbox"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"}],
+	"macros": [
+		{"name":"enoteskip","doc":"This command, which was inspired by a similar provision in hyperendnotes.sty, sets the vertical space between individual endnotes."},
+		{"name":"theendnotesbypart","arg":{"format":"[]","snippet":"theendnotesbypart[${1:section number}]"}},
+		{"name":"theendnotesbypart"},
+		{"name":"theendnotesbypart*","arg":{"format":"[]","snippet":"theendnotesbypart*[${1:section number}]"}},
+		{"name":"theendnotesbypart*"}
+	],
+	"envs": [],
+	"keys": {}
+}

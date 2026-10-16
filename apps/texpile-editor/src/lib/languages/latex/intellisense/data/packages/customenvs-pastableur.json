@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"pas-tableur"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xstring"},{"name":"xkeyval"},{"name":"customenvs-macros"},{"name":"simplekv"},{"name":"calc"},{"name":"etoolbox"},{"name":"xintexpr"},{"name":"xintfrac"},{"name":"xint"},{"name":"xintcore"},{"name":"xintkernel"},{"name":"xinttools"},{"name":"xintbinhex"},{"name":"poormanlog"},{"name":"ifthen"},{"name":"lucide-icons"}],
+	"macros": [
+		{"name":"barreFormule","arg":{"format":"[]{}{}{}","snippet":"barreFormule[${1:hauteur}]{${2:référence cellule}}{${3:dernière colonne}}{${4:contenu formule}}"}},
+		{"name":"barreFormule","arg":{"format":"{}{}{}","snippet":"barreFormule{${1:référence cellule}}{${2:dernière colonne}}{${3:contenu formule}}"}},
+		{"name":"celfusion","arg":{"format":"[]{}{}{}","snippet":"celfusion[${1:options}]{${2:col-lig}}{${3:col-lig}}{${4:label}}"}},
+		{"name":"celfusion","arg":{"format":"{}{}{}","snippet":"celfusion{${1:col-lig}}{${2:col-lig}}{${3:label}}"}},
+		{"name":"celnumbreak","arg":{"format":"{}{}{}","snippet":"celnumbreak{${1:num ligne pointillés}}{${2:début numéro suite}}{${3:fin numéro suite}}"}},
+		{"name":"coinTableur"}
+	],
+	"envs": [],
+	"keys": {}
+}

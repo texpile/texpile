@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"fancyhdr"},{"name":"extramarks"},{"name":"titlesec"},{"name":"enumitem"},{"name":"draftwatermark","if":"draft"},{"name":"kvoptions","if":"draft"},{"name":"keyval","if":"draft"},{"name":"kvsetkeys","if":"draft"},{"name":"graphicx","if":"draft"},{"name":"graphics","if":"draft"},{"name":"trig","if":"draft"},{"name":"xcolor","if":"draft"},{"name":"scrtime","if":"draft"},{"name":"scrkbase","if":"draft"},{"name":"scrbase","if":"draft"},{"name":"scrlfile","if":"draft"},{"name":"scrlfile-hook","if":"draft"},{"name":"scrlogo","if":"draft"},{"name":"prelim2e","if":"draft"}],
+	"macros": [
+		{"name":"gbdebug","arg":{"format":"{}","snippet":"gbdebug{${1}}"},"unusual":true},
+		{"name":"gbdebugx","arg":{"format":"{}","snippet":"gbdebugx{${1}}"},"unusual":true},
+		{"name":"gbheader","doc":"In order to have both the first and the last numbered section in the headline of the page, use the command \\gbheader."},
+		{"name":"gbheadtext"},
+		{"name":"gbitem","arg":{"format":"{}{}","snippet":"gbitem{${1:text}}{${2:id}}"}},
+		{"name":"gbsection","arg":{"format":"{}","snippet":"gbsection{${1:id}}"},"doc":"The \\gbsection{⟨id⟩} macro is the core of the package, defining the different (numbered) sections of the gamebook."},
+		{"name":"gbturn","arg":{"format":"{}","snippet":"gbturn{${1:id}}"},"doc":"References to numbered sections are typeset using \\gbturn, which puts the text defined in \\gbturntext before the reference."},
+		{"name":"gbturntext"},
+		{"name":"gbvillain","arg":{"format":"{}{}{}{}{}","snippet":"gbvillain{${1:villain's name}}{${2:skill}}{${3:skill level}}{${4:life}}{${5:life level}}"},"doc":"Villains and other kinds of opponents are typeset within a special tabbing environment."}
+	],
+	"envs": [
+		{"name":"gbtabbing","unusual":true},
+		{"name":"gbturnoptions","arg":{"format":"[]","snippet":"[${1}]"},"doc":"If there are many options for the reader at the end of one section, you can use the environment gbturnoptions for printing an indented list of these options."},
+		{"name":"gbturnoptions","doc":"If there are many options for the reader at the end of one section, you can use the environment gbturnoptions for printing an indented list of these options."}
+	],
+	"keys": {
+		"\\usepackage/gamebook#c": ["debug","draft"]
+	},
+	"args": ["\\usepackage/gamebook#c"]
+}

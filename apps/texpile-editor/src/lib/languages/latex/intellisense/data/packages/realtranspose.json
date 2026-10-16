@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"realtranspose","arg":{"format":"{}","snippet":"realtranspose{${1:symbol}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

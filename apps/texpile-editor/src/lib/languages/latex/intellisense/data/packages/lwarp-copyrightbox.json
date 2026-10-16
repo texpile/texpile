@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"copyrightbox","arg":{"format":"[]{}{}","snippet":"copyrightbox[${1}]{${2}}{${3}}"}},
+		{"name":"copyrightbox","arg":{"format":"{}{}","snippet":"copyrightbox{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"circuitikz"},{"name":"titlesec"}],
+	"macros": [
+		{"name":"boxcheck","doc":"Prints a black or checked box."},
+		{"name":"boxempty","doc":"Prints an empty box."},
+		{"name":"cesenaexamversion","unusual":true},
+		{"name":"examoneblocktop","arg":{"format":"{}{}","snippet":"examoneblocktop{${1}}{${2}}"}},
+		{"name":"examparts","arg":{"format":"{}","snippet":"examparts{${1}}"},"doc":"Used to include the checkboxes in \\maketitle by passing the code to the \\examparts{} macro."},
+		{"name":"examsection","arg":{"format":"{}{}","snippet":"examsection{${1}}{${2}}"},"doc":"Prints the title between two lines with numbering."},
+		{"name":"examsection*","arg":{"format":"{}{}","snippet":"examsection*{${1}}{${2}}"},"doc":"Prints the title between two lines with numbering."},
+		{"name":"examtwoblocks","arg":{"format":"{}{}{}{}","snippet":"examtwoblocks{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"examtwoblockstop","arg":{"format":"{}{}{}{}","snippet":"examtwoblockstop{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"maketitle","arg":{"format":"[]{}{}{}{}{}","snippet":"maketitle[${1:options}]{${2:surname}}{${3:name}}{${4:id}}{${5:signature}}{${6:n}}"}},
+		{"name":"maketitle","arg":{"format":"{}{}{}{}{}","snippet":"maketitle{${1:surname}}{${2:name}}{${3:id}}{${4:signature}}{${5:n}}"}},
+		{"name":"sectionfont"}
+	],
+	"envs": [],
+	"keys": {}
+}

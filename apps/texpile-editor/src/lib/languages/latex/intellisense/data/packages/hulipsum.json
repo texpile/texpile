@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"hulipsum","arg":{"format":"[]","snippet":"hulipsum[${1:num1-num2}]"},"doc":"This macro typesets the Lórum ipse paragraphs ⟨num1⟩ to ⟨num2⟩."},
+		{"name":"hulipsum","doc":"This macro typesets the Lórum ipse paragraphs ⟨num1⟩ to ⟨num2⟩."},
+		{"name":"hulipsum*","arg":{"format":"[]","snippet":"hulipsum*[${1:num1-num2}]"},"doc":"This macro typesets the Lórum ipse paragraphs ⟨num1⟩ to ⟨num2⟩."},
+		{"name":"hulipsum*","doc":"This macro typesets the Lórum ipse paragraphs ⟨num1⟩ to ⟨num2⟩."},
+		{"name":"hulipsumdocument","arg":{"format":"[]","snippet":"hulipsumdocument[${1:options}]"},"doc":"It creates a blind document with title, author, date, table of contents, part, chapter, section, subsection, subsubsection, paragraph, subparagraph, figure, lists, footnote, marginal note, equations, and bibliography."},
+		{"name":"hulipsumdocument","doc":"It creates a blind document with title, author, date, table of contents, part, chapter, section, subsection, subsubsection, paragraph, subparagraph, figure, lists, footnote, marginal note, equations, and bibliography."},
+		{"name":"hulipsumexp"},
+		{"name":"hulipsumsave","arg":{"format":"[]","snippet":"hulipsumsave[${1:num1-num2}]"}},
+		{"name":"hulipsumsave"},
+		{"name":"hulipsumsave*","arg":{"format":"[]","snippet":"hulipsumsave*[${1:num1-num2}]"}},
+		{"name":"hulipsumsave*"},
+		{"name":"sethulipsumdefault","arg":{"format":"{}","snippet":"sethulipsumdefault{${1:value}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

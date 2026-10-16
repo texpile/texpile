@@ -1,97 +1,17 @@
 {
-  "deps": [
-    {
-      "name": "xetex"
-    },
-    {
-      "name": "fontspec"
-    },
-    {
-      "name": "realscripts"
-    },
-    {
-      "name": "metalogo"
-    }
-  ],
-  "macros": [
-    {
-      "name": "textsuperscript*",
-      "arg": {
-        "format": "{}",
-        "snippet": "textsuperscript*{${1:text}}"
-      }
-    },
-    {
-      "name": "textsubscript*",
-      "arg": {
-        "format": "{}",
-        "snippet": "textsubscript*{${1:text}}"
-      }
-    },
-    {
-      "name": "realsubscript",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "realsubscript{${1:text}}"
-      }
-    },
-    {
-      "name": "realsuperscript",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "realsuperscript{${1:text}}"
-      }
-    },
-    {
-      "name": "fakesubscript",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "fakesubscript{${1:text}}"
-      }
-    },
-    {
-      "name": "fakesuperscript",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "fakesuperscript{${1:text}}"
-      }
-    },
-    {
-      "name": "vfrac",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "vfrac{${1:numerator}}{${2:denominator}}"
-      }
-    },
-    {
-      "name": "namedglyph",
-      "arg": {
-        "format": "{}",
-        "snippet": "namedglyph{${1:glyphname}}"
-      }
-    },
-    {
-      "name": "showhyphens"
-    },
-    {
-      "name": "XeTeX"
-    },
-    {
-      "name": "XeLaTeX"
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/xltxtra#c": [
-      "no-sscript",
-      "no-logos"
-    ]
-  },
-  "args": [
-    "\\usepackage/xltxtra#c"
-  ]
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"ifxetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"realscripts","engines":["xelatex"]},{"name":"metalogo","engines":["xelatex"]},{"name":"graphicx","engines":["xelatex"]},{"name":"keyval","engines":["xelatex"]},{"name":"graphics","engines":["xelatex"]},{"name":"trig","engines":["xelatex"]}],
+	"macros": [
+		{"name":"namedglyph","arg":{"format":"{}","snippet":"namedglyph{${1:glyph name}}"}},
+		{"name":"showhyphens","arg":{"format":"{}","snippet":"showhyphens{${1:words}}"}},
+		{"name":"textsubscript","arg":{"format":"{}","snippet":"textsubscript{${1:text}}"}},
+		{"name":"textsubscript*","arg":{"format":"{}","snippet":"textsubscript*{${1:text}}"}},
+		{"name":"textsuperscript","arg":{"format":"{}","snippet":"textsuperscript{${1:text}}"}},
+		{"name":"textsuperscript*","arg":{"format":"{}","snippet":"textsuperscript*{${1:text}}"}},
+		{"name":"vfrac","arg":{"format":"{}{}","snippet":"vfrac{${1:numerator}}{${2:denominator}}"},"doc":"The \\vfrac command for setting ‘vulgar’ fractions based on AAT or OpenType font features."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/xltxtra#c": ["no-logos","no-sscript"]
+	},
+	"args": ["\\usepackage/xltxtra#c"]
 }

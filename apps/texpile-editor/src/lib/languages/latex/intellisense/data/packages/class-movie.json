@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"class-article"},{"name":"keyval"}],
+	"macros": [
+		{"name":"darken","arg":{"format":"()","snippet":"darken(${1:fraction})"}},
+		{"name":"F","arg":{"format":"{}","snippet":"F{${1:command}}"}},
+		{"name":"Fr","arg":{"format":"{}","snippet":"Fr{${1:command}}"}},
+		{"name":"lighten","arg":{"format":"()","snippet":"lighten(${1:fraction})"}},
+		{"name":"MovieSetup","arg":{"format":"{}","snippet":"MovieSetup{${1:keys}}"}},
+		{"name":"scene","arg":{"format":"[]{}","snippet":"scene[${1:seconds}]{${2:frame content}}"}},
+		{"name":"scene","arg":{"format":"{}","snippet":"scene{${1:frame content}}"}},
+		{"name":"scene*","arg":{"format":"[]{}","snippet":"scene*[${1:seconds}]{${2:frame content}}"}},
+		{"name":"scene*","arg":{"format":"{}","snippet":"scene*{${1:frame content}}"}},
+		{"name":"theF"},
+		{"name":"theFr"},
+		{"name":"theFrame"},
+		{"name":"theScene"},
+		{"name":"Zoom","arg":{"format":"[]{}","snippet":"Zoom[${1:A;B}]{${2:content}}"}},
+		{"name":"Zoom","arg":{"format":"{}","snippet":"Zoom{${1:content}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/movie#c": ["10pt","11pt","12pt","a4paper","a5paper","b5paper","caption","cmactex","count","dvips","dvitops","emtex","executivepaper","landscape","legalpaper","letterpaper","ln","loop","nocaption","nocount","notime","once","oztex","textures","time","xdvi"]
+	},
+	"args": ["\\documentclass/movie#c"]
+}

@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"DFNallowcbreak"},
+		{"name":"DFNalwaysdouble"},
+		{"name":"DFNcolumnsep"},
+		{"name":"DFNcolumnwidth"},
+		{"name":"DFNinhibitcbreak"},
+		{"name":"DFNruleboth"},
+		{"name":"DFNruleleft"},
+		{"name":"DFNtrysingle"}
+	],
+	"envs": [],
+	"keys": {}
+}

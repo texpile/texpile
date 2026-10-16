@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etex"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"background","arg":{"format":"{}","snippet":"background{${1:color}}"},"doc":"\\background fills the entire rectangular area of the flag with color; note: a flag needs neither a frame around it nor a background on principle."},
+		{"name":"chevron","arg":{"format":"{}{}","snippet":"chevron{${1:color}}{${2:x coordinate}}"},"doc":"\\chevron draws an isosceles triangle with a given height over the hoist."},
+		{"name":"flaglength","doc":"\\flagwidth and \\flaglength specify the width and length of a flag."},
+		{"name":"flagsdefault","arg":{"format":"[]","snippet":"flagsdefault[${1}]"},"doc":"\\flagsdefault[opts] specifies default values for the Options opts for subsequent flags."},
+		{"name":"flagsdefault","doc":"\\flagsdefault[opts] specifies default values for the Options opts for subsequent flags."},
+		{"name":"flagvariant","doc":"By checking the macro \\flagvariant, which has to expand to a single digit or character, TeX-code can be executed conditionally by use of \\if...\\else...\\fi."},
+		{"name":"flagwidth","doc":"\\flagwidth is the unit for coordinates and lengths in the flag description."},
+		{"name":"framecode","arg":{"format":"{}","snippet":"framecode{${1:frame path}}"}},
+		{"name":"hbar","arg":{"format":"{}{}{}","snippet":"hbar{${1:color}}{${2:y coordinate}}{${3:line width}}"},"doc":"\\hbar draws a horizontal bar of given width and color at a specified y-coordinate across the flag; \\vbar does the same vertically."},
+		{"name":"hstripesII","arg":{"format":"{}{}","snippet":"hstripesII{${1:color 1}}{${2:color 2}}"},"doc":"partitions the flag into two horizontal stripes with the colors c1 and c2 ."},
+		{"name":"hstripesIII","arg":{"format":"{}{}{}","snippet":"hstripesIII{${1:color 1}}{${2:color 2}}{${3:color 3}}"},"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
+		{"name":"hstripesIV","arg":{"format":"{}{}{}{}","snippet":"hstripesIV{${1:color 1}}{${2:color 2}}{${3:color 3}}{${4:color 4}}"},"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
+		{"name":"moon","arg":{"format":"{}{}{}{}{}","snippet":"moon{${1:color}}{${2:center 1}}{${3:radius 1}}{${4:center 2}}{${5:radius 2}}"}},
+		{"name":"starn","arg":{"format":"{}{}{}{}{}{}","snippet":"starn{${1:color}}{${2:points}}{${3:position}}{${4:outer radius}}{${5:inner radius}}{${6:angle}}"}},
+		{"name":"starV","arg":{"format":"{}{}{}{}","snippet":"starV{${1:color}}{${2:position}}{${3:outer radius}}{${4:angle}}"}},
+		{"name":"starVI","arg":{"format":"{}{}{}{}","snippet":"starVI{${1:color}}{${2:position}}{${3:outer radius}}{${4:angle}}"}},
+		{"name":"stretchfactor","unusual":true},
+		{"name":"unionjack","arg":{"format":"{}{}{}{}","snippet":"unionjack{${1:x1}}{${2:y1}}{${3:x2}}{${4:y2}}"},"doc":"\\unionjack draws the Union Jack (which is part of a couple of flags) between a lower left and an upper right point."},
+		{"name":"vbar","arg":{"format":"{}{}{}","snippet":"vbar{${1:color}}{${2:x coordinate}}{${3:line width}}"}},
+		{"name":"vstripesII","arg":{"format":"{}{}","snippet":"vstripesII{${1:color 1}}{${2:color 2}}"},"doc":"partitions the flag into two vertical stripes with the colors c1 and c2 ."},
+		{"name":"vstripesIII","arg":{"format":"{}{}{}","snippet":"vstripesIII{${1:color 1}}{${2:color 2}}{${3:color 3}}"},"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
+		{"name":"worldflag","arg":{"format":"[]{}","snippet":"worldflag[${1}]{${2}}"},"doc":"\\worldflag{xx} draws a flag, selected by the parameter xx, as a single TikZ-picture."},
+		{"name":"worldflag","arg":{"format":"{}","snippet":"worldflag{${1}}"},"doc":"\\worldflag{xx} draws a flag, selected by the parameter xx, as a single TikZ-picture."}
+	],
+	"envs": [
+		{"name":"flagdescription","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etoolbox"},{"name":"fontawesome"},{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex"}],
+	"macros": [
+		{"name":"sectionintocskip","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

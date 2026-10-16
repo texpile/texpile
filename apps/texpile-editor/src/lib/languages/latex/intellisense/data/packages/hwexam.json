@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"l3keys2e"},{"name":"problem"},{"name":"stex"},{"name":"stex-logo"},{"name":"xspace"},{"name":"standalone"},{"name":"shellesc"},{"name":"ifluatex"},{"name":"iftex"},{"name":"xkeyval"},{"name":"currfile"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"gincltex"},{"name":"svn-prov"},{"name":"adjustbox"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"filemod-expmin","engines":["pdflatex","lualatex"]},{"name":"qrcode","if":"qrcode=true"},{"name":"xcolor","if":"qrcode=true"},{"name":"marginnote","if":"qrcode=true"},{"name":"pdftexcmds","engines":["lualatex"]}],
+	"macros": [
+		{"name":"assignmentautorefname","unusual":true},
+		{"name":"examdata","arg":{"format":"{}","snippet":"examdata{${1}}"}},
+		{"name":"homeworkdata","arg":{"format":"{}","snippet":"homeworkdata{${1}}"}},
+		{"name":"hwexamheader","unusual":true},
+		{"name":"hwexamminutes","unusual":true},
+		{"name":"includeassignment","arg":{"format":"[]{}","snippet":"includeassignment[${1:keys}]{${2:path}}"},"doc":"The \\includeassignment macro can be used to input an assignment from another file."},
+		{"name":"includeassignment","arg":{"format":"{}","snippet":"includeassignment{${1:path}}"},"doc":"The \\includeassignment macro can be used to input an assignment from another file."},
+		{"name":"quizdata","arg":{"format":"{}","snippet":"quizdata{${1}}"}},
+		{"name":"theassignment","unusual":true}
+	],
+	"envs": [
+		{"name":"assignment","arg":{"format":"[]","snippet":"[${1:keys}]"},"doc":"This package supplies the assignment environment that groups problems into assignment number sheets."},
+		{"name":"assignment","doc":"This package supplies the assignment environment that groups problems into assignment number sheets."},
+		{"name":"testheading","arg":{"format":"[]","snippet":"[${1:keys}]"}},
+		{"name":"testheading"}
+	],
+	"keys": {}
+}

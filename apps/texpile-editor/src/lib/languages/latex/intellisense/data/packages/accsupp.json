@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"pdfescape"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"AccSuppSetup","arg":{"format":"{}","snippet":"AccSuppSetup{${1:options}}","keys":["keyval:ACCSUPP"],"keyPos":0}},
+		{"name":"ActualTextDriverDefault","unusual":true},
+		{"name":"BeginAccSupp","arg":{"format":"{}","snippet":"BeginAccSupp{${1:options}}","keys":["keyval:ACCSUPP"],"keyPos":0}},
+		{"name":"EndAccSupp","arg":{"format":"{}","snippet":"EndAccSupp{${1:options}}","keys":["keyval:ACCSUPP"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:ACCSUPP": ["ActualText=","Alt=","E=","Lang=","method=","spacechar=","spacefont=","space=${1|true,false|}","unicode=${1|true,false|}","pdfliteral=${1|direct,page|}"],
+		"\\usepackage/accsupp#c": ["dvipdfm","dvipdfmx","dvips","dvipsone","luatex","pdftex","space=${1|true,false|}","spacechar=","spacefont=","xetex"]
+	},
+	"args": ["\\usepackage/accsupp#c"]
+}

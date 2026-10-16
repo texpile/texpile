@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

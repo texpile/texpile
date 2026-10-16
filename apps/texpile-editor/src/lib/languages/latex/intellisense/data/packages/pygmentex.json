@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"fancyvrb"},{"name":"keyval"},{"name":"color"},{"name":"ifthen"},{"name":"caption"},{"name":"caption3"},{"name":"shellesc"},{"name":"pgfkeys"},{"name":"efbox"},{"name":"mdframed"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"etoolbox"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"newfloat"}],
+	"macros": [
+		{"name":"FormatLineNumber","arg":{"format":"{}","snippet":"FormatLineNumber{${1}}"},"unusual":true},
+		{"name":"inputpygmented","arg":{"format":"[]{}","snippet":"inputpygmented[${1}]{${2}}"}},
+		{"name":"inputpygmented","arg":{"format":"{}","snippet":"inputpygmented{${1}}"}},
+		{"name":"pyginline","arg":{"format":"[]","snippet":"pyginline[${1:options}]"}},
+		{"name":"pyginline"},
+		{"name":"setpygmented","arg":{"format":"{}","snippet":"setpygmented{${1}}"}}
+	],
+	"envs": [
+		{"name":"pygmented","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"pygmented"}
+	],
+	"keys": {
+		"\\usepackage/pygmentex#c": ["force"]
+	},
+	"args": ["\\usepackage/pygmentex#c"]
+}

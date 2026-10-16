@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"etex"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"interfaces-etoolbox"},{"name":"interfaces-pgfkeys"},{"name":"interfaces-tikz"}],
+	"macros": [
+		{"name":"LoadInterface","arg":{"format":"{}","snippet":"LoadInterface{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

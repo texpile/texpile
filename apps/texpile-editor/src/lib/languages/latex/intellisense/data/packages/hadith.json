@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"iftex"},{"name":"biditools"},{"name":"xkeyval"},{"name":"xparse"},{"name":"xstring"}],
+	"macros": [
+		{"name":"hadith","arg":{"format":"[][]","snippet":"hadith[${1:collection}][${2:number}]"}},
+		{"name":"hadith"},
+		{"name":"hadith*","arg":{"format":"[][]","snippet":"hadith*[${1:collection}][${2:number}]"}},
+		{"name":"hadith*"},
+		{"name":"hadithabudawud","arg":{"format":"{}","snippet":"hadithabudawud{${1:number}}"}},
+		{"name":"hadithahmad","arg":{"format":"{}","snippet":"hadithahmad{${1:number}}"}},
+		{"name":"hadithbukhari","arg":{"format":"{}","snippet":"hadithbukhari{${1:number}}"}},
+		{"name":"hadithcite","arg":{"format":"[][]","snippet":"hadithcite[${1:collection}][${2:number}]"}},
+		{"name":"hadithcite"},
+		{"name":"hadithdarimi","arg":{"format":"{}","snippet":"hadithdarimi{${1:number}}"}},
+		{"name":"hadithibnmajah","arg":{"format":"{}","snippet":"hadithibnmajah{${1:number}}"}},
+		{"name":"hadithmalik","arg":{"format":"{}","snippet":"hadithmalik{${1:number}}"}},
+		{"name":"hadithmuslim","arg":{"format":"{}","snippet":"hadithmuslim{${1:number}}"}},
+		{"name":"hadithname","arg":{"format":"{}","snippet":"hadithname{${1:collection}}"}},
+		{"name":"hadithnasai","arg":{"format":"{}","snippet":"hadithnasai{${1:number}}"}},
+		{"name":"hadithrange","arg":{"format":"[][]","snippet":"hadithrange[${1:collection}][${2:start-end}]"}},
+		{"name":"hadithrange"},
+		{"name":"hadithsection","arg":{"format":"{}{}","snippet":"hadithsection{${1:collection}}{${2:number}}"}},
+		{"name":"hadithtirmidhi","arg":{"format":"{}","snippet":"hadithtirmidhi{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

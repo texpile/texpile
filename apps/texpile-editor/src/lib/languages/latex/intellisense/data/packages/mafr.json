@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"a4wide"},{"name":"a4"},{"name":"babel"}],
+	"macros": [
+		{"name":"A","doc":"les macros \\N, \\Z, \\Q, \\R, \\K, \\B, \\C, \\D, \\E, \\F, \\P, \\A, \\I, \\J et \\S permettent d’obtenir les notations usuelles N, Z, Q, R, C, B, C , D, E , F , P, A, I, J et S."},
+		{"name":"angl","arg":{"format":"{}","snippet":"angl{${1:points}}"}},
+		{"name":"B"},
+		{"name":"C"},
+		{"name":"D"},
+		{"name":"E"},
+		{"name":"F"},
+		{"name":"frc","arg":{"format":"{}{}","snippet":"frc{${1:numerator}}{${2:denominator}}"}},
+		{"name":"I"},
+		{"name":"J"},
+		{"name":"K"},
+		{"name":"mathrsfs","arg":{"format":"{}","snippet":"mathrsfs{${1:letters}}"},"unusual":true},
+		{"name":"N"},
+		{"name":"P","doc":"les macros \\N, \\Z, \\Q, \\R, \\K, \\B, \\C, \\D, \\E, \\F, \\P, \\A, \\I, \\J et \\S permettent d’obtenir les notations usuelles N, Z, Q, R, C, B, C , D, E , F , P, A, I, J et S."},
+		{"name":"Q"},
+		{"name":"R"},
+		{"name":"S"},
+		{"name":"scr","arg":{"format":"{}","snippet":"scr{${1:letters}}"}},
+		{"name":"vect","arg":{"format":"{}","snippet":"vect{${1:points}}"}},
+		{"name":"Z","doc":"les macros \\N, \\Z, \\Q, \\R, \\K, \\B, \\C, \\D, \\E, \\F, \\P, \\A, \\I, \\J et \\S permettent d’obtenir les notations usuelles N, Z, Q, R, C, B, C , D, E , F , P, A, I, J et S."}
+	],
+	"envs": [],
+	"keys": {}
+}

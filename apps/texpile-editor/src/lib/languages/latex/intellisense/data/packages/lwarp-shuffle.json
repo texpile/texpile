@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"cshuffle"},
+		{"name":"shuffle","math":true,"detail":"⧢","doc":"shuffle product"}
+	],
+	"envs": [],
+	"keys": {}
+}

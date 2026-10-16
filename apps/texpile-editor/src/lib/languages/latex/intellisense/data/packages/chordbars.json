@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tkz-euclide"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"calc"},{"name":"ifthen"},{"name":"wasysym"},{"name":"relsize"}],
+	"macros": [
+		{"name":"addHalfBar","arg":{"format":"{}","snippet":"addHalfBar{${1:chord}}"}},
+		{"name":"addMeasures","arg":{"format":"{}","snippet":"addMeasures{${1:bars}}"}},
+		{"name":"addN"},
+		{"name":"barsize","doc":"The size of the grids can be adjusted with the internal variable \\barsize."},
+		{"name":"bpb","unusual":true},
+		{"name":"bpbfour"},
+		{"name":"bpbthree"},
+		{"name":"bpm","arg":{"format":"{}","snippet":"bpm{${1:tempo}}"}},
+		{"name":"chordf","arg":{"format":"{}","snippet":"chordf{${1:chord}}"}},
+		{"name":"chordFontSize","doc":"The font used for the chords can be adjusted by redefining the variable \\chordFontSize with classical LaTeX font specifications."},
+		{"name":"chordh","arg":{"format":"{}{}","snippet":"chordh{${1:first chord}}{${2:second chord}}"},"doc":"The command \\chordh (”h” for ”half-chord”) enables printing two chords per bar, as this happens quite often."},
+		{"name":"chordline","arg":{"format":"{}{}{}","snippet":"chordline{${1:chord}}{${2:bars}}{${3:title}}"}},
+		{"name":"countbarsNo"},
+		{"name":"countbarsYes","doc":"The command \\countbarsYes enables counting the bars of the song: each grid will have printed on the left side the number of the first bar of the grid."},
+		{"name":"MajS"},
+		{"name":"NumberOfBarsPerLine","doc":"The default behavior is to have 4-bars long lines, but you can change this anytime by giving a different value to \\NumberOfBarsPerLine."},
+		{"name":"printNbBars"},
+		{"name":"repeatBar","doc":"the command \\repeatBar will be rendered as ”./.” and means ”repeat last bar”."},
+		{"name":"repeatBarPair"},
+		{"name":"resetchordbars","doc":"The command \\resetchordbars will reset the bar and part counters, useful if you want to print two songs in the same document."},
+		{"name":"songtitle","doc":"The package provides a \\songtitle command that will format nicely the data given in the preamble with the classical \\title and \\author commands."},
+		{"name":"susF"},
+		{"name":"tempoBPM","unusual":true},
+		{"name":"theCurrentBarInLine","unusual":true},
+		{"name":"theCurrentLine","unusual":true},
+		{"name":"theNumMesure","unusual":true},
+		{"name":"theNumPart","unusual":true},
+		{"name":"titleFontSize","unusual":true},
+		{"name":"vspaceafter","unusual":true},
+		{"name":"vspacebefore","unusual":true},
+		{"name":"ycoeff"}
+	],
+	"envs": [
+		{"name":"chordbar","arg":{"format":"[]{}{}","snippet":"[${1:repetitions}]{${2:bars}}{${3:title}}"},"doc":"This package provides a single environnment, named chordbar, that has 2 mandatory arguments. The first argument is the number of bars, and the second is the pattern name."},
+		{"name":"chordbar","arg":{"format":"{}{}","snippet":"{${1:bars}}{${2:title}}"},"doc":"This package provides a single environnment, named chordbar, that has 2 mandatory arguments. The first argument is the number of bars, and the second is the pattern name."},
+		{"name":"chordbar*","arg":{"format":"[]{}{}","snippet":"[${1:repetitions}]{${2:bars}}{${3:title}}"},"doc":"This package provides a single environnment, named chordbar, that has 2 mandatory arguments. The first argument is the number of bars, and the second is the pattern name."},
+		{"name":"chordbar*","arg":{"format":"{}{}","snippet":"{${1:bars}}{${2:title}}"},"doc":"This package provides a single environnment, named chordbar, that has 2 mandatory arguments. The first argument is the number of bars, and the second is the pattern name."}
+	],
+	"keys": {}
+}

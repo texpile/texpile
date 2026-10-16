@@ -1,78 +1,28 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "caption*",
-      "arg": {
-        "format": "{}",
-        "snippet": "caption*{${1:text}}"
-      }
-    },
-    {
-      "name": "endfirstfoot"
-    },
-    {
-      "name": "endlastfoot"
-    },
-    {
-      "name": "endfirsthead"
-    },
-    {
-      "name": "endfoot"
-    },
-    {
-      "name": "endhead"
-    },
-    {
-      "name": "LTchunksize"
-    },
-    {
-      "name": "LTcapwidth"
-    },
-    {
-      "name": "LTleft"
-    },
-    {
-      "name": "LTpost"
-    },
-    {
-      "name": "LTpre"
-    },
-    {
-      "name": "LTright"
-    },
-    {
-      "name": "setlongtables"
-    },
-    {
-      "name": "tabularnewline"
-    }
-  ],
-  "envs": [
-    {
-      "name": "longtable",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:alignment}]{${1:preamble}}"
-      }
-    },
-    {
-      "name": "longtable",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:preamble}}"
-      }
-    }
-  ],
-  "keys": {
-    "\\usepackage/longtable#c": [
-      "errorshow",
-      "pausing",
-      "set",
-      "final"
-    ]
-  },
-  "args": [
-    "\\usepackage/longtable#c"
-  ]
+	"macros": [
+		{"name":"caption","arg":{"format":"[]{}","snippet":"caption[${1:lot entry}]{${2:caption}}"},"doc":"\\caption also writes the information to produce an entry in the list of tables."},
+		{"name":"caption","arg":{"format":"{}","snippet":"caption{${1:caption}}"},"doc":"\\caption also writes the information to produce an entry in the list of tables."},
+		{"name":"caption*","arg":{"format":"[]{}","snippet":"caption*[${1:lot entry}]{${2:caption}}"},"doc":"\\caption also writes the information to produce an entry in the list of tables."},
+		{"name":"caption*","arg":{"format":"{}","snippet":"caption*{${1:caption}}"},"doc":"\\caption also writes the information to produce an entry in the list of tables."},
+		{"name":"endfirsthead"},
+		{"name":"endfoot"},
+		{"name":"endhead","doc":"At the start of the table one may specify lines which are to appear at the top \\endhead of every page (under the headline, but before the other lines of the table)."},
+		{"name":"endlastfoot"},
+		{"name":"LTcaptype","doc":"The name used as counter, in caption, \\addcontentsline and in targets."},
+		{"name":"LTcapwidth","doc":"Width of the \\parbox containing the caption."},
+		{"name":"LTchunksize","doc":"Chunk size (the number of rows taken per \\halign)."},
+		{"name":"LTleft","doc":"Glue to the left and right of the table, default \\fill (ie centered)."},
+		{"name":"LTpost"},
+		{"name":"LTpre","doc":"Glue before and after the longtable."},
+		{"name":"LTright"},
+		{"name":"setlongtables","unusual":true}
+	],
+	"envs": [
+		{"name":"longtable","arg":{"format":"[]{}","snippet":"[${1:align}]{${2:cols}}"},"doc":"This package defines the longtable environment, a multi-page version of tabular."},
+		{"name":"longtable","arg":{"format":"{}","snippet":"{${1:cols}}"},"doc":"This package defines the longtable environment, a multi-page version of tabular."}
+	],
+	"keys": {
+		"\\usepackage/longtable#c": ["errorshow","pausing","set","final"]
+	},
+	"args": ["\\usepackage/longtable#c"]
 }

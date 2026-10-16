@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"iftex"},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"everylogo","arg":{"format":"{}","snippet":"everylogo{${1:toks}}"}},
+		{"name":"LuaLaTeX"},
+		{"name":"LuaTeX"},
+		{"name":"seteverylogo","arg":{"format":"{}","snippet":"seteverylogo{${1:toks}}"}},
+		{"name":"setLaTeXa","arg":{"format":"{}","snippet":"setLaTeXa{${1:arg}}"}},
+		{"name":"setLaTeXee","arg":{"format":"{}","snippet":"setLaTeXee{${1:arg}}"}},
+		{"name":"setlogodrop","arg":{"format":"[]{}","snippet":"setlogodrop[${1:string}]{${2:dimen}}"}},
+		{"name":"setlogodrop","arg":{"format":"{}","snippet":"setlogodrop{${1:dimen}}"}},
+		{"name":"setlogokern","arg":{"format":"{}{}","snippet":"setlogokern{${1:string}}{${2:dimen}}"}},
+		{"name":"XeLaTeX"},
+		{"name":"XeTeX"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"color"},{"name":"trig"}],
+	"macros": [
+		{"name":"bidicontour","arg":{"format":"[]{}{}","snippet":"bidicontour[${1:number}]{${2:color}}{${3:text}}"}},
+		{"name":"bidicontour","arg":{"format":"{}{}","snippet":"bidicontour{${1:color}}{${2:text}}"}},
+		{"name":"bidicontour*","arg":{"format":"[]{}{}","snippet":"bidicontour*[${1:number}]{${2:color}}{${3:text}}"}},
+		{"name":"bidicontour*","arg":{"format":"{}{}","snippet":"bidicontour*{${1:color}}{${2:text}}"}},
+		{"name":"bidicontourlength","arg":{"format":"{}","snippet":"bidicontourlength{${1:length}}"}},
+		{"name":"bidicontournumber","arg":{"format":"{}","snippet":"bidicontournumber{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bidicontour#c": ["auto","copies","outline"]
+	},
+	"args": ["\\usepackage/bidicontour#c"]
+}

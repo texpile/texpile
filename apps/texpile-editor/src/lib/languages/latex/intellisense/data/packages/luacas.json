@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"iftex"},{"name":"luacode"},{"name":"ifluatex"},{"name":"luatexbase"},{"name":"xparse"},{"name":"pgfkeys"},{"name":"verbatim"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"fetch","arg":{"format":"{}","snippet":"fetch{${1:expression}}"}},
+		{"name":"forestresult"},
+		{"name":"freeof","arg":{"format":"{}{}","snippet":"freeof{${1:expression}}{${2:symbol}}"}},
+		{"name":"freeof*","arg":{"format":"{}{}","snippet":"freeof*{${1:expression}}{${2:symbol}}"}},
+		{"name":"get","arg":{"format":"[]{}","snippet":"get[${1:autosimplify}]{${2:expression}}"}},
+		{"name":"get","arg":{"format":"{}","snippet":"get{${1:expression}}"}},
+		{"name":"isatomic","arg":{"format":"{}","snippet":"isatomic{${1:expression}}"}},
+		{"name":"isatomic*","arg":{"format":"{}","snippet":"isatomic*{${1:expression}}"}},
+		{"name":"isconstant","arg":{"format":"{}","snippet":"isconstant{${1:expression}}"}},
+		{"name":"isconstant*","arg":{"format":"{}","snippet":"isconstant*{${1:expression}}"}},
+		{"name":"lprint","arg":{"format":"{}[]","snippet":"lprint{${1:list}}[${2:range}]"}},
+		{"name":"lprint","arg":{"format":"{}","snippet":"lprint{${1:list}}"}},
+		{"name":"parseforest","arg":{"format":"{}","snippet":"parseforest{${1:expression}}"}},
+		{"name":"parseforest*","arg":{"format":"{}","snippet":"parseforest*{${1:expression}}"}},
+		{"name":"parseshrub","arg":{"format":"{}","snippet":"parseshrub{${1:expression}}"}},
+		{"name":"parseshrub*","arg":{"format":"{}","snippet":"parseshrub*{${1:expression}}"}},
+		{"name":"print","arg":{"format":"{}","snippet":"print{${1:expression}}"}},
+		{"name":"print*","arg":{"format":"{}","snippet":"print*{${1:expression}}"}},
+		{"name":"printshrub","arg":{"format":"{}","snippet":"printshrub{${1:expression}}"}},
+		{"name":"printshrub*","arg":{"format":"{}","snippet":"printshrub*{${1:expression}}"}},
+		{"name":"printtree","arg":{"format":"{}","snippet":"printtree{${1:expression}}"}},
+		{"name":"printtree*","arg":{"format":"{}","snippet":"printtree*{${1:expression}}"}},
+		{"name":"shrubresult"},
+		{"name":"store","arg":{"format":"{}[]","snippet":"store{${1:expression}}[${2:macro name}]"},"doc":"The \\store command will fetch the contents of its mandatory argument and store it in a macro of the same name."},
+		{"name":"store","arg":{"format":"{}","snippet":"store{${1:expression}}"},"doc":"The \\store command will fetch the contents of its mandatory argument and store it in a macro of the same name."},
+		{"name":"vprint","arg":{"format":"{}","snippet":"vprint{${1:expression}}"}},
+		{"name":"vprint*","arg":{"format":"{}","snippet":"vprint*{${1:expression}}"}},
+		{"name":"whatis","arg":{"format":"{}","snippet":"whatis{${1:expression}}"}},
+		{"name":"yoink","arg":{"format":"{}[]","snippet":"yoink{${1:expression}}[${2:macro name}]"}},
+		{"name":"yoink","arg":{"format":"{}","snippet":"yoink{${1:expression}}"}}
+	],
+	"envs": [
+		{"name":"CAS","doc":"The LaTeX environment \\begin{CAS}..\\end{CAS} is really a glorified Lua environment."}
+	],
+	"keys": {}
+}

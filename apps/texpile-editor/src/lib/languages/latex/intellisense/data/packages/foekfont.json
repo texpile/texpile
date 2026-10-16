@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"foek","arg":{"format":"{}","snippet":"foek{${1:text}}"},"doc":"A command with an argument, \\foek for typesetting small text pieces in FoekFont, e.g. \\foek{cheese} produces CHEESE."},
+		{"name":"foekfamily"},
+		{"name":"madsfoek"}
+	],
+	"envs": [],
+	"keys": {}
+}

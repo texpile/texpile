@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"ifetex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"xstring"},{"name":"ifthen"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"inffigures"},
+		{"name":"infigures"},
+		{"name":"lfstyle"},
+		{"name":"osfstyle"},
+		{"name":"Qnoswash"},
+		{"name":"Qswash","doc":"You may enable it globally using option swashQ to ETbb, or specify it locally with the macro \\Qswash, which renders as Q. If you had enabled it globally, you have access to the ordinary Q with the macro \\Qnoswash."},
+		{"name":"sufigures"},
+		{"name":"supfigures"},
+		{"name":"textde","arg":{"format":"{}","snippet":"textde{${1:text}}"}},
+		{"name":"textfrac","arg":{"format":"[]{}{}","snippet":"textfrac[${1:integer part}]{${2:numerator}}{${3:denominator}}"},"doc":"\\textfrac that may be used to construct simple fractions."},
+		{"name":"textfrac","arg":{"format":"{}{}","snippet":"textfrac{${1:numerator}}{${2:denominator}}"},"doc":"\\textfrac that may be used to construct simple fractions."},
+		{"name":"textin","arg":{"format":"{}","snippet":"textin{${1:text}}"}},
+		{"name":"textinf","arg":{"format":"{}","snippet":"textinf{${1:text}}"}},
+		{"name":"textinferior","arg":{"format":"{}","snippet":"textinferior{${1:text}}"}},
+		{"name":"textlf","arg":{"format":"{}","snippet":"textlf{${1:text}}"}},
+		{"name":"textosf","arg":{"format":"{}","snippet":"textosf{${1:text}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"}},
+		{"name":"textsup","arg":{"format":"{}","snippet":"textsup{${1:text}}"}},
+		{"name":"textsuperior","arg":{"format":"{}","snippet":"textsuperior{${1:text}}"}},
+		{"name":"texttlf","arg":{"format":"{}","snippet":"texttlf{${1:text}}"}},
+		{"name":"texttosf","arg":{"format":"{}","snippet":"texttosf{${1:text}}"}},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf","unusual":true},
+		{"name":"useproportional","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

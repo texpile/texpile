@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ccaux"},{"name":"thcc"},{"name":"theorem"},{"name":"ccthm"},{"name":"relabel"},{"name":"ccproof"},{"name":"ccqed"},{"name":"cc2cite"},{"name":"natbib"},{"name":"ccdbs"},{"name":"url"}],
+	"macros": [
+		{"name":"ccacknowledgementsname"},
+		{"name":"chaptername"},
+		{"name":"sectionname"},
+		{"name":"subsectionname"},
+		{"name":"subsubsectionname"}
+	],
+	"envs": [
+		{"name":"acknowledge","doc":"Environment for acknowledgments."}
+	],
+	"keys": {}
+}

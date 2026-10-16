@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"todonotes"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"},{"name":"datatool"},{"name":"xfor"},{"name":"etoolbox"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"longtable"}],
+	"macros": [
+		{"name":"addcompetence","arg":{"format":"[]{}","snippet":"addcompetence[${1:points}]{${2:competence}}"}},
+		{"name":"addcompetence","arg":{"format":"{}","snippet":"addcompetence{${1:competence}}"}},
+		{"name":"addGlobalCompetence","arg":{"format":"[]{}","snippet":"addGlobalCompetence[${1:points}]{${2:competence}}"}},
+		{"name":"addGlobalCompetence","arg":{"format":"{}","snippet":"addGlobalCompetence{${1:competence}}"}},
+		{"name":"declarecompetence","arg":{"format":"{}","snippet":"declarecompetence{${1:competence}}"}},
+		{"name":"declareprefix","arg":{"format":"{}","snippet":"declareprefix{${1:prefix}}"}},
+		{"name":"tableaucompetences"},
+		{"name":"tableaupartie","arg":{"format":"{}","snippet":"tableaupartie{${1:part}}"}},
+		{"name":"tableauprefix","arg":{"format":"{}","snippet":"tableauprefix{${1:parts}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

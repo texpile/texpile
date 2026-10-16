@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"AddFancyparClass","arg":{"format":"{}","snippet":"AddFancyparClass{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

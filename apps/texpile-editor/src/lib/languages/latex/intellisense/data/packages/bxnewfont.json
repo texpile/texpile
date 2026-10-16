@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"enhancenewfont"},
+		{"name":"newfontjascale","arg":{"format":"{}","snippet":"newfontjascale{${1:scale}}"}},
+		{"name":"newfontx","arg":{"format":"{}[]{}","snippet":"newfontx{${1:command}}[${2:encoding}]{${3:tfm name and at clause}}"},"doc":"`\\newfontx\\CMD[<encoding>]{<tfm-name><at-clause>}`: Defines `\\CMD` to be a “font command” (pseudo-fontdef token)."},
+		{"name":"newfontx","arg":{"format":"{}{}","snippet":"newfontx{${1:command}}{${2:tfm name and at clause}}"},"doc":"`\\newfontx\\CMD[<encoding>]{<tfm-name><at-clause>}`: Defines `\\CMD` to be a “font command” (pseudo-fontdef token)."},
+		{"name":"newfontx*","arg":{"format":"{}[]{}","snippet":"newfontx*{${1:command}}[${2:encoding}]{${3:tfm name and at clause}}"},"doc":"`\\newfontx\\CMD[<encoding>]{<tfm-name><at-clause>}`: Defines `\\CMD` to be a “font command” (pseudo-fontdef token)."},
+		{"name":"newfontx*","arg":{"format":"{}{}","snippet":"newfontx*{${1:command}}{${2:tfm name and at clause}}"},"doc":"`\\newfontx\\CMD[<encoding>]{<tfm-name><at-clause>}`: Defines `\\CMD` to be a “font command” (pseudo-fontdef token)."},
+		{"name":"noenhancenewfont"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bxnewfont#c": ["newfont"]
+	},
+	"args": ["\\usepackage/bxnewfont#c"]
+}

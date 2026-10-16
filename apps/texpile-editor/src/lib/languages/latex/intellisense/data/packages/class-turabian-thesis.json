@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"class-book"},{"name":"turabian-formatting"},{"name":"etoolbox"},{"name":"setspace"},{"name":"footmisc"},{"name":"nowidow"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"perpage","if":"endnotes"},{"name":"endnotes","if":"endnotes"}],
+	"macros": [
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:department}}"}},
+		{"name":"institution","arg":{"format":"{}","snippet":"institution{${1:institution}}"}},
+		{"name":"location","arg":{"format":"{}","snippet":"location{${1:city and state}}"}},
+		{"name":"maketitle","doc":"The \\maketitle command will create a separate title page if the document class specifies (or has as default) the titlepage option—the default option for both turabian-researchpaper and turabian-thesis."},
+		{"name":"submissioninfo","arg":{"format":"{}","snippet":"submissioninfo{${1:information requested for the title page}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}}
+	],
+	"envs": [
+		{"name":"appendixes"}
+	],
+	"keys": {
+		"\\documentclass/turabian-thesis#c": ["10pt","11pt","12pt","authordate","emptymargins","endnotes","noadjustbib","noraggedright","notitlepage","raggedright","twocolumn"]
+	},
+	"args": ["\\documentclass/turabian-thesis#c"]
+}

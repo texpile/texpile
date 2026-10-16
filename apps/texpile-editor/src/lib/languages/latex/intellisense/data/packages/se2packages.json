@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"fvextra","if":"!csquotes=false"},{"name":"etoolbox"},{"name":"fancyvrb","if":"!csquotes=false"},{"name":"keyval"},{"name":"lineno","if":"!csquotes=false"},{"name":"kvoptions","if":"!csquotes=false"},{"name":"kvsetkeys","if":"!csquotes=false"},{"name":"csquotes","if":"!csquotes=false"},{"name":"booktabs","if":"!booktabs=false"},{"name":"microtype","if":"!microtype=false"},{"name":"siunitx","if":"all=true|siunitx=true"},{"name":"translations","if":"all=true|siunitx=true"},{"name":"pdftexcmds","if":"all=true|siunitx=true"},{"name":"iftex","if":"all=true|minted=true|siunitx=true"},{"name":"amstext","if":"all=true|siunitx=true"},{"name":"array","if":"all=true|siunitx=true"},{"name":"minted","if":"all=true|minted=true"},{"name":"catchfile","if":"all=true|minted=true"},{"name":"etexcmds","if":"all=true|minted=true"},{"name":"latex2pydata","if":"all=true|minted=true"},{"name":"pgfkeys","if":"all=true|minted=true"},{"name":"pgfopts","if":"all=true|minted=true"},{"name":"shellesc","if":"all=true|minted=true"},{"name":"newfloat","if":"all=true|minted=true"},{"name":"color","if":"all=true|siunitx=true"},{"name":"cleveref","if":"all=true|cleveref=true"},{"name":"listings","if":"listings=true"},{"name":"xcolor","if":"minted=true"},{"name":"textcomp","if":"!csquotes=false","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

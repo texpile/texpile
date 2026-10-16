@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"pdfcolErrorNoStacks","unusual":true},
+		{"name":"pdfcolIfStackExists","arg":{"format":"{}{}{}","snippet":"pdfcolIfStackExists{${1:name}}{${2:true}}{${3:false}}"},"unusual":true},
+		{"name":"pdfcolInitStack","arg":{"format":"{}","snippet":"pdfcolInitStack{${1:name}}"},"unusual":true},
+		{"name":"pdfcolSetCurrent","arg":{"format":"{}","snippet":"pdfcolSetCurrent{${1:name}}"},"unusual":true},
+		{"name":"pdfcolSetCurrentColor","unusual":true},
+		{"name":"pdfcolSwitchStack","arg":{"format":"{}","snippet":"pdfcolSwitchStack{${1:name}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

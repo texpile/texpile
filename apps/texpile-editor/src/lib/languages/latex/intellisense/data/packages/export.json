@@ -1,0 +1,27 @@
+{
+	"macros": [
+		{"name":"AddInputInAux","arg":{"format":"{}","snippet":"AddInputInAux{${1:secondary document.aux}}"}},
+		{"name":"closeexport","doc":"The command \\closeexport terminates a sequence of exportations by closing the file and announcing."},
+		{"name":"export","unusual":true},
+		{"name":"Export","arg":{"format":"{}","snippet":"Export{${1:counter}}"}},
+		{"name":"ExportArrayParams","doc":"This macro is just a list of exportations of the lengths and parameters defining the layout in array and tabular environments."},
+		{"name":"ExportIf","arg":{"format":"{}","snippet":"ExportIf{${1:ifname}}"},"doc":"\\ExportIf allows you to export the state of an “if” condition, i.e. the command \\ExportIf{foo} will export the state of \\iffoo, just by writing \\foofalse or \\footrue in the export file."},
+		{"name":"ExportLength","arg":{"format":"{}","snippet":"ExportLength{${1:length}}"}},
+		{"name":"ExportMuskip","arg":{"format":"{}","snippet":"ExportMuskip{${1:muskip}}"}},
+		{"name":"ExportPageLayout","doc":"If you want to export all the dimensions (lengths) describing the page layout, just use the \\ExportPageLayout command."},
+		{"name":"ExportParameter","arg":{"format":"{}","snippet":"ExportParameter{${1:parameter}}"},"doc":"\\ExportParameter allows you to export parameters defined by simple commands, like \\textfraction."},
+		{"name":"Import","arg":{"format":"[]{}","snippet":"Import[${1:extension}]{${2:file}}"},"doc":"Importing the data is easy: open the file for reading, read it: the \\setcounter and \\setlength commands are executed, then close it."},
+		{"name":"Import","arg":{"format":"{}","snippet":"Import{${1:file}}"},"doc":"Importing the data is easy: open the file for reading, read it: the \\setcounter and \\setlength commands are executed, then close it."},
+		{"name":"openexport","arg":{"format":"[]{}","snippet":"openexport[${1:extension}]{${2:file}}"}},
+		{"name":"openexport","arg":{"format":"{}","snippet":"openexport{${1:file}}"}},
+		{"name":"PreciseExportLength","arg":{"format":"{}","snippet":"PreciseExportLength{${1:length}}"}},
+		{"name":"xcaption","arg":{"format":"{}[]{}","snippet":"xcaption{${1:float type}}[${2:short caption}]{${3:caption}}"}},
+		{"name":"xcaption","arg":{"format":"{}{}","snippet":"xcaption{${1:float type}}{${2:caption}}"}},
+		{"name":"xcaptionf","arg":{"format":"[]{}","snippet":"xcaptionf[${1:short caption}]{${2:caption}}"}},
+		{"name":"xcaptionf","arg":{"format":"{}","snippet":"xcaptionf{${1:caption}}"}},
+		{"name":"xcaptiont","arg":{"format":"[]{}","snippet":"xcaptiont[${1:short caption}]{${2:caption}}"}},
+		{"name":"xcaptiont","arg":{"format":"{}","snippet":"xcaptiont{${1:caption}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

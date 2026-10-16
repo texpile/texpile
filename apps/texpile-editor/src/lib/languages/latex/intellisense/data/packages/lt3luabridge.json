@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"luabridgeExecute","arg":{"format":"{}","snippet":"luabridgeExecute{${1:Lua code}}"},"doc":"The \\luabridgeExecute document command aliases the \\luabridge_now:e function."}
+	],
+	"envs": [],
+	"keys": {}
+}

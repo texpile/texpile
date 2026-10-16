@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"docdate","unusual":true},
+		{"name":"docversion","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"STClassic","doc":"The macro \\STClassic selects the StarTrekClassicA family."},
+		{"name":"STMovie","doc":"The macro \\STMovie selects the StarTrekClassicMoviesA family."},
+		{"name":"textSTClassic","arg":{"format":"{}","snippet":"textSTClassic{${1:text}}"},"doc":"The command \\textSTClassic typesets its argument with the StarTrekClassicA font."},
+		{"name":"textSTMovie","arg":{"format":"{}","snippet":"textSTMovie{${1:text}}"}},
+		{"name":"textTNG","arg":{"format":"{}","snippet":"textTNG{${1:text}}"},"doc":"The command \\textTNG typesets its argument with the StarTrekTNGCrilleA font."},
+		{"name":"textTNGmon","arg":{"format":"{}","snippet":"textTNGmon{${1:text}}"},"doc":"The macro \\textTNGmon typesets its arguments in the TNGMonitorsPlain font."},
+		{"name":"textTNGtitle","arg":{"format":"{}","snippet":"textTNGtitle{${1:text}}"}},
+		{"name":"TNG","doc":"The macro \\TNG selects the StarTrekTNGCrilleA family."},
+		{"name":"TNGmon","doc":"The macro \\TNGmon selects the TNGMonitorsPlain family."},
+		{"name":"TNGtitle","doc":"The macro \\TNGtitle selects the StarTrekTNGTitleA family."}
+	],
+	"envs": [],
+	"keys": {}
+}

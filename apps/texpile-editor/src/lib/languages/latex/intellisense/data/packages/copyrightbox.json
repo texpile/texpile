@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"copyrightbox","arg":{"format":"[]{}{}","snippet":"copyrightbox[${1:placement}]{${2:image}}{${3:text}}"},"doc":"copyrightbox.sty provides the command \\copyrightbox, which is used to put a small amount of text, usually a copyright notice, close to an image."},
+		{"name":"copyrightbox","arg":{"format":"{}{}","snippet":"copyrightbox{${1:image}}{${2:text}}"},"doc":"copyrightbox.sty provides the command \\copyrightbox, which is used to put a small amount of text, usually a copyright notice, close to an image."}
+	],
+	"envs": [],
+	"keys": {}
+}

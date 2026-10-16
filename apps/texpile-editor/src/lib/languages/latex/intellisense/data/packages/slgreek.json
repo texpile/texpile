@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"begingreek"},
+		{"name":"endgreek"},
+		{"name":"greekdelims"},
+		{"name":"greekfalse","unusual":true},
+		{"name":"greektrue","unusual":true},
+		{"name":"ifgreek","unusual":true},
+		{"name":"math"}
+	],
+	"envs": [],
+	"keys": {}
+}

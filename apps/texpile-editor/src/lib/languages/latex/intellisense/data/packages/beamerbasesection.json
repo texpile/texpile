@@ -1,313 +1,57 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "thelecture",
-      "unusual": true
-    },
-    {
-      "name": "lecture",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "lecture{${1:lecture name%text}}{${2:lecture label}}"
-      }
-    },
-    {
-      "name": "lecture",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "lecture[${3:short lecture name%text}]{${1:lecture name%text}}{${2:lecture label}}"
-      }
-    },
-    {
-      "name": "AtBeginLecture",
-      "arg": {
-        "format": "{}",
-        "snippet": "AtBeginLecture{${1:text}}"
-      }
-    },
-    {
-      "name": "includeonlylecture",
-      "arg": {
-        "format": "{}",
-        "snippet": "includeonlylecture{${1:lecture label}}"
-      }
-    },
-    {
-      "name": "insertlecture",
-      "unusual": true
-    },
-    {
-      "name": "insertlecturenumber",
-      "unusual": true
-    },
-    {
-      "name": "insertshortlecture",
-      "unusual": true
-    },
-    {
-      "name": "insertshortlecture",
-      "unusual": true,
-      "arg": {
-        "format": "[]",
-        "snippet": "insertshortlecture[${1:options%keyvals}]"
-      }
-    },
-    {
-      "name": "part<mode specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "part<mode specification>{${1:title}}"
-      }
-    },
-    {
-      "name": "part<mode specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "part<mode specification>[${2:short title}]{${1:title}}"
-      }
-    },
-    {
-      "name": "partlink",
-      "unusual": true
-    },
-    {
-      "name": "partlinkshort",
-      "unusual": true
-    },
-    {
-      "name": "insertpart",
-      "unusual": true
-    },
-    {
-      "name": "insertromanpartnumber",
-      "unusual": true
-    },
-    {
-      "name": "insertpartnumber",
-      "unusual": true
-    },
-    {
-      "name": "insertshortpart",
-      "unusual": true
-    },
-    {
-      "name": "insertshortpart",
-      "unusual": true,
-      "arg": {
-        "format": "[]",
-        "snippet": "insertshortpart[${1:options%keyvals}]"
-      }
-    },
-    {
-      "name": "AtBeginPart",
-      "arg": {
-        "format": "{}",
-        "snippet": "AtBeginPart{${1:text}}"
-      }
-    },
-    {
-      "name": "sectionname",
-      "unusual": true
-    },
-    {
-      "name": "section<mode specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "section<mode specification>[${2:short title}]{${1:title}}"
-      }
-    },
-    {
-      "name": "section<mode specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "section<mode specification>{${1:title}}"
-      }
-    },
-    {
-      "name": "section<mode specification>*",
-      "arg": {
-        "format": "{}",
-        "snippet": "section<mode specification>*{${1:title}}"
-      }
-    },
-    {
-      "name": "secname",
-      "unusual": true
-    },
-    {
-      "name": "lastsection",
-      "unusual": true
-    },
-    {
-      "name": "sectionlink",
-      "unusual": true
-    },
-    {
-      "name": "insertsection",
-      "unusual": true
-    },
-    {
-      "name": "insertsectionhead",
-      "unusual": true
-    },
-    {
-      "name": "insertsectionnumber",
-      "unusual": true
-    },
-    {
-      "name": "AtBeginSection",
-      "arg": {
-        "format": "{}",
-        "snippet": "AtBeginSection{${1:text}}"
-      }
-    },
-    {
-      "name": "AtBeginSection",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "AtBeginSection[${2:special star text%text}]{${1:text}}"
-      }
-    },
-    {
-      "name": "breakhere",
-      "unusual": true
-    },
-    {
-      "name": "subsectionname",
-      "unusual": true
-    },
-    {
-      "name": "subsection<mode specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "subsection<mode specification>[${2:short title}]{${1:title}}"
-      }
-    },
-    {
-      "name": "subsection<mode specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "subsection<mode specification>{${1:title}}"
-      }
-    },
-    {
-      "name": "subsection<mode specification>*",
-      "arg": {
-        "format": "{}",
-        "snippet": "subsection<mode specification>*{${1:title}}"
-      }
-    },
-    {
-      "name": "subsecname",
-      "unusual": true
-    },
-    {
-      "name": "lastsubsection",
-      "unusual": true
-    },
-    {
-      "name": "subsectionlink",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsection",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsectionhead",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsectionnumber",
-      "unusual": true
-    },
-    {
-      "name": "AtBeginSubsection",
-      "arg": {
-        "format": "{}",
-        "snippet": "AtBeginSubsection{${1:text}}"
-      }
-    },
-    {
-      "name": "AtBeginSubsection",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "AtBeginSubsection[${2:special star text%text}]{${1:text}}"
-      }
-    },
-    {
-      "name": "subsubsection<mode specification>",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "subsubsection<mode specification>[${2:short title}]{${1:title}}"
-      }
-    },
-    {
-      "name": "subsubsection<mode specification>",
-      "arg": {
-        "format": "{}",
-        "snippet": "subsubsection<mode specification>{${1:title}}"
-      }
-    },
-    {
-      "name": "subsubsection<mode specification>*",
-      "arg": {
-        "format": "{}",
-        "snippet": "subsubsection<mode specification>*{${1:title}}"
-      }
-    },
-    {
-      "name": "subsubsecname",
-      "unusual": true
-    },
-    {
-      "name": "lastsubsubsection",
-      "unusual": true
-    },
-    {
-      "name": "subsubsectionlink",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsubsection",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsubsectionhead",
-      "unusual": true
-    },
-    {
-      "name": "insertsubsubsectionnumber",
-      "unusual": true
-    },
-    {
-      "name": "AtBeginSubsubsection",
-      "arg": {
-        "format": "{}",
-        "snippet": "AtBeginSubsubsection{${1:text}}"
-      }
-    },
-    {
-      "name": "AtBeginSubsubsection",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "AtBeginSubsubsection[${2:special star text%text}]{${1:text}}"
-      }
-    },
-    {
-      "name": "appendix<mode specification>"
-    },
-    {
-      "name": "insertappendixframenumber",
-      "unusual": true
-    },
-    {
-      "name": "insertframenumberinappendix",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"appendix","arg":{"format":"<>","snippet":"appendix<${1:mode specification}>"},"doc":"Starts the appendix in the specified modes. All frames, all \\subsection commands, and all \\section commands used after this command will not be shown as part of the normal navigation bars."},
+		{"name":"AtBeginLecture","arg":{"format":"{}","snippet":"AtBeginLecture{${1:text}}"},"doc":"The given text will be inserted at the beginning of every lecture."},
+		{"name":"AtBeginPart","arg":{"format":"{}","snippet":"AtBeginPart{${1:text}}"},"doc":"The given text will be inserted at the beginning of every part."},
+		{"name":"AtBeginSection","arg":{"format":"[]{}","snippet":"AtBeginSection[${1:special star text}]{${2:text}}"},"doc":"The given text will be inserted at the beginning of every section. If the ⟨special star text⟩ parameter is specified, this text will be used for starred sections instead."},
+		{"name":"AtBeginSection","arg":{"format":"{}","snippet":"AtBeginSection{${1:text}}"},"doc":"The given text will be inserted at the beginning of every section. If the ⟨special star text⟩ parameter is specified, this text will be used for starred sections instead."},
+		{"name":"AtBeginSubsection","arg":{"format":"[]{}","snippet":"AtBeginSubsection[${1:special star text}]{${2:text}}"},"doc":"The given text will be inserted at the beginning of every subsection. If the ⟨special star text⟩ parameter is specified, this text will be used for starred subsections instead."},
+		{"name":"AtBeginSubsection","arg":{"format":"{}","snippet":"AtBeginSubsection{${1:text}}"},"doc":"The given text will be inserted at the beginning of every subsection. If the ⟨special star text⟩ parameter is specified, this text will be used for starred subsections instead."},
+		{"name":"AtBeginSubsubsection","arg":{"format":"[]{}","snippet":"AtBeginSubsubsection[${1:special star text}]{${2:text}}"}},
+		{"name":"AtBeginSubsubsection","arg":{"format":"{}","snippet":"AtBeginSubsubsection{${1:text}}"}},
+		{"name":"breakhere","doc":"In order to create a line break in the table of contents (usually not a good idea), you can use the command \\breakhere."},
+		{"name":"includeonlylecture","arg":{"format":"{}","snippet":"includeonlylecture{${1:lecture label}}"},"doc":"Causes all \\frame, frame, \\section, \\subsection, and \\part commands following a \\lecture command to be suppressed, except if the lecture’s label matches the ⟨lecture label⟩."},
+		{"name":"insertappendixframenumber"},
+		{"name":"insertframenumberinappendix","unusual":true},
+		{"name":"insertlecture"},
+		{"name":"insertlecturenumber","unusual":true},
+		{"name":"insertpart","doc":"\\insertpart inserts the current part name. • \\insertpartnumber inserts the current part number as an Arabic number into a template. • \\insertromanpartnumber inserts the current part number as a Roman number into a template."},
+		{"name":"insertpartnumber"},
+		{"name":"insertromanpartnumber"},
+		{"name":"insertsection"},
+		{"name":"insertsectionhead"},
+		{"name":"insertsectionnumber"},
+		{"name":"insertshortlecture","arg":{"format":"[]","snippet":"insertshortlecture[${1:options}]"},"doc":"The ⟨short lecture name⟩ is available via the \\insertshortlecture command."},
+		{"name":"insertshortlecture","doc":"The ⟨short lecture name⟩ is available via the \\insertshortlecture command."},
+		{"name":"insertshortpart","arg":{"format":"[]","snippet":"insertshortpart[${1:options}]"}},
+		{"name":"insertshortpart"},
+		{"name":"insertsubsection"},
+		{"name":"insertsubsectionhead"},
+		{"name":"insertsubsectionnumber"},
+		{"name":"insertsubsubsection"},
+		{"name":"insertsubsubsectionhead"},
+		{"name":"insertsubsubsectionnumber","unusual":true},
+		{"name":"lastsubsection","unusual":true},
+		{"name":"lecture","arg":{"format":"[]{}{}","snippet":"lecture[${1:short lecture name}]{${2:lecture name}}{${3:lecture label}}"},"doc":"The \\lecture command makes it easy to select only a certain set of frames from a file to be presented."},
+		{"name":"lecture","arg":{"format":"{}{}","snippet":"lecture{${1:lecture name}}{${2:lecture label}}"},"doc":"The \\lecture command makes it easy to select only a certain set of frames from a file to be presented."},
+		{"name":"part","arg":{"format":"<>[]{}","snippet":"part<${1:mode specification}>[${2:short part name}]{${3:part name}}"},"doc":"To create a new part, use the \\part command. All sections and subsections following this command will be “local” to that part."},
+		{"name":"part","arg":{"format":"<>{}","snippet":"part<${1:mode specification}>{${2:part name}}"},"doc":"To create a new part, use the \\part command. All sections and subsections following this command will be “local” to that part."},
+		{"name":"section","arg":{"format":"<>[]{}","snippet":"section<${1:mode specification}>[${2:short section name}]{${3:section name}}"}},
+		{"name":"section","arg":{"format":"<>{}","snippet":"section<${1:mode specification}>{${2:section name}}"}},
+		{"name":"section*","arg":{"format":"<>[]{}","snippet":"section*<${1:mode specification}>[${2:short section name}]{${3:section name}}"}},
+		{"name":"section*","arg":{"format":"<>{}","snippet":"section*<${1:mode specification}>{${2:section name}}"}},
+		{"name":"sectionname","unusual":true},
+		{"name":"subsection","arg":{"format":"<>[]{}","snippet":"subsection<${1:mode specification}>[${2:short subsection name}]{${3:subsection name}}"}},
+		{"name":"subsection","arg":{"format":"<>{}","snippet":"subsection<${1:mode specification}>{${2:subsection name}}"}},
+		{"name":"subsection*","arg":{"format":"<>[]{}","snippet":"subsection*<${1:mode specification}>[${2:short subsection name}]{${3:subsection name}}"}},
+		{"name":"subsection*","arg":{"format":"<>{}","snippet":"subsection*<${1:mode specification}>{${2:subsection name}}"}},
+		{"name":"subsectionname","unusual":true},
+		{"name":"subsubsection","arg":{"format":"<>[]{}","snippet":"subsubsection<${1:mode specification}>[${2:short subsubsection name}]{${3:subsubsection name}}"}},
+		{"name":"subsubsection","arg":{"format":"<>{}","snippet":"subsubsection<${1:mode specification}>{${2:subsubsection name}}"}},
+		{"name":"subsubsection*","arg":{"format":"<>[]{}","snippet":"subsubsection*<${1:mode specification}>[${2:short subsubsection name}]{${3:subsubsection name}}"}},
+		{"name":"subsubsection*","arg":{"format":"<>{}","snippet":"subsubsection*<${1:mode specification}>{${2:subsubsection name}}"}},
+		{"name":"thelecture","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
 }

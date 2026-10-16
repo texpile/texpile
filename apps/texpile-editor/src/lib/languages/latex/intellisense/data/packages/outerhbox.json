@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"outerhbox","arg":{"format":"{}","snippet":"outerhbox{${1:horizontal material}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

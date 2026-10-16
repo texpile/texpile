@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"DraftwatermarkOptions","arg":{"format":"{}","snippet":"DraftwatermarkOptions{${1}}"}},
+		{"name":"DraftwatermarkStdMark"},
+		{"name":"SetWatermarkAngle","arg":{"format":"{}","snippet":"SetWatermarkAngle{${1}}"}},
+		{"name":"SetWatermarkColor","arg":{"format":"[]{}","snippet":"SetWatermarkColor[${1:model}]{${2:color spec}}"}},
+		{"name":"SetWatermarkColor","arg":{"format":"{}","snippet":"SetWatermarkColor{${1:color spec}}"}},
+		{"name":"SetWatermarkFontSize","arg":{"format":"{}","snippet":"SetWatermarkFontSize{${1}}"}},
+		{"name":"SetWatermarkHorCenter","arg":{"format":"{}","snippet":"SetWatermarkHorCenter{${1}}"}},
+		{"name":"SetWatermarkLightness","arg":{"format":"{}","snippet":"SetWatermarkLightness{${1}}"}},
+		{"name":"SetWatermarkScale","arg":{"format":"{}","snippet":"SetWatermarkScale{${1}}"}},
+		{"name":"SetWatermarkText","arg":{"format":"{}","snippet":"SetWatermarkText{${1}}"}},
+		{"name":"SetWatermarkVertCenter","arg":{"format":"{}","snippet":"SetWatermarkVertCenter{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

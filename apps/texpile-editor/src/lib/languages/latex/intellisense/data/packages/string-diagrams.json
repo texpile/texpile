@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"wires","arg":{"format":"[]{}{}","snippet":"wires[${1:TikZ keys}]{${2:connectivity}}{${3:loose ends}}"},"doc":"To connect boxes, you can use the \\wires macro."},
+		{"name":"wires","arg":{"format":"{}{}","snippet":"wires{${1:connectivity}}{${2:loose ends}}"},"doc":"To connect boxes, you can use the \\wires macro."}
+	],
+	"envs": [],
+	"keys": {}
+}

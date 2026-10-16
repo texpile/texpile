@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"liederbuch"},{"name":"etoolbox"},{"name":"environ"},{"name":"xparse"},{"name":"pgfmath"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"liederbuch-listofsongs"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"printLiederbuch","arg":{"format":"{}","snippet":"printLiederbuch{${1}}"}}
+	],
+	"envs": [
+		{"name":"lied","arg":{"format":"[]{}{}","snippet":"[${1}]{${2}}{${3}}"}},
+		{"name":"lied","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"}},
+		{"name":"liederbuch","arg":{"format":"[]{}","snippet":"[${1:meta data}]{${2:songbook name}}"}},
+		{"name":"liederbuch","arg":{"format":"{}","snippet":"{${1:songbook name}}"}}
+	],
+	"keys": {}
+}

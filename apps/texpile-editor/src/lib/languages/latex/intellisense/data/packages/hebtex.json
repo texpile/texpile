@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"arabtex"},{"name":"aconfig"},{"name":"arabaux"},{"name":"acmd"},{"name":"afonts"},{"name":"afonts2"},{"name":"aoutput"},{"name":"abidir"},{"name":"atrans"},{"name":"alatex"},{"name":"afoot"},{"name":"abjad"},{"name":"apatch"},{"name":"hecmd"},{"name":"hefonts2"},{"name":"hepatch"}],
+	"macros": [
+		{"name":"hebfalse","unusual":true},
+		{"name":"hebtrue","unusual":true},
+		{"name":"setheb","unusual":true},
+		{"name":"sethebfont","arg":{"format":"{}","snippet":"sethebfont{${1:font}}"}},
+		{"name":"sethebrew"}
+	],
+	"envs": [
+		{"name":"hebtex","unusual":true},
+		{"name":"hebtext"}
+	],
+	"keys": {}
+}

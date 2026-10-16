@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"atveryend-ltx"},{"name":"multicol"},{"name":"multimedia"},{"name":"ifpdf"},{"name":"calc"},{"name":"bm"},{"name":"tabularx"},{"name":"array"},{"name":"booktabs"},{"name":"multirow"},{"name":"algorithm"},{"name":"float"},{"name":"ifthen"},{"name":"algorithmic"},{"name":"latexsym"},{"name":"calligra"},{"name":"pstricks"},{"name":"xkeyval"},{"name":"listings"},{"name":"stackengine"},{"name":"listofitems"},{"name":"natbib"},{"name":"beamerinnerthemethubeamer"},{"name":"ctex"},{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"zhnumber"},{"name":"beamerouterthemethubeamer"}],
+	"macros": [
+		{"name":"thubeamer"}
+	],
+	"envs": [],
+	"keys": {}
+}

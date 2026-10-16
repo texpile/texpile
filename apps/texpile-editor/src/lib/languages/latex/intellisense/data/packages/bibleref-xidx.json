@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"bibleref"},{"name":"ifthen"},{"name":"fmtcount"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"iftex"},{"name":"xstring"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bibleref-xidx#c": ["chapters","nochapters","noverses","verses"]
+	},
+	"args": ["\\usepackage/bibleref-xidx#c"]
+}

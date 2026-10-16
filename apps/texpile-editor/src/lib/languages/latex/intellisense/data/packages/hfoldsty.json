@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"hfofixcmtrue","unusual":true},
+		{"name":"ifhfofixcm","unusual":true},
+		{"name":"newstylenums","arg":{"format":"{}","snippet":"newstylenums{${1:text}}"},"doc":"The \\newstylenums command is the analogous command to \\oldstylenums to switch to lining figures."},
+		{"name":"oldstylenums","arg":{"format":"{}","snippet":"oldstylenums{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hfoldsty#c": ["fix-cm","newstylett","oldstylett","origtt"]
+	},
+	"args": ["\\usepackage/hfoldsty#c"]
+}

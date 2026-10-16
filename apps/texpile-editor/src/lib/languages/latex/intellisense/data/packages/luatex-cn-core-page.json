@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"environ"}],
+	"macros": [
+		{"name":"disableSplitPage"},
+		{"name":"enableSplitPage","arg":{"format":"[]","snippet":"enableSplitPage[${1:options}]"}},
+		{"name":"enableSplitPage"},
+		{"name":"pageSetup","arg":{"format":"{}","snippet":"pageSetup{${1:options}}"}},
+		{"name":"ResetPageNumber"},
+		{"name":"SetPageNumber","arg":{"format":"{}","snippet":"SetPageNumber{${1:number}}"}},
+		{"name":"关闭分页"},
+		{"name":"开启分页","arg":{"format":"[]","snippet":"开启分页[${1}]"}},
+		{"name":"开启分页"},
+		{"name":"换页"},
+		{"name":"換頁"},
+		{"name":"設置頁碼","arg":{"format":"{}","snippet":"設置頁碼{${1}}"}},
+		{"name":"设置页码","arg":{"format":"{}","snippet":"设置页码{${1}}"}},
+		{"name":"重置頁碼"},
+		{"name":"重置页码"},
+		{"name":"開啟分頁","arg":{"format":"[]","snippet":"開啟分頁[${1}]"}},
+		{"name":"開啟分頁"},
+		{"name":"關閉分頁"},
+		{"name":"頁面設置","arg":{"format":"{}","snippet":"頁面設置{${1}}"}},
+		{"name":"页面设置","arg":{"format":"{}","snippet":"页面设置{${1}}"}}
+	],
+	"envs": [
+		{"name":"Page","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"Page"},
+		{"name":"页","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"页"}
+	],
+	"keys": {}
+}

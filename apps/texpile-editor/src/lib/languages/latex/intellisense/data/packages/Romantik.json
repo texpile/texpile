@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"romantik","arg":{"format":"{}","snippet":"romantik{${1:initial}}"}},
+		{"name":"Romantik"}
+	],
+	"envs": [],
+	"keys": {}
+}

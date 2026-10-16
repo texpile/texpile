@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"issuusetup","arg":{"format":"{}","snippet":"issuusetup{${1}}","keys":["keyval:ISL"],"keyPos":0},"doc":"The command \\issuusetup{⟨setup commands⟩} might be used to customize the behavior of the package."},
+		{"name":"newISSUUlink","arg":{"format":"{}{}","snippet":"newISSUUlink{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:ISL": ["prefix="]
+	}
+}

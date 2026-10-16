@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"intparamcalc","arg":{"format":"[]{}{}[]{}[]{}","snippet":"intparamcalc[${1:x macro}]{${2:x initial}}{${3:x final}}[${4:epsilon}]{${5:y desired}}[${6:y macro}]{${7:body}}"}},
+		{"name":"intparamcalc","arg":{"format":"{}{}{}{}","snippet":"intparamcalc{${1:x initial}}{${2:x final}}{${3:y desired}}{${4:body}}"}},
+		{"name":"paramcalc","arg":{"format":"[]{}{}[]{}[]{}","snippet":"paramcalc[${1:x macro}]{${2:x initial}}{${3:x final}}[${4:epsilon}]{${5:y desired}}[${6:y macro}]{${7:body}}"}},
+		{"name":"paramcalc","arg":{"format":"{}{}{}{}","snippet":"paramcalc{${1:x initial}}{${2:x final}}{${3:y desired}}{${4:body}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

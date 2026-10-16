@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"CJK"},{"name":"MULEenc"},{"name":"CJKulem"},{"name":"ulem"}],
+	"macros": [
+		{"name":"CJKsout","arg":{"format":"{}","snippet":"CJKsout{${1:text}}"}},
+		{"name":"CJKsout*","arg":{"format":"{}","snippet":"CJKsout*{${1:text}}"}},
+		{"name":"CJKsoutcolor"},
+		{"name":"CJKsoutheight"},
+		{"name":"CJKulineleftskip"},
+		{"name":"CJKulinerightskip"},
+		{"name":"CJKunderanyline","arg":{"format":"{}{}{}","snippet":"CJKunderanyline{${1:distance to baseline}}{${2:underline shape}}{${3:text}}"}},
+		{"name":"CJKunderanysymbol","arg":{"format":"{}{}{}","snippet":"CJKunderanysymbol{${1:distance to baseline}}{${2:underdot shape}}{${3:text}}"}},
+		{"name":"CJKunderdblline","arg":{"format":"{}","snippet":"CJKunderdblline{${1:text}}"}},
+		{"name":"CJKunderdblline*","arg":{"format":"{}","snippet":"CJKunderdblline*{${1:text}}"}},
+		{"name":"CJKunderdbllinebasesep"},
+		{"name":"CJKunderdbllinecolor"},
+		{"name":"CJKunderdbllinesep"},
+		{"name":"CJKunderdot","arg":{"format":"{}","snippet":"CJKunderdot{${1:text}}"}},
+		{"name":"CJKunderdotbasesep"},
+		{"name":"CJKunderdotcolor"},
+		{"name":"CJKunderdotsep"},
+		{"name":"CJKunderline","arg":{"format":"{}","snippet":"CJKunderline{${1:text}}"}},
+		{"name":"CJKunderline*","arg":{"format":"{}","snippet":"CJKunderline*{${1:text}}"}},
+		{"name":"CJKunderlinebasesep"},
+		{"name":"CJKunderlinecolor"},
+		{"name":"CJKunderlinesep"},
+		{"name":"CJKunderwave","arg":{"format":"{}","snippet":"CJKunderwave{${1:text}}"}},
+		{"name":"CJKunderwave*","arg":{"format":"{}","snippet":"CJKunderwave*{${1:text}}"}},
+		{"name":"CJKunderwavebasesep"},
+		{"name":"CJKunderwavecolor"},
+		{"name":"CJKunderwavesep"},
+		{"name":"CJKxout","arg":{"format":"{}","snippet":"CJKxout{${1:text}}"}},
+		{"name":"CJKxout*","arg":{"format":"{}","snippet":"CJKxout*{${1:text}}"}},
+		{"name":"CJKxoutcolor"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"varCJKunderline","arg":{"format":"{}","snippet":"varCJKunderline{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"CJKfilltwosides","arg":{"format":"{}","snippet":"{${1:width}}"}}
+	],
+	"keys": {}
+}

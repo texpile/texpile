@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"skeyval"},{"name":"longtable"},{"name":"xcolor"},{"name":"pdftexcmds","engines":["lualatex"]},{"name":"iftex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"setupviewkeys","arg":{"format":"{}","snippet":"setupviewkeys{${1:keys}}"}},
+		{"name":"skvshowkeys","arg":{"format":"{}","snippet":"skvshowkeys{${1:keys}}"}},
+		{"name":"skvviewkeys","arg":{"format":"{}","snippet":"skvviewkeys{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

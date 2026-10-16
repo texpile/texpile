@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"beforenote","unusual":true},
+		{"name":"betweenauthors","unusual":true},
+		{"name":"betweenauthoryear","unusual":true},
+		{"name":"betweencites","unusual":true},
+		{"name":"bibhang"},
+		{"name":"citeA","arg":{"format":"[]{}","snippet":"citeA[${1:notes}]{${2:keys}}"}},
+		{"name":"citeA","arg":{"format":"{}","snippet":"citeA{${1:keys}}"}},
+		{"name":"citeauthor","arg":{"format":"[]{}","snippet":"citeauthor[${1:notes}]{${2:keys}}"}},
+		{"name":"citeauthor","arg":{"format":"{}","snippet":"citeauthor{${1:keys}}"}},
+		{"name":"citeB","arg":{"format":"{}","snippet":"citeB{${1:keys}}"}},
+		{"name":"citeends","unusual":true},
+		{"name":"citepunct","arg":{"format":"{}{}{}{}{}{}","snippet":"citepunct{${1:open paren}}{${2:between authors}}{${3:between author year}}{${4:between citations}}{${5:before notes}}{${6:closing paren}}"}},
+		{"name":"citestarts","unusual":true},
+		{"name":"citeyear","arg":{"format":"[]{}","snippet":"citeyear[${1:notes}]{${2:keys}}"}},
+		{"name":"citeyear","arg":{"format":"{}","snippet":"citeyear{${1:keys}}"}},
+		{"name":"newapasectioning"},
+		{"name":"shortcite","arg":{"format":"[]{}","snippet":"shortcite[${1:notes}]{${2:keys}}"}},
+		{"name":"shortcite","arg":{"format":"{}","snippet":"shortcite{${1:keys}}"}},
+		{"name":"shortciteA","arg":{"format":"[]{}","snippet":"shortciteA[${1:notes}]{${2:keys}}"}},
+		{"name":"shortciteA","arg":{"format":"{}","snippet":"shortciteA{${1:keys}}"}},
+		{"name":"shortciteauthor","arg":{"format":"[]{}","snippet":"shortciteauthor[${1:notes}]{${2:keys}}"}},
+		{"name":"shortciteauthor","arg":{"format":"{}","snippet":"shortciteauthor{${1:keys}}"}},
+		{"name":"shortciteB","arg":{"format":"{}","snippet":"shortciteB{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

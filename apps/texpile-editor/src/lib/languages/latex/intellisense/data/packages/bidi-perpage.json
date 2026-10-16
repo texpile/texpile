@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ResetCounterPerPage","arg":{"format":"[]{}","snippet":"ResetCounterPerPage[${1:start value}]{${2:counter}}"}},
+		{"name":"ResetCounterPerPage","arg":{"format":"{}","snippet":"ResetCounterPerPage{${1:counter}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

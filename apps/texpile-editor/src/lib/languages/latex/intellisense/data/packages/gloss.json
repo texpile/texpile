@@ -1,0 +1,39 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"gloss","arg":{"format":"[]{}","snippet":"gloss[${1:options}]{${2:key}}"}},
+		{"name":"gloss","arg":{"format":"{}","snippet":"gloss{${1:key}}"}},
+		{"name":"Gloss","arg":{"format":"{}","snippet":"Gloss{${1}}"},"unusual":true},
+		{"name":"glossgroup","arg":{"format":"{}","snippet":"glossgroup{${1:group}}"}},
+		{"name":"glosshang"},
+		{"name":"glossheading","arg":{"format":"{}","snippet":"glossheading{${1:format}}"},"doc":"Sets how the headings are formatted; it is redefined with \\renewcommand."},
+		{"name":"glosslinkborder"},
+		{"name":"glosslinkbordercolor"},
+		{"name":"glosslinkcolor","doc":"You can control the appearance of gloss links with the following macros: \\glosslinkborder, \\glosslinkcolor, \\glosslinkbordercolor (which correspond to pdfborder, linkcolor and linkbordercolor); you can change them with \\renewcommand."},
+		{"name":"glossname"},
+		{"name":"glosspage","arg":{"format":"{}","snippet":"glosspage{${1:page}}"},"doc":"This command is used to print the page at the end of the gloss entry with refpages."},
+		{"name":"ifglossshort","arg":{"format":"{}{}","snippet":"ifglossshort{${1:short exists}}{${2:no short}}"},"doc":"Use is made of \\ifglossshort which takes the first argument if the short form exists, and the second one if does not exist."},
+		{"name":"ifglossshort*","arg":{"format":"{}{}","snippet":"ifglossshort*{${1:short exists}}{${2:no short}}"},"doc":"Use is made of \\ifglossshort which takes the first argument if the short form exists, and the second one if does not exist."},
+		{"name":"makegloss","doc":"This command in the preamble tells gloss to create a glossary."},
+		{"name":"newgloss","arg":{"format":"{}{}{}{}","snippet":"newgloss{${1:name}}{${2:suffix}}{${3:title}}{${4:style}}"},"doc":"For defining a new glossary use \\newgloss."},
+		{"name":"onlygloss","arg":{"format":"{}","snippet":"onlygloss{${1}}"},"unusual":true},
+		{"name":"printgloss","arg":{"format":"[]{}","snippet":"printgloss[${1:name}]{${2:databases}}"}},
+		{"name":"printgloss","arg":{"format":"{}","snippet":"printgloss{${1:databases}}"}},
+		{"name":"setglossgroup","arg":{"format":"{}{}","snippet":"setglossgroup{${1:group}}{${2:heading}}"},"doc":"Sets the heading corresponding to entries grouped by glsplain under the same group key (and preceded by \\glossgroup, which in turn calls \\glossheading)."},
+		{"name":"setglosslabel","arg":{"format":"{}","snippet":"setglosslabel{${1:format}}"}},
+		{"name":"setglosstext","arg":{"format":"{}{}","snippet":"setglosstext{${1:option-name}}{${2:format}}"}},
+		{"name":"stopglosslist"},
+		{"name":"xglosspage","arg":{"format":"{}","snippet":"xglosspage{${1:page}}"},"doc":"If the entry ends with a period, \\xglosspage is used, which by default just maps to \\glosspage."}
+	],
+	"envs": [
+		{"name":"glossitem","arg":{"format":"{}{}{}{}","snippet":"{${1:key}}{${2:word}}{${3:Word}}{${4:short}}"}},
+		{"name":"glossitem*","arg":{"format":"{}{}{}{}","snippet":"{${1:key}}{${2:word}}{${3:Word}}{${4:short}}"}},
+		{"name":"glosslist"},
+		{"name":"thegloss"}
+	],
+	"keys": {
+		"\\usepackage/gloss#c": ["basque","brazilian","catalan","danish","dutch","french","german","italian","polish","portuguese","refpages","russian","spanish","swedish"]
+	},
+	"args": ["\\usepackage/gloss#c"]
+}

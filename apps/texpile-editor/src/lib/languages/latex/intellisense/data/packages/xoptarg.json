@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"xnewcommand","arg":{"format":"[]{}[][]{}","snippet":"xnewcommand[${1:prefix}]{${2:command}}[${3:number of arguments}][${4:default}]{${5:definition}}"}},
+		{"name":"xnewcommand","arg":{"format":"{}{}","snippet":"xnewcommand{${1:command}}{${2:definition}}"}},
+		{"name":"xnewcommand*","arg":{"format":"[]{}[][]{}","snippet":"xnewcommand*[${1:prefix}]{${2:command}}[${3:number of arguments}][${4:default}]{${5:definition}}"}},
+		{"name":"xnewcommand*","arg":{"format":"{}{}","snippet":"xnewcommand*{${1:command}}{${2:definition}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

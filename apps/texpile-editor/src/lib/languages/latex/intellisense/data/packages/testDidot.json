@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"longtable"}],
+	"macros": [
+		{"name":"BR"},
+		{"name":"cmd","arg":{"format":"{}","snippet":"cmd{${1:command name}}"}},
+		{"name":"frenchCarSample"},
+		{"name":"modernGreekSample"},
+		{"name":"names"},
+		{"name":"noLig"},
+		{"name":"oldgreekSample"},
+		{"name":"OTOneProblem"},
+		{"name":"testAccents"},
+		{"name":"testLig"},
+		{"name":"TexStdTestText"}
+	],
+	"envs": [],
+	"keys": {}
+}

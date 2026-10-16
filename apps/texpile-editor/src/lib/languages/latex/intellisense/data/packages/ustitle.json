@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"keyval"}],
+	"macros": [
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1:address}}"}},
+		{"name":"USTitleFileDate","unusual":true},
+		{"name":"USTitleFileVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

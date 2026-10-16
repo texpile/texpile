@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"cnltx-base"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"etoolbox"},{"name":"iftex"},{"name":"xcolor"},{"name":"listings"},{"name":"keyval"},{"name":"catchfile"}],
+	"macros": [
+		{"name":"listbibfileentries","arg":{"format":"{}","snippet":"listbibfileentries{${1}}"}},
+		{"name":"listbibfilekeys","arg":{"format":"{}","snippet":"listbibfilekeys{${1}}"}},
+		{"name":"listbibfiletypes","arg":{"format":"{}","snippet":"listbibfiletypes{${1}}"}},
+		{"name":"listsilentcmds","doc":"Prints all known control sequence names formatted and separated with the separator set with list-sep."},
+		{"name":"listsilentenvs","doc":"Prints all known environment names formatted and separated with the separator set with list-sep."}
+	],
+	"envs": [],
+	"keys": {}
+}

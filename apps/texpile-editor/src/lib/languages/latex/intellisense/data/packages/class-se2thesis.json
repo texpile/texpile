@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"class-scrbook","if":"!class=report+!class=scrreprt"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"tocbasic"},{"name":"typearea"},{"name":"se2colors"},{"name":"xcolor"},{"name":"se2fonts"},{"name":"mismath"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"esvect"},{"name":"mleftright"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"inconsolata","engines":["pdflatex"]},{"name":"textcomp","engines":["pdflatex"]},{"name":"libertinus-type1","engines":["pdflatex"]},{"name":"ifxetex","engines":["pdflatex"]},{"name":"ifluatex","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"ntheorem"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"class-scrreprt","if":"class=report|class=scrreprt"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math","engines":["lualatex"]},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse","engines":["lualatex"]},{"name":"l3keys2e","engines":["lualatex"]},{"name":"lualatex-math","engines":["lualatex"]},{"name":"libertinus-otf","engines":["lualatex"]},{"name":"inconsolata-nerd-font","engines":["lualatex"]}],
+	"macros": [
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1:name}}"},"doc":"Specify the advisor and co-advisor of the thesis, usually a PhD student or postdoc."},
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:signature name}]{${2:authors}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:authors}}"}},
+		{"name":"authorshipDeclaration","arg":{"format":"[]","snippet":"authorshipDeclaration[${1:location}]"},"doc":"Print the authorship declaration text."},
+		{"name":"authorshipDeclaration","doc":"Print the authorship declaration text."},
+		{"name":"coadvisor","arg":{"format":"{}","snippet":"coadvisor{${1:name}}"}},
+		{"name":"cosupervisor","arg":{"format":"{}","snippet":"cosupervisor{${1:name}}"}},
+		{"name":"degreeprogramme","arg":{"format":"{}","snippet":"degreeprogramme{${1:programme name}}"},"doc":"Specify the degree programme the thesis is meant to be accepted in."},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:name}}"}},
+		{"name":"external","arg":{"format":"{}","snippet":"external{${1:name}}"},"doc":"Specify the name of an external referee."},
+		{"name":"institute","arg":{"format":"[]{}","snippet":"institute[${1:short name}]{${2:name}}"},"doc":"Specify the university’s department and institute you are writing the thesis for."},
+		{"name":"institute","arg":{"format":"{}","snippet":"institute{${1:name}}"},"doc":"Specify the university’s department and institute you are writing the thesis for."},
+		{"name":"location","arg":{"format":"{}","snippet":"location{${1:name of town}}"},"doc":"Specify the name of your residence town for the signature field."},
+		{"name":"matrnumber","arg":{"format":"{}","snippet":"matrnumber{${1:matriculation number}}"},"doc":"Specify the matriculation number of the student writing the thesis."},
+		{"name":"signatureBox","arg":{"format":"[]{}","snippet":"signatureBox[${1:width}]{${2:signature name}}"},"doc":"A helper macro to print the signature box for the authorship declaration."},
+		{"name":"signatureBox","arg":{"format":"{}","snippet":"signatureBox{${1:signature name}}"},"doc":"A helper macro to print the signature box for the authorship declaration."},
+		{"name":"summarybox","arg":{"format":"{}{}","snippet":"summarybox{${1:label}}{${2:text}}"}},
+		{"name":"supervisor","arg":{"format":"{}","snippet":"supervisor{${1:name}}"}},
+		{"name":"version","arg":{"format":"{}","snippet":"version{${1:version}}"},"doc":"Specify the version of the document."}
+	],
+	"envs": [
+		{"name":"abstract","arg":{"format":"[]","snippet":"[${1:language}]"},"doc":"To typeset an abstract, we provide an environment called abstract . The environment takes an optional argument that specifies the language that is used in this abstract."},
+		{"name":"abstract","doc":"To typeset an abstract, we provide an environment called abstract . The environment takes an optional argument that specifies the language that is used in this abstract."},
+		{"name":"acknowledgements","arg":{"format":"[]","snippet":"[${1:language}]"},"doc":"We provide the acknowledgements environment to typeset acknowledgements for your thesis."},
+		{"name":"acknowledgements","doc":"We provide the acknowledgements environment to typeset acknowledgements for your thesis."},
+		{"name":"hyp","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"hyp"},
+		{"name":"resq","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"resq"},
+		{"name":"summary","arg":{"format":"{}","snippet":"{${1:label}}"},"doc":"The summary environment expects a label and has the summary text in its content."}
+	],
+	"keys": {}
+}

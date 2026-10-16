@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"braid","arg":{"format":"[]","snippet":"braid[${1}]"}},
+		{"name":"braid"},
+		{"name":"braidset","arg":{"format":"{}","snippet":"braidset{${1}}"}},
+		{"name":"clabel","arg":{"format":"[]{}{}","snippet":"clabel[${1:style}]{${2:strand}}{${3:label}}"}},
+		{"name":"clabel","arg":{"format":"{}{}","snippet":"clabel{${1:strand}}{${2:label}}"}},
+		{"name":"olabel","arg":{"format":"[]{}{}","snippet":"olabel[${1:style}]{${2:strand}}{${3:label}}"}},
+		{"name":"olabel","arg":{"format":"{}{}","snippet":"olabel{${1:strand}}{${2:label}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/braids#c": ["nowarning"]
+	},
+	"args": ["\\usepackage/braids#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"leftsliderotation","arg":{"format":"{}","snippet":"leftsliderotation{${1:text}}"},"unusual":true},
+		{"name":"rightsliderotation","arg":{"format":"{}","snippet":"rightsliderotation{${1:text}}"},"unusual":true},
+		{"name":"rotate","arg":{"format":"[]{}","snippet":"rotate[${1:type}]{${2:text}}"}},
+		{"name":"rotate","arg":{"format":"{}","snippet":"rotate{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

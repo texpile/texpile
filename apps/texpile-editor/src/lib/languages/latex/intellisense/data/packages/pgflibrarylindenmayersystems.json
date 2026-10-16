@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"pgfdeclarelindenmayersystem","arg":{"format":"{}{}","snippet":"pgfdeclarelindenmayersystem{${1:name}}{${2:specification}}"}},
+		{"name":"pgflindenmayersystem","arg":{"format":"{}{}{}","snippet":"pgflindenmayersystem{${1:name}}{${2:axiom}}{${3:order}}"}},
+		{"name":"pgflsystemcurrentleftangle"},
+		{"name":"pgflsystemcurrentrightangle"},
+		{"name":"pgflsystemcurrentstep"},
+		{"name":"pgflsystemdrawforward"},
+		{"name":"pgflsystemleftangle","unusual":true},
+		{"name":"pgflsystemmoveforward"},
+		{"name":"pgflsystemradonmizestep","unusual":true},
+		{"name":"pgflsystemrandomizeanglepercent","unusual":true},
+		{"name":"pgflsystemrandomizesteppercent","unusual":true},
+		{"name":"pgflsystemranomizeleftangle","unusual":true},
+		{"name":"pgflsystemranomizerightangle","unusual":true},
+		{"name":"pgflsystemrestorestate"},
+		{"name":"pgflsystemrightangle","unusual":true},
+		{"name":"pgflsystemsavestate"},
+		{"name":"pgflsystemstep"},
+		{"name":"pgflsystemturnleft"},
+		{"name":"pgflsystemturnright"}
+	],
+	"envs": [],
+	"keys": {}
+}

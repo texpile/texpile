@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"textcher","arg":{"format":"{}","snippet":"textcher{${1:text}}"}},
+		{"name":"textucher","arg":{"format":"{}","snippet":"textucher{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"cherokee"},
+		{"name":"ucherokee"}
+	],
+	"keys": {}
+}

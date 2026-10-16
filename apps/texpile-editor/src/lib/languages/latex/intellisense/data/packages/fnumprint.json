@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"numprint"},{"name":"array"},{"name":"zahl2string","if":"german|ngerman"}],
+	"macros": [
+		{"name":"fnumprint","arg":{"format":"[]{}","snippet":"fnumprint[${1:ein}]{${2:number}}"}},
+		{"name":"fnumprint","arg":{"format":"{}","snippet":"fnumprint{${1:number}}"}},
+		{"name":"fnumprintc","arg":{"format":"[]{}","snippet":"fnumprintc[${1:ein}]{${2:counter}}"}},
+		{"name":"fnumprintc","arg":{"format":"{}","snippet":"fnumprintc{${1:counter}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fnumprint#c": ["UKenglish","USenglish","american","australian","british","canadian","english","german","newzealand","ngerman"]
+	},
+	"args": ["\\usepackage/fnumprint#c"]
+}

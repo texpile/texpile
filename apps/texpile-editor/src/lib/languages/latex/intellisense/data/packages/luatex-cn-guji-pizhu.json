@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"PiZhu","arg":{"format":"[]{}","snippet":"PiZhu[${1:options}]{${2:content}}"}},
+		{"name":"PiZhu","arg":{"format":"{}","snippet":"PiZhu{${1:content}}"}},
+		{"name":"pizhuSetup","arg":{"format":"{}","snippet":"pizhuSetup{${1:options}}"}},
+		{"name":"批注","arg":{"format":"[]{}","snippet":"批注[${1:options}]{${2:content}}"},"doc":"The \\批注 command allows placing floating annotation boxes anywhere on the page, simulating post-publication notes or commentaries in ancient manuscripts."},
+		{"name":"批注","arg":{"format":"{}","snippet":"批注{${1:content}}"},"doc":"The \\批注 command allows placing floating annotation boxes anywhere on the page, simulating post-publication notes or commentaries in ancient manuscripts."},
+		{"name":"批注設置","arg":{"format":"{}","snippet":"批注設置{${1:options}}"}},
+		{"name":"批注设置","arg":{"format":"{}","snippet":"批注设置{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

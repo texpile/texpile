@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"atau"},
+		{"name":"vtau"}
+	],
+	"envs": [],
+	"keys": {}
+}

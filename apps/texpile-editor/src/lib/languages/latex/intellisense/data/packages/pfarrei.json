@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"etoolbox"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"AvToAiv","arg":{"format":"[]","snippet":"AvToAiv[${1:original file}]"}},
+		{"name":"AvToAiv"},
+		{"name":"bookletbackpagestyle"},
+		{"name":"bookletemptypagestyle"},
+		{"name":"bookletfrontpagestyle"},
+		{"name":"ifbooklet","arg":{"format":"{}{}","snippet":"ifbooklet{${1:booklet code}}{${2:other code}}"},"doc":"Es kann Code davon abhängig ausgeführt werden, ob ein Booklet erzeugt wird oder nicht."},
+		{"name":"makebooklettitlepage"},
+		{"name":"motto","arg":{"format":"{}","snippet":"motto{${1:motto}}"}},
+		{"name":"noresponder","doc":"Das Abschalten der nächsten automatischen Antwort geschieht einfach, indem so getan wird, als wäre das nächste \\item wieder das erste."},
+		{"name":"parish","arg":{"format":"{}","snippet":"parish{${1:parish}}"}},
+		{"name":"pfarreirevision","unusual":true},
+		{"name":"pfarreirevisiondate","unusual":true},
+		{"name":"setupprayer","arg":{"format":"{}","snippet":"setupprayer{${1:options}}"}},
+		{"name":"titlepicture","arg":{"format":"{}","snippet":"titlepicture{${1:picture code}}"}}
+	],
+	"envs": [
+		{"name":"bookletbackpage","doc":"Für ein Booklet kann mit der Umgebung bookletbackpage außerdem eine Rückseite definiert werden."},
+		{"name":"bookletemptypage","doc":"Den Inhalt der leeren Seiten kann ebenfalls mit einer Umgebung, nämlich bookletemptypage, definiert werden."},
+		{"name":"bookletfrontpage"},
+		{"name":"bookletpage","unusual":true},
+		{"name":"prayer","arg":{"format":"[]","snippet":"[${1}]"},"doc":"Die Umgebung prayer ist für Gebete gedacht."},
+		{"name":"prayer","doc":"Die Umgebung prayer ist für Gebete gedacht."},
+		{"name":"samedoublepage"}
+	],
+	"keys": {
+		"\\usepackage/pfarrei#c": ["booklet","nobooklet"]
+	},
+	"args": ["\\usepackage/pfarrei#c"]
+}

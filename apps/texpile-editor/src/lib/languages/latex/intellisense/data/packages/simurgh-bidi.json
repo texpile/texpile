@@ -1,0 +1,37 @@
+{
+	"macros": [
+		{"name":"ensurelatintext","arg":{"format":"{}","snippet":"ensurelatintext{${1}}"}},
+		{"name":"ensureLTRtext","arg":{"format":"{}","snippet":"ensureLTRtext{${1}}"}},
+		{"name":"ensureparsitext","arg":{"format":"{}","snippet":"ensureparsitext{${1}}"}},
+		{"name":"ensureRTLtext","arg":{"format":"{}","snippet":"ensureRTLtext{${1}}"}},
+		{"name":"hboxL","arg":{"format":"{}","snippet":"hboxL{${1:contents}}"}},
+		{"name":"hboxR","arg":{"format":"{}","snippet":"hboxR{${1:contents}}"}},
+		{"name":"LROtextdir","unusual":true},
+		{"name":"resetpardir","unusual":true},
+		{"name":"RLOtextdir","unusual":true},
+		{"name":"savepardir","unusual":true},
+		{"name":"setLTRmath"},
+		{"name":"setLTRpar"},
+		{"name":"setRTLmath"},
+		{"name":"setRTLpar"},
+		{"name":"textLatin","arg":{"format":"{}","snippet":"textLatin{${1:text}}"}},
+		{"name":"textLRE","arg":{"format":"{}","snippet":"textLRE{${1:text}}"}},
+		{"name":"textParsi","arg":{"format":"{}","snippet":"textParsi{${1:text}}"}},
+		{"name":"textRLE","arg":{"format":"{}","snippet":"textRLE{${1:text}}"}},
+		{"name":"unsetLTRmath","unusual":true},
+		{"name":"unsetLTRpar","unusual":true},
+		{"name":"unsetRTLmath","unusual":true},
+		{"name":"unsetRTLpar","unusual":true},
+		{"name":"vboxL","arg":{"format":"{}","snippet":"vboxL{${1:contents}}"}},
+		{"name":"vboxR","arg":{"format":"{}","snippet":"vboxR{${1:contents}}"}},
+		{"name":"vtopL","arg":{"format":"{}","snippet":"vtopL{${1:contents}}"}},
+		{"name":"vtopR","arg":{"format":"{}","snippet":"vtopR{${1:contents}}"}}
+	],
+	"envs": [
+		{"name":"latinpar"},
+		{"name":"LTRpar"},
+		{"name":"parsipar"},
+		{"name":"RTLpar"}
+	],
+	"keys": {}
+}

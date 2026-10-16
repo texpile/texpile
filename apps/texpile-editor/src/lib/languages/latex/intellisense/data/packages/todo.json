@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"}],
+	"macros": [
+		{"name":"astodos","arg":{"format":"{}","snippet":"astodos{${1:mark text}}"}},
+		{"name":"done","arg":{"format":"[]","snippet":"done[${1:done text}]"},"doc":"A \\done command that indicates the thing \\todo was already done, allowing to keep it in the document for reference."},
+		{"name":"done","doc":"A \\done command that indicates the thing \\todo was already done, allowing to keep it in the document for reference."},
+		{"name":"thetodo","unusual":true},
+		{"name":"todo","arg":{"format":"[]{}","snippet":"todo[${1:mark}]{${2:text}}"}},
+		{"name":"todo","arg":{"format":"{}","snippet":"todo{${1:text}}"}},
+		{"name":"todo*","arg":{"format":"[]{}","snippet":"todo*[${1:mark}]{${2:text}}"}},
+		{"name":"todo*","arg":{"format":"{}","snippet":"todo*{${1:text}}"}},
+		{"name":"Todo","arg":{"format":"[]{}","snippet":"Todo[${1:mark}]{${2:text}}"},"doc":"A verbose \\Todo command that puts its text within the running text."},
+		{"name":"Todo","arg":{"format":"{}","snippet":"Todo{${1:text}}"},"doc":"A verbose \\Todo command that puts its text within the running text."},
+		{"name":"Todo*","arg":{"format":"[]{}","snippet":"Todo*[${1:mark}]{${2:text}}"},"doc":"A verbose \\Todo command that puts its text within the running text."},
+		{"name":"Todo*","arg":{"format":"{}","snippet":"Todo*{${1:text}}"},"doc":"A verbose \\Todo command that puts its text within the running text."},
+		{"name":"todoclose","doc":"\\todoopen holds the contents of the beginning mark, and \\todoclose the contents of the ending mark."},
+		{"name":"todoenvformat","doc":"The text of the todo is formatted by \\todoenvformat, that can contain standard declarations (font, size, alignment, etc.)."},
+		{"name":"todoformat","doc":"All marks, the default or the optional one, are formatted by \\todoformat."},
+		{"name":"todomark"},
+		{"name":"todoname"},
+		{"name":"todoopen","doc":"\\todoopen holds the contents of the beginning mark, and \\todoclose the contents of the ending mark."},
+		{"name":"todos","doc":"Command \\todos prints the final list that gathers the todo text of all the todos (except todoenv environments, that simply refer to the text)."}
+	],
+	"envs": [
+		{"name":"todoenv"}
+	],
+	"keys": {
+		"\\usepackage/todo#c": ["hide","marginpar","nothing","superscript"]
+	},
+	"args": ["\\usepackage/todo#c"]
+}

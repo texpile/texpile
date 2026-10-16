@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"textcomp"},{"name":"ifthen"},{"name":"xspace"},{"name":"figureversions"}],
+	"macros": [
+		{"name":"footnotemarkfont","unusual":true},
+		{"name":"sufigures"},
+		{"name":"supfigures"},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"}},
+		{"name":"textsup","arg":{"format":"{}","snippet":"textsup{${1:text}}"}},
+		{"name":"textsuperior","arg":{"format":"{}","snippet":"textsuperior{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

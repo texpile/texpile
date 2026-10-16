@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"DeclareRobustActChar","arg":{"format":"{}[][]{}","snippet":"DeclareRobustActChar{${1:active character}}[${2:n}][${3:default}]{${4:definition}}"},"doc":"One uses \\DeclareRobustActChar as \\DeclareRobustCommand but the macro \\protects the active character when it appears in a moving argument, see ltdefns.dtx in /latex/base/."},
+		{"name":"DeclareRobustActChar","arg":{"format":"{}{}","snippet":"DeclareRobustActChar{${1:active character}}{${2:definition}}"},"doc":"One uses \\DeclareRobustActChar as \\DeclareRobustCommand but the macro \\protects the active character when it appears in a moving argument, see ltdefns.dtx in /latex/base/."},
+		{"name":"DeclareRobustActChar*","arg":{"format":"{}[][]{}","snippet":"DeclareRobustActChar*{${1:active character}}[${2:n}][${3:default}]{${4:definition}}"},"doc":"One uses \\DeclareRobustActChar as \\DeclareRobustCommand but the macro \\protects the active character when it appears in a moving argument, see ltdefns.dtx in /latex/base/."},
+		{"name":"DeclareRobustActChar*","arg":{"format":"{}{}","snippet":"DeclareRobustActChar*{${1:active character}}{${2:definition}}"},"doc":"One uses \\DeclareRobustActChar as \\DeclareRobustCommand but the macro \\protects the active character when it appears in a moving argument, see ltdefns.dtx in /latex/base/."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileinfo","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ReDeclareRobActChar","arg":{"format":"{}[][]{}","snippet":"ReDeclareRobActChar{${1:active character}}[${2:n}][${3:default}]{${4:definition}}"},"doc":"\\ReDeclareRobActChar redefines the active character, previously defined with \\DeclareRobustActChar, the way \\renewcommand does for usual commands."},
+		{"name":"ReDeclareRobActChar","arg":{"format":"{}{}","snippet":"ReDeclareRobActChar{${1:active character}}{${2:definition}}"},"doc":"\\ReDeclareRobActChar redefines the active character, previously defined with \\DeclareRobustActChar, the way \\renewcommand does for usual commands."},
+		{"name":"ReDeclareRobActChar*","arg":{"format":"{}[][]{}","snippet":"ReDeclareRobActChar*{${1:active character}}[${2:n}][${3:default}]{${4:definition}}"},"doc":"\\ReDeclareRobActChar redefines the active character, previously defined with \\DeclareRobustActChar, the way \\renewcommand does for usual commands."},
+		{"name":"ReDeclareRobActChar*","arg":{"format":"{}{}","snippet":"ReDeclareRobActChar*{${1:active character}}{${2:definition}}"},"doc":"\\ReDeclareRobActChar redefines the active character, previously defined with \\DeclareRobustActChar, the way \\renewcommand does for usual commands."}
+	],
+	"envs": [],
+	"keys": {}
+}

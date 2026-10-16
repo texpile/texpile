@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"ZifferAn"},
+		{"name":"ZifferAus"},
+		{"name":"ZifferLeer"},
+		{"name":"ZifferPunktAn"},
+		{"name":"ZifferPunktAus"},
+		{"name":"ZifferStrich","unusual":true},
+		{"name":"ZifferStrichAn"},
+		{"name":"ZifferStrichAus"}
+	],
+	"envs": [],
+	"keys": {}
+}

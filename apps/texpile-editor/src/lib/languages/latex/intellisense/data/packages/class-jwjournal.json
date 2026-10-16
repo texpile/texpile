@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"class-minimart"},{"name":"class-article"},{"name":"silence"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"minimalist"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"lineno"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"projlib-paper"},{"name":"xcolor"},{"name":"projlib-language"},{"name":"babel"},{"name":"scalefnt"},{"name":"setspaceenhanced"},{"name":"setspace"},{"name":"csquotes"},{"name":"relsize"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tikzpagenodes"},{"name":"ifoddpage"},{"name":"fancyhdr"},{"name":"extramarks"},{"name":"titlesec"},{"name":"ulem"},{"name":"titletoc"},{"name":"enumitem"},{"name":"imakeidx"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"multicol"},{"name":"projlib-draft"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsthm"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"projlib-theorem"},{"name":"create-theorem"},{"name":"crefthe"},{"name":"cleveref"},{"name":"regexpatch"},{"name":"xparse"},{"name":"amsfonts"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"tikzfill.image"},{"name":"pdfcol"},{"name":"projlib-author"},{"name":"scontents"},{"name":"projlib-font"},{"name":"microtype"},{"name":"mathpazo"},{"name":"newpxtext"},{"name":"textcomp"},{"name":"xstring"},{"name":"ifthen"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"amssymb"},{"name":"wrapfig2"},{"name":"float"},{"name":"pict2e"},{"name":"caption"},{"name":"caption3"},{"name":"nowidow"},{"name":"ProjLib"},{"name":"projlib-datetime"},{"name":"projlib-logo"},{"name":"projlib-math"},{"name":"mathrsfs"},{"name":"projlib-text"},{"name":"needspace"},{"name":"embrac"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"IncludeJournal","arg":{"format":"{}","snippet":"IncludeJournal{${1:file}}"}},
+		{"name":"InputJournal","arg":{"format":"{}","snippet":"InputJournal{${1:file}}"}},
+		{"name":"JWJournalBack","arg":{"format":"<>","snippet":"JWJournalBack<${1}>"},"unusual":true},
+		{"name":"JWJournalCode","arg":{"format":"{}","snippet":"JWJournalCode{${1}}"},"unusual":true},
+		{"name":"JWJournalCodebox","arg":{"format":"{}","snippet":"JWJournalCodebox{${1:text}}"},"unusual":true},
+		{"name":"JWJournalCompactCenterText","arg":{"format":"{}","snippet":"JWJournalCompactCenterText{${1}}"},"unusual":true},
+		{"name":"JWJournalContinue","arg":{"format":"{}","snippet":"JWJournalContinue{${1}}"},"unusual":true},
+		{"name":"JWJournalEntry","arg":{"format":"{}{}","snippet":"JWJournalEntry{${1:date}}{${2:title}}"}},
+		{"name":"JWJournalItem","arg":{"format":"{}{}","snippet":"JWJournalItem{${1}}{${2}}"},"unusual":true},
+		{"name":"JWJournalNote","arg":{"format":"{}","snippet":"JWJournalNote{${1}}"},"unusual":true},
+		{"name":"JWJournalSeperator","arg":{"format":"[]","snippet":"JWJournalSeperator[${1}]"},"unusual":true},
+		{"name":"JWJournalSeperator","unusual":true},
+		{"name":"JWJournalSepLine","arg":{"format":"[]","snippet":"JWJournalSepLine[${1}]"},"unusual":true},
+		{"name":"JWJournalSepLine","unusual":true},
+		{"name":"JWJournalShowImageCenter","arg":{"format":"<>{}<>","snippet":"JWJournalShowImageCenter<${1}>{${2}}<${3}>"},"unusual":true},
+		{"name":"JWJournalShowImageLeft","arg":{"format":"<>{}<>","snippet":"JWJournalShowImageLeft<${1}>{${2}}<${3}>"},"unusual":true},
+		{"name":"JWJournalShowImageRight","arg":{"format":"<>{}<>","snippet":"JWJournalShowImageRight<${1}>{${2}}<${3}>"},"unusual":true},
+		{"name":"JWJournalSkip","arg":{"format":"<>","snippet":"JWJournalSkip<${1}>"},"unusual":true},
+		{"name":"jwjournaltext","arg":{"format":"{}","snippet":"jwjournaltext{${1}}"},"unusual":true},
+		{"name":"textasterisk"},
+		{"name":"textbacktick"},
+		{"name":"textcolon"},
+		{"name":"textequalsign"},
+		{"name":"textleftparen"},
+		{"name":"textrightparen"},
+		{"name":"textvert"}
+	],
+	"envs": [
+		{"name":"jwjournal"},
+		{"name":"JWJournalCenter","unusual":true},
+		{"name":"JWJournalCompactCenter","unusual":true},
+		{"name":"JWJournalLeft","unusual":true},
+		{"name":"JWJournalRight","unusual":true}
+	],
+	"keys": {}
+}

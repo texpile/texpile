@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ifmakedtx","arg":{"format":"{}{}","snippet":"ifmakedtx{${1:dtx text}}{${2:non-dtx text}}"},"doc":"\\ifmakedtx{⟨dtx text⟩}{⟨non dtx text⟩}. The first argument ⟨dtx text⟩ will be copied to the DTX file by makedtx.pl, but the second argument ⟨non dtx text⟩ won’t."},
+		{"name":"StopEventually","arg":{"format":"{}","snippet":"StopEventually{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

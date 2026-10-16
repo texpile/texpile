@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"inj","arg":{"format":"[]","snippet":"inj[${1:label}]"}},
+		{"name":"inj"},
+		{"name":"isom"},
+		{"name":"la","arg":{"format":"[]","snippet":"la[${1:label}]"}},
+		{"name":"la"},
+		{"name":"linj","arg":{"format":"[]","snippet":"linj[${1:label}]"}},
+		{"name":"linj"},
+		{"name":"lisom"},
+		{"name":"lmapsto"},
+		{"name":"lppf","arg":{"format":"[]","snippet":"lppf[${1:label}]"}},
+		{"name":"lppf"},
+		{"name":"lra","arg":{"format":"[]","snippet":"lra[${1:label}]"}},
+		{"name":"lra"},
+		{"name":"lsmapsto"},
+		{"name":"lsurj","arg":{"format":"[]","snippet":"lsurj[${1:label}]"}},
+		{"name":"lsurj"},
+		{"name":"mapsto","math":true,"detail":"↦","doc":"maps to, rightward"},
+		{"name":"oldmapsto"},
+		{"name":"ppf","arg":{"format":"[]","snippet":"ppf[${1:label}]"}},
+		{"name":"ppf"},
+		{"name":"ra","arg":{"format":"[]","snippet":"ra[${1:label}]"}},
+		{"name":"ra"},
+		{"name":"smapsto"},
+		{"name":"surj","arg":{"format":"[]","snippet":"surj[${1:label}]"}},
+		{"name":"surj"}
+	],
+	"envs": [],
+	"keys": {}
+}

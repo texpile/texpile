@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xtemplate"}],
+	"macros": [
+		{"name":"NewTasksEnvironment","arg":{"format":"[]{}[]()","snippet":"NewTasksEnvironment[${1:options}]{${2:name}}[${3:separator}](${4:cols})"},"doc":"Define environment ⟨name⟩ that uses ⟨separator⟩ to introduce a new item."},
+		{"name":"NewTasksEnvironment","arg":{"format":"{}()","snippet":"NewTasksEnvironment{${1:name}}(${2:cols})"},"doc":"Define environment ⟨name⟩ that uses ⟨separator⟩ to introduce a new item."},
+		{"name":"RenewTasksEnvironment","arg":{"format":"[]{}[]()","snippet":"RenewTasksEnvironment[${1:options}]{${2:name}}[${3:separator}](${4:cols})"},"doc":"Renew environment previously defined with \\NewTasksEnvironment."},
+		{"name":"RenewTasksEnvironment","arg":{"format":"{}()","snippet":"RenewTasksEnvironment{${1:name}}(${2:cols})"},"doc":"Renew environment previously defined with \\NewTasksEnvironment."},
+		{"name":"settasks","arg":{"format":"{}","snippet":"settasks{${1:options}}"}},
+		{"name":"startnewitemline","doc":"Introduce a new line in a tasks environment."},
+		{"name":"task","arg":{"format":"()[]","snippet":"task(${1:num of columns})[${2:label}]"}},
+		{"name":"task","arg":{"format":"()","snippet":"task(${1:num of columns})"}},
+		{"name":"task*","arg":{"format":"()[]","snippet":"task*(${1:num of columns})[${2:label}]"}},
+		{"name":"task*","arg":{"format":"()","snippet":"task*(${1:num of columns})"}},
+		{"name":"tasksifmeasuringF","arg":{"format":"{}","snippet":"tasksifmeasuringF{${1:false code}}"}},
+		{"name":"tasksifmeasuringT","arg":{"format":"{}","snippet":"tasksifmeasuringT{${1:true code}}"}},
+		{"name":"tasksifmeasuringTF","arg":{"format":"{}{}","snippet":"tasksifmeasuringTF{${1:true code}}{${2:false code}}"}},
+		{"name":"theHtask","unusual":true},
+		{"name":"thetask","unusual":true}
+	],
+	"envs": [
+		{"name":"tasks","arg":{"format":"[]()","snippet":"[${1:options}](${2:num of columns})"},"doc":"List like environment where the single items are introduced with \\task."},
+		{"name":"tasks","arg":{"format":"()","snippet":"(${1:num of columns})"},"doc":"List like environment where the single items are introduced with \\task."}
+	],
+	"keys": {}
+}

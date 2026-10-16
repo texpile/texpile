@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"forestcompat","arg":{"format":"{}","snippet":"forestcompat{${1:compat keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

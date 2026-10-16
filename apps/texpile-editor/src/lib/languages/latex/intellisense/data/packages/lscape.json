@@ -1,21 +1,11 @@
 {
-  "deps": [
-    {
-      "name": "graphics"
-    }
-  ],
-  "macros": [],
-  "envs": [
-    {
-      "name": "landscape"
-    }
-  ],
-  "keys": {
-    "\\usepackage/lscape#c": [
-      "pdftex"
-    ]
-  },
-  "args": [
-    "\\usepackage/lscape#c"
-  ]
+	"deps": [{"name":"graphics"},{"name":"trig"}],
+	"macros": [],
+	"envs": [
+		{"name":"landscape","doc":"All text, within the landscape environment is rotated through 90 degrees."}
+	],
+	"keys": {
+		"\\usepackage/lscape#c": ["pdftex"]
+	},
+	"args": ["\\usepackage/lscape#c"]
 }

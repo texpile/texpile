@@ -1,0 +1,36 @@
+{
+	"macros": [
+		{"name":"bibliography","arg":{"format":"{}","snippet":"bibliography{${1:BibTeX files}}"}},
+		{"name":"bibliography*","arg":{"format":"{}","snippet":"bibliography*{${1:BibTeX files}}"}},
+		{"name":"bibliographystyle","arg":{"format":"{}","snippet":"bibliographystyle{${1:style}}"}},
+		{"name":"bibliographystyle*","arg":{"format":"{}","snippet":"bibliographystyle*{${1:style}}"}},
+		{"name":"bibliographyunit","arg":{"format":"[]","snippet":"bibliographyunit[${1:unit}]"}},
+		{"name":"bibliographyunit"},
+		{"name":"cite","arg":{"format":"[]{}","snippet":"cite[${1:postnote}]{${2:keys}}"},"doc":"Citations for the global bibliography are entered using \\cite and \\nocite commands while outside a unit or using \\cite* and \\nocite* while inside a unit."},
+		{"name":"cite","arg":{"format":"{}","snippet":"cite{${1:keys}}"},"doc":"Citations for the global bibliography are entered using \\cite and \\nocite commands while outside a unit or using \\cite* and \\nocite* while inside a unit."},
+		{"name":"cite*","arg":{"format":"[]{}","snippet":"cite*[${1:postnote}]{${2:keys}}"},"doc":"Citations for the global bibliography are entered using \\cite and \\nocite commands while outside a unit or using \\cite* and \\nocite* while inside a unit."},
+		{"name":"cite*","arg":{"format":"{}","snippet":"cite*{${1:keys}}"},"doc":"Citations for the global bibliography are entered using \\cite and \\nocite commands while outside a unit or using \\cite* and \\nocite* while inside a unit."},
+		{"name":"defaultbibliography","arg":{"format":"{}","snippet":"defaultbibliography{${1:BibTeX files}}"},"doc":"\\defaultbibliography allows to define default bibliography files whether bibunits is active or not."},
+		{"name":"defaultbibliographystyle","arg":{"format":"{}","snippet":"defaultbibliographystyle{${1:style}}"},"doc":"\\defaultbibliographystyle allows to define a default bibliography style whether bibunits is active or not."},
+		{"name":"globalcitecopyfalse","unusual":true},
+		{"name":"globalcitecopytrue","unusual":true},
+		{"name":"ifglobalcitecopy","unusual":true},
+		{"name":"iflabelstoglobalaux","unusual":true},
+		{"name":"labelstoglobalauxfalse","unusual":true},
+		{"name":"labelstoglobalauxtrue","unusual":true},
+		{"name":"nocite","arg":{"format":"{}","snippet":"nocite{${1:keys}}"}},
+		{"name":"nocite*","arg":{"format":"{}","snippet":"nocite*{${1:keys}}"}},
+		{"name":"putbib","arg":{"format":"[]","snippet":"putbib[${1:BibTeX files}]"}},
+		{"name":"putbib"},
+		{"name":"stdthebibliography","if":"sectionbib"},
+		{"name":"stdthebibliography","if":"subsectionbib"}
+	],
+	"envs": [
+		{"name":"bibunit","arg":{"format":"[]","snippet":"[${1:style}]"},"doc":"At the beginning of a bibunit, the new commands are activated, at the end of a bibunit, the old commands are restored."},
+		{"name":"bibunit","doc":"At the beginning of a bibunit, the new commands are activated, at the end of a bibunit, the old commands are restored."}
+	],
+	"keys": {
+		"\\usepackage/bibunits#c": ["globalcitecopy","labelstoglobalaux","sectionbib","subsectionbib"]
+	},
+	"args": ["\\usepackage/bibunits#c"]
+}

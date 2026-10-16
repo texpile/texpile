@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"stack"}],
+	"macros": [
+		{"name":"relinput","arg":{"format":"{}{}","snippet":"relinput{${1:directory}}{${2:file}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

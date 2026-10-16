@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"interfaces-base"},{"name":"etex"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"interfaces-pgfkeys"},{"name":"interfaces-tikz"}],
+	"macros": [
+		{"name":"eremovefrom","arg":{"format":"{}{}","snippet":"eremovefrom{${1}}{${2}}"}},
+		{"name":"eremovefromstart","arg":{"format":"{}{}","snippet":"eremovefromstart{${1}}{${2}}"}},
+		{"name":"gremovefrom","arg":{"format":"{}{}","snippet":"gremovefrom{${1}}{${2}}"}},
+		{"name":"gremovefromstart","arg":{"format":"{}{}","snippet":"gremovefromstart{${1}}{${2}}"}},
+		{"name":"removefrom","arg":{"format":"{}{}","snippet":"removefrom{${1}}{${2}}"},"doc":"\\removefrom removes the first occurence of {⟨code⟩} from a ⟨hook⟩."},
+		{"name":"removefromstart","arg":{"format":"{}{}","snippet":"removefromstart{${1}}{${2}}"}},
+		{"name":"xremovefrom","arg":{"format":"{}{}","snippet":"xremovefrom{${1}}{${2}}"}},
+		{"name":"xremovefromstart","arg":{"format":"{}{}","snippet":"xremovefromstart{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

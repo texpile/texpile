@@ -1,0 +1,53 @@
+{
+	"deps": [{"name":"keyval"},{"name":"ifthen"},{"name":"calc"}],
+	"macros": [
+		{"name":"AllowHyphenation","unusual":true},
+		{"name":"background","arg":{"format":"[]{}","snippet":"background[${1:options}]{${2:language}}"}},
+		{"name":"background","arg":{"format":"{}","snippet":"background{${1:language}}"}},
+		{"name":"Colon","unusual":true},
+		{"name":"CompoundWordMarkNoBreakpoint","unusual":true},
+		{"name":"CompoundWordMarkWithBreakpoint","unusual":true},
+		{"name":"DisableLigature","unusual":true},
+		{"name":"ExclamationMark","unusual":true},
+		{"name":"ExplicitHyphen","unusual":true},
+		{"name":"foreignlanguage","arg":{"format":"[]{}{}","snippet":"foreignlanguage[${1:options}]{${2:language}}{${3:text}}"}},
+		{"name":"foreignlanguage","arg":{"format":"{}{}","snippet":"foreignlanguage{${1:language}}{${2:text}}"}},
+		{"name":"GermanLeftDoubleQuotationMark","unusual":true},
+		{"name":"GermanRightDoubleQuotationMark","unusual":true},
+		{"name":"InitialThinSpace","unusual":true},
+		{"name":"InvertedExclamationMark","unusual":true},
+		{"name":"InvertedQuestionMark","unusual":true},
+		{"name":"LeftDoubleQuotationMark","unusual":true},
+		{"name":"LeftPointingDoubleAngleQuotationMark","unusual":true},
+		{"name":"load","arg":{"format":"[]{}","snippet":"load[${1:options}]{${2:language}}"}},
+		{"name":"load","arg":{"format":"{}","snippet":"load{${1:language}}"}},
+		{"name":"LoadOCPByName","arg":{"format":"{}{}","snippet":"LoadOCPByName{${1:command}}{${2:ocp file}}"},"unusual":true},
+		{"name":"makelcletter","arg":{"format":"{}{}","snippet":"makelcletter{${1:uppercase}}{${2:lowercase}}"},"unusual":true},
+		{"name":"makeletter","arg":{"format":"{}{}","snippet":"makeletter{${1:uppercase}}{${2:lowercase}}"},"unusual":true},
+		{"name":"makesameletter","arg":{"format":"{}{}","snippet":"makesameletter{${1:char}}{${2:model char}}"},"unusual":true},
+		{"name":"makeucletter","arg":{"format":"{}{}","snippet":"makeucletter{${1:uppercase}}{${2:lowercase}}"},"unusual":true},
+		{"name":"noextrascurrent","arg":{"format":"{}","snippet":"noextrascurrent{${1}}"},"unusual":true},
+		{"name":"NonBreakingSpace","unusual":true},
+		{"name":"noocpchar","arg":{"format":"{}","snippet":"noocpchar{${1:char code}}"}},
+		{"name":"oaddto","arg":{"format":"{}{}","snippet":"oaddto{${1:command}}{${2:code}}"}},
+		{"name":"originalOmega","unusual":true},
+		{"name":"QuestionMark","unusual":true},
+		{"name":"RightDoubleQuotationMark","unusual":true},
+		{"name":"RightPointingDoubleAngleQuotationMark","unusual":true},
+		{"name":"selectlanguage","arg":{"format":"[]{}","snippet":"selectlanguage[${1:options}]{${2:language}}"}},
+		{"name":"selectlanguage","arg":{"format":"{}","snippet":"selectlanguage{${1:language}}"}},
+		{"name":"Semicolon","unusual":true},
+		{"name":"uniencoding","unusual":true},
+		{"name":"westernrm","doc":"Antomega stores its default font names in the \\westernrm, \\westernsf and \\westerntt variables, since \\rmdefault, \\sfdefault and \\ttdefault will be redefined each time we switch to a new language."},
+		{"name":"westernsf","doc":"Antomega stores its default font names in the \\westernrm, \\westernsf and \\westerntt variables, since \\rmdefault, \\sfdefault and \\ttdefault will be redefined each time we switch to a new language."},
+		{"name":"westerntt","doc":"Antomega stores its default font names in the \\westernrm, \\westernsf and \\westerntt variables, since \\rmdefault, \\sfdefault and \\ttdefault will be redefined each time we switch to a new language."}
+	],
+	"envs": [
+		{"name":"otherlanguage","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:language}}"}},
+		{"name":"otherlanguage","arg":{"format":"{}","snippet":"{${1:language}}"}}
+	],
+	"keys": {
+		"\\usepackage/antomega#c": ["noffi","nolocalmarks"]
+	},
+	"args": ["\\usepackage/antomega#c"]
+}

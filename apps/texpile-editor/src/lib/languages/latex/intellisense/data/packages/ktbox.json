@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"listings"},{"name":"stringenc","engines":["pdflatex"]},{"name":"pdfescape","engines":["pdflatex"]},{"name":"enumitem"}],
+	"macros": [],
+	"envs": [
+		{"name":"ktbox","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The standard ktbox provides a titled box with optional theming, suitable for concise highlights."},
+		{"name":"ktbox","doc":"The standard ktbox provides a titled box with optional theming, suitable for concise highlights."},
+		{"name":"ktboxnumbered","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:title}}"},"doc":"The ktboxnumbered environment introduces built-in counters via \\thetcbcounter."},
+		{"name":"ktboxnumbered","arg":{"format":"{}","snippet":"{${1:title}}"},"doc":"The ktboxnumbered environment introduces built-in counters via \\thetcbcounter."},
+		{"name":"ktboxwide","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The ktboxwide variant extends across the page width, removing the bubble title and adopting a flat top style."},
+		{"name":"ktboxwide","doc":"The ktboxwide variant extends across the page width, removing the bubble title and adopting a flat top style."}
+	],
+	"keys": {}
+}

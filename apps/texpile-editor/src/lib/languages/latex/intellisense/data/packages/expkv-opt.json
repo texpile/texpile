@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"expkv"}],
+	"macros": [
+		{"name":"ekvoDate","unusual":true},
+		{"name":"ekvoProcessFutureOptions","arg":{"format":"{}","snippet":"ekvoProcessFutureOptions{${1:set}}"},"unusual":true},
+		{"name":"ekvoProcessGlobalOptions","arg":{"format":"{}","snippet":"ekvoProcessGlobalOptions{${1:set}}"},"unusual":true},
+		{"name":"ekvoProcessLocalOptions","arg":{"format":"{}","snippet":"ekvoProcessLocalOptions{${1:set}}"},"unusual":true},
+		{"name":"ekvoProcessOptions","arg":{"format":"{}","snippet":"ekvoProcessOptions{${1:set}}"},"unusual":true},
+		{"name":"ekvoProcessOptionsList","arg":{"format":"{}{}","snippet":"ekvoProcessOptionsList{${1:list}}{${2:set}}"},"unusual":true},
+		{"name":"ekvoUseUnknownHandlers","arg":{"format":"{}{}","snippet":"ekvoUseUnknownHandlers{${1:cs1}}{${2:cs2}}"},"unusual":true},
+		{"name":"ekvoUseUnknownHandlers*","arg":{"format":"{}{}","snippet":"ekvoUseUnknownHandlers*{${1:cs1}}{${2:cs2}}"},"unusual":true},
+		{"name":"ekvoVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

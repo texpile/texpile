@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"xifthen"},{"name":"calc"},{"name":"iftex"},{"name":"xparse"},{"name":"xspace"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathtools"},{"name":"keyval"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"iftex"},{"name":"intcalc"},{"name":"bigintcalc"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

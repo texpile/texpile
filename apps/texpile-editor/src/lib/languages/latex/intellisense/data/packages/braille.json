@@ -1,0 +1,28 @@
+{
+	"macros": [
+		{"name":"braille","arg":{"format":"{}","snippet":"braille{${1:tags}}"},"doc":"The user command \\braille{} converts sequence of tags to Braille symbols."},
+		{"name":"braillebox","arg":{"format":"{}","snippet":"braillebox{${1}}"}},
+		{"name":"braillecompactfalse","unusual":true},
+		{"name":"braillecompacttrue","unusual":true},
+		{"name":"brailledot"},
+		{"name":"brailleeightdotsfalse"},
+		{"name":"brailleeightdotstrue"},
+		{"name":"braillemirrorfalse"},
+		{"name":"braillemirrortrue"},
+		{"name":"brailleputtinydotsfalse"},
+		{"name":"brailleputtinydotstrue"},
+		{"name":"brailleunit"},
+		{"name":"brailleuseemptyboxfalse"},
+		{"name":"brailleuseemptyboxtrue"},
+		{"name":"ifbraillecompact","unusual":true},
+		{"name":"ifbrailleeightdots","unusual":true},
+		{"name":"ifbraillemirror","unusual":true},
+		{"name":"ifbrailleputtinydots","unusual":true},
+		{"name":"ifbrailleuseemptybox","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/braille#c": ["8dots","compact","mirror","puttinydots","useemptybox"]
+	},
+	"args": ["\\usepackage/braille#c"]
+}

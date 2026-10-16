@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"class-scrbook"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"makeidx"}],
+	"macros": [
+		{"name":"experiment","arg":{"format":"[]{}","snippet":"experiment[${1:short form}]{${2:long form}}"},"doc":"\\experiment is on the level of section, and there is \\subexperiment which corresponds to \\subsection."},
+		{"name":"experiment","arg":{"format":"{}","snippet":"experiment{${1:long form}}"},"doc":"\\experiment is on the level of section, and there is \\subexperiment which corresponds to \\subsection."},
+		{"name":"experimentmark","arg":{"format":"{}","snippet":"experimentmark{${1}}"},"unusual":true},
+		{"name":"labday","arg":{"format":"{}","snippet":"labday{${1:title}}"},"doc":"\\labday is an extended \\addchap (i.e. an un-numbered \\chapter with toc entry and assignment of a running headline) which additionally sets the closing index entry for the preceding \\(sub)experiment."},
+		{"name":"newexperiment","arg":{"format":"{}[]{}","snippet":"newexperiment{${1:abbreviation}}[${2:short form}]{${3:long form}}"}},
+		{"name":"newexperiment","arg":{"format":"{}{}","snippet":"newexperiment{${1:abbreviation}}{${2:long form}}"}},
+		{"name":"newsubexperiment","arg":{"format":"{}[]{}","snippet":"newsubexperiment{${1:abbreviation}}[${2:short form}]{${3:long form}}"}},
+		{"name":"newsubexperiment","arg":{"format":"{}{}","snippet":"newsubexperiment{${1:abbreviation}}{${2:long form}}"}},
+		{"name":"subexperiment","arg":{"format":"[]{}","snippet":"subexperiment[${1:short form}]{${2:long form}}"},"doc":"Below \\experiment you can use \\subexperiment which works in the same way and produces sub-indexentries. It is intended for sections like “design, realization, evaluation” or “preparation, purification, measurement”."},
+		{"name":"subexperiment","arg":{"format":"{}","snippet":"subexperiment{${1:long form}}"},"doc":"Below \\experiment you can use \\subexperiment which works in the same way and produces sub-indexentries. It is intended for sections like “design, realization, evaluation” or “preparation, purification, measurement”."},
+		{"name":"subexperimentmark","arg":{"format":"{}","snippet":"subexperimentmark{${1}}"},"unusual":true},
+		{"name":"theexperiment","unusual":true},
+		{"name":"theHexperiment","unusual":true},
+		{"name":"theHlabday","unusual":true},
+		{"name":"theHsubexperiment","unusual":true},
+		{"name":"thesubexperiment","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/labbook#c": ["hyperref"]
+	},
+	"args": ["\\documentclass/labbook#c"]
+}

@@ -16,13 +16,21 @@ const FILE = `{
 afterEach(() => setUserPackages(new Map()));
 
 describe('package files', () => {
-	it('completes the commands only where the package is loaded', () => {
+	it('completes the commands only where the package is loaded', async () => {
 		const { contents, problem } = parsePackageFile(FILE);
 		expect(problem).toMatch(/^2 of its entries/);
 		setUserPackages(new Map([['review', contents!]]));
-		const labels = (text: string) => macroOptions(text).map((o) => o.label);
-		expect(labels('\\usepackage{review}\n')).toContain('\\offen');
-		expect(labels('\\usepackage{other}\n')).not.toContain('\\offen');
+		const labels = async (text: string) => (await macroOptions(text)).map((o) => o.label);
+		expect(await labels('\\usepackage{review}\n')).toContain('\\offen');
+		expect(await labels('\\usepackage{other}\n')).not.toContain('\\offen');
+	});
+
+	it('reports a dependency whose engines it does not know', () => {
+		const { contents, problem } = parsePackageFile(
+			'{ "deps": [{ "name": "fontspec", "engines": ["luatex"] }, { "name": "xcolor", "engines": ["lualatex"] }] }'
+		);
+		expect(problem).toMatch(/^1 of its entries/);
+		expect(contents?.deps).toEqual([{ name: 'xcolor', engines: ['lualatex'] }]);
 	});
 
 	it('gives the parser the arguments the file names, over what TeX reports', async () => {
@@ -31,6 +39,44 @@ describe('package files', () => {
 			commands: [{ name: 'offen', spec: 'm' }]
 		}));
 		expect(defs).toBe('\\NewDocumentCommand{\\offen}{o m}{}');
+	});
+
+	it('gives the parser the arguments of a bundled package without asking TeX', async () => {
+		let asked = false;
+		const defs = await installedPackageDefinitions([{ name: 'marginnote', options: '' }], '', async () => {
+			asked = true;
+			return null;
+		});
+		expect(defs).toContain('\\NewDocumentCommand{\\marginnote}{o m o}{}');
+		expect(asked).toBe(false);
+	});
+
+	it('leaves a command two loaded packages define differently to the parser', async () => {
+		const loaded = async (...names: string[]) =>
+			installedPackageDefinitions(
+				names.map((name) => ({ name, options: '' })),
+				'',
+				async () => null
+			);
+		expect(await loaded('algorithm2e')).toContain('\\NewDocumentCommand{\\For}{d() m m d()}{}');
+		expect(await loaded('algorithm2e', 'algpseudocode')).not.toMatch(/\{\\For\}/);
+	});
+
+	it("keeps a package's arguments where the class defines the command differently", async () => {
+		const defs = await installedPackageDefinitions(
+			[
+				{ name: 'class-revtex4-2', options: '' },
+				{ name: 'booktabs', options: '' }
+			],
+			'',
+			async () => null
+		);
+		expect(defs).toContain('\\NewDocumentCommand{\\toprule}{o}{}');
+	});
+
+	it('keeps \\verb-prefixed names out of the definitions, which the tokenizer would read as \\verb', async () => {
+		const defs = await installedPackageDefinitions([{ name: 'verbatim', options: '' }], '', async () => null);
+		expect(defs).not.toMatch(/\\verb/);
 	});
 
 	it('drafts a file from what TeX reports for the package itself, environments apart', () => {

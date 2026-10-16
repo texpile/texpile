@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tokmap"}],
+	"macros": [
+		{"name":"visualtoks","arg":{"format":"{}","snippet":"visualtoks{${1:token list}}"}},
+		{"name":"visualtokssep","doc":"The horizontal separation between displayed tokens may be configured by the dimen register \\visualtokssep."}
+	],
+	"envs": [],
+	"keys": {}
+}

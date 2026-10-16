@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"keyval"},{"name":"ragged2e"},{"name":"dlfltxbmarkupbookkeys","if":"loadsampleconfig"}],
+	"macros": [
+		{"name":"bfindex","arg":{"format":"{}","snippet":"bfindex{${1:entry}}"}},
+		{"name":"cs","arg":{"format":"{}","snippet":"cs{${1:text}}"},"doc":"for writing the name of LaTeX macros."},
+		{"name":"css","arg":{"format":"{}","snippet":"css{${1:text}}"},"doc":"like \\cs but to be used in the index, it will typeset the »\\« in the left margin."},
+		{"name":"felineIndexCmd"},
+		{"name":"felineKeyGenerator","arg":{"format":"{}{}{}{}{}","snippet":"felineKeyGenerator{${1:key}}{${2:description}}{${3:margin code}}{${4:index code}}{${5:text code}}"}},
+		{"name":"felineMarginAdjustment"},
+		{"name":"felineMarkupDescription","arg":{"format":"{}{}{}{}{}","snippet":"felineMarkupDescription{${1:key}}{${2:description}}{${3:margin code}}{${4:index code}}{${5:text code}}"}},
+		{"name":"felineStandardKey"},
+		{"name":"felineWriteInMargin","arg":{"format":"{}","snippet":"felineWriteInMargin{${1:text}}"},"doc":"Depending on whether \\NoMarginparAvail is true or not, it will use \\sidepar (when \\marginpar is unavailable) and \\marginpar otherwise (unless of course the »forcesidepar« key is in effect)."},
+		{"name":"ifNoMarginparAvail","unusual":true},
+		{"name":"itindex","arg":{"format":"{}","snippet":"itindex{${1:entry}}"}},
+		{"name":"markup","arg":{"format":"[]{}","snippet":"markup[${1:keys}]{${2:text}}","keys":["keyval:FelineIndex"],"keyPos":0},"doc":"The \\markup macro is intended to be used for categorising various types of keywords. These can then be automatically written in the text as well as in the (outer) margin and added to the index."},
+		{"name":"markup","arg":{"format":"{}","snippet":"markup{${1:text}}"},"doc":"The \\markup macro is intended to be used for categorising various types of keywords. These can then be automatically written in the text as well as in the (outer) margin and added to the index."},
+		{"name":"NoMarginparAvailfalse"},
+		{"name":"NoMarginparAvailtrue"},
+		{"name":"textbfindex","arg":{"format":"{}","snippet":"textbfindex{${1}}"}},
+		{"name":"textitindex","arg":{"format":"{}","snippet":"textitindex{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:FelineIndex": ["addtospvrt=","forcesidepar","idxbf","idxit","idxn","noidx","nomk","notxt","nowr","vaddtosp="],
+		"\\usepackage/dlfltxbmarkup#c": ["loadsampleconfig"]
+	},
+	"args": ["\\usepackage/dlfltxbmarkup#c"]
+}

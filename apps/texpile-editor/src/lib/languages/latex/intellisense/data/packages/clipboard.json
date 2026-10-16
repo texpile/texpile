@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"clipboard","arg":{"format":"{}{}","snippet":"clipboard{${1}}{${2}}"},"unusual":true},
+		{"name":"Copy","arg":{"format":"{}{}","snippet":"Copy{${1:key}}{${2:content}}"}},
+		{"name":"newclipboard","arg":{"format":"{}","snippet":"newclipboard{${1:basename}}"}},
+		{"name":"openclipboard","arg":{"format":"{}","snippet":"openclipboard{${1:basename}}"},"doc":"\\openclipboard makes the same content available across multiple documents."},
+		{"name":"Paste","arg":{"format":"{}","snippet":"Paste{${1:key}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

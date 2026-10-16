@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"discretionaries"},
+		{"name":"ifspecialpathdelimiters","unusual":true},
+		{"name":"path"},
+		{"name":"specialpathdelimitersfalse"},
+		{"name":"specialpathdelimiterstrue"}
+	],
+	"envs": [],
+	"keys": {}
+}

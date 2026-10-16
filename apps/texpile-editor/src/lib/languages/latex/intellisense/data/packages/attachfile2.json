@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"iftex"},{"name":"keyval"},{"name":"color"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"hyperref"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"attachfile","arg":{"format":"[]{}","snippet":"attachfile[${1:options}]{${2:filename}}","keys":["keyval:AtFi"],"keyPos":0}},
+		{"name":"attachfile","arg":{"format":"{}","snippet":"attachfile{${1:filename}}"}},
+		{"name":"attachfilesetup","arg":{"format":"{}","snippet":"attachfilesetup{${1:options}}","keys":["keyval:AtFi"],"keyPos":0}},
+		{"name":"noattachfile","arg":{"format":"[]","snippet":"noattachfile[${1:options}]","keys":["keyval:AtFi"],"keyPos":0}},
+		{"name":"noattachfile"},
+		{"name":"notextattachfile","arg":{"format":"[]{}","snippet":"notextattachfile[${1:options}]{${2:text}}","keys":["keyval:AtFi"],"keyPos":0}},
+		{"name":"notextattachfile","arg":{"format":"{}","snippet":"notextattachfile{${1:text}}"}},
+		{"name":"textattachfile","arg":{"format":"[]{}{}","snippet":"textattachfile[${1:options}]{${2:filename}}{${3:text}}","keys":["keyval:AtFi"],"keyPos":0}},
+		{"name":"textattachfile","arg":{"format":"{}{}","snippet":"textattachfile{${1:filename}}{${2:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:AtFi": ["color=","date=","mimetype=","scale=","timezone=","ucfilespec","annotname=","appearance=${1|false,true|}","author=","description=","icon=${1|Graph,Paperclip,PushPin,Tag|}","locked=${1|false,true|}","print=${1|false,true|}","subject=","zoom=${1|false,true|}"],
+		"\\usepackage/attachfile2#c": ["annotname=","appearance=${1|false,true|}","author=","color=","date=","description=","draft","driverfallback=${1|dvips,dvipdfmx|}","dvipdfmx","dvips","final","icon=${1|Graph,Paperclip,PushPin,Tag|}","locked=${1|false,true|}","luatex","mimetype=","nofiles","pdftex","print=${1|false,true|}","scale=","subject=","timezone=","ucfilespec","xetex","zoom=${1|false,true|}"]
+	},
+	"args": ["\\usepackage/attachfile2#c"]
+}

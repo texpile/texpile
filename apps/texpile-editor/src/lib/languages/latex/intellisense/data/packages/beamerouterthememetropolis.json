@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"calc"},{"name":"pgfopts"},{"name":"pgfkeys"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"textcomp"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"tccelsius"},
+		{"name":"tccentigrade"},
+		{"name":"tcdegree"},
+		{"name":"tcdigitoldstyle","arg":{"format":"{}","snippet":"tcdigitoldstyle{${1:digits}}"}},
+		{"name":"tcmu"},
+		{"name":"tcohm"},
+		{"name":"tcpertenthousand"},
+		{"name":"tcperthousand"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/mathcomp#c": ["rmdefault"]
+	},
+	"args": ["\\usepackage/mathcomp#c"]
+}

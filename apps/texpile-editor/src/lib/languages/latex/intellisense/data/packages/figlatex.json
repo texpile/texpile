@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"iftex"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xstring"},{"name":"color"},{"name":"epstopdf"},{"name":"grfext"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"epstopdf-base"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/figlatex#c": ["debug"]
+	},
+	"args": ["\\usepackage/figlatex#c"]
+}

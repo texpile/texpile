@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"calc"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"progressbar","arg":{"format":"[]{}","snippet":"progressbar[${1:options}]{${2:number}}","keys":["keyval:progressbarlocal"],"keyPos":0},"doc":"This command is just the same as \\progressbar{<number>} but allows you to manipulate the appearance of the current progressbar."},
+		{"name":"progressbar","arg":{"format":"{}","snippet":"progressbar{${1:number}}"},"doc":"This command is just the same as \\progressbar{<number>} but allows you to manipulate the appearance of the current progressbar."},
+		{"name":"progressbarchange","arg":{"format":"{}","snippet":"progressbarchange{${1:options}}","keys":["keyval:progressbar"],"keyPos":0},"doc":"You can set global options when you load the progressbar with \\usepackage [options]{progressbar} and with the command \\progressbarchange{<options>}."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:progressbar": ["borderwidth=","emptycolor=","filledcolor=","heighta=","heightr=","linecolor=","roundnessa=","roundnessr=","subdivisions=","tickscolor=","ticksheight=","tickswidth=","width="],
+		"keyval:progressbarlocal": ["borderwidth=","emptycolor=","filledcolor=","heighta=","heightr=","linecolor=","roundnessa=","roundnessr=","subdivisions=","tickscolor=","ticksheight=","tickswidth=","width="],
+		"\\usepackage/progressbar#c": ["borderwidth=","emptycolor=","filledcolor=","heighta=","heightr=","linecolor=","roundnessa=","roundnessr=","subdivisions=","tickscolor=","ticksheight=","tickswidth=","width="]
+	},
+	"args": ["\\usepackage/progressbar#c"]
+}

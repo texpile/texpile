@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xspace"}],
+	"macros": [
+		{"name":"cross","arg":{"format":"[]","snippet":"cross[${1:scale}]"},"doc":"The commands \\nought and \\cross use the xspace package to place a space after them or not depending on context."},
+		{"name":"cross","doc":"The commands \\nought and \\cross use the xspace package to place a space after them or not depending on context."},
+		{"name":"iftictactoeox","unusual":true},
+		{"name":"nought","arg":{"format":"[]","snippet":"nought[${1:scale}]"},"doc":"The commands \\nought and \\cross use the xspace package to place a space after them or not depending on context."},
+		{"name":"nought","doc":"The commands \\nought and \\cross use the xspace package to place a space after them or not depending on context."},
+		{"name":"ox","arg":{"format":"[]{}{}","snippet":"ox[${1:scale}]{${2:grid positions}}{${3:winning line}}"},"if":"ox"},
+		{"name":"ox","arg":{"format":"{}{}","snippet":"ox{${1:grid positions}}{${2:winning line}}"},"if":"ox"},
+		{"name":"oxscore","arg":{"format":"[]{}{}{}","snippet":"oxscore[${1:scale}]{${2:grid positions}}{${3:winning line}}{${4:label}}"},"if":"ox"},
+		{"name":"oxscore","arg":{"format":"{}{}{}","snippet":"oxscore{${1:grid positions}}{${2:winning line}}{${3:label}}"},"if":"ox"},
+		{"name":"oxscorenobox","arg":{"format":"[]{}{}{}","snippet":"oxscorenobox[${1:scale}]{${2:grid positions}}{${3:winning line}}{${4:label}}"},"if":"ox"},
+		{"name":"oxscorenobox","arg":{"format":"{}{}{}","snippet":"oxscorenobox{${1:grid positions}}{${2:winning line}}{${3:label}}"},"if":"ox"},
+		{"name":"thetictaccellcounter","unusual":true},
+		{"name":"thetictacrowmakercounter","unusual":true},
+		{"name":"thetictacrowmakermax","unusual":true},
+		{"name":"tictacn"},
+		{"name":"tictaco"},
+		{"name":"tictacO"},
+		{"name":"tictactoe","arg":{"format":"[]{}{}","snippet":"tictactoe[${1:scale}]{${2:grid positions}}{${3:winning line}}"}},
+		{"name":"tictactoe","arg":{"format":"{}{}","snippet":"tictactoe{${1:grid positions}}{${2:winning line}}"}},
+		{"name":"tictactoeoxfalse","unusual":true},
+		{"name":"tictactoeoxtrue","unusual":true},
+		{"name":"tictactoescore","arg":{"format":"[]{}{}{}","snippet":"tictactoescore[${1:scale}]{${2:grid positions}}{${3:winning line}}{${4:label}}"},"doc":"The command \\tictactoescore is used to add a label below each board."},
+		{"name":"tictactoescore","arg":{"format":"{}{}{}","snippet":"tictactoescore{${1:grid positions}}{${2:winning line}}{${3:label}}"},"doc":"The command \\tictactoescore is used to add a label below each board."},
+		{"name":"tictactoescorenobox","arg":{"format":"[]{}{}{}","snippet":"tictactoescorenobox[${1:scale}]{${2:grid positions}}{${3:winning line}}{${4:label}}"}},
+		{"name":"tictactoescorenobox","arg":{"format":"{}{}{}","snippet":"tictactoescorenobox{${1:grid positions}}{${2:winning line}}{${3:label}}"}},
+		{"name":"tictacx"},
+		{"name":"tictacX"},
+		{"name":"tictocfaintcol"},
+		{"name":"tictocfullcol"},
+		{"name":"tictocgridlinescol"},
+		{"name":"tictocwincol"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/tictactoe#c": ["ox"]
+	},
+	"args": ["\\usepackage/tictactoe#c"]
+}

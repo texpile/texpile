@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"italicOver","unusual":true},
+		{"name":"JObeylines","unusual":true},
+		{"name":"Listcenter","unusual":true},
+		{"name":"Listcentered","unusual":true},
+		{"name":"Listend","unusual":true},
+		{"name":"Listjustified","unusual":true},
+		{"name":"Liststart","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"luamplib"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"wordcloud","arg":{"format":"[]{}","snippet":"wordcloud[${1}]{${2}}"}},
+		{"name":"wordcloud","arg":{"format":"{}","snippet":"wordcloud{${1}}"}},
+		{"name":"wordcloudFile","arg":{"format":"[]{}{}","snippet":"wordcloudFile[${1}]{${2}}{${3}}"}},
+		{"name":"wordcloudFile","arg":{"format":"{}{}","snippet":"wordcloudFile{${1}}{${2}}"}},
+		{"name":"wordcloudIgnoreWords","arg":{"format":"{}","snippet":"wordcloudIgnoreWords{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

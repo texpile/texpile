@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"xpatch"},{"name":"xparse"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

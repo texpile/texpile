@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"theorem"},{"name":"akkconditional"},{"name":"class-book"},{"name":"lscape"},{"name":"graphics"},{"name":"trig"},{"name":"longtable"},{"name":"float"},{"name":"enumerate"},{"name":"verbatim"},{"name":"akktex"},{"name":"calc"},{"name":"akkdoc"},{"name":"akkstring"},{"name":"akknum"},{"name":"akkcounterlabelpattern"},{"name":"akkmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"latexsym"},{"name":"akkmathbasic"},{"name":"array"},{"name":"akkmathset"},{"name":"akkmathtext"},{"name":"akkmathrel"},{"name":"akkmathnum"},{"name":"akkmathfun"},{"name":"akkmathproof"},{"name":"akkmathdisc"},{"name":"akkmathpaper"},{"name":"akkcs"},{"name":"akkwidepage"}],
+	"macros": [
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}}
+	],
+	"envs": [
+		{"name":"beispiel","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"beispiel"},
+		{"name":"bemerkung","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"bemerkung"},
+		{"name":"corollar","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"corollar"},
+		{"name":"definition","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"definition"},
+		{"name":"korollar","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"korollar"},
+		{"name":"lemma","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"lemma"},
+		{"name":"proposition","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"proposition"},
+		{"name":"satz","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"satz"},
+		{"name":"theorem","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"theorem"}
+	],
+	"keys": {
+		"\\documentclass/akkscript#c": ["10pt","11pt","12pt"]
+	},
+	"args": ["\\documentclass/akkscript#c"]
+}

@@ -1,0 +1,50 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"class-abntex2"},{"name":"class-memoir"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"dcolumn"},{"name":"delarray"},{"name":"tabularx"},{"name":"booktabs"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"verbatim"},{"name":"shortvrb"},{"name":"textcase"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"babel"},{"name":"enumitem"},{"name":"calc"},{"name":"ifluatex"},{"name":"abntex2cite"},{"name":"abntex2abrev"},{"name":"ifpdf"},{"name":"ifxetex"},{"name":"relsize"},{"name":"caption"},{"name":"caption3"},{"name":"geometry"},{"name":"ifvtex"},{"name":"textpos"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"float"},{"name":"icomma"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"suffix"},{"name":"glossaries-extra"},{"name":"glossaries"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"lmodern","if":"lmodern","engines":["pdflatex","xelatex"]},{"name":"lmodern","engines":["lualatex"]},{"name":"glossaries-extra-bib2gls","if":"siglas|simbolos"},{"name":"unicode-math","engines":["lualatex"]},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"l3keys2e","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"lualatex-math","engines":["lualatex"]}],
+	"macros": [
+		{"name":"areadoconhecimento","arg":{"format":"{}","snippet":"areadoconhecimento{${1:field of knowledge}}"},"doc":"Redefine o conteúdo da macro \\@areadoconhecimento, cujo conteúdo é exibido na folha de rosto do trabalho."},
+		{"name":"autor","arg":{"format":"{}","snippet":"autor{${1:name}}"},"doc":"A função macro \\autor{⟨nome⟩} foi estendida para incluir o nome do autor automaticamente nas propriedades do PDF."},
+		{"name":"avaliadorext","arg":{"format":"{}","snippet":"avaliadorext{${1:name}}"},"doc":"Redefine o conteúdo da macro \\@avaliadorext, cujo conteúdo é exibido na folha de aprovação, se a macro contiver algum texto."},
+		{"name":"avaliadori","arg":{"format":"{}","snippet":"avaliadori{${1:name}}"},"doc":"Redefine o conteúdo da macro \\@avaliadori, cujo conteúdo é exibido na folha de aprovação."},
+		{"name":"avaliadorii","arg":{"format":"{}","snippet":"avaliadorii{${1:name}}"},"doc":"Redefine o conteúdo da macro \\@avaliadorii, cujo conteúdo é exibido na folha de aprovação."},
+		{"name":"fonte","arg":{"format":"[]{}","snippet":"fonte[${1:width}]{${2:source}}"},"doc":"Essa macro foi redefinida para que o texto seja alinhado à esquerda – e não centralizado como na definição original na classe abntex2 – e para que o texto ”Fonte” seja separado do argumento passado pelo usuário por dois pontos, e não por um travessão."},
+		{"name":"fonte","arg":{"format":"{}","snippet":"fonte{${1:source}}"},"doc":"Essa macro foi redefinida para que o texto seja alinhado à esquerda – e não centralizado como na definição original na classe abntex2 – e para que o texto ”Fonte” seja separado do argumento passado pelo usuário por dois pontos, e não por um travessão."},
+		{"name":"foreignlanguage","arg":{"format":"{}{}","snippet":"foreignlanguage{${1:language}}{${2:text}}"},"doc":"Extensão da macro que inicia um texto em língua estrangeira, alterando-a para que o conteúdo seja destacado em itálico."},
+		{"name":"imprimirfolhadeaprovacao","arg":{"format":"[]{}","snippet":"imprimirfolhadeaprovacao[${1:external examiner institution}]{${2:approval date}}"},"doc":"Imprime a folha de aprovação."},
+		{"name":"imprimirfolhadeaprovacao","arg":{"format":"{}","snippet":"imprimirfolhadeaprovacao{${1:approval date}}"},"doc":"Imprime a folha de aprovação."},
+		{"name":"imprimirpalavraschave","doc":"O comando \\imprimirpalavraschave foi criado para formatar o texto que contém as palavras-chave do documento."},
+		{"name":"incluirimagem","arg":{"format":"[]{}{}{}","snippet":"incluirimagem[${1:scale}]{${2:path}}{${3:description}}{${4:source and year}}"}},
+		{"name":"incluirimagem","arg":{"format":"{}{}{}","snippet":"incluirimagem{${1:path}}{${2:description}}{${3:source and year}}"}},
+		{"name":"incluirimagem*","arg":{"format":"[]{}{}{}","snippet":"incluirimagem*[${1:scale}]{${2:path}}{${3:description}}{${4:source and year}}"}},
+		{"name":"incluirimagem*","arg":{"format":"{}{}{}","snippet":"incluirimagem*{${1:path}}{${2:description}}{${3:source and year}}"}},
+		{"name":"incluirsiglas","arg":{"format":"{}","snippet":"incluirsiglas{${1:path}}"},"if":"siglas","doc":"Inclusão do arquivo para a lista de siglas."},
+		{"name":"incluirsimbolos","arg":{"format":"{}","snippet":"incluirsimbolos{${1:path}}"},"if":"simbolos","doc":"Inclusão do arquivo para a lista de símbolos."},
+		{"name":"listofquadros","doc":"Estende o conteúdo da macro \\listofquadros para criar o bookmark no PDF automaticamente."},
+		{"name":"listofquadros*","doc":"Estende o conteúdo da macro \\listofquadros para criar o bookmark no PDF automaticamente."},
+		{"name":"listofsiglas","if":"siglas","doc":"Exibição da lista de siglas."},
+		{"name":"listofsiglas*","if":"siglas","doc":"Exibição da lista de siglas."},
+		{"name":"listofsimbolos","if":"simbolos","doc":"Exibição da lista de símbolos."},
+		{"name":"listofsimbolos*","if":"simbolos","doc":"Exibição da lista de símbolos."},
+		{"name":"listquadroname","unusual":true},
+		{"name":"palavraschave","arg":{"format":"[]{}","snippet":"palavraschave[${1:language}]{${2:keywords}}"}},
+		{"name":"palavraschave","arg":{"format":"{}","snippet":"palavraschave{${1:keywords}}"}},
+		{"name":"palavraschavename","unusual":true},
+		{"name":"preambulo","arg":{"format":"{}","snippet":"preambulo{${1:subject}}"}},
+		{"name":"quadroname","unusual":true},
+		{"name":"thequadro","unusual":true},
+		{"name":"titulo","arg":{"format":"{}","snippet":"titulo{${1:title}}"}}
+	],
+	"envs": [
+		{"name":"dedicatoria"},
+		{"name":"epigrafe","doc":"Extensão do ambiente epigrafe para isentar o usuário da necessidade de formatar manualmente a posição do texto."},
+		{"name":"quadro","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"É um ambiente flutuante semelhante a figure ou table."},
+		{"name":"quadro","doc":"É um ambiente flutuante semelhante a figure ou table."},
+		{"name":"quadro*","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"É um ambiente flutuante semelhante a figure ou table."},
+		{"name":"quadro*","doc":"É um ambiente flutuante semelhante a figure ou table."},
+		{"name":"resumo","arg":{"format":"[]","snippet":"[${1:language}]"}},
+		{"name":"resumo"}
+	],
+	"keys": {
+		"\\documentclass/ucsmonograph#c": ["lmodern","siglas","simbolos"]
+	},
+	"args": ["\\documentclass/ucsmonograph#c"]
+}

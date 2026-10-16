@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"hz"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,50 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"hyphenat"},{"name":"color"},{"name":"datetime2"},{"name":"tracklang"},{"name":"xkeyval"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"xltxtra"},{"name":"ifluatex"},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"graphicx","engines":["xelatex"]},{"name":"graphics","engines":["xelatex"]},{"name":"trig","engines":["xelatex"]},{"name":"ifxetex","engines":["xelatex"]},{"name":"realscripts","engines":["xelatex"]},{"name":"metalogo","engines":["xelatex"]}],
+	"macros": [
+		{"name":"BigGap"},
+		{"name":"BulletItem"},
+		{"name":"BulletSymbol"},
+		{"name":"DatestampY","arg":{"format":"{}","snippet":"DatestampY{${1:yyyy}}"}},
+		{"name":"DatestampYM","arg":{"format":"{}{}","snippet":"DatestampYM{${1:yyyy}}{${2:MM}}"}},
+		{"name":"DatestampYMD","arg":{"format":"{}{}{}","snippet":"DatestampYMD{${1:yyyy}}{${2:MM}}{${3:dd}}"}},
+		{"name":"DraftStamp","unusual":true},
+		{"name":"Entry"},
+		{"name":"FooterText","unusual":true},
+		{"name":"Gap"},
+		{"name":"HeaderText","unusual":true},
+		{"name":"Hide","arg":{"format":"{}","snippet":"Hide{${1:text}}"}},
+		{"name":"Item"},
+		{"name":"LongMonth","arg":{"format":"{}","snippet":"LongMonth{${1}}"},"unusual":true},
+		{"name":"MaxNumberedItem"},
+		{"name":"NumberedItem","arg":{"format":"{}","snippet":"NumberedItem{${1:label}}"}},
+		{"name":"PageKOfN","unusual":true},
+		{"name":"Section","arg":{"format":"{}{}{}","snippet":"Section{${1:heading}}{${2:bookmark heading}}{${3:unique PDF link name}}"}},
+		{"name":"ShortMonth","arg":{"format":"{}","snippet":"ShortMonth{${1}}"},"unusual":true},
+		{"name":"SubBulletItem"},
+		{"name":"SubBulletSymbol"},
+		{"name":"SubItem"},
+		{"name":"SubSection","arg":{"format":"{}{}{}","snippet":"SubSection{${1:heading}}{${2:bookmark heading}}{${3:unique PDF link name}}"}},
+		{"name":"TildeSymbol","unusual":true},
+		{"name":"Timestamp","unusual":true},
+		{"name":"Title","arg":{"format":"{}","snippet":"Title{${1:name}}"}},
+		{"name":"TypesetInDraftMode","unusual":true},
+		{"name":"UseDetailFont","unusual":true},
+		{"name":"UseHeaderFooterFont","unusual":true},
+		{"name":"UseHeadingFont","unusual":true},
+		{"name":"UseNoteFont"},
+		{"name":"UseSecondaryFont"},
+		{"name":"UseSectionFont","unusual":true},
+		{"name":"UseSubSectionFont","unusual":true},
+		{"name":"UseSubTitleFont","unusual":true},
+		{"name":"UseTitleFont","unusual":true}
+	],
+	"envs": [
+		{"name":"Body"},
+		{"name":"Detail"},
+		{"name":"SubTitle"}
+	],
+	"keys": {
+		"\\documentclass/simpleresumecv#c": ["MMMMyyyy","MMMyyyy","a4paper","ddMMMMyyyy","ddMMMyyyy","draftmode","letterpaper","nonstopmode","yyyy","yyyyMM","yyyyMMdd"]
+	},
+	"args": ["\\documentclass/simpleresumecv#c"]
+}

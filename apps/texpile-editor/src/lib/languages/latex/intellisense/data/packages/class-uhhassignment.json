@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"inputenc"},{"name":"cmap"},{"name":"babel"},{"name":"etoolbox"},{"name":"calc"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsthm"},{"name":"xpatch"},{"name":"xparse"},{"name":"enumitem"},{"name":"xcolor"},{"name":"framed"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"lmodern"},{"name":"bookmark"}],
+	"macros": [
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:short author}]{${2:author}}"},"doc":"The \\author command is overridden by this class to support a short author that may be printed at the bottom of each page."},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:author}}"},"doc":"The \\author command is overridden by this class to support a short author that may be printed at the bottom of each page."},
+		{"name":"course","arg":{"format":"[]{}","snippet":"course[${1:short course name}]{${2:course}}"},"doc":"Lets you specify the name of the course of the assignment."},
+		{"name":"course","arg":{"format":"{}","snippet":"course{${1:course}}"},"doc":"Lets you specify the name of the course of the assignment."},
+		{"name":"group","arg":{"format":"{}","snippet":"group{${1:group number}}"},"doc":"Using this command you can specify the number of your group."},
+		{"name":"id","arg":{"format":"{}","snippet":"id{${1:student ID}}"},"doc":"The \\id macro prints the id of an author."},
+		{"name":"maketitle"},
+		{"name":"sheetno","arg":{"format":"{}","snippet":"sheetno{${1:sheet number}}"},"doc":"Lets you specify the current exercise sheet."},
+		{"name":"subsubtask","arg":{"format":"[]{}","snippet":"subsubtask[${1:task number}]{${2:task name}}"},"doc":"\\subsubtask essentially wraps \\subsection with a semi-customizable title."},
+		{"name":"subsubtask","arg":{"format":"{}","snippet":"subsubtask{${1:task name}}"},"doc":"\\subsubtask essentially wraps \\subsection with a semi-customizable title."},
+		{"name":"subtask","arg":{"format":"[]{}","snippet":"subtask[${1:task number}]{${2:task name}}"},"doc":"\\subtask essentially wraps \\subsection with a semi-customizable title."},
+		{"name":"subtask","arg":{"format":"{}","snippet":"subtask{${1:task name}}"},"doc":"\\subtask essentially wraps \\subsection with a semi-customizable title."},
+		{"name":"task","arg":{"format":"[]{}","snippet":"task[${1:task number}]{${2:task name}}"},"doc":"The \\task command replaces the \\section command. It incrementally numbers the tasks (starting at 1)."},
+		{"name":"task","arg":{"format":"{}","snippet":"task{${1:task name}}"},"doc":"The \\task command replaces the \\section command. It incrementally numbers the tasks (starting at 1)."},
+		{"name":"teacher","arg":{"format":"{}","snippet":"teacher{${1:teacher}}"},"doc":"Lets you specify the name of the teacher or teachers of the course."},
+		{"name":"todo","arg":{"format":"[]","snippet":"todo[${1:todo text}]"},"doc":"The \\todo macro places the \\todomark and puts a todo text in a marginpar."},
+		{"name":"todo","doc":"The \\todo macro places the \\todomark and puts a todo text in a marginpar."},
+		{"name":"todomark","doc":"The \\todomark is placed in the text when the \\todo command is used. The default implementation draws a purple box with the text \"Todo\" inside."},
+		{"name":"university","arg":{"format":"[]{}","snippet":"university[${1:short university name}]{${2:university}}"},"doc":"Lets you specify the name of the university (or school)."},
+		{"name":"university","arg":{"format":"{}","snippet":"university{${1:university}}"},"doc":"Lets you specify the name of the university (or school)."}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/uhhassignment#c": ["longheader","longtitle","numberedsheets","repeatauthor","shortheader","shorttitle","unnumberedsheets"]
+	},
+	"args": ["\\documentclass/uhhassignment#c"]
+}

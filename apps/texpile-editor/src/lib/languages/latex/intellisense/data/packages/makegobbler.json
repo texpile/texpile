@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"ifthen","if":"ifthen"}],
+	"macros": [
+		{"name":"makegobbler","arg":{"format":"{}","snippet":"makegobbler{${1:delimiter}}"},"doc":"Le paquetage fournit également deux macros de plus bas niveau \\makegobbler et \\makeungobbler qu’en général l’utilisateur lambda n’a pas besoin d’utiliser directement, et qui servent respectivement au gobage et au dégobage inconditionnel d’un bout de code LaTeX."},
+		{"name":"makeungobbler","arg":{"format":"{}","snippet":"makeungobbler{${1:delimiter}}"},"doc":"Le paquetage fournit également deux macros de plus bas niveau \\makegobbler et \\makeungobbler qu’en général l’utilisateur lambda n’a pas besoin d’utiliser directement, et qui servent respectivement au gobage et au dégobage inconditionnel d’un bout de code LaTeX."},
+		{"name":"MGBdrop","arg":{"format":"{}{}","snippet":"MGBdrop{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBdrop*","arg":{"format":"{}{}","snippet":"MGBdrop*{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBdropelse","arg":{"format":"{}{}","snippet":"MGBdropelse{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBdropelse*","arg":{"format":"{}{}","snippet":"MGBdropelse*{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBkeep","arg":{"format":"{}{}","snippet":"MGBkeep{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBkeep*","arg":{"format":"{}{}","snippet":"MGBkeep*{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBkeepelse","arg":{"format":"{}{}","snippet":"MGBkeepelse{${1:condition}}{${2:delimiter}}"}},
+		{"name":"MGBkeepelse*","arg":{"format":"{}{}","snippet":"MGBkeepelse*{${1:condition}}{${2:delimiter}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/makegobbler#c": ["ifthen","tense"]
+	},
+	"args": ["\\usepackage/makegobbler#c"]
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"goodpar","arg":{"format":"{}","snippet":"goodpar{${1:paragraphs}}"},"unusual":true},
+		{"name":"LR","arg":{"format":"{}","snippet":"LR{${1:Roman text}}"}},
+		{"name":"R","arg":{"format":"{}","snippet":"R{${1:Arabic text}}"}},
+		{"name":"RL","arg":{"format":"{}","snippet":"RL{${1:Arabic text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

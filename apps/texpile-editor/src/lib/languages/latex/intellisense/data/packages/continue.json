@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"atbegshi-ltx"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"auxhook"},{"name":"zref-lastpage"}],
+	"macros": [
+		{"name":"contallpagesfalse","unusual":true},
+		{"name":"contallpagestrue","unusual":true},
+		{"name":"contdrop"},
+		{"name":"contgo"},
+		{"name":"contmarginfalse","unusual":true},
+		{"name":"contmargintrue","unusual":true},
+		{"name":"contsep"},
+		{"name":"contstop"},
+		{"name":"contwordfalse","unusual":true},
+		{"name":"contwordtrue","unusual":true},
+		{"name":"FirstWordBox","unusual":true},
+		{"name":"flagcont"},
+		{"name":"flagend","doc":"This command defines the continuation mark when the last odd page is the final page (i.e. when there is no following recto page)."},
+		{"name":"flagword","doc":"This command specifies how the continuation word is formatted."},
+		{"name":"ifcontallpages","unusual":true},
+		{"name":"ifcontmargin","unusual":true},
+		{"name":"ifcontword","unusual":true},
+		{"name":"LastWordBox","unusual":true},
+		{"name":"NextWordBox"},
+		{"name":"postflagword"},
+		{"name":"preflagword","doc":"This command is printed before the word continuation marker."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/continue#c": ["allpages","margin","word"]
+	},
+	"args": ["\\usepackage/continue#c"]
+}

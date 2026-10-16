@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"relsize"}],
+	"macros": [
+		{"name":"overarc","arg":{"format":"[]{}","snippet":"overarc[${1:width factor}]{${2:text}}"},"doc":"\\overarc puts an arc above the text given as argument."},
+		{"name":"overarc","arg":{"format":"{}","snippet":"overarc{${1:text}}"},"doc":"\\overarc puts an arc above the text given as argument."},
+		{"name":"underarc","arg":{"format":"[]{}","snippet":"underarc[${1:width factor}]{${2:text}}"},"doc":"\\underarc puts the arc below the text."},
+		{"name":"underarc","arg":{"format":"{}","snippet":"underarc{${1:text}}"},"doc":"\\underarc puts the arc below the text."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"twoopt"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"addfont","arg":{"format":"[][]{}{}{}","snippet":"addfont[${1:scale}][${2:cmds}]{${3:encoding}}{${4:font name}}{${5:macro}}"}},
+		{"name":"addfont","arg":{"format":"{}{}{}","snippet":"addfont{${1:encoding}}{${2:font name}}{${3:macro}}"}},
+		{"name":"addfont*","arg":{"format":"[][]{}{}{}","snippet":"addfont*[${1:scale}][${2:cmds}]{${3:encoding}}{${4:font name}}{${5:macro}}"}},
+		{"name":"addfont*","arg":{"format":"{}{}{}","snippet":"addfont*{${1:encoding}}{${2:font name}}{${3:macro}}"}},
+		{"name":"addshape","arg":{"format":"[]{}{}{}","snippet":"addshape[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"addshape","arg":{"format":"{}{}{}","snippet":"addshape{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

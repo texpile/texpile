@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"readprov"}],
+	"macros": [
+		{"name":"EmptyFileList","arg":{"format":"[]","snippet":"EmptyFileList[${1:files}]"}},
+		{"name":"EmptyFileList"},
+		{"name":"filedate","unusual":true},
+		{"name":"FileListRemark","arg":{"format":"[]{}","snippet":"FileListRemark[${1:remark}]{${2:file}}"}},
+		{"name":"FileListRemark","arg":{"format":"{}","snippet":"FileListRemark{${1:file}}"}},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"FindReadListFileInfos","arg":{"format":"[]{}","snippet":"FindReadListFileInfos[${1:txt-file}]{${2:tex-files}}"}},
+		{"name":"FindReadListFileInfos","arg":{"format":"{}","snippet":"FindReadListFileInfos{${1:tex-files}}"}},
+		{"name":"ListGenerator"},
+		{"name":"ListInfos","arg":{"format":"[]","snippet":"ListInfos[${1:output file}]"}},
+		{"name":"ListInfos"},
+		{"name":"NoBottomLines","doc":"suppresses final messages of the LaTeX run, which may be nicer and more informative on the screen."},
+		{"name":"NoStopListInfos","arg":{"format":"[]","snippet":"NoStopListInfos[${1:output file}]"}},
+		{"name":"NoStopListInfos"},
+		{"name":"ReadListFileInfos","arg":{"format":"[]{}","snippet":"ReadListFileInfos[${1:txt-file}]{${2:tex-files}}"}},
+		{"name":"ReadListFileInfos","arg":{"format":"{}","snippet":"ReadListFileInfos{${1:tex-files}}"}},
+		{"name":"UseFindUtility"},
+		{"name":"VarListInfos"},
+		{"name":"WriteFileInfosTo","arg":{"format":"{}","snippet":"WriteFileInfosTo{${1:txt-file}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/myfilist#c": ["no-bot"]
+	},
+	"args": ["\\usepackage/myfilist#c"]
+}

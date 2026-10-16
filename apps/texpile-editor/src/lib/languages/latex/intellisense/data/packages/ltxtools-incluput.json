@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"ltxtools"},{"name":"catoptions"},{"name":"ltxtools-base"},{"name":"ltxkeys"},{"name":"atveryend-ltx"},{"name":"iftex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"IncludeDocument","arg":{"format":"[]{}","snippet":"IncludeDocument[${1:directory}]{${2:file}}"}},
+		{"name":"IncludeDocument","arg":{"format":"{}","snippet":"IncludeDocument{${1:file}}"}},
+		{"name":"IncludeDocument*","arg":{"format":"[]{}","snippet":"IncludeDocument*[${1:directory}]{${2:file}}"}},
+		{"name":"IncludeDocument*","arg":{"format":"{}","snippet":"IncludeDocument*{${1:file}}"}},
+		{"name":"incluput"},
+		{"name":"incluputfalse","unusual":true},
+		{"name":"incluputtrue","unusual":true},
+		{"name":"InputDocument","arg":{"format":"[]{}","snippet":"InputDocument[${1:directory}]{${2:file}}"}},
+		{"name":"InputDocument","arg":{"format":"{}","snippet":"InputDocument{${1:file}}"}},
+		{"name":"InputDocument*","arg":{"format":"[]{}","snippet":"InputDocument*[${1:directory}]{${2:file}}"}},
+		{"name":"InputDocument*","arg":{"format":"{}","snippet":"InputDocument*{${1:file}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

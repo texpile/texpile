@@ -1,0 +1,32 @@
+{
+	"macros": [
+		{"name":"chit","arg":{"format":"[]()()","snippet":"chit[${1:options}](${2:location})(${3:name})"}},
+		{"name":"chit","arg":{"format":"()()","snippet":"chit(${1:location})(${2:name})"}},
+		{"name":"chitdbglvl","unusual":true},
+		{"name":"chitgrid","arg":{"format":"{}{}{}","snippet":"chitgrid{${1:columns}}{${2:rows}}{${3:cell size}}"}},
+		{"name":"chitmark","arg":{"format":"[]{}","snippet":"chitmark[${1:options}]{${2:chit options}}"}},
+		{"name":"chitmark","arg":{"format":"{}","snippet":"chitmark{${1:chit options}}"}},
+		{"name":"chits","arg":{"format":"{}{}{}","snippet":"chits{${1:chits}}{${2:columns}}{${3:cell size}}"}},
+		{"name":"chits*","arg":{"format":"{}{}{}","snippet":"chits*{${1:chits}}{${2:columns}}{${3:cell size}}"}},
+		{"name":"dicemark","arg":{"format":"[]{}","snippet":"dicemark[${1:options}]{${2:number}}"}},
+		{"name":"dicemark","arg":{"format":"{}","snippet":"dicemark{${1:number}}"}},
+		{"name":"doublechitgrid","arg":{"format":"{}{}{}","snippet":"doublechitgrid{${1:columns}}{${2:rows}}{${3:cell size}}"}},
+		{"name":"doublechits","arg":{"format":"{}{}{}","snippet":"doublechits{${1:chits}}{${2:columns}}{${3:cell size}}"}},
+		{"name":"doublechits*","arg":{"format":"{}{}{}","snippet":"doublechits*{${1:chits}}{${2:columns}}{${3:cell size}}"}},
+		{"name":"eliminatechit","arg":{"format":"[]()","snippet":"eliminatechit[${1:opacity}](${2:location})"}},
+		{"name":"eliminatechit","arg":{"format":"()","snippet":"eliminatechit(${1:location})"}},
+		{"name":"hoob","arg":{"format":"{}{}{}{}","snippet":"hoob{${1:chits}}{${2:columns}}{${3:cell width}}{${4:row spacing}}"}},
+		{"name":"hoob*","arg":{"format":"{}{}{}{}","snippet":"hoob*{${1:chits}}{${2:columns}}{${3:cell width}}{${4:row spacing}}"}},
+		{"name":"oob","arg":{"format":"{}{}{}{}","snippet":"oob{${1:chits}}{${2:columns}}{${3:cell width}}{${4:row spacing}}"}},
+		{"name":"oob*","arg":{"format":"{}{}{}{}","snippet":"oob*{${1:chits}}{${2:columns}}{${3:cell width}}{${4:row spacing}}"}},
+		{"name":"shadechit","arg":{"format":"[]()","snippet":"shadechit[${1:opacity}](${2:location})"}},
+		{"name":"shadechit","arg":{"format":"()","snippet":"shadechit(${1:location})"}},
+		{"name":"stackchits","arg":{"format":"()(){}","snippet":"stackchits(${1:location})(${2:offset}){${3:chits}}"}},
+		{"name":"stackmark","arg":{"format":"[]","snippet":"stackmark[${1:options}]"}},
+		{"name":"stackmark"},
+		{"name":"zocmark","arg":{"format":"[]","snippet":"zocmark[${1:options}]"}},
+		{"name":"zocmark"}
+	],
+	"envs": [],
+	"keys": {}
+}

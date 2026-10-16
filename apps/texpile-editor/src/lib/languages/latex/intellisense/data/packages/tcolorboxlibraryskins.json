@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"imagename"},
+		{"name":"imagepage"},
+		{"name":"tcbcontinuedraftmode"},
+		{"name":"tcbhypernode","arg":{"format":"{}{}","snippet":"tcbhypernode{${1:macro}}{${2:node}}"}},
+		{"name":"tcbincludegraphics","arg":{"format":"[]{}","snippet":"tcbincludegraphics[${1:options}]{${2:file name}}"}},
+		{"name":"tcbincludegraphics","arg":{"format":"{}","snippet":"tcbincludegraphics{${1:file name}}"}},
+		{"name":"tcbincludepdf","arg":{"format":"[]{}","snippet":"tcbincludepdf[${1:options}]{${2:file name}}"}},
+		{"name":"tcbincludepdf","arg":{"format":"{}","snippet":"tcbincludepdf{${1:file name}}"}},
+		{"name":"tcbinterruptdraftmode"},
+		{"name":"tcbline"},
+		{"name":"tcbline*"},
+		{"name":"tcboverlaplower","unusual":true},
+		{"name":"tcbsetmacrotoheightofnode","arg":{"format":"{}{}","snippet":"tcbsetmacrotoheightofnode{${1:macro}}{${2:node}}"}},
+		{"name":"tcbsetmacrotowidthofnode","arg":{"format":"{}{}","snippet":"tcbsetmacrotowidthofnode{${1:macro}}{${2:node}}"}},
+		{"name":"tcbsettoheightofnode","arg":{"format":"{}{}","snippet":"tcbsettoheightofnode{${1:register}}{${2:node}}"}},
+		{"name":"tcbsettowidthofnode","arg":{"format":"{}{}","snippet":"tcbsettowidthofnode{${1:register}}{${2:node}}"}},
+		{"name":"tcbstartdraftmode"},
+		{"name":"tcbstopdraftmode"}
+	],
+	"envs": [
+		{"name":"tcbclipframe"},
+		{"name":"tcbclipinterior"},
+		{"name":"tcbcliptitle"},
+		{"name":"tcbinvclipframe"}
+	],
+	"keys": {}
+}

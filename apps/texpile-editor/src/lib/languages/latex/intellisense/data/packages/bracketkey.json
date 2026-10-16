@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"calc"},{"name":"xifthen"},{"name":"ifthen"},{"name":"coolstr"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"altindent","unusual":true},
+		{"name":"keylabelwidth","unusual":true},
+		{"name":"keytitle","arg":{"format":"[]{}","snippet":"keytitle[${1}]{${2}}"}},
+		{"name":"keytitle","arg":{"format":"{}","snippet":"keytitle{${1}}"}},
+		{"name":"leadONE","arg":{"format":"{}{}","snippet":"leadONE{${1}}{${2}}"}},
+		{"name":"leadTWO"},
+		{"name":"name","arg":{"format":"[]{}{}{}","snippet":"name[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"name","arg":{"format":"{}{}{}","snippet":"name{${1}}{${2}}{${3}}"}},
+		{"name":"thebackindex","unusual":true},
+		{"name":"thekey","unusual":true}
+	],
+	"envs": [
+		{"name":"key","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

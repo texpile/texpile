@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"pgothfamily"},
+		{"name":"textpgoth","arg":{"format":"{}","snippet":"textpgoth{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

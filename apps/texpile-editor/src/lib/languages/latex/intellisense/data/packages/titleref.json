@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"currenttitle","doc":"The title of the current section is also available without \\label: use the command \\currenttitle to generate a \\titleref to the current section."},
+		{"name":"theTitleReference","arg":{"format":"{}{}","snippet":"theTitleReference{${1}}{${2}}"},"doc":"The format of the title reference is controlled by the command \\theTitleReference, which can be redefined with \\renewcommand."},
+		{"name":"titleref","arg":{"format":"{}","snippet":"titleref{${1}}"},"doc":"You can use \\titleref just as you use \\ref and \\pageref. Titles for numbered sectioning units and for floats with captions are the same as the respective toc, lof, or lot entry (even when no toc, or whatever, is printed)."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/titleref#c": ["nostar","usetoc"]
+	},
+	"args": ["\\usepackage/titleref#c"]
+}

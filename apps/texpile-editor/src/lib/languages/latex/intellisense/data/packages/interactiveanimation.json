@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"keyval","engines":["pdflatex"]}],
+	"macros": [
+		{"name":"controlbutton","arg":{"format":"[]{}{}{}","snippet":"controlbutton[${1:sequence file}]{${2:caption}}{${3:target frame}}{${4:options}}"},"doc":"Control buttons are inserted, using the command \\controlbutton inside aframe."},
+		{"name":"controlbutton","arg":{"format":"{}{}{}","snippet":"controlbutton{${1:caption}}{${2:target frame}}{${3:options}}"},"doc":"Control buttons are inserted, using the command \\controlbutton inside aframe."}
+	],
+	"envs": [
+		{"name":"aframe","arg":{"format":"{}{}","snippet":"{${1:frame name}}{${2:image file}}"}},
+		{"name":"animation","arg":{"format":"{}{}","snippet":"{${1:width}}{${2:height}}"},"doc":"Horizontal and vertical dimensions of the animation are scaled independently to fit <width> and <height>."}
+	],
+	"keys": {}
+}

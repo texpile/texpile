@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"l3keys2e"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"newunicodechar","engines":["lualatex","xelatex"]}],
+	"macros": [
+		{"name":"usym","arg":{"format":"{}","snippet":"usym{${1}}"},"doc":"Bindet das Symbol mit dem gegebenen Code in das Dokument ein."},
+		{"name":"usymH","arg":{"format":"{}{}","snippet":"usymH{${1}}{${2}}"},"doc":"Bindet das Symbol mit dem gegebenen Code in das Dokument ein. Die Größe wird an die angegebene Höhe angepasst."},
+		{"name":"usymW","arg":{"format":"{}{}","snippet":"usymW{${1}}{${2}}"},"doc":"Bindet das Symbol mit dem gegebenen Code in das Dokument ein. Die Größe wird an die angegebene Breite angepasst."}
+	],
+	"envs": [],
+	"keys": {}
+}

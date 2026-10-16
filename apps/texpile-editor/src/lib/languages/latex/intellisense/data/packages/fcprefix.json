@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"keyval"}],
+	"macros": [
+		{"name":"latinnumeralstring","arg":{"format":"[]{}","snippet":"latinnumeralstring[${1:prefix options}]{${2:counter}}"}},
+		{"name":"latinnumeralstring","arg":{"format":"{}","snippet":"latinnumeralstring{${1:counter}}"}},
+		{"name":"latinnumeralstringnum","arg":{"format":"[]{}","snippet":"latinnumeralstringnum[${1:prefix options}]{${2:number}}"}},
+		{"name":"latinnumeralstringnum","arg":{"format":"{}","snippet":"latinnumeralstringnum{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"titlesec"},{"name":"fancyhdr"},{"name":"xcolor"},{"name":"calligra"},{"name":"pifont"},{"name":"marvosym"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"xparse"},{"name":"geometry"},{"name":"ifvtex"}],
+	"macros": [
+		{"name":"mycfoot","arg":{"format":"{}","snippet":"mycfoot{${1:text}}"},"doc":"\\mycfoot {⟨text⟩} adds ⟨text⟩ to the page footer."},
+		{"name":"mysectionTitleFormat","arg":{"format":"[][]","snippet":"mysectionTitleFormat[${1:title rule color above}][${2:title rule color below}]"}},
+		{"name":"mysectionTitleFormat"},
+		{"name":"mysectionTitleSpacing","arg":{"format":"[][][]","snippet":"mysectionTitleSpacing[${1:left}][${2:before separation}][${3:after separation}]"}},
+		{"name":"mysectionTitleSpacing"}
+	],
+	"envs": [
+		{"name":"myitemize"}
+	],
+	"keys": {}
+}

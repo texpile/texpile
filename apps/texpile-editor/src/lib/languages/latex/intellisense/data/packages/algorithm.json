@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"float"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"listalgorithmname"},
+		{"name":"listofalgorithms"}
+	],
+	"envs": [
+		{"name":"algorithm","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."},
+		{"name":"algorithm","doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."},
+		{"name":"algorithm*","arg":{"format":"[]","snippet":"[${1:placement}]"},"doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."},
+		{"name":"algorithm*","doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."}
+	],
+	"keys": {
+		"\\usepackage/algorithm#c": ["boxed","chapter","nothing","part","plain","ruled","section","subsection","subsubsection"]
+	},
+	"args": ["\\usepackage/algorithm#c"]
+}

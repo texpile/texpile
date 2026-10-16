@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"DOUBLE","unusual":true},
+		{"name":"SEM","arg":{"format":"{}","snippet":"SEM{${1}}"}},
+		{"name":"SEM*","arg":{"format":"{}","snippet":"SEM*{${1}}"}},
+		{"name":"VID"},
+		{"name":"VID*"},
+		{"name":"VK"},
+		{"name":"VKOMM"}
+	],
+	"envs": [],
+	"keys": {}
+}

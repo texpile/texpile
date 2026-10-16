@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplots"}],
+	"macros": [
+		{"name":"addlegendtitle","arg":{"format":"[]{}","snippet":"addlegendtitle[${1:options}]{${2:text}}"}},
+		{"name":"addlegendtitle","arg":{"format":"{}","snippet":"addlegendtitle{${1:text}}"}},
+		{"name":"CreateLineStyleCycleList","arg":{"format":"{}{}","snippet":"CreateLineStyleCycleList{${1:cycle list}}{${2:count}}"}},
+		{"name":"CreateSpacedColormapCycleList","arg":{"format":"{}{}{}","snippet":"CreateSpacedColormapCycleList{${1:cycle list}}{${2:colormap}}{${3:count}}"}},
+		{"name":"cyclelistshift"},
+		{"name":"LineStyleCycleLength"},
+		{"name":"LineStyleDashLength"},
+		{"name":"LineStyleDotLength"},
+		{"name":"LineStyleGapLength"},
+		{"name":"RainbowCycleLength","doc":"\\RainbowCycleLength controls how many colors are generated."},
+		{"name":"RainbowCyclePositions","doc":"\\RainbowCyclePositions is set to the comma-separated list of generated colormap coordinates for logging, inspection, or typesetting."}
+	],
+	"envs": [],
+	"keys": {}
+}

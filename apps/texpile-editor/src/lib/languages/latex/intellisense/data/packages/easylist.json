@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"Activate"},
+		{"name":"Ampersandtrue","unusual":true},
+		{"name":"Attrue","unusual":true},
+		{"name":"Deactivate"},
+		{"name":"ifAmpersand","unusual":true},
+		{"name":"ifAt","unusual":true},
+		{"name":"ifPilcrow","unusual":true},
+		{"name":"ifSharp","unusual":true},
+		{"name":"ListProperties","arg":{"format":"()","snippet":"ListProperties(${1:key=value list})"}},
+		{"name":"NewList","arg":{"format":"()","snippet":"NewList(${1:key=value list})"}},
+		{"name":"Pilcrowtrue","unusual":true},
+		{"name":"Sharptrue","unusual":true}
+	],
+	"envs": [
+		{"name":"easylist","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"easylist"}
+	],
+	"keys": {
+		"\\usepackage/easylist#c": ["ampersand","at","pilcrow","sharp"]
+	},
+	"args": ["\\usepackage/easylist#c"]
+}

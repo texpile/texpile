@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"feynmp"},{"name":"graphics"},{"name":"trig"},{"name":"iftex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/feynmp-auto#c": ["force"]
+	},
+	"args": ["\\usepackage/feynmp-auto#c"]
+}

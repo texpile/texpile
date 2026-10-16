@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"}],
+	"macros": [
+		{"name":"DeclareTensorsCmd","arg":{"format":"{}[]","snippet":"DeclareTensorsCmd{${1:command}}[${2:options}]"}},
+		{"name":"DeclareTensorsCmd","arg":{"format":"{}","snippet":"DeclareTensorsCmd{${1:command}}"}},
+		{"name":"MakeBoldUppercase","arg":{"format":"{}","snippet":"MakeBoldUppercase{${1}}"}},
+		{"name":"MakeUpperBB","arg":{"format":"{}","snippet":"MakeUpperBB{${1}}"}},
+		{"name":"MakeUpperCal","arg":{"format":"{}","snippet":"MakeUpperCal{${1}}"}},
+		{"name":"MakeUpperFrak","arg":{"format":"{}","snippet":"MakeUpperFrak{${1}}"}},
+		{"name":"overdoubleleftrightarrow","arg":{"format":"{}","snippet":"overdoubleleftrightarrow{${1}}"}},
+		{"name":"overrightdoubleleftrightarrow","arg":{"format":"{}","snippet":"overrightdoubleleftrightarrow{${1}}"}},
+		{"name":"overrightleftrightarrow","arg":{"format":"{}","snippet":"overrightleftrightarrow{${1}}"}},
+		{"name":"tensor","arg":{"format":"[]{}{}[]","snippet":"tensor[${1:options}]{${2:rank}}{${3:symbol}}[${4:indices}]"}},
+		{"name":"tensor","arg":{"format":"{}{}","snippet":"tensor{${1:rank}}{${2:symbol}}"}},
+		{"name":"tensor*","arg":{"format":"[]{}{}[]","snippet":"tensor*[${1:options}]{${2:rank}}{${3:symbol}}[${4:indices}]"}},
+		{"name":"tensor*","arg":{"format":"{}{}","snippet":"tensor*{${1:rank}}{${2:symbol}}"}},
+		{"name":"tensorsset","arg":{"format":"{}[]","snippet":"tensorsset{${1:command}}[${2:options}]"}},
+		{"name":"tensorsset","arg":{"format":"{}","snippet":"tensorsset{${1:command}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

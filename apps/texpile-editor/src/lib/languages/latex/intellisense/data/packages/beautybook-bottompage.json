@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"ean13isbn"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"bottomimage","arg":{"format":"{}","snippet":"bottomimage{${1:image file}}"}},
+		{"name":"ISBNcode","arg":{"format":"{}","snippet":"ISBNcode{${1:ISBN barcode}}"}},
+		{"name":"makebottomcover"},
+		{"name":"summary","arg":{"format":"{}","snippet":"summary{${1:summary text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

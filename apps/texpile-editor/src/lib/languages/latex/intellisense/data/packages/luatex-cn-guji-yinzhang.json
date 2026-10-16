@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"YinZhang","arg":{"format":"[]{}","snippet":"YinZhang[${1:options}]{${2:image file}}"}},
+		{"name":"YinZhang","arg":{"format":"{}","snippet":"YinZhang{${1:image file}}"}},
+		{"name":"yinzhangSetup","arg":{"format":"{}","snippet":"yinzhangSetup{${1}}"},"unusual":true},
+		{"name":"印章","arg":{"format":"[]{}","snippet":"印章[${1:options}]{${2:image file}}"},"doc":"The \\印章 command adds images like collection marks or personal seals to the page, supporting absolute positioning and opacity."},
+		{"name":"印章","arg":{"format":"{}","snippet":"印章{${1:image file}}"},"doc":"The \\印章 command adds images like collection marks or personal seals to the page, supporting absolute positioning and opacity."}
+	],
+	"envs": [],
+	"keys": {}
+}

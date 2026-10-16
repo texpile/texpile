@@ -1,0 +1,47 @@
+{
+	"deps": [{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"lpeq","arg":{"format":"[]{}{}","snippet":"lpeq[${1:label}]{${2:constraint}}{${3:for all}}"}},
+		{"name":"lpeq","arg":{"format":"{}{}","snippet":"lpeq{${1:constraint}}{${2:for all}}"}},
+		{"name":"lpeq*","arg":{"format":"[]{}{}","snippet":"lpeq*[${1:label}]{${2:constraint}}{${3:for all}}"}},
+		{"name":"lpeq*","arg":{"format":"{}{}","snippet":"lpeq*{${1:constraint}}{${2:for all}}"}},
+		{"name":"lpforall","arg":{"format":"{}","snippet":"lpforall{${1}}"}},
+		{"name":"lpindent"},
+		{"name":"lplabel","arg":{"format":"{}","snippet":"lplabel{${1:label name}}"}},
+		{"name":"lpnewline"},
+		{"name":"lpnewsubeq","arg":{"format":"[]{}{}","snippet":"lpnewsubeq[${1:label}]{${2:constraint}}{${3:for all}}"}},
+		{"name":"lpnewsubeq","arg":{"format":"{}{}","snippet":"lpnewsubeq{${1:constraint}}{${2:for all}}"}},
+		{"name":"lpnewsubeq*","arg":{"format":"[]{}{}","snippet":"lpnewsubeq*[${1:label}]{${2:constraint}}{${3:for all}}"}},
+		{"name":"lpnewsubeq*","arg":{"format":"{}{}","snippet":"lpnewsubeq*{${1:constraint}}{${2:for all}}"}},
+		{"name":"lpobj","arg":{"format":"[]{}{}","snippet":"lpobj[${1:label}]{${2:min/max}}{${3:objective function}}"}},
+		{"name":"lpobj","arg":{"format":"{}{}","snippet":"lpobj{${1:min/max}}{${2:objective function}}"}},
+		{"name":"lpobj*","arg":{"format":"[]{}{}","snippet":"lpobj*[${1:label}]{${2:min/max}}{${3:objective function}}"}},
+		{"name":"lpobj*","arg":{"format":"{}{}","snippet":"lpobj*{${1:min/max}}{${2:objective function}}"}},
+		{"name":"lpsubeq","arg":{"format":"[]{}{}","snippet":"lpsubeq[${1:label}]{${2:constraint}}{${3:for all}}"}},
+		{"name":"lpsubeq","arg":{"format":"{}{}","snippet":"lpsubeq{${1:constraint}}{${2:for all}}"}},
+		{"name":"lpsubeq*","arg":{"format":"[]{}{}","snippet":"lpsubeq*[${1:label}]{${2:constraint}}{${3:for all}}"}},
+		{"name":"lpsubeq*","arg":{"format":"{}{}","snippet":"lpsubeq*{${1:constraint}}{${2:for all}}"}},
+		{"name":"lpsubeqtag"},
+		{"name":"lpsubjectto"},
+		{"name":"lpeq","arg":{"format":"[]{}","snippet":"lpeq[${1:label}]{${2:constraint}}"},"if":"noforall"},
+		{"name":"lpeq","arg":{"format":"{}","snippet":"lpeq{${1:constraint}}"},"if":"noforall"},
+		{"name":"lpeq*","arg":{"format":"[]{}","snippet":"lpeq*[${1:label}]{${2:constraint}}"},"if":"noforall"},
+		{"name":"lpeq*","arg":{"format":"{}","snippet":"lpeq*{${1:constraint}}"},"if":"noforall"},
+		{"name":"lpnewsubeq","arg":{"format":"[]{}","snippet":"lpnewsubeq[${1:label}]{${2:constraint}}"},"if":"noforall"},
+		{"name":"lpnewsubeq","arg":{"format":"{}","snippet":"lpnewsubeq{${1:constraint}}"},"if":"noforall"},
+		{"name":"lpnewsubeq*","arg":{"format":"[]{}","snippet":"lpnewsubeq*[${1:label}]{${2:constraint}}"},"if":"noforall"},
+		{"name":"lpnewsubeq*","arg":{"format":"{}","snippet":"lpnewsubeq*{${1:constraint}}"},"if":"noforall"},
+		{"name":"lpsubeq","arg":{"format":"[]{}","snippet":"lpsubeq[${1:label}]{${2:constraint}}"},"if":"noforall"},
+		{"name":"lpsubeq","arg":{"format":"{}","snippet":"lpsubeq{${1:constraint}}"},"if":"noforall"},
+		{"name":"lpsubeq*","arg":{"format":"[]{}","snippet":"lpsubeq*[${1:label}]{${2:constraint}}"},"if":"noforall"},
+		{"name":"lpsubeq*","arg":{"format":"{}","snippet":"lpsubeq*{${1:constraint}}"},"if":"noforall"}
+	],
+	"envs": [
+		{"name":"lpformulation","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"lpformulation"}
+	],
+	"keys": {
+		"\\usepackage/lpform#c": ["alignedforall","noforall"]
+	},
+	"args": ["\\usepackage/lpform#c"]
+}

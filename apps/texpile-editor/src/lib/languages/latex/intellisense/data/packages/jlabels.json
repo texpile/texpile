@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"calc"},{"name":"ifthen"},{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"beginjlabels","arg":{"format":"[]","snippet":"beginjlabels[${1:fill style}]"},"doc":"The optional argument of the \\beginjlabels command determines whether the page is filled by columns (opfs = c) or rows (opfs = r)."},
+		{"name":"beginjlabels","doc":"The optional argument of the \\beginjlabels command determines whether the page is filled by columns (opfs = c) or rows (opfs = r)."},
+		{"name":"endjlabels"},
+		{"name":"jlabel","arg":{"format":"[]{}","snippet":"jlabel[${1:copies}]{${2:alias}}"}},
+		{"name":"jlabel","arg":{"format":"{}","snippet":"jlabel{${1:alias}}"}},
+		{"name":"jlabeljustify"},
+		{"name":"jlabelLengths","arg":{"format":"[]{}{}{}{}{}{}{}{}","snippet":"jlabelLengths[${1:unit}]{${2:left margin}}{${3:top margin}}{${4:width}}{${5:height}}{${6:rows}}{${7:columns}}{${8:horizontal gap}}{${9:vertical gap}}"},"doc":"The \\jlabelLengths command sets the page layout as necessary."},
+		{"name":"jlabelLengths","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"jlabelLengths{${1:left margin}}{${2:top margin}}{${3:width}}{${4:height}}{${5:rows}}{${6:columns}}{${7:horizontal gap}}{${8:vertical gap}}"},"doc":"The \\jlabelLengths command sets the page layout as necessary."},
+		{"name":"jlabelt","arg":{"format":"[]{}","snippet":"jlabelt[${1:copies}]{${2:address}}"},"doc":"The optional argument of the \\jlabelt command is the number of times the label is printed and its default value is 1."},
+		{"name":"jlabelt","arg":{"format":"{}","snippet":"jlabelt{${1:address}}"},"doc":"The optional argument of the \\jlabelt command is the number of times the label is printed and its default value is 1."},
+		{"name":"myjlabel","arg":{"format":"{}{}","snippet":"myjlabel{${1:alias}}{${2:address}}"},"doc":"The command \\myjlabel{alias}{address} allows \\jlabel[opint]{alias} to be used in place of \\jlabelt[opint]{address}."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"CJKutf8","engines":["pdflatex"]},{"name":"ifpdf","engines":["pdflatex"]},{"name":"iftex","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"CJK","engines":["pdflatex"]},{"name":"MULEenc","engines":["pdflatex"]},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"disablepinyin"},
+		{"name":"disablepinyin*"},
+		{"name":"enablepinyin"},
+		{"name":"pinyin","arg":{"format":"[]{}","snippet":"pinyin[${1:options}]{${2:text}}"}},
+		{"name":"pinyin","arg":{"format":"{}","snippet":"pinyin{${1:text}}"}},
+		{"name":"setpinyin","arg":{"format":"{}{}","snippet":"setpinyin{${1:character}}{${2:pinyin}}"}},
+		{"name":"xpinyin","arg":{"format":"[]{}","snippet":"xpinyin[${1:options}]{${2:text}}"}},
+		{"name":"xpinyin","arg":{"format":"{}","snippet":"xpinyin{${1:text}}"}},
+		{"name":"xpinyin*","arg":{"format":"[]{}","snippet":"xpinyin*[${1:options}]{${2:text}}"}},
+		{"name":"xpinyin*","arg":{"format":"{}","snippet":"xpinyin*{${1:text}}"}},
+		{"name":"xpinyininitial","arg":{"format":"{}","snippet":"xpinyininitial{${1:text}}"}},
+		{"name":"xpinyininitial*","arg":{"format":"{}","snippet":"xpinyininitial*{${1:text}}"}},
+		{"name":"xpinyinsetup","arg":{"format":"{}","snippet":"xpinyinsetup{${1:key=value}}"}},
+		{"name":"xpinyinshengmu","arg":{"format":"{}","snippet":"xpinyinshengmu{${1:text}}"}},
+		{"name":"xpinyinshengmu*","arg":{"format":"{}","snippet":"xpinyinshengmu*{${1:text}}"}},
+		{"name":"xpinyinvalue","arg":{"format":"{}","snippet":"xpinyinvalue{${1:text}}"}},
+		{"name":"xpinyinvalue*","arg":{"format":"{}","snippet":"xpinyinvalue*{${1:text}}"}},
+		{"name":"xpinyinyunmu","arg":{"format":"{}","snippet":"xpinyinyunmu{${1:text}}"}},
+		{"name":"xpinyinyunmu*","arg":{"format":"{}","snippet":"xpinyinyunmu*{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

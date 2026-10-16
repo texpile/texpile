@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"array"},{"name":"longtable"}],
+	"macros": [
+		{"name":"assume","arg":{"format":"{}{}{}","snippet":"assume{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"assume*","arg":{"format":"{}{}{}","snippet":"assume*{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"conclude","arg":{"format":"[]{}{}{}","snippet":"conclude[${1:number}]{${2:label}}{${3:formula}}{${4:comment}}"}},
+		{"name":"conclude","arg":{"format":"{}{}{}","snippet":"conclude{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"conclude*","arg":{"format":"[]{}{}{}","snippet":"conclude*[${1:number}]{${2:label}}{${3:formula}}{${4:comment}}"}},
+		{"name":"conclude*","arg":{"format":"{}{}{}","snippet":"conclude*{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"derivskip","doc":"The default space (8pt) between lines in a derivation."},
+		{"name":"done","arg":{"format":"[]","snippet":"done[${1:number}]"},"doc":"The \\done command (\\done[⟨number⟩]) can be used to close a assumption and/or introduction without mentioning why."},
+		{"name":"done","doc":"The \\done command (\\done[⟨number⟩]) can be used to close a assumption and/or introduction without mentioning why."},
+		{"name":"inlcmnts","doc":"Command to switch inline comments explicitly on (and by that, overriding and forgetting the default determined by the absence or presence of the inlcmnts package option)."},
+		{"name":"introduce","arg":{"format":"{}{}{}","snippet":"introduce{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"introduce*","arg":{"format":"{}{}{}","snippet":"introduce*{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"introsymb","doc":"The symbol used as variable introduction prefix."},
+		{"name":"noinlcmnts","doc":"Command to switch inline comments explicitly off (and by that, overriding and forgetting the default determined by the absence or presence of the inlcmnts package option)."},
+		{"name":"skipsteps","arg":{"format":"{}{}{}","snippet":"skipsteps{${1:number}}{${2:formula}}{${3:comment}}"}},
+		{"name":"skipsteps*","arg":{"format":"{}{}","snippet":"skipsteps*{${1:formula}}{${2:comment}}"},"doc":"For skipping an unknown number of steps in a manual numbered derivation, the command \\skipsteps*{⟨formula⟩}{⟨comment⟩} can be used."},
+		{"name":"step","arg":{"format":"{}{}{}","snippet":"step{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"step*","arg":{"format":"{}{}{}","snippet":"step*{${1:label}}{${2:formula}}{${3:comment}}"}},
+		{"name":"theinlcmnt","arg":{"format":"{}","snippet":"theinlcmnt{${1:comment}}"},"doc":"The command used to format inline comments (if enabled)."},
+		{"name":"thestepcount","doc":"This is the command used to generate a step number label (used by autonumbering)."},
+		{"name":"thesteplabel","arg":{"format":"{}","snippet":"thesteplabel{${1:number}}"},"doc":"Command used to generate a customized step label (used by manual numbering)."}
+	],
+	"envs": [
+		{"name":"flagderiv","arg":{"format":"[]","snippet":"[${1:namespace}]"},"doc":"Basic derivations are written using an intuitive command sequence placed in the flagderiv environment."},
+		{"name":"flagderiv","doc":"Basic derivations are written using an intuitive command sequence placed in the flagderiv environment."},
+		{"name":"flagderiv*","arg":{"format":"[]","snippet":"[${1:namespace}]"},"doc":"The flagderiv* environment is almost the same as flagderiv with the only difference that the resulting derivation will and can not be split across pages."},
+		{"name":"flagderiv*","doc":"The flagderiv* environment is almost the same as flagderiv with the only difference that the resulting derivation will and can not be split across pages."}
+	],
+	"keys": {
+		"\\usepackage/flagderiv#c": ["inlcmnts"]
+	},
+	"args": ["\\usepackage/flagderiv#c"]
+}

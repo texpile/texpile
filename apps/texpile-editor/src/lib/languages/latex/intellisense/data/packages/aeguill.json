@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ae"},{"name":"latexsym","if":"cm"}],
+	"macros": [
+		{"name":"aeguills","unusual":true},
+		{"name":"ecguills","arg":{"format":"{}","snippet":"ecguills{${1}}"},"unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/aeguill#c": ["cm","cyr","ec","lm","pl"]
+	},
+	"args": ["\\usepackage/aeguill#c"]
+}

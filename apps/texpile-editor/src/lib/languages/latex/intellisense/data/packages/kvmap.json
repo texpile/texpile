@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"xparse"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"bundle","arg":{"format":"[]{}{}{}{}","snippet":"bundle[${1}]{${2}}{${3}}{${4}}{${5}}"},"doc":"This function draws a rectangle (bundle) around the area specified by the two corners."},
+		{"name":"bundle","arg":{"format":"{}{}{}{}","snippet":"bundle{${1}}{${2}}{${3}}{${4}}"},"doc":"This function draws a rectangle (bundle) around the area specified by the two corners."},
+		{"name":"kvlist","arg":{"format":"{}{}{}{}","snippet":"kvlist{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"kvmapsetup","arg":{"format":"{}","snippet":"kvmapsetup{${1}}"},"doc":"This function sets key-value pairs."}
+	],
+	"envs": [
+		{"name":"kvmap","arg":{"format":"[]","snippet":"[${1:key-value pairs}]"}},
+		{"name":"kvmap"},
+		{"name":"kvmatrix","arg":{"format":"{}","snippet":"{${1:variables}}"},"doc":"This environment is a semantic interface to tikzpicutre which should have a kvmatrix or \\kvlist as first child element."}
+	],
+	"keys": {}
+}

@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"dinfer","arg":{"format":"{}{}","snippet":"dinfer{${1:conclusion}}{${2:premises}}"}},
+		{"name":"hin"},
+		{"name":"hinsymb"},
+		{"name":"indanf","arg":{"format":"{}{}","snippet":"indanf{${1:variable}}{${2:start value}}"}},
+		{"name":"indanfs"},
+		{"name":"indende","arg":{"format":"{}","snippet":"indende{${1:induction kind}}"}},
+		{"name":"indschritt"},
+		{"name":"indvor"},
+		{"name":"proofend"},
+		{"name":"proofendedtrue","unusual":true},
+		{"name":"proofendsymbol"},
+		{"name":"prooflabel","arg":{"format":"{}","snippet":"prooflabel{${1:label}}"}},
+		{"name":"rueck"},
+		{"name":"ruecksymb"},
+		{"name":"sethin"},
+		{"name":"sethinsymb"},
+		{"name":"setrueck"},
+		{"name":"setruecksymb"},
+		{"name":"sind"},
+		{"name":"sindende"},
+		{"name":"ssethin"},
+		{"name":"ssethinsymb"},
+		{"name":"ssetrueck"},
+		{"name":"ssetruecksymb"},
+		{"name":"vind","arg":{"format":"{}{}","snippet":"vind{${1}}{${2}}"}},
+		{"name":"vindende"}
+	],
+	"envs": [
+		{"name":"beweis"},
+		{"name":"Beweis"},
+		{"name":"equivproof"},
+		{"name":"equivproof*"},
+		{"name":"proof"},
+		{"name":"Proof"},
+		{"name":"proof*"},
+		{"name":"setequalproof"},
+		{"name":"setequalproof*"}
+	],
+	"keys": {}
+}

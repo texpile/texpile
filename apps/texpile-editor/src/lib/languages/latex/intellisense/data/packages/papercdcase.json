@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"calc"}],
+	"macros": [
+		{"name":"docdate","unusual":true},
+		{"name":"docversion","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"papercdcase","arg":{"format":"[]","snippet":"papercdcase[${1:size in mm}]"},"doc":"This command will produce the folding scheme, consisting of • solid lines, • dashed lines, and • numbers."},
+		{"name":"papercdcase","doc":"This command will produce the folding scheme, consisting of • solid lines, • dashed lines, and • numbers."},
+		{"name":"papercdcase*","arg":{"format":"[]","snippet":"papercdcase*[${1:size in mm}]"},"doc":"This command will produce the folding scheme, consisting of • solid lines, • dashed lines, and • numbers."},
+		{"name":"papercdcase*","doc":"This command will produce the folding scheme, consisting of • solid lines, • dashed lines, and • numbers."},
+		{"name":"setcdbackmatter","arg":{"format":"{}","snippet":"setcdbackmatter{${1}}"}},
+		{"name":"setcdlatchmatter","arg":{"format":"{}","snippet":"setcdlatchmatter{${1}}"}},
+		{"name":"setcdpouchmatter","arg":{"format":"{}","snippet":"setcdpouchmatter{${1}}"}},
+		{"name":"setcdspinematter","arg":{"format":"{}","snippet":"setcdspinematter{${1}}"},"doc":"The spine matter box is centered horizontally and vertically on the spine of the CD case. Typically, this box holds the CD title and the artist for an audio CD."}
+	],
+	"envs": [],
+	"keys": {}
+}

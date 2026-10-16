@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"docdate","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"makenameindex"},
+		{"name":"name","arg":{"format":"[]{}","snippet":"name[${1:index entry}]{${2:name}}"}},
+		{"name":"name","arg":{"format":"{}","snippet":"name{${1:name}}"}},
+		{"name":"name*","arg":{"format":"[]{}","snippet":"name*[${1:index entry}]{${2:name}}"}},
+		{"name":"name*","arg":{"format":"{}","snippet":"name*{${1:name}}"}},
+		{"name":"namefont","arg":{"format":"{}","snippet":"namefont{${1:font}}"}},
+		{"name":"nameindex","arg":{"format":"{}","snippet":"nameindex{${1:name}}"}},
+		{"name":"printnameindex"},
+		{"name":"thenameindex","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

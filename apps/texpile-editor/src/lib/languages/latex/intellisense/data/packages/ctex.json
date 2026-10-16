@@ -1,583 +1,69 @@
 {
-  "deps": [
-    {
-      "name": "zhnumber"
-    },
-    {
-      "name": "fontspec"
-    }
-  ],
-  "macros": [
-    {
-      "name": "CTEXnumberline",
-      "if": "heading",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "CTEXnumberline{${1:arg}}"
-      }
-    },
-    {
-      "name": "CTEXnumberline",
-      "if": "heading=true",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "CTEXnumberline{${1:arg}}"
-      }
-    },
-    {
-      "name": "songti"
-    },
-    {
-      "name": "heiti"
-    },
-    {
-      "name": "fangsong"
-    },
-    {
-      "name": "kaishu"
-    },
-    {
-      "name": "lishu"
-    },
-    {
-      "name": "youyuan"
-    },
-    {
-      "name": "yahei"
-    },
-    {
-      "name": "pingfang"
-    },
-    {
-      "name": "ctexset",
-      "arg": {
-        "format": "{}",
-        "snippet": "ctexset{${1:options%keyvals}}",
-        "keys": [
-          "\\ctexset,\\usepackage/ctex#c",
-          "\\ctexset"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "CTEXthepart",
-      "unusual": true
-    },
-    {
-      "name": "CTEXthechapter",
-      "unusual": true
-    },
-    {
-      "name": "CTEXthesection",
-      "unusual": true
-    },
-    {
-      "name": "CTEXthesubsection",
-      "unusual": true
-    },
-    {
-      "name": "CTEXthesubsubsection",
-      "unusual": true
-    },
-    {
-      "name": "CTEXtheparagraph",
-      "unusual": true
-    },
-    {
-      "name": "CTEXthesubparagraph",
-      "unusual": true
-    },
-    {
-      "name": "CTEXifname",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "CTEXifname{${1:contents with name}}{${2:contents with name}}"
-      }
-    },
-    {
-      "name": "zihao",
-      "arg": {
-        "format": "{}",
-        "snippet": "zihao{${1:number}}"
-      }
-    },
-    {
-      "name": "ziju",
-      "arg": {
-        "format": "{}",
-        "snippet": "ziju{${1:factor}}"
-      }
-    },
-    {
-      "name": "ccwd"
-    },
-    {
-      "name": "chinese",
-      "arg": {
-        "format": "{}",
-        "snippet": "chinese{${1:counter}}"
-      }
-    },
-    {
-      "name": "CTEXnumber",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "CTEXnumber{${1:cmd}}{${2:number}}"
-      }
-    },
-    {
-      "name": "CTEXdigits",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "CTEXdigits{${1:cmd}}{${2:number}}"
-      }
-    },
-    {
-      "name": "CTeX",
-      "unusual": true
-    },
-    {
-      "name": "addCJKfontfeatures*",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "addCJKfontfeatures*[${2:blocks}]{${1:font features%keyvals}}"
-      }
-    },
-    {
-      "name": "addCJKfontfeatures*",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "addCJKfontfeatures*{${1:font features%keyvals}}"
-      }
-    },
-    {
-      "name": "addCJKfontfeatures",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "addCJKfontfeatures[${2:blocks}]{${1:font features%keyvals}}"
-      }
-    },
-    {
-      "name": "addCJKfontfeatures",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "addCJKfontfeatures{${1:font features%keyvals}}"
-      }
-    },
-    {
-      "name": "CJKfontspec",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "CJKfontspec[${2:font features%keyvals}]{${1:font name}}"
-      }
-    },
-    {
-      "name": "CJKfontspec",
-      "arg": {
-        "format": "{}",
-        "snippet": "CJKfontspec{${1:font name}}"
-      }
-    },
-    {
-      "name": "CJKfontspec",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]",
-        "snippet": "CJKfontspec{${1:font name}}[${2:font features}]"
-      }
-    },
-    {
-      "name": "defaultCJKfontfeatures",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "defaultCJKfontfeatures{${1:font features%keyvals}}"
-      }
-    },
-    {
-      "name": "newCJKfontfamily",
-      "arg": {
-        "format": "[]{}[]{}",
-        "snippet": "newCJKfontfamily[${3:family}]{${1:cmd}}[${4:font features%keyvals}]{${2:font name}}"
-      }
-    },
-    {
-      "name": "newCJKfontfamily",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "newCJKfontfamily[${3:family}]{${1:cmd}}{${2:font name}}"
-      }
-    },
-    {
-      "name": "newCJKfontfamily",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "newCJKfontfamily{${1:cmd}}[${3:font features%keyvals}]{${2:font name}}"
-      }
-    },
-    {
-      "name": "newCJKfontfamily",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "newCJKfontfamily{${1:cmd}}{${2:font name}}"
-      }
-    },
-    {
-      "name": "setCJKfamilyfont",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "setCJKfamilyfont{${1:family}}[${3:font features%keyvals}]{${2:font name}}"
-      }
-    },
-    {
-      "name": "setCJKfamilyfont",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "setCJKfamilyfont{${1:family}}{${2:font name}}"
-      }
-    },
-    {
-      "name": "setCJKfamilyfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}[]",
-        "snippet": "setCJKfamilyfont{${1:family}}{${2:font name}}[${3:font features}]"
-      }
-    },
-    {
-      "name": "setCJKmainfont",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "setCJKmainfont[${2:font features%keyvals}]{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKmainfont",
-      "arg": {
-        "format": "{}",
-        "snippet": "setCJKmainfont{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKmainfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]",
-        "snippet": "setCJKmainfont{${1:font name}}[${2:font features}]"
-      }
-    },
-    {
-      "name": "setCJKmathfont",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "setCJKmathfont[${2:font features%keyvals}]{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKmathfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "setCJKmathfont{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKmathfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]",
-        "snippet": "setCJKmathfont{${1:font name}}[${2:font features}]"
-      }
-    },
-    {
-      "name": "setCJKmonofont",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "setCJKmonofont[${2:font features%keyvals}]{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKmonofont",
-      "arg": {
-        "format": "{}",
-        "snippet": "setCJKmonofont{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKmonofont",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]",
-        "snippet": "setCJKmonofont{${1:font name}}[${2:font features}]"
-      }
-    },
-    {
-      "name": "setCJKsansfont",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "setCJKsansfont[${2:font features%keyvals}]{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKsansfont",
-      "arg": {
-        "format": "{}",
-        "snippet": "setCJKsansfont{${1:font name}}"
-      }
-    },
-    {
-      "name": "setCJKsansfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]",
-        "snippet": "setCJKsansfont{${1:font name}}[${2:font features}]"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/ctex#c": [
-      "GBK",
-      "UTF8",
-      "zhmap=${1|true,false,zhmCJK|}",
-      "zihao=${1|-4,5,false|}",
-      "heading",
-      "sub3section",
-      "sub4section",
-      "scheme=${1|chinese,plain|}",
-      "linespread=${1:number}"
-    ],
-    "\\ctexset,\\usepackage/ctex#c": [
-      "fontset=${1|adobe,fandol,founder,mac,macnew,macold,ubuntu,windows,none|}",
-      "punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}",
-      "space=${1|true,false,auto|}",
-      "autoindent="
-    ],
-    "\\ctexset": [
-      "linestretch=",
-      "today=${1|small,big,old|}",
-      "contentsname=${1:name}",
-      "listfigurename=${1:name}",
-      "listtablename=${1:name}",
-      "figurename=${1:name}",
-      "tablename=${1:name}",
-      "abstractname=${1:name}",
-      "indexname=${1:name}",
-      "appendixname=${1:name}",
-      "bibname=${1:name}",
-      "proofname=${1:name}",
-      "refname=${1:name}",
-      "algorithmname=${1:name}",
-      "continuation=${1:name}",
-      "part={${1:settings}}",
-      "chapter={${1:settings}}",
-      "section={${1:settings}}",
-      "subsection={${1:settings}}",
-      "subsubsection={${1:settings}}",
-      "paragraph={${1:settings}}",
-      "subparagraph={${1:settings}}",
-      "part/numbering",
-      "chapter/numbering",
-      "section/numbering",
-      "subsection/numbering",
-      "subsubsection/numbering",
-      "paragraph/numbering",
-      "subparagraph/numbering",
-      "secnumdepth=",
-      "part/name=",
-      "chapter/name=",
-      "section/name=",
-      "subsection/name=",
-      "subsubsection/name=",
-      "paragraph/name=",
-      "subparagraph/name=",
-      "part/number=",
-      "chapter/number=",
-      "section/number=",
-      "subsection/number=",
-      "subsubsection/number=",
-      "paragraph/number=",
-      "subparagraph/number=",
-      "part/format=${1:format commands}",
-      "chapter/format=${1:format commands}",
-      "section/format=${1:format commands}",
-      "subsection/format=${1:format commands}",
-      "subsubsection/format=${1:format commands}",
-      "paragraph/format=${1:format commands}",
-      "subparagraph/format=${1:format commands}",
-      "part/format+=${1:format commands}",
-      "chapter/format+=${1:format commands}",
-      "section/format+=${1:format commands}",
-      "subsection/format+=${1:format commands}",
-      "subsubsection/format+=${1:format commands}",
-      "paragraph/format+=${1:format commands}",
-      "subparagraph/format+=${1:format commands}",
-      "part/nameformat=${1:format commands}",
-      "chapter/nameformat=${1:format commands}",
-      "section/nameformat=${1:format commands}",
-      "subsection/nameformat=${1:format commands}",
-      "subsubsection/nameformat=${1:format commands}",
-      "paragraph/nameformat=${1:format commands}",
-      "subparagraph/nameformat=${1:format commands}",
-      "part/nameformat+=${1:format commands}",
-      "chapter/nameformat+=${1:format commands}",
-      "section/nameformat+=${1:format commands}",
-      "subsection/nameformat+=${1:format commands}",
-      "subsubsection/nameformat+=${1:format commands}",
-      "paragraph/nameformat+=${1:format commands}",
-      "subparagraph/nameformat+=${1:format commands}",
-      "part/numberformat=${1:format commands}",
-      "chapter/numberformat=${1:format commands}",
-      "section/numberformat=${1:format commands}",
-      "subsection/numberformat=${1:format commands}",
-      "subsubsection/numberformat=${1:format commands}",
-      "paragraph/numberformat=${1:format commands}",
-      "subparagraph/numberformat=${1:format commands}",
-      "part/numberformat+=${1:format commands}",
-      "chapter/numberformat+=${1:format commands}",
-      "section/numberformat+=${1:format commands}",
-      "subsection/numberformat+=${1:format commands}",
-      "subsubsection/numberformat+=${1:format commands}",
-      "paragraph/numberformat+=${1:format commands}",
-      "subparagraph/numberformat+=${1:format commands}",
-      "part/titleformat=${1:format commands}",
-      "chapter/titleformat=${1:format commands}",
-      "section/titleformat=${1:format commands}",
-      "subsection/titleformat=${1:format commands}",
-      "subsubsection/titleformat=${1:format commands}",
-      "paragraph/titleformat=${1:format commands}",
-      "subparagraph/titleformat=${1:format commands}",
-      "part/titleformat+=${1:format commands}",
-      "chapter/titleformat+=${1:format commands}",
-      "section/titleformat+=${1:format commands}",
-      "subsection/titleformat+=${1:format commands}",
-      "subsubsection/titleformat+=${1:format commands}",
-      "paragraph/titleformat+=${1:format commands}",
-      "subparagraph/titleformat+=${1:format commands}",
-      "part/aftername=${1:code}",
-      "chapter/aftername=${1:code}",
-      "section/aftername=${1:code}",
-      "subsection/aftername=${1:code}",
-      "subsubsection/aftername=${1:code}",
-      "paragraph/aftername=${1:code}",
-      "subparagraph/aftername=${1:code}",
-      "part/aftername+=${1:code}",
-      "chapter/aftername+=${1:code}",
-      "section/aftername+=${1:code}",
-      "subsection/aftername+=${1:code}",
-      "subsubsection/aftername+=${1:code}",
-      "paragraph/aftername+=${1:code}",
-      "subparagraph/aftername+=${1:code}",
-      "part/aftertitle=${1:code}",
-      "chapter/aftertitle=${1:code}",
-      "section/aftertitle=${1:code}",
-      "subsection/aftertitle=${1:code}",
-      "subsubsection/aftertitle=${1:code}",
-      "paragraph/aftertitle=${1:code}",
-      "subparagraph/aftertitle=${1:code}",
-      "part/aftertitle+=${1:code}",
-      "chapter/aftertitle+=${1:code}",
-      "section/aftertitle+=${1:code}",
-      "subsection/aftertitle+=${1:code}",
-      "subsubsection/aftertitle+=${1:code}",
-      "paragraph/aftertitle+=${1:code}",
-      "subparagraph/aftertitle+=${1:code}",
-      "part/pagestyle=",
-      "chapter/pagestyle=",
-      "section/runin",
-      "subsection/runin",
-      "subsubsection/runin",
-      "paragraph/runin",
-      "subparagraph/runin",
-      "section/hang",
-      "subsection/hang",
-      "subsubsection/hang",
-      "paragraph/hang",
-      "subparagraph/hang",
-      "part/indent=",
-      "chapter/indent=",
-      "section/indent=",
-      "subsection/indent=",
-      "subsubsection/indent=",
-      "paragraph/indent=",
-      "subparagraph/indent=",
-      "part/beforeskip=",
-      "chapter/beforeskip=",
-      "section/beforeskip=",
-      "subsection/beforeskip=",
-      "subsubsection/beforeskip=",
-      "paragraph/beforeskip=",
-      "subparagraph/beforeskip=",
-      "part/afterskip=",
-      "chapter/afterskip=",
-      "section/afterskip=",
-      "subsection/afterskip=",
-      "subsubsection/afterskip=",
-      "paragraph/afterskip=",
-      "subparagraph/afterskip=",
-      "part/fixskip",
-      "chapter/fixskip",
-      "section/fixskip",
-      "subsection/fixskip",
-      "subsubsection/fixskip",
-      "paragraph/fixskip",
-      "subparagraph/fixskip",
-      "part/break=",
-      "chapter/break=",
-      "section/break=",
-      "subsection/break=",
-      "subsubsection/break=",
-      "paragraph/break=",
-      "subparagraph/break=",
-      "part/break+=",
-      "chapter/break+=",
-      "section/break+=",
-      "subsection/break+=",
-      "subsubsection/break+=",
-      "paragraph/break+=",
-      "subparagraph/break+=",
-      "part/afterindent",
-      "chapter/afterindent",
-      "section/afterindent",
-      "subsection/afterindent",
-      "subsubsection/afterindent",
-      "paragraph/afterindent",
-      "subparagraph/afterindent",
-      "tocdepth=",
-      "part/tocline=",
-      "chapter/tocline=",
-      "section/tocline=",
-      "subsection/tocline=",
-      "subsubsection/tocline=",
-      "paragraph/tocline=",
-      "subparagraph/tocline=",
-      "chapter/lofskip=",
-      "chapter/lotskip=",
-      "appendix/numbering",
-      "appendix/name=",
-      "appendix/number=",
-      "declarecharrange=",
-      "clearalternatefont={${1:family1,family2,...}}",
-      "resetalternatefont={${1:family1,family2,...}}"
-    ],
-    "\\pagenumbering#c": [
-      "chinese"
-    ]
-  },
-  "args": [
-    "\\usepackage/ctex#c",
-    "\\ctexset,\\usepackage/ctex#c"
-  ]
+	"deps": [{"name":"luatexja","engines":["lualatex"]},{"name":"luatexja-core","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"iftex","engines":["lualatex"]},{"name":"xkeyval","engines":["lualatex"]},{"name":"etoolbox","engines":["lualatex"]},{"name":"everyhook","engines":["lualatex"]},{"name":"svn-prov","engines":["lualatex"]},{"name":"luatexja-compat","engines":["lualatex"]},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"zhnumber"},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"addCJKfontfeature","arg":{"format":"{}","snippet":"addCJKfontfeature{${1:font features}}"},"unusual":true},
+		{"name":"addCJKfontfeatures","arg":{"format":"{}","snippet":"addCJKfontfeatures{${1:font features}}"}},
+		{"name":"ccwd"},
+		{"name":"chinese","arg":{"format":"{}","snippet":"chinese{${1:counter}}"}},
+		{"name":"Chinese","arg":{"format":"{}","snippet":"Chinese{${1:counter}}"},"unusual":true},
+		{"name":"CJKfamily","arg":{"format":"{}","snippet":"CJKfamily{${1:family}}"}},
+		{"name":"CJKfontspec","arg":{"format":"[]{}","snippet":"CJKfontspec[${1:font features}]{${2:font name}}"}},
+		{"name":"CJKfontspec","arg":{"format":"{}","snippet":"CJKfontspec{${1:font name}}"}},
+		{"name":"CTeX"},
+		{"name":"CTEXdigits","arg":{"format":"{}{}","snippet":"CTEXdigits{${1:macro}}{${2:number}}"}},
+		{"name":"CTEXheadinglabel","arg":{"format":"{}","snippet":"CTEXheadinglabel{${1:level}}"},"if":"heading=true"},
+		{"name":"CTEXheadingnumber","arg":{"format":"{}","snippet":"CTEXheadingnumber{${1:level}}"},"if":"heading=true"},
+		{"name":"CTEXifheadingnumbering","arg":{"format":"{}{}{}","snippet":"CTEXifheadingnumbering{${1:level}}{${2:true}}{${3:false}}"},"if":"heading=true"},
+		{"name":"CTEXifname","arg":{"format":"{}{}","snippet":"CTEXifname{${1:with name}}{${2:without name}}"},"if":"heading=true"},
+		{"name":"CTEXindent","unusual":true},
+		{"name":"CTEXnoindent","unusual":true},
+		{"name":"CTEXnumber","arg":{"format":"{}{}","snippet":"CTEXnumber{${1:macro}}{${2:number}}"}},
+		{"name":"CTEXnumberline","arg":{"format":"{}","snippet":"CTEXnumberline{${1:level}}"},"unusual":true,"if":"heading=true"},
+		{"name":"CTEXoptions","arg":{"format":"[]","snippet":"CTEXoptions[${1:options}]"},"unusual":true},
+		{"name":"CTEXoptions","unusual":true},
+		{"name":"ctexset","arg":{"format":"{}","snippet":"ctexset{${1:options}}","keys":["l3keys:ctex"],"keyPos":0}},
+		{"name":"CTEXsetfont","unusual":true},
+		{"name":"CTEXsetup","arg":{"format":"[]{}","snippet":"CTEXsetup[${1:options}]{${2:heading}}"},"unusual":true},
+		{"name":"CTEXsetup","arg":{"format":"{}","snippet":"CTEXsetup{${1:heading}}"},"unusual":true},
+		{"name":"CTEXthechapter"},
+		{"name":"CTEXtheparagraph","if":"heading=true"},
+		{"name":"CTEXthepart","if":"heading=true"},
+		{"name":"CTEXthesection","if":"heading=true"},
+		{"name":"CTEXthesubparagraph","if":"heading=true"},
+		{"name":"CTEXthesubsection","if":"heading=true"},
+		{"name":"CTEXthesubsubsection","if":"heading=true"},
+		{"name":"defaultCJKfontfeatures","arg":{"format":"{}","snippet":"defaultCJKfontfeatures{${1:font features}}"}},
+		{"name":"fangsong"},
+		{"name":"heiti"},
+		{"name":"ifctexpdf","unusual":true},
+		{"name":"kaishu"},
+		{"name":"lishu","if":"fontset=windows|fontset=founder"},
+		{"name":"newCJKfontfamily","arg":{"format":"[]{}[]{}","snippet":"newCJKfontfamily[${1:family}]{${2:command}}[${3:font features}]{${4:font name}}"}},
+		{"name":"newCJKfontfamily","arg":{"format":"{}{}","snippet":"newCJKfontfamily{${1:command}}{${2:font name}}"}},
+		{"name":"pingfang"},
+		{"name":"proofname"},
+		{"name":"setCJKfamilyfont","arg":{"format":"{}[]{}","snippet":"setCJKfamilyfont{${1:family}}[${2:font features}]{${3:font name}}"}},
+		{"name":"setCJKfamilyfont","arg":{"format":"{}{}","snippet":"setCJKfamilyfont{${1:family}}{${2:font name}}"}},
+		{"name":"setCJKmainfont","arg":{"format":"[]{}","snippet":"setCJKmainfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmainfont","arg":{"format":"{}","snippet":"setCJKmainfont{${1:font name}}"}},
+		{"name":"setCJKmathfont","arg":{"format":"[]{}","snippet":"setCJKmathfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmathfont","arg":{"format":"{}","snippet":"setCJKmathfont{${1:font name}}"}},
+		{"name":"setCJKmonofont","arg":{"format":"[]{}","snippet":"setCJKmonofont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmonofont","arg":{"format":"{}","snippet":"setCJKmonofont{${1:font name}}"}},
+		{"name":"setCJKromanfont","arg":{"format":"[]{}","snippet":"setCJKromanfont[${1:font features}]{${2:font name}}"},"unusual":true},
+		{"name":"setCJKromanfont","arg":{"format":"{}","snippet":"setCJKromanfont{${1:font name}}"},"unusual":true},
+		{"name":"setCJKsansfont","arg":{"format":"[]{}","snippet":"setCJKsansfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKsansfont","arg":{"format":"{}","snippet":"setCJKsansfont{${1:font name}}"}},
+		{"name":"songti"},
+		{"name":"yahei","if":"fontset=windows"},
+		{"name":"youyuan","if":"fontset=windows|fontset=founder"},
+		{"name":"zihao","arg":{"format":"{}","snippet":"zihao{${1:size}}"}},
+		{"name":"ziju","arg":{"format":"{}","snippet":"ziju{${1:factor}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:ctex": ["abstractname=","appendixname=","bibname=","clearalternatefont","contentsname=","declarecharrange=","figurename=","indexname=","linestretch=","listfigurename=","listtablename=","proofname=","resetalternatefont","tablename=","autoindent=${1|true,false|}","fontset=${1|adobe,fandol,founder,hanyi,mac,macnew,macold,ubuntu,windows,none|}","punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}","space=${1|true,false,auto|}","today=${1|small,big,old|}","experiment/CJKecglue=","patch/cleveref=${1|true,false|}","refname=","algorithmname=","continuation=","part={${1:settings}}","chapter={${1:settings}}","section={${1:settings}}","subsection={${1:settings}}","subsubsection={${1:settings}}","paragraph={${1:settings}}","subparagraph={${1:settings}}","part/numbering=${1|true,false|}","chapter/numbering=${1|true,false|}","section/numbering=${1|true,false|}","subsection/numbering=${1|true,false|}","subsubsection/numbering=${1|true,false|}","paragraph/numbering=${1|true,false|}","subparagraph/numbering=${1|true,false|}","secnumdepth=","part/name=","chapter/name=","section/name=","subsection/name=","subsubsection/name=","paragraph/name=","subparagraph/name=","part/number=","chapter/number=","section/number=","subsection/number=","subsubsection/number=","paragraph/number=","subparagraph/number=","part/format=","chapter/format=","section/format=","subsection/format=","subsubsection/format=","paragraph/format=","subparagraph/format=","part/format+=","chapter/format+=","section/format+=","subsection/format+=","subsubsection/format+=","paragraph/format+=","subparagraph/format+=","part/nameformat=","chapter/nameformat=","section/nameformat=","subsection/nameformat=","subsubsection/nameformat=","paragraph/nameformat=","subparagraph/nameformat=","part/nameformat+=","chapter/nameformat+=","section/nameformat+=","subsection/nameformat+=","subsubsection/nameformat+=","paragraph/nameformat+=","subparagraph/nameformat+=","part/numberformat=","chapter/numberformat=","section/numberformat=","subsection/numberformat=","subsubsection/numberformat=","paragraph/numberformat=","subparagraph/numberformat=","part/numberformat+=","chapter/numberformat+=","section/numberformat+=","subsection/numberformat+=","subsubsection/numberformat+=","paragraph/numberformat+=","subparagraph/numberformat+=","part/titleformat=","chapter/titleformat=","section/titleformat=","subsection/titleformat=","subsubsection/titleformat=","paragraph/titleformat=","subparagraph/titleformat=","part/titleformat+=","chapter/titleformat+=","section/titleformat+=","subsection/titleformat+=","subsubsection/titleformat+=","paragraph/titleformat+=","subparagraph/titleformat+=","part/aftername=","chapter/aftername=","section/aftername=","subsection/aftername=","subsubsection/aftername=","paragraph/aftername=","subparagraph/aftername=","part/aftername+=","chapter/aftername+=","section/aftername+=","subsection/aftername+=","subsubsection/aftername+=","paragraph/aftername+=","subparagraph/aftername+=","part/aftertitle=","chapter/aftertitle=","section/aftertitle=","subsection/aftertitle=","subsubsection/aftertitle=","paragraph/aftertitle=","subparagraph/aftertitle=","part/aftertitle+=","chapter/aftertitle+=","section/aftertitle+=","subsection/aftertitle+=","subsubsection/aftertitle+=","paragraph/aftertitle+=","subparagraph/aftertitle+=","part/pagestyle=","chapter/pagestyle=","section/runin=${1|true,false|}","subsection/runin=${1|true,false|}","subsubsection/runin=${1|true,false|}","paragraph/runin=${1|true,false|}","subparagraph/runin=${1|true,false|}","section/hang=${1|true,false|}","subsection/hang=${1|true,false|}","subsubsection/hang=${1|true,false|}","paragraph/hang=${1|true,false|}","subparagraph/hang=${1|true,false|}","part/indent=","chapter/indent=","section/indent=","subsection/indent=","subsubsection/indent=","paragraph/indent=","subparagraph/indent=","part/beforeskip=","chapter/beforeskip=","section/beforeskip=","subsection/beforeskip=","subsubsection/beforeskip=","paragraph/beforeskip=","subparagraph/beforeskip=","part/afterskip=","chapter/afterskip=","section/afterskip=","subsection/afterskip=","subsubsection/afterskip=","paragraph/afterskip=","subparagraph/afterskip=","part/fixskip=${1|true,false|}","chapter/fixskip=${1|true,false|}","section/fixskip=${1|true,false|}","subsection/fixskip=${1|true,false|}","subsubsection/fixskip=${1|true,false|}","paragraph/fixskip=${1|true,false|}","subparagraph/fixskip=${1|true,false|}","part/break=","chapter/break=","section/break=","subsection/break=","subsubsection/break=","paragraph/break=","subparagraph/break=","part/break+=","chapter/break+=","section/break+=","subsection/break+=","subsubsection/break+=","paragraph/break+=","subparagraph/break+=","part/afterindent=${1|true,false|}","chapter/afterindent=${1|true,false|}","section/afterindent=${1|true,false|}","subsection/afterindent=${1|true,false|}","subsubsection/afterindent=${1|true,false|}","paragraph/afterindent=${1|true,false|}","subparagraph/afterindent=${1|true,false|}","tocdepth=","part/tocline=","chapter/tocline=","section/tocline=","subsection/tocline=","subsubsection/tocline=","paragraph/tocline=","subparagraph/tocline=","chapter/lofskip=","chapter/lotskip=","appendix/numbering=${1|true,false|}","appendix/name=","appendix/number="],
+		"\\usepackage/ctex#c": ["10pt","11pt","12pt","GBK","UTF8","autoindent=${1|true,false|}","experiment/font-size-system=${1|word,letterpress|}","fontset=${1|adobe,fandol,founder,hanyi,mac,macnew,macold,ubuntu,windows,none|}","heading=${1|true,false|}","linespread=","punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}","scheme=${1|chinese,plain|}","space=${1|true,false,auto|}","sub3section","sub4section","zhmap=${1|true,false,zhmCJK|}","zihao=${1|-4,5,false|}"]
+	},
+	"args": ["\\usepackage/ctex#c"]
 }

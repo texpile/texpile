@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"addtoendnotes","arg":{"format":"{}","snippet":"addtoendnotes{${1}}"}},
+		{"name":"endnote","arg":{"format":"[]{}","snippet":"endnote[${1:number}]{${2:text}}"}},
+		{"name":"endnote","arg":{"format":"{}","snippet":"endnote{${1:text}}"}},
+		{"name":"endnoteformat","unusual":true},
+		{"name":"endnoteheading","unusual":true},
+		{"name":"endnotemark","arg":{"format":"[]","snippet":"endnotemark[${1}]"}},
+		{"name":"endnotemark"},
+		{"name":"endnotesep","unusual":true},
+		{"name":"endnotesize","unusual":true},
+		{"name":"endnotetext","arg":{"format":"[]{}","snippet":"endnotetext[${1:number}]{${2:text}}"}},
+		{"name":"endnotetext","arg":{"format":"{}","snippet":"endnotetext{${1:text}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"notesname"},
+		{"name":"theendnote","unusual":true},
+		{"name":"theendnotes"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"babel"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"xcolor"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"makeunswfrontmatter","doc":"With this command, a PDF version of the Thesis/Dissertation Sheet can be inserted at the back of the titlepage."},
+		{"name":"makeunswphdtitlepage"},
+		{"name":"unswcotutelle","arg":{"format":"{}","snippet":"unswcotutelle{${1:other university}}"}},
+		{"name":"unswdegree","arg":{"format":"{}","snippet":"unswdegree{${1:degree}}"}},
+		{"name":"unswdissertationsheet","arg":{"format":"{}","snippet":"unswdissertationsheet{${1:file}}"}},
+		{"name":"unswschool","arg":{"format":"{}","snippet":"unswschool{${1:school}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

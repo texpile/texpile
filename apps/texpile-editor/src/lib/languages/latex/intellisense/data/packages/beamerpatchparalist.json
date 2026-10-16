@@ -1,0 +1,10 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"compactenum","arg":{"format":"[][]","snippet":"[${1:overlay specification}][${2:label}]"}},
+		{"name":"compactenum"},
+		{"name":"compactitem","arg":{"format":"[][]","snippet":"[${1:overlay specification}][${2:label}]"}},
+		{"name":"compactitem"}
+	],
+	"keys": {}
+}

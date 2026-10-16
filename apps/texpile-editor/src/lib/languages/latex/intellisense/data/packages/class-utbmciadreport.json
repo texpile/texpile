@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"class-upmethodology-document"},{"name":"upmethodology-p-common"},{"name":"ifthen"},{"name":"xspace"},{"name":"xcolor"},{"name":"ifpdf"},{"name":"iftex"},{"name":"class-report"},{"name":"a4wide"},{"name":"a4"},{"name":"hyperref"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"fancyhdr"},{"name":"upmethodology-document"},{"name":"babel"},{"name":"vmargin"},{"name":"upmethodology-extension"},{"name":"upmethodology-fmt"},{"name":"titlesec"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"subcaption"},{"name":"caption"},{"name":"caption3"},{"name":"tabularx"},{"name":"array"},{"name":"xltabular"},{"name":"ltablex"},{"name":"longtable"},{"name":"multicol"},{"name":"colortbl"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"picinpar"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"thmtools"},{"name":"thm-patch"},{"name":"parseargs"},{"name":"thm-kv"},{"name":"thm-autoref"},{"name":"thm-listof"},{"name":"thm-restate"},{"name":"pifont"},{"name":"setspace"},{"name":"varioref"},{"name":"txfonts"},{"name":"relsize"},{"name":"xkeyval"},{"name":"hyphenat"},{"name":"bbm"},{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"tocbibind"},{"name":"enumitem"},{"name":"stackengine"},{"name":"listofitems"},{"name":"calc"},{"name":"pdfcol"},{"name":"tikzfill.image"},{"name":"upmethodology-version"},{"name":"upmethodology-frontpage"},{"name":"upmethodology-backpage"},{"name":"helvet"},{"name":"wasysym"},{"name":"textcomp"},{"name":"scalefnt","if":"french"},{"name":"fontawesome5-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"ifluatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"addfundingschemelogo","arg":{"format":"[]{}","snippet":"addfundingschemelogo[${1:logo height}]{${2:path to logo image}}"}},
+		{"name":"addfundingschemelogo","arg":{"format":"{}","snippet":"addfundingschemelogo{${1:path to logo image}}"}},
+		{"name":"ifshowCIADlogo","unusual":true},
+		{"name":"ifshowContactOnBack","unusual":true},
+		{"name":"ifshowDocRefOnBack","unusual":true},
+		{"name":"ifshowDocRefOnFront","unusual":true},
+		{"name":"ifshowFundingSchemelogo","unusual":true},
+		{"name":"ifshowICARTSlogo","unusual":true},
+		{"name":"ifshowSayenslogo","unusual":true},
+		{"name":"ifshowUTBMlogo","unusual":true},
+		{"name":"ifshowUTlogo","unusual":true},
+		{"name":"insertciadreportthemeversion","unusual":true},
+		{"name":"showCIADlogofalse","unusual":true},
+		{"name":"showCIADlogotrue","unusual":true},
+		{"name":"showContactOnBackfalse","unusual":true},
+		{"name":"showContactOnBacktrue","unusual":true},
+		{"name":"showDocRefOnBackfalse","unusual":true},
+		{"name":"showDocRefOnBacktrue","unusual":true},
+		{"name":"showDocRefOnFrontfalse","unusual":true},
+		{"name":"showDocRefOnFronttrue","unusual":true},
+		{"name":"showFundingSchemelogofalse","unusual":true},
+		{"name":"showFundingSchemelogotrue","unusual":true},
+		{"name":"showICARTSlogofalse","unusual":true},
+		{"name":"showICARTSlogotrue","unusual":true},
+		{"name":"showSayenslogofalse","unusual":true},
+		{"name":"showSayenslogotrue","unusual":true},
+		{"name":"showUTBMlogofalse","unusual":true},
+		{"name":"showUTBMlogotrue","unusual":true},
+		{"name":"showUTlogofalse","unusual":true},
+		{"name":"showUTlogotrue","unusual":true},
+		{"name":"utbmciadfundingschemeslogos","doc":"\\utbmciadfundingschemeslogos: Show the list of all the funding schemes’ logos."},
+		{"name":"utbmciadreportclasslanguage","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/utbmciadreport#c": ["ciadlogo","contactonback","doclogo","docrefonback","docrefonfront","english","french","fundingschemelogo","icartslogo","nociadlogo","nocontactonback","nodoclogo","nodocrefonback","nodocrefonfront","nofundingschemelogo","noicartslogo","nosayenslogo","noutbmlogo","noutlogo","sayenslogo","utbmlogo","utlogo"]
+	},
+	"args": ["\\documentclass/utbmciadreport#c"]
+}

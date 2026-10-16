@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"class-ximera"},{"name":"class-article"},{"name":"cancel"},{"name":"enumitem"},{"name":"titlesec"},{"name":"titleps"},{"name":"titletoc"},{"name":"titling"},{"name":"url"},{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplots"},{"name":"fancyvrb"},{"name":"forloop"},{"name":"ifthen"},{"name":"environ"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"xifthen"},{"name":"calc"},{"name":"multido"},{"name":"listings"},{"name":"xkeyval"},{"name":"comment"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"nameref"},{"name":"refcount"},{"name":"epstopdf"},{"name":"grfext"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"epstopdf-base"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"activity","arg":{"format":"[]{}","snippet":"activity[${1:options}]{${2:file}}"},"doc":"Documents included with \\activity will be included in the body of the xourse document."},
+		{"name":"activity","arg":{"format":"{}","snippet":"activity{${1:file}}"},"doc":"Documents included with \\activity will be included in the body of the xourse document."},
+		{"name":"ifnonewpage","unusual":true},
+		{"name":"ifnotoc","unusual":true},
+		{"name":"logo","arg":{"format":"{}","snippet":"logo{${1:image file}}"}},
+		{"name":"maketitle"},
+		{"name":"nonewpagefalse","unusual":true},
+		{"name":"nonewpagetrue","unusual":true},
+		{"name":"notocfalse","unusual":true},
+		{"name":"notoctrue","unusual":true},
+		{"name":"practice","arg":{"format":"[]{}","snippet":"practice[${1:options}]{${2:file}}"}},
+		{"name":"practice","arg":{"format":"{}","snippet":"practice{${1:file}}"}}
+	],
+	"envs": [
+		{"name":"graded","arg":{"format":"{}","snippet":"{${1:points}}"},"doc":"The graded environment does nothing in latex, but in html, it wraps the activities in a div in order to assign some weight to them for grading."}
+	],
+	"keys": {
+		"\\documentclass/xourse#c": ["nonewpage","notoc"]
+	},
+	"args": ["\\documentclass/xourse#c"]
+}

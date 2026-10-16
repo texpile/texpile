@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"iftex"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"andika"},
+		{"name":"andikafamily","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

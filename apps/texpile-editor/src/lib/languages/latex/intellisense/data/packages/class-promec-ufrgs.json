@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"class-abntex2"},{"name":"ifthen"},{"name":"class-memoir"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"dcolumn"},{"name":"delarray"},{"name":"tabularx"},{"name":"booktabs"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"verbatim"},{"name":"shortvrb"},{"name":"textcase"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"babel"},{"name":"enumitem"},{"name":"calc"},{"name":"lmodern"},{"name":"inputenc"},{"name":"color"},{"name":"xcolor"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"microtype"},{"name":"xspace"},{"name":"epstopdf"},{"name":"grfext"},{"name":"epstopdf-base"},{"name":"rotating"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"pgfplots"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplotstable"},{"name":"pgfgantt"},{"name":"pgfcalendar"},{"name":"tabulary"},{"name":"multirow"},{"name":"makecell"},{"name":"multicol"},{"name":"colortbl"},{"name":"longtable"},{"name":"import"},{"name":"pdfpages"},{"name":"eso-pic"},{"name":"float"},{"name":"longfigure"},{"name":"ncccomma"},{"name":"svg"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"shellesc"},{"name":"transparent"},{"name":"transparent-nometadata"},{"name":"auxhook","engines":["pdflatex","lualatex"]},{"name":"amsfonts"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"amssymb"},{"name":"bm"},{"name":"mathtools"},{"name":"mhsetup"},{"name":"dsfont"},{"name":"caption"},{"name":"caption3"},{"name":"ltcaption"},{"name":"subcaption"},{"name":"threeparttable"},{"name":"capt-of"},{"name":"standalone"},{"name":"currfile"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"gincltex"},{"name":"svn-prov"},{"name":"filemod-expmin","engines":["pdflatex","lualatex"]},{"name":"cleveref"},{"name":"listings"},{"name":"mfirstuc"},{"name":"glossaries-extra"},{"name":"glossaries"},{"name":"xfor"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"},{"name":"breakurl"},{"name":"ifpdf"},{"name":"abntex2cite"},{"name":"abntex2abrev"},{"name":"ifxetex"},{"name":"relsize"},{"name":"glossary-longbooktabs"},{"name":"glossary-longragged"},{"name":"nomencl"},{"name":"tocbasic"},{"name":"siunitx"},{"name":"translations"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"lipsum"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"area","arg":{"format":"{}","snippet":"area{${1}}"},"doc":"Área de concentração do programa."},
+		{"name":"autortitle","arg":{"format":"{}","snippet":"autortitle{${1}}"},"doc":"Título/qualificação do autor exibido na folha de aprovação."},
+		{"name":"banca","arg":{"format":"{}","snippet":"banca{${1}}"},"doc":"Lista de membros da banca, separados por \\\\ \\vfill."},
+		{"name":"coordinador","arg":{"format":"{}","snippet":"coordinador{${1}}"},"doc":"Nome do coordenador do PROMEC (assina a folha de aprovação)."},
+		{"name":"datacompleta","arg":{"format":"{}","snippet":"datacompleta{${1}}"},"doc":"Data por extenso (folha de aprovação), complementando \\data{}."},
+		{"name":"gmm","unusual":true},
+		{"name":"imprimircapatipodocumento"},
+		{"name":"imprimirmd"},
+		{"name":"imprimirtipotrabalho"},
+		{"name":"numcoorientador","arg":{"format":"{}","snippet":"numcoorientador{${1}}"}},
+		{"name":"promecfrontmatter"},
+		{"name":"rpm","unusual":true},
+		{"name":"sample","unusual":true},
+		{"name":"status","arg":{"format":"{}","snippet":"status{${1}}"},"doc":"Avaliacao ou Aprovado; controla o texto acima da banca na folha de aprovação."},
+		{"name":"tipotrabalho","arg":{"format":"{}","snippet":"tipotrabalho{${1:Mestre | Proposta | Qualifica | Doutor}}"},"doc":"Define o tipo de documento."},
+		{"name":"var","unusual":true},
+		{"name":"voltampere","unusual":true}
+	],
+	"envs": [
+		{"name":"subsubfigure","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"subsubfigure","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

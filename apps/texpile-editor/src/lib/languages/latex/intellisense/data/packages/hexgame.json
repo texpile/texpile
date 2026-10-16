@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"color"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-poly"},{"name":"calc"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"colorhex","arg":{"format":"{}{}","snippet":"colorhex{${1:hexagon}}{${2:color}}"}},
+		{"name":"hexgameboxwidth"},
+		{"name":"labelhex","arg":{"format":"{}{}","snippet":"labelhex{${1:hexagon}}{${2:label}}"}}
+	],
+	"envs": [
+		{"name":"hexgame","arg":{"format":"{}","snippet":"{${1:size}}"}}
+	],
+	"keys": {}
+}

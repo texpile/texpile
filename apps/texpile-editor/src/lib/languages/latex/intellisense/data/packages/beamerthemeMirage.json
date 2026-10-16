@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"regexpatch"},{"name":"fontawesome7"},{"name":"l3keys2e"},{"name":"fontawesome7-utex-helper"},{"name":"luatexbase"},{"name":"relsize"},{"name":"tikz"},{"name":"pgf"},{"name":"pgffor"}],
+	"macros": [
+		{"name":"MirageFrametitlePrefix"},
+		{"name":"MirageGlowRadius","doc":"\\MirageGlowRadius is a length controlling the size of the glowy circle in the footline; especially useful when creating posters with beamerposter."},
+		{"name":"MirageProofPrefix"},
+		{"name":"MiragePullquoteClose"},
+		{"name":"MiragePullquoteOpen"},
+		{"name":"MirageTheoremPrefix"}
+	],
+	"envs": [
+		{"name":"pullquote"}
+	],
+	"keys": {}
+}

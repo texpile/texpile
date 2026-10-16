@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"soul"},{"name":"soul-ori"},{"name":"iftex"},{"name":"marginnote","if":"!basic"},{"name":"tikz","if":"!basic"},{"name":"pgf","if":"!basic"},{"name":"pgfrcs","if":"!basic"},{"name":"pgfcore","if":"!basic"},{"name":"graphicx","if":"!basic"},{"name":"graphics","if":"!basic"},{"name":"trig","if":"!basic"},{"name":"pgfsys","if":"!basic"},{"name":"xcolor","if":"!basic"},{"name":"pgfcomp-version-0-65","if":"!basic"},{"name":"pgfcomp-version-1-18","if":"!basic"},{"name":"pgffor","if":"!basic"},{"name":"pgfkeys","if":"!basic"},{"name":"pgfmath","if":"!basic"},{"name":"ifoddpage","if":"!basic"},{"name":"color","if":"basic"},{"name":"sidenotes","if":"sidenotes"},{"name":"l3keys2e","if":"sidenotes"},{"name":"caption","if":"sidenotes"},{"name":"caption3","if":"sidenotes"},{"name":"xparse","if":"sidenotes"},{"name":"changepage","if":"sidenotes"}],
+	"macros": [
+		{"name":"HideMNOTES","doc":"Hide notes from this point on."},
+		{"name":"MNCOLOUR","unusual":true},
+		{"name":"Mnewauthor","arg":{"format":"[]{}{}","snippet":"Mnewauthor[${1:initials}]{${2:name}}{${3:color}}"},"doc":"Define author-specific margin notes for comments."},
+		{"name":"Mnewauthor","arg":{"format":"{}{}","snippet":"Mnewauthor{${1:name}}{${2:color}}"},"doc":"Define author-specific margin notes for comments."},
+		{"name":"MNFONT","unusual":true},
+		{"name":"MNOTE","arg":{"format":"[]{}","snippet":"MNOTE[${1:color}]{${2:comment}}"},"doc":"The \\MNOTE[colour]{comments} places comments on the right margin of the document."},
+		{"name":"MNOTE","arg":{"format":"{}","snippet":"MNOTE{${1:comment}}"},"doc":"The \\MNOTE[colour]{comments} places comments on the right margin of the document."},
+		{"name":"MNOTEon","arg":{"format":"[]{}","snippet":"MNOTEon[${1}]{${2}}"},"unusual":true},
+		{"name":"MNOTEon","arg":{"format":"{}","snippet":"MNOTEon{${1}}"},"unusual":true},
+		{"name":"MNOTEWIDTH","unusual":true},
+		{"name":"ReverseMNConnect"},
+		{"name":"ShowMNOTES","doc":"Show notes from this point on."}
+	],
+	"envs": [],
+	"keys": {}
+}

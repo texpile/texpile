@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"setspace"},{"name":"footmisc"},{"name":"nowidow"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"perpage","if":"endnotes"},{"name":"endnotes","if":"endnotes"}],
+	"macros": [
+		{"name":"listillustrationname","unusual":true},
+		{"name":"listofillustrations","doc":"The \\listofillustrations command creates a combined list of figures and tables with the first page labelled Illustrations."},
+		{"name":"theendnotes","doc":"To produce a list of endnotes, use the \\theendnotes command provided by the endnotes package."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/turabian-formatting#c": ["authordate","endnotes","noadjustbib","noraggedright"]
+	},
+	"args": ["\\usepackage/turabian-formatting#c"]
+}

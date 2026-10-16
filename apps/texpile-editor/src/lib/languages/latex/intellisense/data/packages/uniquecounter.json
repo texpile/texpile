@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"bigintcalc"},{"name":"pdftexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"UniqueCounterCall","arg":{"format":"{}{}","snippet":"UniqueCounterCall{${1:name}}{${2:code}}"}},
+		{"name":"UniqueCounterGet","arg":{"format":"{}","snippet":"UniqueCounterGet{${1:name}}"}},
+		{"name":"UniqueCounterIncrement","arg":{"format":"{}","snippet":"UniqueCounterIncrement{${1:name}}"}},
+		{"name":"UniqueCounterNew","arg":{"format":"{}","snippet":"UniqueCounterNew{${1:name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etoolbox"},{"name":"manfnt"}],
+	"macros": [
+		{"name":"insertoccasion","unusual":true},
+		{"name":"myinserttheoremaddition","unusual":true},
+		{"name":"occasion","arg":{"format":"{}","snippet":"occasion{${1:occasion}}"}},
+		{"name":"sectionintochideskip"},
+		{"name":"sectionintocshowskip"}
+	],
+	"envs": [],
+	"keys": {}
+}

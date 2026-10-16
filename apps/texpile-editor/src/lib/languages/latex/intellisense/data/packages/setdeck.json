@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"setcard","arg":{"format":"{}{}{}{}{}","snippet":"setcard{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"smallsetcard","arg":{"format":"{}{}{}{}{}","snippet":"smallsetcard{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"The command \\smallsetcard is designed to be used when displaying anything smaller than a half-sized card."}
+	],
+	"envs": [],
+	"keys": {}
+}

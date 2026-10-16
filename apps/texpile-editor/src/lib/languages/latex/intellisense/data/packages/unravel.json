@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"gtl"}],
+	"macros": [
+		{"name":"unravel","arg":{"format":"[]{}","snippet":"unravel[${1:options}]{${2:code}}","keys":["l3keys:unravel"],"keyPos":0},"doc":"This command shows in the terminal the steps performed by TeX when running the ⟨code⟩."},
+		{"name":"unravel","arg":{"format":"{}","snippet":"unravel{${1:code}}"},"doc":"This command shows in the terminal the steps performed by TeX when running the ⟨code⟩."},
+		{"name":"unravel_get:nnN","arg":{"format":"{}{}","snippet":"unravel_get:nnN{${1:options}}{${2:code}}","keys":["l3keys:unravel"],"keyPos":0}},
+		{"name":"unravel_setup:n","arg":{"format":"{}","snippet":"unravel_setup:n{${1:options}}","keys":["l3keys:unravel"],"keyPos":0},"doc":"Set keys, updating both default values and current values."},
+		{"name":"unravel:nn","arg":{"format":"{}{}","snippet":"unravel:nn{${1:options}}{${2:code}}","keys":["l3keys:unravel"],"keyPos":0}},
+		{"name":"unravelsetup","arg":{"format":"{}","snippet":"unravelsetup{${1:options}}","keys":["l3keys:unravel"],"keyPos":0},"doc":"Sets ⟨options⟩ that apply to all subsequent \\unravel."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:unravel": ["max-action=","max-input=","max-output=","online=","output-file=","prompt-input=","explicit-prompt=${1|false,true|}","internal-debug=${1|false,true|}","number-steps=${1|false,true|}","trace-assigns=${1|false,true|}","trace-expansion=${1|false,true|}","trace-other=${1|false,true|}","welcome-message=${1|false,true|}","machine","mute"]
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"zebra"},{"name":"xcolor"},{"name":"marginnote"},{"name":"manfnt"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

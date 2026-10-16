@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"luatex-cn-core-base"},{"name":"luatexbase"},{"name":"enumitem"}],
+	"macros": [
+		{"name":"chapter","arg":{"format":"{}","snippet":"chapter{${1:title}}"}},
+		{"name":"ChapterMarker","arg":{"format":"{}","snippet":"ChapterMarker{${1:chapter title}}"}},
+		{"name":"metadataSetup","arg":{"format":"{}","snippet":"metadataSetup{${1:options}}"}},
+		{"name":"publisher","arg":{"format":"{}","snippet":"publisher{${1:publisher}}"}},
+		{"name":"元数据设置","arg":{"format":"{}","snippet":"元数据设置{${1}}"}},
+		{"name":"元數據設置","arg":{"format":"{}","snippet":"元數據設置{${1}}"}},
+		{"name":"出版商","arg":{"format":"{}","snippet":"出版商{${1}}"}},
+		{"name":"章節標記","arg":{"format":"{}","snippet":"章節標記{${1}}"}},
+		{"name":"章节标记","arg":{"format":"{}","snippet":"章节标记{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

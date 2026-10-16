@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"class-article"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"Intermission"},
+		{"name":"IntermissionText"},
+		{"name":"PartEnd"},
+		{"name":"PartTitle"},
+		{"name":"piece","arg":{"format":"{}{}{}{}","snippet":"piece{${1:title}}{${2:description}}{${3:poet}}{${4:duration}}"}},
+		{"name":"SetPieceIndentation","arg":{"format":"{}","snippet":"SetPieceIndentation{${1:length}}"}}
+	],
+	"envs": [
+		{"name":"composition","arg":{"format":"{}{}{}{}","snippet":"{${1:author}}{${2:years of birth and death}}{${3:title of the composition}}{${4:description}}"}},
+		{"name":"part","arg":{"format":"[]","snippet":"[${1:title}]"}},
+		{"name":"part"},
+		{"name":"programme","arg":{"format":"{}","snippet":"{${1:title of the programme}}"}}
+	],
+	"keys": {
+		"\\documentclass/ConcProg#c": ["durations","noauthors","poets"]
+	},
+	"args": ["\\documentclass/ConcProg#c"]
+}

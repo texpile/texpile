@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"wiserefRecord","arg":{"format":"{}{}{}","snippet":"wiserefRecord{${1}}{${2}}{${3}}"}},
+		{"name":"wiserefsetup","arg":{"format":"{}","snippet":"wiserefsetup{${1}}","keys":["l3keys:wiseref"],"keyPos":0},"doc":"\\wiserefsetup{⟨key–value list⟩} configures subsequent references."},
+		{"name":"wisereftype","arg":{"format":"{}","snippet":"wisereftype{${1}}"}},
+		{"name":"wref","arg":{"format":"[]{}[]","snippet":"wref[${1}]{${2}}[${3}]"},"doc":"\\wref[⟨prefix⟩]{⟨label list⟩}[⟨suffix⟩]. Each optional argument overrides one affix for this call."},
+		{"name":"wref","arg":{"format":"{}","snippet":"wref{${1}}"},"doc":"\\wref[⟨prefix⟩]{⟨label list⟩}[⟨suffix⟩]. Each optional argument overrides one affix for this call."},
+		{"name":"wref*","arg":{"format":"[]{}[]","snippet":"wref*[${1}]{${2}}[${3}]"},"doc":"\\wref[⟨prefix⟩]{⟨label list⟩}[⟨suffix⟩]. Each optional argument overrides one affix for this call."},
+		{"name":"wref*","arg":{"format":"{}","snippet":"wref*{${1}}"},"doc":"\\wref[⟨prefix⟩]{⟨label list⟩}[⟨suffix⟩]. Each optional argument overrides one affix for this call."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:wiseref": ["group-last-separator=","group-separator=","lang-aliases=","name-separator=","number-last-separator=","number-separator=","range-separator=","compress=${1|false,true|}","lang=${1|auto,en,zh,fr,de,es,pt,it,nl,ru,el,ja,ar|}","langs=","links=${1|none,numbers,numbers-and-affixes|}","sort=${1|false,true|}","figure=","subfigure=","table=","subtable=","equation=","chapter=","section=","subsection=","subsubsection=","appendix=","theorem=","lemma=","definition=","proposition=","corollary=","enumi=","enumii=","footnote="]
+	}
+}

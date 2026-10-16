@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"class-article"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"tikzfill.image"}],
+	"macros": [
+		{"name":"mynote"},
+		{"name":"notebox","arg":{"format":"{}","snippet":"notebox{${1:text}}"}},
+		{"name":"section","arg":{"format":"{}","snippet":"section{${1:title}}"}},
+		{"name":"subsection","arg":{"format":"{}","snippet":"subsection{${1:title}}"}},
+		{"name":"subsubsection","arg":{"format":"{}","snippet":"subsubsection{${1:title}}"}},
+		{"name":"thecoloredboxcounter","unusual":true},
+		{"name":"thecoloredlblctr","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

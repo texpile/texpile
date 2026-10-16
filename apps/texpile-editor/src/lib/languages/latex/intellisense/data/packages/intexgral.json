@@ -1,0 +1,40 @@
+{
+	"deps": [{"name":"amsfonts"}],
+	"macros": [
+		{"name":"antideriv","arg":{"format":"[]{}","snippet":"antideriv[${1:list of keys}]{${2:primitive}}","keys":["l3keys:primitive"],"keyPos":0}},
+		{"name":"antideriv","arg":{"format":"{}","snippet":"antideriv{${1:primitive}}"}},
+		{"name":"DeclareLimitsKeyword","arg":{"format":"{}{}","snippet":"DeclareLimitsKeyword{${1:keyword}}{${2:limits}}"}},
+		{"name":"DeclareSymbolKeyword","arg":{"format":"{}{}","snippet":"DeclareSymbolKeyword{${1:key}}{${2:symbol}}"}},
+		{"name":"DeclareVariableKeyword","arg":{"format":"{}{}[]","snippet":"DeclareVariableKeyword{${1:keyword}}{${2:variables}}[${3:jacobian}]"}},
+		{"name":"DeclareVariableKeyword","arg":{"format":"{}{}","snippet":"DeclareVariableKeyword{${1:keyword}}{${2:variables}}"}},
+		{"name":"differentials"},
+		{"name":"integral","arg":{"format":"[]{}","snippet":"integral[${1:list of keys}]{${2:integrand}}","keys":["l3keys:integral"],"keyPos":0},"doc":"The package provides a central macro `\\integral` that helps typeset integrals."},
+		{"name":"integral","arg":{"format":"{}","snippet":"integral{${1:integrand}}"},"doc":"The package provides a central macro `\\integral` that helps typeset integrals."},
+		{"name":"IntegralSetup","arg":{"format":"{}","snippet":"IntegralSetup{${1:list of parameters}}","keys":["l3keys:IntegralSetup"],"keyPos":0}},
+		{"name":"intexgralsetup","arg":{"format":"{}","snippet":"intexgralsetup{${1:package options}}","keys":["l3keys:intexgral"],"keyPos":0}},
+		{"name":"invertdiff"},
+		{"name":"jacobian"},
+		{"name":"NewLimitsKeyword","arg":{"format":"{}{}","snippet":"NewLimitsKeyword{${1:keyword}}{${2:limits}}"}},
+		{"name":"NewSymbolKeyword","arg":{"format":"{}{}","snippet":"NewSymbolKeyword{${1:key}}{${2:symbol}}"}},
+		{"name":"NewVariableKeyword","arg":{"format":"{}{}[]","snippet":"NewVariableKeyword{${1:keyword}}{${2:variables}}[${3:jacobian}]"}},
+		{"name":"NewVariableKeyword","arg":{"format":"{}{}","snippet":"NewVariableKeyword{${1:keyword}}{${2:variables}}"}},
+		{"name":"ProvideLimitsKeyword","arg":{"format":"{}{}","snippet":"ProvideLimitsKeyword{${1:keyword}}{${2:limits}}"}},
+		{"name":"ProvideSymbolKeyword","arg":{"format":"{}{}","snippet":"ProvideSymbolKeyword{${1:key}}{${2:symbol}}"}},
+		{"name":"ProvideVariableKeyword","arg":{"format":"{}{}[]","snippet":"ProvideVariableKeyword{${1:keyword}}{${2:variables}}[${3:jacobian}]"}},
+		{"name":"ProvideVariableKeyword","arg":{"format":"{}{}","snippet":"ProvideVariableKeyword{${1:keyword}}{${2:variables}}"}},
+		{"name":"RenewLimitsKeyword","arg":{"format":"{}{}","snippet":"RenewLimitsKeyword{${1:keyword}}{${2:limits}}"}},
+		{"name":"RenewSymbolKeyword","arg":{"format":"{}{}","snippet":"RenewSymbolKeyword{${1:key}}{${2:symbol}}"}},
+		{"name":"RenewVariableKeyword","arg":{"format":"{}{}[]","snippet":"RenewVariableKeyword{${1:keyword}}{${2:variables}}[${3:jacobian}]"}},
+		{"name":"RenewVariableKeyword","arg":{"format":"{}{}","snippet":"RenewVariableKeyword{${1:keyword}}{${2:variables}}"}},
+		{"name":"variables","doc":"This macro allows you to include the variables as defined by the key directly in the integrand."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:IntegralSetup": ["defaultvar*=","defaultvar=","diff-symb=","diffsep=","domainstyle=","innersymbsep=","jacobiansep=","postsymbsep=","varsep=","vectorstyle=","delim=${1|bar,brackets|}"],
+		"l3keys:integral": ["boundary=","contour=","diff-order=","diff-symb=","domain*=","domain=","double=","limits*=","limits=","llimit=","nint=","quadruple=","single=","surface=","symbol=","triple=","ulimit=","variables=","volume=","diff-vec","jacobian","limits-mode=${1|limits,nolimits|}","mode=${1|default,nested,product|}"],
+		"l3keys:intexgral": ["invert-diff=${1|false,true|}","invert-limits=${1|false,true|}","italic=${1|false,true|}","limits-mode=${1|limits,nolimits|}","upright=${1|false,true|}"],
+		"l3keys:primitive": ["limits=","Big","Bigg","auto","big","bigg","delim=${1|bar,brackets|}"],
+		"\\usepackage/intexgral#c": ["invert-diff=${1|false,true|}","invert-limits=${1|false,true|}","italic=${1|false,true|}","limits-mode=${1|limits,nolimits|}","upright=${1|false,true|}"]
+	},
+	"args": ["\\usepackage/intexgral#c"]
+}

@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"newtxtt"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"multido"},{"name":"multirow"}],
+	"macros": [
+		{"name":"Aff"},
+		{"name":"ContrastDown"},
+		{"name":"ContrastUp"},
+		{"name":"Div"},
+		{"name":"fileauthor","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"theTiCLineCommand","unusual":true},
+		{"name":"theTiCLineResult","unusual":true},
+		{"name":"TiC","arg":{"format":"[]","snippet":"TiC[${1}]","keys":["keyval:PresetTiC"],"keyPos":0},"doc":"Voici la commande qui fournit tous les dessins de touche."},
+		{"name":"TiC","doc":"Voici la commande qui fournit tous les dessins de touche."},
+		{"name":"TiCCalc","arg":{"format":"[]","snippet":"TiCCalc[${1}]","keys":["keyval:TiCalc"],"keyPos":0},"doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"TiCCalc","doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"TiCCalc*","arg":{"format":"[]","snippet":"TiCCalc*[${1}]","keys":["keyval:TiCalc"],"keyPos":0},"doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"TiCCalc*","doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"TiCMenu","arg":{"format":"[]{}","snippet":"TiCMenu[${1}]{${2}}","keys":["keyval:TiCMenu"],"keyPos":0}},
+		{"name":"TiCMenu","arg":{"format":"{}","snippet":"TiCMenu{${1}}"}},
+		{"name":"TiCScreen","arg":{"format":"[]{}","snippet":"TiCScreen[${1}]{${2}}","keys":["keyval:TiCScreen"],"keyPos":0},"doc":"Cette commande permet d’afficher un écran de calculatrice."},
+		{"name":"TiCScreen","arg":{"format":"{}","snippet":"TiCScreen{${1}}"},"doc":"Cette commande permet d’afficher un écran de calculatrice."},
+		{"name":"TiRacine","arg":{"format":"[]","snippet":"TiRacine[${1}]"}},
+		{"name":"TiRacine"}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:PresetTiC": ["color circle=","color key=","color second=","color text=","colour circle=","colour key=","colour second=","colour text=","fontsize=","name=","position=","principal=","radius=","raise=","second=","thickness=","circle=${1|false,true|}","circledown=${1|false,true|}","circleleft=${1|false,true|}","circleright=${1|false,true|}","circleup=${1|false,true|}","rounded=${1|left,none,right|}","style=${1|arrows,general,number|}"],
+		"keyval:TiCMenu": ["color box=","colour box=","size=","text=","select=${1|false,true|}"],
+		"keyval:TiCScreen": ["color screen=","colour screen=","height=","screenname=","width="],
+		"keyval:TiCalc": ["calcraise=","calcrotate=","calcscale=","color calc=","colour calc=","title="]
+	}
+}

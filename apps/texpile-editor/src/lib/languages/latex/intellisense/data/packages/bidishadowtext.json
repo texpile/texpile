@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"color"}],
+	"macros": [
+		{"name":"bidishadowcolor","arg":{"format":"{}","snippet":"bidishadowcolor{${1:color}}"}},
+		{"name":"bidishadowoffset","arg":{"format":"{}","snippet":"bidishadowoffset{${1:length}}"}},
+		{"name":"bidishadowoffsetx","arg":{"format":"{}","snippet":"bidishadowoffsetx{${1:length}}"}},
+		{"name":"bidishadowoffsety","arg":{"format":"{}","snippet":"bidishadowoffsety{${1:length}}"}},
+		{"name":"bidishadowrgb","arg":{"format":"{}","snippet":"bidishadowrgb{${1:r,g,b}}"}},
+		{"name":"bidishadowtext","arg":{"format":"{}","snippet":"bidishadowtext{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

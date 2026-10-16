@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"xy"},{"name":"ifpdf"},{"name":"iftex"}],
+	"macros": [
+		{"name":"asrnode","arg":{"format":"{}","snippet":"asrnode{${1}}"}},
+		{"name":"drsbox","arg":{"format":"[]{}{}","snippet":"drsbox[${1}]{${2}}{${3}}"},"doc":"This macro draws a standard rectangular DRS box."},
+		{"name":"drsbox","arg":{"format":"{}{}","snippet":"drsbox{${1}}{${2}}"},"doc":"This macro draws a standard rectangular DRS box."},
+		{"name":"drsdiabox","arg":{"format":"[]{}","snippet":"drsdiabox[${1}]{${2}}"},"doc":"This macro draws a diamond-shaped box used for representing conditions in DRS."},
+		{"name":"drsdiabox","arg":{"format":"{}","snippet":"drsdiabox{${1}}"},"doc":"This macro draws a diamond-shaped box used for representing conditions in DRS."},
+		{"name":"drsrectbox","arg":{"format":"[]{}","snippet":"drsrectbox[${1}]{${2}}"},"doc":"This macro draws a simple rectangular box consisting of only propositions without referents."},
+		{"name":"drsrectbox","arg":{"format":"{}","snippet":"drsrectbox{${1}}"},"doc":"This macro draws a simple rectangular box consisting of only propositions without referents."},
+		{"name":"rowheight"},
+		{"name":"xybarconnect","arg":{"format":"[][](){}","snippet":"xybarconnect[${1:spacing}][${2:line art}](${3:start pos, end pos}){${4:target node}}"}},
+		{"name":"xybarconnect","arg":{"format":"(){}","snippet":"xybarconnect(${1:start pos, end pos}){${2:target node}}"}},
+		{"name":"xybarnode","arg":{"format":"{}","snippet":"xybarnode{${1}}"}},
+		{"name":"xyconnect","arg":{"format":"[][](){}","snippet":"xyconnect[${1:arrow form}][${2:bending of line}](${3:start pos, end pos}){${4:target node number}}"}},
+		{"name":"xyconnect","arg":{"format":"(){}","snippet":"xyconnect(${1:start pos, end pos}){${2:target node number}}"}},
+		{"name":"xynode","arg":{"format":"[]{}","snippet":"xynode[${1}]{${2}}"},"doc":"\\xynode declares and connects nodes inside one macro."},
+		{"name":"xynode","arg":{"format":"{}","snippet":"xynode{${1}}"},"doc":"\\xynode declares and connects nodes inside one macro."},
+		{"name":"xynodefont","arg":{"format":"{}","snippet":"xynodefont{${1}}"}},
+		{"name":"xyterminal","arg":{"format":"{}","snippet":"xyterminal{${1}}"}},
+		{"name":"xytext","arg":{"format":"{}","snippet":"xytext{${1}}"}},
+		{"name":"xytree","arg":{"format":"[]{}","snippet":"xytree[${1}]{${2}}"}},
+		{"name":"xytree","arg":{"format":"{}","snippet":"xytree{${1}}"}},
+		{"name":"xytrinode","arg":{"format":"[]{}","snippet":"xytrinode[${1}]{${2}}"}},
+		{"name":"xytrinode","arg":{"format":"{}","snippet":"xytrinode{${1}}"}},
+		{"name":"yynode","arg":{"format":"[]{}","snippet":"yynode[${1}]{${2}}"},"doc":"\\yynode specifies a node in \\yytree command."},
+		{"name":"yynode","arg":{"format":"{}","snippet":"yynode{${1}}"},"doc":"\\yynode specifies a node in \\yytree command."},
+		{"name":"yytree","arg":{"format":"[]{}","snippet":"yytree[${1}]{${2}}"}},
+		{"name":"yytree","arg":{"format":"{}","snippet":"yytree{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"calc"}],
+	"macros": [
+		{"name":"NomGroup","arg":{"format":"{}","snippet":"NomGroup{${1:heading}}"},"doc":"Headings can be set with the \\NomGroup command."},
+		{"name":"UnitLabel","arg":{"format":"{}","snippet":"UnitLabel{${1:unit}}"}},
+		{"name":"UnitLabelWdth"},
+		{"name":"UnitLine","arg":{"format":"[]{}{}","snippet":"UnitLine[${1:unit width}]{${2:description}}{${3:unit}}"},"doc":"Items with units declarations can be set with the \\UnitLine command."},
+		{"name":"UnitLine","arg":{"format":"{}{}","snippet":"UnitLine{${1:description}}{${2:unit}}"},"doc":"Items with units declarations can be set with the \\UnitLine command."}
+	],
+	"envs": [
+		{"name":"Nomencl","arg":{"format":"[]","snippet":"[${1:label width}]"},"doc":"The package provides the Nomencl list environment to typeset lists of symbols."},
+		{"name":"Nomencl","doc":"The package provides the Nomencl list environment to typeset lists of symbols."}
+	],
+	"keys": {}
+}

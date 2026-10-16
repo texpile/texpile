@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"verbatim"}],
+	"macros": [
+		{"name":"answerfilesfalse","unusual":true},
+		{"name":"answerfilestrue","unusual":true},
+		{"name":"Closesolutionfile","arg":{"format":"{}","snippet":"Closesolutionfile{${1:handle}}"}},
+		{"name":"Currentlabel"},
+		{"name":"ifanswerfiles","unusual":true},
+		{"name":"Ifanswerfiles","arg":{"format":"{}{}","snippet":"Ifanswerfiles{${1}}{${2}}"},"unusual":true},
+		{"name":"Iffileundefined","arg":{"format":"{}{}{}","snippet":"Iffileundefined{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"Ifopen","arg":{"format":"{}{}{}","snippet":"Ifopen{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"Newassociation","arg":{"format":"{}{}{}","snippet":"Newassociation{${1:source env}}{${2:destination env}}{${3:handle}}"}},
+		{"name":"newsolution","arg":{"format":"{}","snippet":"newsolution{${1}}"},"unusual":true},
+		{"name":"Opensolutionfile","arg":{"format":"{}[]","snippet":"Opensolutionfile{${1:handle}}[${2:file name}]"}},
+		{"name":"Opensolutionfile","arg":{"format":"{}","snippet":"Opensolutionfile{${1:handle}}"}},
+		{"name":"Readsolutionfile","arg":{"format":"{}","snippet":"Readsolutionfile{${1:handle}}"}},
+		{"name":"solutionextension","doc":"The command \\solutionextension can be redefined to change tex to some other extension."},
+		{"name":"solutionpoint"},
+		{"name":"solutionstyle","arg":{"format":"{}","snippet":"solutionstyle{${1:label}}"}},
+		{"name":"Writetofile","arg":{"format":"{}{}","snippet":"Writetofile{${1:handle}}{${2:text}}"}}
+	],
+	"envs": [
+		{"name":"Filesave","arg":{"format":"{}","snippet":"{${1:handle}}"}}
+	],
+	"keys": {
+		"\\usepackage/answers#c": ["nosolutionfiles"]
+	},
+	"args": ["\\usepackage/answers#c"]
+}

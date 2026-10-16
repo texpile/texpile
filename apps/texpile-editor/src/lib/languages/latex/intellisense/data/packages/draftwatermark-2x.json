@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"everypage"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"color"}],
+	"macros": [
+		{"name":"DraftwatermarkOptions","arg":{"format":"{}","snippet":"DraftwatermarkOptions{${1:options}}","keys":["keyval:draftwatermark"],"keyPos":0},"doc":"The package behavior can also be dynamically changed after the package is loaded by the command \\DraftwatermarkOptions{<options>} that can be used anywhere in the document source."},
+		{"name":"DraftwatermarkStdMark","doc":"the macro \\DraftwatermarkStdMark is provided to do the standard job of typesetting the watermark text according to the configuration-defined font, color, angle, and so on."},
+		{"name":"SetWatermarkAngle","arg":{"format":"{}","snippet":"SetWatermarkAngle{${1:angle}}"}},
+		{"name":"SetWatermarkColor","arg":{"format":"[]{}","snippet":"SetWatermarkColor[${1:model}]{${2:color spec}}"}},
+		{"name":"SetWatermarkColor","arg":{"format":"{}","snippet":"SetWatermarkColor{${1:color spec}}"}},
+		{"name":"SetWatermarkFontSize","arg":{"format":"{}","snippet":"SetWatermarkFontSize{${1:length}}"}},
+		{"name":"SetWatermarkHorCenter","arg":{"format":"{}","snippet":"SetWatermarkHorCenter{${1:length}}"}},
+		{"name":"SetWatermarkLightness","arg":{"format":"{}","snippet":"SetWatermarkLightness{${1:lightness}}"},"doc":"Command \\SetWatermarkLightness{<real>} is the same as \\DraftwatermarkOptions{color={[<gray>]{<real>}}}."},
+		{"name":"SetWatermarkScale","arg":{"format":"{}","snippet":"SetWatermarkScale{${1:scale}}"}},
+		{"name":"SetWatermarkText","arg":{"format":"{}","snippet":"SetWatermarkText{${1:text}}"}},
+		{"name":"SetWatermarkVerCenter","arg":{"format":"{}","snippet":"SetWatermarkVerCenter{${1:length}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:draftwatermark": ["anchor=","angle=","color=","colormodel=","colorspec=","final","fontsize=","hpos=","markcmd=","nostamp","pos=","scale=","text=","vpos=","alignment=${1|l,c,r|}","hanchor=${1|l,c,r|}","stamp=${1|true,false|}","vanchor=${1|t,m,b|}"],
+		"\\usepackage/draftwatermark-2x#c": ["alignment=${1|l,c,r|}","anchor=","angle=","color=","colormodel=","colorspec=","final","firstpage","firstpageonly=${1|true,false|}","fontsize=","hanchor=${1|l,c,r|}","hpos=","markcmd=","nostamp","pos=","scale=","stamp=${1|true,false|}","text=","vanchor=${1|t,m,b|}","vpos="]
+	},
+	"args": ["\\usepackage/draftwatermark-2x#c"]
+}

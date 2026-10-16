@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"printindex","arg":{"format":"[]","snippet":"printindex[${1:index name}]"}},
+		{"name":"printindex"}
+	],
+	"envs": [],
+	"keys": {}
+}

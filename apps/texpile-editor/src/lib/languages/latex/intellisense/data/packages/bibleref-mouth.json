@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"bibleref","arg":{"format":"{}","snippet":"bibleref{${1:reference}}"},"doc":"The document should create a Bible reference by calling \\bibleref{⟨reference⟩}."},
+		{"name":"bookchapterseparator","arg":{"format":"{}","snippet":"bookchapterseparator{${1}}"},"unusual":true},
+		{"name":"chapterverseseparator","arg":{"format":"{}","snippet":"chapterverseseparator{${1}}"},"unusual":true},
+		{"name":"ifhasbook","arg":{"format":"{}{}{}","snippet":"ifhasbook{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"ifhaschapter","arg":{"format":"{}{}{}","snippet":"ifhaschapter{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"ifhasverse","arg":{"format":"{}{}{}","snippet":"ifhasverse{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"ifsamebook","arg":{"format":"{}{}{}{}","snippet":"ifsamebook{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"ifsamechapter","arg":{"format":"{}{}{}{}","snippet":"ifsamechapter{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"ifsameverse","arg":{"format":"{}{}{}{}","snippet":"ifsameverse{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"providebiblebook","arg":{"format":"{}{}{}","snippet":"providebiblebook{${1:style name}}{${2:book}}{${3:book name}}"},"doc":"A new stylized Bible book name can be created with \\providebiblebook{⟨stylename⟩}{⟨book⟩}{⟨bookname⟩}."},
+		{"name":"providebiblebookalias","arg":{"format":"{}{}","snippet":"providebiblebookalias{${1:book}}{${2:alias}}"},"doc":"A new Bible book alias can be created with \\providebiblebookalias{⟨book⟩}{⟨alias⟩}."},
+		{"name":"providebiblegatewaystyle","arg":{"format":"{}{}{}","snippet":"providebiblegatewaystyle{${1:style name}}{${2:url style name}}{${3:text style name}}"}},
+		{"name":"providebiblegatewayurl","arg":{"format":"{}{}","snippet":"providebiblegatewayurl{${1:url style name}}{${2:version}}"}},
+		{"name":"providebiblestyle","arg":{"format":"{}{}","snippet":"providebiblestyle{${1:style name}}{${2:formatter}}"},"doc":"To create a new Bible style, the user calls \\providebiblestyle{⟨stylename⟩}{⟨formatter⟩}."},
+		{"name":"setbiblestyle","arg":{"format":"{}","snippet":"setbiblestyle{${1:style name}}"},"doc":"The style of the rendered reference can be changed by calling \\setbiblestyle{⟨stylename⟩}."},
+		{"name":"standardbiblestyle","arg":{"format":"{}{}{}{}{}{}{}{}{}{}{}{}","snippet":"standardbiblestyle{${1:book style}}{${2:bkchsep}}{${3:chvsep}}{${4:bksep}}{${5:chsep}}{${6:vsep}}{${7:rangesep}}{${8:chapter style}}{${9:verse style}}{${10:begin passage}}{${11:end passage}}{${12:list}}"},"doc":"Many different Bible styles have a lot of similarities in structure. As long as the stylized references follow a standard pattern, they can be formatted with this command."},
+		{"name":"thebook","arg":{"format":"{}","snippet":"thebook{${1}}"},"unusual":true},
+		{"name":"thebookname","arg":{"format":"{}{}","snippet":"thebookname{${1}}{${2}}"},"unusual":true},
+		{"name":"thechapter","arg":{"format":"{}","snippet":"thechapter{${1}}"},"unusual":true},
+		{"name":"theverse","arg":{"format":"{}","snippet":"theverse{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

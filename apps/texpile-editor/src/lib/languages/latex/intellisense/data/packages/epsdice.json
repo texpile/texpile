@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"dicefile","unusual":true},
+		{"name":"epsdice","arg":{"format":"[]{}","snippet":"epsdice[${1:color}]{${2:face}}"}},
+		{"name":"epsdice","arg":{"format":"{}","snippet":"epsdice{${1:face}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

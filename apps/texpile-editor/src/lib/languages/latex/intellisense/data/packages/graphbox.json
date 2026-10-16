@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"gheight"},
+		{"name":"gwidth"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/graphbox#c": ["nobeamer"]
+	},
+	"args": ["\\usepackage/graphbox#c"]
+}

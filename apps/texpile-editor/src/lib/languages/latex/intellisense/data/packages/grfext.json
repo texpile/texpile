@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"AppendGraphicsExtensions","arg":{"format":"{}","snippet":"AppendGraphicsExtensions{${1:ext-list}}"},"doc":"macro \\AppendGraphicsExtensions adds the entries after the end of graphics’ list, whereas macro \\PrependGraphicsExtensions puts them in front of the list."},
+		{"name":"AppendGraphicsExtensions*","arg":{"format":"{}","snippet":"AppendGraphicsExtensions*{${1:ext-list}}"},"doc":"macro \\AppendGraphicsExtensions adds the entries after the end of graphics’ list, whereas macro \\PrependGraphicsExtensions puts them in front of the list."},
+		{"name":"PrependGraphicsExtensions","arg":{"format":"{}","snippet":"PrependGraphicsExtensions{${1:ext-list}}"}},
+		{"name":"PrependGraphicsExtensions*","arg":{"format":"{}","snippet":"PrependGraphicsExtensions*{${1:ext-list}}"}},
+		{"name":"PrintGraphicsExtensions","doc":"Macro \\PrintGraphicsExtensions writes the current graphics extensions list in the .log file."},
+		{"name":"RemoveGraphicsExtensions","arg":{"format":"{}","snippet":"RemoveGraphicsExtensions{${1:ext-list}}"},"doc":"All occurences of file extensions in ⟨ext-list⟩ are removed from graphics’ extension list."}
+	],
+	"envs": [],
+	"keys": {}
+}

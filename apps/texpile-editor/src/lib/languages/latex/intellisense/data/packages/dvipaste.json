@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"paste","arg":{"format":"{}{}","snippet":"paste{${1:file}}{${2:number}}"}},
+		{"name":"sendout","arg":{"format":"{}","snippet":"sendout{${1:box}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"turnpageetex"},{"name":"picture"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/turnthepage#c": ["deutsch","english","francais","nederlands","short"]
+	},
+	"args": ["\\usepackage/turnthepage#c"]
+}

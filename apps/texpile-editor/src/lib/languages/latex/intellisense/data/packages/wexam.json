@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"setspace"},{"name":"listings"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"fancybox"},{"name":"bclogo"},{"name":"mdframed"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"ifpdf"},{"name":"background"},{"name":"everypage"},{"name":"afterpage"},{"name":"multicol"},{"name":"moreenum"},{"name":"alphalph"},{"name":"intcalc"},{"name":"enumitem"},{"name":"yagusylo"},{"name":"xifthen"},{"name":"suffix"},{"name":"xargs"},{"name":"wasysym"},{"name":"pifont"},{"name":"polyglossia"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"mathpple"},{"name":"ulem"},{"name":"luabidi"},{"name":"arabicnumbers"},{"name":"hijrical"},{"name":"unibidi-lua"}],
+	"macros": [
+		{"name":"words","arg":{"format":"{}","snippet":"words{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

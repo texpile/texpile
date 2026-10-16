@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"alphalph"},{"name":"intcalc"},{"name":"enumitem"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"}],
+	"macros": [
+		{"name":"enumbinary","arg":{"format":"{}","snippet":"enumbinary{${1:counter}}"}},
+		{"name":"enumhex","arg":{"format":"{}","snippet":"enumhex{${1:counter}}"}},
+		{"name":"enumHex","arg":{"format":"{}","snippet":"enumHex{${1:counter}}"}},
+		{"name":"enumoctal","arg":{"format":"{}","snippet":"enumoctal{${1:counter}}"}},
+		{"name":"greek","arg":{"format":"{}","snippet":"greek{${1:counter}}"}},
+		{"name":"Greek","arg":{"format":"{}","snippet":"Greek{${1:counter}}"}},
+		{"name":"levelnth","arg":{"format":"{}","snippet":"levelnth{${1:counter}}"}},
+		{"name":"nthwords","arg":{"format":"{}","snippet":"nthwords{${1:counter}}"}},
+		{"name":"Nthwords","arg":{"format":"{}","snippet":"Nthwords{${1:counter}}"}},
+		{"name":"NTHWORDS","arg":{"format":"{}","snippet":"NTHWORDS{${1:counter}}"}},
+		{"name":"nwords","arg":{"format":"{}","snippet":"nwords{${1:counter}}"}},
+		{"name":"Nwords","arg":{"format":"{}","snippet":"Nwords{${1:counter}}"}},
+		{"name":"NWORDS","arg":{"format":"{}","snippet":"NWORDS{${1:counter}}"}},
+		{"name":"raisenth","arg":{"format":"{}","snippet":"raisenth{${1:counter}}"}}
+	],
+	"envs": [
+		{"name":"enumbinzero"},
+		{"name":"enumhexzero"},
+		{"name":"enumHexzero"},
+		{"name":"enumoctzero"}
+	],
+	"keys": {}
+}

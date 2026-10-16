@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tikz","if":"!draft=true+!fast=true"},{"name":"pgf","if":"!draft=true+!fast=true"},{"name":"pgfrcs","if":"!draft=true+!fast=true"},{"name":"pgfcore","if":"!draft=true+!fast=true"},{"name":"graphicx","if":"!draft=true+!fast=true"},{"name":"keyval","if":"!draft=true+!fast=true"},{"name":"graphics","if":"!draft=true+!fast=true"},{"name":"trig","if":"!draft=true+!fast=true"},{"name":"pgfsys","if":"!draft=true+!fast=true"},{"name":"xcolor","if":"!draft=true+!fast=true"},{"name":"pgfcomp-version-0-65","if":"!draft=true+!fast=true"},{"name":"pgfcomp-version-1-18","if":"!draft=true+!fast=true"},{"name":"pgffor","if":"!draft=true+!fast=true"},{"name":"pgfkeys","if":"!draft=true+!fast=true"},{"name":"pgfmath","if":"!draft=true+!fast=true"}],
+	"macros": [
+		{"name":"ProjLib"},
+		{"name":"ProjLibText"}
+	],
+	"envs": [],
+	"keys": {}
+}

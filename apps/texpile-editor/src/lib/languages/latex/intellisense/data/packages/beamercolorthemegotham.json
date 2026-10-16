@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xcolor"}],
+	"macros": [
+		{"name":"gothamHookPostColorBGSet"},
+		{"name":"gothamReloadColors","doc":"\\gothamReloadColors Command accessible to users to call the reassignation of color names used internally."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"stacklet"}],
+	"macros": [
+		{"name":"MakeActive","arg":{"format":"{}","snippet":"MakeActive{${1:char}}"}},
+		{"name":"MakeActiveAss","arg":{"format":"{}{}","snippet":"MakeActiveAss{${1:assignment}}{${2:char}}"}},
+		{"name":"MakeActiveDef","arg":{"format":"{}{}","snippet":"MakeActiveDef{${1:char}}{${2:replacement}}"}},
+		{"name":"MakeActiveLet","arg":{"format":"{}{}","snippet":"MakeActiveLet{${1:char}}{${2:cmd}}"}},
+		{"name":"MakeActiveOther","arg":{"format":"{}","snippet":"MakeActiveOther{${1:char}}"}},
+		{"name":"MakeOther","arg":{"format":"{}","snippet":"MakeOther{${1:char}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

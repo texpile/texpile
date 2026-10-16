@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"metalogo"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"iftex"},{"name":"etoolbox"},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"adjustlogos","arg":{"format":"{}","snippet":"adjustlogos{${1}}"},"doc":"\\adjustlogos may be used to adjust the logos for an unknown font."},
+		{"name":"autoadjustlogos"},
+		{"name":"autoadjustlogos*"}
+	],
+	"envs": [],
+	"keys": {}
+}

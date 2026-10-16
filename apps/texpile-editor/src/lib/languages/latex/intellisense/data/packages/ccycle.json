@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"chemstr"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"adamantane","arg":{"format":"{}","snippet":"adamantane{${1:substituent list}}"}},
+		{"name":"BackGroundColor","unusual":true},
+		{"name":"bicycheph","arg":{"format":"[]{}","snippet":"bicycheph[${1:bond list}]{${2:substituent list}}"}},
+		{"name":"bicycheph","arg":{"format":"{}","snippet":"bicycheph{${1:substituent list}}"}},
+		{"name":"bicychepv","arg":{"format":"[]{}","snippet":"bicychepv[${1:bond list}]{${2:substituent list}}"}},
+		{"name":"bicychepv","arg":{"format":"{}","snippet":"bicychepv{${1:substituent list}}"}},
+		{"name":"bornane","arg":{"format":"[]{}","snippet":"bornane[${1:bond list}]{${2:substituent list}}"}},
+		{"name":"bornane","arg":{"format":"{}","snippet":"bornane{${1:substituent list}}"}},
+		{"name":"chair","arg":{"format":"[]{}","snippet":"chair[${1:bond list}]{${2:substituent list}}"}},
+		{"name":"chair","arg":{"format":"{}","snippet":"chair{${1:substituent list}}"}},
+		{"name":"chairi","arg":{"format":"[]{}","snippet":"chairi[${1:bond list}]{${2:substituent list}}"}},
+		{"name":"chairi","arg":{"format":"{}","snippet":"chairi{${1:substituent list}}"}},
+		{"name":"frontthicktothinfalse","unusual":true},
+		{"name":"frontthicktothintrue","unusual":true},
+		{"name":"hadamantane","arg":{"format":"[]{}","snippet":"hadamantane[${1:bond list}]{${2:substituent list}}"}},
+		{"name":"hadamantane","arg":{"format":"{}","snippet":"hadamantane{${1:substituent list}}"}},
+		{"name":"iffrontthicktothin","unusual":true},
+		{"name":"ifmolfront","unusual":true},
+		{"name":"molfrontfalse","unusual":true},
+		{"name":"molfronttrue","unusual":true},
+		{"name":"yladamanposition","arg":{"format":"{}","snippet":"yladamanposition{${1}}"},"unusual":true},
+		{"name":"ylbornaneposition","arg":{"format":"{}","snippet":"ylbornaneposition{${1}}"},"unusual":true},
+		{"name":"ylchairiposition","arg":{"format":"{}","snippet":"ylchairiposition{${1}}"},"unusual":true},
+		{"name":"ylchairposition","arg":{"format":"{}","snippet":"ylchairposition{${1}}"},"unusual":true},
+		{"name":"ylhadamanposition","arg":{"format":"{}","snippet":"ylhadamanposition{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

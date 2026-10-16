@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"altfontenc","arg":{"format":"{}","snippet":"altfontenc{${1:encoding}}"},"unusual":true},
+		{"name":"AvailableFont","arg":{"format":"[]{}{}{}{}","snippet":"AvailableFont[${1:additional code}]{${2:symbolic name}}{${3:roman font}}{${4:sans serif font}}{${5:typewriter font}}"},"unusual":true},
+		{"name":"AvailableFont","arg":{"format":"{}{}{}{}","snippet":"AvailableFont{${1:symbolic name}}{${2:roman font}}{${3:sans serif font}}{${4:typewriter font}}"},"unusual":true},
+		{"name":"AvailableRMFont","arg":{"format":"[]{}{}","snippet":"AvailableRMFont[${1:additional code}]{${2:long name}}{${3:NFSS family name}}"},"unusual":true},
+		{"name":"AvailableRMFont","arg":{"format":"{}{}","snippet":"AvailableRMFont{${1:long name}}{${2:NFSS family name}}"},"unusual":true},
+		{"name":"AvailableSFFont","arg":{"format":"[]{}{}","snippet":"AvailableSFFont[${1:additional code}]{${2:long name}}{${3:NFSS family name}}"},"unusual":true},
+		{"name":"AvailableSFFont","arg":{"format":"{}{}","snippet":"AvailableSFFont{${1:long name}}{${2:NFSS family name}}"},"unusual":true},
+		{"name":"AvailableTTFont","arg":{"format":"[]{}{}","snippet":"AvailableTTFont[${1:additional code}]{${2:long name}}{${3:NFSS family name}}"},"unusual":true},
+		{"name":"AvailableTTFont","arg":{"format":"{}{}","snippet":"AvailableTTFont{${1:long name}}{${2:NFSS family name}}"},"unusual":true},
+		{"name":"DefaultRMFont","arg":{"format":"{}","snippet":"DefaultRMFont{${1:NFSS family name}}"},"unusual":true},
+		{"name":"DefaultSFFont","arg":{"format":"{}","snippet":"DefaultSFFont{${1:NFSS family name}}"},"unusual":true},
+		{"name":"DefaultTTFont","arg":{"format":"{}","snippet":"DefaultTTFont{${1:NFSS family name}}"},"unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/altfont#c": ["courier","dco","gill","helv","newcent","onlyps","palatino","pandora","times"]
+	},
+	"args": ["\\usepackage/altfont#c"]
+}

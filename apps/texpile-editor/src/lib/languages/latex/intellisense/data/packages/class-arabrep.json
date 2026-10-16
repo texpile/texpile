@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"class-report"},{"name":"arabtex"},{"name":"aconfig"},{"name":"arabaux"},{"name":"acmd"},{"name":"afonts"},{"name":"afonts2"},{"name":"aoutput"},{"name":"abidir"},{"name":"atrans"},{"name":"alatex"},{"name":"afoot"},{"name":"abjad"},{"name":"apatch"},{"name":"altxext"},{"name":"arabext"}],
+	"macros": [
+		{"name":"refname","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/arabrep#c": ["article","book"]
+	},
+	"args": ["\\documentclass/arabrep#c"]
+}

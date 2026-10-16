@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"makecvheadnamewidth"},
+		{"name":"quotewidth"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/moderncvheadi#c": ["details","left","nodetails","right","top"]
+	},
+	"args": ["\\usepackage/moderncvheadi#c"]
+}

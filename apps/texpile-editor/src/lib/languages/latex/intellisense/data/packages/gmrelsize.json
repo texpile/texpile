@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"larger","arg":{"format":"[]","snippet":"larger[${1:steps}]"}},
+		{"name":"larger"},
+		{"name":"largerr"},
+		{"name":"relsize","arg":{"format":"{}","snippet":"relsize{${1:steps}}"},"doc":"You declare the font size with \\relsize{⟨n⟩} where ⟨n⟩ gives the number of steps (”mag-step” = factor of 1.2) to change the size by."},
+		{"name":"smaller","arg":{"format":"[]","snippet":"smaller[${1:steps}]"}},
+		{"name":"smaller"},
+		{"name":"smallerr"},
+		{"name":"textlarger","arg":{"format":"[]{}","snippet":"textlarger[${1:steps}]{${2:text}}"}},
+		{"name":"textlarger","arg":{"format":"{}","snippet":"textlarger{${1:text}}"}},
+		{"name":"textsmaller","arg":{"format":"[]{}","snippet":"textsmaller[${1:steps}]{${2:text}}"}},
+		{"name":"textsmaller","arg":{"format":"{}","snippet":"textsmaller{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

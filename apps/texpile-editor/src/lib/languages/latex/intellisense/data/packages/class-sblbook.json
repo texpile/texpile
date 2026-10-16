@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"class-book"},{"name":"sblfonts"},{"name":"babel"},{"name":"Baskervaldx","engines":["pdflatex"]},{"name":"textcomp","engines":["pdflatex"]},{"name":"etoolbox"},{"name":"scalefnt","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"xpatch"},{"name":"xparse"},{"name":"biblatex-source-division"},{"name":"blx-case-expl3"},{"name":"csquotes"},{"name":"sblidx"},{"name":"imakeidx"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"multicol"},{"name":"idxlayout"},{"name":"geometry"},{"name":"ifvtex"},{"name":"nowidow"},{"name":"impnattypo"},{"name":"xcolor"},{"name":"microtype"},{"name":"fancyhdr"},{"name":"footmisc"},{"name":"caption"},{"name":"caption3"},{"name":"titlesec"},{"name":"titletoc"},{"name":"ragged2e"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"keyval","engines":["lualatex","xelatex"]},{"name":"luacode","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"acknowledgementsname"},
+		{"name":"forewordname"},
+		{"name":"introductionname"},
+		{"name":"maketitle"},
+		{"name":"prefacename"},
+		{"name":"series","arg":{"format":"{}","snippet":"series{${1}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1}}"}}
+	],
+	"envs": [
+		{"name":"acknowledgements","doc":"Add an Acknowledgements page to the book."},
+		{"name":"copyrightpage","doc":"Add a copyright page to the book."},
+		{"name":"dedication","doc":"Add a dedication to the book."},
+		{"name":"epigraph","doc":"Add an epigraph to the book."},
+		{"name":"foreword","doc":"Add a Foreword to the book."},
+		{"name":"introduction","doc":"Add an Introduction to the book."},
+		{"name":"preface","doc":"Add a Preface to the book."},
+		{"name":"seriespage","doc":"Add a series page to the book."},
+		{"name":"titlepage","doc":"Add a title page to the book."}
+	],
+	"keys": {}
+}

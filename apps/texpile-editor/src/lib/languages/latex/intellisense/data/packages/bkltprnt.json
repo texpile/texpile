@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bkltprnt#c": ["1to1","eight","four","landscape","largetypeblock","sixteen","thirtytwo","twouparticle"]
+	},
+	"args": ["\\usepackage/bkltprnt#c"]
+}

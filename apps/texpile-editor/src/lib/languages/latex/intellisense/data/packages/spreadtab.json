@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"xstring"},{"name":"simplekv"}],
+	"macros": [
+		{"name":"STcopy","arg":{"format":"{}{}","snippet":"STcopy{${1:range}}{${2:formula}}"},"doc":"To avoid having to re-enter identical formulas in adjacent cells, spreadtab provides the \\STcopy instruction."},
+		{"name":"STdate","unusual":true},
+		{"name":"SThidecol"},
+		{"name":"SThiderow"},
+		{"name":"STname","unusual":true},
+		{"name":"STprintnum","arg":{"format":"{}","snippet":"STprintnum{${1:number}}"},"doc":"Each number processed by spreadtab is given to the \\STprintnum macro in the final array."},
+		{"name":"STrep","arg":{"format":"{}{}","snippet":"STrep{${1:count}}{${2:code}}"},"doc":"Used in the argument of \\STxp, it allows you to generate empty cells or identical lines in a concise way."},
+		{"name":"STreset","doc":"To return to the default values, you can run the \\STreset macro at any time."},
+		{"name":"STset","arg":{"format":"{}","snippet":"STset{${1:key=value list}}"},"doc":"The \\STset macro includes in its mandatory argument a csv of keys = 〈values〉 to specify settings that operate for the rest of the document."},
+		{"name":"STtag","arg":{"format":"{}","snippet":"STtag{${1:tag name}}"}},
+		{"name":"STver","unusual":true},
+		{"name":"STxp","arg":{"format":"{}","snippet":"STxp{${1:code}}"},"doc":"If the macro \\STxp is present one or more times, its argument is expanded to the maximum."}
+	],
+	"envs": [
+		{"name":"spreadtab","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"spreadtab","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"pgfopts"},{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"metroset","arg":{"format":"{}","snippet":"metroset{${1:options}}","keys":["pgfkeys:/metropolis"],"keyPos":0},"doc":"Allows the user to change options midway through a presentation."},
+		{"name":"mreducelistspacing"},
+		{"name":"plain","arg":{"format":"[]{}","snippet":"plain[${1:title}]{${2:text}}"},"unusual":true},
+		{"name":"plain","arg":{"format":"{}","snippet":"plain{${1:text}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/metropolis": [".unknown=","blockbg=","darkcolors=","nosectionslide=","noslidenumbers=","titleformat plain=${1|.unknown,allcaps,allsmallcaps,regular,smallcaps|}","titleformat=","usetitleprogressbar=","usetotalslideindicator=","titleformat=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat plain=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat title=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformattitle=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat subtitle=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformatsubtitle=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat section=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformatsection=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat frame=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformatframe=${1|regular,smallcaps,allsmallcaps,allcaps|}","sectionpage=${1|progressbar,simple,none|}","subsectionpage=${1|none,simple,progressbar|}","numbering=${1|counter,none,fraction|}","progressbar=${1|none,head,frametitle,foot|}","block=${1|transparent,fill|}","background=${1|light,dark|}"],
+		"\\usepackage/beamerthememetropolis#c": [".unknown=","background=${1|light,dark|}","block=${1|transparent,fill|}","blockbg=","darkcolors=","nosectionslide=","noslidenumbers=","numbering=${1|counter,none,fraction|}","progressbar=${1|none,head,frametitle,foot|}","sectionpage=${1|progressbar,simple,none|}","subsectionpage=${1|none,simple,progressbar|}","titleformat frame=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat plain=${1|.unknown,allcaps,allsmallcaps,regular,smallcaps|}","titleformat plain=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat section=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat subtitle=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat title=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformat=","titleformat=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformatframe=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformatsection=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformatsubtitle=${1|regular,smallcaps,allsmallcaps,allcaps|}","titleformattitle=${1|regular,smallcaps,allsmallcaps,allcaps|}","usetitleprogressbar=","usetotalslideindicator="]
+	},
+	"args": ["\\usepackage/beamerthememetropolis#c"]
+}

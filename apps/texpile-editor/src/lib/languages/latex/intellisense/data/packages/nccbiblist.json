@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"topsection"}],
+	"macros": [
+		{"name":"bibliststyle","doc":"The style of preparing the bibliography is controlled with the \\bibliststyle command (its default value is \\small)."}
+	],
+	"envs": [
+		{"name":"biblist","arg":{"format":"[]{}","snippet":"[${1:starting No}]{${2:prototype}}"}},
+		{"name":"biblist","arg":{"format":"{}","snippet":"{${1:prototype}}"}}
+	],
+	"keys": {}
+}

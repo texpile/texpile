@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"}],
+	"macros": [
+		{"name":"move","arg":{"format":"[]{}","snippet":"move[${1}]{${2}}"},"doc":"Draws a stone as part of a move sequence, automatically alternating colors (black, white, black, etc.)."},
+		{"name":"move","arg":{"format":"{}","snippet":"move{${1}}"},"doc":"Draws a stone as part of a move sequence, automatically alternating colors (black, white, black, etc.)."},
+		{"name":"move*","arg":{"format":"[]{}","snippet":"move*[${1}]{${2}}"},"doc":"Draws a stone as part of a move sequence, automatically alternating colors (black, white, black, etc.)."},
+		{"name":"move*","arg":{"format":"{}","snippet":"move*{${1}}"},"doc":"Draws a stone as part of a move sequence, automatically alternating colors (black, white, black, etc.)."},
+		{"name":"moves","arg":{"format":"[]{}","snippet":"moves[${1}]{${2}}"}},
+		{"name":"moves","arg":{"format":"{}","snippet":"moves{${1}}"}},
+		{"name":"moves*","arg":{"format":"[]{}","snippet":"moves*[${1}]{${2}}"}},
+		{"name":"moves*","arg":{"format":"{}","snippet":"moves*{${1}}"}},
+		{"name":"prisoner","arg":{"format":"[]{}","snippet":"prisoner[${1}]{${2}}"},"doc":"Draws a prisoner stone at a specific intersection, with options to customize its style."},
+		{"name":"prisoner","arg":{"format":"{}","snippet":"prisoner{${1}}"},"doc":"Draws a prisoner stone at a specific intersection, with options to customize its style."},
+		{"name":"prisoners","arg":{"format":"[]{}","snippet":"prisoners[${1}]{${2}}"},"doc":"Places multiple prisoner stones in a single line, efficient for showing captured groups."},
+		{"name":"prisoners","arg":{"format":"{}","snippet":"prisoners{${1}}"},"doc":"Places multiple prisoner stones in a single line, efficient for showing captured groups."},
+		{"name":"stone","arg":{"format":"[]{}","snippet":"stone[${1}]{${2}}"}},
+		{"name":"stone","arg":{"format":"{}","snippet":"stone{${1}}"}},
+		{"name":"stones","arg":{"format":"[]{}","snippet":"stones[${1}]{${2}}"}},
+		{"name":"stones","arg":{"format":"{}","snippet":"stones{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

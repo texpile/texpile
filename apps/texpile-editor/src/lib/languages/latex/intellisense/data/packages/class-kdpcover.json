@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-article"},{"name":"iexec"},{"name":"shellesc"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"microtype"},{"name":"etoolbox"},{"name":"calc"},{"name":"setspace"},{"name":"geometry"},{"name":"ifvtex"},{"name":"textpos"}],
+	"macros": [
+		{"name":"kdpxsize"},
+		{"name":"kdpysize"},
+		{"name":"putAuthor","arg":{"format":"{}","snippet":"putAuthor{${1:author}}"},"doc":"This command prints the author."},
+		{"name":"putBack","arg":{"format":"{}","snippet":"putBack{${1:text}}"}},
+		{"name":"putCopyright","arg":{"format":"{}{}","snippet":"putCopyright{${1:year}}{${2:author}}"}},
+		{"name":"putPicture","arg":{"format":"{}","snippet":"putPicture{${1:image file}}"},"doc":"This command prints the front-cover picture."},
+		{"name":"putPrice","arg":{"format":"{}","snippet":"putPrice{${1:price}}"}},
+		{"name":"putSpine","arg":{"format":"[]{}","snippet":"putSpine[${1:logo file}]{${2:text}}"}},
+		{"name":"putSpine","arg":{"format":"{}","snippet":"putSpine{${1:text}}"}},
+		{"name":"putTitle","arg":{"format":"{}","snippet":"putTitle{${1:title}}"},"doc":"This command prints the title of the book."},
+		{"name":"putTLDR","arg":{"format":"{}","snippet":"putTLDR{${1:summary}}"}},
+		{"name":"putVersion","arg":{"format":"{}","snippet":"putVersion{${1:version}}"}},
+		{"name":"putVolume","arg":{"format":"{}","snippet":"putVolume{${1:volume number}}"},"doc":"This command renders the volume figure."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"}],
+	"macros": [
+		{"name":"pgffitsubpicture","arg":{"format":"{}{}","snippet":"pgffitsubpicture{${1:south west}}{${2:north east}}"}},
+		{"name":"pgfmergesubpicture","arg":{"format":"{}","snippet":"pgfmergesubpicture{${1:name}}"}},
+		{"name":"pgfnewsubpicture","arg":{"format":"{}","snippet":"pgfnewsubpicture{${1:name}}"}},
+		{"name":"pgfnodedelete","arg":{"format":"{}","snippet":"pgfnodedelete{${1}}"},"unusual":true},
+		{"name":"pgfnodeifexists","arg":{"format":"{}{}{}","snippet":"pgfnodeifexists{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"pgfplacesubpicture"},
+		{"name":"pgfrestoresubpicture","arg":{"format":"{}","snippet":"pgfrestoresubpicture{${1:name}}"}},
+		{"name":"pgfsavesubpicture","arg":{"format":"{}","snippet":"pgfsavesubpicture{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"pgfsubpicture"}
+	],
+	"keys": {}
+}

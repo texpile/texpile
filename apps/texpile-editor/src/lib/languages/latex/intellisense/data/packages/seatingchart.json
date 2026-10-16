@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"scAliasRoom","arg":{"format":"{}{}","snippet":"scAliasRoom{${1:alias}}{${2:room}}"},"doc":"Sets ⟨alias⟩ as a replacement name for ⟨room⟩."},
+		{"name":"scAssignSeatAt","arg":{"format":"{}{}{}","snippet":"scAssignSeatAt{${1:row}}{${2:seat number}}{${3:label}}"},"unusual":true},
+		{"name":"scConfig","arg":{"format":"{}","snippet":"scConfig{${1:key list}}"},"doc":"This command can be used to set all keys mentioned in Section 3.1, except for room, shape, rows, and seats per row, after the seatingchart environment has begun."},
+		{"name":"scConfigScheme","arg":{"format":"{}","snippet":"scConfigScheme{${1:key list}}"},"doc":"Sets keys just like the optional argument of \\scSeatingScheme, but does not assign seats."},
+		{"name":"scDeclareRoom","arg":{"format":"{}{}","snippet":"scDeclareRoom{${1:room name}}{${2:key list}}"},"doc":"A new room layout is created for the room ⟨room name⟩."},
+		{"name":"scDrawSeating","arg":{"format":"[]","snippet":"scDrawSeating[${1:seat width=, seat height=}]"}},
+		{"name":"scDrawSeating"},
+		{"name":"scGenerateSeatingList","arg":{"format":"[]{}","snippet":"scGenerateSeatingList[${1:input file}]{${2:output file}}"},"doc":"Creates a CSV file ⟨output file⟩ containing the labels of the assigned seats, one per line."},
+		{"name":"scGenerateSeatingList","arg":{"format":"{}","snippet":"scGenerateSeatingList{${1:output file}}"},"doc":"Creates a CSV file ⟨output file⟩ containing the labels of the assigned seats, one per line."},
+		{"name":"scGenerateSeatingList*","arg":{"format":"[]{}","snippet":"scGenerateSeatingList*[${1:input file}]{${2:output file}}"},"doc":"Creates a CSV file ⟨output file⟩ containing the labels of the assigned seats, one per line."},
+		{"name":"scGenerateSeatingList*","arg":{"format":"{}","snippet":"scGenerateSeatingList*{${1:output file}}"},"doc":"Creates a CSV file ⟨output file⟩ containing the labels of the assigned seats, one per line."},
+		{"name":"scLoadSeatingList","arg":{"format":"[]{}","snippet":"scLoadSeatingList[${1:key list}]{${2:input file}}"},"doc":"The command imports labels from ⟨input file⟩ and automatically changes the label format to l, so that the imported text is shown on its seat."},
+		{"name":"scLoadSeatingList","arg":{"format":"{}","snippet":"scLoadSeatingList{${1:input file}}"},"doc":"The command imports labels from ⟨input file⟩ and automatically changes the label format to l, so that the imported text is shown on its seat."},
+		{"name":"scRemoveSeatAt","arg":{"format":"{}{}","snippet":"scRemoveSeatAt{${1:row}}{${2:seat number}}"},"doc":"Removes seat ⟨seat number⟩ in row ⟨row⟩ from the layout."},
+		{"name":"scRemoveSeats","arg":{"format":"{}","snippet":"scRemoveSeats{${1:list}}"},"doc":"Removes all seats listed in the comma-separated ⟨list⟩, where each entry is of the form {⟨row⟩,⟨seat number⟩}."},
+		{"name":"scSeatingList","arg":{"format":"[]{}","snippet":"scSeatingList[${1}]{${2}}"},"unusual":true,"if":"legacy"},
+		{"name":"scSeatingList","arg":{"format":"{}","snippet":"scSeatingList{${1}}"},"unusual":true,"if":"legacy"},
+		{"name":"scSeatingList*","arg":{"format":"[]{}","snippet":"scSeatingList*[${1}]{${2}}"},"unusual":true,"if":"legacy"},
+		{"name":"scSeatingList*","arg":{"format":"{}","snippet":"scSeatingList*{${1}}"},"unusual":true,"if":"legacy"},
+		{"name":"scSeatingScheme","arg":{"format":"[]{}","snippet":"scSeatingScheme[${1:key list}]{${2:name}}"}},
+		{"name":"scSeatingScheme","arg":{"format":"{}","snippet":"scSeatingScheme{${1:name}}"}},
+		{"name":"scSeatingScheme*","arg":{"format":"[]{}","snippet":"scSeatingScheme*[${1:key list}]{${2:name}}"}},
+		{"name":"scSeatingScheme*","arg":{"format":"{}","snippet":"scSeatingScheme*{${1:name}}"}},
+		{"name":"scSetAisle","arg":{"format":"[]{}","snippet":"scSetAisle[${1:start row-end row}]{${2:seat number}}"},"doc":"Inserts an aisle at the position of ⟨seat number⟩ through all rows."},
+		{"name":"scSetAisle","arg":{"format":"{}","snippet":"scSetAisle{${1:seat number}}"},"doc":"Inserts an aisle at the position of ⟨seat number⟩ through all rows."}
+	],
+	"envs": [
+		{"name":"seatingchart","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"seatingchart"}
+	],
+	"keys": {}
+}

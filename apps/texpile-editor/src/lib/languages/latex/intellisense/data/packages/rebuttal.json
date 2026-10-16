@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"calc"},{"name":"environ"},{"name":"etoolbox"},{"name":"marginnote"},{"name":"pgfkeys"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"iftex"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"todonotes"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"ulem"},{"name":"xstring"},{"name":"pdfcomment"},{"name":"datetime2"},{"name":"tracklang"},{"name":"zref-savepos"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"auxhook"},{"name":"refcount"},{"name":"ifpdf"},{"name":"ifluatex"},{"name":"soulpos"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"luatex85","engines":["lualatex"]}],
+	"macros": [
+		{"name":"addition","arg":{"format":"[]{}","snippet":"addition[${1:options}]{${2:text}}"}},
+		{"name":"addition","arg":{"format":"{}","snippet":"addition{${1:text}}"}},
+		{"name":"change","arg":{"format":"[]{}{}","snippet":"change[${1:options}]{${2:old text}}{${3:new text}}"},"doc":"\\change expects two arguments, where the first one denotes the changed text, and the second one the new text."},
+		{"name":"change","arg":{"format":"{}{}","snippet":"change{${1:old text}}{${2:new text}}"},"doc":"\\change expects two arguments, where the first one denotes the changed text, and the second one the new text."},
+		{"name":"deletion","arg":{"format":"[]{}","snippet":"deletion[${1:options}]{${2:text}}"}},
+		{"name":"deletion","arg":{"format":"{}","snippet":"deletion{${1:text}}"}},
+		{"name":"rebuttalanswerlabel","unusual":true},
+		{"name":"rebuttalset","arg":{"format":"{}","snippet":"rebuttalset{${1:options}}","keys":["pgfkeys:/rebuttal"],"keyPos":0},"doc":"Allows to update package options."},
+		{"name":"rebuttaltotalchanges","unusual":true},
+		{"name":"rebuttaltotalcomments","unusual":true},
+		{"name":"theHrebuttalcomment","unusual":true},
+		{"name":"therebuttal","unusual":true},
+		{"name":"therebuttalanswer","unusual":true},
+		{"name":"therebuttalcomment","unusual":true}
+	],
+	"envs": [
+		{"name":"additionenv","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"additionenv"},
+		{"name":"answer"},
+		{"name":"changeenv","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:old text}}"}},
+		{"name":"changeenv","arg":{"format":"{}","snippet":"{${1:old text}}"}},
+		{"name":"comment"},
+		{"name":"deletionenv","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"deletionenv"},
+		{"name":"rebuttal","arg":{"format":"[]","snippet":"[${1:title}]"},"doc":"The `rebuttal` environment can contain several blocks that refer to editor's or specific reviewers' comments and your replies to referees' comments."},
+		{"name":"rebuttal","doc":"The `rebuttal` environment can contain several blocks that refer to editor's or specific reviewers' comments and your replies to referees' comments."}
+	],
+	"keys": {
+		"pgfkeys:/rebuttal": ["addition/color=","answer/font=","change/color=","change/from color=","change/from command=","comment/font=","comment/label/font=","deletion/color=","deletion/command=","execute on begin=","execute on end=","reference/font=","title/font=","addition/font=","answer/label/font=","change/font=","deletion/font=","marked=${1|true,false|}","no hyperlinks=${1|true,false|}"]
+	}
+}

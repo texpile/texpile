@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"endnotes"}],
+	"macros": [
+		{"name":"addtoendnotes","arg":{"format":"{}","snippet":"addtoendnotes{${1:text}}"}},
+		{"name":"endnote","arg":{"format":"[]{}","snippet":"endnote[${1:number}]{${2:text}}"}},
+		{"name":"endnote","arg":{"format":"{}","snippet":"endnote{${1:text}}"}},
+		{"name":"endnotemark","arg":{"format":"[]","snippet":"endnotemark[${1:number}]"}},
+		{"name":"endnotemark"},
+		{"name":"endnotetext","arg":{"format":"[]{}","snippet":"endnotetext[${1:number}]{${2:text}}"}},
+		{"name":"endnotetext","arg":{"format":"{}","snippet":"endnotetext{${1:text}}"}},
+		{"name":"enoteformat","unusual":true},
+		{"name":"enoteheading"},
+		{"name":"enotesize"},
+		{"name":"kcharparline","arg":{"format":"{}","snippet":"kcharparline{${1:characters}}"}},
+		{"name":"linesparpage","arg":{"format":"{}","snippet":"linesparpage{${1:lines}}"}},
+		{"name":"makeenmark","unusual":true},
+		{"name":"notesname"},
+		{"name":"theendnotes"},
+		{"name":"theenmark","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

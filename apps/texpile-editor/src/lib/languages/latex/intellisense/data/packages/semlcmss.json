@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"articlemag","arg":{"format":"{}","snippet":"articlemag{${1}}"},"unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ptsize","arg":{"format":"{}","snippet":"ptsize{${1}}"},"unusual":true},
+		{"name":"slidefonts","doc":"The command \\slidefonts can be used for any special font commands that should apply only to slides."},
+		{"name":"slidesmag","arg":{"format":"{}","snippet":"slidesmag{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

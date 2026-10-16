@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"PstGanttTask","arg":{"format":"[]{}{}","snippet":"PstGanttTask[${1}]{${2}}{${3}}"}},
+		{"name":"PstGanttTask","arg":{"format":"{}{}","snippet":"PstGanttTask{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

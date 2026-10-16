@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"citeauthor","arg":{"format":"{}","snippet":"citeauthor{${1:key}}"}},
+		{"name":"citenoparens","arg":{"format":"[]{}","snippet":"citenoparens[${1:note}]{${2:key}}"}},
+		{"name":"citenoparens","arg":{"format":"{}","snippet":"citenoparens{${1:key}}"}},
+		{"name":"citetext","arg":{"format":"[]{}","snippet":"citetext[${1:note}]{${2:key}}"}},
+		{"name":"citetext","arg":{"format":"{}","snippet":"citetext{${1:key}}"}},
+		{"name":"citeyear","arg":{"format":"{}","snippet":"citeyear{${1:key}}"}},
+		{"name":"shortcite","arg":{"format":"[]{}","snippet":"shortcite[${1:note}]{${2:key}}"}},
+		{"name":"shortcite","arg":{"format":"{}","snippet":"shortcite{${1:key}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

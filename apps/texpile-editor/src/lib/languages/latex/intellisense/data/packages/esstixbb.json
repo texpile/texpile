@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"mathbb","arg":{"format":"{}","snippet":"mathbb{${1:letters}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

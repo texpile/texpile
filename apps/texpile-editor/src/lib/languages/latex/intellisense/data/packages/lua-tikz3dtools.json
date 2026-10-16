@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"ltdtappendcurve","arg":{"format":"[]","snippet":"ltdtappendcurve[${1:keys}]"}},
+		{"name":"ltdtappendcurve"},
+		{"name":"ltdtappendlabel","arg":{"format":"[]","snippet":"ltdtappendlabel[${1:keys}]"}},
+		{"name":"ltdtappendlabel"},
+		{"name":"ltdtappendlight","arg":{"format":"[]","snippet":"ltdtappendlight[${1:keys}]"}},
+		{"name":"ltdtappendlight"},
+		{"name":"ltdtappendsolid","arg":{"format":"[]","snippet":"ltdtappendsolid[${1:keys}]"}},
+		{"name":"ltdtappendsolid"},
+		{"name":"ltdtappendsurface","arg":{"format":"[]","snippet":"ltdtappendsurface[${1:keys}]"}},
+		{"name":"ltdtappendsurface"},
+		{"name":"ltdtappendtriangle","arg":{"format":"[]","snippet":"ltdtappendtriangle[${1:keys}]"}},
+		{"name":"ltdtappendtriangle"},
+		{"name":"ltdtdisplaysimplices"},
+		{"name":"ltdtsetobject","arg":{"format":"[]","snippet":"ltdtsetobject[${1:keys}]"}},
+		{"name":"ltdtsetobject"}
+	],
+	"envs": [],
+	"keys": {}
+}

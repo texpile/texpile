@@ -1,164 +1,31 @@
 {
-  "deps": [
-    {
-      "name": "tikz"
-    },
-    {
-      "name": "tikzlibrarycalc"
-    },
-    {
-      "name": "xpatch"
-    }
-  ],
-  "macros": [
-    {
-      "name": "metricsymbols",
-      "arg": {
-        "format": "{}",
-        "snippet": "metricsymbols{${1:symbols}}"
-      }
-    },
-    {
-      "name": "metricsymbols*",
-      "arg": {
-        "format": "{}",
-        "snippet": "metricsymbols*{${1:symbols}}"
-      }
-    },
-    {
-      "name": "metricsymbols",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "metricsymbols[${2:number=higlighting}]{${1:symbols}}"
-      }
-    },
-    {
-      "name": "metricsymbols*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "metricsymbols*[${2:number=higlighting}]{${1:symbols}}"
-      }
-    },
-    {
-      "name": "metrics",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "metrics{${1:symbols}}{${2:syllables}}"
-      }
-    },
-    {
-      "name": "metrics",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "metrics[${3:number=higlighting}]{${1:symbols}}{${2:syllables}}"
-      }
-    },
-    {
-      "name": "acct",
-      "arg": {
-        "format": "{}",
-        "snippet": "acct{${1:vowel}}"
-      }
-    },
-    {
-      "name": "brv",
-      "arg": {
-        "format": "{}",
-        "snippet": "brv{${1:vowel}}"
-      }
-    },
-    {
-      "name": "lng",
-      "arg": {
-        "format": "{}",
-        "snippet": "lng{${1:vowel}}"
-      }
-    },
-    {
-      "name": "bow",
-      "arg": {
-        "format": "{}",
-        "snippet": "bow{${1:syllables}}"
-      }
-    },
-    {
-      "name": "verseref",
-      "arg": {
-        "format": "{}",
-        "snippet": "verseref{${1:reference}}"
-      }
-    },
-    {
-      "name": "setmetrixvar",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "setmetrixvar{${1:variable%keyvals}}{${2:value}}",
-        "keys": [
-          "\\setmetrixvar,\\usemetrixvar"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "usemetrixvar",
-      "arg": {
-        "format": "{}",
-        "snippet": "usemetrixvar{${1:variable%keyvals}}",
-        "keys": [
-          "\\setmetrixvar,\\usemetrixvar"
-        ],
-        "keyPos": 0
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "symbolline"
-    },
-    {
-      "name": "metricverses"
-    },
-    {
-      "name": "metricverses",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:source}]"
-      }
-    }
-  ],
-  "keys": {
-    "\\setmetrixvar,\\usemetrixvar": [
-      "symbollinewidth",
-      "bigsymbollinewidth",
-      "accentlinewidth",
-      "bowlinewidth",
-      "symbolsep",
-      "baseunit",
-      "bigbaseunit",
-      "shortsyllablelimit",
-      "gap",
-      "symbolshift",
-      "lngshift",
-      "lngshortening",
-      "lngminlength",
-      "brvshift",
-      "dotshift",
-      "itcorrection",
-      "accentxshift",
-      "bowshift",
-      "bowshortening",
-      "bowlooseness",
-      "symbolcolor",
-      "accentcolor",
-      "bowcolor",
-      "highlightcolor",
-      "fillcolor",
-      "arrow",
-      "breakgap",
-      "emptywidth",
-      "acute",
-      "grave"
-    ]
-  },
-  "args": []
+	"deps": [{"name":"xparse"},{"name":"xpatch"},{"name":"etoolbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"textcomp"}],
+	"macros": [
+		{"name":"acct","arg":{"format":"(){}","snippet":"acct(${1:coordinate}){${2:vowel}}"},"doc":"\\acct This macro prints the dot accent below its argument."},
+		{"name":"bow","arg":{"format":"[]{}[]","snippet":"bow[${1:left length}]{${2:syllables}}[${3:right length}]"},"doc":"\\bow This macro prints the bow below it’s argument."},
+		{"name":"bow","arg":{"format":"{}","snippet":"bow{${1:syllables}}"},"doc":"\\bow This macro prints the bow below it’s argument."},
+		{"name":"brv","arg":{"format":"(){}","snippet":"brv(${1:coordinate}){${2:vowel}}"},"doc":"\\brv This macro prints the brevis accent above its argument."},
+		{"name":"lng","arg":{"format":"()[]{}[]","snippet":"lng(${1:coordinate})[${2:left length}]{${3:vowel}}[${4:right length}]"},"doc":"\\lng This macro prints the longa accent above its argument."},
+		{"name":"lng","arg":{"format":"(){}","snippet":"lng(${1:coordinate}){${2:vowel}}"},"doc":"\\lng This macro prints the longa accent above its argument."},
+		{"name":"metrics","arg":{"format":"[]{}{}","snippet":"metrics[${1:highlighting}]{${2:symbols}}{${3:syllables}}"},"doc":"This command can be used to align the symbols above (or below) syllables."},
+		{"name":"metrics","arg":{"format":"{}{}","snippet":"metrics{${1:symbols}}{${2:syllables}}"},"doc":"This command can be used to align the symbols above (or below) syllables."},
+		{"name":"metricsymbols","arg":{"format":"[]{}","snippet":"metricsymbols[${1:highlighting}]{${2:symbols}}"},"doc":"This command typesets stand alone symbols. The starred version prints smaller versions."},
+		{"name":"metricsymbols","arg":{"format":"{}","snippet":"metricsymbols{${1:symbols}}"},"doc":"This command typesets stand alone symbols. The starred version prints smaller versions."},
+		{"name":"metricsymbols*","arg":{"format":"[]{}","snippet":"metricsymbols*[${1:highlighting}]{${2:symbols}}"},"doc":"This command typesets stand alone symbols. The starred version prints smaller versions."},
+		{"name":"metricsymbols*","arg":{"format":"{}","snippet":"metricsymbols*{${1:symbols}}"},"doc":"This command typesets stand alone symbols. The starred version prints smaller versions."},
+		{"name":"metrixFileDate","unusual":true},
+		{"name":"metrixFileDescription","unusual":true},
+		{"name":"metrixFileName","unusual":true},
+		{"name":"metrixFileVersion","unusual":true},
+		{"name":"setmetrixvar","arg":{"format":"{}{}","snippet":"setmetrixvar{${1:variable}}{${2:value}}","keys":["metrix:variable"],"keyPos":0},"doc":"This macro saves the value to an internal variable."},
+		{"name":"usemetrixvar","arg":{"format":"{}","snippet":"usemetrixvar{${1:variable}}","keys":["metrix:variable"],"keyPos":0},"doc":"To access a value you can use \\usemetrixvar{⟨variable⟩}."},
+		{"name":"verseref","arg":{"format":"{}","snippet":"verseref{${1:reference}}"},"doc":"Inside of {metricverses} you may use \\verseref to print a reference."}
+	],
+	"envs": [
+		{"name":"metricverses","doc":"Use this environment to display a verse with metric symbols, separate multiple verses by a blank line."},
+		{"name":"symbolline","doc":"Environment to display stand alone symbols."}
+	],
+	"keys": {
+		"metrix:variable": ["symbollinewidth","bigsymbollinewidth","accentlinewidth","bowlinewidth","symbolsep","baseunit","bigbaseunit","shortsyllablelimit","gap","symbolshift","lngshift","lngshortening","lngminlength","brvshift","dotshift","itcorrection","accentxshift","bowshift","bowshortening","bowlooseness","symbolcolor","accentcolor","bowcolor","highlightcolor","fillcolor","arrow","breakgap","emptywidth","acute","grave"]
+	}
 }

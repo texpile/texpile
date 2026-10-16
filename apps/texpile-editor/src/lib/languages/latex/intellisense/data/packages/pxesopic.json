@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"atbegshi-ltx"},{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

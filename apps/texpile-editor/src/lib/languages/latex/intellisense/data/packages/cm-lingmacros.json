@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"bad","arg":{"format":"{}","snippet":"bad{${1:rating}}"}},
+		{"name":"bib"},
+		{"name":"eeindent"},
+		{"name":"eenumsentence","arg":{"format":"[]{}","snippet":"eenumsentence[${1:label}]{${2:items}}"}},
+		{"name":"eenumsentence","arg":{"format":"{}","snippet":"eenumsentence{${1:items}}"}},
+		{"name":"enumsentence","arg":{"format":"[]{}","snippet":"enumsentence[${1:label}]{${2:text}}"}},
+		{"name":"enumsentence","arg":{"format":"{}","snippet":"enumsentence{${1:text}}"}},
+		{"name":"evnup","arg":{"format":"[]{}","snippet":"evnup[${1:offset}]{${2:text}}"}},
+		{"name":"evnup","arg":{"format":"{}","snippet":"evnup{${1:text}}"}},
+		{"name":"ex","arg":{"format":"{}[]","snippet":"ex{${1:number offset}}[${2:sublabel}]"}},
+		{"name":"ex","arg":{"format":"{}","snippet":"ex{${1:number offset}}"}},
+		{"name":"exlabel","unusual":true},
+		{"name":"exn","arg":{"format":"{}","snippet":"exn{${1:offset}}"}},
+		{"name":"exref","arg":{"format":"{}[]","snippet":"exref{${1:label}}[${2:sublabel}]"}},
+		{"name":"exref","arg":{"format":"{}","snippet":"exref{${1:label}}"}},
+		{"name":"exx","arg":{"format":"{}{}","snippet":"exx{${1:first offset}}{${2:last offset}}"}},
+		{"name":"exxref","arg":{"format":"{}{}","snippet":"exxref{${1:first label}}{${2:last label}}"}},
+		{"name":"llapdimen","unusual":true},
+		{"name":"mc","arg":{"format":"{}{}","snippet":"mc{${1:columns}}{${2:text}}"}},
+		{"name":"modsmalltree","arg":{"format":"[]{}{}","snippet":"modsmalltree[${1:arraystretch}]{${2:columns}}{${3:rows}}"}},
+		{"name":"modsmalltree","arg":{"format":"{}{}","snippet":"modsmalltree{${1:columns}}{${2:rows}}"}},
+		{"name":"oclap","arg":{"format":"{}{}","snippet":"oclap{${1:height}}{${2:text}}"}},
+		{"name":"ollap","arg":{"format":"{}{}","snippet":"ollap{${1:height}}{${2:text}}"}},
+		{"name":"orlap","arg":{"format":"{}{}","snippet":"orlap{${1:height}}{${2:text}}"}},
+		{"name":"outerfs","arg":{"format":"{}","snippet":"outerfs{${1:rows}}"}},
+		{"name":"shortex","arg":{"format":"{}{}{}{}","snippet":"shortex{${1:columns}}{${2:words}}{${3:glosses}}{${4:free translation}}"}},
+		{"name":"shortexnt","arg":{"format":"{}{}{}","snippet":"shortexnt{${1:columns}}{${2:words}}{${3:translation}}"}},
+		{"name":"smalltree","arg":{"format":"{}","snippet":"smalltree{${1:rows}}"}},
+		{"name":"theenums","unusual":true},
+		{"name":"theenumsi","unusual":true},
+		{"name":"toplabel","arg":{"format":"{}","snippet":"toplabel{${1:label}}"}},
+		{"name":"widelabel"}
+	],
+	"envs": [
+		{"name":"example","arg":{"format":"()[]","snippet":"(${1:label})[${2:widest llapped text}]"}},
+		{"name":"example","arg":{"format":"()","snippet":"(${1:label})"}},
+		{"name":"examples","arg":{"format":"()[]","snippet":"(${1:label})[${2:widest llapped text}]"}},
+		{"name":"examples","arg":{"format":"()","snippet":"(${1:label})"}}
+	],
+	"keys": {}
+}

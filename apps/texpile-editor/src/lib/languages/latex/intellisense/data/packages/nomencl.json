@@ -1,192 +1,44 @@
 {
-  "deps": [
-    {
-      "name": "xkeyval"
-    },
-    {
-      "name": "ifthen"
-    },
-    {
-      "name": "tocbasic"
-    },
-    {
-      "name": "array",
-      "if": "nomentbl"
-    },
-    {
-      "name": "longtable",
-      "if": "nomentbl"
-    },
-    {
-      "name": "siunitx",
-      "if": "nomentbl"
-    }
-  ],
-  "macros": [
-    {
-      "name": "makenomenclature"
-    },
-    {
-      "name": "printnomenclature"
-    },
-    {
-      "name": "printnomenclature",
-      "arg": {
-        "format": "[]",
-        "snippet": "printnomenclature[${1:space%l}]"
-      }
-    },
-    {
-      "name": "nomenclature",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "nomenclature[${3:prefix}]{${1:symbol}}{${2:description}}"
-      }
-    },
-    {
-      "name": "nomenclature",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "nomenclature{${1:symbol}}{${2:description}}"
-      }
-    },
-    {
-      "name": "nomrefeq"
-    },
-    {
-      "name": "nomrefpage"
-    },
-    {
-      "name": "nomrefeqpage"
-    },
-    {
-      "name": "nomnorefeq"
-    },
-    {
-      "name": "nomnorefpage"
-    },
-    {
-      "name": "nomnorefeqpage"
-    },
-    {
-      "name": "nomenclature",
-      "if": "nomentbl",
-      "arg": {
-        "format": "[]{}{}{}{}",
-        "snippet": "nomenclature[${5:prefix}]{${1:symbol}}{${2:description}}{${3:units}}{${4:note}}"
-      }
-    },
-    {
-      "name": "nomenclature",
-      "if": "nomentbl",
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "nomenclature{${1:symbol}}{${2:description}}{${3:units}}{${4:note}}"
-      }
-    },
-    {
-      "name": "setnomtableformat",
-      "if": "nomentbl",
-      "arg": {
-        "format": "{}",
-        "snippet": "setnomtableformat{${1:column format}}"
-      }
-    },
-    {
-      "name": "nomlabelwidth",
-      "unusual": true
-    },
-    {
-      "name": "nomname",
-      "unusual": true
-    },
-    {
-      "name": "nomAname",
-      "unusual": true
-    },
-    {
-      "name": "nomGname",
-      "unusual": true
-    },
-    {
-      "name": "nomXname",
-      "unusual": true
-    },
-    {
-      "name": "nomZname",
-      "unusual": true
-    },
-    {
-      "name": "nomgroup",
-      "unusual": true
-    },
-    {
-      "name": "nompreamble",
-      "unusual": true
-    },
-    {
-      "name": "nompostamble",
-      "unusual": true
-    },
-    {
-      "name": "nomitemsep",
-      "unusual": true
-    },
-    {
-      "name": "nomprefix",
-      "unusual": true
-    },
-    {
-      "name": "nomlabel",
-      "unusual": true
-    },
-    {
-      "name": "nomentryend",
-      "unusual": true
-    },
-    {
-      "name": "eqdeclaration",
-      "unusual": true
-    },
-    {
-      "name": "pagedeclaration",
-      "unusual": true
-    },
-    {
-      "name": "nomeqref",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "nomeqref{${1:arg}}"
-      }
-    },
-    {
-      "name": "nomeqref",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "nomeqref{${1:arg}}"
-      }
-    },
-    {
-      "name": "nompageref",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "nompageref{${1:arg}}"
-      }
-    },
-    {
-      "name": "printglossary",
-      "if": "compatible"
-    }
-  ],
-  "envs": [
-    {
-      "name": "thenomenclature",
-      "unusual": true
-    }
-  ],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"xkeyval"},{"name":"ifthen"},{"name":"tocbasic","if":"!notocbasic"},{"name":"scrbase","if":"!notocbasic"},{"name":"scrlfile","if":"!notocbasic"},{"name":"scrlfile-hook","if":"!notocbasic"},{"name":"scrlogo","if":"!notocbasic"},{"name":"array","if":"nomentbl"},{"name":"longtable","if":"nomentbl"},{"name":"siunitx","if":"nomentbl"},{"name":"translations","if":"nomentbl"},{"name":"etoolbox","if":"nomentbl"},{"name":"iftex","if":"nomentbl"},{"name":"amstext","if":"nomentbl"},{"name":"color","if":"nomentbl"}],
+	"macros": [
+		{"name":"eqdeclaration","arg":{"format":"{}","snippet":"eqdeclaration{${1:equation number}}"}},
+		{"name":"makeglossary","unusual":true},
+		{"name":"makenomenclature","doc":"The command \\makenomenclature will instruct LaTeX to open the nomenclature file ⟨filename⟩.nlo corresponding to your LaTeX file ⟨filename⟩.tex and to write the information from your \\nomenclature commands to this file."},
+		{"name":"nomAname","unusual":true},
+		{"name":"nomenclature","arg":{"format":"[]{}{}","snippet":"nomenclature[${1:prefix}]{${2:symbol}}{${3:description}}"},"doc":"Issue the \\nomenclature command (see Section 2.2) for each symbol you want to have included in the nomenclature list."},
+		{"name":"nomenclature","arg":{"format":"{}{}","snippet":"nomenclature{${1:symbol}}{${2:description}}"},"doc":"Issue the \\nomenclature command (see Section 2.2) for each symbol you want to have included in the nomenclature list."},
+		{"name":"nomentryend"},
+		{"name":"nomeqref","arg":{"format":"{}","snippet":"nomeqref{${1}}"},"unusual":true},
+		{"name":"nomGname","unusual":true},
+		{"name":"nomgroup","arg":{"format":"{}","snippet":"nomgroup{${1:group}}"}},
+		{"name":"nomitemsep","doc":"The skip between two items is adjustable by changing \\nomitemsep."},
+		{"name":"nomlabel","arg":{"format":"{}","snippet":"nomlabel{${1:symbol}}"}},
+		{"name":"nomlabelwidth"},
+		{"name":"nomname"},
+		{"name":"nomnorefeq"},
+		{"name":"nomnorefeqpage"},
+		{"name":"nomnorefpage"},
+		{"name":"nompageref","arg":{"format":"{}","snippet":"nompageref{${1}}"},"unusual":true},
+		{"name":"nompostamble"},
+		{"name":"nompreamble"},
+		{"name":"nomprefix","doc":"By default, \\nomprefix is set to “a”; redefining it supersedes the package options prefix and noprefix."},
+		{"name":"nomrefeq"},
+		{"name":"nomrefeqpage"},
+		{"name":"nomrefpage"},
+		{"name":"nomXname","unusual":true},
+		{"name":"nomZname","unusual":true},
+		{"name":"pagedeclaration","arg":{"format":"{}","snippet":"pagedeclaration{${1:page number}}"}},
+		{"name":"printglossary","arg":{"format":"[]","snippet":"printglossary[${1:label width}]"},"unusual":true,"if":"compatible"},
+		{"name":"printglossary","unusual":true,"if":"compatible"},
+		{"name":"printnomenclature","arg":{"format":"[]","snippet":"printnomenclature[${1:label width}]"}},
+		{"name":"printnomenclature"},
+		{"name":"setnomtableformat","arg":{"format":"{}","snippet":"setnomtableformat{${1:column format}}"}}
+	],
+	"envs": [
+		{"name":"thenomenclature","unusual":true}
+	],
+	"keys": {
+		"\\usepackage/nomencl#c": ["catalan","cfg","cfg=${1:file}","compatible","croatian","danish","english","french","german","intoc","italian","nocfg","nomentbl","noncompatible","noprefix","norefeq","norefpage","norwegian-bokmaal","norwegian-nynorsk","nostdsubgroups","notintoc","notocbasic","polish","portuguese","prefix","refeq","refpage","russian","slovene","spanish","stdsubgroups","tocbasic","ukrainian"]
+	},
+	"args": ["\\usepackage/nomencl#c"]
 }

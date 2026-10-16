@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"inputenc","engines":["pdflatex","xelatex"]},{"name":"babel","engines":["pdflatex","xelatex"]},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"typearea"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"lmodern","engines":["pdflatex","xelatex"]},{"name":"microtype"},{"name":"csquotes"},{"name":"enumitem"},{"name":"idxlayout"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"multicol"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"varioref"},{"name":"hypdoc"},{"name":"atveryend-ltx"},{"name":"doc"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"cleveref"},{"name":"xkeyval"},{"name":"calc"},{"name":"pbox"},{"name":"ifthen"},{"name":"keyvaltable"},{"name":"colortbl"},{"name":"array"},{"name":"color"},{"name":"booktabs"},{"name":"tabularx"},{"name":"longtable"},{"name":"xltabular"},{"name":"ltablex"},{"name":"hologo"},{"name":"showexpl"},{"name":"listings"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"varwidth"},{"name":"float"},{"name":"ragged2e"},{"name":"luainputenc","engines":["lualatex"]},{"name":"ifxetex","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"polyglossia","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"cmarg","arg":{"format":"{}","snippet":"cmarg{${1:argument}}"}},
+		{"name":"coarg","arg":{"format":"{}","snippet":"coarg{${1:argument}}"}},
+		{"name":"env","arg":{"format":"{}","snippet":"env{${1:environment}}"}},
+		{"name":"NewNiceDescription","arg":{"format":"{}{}{}{}","snippet":"NewNiceDescription{${1:type}}{${2:margin format}}{${3:argument format}}{${4:index command}}"}},
+		{"name":"NiceDescribeCounter","arg":{"format":"[]{}{}","snippet":"NiceDescribeCounter[${1:index entries}]{${2:counter}}{${3:qualifiers}}"}},
+		{"name":"NiceDescribeCounter","arg":{"format":"{}{}","snippet":"NiceDescribeCounter{${1:counter}}{${2:qualifiers}}"}},
+		{"name":"NiceDescribeCounters","arg":{"format":"{}[]{}{}","snippet":"NiceDescribeCounters{${1:n}}[${2:index entries}]{${3:counter}}{${4:qualifiers}}"}},
+		{"name":"NiceDescribeCounters","arg":{"format":"{}{}{}","snippet":"NiceDescribeCounters{${1:n}}{${2:counter}}{${3:qualifiers}}"}},
+		{"name":"NiceDescribeEnv","arg":{"format":"[]{}{}","snippet":"NiceDescribeEnv[${1:index entries}]{${2:environment}}{${3:parameters}}"}},
+		{"name":"NiceDescribeEnv","arg":{"format":"{}{}","snippet":"NiceDescribeEnv{${1:environment}}{${2:parameters}}"}},
+		{"name":"NiceDescribeEnvs","arg":{"format":"{}[]{}{}","snippet":"NiceDescribeEnvs{${1:n}}[${2:index entries}]{${3:environment}}{${4:parameters}}"}},
+		{"name":"NiceDescribeEnvs","arg":{"format":"{}{}{}","snippet":"NiceDescribeEnvs{${1:n}}{${2:environment}}{${3:parameters}}"}},
+		{"name":"NiceDescribeKey","arg":{"format":"[]{}{}","snippet":"NiceDescribeKey[${1:index entries}]{${2:key name}}{${3:key configuration}}"}},
+		{"name":"NiceDescribeKey","arg":{"format":"{}{}","snippet":"NiceDescribeKey{${1:key name}}{${2:key configuration}}"}},
+		{"name":"NiceDescribeKeys","arg":{"format":"{}[]{}{}","snippet":"NiceDescribeKeys{${1:n}}[${2:index entries}]{${3:key name}}{${4:key configuration}}"}},
+		{"name":"NiceDescribeKeys","arg":{"format":"{}{}{}","snippet":"NiceDescribeKeys{${1:n}}{${2:key name}}{${3:key configuration}}"}},
+		{"name":"NiceDescribeMacro","arg":{"format":"[]{}{}","snippet":"NiceDescribeMacro[${1:index entries}]{${2:macro}}{${3:parameters}}"}},
+		{"name":"NiceDescribeMacro","arg":{"format":"{}{}","snippet":"NiceDescribeMacro{${1:macro}}{${2:parameters}}"}},
+		{"name":"NiceDescribeMacros","arg":{"format":"{}[]{}{}","snippet":"NiceDescribeMacros{${1:n}}[${2:index entries}]{${3:macro}}{${4:parameters}}"}},
+		{"name":"NiceDescribeMacros","arg":{"format":"{}{}{}","snippet":"NiceDescribeMacros{${1:n}}{${2:macro}}{${3:parameters}}"}},
+		{"name":"pkgname","arg":{"format":"{}","snippet":"pkgname{${1:package name}}"}},
+		{"name":"pkgnames","arg":{"format":"{}","snippet":"pkgnames{${1:package names}}"}},
+		{"name":"SpecialOtherIndex","arg":{"format":"{}{}{}","snippet":"SpecialOtherIndex{${1:type}}{${2:types}}{${3:name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

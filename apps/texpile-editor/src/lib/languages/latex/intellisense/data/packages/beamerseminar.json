@@ -1,0 +1,37 @@
+{
+	"macros": [
+		{"name":"articlefalse","unusual":true},
+		{"name":"articletrue","unusual":true},
+		{"name":"blue","doc":"Mapped to \\color{blue}."},
+		{"name":"centerslidesfalse","unusual":true},
+		{"name":"centerslidestrue","unusual":true},
+		{"name":"green","doc":"Mapped to \\color{green}."},
+		{"name":"ifarticle","unusual":true},
+		{"name":"ifcenterslides","unusual":true},
+		{"name":"ifportrait","unusual":true},
+		{"name":"ifslide","unusual":true},
+		{"name":"ifslidesonly","unusual":true},
+		{"name":"newslide"},
+		{"name":"overlay","arg":{"format":"{}","snippet":"overlay{${1}}"},"doc":"Shows the material till the end of the current TeX group only on overlay numbered ⟨number⟩ + 1 or, if the accumulated option is given, from that overlay on."},
+		{"name":"portraitfalse","unusual":true},
+		{"name":"portraittrue","unusual":true},
+		{"name":"ptsize","arg":{"format":"{}","snippet":"ptsize{${1}}"}},
+		{"name":"red","doc":"Mapped to \\color{red}."},
+		{"name":"semcm","unusual":true},
+		{"name":"semin","unusual":true},
+		{"name":"slidefalse","unusual":true},
+		{"name":"slidesonlyfalse","unusual":true},
+		{"name":"slidesonlytrue","unusual":true},
+		{"name":"slidetrue","unusual":true}
+	],
+	"envs": [
+		{"name":"slide","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"slide"},
+		{"name":"slide*","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"slide*"}
+	],
+	"keys": {
+		"\\usepackage/beamerseminar#c": ["accumulated"]
+	},
+	"args": ["\\usepackage/beamerseminar#c"]
+}

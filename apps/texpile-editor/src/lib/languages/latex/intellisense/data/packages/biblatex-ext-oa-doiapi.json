@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"GetOpenaccessURLWrapped","arg":{"format":"{}","snippet":"GetOpenaccessURLWrapped{${1:DOI}}"},"doc":"Obtain the best open access URL as returned by the Unpaywall API wrapped in the \\url macro."},
+		{"name":"IsOpenaccess","arg":{"format":"{}{}{}","snippet":"IsOpenaccess{${1:DOI}}{${2:true}}{${3:false}}"},"doc":"Expands to ⟨true⟩ if the DOI is an open access work according to the Unpaywall database and to ⟨false⟩ otherwise."},
+		{"name":"OpenaccessURLisDOI","arg":{"format":"{}{}{}","snippet":"OpenaccessURLisDOI{${1:DOI}}{${2:true}}{${3:false}}"},"doc":"Expands to ⟨true⟩ if the best open access URL as returned by the Unpaywall API is the DOI and to ⟨false⟩ otherwise."},
+		{"name":"SetDOIAPICacheExpiration","arg":{"format":"{}","snippet":"SetDOIAPICacheExpiration{${1:days}}"},"doc":"Set the expiration period for the cache. If the information for an entry in the cache is older than ⟨days⟩ days it will be queried again."},
+		{"name":"SetDOIAPIMail","arg":{"format":"{}","snippet":"SetDOIAPIMail{${1:email}}"},"doc":"Define the email address that is going to be used for API queries that require an email."}
+	],
+	"envs": [],
+	"keys": {}
+}

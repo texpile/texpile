@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"faktor","arg":{"format":"[]{}{}","snippet":"faktor[${1:style command}]{${2:numerator}}{${3:denominator}}"}},
+		{"name":"faktor","arg":{"format":"{}{}","snippet":"faktor{${1:numerator}}{${2:denominator}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

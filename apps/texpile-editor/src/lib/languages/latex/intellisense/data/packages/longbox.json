@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"options"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"footnote"}],
+	"macros": [
+		{"name":"addvskip","arg":{"format":"{}","snippet":"addvskip{${1}}"}},
+		{"name":"ifinlvbox","unusual":true},
+		{"name":"inlvboxfalse","unusual":true},
+		{"name":"inlvboxtrue","unusual":true},
+		{"name":"lbox","arg":{"format":"[]{}","snippet":"lbox[${1:options}]{${2:content}}"}},
+		{"name":"lbox","arg":{"format":"{}","snippet":"lbox{${1:content}}"}},
+		{"name":"nofirstindent"},
+		{"name":"nofirstparskip"},
+		{"name":"unvcolorbox","arg":{"format":"{}{}","snippet":"unvcolorbox{${1}}{${2}}"},"unusual":true},
+		{"name":"vcolorbox","arg":{"format":"{}{}","snippet":"vcolorbox{${1}}{${2}}"}}
+	],
+	"envs": [
+		{"name":"longbox","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"longbox"},
+		{"name":"lvbox","arg":{"format":"{}{}{}{}","snippet":"{${1}}{${2}}{${3}}{${4}}"},"unusual":true}
+	],
+	"keys": {}
+}

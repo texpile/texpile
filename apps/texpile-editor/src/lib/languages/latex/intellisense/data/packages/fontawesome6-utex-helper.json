@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"faDuotoneSetSecondary","arg":{"format":"{}","snippet":"faDuotoneSetSecondary{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

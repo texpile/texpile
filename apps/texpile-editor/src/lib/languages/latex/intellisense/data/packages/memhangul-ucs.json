@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"dhucs"},{"name":"kotexutf","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"kolabels-utf"},{"name":"memhangul-common"},{"name":"etoolbox"},{"name":"xparse"},{"name":"hologo"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"obchapterstyles"},{"name":"memucs-interword"},{"name":"memucs-setspace"},{"name":"kosections-utf","if":"hanja","engines":["pdflatex"]},{"name":"konames-utf","if":"hanja"},{"name":"luatexko","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"hyperref","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"pdfescape","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"nameref","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"refcount","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"gettitlestring","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"stringenc","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"intcalc","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"url","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"bitset","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"bigintcalc","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"rerunfilecheck","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"uniquecounter","if":"pdfbookmark","engines":["lualatex","xelatex"]},{"name":"xetexko","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"bfdotemph","arg":{"format":"{}","snippet":"bfdotemph{${1:text}}"}},
+		{"name":"bfdotemphchar","unusual":true},
+		{"name":"bfemfalse","unusual":true},
+		{"name":"bfemtrue","unusual":true},
+		{"name":"ccname","unusual":true},
+		{"name":"circemph","arg":{"format":"{}","snippet":"circemph{${1:text}}"}},
+		{"name":"circemphchar","unusual":true},
+		{"name":"colorlayer","unusual":true},
+		{"name":"enclname","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"GrEmphFont","unusual":true},
+		{"name":"GrEmphHanjaFont","unusual":true},
+		{"name":"headtoname","unusual":true},
+		{"name":"kscntformat","arg":{"format":"{}{}{}","snippet":"kscntformat{${1:counter}}{${2:before}}{${3:after}}"}},
+		{"name":"marginparswitchfalse","unusual":true},
+		{"name":"marginparswitchtrue","unusual":true},
+		{"name":"MSNormalSize","unusual":true},
+		{"name":"nosetspace","unusual":true},
+		{"name":"raisedotdim","unusual":true},
+		{"name":"reversemarginfalse","unusual":true},
+		{"name":"reversemargintrue","unusual":true},
+		{"name":"sectionname","unusual":true},
+		{"name":"SetGremphFonts","arg":{"format":"{}{}","snippet":"SetGremphFonts{${1:hangul font}}{${2:hanja font}}"}},
+		{"name":"setxxxlength","arg":{"format":"{}{}","snippet":"setxxxlength{${1}}{${2}}"},"unusual":true},
+		{"name":"subappendixname","unusual":true},
+		{"name":"useremph","arg":{"format":"[][]{}","snippet":"useremph[${1:raise}][${2:char}]{${3:text}}"}},
+		{"name":"useremph","arg":{"format":"{}","snippet":"useremph{${1:text}}"}},
+		{"name":"useremphchar","unusual":true},
+		{"name":"useremphstarblack"},
+		{"name":"useremphstarwhite"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/memhangul-ucs#c": ["adjustmath","arabicfront","cjk","dhucs","dvips","figtabcapt","finemath","gremph","hangulpagestyle","hanja","interwordHWP","interworddefault","nojosa","nonfrench","nosetspace","pdfbookmark","quotespacing","strictcharcheck"]
+	},
+	"args": ["\\usepackage/memhangul-ucs#c"]
+}

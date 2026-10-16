@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"ltlabgraphicdate","unusual":true},
+		{"name":"ltlabgraphicversion","unusual":true}
+	],
+	"envs": [
+		{"name":"picture","arg":{"format":"[]()","snippet":"[${1:keys}](${2:width,height})"}},
+		{"name":"picture","arg":{"format":"()","snippet":"(${1:width,height})"}}
+	],
+	"keys": {}
+}

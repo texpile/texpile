@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"footmisc","if":"document|footnotes"}],
+	"macros": [
+		{"name":"Centering"},
+		{"name":"CenteringLeftskip"},
+		{"name":"CenteringParfillskip"},
+		{"name":"CenteringParindent"},
+		{"name":"CenteringRightskip"},
+		{"name":"justifying"},
+		{"name":"JustifyingParfillskip"},
+		{"name":"JustifyingParindent"},
+		{"name":"RaggedLeft"},
+		{"name":"RaggedLeftLeftskip"},
+		{"name":"RaggedLeftParfillskip"},
+		{"name":"RaggedLeftParindent"},
+		{"name":"RaggedLeftRightskip"},
+		{"name":"RaggedRight"},
+		{"name":"RaggedRightLeftskip"},
+		{"name":"RaggedRightParfillskip"},
+		{"name":"RaggedRightParindent"},
+		{"name":"RaggedRightRightskip"}
+	],
+	"envs": [
+		{"name":"Center"},
+		{"name":"FlushLeft"},
+		{"name":"FlushRight"},
+		{"name":"justify"}
+	],
+	"keys": {
+		"\\usepackage/ragged2e#c": ["NewCommands","NewParameters","OriginalCommands","OriginalParameters","document","footnotes","newcommands","newparameters","originalcommands","originalparameters","raggedrightboxes"]
+	},
+	"args": ["\\usepackage/ragged2e#c"]
+}

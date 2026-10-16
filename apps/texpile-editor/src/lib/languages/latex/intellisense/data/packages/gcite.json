@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"biblatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"}],
+	"macros": [
+		{"name":"cite","arg":{"format":"[]{}","snippet":"cite[${1:postnote}]{${2:keys}}"},"doc":"The traditional \\cite command groups multi-key citations together (i.e. multiple numbers, separated by commas, can be found inside the square brackets). gcite groups multi-key citations similarly, outputting the minimal bibliographic details for each work in turn, then the grouped numeric citation at the end."},
+		{"name":"cite","arg":{"format":"{}","snippet":"cite{${1:keys}}"},"doc":"The traditional \\cite command groups multi-key citations together (i.e. multiple numbers, separated by commas, can be found inside the square brackets). gcite groups multi-key citations similarly, outputting the minimal bibliographic details for each work in turn, then the grouped numeric citation at the end."},
+		{"name":"gcitefootpostsep","arg":{"format":"{}","snippet":"gcitefootpostsep{${1}}"}},
+		{"name":"gcitefootpresep","arg":{"format":"{}","snippet":"gcitefootpresep{${1}}"}},
+		{"name":"gciteitemsep","arg":{"format":"{}","snippet":"gciteitemsep{${1}}"}},
+		{"name":"origcite","arg":{"format":"[][]{}","snippet":"origcite[${1:prenote}][${2:postnote}]{${3:keys}}"}},
+		{"name":"origcite","arg":{"format":"{}","snippet":"origcite{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/gcite#c": ["normalcite"]
+	},
+	"args": ["\\usepackage/gcite#c"]
+}

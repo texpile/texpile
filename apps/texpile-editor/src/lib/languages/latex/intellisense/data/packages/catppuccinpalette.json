@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"CtpReinit","arg":{"format":"[]","snippet":"CtpReinit[${1:options}]"},"doc":"This command allows to reinitialize this package."},
+		{"name":"CtpReinit","doc":"This command allows to reinitialize this package."}
+	],
+	"envs": [],
+	"keys": {}
+}

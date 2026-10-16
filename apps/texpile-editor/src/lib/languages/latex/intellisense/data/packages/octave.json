@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"octavenumbers"},
+		{"name":"octaveprimes"},
+		{"name":"octavetable"},
+		{"name":"pitch","arg":{"format":"{}[]{}","snippet":"pitch{${1:letter}}[${2:accidental}]{${3:octave number}}"},"doc":"To enter a pitch name, use the \\pitch command."},
+		{"name":"pitch","arg":{"format":"{}{}","snippet":"pitch{${1:letter}}{${2:octave number}}"},"doc":"To enter a pitch name, use the \\pitch command."},
+		{"name":"pitchfont","doc":"The default setup (stored in the command \\pitchfont) is for pitch letters and numbers in the Helmholtz system to be in the normal font, while pitch letters and prime marks are in italic."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/octave#c": ["number","prime"]
+	},
+	"args": ["\\usepackage/octave#c"]
+}

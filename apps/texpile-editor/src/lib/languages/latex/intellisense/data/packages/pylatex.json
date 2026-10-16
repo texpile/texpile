@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"comment"},{"name":"listings"},{"name":"keyval"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"pymacros"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"PySetup","arg":{"format":"{}","snippet":"PySetup{${1:key=value}}"},"doc":"The macro \\PySetup can be used to set the preferred options using key-value pairs."},
+		{"name":"pyverb","arg":{"format":"{}","snippet":"pyverb{${1}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"python"}
+	],
+	"keys": {}
+}

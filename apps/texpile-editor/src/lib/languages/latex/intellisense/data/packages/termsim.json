@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"xtemplate"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"fontawesome5"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"varwidth"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"pdfcol"},{"name":"iftex"},{"name":"minted"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"fvextra"},{"name":"fancyvrb"},{"name":"lineno"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"latex2pydata"},{"name":"pgfopts"},{"name":"shellesc"},{"name":"float"},{"name":"fontawesome5-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"ifluatex","engines":["lualatex"]},{"name":"textcomp","engines":["lualatex","xelatex"]}],
+	"macros": [
+		{"name":"termfile","arg":{"format":"[][]{}{}","snippet":"termfile[${1:options}][${2:comments}]{${3:terminal title}}{${4:contents file}}","keys":["l3keys:termsim"],"keyPos":0},"doc":"Typesetting terminal from a file."},
+		{"name":"termfile","arg":{"format":"{}{}","snippet":"termfile{${1:terminal title}}{${2:contents file}}"},"doc":"Typesetting terminal from a file."},
+		{"name":"termfile*","arg":{"format":"[][]{}{}","snippet":"termfile*[${1:options}][${2:comments}]{${3:terminal title}}{${4:contents file}}","keys":["l3keys:termsim"],"keyPos":0},"doc":"Typesetting terminal from a file."},
+		{"name":"termfile*","arg":{"format":"{}{}","snippet":"termfile*{${1:terminal title}}{${2:contents file}}"},"doc":"Typesetting terminal from a file."},
+		{"name":"termset","arg":{"format":"{}","snippet":"termset{${1:key-values}}","keys":["l3keys:termsim"],"keyPos":0},"doc":"The arguments to \\termset are a set of options separated by commas in the form ⟨key⟩ = ⟨value⟩."}
+	],
+	"envs": [
+		{"name":"terminal","arg":{"format":"[][]{}","snippet":"[${1:options}][${2:comments}]{${3:terminal title}}","keys":["l3keys:termsim"],"keyPos":0},"doc":"Typesetting terminal with environment body."},
+		{"name":"terminal","arg":{"format":"{}","snippet":"{${1:terminal title}}"},"doc":"Typesetting terminal with environment body."},
+		{"name":"terminal*","arg":{"format":"[][]{}","snippet":"[${1:options}][${2:comments}]{${3:terminal title}}","keys":["l3keys:termsim"],"keyPos":0},"doc":"Typesetting terminal with environment body."},
+		{"name":"terminal*","arg":{"format":"{}","snippet":"{${1:terminal title}}"},"doc":"Typesetting terminal with environment body."}
+	],
+	"keys": {
+		"l3keys:termsim": ["commentf=","shsize=","shstretch=","shstyle=","minted=${1|true,false|}","os=${1|win10,mac,ubuntu|}","theme=${1|dark,light,white|}"]
+	}
+}

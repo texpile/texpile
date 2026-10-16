@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"shellesc"}],
+	"macros": [
+		{"name":"csvautobooklongtable","arg":{"format":"[]{}","snippet":"csvautobooklongtable[${1:options}]{${2:file name}}","keys":["pgfkeys:/csv"],"keyPos":0},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautobooklongtable","arg":{"format":"{}","snippet":"csvautobooklongtable{${1:file name}}"},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautobooktabular","arg":{"format":"[]{}","snippet":"csvautobooktabular[${1:options}]{${2:file name}}","keys":["pgfkeys:/csv"],"keyPos":0},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautobooktabular","arg":{"format":"{}","snippet":"csvautobooktabular{${1:file name}}"},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautolongtable","arg":{"format":"[]{}","snippet":"csvautolongtable[${1:options}]{${2:file name}}","keys":["pgfkeys:/csv"],"keyPos":0},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautolongtable","arg":{"format":"{}","snippet":"csvautolongtable{${1:file name}}"},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautotabular","arg":{"format":"[]{}","snippet":"csvautotabular[${1:options}]{${2:file name}}","keys":["pgfkeys:/csv"],"keyPos":0},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautotabular","arg":{"format":"{}","snippet":"csvautotabular{${1:file name}}"},"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvcoli"},
+		{"name":"csvcolii"},
+		{"name":"csvcoliii"},
+		{"name":"csvfilteraccept","doc":"All following consistent data lines will be accepted and processed."},
+		{"name":"csvfilterreject","doc":"All following data lines will be ignored."},
+		{"name":"csvheadset","arg":{"format":"{}","snippet":"csvheadset{${1:assignments}}"}},
+		{"name":"csviffirstrow","arg":{"format":"{}{}","snippet":"csviffirstrow{${1:then macros}}{${2:else macros}}"},"doc":"Inside the command list of \\csvreader, the ⟨then macros⟩ are executed for the first data line, and the ⟨else macros⟩ are executed for all following lines."},
+		{"name":"csvifoddrow","arg":{"format":"{}{}","snippet":"csvifoddrow{${1:then macros}}{${2:else macros}}"},"doc":"Inside the command list of \\csvreader, the ⟨then macros⟩ are executed for oddnumbered data lines, and the ⟨else macros⟩ are executed for even-numbered lines."},
+		{"name":"csvline","doc":"This macro contains the current and unprocessed data line."},
+		{"name":"csvlinetotablerow","doc":"Typesets the current processed data line with & between the entries."},
+		{"name":"csvloop","arg":{"format":"{}","snippet":"csvloop{${1:options}}","keys":["pgfkeys:/csv"],"keyPos":0}},
+		{"name":"csvnames","arg":{"format":"{}{}","snippet":"csvnames{${1:key}}{${2:assignments}}"},"doc":"Abbreviation for \\csvset{⟨key⟩/.style={column names={⟨assignments⟩}}} to define additional ⟨assignments⟩ of macros to columns."},
+		{"name":"csvreader","arg":{"format":"[]{}{}{}","snippet":"csvreader[${1:options}]{${2:file name}}{${3:assignments}}{${4:command list}}","keys":["pgfkeys:/csv"],"keyPos":0}},
+		{"name":"csvreader","arg":{"format":"{}{}{}","snippet":"csvreader{${1:file name}}{${2:assignments}}{${3:command list}}"}},
+		{"name":"csvset","arg":{"format":"{}","snippet":"csvset{${1:options}}","keys":["pgfkeys:/csv"],"keyPos":0},"doc":"Sets ⟨options⟩ for every following \\csvreader and \\csvloop."},
+		{"name":"csvstyle","arg":{"format":"{}{}","snippet":"csvstyle{${1:key}}{${2:options}}","keys":["pgfkeys:/csv"],"keyPos":1},"doc":"Abbreviation for \\csvset{⟨key⟩/.style={⟨options⟩}} to define a new style."},
+		{"name":"ifcsvnotstrcmp","arg":{"format":"{}{}{}{}","snippet":"ifcsvnotstrcmp{${1:stringA}}{${2:stringB}}{${3:true}}{${4:false}}"},"doc":"Compares two strings and executes ⟨true⟩ if they are not equal, and ⟨false⟩ otherwise."},
+		{"name":"ifcsvprostrequal","arg":{"format":"{}{}{}{}","snippet":"ifcsvprostrequal{${1:stringA}}{${2:stringB}}{${3:true}}{${4:false}}"}},
+		{"name":"ifcsvstrcmp","arg":{"format":"{}{}{}{}","snippet":"ifcsvstrcmp{${1:stringA}}{${2:stringB}}{${3:true}}{${4:false}}"},"doc":"Compares two strings and executes ⟨true⟩ if they are equal, and ⟨false⟩ otherwise."},
+		{"name":"ifcsvstrequal","arg":{"format":"{}{}{}{}","snippet":"ifcsvstrequal{${1:stringA}}{${2:stringB}}{${3:true}}{${4:false}}"},"doc":"Compares two strings and executes ⟨true⟩ if they are equal, and ⟨false⟩ otherwise."},
+		{"name":"thecsvinputline","unusual":true},
+		{"name":"thecsvrow","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/csv": ["after first line=","after head=","after line=","after reading=","after table=","autobooklongtable=","autobooktabular=","autolongtable=","autotabular=","before filter=","before first line=","before line=","before reading=","before table=","centered tabular=","column count=","column names=","command=","csvsorter command=","csvsorter configpath=","csvsorter log=","csvsorter token=","file=","filter expr=","filter ifthen=","filter test=","filter=","full filter=","head to column names prefix=","late after first line=","late after head=","late after last line=","late after line=","longtable=","on column count error=","preprocessed file=","preprocessor=","sort by=","table foot=","table head=","tabular=","centered tabbing","check column count=${1|false,true|}","column names reset","every csv","filter accept all","filter equal={${1:string A}}{${2:string B}}","filter not equal={${1:string A}}{${2:string B}}","filter not strcmp={${1:string A}}{${2:string B}}","filter reject all","filter strcmp={${1:string A}}{${2:string B}}","head to column names=${1|false,true|}","head=${1|false,true|}","new sorting rule={${1:name}}{${2:file name}}","no check column count","no filter","no head","no preprocessing","no table","respect all","respect and=${1|false,true|}","respect backslash=${1|false,true|}","respect circumflex=${1|false,true|}","respect dollar=${1|false,true|}","respect leftbrace=${1|false,true|}","respect none","respect percent=${1|false,true|}","respect rightbrace=${1|false,true|}","respect sharp=${1|false,true|}","respect tab=${1|false,true|}","respect tilde=${1|false,true|}","respect underscore=${1|false,true|}","separator=${1|comma,pipe,semicolon,tab|}","tabbing","warn on column count error"]
+	}
+}

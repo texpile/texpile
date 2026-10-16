@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"fontawesome"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"color"},{"name":"schedule"},{"name":"calc"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"appointment","arg":{"format":"{}{}{}{}{}{}","snippet":"appointment{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"Inside the appointments-environment you can use the \\appointment-command to add an appointment to the list."},
+		{"name":"deadline","arg":{"format":"{}{}{}{}","snippet":"deadline{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"exam","arg":{"format":"{}{}{}{}","snippet":"exam{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"lecture","arg":{"format":"{}{}{}{}{}{}","snippet":"lecture{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"meeting","arg":{"format":"{}{}{}{}{}{}","snippet":"meeting{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"officehour","arg":{"format":"{}{}{}{}{}{}","snippet":"officehour{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"oral"},
+		{"name":"phigh"},
+		{"name":"plow"},
+		{"name":"pmandatory"},
+		{"name":"pmid"},
+		{"name":"pnone"},
+		{"name":"seminar","arg":{"format":"{}{}{}{}{}{}","snippet":"seminar{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"tba"},
+		{"name":"tbd"},
+		{"name":"teams"},
+		{"name":"ttlegend","arg":{"format":"{}{}","snippet":"ttlegend{${1}}{${2}}"},"doc":"Inside the legend-environment you can use the \\ttlegend-command to add a legend entry for your timetable."},
+		{"name":"tutorial","arg":{"format":"{}{}{}{}{}{}","snippet":"tutorial{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"written"},
+		{"name":"youtube"},
+		{"name":"zoom"}
+	],
+	"envs": [
+		{"name":"appointments","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"appointments"},
+		{"name":"deadlines"},
+		{"name":"exams"},
+		{"name":"legend","doc":"Inside the legend-environment you can use the \\ttlegend-command to add a legend entry for your timetable."},
+		{"name":"timetable","doc":"With the timetable-environment you can create a timetable based on the schedule-package."}
+	],
+	"keys": {}
+}

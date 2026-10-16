@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"class-paper"},{"name":"xcolor"},{"name":"mdframed"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"etoolbox"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"academicons"},{"name":"svg"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"shellesc"},{"name":"transparent"},{"name":"transparent-nometadata"},{"name":"pgfsys"},{"name":"pgfrcs"},{"name":"yfonts"},{"name":"datetime"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"fcprefix"},{"name":"datetime-defaults"},{"name":"ccicons"},{"name":"authblk"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"accepted","arg":{"format":"{}","snippet":"accepted{${1:date}}"}},
+		{"name":"authorcontribution","arg":{"format":"{}","snippet":"authorcontribution{${1:image file}}"}},
+		{"name":"codeavailability","arg":{"format":"{}{}","snippet":"codeavailability{${1:statement}}{${2:repository URL}}"}},
+		{"name":"dataavailability","arg":{"format":"{}{}","snippet":"dataavailability{${1:statement}}{${2:repository URL}}"}},
+		{"name":"doi","arg":{"format":"{}","snippet":"doi{${1:DOI suffix}}"}},
+		{"name":"headlinecolor","unusual":true},
+		{"name":"ISSN","arg":{"format":"{}","snippet":"ISSN{${1:ISSN}}"}},
+		{"name":"ppEnd","arg":{"format":"{}","snippet":"ppEnd{${1:last page}}"}},
+		{"name":"ppInit","arg":{"format":"{}","snippet":"ppInit{${1:first page}}"}},
+		{"name":"received","arg":{"format":"{}","snippet":"received{${1:date}}"}},
+		{"name":"Vol","arg":{"format":"{}","snippet":"Vol{${1:volume}}"}}
+	],
+	"envs": [
+		{"name":"AuthorContribution"}
+	],
+	"keys": {
+		"\\documentclass/SFEE#c": ["green","onecolumn","red"]
+	},
+	"args": ["\\documentclass/SFEE#c"]
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"CountAuthorsFromAffiliations","arg":{"format":"[]{}","snippet":"CountAuthorsFromAffiliations[${1}]{${2}}","keys":["l3keys:affiliations"],"keyPos":0}},
+		{"name":"CountAuthorsFromAffiliations","arg":{"format":"{}","snippet":"CountAuthorsFromAffiliations{${1}}"}},
+		{"name":"LinkToORCIDinAffiliations","arg":{"format":"{}","snippet":"LinkToORCIDinAffiliations{${1}}"},"unusual":true},
+		{"name":"ResolveAffiliations","arg":{"format":"[]{}","snippet":"ResolveAffiliations[${1}]{${2}}","keys":["l3keys:affiliations"],"keyPos":0}},
+		{"name":"ResolveAffiliations","arg":{"format":"{}","snippet":"ResolveAffiliations{${1}}"}},
+		{"name":"SetupAffiliations","arg":{"format":"{}","snippet":"SetupAffiliations{${1}}","keys":["l3keys:affiliations"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:affiliations": ["author affiliation skip=","input affiliation separator=","input names separator=","output affiliation font=","output affiliation paragraph format=","output authors font=","output authors paragraph format=","separator between affiliations=","separator between final two=","separator between indices=","separator between multiple=","separator between two=","output affiliation=${1|false,true|}","output in groups=${1|false,true|}","mark style=${1|alphabetic,numeric,circled,none|}","orcid placement=${1|none,before,after|}"]
+	}
+}

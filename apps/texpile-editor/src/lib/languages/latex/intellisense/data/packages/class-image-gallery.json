@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"class-article"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"url"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"color","if":"dummy"}],
+	"macros": [
+		{"name":"gallerySetup","arg":{"format":"{}","snippet":"gallerySetup{${1:keys}}"}},
+		{"name":"makeGallery","arg":{"format":"{}","snippet":"makeGallery{${1:list file}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/image-gallery#c": ["dummy","nocaption"]
+	},
+	"args": ["\\documentclass/image-gallery#c"]
+}

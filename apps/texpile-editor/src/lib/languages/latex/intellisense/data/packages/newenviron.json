@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"catoptions"},{"name":"iftex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"AlwaysTrimEnvEntries","unusual":true},
+		{"name":"envbody"},
+		{"name":"EveryBeginOfEnvironment","arg":{"format":"{}","snippet":"EveryBeginOfEnvironment{${1}}"}},
+		{"name":"EveryEndOfEnvironment","arg":{"format":"{}","snippet":"EveryEndOfEnvironment{${1}}"}},
+		{"name":"newenviron","arg":{"format":"{}[][]{}{}","snippet":"newenviron{${1:name}}[${2:number of arguments}][${3:default of first argument}]{${4:start code}}{${5:end code}}"},"doc":"The 'newenviron' package provides the commands \\newenviron and \\renewenviron that can be used to define environments whose bodies will be collected in the macros \\envbody and \\<env name>body."},
+		{"name":"newenviron","arg":{"format":"{}{}{}","snippet":"newenviron{${1:name}}{${2:start code}}{${3:end code}}"},"doc":"The 'newenviron' package provides the commands \\newenviron and \\renewenviron that can be used to define environments whose bodies will be collected in the macros \\envbody and \\<env name>body."},
+		{"name":"newenviron*","arg":{"format":"{}[][]{}{}","snippet":"newenviron*{${1:name}}[${2:number of arguments}][${3:default of first argument}]{${4:start code}}{${5:end code}}"},"doc":"The 'newenviron' package provides the commands \\newenviron and \\renewenviron that can be used to define environments whose bodies will be collected in the macros \\envbody and \\<env name>body."},
+		{"name":"newenviron*","arg":{"format":"{}{}{}","snippet":"newenviron*{${1:name}}{${2:start code}}{${3:end code}}"},"doc":"The 'newenviron' package provides the commands \\newenviron and \\renewenviron that can be used to define environments whose bodies will be collected in the macros \\envbody and \\<env name>body."},
+		{"name":"renewenviron","arg":{"format":"{}[][]{}{}","snippet":"renewenviron{${1:name}}[${2:number of arguments}][${3:default of first argument}]{${4:start code}}{${5:end code}}"}},
+		{"name":"renewenviron","arg":{"format":"{}{}{}","snippet":"renewenviron{${1:name}}{${2:start code}}{${3:end code}}"}},
+		{"name":"renewenviron*","arg":{"format":"{}[][]{}{}","snippet":"renewenviron*{${1:name}}[${2:number of arguments}][${3:default of first argument}]{${4:start code}}{${5:end code}}"}},
+		{"name":"renewenviron*","arg":{"format":"{}{}{}","snippet":"renewenviron*{${1:name}}{${2:start code}}{${3:end code}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

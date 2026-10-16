@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"insdljs"},{"name":"xkeyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"addWatermarkFromFile","arg":{"format":"()","snippet":"addWatermarkFromFile(${1:parameters})"}},
+		{"name":"addWatermarkFromText","arg":{"format":"()","snippet":"addWatermarkFromText(${1:parameters})"}},
+		{"name":"appopenDoc","arg":{"format":"()","snippet":"appopenDoc(${1:parameters})"},"doc":"Opens a document and return a Doc object."},
+		{"name":"attachFile","arg":{"format":"()","snippet":"attachFile(${1:parameters})"}},
+		{"name":"certifyInvisibleSign","doc":"An invisible signature field is created and signed using the method Doc.certifyInvisibleSign()."},
+		{"name":"chngDocObjectTo","arg":{"format":"{}{}","snippet":"chngDocObjectTo{${1:new command}}{${2:doc object}}"}},
+		{"name":"createTemplate","arg":{"format":"()","snippet":"createTemplate(${1:parameters})"}},
+		{"name":"DeclareJSHelper","arg":{"format":"{}{}","snippet":"DeclareJSHelper{${1:command}}{${2:JavaScript function}}"},"doc":"A general purpose command for defining what I am calling JavaScript helper commands."},
+		{"name":"docSaveAs","arg":{"format":"()","snippet":"docSaveAs(${1:parameters})"},"doc":"Saves a PDF or converts a PDF to another format to a specified path."},
+		{"name":"executeSave","arg":{"format":"()","snippet":"executeSave(${1})"},"doc":"To save the document, use at the end of the doc assembly environment."},
+		{"name":"extractPages","arg":{"format":"()","snippet":"extractPages(${1:parameters})"}},
+		{"name":"importDataObject","arg":{"format":"()","snippet":"importDataObject(${1:parameters})"}},
+		{"name":"importIcon","arg":{"format":"()","snippet":"importIcon(${1:parameters})"}},
+		{"name":"importSound","arg":{"format":"()","snippet":"importSound(${1:parameters})"}},
+		{"name":"insertPages","arg":{"format":"()","snippet":"insertPages(${1:parameters})"}},
+		{"name":"mailDoc","arg":{"format":"()","snippet":"mailDoc(${1:parameters})"},"doc":"Attach the current PDF and email it someone."},
+		{"name":"retnAbsPathAs","arg":{"format":"()","snippet":"retnAbsPathAs(${1:variable})"}},
+		{"name":"sigFieldObj","arg":{"format":"()","snippet":"sigFieldObj(${1:field name})"}},
+		{"name":"sigInfo"},
+		{"name":"signatureSetSeedValue","arg":{"format":"()","snippet":"signatureSetSeedValue(${1:seed value})"}},
+		{"name":"signatureSign","doc":"The function \\signatureSign takes the info in the oSigInfo object, gets the security handler object, logs into the handler, calls signatureSetSeedValue if the sv property is in the oSigInfo object, and signs the field."},
+		{"name":"theDocObject","doc":"The command \\theDocObject is normally set to this, meaning the current document."}
+	],
+	"envs": [
+		{"name":"docassembly","doc":"The docassembly package defines the docassembly environment in which JavaScript code can be written to execute once and only once the newly created PDF in the Acrobat application."}
+	],
+	"keys": {}
+}

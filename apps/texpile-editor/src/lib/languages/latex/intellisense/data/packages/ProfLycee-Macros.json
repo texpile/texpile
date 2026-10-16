@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"pflnum","arg":{"format":"<>[]{}","snippet":"pflnum<${1:type}>[${2:decimals}]{${3:expression}}"}},
+		{"name":"pflnum","arg":{"format":"<>{}","snippet":"pflnum<${1:type}>{${2:expression}}"}},
+		{"name":"pflnum*","arg":{"format":"<>[]{}","snippet":"pflnum*<${1:type}>[${2:decimals}]{${3:expression}}"}},
+		{"name":"pflnum*","arg":{"format":"<>{}","snippet":"pflnum*<${1:type}>{${2:expression}}"}},
+		{"name":"pflnumfrac","arg":{"format":"[]{}","snippet":"pflnumfrac[${1:format}]{${2:expression}}"}},
+		{"name":"pflnumfrac","arg":{"format":"{}","snippet":"pflnumfrac{${1:expression}}"}},
+		{"name":"pflnumfrac*","arg":{"format":"[]{}","snippet":"pflnumfrac*[${1:format}]{${2:expression}}"}},
+		{"name":"pflnumfrac*","arg":{"format":"{}","snippet":"pflnumfrac*{${1:expression}}"}},
+		{"name":"pflnumrad","arg":{"format":"[]{}","snippet":"pflnumrad[${1:format}]{${2:expression}}"}},
+		{"name":"pflnumrad","arg":{"format":"{}","snippet":"pflnumrad{${1:expression}}"}},
+		{"name":"pflnumrad*","arg":{"format":"[]{}","snippet":"pflnumrad*[${1:format}]{${2:expression}}"}},
+		{"name":"pflnumrad*","arg":{"format":"{}","snippet":"pflnumrad*{${1:expression}}"}},
+		{"name":"pflnumsqrt","arg":{"format":"[]{}","snippet":"pflnumsqrt[${1:format}]{${2:expression}}"}},
+		{"name":"pflnumsqrt","arg":{"format":"{}","snippet":"pflnumsqrt{${1:expression}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

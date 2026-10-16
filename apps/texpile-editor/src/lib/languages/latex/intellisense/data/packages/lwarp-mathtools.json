@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"DeclarePairedDelimiter","arg":{"format":"{}{}{}","snippet":"DeclarePairedDelimiter{${1:command}}{${2:left delimiter}}{${3:right delimiter}}"}},
+		{"name":"DeclarePairedDelimiterXPP","arg":{"format":"{}[]{}{}{}{}{}","snippet":"DeclarePairedDelimiterXPP{${1:command}}[${2:number of arguments}]{${3:pre code}}{${4:left delimiter}}{${5:right delimiter}}{${6:post code}}{${7:body}}"}},
+		{"name":"DeclarePairedDelimiterXPP","arg":{"format":"{}{}{}{}{}{}","snippet":"DeclarePairedDelimiterXPP{${1:command}}{${2:pre code}}{${3:left delimiter}}{${4:right delimiter}}{${5:post code}}{${6:body}}"}},
+		{"name":"MakeAboxedCommand","arg":{"format":"{}{}","snippet":"MakeAboxedCommand{${1:command}}{${2:box command}}"},"doc":"\\MakeAboxedCommand uses \\Aboxed for all commands made."},
+		{"name":"newgathered","arg":{"format":"{}{}{}{}","snippet":"newgathered{${1:name}}{${2:pre line}}{${3:post line}}{${4:after}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

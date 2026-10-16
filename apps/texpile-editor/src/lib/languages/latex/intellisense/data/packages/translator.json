@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"deftranslation","arg":{"format":"[]{}{}","snippet":"deftranslation[${1}]{${2}}{${3}}","keys":["keyval:translator"],"keyPos":0}},
+		{"name":"deftranslation","arg":{"format":"{}{}","snippet":"deftranslation{${1}}{${2}}"}},
+		{"name":"iftranslationdefined","arg":{"format":"[]{}{}{}","snippet":"iftranslationdefined[${1}]{${2}}{${3}}{${4}}","keys":["keyval:translator"],"keyPos":0},"unusual":true},
+		{"name":"iftranslationdefined","arg":{"format":"{}{}{}","snippet":"iftranslationdefined{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"languagealias","arg":{"format":"{}{}","snippet":"languagealias{${1}}{${2}}"}},
+		{"name":"languagepath","arg":{"format":"{}","snippet":"languagepath{${1}}"},"doc":"This command sets the language path that is searched when translator looks for a key."},
+		{"name":"newtranslation","arg":{"format":"[]{}{}","snippet":"newtranslation[${1}]{${2}}{${3}}","keys":["keyval:translator"],"keyPos":0},"doc":"This command defines the translation of ⟨key⟩ to be ⟨translation⟩ in the language specified by the ⟨options⟩."},
+		{"name":"newtranslation","arg":{"format":"{}{}","snippet":"newtranslation{${1}}{${2}}"},"doc":"This command defines the translation of ⟨key⟩ to be ⟨translation⟩ in the language specified by the ⟨options⟩."},
+		{"name":"ProvidesDictionary","arg":{"format":"{}{}[]","snippet":"ProvidesDictionary{${1:kind}}{${2:language}}[${3:version}]"}},
+		{"name":"ProvidesDictionary","arg":{"format":"{}{}","snippet":"ProvidesDictionary{${1:kind}}{${2:language}}"}},
+		{"name":"providetranslation","arg":{"format":"[]{}{}","snippet":"providetranslation[${1}]{${2}}{${3}}","keys":["keyval:translator"],"keyPos":0},"doc":"This command works like \\newtranslation, but no error message will be printed if the translation already exists."},
+		{"name":"providetranslation","arg":{"format":"{}{}","snippet":"providetranslation{${1}}{${2}}"},"doc":"This command works like \\newtranslation, but no error message will be printed if the translation already exists."},
+		{"name":"renewtranslation","arg":{"format":"[]{}{}","snippet":"renewtranslation[${1}]{${2}}{${3}}","keys":["keyval:translator"],"keyPos":0},"doc":"This command works like \\newtranslation, only it will redefine an existing translation."},
+		{"name":"renewtranslation","arg":{"format":"{}{}","snippet":"renewtranslation{${1}}{${2}}"},"doc":"This command works like \\newtranslation, only it will redefine an existing translation."},
+		{"name":"translate","arg":{"format":"[]{}","snippet":"translate[${1}]{${2}}","keys":["keyval:translator"],"keyPos":0},"doc":"This command will insert the translation of the ⟨key⟩ at the current position into the text."},
+		{"name":"translate","arg":{"format":"{}","snippet":"translate{${1}}"},"doc":"This command will insert the translation of the ⟨key⟩ at the current position into the text."},
+		{"name":"translatelet","arg":{"format":"[]{}{}","snippet":"translatelet[${1}]{${2}}{${3}}","keys":["keyval:translator"],"keyPos":0},"doc":"This command works like the \\translate command, only it will not insert the translation into the text, but will set the macro ⟨macro⟩ to the translation found by the \\translate command."},
+		{"name":"translatelet","arg":{"format":"{}{}","snippet":"translatelet{${1}}{${2}}"},"doc":"This command works like the \\translate command, only it will not insert the translation into the text, but will set the macro ⟨macro⟩ to the translation found by the \\translate command."},
+		{"name":"usedictionary","arg":{"format":"{}","snippet":"usedictionary{${1}}"}},
+		{"name":"uselanguage","arg":{"format":"{}","snippet":"uselanguage{${1:languages}}"},"doc":"This command tells the translator package that it should load the dictionaries for all of the ⟨languages⟩."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:translator": ["to="],
+		"\\usepackage/translator#c": ["UKenglish","USenglish","acadian","afrikaans","american","arabic","austrian","bahasa","basque","brazil","brazilian","breton","british","bulgarian","canadian","canadien","catalan","croatian","czech","danish","dutch","english","esperanto","estonian","finnish","francais","french","frenchb","galician","german","germanb","greek","hebrew","hungarian","icelandic","irish","italian","latin","lowersorbian","magyar","naustrian","ngerman","norsk","nynorsk","polish","polutonikogreek","portuges","portuguese","romanian","russian","samin","scottish","serbian","slovak","slovene","spanish","swedish","turkish","ukrainian","uppersorbian","welsh"]
+	},
+	"args": ["\\usepackage/translator#c"]
+}

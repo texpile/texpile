@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"url"},{"name":"xcolor"},{"name":"marginnote"},{"name":"xkeyval"},{"name":"qrcode"},{"name":"hyperref","if":"!nohyperref"},{"name":"iftex","if":"!nohyperref"},{"name":"kvsetkeys","if":"!nohyperref"},{"name":"pdfescape","if":"!nohyperref"},{"name":"nameref","if":"!nohyperref"},{"name":"refcount","if":"!nohyperref"},{"name":"gettitlestring","if":"!nohyperref"},{"name":"kvoptions","if":"!nohyperref"},{"name":"etoolbox","if":"!nohyperref"},{"name":"stringenc","if":"!nohyperref"},{"name":"intcalc","if":"!nohyperref"},{"name":"bitset","if":"!nohyperref"},{"name":"bigintcalc","if":"!nohyperref"},{"name":"rerunfilecheck","if":"!nohyperref"},{"name":"uniquecounter","if":"!nohyperref"}],
+	"macros": [
+		{"name":"hvqrset","arg":{"format":"{}","snippet":"hvqrset{${1:key=value}}","keys":["keyval:hvqr"],"keyPos":0},"doc":"With \\hvqrset one can set the optional arguments globally."},
+		{"name":"hvqrurl","arg":{"format":"[]{}","snippet":"hvqrurl[${1:key=value}]{${2:URL}}","keys":["keyval:hvqr"],"keyPos":0},"doc":"With the default macro \\hvqrurl the URL is printed as as QR code into the margin and in the the text as usual with the macro \\url , for example https://mirror.ctan.org/pkg/hvqrurl ."},
+		{"name":"hvqrurl","arg":{"format":"{}","snippet":"hvqrurl{${1:URL}}"},"doc":"With the default macro \\hvqrurl the URL is printed as as QR code into the margin and in the the text as usual with the macro \\url , for example https://mirror.ctan.org/pkg/hvqrurl ."},
+		{"name":"hvqrurl*","arg":{"format":"[]{}","snippet":"hvqrurl*[${1:key=value}]{${2:URL}}","keys":["keyval:hvqr"],"keyPos":0},"doc":"With the default macro \\hvqrurl the URL is printed as as QR code into the margin and in the the text as usual with the macro \\url , for example https://mirror.ctan.org/pkg/hvqrurl ."},
+		{"name":"hvqrurl*","arg":{"format":"{}","snippet":"hvqrurl*{${1:URL}}"},"doc":"With the default macro \\hvqrurl the URL is printed as as QR code into the margin and in the the text as usual with the macro \\url , for example https://mirror.ctan.org/pkg/hvqrurl ."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:hvqr": ["qrreverse","linktext=","qradjust=","qrcolor=","qrheight=","qrlevel=${1|L,M,Q,H|}","qrlink=${1|link,nolink|}"],
+		"\\usepackage/hvqrurl#c": ["forget","nohyperref"]
+	},
+	"args": ["\\usepackage/hvqrurl#c"]
+}

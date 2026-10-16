@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"engord","arg":{"format":"{}","snippet":"engord{${1}}"},"doc":"It prints the value of the LaTeX counter as English ordinal number."},
+		{"name":"engorderror","arg":{"format":"{}","snippet":"engorderror{${1}}"}},
+		{"name":"engordletters","arg":{"format":"{}","snippet":"engordletters{${1:letters}}"},"doc":"This command formats the English ordinal letters after the number."},
+		{"name":"engordnumber","arg":{"format":"{}","snippet":"engordnumber{${1}}"},"doc":"\\engordnumber is the user command to print a number as english ordinal number."},
+		{"name":"engordraisefalse"},
+		{"name":"engordraisetrue"},
+		{"name":"ifengordraise","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/engord#c": ["normal","raise"]
+	},
+	"args": ["\\usepackage/engord#c"]
+}

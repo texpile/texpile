@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"examplename"},
+		{"name":"newboxtheorem","arg":{"format":"[]{}[]{}[]","snippet":"newboxtheorem[${1:options}]{${2:name}}[${3:shared counter}]{${4:title}}[${5:within}]","keys":["keyval:thmbox"],"keyPos":0}},
+		{"name":"newboxtheorem","arg":{"format":"{}{}","snippet":"newboxtheorem{${1:name}}{${2:title}}"}},
+		{"name":"newtheorem","arg":{"format":"[]{}[]{}[]","snippet":"newtheorem[${1:options}]{${2:name}}[${3:shared counter}]{${4:title}}[${5:within}]","keys":["keyval:thmbox"],"keyPos":0}},
+		{"name":"newtheorem","arg":{"format":"{}{}","snippet":"newtheorem{${1:name}}{${2:title}}"}},
+		{"name":"proofname","unusual":true},
+		{"name":"thmboxoptions","arg":{"format":"{}","snippet":"thmboxoptions{${1:options}}","keys":["keyval:thmbox"],"keyPos":0}}
+	],
+	"envs": [
+		{"name":"example","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"example"},
+		{"name":"leftbar","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:thmbox"],"keyPos":0},"doc":"the package provides an environment leftbar that formats its contents with an extra margin and a running vertical rule in the left."},
+		{"name":"leftbar","doc":"the package provides an environment leftbar that formats its contents with an extra margin and a running vertical rule in the left."},
+		{"name":"proof","arg":{"format":"[]","snippet":"[${1:name}]"},"doc":"The package also redefines the proof environment. The text inside such an enivronment is written smaller, with extra margins, with a black square sign at the end."},
+		{"name":"proof","doc":"The package also redefines the proof environment. The text inside such an enivronment is written smaller, with extra margins, with a black square sign at the end."},
+		{"name":"thmbox","arg":{"format":"[]{}","snippet":"[${1:style and options}]{${2:title}}","keys":["keyval:thmbox"],"keyPos":0}},
+		{"name":"thmbox","arg":{"format":"{}","snippet":"{${1:title}}"}}
+	],
+	"keys": {
+		"keyval:thmbox": ["L","M","S","bodystyle=","cut","headstyle=","hskip=","leftmargin=","nocut","nounderline","rightmargin=","thickness=","titlestyle=","underline","vskip=","style=${1|S,M,L|}"],
+		"\\usepackage/thmbox#c": ["L","M","S","bodystyle=","cut","headstyle=","hskip=","leftmargin=","nocut","nothm","nounderline","rightmargin=","style=${1|S,M,L|}","thickness=","titlestyle=","underline","vskip="]
+	},
+	"args": ["\\usepackage/thmbox#c"]
+}

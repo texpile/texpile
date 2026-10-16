@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"web"},{"name":"xkeyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"xcolor"},{"name":"calc"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"backref"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bigintcalc"},{"name":"url"},{"name":"bitset"},{"name":"aeb-comment"},{"name":"eforms"},{"name":"ifluatex"},{"name":"insdljs"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex"]},{"name":"taborder"}],
+	"macros": [
+		{"name":"generateEvenPage","unusual":true},
+		{"name":"ifmobscalefigures","unusual":true},
+		{"name":"ifsmartphone","unusual":true},
+		{"name":"mobFormPresets","arg":{"format":"{}","snippet":"mobFormPresets{${1:key-values}}"},"doc":"\\mobFormPresets is used to set the appearance of the buttons when the useforms option is taken."},
+		{"name":"mobPrint","arg":{"format":"{}","snippet":"mobPrint{${1:text}}"},"doc":"\\mobPrint sets the text of the print link and the button caption if its a push button."},
+		{"name":"mobPrintIt","arg":{"format":"[]","snippet":"mobPrintIt[${1:opts}]"},"unusual":true},
+		{"name":"mobPrintIt","unusual":true},
+		{"name":"mobPrintTip","doc":"\\mobPrintTip is the tool tip when there’s a button for Print."},
+		{"name":"mobscalefiguresfalse","unusual":true},
+		{"name":"mobscalefigurestrue","unusual":true},
+		{"name":"mobToggleCols","arg":{"format":"{}","snippet":"mobToggleCols{${1:text}}"},"doc":"\\mobToggleCols sets the text for the toggle link and the button caption if its a push button."},
+		{"name":"mobToggleColsTip","doc":"\\mobToggleColsTip is the tool tip for the toggle button."},
+		{"name":"mobTwoCols","arg":{"format":"[]","snippet":"mobTwoCols[${1:opts}]"},"unusual":true},
+		{"name":"mobTwoCols","unusual":true},
+		{"name":"scalefiguresOff","doc":"The commands \\scalefiguresOn and \\scalefiguresOff are a convenient way to turn the scaling of figures on and off."},
+		{"name":"scalefiguresOn","doc":"The commands \\scalefiguresOn and \\scalefiguresOff are a convenient way to turn the scaling of figures on and off."},
+		{"name":"smartphonefalse","unusual":true},
+		{"name":"smartphonetrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

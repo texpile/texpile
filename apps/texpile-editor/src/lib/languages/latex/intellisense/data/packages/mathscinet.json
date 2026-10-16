@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"textcmds"}],
+	"macros": [
+		{"name":"asup","arg":{"format":"{}","snippet":"asup{${1:text}}"}},
+		{"name":"bold","arg":{"format":"{}","snippet":"bold{${1:math}}"}},
+		{"name":"bud"},
+		{"name":"cdprime"},
+		{"name":"cprime"},
+		{"name":"cydot","doc":"Vertically centered dot."},
+		{"name":"dbar","doc":"Latin lower letter d with stroke: d̄ (U+0111)."},
+		{"name":"Dbar"},
+		{"name":"dudot","arg":{"format":"{}","snippet":"dudot{${1:letter}}"}},
+		{"name":"germ","arg":{"format":"{}","snippet":"germ{${1:math}}"}},
+		{"name":"hslash","doc":"Planck’s constant over 2π: h̄ (U+210F).","math":true,"detail":"ℏ"},
+		{"name":"lasp"},
+		{"name":"lfhook","arg":{"format":"{}","snippet":"lfhook{${1:letter}}"}},
+		{"name":"polhk","arg":{"format":"{}","snippet":"polhk{${1:letter}}"}},
+		{"name":"rasp"},
+		{"name":"romsup","arg":{"format":"{}","snippet":"romsup{${1:text}}"}},
+		{"name":"scr","arg":{"format":"{}","snippet":"scr{${1:math}}"}},
+		{"name":"soft","arg":{"format":"{}","snippet":"soft{${1:letter}}"}},
+		{"name":"uarc","arg":{"format":"{}","snippet":"uarc{${1:letter}}"}},
+		{"name":"udot","arg":{"format":"{}","snippet":"udot{${1:letter}}"}},
+		{"name":"utilde","arg":{"format":"{}","snippet":"utilde{${1:letter}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

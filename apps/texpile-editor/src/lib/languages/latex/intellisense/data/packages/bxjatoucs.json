@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"bxjaCidToUcs","arg":{"format":"{}","snippet":"bxjaCidToUcs{${1:value}}"}},
+		{"name":"bxjaCidToUcsHex","arg":{"format":"{}","snippet":"bxjaCidToUcsHex{${1:value}}"}},
+		{"name":"bxjaEucToUcs","arg":{"format":"{}","snippet":"bxjaEucToUcs{${1:value}}"}},
+		{"name":"bxjaEucToUcsHex","arg":{"format":"{}","snippet":"bxjaEucToUcsHex{${1:value}}"}},
+		{"name":"bxjaFastCidToUcs","arg":{"format":"{}","snippet":"bxjaFastCidToUcs{${1:value}}"}},
+		{"name":"bxjaFastCidToUcsHex","arg":{"format":"{}","snippet":"bxjaFastCidToUcsHex{${1:value}}"}},
+		{"name":"bxjaFastJscToUcs","arg":{"format":"{}","snippet":"bxjaFastJscToUcs{${1:value}}"},"unusual":true},
+		{"name":"bxjaFastJscToUcsHex","arg":{"format":"{}","snippet":"bxjaFastJscToUcsHex{${1:value}}"},"unusual":true},
+		{"name":"bxjaFastUcsToJsc","arg":{"format":"{}","snippet":"bxjaFastUcsToJsc{${1:value}}"},"unusual":true},
+		{"name":"bxjaJisToUcs","arg":{"format":"{}","snippet":"bxjaJisToUcs{${1:value}}"}},
+		{"name":"bxjaJisToUcsHex","arg":{"format":"{}","snippet":"bxjaJisToUcsHex{${1:value}}"}},
+		{"name":"bxjaSjisToUcs","arg":{"format":"{}","snippet":"bxjaSjisToUcs{${1:value}}"}},
+		{"name":"bxjaSjisToUcsHex","arg":{"format":"{}","snippet":"bxjaSjisToUcsHex{${1:value}}"}},
+		{"name":"bxjaUcsToEuc","arg":{"format":"{}","snippet":"bxjaUcsToEuc{${1:value}}"}},
+		{"name":"bxjaUcsToJis","arg":{"format":"{}","snippet":"bxjaUcsToJis{${1:value}}"}},
+		{"name":"bxjaUcsToSjis","arg":{"format":"{}","snippet":"bxjaUcsToSjis{${1:value}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

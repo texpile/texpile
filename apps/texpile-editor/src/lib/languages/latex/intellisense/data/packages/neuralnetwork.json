@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"environ"},{"name":"etoolbox"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"algorithmicx"},{"name":"ifthen"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"hiddenlayer","arg":{"format":"[]","snippet":"hiddenlayer[${1}]"}},
+		{"name":"hiddenlayer"},
+		{"name":"inputlayer","arg":{"format":"[]","snippet":"inputlayer[${1}]"}},
+		{"name":"inputlayer"},
+		{"name":"layer","arg":{"format":"[]","snippet":"layer[${1}]"}},
+		{"name":"layer"},
+		{"name":"link","arg":{"format":"[]","snippet":"link[${1}]"}},
+		{"name":"link"},
+		{"name":"linklayers","arg":{"format":"[]","snippet":"linklayers[${1}]"}},
+		{"name":"linklayers"},
+		{"name":"outputlayer","arg":{"format":"[]","snippet":"outputlayer[${1}]"}},
+		{"name":"outputlayer"},
+		{"name":"setdefaultlinklabel","arg":{"format":"{}","snippet":"setdefaultlinklabel{${1}}"}},
+		{"name":"setdefaultnodetext","arg":{"format":"{}","snippet":"setdefaultnodetext{${1}}"}}
+	],
+	"envs": [
+		{"name":"neuralnetwork","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"neuralnetwork"}
+	],
+	"keys": {}
+}

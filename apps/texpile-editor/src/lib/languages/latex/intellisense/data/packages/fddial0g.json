@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"fifinddo"},{"name":"stacklet"},{"name":"actcodes"}],
+	"macros": [
+		{"name":"Announce","arg":{"format":"{}","snippet":"Announce{${1:text}}"}},
+		{"name":"CFGname","arg":{"format":"{}","snippet":"CFGname{${1:name}}"},"unusual":true},
+		{"name":"DebugShowVar","arg":{"format":"{}","snippet":"DebugShowVar{${1}}"},"unusual":true},
+		{"name":"DialogueLoop"},
+		{"name":"EvalBooleanSet","arg":{"format":"{}","snippet":"EvalBooleanSet{${1:id}}"}},
+		{"name":"IfEmptySet","arg":{"format":"{}{}{}","snippet":"IfEmptySet{${1:id}}{${2:if empty}}{${3:unless empty}}"}},
+		{"name":"InputFile","arg":{"format":"{}","snippet":"InputFile{${1:file}}"}},
+		{"name":"LBrk"},
+		{"name":"MakeSet","arg":{"format":"{}{}","snippet":"MakeSet{${1:id}}{${2:setting command}}"}},
+		{"name":"ResultFile","arg":{"format":"{}","snippet":"ResultFile{${1:file}}"}},
+		{"name":"ShowSet","arg":{"format":"{}","snippet":"ShowSet{${1:id}}"}},
+		{"name":"Spaces","arg":{"format":"{}","snippet":"Spaces{${1:count}}"}},
+		{"name":"TimesDo","arg":{"format":"{}{}","snippet":"TimesDo{${1}}{${2}}"},"unusual":true},
+		{"name":"TryDialogueCFG","arg":{"format":"{}{}","snippet":"TryDialogueCFG{${1:file name base}}{${2:settings}}"}},
+		{"name":"UseResultFile","arg":{"format":"{}","snippet":"UseResultFile{${1:file}}"}},
+		{"name":"UseSet","arg":{"format":"{}","snippet":"UseSet{${1:id}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

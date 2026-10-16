@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"starburst","arg":{"format":"{}","snippet":"starburst{${1:initial}}"}},
+		{"name":"Starburstfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

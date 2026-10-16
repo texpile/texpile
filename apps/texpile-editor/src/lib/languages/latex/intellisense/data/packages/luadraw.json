@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"luacode"},{"name":"luatexbase"},{"name":"verbatim"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"luadrawLiteral","arg":{"format":"{}","snippet":"luadrawLiteral{${1}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"luadraw","arg":{"format":"[]{}","snippet":"[${1:unused}]{${2:options}}","keys":["keyval:luaDraw"],"keyPos":1},"doc":"The luadraw package defines the environment of the same name, which lets you create mathematical graphs using the Lua language."},
+		{"name":"luadraw","arg":{"format":"{}","snippet":"{${1:options}}","keys":["keyval:luaDraw"],"keyPos":0},"doc":"The luadraw package defines the environment of the same name, which lets you create mathematical graphs using the Lua language."},
+		{"name":"luadraw*","arg":{"format":"[]{}","snippet":"[${1:unused}]{${2:options}}","keys":["keyval:luaDraw"],"keyPos":1},"doc":"The luadraw package defines the environment of the same name, which lets you create mathematical graphs using the Lua language."},
+		{"name":"luadraw*","arg":{"format":"{}","snippet":"{${1:options}}","keys":["keyval:luaDraw"],"keyPos":0},"doc":"The luadraw package defines the environment of the same name, which lets you create mathematical graphs using the Lua language."}
+	],
+	"keys": {
+		"keyval:luaDraw": ["autofalse=","autotrue=","execfalse=","exectrue=","name=","auto=${1|true,false|}","exec=${1|true,false|}"],
+		"\\usepackage/luadraw#c": ["3d","cachedir=","noexec"]
+	},
+	"args": ["\\usepackage/luadraw#c"]
+}

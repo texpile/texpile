@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"texttwemoji","arg":{"format":"{}","snippet":"texttwemoji{${1:emoji name}}"},"doc":"Uses the \\twemoji command so that it adapts to the fontsize."},
+		{"name":"twemoji","arg":{"format":"[]{}","snippet":"twemoji[${1:image options}]{${2:emoji name}}"},"doc":"Includes the given twemoji as an image in place."},
+		{"name":"twemoji","arg":{"format":"{}","snippet":"twemoji{${1:emoji name}}"},"doc":"Includes the given twemoji as an image in place."},
+		{"name":"twemojiDefaultHeight","doc":"Per default \\includegraphics is given the parameter height=\\twemojiDefaultHeight, where \\twemojiDefaultHeight is set to \\fontcharht\\font‘X (i.e. the height of the letter X)."}
+	],
+	"envs": [],
+	"keys": {}
+}

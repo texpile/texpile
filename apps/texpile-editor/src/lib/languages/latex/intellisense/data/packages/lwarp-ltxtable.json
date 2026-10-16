@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"tabularx"},{"name":"array"},{"name":"longtable"}],
+	"macros": [
+		{"name":"LTXtable","arg":{"format":"{}{}","snippet":"LTXtable{${1:width}}{${2:file}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

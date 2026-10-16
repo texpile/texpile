@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"zref-clever"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-user"},{"name":"zref-abspage"},{"name":"ifdraft"},{"name":"varioref"}],
+	"macros": [
+		{"name":"zfullref","arg":{"format":"[]{}","snippet":"zfullref[${1}]{${2}}"}},
+		{"name":"zfullref","arg":{"format":"{}","snippet":"zfullref{${1}}"}},
+		{"name":"zfullref*","arg":{"format":"[]{}","snippet":"zfullref*[${1}]{${2}}"}},
+		{"name":"zfullref*","arg":{"format":"{}","snippet":"zfullref*{${1}}"}},
+		{"name":"zvhyperlink","arg":{"format":"{}","snippet":"zvhyperlink{${1}}"},"doc":"Inside the options of \\zvLanguageSetup, and also inside the vcurrent and vother options of zref-vario’s reference commands, \\zvhyperlink can be used to produce a hyperlink to the label of the reference."},
+		{"name":"zvLanguageSetup","arg":{"format":"{}{}","snippet":"zvLanguageSetup{${1}}{${2}}"},"doc":"User interface for customization of “strings” and “formats” for ⟨language⟩."},
+		{"name":"zvpageref","arg":{"format":"[]{}","snippet":"zvpageref[${1}]{${2}}"}},
+		{"name":"zvpageref","arg":{"format":"{}","snippet":"zvpageref{${1}}"}},
+		{"name":"zvpageref*","arg":{"format":"[]{}","snippet":"zvpageref*[${1}]{${2}}"}},
+		{"name":"zvpageref*","arg":{"format":"{}","snippet":"zvpageref*{${1}}"}},
+		{"name":"zvpagerefrange","arg":{"format":"[]{}{}","snippet":"zvpagerefrange[${1}]{${2}}{${3}}"}},
+		{"name":"zvpagerefrange","arg":{"format":"{}{}","snippet":"zvpagerefrange{${1}}{${2}}"}},
+		{"name":"zvpagerefrange*","arg":{"format":"[]{}{}","snippet":"zvpagerefrange*[${1}]{${2}}{${3}}"}},
+		{"name":"zvpagerefrange*","arg":{"format":"{}{}","snippet":"zvpagerefrange*{${1}}{${2}}"}},
+		{"name":"zvref","arg":{"format":"[]{}","snippet":"zvref[${1}]{${2}}"}},
+		{"name":"zvref","arg":{"format":"{}","snippet":"zvref{${1}}"}},
+		{"name":"zvref*","arg":{"format":"[]{}","snippet":"zvref*[${1}]{${2}}"}},
+		{"name":"zvref*","arg":{"format":"{}","snippet":"zvref*{${1}}"}},
+		{"name":"zvrefrange","arg":{"format":"[]{}{}","snippet":"zvrefrange[${1}]{${2}}{${3}}"}},
+		{"name":"zvrefrange","arg":{"format":"{}{}","snippet":"zvrefrange{${1}}{${2}}"}},
+		{"name":"zvrefrange*","arg":{"format":"[]{}{}","snippet":"zvrefrange*[${1}]{${2}}{${3}}"}},
+		{"name":"zvrefrange*","arg":{"format":"{}{}","snippet":"zvrefrange*{${1}}{${2}}"}},
+		{"name":"zvsetup","arg":{"format":"{}","snippet":"zvsetup{${1}}"},"doc":"Package options can be set by means of \\zvsetup."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"calc"},{"name":"xcolor"},{"name":"svn","if":"id"},{"name":"eso-pic","if":"id"}],
+	"macros": [
+		{"name":"phfsvnShipoutWatermarkXposRight","unusual":true},
+		{"name":"phfsvnShipoutWatermarkYposBaseline","unusual":true},
+		{"name":"phfsvnVersionIdTag"},
+		{"name":"phfsvnVersionIdTag*"},
+		{"name":"phfsvnVersionIdTagInnerFont"},
+		{"name":"phfsvnVersionIdTagOuterFont"}
+	],
+	"envs": [],
+	"keys": {}
+}

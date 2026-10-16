@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"HyphenRules","arg":{"format":"{}","snippet":"HyphenRules{${1:language name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

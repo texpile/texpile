@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"},{"name":"iftex"},{"name":"paresse-old","engines":["lualatex","xelatex"]}],
+	"macros": [
+		{"name":"ActiveLaParesse"},
+		{"name":"makeparesseletter"},
+		{"name":"makeparesseother"}
+	],
+	"envs": [
+		{"name":"ParesseActive"}
+	],
+	"keys": {}
+}

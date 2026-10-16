@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"luatexbase"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/xdvipskmaps#c": ["otfchar","otfgid"]
+	},
+	"args": ["\\usepackage/xdvipskmaps#c"]
+}

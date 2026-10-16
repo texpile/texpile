@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"caption3"},{"name":"keyval"}],
+	"macros": [
+		{"name":"captionof","arg":{"format":"{}[]{}","snippet":"captionof{${1:float type}}[${2:list entry}]{${3:heading}}"}},
+		{"name":"captionof","arg":{"format":"{}{}","snippet":"captionof{${1:float type}}{${2:heading}}"}},
+		{"name":"captionof*","arg":{"format":"{}[]{}","snippet":"captionof*{${1:float type}}[${2:list entry}]{${3:heading}}"}},
+		{"name":"captionof*","arg":{"format":"{}{}","snippet":"captionof*{${1:float type}}{${2:heading}}"}},
+		{"name":"setcaptiontype","arg":{"format":"{}","snippet":"setcaptiontype{${1:float type}}"}},
+		{"name":"setcaptiontype*","arg":{"format":"{}","snippet":"setcaptiontype*{${1:float type}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

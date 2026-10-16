@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"beamerthememetropolis"},{"name":"pgfopts"},{"name":"beamerinnerthememetropolis"},{"name":"calc"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"beamerouterthememetropolis"},{"name":"beamercolorthememetropolis"},{"name":"beamerfontthememetropolis"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"pgfornament-han"},{"name":"xpatch"},{"name":"xparse"},{"name":"pgfornament"},{"name":"cncolours"},{"name":"suffix"},{"name":"needspace"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

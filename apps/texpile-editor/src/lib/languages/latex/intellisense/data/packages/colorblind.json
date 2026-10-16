@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"ifthen"},{"name":"tikz","if":"!no-tikz"},{"name":"pgf","if":"!no-tikz"},{"name":"pgfrcs","if":"!no-tikz"},{"name":"pgfcore","if":"!no-tikz"},{"name":"graphicx","if":"!no-tikz"},{"name":"keyval","if":"!no-tikz"},{"name":"graphics","if":"!no-tikz"},{"name":"trig","if":"!no-tikz"},{"name":"pgfsys","if":"!no-tikz"},{"name":"pgfcomp-version-0-65","if":"!no-tikz"},{"name":"pgfcomp-version-1-18","if":"!no-tikz"},{"name":"pgffor","if":"!no-tikz"},{"name":"pgfkeys","if":"!no-tikz"},{"name":"pgfmath","if":"!no-tikz"}],
+	"macros": [
+		{"name":"drawScheme","arg":{"format":"{}","snippet":"drawScheme{${1:scheme}}"}},
+		{"name":"drawSchemeC","arg":{"format":"[]{}","snippet":"drawSchemeC[${1:width}]{${2:scheme}}"},"if":"pgf+Tol"},
+		{"name":"drawSchemeC","arg":{"format":"{}","snippet":"drawSchemeC{${1:scheme}}"},"if":"pgf+Tol"},
+		{"name":"ifpgf","unusual":true},
+		{"name":"ifredefinedefaults","unusual":true},
+		{"name":"iftikz","unusual":true},
+		{"name":"ifTolColors","unusual":true},
+		{"name":"pgffalse","unusual":true},
+		{"name":"pgftrue","unusual":true},
+		{"name":"redefinedefaultsfalse","unusual":true},
+		{"name":"redefinedefaultstrue","unusual":true},
+		{"name":"tikzfalse","unusual":true},
+		{"name":"tikztrue","unusual":true},
+		{"name":"TolColorsfalse","unusual":true},
+		{"name":"TolColorstrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/colorblind#c": ["OkabeIto","Tol","keep-defaults","no-tikz","pgf"]
+	},
+	"args": ["\\usepackage/colorblind#c"]
+}

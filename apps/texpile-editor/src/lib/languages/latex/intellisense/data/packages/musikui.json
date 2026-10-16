@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"musidepth"},
+		{"name":"musiheight"},
+		{"name":"musihgap"},
+		{"name":"musiopsymbol"},
+		{"name":"musirule"},
+		{"name":"musivgap"},
+		{"name":"musiwarikakko"},
+		{"name":"musiwidth"}
+	],
+	"envs": [
+		{"name":"musikui"}
+	],
+	"keys": {}
+}

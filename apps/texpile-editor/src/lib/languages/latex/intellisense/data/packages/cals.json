@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"alignC"},
+		{"name":"alignL"},
+		{"name":"alignR","doc":"To align the table cell text left, center or right we add or remove vfill-part of the left and right padding."},
+		{"name":"brow"},
+		{"name":"cell","arg":{"format":"{}","snippet":"cell{${1:content}}"},"doc":"\\cell creates a table cell, puts it to the current row and updates decorations."},
+		{"name":"colwidths","arg":{"format":"{}","snippet":"colwidths{${1:widths}}"}},
+		{"name":"erow"},
+		{"name":"lastrule","doc":"Typesets the last rule (bottom frame) of a table chunk."},
+		{"name":"nullcell","arg":{"format":"{}","snippet":"nullcell{${1}}"}},
+		{"name":"spancontent","arg":{"format":"{}","snippet":"spancontent{${1:content}}"},"doc":"Typesets a spanned cell (the content is in the implicit argument) and puts it to the current row."},
+		{"name":"tbreak","arg":{"format":"{}","snippet":"tbreak{${1}}"},"doc":"force a table break."},
+		{"name":"tfoot","arg":{"format":"{}","snippet":"tfoot{${1}}"}},
+		{"name":"thead","arg":{"format":"{}","snippet":"thead{${1}}"}}
+	],
+	"envs": [
+		{"name":"calstable","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"calstable"}
+	],
+	"keys": {}
+}

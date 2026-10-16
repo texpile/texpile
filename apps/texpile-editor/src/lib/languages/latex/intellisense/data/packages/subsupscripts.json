@@ -1,0 +1,33 @@
+{
+	"macros": [
+		{"name":"dblleftscriptskip","unusual":true},
+		{"name":"dblrightscriptskip","unusual":true},
+		{"name":"fourscripts","arg":{"format":"{}{}{}{}{}","snippet":"fourscripts{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"fourscriptsC","arg":{"format":"{}{}{}{}{}{}{}","snippet":"fourscriptsC{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"}},
+		{"name":"largerSkips"},
+		{"name":"lrsubscripts","arg":{"format":"{}{}{}","snippet":"lrsubscripts{${1}}{${2}}{${3}}"}},
+		{"name":"lrsubscriptsC","arg":{"format":"{}{}{}{}{}","snippet":"lrsubscriptsC{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"lrsuperscripts","arg":{"format":"{}{}{}","snippet":"lrsuperscripts{${1}}{${2}}{${3}}"}},
+		{"name":"lrsuperscriptsC","arg":{"format":"{}{}{}{}{}","snippet":"lrsuperscriptsC{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"lsubscript","arg":{"format":"[]{}{}","snippet":"lsubscript[${1}]{${2}}{${3}}"}},
+		{"name":"lsubscript","arg":{"format":"{}{}","snippet":"lsubscript{${1}}{${2}}"}},
+		{"name":"lsuperscript","arg":{"format":"[]{}{}","snippet":"lsuperscript[${1}]{${2}}{${3}}"}},
+		{"name":"lsuperscript","arg":{"format":"{}{}","snippet":"lsuperscript{${1}}{${2}}"}},
+		{"name":"rsubscript","arg":{"format":"[]{}{}","snippet":"rsubscript[${1}]{${2}}{${3}}"}},
+		{"name":"rsubscript","arg":{"format":"{}{}","snippet":"rsubscript{${1}}{${2}}"}},
+		{"name":"rsuperscript","arg":{"format":"[]{}{}","snippet":"rsuperscript[${1}]{${2}}{${3}}"}},
+		{"name":"rsuperscript","arg":{"format":"{}{}","snippet":"rsuperscript{${1}}{${2}}"}},
+		{"name":"setDblLSkip","arg":{"format":"{}","snippet":"setDblLSkip{${1}}"}},
+		{"name":"setDblRSkip","arg":{"format":"{}","snippet":"setDblRSkip{${1}}"}},
+		{"name":"setSingleLSkip","arg":{"format":"{}","snippet":"setSingleLSkip{${1}}"}},
+		{"name":"setSingleRSkip","arg":{"format":"{}","snippet":"setSingleRSkip{${1}}"}},
+		{"name":"singleleftscriptskip","unusual":true},
+		{"name":"singlerightscriptskip","unusual":true},
+		{"name":"twolscripts","arg":{"format":"[]{}{}{}","snippet":"twolscripts[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"twolscripts","arg":{"format":"{}{}{}","snippet":"twolscripts{${1}}{${2}}{${3}}"}},
+		{"name":"tworscripts","arg":{"format":"[]{}{}{}","snippet":"tworscripts[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"tworscripts","arg":{"format":"{}{}{}","snippet":"tworscripts{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

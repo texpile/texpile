@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"figureversion","arg":{"format":"{}","snippet":"figureversion{${1}}"}},
+		{"name":"fontbasefamily","arg":{"format":"{}","snippet":"fontbasefamily{${1}}"}},
+		{"name":"fontfigurealignment","arg":{"format":"{}","snippet":"fontfigurealignment{${1}}"}},
+		{"name":"fontfigurestyle","arg":{"format":"{}","snippet":"fontfigurestyle{${1}}"}},
+		{"name":"fontprimaryshape","arg":{"format":"{}","snippet":"fontprimaryshape{${1}}"}},
+		{"name":"fontsecondaryshape","arg":{"format":"{}","snippet":"fontsecondaryshape{${1}}"}},
+		{"name":"liningfigures","arg":{"format":"{}","snippet":"liningfigures{${1}}"}},
+		{"name":"lnfigures"},
+		{"name":"mathfigurealignment","arg":{"format":"{}","snippet":"mathfigurealignment{${1}}"}},
+		{"name":"mathweight","arg":{"format":"{}","snippet":"mathweight{${1}}"}},
+		{"name":"noscshape"},
+		{"name":"prfigures"},
+		{"name":"proportionalfigures","arg":{"format":"{}","snippet":"proportionalfigures{${1}}"}},
+		{"name":"proportionalmath"},
+		{"name":"tabularfigures","arg":{"format":"{}","snippet":"tabularfigures{${1}}"}},
+		{"name":"tabularmath"},
+		{"name":"tbfigures"},
+		{"name":"textfigures","arg":{"format":"{}","snippet":"textfigures{${1}}"}},
+		{"name":"txfigures"}
+	],
+	"envs": [],
+	"keys": {}
+}

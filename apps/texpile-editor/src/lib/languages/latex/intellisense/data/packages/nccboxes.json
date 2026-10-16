@@ -1,0 +1,28 @@
+{
+	"macros": [
+		{"name":"addbox","arg":{"format":"{}{}{}","snippet":"addbox{${1}}{${2}}{${3}}"},"doc":"This macro specifies a horizontal box whose height and depth are adjusted using the given values."},
+		{"name":"bstrut","doc":"The \\tstrut, \\bstrut, and \\tbstrut commands insert struts exceeding the height, depth, and both height and depth of the strut prototype \\Strutletter by a special small amount."},
+		{"name":"cbox","arg":{"format":"[]{}","snippet":"cbox[${1:position}]{${2:text}}"},"doc":"The \\cbox/⟨value⟩/[⟨pos⟩]{⟨body⟩} command prepares a box whose body is a one-column table."},
+		{"name":"cbox","arg":{"format":"{}","snippet":"cbox{${1:text}}"},"doc":"The \\cbox/⟨value⟩/[⟨pos⟩]{⟨body⟩} command prepares a box whose body is a one-column table."},
+		{"name":"cbox*","arg":{"format":"[]{}","snippet":"cbox*[${1:position}]{${2:text}}"},"doc":"The \\cbox/⟨value⟩/[⟨pos⟩]{⟨body⟩} command prepares a box whose body is a one-column table."},
+		{"name":"cbox*","arg":{"format":"{}","snippet":"cbox*{${1:text}}"},"doc":"The \\cbox/⟨value⟩/[⟨pos⟩]{⟨body⟩} command prepares a box whose body is a one-column table."},
+		{"name":"cboxstyle","doc":"The \\cboxstyle specifies a style applied to all \\cbox commands."},
+		{"name":"jhbox","arg":{"format":"{}[]{}","snippet":"jhbox{${1:prototype}}[${2:position}]{${3:text}}"}},
+		{"name":"jhbox","arg":{"format":"{}{}","snippet":"jhbox{${1:prototype}}{${2:text}}"}},
+		{"name":"jparbox","arg":{"format":"{}[]{}{}","snippet":"jparbox{${1:prototype}}[${2:position}]{${3:width}}{${4:text}}"},"doc":"The \\jparbox vertically aligns paragraph box with respect to a prototype."},
+		{"name":"jparbox","arg":{"format":"{}{}{}","snippet":"jparbox{${1:prototype}}{${2:width}}{${3:text}}"},"doc":"The \\jparbox vertically aligns paragraph box with respect to a prototype."},
+		{"name":"jvbox","arg":{"format":"{}[]{}","snippet":"jvbox{${1:prototype}}[${2:position}]{${3:text}}"}},
+		{"name":"jvbox","arg":{"format":"{}{}","snippet":"jvbox{${1:prototype}}{${2:text}}"}},
+		{"name":"pbox","arg":{"format":"[]{}","snippet":"pbox[${1}]{${2}}"},"doc":"The \\pbox is a simple version of one-column table."},
+		{"name":"pbox","arg":{"format":"{}","snippet":"pbox{${1}}"},"doc":"The \\pbox is a simple version of one-column table."},
+		{"name":"picbox","arg":{"format":"{}","snippet":"picbox{${1}}"}},
+		{"name":"Strut"},
+		{"name":"Strutletter"},
+		{"name":"Strutstretch"},
+		{"name":"tbstrut","doc":"The \\tstrut, \\bstrut, and \\tbstrut commands insert struts exceeding the height, depth, and both height and depth of the strut prototype \\Strutletter by a special small amount."},
+		{"name":"tc","arg":{"format":"{}","snippet":"tc{${1}}"},"doc":"To center a table field, the \\tc{⟨field⟩} command is introduced since version 1.2 of the package."},
+		{"name":"tstrut","doc":"The \\tstrut, \\bstrut, and \\tbstrut commands insert struts exceeding the height, depth, and both height and depth of the strut prototype \\Strutletter by a special small amount."}
+	],
+	"envs": [],
+	"keys": {}
+}

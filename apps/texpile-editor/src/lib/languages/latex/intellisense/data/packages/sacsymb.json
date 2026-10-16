@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"ca"},
+		{"name":"cb"},
+		{"name":"cc"},
+		{"name":"cd"},
+		{"name":"ce"},
+		{"name":"cf"},
+		{"name":"cg"},
+		{"name":"ch"},
+		{"name":"ci"},
+		{"name":"cj"},
+		{"name":"ck"},
+		{"name":"cl"},
+		{"name":"cm"},
+		{"name":"cn"},
+		{"name":"co"},
+		{"name":"cq"},
+		{"name":"cs"},
+		{"name":"ct"},
+		{"name":"cu"},
+		{"name":"cv"},
+		{"name":"cw"}
+	],
+	"envs": [],
+	"keys": {}
+}

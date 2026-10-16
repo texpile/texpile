@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"fancyhdr"},{"name":"minitoc","if":"minitoc"},{"name":"mtcmess","if":"minitoc"}],
+	"macros": [
+		{"name":"Appendixfalse","unusual":true},
+		{"name":"Appendixtrue","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ifAppendix","unusual":true},
+		{"name":"ifOverview","unusual":true},
+		{"name":"ifPreface","unusual":true},
+		{"name":"Overviewauthorfont","unusual":true},
+		{"name":"Overviewdatefont","unusual":true},
+		{"name":"Overviewfalse","unusual":true},
+		{"name":"Overviewfont","unusual":true},
+		{"name":"Overviewname","unusual":true},
+		{"name":"OverviewPage"},
+		{"name":"Overviewtitlefont","unusual":true},
+		{"name":"Overviewtrue","unusual":true},
+		{"name":"preface","arg":{"format":"[]","snippet":"preface[${1}]"}},
+		{"name":"preface"},
+		{"name":"Prefacefalse","unusual":true},
+		{"name":"Prefacename","unusual":true},
+		{"name":"Prefacetrue","unusual":true},
+		{"name":"thumbauthorfont","unusual":true},
+		{"name":"thumbdatefont","unusual":true},
+		{"name":"thumbheaderfont","unusual":true},
+		{"name":"thumbheight"},
+		{"name":"thumbtitlefont","unusual":true},
+		{"name":"thumbwidth"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/thumb#c": ["box","filledbox","filledoval","minitoc","oval"]
+	},
+	"args": ["\\usepackage/thumb#c"]
+}

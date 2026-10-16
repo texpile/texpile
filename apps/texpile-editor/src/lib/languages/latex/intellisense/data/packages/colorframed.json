@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"framed"},{"name":"color"}],
+	"macros": [
+		{"name":"colorframedbordercolorcommand"},
+		{"name":"colorframedcolorbox","arg":{"format":"{}{}","snippet":"colorframedcolorbox{${1}}{${2}}"},"unusual":true},
+		{"name":"colorframedTFconlabcolorcommand"},
+		{"name":"colorframedTFconlabsep"},
+		{"name":"colorframedTFtitlesep"},
+		{"name":"colorframedTitleBarFrame","arg":{"format":"[]{}","snippet":"colorframedTitleBarFrame[${1:continuation label}]{${2:title}}"}},
+		{"name":"colorframedTitleBarFrame","arg":{"format":"{}","snippet":"colorframedTitleBarFrame{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

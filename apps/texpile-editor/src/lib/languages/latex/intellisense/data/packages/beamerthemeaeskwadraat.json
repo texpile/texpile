@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"merriweather"},{"name":"iftex"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen","if":"!noprogress"},{"name":"calc","if":"!noprogress"},{"name":"tikzducks"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"miniframesoff","doc":"To exclude a group of slide from the progress blocks on top of the presentation, use \\miniframesoff."},
+		{"name":"miniframeson"},
+		{"name":"questionframe"},
+		{"name":"setlogo","arg":{"format":"{}","snippet":"setlogo{${1:file}}"},"doc":"Using \\setlogo{file} changes the logo in the bottom right."},
+		{"name":"setstylecolor","arg":{"format":"{}","snippet":"setstylecolor{${1:R,G,B}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/beamerthemeaeskwadraat#c": ["gradient","legacy","noprogress","uu"]
+	},
+	"args": ["\\usepackage/beamerthemeaeskwadraat#c"]
+}

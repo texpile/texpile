@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"marginfont"},
+		{"name":"marginnote","arg":{"format":"[]{}[]","snippet":"marginnote[${1:left text}]{${2:right text}}[${3:vertical offset}]"}},
+		{"name":"marginnote","arg":{"format":"{}","snippet":"marginnote{${1:right text}}"}},
+		{"name":"marginnotetextwidth"},
+		{"name":"marginnotevadjust"},
+		{"name":"raggedleftmarginnote"},
+		{"name":"raggedrightmarginnote"}
+	],
+	"envs": [],
+	"keys": {}
+}

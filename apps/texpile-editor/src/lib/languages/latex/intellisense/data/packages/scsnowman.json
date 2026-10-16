@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"sctkzsym-base"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"enumsnowman","arg":{"format":"[]{}","snippet":"enumsnowman[${1:keys}]{${2:counter}}"},"unusual":true},
+		{"name":"enumsnowman","arg":{"format":"{}","snippet":"enumsnowman{${1:counter}}"},"unusual":true},
+		{"name":"makedocumentsnowman","unusual":true},
+		{"name":"makeitemsnowman","doc":"Change item labels in itemize environment to snowmen ."},
+		{"name":"makeqedsnowman"},
+		{"name":"scsnowman","arg":{"format":"[]","snippet":"scsnowman[${1:keys}]"},"doc":"The LaTeX package scsnowman provides a command \\scsnowman, which can display many variants of snowmen."},
+		{"name":"scsnowman","doc":"The LaTeX package scsnowman provides a command \\scsnowman, which can display many variants of snowmen."},
+		{"name":"scsnowmandefault","arg":{"format":"{}","snippet":"scsnowmandefault{${1:keys}}"}},
+		{"name":"scsnowmannumeral","arg":{"format":"[]{}","snippet":"scsnowmannumeral[${1:keys}]{${2:number}}"},"doc":"You can replace all “8” inside an arabic number expression with snowmen by using \\scsnowmannumeral."},
+		{"name":"scsnowmannumeral","arg":{"format":"{}","snippet":"scsnowmannumeral{${1:number}}"},"doc":"You can replace all “8” inside an arabic number expression with snowmen by using \\scsnowmannumeral."},
+		{"name":"usescsnowmanlibrary","arg":{"format":"{}","snippet":"usescsnowmanlibrary{${1:library}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

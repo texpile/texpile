@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"chartoclip","arg":{"format":"[]{}","snippet":"chartoclip[${1:key-vals}]{${2:char}}"}},
+		{"name":"chartoclip","arg":{"format":"{}","snippet":"chartoclip{${1:char}}"}},
+		{"name":"chartopath","arg":{"format":"[]{}","snippet":"chartopath[${1:key-vals}]{${2:string}}"},"doc":"Users can specific the color of outline and fill, specific the fill-in pattern, and specific the scale and slant of inputted characters."},
+		{"name":"chartopath","arg":{"format":"{}","snippet":"chartopath{${1:string}}"},"doc":"Users can specific the color of outline and fill, specific the fill-in pattern, and specific the scale and slant of inputted characters."},
+		{"name":"ctpbackslash"},
+		{"name":"ctpdata","arg":{"format":"{}{}","snippet":"ctpdata{${1:font name}}{${2:character}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

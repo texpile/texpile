@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"imajfamily"},
+		{"name":"textimaj","arg":{"format":"{}","snippet":"textimaj{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

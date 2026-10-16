@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-solides3d"}],
+	"macros": [
+		{"name":"psHyperboloid","arg":{"format":"[]()","snippet":"psHyperboloid[${1:options}](${2:x,y,z})"}},
+		{"name":"psHyperboloid","arg":{"format":"()","snippet":"psHyperboloid(${1:x,y,z})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

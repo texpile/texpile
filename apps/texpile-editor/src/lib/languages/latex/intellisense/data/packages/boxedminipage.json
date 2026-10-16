@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"boxedminipage","arg":{"format":"[][][]{}","snippet":"[${1:pos}][${2:height}][${3:inner-pos}]{${4:width}}"}},
+		{"name":"boxedminipage","arg":{"format":"{}","snippet":"{${1:width}}"}}
+	],
+	"keys": {}
+}

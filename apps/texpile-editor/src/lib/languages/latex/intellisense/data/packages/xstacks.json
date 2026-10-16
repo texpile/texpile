@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"pkginfograb"},{"name":"tokgroupmark"},{"name":"tokglobalstack"}],
+	"macros": [
+		{"name":"xstacks_aftergroup:N","arg":{"format":"{}","snippet":"xstacks_aftergroup:N{${1:token}}"},"unusual":true},
+		{"name":"xstacks_aftergroup:NN","arg":{"format":"{}{}","snippet":"xstacks_aftergroup:NN{${1:int variable}}{${2:token}}"},"unusual":true},
+		{"name":"xstacks_cs_gset:n","arg":{"format":"{}","snippet":"xstacks_cs_gset:n{${1:stack prefix}}"},"unusual":true},
+		{"name":"xstacks_cs_gset:N","arg":{"format":"{}","snippet":"xstacks_cs_gset:N{${1:stack prefix}}"},"unusual":true},
+		{"name":"xstacks_gpop:N","arg":{"format":"{}","snippet":"xstacks_gpop:N{${1:stack variable}}"},"unusual":true},
+		{"name":"xstacks_gpush:Nn","arg":{"format":"{}{}","snippet":"xstacks_gpush:Nn{${1:stack variable}}{${2:tokens}}"},"unusual":true},
+		{"name":"xstacks_gput_left:Nn","arg":{"format":"{}{}","snippet":"xstacks_gput_left:Nn{${1:stack variable}}{${2:tokens}}"},"unusual":true},
+		{"name":"xstacks_gput_right:Nn","arg":{"format":"{}{}","snippet":"xstacks_gput_right:Nn{${1:stack variable}}{${2:tokens}}"},"unusual":true},
+		{"name":"xstacks_groupmark:","unusual":true},
+		{"name":"xstacks_groupmark:N","arg":{"format":"{}","snippet":"xstacks_groupmark:N{${1:int variable}}"},"unusual":true},
+		{"name":"xstacks_gset:N","arg":{"format":"{}","snippet":"xstacks_gset:N{${1:stack variable}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"}],
+	"macros": [
+		{"name":"added"},
+		{"name":"changed"},
+		{"name":"changelogremark","arg":{"format":"{}","snippet":"changelogremark{${1:remark}}"}},
+		{"name":"changelogyanked","doc":"Prints the “revoked release” notice: YANKED ."},
+		{"name":"deprecated"},
+		{"name":"fixed"},
+		{"name":"newchangelogsection","arg":{"format":"{}{}","snippet":"newchangelogsection{${1:command}}{${2:description}}"},"doc":"Creates a new command like \\added, \\changed, etc., that can be used in the version environment."},
+		{"name":"removed"},
+		{"name":"security"},
+		{"name":"shortversion","arg":{"format":"{}","snippet":"shortversion{${1:options}}","keys":["l3keys:changelog_version"],"keyPos":0}}
+	],
+	"envs": [
+		{"name":"changelog","arg":{"format":"[]","snippet":"[${1:options}]","keys":["l3keys:changelog_changelog"],"keyPos":0}},
+		{"name":"changelog"},
+		{"name":"changelogdescription"},
+		{"name":"changelogitemize"},
+		{"name":"version","arg":{"format":"[]","snippet":"[${1:options}]","keys":["l3keys:changelog_version"],"keyPos":0},"doc":"Gives a single version; wraps itemize."},
+		{"name":"version","doc":"Gives a single version; wraps itemize."}
+	],
+	"keys": {
+		"l3keys:changelog_changelog": ["label=","sectioncmd=","title=","section=${1|true,false|}","author=","v=","version=","date=","yanked=${1|true,false|}","simple=${1|true,false|}","short=${1|true,false|}","remark=","remarks="],
+		"l3keys:changelog_version": ["author=","changes=","date=","remark=","remarks=","v=","version=","yanked=${1|true,false|}","simple=${1|true,false|}","short=${1|true,false|}"]
+	}
+}

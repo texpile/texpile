@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"pgfoffsetpath","arg":{"format":"{}{}","snippet":"pgfoffsetpath{${1:softpath}}{${2:distance}}"}},
+		{"name":"pgfoffsetpathfraction","arg":{"format":"{}{}{}","snippet":"pgfoffsetpathfraction{${1:softpath}}{${2:hwidth}}{${3:fraction}}"}},
+		{"name":"pgfoffsetpathindex","arg":{"format":"{}{}{}{}","snippet":"pgfoffsetpathindex{${1:softpath}}{${2:width}}{${3:i}}{${4:n}}"}},
+		{"name":"pgfoffsetpathqfraction","arg":{"format":"{}{}{}","snippet":"pgfoffsetpathqfraction{${1:softpath}}{${2:hwidth}}{${3:fraction}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

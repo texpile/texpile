@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ltfilehookdate","unusual":true},
+		{"name":"ltfilehookversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

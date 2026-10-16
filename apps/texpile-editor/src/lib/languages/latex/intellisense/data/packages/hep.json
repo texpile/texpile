@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"url"},{"name":"cite"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"braket"},{"name":"cancel"},{"name":"slashed"},{"name":"hepnicenames"},{"name":"heppennames"},{"name":"hepparticles"},{"name":"subdepth"},{"name":"xspace"},{"name":"hepunits"},{"name":"ifthen"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"color"},{"name":"kvoptions","if":"float|hyper"},{"name":"keyval","if":"float|hyper"},{"name":"kvsetkeys","if":"float|hyper"},{"name":"afterpage","if":"float"},{"name":"ccaption","if":"float"},{"name":"subfigure","if":"float"},{"name":"caption","if":"float"},{"name":"caption3","if":"float"},{"name":"hyperref","if":"hyper"},{"name":"pdfescape","if":"hyper"},{"name":"nameref","if":"hyper"},{"name":"refcount","if":"hyper"},{"name":"gettitlestring","if":"hyper"},{"name":"stringenc","if":"hyper"},{"name":"intcalc","if":"hyper"},{"name":"bitset","if":"hyper"},{"name":"bigintcalc","if":"hyper"},{"name":"rerunfilecheck","if":"hyper"},{"name":"uniquecounter","if":"hyper"},{"name":"booktabs","if":"layout"},{"name":"setspace","if":"layout"},{"name":"fancyhdr","if":"layout"},{"name":"tocbibind","if":"layout"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hep#c": ["HNitalic","HNitforce","HNmaybess","HNnoss","HUGray","HUamssymb","HUbinary","HUcdot","HUderived","HUderivedinbase","HUitalian","HUmediumqspace","HUmediumspace","HUnoams","HUnoamssquareissue","HUnoprefixcmds","HUnotextstyle","HUpstricks","HUsquaren","HUtextstyle","HUthickqspace","HUthickspace","HUthinqspace","HUthinspace","all","fd","float","hyper","layout"]
+	},
+	"args": ["\\usepackage/hep#c"]
+}

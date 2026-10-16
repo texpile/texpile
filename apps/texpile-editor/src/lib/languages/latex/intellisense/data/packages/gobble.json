@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"@gobbleallopt","arg":{"format":"[]","snippet":"@gobbleallopt[${1}]"},"unusual":true},
+		{"name":"@gobbleallopt","unusual":true},
+		{"name":"@gobbleopt","arg":{"format":"[]","snippet":"@gobbleopt[${1}]"},"unusual":true},
+		{"name":"@gobbleopt","unusual":true},
+		{"name":"@gobbletoelse","arg":{"format":"{}","snippet":"@gobbletoelse{${1}}"},"unusual":true},
+		{"name":"@gobbletofi","arg":{"format":"{}","snippet":"@gobbletofi{${1}}"},"unusual":true},
+		{"name":"@gobbletoor","arg":{"format":"{}","snippet":"@gobbletoor{${1}}"},"unusual":true},
+		{"name":"@gobbletwoopt","arg":{"format":"[][]","snippet":"@gobbletwoopt[${1}][${2}]"},"unusual":true},
+		{"name":"@gobbletwoopt","unusual":true},
+		{"name":"@gobbletwoopttwo","arg":{"format":"[][]{}{}","snippet":"@gobbletwoopttwo[${1}][${2}]{${3}}{${4}}"},"unusual":true},
+		{"name":"@gobbletwoopttwo","arg":{"format":"{}{}","snippet":"@gobbletwoopttwo{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

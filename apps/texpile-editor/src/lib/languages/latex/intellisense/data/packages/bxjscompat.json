@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ImposeOldLuaTeXBehavior"},
+		{"name":"RevokeOldLuaTeXBehavior"}
+	],
+	"envs": [],
+	"keys": {}
+}

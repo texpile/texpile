@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"ifminusnumber","unusual":true},
+		{"name":"ifpriornum","unusual":true},
+		{"name":"minusname","unusual":true},
+		{"name":"minusnumberfalse","unusual":true},
+		{"name":"minusnumbertrue","unusual":true},
+		{"name":"numnameru","arg":{"format":"{}","snippet":"numnameru{${1:number}}"}},
+		{"name":"priornumfalse","unusual":true},
+		{"name":"priornumtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

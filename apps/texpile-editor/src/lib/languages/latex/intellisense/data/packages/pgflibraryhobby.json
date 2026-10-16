@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"HobbyDisableAux"},
+		{"name":"pgfpathhobby","arg":{"format":"{}","snippet":"pgfpathhobby{${1:options}}"}},
+		{"name":"pgfpathhobbyend"},
+		{"name":"pgfpathhobbypt","arg":{"format":"{}{}","snippet":"pgfpathhobbypt{${1:pgf point specification}}{${2:options}}"}},
+		{"name":"pgfplothandlerclosedhobby","unusual":true},
+		{"name":"pgfplothandlerhobby","unusual":true},
+		{"name":"pgfplothandlerquickhobby","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

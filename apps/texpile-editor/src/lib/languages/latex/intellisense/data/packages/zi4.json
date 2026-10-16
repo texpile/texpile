@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"altzero"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"exsheets"},{"name":"xparse"},{"name":"xtemplate"},{"name":"l3keys2e"},{"name":"etoolbox"},{"name":"environ"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfrcs"},{"name":"xcolor"},{"name":"cntformats"},{"name":"cnltx-base"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"iftex"},{"name":"tasks"},{"name":"ulem"},{"name":"translations"},{"name":"listings"}],
+	"macros": [
+		{"name":"NewLstQuSolPair","arg":{"format":"[]{}{}[]{}{}[]","snippet":"NewLstQuSolPair[${1:options for both environments}]{${2:lst question env}}{${3:question env}}[${4:options for lst question env}]{${5:lst solution env}}{${6:solution env}}[${7:options for lst solution env}]"}},
+		{"name":"NewLstQuSolPair","arg":{"format":"{}{}{}{}","snippet":"NewLstQuSolPair{${1:lst question env}}{${2:question env}}{${3:lst solution env}}{${4:solution env}}"}}
+	],
+	"envs": [
+		{"name":"lstquestion","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"A listings environment placed in a question."},
+		{"name":"lstquestion","doc":"A listings environment placed in a question."},
+		{"name":"lstsolution","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"A listings environment placed in a solution."},
+		{"name":"lstsolution","doc":"A listings environment placed in a solution."}
+	],
+	"keys": {}
+}

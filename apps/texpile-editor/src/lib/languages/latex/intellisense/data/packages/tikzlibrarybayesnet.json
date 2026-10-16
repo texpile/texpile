@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"edge","arg":{"format":"[]{}{}","snippet":"edge[${1:options}]{${2:inputs}}{${3:outputs}}"}},
+		{"name":"edge","arg":{"format":"{}{}","snippet":"edge{${1:inputs}}{${2:outputs}}"}},
+		{"name":"factor","arg":{"format":"[]{}{}{}{}","snippet":"factor[${1:options}]{${2:name}}{${3:caption}}{${4:inputs}}{${5:outputs}}"}},
+		{"name":"factor","arg":{"format":"{}{}{}{}","snippet":"factor{${1:name}}{${2:caption}}{${3:inputs}}{${4:outputs}}"}},
+		{"name":"factoredge","arg":{"format":"[]{}{}{}","snippet":"factoredge[${1:options}]{${2:inputs}}{${3:factors}}{${4:outputs}}"}},
+		{"name":"factoredge","arg":{"format":"{}{}{}","snippet":"factoredge{${1:inputs}}{${2:factors}}{${3:outputs}}"}},
+		{"name":"gate","arg":{"format":"[]{}{}{}","snippet":"gate[${1:options}]{${2:name}}{${3:fitlist}}{${4:inputs}}"}},
+		{"name":"gate","arg":{"format":"{}{}{}","snippet":"gate{${1:name}}{${2:fitlist}}{${3:inputs}}"}},
+		{"name":"hgate","arg":{"format":"{}{}{}{}{}{}","snippet":"hgate{${1:name}}{${2:fitlist top}}{${3:caption top}}{${4:fitlist bottom}}{${5:caption bottom}}{${6:inputs}}"}},
+		{"name":"plate","arg":{"format":"[]{}{}{}","snippet":"plate[${1:options}]{${2:name}}{${3:fitlist}}{${4:caption}}"}},
+		{"name":"plate","arg":{"format":"{}{}{}","snippet":"plate{${1:name}}{${2:fitlist}}{${3:caption}}"}},
+		{"name":"vgate","arg":{"format":"{}{}{}{}{}{}","snippet":"vgate{${1:name}}{${2:fitlist left}}{${3:caption left}}{${4:fitlist right}}{${5:caption right}}{${6:inputs}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

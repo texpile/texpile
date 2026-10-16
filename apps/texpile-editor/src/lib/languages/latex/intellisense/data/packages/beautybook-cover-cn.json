@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"}],
+	"macros": [
+		{"name":"makecover"}
+	],
+	"envs": [],
+	"keys": {}
+}

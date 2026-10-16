@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"tmatlink","arg":{"format":"{}{}","snippet":"tmatlink{${1}}{${2}}"}},
+		{"name":"tmatpdn","arg":{"format":"{}{}","snippet":"tmatpdn{${1}}{${2}}"}},
+		{"name":"tmatpdv","arg":{"format":"{}{}","snippet":"tmatpdv{${1}}{${2}}"}},
+		{"name":"tmatpn","arg":{"format":"{}{}","snippet":"tmatpn{${1}}{${2}}"}},
+		{"name":"tmatpv","arg":{"format":"{}{}","snippet":"tmatpv{${1}}{${2}}"}},
+		{"name":"tmatpx","arg":{"format":"{}{}","snippet":"tmatpx{${1}}{${2}}"}}
+	],
+	"envs": [
+		{"name":"tmat","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"doc":"The package provides an environment tmat which takes two parameters, the dimensions of the matrix."}
+	],
+	"keys": {}
+}

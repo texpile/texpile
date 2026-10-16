@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"interfaces-base"},{"name":"etex"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"interfaces-etoolbox"},{"name":"interfaces-pgfkeys"},{"name":"interfaces-tikz"}],
+	"macros": [
+		{"name":"getthebotmarks","arg":{"format":"{}{}","snippet":"getthebotmarks{${1:named mark}}{${2:control sequence}}"}},
+		{"name":"getthefirstmarks","arg":{"format":"{}{}","snippet":"getthefirstmarks{${1:named mark}}{${2:control sequence}}"}},
+		{"name":"getthemarks","arg":{"format":"{}{}{}","snippet":"getthemarks{${1}}{${2}}{${3}}"}},
+		{"name":"getthetopmarks","arg":{"format":"{}{}","snippet":"getthetopmarks{${1:named mark}}{${2:control sequence}}"}},
+		{"name":"ifmarksequal","arg":{"format":"{}{}{}{}{}","snippet":"ifmarksequal{${1:marks A}}{${2:marks B}}{${3:named mark}}{${4:true}}{${5:false}}"}},
+		{"name":"marksthe","arg":{"format":"{}{}","snippet":"marksthe{${1}}{${2}}"}},
+		{"name":"marksthecs","arg":{"format":"{}{}","snippet":"marksthecs{${1}}{${2}}"}},
+		{"name":"thebotmarks","arg":{"format":"{}","snippet":"thebotmarks{${1}}"}},
+		{"name":"thefirstmarks","arg":{"format":"{}","snippet":"thefirstmarks{${1}}"}},
+		{"name":"thetopmarks","arg":{"format":"{}","snippet":"thetopmarks{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

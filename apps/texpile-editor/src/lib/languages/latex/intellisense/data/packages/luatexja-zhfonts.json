@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"luatexja-fontspec"},{"name":"l3keys2e"},{"name":"luatexja"},{"name":"luatexja-core"},{"name":"luatexbase"},{"name":"iftex"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"everyhook"},{"name":"svn-prov"},{"name":"lltjdefs"},{"name":"lltjcore"},{"name":"lltjp-geometry"},{"name":"ifluatex"},{"name":"luatexja-compat"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"lltjp-fontspec"},{"name":"luatexja-fontspec-29e"},{"name":"regexpatch"},{"name":"xparse"}],
+	"macros": [
+		{"name":"fang"},
+		{"name":"kai"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/luatexja-zhfonts#c": ["Adobe","Fandol","Founder","HanYi-F","HanYi-J","SinoType","ZhongYi","cwttf"]
+	},
+	"args": ["\\usepackage/luatexja-zhfonts#c"]
+}

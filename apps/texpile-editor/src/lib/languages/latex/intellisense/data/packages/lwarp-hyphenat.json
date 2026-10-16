@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"nohyphens","arg":{"format":"{}","snippet":"nohyphens{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

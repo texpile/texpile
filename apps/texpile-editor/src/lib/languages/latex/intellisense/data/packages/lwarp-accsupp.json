@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"BeginAccSupp","arg":{"format":"{}","snippet":"BeginAccSupp{${1}}"}},
+		{"name":"EndAccSupp","arg":{"format":"{}","snippet":"EndAccSupp{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

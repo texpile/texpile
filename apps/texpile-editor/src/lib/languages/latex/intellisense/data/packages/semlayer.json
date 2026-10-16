@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"colorlayers","arg":{"format":"{}","snippet":"colorlayers{${1:colors}}"}},
+		{"name":"currlayer","doc":"The command \\currlayer is set to the name of the current color layer."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"iflayers","unusual":true},
+		{"name":"ifoverlays","unusual":true},
+		{"name":"layerframe","arg":{"format":"[]{}","snippet":"layerframe[${1:commands}]{${2:style}}"}},
+		{"name":"layerframe","arg":{"format":"{}","snippet":"layerframe{${1:style}}"}},
+		{"name":"layerframe*","arg":{"format":"[]{}","snippet":"layerframe*[${1:commands}]{${2:style}}"}},
+		{"name":"layerframe*","arg":{"format":"{}","snippet":"layerframe*{${1:style}}"}},
+		{"name":"layerlabel"},
+		{"name":"layerpagestyle","arg":{"format":"{}","snippet":"layerpagestyle{${1:style}}"}},
+		{"name":"layersfalse"},
+		{"name":"layerstrue"},
+		{"name":"overlay","arg":{"format":"{}","snippet":"overlay{${1:n}}"},"doc":"puts whatever is in its scope (TeX group) on overlay n, where n = 0, . . . , 9."},
+		{"name":"overlayframe","arg":{"format":"[]{}","snippet":"overlayframe[${1:commands}]{${2:style}}"}},
+		{"name":"overlayframe","arg":{"format":"{}","snippet":"overlayframe{${1:style}}"}},
+		{"name":"overlayframe*","arg":{"format":"[]{}","snippet":"overlayframe*[${1:commands}]{${2:style}}"}},
+		{"name":"overlayframe*","arg":{"format":"{}","snippet":"overlayframe*{${1:style}}"}},
+		{"name":"overlaylabel"},
+		{"name":"overlaypagestyle","arg":{"format":"{}","snippet":"overlaypagestyle{${1:style}}"}},
+		{"name":"overlaysfalse"},
+		{"name":"overlaystrue"},
+		{"name":"thelayer"},
+		{"name":"theoverlay","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

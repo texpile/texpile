@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xstring"},{"name":"xintexpr"},{"name":"xintfrac"},{"name":"xint"},{"name":"xintcore"},{"name":"xintkernel"},{"name":"xinttools"},{"name":"xintbinhex"},{"name":"poormanlog"},{"name":"simplekv"},{"name":"settobox"}],
+	"macros": [
+		{"name":"LigneCalculsGeogebra","arg":{"format":"[]{}{}","snippet":"LigneCalculsGeogebra[${1:options}]{${2:commande}}{${3:resultat}}"},"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsGeogebra. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."},
+		{"name":"LigneCalculsGeogebra","arg":{"format":"{}{}","snippet":"LigneCalculsGeogebra{${1:commande}}{${2:resultat}}"},"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsGeogebra. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."},
+		{"name":"LigneCalculsXcas","arg":{"format":"[]{}{}","snippet":"LigneCalculsXcas[${1:options}]{${2:commande}}{${3:resultat}}"},"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsXcas. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."},
+		{"name":"LigneCalculsXcas","arg":{"format":"{}{}","snippet":"LigneCalculsXcas{${1:commande}}{${2:resultat}}"},"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsXcas. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."}
+	],
+	"envs": [
+		{"name":"CalculFormelGeogebra","arg":{"format":"[]<>","snippet":"[${1:options}]<${2:tikz options}>"},"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Geogebra est CalculFormelGeogebra."},
+		{"name":"CalculFormelGeogebra","arg":{"format":"<>","snippet":"<${1:tikz options}>"},"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Geogebra est CalculFormelGeogebra."},
+		{"name":"CalculFormelXcas","arg":{"format":"[]<>","snippet":"[${1:options}]<${2:tikz options}>"},"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Xcas est CalculFormelXcas."},
+		{"name":"CalculFormelXcas","arg":{"format":"<>","snippet":"<${1:tikz options}>"},"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Xcas est CalculFormelXcas."}
+	],
+	"keys": {}
+}

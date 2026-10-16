@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"mathptm"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"greekrm","arg":{"format":"{}","snippet":"greekrm{${1:math}}"}},
+		{"name":"rmgreek"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/klups#c": ["uprightgreek"]
+	},
+	"args": ["\\usepackage/klups#c"]
+}

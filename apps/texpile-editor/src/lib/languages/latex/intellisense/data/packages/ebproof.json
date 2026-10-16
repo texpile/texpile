@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"delims","arg":{"format":"{}{}","snippet":"delims{${1:left}}{${2:right}}"},"doc":"The statement \\delims puts left and right delimiters around the whole sub-proof, without changing the alignment (the spacing is affected by the delimiters, however)."},
+		{"name":"ebproofdelims","arg":{"format":"{}{}","snippet":"ebproofdelims{${1:left}}{${2:right}}"}},
+		{"name":"ebproofellipsis","arg":{"format":"{}{}","snippet":"ebproofellipsis{${1:label}}{${2:text}}"}},
+		{"name":"ebproofhypo","arg":{"format":"[]{}","snippet":"ebproofhypo[${1:options}]{${2:text}}"}},
+		{"name":"ebproofhypo","arg":{"format":"{}","snippet":"ebproofhypo{${1:text}}"}},
+		{"name":"ebproofinfer","arg":{"format":"[]{}[]{}","snippet":"ebproofinfer[${1:options}]{${2:arity}}[${3:label}]{${4:text}}"}},
+		{"name":"ebproofinfer","arg":{"format":"{}{}","snippet":"ebproofinfer{${1:arity}}{${2:text}}"}},
+		{"name":"ebproofnewrulestyle","arg":{"format":"{}{}","snippet":"ebproofnewrulestyle{${1:name}}{${2:options}}"}},
+		{"name":"ebproofnewstyle","arg":{"format":"{}{}","snippet":"ebproofnewstyle{${1:name}}{${2:options}}"},"doc":"The statement \\ebproofnewstyle defines a new style option with some ⟨name⟩ that sets a given set of ⟨options⟩."},
+		{"name":"ebproofoverlay"},
+		{"name":"ebproofrewrite","arg":{"format":"{}","snippet":"ebproofrewrite{${1:code}}"}},
+		{"name":"ebproofset","arg":{"format":"{}","snippet":"ebproofset{${1:options}}"},"doc":"The statement \\ebproofset is used to set some options."},
+		{"name":"ellipsis","arg":{"format":"{}{}","snippet":"ellipsis{${1:label}}{${2:text}}"},"doc":"The statement \\ellipsis typesets vertical dots, with a label on the right, and a new conclusion."},
+		{"name":"hypo","arg":{"format":"[]{}","snippet":"hypo[${1:options}]{${2:text}}"},"doc":"The statement \\hypo pushes a new proof tree consisting only in one conclusion line, with no premiss and no line above, in other words a tree with only a leaf (\\hypo stands for hypothesis)."},
+		{"name":"hypo","arg":{"format":"{}","snippet":"hypo{${1:text}}"},"doc":"The statement \\hypo pushes a new proof tree consisting only in one conclusion line, with no premiss and no line above, in other words a tree with only a leaf (\\hypo stands for hypothesis)."},
+		{"name":"infer","arg":{"format":"[]{}[]{}","snippet":"infer[${1:options}]{${2:arity}}[${3:label}]{${4:text}}"},"doc":"The statement \\infer builds an inference step by taking some proof trees from the top of the stack, assembling them with a rule joining their conclusions and putting a new conclusion below."},
+		{"name":"infer","arg":{"format":"{}{}","snippet":"infer{${1:arity}}{${2:text}}"},"doc":"The statement \\infer builds an inference step by taking some proof trees from the top of the stack, assembling them with a rule joining their conclusions and putting a new conclusion below."},
+		{"name":"overlay","doc":"The statement \\overlay combines the last two proofs on the stack into a single one, so that their conclusions are placed at the same point."},
+		{"name":"rewrite","arg":{"format":"{}","snippet":"rewrite{${1:code}}"},"doc":"The statement \\rewrite is used to modify the proof of the stack while preserving its size and alignment."},
+		{"name":"set","arg":{"format":"{}","snippet":"set{${1:options}}"}},
+		{"name":"treebox"},
+		{"name":"treemark","arg":{"format":"{}","snippet":"treemark{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"prooftree","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The package provides the prooftree environment, in standard and starred variants. This typesets the proof tree described by the ⟨statements⟩, as described in section 3."},
+		{"name":"prooftree","doc":"The package provides the prooftree environment, in standard and starred variants. This typesets the proof tree described by the ⟨statements⟩, as described in section 3."},
+		{"name":"prooftree*","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The package provides the prooftree environment, in standard and starred variants. This typesets the proof tree described by the ⟨statements⟩, as described in section 3."},
+		{"name":"prooftree*","doc":"The package provides the prooftree environment, in standard and starred variants. This typesets the proof tree described by the ⟨statements⟩, as described in section 3."}
+	],
+	"keys": {}
+}

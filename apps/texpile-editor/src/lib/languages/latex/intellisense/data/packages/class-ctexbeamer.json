@@ -1,89 +1,61 @@
 {
-  "deps": [
-    {
-      "name": "ctex"
-    },
-    {
-      "name": "class-beamer"
-    },
-    {
-      "name": "ucs",
-      "if": "ucs"
-    },
-    {
-      "name": "inputenc",
-      "if": "utf8x"
-    },
-    {
-      "name": "ucs",
-      "if": "utf8x"
-    },
-    {
-      "name": "inputenc",
-      "if": "utf8"
-    }
-  ],
-  "macros": [],
-  "envs": [],
-  "keys": {
-    "\\documentclass/ctexbeamer#c": [
-      "GBK",
-      "UTF8",
-      "zhmap=${1|true,false,zhmCJK|}",
-      "zihao=${1|-4,5,false|}",
-      "heading",
-      "scheme=${1|chinese,plain|}",
-      "linespread=${1:number}",
-      "fontset=${1|adobe,fandol,founder,mac,macnew,macold,ubuntu,windows,none|}",
-      "punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}",
-      "space=${1|true,false,auto|}",
-      "autoindent=",
-      "usepdftitle",
-      "envcountsect",
-      "notheorems",
-      "noamsthm",
-      "compress",
-      "t",
-      "c",
-      "leqno",
-      "fleqn",
-      "handout",
-      "trans",
-      "pdftex",
-      "nativepdf",
-      "pdfmark",
-      "dvips",
-      "dviwindo",
-      "dvipsone",
-      "vtex",
-      "ps2pdf",
-      "ignorenonframetext",
-      "noamssymb",
-      "bigger",
-      "smaller",
-      "8pt",
-      "9pt",
-      "10pt",
-      "11pt",
-      "12pt",
-      "14pt",
-      "17pt",
-      "20pt",
-      "draft",
-      "CJK",
-      "cjk",
-      "onlytextwidth",
-      "pgf={${1:pgf options}}",
-      "hyperref={${1:hyperref options}}",
-      "color={${1:color options}}",
-      "xcolor={${1:xcolor options}}",
-      "ucs",
-      "utf8x",
-      "utf8",
-      "aspectratio=${2|2013,1610,169,149,141,54,43,32,${1:xxxx}|}"
-    ]
-  },
-  "args": [
-    "\\documentclass/ctexbeamer#c"
-  ]
+	"deps": [{"name":"class-beamer"},{"name":"beamerbasemodes"},{"name":"etoolbox"},{"name":"iftex"},{"name":"beamerbaseoptions"},{"name":"keyval"},{"name":"geometry"},{"name":"ifvtex"},{"name":"pgfmath"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"xxcolor"},{"name":"atbegshi-ltx"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"beamerbasecompatibility"},{"name":"beamerbasefont"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"translator"},{"name":"beamerbasemisc"},{"name":"beamerbaseoverlay"},{"name":"beamerbasetitle"},{"name":"beamerbasesection"},{"name":"beamerbaseframe"},{"name":"beamerbaseverbatim"},{"name":"beamerbaseframesize"},{"name":"beamerbaseframecomponents"},{"name":"beamerbasecolor"},{"name":"beamerbasenotes"},{"name":"beamerbasetoc"},{"name":"beamerbaseboxes"},{"name":"beamerbaselocalstructure"},{"name":"enumerate"},{"name":"beamerbasenavigation"},{"name":"beamerbasetheorems"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"beamerbasethemes"},{"name":"luatexja","engines":["lualatex"]},{"name":"luatexja-core","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"xkeyval","engines":["lualatex"]},{"name":"everyhook","engines":["lualatex"]},{"name":"svn-prov","engines":["lualatex"]},{"name":"luatexja-compat","engines":["lualatex"]},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"zhnumber"},{"name":"fancyhdr","if":"fancyhdr"},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"addCJKfontfeature","arg":{"format":"{}","snippet":"addCJKfontfeature{${1:font features}}"},"unusual":true},
+		{"name":"addCJKfontfeatures","arg":{"format":"{}","snippet":"addCJKfontfeatures{${1:font features}}"}},
+		{"name":"ccwd"},
+		{"name":"chinese","arg":{"format":"{}","snippet":"chinese{${1:counter}}"}},
+		{"name":"Chinese","arg":{"format":"{}","snippet":"Chinese{${1:counter}}"},"unusual":true},
+		{"name":"CJKfamily","arg":{"format":"{}","snippet":"CJKfamily{${1:family}}"}},
+		{"name":"CJKfontspec","arg":{"format":"[]{}","snippet":"CJKfontspec[${1:font features}]{${2:font name}}"}},
+		{"name":"CJKfontspec","arg":{"format":"{}","snippet":"CJKfontspec{${1:font name}}"}},
+		{"name":"CTeX"},
+		{"name":"CTEXdigits","arg":{"format":"{}{}","snippet":"CTEXdigits{${1:macro}}{${2:number}}"}},
+		{"name":"CTEXheadinglabel","arg":{"format":"{}","snippet":"CTEXheadinglabel{${1:level}}"}},
+		{"name":"CTEXheadingnumber","arg":{"format":"{}","snippet":"CTEXheadingnumber{${1:level}}"}},
+		{"name":"CTEXifheadingnumbering","arg":{"format":"{}{}{}","snippet":"CTEXifheadingnumbering{${1:level}}{${2:true}}{${3:false}}"}},
+		{"name":"CTEXindent","unusual":true},
+		{"name":"CTEXnoindent","unusual":true},
+		{"name":"CTEXnumber","arg":{"format":"{}{}","snippet":"CTEXnumber{${1:macro}}{${2:number}}"}},
+		{"name":"CTEXoptions","arg":{"format":"[]","snippet":"CTEXoptions[${1:options}]"},"unusual":true},
+		{"name":"CTEXoptions","unusual":true},
+		{"name":"ctexset","arg":{"format":"{}","snippet":"ctexset{${1:options}}"}},
+		{"name":"CTEXsetfont","unusual":true},
+		{"name":"CTEXsetup","arg":{"format":"[]{}","snippet":"CTEXsetup[${1:options}]{${2:heading}}"},"unusual":true},
+		{"name":"CTEXsetup","arg":{"format":"{}","snippet":"CTEXsetup{${1:heading}}"},"unusual":true},
+		{"name":"CTEXthepart"},
+		{"name":"CTEXthesection"},
+		{"name":"CTEXthesubsection"},
+		{"name":"defaultCJKfontfeatures","arg":{"format":"{}","snippet":"defaultCJKfontfeatures{${1:font features}}"}},
+		{"name":"fangsong"},
+		{"name":"heiti"},
+		{"name":"ifctexpdf","unusual":true},
+		{"name":"kaishu"},
+		{"name":"lishu","if":"fontset=windows|fontset=founder"},
+		{"name":"newCJKfontfamily","arg":{"format":"[]{}[]{}","snippet":"newCJKfontfamily[${1:family}]{${2:command}}[${3:font features}]{${4:font name}}"}},
+		{"name":"newCJKfontfamily","arg":{"format":"{}{}","snippet":"newCJKfontfamily{${1:command}}{${2:font name}}"}},
+		{"name":"pingfang"},
+		{"name":"setCJKfamilyfont","arg":{"format":"{}[]{}","snippet":"setCJKfamilyfont{${1:family}}[${2:font features}]{${3:font name}}"}},
+		{"name":"setCJKfamilyfont","arg":{"format":"{}{}","snippet":"setCJKfamilyfont{${1:family}}{${2:font name}}"}},
+		{"name":"setCJKmainfont","arg":{"format":"[]{}","snippet":"setCJKmainfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmainfont","arg":{"format":"{}","snippet":"setCJKmainfont{${1:font name}}"}},
+		{"name":"setCJKmathfont","arg":{"format":"[]{}","snippet":"setCJKmathfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmathfont","arg":{"format":"{}","snippet":"setCJKmathfont{${1:font name}}"}},
+		{"name":"setCJKmonofont","arg":{"format":"[]{}","snippet":"setCJKmonofont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmonofont","arg":{"format":"{}","snippet":"setCJKmonofont{${1:font name}}"}},
+		{"name":"setCJKromanfont","arg":{"format":"[]{}","snippet":"setCJKromanfont[${1:font features}]{${2:font name}}"},"unusual":true},
+		{"name":"setCJKromanfont","arg":{"format":"{}","snippet":"setCJKromanfont{${1:font name}}"},"unusual":true},
+		{"name":"setCJKsansfont","arg":{"format":"[]{}","snippet":"setCJKsansfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKsansfont","arg":{"format":"{}","snippet":"setCJKsansfont{${1:font name}}"}},
+		{"name":"songti"},
+		{"name":"yahei","if":"fontset=windows"},
+		{"name":"youyuan","if":"fontset=windows|fontset=founder"},
+		{"name":"zihao","arg":{"format":"{}","snippet":"zihao{${1:size}}"}},
+		{"name":"ziju","arg":{"format":"{}","snippet":"ziju{${1:factor}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/ctexbeamer#c": ["GBK","UTF8","zhmap=${1|true,false,zhmCJK|}","zihao=${1|-4,5,false|}","scheme=${1|chinese,plain|}","linespread=${1:number}","fontset=${1|adobe,fandol,founder,hanyi,mac,macnew,macold,ubuntu,windows,none|}","punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}","space=${1|true,false,auto|}","autoindent=","usepdftitle=${1|true,false|}","envcountsect","notheorems","noamsthm","compress","t","c","leqno","fleqn","handout","trans","pdftex","nativepdf","pdfmark","dvips","dviwindo","dvipsone","vtex","ps2pdf","ignorenonframetext","noamssymb","bigger","smaller","8pt","9pt","10pt","11pt","12pt","14pt","17pt","20pt","draft","CJK","onlytextwidth","pgf={${1:pgf options}}","color={${1:color options}}","xcolor={${1:xcolor options}}","ucs","utf8x","utf8","aspectratio=${1|2013,1610,169,149,141,54,43,32|}"]
+	},
+	"args": ["\\documentclass/ctexbeamer#c"]
 }

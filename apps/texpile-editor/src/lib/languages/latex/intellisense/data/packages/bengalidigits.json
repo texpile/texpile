@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"bengalidigits","arg":{"format":"{}","snippet":"bengalidigits{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

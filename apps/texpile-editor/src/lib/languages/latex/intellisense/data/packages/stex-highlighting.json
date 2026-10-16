@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"pdfcomment"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"datetime2"},{"name":"tracklang"},{"name":"zref-savepos"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"refcount"},{"name":"ifthen"},{"name":"calc"},{"name":"marginnote"},{"name":"ifpdf"},{"name":"ifluatex"},{"name":"soulpos"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"l3keys2e"},{"name":"luatex85","engines":["lualatex"]}],
+	"macros": [
+		{"name":"compemph","arg":{"format":"{}","snippet":"compemph{${1:text}}"}},
+		{"name":"compemph@uri","arg":{"format":"{}{}","snippet":"compemph@uri{${1:text}}{${2:symbol URI}}"},"unusual":true},
+		{"name":"defemph","arg":{"format":"{}","snippet":"defemph{${1:text}}"}},
+		{"name":"defemph@uri","arg":{"format":"{}{}","snippet":"defemph@uri{${1:text}}{${2:symbol URI}}"},"unusual":true},
+		{"name":"symrefemph","arg":{"format":"{}","snippet":"symrefemph{${1:text}}"}},
+		{"name":"symrefemph@uri","arg":{"format":"{}{}","snippet":"symrefemph@uri{${1:text}}{${2:symbol URI}}"},"unusual":true},
+		{"name":"varemph","arg":{"format":"{}","snippet":"varemph{${1:text}}"}},
+		{"name":"varemph@uri","arg":{"format":"{}{}","snippet":"varemph@uri{${1:text}}{${2:variable name}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

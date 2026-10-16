@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"amstext"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/subtext#c": ["normal","upright"]
+	},
+	"args": ["\\usepackage/subtext#c"]
+}

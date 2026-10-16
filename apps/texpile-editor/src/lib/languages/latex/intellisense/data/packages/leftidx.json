@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"leftidx","arg":{"format":"{}{}{}","snippet":"leftidx{${1}}{${2}}{${3}}"}},
+		{"name":"ltrans","arg":{"format":"{}","snippet":"ltrans{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

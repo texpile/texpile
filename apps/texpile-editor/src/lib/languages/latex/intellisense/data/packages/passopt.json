@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"ClearClassOptions","arg":{"format":"{}","snippet":"ClearClassOptions{${1}}"}},
+		{"name":"ClearPackageOptions","arg":{"format":"{}","snippet":"ClearPackageOptions{${1}}"},"doc":"Clears the options that will be loaded into the macro package."},
+		{"name":"SetOptionsToClass","arg":{"format":"{}{}","snippet":"SetOptionsToClass{${1}}{${2}}"}},
+		{"name":"SetOptionsToClass*","arg":{"format":"{}{}","snippet":"SetOptionsToClass*{${1}}{${2}}"}},
+		{"name":"SetOptionsToPackage","arg":{"format":"{}{}","snippet":"SetOptionsToPackage{${1}}{${2}}"},"doc":"Passes options to the macro package, the location of the passed options is to the right of the options used when loading the macro package."},
+		{"name":"SetOptionsToPackage*","arg":{"format":"{}{}","snippet":"SetOptionsToPackage*{${1}}{${2}}"},"doc":"Passes options to the macro package, the location of the passed options is to the right of the options used when loading the macro package."}
+	],
+	"envs": [],
+	"keys": {}
+}

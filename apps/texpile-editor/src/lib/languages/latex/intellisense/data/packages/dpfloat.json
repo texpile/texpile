@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"fullpage"},
+		{"name":"leftfullpage"}
+	],
+	"keys": {}
+}

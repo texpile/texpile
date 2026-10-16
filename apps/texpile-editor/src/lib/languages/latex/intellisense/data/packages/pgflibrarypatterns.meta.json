@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"pgfdeclarepattern","arg":{"format":"{}","snippet":"pgfdeclarepattern{${1:config}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

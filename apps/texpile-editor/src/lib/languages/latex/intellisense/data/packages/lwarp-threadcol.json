@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"setthreadname","arg":{"format":"{}","snippet":"setthreadname{${1:thread name}}"}},
+		{"name":"setthreadname*","arg":{"format":"{}","snippet":"setthreadname*{${1:thread name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

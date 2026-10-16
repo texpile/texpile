@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"setrannum","arg":{"format":"{}{}{}","snippet":"setrannum{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

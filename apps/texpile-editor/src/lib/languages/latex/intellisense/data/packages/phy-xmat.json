@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"bxmat","arg":{"format":"[]{}{}{}","snippet":"bxmat[${1:options}]{${2:entry}}{${3:rows shown}}{${4:cols shown}}"}},
+		{"name":"bxmat","arg":{"format":"{}{}{}","snippet":"bxmat{${1:entry}}{${2:rows shown}}{${3:cols shown}}"}},
+		{"name":"Bxmat","arg":{"format":"[]{}{}{}","snippet":"Bxmat[${1:options}]{${2:entry}}{${3:rows shown}}{${4:cols shown}}"}},
+		{"name":"Bxmat","arg":{"format":"{}{}{}","snippet":"Bxmat{${1:entry}}{${2:rows shown}}{${3:cols shown}}"}},
+		{"name":"pxmat","arg":{"format":"[]{}{}{}","snippet":"pxmat[${1:options}]{${2:entry}}{${3:rows shown}}{${4:cols shown}}"}},
+		{"name":"pxmat","arg":{"format":"{}{}{}","snippet":"pxmat{${1:entry}}{${2:rows shown}}{${3:cols shown}}"}},
+		{"name":"vxmat","arg":{"format":"[]{}{}{}","snippet":"vxmat[${1:options}]{${2:entry}}{${3:rows shown}}{${4:cols shown}}"}},
+		{"name":"vxmat","arg":{"format":"{}{}{}","snippet":"vxmat{${1:entry}}{${2:rows shown}}{${3:cols shown}}"}},
+		{"name":"Vxmat","arg":{"format":"[]{}{}{}","snippet":"Vxmat[${1:options}]{${2:entry}}{${3:rows shown}}{${4:cols shown}}"}},
+		{"name":"Vxmat","arg":{"format":"{}{}{}","snippet":"Vxmat{${1:entry}}{${2:rows shown}}{${3:cols shown}}"}},
+		{"name":"xmat","arg":{"format":"[]{}{}{}","snippet":"xmat[${1:options}]{${2:entry}}{${3:rows shown}}{${4:cols shown}}"}},
+		{"name":"xmat","arg":{"format":"{}{}{}","snippet":"xmat{${1:entry}}{${2:rows shown}}{${3:cols shown}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

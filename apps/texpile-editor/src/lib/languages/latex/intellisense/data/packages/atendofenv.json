@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"amsthm"},{"name":"letltxmacro"}],
+	"macros": [
+		{"name":"AtEndOfEnv","arg":{"format":"{}{}","snippet":"AtEndOfEnv{${1:environment}}{${2:symbol}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

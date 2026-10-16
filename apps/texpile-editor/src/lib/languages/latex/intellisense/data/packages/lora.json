@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"lorafamily","doc":"The font provides the commands \\lorafamily and \\textlora for selecting the font."},
+		{"name":"LoraMedium","doc":"The font provides the commands \\LoraMedium and \\textloramed for selecting the medium weight variant."},
+		{"name":"LoraSemiBold","doc":"The font provides the commands \\LoraSemiBold and \\textlorasb for selecting the semi-bold variant."},
+		{"name":"texthryvnia"},
+		{"name":"textlora","arg":{"format":"{}","snippet":"textlora{${1:text}}"},"doc":"The font provides the commands \\lorafamily and \\textlora for selecting the font."},
+		{"name":"textloramed","arg":{"format":"{}","snippet":"textloramed{${1:text}}"},"doc":"The font provides the commands \\LoraMedium and \\textloramed for selecting the medium weight variant."},
+		{"name":"textlorasb","arg":{"format":"{}","snippet":"textlorasb{${1:text}}"},"doc":"The font provides the commands \\LoraSemiBold and \\textlorasb for selecting the semi-bold variant."},
+		{"name":"textruble"},
+		{"name":"texttenge"},
+		{"name":"texttugrik"}
+	],
+	"envs": [],
+	"keys": {}
+}

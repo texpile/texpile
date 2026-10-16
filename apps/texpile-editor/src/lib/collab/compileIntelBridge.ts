@@ -137,6 +137,13 @@ export function hostDiagnosticsFor(
 		.map(toDiagnostic);
 }
 
+/** the host's .aux numbers, which a guest reads in place of its own */
+export function sharedAuxOf(session: EditSession, guest: boolean) {
+	const intel = session.compileIntel;
+	if (!guest || !intel) return null;
+	return { numbers: intel.auxNumbers, pages: intel.auxPages, kinds: intel.auxKinds, titles: intel.auxTitles, contents: intel.auxContents };
+}
+
 /** the project's .bib files, absolute, from the flattened tree */
 export function bibPathsFrom(relPaths: string[], root: string): string[] {
 	return relPaths.filter((p) => /\.bib$/i.test(p)).map((p) => joinPath(root, p));

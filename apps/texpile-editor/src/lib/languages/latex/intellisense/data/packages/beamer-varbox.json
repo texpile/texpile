@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"beamerboxesvariablerounded","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:title}}"},"unusual":true},
+		{"name":"beamerboxesvariablerounded","arg":{"format":"{}","snippet":"{${1:title}}"},"unusual":true}
+	],
+	"keys": {}
+}

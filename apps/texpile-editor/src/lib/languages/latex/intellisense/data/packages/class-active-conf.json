@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"class-article"},{"name":"helvet"},{"name":"keyval"},{"name":"textcomp"},{"name":"calc"},{"name":"ifthen"},{"name":"url"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"array"},{"name":"bm"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1}}"},"doc":"Creates a block containing authors previously specified."},
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:affiliation numbers}]{${2:name}}"},"doc":"Separates groups of authors by their respective \\address."},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:name}}"},"doc":"Separates groups of authors by their respective \\address."},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1}}"},"doc":"Adds a footnote containing the email address of the previous author."},
+		{"name":"eqref","arg":{"format":"{}","snippet":"eqref{${1:label}}"},"doc":"The class defines the following four commands for referring to document elements: \\figref, \\tabref, \\eqref, and \\secref. They are used in a similar way to the \\ref command, but print the name of the reference type before the numbered label."},
+		{"name":"figref","arg":{"format":"{}","snippet":"figref{${1}}"},"doc":"The class defines the following four commands for referring to document elements: \\figref, \\tabref, \\eqref, and \\secref. They are used in a similar way to the \\ref command, but print the name of the reference type before the numbered label."},
+		{"name":"note","arg":{"format":"{}","snippet":"note{${1}}"},"doc":"This command is used to typeset notes about the article at the footer of the opening page."},
+		{"name":"num","arg":{"format":"{}{}","snippet":"num{${1}}{${2}}"},"doc":"The \\unit and \\num commands are defined for typesetting units and numbers with units, respectively. In the latter case, a thin space is used between the number and its unit, which is good typographical practise."},
+		{"name":"pdfkeywords","arg":{"format":"{}","snippet":"pdfkeywords{${1}}"}},
+		{"name":"secref","arg":{"format":"{}","snippet":"secref{${1}}"},"doc":"The class defines the following four commands for referring to document elements: \\figref, \\tabref, \\eqref, and \\secref. They are used in a similar way to the \\ref command, but print the name of the reference type before the numbered label."},
+		{"name":"showaffiliations","doc":"If the command \\showaffiliations is placed before the author declarations, each author will reference the address to which they are associated."},
+		{"name":"tabref","arg":{"format":"{}","snippet":"tabref{${1}}"},"doc":"The class defines the following four commands for referring to document elements: \\figref, \\tabref, \\eqref, and \\secref. They are used in a similar way to the \\ref command, but print the name of the reference type before the numbered label."},
+		{"name":"topcaption","arg":{"format":"[]{}","snippet":"topcaption[${1:short caption}]{${2:caption}}"},"unusual":true},
+		{"name":"topcaption","arg":{"format":"{}","snippet":"topcaption{${1:caption}}"},"unusual":true},
+		{"name":"unit","arg":{"format":"{}","snippet":"unit{${1}}"}}
+	],
+	"envs": [
+		{"name":"itemise","unusual":true}
+	],
+	"keys": {}
+}

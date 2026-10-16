@@ -1,27 +1,12 @@
 {
-  "deps": [
-    {
-      "name": "iftex"
-    }
-  ],
-  "macros": [
-    {
-      "name": "ifvtexdvi"
-    },
-    {
-      "name": "ifvtexpdf"
-    },
-    {
-      "name": "ifvtexps"
-    },
-    {
-      "name": "ifvtexhtml"
-    },
-    {
-      "name": "ifvtexgex"
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"iftex"}],
+	"macros": [
+		{"name":"ifvtexdvi","unusual":true},
+		{"name":"ifvtexgex","unusual":true},
+		{"name":"ifvtexhtml","unusual":true},
+		{"name":"ifvtexpdf","unusual":true},
+		{"name":"ifvtexps","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
 }

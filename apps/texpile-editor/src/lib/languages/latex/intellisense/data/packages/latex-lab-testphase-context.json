@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"DebugContextsOff","unusual":true},
+		{"name":"DebugContextsOn","unusual":true},
+		{"name":"DeclarePrimaryContextRule","arg":{"format":"{}{}{}","snippet":"DeclarePrimaryContextRule{${1:current}}{${2:new}}{${3:result}}"},"unusual":true},
+		{"name":"DeclareSecondaryContextRule","arg":{"format":"{}{}{}","snippet":"DeclareSecondaryContextRule{${1:current}}{${2:new}}{${3:result}}"},"unusual":true},
+		{"name":"DeclareTertiaryContextRule","arg":{"format":"{}{}{}","snippet":"DeclareTertiaryContextRule{${1:current}}{${2:new}}{${3:result}}"},"unusual":true},
+		{"name":"ltlabcontextdate","unusual":true},
+		{"name":"ltlabcontextversion","unusual":true},
+		{"name":"SetPrimaryContext","arg":{"format":"{}","snippet":"SetPrimaryContext{${1:new context}}"},"unusual":true},
+		{"name":"SetSecondaryContext","arg":{"format":"{}","snippet":"SetSecondaryContext{${1:new context}}"},"unusual":true},
+		{"name":"SetTertiaryContext","arg":{"format":"{}","snippet":"SetTertiaryContext{${1:new context}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

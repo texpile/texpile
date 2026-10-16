@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"mdframed"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"etoolbox"},{"name":"zref-base"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"color"},{"name":"thm-patch"},{"name":"parseargs"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

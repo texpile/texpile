@@ -1,20 +1,10 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "FloatBarrier"
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/placeins#c": [
-      "section",
-      "above",
-      "below",
-      "verbose"
-    ]
-  },
-  "args": [
-    "\\usepackage/placeins#c"
-  ]
+	"macros": [
+		{"name":"FloatBarrier","doc":"Placeins.sty keeps floats ‘in their place’, preventing them from floating past a “\\FloatBarrier” command into another section."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/placeins#c": ["above","below","section","verbose"]
+	},
+	"args": ["\\usepackage/placeins#c"]
 }

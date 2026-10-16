@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"NumbersAndPrimesInCommandsOff"},
+		{"name":"NumbersAndPrimesInCommandsOn"},
+		{"name":"NumbersInCommandsOff"},
+		{"name":"NumbersInCommandsOn"},
+		{"name":"StrictBracketsOff"},
+		{"name":"StrictBracketsOn"}
+	],
+	"envs": [],
+	"keys": {}
+}

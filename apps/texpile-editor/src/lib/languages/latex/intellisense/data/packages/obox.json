@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"obox","arg":{"format":"[][]{}","snippet":"obox[${1:oval radius}][${2:line thickness command}]{${3:box contents}}"}},
+		{"name":"obox","arg":{"format":"{}","snippet":"obox{${1:box contents}}"}},
+		{"name":"oval","arg":{"format":"[]()[]","snippet":"oval[${1:position}](${2:width,height})[${3:parts}]"}},
+		{"name":"oval","arg":{"format":"()","snippet":"oval(${1:width,height})"}},
+		{"name":"ovalfraction","arg":{"format":"{}","snippet":"ovalfraction{${1:fraction}}"}},
+		{"name":"ovalradius","arg":{"format":"{}","snippet":"ovalradius{${1:length}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

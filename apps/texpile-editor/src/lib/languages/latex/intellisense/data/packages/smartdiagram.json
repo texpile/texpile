@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etoolbox"},{"name":"xparse"},{"name":"xstring"}],
+	"macros": [
+		{"name":"backarrowdisabledfalse","unusual":true},
+		{"name":"backarrowdisabledtrue","unusual":true},
+		{"name":"circularfinalarrowdisabledfalse","unusual":true},
+		{"name":"circularfinalarrowdisabledtrue","unusual":true},
+		{"name":"ifbackarrowdisabled","unusual":true},
+		{"name":"ifcircularfinalarrowdisabled","unusual":true},
+		{"name":"smartdiagram","arg":{"format":"[]{}","snippet":"smartdiagram[${1:type of diagram}]{${2:list of items}}"}},
+		{"name":"smartdiagram","arg":{"format":"{}","snippet":"smartdiagram{${1:list of items}}"}},
+		{"name":"smartdiagramadd","arg":{"format":"[]{}{}","snippet":"smartdiagramadd[${1:type of diagram}]{${2:list of items}}{${3:list of additions}}"}},
+		{"name":"smartdiagramadd","arg":{"format":"{}{}","snippet":"smartdiagramadd{${1:list of items}}{${2:list of additions}}"}},
+		{"name":"smartdiagramanimated","arg":{"format":"[]{}","snippet":"smartdiagramanimated[${1:type of diagram}]{${2:list of items}}"}},
+		{"name":"smartdiagramanimated","arg":{"format":"{}","snippet":"smartdiagramanimated{${1:list of items}}"}},
+		{"name":"smartdiagramconnect","arg":{"format":"{}{}","snippet":"smartdiagramconnect{${1:arrow options}}{${2:start module/end module}}"}},
+		{"name":"smartdiagramset","arg":{"format":"{}","snippet":"smartdiagramset{${1:list of options}}","keys":["pgfkeys:/smart diagram"],"keyPos":0}},
+		{"name":"usesmartdiagramlibrary","arg":{"format":"{}","snippet":"usesmartdiagramlibrary{${1:library}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/smart diagram": ["arrow color=","arrow line width=","arrow style=","arrow tip=","back arrow distance=","border color=","bubble center node color=","bubble center node font=","bubble center node size=","bubble fill opacity=","bubble node font=","bubble node size=","bubble text opacity=","circular distance=","connection color=","connection line width=","description font=","description text width=","description title font=","description title text width=","description title width=","description width=","descriptive items y sep=","distance center/other bubbles=","distance planet-connection=","distance planet-satellite=","distance planet-text=","distance satellite-connection=","distance text center bubble=","font=","insert decoration=","module minimum height=","module minimum width=","module shape=","module x sep=","module y sep=","planet color=","planet font=","planet size=","planet text width=","priority arrow head extend=","priority arrow height advance=","priority arrow width=","priority tick size=","satellite fill opacity=","satellite font=","satellite size=","satellite text opacity=","satellite text width=","sequence item border color=","sequence item border size=","sequence item fill opacity=","sequence item font size=","sequence item height=","sequence item text color=","sequence item text opacity=","sequence item text width=","sequence item uniform color=","sequence item width=","set color list=","text color=","text width=","uniform color list=","back arrow disabled=${1|true,false|}","circular final arrow disabled=${1|true,false|}","uniform arrow color=${1|true|}","uniform connection color=${1|true|}","uniform sequence color=${1|true|}","use predefined color list","additions="]
+	}
+}

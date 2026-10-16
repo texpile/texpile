@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"pgfplotstable"},{"name":"pgfplots"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"array"},{"name":"listings"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"bugtrackerset","arg":{"format":"{}","snippet":"bugtrackerset{${1:keys}}","keys":["pgfkeys:/bugtracker"],"keyPos":0}},
+		{"name":"declarebugtrackeritem","arg":{"format":"{}{}","snippet":"declarebugtrackeritem{${1:name}}{${2:sort order}}"}}
+	],
+	"envs": [
+		{"name":"bug","arg":{"format":"[][]","snippet":"[${1:status}][${2:keys}]","keys":["pgfkeys:/bugtracker"],"keyPos":1}},
+		{"name":"bug"},
+		{"name":"bugtracker"},
+		{"name":"doctodo","arg":{"format":"[][]","snippet":"[${1:status}][${2:keys}]","keys":["pgfkeys:/bugtracker"],"keyPos":1}},
+		{"name":"doctodo"},
+		{"name":"feature","arg":{"format":"[][]","snippet":"[${1:status}][${2:keys}]","keys":["pgfkeys:/bugtracker"],"keyPos":1}},
+		{"name":"feature"},
+		{"name":"minimal","unusual":true}
+	],
+	"keys": {
+		"pgfkeys:/bugtracker": ["epic=","file ext=","font=","name text/bug=","name text/doctodo=","name text/feature=","prefix=","prio=","shell escape=","sort","sort order/bug=","sort order/doctodo=","sort order/feature=","status order/cancelled=","status order/closed=","status order/open=","status order/partially=","system call=","vskip=","status=${1|open,closed,cancelled,partially,-,+,X|}"]
+	}
+}

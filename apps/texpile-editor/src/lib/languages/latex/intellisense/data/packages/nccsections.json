@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"afterpackage"},{"name":"nccsect"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/nccsections#c": ["chapterinline","chaptersection","newsecstyle","newtocstyle","partinline","partsection"]
+	},
+	"args": ["\\usepackage/nccsections#c"]
+}

@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"CTEXheadinglabel","arg":{"format":"{}","snippet":"CTEXheadinglabel{${1:level}}"}},
+		{"name":"CTEXheadingnumber","arg":{"format":"{}","snippet":"CTEXheadingnumber{${1:level}}"}},
+		{"name":"CTEXifheadingnumbering","arg":{"format":"{}{}{}","snippet":"CTEXifheadingnumbering{${1:level}}{${2:true}}{${3:false}}"}},
+		{"name":"CTEXifname","arg":{"format":"{}{}","snippet":"CTEXifname{${1:with name}}{${2:without name}}"}},
+		{"name":"CTEXnumberline","arg":{"format":"{}","snippet":"CTEXnumberline{${1:level}}"},"unusual":true},
+		{"name":"ctexset","arg":{"format":"{}","snippet":"ctexset{${1:options}}"}},
+		{"name":"CTEXthechapter"},
+		{"name":"CTEXtheparagraph"},
+		{"name":"CTEXthepart"},
+		{"name":"CTEXthesection"},
+		{"name":"CTEXthesubparagraph"},
+		{"name":"CTEXthesubsection"},
+		{"name":"CTEXthesubsubsection"}
+	],
+	"envs": [],
+	"keys": {}
+}

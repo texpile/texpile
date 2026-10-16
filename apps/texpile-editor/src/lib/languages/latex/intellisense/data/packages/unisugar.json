@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

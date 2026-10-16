@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"class-extarticle"}],
+	"macros": [
+		{"name":"copyrightspace"},
+		{"name":"pagename","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/extproc#c": ["a5paper","b5paper","onecolumn","titlepage"]
+	},
+	"args": ["\\documentclass/extproc#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"ispackageloaded","arg":{"format":"{}","snippet":"ispackageloaded{${1:package}}"},"doc":"Prints whether ⟨package⟩ is loaded, together with its version if it is."},
+		{"name":"ispackageloaded*","arg":{"format":"{}","snippet":"ispackageloaded*{${1:package}}"},"doc":"Prints whether ⟨package⟩ is loaded, together with its version if it is."},
+		{"name":"printfilelist","arg":{"format":"[]","snippet":"printfilelist[${1:filter}]"},"doc":"Prints the files used by the current document, one per line, together with their version information."},
+		{"name":"printfilelist","doc":"Prints the files used by the current document, one per line, together with their version information."},
+		{"name":"printfilelist*","arg":{"format":"[]","snippet":"printfilelist*[${1:filter}]"},"doc":"Prints the files used by the current document, one per line, together with their version information."},
+		{"name":"printfilelist*","doc":"Prints the files used by the current document, one per line, together with their version information."}
+	],
+	"envs": [],
+	"keys": {}
+}

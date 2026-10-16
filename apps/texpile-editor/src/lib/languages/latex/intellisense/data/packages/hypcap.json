@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"capstart"},
+		{"name":"capstartfalse"},
+		{"name":"capstarttrue"},
+		{"name":"hypcapredef","arg":{"format":"{}","snippet":"hypcapredef{${1:float}}"}},
+		{"name":"hypcapspace","doc":"The anchor is raised.by \\hypcapspace."}
+	],
+	"envs": [],
+	"keys": {}
+}

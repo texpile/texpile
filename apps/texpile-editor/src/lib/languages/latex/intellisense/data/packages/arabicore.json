@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"Aabjadnumeral","arg":{"format":"{}","snippet":"Aabjadnumeral{${1}}"}},
+		{"name":"abjadnumeral","arg":{"format":"{}","snippet":"abjadnumeral{${1}}"}},
+		{"name":"allah"},
+		{"name":"Arabi"},
+		{"name":"arabordinal","arg":{"format":"{}","snippet":"arabordinal{${1}}"},"unusual":true},
+		{"name":"ARmbox","arg":{"format":"{}","snippet":"ARmbox{${1}}"}},
+		{"name":"closguill","unusual":true},
+		{"name":"Decimal"},
+		{"name":"EI","arg":{"format":"{}","snippet":"EI{${1}}"}},
+		{"name":"Fabjadnumeral","arg":{"format":"{}","snippet":"Fabjadnumeral{${1}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"FRmbox","arg":{"format":"{}","snippet":"FRmbox{${1}}"}},
+		{"name":"I","arg":{"format":"{}","snippet":"I{${1}}"}},
+		{"name":"llah"},
+		{"name":"LRmbox","arg":{"format":"{}","snippet":"LRmbox{${1}}"}},
+		{"name":"openguill","unusual":true},
+		{"name":"textLR","arg":{"format":"{}","snippet":"textLR{${1}}"}},
+		{"name":"TOCLanguage","arg":{"format":"{}","snippet":"TOCLanguage{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"sboxrule"},
+		{"name":"sboxsep"},
+		{"name":"sdim"},
+		{"name":"shabox","arg":{"format":"{}","snippet":"shabox{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

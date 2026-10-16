@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"nccboxes"},{"name":"nccmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"bbox","arg":{"format":"{}","snippet":"bbox{${1:text}}"},"unusual":true},
+		{"name":"emline","arg":{"format":"{}{}{}{}{}{}","snippet":"emline{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true},
+		{"name":"emlinewidth","arg":{"format":"{}","snippet":"emlinewidth{${1}}"},"unusual":true},
+		{"name":"Eq","arg":{"format":"{}","snippet":"Eq{${1:formula}}"},"unusual":true},
+		{"name":"Eqalign","arg":{"format":"[]{}","snippet":"Eqalign[${1:columns}]{${2:formulas}}"},"unusual":true},
+		{"name":"Eqalign","arg":{"format":"{}","snippet":"Eqalign{${1:formulas}}"},"unusual":true},
+		{"name":"Eqs","arg":{"format":"[]{}","snippet":"Eqs[${1:column distance}]{${2:formulas}}"},"unusual":true},
+		{"name":"Eqs","arg":{"format":"{}","snippet":"Eqs{${1:formulas}}"},"unusual":true},
+		{"name":"eref","arg":{"format":"{}","snippet":"eref{${1}}"},"unusual":true},
+		{"name":"no","arg":{"format":"{}","snippet":"no{${1:tag}}"},"unusual":true},
+		{"name":"tbbox","arg":{"format":"{}","snippet":"tbbox{${1:text}}"},"unusual":true},
+		{"name":"tbox","arg":{"format":"{}","snippet":"tbox{${1:text}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

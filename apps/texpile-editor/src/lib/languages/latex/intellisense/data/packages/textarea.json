@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"ExpandTextArea","arg":{"format":"[]","snippet":"ExpandTextArea[${1}]"}},
+		{"name":"ExpandTextArea"},
+		{"name":"RestoreTextArea"},
+		{"name":"StartFromHeaderArea"},
+		{"name":"StartFromTextArea","doc":"using the \\StartFromTextArea command prevents incorrect spacing at the beginning of page. Applied at the beginning of page, it adjusts the beginning of text area to the header area by inserting a negative vertical skip."}
+	],
+	"envs": [],
+	"keys": {}
+}

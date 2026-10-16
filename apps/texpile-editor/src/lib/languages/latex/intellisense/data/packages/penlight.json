@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/penlight#c": ["format","func","import","pl","stringx"]
+	},
+	"args": ["\\usepackage/penlight#c"]
+}

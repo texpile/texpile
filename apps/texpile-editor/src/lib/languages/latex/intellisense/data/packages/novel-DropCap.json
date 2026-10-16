@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"dropcap","arg":{"format":"[]{}","snippet":"dropcap[${1:options}]{${2:letter or image}}"}},
+		{"name":"dropcap","arg":{"format":"{}","snippet":"dropcap{${1:letter or image}}"}},
+		{"name":"dropcap*","arg":{"format":"[]{}","snippet":"dropcap*[${1:options}]{${2:letter or image}}"}},
+		{"name":"dropcap*","arg":{"format":"{}","snippet":"dropcap*{${1:letter or image}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

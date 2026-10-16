@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xspace","if":"xspace"}],
+	"macros": [
+		{"name":"DeclareTotalCounter","arg":{"format":"{}","snippet":"DeclareTotalCounter{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/totalcount#c": ["xspace"]
+	},
+	"args": ["\\usepackage/totalcount#c"]
+}

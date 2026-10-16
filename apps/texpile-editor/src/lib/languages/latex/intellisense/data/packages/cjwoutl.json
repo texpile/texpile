@@ -1,0 +1,37 @@
+{
+	"macros": [
+		{"name":"aboveoutlskip","doc":"Two lengths, \\aboveoutlskip and \\belowoutlskip, initially set to the equivalent values for math displays, are used to separate an outline environment from the surrounding text."},
+		{"name":"belowoutlskip","doc":"Two lengths, \\aboveoutlskip and \\belowoutlskip, initially set to the equivalent values for math displays, are used to separate an outline environment from the surrounding text."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"firstparfont"},
+		{"name":"labelfont","doc":"The labels themselves are typeset in \\labelfont, which can also be set by the user."},
+		{"name":"labeloutldef"},
+		{"name":"labeloutli"},
+		{"name":"labeloutlii"},
+		{"name":"labeloutliii"},
+		{"name":"labeloutliv"},
+		{"name":"labeloutlv"},
+		{"name":"labeloutlvi"},
+		{"name":"labeloutlvii"},
+		{"name":"npp","arg":{"format":"{}","snippet":"npp{${1:level}}"}},
+		{"name":"ol","arg":{"format":"{}{}","snippet":"ol{${1:level}}{${2:label}}"}},
+		{"name":"outl","arg":{"format":"{}","snippet":"outl{${1:level}}"}},
+		{"name":"outlindent","doc":"The \\outlindent macro controls the increment between adjacent outline levels."},
+		{"name":"outlstyle","arg":{"format":"{}","snippet":"outlstyle{${1:style}}"}},
+		{"name":"theoutldef","unusual":true},
+		{"name":"theoutli","unusual":true},
+		{"name":"theoutlii","unusual":true},
+		{"name":"theoutliii","unusual":true},
+		{"name":"theoutliv","unusual":true},
+		{"name":"theoutlv","unusual":true},
+		{"name":"theoutlvi","unusual":true},
+		{"name":"theoutlvii","unusual":true},
+		{"name":"unpp","arg":{"format":"{}","snippet":"unpp{${1:level}}"},"doc":"The \\unpp macro does not indent the first line of text."}
+	],
+	"envs": [
+		{"name":"outline","arg":{"format":"[]","snippet":"[${1:new}]"}},
+		{"name":"outline"}
+	],
+	"keys": {}
+}

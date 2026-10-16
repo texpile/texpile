@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"texshade"},{"name":"color"},{"name":"graphics"},{"name":"trig"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"textopo"}],
+	"macros": [
+		{"name":"BioTeX"}
+	],
+	"envs": [],
+	"keys": {}
+}

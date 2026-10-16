@@ -31,7 +31,7 @@ import { trailingDebounce } from '$lib/trailingDebounce';
 import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { setMathMacros } from '$lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte';
 import { retypesetStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
-import { bibPathsFrom } from '$lib/collab/compileIntelBridge';
+import { bibPathsFrom, sharedAuxOf } from '$lib/collab/compileIntelBridge';
 import { compileOutDir } from '$lib/workspace/compileCommand';
 import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
@@ -378,21 +378,14 @@ export class WorkspaceIntegrations {
 			// this when a fresh compile lands). Reading session.active also seeds the host's share
 			// when a session starts against an already-compiled project.
 			const live = session.active;
-			const sharedAux =
-				guest && session.compileIntel
-					? {
-							numbers: session.compileIntel.auxNumbers,
-							pages: session.compileIntel.auxPages,
-							kinds: session.compileIntel.auxKinds,
-							titles: session.compileIntel.auxTitles,
-							contents: session.compileIntel.auxContents
-						}
-					: null;
+			const sharedAux = sharedAuxOf(session, guest);
 			if (!capsOf(d.provider).project) return;
 			void refreshMainFileLanguage(main, (p) => d.provider.readText(p));
-			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux).then(() => {
-				if (live && !guest) d.cc().share();
-			});
+			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux, main).then(
+				() => {
+					if (live && !guest) d.cc().share();
+				}
+			);
 		});
 		// the document's own \newcommand definitions, so the visual editor's maths renders them
 		// instead of showing the macro name. Debounced and change-checked: the scan is over the

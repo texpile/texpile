@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"physicsrampangle","arg":{"format":"[]{}{}","snippet":"physicsrampangle[${1:pic options}]{${2:node}}{${3:label}}"}},
+		{"name":"physicsrampangle","arg":{"format":"{}{}","snippet":"physicsrampangle{${1:node}}{${2:label}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

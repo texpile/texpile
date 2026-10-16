@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"black","arg":{"format":"{}","snippet":"black{${1:move number}}"}},
+		{"name":"gofontsize","arg":{"format":"{}","snippet":"gofontsize{${1:size}}"}},
+		{"name":"inidiagram"},
+		{"name":"inifulldiagram"},
+		{"name":"letter","arg":{"format":"{}","snippet":"letter{${1:letter}}"}},
+		{"name":"pos","arg":{"format":"{}{}","snippet":"pos{${1:row}}{${2:column}}"}},
+		{"name":"showdiagram"},
+		{"name":"showfulldiagram"},
+		{"name":"square"},
+		{"name":"textblack","arg":{"format":"{}","snippet":"textblack{${1:move number}}"}},
+		{"name":"textwhite","arg":{"format":"{}","snippet":"textwhite{${1:move number}}"}},
+		{"name":"white","arg":{"format":"{}","snippet":"white{${1:move number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

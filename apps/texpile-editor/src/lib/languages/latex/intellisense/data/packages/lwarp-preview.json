@@ -1,0 +1,28 @@
+{
+	"macros": [
+		{"name":"ifPreview","unusual":true},
+		{"name":"PreviewClose","arg":{"format":"[][]{}","snippet":"PreviewClose[${1:arguments}][${2:replacement}]{${3:macro}}"}},
+		{"name":"PreviewClose","arg":{"format":"{}","snippet":"PreviewClose{${1:macro}}"}},
+		{"name":"PreviewClose*","arg":{"format":"[][]{}","snippet":"PreviewClose*[${1:arguments}][${2:replacement}]{${3:macro}}"}},
+		{"name":"PreviewClose*","arg":{"format":"{}","snippet":"PreviewClose*{${1:macro}}"}},
+		{"name":"PreviewEnvironment","arg":{"format":"[][]{}","snippet":"PreviewEnvironment[${1:arguments}][${2:replacement}]{${3:environment}}"}},
+		{"name":"PreviewEnvironment","arg":{"format":"{}","snippet":"PreviewEnvironment{${1:environment}}"}},
+		{"name":"PreviewEnvironment*","arg":{"format":"[][]{}","snippet":"PreviewEnvironment*[${1:arguments}][${2:replacement}]{${3:environment}}"}},
+		{"name":"PreviewEnvironment*","arg":{"format":"{}","snippet":"PreviewEnvironment*{${1:environment}}"}},
+		{"name":"PreviewMacro","arg":{"format":"[][]{}","snippet":"PreviewMacro[${1:arguments}][${2:replacement}]{${3:macro}}"}},
+		{"name":"PreviewMacro","arg":{"format":"{}","snippet":"PreviewMacro{${1:macro}}"}},
+		{"name":"PreviewMacro*","arg":{"format":"[][]{}","snippet":"PreviewMacro*[${1:arguments}][${2:replacement}]{${3:macro}}"}},
+		{"name":"PreviewMacro*","arg":{"format":"{}","snippet":"PreviewMacro*{${1:macro}}"}},
+		{"name":"PreviewOpen","arg":{"format":"[][]{}","snippet":"PreviewOpen[${1:arguments}][${2:replacement}]{${3:macro}}"}},
+		{"name":"PreviewOpen","arg":{"format":"{}","snippet":"PreviewOpen{${1:macro}}"}},
+		{"name":"PreviewOpen*","arg":{"format":"[][]{}","snippet":"PreviewOpen*[${1:arguments}][${2:replacement}]{${3:macro}}"}},
+		{"name":"PreviewOpen*","arg":{"format":"{}","snippet":"PreviewOpen*{${1:macro}}"}},
+		{"name":"PreviewSnarfEnvironment","arg":{"format":"[]{}","snippet":"PreviewSnarfEnvironment[${1:arguments}]{${2:environment}}"}},
+		{"name":"PreviewSnarfEnvironment","arg":{"format":"{}","snippet":"PreviewSnarfEnvironment{${1:environment}}"}}
+	],
+	"envs": [
+		{"name":"nopreview"},
+		{"name":"preview"}
+	],
+	"keys": {}
+}

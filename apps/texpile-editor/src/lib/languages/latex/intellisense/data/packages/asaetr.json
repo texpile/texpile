@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"AmSTeX","unusual":true},
+		{"name":"asae","unusual":true},
+		{"name":"associate"},
+		{"name":"ATT","unusual":true},
+		{"name":"BibTeX"},
+		{"name":"Cplusplus"},
+		{"name":"Cpp"},
+		{"name":"drop","arg":{"format":"{}{}","snippet":"drop{${1:letters}}{${2:next letter}}"}},
+		{"name":"fellow"},
+		{"name":"firstauthor","arg":{"format":"{}","snippet":"firstauthor{${1:name}}"}},
+		{"name":"keywords"},
+		{"name":"member"},
+		{"name":"MF"},
+		{"name":"nonmember"},
+		{"name":"PS"},
+		{"name":"student"},
+		{"name":"thickhline"},
+		{"name":"thinhline"}
+	],
+	"envs": [],
+	"keys": {}
+}

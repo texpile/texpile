@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"makecover"}
+	],
+	"envs": [],
+	"keys": {}
+}

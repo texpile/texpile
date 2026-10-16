@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"charactersperpage"},
+		{"name":"currentfontletters"}
+	],
+	"envs": [],
+	"keys": {}
+}

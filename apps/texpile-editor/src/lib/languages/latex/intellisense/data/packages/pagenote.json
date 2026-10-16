@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"addtonotes","arg":{"format":"{}","snippet":"addtonotes{${1:text}}"},"doc":"The macro \\addtonotes{⟨text⟩} inserts ⟨text⟩ into the ent file."},
+		{"name":"chaptername","doc":"The command \\chaptername is supplied by the LaTeX classes that provide \\chapter divisions and is defined to produce ‘Chapter’."},
+		{"name":"ifmakingpagenotes","unusual":true},
+		{"name":"ifpncontopt","unusual":true},
+		{"name":"ifpnhaschapter","unusual":true},
+		{"name":"ifpnpageopt","unusual":true},
+		{"name":"makepagenote","doc":"If you want to have page/end notes, the \\makepagenote command must be put in the preamble. Among other things, this sets up the note ent file."},
+		{"name":"makingpagenotesfalse","unusual":true},
+		{"name":"makingpagenotestrue","unusual":true},
+		{"name":"notedivision"},
+		{"name":"noteentry","arg":{"format":"{}{}{}{}","snippet":"noteentry{${1:note number}}{${2:id}}{${3:text}}{${4:page number}}"},"doc":"\\noteentry{⟨notenum⟩}{⟨id⟩}{⟨pagenum⟩}{⟨text⟩} typesets a note."},
+		{"name":"noteidinnotes","arg":{"format":"{}{}","snippet":"noteidinnotes{${1:note number}}{${2:id}}"},"doc":"The macro \\noteidinnotes{⟨notenum⟩}{⟨id⟩} is designed to typeset the note number and/or the note id (from the optional hid i argument to \\pagenote)."},
+		{"name":"noteinnotes","arg":{"format":"{}","snippet":"noteinnotes{${1:text}}"},"doc":"\\noteinnotes{⟨text⟩} is used to typeset the note’s text (in the note list)."},
+		{"name":"notenuminnotes","arg":{"format":"{}","snippet":"notenuminnotes{${1:number}}"},"doc":"\\notenuminnotes{⟨notenum⟩} typesets ⟨notenum⟩ (as part of the note)."},
+		{"name":"notenumintext","arg":{"format":"{}","snippet":"notenumintext{${1:number}}"},"doc":"The macro \\notenumintext{⟨num⟩} is called by \\pagenote to print the pagenote number."},
+		{"name":"notesname","doc":"Heading for note list."},
+		{"name":"pageinnotes","arg":{"format":"{}","snippet":"pageinnotes{${1:page number}}"},"doc":"The macro \\pageinnotes{⟨pagenum⟩} is used for typesetting (or ignoring) the page number where the note was specified, and \\noteinnotes{⟨text⟩} sets the actual note ⟨text⟩."},
+		{"name":"pagename","doc":"The macros \\sectionname and \\pagename are provided by this package, producing respectively ‘Section’ and ‘page’."},
+		{"name":"pagenote","arg":{"format":"[]{}","snippet":"pagenote[${1:id}]{${2:text}}"},"doc":"\\pagenote[⟨id⟩]{⟨text⟩} is used where you want a note to be inserted, although it will not be printed there."},
+		{"name":"pagenote","arg":{"format":"{}","snippet":"pagenote{${1:text}}"},"doc":"\\pagenote[⟨id⟩]{⟨text⟩} is used where you want a note to be inserted, although it will not be printed there."},
+		{"name":"pagenotesubhead","arg":{"format":"{}{}","snippet":"pagenotesubhead{${1:number}}{${2:title}}"},"doc":"This macro is used to typeset a heading for each set of notes."},
+		{"name":"pncontoptfalse","unusual":true},
+		{"name":"pncontopttrue","unusual":true},
+		{"name":"pnhaschapterfalse","unusual":true},
+		{"name":"pnhaschaptertrue","unusual":true},
+		{"name":"pnpageoptfalse","unusual":true},
+		{"name":"pnpageopttrue","unusual":true},
+		{"name":"postnoteinnotes","doc":"The macros \\prenoteinnotes and \\postnoteinnotes are used to start and end the typesetting of the note — effectively typesetting each note as a paragraph; their definitions can be changed if need be."},
+		{"name":"prenoteinnotes"},
+		{"name":"printnotes","doc":"The \\printnotes command will cause the ent file to be closed for any new notes, and then \\input in order to print the collected notes."},
+		{"name":"printnotes*","doc":"The \\printnotes command will cause the ent file to be closed for any new notes, and then \\input in order to print the collected notes."},
+		{"name":"sectionname","doc":"The macros \\sectionname and \\pagename are provided by this package, producing respectively ‘Section’ and ‘page’."},
+		{"name":"textinnotes","arg":{"format":"{}","snippet":"textinnotes{${1:id text}}"}},
+		{"name":"thepagenote","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pagenote#c": ["continuous","page"]
+	},
+	"args": ["\\usepackage/pagenote#c"]
+}

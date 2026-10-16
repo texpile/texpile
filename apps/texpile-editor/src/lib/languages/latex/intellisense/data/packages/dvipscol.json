@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"nogroupcolor","arg":{"format":"[]{}","snippet":"nogroupcolor[${1:model}]{${2:color}}"},"unusual":true},
+		{"name":"nogroupcolor","arg":{"format":"{}","snippet":"nogroupcolor{${1:color}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

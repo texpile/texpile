@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-savepos"},{"name":"keyval"}],
+	"macros": [
+		{"name":"zdotfill","doc":"This package provides the command \\zdotfill that works similar to \\dotfill, but can be configured."},
+		{"name":"zdotfillsetup","arg":{"format":"{}","snippet":"zdotfillsetup{${1:key=value list}}"},"doc":"This command allows to configure the behaviour of \\zdotfill."}
+	],
+	"envs": [],
+	"keys": {}
+}

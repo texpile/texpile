@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"dashline","arg":{"format":"[]{}[]()()","snippet":"dashline[${1:stretch}]{${2:dash-length}}[${3:dotgap}](${4:x1,y1})(${5:x2,y2})"}},
+		{"name":"dashline","arg":{"format":"{}()()","snippet":"dashline{${1:dash-length}}(${2:x1,y1})(${3:x2,y2})"}},
+		{"name":"dashlinestretch"},
+		{"name":"dottedline","arg":{"format":"[]{}()()","snippet":"dottedline[${1:dot character}]{${2:dotgap}}(${3:x1,y1})(${4:x2,y2})"}},
+		{"name":"dottedline","arg":{"format":"{}()()","snippet":"dottedline{${1:dotgap}}(${2:x1,y1})(${3:x2,y2})"}},
+		{"name":"drawline","arg":{"format":"[]()()","snippet":"drawline[${1:stretch}](${2:x1,y1})(${3:x2,y2})"}},
+		{"name":"drawline","arg":{"format":"()()","snippet":"drawline(${1:x1,y1})(${2:x2,y2})"}},
+		{"name":"drawlinestretch"},
+		{"name":"grid","arg":{"format":"()()[]","snippet":"grid(${1:wd,ht})(${2:delta-wd,delta-ht})[${3:initial-X,initial-Y}]"}},
+		{"name":"grid","arg":{"format":"()()","snippet":"grid(${1:wd,ht})(${2:delta-wd,delta-ht})"}},
+		{"name":"jput","arg":{"format":"(){}","snippet":"jput(${1:x,y}){${2:character}}"}},
+		{"name":"matrixput","arg":{"format":"()(){}(){}{}","snippet":"matrixput(${1:x,y})(${2:delta-x1,delta-y1}){${3:n1}}(${4:delta-x2,delta-y2}){${5:n2}}{${6:object}}"}},
+		{"name":"multiputlist","arg":{"format":"()()[]{}","snippet":"multiputlist(${1:x,y})(${2:delta-x,delta-y})[${3:tbrl}]{${4:item1,item2,...}}"}},
+		{"name":"multiputlist","arg":{"format":"()(){}","snippet":"multiputlist(${1:x,y})(${2:delta-x,delta-y}){${3:item1,item2,...}}"}},
+		{"name":"picsquare"},
+		{"name":"putfile","arg":{"format":"{}{}","snippet":"putfile{${1}}{${2}}"}}
+	],
+	"envs": [
+		{"name":"dashjoin","arg":{"format":"[]{}[]","snippet":"[${1:stretch}]{${2:dash-length}}[${3:dotgap}]"}},
+		{"name":"dashjoin","arg":{"format":"{}","snippet":"{${1:dash-length}}"}},
+		{"name":"dottedjoin","arg":{"format":"[]{}","snippet":"[${1:dot character}]{${2:dotgap}}"}},
+		{"name":"dottedjoin","arg":{"format":"{}","snippet":"{${1:dotgap}}"}},
+		{"name":"drawjoin","arg":{"format":"[]","snippet":"[${1:stretch}]"}},
+		{"name":"drawjoin"}
+	],
+	"keys": {}
+}

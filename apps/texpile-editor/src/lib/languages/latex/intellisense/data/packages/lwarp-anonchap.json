@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"restorechapter"},
+		{"name":"simplechapter","arg":{"format":"[]","snippet":"simplechapter[${1}]"}},
+		{"name":"simplechapter"}
+	],
+	"envs": [],
+	"keys": {}
+}

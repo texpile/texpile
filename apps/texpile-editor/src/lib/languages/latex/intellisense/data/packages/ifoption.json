@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"CurrentClass","unusual":true},
+		{"name":"CurrentPackage","unusual":true},
+		{"name":"DeclareBooleanOption","arg":{"format":"{}","snippet":"DeclareBooleanOption{${1}}"},"unusual":true},
+		{"name":"DeclareExclusiveOptions","arg":{"format":"{}","snippet":"DeclareExclusiveOptions{${1}}"},"unusual":true},
+		{"name":"IfClassOption","arg":{"format":"{}{}{}{}","snippet":"IfClassOption{${1:class}}{${2:option}}{${3:true}}{${4:false}}"},"unusual":true},
+		{"name":"IfOption","arg":{"format":"{}{}{}","snippet":"IfOption{${1:option}}{${2:true}}{${3:false}}"},"unusual":true},
+		{"name":"IfPackageOption","arg":{"format":"{}{}{}{}","snippet":"IfPackageOption{${1:package}}{${2:option}}{${3:true}}{${4:false}}"},"unusual":true},
+		{"name":"ProcessExclusiveOptions","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

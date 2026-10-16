@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"iftex"},{"name":"luacode"},{"name":"ifluatex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"getNumberFromList","arg":{"format":"{}","snippet":"getNumberFromList{${1:number}}"}},
+		{"name":"makeRandomNumberList","arg":{"format":"[]{}{}{}","snippet":"makeRandomNumberList[${1:seed}]{${2:left}}{${3:right}}{${4:N}}"}},
+		{"name":"makeRandomNumberList","arg":{"format":"{}{}{}","snippet":"makeRandomNumberList{${1:left}}{${2:right}}{${3:N}}"}},
+		{"name":"makeSimpleRandomNumberList","arg":{"format":"[]{}{}{}","snippet":"makeSimpleRandomNumberList[${1:seed}]{${2:left}}{${3:right}}{${4:N}}"}},
+		{"name":"makeSimpleRandomNumberList","arg":{"format":"{}{}{}","snippet":"makeSimpleRandomNumberList{${1:left}}{${2:right}}{${3:N}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

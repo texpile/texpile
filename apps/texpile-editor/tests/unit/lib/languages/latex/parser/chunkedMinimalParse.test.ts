@@ -3,7 +3,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { getParser } from '@unified-latex/unified-latex-util-parse';
+import { parseMinimal as upstreamMinimal } from '@unified-latex/unified-latex-util-parse';
 import { parseMinimal } from '$lib/languages/latex/parser/pegMinimal';
 import { parseMinimalChunked } from '$lib/languages/latex/parser/chunkedMinimalParse';
 import { parseLatex } from '$lib/languages/latex/parser/parser';
@@ -15,6 +15,11 @@ vi.mock('$lib/languages/latex/parser/pegMinimal', async (importOriginal) => {
 });
 
 const OPTS = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES };
+// the same pipeline with upstream's tokenizer in place of the vendored one
+function upstreamTokenized(src: string): string {
+	vi.mocked(parseMinimal).mockImplementationOnce((text: string) => upstreamMinimal(text));
+	return JSON.stringify(parseLatex(src, OPTS));
+}
 
 // every construct the tokenizer scans forward through, laid across blank lines
 const BODY = [
@@ -183,10 +188,33 @@ describe('parseMinimalChunked', () => {
 		doc += UNMATCHED;
 		vi.mocked(parseMinimal).mockClear();
 		const ours = JSON.stringify(parseLatex(doc, OPTS));
-		// the memo-free tokenizer takes the whole string in one call; the chunked one is for a
+		// the vendored tokenizer takes the whole string in one call; the chunked one is for a
 		// tokenizer whose memo grows with the input
 		expect(vi.mocked(parseMinimal).mock.calls.length).toBe(1);
-		expect(firstDifference(ours, JSON.stringify(getParser(OPTS).parse(doc)))).toBeNull();
+		expect(firstDifference(ours, upstreamTokenized(doc))).toBeNull();
+	});
+});
+
+describe('the vendored tokenizer', () => {
+	// without a memo every failed environment was scanned again by each one before it: 5 s for these 9 lines
+	it('reads unclosed \\begin inside groups like upstream, at once', () => {
+		const src = Array.from({ length: 9 }, (_, i) => `\\newcommand{\\b${'abcdefghi'[i]}}{\\begin{lemm}\\begin{sl}}`).join('\n');
+		const start = performance.now();
+		const ours = JSON.stringify(parseLatex(src, OPTS));
+		expect(performance.now() - start).toBeLessThan(1000);
+		expect(firstDifference(ours, upstreamTokenized(src))).toBeNull();
+	});
+
+	it.each([
+		['\\[', '\\[ a '.repeat(16)],
+		['\\(', '\\( a '.repeat(16)],
+		['\\lstinline[', '\\lstinline[ x '.repeat(14)],
+		['a display closed by a macro', '\\newcommand{\\edm}{\\]}\n' + 'Text \\[ x_i = 1 \\edm\n\n'.repeat(12)]
+	])('reads unclosed %s like upstream, at once', (_, src) => {
+		const start = performance.now();
+		const ours = JSON.stringify(parseLatex(src, OPTS));
+		expect(performance.now() - start).toBeLessThan(1000);
+		expect(firstDifference(ours, upstreamTokenized(src))).toBeNull();
 	});
 });
 
@@ -201,6 +229,15 @@ function walk(dir: string, out: string[] = []): string[] {
 	return out;
 }
 
+// null where upstream throws (its list cleanup on \smallskip before a blank line)
+function upstreamParse(src: string): string | null {
+	try {
+		return upstreamTokenized(src);
+	} catch {
+		return null;
+	}
+}
+
 describe.skipIf(!CORPUS)('chunked parse over the corpus', () => {
 	it(
 		'matches upstream on every file, at the shipped chunk size and at 4 KB',
@@ -210,7 +247,9 @@ describe.skipIf(!CORPUS)('chunked parse over the corpus', () => {
 				await new Promise((r) => setTimeout(r, 0)); // let the worker answer the reporter between files
 				vi.mocked(parseMinimal).mockClear(); // the spy would otherwise retain every AST
 				const src = fs.readFileSync(file, 'utf8');
-				const pipeline = firstDifference(JSON.stringify(parseLatex(src, OPTS)), JSON.stringify(getParser(OPTS).parse(src)));
+				const ours = JSON.stringify(parseLatex(src, OPTS));
+				const upstream = upstreamParse(src);
+				const pipeline = upstream === null ? null : firstDifference(ours, upstream);
 				if (pipeline) bad.push(`${file} (pipeline) ${pipeline}`);
 				const minimal = firstDifference(JSON.stringify(parseMinimalChunked(src, 4096)), JSON.stringify(parseMinimal(src)));
 				if (minimal) bad.push(`${file} (4 KB) ${minimal}`);

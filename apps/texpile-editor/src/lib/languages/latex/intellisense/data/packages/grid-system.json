@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"calc"},{"name":"xkeyval"},{"name":"ifthen"},{"name":"environ"},{"name":"forloop"}],
+	"macros": [],
+	"envs": [
+		{"name":"cell","arg":{"format":"{}","snippet":"{${1:columns to span}}"},"unusual":true},
+		{"name":"Cell","arg":{"format":"{}","snippet":"{${1:columns to span}}"}},
+		{"name":"row","arg":{"format":"[]{}{}","snippet":"[${1:cellsep=1.75em}]{${2:total number of columns}}{${3:number of cells}}","keys":["keyval:row"],"keyPos":0},"unusual":true},
+		{"name":"row","arg":{"format":"{}{}","snippet":"{${1:total number of columns}}{${2:number of cells}}"},"unusual":true},
+		{"name":"Row","arg":{"format":"[]","snippet":"[${1:cellsep=1.75em}]","keys":["keyval:row"],"keyPos":0}},
+		{"name":"Row"}
+	],
+	"keys": {
+		"keyval:row": ["cellsep="]
+	}
+}

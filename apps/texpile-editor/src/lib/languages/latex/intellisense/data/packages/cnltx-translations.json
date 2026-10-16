@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"cnltx-base"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"etoolbox"},{"name":"iftex"},{"name":"xcolor"},{"name":"translations"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

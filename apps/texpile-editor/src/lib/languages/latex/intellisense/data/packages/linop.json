@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"xparse"},{"name":"bm"}],
+	"macros": [
+		{"name":"hc","arg":{"format":"[]{}{}{}{}","snippet":"hc[${1:superscript spacing}]{${2:operator}}{${3:subscript}}{${4:superscript}}{${5:supersuperscript}}"}},
+		{"name":"hc","arg":{"format":"{}{}{}{}","snippet":"hc{${1:operator}}{${2:subscript}}{${3:superscript}}{${4:supersuperscript}}"}},
+		{"name":"hc*","arg":{"format":"[]{}{}{}{}","snippet":"hc*[${1:superscript spacing}]{${2:operator}}{${3:subscript}}{${4:superscript}}{${5:supersuperscript}}"}},
+		{"name":"hc*","arg":{"format":"{}{}{}{}","snippet":"hc*{${1:operator}}{${2:subscript}}{${3:superscript}}{${4:supersuperscript}}"}},
+		{"name":"linopconjugate"},
+		{"name":"linopspacewide"},
+		{"name":"linopspacewidehc"},
+		{"name":"linopstyle"},
+		{"name":"linopstylewide"},
+		{"name":"linopsubscript"},
+		{"name":"linopsuperscript"},
+		{"name":"linopsuperscripthc"},
+		{"name":"op","arg":{"format":"[]{}{}{}{}","snippet":"op[${1:superscript spacing}]{${2:operator}}{${3:subscript}}{${4:superscript}}{${5:supersuperscript}}"}},
+		{"name":"op","arg":{"format":"{}{}{}{}","snippet":"op{${1:operator}}{${2:subscript}}{${3:superscript}}{${4:supersuperscript}}"}},
+		{"name":"op*","arg":{"format":"[]{}{}{}{}","snippet":"op*[${1:superscript spacing}]{${2:operator}}{${3:subscript}}{${4:superscript}}{${5:supersuperscript}}"}},
+		{"name":"op*","arg":{"format":"{}{}{}{}","snippet":"op*{${1:operator}}{${2:subscript}}{${3:superscript}}{${4:supersuperscript}}"}},
+		{"name":"hc","arg":{"format":"[]{}[][][]","snippet":"hc[${1:superscript spacing}]{${2:operator}}[${3:subscript}][${4:superscript}][${5:supersuperscript}]"},"if":"square"},
+		{"name":"hc","arg":{"format":"{}","snippet":"hc{${1:operator}}"},"if":"square"},
+		{"name":"hc*","arg":{"format":"[]{}[][][]","snippet":"hc*[${1:superscript spacing}]{${2:operator}}[${3:subscript}][${4:superscript}][${5:supersuperscript}]"},"if":"square"},
+		{"name":"hc*","arg":{"format":"{}","snippet":"hc*{${1:operator}}"},"if":"square"},
+		{"name":"op","arg":{"format":"[]{}[][][]","snippet":"op[${1:superscript spacing}]{${2:operator}}[${3:subscript}][${4:superscript}][${5:supersuperscript}]"},"if":"square"},
+		{"name":"op","arg":{"format":"{}","snippet":"op{${1:operator}}"},"if":"square"},
+		{"name":"op*","arg":{"format":"[]{}[][][]","snippet":"op*[${1:superscript spacing}]{${2:operator}}[${3:subscript}][${4:superscript}][${5:supersuperscript}]"},"if":"square"},
+		{"name":"op*","arg":{"format":"{}","snippet":"op*{${1:operator}}"},"if":"square"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/linop#c": ["bmbold","bold","compact","nohat","square","star","wide"]
+	},
+	"args": ["\\usepackage/linop#c"]
+}

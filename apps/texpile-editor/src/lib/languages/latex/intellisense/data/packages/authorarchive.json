@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"enumitem"},{"name":"orcidlink"},{"name":"etoolbox"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"eso-pic"},{"name":"intopdf"},{"name":"xparse"},{"name":"calc"},{"name":"qrcode"},{"name":"xkeyval"},{"name":"hologo"}],
+	"macros": [
+		{"name":"authorat","arg":{"format":"{}","snippet":"authorat{${1:text}}"}},
+		{"name":"authorcrfont"},
+		{"name":"authorsetup","arg":{"format":"{}","snippet":"authorsetup{${1:options}}","keys":["keyval:AA"],"keyPos":0},"doc":"The package also defines a command `\\authorsetup{}` which allows to define key value options dynamically."},
+		{"name":"authorwidth","arg":{"format":"{}","snippet":"authorwidth{${1:width}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:AA": ["ACM","ENTCS","IEEE","LNCS","LNI","acmart","baseurl=","bibtexdir=","suffix=","publisher=","year=","key=","doi=","doiText=","publisherurl=","startpage=","publication=","nocopyright=${1|false,true|}","nourl=${1|false,true|}","nobib=${1|false,true|}","orcidicon=${1|false,true|}"],
+		"\\usepackage/authorarchive#c": ["ACM","ENTCS","IEEE","LNCS","LNI","acmart","baseurl=","bibtexdir=","doi=","doiText=","key=","nobib=${1|false,true|}","nocopyright=${1|false,true|}","nourl=${1|false,true|}","orcidicon=${1|false,true|}","publication=","publisher=","publisherurl=","startpage=","suffix=","year="]
+	},
+	"args": ["\\usepackage/authorarchive#c"]
+}

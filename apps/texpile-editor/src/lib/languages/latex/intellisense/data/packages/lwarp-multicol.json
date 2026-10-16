@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"columnbreak","arg":{"format":"[]","snippet":"columnbreak[${1:desirability 0-4}]"}},
+		{"name":"columnbreak"},
+		{"name":"columnseprulecolor"},
+		{"name":"docolaction","arg":{"format":"[]{}{}{}","snippet":"docolaction[${1:default}]{${2:first column}}{${3:middle column}}{${4:last column}}"}},
+		{"name":"docolaction","arg":{"format":"{}{}{}","snippet":"docolaction{${1:first column}}{${2:middle column}}{${3:last column}}"}},
+		{"name":"docolaction*","arg":{"format":"[]{}{}{}","snippet":"docolaction*[${1:default}]{${2:first column}}{${3:middle column}}{${4:last column}}"}},
+		{"name":"docolaction*","arg":{"format":"{}{}{}","snippet":"docolaction*{${1:first column}}{${2:middle column}}{${3:last column}}"}},
+		{"name":"LRmulticolcolumns"},
+		{"name":"multicolbaselineskip"},
+		{"name":"multicolovershoot"},
+		{"name":"multicolpretolerance"},
+		{"name":"multicolsep"},
+		{"name":"multicoltolerance"},
+		{"name":"multicolundershoot"},
+		{"name":"newcolumn"},
+		{"name":"postmulticols"},
+		{"name":"premulticols"},
+		{"name":"RLmulticolcolumns"}
+	],
+	"envs": [
+		{"name":"multicols","arg":{"format":"{}[][]","snippet":"{${1:number of columns}}[${2:preface}][${3:minimum space}]"}},
+		{"name":"multicols","arg":{"format":"{}","snippet":"{${1:number of columns}}"}},
+		{"name":"multicols*","arg":{"format":"{}[][]","snippet":"{${1:number of columns}}[${2:preface}][${3:minimum space}]"}},
+		{"name":"multicols*","arg":{"format":"{}","snippet":"{${1:number of columns}}"}}
+	],
+	"keys": {}
+}

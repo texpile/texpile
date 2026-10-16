@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"croplength"},
+		{"name":"croppadbot"},
+		{"name":"croppadlr"},
+		{"name":"croppadtop"},
+		{"name":"cropsep"},
+		{"name":"cropwidth"}
+	],
+	"envs": [],
+	"keys": {}
+}

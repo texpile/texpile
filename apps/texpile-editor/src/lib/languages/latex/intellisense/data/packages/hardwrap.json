@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"ifplatform"},{"name":"shellesc"},{"name":"iftex"},{"name":"catchfile"}],
+	"macros": [
+		{"name":"GenerateClassLogMacros","arg":{"format":"[]{}","snippet":"GenerateClassLogMacros[${1:prefix}]{${2:class name}}"},"unusual":true},
+		{"name":"GenerateClassLogMacros","arg":{"format":"{}","snippet":"GenerateClassLogMacros{${1:class name}}"},"unusual":true},
+		{"name":"GenerateLogMacros","arg":{"format":"{}[]{}","snippet":"GenerateLogMacros{${1:package|class}}[${2:prefix}]{${3:name}}"}},
+		{"name":"GenerateLogMacros","arg":{"format":"{}{}","snippet":"GenerateLogMacros{${1:package|class}}{${2:name}}"}},
+		{"name":"GeneratePackageLogMacros","arg":{"format":"[]{}","snippet":"GeneratePackageLogMacros[${1:prefix}]{${2:package name}}"},"unusual":true},
+		{"name":"GeneratePackageLogMacros","arg":{"format":"{}","snippet":"GeneratePackageLogMacros{${1:package name}}"},"unusual":true},
+		{"name":"HardWrap","arg":{"format":"{}{}{}{}{}","snippet":"HardWrap{${1:function}}{${2:width}}{${3:setup code}}{${4:newline}}{${5:text}}"},"doc":"This command will wrap ⟨text⟩ to a text block of ⟨width⟩ characters wide, inserting ⟨newline⟩ at the end of each line and processing the result with ⟨function⟩."},
+		{"name":"HardWrapSetup","doc":"This is the command to use if you want to ‘special-case’ some meanings to be more appropriate inside message text."},
+		{"name":"setmaxprintline","arg":{"format":"{}","snippet":"setmaxprintline{${1:value}}"},"doc":"While hardwrap attempts to determine the maximum line lengths based on where TeX will wrap its console and log output, you may wish to override the value found using \\setmaxprintline{⟨value⟩}."}
+	],
+	"envs": [],
+	"keys": {}
+}

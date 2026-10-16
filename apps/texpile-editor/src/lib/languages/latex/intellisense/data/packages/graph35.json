@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"pixelart0"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"tikz"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsbsy"},{"name":"sansmath"},{"name":"letterspace"}],
+	"macros": [
+		{"name":"battery","arg":{"format":"{}","snippet":"battery{${1:state}}"}},
+		{"name":"calculator","arg":{"format":"[]{}","snippet":"calculator[${1:color, scale}]{${2:model}}"}},
+		{"name":"calculator","arg":{"format":"{}","snippet":"calculator{${1:model}}"}},
+		{"name":"function","arg":{"format":"{}","snippet":"function{${1:function}}"}},
+		{"name":"key","arg":{"format":"[]{}","snippet":"key[${1:options}]{${2:key}}"}},
+		{"name":"key","arg":{"format":"{}","snippet":"key{${1:key}}"}},
+		{"name":"menu","arg":{"format":"{}{}","snippet":"menu{${1:icon}}{${2:shortcut}}"},"doc":"Macro \\menu{⟨icon⟩}{⟨shortcut⟩} draws an icon from the main menu."},
+		{"name":"setgraphcolor","arg":{"format":"{}","snippet":"setgraphcolor{${1:color}}"},"doc":"default color can be redefined at any time using macro \\setgraphcolor{⟨color⟩}."},
+		{"name":"tikzbattery","arg":{"format":"[]{}{}","snippet":"tikzbattery[${1:options}]{${2:state}}{${3:coordinates}}"},"doc":"Macro \\tikzbattery[⟨options⟩]{⟨state⟩}{⟨coordinates⟩} is identical to macro \\battery, but from within a TikZ environment."},
+		{"name":"tikzbattery","arg":{"format":"{}{}","snippet":"tikzbattery{${1:state}}{${2:coordinates}}"},"doc":"Macro \\tikzbattery[⟨options⟩]{⟨state⟩}{⟨coordinates⟩} is identical to macro \\battery, but from within a TikZ environment."},
+		{"name":"tikzcalculator","arg":{"format":"{}","snippet":"tikzcalculator{${1:model}}"},"doc":"One can include a calculator in a TikZ drawing, using command \\tikzcalculator{⟨model⟩}. This command takes a single argument {⟨model⟩}, and displays a calculator around coordinates (0; 0)."},
+		{"name":"tikzfunction","arg":{"format":"[]{}{}","snippet":"tikzfunction[${1:options}]{${2:function}}{${3:coordinates}}"},"doc":"Macro \\tikzfunction[⟨options⟩]{⟨function⟩}{⟨coordinates⟩} is the same as \\function, but from within a TikZ environment."},
+		{"name":"tikzfunction","arg":{"format":"{}{}","snippet":"tikzfunction{${1:function}}{${2:coordinates}}"},"doc":"Macro \\tikzfunction[⟨options⟩]{⟨function⟩}{⟨coordinates⟩} is the same as \\function, but from within a TikZ environment."},
+		{"name":"tikzkey","arg":{"format":"[]{}{}","snippet":"tikzkey[${1:options}]{${2:key}}{${3:coordinates}}"}},
+		{"name":"tikzkey","arg":{"format":"{}{}","snippet":"tikzkey{${1:key}}{${2:coordinates}}"}},
+		{"name":"tikzmenu","arg":{"format":"[]{}{}{}","snippet":"tikzmenu[${1:options}]{${2:icon}}{${3:shortcut}}{${4:coordinates}}"},"doc":"The \\tikzmenu macro draws a menu item in a TikZ environment."},
+		{"name":"tikzmenu","arg":{"format":"{}{}{}","snippet":"tikzmenu{${1:icon}}{${2:shortcut}}{${3:coordinates}}"},"doc":"The \\tikzmenu macro draws a menu item in a TikZ environment."}
+	],
+	"envs": [],
+	"keys": {}
+}

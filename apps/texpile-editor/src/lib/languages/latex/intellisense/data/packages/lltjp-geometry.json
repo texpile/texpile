@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"etoolbox"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/lltjp-geometry#c": ["disable","force"]
+	},
+	"args": ["\\usepackage/lltjp-geometry#c"]
+}

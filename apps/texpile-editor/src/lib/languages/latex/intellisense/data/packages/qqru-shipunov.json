@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"<"},
+		{"name":">"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/qqru-shipunov#c": ["convert","en","noconvert","ru"]
+	},
+	"args": ["\\usepackage/qqru-shipunov#c"]
+}

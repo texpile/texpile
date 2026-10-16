@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"graphics"},{"name":"trig"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

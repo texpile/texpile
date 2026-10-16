@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"lstdoc"},{"name":"listings"},{"name":"keyval"},{"name":"fancyvrb"},{"name":"hyperref","engines":["pdflatex"]},{"name":"iftex","engines":["pdflatex"]},{"name":"kvsetkeys"},{"name":"pdfescape","engines":["pdflatex"]},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc","engines":["pdflatex"]},{"name":"intcalc","engines":["pdflatex"]},{"name":"url"},{"name":"bitset","engines":["pdflatex"]},{"name":"bigintcalc","engines":["pdflatex"]},{"name":"rerunfilecheck","engines":["pdflatex"]},{"name":"uniquecounter","engines":["pdflatex"]},{"name":"color"},{"name":"algorithmic"},{"name":"ifthen"},{"name":"xurl"},{"name":"pgfkeys"},{"name":"forest-index"},{"name":"forest"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"elocalloc"},{"name":"environ"},{"name":"xparse"},{"name":"inlinedef"},{"name":"dingbat"}],
+	"macros": [
+		{"name":"cmdname","arg":{"format":"{}","snippet":"cmdname{${1}}"},"unusual":true},
+		{"name":"foRest","unusual":true},
+		{"name":"FoRest","unusual":true},
+		{"name":"forestexampleimport","arg":{"format":"[]","snippet":"forestexampleimport[${1}]"},"unusual":true},
+		{"name":"forestexampleimport","unusual":true},
+		{"name":"forestversion","unusual":true},
+		{"name":"greaterthan","unusual":true},
+		{"name":"itemnosep","arg":{"format":"[]","snippet":"itemnosep[${1}]"},"unusual":true},
+		{"name":"itemnosep","unusual":true},
+		{"name":"lstinputregion","arg":{"format":"[]{}{}","snippet":"lstinputregion[${1}]{${2}}{${3}}"},"unusual":true},
+		{"name":"lstinputregion","arg":{"format":"{}{}","snippet":"lstinputregion{${1}}{${2}}"},"unusual":true},
+		{"name":"PGF","unusual":true},
+		{"name":"settodayfromforestdate","unusual":true},
+		{"name":"spaces","arg":{"format":"{}","snippet":"spaces{${1}}"},"unusual":true},
+		{"name":"TikZ","unusual":true}
+	],
+	"envs": [
+		{"name":"forestexample","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
+		{"name":"forestexample","unusual":true}
+	],
+	"keys": {}
+}

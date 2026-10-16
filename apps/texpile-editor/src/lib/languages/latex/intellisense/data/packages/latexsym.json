@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"Box","math":true},
+		{"name":"Diamond","math":true},
+		{"name":"Join","math":true,"detail":"⨝","doc":"join"},
+		{"name":"leadsto","math":true},
+		{"name":"lhd","math":true},
+		{"name":"mho","math":true,"detail":"℧","doc":"conductance"},
+		{"name":"rhd","math":true},
+		{"name":"sqsubset","math":true,"detail":"⊏","doc":"square subset"},
+		{"name":"sqsupset","math":true,"detail":"⊐","doc":"square superset"},
+		{"name":"unlhd","math":true},
+		{"name":"unrhd","math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

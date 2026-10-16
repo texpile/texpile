@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"disableindex","arg":{"format":"{}","snippet":"disableindex{${1:tags}}"}},
+		{"name":"ifproofmode","unusual":true},
+		{"name":"index","arg":{"format":"[]{}","snippet":"index[${1:tag}]{${2:entry}}"}},
+		{"name":"index","arg":{"format":"{}","snippet":"index{${1:entry}}"}},
+		{"name":"index*","arg":{"format":"[]{}","snippet":"index*[${1:tag}]{${2:entry}}"}},
+		{"name":"index*","arg":{"format":"{}","snippet":"index*{${1:entry}}"}},
+		{"name":"indexproofstyle","arg":{"format":"{}","snippet":"indexproofstyle{${1:font commands}}"}},
+		{"name":"newindex","arg":{"format":"[]{}{}{}{}","snippet":"newindex[${1:counter command}]{${2:tag}}{${3:raw ext}}{${4:processed ext}}{${5:title}}"}},
+		{"name":"newindex","arg":{"format":"{}{}{}{}","snippet":"newindex{${1:tag}}{${2:raw ext}}{${3:processed ext}}{${4:title}}"}},
+		{"name":"newindex*","arg":{"format":"[]{}{}{}{}","snippet":"newindex*[${1:counter command}]{${2:tag}}{${3:raw ext}}{${4:processed ext}}{${5:title}}"}},
+		{"name":"newindex*","arg":{"format":"{}{}{}{}","snippet":"newindex*{${1:tag}}{${2:raw ext}}{${3:processed ext}}{${4:title}}"}},
+		{"name":"printindex","arg":{"format":"[][]","snippet":"printindex[${1:tag}][${2:prologue}]"},"doc":"The \\printindex command is modified by the addition of an optional argument, which is the tag of the index that should be printed."},
+		{"name":"printindex","doc":"The \\printindex command is modified by the addition of an optional argument, which is the tag of the index that should be printed."},
+		{"name":"proofmodefalse"},
+		{"name":"proofmodetrue","doc":"The command \\proofmodetrue can be used to enable the printing of index entries in the margin of pages."},
+		{"name":"renewindex","arg":{"format":"[]{}{}{}{}","snippet":"renewindex[${1:counter command}]{${2:tag}}{${3:raw ext}}{${4:processed ext}}{${5:title}}"},"doc":"The \\renewindex command takes the same arguments as the \\newindex command and can be used to redefine indexes that have been previously declared."},
+		{"name":"renewindex","arg":{"format":"{}{}{}{}","snippet":"renewindex{${1:tag}}{${2:raw ext}}{${3:processed ext}}{${4:title}}"},"doc":"The \\renewindex command takes the same arguments as the \\newindex command and can be used to redefine indexes that have been previously declared."},
+		{"name":"renewindex*","arg":{"format":"[]{}{}{}{}","snippet":"renewindex*[${1:counter command}]{${2:tag}}{${3:raw ext}}{${4:processed ext}}{${5:title}}"},"doc":"The \\renewindex command takes the same arguments as the \\newindex command and can be used to redefine indexes that have been previously declared."},
+		{"name":"renewindex*","arg":{"format":"{}{}{}{}","snippet":"renewindex*{${1:tag}}{${2:raw ext}}{${3:processed ext}}{${4:title}}"},"doc":"The \\renewindex command takes the same arguments as the \\newindex command and can be used to redefine indexes that have been previously declared."},
+		{"name":"see","arg":{"format":"{}{}","snippet":"see{${1}}{${2}}"}},
+		{"name":"seename"},
+		{"name":"shortindexingoff","unusual":true},
+		{"name":"shortindexingon","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

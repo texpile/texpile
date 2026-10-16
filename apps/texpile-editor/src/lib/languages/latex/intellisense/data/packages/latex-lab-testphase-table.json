@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"array"}],
+	"macros": [
+		{"name":"ltlabtbldate","unusual":true},
+		{"name":"ltlabtblversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

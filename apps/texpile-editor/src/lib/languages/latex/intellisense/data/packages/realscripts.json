@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"fakesubscript","arg":{"format":"{}","snippet":"fakesubscript{${1:text}}"}},
+		{"name":"fakesuperscript","arg":{"format":"{}","snippet":"fakesuperscript{${1:text}}"}},
+		{"name":"footnotemarkfont","doc":"We define a \\footnotemarkfont that is used to style the number used for the footnote, which by default is simply \\normalfont (following LaTeX 2ε ’s default)."},
+		{"name":"realsubscript","arg":{"format":"{}","snippet":"realsubscript{${1:text}}"}},
+		{"name":"realsuperscript","arg":{"format":"{}","snippet":"realsuperscript{${1:text}}"}},
+		{"name":"subsupersep"},
+		{"name":"textsubscript","arg":{"format":"{}","snippet":"textsubscript{${1:text}}"}},
+		{"name":"textsubscript*","arg":{"format":"{}","snippet":"textsubscript*{${1:text}}"}},
+		{"name":"textsubsuperscript","arg":{"format":"[]{}{}","snippet":"textsubsuperscript[${1:alignment}]{${2:sub}}{${3:super}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsubsuperscript","arg":{"format":"{}{}","snippet":"textsubsuperscript{${1:sub}}{${2:super}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsubsuperscript*","arg":{"format":"[]{}{}","snippet":"textsubsuperscript*[${1:alignment}]{${2:sub}}{${3:super}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsubsuperscript*","arg":{"format":"{}{}","snippet":"textsubsuperscript*{${1:sub}}{${2:super}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsuperscript","arg":{"format":"{}","snippet":"textsuperscript{${1:text}}"}},
+		{"name":"textsuperscript*","arg":{"format":"{}","snippet":"textsuperscript*{${1:text}}"}},
+		{"name":"textsupersubscript","arg":{"format":"[]{}{}","snippet":"textsupersubscript[${1:alignment}]{${2:super}}{${3:sub}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsupersubscript","arg":{"format":"{}{}","snippet":"textsupersubscript{${1:super}}{${2:sub}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsupersubscript*","arg":{"format":"[]{}{}","snippet":"textsupersubscript*[${1:alignment}]{${2:super}}{${3:sub}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsupersubscript*","arg":{"format":"{}{}","snippet":"textsupersubscript*{${1:super}}{${2:sub}}"},"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"scrlayer"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"}],
+	"macros": [
+		{"name":"clearnotecolumn","arg":{"format":"[]","snippet":"clearnotecolumn[${1:note column name}]"}},
+		{"name":"clearnotecolumn"},
+		{"name":"clearnotecolumns","arg":{"format":"[]","snippet":"clearnotecolumns[${1:list of note column names}]"}},
+		{"name":"clearnotecolumns"},
+		{"name":"DeclareNewNoteColumn","arg":{"format":"[]{}","snippet":"DeclareNewNoteColumn[${1:option list}]{${2:note column name}}"}},
+		{"name":"DeclareNewNoteColumn","arg":{"format":"{}","snippet":"DeclareNewNoteColumn{${1:note column name}}"}},
+		{"name":"DeclareNoteColumn","arg":{"format":"[]{}","snippet":"DeclareNoteColumn[${1:option list}]{${2:note column name}}"}},
+		{"name":"DeclareNoteColumn","arg":{"format":"{}","snippet":"DeclareNoteColumn{${1:note column name}}"}},
+		{"name":"makenote","arg":{"format":"[]{}","snippet":"makenote[${1:note column name}]{${2:note}}"}},
+		{"name":"makenote","arg":{"format":"{}","snippet":"makenote{${1:note}}"}},
+		{"name":"makenote*","arg":{"format":"[]{}","snippet":"makenote*[${1:note column name}]{${2:note}}"}},
+		{"name":"makenote*","arg":{"format":"{}","snippet":"makenote*{${1:note}}"}},
+		{"name":"ProvideNoteColumn","arg":{"format":"[]{}","snippet":"ProvideNoteColumn[${1:option list}]{${2:note column name}}"}},
+		{"name":"ProvideNoteColumn","arg":{"format":"{}","snippet":"ProvideNoteColumn{${1:note column name}}"}},
+		{"name":"RedeclareNoteColumn","arg":{"format":"[]{}","snippet":"RedeclareNoteColumn[${1:option list}]{${2:note column name}}"}},
+		{"name":"RedeclareNoteColumn","arg":{"format":"{}","snippet":"RedeclareNoteColumn{${1:note column name}}"}},
+		{"name":"restoreinnote","arg":{"format":"{}","snippet":"restoreinnote{${1:command}}"},"unusual":true},
+		{"name":"syncwithnotecolumn","arg":{"format":"[]","snippet":"syncwithnotecolumn[${1:note column name}]"}},
+		{"name":"syncwithnotecolumn"},
+		{"name":"syncwithnotecolumns","arg":{"format":"[]","snippet":"syncwithnotecolumns[${1:list of note column names}]"}},
+		{"name":"syncwithnotecolumns"},
+		{"name":"theslncpage","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-slpe"},{"name":"multido"}],
+	"macros": [
+		{"name":"psAnt","arg":{"format":"[]","snippet":"psAnt[${1}]"}},
+		{"name":"psAnt"},
+		{"name":"psBill","arg":{"format":"[]","snippet":"psBill[${1}]"}},
+		{"name":"psBill"},
+		{"name":"psBird","arg":{"format":"[]","snippet":"psBird[${1}]"}},
+		{"name":"psBird"},
+		{"name":"psFish","arg":{"format":"[]","snippet":"psFish[${1}]"}},
+		{"name":"psFish"},
+		{"name":"psHuman","arg":{"format":"[]","snippet":"psHuman[${1}]"}},
+		{"name":"psHuman"},
+		{"name":"psKangaroo","arg":{"format":"[]{}","snippet":"psKangaroo[${1}]{${2}}"}},
+		{"name":"psKangaroo","arg":{"format":"{}","snippet":"psKangaroo{${1}}"}},
+		{"name":"psLouisXIII","arg":{"format":"[]","snippet":"psLouisXIII[${1}]"}},
+		{"name":"psLouisXIII"},
+		{"name":"psLuke","arg":{"format":"[]","snippet":"psLuke[${1}]"}},
+		{"name":"psLuke"},
+		{"name":"psParrot","arg":{"format":"[]{}","snippet":"psParrot[${1}]{${2}}"}},
+		{"name":"psParrot","arg":{"format":"{}","snippet":"psParrot{${1}}"}},
+		{"name":"psPig","arg":{"format":"[]()","snippet":"psPig[${1}](${2})"}},
+		{"name":"psPig","arg":{"format":"()","snippet":"psPig(${1})"}},
+		{"name":"psPulpo","arg":{"format":"[]","snippet":"psPulpo[${1}]"}},
+		{"name":"psPulpo"}
+	],
+	"envs": [],
+	"keys": {}
+}

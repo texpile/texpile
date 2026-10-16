@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"},{"name":"luacode"},{"name":"ifluatex"},{"name":"luatexbase"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"hyperbolicTiling","arg":{"format":"{}{}{}[]","snippet":"hyperbolicTiling{${1:P}}{${2:Q}}{${3:R}}[${4:options}]"}},
+		{"name":"hyperbolicTiling","arg":{"format":"{}{}{}","snippet":"hyperbolicTiling{${1:P}}{${2:Q}}{${3:R}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

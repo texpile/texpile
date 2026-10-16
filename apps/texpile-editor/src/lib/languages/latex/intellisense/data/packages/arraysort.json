@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"arrayjobx"},{"name":"calc"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"xargs"},{"name":"xkeyval"},{"name":"macroswap"},{"name":"iftex","if":"comparestr"},{"name":"lcg","if":"randompart"}],
+	"macros": [
+		{"name":"arraysortcomparenum","arg":{"format":"{}{}","snippet":"arraysortcomparenum{${1:value1}}{${2:value2}}"},"if":"comparenum"},
+		{"name":"arraysortcomparestr","arg":{"format":"{}{}","snippet":"arraysortcomparestr{${1:value1}}{${2:value2}}"},"if":"comparestr"},
+		{"name":"sortArray","arg":{"format":"[][]{}{}[]","snippet":"sortArray[${1:comparator}][${2:from}]{${3:to}}{${4:array name}}[${5:partition}]"}},
+		{"name":"sortArray","arg":{"format":"{}{}","snippet":"sortArray{${1:to}}{${2:array name}}"}},
+		{"name":"sortArrayPartitionFirst","arg":{"format":"{}{}{}{}","snippet":"sortArrayPartitionFirst{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"sortArrayPartitionMed","arg":{"format":"{}{}{}{}","snippet":"sortArrayPartitionMed{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"sortArrayPartitionMid","arg":{"format":"{}{}{}{}","snippet":"sortArrayPartitionMid{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"sortArrayPartitionRand","arg":{"format":"{}{}{}{}","snippet":"sortArrayPartitionRand{${1}}{${2}}{${3}}{${4}}"},"unusual":true,"if":"randompart"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/arraysort#c": ["comparenum","comparestr","randompart"]
+	},
+	"args": ["\\usepackage/arraysort#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"blog"},{"name":"fifinddo"},{"name":"stacklet"},{"name":"actcodes"},{"name":"dowith"},{"name":"texlinks"},{"name":"domore"},{"name":"langcode"}],
+	"macros": [
+		{"name":"doubleapostr","unusual":true},
+		{"name":"doublestar","unusual":true},
+		{"name":"MakePairLaTeXcmd","arg":{"format":"{}{}","snippet":"MakePairLaTeXcmd{${1}}{${2}}"}},
+		{"name":"tripleapostr","unusual":true},
+		{"name":"triplestar","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

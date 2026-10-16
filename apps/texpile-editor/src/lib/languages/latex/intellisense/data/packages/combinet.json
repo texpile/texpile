@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/combinet#c": ["nomauthor","nomtitle","nothanks","pub","pubtop"]
+	},
+	"args": ["\\usepackage/combinet#c"]
+}

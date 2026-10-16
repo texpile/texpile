@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"newtotcounter","arg":{"format":"[]{}","snippet":"newtotcounter[${1}]{${2}}"},"doc":"The macro \\newtotcounter is a shorthand for creating a new counter and registering it as a total counter."},
+		{"name":"newtotcounter","arg":{"format":"{}","snippet":"newtotcounter{${1}}"},"doc":"The macro \\newtotcounter is a shorthand for creating a new counter and registering it as a total counter."},
+		{"name":"regtotcounter","arg":{"format":"[]{}","snippet":"regtotcounter[${1}]{${2}}"},"doc":"Registers a counter as a total counter."},
+		{"name":"regtotcounter","arg":{"format":"{}","snippet":"regtotcounter{${1}}"},"doc":"Registers a counter as a total counter."},
+		{"name":"total","arg":{"format":"{}","snippet":"total{${1}}"},"doc":"Prints the total value of a registered total counter that is passed as argument."},
+		{"name":"totvalue","arg":{"format":"{}","snippet":"totvalue{${1}}"},"doc":"Returns the numeric total value of a registered total counter that is passed as argument."},
+		{"name":"usetotcountfile","arg":{"format":"{}","snippet":"usetotcountfile{${1}}"},"doc":"Inputs an auxiliary file that should contain total-counter definitions."}
+	],
+	"envs": [],
+	"keys": {}
+}

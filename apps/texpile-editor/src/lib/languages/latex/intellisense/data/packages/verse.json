@@ -1,276 +1,64 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "indentpattern",
-      "arg": {
-        "format": "{}",
-        "snippet": "indentpattern{${1:digits}}"
-      }
-    },
-    {
-      "name": "versewidth"
-    },
-    {
-      "name": "vin"
-    },
-    {
-      "name": "vgap"
-    },
-    {
-      "name": "vindent"
-    },
-    {
-      "name": "leftmargini"
-    },
-    {
-      "name": "stanzaskip"
-    },
-    {
-      "name": "verselinebreak"
-    },
-    {
-      "name": "verselinebreak",
-      "arg": {
-        "format": "[]",
-        "snippet": "verselinebreak[${1:length}]"
-      }
-    },
-    {
-      "name": "flagverse",
-      "arg": {
-        "format": "{}",
-        "snippet": "flagverse{${1:flag}}"
-      }
-    },
-    {
-      "name": "vleftskip"
-    },
-    {
-      "name": "vrightskip"
-    },
-    {
-      "name": "poemlines",
-      "arg": {
-        "format": "{}",
-        "snippet": "poemlines{${1:nth}}"
-      }
-    },
-    {
-      "name": "setverselinenums",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "setverselinenums{${1:first line num}}{${2:start nums at}}"
-      }
-    },
-    {
-      "name": "thepoemline"
-    },
-    {
-      "name": "verselinenumfont",
-      "arg": {
-        "format": "{}",
-        "snippet": "verselinenumfont{${1:font-spec}}"
-      }
-    },
-    {
-      "name": "verselinenumbersleft"
-    },
-    {
-      "name": "verselinenumbersright"
-    },
-    {
-      "name": "poemtitle",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "poemtitle{${1:short}}{${2:long}}"
-      }
-    },
-    {
-      "name": "poemtitle*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "poemtitle*{${1:short}}{${2:long}}"
-      }
-    },
-    {
-      "name": "poemtoc"
-    },
-    {
-      "name": "poemtitlefont"
-    },
-    {
-      "name": "beforepoemtitleskip"
-    },
-    {
-      "name": "afterpoemtitleskip"
-    },
-    {
-      "name": "poemtitlemark",
-      "arg": {
-        "format": "{}",
-        "snippet": "poemtitlemark{${1:title}}"
-      }
-    },
-    {
-      "name": "newarray",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "newarray{${1:array name}}{${2:low}}{${3:high}}"
-      }
-    },
-    {
-      "name": "setarrayelement",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "setarrayelement{${1:array name}}{${2:index}}{${3:text}}"
-      }
-    },
-    {
-      "name": "getarrayelement",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "getarrayelement{${1:array name}}{${2:index}}{${3:result}}"
-      }
-    },
-    {
-      "name": "checkarrayindex",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "checkarrayindex{${1:array name}}{${2:index}}"
-      }
-    },
-    {
-      "name": "stringtoarray",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "stringtoarray{${1:array name}}{${2:string}}"
-      }
-    },
-    {
-      "name": "arraytostring",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "arraytostring{${1:array name}}{${2:result}}"
-      }
-    },
-    {
-      "name": "checkifinteger",
-      "arg": {
-        "format": "{}",
-        "snippet": "checkifinteger{${1:number}}"
-      }
-    },
-    {
-      "name": "altindentfalse",
-      "unusual": true
-    },
-    {
-      "name": "altindenttrue",
-      "unusual": true
-    },
-    {
-      "name": "bounderrorfalse",
-      "unusual": true
-    },
-    {
-      "name": "bounderrortrue",
-      "unusual": true
-    },
-    {
-      "name": "gobm",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "gobm{${1:number}}"
-      }
-    },
-    {
-      "name": "ifaltindent",
-      "unusual": true
-    },
-    {
-      "name": "ifbounderror",
-      "unusual": true
-    },
-    {
-      "name": "ifinteger",
-      "unusual": true
-    },
-    {
-      "name": "ifpattern",
-      "unusual": true
-    },
-    {
-      "name": "ifstarpattern",
-      "unusual": true
-    },
-    {
-      "name": "integerfalse",
-      "unusual": true
-    },
-    {
-      "name": "integertrue",
-      "unusual": true
-    },
-    {
-      "name": "patternfalse",
-      "unusual": true
-    },
-    {
-      "name": "patterntrue",
-      "unusual": true
-    },
-    {
-      "name": "starpatternfalse",
-      "unusual": true
-    },
-    {
-      "name": "starpatterntrue",
-      "unusual": true
-    },
-    {
-      "name": "thechrsinstr",
-      "unusual": true
-    },
-    {
-      "name": "thefvsline",
-      "unusual": true
-    },
-    {
-      "name": "theHpoemline",
-      "unusual": true
-    },
-    {
-      "name": "thevslineno",
-      "unusual": true
-    },
-    {
-      "name": "vlnumfont",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "verse"
-    },
-    {
-      "name": "verse",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:length of average line}]"
-      }
-    },
-    {
-      "name": "altverse"
-    },
-    {
-      "name": "patverse"
-    },
-    {
-      "name": "patverse*"
-    }
-  ],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"afterpoemtitleskip"},
+		{"name":"altindentfalse","unusual":true},
+		{"name":"altindenttrue","unusual":true},
+		{"name":"arraytostring","arg":{"format":"{}{}","snippet":"arraytostring{${1:array name}}{${2:result}}"},"doc":"The macro \\arraytostring{⟨arrayname⟩}{⟨result⟩} assumes that ⟨arrayname⟩ is an array of characters, and defines the macro ⟨result⟩ to be that sequence of characters."},
+		{"name":"beforepoemtitleskip"},
+		{"name":"bounderrorfalse","unusual":true},
+		{"name":"bounderrortrue","unusual":true},
+		{"name":"checkarrayindex","arg":{"format":"{}{}","snippet":"checkarrayindex{${1:array name}}{${2:index}}"},"doc":"\\checkarrayindex{⟨arrayname⟩}{⟨index⟩} checks if ⟨arrayname⟩ is an array and if ⟨index⟩ is a valid index for the array."},
+		{"name":"checkifinteger","arg":{"format":"{}","snippet":"checkifinteger{${1:number}}"},"doc":"\\checkifinteger{⟨num⟩} checks if ⟨num⟩ is an integer (not less than zero)."},
+		{"name":"flagverse","arg":{"format":"{}","snippet":"flagverse{${1:flag}}"},"doc":"\\flagverse{⟨flag⟩} inserts ⟨flag⟩ at the left (of a line)."},
+		{"name":"getarrayelement","arg":{"format":"{}{}{}","snippet":"getarrayelement{${1:array name}}{${2:index}}{${3:result}}"},"doc":"\\getarrayelement{⟨arrayname⟩}{⟨index⟩}{⟨result⟩} sets the parameterless macro ⟨result⟩ to the contents of the ⟨index⟩ location in the ⟨arrayname⟩ array."},
+		{"name":"ifaltindent","unusual":true},
+		{"name":"ifbounderror","unusual":true},
+		{"name":"ifinteger","unusual":true},
+		{"name":"ifpattern","unusual":true},
+		{"name":"ifstarpattern","unusual":true},
+		{"name":"indentpattern","arg":{"format":"{}","snippet":"indentpattern{${1:digits}}"},"doc":"The indentation pattern for a patverse environment is specified via the \\indentpattern{⟨digits⟩} command."},
+		{"name":"integerfalse","unusual":true},
+		{"name":"integertrue","unusual":true},
+		{"name":"newarray","arg":{"format":"{}{}{}","snippet":"newarray{${1:array name}}{${2:low}}{${3:high}}"},"doc":"\\newarray{⟨arrayname⟩}{⟨low⟩}{⟨high⟩} defines the ⟨arrayname⟩ array, where ⟨arrayname⟩ is a name like MyArray."},
+		{"name":"patternfalse","unusual":true},
+		{"name":"patterntrue","unusual":true},
+		{"name":"poemlines","arg":{"format":"{}","snippet":"poemlines{${1:nth}}"},"doc":"Use the \\poemlines{⟨N⟩} command to number every ⟨N⟩th line of a poem."},
+		{"name":"poemtitle","arg":{"format":"[]{}","snippet":"poemtitle[${1:short title}]{${2:title}}"},"doc":"Use the \\poemtitle{⟨title⟩} command (just before the verse environment) to give each poem a title; commands are provided to adjust the formatting and include the poem into the standard table of contents."},
+		{"name":"poemtitle","arg":{"format":"{}","snippet":"poemtitle{${1:title}}"},"doc":"Use the \\poemtitle{⟨title⟩} command (just before the verse environment) to give each poem a title; commands are provided to adjust the formatting and include the poem into the standard table of contents."},
+		{"name":"poemtitle*","arg":{"format":"[]{}","snippet":"poemtitle*[${1:short title}]{${2:title}}"},"doc":"Use the \\poemtitle{⟨title⟩} command (just before the verse environment) to give each poem a title; commands are provided to adjust the formatting and include the poem into the standard table of contents."},
+		{"name":"poemtitle*","arg":{"format":"{}","snippet":"poemtitle*{${1:title}}"},"doc":"Use the \\poemtitle{⟨title⟩} command (just before the verse environment) to give each poem a title; commands are provided to adjust the formatting and include the poem into the standard table of contents."},
+		{"name":"poemtitlefont","doc":"This macro specifies the font and positioning of the poem title."},
+		{"name":"poemtitlemark","arg":{"format":"{}","snippet":"poemtitlemark{${1:title}}"}},
+		{"name":"poemtoc","doc":"The kind of entry made in the ToC by the \\poemtitle command is defined by \\poemtoc."},
+		{"name":"setarrayelement","arg":{"format":"{}{}{}","snippet":"setarrayelement{${1:array name}}{${2:index}}{${3:text}}"},"doc":"\\setarrayelement{⟨arrayname⟩}{⟨index⟩}{⟨text⟩} sets the ⟨index⟩ location in the ⟨arrayname⟩ array to be ⟨text⟩."},
+		{"name":"setverselinenums","arg":{"format":"{}{}","snippet":"setverselinenums{${1:first line number}}{${2:start numbers at}}"},"doc":"The command \\setverselinenums{⟨firstlinenum⟩}{⟨startnumsat⟩} can be used to set the number of the first verse line to ⟨firstlinenum⟩ instead of the default ‘1’ and to specify that the first printed line number should be for line number ⟨startnumsat⟩."},
+		{"name":"stanzaskip","doc":"\\stanzaskip controls the space between stanzas."},
+		{"name":"starpatternfalse","unusual":true},
+		{"name":"starpatterntrue","unusual":true},
+		{"name":"stringtoarray","arg":{"format":"{}{}","snippet":"stringtoarray{${1:array name}}{${2:string}}"},"doc":"\\stringtoarray{⟨arrayname⟩}{⟨string⟩} puts each character from ⟨string⟩ sequentially into the ⟨arrayname⟩ array, starting at index 1."},
+		{"name":"thechrsinstr","unusual":true},
+		{"name":"theHpoemline","unusual":true},
+		{"name":"thepoemline","unusual":true},
+		{"name":"thevslineno","unusual":true},
+		{"name":"verselinebreak","arg":{"format":"[]","snippet":"verselinebreak[${1:length}]"},"doc":"Using the command \\verselinebreak[⟨length⟩] will cause later text in the line of the verse to be typeset indented on the following line."},
+		{"name":"verselinebreak","doc":"Using the command \\verselinebreak[⟨length⟩] will cause later text in the line of the verse to be typeset indented on the following line."},
+		{"name":"verselinenumbersleft","doc":"If you want line numbers set at the left use the \\verselinenumbersleft declaration."},
+		{"name":"verselinenumbersright"},
+		{"name":"verselinenumfont","arg":{"format":"{}","snippet":"verselinenumfont{${1:font-spec}}"},"doc":"\\verselinenumfont Set the font for line numbers."},
+		{"name":"versewidth"},
+		{"name":"vgap","doc":"The length \\vgap is used as the basis for spacing."},
+		{"name":"vin"},
+		{"name":"vindent","doc":"When a verse line is too long to fit within the typeblock it is wrapped onto the next line with a space, given by the value of the length \\vindent."},
+		{"name":"vleftskip"},
+		{"name":"vlnumfont","unusual":true},
+		{"name":"vrightskip"}
+	],
+	"envs": [
+		{"name":"altverse","doc":"Each stanza within a verse may optionally be surrounded by either an altverse or patverse environment to effect specific typesetting; altverse indents every second line of a stanza, and patverse allows arbitrary indentation based on the ⟨pattern⟩ given by \\indentpattern{⟨pattern⟩}."},
+		{"name":"patverse","doc":"Each stanza within a verse may optionally be surrounded by either an altverse or patverse environment to effect specific typesetting; altverse indents every second line of a stanza, and patverse allows arbitrary indentation based on the ⟨pattern⟩ given by \\indentpattern{⟨pattern⟩}."},
+		{"name":"patverse*","doc":"Each stanza within a verse may optionally be surrounded by either an altverse or patverse environment to effect specific typesetting; altverse indents every second line of a stanza, and patverse allows arbitrary indentation based on the ⟨pattern⟩ given by \\indentpattern{⟨pattern⟩}."},
+		{"name":"verse","arg":{"format":"[]","snippet":"[${1:length of average line}]"},"doc":"The length parameter, if given, should be about the length of an average line, and then the entire contents will be typeset with the mid point of the length centered horizontally on the page."},
+		{"name":"verse","doc":"The length parameter, if given, should be about the length of an average line, and then the entire contents will be typeset with the mid point of the length centered horizontally on the page."}
+	],
+	"keys": {}
 }

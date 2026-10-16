@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"luatexbase"}],
+	"macros": [
+		{"name":"defineenigma","arg":{"format":"{}","snippet":"defineenigma{${1:machine id}}"}},
+		{"name":"setupenigma","arg":{"format":"{}{}","snippet":"setupenigma{${1:machine id}}{${2:key=value list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"mabnayeteramgozari","unusual":true},
+		{"name":"sotoneteram","arg":{"format":"[]{}{}[]","snippet":"sotoneteram[${1:shape}]{${2:columns}}{${3:height factor}}[${4:width}]"},"unusual":true},
+		{"name":"sotoneteram","arg":{"format":"{}{}","snippet":"sotoneteram{${1:columns}}{${2:height factor}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"tram","arg":{"format":"[]","snippet":"[${1:integer}]"},"doc":"This package implements tram environment that can be used for producing tram boxes in LaTeX."},
+		{"name":"tram","doc":"This package implements tram environment that can be used for producing tram boxes in LaTeX."}
+	],
+	"keys": {}
+}

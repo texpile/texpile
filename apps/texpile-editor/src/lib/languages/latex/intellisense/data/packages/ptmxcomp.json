@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"mathcomp"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

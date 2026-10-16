@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"footmisc"},{"name":"calc"},{"name":"hanging"}],
+	"macros": [
+		{"name":"coolfnversionnumber","unusual":true},
+		{"name":"fnindent"}
+	],
+	"envs": [],
+	"keys": {}
+}

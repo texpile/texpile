@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"DropCapDefaultFindent"},
+		{"name":"DropCapDefaultLhang"},
+		{"name":"DropCapDefaultLines"},
+		{"name":"DropCapDefaultLoversize"},
+		{"name":"DropCapDefaultLraise"},
+		{"name":"DropCapDefaultNindent"},
+		{"name":"DropCapDefaultSlope"},
+		{"name":"DropCapFont","unusual":true},
+		{"name":"DropCapFontEPS","unusual":true},
+		{"name":"DropCapFontHook","unusual":true},
+		{"name":"DropCapTextFont","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

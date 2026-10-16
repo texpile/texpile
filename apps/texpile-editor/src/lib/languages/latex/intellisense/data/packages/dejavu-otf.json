@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse"},{"name":"l3keys2e"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"etoolbox","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"DejaVuSansCondensed"},
+		{"name":"DejaVuSansLight"},
+		{"name":"DejaVuSerifCondensed"}
+	],
+	"envs": [],
+	"keys": {}
+}

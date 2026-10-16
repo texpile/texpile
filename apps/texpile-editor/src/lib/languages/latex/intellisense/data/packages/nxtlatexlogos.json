@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"nxtlatexcolors"},{"name":"xcolor"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"accsupp"},{"name":"pdfescape"},{"name":"iftex"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"hsrtlogograu","arg":{"format":"[]","snippet":"hsrtlogograu[${1}]"}},
+		{"name":"hsrtlogograu"},
+		{"name":"hsrtskyline","arg":{"format":"[]","snippet":"hsrtskyline[${1}]"}},
+		{"name":"hsrtskyline"},
+		{"name":"nxthsrtlogo","arg":{"format":"[]","snippet":"nxthsrtlogo[${1:Optionen}]"}},
+		{"name":"nxthsrtlogo"},
+		{"name":"nxtlogo","arg":{"format":"[]","snippet":"nxtlogo[${1:Optionen}]"}},
+		{"name":"nxtlogo"},
+		{"name":"nxtlogofont"},
+		{"name":"nxtlogonut","arg":{"format":"[]","snippet":"nxtlogonut[${1:Optionen}]"}},
+		{"name":"nxtlogonut"},
+		{"name":"nxtlogostandard","arg":{"format":"[]","snippet":"nxtlogostandard[${1:Optionen}]"}},
+		{"name":"nxtlogostandard"},
+		{"name":"nxtzeichen","arg":{"format":"[]","snippet":"nxtzeichen[${1:Optionen}]"}},
+		{"name":"nxtzeichen"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,50 @@
+{
+	"deps": [{"name":"setspace"}],
+	"macros": [
+		{"name":"adviser","arg":{"format":"{}","snippet":"adviser{${1}}"}},
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1}}"}},
+		{"name":"appendix","doc":"To switch from the body of your thesis to the reference material at the end, you should use the standard LaTeX \\appendix command."},
+		{"name":"appendix*","doc":"To switch from the body of your thesis to the reference material at the end, you should use the standard LaTeX \\appendix command."},
+		{"name":"bibname","doc":"\\bibname is a standard LaTeX macro that contains the title of the reference section at the end of your thesis; “References” by default."},
+		{"name":"chapternumberfont","doc":"Define the font used for chapter numbers in fancy chapter headings."},
+		{"name":"chaptertitlefont","doc":"Define the font used for chapter titles."},
+		{"name":"chaptertitleheight","doc":"\\chaptertitleheight is the amount of space allotted for the chapter title at the top of the page."},
+		{"name":"college","arg":{"format":"{}","snippet":"college{${1}}"}},
+		{"name":"committee","arg":{"format":"{}","snippet":"committee{${1}}"}},
+		{"name":"degree","unusual":true},
+		{"name":"degreeyear","arg":{"format":"{}","snippet":"degreeyear{${1}}"}},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1}}"}},
+		{"name":"draftheader","if":"draftthesis"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"frontmatter","doc":"Use the \\frontmatter command to start this preliminary section of the thesis."},
+		{"name":"msthesis"},
+		{"name":"nocopyrightpage"},
+		{"name":"note","arg":{"format":"{}","snippet":"note{${1}}"}},
+		{"name":"otherdoctorate","arg":{"format":"{}{}","snippet":"otherdoctorate{${1}}{${2}}"}},
+		{"name":"othermasters","arg":{"format":"{}{}","snippet":"othermasters{${1}}{${2}}"}},
+		{"name":"phdthesis","doc":"Use the \\phdthesis or \\msthesis to set the correct thesis type."},
+		{"name":"schools","arg":{"format":"{}","snippet":"schools{${1}}"}},
+		{"name":"sectiontitlefont"},
+		{"name":"subsectiontitlefont"},
+		{"name":"subsubsectiontitlefont"},
+		{"name":"thesisspacing","doc":"The \\thesisspacing command is called to switch to the default line spacing for the thesis."},
+		{"name":"toclabels"},
+		{"name":"vita","doc":"The \\vita command begins a new chapter for your vita."},
+		{"name":"vitaname"},
+		{"name":"volume","arg":{"format":"{}","snippet":"volume{${1}}"},"doc":"The \\volume macro provides nominal support for very long theses that must be broken up into multiple volumes."}
+	],
+	"envs": [
+		{"name":"dedication","doc":"The dedication environment just starts a new page and prints the dedication in the center in italics."},
+		{"name":"preliminary","unusual":true},
+		{"name":"symbollist","arg":{"format":"[]","snippet":"[${1:label width}]"},"doc":"The symbollist environments can be used to create a list of symbols or abbreviations."},
+		{"name":"symbollist","doc":"The symbollist environments can be used to create a list of symbols or abbreviations."},
+		{"name":"symbollist*","arg":{"format":"[]","snippet":"[${1:label width}]"},"doc":"The symbollist environments can be used to create a list of symbols or abbreviations."},
+		{"name":"symbollist*","doc":"The symbollist environments can be used to create a list of symbols or abbreviations."},
+		{"name":"thesis","unusual":true}
+	],
+	"keys": {
+		"\\usepackage/uiucthesis#c": ["centerchapter","draftthesis","edeposit","fancy","fullpage","largecaps","offcenter","proquest","toclabels"]
+	},
+	"args": ["\\usepackage/uiucthesis#c"]
+}

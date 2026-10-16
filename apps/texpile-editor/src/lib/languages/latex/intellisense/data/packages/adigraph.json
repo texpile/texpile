@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"xparse"},{"name":"xstring"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"AdigraphVersionNumber","unusual":true},
+		{"name":"DisableAdigraphs"},
+		{"name":"EnableAdigraphs"},
+		{"name":"NewAdigraph","arg":{"format":"{}{}{}[]","snippet":"NewAdigraph{${1:name}}{${2:nodes}}{${3:edges}}[${4:edge style}]"}},
+		{"name":"NewAdigraph","arg":{"format":"{}{}{}","snippet":"NewAdigraph{${1:name}}{${2:nodes}}{${3:edges}}"}},
+		{"name":"RenewAdigraph","arg":{"format":"{}{}{}[]","snippet":"RenewAdigraph{${1:name}}{${2:nodes}}{${3:edges}}[${4:edge style}]"}},
+		{"name":"RenewAdigraph","arg":{"format":"{}{}{}","snippet":"RenewAdigraph{${1:name}}{${2:nodes}}{${3:edges}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

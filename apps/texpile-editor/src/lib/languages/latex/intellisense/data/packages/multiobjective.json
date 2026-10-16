@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"}],
+	"macros": [
+		{"name":"addiepsilondom"},
+		{"name":"argmax"},
+		{"name":"argmin"},
+		{"name":"better"},
+		{"name":"dom"},
+		{"name":"multepsilondom"},
+		{"name":"negdom"},
+		{"name":"negstrictdom"},
+		{"name":"negweakdom"},
+		{"name":"set","arg":{"format":"{}","snippet":"set{${1}}"}},
+		{"name":"strictdom"},
+		{"name":"weakdom"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-3d"},{"name":"multido"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"babel"},{"name":"arabicore","engines":["pdflatex"]},{"name":"arabicfnt","engines":["pdflatex"]},{"name":"arabnovowel","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]}],
+	"macros": [
+		{"name":"Calendrier","arg":{"format":"[]","snippet":"Calendrier[${1:options}]"}},
+		{"name":"Calendrier"},
+		{"name":"dodecaedre","arg":{"format":"[]","snippet":"dodecaedre[${1:options}]"}},
+		{"name":"dodecaedre"}
+	],
+	"envs": [],
+	"keys": {}
+}

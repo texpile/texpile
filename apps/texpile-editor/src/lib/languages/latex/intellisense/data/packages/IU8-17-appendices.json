@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"appendixsection","arg":{"format":"{}","snippet":"appendixsection{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

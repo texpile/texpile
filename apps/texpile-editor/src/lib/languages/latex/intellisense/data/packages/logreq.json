@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"keyval"}],
+	"macros": [
+		{"name":"binary","arg":{"format":"{}","snippet":"binary{${1:program}}"}},
+		{"name":"cmdline","arg":{"format":"{}","snippet":"cmdline{${1:binary, options and files}}"}},
+		{"name":"DeclareLogreqAttribute","arg":{"format":"{}[]{}{}","snippet":"DeclareLogreqAttribute{${1:element}}[${2:default}]{${3:attribute}}{${4:dtd spec}}"},"unusual":true},
+		{"name":"DeclareLogreqAttribute","arg":{"format":"{}{}{}","snippet":"DeclareLogreqAttribute{${1:element}}{${2:attribute}}{${3:dtd spec}}"},"unusual":true},
+		{"name":"DeclareLogreqContainer","arg":{"format":"{}{}","snippet":"DeclareLogreqContainer{${1:element}}{${2:dtd spec}}"},"unusual":true},
+		{"name":"DeclareLogreqElement","arg":{"format":"{}{}","snippet":"DeclareLogreqElement{${1:element}}{${2:dtd spec}}"},"unusual":true},
+		{"name":"file","arg":{"format":"[]{}","snippet":"file[${1:type}]{${2:file name}}"}},
+		{"name":"file","arg":{"format":"{}","snippet":"file{${1:file name}}"}},
+		{"name":"generic","arg":{"format":"{}","snippet":"generic{${1:request}}"}},
+		{"name":"infile","arg":{"format":"{}","snippet":"infile{${1:file}}"}},
+		{"name":"LogreqDTDVersion","unusual":true},
+		{"name":"logrequest","arg":{"format":"[]{}","snippet":"logrequest[${1}]{${2}}"}},
+		{"name":"logrequest","arg":{"format":"{}","snippet":"logrequest{${1}}"}},
+		{"name":"ltxrequest","arg":{"format":"{}{}{}","snippet":"ltxrequest{${1}}{${2}}{${3}}"}},
+		{"name":"option","arg":{"format":"{}","snippet":"option{${1:option}}"}},
+		{"name":"outfile","arg":{"format":"{}","snippet":"outfile{${1:file}}"}},
+		{"name":"provides","arg":{"format":"[]{}","snippet":"provides[${1:type=static|dynamic|editable}]{${2:files}}"}},
+		{"name":"provides","arg":{"format":"{}","snippet":"provides{${1:files}}"}},
+		{"name":"requires","arg":{"format":"[]{}","snippet":"requires[${1:type=static|dynamic|editable}]{${2:files}}"}},
+		{"name":"requires","arg":{"format":"{}","snippet":"requires{${1:files}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

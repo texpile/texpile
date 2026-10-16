@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"paracol"},{"name":"tabularray"},{"name":"enumitem"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"xcolor"},{"name":"ninecolors"},{"name":"xparse"},{"name":"hologo"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"kvoptions"},{"name":"setspace"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"pdfcol"},{"name":"listings"},{"name":"listingsutf8"},{"name":"fontawesome"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"expkv"},{"name":"expkv-cs"},{"name":"expkv-pop"},{"name":"expkv-def"}],
+	"macros": [
+		{"name":"hlbox","arg":{"format":"[]{}","snippet":"hlbox[${1:color}]{${2:text}}"},"doc":"The \\hlbox{text} command renders inline text in a highlighted rounded box with a monospaced (ttfamily) font, which is useful for keywords, technologies, or skills."},
+		{"name":"hlbox","arg":{"format":"{}","snippet":"hlbox{${1:text}}"},"doc":"The \\hlbox{text} command renders inline text in a highlighted rounded box with a monospaced (ttfamily) font, which is useful for keywords, technologies, or skills."},
+		{"name":"ressep","doc":"The \\ressep command separates the experience/event within a section."},
+		{"name":"restitle","arg":{"format":"{}","snippet":"restitle{${1:key-value list}}"},"doc":"The \\restitle command helps user to print the title of the resume, which contains key information such as name, location, email, phone, and Linkedin ID."}
+	],
+	"envs": [
+		{"name":"ressection","arg":{"format":"[]","snippet":"[${1:key-value list}]"},"doc":"The ressection environment helps users set the sections (e.g., Education, Experience, Certifications, etc.) of the resume."},
+		{"name":"ressection","doc":"The ressection environment helps users set the sections (e.g., Education, Experience, Certifications, etc.) of the resume."}
+	],
+	"keys": {}
+}

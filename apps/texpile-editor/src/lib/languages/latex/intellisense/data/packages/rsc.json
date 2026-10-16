@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"natbib"},{"name":"natmove"},{"name":"mciteplus"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"luaTruthTable","arg":{"format":"[]{}{}","snippet":"luaTruthTable[${1}]{${2}}{${3}}","keys":["keyval:luatruthtable"],"keyPos":0},"doc":"The \\luaTruthTable command is the main command in the luatruthtable package which generates truth tables."},
+		{"name":"luaTruthTable","arg":{"format":"{}{}","snippet":"luaTruthTable{${1}}{${2}}"},"doc":"The \\luaTruthTable command is the main command in the luatruthtable package which generates truth tables."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:luatruthtable": ["fltext=","trtext="]
+	}
+}

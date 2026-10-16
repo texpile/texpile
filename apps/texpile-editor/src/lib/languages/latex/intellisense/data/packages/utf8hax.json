@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"inputenc"}],
+	"macros": [
+		{"name":"Alpha"},
+		{"name":"Beta"},
+		{"name":"Chi"},
+		{"name":"Epsilon"},
+		{"name":"Eta"},
+		{"name":"Iota"},
+		{"name":"Kappa"},
+		{"name":"Mu"},
+		{"name":"newautomath","arg":{"format":"{}{}","snippet":"newautomath{${1:character}}{${2:math}}"}},
+		{"name":"Nu"},
+		{"name":"omicron"},
+		{"name":"Omicron"},
+		{"name":"Rho"},
+		{"name":"Tau"},
+		{"name":"Zeta"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xstring"},{"name":"xkeyval"},{"name":"quran"},{"name":"ifxetex"},{"name":"iftex"},{"name":"biditools"},{"name":"listofitems"},{"name":"xparse"},{"name":"xspace"}],
+	"macros": [
+		{"name":"deGetTrans"},
+		{"name":"deSetTrans","arg":{"format":"{}","snippet":"deSetTrans{${1}}"}},
+		{"name":"qurandedate","unusual":true},
+		{"name":"qurandeversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

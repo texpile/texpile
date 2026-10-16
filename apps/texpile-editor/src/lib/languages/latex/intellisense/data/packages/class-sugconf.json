@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"inputenc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"class-article"},{"name":"url"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"OtherTrademarks"},
+		{"name":"SASisRegisteredTrademark"},
+		{"name":"SASregistered"},
+		{"name":"sugconfbanner","arg":{"format":"{}","snippet":"sugconfbanner{${1:banner image file}}"}},
+		{"name":"sugconfkeywords","arg":{"format":"{}","snippet":"sugconfkeywords{${1:keywords}}"},"unusual":true},
+		{"name":"sugconfpapernumber","arg":{"format":"{}","snippet":"sugconfpapernumber{${1:paper number}}"}},
+		{"name":"sugconfsubject","arg":{"format":"{}","snippet":"sugconfsubject{${1:subject}}"},"unusual":true},
+		{"name":"tightlist","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/sugconf#c": ["nopagenumbers"]
+	},
+	"args": ["\\documentclass/sugconf#c"]
+}

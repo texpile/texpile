@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"embedfile"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"currfile"},{"name":"kvoptions"},{"name":"keyval"},{"name":"etoolbox"},{"name":"letltxmacro","if":"compat"}],
+	"macros": [
+		{"name":"embedinput","arg":{"format":"[]{}","snippet":"embedinput[${1:options}]{${2:filename}}"},"if":"compat","doc":"This command is a substitute for \\input{<filename>} in compatibility mode."},
+		{"name":"embedinput","arg":{"format":"{}","snippet":"embedinput{${1:filename}}"},"if":"compat","doc":"This command is a substitute for \\input{<filename>} in compatibility mode."},
+		{"name":"embedsource","arg":{"format":"[]","snippet":"embedsource[${1:options}]"},"doc":"This macro can be used to embed the current TeX file in case the automatic hook has been disabled."},
+		{"name":"embedsource","doc":"This macro can be used to embed the current TeX file in case the automatic hook has been disabled."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/embedall#c": ["all","compat","csvsimple","graphicx","include","input","main","notall"]
+	},
+	"args": ["\\usepackage/embedall#c"]
+}

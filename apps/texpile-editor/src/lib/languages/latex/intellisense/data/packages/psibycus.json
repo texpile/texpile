@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"braceleft","unusual":true},
+		{"name":"braceright","unusual":true},
+		{"name":"bracketleftbt","unusual":true},
+		{"name":"bracketrightbt","unusual":true},
+		{"name":"dbldagger","unusual":true},
+		{"name":"greek"},
+		{"name":"textgreek","arg":{"format":"{}","snippet":"textgreek{${1:Greek text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

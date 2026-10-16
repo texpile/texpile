@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"latexsym"}],
+	"macros": [
+		{"name":"mediumseries","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

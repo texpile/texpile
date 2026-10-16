@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"romanbar"},{"name":"trimclip"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"xkeyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

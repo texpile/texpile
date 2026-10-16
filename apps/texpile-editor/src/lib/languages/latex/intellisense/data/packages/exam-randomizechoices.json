@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"environ"},{"name":"etoolbox"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"keylistkeyname","arg":{"format":"{}","snippet":"keylistkeyname{${1:text}}"},"doc":"The text in the table header row can be changed using two command: the command \\keylistquestionname sets the text above the question numbers, which defaults to “Question”, the command \\keylistkeyname sets the text above the keys, which defaults to “Key”."},
+		{"name":"keylistquestionname","arg":{"format":"{}","snippet":"keylistquestionname{${1:text}}"},"doc":"The text in the table header row can be changed using two command: the command \\keylistquestionname sets the text above the question numbers, which defaults to “Question”, the command \\keylistkeyname sets the text above the keys, which defaults to “Key”."},
+		{"name":"printkeytable","arg":{"format":"[]","snippet":"printkeytable[${1:range}]"}},
+		{"name":"printkeytable"},
+		{"name":"savekeylist","arg":{"format":"[]","snippet":"savekeylist[${1:command name}]"}},
+		{"name":"savekeylist"},
+		{"name":"setrandomizerseed","arg":{"format":"{}","snippet":"setrandomizerseed{${1:seed}}"}},
+		{"name":"writekeylist","arg":{"format":"[]{}","snippet":"writekeylist[${1:file name}]{${2:command name}}"}},
+		{"name":"writekeylist","arg":{"format":"{}","snippet":"writekeylist{${1:command name}}"}}
+	],
+	"envs": [
+		{"name":"checkboxes","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"checkboxes"},
+		{"name":"choices","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"choices"},
+		{"name":"oneparcheckboxes","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The oneparcheckboxes environment typesets the choices in al linear, horizontal way."},
+		{"name":"oneparcheckboxes","doc":"The oneparcheckboxes environment typesets the choices in al linear, horizontal way."},
+		{"name":"oneparchoices","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"oneparchoices"},
+		{"name":"randomizecheckboxes","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"randomizecheckboxes"},
+		{"name":"randomizechoices","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"randomizechoices"},
+		{"name":"randomizeoneparcheckboxes","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"randomizeoneparcheckboxes"},
+		{"name":"randomizeoneparchoices","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"randomizeoneparchoices"}
+	],
+	"keys": {}
+}

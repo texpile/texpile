@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"xsavebox","arg":{"format":"{}[][]{}","snippet":"xsavebox{${1:xsbox name}}[${2:width}][${3:position}]{${4:content}}"}},
+		{"name":"xsavebox","arg":{"format":"{}{}","snippet":"xsavebox{${1:xsbox name}}{${2:content}}"}},
+		{"name":"xsavebox*","arg":{"format":"{}[][]{}","snippet":"xsavebox*{${1:xsbox name}}[${2:width}][${3:position}]{${4:content}}"}},
+		{"name":"xsavebox*","arg":{"format":"{}{}","snippet":"xsavebox*{${1:xsbox name}}{${2:content}}"}},
+		{"name":"xsbox","arg":{"format":"{}{}","snippet":"xsbox{${1:xsbox name}}{${2:content}}"}},
+		{"name":"xusebox","arg":{"format":"{}","snippet":"xusebox{${1:xsbox name}}"}}
+	],
+	"envs": [
+		{"name":"xlrbox","arg":{"format":"{}","snippet":"{${1:xsbox name}}"}},
+		{"name":"xlrbox*","arg":{"format":"{}","snippet":"{${1:xsbox name}}"}}
+	],
+	"keys": {}
+}

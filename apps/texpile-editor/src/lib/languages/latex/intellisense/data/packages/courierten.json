@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"ifthen"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"xkeyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"smalllogo","arg":{"format":"[]{}","snippet":"smalllogo[${1:options}]{${2:logo file}}"},"doc":"We define the command \\smalllogo to specify the logo that needs to be applied displayed on all normal frames."},
+		{"name":"smalllogo","arg":{"format":"{}","snippet":"smalllogo{${1:logo file}}"},"doc":"We define the command \\smalllogo to specify the logo that needs to be applied displayed on all normal frames."}
+	],
+	"envs": [],
+	"keys": {}
+}

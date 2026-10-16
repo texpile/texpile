@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"moderncviconsawesome"},{"name":"fontawesome6"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"xcolor"},{"name":"moderncviconsacademic"},{"name":"academicons"},{"name":"iftex"},{"name":"moderncviconstikz"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"etoolbox"},{"name":"fontawesome6-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

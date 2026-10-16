@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"class-article"}],
+	"macros": [
+		{"name":"AS"},
+		{"name":"BS"},
+		{"name":"cassete","arg":{"format":"{}{}{}{}{}","snippet":"cassete{${1:label}}{${2:side A text}}{${3:side B text}}{${4:side A cover text}}{${5:side B cover text}}"}},
+		{"name":"cassete*","arg":{"format":"{}{}{}{}{}","snippet":"cassete*{${1:label}}{${2:side A text}}{${3:side B text}}{${4:side A cover text}}{${5:side B cover text}}"}},
+		{"name":"FormatLabel"},
+		{"name":"nohyphens"},
+		{"name":"SideA"},
+		{"name":"SideAWord"},
+		{"name":"SideB"},
+		{"name":"SideBWord"},
+		{"name":"SideT","arg":{"format":"{}","snippet":"SideT{${1:header}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

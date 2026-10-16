@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"MakeRobustCommand","arg":{"format":"{}","snippet":"MakeRobustCommand{${1:command}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

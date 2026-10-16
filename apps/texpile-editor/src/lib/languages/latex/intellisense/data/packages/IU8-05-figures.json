@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"float"},{"name":"caption"},{"name":"caption3"},{"name":"keyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

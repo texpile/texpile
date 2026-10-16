@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"verbatim"},{"name":"ifthen"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"egpaddtofigepilog","arg":{"format":"{}","snippet":"egpaddtofigepilog{${1}}"}},
+		{"name":"egpaddtofigprelude","arg":{"format":"{}","snippet":"egpaddtofigprelude{${1}}"},"doc":"Define and add to a gnuplot prelude that is prepended to the output of every egp, egpx or egpdef environment."},
+		{"name":"egpaddtoprelude","arg":{"format":"{}","snippet":"egpaddtoprelude{${1}}"},"doc":"Define and add to the set of commands that are prepended to the top of every gnuplot file."},
+		{"name":"egpassign","arg":{"format":"{}{}","snippet":"egpassign{${1}}{${2}}"}},
+		{"name":"egpcalc","arg":{"format":"[]{}","snippet":"egpcalc[${1}]{${2}}"}},
+		{"name":"egpcalc","arg":{"format":"{}","snippet":"egpcalc{${1}}"}},
+		{"name":"egpcomment","unusual":true},
+		{"name":"egpfigepilog","arg":{"format":"{}","snippet":"egpfigepilog{${1}}"}},
+		{"name":"egpfigprelude","arg":{"format":"{}","snippet":"egpfigprelude{${1}}"},"doc":"Define and add to a gnuplot prelude that is prepended to the output of every egp, egpx or egpdef environment."},
+		{"name":"egpprelude","arg":{"format":"{}","snippet":"egpprelude{${1}}"}},
+		{"name":"egpshowval","arg":{"format":"[]{}","snippet":"egpshowval[${1}]{${2}}"}},
+		{"name":"egpshowval","arg":{"format":"{}","snippet":"egpshowval{${1}}"}},
+		{"name":"egpuse","arg":{"format":"[]{}","snippet":"egpuse[${1}]{${2}}"},"doc":"Reuse a previously defined figure."},
+		{"name":"egpuse","arg":{"format":"{}","snippet":"egpuse{${1}}"},"doc":"Reuse a previously defined figure."},
+		{"name":"egpuseval","arg":{"format":"{}","snippet":"egpuseval{${1}}"}},
+		{"name":"egpwrite","arg":{"format":"{}","snippet":"egpwrite{${1}}"},"doc":"Write gnuplot commands to the current file outside of a figure."},
+		{"name":"filedate","unusual":true},
+		{"name":"filemaintainer","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"theegpcalc","unusual":true},
+		{"name":"theegpfig","unusual":true},
+		{"name":"theegpfilenum","unusual":true}
+	],
+	"envs": [
+		{"name":"egp","arg":{"format":"[]","snippet":"[${1}]"},"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"egp","doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"egpcmds"},
+		{"name":"egpdef","arg":{"format":"{}","snippet":"{${1}}"},"doc":"The egpdef environment only defines a figure but does not include it into the document."},
+		{"name":"egpfile","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"egpfile"},
+		{"name":"egpx","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"},"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"egpx","arg":{"format":"{}","snippet":"{${1}}"},"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."}
+	],
+	"keys": {
+		"\\usepackage/egplot#c": ["german","gnuplot35","gnuplot36beta"]
+	},
+	"args": ["\\usepackage/egplot#c"]
+}

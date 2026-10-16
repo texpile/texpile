@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/mltex#c": ["replace","switchonly"]
+	},
+	"args": ["\\usepackage/mltex#c"]
+}

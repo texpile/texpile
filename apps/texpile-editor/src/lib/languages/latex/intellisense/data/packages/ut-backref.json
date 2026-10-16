@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"backcite","arg":{"format":"{}{}","snippet":"backcite{${1}}{${2}}"},"unusual":true},
+		{"name":"backref","unusual":true},
+		{"name":"backrefclose","unusual":true},
+		{"name":"backrefs","unusual":true},
+		{"name":"backrefsclose","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

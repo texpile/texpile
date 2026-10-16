@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"exerquiz"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"array"},{"name":"xcolor"},{"name":"colortbl"},{"name":"aeb-comment"},{"name":"verbatim"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"eforms"},{"name":"calc"},{"name":"insdljs"},{"name":"conv-xkv"},{"name":"everyshi"},{"name":"taborder"}],
+	"macros": [
+		{"name":"addHiddenTextField","arg":{"format":"[]{}{}","snippet":"addHiddenTextField[${1:field options}]{${2:field name}}{${3:default value}}"},"doc":"The first parameter is the title (name) of the field, the second parameter is the default value."},
+		{"name":"addHiddenTextField","arg":{"format":"{}{}","snippet":"addHiddenTextField{${1:field name}}{${2:default value}}"},"doc":"The first parameter is the title (name) of the field, the second parameter is the default value."},
+		{"name":"hiddenTextField","arg":{"format":"[]{}{}","snippet":"hiddenTextField[${1}]{${2}}{${3}}"},"unusual":true},
+		{"name":"hiddenTextField","arg":{"format":"{}{}","snippet":"hiddenTextField{${1}}{${2}}"},"unusual":true},
+		{"name":"populateHiddenField","arg":{"format":"{}{}","snippet":"populateHiddenField{${1:field name}}{${2:field value}}"},"doc":"The eq2db command \\populateHiddenField inserts the necessary JavaScript that would populate the specified field."}
+	],
+	"envs": [],
+	"keys": {}
+}

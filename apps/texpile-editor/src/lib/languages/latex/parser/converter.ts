@@ -27,6 +27,7 @@ import { macroHandlers } from './convert/macroHandlers';
 import { TABLE_RULE_MACROS } from './convert/tableConvert';
 import { isBlockNode } from './convert/blockKinds';
 import { scanPreambleText } from './convert/preambleScan';
+import { KERNEL_AFTER_PARSE, loadsBeamer, replacedBy } from './signatures/signatureTable';
 import { convertNodeToBlock } from './convert/blockConvert';
 import {
 	applyLigaturesToNodes,
@@ -330,9 +331,16 @@ function extractContent(ast: Root): Node[] {
 // call dominated large projects. single slot, latest wins; a timed-out worker is rebooted,
 // which clears it for free.
 export function latexToProseMirror(latex: string, options: ConversionOptions = {}): { doc: PmNode; ast: Root } {
-	const parseOptions: ParseOptions = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES };
+	const baseOptions: ParseOptions = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES, beamer: loadsBeamer(options.preamble ?? '') };
+	const preScan = options.preamble ? scanPreambleText(options.preamble, baseOptions) : null;
+	const parseOptions: ParseOptions = { ...baseOptions, documentMacros: replacedBy(baseOptions, preScan?.newcommands ?? []) };
 
-	const ast = parseLatex(maskUrlSpecials(latex), parseOptions);
+	const masked = maskUrlSpecials(latex);
+	let ast = parseLatex(masked, parseOptions);
+	// the body redefines a command the table has: parsed again with its own signature
+	const redefined = replacedBy(parseOptions, listNewcommands(ast));
+	if (Object.keys(redefined).length)
+		ast = parseLatex(masked, { ...parseOptions, documentMacros: { ...parseOptions.documentMacros, ...redefined } });
 	unmaskUrlSpecials(ast);
 	// the sync unified-latex parse above is the single longest step and reports nothing while it
 	// runs; everything after it is ours, so this is the one honest boundary to announce
@@ -359,7 +367,6 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	heuristicMarkTexPrimitiveDefs(ast.content as Node[], latex, delimPairs);
 
 	// cross-file pairs come from the shared preamble scan (see scanPreambleText)
-	const preScan = options.preamble ? scanPreambleText(options.preamble, parseOptions) : null;
 	if (preScan) for (const [name, delim] of preScan.delimPairs) delimPairs.set(name, delim);
 
 	// a \def with a delimited parameter tells us \bea swallows everything up to \eea, typically
@@ -373,7 +380,7 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	// drop trailing comments so a command's args can attach across them (see fn comment)
 	stripSamelineComments(ast.content as Node[]);
 
-	// signatures for user-defined commands so their args stay attached. three sources, in
+	// signatures for user-defined commands so their args stay attached. four sources, in
 	// priority order:
 	const macroInfo: Record<string, { signature: string }> = {};
 	//  1. \newcommand/\renewcommand/... in the body
@@ -384,7 +391,9 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 			if (!macroInfo[m.name]) macroInfo[m.name] = { signature: m.signature };
 		}
 	}
-	//  3. heuristic: infer an unknown command's arity from usage so the args don't flatten
+	//  3. the kernel's commands unified-latex lacks
+	for (const [name, entry] of Object.entries(KERNEL_AFTER_PARSE)) macroInfo[name] ??= { signature: entry.signature! };
+	//  4. heuristic: infer an unknown command's arity from usage so the args don't flatten
 	Object.assign(macroInfo, heuristicInferUnknownMacroSignatures(ast, heuristicKnows, macroInfo));
 
 	if (Object.keys(macroInfo).length > 0) {

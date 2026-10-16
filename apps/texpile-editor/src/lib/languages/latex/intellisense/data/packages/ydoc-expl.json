@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"float"}],
+	"macros": [
+		{"name":"examplename","unusual":true}
+	],
+	"envs": [
+		{"name":"example","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"example"},
+		{"name":"examplecode","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"examplecode"}
+	],
+	"keys": {}
+}

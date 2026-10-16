@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"overridelabel","arg":{"format":"{}","snippet":"overridelabel{${1}}"}},
+		{"name":"undonewlabel","arg":{"format":"{}","snippet":"undonewlabel{${1:label name}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

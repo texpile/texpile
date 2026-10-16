@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"mathbbm","arg":{"format":"{}","snippet":"mathbbm{${1:letters}}"},"math":true},
+		{"name":"mathbbmss","arg":{"format":"{}","snippet":"mathbbmss{${1:letters}}"}},
+		{"name":"mathbbmtt","arg":{"format":"{}","snippet":"mathbbmtt{${1:letters}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

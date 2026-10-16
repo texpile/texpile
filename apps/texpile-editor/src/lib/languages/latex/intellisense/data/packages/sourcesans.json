@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"sourcesans"},
+		{"name":"sourcesansextreme"},
+		{"name":"sourcesanslight"},
+		{"name":"sourcesansmedium"}
+	],
+	"envs": [],
+	"keys": {}
+}

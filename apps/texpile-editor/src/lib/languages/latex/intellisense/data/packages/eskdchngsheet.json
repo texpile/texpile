@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"eskdlang"},{"name":"babel"},{"name":"eskdstamp"},{"name":"calc"},{"name":"keyval"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"eskdfont"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"everyshi"},{"name":"chngpage"},{"name":"eskdinfo"},{"name":"array"},{"name":"longtable"}],
+	"macros": [
+		{"name":"ESKDchngColumnIIIwidth"},
+		{"name":"ESKDchngColumnIIwidth"},
+		{"name":"ESKDchngColumnIVwidth"},
+		{"name":"ESKDchngColumnIwidth"},
+		{"name":"ESKDchngColumnIXwidth"},
+		{"name":"ESKDchngColumnVIIIwidth"},
+		{"name":"ESKDchngColumnVIIwidth"},
+		{"name":"ESKDchngColumnVIwidth"},
+		{"name":"ESKDchngColumnVwidth"},
+		{"name":"ESKDchngColumnXwidth"}
+	],
+	"envs": [
+		{"name":"ESKDchangeSheet"}
+	],
+	"keys": {}
+}

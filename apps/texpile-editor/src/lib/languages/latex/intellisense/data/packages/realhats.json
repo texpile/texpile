@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"lcg"},{"name":"calc"},{"name":"stackengine"},{"name":"etoolbox"},{"name":"listofitems"}],
+	"macros": [
+		{"name":"hat","arg":{"format":"[]{}","snippet":"hat[${1:hat name}]{${2:symbol}}"},"doc":"realhats is a package for LaTeX that makes `\\hat` put real hats on symbols."},
+		{"name":"hat","arg":{"format":"{}","snippet":"hat{${1:symbol}}"},"doc":"realhats is a package for LaTeX that makes `\\hat` put real hats on symbols.","math":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/realhats#c": ["ash","beret","birthday","cowboy","crown","dunce","fez","mortarboard","policeman","santa","scottish","sombrero","tile-blue","tile-gray","tile-light-blue","tile-white","tophat","witch"]
+	},
+	"args": ["\\usepackage/realhats#c"]
+}

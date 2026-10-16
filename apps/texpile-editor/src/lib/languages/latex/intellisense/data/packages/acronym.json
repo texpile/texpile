@@ -1,962 +1,110 @@
 {
-  "deps": [
-    {
-      "name": "suffix"
-    },
-    {
-      "name": "xstring"
-    },
-    {
-      "name": "relsize",
-      "if": "smaller"
-    }
-  ],
-  "macros": [
-    {
-      "name": "ac*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "ac*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Ac*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Ac*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "ac*",
-      "arg": {
-        "format": "{}",
-        "snippet": "ac*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Ac*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Ac*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "ac",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "ac[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Ac",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Ac[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "ac",
-      "arg": {
-        "format": "{}",
-        "snippet": "ac{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Ac",
-      "arg": {
-        "format": "{}",
-        "snippet": "Ac{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acf*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acf*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acf*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acf*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acf*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acf*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acf*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acf*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acf",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acf[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acf",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acf[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acf",
-      "arg": {
-        "format": "{}",
-        "snippet": "acf{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acf",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acf{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfa",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfa[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfa",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfa[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfa",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acfa{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfa",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfa{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acffont",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acffont{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "acfi*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfi*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfi*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfi*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfi*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acfi*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfi*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfi*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfi",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfi[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfi",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfi[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfi",
-      "arg": {
-        "format": "{}",
-        "snippet": "acfi{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfi",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfi{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfip",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfip[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfip",
-      "arg": {
-        "format": "{}",
-        "snippet": "acfip{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfip",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfip[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfip",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfip{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfip*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfip*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfip*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acfip*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfip*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfip*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfip*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfip*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfia",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfia[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfia",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfia[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfia",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acfia{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfia",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfia{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfp*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfp*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acfp*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfp",
-      "arg": {
-        "format": "{}",
-        "snippet": "acfp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfp",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfpa",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acfpa[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfpa",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acfpa[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfpa",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acfpa{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acfpa",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "Acfpa{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acfsfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acfsfont{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "acl*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acl*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acl*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acl*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acl*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acl*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acl*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acl*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acl",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acl[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acl",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acl[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acl",
-      "arg": {
-        "format": "{}",
-        "snippet": "acl{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acl",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acl{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclabelfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "aclabelfont{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "aclp*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "aclp*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclp*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Aclp*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "aclp*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Aclp*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "aclp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Aclp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclp",
-      "arg": {
-        "format": "{}",
-        "snippet": "aclp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclp",
-      "arg": {
-        "format": "{}",
-        "snippet": "Aclp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclu*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "aclu*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclu*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Aclu*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclu*",
-      "arg": {
-        "format": "{}",
-        "snippet": "aclu*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclu*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Aclu*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclu",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "aclu[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclu",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Aclu[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclu",
-      "arg": {
-        "format": "{}",
-        "snippet": "aclu{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclu",
-      "arg": {
-        "format": "{}",
-        "snippet": "Aclu{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclua",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "aclua[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclua",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Aclua[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "aclua",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "aclua{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Aclua",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "Aclua{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acp*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acp*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acp*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acp*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acp*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acp*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "Acp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acp",
-      "arg": {
-        "format": "{}",
-        "snippet": "acp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Acp",
-      "arg": {
-        "format": "{}",
-        "snippet": "Acp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acresetall"
-    },
-    {
-      "name": "acro",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "acro{${1:acronym}}[${3:short name}]{${2:full name}}"
-      }
-    },
-    {
-      "name": "acro",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "acro{${1:acronym}}{${2:full name}}"
-      }
-    },
-    {
-      "name": "acrodef",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "acrodef{${1:acronym}}[${3:short name}]{${2:full name}}"
-      }
-    },
-    {
-      "name": "acrodef",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "acrodef{${1:acronym}}{${2:full name}}"
-      }
-    },
-    {
-      "name": "acrodefindefinite",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "acrodefindefinite{${1:acronym}}{${2:short indefinite article}}{${3:long indefinite article}}"
-      }
-    },
-    {
-      "name": "acrodefplural",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "acrodefplural{${1:acronym}}[${3:short plural name}]{${2:full plural name}}"
-      }
-    },
-    {
-      "name": "acrodefplural",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "acrodefplural{${1:acronym}}{${2:full plural name}}"
-      }
-    },
-    {
-      "name": "acroextra",
-      "arg": {
-        "format": "{}",
-        "snippet": "acroextra{${1:additional info}}"
-      }
-    },
-    {
-      "name": "acroindefinite",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "acroindefinite{${1:acronym}}{${2:short indefinite article}}{${3:long indefinite article}}"
-      }
-    },
-    {
-      "name": "acroplural",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "acroplural{${1:acronym}}[${3:short plural name}]{${2:full plural name}}"
-      }
-    },
-    {
-      "name": "acroplural",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "acroplural{${1:acronym}}{${2:full plural name}}"
-      }
-    },
-    {
-      "name": "acs*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acs*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acs*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acs*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acs",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acs[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acs",
-      "arg": {
-        "format": "{}",
-        "snippet": "acs{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsfont",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acsfont{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "acsp*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acsp*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsp*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acsp*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsp",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acsp[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsp",
-      "arg": {
-        "format": "{}",
-        "snippet": "acsp{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acspa",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acspa[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acspa",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acspa{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsu*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acsu*[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsu*",
-      "arg": {
-        "format": "{}",
-        "snippet": "acsu*{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsu",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acsu[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsu",
-      "arg": {
-        "format": "{}",
-        "snippet": "acsu{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsua",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "acsua[${2:linebreak penalty}]{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acsua",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "acsua{${1:acronym}}"
-      }
-    },
-    {
-      "name": "acused",
-      "arg": {
-        "format": "{}",
-        "snippet": "acused{${1:acronym}}"
-      }
-    },
-    {
-      "name": "iac",
-      "arg": {
-        "format": "{}",
-        "snippet": "iac{${1:acronym}}"
-      }
-    },
-    {
-      "name": "iac",
-      "arg": {
-        "format": "{}",
-        "snippet": "iac{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Iac",
-      "arg": {
-        "format": "{}",
-        "snippet": "Iac{${1:acronym}}"
-      }
-    },
-    {
-      "name": "Iac",
-      "arg": {
-        "format": "{}",
-        "snippet": "Iac{${1:acronym}}"
-      }
-    },
-    {
-      "name": "newacro",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "newacro{${1:acronym}}[${3:short name}]{${2:full name}}"
-      }
-    },
-    {
-      "name": "newacro",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "newacro{${1:acronym}}{${2:full name}}"
-      }
-    },
-    {
-      "name": "newacroindefinite",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "newacroindefinite{${1:acronym}}{${2:short indefinite article}}{${3:long indefinite article}}"
-      }
-    },
-    {
-      "name": "newacroplural",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "newacroplural{${1:acronym}}[${3:short plural name}]{${2:full plural name}}"
-      }
-    },
-    {
-      "name": "newacroplural",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "newacroplural{${1:acronym}}{${2:full plural name}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "acronym"
-    },
-    {
-      "name": "acronym",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:longest}]"
-      }
-    }
-  ],
-  "keys": {
-    "\\usepackage/acronym#c": [
-      "footnote",
-      "nohyperlinks",
-      "noforwardlinks",
-      "noacroprefix",
-      "printonlyused",
-      "printonlyreused",
-      "withpage",
-      "smaller",
-      "dua",
-      "nolist",
-      "nolinebreak"
-    ]
-  },
-  "args": [
-    "\\usepackage/acronym#c"
-  ]
+	"deps": [{"name":"suffix"},{"name":"xstring"},{"name":"relsize","if":"smaller"}],
+	"macros": [
+		{"name":"ac","arg":{"format":"[]{}","snippet":"ac[${1:linebreak penalty}]{${2:acronym}}"}},
+		{"name":"ac","arg":{"format":"{}","snippet":"ac{${1:acronym}}"}},
+		{"name":"ac*","arg":{"format":"[]{}","snippet":"ac*[${1:linebreak penalty}]{${2:acronym}}"}},
+		{"name":"ac*","arg":{"format":"{}","snippet":"ac*{${1:acronym}}"}},
+		{"name":"Ac","arg":{"format":"[]{}","snippet":"Ac[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\ac, but starts the long form with an upper case letter."},
+		{"name":"Ac","arg":{"format":"{}","snippet":"Ac{${1:acronym}}"},"doc":"Works in the same way as \\ac, but starts the long form with an upper case letter."},
+		{"name":"Ac*","arg":{"format":"[]{}","snippet":"Ac*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\ac, but starts the long form with an upper case letter."},
+		{"name":"Ac*","arg":{"format":"{}","snippet":"Ac*{${1:acronym}}"},"doc":"Works in the same way as \\ac, but starts the long form with an upper case letter."},
+		{"name":"acf","arg":{"format":"[]{}","snippet":"acf[${1:linebreak penalty}]{${2:acronym}}"}},
+		{"name":"acf","arg":{"format":"{}","snippet":"acf{${1:acronym}}"}},
+		{"name":"acf*","arg":{"format":"[]{}","snippet":"acf*[${1:linebreak penalty}]{${2:acronym}}"}},
+		{"name":"acf*","arg":{"format":"{}","snippet":"acf*{${1:acronym}}"}},
+		{"name":"Acf","arg":{"format":"[]{}","snippet":"Acf[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acf, but starts the long form with an upper case letter."},
+		{"name":"Acf","arg":{"format":"{}","snippet":"Acf{${1:acronym}}"},"doc":"Works in the same way as \\acf, but starts the long form with an upper case letter."},
+		{"name":"Acf*","arg":{"format":"[]{}","snippet":"Acf*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acf, but starts the long form with an upper case letter."},
+		{"name":"Acf*","arg":{"format":"{}","snippet":"Acf*{${1:acronym}}"},"doc":"Works in the same way as \\acf, but starts the long form with an upper case letter."},
+		{"name":"acffont","arg":{"format":"{}","snippet":"acffont{${1}}"}},
+		{"name":"acfi","arg":{"format":"[]{}","snippet":"acfi[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acf, but prints the Full Name acronym (\\acl) in italics and the abbreviated form (\\acs) in upshaped form."},
+		{"name":"acfi","arg":{"format":"{}","snippet":"acfi{${1:acronym}}"},"doc":"Works in the same way as \\acf, but prints the Full Name acronym (\\acl) in italics and the abbreviated form (\\acs) in upshaped form."},
+		{"name":"acfi*","arg":{"format":"[]{}","snippet":"acfi*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acf, but prints the Full Name acronym (\\acl) in italics and the abbreviated form (\\acs) in upshaped form."},
+		{"name":"acfi*","arg":{"format":"{}","snippet":"acfi*{${1:acronym}}"},"doc":"Works in the same way as \\acf, but prints the Full Name acronym (\\acl) in italics and the abbreviated form (\\acs) in upshaped form."},
+		{"name":"Acfi","arg":{"format":"[]{}","snippet":"Acfi[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfi, but starts the long form with an upper case letter."},
+		{"name":"Acfi","arg":{"format":"{}","snippet":"Acfi{${1:acronym}}"},"doc":"Works in the same way as \\acfi, but starts the long form with an upper case letter."},
+		{"name":"Acfi*","arg":{"format":"[]{}","snippet":"Acfi*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfi, but starts the long form with an upper case letter."},
+		{"name":"Acfi*","arg":{"format":"{}","snippet":"Acfi*{${1:acronym}}"},"doc":"Works in the same way as \\acfi, but starts the long form with an upper case letter."},
+		{"name":"acfip","arg":{"format":"[]{}","snippet":"acfip[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfi, but makes the short and long forms into plurals."},
+		{"name":"acfip","arg":{"format":"{}","snippet":"acfip{${1:acronym}}"},"doc":"Works in the same way as \\acfi, but makes the short and long forms into plurals."},
+		{"name":"acfip*","arg":{"format":"[]{}","snippet":"acfip*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfi, but makes the short and long forms into plurals."},
+		{"name":"acfip*","arg":{"format":"{}","snippet":"acfip*{${1:acronym}}"},"doc":"Works in the same way as \\acfi, but makes the short and long forms into plurals."},
+		{"name":"Acfip","arg":{"format":"[]{}","snippet":"Acfip[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfip, but starts the long form with an upper case letter."},
+		{"name":"Acfip","arg":{"format":"{}","snippet":"Acfip{${1:acronym}}"},"doc":"Works in the same way as \\acfip, but starts the long form with an upper case letter."},
+		{"name":"Acfip*","arg":{"format":"[]{}","snippet":"Acfip*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfip, but starts the long form with an upper case letter."},
+		{"name":"Acfip*","arg":{"format":"{}","snippet":"Acfip*{${1:acronym}}"},"doc":"Works in the same way as \\acfip, but starts the long form with an upper case letter."},
+		{"name":"acfp","arg":{"format":"[]{}","snippet":"acfp[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acf, but makes the short and long forms into plurals."},
+		{"name":"acfp","arg":{"format":"{}","snippet":"acfp{${1:acronym}}"},"doc":"Works in the same way as \\acf, but makes the short and long forms into plurals."},
+		{"name":"acfp*","arg":{"format":"[]{}","snippet":"acfp*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acf, but makes the short and long forms into plurals."},
+		{"name":"acfp*","arg":{"format":"{}","snippet":"acfp*{${1:acronym}}"},"doc":"Works in the same way as \\acf, but makes the short and long forms into plurals."},
+		{"name":"Acfp","arg":{"format":"[]{}","snippet":"Acfp[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfp, but starts the long form with an upper case letter."},
+		{"name":"Acfp","arg":{"format":"{}","snippet":"Acfp{${1:acronym}}"},"doc":"Works in the same way as \\acfp, but starts the long form with an upper case letter."},
+		{"name":"Acfp*","arg":{"format":"[]{}","snippet":"Acfp*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acfp, but starts the long form with an upper case letter."},
+		{"name":"Acfp*","arg":{"format":"{}","snippet":"Acfp*{${1:acronym}}"},"doc":"Works in the same way as \\acfp, but starts the long form with an upper case letter."},
+		{"name":"acfsfont","arg":{"format":"{}","snippet":"acfsfont{${1}}"}},
+		{"name":"acl","arg":{"format":"{}","snippet":"acl{${1:acronym}}"},"doc":"Gives you the expanded acronym without even mentioning the acronym."},
+		{"name":"acl*","arg":{"format":"{}","snippet":"acl*{${1:acronym}}"},"doc":"Gives you the expanded acronym without even mentioning the acronym."},
+		{"name":"Acl","arg":{"format":"{}","snippet":"Acl{${1:acronym}}"}},
+		{"name":"Acl*","arg":{"format":"{}","snippet":"Acl*{${1:acronym}}"}},
+		{"name":"aclabelfont","arg":{"format":"{}","snippet":"aclabelfont{${1}}"},"doc":"The short form of each acronym in the list is formatted using \\aclabelfont, which typesets its arguments in bold font by default."},
+		{"name":"aclp","arg":{"format":"{}","snippet":"aclp{${1:acronym}}"},"doc":"Works in the same way as \\acl, but makes the long form into a plural."},
+		{"name":"aclp*","arg":{"format":"{}","snippet":"aclp*{${1:acronym}}"},"doc":"Works in the same way as \\acl, but makes the long form into a plural."},
+		{"name":"Aclp","arg":{"format":"{}","snippet":"Aclp{${1:acronym}}"},"doc":"Works in the same way as \\aclp, but starts with an upper case letter."},
+		{"name":"Aclp*","arg":{"format":"{}","snippet":"Aclp*{${1:acronym}}"},"doc":"Works in the same way as \\aclp, but starts with an upper case letter."},
+		{"name":"aclu","arg":{"format":"{}","snippet":"aclu{${1:acronym}}"},"doc":"Prints the long form of the acronym and marks it as used."},
+		{"name":"aclu*","arg":{"format":"{}","snippet":"aclu*{${1:acronym}}"},"doc":"Prints the long form of the acronym and marks it as used."},
+		{"name":"Aclu","arg":{"format":"{}","snippet":"Aclu{${1:acronym}}"},"doc":"Works in the same way as \\aclu, but starts with an upper case letter."},
+		{"name":"Aclu*","arg":{"format":"{}","snippet":"Aclu*{${1:acronym}}"},"doc":"Works in the same way as \\aclu, but starts with an upper case letter."},
+		{"name":"acp","arg":{"format":"[]{}","snippet":"acp[${1:linebreak penalty}]{${2:acronym}}"},"doc":"The first time an acronym is accessed Full Names (FNs) is printed."},
+		{"name":"acp","arg":{"format":"{}","snippet":"acp{${1:acronym}}"},"doc":"The first time an acronym is accessed Full Names (FNs) is printed."},
+		{"name":"acp*","arg":{"format":"[]{}","snippet":"acp*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"The first time an acronym is accessed Full Names (FNs) is printed."},
+		{"name":"acp*","arg":{"format":"{}","snippet":"acp*{${1:acronym}}"},"doc":"The first time an acronym is accessed Full Names (FNs) is printed."},
+		{"name":"Acp","arg":{"format":"[]{}","snippet":"Acp[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acp, but starts the long form with an upper case letter."},
+		{"name":"Acp","arg":{"format":"{}","snippet":"Acp{${1:acronym}}"},"doc":"Works in the same way as \\acp, but starts the long form with an upper case letter."},
+		{"name":"Acp*","arg":{"format":"[]{}","snippet":"Acp*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as \\acp, but starts the long form with an upper case letter."},
+		{"name":"Acp*","arg":{"format":"{}","snippet":"Acp*{${1:acronym}}"},"doc":"Works in the same way as \\acp, but starts the long form with an upper case letter."},
+		{"name":"acresetall","doc":"The ’memory’ of the macro \\ac can be flushed by calling the macro \\acresetall."},
+		{"name":"acro","arg":{"format":"{}[]{}","snippet":"acro{${1:acronym}}[${2:short name}]{${3:full name}}"},"doc":"There are three commands that define acronyms: \\newacro, \\acrodef, and \\acro."},
+		{"name":"acro","arg":{"format":"{}{}","snippet":"acro{${1:acronym}}{${2:full name}}"},"doc":"There are three commands that define acronyms: \\newacro, \\acrodef, and \\acro."},
+		{"name":"acrodef","arg":{"format":"{}[]{}","snippet":"acrodef{${1:acronym}}[${2:short name}]{${3:full name}}"},"doc":"\\acrodef The user command \\acrodef calls \\newacro and writes it into the .aux file."},
+		{"name":"acrodef","arg":{"format":"{}{}","snippet":"acrodef{${1:acronym}}{${2:full name}}"},"doc":"\\acrodef The user command \\acrodef calls \\newacro and writes it into the .aux file."},
+		{"name":"acrodefindefinite","arg":{"format":"{}{}{}","snippet":"acrodefindefinite{${1}}{${2}}{${3}}"}},
+		{"name":"acrodefplural","arg":{"format":"{}[]{}","snippet":"acrodefplural{${1:acronym}}[${2:short plural}]{${3:long plural}}"}},
+		{"name":"acrodefplural","arg":{"format":"{}{}","snippet":"acrodefplural{${1:acronym}}{${2:long plural}}"}},
+		{"name":"acroextra","arg":{"format":"{}","snippet":"acroextra{${1}}"},"doc":"Inside the acronym environment additional information can be added to the list of acronyms with the \\acroextra command that will not be included in the normal inline acronyms."},
+		{"name":"acroindefinite","arg":{"format":"{}{}{}","snippet":"acroindefinite{${1:acronym}}{${2:short indefinite article}}{${3:long indefinite article}}"}},
+		{"name":"acronymused","arg":{"format":"{}","snippet":"acronymused{${1}}"},"unusual":true},
+		{"name":"acroplural","arg":{"format":"{}[]{}","snippet":"acroplural{${1:acronym}}[${2:short plural}]{${3:long plural}}"}},
+		{"name":"acroplural","arg":{"format":"{}{}","snippet":"acroplural{${1:acronym}}{${2:long plural}}"}},
+		{"name":"acs","arg":{"format":"{}","snippet":"acs{${1:acronym}}"}},
+		{"name":"acs*","arg":{"format":"{}","snippet":"acs*{${1:acronym}}"}},
+		{"name":"acsfont","arg":{"format":"{}","snippet":"acsfont{${1}}"}},
+		{"name":"acsp","arg":{"format":"{}","snippet":"acsp{${1:acronym}}"},"doc":"Works in the same way as \\acs, but makes the short form into a plural."},
+		{"name":"acsp*","arg":{"format":"{}","snippet":"acsp*{${1:acronym}}"},"doc":"Works in the same way as \\acs, but makes the short form into a plural."},
+		{"name":"acsu","arg":{"format":"{}","snippet":"acsu{${1:acronym}}"},"doc":"Prints the short form of the acronym and marks it as used."},
+		{"name":"acsu*","arg":{"format":"{}","snippet":"acsu*{${1:acronym}}"},"doc":"Prints the short form of the acronym and marks it as used."},
+		{"name":"acused","arg":{"format":"{}","snippet":"acused{${1}}"},"doc":"Marks an acronym as used, as if it had been called with \\ac, but without printing anything."},
+		{"name":"iac","arg":{"format":"[]{}","snippet":"iac[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as the \\ac command but prefixes it with an appropriate indefinite article."},
+		{"name":"iac","arg":{"format":"{}","snippet":"iac{${1:acronym}}"},"doc":"Works in the same way as the \\ac command but prefixes it with an appropriate indefinite article."},
+		{"name":"iac*","arg":{"format":"[]{}","snippet":"iac*[${1:linebreak penalty}]{${2:acronym}}"},"doc":"Works in the same way as the \\ac command but prefixes it with an appropriate indefinite article."},
+		{"name":"iac*","arg":{"format":"{}","snippet":"iac*{${1:acronym}}"},"doc":"Works in the same way as the \\ac command but prefixes it with an appropriate indefinite article."},
+		{"name":"Iac","arg":{"format":"[]{}","snippet":"Iac[${1:linebreak penalty}]{${2:acronym}}"}},
+		{"name":"Iac","arg":{"format":"{}","snippet":"Iac{${1:acronym}}"}},
+		{"name":"Iac*","arg":{"format":"[]{}","snippet":"Iac*[${1:linebreak penalty}]{${2:acronym}}"}},
+		{"name":"Iac*","arg":{"format":"{}","snippet":"Iac*{${1:acronym}}"}},
+		{"name":"newacro","arg":{"format":"{}[]{}","snippet":"newacro{${1:acronym}}[${2:short name}]{${3:full name}}"}},
+		{"name":"newacro","arg":{"format":"{}{}","snippet":"newacro{${1:acronym}}{${2:full name}}"}},
+		{"name":"newacroindefinite","arg":{"format":"{}{}{}","snippet":"newacroindefinite{${1}}{${2}}{${3}}"},"doc":"\\newacroindefinite Sets up a non standard indefinite article for a given acronym."},
+		{"name":"newacroplural","arg":{"format":"{}[]{}","snippet":"newacroplural{${1:acronym}}[${2:short plural}]{${3:long plural}}"},"doc":"\\newacroplural Sets up a non standard plural form for a given acronym."},
+		{"name":"newacroplural","arg":{"format":"{}{}","snippet":"newacroplural{${1:acronym}}{${2:long plural}}"},"doc":"\\newacroplural Sets up a non standard plural form for a given acronym."}
+	],
+	"envs": [
+		{"name":"acronym","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"acronym"}
+	],
+	"keys": {
+		"\\usepackage/acronym#c": ["dua","error","footnote","noacroprefix","noforwardlinks","nohyperlinks","nolinebreak","nolist","printonlyreused","printonlyused","smaller","withpage"]
+	},
+	"args": ["\\usepackage/acronym#c"]
 }

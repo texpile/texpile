@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"hyphenat"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"biblatex"},{"name":"logreq"},{"name":"ifthen"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"placeins"},{"name":"framed"},{"name":"sidecap"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"fontawesome5-utex-helper"},{"name":"luatexbase","engines":["lualatex"]},{"name":"xcolor"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"fancyhdr"},{"name":"caption"},{"name":"caption3"},{"name":"longtable"},{"name":"booktabs"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"attribution","arg":{"format":"{}","snippet":"attribution{${1:source}}"}},
+		{"name":"backmatter"},
+		{"name":"blurb","arg":{"format":"{}","snippet":"blurb{${1:blurb text}}"},"doc":"Amnesty International reports include a short blurb up to 200 words. The macro \\blurb{⟨blurb text⟩} sets them."},
+		{"name":"citep","arg":{"format":"[][]{}","snippet":"citep[${1:prenote}][${2:postnote}]{${3:key}}"}},
+		{"name":"citep","arg":{"format":"{}","snippet":"citep{${1:key}}"}},
+		{"name":"citet","arg":{"format":"[][]{}","snippet":"citet[${1:prenote}][${2:postnote}]{${3:key}}"}},
+		{"name":"citet","arg":{"format":"{}","snippet":"citet{${1:key}}"}},
+		{"name":"copyrightyear","arg":{"format":"{}","snippet":"copyrightyear{${1:year}}"}},
+		{"name":"firstpublicationyear","arg":{"format":"{}","snippet":"firstpublicationyear{${1:year}}"}},
+		{"name":"frontmatter"},
+		{"name":"mainmatter","doc":"The main section starts with the command \\mainmatter."},
+		{"name":"normalFigureCaptions","doc":"Switching to the normal figures."},
+		{"name":"normalTableCaptions","doc":"Switching to the normal tables."},
+		{"name":"reportindex","arg":{"format":"{}","snippet":"reportindex{${1:index}}"},"doc":"The index of the report is set by the command \\reportindex{⟨index⟩}."},
+		{"name":"reportmonth","arg":{"format":"{}","snippet":"reportmonth{${1:month}}"}},
+		{"name":"reportyear","arg":{"format":"{}","snippet":"reportyear{${1:year}}"}},
+		{"name":"sideFigureCaptions","doc":"Switching to the sideways figures."},
+		{"name":"sideTableCaptions","doc":"Switching to the sideways tables."},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"},"doc":"An additional command \\subtitle is used to set the subtitle of the report."},
+		{"name":"tightlist","unusual":true},
+		{"name":"titleimage","arg":{"format":"{}","snippet":"titleimage{${1:image file}}"},"doc":"The command \\titleimage{⟨filename⟩} defines the image on the title page."},
+		{"name":"titleimagecaption","arg":{"format":"{}","snippet":"titleimagecaption{${1:caption}}"},"doc":"The command \\titleimagecaption{⟨caption⟩} describes the image."}
+	],
+	"envs": [
+		{"name":"AmnestyGlossary","arg":{"format":"[]","snippet":"[${1:term column width}]"}},
+		{"name":"AmnestyGlossary"}
+	],
+	"keys": {
+		"\\documentclass/amnestyreport#c": ["a4paper","amnestyfonts","freefonts","letterpaper","logo","nologo"]
+	},
+	"args": ["\\documentclass/amnestyreport#c"]
+}

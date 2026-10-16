@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"KeyparseEval","arg":{"format":"{}{}","snippet":"KeyparseEval{${1:rule}}{${2:key and arguments}}"}},
+		{"name":"KeyparseKeys","arg":{"format":"{}","snippet":"KeyparseKeys{${1:rule}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

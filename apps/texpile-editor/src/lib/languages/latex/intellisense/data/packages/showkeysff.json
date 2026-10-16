@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"color","if":"color"}],
+	"macros": [
+		{"name":"ffcite","arg":{"format":"[]{}","snippet":"ffcite[${1}]{${2}}"}},
+		{"name":"ffcite","arg":{"format":"{}","snippet":"ffcite{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/showkeysff#c": ["color","draft","final","notcite","notffcite","notref"]
+	},
+	"args": ["\\usepackage/showkeysff#c"]
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"totcount"},{"name":"keyval"}],
+	"macros": [
+		{"name":"institutionlogomain","unusual":true},
+		{"name":"institutionlogosmall","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

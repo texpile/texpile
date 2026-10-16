@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"upmethodology-p-common"},{"name":"ifthen"},{"name":"xspace"},{"name":"xcolor"},{"name":"ifpdf"},{"name":"iftex"},{"name":"upmethodology-extension"}],
+	"macros": [
+		{"name":"makebackcover"},
+		{"name":"setbackcover","arg":{"format":"{}","snippet":"setbackcover{${1:layout name}}"}},
+		{"name":"setbacklayout","arg":{"format":"{}","snippet":"setbacklayout{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/upmethodology-backpage#c": ["english","francais","french"]
+	},
+	"args": ["\\usepackage/upmethodology-backpage#c"]
+}

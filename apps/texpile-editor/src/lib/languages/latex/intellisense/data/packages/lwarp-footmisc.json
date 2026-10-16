@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"DefineFNsymbols","arg":{"format":"{}[]{}","snippet":"DefineFNsymbols{${1:name}}[${2:text or math}]{${3:symbols}}"}},
+		{"name":"DefineFNsymbols","arg":{"format":"{}{}","snippet":"DefineFNsymbols{${1:name}}{${2:symbols}}"}},
+		{"name":"DefineFNsymbols*","arg":{"format":"{}[]{}","snippet":"DefineFNsymbols*{${1:name}}[${2:text or math}]{${3:symbols}}"}},
+		{"name":"DefineFNsymbols*","arg":{"format":"{}{}","snippet":"DefineFNsymbols*{${1:name}}{${2:symbols}}"}},
+		{"name":"footnotelayout"},
+		{"name":"footnotemargin"},
+		{"name":"hangfootparindent"},
+		{"name":"hangfootparskip"},
+		{"name":"mpfootnotemark","arg":{"format":"[]","snippet":"mpfootnotemark[${1:number}]"}},
+		{"name":"mpfootnotemark"},
+		{"name":"mpfootnoterule"},
+		{"name":"multfootsep"},
+		{"name":"pagefootnoterule"},
+		{"name":"setfnsymbol","arg":{"format":"{}","snippet":"setfnsymbol{${1:symbol set}}"}},
+		{"name":"splitfootnoterule"}
+	],
+	"envs": [],
+	"keys": {}
+}

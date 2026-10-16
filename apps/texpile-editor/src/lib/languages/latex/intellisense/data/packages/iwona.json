@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/iwona#c": ["condensed","light","math","mathnoalias","regular"]
+	},
+	"args": ["\\usepackage/iwona#c"]
+}

@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"inputenc"},{"name":"babel"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"arcctg"},
+		{"name":"arctg"},
+		{"name":"ch"},
+		{"name":"ctg"},
+		{"name":"cth"},
+		{"name":"sh"},
+		{"name":"tg"},
+		{"name":"tgh"},
+		{"name":"th"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hrlatex#c": ["last","slovene"]
+	},
+	"args": ["\\usepackage/hrlatex#c"]
+}

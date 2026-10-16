@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"place","arg":{"format":"[](){}","snippet":"place[${1:node options}](${2:x,y}){${3:material}}"}},
+		{"name":"place","arg":{"format":"(){}","snippet":"place(${1:x,y}){${2:material}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

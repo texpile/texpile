@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"continuouslabelsfalse","unusual":true},
+		{"name":"continuouslabelstrue","unusual":true},
+		{"name":"ifcontinuouslabels","unusual":true},
+		{"name":"iflabeled","unusual":true},
+		{"name":"labeledfalse","unusual":true},
+		{"name":"labeledtrue","unusual":true},
+		{"name":"newcites","arg":{"format":"{}{}","snippet":"newcites{${1}}{${2}}"},"doc":"The package introduces the generic macro \\newcites which generates user-defined citation and bibliography commands for each new bibliography in the document."},
+		{"name":"setbiblabelwidth","arg":{"format":"{}","snippet":"setbiblabelwidth{${1}}"},"doc":"The macro \\setbiblabelwidth explicitly sets the width of the labels in the bibliography."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/multibib#c": ["labeled","resetlabels"]
+	},
+	"args": ["\\usepackage/multibib#c"]
+}

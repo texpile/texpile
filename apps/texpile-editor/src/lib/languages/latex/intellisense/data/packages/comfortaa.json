@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"comfortaa","doc":"The package supplies the \\comfortaa command to switch the current font to Comfortaa."},
+		{"name":"fcofamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

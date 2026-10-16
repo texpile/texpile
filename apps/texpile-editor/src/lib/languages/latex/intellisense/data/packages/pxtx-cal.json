@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"mathbcal","arg":{"format":"{}","snippet":"mathbcal{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

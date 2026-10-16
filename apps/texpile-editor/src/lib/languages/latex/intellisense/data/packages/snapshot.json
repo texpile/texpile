@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"controldates","arg":{"format":"{}","snippet":"controldates{${1:dates}}"},"unusual":true},
+		{"name":"RequireVersions","arg":{"format":"[]{}","snippet":"RequireVersions[${1}]{${2}}"}},
+		{"name":"RequireVersions","arg":{"format":"{}","snippet":"RequireVersions{${1}}"}},
+		{"name":"snapshotApplication","unusual":true},
+		{"name":"SpecialInput","arg":{"format":"{}","snippet":"SpecialInput{${1:file}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/snapshot#c": ["bbinfo","date","dep","error","log","major-version","self-warning","test","tfm","version","warning"]
+	},
+	"args": ["\\usepackage/snapshot#c"]
+}

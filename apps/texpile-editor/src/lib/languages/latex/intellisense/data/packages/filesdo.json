@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"stacklet"},{"name":"commado"}],
+	"macros": [
+		{"name":"DoWithBasesExts","arg":{"format":"{}{}{}","snippet":"DoWithBasesExts{${1:cmd}}{${2:basenames}}{${3:exts}}"}},
+		{"name":"DoWithExtBases","arg":{"format":"{}{}{}","snippet":"DoWithExtBases{${1:cmd}}{${2:ext}}{${3:basenames}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

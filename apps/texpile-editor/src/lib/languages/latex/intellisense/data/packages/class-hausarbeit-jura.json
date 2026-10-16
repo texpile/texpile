@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"iftex"},{"name":"class-jurabook"},{"name":"jurabase"},{"name":"xspace"},{"name":"calc"},{"name":"fancyhdr"},{"name":"multicol"},{"name":"class-book"},{"name":"ifpdf"},{"name":"inputenc"},{"name":"tgtermes","if":"!oldfonts"},{"name":"kvoptions","if":"!oldfonts"},{"name":"keyval"},{"name":"kvsetkeys","if":"!oldfonts"},{"name":"tgheros","if":"!oldfonts"},{"name":"tgcursor","if":"!oldfonts"},{"name":"textcomp"},{"name":"eurosym"},{"name":"babel"},{"name":"geometry"},{"name":"ifvtex"},{"name":"ellipsis"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"microtype"},{"name":"jurabib"},{"name":"url"},{"name":"array"},{"name":"mathptmx","if":"oldfonts"},{"name":"helvet","if":"oldfonts"},{"name":"varioref","if":"varioref"}],
+	"macros": [
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:short author}]{${2:author}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:author}}"}},
+		{"name":"matrikelnummer","arg":{"format":"{}","snippet":"matrikelnummer{${1:matriculation number}}"}},
+		{"name":"prof","arg":{"format":"{}","snippet":"prof{${1:supervisor}}"}},
+		{"name":"sectionafter","unusual":true},
+		{"name":"sectionbefore","unusual":true},
+		{"name":"semester","arg":{"format":"[]{}","snippet":"semester[${1:semester of study}]{${2:semester}}"}},
+		{"name":"semester","arg":{"format":"{}","snippet":"semester{${1:semester}}"}},
+		{"name":"setpg","arg":{"format":"[]{}","snippet":"setpg[${1}]{${2}}"},"unusual":true},
+		{"name":"setpg","arg":{"format":"{}","snippet":"setpg{${1}}"},"unusual":true},
+		{"name":"setpgfront","arg":{"format":"{}","snippet":"setpgfront{${1:geometry options}}"}},
+		{"name":"setpgmain","arg":{"format":"{}","snippet":"setpgmain{${1:geometry options}}"},"doc":"Möchte man den Satzspiegel ändern, so sollte man hierfür die Befehle \\setpgfront{hMaße für Vorspanni} bzw. \\setpgmain{hMaße für Hauptteili} nutzen."},
+		{"name":"setspaceafterchapter","arg":{"format":"{}","snippet":"setspaceafterchapter{${1:length}}"}},
+		{"name":"setspaceaftersection","arg":{"format":"{}","snippet":"setspaceaftersection{${1:length}}"}},
+		{"name":"setspacebeforechapter","arg":{"format":"{}","snippet":"setspacebeforechapter{${1:length}}"}},
+		{"name":"setspacebeforesection","arg":{"format":"{}","snippet":"setspacebeforesection{${1:length}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"newstylenums","arg":{"format":"{}","snippet":"newstylenums{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

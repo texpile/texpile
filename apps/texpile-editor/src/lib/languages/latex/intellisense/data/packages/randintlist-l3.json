@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"rdlgenlist","arg":{"format":"[]<>{}","snippet":"rdlgenlist[${1:keys}]<${2:sep}>{${3:macro}}"}},
+		{"name":"rdlgenlist","arg":{"format":"<>{}","snippet":"rdlgenlist<${1:sep}>{${2:macro}}"}},
+		{"name":"rdlgetitem","arg":{"format":"{}{}[]","snippet":"rdlgetitem{${1:macro}}{${2:index}}[${3:macrores}]"}},
+		{"name":"rdlgetitem","arg":{"format":"{}{}","snippet":"rdlgetitem{${1:macro}}{${2:index}}"}},
+		{"name":"rdlgetitem*","arg":{"format":"{}{}[]","snippet":"rdlgetitem*{${1:macro}}{${2:index}}[${3:macrores}]"}},
+		{"name":"rdlgetitem*","arg":{"format":"{}{}","snippet":"rdlgetitem*{${1:macro}}{${2:index}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

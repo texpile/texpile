@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"badeq"},
+		{"name":"hl"},
+		{"name":"hr"},
+		{"name":"Lyd","arg":{"format":"[]{}","snippet":"Lyd[${1:font selection}]{${2:transcription}}"}},
+		{"name":"Lyd","arg":{"format":"{}","snippet":"Lyd{${1:transcription}}"}},
+		{"name":"tsub","arg":{"format":"{}","snippet":"tsub{${1:text}}"},"doc":"\\tsup and \\tsub create super- and subscripts, respectively."},
+		{"name":"tsup","arg":{"format":"{}","snippet":"tsup{${1:text}}"},"doc":"\\tsup and \\tsub create super- and subscripts, respectively."}
+	],
+	"envs": [],
+	"keys": {}
+}

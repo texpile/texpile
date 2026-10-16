@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"newdata","arg":{"format":"{}","snippet":"newdata{${1:variable}}"}},
+		{"name":"newdata*","arg":{"format":"{}","snippet":"newdata*{${1:variable}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

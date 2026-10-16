@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"pdfmarginpar","arg":{"format":"[]{}","snippet":"pdfmarginpar[${1:options}]{${2:annotation contents}}","keys":["pgfkeys:/pdfmarginpar"],"keyPos":0},"doc":"A small mark will be placed just where the command occurs and a popup window appears after clicking on it."},
+		{"name":"pdfmarginpar","arg":{"format":"{}","snippet":"pdfmarginpar{${1:annotation contents}}"},"doc":"A small mark will be placed just where the command occurs and a popup window appears after clicking on it."},
+		{"name":"pdfmarginparset","arg":{"format":"{}","snippet":"pdfmarginparset{${1:options}}","keys":["pgfkeys:/pdfmarginpar"],"keyPos":0},"doc":"This command can be used to set options for all annotations (for example, in the document’s preamble)."}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/pdfmarginpar": ["C=","CA=","Comment=","FreeText=","Help=","Insert=","Key=","Name=${1|.unknown,Comment,Help,Insert,Key,NewParagraph,Note,Paragraph,none|}","NewParagraph=","Note=","Open=${1|.unknown,false,true|}","Paragraph=","Subj=","Subject=","Subtype=${1|.unknown,FreeText,Other,Text|}","caption=","color=","depth=","height=","hoffset=","none=","opacity=","voffset=","width=","Comment","Help","Insert","Key","NewParagraph","Note","Paragraph","Name=${1|Comment,Help,Insert,Key,NewParagraph,Note,Paragraph,none|}","Open=${1|false,true|}","Subtype=${1|FreeText,Text|}","Subtype/Other="]
+	}
+}

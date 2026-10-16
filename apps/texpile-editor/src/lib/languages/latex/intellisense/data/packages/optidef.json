@@ -1,0 +1,49 @@
+{
+	"deps": [{"name":"environ"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"xifthen"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"xparse"}],
+	"macros": [
+		{"name":"addConstraint","arg":{"format":"{}{}{}","snippet":"addConstraint{${1:left-hand side}}{${2:right-hand side}}{${3:extra}}"}},
+		{"name":"breakObjective","arg":{"format":"{}","snippet":"breakObjective{${1}}"}},
+		{"name":"defaultConstraintFormat","unusual":true},
+		{"name":"defaultOCPConstraint","unusual":true},
+		{"name":"defaultProblemFormat","unusual":true},
+		{"name":"labelOP","arg":{"format":"{}","snippet":"labelOP{${1}}"},"doc":"To create the number/label, the command \\labelOP{label} should be used."}
+	],
+	"envs": [
+		{"name":"argmaxi","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmaxi","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argmaxi*","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmaxi*","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argmaxi!","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmaxi!","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argmaxie","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmaxie","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argmini","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmini","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argmini*","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmini*","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argmini!","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argmini!","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"argminie","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"argminie","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"maxi","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"maxi","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"maxi*","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"maxi*","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"maxi!","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"maxi!","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"maxie","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"maxie","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"mini","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"mini","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"mini*","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"mini*","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"mini!","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"}},
+		{"name":"mini!","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"}},
+		{"name":"minie","arg":{"format":"[]<>{}{}{}{}","snippet":"[${1:constraint format}]<${2:break}>{${3:variable}}{${4:objective}}{${5:label}}{${6:result}}"},"doc":"The minie environment: same functionality as the mini! environment and it replaces mini! when using the optidef library with some languages in the babel package."},
+		{"name":"minie","arg":{"format":"<>{}{}{}{}","snippet":"<${1:break}>{${2:variable}}{${3:objective}}{${4:label}}{${5:result}}"},"doc":"The minie environment: same functionality as the mini! environment and it replaces mini! when using the optidef library with some languages in the babel package."}
+	],
+	"keys": {
+		"\\usepackage/optidef#c": ["c1","c2","c3","long","nocomma","short"]
+	},
+	"args": ["\\usepackage/optidef#c"]
+}

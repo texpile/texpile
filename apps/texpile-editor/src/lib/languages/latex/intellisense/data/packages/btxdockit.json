@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"ltxdockit"},{"name":"listings"},{"name":"keyval"},{"name":"color"},{"name":"xspace"},{"name":"iftex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"bibfield","arg":{"format":"{}","snippet":"bibfield{${1}}"}},
+		{"name":"bibtype","arg":{"format":"{}","snippet":"bibtype{${1}}"}},
+		{"name":"fielditem","arg":{"format":"{}{}","snippet":"fielditem{${1:field}}{${2:type}}"}},
+		{"name":"listitem","arg":{"format":"{}{}","snippet":"listitem{${1:field}}{${2:type}}"}},
+		{"name":"optitem","arg":{"format":"{}","snippet":"optitem{${1:field list}}"}},
+		{"name":"reqitem","arg":{"format":"{}","snippet":"reqitem{${1:field list}}"}},
+		{"name":"typeitem","arg":{"format":"{}","snippet":"typeitem{${1:entry type}}"}}
+	],
+	"envs": [
+		{"name":"fieldlist"},
+		{"name":"typelist"}
+	],
+	"keys": {}
+}

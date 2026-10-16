@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"scrlayer"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"fancyhdr"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

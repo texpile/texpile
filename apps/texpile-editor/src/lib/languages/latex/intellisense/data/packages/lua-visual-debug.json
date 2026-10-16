@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"}],
+	"macros": [
+		{"name":"lvdset","arg":{"format":"{}","snippet":"lvdset{${1:key=value list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

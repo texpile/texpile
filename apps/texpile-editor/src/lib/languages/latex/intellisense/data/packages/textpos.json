@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"ifTPshowboxes","unusual":true},
+		{"name":"showtextsize","doc":"When \\textblocklabel is being shown, the text appears in size \\showtextsize, which is defined by default to be \\normalsize."},
+		{"name":"tekstblokkulur","arg":{"format":"{}","snippet":"tekstblokkulur{${1}}"}},
+		{"name":"tekstblokroolkulur","arg":{"format":"{}","snippet":"tekstblokroolkulur{${1}}"}},
+		{"name":"textblockcolor","arg":{"format":"{}","snippet":"textblockcolor{${1}}"}},
+		{"name":"textblockcolour","arg":{"format":"{}","snippet":"textblockcolour{${1}}"}},
+		{"name":"textblocklabel","arg":{"format":"{}","snippet":"textblocklabel{${1}}"}},
+		{"name":"textblockorigin","arg":{"format":"{}{}","snippet":"textblockorigin{${1}}{${2}}"},"doc":"Sets the position of the top-left of the printable area."},
+		{"name":"textblockrulecolor","arg":{"format":"{}","snippet":"textblockrulecolor{${1}}"}},
+		{"name":"textblockrulecolour","arg":{"format":"{}","snippet":"textblockrulecolour{${1}}"}},
+		{"name":"TPboxrulesize"},
+		{"name":"TPGrid","arg":{"format":"[]{}{}","snippet":"TPGrid[${1:x,y border}]{${2:nhoriz}}{${3:nvert}}"}},
+		{"name":"TPGrid","arg":{"format":"{}{}","snippet":"TPGrid{${1:nhoriz}}{${2:nvert}}"}},
+		{"name":"TPHorizModule"},
+		{"name":"TPMargin","arg":{"format":"{}","snippet":"TPMargin{${1}}"}},
+		{"name":"TPMargin*","arg":{"format":"{}","snippet":"TPMargin*{${1}}"}},
+		{"name":"TPoptions","arg":{"format":"{}","snippet":"TPoptions{${1:keys}}","keys":["keyval:tp"],"keyPos":0}},
+		{"name":"TPReferencePosition","arg":{"format":"{}","snippet":"TPReferencePosition{${1}}"}},
+		{"name":"TPshowboxesfalse","doc":"You can control whether text blocks have the rule around them by using the \\TPshowboxestrue and \\TPshowboxesfalse commands."},
+		{"name":"TPshowboxestrue","doc":"You can control whether text blocks have the rule around them by using the \\TPshowboxestrue and \\TPshowboxesfalse commands."},
+		{"name":"TPShowGrid","arg":{"format":"{}{}","snippet":"TPShowGrid{${1:nhoriz}}{${2:nvert}}"},"doc":"To display the grid, use the \\TPShowGrid{<nhoriz>}{<nvert>} macro."},
+		{"name":"TPShowGrid*","arg":{"format":"{}{}","snippet":"TPShowGrid*{${1:nhoriz}}{${2:nvert}}"},"doc":"To display the grid, use the \\TPShowGrid{<nhoriz>}{<nvert>} macro."},
+		{"name":"TPVertModule","doc":"The length unit which is used for the vertical positioning and size parameters of the {textblock} environment."}
+	],
+	"envs": [
+		{"name":"textblock","arg":{"format":"{}[]()","snippet":"{${1:hsize}}[${2:ho,vo}](${3:hpos,vpos})"}},
+		{"name":"textblock","arg":{"format":"{}()","snippet":"{${1:hsize}}(${2:hpos,vpos})"}},
+		{"name":"textblock*","arg":{"format":"{}[]()","snippet":"{${1:hsize}}[${2:ho,vo}](${3:hpos,vpos})"}},
+		{"name":"textblock*","arg":{"format":"{}()","snippet":"{${1:hsize}}(${2:hpos,vpos})"}}
+	],
+	"keys": {
+		"keyval:tp": ["absolute=${1|true,false|}","discardcontent=${1|true,false|}","showboxes=${1|true,false|}","showtext=${1|true,false|}","verbose=${1|true,false|}"],
+		"\\usepackage/textpos#c": ["absolute","discardcontent","noshowtext","overlay","quiet","relative","showboxes","verbose"]
+	},
+	"args": ["\\usepackage/textpos#c"]
+}

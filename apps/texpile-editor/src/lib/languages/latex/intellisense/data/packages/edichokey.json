@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"alter"},
+		{"name":"alterindent","unusual":true},
+		{"name":"edknamestyle","doc":"Every ⟨prefix⟩ and ⟨taxon name⟩ use the font style defined by \\edknamestyle, or by default \\bfseries\\itshape."},
+		{"name":"name","arg":{"format":"[]{}","snippet":"name[${1}]{${2}}"}},
+		{"name":"name","arg":{"format":"{}","snippet":"name{${1}}"}},
+		{"name":"taxonrightskip"}
+	],
+	"envs": [
+		{"name":"Key","arg":{"format":"[]","snippet":"[${1:prefix}]"},"doc":"An identification key should be made within a Key environment, i.e. between \\begin{Key} [⟨prefix⟩] and \\end{Key}."},
+		{"name":"Key","doc":"An identification key should be made within a Key environment, i.e. between \\begin{Key} [⟨prefix⟩] and \\end{Key}."}
+	],
+	"keys": {
+		"\\usepackage/edichokey#c": ["hyperref"]
+	},
+	"args": ["\\usepackage/edichokey#c"]
+}

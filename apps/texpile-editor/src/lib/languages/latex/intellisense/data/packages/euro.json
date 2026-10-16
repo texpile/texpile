@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"fp-basic"},{"name":"fp-snap"}],
+	"macros": [
+		{"name":"EURO","arg":{"format":"{}[]{}","snippet":"EURO{${1:source currency}}[${2:destination currency}]{${3:amount}}"},"doc":"The \\EURO command does the main work. It takes the source currency unit, an optional destination currency unit, both as three-digits ISO currency codes (see table 1), and the respective money amount."},
+		{"name":"EURO","arg":{"format":"{}{}","snippet":"EURO{${1:source currency}}{${2:amount}}"},"doc":"The \\EURO command does the main work. It takes the source currency unit, an optional destination currency unit, both as three-digits ISO currency codes (see table 1), and the respective money amount."},
+		{"name":"EUROADD","arg":{"format":"{}{}{}","snippet":"EUROADD{${1:ISO code}}{${2:symbol}}{${3:conversion rate}}"}},
+		{"name":"EUROFORMAT","arg":{"format":"{}{}","snippet":"EUROFORMAT{${1:format name}}{${2:format string}}"}},
+		{"name":"EUROSYM","arg":{"format":"{}{}","snippet":"EUROSYM{${1:currency unit}}{${2:symbol}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/euro#c": ["dots","eco","emdash","endash","table","zeros"]
+	},
+	"args": ["\\usepackage/euro#c"]
+}

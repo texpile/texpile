@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"harveyBallFull","arg":{"format":"[]","snippet":"harveyBallFull[${1:size}]"}},
+		{"name":"harveyBallFull"},
+		{"name":"harveyBallHalf","arg":{"format":"[]","snippet":"harveyBallHalf[${1:size}]"}},
+		{"name":"harveyBallHalf"},
+		{"name":"harveyBallNone","arg":{"format":"[]","snippet":"harveyBallNone[${1:size}]"}},
+		{"name":"harveyBallNone"},
+		{"name":"harveyBallQuarter","arg":{"format":"[]","snippet":"harveyBallQuarter[${1:size}]"}},
+		{"name":"harveyBallQuarter"},
+		{"name":"harveyBallsColor"},
+		{"name":"harveyBallsLineColor"},
+		{"name":"harveyBallsLineWidth"},
+		{"name":"harveyBallsSize"},
+		{"name":"harveyBallThreeQuarter","arg":{"format":"[]","snippet":"harveyBallThreeQuarter[${1:size}]"}},
+		{"name":"harveyBallThreeQuarter"}
+	],
+	"envs": [],
+	"keys": {}
+}

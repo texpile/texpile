@@ -1,7 +1,6 @@
-// hand-maintained key/value rules for argument slots the vendored LaTeX Workshop package data
-// does NOT carry (verified by scratchpad/gen-packages.mjs coverage probe: pagestyle/pagenumbering
-// have no key groups anywhere in LW's data). package-dependent slots live in
-// completion/packageData.ts; add a rule here only when the data genuinely lacks the values.
+// hand-maintained key/value rules for argument slots the bundled package data does NOT carry
+// (pagestyle/pagenumbering have no key groups in it). package-dependent slots live in
+// packages/packageData.ts; add a rule here only when the data genuinely lacks the values.
 export type ArgKeyRule = {
 	name: string;
 	/** matches text-to-cursor; must end right where the key list starts or continues. */

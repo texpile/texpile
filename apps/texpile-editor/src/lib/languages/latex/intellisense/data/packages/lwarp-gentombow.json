@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"settombowbanner","arg":{"format":"{}","snippet":"settombowbanner{${1:text}}"}},
+		{"name":"settombowbannerfont","arg":{"format":"{}","snippet":"settombowbannerfont{${1:font}}"}},
+		{"name":"settombowbleed","arg":{"format":"{}","snippet":"settombowbleed{${1:length}}"}},
+		{"name":"settombowcolor","arg":{"format":"{}","snippet":"settombowcolor{${1:color code}}"}},
+		{"name":"settombowwidth","arg":{"format":"{}","snippet":"settombowwidth{${1:length}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

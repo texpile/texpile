@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-minimart"},{"name":"class-article"},{"name":"silence"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"minimalist"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"lineno"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"projlib-paper"},{"name":"xcolor"},{"name":"projlib-language"},{"name":"babel"},{"name":"scalefnt"},{"name":"setspaceenhanced"},{"name":"setspace"},{"name":"csquotes"},{"name":"relsize"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tikzpagenodes"},{"name":"ifoddpage"},{"name":"fancyhdr"},{"name":"extramarks"},{"name":"titlesec"},{"name":"ulem"},{"name":"titletoc"},{"name":"enumitem"},{"name":"imakeidx"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"multicol"},{"name":"projlib-draft"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsthm"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"projlib-theorem"},{"name":"create-theorem"},{"name":"crefthe"},{"name":"cleveref"},{"name":"regexpatch"},{"name":"xparse"},{"name":"amsfonts"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"tikzfill.image"},{"name":"pdfcol"},{"name":"projlib-author"},{"name":"scontents"},{"name":"projlib-font"},{"name":"microtype"},{"name":"mathpazo"},{"name":"newpxtext"},{"name":"textcomp"},{"name":"xstring"},{"name":"ifthen"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"amssymb"},{"name":"wrapfig2"},{"name":"float"},{"name":"pict2e"},{"name":"caption"},{"name":"caption3"},{"name":"nowidow"},{"name":"ProjLib"},{"name":"projlib-datetime"},{"name":"projlib-logo"},{"name":"projlib-math"},{"name":"mathrsfs"},{"name":"projlib-text"},{"name":"parskip"},{"name":"embrac"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"IfAnswerF","arg":{"format":"{}","snippet":"IfAnswerF{${1:code if answers are hidden}}"},"unusual":true},
+		{"name":"IfAnswerT","arg":{"format":"{}","snippet":"IfAnswerT{${1:code if answers are shown}}"},"unusual":true},
+		{"name":"IfAnswerTF","arg":{"format":"{}{}","snippet":"IfAnswerTF{${1:code if answers are shown}}{${2:code if answers are hidden}}"},"unusual":true},
+		{"name":"IfSolutionF","arg":{"format":"{}","snippet":"IfSolutionF{${1:code if solutions are hidden}}"},"unusual":true},
+		{"name":"IfSolutionT","arg":{"format":"{}","snippet":"IfSolutionT{${1:code if solutions are shown}}"},"unusual":true},
+		{"name":"IfSolutionTF","arg":{"format":"{}{}","snippet":"IfSolutionTF{${1:code if solutions are shown}}{${2:code if solutions are hidden}}"},"unusual":true},
+		{"name":"ManualNumbering","arg":{"format":"{}{}","snippet":"ManualNumbering{${1:environment}}{${2:number}}"},"doc":"Use \\ManualNumbering to manually set the numbering."},
+		{"name":"pretitle","arg":{"format":"{}","snippet":"pretitle{${1:pretitle text}}"}}
+	],
+	"envs": [
+		{"name":"answer","arg":{"format":"[]","snippet":"[${1:title}]"}},
+		{"name":"answer"},
+		{"name":"solution","arg":{"format":"[]","snippet":"[${1:title}]"}},
+		{"name":"solution"}
+	],
+	"keys": {}
+}

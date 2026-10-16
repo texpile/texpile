@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"ActivateErrorFilters","arg":{"format":"[]","snippet":"ActivateErrorFilters[${1:families}]"}},
+		{"name":"ActivateErrorFilters"},
+		{"name":"ActivateFilters","arg":{"format":"[]","snippet":"ActivateFilters[${1:families}]"}},
+		{"name":"ActivateFilters"},
+		{"name":"ActivateWarningFilters","arg":{"format":"[]","snippet":"ActivateWarningFilters[${1:families}]"}},
+		{"name":"ActivateWarningFilters"},
+		{"name":"BoldMode"},
+		{"name":"DeactivateErrorFilters","arg":{"format":"[]","snippet":"DeactivateErrorFilters[${1:families}]"}},
+		{"name":"DeactivateErrorFilters"},
+		{"name":"DeactivateFilters","arg":{"format":"[]","snippet":"DeactivateFilters[${1:families}]"}},
+		{"name":"DeactivateFilters"},
+		{"name":"DeactivateWarningFilters","arg":{"format":"[]","snippet":"DeactivateWarningFilters[${1:families}]"}},
+		{"name":"DeactivateWarningFilters"},
+		{"name":"ErrorFilter","arg":{"format":"[]{}{}","snippet":"ErrorFilter[${1:family}]{${2:package}}{${3:message}}"}},
+		{"name":"ErrorFilter","arg":{"format":"{}{}","snippet":"ErrorFilter{${1:package}}{${2:message}}"}},
+		{"name":"ErrorFilter*","arg":{"format":"[]{}{}","snippet":"ErrorFilter*[${1:family}]{${2:package}}{${3:message}}"}},
+		{"name":"ErrorFilter*","arg":{"format":"{}{}","snippet":"ErrorFilter*{${1:package}}{${2:message}}"}},
+		{"name":"ErrorsOff","arg":{"format":"[]","snippet":"ErrorsOff[${1:packages}]"}},
+		{"name":"ErrorsOff"},
+		{"name":"ErrorsOff*","arg":{"format":"[]","snippet":"ErrorsOff*[${1:packages}]"}},
+		{"name":"ErrorsOff*"},
+		{"name":"ErrorsOn","arg":{"format":"[]","snippet":"ErrorsOn[${1:packages}]"}},
+		{"name":"ErrorsOn"},
+		{"name":"SafeMode","doc":"When you say \\SafeMode, messages are not expanded."},
+		{"name":"WarningFilter","arg":{"format":"[]{}{}","snippet":"WarningFilter[${1:family}]{${2:package}}{${3:message}}"}},
+		{"name":"WarningFilter","arg":{"format":"{}{}","snippet":"WarningFilter{${1:package}}{${2:message}}"}},
+		{"name":"WarningFilter*","arg":{"format":"[]{}{}","snippet":"WarningFilter*[${1:family}]{${2:package}}{${3:message}}"}},
+		{"name":"WarningFilter*","arg":{"format":"{}{}","snippet":"WarningFilter*{${1:package}}{${2:message}}"}},
+		{"name":"WarningsOff","arg":{"format":"[]","snippet":"WarningsOff[${1:packages}]"}},
+		{"name":"WarningsOff"},
+		{"name":"WarningsOff*","arg":{"format":"[]","snippet":"WarningsOff*[${1:packages}]"}},
+		{"name":"WarningsOff*"},
+		{"name":"WarningsOn","arg":{"format":"[]","snippet":"WarningsOn[${1:packages}]"}},
+		{"name":"WarningsOn"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/silence#c": ["debrief","immediate","safe","save","saveall","showerrors","showwarnings"]
+	},
+	"args": ["\\usepackage/silence#c"]
+}

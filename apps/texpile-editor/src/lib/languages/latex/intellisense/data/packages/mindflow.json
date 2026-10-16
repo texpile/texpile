@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"lineno"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"nowidow"},{"name":"verbatim"},{"name":"tcolorbox","if":"nonbreakable"},{"name":"tikz","if":"nonbreakable"},{"name":"pgf","if":"nonbreakable"},{"name":"pgfrcs","if":"nonbreakable"},{"name":"pgfcore","if":"nonbreakable"},{"name":"graphicx","if":"nonbreakable"},{"name":"graphics","if":"nonbreakable"},{"name":"trig","if":"nonbreakable"},{"name":"pgfsys","if":"nonbreakable"},{"name":"pgfcomp-version-0-65","if":"nonbreakable"},{"name":"pgfcomp-version-1-18","if":"nonbreakable"},{"name":"pgffor","if":"nonbreakable"},{"name":"pgfkeys","if":"nonbreakable"},{"name":"pgfmath","if":"nonbreakable"},{"name":"environ","if":"nonbreakable"},{"name":"pdfcol","if":"nonbreakable"},{"name":"iftex","if":"nonbreakable"},{"name":"amsmath","if":"nonbreakable"},{"name":"amstext","if":"nonbreakable"},{"name":"amsbsy","if":"nonbreakable"},{"name":"amsopn","if":"nonbreakable"}],
+	"macros": [
+		{"name":"mindflowLeft","doc":"The left and right markers is defined by \\mindflowLeft and \\mindflowRight."},
+		{"name":"mindflowLineHeight"},
+		{"name":"mindflowMarkerFont"},
+		{"name":"mindflowNumFont"},
+		{"name":"mindflowRight"},
+		{"name":"mindflowset","arg":{"format":"{}","snippet":"mindflowset{${1:configuration}}","keys":["keyval:mindflow"],"keyPos":0},"doc":"You can use \\mindflowset{⟨configuration⟩} to further configure the mindflow environment."},
+		{"name":"mindflowTextFont"}
+	],
+	"envs": [
+		{"name":"mindflow"}
+	],
+	"keys": {
+		"keyval:mindflow": ["backgroundcolor=","incolumn","left=","leftlinenumber","leftmarker","linecolor=","lineheight=","linenumber","markercolor=","markerfont=","numcolor=","numfont=","off","on","right=","rightlinenumber","rightmarker","textcolor=","textfont="],
+		"\\usepackage/mindflow#c": ["incolumn","leftlinenumber","leftmarker","linenumber","mathlines","nonbreakable","off","on","rightlinenumber","rightmarker"]
+	},
+	"args": ["\\usepackage/mindflow#c"]
+}

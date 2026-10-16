@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"ifthen"},{"name":"calc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"alerterror","arg":{"format":"{}","snippet":"alerterror{${1:message}}"},"doc":"This macro displays a red alert indicating an error message."},
+		{"name":"alertinfo","arg":{"format":"{}","snippet":"alertinfo{${1:message}}"}},
+		{"name":"alertsuccess","arg":{"format":"{}","snippet":"alertsuccess{${1:message}}"},"doc":"This macro displays a green alert indicating a successful message."},
+		{"name":"alertwarning","arg":{"format":"{}","snippet":"alertwarning{${1:message}}"},"doc":"This macro displays an orange alert indicating a warning message."}
+	],
+	"envs": [],
+	"keys": {}
+}

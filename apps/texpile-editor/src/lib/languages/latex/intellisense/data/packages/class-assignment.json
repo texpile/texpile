@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"class-article"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"asgimplies"},
+		{"name":"boxit","arg":{"format":"{}","snippet":"boxit{${1:math}}"}},
+		{"name":"courselabel","arg":{"format":"{}","snippet":"courselabel{${1:course label}}"}},
+		{"name":"coursetitle","arg":{"format":"{}","snippet":"coursetitle{${1:course title}}"}},
+		{"name":"department","arg":{"format":"{}","snippet":"department{${1:department}}"}},
+		{"name":"e"},
+		{"name":"exercisesheet","arg":{"format":"{}{}","snippet":"exercisesheet{${1:sheet title}}{${2:subject}}"}},
+		{"name":"ifshowanswers","unusual":true},
+		{"name":"PB"},
+		{"name":"pbitem"},
+		{"name":"school","arg":{"format":"{}","snippet":"school{${1:school}}"}},
+		{"name":"semester","arg":{"format":"{}","snippet":"semester{${1:semester}}"}},
+		{"name":"solutionstext","unusual":true},
+		{"name":"student","arg":{"format":"{}","snippet":"student{${1:student name}}"}},
+		{"name":"university","arg":{"format":"{}","snippet":"university{${1:university}}"}}
+	],
+	"envs": [
+		{"name":"answer"},
+		{"name":"problem"},
+		{"name":"problemlist"}
+	],
+	"keys": {
+		"\\documentclass/assignment#c": ["twoside"]
+	},
+	"args": ["\\documentclass/assignment#c"]
+}

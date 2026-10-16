@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"ifulendtype","arg":{"format":"{}{}{}","snippet":"ifulendtype{${1:type}}{${2:true}}{${3:false}}"}},
+		{"name":"ifulstarttype","arg":{"format":"{}{}{}","snippet":"ifulstarttype{${1:type}}{${2:true}}{${3:false}}"}},
+		{"name":"ulendtype"},
+		{"name":"ulposdef","arg":{"format":"{}[]{}","snippet":"ulposdef{${1:name}}[${2:options}]{${3:commands}}"}},
+		{"name":"ulposdef","arg":{"format":"{}{}","snippet":"ulposdef{${1:name}}{${2:commands}}"}},
+		{"name":"ulpostolerance"},
+		{"name":"ulstarttype"},
+		{"name":"ulwidth","doc":"The width of the text block to be underlined."}
+	],
+	"envs": [],
+	"keys": {}
+}

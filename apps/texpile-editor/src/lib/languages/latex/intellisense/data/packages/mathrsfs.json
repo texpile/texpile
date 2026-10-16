@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"mathscr","arg":{"format":"{}","snippet":"mathscr{${1:letters}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

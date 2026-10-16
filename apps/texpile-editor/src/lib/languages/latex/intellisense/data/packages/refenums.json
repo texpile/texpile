@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"csquotes"},{"name":"etoolbox"},{"name":"keyval"},{"name":"ifthen"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"cleveref"}],
+	"macros": [
+		{"name":"defRefEnum","arg":{"format":"[]{}{}{}","snippet":"defRefEnum[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"defRefEnum","arg":{"format":"{}{}{}","snippet":"defRefEnum{${1}}{${2}}{${3}}"}},
+		{"name":"defRefEnumInline","arg":{"format":"[]{}{}{}","snippet":"defRefEnumInline[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"defRefEnumInline","arg":{"format":"{}{}{}","snippet":"defRefEnumInline{${1}}{${2}}{${3}}"}},
+		{"name":"refEnum","arg":{"format":"{}{}","snippet":"refEnum{${1}}{${2}}"}},
+		{"name":"refenumenclosing","arg":{"format":"{}","snippet":"refenumenclosing{${1}}"}},
+		{"name":"refEnumFull","arg":{"format":"{}{}","snippet":"refEnumFull{${1}}{${2}}"}},
+		{"name":"refEnumFullP","arg":{"format":"{}{}","snippet":"refEnumFullP{${1}}{${2}}"}},
+		{"name":"refEnumFullT","arg":{"format":"{}{}","snippet":"refEnumFullT{${1}}{${2}}"}},
+		{"name":"refenuminlineenclosing","arg":{"format":"{}","snippet":"refenuminlineenclosing{${1}}"}},
+		{"name":"setupRefEnums","arg":{"format":"[]{}{}","snippet":"setupRefEnums[${1}]{${2}}{${3}}"}},
+		{"name":"setupRefEnums","arg":{"format":"{}{}","snippet":"setupRefEnums{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"HBeforeEvenMove"},
+		{"name":"HBeforeOddMove"},
+		{"name":"HBeforeStone","doc":"\\HBeforeStone: a macro expanded before placing stones, influences \\HStoneGroup, default: {}."},
+		{"name":"HBlackStone"},
+		{"name":"HCoordinateStyle","arg":{"format":"{}","snippet":"HCoordinateStyle{${1:coordinate}}"}},
+		{"name":"HDrawHex"},
+		{"name":"HGame","arg":{"format":"[]{}","snippet":"HGame[${1:options}]{${2:moves}}","keys":["pgfkeys:/h@game"],"keyPos":0}},
+		{"name":"HGame","arg":{"format":"{}","snippet":"HGame{${1:moves}}"}},
+		{"name":"HHexGroup","arg":{"format":"[]{}","snippet":"HHexGroup[${1:options}]{${2:coordinates}}","keys":["pgfkeys:/h@hex@group"],"keyPos":0}},
+		{"name":"HHexGroup","arg":{"format":"{}","snippet":"HHexGroup{${1:coordinates}}"}},
+		{"name":"HLetterCoordinates"},
+		{"name":"HMoveNumberStyle","arg":{"format":"{}","snippet":"HMoveNumberStyle{${1:number}}"}},
+		{"name":"HStoneDiameter"},
+		{"name":"HStoneGroup","arg":{"format":"[]{}","snippet":"HStoneGroup[${1:options}]{${2:coordinates}}","keys":["pgfkeys:/h@stone@group"],"keyPos":0}},
+		{"name":"HStoneGroup","arg":{"format":"{}","snippet":"HStoneGroup{${1:coordinates}}"}},
+		{"name":"HTransparentStone"},
+		{"name":"HWhiteStone"}
+	],
+	"envs": [
+		{"name":"HavannahBoard","arg":{"format":"[]","snippet":"[${1:options}]","keys":["pgfkeys:/h@havannah@board"],"keyPos":0},"doc":"The HavannahBoard environment typesets a Havannah board."},
+		{"name":"HavannahBoard","doc":"The HavannahBoard environment typesets a Havannah board."},
+		{"name":"HexBoard","arg":{"format":"[]","snippet":"[${1:options}]","keys":["pgfkeys:/h@hex@board"],"keyPos":0},"doc":"The HexBoard environment typesets a Hex board."},
+		{"name":"HexBoard","doc":"The HexBoard environment typesets a Hex board."},
+		{"name":"InnerHavannahBoard","arg":{"format":"[]","snippet":"[${1:options}]","keys":["pgfkeys:/h@havannah@board"],"keyPos":0}},
+		{"name":"InnerHavannahBoard"},
+		{"name":"InnerHexBoard","arg":{"format":"[]","snippet":"[${1:options}]","keys":["pgfkeys:/h@hex@board"],"keyPos":0},"doc":"The InnerHexBoard environment typesets a Hex board inside a tikzpicture environment."},
+		{"name":"InnerHexBoard","doc":"The InnerHexBoard environment typesets a Hex board inside a tikzpicture environment."}
+	],
+	"keys": {
+		"pgfkeys:/h@game": ["first move label=","relative stone size=","first player=${1|white,black|}","numbered moves=${1|true,false|}"],
+		"pgfkeys:/h@havannah@board": ["board size=","hex height=","prefix=","x=","y=","coordinate style=${1|classical,little golem|}","show coordinates=${1|true,false|}","show hexes=${1|true,false|}"],
+		"pgfkeys:/h@hex@board": ["board size=","hex height=","prefix=","x=","y=","show coordinates=${1|true,false|}","show hexes=${1|true,false|}","top left color=${1|white,black|}"],
+		"pgfkeys:/h@hex@group": ["label="],
+		"pgfkeys:/h@stone@group": ["label=","relative stone size=","color=${1|white,black,transparent|}"]
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"tikzfill.image"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"enumitem"},{"name":"tabularx"},{"name":"array"},{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"fontawesome5-utex-helper","engines":["xelatex"]}],
+	"macros": [
+		{"name":"personabrand","arg":{"format":"[]{}","snippet":"personabrand[${1}]{${2}}"}},
+		{"name":"personabrand","arg":{"format":"{}","snippet":"personabrand{${1}}"}},
+		{"name":"personacard","arg":{"format":"[]{}{}{}","snippet":"personacard[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"personacard","arg":{"format":"{}{}{}","snippet":"personacard{${1}}{${2}}{${3}}"}},
+		{"name":"personacontext","arg":{"format":"[]{}{}","snippet":"personacontext[${1}]{${2}}{${3}}"}},
+		{"name":"personacontext","arg":{"format":"{}{}","snippet":"personacontext{${1}}{${2}}"}},
+		{"name":"personafact","arg":{"format":"{}{}","snippet":"personafact{${1}}{${2}}"}},
+		{"name":"personaphoto","arg":{"format":"{}","snippet":"personaphoto{${1}}"}},
+		{"name":"personapill","arg":{"format":"{}","snippet":"personapill{${1}}"}},
+		{"name":"personaquote","arg":{"format":"{}","snippet":"personaquote{${1}}"}},
+		{"name":"personasection","arg":{"format":"[]{}{}{}","snippet":"personasection[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"personasection","arg":{"format":"{}{}{}","snippet":"personasection{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [
+		{"name":"persona","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

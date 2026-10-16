@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"easy"}],
+	"macros": [
+		{"name":"alignbottom"},
+		{"name":"aligntop"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"first","arg":{"format":"{}","snippet":"first{${1:rule}}"}}
+	],
+	"envs": [
+		{"name":"MAT","arg":{"format":"()[]{}","snippet":"(${1})[${2}]{${3}}"}},
+		{"name":"MAT","arg":{"format":"(){}","snippet":"(${1}){${2}}"}}
+	],
+	"keys": {
+		"\\usepackage/easymat#c": ["thiklines","thinlines"]
+	},
+	"args": ["\\usepackage/easymat#c"]
+}

@@ -1,0 +1,21 @@
+{
+	"macros": [
+		{"name":"colonEq","unusual":true},
+		{"name":"Dmath","arg":{"format":"[]{}","snippet":"Dmath[${1:options}]{${2:math}}"},"doc":"The pyLaTeX package defines \\Dmath for the dmath environment as well as \\Dmath* as a shortcut for the dmath* environment."},
+		{"name":"Dmath","arg":{"format":"{}","snippet":"Dmath{${1:math}}"},"doc":"The pyLaTeX package defines \\Dmath for the dmath environment as well as \\Dmath* as a shortcut for the dmath* environment."},
+		{"name":"Dmath*","arg":{"format":"[]{}","snippet":"Dmath*[${1:options}]{${2:math}}"},"doc":"The pyLaTeX package defines \\Dmath for the dmath environment as well as \\Dmath* as a shortcut for the dmath* environment."},
+		{"name":"Dmath*","arg":{"format":"{}","snippet":"Dmath*{${1:math}}"},"doc":"The pyLaTeX package defines \\Dmath for the dmath environment as well as \\Dmath* as a shortcut for the dmath* environment."},
+		{"name":"Input","arg":{"format":"{}","snippet":"Input{${1:file}}"}},
+		{"name":"pglabel","arg":{"format":"{}","snippet":"pglabel{${1:label}}"}},
+		{"name":"py","arg":{"format":"{}","snippet":"py{${1:tag}}"},"doc":"Display the value of foo without any additional decorations."},
+		{"name":"py*","arg":{"format":"{}","snippet":"py*{${1:tag}}"},"doc":"Display the value of foo without any additional decorations."},
+		{"name":"Py","arg":{"format":"[]{}","snippet":"Py[${1:spacing}]{${2:tag}}"},"doc":"Display the value of foo and set the equation tag to be (foo)."},
+		{"name":"Py","arg":{"format":"{}","snippet":"Py{${1:tag}}"},"doc":"Display the value of foo and set the equation tag to be (foo)."},
+		{"name":"Py*","arg":{"format":"[]{}","snippet":"Py*[${1:spacing}]{${2:tag}}"},"doc":"Display the value of foo and set the equation tag to be (foo)."},
+		{"name":"Py*","arg":{"format":"{}","snippet":"Py*{${1:tag}}"},"doc":"Display the value of foo and set the equation tag to be (foo)."},
+		{"name":"pytag","arg":{"format":"{}{}","snippet":"pytag{${1:tag}}{${2:value}}"},"unusual":true},
+		{"name":"ttTag","arg":{"format":"{}","snippet":"ttTag{${1:tag}}"},"doc":"The \\ttTag macro, defined in the pyLaTeX package, does as its name suggests – typesets the tag in the \\tt font."}
+	],
+	"envs": [],
+	"keys": {}
+}

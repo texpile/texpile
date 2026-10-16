@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"diff","arg":{"format":"[]{}{}","snippet":"diff[${1:order}]{${2:function}}{${3:variable}}"}},
+		{"name":"diff","arg":{"format":"{}{}","snippet":"diff{${1:function}}{${2:variable}}"}},
+		{"name":"diff*","arg":{"format":"[]{}{}{}","snippet":"diff*[${1:order}]{${2:function}}{${3:variable}}{${4:point}}"}},
+		{"name":"diff*","arg":{"format":"{}{}{}","snippet":"diff*{${1:function}}{${2:variable}}{${3:point}}"}},
+		{"name":"diffp","arg":{"format":"[]{}{}","snippet":"diffp[${1:order}]{${2:function}}{${3:variable}}"}},
+		{"name":"diffp","arg":{"format":"{}{}","snippet":"diffp{${1:function}}{${2:variable}}"}},
+		{"name":"diffp*","arg":{"format":"[]{}{}{}","snippet":"diffp*[${1:order}]{${2:function}}{${3:variable}}{${4:point}}"}},
+		{"name":"diffp*","arg":{"format":"{}{}{}","snippet":"diffp*{${1:function}}{${2:variable}}{${3:point}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/esdiff#c": ["big","bigc","bigp","display","italic","med","medc","medp","roman","text","thin","thinc","thinp"]
+	},
+	"args": ["\\usepackage/esdiff#c"]
+}

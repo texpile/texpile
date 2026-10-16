@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"gishape","doc":"The style adds two new commands \\gishape and \\gushape that typeset “Gillized” italics and “Gillized” upright italics."},
+		{"name":"gushape","doc":"The style adds two new commands \\gishape and \\gushape that typeset “Gillized” italics and “Gillized” upright italics."}
+	],
+	"envs": [],
+	"keys": {}
+}

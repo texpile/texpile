@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ltlabtikzdate","unusual":true},
+		{"name":"ltlabtikzversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

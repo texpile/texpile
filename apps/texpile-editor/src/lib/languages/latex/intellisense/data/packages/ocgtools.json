@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"color"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pifont"},{"name":"ocg"},{"name":"ifpdf"},{"name":"xkeyval"},{"name":"atbegshi-ltx"},{"name":"eforms"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"calc"},{"name":"insdljs"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi"},{"name":"taborder"}],
+	"macros": [
+		{"name":"defaultocgfontcolor"},
+		{"name":"defaultocgpapercolor"},
+		{"name":"layerHshift"},
+		{"name":"layerVshift"},
+		{"name":"ocgclosechar","doc":"The \\ocgclosechar command is used to print mark which is used to close layers."},
+		{"name":"ocgminitext","arg":{"format":"[]{}{}","snippet":"ocgminitext[${1:options}]{${2:link text}}{${3:layer text}}"}},
+		{"name":"ocgminitext","arg":{"format":"{}{}","snippet":"ocgminitext{${1:link text}}{${2:layer text}}"}},
+		{"name":"ocgminitextlb","arg":{"format":"[]{}{}","snippet":"ocgminitextlb[${1:options}]{${2:link text}}{${3:layer text}}"}},
+		{"name":"ocgminitextlb","arg":{"format":"{}{}","snippet":"ocgminitextlb{${1:link text}}{${2:layer text}}"}},
+		{"name":"ocgminitextlt","arg":{"format":"[]{}{}","snippet":"ocgminitextlt[${1:options}]{${2:link text}}{${3:layer text}}"}},
+		{"name":"ocgminitextlt","arg":{"format":"{}{}","snippet":"ocgminitextlt{${1:link text}}{${2:layer text}}"}},
+		{"name":"ocgminitextrb","arg":{"format":"[]{}{}","snippet":"ocgminitextrb[${1:options}]{${2:link text}}{${3:layer text}}"}},
+		{"name":"ocgminitextrb","arg":{"format":"{}{}","snippet":"ocgminitextrb{${1:link text}}{${2:layer text}}"}},
+		{"name":"ocgminitextrt","arg":{"format":"[]{}{}","snippet":"ocgminitextrt[${1:options}]{${2:link text}}{${3:layer text}}"}},
+		{"name":"ocgminitextrt","arg":{"format":"{}{}","snippet":"ocgminitextrt{${1:link text}}{${2:layer text}}"}},
+		{"name":"ocgpicture","arg":{"format":"[]{}","snippet":"ocgpicture[${1:includegraphics options}]{${2:image}}"}},
+		{"name":"ocgpicture","arg":{"format":"{}","snippet":"ocgpicture{${1:image}}"}},
+		{"name":"ocgtext","arg":{"format":"[]{}{}","snippet":"ocgtext[${1:options}]{${2:link text}}{${3:layer text}}"}},
+		{"name":"ocgtext","arg":{"format":"{}{}","snippet":"ocgtext{${1:link text}}{${2:layer text}}"}},
+		{"name":"ocgtextend","doc":"Macros \\ocgtextstart and \\ocgtextend are used to denote the start and the end of hyperlink which is used to hide/reveal layers."},
+		{"name":"ocgtextstart","doc":"Macros \\ocgtextstart and \\ocgtextend are used to denote the start and the end of hyperlink which is used to hide/reveal layers."}
+	],
+	"envs": [],
+	"keys": {}
+}

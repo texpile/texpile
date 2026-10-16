@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"class-report"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amsthm"},{"name":"ua-title"}],
+	"macros": [
+		{"name":"dedicationname","unusual":true},
+		{"name":"doublespaced"},
+		{"name":"maketitle"},
+		{"name":"singlespaced"}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/ua-thesis#c": ["draft","final"]
+	},
+	"args": ["\\documentclass/ua-thesis#c"]
+}

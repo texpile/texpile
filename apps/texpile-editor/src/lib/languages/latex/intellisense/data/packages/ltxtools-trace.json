@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"ltsbegingroup"},
+		{"name":"ltsendgroup"},
+		{"name":"showcsn","arg":{"format":"{}","snippet":"showcsn{${1}}"}},
+		{"name":"starttracingall"},
+		{"name":"stoptracingall"},
+		{"name":"tracinggrade"}
+	],
+	"envs": [
+		{"name":"trace"},
+		{"name":"trace*"}
+	],
+	"keys": {
+		"\\usepackage/ltxtools-trace#c": ["logonly","notraceifs","traceall","tracingall"]
+	},
+	"args": ["\\usepackage/ltxtools-trace#c"]
+}

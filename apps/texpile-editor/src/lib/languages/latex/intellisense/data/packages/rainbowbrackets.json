@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xstring"},{"name":"xcolor"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"rbdisable","doc":"Description: Disables coloring mid document."},
+		{"name":"rbenable"},
+		{"name":"rbparenl"},
+		{"name":"rbparenr"},
+		{"name":"rbresetbracketmax","doc":"Description: Resets the max coloring level to the package default."},
+		{"name":"rbresetbrackets","doc":"Resets the bracket symbol(s). If used outside an rb environment it will reset the global bracket symbol(s) to the package default(s) (or the one(s) passed via the package arguments), if used within a rb environment it will reset them to the current environment default(s)."},
+		{"name":"rbresetlbracket"},
+		{"name":"rbresetmode"},
+		{"name":"rbresetrbracket","doc":"Resets the bracket symbol(s). If used outside an rb environment it will reset the global bracket symbol(s) to the package default(s) (or the one(s) passed via the package arguments), if used within a rb environment it will reset them to the current environment default(s)."},
+		{"name":"rbresetstyle"},
+		{"name":"rbsetboldmode"},
+		{"name":"rbsetbracketmax","arg":{"format":"{}[][]","snippet":"rbsetbracketmax{${1:value}}[${2:fallbackvalue}][${3:errorinfo}]"}},
+		{"name":"rbsetbracketmax","arg":{"format":"{}","snippet":"rbsetbracketmax{${1:value}}"}},
+		{"name":"rbsetitalicmode"},
+		{"name":"rbsetlbracket","arg":{"format":"{}","snippet":"rbsetlbracket{${1:symbol}}"},"doc":"Change the bracket symbol mid document."},
+		{"name":"rbsetnormalmode"},
+		{"name":"rbsetrbracket","arg":{"format":"{}","snippet":"rbsetrbracket{${1:symbol}}"},"doc":"Change the bracket symbol mid document."},
+		{"name":"rbsetstyle","arg":{"format":"{}","snippet":"rbsetstyle{${1:style}}"},"doc":"Changes the color scheme mid document to the specified style."},
+		{"name":"rbtransformer","arg":{"format":"{}","snippet":"rbtransformer{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"rb","arg":{"format":"[][]","snippet":"[${1:lbracket}][${2:rbracket}]"}},
+		{"name":"rb"},
+		{"name":"rbb","arg":{"format":"[][]","snippet":"[${1:lbracket}][${2:rbracket}]"},"doc":"Same as rb environment but all parentheses are in bold mode."},
+		{"name":"rbb","doc":"Same as rb environment but all parentheses are in bold mode."},
+		{"name":"rbi","arg":{"format":"[][]","snippet":"[${1:lbracket}][${2:rbracket}]"}},
+		{"name":"rbi"}
+	],
+	"keys": {}
+}

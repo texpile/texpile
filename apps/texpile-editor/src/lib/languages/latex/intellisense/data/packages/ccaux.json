@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"addto","arg":{"format":"{}{}","snippet":"addto{${1}}{${2}}"},"unusual":true},
+		{"name":"babel","arg":{"format":"{}{}[]","snippet":"babel{${1:macro}}{${2:english text}}[${3:translations}]"},"unusual":true},
+		{"name":"babel","arg":{"format":"{}{}","snippet":"babel{${1:macro}}{${2:english text}}"},"unusual":true},
+		{"name":"babeladdtranslations","arg":{"format":"{}{}","snippet":"babeladdtranslations{${1:macro}}{${2:language=translation list}}"}},
+		{"name":"ccClassWarning","arg":{"format":"{}","snippet":"ccClassWarning{${1}}"},"unusual":true},
+		{"name":"condbreak","arg":{"format":"{}","snippet":"condbreak{${1:length}}"}},
+		{"name":"newwarning","arg":{"format":"{}{}","snippet":"newwarning{${1}}{${2}}"},"unusual":true},
+		{"name":"numberallwithin","arg":{"format":"{}","snippet":"numberallwithin{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

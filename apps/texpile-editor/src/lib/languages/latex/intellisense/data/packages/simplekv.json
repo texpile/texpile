@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"defKV","arg":{"format":"[]{}","snippet":"defKV[${1:keys set}]{${2:key=code list}}"}},
+		{"name":"defKV","arg":{"format":"{}","snippet":"defKV{${1:key=code list}}"}},
+		{"name":"ifboolKV","arg":{"format":"[]{}{}{}","snippet":"ifboolKV[${1:keys set}]{${2:key}}{${3:code if true}}{${4:code if false}}"}},
+		{"name":"ifboolKV","arg":{"format":"{}{}{}","snippet":"ifboolKV{${1:key}}{${2:code if true}}{${3:code if false}}"}},
+		{"name":"ifemptyKV","arg":{"format":"[]{}{}{}","snippet":"ifemptyKV[${1:keys set}]{${2:key}}{${3:code if empty}}{${4:code if not empty}}"}},
+		{"name":"ifemptyKV","arg":{"format":"{}{}{}","snippet":"ifemptyKV{${1:key}}{${2:code if empty}}{${3:code if not empty}}"}},
+		{"name":"ifkeyKV","arg":{"format":"[]{}{}{}","snippet":"ifkeyKV[${1:keys set}]{${2:key}}{${3:code if defined}}{${4:code if undefined}}"}},
+		{"name":"ifkeyKV","arg":{"format":"{}{}{}","snippet":"ifkeyKV{${1:key}}{${2:code if defined}}{${3:code if undefined}}"}},
+		{"name":"restoreKV","arg":{"format":"[]","snippet":"restoreKV[${1:keys set}]"}},
+		{"name":"restoreKV"},
+		{"name":"setKV","arg":{"format":"[]{}","snippet":"setKV[${1:keys set}]{${2:key=value list}}"}},
+		{"name":"setKV","arg":{"format":"{}","snippet":"setKV{${1:key=value list}}"}},
+		{"name":"setKVdefault","arg":{"format":"[]{}","snippet":"setKVdefault[${1:keys set}]{${2:key=value list}}"}},
+		{"name":"setKVdefault","arg":{"format":"{}","snippet":"setKVdefault{${1:key=value list}}"}},
+		{"name":"showKV","arg":{"format":"[]{}","snippet":"showKV[${1:keys set}]{${2:key}}"}},
+		{"name":"showKV","arg":{"format":"{}","snippet":"showKV{${1:key}}"}},
+		{"name":"skvdate","unusual":true},
+		{"name":"skvname","unusual":true},
+		{"name":"skvver","unusual":true},
+		{"name":"testboolKV","arg":{"format":"{}{}{}","snippet":"testboolKV{${1:argument}}{${2:code if true}}{${3:code if false}}"}},
+		{"name":"useKV","arg":{"format":"[]{}","snippet":"useKV[${1:keys set}]{${2:key}}"}},
+		{"name":"useKV","arg":{"format":"{}","snippet":"useKV{${1:key}}"}},
+		{"name":"useKVdefault","arg":{"format":"[]","snippet":"useKVdefault[${1:keys set}]"}},
+		{"name":"useKVdefault"}
+	],
+	"envs": [],
+	"keys": {}
+}

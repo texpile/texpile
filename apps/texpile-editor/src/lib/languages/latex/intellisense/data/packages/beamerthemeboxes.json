@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"addfootbox","arg":{"format":"{}{}","snippet":"addfootbox{${1}}{${2}}"}},
+		{"name":"addfootboxtemplate","arg":{"format":"{}{}","snippet":"addfootboxtemplate{${1}}{${2}}"},"unusual":true},
+		{"name":"addheadbox","arg":{"format":"{}{}","snippet":"addheadbox{${1}}{${2}}"},"doc":"Each time this command is invoked, a new box is added to the head line, with the first added box being shown on the left."},
+		{"name":"addheadboxtemplate","arg":{"format":"{}{}","snippet":"addheadboxtemplate{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

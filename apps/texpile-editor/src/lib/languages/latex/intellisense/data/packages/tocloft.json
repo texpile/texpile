@@ -1,681 +1,216 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "tocloftpagestyle",
-      "arg": {
-        "format": "{}",
-        "snippet": "tocloftpagestyle{${1:style}}"
-      }
-    },
-    {
-      "name": "cftmarktoc"
-    },
-    {
-      "name": "cftmarklof"
-    },
-    {
-      "name": "cftmarklot"
-    },
-    {
-      "name": "cftbeforetoctitleskip"
-    },
-    {
-      "name": "cftbeforeloftitleskip"
-    },
-    {
-      "name": "cftbeforelottitleskip"
-    },
-    {
-      "name": "cftaftertoctitleskip"
-    },
-    {
-      "name": "cftafterloftitleskip"
-    },
-    {
-      "name": "cftafterlottitleskip"
-    },
-    {
-      "name": "cfttoctitlefont"
-    },
-    {
-      "name": "cftloftitlefont"
-    },
-    {
-      "name": "cftlottitlefont"
-    },
-    {
-      "name": "cftaftertoctitle"
-    },
-    {
-      "name": "cftafterloftitle"
-    },
-    {
-      "name": "cftafterlottitle"
-    },
-    {
-      "name": "cftdot"
-    },
-    {
-      "name": "cftdotsep"
-    },
-    {
-      "name": "cftnodots"
-    },
-    {
-      "name": "cftdotfill",
-      "arg": {
-        "format": "{}",
-        "snippet": "cftdotfill{${1:sep}}"
-      }
-    },
-    {
-      "name": "cftsetpnumwidth",
-      "arg": {
-        "format": "{}",
-        "snippet": "cftsetpnumwidth{${1:length}}"
-      }
-    },
-    {
-      "name": "cftsetrmarg",
-      "arg": {
-        "format": "{}",
-        "snippet": "cftsetrmarg{${1:length}}"
-      }
-    },
-    {
-      "name": "cftpnumalign"
-    },
-    {
-      "name": "cftparskip"
-    },
-    {
-      "name": "cftbeforepartskip"
-    },
-    {
-      "name": "cftbeforechapskip"
-    },
-    {
-      "name": "cftbeforesecskip"
-    },
-    {
-      "name": "cftbeforesubsecskip"
-    },
-    {
-      "name": "cftbeforesubsubsecskip"
-    },
-    {
-      "name": "cftbeforeparaskip"
-    },
-    {
-      "name": "cftbeforesubparaskip"
-    },
-    {
-      "name": "cftbeforefigskip"
-    },
-    {
-      "name": "cftbeforesubfigskip"
-    },
-    {
-      "name": "cftbeforetabskip"
-    },
-    {
-      "name": "cftbeforesubtabskip"
-    },
-    {
-      "name": "cftpartindent"
-    },
-    {
-      "name": "cftchapindent"
-    },
-    {
-      "name": "cftsecindent"
-    },
-    {
-      "name": "cftsubsecindent"
-    },
-    {
-      "name": "cftsubsubsecindent"
-    },
-    {
-      "name": "cftparaindent"
-    },
-    {
-      "name": "cftsubparaindent"
-    },
-    {
-      "name": "cftfigindent"
-    },
-    {
-      "name": "cftsubfigindent"
-    },
-    {
-      "name": "cfttabindent"
-    },
-    {
-      "name": "cftsubtabindent"
-    },
-    {
-      "name": "cftpartnumwidth"
-    },
-    {
-      "name": "cftchapnumwidth"
-    },
-    {
-      "name": "cftsecnumwidth"
-    },
-    {
-      "name": "cftsubsecnumwidth"
-    },
-    {
-      "name": "cftsubsubsecnumwidth"
-    },
-    {
-      "name": "cftparanumwidth"
-    },
-    {
-      "name": "cftsubparanumwidth"
-    },
-    {
-      "name": "cftfignumwidth"
-    },
-    {
-      "name": "cftsubfignumwidth"
-    },
-    {
-      "name": "cfttabnumwidth"
-    },
-    {
-      "name": "cftsubtabnumwidth"
-    },
-    {
-      "name": "cftpartfont"
-    },
-    {
-      "name": "cftchapfont"
-    },
-    {
-      "name": "cftsecfont"
-    },
-    {
-      "name": "cftsubsecfont"
-    },
-    {
-      "name": "cftsubsubsecfont"
-    },
-    {
-      "name": "cftparafont"
-    },
-    {
-      "name": "cftsubparafont"
-    },
-    {
-      "name": "cftfigfont"
-    },
-    {
-      "name": "cftsubfigfont"
-    },
-    {
-      "name": "cfttabfont"
-    },
-    {
-      "name": "cftsubtabfont"
-    },
-    {
-      "name": "cftpartpresnum"
-    },
-    {
-      "name": "cftchappresnum"
-    },
-    {
-      "name": "cftsecpresnum"
-    },
-    {
-      "name": "cftsubsecpresnum"
-    },
-    {
-      "name": "cftsubsubsecpresnum"
-    },
-    {
-      "name": "cftparapresnum"
-    },
-    {
-      "name": "cftsubparapresnum"
-    },
-    {
-      "name": "cftfigpresnum"
-    },
-    {
-      "name": "cftsubfigpresnum"
-    },
-    {
-      "name": "cfttabpresnum"
-    },
-    {
-      "name": "cftsubtabpresnum"
-    },
-    {
-      "name": "cftpartaftersnum"
-    },
-    {
-      "name": "cftchapaftersnum"
-    },
-    {
-      "name": "cftsecaftersnum"
-    },
-    {
-      "name": "cftsubsecaftersnum"
-    },
-    {
-      "name": "cftsubsubsecaftersnum"
-    },
-    {
-      "name": "cftparaaftersnum"
-    },
-    {
-      "name": "cftsubparaaftersnum"
-    },
-    {
-      "name": "cftfigaftersnum"
-    },
-    {
-      "name": "cftsubfigaftersnum"
-    },
-    {
-      "name": "cfttabaftersnum"
-    },
-    {
-      "name": "cftsubtabaftersnum"
-    },
-    {
-      "name": "cftpartaftersnumb"
-    },
-    {
-      "name": "cftchapaftersnumb"
-    },
-    {
-      "name": "cftsecaftersnumb"
-    },
-    {
-      "name": "cftsubsecaftersnumb"
-    },
-    {
-      "name": "cftsubsubsecaftersnumb"
-    },
-    {
-      "name": "cftparaaftersnumb"
-    },
-    {
-      "name": "cftsubparaaftersnumb"
-    },
-    {
-      "name": "cftfigaftersnumb"
-    },
-    {
-      "name": "cftsubfigaftersnumb"
-    },
-    {
-      "name": "cfttabaftersnumb"
-    },
-    {
-      "name": "cftsubtabaftersnumb"
-    },
-    {
-      "name": "cftpartleader"
-    },
-    {
-      "name": "cftchapleader"
-    },
-    {
-      "name": "cftsecleader"
-    },
-    {
-      "name": "cftsubsecleader"
-    },
-    {
-      "name": "cftsubsubsecleader"
-    },
-    {
-      "name": "cftparaleader"
-    },
-    {
-      "name": "cftsubparaleader"
-    },
-    {
-      "name": "cftfigleader"
-    },
-    {
-      "name": "cftsubfigleader"
-    },
-    {
-      "name": "cfttableader"
-    },
-    {
-      "name": "cftsubtableader"
-    },
-    {
-      "name": "cftpartdotsep"
-    },
-    {
-      "name": "cftchapdotsep"
-    },
-    {
-      "name": "cftsecdotsep"
-    },
-    {
-      "name": "cftsubsecdotsep"
-    },
-    {
-      "name": "cftsubsubsecdotsep"
-    },
-    {
-      "name": "cftparadotsep"
-    },
-    {
-      "name": "cftsubparadotsep"
-    },
-    {
-      "name": "cftfigdotsep"
-    },
-    {
-      "name": "cftsubfigdotsep"
-    },
-    {
-      "name": "cfttabdotsep"
-    },
-    {
-      "name": "cftsubtabdotsep"
-    },
-    {
-      "name": "cftpartpagefont"
-    },
-    {
-      "name": "cftchappagefont"
-    },
-    {
-      "name": "cftsecpagefont"
-    },
-    {
-      "name": "cftsubsecpagefont"
-    },
-    {
-      "name": "cftsubsubsecpagefont"
-    },
-    {
-      "name": "cftparapagefont"
-    },
-    {
-      "name": "cftsubparapagefont"
-    },
-    {
-      "name": "cftfigpagefont"
-    },
-    {
-      "name": "cftsubfigpagefont"
-    },
-    {
-      "name": "cfttabpagefont"
-    },
-    {
-      "name": "cftsubtabpagefont"
-    },
-    {
-      "name": "cftpartafterpnum"
-    },
-    {
-      "name": "cftchapafterpnum"
-    },
-    {
-      "name": "cftsecafterpnum"
-    },
-    {
-      "name": "cftsubsecafterpnum"
-    },
-    {
-      "name": "cftsubsubsecafterpnum"
-    },
-    {
-      "name": "cftparaafterpnum"
-    },
-    {
-      "name": "cftsubparaafterpnum"
-    },
-    {
-      "name": "cftfigafterpnum"
-    },
-    {
-      "name": "cftsubfigafterpnum"
-    },
-    {
-      "name": "cfttabafterpnum"
-    },
-    {
-      "name": "cftsubtabafterpnum"
-    },
-    {
-      "name": "cftsetindents",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "cftsetindents{${1:entry}}{${2:indent}}{${3:numwidth}}"
-      }
-    },
-    {
-      "name": "cftpagenumbersoff",
-      "arg": {
-        "format": "{}",
-        "snippet": "cftpagenumbersoff{${1:entry}}"
-      }
-    },
-    {
-      "name": "cftpagenumberson",
-      "arg": {
-        "format": "{}",
-        "snippet": "cftpagenumberson{${1:entry}}"
-      }
-    },
-    {
-      "name": "newlistof",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "newlistof[${4:within}]{${1:entry}}{${2:ext}}{${3:listofname}}"
-      }
-    },
-    {
-      "name": "newlistof",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "newlistof{${1:entry}}{${2:ext}}{${3:listofname}}"
-      }
-    },
-    {
-      "name": "tocdepth"
-    },
-    {
-      "name": "lotdepth"
-    },
-    {
-      "name": "lofdepth"
-    },
-    {
-      "name": "newlistentry",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "newlistentry[${4:within}]{${1:entry}}{${2:ext}}{${3:level-1}}"
-      }
-    },
-    {
-      "name": "cftchapterprecis",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "cftchapterprecis{${1:text}}"
-      }
-    },
-    {
-      "name": "cftchapterprecishere",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "cftchapterprecishere{${1:text}}"
-      }
-    },
-    {
-      "name": "cftchapterprecistoc",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "cftchapterprecistoc{${1:text}}"
-      }
-    },
-    {
-      "name": "cftlocalchange",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "cftlocalchange{${1:file}}{${2:pnumwidth}}{${3:tocrmarg}}"
-      }
-    },
-    {
-      "name": "cftaddtitleline",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "cftaddtitleline{${1:file}}{${2:kind}}{${3:title}}{${4:page}}"
-      }
-    },
-    {
-      "name": "cftaddnumtitleline",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}{}",
-        "snippet": "cftaddnumtitleline{${1:file}}{${2:kind}}{${3:num}}{${4:title}}{${5:page}}"
-      }
-    },
-    {
-      "name": "cftlofposthook",
-      "unusual": true
-    },
-    {
-      "name": "cftlofprehook",
-      "unusual": true
-    },
-    {
-      "name": "cftlotposthook",
-      "unusual": true
-    },
-    {
-      "name": "cftlotprehook",
-      "unusual": true
-    },
-    {
-      "name": "cfttocposthook",
-      "unusual": true
-    },
-    {
-      "name": "cfttocprehook",
-      "unusual": true
-    },
-    {
-      "name": "cftpartfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftchapfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftsecfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftsubsecfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftsubsubsecfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftparafillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftsubparafillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftfigfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftsubfigfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cfttabfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftsubtabfillnum",
-      "unusual": true
-    },
-    {
-      "name": "cftchapname",
-      "unusual": true
-    },
-    {
-      "name": "cftsecname",
-      "unusual": true
-    },
-    {
-      "name": "cftsubsecname",
-      "unusual": true
-    },
-    {
-      "name": "cftsubsubsecname",
-      "unusual": true
-    },
-    {
-      "name": "cftparaname",
-      "unusual": true
-    },
-    {
-      "name": "cftsubparaname",
-      "unusual": true
-    },
-    {
-      "name": "cftfigname",
-      "unusual": true
-    },
-    {
-      "name": "cftsubfigname",
-      "unusual": true
-    },
-    {
-      "name": "cfttabname",
-      "unusual": true
-    },
-    {
-      "name": "cftsubtabname",
-      "unusual": true
-    },
-    {
-      "name": "phantomsection",
-      "unusual": true
-    },
-    {
-      "name": "cftparfillskip",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/tocloft#c": [
-      "subfigure",
-      "titles"
-    ]
-  },
-  "args": [
-    "\\usepackage/tocloft#c"
-  ]
+	"deps": [{"name":"etoolbox"}],
+	"macros": [
+		{"name":"cftaddnumtitleline","arg":{"format":"{}{}{}{}{}","snippet":"cftaddnumtitleline{${1:file}}{${2:kind}}{${3:num}}{${4:title}}{${5:page}}"}},
+		{"name":"cftaddtitleline","arg":{"format":"{}{}{}{}","snippet":"cftaddtitleline{${1:file}}{${2:kind}}{${3:title}}{${4:page}}"},"doc":"The command \\cftaddtitleline{⟨file⟩}{⟨kind⟩}{⟨title⟩}{⟨page⟩} will write a \\contentsline entry into ⟨file⟩ for a ⟨kind⟩ entry with title ⟨title⟩ and page number ⟨page⟩."},
+		{"name":"cftafterloftitle"},
+		{"name":"cftafterloftitleskip"},
+		{"name":"cftafterlottitle"},
+		{"name":"cftafterlottitleskip"},
+		{"name":"cftaftertoctitle"},
+		{"name":"cftaftertoctitleskip"},
+		{"name":"cftbeforechapskip"},
+		{"name":"cftbeforefigskip"},
+		{"name":"cftbeforeloftitleskip"},
+		{"name":"cftbeforelottitleskip"},
+		{"name":"cftbeforeparaskip"},
+		{"name":"cftbeforepartskip"},
+		{"name":"cftbeforesecskip"},
+		{"name":"cftbeforesubfigskip","if":"subfigure"},
+		{"name":"cftbeforesubparaskip"},
+		{"name":"cftbeforesubsecskip"},
+		{"name":"cftbeforesubsubsecskip"},
+		{"name":"cftbeforesubtabskip","if":"subfigure"},
+		{"name":"cftbeforetabskip"},
+		{"name":"cftbeforetoctitleskip"},
+		{"name":"cftchapafterpnum"},
+		{"name":"cftchapaftersnum"},
+		{"name":"cftchapaftersnumb"},
+		{"name":"cftchapdotsep"},
+		{"name":"cftchapfillnum","arg":{"format":"{}","snippet":"cftchapfillnum{${1:page}}"},"unusual":true},
+		{"name":"cftchapfont"},
+		{"name":"cftchapindent"},
+		{"name":"cftchapleader"},
+		{"name":"cftchapname","unusual":true},
+		{"name":"cftchapnumwidth"},
+		{"name":"cftchappagefont"},
+		{"name":"cftchappnumfinal"},
+		{"name":"cftchappresnum"},
+		{"name":"cftchapter","arg":{"format":"[]{}","snippet":"cftchapter[${1:options}]{${2:list}}"},"unusual":true},
+		{"name":"cftchapter","arg":{"format":"{}","snippet":"cftchapter{${1:list}}"},"unusual":true},
+		{"name":"cftchapterprecis","arg":{"format":"{}","snippet":"cftchapterprecis{${1:text}}"},"doc":"\\cftchapterprecis{⟨text⟩} typesets ⟨text⟩ at the point where it is called, and also adds ⟨text⟩ to the .toc file."},
+		{"name":"cftchapterprecishere","arg":{"format":"{}","snippet":"cftchapterprecishere{${1:text}}"},"doc":"\\cftchapterprecishere{⟨text⟩} typesets ⟨text⟩."},
+		{"name":"cftchapterprecistoc","arg":{"format":"{}","snippet":"cftchapterprecistoc{${1:text}}"},"doc":"\\cftchapterprecistoc{⟨text⟩} adds ⟨text⟩ to the .toc file."},
+		{"name":"cftdot","doc":"The symbol used for the ‘dots’ in the leader is given by the value of \\cftdot."},
+		{"name":"cftdotfill","arg":{"format":"{}","snippet":"cftdotfill{${1:dot spacing}}"},"doc":"The \\cftdotfill{⟨sep⟩} command provides a parameterised version of the leader code, where ⟨sep⟩ is the separation between the dots in mu units."},
+		{"name":"cftdotsep","doc":"\\cftdotsep holds the default dot separation, and is also provided by the ccaption package."},
+		{"name":"cftfigafterpnum"},
+		{"name":"cftfigaftersnum"},
+		{"name":"cftfigaftersnumb"},
+		{"name":"cftfigdotsep"},
+		{"name":"cftfigfillnum","arg":{"format":"{}","snippet":"cftfigfillnum{${1}}"},"unusual":true},
+		{"name":"cftfigfont"},
+		{"name":"cftfigindent"},
+		{"name":"cftfigleader"},
+		{"name":"cftfigname","unusual":true},
+		{"name":"cftfignumwidth"},
+		{"name":"cftfigpagefont"},
+		{"name":"cftfigpnumfinal"},
+		{"name":"cftfigpresnum"},
+		{"name":"cftlocalchange","arg":{"format":"{}{}{}","snippet":"cftlocalchange{${1:file}}{${2:pnumwidth}}{${3:tocrmarg}}"},"doc":"The command \\cftlocalchange{⟨file⟩}{⟨pnumwidth⟩}{⟨tocrmarg⟩} will write an entry into ⟨file⟩ to reset the global parameters."},
+		{"name":"cftlofposthook"},
+		{"name":"cftlofprehook"},
+		{"name":"cftloftitlefont","doc":"The LoF title is typeset in the style given by \\cftloftitlefont."},
+		{"name":"cftloftitlename"},
+		{"name":"cftlotposthook"},
+		{"name":"cftlotprehook"},
+		{"name":"cftlottitlefont","doc":"The LoT title is typeset in the style given by \\cftlottitlefont."},
+		{"name":"cftlottitlename"},
+		{"name":"cftmarklof"},
+		{"name":"cftmarklot"},
+		{"name":"cftmarktoc"},
+		{"name":"cftnodots"},
+		{"name":"cftpagenumbersoff","arg":{"format":"{}","snippet":"cftpagenumbersoff{${1:entry}}"},"doc":"The user level command for switching off page numbers is \\cftpagenumbersoff{⟨entry⟩} where ⟨entry⟩ is the longhand name of the entry."},
+		{"name":"cftpagenumberson","arg":{"format":"{}","snippet":"cftpagenumberson{${1:entry}}"}},
+		{"name":"cftparaafterpnum"},
+		{"name":"cftparaaftersnum"},
+		{"name":"cftparaaftersnumb"},
+		{"name":"cftparadotsep"},
+		{"name":"cftparafillnum","arg":{"format":"{}","snippet":"cftparafillnum{${1}}"},"unusual":true},
+		{"name":"cftparafont"},
+		{"name":"cftparaindent"},
+		{"name":"cftparaleader"},
+		{"name":"cftparaname","unusual":true},
+		{"name":"cftparanumwidth"},
+		{"name":"cftparapagefont"},
+		{"name":"cftparapnumfinal"},
+		{"name":"cftparapresnum"},
+		{"name":"cftparfillskip","doc":"\\cftparfillskip is a copy of the default TEXbook \\parfillskip definition."},
+		{"name":"cftparskip","doc":"The \\parskip local to the ToC, etc., is set to the length \\cftparskip."},
+		{"name":"cftpartafterpnum"},
+		{"name":"cftpartaftersnum"},
+		{"name":"cftpartaftersnumb"},
+		{"name":"cftpartdotsep"},
+		{"name":"cftpartfillnum","arg":{"format":"{}","snippet":"cftpartfillnum{${1}}"},"unusual":true},
+		{"name":"cftpartfont"},
+		{"name":"cftpartindent"},
+		{"name":"cftpartinitnumwidth","arg":{"format":"{}","snippet":"cftpartinitnumwidth{${1:number}}"}},
+		{"name":"cftpartleader"},
+		{"name":"cftpartnumwidth"},
+		{"name":"cftpartpagefont"},
+		{"name":"cftpartpnumfinal"},
+		{"name":"cftpartpresnum"},
+		{"name":"cftpnumalign"},
+		{"name":"cftpnumfinaldefault","doc":"A kern pair used at the end of entries to avoid problems with protrusion."},
+		{"name":"cftsecafterpnum"},
+		{"name":"cftsecaftersnum"},
+		{"name":"cftsecaftersnumb"},
+		{"name":"cftsecdotsep"},
+		{"name":"cftsecfillnum","arg":{"format":"{}","snippet":"cftsecfillnum{${1}}"},"unusual":true},
+		{"name":"cftsecfont"},
+		{"name":"cftsecindent"},
+		{"name":"cftsecleader"},
+		{"name":"cftsecname","unusual":true},
+		{"name":"cftsecnumwidth"},
+		{"name":"cftsecpagefont"},
+		{"name":"cftsecpnumfinal"},
+		{"name":"cftsecpresnum"},
+		{"name":"cftsection","arg":{"format":"[]{}","snippet":"cftsection[${1:options}]{${2:list}}"},"unusual":true},
+		{"name":"cftsection","arg":{"format":"{}","snippet":"cftsection{${1:list}}"},"unusual":true},
+		{"name":"cftsetindents","arg":{"format":"{}{}{}","snippet":"cftsetindents{${1:entry}}{${2:indent}}{${3:numwidth}}"},"doc":"The command \\cftsetindents{⟨entry⟩}{⟨indent⟩}{⟨numwidth⟩} sets the ⟨entry⟩’s indent to the length ⟨indent⟩ and its numwidth to the length ⟨numwidth⟩."},
+		{"name":"cftsetpnumwidth","arg":{"format":"{}","snippet":"cftsetpnumwidth{${1:length}}"}},
+		{"name":"cftsetrmarg","arg":{"format":"{}","snippet":"cftsetrmarg{${1:length}}"}},
+		{"name":"cftsubfigafterpnum","if":"subfigure"},
+		{"name":"cftsubfigaftersnum","if":"subfigure"},
+		{"name":"cftsubfigaftersnumb","if":"subfigure"},
+		{"name":"cftsubfigdotsep","if":"subfigure"},
+		{"name":"cftsubfigfillnum","arg":{"format":"{}","snippet":"cftsubfigfillnum{${1:page}}"},"unusual":true,"if":"subfigure"},
+		{"name":"cftsubfigfont","if":"subfigure"},
+		{"name":"cftsubfigindent","if":"subfigure"},
+		{"name":"cftsubfigleader","if":"subfigure"},
+		{"name":"cftsubfigname","unusual":true},
+		{"name":"cftsubfignumwidth","if":"subfigure"},
+		{"name":"cftsubfigpagefont","if":"subfigure"},
+		{"name":"cftsubfigpnumfinal","if":"subfigure"},
+		{"name":"cftsubfigpresnum","if":"subfigure"},
+		{"name":"cftsubparaafterpnum"},
+		{"name":"cftsubparaaftersnum"},
+		{"name":"cftsubparaaftersnumb"},
+		{"name":"cftsubparadotsep"},
+		{"name":"cftsubparafillnum","arg":{"format":"{}","snippet":"cftsubparafillnum{${1}}"},"unusual":true},
+		{"name":"cftsubparafont"},
+		{"name":"cftsubparaindent"},
+		{"name":"cftsubparaleader"},
+		{"name":"cftsubparaname","unusual":true},
+		{"name":"cftsubparanumwidth"},
+		{"name":"cftsubparapagefont"},
+		{"name":"cftsubparapnumfinal"},
+		{"name":"cftsubparapresnum"},
+		{"name":"cftsubsecafterpnum"},
+		{"name":"cftsubsecaftersnum","doc":"Arrange that the (section number and) first line of the title is set at the current indent, and any further lines are further indented."},
+		{"name":"cftsubsecaftersnumb"},
+		{"name":"cftsubsecdotsep"},
+		{"name":"cftsubsecfillnum","arg":{"format":"{}","snippet":"cftsubsecfillnum{${1}}"},"unusual":true},
+		{"name":"cftsubsecfont"},
+		{"name":"cftsubsecindent"},
+		{"name":"cftsubsecleader"},
+		{"name":"cftsubsecname","unusual":true},
+		{"name":"cftsubsecnumwidth"},
+		{"name":"cftsubsecpagefont"},
+		{"name":"cftsubsecpnumfinal"},
+		{"name":"cftsubsecpresnum"},
+		{"name":"cftsubsubsecafterpnum"},
+		{"name":"cftsubsubsecaftersnum"},
+		{"name":"cftsubsubsecaftersnumb"},
+		{"name":"cftsubsubsecdotsep"},
+		{"name":"cftsubsubsecfillnum","arg":{"format":"{}","snippet":"cftsubsubsecfillnum{${1}}"},"unusual":true},
+		{"name":"cftsubsubsecfont"},
+		{"name":"cftsubsubsecindent"},
+		{"name":"cftsubsubsecleader"},
+		{"name":"cftsubsubsecname","unusual":true},
+		{"name":"cftsubsubsecnumwidth"},
+		{"name":"cftsubsubsecpagefont"},
+		{"name":"cftsubsubsecpnumfinal"},
+		{"name":"cftsubsubsecpresnum"},
+		{"name":"cftsubtabafterpnum","if":"subfigure"},
+		{"name":"cftsubtabaftersnum","if":"subfigure"},
+		{"name":"cftsubtabaftersnumb","if":"subfigure"},
+		{"name":"cftsubtabdotsep","if":"subfigure"},
+		{"name":"cftsubtabfont","if":"subfigure"},
+		{"name":"cftsubtabindent","if":"subfigure"},
+		{"name":"cftsubtableader","if":"subfigure"},
+		{"name":"cftsubtabname","unusual":true},
+		{"name":"cftsubtabnumwidth","if":"subfigure"},
+		{"name":"cftsubtabpagefont","if":"subfigure"},
+		{"name":"cftsubtabpnumfinal","if":"subfigure"},
+		{"name":"cftsubtabpresnum","if":"subfigure"},
+		{"name":"cfttabafterpnum"},
+		{"name":"cfttabaftersnum"},
+		{"name":"cfttabaftersnumb"},
+		{"name":"cfttabdotsep"},
+		{"name":"cfttabfillnum","arg":{"format":"{}","snippet":"cfttabfillnum{${1}}"},"unusual":true},
+		{"name":"cfttabfont"},
+		{"name":"cfttabindent"},
+		{"name":"cfttableader"},
+		{"name":"cfttabname","unusual":true},
+		{"name":"cfttabnumwidth"},
+		{"name":"cfttabpagefont"},
+		{"name":"cfttabpnumfinal"},
+		{"name":"cfttabpresnum"},
+		{"name":"cfttitlecommand","arg":{"format":"{}","snippet":"cfttitlecommand{${1:list}}"},"doc":"This command is used to typeset the title if \\DocumentMetadata is used and the titles option is not used."},
+		{"name":"cfttocposthook"},
+		{"name":"cfttocprehook"},
+		{"name":"cfttoctitlefont","doc":"The ToC title is typeset in the style given by \\cfttoctitlefont."},
+		{"name":"cfttoctitlename"},
+		{"name":"newlistentry","arg":{"format":"[]{}{}{}","snippet":"newlistentry[${1:within}]{${2:entry}}{${3:ext}}{${4:level-1}}"},"doc":"The command \\newlistentry[⟨within⟩]{⟨entry⟩}{⟨ext⟩}{⟨level-1⟩} creates new commands for typesetting a new kind of entry in a listing."},
+		{"name":"newlistentry","arg":{"format":"{}{}{}","snippet":"newlistentry{${1:entry}}{${2:ext}}{${3:level-1}}"},"doc":"The command \\newlistentry[⟨within⟩]{⟨entry⟩}{⟨ext⟩}{⟨level-1⟩} creates new commands for typesetting a new kind of entry in a listing."},
+		{"name":"newlistof","arg":{"format":"[]{}{}{}","snippet":"newlistof[${1:within}]{${2:entry}}{${3:ext}}{${4:listofname}}"},"doc":"\\newlistof[⟨within⟩]{⟨entry⟩}{⟨ext⟩}{⟨listofname⟩} creates the commands for a new List of."},
+		{"name":"newlistof","arg":{"format":"{}{}{}","snippet":"newlistof{${1:entry}}{${2:ext}}{${3:listofname}}"},"doc":"\\newlistof[⟨within⟩]{⟨entry⟩}{⟨ext⟩}{⟨listofname⟩} creates the commands for a new List of."},
+		{"name":"tocloftpagestyle","arg":{"format":"{}","snippet":"tocloftpagestyle{${1:style}}"},"doc":"The \\thispagestyle page style of the ToC, LoF and/or LoT is set by the command \\tocloftpagestyle{⟨style⟩}, where ⟨style⟩ is one of the available page styles."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/tocloft#c": ["subfigure","titles"]
+	},
+	"args": ["\\usepackage/tocloft#c"]
 }

@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"pkginfograb"}],
+	"macros": [
+		{"name":"addclass","arg":{"format":"[]{}{}{}[]","snippet":"addclass[${1}]{${2}}{${3}}{${4}}[${5}]"},"doc":"\\addclass adds a class, ⟨classID⟩, to the current semester."},
+		{"name":"addclass","arg":{"format":"{}{}{}","snippet":"addclass{${1}}{${2}}{${3}}"},"doc":"\\addclass adds a class, ⟨classID⟩, to the current semester."},
+		{"name":"altdep","doc":"\\altdep defines/start and alternate dependency list."},
+		{"name":"bibdef","arg":{"format":"[]{}","snippet":"bibdef[${1}]{${2}}"},"doc":"\\bibdef is used to set a list of bibliographies, one per issued command."},
+		{"name":"bibdef","arg":{"format":"{}","snippet":"bibdef{${1}}"},"doc":"\\bibdef is used to set a list of bibliographies, one per issued command."},
+		{"name":"classdef","arg":{"format":"[]{}{}{}","snippet":"classdef[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"classdef","arg":{"format":"{}{}{}","snippet":"classdef{${1}}{${2}}{${3}}"}},
+		{"name":"classremark","arg":{"format":"{}","snippet":"classremark{${1}}"}},
+		{"name":"classset","arg":{"format":"{}","snippet":"classset{${1}}"},"doc":"\\classset sets the current class."},
+		{"name":"csummary","arg":{"format":"{}","snippet":"csummary{${1}}"}},
+		{"name":"currdef","arg":{"format":"{}{}{}","snippet":"currdef{${1}}{${2}}{${3}}"}},
+		{"name":"defaulttopic","arg":{"format":"{}","snippet":"defaulttopic{${1}}"}},
+		{"name":"depdef","arg":{"format":"[]{}","snippet":"depdef[${1}]{${2}}"},"doc":"\\depdef inserts/creates a “class dependency” list."},
+		{"name":"depdef","arg":{"format":"{}","snippet":"depdef{${1}}"},"doc":"\\depdef inserts/creates a “class dependency” list."},
+		{"name":"depdef*","arg":{"format":"[]{}","snippet":"depdef*[${1}]{${2}}"},"doc":"\\depdef inserts/creates a “class dependency” list."},
+		{"name":"depdef*","arg":{"format":"{}","snippet":"depdef*{${1}}"},"doc":"\\depdef inserts/creates a “class dependency” list."},
+		{"name":"GraphEtp","arg":{"format":"{}","snippet":"GraphEtp{${1}}"}},
+		{"name":"semdef","arg":{"format":"{}{}{}","snippet":"semdef{${1}}{${2}}{${3}}"}},
+		{"name":"setclass","arg":{"format":"{}","snippet":"setclass{${1:class ID}}"}},
+		{"name":"TabEtp","arg":{"format":"[]{}[]","snippet":"TabEtp[${1}]{${2}}[${3}]"},"doc":"\\TabEtp will construct a longtable with all classes associated with ⟨semID⟩."},
+		{"name":"TabEtp","arg":{"format":"{}","snippet":"TabEtp{${1}}"},"doc":"\\TabEtp will construct a longtable with all classes associated with ⟨semID⟩."},
+		{"name":"TabEtp*","arg":{"format":"[]{}[]","snippet":"TabEtp*[${1}]{${2}}[${3}]"},"doc":"\\TabEtp will construct a longtable with all classes associated with ⟨semID⟩."},
+		{"name":"TabEtp*","arg":{"format":"{}","snippet":"TabEtp*{${1}}"},"doc":"\\TabEtp will construct a longtable with all classes associated with ⟨semID⟩."},
+		{"name":"TabTopic","arg":{"format":"{}","snippet":"TabTopic{${1}}"},"doc":"\\TabTopic will construct a longtable with all classes associated with a ⟨topicID⟩."},
+		{"name":"topicdef","arg":{"format":"[]{}{}","snippet":"topicdef[${1}]{${2}}{${3}}"},"doc":"defines ⟨topicID⟩ (to be used when describing a class) and associates a ⟨text⟩ description and a ⟨color⟩ (for topic highlight)."},
+		{"name":"topicdef","arg":{"format":"{}{}","snippet":"topicdef{${1}}{${2}}"},"doc":"defines ⟨topicID⟩ (to be used when describing a class) and associates a ⟨text⟩ description and a ⟨color⟩ (for topic highlight)."}
+	],
+	"envs": [
+		{"name":"tikzGraphSem","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"tikzGraphSem"}
+	],
+	"keys": {}
+}

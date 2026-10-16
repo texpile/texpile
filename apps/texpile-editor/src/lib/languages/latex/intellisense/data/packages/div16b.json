@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"laemu"}],
+	"macros": [
+		{"name":"ifLaTeX","unusual":true},
+		{"name":"ifLOOP","unusual":true},
+		{"name":"LaTeXfalse","unusual":true},
+		{"name":"LaTeXtrue","unusual":true},
+		{"name":"LOOPfalse","unusual":true},
+		{"name":"LOOPtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

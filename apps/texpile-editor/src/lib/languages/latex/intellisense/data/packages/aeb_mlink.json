@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"eforms"},{"name":"ifluatex"},{"name":"calc"},{"name":"insdljs"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex"]},{"name":"taborder"}],
+	"macros": [
+		{"name":"mlcs","arg":{"format":"{}","snippet":"mlcs{${1:name}}"}},
+		{"name":"mlhref","arg":{"format":"[]{}{}","snippet":"mlhref[${1:opts}]{${2:url}}{${3:text}}"},"doc":"A multi-line version of the hyperref command, \\href."},
+		{"name":"mlhref","arg":{"format":"{}{}","snippet":"mlhref{${1:url}}{${2:text}}"},"doc":"A multi-line version of the hyperref command, \\href."},
+		{"name":"mlhyperlink","arg":{"format":"[]{}{}","snippet":"mlhyperlink[${1:opts}]{${2:named-dest}}{${3:text}}"},"doc":"A multi-line version of the \\hyperlink command."},
+		{"name":"mlhyperlink","arg":{"format":"{}{}","snippet":"mlhyperlink{${1:named-dest}}{${2:text}}"},"doc":"A multi-line version of the \\hyperlink command."},
+		{"name":"mlhyperref","arg":{"format":"[]{}{}","snippet":"mlhyperref[${1:opts}]{${2:label}}{${3:text}}"},"doc":"A multi-line version of the \\hyperref command."},
+		{"name":"mlhyperref","arg":{"format":"{}{}","snippet":"mlhyperref{${1:label}}{${2:text}}"},"doc":"A multi-line version of the \\hyperref command."},
+		{"name":"mlhypertext","arg":{"format":"[]{}","snippet":"mlhypertext[${1:opts}]{${2:text}}"}},
+		{"name":"mlhypertext","arg":{"format":"{}","snippet":"mlhypertext{${1:text}}"}},
+		{"name":"mlMarksOff","doc":"Turn marking back off with \\mlMarksOff."},
+		{"name":"mlMarksOn","doc":"By expanding \\mlMarksOn, you turn on the marking of the links."},
+		{"name":"mlMaxNSylls"},
+		{"name":"mlnameref","arg":{"format":"[]{}","snippet":"mlnameref[${1:opts}]{${2:label}}"},"doc":"A multi-line version of the \\nameref command."},
+		{"name":"mlnameref","arg":{"format":"{}","snippet":"mlnameref{${1:label}}"},"doc":"A multi-line version of the \\nameref command."},
+		{"name":"mlNameref","arg":{"format":"[]{}","snippet":"mlNameref[${1:opts}]{${2:label}}"}},
+		{"name":"mlNameref","arg":{"format":"{}","snippet":"mlNameref{${1:label}}"}},
+		{"name":"mlurl","arg":{"format":"[]{}","snippet":"mlurl[${1:opts}]{${2:url}}"}},
+		{"name":"mlurl","arg":{"format":"{}","snippet":"mlurl{${1:url}}"}},
+		{"name":"OldStyleBoxesOff"},
+		{"name":"OldStyleBoxesOn","doc":"You can declare \\OldStyleBoxesOn in the preamble to revert to the old style that does not use the information written to the auxiliary file."},
+		{"name":"turnSyllbCntOff"},
+		{"name":"turnSyllbCntOn","doc":"You can display the syllable numbers of multi-line hypertext by expanding \\turnSyllbCntOn; \\turnSyllbCntOff turns off this feature again."}
+	],
+	"envs": [],
+	"keys": {}
+}

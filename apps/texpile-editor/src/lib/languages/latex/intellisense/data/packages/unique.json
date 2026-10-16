@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"ifuniq","arg":{"format":"{}{}{}","snippet":"ifuniq{${1:name}}{${2:true part}}{${3:false part}}"},"doc":"\\ifuniq takes three parameters: a name, a true-part and a false-part. The true part is executed if and only if there was exactly one call to \\setuniqmark with the given name during the previous LaTeX run."},
+		{"name":"setuniqmark","arg":{"format":"{}","snippet":"setuniqmark{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/unique#c": ["aux","unq"]
+	},
+	"args": ["\\usepackage/unique#c"]
+}

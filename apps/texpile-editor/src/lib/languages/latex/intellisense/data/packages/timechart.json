@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"timechartfinish"},
+		{"name":"timechartinterval","arg":{"format":"[]{}{}{}","snippet":"timechartinterval[${1:options}]{${2:start}}{${3:finish}}{${4:label}}"},"doc":"This command creates an interval in the chart at the current y coordinate between the specified ⟨start⟩ and ⟨finish⟩, with the given ⟨label⟩."},
+		{"name":"timechartinterval","arg":{"format":"{}{}{}","snippet":"timechartinterval{${1:start}}{${2:finish}}{${3:label}}"},"doc":"This command creates an interval in the chart at the current y coordinate between the specified ⟨start⟩ and ⟨finish⟩, with the given ⟨label⟩."},
+		{"name":"timechartlegendfinishrange","arg":{"format":"[]","snippet":"timechartlegendfinishrange[${1}]"}},
+		{"name":"timechartlegendfinishrange"},
+		{"name":"timechartlegenditem","arg":{"format":"[]","snippet":"timechartlegenditem[${1}]"},"doc":"Draw a bar suitable for use in a legend."},
+		{"name":"timechartlegenditem","doc":"Draw a bar suitable for use in a legend."},
+		{"name":"timechartlegendstartrange","arg":{"format":"[]","snippet":"timechartlegendstartrange[${1}]"},"doc":"Draw a bar suitable for use in a legend, with a start or finish range."},
+		{"name":"timechartlegendstartrange","doc":"Draw a bar suitable for use in a legend, with a start or finish range."},
+		{"name":"timechartmakeafteryear","arg":{"format":"{}","snippet":"timechartmakeafteryear{${1}}"}},
+		{"name":"timechartmakebeforeyear","arg":{"format":"{}","snippet":"timechartmakebeforeyear{${1}}"},"doc":"By default, \\timechartmakebeforeyear{⟨number⟩} produces ⟨number⟩ bce and \\timechartmakeafteryear{⟨number⟩} produces ⟨number⟩ ce."},
+		{"name":"timechartresety","doc":"Reset the y coordinate to the last coordinate saved using \\timechartsavey, or to 0 if there has been no use of \\timechartsavey within the current timechart environment."},
+		{"name":"timechartsavey","doc":"Save the current y coordinate."},
+		{"name":"timechartsety","arg":{"format":"{}","snippet":"timechartsety{${1:dimension}}"},"doc":"Set the current y coordinate to ⟨dimension⟩."},
+		{"name":"timechartsetymaximumautoreset","arg":{"format":"{}","snippet":"timechartsetymaximumautoreset{${1:max-coordinate}}"}},
+		{"name":"timechartsetyminimumautoreset","arg":{"format":"{}","snippet":"timechartsetyminimumautoreset{${1:min-coordinate}}"}},
+		{"name":"timechartspace","arg":{"format":"[]","snippet":"timechartspace[${1:options}]"},"doc":"Create a space in the time chart at the current y coordinate, with the same effect on vertical spacing as an interval."},
+		{"name":"timechartspace","doc":"Create a space in the time chart at the current y coordinate, with the same effect on vertical spacing as an interval."},
+		{"name":"timechartstepy","arg":{"format":"[]","snippet":"timechartstepy[${1:count}]"},"doc":"Manually step the current y coordinate by ⟨count⟩ times the value of /timechart/ystep."},
+		{"name":"timechartstepy","doc":"Manually step the current y coordinate by ⟨count⟩ times the value of /timechart/ystep."},
+		{"name":"timecharttext","arg":{"format":"[]{}{}","snippet":"timecharttext[${1:options}]{${2:year}}{${3:text}}"},"doc":"Place ⟨text⟩ in the time chart at the current y coordinate and at the horizontal position of ⟨year⟩, which must be a definite year (that is, must satsify ⟨year⟩ in the grammar in Section 7)."},
+		{"name":"timecharttext","arg":{"format":"{}{}","snippet":"timecharttext{${1:year}}{${2:text}}"},"doc":"Place ⟨text⟩ in the time chart at the current y coordinate and at the horizontal position of ⟨year⟩, which must be a definite year (that is, must satsify ⟨year⟩ in the grammar in Section 7)."}
+	],
+	"envs": [
+		{"name":"timechart","arg":{"format":"[]{}{}","snippet":"[${1}]{${2}}{${3}}"},"doc":"The basic environment is timechart, which includes the specification of the start and finish years."},
+		{"name":"timechart","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"doc":"The basic environment is timechart, which includes the specification of the start and finish years."}
+	],
+	"keys": {}
+}

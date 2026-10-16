@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplots"},{"name":"xstring"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"signchart","arg":{"format":"[]{}{}","snippet":"signchart[${1}]{${2}}{${3}}"},"doc":"The \\signchart command produces a signchart—a number line with evenly spaced ticks, with ⟨values⟩ placed over each tick mark and ⟨signs⟩ placed between each value."},
+		{"name":"signchart","arg":{"format":"{}{}","snippet":"signchart{${1}}{${2}}"},"doc":"The \\signchart command produces a signchart—a number line with evenly spaced ticks, with ⟨values⟩ placed over each tick mark and ⟨signs⟩ placed between each value."},
+		{"name":"signHeightKey","unusual":true},
+		{"name":"valNorthSouthKey","unusual":true},
+		{"name":"valSepKey","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/signchart#c": ["signunder","valunder"]
+	},
+	"args": ["\\usepackage/signchart#c"]
+}

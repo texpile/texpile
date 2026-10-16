@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"eAdd","arg":{"format":"{}","snippet":"eAdd{${1:new text}}"},"doc":"This macro just passes through the argument, and delemits it, so that the extent of the insertion can be seen."},
+		{"name":"eDelete","arg":{"format":"{}","snippet":"eDelete{${1:old text}}"},"doc":"This macro just passes through the argument, and explains what was deleted in a footnote."},
+		{"name":"ednotemessage"},
+		{"name":"eReplace","arg":{"format":"{}{}","snippet":"eReplace{${1:old text}}{${2:new text}}"}},
+		{"name":"erratumAdd","arg":{"format":"[]{}{}","snippet":"erratumAdd[${1:keyvals}]{${2:explanation}}{${3:new text}}","keys":["keyval:erratum"],"keyPos":0}},
+		{"name":"erratumAdd","arg":{"format":"{}{}","snippet":"erratumAdd{${1:explanation}}{${2:new text}}"}},
+		{"name":"erratumDelete","arg":{"format":"[]{}{}","snippet":"erratumDelete[${1:keyvals}]{${2:explanation}}{${3:old text}}","keys":["keyval:erratum"],"keyPos":0}},
+		{"name":"erratumDelete","arg":{"format":"{}{}","snippet":"erratumDelete{${1:explanation}}{${2:old text}}"}},
+		{"name":"erratumItem","arg":{"format":"{}{}","snippet":"erratumItem{${1:reference}}{${2:explanation}}"}},
+		{"name":"erratumReplace","arg":{"format":"[]{}{}{}","snippet":"erratumReplace[${1:keyvals}]{${2:explanation}}{${3:old text}}{${4:new text}}","keys":["keyval:erratum"],"keyPos":0}},
+		{"name":"erratumReplace","arg":{"format":"{}{}{}","snippet":"erratumReplace{${1:explanation}}{${2:old text}}{${3:new text}}"}},
+		{"name":"footsfalse","unusual":true},
+		{"name":"footstrue","unusual":true},
+		{"name":"iffoots","unusual":true},
+		{"name":"ifmargins","unusual":true},
+		{"name":"ifrecord","unusual":true},
+		{"name":"marginsfalse","unusual":true},
+		{"name":"marginstrue","unusual":true},
+		{"name":"printerrata","arg":{"format":"{}","snippet":"printerrata{${1:jobname}}"},"doc":"The \\printerrata inputs the errata file for the path given in its argument."},
+		{"name":"PrintErrata"},
+		{"name":"recordfalse","unusual":true},
+		{"name":"recordtrue","unusual":true}
+	],
+	"envs": [
+		{"name":"errata"},
+		{"name":"erratum","arg":{"format":"[]{}","snippet":"[${1:keyvals}]{${2:explanation}}","keys":["keyval:erratum"],"keyPos":0},"doc":"Extended errata group multiple editing operations into a coherent group via the erratum environment."},
+		{"name":"erratum","arg":{"format":"{}","snippet":"{${1:explanation}}"},"doc":"Extended errata group multiple editing operations into a coherent group via the erratum environment."}
+	],
+	"keys": {
+		"keyval:erratum": ["date=","id=","reported-by=","type="],
+		"\\usepackage/errata#c": ["foots","hide","margins","record","show"]
+	},
+	"args": ["\\usepackage/errata#c"]
+}

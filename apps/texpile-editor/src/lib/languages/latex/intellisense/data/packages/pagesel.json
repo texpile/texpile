@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pagesel#c": ["even","files","nofiles","nonofiles","odd"]
+	},
+	"args": ["\\usepackage/pagesel#c"]
+}

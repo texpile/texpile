@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"slidebottommargin"},
+		{"name":"slideleftmargin"},
+		{"name":"sliderightmargin"},
+		{"name":"slidetopmargin"}
+	],
+	"envs": [],
+	"keys": {}
+}

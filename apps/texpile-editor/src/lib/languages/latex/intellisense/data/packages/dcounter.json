@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"countstyle","arg":{"format":"[]{}","snippet":"countstyle[${1}]{${2}}"}},
+		{"name":"countstyle","arg":{"format":"{}","snippet":"countstyle{${1}}"}},
+		{"name":"DeclareDynamicCounter","arg":{"format":"{}","snippet":"DeclareDynamicCounter{${1}}"},"doc":"If the ⟨foo⟩ counter does not exist, its name is added to the list of dynamic counters."},
+		{"name":"DynamicCount","arg":{"format":"{}","snippet":"DynamicCount{${1}}"},"doc":"The macro \\DynamicCount{⟨foo⟩} modifies the count style of the counter ⟨foo⟩ and defines this counter if it is undefined."}
+	],
+	"envs": [],
+	"keys": {}
+}

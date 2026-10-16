@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"pst-node"},{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-tree"}],
+	"macros": [
+		{"name":"Troof","arg":{"format":"{}","snippet":"Troof{${1}}"},"doc":"One special type of (large) node defined by pst-qtree is \\Troof, which is similar to Qtree’s \\qroof but not identical in use."}
+	],
+	"envs": [],
+	"keys": {}
+}

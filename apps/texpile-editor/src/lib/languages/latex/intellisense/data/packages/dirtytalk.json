@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"say","arg":{"format":"{}","snippet":"say{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

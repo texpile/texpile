@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"calc"},{"name":"pgfopts"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

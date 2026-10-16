@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"bn","doc":"The Bengali text is delimited by the \\bn macro, eg. {\\bn baa.mlaa} produces bAMlA."}
+	],
+	"envs": [],
+	"keys": {}
+}

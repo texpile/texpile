@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"babel"},{"name":"aeskwadraat"},{"name":"xspace"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"epsfig"},{"name":"eurosym"},{"name":"ifthen"},{"name":"calc"}],
+	"macros": [
+		{"name":"aanadviesraad"},
+		{"name":"aanadviesraad*"},
+		{"name":"aanadviesraadnaam","unusual":true},
+		{"name":"aanhetbestuur"},
+		{"name":"aanhetbestuur*"},
+		{"name":"aanhetbestuurnaam","unusual":true},
+		{"name":"aanwezig","arg":{"format":"{}","snippet":"aanwezig{${1:names}}"},"doc":"Use \\aanwezig{names} to take note of who is present at the meeting."},
+		{"name":"aar","arg":{"format":"{}","snippet":"aar{${1:text}}"}},
+		{"name":"advies","arg":{"format":"{}","snippet":"advies{${1:advice}}"}},
+		{"name":"adviezenlijst","doc":"Use \\adviezenlijst to generate a table of contents."},
+		{"name":"adviezenlijst*","doc":"Use \\adviezenlijst to generate a table of contents."},
+		{"name":"adviezenlijstnaam","unusual":true},
+		{"name":"afwezig","arg":{"format":"{}","snippet":"afwezig{${1:names}}"},"doc":"To mark names as absent, use \\afwezig{naam3, naam4} ."},
+		{"name":"ahb","arg":{"format":"{}","snippet":"ahb{${1:text}}"}},
+		{"name":"ap","arg":{"format":"{}{}","snippet":"ap{${1:name}}{${2:task}}"},"doc":"Use \\ap{name}{task} to assign a task (“actiepunt”) to a name."},
+		{"name":"aplijst","doc":"\\aplijst produces a list of tasks."},
+		{"name":"aplijst*","doc":"\\aplijst produces a list of tasks."},
+		{"name":"aplijstnaam","unusual":true},
+		{"name":"aplijstpp","doc":"\\aplijstpp produces a list of tasks sorted by whom they are assigned to."},
+		{"name":"aplijstpp*","doc":"\\aplijstpp produces a list of tasks sorted by whom they are assigned to."},
+		{"name":"besluit","arg":{"format":"{}","snippet":"besluit{${1:decision}}"},"doc":"Use \\besluit{decision} to create a “decision”."},
+		{"name":"besluitenlijst"},
+		{"name":"besluitenlijst*"},
+		{"name":"besluitenlijstnaam","unusual":true},
+		{"name":"korteapnaam","arg":{"format":"{}{}","snippet":"korteapnaam{${1:macro}}{${2:name}}"},"doc":"It is possible to define macros for names using \\korteapnaam{macro}{name}."},
+		{"name":"naam","arg":{"format":"{}","snippet":"naam{${1:name}}"},"doc":"\\naam{name} displays a name slanted, e.g., \\naam{Bob} would return Bob."},
+		{"name":"naamzet","doc":"\\naamzet outputs a list of present (and potentially absent) names."},
+		{"name":"nameshape","unusual":true},
+		{"name":"noitemsep","doc":"This removes the vertical spacing between items in lists, such as itemize or enumerate."},
+		{"name":"opm","arg":{"format":"{}","snippet":"opm{${1:comment}}"},"doc":"\\opm{comment} adds a comment, which will be smaller and emphasized."},
+		{"name":"wvttk"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/aeskwadraatnotulen#c": ["english"]
+	},
+	"args": ["\\usepackage/aeskwadraatnotulen#c"]
+}

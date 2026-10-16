@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ltlabbibdate","unusual":true},
+		{"name":"ltlabbibversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

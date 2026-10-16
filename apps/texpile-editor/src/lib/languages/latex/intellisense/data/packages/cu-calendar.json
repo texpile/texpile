@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"intcalc"},{"name":"cu-num"}],
+	"macros": [
+		{"name":"cuAsGregorian","arg":{"format":"{}","snippet":"cuAsGregorian{${1:YYYY-MM-DD}}"},"doc":"Converts a date according to the Julian calendar to a date according to the Gregorian calendar."},
+		{"name":"cuAsJulian","arg":{"format":"{}","snippet":"cuAsJulian{${1:YYYY-MM-DD}}"},"doc":"Converts a date on the Gregorian calendar to a date on the Julian calendar."},
+		{"name":"cuDate","arg":{"format":"{}","snippet":"cuDate{${1:YYYY-MM-DD}}"}},
+		{"name":"cuDateJulian","arg":{"format":"{}","snippet":"cuDateJulian{${1:YYYY-MM-DD}}"}},
+		{"name":"cuDAY"},
+		{"name":"cuDayName","arg":{"format":"{}","snippet":"cuDayName{${1:day of week number}}"},"doc":"Expands a numeric argument into a textual representation of the day of the week in the nominative case."},
+		{"name":"cuDayNameAccusative","arg":{"format":"{}","snippet":"cuDayNameAccusative{${1:day of week number}}"},"doc":"Expands a numeric argument into a textual representation of the day of the week in the accusative case."},
+		{"name":"cuDefineDateFormat","arg":{"format":"{}{}","snippet":"cuDefineDateFormat{${1:name}}{${2:format}}"}},
+		{"name":"cuDOW"},
+		{"name":"cuINDICTION"},
+		{"name":"cuMONTH"},
+		{"name":"cuMonthName","arg":{"format":"{}","snippet":"cuMonthName{${1:month number}}"}},
+		{"name":"cuToday"},
+		{"name":"cuTodayJulian"},
+		{"name":"cuUseDateFormat","arg":{"format":"{}","snippet":"cuUseDateFormat{${1:name}}"}},
+		{"name":"cuYEAR"},
+		{"name":"cuYEARAM"}
+	],
+	"envs": [],
+	"keys": {}
+}

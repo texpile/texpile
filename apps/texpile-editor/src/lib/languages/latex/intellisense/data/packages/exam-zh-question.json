@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"xparse"},{"name":"amsthm"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"listings"},{"name":"xeCJKfntef"},{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"ulem"},{"name":"accsupp"},{"name":"pdfescape"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"enumitem"},{"name":"exam-zh-counter"},{"name":"exam-zh-circlednumber"},{"name":"linegoal"},{"name":"zref"},{"name":"zref-base"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-savepos"}],
+	"macros": [
+		{"name":"AddFillinCounter","arg":{"format":"{}{}","snippet":"AddFillinCounter{${1}}{${2}}"}},
+		{"name":"AddQuestionCounter","arg":{"format":"{}{}","snippet":"AddQuestionCounter{${1}}{${2}}"}},
+		{"name":"fillin","arg":{"format":"[][]","snippet":"fillin[${1:key-value list}][${2:answer}]"}},
+		{"name":"fillin"},
+		{"name":"fillin*","arg":{"format":"[][]","snippet":"fillin*[${1:key-value list}][${2:answer}]"}},
+		{"name":"fillin*"},
+		{"name":"fillinsetup","arg":{"format":"{}","snippet":"fillinsetup{${1}}"},"unusual":true},
+		{"name":"paren","arg":{"format":"[]","snippet":"paren[${1:answer}]"}},
+		{"name":"paren"},
+		{"name":"paren*","arg":{"format":"[]","snippet":"paren*[${1:answer}]"}},
+		{"name":"paren*"},
+		{"name":"questionsetup","arg":{"format":"{}","snippet":"questionsetup{${1}}"},"unusual":true},
+		{"name":"score","arg":{"format":"[]{}","snippet":"score[${1:key-value list}]{${2:points}}"}},
+		{"name":"score","arg":{"format":"{}","snippet":"score{${1:points}}"}}
+	],
+	"envs": [
+		{"name":"problem","arg":{"format":"[]","snippet":"[${1:key-value list}]"}},
+		{"name":"problem"},
+		{"name":"question","arg":{"format":"[]","snippet":"[${1:key-value list}]"}},
+		{"name":"question"},
+		{"name":"solution","arg":{"format":"[]","snippet":"[${1:key-value list}]"}},
+		{"name":"solution"}
+	],
+	"keys": {}
+}

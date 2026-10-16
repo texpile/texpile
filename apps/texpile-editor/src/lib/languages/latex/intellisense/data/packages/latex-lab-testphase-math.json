@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"DebugMathOff","unusual":true},
+		{"name":"DebugMathOn","unusual":true},
+		{"name":"ltlabmathdate","unusual":true},
+		{"name":"ltlabmathversion","unusual":true},
+		{"name":"RegisterMathEnvironment","arg":{"format":"[]{}","snippet":"RegisterMathEnvironment[${1:options}]{${2:env}}"}},
+		{"name":"RegisterMathEnvironment","arg":{"format":"{}","snippet":"RegisterMathEnvironment{${1:env}}"}},
+		{"name":"UseMathForPositioningText","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

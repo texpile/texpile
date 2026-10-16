@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"printref","arg":{"format":"{}","snippet":"printref{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

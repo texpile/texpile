@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ltlabdoctaggingdate","unusual":true},
+		{"name":"ltlabdoctaggingversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,30 @@
+{
+	"macros": [
+		{"name":"IfNextSpace","arg":{"format":"{}{}","snippet":"IfNextSpace{${1:if}}{${2:else}}"}},
+		{"name":"IfNextToken","arg":{"format":"{}{}{}","snippet":"IfNextToken{${1:token}}{${2:if}}{${3:else}}"},"doc":"\\IfNextToken is an alternative to \\@ifnextchar, not skipping spaces (Section 5.1)."},
+		{"name":"IfStarNextToken","arg":{"format":"{}{}","snippet":"IfStarNextToken{${1:if star}}{${2:else}}"},"doc":"\\IfStarNextToken is an alternative to \\@ifstar, not skipping spaces, using \\IfNextToken in lieu of \\@ifnextchar (Section 5.4)."},
+		{"name":"INTactOnEnv","arg":{"format":"{}{}{}","snippet":"INTactOnEnv{${1:action1}}{${2:action2}}{${3:env}}"},"unusual":true},
+		{"name":"INTpatch","arg":{"format":"{}{}","snippet":"INTpatch{${1:replacer}}{${2:macro}}"},"unusual":true},
+		{"name":"INTrestore","arg":{"format":"{}","snippet":"INTrestore{${1:macro}}"},"unusual":true},
+		{"name":"INTstore","arg":{"format":"{}","snippet":"INTstore{${1:macro}}"},"unusual":true},
+		{"name":"MakeNotSkipping","arg":{"format":"{}{}","snippet":"MakeNotSkipping{${1:target}}{${2:on-space}}"},"doc":"\\MakeNotSkipping{⟨target⟩}{⟨on-space⟩} should modify ⟨target⟩ so that it acts in its usual way when no space token is ahead while executing ⟨on-space⟩ otherwise."},
+		{"name":"NextTestPatch","arg":{"format":"{}","snippet":"NextTestPatch{${1:macro}}"}},
+		{"name":"NoNewlineSkipping"},
+		{"name":"NoNextSkipping"},
+		{"name":"NoStarSkipping"},
+		{"name":"NotSkippingCRs","arg":{"format":"{}","snippet":"NotSkippingCRs{${1:env}}"}},
+		{"name":"RestoreNewlineSkipping"},
+		{"name":"RestoreNextSkipping","doc":"\\RestoreNextSkipping just switches back to LaTeX’s original version, so some support for amsmath may be missing here."},
+		{"name":"RestoreSkippingCRs","arg":{"format":"{}","snippet":"RestoreSkippingCRs{${1:env}}"}},
+		{"name":"RestoreStarSkipping"},
+		{"name":"StarTestPatch","arg":{"format":"{}","snippet":"StarTestPatch{${1:macro}}"}},
+		{"name":"StoreNewlineSkipping"},
+		{"name":"StoreSkippingCRs","arg":{"format":"{}","snippet":"StoreSkippingCRs{${1:env}}"}},
+		{"name":"StoreStarSkipping"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ifnextok#c": ["all","array","center","newline","stdbreaks","tab","tabular"]
+	},
+	"args": ["\\usepackage/ifnextok#c"]
+}

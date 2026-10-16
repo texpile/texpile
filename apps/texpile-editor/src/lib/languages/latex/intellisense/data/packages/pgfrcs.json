@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"pgferror","arg":{"format":"{}","snippet":"pgferror{${1:message}}"},"doc":"Stops the processing of the current document and prints out the ⟨message⟩."},
+		{"name":"pgftypesetversion","unusual":true},
+		{"name":"pgfwarning","arg":{"format":"{}","snippet":"pgfwarning{${1:message}}"},"doc":"Prints the ⟨message⟩ on the output, but does not interrupt the processing."},
+		{"name":"usepgflibrary","arg":{"format":"{}","snippet":"usepgflibrary{${1:libraries}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

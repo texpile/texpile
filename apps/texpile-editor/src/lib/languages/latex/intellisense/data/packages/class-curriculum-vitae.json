@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"class-article"},{"name":"titlesec"},{"name":"xparse"},{"name":"microtype"},{"name":"keyval"},{"name":"etoolbox"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"ragged2e"},{"name":"parskip"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"setspace"},{"name":"FiraSans"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"cvsection","arg":{"format":"[]{}","snippet":"cvsection[${1:heading}]{${2:content}}"}},
+		{"name":"cvsection","arg":{"format":"{}","snippet":"cvsection{${1:content}}"}},
+		{"name":"desc","arg":{"format":"{}","snippet":"desc{${1:description}}"}},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email address}}"}},
+		{"name":"emailSymbol","unusual":true},
+		{"name":"mailingaddr","arg":{"format":"{}","snippet":"mailingaddr{${1:mailing address}}"}},
+		{"name":"name","arg":{"format":"{}","snippet":"name{${1:name}}"}},
+		{"name":"phone","arg":{"format":"{}","snippet":"phone{${1:phone number}}"}},
+		{"name":"phoneSymbol","unusual":true},
+		{"name":"qualification","arg":{"format":"{}","snippet":"qualification{${1:qualification}}"}},
+		{"name":"webpage","arg":{"format":"{}","snippet":"webpage{${1:web page}}"}},
+		{"name":"webSymbol","unusual":true}
+	],
+	"envs": [
+		{"name":"detail","arg":{"format":"[]{}{}","snippet":"[${1:title}]{${2:start date}}{${3:end date}}"}},
+		{"name":"detail","arg":{"format":"{}{}","snippet":"{${1:start date}}{${2:end date}}"}}
+	],
+	"keys": {}
+}

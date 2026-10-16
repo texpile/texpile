@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"class-cc"},{"name":"ccaux"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"url"},{"name":"cc2cite"},{"name":"natbib"},{"name":"ccdbs"},{"name":"ccref"},{"name":"relabel"},{"name":"ccthm"},{"name":"theorem"},{"name":"thcc"},{"name":"ccproof"},{"name":"ccqed"},{"name":"ccalgo"}],
+	"macros": [
+		{"name":"cc"},
+		{"name":"ccacknowledgementsname"},
+		{"name":"ccauthorhead"},
+		{"name":"cctitlehead","if":"!cclayout"},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email address}}"}},
+		{"name":"headrulewidth"},
+		{"name":"homepage","arg":{"format":"{}","snippet":"homepage{${1:www address}}"}},
+		{"name":"noacknowledge"}
+	],
+	"envs": [
+		{"name":"acknowledge","doc":"Environment for acknowledgments."}
+	],
+	"keys": {}
+}

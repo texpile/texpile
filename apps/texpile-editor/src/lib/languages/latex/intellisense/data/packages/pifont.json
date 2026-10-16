@@ -1,86 +1,18 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "ding",
-      "arg": {
-        "format": "{}",
-        "snippet": "ding{${1:number}}"
-      }
-    },
-    {
-      "name": "dingfill",
-      "arg": {
-        "format": "{}",
-        "snippet": "dingfill{${1:number}}"
-      }
-    },
-    {
-      "name": "dingline",
-      "arg": {
-        "format": "{}",
-        "snippet": "dingline{${1:number}}"
-      }
-    },
-    {
-      "name": "Pifont",
-      "arg": {
-        "format": "{}",
-        "snippet": "Pifont{${1:family}}"
-      }
-    },
-    {
-      "name": "Pisymbol",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "Pisymbol{${1:family}}{${2:number}}"
-      }
-    },
-    {
-      "name": "Pifill",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "Pifill{${1:family}}{${2:number}}"
-      }
-    },
-    {
-      "name": "Piline",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "Piline{${1:family}}{${2:number}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "dinglist",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:number}}"
-      }
-    },
-    {
-      "name": "dingautolist",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:number}}"
-      }
-    },
-    {
-      "name": "Pilist",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "{${1:family}}{${2:number}}"
-      }
-    },
-    {
-      "name": "Piautolist",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "{${1:family}}{${2:number}}"
-      }
-    }
-  ],
-  "keys": {},
-  "args": []
+	"macros": [
+		{"name":"ding","arg":{"format":"{}","snippet":"ding{${1:number}}"},"doc":"A given character can be chosen via the \\ding command."},
+		{"name":"dingfill","arg":{"format":"{}","snippet":"dingfill{${1}}"}},
+		{"name":"dingline","arg":{"format":"{}","snippet":"dingline{${1}}"}},
+		{"name":"Pifill","arg":{"format":"{}{}","snippet":"Pifill{${1}}{${2}}"},"doc":"\\Pifill acts like the other filling commands in TeX, but fills the space with a chosen symbol (compare with \\dingfill)."},
+		{"name":"Pifont","arg":{"format":"{}","snippet":"Pifont{${1}}"}},
+		{"name":"Piline","arg":{"format":"{}{}","snippet":"Piline{${1}}{${2}}"},"doc":"\\Piline typesets a line consisting of several copies of the specified symbol, with some space at the left and right (compare with \\dingline)."},
+		{"name":"Pisymbol","arg":{"format":"{}{}","snippet":"Pisymbol{${1}}{${2}}"},"doc":"This command typesets the specified symbol (compare this with the \\ding command)."}
+	],
+	"envs": [
+		{"name":"dingautolist","arg":{"format":"{}","snippet":"{${1}}"},"doc":"There also exists an environment dingautolist, which allows you to build an enumerated list with a set of Zapf Dingbats characters."},
+		{"name":"dinglist","arg":{"format":"{}","snippet":"{${1}}"},"doc":"The dinglist environment is a special itemized list."},
+		{"name":"Piautolist","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"doc":"Piautolist is an environment where a series of symbols starting with the one at the decimal position ⟨number⟩ in font family ⟨family⟩ is used to number the items in an enumerated list (compare with the dingautolist environment)."},
+		{"name":"Pilist","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"doc":"In the Pilist environment the specified symbol is used in front of each item in an itemized list (compare with the dinglist environment)."}
+	],
+	"keys": {}
 }

@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"mlp-opts","if":"acadian|acadien|austrian|canadianf|canadien|efrench|english|french|frenchle|german|naustrian|ngerman"},{"name":"mlp-33","if":"acadian|acadien|canadianf|canadien|efrench|french|frenchle"},{"name":"french","if":"acadian|acadien|canadianf|canadien|efrench|french"},{"name":"msg","if":"acadian|acadien|canadianf|canadien|efrench|french"},{"name":"latexsym","if":"acadian|acadien|canadianf|canadien|efrench|french"},{"name":"fenglish","if":"acadian|acadien|canadianf|canadien|efrench|english|french"},{"name":"mlp-49","if":"austrian|german"},{"name":"german","if":"austrian|german"},{"name":"mlp-01","if":"english"},{"name":"frenchle","if":"frenchle"},{"name":"mlp-49n","if":"naustrian|ngerman"},{"name":"ngerman","if":"naustrian|ngerman"}],
+	"macros": [
+		{"name":"addcaptionnames","arg":{"format":"{}","snippet":"addcaptionnames{${1}}"},"unusual":true},
+		{"name":"beginlanguage"},
+		{"name":"german","if":"frenchle"},
+		{"name":"languagename","if":"frenchle"},
+		{"name":"ngerman","if":"frenchle"},
+		{"name":"beginFWdirection","unusual":true,"if":"german"},
+		{"name":"captionsnames","unusual":true,"if":"german"},
+		{"name":"germanTeXmods","unusual":true,"if":"german"},
+		{"name":"languagename","if":"german"},
+		{"name":"switchtolanguage","unusual":true,"if":"german"},
+		{"name":"beginFWdirection","unusual":true,"if":"ngerman"},
+		{"name":"captionsnames","unusual":true,"if":"ngerman"},
+		{"name":"languagename","if":"ngerman"},
+		{"name":"ngermanTeXmods","unusual":true,"if":"ngerman"},
+		{"name":"switchtolanguage","unusual":true,"if":"ngerman"}
+	],
+	"envs": [
+		{"name":"french","if":"frenchle"},
+		{"name":"german","if":"german"},
+		{"name":"ngerman","if":"ngerman"}
+	],
+	"keys": {
+		"\\usepackage/mlp#c": ["acadian","acadien","austrian","canadianf","canadien","efrench","english","french","frenchle","german","naustrian","ngerman"]
+	},
+	"args": ["\\usepackage/mlp#c"]
+}

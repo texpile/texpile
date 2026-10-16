@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"click","arg":{"format":"[]","snippet":"click[${1:minutes}]"}},
+		{"name":"click"},
+		{"name":"flush","arg":{"format":"[]","snippet":"flush[${1:minutes}]"}},
+		{"name":"flush"},
+		{"name":"plick","arg":{"format":"[]{}","snippet":"plick[${1:minutes}]{${2:text}}"}},
+		{"name":"plick","arg":{"format":"{}","snippet":"plick{${1:text}}"}},
+		{"name":"plush","arg":{"format":"[]{}","snippet":"plush[${1:minutes}]{${2:text}}"}},
+		{"name":"plush","arg":{"format":"{}","snippet":"plush{${1:text}}"}},
+		{"name":"print","arg":{"format":"{}","snippet":"print{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

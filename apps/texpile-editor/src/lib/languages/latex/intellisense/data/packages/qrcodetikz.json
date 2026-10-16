@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"qrcode"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"qrcodeFillOptions","arg":{"format":"{}","snippet":"qrcodeFillOptions{${1}}"}},
+		{"name":"qrcodetikzOff"},
+		{"name":"qrcodetikzOn"},
+		{"name":"QRTZgetTikzPathMaybeSaved","arg":{"format":"{}{}","snippet":"QRTZgetTikzPathMaybeSaved{${1:binary data}}{${2:cmd to store path}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

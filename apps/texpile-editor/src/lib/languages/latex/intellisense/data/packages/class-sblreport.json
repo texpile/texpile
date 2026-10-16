@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"class-report"},{"name":"sblfonts"},{"name":"babel"},{"name":"tempora","engines":["pdflatex"]},{"name":"textcomp","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"xkeyval","engines":["pdflatex"]},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"xpatch"},{"name":"xparse"},{"name":"biblatex-source-division"},{"name":"blx-case-expl3"},{"name":"csquotes"},{"name":"geometry"},{"name":"ifvtex"},{"name":"setspace"},{"name":"ragged2e"},{"name":"fancyhdr"},{"name":"footmisc"},{"name":"caption"},{"name":"caption3"},{"name":"titlesec"},{"name":"titletoc"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"keyval","engines":["lualatex","xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"acknowledgementsname"},
+		{"name":"degree","arg":{"format":"{}","snippet":"degree{${1}}"},"doc":"Set the name of the degree the thesis is for."},
+		{"name":"institution","arg":{"format":"{}","snippet":"institution{${1}}"},"doc":"Set the name of the institution the thesis will be submitted at."},
+		{"name":"maketitle"},
+		{"name":"prefacename"}
+	],
+	"envs": [
+		{"name":"acknowledgements","doc":"Add an Acknowledgements page to the thesis."},
+		{"name":"approvalpage","doc":"Add an approval page to the thesis."},
+		{"name":"copyrightpage","doc":"Add a copyright page to the thesis."},
+		{"name":"dedication","doc":"Add a dedication to the thesis."},
+		{"name":"epigraph","doc":"Add an epigraph to the thesis."},
+		{"name":"preface","doc":"Add an Preface to the thesis."}
+	],
+	"keys": {}
+}

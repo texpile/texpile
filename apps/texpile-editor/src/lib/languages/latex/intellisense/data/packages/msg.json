@@ -1,0 +1,39 @@
+{
+	"deps": [{"name":"inputenc"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"getmsg","arg":{"format":"{}()[]","snippet":"getmsg{${1:id}}(${2:package})[${3:replacement for #1}]"},"doc":"When requested via \\getmsg or \\issuemsg the four parts are sticked in the usual order."},
+		{"name":"getmsg","arg":{"format":"{}()","snippet":"getmsg{${1:id}}(${2:package})"},"doc":"When requested via \\getmsg or \\issuemsg the four parts are sticked in the usual order."},
+		{"name":"help","arg":{"format":"{}","snippet":"help{${1:help text}}"}},
+		{"name":"issueallmsg","arg":{"format":"[]()","snippet":"issueallmsg[${1:message macro}](${2:package})"}},
+		{"name":"issueallmsg","arg":{"format":"()","snippet":"issueallmsg(${1:package})"}},
+		{"name":"issuemsg","arg":{"format":"[]{}()[]","snippet":"issuemsg[${1:message macro}]{${2:id}}(${3:package})[${4:replacement for #1}]"}},
+		{"name":"issuemsg","arg":{"format":"{}()","snippet":"issuemsg{${1:id}}(${2:package})"}},
+		{"name":"issuemsgio","arg":{"format":"{}","snippet":"issuemsgio{${1}}"}},
+		{"name":"issuemsgx","arg":{"format":"[]{}()[]","snippet":"issuemsgx[${1:message macro}]{${2:id}}(${3:package})[${4:replacement for #1}]"}},
+		{"name":"issuemsgx","arg":{"format":"{}()","snippet":"issuemsgx{${1:id}}(${2:package})"}},
+		{"name":"msg","arg":{"format":"{}{}{}","snippet":"msg{${1:id}}{${2:message}}{${3:extra parts}}"}},
+		{"name":"msg*","arg":{"format":"{}{}{}","snippet":"msg*{${1:id}}{${2:message}}{${3:extra parts}}"}},
+		{"name":"msgencoding","arg":{"format":"{}","snippet":"msgencoding{${1}}"}},
+		{"name":"msgheader","arg":{"format":"{}","snippet":"msgheader{${1}}"}},
+		{"name":"msgid"},
+		{"name":"msgparti","arg":{"format":"{}","snippet":"msgparti{${1:message part 2}}"}},
+		{"name":"msgpartii","arg":{"format":"{}","snippet":"msgpartii{${1:message part 3}}"}},
+		{"name":"msgpartiii","arg":{"format":"{}","snippet":"msgpartiii{${1:message part 4}}"}},
+		{"name":"msgtrailer","arg":{"format":"{}","snippet":"msgtrailer{${1}}"}},
+		{"name":"nativelanguage","unusual":true},
+		{"name":"packagewarningheader","arg":{"format":"{}","snippet":"packagewarningheader{${1}}"},"unusual":true},
+		{"name":"retrievemsg","arg":{"format":"{}()[]","snippet":"retrievemsg{${1:id}}(${2:package})[${3:replacement for #1}]"},"doc":"The \\retrievemsg command is the heart of all macros to obtain the wanted message. It will input the message file, depending on the language to use, searching for the message “id”."},
+		{"name":"retrievemsg","arg":{"format":"{}()","snippet":"retrievemsg{${1:id}}(${2:package})"},"doc":"The \\retrievemsg command is the heart of all macros to obtain the wanted message. It will input the message file, depending on the language to use, searching for the message “id”."},
+		{"name":"themsg"},
+		{"name":"themsgi"},
+		{"name":"themsgii"},
+		{"name":"themsgiii"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/msg#c": ["french","kbtypeout","message","noop","tracefiles","typeout","wlog"]
+	},
+	"args": ["\\usepackage/msg#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"aurl","arg":{"format":"{}{}","snippet":"aurl{${1:prefix}}{${2:suffix}}"},"doc":"The aurl package introduces `\\aurl{prefix}{suffix}` and includes the 100 most popular prefixes from [prefix.cc](http://prefix.cc)."},
+		{"name":"daurl","arg":{"format":"{}{}","snippet":"daurl{${1:prefix}}{${2:prefix expansion}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/aurl#c": ["100","1000"]
+	},
+	"args": ["\\usepackage/aurl#c"]
+}

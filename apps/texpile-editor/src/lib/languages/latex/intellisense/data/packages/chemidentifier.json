@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"chemidentifier-v2"}],
+	"macros": [
+		{"name":"chemid","arg":{"format":"{}","snippet":"chemid{${1}}"}},
+		{"name":"chemid*","arg":{"format":"{}","snippet":"chemid*{${1}}"}},
+		{"name":"chemidaddlanguage","arg":{"format":"{}{}","snippet":"chemidaddlanguage{${1}}{${2}}"}},
+		{"name":"chemidanchored","arg":{"format":"{}","snippet":"chemidanchored{${1}}"},"unusual":true},
+		{"name":"chemidanchoredfamily","arg":{"format":"{}","snippet":"chemidanchoredfamily{${1}}"},"unusual":true},
+		{"name":"chemidfamily","arg":{"format":"{}{}","snippet":"chemidfamily{${1}}{${2}}"},"doc":"\\chemidfamily déclare le parent, exactement comme le ferait \\chemid* — il prend la même place dans la numérotation — et lui donne une forme dont ses enfants héritent."},
+		{"name":"chemidfirstchild","arg":{"format":"{}{}","snippet":"chemidfirstchild{${1}}{${2}}"},"unusual":true},
+		{"name":"chemidhere","arg":{"format":"{}","snippet":"chemidhere{${1}}"},"doc":"\\chemidhere{clé} pose la cible du lien."},
+		{"name":"chemidkey","arg":{"format":"[]{}{}","snippet":"chemidkey[${1}]{${2}}{${3}}"},"doc":"\\chemidkey takes the compound’s current number: it does not declare or renumber anything, so keys still need a matching \\chemid* declared elsewhere."},
+		{"name":"chemidkey","arg":{"format":"{}{}","snippet":"chemidkey{${1}}{${2}}"},"doc":"\\chemidkey takes the compound’s current number: it does not declare or renumber anything, so keys still need a matching \\chemid* declared elsewhere."},
+		{"name":"chemidnote","arg":{"format":"[]{}{}","snippet":"chemidnote[${1}]{${2}}{${3}}"}},
+		{"name":"chemidnote","arg":{"format":"{}{}","snippet":"chemidnote{${1}}{${2}}"}},
+		{"name":"chemidregister","arg":{"format":"{}{}{}{}{}{}","snippet":"chemidregister{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true},
+		{"name":"chemidregisterfamily","arg":{"format":"{}{}{}{}{}{}","snippet":"chemidregisterfamily{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"unusual":true},
+		{"name":"chemidregistervalue","arg":{"format":"{}{}{}","snippet":"chemidregistervalue{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"chemidreset","doc":"\\chemidreset resets the main counter to zero: the next declaration will start again from 1."},
+		{"name":"chemidscheme","arg":{"format":"[]{}","snippet":"chemidscheme[${1}]{${2}}"}},
+		{"name":"chemidscheme","arg":{"format":"{}","snippet":"chemidscheme{${1}}"}},
+		{"name":"chemidsetup","arg":{"format":"{}","snippet":"chemidsetup{${1}}","keys":["l3keys:chemidentifier"],"keyPos":0}},
+		{"name":"chemidvalue"},
+		{"name":"herechemid","arg":{"format":"{}","snippet":"herechemid{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:chemidentifier": ["format=","last-sep=","list-sep=","main-style=","pdftex-font=","prefix=","range-sep=","range-threshold=","sub-sep=","sub-style=","unknown-text=","version=","anchor-children=${1|true,false|}","auto-lang=${1|true,false|}","implicit-parent=${1|true,false|}","links=${1|true,false|}","purify=${1|true,false|}","strict-anchors=${1|true,false|}"],
+		"\\usepackage/chemidentifier#c": ["anchor-children=${1|true,false|}","auto-lang=${1|true,false|}","format=","implicit-parent=${1|true,false|}","last-sep=","links=${1|true,false|}","list-sep=","main-style=","pdftex-font=","prefix=","purify=${1|true,false|}","range-sep=","range-threshold=","strict-anchors=${1|true,false|}","sub-sep=","sub-style=","unknown-text=","version="]
+	},
+	"args": ["\\usepackage/chemidentifier#c"]
+}

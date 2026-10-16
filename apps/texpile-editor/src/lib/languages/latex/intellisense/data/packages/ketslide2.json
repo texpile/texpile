@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"ketmarginE","unusual":true},
+		{"name":"ketmarginJ","unusual":true},
+		{"name":"ketslideinit","unusual":true},
+		{"name":"mainsameslide","arg":{"format":"[]","snippet":"mainsameslide[${1:title y position}]"},"unusual":true},
+		{"name":"mainsameslide","unusual":true},
+		{"name":"mainslide","arg":{"format":"[]{}","snippet":"mainslide[${1:title y position}]{${2:title}}"},"unusual":true},
+		{"name":"mainslide","arg":{"format":"{}","snippet":"mainslide{${1:title}}"},"unusual":true},
+		{"name":"newnewslide","arg":{"format":"[]{}","snippet":"newnewslide[${1:title y position}]{${2:title}}"},"unusual":true},
+		{"name":"newnewslide","arg":{"format":"{}","snippet":"newnewslide{${1:title}}"},"unusual":true},
+		{"name":"newslide","arg":{"format":"[]{}","snippet":"newslide[${1:title y position}]{${2:title}}"},"unusual":true},
+		{"name":"newslide","arg":{"format":"{}","snippet":"newslide{${1:title}}"},"unusual":true},
+		{"name":"sameslide","arg":{"format":"[]","snippet":"sameslide[${1:title y position}]"},"unusual":true},
+		{"name":"sameslide","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

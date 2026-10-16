@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"xparse"},{"name":"datemultical-engine"},{"name":"iftex"}],
+	"macros": [
+		{"name":"dmc","arg":{"format":"[]{}{}","snippet":"dmc[${1:calendar}]{${2:name}}{${3:style}}"}},
+		{"name":"dmc","arg":{"format":"{}{}","snippet":"dmc{${1:name}}{${2:style}}"}},
+		{"name":"dmcformat","arg":{"format":"[]{}{}","snippet":"dmcformat[${1:calendar}]{${2:name}}{${3:pattern}}"}},
+		{"name":"dmcformat","arg":{"format":"{}{}","snippet":"dmcformat{${1:name}}{${2:pattern}}"}},
+		{"name":"dmcget","arg":{"format":"[]{}{}","snippet":"dmcget[${1:calendar}]{${2:name}}{${3:field}}"}},
+		{"name":"dmcget","arg":{"format":"{}{}","snippet":"dmcget{${1:name}}{${2:field}}"}},
+		{"name":"dmcnew","arg":{"format":"[]{}{}","snippet":"dmcnew[${1:calendar}]{${2:name}}{${3:key=value}}"},"doc":"The command \\dmcnew is available only with LuaLATEX. It creates and stores a named date using calendar-specific key–value pairs."},
+		{"name":"dmcnew","arg":{"format":"{}{}","snippet":"dmcnew{${1:name}}{${2:key=value}}"},"doc":"The command \\dmcnew is available only with LuaLATEX. It creates and stores a named date using calendar-specific key–value pairs."},
+		{"name":"dmcset","arg":{"format":"[]{}{}{}{}","snippet":"dmcset[${1:calendar}]{${2:name}}{${3:year}}{${4:month}}{${5:day}}"}},
+		{"name":"dmcset","arg":{"format":"{}{}{}{}","snippet":"dmcset{${1:name}}{${2:year}}{${3:month}}{${4:day}}"}},
+		{"name":"dmcstyle","arg":{"format":"[]{}{}","snippet":"dmcstyle[${1:calendars}]{${2:style}}{${3:pattern}}"}},
+		{"name":"dmcstyle","arg":{"format":"{}{}","snippet":"dmcstyle{${1:style}}{${2:pattern}}"}},
+		{"name":"FaMiladi","arg":{"format":"{}","snippet":"FaMiladi{${1:name}}"}},
+		{"name":"Ghamari","arg":{"format":"{}","snippet":"Ghamari{${1:name}}"}},
+		{"name":"Miladi","arg":{"format":"{}","snippet":"Miladi{${1:name}}"}},
+		{"name":"Persianweekday","arg":{"format":"{}","snippet":"Persianweekday{${1:name}}"}},
+		{"name":"Shamsi","arg":{"format":"{}","snippet":"Shamsi{${1:name}}"}},
+		{"name":"ShortGhamari","arg":{"format":"{}","snippet":"ShortGhamari{${1:name}}"}},
+		{"name":"ShortMiladi","arg":{"format":"{}","snippet":"ShortMiladi{${1:name}}"}},
+		{"name":"ShortShamsi","arg":{"format":"{}","snippet":"ShortShamsi{${1:name}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/datemultical#c": ["native","persian"]
+	},
+	"args": ["\\usepackage/datemultical#c"]
+}

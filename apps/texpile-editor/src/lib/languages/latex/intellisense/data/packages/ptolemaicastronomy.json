@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"proposition","arg":{"format":"[]{}{}{}{}","snippet":"proposition[${1:TikZ options}]{${2:direction}}{${3:n}}{${4:width}}{${5:length}}"},"doc":"\\proposition[⟨options⟩]{⟨direction⟩}{⟨n⟩}{⟨width⟩}{⟨length⟩} actually draws the proposition."},
+		{"name":"proposition","arg":{"format":"{}{}{}{}","snippet":"proposition{${1:direction}}{${2:n}}{${3:width}}{${4:length}}"},"doc":"\\proposition[⟨options⟩]{⟨direction⟩}{⟨n⟩}{⟨width⟩}{⟨length⟩} actually draws the proposition."},
+		{"name":"propositionintersect","arg":{"format":"[]{}{}{}{}","snippet":"propositionintersect[${1:TikZ options}]{${2:direction}}{${3:n}}{${4:width}}{${5:length}}"},"doc":"\\propositionintersect uses \\sphereintersect[⟨options⟩]{⟨n⟩}{⟨code⟩} to fill the area between the parabola and the outside edge of the ⟨n⟩-th sphere."},
+		{"name":"propositionintersect","arg":{"format":"{}{}{}{}","snippet":"propositionintersect{${1:direction}}{${2:n}}{${3:width}}{${4:length}}"},"doc":"\\propositionintersect uses \\sphereintersect[⟨options⟩]{⟨n⟩}{⟨code⟩} to fill the area between the parabola and the outside edge of the ⟨n⟩-th sphere."},
+		{"name":"propositionplot","arg":{"format":"{}{}{}{}","snippet":"propositionplot{${1:direction}}{${2:n}}{${3:width}}{${4:length}}"},"doc":"\\propositionplot[⟨options⟩]{⟨direction⟩}{⟨n⟩}{⟨width⟩}{⟨length⟩} produces the plot code for a proposition intersecting the ⟨n⟩-th layer in angle ⟨direction⟩ away from the center of the sphere system, with endpoints ⟨length⟩ away from the center at an angle of ⟨direction⟩ ± ⟨width⟩/2."},
+		{"name":"spherefill","arg":{"format":"[]{}","snippet":"spherefill[${1:TikZ options}]{${2:n}}"}},
+		{"name":"spherefill","arg":{"format":"{}","snippet":"spherefill{${1:n}}"}},
+		{"name":"sphereintersect","arg":{"format":"[]{}{}","snippet":"sphereintersect[${1:TikZ options}]{${2:n}}{${3:code}}"}},
+		{"name":"sphereintersect","arg":{"format":"{}{}","snippet":"sphereintersect{${1:n}}{${2:code}}"}},
+		{"name":"spherelayer","arg":{"format":"[]{}","snippet":"spherelayer[${1:TikZ options}]{${2:n}}"}},
+		{"name":"spherelayer","arg":{"format":"{}","snippet":"spherelayer{${1:n}}"}},
+		{"name":"sphereplot","arg":{"format":"{}","snippet":"sphereplot{${1:n}}"}},
+		{"name":"spherepos","arg":{"format":"[]{}{}{}","snippet":"spherepos[${1:TikZ options}]{${2:direction}}{${3:n}}{${4:code}}"},"doc":"\\spherepos{⟨direction⟩}{⟨n⟩}{⟨code⟩} moves to a position in the center of layer ⟨n⟩ in ⟨direction⟩ and then executes TikZ path code ⟨code⟩."},
+		{"name":"spherepos","arg":{"format":"{}{}{}","snippet":"spherepos{${1:direction}}{${2:n}}{${3:code}}"},"doc":"\\spherepos{⟨direction⟩}{⟨n⟩}{⟨code⟩} moves to a position in the center of layer ⟨n⟩ in ⟨direction⟩ and then executes TikZ path code ⟨code⟩."},
+		{"name":"spheresystem","arg":{"format":"[]{}","snippet":"spheresystem[${1:TikZ options}]{${2:n}}"}},
+		{"name":"spheresystem","arg":{"format":"{}","snippet":"spheresystem{${1:n}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

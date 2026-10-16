@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"ccaux"},{"name":"ccthm"},{"name":"theorem"},{"name":"thcc"},{"name":"relabel"},{"name":"ccqed"},{"name":"ccproof"},{"name":"cc2cite"},{"name":"natbib"},{"name":"ccdbs"},{"name":"url"}],
+	"macros": [
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email address}}"}},
+		{"name":"homepage","arg":{"format":"{}","snippet":"homepage{${1:www address}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

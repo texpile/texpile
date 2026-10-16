@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"gmcommand"},{"name":"gmbase"},{"name":"xparse"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"endfilepart"},
+		{"name":"filepart","arg":{"format":"{}","snippet":"filepart{${1}}"}},
+		{"name":"inclasthook","unusual":true},
+		{"name":"includecountfix"},
+		{"name":"nofileparts"},
+		{"name":"providecounter","arg":{"format":"{}","snippet":"providecounter{${1}}"},"unusual":true},
+		{"name":"whenonly","arg":{"format":"{}{}{}","snippet":"whenonly{${1:part}}{${2:if included}}{${3:otherwise}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

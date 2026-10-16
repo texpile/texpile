@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"xltxtra"},{"name":"ifluatex"},{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"lettrine"},{"name":"ifxetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"realscripts","engines":["xelatex"]},{"name":"metalogo","engines":["xelatex"]},{"name":"graphicx","engines":["xelatex"]},{"name":"keyval","engines":["xelatex"]},{"name":"graphics","engines":["xelatex"]},{"name":"trig","engines":["xelatex"]}],
+	"macros": [
+		{"name":"dsubop"},
+		{"name":"dunit"},
+		{"name":"dUnit"},
+		{"name":"dunknown"},
+		{"name":"phkl"},
+		{"name":"textinit","arg":{"format":"{}{}","snippet":"textinit{${1:first letter}}{${2:rest of word}}"},"if":"global","doc":"In particular, the command \\textinit, which has two arguments, the first being the first letter of a word and the second being the rest of the word, can be used to typeset a drop capital."},
+		{"name":"textphlk","arg":{"format":"{}","snippet":"textphlk{${1}}"},"doc":"When the package is used with the local option, which is the default option, it provides the commands \\textphlk and \\phkl to enable typesetting of short passages. The first command takes one argument which is typeset using the font."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/philokalia#c": ["global","local"]
+	},
+	"args": ["\\usepackage/philokalia#c"]
+}

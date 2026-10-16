@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"polyglossia"},{"name":"etoolbox"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"Ala"},
+		{"name":"Chingam"},
+		{"name":"ChingamAlt"},
+		{"name":"Ezhuthu"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"fontpath","arg":{"format":"{}","snippet":"fontpath{${1}}"},"unusual":true},
+		{"name":"Indira"},
+		{"name":"Joy"},
+		{"name":"Karuna"},
+		{"name":"Keraleeyam"},
+		{"name":"Keram"},
+		{"name":"Kutty"},
+		{"name":"Lasya"},
+		{"name":"Lekha"},
+		{"name":"Meera"},
+		{"name":"Panmana"},
+		{"name":"Rachana"},
+		{"name":"Sundar"},
+		{"name":"Thaara"},
+		{"name":"thefontpath","unusual":true},
+		{"name":"Uroob"}
+	],
+	"envs": [],
+	"keys": {}
+}

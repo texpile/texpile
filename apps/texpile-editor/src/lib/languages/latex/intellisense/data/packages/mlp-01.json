@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"fenglish"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/mlp-01#c": ["english"]
+	},
+	"args": ["\\usepackage/mlp-01#c"]
+}

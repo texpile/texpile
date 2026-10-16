@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"sourcesanspro"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"sourcesans"},{"name":"sourcecodepro"},{"name":"microtype"},{"name":"etoolbox"},{"name":"titlesec"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"xcolor"},{"name":"stringstrings"},{"name":"ifthen"},{"name":"textpos"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1}}"}},
+		{"name":"cricos","arg":{"format":"{}","snippet":"cricos{${1}}"},"doc":"The university’s CRICOS provider code."},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1}}"}},
+		{"name":"footeraddress","arg":{"format":"{}","snippet":"footeraddress{${1}}"},"doc":"The university’s address, shortened for the first-page footer."},
+		{"name":"mbdp","arg":{"format":"{}","snippet":"mbdp{${1}}"},"doc":"The author’s mailbag delivery point (MBDP)."},
+		{"name":"mobile","arg":{"format":"{}","snippet":"mobile{${1}}"}},
+		{"name":"phone","arg":{"format":"{}","snippet":"phone{${1}}"}},
+		{"name":"school","arg":{"format":"{}","snippet":"school{${1}}"}},
+		{"name":"university","arg":{"format":"{}","snippet":"university{${1}}"},"doc":"The name of the university."},
+		{"name":"uwacrest","arg":{"format":"{}","snippet":"uwacrest{${1}}"},"doc":"The filename of the UWA crest in PDF format (available in SVG format at https://static-listing.weboffice.uwa.edu.au/visualid/core-rebrand/img/uwacrest/)."},
+		{"name":"website","arg":{"format":"{}","snippet":"website{${1}}"},"doc":"The author’s website, or their school’s website."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/uwa-letterhead#c": ["arial","footer","light","noarial","nofooter","nouwafont","regular","uwafont"]
+	},
+	"args": ["\\usepackage/uwa-letterhead#c"]
+}

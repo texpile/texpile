@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"br","arg":{"format":"{}","snippet":"br{${1:expression}}"},"doc":"The bracket command replaces \\left( and \\right) with the single command, \\br to produce brackets in a math environment."},
+		{"name":"od","arg":{"format":"[]{}{}","snippet":"od[${1:order}]{${2:function}}{${3:variable}}"}},
+		{"name":"od","arg":{"format":"{}{}","snippet":"od{${1:function}}{${2:variable}}"}},
+		{"name":"pd","arg":{"format":"[]{}{}","snippet":"pd[${1:order}]{${2:function}}{${3:variables}}"},"doc":"The command \\pd follows the same form as \\od, but instead produces partial differentials."},
+		{"name":"pd","arg":{"format":"{}{}","snippet":"pd{${1:function}}{${2:variables}}"},"doc":"The command \\pd follows the same form as \\od, but instead produces partial differentials."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bropd#c": ["pdalt","pdshort","sans"]
+	},
+	"args": ["\\usepackage/bropd#c"]
+}

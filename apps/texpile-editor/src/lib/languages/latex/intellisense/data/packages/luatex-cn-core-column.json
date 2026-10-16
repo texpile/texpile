@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"luatex-cn-core-base"},{"name":"luatexbase"},{"name":"enumitem"},{"name":"xparse"}],
+	"macros": [
+		{"name":"Column","arg":{"format":"[]{}","snippet":"Column[${1:options}]{${2:text}}"}},
+		{"name":"Column","arg":{"format":"{}","snippet":"Column{${1:text}}"}},
+		{"name":"LastColumn","arg":{"format":"[]{}","snippet":"LastColumn[${1:options}]{${2:text}}"}},
+		{"name":"LastColumn","arg":{"format":"{}","snippet":"LastColumn{${1:text}}"}},
+		{"name":"末行","arg":{"format":"[]{}","snippet":"末行[${1}]{${2}}"}},
+		{"name":"末行","arg":{"format":"{}","snippet":"末行{${1}}"}},
+		{"name":"行","arg":{"format":"[]{}","snippet":"行[${1}]{${2}}"}},
+		{"name":"行","arg":{"format":"{}","snippet":"行{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

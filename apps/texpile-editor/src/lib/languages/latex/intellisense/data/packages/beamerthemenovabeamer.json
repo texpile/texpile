@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"comment"}],
+	"macros": [
+		{"name":"fullpagewidth","unusual":true},
+		{"name":"textmargin","unusual":true},
+		{"name":"titlehmargin","unusual":true},
+		{"name":"titlevmargin","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

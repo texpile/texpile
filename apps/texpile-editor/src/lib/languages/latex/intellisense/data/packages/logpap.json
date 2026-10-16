@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"calc"},{"name":"color"}],
+	"macros": [
+		{"name":"DefineLPLabelColor","arg":{"format":"{}","snippet":"DefineLPLabelColor{${1:color command}}"}},
+		{"name":"DefineLPLabelDist","arg":{"format":"{}","snippet":"DefineLPLabelDist{${1:length}}"}},
+		{"name":"DefineLPLabelFont","arg":{"format":"{}","snippet":"DefineLPLabelFont{${1:label-font}}"}},
+		{"name":"DefineLPLineColor","arg":{"format":"{}","snippet":"DefineLPLineColor{${1:color command}}"}},
+		{"name":"DefineLPMedLineThickness","arg":{"format":"{}","snippet":"DefineLPMedLineThickness{${1:thickness}}"}},
+		{"name":"DefineLPMedTickLen","arg":{"format":"{}","snippet":"DefineLPMedTickLen{${1:length}}"}},
+		{"name":"DefineLPMinLineDist","arg":{"format":"{}","snippet":"DefineLPMinLineDist{${1:length}}"}},
+		{"name":"DefineLPmu","arg":{"format":"{}","snippet":"DefineLPmu{${1:mu symbol}}"}},
+		{"name":"DefineLPText","arg":{"format":"{}","snippet":"DefineLPText{${1:text}}"}},
+		{"name":"DefineLPThickLineThickness","arg":{"format":"{}","snippet":"DefineLPThickLineThickness{${1:thickness}}"}},
+		{"name":"DefineLPThickTickLen","arg":{"format":"{}","snippet":"DefineLPThickTickLen{${1:length}}"}},
+		{"name":"DefineLPThinLineThickness","arg":{"format":"{}","snippet":"DefineLPThinLineThickness{${1:thickness}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"linlinpap","arg":{"format":"()(){}{}[][]","snippet":"linlinpap(${1:x-length,y-length})(${2:x-divisions,y-divisions}){${3:x-start,increment}}{${4:y-start,increment}}[${5:x-axis name}][${6:y-axis name}]"}},
+		{"name":"linlinpap","arg":{"format":"()(){}{}","snippet":"linlinpap(${1:x-length,y-length})(${2:x-divisions,y-divisions}){${3:x-start,increment}}{${4:y-start,increment}}"}},
+		{"name":"linlogpap","arg":{"format":"()(){}{}[][]","snippet":"linlogpap(${1:x-length,y-length})(${2:x-divisions,y-decades}){${3:x-start,increment}}{${4:y-start,factor}}[${5:x-axis name}][${6:y-axis name}]"}},
+		{"name":"linlogpap","arg":{"format":"()(){}{}","snippet":"linlogpap(${1:x-length,y-length})(${2:x-divisions,y-decades}){${3:x-start,increment}}{${4:y-start,factor}}"}},
+		{"name":"loglinpap","arg":{"format":"()(){}{}[][]","snippet":"loglinpap(${1:x-length,y-length})(${2:x-decades,y-divisions}){${3:x-start,factor}}{${4:y-start,increment}}[${5:x-axis name}][${6:y-axis name}]"}},
+		{"name":"loglinpap","arg":{"format":"()(){}{}","snippet":"loglinpap(${1:x-length,y-length})(${2:x-decades,y-divisions}){${3:x-start,factor}}{${4:y-start,increment}}"}},
+		{"name":"loglogpap","arg":{"format":"()(){}{}[][]","snippet":"loglogpap(${1:x-length,y-length})(${2:x-decades,y-decades}){${3:x-start,factor}}{${4:y-start,factor}}[${5:x-axis name}][${6:y-axis name}]"}},
+		{"name":"loglogpap","arg":{"format":"()(){}{}","snippet":"loglogpap(${1:x-length,y-length})(${2:x-decades,y-decades}){${3:x-start,factor}}{${4:y-start,factor}}"}},
+		{"name":"lpgridx"},
+		{"name":"lpgridy"},
+		{"name":"LPSet","arg":{"format":"{}","snippet":"LPSet{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/logpap#c": ["dimensions","fsnx","fsny","nodimensions","nofsnx","nofsny","notenlower","notext","noticksupright","notwoninex","notwoniney","tenlower","text","ticksupright","twoninex","twoniney"]
+	},
+	"args": ["\\usepackage/logpap#c"]
+}

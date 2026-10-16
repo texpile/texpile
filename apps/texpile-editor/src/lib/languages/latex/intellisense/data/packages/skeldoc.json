@@ -1,0 +1,38 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"xparse"},{"name":"tabularx"},{"name":"array"},{"name":"booktabs"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"enotez"},{"name":"l3keys2e"},{"name":"xtemplate"},{"name":"translations"},{"name":"marginnote"},{"name":"enumitem"}],
+	"macros": [
+		{"name":"printskelnotes"},
+		{"name":"skelbib","arg":{"format":"[]{}","snippet":"skelbib[${1:options}]{${2:note}}"}},
+		{"name":"skelbib","arg":{"format":"{}","snippet":"skelbib{${1:note}}"}},
+		{"name":"skelcaption","arg":{"format":"[]{}","snippet":"skelcaption[${1:options}]{${2:note}}"}},
+		{"name":"skelcaption","arg":{"format":"{}","snippet":"skelcaption{${1:note}}"}},
+		{"name":"skelcite","arg":{"format":"[]{}","snippet":"skelcite[${1:options}]{${2:note}}"}},
+		{"name":"skelcite","arg":{"format":"{}","snippet":"skelcite{${1:note}}"}},
+		{"name":"skeldate","unusual":true},
+		{"name":"skelenum","arg":{"format":"[]{}","snippet":"skelenum[${1:options}]{${2:note}}"}},
+		{"name":"skelenum","arg":{"format":"{}","snippet":"skelenum{${1:note}}"}},
+		{"name":"skelfig","arg":{"format":"[]{}","snippet":"skelfig[${1:options}]{${2:note}}"}},
+		{"name":"skelfig","arg":{"format":"{}","snippet":"skelfig{${1:note}}"}},
+		{"name":"skelitems","arg":{"format":"[]{}","snippet":"skelitems[${1:options}]{${2:note}}"}},
+		{"name":"skelitems","arg":{"format":"{}","snippet":"skelitems{${1:note}}"}},
+		{"name":"skelline","arg":{"format":"[]{}","snippet":"skelline[${1:options}]{${2:note}}"}},
+		{"name":"skelline","arg":{"format":"{}","snippet":"skelline{${1:note}}"}},
+		{"name":"skelnote","arg":{"format":"{}","snippet":"skelnote{${1:note}}"}},
+		{"name":"skelpar","arg":{"format":"[]{}","snippet":"skelpar[${1:options}]{${2:note}}"}},
+		{"name":"skelpar","arg":{"format":"{}","snippet":"skelpar{${1:note}}"}},
+		{"name":"skelpars","arg":{"format":"[]{}","snippet":"skelpars[${1:options}]{${2:note}}"}},
+		{"name":"skelpars","arg":{"format":"{}","snippet":"skelpars{${1:note}}"}},
+		{"name":"skelpseudo","arg":{"format":"[]{}","snippet":"skelpseudo[${1:options}]{${2:note}}"}},
+		{"name":"skelpseudo","arg":{"format":"{}","snippet":"skelpseudo{${1:note}}"}},
+		{"name":"skelref","arg":{"format":"[]{}","snippet":"skelref[${1:options}]{${2:note}}"}},
+		{"name":"skelref","arg":{"format":"{}","snippet":"skelref{${1:note}}"}},
+		{"name":"skelset","arg":{"format":"{}","snippet":"skelset{${1:keys}}","keys":["l3keys:skeldoc"],"keyPos":0}},
+		{"name":"skeltabular","arg":{"format":"[]{}","snippet":"skeltabular[${1:options}]{${2:note}}"}},
+		{"name":"skeltabular","arg":{"format":"{}","snippet":"skeltabular{${1:note}}"}},
+		{"name":"skelversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:skeldoc": ["bib-item-lines=","bib-items=","caption-lines=","cite-left=","cite-right=","cite-width=","fig-height=","fig-width=","fill-width=","full-width=","hypersetup=","line-height=","line-raise=","line-width=","list-item-lines=","list-items=","main-color=","min-mpwidth=","note-color=","note-font=","par-first-width=","par-last-width=","par-lines=","par-width=","pars-pars=","pseudo-head=","pseudo-lines=","pseudo-newlines=","ref-width=","short-width=","tabular-colsep=","tabular-rows=","tabular-stretch=","hide-all","hide-notes=${1|true,false|}"]
+	}
+}

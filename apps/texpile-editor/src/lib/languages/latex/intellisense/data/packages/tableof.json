@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"atveryend-ltx"}],
+	"macros": [
+		{"name":"nexttocwithtags","arg":{"format":"{}{}","snippet":"nexttocwithtags{${1:required tags}}{${2:excluded tags}}"}},
+		{"name":"nexttocwithtags*","arg":{"format":"{}{}","snippet":"nexttocwithtags*{${1:required tags}}{${2:excluded tags}}"}},
+		{"name":"tablenotof","arg":{"format":"{}","snippet":"tablenotof{${1:excluded tags}}"}},
+		{"name":"tablenotof*","arg":{"format":"{}","snippet":"tablenotof*{${1:excluded tags}}"}},
+		{"name":"tableof","arg":{"format":"{}","snippet":"tableof{${1:required tags}}"}},
+		{"name":"tableof*","arg":{"format":"{}","snippet":"tableof*{${1:required tags}}"}},
+		{"name":"tableoftaggedcontents","arg":{"format":"{}{}","snippet":"tableoftaggedcontents{${1:required tags}}{${2:excluded tags}}"}},
+		{"name":"tableoftaggedcontents*","arg":{"format":"{}{}","snippet":"tableoftaggedcontents*{${1:required tags}}{${2:excluded tags}}"}},
+		{"name":"tofOpenTocFileForWrite"},
+		{"name":"toftagstart","arg":{"format":"{}","snippet":"toftagstart{${1}}"}},
+		{"name":"toftagstop","arg":{"format":"{}","snippet":"toftagstop{${1}}"}},
+		{"name":"toftagthis","arg":{"format":"{}","snippet":"toftagthis{${1}}"},"doc":"The \\toftagthis command flags with the comma separated values from its list argument only the next sectioning command."},
+		{"name":"tofuntagthis","arg":{"format":"{}","snippet":"tofuntagthis{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

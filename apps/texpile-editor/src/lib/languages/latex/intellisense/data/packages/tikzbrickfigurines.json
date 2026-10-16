@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"simplekv"},{"name":"xstring"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"listofitems"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"calc"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"minitikzbrickfigurine","arg":{"format":"[]<>{}{}","snippet":"minitikzbrickfigurine[${1:keys}]<${2:tikz options}>{${3:height}}{${4:list of styles}}"}},
+		{"name":"minitikzbrickfigurine","arg":{"format":"<>{}{}","snippet":"minitikzbrickfigurine<${1:tikz options}>{${2:height}}{${3:list of styles}}"}},
+		{"name":"tikzbrickfigurine","arg":{"format":"[]<>{}","snippet":"tikzbrickfigurine[${1:keys}]<${2:tikz options}>{${3:height}}"}},
+		{"name":"tikzbrickfigurine","arg":{"format":"<>{}","snippet":"tikzbrickfigurine<${1:tikz options}>{${2:height}}"}},
+		{"name":"tikzbrickfigurinepiece","arg":{"format":"[]<>{}{}","snippet":"tikzbrickfigurinepiece[${1:keys}]<${2:tikz options}>{${3:piece}}{${4:height}}"}},
+		{"name":"tikzbrickfigurinepiece","arg":{"format":"<>{}{}","snippet":"tikzbrickfigurinepiece<${1:tikz options}>{${2:piece}}{${3:height}}"}},
+		{"name":"tkzshapebrickadjustlogo","unusual":true},
+		{"name":"tkzshapebrickfiglinescolor","unusual":true},
+		{"name":"tkzshapebrickfiglogo","unusual":true},
+		{"name":"tkzshapebrickfigname","unusual":true},
+		{"name":"tkzshapebrickfigpantcolor","unusual":true},
+		{"name":"tkzshapebrickfigscalelogo","unusual":true},
+		{"name":"tkzshapebrickfigskincolor","unusual":true},
+		{"name":"tkzshapebrickfigsweatcolor","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

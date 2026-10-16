@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"iftex"}],
+	"macros": [
+		{"name":"callout","arg":{"format":"[]{}{}","snippet":"callout[${1:options}]{${2:heading}}{${3:body}}","keys":["pgfkeys:/callout"],"keyPos":0}},
+		{"name":"callout","arg":{"format":"{}{}","snippet":"callout{${1:heading}}{${2:body}}"}},
+		{"name":"callout*","arg":{"format":"[]{}{}","snippet":"callout*[${1:options}]{${2:heading}}{${3:body}}","keys":["pgfkeys:/callout"],"keyPos":0}},
+		{"name":"callout*","arg":{"format":"{}{}","snippet":"callout*{${1:heading}}{${2:body}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/callout": ["arc=","barcolor=","barwidth=","bgcolor=","corners=${1|.unknown,rounded,sharp|}","family=","familyactivefalse=","familyactivetrue=","gap=","headcolor=","number=","shadow=${1|.unknown,false,off,on,true|}","theme=${1|.unknown,blue,green,orange,purple,red,slate,teal|}","vertical=${1|.unknown,false,off,on,true|}","corners=${1|rounded,sharp|}","shadow=${1|false,off,on,true|}","theme=${1|blue,green,orange,purple,red,slate,teal|}","vertical=${1|false,off,on,true|}"]
+	}
+}

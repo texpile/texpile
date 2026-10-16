@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"LaTeXpigpen"},
+		{"name":"pigpenfont"},
+		{"name":"TeXpigpen"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"histrings"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

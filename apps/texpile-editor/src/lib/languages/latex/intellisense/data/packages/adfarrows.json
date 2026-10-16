@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"fixtounicode"}],
+	"macros": [
+		{"name":"adfarrow","arg":{"format":"[]{}","snippet":"adfarrow[${1:family}]{${2:number or direction}}"},"doc":"There are 52 arrows in ArrowsADF which can be produced by feeding the relevant number between 1 and 52 to \\adfarrow{}."},
+		{"name":"adfarrow","arg":{"format":"{}","snippet":"adfarrow{${1:number or direction}}"},"doc":"There are 52 arrows in ArrowsADF which can be produced by feeding the relevant number between 1 and 52 to \\adfarrow{}."},
+		{"name":"adfarrowe","arg":{"format":"{}","snippet":"adfarrowe{${1:family 1-6}}"}},
+		{"name":"adfarrown","arg":{"format":"{}","snippet":"adfarrown{${1:family 1-6}}"}},
+		{"name":"adfarrowne","arg":{"format":"{}","snippet":"adfarrowne{${1:family 1-6}}"}},
+		{"name":"adfarrownw","arg":{"format":"{}","snippet":"adfarrownw{${1:family 1-6}}"}},
+		{"name":"adfarrows","arg":{"format":"{}","snippet":"adfarrows{${1:family 1-6}}"}},
+		{"name":"adfarrowse","arg":{"format":"{}","snippet":"adfarrowse{${1:family 1-6}}"}},
+		{"name":"adfarrowsw","arg":{"format":"{}","snippet":"adfarrowsw{${1:family 1-6}}"}},
+		{"name":"adfarroww","arg":{"format":"{}","snippet":"adfarroww{${1:family 1-6}}"}},
+		{"name":"adfhalfarrowleft"},
+		{"name":"adfhalfarrowleftsolid"},
+		{"name":"adfhalfarrowright"},
+		{"name":"adfhalfarrowrightsolid"}
+	],
+	"envs": [],
+	"keys": {}
+}

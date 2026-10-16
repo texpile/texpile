@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"clap","arg":{"format":"{}","snippet":"clap{${1:text}}"}},
+		{"name":"eeindent","unusual":true},
+		{"name":"eenumsentence","arg":{"format":"[]{}","snippet":"eenumsentence[${1:label}]{${2:items}}"}},
+		{"name":"eenumsentence","arg":{"format":"{}","snippet":"eenumsentence{${1:items}}"}},
+		{"name":"enumsentence","arg":{"format":"[]{}","snippet":"enumsentence[${1:label}]{${2:sentence}}"},"doc":"The enumsentence macros are similar to the math equation environment except that they take regular text."},
+		{"name":"enumsentence","arg":{"format":"{}","snippet":"enumsentence{${1:sentence}}"},"doc":"The enumsentence macros are similar to the math equation environment except that they take regular text."},
+		{"name":"evnup","arg":{"format":"[]{}","snippet":"evnup[${1:raise}]{${2:text}}"}},
+		{"name":"evnup","arg":{"format":"{}","snippet":"evnup{${1:text}}"}},
+		{"name":"ex","arg":{"format":"{}","snippet":"ex{${1:number}}"},"doc":"\\ex{number} which gives a relative reference."},
+		{"name":"longex","arg":{"format":"{}{}{}{}{}{}{}","snippet":"longex{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"}},
+		{"name":"longexdt","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"longexdt{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"}},
+		{"name":"longexnt","arg":{"format":"{}{}{}{}{}{}","snippet":"longexnt{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"modsmalltree","arg":{"format":"[]{}{}","snippet":"modsmalltree[${1:arraystretch}]{${2:number of columns}}{${3:alignment structure}}"}},
+		{"name":"modsmalltree","arg":{"format":"{}{}","snippet":"modsmalltree{${1:number of columns}}{${2:alignment structure}}"}},
+		{"name":"oclap","arg":{"format":"{}{}","snippet":"oclap{${1:height}}{${2:text}}"}},
+		{"name":"ollap","arg":{"format":"{}{}","snippet":"ollap{${1:height}}{${2:text}}"}},
+		{"name":"orlap","arg":{"format":"{}{}","snippet":"orlap{${1:height}}{${2:text}}"}},
+		{"name":"outerfs","arg":{"format":"{}","snippet":"outerfs{${1:attribute value rows}}"}},
+		{"name":"shortex","arg":{"format":"{}{}{}{}","snippet":"shortex{${1:number of columns}}{${2:first line}}{${3:second line}}{${4:gloss}}"}},
+		{"name":"shortexnt","arg":{"format":"{}{}{}","snippet":"shortexnt{${1:number of columns}}{${2:first line}}{${3:second line}}"}},
+		{"name":"smalltree","arg":{"format":"{}","snippet":"smalltree{${1:alignment structure}}"},"doc":"\\smalltree is based on the tabular environment with a large baselineskip."},
+		{"name":"theenums","unusual":true},
+		{"name":"theenumsi","unusual":true},
+		{"name":"toplabel","arg":{"format":"{}","snippet":"toplabel{${1:label}}"}},
+		{"name":"widelabel"}
+	],
+	"envs": [],
+	"keys": {}
+}

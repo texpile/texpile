@@ -1,1755 +1,2029 @@
 {
-  "deps": [
-    {
-      "name": "latex-dev"
-    },
-    {
-      "name": "textcomp"
-    }
-  ],
-  "macros": [
-    {
-      "name": "abstractname",
-      "unusual": true
-    },
-    {
-      "name": "Alph",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "Alph{${1:counter}}"
-      }
-    },
-    {
-      "name": "alph",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "alph{${1:counter}}"
-      }
-    },
-    {
-      "name": "and",
-      "unusual": true
-    },
-    {
-      "name": "asciispace",
-      "unusual": true
-    },
-    {
-      "name": "bezier",
-      "unusual": true,
-      "arg": {
-        "format": "{}()()()",
-        "snippet": "bezier{${1:n}}(${2:x1},${3:y1})(${4:x2},${5:y2})(${6:x3},${7:y3})"
-      }
-    },
-    {
-      "name": "bfseries"
-    },
-    {
-      "name": "bibindent",
-      "unusual": true
-    },
-    {
-      "name": "Bigg"
-    },
-    {
-      "name": "Bigg(",
-      "arg": {
-        "format": "",
-        "snippet": "Bigg(${1}\\Bigg)"
-      }
-    },
-    {
-      "name": "Bigg[",
-      "arg": {
-        "format": "",
-        "snippet": "Bigg[${1}\\Bigg]"
-      }
-    },
-    {
-      "name": "Bigg|",
-      "arg": {
-        "format": "",
-        "snippet": "Bigg|${1}\\Bigg|"
-      }
-    },
-    {
-      "name": "bigg"
-    },
-    {
-      "name": "bigg(",
-      "arg": {
-        "format": "",
-        "snippet": "bigg(${1}\\bigg)"
-      }
-    },
-    {
-      "name": "bigg[",
-      "arg": {
-        "format": "",
-        "snippet": "bigg[${1}\\bigg]"
-      }
-    },
-    {
-      "name": "bigg|",
-      "arg": {
-        "format": "",
-        "snippet": "bigg|${1}\\bigg|"
-      }
-    },
-    {
-      "name": "boldmath"
-    },
-    {
-      "name": "botfigrule",
-      "unusual": true
-    },
-    {
-      "name": "braceld",
-      "unusual": true
-    },
-    {
-      "name": "bracelu",
-      "unusual": true
-    },
-    {
-      "name": "bracerd",
-      "unusual": true
-    },
-    {
-      "name": "braceru",
-      "unusual": true
-    },
-    {
-      "name": "circle",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "circle{${1:diameter}}"
-      }
-    },
-    {
-      "name": "circle*",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "circle*{${1:diameter}}"
-      }
-    },
-    {
-      "name": "columnwidth"
-    },
-    {
-      "name": "contentsline",
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "contentsline{${1:type}}{${2:text}}{${3:page}}{${4:Href}}"
-      }
-    },
-    {
-      "name": "contentsname"
-    },
-    {
-      "name": "dashbox",
-      "unusual": true,
-      "arg": {
-        "format": "{}()[]{}",
-        "snippet": "dashbox{${1:dashlength}}(${4:width},${5:height})[${3:position}]{${2:text}}"
-      }
-    },
-    {
-      "name": "dashbox",
-      "unusual": true,
-      "arg": {
-        "format": "{}(){}",
-        "snippet": "dashbox{${1:dashlength}}(${3:width},${4:height}){${2:text}}"
-      }
-    },
-    {
-      "name": "depth",
-      "unusual": true
-    },
-    {
-      "name": "descriptionlabel",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "descriptionlabel{${1:code}}"
-      }
-    },
-    {
-      "name": "dimeval",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dimeval{${1:dimen expression}}"
-      }
-    },
-    {
-      "name": "em",
-      "unusual": true
-    },
-    {
-      "name": "encodingdefault",
-      "unusual": true
-    },
-    {
-      "name": "enlargethispage*",
-      "arg": {
-        "format": "{}",
-        "snippet": "enlargethispage*{${1:size}}"
-      }
-    },
-    {
-      "name": "enlargethispage",
-      "arg": {
-        "format": "{}",
-        "snippet": "enlargethispage{${1:size}}"
-      }
-    },
-    {
-      "name": "figurename"
-    },
-    {
-      "name": "flushbottom"
-    },
-    {
-      "name": "fnsymbol",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "fnsymbol{${1:counter}}"
-      }
-    },
-    {
-      "name": "fontencoding",
-      "arg": {
-        "format": "{}",
-        "snippet": "fontencoding{${1:enc}}"
-      }
-    },
-    {
-      "name": "fontfamily",
-      "arg": {
-        "format": "{}",
-        "snippet": "fontfamily{${1:family}}"
-      }
-    },
-    {
-      "name": "fontseries",
-      "arg": {
-        "format": "{}",
-        "snippet": "fontseries{${1:series}}"
-      }
-    },
-    {
-      "name": "fontseriesforce",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "fontseriesforce{${1:series}}"
-      }
-    },
-    {
-      "name": "fontshape",
-      "arg": {
-        "format": "{}",
-        "snippet": "fontshape{${1:shape}}"
-      }
-    },
-    {
-      "name": "fontshapeforce",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "fontshapeforce{${1:shape}}"
-      }
-    },
-    {
-      "name": "fontsize",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "fontsize{${1:size}}{${2:skip}}"
-      }
-    },
-    {
-      "name": "fontsubfuzz",
-      "unusual": true
-    },
-    {
-      "name": "footref",
-      "arg": {
-        "format": "{}",
-        "snippet": "footref{${1:label}}"
-      }
-    },
-    {
-      "name": "fpeval",
-      "arg": {
-        "format": "{}",
-        "snippet": "fpeval{${1:fp expression%definition}}"
-      }
-    },
-    {
-      "name": "framebox",
-      "arg": {
-        "format": "()[]{}",
-        "snippet": "framebox(${3:xdimen},${4:ydimen})[${2:position}]{${1:text}}"
-      }
-    },
-    {
-      "name": "framebox",
-      "arg": {
-        "format": "(){}",
-        "snippet": "framebox(${2:xdimen},${3:ydimen}){${1:text}}"
-      }
-    },
-    {
-      "name": "frame",
-      "arg": {
-        "format": "{}",
-        "snippet": "frame{${1:text}}"
-      }
-    },
-    {
-      "name": "fussy",
-      "unusual": true
-    },
-    {
-      "name": "hrule"
-    },
-    {
-      "name": "i"
-    },
-    {
-      "name": "ij"
-    },
-    {
-      "name": "IJ"
-    },
-    {
-      "name": "indexname"
-    },
-    {
-      "name": "indexspace"
-    },
-    {
-      "name": "inputencodingname",
-      "unusual": true
-    },
-    {
-      "name": "inteval",
-      "arg": {
-        "format": "{}",
-        "snippet": "inteval{${1:int expression}}"
-      }
-    },
-    {
-      "name": "intop",
-      "unusual": true
-    },
-    {
-      "name": "it",
-      "unusual": true
-    },
-    {
-      "name": "iterate",
-      "unusual": true
-    },
-    {
-      "name": "labelformat",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "labelformat{${1:counter}}{${2:representation}}"
-      }
-    },
-    {
-      "name": "labelitemfont",
-      "unusual": true
-    },
-    {
-      "name": "language",
-      "unusual": true
-    },
-    {
-      "name": "languagename",
-      "unusual": true
-    },
-    {
-      "name": "LaTeXe"
-    },
-    {
-      "name": "lbrack",
-      "unusual": true,
-      "detail": "[",
-      "doc": "Left square bracket"
-    },
-    {
-      "name": "lefteqn",
-      "arg": {
-        "format": "{}",
-        "snippet": "lefteqn{${1:formula}}"
-      }
-    },
-    {
-      "name": "lefthyphenmin",
-      "unusual": true
-    },
-    {
-      "name": "legacyoldstylenums",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "legacyoldstylenums{${1:text}}"
-      }
-    },
-    {
-      "name": "lhook",
-      "unusual": true
-    },
-    {
-      "name": "line",
-      "unusual": true,
-      "arg": {
-        "format": "(){}",
-        "snippet": "line(${2:xslope},${3:yslope}){${1:length}}"
-      }
-    },
-    {
-      "name": "linethickness",
-      "arg": {
-        "format": "{}",
-        "snippet": "linethickness{${1:dimension}}"
-      }
-    },
-    {
-      "name": "linewidth"
-    },
-    {
-      "name": "listfigurename"
-    },
-    {
-      "name": "listfiles"
-    },
-    {
-      "name": "listfiles",
-      "arg": {
-        "format": "[]",
-        "snippet": "listfiles[${1:options%keyvals}]",
-        "keys": [
-          "\\listfiles"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "listparindent",
-      "unusual": true
-    },
-    {
-      "name": "listtablename"
-    },
-    {
-      "name": "makebox",
-      "unusual": true,
-      "arg": {
-        "format": "()[]{}",
-        "snippet": "makebox(${3:width},${4:height})[${2:position}]{${1:text}}"
-      }
-    },
-    {
-      "name": "makebox",
-      "unusual": true,
-      "arg": {
-        "format": "(){}",
-        "snippet": "makebox(${2:width},${3:height}){${1:text}}"
-      }
-    },
-    {
-      "name": "makelabel",
-      "unusual": true
-    },
-    {
-      "name": "MakeLowercase",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "MakeLowercase{${1:text}}"
-      }
-    },
-    {
-      "name": "MakeLowercase",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "MakeLowercase[${2:options%keyvals}]{${1:text}}",
-        "keys": [
-          "\\MakeLowercase#c,\\MakeTitlecase#c,\\MakeUppercase#c"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "MakeTitlecase",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "MakeTitlecase{${1:text}}"
-      }
-    },
-    {
-      "name": "MakeTitlecase",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "MakeTitlecase[${2:options%keyvals}]{${1:text}}",
-        "keys": [
-          "\\MakeLowercase#c,\\MakeTitlecase#c,\\MakeUppercase#c"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "MakeUppercase",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "MakeUppercase{${1:text}}"
-      }
-    },
-    {
-      "name": "MakeUppercase",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "MakeUppercase[${2:options%keyvals}]{${1:text}}",
-        "keys": [
-          "\\MakeLowercase#c,\\MakeTitlecase#c,\\MakeUppercase#c"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "mapstochar",
-      "unusual": true
-    },
-    {
-      "name": "mathdollar",
-      "detail": "$",
-      "doc": "\\mathdollar, dollar sign"
-    },
-    {
-      "name": "mathellipsis"
-    },
-    {
-      "name": "mathgroup"
-    },
-    {
-      "name": "mathindent",
-      "unusual": true
-    },
-    {
-      "name": "mathparagraph"
-    },
-    {
-      "name": "mathring",
-      "arg": {
-        "format": "{}",
-        "snippet": "mathring{${1:o}}"
-      }
-    },
-    {
-      "name": "mathsection"
-    },
-    {
-      "name": "mathsterling"
-    },
-    {
-      "name": "mathunderscore"
-    },
-    {
-      "name": "mathversion",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "mathversion{${1:version%keyvals}}",
-        "keys": [
-          "\\mathversion#c"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "medspace"
-    },
-    {
-      "name": "mdseries",
-      "unusual": true
-    },
-    {
-      "name": "multiput",
-      "unusual": true,
-      "arg": {
-        "format": "()(){}{}",
-        "snippet": "multiput(${3:xcoord},${4:ycoord})(${5:xdelta},${6:ydelta}){${1:copies}}{${2:object}}"
-      }
-    },
-    {
-      "name": "negmedspace"
-    },
-    {
-      "name": "negthickspace"
-    },
-    {
-      "name": "newblock",
-      "unusual": true
-    },
-    {
-      "name": "newlabel",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "newlabel{${1:label%plain}}{${2:data}}"
-      }
-    },
-    {
-      "name": "newlength",
-      "arg": {
-        "format": "{}",
-        "snippet": "newlength{${1:newlength%cmd}}"
-      }
-    },
-    {
-      "name": "NoCaseChange",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "NoCaseChange{${1:text}}"
-      }
-    },
-    {
-      "name": "nocorr",
-      "unusual": true
-    },
-    {
-      "name": "nocorrlist",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "nocorrlist{${1:charlist}}"
-      }
-    },
-    {
-      "name": "nofiles"
-    },
-    {
-      "name": "noprotrusion",
-      "unusual": true
-    },
-    {
-      "name": "normalcolor"
-    },
-    {
-      "name": "normalfont"
-    },
-    {
-      "name": "normalmarginpar",
-      "unusual": true
-    },
-    {
-      "name": "normalshape",
-      "unusual": true
-    },
-    {
-      "name": "obeycr",
-      "unusual": true
-    },
-    {
-      "name": "oddsidemargin",
-      "unusual": true
-    },
-    {
-      "name": "oe"
-    },
-    {
-      "name": "OE"
-    },
-    {
-      "name": "ointop",
-      "unusual": true
-    },
-    {
-      "name": "oldstylenums",
-      "arg": {
-        "format": "{}",
-        "snippet": "oldstylenums{${1:text}}"
-      }
-    },
-    {
-      "name": "onecolumn"
-    },
-    {
-      "name": "oval",
-      "unusual": true,
-      "arg": {
-        "format": "()",
-        "snippet": "oval(${1:width},${2:height})"
-      }
-    },
-    {
-      "name": "oval",
-      "unusual": true,
-      "arg": {
-        "format": "()[]",
-        "snippet": "oval(${2:width},${3:height})[${1:portion}]"
-      }
-    },
-    {
-      "name": "pageref*",
-      "arg": {
-        "format": "{}",
-        "snippet": "pageref*{${1:label}}"
-      }
-    },
-    {
-      "name": "paragraphmark",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "paragraphmark{${1:code}}"
-      }
-    },
-    {
-      "name": "parbox",
-      "arg": {
-        "format": "[][][]{}{}",
-        "snippet": "parbox[${3:position}][${4:height}][${5:inner-pos}]{${1:width}}{${2:text}}"
-      }
-    },
-    {
-      "name": "parbox",
-      "arg": {
-        "format": "[][]{}{}",
-        "snippet": "parbox[${3:position}][${4:height}]{${1:width}}{${2:text}}"
-      }
-    },
-    {
-      "name": "partname"
-    },
-    {
-      "name": "poptabs"
-    },
-    {
-      "name": "pounds"
-    },
-    {
-      "name": "protect"
-    },
-    {
-      "name": "pushtabs"
-    },
-    {
-      "name": "put",
-      "unusual": true,
-      "arg": {
-        "format": "(){}",
-        "snippet": "put(${2:xcoord},${3:ycoord}){${1:text}}"
-      }
-    },
-    {
-      "name": "qbezier",
-      "unusual": true,
-      "arg": {
-        "format": "()()()",
-        "snippet": "qbezier(${1:x1},${2:y1})(${3:x2},${4:y2})(${5:x3},${6:y3})"
-      }
-    },
-    {
-      "name": "qbezier",
-      "unusual": true,
-      "arg": {
-        "format": "[]()()()",
-        "snippet": "qbezier[${1:n}](${2:x1},${3:y1})(${4:x2},${5:y2})(${6:x3},${7:y3})"
-      }
-    },
-    {
-      "name": "qbeziermax",
-      "unusual": true
-    },
-    {
-      "name": "r",
-      "arg": {
-        "format": "{}",
-        "snippet": "r{${1:letter}}"
-      }
-    },
-    {
-      "name": "rbrack",
-      "unusual": true,
-      "detail": "]",
-      "doc": "Right square bracket"
-    },
-    {
-      "name": "ref*",
-      "arg": {
-        "format": "{}",
-        "snippet": "ref*{${1:label}}"
-      }
-    },
-    {
-      "name": "Ref",
-      "arg": {
-        "format": "{}",
-        "snippet": "Ref{${1:label}}"
-      }
-    },
-    {
-      "name": "Ref*",
-      "arg": {
-        "format": "{}",
-        "snippet": "Ref*{${1:label}}"
-      }
-    },
-    {
-      "name": "refname"
-    },
-    {
-      "name": "relbar",
-      "unusual": true
-    },
-    {
-      "name": "Relbar",
-      "unusual": true
-    },
-    {
-      "name": "rhook",
-      "unusual": true
-    },
-    {
-      "name": "rightmargin"
-    },
-    {
-      "name": "rightmark"
-    },
-    {
-      "name": "rm",
-      "unusual": true
-    },
-    {
-      "name": "rmfamily"
-    },
-    {
-      "name": "rootbox",
-      "unusual": true
-    },
-    {
-      "name": "SS"
-    },
-    {
-      "name": "samepage",
-      "unusual": true
-    },
-    {
-      "name": "sbox",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "sbox{${1:cmd}}{${2:text}}"
-      }
-    },
-    {
-      "name": "sc",
-      "unusual": true
-    },
-    {
-      "name": "scshape"
-    },
-    {
-      "name": "sectionmark",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "sectionmark{${1:code}}"
-      }
-    },
-    {
-      "name": "selectfont"
-    },
-    {
-      "name": "setlength",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "setlength{${1:cmd}}{${2:length}}"
-      }
-    },
-    {
-      "name": "sf",
-      "unusual": true
-    },
-    {
-      "name": "sffamily"
-    },
-    {
-      "name": "shortstack",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "shortstack[${2:position}]{${1:text\\\\text}}"
-      }
-    },
-    {
-      "name": "shortstack",
-      "arg": {
-        "format": "{}",
-        "snippet": "shortstack{${1:text\\\\text}}"
-      }
-    },
-    {
-      "name": "skipeval",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "skipeval{${1:skip expression}}"
-      }
-    },
-    {
-      "name": "sl",
-      "unusual": true
-    },
-    {
-      "name": "sloppy",
-      "unusual": true
-    },
-    {
-      "name": "slshape"
-    },
-    {
-      "name": "sqrt",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "sqrt[${2:root}]{${1:arg}}"
-      },
-      "detail": "√",
-      "doc": "Radical"
-    },
-    {
-      "name": "sqrtsign",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "sqrtsign{${1:arg}}"
-      }
-    },
-    {
-      "name": "sscshape",
-      "unusual": true
-    },
-    {
-      "name": "stepcounter",
-      "arg": {
-        "format": "{}",
-        "snippet": "stepcounter{${1:counter}}"
-      }
-    },
-    {
-      "name": "stop"
-    },
-    {
-      "name": "subitem"
-    },
-    {
-      "name": "subparagraphmark",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "subparagraphmark{${1:code}}"
-      }
-    },
-    {
-      "name": "subsectionmark",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "subsectionmark{${1:code}}"
-      }
-    },
-    {
-      "name": "subsubitem"
-    },
-    {
-      "name": "subsubsectionmark",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "subsubsectionmark{${1:code}}"
-      }
-    },
-    {
-      "name": "suppressfloats"
-    },
-    {
-      "name": "suppressfloats",
-      "arg": {
-        "format": "[]",
-        "snippet": "suppressfloats[${1:placement}]"
-      }
-    },
-    {
-      "name": "swshape",
-      "unusual": true
-    },
-    {
-      "name": "symbol",
-      "arg": {
-        "format": "{}",
-        "snippet": "symbol{${1:n}}"
-      }
-    },
-    {
-      "name": "tablename"
-    },
-    {
-      "name": "tabularnewline"
-    },
-    {
-      "name": "textasciicircum"
-    },
-    {
-      "name": "textasciitilde"
-    },
-    {
-      "name": "textasteriskcentered"
-    },
-    {
-      "name": "textbackslash"
-    },
-    {
-      "name": "textbar"
-    },
-    {
-      "name": "textbardbl",
-      "unusual": true
-    },
-    {
-      "name": "textbraceleft"
-    },
-    {
-      "name": "textbraceright"
-    },
-    {
-      "name": "textbullet"
-    },
-    {
-      "name": "textcircled",
-      "arg": {
-        "format": "{}",
-        "snippet": "textcircled{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "textcommaabove",
-      "arg": {
-        "format": "{}",
-        "snippet": "textcommaabove{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "textcommabelow",
-      "arg": {
-        "format": "{}",
-        "snippet": "textcommabelow{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "textcompwordmark"
-    },
-    {
-      "name": "textcopyright"
-    },
-    {
-      "name": "textdagger"
-    },
-    {
-      "name": "textdaggerdbl"
-    },
-    {
-      "name": "textdollar"
-    },
-    {
-      "name": "textellipsis"
-    },
-    {
-      "name": "textemdash"
-    },
-    {
-      "name": "textendash"
-    },
-    {
-      "name": "textexclamdown"
-    },
-    {
-      "name": "textfiguredash",
-      "unusual": true
-    },
-    {
-      "name": "textgreater"
-    },
-    {
-      "name": "textheight"
-    },
-    {
-      "name": "texthorizontalbar",
-      "unusual": true
-    },
-    {
-      "name": "textless"
-    },
-    {
-      "name": "textnonbreakinghyphen",
-      "unusual": true
-    },
-    {
-      "name": "textparagraph"
-    },
-    {
-      "name": "textperiodcentered"
-    },
-    {
-      "name": "textquestiondown"
-    },
-    {
-      "name": "textquotedblleft"
-    },
-    {
-      "name": "textquotedblright"
-    },
-    {
-      "name": "textquoteleft"
-    },
-    {
-      "name": "textquoteright"
-    },
-    {
-      "name": "textregistered"
-    },
-    {
-      "name": "textssc",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "textssc{${1:text}}"
-      }
-    },
-    {
-      "name": "textsection"
-    },
-    {
-      "name": "textsterling"
-    },
-    {
-      "name": "textsubscript",
-      "arg": {
-        "format": "{}",
-        "snippet": "textsubscript{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "textsuperscript",
-      "arg": {
-        "format": "{}",
-        "snippet": "textsuperscript{${1:text%plain}}"
-      }
-    },
-    {
-      "name": "textsw",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "textsw{${1:text}}"
-      }
-    },
-    {
-      "name": "texttrademark"
-    },
-    {
-      "name": "textulc",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "textulc{${1:text}}"
-      }
-    },
-    {
-      "name": "textunderscore"
-    },
-    {
-      "name": "textvisiblespace"
-    },
-    {
-      "name": "thicklines",
-      "unusual": true
-    },
-    {
-      "name": "thickspace"
-    },
-    {
-      "name": "thinlines",
-      "unusual": true
-    },
-    {
-      "name": "time"
-    },
-    {
-      "name": "tt",
-      "unusual": true
-    },
-    {
-      "name": "twocolumn",
-      "arg": {
-        "format": "[]",
-        "snippet": "twocolumn[${1:text}]"
-      }
-    },
-    {
-      "name": "typein",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "typein[${2:cmd}]{${1:msg}}"
-      }
-    },
-    {
-      "name": "typein",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "typein{${1:msg}}"
-      }
-    },
-    {
-      "name": "typeout",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "typeout{${1:msg}}"
-      }
-    },
-    {
-      "name": "ulcshape",
-      "unusual": true
-    },
-    {
-      "name": "unboldmath"
-    },
-    {
-      "name": "upshape"
-    },
-    {
-      "name": "varbigtriangledown"
-    },
-    {
-      "name": "varbigtriangleup"
-    },
-    {
-      "name": "vdots",
-      "detail": "⋮",
-      "doc": "Vertical ellipsis"
-    },
-    {
-      "name": "vector",
-      "unusual": true,
-      "arg": {
-        "format": "(){}",
-        "snippet": "vector(${2:xslope},${3:yslope}){${1:length}}"
-      }
-    },
-    {
-      "name": "verb",
-      "arg": {
-        "format": "||",
-        "snippet": "verb|${1:text}|"
-      }
-    },
-    {
-      "name": "verb*",
-      "arg": {
-        "format": "||",
-        "snippet": "verb*|${1:text}|"
-      }
-    },
-    {
-      "name": "verbvisiblespace",
-      "unusual": true
-    },
-    {
-      "name": "vline"
-    },
-    {
-      "name": "width"
-    },
-    {
-      "name": "newcommand*",
-      "arg": {
-        "format": "{}[][]{}",
-        "snippet": "newcommand*{${1:cmd}}[${3:args}][${4:default}]{${2:def}}"
-      }
-    },
-    {
-      "name": "newcommand*",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "newcommand*{${1:cmd}}[${3:args}]{${2:def}}"
-      }
-    },
-    {
-      "name": "newcommand*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "newcommand*{${1:cmd}}{${2:def}}"
-      }
-    },
-    {
-      "name": "providecommand*",
-      "unusual": true,
-      "arg": {
-        "format": "{}[][]{}",
-        "snippet": "providecommand*{${1:cmd}}[${3:args}][${4:default}]{${2:def}}"
-      }
-    },
-    {
-      "name": "providecommand*",
-      "unusual": true,
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "providecommand*{${1:cmd}}[${3:args}]{${2:def}}"
-      }
-    },
-    {
-      "name": "providecommand*",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "providecommand*{${1:cmd}}{${2:def}}"
-      }
-    },
-    {
-      "name": "newenvironment*",
-      "arg": {
-        "format": "{}[][]{}{}",
-        "snippet": "newenvironment*{${1:envname}}[${4:args}][${5:default}]{${2:begdef}}{${3:enddef}}"
-      }
-    },
-    {
-      "name": "newenvironment*",
-      "arg": {
-        "format": "{}[]{}{}",
-        "snippet": "newenvironment*{${1:envname}}[${4:args}]{${2:begdef}}{${3:enddef}}"
-      }
-    },
-    {
-      "name": "newenvironment*",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "newenvironment*{${1:envname}}{${2:begdef}}{${3:enddef}}"
-      }
-    },
-    {
-      "name": "renewcommand*",
-      "arg": {
-        "format": "{}[][]{}",
-        "snippet": "renewcommand*{${1:cmd}}[${3:args}][${4:default}]{${2:def}}"
-      }
-    },
-    {
-      "name": "renewcommand*",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "renewcommand*{${1:cmd}}[${3:args}]{${2:def}}"
-      }
-    },
-    {
-      "name": "renewcommand*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "renewcommand*{${1:cmd}}{${2:def}}"
-      }
-    },
-    {
-      "name": "renewenvironment*",
-      "arg": {
-        "format": "{}[][]{}{}",
-        "snippet": "renewenvironment*{${1:envname}}[${4:args}][${5:default}]{${2:begdef}}{${3:enddef}}"
-      }
-    },
-    {
-      "name": "renewenvironment*",
-      "arg": {
-        "format": "{}[]{}{}",
-        "snippet": "renewenvironment*{${1:envname}}[${4:args}]{${2:begdef}}{${3:enddef}}"
-      }
-    },
-    {
-      "name": "renewenvironment*",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "renewenvironment*{${1:envname}}{${2:begdef}}{${3:enddef}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "abstract"
-    },
-    {
-      "name": "array",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:cols}}"
-      }
-    },
-    {
-      "name": "array",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:pos}]{${1:cols}}"
-      }
-    },
-    {
-      "name": "center"
-    },
-    {
-      "name": "description"
-    },
-    {
-      "name": "displaymath"
-    },
-    {
-      "name": "document"
-    },
-    {
-      "name": "equation"
-    },
-    {
-      "name": "eqnarray"
-    },
-    {
-      "name": "eqnarray*"
-    },
-    {
-      "name": "figure"
-    },
-    {
-      "name": "figure",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:placement}]"
-      }
-    },
-    {
-      "name": "figure*"
-    },
-    {
-      "name": "figure*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:placement}]"
-      }
-    },
-    {
-      "name": "filecontents",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:file}}"
-      }
-    },
-    {
-      "name": "filecontents",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:options%keyvals}]{${1:file}}",
-        "keys": [
-          "\\begin{filecontents},\\begin{filecontents*}"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "filecontents*",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:file}}"
-      }
-    },
-    {
-      "name": "filecontents*",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:options%keyvals}]{${1:file}}",
-        "keys": [
-          "\\begin{filecontents},\\begin{filecontents*}"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "flushleft"
-    },
-    {
-      "name": "flushright"
-    },
-    {
-      "name": "footnotesize"
-    },
-    {
-      "name": "Huge"
-    },
-    {
-      "name": "huge"
-    },
-    {
-      "name": "itemize"
-    },
-    {
-      "name": "LARGE"
-    },
-    {
-      "name": "Large"
-    },
-    {
-      "name": "large"
-    },
-    {
-      "name": "list",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "{${1:label}}{${2:spacing}}"
-      }
-    },
-    {
-      "name": "lrbox",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:box}}"
-      }
-    },
-    {
-      "name": "math"
-    },
-    {
-      "name": "matrix"
-    },
-    {
-      "name": "minipage",
-      "arg": {
-        "format": "[][][]{}",
-        "snippet": "[${2:position}][${3:height}][${4:inner pos}]{${1:width}}"
-      }
-    },
-    {
-      "name": "minipage",
-      "arg": {
-        "format": "[][]{}",
-        "snippet": "[${2:position}][${3:height}]{${1:width}}"
-      }
-    },
-    {
-      "name": "minipage",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:position}]{${1:width}}"
-      }
-    },
-    {
-      "name": "minipage",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:width}}"
-      }
-    },
-    {
-      "name": "normalsize"
-    },
-    {
-      "name": "picture",
-      "arg": {
-        "format": "()",
-        "snippet": "(${1:width},${2:height})"
-      }
-    },
-    {
-      "name": "picture",
-      "arg": {
-        "format": "()()",
-        "snippet": "(${1:width},${2:height})(${3:xoffset},${4:yoffset})"
-      }
-    },
-    {
-      "name": "pmatrix"
-    },
-    {
-      "name": "quotation"
-    },
-    {
-      "name": "quote"
-    },
-    {
-      "name": "scriptsize"
-    },
-    {
-      "name": "samepage"
-    },
-    {
-      "name": "small"
-    },
-    {
-      "name": "tabbing"
-    },
-    {
-      "name": "table*"
-    },
-    {
-      "name": "table*",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:placement}]"
-      }
-    },
-    {
-      "name": "table"
-    },
-    {
-      "name": "table",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:placement}]"
-      }
-    },
-    {
-      "name": "tabular",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:cols}}"
-      }
-    },
-    {
-      "name": "tabular",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "[${2:pos}]{${1:cols}}"
-      }
-    },
-    {
-      "name": "tabular*",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "{${1:width}}[${3:pos}]{${2:cols}}"
-      }
-    },
-    {
-      "name": "tabular*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "{${1:width}}{${2:cols}}"
-      }
-    },
-    {
-      "name": "thebibliography",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:widestlabel}}"
-      }
-    },
-    {
-      "name": "theindex"
-    },
-    {
-      "name": "tiny"
-    },
-    {
-      "name": "titlepage"
-    },
-    {
-      "name": "trivlist"
-    },
-    {
-      "name": "verbatim"
-    },
-    {
-      "name": "verbatim*"
-    },
-    {
-      "name": "verse"
-    }
-  ],
-  "keys": {
-    "\\begin{filecontents},\\begin{filecontents*}": [
-      "force",
-      "overwrite",
-      "noheader",
-      "nosearch",
-      "nowarn"
-    ],
-    "\\bibliographystyle#c": [
-      "abbrv",
-      "acm",
-      "alpha",
-      "apalike",
-      "ieeetr",
-      "plain",
-      "siam",
-      "unsrt"
-    ],
-    "\\listfiles": [
-      "hashes",
-      "sizes"
-    ],
-    "\\MakeLowercase#c,\\MakeTitlecase#c,\\MakeUppercase#c": [
-      "locale=${1:BCP-47 tag}",
-      "lang=${1:BCP-47 tag}"
-    ],
-    "\\mathversion#c": [
-      "bold",
-      "normal"
-    ],
-    "\\pagenumbering#c": [
-      "arabic",
-      "roman",
-      "Roman",
-      "alph",
-      "Alph"
-    ],
-    "\\pagestyle#c,\\thispagestyle#c": [
-      "plain",
-      "empty",
-      "headings",
-      "myheadings"
-    ],
-    "\\documentclass/article#c": [
-      "a4paper",
-      "a5paper",
-      "b5paper",
-      "letterpaper",
-      "legalpaper",
-      "executivepaper",
-      "landscape",
-      "10pt",
-      "11pt",
-      "12pt",
-      "oneside",
-      "twoside",
-      "draft",
-      "final",
-      "titlepage",
-      "notitlepage",
-      "onecolumn",
-      "twocolumn",
-      "leqno",
-      "fleqn",
-      "openbib"
-    ]
-  },
-  "args": [
-    "\\documentclass/article#c"
-  ]
+	"macros": [
+		{"name":"a","unusual":true,"math":true,"detail":"𝑎","doc":"mathematical italic small a"},
+		{"name":"aa"},
+		{"name":"AA"},
+		{"name":"above","math":true},
+		{"name":"abovedisplayshortskip"},
+		{"name":"abovedisplayskip"},
+		{"name":"abovewithdelims"},
+		{"name":"abstractname"},
+		{"name":"accent"},
+		{"name":"ActivateGenericHook","arg":{"format":"{}","snippet":"ActivateGenericHook{${1:hook}}"},"unusual":true},
+		{"name":"active"},
+		{"name":"acute","arg":{"format":"{}","snippet":"acute{${1}}"},"math":true},
+		{"name":"addcontentsline","arg":{"format":"{}{}{}","snippet":"addcontentsline{${1}}{${2}}{${3}}"}},
+		{"name":"addpenalty","arg":{"format":"{}","snippet":"addpenalty{${1:penalty}}"},"unusual":true},
+		{"name":"addtocontents","arg":{"format":"{}{}","snippet":"addtocontents{${1}}{${2}}"}},
+		{"name":"addtocounter","arg":{"format":"{}{}","snippet":"addtocounter{${1}}{${2}}"}},
+		{"name":"AddToDocumentProperties","arg":{"format":"[]{}{}","snippet":"AddToDocumentProperties[${1:label}]{${2:property}}{${3:value}}"},"unusual":true},
+		{"name":"AddToDocumentProperties","arg":{"format":"{}{}","snippet":"AddToDocumentProperties{${1:property}}{${2:value}}"},"unusual":true},
+		{"name":"AddToHook","arg":{"format":"{}[]{}","snippet":"AddToHook{${1:hook}}[${2:label}]{${3:code}}"}},
+		{"name":"AddToHook","arg":{"format":"{}{}","snippet":"AddToHook{${1:hook}}{${2:code}}"}},
+		{"name":"AddToHookNext","arg":{"format":"{}{}","snippet":"AddToHookNext{${1:hook}}{${2:code}}"},"unusual":true},
+		{"name":"AddToHookNextWithArguments","arg":{"format":"{}{}","snippet":"AddToHookNextWithArguments{${1:hook}}{${2:code}}"},"unusual":true},
+		{"name":"AddToHookWithArguments","arg":{"format":"{}[]{}","snippet":"AddToHookWithArguments{${1:hook}}[${2:label}]{${3:code}}"},"unusual":true},
+		{"name":"AddToHookWithArguments","arg":{"format":"{}{}","snippet":"AddToHookWithArguments{${1:hook}}{${2:code}}"},"unusual":true},
+		{"name":"addtolength","arg":{"format":"{}{}","snippet":"addtolength{${1}}{${2}}"}},
+		{"name":"AddToNoCaseChangeList","arg":{"format":"{}","snippet":"AddToNoCaseChangeList{${1:command}}"},"unusual":true},
+		{"name":"addvspace","arg":{"format":"{}","snippet":"addvspace{${1:vertical space}}"}},
+		{"name":"adjdemerits"},
+		{"name":"advance"},
+		{"name":"ae"},
+		{"name":"AE"},
+		{"name":"afterassignment"},
+		{"name":"AfterEndEnvironment","arg":{"format":"[]{}{}","snippet":"AfterEndEnvironment[${1:label}]{${2:environment}}{${3:code}}"}},
+		{"name":"AfterEndEnvironment","arg":{"format":"{}{}","snippet":"AfterEndEnvironment{${1:environment}}{${2:code}}"}},
+		{"name":"aftergroup"},
+		{"name":"aleph","math":true,"detail":"ℵ","doc":"aleph, hebrew"},
+		{"name":"allocationnumber"},
+		{"name":"allowbreak"},
+		{"name":"alph","arg":{"format":"{}","snippet":"alph{${1}}"}},
+		{"name":"Alph","arg":{"format":"{}","snippet":"Alph{${1}}"}},
+		{"name":"alpha","math":true,"detail":"α","doc":"small alpha, greek"},
+		{"name":"amalg","math":true,"detail":"⨿","doc":"amalgamation or coproduct"},
+		{"name":"and"},
+		{"name":"angle","math":true,"detail":"∠","doc":"angle"},
+		{"name":"appendix"},
+		{"name":"appendixname"},
+		{"name":"approx","math":true,"detail":"≈","doc":"approximate"},
+		{"name":"arabic","arg":{"format":"{}","snippet":"arabic{${1}}"}},
+		{"name":"arccos","math":true},
+		{"name":"arcsin","math":true},
+		{"name":"arctan","math":true},
+		{"name":"arg","math":true},
+		{"name":"arraycolsep"},
+		{"name":"arrayrulewidth"},
+		{"name":"arraystretch"},
+		{"name":"arrowvert","math":true},
+		{"name":"Arrowvert","math":true},
+		{"name":"asciispace"},
+		{"name":"AssignSocketPlug","arg":{"format":"{}{}","snippet":"AssignSocketPlug{${1:socket}}{${2:plug}}"}},
+		{"name":"AssignStructureRole","arg":{"format":"{}{}","snippet":"AssignStructureRole{${1:name}}{${2:role}}"},"unusual":true},
+		{"name":"AssignTaggingSocketPlug","arg":{"format":"{}{}","snippet":"AssignTaggingSocketPlug{${1:socket}}{${2:plug}}"},"unusual":true},
+		{"name":"AssignTemplateKeys","unusual":true},
+		{"name":"ast","math":true,"detail":"∗","doc":"centered asterisk"},
+		{"name":"asymp","math":true,"detail":"≍","doc":"asymptotically equal to"},
+		{"name":"AtBeginDocument","arg":{"format":"[]{}","snippet":"AtBeginDocument[${1:label}]{${2:code}}"}},
+		{"name":"AtBeginDocument","arg":{"format":"{}","snippet":"AtBeginDocument{${1:code}}"}},
+		{"name":"AtBeginDvi","arg":{"format":"{}","snippet":"AtBeginDvi{${1:code}}"},"unusual":true},
+		{"name":"AtBeginEnvironment","arg":{"format":"[]{}{}","snippet":"AtBeginEnvironment[${1:label}]{${2:environment}}{${3:code}}"}},
+		{"name":"AtBeginEnvironment","arg":{"format":"{}{}","snippet":"AtBeginEnvironment{${1:environment}}{${2:code}}"}},
+		{"name":"AtEndDocument","arg":{"format":"[]{}","snippet":"AtEndDocument[${1:label}]{${2:code}}"}},
+		{"name":"AtEndDocument","arg":{"format":"{}","snippet":"AtEndDocument{${1:code}}"}},
+		{"name":"AtEndDvi","arg":{"format":"{}","snippet":"AtEndDvi{${1:code}}"},"unusual":true},
+		{"name":"AtEndEnvironment","arg":{"format":"[]{}{}","snippet":"AtEndEnvironment[${1:label}]{${2:environment}}{${3:code}}"}},
+		{"name":"AtEndEnvironment","arg":{"format":"{}{}","snippet":"AtEndEnvironment{${1:environment}}{${2:code}}"}},
+		{"name":"AtEndOfClass","arg":{"format":"{}","snippet":"AtEndOfClass{${1:code}}"},"unusual":true},
+		{"name":"AtEndOfPackage","arg":{"format":"{}","snippet":"AtEndOfPackage{${1:code}}"},"unusual":true},
+		{"name":"atop","math":true},
+		{"name":"atopwithdelims"},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:names}}"}},
+		{"name":"b","arg":{"format":"{}","snippet":"b{${1:o}}"}},
+		{"name":"backslash","math":true,"detail":"\\","doc":"reverse solidus"},
+		{"name":"badness"},
+		{"name":"bar","arg":{"format":"{}","snippet":"bar{${1}}"},"math":true},
+		{"name":"baselineskip"},
+		{"name":"baselinestretch"},
+		{"name":"batchmode"},
+		{"name":"BCPdata","arg":{"format":"{}","snippet":"BCPdata{${1:key}}"},"unusual":true},
+		{"name":"BeforeBeginEnvironment","arg":{"format":"[]{}{}","snippet":"BeforeBeginEnvironment[${1:label}]{${2:environment}}{${3:code}}"}},
+		{"name":"BeforeBeginEnvironment","arg":{"format":"{}{}","snippet":"BeforeBeginEnvironment{${1:environment}}{${2:code}}"}},
+		{"name":"begin"},
+		{"name":"begingroup"},
+		{"name":"beginL","unusual":true},
+		{"name":"beginR","unusual":true},
+		{"name":"belowdisplayshortskip"},
+		{"name":"belowdisplayskip"},
+		{"name":"beta","math":true,"detail":"β","doc":"small beta, greek"},
+		{"name":"bezier","arg":{"format":"{}()()()","snippet":"bezier{${1}}(${2})(${3})(${4})"}},
+		{"name":"bf"},
+		{"name":"bfdefault","unusual":true},
+		{"name":"bfseries"},
+		{"name":"bgroup"},
+		{"name":"bibindent"},
+		{"name":"bibitem","arg":{"format":"[]{}","snippet":"bibitem[${1}]{${2}}"}},
+		{"name":"bibitem","arg":{"format":"{}","snippet":"bibitem{${1}}"}},
+		{"name":"bibliography","arg":{"format":"{}","snippet":"bibliography{${1}}"}},
+		{"name":"bibliographystyle","arg":{"format":"{}","snippet":"bibliographystyle{${1}}"}},
+		{"name":"big","math":true},
+		{"name":"Big","math":true},
+		{"name":"bigbreak"},
+		{"name":"bigcap","math":true,"detail":"⋂","doc":"intersection operator"},
+		{"name":"bigcirc","math":true},
+		{"name":"bigcup","math":true,"detail":"⋃","doc":"union operator"},
+		{"name":"bigg","math":true},
+		{"name":"Bigg","math":true},
+		{"name":"biggl","math":true},
+		{"name":"Biggl","math":true},
+		{"name":"biggm","math":true},
+		{"name":"Biggm","math":true},
+		{"name":"biggr","math":true},
+		{"name":"Biggr","math":true},
+		{"name":"bigl","math":true},
+		{"name":"Bigl","math":true},
+		{"name":"bigm","math":true},
+		{"name":"Bigm","math":true},
+		{"name":"bigodot","math":true,"detail":"⨀","doc":"n-ary circled dot operator"},
+		{"name":"bigoplus","math":true,"detail":"⨁","doc":"n-ary circled plus operator"},
+		{"name":"bigotimes","math":true,"detail":"⨂","doc":"n-ary circled times operator"},
+		{"name":"bigr","math":true},
+		{"name":"Bigr","math":true},
+		{"name":"bigskip"},
+		{"name":"bigskipamount"},
+		{"name":"bigsqcup","math":true,"detail":"⨆","doc":"n-ary square union operator"},
+		{"name":"bigtriangledown","math":true,"detail":"▽","doc":"big down triangle, open"},
+		{"name":"bigtriangleup","math":true,"detail":"△","doc":"big up triangle, open"},
+		{"name":"biguplus","math":true,"detail":"⨄","doc":"n-ary union operator with plus"},
+		{"name":"bigvee","math":true,"detail":"⋁","doc":"logical or operator"},
+		{"name":"bigwedge","math":true,"detail":"⋀","doc":"logical and operator"},
+		{"name":"binoppenalty"},
+		{"name":"bmod","math":true},
+		{"name":"boldmath"},
+		{"name":"BooleanFalse","unusual":true},
+		{"name":"BooleanTrue","unusual":true},
+		{"name":"bordermatrix","arg":{"format":"{}","snippet":"bordermatrix{${1:line \\cr ... line \\cr}}"},"math":true},
+		{"name":"bot","math":true,"detail":"⊥","doc":"bottom"},
+		{"name":"botfigrule"},
+		{"name":"botmark"},
+		{"name":"bottomfraction"},
+		{"name":"bowtie","math":true,"detail":"⋈","doc":"bowtie"},
+		{"name":"box"},
+		{"name":"boxmaxdepth"},
+		{"name":"brace","math":true},
+		{"name":"braceld","math":true},
+		{"name":"bracelu","math":true},
+		{"name":"bracerd","math":true},
+		{"name":"braceru","math":true},
+		{"name":"bracevert","math":true},
+		{"name":"brack","math":true},
+		{"name":"break"},
+		{"name":"breve","arg":{"format":"{}","snippet":"breve{${1}}"},"math":true},
+		{"name":"brokenpenalty"},
+		{"name":"buildrel","math":true},
+		{"name":"bullet","math":true},
+		{"name":"c","arg":{"format":"{}","snippet":"c{${1:o}}"}},
+		{"name":"cal","math":true},
+		{"name":"cap","math":true,"detail":"∩","doc":"intersection"},
+		{"name":"capitalacute","arg":{"format":"{}","snippet":"capitalacute{${1:letter}}"}},
+		{"name":"capitalbreve","arg":{"format":"{}","snippet":"capitalbreve{${1:letter}}"}},
+		{"name":"capitalcaron","arg":{"format":"{}","snippet":"capitalcaron{${1:letter}}"}},
+		{"name":"capitalcedilla","arg":{"format":"{}","snippet":"capitalcedilla{${1:letter}}"}},
+		{"name":"capitalcircumflex","arg":{"format":"{}","snippet":"capitalcircumflex{${1:letter}}"}},
+		{"name":"capitaldieresis","arg":{"format":"{}","snippet":"capitaldieresis{${1:letter}}"}},
+		{"name":"capitaldotaccent","arg":{"format":"{}","snippet":"capitaldotaccent{${1:letter}}"}},
+		{"name":"capitalgrave","arg":{"format":"{}","snippet":"capitalgrave{${1:letter}}"}},
+		{"name":"capitalhungarumlaut","arg":{"format":"{}","snippet":"capitalhungarumlaut{${1:letter}}"}},
+		{"name":"capitalmacron","arg":{"format":"{}","snippet":"capitalmacron{${1:letter}}"}},
+		{"name":"capitalnewtie","arg":{"format":"{}","snippet":"capitalnewtie{${1:two letters}}"}},
+		{"name":"capitalogonek","arg":{"format":"{}","snippet":"capitalogonek{${1:letter}}"}},
+		{"name":"capitalring","arg":{"format":"{}","snippet":"capitalring{${1:letter}}"}},
+		{"name":"capitaltie","arg":{"format":"{}","snippet":"capitaltie{${1:two letters}}"}},
+		{"name":"capitaltilde","arg":{"format":"{}","snippet":"capitaltilde{${1:letter}}"}},
+		{"name":"caption","arg":{"format":"[]{}","snippet":"caption[${1:short-caption-text}]{${2:caption-text}}"}},
+		{"name":"caption","arg":{"format":"{}","snippet":"caption{${1:caption-text}}"}},
+		{"name":"cases","arg":{"format":"{}","snippet":"cases{${1:contents}}"},"math":true},
+		{"name":"CaseSwitch","arg":{"format":"{}{}{}{}","snippet":"CaseSwitch{${1:no change}}{${2:upper}}{${3:lower}}{${4:title}}"},"unusual":true},
+		{"name":"catcode"},
+		{"name":"cdot","math":true,"detail":"⋅","doc":"small middle dot"},
+		{"name":"cdotp","math":true,"detail":"·","doc":"middle dot"},
+		{"name":"cdots","math":true},
+		{"name":"centering"},
+		{"name":"centerline","arg":{"format":"{}","snippet":"centerline{${1:text}}"}},
+		{"name":"char"},
+		{"name":"chardef"},
+		{"name":"check","arg":{"format":"{}","snippet":"check{${1}}"},"math":true},
+		{"name":"CheckCommand","arg":{"format":"{}[][]{}","snippet":"CheckCommand{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"unusual":true},
+		{"name":"CheckCommand","arg":{"format":"{}{}","snippet":"CheckCommand{${1:command}}{${2:definition}}"},"unusual":true},
+		{"name":"CheckCommand*","arg":{"format":"{}[][]{}","snippet":"CheckCommand*{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"unusual":true},
+		{"name":"CheckCommand*","arg":{"format":"{}{}","snippet":"CheckCommand*{${1:command}}{${2:definition}}"},"unusual":true},
+		{"name":"CheckEncodingSubset","arg":{"format":"{}{}{}{}{}","snippet":"CheckEncodingSubset{${1:accessor}}{${2:encoding}}{${3:fallback}}{${4:subset id}}{${5:symbol}}"},"unusual":true},
+		{"name":"chi","math":true,"detail":"χ","doc":"small chi, greek"},
+		{"name":"choose","math":true},
+		{"name":"circ","math":true},
+		{"name":"circle","arg":{"format":"{}","snippet":"circle{${1:diameter}}"}},
+		{"name":"circle*","arg":{"format":"{}","snippet":"circle*{${1:diameter}}"}},
+		{"name":"cite","arg":{"format":"[]{}","snippet":"cite[${1:subcite}]{${2:keys}}"}},
+		{"name":"cite","arg":{"format":"{}","snippet":"cite{${1:keys}}"}},
+		{"name":"clap","arg":{"format":"{}","snippet":"clap{${1:text}}"}},
+		{"name":"ClassError","arg":{"format":"{}{}{}","snippet":"ClassError{${1:class name}}{${2:error text}}{${3:help text}}"},"unusual":true},
+		{"name":"ClassInfo","arg":{"format":"{}{}","snippet":"ClassInfo{${1:class name}}{${2:log text}}"},"unusual":true},
+		{"name":"ClassNote","arg":{"format":"{}{}","snippet":"ClassNote{${1:class name}}{${2:note text}}"},"unusual":true},
+		{"name":"ClassNoteNoLine","arg":{"format":"{}{}","snippet":"ClassNoteNoLine{${1:class name}}{${2:note text}}"},"unusual":true},
+		{"name":"ClassWarning","arg":{"format":"{}{}","snippet":"ClassWarning{${1:class name}}{${2:warning text}}"},"unusual":true},
+		{"name":"ClassWarningNoLine","arg":{"format":"{}{}","snippet":"ClassWarningNoLine{${1:class name}}{${2:warning text}}"},"unusual":true},
+		{"name":"cleaders"},
+		{"name":"cleardoublepage"},
+		{"name":"ClearHookNext","arg":{"format":"{}","snippet":"ClearHookNext{${1:hook}}"},"unusual":true},
+		{"name":"ClearHookRule","arg":{"format":"{}{}{}","snippet":"ClearHookRule{${1:hook}}{${2:label1}}{${3:label2}}"},"unusual":true},
+		{"name":"clearpage"},
+		{"name":"cline"},
+		{"name":"closein"},
+		{"name":"closeout"},
+		{"name":"clubpenalties"},
+		{"name":"clubpenalty"},
+		{"name":"clubsuit","math":true,"detail":"♣","doc":"club suit symbol"},
+		{"name":"colon","math":true},
+		{"name":"columnsep"},
+		{"name":"columnseprule"},
+		{"name":"columnwidth"},
+		{"name":"cong","math":true,"detail":"≅","doc":"congruent with"},
+		{"name":"contentsline","arg":{"format":"{}{}{}{}","snippet":"contentsline{${1:type}}{${2:entry}}{${3:page}}{${4:destination}}"},"unusual":true},
+		{"name":"contentsname"},
+		{"name":"coprod","math":true,"detail":"∐","doc":"coproduct operator"},
+		{"name":"copy"},
+		{"name":"copyright"},
+		{"name":"cos","math":true},
+		{"name":"cosh","math":true},
+		{"name":"cot","math":true},
+		{"name":"coth","math":true},
+		{"name":"count"},
+		{"name":"countdef"},
+		{"name":"counterwithin","arg":{"format":"[]{}{}","snippet":"counterwithin[${1:format}]{${2:counter}}{${3:within}}"}},
+		{"name":"counterwithin","arg":{"format":"{}{}","snippet":"counterwithin{${1:counter}}{${2:within}}"}},
+		{"name":"counterwithin*","arg":{"format":"[]{}{}","snippet":"counterwithin*[${1:format}]{${2:counter}}{${3:within}}"}},
+		{"name":"counterwithin*","arg":{"format":"{}{}","snippet":"counterwithin*{${1:counter}}{${2:within}}"}},
+		{"name":"counterwithout","arg":{"format":"[]{}{}","snippet":"counterwithout[${1:format}]{${2:counter}}{${3:within}}"}},
+		{"name":"counterwithout","arg":{"format":"{}{}","snippet":"counterwithout{${1:counter}}{${2:within}}"}},
+		{"name":"counterwithout*","arg":{"format":"[]{}{}","snippet":"counterwithout*[${1:format}]{${2:counter}}{${3:within}}"}},
+		{"name":"counterwithout*","arg":{"format":"{}{}","snippet":"counterwithout*{${1:counter}}{${2:within}}"}},
+		{"name":"cr"},
+		{"name":"crcr"},
+		{"name":"csc","math":true},
+		{"name":"csname"},
+		{"name":"cup","math":true,"detail":"∪","doc":"union or logical sum"},
+		{"name":"CurrentFile","unusual":true},
+		{"name":"CurrentFilePath","unusual":true},
+		{"name":"CurrentFilePathUsed","unusual":true},
+		{"name":"CurrentFileUsed","unusual":true},
+		{"name":"currentgrouplevel"},
+		{"name":"currentgrouptype"},
+		{"name":"currentifbranch"},
+		{"name":"currentiflevel"},
+		{"name":"currentiftype"},
+		{"name":"CurrentOption","unusual":true},
+		{"name":"d","arg":{"format":"{}","snippet":"d{${1:o}}"}},
+		{"name":"dag"},
+		{"name":"dagger","math":true,"detail":"†","doc":"dagger relation"},
+		{"name":"dashbox","arg":{"format":"{}()[]{}","snippet":"dashbox{${1:dash length}}(${2:width,height})[${3:position}]{${4:text}}"}},
+		{"name":"dashbox","arg":{"format":"{}(){}","snippet":"dashbox{${1:dash length}}(${2:width,height}){${3:text}}"}},
+		{"name":"dashv","math":true,"detail":"⊣","doc":"dash, vertical"},
+		{"name":"date","arg":{"format":"{}","snippet":"date{${1:text}}"}},
+		{"name":"day"},
+		{"name":"dblfloatpagefraction"},
+		{"name":"dblfloatsep"},
+		{"name":"dbltextfloatsep"},
+		{"name":"dbltopfraction"},
+		{"name":"ddag"},
+		{"name":"ddagger","math":true,"detail":"‡","doc":"double dagger relation"},
+		{"name":"ddot","arg":{"format":"{}","snippet":"ddot{${1}}"},"math":true},
+		{"name":"ddots","math":true,"detail":"⋱","doc":"three dots, descending"},
+		{"name":"deadcycles"},
+		{"name":"DebugHooksOff","unusual":true},
+		{"name":"DebugHooksOn","unusual":true},
+		{"name":"DebugMarksOff","unusual":true},
+		{"name":"DebugMarksOn","unusual":true},
+		{"name":"DebugShipoutsOff","unusual":true},
+		{"name":"DebugShipoutsOn","unusual":true},
+		{"name":"DebugSocketsOff","unusual":true},
+		{"name":"DebugSocketsOn","unusual":true},
+		{"name":"DebugTablesOff","unusual":true},
+		{"name":"DebugTablesOn","unusual":true},
+		{"name":"DebugTemplatesOff","unusual":true},
+		{"name":"DebugTemplatesOn","unusual":true},
+		{"name":"DeclareCaseChangeEquivalent","arg":{"format":"{}{}","snippet":"DeclareCaseChangeEquivalent{${1:command}}{${2:replacement}}"},"unusual":true},
+		{"name":"DeclareCommandCopy","arg":{"format":"{}{}","snippet":"DeclareCommandCopy{${1:command}}{${2:existing command}}"}},
+		{"name":"DeclareCurrentRelease","arg":{"format":"{}{}","snippet":"DeclareCurrentRelease{${1:name}}{${2:date}}"},"unusual":true},
+		{"name":"DeclareDefaultHookRule","arg":{"format":"{}{}{}","snippet":"DeclareDefaultHookRule{${1:label1}}{${2:relation}}{${3:label2}}"},"unusual":true},
+		{"name":"DeclareDocumentCommand","arg":{"format":"{}{}{}","snippet":"DeclareDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"DeclareDocumentEnvironment","arg":{"format":"{}{}{}{}","snippet":"DeclareDocumentEnvironment{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DeclareEmphSequence","arg":{"format":"{}","snippet":"DeclareEmphSequence{${1:list of font declarations}}"}},
+		{"name":"DeclareEncodingSubset","arg":{"format":"{}{}{}","snippet":"DeclareEncodingSubset{${1:encoding}}{${2:font family}}{${3:subset number}}"},"unusual":true},
+		{"name":"DeclareEnvironmentCopy","arg":{"format":"{}{}","snippet":"DeclareEnvironmentCopy{${1:environment}}{${2:existing environment}}"}},
+		{"name":"DeclareErrorFont","arg":{"format":"{}{}{}{}{}","snippet":"DeclareErrorFont{${1:encoding}}{${2:family}}{${3:series}}{${4:shape}}{${5:size}}"},"unusual":true},
+		{"name":"DeclareExpandableDocumentCommand","arg":{"format":"{}{}{}","snippet":"DeclareExpandableDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"DeclareFixedFont","arg":{"format":"{}{}{}{}{}{}","snippet":"DeclareFixedFont{${1:command}}{${2:encoding}}{${3:family}}{${4:series}}{${5:shape}}{${6:size}}"}},
+		{"name":"DeclareFontEncoding","arg":{"format":"{}{}{}","snippet":"DeclareFontEncoding{${1:encoding}}{${2:text settings}}{${3:math settings}}"},"unusual":true},
+		{"name":"DeclareFontEncodingDefaults","arg":{"format":"{}{}","snippet":"DeclareFontEncodingDefaults{${1:text settings}}{${2:math settings}}"},"unusual":true},
+		{"name":"DeclareFontFamily","arg":{"format":"{}{}{}","snippet":"DeclareFontFamily{${1:encoding}}{${2:family}}{${3:loading settings}}"}},
+		{"name":"DeclareFontFamilySubstitution","arg":{"format":"{}{}{}","snippet":"DeclareFontFamilySubstitution{${1:encoding}}{${2:family}}{${3:new family}}"}},
+		{"name":"DeclareFontSeriesChangeRule","arg":{"format":"{}{}{}{}","snippet":"DeclareFontSeriesChangeRule{${1:current series}}{${2:requested series}}{${3:result}}{${4:alternative result}}"},"unusual":true},
+		{"name":"DeclareFontSeriesDefault","arg":{"format":"[]{}{}","snippet":"DeclareFontSeriesDefault[${1:meta family}]{${2:meta series}}{${3:series value}}"}},
+		{"name":"DeclareFontSeriesDefault","arg":{"format":"{}{}","snippet":"DeclareFontSeriesDefault{${1:meta series}}{${2:series value}}"}},
+		{"name":"DeclareFontShape","arg":{"format":"{}{}{}{}{}{}","snippet":"DeclareFontShape{${1:encoding}}{${2:family}}{${3:series}}{${4:shape}}{${5:loading info}}{${6:loading settings}}"}},
+		{"name":"DeclareFontShapeChangeRule","arg":{"format":"{}{}{}{}","snippet":"DeclareFontShapeChangeRule{${1:current shape}}{${2:requested shape}}{${3:result}}{${4:alternative result}}"},"unusual":true},
+		{"name":"DeclareFontSubstitution","arg":{"format":"{}{}{}{}","snippet":"DeclareFontSubstitution{${1:encoding}}{${2:family}}{${3:series}}{${4:shape}}"},"unusual":true},
+		{"name":"DeclareHookRule","arg":{"format":"{}{}{}{}","snippet":"DeclareHookRule{${1:hook}}{${2:label1}}{${3:relation}}{${4:label2}}"},"unusual":true},
+		{"name":"DeclareInstance","arg":{"format":"{}{}{}{}","snippet":"DeclareInstance{${1:type}}{${2:instance}}{${3:template}}{${4:parameters}}"}},
+		{"name":"DeclareInstanceCopy","arg":{"format":"{}{}{}","snippet":"DeclareInstanceCopy{${1:type}}{${2:new instance}}{${3:existing instance}}"},"unusual":true},
+		{"name":"DeclareKeys","arg":{"format":"[]{}","snippet":"DeclareKeys[${1:family}]{${2:declarations}}"},"unusual":true},
+		{"name":"DeclareKeys","arg":{"format":"{}","snippet":"DeclareKeys{${1:declarations}}"},"unusual":true},
+		{"name":"DeclareLowercaseExclusions","arg":{"format":"{}","snippet":"DeclareLowercaseExclusions{${1:comma separated words}}"}},
+		{"name":"DeclareLowercaseMapping","arg":{"format":"[]{}{}","snippet":"DeclareLowercaseMapping[${1:locale}]{${2:codepoint}}{${3:output}}"},"unusual":true},
+		{"name":"DeclareLowercaseMapping","arg":{"format":"{}{}","snippet":"DeclareLowercaseMapping{${1:codepoint}}{${2:output}}"},"unusual":true},
+		{"name":"DeclareMathAccent","arg":{"format":"{}{}{}{}","snippet":"DeclareMathAccent{${1:command}}{${2:type}}{${3:symbol font}}{${4:slot}}"},"unusual":true},
+		{"name":"DeclareMathAlphabet","arg":{"format":"{}{}{}{}{}","snippet":"DeclareMathAlphabet{${1:math alphabet}}{${2:encoding}}{${3:family}}{${4:series}}{${5:shape}}"}},
+		{"name":"DeclareMathDelimiter","arg":{"format":"{}{}{}{}{}{}","snippet":"DeclareMathDelimiter{${1:command}}{${2:type}}{${3:symbol font 1}}{${4:slot 1}}{${5:symbol font 2}}{${6:slot 2}}"},"unusual":true},
+		{"name":"DeclareMathRadical","arg":{"format":"{}{}{}{}{}","snippet":"DeclareMathRadical{${1:command}}{${2:symbol font 1}}{${3:slot 1}}{${4:symbol font 2}}{${5:slot 2}}"},"unusual":true},
+		{"name":"DeclareMathScriptfontMapping","arg":{"format":"{}{}{}{}{}{}","snippet":"DeclareMathScriptfontMapping{${1:text encoding}}{${2:text family}}{${3:script encoding}}{${4:script family}}{${5:scriptscript encoding}}{${6:scriptscript family}}"},"unusual":true},
+		{"name":"DeclareMathSizes","arg":{"format":"{}{}{}{}","snippet":"DeclareMathSizes{${1:t-size}}{${2:mt-size}}{${3:s-size}}{${4:ss-size}}"}},
+		{"name":"DeclareMathSymbol","arg":{"format":"{}{}{}{}","snippet":"DeclareMathSymbol{${1:symbol}}{${2:type}}{${3:symbol font}}{${4:slot}}"}},
+		{"name":"DeclareMathVersion","arg":{"format":"{}","snippet":"DeclareMathVersion{${1:version}}"}},
+		{"name":"DeclareOldFontCommand","arg":{"format":"{}{}{}","snippet":"DeclareOldFontCommand{${1:command}}{${2:text switch}}{${3:math switch}}"}},
+		{"name":"DeclareOption","arg":{"format":"{}{}","snippet":"DeclareOption{${1:option}}{${2:code}}"},"unusual":true},
+		{"name":"DeclarePreloadSizes","arg":{"format":"{}{}{}{}{}","snippet":"DeclarePreloadSizes{${1:encoding}}{${2:family}}{${3:series}}{${4:shape}}{${5:size list}}"},"unusual":true},
+		{"name":"DeclareRelease","arg":{"format":"{}{}{}","snippet":"DeclareRelease{${1:name}}{${2:date}}{${3:file}}"},"unusual":true},
+		{"name":"DeclareRobustCommand","arg":{"format":"{}[][]{}","snippet":"DeclareRobustCommand{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"}},
+		{"name":"DeclareRobustCommand","arg":{"format":"{}{}","snippet":"DeclareRobustCommand{${1:command}}{${2:definition}}"}},
+		{"name":"DeclareRobustCommand*","arg":{"format":"{}[][]{}","snippet":"DeclareRobustCommand*{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"}},
+		{"name":"DeclareRobustCommand*","arg":{"format":"{}{}","snippet":"DeclareRobustCommand*{${1:command}}{${2:definition}}"}},
+		{"name":"DeclareSizeFunction","arg":{"format":"{}{}","snippet":"DeclareSizeFunction{${1:name}}{${2:code}}"},"unusual":true},
+		{"name":"DeclareSymbolFont","arg":{"format":"{}{}{}{}{}","snippet":"DeclareSymbolFont{${1:symbol font}}{${2:encoding}}{${3:family}}{${4:series}}{${5:shape}}"}},
+		{"name":"DeclareSymbolFontAlphabet","arg":{"format":"{}{}","snippet":"DeclareSymbolFontAlphabet{${1:math alphabet}}{${2:symbol font}}"}},
+		{"name":"DeclareTemplateCode","arg":{"format":"{}{}{}{}{}","snippet":"DeclareTemplateCode{${1:type}}{${2:template}}{${3:number of arguments}}{${4:key bindings}}{${5:code}}"},"unusual":true},
+		{"name":"DeclareTemplateCopy","arg":{"format":"{}{}{}","snippet":"DeclareTemplateCopy{${1:type}}{${2:new template}}{${3:existing template}}"},"unusual":true},
+		{"name":"DeclareTemplateInterface","arg":{"format":"{}{}{}{}","snippet":"DeclareTemplateInterface{${1:type}}{${2:template}}{${3:number of arguments}}{${4:key list}}"},"unusual":true},
+		{"name":"DeclareTextAccent","arg":{"format":"{}{}{}","snippet":"DeclareTextAccent{${1:command}}{${2:encoding}}{${3:slot}}"},"unusual":true},
+		{"name":"DeclareTextAccentDefault","arg":{"format":"{}{}","snippet":"DeclareTextAccentDefault{${1:command}}{${2:encoding}}"},"unusual":true},
+		{"name":"DeclareTextCommand","arg":{"format":"{}{}[][]{}","snippet":"DeclareTextCommand{${1:command}}{${2:encoding}}[${3:number of arguments}][${4:default}]{${5:definition}}"},"unusual":true},
+		{"name":"DeclareTextCommand","arg":{"format":"{}{}{}","snippet":"DeclareTextCommand{${1:command}}{${2:encoding}}{${3:definition}}"},"unusual":true},
+		{"name":"DeclareTextCommandDefault","arg":{"format":"{}[][]{}","snippet":"DeclareTextCommandDefault{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"unusual":true},
+		{"name":"DeclareTextCommandDefault","arg":{"format":"{}{}","snippet":"DeclareTextCommandDefault{${1:command}}{${2:definition}}"},"unusual":true},
+		{"name":"DeclareTextComposite","arg":{"format":"{}{}{}{}","snippet":"DeclareTextComposite{${1:command}}{${2:encoding}}{${3:simple object}}{${4:slot}}"},"unusual":true},
+		{"name":"DeclareTextCompositeCommand","arg":{"format":"{}{}{}{}","snippet":"DeclareTextCompositeCommand{${1:command}}{${2:encoding}}{${3:argument}}{${4:code}}"},"unusual":true},
+		{"name":"DeclareTextFontCommand","arg":{"format":"{}{}","snippet":"DeclareTextFontCommand{${1:command}}{${2:font switches}}"}},
+		{"name":"DeclareTextSymbol","arg":{"format":"{}{}{}","snippet":"DeclareTextSymbol{${1:command}}{${2:encoding}}{${3:slot}}"},"unusual":true},
+		{"name":"DeclareTextSymbolDefault","arg":{"format":"{}{}","snippet":"DeclareTextSymbolDefault{${1:command}}{${2:encoding}}"},"unusual":true},
+		{"name":"DeclareTitlecaseExclusions","arg":{"format":"{}","snippet":"DeclareTitlecaseExclusions{${1:comma separated words}}"}},
+		{"name":"DeclareTitlecaseMapping","arg":{"format":"[]{}{}","snippet":"DeclareTitlecaseMapping[${1:locale}]{${2:codepoint}}{${3:output}}"},"unusual":true},
+		{"name":"DeclareTitlecaseMapping","arg":{"format":"{}{}","snippet":"DeclareTitlecaseMapping{${1:codepoint}}{${2:output}}"},"unusual":true},
+		{"name":"DeclareUnicodeAccent","arg":{"format":"{}{}","snippet":"DeclareUnicodeAccent{${1:command}}{${2:slot}}"},"unusual":true},
+		{"name":"DeclareUnicodeCommand","arg":{"format":"{}[][]{}","snippet":"DeclareUnicodeCommand{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"unusual":true},
+		{"name":"DeclareUnicodeCommand","arg":{"format":"{}{}","snippet":"DeclareUnicodeCommand{${1:command}}{${2:definition}}"},"unusual":true},
+		{"name":"DeclareUnicodeComposite","arg":{"format":"{}{}{}","snippet":"DeclareUnicodeComposite{${1:command}}{${2:simple object}}{${3:slot}}"},"unusual":true},
+		{"name":"DeclareUnicodeSymbol","arg":{"format":"{}{}","snippet":"DeclareUnicodeSymbol{${1:command}}{${2:slot}}"},"unusual":true},
+		{"name":"DeclareUnknownKeyHandler","arg":{"format":"[]{}","snippet":"DeclareUnknownKeyHandler[${1:family}]{${2:code}}"},"unusual":true},
+		{"name":"DeclareUnknownKeyHandler","arg":{"format":"{}","snippet":"DeclareUnknownKeyHandler{${1:code}}"},"unusual":true},
+		{"name":"DeclareUppercaseExclusions","arg":{"format":"{}","snippet":"DeclareUppercaseExclusions{${1:comma separated words}}"}},
+		{"name":"DeclareUppercaseMapping","arg":{"format":"[]{}{}","snippet":"DeclareUppercaseMapping[${1:locale}]{${2:codepoint}}{${3:output}}"},"unusual":true},
+		{"name":"DeclareUppercaseMapping","arg":{"format":"{}{}","snippet":"DeclareUppercaseMapping{${1:codepoint}}{${2:output}}"},"unusual":true},
+		{"name":"def"},
+		{"name":"defaulthyphenchar"},
+		{"name":"defaultscriptratio","unusual":true},
+		{"name":"defaultscriptscriptratio","unusual":true},
+		{"name":"defaultskewchar"},
+		{"name":"deg","math":true},
+		{"name":"delcode"},
+		{"name":"delimiter","math":true},
+		{"name":"delimiterfactor"},
+		{"name":"delimitershortfall"},
+		{"name":"delta","math":true,"detail":"δ","doc":"small delta, greek"},
+		{"name":"Delta","math":true,"detail":"Δ","doc":"capital delta, greek"},
+		{"name":"depth"},
+		{"name":"descriptionlabel","arg":{"format":"{}","snippet":"descriptionlabel{${1:label}}"}},
+		{"name":"det","math":true},
+		{"name":"detokenize","arg":{"format":"{}","snippet":"detokenize{${1:arg}}"}},
+		{"name":"dh"},
+		{"name":"DH"},
+		{"name":"diamond","math":true},
+		{"name":"diamondsuit","math":true,"detail":"♢","doc":"diamond suit symbol"},
+		{"name":"dim","math":true},
+		{"name":"dimen"},
+		{"name":"dimendef"},
+		{"name":"dimeval","arg":{"format":"{}","snippet":"dimeval{${1:dimen expression}}"}},
+		{"name":"dimexpr"},
+		{"name":"directlua","arg":{"format":"{}","snippet":"directlua{${1:lua code}}"},"unusual":true},
+		{"name":"DisableGenericHook","arg":{"format":"{}","snippet":"DisableGenericHook{${1:hook}}"},"unusual":true},
+		{"name":"DisableHook","arg":{"format":"{}","snippet":"DisableHook{${1:hook}}"},"unusual":true},
+		{"name":"DiscardShipoutBox","unusual":true},
+		{"name":"discretionary","arg":{"format":"{}{}{}","snippet":"discretionary{${1:pre-break}}{${2:post-break}}{${3:no-break}}"}},
+		{"name":"displayindent"},
+		{"name":"displaylimits","math":true},
+		{"name":"displaylines","arg":{"format":"{}","snippet":"displaylines{${1:line \\cr ... line \\cr}}"},"math":true},
+		{"name":"displaystyle","math":true},
+		{"name":"displaywidowpenalties"},
+		{"name":"displaywidowpenalty"},
+		{"name":"displaywidth"},
+		{"name":"div","math":true,"detail":"÷","doc":"divide sign"},
+		{"name":"divide"},
+		{"name":"dj"},
+		{"name":"DJ"},
+		{"name":"do"},
+		{"name":"documentclass","arg":{"format":"[]{}","snippet":"documentclass[${1}]{${2}}"}},
+		{"name":"documentclass","arg":{"format":"{}","snippet":"documentclass{${1}}"}},
+		{"name":"DocumentMetadata","arg":{"format":"{}","snippet":"DocumentMetadata{${1:key-value list}}","keys":["latex-document:document metadata"],"keyPos":0}},
+		{"name":"documentstyle","arg":{"format":"[]{}","snippet":"documentstyle[${1:options}]{${2:class}}"},"unusual":true},
+		{"name":"documentstyle","arg":{"format":"{}","snippet":"documentstyle{${1:class}}"},"unusual":true},
+		{"name":"dospecials"},
+		{"name":"dot","arg":{"format":"{}","snippet":"dot{${1}}"},"math":true},
+		{"name":"doteq","math":true,"detail":"≐","doc":"equals, single dot above"},
+		{"name":"dotfill"},
+		{"name":"dots"},
+		{"name":"doublehyphendemerits"},
+		{"name":"doublerulesep"},
+		{"name":"downarrow","math":true,"detail":"↓","doc":"downward arrow"},
+		{"name":"Downarrow","math":true,"detail":"⇓","doc":"down double arrow"},
+		{"name":"downbracefill"},
+		{"name":"dp"},
+		{"name":"dump"},
+		{"name":"edef"},
+		{"name":"EditInstance","arg":{"format":"{}{}{}","snippet":"EditInstance{${1:type}}{${2:instance}}{${3:new values}}"}},
+		{"name":"EditTemplateDefaults","arg":{"format":"{}{}{}","snippet":"EditTemplateDefaults{${1:type}}{${2:template}}{${3:new defaults}}"},"unusual":true},
+		{"name":"egroup"},
+		{"name":"eject"},
+		{"name":"ell","math":true,"detail":"ℓ","doc":"cursive small l"},
+		{"name":"else"},
+		{"name":"em"},
+		{"name":"emergencystretch"},
+		{"name":"emforce","unusual":true},
+		{"name":"eminnershape","unusual":true},
+		{"name":"emph","arg":{"format":"{}","snippet":"emph{${1}}"}},
+		{"name":"empty"},
+		{"name":"emptyset","math":true},
+		{"name":"emreset","unusual":true},
+		{"name":"encodingdefault"},
+		{"name":"end"},
+		{"name":"endcsname"},
+		{"name":"endgraf"},
+		{"name":"endgroup"},
+		{"name":"EndIncludeInRelease","unusual":true},
+		{"name":"endinput"},
+		{"name":"endL","unusual":true},
+		{"name":"endline"},
+		{"name":"endlinechar"},
+		{"name":"EndModuleRelease","unusual":true},
+		{"name":"endR","unusual":true},
+		{"name":"endtrivlist"},
+		{"name":"enlargethispage","arg":{"format":"{}","snippet":"enlargethispage{${1:size}}"}},
+		{"name":"enlargethispage*","arg":{"format":"{}","snippet":"enlargethispage*{${1:size}}"}},
+		{"name":"enskip"},
+		{"name":"enspace"},
+		{"name":"ensuremath","arg":{"format":"{}","snippet":"ensuremath{${1:formula}}"}},
+		{"name":"epsilon","math":true,"detail":"ϵ","doc":"greek lunate varepsilon symbol"},
+		{"name":"eqno","arg":{"format":"{}","snippet":"eqno{${1:eqn num}}"},"math":true},
+		{"name":"equiv","math":true,"detail":"≡","doc":"identical with"},
+		{"name":"errhelp"},
+		{"name":"errmessage","arg":{"format":"{}","snippet":"errmessage{${1:text}}"}},
+		{"name":"errorcontextlines"},
+		{"name":"errorstopmode"},
+		{"name":"escapechar"},
+		{"name":"eta","math":true,"detail":"η","doc":"small eta, greek"},
+		{"name":"eTeXrevision"},
+		{"name":"eTeXversion"},
+		{"name":"evensidemargin"},
+		{"name":"everycr"},
+		{"name":"everydisplay"},
+		{"name":"everyeof","arg":{"format":"{}","snippet":"everyeof{${1:arg}}"}},
+		{"name":"everyhbox"},
+		{"name":"everyjob"},
+		{"name":"everymath"},
+		{"name":"everypar"},
+		{"name":"everyvbox"},
+		{"name":"ExecuteOptions","arg":{"format":"{}","snippet":"ExecuteOptions{${1:option list}}"},"unusual":true},
+		{"name":"exhyphenpenalty"},
+		{"name":"exists","math":true,"detail":"∃","doc":"at least one exists"},
+		{"name":"exp","math":true},
+		{"name":"expandableinput","arg":{"format":"{}","snippet":"expandableinput{${1:filename}}"}},
+		{"name":"expandafter"},
+		{"name":"ExpandArgs","arg":{"format":"{}{}{}","snippet":"ExpandArgs{${1:spec}}{${2:command}}{${3:argument}}"},"unusual":true},
+		{"name":"expanded","arg":{"format":"{}","snippet":"expanded{${1:tokens}}"},"unusual":true},
+		{"name":"ExplFileDate","unusual":true},
+		{"name":"ExplLoaderFileDate","unusual":true},
+		{"name":"ExplSyntaxOff"},
+		{"name":"ExplSyntaxOn"},
+		{"name":"extracolsep","arg":{"format":"{}","snippet":"extracolsep{${1:width}}"}},
+		{"name":"extrafloats","arg":{"format":"{}","snippet":"extrafloats{${1:number}}"}},
+		{"name":"fam"},
+		{"name":"familydefault"},
+		{"name":"fbox","arg":{"format":"{}","snippet":"fbox{${1}}"}},
+		{"name":"fboxrule"},
+		{"name":"fboxsep"},
+		{"name":"fi"},
+		{"name":"figurename"},
+		{"name":"filbreak"},
+		{"name":"fill"},
+		{"name":"finalhyphendemerits"},
+		{"name":"firstmark"},
+		{"name":"FirstMark","arg":{"format":"[]{}","snippet":"FirstMark[${1:region}]{${2:class}}"},"unusual":true},
+		{"name":"FirstMark","arg":{"format":"{}","snippet":"FirstMark{${1:class}}"},"unusual":true},
+		{"name":"firstmarks","unusual":true},
+		{"name":"flat","math":true,"detail":"♭","doc":"musical flat"},
+		{"name":"floatingpenalty"},
+		{"name":"floatpagefraction"},
+		{"name":"floatsep"},
+		{"name":"flushbottom"},
+		{"name":"fmtname"},
+		{"name":"fmtversion"},
+		{"name":"fnsymbol","arg":{"format":"{}","snippet":"fnsymbol{${1}}"}},
+		{"name":"font"},
+		{"name":"fontchardp","unusual":true},
+		{"name":"fontcharht","unusual":true},
+		{"name":"fontcharic","unusual":true},
+		{"name":"fontcharwd","unusual":true},
+		{"name":"fontdimen"},
+		{"name":"fontencoding","arg":{"format":"{}","snippet":"fontencoding{${1:encoding}}"}},
+		{"name":"fontfamily","arg":{"format":"{}","snippet":"fontfamily{${1:family}}"}},
+		{"name":"fontname"},
+		{"name":"fontseries","arg":{"format":"{}","snippet":"fontseries{${1:series}}"}},
+		{"name":"fontseriesforce","arg":{"format":"{}","snippet":"fontseriesforce{${1:series}}"},"unusual":true},
+		{"name":"fontshape","arg":{"format":"{}","snippet":"fontshape{${1:shape}}"}},
+		{"name":"fontshapeforce","arg":{"format":"{}","snippet":"fontshapeforce{${1:shape}}"},"unusual":true},
+		{"name":"fontsize","arg":{"format":"{}{}","snippet":"fontsize{${1:size}}{${2:skip}}"}},
+		{"name":"fontsubfuzz","unusual":true},
+		{"name":"footins"},
+		{"name":"footnote","arg":{"format":"[]{}","snippet":"footnote[${1:number}]{${2:text}}"}},
+		{"name":"footnote","arg":{"format":"{}","snippet":"footnote{${1:text}}"}},
+		{"name":"footnotemark","arg":{"format":"[]","snippet":"footnotemark[${1}]"}},
+		{"name":"footnotemark"},
+		{"name":"footnoterule"},
+		{"name":"footnotesep"},
+		{"name":"footnotesize"},
+		{"name":"footnotetext","arg":{"format":"[]{}","snippet":"footnotetext[${1:number}]{${2:text}}"}},
+		{"name":"footnotetext","arg":{"format":"{}","snippet":"footnotetext{${1:text}}"}},
+		{"name":"footref","arg":{"format":"{}","snippet":"footref{${1}}"}},
+		{"name":"footskip"},
+		{"name":"forall","math":true,"detail":"∀","doc":"for all"},
+		{"name":"fpeval","arg":{"format":"{}","snippet":"fpeval{${1:floating point expression}}"}},
+		{"name":"frac","arg":{"format":"{}{}","snippet":"frac{${1}}{${2}}"},"math":true},
+		{"name":"frame","arg":{"format":"{}","snippet":"frame{${1}}"}},
+		{"name":"framebox","arg":{"format":"()[][]{}","snippet":"framebox(${1:rec-width,rec-height})[${2:width}][${3:position}]{${4:text}}"}},
+		{"name":"framebox","arg":{"format":"(){}","snippet":"framebox(${1:rec-width,rec-height}){${2:text}}"}},
+		{"name":"frenchspacing"},
+		{"name":"frown","math":true,"detail":"⌢","doc":"down curve"},
+		{"name":"fussy"},
+		{"name":"futurelet"},
+		{"name":"gamma","math":true,"detail":"γ","doc":"small gamma, greek"},
+		{"name":"Gamma","math":true,"detail":"Γ","doc":"capital gamma, greek"},
+		{"name":"gcd","math":true},
+		{"name":"gdef"},
+		{"name":"ge","math":true},
+		{"name":"GenericError","arg":{"format":"{}{}{}{}","snippet":"GenericError{${1:continuation}}{${2:error message}}{${3:help location}}{${4:help text}}"},"unusual":true},
+		{"name":"GenericInfo","arg":{"format":"{}{}","snippet":"GenericInfo{${1:continuation}}{${2:message}}"},"unusual":true},
+		{"name":"GenericWarning","arg":{"format":"{}{}","snippet":"GenericWarning{${1:continuation}}{${2:message}}"},"unusual":true},
+		{"name":"geq","math":true,"detail":"≥","doc":"greater-than-or-equal"},
+		{"name":"GetDocumentProperty","arg":{"format":"{}","snippet":"GetDocumentProperty{${1:property}}"},"unusual":true},
+		{"name":"GetIdInfo","unusual":true},
+		{"name":"gets","math":true},
+		{"name":"gg","math":true,"detail":"≫","doc":"much greater than, type 2"},
+		{"name":"global"},
+		{"name":"globaldefs"},
+		{"name":"glossary","arg":{"format":"{}","snippet":"glossary{${1:text}}"}},
+		{"name":"glueexpr"},
+		{"name":"glueshrink"},
+		{"name":"glueshrinkorder"},
+		{"name":"gluestretch"},
+		{"name":"gluestretchorder"},
+		{"name":"gluetomu"},
+		{"name":"goodbreak"},
+		{"name":"grave","arg":{"format":"{}","snippet":"grave{${1}}"},"math":true},
+		{"name":"guillemetleft"},
+		{"name":"guillemetright"},
+		{"name":"guillemotleft","unusual":true},
+		{"name":"guillemotright","unusual":true},
+		{"name":"guilsinglleft"},
+		{"name":"guilsinglright"},
+		{"name":"H","arg":{"format":"{}","snippet":"H{${1:o}}"}},
+		{"name":"halign"},
+		{"name":"hangafter"},
+		{"name":"hangindent"},
+		{"name":"hat","arg":{"format":"{}","snippet":"hat{${1}}"},"math":true},
+		{"name":"hbadness"},
+		{"name":"hbar","math":true},
+		{"name":"hbox","arg":{"format":"{}","snippet":"hbox{${1:text}}"}},
+		{"name":"headheight"},
+		{"name":"headsep"},
+		{"name":"heartsuit","math":true,"detail":"♡","doc":"heart suit symbol"},
+		{"name":"hfil"},
+		{"name":"hfill"},
+		{"name":"hfilneg"},
+		{"name":"hfuzz"},
+		{"name":"hglue"},
+		{"name":"hideoutput","unusual":true},
+		{"name":"hideskip"},
+		{"name":"hidewidth"},
+		{"name":"hline"},
+		{"name":"hoffset"},
+		{"name":"holdinginserts"},
+		{"name":"hom","math":true},
+		{"name":"hookleftarrow","math":true,"detail":"↩","doc":"left arrow-hooked"},
+		{"name":"hookrightarrow","math":true,"detail":"↪","doc":"right arrow-hooked"},
+		{"name":"hphantom","arg":{"format":"{}","snippet":"hphantom{${1:subformula}}"}},
+		{"name":"hrule"},
+		{"name":"hrulefill"},
+		{"name":"hsize"},
+		{"name":"hskip"},
+		{"name":"hspace","arg":{"format":"{}","snippet":"hspace{${1}}"}},
+		{"name":"hspace*","arg":{"format":"{}","snippet":"hspace*{${1}}"}},
+		{"name":"hss"},
+		{"name":"ht"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"hwithstroke"},
+		{"name":"Hwithstroke"},
+		{"name":"hyphenation","arg":{"format":"{}","snippet":"hyphenation{${1:words}}"}},
+		{"name":"hyphenchar"},
+		{"name":"hyphenpenalty"},
+		{"name":"i","math":true,"detail":"𝑖","doc":"mathematical italic small i"},
+		{"name":"ialign","arg":{"format":"{}","snippet":"ialign{${1:⟨preamble⟩ \\cr ⟨row⟩ \\cr ... ⟨row⟩ \\cr}}"}},
+		{"name":"if"},
+		{"name":"IfBlankF","arg":{"format":"{}{}","snippet":"IfBlankF{${1:argument}}{${2:false code}}"}},
+		{"name":"IfBlankT","arg":{"format":"{}{}","snippet":"IfBlankT{${1:argument}}{${2:true code}}"}},
+		{"name":"IfBlankTF","arg":{"format":"{}{}{}","snippet":"IfBlankTF{${1:argument}}{${2:true code}}{${3:false code}}"}},
+		{"name":"IfBooleanF","arg":{"format":"{}{}","snippet":"IfBooleanF{${1:argument}}{${2:false code}}"}},
+		{"name":"IfBooleanT","arg":{"format":"{}{}","snippet":"IfBooleanT{${1:argument}}{${2:true code}}"}},
+		{"name":"IfBooleanTF","arg":{"format":"{}{}{}","snippet":"IfBooleanTF{${1:argument}}{${2:true code}}{${3:false code}}"}},
+		{"name":"ifcase"},
+		{"name":"ifcat"},
+		{"name":"IfClassAtLeastF","arg":{"format":"{}{}{}","snippet":"IfClassAtLeastF{${1:class}}{${2:date}}{${3:false code}}"},"unusual":true},
+		{"name":"IfClassAtLeastT","arg":{"format":"{}{}{}","snippet":"IfClassAtLeastT{${1:class}}{${2:date}}{${3:true code}}"},"unusual":true},
+		{"name":"IfClassAtLeastTF","arg":{"format":"{}{}{}{}","snippet":"IfClassAtLeastTF{${1:class}}{${2:date}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfClassLoadedF","arg":{"format":"{}{}","snippet":"IfClassLoadedF{${1:class}}{${2:false code}}"},"unusual":true},
+		{"name":"IfClassLoadedT","arg":{"format":"{}{}","snippet":"IfClassLoadedT{${1:class}}{${2:true code}}"},"unusual":true},
+		{"name":"IfClassLoadedTF","arg":{"format":"{}{}{}","snippet":"IfClassLoadedTF{${1:class}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"IfClassLoadedWithOptionsF","arg":{"format":"{}{}{}","snippet":"IfClassLoadedWithOptionsF{${1:class}}{${2:options}}{${3:false code}}"},"unusual":true},
+		{"name":"IfClassLoadedWithOptionsT","arg":{"format":"{}{}{}","snippet":"IfClassLoadedWithOptionsT{${1:class}}{${2:options}}{${3:true code}}"},"unusual":true},
+		{"name":"IfClassLoadedWithOptionsTF","arg":{"format":"{}{}{}{}","snippet":"IfClassLoadedWithOptionsTF{${1:class}}{${2:options}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"ifcsname"},
+		{"name":"ifdefined"},
+		{"name":"ifdim"},
+		{"name":"IfDocumentMetadataF","arg":{"format":"{}","snippet":"IfDocumentMetadataF{${1:false code}}"},"unusual":true},
+		{"name":"IfDocumentMetadataT","arg":{"format":"{}","snippet":"IfDocumentMetadataT{${1:true code}}"},"unusual":true},
+		{"name":"IfDocumentMetadataTF","arg":{"format":"{}{}","snippet":"IfDocumentMetadataTF{${1:true code}}{${2:false code}}"},"unusual":true},
+		{"name":"ifeof"},
+		{"name":"IfExplAtLeastF","arg":{"format":"{}{}","snippet":"IfExplAtLeastF{${1:date}}{${2:false code}}"},"unusual":true},
+		{"name":"IfExplAtLeastT","arg":{"format":"{}{}","snippet":"IfExplAtLeastT{${1:date}}{${2:true code}}"},"unusual":true},
+		{"name":"IfExplAtLeastTF","arg":{"format":"{}{}{}","snippet":"IfExplAtLeastTF{${1:date}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"iff","math":true},
+		{"name":"iffalse"},
+		{"name":"IfFileAtLeastF","arg":{"format":"{}{}{}","snippet":"IfFileAtLeastF{${1:file name}}{${2:date}}{${3:false code}}"},"unusual":true},
+		{"name":"IfFileAtLeastT","arg":{"format":"{}{}{}","snippet":"IfFileAtLeastT{${1:file name}}{${2:date}}{${3:true code}}"},"unusual":true},
+		{"name":"IfFileAtLeastTF","arg":{"format":"{}{}{}{}","snippet":"IfFileAtLeastTF{${1:file name}}{${2:date}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfFileExists","arg":{"format":"{}{}{}","snippet":"IfFileExists{${1:file name}}{${2:true code}}{${3:false code}}"}},
+		{"name":"IfFileLoadedF","arg":{"format":"{}{}","snippet":"IfFileLoadedF{${1:file name}}{${2:false code}}"},"unusual":true},
+		{"name":"IfFileLoadedT","arg":{"format":"{}{}","snippet":"IfFileLoadedT{${1:file name}}{${2:true code}}"},"unusual":true},
+		{"name":"IfFileLoadedTF","arg":{"format":"{}{}{}","snippet":"IfFileLoadedTF{${1:file name}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"iffontchar"},
+		{"name":"IfFontSeriesContextF","arg":{"format":"{}{}","snippet":"IfFontSeriesContextF{${1:context}}{${2:false code}}"},"unusual":true},
+		{"name":"IfFontSeriesContextT","arg":{"format":"{}{}","snippet":"IfFontSeriesContextT{${1:context}}{${2:true code}}"},"unusual":true},
+		{"name":"IfFontSeriesContextTF","arg":{"format":"{}{}{}","snippet":"IfFontSeriesContextTF{${1:context}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"IfFormatAtLeastF","arg":{"format":"{}{}","snippet":"IfFormatAtLeastF{${1:date}}{${2:false code}}"},"unusual":true},
+		{"name":"IfFormatAtLeastT","arg":{"format":"{}{}","snippet":"IfFormatAtLeastT{${1:date}}{${2:true code}}"},"unusual":true},
+		{"name":"IfFormatAtLeastTF","arg":{"format":"{}{}{}","snippet":"IfFormatAtLeastTF{${1:date}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"ifhbox"},
+		{"name":"ifhmode"},
+		{"name":"IfHookEmptyF","arg":{"format":"{}{}","snippet":"IfHookEmptyF{${1:hook}}{${2:false code}}"},"unusual":true},
+		{"name":"IfHookEmptyT","arg":{"format":"{}{}","snippet":"IfHookEmptyT{${1:hook}}{${2:true code}}"},"unusual":true},
+		{"name":"IfHookEmptyTF","arg":{"format":"{}{}{}","snippet":"IfHookEmptyTF{${1:hook}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"ifincsname","unusual":true},
+		{"name":"ifinner"},
+		{"name":"IfInstanceExistsF","arg":{"format":"{}{}{}","snippet":"IfInstanceExistsF{${1:type}}{${2:instance}}{${3:false code}}"},"unusual":true},
+		{"name":"IfInstanceExistsT","arg":{"format":"{}{}{}","snippet":"IfInstanceExistsT{${1:type}}{${2:instance}}{${3:true code}}"},"unusual":true},
+		{"name":"IfInstanceExistsTF","arg":{"format":"{}{}{}{}","snippet":"IfInstanceExistsTF{${1:type}}{${2:instance}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfLabelExistsF","arg":{"format":"{}{}","snippet":"IfLabelExistsF{${1:label}}{${2:false code}}"},"unusual":true},
+		{"name":"IfLabelExistsT","arg":{"format":"{}{}","snippet":"IfLabelExistsT{${1:label}}{${2:true code}}"},"unusual":true},
+		{"name":"IfLabelExistsTF","arg":{"format":"{}{}{}","snippet":"IfLabelExistsTF{${1:label}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"iflanguage","arg":{"format":"{}{}{}","snippet":"iflanguage{${1:language}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"IfMarksEqualF","arg":{"format":"[]{}{}{}{}","snippet":"IfMarksEqualF[${1:region}]{${2:class}}{${3:pos1}}{${4:pos2}}{${5:false code}}"},"unusual":true},
+		{"name":"IfMarksEqualF","arg":{"format":"{}{}{}{}","snippet":"IfMarksEqualF{${1:class}}{${2:pos1}}{${3:pos2}}{${4:false code}}"},"unusual":true},
+		{"name":"IfMarksEqualT","arg":{"format":"[]{}{}{}{}","snippet":"IfMarksEqualT[${1:region}]{${2:class}}{${3:pos 1}}{${4:pos 2}}{${5:true code}}"},"unusual":true},
+		{"name":"IfMarksEqualT","arg":{"format":"{}{}{}{}","snippet":"IfMarksEqualT{${1:class}}{${2:pos 1}}{${3:pos 2}}{${4:true code}}"},"unusual":true},
+		{"name":"IfMarksEqualTF","arg":{"format":"[]{}{}{}{}{}","snippet":"IfMarksEqualTF[${1:region}]{${2:class}}{${3:pos 1}}{${4:pos 2}}{${5:true code}}{${6:false code}}"},"unusual":true},
+		{"name":"IfMarksEqualTF","arg":{"format":"{}{}{}{}{}","snippet":"IfMarksEqualTF{${1:class}}{${2:pos 1}}{${3:pos 2}}{${4:true code}}{${5:false code}}"},"unusual":true},
+		{"name":"ifmmode"},
+		{"name":"IfNoValueF","arg":{"format":"{}{}","snippet":"IfNoValueF{${1:argument}}{${2:false code}}"}},
+		{"name":"IfNoValueT","arg":{"format":"{}{}","snippet":"IfNoValueT{${1:argument}}{${2:true code}}"}},
+		{"name":"IfNoValueTF","arg":{"format":"{}{}{}","snippet":"IfNoValueTF{${1:argument}}{${2:true code}}{${3:false code}}"}},
+		{"name":"ifnum"},
+		{"name":"ifodd"},
+		{"name":"IfPackageAtLeastF","arg":{"format":"{}{}{}","snippet":"IfPackageAtLeastF{${1:package}}{${2:date}}{${3:false code}}"},"unusual":true},
+		{"name":"IfPackageAtLeastT","arg":{"format":"{}{}{}","snippet":"IfPackageAtLeastT{${1:package}}{${2:date}}{${3:true code}}"},"unusual":true},
+		{"name":"IfPackageAtLeastTF","arg":{"format":"{}{}{}{}","snippet":"IfPackageAtLeastTF{${1:package}}{${2:date}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfPackageLoadedF","arg":{"format":"{}{}","snippet":"IfPackageLoadedF{${1:package}}{${2:false code}}"},"unusual":true},
+		{"name":"IfPackageLoadedT","arg":{"format":"{}{}","snippet":"IfPackageLoadedT{${1:package}}{${2:true code}}"},"unusual":true},
+		{"name":"IfPackageLoadedTF","arg":{"format":"{}{}{}","snippet":"IfPackageLoadedTF{${1:package}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"IfPackageLoadedWithOptionsF","arg":{"format":"{}{}{}","snippet":"IfPackageLoadedWithOptionsF{${1:package}}{${2:options}}{${3:false code}}"},"unusual":true},
+		{"name":"IfPackageLoadedWithOptionsT","arg":{"format":"{}{}{}","snippet":"IfPackageLoadedWithOptionsT{${1:package}}{${2:options}}{${3:true code}}"},"unusual":true},
+		{"name":"IfPackageLoadedWithOptionsTF","arg":{"format":"{}{}{}{}","snippet":"IfPackageLoadedWithOptionsTF{${1:package}}{${2:options}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfPDFManagementActiveF","arg":{"format":"{}","snippet":"IfPDFManagementActiveF{${1:false code}}"},"unusual":true},
+		{"name":"IfPDFManagementActiveT","arg":{"format":"{}","snippet":"IfPDFManagementActiveT{${1:true code}}"},"unusual":true},
+		{"name":"IfPDFManagementActiveTF","arg":{"format":"{}{}","snippet":"IfPDFManagementActiveTF{${1:true code}}{${2:false code}}"},"unusual":true},
+		{"name":"IfPropertyExistsF","arg":{"format":"{}{}","snippet":"IfPropertyExistsF{${1:property}}{${2:false code}}"},"unusual":true},
+		{"name":"IfPropertyExistsT","arg":{"format":"{}{}","snippet":"IfPropertyExistsT{${1:property}}{${2:true code}}"},"unusual":true},
+		{"name":"IfPropertyExistsTF","arg":{"format":"{}{}{}","snippet":"IfPropertyExistsTF{${1:property}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"IfPropertyRecordedF","arg":{"format":"{}{}{}","snippet":"IfPropertyRecordedF{${1:label}}{${2:property}}{${3:false code}}"},"unusual":true},
+		{"name":"IfPropertyRecordedT","arg":{"format":"{}{}{}","snippet":"IfPropertyRecordedT{${1:label}}{${2:property}}{${3:true code}}"},"unusual":true},
+		{"name":"IfPropertyRecordedTF","arg":{"format":"{}{}{}{}","snippet":"IfPropertyRecordedTF{${1:label}}{${2:property}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfSocketExistsF","arg":{"format":"{}{}","snippet":"IfSocketExistsF{${1:socket name}}{${2:false code}}"},"unusual":true},
+		{"name":"IfSocketExistsT","arg":{"format":"{}{}","snippet":"IfSocketExistsT{${1:socket name}}{${2:true code}}"},"unusual":true},
+		{"name":"IfSocketExistsTF","arg":{"format":"{}{}{}","snippet":"IfSocketExistsTF{${1:socket name}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"IfSocketPlugAssignedF","arg":{"format":"{}{}{}","snippet":"IfSocketPlugAssignedF{${1:socket name}}{${2:plug name}}{${3:false code}}"},"unusual":true},
+		{"name":"IfSocketPlugAssignedT","arg":{"format":"{}{}{}","snippet":"IfSocketPlugAssignedT{${1:socket name}}{${2:plug name}}{${3:true code}}"},"unusual":true},
+		{"name":"IfSocketPlugAssignedTF","arg":{"format":"{}{}{}{}","snippet":"IfSocketPlugAssignedTF{${1:socket name}}{${2:plug name}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfSocketPlugExistsF","arg":{"format":"{}{}{}","snippet":"IfSocketPlugExistsF{${1:socket name}}{${2:plug name}}{${3:false code}}"},"unusual":true},
+		{"name":"IfSocketPlugExistsT","arg":{"format":"{}{}{}","snippet":"IfSocketPlugExistsT{${1:socket name}}{${2:plug name}}{${3:true code}}"},"unusual":true},
+		{"name":"IfSocketPlugExistsTF","arg":{"format":"{}{}{}{}","snippet":"IfSocketPlugExistsTF{${1:socket name}}{${2:plug name}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfTargetDateBefore","arg":{"format":"{}{}{}","snippet":"IfTargetDateBefore{${1:date}}{${2:before code}}{${3:after code}}"},"unusual":true},
+		{"name":"iftrue"},
+		{"name":"IfValueF","arg":{"format":"{}{}","snippet":"IfValueF{${1:argument}}{${2:false code}}"}},
+		{"name":"IfValueT","arg":{"format":"{}{}","snippet":"IfValueT{${1:argument}}{${2:true code}}"}},
+		{"name":"IfValueTF","arg":{"format":"{}{}{}","snippet":"IfValueTF{${1:argument}}{${2:true code}}{${3:false code}}"}},
+		{"name":"ifvbox"},
+		{"name":"ifvmode"},
+		{"name":"ifvoid"},
+		{"name":"ifx"},
+		{"name":"ignorespaces"},
+		{"name":"ignorespacesafterend"},
+		{"name":"ij"},
+		{"name":"IJ"},
+		{"name":"Im","math":true,"detail":"ℑ","doc":"imaginary part"},
+		{"name":"imath","math":true,"detail":"𝚤","doc":"mathematical italic small dotless i"},
+		{"name":"immediate"},
+		{"name":"in","math":true,"detail":"∈","doc":"set membership, variant"},
+		{"name":"include","arg":{"format":"{}","snippet":"include{${1}}"}},
+		{"name":"IncludeInRelease","arg":{"format":"{}[]{}{}","snippet":"IncludeInRelease{${1:date}}[${2:name}]{${3:command}}{${4:description}}"},"unusual":true},
+		{"name":"IncludeInRelease","arg":{"format":"{}{}{}","snippet":"IncludeInRelease{${1:date}}{${2:command}}{${3:description}}"},"unusual":true},
+		{"name":"includeonly","arg":{"format":"{}","snippet":"includeonly{${1}}"}},
+		{"name":"indent"},
+		{"name":"IndentBox","unusual":true},
+		{"name":"index","arg":{"format":"{}","snippet":"index{${1:entry}}"}},
+		{"name":"indexname"},
+		{"name":"indexspace"},
+		{"name":"inf","math":true},
+		{"name":"infty","math":true,"detail":"∞","doc":"infinity"},
+		{"name":"input","arg":{"format":"{}","snippet":"input{${1:filename}}"}},
+		{"name":"inputencodingname"},
+		{"name":"InputIfFileExists","arg":{"format":"{}{}{}","snippet":"InputIfFileExists{${1:file name}}{${2:true code}}{${3:false code}}"}},
+		{"name":"inputlineno"},
+		{"name":"insert"},
+		{"name":"InsertMark","arg":{"format":"{}{}","snippet":"InsertMark{${1:class}}{${2:text}}"},"unusual":true},
+		{"name":"insertpenalties"},
+		{"name":"InstanceValue","arg":{"format":"{}{}{}","snippet":"InstanceValue{${1:type}}{${2:instance}}{${3:key}}"},"unusual":true},
+		{"name":"int","math":true,"detail":"∫","doc":"integral operator"},
+		{"name":"interactionmode"},
+		{"name":"interdisplaylinepenalty"},
+		{"name":"interfootnotelinepenalty"},
+		{"name":"interlinepenalties"},
+		{"name":"interlinepenalty"},
+		{"name":"inteval","arg":{"format":"{}","snippet":"inteval{${1:integer expression}}"}},
+		{"name":"intextsep"},
+		{"name":"intop","math":true},
+		{"name":"iota","math":true,"detail":"ι","doc":"small iota, greek"},
+		{"name":"it"},
+		{"name":"itdefault","unusual":true},
+		{"name":"item","arg":{"format":"[]","snippet":"item[${1:label}]"}},
+		{"name":"item"},
+		{"name":"itemindent"},
+		{"name":"itemsep"},
+		{"name":"iterate"},
+		{"name":"itshape"},
+		{"name":"j","math":true,"detail":"𝑗","doc":"mathematical italic small j"},
+		{"name":"jmath","math":true,"detail":"𝚥","doc":"mathematical italic small dotless j"},
+		{"name":"jobname"},
+		{"name":"joinrel","math":true},
+		{"name":"jot"},
+		{"name":"k","arg":{"format":"{}","snippet":"k{${1:letter}}"}},
+		{"name":"kappa","math":true,"detail":"κ","doc":"small kappa, greek"},
+		{"name":"ker","math":true},
+		{"name":"kern"},
+		{"name":"KeyValue","arg":{"format":"{}","snippet":"KeyValue{${1:key name}}"},"unusual":true},
+		{"name":"kill"},
+		{"name":"l","math":true,"detail":"𝑙","doc":"mathematical italic small l"},
+		{"name":"L","math":true,"detail":"𝐿","doc":"mathematical italic capital l"},
+		{"name":"label","arg":{"format":"{}","snippet":"label{${1:key}}"}},
+		{"name":"labelenumi"},
+		{"name":"labelenumii"},
+		{"name":"labelenumiii"},
+		{"name":"labelenumiv"},
+		{"name":"labelformat","arg":{"format":"{}{}","snippet":"labelformat{${1:counter name}}{${2:reference text}}"}},
+		{"name":"labelitemfont"},
+		{"name":"labelitemi"},
+		{"name":"labelitemii"},
+		{"name":"labelitemiii"},
+		{"name":"labelitemiv"},
+		{"name":"labelsep"},
+		{"name":"labelwidth"},
+		{"name":"lambda","math":true,"detail":"λ","doc":"small lambda, greek"},
+		{"name":"Lambda","math":true,"detail":"Λ","doc":"capital lambda, greek"},
+		{"name":"land","math":true},
+		{"name":"langle","math":true,"detail":"⟨","doc":"mathematical left angle bracket"},
+		{"name":"language"},
+		{"name":"languagename"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"lastbox"},
+		{"name":"LastDeclaredEncoding","unusual":true},
+		{"name":"lastkern"},
+		{"name":"lastlinefit"},
+		{"name":"LastMark","arg":{"format":"[]{}","snippet":"LastMark[${1:region}]{${2:class}}"},"unusual":true},
+		{"name":"LastMark","arg":{"format":"{}","snippet":"LastMark{${1:class}}"},"unusual":true},
+		{"name":"lastnodetype"},
+		{"name":"lastpenalty"},
+		{"name":"lastskip"},
+		{"name":"LaTeX"},
+		{"name":"LaTeXe"},
+		{"name":"LaTeXFirstAidDate","unusual":true},
+		{"name":"LaTeXFirstAidVersion","unusual":true},
+		{"name":"lbrace","math":true,"detail":"{","doc":"left curly bracket"},
+		{"name":"lbrack","math":true,"detail":"[","doc":"left square bracket"},
+		{"name":"lccode"},
+		{"name":"lceil","math":true,"detail":"⌈","doc":"left ceiling"},
+		{"name":"ldotp","math":true},
+		{"name":"ldots"},
+		{"name":"le","math":true},
+		{"name":"leaders"},
+		{"name":"leavevmode"},
+		{"name":"left","math":true},
+		{"name":"leftarrow","math":true,"detail":"←","doc":"leftward arrow"},
+		{"name":"Leftarrow","math":true,"detail":"⇐","doc":"is implied by"},
+		{"name":"leftarrowfill"},
+		{"name":"lefteqn","arg":{"format":"{}","snippet":"lefteqn{${1:formula}}"},"unusual":true},
+		{"name":"leftharpoondown","math":true,"detail":"↽","doc":"left harpoon-down"},
+		{"name":"leftharpoonup","math":true,"detail":"↼","doc":"left harpoon-up"},
+		{"name":"lefthyphenmin"},
+		{"name":"leftline","arg":{"format":"{}","snippet":"leftline{${1:text}}"}},
+		{"name":"leftmargin"},
+		{"name":"leftmargini"},
+		{"name":"leftmarginii"},
+		{"name":"leftmarginiii"},
+		{"name":"leftmarginiv"},
+		{"name":"leftmarginv","unusual":true},
+		{"name":"leftmarginvi","unusual":true},
+		{"name":"leftmark"},
+		{"name":"leftrightarrow","math":true,"detail":"↔","doc":"left and right arrow"},
+		{"name":"Leftrightarrow","math":true,"detail":"⇔","doc":"left and right double arrow"},
+		{"name":"leftskip"},
+		{"name":"legacyoldstylenums","arg":{"format":"{}","snippet":"legacyoldstylenums{${1:numerals}}"},"unusual":true},
+		{"name":"leq","math":true,"detail":"≤","doc":"less-than-or-equal"},
+		{"name":"leqno","arg":{"format":"{}","snippet":"leqno{${1:eqn num}}"},"math":true},
+		{"name":"let"},
+		{"name":"letterspacefont","unusual":true},
+		{"name":"lfloor","math":true,"detail":"⌊","doc":"left floor"},
+		{"name":"lg","math":true},
+		{"name":"lgroup","math":true,"detail":"⟮","doc":"mathematical left flattened parenthesis"},
+		{"name":"lhook","math":true},
+		{"name":"lim","math":true},
+		{"name":"liminf","math":true},
+		{"name":"limits","math":true},
+		{"name":"limsup","math":true},
+		{"name":"line","arg":{"format":"(){}","snippet":"line(${1}){${2}}"}},
+		{"name":"linebreak","arg":{"format":"[]","snippet":"linebreak[${1:zero-to-four}]"}},
+		{"name":"linebreak"},
+		{"name":"linepenalty"},
+		{"name":"lineskip"},
+		{"name":"lineskiplimit"},
+		{"name":"linespread","arg":{"format":"{}","snippet":"linespread{${1:x}}"}},
+		{"name":"linethickness","arg":{"format":"{}","snippet":"linethickness{${1:thickness}}"}},
+		{"name":"linewidth"},
+		{"name":"LinkTargetOff","unusual":true},
+		{"name":"LinkTargetOn","unusual":true},
+		{"name":"listfigurename"},
+		{"name":"listfiles","arg":{"format":"[]","snippet":"listfiles[${1:options}]","keys":["latex-document:listfiles"],"keyPos":0}},
+		{"name":"listfiles"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"listparindent"},
+		{"name":"listtablename"},
+		{"name":"ll","math":true,"detail":"≪","doc":"much less than, type 2"},
+		{"name":"llap","arg":{"format":"{}","snippet":"llap{${1:text}}"}},
+		{"name":"lmoustache","math":true,"detail":"⎰","doc":"upper left or lower right curly bracket section"},
+		{"name":"ln","math":true},
+		{"name":"lnot","math":true},
+		{"name":"LoadClass","arg":{"format":"[]{}[]","snippet":"LoadClass[${1:options}]{${2:class}}[${3:release date}]"},"unusual":true},
+		{"name":"LoadClass","arg":{"format":"{}","snippet":"LoadClass{${1:class}}"},"unusual":true},
+		{"name":"LoadClassWithOptions","arg":{"format":"{}[]","snippet":"LoadClassWithOptions{${1:class}}[${2:release date}]"},"unusual":true},
+		{"name":"LoadClassWithOptions","arg":{"format":"{}","snippet":"LoadClassWithOptions{${1:class}}"},"unusual":true},
+		{"name":"LoadFontDefinitionFile","arg":{"format":"{}{}","snippet":"LoadFontDefinitionFile{${1:encoding}}{${2:family}}"},"unusual":true},
+		{"name":"log","math":true},
+		{"name":"LogDocumentProperties","unusual":true},
+		{"name":"loggingall"},
+		{"name":"loggingoutput","unusual":true},
+		{"name":"LogHook","arg":{"format":"{}","snippet":"LogHook{${1:hook}}"},"unusual":true},
+		{"name":"LogSocket","arg":{"format":"{}","snippet":"LogSocket{${1:socket name}}"},"unusual":true},
+		{"name":"long"},
+		{"name":"longleftarrow","math":true,"detail":"⟵","doc":"long leftwards arrow"},
+		{"name":"Longleftarrow","math":true,"detail":"⟸","doc":"long leftwards double arrow"},
+		{"name":"longleftrightarrow","math":true,"detail":"⟷","doc":"long left right arrow"},
+		{"name":"Longleftrightarrow","math":true,"detail":"⟺","doc":"long left right double arrow"},
+		{"name":"longmapsto","math":true,"detail":"⟼","doc":"long rightwards arrow from bar"},
+		{"name":"longrightarrow","math":true,"detail":"⟶","doc":"long rightwards arrow"},
+		{"name":"Longrightarrow","math":true,"detail":"⟹","doc":"long rightwards double arrow"},
+		{"name":"loop"},
+		{"name":"looseness"},
+		{"name":"lor","math":true},
+		{"name":"lower"},
+		{"name":"lowercase","arg":{"format":"{}","snippet":"lowercase{${1:text}}"}},
+		{"name":"lpcode","unusual":true},
+		{"name":"lq"},
+		{"name":"ltcmddate","unusual":true},
+		{"name":"ltcmdversion","unusual":true},
+		{"name":"luadef","unusual":true},
+		{"name":"mag"},
+		{"name":"magstep"},
+		{"name":"magstephalf"},
+		{"name":"makeatletter"},
+		{"name":"makeatother"},
+		{"name":"makebox","arg":{"format":"()[][]{}","snippet":"makebox(${1:rec-width,rec-height})[${2:width}][${3:position}]{${4:text}}"}},
+		{"name":"makebox","arg":{"format":"(){}","snippet":"makebox(${1:rec-width,rec-height}){${2:text}}"}},
+		{"name":"makeglossary"},
+		{"name":"makeindex"},
+		{"name":"makelabel","arg":{"format":"{}","snippet":"makelabel{${1:label}}"},"unusual":true},
+		{"name":"MakeLinkTarget","arg":{"format":"[]{}","snippet":"MakeLinkTarget[${1:prefix}]{${2:counter or target name}}"},"unusual":true},
+		{"name":"MakeLinkTarget","arg":{"format":"{}","snippet":"MakeLinkTarget{${1:counter or target name}}"},"unusual":true},
+		{"name":"MakeLinkTarget*","arg":{"format":"[]{}","snippet":"MakeLinkTarget*[${1:prefix}]{${2:counter or target name}}"},"unusual":true},
+		{"name":"MakeLinkTarget*","arg":{"format":"{}","snippet":"MakeLinkTarget*{${1:counter or target name}}"},"unusual":true},
+		{"name":"MakeLowercase","arg":{"format":"[]{}","snippet":"MakeLowercase[${1:keyvals}]{${2:text}}","keys":["latex-document:case change"],"keyPos":0}},
+		{"name":"MakeLowercase","arg":{"format":"{}","snippet":"MakeLowercase{${1:text}}"}},
+		{"name":"MakeRobust","arg":{"format":"{}","snippet":"MakeRobust{${1:command}}"},"unusual":true},
+		{"name":"maketitle"},
+		{"name":"MakeTitlecase","arg":{"format":"[]{}","snippet":"MakeTitlecase[${1:keyvals}]{${2:text}}","keys":["latex-document:case change"],"keyPos":0}},
+		{"name":"MakeTitlecase","arg":{"format":"{}","snippet":"MakeTitlecase{${1:text}}"}},
+		{"name":"MakeUppercase","arg":{"format":"[]{}","snippet":"MakeUppercase[${1:keyvals}]{${2:text}}","keys":["latex-document:case change"],"keyPos":0}},
+		{"name":"MakeUppercase","arg":{"format":"{}","snippet":"MakeUppercase{${1:text}}"}},
+		{"name":"mapsto","math":true,"detail":"↦","doc":"maps to, rightward"},
+		{"name":"mapstochar","math":true},
+		{"name":"marginpar","arg":{"format":"[]{}","snippet":"marginpar[${1:left}]{${2:right}}"}},
+		{"name":"marginpar","arg":{"format":"{}","snippet":"marginpar{${1:right}}"}},
+		{"name":"marginparpush"},
+		{"name":"marginparsep"},
+		{"name":"marginparwidth"},
+		{"name":"mark","arg":{"format":"{}","snippet":"mark{${1:mark text}}"}},
+		{"name":"markboth","arg":{"format":"{}{}","snippet":"markboth{${1:lefthead}}{${2:righthead}}"}},
+		{"name":"markright","arg":{"format":"{}","snippet":"markright{${1:righthead}}"}},
+		{"name":"mathaccent","math":true},
+		{"name":"mathbf","arg":{"format":"{}","snippet":"mathbf{${1:math text}}"},"math":true},
+		{"name":"mathbin","math":true},
+		{"name":"mathcal","arg":{"format":"{}","snippet":"mathcal{${1:math text}}"},"math":true},
+		{"name":"mathchar","math":true},
+		{"name":"mathchardef"},
+		{"name":"mathchoice","arg":{"format":"{}{}{}{}","snippet":"mathchoice{${1:display}}{${2:text%plain}}{${3:subscript}}{${4:subsubscript}}"}},
+		{"name":"mathclose","math":true},
+		{"name":"mathcode"},
+		{"name":"MathCollectFalse","unusual":true},
+		{"name":"MathCollectTrue","unusual":true},
+		{"name":"mathdefaultsmode","unusual":true},
+		{"name":"mathdollar","math":true,"detail":"$","doc":"dollar sign"},
+		{"name":"mathellipsis"},
+		{"name":"mathgroup"},
+		{"name":"mathhexbox"},
+		{"name":"mathinner","math":true},
+		{"name":"mathit","arg":{"format":"{}","snippet":"mathit{${1:math text}}"},"math":true},
+		{"name":"MathMLarg","arg":{"format":"{}{}","snippet":"MathMLarg{${1:arg}}{${2:term}}"},"unusual":true},
+		{"name":"MathMLintent","arg":{"format":"{}{}","snippet":"MathMLintent{${1:intent}}{${2:term}}"},"unusual":true},
+		{"name":"mathnormal","arg":{"format":"{}","snippet":"mathnormal{${1:math text}}"}},
+		{"name":"mathop","math":true},
+		{"name":"mathopen","math":true},
+		{"name":"mathord","math":true},
+		{"name":"mathpalette","arg":{"format":"{}{}","snippet":"mathpalette{${1:arg1}}{${2:arg2}}"},"math":true},
+		{"name":"mathparagraph","math":true,"detail":"¶","doc":"paragraph symbol"},
+		{"name":"mathpunct","math":true},
+		{"name":"mathrel","math":true},
+		{"name":"mathring","arg":{"format":"{}","snippet":"mathring{${1:symbol}}"}},
+		{"name":"mathrm","arg":{"format":"{}","snippet":"mathrm{${1:math text}}"},"math":true},
+		{"name":"mathsection","math":true,"detail":"§","doc":"section symbol"},
+		{"name":"mathsf","arg":{"format":"{}","snippet":"mathsf{${1:math text}}"},"math":true},
+		{"name":"mathsterling","math":true,"detail":"£","doc":"pound sign"},
+		{"name":"mathstrut","math":true},
+		{"name":"mathsurround"},
+		{"name":"mathtt","arg":{"format":"{}","snippet":"mathtt{${1:math text}}"},"math":true},
+		{"name":"mathunderscore"},
+		{"name":"mathversion","arg":{"format":"{}","snippet":"mathversion{${1:version}}","keys":["latex-document:math version"],"keyPos":0}},
+		{"name":"matrix","arg":{"format":"{}","snippet":"matrix{${1:line \\cr ... line \\cr}}"},"math":true},
+		{"name":"max","math":true},
+		{"name":"maxdeadcycles"},
+		{"name":"maxdepth"},
+		{"name":"maxdimen"},
+		{"name":"mbox","arg":{"format":"{}","snippet":"mbox{${1}}"}},
+		{"name":"mddefault","unusual":true},
+		{"name":"mdseries"},
+		{"name":"meaning"},
+		{"name":"medbreak"},
+		{"name":"medmuskip"},
+		{"name":"medskip"},
+		{"name":"medskipamount"},
+		{"name":"medspace"},
+		{"name":"message","arg":{"format":"{}","snippet":"message{${1:text}}"}},
+		{"name":"mid","math":true,"detail":"∣","doc":"/mid r:"},
+		{"name":"middle","math":true},
+		{"name":"min","math":true},
+		{"name":"mit","math":true},
+		{"name":"mkern"},
+		{"name":"models","math":true,"detail":"⊧","doc":"models (vertical, short double dash)"},
+		{"name":"month"},
+		{"name":"moveleft"},
+		{"name":"moveright"},
+		{"name":"mp","math":true,"detail":"∓","doc":"minus-or-plus sign"},
+		{"name":"mskip"},
+		{"name":"mu","math":true,"detail":"μ","doc":"small mu, greek"},
+		{"name":"muexpr"},
+		{"name":"multicolumn","arg":{"format":"{}{}{}","snippet":"multicolumn{${1}}{${2}}{${3}}"}},
+		{"name":"multiply"},
+		{"name":"multiput","arg":{"format":"()(){}{}","snippet":"multiput(${1:x,y})(${2:delta_x,delta_y}){${3:num-copies}}{${4:object}}"}},
+		{"name":"multispan","arg":{"format":"{}","snippet":"multispan{${1:number}}"},"unusual":true},
+		{"name":"muskip"},
+		{"name":"muskipdef"},
+		{"name":"mutoglue"},
+		{"name":"nabla","math":true,"detail":"∇","doc":"nabla, del, hamilton operator"},
+		{"name":"narrower"},
+		{"name":"natural","math":true,"detail":"♮","doc":"music natural"},
+		{"name":"ne","math":true,"detail":"≠","doc":"not equal"},
+		{"name":"nearrow","math":true,"detail":"↗","doc":"ne pointing arrow"},
+		{"name":"NeedsDocumentMetadata","unusual":true},
+		{"name":"NeedsTeXFormat","arg":{"format":"{}[]","snippet":"NeedsTeXFormat{${1:format}}[${2:format date}]"},"unusual":true},
+		{"name":"NeedsTeXFormat","arg":{"format":"{}","snippet":"NeedsTeXFormat{${1:format}}"},"unusual":true},
+		{"name":"neg","math":true,"detail":"¬","doc":"not sign"},
+		{"name":"negmedspace"},
+		{"name":"negthickspace"},
+		{"name":"negthinspace"},
+		{"name":"neq","math":true},
+		{"name":"newattribute","arg":{"format":"{}","snippet":"newattribute{${1:attribute}}"},"unusual":true},
+		{"name":"newblock"},
+		{"name":"newbox"},
+		{"name":"newcatcodetable","arg":{"format":"{}","snippet":"newcatcodetable{${1:table}}"},"unusual":true},
+		{"name":"newcommand","arg":{"format":"{}[][]{}","snippet":"newcommand{${1:cmd}}[${2:nargs}][${3:optargdefault}]{${4:defn}}"}},
+		{"name":"newcommand","arg":{"format":"{}{}","snippet":"newcommand{${1:cmd}}{${2:defn}}"}},
+		{"name":"newcommand*","arg":{"format":"{}[][]{}","snippet":"newcommand*{${1:cmd}}[${2:nargs}][${3:optargdefault}]{${4:defn}}"}},
+		{"name":"newcommand*","arg":{"format":"{}{}","snippet":"newcommand*{${1:cmd}}{${2:defn}}"}},
+		{"name":"NewCommandCopy","arg":{"format":"{}{}","snippet":"NewCommandCopy{${1:command}}{${2:existing command}}"}},
+		{"name":"newcount"},
+		{"name":"newcounter","arg":{"format":"{}[]","snippet":"newcounter{${1:countername}}[${2:supercounter}]"}},
+		{"name":"newcounter","arg":{"format":"{}","snippet":"newcounter{${1:countername}}"}},
+		{"name":"newcounteralias","arg":{"format":"{}{}","snippet":"newcounteralias{${1:alias counter}}{${2:root counter}}"}},
+		{"name":"newdimen"},
+		{"name":"NewDocumentCommand","arg":{"format":"{}{}{}","snippet":"NewDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"NewDocumentEnvironment","arg":{"format":"{}{}{}{}","snippet":"NewDocumentEnvironment{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"newenvironment","arg":{"format":"{}[][]{}{}","snippet":"newenvironment{${1:env}}[${2:nargs}][${3:optargdefault}]{${4:begdef}}{${5:enddef}}"}},
+		{"name":"newenvironment","arg":{"format":"{}{}{}","snippet":"newenvironment{${1:env}}{${2:begdef}}{${3:enddef}}"}},
+		{"name":"newenvironment*","arg":{"format":"{}[][]{}{}","snippet":"newenvironment*{${1:env}}[${2:nargs}][${3:optargdefault}]{${4:begdef}}{${5:enddef}}"}},
+		{"name":"newenvironment*","arg":{"format":"{}{}{}","snippet":"newenvironment*{${1:env}}{${2:begdef}}{${3:enddef}}"}},
+		{"name":"NewEnvironmentCopy","arg":{"format":"{}{}","snippet":"NewEnvironmentCopy{${1:environment}}{${2:existing environment}}"}},
+		{"name":"NewExpandableDocumentCommand","arg":{"format":"{}{}{}","snippet":"NewExpandableDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"newfam"},
+		{"name":"newfont","arg":{"format":"{}{}","snippet":"newfont{${1}}{${2}}"}},
+		{"name":"newhelp"},
+		{"name":"NewHook","arg":{"format":"{}","snippet":"NewHook{${1:hook}}"},"unusual":true},
+		{"name":"NewHookWithArguments","arg":{"format":"{}{}","snippet":"NewHookWithArguments{${1:hook}}{${2:number}}"},"unusual":true},
+		{"name":"newif"},
+		{"name":"newinsert"},
+		{"name":"newlanguage"},
+		{"name":"newlength","arg":{"format":"{}","snippet":"newlength{${1}}"}},
+		{"name":"newline"},
+		{"name":"newlinechar"},
+		{"name":"newluabytecode","arg":{"format":"{}","snippet":"newluabytecode{${1:bytecode}}"},"unusual":true},
+		{"name":"newluachunkname","arg":{"format":"{}","snippet":"newluachunkname{${1:chunkname}}"},"unusual":true},
+		{"name":"newluacmd","arg":{"format":"{}","snippet":"newluacmd{${1:cs}}"},"unusual":true},
+		{"name":"newluafunction","arg":{"format":"{}","snippet":"newluafunction{${1:function}}"},"unusual":true},
+		{"name":"NewMarkClass","arg":{"format":"{}","snippet":"NewMarkClass{${1:class}}"},"unusual":true},
+		{"name":"newmarks","arg":{"format":"{}","snippet":"newmarks{${1:cmd}}"},"unusual":true},
+		{"name":"NewMirroredHookPair","arg":{"format":"{}{}","snippet":"NewMirroredHookPair{${1:hook 1}}{${2:hook 2}}"},"unusual":true},
+		{"name":"NewMirroredHookPairWithArguments","arg":{"format":"{}{}{}","snippet":"NewMirroredHookPairWithArguments{${1:hook-1}}{${2:hook-2}}{${3:number}}"},"unusual":true},
+		{"name":"NewModuleRelease","arg":{"format":"{}{}{}","snippet":"NewModuleRelease{${1:initial release date}}{${2:module name}}{${3:description}}"},"unusual":true},
+		{"name":"newmuskip"},
+		{"name":"newpage"},
+		{"name":"NewProperty","arg":{"format":"{}{}{}{}","snippet":"NewProperty{${1:name}}{${2:setpoint}}{${3:default}}{${4:code}}"},"unusual":true},
+		{"name":"newprotectedluacmd","arg":{"format":"{}","snippet":"newprotectedluacmd{${1:function}}"},"unusual":true},
+		{"name":"newread"},
+		{"name":"NewReversedHook","arg":{"format":"{}","snippet":"NewReversedHook{${1:hook}}"},"unusual":true},
+		{"name":"NewReversedHookWithArguments","arg":{"format":"{}{}","snippet":"NewReversedHookWithArguments{${1:hook}}{${2:number}}"},"unusual":true},
+		{"name":"newsavebox","arg":{"format":"{}","snippet":"newsavebox{${1}}"}},
+		{"name":"newskip"},
+		{"name":"NewSocket","arg":{"format":"{}{}","snippet":"NewSocket{${1:socket name}}{${2:number of inputs}}"},"unusual":true},
+		{"name":"NewSocketPlug","arg":{"format":"{}{}{}","snippet":"NewSocketPlug{${1:socket name}}{${2:plug name}}{${3:code}}"},"unusual":true},
+		{"name":"NewStructureName","arg":{"format":"{}","snippet":"NewStructureName{${1:name}}"},"unusual":true},
+		{"name":"NewTaggingSocket","arg":{"format":"{}{}","snippet":"NewTaggingSocket{${1:socket name}}{${2:number of inputs}}"},"unusual":true},
+		{"name":"NewTaggingSocketPlug","arg":{"format":"{}{}{}","snippet":"NewTaggingSocketPlug{${1:socket name}}{${2:plug name}}{${3:code}}"},"unusual":true},
+		{"name":"NewTemplateType","arg":{"format":"{}{}","snippet":"NewTemplateType{${1:template type}}{${2:number of arguments}}"},"unusual":true},
+		{"name":"newtheorem","arg":{"format":"{}[]{}[]","snippet":"newtheorem{${1:name}}[${2:numbered_like}]{${3:title}}[${4:numbered_within}]"}},
+		{"name":"newtheorem","arg":{"format":"{}{}","snippet":"newtheorem{${1:name}}{${2:title}}"}},
+		{"name":"newtheorem*","arg":{"format":"{}[]{}[]","snippet":"newtheorem*{${1:name}}[${2:numbered_like}]{${3:title}}[${4:numbered_within}]"}},
+		{"name":"newtheorem*","arg":{"format":"{}{}","snippet":"newtheorem*{${1:name}}{${2:title}}"}},
+		{"name":"newtie","arg":{"format":"{}","snippet":"newtie{${1:two letters}}"}},
+		{"name":"newtoks"},
+		{"name":"newwhatsit","arg":{"format":"{}","snippet":"newwhatsit{${1:whatsit}}"},"unusual":true},
+		{"name":"newwrite"},
+		{"name":"NextLinkTarget","arg":{"format":"{}","snippet":"NextLinkTarget{${1:target name}}"},"unusual":true},
+		{"name":"ng"},
+		{"name":"NG"},
+		{"name":"ni","math":true,"detail":"∋","doc":"contains, variant"},
+		{"name":"noalign","arg":{"format":"{}","snippet":"noalign{${1:material}}"}},
+		{"name":"noboundary"},
+		{"name":"nobreak"},
+		{"name":"nobreakdashes","unusual":true},
+		{"name":"nobreakspace"},
+		{"name":"NoCaseChange","arg":{"format":"{}","snippet":"NoCaseChange{${1:text}}"}},
+		{"name":"nocite","arg":{"format":"{}","snippet":"nocite{${1:keylist}}"}},
+		{"name":"nocorr"},
+		{"name":"nocorrlist","unusual":true},
+		{"name":"noexpand"},
+		{"name":"nofiles"},
+		{"name":"noindent"},
+		{"name":"nointerlineskip"},
+		{"name":"nolimits","math":true},
+		{"name":"nolinebreak","arg":{"format":"[]","snippet":"nolinebreak[${1:zero-to-four}]"}},
+		{"name":"nolinebreak"},
+		{"name":"nonfrenchspacing"},
+		{"name":"nonscript"},
+		{"name":"nonstopmode"},
+		{"name":"nonumber","math":true},
+		{"name":"nopagebreak","arg":{"format":"[]","snippet":"nopagebreak[${1:zero-to-four}]"}},
+		{"name":"nopagebreak"},
+		{"name":"noprotrusion"},
+		{"name":"normalbaselines"},
+		{"name":"normalbaselineskip"},
+		{"name":"normalcolor"},
+		{"name":"normalfont"},
+		{"name":"normallineskip"},
+		{"name":"normallineskiplimit"},
+		{"name":"normalmarginpar"},
+		{"name":"normalsfcodes"},
+		{"name":"normalshape"},
+		{"name":"normalsize"},
+		{"name":"not","math":true},
+		{"name":"notin","math":true,"detail":"∉","doc":"negated set membership"},
+		{"name":"NoValue","unusual":true},
+		{"name":"nu","math":true,"detail":"ν","doc":"small nu, greek"},
+		{"name":"null"},
+		{"name":"nulldelimiterspace"},
+		{"name":"nullfont"},
+		{"name":"number"},
+		{"name":"numberline","arg":{"format":"{}","snippet":"numberline{${1:number}}"}},
+		{"name":"numexpr"},
+		{"name":"nwarrow","math":true,"detail":"↖","doc":"nw pointing arrow"},
+		{"name":"o","math":true,"detail":"𝑜","doc":"mathematical italic small o"},
+		{"name":"O","math":true,"detail":"𝑂","doc":"mathematical italic capital o"},
+		{"name":"oalign","arg":{"format":"{}","snippet":"oalign{${1:arg}}"}},
+		{"name":"obeycr"},
+		{"name":"obeyedline","unusual":true},
+		{"name":"obeyedspace","unusual":true},
+		{"name":"obeylines"},
+		{"name":"obeyspaces"},
+		{"name":"oddsidemargin"},
+		{"name":"odot","math":true,"detail":"⊙","doc":"middle dot in circle"},
+		{"name":"oe"},
+		{"name":"OE"},
+		{"name":"offinterlineskip"},
+		{"name":"oint","math":true,"detail":"∮","doc":"contour integral operator"},
+		{"name":"ointop","math":true},
+		{"name":"oldstylenums","arg":{"format":"{}","snippet":"oldstylenums{${1:numerals}}"}},
+		{"name":"omega","math":true,"detail":"ω","doc":"small omega, greek"},
+		{"name":"Omega","math":true,"detail":"Ω","doc":"capital omega, greek"},
+		{"name":"ominus","math":true,"detail":"⊖","doc":"minus sign in circle"},
+		{"name":"omit"},
+		{"name":"OmitIndent","unusual":true},
+		{"name":"onecolumn"},
+		{"name":"ooalign","arg":{"format":"{}","snippet":"ooalign{${1:arg}}"}},
+		{"name":"openin"},
+		{"name":"openout"},
+		{"name":"openup","unusual":true},
+		{"name":"oplus","math":true,"detail":"⊕","doc":"plus sign in circle"},
+		{"name":"OptionNotUsed","unusual":true},
+		{"name":"or"},
+		{"name":"oslash","math":true,"detail":"⊘","doc":"solidus in circle"},
+		{"name":"otimes","math":true,"detail":"⊗","doc":"multiply sign in circle"},
+		{"name":"outer"},
+		{"name":"output"},
+		{"name":"outputpenalty"},
+		{"name":"oval","arg":{"format":"()[]","snippet":"oval(${1:width,height})[${2:portion}]"}},
+		{"name":"oval","arg":{"format":"()","snippet":"oval(${1:width,height})"}},
+		{"name":"over","math":true},
+		{"name":"overbrace","arg":{"format":"{}","snippet":"overbrace{${1:math}}"},"math":true},
+		{"name":"overfullrule"},
+		{"name":"overleftarrow","arg":{"format":"{}","snippet":"overleftarrow{${1:text%plain}}"},"math":true},
+		{"name":"overline","arg":{"format":"{}","snippet":"overline{${1:text}}"},"math":true},
+		{"name":"overrightarrow","arg":{"format":"{}","snippet":"overrightarrow{${1:text%plain}}"},"math":true},
+		{"name":"overwithdelims"},
+		{"name":"owns","math":true},
+		{"name":"P","math":true,"detail":"𝑃","doc":"mathematical italic capital p"},
+		{"name":"PackageError","arg":{"format":"{}{}{}","snippet":"PackageError{${1:package name}}{${2:error text}}{${3:help text}}"},"unusual":true},
+		{"name":"PackageInfo","arg":{"format":"{}{}","snippet":"PackageInfo{${1:package name}}{${2:log text}}"},"unusual":true},
+		{"name":"PackageNote","arg":{"format":"{}{}","snippet":"PackageNote{${1:package name}}{${2:note text}}"},"unusual":true},
+		{"name":"PackageNoteNoLine","arg":{"format":"{}{}","snippet":"PackageNoteNoLine{${1:package name}}{${2:note text}}"},"unusual":true},
+		{"name":"PackageWarning","arg":{"format":"{}{}","snippet":"PackageWarning{${1:package name}}{${2:warning text}}"},"unusual":true},
+		{"name":"PackageWarningNoLine","arg":{"format":"{}{}","snippet":"PackageWarningNoLine{${1:package name}}{${2:warning text}}"},"unusual":true},
+		{"name":"pagebreak","arg":{"format":"[]","snippet":"pagebreak[${1:zero-to-four}]"}},
+		{"name":"pagebreak"},
+		{"name":"pagedepth"},
+		{"name":"pagediscards"},
+		{"name":"pagefilllstretch"},
+		{"name":"pagefillstretch"},
+		{"name":"pagefilstretch"},
+		{"name":"pagegoal"},
+		{"name":"pagenumbering","arg":{"format":"{}","snippet":"pagenumbering{${1}}"}},
+		{"name":"pageref","arg":{"format":"{}","snippet":"pageref{${1}}"}},
+		{"name":"pageref*","arg":{"format":"{}","snippet":"pageref*{${1}}"}},
+		{"name":"pageshrink"},
+		{"name":"pagestretch"},
+		{"name":"pagestyle","arg":{"format":"{}","snippet":"pagestyle{${1}}"}},
+		{"name":"pagetotal"},
+		{"name":"paperheight"},
+		{"name":"paperwidth"},
+		{"name":"par"},
+		{"name":"paragraph","arg":{"format":"[]{}","snippet":"paragraph[${1:toc-title}]{${2:title}}"}},
+		{"name":"paragraph","arg":{"format":"{}","snippet":"paragraph{${1:title}}"}},
+		{"name":"paragraph*","arg":{"format":"[]{}","snippet":"paragraph*[${1:toc-title}]{${2:title}}"}},
+		{"name":"paragraph*","arg":{"format":"{}","snippet":"paragraph*{${1:title}}"}},
+		{"name":"paragraphmark","arg":{"format":"{}","snippet":"paragraphmark{${1}}"}},
+		{"name":"parallel","math":true,"detail":"∥","doc":"parallel"},
+		{"name":"parbox","arg":{"format":"[][][]{}{}","snippet":"parbox[${1:position}][${2:height}][${3:inner-pos}]{${4:width}}{${5:contents}}"}},
+		{"name":"parbox","arg":{"format":"{}{}","snippet":"parbox{${1:width}}{${2:contents}}"}},
+		{"name":"parfillskip"},
+		{"name":"parindent"},
+		{"name":"parsep"},
+		{"name":"parshape"},
+		{"name":"parshapedimen"},
+		{"name":"parshapeindent"},
+		{"name":"parshapelength"},
+		{"name":"parskip"},
+		{"name":"part","arg":{"format":"[]{}","snippet":"part[${1:toc-title}]{${2:title}}"}},
+		{"name":"part","arg":{"format":"{}","snippet":"part{${1:title}}"}},
+		{"name":"part*","arg":{"format":"[]{}","snippet":"part*[${1:toc-title}]{${2:title}}"}},
+		{"name":"part*","arg":{"format":"{}","snippet":"part*{${1:title}}"}},
+		{"name":"partial","math":true,"detail":"∂","doc":"partial differential"},
+		{"name":"partname"},
+		{"name":"partopsep"},
+		{"name":"PassOptionsToClass","arg":{"format":"{}{}","snippet":"PassOptionsToClass{${1:options}}{${2:class}}"}},
+		{"name":"PassOptionsToPackage","arg":{"format":"{}{}","snippet":"PassOptionsToPackage{${1:options}}{${2:package}}"}},
+		{"name":"patterns","arg":{"format":"{}","snippet":"patterns{${1:patterns}}"}},
+		{"name":"pausing"},
+		{"name":"pdfgentounicode","unusual":true},
+		{"name":"pdfglyphtounicode","arg":{"format":"{}{}","snippet":"pdfglyphtounicode{${1:glyph}}{${2:unicode}}"},"unusual":true},
+		{"name":"pdfinfo","arg":{"format":"{}","snippet":"pdfinfo{${1:info}}"},"unusual":true},
+		{"name":"pdfminorversion"},
+		{"name":"pdfoutput"},
+		{"name":"pdfpageheight"},
+		{"name":"pdfpagewidth"},
+		{"name":"penalty"},
+		{"name":"perp","math":true,"detail":"⟂","doc":"perpendicular"},
+		{"name":"phantom","arg":{"format":"{}","snippet":"phantom{${1:subformula}}"}},
+		{"name":"phi","math":true,"detail":"ϕ","doc":"- small phi, greek"},
+		{"name":"Phi","math":true,"detail":"Φ","doc":"capital phi, greek"},
+		{"name":"pi","math":true,"detail":"π","doc":"small pi, greek"},
+		{"name":"Pi","math":true,"detail":"Π","doc":"capital pi, greek"},
+		{"name":"pm","math":true,"detail":"±","doc":"plus-or-minus sign"},
+		{"name":"pmatrix","arg":{"format":"{}","snippet":"pmatrix{${1:line \\cr line \\cr}}"},"math":true},
+		{"name":"pmod","math":true},
+		{"name":"PopDefaultHookLabel","unusual":true},
+		{"name":"poptabs"},
+		{"name":"postdisplaypenalty"},
+		{"name":"pounds"},
+		{"name":"Pr","math":true},
+		{"name":"prec","math":true,"detail":"≺","doc":"precedes"},
+		{"name":"preceq","math":true,"detail":"⪯","doc":"precedes above single-line equals sign"},
+		{"name":"predisplaydirection"},
+		{"name":"predisplaypenalty"},
+		{"name":"predisplaysize"},
+		{"name":"pretolerance"},
+		{"name":"prevdepth"},
+		{"name":"prevgraf"},
+		{"name":"PreviousTotalPages","unusual":true},
+		{"name":"prime","math":true,"detail":"′","doc":"prime or minute, not superscripted"},
+		{"name":"ProcessedArgument","unusual":true},
+		{"name":"ProcessKeyOptions","arg":{"format":"[]","snippet":"ProcessKeyOptions[${1:families}]"},"unusual":true},
+		{"name":"ProcessKeyOptions","unusual":true},
+		{"name":"ProcessList","arg":{"format":"{}{}","snippet":"ProcessList{${1:list}}{${2:tokens}}"}},
+		{"name":"ProcessOptions","unusual":true},
+		{"name":"ProcessOptions*","unusual":true},
+		{"name":"prod","math":true,"detail":"∏","doc":"product operator"},
+		{"name":"propto","math":true,"detail":"∝","doc":"is proportional to"},
+		{"name":"protect"},
+		{"name":"protected"},
+		{"name":"providecommand","arg":{"format":"{}[][]{}","snippet":"providecommand{${1:cmd}}[${2:nargs}][${3:optargdefault}]{${4:defn}}"}},
+		{"name":"providecommand","arg":{"format":"{}{}","snippet":"providecommand{${1:cmd}}{${2:defn}}"}},
+		{"name":"providecommand*","arg":{"format":"{}[][]{}","snippet":"providecommand*{${1:cmd}}[${2:nargs}][${3:optargdefault}]{${4:defn}}"}},
+		{"name":"providecommand*","arg":{"format":"{}{}","snippet":"providecommand*{${1:cmd}}{${2:defn}}"}},
+		{"name":"ProvideDocumentCommand","arg":{"format":"{}{}{}","snippet":"ProvideDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"ProvideDocumentEnvironment","arg":{"format":"{}{}{}{}","snippet":"ProvideDocumentEnvironment{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"ProvideExpandableDocumentCommand","arg":{"format":"{}{}{}","snippet":"ProvideExpandableDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"ProvideHook","arg":{"format":"{}","snippet":"ProvideHook{${1:hook}}"},"unusual":true},
+		{"name":"ProvideMirroredHookPair","arg":{"format":"{}{}","snippet":"ProvideMirroredHookPair{${1:hook-1}}{${2:hook-2}}"},"unusual":true},
+		{"name":"ProvideReversedHook","arg":{"format":"{}","snippet":"ProvideReversedHook{${1:hook}}"},"unusual":true},
+		{"name":"ProvidesClass","arg":{"format":"{}[]","snippet":"ProvidesClass{${1:class name}}[${2:release date and info}]"},"unusual":true},
+		{"name":"ProvidesClass","arg":{"format":"{}","snippet":"ProvidesClass{${1:class name}}"},"unusual":true},
+		{"name":"ProvidesExplClass","arg":{"format":"{}{}{}{}","snippet":"ProvidesExplClass{${1:class}}{${2:date}}{${3:version}}{${4:description}}"},"unusual":true},
+		{"name":"ProvidesExplFile","arg":{"format":"{}{}{}{}","snippet":"ProvidesExplFile{${1:file}}{${2:date}}{${3:version}}{${4:description}}"},"unusual":true},
+		{"name":"ProvidesExplPackage","arg":{"format":"{}{}{}{}","snippet":"ProvidesExplPackage{${1:package}}{${2:date}}{${3:version}}{${4:description}}"},"unusual":true},
+		{"name":"ProvidesFile","arg":{"format":"{}[]","snippet":"ProvidesFile{${1:file name}}[${2:release date and info}]"},"unusual":true},
+		{"name":"ProvidesFile","arg":{"format":"{}","snippet":"ProvidesFile{${1:file name}}"},"unusual":true},
+		{"name":"ProvidesPackage","arg":{"format":"{}[]","snippet":"ProvidesPackage{${1:package name}}[${2:release date and info}]"},"unusual":true},
+		{"name":"ProvidesPackage","arg":{"format":"{}","snippet":"ProvidesPackage{${1:package name}}"},"unusual":true},
+		{"name":"ProvideTextCommand","arg":{"format":"{}{}[][]{}","snippet":"ProvideTextCommand{${1:command}}{${2:encoding}}[${3:number of arguments}][${4:default}]{${5:definition}}"},"unusual":true},
+		{"name":"ProvideTextCommand","arg":{"format":"{}{}{}","snippet":"ProvideTextCommand{${1:command}}{${2:encoding}}{${3:definition}}"},"unusual":true},
+		{"name":"ProvideTextCommandDefault","arg":{"format":"{}[][]{}","snippet":"ProvideTextCommandDefault{${1:command}}[${2:number of arguments}][${3:default}]{${4:definition}}"},"unusual":true},
+		{"name":"ProvideTextCommandDefault","arg":{"format":"{}{}","snippet":"ProvideTextCommandDefault{${1:command}}{${2:definition}}"},"unusual":true},
+		{"name":"psi","math":true,"detail":"ψ","doc":"small psi, greek"},
+		{"name":"Psi","math":true,"detail":"Ψ","doc":"capital psi, greek"},
+		{"name":"PushDefaultHookLabel","arg":{"format":"{}","snippet":"PushDefaultHookLabel{${1:default label}}"},"unusual":true},
+		{"name":"pushtabs"},
+		{"name":"put","arg":{"format":"(){}","snippet":"put(${1:x,y}){${2:text}}"}},
+		{"name":"qbezier","arg":{"format":"[]()()()","snippet":"qbezier[${1:points}](${2:x1,y1})(${3:x2,y2})(${4:x3,y3})"}},
+		{"name":"qbezier","arg":{"format":"()()()","snippet":"qbezier(${1:x1,y1})(${2:x2,y2})(${3:x3,y3})"}},
+		{"name":"qbeziermax","unusual":true},
+		{"name":"qquad"},
+		{"name":"quad"},
+		{"name":"quitvmode","unusual":true},
+		{"name":"quotedblbase"},
+		{"name":"quotesinglbase"},
+		{"name":"r","arg":{"format":"{}","snippet":"r{${1:letter}}"}},
+		{"name":"radical","math":true},
+		{"name":"raggedbottom"},
+		{"name":"raggedleft"},
+		{"name":"raggedright"},
+		{"name":"raise"},
+		{"name":"raisebox","arg":{"format":"{}[][]{}","snippet":"raisebox{${1:distance}}[${2:height}][${3:depth}]{${4:text}}"}},
+		{"name":"raisebox","arg":{"format":"{}{}","snippet":"raisebox{${1:distance}}{${2:text}}"}},
+		{"name":"rangle","math":true,"detail":"⟩","doc":"mathematical right angle bracket"},
+		{"name":"RawIndent","unusual":true},
+		{"name":"RawNoindent","unusual":true},
+		{"name":"RawParEnd","unusual":true},
+		{"name":"RawShipout","unusual":true},
+		{"name":"rbrace","math":true,"detail":"}","doc":"right curly bracket"},
+		{"name":"rbrack","math":true,"detail":"]","doc":"right square bracket"},
+		{"name":"rceil","math":true,"detail":"⌉","doc":"right ceiling"},
+		{"name":"Re","math":true,"detail":"ℜ","doc":"real part"},
+		{"name":"read"},
+		{"name":"ReadonlyShipoutCounter","unusual":true},
+		{"name":"RecordProperties","arg":{"format":"{}{}","snippet":"RecordProperties{${1:label}}{${2:properties}}","keys":["latex-document:properties"],"keyPos":1}},
+		{"name":"ref","arg":{"format":"{}","snippet":"ref{${1:key}}"}},
+		{"name":"ref*","arg":{"format":"{}","snippet":"ref*{${1:key}}"}},
+		{"name":"Ref","arg":{"format":"{}","snippet":"Ref{${1:label}}"}},
+		{"name":"Ref*","arg":{"format":"{}","snippet":"Ref*{${1:label}}"}},
+		{"name":"refname"},
+		{"name":"RefProperty","arg":{"format":"[]{}{}","snippet":"RefProperty[${1:local default}]{${2:label}}{${3:property}}","keys":["latex-document:properties"],"keyPos":2}},
+		{"name":"RefProperty","arg":{"format":"{}{}","snippet":"RefProperty{${1:label}}{${2:property}}","keys":["latex-document:properties"],"keyPos":1}},
+		{"name":"refstepcounter","arg":{"format":"{}","snippet":"refstepcounter{${1}}"}},
+		{"name":"RefUndefinedWarn","arg":{"format":"{}{}","snippet":"RefUndefinedWarn{${1:label}}{${2:property}}","keys":["latex-document:properties"],"keyPos":1},"unusual":true},
+		{"name":"relax"},
+		{"name":"relbar","math":true},
+		{"name":"Relbar","math":true},
+		{"name":"relpenalty"},
+		{"name":"RemoveFromHook","arg":{"format":"{}[]","snippet":"RemoveFromHook{${1:hook}}[${2:label}]"},"unusual":true},
+		{"name":"RemoveFromHook","arg":{"format":"{}","snippet":"RemoveFromHook{${1:hook}}"},"unusual":true},
+		{"name":"removelastskip"},
+		{"name":"renewcommand","arg":{"format":"{}[][]{}","snippet":"renewcommand{${1:cmd}}[${2:nargs}][${3:optargdefault}]{${4:defn}}"}},
+		{"name":"renewcommand","arg":{"format":"{}{}","snippet":"renewcommand{${1:cmd}}{${2:defn}}"}},
+		{"name":"renewcommand*","arg":{"format":"{}[][]{}","snippet":"renewcommand*{${1:cmd}}[${2:nargs}][${3:optargdefault}]{${4:defn}}"}},
+		{"name":"renewcommand*","arg":{"format":"{}{}","snippet":"renewcommand*{${1:cmd}}{${2:defn}}"}},
+		{"name":"RenewCommandCopy","arg":{"format":"{}{}","snippet":"RenewCommandCopy{${1:command}}{${2:existing command}}"}},
+		{"name":"RenewDocumentCommand","arg":{"format":"{}{}{}","snippet":"RenewDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"RenewDocumentEnvironment","arg":{"format":"{}{}{}{}","snippet":"RenewDocumentEnvironment{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"renewenvironment","arg":{"format":"{}[][]{}{}","snippet":"renewenvironment{${1:env}}[${2:nargs}][${3:optargdefault}]{${4:begdef}}{${5:enddef}}"}},
+		{"name":"renewenvironment","arg":{"format":"{}{}{}","snippet":"renewenvironment{${1:env}}{${2:begdef}}{${3:enddef}}"}},
+		{"name":"renewenvironment*","arg":{"format":"{}[][]{}{}","snippet":"renewenvironment*{${1:env}}[${2:nargs}][${3:optargdefault}]{${4:begdef}}{${5:enddef}}"}},
+		{"name":"renewenvironment*","arg":{"format":"{}{}{}","snippet":"renewenvironment*{${1:env}}{${2:begdef}}{${3:enddef}}"}},
+		{"name":"RenewEnvironmentCopy","arg":{"format":"{}{}","snippet":"RenewEnvironmentCopy{${1:environment}}{${2:existing environment}}"}},
+		{"name":"RenewExpandableDocumentCommand","arg":{"format":"{}{}{}","snippet":"RenewExpandableDocumentCommand{${1}}{${2}}{${3}}"}},
+		{"name":"repeat"},
+		{"name":"requestedLaTeXdate","unusual":true},
+		{"name":"RequirePackage","arg":{"format":"[]{}[]","snippet":"RequirePackage[${1:option-list}]{${2:pkgname}}[${3:release-date}]"},"unusual":true},
+		{"name":"RequirePackage","arg":{"format":"{}","snippet":"RequirePackage{${1:pkgname}}"},"unusual":true},
+		{"name":"RequirePackageWithOptions","arg":{"format":"{}[]","snippet":"RequirePackageWithOptions{${1:package}}[${2:release date}]"},"unusual":true},
+		{"name":"RequirePackageWithOptions","arg":{"format":"{}","snippet":"RequirePackageWithOptions{${1:package}}"},"unusual":true},
+		{"name":"restorecr"},
+		{"name":"ResumeTagging","arg":{"format":"{}","snippet":"ResumeTagging{${1:string}}"},"unusual":true},
+		{"name":"ReverseBoolean"},
+		{"name":"reversemarginpar"},
+		{"name":"rfloor","math":true,"detail":"⌋","doc":"right floor"},
+		{"name":"rgroup","math":true,"detail":"⟯","doc":"mathematical right flattened parenthesis"},
+		{"name":"rho","math":true,"detail":"ρ","doc":"small rho, greek"},
+		{"name":"rhook","math":true},
+		{"name":"right","math":true},
+		{"name":"rightarrow","math":true,"detail":"→","doc":"rightward arrow"},
+		{"name":"Rightarrow","math":true,"detail":"⇒","doc":"implies"},
+		{"name":"rightarrowfill"},
+		{"name":"rightharpoondown","math":true,"detail":"⇁","doc":"right harpoon-down"},
+		{"name":"rightharpoonup","math":true,"detail":"⇀","doc":"right harpoon-up"},
+		{"name":"righthyphenmin"},
+		{"name":"rightleftharpoons","math":true,"detail":"⇌","doc":"right harpoon over left"},
+		{"name":"rightline","arg":{"format":"{}","snippet":"rightline{${1:text}}"}},
+		{"name":"rightmargin"},
+		{"name":"rightmark"},
+		{"name":"rightskip"},
+		{"name":"rlap","arg":{"format":"{}","snippet":"rlap{${1:text}}"}},
+		{"name":"rm"},
+		{"name":"rmdefault"},
+		{"name":"rmfamily"},
+		{"name":"rmoustache","math":true,"detail":"⎱","doc":"upper right or lower left curly bracket section"},
+		{"name":"rmsubstdefault","unusual":true},
+		{"name":"roman","arg":{"format":"{}","snippet":"roman{${1}}"}},
+		{"name":"Roman","arg":{"format":"{}","snippet":"Roman{${1}}"}},
+		{"name":"romannumeral"},
+		{"name":"root","math":true},
+		{"name":"rootbox"},
+		{"name":"rpcode","unusual":true},
+		{"name":"rq"},
+		{"name":"rule","arg":{"format":"[]{}{}","snippet":"rule[${1}]{${2}}{${3}}"}},
+		{"name":"rule","arg":{"format":"{}{}","snippet":"rule{${1}}{${2}}"}},
+		{"name":"S","math":true,"detail":"𝑆","doc":"mathematical italic capital s"},
+		{"name":"samepage"},
+		{"name":"savebox","arg":{"format":"{}()[][]{}","snippet":"savebox{${1:box-cmd}}(${2:rec-width,rec-height})[${3:width}][${4:pos}]{${5:text}}"}},
+		{"name":"savebox","arg":{"format":"{}(){}","snippet":"savebox{${1:box-cmd}}(${2:rec-width,rec-height}){${3:text}}"}},
+		{"name":"SaveLastSkip","unusual":true},
+		{"name":"savepos","unusual":true},
+		{"name":"savinghyphcodes"},
+		{"name":"savingvdiscards"},
+		{"name":"sb","arg":{"format":"{}","snippet":"sb{${1:subscript}}"},"math":true},
+		{"name":"sbox","arg":{"format":"{}{}","snippet":"sbox{${1}}{${2}}"}},
+		{"name":"sc","unusual":true},
+		{"name":"scantokens","arg":{"format":"{}","snippet":"scantokens{${1:arg}}"}},
+		{"name":"scdefault","unusual":true},
+		{"name":"scriptfont"},
+		{"name":"scriptscriptfont"},
+		{"name":"scriptscriptstyle","math":true},
+		{"name":"scriptsize"},
+		{"name":"scriptspace"},
+		{"name":"scriptstyle","math":true},
+		{"name":"scrollmode"},
+		{"name":"scshape"},
+		{"name":"searrow","math":true,"detail":"↘","doc":"se pointing arrow"},
+		{"name":"sec","math":true},
+		{"name":"secdef","arg":{"format":"{}{}","snippet":"secdef{${1:unstarred command}}{${2:starred command}}"},"unusual":true},
+		{"name":"section","arg":{"format":"[]{}","snippet":"section[${1:toc-title}]{${2:title}}"}},
+		{"name":"section","arg":{"format":"{}","snippet":"section{${1:title}}"}},
+		{"name":"section*","arg":{"format":"[]{}","snippet":"section*[${1:toc-title}]{${2:title}}"}},
+		{"name":"section*","arg":{"format":"{}","snippet":"section*{${1:title}}"}},
+		{"name":"sectionmark","arg":{"format":"{}","snippet":"sectionmark{${1}}"}},
+		{"name":"selectfont"},
+		{"name":"seriesdefault","unusual":true},
+		{"name":"setattribute","arg":{"format":"{}{}","snippet":"setattribute{${1:attribute}}{${2:value}}"},"unusual":true},
+		{"name":"setbox"},
+		{"name":"setcounter","arg":{"format":"{}{}","snippet":"setcounter{${1}}{${2}}"}},
+		{"name":"SetDefaultHookLabel","arg":{"format":"{}","snippet":"SetDefaultHookLabel{${1:default label}}"},"unusual":true},
+		{"name":"SetKeys","arg":{"format":"[]{}","snippet":"SetKeys[${1:family}]{${2:keyvals}}"},"unusual":true},
+		{"name":"SetKeys","arg":{"format":"{}","snippet":"SetKeys{${1:keyvals}}"},"unusual":true},
+		{"name":"SetKnownTemplateKeys","arg":{"format":"{}{}{}","snippet":"SetKnownTemplateKeys{${1:type}}{${2:template}}{${3:keyvals}}"},"unusual":true},
+		{"name":"setlanguage"},
+		{"name":"setlength","arg":{"format":"{}{}","snippet":"setlength{${1}}{${2}}"}},
+		{"name":"SetMathAlphabet","arg":{"format":"{}{}{}{}{}{}","snippet":"SetMathAlphabet{${1:math alphabet}}{${2:version}}{${3:encoding}}{${4:family}}{${5:series}}{${6:shape}}"}},
+		{"name":"setminus","math":true,"detail":"∖","doc":"set minus (cf. reverse solidus)"},
+		{"name":"SetProperty","arg":{"format":"{}{}{}{}","snippet":"SetProperty{${1:name}}{${2:setpoint}}{${3:default}}{${4:code}}"},"unusual":true},
+		{"name":"SetSymbolFont","arg":{"format":"{}{}{}{}{}{}","snippet":"SetSymbolFont{${1:symbol font}}{${2:version}}{${3:encoding}}{${4:family}}{${5:series}}{${6:shape}}"}},
+		{"name":"SetTemplateKeys","arg":{"format":"{}{}{}","snippet":"SetTemplateKeys{${1:type}}{${2:template}}{${3:keyvals}}"},"unusual":true},
+		{"name":"settodepth","arg":{"format":"{}{}","snippet":"settodepth{${1:len}}{${2:text}}"}},
+		{"name":"settoheight","arg":{"format":"{}{}","snippet":"settoheight{${1:len}}{${2:text}}"}},
+		{"name":"settowidth","arg":{"format":"{}{}","snippet":"settowidth{${1:len}}{${2:text}}"}},
+		{"name":"sf","unusual":true},
+		{"name":"sfcode"},
+		{"name":"sfdefault"},
+		{"name":"sffamily"},
+		{"name":"sfsubstdefault","unusual":true},
+		{"name":"shapedefault","unusual":true},
+		{"name":"sharp","math":true,"detail":"♯","doc":"musical sharp"},
+		{"name":"shipout"},
+		{"name":"ShipoutBox","unusual":true},
+		{"name":"shortstack","arg":{"format":"[]{}","snippet":"shortstack[${1:position}]{${2:line 1 \\\\ line 2}}"}},
+		{"name":"shortstack","arg":{"format":"{}","snippet":"shortstack{${1:line 1 \\\\ line 2}}"}},
+		{"name":"show"},
+		{"name":"showbox"},
+		{"name":"showboxbreadth"},
+		{"name":"showboxdepth"},
+		{"name":"ShowCommand","arg":{"format":"{}","snippet":"ShowCommand{${1:command}}"}},
+		{"name":"ShowDocumentProperties","unusual":true},
+		{"name":"ShowEnvironment","arg":{"format":"{}","snippet":"ShowEnvironment{${1:environment}}"}},
+		{"name":"ShowFloat","arg":{"format":"{}","snippet":"ShowFloat{${1:identifier}}"},"unusual":true},
+		{"name":"showgroups"},
+		{"name":"ShowHook","arg":{"format":"{}","snippet":"ShowHook{${1:hook}}"},"unusual":true},
+		{"name":"showhyphens","arg":{"format":"{}","snippet":"showhyphens{${1:space separated words}}"}},
+		{"name":"showifs"},
+		{"name":"ShowInstanceValues","arg":{"format":"{}{}","snippet":"ShowInstanceValues{${1:type}}{${2:instance}}"},"unusual":true},
+		{"name":"showlists"},
+		{"name":"showoutput","unusual":true},
+		{"name":"showoverfull","unusual":true},
+		{"name":"ShowSocket","arg":{"format":"{}","snippet":"ShowSocket{${1:socket name}}"},"unusual":true},
+		{"name":"ShowTemplateCode","arg":{"format":"{}{}","snippet":"ShowTemplateCode{${1:type}}{${2:template}}"},"unusual":true},
+		{"name":"ShowTemplateDefaults","arg":{"format":"{}{}","snippet":"ShowTemplateDefaults{${1:type}}{${2:template}}"},"unusual":true},
+		{"name":"ShowTemplateInterface","arg":{"format":"{}{}","snippet":"ShowTemplateInterface{${1:type}}{${2:template}}"},"unusual":true},
+		{"name":"ShowTemplateVariables","arg":{"format":"{}{}","snippet":"ShowTemplateVariables{${1:type}}{${2:template}}"},"unusual":true},
+		{"name":"showthe"},
+		{"name":"showtokens","arg":{"format":"{}","snippet":"showtokens{${1:arg}}"}},
+		{"name":"sigma","math":true,"detail":"σ","doc":"small sigma, greek"},
+		{"name":"Sigma","math":true,"detail":"Σ","doc":"capital sigma, greek"},
+		{"name":"sim","math":true,"detail":"∼","doc":"similar"},
+		{"name":"simeq","math":true,"detail":"≃","doc":"similar, equals"},
+		{"name":"sin","math":true},
+		{"name":"sinh","math":true},
+		{"name":"skew","arg":{"format":"{}{}{}","snippet":"skew{${1:num}}{${2:math accent}}{${3:text}}"},"math":true},
+		{"name":"skewchar"},
+		{"name":"skip"},
+		{"name":"skipdef"},
+		{"name":"skipeval","arg":{"format":"{}","snippet":"skipeval{${1:skip expression}}"}},
+		{"name":"sl"},
+		{"name":"slash"},
+		{"name":"sldefault","unusual":true},
+		{"name":"sloppy"},
+		{"name":"slshape"},
+		{"name":"small"},
+		{"name":"smallbreak"},
+		{"name":"smallint","math":true},
+		{"name":"smallskip"},
+		{"name":"smallskipamount"},
+		{"name":"smash","arg":{"format":"{}","snippet":"smash{${1:text}}"}},
+		{"name":"smile","math":true,"detail":"⌣","doc":"up curve"},
+		{"name":"sp","arg":{"format":"{}","snippet":"sp{${1:superscript}}"},"math":true},
+		{"name":"space"},
+		{"name":"spacefactor"},
+		{"name":"spaceskip"},
+		{"name":"spadesuit","math":true,"detail":"♠","doc":"spades suit symbol"},
+		{"name":"span"},
+		{"name":"special","arg":{"format":"{}","snippet":"special{${1:code}}"}},
+		{"name":"SplitArgument","arg":{"format":"{}{}","snippet":"SplitArgument{${1:number}}{${2:tokens}}"}},
+		{"name":"splitbotmark"},
+		{"name":"splitdiscards"},
+		{"name":"splitfirstmark"},
+		{"name":"SplitList","arg":{"format":"{}","snippet":"SplitList{${1:tokens}}"}},
+		{"name":"splitmaxdepth"},
+		{"name":"splittopskip"},
+		{"name":"sqcap","math":true,"detail":"⊓","doc":"square intersection"},
+		{"name":"sqcup","math":true,"detail":"⊔","doc":"square union"},
+		{"name":"sqrt","arg":{"format":"[]{}","snippet":"sqrt[${1:root-number}]{${2:arg}}"},"math":true},
+		{"name":"sqrt","arg":{"format":"{}","snippet":"sqrt{${1:arg}}"},"math":true},
+		{"name":"sqrtsign","arg":{"format":"{}","snippet":"sqrtsign{${1}}"}},
+		{"name":"sqsubseteq","math":true,"detail":"⊑","doc":"square subset, equals"},
+		{"name":"sqsupseteq","math":true,"detail":"⊒","doc":"square superset, equals"},
+		{"name":"ss"},
+		{"name":"SS"},
+		{"name":"sscdefault","unusual":true},
+		{"name":"sscshape"},
+		{"name":"stackrel","arg":{"format":"{}{}","snippet":"stackrel{${1}}{${2}}"},"math":true},
+		{"name":"star","math":true,"detail":"⋆","doc":"small star, filled, low"},
+		{"name":"stepcounter","arg":{"format":"{}","snippet":"stepcounter{${1}}"}},
+		{"name":"stockheight","unusual":true},
+		{"name":"stockwidth","unusual":true},
+		{"name":"stop","unusual":true},
+		{"name":"stretch","arg":{"format":"{}","snippet":"stretch{${1}}"}},
+		{"name":"string"},
+		{"name":"strut"},
+		{"name":"strutbox"},
+		{"name":"subitem"},
+		{"name":"subparagraph","arg":{"format":"[]{}","snippet":"subparagraph[${1:toc-title}]{${2:title}}"}},
+		{"name":"subparagraph","arg":{"format":"{}","snippet":"subparagraph{${1:title}}"}},
+		{"name":"subparagraph*","arg":{"format":"[]{}","snippet":"subparagraph*[${1:toc-title}]{${2:title}}"}},
+		{"name":"subparagraph*","arg":{"format":"{}","snippet":"subparagraph*{${1:title}}"}},
+		{"name":"subparagraphmark","arg":{"format":"{}","snippet":"subparagraphmark{${1}}"}},
+		{"name":"subsection","arg":{"format":"[]{}","snippet":"subsection[${1:toc-title}]{${2:title}}"}},
+		{"name":"subsection","arg":{"format":"{}","snippet":"subsection{${1:title}}"}},
+		{"name":"subsection*","arg":{"format":"[]{}","snippet":"subsection*[${1:toc-title}]{${2:title}}"}},
+		{"name":"subsection*","arg":{"format":"{}","snippet":"subsection*{${1:title}}"}},
+		{"name":"subsectionmark","arg":{"format":"{}","snippet":"subsectionmark{${1}}"}},
+		{"name":"subset","math":true,"detail":"⊂","doc":"subset or is implied by"},
+		{"name":"subseteq","math":true,"detail":"⊆","doc":"subset, equals"},
+		{"name":"subsubitem"},
+		{"name":"subsubsection","arg":{"format":"[]{}","snippet":"subsubsection[${1:toc-title}]{${2:title}}"}},
+		{"name":"subsubsection","arg":{"format":"{}","snippet":"subsubsection{${1:title}}"}},
+		{"name":"subsubsection*","arg":{"format":"[]{}","snippet":"subsubsection*[${1:toc-title}]{${2:title}}"}},
+		{"name":"subsubsection*","arg":{"format":"{}","snippet":"subsubsection*{${1:title}}"}},
+		{"name":"subsubsectionmark","arg":{"format":"{}","snippet":"subsubsectionmark{${1}}"}},
+		{"name":"succ","math":true,"detail":"≻","doc":"succeeds"},
+		{"name":"succeq","math":true,"detail":"⪰","doc":"succeeds above single-line equals sign"},
+		{"name":"sum","math":true,"detail":"∑","doc":"summation operator"},
+		{"name":"sup","math":true},
+		{"name":"suppressfloats","arg":{"format":"[]","snippet":"suppressfloats[${1:t or b}]"}},
+		{"name":"suppressfloats"},
+		{"name":"supset","math":true,"detail":"⊃","doc":"superset or implies"},
+		{"name":"supseteq","math":true,"detail":"⊇","doc":"superset, equals"},
+		{"name":"surd","math":true,"detail":"√","doc":"radical"},
+		{"name":"SuspendTagging","arg":{"format":"{}","snippet":"SuspendTagging{${1:label}}"},"unusual":true},
+		{"name":"swarrow","math":true,"detail":"↙","doc":"sw pointing arrow"},
+		{"name":"swdefault","unusual":true},
+		{"name":"swshape"},
+		{"name":"symbol","arg":{"format":"{}","snippet":"symbol{${1:character number}}"}},
+		{"name":"synctex"},
+		{"name":"t","arg":{"format":"{}","snippet":"t{${1:oo}}"}},
+		{"name":"tabbingsep"},
+		{"name":"tabcolsep"},
+		{"name":"tablename"},
+		{"name":"tabskip"},
+		{"name":"tabularnewline"},
+		{"name":"tan","math":true},
+		{"name":"tanh","math":true},
+		{"name":"tau","math":true,"detail":"τ","doc":"small tau, greek"},
+		{"name":"TeX"},
+		{"name":"textacutedbl"},
+		{"name":"textascendercompwordmark","unusual":true},
+		{"name":"textasciiacute"},
+		{"name":"textasciibreve"},
+		{"name":"textasciicaron"},
+		{"name":"textasciicircum"},
+		{"name":"textasciidieresis"},
+		{"name":"textasciigrave"},
+		{"name":"textasciimacron"},
+		{"name":"textasciitilde"},
+		{"name":"textasteriskcentered"},
+		{"name":"textbackslash"},
+		{"name":"textbaht"},
+		{"name":"textbar"},
+		{"name":"textbardbl"},
+		{"name":"textbf","arg":{"format":"{}","snippet":"textbf{${1}}"}},
+		{"name":"textbigcircle"},
+		{"name":"textblank"},
+		{"name":"textborn"},
+		{"name":"textbraceleft"},
+		{"name":"textbraceright"},
+		{"name":"textbrokenbar"},
+		{"name":"textbullet"},
+		{"name":"textcapitalcompwordmark","unusual":true},
+		{"name":"textcelsius"},
+		{"name":"textcent"},
+		{"name":"textcentoldstyle"},
+		{"name":"textcircled","arg":{"format":"{}","snippet":"textcircled{${1:letter}}"}},
+		{"name":"textcircledP"},
+		{"name":"textcolonmonetary"},
+		{"name":"textcommaabove","arg":{"format":"{}","snippet":"textcommaabove{${1}}"}},
+		{"name":"textcommabelow","arg":{"format":"{}","snippet":"textcommabelow{${1}}"}},
+		{"name":"textcompwordmark"},
+		{"name":"textcopyleft"},
+		{"name":"textcopyright"},
+		{"name":"textcurrency"},
+		{"name":"textdagger"},
+		{"name":"textdaggerdbl"},
+		{"name":"textdblhyphen"},
+		{"name":"textdblhyphenchar","unusual":true},
+		{"name":"textdegree"},
+		{"name":"textdied"},
+		{"name":"textdiscount"},
+		{"name":"textdiv"},
+		{"name":"textdivorced"},
+		{"name":"textdollar"},
+		{"name":"textdollaroldstyle"},
+		{"name":"textdong"},
+		{"name":"textdownarrow"},
+		{"name":"texteightoldstyle"},
+		{"name":"textellipsis"},
+		{"name":"textemdash"},
+		{"name":"textendash"},
+		{"name":"textestimated"},
+		{"name":"texteuro"},
+		{"name":"textexclamdown"},
+		{"name":"textfiguredash"},
+		{"name":"textfiveoldstyle"},
+		{"name":"textfloatsep"},
+		{"name":"textflorin"},
+		{"name":"textfont"},
+		{"name":"textfouroldstyle"},
+		{"name":"textfraction"},
+		{"name":"textfractionsolidus"},
+		{"name":"textgravedbl"},
+		{"name":"textgreater"},
+		{"name":"textguarani"},
+		{"name":"textheight"},
+		{"name":"texthorizontalbar"},
+		{"name":"textinterrobang"},
+		{"name":"textinterrobangdown"},
+		{"name":"textit","arg":{"format":"{}","snippet":"textit{${1}}"}},
+		{"name":"textlangle"},
+		{"name":"textlbrackdbl"},
+		{"name":"textleaf"},
+		{"name":"textleftarrow"},
+		{"name":"textlegacyasteriskcentered","unusual":true},
+		{"name":"textlegacybardbl","unusual":true},
+		{"name":"textlegacybullet","unusual":true},
+		{"name":"textlegacydagger","unusual":true},
+		{"name":"textlegacydaggerdbl","unusual":true},
+		{"name":"textlegacyparagraph","unusual":true},
+		{"name":"textlegacyperiodcentered","unusual":true},
+		{"name":"textlegacysection","unusual":true},
+		{"name":"textless"},
+		{"name":"textlira"},
+		{"name":"textlnot"},
+		{"name":"textlquill"},
+		{"name":"textmarried"},
+		{"name":"textmd","arg":{"format":"{}","snippet":"textmd{${1}}"}},
+		{"name":"textmho"},
+		{"name":"textminus"},
+		{"name":"textmu"},
+		{"name":"textmusicalnote"},
+		{"name":"textnaira"},
+		{"name":"textnineoldstyle"},
+		{"name":"textnonbreakinghyphen"},
+		{"name":"textnormal","arg":{"format":"{}","snippet":"textnormal{${1}}"}},
+		{"name":"textnumero"},
+		{"name":"textohm"},
+		{"name":"textonehalf"},
+		{"name":"textoneoldstyle"},
+		{"name":"textonequarter"},
+		{"name":"textonesuperior"},
+		{"name":"textopenbullet"},
+		{"name":"textordfeminine"},
+		{"name":"textordmasculine"},
+		{"name":"TextOrMath","arg":{"format":"{}{}","snippet":"TextOrMath{${1:text}}{${2:math}}"},"unusual":true},
+		{"name":"textparagraph"},
+		{"name":"textperiodcentered"},
+		{"name":"textpertenthousand"},
+		{"name":"textperthousand"},
+		{"name":"textpeso"},
+		{"name":"textpilcrow"},
+		{"name":"textpm"},
+		{"name":"textquestiondown"},
+		{"name":"textquotedbl"},
+		{"name":"textquotedblleft"},
+		{"name":"textquotedblright"},
+		{"name":"textquoteleft"},
+		{"name":"textquoteright"},
+		{"name":"textquotesingle"},
+		{"name":"textquotestraightbase"},
+		{"name":"textquotestraightdblbase"},
+		{"name":"textrangle"},
+		{"name":"textrbrackdbl"},
+		{"name":"textrecipe"},
+		{"name":"textreferencemark"},
+		{"name":"textregistered"},
+		{"name":"textrightarrow"},
+		{"name":"textrm","arg":{"format":"{}","snippet":"textrm{${1}}"}},
+		{"name":"textrquill"},
+		{"name":"textsc","arg":{"format":"{}","snippet":"textsc{${1}}"}},
+		{"name":"textsection"},
+		{"name":"textservicemark"},
+		{"name":"textsevenoldstyle"},
+		{"name":"textsf","arg":{"format":"{}","snippet":"textsf{${1}}"}},
+		{"name":"textsixoldstyle"},
+		{"name":"textsl","arg":{"format":"{}","snippet":"textsl{${1}}"}},
+		{"name":"textssc","arg":{"format":"{}","snippet":"textssc{${1:text}}"}},
+		{"name":"textsterling"},
+		{"name":"textstyle","math":true},
+		{"name":"textsubscript","arg":{"format":"{}","snippet":"textsubscript{${1:text}}"}},
+		{"name":"textsuperscript","arg":{"format":"{}","snippet":"textsuperscript{${1:text}}"}},
+		{"name":"textsurd"},
+		{"name":"textsw","arg":{"format":"{}","snippet":"textsw{${1:text}}"}},
+		{"name":"textthreeoldstyle"},
+		{"name":"textthreequarters"},
+		{"name":"textthreequartersemdash"},
+		{"name":"textthreesuperior"},
+		{"name":"texttildelow"},
+		{"name":"texttimes"},
+		{"name":"texttrademark"},
+		{"name":"texttt","arg":{"format":"{}","snippet":"texttt{${1}}"}},
+		{"name":"texttwelveudash"},
+		{"name":"texttwooldstyle"},
+		{"name":"texttwosuperior"},
+		{"name":"textulc","arg":{"format":"{}","snippet":"textulc{${1:text}}"}},
+		{"name":"textunderscore"},
+		{"name":"textup","arg":{"format":"{}","snippet":"textup{${1}}"}},
+		{"name":"textuparrow"},
+		{"name":"textvisiblespace"},
+		{"name":"textwidth"},
+		{"name":"textwon"},
+		{"name":"textyen"},
+		{"name":"textzerooldstyle"},
+		{"name":"TeXXeTstate","unusual":true},
+		{"name":"th"},
+		{"name":"TH"},
+		{"name":"thanks","arg":{"format":"{}","snippet":"thanks{${1}}"}},
+		{"name":"the"},
+		{"name":"theenumi"},
+		{"name":"theenumii","unusual":true},
+		{"name":"theenumiii","unusual":true},
+		{"name":"theenumiv","unusual":true},
+		{"name":"theequation"},
+		{"name":"thefootnote"},
+		{"name":"theHsection","unusual":true},
+		{"name":"thempfootnote","unusual":true},
+		{"name":"thepage"},
+		{"name":"thesection"},
+		{"name":"theta","math":true,"detail":"θ","doc":"straight theta, small theta, greek"},
+		{"name":"Theta","math":true,"detail":"Θ","doc":"capital theta, greek"},
+		{"name":"thetotalpages","unusual":true},
+		{"name":"thicklines"},
+		{"name":"thickmuskip"},
+		{"name":"thickspace"},
+		{"name":"thinlines"},
+		{"name":"thinmuskip"},
+		{"name":"thinspace"},
+		{"name":"thispagestyle","arg":{"format":"{}","snippet":"thispagestyle{${1}}"}},
+		{"name":"tilde","arg":{"format":"{}","snippet":"tilde{${1}}"},"math":true},
+		{"name":"time"},
+		{"name":"times","math":true,"detail":"×","doc":"multiply sign"},
+		{"name":"tiny"},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:text}}"}},
+		{"name":"tmspace","arg":{"format":"{}{}{}","snippet":"tmspace{${1:sign}}{${2:math space}}{${3:text space}}"},"unusual":true},
+		{"name":"to","math":true},
+		{"name":"today"},
+		{"name":"toks"},
+		{"name":"toksdef"},
+		{"name":"tolerance"},
+		{"name":"top","math":true,"detail":"⊤","doc":"top"},
+		{"name":"topfraction"},
+		{"name":"topmargin"},
+		{"name":"topmark"},
+		{"name":"TopMark","arg":{"format":"[]{}","snippet":"TopMark[${1:region}]{${2:class}}"},"unusual":true},
+		{"name":"TopMark","arg":{"format":"{}","snippet":"TopMark{${1:class}}"},"unusual":true},
+		{"name":"topsep"},
+		{"name":"topskip"},
+		{"name":"tracingall"},
+		{"name":"tracingassigns"},
+		{"name":"tracingcommands"},
+		{"name":"tracinggroups"},
+		{"name":"tracingifs"},
+		{"name":"tracinglostchars"},
+		{"name":"tracingmacros"},
+		{"name":"tracingnesting"},
+		{"name":"tracingnone","unusual":true},
+		{"name":"tracingonline"},
+		{"name":"tracingoutput"},
+		{"name":"tracingpages"},
+		{"name":"tracingparagraphs"},
+		{"name":"tracingrestores"},
+		{"name":"tracingscantokens"},
+		{"name":"tracingstacklevels","unusual":true},
+		{"name":"tracingstats"},
+		{"name":"triangle","math":true},
+		{"name":"triangleleft","math":true,"detail":"◁","doc":"(large) left triangle, open; z notation domain restriction"},
+		{"name":"triangleright","math":true,"detail":"▷","doc":"(large) right triangle, open; z notation range restriction"},
+		{"name":"TrimSpaces"},
+		{"name":"tt"},
+		{"name":"ttdefault","unusual":true},
+		{"name":"ttfamily"},
+		{"name":"twocolumn","arg":{"format":"[]","snippet":"twocolumn[${1:prelim one column text}]"}},
+		{"name":"twocolumn"},
+		{"name":"typein","arg":{"format":"[]{}","snippet":"typein[${1:cmd}]{${2:prompt-msg}}"}},
+		{"name":"typein","arg":{"format":"{}","snippet":"typein{${1:prompt-msg}}"}},
+		{"name":"typeout","arg":{"format":"{}","snippet":"typeout{${1:msg}}"}},
+		{"name":"u","arg":{"format":"{}","snippet":"u{${1:o}}"}},
+		{"name":"uccode"},
+		{"name":"uchyph"},
+		{"name":"ulcdefault","unusual":true},
+		{"name":"ulcshape"},
+		{"name":"unboldmath"},
+		{"name":"UndeclareTextCommand","arg":{"format":"{}{}","snippet":"UndeclareTextCommand{${1:command}}{${2:encoding}}"},"unusual":true},
+		{"name":"underbar","arg":{"format":"{}","snippet":"underbar{${1:text}}"},"math":true},
+		{"name":"underbrace","arg":{"format":"{}","snippet":"underbrace{${1:math}}"},"math":true},
+		{"name":"underline","arg":{"format":"{}","snippet":"underline{${1}}"}},
+		{"name":"unexpanded","arg":{"format":"{}","snippet":"unexpanded{${1:arg}}"}},
+		{"name":"unhbox"},
+		{"name":"unhcopy"},
+		{"name":"UnicodeEncodingName","unusual":true},
+		{"name":"UnicodeFontFile","arg":{"format":"{}{}","snippet":"UnicodeFontFile{${1:file}}{${2:features}}"},"unusual":true},
+		{"name":"UnicodeFontName","arg":{"format":"{}{}","snippet":"UnicodeFontName{${1:name}}{${2:features}}"},"unusual":true},
+		{"name":"UnicodeFontTeXLigatures","unusual":true},
+		{"name":"unitlength"},
+		{"name":"unkern"},
+		{"name":"unless"},
+		{"name":"unpenalty"},
+		{"name":"unsetattribute","arg":{"format":"{}","snippet":"unsetattribute{${1:attribute}}"},"unusual":true},
+		{"name":"unskip"},
+		{"name":"UnusedTemplateKeys","unusual":true},
+		{"name":"unvbox"},
+		{"name":"unvcopy"},
+		{"name":"uparrow","math":true,"detail":"↑","doc":"upward arrow"},
+		{"name":"Uparrow","math":true,"detail":"⇑","doc":"up double arrow"},
+		{"name":"upbracefill"},
+		{"name":"updefault","unusual":true},
+		{"name":"updownarrow","math":true,"detail":"↕","doc":"up and down arrow"},
+		{"name":"Updownarrow","math":true,"detail":"⇕","doc":"up and down double arrow"},
+		{"name":"uplus","math":true,"detail":"⊎","doc":"plus sign in union"},
+		{"name":"uppercase","arg":{"format":"{}","snippet":"uppercase{${1:text}}"}},
+		{"name":"upshape"},
+		{"name":"upsilon","math":true,"detail":"υ","doc":"small upsilon, greek"},
+		{"name":"Upsilon","math":true,"detail":"Υ","doc":"capital upsilon, greek"},
+		{"name":"usebox","arg":{"format":"{}","snippet":"usebox{${1:box}}"}},
+		{"name":"usecounter","arg":{"format":"{}","snippet":"usecounter{${1}}"}},
+		{"name":"UseExpandableTaggingSocket","arg":{"format":"{}","snippet":"UseExpandableTaggingSocket{${1:socket}}"},"unusual":true},
+		{"name":"usefont","arg":{"format":"{}{}{}{}","snippet":"usefont{${1:enc}}{${2:family}}{${3:series}}{${4:shape}}"},"unusual":true},
+		{"name":"UseHook","arg":{"format":"{}","snippet":"UseHook{${1:hook}}"},"unusual":true},
+		{"name":"UseHookWithArguments","arg":{"format":"{}{}","snippet":"UseHookWithArguments{${1:hook}}{${2:number}}"},"unusual":true},
+		{"name":"UseInstance","arg":{"format":"{}{}","snippet":"UseInstance{${1:type}}{${2:instance}}"},"unusual":true},
+		{"name":"UseLegacyTextSymbols","unusual":true},
+		{"name":"UseName","arg":{"format":"{}","snippet":"UseName{${1:string}}"},"unusual":true},
+		{"name":"UseOneTimeHook","arg":{"format":"{}","snippet":"UseOneTimeHook{${1:hook}}"},"unusual":true},
+		{"name":"UseOneTimeHookWithArguments","arg":{"format":"{}{}","snippet":"UseOneTimeHookWithArguments{${1:hook}}{${2:number}}"},"unusual":true},
+		{"name":"usepackage","arg":{"format":"[]{}[]","snippet":"usepackage[${1:options}]{${2:pkg}}[${3:mindate}]"}},
+		{"name":"usepackage","arg":{"format":"{}","snippet":"usepackage{${1:pkg}}"}},
+		{"name":"UseSocket","arg":{"format":"{}","snippet":"UseSocket{${1:socket name}}"},"unusual":true},
+		{"name":"UseStructureName","arg":{"format":"{}","snippet":"UseStructureName{${1:name}}"},"unusual":true},
+		{"name":"UseTaggingSocket","arg":{"format":"{}","snippet":"UseTaggingSocket{${1:socket}}"},"unusual":true},
+		{"name":"UseTemplate","arg":{"format":"{}{}{}","snippet":"UseTemplate{${1:type}}{${2:template}}{${3:settings}}"},"unusual":true},
+		{"name":"UseTextAccent","arg":{"format":"{}{}{}","snippet":"UseTextAccent{${1:encoding}}{${2:command}}{${3:text}}"}},
+		{"name":"UseTextSymbol","arg":{"format":"{}{}","snippet":"UseTextSymbol{${1:encoding}}{${2:command}}"}},
+		{"name":"v","arg":{"format":"{}","snippet":"v{${1:o}}"}},
+		{"name":"vadjust","arg":{"format":"{}","snippet":"vadjust{${1:vertical mode material}}"}},
+		{"name":"valign","arg":{"format":"{}","snippet":"valign{${1:⟨preamble⟩ \\cr ⟨column⟩ \\cr ... ⟨column⟩ \\cr}}"}},
+		{"name":"value","arg":{"format":"{}","snippet":"value{${1}}"}},
+		{"name":"varbigtriangledown","math":true},
+		{"name":"varbigtriangleup","math":true},
+		{"name":"varepsilon","math":true,"detail":"ε","doc":"rounded small varepsilon, greek"},
+		{"name":"varphi","math":true,"detail":"φ","doc":"curly or open small phi, greek"},
+		{"name":"varpi","math":true,"detail":"ϖ","doc":"rounded small pi (pomega), greek"},
+		{"name":"varrho","math":true,"detail":"ϱ","doc":"rounded small rho, greek"},
+		{"name":"varsigma","math":true,"detail":"ς","doc":"terminal sigma, greek"},
+		{"name":"vartheta","math":true,"detail":"ϑ","doc":"- curly or open theta"},
+		{"name":"vbadness"},
+		{"name":"vbox","arg":{"format":"{}","snippet":"vbox{${1:text}}"}},
+		{"name":"vcenter","arg":{"format":"{}","snippet":"vcenter{${1:vertical mode material}}"}},
+		{"name":"vdash","math":true,"detail":"⊢","doc":"vertical, dash"},
+		{"name":"vdots","math":true,"detail":"⋮","doc":"vertical ellipsis"},
+		{"name":"vec","arg":{"format":"{}","snippet":"vec{${1}}"},"math":true},
+		{"name":"vector","arg":{"format":"(){}","snippet":"vector(${1:x_run,y_rise}){${2:travel}}"}},
+		{"name":"vee","math":true,"detail":"∨","doc":"logical or"},
+		{"name":"verb"},
+		{"name":"verb*"},
+		{"name":"verbvisiblespace"},
+		{"name":"vert","math":true,"detail":"|","doc":"vertical bar"},
+		{"name":"Vert","math":true,"detail":"‖","doc":"double vertical bar"},
+		{"name":"vfil"},
+		{"name":"vfill"},
+		{"name":"vfilneg"},
+		{"name":"vfuzz"},
+		{"name":"vglue"},
+		{"name":"vline"},
+		{"name":"voffset"},
+		{"name":"vphantom","arg":{"format":"{}","snippet":"vphantom{${1:subformula}}"}},
+		{"name":"vrule"},
+		{"name":"vsize"},
+		{"name":"vskip"},
+		{"name":"vspace","arg":{"format":"{}","snippet":"vspace{${1}}"}},
+		{"name":"vspace*","arg":{"format":"{}","snippet":"vspace*{${1}}"}},
+		{"name":"vsplit"},
+		{"name":"vss"},
+		{"name":"vtop","arg":{"format":"{}","snippet":"vtop{${1:vertical mode material}}"}},
+		{"name":"wd"},
+		{"name":"wedge","math":true,"detail":"∧","doc":"logical and"},
+		{"name":"widehat","arg":{"format":"{}","snippet":"widehat{${1}}"},"math":true},
+		{"name":"widetilde","arg":{"format":"{}","snippet":"widetilde{${1}}"},"math":true},
+		{"name":"widowpenalties"},
+		{"name":"widowpenalty"},
+		{"name":"width"},
+		{"name":"wlog","arg":{"format":"{}","snippet":"wlog{${1:token list%text}}"}},
+		{"name":"wp","math":true,"detail":"℘","doc":"weierstrass p"},
+		{"name":"wr","math":true,"detail":"≀","doc":"wreath product"},
+		{"name":"write"},
+		{"name":"xdef"},
+		{"name":"xi","math":true,"detail":"ξ","doc":"small xi, greek"},
+		{"name":"Xi","math":true,"detail":"Ξ","doc":"capital xi, greek"},
+		{"name":"xleaders"},
+		{"name":"xspaceskip"},
+		{"name":"year"},
+		{"name":"zeta","math":true,"detail":"ζ","doc":"small zeta, greek"}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"array","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"array","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"center"},
+		{"name":"description","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"description"},
+		{"name":"displaymath"},
+		{"name":"document"},
+		{"name":"enumerate","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"enumerate"},
+		{"name":"eqnarray"},
+		{"name":"eqnarray*"},
+		{"name":"equation"},
+		{"name":"figure","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"figure"},
+		{"name":"figure*","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"figure*"},
+		{"name":"filecontents","arg":{"format":"[]{}","snippet":"[${1}]{${2}}","keys":["latex-document:filecontents"],"keyPos":0}},
+		{"name":"filecontents","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"filecontents*","arg":{"format":"[]{}","snippet":"[${1}]{${2}}","keys":["latex-document:filecontents"],"keyPos":0}},
+		{"name":"filecontents*","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"flushleft"},
+		{"name":"flushright"},
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"itemize","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"itemize"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"list","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"}},
+		{"name":"lrbox","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"math"},
+		{"name":"minipage","arg":{"format":"[][][]{}","snippet":"[${1}][${2}][${3}]{${4}}"}},
+		{"name":"minipage","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"normalsize"},
+		{"name":"picture","arg":{"format":"()()","snippet":"(${1})(${2})"}},
+		{"name":"quotation"},
+		{"name":"quote"},
+		{"name":"samepage"},
+		{"name":"scriptsize"},
+		{"name":"sloppypar"},
+		{"name":"small"},
+		{"name":"tabbing"},
+		{"name":"table","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"table"},
+		{"name":"table*","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"table*"},
+		{"name":"tabular","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"tabular","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"tabular*","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"tabular*","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"thebibliography","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"theindex"},
+		{"name":"tiny"},
+		{"name":"titlepage"},
+		{"name":"trivlist","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"trivlist"},
+		{"name":"verbatim"},
+		{"name":"verbatim*"},
+		{"name":"verse"}
+	],
+	"keys": {
+		"latex-document:listfiles": ["hashes","sizes"],
+		"latex-document:case change": ["locale=${1:BCP-47 tag}","lang=${1:BCP-47 tag}"],
+		"latex-document:math version": ["bold","normal"],
+		"latex-document:filecontents": ["force","overwrite","noheader","nosearch","nowarn"],
+		"\\usepackage/latex-document#c": ["a4paper","a5paper","b5paper","letterpaper","legalpaper","executivepaper","landscape","10pt","11pt","12pt","oneside","twoside","draft","final","titlepage","notitlepage","onecolumn","twocolumn","leqno","fleqn","openbib"],
+		"latex-document:document metadata": ["backend=${1|dvipdfmx,dvips,dvisvgm,luatex,pdftex,pdfmode,xdvipdfmx,xetex|}","pdfversion=${1|1.4,1.5,1.6,1.7,2.0|}","uncompress","language=","other-languages={${1:language list}}","lang=","pdfstandard=${1|A-1b,A-2a,A-2b,A-2u,A-3a,A-3b,A-3u,A-4,A-4E,A-4F,X-4,X-4p,X-5g,X-5n,X-5pg,X-6,X-6n,X-6p,UA-1,UA-2|}","xmp=${1|true,false|}","colorprofiles={${1:color profiles}}","tagging=${1|on,off,draft|}","tagging-setup={${1:tagging setup}}","check-tagging-status","testphase=${1|latest,phase-I,phase-II,phase-III|}","debug={${1:debug options}}"],
+		"latex-document:properties": ["abspage","page","pagenum","label","title","target","pagetarget","counter","xpos","ypos"]
+	},
+	"args": ["\\usepackage/latex-document#c"]
 }

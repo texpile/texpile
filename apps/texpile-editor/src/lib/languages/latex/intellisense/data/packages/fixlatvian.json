@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"caption"},{"name":"caption3"},{"name":"keyval"},{"name":"etoolbox"},{"name":"perpage"},{"name":"polyglossia"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"iftex"},{"name":"xstring"},{"name":"icomma"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"npageref","arg":{"format":"{}","snippet":"npageref{${1:label}}"}},
+		{"name":"npageref*","arg":{"format":"{}","snippet":"npageref*{${1:label}}"}},
+		{"name":"nref","arg":{"format":"{}","snippet":"nref{${1:label}}"}},
+		{"name":"nref*","arg":{"format":"{}","snippet":"nref*{${1:label}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

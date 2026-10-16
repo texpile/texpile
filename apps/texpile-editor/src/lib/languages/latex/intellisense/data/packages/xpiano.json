@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"keyboard","arg":{"format":"[]{}","snippet":"keyboard[${1}]{${2}}","keys":["l3keys:piano"],"keyPos":0},"doc":"The basic command is \\keyboard, which takes as mandatory argument the list of notes to mark."},
+		{"name":"keyboard","arg":{"format":"{}","snippet":"keyboard{${1}}"},"doc":"The basic command is \\keyboard, which takes as mandatory argument the list of notes to mark."},
+		{"name":"Keyboard","arg":{"format":"[][][][][]","snippet":"Keyboard[${1}][${2}][${3}][${4}][${5}]"}},
+		{"name":"Keyboard"},
+		{"name":"keyboardsetup","arg":{"format":"{}","snippet":"keyboardsetup{${1}}","keys":["l3keys:piano"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:piano": ["10=","11=","color=","ext=${1|false,true|}","font=","height=","numbercolor=","numbers=${1|false,true|}","ratio=","single=${1|false,true|}","size=","ext=${1|false,true|}","numbers=${1|false,true|}","single=${1|false,true|}"]
+	}
+}

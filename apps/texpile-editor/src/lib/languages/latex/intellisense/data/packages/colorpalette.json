@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"macrolist"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"activepalette","arg":{"format":"{}{}","snippet":"activepalette{${1:theme}}{${2:palette}}"},"doc":"To set the active palette of theme theme as palette, write \\activepalette{theme}{palette}."},
+		{"name":"addcolortotheme","arg":{"format":"{}{}","snippet":"addcolortotheme{${1:theme}}{${2:color}}"},"doc":"To add a color color to theme theme, write \\addcolortotheme{theme}{color}."},
+		{"name":"applycolor","arg":{"format":"{}{}","snippet":"applycolor{${1:theme}}{${2:color}}"}},
+		{"name":"getcolor","arg":{"format":"{}{}","snippet":"getcolor{${1:theme}}{${2:color}}"}},
+		{"name":"newpalette","arg":{"format":"{}{}","snippet":"newpalette{${1:theme}}{${2:palette}}"},"doc":"To create a new palette palette based on theme theme, write \\newpalette{theme}{palette}."},
+		{"name":"newpalettetheme","arg":{"format":"{}","snippet":"newpalettetheme{${1:theme}}"},"doc":"To create a new palette theme called theme, write \\newpalettetheme{theme}."},
+		{"name":"setpalettecolor","arg":{"format":"{}{}{}[]{}","snippet":"setpalettecolor{${1:theme}}{${2:palette}}{${3:color}}[${4:encoding}]{${5:value}}"}},
+		{"name":"setpalettecolor","arg":{"format":"{}{}{}{}","snippet":"setpalettecolor{${1:theme}}{${2:palette}}{${3:color}}{${4:value}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

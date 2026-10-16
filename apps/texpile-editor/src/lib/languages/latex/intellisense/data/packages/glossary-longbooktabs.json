@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"booktabs"},{"name":"glossary-longragged"},{"name":"array"}],
+	"macros": [
+		{"name":"glsLTpenaltycheck"},
+		{"name":"glspatchLToutput"},
+		{"name":"glspenaltygroupskip"},
+		{"name":"glsrestoreLToutput","doc":"Reverses the effect of \\glspatchLToutput."}
+	],
+	"envs": [],
+	"keys": {}
+}

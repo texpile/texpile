@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"kvoptions","engines":["lualatex"]},{"name":"keyval","engines":["lualatex"]},{"name":"kvsetkeys","engines":["lualatex"]}],
+	"macros": [
+		{"name":"compoundinitials","arg":{"format":"{}{}","snippet":"compoundinitials{${1}}{${2}}"},"doc":"Declare compound letters for given language."},
+		{"name":"disablesplithyphens","arg":{"format":"{}","snippet":"disablesplithyphens{${1}}"}},
+		{"name":"enablesplithyphens","arg":{"format":"{}","snippet":"enablesplithyphens{${1}}"}},
+		{"name":"noinitials"},
+		{"name":"nopredegrees"},
+		{"name":"nosingledefaults","unusual":true},
+		{"name":"nosufdegrees"},
+		{"name":"nounits"},
+		{"name":"preventsingledebugoff"},
+		{"name":"preventsingledebugon"},
+		{"name":"preventsinglelang","arg":{"format":"{}","snippet":"preventsinglelang{${1}}"}},
+		{"name":"preventsingleoff"},
+		{"name":"preventsingleon"},
+		{"name":"singlechars","arg":{"format":"{}{}","snippet":"singlechars{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

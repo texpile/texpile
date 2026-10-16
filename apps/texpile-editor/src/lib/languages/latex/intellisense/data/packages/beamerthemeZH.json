@@ -1,0 +1,7 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"myblock","arg":{"format":"<>{}","snippet":"<${1:overlay specification}>{${2:title}}"}}
+	],
+	"keys": {}
+}

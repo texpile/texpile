@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"orcidlink","arg":{"format":"{}","snippet":"orcidlink{${1}}"}},
+		{"name":"orcidlinkc","arg":{"format":"{}","snippet":"orcidlinkc{${1}}"}},
+		{"name":"orcidlinkf","arg":{"format":"{}","snippet":"orcidlinkf{${1}}"}},
+		{"name":"orcidlinki","arg":{"format":"{}{}","snippet":"orcidlinki{${1}}{${2}}"}},
+		{"name":"orcidlinkX","arg":{"format":"{}{}{}","snippet":"orcidlinkX{${1}}{${2}}{${3}}"}},
+		{"name":"orcidlogo","doc":"If you simply want the ORCiD logo without a hyperlink anywhere, use `\\orcidlogo`."}
+	],
+	"envs": [],
+	"keys": {}
+}

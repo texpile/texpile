@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"keyval"},{"name":"pict2e"},{"name":"trig"},{"name":"calc"},{"name":"array"}],
+	"macros": [
+		{"name":"backslashbox","arg":{"format":"[][]{}{}","snippet":"backslashbox[${1:width}][${2:trim}]{${3:A}}{${4:B}}"},"doc":"\\backslashbox works as \\diagbox, but it takes two optional arguments to specify the width and trim options."},
+		{"name":"backslashbox","arg":{"format":"{}{}","snippet":"backslashbox{${1:A}}{${2:B}}"},"doc":"\\backslashbox works as \\diagbox, but it takes two optional arguments to specify the width and trim options."},
+		{"name":"diagbox","arg":{"format":"[]{}{}","snippet":"diagbox[${1:options}]{${2:A}}{${3:B}}"}},
+		{"name":"diagbox","arg":{"format":"{}{}","snippet":"diagbox{${1:A}}{${2:B}}"}},
+		{"name":"slashbox","arg":{"format":"[][]{}{}","snippet":"slashbox[${1:width}][${2:trim}]{${3:A}}{${4:B}}"},"doc":"\\slashbox works as \\diagbox[dir=SW], and takes two optional arguments to specify the width and trim options."},
+		{"name":"slashbox","arg":{"format":"{}{}","snippet":"slashbox{${1:A}}{${2:B}}"},"doc":"\\slashbox works as \\diagbox[dir=SW], and takes two optional arguments to specify the width and trim options."}
+	],
+	"envs": [],
+	"keys": {}
+}

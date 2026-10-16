@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"ifthen"},{"name":"href-ul"},{"name":"ulem"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"pagecolor"},{"name":"xcolor"},{"name":"varwidth"},{"name":"csquotes"},{"name":"qrcode"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"tikzpagenodes"},{"name":"ifoddpage"},{"name":"enumitem"},{"name":"crumbs"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"calc"},{"name":"tabularx"},{"name":"array"},{"name":"seqsplit"},{"name":"geometry","if":"template"},{"name":"ifvtex","if":"template"},{"name":"textpos","if":"template"},{"name":"microtype","if":"template"},{"name":"multicol","if":"template"},{"name":"fontsize","if":"template"},{"name":"changepage","if":"template"},{"name":"soul","if":"template"},{"name":"soul-ori","if":"template"},{"name":"fancyhdr","if":"template"}],
+	"macros": [
+		{"name":"pptBanner","arg":{"format":"[]{}","snippet":"pptBanner[${1}]{${2}}"}},
+		{"name":"pptBanner","arg":{"format":"{}","snippet":"pptBanner{${1}}"}},
+		{"name":"pptChapter","arg":{"format":"[]{}","snippet":"pptChapter[${1}]{${2}}"}},
+		{"name":"pptChapter","arg":{"format":"{}","snippet":"pptChapter{${1}}"}},
+		{"name":"pptChapterLabel","unusual":true},
+		{"name":"pptHeader","arg":{"format":"{}","snippet":"pptHeader{${1}}"},"doc":"The \\pptHeader command prints a header similar to that produced by the \\pptSection command, yet without commencing a new section."},
+		{"name":"pptLeft","arg":{"format":"{}","snippet":"pptLeft{${1:footer text}}"},"if":"template|template=9x6"},
+		{"name":"pptPic","arg":{"format":"{}{}","snippet":"pptPic{${1}}{${2}}"}},
+		{"name":"pptPin","arg":{"format":"[]{}","snippet":"pptPin[${1}]{${2}}"}},
+		{"name":"pptPin","arg":{"format":"{}","snippet":"pptPin{${1}}"}},
+		{"name":"pptPinQR","arg":{"format":"[]{}","snippet":"pptPinQR[${1}]{${2}}"}},
+		{"name":"pptPinQR","arg":{"format":"{}","snippet":"pptPinQR{${1}}"}},
+		{"name":"pptPunch","arg":{"format":"{}","snippet":"pptPunch{${1}}"}},
+		{"name":"pptQR","arg":{"format":"[]{}","snippet":"pptQR[${1}]{${2}}"}},
+		{"name":"pptQR","arg":{"format":"{}","snippet":"pptQR{${1}}"}},
+		{"name":"pptQuote","arg":{"format":"[]{}{}{}","snippet":"pptQuote[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"pptQuote","arg":{"format":"{}{}{}","snippet":"pptQuote{${1}}{${2}}{${3}}"}},
+		{"name":"pptRight","arg":{"format":"{}","snippet":"pptRight{${1:footer text}}"},"if":"template|template=9x6"},
+		{"name":"pptSection","arg":{"format":"[]{}","snippet":"pptSection[${1}]{${2}}"},"doc":"The \\pptChapter and \\pptSection commands employed in tandem render an elegant two-level navigation menu at the upper left corner."},
+		{"name":"pptSection","arg":{"format":"{}","snippet":"pptSection{${1}}"},"doc":"The \\pptChapter and \\pptSection commands employed in tandem render an elegant two-level navigation menu at the upper left corner."},
+		{"name":"pptSnippet","arg":{"format":"[]{}","snippet":"pptSnippet[${1}]{${2}}"}},
+		{"name":"pptSnippet","arg":{"format":"{}","snippet":"pptSnippet{${1}}"}},
+		{"name":"pptThought","arg":{"format":"{}","snippet":"pptThought{${1}}"}},
+		{"name":"pptTitle","arg":{"format":"{}{}","snippet":"pptTitle{${1}}{${2}}"}},
+		{"name":"pptToc","arg":{"format":"[]","snippet":"pptToc[${1}]"},"doc":"\\pptToc renders the table of contents in an interactive “clickable” format."},
+		{"name":"pptToc","doc":"\\pptToc renders the table of contents in an interactive “clickable” format."}
+	],
+	"envs": [
+		{"name":"pptMiddle"},
+		{"name":"pptWide","arg":{"format":"{}","snippet":"{${1}}"}},
+		{"name":"pptWideOne"}
+	],
+	"keys": {}
+}

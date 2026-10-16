@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"gmbase"},{"name":"xparse"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"AmSTeX"},
+		{"name":"BibTeX"},
+		{"name":"ConTeXt"},
+		{"name":"DeclareLogo","arg":{"format":"[]{}{}","snippet":"DeclareLogo[${1:PD1 spelling}]{${2:command}}{${3:definition}}"}},
+		{"name":"DeclareLogo","arg":{"format":"{}{}","snippet":"DeclareLogo{${1:command}}{${2:definition}}"}},
+		{"name":"EofTeX","arg":{"format":"{}{}{}","snippet":"EofTeX{${1:kern before}}{${2:kern after}}{${3:text}}"},"unusual":true},
+		{"name":"eTeX"},
+		{"name":"HyphenateLogo","arg":{"format":"{}","snippet":"HyphenateLogo{${1:logo}}"}},
+		{"name":"LaTeXpar"},
+		{"name":"LuaTeX"},
+		{"name":"oldLaTeX"},
+		{"name":"oldLaTeXe"},
+		{"name":"pdfeTeX"},
+		{"name":"pdfLaTeX"},
+		{"name":"pdfTeX"},
+		{"name":"PlainTeX"},
+		{"name":"SliTeX"},
+		{"name":"TB"},
+		{"name":"TeXbook"},
+		{"name":"Web"},
+		{"name":"XeLaTeX"},
+		{"name":"XeTeX"},
+		{"name":"XeTeXpar"}
+	],
+	"envs": [],
+	"keys": {}
+}

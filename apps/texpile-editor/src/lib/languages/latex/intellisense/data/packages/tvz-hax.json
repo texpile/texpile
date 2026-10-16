@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"fancybox"}],
+	"macros": [
+		{"name":"AmS"},
+		{"name":"Backslash"},
+		{"name":"bLaTeX"},
+		{"name":"CheckVersion","arg":{"format":"{}","snippet":"CheckVersion{${1:file}}"}},
+		{"name":"DeleteShortMeta"},
+		{"name":"DisplayFont"},
+		{"name":"expanddate","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"GetVersion","arg":{"format":"{}","snippet":"GetVersion{${1:file}}"}},
+		{"name":"iftwoup","unusual":true},
+		{"name":"InlineFont"},
+		{"name":"MainFont"},
+		{"name":"MetaFont"},
+		{"name":"ShortMeta"},
+		{"name":"TableOfContents"},
+		{"name":"thefiledate","unusual":true},
+		{"name":"TOCshrink"},
+		{"name":"twosideclearpage"},
+		{"name":"twoupfalse","unusual":true},
+		{"name":"twouptrue","unusual":true},
+		{"name":"UsageFont"}
+	],
+	"envs": [
+		{"name":"Ex"}
+	],
+	"keys": {}
+}

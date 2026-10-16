@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"appendixfalse","unusual":true},
+		{"name":"appendixtrue","unusual":true},
+		{"name":"AtAppendix","arg":{"format":"{}","snippet":"AtAppendix{${1:code}}"},"doc":"Add 〈code〉 to the hook that is executed when \\appendix is given."},
+		{"name":"ifappendix","unusual":true},
+		{"name":"IfAppendix","arg":{"format":"{}{}","snippet":"IfAppendix{${1:then}}{${2:else}}"},"doc":"Expands to 〈else〉 before \\appendix is executed, and to 〈then〉 afterwards."}
+	],
+	"envs": [],
+	"keys": {}
+}

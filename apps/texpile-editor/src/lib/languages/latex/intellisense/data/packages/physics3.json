@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"biggg","arg":{"format":"{}","snippet":"biggg{${1:delimiter}}"},"doc":"\\biggg and \\Biggg, followed by a math delimiter. They are even bigger than \\Bigg."},
+		{"name":"Biggg","arg":{"format":"{}","snippet":"Biggg{${1:delimiter}}"},"doc":"\\biggg and \\Biggg, followed by a math delimiter. They are even bigger than \\Bigg."},
+		{"name":"bigggl","arg":{"format":"{}","snippet":"bigggl{${1:delimiter}}"}},
+		{"name":"Bigggl","arg":{"format":"{}","snippet":"Bigggl{${1:delimiter}}"}},
+		{"name":"bigggm","arg":{"format":"{}","snippet":"bigggm{${1:delimiter}}"}},
+		{"name":"Bigggm","arg":{"format":"{}","snippet":"Bigggm{${1:delimiter}}"}},
+		{"name":"bigggr","arg":{"format":"{}","snippet":"bigggr{${1:delimiter}}"}},
+		{"name":"Bigggr","arg":{"format":"{}","snippet":"Bigggr{${1:delimiter}}"}},
+		{"name":"delclose"},
+		{"name":"delopen"},
+		{"name":"RequirePhxmodu","arg":{"format":"[]{}[]","snippet":"RequirePhxmodu[${1:options}]{${2:modules}}[${3:date}]"},"unusual":true},
+		{"name":"RequirePhxmodu","arg":{"format":"{}","snippet":"RequirePhxmodu{${1:modules}}"},"unusual":true},
+		{"name":"usephxmodu","arg":{"format":"[]{}[]","snippet":"usephxmodu[${1:options}]{${2:modules}}[${3:date}]"},"doc":"The usage of \\usephxmodu is similar to \\usepackage, so you can load several modules in one line."},
+		{"name":"usephxmodu","arg":{"format":"{}","snippet":"usephxmodu{${1:modules}}"},"doc":"The usage of \\usephxmodu is similar to \\usepackage, so you can load several modules in one line."}
+	],
+	"envs": [],
+	"keys": {}
+}

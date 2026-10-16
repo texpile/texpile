@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"class-book"},{"name":"href-ul"},{"name":"ulem"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"cleveref"},{"name":"geometry"},{"name":"ifvtex"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"handstroke"},{"name":"paralist"},{"name":"enumitem"},{"name":"float"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"csquotes"},{"name":"setspace"},{"name":"doi"},{"name":"biblatex"},{"name":"logreq"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"microtype"},{"name":"titlesec"},{"name":"imakeidx"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"multicol"},{"name":"wrapfig"},{"name":"mdframed"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"changepage"},{"name":"perpage"},{"name":"footmisc"},{"name":"textpos","if":"authordraft"},{"name":"fancyhdr","if":"authordraft"}],
+	"macros": [
+		{"name":"incolor","arg":{"format":"{}{}","snippet":"incolor{${1}}{${2}}"},"unusual":true},
+		{"name":"ix","arg":{"format":"[]{}","snippet":"ix[${1:index entry}]{${2:text}}"}},
+		{"name":"ix","arg":{"format":"{}","snippet":"ix{${1:text}}"}},
+		{"name":"theauthor"},
+		{"name":"thedate"},
+		{"name":"thereviewer"},
+		{"name":"thetitle"},
+		{"name":"theversion"},
+		{"name":"thevolume"},
+		{"name":"ybEpigraph","arg":{"format":"{}{}{}","snippet":"ybEpigraph{${1:quote}}{${2:author}}{${3:bib key}}"}},
+		{"name":"ybPrintBibliography","arg":{"format":"[]","snippet":"ybPrintBibliography[${1:section title}]"},"doc":"Prints the list of bib references."},
+		{"name":"ybPrintBibliography","doc":"Prints the list of bib references."},
+		{"name":"ybPrintIndex","arg":{"format":"[]","snippet":"ybPrintIndex[${1:section title}]"}},
+		{"name":"ybPrintIndex"},
+		{"name":"ybPrintTitlePage"},
+		{"name":"ybPrintTOC","doc":"Prints the table of contents."},
+		{"name":"ybQuote","arg":{"format":"{}{}{}","snippet":"ybQuote{${1:quote}}{${2:author}}{${3:source}}"}},
+		{"name":"ybTweet","arg":{"format":"{}","snippet":"ybTweet{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"condensed"}
+	],
+	"keys": {}
+}

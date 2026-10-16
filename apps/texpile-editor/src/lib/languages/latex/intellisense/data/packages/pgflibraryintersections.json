@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"pgfiflinesintersect","arg":{"format":"{}{}{}{}{}{}","snippet":"pgfiflinesintersect{${1:point 1}}{${2:point 2}}{${3:point 3}}{${4:point 4}}{${5:true code}}{${6:false code}}"},"unusual":true},
+		{"name":"pgfintersectiongetsolutionsegmentindices","arg":{"format":"{}{}{}","snippet":"pgfintersectiongetsolutionsegmentindices{${1:solution}}{${2:first path segment macro}}{${3:second path segment macro}}"},"unusual":true},
+		{"name":"pgfintersectiongetsolutiontimes","arg":{"format":"{}{}{}","snippet":"pgfintersectiongetsolutiontimes{${1:solution}}{${2:first path time macro}}{${3:second path time macro}}"},"unusual":true},
+		{"name":"pgfintersectionofpaths","arg":{"format":"{}{}","snippet":"pgfintersectionofpaths{${1:path 1}}{${2:path 2}}"}},
+		{"name":"pgfintersectionsolutions"},
+		{"name":"pgfintersectionsortbyfirstpath"},
+		{"name":"pgfintersectionsortbysecondpath"},
+		{"name":"pgfpointintersectionofcurves","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"pgfpointintersectionofcurves{${1:curve 1 point 1}}{${2:curve 1 point 2}}{${3:curve 1 point 3}}{${4:curve 1 point 4}}{${5:curve 2 point 1}}{${6:curve 2 point 2}}{${7:curve 2 point 3}}{${8:curve 2 point 4}}{${9:solution}}"},"unusual":true},
+		{"name":"pgfpointintersectionsolution","arg":{"format":"{}","snippet":"pgfpointintersectionsolution{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

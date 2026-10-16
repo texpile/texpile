@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"colorpalette","arg":{"format":"[]{}","snippet":"colorpalette[${1:key-value arguments}]{${2:color name}}"}},
+		{"name":"colorpalette","arg":{"format":"{}","snippet":"colorpalette{${1:color name}}"}},
+		{"name":"colorsample","arg":{"format":"[][][]{}[]","snippet":"colorsample[${1:color model}][${2:text color}][${3:box width}]{${4:color name}}[${5:title}]"},"doc":"A user level macro for drawing color samples. It draws a colorbox with the specified color and value."},
+		{"name":"colorsample","arg":{"format":"{}","snippet":"colorsample{${1:color name}}"},"doc":"A user level macro for drawing color samples. It draws a colorbox with the specified color and value."},
+		{"name":"printcolorvalue","arg":{"format":"[]{}","snippet":"printcolorvalue[${1}]{${2}}"},"doc":"A user level macro to provide color values formatted in three different color models: HTML, RGB, and CMYK."},
+		{"name":"printcolorvalue","arg":{"format":"{}","snippet":"printcolorvalue{${1}}"},"doc":"A user level macro to provide color values formatted in three different color models: HTML, RGB, and CMYK."}
+	],
+	"envs": [],
+	"keys": {}
+}

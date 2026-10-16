@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"beginverticaltypesetting","unusual":true},
+		{"name":"typesetvertical"},
+		{"name":"verticaltypesetting"}
+	],
+	"envs": [
+		{"name":"horizontal","arg":{"format":"{}","snippet":"{${1:box width}}"}},
+		{"name":"vertical","arg":{"format":"{}","snippet":"{${1:box height}}"}}
+	],
+	"keys": {}
+}

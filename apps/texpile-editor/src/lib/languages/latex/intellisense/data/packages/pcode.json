@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pl"}],
+	"macros": [
+		{"name":"PrologInit","unusual":true},
+		{"name":"PrologQuintusfalse","unusual":true},
+		{"name":"PrologQuintustrue","unusual":true},
+		{"name":"StopProlog","unusual":true},
+		{"name":"WithActiveUnderscore","arg":{"format":"{}","snippet":"WithActiveUnderscore{${1:commands}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

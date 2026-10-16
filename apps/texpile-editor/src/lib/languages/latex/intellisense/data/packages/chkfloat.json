@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

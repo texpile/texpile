@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xcolor"}],
+	"macros": [
+		{"name":"HTMLDeclareSIUnit","arg":{"format":"[]{}{}","snippet":"HTMLDeclareSIUnit[${1:options}]{${2:name}}{${3:definition}}"}},
+		{"name":"HTMLDeclareSIUnit","arg":{"format":"{}{}","snippet":"HTMLDeclareSIUnit{${1:name}}{${2:definition}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

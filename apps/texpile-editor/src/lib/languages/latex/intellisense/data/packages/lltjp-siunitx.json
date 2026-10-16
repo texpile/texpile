@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"},{"name":"amstext"},{"name":"array"},{"name":"color"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

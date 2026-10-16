@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"datetime2"},{"name":"tracklang"},{"name":"etoolbox"},{"name":"xkeyval"},{"name":"itnumpar"},{"name":"iftex"}],
+	"macros": [
+		{"name":"DTMitfulltextmonthyearsep"},
+		{"name":"DTMitminuti","arg":{"format":"{}","snippet":"DTMitminuti{${1}}"},"unusual":true},
+		{"name":"DTMitore","arg":{"format":"{}","snippet":"DTMitore{${1}}"},"unusual":true},
+		{"name":"DTMitsecondi","arg":{"format":"{}","snippet":"DTMitsecondi{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

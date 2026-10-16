@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"eichen","arg":{"format":"{}","snippet":"eichen{${1:initial}}"}},
+		{"name":"Eichenlafamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

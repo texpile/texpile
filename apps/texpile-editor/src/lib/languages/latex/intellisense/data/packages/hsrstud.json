@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"bm"},{"name":"esint"},{"name":"esvect"},{"name":"xcolor"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"listings"}],
+	"macros": [
+		{"name":"bookref","arg":{"format":"{}","snippet":"bookref{${1}}"},"unusual":true},
+		{"name":"crossp","doc":"Cross product between vectors."},
+		{"name":"curl","doc":"Curl of a vector field."},
+		{"name":"dd","arg":{"format":"[]{}","snippet":"dd[${1:order}]{${2:var}}"},"doc":"The differential element."},
+		{"name":"dd","arg":{"format":"{}","snippet":"dd{${1:var}}"},"doc":"The differential element."},
+		{"name":"deriv","arg":{"format":"[]{}{}","snippet":"deriv[${1:order}]{${2:function}}{${3:var}}"}},
+		{"name":"deriv","arg":{"format":"{}{}","snippet":"deriv{${1:function}}{${2:var}}"}},
+		{"name":"di","arg":{"format":"[]{}","snippet":"di[${1:order}]{${2:var}}"}},
+		{"name":"di","arg":{"format":"{}","snippet":"di{${1:var}}"}},
+		{"name":"divg"},
+		{"name":"divsymb"},
+		{"name":"dotp","doc":"Dot product between vectors."},
+		{"name":"grad","doc":"The gradient vector operator."},
+		{"name":"heq","doc":"L’Hôpital limit equality symbol."},
+		{"name":"laplacian","doc":"The laplacian operator."},
+		{"name":"lectureref","arg":{"format":"{}","snippet":"lectureref{${1}}"},"unusual":true},
+		{"name":"mx","arg":{"format":"{}","snippet":"mx{${1:letter}}"},"doc":"the \\mx macro takes a {⟨symbol⟩} and typesets it as upright bold."},
+		{"name":"notesref","arg":{"format":"{}","snippet":"notesref{${1}}"},"unusual":true},
+		{"name":"oldvec","arg":{"format":"{}","snippet":"oldvec{${1}}"}},
+		{"name":"pderiv","arg":{"format":"[]{}{}","snippet":"pderiv[${1:order}]{${2:function}}{${3:var}}"}},
+		{"name":"pderiv","arg":{"format":"{}{}","snippet":"pderiv{${1:function}}{${2:var}}"}},
+		{"name":"uv","arg":{"format":"{}","snippet":"uv{${1:letter}}"}},
+		{"name":"uvec","arg":{"format":"{}","snippet":"uvec{${1:letter}}"}},
+		{"name":"vaccent","arg":{"format":"{}","snippet":"vaccent{${1}}"}},
+		{"name":"vc","arg":{"format":"{}","snippet":"vc{${1:letter}}"}},
+		{"name":"vlaplacian"}
+	],
+	"envs": [],
+	"keys": {}
+}

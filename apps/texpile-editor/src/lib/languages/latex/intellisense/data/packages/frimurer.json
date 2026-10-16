@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"textfrimurer","arg":{"format":"{}","snippet":"textfrimurer{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"frimurer","doc":"The primary way to use the font is the ‘frimurer’ environment."}
+	],
+	"keys": {}
+}

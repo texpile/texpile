@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"multicol"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"immediateaddtocontents","arg":{"format":"{}{}","snippet":"immediateaddtocontents{${1}}{${2}}"},"unusual":true},
+		{"name":"multicolumnlof"},
+		{"name":"multicolumnlot"},
+		{"name":"multicolumntoc","doc":"The number of columns for the table of contens, list of figures and list of tables can be set by redefining the commands \\multicolumntoc, \\multicolumnlot and \\multicolumnlof. The default is two columns."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/multitoc#c": ["lof","lot","toc"]
+	},
+	"args": ["\\usepackage/multitoc#c"]
+}

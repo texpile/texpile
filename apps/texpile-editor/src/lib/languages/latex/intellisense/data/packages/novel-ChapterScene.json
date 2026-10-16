@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"ChapterDeco","arg":{"format":"[]{}","snippet":"ChapterDeco[${1:alignment scale}]{${2:text}}"}},
+		{"name":"ChapterDeco","arg":{"format":"{}","snippet":"ChapterDeco{${1:text}}"}},
+		{"name":"ChapterSubtitle","arg":{"format":"[]{}","snippet":"ChapterSubtitle[${1:alignment}]{${2:text}}"}},
+		{"name":"ChapterSubtitle","arg":{"format":"{}","snippet":"ChapterSubtitle{${1:text}}"}},
+		{"name":"ChapterTitle","arg":{"format":"[]{}","snippet":"ChapterTitle[${1:alignment}]{${2:text}}"}},
+		{"name":"ChapterTitle","arg":{"format":"{}","snippet":"ChapterTitle{${1:text}}"}},
+		{"name":"cleartoend"},
+		{"name":"cleartorecto"},
+		{"name":"FirstLine","arg":{"format":"{}","snippet":"FirstLine{${1}}"}},
+		{"name":"FirstLine*","arg":{"format":"{}","snippet":"FirstLine*{${1}}"}},
+		{"name":"IndentAfterScenebreak","unusual":true},
+		{"name":"QuickChapter","arg":{"format":"[]{}","snippet":"QuickChapter[${1:linelength}]{${2:chapter title}}"}},
+		{"name":"QuickChapter","arg":{"format":"{}","snippet":"QuickChapter{${1:chapter title}}"}},
+		{"name":"scenebreak"},
+		{"name":"sceneline"},
+		{"name":"scenestars"},
+		{"name":"SetChapterStart","arg":{"format":"{}","snippet":"SetChapterStart{${1}}"},"unusual":true},
+		{"name":"SetChapterStartHeight","arg":{"format":"{}","snippet":"SetChapterStartHeight{${1:lines}}"}},
+		{"name":"SetChapterStartStyle","arg":{"format":"{}","snippet":"SetChapterStartStyle{${1:choice}}"}},
+		{"name":"SetScenebreakIndent","arg":{"format":"{}","snippet":"SetScenebreakIndent{${1:true or false}}"}}
+	],
+	"envs": [
+		{"name":"ChapterDisplay","arg":{"format":"[][]","snippet":"[${1}][${2}]"},"unusual":true},
+		{"name":"ChapterDisplay","unusual":true},
+		{"name":"ChapterStart","arg":{"format":"[][]","snippet":"[${1:lines}][${2:style}]"}},
+		{"name":"ChapterStart"}
+	],
+	"keys": {}
+}

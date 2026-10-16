@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"babel"}],
+	"macros": [
+		{"name":"malagasyweekdayname","arg":{"format":"{}","snippet":"malagasyweekdayname{${1:weekday number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

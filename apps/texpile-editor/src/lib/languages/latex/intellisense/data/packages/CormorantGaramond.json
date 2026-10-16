@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"infigures","doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"liningnums","arg":{"format":"{}","snippet":"liningnums{${1:text}}"},"doc":"Commands \\oldstylenums{...} and \\liningnums{...} are defined to allow for local use of old-style figures or lining figures, respectively."},
+		{"name":"proportionalnums","arg":{"format":"{}","snippet":"proportionalnums{${1:text}}"}},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"tabularnums","arg":{"format":"{}","snippet":"tabularnums{${1:text}}"},"doc":"\\tabularnums{...} and \\proportionalnums{...} allow for local use of monospaced or varying-width figures, respectively."},
+		{"name":"textinf","arg":{"format":"{}","snippet":"textinf{${1:text}}"},"doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"},"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	],
+	"envs": [],
+	"keys": {}
+}

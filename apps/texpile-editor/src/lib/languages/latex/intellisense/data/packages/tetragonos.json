@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"getTG","arg":{"format":"{}","snippet":"getTG{${1:string}}"}},
+		{"name":"loadTG","arg":{"format":"{}","snippet":"loadTG{${1}}"},"unusual":true},
+		{"name":"saveTG","arg":{"format":"{}{}","snippet":"saveTG{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

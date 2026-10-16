@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/add2-shipunov#c": ["club","land","noclub","port"]
+	},
+	"args": ["\\usepackage/add2-shipunov#c"]
+}

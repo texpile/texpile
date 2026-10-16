@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"appendixref","arg":{"format":"{}","snippet":"appendixref{${1:keys}}"}},
+		{"name":"chapterref","arg":{"format":"{}","snippet":"chapterref{${1:keys}}"}},
+		{"name":"docdate","unusual":true},
+		{"name":"eqref","arg":{"format":"{}","snippet":"eqref{${1:keys}}"}},
+		{"name":"figureref","arg":{"format":"{}","snippet":"figureref{${1:keys}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"footnoteref","arg":{"format":"{}","snippet":"footnoteref{${1:keys}}"}},
+		{"name":"itemname","arg":{"format":"{}","snippet":"itemname{${1:label type}}"}},
+		{"name":"itemref","arg":{"format":"{}","snippet":"itemref{${1:keys}}"}},
+		{"name":"newtheorem","arg":{"format":"{}[]{}{}[]","snippet":"newtheorem{${1:name}}[${2:shared counter}]{${3:title}}{${4:plural}}[${5:within}]"}},
+		{"name":"newtheorem","arg":{"format":"{}{}{}","snippet":"newtheorem{${1:name}}{${2:title}}{${3:plural}}"}},
+		{"name":"newtheorem*","arg":{"format":"{}[]{}{}[]","snippet":"newtheorem*{${1:name}}[${2:shared counter}]{${3:title}}{${4:plural}}[${5:within}]"}},
+		{"name":"newtheorem*","arg":{"format":"{}{}{}","snippet":"newtheorem*{${1:name}}{${2:title}}{${3:plural}}"}},
+		{"name":"paragraphref","arg":{"format":"{}","snippet":"paragraphref{${1:keys}}"}},
+		{"name":"partref","arg":{"format":"{}","snippet":"partref{${1:keys}}"}},
+		{"name":"refname","arg":{"format":"{}{}{}","snippet":"refname{${1:label type}}{${2:singular}}{${3:plural}}"}},
+		{"name":"sectionref","arg":{"format":"{}","snippet":"sectionref{${1:keys}}"}},
+		{"name":"tableref","arg":{"format":"{}","snippet":"tableref{${1:keys}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

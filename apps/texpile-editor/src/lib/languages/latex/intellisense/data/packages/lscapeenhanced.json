@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"lscape"},{"name":"graphics"},{"name":"trig"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

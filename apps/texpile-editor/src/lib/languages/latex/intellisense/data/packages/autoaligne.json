@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"aadate","unusual":true},
+		{"name":"aanom","unusual":true},
+		{"name":"aavcoeff","arg":{"format":"{}","snippet":"aavcoeff{${1:coeff}}"}},
+		{"name":"aaversion","unusual":true},
+		{"name":"autoaligne","arg":{"format":"[](){}","snippet":"autoaligne[${1:alignment}](${2:position}){${3:rows}}"}},
+		{"name":"autoaligne","arg":{"format":"(){}","snippet":"autoaligne(${1:position}){${2:rows}}"}},
+		{"name":"definirespacements","arg":{"format":"[]{}{}","snippet":"definirespacements[${1:before,after}]{${2:member spacing}}{${3:term spacing}}"},"doc":"définit les espaces placées de part et d’autre de chaque séparateur de membres ou de termes."},
+		{"name":"definirespacements","arg":{"format":"{}{}","snippet":"definirespacements{${1:member spacing}}{${2:term spacing}}"},"doc":"définit les espaces placées de part et d’autre de chaque séparateur de membres ou de termes."},
+		{"name":"definirseparateurs","arg":{"format":"{}{}{}","snippet":"definirseparateurs{${1:line sep}}{${2:member sep}}{${3:term sep}}"}},
+		{"name":"egaldevantmembrevide"}
+	],
+	"envs": [],
+	"keys": {}
+}

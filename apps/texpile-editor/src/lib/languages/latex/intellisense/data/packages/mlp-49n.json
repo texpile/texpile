@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"ngerman"}],
+	"macros": [
+		{"name":"beginlanguage"}
+	],
+	"envs": [
+		{"name":"ngerman"}
+	],
+	"keys": {
+		"\\usepackage/mlp-49n#c": ["ngerman"]
+	},
+	"args": ["\\usepackage/mlp-49n#c"]
+}

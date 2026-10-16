@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"gradientRGB","arg":{"format":"{}{}{}","snippet":"gradientRGB{${1:text}}{${2:first RGB}}{${3:last RGB}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

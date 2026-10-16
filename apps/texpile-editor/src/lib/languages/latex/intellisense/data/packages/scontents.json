@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"cleanseqsc","arg":{"format":"{}","snippet":"cleanseqsc{${1}}"},"doc":"The command \\cleanseqsc removes all 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"countsc","arg":{"format":"{}","snippet":"countsc{${1}}"},"doc":"User command \\countsc to count number of 〈stored contents 〉 in the sequence."},
+		{"name":"foreachsc","arg":{"format":"[]{}","snippet":"foreachsc[${1}]{${2}}"},"doc":"User command \\foreachsc to loop over 〈stored content 〉 in sequence."},
+		{"name":"foreachsc","arg":{"format":"{}","snippet":"foreachsc{${1}}"},"doc":"User command \\foreachsc to loop over 〈stored content 〉 in sequence."},
+		{"name":"getstored","arg":{"format":"[]{}","snippet":"getstored[${1}]{${2}}"},"doc":"The \\getstored command retrieves the 〈stored content 〉 according to the integer value set in 〈index 〉 which corresponds to the position of the 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"getstored","arg":{"format":"{}","snippet":"getstored{${1}}"},"doc":"The \\getstored command retrieves the 〈stored content 〉 according to the integer value set in 〈index 〉 which corresponds to the position of the 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"meaningsc","arg":{"format":"[]{}","snippet":"meaningsc[${1}]{${2}}"},"doc":"The command \\meaningsc executes \\meaning on the 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"meaningsc","arg":{"format":"{}","snippet":"meaningsc{${1}}"},"doc":"The command \\meaningsc executes \\meaning on the 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"mergesc","arg":{"format":"[]{}","snippet":"mergesc[${1}]{${2}}"},"doc":"The command \\mergesc assembles the 〈stored content 〉 in the sequences {〈seq A〉}[1], {〈seq B〉}[2-5] and {〈seq C 〉}[1-end] and then executes \\typestored (§5.6) if the typestored key is active or \\meaningsc (§5.7) if the meaningsc key is active."},
+		{"name":"mergesc","arg":{"format":"{}","snippet":"mergesc{${1}}"},"doc":"The command \\mergesc assembles the 〈stored content 〉 in the sequences {〈seq A〉}[1], {〈seq B〉}[2-5] and {〈seq C 〉}[1-end] and then executes \\typestored (§5.6) if the typestored key is active or \\meaningsc (§5.7) if the meaningsc key is active."},
+		{"name":"newenvsc","arg":{"format":"{}[]","snippet":"newenvsc{${1}}[${2}]"},"doc":"The command \\newenvsc allows you to create 〈new environments 〉 based on the same characteristics of the scontents environment."},
+		{"name":"newenvsc","arg":{"format":"{}","snippet":"newenvsc{${1}}"},"doc":"The command \\newenvsc allows you to create 〈new environments 〉 based on the same characteristics of the scontents environment."},
+		{"name":"Scontents","arg":{"format":"[]{}","snippet":"Scontents[${1}]{${2}}"},"doc":"The \\Scontents command reads the {〈argument 〉} in standard mode and “stores” it in the sequence set by the key store-cmd at the time it is executed."},
+		{"name":"Scontents","arg":{"format":"{}","snippet":"Scontents{${1}}"},"doc":"The \\Scontents command reads the {〈argument 〉} in standard mode and “stores” it in the sequence set by the key store-cmd at the time it is executed."},
+		{"name":"Scontents*","arg":{"format":"[]{}","snippet":"Scontents*[${1}]{${2}}"},"doc":"The \\Scontents command reads the {〈argument 〉} in standard mode and “stores” it in the sequence set by the key store-cmd at the time it is executed."},
+		{"name":"Scontents*","arg":{"format":"{}","snippet":"Scontents*{${1}}"},"doc":"The \\Scontents command reads the {〈argument 〉} in standard mode and “stores” it in the sequence set by the key store-cmd at the time it is executed."},
+		{"name":"ScontentsFileDate","unusual":true},
+		{"name":"ScontentsFileDescription","unusual":true},
+		{"name":"ScontentsFileVersion","unusual":true},
+		{"name":"setupsc","arg":{"format":"{}","snippet":"setupsc{${1}}"},"doc":"The command \\setupsc sets the 〈keys 〉 in a global way, it can be used both in the preamble and in the body of the document as many times as desired."},
+		{"name":"typestored","arg":{"format":"[]{}","snippet":"typestored[${1}]{${2}}"},"doc":"The command \\typestored places the 〈stored content 〉 in the sequence {〈seq name 〉} into the internally verbatimsc environment (§5.9)."},
+		{"name":"typestored","arg":{"format":"{}","snippet":"typestored{${1}}"},"doc":"The command \\typestored places the 〈stored content 〉 in the sequence {〈seq name 〉} into the internally verbatimsc environment (§5.9)."}
+	],
+	"envs": [
+		{"name":"scontents"},
+		{"name":"verbatimsc","doc":"The verbatimsc environment is, in a way, a customized version of the standard verbatim environment provided by LaTeX."}
+	],
+	"keys": {}
+}

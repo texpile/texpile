@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"gmcommand"},{"name":"gmbase"},{"name":"xparse"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"DeclareUrlCommand","arg":{"format":"{}{}","snippet":"DeclareUrlCommand{${1:command}}{${2:definition}}"}},
+		{"name":"metaat"},
+		{"name":"metadot"},
+		{"name":"urladdstar"},
+		{"name":"UrlFix"},
+		{"name":"UrlSlashKern","arg":{"format":"[]{}","snippet":"UrlSlashKern[${1:url style}]{${2:kern}}"}},
+		{"name":"UrlSlashKern","arg":{"format":"{}","snippet":"UrlSlashKern{${1:kern}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

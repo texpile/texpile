@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"liftarm","arg":{"format":"[]{}{}{}","snippet":"liftarm[${1:options}]{${2:point}}{${3:length}}{${4:angle}}"},"doc":"This command can be placed inside a tikzpicture environment. It draws a liftarm of ⟨length⟩ starting at ⟨point⟩."},
+		{"name":"liftarm","arg":{"format":"{}{}{}","snippet":"liftarm{${1:point}}{${2:length}}{${3:angle}}"},"doc":"This command can be placed inside a tikzpicture environment. It draws a liftarm of ⟨length⟩ starting at ⟨point⟩."},
+		{"name":"liftarmanimate","arg":{"format":"[]{}{}{}","snippet":"liftarmanimate[${1:options}]{${2:frame rate}}{${3:list}}{${4:command}}"},"doc":"This command shows an animation using the animateinline environment of the package animate."},
+		{"name":"liftarmanimate","arg":{"format":"{}{}{}","snippet":"liftarmanimate{${1:frame rate}}{${2:list}}{${3:command}}"},"doc":"This command shows an animation using the animateinline environment of the package animate."},
+		{"name":"liftarmconstruct","arg":{"format":"{}","snippet":"liftarmconstruct{${1:commands}}"},"doc":"This command appends ⟨commands⟩ to an internal token list."},
+		{"name":"liftarmconstructclear","doc":"This command clears the token list which is used by the command \\liftarmconstruct."}
+	],
+	"envs": [
+		{"name":"liftarmconnect","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"liftarmconnect"}
+	],
+	"keys": {}
+}

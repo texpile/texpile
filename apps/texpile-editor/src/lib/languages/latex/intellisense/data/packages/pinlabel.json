@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"dvifalse","unusual":true},
+		{"name":"dvitrue","unusual":true},
+		{"name":"endlabellist"},
+		{"name":"hair"},
+		{"name":"hyperactivelabels","unusual":true},
+		{"name":"ifdvi","unusual":true},
+		{"name":"ifoldlabels","unusual":true},
+		{"name":"labellist","doc":"opens the list of labels."},
+		{"name":"oldlabelsfalse","unusual":true},
+		{"name":"oldlabelstrue","unusual":true},
+		{"name":"pinlabel","arg":{"format":"{}[]<>","snippet":"pinlabel{${1:label}}[${2:position}]<${3:x-adj,y-adj}>"}},
+		{"name":"pinlabel","arg":{"format":"{}<>","snippet":"pinlabel{${1:label}}<${2:x-adj,y-adj}>"}},
+		{"name":"pinlabel*","arg":{"format":"{}[]<>","snippet":"pinlabel*{${1:label}}[${2:position}]<${3:x-adj,y-adj}>"}},
+		{"name":"pinlabel*","arg":{"format":"{}<>","snippet":"pinlabel*{${1:label}}<${2:x-adj,y-adj}>"}},
+		{"name":"psdraft","unusual":true},
+		{"name":"psfig","arg":{"format":"{}","snippet":"psfig{${1}}"}},
+		{"name":"psfull","unusual":true},
+		{"name":"psnoisy","unusual":true},
+		{"name":"pssilent","unusual":true},
+		{"name":"reallyincludegraphics","arg":{"format":"[]{}","snippet":"reallyincludegraphics[${1:options}]{${2:file}}"}},
+		{"name":"reallyincludegraphics","arg":{"format":"{}","snippet":"reallyincludegraphics{${1:file}}"}},
+		{"name":"reallyincludegraphics*","arg":{"format":"[]{}","snippet":"reallyincludegraphics*[${1:options}]{${2:file}}"}},
+		{"name":"reallyincludegraphics*","arg":{"format":"{}","snippet":"reallyincludegraphics*{${1:file}}"}},
+		{"name":"setlabel","arg":{"format":"<>{}{}{}{}{}","snippet":"setlabel<${1:x-adj,y-adj}>{${2:label}}{${3:x}}{${4:y}}{${5:x-pin}}{${6:y-pin}}"}},
+		{"name":"setlabel*","arg":{"format":"<>{}{}{}{}{}","snippet":"setlabel*<${1:x-adj,y-adj}>{${2:label}}{${3:x}}{${4:y}}{${5:x-pin}}{${6:y-pin}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

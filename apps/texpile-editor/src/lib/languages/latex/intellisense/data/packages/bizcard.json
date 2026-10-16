@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [
+		{"name":"bizcard","doc":"The bizcard environment will print one page of 10 biz cards."}
+	],
+	"keys": {
+		"\\usepackage/bizcard#c": ["flat","frame","none","star"]
+	},
+	"args": ["\\usepackage/bizcard#c"]
+}

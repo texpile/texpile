@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"iftex"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"infigures"},
+		{"name":"librebodoni"},
+		{"name":"sufigures"},
+		{"name":"textin","arg":{"format":"{}","snippet":"textin{${1}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

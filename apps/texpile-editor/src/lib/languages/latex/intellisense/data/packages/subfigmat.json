@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"subfigure"}],
+	"macros": [
+		{"name":"sfmcolsep"}
+	],
+	"envs": [
+		{"name":"subfigmatrix","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

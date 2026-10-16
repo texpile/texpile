@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"marginalia","arg":{"format":"[]{}","snippet":"marginalia[${1:options}]{${2:content}}"},"doc":"This is the basic command for placing marginal content."},
+		{"name":"marginalia","arg":{"format":"{}","snippet":"marginalia{${1:content}}"},"doc":"This is the basic command for placing marginal content."},
+		{"name":"marginaliacolumn"},
+		{"name":"marginalianewgeometry","doc":"The user command to signal that the page geometry has been changed."},
+		{"name":"marginaliapage"},
+		{"name":"marginaliasetup","arg":{"format":"{}","snippet":"marginaliasetup{${1:options}}"},"doc":"This command is used to set options for subsequent calls to \\marginalia."}
+	],
+	"envs": [],
+	"keys": {}
+}

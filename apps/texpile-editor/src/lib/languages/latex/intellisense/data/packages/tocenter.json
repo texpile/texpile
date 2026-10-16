@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"FromMargins","arg":{"format":"[]{}{}{}{}","snippet":"FromMargins[${1:areas}]{${2:left}}{${3:right}}{${4:top}}{${5:bottom}}"}},
+		{"name":"FromMargins","arg":{"format":"{}{}{}{}","snippet":"FromMargins{${1:left}}{${2:right}}{${3:top}}{${4:bottom}}"}},
+		{"name":"FromMargins*","arg":{"format":"[]{}{}{}{}","snippet":"FromMargins*[${1:areas}]{${2:left}}{${3:right}}{${4:top}}{${5:bottom}}"}},
+		{"name":"FromMargins*","arg":{"format":"{}{}{}{}","snippet":"FromMargins*{${1:left}}{${2:right}}{${3:top}}{${4:bottom}}"}},
+		{"name":"ToCenter","arg":{"format":"[]{}{}","snippet":"ToCenter[${1:areas}]{${2:text width}}{${3:text height}}"},"doc":"The \\ToCenter[⟨hfm⟩]{⟨text-width⟩}{⟨text-height⟩} command calculates margins in such a way to center the specified text area together with header/footer/marginals areas on a sheet of paper."},
+		{"name":"ToCenter","arg":{"format":"{}{}","snippet":"ToCenter{${1:text width}}{${2:text height}}"},"doc":"The \\ToCenter[⟨hfm⟩]{⟨text-width⟩}{⟨text-height⟩} command calculates margins in such a way to center the specified text area together with header/footer/marginals areas on a sheet of paper."},
+		{"name":"ToCenter*","arg":{"format":"[]{}{}","snippet":"ToCenter*[${1:areas}]{${2:text width}}{${3:text height}}"},"doc":"The \\ToCenter[⟨hfm⟩]{⟨text-width⟩}{⟨text-height⟩} command calculates margins in such a way to center the specified text area together with header/footer/marginals areas on a sheet of paper."},
+		{"name":"ToCenter*","arg":{"format":"{}{}","snippet":"ToCenter*{${1:text width}}{${2:text height}}"},"doc":"The \\ToCenter[⟨hfm⟩]{⟨text-width⟩}{⟨text-height⟩} command calculates margins in such a way to center the specified text area together with header/footer/marginals areas on a sheet of paper."}
+	],
+	"envs": [],
+	"keys": {}
+}

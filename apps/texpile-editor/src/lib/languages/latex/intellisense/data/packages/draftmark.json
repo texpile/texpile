@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xkeyval"},{"name":"etextools"},{"name":"etex"},{"name":"etoolbox"},{"name":"letltxmacro"},{"name":"atbegshi-ltx"},{"name":"picture"},{"name":"xcolor"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"ltxnew"},{"name":"pagerange"}],
+	"macros": [
+		{"name":"draftmarksetup","arg":{"format":"{}","snippet":"draftmarksetup{${1:key=value list}}"}},
+		{"name":"fileauthor","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"filedesc","unusual":true},
+		{"name":"filetime","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

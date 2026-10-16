@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"makesavenoteenv","arg":{"format":"[]{}","snippet":"makesavenoteenv[${1}]{${2}}"},"doc":"The \\makesavenoteenv command makes an environment save footnotes around itself."},
+		{"name":"makesavenoteenv","arg":{"format":"{}","snippet":"makesavenoteenv{${1}}"},"doc":"The \\makesavenoteenv command makes an environment save footnotes around itself."},
+		{"name":"spewnotes","doc":"If you’re defining a command or environment, you can use the \\savenotes command to start saving up footnotes, and the \\spewnotes command to execute them all at the end."}
+	],
+	"envs": [
+		{"name":"footnote","arg":{"format":"[]","snippet":"[${1:mark number}]"}},
+		{"name":"footnote"},
+		{"name":"footnotetext","arg":{"format":"[]","snippet":"[${1:mark number}]"},"doc":"To go with the footnote environment, there’s a footnotetext environment, which just puts the text in the bottom of the page, like \\footnotetext does."},
+		{"name":"footnotetext","doc":"To go with the footnote environment, there’s a footnotetext environment, which just puts the text in the bottom of the page, like \\footnotetext does."},
+		{"name":"minipage*","arg":{"format":"[][][]{}","snippet":"[${1:position}][${2:height}][${3:inner position}]{${4:width}}"}},
+		{"name":"minipage*","arg":{"format":"{}","snippet":"{${1:width}}"}},
+		{"name":"savenotes","doc":"The savenotes environment saves up any footnotes encountered within it, and performs them all at the end."}
+	],
+	"keys": {}
+}

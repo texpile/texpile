@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"class-memoir"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"iftex"},{"name":"array"},{"name":"dcolumn"},{"name":"delarray"},{"name":"tabularx"},{"name":"booktabs"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"verbatim"},{"name":"shortvrb"}],
+	"macros": [
+		{"name":"degreecompletionyear","arg":{"format":"{}","snippet":"degreecompletionyear{${1:year}}"}},
+		{"name":"degreediscipline","arg":{"format":"{}","snippet":"degreediscipline{${1:discipline}}"}},
+		{"name":"degreesought","arg":{"format":"{}","snippet":"degreesought{${1:degree}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}},
+		{"name":"thesisdedication","arg":{"format":"{}","snippet":"thesisdedication{${1:dedication text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/aucklandthesis#c": ["doublespace","examcopy","onehalfspace","partial","singlespace"]
+	},
+	"args": ["\\documentclass/aucklandthesis#c"]
+}

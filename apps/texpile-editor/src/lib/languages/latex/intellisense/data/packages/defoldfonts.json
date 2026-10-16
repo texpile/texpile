@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"sfb","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

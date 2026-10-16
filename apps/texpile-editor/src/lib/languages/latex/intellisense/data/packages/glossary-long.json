@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"longtable"}],
+	"macros": [
+		{"name":"glsdescwidth","doc":"This is a length that governs the width of the description column."},
+		{"name":"glspagelistwidth","doc":"This is a length that governs the width of the page list column."}
+	],
+	"envs": [],
+	"keys": {}
+}

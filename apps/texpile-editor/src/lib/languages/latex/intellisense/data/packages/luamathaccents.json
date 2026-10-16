@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"}],
+	"macros": [
+		{"name":"LuaMathAccentsOff"},
+		{"name":"LuaMathAccentsOn"}
+	],
+	"envs": [],
+	"keys": {}
+}

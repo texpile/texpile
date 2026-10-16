@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"class-article"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"csquotes"},{"name":"xpatch"},{"name":"xparse"},{"name":"blx-case-expl3"},{"name":"setspace"},{"name":"geometry"},{"name":"ifvtex"},{"name":"parskip","if":"!noparskip=true+!parskip=false"},{"name":"forloop"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"translations"},{"name":"tabularx"},{"name":"array"},{"name":"boxedminipage"}],
+	"macros": [
+		{"name":"configureTitlepage","arg":{"format":"{}","snippet":"configureTitlepage{${1:titlepage-info}}"}},
+		{"name":"figuresource","arg":{"format":"{}","snippet":"figuresource{${1:figure source text}}"}},
+		{"name":"maketitle","arg":{"format":"[]","snippet":"maketitle[${1:titlepage-info}]"},"doc":"The native command \\maketitle is redefined to create the title page according to the template in the guidelines."},
+		{"name":"maketitle","doc":"The native command \\maketitle is redefined to create the title page according to the template in the guidelines."},
+		{"name":"printbibliographies","arg":{"format":"[]","snippet":"printbibliographies[${1:options}]"}},
+		{"name":"printbibliographies"},
+		{"name":"printfiguresources","arg":{"format":"[]","snippet":"printfiguresources[${1:options}]"}},
+		{"name":"printfiguresources"},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

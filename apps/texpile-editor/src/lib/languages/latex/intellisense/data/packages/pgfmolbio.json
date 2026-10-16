@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"luatexbase-modutils","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"adddisulfidefeatures","arg":{"format":"{}","snippet":"adddisulfidefeatures{${1:key list}}"},"doc":"Adds the ⟨features⟩ to the list of disulfide-like features without overwriting the current list."},
+		{"name":"addfeature","arg":{"format":"[]{}{}{}","snippet":"addfeature[${1:key-value list}]{${2:type}}{${3:start}}{${4:stop}}","keys":["pgfkeys:/pgfmolbio"],"keyPos":0},"doc":"Adds a feature of the given ⟨type⟩ to the current domain diagram (only defined inside pmbdomains)."},
+		{"name":"addfeature","arg":{"format":"{}{}{}","snippet":"addfeature{${1:type}}{${2:start}}{${3:stop}}"},"doc":"Adds a feature of the given ⟨type⟩ to the current domain diagram (only defined inside pmbdomains)."},
+		{"name":"inputgff","arg":{"format":"{}","snippet":"inputgff{${1:gff file}}"}},
+		{"name":"inputuniprot","arg":{"format":"{}","snippet":"inputuniprot{${1:Uniprot file}}"}},
+		{"name":"pgfmolbioset","arg":{"format":"[]{}","snippet":"pgfmolbioset[${1}]{${2}}","keys":["pgfkeys:/pgfmolbio"],"keyPos":1},"doc":"Fine-tunes the graphs produced by each pgfmolbio module."},
+		{"name":"pgfmolbioset","arg":{"format":"{}","snippet":"pgfmolbioset{${1}}","keys":["pgfkeys:/pgfmolbio"],"keyPos":0},"doc":"Fine-tunes the graphs produced by each pgfmolbio module."},
+		{"name":"pmbchromatogram","arg":{"format":"[]{}","snippet":"pmbchromatogram[${1:key-value list}]{${2:scf file}}","keys":["pgfkeys:/pgfmolbio"],"keyPos":0}},
+		{"name":"pmbchromatogram","arg":{"format":"{}","snippet":"pmbchromatogram{${1:scf file}}"}},
+		{"name":"pmbdomdrawfeature","arg":{"format":"{}","snippet":"pmbdomdrawfeature{${1:type}}"},"if":"domains"},
+		{"name":"pmbdomvalueof","arg":{"format":"{}","snippet":"pmbdomvalueof{${1:key}}"},"if":"domains","doc":"\\pmbdomvalueof retrieves the value of a ⟨key⟩ in path /pgfmolbio/domains."},
+		{"name":"pmbprotocolsizes","arg":{"format":"{}{}","snippet":"pmbprotocolsizes{${1}}{${2}}"}},
+		{"name":"removedisulfidefeatures","arg":{"format":"{}","snippet":"removedisulfidefeatures{${1:key list}}"},"doc":"Removes the ⟨features⟩ from the list of disulfide-like features."},
+		{"name":"removefeatureprintfunction","arg":{"format":"{}","snippet":"removefeatureprintfunction{${1:key list}}"},"doc":"Removes any feature print function from the features in the ⟨list⟩."},
+		{"name":"setdisulfidefeatures","arg":{"format":"{}","snippet":"setdisulfidefeatures{${1:key list}}"},"doc":"Clears the list of disulfide-like features and adds the ⟨features⟩ to the empty list."},
+		{"name":"setfeaturealias","arg":{"format":"{}{}","snippet":"setfeaturealias{${1:new type}}{${2:existing type}}"},"if":"domains","doc":"This is a shorthand for calling both \\setfeatureshape and \\setfeaturestyle."},
+		{"name":"setfeatureprintfunction","arg":{"format":"{}{}","snippet":"setfeatureprintfunction{${1:key list}}{${2:Lua function}}"},"doc":"Assigns a feature print ⟨function⟩ to each feature in the ⟨list⟩."},
+		{"name":"setfeatureshape","arg":{"format":"{}{}","snippet":"setfeatureshape{${1:type}}{${2:TikZ code}}"},"if":"domains","doc":"Defines a new feature shape named ⟨type⟩ or changes an existing one."},
+		{"name":"setfeatureshapealias","arg":{"format":"{}{}","snippet":"setfeatureshapealias{${1:new type}}{${2:existing type}}"},"if":"domains","doc":"Links a new shape to an existing one."},
+		{"name":"setfeaturestyle","arg":{"format":"{}{}","snippet":"setfeaturestyle{${1:type}}{${2:style list}}"}},
+		{"name":"setfeaturestylealias","arg":{"format":"{}{}","snippet":"setfeaturestylealias{${1:new type}}{${2:existing type}}"}}
+	],
+	"envs": [
+		{"name":"pmbdomains","arg":{"format":"[]{}","snippet":"[${1:key-value list}]{${2:sequence length}}","keys":["pgfkeys:/pgfmolbio"],"keyPos":0},"doc":"Draws a domain diagram with the ⟨features⟩ given."},
+		{"name":"pmbdomains","arg":{"format":"{}","snippet":"{${1:sequence length}}"},"doc":"Draws a domain diagram with the ⟨features⟩ given."}
+	],
+	"keys": {
+		"pgfkeys:/pgfmolbio": ["coordinate format string=","coordinate unit=","sample range=","x unit=","y unit=","samples per line=","baseline skip=","canvas style=","canvas height=","trace A style=","trace C style=","trace G style=","trace T style=","trace style=","traces drawn=","tick A style=","tick C style=","tick G style=","tick T style=","tick style=","tick length=","ticks drawn=","base label A text=","base label C text=","base label G text=","base label T text=","base label A style=","base label C style=","base label G style=","base label T style=","base label style=","base labels drawn=","show base numbers=${1|true,false|}","base number style=","base number range=","probabilities drawn=","probability distance=","probability style function=","bases drawn=","name=","description=","show name=${1|true,false|}","residues per line=","residue numbering=","residue range=","enlarge left=","enlarge right=","enlarge top=","enlarge bottom=","style=","domain font=","level=","disulfide base distance=","disulfide level distance=","range font=","show ruler=${1|true,false|}","ruler range=","default ruler step size=","ruler distance=","sequence=","magnified sequence font=","show secondary structure=${1|true,false|}","secondary structure distance=","helix back border color=","helix back main color=","helix back middle color=","helix front border color=","helix front main color=","helix front middle color=","sequence length=","output file name=","output file extension=","output code=${1|tikz,pgfmolbio|}","include description=${1|true,false|}"],
+		"\\usepackage/pgfmolbio#c": ["chromatogram","convert","domains"]
+	},
+	"args": ["\\usepackage/pgfmolbio#c"]
+}

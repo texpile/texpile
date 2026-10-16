@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"multicol"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"dot2texi"},{"name":"moreverb"},{"name":"verbatim"},{"name":"xkeyval"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"ulQda","unusual":true},
+		{"name":"ulqdaClearSectFilter","doc":"\\ulqdaClearSectFilter clears a section filter establihed by \\ulqdaSetSectFilter so that a subsequent \\ulqdaGraph or a \\ulqdaTable macro will process all sections from the CSV file."},
+		{"name":"ulqdaCloud","doc":"\\ulqdaCloud is a macro which invokes processing of the generated CSV file to create a LaTeX cloud (see table 2)."},
+		{"name":"ulqdaCode","arg":{"format":"{}{}","snippet":"ulqdaCode{${1}}{${2}}"},"doc":"\\ulqdaCode is used to assign a code a particular sentence or passage of text."},
+		{"name":"ulqdaGraph","arg":{"format":"{}{}","snippet":"ulqdaGraph{${1}}{${2}}"},"doc":"\\ulqdaGraph is a macro which invokes processing of the generated CSV file to allow the visualisation of a coded ontology as a GraphViz diagram."},
+		{"name":"ulqdaHighlight","arg":{"format":"{}{}","snippet":"ulqdaHighlight{${1}}{${2}}"},"doc":"\\ulqdaHighlight is used to format coded text for typesetting purposes."},
+		{"name":"ulqdaSetSectFilter","arg":{"format":"{}","snippet":"ulqdaSetSectFilter{${1}}"},"doc":"\\ulqdaSetSectFilter establishes a filter for the next \\ulqdaGraph or \\ulqdaTable macro."},
+		{"name":"ulqdaTable"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ulqda#c": ["MiKTeX","active","cache","counts","debug","nocache","noshell","shell"]
+	},
+	"args": ["\\usepackage/ulqda#c"]
+}

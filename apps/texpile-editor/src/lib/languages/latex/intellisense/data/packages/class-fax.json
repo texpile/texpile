@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"class-artikel3"}],
+	"macros": [
+		{"name":"bsf"},
+		{"name":"faxtopsep"},
+		{"name":"from","arg":{"format":"{}","snippet":"from{${1:from box}}"},"doc":"Specifies what you want in the ‘from’ box."},
+		{"name":"mymsg","arg":{"format":"{}","snippet":"mymsg{${1:header}}"}},
+		{"name":"note","arg":{"format":"{}","snippet":"note{${1:note}}"}},
+		{"name":"slsf"},
+		{"name":"thefaxpages","unusual":true},
+		{"name":"to","arg":{"format":"{}","snippet":"to{${1:to box}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

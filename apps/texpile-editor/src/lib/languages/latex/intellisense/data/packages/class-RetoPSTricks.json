@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"class-standalone"},{"name":"shellesc"},{"name":"ifluatex"},{"name":"iftex"},{"name":"xkeyval"},{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"tocbasic"},{"name":"typearea"},{"name":"auto-pst-pdf"},{"name":"ifpdf"},{"name":"ifplatform"},{"name":"pdftexcmds"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"pst-pdf"},{"name":"ifxetex"},{"name":"ifvtex"},{"name":"luatex85","engines":["pdflatex","lualatex"]},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pstricks"},{"name":"xcolor"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"preview","engines":["pdflatex","lualatex"]},{"name":"environ","engines":["pdflatex","lualatex"]},{"name":"pst-eucl"},{"name":"pst-node"},{"name":"pst-tools"},{"name":"pst-calculate"},{"name":"xparse"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"amstext"},{"name":"array"},{"name":"pstricks-add"},{"name":"pst-plot"},{"name":"pst-xkey"},{"name":"multido"},{"name":"pst-3d"},{"name":"pst-math"},{"name":"xstring"},{"name":"mathpazo"}],
+	"macros": [
+		{"name":"pstBarycenter","arg":{"format":"{}{}{}{}","snippet":"pstBarycenter{${1:A}}{${2:B}}{${3:C}}{${4:barycenter name}}"}},
+		{"name":"pstcenter","arg":{"format":"{}{}{}{}{}","snippet":"pstcenter{${1:A}}{${2:B}}{${3:C}}{${4:D}}{${5:center name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

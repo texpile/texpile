@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"checkoddpage"},
+		{"name":"ifoddpage","unusual":true},
+		{"name":"ifoddpageoroneside","unusual":true},
+		{"name":"oddpagefalse","unusual":true},
+		{"name":"oddpageoronesidefalse","unusual":true},
+		{"name":"oddpageoronesidetrue","unusual":true},
+		{"name":"oddpagetrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

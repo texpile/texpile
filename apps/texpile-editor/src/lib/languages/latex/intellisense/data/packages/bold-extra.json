@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bold-extra#c": ["cmbtt","cmttb"]
+	},
+	"args": ["\\usepackage/bold-extra#c"]
+}

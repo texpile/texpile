@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"xparse"},{"name":"calc"}],
+	"macros": [
+		{"name":"eqexplSetDelim","arg":{"format":"{}","snippet":"eqexplSetDelim{${1:delimiter}}"}},
+		{"name":"eqexplSetIntro","arg":{"format":"{}","snippet":"eqexplSetIntro{${1:intro text}}"}},
+		{"name":"eqexplSetItemAlign","arg":{"format":"{}","snippet":"eqexplSetItemAlign{${1:l|c|r}}"}},
+		{"name":"eqexplSetItemWidth","arg":{"format":"{}","snippet":"eqexplSetItemWidth{${1:width}}"}},
+		{"name":"eqexplSetSpace","arg":{"format":"{}","snippet":"eqexplSetSpace{${1:width}}"}}
+	],
+	"envs": [
+		{"name":"eqexpl","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"eqexpl"}
+	],
+	"keys": {}
+}

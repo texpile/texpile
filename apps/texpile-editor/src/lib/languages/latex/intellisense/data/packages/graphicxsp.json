@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"eso-pic"},{"name":"xcolor"},{"name":"verbatim"}],
+	"macros": [
+		{"name":"AddToEmbeddedEPSs","arg":{"format":"{}","snippet":"AddToEmbeddedEPSs{${1:code}}"},"unusual":true},
+		{"name":"bboxOf","arg":{"format":"{}","snippet":"bboxOf{${1:name}}"}},
+		{"name":"csOf","arg":{"format":"{}","snippet":"csOf{${1:name}}"},"doc":"Use \\csOf to expand a name."},
+		{"name":"embedEPS","arg":{"format":"[]{}{}","snippet":"embedEPS[${1:key-values}]{${2:name}}{${3:path}}"},"doc":"The \\embedEPS command is designed for graphics that are in an exterior EPS file."},
+		{"name":"embedEPS","arg":{"format":"{}{}","snippet":"embedEPS{${1:name}}{${2:path}}"},"doc":"The \\embedEPS command is designed for graphics that are in an exterior EPS file."},
+		{"name":"heightOf","arg":{"format":"{}","snippet":"heightOf{${1:name}}"}},
+		{"name":"ifpreview","unusual":true},
+		{"name":"insertEPS","arg":{"format":"[]{}","snippet":"insertEPS[${1:key-values}]{${2:name}}"}},
+		{"name":"insertEPS","arg":{"format":"{}","snippet":"insertEPS{${1:name}}"}},
+		{"name":"insertEPS*","arg":{"format":"[]{}","snippet":"insertEPS*[${1:key-values}]{${2:name}}"}},
+		{"name":"insertEPS*","arg":{"format":"{}","snippet":"insertEPS*{${1:name}}"}},
+		{"name":"llxOf","arg":{"format":"{}","snippet":"llxOf{${1:name}}"}},
+		{"name":"llyOf","arg":{"format":"{}","snippet":"llyOf{${1:name}}"}},
+		{"name":"previewfalse"},
+		{"name":"previewOff","unusual":true},
+		{"name":"previewOn","unusual":true},
+		{"name":"previewtrue"},
+		{"name":"setSMask","arg":{"format":"[]{}","snippet":"setSMask[${1:key-values}]{${2:name}}"},"doc":"Use \\setSMask to set a soft mask."},
+		{"name":"setSMask","arg":{"format":"{}","snippet":"setSMask{${1:name}}"},"doc":"Use \\setSMask to set a soft mask."},
+		{"name":"urxOf","arg":{"format":"{}","snippet":"urxOf{${1:name}}"}},
+		{"name":"uryOf","arg":{"format":"{}","snippet":"uryOf{${1:name}}"}},
+		{"name":"widthOf","arg":{"format":"{}","snippet":"widthOf{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"createImage","arg":{"format":"[]{}{}","snippet":"[${1}]{${2}}{${3}}"},"doc":"The createImage environment defines a command \\⟨name⟩ that expands to ⟨name⟩."},
+		{"name":"createImage","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"doc":"The createImage environment defines a command \\⟨name⟩ that expands to ⟨name⟩."}
+	],
+	"keys": {}
+}

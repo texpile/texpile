@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"xeCJKfntef"},{"name":"xeCJK"},{"name":"ulem"},{"name":"accsupp"},{"name":"pdfescape"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"amstext"},{"name":"array"},{"name":"bm"},{"name":"mathrsfs"},{"name":"xcolor"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"algorithm2e"},{"name":"ifoddpage"},{"name":"xspace"},{"name":"relsize"},{"name":"listings"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"AlgoBiCaption","arg":{"format":"{}{}","snippet":"AlgoBiCaption{${1}}{${2}}"}},
+		{"name":"algoenname","unusual":true},
+		{"name":"cmd","arg":{"format":"{}","snippet":"cmd{${1}}"},"unusual":true},
+		{"name":"cs","arg":{"format":"{}","snippet":"cs{${1}}"}},
+		{"name":"gscna","unusual":true},
+		{"name":"gscnas","unusual":true},
+		{"name":"gtssbp","unusual":true},
+		{"name":"ncell","arg":{"format":"{}{}","snippet":"ncell{${1}}{${2}}"},"unusual":true},
+		{"name":"rcell","arg":{"format":"{}{}","snippet":"rcell{${1}}{${2}}"},"unusual":true},
+		{"name":"tcellfive","arg":{"format":"{}{}","snippet":"tcellfive{${1}}{${2}}"},"unusual":true},
+		{"name":"tcellfour","arg":{"format":"{}{}","snippet":"tcellfour{${1}}{${2}}"},"unusual":true},
+		{"name":"tcellone","arg":{"format":"{}{}","snippet":"tcellone{${1}}{${2}}"},"unusual":true},
+		{"name":"tcellthree","arg":{"format":"{}{}","snippet":"tcellthree{${1}}{${2}}"},"unusual":true},
+		{"name":"tcelltwo","arg":{"format":"{}{}","snippet":"tcelltwo{${1}}{${2}}"},"unusual":true},
+		{"name":"thealgoen","unusual":true},
+		{"name":"theDirected","arg":{"format":"{}","snippet":"theDirected{${1}}"},"unusual":true},
+		{"name":"theDirectedEdge","arg":{"format":"{}{}","snippet":"theDirectedEdge{${1}}{${2}}"},"unusual":true},
+		{"name":"theMatrix","arg":{"format":"{}","snippet":"theMatrix{${1}}"},"unusual":true},
+		{"name":"theNetwork","arg":{"format":"{}","snippet":"theNetwork{${1}}"},"unusual":true},
+		{"name":"theNode","arg":{"format":"{}","snippet":"theNode{${1}}"},"unusual":true},
+		{"name":"theSet","arg":{"format":"{}","snippet":"theSet{${1}}"},"unusual":true},
+		{"name":"theUndirected","arg":{"format":"{}","snippet":"theUndirected{${1}}"},"unusual":true},
+		{"name":"theUndirectedEdge","arg":{"format":"{}{}","snippet":"theUndirectedEdge{${1}}{${2}}"},"unusual":true},
+		{"name":"theVector","arg":{"format":"{}","snippet":"theVector{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

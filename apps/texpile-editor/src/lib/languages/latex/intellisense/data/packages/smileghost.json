@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"pict2e"},{"name":"trig"}],
+	"macros": [
+		{"name":"smileghost"}
+	],
+	"envs": [],
+	"keys": {}
+}

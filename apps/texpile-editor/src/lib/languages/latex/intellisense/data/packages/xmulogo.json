@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xparse"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"xmulogo","arg":{"format":"[]{}","snippet":"xmulogo[${1:scale}]{${2:r,g,b}}"}},
+		{"name":"xmulogo","arg":{"format":"{}","snippet":"xmulogo{${1:r,g,b}}"}},
+		{"name":"xmulogon","arg":{"format":"[]{}","snippet":"xmulogon[${1:scale}]{${2:r,g,b}}"}},
+		{"name":"xmulogon","arg":{"format":"{}","snippet":"xmulogon{${1:r,g,b}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"luatex-cn-core-base"},{"name":"luatexbase"},{"name":"enumitem"}],
+	"macros": [
+		{"name":"chapter","arg":{"format":"[]{}","snippet":"chapter[${1:banxin title}]{${2:title}}"}},
+		{"name":"chapter","arg":{"format":"{}","snippet":"chapter{${1:title}}"}},
+		{"name":"chapter*","arg":{"format":"[]{}","snippet":"chapter*[${1:banxin title}]{${2:title}}"}},
+		{"name":"chapter*","arg":{"format":"{}","snippet":"chapter*{${1:title}}"}},
+		{"name":"section","arg":{"format":"{}","snippet":"section{${1:title}}"}},
+		{"name":"section*","arg":{"format":"{}","snippet":"section*{${1:title}}"}},
+		{"name":"sectionSetup","arg":{"format":"{}","snippet":"sectionSetup{${1:options}}"}},
+		{"name":"subsection","arg":{"format":"{}","snippet":"subsection{${1:title}}"}},
+		{"name":"subsection*","arg":{"format":"{}","snippet":"subsection*{${1:title}}"}},
+		{"name":"卷","arg":{"format":"[]{}","snippet":"卷[${1}]{${2}}"}},
+		{"name":"卷","arg":{"format":"{}","snippet":"卷{${1}}"}},
+		{"name":"卷*","arg":{"format":"[]{}","snippet":"卷*[${1}]{${2}}"}},
+		{"name":"卷*","arg":{"format":"{}","snippet":"卷*{${1}}"}},
+		{"name":"标题设置","arg":{"format":"{}","snippet":"标题设置{${1}}"}},
+		{"name":"標題設置","arg":{"format":"{}","snippet":"標題設置{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

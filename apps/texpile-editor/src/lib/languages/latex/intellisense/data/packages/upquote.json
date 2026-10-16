@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"textcomp","engines":["lualatex","xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

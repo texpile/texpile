@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"liningnums","arg":{"format":"{}","snippet":"liningnums{${1:text}}"}},
+		{"name":"oldstylenums","arg":{"format":"{}","snippet":"oldstylenums{${1:text}}"}},
+		{"name":"overlock"},
+		{"name":"overlockBlack"},
+		{"name":"overlockfamily","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

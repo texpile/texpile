@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"greekdelims","unusual":true},
+		{"name":"greekfalse","unusual":true},
+		{"name":"greeknames","unusual":true},
+		{"name":"greektrue","unusual":true},
+		{"name":"ifgreek","unusual":true}
+	],
+	"envs": [
+		{"name":"greek"}
+	],
+	"keys": {
+		"\\usepackage/lgreek#c": ["allgreek","delims"]
+	},
+	"args": ["\\usepackage/lgreek#c"]
+}

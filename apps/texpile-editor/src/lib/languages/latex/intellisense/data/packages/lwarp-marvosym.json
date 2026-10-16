@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"mvchr","arg":{"format":"{}","snippet":"mvchr{${1:character code}}"}},
+		{"name":"textmvs","arg":{"format":"{}","snippet":"textmvs{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

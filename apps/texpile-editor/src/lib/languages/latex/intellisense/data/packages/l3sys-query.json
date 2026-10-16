@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"QueryFiles","arg":{"format":"[]{}{}","snippet":"QueryFiles[${1:options}]{${2:spec}}{${3:function}}"}},
+		{"name":"QueryFiles","arg":{"format":"{}{}","snippet":"QueryFiles{${1:spec}}{${2:function}}"}},
+		{"name":"QueryFilesTF","arg":{"format":"[]{}{}{}{}","snippet":"QueryFilesTF[${1:options}]{${2:spec}}{${3:function}}{${4:pre code}}{${5:empty list code}}"}},
+		{"name":"QueryFilesTF","arg":{"format":"{}{}{}{}","snippet":"QueryFilesTF{${1:spec}}{${2:function}}{${3:pre code}}{${4:empty list code}}"}},
+		{"name":"QueryWorkingDirectory","arg":{"format":"{}","snippet":"QueryWorkingDirectory{${1:result cmd}}"},"doc":"Defines supplied command ⟨result cmd⟩ to hold the absolute path to the current working directory of the TeX system."}
+	],
+	"envs": [],
+	"keys": {}
+}

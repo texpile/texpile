@@ -1,0 +1,38 @@
+{
+	"deps": [{"name":"class-ctexart"},{"name":"class-article"},{"name":"CJKutf8","engines":["pdflatex"]},{"name":"ifpdf","engines":["pdflatex"]},{"name":"iftex"},{"name":"inputenc","engines":["pdflatex"]},{"name":"CJK","engines":["pdflatex"]},{"name":"MULEenc","engines":["pdflatex"]},{"name":"CJKpunct","engines":["pdflatex"]},{"name":"CJKspace","engines":["pdflatex"]},{"name":"zhnumber"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsthm"},{"name":"graphicx"},{"name":"keyval","engines":["pdflatex"]},{"name":"graphics"},{"name":"trig"},{"name":"enumitem"},{"name":"fancyhdr"},{"name":"etoolbox"},{"name":"geometry"},{"name":"ifvtex"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"zref-savepos"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"ulem"},{"name":"hyperref","if":"simple"},{"name":"pdfescape","if":"simple"},{"name":"nameref","if":"simple"},{"name":"refcount","if":"simple"},{"name":"gettitlestring","if":"simple"},{"name":"kvoptions","if":"simple"},{"name":"stringenc","if":"simple"},{"name":"intcalc","if":"simple"},{"name":"url","if":"simple"},{"name":"bitset","if":"simple"},{"name":"bigintcalc","if":"simple"},{"name":"rerunfilecheck","if":"simple"},{"name":"uniquecounter","if":"simple"},{"name":"luatexja","engines":["lualatex"]},{"name":"luatexja-core","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"xkeyval","engines":["lualatex"]},{"name":"everyhook","engines":["lualatex"]},{"name":"svn-prov","engines":["lualatex"]},{"name":"luatexja-compat","engines":["lualatex"]},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"BiaoTi","arg":{"format":"{}","snippet":"BiaoTi{${1:title}}"}},
+		{"name":"fillblank","arg":{"format":"[][]{}","snippet":"fillblank[${1:length}][${2:minimum height}]{${3:content}}"}},
+		{"name":"fillblank","arg":{"format":"{}","snippet":"fillblank{${1:content}}"}},
+		{"name":"hfutFontHead","unusual":true},
+		{"name":"hfutFontTitle","unusual":true},
+		{"name":"hfutstretch"},
+		{"name":"indent","doc":"文档默认无缩进, 可在需要处使用命令 \\indent 得到缩进."},
+		{"name":"KaoShiRiQi","arg":{"format":"{}","snippet":"KaoShiRiQi{${1}}"}},
+		{"name":"KaoShiXingShi","arg":{"format":"{}","snippet":"KaoShiXingShi{${1}}"}},
+		{"name":"KeChengDaiMa","arg":{"format":"{}","snippet":"KeChengDaiMa{${1}}"}},
+		{"name":"KeChengMingCheng","arg":{"format":"{}","snippet":"KeChengMingCheng{${1}}"}},
+		{"name":"KeChengXingZhi","arg":{"format":"{}","snippet":"KeChengXingZhi{${1}}"}},
+		{"name":"maketitle"},
+		{"name":"MingTiJiaoShi","arg":{"format":"{}","snippet":"MingTiJiaoShi{${1}}"}},
+		{"name":"notice"},
+		{"name":"score","arg":{"format":"{}","snippet":"score{${1:points}}"}},
+		{"name":"Score","arg":{"format":"{}","snippet":"Score{${1:score note}}"}},
+		{"name":"scorebox"},
+		{"name":"tigan","arg":{"format":"{}","snippet":"tigan{${1:question heading}}"},"doc":"用于生成题干, 为 14pt 黑体. 小题可用 enumerate 环境来生成. 如觉格式不妥也可不用该命令而使用\\textbf{}, 或任意自行设置."},
+		{"name":"XiZhuRenQianMing","arg":{"format":"[]{}","snippet":"XiZhuRenQianMing[${1:image width}]{${2:image file}}"}},
+		{"name":"XiZhuRenQianMing","arg":{"format":"{}","snippet":"XiZhuRenQianMing{${1:image file}}"}},
+		{"name":"xuanzeti","arg":{"format":"{}{}","snippet":"xuanzeti{${1:question number}}{${2:answer}}"}},
+		{"name":"XueFen","arg":{"format":"{}","snippet":"XueFen{${1}}"}},
+		{"name":"XueNian","arg":{"format":"{}{}","snippet":"XueNian{${1:start year}}{${2:end year}}"}},
+		{"name":"XueQi","arg":{"format":"{}","snippet":"XueQi{${1}}"}},
+		{"name":"xx","arg":{"format":"[]{}{}{}{}","snippet":"xx[${1:items per row}]{${2:option A}}{${3:option B}}{${4:option C}}{${5:option D}}"}},
+		{"name":"xx","arg":{"format":"{}{}{}{}","snippet":"xx{${1:option A}}{${2:option B}}{${3:option C}}{${4:option D}}"}},
+		{"name":"ZhuanYeBanJi","arg":{"format":"{}","snippet":"ZhuanYeBanJi{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/hfutexam#c": ["cankaodaan","datizhi","nofangzheng","nosign","simple"]
+	},
+	"args": ["\\documentclass/hfutexam#c"]
+}

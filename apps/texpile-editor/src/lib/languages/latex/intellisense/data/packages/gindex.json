@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"addindexheading","arg":{"format":"{}","snippet":"addindexheading{${1}}"},"unusual":true},
+		{"name":"addindexitem","arg":{"format":"{}{}","snippet":"addindexitem{${1}}{${2}}"},"unusual":true},
+		{"name":"addindexskip","arg":{"format":"{}","snippet":"addindexskip{${1}}"},"unusual":true},
+		{"name":"addindexsubitem","arg":{"format":"{}{}","snippet":"addindexsubitem{${1}}{${2}}"},"unusual":true},
+		{"name":"addindexsubsubitem","arg":{"format":"{}{}","snippet":"addindexsubsubitem{${1}}{${2}}"},"unusual":true},
+		{"name":"indexheading","arg":{"format":"{}","snippet":"indexheading{${1:heading}}"}},
+		{"name":"indexitem","arg":{"format":"{}{}","snippet":"indexitem{${1:entry}}{${2:locator}}"}},
+		{"name":"indexitemhang","arg":{"format":"{}{}{}{}{}{}","snippet":"indexitemhang{${1:first line margin}}{${2:hanging margin}}{${3:no-locator text}}{${4:separator}}{${5:entry}}{${6:locator}}"}},
+		{"name":"indexnoitem","arg":{"format":"{}{}","snippet":"indexnoitem{${1}}{${2}}"}},
+		{"name":"indexpagessep"},
+		{"name":"indexpostamble"},
+		{"name":"indexpreamble"},
+		{"name":"indexrangesep"},
+		{"name":"indexskip","arg":{"format":"{}","snippet":"indexskip{${1}}"}},
+		{"name":"indexspecial","doc":"If an item starts with \\indexspecial, what follows replaces the current item."},
+		{"name":"indexsubitem","arg":{"format":"{}{}","snippet":"indexsubitem{${1:entry}}{${2:locator}}"}},
+		{"name":"indexsubsubitem","arg":{"format":"{}{}","snippet":"indexsubsubitem{${1:entry}}{${2:locator}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

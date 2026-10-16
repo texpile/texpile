@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"defaulthfntprefix","unusual":true},
+		{"name":"SelectHfonts","arg":{"format":"{}{}","snippet":"SelectHfonts{${1:hangul fonts}}{${2:hanja fonts}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hfontsel#c": ["hfontspec","ps","unttf"]
+	},
+	"args": ["\\usepackage/hfontsel#c"]
+}

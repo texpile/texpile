@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/concmath#c": ["amsfonts","amssymb","boldsans","exscale"]
+	},
+	"args": ["\\usepackage/concmath#c"]
+}

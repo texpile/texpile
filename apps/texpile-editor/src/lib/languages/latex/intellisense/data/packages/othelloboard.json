@@ -1,0 +1,38 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pict2e"},{"name":"ifthen"},{"name":"color"},{"name":"xstring"},{"name":"stringstrings"}],
+	"macros": [
+		{"name":"annotationseighthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationseighthrow{${1:a8}}{${2:b8}}{${3:c8}}{${4:d8}}{${5:e8}}{${6:f8}}{${7:g8}}{${8:h8}}"}},
+		{"name":"annotationsfifthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationsfifthrow{${1:a5}}{${2:b5}}{${3:c5}}{${4:d5}}{${5:e5}}{${6:f5}}{${7:g5}}{${8:h5}}"},"doc":"The command simply prints the value of each argument, centred at the corresponding square."},
+		{"name":"annotationsfirstrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationsfirstrow{${1:a1}}{${2:b1}}{${3:c1}}{${4:d1}}{${5:e1}}{${6:f1}}{${7:g1}}{${8:h1}}"}},
+		{"name":"annotationsfourthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationsfourthrow{${1:a4}}{${2:b4}}{${3:c4}}{${4:d4}}{${5:e4}}{${6:f4}}{${7:g4}}{${8:h4}}"}},
+		{"name":"annotationssecondrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationssecondrow{${1:a2}}{${2:b2}}{${3:c2}}{${4:d2}}{${5:e2}}{${6:f2}}{${7:g2}}{${8:h2}}"}},
+		{"name":"annotationsseventhrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationsseventhrow{${1:a7}}{${2:b7}}{${3:c7}}{${4:d7}}{${5:e7}}{${6:f7}}{${7:g7}}{${8:h7}}"}},
+		{"name":"annotationssixthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationssixthrow{${1:a6}}{${2:b6}}{${3:c6}}{${4:d6}}{${5:e6}}{${6:f6}}{${7:g6}}{${8:h6}}"}},
+		{"name":"annotationsthirdrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"annotationsthirdrow{${1:a3}}{${2:b3}}{${3:c3}}{${4:d3}}{${5:e3}}{${6:f3}}{${7:g3}}{${8:h3}}"}},
+		{"name":"blackdiamond"},
+		{"name":"blackdisc"},
+		{"name":"countblackdiscs"},
+		{"name":"countwhitediscs"},
+		{"name":"dotmarkings","doc":"\\dotmarkings produces the tiny marker dots on the inside corners of the X-squares."},
+		{"name":"drawboardfromstring","arg":{"format":"{}","snippet":"drawboardfromstring{${1:long string}}"}},
+		{"name":"drawtranscript","arg":{"format":"{}","snippet":"drawtranscript{${1:long string}}"}},
+		{"name":"gridrefs","unusual":true},
+		{"name":"othelloarrayeighthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarrayeighthrow{${1:a8}}{${2:b8}}{${3:c8}}{${4:d8}}{${5:e8}}{${6:f8}}{${7:g8}}{${8:h8}}"}},
+		{"name":"othelloarrayfifthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarrayfifthrow{${1:a5}}{${2:b5}}{${3:c5}}{${4:d5}}{${5:e5}}{${6:f5}}{${7:g5}}{${8:h5}}"}},
+		{"name":"othelloarrayfirstrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarrayfirstrow{${1:a1}}{${2:b1}}{${3:c1}}{${4:d1}}{${5:e1}}{${6:f1}}{${7:g1}}{${8:h1}}"}},
+		{"name":"othelloarrayfourthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarrayfourthrow{${1:a4}}{${2:b4}}{${3:c4}}{${4:d4}}{${5:e4}}{${6:f4}}{${7:g4}}{${8:h4}}"}},
+		{"name":"othelloarraysecondrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarraysecondrow{${1:a2}}{${2:b2}}{${3:c2}}{${4:d2}}{${5:e2}}{${6:f2}}{${7:g2}}{${8:h2}}"}},
+		{"name":"othelloarrayseventhrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarrayseventhrow{${1:a7}}{${2:b7}}{${3:c7}}{${4:d7}}{${5:e7}}{${6:f7}}{${7:g7}}{${8:h7}}"}},
+		{"name":"othelloarraysixthrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarraysixthrow{${1:a6}}{${2:b6}}{${3:c6}}{${4:d6}}{${5:e6}}{${6:f6}}{${7:g6}}{${8:h6}}"}},
+		{"name":"othelloarraythirdrow","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"othelloarraythirdrow{${1:a3}}{${2:b3}}{${3:c3}}{${4:d3}}{${5:e3}}{${6:f3}}{${7:g3}}{${8:h3}}"}},
+		{"name":"othellogrid","unusual":true},
+		{"name":"posannotation","arg":{"format":"{}{}","snippet":"posannotation{${1:square name}}{${2:annotation string}}"}},
+		{"name":"whitediamond"},
+		{"name":"whitedisc"}
+	],
+	"envs": [
+		{"name":"othelloboard","arg":{"format":"{}","snippet":"{${1:size}}"}},
+		{"name":"othelloboardnorefs","arg":{"format":"{}","snippet":"{${1:size}}"},"doc":"If you don’t want grid reference labels along the top and left edges, you can use the othelloboardnorefs environment instead of the othelloboard environment."}
+	],
+	"keys": {}
+}

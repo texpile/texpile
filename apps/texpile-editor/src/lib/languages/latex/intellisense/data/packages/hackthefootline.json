@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"pgfkeys"},{"name":"etoolbox"},{"name":"calc"},{"name":"numprint"},{"name":"array"}],
+	"macros": [
+		{"name":"hackthefootline","unusual":true},
+		{"name":"htfauthinst","unusual":true},
+		{"name":"htfauthorpths","unusual":true},
+		{"name":"htfcolonsep","unusual":true},
+		{"name":"htfcommasep","unusual":true},
+		{"name":"htfconfig","arg":{"format":"{}","snippet":"htfconfig{${1}}","keys":["pgfkeys:/hackthefootline"],"keyPos":0},"doc":"Use \\htfconfig{key1=value1, key2=value2, ...} to modify the current configuration of the footline."},
+		{"name":"htfcounterframenrs","unusual":true},
+		{"name":"htffractionframenrs","unusual":true},
+		{"name":"htfinstitutepths","unusual":true},
+		{"name":"htflongdate","unusual":true},
+		{"name":"htflongtitle","unusual":true},
+		{"name":"htfnoauthinst","unusual":true},
+		{"name":"htfnodate","unusual":true},
+		{"name":"htfnoframenrs","unusual":true},
+		{"name":"htfnotitle","unusual":true},
+		{"name":"htfonlyauthor","unusual":true},
+		{"name":"htfonlyinstitute","unusual":true},
+		{"name":"htfpercentframenrs","unusual":true},
+		{"name":"htfsepspace","unusual":true},
+		{"name":"htfshortdate","unusual":true},
+		{"name":"htfshorttitle","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"pgfkeys:/hackthefootline": ["atsep=${1|colon,comma,space|}","authinst=${1|onlyauthor,onlyinst,instpths,authpths,both,none|}","cols=${1|one,two,three,none|}","date=${1|short,long,none|}","framenrs=${1|counter,fraction,percent,none|}","title=${1|short,long,none|}"]
+	}
+}

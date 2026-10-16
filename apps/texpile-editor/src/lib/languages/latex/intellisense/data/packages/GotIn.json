@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"gotin","arg":{"format":"{}","snippet":"gotin{${1:initial}}"}},
+		{"name":"GotInfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

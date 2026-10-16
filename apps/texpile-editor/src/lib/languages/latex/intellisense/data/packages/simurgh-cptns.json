@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"bibname","unusual":true},
+		{"name":"ccname","unusual":true},
+		{"name":"chaptername","unusual":true},
+		{"name":"datename","unusual":true},
+		{"name":"enclname","unusual":true},
+		{"name":"headtoname","unusual":true},
+		{"name":"pagename","unusual":true},
+		{"name":"proofname","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

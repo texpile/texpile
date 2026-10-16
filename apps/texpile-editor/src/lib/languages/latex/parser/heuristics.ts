@@ -70,6 +70,10 @@ export function heuristicMarkCommentedMacroCalls(nodes: Node[] | undefined, sour
 			// (lexical tail check: comments don't nest or span lines.) At the end of the file
 			// there is no line end to take, and the span must stay the file's bytes
 			node._raw = lastEnd < source.length && /(^|[^\\])%[^\n]*$/.test(text) ? text + '\n' : text;
+			// its arguments are in the span: a later attach would hand it the next call, cell break or word as one.
+			// an optional argument after it ([q]{-}{-}) is still its own
+			const next = nodes[j] as LooseNode | undefined;
+			if (!(next?.type === 'string' && next.content === '[')) node.args ??= [];
 			nodes.splice(i + 1, j - (i + 1)); // drop the consumed run; the span lives on `_raw` now
 		}
 	}

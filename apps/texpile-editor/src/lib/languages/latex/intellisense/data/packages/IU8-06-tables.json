@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"tabularx"},{"name":"array"},{"name":"longtable"},{"name":"xltabular"},{"name":"etoolbox"},{"name":"ltablex"},{"name":"multirow"},{"name":"hhline"},{"name":"float"},{"name":"caption"},{"name":"caption3"},{"name":"keyval"},{"name":"ltcaption"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

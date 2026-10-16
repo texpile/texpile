@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"class-article"},{"name":"enumitem"},{"name":"fancyhdr"},{"name":"fullpage"},{"name":"ragged2e"},{"name":"titlesec"},{"name":"xstring"},{"name":"babel"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"keyval"},{"name":"hanging"},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"caption","engines":["pdflatex"]},{"name":"caption","if":"!nofigures","engines":["lualatex","xelatex"]},{"name":"caption3","engines":["pdflatex"]},{"name":"caption3","if":"!nofigures","engines":["lualatex","xelatex"]},{"name":"float","engines":["pdflatex"]},{"name":"float","if":"!nofigures","engines":["lualatex","xelatex"]},{"name":"graphicx","engines":["pdflatex"]},{"name":"graphicx","if":"!nofigures","engines":["lualatex","xelatex"]},{"name":"graphics","engines":["pdflatex"]},{"name":"graphics","if":"!nofigures","engines":["lualatex","xelatex"]},{"name":"trig","engines":["pdflatex"]},{"name":"trig","if":"!nofigures","engines":["lualatex","xelatex"]},{"name":"enotez","if":"!nonotes"},{"name":"l3keys2e","if":"!nonotes"},{"name":"xtemplate","if":"!nonotes"},{"name":"translations","if":"!nonotes"},{"name":"newtxtext","if":"!notimes"},{"name":"xpatch","if":"!notimes"},{"name":"xcolor","if":"!notimes"},{"name":"xkeyval","if":"!notimes"},{"name":"textcomp","if":"!notimes"},{"name":"scalefnt","if":"!notimes"},{"name":"fontaxes","if":"!notimes","engines":["pdflatex"]},{"name":"figureversions","if":"!notimes","engines":["pdflatex"]},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"microtype","if":"microtype"},{"name":"fontspec","if":"!notimes","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","if":"!notimes","engines":["lualatex"]},{"name":"fontspec-xetex","if":"!notimes","engines":["xelatex"]}],
+	"macros": [
+		{"name":"course","arg":{"format":"{}","snippet":"course{${1}}"},"doc":"The course for which this paper was assigned, i.e. ENGL 101-02."},
+		{"name":"makemlaheader"},
+		{"name":"mladate","doc":"The macro \\mladate will format \\today accordingly to be used as the default value for \\date (see section 5.1)."},
+		{"name":"professor","arg":{"format":"{}","snippet":"professor{${1}}"},"doc":"The instructor who assigned the paper, i.e. Dr. Marjorie Stewart."}
+	],
+	"envs": [
+		{"name":"blockquote"},
+		{"name":"mlanotes","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
+		{"name":"mlanotes","unusual":true},
+		{"name":"noindent","unusual":true},
+		{"name":"notes"},
+		{"name":"paper"},
+		{"name":"workscited"}
+	],
+	"keys": {
+		"\\documentclass/mla#c": ["fullpage","microtype","mla7","mla8","mla8alt","nofigures","noheaders","nonotes","nopageheader","nopaperheader","notimes","plainheadings"]
+	},
+	"args": ["\\documentclass/mla#c"]
+}

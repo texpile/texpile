@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"relabel"}],
+	"macros": [
+		{"name":"chaptername"},
+		{"name":"nref","arg":{"format":"{}","snippet":"nref{${1:label}}"},"unusual":true},
+		{"name":"nref*","arg":{"format":"{}","snippet":"nref*{${1:label}}"},"unusual":true},
+		{"name":"sectionname"},
+		{"name":"subsectionname"},
+		{"name":"subsubsectionname"}
+	],
+	"envs": [],
+	"keys": {}
+}

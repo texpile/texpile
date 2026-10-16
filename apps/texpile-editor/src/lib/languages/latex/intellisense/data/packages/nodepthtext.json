@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"xstring"},{"name":"calc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"nodepth","arg":{"format":"[]{}","snippet":"nodepth[${1:scale}]{${2:text}}"}},
+		{"name":"nodepth","arg":{"format":"{}","snippet":"nodepth{${1:text}}"}},
+		{"name":"nodepthlua","arg":{"format":"[]{}","snippet":"nodepthlua[${1}]{${2}}"},"unusual":true},
+		{"name":"nodepthlua","arg":{"format":"{}","snippet":"nodepthlua{${1}}"},"unusual":true},
+		{"name":"raisesmashletter","arg":{"format":"[]{}","snippet":"raisesmashletter[${1:ref chars}]{${2:character}}"}},
+		{"name":"raisesmashletter","arg":{"format":"{}","snippet":"raisesmashletter{${1:character}}"}},
+		{"name":"raisesmashletter*","arg":{"format":"[]{}","snippet":"raisesmashletter*[${1:ref chars}]{${2:character}}"}},
+		{"name":"raisesmashletter*","arg":{"format":"{}","snippet":"raisesmashletter*{${1:character}}"}},
+		{"name":"raisesmashtext","arg":{"format":"[]{}","snippet":"raisesmashtext[${1:ref chars}]{${2:word}}"}},
+		{"name":"raisesmashtext","arg":{"format":"{}","snippet":"raisesmashtext{${1:word}}"}},
+		{"name":"sampleslettersmajus"},
+		{"name":"sampleslettersminus"}
+	],
+	"envs": [],
+	"keys": {}
+}

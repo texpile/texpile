@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"luatexbase"},{"name":"luapackageloader"},{"name":"iftex"}],
+	"macros": [
+		{"name":"countwordsstart","arg":{"format":"{}","snippet":"countwordsstart{${1}}"}},
+		{"name":"countwordsstop","arg":{"format":"{}","snippet":"countwordsstop{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

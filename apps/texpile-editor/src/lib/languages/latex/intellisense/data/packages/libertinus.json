@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"libertinus-type1","engines":["pdflatex"]},{"name":"textcomp","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"libertinus-otf","engines":["lualatex","xelatex"]},{"name":"unicode-math","engines":["lualatex","xelatex"]},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse","engines":["lualatex","xelatex"]},{"name":"l3keys2e","engines":["lualatex","xelatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"amsmath","engines":["lualatex","xelatex"]},{"name":"amstext","engines":["lualatex","xelatex"]},{"name":"amsbsy","engines":["lualatex","xelatex"]},{"name":"amsopn","engines":["lualatex","xelatex"]},{"name":"etoolbox","engines":["lualatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

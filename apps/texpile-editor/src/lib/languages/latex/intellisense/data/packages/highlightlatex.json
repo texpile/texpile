@@ -1,0 +1,37 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"consumeblock","arg":{"format":"{}","snippet":"consumeblock{${1:name}}"},"doc":"The \\consumeblock works like \\useblock, except the saved block is deleted from memory after its use."},
+		{"name":"defaultgobble"},
+		{"name":"frameval","unusual":true},
+		{"name":"hll","arg":{"format":"[]","snippet":"hll[${1:listings options}]"}},
+		{"name":"hll"},
+		{"name":"hllAfterSkip","unusual":true},
+		{"name":"hllBeforeSkip","unusual":true},
+		{"name":"hllDebugFramefalse","unusual":true},
+		{"name":"hllDebugFrametrue","unusual":true},
+		{"name":"hllDelimDollar","arg":{"format":"[]","snippet":"hllDelimDollar[${1}]"},"unusual":true},
+		{"name":"hllDelimDollar","unusual":true},
+		{"name":"hllDelimParen","arg":{"format":"[]","snippet":"hllDelimParen[${1}]"},"unusual":true},
+		{"name":"hllDelimParen","unusual":true},
+		{"name":"hllStyleAnywherefalse","unusual":true},
+		{"name":"hllStyleAnywheretrue","unusual":true},
+		{"name":"ifhllDebugFrame","unusual":true},
+		{"name":"ifhllStyleAnywhere","unusual":true},
+		{"name":"setframe","arg":{"format":"{}","snippet":"setframe{${1}}"},"unusual":true},
+		{"name":"updatehighlight","arg":{"format":"{}","snippet":"updatehighlight{${1:key value list}}","keys":["keyval:updatehighlight"],"keyPos":0}},
+		{"name":"useblock","arg":{"format":"{}","snippet":"useblock{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"highlightblock","arg":{"format":"[]","snippet":"[${1:listings options}]"}},
+		{"name":"highlightblock"},
+		{"name":"hllblock","arg":{"format":"[]","snippet":"[${1:listings options}]"},"unusual":true},
+		{"name":"hllblock","unusual":true},
+		{"name":"saveblock","arg":{"format":"{}","snippet":"{${1:name}}"}}
+	],
+	"keys": {
+		"keyval:updatehighlight": ["add=","classoffset=","clear","color=","name=","remove=","style="],
+		"\\usepackage/highlightlatex#c": ["frame","noframe","styleanywhere"]
+	},
+	"args": ["\\usepackage/highlightlatex#c"]
+}

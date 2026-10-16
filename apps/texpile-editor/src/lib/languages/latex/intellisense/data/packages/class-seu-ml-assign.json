@@ -1,0 +1,49 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"titlesec"},{"name":"suffix"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsthm"},{"name":"bm"},{"name":"nicematrix"},{"name":"array"},{"name":"listings"},{"name":"caption"},{"name":"caption3"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"tikzfill.image"},{"name":"pdfcol"},{"name":"varwidth"},{"name":"footmisc"},{"name":"fancyhdr"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tabularx"},{"name":"afterpage"}],
+	"macros": [
+		{"name":"argmax"},
+		{"name":"argmin"},
+		{"name":"assignno","arg":{"format":"{}","snippet":"assignno{${1:assignment number}}"}},
+		{"name":"duedate","arg":{"format":"{}","snippet":"duedate{${1:due date}}"}},
+		{"name":"hint","arg":{"format":"{}","snippet":"hint{${1:hint text}}"},"doc":"You can easily use command \\hint{} to show a hint to a problem."},
+		{"name":"hintstyle"},
+		{"name":"instructor","arg":{"format":"{}","snippet":"instructor{${1:instructor}}"}},
+		{"name":"mainproblem","arg":{"format":"{}","snippet":"mainproblem{${1:main problem}}"}},
+		{"name":"pdftitleadditionalname","unusual":true},
+		{"name":"problem","arg":{"format":"[]{}","snippet":"problem[${1:points}]{${2:title}}"}},
+		{"name":"problem","arg":{"format":"{}","snippet":"problem{${1:title}}"}},
+		{"name":"problem*","arg":{"format":"[]{}","snippet":"problem*[${1:points}]{${2:title}}"}},
+		{"name":"problem*","arg":{"format":"{}","snippet":"problem*{${1:title}}"}},
+		{"name":"problempts","arg":{"format":"{}","snippet":"problempts{${1:points}}"},"doc":"The points of a problem can be set using command \\problempts{xxx} before calling the \\section{} command."},
+		{"name":"sectionheadname"},
+		{"name":"semester","arg":{"format":"{}","snippet":"semester{${1:semester}}"}},
+		{"name":"setproblem","arg":{"format":"{}","snippet":"setproblem{${1:problem number}}"},"doc":"The number of the section can be changed, for example \\texttt{\\setproblem{4}} will make the next section number be 5."},
+		{"name":"setsubproblem","arg":{"format":"{}","snippet":"setsubproblem{${1:sub problem number}}"}},
+		{"name":"solutionname"},
+		{"name":"startsolution","arg":{"format":"[]","snippet":"startsolution[${1:print}]"},"doc":"You can use \\startsolution to declare you start writing the solution."},
+		{"name":"startsolution","doc":"You can use \\startsolution to declare you start writing the solution."},
+		{"name":"studentID","arg":{"format":"{}","snippet":"studentID{${1:student ID}}"}},
+		{"name":"subproblem","arg":{"format":"{}","snippet":"subproblem{${1:title}}"},"doc":"The command \\subproblem{} adds the sub problem number in ToC and bookmarks."},
+		{"name":"subproblem*","arg":{"format":"{}","snippet":"subproblem*{${1:title}}"},"doc":"The command \\subproblem{} adds the sub problem number in ToC and bookmarks."},
+		{"name":"subsubproblem","arg":{"format":"{}","snippet":"subsubproblem{${1:title}}"}},
+		{"name":"subsubproblem*","arg":{"format":"{}","snippet":"subsubproblem*{${1:title}}"}}
+	],
+	"envs": [
+		{"name":"corollary","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"corollary"},
+		{"name":"fancybox","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:title}}"}},
+		{"name":"fancybox","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"lemma","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"lemma"},
+		{"name":"notice","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:title}}"}},
+		{"name":"notice","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"proposition","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"proposition"},
+		{"name":"theorem","arg":{"format":"[]","snippet":"[${1:note}]"}},
+		{"name":"theorem"}
+	],
+	"keys": {
+		"\\documentclass/seu-ml-assign#c": ["10pt","11pt","12pt","9pt","oneside","problem","solution","twoside"]
+	},
+	"args": ["\\documentclass/seu-ml-assign#c"]
+}

@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"keyval"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"AddToShipoutPicture","arg":{"format":"{}","snippet":"AddToShipoutPicture{${1:picture commands}}"}},
+		{"name":"AddToShipoutPicture*","arg":{"format":"{}","snippet":"AddToShipoutPicture*{${1:picture commands}}"}},
+		{"name":"AddToShipoutPictureBG","arg":{"format":"{}","snippet":"AddToShipoutPictureBG{${1:picture commands}}"}},
+		{"name":"AddToShipoutPictureBG*","arg":{"format":"{}","snippet":"AddToShipoutPictureBG*{${1:picture commands}}"}},
+		{"name":"AddToShipoutPictureFG","arg":{"format":"{}","snippet":"AddToShipoutPictureFG{${1:picture commands}}"},"doc":"Works like \\AddToShipoutPictureBG but the picture commands are on the top of the normal document content."},
+		{"name":"AddToShipoutPictureFG*","arg":{"format":"{}","snippet":"AddToShipoutPictureFG*{${1:picture commands}}"},"doc":"Works like \\AddToShipoutPictureBG but the picture commands are on the top of the normal document content."},
+		{"name":"AtPageCenter","arg":{"format":"{}","snippet":"AtPageCenter{${1}}"}},
+		{"name":"AtPageLowerLeft","arg":{"format":"{}","snippet":"AtPageLowerLeft{${1}}"}},
+		{"name":"AtPageUpperLeft","arg":{"format":"{}","snippet":"AtPageUpperLeft{${1}}"}},
+		{"name":"AtStockCenter","arg":{"format":"{}","snippet":"AtStockCenter{${1}}"}},
+		{"name":"AtStockLowerLeft","arg":{"format":"{}","snippet":"AtStockLowerLeft{${1}}"}},
+		{"name":"AtStockUpperLeft","arg":{"format":"{}","snippet":"AtStockUpperLeft{${1}}"}},
+		{"name":"AtTextCenter","arg":{"format":"{}","snippet":"AtTextCenter{${1}}"}},
+		{"name":"AtTextLowerLeft","arg":{"format":"{}","snippet":"AtTextLowerLeft{${1}}"}},
+		{"name":"AtTextUpperLeft","arg":{"format":"{}","snippet":"AtTextUpperLeft{${1}}"}},
+		{"name":"ClearShipoutPicture"},
+		{"name":"ClearShipoutPictureBG","doc":"A call of \\ClearShipoutPictureBG clears the contents of \\ESO@HookIBG."},
+		{"name":"ClearShipoutPictureFG","doc":"A call of \\ClearShipoutPictureFG clears the contents of \\ESO@HookIFG."},
+		{"name":"GridPicture"},
+		{"name":"gridSetup","arg":{"format":"[]{}{}{}{}{}","snippet":"gridSetup[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"gridSetup","arg":{"format":"{}{}{}{}{}","snippet":"gridSetup{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"LenToUnit","arg":{"format":"{}","snippet":"LenToUnit{${1}}"}},
+		{"name":"ProcessOptionsWithKV","arg":{"format":"{}","snippet":"ProcessOptionsWithKV{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

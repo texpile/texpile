@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"handstroke","arg":{"format":"[]{}","snippet":"handstroke[${1:color=name}]{${2:text}}"},"doc":"The \\handstroke command takes a single argument and underlines it, much like the familiar \\ul."},
+		{"name":"handstroke","arg":{"format":"{}","snippet":"handstroke{${1:text}}"},"doc":"The \\handstroke command takes a single argument and underlines it, much like the familiar \\ul."},
+		{"name":"ul","arg":{"format":"[]{}","snippet":"ul[${1:color=name}]{${2:text}}"},"if":"ul"},
+		{"name":"ul","arg":{"format":"{}","snippet":"ul{${1:text}}"},"if":"ul"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/handstroke#c": ["color=","colored","emph","synonym=","ul"]
+	},
+	"args": ["\\usepackage/handstroke#c"]
+}

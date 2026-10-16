@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"EqnDots"},
+		{"name":"mathindent"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/dotseqn#c": ["leftjust","nocolsep"]
+	},
+	"args": ["\\usepackage/dotseqn#c"]
+}

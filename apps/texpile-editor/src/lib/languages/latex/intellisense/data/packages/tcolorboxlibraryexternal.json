@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"newtcbexternalizeenvironment","arg":{"format":"{}{}{}{}{}","snippet":"newtcbexternalizeenvironment{${1:newenv}}{${2:env}}{${3:options}}{${4:begin}}{${5:end}}"}},
+		{"name":"newtcbexternalizetcolorbox","arg":{"format":"{}{}{}{}","snippet":"newtcbexternalizetcolorbox{${1:newenv}}{${2:env}}{${3:options}}{${4:begin end options}}"}},
+		{"name":"renewtcbexternalizeenvironment","arg":{"format":"{}{}{}{}{}","snippet":"renewtcbexternalizeenvironment{${1:newenv}}{${2:env}}{${3:options}}{${4:begin}}{${5:end}}"}},
+		{"name":"renewtcbexternalizetcolorbox","arg":{"format":"{}{}{}{}","snippet":"renewtcbexternalizetcolorbox{${1:newenv}}{${2:env}}{${3:options}}{${4:begin end options}}"}},
+		{"name":"tcbEXTERNALIZE"},
+		{"name":"tcbifexternal","arg":{"format":"{}{}","snippet":"tcbifexternal{${1:true}}{${2:false}}"}},
+		{"name":"tcbiffileprocess","arg":{"format":"{}{}{}{}{}{}","snippet":"tcbiffileprocess{${1:condition}}{${2:source}}{${3:md5-file}}{${4:target}}{${5:true}}{${6:false}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"extcolorbox","arg":{"format":"[]{}[]","snippet":"[${1:options}]{${2:name}}[${3:tcolorbox options}]"}},
+		{"name":"extcolorbox","arg":{"format":"{}","snippet":"{${1:name}}"}},
+		{"name":"extikzpicture","arg":{"format":"[]{}[]","snippet":"[${1:options}]{${2:name}}[${3:tikz options}]"}},
+		{"name":"extikzpicture","arg":{"format":"{}","snippet":"{${1:name}}"}},
+		{"name":"tcbexternal","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:name}}"}},
+		{"name":"tcbexternal","arg":{"format":"{}","snippet":"{${1:name}}"}}
+	],
+	"keys": {}
+}

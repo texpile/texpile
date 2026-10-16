@@ -1,0 +1,10 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"setouterhbox","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {
+		"\\usepackage/setouterhbox#c": ["hyperref"]
+	},
+	"args": ["\\usepackage/setouterhbox#c"]
+}

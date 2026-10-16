@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"tikzmath","arg":{"format":"{}","snippet":"tikzmath{${1:statements}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

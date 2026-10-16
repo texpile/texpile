@@ -1,72 +1,22 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "singlespacing"
-    },
-    {
-      "name": "onehalfspacing"
-    },
-    {
-      "name": "doublespacing"
-    },
-    {
-      "name": "SetSinglespace",
-      "arg": {
-        "format": "{}",
-        "snippet": "SetSinglespace{${1:factor}}"
-      }
-    },
-    {
-      "name": "setstretch",
-      "arg": {
-        "format": "{}",
-        "snippet": "setstretch{${1:factor}}"
-      }
-    },
-    {
-      "name": "displayskipstretch",
-      "unusual": true
-    },
-    {
-      "name": "setdisplayskipstretch",
-      "arg": {
-        "format": "{}",
-        "snippet": "setdisplayskipstretch{${1:factor}}"
-      }
-    }
-  ],
-  "envs": [
-    {
-      "name": "singlespace"
-    },
-    {
-      "name": "singlespace*",
-      "unusual": true
-    },
-    {
-      "name": "doublespace"
-    },
-    {
-      "name": "onehalfspace"
-    },
-    {
-      "name": "spacing",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:factor}}"
-      }
-    }
-  ],
-  "keys": {
-    "\\usepackage/setspace#c": [
-      "nodisplayskipstretch",
-      "singlespacing",
-      "onehalfspacing",
-      "doublespacing"
-    ]
-  },
-  "args": [
-    "\\usepackage/setspace#c"
-  ]
+	"macros": [
+		{"name":"displayskipstretch","unusual":true},
+		{"name":"doublespacing","doc":"The commands \\singlespacing, \\onehalfspacing, and \\doublespacing, are for use in the preamble to set the overall spacing for the document."},
+		{"name":"onehalfspacing","doc":"The commands \\singlespacing, \\onehalfspacing, and \\doublespacing, are for use in the preamble to set the overall spacing for the document."},
+		{"name":"setdisplayskipstretch","arg":{"format":"{}","snippet":"setdisplayskipstretch{${1}}"}},
+		{"name":"SetSinglespace","arg":{"format":"{}","snippet":"SetSinglespace{${1}}"}},
+		{"name":"setstretch","arg":{"format":"{}","snippet":"setstretch{${1}}"},"doc":"If a different spacing is required then the \\setstretch{baselinestretch} command can be used in the preamble to set the baselinestretch appropriately."},
+		{"name":"singlespacing","doc":"The commands \\singlespacing, \\onehalfspacing, and \\doublespacing, are for use in the preamble to set the overall spacing for the document."}
+	],
+	"envs": [
+		{"name":"doublespace","doc":"Three environments, singlespace, onehalfspace, and doublespace, allow the spacing to be changed within the document."},
+		{"name":"onehalfspace"},
+		{"name":"singlespace"},
+		{"name":"singlespace*"},
+		{"name":"spacing","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {
+		"\\usepackage/setspace#c": ["doublespacing","nodisplayskipstretch","onehalfspacing","singlespacing"]
+	},
+	"args": ["\\usepackage/setspace#c"]
 }

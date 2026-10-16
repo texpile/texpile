@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"iftex"}],
+	"macros": [
+		{"name":"percentchar"},
+		{"name":"tkzDrawCirclesFromPaths","arg":{"format":"[]()","snippet":"tkzDrawCirclesFromPaths[${1:options}](${2:center path,through path})"},"doc":"This macro draws circles defined by two paths: one for the centers and one for the points through which each circle passes."},
+		{"name":"tkzDrawCirclesFromPaths","arg":{"format":"()","snippet":"tkzDrawCirclesFromPaths(${1:center path,through path})"},"doc":"This macro draws circles defined by two paths: one for the centers and one for the points through which each circle passes."},
+		{"name":"tkzDrawCoordinates","arg":{"format":"[]()","snippet":"tkzDrawCoordinates[${1:options}](${2:lua path})"}},
+		{"name":"tkzDrawCoordinates","arg":{"format":"()","snippet":"tkzDrawCoordinates(${1:lua path})"}},
+		{"name":"tkzDrawFromPointToPath","arg":{"format":"[]()","snippet":"tkzDrawFromPointToPath[${1:options}](${2:point,lua path})"},"doc":"This macro draws a set of line segments from a given TikZ point to every point of a Lua path object."},
+		{"name":"tkzDrawFromPointToPath","arg":{"format":"()","snippet":"tkzDrawFromPointToPath(${1:point,lua path})"},"doc":"This macro draws a set of line segments from a given TikZ point to every point of a Lua path object."},
+		{"name":"tkzDrawLuaEllipse","arg":{"format":"[]()","snippet":"tkzDrawLuaEllipse[${1:options}](${2:center,point,point})"}},
+		{"name":"tkzDrawLuaEllipse","arg":{"format":"()","snippet":"tkzDrawLuaEllipse(${1:center,point,point})"}},
+		{"name":"tkzDrawPath","arg":{"format":"[]()","snippet":"tkzDrawPath[${1:options}](${2:lua path})"}},
+		{"name":"tkzDrawPath","arg":{"format":"()","snippet":"tkzDrawPath(${1:lua path})"}},
+		{"name":"tkzDrawPointsFromPath","arg":{"format":"[]()","snippet":"tkzDrawPointsFromPath[${1:options}](${2:lua path})"},"doc":"This macro draws all points of a path using tkzDrawPoint, without exporting point names."},
+		{"name":"tkzDrawPointsFromPath","arg":{"format":"()","snippet":"tkzDrawPointsFromPath(${1:lua path})"},"doc":"This macro draws all points of a path using tkzDrawPoint, without exporting point names."},
+		{"name":"tkzDrawSegmentsFromPaths","arg":{"format":"[]()","snippet":"tkzDrawSegmentsFromPaths[${1:options}](${2:path start,path end})"},"doc":"Draws segments encoded in one or more Lua paths (pairs of points or consecutive points, depending on the chosen convention)."},
+		{"name":"tkzDrawSegmentsFromPaths","arg":{"format":"()","snippet":"tkzDrawSegmentsFromPaths(${1:path start,path end})"},"doc":"Draws segments encoded in one or more Lua paths (pairs of points or consecutive points, depending on the chosen convention)."},
+		{"name":"tkzEraseLuaObj","arg":{"format":"{}","snippet":"tkzEraseLuaObj{${1}}"},"doc":"Removes a stored Lua object from the global storage table (typically z, L, C, CO, etc., depending on your conventions)."},
+		{"name":"tkzGetNodes","doc":"A crucial component in the tikzpicture environment is the macro \\tkzGetNodes. This macro transfers the points defined in Lua to TikZ by creating the corresponding nodes."},
+		{"name":"tkzGetNodesMP","arg":{"format":"{}","snippet":"tkzGetNodesMP{${1}}"},"doc":"\\tkzGetNodesMP, a variant that enables communication with MetaPost."},
+		{"name":"tkzGetPointFromPath","arg":{"format":"(){}","snippet":"tkzGetPointFromPath(${1:lua path,index}){${2:point name}}"},"doc":"This macro extracts the i-th vertex of a Lua path and defines it as a TikZ point with a given name."},
+		{"name":"tkzGetPointsFromPath","arg":{"format":"()","snippet":"tkzGetPointsFromPath(${1:lua path,basename})"},"doc":"This macro defines TikZ points from a Lua path."},
+		{"name":"tkzPathCount","arg":{"format":"(){}","snippet":"tkzPathCount(${1:lua path}){${2:macro name}}"},"doc":"This macro retrieves the number of vertices in a Lua path and stores the result in a TeX macro."},
+		{"name":"tkzPN","arg":{"format":"[]{}","snippet":"tkzPN[${1}]{${2}}"}},
+		{"name":"tkzPN","arg":{"format":"{}","snippet":"tkzPN{${1}}"}},
+		{"name":"tkzPrintNumber","arg":{"format":"[]{}","snippet":"tkzPrintNumber[${1}]{${2}}"},"doc":"This macro formats and prints a number using PGF’s fixed-point output, with a default precision of 2 decimal places."},
+		{"name":"tkzPrintNumber","arg":{"format":"{}","snippet":"tkzPrintNumber{${1}}"},"doc":"This macro formats and prints a number using PGF’s fixed-point output, with a default precision of 2 decimal places."},
+		{"name":"tkzUseLua","arg":{"format":"{}","snippet":"tkzUseLua{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

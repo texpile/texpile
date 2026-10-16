@@ -1,0 +1,52 @@
+{
+	"deps": [{"name":"class-book"},{"name":"inputenc"},{"name":"lmodern"},{"name":"etoolbox"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"setspace"},{"name":"xcolor"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"float"},{"name":"subfigure"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"fancyhdr"},{"name":"babel"},{"name":"csquotes"},{"name":"datetime"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"fcprefix"},{"name":"datetime-defaults"},{"name":"biblatex","if":"!custombib"},{"name":"logreq","if":"!custombib"},{"name":"blx-case-expl3","if":"!custombib"},{"name":"xparse","if":"!custombib"}],
+	"macros": [
+		{"name":"abstractEN","arg":{"format":"{}","snippet":"abstractEN{${1:text}}"}},
+		{"name":"abstractFR","arg":{"format":"{}","snippet":"abstractFR{${1:text}}"}},
+		{"name":"acknowledgements","arg":{"format":"{}","snippet":"acknowledgements{${1:text}}"}},
+		{"name":"authorFirstname","arg":{"format":"{}","snippet":"authorFirstname{${1:text}}"},"doc":"Instead of using the \\author{text} command we provide the two commands \\authorFirstname{text} and \\authorLastname{text} to separately handle the firstname and the lastname."},
+		{"name":"authorLastname","arg":{"format":"{}","snippet":"authorLastname{${1:text}}"},"doc":"Instead of using the \\author{text} command we provide the two commands \\authorFirstname{text} and \\authorLastname{text} to separately handle the firstname and the lastname."},
+		{"name":"dedication","arg":{"format":"{}","snippet":"dedication{${1:text}}"}},
+		{"name":"monthyeardate","unusual":true},
+		{"name":"printcoverpage","doc":"Print the cover page of the thesis."},
+		{"name":"printfrontmatter"},
+		{"name":"startconclusion"},
+		{"name":"startintroduction"},
+		{"name":"theabstractEN","unusual":true},
+		{"name":"theabstractFR","unusual":true},
+		{"name":"theacknowledgements","unusual":true},
+		{"name":"theauthorFirstname","unusual":true},
+		{"name":"theauthorLastname","unusual":true},
+		{"name":"thededication","unusual":true},
+		{"name":"theFaculty","unusual":true},
+		{"name":"thesisByLabel","unusual":true},
+		{"name":"thesisCommitteeA","arg":{"format":"{}{}{}{}","snippet":"thesisCommitteeA{${1:title}}{${2:firstname}}{${3:lastname}}{${4:role}}"},"doc":"You can specify information about members of your thesis committee with the six \\thesisCommitteeA-F{title}{firstname}{lastname}{role} commands."},
+		{"name":"thesisCommitteeB","arg":{"format":"{}{}{}{}","snippet":"thesisCommitteeB{${1:title}}{${2:firstname}}{${3:lastname}}{${4:role}}"}},
+		{"name":"thesisCommitteeC","arg":{"format":"{}{}{}{}","snippet":"thesisCommitteeC{${1:title}}{${2:firstname}}{${3:lastname}}{${4:role}}"}},
+		{"name":"thesisCommitteeD","arg":{"format":"{}{}{}{}","snippet":"thesisCommitteeD{${1:title}}{${2:firstname}}{${3:lastname}}{${4:role}}"}},
+		{"name":"thesisCommitteeE","arg":{"format":"{}{}{}{}","snippet":"thesisCommitteeE{${1:title}}{${2:firstname}}{${3:lastname}}{${4:role}}"}},
+		{"name":"thesisCommitteeF","arg":{"format":"{}{}{}{}","snippet":"thesisCommitteeF{${1:title}}{${2:firstname}}{${3:lastname}}{${4:role}}"}},
+		{"name":"thesisCommitteeLabel","unusual":true},
+		{"name":"thesisField","arg":{"format":"{}","snippet":"thesisField{${1:text}}"},"doc":"You specify the PhD you are enrolled in with the \\thesisField{text}, among others: Economics, Management, Statistics, Information Systems."},
+		{"name":"thesisFieldLabel","unusual":true},
+		{"name":"thesisLocationLabel","unusual":true},
+		{"name":"thesisNumber","arg":{"format":"{}","snippet":"thesisNumber{${1:text}}"}},
+		{"name":"thesisNumberLabel","unusual":true},
+		{"name":"thethesisCommitteeA","unusual":true},
+		{"name":"thethesisCommitteeB","unusual":true},
+		{"name":"thethesisCommitteeC","unusual":true},
+		{"name":"thethesisCommitteeD","unusual":true},
+		{"name":"thethesisCommitteeE","unusual":true},
+		{"name":"thethesisCommitteeF","unusual":true},
+		{"name":"thethesisField","unusual":true},
+		{"name":"thethesisNumber","unusual":true}
+	],
+	"envs": [
+		{"name":"itemize"},
+		{"name":"itemize*"}
+	],
+	"keys": {
+		"\\documentclass/gsemthesis#c": ["b5paper","custombib","draft","fr"]
+	},
+	"args": ["\\documentclass/gsemthesis#c"]
+}

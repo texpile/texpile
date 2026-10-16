@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"etextools"},{"name":"etex"},{"name":"etoolbox"},{"name":"letltxmacro"},{"name":"ltxnew"},{"name":"xkeyval"},{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"boxedminipage"}],
+	"macros": [
+		{"name":"getfiledate","arg":{"format":"[]{}","snippet":"getfiledate[${1:options}]{${2:file name}}"}},
+		{"name":"getfiledate","arg":{"format":"{}","snippet":"getfiledate{${1:file name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"pict2e"},{"name":"trig"}],
+	"macros": [
+		{"name":"lraskfilename","doc":"The command \\lraskfilename asks for the data file name from the terminal."},
+		{"name":"lrcomputation","doc":"The macro \\lrcomputation reads the data and performs all the computations."},
+		{"name":"lrfilename","arg":{"format":"{}","snippet":"lrfilename{${1:file name}}"},"doc":"The command \\lrfilename records the file name passed as argument."},
+		{"name":"lrnumdigit","arg":{"format":"{}","snippet":"lrnumdigit{${1:number of digits}}"},"doc":"The computed numbers are printed with four decimal digit maximum by default, but this number can be set to any desired \\lrnumdigit value with the command \\lrnumdigit{⟨number⟩}."},
+		{"name":"lrplot","arg":{"format":"{}{}{}{}{}","snippet":"lrplot{${1:image width}}{${2:point code}}{${3:key 1}}{${4:key 2}}{${5:key 3}}"},"doc":"The macro \\lrplot{⟨imagewidth⟩}{⟨key1⟩}{⟨key2⟩}{⟨key3⟩}{⟨key4⟩} really generates the plot."},
+		{"name":"lrplotparameters","arg":{"format":"{}{}","snippet":"lrplotparameters{${1:diameter}}{${2:image height}}"},"doc":"The command \\lrplotparameters{⟨diameter⟩}{⟨imageheight⟩} is used to record some more parameters that are related to the generation of the plot."},
+		{"name":"lrprint","doc":"The macro \\lrprint generates a table with all the estimated parameters and some information about the data."}
+	],
+	"envs": [],
+	"keys": {}
+}

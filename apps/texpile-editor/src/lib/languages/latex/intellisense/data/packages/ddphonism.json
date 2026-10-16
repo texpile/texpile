@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"darrows","arg":{"format":"[]{}","snippet":"darrows[${1:options}]{${2:tone row}}"}},
+		{"name":"darrows","arg":{"format":"{}","snippet":"darrows{${1:tone row}}"}},
+		{"name":"ddiagram","arg":{"format":"[]{}","snippet":"ddiagram[${1:options}]{${2:tone row}}"}},
+		{"name":"ddiagram","arg":{"format":"{}","snippet":"ddiagram{${1:tone row}}"}},
+		{"name":"ddihedral","arg":{"format":"[]{}","snippet":"ddihedral[${1:options}]{${2:tone row}}"}},
+		{"name":"ddihedral","arg":{"format":"{}","snippet":"ddihedral{${1:tone row}}"}},
+		{"name":"dmatrix","arg":{"format":"[]{}","snippet":"dmatrix[${1:options}]{${2:tone row}}"}},
+		{"name":"dmatrix","arg":{"format":"{}","snippet":"dmatrix{${1:tone row}}"}},
+		{"name":"drow","arg":{"format":"[]{}","snippet":"drow[${1:options}]{${2:tone row}}"},"doc":"produces a twelve-tone row sequence as a mathematical permutation in its matrix form (using an array environment)."},
+		{"name":"drow","arg":{"format":"{}","snippet":"drow{${1:tone row}}"},"doc":"produces a twelve-tone row sequence as a mathematical permutation in its matrix form (using an array environment)."},
+		{"name":"ifdarrowsTikz","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

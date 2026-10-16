@@ -1,0 +1,26 @@
+{
+	"macros": [
+		{"name":"addtodelayedfloat","arg":{"format":"{}{}","snippet":"addtodelayedfloat{${1}}{${2}}"}},
+		{"name":"addtodelayedfloat*","arg":{"format":"{}{}","snippet":"addtodelayedfloat*{${1}}{${2}}"}},
+		{"name":"AtBeginDelayedFloats","arg":{"format":"{}","snippet":"AtBeginDelayedFloats{${1}}"}},
+		{"name":"AtBeginFigures","arg":{"format":"{}","snippet":"AtBeginFigures{${1}}"}},
+		{"name":"AtBeginTables","arg":{"format":"{}","snippet":"AtBeginTables{${1}}"}},
+		{"name":"efloatbegin"},
+		{"name":"efloatbeginlist"},
+		{"name":"efloatend"},
+		{"name":"efloatendlist"},
+		{"name":"efloatheading","arg":{"format":"{}","snippet":"efloatheading{${1}}"}},
+		{"name":"efloatpostamble"},
+		{"name":"efloatpreamble"},
+		{"name":"efloatseparator"},
+		{"name":"efloattype"},
+		{"name":"figureplace"},
+		{"name":"floatplace","arg":{"format":"{}","snippet":"floatplace{${1}}"}},
+		{"name":"processdelayedfloats"},
+		{"name":"tableplace"},
+		{"name":"thepostfig","unusual":true},
+		{"name":"theposttbl","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

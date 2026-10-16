@@ -1,0 +1,37 @@
+{
+	"macros": [
+		{"name":"AbsoluteFromGregorian","arg":{"format":"{}{}{}{}","snippet":"AbsoluteFromGregorian{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"AbsoluteFromHebrew","arg":{"format":"{}{}{}{}","snippet":"AbsoluteFromHebrew{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"CheckIfDivisible","arg":{"format":"{}{}","snippet":"CheckIfDivisible{${1}}{${2}}"},"unusual":true},
+		{"name":"CheckLeapHebrewYear","arg":{"format":"{}","snippet":"CheckLeapHebrewYear{${1}}"},"unusual":true},
+		{"name":"DaysInHebrewYear","arg":{"format":"{}{}","snippet":"DaysInHebrewYear{${1}}{${2}}"},"unusual":true},
+		{"name":"FormatDate","arg":{"format":"{}{}{}","snippet":"FormatDate{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"FormatForEnglish","arg":{"format":"{}{}{}","snippet":"FormatForEnglish{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"FormatForHebrew","arg":{"format":"{}{}{}","snippet":"FormatForHebrew{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"GregorianDaysInPriorMonths","arg":{"format":"{}{}{}","snippet":"GregorianDaysInPriorMonths{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"GregorianDaysInPriorYears","arg":{"format":"{}{}","snippet":"GregorianDaysInPriorYears{${1}}{${2}}"},"unusual":true},
+		{"name":"Hebrewdate","arg":{"format":"{}{}{}","snippet":"Hebrewdate{${1:Gday}}{${2:Gmonth}}{${3:Gyear}}"},"doc":"Computes the Hebrew date from the given Gregorian date and prints it."},
+		{"name":"Hebrewday"},
+		{"name":"HebrewDayName","arg":{"format":"{}","snippet":"HebrewDayName{${1}}"},"unusual":true},
+		{"name":"HebrewDaysInPriorMonths","arg":{"format":"{}{}{}","snippet":"HebrewDaysInPriorMonths{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"HebrewElapsedDays","arg":{"format":"{}{}","snippet":"HebrewElapsedDays{${1}}{${2}}"},"unusual":true},
+		{"name":"HebrewElapsedMonths","arg":{"format":"{}{}","snippet":"HebrewElapsedMonths{${1}}{${2}}"},"unusual":true},
+		{"name":"HebrewFromGregorian","arg":{"format":"{}{}{}{}{}{}","snippet":"HebrewFromGregorian{${1:Gday}}{${2:Gmonth}}{${3:Gyear}}{${4:Hday}}{${5:Hmonth}}{${6:Hyear}}"}},
+		{"name":"Hebrewmonth"},
+		{"name":"HebrewMonthName","arg":{"format":"{}{}","snippet":"HebrewMonthName{${1}}{${2}}"},"unusual":true},
+		{"name":"HebrewMonthNameInEnglish","arg":{"format":"{}{}","snippet":"HebrewMonthNameInEnglish{${1}}{${2}}"},"unusual":true},
+		{"name":"Hebrewsetreg","doc":"Set registers: today’s date in hebrew calendar."},
+		{"name":"hebrewtoday"},
+		{"name":"Hebrewtoday","doc":"The command \\Hebrewtoday produces today’s date for Hebrew calendar."},
+		{"name":"Hebrewyear"},
+		{"name":"HebrewYearName","arg":{"format":"{}","snippet":"HebrewYearName{${1}}"},"unusual":true},
+		{"name":"IfGregorianLeap","arg":{"format":"{}","snippet":"IfGregorianLeap{${1}}"},"unusual":true},
+		{"name":"ifundefined","arg":{"format":"{}","snippet":"ifundefined{${1}}"},"unusual":true},
+		{"name":"Remainder","arg":{"format":"{}{}{}","snippet":"Remainder{${1}}{${2}}{${3}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hebcal#c": ["full"]
+	},
+	"args": ["\\usepackage/hebcal#c"]
+}

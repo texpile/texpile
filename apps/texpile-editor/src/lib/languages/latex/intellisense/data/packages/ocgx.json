@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"ocg-p"},{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"actionsocg","arg":{"format":"{}{}{}{}","snippet":"actionsocg{${1:toggle layer ids}}{${2:show layer ids}}{${3:hide layer ids}}{${4:display}}"},"doc":"The \\actionsocg macro transforms its fourth argument into a clickable link."},
+		{"name":"hideocg","arg":{"format":"{}{}","snippet":"hideocg{${1:layer ids}}{${2:display}}"},"doc":"The \\hideocg macro turns its second argument into a clickable link that make invisible all OCGs whose references are listed in its first argument: a visible OCG becomes invisible and an OCG already invisible remains invisible."},
+		{"name":"ocgxversion","unusual":true},
+		{"name":"showocg","arg":{"format":"{}{}","snippet":"showocg{${1:layer ids}}{${2:display}}"},"doc":"The \\showocg macro turns its second argument into a clickable link that make visible all OCGs whose references are listed in its first argument: an invisible OCG becomes visible and an OCG already visible remains visible."},
+		{"name":"switchocg","arg":{"format":"{}{}","snippet":"switchocg{${1:layer ids}}{${2:display}}"},"doc":"The \\switchocg macro turns its second argument into a clickable link that toggles the visibility status of all listed OCGs (by their reference) in its first argument: if an OCG was visible, it becomes invisible, and conversely, if an OCG was invisible, it becomes visible."}
+	],
+	"envs": [],
+	"keys": {}
+}

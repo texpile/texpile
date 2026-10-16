@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"calc"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"reflectgraphics","arg":{"format":"[]{}","snippet":"reflectgraphics[${1}]{${2}}","keys":["keyval:reflectgraphics"],"keyPos":0},"doc":"It can be used to render graphics together with their reflections at the bottom, which are fading from a particular starting opacity to fully transparent."},
+		{"name":"reflectgraphics","arg":{"format":"{}","snippet":"reflectgraphics{${1}}"},"doc":"It can be used to render graphics together with their reflections at the bottom, which are fading from a particular starting opacity to fully transparent."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:reflectgraphics": ["angle=","distance=","height=","length=","opacity=","scale=","trim=","width=","debug=${1|true,false|}"],
+		"\\usepackage/reflectgraphics#c": ["angle=","debug=${1|true,false|}","distance=","height=","length=","opacity=","scale=","trim=","width="]
+	},
+	"args": ["\\usepackage/reflectgraphics#c"]
+}

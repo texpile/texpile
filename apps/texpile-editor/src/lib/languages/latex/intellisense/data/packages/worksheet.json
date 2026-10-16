@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"}],
+	"macros": [
+		{"name":"easy"},
+		{"name":"hard"},
+		{"name":"learningtargets","arg":{"format":"{}","snippet":"learningtargets{${1}}"}},
+		{"name":"medium"},
+		{"name":"occurrence","arg":{"format":"{}","snippet":"occurrence{${1}}"}},
+		{"name":"score","arg":{"format":"{}","snippet":"score{${1}}"}},
+		{"name":"worksheetAuthors","arg":{"format":"{}","snippet":"worksheetAuthors{${1}}"}},
+		{"name":"worksheetChangelvFile","arg":{"format":"{}","snippet":"worksheetChangelvFile{${1}}"}},
+		{"name":"worksheetCourseName","arg":{"format":"{}","snippet":"worksheetCourseName{${1}}"}},
+		{"name":"worksheetHideDifficulty"},
+		{"name":"worksheetHideFileName"},
+		{"name":"worksheetHideHeader"},
+		{"name":"worksheetHideLearningTargets"},
+		{"name":"worksheetHideOccurrence"},
+		{"name":"worksheetHideScore"},
+		{"name":"worksheetMakeTitle","doc":"The title itself is then displayed with \\worksheetMakeTitle."},
+		{"name":"worksheetNoSFFamilyInHeader"},
+		{"name":"worksheetShowDifficulty"},
+		{"name":"worksheetShowFileName"},
+		{"name":"worksheetShowLearningTargets"},
+		{"name":"worksheetShowOccurrence"},
+		{"name":"worksheetShowScore"},
+		{"name":"worksheetSubTitle","arg":{"format":"{}","snippet":"worksheetSubTitle{${1}}"}},
+		{"name":"worksheetTitle","arg":{"format":"{}","snippet":"worksheetTitle{${1}}"}}
+	],
+	"envs": [
+		{"name":"exercise","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"exercise"}
+	],
+	"keys": {}
+}

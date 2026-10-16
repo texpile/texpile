@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"cmnum","doc":"The command \\cmnum switches back to Arabic numerals."},
+		{"name":"dn","doc":"The basic delimiter is the \\dn macro. This delimiter is used by enclosing Devanāgarı̄ text between {\\dn ... }, eg. {\\dn acchaa}."},
+		{"name":"dnnum","doc":"The command \\dnnum switches to Devanāgarı̄ numerals."},
+		{"name":"qa","arg":{"format":"{}{}","snippet":"qa{${1}}{${2}}"},"unusual":true},
+		{"name":"qb","arg":{"format":"{}","snippet":"qb{${1}}"},"unusual":true},
+		{"name":"qc","arg":{"format":"{}{}","snippet":"qc{${1}}{${2}}"},"unusual":true},
+		{"name":"qq","arg":{"format":"{}","snippet":"qq{${1}}"},"unusual":true},
+		{"name":"qva","unusual":true},
+		{"name":"qvb","unusual":true},
+		{"name":"qvc","unusual":true},
+		{"name":"qx","arg":{"format":"{}","snippet":"qx{${1}}"},"unusual":true},
+		{"name":"qy","arg":{"format":"{}","snippet":"qy{${1}}"},"unusual":true},
+		{"name":"qz","arg":{"format":"{}","snippet":"qz{${1}}"},"unusual":true},
+		{"name":"rdt","unusual":true},
+		{"name":"re","unusual":true},
+		{"name":"rn","arg":{"format":"{}","snippet":"rn{${1:number}}"}},
+		{"name":"rs","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

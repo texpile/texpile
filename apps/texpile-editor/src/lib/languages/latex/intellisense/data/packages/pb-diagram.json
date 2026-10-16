@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"arrow","arg":{"format":"[]{}{}{}","snippet":"arrow[${1:size}]{${2:direction,options}}{${3:label 1}}{${4:label 2}}"},"doc":"An ARROW is specified by the \\arrow command, which may also be used anywhere in math mode, independent of the diagram environment."},
+		{"name":"arrow","arg":{"format":"{}{}{}","snippet":"arrow{${1:direction,options}}{${2:label 1}}{${3:label 2}}"},"doc":"An ARROW is specified by the \\arrow command, which may also be used anywhere in math mode, independent of the diagram environment."},
+		{"name":"dgARROWLENGTH","doc":"The most important parameter is \\dgARROWLENGTH, which specifies the minimum length for all arrows."},
+		{"name":"dgARROWPARTS","doc":"An arrow is divided into \\dgARROWPARTS parts for custom positioning of labels along the arrow (the only sensible choices for this number are 2,4,6,8,10)."},
+		{"name":"dgCOLUMNWIDTH","unusual":true},
+		{"name":"dgDOTSIZE"},
+		{"name":"dgDOTSPACING"},
+		{"name":"dgeverylabel"},
+		{"name":"dgeverynode"},
+		{"name":"dggeometry","unusual":true},
+		{"name":"dgHORIZPAD","doc":"The padding increases the apparent horizontal size of each formula by \\dgHORIZPAD and the apparent vertical size by \\dgVERTPAD."},
+		{"name":"dgLABELOFFSET","doc":"\\dgLABELOFFSET is the (approximate) distance which will separate labels from their arrows."},
+		{"name":"dgMAXSQUARE","unusual":true},
+		{"name":"dgMINDBLSQ","unusual":true},
+		{"name":"dgoldgeometry","unusual":true},
+		{"name":"dgTEXTARROWLENGTH"},
+		{"name":"dgVERBOSEfalse","unusual":true},
+		{"name":"dgVERBOSEtrue","unusual":true},
+		{"name":"dgVERTPAD"},
+		{"name":"ifdgVERBOSE","unusual":true},
+		{"name":"newoptcommand","arg":{"format":"{}{}[]{}","snippet":"newoptcommand{${1:command}}{${2:default}}[${3:number of arguments}]{${4:text}}"}},
+		{"name":"newoptcommand","arg":{"format":"{}{}{}","snippet":"newoptcommand{${1:command}}{${2:default}}{${3:text}}"}},
+		{"name":"newoptenvironment","arg":{"format":"{}{}[]{}{}","snippet":"newoptenvironment{${1:name}}{${2:default}}[${3:number of arguments}]{${4:begin text}}{${5:end text}}"}},
+		{"name":"newoptenvironment","arg":{"format":"{}{}{}{}","snippet":"newoptenvironment{${1:name}}{${2:default}}{${3:begin text}}{${4:end text}}"}},
+		{"name":"newoptenvironment*","arg":{"format":"{}{}[]{}{}","snippet":"newoptenvironment*{${1:name}}{${2:default}}[${3:number of arguments}]{${4:begin text}}{${5:end text}}"}},
+		{"name":"newoptenvironment*","arg":{"format":"{}{}{}{}","snippet":"newoptenvironment*{${1:name}}{${2:default}}{${3:begin text}}{${4:end text}}"}},
+		{"name":"node","arg":{"format":"[]{}","snippet":"node[${1:columns}]{${2:formula}}"}},
+		{"name":"node","arg":{"format":"{}","snippet":"node{${1:formula}}"}},
+		{"name":"renewoptcommand","arg":{"format":"{}{}[]{}","snippet":"renewoptcommand{${1:command}}{${2:default}}[${3:number of arguments}]{${4:text}}"}},
+		{"name":"renewoptcommand","arg":{"format":"{}{}{}","snippet":"renewoptcommand{${1:command}}{${2:default}}{${3:text}}"}},
+		{"name":"renewoptenvironment","arg":{"format":"{}{}[]{}{}","snippet":"renewoptenvironment{${1:name}}{${2:default}}[${3:number of arguments}]{${4:begin text}}{${5:end text}}"}},
+		{"name":"renewoptenvironment","arg":{"format":"{}{}{}{}","snippet":"renewoptenvironment{${1:name}}{${2:default}}{${3:begin text}}{${4:end text}}"}},
+		{"name":"renewoptenvironment*","arg":{"format":"{}{}[]{}{}","snippet":"renewoptenvironment*{${1:name}}{${2:default}}[${3:number of arguments}]{${4:begin text}}{${5:end text}}"}},
+		{"name":"renewoptenvironment*","arg":{"format":"{}{}{}{}","snippet":"renewoptenvironment*{${1:name}}{${2:default}}{${3:begin text}}{${4:end text}}"}}
+	],
+	"envs": [
+		{"name":"diagram","arg":{"format":"[]","snippet":"[${1:widest node}]"},"doc":"The diagram environment allows the LaTeX 2ε user to easily create complex commutative diagrams, by placing formula nodes on a conceptual grid and attaching arrows to them."},
+		{"name":"diagram","doc":"The diagram environment allows the LaTeX 2ε user to easily create complex commutative diagrams, by placing formula nodes on a conceptual grid and attaching arrows to them."}
+	],
+	"keys": {}
+}

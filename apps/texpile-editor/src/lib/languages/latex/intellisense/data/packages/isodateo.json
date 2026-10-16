@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"substr"}],
+	"macros": [
+		{"name":"docdate","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"isodash","arg":{"format":"{}","snippet":"isodash{${1:dash}}"}},
+		{"name":"isodate"},
+		{"name":"numdate"},
+		{"name":"origdate"},
+		{"name":"packagename","unusual":true},
+		{"name":"printdate","arg":{"format":"{}","snippet":"printdate{${1:date}}"}},
+		{"name":"printdateTeX","arg":{"format":"{}","snippet":"printdateTeX{${1:date}}"}},
+		{"name":"shortdate"},
+		{"name":"TeXdate"},
+		{"name":"theyeartwo","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/isodateo#c": ["TeX","iso","num","orig","short"]
+	},
+	"args": ["\\usepackage/isodateo#c"]
+}

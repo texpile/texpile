@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"text","arg":{"format":"{}","snippet":"text{${1:text}}"},"doc":"The \\text macro is a sophisticated command which allows the user to insert “normal text” into math formulas without worrying about correct sizes in sub- or superscripts.","math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

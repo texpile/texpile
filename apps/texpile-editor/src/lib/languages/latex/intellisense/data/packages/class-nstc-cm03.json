@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"setspace"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"CJKutf8","engines":["pdflatex"]},{"name":"ifpdf","engines":["pdflatex"]},{"name":"inputenc","engines":["pdflatex"]},{"name":"CJK","engines":["pdflatex"]},{"name":"MULEenc","engines":["pdflatex"]},{"name":"newtxtext","if":"!libertine"},{"name":"xpatch","if":"!libertine"},{"name":"xparse","if":"!libertine","engines":["pdflatex"]},{"name":"xparse","engines":["xelatex"]},{"name":"etoolbox","engines":["pdflatex"]},{"name":"etoolbox","if":"!libertine","engines":["xelatex"]},{"name":"xcolor","if":"!libertine"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"xstring","if":"!libertine"},{"name":"scalefnt","if":"!libertine"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"newtxmath","engines":["pdflatex"]},{"name":"newtxmath","if":"!libertine","engines":["xelatex"]},{"name":"centernot","engines":["pdflatex"]},{"name":"centernot","if":"!libertine","engines":["xelatex"]},{"name":"zhnumber"},{"name":"titlesec"},{"name":"fancyhdr"},{"name":"libertine","if":"libertine"},{"name":"ifxetex","if":"libertine"},{"name":"ifluatex","if":"libertine"},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"unicode-math","if":"libertine","engines":["xelatex"]},{"name":"unicode-math-xetex","if":"libertine","engines":["xelatex"]},{"name":"l3keys2e","if":"libertine","engines":["xelatex"]}],
+	"macros": [
+		{"name":"ProposalBackground"},
+		{"name":"ProposalIntegration"},
+		{"name":"ProposalMethod"},
+		{"name":"ProposalPlan"}
+	],
+	"envs": [
+		{"name":"zh","unusual":true}
+	],
+	"keys": {
+		"\\documentclass/nstc-cm03#c": ["10pt","11pt","a5paper","b5paper","executivepaper","kaiti","legalpaper","letterpaper","libertine","notitlepage","openright","titlepage","twocolumn"]
+	},
+	"args": ["\\documentclass/nstc-cm03#c"]
+}

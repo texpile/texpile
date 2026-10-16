@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"etoolbox"},{"name":"calc"}],
+	"macros": [
+		{"name":"basicfooter","arg":{"format":"{}{}","snippet":"basicfooter{${1}}{${2}}"},"unusual":true},
+		{"name":"headerpath","unusual":true},
+		{"name":"institutepath","unusual":true},
+		{"name":"logofooter"},
+		{"name":"logoheader"},
+		{"name":"logotitle","doc":"Command used for the title page."},
+		{"name":"myfooterheight","unusual":true},
+		{"name":"myleftmargin","unusual":true},
+		{"name":"myrightmargin","unusual":true},
+		{"name":"pageword"}
+	],
+	"envs": [],
+	"keys": {}
+}

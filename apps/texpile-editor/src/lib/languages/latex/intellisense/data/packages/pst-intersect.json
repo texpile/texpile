@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-xkey"},{"name":"pst-node"},{"name":"pst-func"},{"name":"pst-plot"},{"name":"multido"},{"name":"pst-math"},{"name":"pst-calculate"},{"name":"xparse"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"amstext"},{"name":"array"},{"name":"ifluatex"},{"name":"xstring"},{"name":"pst-tools"},{"name":"pstricks-add"},{"name":"pst-3d"},{"name":"luacode","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"psGetCurvePoint","arg":{"format":"{}{}","snippet":"psGetCurvePoint{${1}}{${2}}"}},
+		{"name":"psGetIsectCenter","arg":{"format":"{}{}{}","snippet":"psGetIsectCenter{${1}}{${2}}{${3}}"}},
+		{"name":"psintersect","arg":{"format":"{}{}","snippet":"psintersect{${1}}{${2}}"},"doc":"After having saved some paths and curves, you can now calculate the intersections."},
+		{"name":"pssavebezier","arg":{"format":"[]{}()()","snippet":"pssavebezier[${1}]{${2}}(${3})(${4})"},"doc":"With the macro \\pssavebezier you can define Bézier curves up to nineth order."},
+		{"name":"pssavebezier","arg":{"format":"{}()()","snippet":"pssavebezier{${1}}(${2})(${3})"},"doc":"With the macro \\pssavebezier you can define Bézier curves up to nineth order."},
+		{"name":"pssavepath","arg":{"format":"[]{}{}","snippet":"pssavepath[${1}]{${2}}{${3}}"}},
+		{"name":"pssavepath","arg":{"format":"{}{}","snippet":"pssavepath{${1}}{${2}}"}},
+		{"name":"pstracecurve","arg":{"format":"[]{}","snippet":"pstracecurve[${1}]{${2}}"},"doc":"Saved paths and curves can be drawn again with this macro."},
+		{"name":"pstracecurve","arg":{"format":"{}","snippet":"pstracecurve{${1}}"},"doc":"Saved paths and curves can be drawn again with this macro."}
+	],
+	"envs": [],
+	"keys": {}
+}

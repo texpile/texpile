@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"loadtheorems","arg":{"format":"{}","snippet":"loadtheorems{${1:theorem file}}"},"doc":"\\loadtheorems{bar.thm} in the preamble, which loads all theorems saved in bar.thm."},
+		{"name":"repthm","arg":{"format":"{}[]","snippet":"repthm{${1:label}}[${2:alt text}]"},"doc":"To repeat a theorem, use the \\repthm command."},
+		{"name":"repthm","arg":{"format":"{}","snippet":"repthm{${1:label}}"},"doc":"To repeat a theorem, use the \\repthm command."},
+		{"name":"repthm*","arg":{"format":"{}[]","snippet":"repthm*{${1:label}}[${2:alt text}]"},"doc":"To repeat a theorem, use the \\repthm command."},
+		{"name":"repthm*","arg":{"format":"{}","snippet":"repthm*{${1:label}}"},"doc":"To repeat a theorem, use the \\repthm command."},
+		{"name":"theoremfile","arg":{"format":"[]","snippet":"theoremfile[${1:theorem file}]"},"doc":"Using \\theoremfile will output all saved theorems into an output file."},
+		{"name":"theoremfile","doc":"Using \\theoremfile will output all saved theorems into an output file."}
+	],
+	"envs": [
+		{"name":"makethm","arg":{"format":"{}{}[]","snippet":"{${1:theorem environment}}{${2:label}}[${3:name}]"}},
+		{"name":"makethm","arg":{"format":"{}{}","snippet":"{${1:theorem environment}}{${2:label}}"}}
+	],
+	"keys": {}
+}

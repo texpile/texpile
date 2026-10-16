@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"parallel"},{"name":"pdfcol"},{"name":"iftex"},{"name":"color","engines":["pdflatex","lualatex"]},{"name":"etoolbox","engines":["pdflatex","lualatex"]},{"name":"keyval","engines":["pdflatex","lualatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"scontents"}],
+	"macros": [
+		{"name":"DemoCode","arg":{"format":"[]{}[]","snippet":"DemoCode[${1:dclisting-keys}]{${2:st-name}}[${3:space}]"}},
+		{"name":"DemoCode","arg":{"format":"{}","snippet":"DemoCode{${1:st-name}}"}},
+		{"name":"DemoCodeB","arg":{"format":"[]{}","snippet":"DemoCodeB[${1}]{${2}}"},"unusual":true},
+		{"name":"DemoCodeB","arg":{"format":"{}","snippet":"DemoCodeB{${1}}"},"unusual":true},
+		{"name":"DisplayCode","arg":{"format":"[]{}","snippet":"DisplayCode[${1:dclisting-keys}]{${2:st-name}}"}},
+		{"name":"DisplayCode","arg":{"format":"{}","snippet":"DisplayCode{${1:st-name}}"}},
+		{"name":"DisplayCodeB","arg":{"format":"[]{}","snippet":"DisplayCodeB[${1}]{${2}}"},"unusual":true},
+		{"name":"DisplayCodeB","arg":{"format":"{}","snippet":"DisplayCodeB{${1}}"},"unusual":true},
+		{"name":"setdclisting","arg":{"format":"{}","snippet":"setdclisting{${1:dclisting-keys}}"}},
+		{"name":"setdcpar","arg":{"format":"{}","snippet":"setdcpar{${1}}"},"unusual":true},
+		{"name":"TabbedDemoCode","arg":{"format":"[]{}[]","snippet":"TabbedDemoCode[${1:dclisting-keys}]{${2:st-name}}[${3:space}]"}},
+		{"name":"TabbedDemoCode","arg":{"format":"{}","snippet":"TabbedDemoCode{${1:st-name}}"}},
+		{"name":"TabbedDemoCodeB","arg":{"format":"[]{}","snippet":"TabbedDemoCodeB[${1}]{${2}}"},"unusual":true},
+		{"name":"TabbedDemoCodeB","arg":{"format":"{}","snippet":"TabbedDemoCodeB{${1}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"stcode","arg":{"format":"[]","snippet":"[${1:keys}]"},"doc":"The environment body is stored verbatim in the st named key."},
+		{"name":"stcode","doc":"The environment body is stored verbatim in the st named key."}
+	],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"pstPutAbs","arg":{"format":"[](){}","snippet":"pstPutAbs[${1}](${2}){${3}}"},"doc":"\\pstPutAbs [Options] (x , y ){object } puts any object depending to the option at (x; y)."},
+		{"name":"pstPutAbs","arg":{"format":"(){}","snippet":"pstPutAbs(${1}){${2}}"},"doc":"\\pstPutAbs [Options] (x , y ){object } puts any object depending to the option at (x; y)."},
+		{"name":"pstSetAbsoluteOrigin"},
+		{"name":"pstSetPostScriptOrigin"},
+		{"name":"pstSetRelativeOrigin","arg":{"format":"()","snippet":"pstSetRelativeOrigin(${1})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

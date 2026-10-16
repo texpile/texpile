@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"titlesec"},{"name":"titletoc"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"biditools"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bidituftetoc#c": ["notoc","toc"]
+	},
+	"args": ["\\usepackage/bidituftetoc#c"]
+}

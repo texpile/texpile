@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"iftex","if":"vlines"}],
+	"macros": [
+		{"name":"interrowfill","arg":{"format":"[]","snippet":"interrowfill[${1:line numbers}]"}},
+		{"name":"interrowfill"},
+		{"name":"interrowspace","arg":{"format":"[]{}","snippet":"interrowspace[${1:line numbers}]{${2:height}}"},"doc":"Adds space between table rows."},
+		{"name":"interrowspace","arg":{"format":"{}","snippet":"interrowspace{${1:height}}"},"doc":"Adds space between table rows."},
+		{"name":"interrowstart","arg":{"format":"[]","snippet":"interrowstart[${1:line numbers}]"}},
+		{"name":"interrowstart"},
+		{"name":"interrowstop"}
+	],
+	"envs": [
+		{"name":"arrayht","arg":{"format":"{}[]{}","snippet":"{${1:height}}[${2:pos}]{${3:cols}}"}},
+		{"name":"arrayht","arg":{"format":"{}{}","snippet":"{${1:height}}{${2:cols}}"}},
+		{"name":"tabularht","arg":{"format":"{}[]{}","snippet":"{${1:height}}[${2:pos}]{${3:cols}}"},"doc":"The package provides the following environments that extend the tabular/array environment by a height specification as first argument: • tabularht, tabularht* • arrayht • tabularhtx (if package tabularx is loaded) The height argument allows a length specification, package calc is supported if used. This means, the tabular will have the specified height."},
+		{"name":"tabularht","arg":{"format":"{}{}","snippet":"{${1:height}}{${2:cols}}"},"doc":"The package provides the following environments that extend the tabular/array environment by a height specification as first argument: • tabularht, tabularht* • arrayht • tabularhtx (if package tabularx is loaded) The height argument allows a length specification, package calc is supported if used. This means, the tabular will have the specified height."},
+		{"name":"tabularht*","arg":{"format":"{}{}[]{}","snippet":"{${1:height}}{${2:width}}[${3:pos}]{${4:cols}}"}},
+		{"name":"tabularht*","arg":{"format":"{}{}{}","snippet":"{${1:height}}{${2:width}}{${3:cols}}"}},
+		{"name":"tabularhtx","arg":{"format":"{}{}[]{}","snippet":"{${1:height}}{${2:width}}[${3:pos}]{${4:cols}}"},"doc":"The package provides the following environments that extend the tabular/array environment by a height specification as first argument: • tabularht, tabularht* • arrayht • tabularhtx (if package tabularx is loaded) The height argument allows a length specification, package calc is supported if used. This means, the tabular will have the specified height."},
+		{"name":"tabularhtx","arg":{"format":"{}{}{}","snippet":"{${1:height}}{${2:width}}{${3:cols}}"},"doc":"The package provides the following environments that extend the tabular/array environment by a height specification as first argument: • tabularht, tabularht* • arrayht • tabularhtx (if package tabularx is loaded) The height argument allows a length specification, package calc is supported if used. This means, the tabular will have the specified height."}
+	],
+	"keys": {
+		"\\usepackage/tabularht#c": ["dvips","pdftex","vlines"]
+	},
+	"args": ["\\usepackage/tabularht#c"]
+}

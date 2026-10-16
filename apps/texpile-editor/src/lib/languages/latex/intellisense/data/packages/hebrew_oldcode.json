@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"inputenc"},{"name":"babel"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

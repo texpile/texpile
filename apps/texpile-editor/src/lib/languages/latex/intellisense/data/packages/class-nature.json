@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"class-article"},{"name":"cite"},{"name":"fullpage"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"addendumlabel","arg":{"format":"{}","snippet":"addendumlabel{${1}}"},"unusual":true},
+		{"name":"includegraphics","arg":{"format":"[]{}","snippet":"includegraphics[${1:options}]{${2:file}}"}},
+		{"name":"includegraphics","arg":{"format":"{}","snippet":"includegraphics{${1:file}}"}},
+		{"name":"spacing","arg":{"format":"{}","snippet":"spacing{${1}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"addendum"},
+		{"name":"affiliations"},
+		{"name":"methods"}
+	],
+	"keys": {}
+}

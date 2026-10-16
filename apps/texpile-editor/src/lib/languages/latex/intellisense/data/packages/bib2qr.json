@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"biblatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"qrcode"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"xstring"}],
+	"macros": [
+		{"name":"qrcite","arg":{"format":"[][]{}","snippet":"qrcite[${1:prenote}][${2:postnote}]{${3:keys}}"},"doc":"Display the QR code of a BibTeX entry’s DOI link or URL by introducing the cite command \\qrcite{⟨key⟩}, which makes use of the previously defined bibliography driver @bibiiqr@bibDrvQR."},
+		{"name":"qrcite","arg":{"format":"{}","snippet":"qrcite{${1:keys}}"},"doc":"Display the QR code of a BibTeX entry’s DOI link or URL by introducing the cite command \\qrcite{⟨key⟩}, which makes use of the previously defined bibliography driver @bibiiqr@bibDrvQR."},
+		{"name":"qrfullcite","arg":{"format":"[]{}","snippet":"qrfullcite[${1:noindent}]{${2:key}}"},"doc":"Display the QR code of a singe BibTeX entry’s DOI link or URL and a full citation of it."},
+		{"name":"qrfullcite","arg":{"format":"{}","snippet":"qrfullcite{${1:key}}"},"doc":"Display the QR code of a singe BibTeX entry’s DOI link or URL and a full citation of it."}
+	],
+	"envs": [],
+	"keys": {}
+}

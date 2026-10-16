@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"fewerfloatpagesdate","unusual":true},
+		{"name":"fewerfloatpagesversion","unusual":true},
+		{"name":"floatpagekeepfraction"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fewerfloatpages#c": ["addbang","checktb","nocheck","trace"]
+	},
+	"args": ["\\usepackage/fewerfloatpages#c"]
+}

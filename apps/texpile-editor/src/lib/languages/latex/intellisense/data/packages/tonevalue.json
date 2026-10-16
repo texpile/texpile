@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"listofitems"},{"name":"xstring"},{"name":"xkeyval"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"contour"}],
+	"macros": [
+		{"name":"linkuntpoints","arg":{"format":"[]{}{}","snippet":"linkuntpoints[${1:options}]{${2:first point}}{${3:second point}}","keys":["keyval:linkuntpoints"],"keyPos":0}},
+		{"name":"linkuntpoints","arg":{"format":"{}{}","snippet":"linkuntpoints{${1:first point}}{${2:second point}}"}},
+		{"name":"toneVisualisationFontCmd","unusual":true},
+		{"name":"untpoint","arg":{"format":"[]{}{}","snippet":"untpoint[${1:options}]{${2:tone value}}{${3:tone name}}","keys":["keyval:untpoint"],"keyPos":0},"doc":"Use inside the untVisualisation environment to plot tone values."},
+		{"name":"untpoint","arg":{"format":"{}{}","snippet":"untpoint{${1:tone value}}{${2:tone name}}"},"doc":"Use inside the untVisualisation environment to plot tone values."}
+	],
+	"envs": [
+		{"name":"untVisualisation","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:untVisualisation"],"keyPos":0},"doc":"Use this environment to draw the axes and, optionally, labels of unt’s model."},
+		{"name":"untVisualisation","doc":"Use this environment to draw the axes and, optionally, labels of unt’s model."}
+	],
+	"keys": {
+		"keyval:linkuntpoints": ["bend=","color="],
+		"keyval:untVisualisation": ["minmax=","scale=","showlabels=${1|true,false|}"],
+		"keyval:untpoint": ["bgcolor=","label=","scale=","tikzoptions=","xshift=","yshift=","stem=${1|true,false|}"],
+		"\\usepackage/tonevalue#c": ["contourlength=","contournumber=","defaultcolors","draft","fontcmd="]
+	},
+	"args": ["\\usepackage/tonevalue#c"]
+}

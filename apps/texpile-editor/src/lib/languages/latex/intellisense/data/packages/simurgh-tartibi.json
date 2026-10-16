@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"tartibi","arg":{"format":"{}","snippet":"tartibi{${1:counter}}"}},
+		{"name":"tartibinumeral","arg":{"format":"{}","snippet":"tartibinumeral{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

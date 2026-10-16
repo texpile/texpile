@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"splitidx"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"acro","arg":{"format":"{}","snippet":"acro{${1}}"},"doc":"marks an acronym in normal form."},
+		{"name":"Acro","arg":{"format":"{}","snippet":"Acro{${1}}"},"doc":"marks an acronym in emphasized form."},
+		{"name":"acroexpand","arg":{"format":"[]{}","snippet":"acroexpand[${1}]{${2}}"},"doc":"print the expanded form (that is the term) of an acronym, if defined. The optional first parameter is prepended only on success."},
+		{"name":"acroexpand","arg":{"format":"{}","snippet":"acroexpand{${1}}"},"doc":"print the expanded form (that is the term) of an acronym, if defined. The optional first parameter is prepended only on success."},
+		{"name":"acroindexstyle","arg":{"format":"{}","snippet":"acroindexstyle{${1}}"},"doc":"print an acronym as index entry."},
+		{"name":"acrostyle","arg":{"format":"{}","snippet":"acrostyle{${1}}"}},
+		{"name":"Acrostyle","arg":{"format":"{}","snippet":"Acrostyle{${1}}"}},
+		{"name":"aterm","arg":{"format":"{}{}","snippet":"aterm{${1}}{${2}}"},"doc":"\\tacro and \\aterm mark a term together with its acronym or vice versa."},
+		{"name":"Aterm","arg":{"format":"{}{}","snippet":"Aterm{${1}}{${2}}"}},
+		{"name":"atermstyle","arg":{"format":"{}{}","snippet":"atermstyle{${1}}{${2}}"}},
+		{"name":"Atermstyle","arg":{"format":"{}{}","snippet":"Atermstyle{${1}}{${2}}"}},
+		{"name":"bfhref","arg":{"format":"{}","snippet":"bfhref{${1}}"},"unusual":true},
+		{"name":"provideacronym","arg":{"format":"{}{}","snippet":"provideacronym{${1}}{${2}}"},"unusual":true},
+		{"name":"tacro","arg":{"format":"[]{}{}","snippet":"tacro[${1}]{${2}}{${3}}"},"doc":"\\tacro and \\aterm mark a term together with its acronym or vice versa."},
+		{"name":"tacro","arg":{"format":"{}{}","snippet":"tacro{${1}}{${2}}"},"doc":"\\tacro and \\aterm mark a term together with its acronym or vice versa."},
+		{"name":"Tacro","arg":{"format":"[]{}{}","snippet":"Tacro[${1}]{${2}}{${3}}"}},
+		{"name":"Tacro","arg":{"format":"{}{}","snippet":"Tacro{${1}}{${2}}"}},
+		{"name":"tacrostyle","arg":{"format":"{}{}","snippet":"tacrostyle{${1}}{${2}}"}},
+		{"name":"Tacrostyle","arg":{"format":"{}{}","snippet":"Tacrostyle{${1}}{${2}}"}},
+		{"name":"term","arg":{"format":"[]{}","snippet":"term[${1}]{${2}}"},"doc":"marks a term in normal form."},
+		{"name":"term","arg":{"format":"{}","snippet":"term{${1}}"},"doc":"marks a term in normal form."},
+		{"name":"Term","arg":{"format":"[]{}","snippet":"Term[${1}]{${2}}"}},
+		{"name":"Term","arg":{"format":"{}","snippet":"Term{${1}}"}},
+		{"name":"termstyle","arg":{"format":"{}","snippet":"termstyle{${1}}"}},
+		{"name":"Termstyle","arg":{"format":"{}","snippet":"Termstyle{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"counterlabelpatternTokenHook","unusual":true},
+		{"name":"createcounterlabel","arg":{"format":"{}{}{}","snippet":"createcounterlabel{${1:counter}}{${2:label name}}{${3:label pattern}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"iftex"},{"name":"inputenc","engines":["pdflatex"]},{"name":"babel"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"microtype"},{"name":"setspace"},{"name":"geometry"},{"name":"ifvtex"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"pdfcol"},{"name":"tikzfill.image"},{"name":"xparse"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"FiraSans"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"FiraMono"},{"name":"qrcode"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"autorenlistefalse","unusual":true},
+		{"name":"autorenlistetrue","unusual":true},
+		{"name":"gi"},
+		{"name":"GI"},
+		{"name":"GIAautorenListe","doc":"setzt die Autoren, sofern autorenListe aktiviert ist."},
+		{"name":"giacolorboxskip","unusual":true},
+		{"name":"GIAkoordination","doc":"setzt die Koordination, sofern koordination aktiviert ist."},
+		{"name":"GIAmitwirkende","doc":"setzt die Mitwirkenden."},
+		{"name":"GIAsetzeautorenListe","arg":{"format":"[]{}","snippet":"GIAsetzeautorenListe[${1:unused}]{${2:authors}}"},"doc":"definiert die zu setzenden Autoren."},
+		{"name":"GIAsetzeautorenListe","arg":{"format":"{}","snippet":"GIAsetzeautorenListe{${1:authors}}"},"doc":"definiert die zu setzenden Autoren."},
+		{"name":"GIAsetzekoordination","arg":{"format":"[]{}","snippet":"GIAsetzekoordination[${1:unused}]{${2:coordination}}"},"doc":"definiert die zu setzende Koordination."},
+		{"name":"GIAsetzekoordination","arg":{"format":"{}","snippet":"GIAsetzekoordination{${1:coordination}}"},"doc":"definiert die zu setzende Koordination."},
+		{"name":"hervor","arg":{"format":"[]{}","snippet":"hervor[${1:unused}]{${2:text}}"},"doc":"setzt den Text fett und in der Farbe giaBlue."},
+		{"name":"hervor","arg":{"format":"{}","snippet":"hervor{${1:text}}"},"doc":"setzt den Text fett und in der Farbe giaBlue."},
+		{"name":"ifautorenliste","unusual":true},
+		{"name":"ifkoordination","unusual":true},
+		{"name":"koordinationfalse","unusual":true},
+		{"name":"koordinationtrue","unusual":true},
+		{"name":"theqrcodecnt","unusual":true}
+	],
+	"envs": [
+		{"name":"giacolorbox","arg":{"format":"[]","snippet":"[${1:title}]"},"doc":"setzt eine benutzerdefinierte tcolorbox, die als Div getaggt wird."},
+		{"name":"giacolorbox","doc":"setzt eine benutzerdefinierte tcolorbox, die als Div getaggt wird."},
+		{"name":"zweispaltig","arg":{"format":"[]","snippet":"[${1:columns}]"},"doc":"setzt den Text zweispaltig."},
+		{"name":"zweispaltig","doc":"setzt den Text zweispaltig."}
+	],
+	"keys": {}
+}

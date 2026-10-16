@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"pgfornament"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"}],
+	"macros": [
+		{"name":"pgfornamenthan","arg":{"format":"[]{}","snippet":"pgfornamenthan[${1:options}]{${2:ornament number}}"}},
+		{"name":"pgfornamenthan","arg":{"format":"{}","snippet":"pgfornamenthan{${1:ornament number}}"}},
+		{"name":"pgfOrnamentsHanObject","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

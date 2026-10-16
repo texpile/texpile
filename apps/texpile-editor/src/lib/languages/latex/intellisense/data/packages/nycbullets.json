@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"nycbullet","arg":{"format":"[]{}","snippet":"nycbullet[${1:options}]{${2:key}}","keys":["l3keys:nycbullets"],"keyPos":0},"doc":"Typesets the bullet named ⟨key⟩ from the current set."},
+		{"name":"nycbullet","arg":{"format":"{}","snippet":"nycbullet{${1:key}}"},"doc":"Typesets the bullet named ⟨key⟩ from the current set."},
+		{"name":"nycbulletfont","arg":{"format":"[]","snippet":"nycbulletfont[${1:set}]"},"doc":"Switches to the bullet font of a set, for typing keys directly."},
+		{"name":"nycbulletfont","doc":"Switches to the bullet font of a set, for typing keys directly."},
+		{"name":"nycbulletsetup","arg":{"format":"{}","snippet":"nycbulletsetup{${1:key=value list}}","keys":["l3keys:nycbullets"],"keyPos":0},"doc":"Sets options for all following bullets in the current group."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:nycbullets": ["raise=","scale=","set=${1|std,helv,nycta,r62a,r32,retired,legacy,all|}","color=${1|false,true|}","renderer=${1|node,harfbuzz|}","std","standard","helv","helvetica","nycta","r62a","r32","retired","legacy","all"],
+		"\\usepackage/nycbullets#c": ["all","color=${1|false,true|}","helv","helvetica","legacy","nycta","r32","r62a","raise=","renderer=${1|node,harfbuzz|}","retired","scale=","set=${1|std,helv,nycta,r62a,r32,retired,legacy,all|}","standard","std"]
+	},
+	"args": ["\\usepackage/nycbullets#c"]
+}

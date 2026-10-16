@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"pgfrcs"},{"name":"pgf"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

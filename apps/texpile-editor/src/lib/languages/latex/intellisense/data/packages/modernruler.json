@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pgfkeys"},{"name":"varwidth"},{"name":"zref-savepos"},{"name":"zref-base"},{"name":"iftex"},{"name":"auxhook"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"pdfcol"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"listings"},{"name":"listingsutf8","engines":["pdflatex"]},{"name":"stringenc","engines":["pdflatex"]},{"name":"pdfescape","engines":["pdflatex"]}],
+	"macros": [
+		{"name":"mruleth","arg":{"format":"[]","snippet":"mruleth[${1}]"},"doc":"\\mruleth and mruletv are extended \\hrule and \\vrule."},
+		{"name":"mruleth","doc":"\\mruleth and mruletv are extended \\hrule and \\vrule."},
+		{"name":"mruletv","arg":{"format":"[]","snippet":"mruletv[${1}]"}},
+		{"name":"mruletv"},
+		{"name":"SetUNote","arg":{"format":"[]","snippet":"SetUNote[${1}]"}},
+		{"name":"SetUNote"},
+		{"name":"undernote","arg":{"format":"[]{}{}","snippet":"undernote[${1:lines to shift}]{${2:target phrase}}{${3:annotation}}"}},
+		{"name":"undernote","arg":{"format":"{}{}","snippet":"undernote{${1:target phrase}}{${2:annotation}}"}},
+		{"name":"undernote*","arg":{"format":"[]{}{}","snippet":"undernote*[${1:lines to shift}]{${2:target phrase}}{${3:annotation}}"}},
+		{"name":"undernote*","arg":{"format":"{}{}","snippet":"undernote*{${1:target phrase}}{${2:annotation}}"}},
+		{"name":"zw"}
+	],
+	"envs": [],
+	"keys": {}
+}

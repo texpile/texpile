@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"bookname","unusual":true},
+		{"name":"thebook","unusual":true},
+		{"name":"thechapter","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/srbook-mem#c": ["light","wilson"]
+	},
+	"args": ["\\usepackage/srbook-mem#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"inputenc","engines":["pdflatex","xelatex"]},{"name":"lmodern","if":"!font=old-times+!font=oldtimes+!font=tg+!font=times"},{"name":"babel"},{"name":"soul"},{"name":"soul-ori"},{"name":"iftex"},{"name":"mathptmx","if":"font=old-times|font=oldtimes|font=tg|font=times"},{"name":"kvoptions","if":"font=tg|font=times"},{"name":"keyval","if":"font=tg|font=times"},{"name":"kvsetkeys","if":"font=tg|font=times"},{"name":"luainputenc","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"uline","arg":{"format":"{}","snippet":"uline{${1:text}}"}},
+		{"name":"UnivFixPaperSize","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/uni8#c": ["font=cm","font=ec","font=lm","font=lmodern","font=old-times","font=oldtimes","font=tg","font=times","fontspec","fontspec=no","fontspec=yes","inputenc=latin1","inputenc=latin2","inputenc=utf8","inputenc=utf8x","nop"]
+	},
+	"args": ["\\usepackage/uni8#c"]
+}

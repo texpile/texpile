@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"svg"},{"name":"iftex"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"shellesc"},{"name":"xcolor"},{"name":"transparent"},{"name":"transparent-nometadata"},{"name":"auxhook","engines":["pdflatex","lualatex"]},{"name":"pgfsys"},{"name":"pgfrcs"},{"name":"xstring"},{"name":"booktabs"},{"name":"array"},{"name":"multicol"},{"name":"enumitem"},{"name":"xparse"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"card","arg":{"format":"{}","snippet":"card{${1:name}}"},"doc":"Typesets ⟨card name⟩ in italics and makes it a clickable link to the Scryfall search page for that card."},
+		{"name":"cardlink","arg":{"format":"{}{}","snippet":"cardlink{${1:name}}{${2:text}}"},"doc":"Like \\card, but shows ⟨display text⟩ instead of the card name."},
+		{"name":"initem","arg":{"format":"{}","snippet":"initem{${1:entry}}"}},
+		{"name":"insertdeck","arg":{"format":"{}","snippet":"insertdeck{${1:file}}"},"doc":"Reads a plain-text file and renders a two-column deck list with Scryfall-linked card names and automatic totals."},
+		{"name":"mana","arg":{"format":"{}","snippet":"mana{${1:id}}"},"doc":"The command \\mana inserts the symbol whose filename (without extension) matches ⟨id⟩ from the symbolpath directory."},
+		{"name":"manaB"},
+		{"name":"manaC"},
+		{"name":"manacost","arg":{"format":"{}","snippet":"manacost{${1:ids}}"}},
+		{"name":"manaG"},
+		{"name":"manaR"},
+		{"name":"manaU"},
+		{"name":"manaW"},
+		{"name":"matchresult","arg":{"format":"{}{}{}{}{}","snippet":"matchresult{${1:round}}{${2:opponent}}{${3:deck}}{${4:score}}{${5:result}}"}},
+		{"name":"outitem","arg":{"format":"{}","snippet":"outitem{${1:entry}}"}},
+		{"name":"setmanasymbolsize","arg":{"format":"{}","snippet":"setmanasymbolsize{${1:dimension}}"}},
+		{"name":"setsetsymbolsize","arg":{"format":"{}","snippet":"setsetsymbolsize{${1:dimension}}"}},
+		{"name":"setsymbol","arg":{"format":"{}","snippet":"setsymbol{${1:code}}"}}
+	],
+	"envs": [
+		{"name":"matchresults"},
+		{"name":"matchup"}
+	],
+	"keys": {}
+}

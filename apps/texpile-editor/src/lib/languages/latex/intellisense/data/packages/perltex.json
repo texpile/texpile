@@ -1,0 +1,29 @@
+{
+	"macros": [
+		{"name":"ifperl"},
+		{"name":"perldo","arg":{"format":"{}","snippet":"perldo{${1:Perl code}}"},"doc":"\\perldo immediately executes a block of Perl code without (re)defining any macros or environments."},
+		{"name":"perlfalse","unusual":true},
+		{"name":"perlnewcommand","arg":{"format":"{}[][]{}","snippet":"perlnewcommand{${1:command}}[${2:number of arguments}][${3:default for first argument}]{${4:Perl code}}"}},
+		{"name":"perlnewcommand","arg":{"format":"{}{}","snippet":"perlnewcommand{${1:command}}{${2:Perl code}}"}},
+		{"name":"perlnewcommand*","arg":{"format":"{}[][]{}","snippet":"perlnewcommand*{${1:command}}[${2:number of arguments}][${3:default for first argument}]{${4:Perl code}}"}},
+		{"name":"perlnewcommand*","arg":{"format":"{}{}","snippet":"perlnewcommand*{${1:command}}{${2:Perl code}}"}},
+		{"name":"perlnewenvironment","arg":{"format":"{}[][]{}{}","snippet":"perlnewenvironment{${1:environment}}[${2:number of arguments}][${3:default for first argument}]{${4:begin Perl code}}{${5:end Perl code}}"},"doc":"In addition to \\perlnewcommand and \\perlrenewcommand, PerlTEX supports \\perlnewenvironment and \\perlrenewenvironment macros. These enable environments to be defined using Perl code."},
+		{"name":"perlnewenvironment","arg":{"format":"{}{}{}","snippet":"perlnewenvironment{${1:environment}}{${2:begin Perl code}}{${3:end Perl code}}"},"doc":"In addition to \\perlnewcommand and \\perlrenewcommand, PerlTEX supports \\perlnewenvironment and \\perlrenewenvironment macros. These enable environments to be defined using Perl code."},
+		{"name":"perlnewenvironment*","arg":{"format":"{}[][]{}{}","snippet":"perlnewenvironment*{${1:environment}}[${2:number of arguments}][${3:default for first argument}]{${4:begin Perl code}}{${5:end Perl code}}"},"doc":"In addition to \\perlnewcommand and \\perlrenewcommand, PerlTEX supports \\perlnewenvironment and \\perlrenewenvironment macros. These enable environments to be defined using Perl code."},
+		{"name":"perlnewenvironment*","arg":{"format":"{}{}{}","snippet":"perlnewenvironment*{${1:environment}}{${2:begin Perl code}}{${3:end Perl code}}"},"doc":"In addition to \\perlnewcommand and \\perlrenewcommand, PerlTEX supports \\perlnewenvironment and \\perlrenewenvironment macros. These enable environments to be defined using Perl code."},
+		{"name":"perlrenewcommand","arg":{"format":"{}[][]{}","snippet":"perlrenewcommand{${1:command}}[${2:number of arguments}][${3:default for first argument}]{${4:Perl code}}"},"doc":"If the document includes a \\usepackage{perltex} in its preamble, then \\perlnewcommand and \\perlrenewcommand macros will be made available. These behave just like LaTeX’s \\newcommand and \\renewcommand except that the macro body contains Perl code instead of LaTeX code."},
+		{"name":"perlrenewcommand","arg":{"format":"{}{}","snippet":"perlrenewcommand{${1:command}}{${2:Perl code}}"},"doc":"If the document includes a \\usepackage{perltex} in its preamble, then \\perlnewcommand and \\perlrenewcommand macros will be made available. These behave just like LaTeX’s \\newcommand and \\renewcommand except that the macro body contains Perl code instead of LaTeX code."},
+		{"name":"perlrenewcommand*","arg":{"format":"{}[][]{}","snippet":"perlrenewcommand*{${1:command}}[${2:number of arguments}][${3:default for first argument}]{${4:Perl code}}"},"doc":"If the document includes a \\usepackage{perltex} in its preamble, then \\perlnewcommand and \\perlrenewcommand macros will be made available. These behave just like LaTeX’s \\newcommand and \\renewcommand except that the macro body contains Perl code instead of LaTeX code."},
+		{"name":"perlrenewcommand*","arg":{"format":"{}{}","snippet":"perlrenewcommand*{${1:command}}{${2:Perl code}}"},"doc":"If the document includes a \\usepackage{perltex} in its preamble, then \\perlnewcommand and \\perlrenewcommand macros will be made available. These behave just like LaTeX’s \\newcommand and \\renewcommand except that the macro body contains Perl code instead of LaTeX code."},
+		{"name":"perlrenewenvironment","arg":{"format":"{}[][]{}{}","snippet":"perlrenewenvironment{${1:environment}}[${2:number of arguments}][${3:default for first argument}]{${4:begin Perl code}}{${5:end Perl code}}"}},
+		{"name":"perlrenewenvironment","arg":{"format":"{}{}{}","snippet":"perlrenewenvironment{${1:environment}}{${2:begin Perl code}}{${3:end Perl code}}"}},
+		{"name":"perlrenewenvironment*","arg":{"format":"{}[][]{}{}","snippet":"perlrenewenvironment*{${1:environment}}[${2:number of arguments}][${3:default for first argument}]{${4:begin Perl code}}{${5:end Perl code}}"}},
+		{"name":"perlrenewenvironment*","arg":{"format":"{}{}{}","snippet":"perlrenewenvironment*{${1:environment}}{${2:begin Perl code}}{${3:end Perl code}}"}},
+		{"name":"perltrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/perltex#c": ["optional"]
+	},
+	"args": ["\\usepackage/perltex#c"]
+}

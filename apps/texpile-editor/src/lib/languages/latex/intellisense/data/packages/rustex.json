@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xspace"}],
+	"macros": [
+		{"name":"rustex"},
+		{"name":"RusTeX"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,30 +1,46 @@
 {
-  "deps": [
-    {
-      "name": "html"
-    },
-    {
-      "name": "ifthen"
-    }
-  ],
-  "macros": [
-    {
-      "name": "citeaffixed"
-    },
-    {
-      "name": "citeasnoun"
-    },
-    {
-      "name": "citename"
-    },
-    {
-      "name": "citeyear"
-    },
-    {
-      "name": "possessivecite"
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"citationmode","arg":{"format":"{}","snippet":"citationmode{${1:full|abbr|default}}"},"doc":"The command \\citationmode{full} makes the system use full citations, \\citationmode{abbr} makes the system use abbreviated citations and \\citationmode{default} causes the default behaviour of using full citations for the first instance and abbreviated citations thereafter."},
+		{"name":"citationstyle","arg":{"format":"{}","snippet":"citationstyle{${1:agsm|dcu|apsr}}"}},
+		{"name":"cite","arg":{"format":"[]{}","snippet":"cite[${1:note}]{${2:keys}}"}},
+		{"name":"cite","arg":{"format":"{}","snippet":"cite{${1:keys}}"}},
+		{"name":"cite*","arg":{"format":"[]{}","snippet":"cite*[${1:note}]{${2:keys}}"}},
+		{"name":"cite*","arg":{"format":"{}","snippet":"cite*{${1:keys}}"}},
+		{"name":"citeaffixed","arg":{"format":"[]{}{}","snippet":"citeaffixed[${1:note}]{${2:keys}}{${3:affix}}"}},
+		{"name":"citeaffixed","arg":{"format":"{}{}","snippet":"citeaffixed{${1:keys}}{${2:affix}}"}},
+		{"name":"citeaffixed*","arg":{"format":"[]{}{}","snippet":"citeaffixed*[${1:note}]{${2:keys}}{${3:affix}}"}},
+		{"name":"citeaffixed*","arg":{"format":"{}{}","snippet":"citeaffixed*{${1:keys}}{${2:affix}}"}},
+		{"name":"citeasnoun","arg":{"format":"[]{}","snippet":"citeasnoun[${1:note}]{${2:key}}"},"doc":"To facilitate using a citation as a noun a new command \\citeasnoun has been created which has the same syntax as the \\cite command except that multiple citations are not permitted."},
+		{"name":"citeasnoun","arg":{"format":"{}","snippet":"citeasnoun{${1:key}}"},"doc":"To facilitate using a citation as a noun a new command \\citeasnoun has been created which has the same syntax as the \\cite command except that multiple citations are not permitted."},
+		{"name":"citeasnoun*","arg":{"format":"[]{}","snippet":"citeasnoun*[${1:note}]{${2:key}}"},"doc":"To facilitate using a citation as a noun a new command \\citeasnoun has been created which has the same syntax as the \\cite command except that multiple citations are not permitted."},
+		{"name":"citeasnoun*","arg":{"format":"{}","snippet":"citeasnoun*{${1:key}}"},"doc":"To facilitate using a citation as a noun a new command \\citeasnoun has been created which has the same syntax as the \\cite command except that multiple citations are not permitted."},
+		{"name":"citename","arg":{"format":"[]{}","snippet":"citename[${1:note}]{${2:key}}"},"doc":"\\citename behaves like the \\citeasnoun command except that only the author name(s) portion of the citation label is used."},
+		{"name":"citename","arg":{"format":"{}","snippet":"citename{${1:key}}"},"doc":"\\citename behaves like the \\citeasnoun command except that only the author name(s) portion of the citation label is used."},
+		{"name":"citename*","arg":{"format":"[]{}","snippet":"citename*[${1:note}]{${2:key}}"},"doc":"\\citename behaves like the \\citeasnoun command except that only the author name(s) portion of the citation label is used."},
+		{"name":"citename*","arg":{"format":"{}","snippet":"citename*{${1:key}}"},"doc":"\\citename behaves like the \\citeasnoun command except that only the author name(s) portion of the citation label is used."},
+		{"name":"citeyear","arg":{"format":"[]{}","snippet":"citeyear[${1:note}]{${2:keys}}"},"doc":"\\citeyear behaves like the \\cite command except that only the year portion of the citation label is used."},
+		{"name":"citeyear","arg":{"format":"{}","snippet":"citeyear{${1:keys}}"},"doc":"\\citeyear behaves like the \\cite command except that only the year portion of the citation label is used."},
+		{"name":"citeyear*","arg":{"format":"[]{}","snippet":"citeyear*[${1:note}]{${2:keys}}"},"doc":"\\citeyear behaves like the \\cite command except that only the year portion of the citation label is used."},
+		{"name":"citeyear*","arg":{"format":"{}","snippet":"citeyear*{${1:keys}}"},"doc":"\\citeyear behaves like the \\cite command except that only the year portion of the citation label is used."},
+		{"name":"harvardand"},
+		{"name":"harvarditem","arg":{"format":"[]{}{}{}","snippet":"harvarditem[${1:abbr-citation}]{${2:full-citation}}{${3:citation-year}}{${4:cite-key}}"}},
+		{"name":"harvarditem","arg":{"format":"{}{}{}","snippet":"harvarditem{${1:full-citation}}{${2:citation-year}}{${3:cite-key}}"}},
+		{"name":"harvardleft","unusual":true},
+		{"name":"harvardparenthesis","arg":{"format":"{}","snippet":"harvardparenthesis{${1:round|curly|angle|square|none}}"},"doc":"The type of parenthesis used in citations may be set using the \\harvardparenthesis command which takes one argument. The argument to this command must be one of round, curly, angle, square or none."},
+		{"name":"harvardright","unusual":true},
+		{"name":"harvardurl","arg":{"format":"{}","snippet":"harvardurl{${1}}"},"unusual":true},
+		{"name":"harvardyearleft","unusual":true},
+		{"name":"harvardyearparenthesis","arg":{"format":"{}","snippet":"harvardyearparenthesis{${1:round|curly|angle|square|none}}"}},
+		{"name":"harvardyearright","unusual":true},
+		{"name":"possessivecite","arg":{"format":"[]{}","snippet":"possessivecite[${1:note}]{${2:key}}"},"doc":"\\possessivecite is provided for those instances where it is desired to use the citation as a possessive noun phrase."},
+		{"name":"possessivecite","arg":{"format":"{}","snippet":"possessivecite{${1:key}}"},"doc":"\\possessivecite is provided for those instances where it is desired to use the citation as a possessive noun phrase."},
+		{"name":"possessivecite*","arg":{"format":"[]{}","snippet":"possessivecite*[${1:note}]{${2:key}}"},"doc":"\\possessivecite is provided for those instances where it is desired to use the citation as a possessive noun phrase."},
+		{"name":"possessivecite*","arg":{"format":"{}","snippet":"possessivecite*{${1:key}}"},"doc":"\\possessivecite is provided for those instances where it is desired to use the citation as a possessive noun phrase."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/harvard#c": ["abbr","agsmcite","angle","curly","dcucite","default","full","none","round","square"]
+	},
+	"args": ["\\usepackage/harvard#c"]
 }

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"array"}],
+	"macros": [
+		{"name":"tyformat"},
+		{"name":"tymax"},
+		{"name":"tymin"}
+	],
+	"envs": [
+		{"name":"tabulary","arg":{"format":"{}[]{}","snippet":"{${1:length}}[${2:position}]{${3:preamble}}"}},
+		{"name":"tabulary","arg":{"format":"{}{}","snippet":"{${1:length}}{${2:preamble}}"}}
+	],
+	"keys": {}
+}

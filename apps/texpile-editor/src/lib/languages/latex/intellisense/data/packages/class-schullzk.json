@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"inputenc"},{"name":"schulealt"},{"name":"etex"},{"name":"babel"},{"name":"ifthen"},{"name":"xifthen"},{"name":"calc"},{"name":"xspace"},{"name":"tabularx"},{"name":"array"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ragged2e"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"paralist"},{"name":"textcomp"},{"name":"xmpincl"},{"name":"ifpdf"},{"name":"iftex"},{"name":"wrapfig"},{"name":"eurosym"},{"name":"multirow"},{"name":"multicol"},{"name":"ccicons"},{"name":"xkeyval"},{"name":"svn-multi"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"currfile"},{"name":"cancel"},{"name":"varwidth"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"schullzk"}],
+	"macros": [
+		{"name":"aufgabensec","arg":{"format":"[]{}","snippet":"aufgabensec[${1:extra points}]{${2:title}}"}},
+		{"name":"aufgabensec","arg":{"format":"{}","snippet":"aufgabensec{${1:title}}"}},
+		{"name":"datum","arg":{"format":"{}","snippet":"datum{${1:date}}"}},
+		{"name":"inhalt","arg":{"format":"{}","snippet":"inhalt{${1:content}}"}},
+		{"name":"newpunkte","arg":{"format":"{}{}","snippet":"newpunkte{${1}}{${2}}"},"unusual":true},
+		{"name":"punktesec","arg":{"format":"[]{}","snippet":"punktesec[${1:extra points}]{${2:title}}"}},
+		{"name":"punktesec","arg":{"format":"{}","snippet":"punktesec{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

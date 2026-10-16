@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"babel"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"inputenc"},{"name":"lmodern"}],
+	"macros": [
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1:advisor}}"},"doc":"Define o nome do orientador do trabalho."},
+		{"name":"collaborators","arg":{"format":"{}","snippet":"collaborators{${1:collaborators}}"},"doc":"Define os colaboradores do trabalho."},
+		{"name":"emailauthor","arg":{"format":"{}","snippet":"emailauthor{${1:author email}}"},"doc":"Define o endereço de e-mail do primeiro autor."},
+		{"name":"institution","arg":{"format":"{}","snippet":"institution{${1:institution}}"},"doc":"Define a unidade, instituto ou faculdade e a universidade às quais o trabalho está vinculado."}
+	],
+	"envs": [],
+	"keys": {}
+}

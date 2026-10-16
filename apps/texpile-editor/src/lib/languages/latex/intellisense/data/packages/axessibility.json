@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"xstring"},{"name":"tagpdf","if":"!accsupp"},{"name":"tagpdf-base","if":"!accsupp"},{"name":"fontspec","if":"!accsupp"},{"name":"fontspec-luatex","if":"!accsupp","engines":["lualatex"]},{"name":"luacode","if":"!accsupp"},{"name":"iftex"},{"name":"luatexbase","if":"!accsupp","engines":["lualatex"]},{"name":"accsupp","if":"accsupp"},{"name":"pdfescape","if":"accsupp"},{"name":"kvoptions","if":"accsupp"},{"name":"keyval","if":"accsupp"},{"name":"kvsetkeys","if":"accsupp"},{"name":"fontspec-xetex","if":"!accsupp","engines":["xelatex"]}],
+	"macros": [
+		{"name":"doreplacement","arg":{"format":"{}","snippet":"doreplacement{${1:true|false}}"}},
+		{"name":"iftagpdfopt","unusual":true},
+		{"name":"tagpdfoptfalse","unusual":true},
+		{"name":"tagpdfopttrue","unusual":true},
+		{"name":"wrap","arg":{"format":"{}","snippet":"wrap{${1:formula}}"}},
+		{"name":"wrapml","arg":{"format":"{}","snippet":"wrapml{${1}}"},"unusual":true},
+		{"name":"wrapmlstar","arg":{"format":"{}","snippet":"wrapmlstar{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/axessibility#c": ["accsupp","tagpdf"]
+	},
+	"args": ["\\usepackage/axessibility#c"]
+}

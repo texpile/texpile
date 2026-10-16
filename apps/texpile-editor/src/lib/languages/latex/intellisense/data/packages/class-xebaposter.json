@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"class-article"},{"name":"xkeyval"},{"name":"calc"},{"name":"xcolor"},{"name":"ifxetex"},{"name":"iftex"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"},{"name":"geometry"},{"name":"ifvtex"},{"name":"pgfpages"},{"name":"colortbl","if":"table"},{"name":"array","if":"table"}],
+	"macros": [
+		{"name":"background","arg":{"format":"{}","snippet":"background{${1:background drawing}}"}},
+		{"name":"headerbox","arg":{"format":"{}{}{}","snippet":"headerbox{${1:title}}{${2:options}}{${3:content}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"poster","arg":{"format":"{}{}{}{}{}","snippet":"{${1:options}}{${2:eye catcher}}{${3:title}}{${4:authors}}{${5:university logo}}"}},
+		{"name":"posterbox","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:title}}"}},
+		{"name":"posterbox","arg":{"format":"{}","snippet":"{${1:title}}"}}
+	],
+	"keys": {}
+}

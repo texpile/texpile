@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"margins","arg":{"format":"{}","snippet":"margins{${1:margin}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

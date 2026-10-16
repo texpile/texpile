@@ -1,58 +1,21 @@
 {
-  "deps": [
-    {
-      "name": "ifthen"
-    }
-  ],
-  "macros": [
-    {
-      "name": "cvplace",
-      "arg": {
-        "format": "{}",
-        "snippet": "cvplace{${1:location}}"
-      }
-    },
-    {
-      "name": "cvheadingfont"
-    },
-    {
-      "name": "cvlistheadingfont"
-    },
-    {
-      "name": "cvlabelfont"
-    },
-    {
-      "name": "cvlabelwidth"
-    },
-    {
-      "name": "cvlabelskip"
-    },
-    {
-      "name": "cvlabelsep"
-    },
-    {
-      "name": "cvbibname"
-    }
-  ],
-  "envs": [
-    {
-      "name": "cv",
-      "arg": {
-        "format": "{}",
-        "snippet": "{${1:heading of the curriculum vitae%text}}"
-      }
-    }
-  ],
-  "keys": {
-    "\\usepackage/currvita#c": [
-      "LabelsAligned",
-      "TextAligned",
-      "openbib",
-      "ManyBibs",
-      "NoDate"
-    ]
-  },
-  "args": [
-    "\\usepackage/currvita#c"
-  ]
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"cvbibname"},
+		{"name":"cvheadingfont"},
+		{"name":"cvlabelfont","doc":"The labels of the cvlist environments are typeset in the normal size of the current font."},
+		{"name":"cvlabelsep","doc":"The default width of the distance between the labels and the items itself is equal to 1em."},
+		{"name":"cvlabelskip"},
+		{"name":"cvlabelwidth"},
+		{"name":"cvlistheadingfont"},
+		{"name":"cvplace","arg":{"format":"{}","snippet":"cvplace{${1:location}}"}}
+	],
+	"envs": [
+		{"name":"cv","arg":{"format":"{}","snippet":"{${1:heading}}"}},
+		{"name":"cvlist","arg":{"format":"{}","snippet":"{${1:heading}}"}}
+	],
+	"keys": {
+		"\\usepackage/currvita#c": ["LabelsAligned","ManyBibs","NoDate","TextAligned","openbib"]
+	},
+	"args": ["\\usepackage/currvita#c"]
 }

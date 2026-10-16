@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"addtreesep","arg":{"format":"{}","snippet":"addtreesep{${1}}"}},
+		{"name":"endpsTree"},
+		{"name":"MakeShortTnput","arg":{"format":"{}","snippet":"MakeShortTnput{${1}}"}},
+		{"name":"psedge","arg":{"format":"{}{}","snippet":"psedge{${1}}{${2}}"}},
+		{"name":"pstree","arg":{"format":"{}{}","snippet":"pstree{${1}}{${2}}"}},
+		{"name":"psTree","arg":{"format":"{}","snippet":"psTree{${1}}"}},
+		{"name":"Tc","arg":{"format":"{}{}","snippet":"Tc{${1}}{${2}}"}},
+		{"name":"TC"},
+		{"name":"Tcircle","arg":{"format":"{}","snippet":"Tcircle{${1}}"}},
+		{"name":"TCircle","arg":{"format":"[]{}","snippet":"TCircle[${1}]{${2}}"}},
+		{"name":"TCircle","arg":{"format":"{}","snippet":"TCircle{${1}}"}},
+		{"name":"Tdia","arg":{"format":"{}","snippet":"Tdia{${1}}"}},
+		{"name":"Tdot","arg":{"format":"[]","snippet":"Tdot[${1:options}]"}},
+		{"name":"Tdot"},
+		{"name":"Tdot*","arg":{"format":"[]","snippet":"Tdot*[${1:options}]"}},
+		{"name":"Tdot*"},
+		{"name":"Tf"},
+		{"name":"Tfan","arg":{"format":"[]","snippet":"Tfan[${1}]"}},
+		{"name":"Tfan"},
+		{"name":"Tn"},
+		{"name":"Toval","arg":{"format":"{}","snippet":"Toval{${1}}"}},
+		{"name":"Tp"},
+		{"name":"Tr","arg":{"format":"{}","snippet":"Tr{${1}}"}},
+		{"name":"TR","arg":{"format":"{}","snippet":"TR{${1}}"}},
+		{"name":"Ttri","arg":{"format":"{}","snippet":"Ttri{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

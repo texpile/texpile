@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"UnderscoreCommands","if":"strings"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/underscore#c": ["nohyphen","strings"]
+	},
+	"args": ["\\usepackage/underscore#c"]
+}

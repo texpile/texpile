@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

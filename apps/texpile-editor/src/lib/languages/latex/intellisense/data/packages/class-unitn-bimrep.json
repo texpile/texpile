@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"class-report"},{"name":"babel"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"array"},{"name":"libertine"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"framed"},{"name":"biblatex","if":"bib"},{"name":"pdftexcmds","if":"bib"},{"name":"etoolbox","if":"bib"},{"name":"kvoptions","if":"bib"},{"name":"kvsetkeys","if":"bib"},{"name":"logreq","if":"bib"},{"name":"ifthen","if":"bib"},{"name":"url","if":"bib"},{"name":"blx-case-expl3","if":"bib"},{"name":"xparse","if":"bib"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1:advisor name}}"}},
+		{"name":"cycle","arg":{"format":"{}","snippet":"cycle{${1:cycle}}"}}
+	],
+	"envs": [
+		{"name":"production","doc":"The `production` enviroment should contain a sequence of `\\item` that describe The course you have attended."},
+		{"name":"production*","doc":"The `production` enviroment should contain a sequence of `\\item` that describe The course you have attended."},
+		{"name":"research"},
+		{"name":"research*"},
+		{"name":"school","doc":"The `school` enviroment should contain a sequence of `\\item` that describe the courses you have attended."},
+		{"name":"school*","doc":"The `school` enviroment should contain a sequence of `\\item` that describe the courses you have attended."}
+	],
+	"keys": {
+		"\\documentclass/unitn-bimrep#c": ["bib"]
+	},
+	"args": ["\\documentclass/unitn-bimrep#c"]
+}

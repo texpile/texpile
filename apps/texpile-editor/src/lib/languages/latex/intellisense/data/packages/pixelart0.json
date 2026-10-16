@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"tikz"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"bwpixelart","arg":{"format":"[]{}","snippet":"bwpixelart[${1}]{${2}}"}},
+		{"name":"bwpixelart","arg":{"format":"{}","snippet":"bwpixelart{${1}}"}},
+		{"name":"tikzbwpixelart","arg":{"format":"[]{}{}","snippet":"tikzbwpixelart[${1}]{${2}}{${3}}"}},
+		{"name":"tikzbwpixelart","arg":{"format":"{}{}","snippet":"tikzbwpixelart{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

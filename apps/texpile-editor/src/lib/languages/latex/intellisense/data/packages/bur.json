@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"multicol"},{"name":"tabularx"},{"name":"array"},{"name":"ragged2e"},{"name":"xspace"},{"name":"amsthm"},{"name":"color"},{"name":"colortbl"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"grgmath"},{"name":"natbib"}],
+	"macros": [
+		{"name":"bhline"},
+		{"name":"caption","arg":{"format":"[]{}","snippet":"caption[${1:list entry}]{${2:caption}}"}},
+		{"name":"caption","arg":{"format":"{}","snippet":"caption{${1:caption}}"}},
+		{"name":"caption*","arg":{"format":"[]{}","snippet":"caption*[${1:list entry}]{${2:caption}}"}},
+		{"name":"caption*","arg":{"format":"{}","snippet":"caption*{${1:caption}}"}},
+		{"name":"citeblue","arg":{"format":"{}","snippet":"citeblue{${1}}"}},
+		{"name":"emdash"},
+		{"name":"endash"},
+		{"name":"heading","arg":{"format":"{}","snippet":"heading{${1}}"}},
+		{"name":"inst","arg":{"format":"{}","snippet":"inst{${1}}"}},
+		{"name":"Issue","arg":{"format":"{}","snippet":"Issue{${1}}"}},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1}}"}},
+		{"name":"legend","arg":{"format":"{}","snippet":"legend{${1}}"},"doc":"Additional descriptive text below a table should be marked up with \\legend."},
+		{"name":"Month","arg":{"format":"{}","snippet":"Month{${1}}"}},
+		{"name":"section","arg":{"format":"{}","snippet":"section{${1:heading}}"}},
+		{"name":"section*","arg":{"format":"{}","snippet":"section*{${1:heading}}"}},
+		{"name":"subsection","arg":{"format":"{}","snippet":"subsection{${1:heading}}"}},
+		{"name":"subsection*","arg":{"format":"{}","snippet":"subsection*{${1:heading}}"}},
+		{"name":"subsubsection","arg":{"format":"{}","snippet":"subsubsection{${1:heading}}"}},
+		{"name":"subsubsection*","arg":{"format":"{}","snippet":"subsubsection*{${1:heading}}"}},
+		{"name":"Volume","arg":{"format":"{}","snippet":"Volume{${1}}"}},
+		{"name":"Year","arg":{"format":"{}","snippet":"Year{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

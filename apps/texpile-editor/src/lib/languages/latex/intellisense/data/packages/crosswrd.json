@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"ACROSStext"},
+		{"name":"barwidth"},
+		{"name":"clue","arg":{"format":"{}{}{}{}{}{}{}","snippet":"clue{${1:clue number}}{${2:A/D}}{${3:column}}{${4:row}}{${5:answer}}{${6:text}}{${7:help}}"}},
+		{"name":"cluesize"},
+		{"name":"cluewidth"},
+		{"name":"DOWNtext"},
+		{"name":"Header","doc":"The crossword environment defines \\Header to be empty, but the user may give it an explicit definition within the environment; if so, we’ll print it just above the grid itself."},
+		{"name":"ifnumberit","unusual":true},
+		{"name":"ifseqtest","unusual":true},
+		{"name":"ninept"},
+		{"name":"numberitfalse","unusual":true},
+		{"name":"numberittrue","unusual":true},
+		{"name":"numbersize"},
+		{"name":"Preamble"},
+		{"name":"seqtestfalse","unusual":true},
+		{"name":"seqtesttrue","unusual":true}
+	],
+	"envs": [
+		{"name":"crossword","arg":{"format":"[]{}{}","snippet":"[${1:rows}]{${2:columns}}{${3:Y/N}}"}},
+		{"name":"crossword","arg":{"format":"{}{}","snippet":"{${1:columns}}{${2:Y/N}}"}},
+		{"name":"crossword*","arg":{"format":"[]{}{}","snippet":"[${1:rows}]{${2:columns}}{${3:Y/N}}"}},
+		{"name":"crossword*","arg":{"format":"{}{}","snippet":"{${1:columns}}{${2:Y/N}}"}}
+	],
+	"keys": {}
+}

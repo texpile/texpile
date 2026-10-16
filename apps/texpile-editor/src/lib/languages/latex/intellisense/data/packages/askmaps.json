@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"pict2e"},{"name":"trig"}],
+	"macros": [
+		{"name":"askmap","arg":{"format":"{}{}{}{}{}","snippet":"askmap{${1:variables}}{${2:output}}{${3:inputs}}{${4:values}}{${5:picture commands}}"},"doc":"The command \\askmap provides a drop-in replacement for the command \\karnaughmap from the Karnaugh package."},
+		{"name":"askmapbitcombinationsize","doc":"The command \\askmapbitcombinationsize sets the size and typeface for the bit combinations at the top and the left."},
+		{"name":"askmapcontentsize","doc":"The command \\askmapcontentsize sets the size and typeface for the cell’s contents."},
+		{"name":"askmapi","arg":{"format":"{}{}{}{}{}","snippet":"askmapi{${1:output}}{${2:inputs}}{${3:options}}{${4:values}}{${5:picture commands}}"}},
+		{"name":"askmapii","arg":{"format":"{}{}{}{}{}","snippet":"askmapii{${1:output}}{${2:inputs}}{${3:options}}{${4:values}}{${5:picture commands}}"}},
+		{"name":"askmapiii","arg":{"format":"{}{}{}{}{}","snippet":"askmapiii{${1:output}}{${2:inputs}}{${3:options}}{${4:values}}{${5:picture commands}}"}},
+		{"name":"askmapiiialt","arg":{"format":"{}{}{}{}{}","snippet":"askmapiiialt{${1:output}}{${2:inputs}}{${3:options}}{${4:values}}{${5:picture commands}}"}},
+		{"name":"askmapindexsize","doc":"The command \\askmapindexsize sets the size and typeface of the minterm numbers in the cells."},
+		{"name":"askmapiv","arg":{"format":"{}{}{}{}{}","snippet":"askmapiv{${1:output}}{${2:inputs}}{${3:options}}{${4:values}}{${5:picture commands}}"}},
+		{"name":"askmapsdate","unusual":true},
+		{"name":"askmapsversion","unusual":true},
+		{"name":"askmapunitlength","doc":"The new dimension \\askmapunitlength is available and specifies the length and width of the squares."},
+		{"name":"askmapv","arg":{"format":"{}{}{}{}{}","snippet":"askmapv{${1:output}}{${2:inputs}}{${3:options}}{${4:values}}{${5:picture commands}}"}},
+		{"name":"askmapvarsep","doc":"The command \\askmapvarsep sets the relative line length of the variable separator on the left of the Karnaugh map."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/askmaps#c": ["disablef"]
+	},
+	"args": ["\\usepackage/askmaps#c"]
+}

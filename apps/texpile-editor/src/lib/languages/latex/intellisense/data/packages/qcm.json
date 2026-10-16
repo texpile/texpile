@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"verbatim"},{"name":"tabularx"},{"name":"array"}],
+	"macros": [
+		{"name":"answernumberfont","arg":{"format":"{}","snippet":"answernumberfont{${1}}"},"doc":"The \\answernumberfont macro takes one mandatory argument which redefines the font to use for displaying the answer number."},
+		{"name":"answerstitle","arg":{"format":"{}","snippet":"answerstitle{${1}}"}},
+		{"name":"answerstitlefont","arg":{"format":"{}","snippet":"answerstitlefont{${1}}"},"doc":"The \\answerstitlefont macro takes one mandatory argument which redefines the font to use for the answers title."},
+		{"name":"correctionstyle","arg":{"format":"{}","snippet":"correctionstyle{${1}}"},"doc":"The appearance of the contents of the correction environment can be adjusted by using the \\correctionstyle macro."},
+		{"name":"false"},
+		{"name":"falsesymbol","arg":{"format":"{}","snippet":"falsesymbol{${1}}"}},
+		{"name":"headerfont","arg":{"format":"{}","snippet":"headerfont{${1}}"},"doc":"The \\headerfont macro takes one mandatory argument which redefines the font to use for the headers (first line and first column) of the form and mask arrays."},
+		{"name":"makeform"},
+		{"name":"makemask","doc":"Based on the questions appearing in your document, QCM has the ability to generate a “form” (a grid that your students will have to fill in), and a “mask” (the same grid, only with correct answers properly checked in)."},
+		{"name":"questionspace","doc":"\\questionspace is the amount of extra vertical space to put under the question, before the list of proposed answers."},
+		{"name":"thequestion","unusual":true},
+		{"name":"true"},
+		{"name":"truesymbol","arg":{"format":"{}","snippet":"truesymbol{${1}}"}},
+		{"name":"X","arg":{"format":"{}","snippet":"X{${1}}"}}
+	],
+	"envs": [
+		{"name":"correction","doc":"To typeset explanations below the questions, use the correction environment (no argument)."},
+		{"name":"question","arg":{"format":"{}","snippet":"{${1}}"},"doc":"The proposed answers are displayed below the question in a list fashion (the question environment is a list-based one)."}
+	],
+	"keys": {
+		"\\usepackage/qcm#c": ["correction","english","francais","french","nocorrection"]
+	},
+	"args": ["\\usepackage/qcm#c"]
+}

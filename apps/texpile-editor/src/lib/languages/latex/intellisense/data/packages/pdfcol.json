@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"iftex"},{"name":"color","engines":["pdflatex","lualatex"]},{"name":"etoolbox","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"ifpdfcolAvailable","unusual":true},
+		{"name":"pdfcolErrorNoStacks"},
+		{"name":"pdfcolIfStackExists","arg":{"format":"{}{}{}","snippet":"pdfcolIfStackExists{${1:name}}{${2:true}}{${3:false}}"},"doc":"Macro \\pdfcolIfStackExists checks whether color stack ⟨name⟩ exists."},
+		{"name":"pdfcolInitStack","arg":{"format":"{}","snippet":"pdfcolInitStack{${1}}"},"doc":"A new color stack is initialized by \\pdfcolInitStack."},
+		{"name":"pdfcolSetCurrent","arg":{"format":"{}","snippet":"pdfcolSetCurrent{${1}}"},"doc":"Macro \\pdfcolSetCurrent sets the color that is read in the top-most entry of color stack ⟨name⟩."},
+		{"name":"pdfcolSetCurrentColor"},
+		{"name":"pdfcolSwitchStack","arg":{"format":"{}","snippet":"pdfcolSwitchStack{${1}}"},"doc":"Macro \\pdfcolSwitchStack switches the color stack."}
+	],
+	"envs": [],
+	"keys": {}
+}

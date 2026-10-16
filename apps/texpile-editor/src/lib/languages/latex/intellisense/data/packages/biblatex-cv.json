@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"biblatex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"datenumber"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"xpatch"},{"name":"xparse"},{"name":"blx-case-expl3"},{"name":"totcount"}],
+	"macros": [
+		{"name":"highlightname","arg":{"format":"{}{}{}{}","snippet":"highlightname{${1:family}}{${2:given}}{${3:prefix}}{${4:suffix}}"},"doc":"The \\highlightname macro is used to identify a particular name for special treatment."},
+		{"name":"mkbibdown","arg":{"format":"{}","snippet":"mkbibdown{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

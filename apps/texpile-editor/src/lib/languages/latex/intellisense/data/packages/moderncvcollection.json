@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"collectionadd","arg":{"format":"[]{}{}","snippet":"collectionadd[${1:key}]{${2:collection name}}{${3:item}}"},"unusual":true},
+		{"name":"collectionadd","arg":{"format":"{}{}","snippet":"collectionadd{${1:collection name}}{${2:item}}"},"unusual":true},
+		{"name":"collectioncount","arg":{"format":"{}","snippet":"collectioncount{${1:collection name}}"},"unusual":true},
+		{"name":"collectionfindbykey","arg":{"format":"{}{}","snippet":"collectionfindbykey{${1:collection name}}{${2:key}}"},"unusual":true},
+		{"name":"collectiongetitem","arg":{"format":"{}{}","snippet":"collectiongetitem{${1:collection name}}{${2:element id}}"},"unusual":true},
+		{"name":"collectiongetkey","arg":{"format":"{}{}","snippet":"collectiongetkey{${1:collection name}}{${2:element id}}"},"unusual":true},
+		{"name":"collectionloop","arg":{"format":"{}{}","snippet":"collectionloop{${1:collection name}}{${2:operation}}"},"unusual":true},
+		{"name":"collectionloopbreak","unusual":true},
+		{"name":"collectionnew","arg":{"format":"{}","snippet":"collectionnew{${1:collection name}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

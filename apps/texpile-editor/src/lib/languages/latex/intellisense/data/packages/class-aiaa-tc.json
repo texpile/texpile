@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"array"},{"name":"overcite"},{"name":"cite"},{"name":"fancyhdr"},{"name":"setspace","if":"submit"}],
+	"macros": [
+		{"name":"AIAAconference","arg":{"format":"{}","snippet":"AIAAconference{${1:conference}}"}},
+		{"name":"AIAAcopyright","arg":{"format":"{}","snippet":"AIAAcopyright{${1:copyright notice}}"}},
+		{"name":"AIAAcopyrightA","arg":{"format":"{}","snippet":"AIAAcopyrightA{${1:year}}"}},
+		{"name":"AIAAcopyrightB","arg":{"format":"{}{}","snippet":"AIAAcopyrightB{${1:year}}{${2:holder}}"}},
+		{"name":"AIAAcopyrightC"},
+		{"name":"AIAAcopyrightD","arg":{"format":"{}","snippet":"AIAAcopyrightD{${1:year}}"}},
+		{"name":"AIAAcopyrightDAPL","arg":{"format":"{}","snippet":"AIAAcopyrightDAPL{${1:year}}"}},
+		{"name":"AIAApapernumber","arg":{"format":"{}","snippet":"AIAApapernumber{${1:paper number}}"}},
+		{"name":"AIAAsubmitinfo","arg":{"format":"{}","snippet":"AIAAsubmitinfo{${1:footer text}}"}},
+		{"name":"thanksibid","arg":{"format":"{}","snippet":"thanksibid{${1:author position}}"},"doc":"The command \\thanksibid is very similar to the standard \\thanks command which is used when footnoting the author affliations within the \\author field. The distinction is that the \\thanksibid command allows one to repeat a given footnote symbol without repeating the associated footnote text."}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/aiaa-tc#c": ["handcarry","submit"]
+	},
+	"args": ["\\documentclass/aiaa-tc#c"]
+}

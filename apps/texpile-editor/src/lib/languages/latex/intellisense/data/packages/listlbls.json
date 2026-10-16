@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"}],
+	"macros": [
+		{"name":"listoflabels","arg":{"format":"[]","snippet":"listoflabels[${1}]"},"if":"draft","doc":"Print a list of all available lables that are defined throughout the document."},
+		{"name":"listoflabels","if":"draft","doc":"Print a list of all available lables that are defined throughout the document."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/listlbls#c": ["draft","final","nonameref","notoc","numtoc","totoc"]
+	},
+	"args": ["\\usepackage/listlbls#c"]
+}

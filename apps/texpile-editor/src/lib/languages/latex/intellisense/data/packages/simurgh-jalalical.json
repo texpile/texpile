@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"gregoriantoday"},
+		{"name":"jalaliday"},
+		{"name":"jalalimonth"},
+		{"name":"jalalitoday"},
+		{"name":"jalaliyear"}
+	],
+	"envs": [],
+	"keys": {}
+}

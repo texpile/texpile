@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"bbigg","arg":{"format":"[]{}{}","snippet":"bbigg[${1:increment}]{${2:multiplier}}{${3:delimiter}}"}},
+		{"name":"bbigg","arg":{"format":"{}{}","snippet":"bbigg{${1:multiplier}}{${2:delimiter}}"}},
+		{"name":"bbiggl","arg":{"format":"[]{}{}","snippet":"bbiggl[${1:increment}]{${2:multiplier}}{${3:delimiter}}"}},
+		{"name":"bbiggl","arg":{"format":"{}{}","snippet":"bbiggl{${1:multiplier}}{${2:delimiter}}"}},
+		{"name":"bbiggm","arg":{"format":"[]{}{}","snippet":"bbiggm[${1:increment}]{${2:multiplier}}{${3:delimiter}}"}},
+		{"name":"bbiggm","arg":{"format":"{}{}","snippet":"bbiggm{${1:multiplier}}{${2:delimiter}}"}},
+		{"name":"bbiggr","arg":{"format":"[]{}{}","snippet":"bbiggr[${1:increment}]{${2:multiplier}}{${3:delimiter}}"}},
+		{"name":"bbiggr","arg":{"format":"{}{}","snippet":"bbiggr{${1:multiplier}}{${2:delimiter}}"}},
+		{"name":"bitand"},
+		{"name":"bitor"},
+		{"name":"dbland"},
+		{"name":"dblor"},
+		{"name":"root","arg":{"format":"{}","snippet":"root{${1:radicand}}"},"unusual":true},
+		{"name":"root*","arg":{"format":"{}","snippet":"root*{${1:radicand}}"},"unusual":true},
+		{"name":"sqrt","arg":{"format":"[]{}","snippet":"sqrt[${1:index}]{${2:radicand}}"},"math":true},
+		{"name":"sqrt","arg":{"format":"{}","snippet":"sqrt{${1:radicand}}"},"math":true},
+		{"name":"sqrt*","arg":{"format":"[]{}","snippet":"sqrt*[${1:index}]{${2:radicand}}"},"math":true},
+		{"name":"sqrt*","arg":{"format":"{}","snippet":"sqrt*{${1:radicand}}"},"math":true},
+		{"name":"sqrtdel","arg":{"format":"{}","snippet":"sqrtdel{${1:radicand}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

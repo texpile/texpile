@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"pkginfograb"}],
+	"macros": [
+		{"name":"xpeekEnv","arg":{"format":"{}{}{}{}","snippet":"xpeekEnv{${1:environment name}}{${2:regex}}{${3:if true}}{${4:if false}}"}},
+		{"name":"xpeekEnvCmd","arg":{"format":"{}{}","snippet":"xpeekEnvCmd{${1}}{${2}}"}},
+		{"name":"xpeekSetCmd","arg":{"format":"{}{}{}{}","snippet":"xpeekSetCmd{${1:command}}{${2:regex}}{${3:if true}}{${4:if false}}"}},
+		{"name":"xpeekSetCmdGlobal","arg":{"format":"{}{}{}{}","snippet":"xpeekSetCmdGlobal{${1:command}}{${2:regex}}{${3:if true}}{${4:if false}}"}},
+		{"name":"xpeekTok","arg":{"format":"{}{}{}","snippet":"xpeekTok{${1:regex}}{${2:if true}}{${3:if false}}"}},
+		{"name":"xpeekTokCmd","arg":{"format":"{}","snippet":"xpeekTokCmd{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"PopLetterCat","arg":{"format":"{}","snippet":"PopLetterCat{${1:char}}"},"unusual":true},
+		{"name":"PopLetterCatAt","unusual":true},
+		{"name":"PushCatMakeLetter","arg":{"format":"{}","snippet":"PushCatMakeLetter{${1:char}}"},"unusual":true},
+		{"name":"PushCatMakeLetterAt","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

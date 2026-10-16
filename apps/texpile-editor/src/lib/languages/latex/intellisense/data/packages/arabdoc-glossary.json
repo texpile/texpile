@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"glossaries"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"mfirstuc"},{"name":"etoolbox"},{"name":"xfor"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"}],
+	"macros": [
+		{"name":"arabdocglossarydate","unusual":true},
+		{"name":"arabdocglossaryversion","unusual":true},
+		{"name":"newarabicacronym","arg":{"format":"{}{}{}{}","snippet":"newarabicacronym{${1:key}}{${2:abbreviation}}{${3:English full form}}{${4:Arabic full form}}"}},
+		{"name":"newarabicterm","arg":{"format":"{}{}{}","snippet":"newarabicterm{${1:key}}{${2:English name}}{${3:Arabic description}}"}},
+		{"name":"newbilingualterm","arg":{"format":"{}{}{}{}","snippet":"newbilingualterm{${1}}{${2}}{${3}}{${4}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

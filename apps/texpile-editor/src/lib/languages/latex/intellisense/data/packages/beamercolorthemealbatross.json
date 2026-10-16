@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/beamercolorthemealbatross#c": ["overlystylish"]
+	},
+	"args": ["\\usepackage/beamercolorthemealbatross#c"]
+}

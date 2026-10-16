@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"class-ctexart"},{"name":"class-article"},{"name":"luatexja","engines":["lualatex"]},{"name":"luatexja-core","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"everyhook","engines":["lualatex"]},{"name":"svn-prov","engines":["lualatex"]},{"name":"luatexja-compat","engines":["lualatex"]},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"zhnumber"},{"name":"fancyhdr"},{"name":"xcolor"},{"name":"amsthm"},{"name":"amsfonts"},{"name":"siunitx"},{"name":"translations"},{"name":"amstext"},{"name":"array"},{"name":"xstring"},{"name":"mfirstuc"},{"name":"textcase"},{"name":"asymptote"},{"name":"ifthen"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifpdf"},{"name":"ifxetex"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"newtxtext"},{"name":"xpatch"},{"name":"xparse"},{"name":"textcomp"},{"name":"scalefnt"},{"name":"newtxmath"},{"name":"amsmath"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"centernot"},{"name":"abstract"},{"name":"cite"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"calc"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"listings"},{"name":"lltjp-listings","engines":["lualatex"]},{"name":"luatexbase-cctb","engines":["lualatex"]},{"name":"microtype"},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"keyval","engines":["xelatex"]},{"name":"xeCJK-listings","engines":["xelatex"]}],
+	"macros": [
+		{"name":"entitle","arg":{"format":"{}","snippet":"entitle{${1:English title}}"}},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords}}"}}
+	],
+	"envs": [
+		{"name":"case","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"case"},
+		{"name":"conjecture","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"conjecture"},
+		{"name":"corollary","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"corollary"},
+		{"name":"definition","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"definition"},
+		{"name":"example","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"example"},
+		{"name":"lemma","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"lemma"},
+		{"name":"note","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"note"},
+		{"name":"problem","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"problem"},
+		{"name":"problema","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"problema"},
+		{"name":"proposition","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"proposition"},
+		{"name":"remark","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"remark"},
+		{"name":"solution","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"solution"},
+		{"name":"theorem","arg":{"format":"[]","snippet":"[${1:name}]"}},
+		{"name":"theorem"}
+	],
+	"keys": {}
+}

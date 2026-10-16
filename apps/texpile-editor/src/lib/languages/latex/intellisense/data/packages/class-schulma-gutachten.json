@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"babel"},{"name":"datetime2"},{"name":"tracklang"},{"name":"etoolbox"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"siunitx"},{"name":"translations"},{"name":"pdftexcmds"},{"name":"amstext"},{"name":"array"},{"name":"color"}],
+	"macros": [
+		{"name":"Datum","arg":{"format":"{}","snippet":"Datum{${1:date}}"},"doc":"Gibt das Datum des Gutachtens an."},
+		{"name":"Fach","arg":{"format":"{}","snippet":"Fach{${1:subject}}"},"doc":"Gibt das geprüfte Unterrichtsfach an."},
+		{"name":"Gesamtpunktzahl","arg":{"format":"{}","snippet":"Gesamtpunktzahl{${1:total points}}"},"doc":"Gibt die erreichbare Punktzahl in der Klausur an."},
+		{"name":"Name","doc":"Dient zur Verwendung des Namens des Prüflings innerhalb des Gutachtentextes."},
+		{"name":"NameDativ","doc":"Dient zur Verwendung des Namens des Prüflings im Dativ innerhalb des Gutachtentextes."},
+		{"name":"Ort","arg":{"format":"{}","snippet":"Ort{${1:school place}}"},"doc":"Gibt den Ort der Schule an."},
+		{"name":"Schule","arg":{"format":"{}","snippet":"Schule{${1:school name}}"},"doc":"Gibt den Namen der Schule an."}
+	],
+	"envs": [
+		{"name":"Gutachten","arg":{"format":"{}{}{}{}[]","snippet":"{${1:first name}}{${2:last name}}{${3:gender}}{${4:points}}[${5:deduction}]"},"doc":"Diese Umgebung enthält das Gutachten für einen einzelnen Prüfling."},
+		{"name":"Gutachten","arg":{"format":"{}{}{}{}","snippet":"{${1:first name}}{${2:last name}}{${3:gender}}{${4:points}}"},"doc":"Diese Umgebung enthält das Gutachten für einen einzelnen Prüfling."}
+	],
+	"keys": {
+		"\\documentclass/schulma-gutachten#c": ["AT","BELL","Korreferentin","Referentin"]
+	},
+	"args": ["\\documentclass/schulma-gutachten#c"]
+}

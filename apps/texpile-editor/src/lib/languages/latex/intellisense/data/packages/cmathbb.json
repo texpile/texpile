@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"amsfonts"}],
+	"macros": [
+		{"name":"CMath","arg":{"format":"{}","snippet":"CMath{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/cmathbb#c": ["cmathbb","psamsfonts"]
+	},
+	"args": ["\\usepackage/cmathbb#c"]
+}

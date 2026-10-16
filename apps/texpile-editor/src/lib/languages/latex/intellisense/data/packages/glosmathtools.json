@@ -1,0 +1,49 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"etoolbox"},{"name":"glossaries"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"}],
+	"macros": [
+		{"name":"glsac","arg":{"format":"[]{}","snippet":"glsac[${1:accent}]{${2:label}}"}},
+		{"name":"glsac","arg":{"format":"{}","snippet":"glsac{${1:label}}"}},
+		{"name":"glscatnamefmt","arg":{"format":"{}","snippet":"glscatnamefmt{${1}}"},"doc":"The \\glscatnamefmt macro can be redefined in the preamble to modify header format for categories."},
+		{"name":"glsdescsec","arg":{"format":"[]{}[]","snippet":"glsdescsec[${1:options}]{${2:label}}[${3:insert}]"}},
+		{"name":"glsdescsec","arg":{"format":"{}","snippet":"glsdescsec{${1:label}}"}},
+		{"name":"glsdescsec*","arg":{"format":"[]{}[]","snippet":"glsdescsec*[${1:options}]{${2:label}}[${3:insert}]"}},
+		{"name":"glsdescsec*","arg":{"format":"{}","snippet":"glsdescsec*{${1:label}}"}},
+		{"name":"Glsdescsec","arg":{"format":"[]{}[]","snippet":"Glsdescsec[${1:options}]{${2:label}}[${3:insert}]"}},
+		{"name":"Glsdescsec","arg":{"format":"{}","snippet":"Glsdescsec{${1:label}}"}},
+		{"name":"Glsdescsec*","arg":{"format":"[]{}[]","snippet":"Glsdescsec*[${1:options}]{${2:label}}[${3:insert}]"}},
+		{"name":"Glsdescsec*","arg":{"format":"{}","snippet":"Glsdescsec*{${1:label}}"}},
+		{"name":"GLSdescsec","arg":{"format":"[]{}[]","snippet":"GLSdescsec[${1:options}]{${2:label}}[${3:insert}]"}},
+		{"name":"GLSdescsec","arg":{"format":"{}","snippet":"GLSdescsec{${1:label}}"}},
+		{"name":"GLSdescsec*","arg":{"format":"[]{}[]","snippet":"GLSdescsec*[${1:options}]{${2:label}}[${3:insert}]"}},
+		{"name":"GLSdescsec*","arg":{"format":"{}","snippet":"GLSdescsec*{${1:label}}"}},
+		{"name":"glsentrybar","arg":{"format":"{}","snippet":"glsentrybar{${1}}"},"unusual":true},
+		{"name":"glsentryddot","arg":{"format":"{}","snippet":"glsentryddot{${1}}"},"unusual":true},
+		{"name":"glsentrydescsec","arg":{"format":"{}","snippet":"glsentrydescsec{${1}}"},"unusual":true},
+		{"name":"Glsentrydescsec","arg":{"format":"{}","snippet":"Glsentrydescsec{${1}}"},"unusual":true},
+		{"name":"glsentrydot","arg":{"format":"{}","snippet":"glsentrydot{${1}}"},"unusual":true},
+		{"name":"glsentryhat","arg":{"format":"{}","snippet":"glsentryhat{${1}}"},"unusual":true},
+		{"name":"glsentrytilde","arg":{"format":"{}","snippet":"glsentrytilde{${1}}"},"unusual":true},
+		{"name":"glsentryvec","arg":{"format":"{}","snippet":"glsentryvec{${1}}"},"unusual":true},
+		{"name":"glslang","arg":{"format":"[]{}","snippet":"glslang[${1:language}]{${2:label}}"}},
+		{"name":"glslang","arg":{"format":"{}","snippet":"glslang{${1:label}}"}},
+		{"name":"glsub","arg":{"format":"[]{}{}","snippet":"glsub[${1:accent}]{${2:label}}{${3:subscript}}"},"doc":"The \\glsub macro allows to add subscripts to variables: dv , zv , Tv , Da , ρw and μv ."},
+		{"name":"glsub","arg":{"format":"{}{}","snippet":"glsub{${1:label}}{${2:subscript}}"},"doc":"The \\glsub macro allows to add subscripts to variables: dv , zv , Tv , Da , ρw and μv ."},
+		{"name":"glsubs","arg":{"format":"[]{}{}{}","snippet":"glsubs[${1:accent}]{${2:label}}{${3:subscript}}{${4:subscript}}"}},
+		{"name":"glsubs","arg":{"format":"{}{}{}","snippet":"glsubs{${1:label}}{${2:subscript}}{${3:subscript}}"}},
+		{"name":"glsvi","arg":{"format":"[][]{}{}","snippet":"glsvi[${1:accent}][${2:index accent}]{${3:variable}}{${4:index variable}}"}},
+		{"name":"glsvi","arg":{"format":"{}{}","snippet":"glsvi{${1:variable}}{${2:index variable}}"}},
+		{"name":"glsvisub","arg":{"format":"[][]{}{}{}","snippet":"glsvisub[${1:accent}][${2:index accent}]{${3:variable}}{${4:index variable}}{${5:subscript}}"}},
+		{"name":"glsvisub","arg":{"format":"{}{}{}","snippet":"glsvisub{${1:variable}}{${2:index variable}}{${3:subscript}}"}},
+		{"name":"newglosentrymath","arg":{"format":"{}{}{}","snippet":"newglosentrymath{${1:label}}{${2:symbol}}{${3:options}}"},"doc":"By defining mathematical symbols with \\newglosentrymath, all macros can be used in text mode and math mode (with $$)."},
+		{"name":"qtmark","if":"qtmarkupright","doc":"The \\qtmark macro inserts the character <\">."},
+		{"name":"sbu","arg":{"format":"{}","snippet":"sbu{${1:subscript}}"}},
+		{"name":"setacronymlang","arg":{"format":"{}","snippet":"setacronymlang{${1:L1|L2|L1L2|L2L1}}"}}
+	],
+	"envs": [
+		{"name":"acronymlang","arg":{"format":"{}","snippet":"{${1:L1|L2|L1L2|L2L1}}"}}
+	],
+	"keys": {
+		"\\usepackage/glosmathtools#c": ["nodefop","qtmarkupright","singlelineskip"]
+	},
+	"args": ["\\usepackage/glosmathtools#c"]
+}

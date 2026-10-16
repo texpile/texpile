@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"etoolbox"},{"name":"suffix"}],
+	"macros": [
+		{"name":"disablehandout","doc":"use \\disablehandout to disable the handout’s generation from the current point and \\enablehandout to enable it from the current point."},
+		{"name":"enablehandout","doc":"use \\disablehandout to disable the handout’s generation from the current point and \\enablehandout to enable it from the current point."},
+		{"name":"forhandout","arg":{"format":"{}","snippet":"forhandout{${1:code}}"}},
+		{"name":"forhandout*","arg":{"format":"{}","snippet":"forhandout*{${1:code}}"}},
+		{"name":"handout","arg":{"format":"{}","snippet":"handout{${1:file}}"}},
+		{"name":"handoutnumber","arg":{"format":"{}","snippet":"handoutnumber{${1:number}}"}},
+		{"name":"handoutnumberintxt","arg":{"format":"{}","snippet":"handoutnumberintxt{${1:number}}"}},
+		{"name":"nothandout","arg":{"format":"{}","snippet":"nothandout{${1:text}}"},"doc":"the argument of a command \\nothandout will be printed only in the main text."},
+		{"name":"onlyhandout","arg":{"format":"{}","snippet":"onlyhandout{${1:text}}"},"doc":"The argument of a \\onlyhandout command will be printed only in the handout."},
+		{"name":"thehandoutnumber","unusual":true,"if":"numbering"}
+	],
+	"envs": [],
+	"keys": {}
+}

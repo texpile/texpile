@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"ctbnex"},
+		{"name":"ctbney","doc":"The y-coordinate of the north east corner of the shape’s corrected text box."},
+		{"name":"mincorrect","arg":{"format":"{}{}","snippet":"mincorrect{${1}}{${2}}"}},
+		{"name":"setpaths","arg":{"format":"{}{}","snippet":"setpaths{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

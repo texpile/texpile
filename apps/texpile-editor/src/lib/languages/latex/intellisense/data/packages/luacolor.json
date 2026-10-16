@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"color"}],
+	"macros": [
+		{"name":"luacolorProcessBox","arg":{"format":"{}","snippet":"luacolorProcessBox{${1:box number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

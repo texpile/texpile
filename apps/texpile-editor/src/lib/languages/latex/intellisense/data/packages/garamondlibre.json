@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"garamondlibrelgr","doc":"Command \\garamondlibrelgr activates the LGR encoding of type1 fonts."},
+		{"name":"infigures","doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"ornaments"},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"swashshape"},
+		{"name":"textin","arg":{"format":"{}","snippet":"textin{${1:text}}"}},
+		{"name":"textornaments","arg":{"format":"{}","snippet":"textornaments{${1:digits}}"}},
+		{"name":"textsu","arg":{"format":"{}","snippet":"textsu{${1:text}}"},"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	],
+	"envs": [],
+	"keys": {}
+}

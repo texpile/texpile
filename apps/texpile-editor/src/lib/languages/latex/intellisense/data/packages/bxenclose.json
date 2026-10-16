@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"enclosebodywith","arg":{"format":"{}{}","snippet":"enclosebodywith{${1:begin}}{${2:end}}"},"doc":"This command makes the document body enclosed with `<begin>` and `<end>`."}
+	],
+	"envs": [],
+	"keys": {}
+}

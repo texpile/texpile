@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"framefor","arg":{"format":"{}{}","snippet":"framefor{${1:audience keyword}}{${2:frame content}}"}},
+		{"name":"justfor","arg":{"format":"{}{}","snippet":"justfor{${1:audience keyword}}{${2:content}}"}},
+		{"name":"showcontentfor","arg":{"format":"{}{}","snippet":"showcontentfor{${1:audience keyword}}{${2:content}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

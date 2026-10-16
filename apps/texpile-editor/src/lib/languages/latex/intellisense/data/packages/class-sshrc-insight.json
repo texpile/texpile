@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"class-article"},{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"subfiles"},{"name":"import"},{"name":"newtxtext"},{"name":"xpatch"},{"name":"xparse"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"xstring"},{"name":"ifthen"},{"name":"scalefnt"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"newtxmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"centernot"},{"name":"geometry"},{"name":"ifvtex"},{"name":"ulem"},{"name":"tokcycle"},{"name":"translations"},{"name":"pdftexcmds"}],
+	"macros": [
+		{"name":"characterlimit","unusual":true},
+		{"name":"countchars","arg":{"format":"[]{}","snippet":"countchars[${1:length limit}]{${2:text}}"},"doc":"This macro can be used for writing long-answer form data, such as the proposal summary and the response to previous critiques. Its principal benefit is that, in addition to printing the answer text, it outputs its total character count, thereby helping you keep your text within the length limit specified in the application form."},
+		{"name":"countchars","arg":{"format":"{}","snippet":"countchars{${1:text}}"},"doc":"This macro can be used for writing long-answer form data, such as the proposal summary and the response to previous critiques. Its principal benefit is that, in addition to printing the answer text, it outputs its total character count, thereby helping you keep your text within the length limit specified in the application form."},
+		{"name":"ifrunningcount","unusual":true},
+		{"name":"ifsummarycount","unusual":true},
+		{"name":"limitcolor","unusual":true},
+		{"name":"runningcountfalse","unusual":true},
+		{"name":"runningcounttrue","unusual":true},
+		{"name":"sshrcstudent"},
+		{"name":"sshrcsupported"},
+		{"name":"subfilesection","arg":{"format":"{}","snippet":"subfilesection{${1:heading}}"}},
+		{"name":"subfilesubsection","arg":{"format":"{}","snippet":"subfilesubsection{${1:heading}}"}},
+		{"name":"subfiletitle","arg":{"format":"{}","snippet":"subfiletitle{${1:title}}"},"doc":"In subfiles, this macro should be used in place of the standard \\maketitle macro. It takes as its sole argument the title of the subfile."},
+		{"name":"summarycountfalse","unusual":true},
+		{"name":"summarycounttrue","unusual":true},
+		{"name":"thelettercount","unusual":true},
+		{"name":"thewordcount","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

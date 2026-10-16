@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"xparse"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"linesyscircled","arg":{"format":"{}","snippet":"linesyscircled{${1:text}}"},"doc":"The package also defines \\linesyscircled as the command used by the built-in pivot highlighter. It takes one argument and places that argument inside a TikZ circle; this command is available independently of the environment."},
+		{"name":"linesysdeclaretransparentwrapper","arg":{"format":"{}","snippet":"linesysdeclaretransparentwrapper{${1:wrapper command}}"},"doc":"Declare a one-argument source form \\foo{content} transparent to lexical coefficient classification."},
+		{"name":"linesyssetcommonoptions","arg":{"format":"{}","snippet":"linesyssetcommonoptions{${1:options}}"},"doc":"Set only the persistent options shared by both renderers."},
+		{"name":"linesyssetdefaultoptions","arg":{"format":"{}","snippet":"linesyssetdefaultoptions{${1:options}}"},"doc":"Set persistent defaults for linesys."},
+		{"name":"linesyswrapdisable","doc":"Suppress visual wrapper application within the surrounding TeX group; wrapper syntax is still parsed and validated."},
+		{"name":"linesyswrapenable","doc":"Re-enable visual wrapper application within the surrounding TeX group."},
+		{"name":"linexpr","arg":{"format":"[]{}","snippet":"linexpr[${1:options}]{${2:coefficients}}"}},
+		{"name":"linexpr","arg":{"format":"{}","snippet":"linexpr{${1:coefficients}}"}},
+		{"name":"linexpsetdefaultoptions","arg":{"format":"{}","snippet":"linexpsetdefaultoptions{${1:options}}"},"doc":"Set persistent defaults for linexp and \\linexpr ."}
+	],
+	"envs": [
+		{"name":"linesys","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The linesys environment turns an augmented matrix into a system of linear equations or inequalities, while linexp turns one coefficient row into a linear expression."},
+		{"name":"linesys","doc":"The linesys environment turns an augmented matrix into a system of linear equations or inequalities, while linexp turns one coefficient row into a linear expression."},
+		{"name":"linexp","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"The linexp environment typesets one linear expression from one row of coefficients."},
+		{"name":"linexp","doc":"The linexp environment typesets one linear expression from one row of coefficients."}
+	],
+	"keys": {}
+}

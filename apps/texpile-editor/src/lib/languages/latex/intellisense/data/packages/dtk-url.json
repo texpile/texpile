@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"url"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pdfescape"},{"name":"iftex"},{"name":"atveryend-ltx","engines":["pdflatex","lualatex"]},{"name":"embedfile","engines":["pdflatex","lualatex"]},{"name":"kvsetkeys","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"ctanurl","arg":{"format":"{}","snippet":"ctanurl{${1:CTAN path}}"}},
+		{"name":"CTANurl","arg":{"format":"{}","snippet":"CTANurl{${1:CTAN path}}"}},
+		{"name":"Email","arg":{"format":"{}","snippet":"Email{${1:address}}"}},
+		{"name":"File","arg":{"format":"{}","snippet":"File{${1:file}}"}},
+		{"name":"URL","arg":{"format":"{}","snippet":"URL{${1:URL}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

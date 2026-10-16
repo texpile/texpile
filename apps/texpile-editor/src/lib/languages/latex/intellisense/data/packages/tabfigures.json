@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"xcolor","if":"debug"}],
+	"macros": [
+		{"name":"tbfigures"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/tabfigures#c": ["bib","debug","enum","eqno","lineno","toc"]
+	},
+	"args": ["\\usepackage/tabfigures#c"]
+}

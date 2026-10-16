@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"iftex"},{"name":"inputenc","engines":["pdflatex"]},{"name":"Alegreya","if":"!noalegre"},{"name":"textcomp","if":"!noalegre"},{"name":"xkeyval"},{"name":"fontaxes","if":"!noalegre","engines":["pdflatex"]},{"name":"figureversions","if":"!noalegre","engines":["pdflatex"]},{"name":"AlegreyaSans","if":"!noalegre"},{"name":"eulervm","if":"!noalegre"},{"name":"mathalpha"},{"name":"microtype"},{"name":"etoolbox"},{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"xcolor"},{"name":"enumitem"},{"name":"parskip"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tcolorbox"},{"name":"verbatim"},{"name":"environ"},{"name":"fontspec","if":"!noalegre","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","if":"!noalegre","engines":["lualatex"]},{"name":"fontawesome5-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"fontspec-xetex","if":"!noalegre","engines":["xelatex"]}],
+	"macros": [
+		{"name":"End"},
+		{"name":"mediumfont","unusual":true},
+		{"name":"Section","arg":{"format":"{}","snippet":"Section{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/beamerthemeArguelles#c": ["frameno","noalegre","sans","splitnav"]
+	},
+	"args": ["\\usepackage/beamerthemeArguelles#c"]
+}

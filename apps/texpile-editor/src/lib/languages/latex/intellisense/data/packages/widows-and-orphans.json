@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"WaOignorenext","doc":"This command directs the package to not generate warnings for the current page or columns (if we know that they can’t be corrected)."},
+		{"name":"WaOparameters","doc":"This command produces a listing of the parameter combinations and their values."},
+		{"name":"WaOsetup","arg":{"format":"{}","snippet":"WaOsetup{${1:comma list}}","keys":["l3keys:fmwao"],"keyPos":0},"doc":"This command accepts any of the package options and allows adjusting the package behavior in mid-document if necessary."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:fmwao": ["avoid-all","check=${1|error,info,none,warning|}","default-all","draft","hyphens=${1|avoid,default,prevent|}","orphans=${1|avoid,default,prevent|}","prevent-all","widows=${1|avoid,default,prevent|}"],
+		"\\usepackage/widows-and-orphans#c": ["avoid-all","check=${1|error,info,none,warning|}","default-all","draft","hyphens=${1|avoid,default,prevent|}","orphans=${1|avoid,default,prevent|}","prevent-all","widows=${1|avoid,default,prevent|}"]
+	},
+	"args": ["\\usepackage/widows-and-orphans#c"]
+}

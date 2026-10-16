@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"stdclsdv"}],
+	"macros": [
+		{"name":"romannum","arg":{"format":"{}","snippet":"romannum{${1}}"}},
+		{"name":"Romannum","arg":{"format":"{}","snippet":"Romannum{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/romannum#c": ["Caption","Day","Enumerate","Equation","Footnote","Most","Section","Year","caption","day","enumerate","equation","footnote","most","section"]
+	},
+	"args": ["\\usepackage/romannum#c"]
+}

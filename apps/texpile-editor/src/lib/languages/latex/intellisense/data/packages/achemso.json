@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"natbib"},{"name":"natmove"},{"name":"mciteplus"}],
+	"macros": [
+		{"name":"bibnote","arg":{"format":"[]{}","snippet":"bibnote[${1:name}]{${2:text}}"}},
+		{"name":"bibnote","arg":{"format":"{}","snippet":"bibnote{${1:text}}"}},
+		{"name":"bibnotemark","arg":{"format":"[]","snippet":"bibnotemark[${1}]"}},
+		{"name":"bibnotemark"},
+		{"name":"bibnotetext","arg":{"format":"[]{}","snippet":"bibnotetext[${1:name}]{${2:text}}"}},
+		{"name":"bibnotetext","arg":{"format":"{}","snippet":"bibnotetext{${1:text}}"}},
+		{"name":"latin","arg":{"format":"{}","snippet":"latin{${1}}"}},
+		{"name":"printbibnotes"},
+		{"name":"thebibnote","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

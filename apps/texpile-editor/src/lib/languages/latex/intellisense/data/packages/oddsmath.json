@@ -1,0 +1,18 @@
+{
+	"macros": [
+		{"name":"AmericanToDec","arg":{"format":"{}","snippet":"AmericanToDec{${1}}"}},
+		{"name":"DecToAmerican","arg":{"format":"{}","snippet":"DecToAmerican{${1}}"}},
+		{"name":"DecToPct","arg":{"format":"{}","snippet":"DecToPct{${1}}"}},
+		{"name":"DecToProb","arg":{"format":"{}","snippet":"DecToProb{${1}}"}},
+		{"name":"ExpectedValue","arg":{"format":"{}{}","snippet":"ExpectedValue{${1}}{${2}}"}},
+		{"name":"FairProb","arg":{"format":"{}{}","snippet":"FairProb{${1}}{${2}}"}},
+		{"name":"FairProbIII","arg":{"format":"{}{}{}","snippet":"FairProbIII{${1}}{${2}}{${3}}"}},
+		{"name":"FracToDec","arg":{"format":"{}{}","snippet":"FracToDec{${1}}{${2}}"}},
+		{"name":"KellyFraction","arg":{"format":"{}{}","snippet":"KellyFraction{${1}}{${2}}"}},
+		{"name":"Overround","arg":{"format":"{}{}","snippet":"Overround{${1}}{${2}}"}},
+		{"name":"OverroundIII","arg":{"format":"{}{}{}","snippet":"OverroundIII{${1}}{${2}}{${3}}"}},
+		{"name":"ProbToDec","arg":{"format":"{}","snippet":"ProbToDec{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

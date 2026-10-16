@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:keys}]{${2:author}}"}},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:author}}"}},
+		{"name":"ltlabtitledate","unusual":true},
+		{"name":"ltlabtitleversion","unusual":true},
+		{"name":"title","arg":{"format":"[]{}","snippet":"title[${1:keys}]{${2:title}}"}},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

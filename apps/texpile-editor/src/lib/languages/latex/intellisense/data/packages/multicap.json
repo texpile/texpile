@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"abvmcapskip"},
+		{"name":"blwmcapskip"},
+		{"name":"mfcaption","arg":{"format":"[]{}","snippet":"mfcaption[${1}]{${2}}"},"doc":"The multicap package defines the \\mfcaption and \\mtcaption commands, which replace the \\caption command outside of a floating environment; for column figures and column tabular material respectively, that are necessary outside of a floating environment inside multicols."},
+		{"name":"mfcaption","arg":{"format":"{}","snippet":"mfcaption{${1}}"},"doc":"The multicap package defines the \\mfcaption and \\mtcaption commands, which replace the \\caption command outside of a floating environment; for column figures and column tabular material respectively, that are necessary outside of a floating environment inside multicols."},
+		{"name":"mtcaption","arg":{"format":"[]{}","snippet":"mtcaption[${1}]{${2}}"}},
+		{"name":"mtcaption","arg":{"format":"{}","snippet":"mtcaption{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/multicap#c": ["Sans","normal"]
+	},
+	"args": ["\\usepackage/multicap#c"]
+}

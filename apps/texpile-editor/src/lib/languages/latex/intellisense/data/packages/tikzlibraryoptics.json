@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"tikzopticsversion","unusual":true},
+		{"name":"tikzopticsversiondate","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

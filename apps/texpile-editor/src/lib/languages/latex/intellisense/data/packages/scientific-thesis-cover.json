@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"ifthen"},{"name":"iftex"},{"name":"ifluatex"},{"name":"csquotes"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"Affirmation"},
+		{"name":"Coverpage"},
+		{"name":"ifinputencloaded","unusual":true},
+		{"name":"inputencloadedfalse","unusual":true},
+		{"name":"inputencloadedtrue","unusual":true},
+		{"name":"Titelblatt","unusual":true},
+		{"name":"Versicherung","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

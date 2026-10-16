@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"expkv-pop"},{"name":"expkv"}],
+	"macros": [
+		{"name":"ekvcChange","arg":{"format":"{}{}","snippet":"ekvcChange{${1:cs}}{${2:key=value list}}"},"doc":"This processes the ⟨key⟩=⟨value⟩ list for the macro ⟨cs⟩ to set new defaults for it (meaning the initial values used if you don’t provide anything at use time, not those specified with the default type)."},
+		{"name":"ekvcDate","unusual":true},
+		{"name":"ekvcFlagGetHeight","arg":{"format":"{}{}","snippet":"ekvcFlagGetHeight{${1:flag}}{${2:next}}"},"doc":"This retrieves the current height of the ⟨flag⟩ and provides it as a braced argument to ⟨next⟩, leaving ⟨next⟩{⟨height⟩} in the input stream."},
+		{"name":"ekvcFlagGetHeights","arg":{"format":"{}{}","snippet":"ekvcFlagGetHeights{${1:flag-list}}{${2:next}}"},"doc":"This retrieves the current height of each ⟨flag⟩ in the ⟨flag-list⟩ and provides them as a single argument to ⟨next⟩."},
+		{"name":"ekvcFlagHeight","doc":"This expands to the current height of ⟨flag⟩ in a single step of expansion (without a trailing space)."},
+		{"name":"ekvcFlagIf","arg":{"format":"{}{}{}","snippet":"ekvcFlagIf{${1:flag}}{${2:true}}{${3:false}}"},"doc":"This interprets a ⟨flag⟩ as a boolean and expands to either ⟨true⟩ or ⟨false⟩."},
+		{"name":"ekvcFlagIfRaised","arg":{"format":"{}{}{}","snippet":"ekvcFlagIfRaised{${1:flag}}{${2:true}}{${3:false}}"},"doc":"This tests whether the ⟨flag⟩ is raised, meaning it has a height greater than zero, and if so expands to ⟨true⟩ else to ⟨false⟩."},
+		{"name":"ekvcFlagNew","arg":{"format":"{}","snippet":"ekvcFlagNew{${1:flag}}"},"doc":"This initialises the macro ⟨flag⟩ as a new flag."},
+		{"name":"ekvcFlagRaise","arg":{"format":"{}","snippet":"ekvcFlagRaise{${1:flag}}"},"doc":"This expandably raises the height of ⟨flag⟩ by 1."},
+		{"name":"ekvcFlagReset","arg":{"format":"{}","snippet":"ekvcFlagReset{${1:flag}}"},"doc":"This resets a flag (so restores its height to 0)."},
+		{"name":"ekvcFlagResetGlobal","arg":{"format":"{}","snippet":"ekvcFlagResetGlobal{${1:flag}}"},"doc":"This resets a flag (so restores its height to 0). This operation is not expandable and done locally for \\ekvcFlagReset and globally for \\ekvcFlagResetGlobal."},
+		{"name":"ekvcFlagSetFalse","arg":{"format":"{}","snippet":"ekvcFlagSetFalse{${1:flag}}"}},
+		{"name":"ekvcFlagSetTrue","arg":{"format":"{}","snippet":"ekvcFlagSetTrue{${1:flag}}"}},
+		{"name":"ekvcHash","arg":{"format":"{}{}{}","snippet":"ekvcHash{${1:cs}}{${2:primary keys}}{${3:definition}}"},"doc":"This defines ⟨cs⟩ to be a macro taking one mandatory argument which should contain a ⟨key⟩=⟨value⟩ list."},
+		{"name":"ekvcHashAndForward","arg":{"format":"{}{}{}","snippet":"ekvcHashAndForward{${1:cs}}{${2:after}}{${3:primary keys}}"},"doc":"This defines ⟨cs⟩ to be a macro taking one mandatory argument which should contain a ⟨key⟩=⟨value⟩ list."},
+		{"name":"ekvcHashAndUse","arg":{"format":"{}{}","snippet":"ekvcHashAndUse{${1:cs}}{${2:primary keys}}"}},
+		{"name":"ekvcPass","arg":{"format":"{}{}{}","snippet":"ekvcPass{${1:cs}}{${2:key}}{${3:value}}"},"doc":"This passes ⟨value⟩ on to ⟨key⟩ for the expkv-cs-macro ⟨cs⟩."},
+		{"name":"ekvcSecondaryKeys","arg":{"format":"{}{}","snippet":"ekvcSecondaryKeys{${1:cs}}{${2:key=value list}}"},"doc":"This is the front facing macro to define secondary keys."},
+		{"name":"ekvcSplit","arg":{"format":"{}{}{}","snippet":"ekvcSplit{${1:cs}}{${2:primary keys}}{${3:definition}}"},"doc":"This defines ⟨cs⟩ to be a macro taking one mandatory argument which should contain a ⟨key⟩=⟨value⟩ list."},
+		{"name":"ekvcSplitAndForward","arg":{"format":"{}{}{}","snippet":"ekvcSplitAndForward{${1:cs}}{${2:after}}{${3:primary keys}}"}},
+		{"name":"ekvcSplitAndUse","arg":{"format":"{}{}","snippet":"ekvcSplitAndUse{${1:cs}}{${2:primary keys}}"}},
+		{"name":"ekvcValue","arg":{"format":"{}{}","snippet":"ekvcValue{${1:key}}{${2:key list}}"},"doc":"This is a safe way to access your keys in a hash variant."},
+		{"name":"ekvcValueFast","arg":{"format":"{}{}","snippet":"ekvcValueFast{${1:key}}{${2:key list}}"},"doc":"This behaves similar to \\ekvcValue, but without any safefy tests."},
+		{"name":"ekvcValueSplit","arg":{"format":"{}{}{}","snippet":"ekvcValueSplit{${1:key}}{${2:key list}}{${3:next}}"},"doc":"If you need a specific ⟨key⟩ from a ⟨key list⟩ more than once, it’ll be a good idea to only extract it once and from then on keep it as a separate argument (or if you want to forward this value to another macro). Hence the macro \\ekvcValueSplit will extract one specific ⟨key⟩’s ⟨value⟩ from the list and forward it as an argument to ⟨next⟩, so the result of this will be ⟨next⟩{⟨value⟩}."},
+		{"name":"ekvcValueSplitFast","arg":{"format":"{}{}{}","snippet":"ekvcValueSplitFast{${1:key}}{${2:key list}}{${3:next}}"},"doc":"This behaves just like \\ekvcValueSplit, but it won’t run the safety tests, hence it is faster but more error prone, just like the relation between \\ekvcValue and \\ekvcValueFast."},
+		{"name":"ekvcVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

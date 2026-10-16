@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"ccaux"},{"name":"thcc"},{"name":"theorem"},{"name":"ccthm"},{"name":"relabel"},{"name":"cc2cite"},{"name":"natbib"},{"name":"ccdbs"},{"name":"ccqed"}],
+	"macros": [
+		{"name":"ccacknowledgementsname"}
+	],
+	"envs": [
+		{"name":"acknowledge","doc":"Environment for acknowledgments."}
+	],
+	"keys": {}
+}

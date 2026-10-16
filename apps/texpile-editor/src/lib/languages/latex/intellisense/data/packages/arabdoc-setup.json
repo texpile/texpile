@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pdftexcmds"},{"name":"iftex"},{"name":"array"},{"name":"booktabs"},{"name":"tabularx"},{"name":"enumitem"},{"name":"float"},{"name":"titlesec"},{"name":"fancyhdr"},{"name":"setspace"},{"name":"xcolor"},{"name":"colortbl"},{"name":"bidi"},{"name":"biditools"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"polyglossia"},{"name":"etoolbox"},{"name":"arabicnumbers"},{"name":"hijrical"},{"name":"calc"},{"name":"hyperref"},{"name":"keyval"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"arabdocsetupdate","unusual":true},
+		{"name":"arabdocsetupversion","unusual":true},
+		{"name":"arabicfont"},
+		{"name":"chaptername","unusual":true},
+		{"name":"englishfont"}
+	],
+	"envs": [],
+	"keys": {}
+}

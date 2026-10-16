@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathpazo"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

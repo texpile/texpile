@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"useclass","arg":{"format":"[]{}","snippet":"useclass[${1}]{${2}}"},"doc":"Load class with options, where ⟨options⟩ is the options for the class and ⟨class⟩ is the class name without the extension."},
+		{"name":"useclass","arg":{"format":"{}","snippet":"useclass{${1}}"},"doc":"Load class with options, where ⟨options⟩ is the options for the class and ⟨class⟩ is the class name without the extension."},
+		{"name":"useclass*","arg":{"format":"[]{}","snippet":"useclass*[${1}]{${2}}"},"doc":"Load class with options, where ⟨options⟩ is the options for the class and ⟨class⟩ is the class name without the extension."},
+		{"name":"useclass*","arg":{"format":"{}","snippet":"useclass*{${1}}"},"doc":"Load class with options, where ⟨options⟩ is the options for the class and ⟨class⟩ is the class name without the extension."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"oldcolsbreak","arg":{"format":"{}","snippet":"oldcolsbreak{${1}}"}},
+		{"name":"postCutedStrip","arg":{"format":"{}","snippet":"postCutedStrip{${1:tokens}}"},"doc":"After the strip \\the\\postCutedStrip token list ⟨tokens⟩ and \\stripsep glue are added."},
+		{"name":"preCutedStrip","arg":{"format":"{}","snippet":"preCutedStrip{${1:tokens}}"},"doc":"Before the strip \\stripsep glue and \\the\\preCutedStrip token list ⟨tokens⟩ are added."},
+		{"name":"stripsep"},
+		{"name":"switchonecolumn"},
+		{"name":"switchtwocolumn"}
+	],
+	"envs": [
+		{"name":"strip","doc":"Puts \\vbox{⟨wide onecolumn material⟩} in full-width on double-column page."}
+	],
+	"keys": {
+		"\\usepackage/cuted#c": ["debug","lshrink","lspread","nodebug","nolshrink","nolspread","norshrink","norspread","noshrink","nospread","rshrink","rspread","shrink","spread"]
+	},
+	"args": ["\\usepackage/cuted#c"]
+}

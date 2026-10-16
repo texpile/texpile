@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"preview"},{"name":"luatex85"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

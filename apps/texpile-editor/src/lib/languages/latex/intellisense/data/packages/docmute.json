@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"docmute"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/docmute#c": ["nested"]
+	},
+	"args": ["\\usepackage/docmute#c"]
+}

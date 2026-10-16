@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"xdvipskmaps","if":"!noOpenType"},{"name":"luatexbase","if":"!noOpenType"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/xdvipsk-support#c": ["noOpenType"]
+	},
+	"args": ["\\usepackage/xdvipsk-support#c"]
+}

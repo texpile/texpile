@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"tracefloats"},
+		{"name":"tracefloatsoff"},
+		{"name":"tracefloatvals"}
+	],
+	"envs": [],
+	"keys": {}
+}

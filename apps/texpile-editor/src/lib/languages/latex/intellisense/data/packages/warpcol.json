@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"array"}],
+	"macros": [
+		{"name":"pcolbegin","arg":{"format":"{}{}","snippet":"pcolbegin{${1}}{${2}}"},"doc":"The \\pcolbegin command takes two arguments. The first is a code (l, c or r) specifying how numerical items should be justified relative to each other."},
+		{"name":"pcolend","doc":"The \\pcolend command is executed after column entries. It completes the box definition started by the \\pcolbegin command, and then prints the box."}
+	],
+	"envs": [],
+	"keys": {}
+}

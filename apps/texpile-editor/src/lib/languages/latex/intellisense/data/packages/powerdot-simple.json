@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"pifont"},{"name":"amssymb"},{"name":"amsfonts"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

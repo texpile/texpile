@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/lcy#c": ["nowarn"]
+	},
+	"args": ["\\usepackage/lcy#c"]
+}

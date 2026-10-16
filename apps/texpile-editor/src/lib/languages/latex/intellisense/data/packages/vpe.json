@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [
+		{"name":"vpesetup","arg":{"format":"{}","snippet":"vpesetup{${1:options}}","keys":["keyval:vpe"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:vpe": ["acroform","active","application=","attr=","border=","color=","command=","depth=","dupes","everyhbox","flag=","form","height=","inactive","noacroform","nodupes","noform","parameters=","progname=","system=","width="],
+		"\\usepackage/vpe#c": ["acroform","active","debug","dos","dupes","dvips","everyhbox","form","inactive","linux","noNL","noTILDE","noacroform","nocite","noclearpage","nodocument","nodupes","noendtrivlist","noeveryhbox","noeverymath","noeverypar","noform","nohrule","noinclude","noinput","noitem","nombox","nonewline","nonewpage","noref","notabularnewline","notrivlist","novrule","pdfmark","pdftex","ps2pdf","unix","win"]
+	},
+	"args": ["\\usepackage/vpe#c"]
+}

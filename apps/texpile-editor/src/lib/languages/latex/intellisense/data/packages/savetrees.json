@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifluatex"},{"name":"titlesec","if":"!moderate+!subtle","engines":["pdflatex"]},{"name":"titlesec","if":"!moderate+!normalsections+!subtle","engines":["lualatex","xelatex"]},{"name":"geometry","if":"!moderate+!subtle","engines":["pdflatex"]},{"name":"geometry","if":"!moderate+!normalmargins+!subtle","engines":["lualatex","xelatex"]},{"name":"ifvtex","if":"!moderate+!subtle","engines":["pdflatex"]},{"name":"ifvtex","if":"!moderate+!normalmargins+!subtle","engines":["lualatex","xelatex"]},{"name":"calc","if":"!subtle","engines":["pdflatex"]},{"name":"calc","if":"!normallists+!subtle","engines":["lualatex","xelatex"]},{"name":"microtype","engines":["pdflatex"]},{"name":"microtype","if":"!subtle","engines":["lualatex"]},{"name":"etoolbox","engines":["pdflatex"]},{"name":"etoolbox","if":"!subtle","engines":["lualatex"]}],
+	"macros": [
+		{"name":"savetreesbibnote","arg":{"format":"{}","snippet":"savetreesbibnote{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

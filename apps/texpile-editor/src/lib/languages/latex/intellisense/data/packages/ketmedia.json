@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"inputmovie","arg":{"format":"[]{}{}{}{}","snippet":"inputmovie[${1:horizontal position}]{${2:width}}{${3:height}}{${4:folder}}{${5:file name}}"}},
+		{"name":"inputmovie","arg":{"format":"{}{}{}{}","snippet":"inputmovie{${1:width}}{${2:height}}{${3:folder}}{${4:file name}}"}},
+		{"name":"inputsound","arg":{"format":"[]{}{}","snippet":"inputsound[${1:horizontal position}]{${2:folder}}{${3:file name}}"}},
+		{"name":"inputsound","arg":{"format":"{}{}","snippet":"inputsound{${1:folder}}{${2:file name}}"}},
+		{"name":"inputsoundclick","arg":{"format":"[]{}{}","snippet":"inputsoundclick[${1:horizontal position}]{${2:folder}}{${3:file name}}"}},
+		{"name":"inputsoundclick","arg":{"format":"{}{}","snippet":"inputsoundclick{${1:folder}}{${2:file name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"tikz"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"listofitems"},{"name":"simplekv"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"Becher","arg":{"format":"[]{}","snippet":"Becher[${1}]{${2}}"}},
+		{"name":"Becher","arg":{"format":"{}","snippet":"Becher{${1}}"}},
+		{"name":"Dosage","arg":{"format":"[]{}","snippet":"Dosage[${1}]{${2}}"}},
+		{"name":"Dosage","arg":{"format":"{}","snippet":"Dosage{${1}}"}},
+		{"name":"EchelleTube","arg":{"format":"[]{}","snippet":"EchelleTube[${1:keys}]{${2:number of tubes}}"}},
+		{"name":"EchelleTube","arg":{"format":"{}","snippet":"EchelleTube{${1:number of tubes}}"}},
+		{"name":"Erlen","arg":{"format":"[]{}","snippet":"Erlen[${1}]{${2}}"}},
+		{"name":"Erlen","arg":{"format":"{}","snippet":"Erlen{${1}}"}},
+		{"name":"FioleJaugee","arg":{"format":"[]{}","snippet":"FioleJaugee[${1}]{${2}}"}},
+		{"name":"FioleJaugee","arg":{"format":"{}","snippet":"FioleJaugee{${1}}"}},
+		{"name":"TubeAEssai","arg":{"format":"[]{}","snippet":"TubeAEssai[${1}]{${2}}"}},
+		{"name":"TubeAEssai","arg":{"format":"{}","snippet":"TubeAEssai{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

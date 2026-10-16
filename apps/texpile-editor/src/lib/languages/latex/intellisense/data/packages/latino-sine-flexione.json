@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"datetime"},{"name":"etoolbox"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"fcprefix"},{"name":"datetime-defaults"}],
+	"macros": [
+		{"name":"alsoname","unusual":true},
+		{"name":"bibname","unusual":true},
+		{"name":"chaptername","unusual":true},
+		{"name":"datename","unusual":true},
+		{"name":"glossaryname","unusual":true},
+		{"name":"ildate","unusual":true},
+		{"name":"pagename","unusual":true},
+		{"name":"prefacename","unusual":true},
+		{"name":"proofname","unusual":true},
+		{"name":"seename","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

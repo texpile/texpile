@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"xparse"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"setsecnum","arg":{"format":"{}","snippet":"setsecnum{${1}}"},"doc":"This package provides a macro `\\setsecnum` to format section numbering intuitively."}
+	],
+	"envs": [],
+	"keys": {}
+}

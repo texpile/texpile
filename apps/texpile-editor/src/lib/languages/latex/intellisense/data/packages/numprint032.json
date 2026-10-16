@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"calc"},{"name":"array"}],
+	"macros": [
+		{"name":"addmissingzero","doc":"Numprint can add the left out zero, when \\addmissingzero is used."},
+		{"name":"digits","arg":{"format":"{}{}","snippet":"digits{${1}}{${2}}"}},
+		{"name":"exponentdigits","arg":{"format":"{}","snippet":"exponentdigits{${1}}"}},
+		{"name":"fourdigitnosep"},
+		{"name":"fourdigitsep"},
+		{"name":"noaddmissingzero","doc":"Adding zeros can be switched off with \\noaddmissingzero."},
+		{"name":"nodigits"},
+		{"name":"noexponentdigits"},
+		{"name":"npdecimalsign","arg":{"format":"{}","snippet":"npdecimalsign{${1}}"},"doc":"Change the decimal sign."},
+		{"name":"npnoround"},
+		{"name":"npnoroundexp"},
+		{"name":"npprintnull"},
+		{"name":"npproductsign","arg":{"format":"{}","snippet":"npproductsign{${1}}"},"doc":"Change the product sign."},
+		{"name":"npreplacenull","arg":{"format":"{}","snippet":"npreplacenull{${1}}"}},
+		{"name":"nprounddigits","arg":{"format":"{}","snippet":"nprounddigits{${1}}"},"doc":"Define a command that sets a count of digits after which the number is rounded."},
+		{"name":"nproundexpdigits","arg":{"format":"{}","snippet":"nproundexpdigits{${1}}"}},
+		{"name":"nprtdocdate","unusual":true},
+		{"name":"nprtfiledate","unusual":true},
+		{"name":"nprtfileversion","unusual":true},
+		{"name":"npthousandsep","arg":{"format":"{}","snippet":"npthousandsep{${1}}"},"doc":"Change the thousand separator."},
+		{"name":"npthousandthpartsep","arg":{"format":"{}","snippet":"npthousandthpartsep{${1}}"},"doc":"Change the thousand separator (only after the decimal sign)."},
+		{"name":"npunitseparator","arg":{"format":"{}","snippet":"npunitseparator{${1}}"},"doc":"Change the separator between a number and a unit."},
+		{"name":"numprint","arg":{"format":"[]{}","snippet":"numprint[${1}]{${2}}"}},
+		{"name":"numprint","arg":{"format":"{}","snippet":"numprint{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/numprint032#c": ["addmissingzero","noaddmissingzero","nosepfour","sepfour"]
+	},
+	"args": ["\\usepackage/numprint032#c"]
+}

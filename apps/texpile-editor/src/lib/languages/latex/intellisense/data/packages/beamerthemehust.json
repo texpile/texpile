@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"beamerthememoloch"},{"name":"pgfopts"}],
+	"macros": [
+		{"name":"hustbrandmark","arg":{"format":"[]","snippet":"hustbrandmark[${1:height}]"},"doc":"Render the active color emblem."},
+		{"name":"hustbrandmark","doc":"Render the active color emblem."},
+		{"name":"hustbrandmarkinverse","arg":{"format":"[]","snippet":"hustbrandmarkinverse[${1:height}]"},"doc":"Render the inverse emblem."},
+		{"name":"hustbrandmarkinverse","doc":"Render the inverse emblem."},
+		{"name":"hustclearcoverimage","doc":"Restore the solid-blue cover identity field."},
+		{"name":"hustclosing","arg":{"format":"{}{}{}","snippet":"hustclosing{${1:title}}{${2:subtitle}}{${3:detail}}"},"doc":"Closing content for a standout frame."},
+		{"name":"hustitem","arg":{"format":"{}{}","snippet":"hustitem{${1:title}}{${2:note}}"},"doc":"Render a two-level item inside a native list."},
+		{"name":"hustkicker","arg":{"format":"{}","snippet":"hustkicker{${1:text}}"},"doc":"Render a compact neutral editorial label."},
+		{"name":"hustmetric","arg":{"format":"{}{}","snippet":"hustmetric{${1:value}}{${2:label}}"},"doc":"Render an open metric with supporting evidence."},
+		{"name":"hustoutlineitem","arg":{"format":"{}{}{}","snippet":"hustoutlineitem{${1:number}}{${2:title}}{${3:note}}"},"doc":"Numbered outline or conclusion row."},
+		{"name":"hustsetassetpath","arg":{"format":"{}","snippet":"hustsetassetpath{${1:path}}"},"doc":"Override the directory containing the vector identity assets."},
+		{"name":"hustsetcoverimage","arg":{"format":"[]{}","snippet":"hustsetcoverimage[${1:options}]{${2:file}}"},"doc":"Optional photograph behind the blue cover identity field."},
+		{"name":"hustsetcoverimage","arg":{"format":"{}","snippet":"hustsetcoverimage{${1:file}}"},"doc":"Optional photograph behind the blue cover identity field."},
+		{"name":"hustsetdepartment","arg":{"format":"{}","snippet":"hustsetdepartment{${1:department}}"},"doc":"Chinese unit name on the cover."},
+		{"name":"hustsetdepartmenten","arg":{"format":"{}","snippet":"hustsetdepartmenten{${1:department}}"}},
+		{"name":"hustsetdepartmentshort","arg":{"format":"{}","snippet":"hustsetdepartmentshort{${1:short name}}"}},
+		{"name":"hustsetevent","arg":{"format":"{}","snippet":"hustsetevent{${1:event}}"},"doc":"Chinese presentation type above the cover title."},
+		{"name":"hustseteventen","arg":{"format":"{}","snippet":"hustseteventen{${1:event}}"},"doc":"English presentation type above the cover title."},
+		{"name":"hustsetlogo","arg":{"format":"{}","snippet":"hustsetlogo{${1:logo}}"},"doc":"Override the automatically discovered emblem; ensure that the custom mark remains legible on dark pages."},
+		{"name":"hustsetsectionnote","arg":{"format":"{}","snippet":"hustsetsectionnote{${1:note}}"},"doc":"One-shot claim shown on the next section divider."},
+		{"name":"hustwordmark","arg":{"format":"[]","snippet":"hustwordmark[${1:width}]"},"doc":"Render the blue Chinese standard name."},
+		{"name":"hustwordmark","doc":"Render the blue Chinese standard name."},
+		{"name":"hustwordmarkinverse","arg":{"format":"[]","snippet":"hustwordmarkinverse[${1:width}]"},"doc":"Render the inverse Chinese standard name."},
+		{"name":"hustwordmarkinverse","doc":"Render the inverse Chinese standard name."}
+	],
+	"envs": [],
+	"keys": {}
+}

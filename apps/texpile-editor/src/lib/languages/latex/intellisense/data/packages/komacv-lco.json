@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"marvosym"},{"name":"fontawesome"},{"name":"iftex"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"emaillink","arg":{"format":"[]{}","snippet":"emaillink[${1:link-text}]{${2:link}}"},"doc":"The \\emaillink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\emaillink macro, provides a means for typesetting a “mailto” link."},
+		{"name":"emaillink","arg":{"format":"{}","snippet":"emaillink{${1:link}}"},"doc":"The \\emaillink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\emaillink macro, provides a means for typesetting a “mailto” link."},
+		{"name":"httplink","arg":{"format":"[]{}","snippet":"httplink[${1:link-text}]{${2:link}}"},"doc":"The \\httplink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\httplink macro, provides a means for typesetting an HTTP link."},
+		{"name":"httplink","arg":{"format":"{}","snippet":"httplink{${1:link}}"},"doc":"The \\httplink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\httplink macro, provides a means for typesetting an HTTP link."},
+		{"name":"httpslink","arg":{"format":"[]{}","snippet":"httpslink[${1:link-text}]{${2:link}}"},"doc":"The \\httpslink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\httplink macro, provides a means for typesetting an HTTPS link."},
+		{"name":"httpslink","arg":{"format":"{}","snippet":"httpslink{${1:link}}"},"doc":"The \\httpslink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\httplink macro, provides a means for typesetting an HTTPS link."},
+		{"name":"ifkomavar","arg":{"format":"{}{}{}","snippet":"ifkomavar{${1:name}}{${2:true-code}}{${3:false-code}}"},"doc":"The \\ifkomavar{⟨name⟩}{⟨true-code⟩}{⟨false-code⟩} macro checks whether the KOMA variable ⟨name⟩ is defined and expands to ⟨true-code⟩ (positive case) or ⟨false-code⟩ (negative case) respectively."},
+		{"name":"ifkomavarempty","arg":{"format":"{}{}{}","snippet":"ifkomavarempty{${1:name}}{${2:true-code}}{${3:false-code}}"},"doc":"The \\ifkomavarempty{⟨name⟩}{⟨true-code⟩}{⟨false-code⟩} expands to ⟨true-code⟩ if the content of the KOMA variable ⟨name⟩ is empty, and expands to ⟨false-code⟩ otherwise."},
+		{"name":"ifkomavarempty*","arg":{"format":"{}{}{}","snippet":"ifkomavarempty*{${1:name}}{${2:true-code}}{${3:false-code}}"},"doc":"The \\ifkomavarempty{⟨name⟩}{⟨true-code⟩}{⟨false-code⟩} expands to ⟨true-code⟩ if the content of the KOMA variable ⟨name⟩ is empty, and expands to ⟨false-code⟩ otherwise."},
+		{"name":"ifkomavarenabled","arg":{"format":"{}{}{}","snippet":"ifkomavarenabled{${1:name}}{${2:true-code}}{${3:false-code}}"}},
+		{"name":"LoadLetterOption","arg":{"format":"{}","snippet":"LoadLetterOption{${1:name}}"},"doc":"The \\LoadLetterOption{⟨name⟩} loads options from the file with filename ⟨name⟩ (an “lco”-file, but without the file extension)."},
+		{"name":"LoadLetterOptions","arg":{"format":"{}","snippet":"LoadLetterOptions{${1:names}}"},"doc":"The \\LoadLetterOptions{⟨names⟩} loads options from the files in the commaseparated list ⟨names⟩ of file names (again without “lco” extension)."},
+		{"name":"newkomavar","arg":{"format":"[]{}","snippet":"newkomavar[${1:description}]{${2:name}}"},"doc":"The \\newkomavar[⟨description⟩]{⟨name⟩} macro defines a new KOMA variable with name ⟨name⟩ and description ⟨description⟩."},
+		{"name":"newkomavar","arg":{"format":"{}","snippet":"newkomavar{${1:name}}"},"doc":"The \\newkomavar[⟨description⟩]{⟨name⟩} macro defines a new KOMA variable with name ⟨name⟩ and description ⟨description⟩."},
+		{"name":"newkomavar*","arg":{"format":"[]{}","snippet":"newkomavar*[${1:description}]{${2:name}}"},"doc":"The \\newkomavar[⟨description⟩]{⟨name⟩} macro defines a new KOMA variable with name ⟨name⟩ and description ⟨description⟩."},
+		{"name":"newkomavar*","arg":{"format":"{}","snippet":"newkomavar*{${1:name}}"},"doc":"The \\newkomavar[⟨description⟩]{⟨name⟩} macro defines a new KOMA variable with name ⟨name⟩ and description ⟨description⟩."},
+		{"name":"setkomavar","arg":{"format":"{}[]{}","snippet":"setkomavar{${1:name}}[${2:description}]{${3:content}}"},"doc":"The \\setkomavar{⟨name⟩}[⟨description⟩]{⟨content⟩} macro sets the content of the variable with name ⟨name⟩ to content ⟨content⟩ and sets the description of the variable to ⟨description⟩."},
+		{"name":"setkomavar","arg":{"format":"{}{}","snippet":"setkomavar{${1:name}}{${2:content}}"},"doc":"The \\setkomavar{⟨name⟩}[⟨description⟩]{⟨content⟩} macro sets the content of the variable with name ⟨name⟩ to content ⟨content⟩ and sets the description of the variable to ⟨description⟩."},
+		{"name":"setkomavar*","arg":{"format":"{}[]{}","snippet":"setkomavar*{${1:name}}[${2:description}]{${3:content}}"},"doc":"The \\setkomavar{⟨name⟩}[⟨description⟩]{⟨content⟩} macro sets the content of the variable with name ⟨name⟩ to content ⟨content⟩ and sets the description of the variable to ⟨description⟩."},
+		{"name":"setkomavar*","arg":{"format":"{}{}","snippet":"setkomavar*{${1:name}}{${2:content}}"},"doc":"The \\setkomavar{⟨name⟩}[⟨description⟩]{⟨content⟩} macro sets the content of the variable with name ⟨name⟩ to content ⟨content⟩ and sets the description of the variable to ⟨description⟩."},
+		{"name":"usekomavar","arg":{"format":"[]{}","snippet":"usekomavar[${1:command}]{${2:name}}"}},
+		{"name":"usekomavar","arg":{"format":"{}","snippet":"usekomavar{${1:name}}"}},
+		{"name":"usekomavar*","arg":{"format":"[]{}","snippet":"usekomavar*[${1:command}]{${2:name}}"}},
+		{"name":"usekomavar*","arg":{"format":"{}","snippet":"usekomavar*{${1:name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

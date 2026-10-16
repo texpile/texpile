@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ccfonts#c": ["boldsans","exscale","slantedGreek","standard-baselineskips"]
+	},
+	"args": ["\\usepackage/ccfonts#c"]
+}

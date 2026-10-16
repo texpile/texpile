@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"atveryend-ltx"}],
+	"macros": [
+		{"name":"frameofframes","unusual":true},
+		{"name":"setframeofframes","arg":{"format":"{}","snippet":"setframeofframes{${1}}"}},
+		{"name":"varparallel"}
+	],
+	"envs": [],
+	"keys": {}
+}

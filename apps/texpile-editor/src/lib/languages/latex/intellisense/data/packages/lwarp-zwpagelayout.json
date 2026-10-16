@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"clap","arg":{"format":"{}","snippet":"clap{${1:text}}"}},
+		{"name":"CropFlap"},
+		{"name":"CropSpine"},
+		{"name":"CropXSpine"},
+		{"name":"CropXtrim"},
+		{"name":"CropYtrim"},
+		{"name":"ifcaseZWdriver"},
+		{"name":"noBboxes"},
+		{"name":"SetEvenPageMessage","arg":{"format":"{}","snippet":"SetEvenPageMessage{${1:message}}"}},
+		{"name":"SetKnockout"},
+		{"name":"SetOddPageMessage","arg":{"format":"{}","snippet":"SetOddPageMessage{${1:message}}"}},
+		{"name":"SetOverprint"},
+		{"name":"SetPDFminorversion","arg":{"format":"{}","snippet":"SetPDFminorversion{${1:minor version}}"}},
+		{"name":"textknockout","arg":{"format":"{}","snippet":"textknockout{${1:text}}"}},
+		{"name":"textoverprint","arg":{"format":"{}","snippet":"textoverprint{${1:text}}"}},
+		{"name":"thePageNumber"},
+		{"name":"UserBotMargin","unusual":true},
+		{"name":"UserLeftMargin"},
+		{"name":"UserRightMargin"},
+		{"name":"UserTopMargin","unusual":true},
+		{"name":"UserWidth"},
+		{"name":"vb","arg":{"format":"[]","snippet":"vb[${1:multiple of baselineskip}]"}},
+		{"name":"vb"},
+		{"name":"Vcorr"},
+		{"name":"ZWifdriver","arg":{"format":"{}{}","snippet":"ZWifdriver{${1:driver}}{${2:code}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

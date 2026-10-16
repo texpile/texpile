@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"newcommentnotes","arg":{"format":"{}","snippet":"newcommentnotes{${1:prefix}}"}},
+		{"name":"newendnotes","arg":{"format":"{}","snippet":"newendnotes{${1:prefix}}"}},
+		{"name":"newfootnotes","arg":{"format":"{}","snippet":"newfootnotes{${1:prefix}}"}},
+		{"name":"newfootnotes*","arg":{"format":"{}","snippet":"newfootnotes*{${1:prefix}}"}},
+		{"name":"newsymbolcommentnotes","arg":{"format":"[]{}","snippet":"newsymbolcommentnotes[${1:master counter}]{${2:prefix}}"}},
+		{"name":"newsymbolcommentnotes","arg":{"format":"{}","snippet":"newsymbolcommentnotes{${1:prefix}}"}},
+		{"name":"newsymbolfootnotes","arg":{"format":"[]{}","snippet":"newsymbolfootnotes[${1:master counter}]{${2:prefix}}"}},
+		{"name":"newsymbolfootnotes","arg":{"format":"{}","snippet":"newsymbolfootnotes{${1:prefix}}"}},
+		{"name":"printsepfootnote","arg":{"format":"{}","snippet":"printsepfootnote{${1:key}}"}},
+		{"name":"sepfootnote","arg":{"format":"{}","snippet":"sepfootnote{${1:key}}"}},
+		{"name":"sepfootnotecontent","arg":{"format":"{}{}","snippet":"sepfootnotecontent{${1:key}}{${2:content}}"}},
+		{"name":"sepfootnotemark","arg":{"format":"{}","snippet":"sepfootnotemark{${1:key}}"}},
+		{"name":"sepfootnotetext","arg":{"format":"{}","snippet":"sepfootnotetext{${1:key}}"}},
+		{"name":"sepfootquicknote","arg":{"format":"{}","snippet":"sepfootquicknote{${1:content}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/sepfootnotes#c": ["after","error","global","quiet","warn"]
+	},
+	"args": ["\\usepackage/sepfootnotes#c"]
+}

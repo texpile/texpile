@@ -14,6 +14,8 @@ Edit the LaTeX directly. Commands, labels, citation keys and file names complete
 
 Completion covers commands (your own `\newcommand` macros too), environments, packages, labels, citation keys and file names. In `\cite{`, search by key, title or author. Type `@` and a letter for a symbol: `@a` offers `\alpha`.
 
+Commands and environments come from the class, packages and libraries your project loads. Common packages outside your preamble offer theirs too, last in the list with the package name beside them. Choosing one offers to add its `\usepackage`.
+
 ## Go to definition and hover
 
 F12, or Ctrl Click, on a label, a citation key, one of your own commands, or a file in `\input` opens where it is defined.

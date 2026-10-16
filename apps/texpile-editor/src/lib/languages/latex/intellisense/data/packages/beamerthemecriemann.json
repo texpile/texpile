@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgffor"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"calc"}],
+	"macros": [
+		{"name":"backgroundmarkleftfalse","unusual":true},
+		{"name":"backgroundmarklefttrue","unusual":true},
+		{"name":"backgroundmarkrightfalse","unusual":true},
+		{"name":"backgroundmarkrighttrue","unusual":true},
+		{"name":"changenavibox"},
+		{"name":"ifbackgroundmarkleft","unusual":true},
+		{"name":"ifbackgroundmarkright","unusual":true},
+		{"name":"insertoccasion","unusual":true},
+		{"name":"myinserttheoremaddition","unusual":true},
+		{"name":"occasion","arg":{"format":"{}","snippet":"occasion{${1}}"}},
+		{"name":"sectionintocskip","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

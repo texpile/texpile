@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"Describe","arg":{"format":"{}{}{}","snippet":"Describe{${1:head}}{${2:flag}}{${3:name}}"},"doc":"\\Describe{⟨head⟩}{⟨flag⟩}{⟨name⟩} typesets ⟨name⟩ in the margin and makes index entries for it."},
+		{"name":"DescribeRoutine","arg":{"format":"{}","snippet":"DescribeRoutine{${1:name}}"},"doc":"The command \\DescribeRoutine{⟨name⟩} typesets a marginal heading and an index entry for the description of a routine called ⟨name⟩."},
+		{"name":"DescribeVariable","arg":{"format":"{}","snippet":"DescribeVariable{${1:name}}"},"doc":"The command \\DescribeVariable{⟨name⟩} typesets a marginal heading and an index entry for the description of a variable called ⟨name⟩."},
+		{"name":"PrintMfpName","arg":{"format":"{}","snippet":"PrintMfpName{${1}}"},"unusual":true},
+		{"name":"routineheadname"},
+		{"name":"routinestring"},
+		{"name":"SpecialMainMfpIndex","arg":{"format":"{}{}{}","snippet":"SpecialMainMfpIndex{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"SpecialMfpIndex","arg":{"format":"{}{}{}","snippet":"SpecialMfpIndex{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"variableheadname"},
+		{"name":"variablestring"}
+	],
+	"envs": [
+		{"name":"Code","arg":{"format":"{}{}{}","snippet":"{${1:head}}{${2:flag}}{${3:name}}"},"doc":"\\begin{Code}{⟨head⟩}{⟨flag⟩}{⟨name⟩} typesets ⟨name⟩ in the margin and makes index entries for it."},
+		{"name":"routine","arg":{"format":"{}","snippet":"{${1:name}}"},"doc":"The routine environment is equivalent to the doc package macro environment. It takes one argument, which is the name of the Metafont/post macro (or character or picture) that is being defined."},
+		{"name":"variable","arg":{"format":"{}","snippet":"{${1:name}}"}}
+	],
+	"keys": {}
+}

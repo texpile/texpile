@@ -1,0 +1,34 @@
+{
+	"macros": [
+		{"name":"thewarekiyear","unusual":true},
+		{"name":"warekicustomdate","arg":{"format":"{}","snippet":"warekicustomdate{${1:option}}"}},
+		{"name":"warekidate"},
+		{"name":"warekigengo","doc":"The gengo (元号) in kanji, e. g. “令和”."},
+		{"name":"warekigengoinitial"},
+		{"name":"WarekiIfAvailable","arg":{"format":"{}{}","snippet":"WarekiIfAvailable{${1:true}}{${2:false}}"},"doc":"Tests if the package can really write kanji characters."},
+		{"name":"WarekiIfCustomDateAvailable","arg":{"format":"{}{}","snippet":"WarekiIfCustomDateAvailable{${1:true}}{${2:false}}"}},
+		{"name":"warekijkanjidate"},
+		{"name":"warekijkanjitoday"},
+		{"name":"WarekiJKansuji","arg":{"format":"{}","snippet":"WarekiJKansuji{${1:counter}}"},"doc":"Prints the counter value using kansuji-by-reading."},
+		{"name":"WarekiJxKansuji","arg":{"format":"{}","snippet":"WarekiJxKansuji{${1:counter}}"}},
+		{"name":"warekikanjidate","doc":"The date string using kansuji (kanji numerals), e. g. “令和四年八月二八日”."},
+		{"name":"warekikanjitoday"},
+		{"name":"WarekiKansuji","arg":{"format":"{}","snippet":"WarekiKansuji{${1:counter}}"}},
+		{"name":"WarekiMonthName","arg":{"format":"{}","snippet":"WarekiMonthName{${1:counter}}"}},
+		{"name":"WarekiResetUHandler","unusual":true},
+		{"name":"warekisetdate","arg":{"format":"{}{}{}","snippet":"warekisetdate{${1:year}}{${2:month}}{${3:day}}"},"doc":"Converts from the specified Western date."},
+		{"name":"warekisettoday"},
+		{"name":"WarekiSetToday","unusual":true},
+		{"name":"WarekiSetUHandler","arg":{"format":"{}","snippet":"WarekiSetUHandler{${1:text}}"},"unusual":true},
+		{"name":"warekitoday","doc":"The \\warekidate form of the current date."},
+		{"name":"WarekiUseCustomInterGlue","arg":{"format":"{}","snippet":"WarekiUseCustomInterGlue{${1:text}}"}},
+		{"name":"WarekiUseNoInterGlue","doc":"Disables shibuaki spaces."},
+		{"name":"WarekiUseNormalInterGlue"},
+		{"name":"warekiyear"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/bxwareki#c": ["download2019"]
+	},
+	"args": ["\\usepackage/bxwareki#c"]
+}

@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"Alif"},
+		{"name":"Ayn"},
+		{"name":"D","arg":{"format":"{}","snippet":"D{${1:letter}}"}},
+		{"name":"T","arg":{"format":"{}","snippet":"T{${1:letter}}"}},
+		{"name":"U","arg":{"format":"{}","snippet":"U{${1:letter}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

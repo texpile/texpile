@@ -1,0 +1,49 @@
+{
+	"deps": [{"name":"amssymb"},{"name":"amsfonts"},{"name":"multicol"},{"name":"relsize"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"AIDactivate","arg":{"format":"{}","snippet":"AIDactivate{${1:key}}"},"doc":"Use \\AIDactivate{} to check specific items in the taxonomy."},
+		{"name":"AIDboxUnusedColor","arg":{"format":"{}","snippet":"AIDboxUnusedColor{${1:color}}"}},
+		{"name":"AIDboxUsedColor","arg":{"format":"{}","snippet":"AIDboxUsedColor{${1:color}}"}},
+		{"name":"AIDchecklistFontSize","arg":{"format":"{}","snippet":"AIDchecklistFontSize{${1:size}}"}},
+		{"name":"AIDcheckmarkColor","arg":{"format":"{}","snippet":"AIDcheckmarkColor{${1:color}}"}},
+		{"name":"AIDcheckmarkSymbol","arg":{"format":"{}","snippet":"AIDcheckmarkSymbol{${1:symbol}}"}},
+		{"name":"AIDconfig","arg":{"format":"{}","snippet":"AIDconfig{${1:options}}"},"doc":"The \\AIDconfig command is a universal setter for content, visuals, and strings."},
+		{"name":"AIDdiscloseTitle","arg":{"format":"[]{}[]","snippet":"AIDdiscloseTitle[${1:short title}]{${2:full title}}[${3:section-level}]"},"doc":"Change the default section title and hierarchy level using \\AIDdiscloseTitle."},
+		{"name":"AIDdiscloseTitle","arg":{"format":"{}","snippet":"AIDdiscloseTitle{${1:full title}}"},"doc":"Change the default section title and hierarchy level using \\AIDdiscloseTitle."},
+		{"name":"AIDdiscloseTitleLong"},
+		{"name":"AIDdiscloseTitleShort"},
+		{"name":"AIDGetString","arg":{"format":"{}","snippet":"AIDGetString{${1:key}}"},"doc":"Returns the localized string associated with a specific internal key."},
+		{"name":"AIDlatexProcessor","unusual":true},
+		{"name":"AIDloadLanguage","arg":{"format":"{}","snippet":"AIDloadLanguage{${1:code}}"},"doc":"Manually forces the loading of a specific language definition file, overriding the auto-detection."},
+		{"name":"AIDorder","arg":{"format":"{}","snippet":"AIDorder{${1:order}}"},"doc":"Use \\AIDorder to define the sequence of the disclosure components."},
+		{"name":"AIDpackageName","doc":"Typesets the package name (aidisclose)."},
+		{"name":"AIDpostComments","arg":{"format":"{}","snippet":"AIDpostComments{${1:text}}"}},
+		{"name":"AIDpostTaxonomy","arg":{"format":"{}","snippet":"AIDpostTaxonomy{${1:text}}"}},
+		{"name":"AIDpostTools","arg":{"format":"{}","snippet":"AIDpostTools{${1:text}}"}},
+		{"name":"AIDpreamble","arg":{"format":"{}","snippet":"AIDpreamble{${1:text}}"},"doc":"You can modify internal strings using \\AIDstrings and the main preamble paragraph using \\AIDpreamble."},
+		{"name":"AIDpreComments","arg":{"format":"{}","snippet":"AIDpreComments{${1:text}}"}},
+		{"name":"AIDpreTaxonomy","arg":{"format":"{}","snippet":"AIDpreTaxonomy{${1:text}}"}},
+		{"name":"AIDpreTools","arg":{"format":"{}","snippet":"AIDpreTools{${1:text}}"}},
+		{"name":"AIDrenderDeclaration","arg":{"format":"[]{}","snippet":"AIDrenderDeclaration[${1:options}]{${2:authors}}"}},
+		{"name":"AIDrenderDeclaration","arg":{"format":"{}","snippet":"AIDrenderDeclaration{${1:authors}}"}},
+		{"name":"AIDrenderDeclaration*","arg":{"format":"[]{}","snippet":"AIDrenderDeclaration*[${1:options}]{${2:authors}}"}},
+		{"name":"AIDrenderDeclaration*","arg":{"format":"{}","snippet":"AIDrenderDeclaration*{${1:authors}}"}},
+		{"name":"AIDset","arg":{"format":"{}","snippet":"AIDset{${1:options}}","keys":["l3keys:aidisclose"],"keyPos":0},"doc":"The \\AIDset command allows you to change package load-time options dynamically in the preamble."},
+		{"name":"AIDstrings","arg":{"format":"{}","snippet":"AIDstrings{${1:strings}}"},"doc":"You can modify internal strings using \\AIDstrings and the main preamble paragraph using \\AIDpreamble."},
+		{"name":"AIDtoolsUsed","arg":{"format":"{}","snippet":"AIDtoolsUsed{${1:tools}}"},"doc":"Use \\AIDtoolsUsed{} to list the AI tools employed."},
+		{"name":"AIDunusedColor","arg":{"format":"{}","snippet":"AIDunusedColor{${1:color}}"}},
+		{"name":"AIDusedColor","arg":{"format":"{}","snippet":"AIDusedColor{${1:color}}"}},
+		{"name":"aidversion","unusual":true},
+		{"name":"CiteGAIDeT"},
+		{"name":"CiteLaTeX"}
+	],
+	"envs": [
+		{"name":"AIDcomment","doc":"Use the AIDcomment (numbered) and AIDcomment* (unnumbered) environments for details."},
+		{"name":"AIDcomment*","doc":"Use the AIDcomment (numbered) and AIDcomment* (unnumbered) environments for details."}
+	],
+	"keys": {
+		"l3keys:aidisclose": ["autobib=${1|true,false|}","nocite=${1|true,false|}"],
+		"\\usepackage/aidisclose#c": ["autobib=${1|true,false|}","nocite=${1|true,false|}"]
+	},
+	"args": ["\\usepackage/aidisclose#c"]
+}

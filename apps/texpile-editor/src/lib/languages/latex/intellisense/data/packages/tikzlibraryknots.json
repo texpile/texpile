@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"flipcrossings","arg":{"format":"{}","snippet":"flipcrossings{${1:crossings}}"}},
+		{"name":"redraw","arg":{"format":"{}{}","snippet":"redraw{${1:strand number}}{${2:point}}"}},
+		{"name":"strand","arg":{"format":"[]","snippet":"strand[${1:options}]"}},
+		{"name":"strand"}
+	],
+	"envs": [
+		{"name":"knot","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"knot"}
+	],
+	"keys": {}
+}

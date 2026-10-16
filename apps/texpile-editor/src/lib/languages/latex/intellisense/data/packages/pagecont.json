@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"keyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pagecont#c": ["first"]
+	},
+	"args": ["\\usepackage/pagecont#c"]
+}

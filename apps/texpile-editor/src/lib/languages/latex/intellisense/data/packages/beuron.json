@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xparse"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"beuronOmega","doc":"Outputs the Greek capital letter Omega."},
+		{"name":"textbeuron","arg":{"format":"{}","snippet":"textbeuron{${1:text}}"},"doc":"The command typesets a text in the normal Beuron font."},
+		{"name":"textbeuron*","arg":{"format":"{}","snippet":"textbeuron*{${1:text}}"},"doc":"The command typesets a text in the normal Beuron font."},
+		{"name":"textbeuronc","arg":{"format":"{}","snippet":"textbeuronc{${1:text}}"}},
+		{"name":"textbeuronc*","arg":{"format":"{}","snippet":"textbeuronc*{${1:text}}"}},
+		{"name":"textbeuronx","arg":{"format":"{}","snippet":"textbeuronx{${1:text}}"}},
+		{"name":"textbeuronx*","arg":{"format":"{}","snippet":"textbeuronx*{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

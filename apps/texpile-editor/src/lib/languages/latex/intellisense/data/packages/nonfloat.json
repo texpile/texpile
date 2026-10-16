@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"figcaption","arg":{"format":"[]{}","snippet":"figcaption[${1:short caption}]{${2:caption}}"}},
+		{"name":"figcaption","arg":{"format":"{}","snippet":"figcaption{${1:caption}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"tabcaption","arg":{"format":"[]{}","snippet":"tabcaption[${1:short caption}]{${2:caption}}"}},
+		{"name":"tabcaption","arg":{"format":"{}","snippet":"tabcaption{${1:caption}}"}},
+		{"name":"topcaption","arg":{"format":"[]{}","snippet":"topcaption[${1:short caption}]{${2:caption}}"},"unusual":true},
+		{"name":"topcaption","arg":{"format":"{}","snippet":"topcaption{${1:caption}}"},"unusual":true}
+	],
+	"envs": [
+		{"name":"narrow","arg":{"format":"{}{}","snippet":"{${1:left margin}}{${2:right margin}}"},"doc":"Using this environment, you can set not only narrow text, but through the use of negative lengths, it is possible to have very wide figures, tables, etc., stick out in the margins."}
+	],
+	"keys": {}
+}

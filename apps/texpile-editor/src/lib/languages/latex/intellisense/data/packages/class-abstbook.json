@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"class-report"},{"name":"makeidx"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"minitoc"},{"name":"mtcmess"}],
+	"macros": [
+		{"name":"adr","arg":{"format":"{}","snippet":"adr{${1:addresses}}"}},
+		{"name":"conferenceday","arg":{"format":"{}","snippet":"conferenceday{${1:day}}"}},
+		{"name":"loadabstr","arg":{"format":"[]{}{}","snippet":"loadabstr[${1:additional}]{${2:TOC entry}}{${3:file name}}"}},
+		{"name":"loadabstr","arg":{"format":"{}{}","snippet":"loadabstr{${1:TOC entry}}{${2:file name}}"}},
+		{"name":"loadpsabstr","arg":{"format":"[]{}{}{}","snippet":"loadpsabstr[${1:additional}]{${2:TOC entry}}{${3:file name}}{${4:includegraphics options}}"}},
+		{"name":"loadpsabstr","arg":{"format":"{}{}{}","snippet":"loadpsabstr{${1:TOC entry}}{${2:file name}}{${3:includegraphics options}}"}},
+		{"name":"name","arg":{"format":"{}","snippet":"name{${1:author names}}"}},
+		{"name":"sessionname","arg":{"format":"{}{}","snippet":"sessionname{${1:short name}}{${2:long name}}"}},
+		{"name":"titl","arg":{"format":"{}","snippet":"titl{${1:title}}"}}
+	],
+	"envs": [
+		{"name":"abstr"}
+	],
+	"keys": {
+		"\\documentclass/abstbook#c": ["twocolumn"]
+	},
+	"args": ["\\documentclass/abstbook#c"]
+}

@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"NewStack","arg":{"format":"{}{}","snippet":"NewStack{${1:stack}}{${2:default}}"},"unusual":true},
+		{"name":"Pop","arg":{"format":"{}","snippet":"Pop{${1:stack}}"},"unusual":true},
+		{"name":"Push","arg":{"format":"{}{}","snippet":"Push{${1:stack}}{${2:value}}"},"unusual":true},
+		{"name":"ShowTop","arg":{"format":"{}","snippet":"ShowTop{${1:stack}}"},"unusual":true},
+		{"name":"Stack","arg":{"format":"{}","snippet":"Stack{${1:stack}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"xparse"},{"name":"array"},{"name":"multirow"},{"name":"longtable"}],
+	"macros": [
+		{"name":"Topic","arg":{"format":"[]","snippet":"Topic[${1:content}]"},"doc":"This is the main macro of the package; you can use it to wrap the optional ⟨content⟩ of a cell in order to allow it to merge with adjacent cells."},
+		{"name":"Topic","doc":"This is the main macro of the package; you can use it to wrap the optional ⟨content⟩ of a cell in order to allow it to merge with adjacent cells."},
+		{"name":"TopicLine","doc":"\\TopicLine can be used at the start of a row to automatically draw the horizontal lines that separates it from the row above and correctly accounts for merged cells."},
+		{"name":"TopicSetContinuationCode","arg":{"format":"{}","snippet":"TopicSetContinuationCode{${1:TeX code}}"}},
+		{"name":"TopicSetVPos","arg":{"format":"{}","snippet":"TopicSetVPos{${1:vertical position}}"},"doc":"You can set the vertical position for \\Topic cells by using \\TopicSetVPos."},
+		{"name":"TopicSetWidth","arg":{"format":"{}","snippet":"TopicSetWidth{${1:cell width}}"},"doc":"You can set the width of the \\Topic cells by using \\TopicSetWidth."}
+	],
+	"envs": [
+		{"name":"topiclongtable","arg":{"format":"{}","snippet":"{${1:column specification}}"},"doc":"The topiclongtable environment extends longtable."}
+	],
+	"keys": {}
+}

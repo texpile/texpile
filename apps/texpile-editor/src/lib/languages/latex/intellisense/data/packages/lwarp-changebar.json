@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"cbcolor","arg":{"format":"{}","snippet":"cbcolor{${1}}"}},
+		{"name":"cbdelete","arg":{"format":"[]","snippet":"cbdelete[${1:width}]"}},
+		{"name":"cbdelete"},
+		{"name":"cbend"},
+		{"name":"cbstart","arg":{"format":"[]","snippet":"cbstart[${1:width}]"}},
+		{"name":"cbstart"},
+		{"name":"changebarsep"},
+		{"name":"changebarwidth"},
+		{"name":"deletebarwidth"}
+	],
+	"envs": [],
+	"keys": {}
+}

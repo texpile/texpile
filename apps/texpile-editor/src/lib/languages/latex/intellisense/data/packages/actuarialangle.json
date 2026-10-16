@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"pict2e","if":"!nobracket"},{"name":"trig","if":"!nobracket"}],
+	"macros": [
+		{"name":"actuarialangle","arg":{"format":"{}","snippet":"actuarialangle{${1:duration}}"},"doc":"composes an angle symbol around ⟨duration⟩."},
+		{"name":"angl","arg":{"format":"{}","snippet":"angl{${1}}"}},
+		{"name":"anglk","doc":"Commands \\angln, \\anglr and \\anglk are shortcuts for the common cases \\angl{n}, \\angl{r} and \\angl{k}, respectively."},
+		{"name":"angln","doc":"Commands \\angln, \\anglr and \\anglk are shortcuts for the common cases \\angl{n}, \\angl{r} and \\angl{k}, respectively."},
+		{"name":"anglr","doc":"Commands \\angln, \\anglr and \\anglk are shortcuts for the common cases \\angl{n}, \\angl{r} and \\angl{k}, respectively."},
+		{"name":"group","arg":{"format":"{}","snippet":"group{${1:statuses}}"}},
+		{"name":"overanglebracket","arg":{"format":"{}","snippet":"overanglebracket{${1:statuses}}"},"doc":"composes an angle bracket (“roof”) above ⟨statuses⟩."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/actuarialangle#c": ["nobracket","thickspace","thinspace"]
+	},
+	"args": ["\\usepackage/actuarialangle#c"]
+}

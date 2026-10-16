@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"basename","unusual":true},
+		{"name":"displaytagstyle","arg":{"format":"{}","snippet":"displaytagstyle{${1:style format}}"},"doc":"The command to redefine the behaviour of \\eqref is \\eqrefstyle; the command to redefine how equation numbers appear in displayed equations is \\displaytagstyle."},
+		{"name":"eqrefstyle","arg":{"format":"{}","snippet":"eqrefstyle{${1:style format}}"},"doc":"The command to redefine the behaviour of \\eqref is \\eqrefstyle; the command to redefine how equation numbers appear in displayed equations is \\displaytagstyle."},
+		{"name":"fullname","unusual":true},
+		{"name":"GlobalRefStyle","arg":{"format":"{}","snippet":"GlobalRefStyle{${1:style format}}"}},
+		{"name":"GlobalVarRefStyle","arg":{"format":"{}","snippet":"GlobalVarRefStyle{${1:style format}}"}},
+		{"name":"Ref","arg":{"format":"{}","snippet":"Ref{${1:label}}"},"doc":"Sometimes it is useful to access a cross-reference without any special formatting. To do this, one may use the \\Ref command: this preserves the standard LaTeX 2ε functionality of \\ref."},
+		{"name":"refstyle","arg":{"format":"{}{}","snippet":"refstyle{${1:style name}}{${2:style format}}"},"doc":"The command to use to define special reference styles is \\refstyle; the command to change the delimiter mid-document is \\setrefdelimiter."},
+		{"name":"revision","unusual":true},
+		{"name":"revisiondate","unusual":true},
+		{"name":"setrefdelimiter","arg":{"format":"{}","snippet":"setrefdelimiter{${1:delimiter}}"},"doc":"The macro \\setrefdelimiter is a meta-macro which takes a single argument: this argument will be used as a delimiter in further macros which define the infrastructure of modref."},
+		{"name":"varref","arg":{"format":"{}","snippet":"varref{${1}}"}},
+		{"name":"writtenby","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

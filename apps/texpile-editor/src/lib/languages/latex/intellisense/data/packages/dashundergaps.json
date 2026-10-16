@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"ulem"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"dashundergapsdate","unusual":true},
+		{"name":"dashundergapssetup","arg":{"format":"{}","snippet":"dashundergapssetup{${1:key-value list}}","keys":["l3keys:fmdug"],"keyPos":0},"doc":"Change options anywhere."},
+		{"name":"dashundergapsversion","unusual":true},
+		{"name":"gap","arg":{"format":"[]{}","snippet":"gap[${1:style}]{${2:text}}"},"doc":"The dashundergaps package provides a single command \\gap which takes one argument and produces a gap of the width of that argument."},
+		{"name":"gap","arg":{"format":"{}","snippet":"gap{${1:text}}"},"doc":"The dashundergaps package provides a single command \\gap which takes one argument and produces a gap of the width of that argument."},
+		{"name":"gap*","arg":{"format":"[]{}","snippet":"gap*[${1:style}]{${2:text}}"},"doc":"The dashundergaps package provides a single command \\gap which takes one argument and produces a gap of the width of that argument."},
+		{"name":"gap*","arg":{"format":"{}","snippet":"gap*{${1:text}}"},"doc":"The dashundergaps package provides a single command \\gap which takes one argument and produces a gap of the width of that argument."},
+		{"name":"TeacherModeOff"},
+		{"name":"TeacherModeOn"},
+		{"name":"thegapnumber","unusual":true},
+		{"name":"thetotalgapnumber","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:fmdug": ["gap-extend-minimum=","gap-extend-percent=","gap-font=","gap-number-format=","display-total-gaps=${1|true,false|}","gap-format-adjust=${1|true,false|}","gap-format=${1|underline,double-underline,dash,dot,wave,blank|}","gap-mode=${1|true,false|}","gap-numbers=${1|true,false|}","gap-widen=${1|true,false|}","teacher-gap-format=${1|underline,double-underline,dash,dot,wave,blank|}","teacher-mode=${1|true,false|}","adjust","dash","dot","displaynbgaps","numbers","teachermode","widen"],
+		"\\usepackage/dashundergaps#c": ["adjust","dash","display-total-gaps=${1|true,false|}","displaynbgaps","dot","gap-extend-minimum=","gap-extend-percent=","gap-font=","gap-format-adjust=${1|true,false|}","gap-format=${1|underline,double-underline,dash,dot,wave,blank|}","gap-mode=${1|true,false|}","gap-number-format=","gap-numbers=${1|true,false|}","gap-widen=${1|true,false|}","numbers","teacher-gap-format=${1|underline,double-underline,dash,dot,wave,blank|}","teacher-mode=${1|true,false|}","teachermode","widen"]
+	},
+	"args": ["\\usepackage/dashundergaps#c"]
+}

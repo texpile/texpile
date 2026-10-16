@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"citeform","arg":{"format":"{}","snippet":"citeform{${1:tag}}"}},
+		{"name":"citeleft"},
+		{"name":"citemid"},
+		{"name":"citen","arg":{"format":"{}","snippet":"citen{${1:keys}}"},"doc":"The command \\citen is provided to give just the citation number(s) without the brackets or superscript and other formatting."},
+		{"name":"citepunct"},
+		{"name":"citeright"},
+		{"name":"nocitecount","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/drftcite#c": ["breakcites","nocitecount","nospace","space","tt","verbose"]
+	},
+	"args": ["\\usepackage/drftcite#c"]
+}

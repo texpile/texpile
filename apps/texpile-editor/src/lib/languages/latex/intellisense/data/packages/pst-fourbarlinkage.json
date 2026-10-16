@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"psFourBarLinkage","arg":{"format":"[]","snippet":"psFourBarLinkage[${1}]"}},
+		{"name":"psFourBarLinkage"}
+	],
+	"envs": [],
+	"keys": {}
+}

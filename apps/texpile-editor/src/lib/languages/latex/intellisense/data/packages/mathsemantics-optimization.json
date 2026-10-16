@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"mathsemantics-semantic"},{"name":"mathsemantics-commons"},{"name":"ifthen"},{"name":"xifthen"},{"name":"calc"},{"name":"iftex"},{"name":"xparse"},{"name":"xspace"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathtools"},{"name":"keyval"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"mathsemantics-syntax"}],
+	"macros": [
+		{"name":"linearizingcone","arg":{"format":"[]{}{}","snippet":"linearizingcone[${1:delimiter size}]{${2:set}}{${3:base point}}"}},
+		{"name":"linearizingcone","arg":{"format":"{}{}","snippet":"linearizingcone{${1:set}}{${2:base point}}"}},
+		{"name":"normalcone","arg":{"format":"[]{}{}","snippet":"normalcone[${1:delimiter size}]{${2:set}}{${3:base point}}"}},
+		{"name":"normalcone","arg":{"format":"{}{}","snippet":"normalcone{${1:set}}{${2:base point}}"}},
+		{"name":"polarcone","arg":{"format":"{}","snippet":"polarcone{${1:set}}"}},
+		{"name":"radialcone","arg":{"format":"[]{}{}","snippet":"radialcone[${1:delimiter size}]{${2:set}}{${3:base point}}"}},
+		{"name":"radialcone","arg":{"format":"{}{}","snippet":"radialcone{${1:set}}{${2:base point}}"}},
+		{"name":"tangentcone","arg":{"format":"[]{}{}","snippet":"tangentcone[${1:delimiter size}]{${2:set}}{${3:base point}}"}},
+		{"name":"tangentcone","arg":{"format":"{}{}","snippet":"tangentcone{${1:set}}{${2:base point}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

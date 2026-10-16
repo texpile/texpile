@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"MakeTextLowercase","arg":{"format":"[]{}","snippet":"MakeTextLowercase[${1:language}]{${2:text}}"}},
+		{"name":"MakeTextLowercase","arg":{"format":"{}","snippet":"MakeTextLowercase{${1:text}}"}},
+		{"name":"MakeTextUppercase","arg":{"format":"[]{}","snippet":"MakeTextUppercase[${1:language}]{${2:text}}"}},
+		{"name":"MakeTextUppercase","arg":{"format":"{}","snippet":"MakeTextUppercase{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/textcase#c": ["overload"]
+	},
+	"args": ["\\usepackage/textcase#c"]
+}

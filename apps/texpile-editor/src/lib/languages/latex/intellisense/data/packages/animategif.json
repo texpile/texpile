@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"animate"},{"name":"ifthen"},{"name":"iftex"},{"name":"ifdraft"},{"name":"calc"},{"name":"graphics"},{"name":"trig"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"auxhook"},{"name":"graphicx"},{"name":"keyval"}],
+	"macros": [
+		{"name":"animategif","arg":{"format":"[]{}","snippet":"animategif[${1:options}]{${2:gif file}}","keys":["l3keys:animategif"],"keyPos":0}},
+		{"name":"animategif","arg":{"format":"{}","snippet":"animategif{${1:gif file}}"}},
+		{"name":"animategifsetup","arg":{"format":"{}","snippet":"animategifsetup{${1:options}}","keys":["l3keys:animategif"],"keyPos":0},"doc":"Options are given to \\animategif, to the package, or to \\animategifsetup{〈options〉}, which sets them for the rest of the current group."}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:animategif": ["cachedir=","downsample=","fps=","frames=","keyframe=","label=","plays=","speed=","step=","still","handout=${1|still,animate|}","optimize=${1|true,false|}"],
+		"\\usepackage/animategif#c": ["cachedir=","downsample=","fps=","frames=","handout=${1|still,animate|}","keyframe=","label=","optimize=${1|true,false|}","plays=","speed=","step=","still"]
+	},
+	"args": ["\\usepackage/animategif#c"]
+}

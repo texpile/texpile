@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"name","arg":{"format":"{}","snippet":"name{${1:axis name}}"}},
+		{"name":"nbin","arg":{"format":"{}{}","snippet":"nbin{${1:axes}}{${2:operator}}"},"doc":"You can use `\\nbin` to make new binary operators."},
+		{"name":"ncat","arg":{"format":"{}","snippet":"ncat{${1:axes}}"}},
+		{"name":"ndef","arg":{"format":"{}{}","snippet":"ndef{${1:macro}}{${2:axis name}}"}},
+		{"name":"ndot","arg":{"format":"{}","snippet":"ndot{${1:axes}}"}},
+		{"name":"nfun","arg":{"format":"{}{}","snippet":"nfun{${1:axes}}{${2:function name}}"}},
+		{"name":"nsum","arg":{"format":"{}","snippet":"nsum{${1:axes}}"},"doc":"Use `\\nsum{\\ax} A` for summation over a named axis."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xetexko"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"kolabels-utf"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

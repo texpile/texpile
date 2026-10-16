@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"afterpage"}],
+	"macros": [],
+	"envs": [
+		{"name":"FPfigure"},
+		{"name":"FPtable"}
+	],
+	"keys": {}
+}

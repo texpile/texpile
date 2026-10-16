@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"mlftitle","unusual":true},
+		{"name":"mlttitle","unusual":true},
+		{"name":"mtctitle","unusual":true},
+		{"name":"plftitle","unusual":true},
+		{"name":"plttitle","unusual":true},
+		{"name":"ptctitle","unusual":true},
+		{"name":"slftitle","unusual":true},
+		{"name":"slttitle","unusual":true},
+		{"name":"stctitle","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

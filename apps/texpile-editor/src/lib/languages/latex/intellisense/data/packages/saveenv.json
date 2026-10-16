@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"precattl"}],
+	"macros": [],
+	"envs": [
+		{"name":"saveenv","arg":{"format":"{}","snippet":"{${1:macro}}"},"doc":"Allow users to collect environment content verbatim."},
+		{"name":"saveenvghost","arg":{"format":"{}","snippet":"{${1:macro}}"}},
+		{"name":"saveenvkeeplast","arg":{"format":"{}","snippet":"{${1:macro}}"}},
+		{"name":"saveenvkeeplastreinsert","arg":{"format":"{}{}","snippet":"{${1:macro}}{${2:code after group}}"}},
+		{"name":"saveenvreinsert","arg":{"format":"{}{}","snippet":"{${1:macro}}{${2:code after group}}"}}
+	],
+	"keys": {}
+}

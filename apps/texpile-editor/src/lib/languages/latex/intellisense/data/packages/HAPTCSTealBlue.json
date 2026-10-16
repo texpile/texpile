@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-slpe"},{"name":"pifont"}],
+	"macros": [
+		{"name":"slidetitle","arg":{"format":"{}","snippet":"slidetitle{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

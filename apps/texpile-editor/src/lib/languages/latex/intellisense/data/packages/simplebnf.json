@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"xparse"},{"name":"tabularray"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"bnfannot","arg":{"format":"{}","snippet":"bnfannot{${1}}"},"unusual":true},
+		{"name":"bnfcomment","arg":{"format":"{}","snippet":"bnfcomment{${1:comment}}"}},
+		{"name":"bnfexpr","arg":{"format":"{}","snippet":"bnfexpr{${1}}"},"unusual":true},
+		{"name":"SetBNFConfig","arg":{"format":"{}","snippet":"SetBNFConfig{${1:configuration keys}}","keys":["l3keys:simplebnf"],"keyPos":0}},
+		{"name":"SetBNFLayout","arg":{"format":"{}","snippet":"SetBNFLayout{${1:layout keys}}"}},
+		{"name":"SimpleBNFDefEq","unusual":true},
+		{"name":"SimpleBNFDefOr","unusual":true},
+		{"name":"SimpleBNFStretch","unusual":true}
+	],
+	"envs": [
+		{"name":"bnf","arg":{"format":"()[]","snippet":"(${1:configuration keys})[${2:layout keys}]","keys":["l3keys:simplebnf"],"keyPos":0}},
+		{"name":"bnf","arg":{"format":"()","snippet":"(${1:configuration keys})","keys":["l3keys:simplebnf"],"keyPos":0}},
+		{"name":"bnfgrammar","arg":{"format":"[][][]","snippet":"[${1}][${2}][${3}]"},"unusual":true},
+		{"name":"bnfgrammar","unusual":true}
+	],
+	"keys": {
+		"l3keys:simplebnf": ["comment=","line-break-delim=","new-line-delim=","or-sym=","prod-delim=","prod-sep=","relation-sym-map=","relation=","row-sep=","single-line-delim="]
+	}
+}

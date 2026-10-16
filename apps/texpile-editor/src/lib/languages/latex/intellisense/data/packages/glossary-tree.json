@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"glsfindwidesttoplevelname","arg":{"format":"[]","snippet":"glsfindwidesttoplevelname[${1:glossary labels}]"}},
+		{"name":"glsfindwidesttoplevelname"},
+		{"name":"glssetwidest","arg":{"format":"[]{}","snippet":"glssetwidest[${1:level}]{${2:name}}"},"doc":"\\glssetwidest[⟨level⟩]{⟨text⟩} sets the widest text for the given level."},
+		{"name":"glssetwidest","arg":{"format":"{}","snippet":"glssetwidest{${1:name}}"},"doc":"\\glssetwidest[⟨level⟩]{⟨text⟩} sets the widest text for the given level."},
+		{"name":"glstreechildpredesc"},
+		{"name":"glstreegroupheaderfmt","arg":{"format":"{}","snippet":"glstreegroupheaderfmt{${1:text}}"},"doc":"Format used to display the group header in the tree styles."},
+		{"name":"glstreeindent","doc":"Length governing left indent for each level of the tree style."},
+		{"name":"glstreeitem","doc":"Top level item used in index style."},
+		{"name":"glstreenamebox","arg":{"format":"{}{}","snippet":"glstreenamebox{${1:width}}{${2:text}}"},"doc":"Creates the box for the name with styles like alttree."},
+		{"name":"glstreenamefmt","arg":{"format":"{}","snippet":"glstreenamefmt{${1:text}}"},"doc":"Format used to display the name in the tree styles."},
+		{"name":"glstreenavigationfmt","arg":{"format":"{}","snippet":"glstreenavigationfmt{${1:text}}"},"doc":"Format used to display the navigation header in the tree styles."},
+		{"name":"glstreepredesc","doc":"Space inserted before top-level descriptions."},
+		{"name":"GlsTreeSetup","arg":{"format":"{}","snippet":"GlsTreeSetup{${1:key=value list}}"}},
+		{"name":"GlsTreeStarBox","arg":{"format":"{}","snippet":"GlsTreeStarBox{${1:text}}"}},
+		{"name":"GlsTreeStarItemCounterBox","arg":{"format":"{}","snippet":"GlsTreeStarItemCounterBox{${1:text}}"},"doc":"This applies grouping to localise any font change."},
+		{"name":"GlsTreeStarNameBox","arg":{"format":"{}","snippet":"GlsTreeStarNameBox{${1:text}}"}},
+		{"name":"GlsTreeStarOuterBox","arg":{"format":"{}","snippet":"GlsTreeStarOuterBox{${1:text}}"}},
+		{"name":"GlsTreeStarSubItemCounterBox","arg":{"format":"{}","snippet":"GlsTreeStarSubItemCounterBox{${1:text}}"},"doc":"This applies grouping to localise any font change."},
+		{"name":"GlsTreeStarSymbolBox","arg":{"format":"{}","snippet":"GlsTreeStarSymbolBox{${1:text}}"}},
+		{"name":"glstreesubitem","doc":"Used to indent the level 1 entries for the index styles."},
+		{"name":"glstreesubsubitem","doc":"Used to indent the level 2 entries for the index styles."},
+		{"name":"GlsTreeUpdateWidestNameAndSymbol","arg":{"format":"[]{}","snippet":"GlsTreeUpdateWidestNameAndSymbol[${1:level}]{${2:entry label}}"},"doc":"Updates the widest name and symbol if the combined width of the given entry’s name and symbol is wider than the current setting."},
+		{"name":"GlsTreeUpdateWidestNameAndSymbol","arg":{"format":"{}","snippet":"GlsTreeUpdateWidestNameAndSymbol{${1:entry label}}"},"doc":"Updates the widest name and symbol if the combined width of the given entry’s name and symbol is wider than the current setting."},
+		{"name":"GlsTreeUpdateWidestNameOrSymbol","arg":{"format":"[]{}","snippet":"GlsTreeUpdateWidestNameOrSymbol[${1:level}]{${2:entry label}}"}},
+		{"name":"GlsTreeUpdateWidestNameOrSymbol","arg":{"format":"{}","snippet":"GlsTreeUpdateWidestNameOrSymbol{${1:entry label}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

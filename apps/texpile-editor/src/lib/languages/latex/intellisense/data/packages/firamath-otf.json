@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"unicode-math"},{"name":"unicode-math-luatex"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"etoolbox"},{"name":"xfakebold","if":"fakebold"},{"name":"pdfrender","if":"fakebold"},{"name":"kvsetkeys","if":"fakebold"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

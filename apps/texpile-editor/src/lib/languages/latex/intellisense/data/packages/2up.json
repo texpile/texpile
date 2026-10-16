@@ -1,0 +1,20 @@
+{
+	"macros": [
+		{"name":"magstepminus","arg":{"format":"{}","snippet":"magstepminus{${1:n}}"}},
+		{"name":"pageseplength"},
+		{"name":"pagesepoffset"},
+		{"name":"pagesepwidth"},
+		{"name":"source","arg":{"format":"{}{}{}","snippet":"source{${1:mag}}{${2:width}}{${3:height}}"}},
+		{"name":"target","arg":{"format":"{}{}{}","snippet":"target{${1:mag}}{${2:width}}{${3:height}}"}},
+		{"name":"targetlayout","arg":{"format":"{}","snippet":"targetlayout{${1:options}}"}},
+		{"name":"twouparticle"},
+		{"name":"twoupclearpage"},
+		{"name":"twoupemptypage"},
+		{"name":"twouplandscape"},
+		{"name":"twouplegaltarget"},
+		{"name":"twoupplain"},
+		{"name":"TwoupWrites","doc":"\\TwoupWrites makes \\write and \\read \\immediate, if you know what that means."}
+	],
+	"envs": [],
+	"keys": {}
+}

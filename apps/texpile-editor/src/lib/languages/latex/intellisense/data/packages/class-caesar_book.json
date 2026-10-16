@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"class-book"},{"name":"sidenotes"},{"name":"l3keys2e"},{"name":"marginnote"},{"name":"caption"},{"name":"caption3"},{"name":"keyval"},{"name":"xparse"},{"name":"changepage"},{"name":"marginfix"},{"name":"microtype"},{"name":"etoolbox"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"mathpazo","engines":["pdflatex","xelatex"]},{"name":"helvet","engines":["pdflatex","xelatex"]},{"name":"beramono","engines":["pdflatex","xelatex"]},{"name":"titlesec"},{"name":"titletoc"},{"name":"fancyhdr"},{"name":"ragged2e"},{"name":"enumitem"},{"name":"ifthen"},{"name":"textcase"},{"name":"color"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math","engines":["lualatex"]},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"amsmath","engines":["lualatex"]},{"name":"amstext","engines":["lualatex"]},{"name":"amsbsy","engines":["lualatex"]},{"name":"amsopn","engines":["lualatex"]},{"name":"lualatex-math","engines":["lualatex"]}],
+	"macros": [
+		{"name":"maketitlepage"},
+		{"name":"marginparstyle","unusual":true},
+		{"name":"newthought","arg":{"format":"{}","snippet":"newthought{${1:opening words}}"}},
+		{"name":"publisher","arg":{"format":"{}","snippet":"publisher{${1:publisher}}"}},
+		{"name":"sidecite","arg":{"format":"[][]{}","snippet":"sidecite[${1:prefix}][${2:postfix}]{${3:keys}}"}},
+		{"name":"sidecite","arg":{"format":"{}","snippet":"sidecite{${1:keys}}"}},
+		{"name":"thesis","arg":{"format":"{}","snippet":"thesis{${1:thesis type}}"}}
+	],
+	"envs": [
+		{"name":"fullwidth"}
+	],
+	"keys": {}
+}

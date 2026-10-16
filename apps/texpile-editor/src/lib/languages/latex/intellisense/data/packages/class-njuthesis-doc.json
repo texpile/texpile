@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"l3keys2e"},{"name":"class-ctxdoc"},{"name":"class-l3doc"},{"name":"calc"},{"name":"class-article"},{"name":"doc"},{"name":"multicol"},{"name":"array"},{"name":"alphalph"},{"name":"intcalc"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"booktabs"},{"name":"color"},{"name":"colortbl"},{"name":"hologo"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"enumitem"},{"name":"pifont"},{"name":"textcomp"},{"name":"trace"},{"name":"csquotes"},{"name":"etoolbox"},{"name":"fancyvrb"},{"name":"underscore"},{"name":"verbatim"},{"name":"hypdoc"},{"name":"atveryend-ltx"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"ctex"},{"name":"luatexja","engines":["lualatex"]},{"name":"luatexja-core","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"xkeyval"},{"name":"everyhook","engines":["lualatex"]},{"name":"svn-prov","engines":["lualatex"]},{"name":"luatexja-compat","engines":["lualatex"]},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"zhnumber"},{"name":"multitoc"},{"name":"ifthen"},{"name":"geometry"},{"name":"ifvtex"},{"name":"tabularx"},{"name":"makecell"},{"name":"threeparttable"},{"name":"siunitx"},{"name":"translations"},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse"},{"name":"lualatex-math","engines":["lualatex"]},{"name":"xcolor"},{"name":"caption"},{"name":"caption3"},{"name":"fancyvrb-ex"},{"name":"hbaw"},{"name":"zref-base"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"background"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"everypage"},{"name":"afterpage"},{"name":"codehigh"},{"name":"catchfile"},{"name":"ninecolors"},{"name":"varwidth"},{"name":"listings"},{"name":"lltjp-listings","engines":["lualatex"]},{"name":"luatexbase-cctb","engines":["lualatex"]},{"name":"njuvisual"},{"name":"tabularray"},{"name":"zhlineskip"},{"name":"mathtools"},{"name":"mhsetup"},{"name":"lua-ul","engines":["lualatex"]},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"xeCJK-listings","engines":["xelatex"]},{"name":"xeCJKfntef","engines":["xelatex"]},{"name":"ulem","engines":["xelatex"]},{"name":"accsupp","engines":["xelatex"]}],
+	"macros": [
+		{"name":"biber"},
+		{"name":"CJKsout","arg":{"format":"[]{}","snippet":"CJKsout[${1:options}]{${2:text}}"}},
+		{"name":"CJKsout","arg":{"format":"{}","snippet":"CJKsout{${1:text}}"}},
+		{"name":"CJKunderdot","arg":{"format":"[]{}","snippet":"CJKunderdot[${1}]{${2}}"},"unusual":true},
+		{"name":"CJKunderdot","arg":{"format":"{}","snippet":"CJKunderdot{${1}}"},"unusual":true},
+		{"name":"CJKunderline","arg":{"format":"[]{}","snippet":"CJKunderline[${1}]{${2}}"},"unusual":true},
+		{"name":"CJKunderline","arg":{"format":"{}","snippet":"CJKunderline{${1}}"},"unusual":true},
+		{"name":"grd","arg":{"format":"{}","snippet":"grd{${1:module}}"}},
+		{"name":"MacTeX"},
+		{"name":"OPT","arg":{"format":"{}","snippet":"OPT{${1:option}}"}},
+		{"name":"pgrd","arg":{"format":"{}","snippet":"pgrd{${1:module}}"}},
+		{"name":"sgrd","arg":{"format":"{}","snippet":"sgrd{${1:module}}"}},
+		{"name":"TA"},
+		{"name":"TB"},
+		{"name":"TC"},
+		{"name":"TD"},
+		{"name":"TE"},
+		{"name":"tikzlogo"},
+		{"name":"TL"},
+		{"name":"tpbutton","arg":{"format":"{}","snippet":"tpbutton{${1:button text}}"}}
+	],
+	"envs": [
+		{"name":"latexexample","arg":{"format":"[]","snippet":"[${1:listings options}]"}},
+		{"name":"latexexample"},
+		{"name":"shellexample","arg":{"format":"[]","snippet":"[${1:listings options}]"}},
+		{"name":"shellexample"}
+	],
+	"keys": {}
+}

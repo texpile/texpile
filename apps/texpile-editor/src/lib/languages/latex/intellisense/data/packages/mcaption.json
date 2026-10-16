@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"changepage"}],
+	"macros": [
+		{"name":"margincapalign","unusual":true,"if":"v2.2"},
+		{"name":"margincapsep","doc":"Horizontal spacing between a margincap environment’s contents and the caption can be adjusted by the length \\margincapsep."}
+	],
+	"envs": [
+		{"name":"margincap","doc":"The margincap environment places its contents into a box whose width matches the current line witdh and attaches a caption (with an optional label) next to the box in the outer margin."},
+		{"name":"margincap","arg":{"format":"[]{}","snippet":"[${1:short caption}]{${2:long caption}}"},"if":"v2.2"},
+		{"name":"margincap","arg":{"format":"{}","snippet":"{${1:long caption}}"},"if":"v2.2"}
+	],
+	"keys": {
+		"\\usepackage/mcaption#c": ["bottom","top","v2.2"]
+	},
+	"args": ["\\usepackage/mcaption#c"]
+}

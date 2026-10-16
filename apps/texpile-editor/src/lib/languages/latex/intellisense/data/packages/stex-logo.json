@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xspace"}],
+	"macros": [
+		{"name":"flams","unusual":true},
+		{"name":"stex"},
+		{"name":"sTeX"}
+	],
+	"envs": [],
+	"keys": {}
+}

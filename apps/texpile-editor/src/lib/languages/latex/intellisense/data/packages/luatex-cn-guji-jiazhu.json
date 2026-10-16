@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"xparse"},{"name":"luatex-cn-core-textflow"},{"name":"luatex-cn-core-base"},{"name":"luatexbase"},{"name":"enumitem"}],
+	"macros": [
+		{"name":"JiaZhu","arg":{"format":"[]{}","snippet":"JiaZhu[${1:options}]{${2:content}}"}},
+		{"name":"JiaZhu","arg":{"format":"{}","snippet":"JiaZhu{${1:content}}"}},
+		{"name":"jiazhuSetup","arg":{"format":"{}","snippet":"jiazhuSetup{${1:options}}"}},
+		{"name":"jiazhuShortcut","arg":{"format":"[]{}{}","snippet":"jiazhuShortcut[${1:options}]{${2:open}}{${3:close}}"},"doc":"The \\jiazhuShortcut command registers a bracket pair so that matching brackets in source code are automatically replaced with \\夹注{...} , simplifying input when there are many interlinear notes."},
+		{"name":"jiazhuShortcut","arg":{"format":"{}{}","snippet":"jiazhuShortcut{${1:open}}{${2:close}}"},"doc":"The \\jiazhuShortcut command registers a bracket pair so that matching brackets in source code are automatically replaced with \\夹注{...} , simplifying input when there are many interlinear notes."},
+		{"name":"单行夹注","arg":{"format":"[]{}","snippet":"单行夹注[${1:column}]{${2:content}}"}},
+		{"name":"单行夹注","arg":{"format":"{}","snippet":"单行夹注{${1:content}}"}},
+		{"name":"單行夾注","arg":{"format":"[]{}","snippet":"單行夾注[${1:column}]{${2:content}}"}},
+		{"name":"單行夾注","arg":{"format":"{}","snippet":"單行夾注{${1:content}}"}},
+		{"name":"夹注","arg":{"format":"[]{}","snippet":"夹注[${1:options}]{${2:content}}"}},
+		{"name":"夹注","arg":{"format":"{}","snippet":"夹注{${1:content}}"}},
+		{"name":"夹注捷径","arg":{"format":"[]{}{}","snippet":"夹注捷径[${1:options}]{${2:open}}{${3:close}}"}},
+		{"name":"夹注捷径","arg":{"format":"{}{}","snippet":"夹注捷径{${1:open}}{${2:close}}"}},
+		{"name":"夹注设置","arg":{"format":"{}","snippet":"夹注设置{${1:options}}"}},
+		{"name":"夾注","arg":{"format":"[]{}","snippet":"夾注[${1:options}]{${2:content}}"}},
+		{"name":"夾注","arg":{"format":"{}","snippet":"夾注{${1:content}}"}},
+		{"name":"夾注捷徑","arg":{"format":"[]{}{}","snippet":"夾注捷徑[${1:options}]{${2:open}}{${3:close}}"}},
+		{"name":"夾注捷徑","arg":{"format":"{}{}","snippet":"夾注捷徑{${1:open}}{${2:close}}"}},
+		{"name":"夾注設置","arg":{"format":"{}","snippet":"夾注設置{${1:options}}"}}
+	],
+	"envs": [
+		{"name":"JiaZhuEnv","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"JiaZhuEnv"},
+		{"name":"夹注环境","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"夹注环境"},
+		{"name":"夾注環境","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"夾注環境"}
+	],
+	"keys": {}
+}

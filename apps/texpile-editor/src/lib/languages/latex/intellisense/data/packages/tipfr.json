@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"newtxtt"},{"name":"textcomp"},{"name":"xkeyval"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"multido"}],
+	"macros": [
+		{"name":"Calculatrice","arg":{"format":"[]","snippet":"Calculatrice[${1:optional title}]","keys":["keyval:Calculatrice"],"keyPos":0},"doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"Calculatrice","doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"Calculatrice*","arg":{"format":"[]","snippet":"Calculatrice*[${1:optional title}]","keys":["keyval:Calculatrice"],"keyPos":0},"doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"Calculatrice*","doc":"Cette commande permet d’afficher la calculatrice en entier."},
+		{"name":"Circonflexe"},
+		{"name":"Ecran","arg":{"format":"[]{}","snippet":"Ecran[${1:options}]{${2:arguments}}","keys":["keyval:Ecran"],"keyPos":0},"doc":"Cette commande permet d’afficher un écran de calculatrice."},
+		{"name":"Ecran","arg":{"format":"{}","snippet":"Ecran{${1:arguments}}"},"doc":"Cette commande permet d’afficher un écran de calculatrice."},
+		{"name":"fileauthor","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"Menu","arg":{"format":"[]{}","snippet":"Menu[${1:options}]{${2:name}}","keys":["keyval:Menu"],"keyPos":0},"doc":"Cette commande écrit ⟨nom⟩ en majuscule dans une fonte à chasse fixe de type machine à écrire pour nommer un menu de calculatrice."},
+		{"name":"Menu","arg":{"format":"{}","snippet":"Menu{${1:name}}"},"doc":"Cette commande écrit ⟨nom⟩ en majuscule dans une fonte à chasse fixe de type machine à écrire pour nommer un menu de calculatrice."},
+		{"name":"Racine"},
+		{"name":"theLineCommand","unusual":true},
+		{"name":"theLineResult","unusual":true},
+		{"name":"Touche","arg":{"format":"[]","snippet":"Touche[${1:options}]","keys":["keyval:Touche"],"keyPos":0},"doc":"Voici la commande qui fournit tous les dessins de touche."},
+		{"name":"Touche","doc":"Voici la commande qui fournit tous les dessins de touche."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:Calculatrice": ["calcraise=","calcrotate=","calcscale="],
+		"keyval:Ecran": ["height=","nbgradx=","nbgrady=","origin=","plotcolor=","plotcolour=","plotwidth=","screencolor=","screencolour=","screenname=","width=","xgrad=","ygrad=","graphic=${1|true,false|}"],
+		"keyval:Menu": ["colorbox=","colourbox=","size=","text=","select=${1|true,false|}"],
+		"keyval:Touche": ["alpha=","color=","colour=","fontsize=","name=","position=","principal=","radius=","raise=","scalearrows=","second=","thickness=","xoffset=","yoffset=","arrowdown=${1|true,false|}","arrowleft=${1|true,false|}","arrowright=${1|true,false|}","arrowtot=${1|true,false|}","arrowup=${1|true,false|}","circle=${1|true,false|}","fixed=${1|true,false|}","style=${1|function,number,operation,graph,second,on,enter,alpha,arrows|}"]
+	}
+}

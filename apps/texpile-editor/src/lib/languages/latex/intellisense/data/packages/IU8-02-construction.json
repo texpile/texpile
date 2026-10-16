@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"titlesec"},{"name":"titletoc"}],
+	"macros": [
+		{"name":"conclusion"},
+		{"name":"introduction"},
+		{"name":"sectionbreak","unusual":true},
+		{"name":"structure","arg":{"format":"[]{}","snippet":"structure[${1:short title}]{${2:title}}"}},
+		{"name":"structure","arg":{"format":"{}","snippet":"structure{${1:title}}"}},
+		{"name":"structure*","arg":{"format":"[]{}","snippet":"structure*[${1:short title}]{${2:title}}"}},
+		{"name":"structure*","arg":{"format":"{}","snippet":"structure*{${1:title}}"}},
+		{"name":"structurebreak","unusual":true},
+		{"name":"thestructure","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

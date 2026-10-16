@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"bdiagmat","arg":{"format":"[]{}","snippet":"bdiagmat[${1:options}]{${2:diagonal}}"}},
+		{"name":"bdiagmat","arg":{"format":"{}","snippet":"bdiagmat{${1:diagonal}}"}},
+		{"name":"bdiagmat*","arg":{"format":"[]{}","snippet":"bdiagmat*[${1:options}]{${2:diagonal}}"}},
+		{"name":"bdiagmat*","arg":{"format":"{}","snippet":"bdiagmat*{${1:diagonal}}"}},
+		{"name":"Bdiagmat","arg":{"format":"[]{}","snippet":"Bdiagmat[${1:options}]{${2:diagonal}}"}},
+		{"name":"Bdiagmat","arg":{"format":"{}","snippet":"Bdiagmat{${1:diagonal}}"}},
+		{"name":"Bdiagmat*","arg":{"format":"[]{}","snippet":"Bdiagmat*[${1:options}]{${2:diagonal}}"}},
+		{"name":"Bdiagmat*","arg":{"format":"{}","snippet":"Bdiagmat*{${1:diagonal}}"}},
+		{"name":"diagmat","arg":{"format":"[]{}","snippet":"diagmat[${1:options}]{${2:diagonal}}"}},
+		{"name":"diagmat","arg":{"format":"{}","snippet":"diagmat{${1:diagonal}}"}},
+		{"name":"diagmat*","arg":{"format":"[]{}","snippet":"diagmat*[${1:options}]{${2:diagonal}}"}},
+		{"name":"diagmat*","arg":{"format":"{}","snippet":"diagmat*{${1:diagonal}}"}},
+		{"name":"pdiagmat","arg":{"format":"[]{}","snippet":"pdiagmat[${1:options}]{${2:diagonal}}"}},
+		{"name":"pdiagmat","arg":{"format":"{}","snippet":"pdiagmat{${1:diagonal}}"}},
+		{"name":"pdiagmat*","arg":{"format":"[]{}","snippet":"pdiagmat*[${1:options}]{${2:diagonal}}"}},
+		{"name":"pdiagmat*","arg":{"format":"{}","snippet":"pdiagmat*{${1:diagonal}}"}},
+		{"name":"vdiagmat","arg":{"format":"[]{}","snippet":"vdiagmat[${1:options}]{${2:diagonal}}"}},
+		{"name":"vdiagmat","arg":{"format":"{}","snippet":"vdiagmat{${1:diagonal}}"}},
+		{"name":"vdiagmat*","arg":{"format":"[]{}","snippet":"vdiagmat*[${1:options}]{${2:diagonal}}"}},
+		{"name":"vdiagmat*","arg":{"format":"{}","snippet":"vdiagmat*{${1:diagonal}}"}},
+		{"name":"Vdiagmat","arg":{"format":"[]{}","snippet":"Vdiagmat[${1:options}]{${2:diagonal}}"}},
+		{"name":"Vdiagmat","arg":{"format":"{}","snippet":"Vdiagmat{${1:diagonal}}"}},
+		{"name":"Vdiagmat*","arg":{"format":"[]{}","snippet":"Vdiagmat*[${1:options}]{${2:diagonal}}"}},
+		{"name":"Vdiagmat*","arg":{"format":"{}","snippet":"Vdiagmat*{${1:diagonal}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

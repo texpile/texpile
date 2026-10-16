@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tracefnt"},{"name":"latexsym"}],
+	"macros": [
+		{"name":"mathsc","arg":{"format":"{}","snippet":"mathsc{${1:text}}"},"unusual":true},
+		{"name":"mathsl","arg":{"format":"{}","snippet":"mathsl{${1:text}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

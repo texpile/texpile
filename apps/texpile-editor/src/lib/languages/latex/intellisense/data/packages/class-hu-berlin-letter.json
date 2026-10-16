@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"class-scrlttr2"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"typearea"},{"name":"hu-berlin-base"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatex85"},{"name":"babel"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"marvosym"},{"name":"xcolor"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"geometry"},{"name":"ifvtex"}],
+	"macros": [
+		{"name":"hubAccessibility","unusual":true},
+		{"name":"hubAddress","unusual":true},
+		{"name":"hubBank","unusual":true},
+		{"name":"hubCCseparator","unusual":true},
+		{"name":"hubConnections","unusual":true},
+		{"name":"hubDate","unusual":true},
+		{"name":"hubEnclSeparator","unusual":true},
+		{"name":"hubFromName","unusual":true},
+		{"name":"hubMyRef","unusual":true},
+		{"name":"hubOffice","unusual":true},
+		{"name":"hubOfficeHours","unusual":true},
+		{"name":"Version","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/hu-berlin-letter#c": ["english","ngerman"]
+	},
+	"args": ["\\documentclass/hu-berlin-letter#c"]
+}

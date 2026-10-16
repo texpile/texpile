@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"etoolbox"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileinfo","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"longroman","arg":{"format":"{}","snippet":"longroman{${1:counter}}"}},
+		{"name":"LongRoman","arg":{"format":"{}","snippet":"LongRoman{${1:counter}}"}},
+		{"name":"longromannumeral"},
+		{"name":"LongRomannumeral"},
+		{"name":"modroman","arg":{"format":"{}","snippet":"modroman{${1:counter}}"}},
+		{"name":"modromannumeral"},
+		{"name":"nblongroman","arg":{"format":"{}","snippet":"nblongroman{${1:number}}"}},
+		{"name":"nbLongRoman","arg":{"format":"{}","snippet":"nbLongRoman{${1:number}}"}},
+		{"name":"nbmodroman","arg":{"format":"{}","snippet":"nbmodroman{${1:number}}"}},
+		{"name":"nbroman","arg":{"format":"{}","snippet":"nbroman{${1:number}}"}},
+		{"name":"nbRoman","arg":{"format":"{}","snippet":"nbRoman{${1:number}}"}},
+		{"name":"nbshortroman","arg":{"format":"{}","snippet":"nbshortroman{${1:number}}"}},
+		{"name":"printntimes","arg":{"format":"{}{}","snippet":"printntimes{${1:number}}{${2:text}}"}},
+		{"name":"RedefineMRmdclxvij","arg":{"format":"[]{}{}{}{}{}{}{}{}","snippet":"RedefineMRmdclxvij[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}{${9}}"},"doc":"The macro \\RedefineMRmdclxvij enables the user to redefine the roman digits."},
+		{"name":"RedefineMRmdclxvij","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"RedefineMRmdclxvij{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"},"doc":"The macro \\RedefineMRmdclxvij enables the user to redefine the roman digits."},
+		{"name":"Romannumeral"},
+		{"name":"shortroman","arg":{"format":"{}","snippet":"shortroman{${1:counter}}"}},
+		{"name":"shortromannumeral"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/modroman#c": ["court","ifinal","jfinal","long","maj","min","sansmod","upourv","vpourv"]
+	},
+	"args": ["\\usepackage/modroman#c"]
+}

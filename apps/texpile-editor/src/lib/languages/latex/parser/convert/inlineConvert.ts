@@ -125,7 +125,7 @@ export function convertNodesToInline(nodes: Node[], ctx: ConversionContext): PmN
 		}
 		const chip = groupAfterRawChip(node, prevAst, result[result.length - 1]);
 		if (chip) {
-			result.push(chip);
+			result.push(ctx.marks.length > 0 ? chip.mark(realMarks(ctx.marks)) : chip);
 			prevAst = node;
 			continue;
 		}

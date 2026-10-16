@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"spaced","arg":{"format":"[]{}","snippet":"spaced[${1}]{${2}}"},"unusual":true},
+		{"name":"spaced","arg":{"format":"{}","snippet":"spaced{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

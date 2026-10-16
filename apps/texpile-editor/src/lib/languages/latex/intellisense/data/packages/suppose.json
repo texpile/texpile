@@ -1,0 +1,36 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"euscript"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"bcsup"},
+		{"name":"bdsup"},
+		{"name":"besup"},
+		{"name":"bsup"},
+		{"name":"btsup"},
+		{"name":"bvsup"},
+		{"name":"csup","math":true,"detail":"⫐","doc":"closed superset"},
+		{"name":"dsup"},
+		{"name":"esup"},
+		{"name":"plainbsup"},
+		{"name":"plainsupp"},
+		{"name":"sbcsup"},
+		{"name":"sbdsup"},
+		{"name":"sbesup"},
+		{"name":"sbsup"},
+		{"name":"sbtsup"},
+		{"name":"sbvsup"},
+		{"name":"scsup"},
+		{"name":"sdsup"},
+		{"name":"sesup"},
+		{"name":"ssup"},
+		{"name":"stsup"},
+		{"name":"supp"},
+		{"name":"svsup"},
+		{"name":"tsup"},
+		{"name":"vsup"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/suppose#c": ["dutchcal","eulerscript","mathcal","sans-serif","slant","tt"]
+	},
+	"args": ["\\usepackage/suppose#c"]
+}

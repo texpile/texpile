@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"xparse"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"pgfcalendar"}],
+	"macros": [
+		{"name":"datemarker","arg":{"format":"{}{}","snippet":"datemarker{${1:date}}{${2:label}}"},"doc":"Adds date markers (e.g., month labels) on the timeline."},
+		{"name":"highlightmilestone","arg":{"format":"[][]{}{}","snippet":"highlightmilestone[${1:position}][${2:options}]{${3:date}}{${4:label}}"},"doc":"Adds a highlighted milestone (different color) for important events."},
+		{"name":"highlightmilestone","arg":{"format":"{}{}","snippet":"highlightmilestone{${1:date}}{${2:label}}"},"doc":"Adds a highlighted milestone (different color) for important events."},
+		{"name":"milestone","arg":{"format":"[][]{}{}","snippet":"milestone[${1:position}][${2:options}]{${3:date}}{${4:label}}"},"doc":"Adds a standard milestone to the timeline."},
+		{"name":"milestone","arg":{"format":"{}{}","snippet":"milestone{${1:date}}{${2:label}}"},"doc":"Adds a standard milestone to the timeline."},
+		{"name":"milestoneat","arg":{"format":"[][]{}{}{}","snippet":"milestoneat[${1:position}][${2:options}]{${3:x}}{${4:date}}{${5:label}}"},"doc":"Adds a milestone at a specific x-position (overrides date positioning)."},
+		{"name":"milestoneat","arg":{"format":"{}{}{}","snippet":"milestoneat{${1:x}}{${2:date}}{${3:label}}"},"doc":"Adds a milestone at a specific x-position (overrides date positioning)."},
+		{"name":"timelinetitle","arg":{"format":"{}","snippet":"timelinetitle{${1:title}}"},"doc":"Adds a title above the timeline."}
+	],
+	"envs": [
+		{"name":"timeline","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"timeline"}
+	],
+	"keys": {}
+}

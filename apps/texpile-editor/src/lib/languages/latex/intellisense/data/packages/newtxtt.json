@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"textcomp"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"textttz","arg":{"format":"{}","snippet":"textttz{${1}}"}},
+		{"name":"ttz"},
+		{"name":"ttzdefault"},
+		{"name":"ttzfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

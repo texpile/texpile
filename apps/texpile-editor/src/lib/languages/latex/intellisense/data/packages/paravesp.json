@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"IgnoreSpaceAboveNextPara"},
+		{"name":"IssueParaSpace"},
+		{"name":"ParaSpaceAbove","arg":{"format":"{}","snippet":"ParaSpaceAbove{${1}}"},"doc":"The command \\ParaSpaceAbove, which preceedes a paragraph, can’t know how much glue induced by baselineskip will be added. Therefore, the command disables this glue completely by setting prevdepth to infinity."},
+		{"name":"ParaSpaceBelow","arg":{"format":"{}","snippet":"ParaSpaceBelow{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

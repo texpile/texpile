@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"xparse"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"csSyntaxDisabled","doc":"Restores the original catcodes: `_` → 8, `:` → 12, `/` → 12."},
+		{"name":"csSyntaxEnabled","doc":"Activates `_`, `:` and `/` as letters (catcode 11). Opens a scope in which structured names can be typed directly."},
+		{"name":"csSyntaxOff"},
+		{"name":"csSyntaxOn","doc":"\\csSyntaxOn activates _, : and / as letters."}
+	],
+	"envs": [],
+	"keys": {}
+}

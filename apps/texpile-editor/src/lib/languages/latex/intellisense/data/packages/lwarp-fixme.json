@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"FXFaceEnvHTMLStyle"},
+		{"name":"FXFaceInlineHTMLStyle"},
+		{"name":"FXFaceSignatureHTMLStyle"},
+		{"name":"FXFaceTargetHTMLStyle"}
+	],
+	"envs": [],
+	"keys": {}
+}

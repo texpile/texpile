@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"setbeamercolorXXX","arg":{"format":"{}{}","snippet":"setbeamercolorXXX{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"ifthen"},{"name":"helvet"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"babel"},{"name":"setspace"},{"name":"titlesec"},{"name":"url"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"natbib"},{"name":"fancyhdr"}],
+	"macros": [
+		{"name":"affiliation","arg":{"format":"{}","snippet":"affiliation{${1:affiliation}}"}},
+		{"name":"citepPage","arg":{"format":"{}{}","snippet":"citepPage{${1:page}}{${2:key}}"}},
+		{"name":"citetPage","arg":{"format":"{}{}","snippet":"citetPage{${1:page}}{${2:key}}"}},
+		{"name":"jelclass","arg":{"format":"{}","snippet":"jelclass{${1}}"},"unusual":true},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/oegatb#c": ["english","german","nopagenumbers"]
+	},
+	"args": ["\\documentclass/oegatb#c"]
+}

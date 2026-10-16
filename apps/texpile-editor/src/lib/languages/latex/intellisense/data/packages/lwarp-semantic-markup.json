@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"musicography"},{"name":"stackengine"},{"name":"etoolbox"},{"name":"listofitems"},{"name":"calc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"setspace"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

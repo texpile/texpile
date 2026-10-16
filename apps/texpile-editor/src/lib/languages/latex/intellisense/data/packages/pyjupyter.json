@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"colortbl"},{"name":"array"},{"name":"listings"},{"name":"keyval"},{"name":"listingsutf8"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"stringenc","engines":["pdflatex","lualatex"]},{"name":"pdfescape","engines":["pdflatex","lualatex"]},{"name":"etoolbox"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"pdfcol"},{"name":"xparse"},{"name":"sourcecodepro"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"beramono"},{"name":"zi4"},{"name":"textcomp"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"inputpythonfile","arg":{"format":"[]{}","snippet":"inputpythonfile[${1}]{${2}}"},"doc":"The package provides a dedicated command \\inputpythonfile for including external Python files into your LaTeX document."},
+		{"name":"inputpythonfile","arg":{"format":"{}","snippet":"inputpythonfile{${1}}"},"doc":"The package provides a dedicated command \\inputpythonfile for including external Python files into your LaTeX document."}
+	],
+	"envs": [
+		{"name":"jupyter","arg":{"format":"[]","snippet":"[${1}]"},"doc":"The package defines a single environment called `jupyter` for displaying Python code."},
+		{"name":"jupyter","doc":"The package defines a single environment called `jupyter` for displaying Python code."}
+	],
+	"keys": {}
+}

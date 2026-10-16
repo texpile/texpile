@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"subdepth"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"HepAntiParticle","arg":{"format":"{}{}{}","snippet":"HepAntiParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepGenAntiParticle","arg":{"format":"{}{}{}","snippet":"HepGenAntiParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepGenParticle","arg":{"format":"{}{}{}","snippet":"HepGenParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepGenSusyAntiParticle","arg":{"format":"{}{}{}","snippet":"HepGenSusyAntiParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepGenSusyParticle","arg":{"format":"{}{}{}","snippet":"HepGenSusyParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepParticle","arg":{"format":"{}{}{}","snippet":"HepParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepParticleResonance","arg":{"format":"{}{}{}{}","snippet":"HepParticleResonance{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"HepParticleResonanceFormal","arg":{"format":"{}{}{}{}{}{}{}","snippet":"HepParticleResonanceFormal{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"}},
+		{"name":"HepParticleResonanceFormalFull","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"HepParticleResonanceFormalFull{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}{${9}}"}},
+		{"name":"HepParticleResonanceFull","arg":{"format":"{}{}{}{}{}{}","snippet":"HepParticleResonanceFull{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"HepProcess","arg":{"format":"{}","snippet":"HepProcess{${1}}"}},
+		{"name":"HepResonanceMassTerm","arg":{"format":"{}{}{}","snippet":"HepResonanceMassTerm{${1}}{${2}}{${3}}"}},
+		{"name":"HepResonanceSpecTerm","arg":{"format":"{}{}{}","snippet":"HepResonanceSpecTerm{${1}}{${2}}{${3}}"}},
+		{"name":"HepSusyAntiParticle","arg":{"format":"{}{}{}","snippet":"HepSusyAntiParticle{${1}}{${2}}{${3}}"}},
+		{"name":"HepSusyParticle","arg":{"format":"{}{}{}","snippet":"HepSusyParticle{${1}}{${2}}{${3}}"}},
+		{"name":"mathsfit","arg":{"format":"{}","snippet":"mathsfit{${1}}"},"unusual":true},
+		{"name":"mathsfup","arg":{"format":"{}","snippet":"mathsfup{${1}}"},"unusual":true},
+		{"name":"mathup","arg":{"format":"{}","snippet":"mathup{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/hepparticles#c": ["italic"]
+	},
+	"args": ["\\usepackage/hepparticles#c"]
+}

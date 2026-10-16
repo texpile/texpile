@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"calc"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"ifthen"},{"name":"xspace"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"setpresyl","arg":{"format":"{}","snippet":"setpresyl{${1}}"},"doc":"Command for changing the horizontal space to the right of the syllogism (def=2em)."},
+		{"name":"setsylergo","arg":{"format":"{}","snippet":"setsylergo{${1}}"},"doc":"Command for changing the text that begins the conclusion."},
+		{"name":"setsylergosign","arg":{"format":"{}","snippet":"setsylergosign{${1}}"},"doc":"Command for changing the sign that goes after the conclusion text (def=∴)."},
+		{"name":"setsyllabel","arg":{"format":"{}","snippet":"setsyllabel{${1}}"},"doc":"Command for changing the horizonal space between the label and the syllogism (def=1em)."},
+		{"name":"setsylpuncc","arg":{"format":"{}","snippet":"setsylpuncc{${1}}"},"doc":"Command for changing the punctuation after the conclusion (def=.)."},
+		{"name":"setsylpuncpa","arg":{"format":"{}","snippet":"setsylpuncpa{${1}}"},"doc":"Command for changing the punctuation after the first premiss (def=;)."},
+		{"name":"setsylpuncpb","arg":{"format":"{}","snippet":"setsylpuncpb{${1}}"},"doc":"Command for changing the punctuation after the second premiss (def=.)."},
+		{"name":"setsylrh","arg":{"format":"{}","snippet":"setsylrh{${1}}"},"doc":"Command for changing the ‘width’ of the rule (def=.3pt)."},
+		{"name":"setsylsed","arg":{"format":"{}","snippet":"setsylsed{${1}}"},"doc":"Command for changing the text that begins the second premiss."},
+		{"name":"setsylsep","arg":{"format":"{}","snippet":"setsylsep{${1}}"},"doc":"Command for changing the vertical space both before and after the syllogism to the same value."},
+		{"name":"setsylsepa","arg":{"format":"{}","snippet":"setsylsepa{${1}}"},"doc":"Command for changing the vertical space before the syllogism (def=\\baselineskip)."},
+		{"name":"setsylsepb","arg":{"format":"{}","snippet":"setsylsepb{${1}}"},"doc":"Command for changing the vertical space after the syllogism (def=\\baselineskip)."},
+		{"name":"syl"},
+		{"name":"syllog","arg":{"format":"[]{}{}{}","snippet":"syllog[${1:pre-text}]{${2:first premiss}}{${3:second premiss}}{${4:conclusion}}"}},
+		{"name":"syllog","arg":{"format":"{}{}{}","snippet":"syllog{${1:first premiss}}{${2:second premiss}}{${3:conclusion}}"}},
+		{"name":"syllogC","arg":{"format":"{}{}{}","snippet":"syllogC{${1}}{${2}}{${3}}"},"doc":"The package also provides the command \\syllogC which includes an automatic numeration feature."},
+		{"name":"syllogTA","arg":{"format":"[]{}{}{}","snippet":"syllogTA[${1:pre-text}]{${2:first premiss}}{${3:second premiss}}{${4:conclusion}}"},"doc":"The command \\syllogTA works almost exactly as \\syllog, the only difference being that it adds some text to the second premiss and the conclusion."},
+		{"name":"syllogTA","arg":{"format":"{}{}{}","snippet":"syllogTA{${1:first premiss}}{${2:second premiss}}{${3:conclusion}}"},"doc":"The command \\syllogTA works almost exactly as \\syllog, the only difference being that it adds some text to the second premiss and the conclusion."},
+		{"name":"syllogTAC","arg":{"format":"{}{}{}","snippet":"syllogTAC{${1}}{${2}}{${3}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/syllogism#c": ["english","latin1","latin2","spanish"]
+	},
+	"args": ["\\usepackage/syllogism#c"]
+}

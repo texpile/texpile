@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"ascii"},
+		{"name":"Ascii"},
+		{"name":"ASCII"},
+		{"name":"keytop","arg":{"format":"[]{}","snippet":"keytop[${1:pos}]{${2:key}}"}},
+		{"name":"keytop","arg":{"format":"{}","snippet":"keytop{${1:key}}"}},
+		{"name":"mask","arg":{"format":"{}{}","snippet":"mask{${1:text}}{${2:mask char}}"}},
+		{"name":"maskbox","arg":{"format":"{}{}{}{}{}","snippet":"maskbox{${1:width}}{${2:height}}{${3:mask char}}{${4:pos}}{${5:body}}"}},
+		{"name":"Maskbox","arg":{"format":"{}{}{}{}{}{}","snippet":"Maskbox{${1:width}}{${2:height}}{${3:mask char}}{${4:pos}}{${5:rule width}}{${6:body}}"}},
+		{"name":"return"},
+		{"name":"Return"},
+		{"name":"yen"}
+	],
+	"envs": [
+		{"name":"boxnote"},
+		{"name":"itembox","arg":{"format":"[]{}","snippet":"[${1:pos}]{${2:title}}"}},
+		{"name":"itembox","arg":{"format":"{}","snippet":"{${1:title}}"}},
+		{"name":"screen","arg":{"format":"[]","snippet":"[${1:corner}]"}},
+		{"name":"screen"},
+		{"name":"shadebox"}
+	],
+	"keys": {}
+}

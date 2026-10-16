@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"consumeboxarray","arg":{"format":"[]{}","snippet":"consumeboxarray[${1:name}]{${2:index}}"}},
+		{"name":"consumeboxarray","arg":{"format":"{}","snippet":"consumeboxarray{${1:index}}"}},
+		{"name":"ifboxarrayempty","arg":{"format":"[]{}{}{}","snippet":"ifboxarrayempty[${1:name}]{${2:index}}{${3:true}}{${4:false}}"}},
+		{"name":"ifboxarrayempty","arg":{"format":"{}{}{}","snippet":"ifboxarrayempty{${1:index}}{${2:true}}{${3:false}}"}},
+		{"name":"newboxarray","arg":{"format":"{}","snippet":"newboxarray{${1:name}}"}},
+		{"name":"posterbox","arg":{"format":"[]{}{}","snippet":"posterbox[${1:options}]{${2:placement}}{${3:box content}}"}},
+		{"name":"posterbox","arg":{"format":"{}{}","snippet":"posterbox{${1:placement}}{${2:box content}}"}},
+		{"name":"tcbposterset","arg":{"format":"{}","snippet":"tcbposterset{${1:options}}"}}
+	],
+	"envs": [
+		{"name":"posterboxenv","arg":{"format":"[]{}","snippet":"[${1:options}]{${2:placement}}"}},
+		{"name":"posterboxenv","arg":{"format":"{}","snippet":"{${1:placement}}"}},
+		{"name":"tcbposter","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"tcbposter"}
+	],
+	"keys": {}
+}

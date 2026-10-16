@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"fancyhdr"},{"name":"biditools"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

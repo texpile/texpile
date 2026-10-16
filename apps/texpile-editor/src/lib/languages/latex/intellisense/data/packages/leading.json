@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"calc"}],
+	"macros": [
+		{"name":"leading","arg":{"format":"{}","snippet":"leading{${1}}"},"doc":"Defines the \\leading{<length>} command to set the leading of the document to the length specified."}
+	],
+	"envs": [],
+	"keys": {}
+}

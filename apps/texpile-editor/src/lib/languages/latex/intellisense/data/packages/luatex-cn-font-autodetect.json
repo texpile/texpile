@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xparse"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"ApplyAutoFont","unusual":true},
+		{"name":"setfontfamily","arg":{"format":"{}","snippet":"setfontfamily{${1:fonts}}"}},
+		{"name":"setFontFamily","arg":{"format":"{}","snippet":"setFontFamily{${1:fonts}}"}},
+		{"name":"設置字體","arg":{"format":"{}","snippet":"設置字體{${1:font}}"}},
+		{"name":"設置字體族","arg":{"format":"{}","snippet":"設置字體族{${1:fonts}}"}},
+		{"name":"设置字体","arg":{"format":"{}","snippet":"设置字体{${1:font}}"}},
+		{"name":"设置字体族","arg":{"format":"{}","snippet":"设置字体族{${1:fonts}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

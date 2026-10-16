@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"subst","arg":{"format":"[]{}{}{}","snippet":"subst[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"subst","arg":{"format":"{}{}{}","snippet":"subst{${1}}{${2}}{${3}}"}},
+		{"name":"subst*","arg":{"format":"[]{}{}{}","snippet":"subst*[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"subst*","arg":{"format":"{}{}{}","snippet":"subst*{${1}}{${2}}{${3}}"}},
+		{"name":"substmark","arg":{"format":"[]{}{}","snippet":"substmark[${1}]{${2}}{${3}}"}},
+		{"name":"substmark","arg":{"format":"{}{}","snippet":"substmark{${1}}{${2}}"}},
+		{"name":"substmark*","arg":{"format":"[]{}{}","snippet":"substmark*[${1}]{${2}}{${3}}"}},
+		{"name":"substmark*","arg":{"format":"{}{}","snippet":"substmark*{${1}}{${2}}"}},
+		{"name":"substnoteSubst","arg":{"format":"[]{}{}{}","snippet":"substnoteSubst[${1}]{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"substnoteSubst","arg":{"format":"{}{}{}","snippet":"substnoteSubst{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"substnoteSubst*","arg":{"format":"[]{}{}{}","snippet":"substnoteSubst*[${1}]{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"substnoteSubst*","arg":{"format":"{}{}{}","snippet":"substnoteSubst*{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"substnoteSubstMark","arg":{"format":"[]{}{}","snippet":"substnoteSubstMark[${1}]{${2}}{${3}}"},"unusual":true},
+		{"name":"substnoteSubstMark","arg":{"format":"{}{}","snippet":"substnoteSubstMark{${1}}{${2}}"},"unusual":true},
+		{"name":"substnoteSubstMark*","arg":{"format":"[]{}{}","snippet":"substnoteSubstMark*[${1}]{${2}}{${3}}"},"unusual":true},
+		{"name":"substnoteSubstMark*","arg":{"format":"{}{}","snippet":"substnoteSubstMark*{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

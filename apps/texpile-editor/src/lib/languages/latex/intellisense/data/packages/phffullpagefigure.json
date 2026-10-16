@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"ifoddpage"},{"name":"afterpage"},{"name":"placeins"},{"name":"pdfpages","if":"!nopdfpages"},{"name":"ifthen","if":"!nopdfpages"},{"name":"calc","if":"!nopdfpages"},{"name":"eso-pic","if":"!nopdfpages"},{"name":"keyval","if":"!nopdfpages"},{"name":"xcolor","if":"!nopdfpages"},{"name":"graphicx","if":"!nopdfpages"},{"name":"graphics","if":"!nopdfpages"},{"name":"trig","if":"!nopdfpages"}],
+	"macros": [
+		{"name":"figcapmaxheight","arg":{"format":"{}","snippet":"figcapmaxheight{${1:length}}"}},
+		{"name":"figcontents","arg":{"format":"{}","snippet":"figcontents{${1:LaTeX commands}}"},"doc":"Specify the contents of the figure by calling \\figcontents{〈LaTeX commands〉}."},
+		{"name":"figpageside","arg":{"format":"{}","snippet":"figpageside{${1:odd, even or empty}}"},"doc":"Calling \\figpageside{}, i.e. with an empty argument, instructs fullpagefigure to use either side, whichever is more convenient."},
+		{"name":"figpdf","arg":{"format":"[]{}","snippet":"figpdf[${1:options}]{${2:pdf file}}"},"doc":"The \\figpdf command sets the PDF file to be displayed in full page (see more details below)."},
+		{"name":"figpdf","arg":{"format":"{}","snippet":"figpdf{${1:pdf file}}"},"doc":"The \\figpdf command sets the PDF file to be displayed in full page (see more details below)."},
+		{"name":"figplacement","arg":{"format":"{}","snippet":"figplacement{${1:b, t or p}}"},"doc":"Specify the figure caption placement with \\figplacement{b|t|p}."},
+		{"name":"FlushAllFullPageFigures","arg":{"format":"[]","snippet":"FlushAllFullPageFigures[${1:page break command}]"},"doc":"If you need to make sure that all full-page-figures have been placed up to a certain point, you may issue the command \\FlushAllFullPageFigures."},
+		{"name":"FlushAllFullPageFigures","doc":"If you need to make sure that all full-page-figures have been placed up to a certain point, you may issue the command \\FlushAllFullPageFigures."},
+		{"name":"fullpagefigurecaptionfmt","arg":{"format":"{}","snippet":"fullpagefigurecaptionfmt{${1:page side O, E or x}}"},"doc":"The macro \\fullpagefigurecaptionfmt is called to generate the text which is prepended to the figure caption."},
+		{"name":"phffpfFloatBarrier","unusual":true}
+	],
+	"envs": [
+		{"name":"fullpagefigure","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"fullpagefigure"}
+	],
+	"keys": {
+		"\\usepackage/phffullpagefigure#c": ["nopdfpages"]
+	},
+	"args": ["\\usepackage/phffullpagefigure#c"]
+}

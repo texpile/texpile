@@ -1,0 +1,31 @@
+{
+	"macros": [
+		{"name":"itemx","arg":{"format":"{}","snippet":"itemx{${1}}"},"unusual":true},
+		{"name":"itemxox","arg":{"format":"{}{}","snippet":"itemxox{${1}}{${2}}"},"unusual":true},
+		{"name":"itemxoxx","arg":{"format":"{}{}{}","snippet":"itemxoxx{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"itemxx","arg":{"format":"{}{}","snippet":"itemxx{${1}}{${2}}"},"unusual":true},
+		{"name":"itemxxo","arg":{"format":"{}{}","snippet":"itemxxo{${1}}{${2}}"},"unusual":true},
+		{"name":"itemxxox","arg":{"format":"{}{}{}","snippet":"itemxxox{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"itemxxx","arg":{"format":"{}{}{}","snippet":"itemxxx{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"itemxxxo","arg":{"format":"{}{}{}","snippet":"itemxxxo{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"itemxxxx","arg":{"format":"{}{}{}{}","snippet":"itemxxxx{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"itemxxxxx","arg":{"format":"{}{}{}{}{}","snippet":"itemxxxxx{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"mitemx","arg":{"format":"{}","snippet":"mitemx{${1}}"}},
+		{"name":"mitemxox","arg":{"format":"{}{}","snippet":"mitemxox{${1}}{${2}}"}},
+		{"name":"mitemxoxx","arg":{"format":"{}{}{}","snippet":"mitemxoxx{${1}}{${2}}{${3}}"}},
+		{"name":"mitemxx","arg":{"format":"{}{}","snippet":"mitemxx{${1}}{${2}}"}},
+		{"name":"mitemxxo","arg":{"format":"{}{}","snippet":"mitemxxo{${1}}{${2}}"}},
+		{"name":"mitemxxox","arg":{"format":"{}{}{}","snippet":"mitemxxox{${1}}{${2}}{${3}}"}},
+		{"name":"mitemxxx","arg":{"format":"{}{}{}","snippet":"mitemxxx{${1}}{${2}}{${3}}"}},
+		{"name":"mitemxxxo","arg":{"format":"{}{}{}","snippet":"mitemxxxo{${1}}{${2}}{${3}}"}},
+		{"name":"mitemxxxx","arg":{"format":"{}{}{}{}","snippet":"mitemxxxx{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"mitemxxxxx","arg":{"format":"{}{}{}{}{}","snippet":"mitemxxxxx{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"themultienumdepth","unusual":true},
+		{"name":"themultienumi","unusual":true}
+	],
+	"envs": [
+		{"name":"multienumerate","arg":{"format":"[]","snippet":"[${1}]"},"doc":"The multienum.sty package provides an environment, multienumerate, that produces an enumerated array in which columns are vertically aligned on the counter."},
+		{"name":"multienumerate","doc":"The multienum.sty package provides an environment, multienumerate, that produces an enumerated array in which columns are vertically aligned on the counter."}
+	],
+	"keys": {}
+}

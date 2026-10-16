@@ -1,0 +1,34 @@
+{
+	"deps": [{"name":"color"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"az"},
+		{"name":"centerbox","arg":{"format":"{}","snippet":"centerbox{${1:content}}"}},
+		{"name":"Centerbox","arg":{"format":"{}","snippet":"Centerbox{${1:content}}"}},
+		{"name":"CSBULilustrace","arg":{"format":"{}","snippet":"CSBULilustrace{${1:illustration credit}}"}},
+		{"name":"cslogodir","unusual":true},
+		{"name":"cstuglogo","unusual":true},
+		{"name":"EnglishTOC"},
+		{"name":"Gray","unusual":true},
+		{"name":"ifWOW","unusual":true},
+		{"name":"ISSN","unusual":true},
+		{"name":"NovyTextPodObsah"},
+		{"name":"Obalka","arg":{"format":"[]","snippet":"Obalka[${1:picture}]"}},
+		{"name":"Obalka"},
+		{"name":"RedakcniRada"},
+		{"name":"RedakcniRadaA","unusual":true},
+		{"name":"RedakcniRadaB","unusual":true},
+		{"name":"RedakcniRadaC","unusual":true},
+		{"name":"TechnickyRedaktor","arg":{"format":"{}","snippet":"TechnickyRedaktor{${1:name}}"}},
+		{"name":"TextPodObsah"},
+		{"name":"tiraz"},
+		{"name":"White","unusual":true},
+		{"name":"XISSN","unusual":true}
+	],
+	"envs": [
+		{"name":"xmltugboat"}
+	],
+	"keys": {
+		"\\usepackage/csbulobalka#c": ["color","custom","twocolor","web"]
+	},
+	"args": ["\\usepackage/csbulobalka#c"]
+}

@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"dubinspath","arg":{"format":"{}","snippet":"dubinspath{${1}}"}},
+		{"name":"dubinspathcalc","arg":{"format":"{}","snippet":"dubinspathcalc{${1}}"}},
+		{"name":"dubinspathset","arg":{"format":"{}","snippet":"dubinspathset{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

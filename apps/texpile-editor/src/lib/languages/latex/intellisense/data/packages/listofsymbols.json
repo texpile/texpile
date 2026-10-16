@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"xspace","if":"!noxspace"},{"name":"nomencl","if":"nomencl"},{"name":"xkeyval","if":"nomencl"},{"name":"tocbasic","if":"nomencl"},{"name":"scrbase","if":"nomencl"},{"name":"scrlfile","if":"nomencl"},{"name":"scrlfile-hook","if":"nomencl"},{"name":"scrlogo","if":"nomencl"}],
+	"macros": [
+		{"name":"bothheadingname","doc":"The headings of the lists are stored in \\symheadingname and \\subheadingname and \\bothheadingname."},
+		{"name":"closesymdef"},
+		{"name":"dontmarkasused","arg":{"format":"{}","snippet":"dontmarkasused{${1:macro name}}"}},
+		{"name":"listofboth"},
+		{"name":"listofsubscripts"},
+		{"name":"listofsymbols"},
+		{"name":"losstring"},
+		{"name":"markasunused","arg":{"format":"{}","snippet":"markasunused{${1:macro name}}"}},
+		{"name":"markasused","arg":{"format":"{}","snippet":"markasused{${1:macro name}}"}},
+		{"name":"newsub","arg":{"format":"[]{}{}","snippet":"newsub[${1:description}]{${2:macro name}}{${3:output}}"}},
+		{"name":"newsub","arg":{"format":"{}{}","snippet":"newsub{${1:macro name}}{${2:output}}"}},
+		{"name":"newsym","arg":{"format":"[]{}{}","snippet":"newsym[${1:description}]{${2:macro name}}{${3:output}}"}},
+		{"name":"newsym","arg":{"format":"{}{}","snippet":"newsym{${1:macro name}}{${2:output}}"}},
+		{"name":"opensymdef"},
+		{"name":"printsymline","arg":{"format":"{}{}{}{}{}","snippet":"printsymline{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"subheadingname"},
+		{"name":"subsep","arg":{"format":"[]","snippet":"subsep[${1:separator}]"}},
+		{"name":"subsep"},
+		{"name":"symheadingname","doc":"The headings of the lists are stored in \\symheadingname and \\subheadingname and \\bothheadingname."},
+		{"name":"symwidth"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/listofsymbols#c": ["Final","draft","final","nomencl","nopageno","noxspace","pageno","usexspace"]
+	},
+	"args": ["\\usepackage/listofsymbols#c"]
+}

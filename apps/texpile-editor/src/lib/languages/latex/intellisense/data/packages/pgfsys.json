@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"pgfrcs"}],
+	"macros": [
+		{"name":"pgfset","arg":{"format":"{}","snippet":"pgfset{${1:key list}}"}},
+		{"name":"pgfsysdriver","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pgfsys#c": ["dvisvgm"]
+	},
+	"args": ["\\usepackage/pgfsys#c"]
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"bxpapersizesetup","arg":{"format":"{}","snippet":"bxpapersizesetup{${1}}"}},
+		{"name":"papersizesetup","arg":{"format":"{}","snippet":"papersizesetup{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

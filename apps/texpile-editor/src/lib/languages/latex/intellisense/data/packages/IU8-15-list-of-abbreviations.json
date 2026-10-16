@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"glossaries-extra"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"glossaries"},{"name":"ifthen"},{"name":"mfirstuc"},{"name":"xfor"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tracklang"},{"name":"glossary-hypernav"},{"name":"glossary-list"},{"name":"glossary-long"},{"name":"longtable"},{"name":"glossary-super"},{"name":"supertabular"},{"name":"glossary-tree"}],
+	"macros": [
+		{"name":"listofabbreviations"}
+	],
+	"envs": [],
+	"keys": {}
+}

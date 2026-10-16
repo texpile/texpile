@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"inputenc"}],
+	"macros": [
+		{"name":"AfterInputEncoding","arg":{"format":"{}","snippet":"AfterInputEncoding{${1:code}}"}},
+		{"name":"BeforeInputEncoding","arg":{"format":"{}","snippet":"BeforeInputEncoding{${1:code}}"}},
+		{"name":"CurrentInputEncodingName"},
+		{"name":"CurrentInputEncodingOption","doc":"The real encoding name (base file name of the encoding file) is remembered in \\CurrentInputEncodingOption (option means option for package inputenc)."},
+		{"name":"InputEncoding","arg":{"format":"{}","snippet":"InputEncoding{${1:encoding}}"},"doc":"After package inputenx is loaded an encoding can be set or changed using \\InputEncoding."},
+		{"name":"InputEncodingNameOld","unusual":true},
+		{"name":"InputEncodingNew","unusual":true},
+		{"name":"InputEncodingOptionOld","unusual":true},
+		{"name":"InputenxAlias","arg":{"format":"{}{}","snippet":"InputenxAlias{${1}}{${2}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/inputenx#c": ["math"]
+	},
+	"args": ["\\usepackage/inputenx#c"]
+}

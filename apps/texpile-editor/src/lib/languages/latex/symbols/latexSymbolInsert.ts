@@ -3,6 +3,7 @@ import type { Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { collapseNodeSelection } from '$lib/editor/symbols/symbolVisualCaret';
+import { filePackageNamesNow } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { loadsPackageFor } from './latexSymbolPackage';
 import type { LatexSymbol } from './latexSymbol.types';
 
@@ -91,7 +92,9 @@ function placeAt(state: EditorState, from: number, to: number, symbol: LatexSymb
 			return { ...joined, from: from + 1, to: from + 1 };
 		}
 	}
-	const amsmath = symbol.mode === 'text' && loadsPackageFor(state.doc.toString(), AMSMATH);
+	const text = state.doc.toString();
+	const packages = symbol.mode === 'text' ? filePackageNamesNow(text) : null;
+	const amsmath = !!packages && loadsPackageFor(text, AMSMATH, packages);
 	return { ...latexSymbolInsertion(symbol, inMath, state.sliceDoc(to, to + 1), amsmath), from, to };
 }
 

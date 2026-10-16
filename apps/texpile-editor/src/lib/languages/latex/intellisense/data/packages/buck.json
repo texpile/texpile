@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"setcode","arg":{"format":"{}","snippet":"setcode{${1:encoding}}"},"doc":"Input encoding is switched by the command \\setcode{code name} that changes the coding for Arabic text globally."}
+	],
+	"envs": [],
+	"keys": {}
+}

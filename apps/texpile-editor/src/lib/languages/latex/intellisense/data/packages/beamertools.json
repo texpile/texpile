@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"redefbeamertemplate","arg":{"format":"<>{}{}[][]{}","snippet":"redefbeamertemplate<${1:mode specification}>{${2:element name}}{${3:predefined option}}[${4:argument number}][${5:default optional argument}]{${6:predefined text}}"},"doc":"The packages provides the control sequence \\redefbeamertemplate for redefining a predefined beamer template and has exactly the same syntax as the control sequence \\defbeamertemplate that beamer provides."},
+		{"name":"redefbeamertemplate","arg":{"format":"<>{}{}{}","snippet":"redefbeamertemplate<${1:mode specification}>{${2:element name}}{${3:predefined option}}{${4:predefined text}}"},"doc":"The packages provides the control sequence \\redefbeamertemplate for redefining a predefined beamer template and has exactly the same syntax as the control sequence \\defbeamertemplate that beamer provides."},
+		{"name":"redefbeamertemplate*","arg":{"format":"<>{}{}[][]{}","snippet":"redefbeamertemplate*<${1:mode specification}>{${2:element name}}{${3:predefined option}}[${4:argument number}][${5:default optional argument}]{${6:predefined text}}"},"doc":"The packages provides the control sequence \\redefbeamertemplate for redefining a predefined beamer template and has exactly the same syntax as the control sequence \\defbeamertemplate that beamer provides."},
+		{"name":"redefbeamertemplate*","arg":{"format":"<>{}{}{}","snippet":"redefbeamertemplate*<${1:mode specification}>{${2:element name}}{${3:predefined option}}{${4:predefined text}}"},"doc":"The packages provides the control sequence \\redefbeamertemplate for redefining a predefined beamer template and has exactly the same syntax as the control sequence \\defbeamertemplate that beamer provides."}
+	],
+	"envs": [],
+	"keys": {}
+}

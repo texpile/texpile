@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"collargs"},{"name":"pgfkeys"},{"name":"etoolbox"},{"name":"xparse"}],
+	"macros": [
+		{"name":"AdviceAfterSetup","unusual":true},
+		{"name":"AdviceArgs"},
+		{"name":"AdviceBailoutHandler"},
+		{"name":"AdviceCollector"},
+		{"name":"AdviceCollectorOptions"},
+		{"name":"AdviceCollectTikZArguments"},
+		{"name":"AdviceCsname"},
+		{"name":"AdviceCsnameGetOriginal","arg":{"format":"{}{}","snippet":"AdviceCsnameGetOriginal{${1}}{${2}}"}},
+		{"name":"AdviceGetOriginal","arg":{"format":"{}{}","snippet":"AdviceGetOriginal{${1}}{${2}}"}},
+		{"name":"AdviceIfArgs","arg":{"format":"{}{}","snippet":"AdviceIfArgs{${1:true branch}}{${2:false branch}}"}},
+		{"name":"AdviceInnerHandler","arg":{"format":"{}","snippet":"AdviceInnerHandler{${1}}"}},
+		{"name":"AdviceName"},
+		{"name":"AdviceNamespace"},
+		{"name":"AdviceOptions"},
+		{"name":"AdviceOriginal"},
+		{"name":"AdviceOuterHandler"},
+		{"name":"AdviceRawCollectorOptions"},
+		{"name":"AdviceReplaced"},
+		{"name":"AdviceRunConditions"},
+		{"name":"AdviceRunfalse","unusual":true},
+		{"name":"AdviceRuntrue","unusual":true},
+		{"name":"AdviceSetup","arg":{"format":"{}{}{}{}","snippet":"AdviceSetup{${1:namespace}}{${2:setup key}}{${3:command or environment}}{${4:setup code}}"}},
+		{"name":"AdviceTracingOff"},
+		{"name":"AdviceTracingOn"},
+		{"name":"ifAdviceRun","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

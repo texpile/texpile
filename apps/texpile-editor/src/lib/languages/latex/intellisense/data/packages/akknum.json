@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"alphnum","arg":{"format":"{}","snippet":"alphnum{${1:number}}"}},
+		{"name":"Alphnum","arg":{"format":"{}","snippet":"Alphnum{${1:number}}"}},
+		{"name":"rom","arg":{"format":"{}","snippet":"rom{${1:number}}"}},
+		{"name":"Rom","arg":{"format":"{}","snippet":"Rom{${1:number}}"}},
+		{"name":"romannum","arg":{"format":"{}","snippet":"romannum{${1:number}}"}},
+		{"name":"Romannum","arg":{"format":"{}","snippet":"Romannum{${1:number}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

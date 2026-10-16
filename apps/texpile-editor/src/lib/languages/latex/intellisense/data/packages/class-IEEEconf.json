@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry","if":"!latex8"},{"name":"keyval"},{"name":"ifvtex","if":"!latex8"},{"name":"iftex","if":"!latex8"},{"name":"mathptmx"},{"name":"helvet"},{"name":"array"},{"name":"titlesec"}],
+	"macros": [
+		{"name":"callout","arg":{"format":"{}","snippet":"callout{${1:text}}"},"doc":"The \\callout macro simply typesets its argument in 9-point Helvetica as per the IEEE Computer Society Press guidelines."},
+		{"name":"dobeforekey","arg":{"format":"{}{}","snippet":"dobeforekey{${1:bibliography key}}{${2:command}}"},"doc":"Store a command to execute before a given bibliography key."},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:address}}"},"doc":"For convenience, IEEEconf provides an affiliation environment for typesetting affiliations and an \\email macro for typesetting e-mail addresses."},
+		{"name":"extrareflistcode","doc":"The \\extrareflistcode macro specifies extra code to execute as part of the second argument to \\begin{list} when typesetting the document’s References section."}
+	],
+	"envs": [
+		{"name":"affiliation"}
+	],
+	"keys": {
+		"\\documentclass/IEEEconf#c": ["latex8","onecolumn"]
+	},
+	"args": ["\\documentclass/IEEEconf#c"]
+}

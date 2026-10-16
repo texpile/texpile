@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"arrayjob"},{"name":"forloop"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"parshapearray","arg":{"format":"{}{}","snippet":"parshapearray{${1}}{${2}}"}},
+		{"name":"Parshapearray","arg":{"format":"{}{}","snippet":"Parshapearray{${1}}{${2}}"}},
+		{"name":"parshapearrlenout","arg":{"format":"{}{}","snippet":"parshapearrlenout{${1}}{${2}}"}},
+		{"name":"parshapeary","arg":{"format":"{}","snippet":"parshapeary{${1}}"}},
+		{"name":"parshapelenout","arg":{"format":"{}","snippet":"parshapelenout{${1}}"},"doc":"Used inside a parshapecollect environment, writes length #1 to the \\parshape command file."}
+	],
+	"envs": [
+		{"name":"parshapecollect"}
+	],
+	"keys": {}
+}

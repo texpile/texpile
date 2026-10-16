@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"DeclareInputBoth","arg":{"format":"{}{}{}","snippet":"DeclareInputBoth{${1:slot}}{${2:text}}{${3:math}}"},"doc":"The \\DeclareInputBoth command is similar to \\DeclareInputText and \\DeclareInputMath commands, but it offers an extra feature—the text and math definitions of a character can be different."},
+		{"name":"DeclareInputMath","arg":{"format":"{}{}","snippet":"DeclareInputMath{${1:slot}}{${2:definition}}"}},
+		{"name":"DeclareInputText","arg":{"format":"{}{}","snippet":"DeclareInputText{${1:slot}}{${2:definition}}"}},
+		{"name":"IfInputModeCode","arg":{"format":"{}{}","snippet":"IfInputModeCode{${1:code}}{${2:text}}"},"doc":"The \\IfInputModeCode command can be used to test which mode the rtkinenc package currently is in."},
+		{"name":"inputencoding","arg":{"format":"{}","snippet":"inputencoding{${1:encoding}}"},"doc":"The \\inputencoding command sets the current input encoding to be the one specified in its only argument."},
+		{"name":"InputModeCode","doc":"The \\InputModeCode and \\InputModeText commands switch to the ‘code’ and ‘text’ respectively modes for the rtkinenc package. They both act locally, since it is often convenient to have the previous mode restored at the end of an environment."},
+		{"name":"InputModeText","doc":"The \\InputModeCode and \\InputModeText commands switch to the ‘code’ and ‘text’ respectively modes for the rtkinenc package. They both act locally, since it is often convenient to have the previous mode restored at the end of an environment."},
+		{"name":"RieBC","arg":{"format":"{}{}{}","snippet":"RieBC{${1:code}}{${2:text definition}}{${3:math definition}}"},"unusual":true},
+		{"name":"RieC","arg":{"format":"{}{}","snippet":"RieC{${1:code}}{${2:definition}}"},"unusual":true},
+		{"name":"SetUnavailableAction","arg":{"format":"{}","snippet":"SetUnavailableAction{${1:definition}}"}},
+		{"name":"TypesetHexNumber","arg":{"format":"{}","snippet":"TypesetHexNumber{${1:number}}"}},
+		{"name":"TypesetOctalNumber","arg":{"format":"{}","snippet":"TypesetOctalNumber{${1:number}}"}},
+		{"name":"verifycharcode","arg":{"format":"{}{}","snippet":"verifycharcode{${1:character}}{${2:code}}"},"doc":"The purpose of this command is to detect when the code of some character used in a document is changed."}
+	],
+	"envs": [],
+	"keys": {}
+}

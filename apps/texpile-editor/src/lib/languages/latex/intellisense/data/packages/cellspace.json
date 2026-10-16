@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"array"},{"name":"calc"},{"name":"xkeyval"},{"name":"amsmath","if":"math"},{"name":"amstext","if":"math"},{"name":"amsbsy","if":"math"},{"name":"amsopn","if":"math"}],
+	"macros": [
+		{"name":"addparagraphcolumntypes","arg":{"format":"{}","snippet":"addparagraphcolumntypes{${1}}"}},
+		{"name":"cellspacebottomlimit"},
+		{"name":"cellspacetoplimit","doc":"The dimension \\cellspacetoplimit is the minimal spacing required between the actual text the cell is made up of and the top of the cell (where \\hlines may appear), if the spacing is less than this threshold, a space of \\cellspacetoplimit is added, otherwise nothing is done."},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

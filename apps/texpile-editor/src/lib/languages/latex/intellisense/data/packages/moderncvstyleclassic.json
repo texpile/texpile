@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"moderncvstyleheadoptions","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/moderncvstyleclassic#c": ["details","left","nodetails","nosymbols","right","symbols","top"]
+	},
+	"args": ["\\usepackage/moderncvstyleclassic#c"]
+}

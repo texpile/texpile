@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"etoolbox"},{"name":"tikzfill.image"},{"name":"pdfcol"},{"name":"iftex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"listings"},{"name":"listingsutf8","engines":["pdflatex"]},{"name":"pdftexcmds","engines":["pdflatex"]},{"name":"stringenc","engines":["pdflatex"]},{"name":"pdfescape","engines":["pdflatex"]}],
+	"macros": [
+		{"name":"thenotenumber","unusual":true},
+		{"name":"titlebox","arg":{"format":"{}","snippet":"titlebox{${1}}","keys":["l3keys:titlebox"],"keyPos":0}}
+	],
+	"envs": [
+		{"name":"noteframe","arg":{"format":"[]","snippet":"[${1}]","keys":["l3keys:noteframe"],"keyPos":0},"doc":"The noteframe environment helps you generate fancy colored boxes to emphasize the important information (e.g. Theorems, Equations, Proof, etc.) in your document."},
+		{"name":"noteframe","doc":"The noteframe environment helps you generate fancy colored boxes to emphasize the important information (e.g. Theorems, Equations, Proof, etc.) in your document."}
+	],
+	"keys": {
+		"l3keys:noteframe": ["color=","style=","title=","style=${1|zero,one,two|}"],
+		"l3keys:titlebox": ["bottom-left=","bottom-right=","notenumber=","top-left=","top-right=","topic=","type="]
+	}
+}

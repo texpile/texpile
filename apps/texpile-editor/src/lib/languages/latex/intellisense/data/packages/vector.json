@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"}],
+	"macros": [
+		{"name":"buvec","arg":{"format":"{}","snippet":"buvec{${1:symbol}}"}},
+		{"name":"bvec","arg":{"format":"{}","snippet":"bvec{${1:symbol}}"}},
+		{"name":"cvec","arg":{"format":"{}{}{}","snippet":"cvec{${1:symbol}}{${2:first subscript}}{${3:last subscript}}"}},
+		{"name":"firstelement","arg":{"format":"{}","snippet":"firstelement{${1:first subscript}}"}},
+		{"name":"icvec","arg":{"format":"[]{}","snippet":"icvec[${1:last subscript}]{${2:symbol}}"}},
+		{"name":"icvec","arg":{"format":"{}","snippet":"icvec{${1:symbol}}"}},
+		{"name":"irvec","arg":{"format":"[]{}","snippet":"irvec[${1:last subscript}]{${2:symbol}}"},"doc":"\\irvec and \\icvec generate ‘implicit’ row and column vectors, respectively."},
+		{"name":"irvec","arg":{"format":"{}","snippet":"irvec{${1:symbol}}"},"doc":"\\irvec and \\icvec generate ‘implicit’ row and column vectors, respectively."},
+		{"name":"rvec","arg":{"format":"{}{}{}","snippet":"rvec{${1:symbol}}{${2:first subscript}}{${3:last subscript}}"}},
+		{"name":"suvec","arg":{"format":"{}","snippet":"suvec{${1:symbol}}"}},
+		{"name":"svec","arg":{"format":"{}","snippet":"svec{${1:symbol}}"}},
+		{"name":"uuvec","arg":{"format":"{}","snippet":"uuvec{${1:symbol}}"},"doc":"By default, \\uvec and \\uuvec underline a symbol using a straight line."},
+		{"name":"uvec","arg":{"format":"{}","snippet":"uvec{${1:symbol}}"},"doc":"By default, \\uvec and \\uuvec underline a symbol using a straight line."}
+	],
+	"envs": [],
+	"keys": {}
+}

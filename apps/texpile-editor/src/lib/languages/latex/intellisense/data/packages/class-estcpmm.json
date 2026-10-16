@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"class-book"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"caption"},{"name":"caption3"},{"name":"mathptmx"},{"name":"helvet"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyhdr"}],
+	"macros": [
+		{"name":"internalno","arg":{"format":"{}","snippet":"internalno{${1:internal project number}}"}},
+		{"name":"logo","arg":{"format":"[]{}","snippet":"logo[${1:options}]{${2:file}}"}},
+		{"name":"logo","arg":{"format":"{}","snippet":"logo{${1:file}}"}},
+		{"name":"projectno","arg":{"format":"{}","snippet":"projectno{${1:project number}}"}},
+		{"name":"specialsection","arg":{"format":"{}","snippet":"specialsection{${1:title}}"},"doc":"If you need to have a section, that is not included in the table of contents, use \\specialsection{hTitlei} command."},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1:subtitle}}"}},
+		{"name":"title","arg":{"format":"[]{}","snippet":"title[${1:short title}]{${2:full title}}"},"doc":"The command \\title is used to store project name."},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:full title}}"},"doc":"The command \\title is used to store project name."},
+		{"name":"version","arg":{"format":"{}","snippet":"version{${1:version}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/estcpmm#c": ["10pt","11pt","12pt","8pt","9pt"]
+	},
+	"args": ["\\documentclass/estcpmm#c"]
+}

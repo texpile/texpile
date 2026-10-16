@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"CleverPanda","arg":{"format":"{}","snippet":"CleverPanda{${1:scale}}"}},
+		{"name":"CleverPandaGet","arg":{"format":"{}","snippet":"CleverPandaGet{${1:scale}}"}},
+		{"name":"CleverPandaSet"}
+	],
+	"envs": [],
+	"keys": {}
+}

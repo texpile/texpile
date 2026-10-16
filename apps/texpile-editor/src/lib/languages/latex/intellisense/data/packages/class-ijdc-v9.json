@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"class-article"},{"name":"dccpaper-base"},{"name":"babel"},{"name":"etoolbox"},{"name":"xpatch"},{"name":"xparse"},{"name":"iftex"},{"name":"newtxtext","engines":["pdflatex"]},{"name":"xcolor"},{"name":"xkeyval"},{"name":"textcomp","engines":["pdflatex"]},{"name":"xstring","engines":["pdflatex"]},{"name":"ifthen"},{"name":"scalefnt","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"newtxmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"centernot"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"calc"},{"name":"ifpdf"},{"name":"atbegshi-ltx"},{"name":"titlesec"},{"name":"array"},{"name":"booktabs"},{"name":"caption"},{"name":"caption3"},{"name":"footmisc"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"hyperxmp"},{"name":"ifdraft"},{"name":"ifluatex"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"luacode","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"Version","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/ijdc-v9#c": ["article","brief","conference","editorial","paper","preprint"]
+	},
+	"args": ["\\documentclass/ijdc-v9#c"]
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"simplekv"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"contour"}],
+	"macros": [
+		{"name":"drawcardsrecto","arg":{"format":"[]{}","snippet":"drawcardsrecto[${1}]{${2}}"},"doc":"This command has one required parameter : text written in the center of the card. It fills an A4 paper with 9 identical cards."},
+		{"name":"drawcardsrecto","arg":{"format":"{}","snippet":"drawcardsrecto{${1}}"},"doc":"This command has one required parameter : text written in the center of the card. It fills an A4 paper with 9 identical cards."},
+		{"name":"drawcardsverso","arg":{"format":"[]{}","snippet":"drawcardsverso[${1}]{${2}}"}},
+		{"name":"drawcardsverso","arg":{"format":"{}","snippet":"drawcardsverso{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/playcards#c": ["anttor"]
+	},
+	"args": ["\\usepackage/playcards#c"]
+}

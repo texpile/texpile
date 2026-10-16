@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"tsFullSymbology"},
+		{"name":"tsSymbol","arg":{"format":"[]{}","snippet":"tsSymbol[${1:height}]{${2:symbol name}}"}},
+		{"name":"tsSymbol","arg":{"format":"{}","snippet":"tsSymbol{${1:symbol name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

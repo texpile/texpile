@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"nccdefaults"},{"name":"afterpackage"}],
+	"macros": [
+		{"name":"corollaryname","unusual":true},
+		{"name":"definitionname","unusual":true},
+		{"name":"examplename","unusual":true},
+		{"name":"lemmaname","unusual":true},
+		{"name":"propositionname","unusual":true},
+		{"name":"remarkname","unusual":true},
+		{"name":"statementname","unusual":true},
+		{"name":"theoremname","unusual":true}
+	],
+	"envs": [
+		{"name":"atheorem"},
+		{"name":"corollary"},
+		{"name":"definition"},
+		{"name":"example"},
+		{"name":"lemma"},
+		{"name":"proposition"},
+		{"name":"remark"},
+		{"name":"statement"},
+		{"name":"theorem"}
+	],
+	"keys": {}
+}

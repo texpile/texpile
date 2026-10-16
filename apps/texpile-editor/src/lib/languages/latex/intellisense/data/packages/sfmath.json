@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"mathsl","arg":{"format":"{}","snippet":"mathsl{${1:text}}"}},
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/sfmath#c": ["AlphT1experimental","T1experimental","cm","cmbright","helvet","lm","mathbfOrig","mathitOrig","mathrmOrig","mathsfOrig","px","slantedGreek","tx"]
+	},
+	"args": ["\\usepackage/sfmath#c"]
+}

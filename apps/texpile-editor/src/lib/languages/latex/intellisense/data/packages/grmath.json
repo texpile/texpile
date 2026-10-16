@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"arccot"},
+		{"name":"arccsc"},
+		{"name":"arcsec"},
+		{"name":"lcm"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/grmath#c": ["enlog","grlog"]
+	},
+	"args": ["\\usepackage/grmath#c"]
+}

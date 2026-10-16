@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"luatex-cn-core-base"},{"name":"luatexbase"},{"name":"enumitem"},{"name":"xparse"}],
+	"macros": [
+		{"name":"CePi","arg":{"format":"[]{}","snippet":"CePi[${1:options}]{${2:text}}"}},
+		{"name":"CePi","arg":{"format":"{}","snippet":"CePi{${1:text}}"}},
+		{"name":"Sidenote","arg":{"format":"[]{}","snippet":"Sidenote[${1:options}]{${2:text}}"}},
+		{"name":"Sidenote","arg":{"format":"{}","snippet":"Sidenote{${1:text}}"}},
+		{"name":"sidenoteSetup","arg":{"format":"{}","snippet":"sidenoteSetup{${1:options}}"}},
+		{"name":"侧批","arg":{"format":"[]{}","snippet":"侧批[${1}]{${2}}"}},
+		{"name":"侧批","arg":{"format":"{}","snippet":"侧批{${1}}"}},
+		{"name":"侧批设置","arg":{"format":"{}","snippet":"侧批设置{${1}}"}},
+		{"name":"側批","arg":{"format":"[]{}","snippet":"側批[${1}]{${2}}"}},
+		{"name":"側批","arg":{"format":"{}","snippet":"側批{${1}}"}},
+		{"name":"側批設置","arg":{"format":"{}","snippet":"側批設置{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"interfaces-base"},{"name":"etex"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"interfaces-etoolbox"},{"name":"interfaces-pgfkeys"},{"name":"interfaces-tikz"}],
+	"macros": [
+		{"name":"embedthisfile"},
+		{"name":"embedthisfile*"}
+	],
+	"envs": [],
+	"keys": {}
+}

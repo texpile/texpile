@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"atveryend-ltx"}],
+	"macros": [
+		{"name":"c","arg":{"format":"{}","snippet":"c{${1:contracted symbol}}"}},
+		{"name":"wick","arg":{"format":"[]{}","snippet":"wick[${1:options}]{${2:contractions}}"}},
+		{"name":"wick","arg":{"format":"{}","snippet":"wick{${1:contractions}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

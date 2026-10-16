@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"BODY"},
+		{"name":"environbodyname","arg":{"format":"{}","snippet":"environbodyname{${1:command}}"}},
+		{"name":"environfinalcode","arg":{"format":"{}","snippet":"environfinalcode{${1:final code}}"}},
+		{"name":"NewEnviron","arg":{"format":"{}[][]{}[]","snippet":"NewEnviron{${1:name}}[${2:number of args}][${3:default of first arg}]{${4:macro code}}[${5:final code}]"}},
+		{"name":"NewEnviron","arg":{"format":"{}{}","snippet":"NewEnviron{${1:name}}{${2:macro code}}"}},
+		{"name":"RenewEnviron","arg":{"format":"{}[][]{}[]","snippet":"RenewEnviron{${1:name}}[${2:number of args}][${3:default of first arg}]{${4:macro code}}[${5:final code}]"}},
+		{"name":"RenewEnviron","arg":{"format":"{}{}","snippet":"RenewEnviron{${1:name}}{${2:macro code}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

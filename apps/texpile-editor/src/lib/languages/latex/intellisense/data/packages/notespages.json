@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"definenotesoption","arg":{"format":"{}{}","snippet":"definenotesoption{${1:new option}}{${2:options}}","keys":["keyval:np"],"keyPos":1}},
+		{"name":"definenotesstyle","arg":{"format":"{}{}","snippet":"definenotesstyle{${1:new notes style}}{${2:commands}}"}},
+		{"name":"definetitlestyle","arg":{"format":"{}{}","snippet":"definetitlestyle{${1:new title style}}{${2:commands}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"notesareatext"},
+		{"name":"notesfill","arg":{"format":"[]","snippet":"notesfill[${1:options}]","keys":["keyval:np"],"keyPos":0}},
+		{"name":"notesfill"},
+		{"name":"notespage","arg":{"format":"[]","snippet":"notespage[${1:options}]","keys":["keyval:np"],"keyPos":0}},
+		{"name":"notespage"},
+		{"name":"notespages","arg":{"format":"[]","snippet":"notespages[${1:options}]","keys":["keyval:np"],"keyPos":0}},
+		{"name":"notespages"},
+		{"name":"notestitletext"},
+		{"name":"npnotesname"},
+		{"name":"npnotestext"},
+		{"name":"npnpinfo","arg":{"format":"{}","snippet":"npnpinfo{${1}}"},"unusual":true},
+		{"name":"nppatchchapter","arg":{"format":"{}","snippet":"nppatchchapter{${1:options}}","keys":["keyval:np"],"keyPos":0}},
+		{"name":"npunpatchchapter","doc":"With \\npunpatchchapter the command \\chapter is restored to its original meaning, thus there will be no more notes pages before a new chapter after issuing this command."},
+		{"name":"remainingtextheight"},
+		{"name":"setnotespages","arg":{"format":"{}","snippet":"setnotespages{${1:options}}","keys":["keyval:np"],"keyPos":0}},
+		{"name":"tracingnpmarks","doc":"By setting the counter \\tracingnpmarks to a value greater then 0, informations about the reasons for doing or not doing things are stored to the log file."}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:np": ["default","empty","endpages","fillmaxspace","fillminspace","filltopskip","hparts","marktext","minpages","multiple","notestext","pagestyle","titleskip","titletext","vacant","vparts","startnotes=${1|clearpage,newpage|}","allowfloats=${1|false,true|}","notesstyle=${1|plain,lines,vlines,grid,text|}","titlestyle=${1|none,text,section,subsection,subsubsection,minisec|}","titlenotesfill=${1|false,true|}","notestextalign=${1|left,right,center,none|}","mark=${1|both,right,left,keep|}","markuppercase=${1|false,true|}","usenotesareaheight=${1|false,true|}","filltopfill=${1|false,true|}"],
+		"\\usepackage/notespages#c": ["allowfloats=${1|false,true|}","default","empty","endpages","fillmaxspace","fillminspace","filltopfill=${1|false,true|}","filltopskip","hparts","mark=${1|both,right,left,keep|}","marktext","markuppercase=${1|false,true|}","minpages","multiple","notesstyle=${1|plain,lines,vlines,grid,text|}","notestext","notestextalign=${1|left,right,center,none|}","pagestyle","startnotes=${1|clearpage,newpage|}","titlenotesfill=${1|false,true|}","titleskip","titlestyle=${1|none,text,section,subsection,subsubsection,minisec|}","titletext","usenotesareaheight=${1|false,true|}","vacant","vparts"]
+	},
+	"args": ["\\usepackage/notespages#c"]
+}

@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"babel"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"setspace"},{"name":"titlesec"},{"name":"lmodern"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"url"},{"name":"natbib"},{"name":"caption"},{"name":"caption3"},{"name":"endfloat","if":"!noendfloat"}],
+	"macros": [
+		{"name":"affiliation","arg":{"format":"{}","snippet":"affiliation{${1}}"}},
+		{"name":"citepPage","arg":{"format":"{}{}","snippet":"citepPage{${1}}{${2}}"}},
+		{"name":"citetPage","arg":{"format":"{}{}","snippet":"citetPage{${1}}{${2}}"}},
+		{"name":"jelclass","arg":{"format":"{}","snippet":"jelclass{${1}}"}},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1}}"}},
+		{"name":"matgreek","arg":{"format":"{}","snippet":"matgreek{${1}}"}},
+		{"name":"matlatin","arg":{"format":"{}","snippet":"matlatin{${1}}"}},
+		{"name":"theShowAuthor","unusual":true},
+		{"name":"theShowDate","unusual":true},
+		{"name":"theUseEndfloat","unusual":true},
+		{"name":"theUseLetterPaper","unusual":true},
+		{"name":"vecgreek","arg":{"format":"{}","snippet":"vecgreek{${1}}"}},
+		{"name":"veclatin","arg":{"format":"{}","snippet":"veclatin{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/agecon#c": ["author","date","letterpaper","noendfloat"]
+	},
+	"args": ["\\documentclass/agecon#c"]
+}

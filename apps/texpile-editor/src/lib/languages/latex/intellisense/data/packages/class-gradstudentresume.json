@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"class-article"},{"name":"anysize"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"grad","arg":{"format":"{}{}{}{}{}{}","snippet":"grad{${1:degree}}{${2:date}}{${3:school}}{${4:location}}{${5:thesis}}{${6:advisor}}"}},
+		{"name":"largespace"},
+		{"name":"myname"},
+		{"name":"paper","arg":{"format":"{}{}{}{}{}{}{}","snippet":"paper{${1:authors}}{${2:year}}{${3:title}}{${4:journal}}{${5:volume}}{${6:number}}{${7:pages}}"}},
+		{"name":"presentation","arg":{"format":"{}{}{}{}","snippet":"presentation{${1:section of the conference}}{${2:date}}{${3:conference or school name}}{${4:location}}"}},
+		{"name":"reference","arg":{"format":"{}{}{}{}{}{}{}","snippet":"reference{${1:name}}{${2:title}}{${3:telephone}}{${4:department}}{${5:email}}{${6:school}}{${7:address line 2}}"}},
+		{"name":"sectionheading","arg":{"format":"{}","snippet":"sectionheading{${1:title}}"}},
+		{"name":"sectionrule","unusual":true},
+		{"name":"smallspace"},
+		{"name":"subsectionheading","arg":{"format":"{}","snippet":"subsectionheading{${1:title}}"}},
+		{"name":"undergrad","arg":{"format":"{}{}{}{}{}","snippet":"undergrad{${1:degree}}{${2:date}}{${3:school}}{${4:location}}{${5:honors}}"}}
+	],
+	"envs": [
+		{"name":"desc","arg":{"format":"{}{}{}","snippet":"{${1:title}}{${2:dates}}{${3:description}}"}},
+		{"name":"info","arg":{"format":"{}{}{}{}","snippet":"{${1:name}}{${2:address}}{${3:telephone}}{${4:email}}"}},
+		{"name":"pres","arg":{"format":"{}","snippet":"{${1:presentation name}}"}},
+		{"name":"wrapped"}
+	],
+	"keys": {}
+}

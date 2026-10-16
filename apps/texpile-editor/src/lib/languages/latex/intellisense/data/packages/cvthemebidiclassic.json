@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/cvthemebidiclassic#c": ["blue","green","grey","orange","red"]
+	},
+	"args": ["\\usepackage/cvthemebidiclassic#c"]
+}

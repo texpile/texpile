@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"pbox","arg":{"format":"[][][]{}{}","snippet":"pbox[${1:position}][${2:height}][${3:inner position}]{${4:width}}{${5:text}}"}},
+		{"name":"pbox","arg":{"format":"{}{}","snippet":"pbox{${1:width}}{${2:text}}"}},
+		{"name":"settominwidth","arg":{"format":"[]{}{}","snippet":"settominwidth[${1:minimum width}]{${2:length}}{${3:text}}"}},
+		{"name":"settominwidth","arg":{"format":"{}{}","snippet":"settominwidth{${1:length}}{${2:text}}"}},
+		{"name":"widthofpbox","arg":{"format":"{}","snippet":"widthofpbox{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

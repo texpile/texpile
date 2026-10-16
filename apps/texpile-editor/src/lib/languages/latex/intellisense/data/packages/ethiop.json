@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"ethiop","arg":{"format":"{}","snippet":"ethiop{${1:counter}}"}},
+		{"name":"ethmath","arg":{"format":"{}","snippet":"ethmath{${1:text}}"},"doc":"When the macro \\ethmath appears in math mode while the Ethiopian language is selected, its single argument will appear in the proper size typeset with the Ethiopian fonts."},
+		{"name":"ethnum","arg":{"format":"{}","snippet":"ethnum{${1:number}}"}},
+		{"name":"ethvariantCfalse"},
+		{"name":"ethvariantCtrue","doc":"The variant series can be activated by issuing the command \\ethvariantCtrue once."}
+	],
+	"envs": [],
+	"keys": {}
+}

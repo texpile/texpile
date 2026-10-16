@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"complex"},
+		{"name":"integer","doc":"Since sets of natural, whole, real and complex numbers (N, Z, R and C) occur often in the Mathematics Mode they can be reached by the macros \\nat, \\integer, \\real and \\complex."},
+		{"name":"mathbb","math":true},
+		{"name":"MathItalics"},
+		{"name":"MathNormal"},
+		{"name":"nat","doc":"Since sets of natural, whole, real and complex numbers (N, Z, R and C) occur often in the Mathematics Mode they can be reached by the macros \\nat, \\integer, \\real and \\complex."},
+		{"name":"rational"},
+		{"name":"real","doc":"Since sets of natural, whole, real and complex numbers (N, Z, R and C) occur often in the Mathematics Mode they can be reached by the macros \\nat, \\integer, \\real and \\complex."}
+	],
+	"envs": [],
+	"keys": {}
+}

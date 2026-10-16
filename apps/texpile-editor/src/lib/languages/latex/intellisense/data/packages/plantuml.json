@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"fancyvrb"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"ifthen"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"},{"name":"capt-of"},{"name":"luacode","engines":["lualatex"]},{"name":"ifluatex","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"plantumlinput","arg":{"format":"[]{}","snippet":"plantumlinput[${1:keys}]{${2:file}}"}},
+		{"name":"plantumlinput","arg":{"format":"{}","snippet":"plantumlinput{${1:file}}"}},
+		{"name":"PlantUmlMode","unusual":true},
+		{"name":"plantumlpreamblefile","arg":{"format":"{}","snippet":"plantumlpreamblefile{${1:file}}"}},
+		{"name":"PlantUmlServer","unusual":true},
+		{"name":"plantumlset","arg":{"format":"{}","snippet":"plantumlset{${1:keys}}"}},
+		{"name":"PlantUmlTikzFont","doc":"The package therefore renders the diagram text with \\PlantUmlTikzFont, which defaults to \\sffamily so the text matches the boxes."},
+		{"name":"thePlantUmlFigureNumberSVG","unusual":true}
+	],
+	"envs": [
+		{"name":"plantuml"},
+		{"name":"plantumlpreamble"}
+	],
+	"keys": {}
+}

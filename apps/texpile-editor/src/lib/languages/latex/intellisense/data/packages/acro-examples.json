@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"acro"},{"name":"l3keys2e"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

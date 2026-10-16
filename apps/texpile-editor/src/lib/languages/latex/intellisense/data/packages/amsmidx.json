@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"index","arg":{"format":"{}{}","snippet":"index{${1:filename}}{${2:index term}}"},"doc":"Redefine \\index to specify into which file/index the term is to be placed."},
+		{"name":"indexcomment","arg":{"format":"{}","snippet":"indexcomment{${1:text of comments}}"}},
+		{"name":"makeindex","arg":{"format":"{}","snippet":"makeindex{${1:filename}}"},"doc":"Redefine \\makeindex to create a new .idx file with the name provided by argument #1."},
+		{"name":"printindex","arg":{"format":"{}","snippet":"printindex{${1:filename}}"},"doc":"Redefine \\printindex to specify the file to be included; provide an alternate command \\Printindex that specifies both the file and the index title to be printed."},
+		{"name":"Printindex","arg":{"format":"{}{}","snippet":"Printindex{${1:filename}}{${2:title}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

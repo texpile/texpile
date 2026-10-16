@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"bbdotlessi"},
+		{"name":"bbdotlessj"},
+		{"name":"imathbb"},
+		{"name":"jmathbb"},
+		{"name":"mathbb","arg":{"format":"{}","snippet":"mathbb{${1}}"},"math":true}
+	],
+	"envs": [],
+	"keys": {}
+}

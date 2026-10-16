@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"lua-unicode-math","engines":["lualatex"]},{"name":"linguistix-base"},{"name":"linguistix-nfss"},{"name":"linguistix-fixpex"},{"name":"unicode-math","engines":["xelatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"xparse","engines":["xelatex"]},{"name":"l3keys2e","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"amsmath","engines":["xelatex"]},{"name":"amstext","engines":["xelatex"]},{"name":"amsbsy","engines":["xelatex"]},{"name":"amsopn","engines":["xelatex"]}],
+	"macros": [
+		{"name":"ipatext","arg":{"format":"{}","snippet":"ipatext{${1:transcription}}"}},
+		{"name":"ipatext*","arg":{"format":"{}","snippet":"ipatext*{${1:transcription}}"}},
+		{"name":"lngxipa"}
+	],
+	"envs": [],
+	"keys": {}
+}

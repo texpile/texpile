@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"import"}],
+	"macros": [
+		{"name":"wasserdicht"}
+	],
+	"envs": [],
+	"keys": {}
+}

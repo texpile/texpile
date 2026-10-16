@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xparse"},{"name":"luacode"},{"name":"ifluatex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"convLength","arg":{"format":"[][]{}[]","snippet":"convLength[${1:unit}][${2:digits}]{${3:value}}[${4:original unit}]"}},
+		{"name":"convLength","arg":{"format":"{}","snippet":"convLength{${1:value}}"}},
+		{"name":"convLength*","arg":{"format":"[][]{}[]","snippet":"convLength*[${1:unit}][${2:digits}]{${3:value}}[${4:original unit}]"}},
+		{"name":"convLength*","arg":{"format":"{}","snippet":"convLength*{${1:value}}"}},
+		{"name":"convTeXLength","arg":{"format":"[][]{}","snippet":"convTeXLength[${1:unit}][${2:digits}]{${3:TeX length}}"}},
+		{"name":"convTeXLength","arg":{"format":"{}","snippet":"convTeXLength{${1:TeX length}}"}},
+		{"name":"convTeXLength*","arg":{"format":"[][]{}","snippet":"convTeXLength*[${1:unit}][${2:digits}]{${3:TeX length}}"}},
+		{"name":"convTeXLength*","arg":{"format":"{}","snippet":"convTeXLength*{${1:TeX length}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

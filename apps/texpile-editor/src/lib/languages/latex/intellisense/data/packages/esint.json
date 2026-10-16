@@ -1,150 +1,40 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "int",
-      "detail": "∫",
-      "doc": "Integral operator"
-    },
-    {
-      "name": "iint",
-      "detail": "∬ (\"amsmath fourier esint wasysym\" command)",
-      "doc": "Double integral operator"
-    },
-    {
-      "name": "iiint",
-      "detail": "∭ (\"amsmath fourier esint wasysym\" command)",
-      "doc": "Triple integral operator"
-    },
-    {
-      "name": "iiiint",
-      "detail": "⨌ (\"amsmath esint\" command)",
-      "doc": "Quadruple integral operator"
-    },
-    {
-      "name": "idotsint"
-    },
-    {
-      "name": "oint",
-      "detail": "∮",
-      "doc": "Contour integral operator"
-    },
-    {
-      "name": "oiint",
-      "detail": "∯ (\"esint wasysym fourier\" command)",
-      "doc": "\\dbloint (wrisym), double contour integral operator"
-    },
-    {
-      "name": "varoiint"
-    },
-    {
-      "name": "sqint",
-      "detail": "⨖ (\"esint\" command)",
-      "doc": "\\sqrint (wrisym), quaternion integral operator"
-    },
-    {
-      "name": "sqiint"
-    },
-    {
-      "name": "ointctrclockwise",
-      "detail": "∳ (\"esint\" command)",
-      "doc": "\\cntclockoint (wrisym), contour integral, anticlockwise"
-    },
-    {
-      "name": "ointclockwise"
-    },
-    {
-      "name": "varointclockwise",
-      "detail": "∲ (\"esint\" command)",
-      "doc": "\\clockoint (wrisym), contour integral, clockwise"
-    },
-    {
-      "name": "varointctrclockwise"
-    },
-    {
-      "name": "fint",
-      "detail": "⨏ (\"esint wrisym\" command)",
-      "doc": "Integral average with slash"
-    },
-    {
-      "name": "landupint"
-    },
-    {
-      "name": "landdownint"
-    },
-    {
-      "name": "iintop",
-      "unusual": true
-    },
-    {
-      "name": "iiintop",
-      "unusual": true
-    },
-    {
-      "name": "iiiintop",
-      "unusual": true
-    },
-    {
-      "name": "dotsintop",
-      "unusual": true
-    },
-    {
-      "name": "dotsint",
-      "unusual": true
-    },
-    {
-      "name": "oiintop",
-      "unusual": true
-    },
-    {
-      "name": "sqintop",
-      "unusual": true
-    },
-    {
-      "name": "sqiintop",
-      "unusual": true
-    },
-    {
-      "name": "ointctrclockwiseop",
-      "unusual": true
-    },
-    {
-      "name": "ointclockwiseop",
-      "unusual": true
-    },
-    {
-      "name": "varointclockwiseop",
-      "unusual": true
-    },
-    {
-      "name": "varointctrclockwiseop",
-      "unusual": true
-    },
-    {
-      "name": "fintop",
-      "unusual": true
-    },
-    {
-      "name": "varoiintop",
-      "unusual": true
-    },
-    {
-      "name": "landupintop",
-      "unusual": true
-    },
-    {
-      "name": "landdownintop",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/esint#c": [
-      "intlimits",
-      "nointlimits"
-    ]
-  },
-  "args": [
-    "\\usepackage/esint#c"
-  ]
+	"macros": [
+		{"name":"dotsint","unusual":true},
+		{"name":"dotsintop","unusual":true},
+		{"name":"fint","math":true,"detail":"⨏","doc":"integral average with slash"},
+		{"name":"fintop","unusual":true},
+		{"name":"idotsint"},
+		{"name":"iiiint","math":true,"detail":"⨌","doc":"quadruple integral operator"},
+		{"name":"iiiintop","unusual":true},
+		{"name":"iiint","math":true,"detail":"∭","doc":"triple integral operator"},
+		{"name":"iiintop","unusual":true},
+		{"name":"iint","math":true,"detail":"∬","doc":"double integral operator"},
+		{"name":"iintop","unusual":true},
+		{"name":"landdownint"},
+		{"name":"landdownintop","unusual":true},
+		{"name":"landupint"},
+		{"name":"landupintop","unusual":true},
+		{"name":"oiint","math":true,"detail":"∯","doc":"double contour integral operator"},
+		{"name":"oiintop","unusual":true},
+		{"name":"ointclockwise"},
+		{"name":"ointclockwiseop","unusual":true},
+		{"name":"ointctrclockwise","math":true,"detail":"∳","doc":"contour integral, anticlockwise"},
+		{"name":"ointctrclockwiseop","unusual":true},
+		{"name":"sqiint"},
+		{"name":"sqiintop","unusual":true},
+		{"name":"sqint","math":true,"detail":"⨖","doc":"quaternion integral operator"},
+		{"name":"sqintop","unusual":true},
+		{"name":"varoiint"},
+		{"name":"varoiintop","unusual":true},
+		{"name":"varointclockwise","math":true,"detail":"∲","doc":"contour integral, clockwise"},
+		{"name":"varointclockwiseop","unusual":true},
+		{"name":"varointctrclockwise"},
+		{"name":"varointctrclockwiseop","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/esint#c": ["intlimits","nointlimits"]
+	},
+	"args": ["\\usepackage/esint#c"]
 }

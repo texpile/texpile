@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"graphics"},{"name":"trig"},{"name":"float","if":"AllowH"},{"name":"subfigure","if":"subfigure"}],
+	"macros": [
+		{"name":"docdate","unusual":true},
+		{"name":"FigureDefaultPlacement","arg":{"format":"{}","snippet":"FigureDefaultPlacement{${1}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"filedescr","unusual":true},
+		{"name":"FileName","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"graphfile","arg":{"format":"[]{}[]","snippet":"graphfile[${1:width}]{${2:file}}[${3:sub-caption}]"}},
+		{"name":"graphfile","arg":{"format":"{}","snippet":"graphfile{${1:file}}"}},
+		{"name":"graphfile*","arg":{"format":"[]{}[]","snippet":"graphfile*[${1:width}]{${2:file}}[${3:sub-caption}]"}},
+		{"name":"graphfile*","arg":{"format":"{}","snippet":"graphfile*{${1:file}}"}}
+	],
+	"envs": [
+		{"name":"Figure","arg":{"format":"[]{}[]","snippet":"[${1:placement}]{${2:caption}}[${3:label}]"}},
+		{"name":"Figure","arg":{"format":"{}","snippet":"{${1:caption}}"}}
+	],
+	"keys": {
+		"\\usepackage/graphfig#c": ["AllowH","subfigure"]
+	},
+	"args": ["\\usepackage/graphfig#c"]
+}

@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"Address"},
+		{"name":"EMail"},
+		{"name":"Firstname"},
+		{"name":"ForEachAddress","arg":{"format":"{}{}","snippet":"ForEachAddress{${1:address file}}{${2:commands}}"}},
+		{"name":"Name"},
+		{"name":"Opening"},
+		{"name":"PrivateNumber"},
+		{"name":"Sex"},
+		{"name":"Telefax"},
+		{"name":"Telephone"},
+		{"name":"Title"}
+	],
+	"envs": [],
+	"keys": {}
+}

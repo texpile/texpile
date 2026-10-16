@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xsavebox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"DefineOASymbol","arg":{"format":"[]","snippet":"DefineOASymbol[${1:symbol}]"},"doc":"This command redefines \\oasymbol to point to a different version of the symbol."},
+		{"name":"DefineOASymbol","doc":"This command redefines \\oasymbol to point to a different version of the symbol."},
+		{"name":"DefineTikZOASymbol","arg":{"format":"[]","snippet":"DefineTikZOASymbol[${1:symbol}]"},"unusual":true},
+		{"name":"DefineTikZOASymbol","unusual":true},
+		{"name":"oasymbol","doc":"This commands holds the little symbol that is going to be printed in the margin to mark open access publications."}
+	],
+	"envs": [],
+	"keys": {}
+}

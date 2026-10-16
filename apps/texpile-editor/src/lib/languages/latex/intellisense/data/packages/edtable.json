@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"longtable","if":"longtable"},{"name":"ltabptch","if":"longtable"}],
+	"macros": [
+		{"name":"ETextraoffset"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [
+		{"name":"edtable","arg":{"format":"[]{}","snippet":"[${1:$ or $$}]{${2:tabular environment}}"}},
+		{"name":"edtable","arg":{"format":"{}","snippet":"{${1:tabular environment}}"}}
+	],
+	"keys": {
+		"\\usepackage/edtable#c": ["longtable","nolongtablepatch"]
+	},
+	"args": ["\\usepackage/edtable#c"]
+}

@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"float"},{"name":"tabularray"},{"name":"varwidth"}],
+	"macros": [
+		{"name":"listadequadros","doc":"A lista de quadros pode ser produzido pelo \\listadequadros."},
+		{"name":"listadequadros*","doc":"A lista de quadros pode ser produzido pelo \\listadequadros."},
+		{"name":"listquadroname","unusual":true},
+		{"name":"quadroname","unusual":true},
+		{"name":"SetAbntTblrFont","arg":{"format":"{}","snippet":"SetAbntTblrFont{${1:font commands}}"}},
+		{"name":"thequadro","unusual":true}
+	],
+	"envs": [
+		{"name":"abnttblr","arg":{"format":"[]{}","snippet":"[${1:outer specs}]{${2:inner specs}}"}},
+		{"name":"abnttblr","arg":{"format":"{}","snippet":"{${1:inner specs}}"}},
+		{"name":"longabnttblr","arg":{"format":"[]{}","snippet":"[${1:outer specs}]{${2:inner specs}}"},"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."},
+		{"name":"longabnttblr","arg":{"format":"{}","snippet":"{${1:inner specs}}"},"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."},
+		{"name":"quadro","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"quadro"},
+		{"name":"tallabnttblr","arg":{"format":"[]{}","snippet":"[${1:outer specs}]{${2:inner specs}}"},"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."},
+		{"name":"tallabnttblr","arg":{"format":"{}","snippet":"{${1:inner specs}}"},"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."}
+	],
+	"keys": {}
+}

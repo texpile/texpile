@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"DeclareNewPSOperator","arg":{"format":"{}","snippet":"DeclareNewPSOperator{${1:operator name}}"},"unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"infixtoRPN","arg":{"format":"{}","snippet":"infixtoRPN{${1:infix expression}}"}},
+		{"name":"RCSDate","unusual":true},
+		{"name":"RCSRevision","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"stix2","if":"!nostix"},{"name":"textcomp","if":"!nostix"}],
+	"macros": [
+		{"name":"ADS","arg":{"format":"{}","snippet":"ADS{${1:letter}}"}},
+		{"name":"ADU","arg":{"format":"{}","snippet":"ADU{${1:letter}}"}},
+		{"name":"ADZ","arg":{"format":"{}","snippet":"ADZ{${1:letter}}"}},
+		{"name":"AGZ","arg":{"format":"{}","snippet":"AGZ{${1:letter}}"}},
+		{"name":"AKS","arg":{"format":"{}","snippet":"AKS{${1:letter}}"}},
+		{"name":"AKU","arg":{"format":"{}","snippet":"AKU{${1:letter}}"}},
+		{"name":"AKZ","arg":{"format":"{}","snippet":"AKZ{${1:letter}}"}},
+		{"name":"C","arg":{"format":"{}","snippet":"C{${1:letter}}"},"unusual":true},
+		{"name":"cyr","arg":{"format":"{}","snippet":"cyr{${1:text}}"},"doc":"The commands \\LAT, \\CYR, \\lat and \\cyr are defined to switch from the stix2 font to the srbtiks and opposite (i.e. from Latin to Cyrillic and Cyrillic to Latin)."},
+		{"name":"CYR","doc":"The commands \\LAT, \\CYR, \\lat and \\cyr are defined to switch from the stix2 font to the srbtiks and opposite (i.e. from Latin to Cyrillic and Cyrillic to Latin)."},
+		{"name":"f","arg":{"format":"{}","snippet":"f{${1:letter}}"},"unusual":true},
+		{"name":"lat","arg":{"format":"{}","snippet":"lat{${1:text}}"}},
+		{"name":"LAT"},
+		{"name":"U","arg":{"format":"{}","snippet":"U{${1:letter}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/srbtiks#c": ["noslant","nostix"]
+	},
+	"args": ["\\usepackage/srbtiks#c"]
+}

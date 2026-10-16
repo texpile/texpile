@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"ifvtex"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"letltxmacro"},{"name":"auxhook"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

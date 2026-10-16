@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"xcolor"}],
+	"macros": [
+		{"name":"listing","arg":{"format":"[]{}","snippet":"listing[${1:listings options}]{${2:file}}"}},
+		{"name":"listing","arg":{"format":"{}","snippet":"listing{${1:file}}"}}
+	],
+	"envs": [
+		{"name":"codelisting","arg":{"format":"[]","snippet":"[${1:listings options}]"}},
+		{"name":"codelisting"}
+	],
+	"keys": {}
+}

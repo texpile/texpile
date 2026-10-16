@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"algpseudocodex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"algorithmicx"},{"name":"ifthen"},{"name":"etoolbox"},{"name":"fifo-stack"},{"name":"varwidth"},{"name":"tabto"},{"name":"totcount"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"},{"name":"algorithm"},{"name":"float"}],
+	"macros": [
+		{"name":"algbigskip"},
+		{"name":"algmedskip"},
+		{"name":"algsmallskip"},
+		{"name":"Input","arg":{"format":"{}","snippet":"Input{${1:text}}"}},
+		{"name":"Returns","arg":{"format":"{}","snippet":"Returns{${1:text}}"}},
+		{"name":"StateL","arg":{"format":"{}","snippet":"StateL{${1:text}}"},"unusual":true},
+		{"name":"StateNN","arg":{"format":"[]{}","snippet":"StateNN[${1:nesting}]{${2:text}}"},"doc":"\\StateNN[<nesting>]{<text>}: Creates a non-numbered statement like algorithmicx’s \\Statex command but provides controlled indentation inside nested constructs."},
+		{"name":"StateNN","arg":{"format":"{}","snippet":"StateNN{${1:text}}"},"doc":"\\StateNN[<nesting>]{<text>}: Creates a non-numbered statement like algorithmicx’s \\Statex command but provides controlled indentation inside nested constructs."}
+	],
+	"envs": [],
+	"keys": {}
+}

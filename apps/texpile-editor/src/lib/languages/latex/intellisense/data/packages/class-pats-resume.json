@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"class-article"},{"name":"babel"},{"name":"enumitem"},{"name":"fancyhdr"},{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"microtype"},{"name":"paracol"},{"name":"supertabular"},{"name":"titlesec"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"comment"},{"name":"ifthen"},{"name":"fontawesome5-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]}],
+	"macros": [
+		{"name":"consulting","arg":{"format":"{}","snippet":"consulting{${1}}"}},
+		{"name":"details","arg":{"format":"{}","snippet":"details{${1:items}}"}},
+		{"name":"email","unusual":true},
+		{"name":"entry","arg":{"format":"{}{}{}{}","snippet":"entry{${1:title}}{${2:subtitle}}{${3:location}}{${4:date}}"}},
+		{"name":"github","unusual":true},
+		{"name":"gpa","arg":{"format":"{}","snippet":"gpa{${1}}"}},
+		{"name":"heading","arg":{"format":"{}","snippet":"heading{${1}}"},"unusual":true},
+		{"name":"info","arg":{"format":"{}{}","snippet":"info{${1}}{${2}}"},"unusual":true},
+		{"name":"linkedin","unusual":true},
+		{"name":"name","unusual":true},
+		{"name":"phone","unusual":true},
+		{"name":"ResumeSection","arg":{"format":"{}","snippet":"ResumeSection{${1:section}}"}},
+		{"name":"setemail","arg":{"format":"{}","snippet":"setemail{${1:email}}"}},
+		{"name":"setgithub","arg":{"format":"{}","snippet":"setgithub{${1:github}}"}},
+		{"name":"setlinkedin","arg":{"format":"{}","snippet":"setlinkedin{${1:linkedin}}"}},
+		{"name":"setname","arg":{"format":"{}","snippet":"setname{${1:name}}"}},
+		{"name":"setphone","arg":{"format":"{}","snippet":"setphone{${1:phone}}"}},
+		{"name":"skill","arg":{"format":"{}{}{}{}","snippet":"skill{${1:name}}{${2:description}}{${3:location}}{${4:date}}"}},
+		{"name":"tableentry","arg":{"format":"{}{}{}","snippet":"tableentry{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"tech","arg":{"format":"{}","snippet":"tech{${1}}"}},
+		{"name":"tools","arg":{"format":"{}","snippet":"tools{${1:tools}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -80,7 +80,7 @@ describe('latex completion source', () => {
 	});
 
 	it('completes environment names inside \\end{…} too', async () => {
-		expect(labels(await completeAt('\\end{align'))).toContain('align*');
+		expect(labels(await completeAt('\\usepackage{amsmath}\n\\end{align'))).toContain('align*');
 	});
 
 	it('ranks the still-open environment first inside \\end{…}', async () => {

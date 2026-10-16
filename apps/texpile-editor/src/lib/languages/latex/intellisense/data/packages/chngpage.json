@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"changepage","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"changepage{${1:text height}}{${2:text width}}{${3:even-side margin}}{${4:odd-side margin}}{${5:column sep.}}{${6:topmargin}}{${7:headheight}}{${8:headsep}}{${9:footskip}}"},"doc":"The \\changepage command is for changing the general layout of a page."},
+		{"name":"changetext","arg":{"format":"{}{}{}{}{}","snippet":"changetext{${1:text height}}{${2:text width}}{${3:even-side margin}}{${4:odd-side margin}}{${5:column sep.}}"},"doc":"The given lengths are added to the corresponding current lengths and the remainder of the current page is typeset using the changed text block layout."},
+		{"name":"checkoddpage","doc":"The \\checkoddpage command can be used anywhere in the body of a document to determine if TeX is typesetting on an odd or even numbered page."},
+		{"name":"cplabelprefix"},
+		{"name":"cpoddpagefalse","unusual":true},
+		{"name":"cpoddpagetrue","unusual":true},
+		{"name":"cpstrictfalse"},
+		{"name":"cpstricttrue"},
+		{"name":"ifcpoddpage"},
+		{"name":"ifcpstrict","unusual":true}
+	],
+	"envs": [
+		{"name":"adjustwidth","arg":{"format":"[]{}{}","snippet":"[${1:odd/even switch}]{${2:leftmargin}}{${3:rightmargin}}"},"doc":"Within an adjustwidth environment the left and right margins can be adjusted."},
+		{"name":"adjustwidth","arg":{"format":"{}{}","snippet":"{${1:leftmargin}}{${2:rightmargin}}"},"doc":"Within an adjustwidth environment the left and right margins can be adjusted."}
+	],
+	"keys": {
+		"\\usepackage/chngpage#c": ["strict"]
+	},
+	"args": ["\\usepackage/chngpage#c"]
+}

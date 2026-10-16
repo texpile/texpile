@@ -1,0 +1,22 @@
+{
+	"macros": [
+		{"name":"SetApplication","arg":{"format":"{}","snippet":"SetApplication{${1:text}}"}},
+		{"name":"SetAuthor","arg":{"format":"{}","snippet":"SetAuthor{${1:text}}"}},
+		{"name":"SetPDFX","arg":{"format":"[]{}","snippet":"SetPDFX[${1:Output Intent}]{${2:compliance standard}}"}},
+		{"name":"SetPDFX","arg":{"format":"{}","snippet":"SetPDFX{${1:compliance standard}}"}},
+		{"name":"SetPDFX*","arg":{"format":"[]{}","snippet":"SetPDFX*[${1:Output Intent}]{${2:compliance standard}}"}},
+		{"name":"SetPDFX*","arg":{"format":"{}","snippet":"SetPDFX*{${1:compliance standard}}"}},
+		{"name":"SetProducer","arg":{"format":"{}","snippet":"SetProducer{${1:text}}"}},
+		{"name":"SetSubtitle","arg":{"format":"{}","snippet":"SetSubtitle{${1:text}}"}},
+		{"name":"SetTitle","arg":{"format":"{}","snippet":"SetTitle{${1:text}}"}},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1}}"}},
+		{"name":"theauthor","unusual":true},
+		{"name":"theAuthor"},
+		{"name":"thesubtitle","unusual":true},
+		{"name":"theSubtitle"},
+		{"name":"thetitle","unusual":true},
+		{"name":"theTitle"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"bm"},{"name":"cmbright","engines":["lualatex","xelatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

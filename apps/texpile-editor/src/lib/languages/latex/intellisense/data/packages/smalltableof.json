@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"chapterNoNumber","arg":{"format":"{}","snippet":"chapterNoNumber{${1}}"}},
+		{"name":"mabibliographie","arg":{"format":"{}{}","snippet":"mabibliographie{${1}}{${2}}"}},
+		{"name":"sectionNoNumber","arg":{"format":"{}","snippet":"sectionNoNumber{${1}}"},"doc":"Qui cree une section, sans numerotation, sans en-tete, mais qui est dans la table des matieres."},
+		{"name":"sectiontable","arg":{"format":"{}{}","snippet":"sectiontable{${1}}{${2}}"}},
+		{"name":"sectiontableoffigure"},
+		{"name":"sectiontableoftable"},
+		{"name":"stdtables","doc":"Qui cree un chapitre tables avec les listes de figures et de tables."},
+		{"name":"tablechapter"},
+		{"name":"tablesname"},
+		{"name":"toc","arg":{"format":"{}","snippet":"toc{${1}}"},"doc":"Qui insere la table/liste dans le document (par exemple : \\toc{lof} insere la liste des figures dans le document."}
+	],
+	"envs": [],
+	"keys": {}
+}

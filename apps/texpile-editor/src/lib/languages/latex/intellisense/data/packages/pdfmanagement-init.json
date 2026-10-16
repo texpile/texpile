@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tagpdf-base"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pdfmanagement-init#c": ["debug"]
+	},
+	"args": ["\\usepackage/pdfmanagement-init#c"]
+}

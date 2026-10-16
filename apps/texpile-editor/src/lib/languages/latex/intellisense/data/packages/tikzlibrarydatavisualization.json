@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"datavisualization","arg":{"format":"[]","snippet":"datavisualization[${1:data visualization options}]"}},
+		{"name":"datavisualization"},
+		{"name":"tikzdatavisualizationset","arg":{"format":"{}","snippet":"tikzdatavisualizationset{${1:options}}"}},
+		{"name":"tikzdvdeclarestylesheetcolorseries","arg":{"format":"{}{}{}{}","snippet":"tikzdvdeclarestylesheetcolorseries{${1:name}}{${2:color model}}{${3:initial color}}{${4:step}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

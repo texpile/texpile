@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"transparent-nometadata"},{"name":"iftex"},{"name":"auxhook","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"texttransparent","arg":{"format":"{}{}","snippet":"texttransparent{${1:opacity}}{${2:text}}"}},
+		{"name":"transparent","arg":{"format":"{}","snippet":"transparent{${1:opacity}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

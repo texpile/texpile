@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"makeidx","if":"makeidx"}],
+	"macros": [
+		{"name":"bfIndex","arg":{"format":"{}","snippet":"bfIndex{${1:entry}}"}},
+		{"name":"iBraceL"},
+		{"name":"IBraceL"},
+		{"name":"iBraceR"},
+		{"name":"IBraceR"},
+		{"name":"Index","arg":{"format":"{}","snippet":"Index{${1:entry}}"}},
+		{"name":"itIndex","arg":{"format":"{}","snippet":"itIndex{${1:entry}}"}},
+		{"name":"iVert"},
+		{"name":"IVert"},
+		{"name":"saIndex","arg":{"format":"{}","snippet":"saIndex{${1:entry|see also}}"}},
+		{"name":"scIndex","arg":{"format":"{}","snippet":"scIndex{${1:entry}}"}},
+		{"name":"sfIndex","arg":{"format":"{}","snippet":"sfIndex{${1:entry}}"}},
+		{"name":"sIndex","arg":{"format":"{}","snippet":"sIndex{${1:entry|see}}"}},
+		{"name":"ttIndex","arg":{"format":"{}","snippet":"ttIndex{${1:entry}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

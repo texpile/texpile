@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-grad"}],
+	"macros": [
+		{"name":"psArcTS","arg":{"format":"[]{}{}{}","snippet":"psArcTS[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"psArcTS","arg":{"format":"{}{}{}","snippet":"psArcTS{${1}}{${2}}{${3}}"}},
+		{"name":"psArcTSX","arg":{"format":"[]{}{}{}","snippet":"psArcTSX[${1}]{${2}}{${3}}{${4}}"}},
+		{"name":"psArcTSX","arg":{"format":"{}{}{}","snippet":"psArcTSX{${1}}{${2}}{${3}}"}},
+		{"name":"psboxTS","arg":{"format":"[](){}{}{}{}","snippet":"psboxTS[${1}](${2}){${3}}{${4}}{${5}}{${6}}"},"doc":"With the macro \\psboxTS we can easily draw cuboids."},
+		{"name":"psboxTS","arg":{"format":"(){}{}{}{}","snippet":"psboxTS(${1}){${2}}{${3}}{${4}}{${5}}"},"doc":"With the macro \\psboxTS we can easily draw cuboids."},
+		{"name":"psCircleTS","arg":{"format":"[]{}","snippet":"psCircleTS[${1}]{${2}}"}},
+		{"name":"psCircleTS","arg":{"format":"{}","snippet":"psCircleTS{${1}}"}},
+		{"name":"psCircleTSX","arg":{"format":"[]{}","snippet":"psCircleTSX[${1}]{${2}}"}},
+		{"name":"psCircleTSX","arg":{"format":"{}","snippet":"psCircleTSX{${1}}"}},
+		{"name":"pstransTSK","arg":{"format":"[](){}{}{}","snippet":"pstransTSK[${1}](${2}){${3}}{${4}}{${5}}"}},
+		{"name":"pstransTSK","arg":{"format":"(){}{}{}","snippet":"pstransTSK(${1}){${2}}{${3}}{${4}}"}},
+		{"name":"pstransTSX","arg":{"format":"[](){}{}","snippet":"pstransTSX[${1}](${2}){${3}}{${4}}"}},
+		{"name":"pstransTSX","arg":{"format":"(){}{}","snippet":"pstransTSX(${1}){${2}}{${3}}"}},
+		{"name":"psZylinderTS","arg":{"format":"[]{}{}","snippet":"psZylinderTS[${1}]{${2}}{${3}}"}},
+		{"name":"psZylinderTS","arg":{"format":"{}{}","snippet":"psZylinderTS{${1}}{${2}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,32 @@
+{
+	"macros": [
+		{"name":"changechapternotesline","arg":{"format":"{}","snippet":"changechapternotesline{${1}}"}},
+		{"name":"changemultiplepageabbrev","arg":{"format":"{}","snippet":"changemultiplepageabbrev{${1}}"}},
+		{"name":"changenotescontentsname","arg":{"format":"{}","snippet":"changenotescontentsname{${1}}"}},
+		{"name":"changenotesheader","arg":{"format":"{}","snippet":"changenotesheader{${1}}"}},
+		{"name":"changenotesname","arg":{"format":"{}","snippet":"changenotesname{${1}}"}},
+		{"name":"changesinglepageabbrev","arg":{"format":"{}","snippet":"changesinglepageabbrev{${1}}"}},
+		{"name":"endnoteheadersonfalse","unusual":true},
+		{"name":"endnoteheadersontrue","unusual":true},
+		{"name":"ifendnoteheaderson","unusual":true},
+		{"name":"ifnotesbychapteron","unusual":true},
+		{"name":"ifnotesincontentson","unusual":true},
+		{"name":"iftitleinnotes","unusual":true},
+		{"name":"notesbychapter"},
+		{"name":"notesbychapteronfalse","unusual":true},
+		{"name":"notesbychapterontrue","unusual":true},
+		{"name":"notesincontents"},
+		{"name":"notesincontentsonfalse","unusual":true},
+		{"name":"notesincontentsontrue","unusual":true},
+		{"name":"resetendnotes"},
+		{"name":"setstyleforchapternotebegin","arg":{"format":"{}","snippet":"setstyleforchapternotebegin{${1}}"}},
+		{"name":"setstyleforchapternoteend","arg":{"format":"{}","snippet":"setstyleforchapternoteend{${1}}"}},
+		{"name":"setupendnoteheaders"},
+		{"name":"styleforchapternotebegin","unusual":true},
+		{"name":"styleforchapternoteend","unusual":true},
+		{"name":"titleinnotesfalse","unusual":true},
+		{"name":"titleinnotestrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

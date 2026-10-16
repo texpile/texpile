@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"DeleteShortVerb","arg":{"format":"{}","snippet":"DeleteShortVerb{${1:character}}"}},
+		{"name":"MakeShortVerb","arg":{"format":"{}","snippet":"MakeShortVerb{${1:character}}"}},
+		{"name":"MakeShortVerb*","arg":{"format":"{}","snippet":"MakeShortVerb*{${1:character}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

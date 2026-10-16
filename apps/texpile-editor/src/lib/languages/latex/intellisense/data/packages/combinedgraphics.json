@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"keyval"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"color"}],
+	"macros": [
+		{"name":"includecombinedgraphics","arg":{"format":"[]{}","snippet":"includecombinedgraphics[${1:option list}]{${2:graphics file}}"},"doc":"This package provides a macro (\\includecombinedgraphics) for the inclusion of combined EPS/LaTeX and PDF/LaTeX graphics (an export format of Gnuplot, Xfig, and maybe other programs)."},
+		{"name":"includecombinedgraphics","arg":{"format":"{}","snippet":"includecombinedgraphics{${1:graphics file}}"},"doc":"This package provides a macro (\\includecombinedgraphics) for the inclusion of combined EPS/LaTeX and PDF/LaTeX graphics (an export format of Gnuplot, Xfig, and maybe other programs)."}
+	],
+	"envs": [],
+	"keys": {}
+}

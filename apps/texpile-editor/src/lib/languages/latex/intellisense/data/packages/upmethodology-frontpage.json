@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"upmethodology-p-common"},{"name":"ifthen"},{"name":"xspace"},{"name":"xcolor"},{"name":"ifpdf"},{"name":"iftex"},{"name":"upmethodology-extension"},{"name":"upmethodology-document"},{"name":"babel"},{"name":"vmargin"},{"name":"upmethodology-fmt"},{"name":"titlesec"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"subcaption"},{"name":"caption"},{"name":"caption3"},{"name":"tabularx"},{"name":"array"},{"name":"xltabular"},{"name":"etoolbox"},{"name":"ltablex"},{"name":"longtable"},{"name":"multicol"},{"name":"colortbl"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"},{"name":"picinpar"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"thmtools"},{"name":"thm-patch"},{"name":"parseargs"},{"name":"thm-kv"},{"name":"kvsetkeys"},{"name":"thm-autoref"},{"name":"thm-listof"},{"name":"thm-restate"},{"name":"pifont"},{"name":"setspace"},{"name":"varioref"},{"name":"txfonts"},{"name":"relsize"},{"name":"xkeyval"},{"name":"hyphenat"},{"name":"bbm"},{"name":"fontawesome5"},{"name":"l3keys2e"},{"name":"xparse"},{"name":"tocbibind"},{"name":"enumitem"},{"name":"stackengine"},{"name":"listofitems"},{"name":"calc"},{"name":"pdfcol"},{"name":"tikzfill.image"},{"name":"upmethodology-version"},{"name":"fontawesome5-utex-helper","engines":["lualatex","xelatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"ifluatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"clearfrontillustration"},
+		{"name":"makefrontcover"},
+		{"name":"setfrontcover","arg":{"format":"{}","snippet":"setfrontcover{${1:layout name}}"}},
+		{"name":"setfrontillustration","arg":{"format":"[]{}","snippet":"setfrontillustration[${1:width factor}]{${2:filename}}"}},
+		{"name":"setfrontillustration","arg":{"format":"{}","snippet":"setfrontillustration{${1:filename}}"}},
+		{"name":"setfrontlayout","arg":{"format":"{}","snippet":"setfrontlayout{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/upmethodology-frontpage#c": ["english","francais","french"]
+	},
+	"args": ["\\usepackage/upmethodology-frontpage#c"]
+}

@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"class-article"},{"name":"inputenc"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"musixtex"},{"name":"harmony"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathtools"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"intcalc"}],
+	"macros": [
+		{"name":"albumtitle","arg":{"format":"{}","snippet":"albumtitle{${1:title}}"}},
+		{"name":"artistname","arg":{"format":"{}","snippet":"artistname{${1:name}}"}},
+		{"name":"maketabheader","doc":"the \\maketabheader is used to print a header of the document."},
+		{"name":"nextbar"},
+		{"name":"note","arg":{"format":"{}{}{}{}","snippet":"note{${1:numerator}}{${2:denominator}}{${3:string}}{${4:fret}}"}},
+		{"name":"notel","arg":{"format":"{}{}{}{}{}","snippet":"notel{${1:numerator}}{${2:denominator}}{${3:string}}{${4:fret}}{${5:length}}"}},
+		{"name":"resteighth","arg":{"format":"{}{}","snippet":"resteighth{${1:numerator}}{${2:denominator}}"}},
+		{"name":"resthalf","arg":{"format":"{}{}","snippet":"resthalf{${1:numerator}}{${2:denominator}}"}},
+		{"name":"restquarter","arg":{"format":"{}{}","snippet":"restquarter{${1:numerator}}{${2:denominator}}"}},
+		{"name":"restsixteenth","arg":{"format":"{}{}","snippet":"restsixteenth{${1:numerator}}{${2:denominator}}"}},
+		{"name":"restwhole","arg":{"format":"{}{}","snippet":"restwhole{${1:numerator}}{${2:denominator}}"}},
+		{"name":"songname","arg":{"format":"{}","snippet":"songname{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"tabline","arg":{"format":"{}{}{}{}","snippet":"{${1:bars}}{${2:upper time signature}}{${3:lower time signature}}{${4:tuning}}"}}
+	],
+	"keys": {}
+}

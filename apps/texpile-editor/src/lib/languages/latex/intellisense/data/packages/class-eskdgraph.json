@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"class-article"},{"name":"eskdlang"},{"name":"babel"},{"name":"eskdstamp"},{"name":"calc"},{"name":"keyval"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"eskdfont"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"everyshi"},{"name":"chngpage"},{"name":"ifpdf"},{"name":"eskdinfo"},{"name":"inputenc","if":"cp1251|cp866|koi8-r|koi8-u|utf8"}],
+	"macros": [],
+	"envs": [
+		{"name":"ESKDdrawing"}
+	],
+	"keys": {
+		"\\documentclass/eskdgraph#c": ["cp1251","cp866","draft","formII","iso8859-5","koi8-r","koi8-u","russian","twoside","ukrainian","utf-8","utf8"]
+	},
+	"args": ["\\documentclass/eskdgraph#c"]
+}

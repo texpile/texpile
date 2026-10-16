@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"AddToKeyvalOption","arg":{"format":"{}{}{}","snippet":"AddToKeyvalOption{${1:family}}{${2:key}}{${3:code}}"},"doc":"The code for an existing key ⟨key⟩ of family ⟨family⟩ is extended by code ⟨code⟩."},
+		{"name":"AddToKeyvalOption*","arg":{"format":"{}{}{}","snippet":"AddToKeyvalOption*{${1:family}}{${2:key}}{${3:code}}"},"doc":"The code for an existing key ⟨key⟩ of family ⟨family⟩ is extended by code ⟨code⟩."},
+		{"name":"CurrentOptionKey","doc":"\\CurrentOptionKey contains the key of the key value pair, or the whole option string, if it misses the equal sign."},
+		{"name":"CurrentOptionValue","doc":"\\CurrentOptionValue contains the value part if the option string is parsable as key value pair, otherwise it is \\relax."},
+		{"name":"DeclareBoolOption","arg":{"format":"[]{}","snippet":"DeclareBoolOption[${1:init}]{${2:key}}"},"doc":"A boolean switch is generated, initialized by value ⟨init⟩ and the corresponding key ⟨key⟩ is defined."},
+		{"name":"DeclareBoolOption","arg":{"format":"{}","snippet":"DeclareBoolOption{${1:key}}"},"doc":"A boolean switch is generated, initialized by value ⟨init⟩ and the corresponding key ⟨key⟩ is defined."},
+		{"name":"DeclareComplementaryOption","arg":{"format":"{}{}","snippet":"DeclareComplementaryOption{${1:key}}{${2:parent}}"}},
+		{"name":"DeclareDefaultOption","arg":{"format":"{}","snippet":"DeclareDefaultOption{${1:code}}"},"doc":"This command does not define a specific key, it is the equivalent to LaTeX’s \\DeclareOption*. It allows the specification of a default action ⟨code⟩ that is invoked if an unknown option is found."},
+		{"name":"DeclareLocalOptions","arg":{"format":"{}","snippet":"DeclareLocalOptions{${1:option list}}"}},
+		{"name":"DeclareStringOption","arg":{"format":"[]{}[]","snippet":"DeclareStringOption[${1:init}]{${2:key}}[${3:default}]"},"doc":"A macro is created that remembers the value of the key ⟨key⟩."},
+		{"name":"DeclareStringOption","arg":{"format":"{}","snippet":"DeclareStringOption{${1:key}}"},"doc":"A macro is created that remembers the value of the key ⟨key⟩."},
+		{"name":"DeclareVoidOption","arg":{"format":"{}{}","snippet":"DeclareVoidOption{${1:key}}{${2:code}}"}},
+		{"name":"DisableKeyvalOption","arg":{"format":"[]{}{}","snippet":"DisableKeyvalOption[${1:options}]{${2:family}}{${3:key}}","keys":["keyval:KVOdyn"],"keyPos":0},"doc":"\\DisableKeyvalOption can be called to mark the end when the option ⟨key⟩ is no longer useful."},
+		{"name":"DisableKeyvalOption","arg":{"format":"{}{}","snippet":"DisableKeyvalOption{${1:family}}{${2:key}}"},"doc":"\\DisableKeyvalOption can be called to mark the end when the option ⟨key⟩ is no longer useful."},
+		{"name":"ProcessKeyvalOptions","arg":{"format":"{}","snippet":"ProcessKeyvalOptions{${1:family}}"},"doc":"This command evaluates the global or local options of the package that are defined with keyval’s interface within the family ⟨family⟩."},
+		{"name":"ProcessKeyvalOptions*","arg":{"format":"{}","snippet":"ProcessKeyvalOptions*{${1:family}}"},"doc":"This command evaluates the global or local options of the package that are defined with keyval’s interface within the family ⟨family⟩."},
+		{"name":"ProcessLocalKeyvalOptions","arg":{"format":"{}","snippet":"ProcessLocalKeyvalOptions{${1:family}}"}},
+		{"name":"ProcessLocalKeyvalOptions*","arg":{"format":"{}","snippet":"ProcessLocalKeyvalOptions*{${1:family}}"}},
+		{"name":"SetupKeyvalOptions","arg":{"format":"{}","snippet":"SetupKeyvalOptions{${1:family=..., prefix=..., setkeys=...}}","keys":["keyval:KVO"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:KVO": ["family=","prefix=","setkeys="],
+		"keyval:KVOdyn": ["class=","global","local","package=","action=${1|undef,warning,error,ignore|}"],
+		"\\usepackage/kvoptions#c": ["debugshow"]
+	},
+	"args": ["\\usepackage/kvoptions#c"]
+}

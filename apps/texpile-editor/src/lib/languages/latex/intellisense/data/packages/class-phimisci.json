@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"xparse"},{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"scrlayer-notecolumn"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsthm"},{"name":"xpatch"},{"name":"etoolbox"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"array"},{"name":"booktabs"},{"name":"csquotes"},{"name":"enumitem"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"hyphenat"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"xcolor"},{"name":"colortbl"},{"name":"l3keys2e"},{"name":"microtype"},{"name":"orcidlink"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"libertinus"},{"name":"xkeyval"},{"name":"libertinus-otf"},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"lualatex-math","engines":["lualatex"]},{"name":"noto-sans"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"textcomp"},{"name":"biblatex"},{"name":"logreq"},{"name":"ifthen"},{"name":"blx-case-expl3"},{"name":"babel"},{"name":"geometry"},{"name":"ifvtex"},{"name":"bookmark"},{"name":"lua-widow-control","if":"settings/widow-control=chernoff","engines":["lualatex"]},{"name":"scrtime","if":"stage=draft"},{"name":"lineno","if":"stage=draft"},{"name":"unicode-math-xetex","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"abstract","arg":{"format":"{}","snippet":"abstract{${1:text}}"},"doc":"Print ⟨text⟩ as the paper’s abstract."},
+		{"name":"affiliation","arg":{"format":"{}","snippet":"affiliation{${1:list of affiliations}}"}},
+		{"name":"author","arg":{"format":"[]{}","snippet":"author[${1:short name}]{${2:author data}}"},"doc":"Author data, including affiliations and ORCiDs, are processed by an adjusted \\author command."},
+		{"name":"author","arg":{"format":"{}","snippet":"author{${1:author data}}"},"doc":"Author data, including affiliations and ORCiDs, are processed by an adjusted \\author command."},
+		{"name":"contact","arg":{"format":"[]{}{}","snippet":"contact[${1:mode}]{${2:contact name}}{${3:contact details}}"},"doc":"Supply contact details for the primary contact."},
+		{"name":"contact","arg":{"format":"{}{}","snippet":"contact{${1:contact name}}{${2:contact details}}"},"doc":"Supply contact details for the primary contact."},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:list of keywords}}"},"doc":"Store a list of keywords, separated by a user-configurable input separator."},
+		{"name":"orcid","arg":{"format":"{}","snippet":"orcid{${1:id}}"}},
+		{"name":"PhiMiSciMediumFont","unusual":true},
+		{"name":"PhiMiSciParagraphNumber","arg":{"format":"{}","snippet":"PhiMiSciParagraphNumber{${1:n}}"},"doc":"Print ⟨n⟩ as the paragraph number in the outer margin."},
+		{"name":"PhiMiSciSettings","arg":{"format":"{}","snippet":"PhiMiSciSettings{${1:key=value list}}"},"doc":"Accepts further meta data settings and their values."},
+		{"name":"PhiMiSciTitleFont","unusual":true},
+		{"name":"title","arg":{"format":"[]{}","snippet":"title[${1:short title}]{${2:full title}}"},"doc":"Uses the ⟨full⟩ title in all places a title is used in the document."},
+		{"name":"title","arg":{"format":"{}","snippet":"title{${1:full title}}"},"doc":"Uses the ⟨full⟩ title in all places a title is used in the document."}
+	],
+	"envs": [
+		{"name":"PhiMiSciNumberedParagraphs","doc":"An environment for encapsulating content in which the paragraphs are counted."}
+	],
+	"keys": {}
+}

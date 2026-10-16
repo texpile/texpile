@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"setspace","arg":{"format":"{}","snippet":"setspace{${1}}"}},
+		{"name":"testoutput","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

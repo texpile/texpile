@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"mathalphaDate","unusual":true},
+		{"name":"mathalphaVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/mathalpha#c": ["showoptions"]
+	},
+	"args": ["\\usepackage/mathalpha#c"]
+}

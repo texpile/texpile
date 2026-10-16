@@ -1,0 +1,38 @@
+{
+	"macros": [
+		{"name":"ADLactivate"},
+		{"name":"ADLdrawingmode","arg":{"format":"{}","snippet":"ADLdrawingmode{${1}}"}},
+		{"name":"ADLinactivate"},
+		{"name":"ADLnoshorthanded"},
+		{"name":"ADLnullwide"},
+		{"name":"ADLnullwidehline"},
+		{"name":"ADLsomewide"},
+		{"name":"ADLsomewidehline"},
+		{"name":"cdashline","arg":{"format":"{}[]","snippet":"cdashline{${1:col1-col2}}[${2:dash/gap}]"}},
+		{"name":"cdashline","arg":{"format":"{}","snippet":"cdashline{${1:col1-col2}}"}},
+		{"name":"dashgapcolor","arg":{"format":"[]{}","snippet":"dashgapcolor[${1:model}]{${2:color}}"}},
+		{"name":"dashgapcolor","arg":{"format":"{}","snippet":"dashgapcolor{${1:color}}"}},
+		{"name":"dashlinedash","doc":"You have two style parameters to control the shape of dash-lines: \\dashlinedash is for the length of each dash segment in a dash line; \\dashlinegap controls the amount of each gap between dash segments."},
+		{"name":"dashlinegap","doc":"You have two style parameters to control the shape of dash-lines: \\dashlinedash is for the length of each dash segment in a dash line; \\dashlinegap controls the amount of each gap between dash segments."},
+		{"name":"firsthdashline","arg":{"format":"[]","snippet":"firsthdashline[${1:dash/gap}]"}},
+		{"name":"firsthdashline"},
+		{"name":"hdashline","arg":{"format":"[]","snippet":"hdashline[${1:dash/gap}]"},"doc":"Use \\hdashline and \\cdashline as the counterparts of \\hline and \\cline."},
+		{"name":"hdashline","doc":"Use \\hdashline and \\cdashline as the counterparts of \\hline and \\cline."},
+		{"name":"hdashlinegap","unusual":true},
+		{"name":"hdashlinewidth","unusual":true},
+		{"name":"lasthdashline","arg":{"format":"[]","snippet":"lasthdashline[${1:dash/gap}]"}},
+		{"name":"lasthdashline"},
+		{"name":"nodashgapcolor","doc":"The commmand \\nodashgapcolor (no arguments) nullifies the effect of \\dashgapcolor."}
+	],
+	"envs": [
+		{"name":"Array","arg":{"format":"[]{}","snippet":"[${1:pos}]{${2:preamble}}"},"doc":"If you feel it tiresome to type the long command/environment name for the activation, you may use Array and Tabular(*) environment in which dash-line functions are always active."},
+		{"name":"Array","arg":{"format":"{}","snippet":"{${1:preamble}}"},"doc":"If you feel it tiresome to type the long command/environment name for the activation, you may use Array and Tabular(*) environment in which dash-line functions are always active."},
+		{"name":"Longtable","arg":{"format":"[]{}","snippet":"[${1:pos}]{${2:preamble}}"}},
+		{"name":"Longtable","arg":{"format":"{}","snippet":"{${1:preamble}}"}},
+		{"name":"Tabular","arg":{"format":"[]{}","snippet":"[${1:pos}]{${2:preamble}}"}},
+		{"name":"Tabular","arg":{"format":"{}","snippet":"{${1:preamble}}"}},
+		{"name":"Tabular*","arg":{"format":"{}[]{}","snippet":"{${1:width}}[${2:pos}]{${3:preamble}}"}},
+		{"name":"Tabular*","arg":{"format":"{}{}","snippet":"{${1:width}}{${2:preamble}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/duplicat#c": ["dvips"]
+	},
+	"args": ["\\usepackage/duplicat#c"]
+}

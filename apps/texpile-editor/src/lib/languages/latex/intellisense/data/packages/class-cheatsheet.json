@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"class-article"},{"name":"hyperref"},{"name":"iftex"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"libertine"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"suffix"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"multicol"},{"name":"csquotes"},{"name":"xcolor"},{"name":"mdframed"},{"name":"xparse"},{"name":"zref-abspage"},{"name":"zref-base"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"listings"},{"name":"geometry"},{"name":"ifvtex"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"csfiledate","unusual":true},
+		{"name":"csfileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

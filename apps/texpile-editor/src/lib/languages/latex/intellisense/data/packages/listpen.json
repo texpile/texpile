@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"allowitembreaks","arg":{"format":"[]","snippet":"allowitembreaks[${1:penalty -4..4}]"}},
+		{"name":"allowitembreaks"},
+		{"name":"allowpostlistbreaks","arg":{"format":"[]","snippet":"allowpostlistbreaks[${1:penalty -4..4}]"}},
+		{"name":"allowpostlistbreaks"},
+		{"name":"allowprelistbreaks","arg":{"format":"[]","snippet":"allowprelistbreaks[${1:penalty -4..4}]"}},
+		{"name":"allowprelistbreaks"},
+		{"name":"makelabelseparator","arg":{"format":"{}","snippet":"makelabelseparator{${1:separator}}"}},
+		{"name":"newseparatedlabel","arg":{"format":"{}{}{}","snippet":"newseparatedlabel{${1:command}}{${2:float type}}{${3:subfloat type}}"}},
+		{"name":"newseparatedref","arg":{"format":"{}{}","snippet":"newseparatedref{${1:command}}{${2:separator}}"}},
+		{"name":"RemoveSpaces"},
+		{"name":"RestoreSpaces"}
+	],
+	"envs": [],
+	"keys": {}
+}

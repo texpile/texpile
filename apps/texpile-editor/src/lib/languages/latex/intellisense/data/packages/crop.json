@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"iftex"},{"name":"color"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"crop","arg":{"format":"[]","snippet":"crop[${1:options}]"}},
+		{"name":"crop"},
+		{"name":"cropdef","arg":{"format":"[]{}{}{}{}{}","snippet":"cropdef[${1:info}]{${2:upper left}}{${3:upper right}}{${4:lower left}}{${5:lower right}}{${6:name}}"},"doc":"The \\cropdef command defines the mode switch."},
+		{"name":"cropdef","arg":{"format":"{}{}{}{}{}","snippet":"cropdef{${1:upper left}}{${2:upper right}}{${3:lower left}}{${4:lower right}}{${5:name}}"},"doc":"The \\cropdef command defines the mode switch."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/crop#c": ["!","a0","a1","a2","a3","a4","a5","a6","b0","b1","b2","b3","b4","b5","b6","center","dvips","dvips!","executive","invert","landscape","legal","letter","lualatex","lualatex!","luatex","luatex!","mirror","nodriver","notext","pdflatex","pdflatex!","pdftex","pdftex!","rotate","vtex","vtex!"]
+	},
+	"args": ["\\usepackage/crop#c"]
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"uniquecounter"},{"name":"bigintcalc"}],
+	"macros": [
+		{"name":"RerunFileCheck","arg":{"format":"{}{}{}","snippet":"RerunFileCheck{${1:file}}{${2:file closing action}}{${3:rerun warning}}"},"unusual":true},
+		{"name":"RerunFileCheckSetup","arg":{"format":"{}","snippet":"RerunFileCheckSetup{${1:key value list}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

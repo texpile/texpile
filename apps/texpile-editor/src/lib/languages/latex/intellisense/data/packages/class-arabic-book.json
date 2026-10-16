@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"class-book"},{"name":"polyglossia"},{"name":"etoolbox"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"iftex"},{"name":"hyperref"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"geometry"},{"name":"ifvtex"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"enumitem"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"setspace"},{"name":"titling"},{"name":"ifthen"},{"name":"titlesec"},{"name":"tocloft"},{"name":"totalcount"},{"name":"tocbibind"},{"name":"newfloat"},{"name":"caption"},{"name":"caption3"},{"name":"collcell"},{"name":"array"},{"name":"float"},{"name":"xwatermark"},{"name":"catoptions"},{"name":"picture"},{"name":"atbegshi-ltx"},{"name":"fancyhdr"},{"name":"atveryend-ltx"},{"name":"ltxkeys"},{"name":"framed"},{"name":"luabidi"},{"name":"arabicnumbers"},{"name":"hijrical"},{"name":"calc"},{"name":"unibidi-lua"}],
+	"macros": [
+		{"name":"abstract","arg":{"format":"{}","snippet":"abstract{${1}}"}},
+		{"name":"iftotalappendixfigures","unusual":true},
+		{"name":"iftotalappendixtables","unusual":true},
+		{"name":"listofappendixfigures","unusual":true},
+		{"name":"listofappendixtables","unusual":true},
+		{"name":"makeabstract","unusual":true},
+		{"name":"namedappendix","arg":{"format":"{}","snippet":"namedappendix{${1}}"}},
+		{"name":"SepMark","arg":{"format":"{}","snippet":"SepMark{${1}}"},"unusual":true},
+		{"name":"theappendixfigure","unusual":true},
+		{"name":"theappendixtable","unusual":true},
+		{"name":"totalappendixfigures","unusual":true},
+		{"name":"totalappendixfiguresfalse","unusual":true},
+		{"name":"totalappendixfigurestrue","unusual":true},
+		{"name":"totalappendixtables","unusual":true},
+		{"name":"totalappendixtablesfalse","unusual":true},
+		{"name":"totalappendixtablestrue","unusual":true}
+	],
+	"envs": [
+		{"name":"appendixfigure","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"appendixfigure"},
+		{"name":"appendixtable","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"appendixtable"}
+	],
+	"keys": {}
+}

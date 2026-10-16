@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"regexpatch"},{"name":"xparse"},{"name":"projlib-language","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"babel","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"etoolbox","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"scalefnt","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"silence","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"setspaceenhanced","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"setspace","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"csquotes","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"keyval","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"scontents","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"}],
+	"macros": [
+		{"name":"address","arg":{"format":"{}","snippet":"address{${1:address}}"}},
+		{"name":"curraddr","arg":{"format":"{}","snippet":"curraddr{${1:current address}}"}},
+		{"name":"dedicatory","arg":{"format":"{}","snippet":"dedicatory{${1:dedication}}"},"if":"ams-fashion"},
+		{"name":"email","arg":{"format":"{}","snippet":"email{${1:email address}}"}},
+		{"name":"institute","arg":{"format":"{}","snippet":"institute{${1:institute}}"}},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords}}"},"if":"ams-fashion"},
+		{"name":"subjclass","arg":{"format":"[]{}","snippet":"subjclass[${1:MSC edition}]{${2:classification}}"},"if":"ams-fashion"},
+		{"name":"subjclass","arg":{"format":"{}","snippet":"subjclass{${1:classification}}"},"if":"ams-fashion"}
+	],
+	"envs": [],
+	"keys": {}
+}

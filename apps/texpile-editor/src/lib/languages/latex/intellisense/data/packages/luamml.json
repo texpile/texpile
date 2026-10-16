@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"RegisterFamilyMapping","arg":{"format":"{}","snippet":"RegisterFamilyMapping{${1:mapping}}"},"unusual":true},
+		{"name":"RegisterTextFamily","arg":{"format":"{}","snippet":"RegisterTextFamily{${1}}"},"unusual":true},
+		{"name":"tracingmathml"}
+	],
+	"envs": [],
+	"keys": {}
+}

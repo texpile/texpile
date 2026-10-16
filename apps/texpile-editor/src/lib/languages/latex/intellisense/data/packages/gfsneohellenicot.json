@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse"},{"name":"l3keys2e"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"etoolbox","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"bigggint","doc":"Larger integrals are accessible with the commands \\Bigint, \\biggint, \\Biggint, \\bigggint."},
+		{"name":"biggint"},
+		{"name":"Biggint"},
+		{"name":"Bigint","doc":"Larger integrals are accessible with the commands \\Bigint, \\biggint, \\Biggint, \\bigggint."},
+		{"name":"nleftleftarrows"},
+		{"name":"nrightrightarrows"},
+		{"name":"smallcoprod"},
+		{"name":"smallprod","doc":"Smaller integrals, sums and products are also available with the commands \\smallprod, \\smallcoprod, \\smallsum and \\smallint."},
+		{"name":"smallsum","doc":"Smaller integrals, sums and products are also available with the commands \\smallprod, \\smallcoprod, \\smallsum and \\smallint."},
+		{"name":"varnothing","math":true,"detail":"∅","doc":"circle, slash"}
+	],
+	"envs": [],
+	"keys": {}
+}

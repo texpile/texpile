@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"hyperref","engines":["pdflatex"]},{"name":"iftex","engines":["pdflatex"]},{"name":"keyval","engines":["pdflatex"]},{"name":"kvsetkeys","engines":["pdflatex"]},{"name":"pdfescape","engines":["pdflatex"]},{"name":"pdftexcmds","engines":["pdflatex"]},{"name":"nameref","engines":["pdflatex"]},{"name":"refcount","engines":["pdflatex"]},{"name":"gettitlestring","engines":["pdflatex"]},{"name":"kvoptions","engines":["pdflatex"]},{"name":"etoolbox","engines":["pdflatex"]},{"name":"stringenc","engines":["pdflatex"]},{"name":"intcalc","engines":["pdflatex"]},{"name":"url","engines":["pdflatex"]},{"name":"bitset","engines":["pdflatex"]},{"name":"bigintcalc","engines":["pdflatex"]},{"name":"rerunfilecheck","engines":["pdflatex"]},{"name":"uniquecounter","engines":["pdflatex"]}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"rotating"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"ifthen"},{"name":"mdframed"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"xparse"},{"name":"etoolbox"},{"name":"zref-base"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"needspace"},{"name":"fancyhdr"},{"name":"relsize"},{"name":"setspace"}],
+	"macros": [
+		{"name":"eg","unusual":true},
+		{"name":"ifmargin","unusual":true},
+		{"name":"MakeCarderockDivPage","doc":"The macro \\MakeCarderockDivPage will create a Technical Components page that lists the major Carderock Division technical components of the organization along with the three types of reports issued by this division."},
+		{"name":"MakeNavyTitlePage","doc":"The \\MakeNavyTitlePage command creates the Report Title Page using the information defined by the associated field macros."},
+		{"name":"marginfalse","unusual":true},
+		{"name":"margintrue","unusual":true},
+		{"name":"MONTH","unusual":true},
+		{"name":"NavyAuthor","arg":{"format":"{}","snippet":"NavyAuthor{${1:author}}"}},
+		{"name":"NavyDistributionStatement","arg":{"format":"{}","snippet":"NavyDistributionStatement{${1:statement}}"}},
+		{"name":"NavyDivision","arg":{"format":"{}","snippet":"NavyDivision{${1:division}}"}},
+		{"name":"NavyDivisionLocation","arg":{"format":"{}","snippet":"NavyDivisionLocation{${1:location}}"}},
+		{"name":"NavyFormID","arg":{"format":"{}","snippet":"NavyFormID{${1:form ID}}"},"doc":"The macro \\NavyFormID{FormID} is defined so a form identifier can be placed at the bottom of a page."},
+		{"name":"NavyMarginTitle","arg":{"format":"[][]{}","snippet":"NavyMarginTitle[${1}][${2}]{${3}}"},"doc":"The macro \\NavyMarginTitle is defined so an optional title can appear in the left hand margin of the cover page, oriented in a vertical position."},
+		{"name":"NavyMarginTitle","arg":{"format":"{}","snippet":"NavyMarginTitle{${1}}"},"doc":"The macro \\NavyMarginTitle is defined so an optional title can appear in the left hand margin of the cover page, oriented in a vertical position."},
+		{"name":"NavyReportDate","arg":{"format":"{}","snippet":"NavyReportDate{${1:date}}"}},
+		{"name":"NavyReportNumber","arg":{"format":"{}","snippet":"NavyReportNumber{${1:report number}}"},"doc":"The \\NavyReportNumber command is defined so the user can use it to both specify and retrieve the report number."},
+		{"name":"NavyReportTitle","arg":{"format":"{}","snippet":"NavyReportTitle{${1:title}}"}},
+		{"name":"NavyReportType","arg":{"format":"{}","snippet":"NavyReportType{${1:report type}}"}},
+		{"name":"NavyTitlePage","doc":"The macro \\NavyTitlePage will produce a title page for the Navy technical report on a separate page at the location where it appears."}
+	],
+	"envs": [],
+	"keys": {}
+}

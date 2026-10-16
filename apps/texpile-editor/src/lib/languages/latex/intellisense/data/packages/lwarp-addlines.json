@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"addline","arg":{"format":"[]","snippet":"addline[${1}]"}},
+		{"name":"addline"},
+		{"name":"addline*","arg":{"format":"[]","snippet":"addline*[${1}]"}},
+		{"name":"addline*"},
+		{"name":"addlines","arg":{"format":"[]","snippet":"addlines[${1}]"}},
+		{"name":"addlines"},
+		{"name":"addlines*","arg":{"format":"[]","snippet":"addlines*[${1}]"}},
+		{"name":"addlines*"},
+		{"name":"removeline","arg":{"format":"[]","snippet":"removeline[${1}]"}},
+		{"name":"removeline"},
+		{"name":"removeline*","arg":{"format":"[]","snippet":"removeline*[${1}]"}},
+		{"name":"removeline*"},
+		{"name":"removelines","arg":{"format":"[]","snippet":"removelines[${1}]"}},
+		{"name":"removelines"},
+		{"name":"removelines*","arg":{"format":"[]","snippet":"removelines*[${1}]"}},
+		{"name":"removelines*"},
+		{"name":"squeezepage","arg":{"format":"[]","snippet":"squeezepage[${1}]"}},
+		{"name":"squeezepage"}
+	],
+	"envs": [],
+	"keys": {}
+}

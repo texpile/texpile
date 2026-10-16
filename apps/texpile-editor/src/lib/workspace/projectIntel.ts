@@ -2,7 +2,8 @@
 // buffer, whose live text the editor owns), the .bib files, and the main file's .aux, and
 // derives what completion/hover/definition/outline need. see stores/projectIntel.ts for types.
 import { typstSourceOutline } from '$lib/languages/typst/outline';
-import { readTextFile, samePath, type TexFile } from './fileSystem';
+import { dirname, joinPath, pathKey, readTextFile, samePath, type TexFile } from './fileSystem';
+import { hasDocumentEnv } from './latexRoundtrip';
 import { parseAuxLabels } from './auxLabels';
 import { parseAuxContents } from '$lib/editor/visual/extensions/tableofcontents/compiled/auxContents';
 import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
@@ -12,6 +13,8 @@ import { scanScripts } from '$lib/languages/latex/intellisense/completion/subsup
 import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import { macroDefinitionsIn } from '$lib/languages/latex/macroDefinitions';
+import { packageUsesIn, withoutComments, type PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { isBundledPackage } from '$lib/languages/latex/intellisense/packages/packageData';
 
 const MAX_FILES = 300;
 const MAX_FILE_LENGTH = 2_000_000;
@@ -117,6 +120,43 @@ export async function typstOutlineOf(text: string): Promise<TypstOutline> {
 	return { items, includes };
 }
 
+const INCLUDE_RE = /\\(?:input|include|subfile|subfileinclude)\s*\{([^}]+)\}/g;
+
+// what the open document loads: its own tree when it starts a document, else the main file's. A package or class the
+// project ships counts by what it loads in turn; only its \usepackage lines are read
+async function documentPackageUses(start: string, root: string, read: (p: string) => Promise<string>): Promise<PackageUse[]> {
+	const out: PackageUse[] = [];
+	const seen = new Set<string>();
+	async function readFrom(dir: string, file: string): Promise<{ path: string; text: string } | null> {
+		for (const base of [dir, root]) {
+			const path = joinPath(base, file);
+			const text = await read(path).catch(() => null);
+			if (text !== null) return { path, text };
+		}
+		return null;
+	}
+	async function walk(path: string, text: string, depth: number): Promise<void> {
+		if (seen.has(pathKey(path)) || text.length > MAX_FILE_LENGTH) return;
+		seen.add(pathKey(path));
+		const uses = packageUsesIn(text);
+		out.push(...uses);
+		if (depth >= 6) return;
+		for (const use of uses) {
+			if (!use.file || isBundledPackage(use.name)) continue;
+			const shipped = await readFrom(dirname(path), use.file);
+			if (shipped) await walk(shipped.path, shipped.text, depth + 1);
+		}
+		for (const m of withoutComments(text).matchAll(INCLUDE_RE)) {
+			const ref = m[1].trim();
+			const included = await readFrom(dirname(path), /\.[a-z]+$/i.test(ref) ? ref : `${ref}.tex`);
+			if (included) await walk(included.path, included.text, depth + 1);
+		}
+	}
+	const text = await read(start).catch(() => null);
+	if (text !== null) await walk(start, text, 0);
+	return out;
+}
+
 let scanToken = 0;
 
 /**
@@ -138,7 +178,9 @@ export async function refreshProjectIntel(
 		kinds?: Record<string, string>;
 		titles?: Record<string, string>;
 		contents?: CompiledEntry[];
-	} | null
+	} | null,
+	// whose tree gives the packages when the open file is a fragment
+	mainPath: string | null = null
 ): Promise<void> {
 	const token = ++scanToken;
 	const into: ProjectIntel = {
@@ -146,6 +188,7 @@ export async function refreshProjectIntel(
 		labels: [],
 		macros: [],
 		envs: [],
+		packages: [],
 		glossary: [],
 		bibEntries: [],
 		sub: [],
@@ -171,6 +214,10 @@ export async function refreshProjectIntel(
 			}
 		})
 	);
+	const active = activePath ? await read(activePath).catch(() => null) : null;
+	const start = activePath && active !== null && hasDocumentEnv(active) ? activePath : mainPath;
+	const root = texFiles[0] ? texFiles[0].path.slice(0, texFiles[0].path.length - texFiles[0].relPath.length) : '';
+	if (start) into.packages.push(...(await documentPackageUses(start, root, read)));
 	await Promise.all(
 		bibPaths.slice(0, MAX_FILES).map(async (path) => {
 			try {

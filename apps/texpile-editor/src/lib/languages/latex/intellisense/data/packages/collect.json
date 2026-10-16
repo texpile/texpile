@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"definecollection","arg":{"format":"{}","snippet":"definecollection{${1:name}}"}},
+		{"name":"includecollection","arg":{"format":"{}","snippet":"includecollection{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"collect","arg":{"format":"{}{}{}","snippet":"{${1:name}}{${2:before collection}}{${3:after collection}}"},"doc":"This package provides the collect environment that typesets its contents and collects it for later use as well."},
+		{"name":"collect*","arg":{"format":"{}{}{}","snippet":"{${1:name}}{${2:before collection}}{${3:after collection}}"},"doc":"This package provides the collect environment that typesets its contents and collects it for later use as well."},
+		{"name":"collectinmacro","arg":{"format":"{}{}{}","snippet":"{${1}}{${2}}{${3}}"}}
+	],
+	"keys": {}
+}

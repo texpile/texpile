@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"highext","arg":{"format":"{}","snippet":"highext{${1:extension}}"}},
+		{"name":"hilofig","arg":{"format":"[]{}","snippet":"hilofig[${1:key val list}]{${2:file}}"}},
+		{"name":"hilofig","arg":{"format":"{}","snippet":"hilofig{${1:file}}"}},
+		{"name":"lowext","arg":{"format":"{}","snippet":"lowext{${1:extension}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

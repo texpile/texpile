@@ -1,0 +1,9 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"Description"},
+		{"name":"Enumerate"},
+		{"name":"Itemize"}
+	],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"l3keys2e"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"newstocksize","arg":{"format":"{}","snippet":"newstocksize{${1}}"},"doc":"\\newstocksize{options} Starts a new page with the specified stock size."},
+		{"name":"restorestocksize","doc":"\\restorestocksize Ends the current layout and restores the previous stock size and geometry settings from the stack."}
+	],
+	"envs": [],
+	"keys": {}
+}

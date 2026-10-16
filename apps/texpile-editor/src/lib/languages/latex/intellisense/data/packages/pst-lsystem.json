@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"pslsystem","arg":{"format":"[]()","snippet":"pslsystem[${1}](${2})"}},
+		{"name":"pslsystem","arg":{"format":"()","snippet":"pslsystem(${1})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

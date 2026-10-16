@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileinfo"},
+		{"name":"filename"},
+		{"name":"fileversion"},
+		{"name":"GetFileInfo","arg":{"format":"{}","snippet":"GetFileInfo{${1:filename}}"}},
+		{"name":"ReadClassInfo","arg":{"format":"{}","snippet":"ReadClassInfo{${1:filename}}"},"doc":"searches ⟨filename⟩.cls for \\ProvidesClass."},
+		{"name":"ReadFileInfos","arg":{"format":"{}","snippet":"ReadFileInfos{${1:list of filenames}}"}},
+		{"name":"ReadPackageInfos","arg":{"format":"{}","snippet":"ReadPackageInfos{${1:list of filenames}}"},"doc":"searches .sty files from ⟨list-of-filenames⟩ for \\ProvidesPackage."},
+		{"name":"ReadShInfos","arg":{"format":"{}","snippet":"ReadShInfos{${1:list of filenames}}"}},
+		{"name":"UseDateOf","arg":{"format":"{}","snippet":"UseDateOf{${1:filename}}"}},
+		{"name":"UseVersionOf","arg":{"format":"{}","snippet":"UseVersionOf{${1:filename}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

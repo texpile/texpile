@@ -1,0 +1,45 @@
+{
+	"deps": [{"name":"array"},{"name":"tabularx"},{"name":"pict2e"},{"name":"trig"},{"name":"calc"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"da"},
+		{"name":"dv"},
+		{"name":"ea"},
+		{"name":"ed"},
+		{"name":"eh"},
+		{"name":"es"},
+		{"name":"ev"},
+		{"name":"fa"},
+		{"name":"fs"},
+		{"name":"labstiegeins","arg":{"format":"{}","snippet":"labstiegeins{${1:TeX expression}}"}},
+		{"name":"labstiegzwei","arg":{"format":"{}","snippet":"labstiegzwei{${1:TeX expression}}"}},
+		{"name":"lverbindungdrei","arg":{"format":"{}","snippet":"lverbindungdrei{${1:TeX expression}}"}},
+		{"name":"lverbindungeins","arg":{"format":"{}","snippet":"lverbindungeins{${1:TeX expression}}"}},
+		{"name":"lverbindungzwei","arg":{"format":"{}","snippet":"lverbindungzwei{${1:TeX expression}}"}},
+		{"name":"nfrac","arg":{"format":"{}{}","snippet":"nfrac{${1:numerator}}{${2:denominator}}"}},
+		{"name":"rechtspfeilsetup","arg":{"format":"{}","snippet":"rechtspfeilsetup{${1:arrows}}"},"doc":"Die Definition der Pfeile rechts zwischen den einzelnen Lagentabellen erfolgt mit Hilfe des Befehls \\rechtspfeilsetup."},
+		{"name":"rlagentabelledrei","arg":{"format":"{}","snippet":"rlagentabelledrei{${1:TeX expression}}"}},
+		{"name":"rlagentabelleeins","arg":{"format":"{}","snippet":"rlagentabelleeins{${1:TeX expression}}"}},
+		{"name":"rlagentabellezwei","arg":{"format":"{}","snippet":"rlagentabellezwei{${1:TeX expression}}"}},
+		{"name":"rlagentranseins","arg":{"format":"{}","snippet":"rlagentranseins{${1:TeX expression}}"}},
+		{"name":"rlagentranszwei","arg":{"format":"{}","snippet":"rlagentranszwei{${1:TeX expression}}"}},
+		{"name":"rpfeileinszwei","arg":{"format":"{}{}","snippet":"rpfeileinszwei{${1:start}}{${2:end}}"}},
+		{"name":"rpfeilzweidrei","arg":{"format":"{}{}","snippet":"rpfeilzweidrei{${1:start}}{${2:end}}"}},
+		{"name":"sa"},
+		{"name":"setupdivers","arg":{"format":"{}{}{}{}{}{}","snippet":"setupdivers{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"\\setupdivers erwartet insgesamt sechs Argumente, welche weitere Zeichnungsoptionen, steuern."},
+		{"name":"setuplinks","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"setuplinks{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"}},
+		{"name":"setuprechts","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"setuprechts{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"},"doc":"\\setuprechts erwartet insgesamt acht Argumente, welche die einzelnen Elemente und Abstände im rechten Teil der Abbildung, den Tabellen mit der Lagenfortführung, steuern."},
+		{"name":"setuprlagentabellen","arg":{"format":"{}{}{}{}{}{}{}","snippet":"setuprlagentabellen{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"},"doc":"\\setuprlagentabellen erwartet insgesamt sieben Argumente, welche die Lagenfortführungstabellen steuern."},
+		{"name":"spaltenbreiteem"},
+		{"name":"spaltendrei"},
+		{"name":"spalteneins"},
+		{"name":"spaltenzwei"},
+		{"name":"zd"}
+	],
+	"envs": [
+		{"name":"stammbaum"}
+	],
+	"keys": {
+		"\\usepackage/gu#c": ["dvipdfm","dvips","ltxarrows","pdftex","pstarrows","vtex","xdvi"]
+	},
+	"args": ["\\usepackage/gu#c"]
+}

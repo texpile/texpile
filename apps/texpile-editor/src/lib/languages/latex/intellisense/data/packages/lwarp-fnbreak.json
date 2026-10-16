@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"fnbreaklabel"},
+		{"name":"fnbreaknolabel"},
+		{"name":"fnbreaknonverbose"},
+		{"name":"fnbreakverbose"}
+	],
+	"envs": [],
+	"keys": {}
+}

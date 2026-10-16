@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"ifpdf"},{"name":"iftex"},{"name":"class-book"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"hgb"},{"name":"hgbdict"},{"name":"lmodern"},{"name":"cmap"},{"name":"inputenc"},{"name":"babel"},{"name":"xstring"},{"name":"datetime2"},{"name":"tracklang"},{"name":"etoolbox"},{"name":"xkeyval"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"datetime2-calc"},{"name":"pgfkeys"},{"name":"pgfcalendar"},{"name":"pgfrcs"},{"name":"upquote"},{"name":"textcomp"},{"name":"marvosym"},{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"overpic"},{"name":"epic"},{"name":"pict2e"},{"name":"xcolor"},{"name":"url"},{"name":"verbatim"},{"name":"moreverb"},{"name":"epstopdf","engines":["pdflatex","lualatex"]},{"name":"grfext","engines":["pdflatex","lualatex"]},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"epstopdf-base","engines":["pdflatex","lualatex"]},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"hypcap"},{"name":"letltxmacro"},{"name":"float"},{"name":"caption"},{"name":"caption3"},{"name":"enumitem"},{"name":"lengthconvert"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"tocbasic"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"pdfpages"},{"name":"eso-pic"},{"name":"booktabs"},{"name":"longtable"},{"name":"multirow"},{"name":"titling"},{"name":"hgbmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"subdepth"},{"name":"hgbalgo"},{"name":"algpseudocodex"},{"name":"algorithmicx"},{"name":"fifo-stack"},{"name":"varwidth"},{"name":"tabto"},{"name":"totcount"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"algorithm"},{"name":"hgbheadings"},{"name":"fancyhdr"},{"name":"extramarks"},{"name":"titlesec"},{"name":"hgbabbrev"},{"name":"xspace"},{"name":"hgblistings"},{"name":"listingsutf8"},{"name":"listings"},{"name":"hgbbib"},{"name":"biblatex"},{"name":"logreq"},{"name":"blx-case-expl3"},{"name":"csquotes"},{"name":"hgbtheme-default"},{"name":"forloop"},{"name":"textpos"},{"name":"breakurl","engines":["xelatex"]}],
+	"macros": [
+		{"name":"advisor","arg":{"format":"[]{}","snippet":"advisor[${1:role}]{${2:name}}"},"doc":"The command \\advisor[role]{name} accepts an optional argument to associate a role with the advisor’s name, e.g., \\advisor[Supervisor]{Prof.~Marie Curie, PhD}."},
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1:name}}"},"doc":"The command \\advisor[role]{name} accepts an optional argument to associate a role with the advisor’s name, e.g., \\advisor[Supervisor]{Prof.~Marie Curie, PhD}."},
+		{"name":"cclicense","unusual":true},
+		{"name":"companyName","arg":{"format":"{}","snippet":"companyName{${1}}"},"unusual":true},
+		{"name":"companyUrl","arg":{"format":"{}","snippet":"companyUrl{${1}}"},"unusual":true},
+		{"name":"dateofsubmission","arg":{"format":"{}{}{}","snippet":"dateofsubmission{${1:yyyy}}{${2:mm}}{${3:dd}}"}},
+		{"name":"institution","arg":{"format":"{}","snippet":"institution{${1}}"}},
+		{"name":"license","arg":{"format":"{}","snippet":"license{${1}}"}},
+		{"name":"logofile","arg":{"format":"{}","snippet":"logofile{${1}}"},"unusual":true},
+		{"name":"placeofstudy","arg":{"format":"{}","snippet":"placeofstudy{${1}}"}},
+		{"name":"programname","arg":{"format":"{}","snippet":"programname{${1}}"}},
+		{"name":"programtype","arg":{"format":"{}","snippet":"programtype{${1}}"}},
+		{"name":"strictlicense","unusual":true},
+		{"name":"subtitle","arg":{"format":"{}","snippet":"subtitle{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

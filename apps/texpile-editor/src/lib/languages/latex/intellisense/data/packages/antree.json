@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"calc"},{"name":"ifthen"},{"name":"epic"},{"name":"eepic"}],
+	"macros": [
+		{"name":"ANesep"},
+		{"name":"ANespace"},
+		{"name":"ANhspace"},
+		{"name":"ANvspace"},
+		{"name":"leaf","arg":{"format":"[]{}","snippet":"leaf[${1:edge label}]{${2:content}}"}},
+		{"name":"leaf","arg":{"format":"{}","snippet":"leaf{${1:content}}"}},
+		{"name":"link","arg":{"format":"[]{}","snippet":"link[${1:edge label}]{${2:content}}"}},
+		{"name":"link","arg":{"format":"{}","snippet":"link{${1:content}}"}}
+	],
+	"envs": [
+		{"name":"antree","arg":{"format":"[]{}","snippet":"[${1}]{${2}}"}},
+		{"name":"antree","arg":{"format":"{}","snippet":"{${1}}"}}
+	],
+	"keys": {}
+}

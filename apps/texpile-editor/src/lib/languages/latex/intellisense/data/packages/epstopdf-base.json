@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"epstopdfcall","arg":{"format":"{}","snippet":"epstopdfcall{${1:command}}"}},
+		{"name":"epstopdfDeclareGraphicsRule","arg":{"format":"{}{}{}{}","snippet":"epstopdfDeclareGraphicsRule{${1:extension}}{${2:type}}{${3:read file}}{${4:command}}"}},
+		{"name":"epstopdfsetup","arg":{"format":"{}","snippet":"epstopdfsetup{${1}}"}},
+		{"name":"OutputFile"},
+		{"name":"SourceExt"},
+		{"name":"SourceFile"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,50 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfcalendar"}],
+	"macros": [
+		{"name":"ganttalignnewline"},
+		{"name":"ganttbar","arg":{"format":"[]{}{}{}","snippet":"ganttbar[${1}]{${2}}{${3}}{${4}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttbar","arg":{"format":"{}{}{}","snippet":"ganttbar{${1}}{${2}}{${3}}"}},
+		{"name":"ganttgroup","arg":{"format":"[]{}{}{}","snippet":"ganttgroup[${1}]{${2}}{${3}}{${4}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttgroup","arg":{"format":"{}{}{}","snippet":"ganttgroup{${1}}{${2}}{${3}}"}},
+		{"name":"ganttlink","arg":{"format":"[]{}{}","snippet":"ganttlink[${1}]{${2}}{${3}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0},"doc":"The \\ganttlink macro connects two elements, which are specified by their ⟨name⟩s."},
+		{"name":"ganttlink","arg":{"format":"{}{}","snippet":"ganttlink{${1}}{${2}}"},"doc":"The \\ganttlink macro connects two elements, which are specified by their ⟨name⟩s."},
+		{"name":"ganttlinkedbar","arg":{"format":"[]{}{}{}","snippet":"ganttlinkedbar[${1:options}]{${2:label}}{${3:start tss}}{${4:end tss}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttlinkedbar","arg":{"format":"{}{}{}","snippet":"ganttlinkedbar{${1:label}}{${2:start tss}}{${3:end tss}}"}},
+		{"name":"ganttlinkedgroup","arg":{"format":"[]{}{}{}","snippet":"ganttlinkedgroup[${1:options}]{${2:label}}{${3:start tss}}{${4:end tss}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttlinkedgroup","arg":{"format":"{}{}{}","snippet":"ganttlinkedgroup{${1:label}}{${2:start tss}}{${3:end tss}}"}},
+		{"name":"ganttlinkedmilestone","arg":{"format":"[]{}{}","snippet":"ganttlinkedmilestone[${1:options}]{${2:label}}{${3:tss}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttlinkedmilestone","arg":{"format":"{}{}","snippet":"ganttlinkedmilestone{${1:label}}{${2:tss}}"}},
+		{"name":"ganttlinklabel","unusual":true},
+		{"name":"ganttmilestone","arg":{"format":"[]{}{}","snippet":"ganttmilestone[${1}]{${2}}{${3}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttmilestone","arg":{"format":"{}{}","snippet":"ganttmilestone{${1}}{${2}}"}},
+		{"name":"ganttnewline","arg":{"format":"[]","snippet":"ganttnewline[${1}]"}},
+		{"name":"ganttnewline"},
+		{"name":"ganttset","arg":{"format":"{}","snippet":"ganttset{${1}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttsetendanchor","arg":{"format":"{}","snippet":"ganttsetendanchor{${1:anchor}}"}},
+		{"name":"ganttsetstartanchor","arg":{"format":"{}","snippet":"ganttsetstartanchor{${1:anchor}}"}},
+		{"name":"gantttitle","arg":{"format":"[]{}{}","snippet":"gantttitle[${1}]{${2}}{${3}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0},"doc":"\\gantttitle draws a title element (i. e., a rectangle with a single node at its center)."},
+		{"name":"gantttitle","arg":{"format":"{}{}","snippet":"gantttitle{${1}}{${2}}"},"doc":"\\gantttitle draws a title element (i. e., a rectangle with a single node at its center)."},
+		{"name":"gantttitlecalendar","arg":{"format":"[]{}","snippet":"gantttitlecalendar[${1:options}]{${2:calendar lines}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0},"doc":"Prints a title calendar that spans the whole chart and contains one or more ⟨calendar lines⟩."},
+		{"name":"gantttitlecalendar","arg":{"format":"{}","snippet":"gantttitlecalendar{${1:calendar lines}}"},"doc":"Prints a title calendar that spans the whole chart and contains one or more ⟨calendar lines⟩."},
+		{"name":"gantttitlecalendar*","arg":{"format":"[]{}","snippet":"gantttitlecalendar*[${1:options}]{${2:calendar lines}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0},"doc":"Prints a title calendar that spans the whole chart and contains one or more ⟨calendar lines⟩."},
+		{"name":"gantttitlecalendar*","arg":{"format":"{}","snippet":"gantttitlecalendar*{${1:calendar lines}}"},"doc":"Prints a title calendar that spans the whole chart and contains one or more ⟨calendar lines⟩."},
+		{"name":"gantttitlelist","arg":{"format":"[]{}{}","snippet":"gantttitlelist[${1}]{${2}}{${3}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0},"doc":"\\gantttitlelist generates title elements by repeatedly calling \\gantttitle."},
+		{"name":"gantttitlelist","arg":{"format":"{}{}","snippet":"gantttitlelist{${1}}{${2}}"},"doc":"\\gantttitlelist generates title elements by repeatedly calling \\gantttitle."},
+		{"name":"ganttvalueof","arg":{"format":"{}","snippet":"ganttvalueof{${1}}"},"doc":"\\ganttvalueof{⟨key⟩} retrieves the value stored by a ⟨key⟩."},
+		{"name":"ganttvrule","arg":{"format":"[]{}{}","snippet":"ganttvrule[${1}]{${2}}{${3}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0}},
+		{"name":"ganttvrule","arg":{"format":"{}{}","snippet":"ganttvrule{${1}}{${2}}"}},
+		{"name":"newganttchartelement","arg":{"format":"{}{}","snippet":"newganttchartelement{${1:name}}{${2:new default key values}}","keys":["pgfkeys:/pgfgantt"],"keyPos":1}},
+		{"name":"newganttchartelement*","arg":{"format":"{}{}","snippet":"newganttchartelement*{${1:name}}{${2:new default key values}}","keys":["pgfkeys:/pgfgantt"],"keyPos":1}},
+		{"name":"newganttlinktype","arg":{"format":"{}{}","snippet":"newganttlinktype{${1}}{${2}}"},"doc":"\\newganttlinktype{⟨type⟩}{⟨code⟩} stores ⟨code⟩ in an internal macro \\@gtt@linktype@⟨type⟩, which is later called by \\gtt@drawlink."},
+		{"name":"newganttlinktypealias","arg":{"format":"{}{}","snippet":"newganttlinktypealias{${1}}{${2}}"}},
+		{"name":"newgantttimeslotformat","arg":{"format":"{}{}","snippet":"newgantttimeslotformat{${1}}{${2}}"}},
+		{"name":"setganttlinklabel","arg":{"format":"{}{}","snippet":"setganttlinklabel{${1}}{${2}}"},"doc":"\\setganttlinklabel sets a ⟨label⟩ for the given link ⟨type⟩."}
+	],
+	"envs": [
+		{"name":"ganttchart","arg":{"format":"[]{}{}","snippet":"[${1}]{${2}}{${3}}","keys":["pgfkeys:/pgfgantt"],"keyPos":0},"doc":"The pgfgantt package provides the ganttchart environment, which draws a Gantt chart within a TikZ picture."},
+		{"name":"ganttchart","arg":{"format":"{}{}","snippet":"{${1}}{${2}}"},"doc":"The pgfgantt package provides the ganttchart environment, which draws a Gantt chart within a TikZ picture."}
+	],
+	"keys": {
+		"pgfkeys:/pgfgantt": ["bar height=","bar incomplete=","bar inline label anchor=","bar inline label node=","bar label font=","bar label node=","bar label text=","bar left shift=","bar progress label anchor=","bar progress label font=","bar progress label node=","bar right shift=","bar top shift=","bar=","calendar week text=","canvas=","expand chart=","group height=","group incomplete=","group inline label anchor=","group inline label node=","group label font=","group label node=","group label text=","group left peak height=","group left peak tip position=","group left peak width=","group left shift=","group peaks height=","group peaks tip position=","group peaks width=","group progress label anchor=","group progress label font=","group progress label node=","group right peak height=","group right peak tip position=","group right peak width=","group right shift=","group top shift=","group=","hgrid","hgrid style=","include title in canvas","inline","link bulge=","link label font=","link label node=","link label=","link mid=","link tolerance=","link type=","link=","milestone height=","milestone incomplete=","milestone inline label anchor=","milestone inline label node=","milestone label font=","milestone label node=","milestone label text=","milestone left shift=","milestone progress label anchor=","milestone progress label font=","milestone progress label node=","milestone right shift=","milestone top shift=","milestone=","name=","newline shortcut","on bottom fraction=","on left fraction=","on right fraction=","on top fraction=","progress label text=","progress=","title height=","title label font=","title label node=","title label text=","title left shift=","title list options=","title right shift=","title top shift=","title=","today label font=","today label node=","today label=","today offset=","today rule=","today=","vgrid","vrule label font=","vrule label node=","vrule offset=","vrule=","x unit=","y unit chart=","y unit title=","time slot format=${1|simple,isodate,isodate-yearmonth,isodate-year,little-endian,middle-endian,big-endian|}","time slot format/base century=","time slot format/start date=","time slot unit=${1|day,month,year|}","chart element start border=${1|left,right|}"]
+	}
+}

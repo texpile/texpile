@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"environ"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"alert","arg":{"format":"{}{}","snippet":"alert{${1:overlay specification}}{${2:content}}"},"doc":"The \\alert command highlights its content on the specified overlays with the alert color, which may be redefined by means of the \\definecolor command."},
+		{"name":"alertsoff"},
+		{"name":"only","arg":{"format":"{}{}","snippet":"only{${1:overlay specification}}{${2:content}}"},"doc":"The content of the \\only command is also uncovered on the overlays specified in the overlay specification, but is absent from unspecified overlays and does not take up space there."},
+		{"name":"overlaysoff","doc":"Use the \\overlaysoff command in the preamble in order to switch overlay processing off, effectively typesetting only the last overlay of each incremental slide."},
+		{"name":"psalert","arg":{"format":"{}{}","snippet":"psalert{${1:overlay specification}}{${2:content}}"}},
+		{"name":"psvisible","arg":{"format":"{}{}","snippet":"psvisible{${1:overlay specification}}{${2:content}}"}},
+		{"name":"savebetweenoverlays","arg":{"format":"{}","snippet":"savebetweenoverlays{${1}}"},"unusual":true},
+		{"name":"savecounterbetweenoverlays","arg":{"format":"{}","snippet":"savecounterbetweenoverlays{${1:counter name}}"}},
+		{"name":"saveseriesbetweenoverlays","arg":{"format":"{}","snippet":"saveseriesbetweenoverlays{${1:series name}}"}},
+		{"name":"visible","arg":{"format":"{}{}","snippet":"visible{${1:overlay specification}}{${2:content}}"},"doc":"The \\visible command uncovers its content on the overlays which are specified in the overlay specification."}
+	],
+	"envs": [
+		{"name":"fragileoverlays","arg":{"format":"{}","snippet":"{${1:total overlay number}}"},"doc":"The fragileoverlays environment should be used for incremental slides with verbatim content."},
+		{"name":"overlays","arg":{"format":"{}","snippet":"{${1:total overlay number}}"}}
+	],
+	"keys": {}
+}

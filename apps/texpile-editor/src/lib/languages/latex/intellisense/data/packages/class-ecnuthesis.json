@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xtemplate"},{"name":"l3keys2e"},{"name":"class-ctexrep"},{"name":"class-report"},{"name":"xeCJK"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"zhnumber"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"unicode-math"},{"name":"unicode-math-xetex"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"fancyhdr"},{"name":"footmisc"},{"name":"perpage"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"caption"},{"name":"caption3"},{"name":"bicaption"},{"name":"xcolor"},{"name":"xeCJKfntef"},{"name":"ulem"},{"name":"accsupp"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"titletoc"},{"name":"biblatex"},{"name":"etoolbox"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"xstring"},{"name":"blx-case-expl3"},{"name":"hyperref"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
+	"macros": [
+		{"name":"backmatter"},
+		{"name":"declarationpage","unusual":true},
+		{"name":"DeclareCoverTemplate","arg":{"format":"{}{}","snippet":"DeclareCoverTemplate{${1}}{${2}}"},"unusual":true},
+		{"name":"ecnusetup","arg":{"format":"{}","snippet":"ecnusetup{${1:keys}}"}},
+		{"name":"frontmatter"},
+		{"name":"graduationyear","unusual":true},
+		{"name":"innercover","unusual":true},
+		{"name":"innercoverEN","unusual":true},
+		{"name":"mainmatter"},
+		{"name":"themonth","unusual":true},
+		{"name":"theyear","unusual":true},
+		{"name":"tocchaptercontents","unusual":true},
+		{"name":"tocchapterformat","unusual":true},
+		{"name":"tocsectioncontents","unusual":true},
+		{"name":"tocsectionformat","unusual":true},
+		{"name":"tocsubsectioncontents","unusual":true}
+	],
+	"envs": [
+		{"name":"abstract","arg":{"format":"[]","snippet":"[${1:title}]"}},
+		{"name":"abstract"},
+		{"name":"abstractEN","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"abstractEN"},
+		{"name":"acknowledgement","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"acknowledgement"},
+		{"name":"appendix","arg":{"format":"[]","snippet":"[${1:title}]"}},
+		{"name":"appendix"}
+	],
+	"keys": {}
+}

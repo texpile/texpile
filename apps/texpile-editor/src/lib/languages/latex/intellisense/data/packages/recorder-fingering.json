@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"AddFingerings","arg":{"format":"{}{}","snippet":"AddFingerings{${1}}{${2}}"}},
+		{"name":"AddTrills","arg":{"format":"{}{}","snippet":"AddTrills{${1}}{${2}}"}},
+		{"name":"Alto","arg":{"format":"[]{}","snippet":"Alto[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Alto","arg":{"format":"{}","snippet":"Alto{${1}}"}},
+		{"name":"Bass","arg":{"format":"[]{}","snippet":"Bass[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Bass","arg":{"format":"{}","snippet":"Bass{${1}}"}},
+		{"name":"Ctrill","arg":{"format":"[]{}","snippet":"Ctrill[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0},"doc":"Fingerings that are created using the trill fingering macros can be displayed along with their associated trill annotations using the commands \\Ftrill, \\Ctrill, and \\Dtrill."},
+		{"name":"Ctrill","arg":{"format":"{}","snippet":"Ctrill{${1}}"},"doc":"Fingerings that are created using the trill fingering macros can be displayed along with their associated trill annotations using the commands \\Ftrill, \\Ctrill, and \\Dtrill."},
+		{"name":"Dtrill","arg":{"format":"[]{}","snippet":"Dtrill[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Dtrill","arg":{"format":"{}","snippet":"Dtrill{${1}}"}},
+		{"name":"fingering","unusual":true},
+		{"name":"fingeringSetup","arg":{"format":"{}","snippet":"fingeringSetup{${1}}","keys":["l3keys:fingering"],"keyPos":0},"doc":"Fingering diagrams are customizable either globally using \\fingeringSetup{} or locally as an optional argument passed to any individual command."},
+		{"name":"Ftrill","arg":{"format":"[]{}","snippet":"Ftrill[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Ftrill","arg":{"format":"{}","snippet":"Ftrill{${1}}"}},
+		{"name":"NewCfingering","arg":{"format":"{}{}","snippet":"NewCfingering{${1}}{${2}}"},"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewCfingering*","arg":{"format":"{}{}","snippet":"NewCfingering*{${1}}{${2}}"},"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewCtrill","arg":{"format":"{}{}{}","snippet":"NewCtrill{${1}}{${2}}{${3}}"}},
+		{"name":"NewCtrill*","arg":{"format":"{}{}{}","snippet":"NewCtrill*{${1}}{${2}}{${3}}"}},
+		{"name":"NewDfingering","arg":{"format":"{}{}","snippet":"NewDfingering{${1}}{${2}}"},"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewDfingering*","arg":{"format":"{}{}","snippet":"NewDfingering*{${1}}{${2}}"},"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewDtrill","arg":{"format":"{}{}{}","snippet":"NewDtrill{${1}}{${2}}{${3}}"}},
+		{"name":"NewDtrill*","arg":{"format":"{}{}{}","snippet":"NewDtrill*{${1}}{${2}}{${3}}"}},
+		{"name":"NewFfingering","arg":{"format":"{}{}","snippet":"NewFfingering{${1}}{${2}}"},"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewFfingering*","arg":{"format":"{}{}","snippet":"NewFfingering*{${1}}{${2}}"},"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewFtrill","arg":{"format":"{}{}{}","snippet":"NewFtrill{${1}}{${2}}{${3}}"}},
+		{"name":"NewFtrill*","arg":{"format":"{}{}{}","snippet":"NewFtrill*{${1}}{${2}}{${3}}"}},
+		{"name":"Sopranino","arg":{"format":"[]{}","snippet":"Sopranino[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Sopranino","arg":{"format":"{}","snippet":"Sopranino{${1}}"}},
+		{"name":"Soprano","arg":{"format":"[]{}","snippet":"Soprano[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Soprano","arg":{"format":"{}","snippet":"Soprano{${1}}"}},
+		{"name":"Tenor","arg":{"format":"[]{}","snippet":"Tenor[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Tenor","arg":{"format":"{}","snippet":"Tenor{${1}}"}},
+		{"name":"Whistle","arg":{"format":"[]{}","snippet":"Whistle[${1}]{${2}}","keys":["l3keys:fingering"],"keyPos":0}},
+		{"name":"Whistle","arg":{"format":"{}","snippet":"Whistle{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:fingering": ["LHRHspace=","LPointer=","RPointer=","trill=","width=","LHRHdivider=${1|true,false|}","revdouble=${1|true,false|}","thumboffset=${1|true,false|}","trilldir=${1|L,R,LR|}"]
+	}
+}

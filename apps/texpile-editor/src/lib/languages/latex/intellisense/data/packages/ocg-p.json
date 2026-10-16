@@ -1,0 +1,25 @@
+{
+	"deps": [{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"xkeyval"},{"name":"datatool","if":"ocgtabular"},{"name":"ifthen","if":"ocgtabular"},{"name":"xfor","if":"ocgtabular"},{"name":"etoolbox","if":"ocgtabular"},{"name":"tracklang","if":"ocgtabular"},{"name":"datatool-base","if":"ocgtabular"},{"name":"amsmath","if":"ocgtabular"},{"name":"amstext","if":"ocgtabular"},{"name":"amsbsy","if":"ocgtabular"},{"name":"amsopn","if":"ocgtabular"},{"name":"tikz","if":"ocgtabular"},{"name":"pgf","if":"ocgtabular"},{"name":"pgfrcs","if":"ocgtabular"},{"name":"pgfcore","if":"ocgtabular"},{"name":"graphicx","if":"ocgtabular"},{"name":"graphics","if":"ocgtabular"},{"name":"trig","if":"ocgtabular"},{"name":"pgfsys","if":"ocgtabular"},{"name":"pgfcomp-version-0-65","if":"ocgtabular"},{"name":"pgfcomp-version-1-18","if":"ocgtabular"},{"name":"pgffor","if":"ocgtabular"},{"name":"pgfkeys","if":"ocgtabular"},{"name":"pgfmath","if":"ocgtabular"},{"name":"listings","if":"ocgtabular"}],
+	"macros": [
+		{"name":"hideocgs","arg":{"format":"[]{}{}","snippet":"hideocgs[${1:options}]{${2:layer ids}}{${3:display}}"}},
+		{"name":"hideocgs","arg":{"format":"{}{}","snippet":"hideocgs{${1:layer ids}}{${2:display}}"}},
+		{"name":"ifocgtabular","unusual":true},
+		{"name":"ocgpversion","unusual":true},
+		{"name":"ocgtabularfalse","unusual":true},
+		{"name":"ocgtabulartrue","unusual":true},
+		{"name":"setocgs","arg":{"format":"[]{}{}{}{}","snippet":"setocgs[${1:options}]{${2:toggle layer ids}}{${3:show layer ids}}{${4:hide layer ids}}{${5:display}}"}},
+		{"name":"setocgs","arg":{"format":"{}{}{}{}","snippet":"setocgs{${1:toggle layer ids}}{${2:show layer ids}}{${3:hide layer ids}}{${4:display}}"}},
+		{"name":"setocgtabularheader","arg":{"format":"{}{}","snippet":"setocgtabularheader{${1:column name}}{${2:displayed header}}"}},
+		{"name":"showocgs","arg":{"format":"[]{}{}","snippet":"showocgs[${1:options}]{${2:layer ids}}{${3:display}}"}},
+		{"name":"showocgs","arg":{"format":"{}{}","snippet":"showocgs{${1:layer ids}}{${2:display}}"}},
+		{"name":"toggleocgs","arg":{"format":"[]{}{}","snippet":"toggleocgs[${1:options}]{${2:layer ids}}{${3:display}}"}},
+		{"name":"toggleocgs","arg":{"format":"{}{}","snippet":"toggleocgs{${1:layer ids}}{${2:display}}"}}
+	],
+	"envs": [
+		{"name":"ocg","arg":{"format":"[]{}{}{}","snippet":"[${1:options}]{${2:layer name}}{${3:layer id}}{${4:initial visibility}}"}},
+		{"name":"ocg","arg":{"format":"{}{}{}","snippet":"{${1:layer name}}{${2:layer id}}{${3:initial visibility}}"}},
+		{"name":"ocgtabular","arg":{"format":"[]{}{}{}","snippet":"[${1:tabular options}]{${2:tabular argument}}{${3:database name}}{${4:ocgtabular options}}"},"if":"ocgtabular","doc":"The purpose of the ocgtabular environment is to create tables which can be sorted by clicking on the headers."},
+		{"name":"ocgtabular","arg":{"format":"{}{}{}","snippet":"{${1:tabular argument}}{${2:database name}}{${3:ocgtabular options}}"},"if":"ocgtabular","doc":"The purpose of the ocgtabular environment is to create tables which can be sorted by clicking on the headers."}
+	],
+	"keys": {}
+}

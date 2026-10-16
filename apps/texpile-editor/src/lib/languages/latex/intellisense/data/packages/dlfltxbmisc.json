@@ -1,0 +1,28 @@
+{
+	"deps": [{"name":"chngpage"},{"name":"ragged2e"},{"name":"url"},{"name":"calc"}],
+	"macros": [
+		{"name":"addCTAN","arg":{"format":"[]{}{}","snippet":"addCTAN[${1:pre text}]{${2:path}}{${3:eaten}}"}},
+		{"name":"addCTAN","arg":{"format":"{}{}","snippet":"addCTAN{${1:path}}{${2:eaten}}"}},
+		{"name":"addurl","arg":{"format":"[]{}{}","snippet":"addurl[${1:pre text}]{${2:url}}{${3:eaten}}"}},
+		{"name":"addurl","arg":{"format":"{}{}","snippet":"addurl{${1:url}}{${2:eaten}}"}},
+		{"name":"Arg","arg":{"format":"{}","snippet":"Arg{${1:text}}"}},
+		{"name":"Arg*","arg":{"format":"{}","snippet":"Arg*{${1:text}}"}},
+		{"name":"CTAN","arg":{"format":"{}","snippet":"CTAN{${1:path}}"}},
+		{"name":"dbx","arg":{"format":"[]","snippet":"dbx[${1:width}]"}},
+		{"name":"dbx"},
+		{"name":"malign","arg":{"format":"[]{}","snippet":"malign[${1}]{${2}}"},"unusual":true},
+		{"name":"malign","arg":{"format":"{}","snippet":"malign{${1}}"},"unusual":true},
+		{"name":"marg","arg":{"format":"{}","snippet":"marg{${1:text}}"}},
+		{"name":"marg*","arg":{"format":"{}","snippet":"marg*{${1:text}}"}},
+		{"name":"oarg","arg":{"format":"{}","snippet":"oarg{${1:text}}"}},
+		{"name":"oarg*","arg":{"format":"{}","snippet":"oarg*{${1:text}}"}},
+		{"name":"parg","arg":{"format":"{}","snippet":"parg{${1:text}}"}},
+		{"name":"parg*","arg":{"format":"{}","snippet":"parg*{${1:text}}"}}
+	],
+	"envs": [
+		{"name":"syntaks","unusual":true},
+		{"name":"syntax","doc":"Environments syntax and syntax* for explaining syntax."},
+		{"name":"syntax*","doc":"Environments syntax and syntax* for explaining syntax."}
+	],
+	"keys": {}
+}

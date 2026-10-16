@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"keyval"},{"name":"xspace"},{"name":"calc"}],
+	"macros": [
+		{"name":"ranglocite","arg":{"format":"[]{}","snippet":"ranglocite[${1:page}]{${2:key}}"}},
+		{"name":"ranglocite","arg":{"format":"{}","snippet":"ranglocite{${1:key}}"}},
+		{"name":"rcite","arg":{"format":"[]{}","snippet":"rcite[${1:page}]{${2:key}}"}},
+		{"name":"rcite","arg":{"format":"{}","snippet":"rcite{${1:key}}"}},
+		{"name":"rfullcite","arg":{"format":"[]{}","snippet":"rfullcite[${1:page}]{${2:key}}"}},
+		{"name":"rfullcite","arg":{"format":"{}","snippet":"rfullcite{${1:key}}"}},
+		{"name":"rleancite","arg":{"format":"[]{}","snippet":"rleancite[${1:page}]{${2:key}}"}},
+		{"name":"rleancite","arg":{"format":"{}","snippet":"rleancite{${1:key}}"}},
+		{"name":"rnocite","arg":{"format":"{}","snippet":"rnocite{${1:key}}"}},
+		{"name":"rphantomcite","arg":{"format":"{}","snippet":"rphantomcite{${1:key}}"}},
+		{"name":"rrepeatcite","arg":{"format":"[]{}","snippet":"rrepeatcite[${1:page}]{${2:key}}"}},
+		{"name":"rrepeatcite","arg":{"format":"{}","snippet":"rrepeatcite{${1:key}}"}},
+		{"name":"rshortcite","arg":{"format":"[]{}","snippet":"rshortcite[${1:page}]{${2:key}}"}},
+		{"name":"rshortcite","arg":{"format":"{}","snippet":"rshortcite{${1:key}}"}},
+		{"name":"rspdata","arg":{"format":"{}","snippet":"rspdata{${1:bib file}}"}},
+		{"name":"rspitem","arg":{"format":"[]{}","snippet":"rspitem[${1}]{${2}}"},"unusual":true},
+		{"name":"rspitem","arg":{"format":"{}","snippet":"rspitem{${1}}"},"unusual":true},
+		{"name":"rspsetup","arg":{"format":"{}","snippet":"rspsetup{${1:options}}","keys":["keyval:rsp"],"keyPos":0}},
+		{"name":"rspsilent","unusual":true},
+		{"name":"rspstyle","arg":{"format":"{}","snippet":"rspstyle{${1:style}}"}},
+		{"name":"rsptitledocuments","unusual":true},
+		{"name":"rsptitlejudgements","unusual":true},
+		{"name":"therspbeginpage","unusual":true},
+		{"name":"therspendpage","unusual":true}
+	],
+	"envs": [
+		{"name":"thersplist","unusual":true}
+	],
+	"keys": {
+		"keyval:rsp": ["pagestring=","citationmode=${1|comma,colon,semicolon,brackets|}","citationfont=${1|slanted,italics,bold,normal|}","preferofficial=${1|all,never,documents,judgements|}","conceptmode=${1|on,off|}","fullcitecontent=${1|normal,full,likelist|}","leancitecontent=${1|normal,minimum,likeentry|}","documentcitefull=${1|never,first,chapter,section,all|}","judgementcitefull=${1|never,first,chapter,section,all|}","makelists=${1|all,never,documents,judgements|}","listpages=${1|left,right,center|}","rlookat=${1|all,never,documents,judgements|}","showname=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","showparties=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","showdate=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","showdecision=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","showsign=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","showcommented=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","showadditional=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","longofficial=${1|all,never,documents,judgements,lists,documentslist,judgementslist|}","groupbystate=${1|all,never,documents,judgements|}","groupbyjurisdiction=${1|all,never,documents,judgements|}","groupbylevel=${1|all,never,documents,judgements|}","groupbycourt=${1|all,never,documents,judgements|}"]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/onlyamsmath#c": ["all","eqnarray","error","nodollardollar","warning"]
+	},
+	"args": ["\\usepackage/onlyamsmath#c"]
+}

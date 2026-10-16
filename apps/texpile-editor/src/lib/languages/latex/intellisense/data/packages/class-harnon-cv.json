@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"etoolbox"},{"name":"framed"},{"name":"tabularx"},{"name":"array"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"cantarell"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"ifluatex"},{"name":"ifxetex"},{"name":"xkeyval"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"addcallout","arg":{"format":"{}","snippet":"addcallout{${1:text}}"}},
+		{"name":"adddocumentheader","arg":{"format":"{}","snippet":"adddocumentheader{${1:text}}"}},
+		{"name":"addheadertext","arg":{"format":"{}","snippet":"addheadertext{${1:text}}"}},
+		{"name":"addsubheader","arg":{"format":"{}","snippet":"addsubheader{${1:text}}"}},
+		{"name":"addtimelinebullet","arg":{"format":"{}","snippet":"addtimelinebullet{${1:text}}"}},
+		{"name":"addtimelineheader","arg":{"format":"{}","snippet":"addtimelineheader{${1}}"},"unusual":true},
+		{"name":"listitem","arg":{"format":"{}","snippet":"listitem{${1:text}}"}},
+		{"name":"recenthistory","arg":{"format":"{}","snippet":"recenthistory{${1:summary}}"}},
+		{"name":"starttimeline"},
+		{"name":"stoptimeline"},
+		{"name":"timelineitem","arg":{"format":"{}{}","snippet":"timelineitem{${1:year}}{${2:text}}"}},
+		{"name":"timelinespacer"},
+		{"name":"youraddress","arg":{"format":"{}","snippet":"youraddress{${1:address}}"}},
+		{"name":"youremail","arg":{"format":"{}","snippet":"youremail{${1:email}}"}},
+		{"name":"yourname","arg":{"format":"{}","snippet":"yourname{${1:name}}"}},
+		{"name":"yournumber","arg":{"format":"{}","snippet":"yournumber{${1:phone number}}"}},
+		{"name":"yourwebsite","arg":{"format":"{}","snippet":"yourwebsite{${1:website}}"}}
+	],
+	"envs": [
+		{"name":"callout","unusual":true},
+		{"name":"sectionheader","unusual":true},
+		{"name":"subheader","unusual":true},
+		{"name":"timelinebullet","unusual":true},
+		{"name":"timelineheader","unusual":true}
+	],
+	"keys": {}
+}

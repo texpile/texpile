@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"},{"name":"luamaths"}],
+	"macros": [
+		{"name":"luaSetBelongsto","arg":{"format":"{}{}","snippet":"luaSetBelongsto{${1:element}}{${2:set}}"},"doc":"Returns true if an element is in a set; otherwise, it returns false."},
+		{"name":"luaSetCardinal","arg":{"format":"{}","snippet":"luaSetCardinal{${1:set}}"},"doc":"Gives the cardinality of a set (number of elements)."},
+		{"name":"luaSetDifference","arg":{"format":"{}{}{}","snippet":"luaSetDifference{${1:set}}{${2:set1}}{${3:set2}}"},"doc":"Defines the new set as a difference of set1 and set2."},
+		{"name":"luaSetEqual","arg":{"format":"{}{}","snippet":"luaSetEqual{${1:set1}}{${2:set2}}"},"doc":"Returns true if set1 is equal to set2; otherwise, it returns false."},
+		{"name":"luaSetIntersection","arg":{"format":"{}{}{}","snippet":"luaSetIntersection{${1:set}}{${2:set1}}{${3:set2}}"},"doc":"Defines the new set as an intersection of set1 and set2."},
+		{"name":"luaSetNew","arg":{"format":"{}{}","snippet":"luaSetNew{${1:name}}{${2:set}}"},"doc":"A set can be defined by using the \\luaSetNew command."},
+		{"name":"luaSetPrint","arg":{"format":"{}","snippet":"luaSetPrint{${1:name of set}}"},"doc":"The set can be displayed or printed by using the \\luaSetPrint command."},
+		{"name":"luaSetSubset","arg":{"format":"{}{}","snippet":"luaSetSubset{${1:set1}}{${2:set2}}"},"doc":"Returns true if set1 is a proper subset of set2; otherwise, it returns false."},
+		{"name":"luaSetSubseteq","arg":{"format":"{}{}","snippet":"luaSetSubseteq{${1:set1}}{${2:set2}}"},"doc":"Returns true if set1 is a subset of set2; otherwise, it returns false."},
+		{"name":"luaSetUnion","arg":{"format":"{}{}{}","snippet":"luaSetUnion{${1:set}}{${2:set1}}{${3:set2}}"},"doc":"Defines the new set as a union of set1 and set2."}
+	],
+	"envs": [],
+	"keys": {}
+}

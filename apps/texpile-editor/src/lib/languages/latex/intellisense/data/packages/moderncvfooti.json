@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"addtofoot","arg":{"format":"[]{}","snippet":"addtofoot[${1}]{${2}}"},"unusual":true},
+		{"name":"addtofoot","arg":{"format":"{}","snippet":"addtofoot{${1}}"},"unusual":true},
+		{"name":"footsymbol","unusual":true},
+		{"name":"footwidth"}
+	],
+	"envs": [],
+	"keys": {}
+}

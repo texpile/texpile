@@ -1,41 +1,12 @@
 {
-  "deps": [
-    {
-      "name": "pstricks"
-    },
-    {
-      "name": "pst-xkey"
-    }
-  ],
-  "macros": [
-    {
-      "name": "psblurbox",
-      "arg": {
-        "format": "{}",
-        "snippet": "psblurbox{${1:stuff}}"
-      }
-    },
-    {
-      "name": "psblurbox",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "psblurbox[${2:options%keyvals}]{${1:stuff}}"
-      }
-    },
-    {
-      "name": "ifpsblur",
-      "unusual": true
-    },
-    {
-      "name": "psblurtrue",
-      "unusual": true
-    },
-    {
-      "name": "psblurfalse",
-      "unusual": true
-    }
-  ],
-  "envs": [],
-  "keys": {},
-  "args": []
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"ifpsblur","unusual":true},
+		{"name":"psblurbox","arg":{"format":"[]{}","snippet":"psblurbox[${1:options}]{${2:text}}"}},
+		{"name":"psblurbox","arg":{"format":"{}","snippet":"psblurbox{${1:text}}"}},
+		{"name":"psblurfalse","unusual":true},
+		{"name":"psblurtrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
 }

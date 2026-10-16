@@ -1,0 +1,30 @@
+{
+	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"xparse"}],
+	"macros": [
+		{"name":"<"},
+		{"name":">"},
+		{"name":"inhibitglue"},
+		{"name":"jafamily","arg":{"format":"{}","snippet":"jafamily{${1:family name}}"}},
+		{"name":"rawentext"},
+		{"name":"rawjatext"},
+		{"name":"setjafamilyfont","arg":{"format":"{}[]{}","snippet":"setjafamilyfont{${1:family name}}[${2:features}]{${3:font name}}"}},
+		{"name":"setjafamilyfont","arg":{"format":"{}{}","snippet":"setjafamilyfont{${1:family name}}{${2:font name}}"}},
+		{"name":"setjafontscale","arg":{"format":"{}","snippet":"setjafontscale{${1:scale}}"}},
+		{"name":"setjamainfont","arg":{"format":"[]{}","snippet":"setjamainfont[${1:features}]{${2:font name}}"}},
+		{"name":"setjamainfont","arg":{"format":"{}","snippet":"setjamainfont{${1:font name}}"}},
+		{"name":"setjamonofont","arg":{"format":"[]{}","snippet":"setjamonofont[${1:features}]{${2:font name}}"}},
+		{"name":"setjamonofont","arg":{"format":"{}","snippet":"setjamonofont{${1:font name}}"}},
+		{"name":"setjasansfont","arg":{"format":"[]{}","snippet":"setjasansfont[${1:features}]{${2:font name}}"}},
+		{"name":"setjasansfont","arg":{"format":"{}","snippet":"setjasansfont{${1:font name}}"}},
+		{"name":"textrawen","arg":{"format":"{}","snippet":"textrawen{${1:text}}"}},
+		{"name":"textrawja","arg":{"format":"{}","snippet":"textrawja{${1:text}}"}},
+		{"name":"zxJaFamilyFontHook","unusual":true},
+		{"name":"zxJaFamilyName","unusual":true},
+		{"name":"zxjapanesestyle","doc":"Applies the setting for Japanese document."},
+		{"name":"zxjatypeJaScale","unusual":true},
+		{"name":"zxusejapaneseparameters"},
+		{"name":"zxuseoriginalparameters"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"beamerfontthemeSaintPetersburg"},{"name":"FiraMono"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"opensans"},{"name":"fontaxes"},{"name":"figureversions"},{"name":"tikz"},{"name":"pgf"},{"name":"pgffor"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

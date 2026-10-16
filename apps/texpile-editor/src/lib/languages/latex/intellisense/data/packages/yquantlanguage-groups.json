@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"yquant"},{"name":"etoolbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"xkeyval"}],
+	"macros": [
+		{"name":"circuit","arg":{"format":"[]{}","snippet":"circuit[${1:style}]{${2:content}}"}},
+		{"name":"circuit","arg":{"format":"{}","snippet":"circuit{${1:content}}"}},
+		{"name":"equals","arg":{"format":"[]","snippet":"equals[${1:content}]"},"doc":"The \\equals macro inserts a blank text—internally, a box-like gate with the style /yquant/operators/every group equals—that contains <content>."},
+		{"name":"equals","doc":"The \\equals macro inserts a blank text—internally, a box-like gate with the style /yquant/operators/every group equals—that contains <content>."},
+		{"name":"equals*","arg":{"format":"[]","snippet":"equals*[${1:content}]"},"doc":"The \\equals macro inserts a blank text—internally, a box-like gate with the style /yquant/operators/every group equals—that contains <content>."},
+		{"name":"equals*","doc":"The \\equals macro inserts a blank text—internally, a box-like gate with the style /yquant/operators/every group equals—that contains <content>."},
+		{"name":"intertext","arg":{"format":"[][]{}","snippet":"intertext[${1:space before}][${2:space after}]{${3:text}}"},"doc":"The text intermission commands are available only if the yquantgroup was not enclosed in a tikzpicture. They will end the current picture environment, output the text (or really just anything) that was given as required argument as a new paragraph, and start a new picture with the same alignment."},
+		{"name":"intertext","arg":{"format":"{}","snippet":"intertext{${1:text}}"},"doc":"The text intermission commands are available only if the yquantgroup was not enclosed in a tikzpicture. They will end the current picture environment, output the text (or really just anything) that was given as required argument as a new paragraph, and start a new picture with the same alignment."},
+		{"name":"registers","arg":{"format":"{}","snippet":"registers{${1:register declarations}}"},"doc":"The \\registers macro can and must only be used once in a yquantgroup environment. It contains the declaration of all the registers that are shared among the various circuits within a group."},
+		{"name":"shiftright","arg":{"format":"[]","snippet":"shiftright[${1:where}]"},"doc":"The \\shiftright command will put the “cursor,” i.e., the horizontal position at which the next \\circuit or \\equals will start, at the position specified by <where>."},
+		{"name":"shiftright","doc":"The \\shiftright command will put the “cursor,” i.e., the horizontal position at which the next \\circuit or \\equals will start, at the position specified by <where>."},
+		{"name":"shiftright*","arg":{"format":"[]","snippet":"shiftright*[${1:where}]"},"doc":"The \\shiftright command will put the “cursor,” i.e., the horizontal position at which the next \\circuit or \\equals will start, at the position specified by <where>."},
+		{"name":"shiftright*","doc":"The \\shiftright command will put the “cursor,” i.e., the horizontal position at which the next \\circuit or \\equals will start, at the position specified by <where>."},
+		{"name":"shortintertext","arg":{"format":"[][]{}","snippet":"shortintertext[${1:space before}][${2:space after}]{${3:text}}"},"doc":"The text intermission commands are available only if the yquantgroup was not enclosed in a tikzpicture. They will end the current picture environment, output the text (or really just anything) that was given as required argument as a new paragraph, and start a new picture with the same alignment."},
+		{"name":"shortintertext","arg":{"format":"{}","snippet":"shortintertext{${1:text}}"},"doc":"The text intermission commands are available only if the yquantgroup was not enclosed in a tikzpicture. They will end the current picture environment, output the text (or really just anything) that was given as required argument as a new paragraph, and start a new picture with the same alignment."}
+	],
+	"envs": [
+		{"name":"yquantgroup","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"yquantgroup"},
+		{"name":"yquantgroup*","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"yquantgroup*"}
+	],
+	"keys": {}
+}

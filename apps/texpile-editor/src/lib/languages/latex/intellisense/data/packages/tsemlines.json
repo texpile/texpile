@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"emline","arg":{"format":"{}{}{}{}{}{}","snippet":"emline{${1:x1}}{${2:y1}}{${3:label of first point}}{${4:x2}}{${5:y2}}{${6:label of last point}}"}},
+		{"name":"newpic","arg":{"format":"{}","snippet":"newpic{${1:picture label}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

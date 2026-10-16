@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"backmatter"},
+		{"name":"chappgsep"},
+		{"name":"mainmatter"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/chappg#c": ["auto","noauto"]
+	},
+	"args": ["\\usepackage/chappg#c"]
+}

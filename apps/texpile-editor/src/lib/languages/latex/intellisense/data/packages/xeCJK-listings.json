@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"listings"},{"name":"keyval"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

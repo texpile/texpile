@@ -1,0 +1,37 @@
+{
+	"macros": [
+		{"name":"DeclareTCBInputListing","arg":{"format":"[]{}{}{}","snippet":"DeclareTCBInputListing[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"DeclareTCBInputListing","arg":{"format":"{}{}{}","snippet":"DeclareTCBInputListing{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"DeclareTCBListing","arg":{"format":"[]{}{}{}","snippet":"DeclareTCBListing[${1:init options}]{${2:name}}{${3:specification}}{${4:options}}"}},
+		{"name":"DeclareTCBListing","arg":{"format":"{}{}{}","snippet":"DeclareTCBListing{${1:name}}{${2:specification}}{${3:options}}"}},
+		{"name":"newtcbinputlisting","arg":{"format":"[]{}[][]{}","snippet":"newtcbinputlisting[${1:init options}]{${2:\\name}}[${3:number}][${4:default}]{${5:options}}"}},
+		{"name":"newtcbinputlisting","arg":{"format":"{}{}","snippet":"newtcbinputlisting{${1:\\name}}{${2:options}}"}},
+		{"name":"NewTCBInputListing","arg":{"format":"[]{}{}{}","snippet":"NewTCBInputListing[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"NewTCBInputListing","arg":{"format":"{}{}{}","snippet":"NewTCBInputListing{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"newtcblisting","arg":{"format":"[]{}[][]{}","snippet":"newtcblisting[${1:init options}]{${2:name}}[${3:number}][${4:default}]{${5:options}}"}},
+		{"name":"newtcblisting","arg":{"format":"{}{}","snippet":"newtcblisting{${1:name}}{${2:options}}"}},
+		{"name":"NewTCBListing","arg":{"format":"[]{}{}{}","snippet":"NewTCBListing[${1:init options}]{${2:name}}{${3:specification}}{${4:options}}"}},
+		{"name":"NewTCBListing","arg":{"format":"{}{}{}","snippet":"NewTCBListing{${1:name}}{${2:specification}}{${3:options}}"}},
+		{"name":"ProvideTCBInputListing","arg":{"format":"[]{}{}{}","snippet":"ProvideTCBInputListing[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"ProvideTCBInputListing","arg":{"format":"{}{}{}","snippet":"ProvideTCBInputListing{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"ProvideTCBListing","arg":{"format":"[]{}{}{}","snippet":"ProvideTCBListing[${1:init options}]{${2:name}}{${3:specification}}{${4:options}}"}},
+		{"name":"ProvideTCBListing","arg":{"format":"{}{}{}","snippet":"ProvideTCBListing{${1:name}}{${2:specification}}{${3:options}}"}},
+		{"name":"renewtcbinputlisting","arg":{"format":"[]{}[][]{}","snippet":"renewtcbinputlisting[${1:init options}]{${2:\\name}}[${3:number}][${4:default}]{${5:options}}"}},
+		{"name":"renewtcbinputlisting","arg":{"format":"{}{}","snippet":"renewtcbinputlisting{${1:\\name}}{${2:options}}"}},
+		{"name":"RenewTCBInputListing","arg":{"format":"[]{}{}{}","snippet":"RenewTCBInputListing[${1:init options}]{${2:\\name}}{${3:specification}}{${4:options}}"}},
+		{"name":"RenewTCBInputListing","arg":{"format":"{}{}{}","snippet":"RenewTCBInputListing{${1:\\name}}{${2:specification}}{${3:options}}"}},
+		{"name":"renewtcblisting","arg":{"format":"[]{}[][]{}","snippet":"renewtcblisting[${1:init options}]{${2:name}}[${3:number}][${4:default}]{${5:options}}"}},
+		{"name":"renewtcblisting","arg":{"format":"{}{}","snippet":"renewtcblisting{${1:name}}{${2:options}}"}},
+		{"name":"RenewTCBListing","arg":{"format":"[]{}{}{}","snippet":"RenewTCBListing[${1:init options}]{${2:name}}{${3:specification}}{${4:options}}"}},
+		{"name":"RenewTCBListing","arg":{"format":"{}{}{}","snippet":"RenewTCBListing{${1:name}}{${2:specification}}{${3:options}}"}},
+		{"name":"tcbinputlisting","arg":{"format":"{}","snippet":"tcbinputlisting{${1:options}}"}},
+		{"name":"tcbuselistinglisting"},
+		{"name":"tcbuselistingtext"},
+		{"name":"tcbusetemplisting"}
+	],
+	"envs": [
+		{"name":"tcblisting","arg":{"format":"{}","snippet":"{${1:options}}"}},
+		{"name":"tcboutputlisting"}
+	],
+	"keys": {}
+}

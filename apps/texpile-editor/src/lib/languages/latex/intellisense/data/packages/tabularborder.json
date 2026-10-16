@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"booktabs"},{"name":"array"}],
+	"macros": [
+		{"name":"tabcolwidthii"},
+		{"name":"tabcolwidthiv"},
+		{"name":"tboff"},
+		{"name":"tbon"}
+	],
+	"envs": [],
+	"keys": {}
+}

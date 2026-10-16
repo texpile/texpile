@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"hanyrule","arg":{"format":"[]{}{}","snippet":"hanyrule[${1:leader}]{${2:width}}{${3:symbol list}}"},"doc":"This command sets the length of the dashed line and fills it with arbitrary symbols."},
+		{"name":"hanyrule","arg":{"format":"{}{}","snippet":"hanyrule{${1:width}}{${2:symbol list}}"},"doc":"This command sets the length of the dashed line and fills it with arbitrary symbols."},
+		{"name":"hdashrule","arg":{"format":"[][]{}{}{}","snippet":"hdashrule[${1:raise}][${2:leader}]{${3:width}}{${4:thickness list}}{${5:dash rules}}"},"doc":"This command is used to draw a dashed line, based on the \\rule command, and the same as the \\rule command when the ⟨dash rules⟩ are empty."},
+		{"name":"hdashrule","arg":{"format":"{}{}{}","snippet":"hdashrule{${1:width}}{${2:thickness list}}{${3:dash rules}}"},"doc":"This command is used to draw a dashed line, based on the \\rule command, and the same as the \\rule command when the ⟨dash rules⟩ are empty."},
+		{"name":"vrulemod","arg":{"format":"[][][]{}{}","snippet":"vrulemod[${1:raise}][${2:height}][${3:depth}]{${4:width}}{${5:thickness list}}"}},
+		{"name":"vrulemod","arg":{"format":"{}{}","snippet":"vrulemod{${1:width}}{${2:thickness list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,15 +1,8 @@
 {
-  "deps": [],
-  "macros": [],
-  "envs": [
-    {
-      "name": "enumerate",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:option}]"
-      }
-    }
-  ],
-  "keys": {},
-  "args": []
+	"macros": [],
+	"envs": [
+		{"name":"enumerate","arg":{"format":"[]","snippet":"[${1:label}]"},"doc":"This package gives the enumerate environment an optional argument which determines the style in which the counter is printed."},
+		{"name":"enumerate","doc":"This package gives the enumerate environment an optional argument which determines the style in which the counter is printed."}
+	],
+	"keys": {}
 }

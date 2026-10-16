@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"etex"}],
+	"macros": [
+		{"name":"bigtype"},
+		{"name":"Bigtype"},
+		{"name":"BIgtype"},
+		{"name":"BIGtype"},
+		{"name":"example","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"example{${1:basename}}{${2:extension of the code file}}{${3:music width}}{${4:separation}}{${5:code width}}{${6:music vskip}}{${7:alignment}}{${8:code vskip}}"}},
+		{"name":"headingandcontents","arg":{"format":"{}","snippet":"headingandcontents{${1:heading}}"}},
+		{"name":"MTx"},
+		{"name":"mtxlatex","unusual":true},
+		{"name":"mtxlatexdate","unusual":true},
+		{"name":"musixlyr"},
+		{"name":"PMX"}
+	],
+	"envs": [
+		{"name":"excerpts"},
+		{"name":"mus"},
+		{"name":"score"},
+		{"name":"Score","arg":{"format":"{}{}","snippet":"{${1:heading}}{${2:file}}"}}
+	],
+	"keys": {}
+}

@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"chapter","arg":{"format":"[]{}","snippet":"chapter[${1:short title}]{${2:title}}"}},
+		{"name":"chapter","arg":{"format":"{}","snippet":"chapter{${1:title}}"}},
+		{"name":"chapter*","arg":{"format":"[]{}","snippet":"chapter*[${1:short title}]{${2:title}}"}},
+		{"name":"chapter*","arg":{"format":"{}","snippet":"chapter*{${1:title}}"}},
+		{"name":"contentsname"},
+		{"name":"landscapefoils"},
+		{"name":"landscapefoils*"},
+		{"name":"paragraph","arg":{"format":"[]{}","snippet":"paragraph[${1:short title}]{${2:title}}"}},
+		{"name":"paragraph","arg":{"format":"{}","snippet":"paragraph{${1:title}}"}},
+		{"name":"paragraph*","arg":{"format":"[]{}","snippet":"paragraph*[${1:short title}]{${2:title}}"}},
+		{"name":"paragraph*","arg":{"format":"{}","snippet":"paragraph*{${1:title}}"}},
+		{"name":"part","arg":{"format":"[]{}","snippet":"part[${1:short title}]{${2:title}}"}},
+		{"name":"part","arg":{"format":"{}","snippet":"part{${1:title}}"}},
+		{"name":"part*","arg":{"format":"[]{}","snippet":"part*[${1:short title}]{${2:title}}"}},
+		{"name":"part*","arg":{"format":"{}","snippet":"part*{${1:title}}"}},
+		{"name":"portraitfoils"},
+		{"name":"portraitfoils*"},
+		{"name":"section","arg":{"format":"[]{}","snippet":"section[${1:short title}]{${2:title}}"}},
+		{"name":"section","arg":{"format":"{}","snippet":"section{${1:title}}"}},
+		{"name":"section*","arg":{"format":"[]{}","snippet":"section*[${1:short title}]{${2:title}}"}},
+		{"name":"section*","arg":{"format":"{}","snippet":"section*{${1:title}}"}},
+		{"name":"subparagraph","arg":{"format":"[]{}","snippet":"subparagraph[${1:short title}]{${2:title}}"}},
+		{"name":"subparagraph","arg":{"format":"{}","snippet":"subparagraph{${1:title}}"}},
+		{"name":"subparagraph*","arg":{"format":"[]{}","snippet":"subparagraph*[${1:short title}]{${2:title}}"}},
+		{"name":"subparagraph*","arg":{"format":"{}","snippet":"subparagraph*{${1:title}}"}},
+		{"name":"subsection","arg":{"format":"[]{}","snippet":"subsection[${1:short title}]{${2:title}}"}},
+		{"name":"subsection","arg":{"format":"{}","snippet":"subsection{${1:title}}"}},
+		{"name":"subsection*","arg":{"format":"[]{}","snippet":"subsection*[${1:short title}]{${2:title}}"}},
+		{"name":"subsection*","arg":{"format":"{}","snippet":"subsection*{${1:title}}"}},
+		{"name":"subsubsection","arg":{"format":"[]{}","snippet":"subsubsection[${1:short title}]{${2:title}}"}},
+		{"name":"subsubsection","arg":{"format":"{}","snippet":"subsubsection{${1:title}}"}},
+		{"name":"subsubsection*","arg":{"format":"[]{}","snippet":"subsubsection*[${1:short title}]{${2:title}}"}},
+		{"name":"subsubsection*","arg":{"format":"{}","snippet":"subsubsection*{${1:title}}"}},
+		{"name":"tableofcontents"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/foilhtml#c": ["landscape","nopagesintoc","pagesintoc"]
+	},
+	"args": ["\\usepackage/foilhtml#c"]
+}

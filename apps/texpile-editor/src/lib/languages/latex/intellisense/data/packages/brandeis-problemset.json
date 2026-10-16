@@ -1,0 +1,48 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xkeyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"changepage"},{"name":"comment","if":"!solution"},{"name":"listings","if":"assembly|listings|pseudocode|scheme"},{"name":"xcolor","if":"assembly|gantt|listings|pseudocode|scheme"},{"name":"tikz","if":"gantt"},{"name":"pgf","if":"gantt"},{"name":"pgfrcs","if":"gantt"},{"name":"pgfcore","if":"gantt"},{"name":"graphicx","if":"gantt"},{"name":"graphics","if":"gantt"},{"name":"trig","if":"gantt"},{"name":"pgfsys","if":"gantt"},{"name":"pgfcomp-version-0-65","if":"gantt"},{"name":"pgfcomp-version-1-18","if":"gantt"},{"name":"pgffor","if":"gantt"},{"name":"pgfkeys","if":"gantt"},{"name":"pgfmath","if":"gantt"},{"name":"fp","if":"gantt"},{"name":"defpattern","if":"gantt"},{"name":"fp-basic","if":"gantt"},{"name":"fp-addons","if":"gantt"},{"name":"fp-snap","if":"gantt"},{"name":"fp-exp","if":"gantt"},{"name":"fp-trigo","if":"gantt"},{"name":"fp-pas","if":"gantt"},{"name":"fp-random","if":"gantt"},{"name":"fp-eqn","if":"gantt"},{"name":"fp-upn","if":"gantt"},{"name":"fp-eval","if":"gantt"},{"name":"calc","if":"gantt"},{"name":"fancyhdr","if":"header"}],
+	"macros": [
+		{"name":"ac","arg":{"format":"{}","snippet":"ac{${1:acronym}}"},"doc":"Typesets an acronym."},
+		{"name":"bpsset","arg":{"format":"{}","snippet":"bpsset{${1:options}}","keys":["keyval:bps"],"keyPos":0},"if":"config|maketitle|header","doc":"Sets global brandeis-problemset options."},
+		{"name":"burst","arg":{"format":"{}{}","snippet":"burst{${1:pid}}{${2:burst length}}"},"doc":"Within a ganttschedule, use the \\burst command to indicate an active process (i.e. a process burst)."},
+		{"name":"maketitlepage","if":"maketitle"},
+		{"name":"newacronym","arg":{"format":"[]{}","snippet":"newacronym[${1:command}]{${2:acronym text}}"},"doc":"Creates a new acronym."},
+		{"name":"newacronym","arg":{"format":"{}","snippet":"newacronym{${1:acronym text}}"},"doc":"Creates a new acronym."},
+		{"name":"newacronyms","arg":{"format":"{}","snippet":"newacronyms{${1:acronym list}}"}},
+		{"name":"problemsetsetup","arg":{"format":"{}","snippet":"problemsetsetup{${1:options}}","keys":["keyval:bps"],"keyPos":0},"unusual":true,"if":"config|maketitle|header"},
+		{"name":"pseudocodeemptyset","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocodege","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocodeinfty","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocodele","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocodeleftarrow","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocodene","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocoderightarrow","unusual":true,"if":"pseudocode"},
+		{"name":"pseudocodesymbolfont"},
+		{"name":"solutionstyle","doc":"The style of solutions is customizable by redefining \\solutionstyle; it’s defined to \\color{blue} by default."},
+		{"name":"Th","arg":{"format":"[]{}","snippet":"Th[${1:column spec}]{${2:header text}}"},"if":"tabu","doc":"Typesets a table header in bold-face."},
+		{"name":"Th","arg":{"format":"{}","snippet":"Th{${1:header text}}"},"if":"tabu","doc":"Typesets a table header in bold-face."}
+	],
+	"envs": [
+		{"name":"assembly","arg":{"format":"[]","snippet":"[${1:listings options}]"},"if":"assembly"},
+		{"name":"assembly","if":"assembly"},
+		{"name":"ganttschedule","arg":{"format":"{}[]","snippet":"{${1:total cell count}}[${2:title}]"},"doc":"An environment for drawing Gantt charts indicating process scheduling."},
+		{"name":"ganttschedule","arg":{"format":"{}","snippet":"{${1:total cell count}}"},"doc":"An environment for drawing Gantt charts indicating process scheduling."},
+		{"name":"java","arg":{"format":"[]","snippet":"[${1:listings options}]"},"if":"listings","doc":"Tragically-common shorthand environment for a listing of Java code."},
+		{"name":"java","if":"listings","doc":"Tragically-common shorthand environment for a listing of Java code."},
+		{"name":"problem","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:problem"],"keyPos":0}},
+		{"name":"problem"},
+		{"name":"pseudocode","arg":{"format":"[]","snippet":"[${1:keywords}]"},"if":"pseudocode"},
+		{"name":"pseudocode","if":"pseudocode"},
+		{"name":"scheme","arg":{"format":"[]","snippet":"[${1:listings options}]"},"if":"scheme","doc":"Shorthand environment for a listing of Scheme code, useful for COSI 121b."},
+		{"name":"scheme","if":"scheme","doc":"Shorthand environment for a listing of Scheme code, useful for COSI 121b."},
+		{"name":"solution","doc":"Defines a solution for a problem; a solution prints in blue and is excluded from the compiled document entirely unless the solutions package option is given."},
+		{"name":"subproblem","arg":{"format":"[]","snippet":"[${1:options}]","keys":["keyval:subproblem"],"keyPos":0},"doc":"A subproblem is set 1 inch from the left margin (although this amount may be customized by modifying the \\subproblemindent length) and begins a new page."},
+		{"name":"subproblem","doc":"A subproblem is set 1 inch from the left margin (although this amount may be customized by modifying the \\subproblemindent length) and begins a new page."}
+	],
+	"keys": {
+		"keyval:bps": ["course=${1:course name}","coursenumber=${1:course number}","assignment=${1:assignment name}","number=${1:problem set number}","duedate=${1:due date}","instructor=${1:course instructor}","author=${1:your name}","date=${1:document date}","codefont=${1:font name}"],
+		"keyval:problem": ["label=","number=","partlabel=","title=","pagebreak=${1|true,false|}","toc=${1|true,false|}","part=${1:part name}"],
+		"keyval:subproblem": ["label=","number=","title=","pagebreak=${1|true,false|}","toc=${1|true,false|}"],
+		"\\usepackage/brandeis-problemset#c": ["assembly","config","gantt","header","listings","maketitle","noassembly","noconfig","nogantt","noheader","nolistings","nomaketitle","nopseudocode","noscheme","nosolution","notabu","pseudocode","scheme","solution","tabu"]
+	},
+	"args": ["\\usepackage/brandeis-problemset#c"]
+}

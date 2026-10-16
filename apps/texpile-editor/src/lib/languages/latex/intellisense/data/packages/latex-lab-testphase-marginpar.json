@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"ltlabmarginpardate","unusual":true},
+		{"name":"ltlabmarginparversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

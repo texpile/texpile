@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"iftex"},{"name":"etoolbox"},{"name":"array"},{"name":"ifdraft"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"}],
+	"macros": [
+		{"name":"ExecuteAfterPackage","arg":{"format":"{}{}","snippet":"ExecuteAfterPackage{${1}}{${2}}"},"doc":"Executes the code after the reference package has been loaded (using \\AfterAtEndOfPackage) or finally at the end of the preamble if the reference package was not loaded until then."},
+		{"name":"ExecuteBeforePackage","arg":{"format":"{}{}","snippet":"ExecuteBeforePackage{${1}}{${2}}"},"doc":"Executes the code directly before the reference package is loaded (using \\BeforePackage) or finally at the end of the preamble if the reference package was not loaded until then."},
+		{"name":"IfBibEnvironmentDefined","arg":{"format":"{}{}{}","snippet":"IfBibEnvironmentDefined{${1:environment name}}{${2:defined}}{${3:undefined}}"}},
+		{"name":"IfColorDefined","arg":{"format":"{}{}{}","snippet":"IfColorDefined{${1}}{${2}}{${3}}"}},
+		{"name":"IfColorsDefined","arg":{"format":"{}{}{}","snippet":"IfColorsDefined{${1:color names}}{${2:defined}}{${3:undefined}}"}},
+		{"name":"IfColumntypeDefined","arg":{"format":"{}{}{}","snippet":"IfColumntypeDefined{${1}}{${2}}{${3}}"}},
+		{"name":"IfColumntypesDefined","arg":{"format":"{}{}{}","snippet":"IfColumntypesDefined{${1:column types}}{${2:defined}}{${3:undefined}}"}},
+		{"name":"IfDefined","arg":{"format":"{}{}","snippet":"IfDefined{${1}}{${2}}"},"doc":"Executes the code if the command is defined."},
+		{"name":"IfDraft","arg":{"format":"{}","snippet":"IfDraft{${1}}"}},
+		{"name":"IfElseDefined","arg":{"format":"{}{}{}","snippet":"IfElseDefined{${1}}{${2}}{${3}}"},"doc":"Executes either the code in the defined bracket if the command is defined or in the undefined bracket if the code is undefined."},
+		{"name":"IfElsePackageLoaded","arg":{"format":"{}{}{}","snippet":"IfElsePackageLoaded{${1:package}}{${2:loaded}}{${3:not loaded}}"}},
+		{"name":"IfElseUndefined","arg":{"format":"{}{}{}","snippet":"IfElseUndefined{${1}}{${2}}{${3}}"}},
+		{"name":"IfGlossariesStyleDefined","arg":{"format":"{}{}","snippet":"IfGlossariesStyleDefined{${1}}{${2}}"}},
+		{"name":"IfMathVersionDefined","arg":{"format":"{}{}{}","snippet":"IfMathVersionDefined{${1}}{${2}}{${3}}"}},
+		{"name":"IfMultDefined","arg":{"format":"{}{}{}","snippet":"IfMultDefined{${1:commands}}{${2:defined}}{${3:undefined}}"},"doc":"Checks a comma separated list of commands before it executes the defined code path if all commands were defined or the undefined code path else."},
+		{"name":"IfNotDraft","arg":{"format":"{}","snippet":"IfNotDraft{${1}}"}},
+		{"name":"IfNotDraftElse","arg":{"format":"{}{}","snippet":"IfNotDraftElse{${1}}{${2}}"}},
+		{"name":"IfPackageLoaded","arg":{"format":"{}{}","snippet":"IfPackageLoaded{${1}}{${2}}"}},
+		{"name":"IfPackageNotLoaded","arg":{"format":"{}{}","snippet":"IfPackageNotLoaded{${1}}{${2}}"}},
+		{"name":"IfPackagesLoaded","arg":{"format":"{}{}{}","snippet":"IfPackagesLoaded{${1:packages}}{${2:all loaded}}{${3:not all loaded}}"}},
+		{"name":"IfPackagesNotLoaded","arg":{"format":"{}{}{}","snippet":"IfPackagesNotLoaded{${1:packages}}{${2:none loaded}}{${3:some loaded}}"}},
+		{"name":"IfTikzLibraryLoaded","arg":{"format":"{}{}{}","snippet":"IfTikzLibraryLoaded{${1:library}}{${2:loaded}}{${3:not loaded}}"}},
+		{"name":"IfUndefined","arg":{"format":"{}{}","snippet":"IfUndefined{${1}}{${2}}"},"doc":"Executes the code if the command is not defined."},
+		{"name":"SetTemplateDefinition","arg":{"format":"{}{}{}","snippet":"SetTemplateDefinition{${1}}{${2}}{${3}}"},"doc":"Defines a collection of commands (a macro) with a group and property."},
+		{"name":"UseDefinition","arg":{"format":"{}{}","snippet":"UseDefinition{${1}}{${2}}"},"doc":"Executes the macro using \\csuse if it is defined."}
+	],
+	"envs": [],
+	"keys": {}
+}

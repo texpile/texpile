@@ -1,0 +1,25 @@
+{
+	"macros": [
+		{"name":"DefaultInterHchar","unusual":true},
+		{"name":"interHchar","arg":{"format":"{}","snippet":"interHchar{${1:skip}}"}},
+		{"name":"interhword","arg":{"format":"[]{}{}{}","snippet":"interhword[${1:xspaceskip}]{${2:spaceskip}}{${3:stretch}}{${4:shrink}}"}},
+		{"name":"interhword","arg":{"format":"{}{}{}","snippet":"interhword{${1:spaceskip}}{${2:stretch}}{${3:shrink}}"}},
+		{"name":"memucsfninterwordhook","unusual":true},
+		{"name":"memucshangulskips","unusual":true},
+		{"name":"memucsinterwordchapterskip","unusual":true},
+		{"name":"memucsinterwordchapterskiphook","unusual":true},
+		{"name":"memucsinterwordhook","unusual":true},
+		{"name":"memucsinterwordskip","unusual":true},
+		{"name":"narrowerinterhword","unusual":true},
+		{"name":"setinterwordskip","arg":{"format":"[]{}{}{}","snippet":"setinterwordskip[${1:xspaceskip}]{${2:spaceskip}}{${3:stretch}}{${4:shrink}}"}},
+		{"name":"setinterwordskip","arg":{"format":"{}{}{}","snippet":"setinterwordskip{${1:spaceskip}}{${2:stretch}}{${3:shrink}}"}}
+	],
+	"envs": [
+		{"name":"engtext"},
+		{"name":"engtxt","unusual":true}
+	],
+	"keys": {
+		"\\usepackage/memucs-interword-x#c": ["HWP","default","narrower","nonfrench","wider"]
+	},
+	"args": ["\\usepackage/memucs-interword-x#c"]
+}

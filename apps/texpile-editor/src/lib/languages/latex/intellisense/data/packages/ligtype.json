@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"}],
+	"macros": [
+		{"name":"keeplig","arg":{"format":"{}{}","snippet":"keeplig{${1:string}}{${2:breakpoint}}"}},
+		{"name":"ligs","unusual":true},
+		{"name":"ligtypeoff"},
+		{"name":"ligtypeon"},
+		{"name":"nolig","arg":{"format":"{}{}","snippet":"nolig{${1:string}}{${2:breakpoint}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ligtype#c": ["allshortf","connotes","kerntest","liglist","makemarks","nodefault","noshortf"]
+	},
+	"args": ["\\usepackage/ligtype#c"]
+}

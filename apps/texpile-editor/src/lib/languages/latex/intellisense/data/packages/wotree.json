@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"defWO","arg":{"format":"{}{}","snippet":"defWO{${1}}{${2}}"}},
+		{"name":"WO","arg":{"format":"{}","snippet":"WO{${1}}"}},
+		{"name":"WOEdge","arg":{"format":"()","snippet":"WOEdge(${1:parent,child})"},"unusual":true},
+		{"name":"WOSpace","arg":{"format":"()","snippet":"WOSpace(${1:hspace,vspace})"}},
+		{"name":"WOTree","arg":{"format":"{}","snippet":"WOTree{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

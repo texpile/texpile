@@ -1,0 +1,43 @@
+{
+	"deps": [{"name":"pict2e","if":"!noload"},{"name":"trig","if":"!noload"}],
+	"macros": [
+		{"name":"0"},
+		{"name":"1"},
+		{"name":"2"},
+		{"name":"automath"},
+		{"name":"branch","arg":{"format":"{}{}","snippet":"branch{${1}}{${2}}"}},
+		{"name":"faketreewidth","arg":{"format":"{}","snippet":"faketreewidth{${1}}"}},
+		{"name":"ifqtreecenter","unusual":true},
+		{"name":"leaf","arg":{"format":"{}","snippet":"leaf{${1}}"}},
+		{"name":"nbranches","doc":"The front end uses an internal counter, \\nbranches, to keep track of how many children a node has."},
+		{"name":"noautomath"},
+		{"name":"qbalance"},
+		{"name":"qdraw@branches","arg":{"format":"{}","snippet":"qdraw@branches{${1:number of branches}}"},"unusual":true},
+		{"name":"qframesubtree"},
+		{"name":"qlabelhook"},
+		{"name":"qleafhook"},
+		{"name":"qobitree"},
+		{"name":"qroof","arg":{"format":"{}","snippet":"qroof{${1:phrase}}"},"doc":"The command \\qroof draws a triangular “roof” above a phrase that is treated as a unit."},
+		{"name":"qroofpadding"},
+		{"name":"qroofx"},
+		{"name":"qroofy"},
+		{"name":"qsetw","arg":{"format":"{}","snippet":"qsetw{${1}}"}},
+		{"name":"qtreecenterfalse"},
+		{"name":"qtreecentertrue"},
+		{"name":"qTreeDate","unusual":true},
+		{"name":"qtreefinalhook"},
+		{"name":"qtreeinithook","doc":"Called at the beginning of each tree, before processing begins."},
+		{"name":"qtreenoframes","unusual":true},
+		{"name":"qtreepadding"},
+		{"name":"qtreeprimes"},
+		{"name":"qtreeshowframes"},
+		{"name":"qtreeunaryht"},
+		{"name":"qTreeVersion","unusual":true},
+		{"name":"Tree"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/qtree#c": ["center","nocenter","noeepic","noload","pdf"]
+	},
+	"args": ["\\usepackage/qtree#c"]
+}

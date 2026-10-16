@@ -1,133 +1,34 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "newtheorem*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "newtheorem*{${1:envname}}{${2:caption}}"
-      }
-    },
-    {
-      "name": "theoremstyle",
-      "arg": {
-        "format": "{}",
-        "snippet": "theoremstyle{${1:style%keyvals}}",
-        "keys": [
-          "\\theoremstyle#c"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "swapnumbers"
-    },
-    {
-      "name": "newtheoremstyle",
-      "arg": {
-        "format": "{}{}{}{}{}{}{}{}{}",
-        "snippet": "newtheoremstyle{${1:style name%specialDef}}{${2:space above}}{${3:space below}}{${4:body font}}{${5:indent amount}}{${6:head font}}{${7:head punct}}{${8:after head space}}{${9:head spec}}"
-      }
-    },
-    {
-      "name": "thmname",
-      "arg": {
-        "format": "{}",
-        "snippet": "thmname{${1:arg}}"
-      }
-    },
-    {
-      "name": "thmnumber",
-      "arg": {
-        "format": "{}",
-        "snippet": "thmnumber{${1:arg}}"
-      }
-    },
-    {
-      "name": "thmnote",
-      "arg": {
-        "format": "{}",
-        "snippet": "thmnote{${1:arg}}"
-      }
-    },
-    {
-      "name": "qedsymbol"
-    },
-    {
-      "name": "qedhere"
-    },
-    {
-      "name": "qed"
-    },
-    {
-      "name": "proofname"
-    },
-    {
-      "name": "nopunct",
-      "unusual": true
-    },
-    {
-      "name": "thmhead",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "thmhead{${1:arg1}}{${2:arg2}}{${3:arg3}}"
-      }
-    },
-    {
-      "name": "swappedhead",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "swappedhead{${1:arg1}}{${2:arg2}}{${3:arg3}}"
-      }
-    },
-    {
-      "name": "mathqed",
-      "unusual": true
-    },
-    {
-      "name": "pushQED",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "pushQED{${1:arg}}"
-      }
-    },
-    {
-      "name": "popQED",
-      "unusual": true
-    },
-    {
-      "name": "openbox"
-    },
-    {
-      "name": "textsquare"
-    },
-    {
-      "name": "thmheadnl",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "proof"
-    },
-    {
-      "name": "proof",
-      "arg": {
-        "format": "[]",
-        "snippet": "[${1:heading}]"
-      }
-    }
-  ],
-  "keys": {
-    "\\theoremstyle#c": [
-      "plain",
-      "definition",
-      "remark",
-      "%theoremstyle"
-    ]
-  },
-  "args": []
+	"macros": [
+		{"name":"mathqed","unusual":true},
+		{"name":"newtheorem","arg":{"format":"{}[]{}[]","snippet":"newtheorem{${1:envname}}[${2:shared counter}]{${3:text}}[${4:within}]"}},
+		{"name":"newtheorem","arg":{"format":"{}{}","snippet":"newtheorem{${1:envname}}{${2:text}}"}},
+		{"name":"newtheorem*","arg":{"format":"{}[]{}[]","snippet":"newtheorem*{${1:envname}}[${2:shared counter}]{${3:text}}[${4:within}]"}},
+		{"name":"newtheorem*","arg":{"format":"{}{}","snippet":"newtheorem*{${1:envname}}{${2:text}}"}},
+		{"name":"newtheoremstyle","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"newtheoremstyle{${1:name}}{${2:space above}}{${3:space below}}{${4:body font}}{${5:indent amount}}{${6:head font}}{${7:head punctuation}}{${8:space after head}}{${9:head spec}}"},"doc":"The \\newtheoremstyle command is designed to provide, through a relatively simple interface, control over the style aspects that are most commonly changed."},
+		{"name":"nonslanted","unusual":true},
+		{"name":"nopunct"},
+		{"name":"openbox"},
+		{"name":"popQED"},
+		{"name":"proofname"},
+		{"name":"pushQED","arg":{"format":"{}","snippet":"pushQED{${1:qed code}}"}},
+		{"name":"qed"},
+		{"name":"qedhere"},
+		{"name":"qedsymbol"},
+		{"name":"swapnumbers","doc":"A \\swapnumbers command allows theorem numbers to be swapped to the front of the theorem headings."},
+		{"name":"swappedhead","arg":{"format":"{}{}{}","snippet":"swappedhead{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"textsquare"},
+		{"name":"theoremstyle","arg":{"format":"{}","snippet":"theoremstyle{${1:style}}","keys":["amsthm:style"],"keyPos":0}},
+		{"name":"thmhead","arg":{"format":"{}{}{}","snippet":"thmhead{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"thmname","arg":{"format":"{}","snippet":"thmname{${1:name}}"}},
+		{"name":"thmnote","arg":{"format":"{}","snippet":"thmnote{${1:note}}"}},
+		{"name":"thmnumber","arg":{"format":"{}","snippet":"thmnumber{${1:number}}"}}
+	],
+	"envs": [
+		{"name":"proof","arg":{"format":"[]","snippet":"[${1:proof name}]"},"doc":"The proof environment is never numbered, and has a \\qed at the end, which makes it inconvenient to use \\newtheorem for defining it."},
+		{"name":"proof","doc":"The proof environment is never numbered, and has a \\qed at the end, which makes it inconvenient to use \\newtheorem for defining it."}
+	],
+	"keys": {
+		"amsthm:style": ["plain","definition","remark"]
+	}
 }

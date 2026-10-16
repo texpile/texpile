@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"bfhcolors"},{"name":"xcolor"},{"name":"class-scrbook","if":"!class=article+!class=report+!class=scrartcl+!class=scrreprt+!department=hkb-doc"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"bfhlayout"},{"name":"zref"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-lastpage"},{"name":"zref-abspage"},{"name":"zref-user"},{"name":"translations"},{"name":"etoolbox"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"bfhfonts"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"nunito","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"textcomp","engines":["pdflatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"sourceserif"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"trimclip"},{"name":"collectbox"},{"name":"adjcalc"},{"name":"xparse"},{"name":"bfhmodule"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"hyperref"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"class-scrartcl","if":"class=article|class=scrartcl|department=hkb-doc"},{"name":"class-scrreprt","if":"class=report|class=scrreprt"},{"name":"tabularx","if":"department=hkb-doc"},{"name":"array","if":"department=hkb-doc"},{"name":"geometry","if":"department=hkb-doc"},{"name":"ifvtex","if":"department=hkb-doc"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"advisor","arg":{"format":"{}","snippet":"advisor{${1:advisor}}"}},
+		{"name":"coadvisor","arg":{"format":"{}","snippet":"coadvisor{${1:co-advisor}}"}},
+		{"name":"declarationOfAuthorship","arg":{"format":"[]","snippet":"declarationOfAuthorship[${1:signature list}]"}},
+		{"name":"declarationOfAuthorship"},
+		{"name":"degreeprogram","arg":{"format":"{}","snippet":"degreeprogram{${1:degree program}}"}},
+		{"name":"expert","arg":{"format":"{}","snippet":"expert{${1:expert}}"}},
+		{"name":"projectpartner","arg":{"format":"{}","snippet":"projectpartner{${1:project partner}}"}},
+		{"name":"setupSignature","arg":{"format":"{}","snippet":"setupSignature{${1:signature list}}"}},
+		{"name":"SignatureBox","arg":{"format":"{}","snippet":"SignatureBox{${1:signature list}}"}},
+		{"name":"SignatureBox*","arg":{"format":"{}","snippet":"SignatureBox*{${1:signature list}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

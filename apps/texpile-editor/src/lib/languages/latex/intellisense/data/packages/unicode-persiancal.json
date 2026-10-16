@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"persianday"},
+		{"name":"persianmonth"},
+		{"name":"persianseason"},
+		{"name":"persiantoday"},
+		{"name":"persianyear"}
+	],
+	"envs": [],
+	"keys": {}
+}

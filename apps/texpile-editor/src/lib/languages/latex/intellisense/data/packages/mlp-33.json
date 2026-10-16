@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"french","if":"efrench|french"},{"name":"msg","if":"efrench|french"},{"name":"latexsym","if":"efrench|french"},{"name":"fenglish","if":"efrench|french"},{"name":"frenchle","if":"frenchle"}],
+	"macros": [],
+	"envs": [
+		{"name":"french","if":"frenchle"}
+	],
+	"keys": {
+		"\\usepackage/mlp-33#c": ["efrench","french","frenchle"]
+	},
+	"args": ["\\usepackage/mlp-33#c"]
+}

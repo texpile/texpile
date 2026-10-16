@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"class-scrartcl"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"tocbasic"},{"name":"typearea"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"xcolor"},{"name":"babel"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"enumitem"},{"name":"xparse"},{"name":"etoolbox"},{"name":"url"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"zb-basics"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"stmaryrd"},{"name":"mathrsfs"},{"name":"tikz-cd"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"textcomp"},{"name":"gensymb"},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"blue","arg":{"format":"{}","snippet":"blue{${1}}"},"unusual":true},
+		{"name":"keywords","arg":{"format":"{}","snippet":"keywords{${1:keywords separated by ;}}"}},
+		{"name":"makefooter"},
+		{"name":"msc","arg":{"format":"{}","snippet":"msc{${1:MSC classes separated by space}}"}},
+		{"name":"reviewer","arg":{"format":"{}","snippet":"reviewer{${1:your name (location)}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

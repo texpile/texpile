@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"newverbatim","arg":{"format":"{}[][]{}{}{}{}","snippet":"newverbatim{${1:env}}[${2:n-args}][${3:default}]{${4:beg-def-outer}}{${5:beg-def-inner}}{${6:end-def-inner}}{${7:end-def-outer}}"}},
+		{"name":"newverbatim","arg":{"format":"{}{}{}{}{}","snippet":"newverbatim{${1:env}}{${2:beg-def-outer}}{${3:beg-def-inner}}{${4:end-def-inner}}{${5:end-def-outer}}"}},
+		{"name":"renewverbatim","arg":{"format":"{}[][]{}{}{}{}","snippet":"renewverbatim{${1:env}}[${2:n-args}][${3:default}]{${4:beg-def-outer}}{${5:beg-def-inner}}{${6:end-def-inner}}{${7:end-def-outer}}"},"doc":"You may redefine your own verbatim-like environment, or even verbatim itself, by \\renewverbatim whose arguments are same as those of \\newenvironment."},
+		{"name":"renewverbatim","arg":{"format":"{}{}{}{}{}","snippet":"renewverbatim{${1:env}}{${2:beg-def-outer}}{${3:beg-def-inner}}{${4:end-def-inner}}{${5:end-def-outer}}"},"doc":"You may redefine your own verbatim-like environment, or even verbatim itself, by \\renewverbatim whose arguments are same as those of \\newenvironment."}
+	],
+	"envs": [],
+	"keys": {}
+}

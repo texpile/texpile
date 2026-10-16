@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"eskdlang"},{"name":"babel"}],
+	"macros": [
+		{"name":"ESKDexplanIndent","doc":"Длина \\ESKDexplanIndent задает отступ списка пояснений от левого края страницы."}
+	],
+	"envs": [
+		{"name":"ESKDexplanation","arg":{"format":"[]","snippet":"[${1:width}]"}},
+		{"name":"ESKDexplanation"}
+	],
+	"keys": {}
+}

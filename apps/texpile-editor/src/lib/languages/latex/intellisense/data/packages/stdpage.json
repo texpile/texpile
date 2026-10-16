@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"typearea"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"keyval"},{"name":"ragged2e"},{"name":"ifthen"},{"name":"lineno"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"hyphenat"},{"name":"titlesec"}],
+	"macros": [
+		{"name":"zeichenzahl","unusual":true},
+		{"name":"zeilenzahl","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"cleveref"},{"name":"xparse"}],
+	"macros": [
+		{"name":"DeclareIcrefType","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"DeclareIcrefType{${1:type}}{${2:nom sg}}{${3:acc sg}}{${4:dat sg}}{${5:gen sg}}{${6:nom pl}}{${7:acc pl}}{${8:dat pl}}{${9:gen pl}}"}},
+		{"name":"DeclareIcrefTypeCapital","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"DeclareIcrefTypeCapital{${1:type}}{${2:nom sg}}{${3:acc sg}}{${4:dat sg}}{${5:gen sg}}{${6:nom pl}}{${7:acc pl}}{${8:dat pl}}{${9:gen pl}}"}},
+		{"name":"DeclareIscrefPreposition","arg":{"format":"{}{}","snippet":"DeclareIscrefPreposition{${1:preposition}}{${2:case}}"}},
+		{"name":"icref","arg":{"format":"[]{}","snippet":"icref[${1:case or preposition}]{${2:labels}}"}},
+		{"name":"icref","arg":{"format":"{}","snippet":"icref{${1:labels}}"}},
+		{"name":"Icref","arg":{"format":"[]{}","snippet":"Icref[${1:case or preposition}]{${2:labels}}"}},
+		{"name":"Icref","arg":{"format":"{}","snippet":"Icref{${1:labels}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

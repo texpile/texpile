@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"array","arg":{"format":"{}()","snippet":"array{${1:array name}}(${2:index})"},"doc":"Store or get the content of the array element specified by the index."},
+		{"name":"cachedata","doc":"Macro where the content is stored after a \\check request."},
+		{"name":"clrarray","arg":{"format":"{}()","snippet":"clrarray{${1:array name}}(${2:index})"},"doc":"Clear the content of the array element specified."},
+		{"name":"dataheight","doc":"Counter containing the number of elements in the first dimension, if arrays are bi-dimensional."},
+		{"name":"delarray","arg":{"format":"{}","snippet":"delarray{${1}}"},"doc":"Delete an array."},
+		{"name":"emptydatafalse","unusual":true},
+		{"name":"emptydatatrue","unusual":true},
+		{"name":"expandarrayelementfalse"},
+		{"name":"expandarrayelementtrue"},
+		{"name":"ifemptydata","unusual":true},
+		{"name":"ifexpandarrayelement","unusual":true},
+		{"name":"ifnormalindex","unusual":true},
+		{"name":"newarray","arg":{"format":"{}","snippet":"newarray{${1}}"},"doc":"Define a new array."},
+		{"name":"normalindexfalse"},
+		{"name":"normalindextrue"},
+		{"name":"readarray","arg":{"format":"{}{}","snippet":"readarray{${1}}{${2}}"},"doc":"Store consecutive values in an array, starting from the indice one."},
+		{"name":"testarray","arg":{"format":"{}()","snippet":"testarray{${1:array name}}(${2:index})"}}
+	],
+	"envs": [],
+	"keys": {}
+}

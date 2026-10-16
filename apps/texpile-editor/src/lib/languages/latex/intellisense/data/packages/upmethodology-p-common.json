@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"xspace"},{"name":"xcolor"},{"name":"ifpdf"},{"name":"iftex"}],
+	"macros": [
+		{"name":"arakhneorg"},
+		{"name":"Ifelseempty","arg":{"format":"{}{}{}","snippet":"Ifelseempty{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"Ifempty","arg":{"format":"{}{}","snippet":"Ifempty{${1:text}}{${2:latex code}}"}},
+		{"name":"Ifnotempty","arg":{"format":"{}{}","snippet":"Ifnotempty{${1:text}}{${2:latex code}}"}},
+		{"name":"ifupmarticleformat","unusual":true},
+		{"name":"ifupmbookformat","unusual":true},
+		{"name":"ifupmlang","arg":{"format":"{}{}{}","snippet":"ifupmlang{${1:lang id}}{${2:then commands}}{${3:else commands}}"}},
+		{"name":"ifupmreportformat","unusual":true},
+		{"name":"newpageintoc","doc":"The command \\newpageintoc makes it possible to insert a page break inside the table of contents (toc)."},
+		{"name":"setpdfcolor","arg":{"format":"{}","snippet":"setpdfcolor{${1:r,g,b color}}"}},
+		{"name":"upmarticleformatfalse","unusual":true},
+		{"name":"upmarticleformattrue","unusual":true},
+		{"name":"upmbookformatfalse","unusual":true},
+		{"name":"upmbookformattrue","unusual":true},
+		{"name":"upmcurrentlang"},
+		{"name":"upmreportformatfalse","unusual":true},
+		{"name":"upmreportformattrue","unusual":true},
+		{"name":"UPMVERSION","unusual":true},
+		{"name":"UPMVERSIONTEST","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

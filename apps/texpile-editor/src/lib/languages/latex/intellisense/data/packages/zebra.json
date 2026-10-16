@@ -1,0 +1,35 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"marginnote"},{"name":"manfnt"}],
+	"macros": [
+		{"name":"comment","arg":{"format":"[]{}","snippet":"comment[${1}]{${2}}"}},
+		{"name":"comment","arg":{"format":"{}","snippet":"comment{${1}}"}},
+		{"name":"fixed","arg":{"format":"[]{}","snippet":"fixed[${1}]{${2}}"}},
+		{"name":"fixed","arg":{"format":"{}","snippet":"fixed{${1}}"}},
+		{"name":"note","arg":{"format":"[]{}","snippet":"note[${1}]{${2}}"}},
+		{"name":"note","arg":{"format":"{}","snippet":"note{${1}}"}},
+		{"name":"placeholder","arg":{"format":"[]{}","snippet":"placeholder[${1}]{${2}}"}},
+		{"name":"placeholder","arg":{"format":"{}","snippet":"placeholder{${1}}"}},
+		{"name":"todo","arg":{"format":"[]{}","snippet":"todo[${1}]{${2}}"},"doc":"The primary command provided by zebra is \\todo. It inserts an inline note in the current paragraph, typeset in a predefined colour and marked with a symbol in the nearest margin."},
+		{"name":"todo","arg":{"format":"{}","snippet":"todo{${1}}"},"doc":"The primary command provided by zebra is \\todo. It inserts an inline note in the current paragraph, typeset in a predefined colour and marked with a symbol in the nearest margin."},
+		{"name":"zebracomment","arg":{"format":"[]{}","snippet":"zebracomment[${1:name}]{${2:text}}"}},
+		{"name":"zebracomment","arg":{"format":"{}","snippet":"zebracomment{${1:text}}"}},
+		{"name":"zebrafixed","arg":{"format":"[]{}","snippet":"zebrafixed[${1:name}]{${2:text}}"}},
+		{"name":"zebrafixed","arg":{"format":"{}","snippet":"zebrafixed{${1:text}}"}},
+		{"name":"zebranewnote","arg":{"format":"{}{}[]","snippet":"zebranewnote{${1}}{${2}}[${3}]"},"doc":"Creates a new note type."},
+		{"name":"zebranewnote","arg":{"format":"{}{}","snippet":"zebranewnote{${1}}{${2}}"},"doc":"Creates a new note type."},
+		{"name":"zebranote","arg":{"format":"[]{}","snippet":"zebranote[${1}]{${2}}"}},
+		{"name":"zebranote","arg":{"format":"{}","snippet":"zebranote{${1}}"}},
+		{"name":"zebraplaceholder","arg":{"format":"[]{}","snippet":"zebraplaceholder[${1:name}]{${2:text}}"}},
+		{"name":"zebraplaceholder","arg":{"format":"{}","snippet":"zebraplaceholder{${1:text}}"}},
+		{"name":"zebraref","arg":{"format":"{}","snippet":"zebraref{${1}}"},"doc":"Standard \\ref returns the note number, while \\zebraref prints the note type together with the number."},
+		{"name":"zebrasetup","arg":{"format":"{}","snippet":"zebrasetup{${1}}","keys":["l3keys:zebra-setup"],"keyPos":0},"doc":"Configures note appearance after loading."},
+		{"name":"zebratodo","arg":{"format":"[]{}","snippet":"zebratodo[${1:name}]{${2:text}}"}},
+		{"name":"zebratodo","arg":{"format":"{}","snippet":"zebratodo{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"l3keys:zebra-setup": ["color/unknown=","symbol/unknown=","color/todo=","color/fixed=","color/comment=","color/note=","color/placeholder=","color/${1:type}=","symbol/todo=","symbol/fixed=","symbol/comment=","symbol/note=","symbol/placeholder=","symbol/${1:type}="],
+		"\\usepackage/zebra#c": ["draft=${1|false,true|}","final","final=","sort=${1|none,type|}","unnumbered=${1|false,true|}"]
+	},
+	"args": ["\\usepackage/zebra#c"]
+}

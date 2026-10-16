@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"pifont"},{"name":"fullpage"},{"name":"ifthen"},{"name":"calc"},{"name":"verbatim"},{"name":"tabularx"},{"name":"array"}],
+	"macros": [
+		{"name":"answernumberfont","arg":{"format":"{}","snippet":"answernumberfont{${1:font}}"}},
+		{"name":"answerstitle","arg":{"format":"{}","snippet":"answerstitle{${1}}"},"unusual":true},
+		{"name":"answerstitlefont","arg":{"format":"{}","snippet":"answerstitlefont{${1:font}}"}},
+		{"name":"correctionstyle","arg":{"format":"{}","snippet":"correctionstyle{${1:font}}"}},
+		{"name":"false"},
+		{"name":"falsesymbol","arg":{"format":"{}","snippet":"falsesymbol{${1:symbol}}"}},
+		{"name":"headerfont","arg":{"format":"{}","snippet":"headerfont{${1:font}}"}},
+		{"name":"makeform"},
+		{"name":"makemask"},
+		{"name":"questionsepspace","unusual":true},
+		{"name":"questionspace"},
+		{"name":"questiontitle","arg":{"format":"{}","snippet":"questiontitle{${1}}"},"unusual":true},
+		{"name":"questiontitlefont","arg":{"format":"{}","snippet":"questiontitlefont{${1}}"},"unusual":true},
+		{"name":"questiontitlespace","unusual":true},
+		{"name":"thequestion","unusual":true},
+		{"name":"true"},
+		{"name":"truesymbol","arg":{"format":"{}","snippet":"truesymbol{${1:symbol}}"}},
+		{"name":"X","arg":{"format":"{}","snippet":"X{${1:symbol}}"}}
+	],
+	"envs": [
+		{"name":"correction"},
+		{"name":"question","arg":{"format":"{}","snippet":"{${1:question text}}"}}
+	],
+	"keys": {
+		"\\usepackage/xepersian-multiplechoice#c": ["correction","nocorrection"]
+	},
+	"args": ["\\usepackage/xepersian-multiplechoice#c"]
+}

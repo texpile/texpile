@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"verbatim"},{"name":"verbatimbox"},{"name":"readarray"},{"name":"forloop"},{"name":"ifthen"},{"name":"listofitems"}],
+	"macros": [
+		{"name":"blockindent"},
+		{"name":"blocklabel","arg":{"format":"{}","snippet":"blocklabel{${1}}"}},
+		{"name":"maxblocklabelsize"},
+		{"name":"nblabel","arg":{"format":"{}","snippet":"nblabel{${1}}"}},
+		{"name":"nbVlabel","arg":{"format":"{}","snippet":"nbVlabel{${1}}"}},
+		{"name":"numblock","arg":{"format":"{}","snippet":"numblock{${1}}"}},
+		{"name":"theblocknum","unusual":true}
+	],
+	"envs": [
+		{"name":"numVblock","arg":{"format":"[]","snippet":"[${1:label command}]"}},
+		{"name":"numVblock"}
+	],
+	"keys": {}
+}

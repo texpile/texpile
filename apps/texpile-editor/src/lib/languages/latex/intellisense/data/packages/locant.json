@@ -1,0 +1,17 @@
+{
+	"macros": [
+		{"name":"bdlocant"},
+		{"name":"bdlocnth"},
+		{"name":"bdloocant","arg":{"format":"{}{}{}{}{}{}","snippet":"bdloocant{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"bdloocnth","arg":{"format":"{}{}{}{}{}{}","snippet":"bdloocnth{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"locantnumsize"},
+		{"name":"sixsugarhlocant"},
+		{"name":"sixsugarhloocnt","arg":{"format":"{}{}{}{}{}{}","snippet":"sixsugarhloocnt{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"sxlocant"},
+		{"name":"sxlocnth"},
+		{"name":"sxloocant","arg":{"format":"{}{}{}{}{}{}","snippet":"sxloocant{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"sxloocnth","arg":{"format":"{}{}{}{}{}{}","snippet":"sxloocnth{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

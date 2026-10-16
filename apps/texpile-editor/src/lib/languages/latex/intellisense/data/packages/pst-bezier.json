@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"psRQBCmasse","arg":{"format":"[]()()(){}","snippet":"psRQBCmasse[${1}](${2})(${3})(${4}){${5}}"}},
+		{"name":"psRQBCmasse","arg":{"format":"()()(){}","snippet":"psRQBCmasse(${1})(${2})(${3}){${4}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

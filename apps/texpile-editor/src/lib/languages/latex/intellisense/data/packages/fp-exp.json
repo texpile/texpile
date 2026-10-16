@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"fp-basic"}],
+	"macros": [
+		{"name":"FPe"},
+		{"name":"FPexp","arg":{"format":"{}{}","snippet":"FPexp{${1:result}}{${2:value}}"}},
+		{"name":"FPln","arg":{"format":"{}{}","snippet":"FPln{${1:result}}{${2:value}}"}},
+		{"name":"FPpow","arg":{"format":"{}{}{}","snippet":"FPpow{${1:result}}{${2:base}}{${3:exponent}}"}},
+		{"name":"FProot","arg":{"format":"{}{}{}","snippet":"FProot{${1:result}}{${2:value}}{${3:n}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

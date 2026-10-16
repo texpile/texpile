@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"framed"},{"name":"calc"}],
+	"macros": [
+		{"name":"chuu","arg":{"format":"{}","snippet":"chuu{${1:note}}"}},
+		{"name":"chuuaki","arg":{"format":"{}","snippet":"chuuaki{${1:space in zw}}"}},
+		{"name":"chuuakiprint","unusual":true},
+		{"name":"chuuhaba","arg":{"format":"{}","snippet":"chuuhaba{${1:text width ratio}}"}},
+		{"name":"chuuhabaprint","unusual":true},
+		{"name":"chuukigou","arg":{"format":"{}{}","snippet":"chuukigou{${1:mark in text}}{${2:mark in margin}}"}},
+		{"name":"chuukigouprintA","unusual":true},
+		{"name":"chuukigouprintB","unusual":true},
+		{"name":"thechuubangou","unusual":true}
+	],
+	"envs": [
+		{"name":"chuushaku","arg":{"format":"[]<>","snippet":"[${1:text width ratio}]<${2:space in zw}>"}},
+		{"name":"chuushaku","arg":{"format":"<>","snippet":"<${1:space in zw}>"}}
+	],
+	"keys": {}
+}

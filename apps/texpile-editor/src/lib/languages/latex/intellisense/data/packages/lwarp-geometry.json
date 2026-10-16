@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"geometry","arg":{"format":"{}","snippet":"geometry{${1:options}}"}},
+		{"name":"loadgeometry","arg":{"format":"{}","snippet":"loadgeometry{${1:name}}"}},
+		{"name":"newgeometry","arg":{"format":"{}","snippet":"newgeometry{${1:options}}"}},
+		{"name":"restoregeometry"},
+		{"name":"savegeometry","arg":{"format":"{}","snippet":"savegeometry{${1:name}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

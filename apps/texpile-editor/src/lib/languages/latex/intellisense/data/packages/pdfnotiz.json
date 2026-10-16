@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"marginnote"}],
+	"macros": [
+		{"name":"cooltooltip","arg":{"format":"[][]{}{}{}{}{}","snippet":"cooltooltip[${1:popup color}][${2:link color}]{${3:subject}}{${4:message}}{${5:URL}}{${6:tooltip}}{${7:text}}"}},
+		{"name":"cooltooltip","arg":{"format":"{}{}{}{}{}","snippet":"cooltooltip{${1:subject}}{${2:message}}{${3:URL}}{${4:tooltip}}{${5:text}}"}},
+		{"name":"cooltooltiptoggle","arg":{"format":"{}","snippet":"cooltooltiptoggle{${1:text}}"}},
+		{"name":"pdfmarginnote","arg":{"format":"[]{}","snippet":"pdfmarginnote[${1:style}]{${2:note}}"},"doc":"\\pdfmarginnote will set a link to a pdf annotation into the margin."},
+		{"name":"pdfmarginnote","arg":{"format":"{}","snippet":"pdfmarginnote{${1:note}}"},"doc":"\\pdfmarginnote will set a link to a pdf annotation into the margin."},
+		{"name":"pdfnote","arg":{"format":"{}","snippet":"pdfnote{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"luatex-cn-debug"},{"name":"luatexbase"},{"name":"xcolor"},{"name":"enumitem"},{"name":"luatex-cn-core-metadata"},{"name":"luatex-cn-core-document"},{"name":"luatex-cn-core-page"},{"name":"environ"},{"name":"luatex-cn-core-content"},{"name":"luatex-cn-core-paragraph"},{"name":"luatex-cn-core-sidenote"},{"name":"xparse"},{"name":"luatex-cn-core-textbox"},{"name":"luatex-cn-core-column"},{"name":"luatex-cn-core-style"},{"name":"luatex-cn-core-section"},{"name":"luatex-cn-core-punct"},{"name":"luatex-cn-core-table"},{"name":"luatex-cn-core-export"},{"name":"luatex-cn-decorate"},{"name":"luatex-cn-linemark"},{"name":"luatex-cn-gongche"},{"name":"luatex-cn-banxin"},{"name":"luatex-cn-font-autodetect"}],
+	"macros": [
+		{"name":"luatexcncoreversion","unusual":true}
+	],
+	"envs": [
+		{"name":"列表","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"列表"}
+	],
+	"keys": {}
+}

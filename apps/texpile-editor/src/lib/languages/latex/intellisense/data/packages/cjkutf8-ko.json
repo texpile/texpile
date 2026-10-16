@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"CJKutf8"},{"name":"iftex"},{"name":"inputenc"},{"name":"CJK"},{"name":"MULEenc"},{"name":"cjkutf8-josa"},{"name":"kolabels-utf"},{"name":"konames-utf","if":"hangul|hanja|usecjkt1font"},{"name":"ulem","if":"usedotemph"},{"name":"CJKfntef","if":"usedotemph"},{"name":"CJKulem","if":"usedotemph"}],
+	"macros": [
+		{"name":"cancelCJKscale","unusual":true},
+		{"name":"cancellowercjkchar","unusual":true},
+		{"name":"cancellowerCJKchar","unusual":true},
+		{"name":"CJKscale","arg":{"format":"{}","snippet":"CJKscale{${1:scale factor}}"}},
+		{"name":"dotemph","arg":{"format":"{}","snippet":"dotemph{${1:text}}"}},
+		{"name":"lowercjkchar","arg":{"format":"{}","snippet":"lowercjkchar{${1}}"},"unusual":true},
+		{"name":"lowerCJKchar","arg":{"format":"{}","snippet":"lowerCJKchar{${1:length}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

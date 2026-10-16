@@ -1,99 +1,20 @@
 {
-  "deps": [
-    {
-      "name": "graphics"
-    }
-  ],
-  "macros": [
-    {
-      "name": "psfrag",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "psfrag{${1:tag}}{${2:replacement}}"
-      }
-    },
-    {
-      "name": "psfrag",
-      "arg": {
-        "format": "{}[][][][]{}",
-        "snippet": "psfrag{${1:tag}}[${3:posn}][${4:psposn}][${5:scale}][${6:rot}]{${2:replacement}}"
-      }
-    },
-    {
-      "name": "psfrag*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "psfrag*{${1:tag}}{${2:replacement}}"
-      }
-    },
-    {
-      "name": "psfrag*",
-      "arg": {
-        "format": "{}[][][][]{}",
-        "snippet": "psfrag*{${1:tag}}[${3:posn}][${4:psposn}][${5:scale}][${6:rot}]{${2:replacement}}"
-      }
-    },
-    {
-      "name": "psfragscanon"
-    },
-    {
-      "name": "psfragscanoff"
-    },
-    {
-      "name": "psfragdebugon",
-      "unusual": true
-    },
-    {
-      "name": "psfragdebugoff",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "psfrags"
-    }
-  ],
-  "keys": {
-    "\\usepackage/psfrag#c": [
-      "scanall",
-      "2emode",
-      "209mode",
-      "debugshow",
-      "unknownkeysallowed",
-      "draft",
-      "final",
-      "hiresbb",
-      "demo",
-      "setpagesize",
-      "nosetpagesize",
-      "dvips",
-      "xdvi",
-      "dvipdf",
-      "dvipdfm",
-      "dvipdfmx",
-      "xetex",
-      "pdftex",
-      "luatex",
-      "dvisvgm",
-      "dvipsone",
-      "dviwindo",
-      "emtex",
-      "dviwin",
-      "oztex",
-      "textures",
-      "pctexps",
-      "pctexwin",
-      "pctexhp",
-      "pctex32",
-      "truetex",
-      "tcidvi",
-      "vtex",
-      "debugshow",
-      "hiderotate",
-      "hidescale"
-    ]
-  },
-  "args": [
-    "\\usepackage/psfrag#c"
-  ]
+	"deps": [{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"psfrag","arg":{"format":"{}[][][][]{}","snippet":"psfrag{${1:tag}}[${2:posn}][${3:psposn}][${4:scale}][${5:rot}]{${6:LaTeX text}}"},"doc":"The \\psfrag macro defines a LaTeX-typeset {replacement} to be placed at the same position as a PostScript {tag}."},
+		{"name":"psfrag","arg":{"format":"{}{}","snippet":"psfrag{${1:tag}}{${2:LaTeX text}}"},"doc":"The \\psfrag macro defines a LaTeX-typeset {replacement} to be placed at the same position as a PostScript {tag}."},
+		{"name":"psfrag*","arg":{"format":"{}[][][][]{}","snippet":"psfrag*{${1:tag}}[${2:posn}][${3:psposn}][${4:scale}][${5:rot}]{${6:LaTeX text}}"},"doc":"The \\psfrag macro defines a LaTeX-typeset {replacement} to be placed at the same position as a PostScript {tag}."},
+		{"name":"psfrag*","arg":{"format":"{}{}","snippet":"psfrag*{${1:tag}}{${2:LaTeX text}}"},"doc":"The \\psfrag macro defines a LaTeX-typeset {replacement} to be placed at the same position as a PostScript {tag}."},
+		{"name":"psfragdebugoff"},
+		{"name":"psfragdebugon"},
+		{"name":"psfragscanoff"},
+		{"name":"psfragscanon","doc":"To turn on scanning for a single figure, precede the \\epsfbox or \\includegraphics command with a call to the command \\psfragscanon."}
+	],
+	"envs": [
+		{"name":"psfrags","doc":"The psfrags environment may be used, if necessary, to delimit the scope of the \\psfrag calls."}
+	],
+	"keys": {
+		"\\usepackage/psfrag#c": ["209mode","2emode","debugshow","demo","draft","dvipdf","dvipdfm","dvipdfmx","dvips","dvipsone","dvisvgm","dviwin","dviwindo","emtex","final","hiderotate","hidescale","hiresbb","luatex","nosetpagesize","oztex","pctex32","pctexhp","pctexps","pctexwin","pdftex","scanall","setpagesize","tcidvi","textures","truetex","vtex","xdvi","xetex"]
+	},
+	"args": ["\\usepackage/psfrag#c"]
 }

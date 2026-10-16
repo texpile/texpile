@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"spanishindexchars","arg":{"format":"{}{}{}","snippet":"spanishindexchars{${1:encap}}{${2:open_range}}{${3:close_range}}"},"doc":"An additional macro, \\spanishindexchars{encap}{openrange}{closerange} determines the characters delimiting index entries."}
+	],
+	"envs": [],
+	"keys": {}
+}

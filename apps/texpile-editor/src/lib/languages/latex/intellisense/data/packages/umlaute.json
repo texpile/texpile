@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"inputenc"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/umlaute#c": ["850","amiga","amigaos","ansi","dos","hpux","ibmpc","iso","mac","macos","nogerman","tos","windows"]
+	},
+	"args": ["\\usepackage/umlaute#c"]
+}

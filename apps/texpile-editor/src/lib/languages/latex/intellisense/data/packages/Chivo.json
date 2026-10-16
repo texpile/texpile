@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"iftex"},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"infigures"},
+		{"name":"nufigures"},
+		{"name":"sufigures"},
+		{"name":"textdenominator","arg":{"format":"{}","snippet":"textdenominator{${1:text}}"},"doc":"\\textdenominator renders its argument in denominator figures."},
+		{"name":"textinferior","arg":{"format":"{}","snippet":"textinferior{${1:text}}"},"doc":"\\textinferior renders its argument in inferior figures."},
+		{"name":"textnumerator","arg":{"format":"{}","snippet":"textnumerator{${1:text}}"},"doc":"\\textnumerator renders its argument in numerator figures."},
+		{"name":"textsuperior","arg":{"format":"{}","snippet":"textsuperior{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"alsoname","unusual":true},
+		{"name":"bibname","unusual":true},
+		{"name":"ccname","unusual":true},
+		{"name":"chaptername","unusual":true},
+		{"name":"colorlayer","unusual":true},
+		{"name":"enclname","unusual":true},
+		{"name":"glossaryname","unusual":true},
+		{"name":"headtoname","unusual":true},
+		{"name":"KSTHE","unusual":true},
+		{"name":"pagename","unusual":true},
+		{"name":"proofname","unusual":true},
+		{"name":"sectionname","unusual":true},
+		{"name":"seename","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

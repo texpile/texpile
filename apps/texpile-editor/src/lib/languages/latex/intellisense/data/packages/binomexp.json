@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"calc"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"binomexp@proof","arg":{"format":"{}{}","snippet":"binomexp@proof{${1:row variable}}{${2:column variable}}"},"doc":"This command prints a mathematical proof of the Pascals’s triangle based upon obervation."},
+		{"name":"binomexp@putpascal","arg":{"format":"{}{}{}{}{}{}","snippet":"binomexp@putpascal{${1:lower power}}{${2:higher power}}{${3:first variable}}{${4:second variable}}{${5:first variable again}}{${6:second variable again}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

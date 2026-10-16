@@ -1,0 +1,18 @@
+{
+	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"xcolor"},{"name":"xspace"},{"name":"beramono","if":"!inconsolata+!nofont"},{"name":"zi4","if":"inconsolata"},{"name":"textcomp","if":"inconsolata"},{"name":"xkeyval","if":"inconsolata"},{"name":"lmodern","if":"nofont"}],
+	"macros": [
+		{"name":"attribute","arg":{"format":"{}","snippet":"attribute{${1:text}}"},"doc":"\\attribute{text} Applies the **Attribute** color (Price, Kcal, etc.) and monospaced font."},
+		{"name":"constraint","arg":{"format":"{}","snippet":"constraint{${1}}"},"doc":"Applies monospaced font for entire constraint expressions."},
+		{"name":"feature","arg":{"format":"{}","snippet":"feature{${1}}"},"doc":"\\feature{text} Applies the **Feature** color (Pizza, Topping, etc.) and monospaced font."},
+		{"name":"inputuvl","arg":{"format":"[]{}","snippet":"inputuvl[${1}]{${2}}"},"doc":"This command imports an external .uvl file and formats it as a UVL code block. It accepts optional arguments compatible with lstinputlisting."},
+		{"name":"inputuvl","arg":{"format":"{}","snippet":"inputuvl{${1}}"},"doc":"This command imports an external .uvl file and formats it as a UVL code block. It accepts optional arguments compatible with lstinputlisting."},
+		{"name":"UVL","doc":"Write the acronym UVL following the style of the official paper."},
+		{"name":"uvlattributes","arg":{"format":"{}","snippet":"uvlattributes{${1}}"}},
+		{"name":"UVLKeyword","arg":{"format":"{}","snippet":"UVLKeyword{${1}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/uvlhighlight#c": ["beramono","bw","flamapy","inconsolata","nofont","uvls"]
+	},
+	"args": ["\\usepackage/uvlhighlight#c"]
+}

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"graphics"},{"name":"trig"},{"name":"epstopdf-base"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"epspdfconversioncmdline","arg":{"format":"{}","snippet":"epspdfconversioncmdline{${1:file}}"},"doc":"Typing \\epspdfconversioncmdline somewhere in your source-.tex file will output the call that you have defined in your preamble."},
+		{"name":"epspdfconversionsetup","arg":{"format":"{}","snippet":"epspdfconversionsetup{${1:options}}","keys":["keyval:EPC"],"keyPos":0}}
+	],
+	"envs": [],
+	"keys": {
+		"keyval:EPC": ["GRAY","GREY","custom=","default","ebook","gray","grey","help","hires","no-hires","nogray","nogrey","nopdftops","outdir=","pagenumber=","pdftops","prepress","printer","psoptions=","screen","simple","suffix=","bbox=${1|false,true|}","pdftopdf=${1|false,true|}","pdfversion=${1|1.2,1.3,1.4,default|}","prefersuffix=${1|false,true|}","prepend=${1|false,true|}","pstopdf=${1|false,true|}","target=${1|default,ebook,prepress,printer,screen|}","update=${1|false,true|}","verbose=${1|false,true|}"],
+		"\\usepackage/epspdfconversion#c": ["GRAY","GREY","bbox=${1|false,true|}","custom=","default","ebook","gray","grey","help","hires","no-hires","nogray","nogrey","nopdftops","outdir=","pagenumber=","pdftopdf=${1|false,true|}","pdftops","pdfversion=${1|1.2,1.3,1.4,default|}","prefersuffix=${1|false,true|}","prepend=${1|false,true|}","prepress","printer","psoptions=","pstopdf=${1|false,true|}","screen","simple","suffix=","target=${1|default,ebook,prepress,printer,screen|}","update=${1|false,true|}","verbose=${1|false,true|}"]
+	},
+	"args": ["\\usepackage/epspdfconversion#c"]
+}

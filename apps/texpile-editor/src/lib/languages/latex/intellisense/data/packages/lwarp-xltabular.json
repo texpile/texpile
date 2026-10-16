@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tabularx"},{"name":"array"},{"name":"ltablex"},{"name":"longtable"}],
+	"macros": [],
+	"envs": [
+		{"name":"xltabular","arg":{"format":"[]{}{}","snippet":"[${1:position}]{${2:width}}{${3:columns}}"}},
+		{"name":"xltabular","arg":{"format":"{}{}","snippet":"{${1:width}}{${2:columns}}"}}
+	],
+	"keys": {}
+}

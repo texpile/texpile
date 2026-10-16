@@ -1,0 +1,14 @@
+{
+	"deps": [{"name":"xparse"}],
+	"macros": [
+		{"name":"MeiPi","arg":{"format":"[]{}","snippet":"MeiPi[${1:options}]{${2:content}}"}},
+		{"name":"MeiPi","arg":{"format":"{}","snippet":"MeiPi{${1:content}}"}},
+		{"name":"meipiSetup","arg":{"format":"{}","snippet":"meipiSetup{${1:options}}"}},
+		{"name":"眉批","arg":{"format":"[]{}","snippet":"眉批[${1:options}]{${2:content}}"},"doc":"The \\眉批 command places annotations at the top of the page (above the main text), a common format in traditional Chinese book annotations."},
+		{"name":"眉批","arg":{"format":"{}","snippet":"眉批{${1:content}}"},"doc":"The \\眉批 command places annotations at the top of the page (above the main text), a common format in traditional Chinese book annotations."},
+		{"name":"眉批設置","arg":{"format":"{}","snippet":"眉批設置{${1:options}}"}},
+		{"name":"眉批设置","arg":{"format":"{}","snippet":"眉批设置{${1:options}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

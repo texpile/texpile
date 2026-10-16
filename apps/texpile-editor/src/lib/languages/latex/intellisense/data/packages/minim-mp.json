@@ -1,0 +1,43 @@
+{
+	"macros": [
+		{"name":"boxnamedmpimage","arg":{"format":"{}","snippet":"boxnamedmpimage{${1:name}}"},"doc":"Puts the image named name in box box-nr."},
+		{"name":"boxnextmpimage","doc":"Puts the next unretrieved image in box box-nr."},
+		{"name":"closemetapostinstance","doc":"An instance can be closed with \\closemetapostinstance \\id."},
+		{"name":"convertmpcolours","unusual":true},
+		{"name":"debugmetapost","doc":"You can enable (global) debugging by saying debug_pdf to metapost, \\debugmetapost to tex or M.enable_debugging() to lua. This will write out a summary of metapost object information to the pdf file, just above the pdf instructions that object was translated into."},
+		{"name":"directmetapost","arg":{"format":"[]{}","snippet":"directmetapost[${1:options}]{${2:metapost code}}"},"doc":"Every call to \\directmetapost opens and closes a separate metapost instance."},
+		{"name":"directmetapost","arg":{"format":"{}","snippet":"directmetapost{${1:metapost code}}"},"doc":"Every call to \\directmetapost opens and closes a separate metapost instance."},
+		{"name":"everyendmplib","arg":{"format":"[]{}","snippet":"everyendmplib[${1:instance}]{${2:metapost code}}"},"if":"luamplib"},
+		{"name":"everyendmplib","arg":{"format":"{}","snippet":"everyendmplib{${1:metapost code}}"},"if":"luamplib"},
+		{"name":"everymp","arg":{"format":"{}{}{}","snippet":"everymp{${1:instance}}{${2:pre|post}}{${3:tex|mp}}"}},
+		{"name":"everymplib","arg":{"format":"[]{}","snippet":"everymplib[${1:instance}]{${2:metapost code}}"},"if":"luamplib"},
+		{"name":"everymplib","arg":{"format":"{}","snippet":"everymplib{${1:metapost code}}"},"if":"luamplib"},
+		{"name":"getallmpimages","doc":"Say \\remainingmpimages \\id for the number of images not yet retrieved and \\getallmpimages \\id to insert all remaining images."},
+		{"name":"getnamedmpimage","arg":{"format":"{}","snippet":"getnamedmpimage{${1:name}}"},"doc":"Retrieves an image by name and writes it to the current node list."},
+		{"name":"getnextmpimage","doc":"Writes the first unretrieved image to the current node list."},
+		{"name":"mpcolor","arg":{"format":"{}","snippet":"mpcolor{${1:color name}}"}},
+		{"name":"mpdim","arg":{"format":"{}","snippet":"mpdim{${1:dimension expression}}"}},
+		{"name":"mplibcodeinherit","arg":{"format":"{}","snippet":"mplibcodeinherit{${1:enable|disable}}"},"if":"luamplib"},
+		{"name":"mplibnumbersystem","arg":{"format":"{}","snippet":"mplibnumbersystem{${1:scaled|decimal|double}}"},"if":"luamplib"},
+		{"name":"mplibsetformat","arg":{"format":"{}","snippet":"mplibsetformat{${1:format}}"},"if":"luamplib"},
+		{"name":"mplibshowlog","arg":{"format":"{}","snippet":"mplibshowlog{${1:enable|disable}}"},"if":"luamplib"},
+		{"name":"newmetapostenvironment","arg":{"format":"[]{}","snippet":"newmetapostenvironment[${1:options}]{${2:name}}"}},
+		{"name":"newmetapostenvironment","arg":{"format":"{}","snippet":"newmetapostenvironment{${1:name}}"}},
+		{"name":"newmetapostinstance","arg":{"format":"[]","snippet":"newmetapostinstance[${1:options}]"},"doc":"You can define a new persistent metapost instance with \\newmetapostinstance [ options ] \\id."},
+		{"name":"newmetapostinstance","doc":"You can define a new persistent metapost instance with \\newmetapostinstance [ options ] \\id."},
+		{"name":"remainingmpimages","doc":"Say \\remainingmpimages \\id for the number of images not yet retrieved and \\getallmpimages \\id to insert all remaining images."},
+		{"name":"runmetapost","arg":{"format":"{}","snippet":"runmetapost{${1:metapost code}}"}},
+		{"name":"runmetapostimage","arg":{"format":"{}","snippet":"runmetapostimage{${1:metapost code}}"},"doc":"\\runmetapostimage \\id { code } will add beginfig ... endfig; to your code and write the resulting image immediately to the current list."},
+		{"name":"mplibtextextlabel","arg":{"format":"{}","snippet":"mplibtextextlabel{${1}}"},"unusual":true,"if":"luamplib"}
+	],
+	"envs": [
+		{"name":"metapost","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"metapost"},
+		{"name":"mplibcode","arg":{"format":"[]","snippet":"[${1:options}]"},"if":"luamplib"},
+		{"name":"mplibcode","if":"luamplib"}
+	],
+	"keys": {
+		"\\usepackage/minim-mp#c": ["luamplib"]
+	},
+	"args": ["\\usepackage/minim-mp#c"]
+}

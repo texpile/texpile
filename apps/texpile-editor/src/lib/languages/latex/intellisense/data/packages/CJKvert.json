@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [
+		{"name":"CJKbaselinestretch"},
+		{"name":"CJKhorz"},
+		{"name":"CJKsymbol","arg":{"format":"{}","snippet":"CJKsymbol{${1}}"},"unusual":true},
+		{"name":"CJKsymbolsimple","arg":{"format":"{}","snippet":"CJKsymbolsimple{${1}}"},"unusual":true},
+		{"name":"CJKvert"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/CJKvert#c": ["usebaselinestretch"]
+	},
+	"args": ["\\usepackage/CJKvert#c"]
+}

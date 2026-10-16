@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"addressfile","arg":{"format":"{}","snippet":"addressfile{${1:file name}}"}},
+		{"name":"mailingtext","arg":{"format":"{}","snippet":"mailingtext{${1:text of the mailing}}"},"doc":"The argument to this macro contains the entire text of the mailing."},
+		{"name":"makemailing"}
+	],
+	"envs": [],
+	"keys": {}
+}

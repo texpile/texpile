@@ -1,0 +1,8 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"nfssext-cfr"},{"name":"etoolbox"},{"name":"nfssext-cfr-nnfss"}],
+	"macros": [
+		{"name":"zeroslash"}
+	],
+	"envs": [],
+	"keys": {}
+}

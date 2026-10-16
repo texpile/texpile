@@ -1,0 +1,38 @@
+{
+	"macros": [
+		{"name":"ESKDappendix","arg":{"format":"{}{}","snippet":"ESKDappendix{${1:type}}{${2:title}}"}},
+		{"name":"ESKDappendixSkip","unusual":true},
+		{"name":"ESKDsectAlign","arg":{"format":"{}{}","snippet":"ESKDsectAlign{${1:element}}{${2:alignment}}"},"doc":"устанавливает выравнивание элемента."},
+		{"name":"ESKDsectAlignCenter","unusual":true},
+		{"name":"ESKDsectAlignLeft","unusual":true},
+		{"name":"ESKDsectAlignRight","unusual":true},
+		{"name":"ESKDsectionAlign","unusual":true},
+		{"name":"ESKDsectionSkipAfter","unusual":true},
+		{"name":"ESKDsectionSkipBefore","unusual":true},
+		{"name":"ESKDsectionStyle","unusual":true},
+		{"name":"ESKDsectSkip","arg":{"format":"{}{}{}","snippet":"ESKDsectSkip{${1:element}}{${2:skip before}}{${3:skip after}}"}},
+		{"name":"ESKDsectStyle","arg":{"format":"{}{}","snippet":"ESKDsectStyle{${1:element}}{${2:style}}"}},
+		{"name":"ESKDsubsectionAlign","unusual":true},
+		{"name":"ESKDsubsectionSkipAfter","unusual":true},
+		{"name":"ESKDsubsectionSkipBefore","unusual":true},
+		{"name":"ESKDsubsectionStyle","unusual":true},
+		{"name":"ESKDsubsubsectionAlign","unusual":true},
+		{"name":"ESKDsubsubsectionSkipAfter","unusual":true},
+		{"name":"ESKDsubsubsectionSkipBefore","unusual":true},
+		{"name":"ESKDsubsubsectionStyle","unusual":true},
+		{"name":"minus","unusual":true},
+		{"name":"plus","unusual":true},
+		{"name":"point"},
+		{"name":"subpoint"},
+		{"name":"subsubpoint"},
+		{"name":"theappendix","unusual":true},
+		{"name":"thepoint","unusual":true},
+		{"name":"thesubpoint","unusual":true},
+		{"name":"thesubsubpoint","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/eskdsect#c": ["pointsection","pointsingle","pointsubsection"]
+	},
+	"args": ["\\usepackage/eskdsect#c"]
+}

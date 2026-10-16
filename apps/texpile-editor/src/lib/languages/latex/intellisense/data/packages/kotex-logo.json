@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"hologo"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"}],
+	"macros": [
+		{"name":"ko"},
+		{"name":"koTeX"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"textarea"}],
+	"macros": [
+		{"name":"abstractstyle","arg":{"format":"{}","snippet":"abstractstyle{${1:style}}"}},
+		{"name":"AuthorBeforeTitle"},
+		{"name":"bibindex","arg":{"format":"[]{}","snippet":"bibindex[${1:style}]{${2:index}}"}},
+		{"name":"bibindex","arg":{"format":"{}","snippet":"bibindex{${1:index}}"}},
+		{"name":"copyrighttable","arg":{"format":"[]{}{}","snippet":"copyrighttable[${1:style}]{${2:ISBN}}{${3:copyright}}"}},
+		{"name":"copyrighttable","arg":{"format":"{}{}","snippet":"copyrighttable{${1:ISBN}}{${2:copyright}}"}},
+		{"name":"fulltitle","arg":{"format":"[]{}{}","snippet":"fulltitle[${1:style}]{${2:authors}}{${3:full title}}"}},
+		{"name":"fulltitle","arg":{"format":"{}{}","snippet":"fulltitle{${1:authors}}{${2:full title}}"}},
+		{"name":"lastpagehead","arg":{"format":"{}","snippet":"lastpagehead{${1:text}}"}},
+		{"name":"lastpageinfo","arg":{"format":"[]{}{}{}","snippet":"lastpageinfo[${1:style}]{${2:designers}}{${3:publishing attributes}}{${4:publisher}}"}},
+		{"name":"lastpageinfo","arg":{"format":"{}{}{}","snippet":"lastpageinfo{${1:designers}}{${2:publishing attributes}}{${3:publisher}}"}},
+		{"name":"lastpagestretch","arg":{"format":"{}","snippet":"lastpagestretch{${1:value}}"}},
+		{"name":"lastpagestyle","arg":{"format":"{}","snippet":"lastpagestyle{${1:style}}"}},
+		{"name":"makelastpage"},
+		{"name":"titleareadefault"},
+		{"name":"TitleBeforeAuthor"},
+		{"name":"titlecomment","arg":{"format":"{}","snippet":"titlecomment{${1:comment}}"}},
+		{"name":"titlefoot","arg":{"format":"{}","snippet":"titlefoot{${1:text}}"}},
+		{"name":"titlehead","arg":{"format":"{}","snippet":"titlehead{${1:text}}"}},
+		{"name":"titlesign","arg":{"format":"{}","snippet":"titlesign{${1:sign}}"}},
+		{"name":"titlestretch","arg":{"format":"{}","snippet":"titlestretch{${1:value}}"}},
+		{"name":"titlestyle","arg":{"format":"{}","snippet":"titlestyle{${1:style}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

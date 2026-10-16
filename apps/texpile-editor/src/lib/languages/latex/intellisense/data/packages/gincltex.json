@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"svn-prov"},{"name":"adjustbox"},{"name":"xkeyval"},{"name":"adjcalc"},{"name":"trimclip"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"collectbox"},{"name":"ifoddpage"},{"name":"varwidth"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/gincltex#c": ["bb=aux","bb=file","draft","draft=false","draft=true","final","final=false","final=true"]
+	},
+	"args": ["\\usepackage/gincltex#c"]
+}

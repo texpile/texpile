@@ -1,0 +1,19 @@
+{
+	"deps": [{"name":"color"},{"name":"multimedia"},{"name":"keyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"multido"},{"name":"animate"},{"name":"ifthen"},{"name":"ifdraft"},{"name":"calc"},{"name":"graphics"},{"name":"trig"},{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"pstricks"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-coil"},{"name":"arrayjob"},{"name":"fltpoint"}],
+	"macros": [
+		{"name":"Nframes"},
+		{"name":"PlotDotsVocal"},
+		{"name":"SetOscAmp","arg":{"format":"{}{}","snippet":"SetOscAmp{${1:frame index}}{${2:breath type}}"}},
+		{"name":"ShowLinearTubes","arg":{"format":"{}","snippet":"ShowLinearTubes{${1:frame index}}"}},
+		{"name":"ShowParameters"},
+		{"name":"ShowPhonemesGerman","arg":{"format":"{}","snippet":"ShowPhonemesGerman{${1:frame index}}"}},
+		{"name":"ShowPressure","arg":{"format":"{}","snippet":"ShowPressure{${1:frame index}}"}},
+		{"name":"SpeakVec","arg":{"format":"()","snippet":"SpeakVec(${1:row,column})"}},
+		{"name":"StomachCompartment"},
+		{"name":"UpdateRespOscillation"},
+		{"name":"UpdateVocalTract","arg":{"format":"{}","snippet":"UpdateVocalTract{${1:frame index}}"}},
+		{"name":"VocalChords"}
+	],
+	"envs": [],
+	"keys": {}
+}

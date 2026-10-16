@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"fetch","arg":{"format":"{}","snippet":"fetch{${1:index}}"}},
+		{"name":"placebox","arg":{"format":"[][][][][][]{}","snippet":"placebox[${1:position}][${2:x shift}][${3:y shift}][${4:extra x shift}][${5:extra y shift}][${6:box type}]{${7:content}}"}},
+		{"name":"placebox","arg":{"format":"{}","snippet":"placebox{${1:content}}"}},
+		{"name":"pop"},
+		{"name":"popnil"},
+		{"name":"push","arg":{"format":"{}","snippet":"push{${1}}"}},
+		{"name":"setdefault","arg":{"format":"{}{}{}","snippet":"setdefault{${1:command name}}{${2:number of defaults}}{${3:first default}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

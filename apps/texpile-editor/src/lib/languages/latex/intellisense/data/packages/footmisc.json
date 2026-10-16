@@ -1,0 +1,27 @@
+{
+	"deps": [{"name":"perpage","if":"perpage"}],
+	"macros": [
+		{"name":"DefineFNsymbols","arg":{"format":"{}[]{}","snippet":"DefineFNsymbols{${1:name}}[${2:text or math}]{${3:symbols}}"},"doc":"The macro \\DefineFNsymbols allows the user to define a set of footnote symbols, to be used with the \\setfnsymbol command."},
+		{"name":"DefineFNsymbols","arg":{"format":"{}{}","snippet":"DefineFNsymbols{${1:name}}{${2:symbols}}"},"doc":"The macro \\DefineFNsymbols allows the user to define a set of footnote symbols, to be used with the \\setfnsymbol command."},
+		{"name":"DefineFNsymbols*","arg":{"format":"{}[]{}","snippet":"DefineFNsymbols*{${1:name}}[${2:text or math}]{${3:symbols}}"},"doc":"The macro \\DefineFNsymbols allows the user to define a set of footnote symbols, to be used with the \\setfnsymbol command."},
+		{"name":"DefineFNsymbols*","arg":{"format":"{}{}","snippet":"DefineFNsymbols*{${1:name}}{${2:symbols}}"},"doc":"The macro \\DefineFNsymbols allows the user to define a set of footnote symbols, to be used with the \\setfnsymbol command."},
+		{"name":"DefineFNsymbolsTM","arg":{"format":"{}{}","snippet":"DefineFNsymbolsTM{${1:name}}{${2:text/math symbol pairs}}"}},
+		{"name":"DefineFNsymbolsTM*","arg":{"format":"{}{}","snippet":"DefineFNsymbolsTM*{${1:name}}{${2:text/math symbol pairs}}"}},
+		{"name":"footnotelayout"},
+		{"name":"footnotemargin","doc":"If \\footnotemargin is a positive length, the footnote mark will be set with its right edge \\footnotemargin from the margin."},
+		{"name":"hangfootparindent","doc":"The footnote itself may of course be longer than one paragraph; if so, the paragraphs will be separated by the vertical space specified by \\hangfootparskip, and the second and subsequent paragraphs are indented by \\hangfootparindent."},
+		{"name":"hangfootparskip","doc":"The footnote itself may of course be longer than one paragraph; if so, the paragraphs will be separated by the vertical space specified by \\hangfootparskip, and the second and subsequent paragraphs are indented by \\hangfootparindent."},
+		{"name":"mpfootnotemark","arg":{"format":"[]","snippet":"mpfootnotemark[${1:number}]"}},
+		{"name":"mpfootnotemark"},
+		{"name":"mpfootnoterule","if":"splitrule"},
+		{"name":"multfootsep","if":"multiple"},
+		{"name":"pagefootnoterule","if":"splitrule","doc":"By default, \\mpfootnoterule and \\pagefootnoterule retain the original definition of \\footnoterule (which may have been modified by a norule option), while \\splitfootnoterule becomes a full-width rule."},
+		{"name":"setfnsymbol","arg":{"format":"{}","snippet":"setfnsymbol{${1:symbol set}}"}},
+		{"name":"splitfootnoterule","if":"splitrule","doc":"By default, \\mpfootnoterule and \\pagefootnoterule retain the original definition of \\footnoterule (which may have been modified by a norule option), while \\splitfootnoterule becomes a full-width rule."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/footmisc#c": ["abovefloats","belowfloats","bottom","bottomfloats","flushmargin","hang","marginal","multiple","norule","para","perpage","ragged","side","splitrule","stable","symbol","symbol*"]
+	},
+	"args": ["\\usepackage/footmisc#c"]
+}

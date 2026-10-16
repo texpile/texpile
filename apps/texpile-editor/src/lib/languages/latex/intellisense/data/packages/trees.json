@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"branch","arg":{"format":"{}{}","snippet":"branch{${1:steepness}}{${2:text}}"},"doc":"For each ”internal node”, you only have to specify which are the descending nodes, with a \\branch command (\\tbranch for ternary node.)."},
+		{"name":"branchlabels","arg":{"format":"{}{}{}","snippet":"branchlabels{${1:first label}}{${2:second label}}{${3:third label}}"}},
+		{"name":"labela","unusual":true},
+		{"name":"labelb","unusual":true},
+		{"name":"labelc","unusual":true},
+		{"name":"leaf","arg":{"format":"{}{}","snippet":"leaf{${1:text}}{${2:right text}}"}},
+		{"name":"root","arg":{"format":"()","snippet":"root(${1:x,y})"}},
+		{"name":"tbranch","arg":{"format":"{}{}","snippet":"tbranch{${1:steepness}}{${2:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

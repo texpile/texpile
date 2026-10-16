@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"cp"}],
+	"macros": [
+		{"name":"cpemdash","unusual":true},
+		{"name":"cpgerman","unusual":true},
+		{"name":"cpneg","unusual":true},
+		{"name":"cporiginal","unusual":true},
+		{"name":"cpVert","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

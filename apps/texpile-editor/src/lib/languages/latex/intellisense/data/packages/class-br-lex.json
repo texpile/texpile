@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"class-mwbk"},{"name":"ulem"},{"name":"ifxetex"},{"name":"iftex"},{"name":"inputenc","engines":["pdflatex","lualatex"]},{"name":"babel","engines":["pdflatex","lualatex"]},{"name":"textcase"},{"name":"fontspec","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"polyglossia","engines":["xelatex"]},{"name":"etoolbox","engines":["xelatex"]}],
+	"macros": [
+		{"name":"alinea"},
+		{"name":"artigo"},
+		{"name":"cortado","arg":{"format":"{}","snippet":"cortado{${1:text}}"}},
+		{"name":"descricao","arg":{"format":"{}","snippet":"descricao{${1:description}}"}},
+		{"name":"inciso"},
+		{"name":"itens"},
+		{"name":"paragrafo"},
+		{"name":"paragrafounico"},
+		{"name":"theartigo","unusual":true},
+		{"name":"theparagrafo","unusual":true},
+		{"name":"titulo","arg":{"format":"{}","snippet":"titulo{${1:title}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/br-lex#c": ["capitulo","paragrafoespaco","paragrafonormal"]
+	},
+	"args": ["\\documentclass/br-lex#c"]
+}

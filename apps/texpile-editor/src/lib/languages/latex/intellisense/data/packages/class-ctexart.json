@@ -1,67 +1,68 @@
 {
-  "deps": [
-    {
-      "name": "ctex"
-    }
-  ],
-  "macros": [
-    {
-      "name": "partmark",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "partmark{${1:code}}"
-      }
-    },
-    {
-      "name": "CTEXnumberline",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "CTEXnumberline{${1:number}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\documentclass/ctexart#c": [
-      "GBK",
-      "UTF8",
-      "zhmap=${1|true,false,zhmCJK|}",
-      "zihao=${1|-4,5,false|}",
-      "heading",
-      "sub3section",
-      "sub4section",
-      "scheme=${1|chinese,plain|}",
-      "linespread=${1:number}",
-      "fontset=${1|adobe,fandol,founder,mac,macnew,macold,ubuntu,windows,none|}",
-      "punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}",
-      "space=${1|true,false,auto|}",
-      "autoindent=",
-      "a4paper",
-      "a5paper",
-      "b5paper",
-      "letterpaper",
-      "legalpaper",
-      "executivepaper",
-      "landscape",
-      "10pt",
-      "11pt",
-      "12pt",
-      "oneside",
-      "twoside",
-      "draft",
-      "final",
-      "titlepage",
-      "notitlepage",
-      "onecolumn",
-      "twocolumn",
-      "leqno",
-      "fleqn",
-      "openbib"
-    ]
-  },
-  "args": [
-    "\\documentclass/ctexart#c"
-  ]
+	"deps": [{"name":"class-article"},{"name":"luatexja","engines":["lualatex"]},{"name":"luatexja-core","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"iftex","engines":["lualatex"]},{"name":"iftex","if":"hyperref","engines":["xelatex"]},{"name":"xkeyval","engines":["lualatex"]},{"name":"etoolbox","engines":["lualatex"]},{"name":"etoolbox","if":"hyperref","engines":["xelatex"]},{"name":"everyhook","engines":["lualatex"]},{"name":"svn-prov","engines":["lualatex"]},{"name":"luatexja-compat","engines":["lualatex"]},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"zhnumber"},{"name":"fancyhdr","if":"fancyhdr"},{"name":"hyperref","if":"hyperref"},{"name":"kvsetkeys","if":"hyperref"},{"name":"pdfescape","if":"hyperref"},{"name":"nameref","if":"hyperref"},{"name":"refcount","if":"hyperref"},{"name":"gettitlestring","if":"hyperref"},{"name":"kvoptions","if":"hyperref"},{"name":"stringenc","if":"hyperref"},{"name":"intcalc","if":"hyperref"},{"name":"url","if":"hyperref"},{"name":"bitset","if":"hyperref"},{"name":"bigintcalc","if":"hyperref"},{"name":"rerunfilecheck","if":"hyperref"},{"name":"uniquecounter","if":"hyperref"},{"name":"xeCJK","engines":["xelatex"]},{"name":"xtemplate","engines":["xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"keyval","if":"hyperref","engines":["xelatex"]}],
+	"macros": [
+		{"name":"addCJKfontfeature","arg":{"format":"{}","snippet":"addCJKfontfeature{${1:font features}}"},"unusual":true},
+		{"name":"addCJKfontfeatures","arg":{"format":"{}","snippet":"addCJKfontfeatures{${1:font features}}"}},
+		{"name":"ccwd"},
+		{"name":"chinese","arg":{"format":"{}","snippet":"chinese{${1:counter}}"}},
+		{"name":"Chinese","arg":{"format":"{}","snippet":"Chinese{${1:counter}}"},"unusual":true},
+		{"name":"CJKfamily","arg":{"format":"{}","snippet":"CJKfamily{${1:family}}"}},
+		{"name":"CJKfontspec","arg":{"format":"[]{}","snippet":"CJKfontspec[${1:font features}]{${2:font name}}"}},
+		{"name":"CJKfontspec","arg":{"format":"{}","snippet":"CJKfontspec{${1:font name}}"}},
+		{"name":"CTeX"},
+		{"name":"CTEXdigits","arg":{"format":"{}{}","snippet":"CTEXdigits{${1:macro}}{${2:number}}"}},
+		{"name":"CTEXheadinglabel","arg":{"format":"{}","snippet":"CTEXheadinglabel{${1:level}}"}},
+		{"name":"CTEXheadingnumber","arg":{"format":"{}","snippet":"CTEXheadingnumber{${1:level}}"}},
+		{"name":"CTEXifheadingnumbering","arg":{"format":"{}{}{}","snippet":"CTEXifheadingnumbering{${1:level}}{${2:true}}{${3:false}}"}},
+		{"name":"CTEXifname","arg":{"format":"{}{}","snippet":"CTEXifname{${1:with name}}{${2:without name}}"}},
+		{"name":"CTEXindent","unusual":true},
+		{"name":"CTEXnoindent","unusual":true},
+		{"name":"CTEXnumber","arg":{"format":"{}{}","snippet":"CTEXnumber{${1:macro}}{${2:number}}"}},
+		{"name":"CTEXnumberline","arg":{"format":"{}","snippet":"CTEXnumberline{${1:level}}"},"unusual":true},
+		{"name":"CTEXoptions","arg":{"format":"[]","snippet":"CTEXoptions[${1:options}]"},"unusual":true},
+		{"name":"CTEXoptions","unusual":true},
+		{"name":"ctexset","arg":{"format":"{}","snippet":"ctexset{${1:options}}"}},
+		{"name":"CTEXsetfont","unusual":true},
+		{"name":"CTEXsetup","arg":{"format":"[]{}","snippet":"CTEXsetup[${1:options}]{${2:heading}}"},"unusual":true},
+		{"name":"CTEXsetup","arg":{"format":"{}","snippet":"CTEXsetup{${1:heading}}"},"unusual":true},
+		{"name":"CTEXtheparagraph"},
+		{"name":"CTEXthepart"},
+		{"name":"CTEXthesection"},
+		{"name":"CTEXthesubparagraph"},
+		{"name":"CTEXthesubsection"},
+		{"name":"CTEXthesubsubsection"},
+		{"name":"defaultCJKfontfeatures","arg":{"format":"{}","snippet":"defaultCJKfontfeatures{${1:font features}}"}},
+		{"name":"fangsong"},
+		{"name":"heiti"},
+		{"name":"ifctexpdf","unusual":true},
+		{"name":"kaishu"},
+		{"name":"lishu","if":"fontset=windows|fontset=founder"},
+		{"name":"newCJKfontfamily","arg":{"format":"[]{}[]{}","snippet":"newCJKfontfamily[${1:family}]{${2:command}}[${3:font features}]{${4:font name}}"}},
+		{"name":"newCJKfontfamily","arg":{"format":"{}{}","snippet":"newCJKfontfamily{${1:command}}{${2:font name}}"}},
+		{"name":"partmark","arg":{"format":"{}","snippet":"partmark{${1:title}}"},"unusual":true},
+		{"name":"pingfang"},
+		{"name":"proofname"},
+		{"name":"setCJKfamilyfont","arg":{"format":"{}[]{}","snippet":"setCJKfamilyfont{${1:family}}[${2:font features}]{${3:font name}}"}},
+		{"name":"setCJKfamilyfont","arg":{"format":"{}{}","snippet":"setCJKfamilyfont{${1:family}}{${2:font name}}"}},
+		{"name":"setCJKmainfont","arg":{"format":"[]{}","snippet":"setCJKmainfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmainfont","arg":{"format":"{}","snippet":"setCJKmainfont{${1:font name}}"}},
+		{"name":"setCJKmathfont","arg":{"format":"[]{}","snippet":"setCJKmathfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmathfont","arg":{"format":"{}","snippet":"setCJKmathfont{${1:font name}}"}},
+		{"name":"setCJKmonofont","arg":{"format":"[]{}","snippet":"setCJKmonofont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKmonofont","arg":{"format":"{}","snippet":"setCJKmonofont{${1:font name}}"}},
+		{"name":"setCJKromanfont","arg":{"format":"[]{}","snippet":"setCJKromanfont[${1:font features}]{${2:font name}}"},"unusual":true},
+		{"name":"setCJKromanfont","arg":{"format":"{}","snippet":"setCJKromanfont{${1:font name}}"},"unusual":true},
+		{"name":"setCJKsansfont","arg":{"format":"[]{}","snippet":"setCJKsansfont[${1:font features}]{${2:font name}}"}},
+		{"name":"setCJKsansfont","arg":{"format":"{}","snippet":"setCJKsansfont{${1:font name}}"}},
+		{"name":"songti"},
+		{"name":"yahei","if":"fontset=windows"},
+		{"name":"youyuan","if":"fontset=windows|fontset=founder"},
+		{"name":"zihao","arg":{"format":"{}","snippet":"zihao{${1:size}}"}},
+		{"name":"ziju","arg":{"format":"{}","snippet":"ziju{${1:factor}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\documentclass/ctexart#c": ["GBK","UTF8","zhmap=${1|true,false,zhmCJK|}","zihao=${1|-4,5,false|}","sub3section","sub4section","scheme=${1|chinese,plain|}","linespread=${1:number}","fontset=${1|adobe,fandol,founder,hanyi,mac,macnew,macold,ubuntu,windows,none|}","punct=${1|quanjiao,banjiao,kaiming,CCT,plain|}","space=${1|true,false,auto|}","autoindent=","a4paper","a5paper","b5paper","letterpaper","legalpaper","executivepaper","landscape","10pt","11pt","12pt","oneside","twoside","draft","final","titlepage","notitlepage","onecolumn","twocolumn","leqno","fleqn","openbib"]
+	},
+	"args": ["\\documentclass/ctexart#c"]
 }

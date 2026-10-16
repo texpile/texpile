@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"insertauthorindicator"},
+		{"name":"insertdateindicator"},
+		{"name":"insertinstituteindicator"},
+		{"name":"inserttitleindicator"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"cleartolastpage","arg":{"format":"[][]","snippet":"cleartolastpage[${1:divisor}][${2:remainder}]"}},
+		{"name":"cleartolastpage"},
+		{"name":"cleartolastpage*","arg":{"format":"[][]","snippet":"cleartolastpage*[${1:divisor}][${2:remainder}]"}},
+		{"name":"cleartolastpage*"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/twoup#c": ["a4paper","a5paper","b5paper","dvips","executivepaper","legalpaper","letterpaper","nofoot","nohead","noheadfoot","nospecial"]
+	},
+	"args": ["\\usepackage/twoup#c"]
+}

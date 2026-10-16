@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"},{"name":"lscape"},{"name":"graphics"},{"name":"trig"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/pdflscape-nometadata#c": ["dvipdfm","dvipdfmx","dvips","dvipsone","luatex","pctexps","pdftex","xetex"]
+	},
+	"args": ["\\usepackage/pdflscape-nometadata#c"]
+}

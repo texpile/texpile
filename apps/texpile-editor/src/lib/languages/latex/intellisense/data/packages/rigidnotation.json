@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"xparse"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"Conj"},
+		{"name":"Herm","doc":"Macro that typesets a ·H in the right super-script position to denote the Hermitian as in bRaH ."},
+		{"name":"Inv","doc":"Macro that typesets a ·−1 in the right super-script position to denote the inverse as in cbpa−1."},
+		{"name":"NewRigidNotation","arg":{"format":"{}{}","snippet":"NewRigidNotation{${1:name}}{${2:symbol}}"}},
+		{"name":"Pos","arg":{"format":"[]{}{}{}","snippet":"Pos[${1:accent}]{${2:subject}}{${3:basis}}{${4:coordinate system}}"}},
+		{"name":"Pos","arg":{"format":"{}{}{}","snippet":"Pos{${1:subject}}{${2:basis}}{${3:coordinate system}}"}},
+		{"name":"Pose","arg":{"format":"[]{}{}{}","snippet":"Pose[${1:accent}]{${2:subject}}{${3:basis}}{${4:coordinate system}}"}},
+		{"name":"Pose","arg":{"format":"{}{}{}","snippet":"Pose{${1:subject}}{${2:basis}}{${3:coordinate system}}"}},
+		{"name":"Rot","arg":{"format":"[]{}{}{}","snippet":"Rot[${1:accent}]{${2:subject}}{${3:basis}}{${4:coordinate system}}"}},
+		{"name":"Rot","arg":{"format":"{}{}{}","snippet":"Rot{${1:subject}}{${2:basis}}{${3:coordinate system}}"}},
+		{"name":"SetConciseNotation","arg":{"format":"{}","snippet":"SetConciseNotation{${1:boolean}}"},"doc":"Sets whether to use the concise notation that omits to state the coordinate system when the basis and coordinate systems are the same."},
+		{"name":"Tran"},
+		{"name":"UnsetConciseNotation","doc":"Disables the concise notation."}
+	],
+	"envs": [],
+	"keys": {}
+}

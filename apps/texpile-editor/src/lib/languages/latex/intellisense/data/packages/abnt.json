@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"setspace"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"etoolbox"},{"name":"tocbasic"},{"name":"emptypage"},{"name":"newfloat"},{"name":"caption"},{"name":"caption3"},{"name":"enumerate"}],
+	"macros": [
+		{"name":"authorfont","arg":{"format":"{}","snippet":"authorfont{${1}}"}},
+		{"name":"capa"},
+		{"name":"coorientador","arg":{"format":"{}","snippet":"coorientador{${1}}"}},
+		{"name":"coorientadora","arg":{"format":"{}","snippet":"coorientadora{${1}}"}},
+		{"name":"datefont","arg":{"format":"{}","snippet":"datefont{${1}}"}},
+		{"name":"folhaderosto"},
+		{"name":"instituicao","arg":{"format":"{}","snippet":"instituicao{${1}}"}},
+		{"name":"instituicaofont","arg":{"format":"{}","snippet":"instituicaofont{${1}}"}},
+		{"name":"listofmapas"},
+		{"name":"listofquadros"},
+		{"name":"local","arg":{"format":"{}","snippet":"local{${1}}"}},
+		{"name":"localfont","arg":{"format":"{}","snippet":"localfont{${1}}"}},
+		{"name":"mapaname","unusual":true},
+		{"name":"orientador","arg":{"format":"{}","snippet":"orientador{${1}}"}},
+		{"name":"orientadora","arg":{"format":"{}","snippet":"orientadora{${1}}"}},
+		{"name":"pretextual"},
+		{"name":"quadroname","unusual":true},
+		{"name":"textual"},
+		{"name":"tipotrabalho","arg":{"format":"{}","snippet":"tipotrabalho{${1}}"}},
+		{"name":"titlefont","arg":{"format":"{}","snippet":"titlefont{${1}}"}}
+	],
+	"envs": [
+		{"name":"citacao"},
+		{"name":"mapa","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"mapa"},
+		{"name":"quadro","arg":{"format":"[]","snippet":"[${1:placement}]"}},
+		{"name":"quadro"}
+	],
+	"keys": {}
+}

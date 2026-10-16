@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"color","if":"color"}],
+	"macros": [
+		{"name":"showkeyslabelformat","arg":{"format":"{}","snippet":"showkeyslabelformat{${1:label}}"},"doc":"You can also control the appearance of the typeset label with the command \\showkeyslabelformat, which takes one argument."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/showkeys#c": ["color","draft","final","notcite","notref"]
+	},
+	"args": ["\\usepackage/showkeys#c"]
+}

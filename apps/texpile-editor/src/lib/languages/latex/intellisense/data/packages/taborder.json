@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"setStructTabOrder","arg":{"format":"{}","snippet":"setStructTabOrder{${1:list of object names}}"}},
+		{"name":"setTabOrder","arg":{"format":"{}","snippet":"setTabOrder{${1}}"}},
+		{"name":"setTabOrderByList"},
+		{"name":"setTabOrderByNumber"}
+	],
+	"envs": [],
+	"keys": {}
+}

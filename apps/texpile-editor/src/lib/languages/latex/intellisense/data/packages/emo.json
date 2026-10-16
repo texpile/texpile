@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"inputenc"},{"name":"iftex"},{"name":"graphicx","engines":["pdflatex","xelatex"]},{"name":"keyval","engines":["pdflatex","xelatex"]},{"name":"graphics","engines":["pdflatex","xelatex"]},{"name":"trig","engines":["pdflatex","xelatex"]},{"name":"xcolor"},{"name":"xspace","if":"extra"},{"name":"index","if":"index"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
+	"macros": [
+		{"name":"emo","arg":{"format":"{}","snippet":"emo{${1:emoji-name}}"},"doc":"An \\emo{⟨emoji-name⟩} invocation expands to the named emoji."},
+		{"name":"lingchi","if":"extra","doc":"When emo is used with the `extra` option, this package also defines the `\\lingchi` and `\\YHWH` macros for 凌遲 and יהוה, respectively."},
+		{"name":"YHWH","if":"extra","doc":"When emo is used with the `extra` option, this package also defines the `\\lingchi` and `\\YHWH` macros for 凌遲 and יהוה, respectively."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/emo#c": ["debug","extra","index"]
+	},
+	"args": ["\\usepackage/emo#c"]
+}

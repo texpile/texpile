@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"class-article"},{"name":"sblfonts"},{"name":"babel"},{"name":"tempora","engines":["pdflatex"]},{"name":"textcomp","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"xkeyval","engines":["pdflatex"]},{"name":"biblatex"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etoolbox"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"xpatch"},{"name":"xparse"},{"name":"biblatex-source-division"},{"name":"blx-case-expl3"},{"name":"csquotes"},{"name":"geometry"},{"name":"ifvtex"},{"name":"setspace"},{"name":"ragged2e"},{"name":"fancyhdr"},{"name":"footmisc"},{"name":"caption"},{"name":"caption3"},{"name":"titlesec"},{"name":"titletoc"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"luatexbase","engines":["lualatex"]},{"name":"keyval","engines":["lualatex","xelatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"course","arg":{"format":"{}","snippet":"course{${1}}"},"doc":"Set the name of the course the paper is for."},
+		{"name":"institution","arg":{"format":"{}","snippet":"institution{${1}}"},"doc":"Set the name of the institution the paper will be submitted at."},
+		{"name":"maketitle"},
+		{"name":"professor","arg":{"format":"{}","snippet":"professor{${1}}"},"doc":"Set the name of the professor the paper will be submitted to."}
+	],
+	"envs": [],
+	"keys": {}
+}

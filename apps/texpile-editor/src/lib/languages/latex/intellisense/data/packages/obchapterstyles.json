@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"apptoobchapterstyle","arg":{"format":"{}{}","snippet":"apptoobchapterstyle{${1:style name}}{${2:code}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

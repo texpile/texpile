@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"semhelv"}],
+	"macros": [
+		{"name":"colC","unusual":true},
+		{"name":"colorA","unusual":true},
+		{"name":"colorB","unusual":true},
+		{"name":"darkblue","unusual":true},
+		{"name":"myblue","unusual":true},
+		{"name":"slidetitle","arg":{"format":"{}","snippet":"slidetitle{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

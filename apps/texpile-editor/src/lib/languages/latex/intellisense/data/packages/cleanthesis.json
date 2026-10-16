@@ -1,0 +1,26 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"xcolor"},{"name":"lmodern"},{"name":"microtype"},{"name":"etoolbox"},{"name":"setspace"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"tabularx"},{"name":"array"},{"name":"enumitem"},{"name":"blindtext"},{"name":"xspace"},{"name":"textcomp"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"scrlayer-scrpage"},{"name":"scrlayer"},{"name":"scrkbase"},{"name":"scrbase"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"caption"},{"name":"caption3"},{"name":"csquotes"},{"name":"tocloft"}],
+	"macros": [
+		{"name":"cleanchapterquote","arg":{"format":"{}{}{}","snippet":"cleanchapterquote{${1:quote}}{${2:author}}{${3:description}}"}},
+		{"name":"cthesissetcolor","arg":{"format":"{}{}{}","snippet":"cthesissetcolor{${1:model}}{${2:main color}}{${3:accessory color}}"},"unusual":true},
+		{"name":"cthesissetcolorbluegreen","unusual":true},
+		{"name":"cthesissetcolorbluemagenta","unusual":true},
+		{"name":"figref","arg":{"format":"{}","snippet":"figref{${1}}"}},
+		{"name":"figrefadd","arg":{"format":"{}{}","snippet":"figrefadd{${1}}{${2}}"}},
+		{"name":"figrefaddt","arg":{"format":"{}{}","snippet":"figrefaddt{${1}}{${2}}"}},
+		{"name":"figreft","arg":{"format":"{}","snippet":"figreft{${1}}"}},
+		{"name":"fref","arg":{"format":"{}","snippet":"fref{${1}}"}},
+		{"name":"frefadd","arg":{"format":"{}{}","snippet":"frefadd{${1}}{${2}}"}},
+		{"name":"seepage","arg":{"format":"{}","snippet":"seepage{${1}}"}},
+		{"name":"tableref","arg":{"format":"{}","snippet":"tableref{${1}}"}},
+		{"name":"tabref","arg":{"format":"{}","snippet":"tabref{${1}}"}},
+		{"name":"textref","arg":{"format":"{}","snippet":"textref{${1}}"}},
+		{"name":"textreft","arg":{"format":"{}","snippet":"textreft{${1}}"}},
+		{"name":"tgherosfont"},
+		{"name":"TODO","arg":{"format":"{}","snippet":"TODO{${1}}"}},
+		{"name":"tref","arg":{"format":"{}","snippet":"tref{${1}}"}},
+		{"name":"treft","arg":{"format":"{}","snippet":"treft{${1}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

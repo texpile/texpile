@@ -51,6 +51,11 @@ function uncommentedIndexOf(text: string, marker: string, last = false): number 
 	return found;
 }
 
+/** where the real \begin{document} starts, -1 when there is none */
+export function documentStart(text: string): number {
+	return uncommentedIndexOf(text, BEGIN);
+}
+
 /** whether the text has a real \begin{document}: not commented out, not quoted */
 export function hasDocumentEnv(text: string): boolean {
 	return uncommentedIndexOf(text, BEGIN) >= 0;

@@ -1,163 +1,29 @@
 {
-  "deps": [
-    {
-      "name": "array"
-    },
-    {
-      "name": "color"
-    }
-  ],
-  "macros": [
-    {
-      "name": "arrayrulecolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "arrayrulecolor{${1:color}}"
-      }
-    },
-    {
-      "name": "arrayrulecolor",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "arrayrulecolor[${2:color model}]{${1:color}}"
-      }
-    },
-    {
-      "name": "cellcolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "cellcolor{${1:color}}"
-      }
-    },
-    {
-      "name": "cellcolor",
-      "arg": {
-        "format": "[]{}[][]",
-        "snippet": "cellcolor[${2:color model}]{${1:color}}[${3:left overhang}][${4:right overhang}]"
-      }
-    },
-    {
-      "name": "columncolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "columncolor{${1:color}}"
-      }
-    },
-    {
-      "name": "columncolor",
-      "arg": {
-        "format": "[]{}[][]",
-        "snippet": "columncolor[${2:color model}]{${1:color}}[${3:left overhang}][${4:right overhang}]"
-      }
-    },
-    {
-      "name": "doublerulesepcolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "doublerulesepcolor{${1:color}}"
-      }
-    },
-    {
-      "name": "doublerulesepcolor",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "doublerulesepcolor[${2:color model}]{${1:color}}"
-      }
-    },
-    {
-      "name": "rowcolor",
-      "arg": {
-        "format": "{}",
-        "snippet": "rowcolor{${1:color}}"
-      }
-    },
-    {
-      "name": "rowcolor",
-      "arg": {
-        "format": "[]{}[][]",
-        "snippet": "rowcolor[${2:color model}]{${1:color}}[${3:left overhang}][${4:right overhang}]"
-      }
-    },
-    {
-      "name": "minrowclearance",
-      "unusual": true
-    },
-    {
-      "name": "rowcolors",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "rowcolors{${1:row}}{${2:odd-row-color}}{${3:even-row-color}}"
-      }
-    },
-    {
-      "name": "rowcolors",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "rowcolors[${4:commands}]{${1:row}}{${2:odd-row-color}}{${3:even-row-color}}"
-      }
-    },
-    {
-      "name": "rowcolors*",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "rowcolors*{${1:row}}{${2:odd-row-color}}{${3:even-row-color}}"
-      }
-    },
-    {
-      "name": "rowcolors*",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "rowcolors*[${4:commands}]{${1:row}}{${2:odd-row-color}}{${3:even-row-color}}"
-      }
-    },
-    {
-      "name": "showrowcolors"
-    },
-    {
-      "name": "hiderowcolors"
-    },
-    {
-      "name": "rownum"
-    },
-    {
-      "name": "therownum"
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/colortbl#c": [
-      "monochrome",
-      "debugshow",
-      "setpagesize",
-      "nosetpagesize",
-      "dvips",
-      "xdvi",
-      "dvipdf",
-      "dvipdfm",
-      "dvipdfmx",
-      "pdftex",
-      "luatex",
-      "dvisvgm",
-      "xetex",
-      "dvipsone",
-      "dviwindo",
-      "emtex",
-      "dviwin",
-      "oztex",
-      "textures",
-      "pctexps",
-      "pctexwin",
-      "pctexhp",
-      "pctex32",
-      "truetex",
-      "tcidvi",
-      "vtex",
-      "dvipsnames",
-      "nodvipsnames",
-      "usenames"
-    ]
-  },
-  "args": [
-    "\\usepackage/colortbl#c"
-  ]
+	"deps": [{"name":"array"},{"name":"color"}],
+	"macros": [
+		{"name":"arrayrulecolor","arg":{"format":"[]{}","snippet":"arrayrulecolor[${1:color model}]{${2:color}}"},"doc":"\\arrayrulecolor takes the same arguments as \\color, and is a global declaration which affects all following horizontal and vertical rules in tables."},
+		{"name":"arrayrulecolor","arg":{"format":"{}","snippet":"arrayrulecolor{${1:color}}"},"doc":"\\arrayrulecolor takes the same arguments as \\color, and is a global declaration which affects all following horizontal and vertical rules in tables."},
+		{"name":"cellcolor","arg":{"format":"[]{}","snippet":"cellcolor[${1:color model}]{${2:color}}"},"doc":"\\cellcolor applies the specified color to just its own tabular cell."},
+		{"name":"cellcolor","arg":{"format":"{}","snippet":"cellcolor{${1:color}}"},"doc":"\\cellcolor applies the specified color to just its own tabular cell."},
+		{"name":"columncolor","arg":{"format":"[]{}[][]","snippet":"columncolor[${1:color model}]{${2:color}}[${3:left overhang}][${4:right overhang}]"},"doc":"The package supplies a \\columncolor command, that should (only) be used in the argument of a > column specifier, to add a colored panel behind the specified column."},
+		{"name":"columncolor","arg":{"format":"{}","snippet":"columncolor{${1:color}}"},"doc":"The package supplies a \\columncolor command, that should (only) be used in the argument of a > column specifier, to add a colored panel behind the specified column."},
+		{"name":"doublerulesepcolor","arg":{"format":"[]{}","snippet":"doublerulesepcolor[${1:color model}]{${2:color}}"}},
+		{"name":"doublerulesepcolor","arg":{"format":"{}","snippet":"doublerulesepcolor{${1:color}}"}},
+		{"name":"hiderowcolors"},
+		{"name":"minrowclearance"},
+		{"name":"rowcolor","arg":{"format":"[]{}[][]","snippet":"rowcolor[${1:color model}]{${2:color}}[${3:left overhang}][${4:right overhang}]"}},
+		{"name":"rowcolor","arg":{"format":"{}","snippet":"rowcolor{${1:color}}"}},
+		{"name":"rowcolors","arg":{"format":"[]{}{}{}","snippet":"rowcolors[${1:commands}]{${2:row}}{${3:odd-row color}}{${4:even-row color}}"},"doc":"Defines alternating colors for the next tabular environment."},
+		{"name":"rowcolors","arg":{"format":"{}{}{}","snippet":"rowcolors{${1:row}}{${2:odd-row color}}{${3:even-row color}}"},"doc":"Defines alternating colors for the next tabular environment."},
+		{"name":"rowcolors*","arg":{"format":"[]{}{}{}","snippet":"rowcolors*[${1:commands}]{${2:row}}{${3:odd-row color}}{${4:even-row color}}"},"doc":"Defines alternating colors for the next tabular environment."},
+		{"name":"rowcolors*","arg":{"format":"{}{}{}","snippet":"rowcolors*{${1:row}}{${2:odd-row color}}{${3:even-row color}}"},"doc":"Defines alternating colors for the next tabular environment."},
+		{"name":"rownum"},
+		{"name":"showrowcolors"},
+		{"name":"therownum"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/colortbl#c": ["debugshow","dvipdf","dvipdfm","dvipdfmx","dvips","dvipsnames","dvipsone","dvisvgm","dviwin","dviwindo","emtex","luatex","monochrome","nodvipsnames","nosetpagesize","oztex","pctex32","pctexhp","pctexps","pctexwin","pdftex","setpagesize","tcidvi","textures","truetex","usenames","vtex","xdvi","xetex"]
+	},
+	"args": ["\\usepackage/colortbl#c"]
 }

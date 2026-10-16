@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/texnansi#c": ["ansinew"]
+	},
+	"args": ["\\usepackage/texnansi#c"]
+}

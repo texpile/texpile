@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"WorldMap","arg":{"format":"[]","snippet":"WorldMap[${1}]"},"doc":"\\WorldMap[maillage=false] draws the Mercator projection, without the parallels and meridians."},
+		{"name":"WorldMap","doc":"\\WorldMap[maillage=false] draws the Mercator projection, without the parallels and meridians."},
+		{"name":"WorldMapII","arg":{"format":"[]","snippet":"WorldMapII[${1}]"}},
+		{"name":"WorldMapII"},
+		{"name":"WorldMapThreeD","arg":{"format":"[]","snippet":"WorldMapThreeD[${1}]"}},
+		{"name":"WorldMapThreeD"},
+		{"name":"WorldMapThreeDII","arg":{"format":"[]","snippet":"WorldMapThreeDII[${1}]"}},
+		{"name":"WorldMapThreeDII"}
+	],
+	"envs": [],
+	"keys": {}
+}

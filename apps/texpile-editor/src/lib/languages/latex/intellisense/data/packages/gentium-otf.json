@@ -1,0 +1,29 @@
+{
+	"deps": [{"name":"iftex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
+	"macros": [
+		{"name":"ExtraBold","unusual":true},
+		{"name":"GentiumMedium","unusual":true},
+		{"name":"GentiumRegular","unusual":true},
+		{"name":"Lctosc","arg":{"format":"{}","snippet":"Lctosc{${1:text}}"},"doc":"The macro \\Lctosc{ arg} is for a local change of arg and \\LCtoSC+ and \\LCtoSC- for a global change of capitals to small caps."},
+		{"name":"LCtoSC","doc":"The macro \\Lctosc{ arg} is for a local change of arg and \\LCtoSC+ and \\LCtoSC- for a global change of capitals to small caps."},
+		{"name":"Lctosmcp","arg":{"format":"{}","snippet":"Lctosmcp{${1:text}}"},"doc":"The macro \\Lctosmcp{ arg} is for a local change of arg and \\LCtoSMCP+ and \\LCtoSMCP- for a global change of capitals to small caps."},
+		{"name":"LCtoSMCP","doc":"The macro \\Lctosmcp{ arg} is for a local change of arg and \\LCtoSMCP+ and \\LCtoSMCP- for a global change of capitals to small caps."},
+		{"name":"Lcv","arg":{"format":"[]{}{}{}","snippet":"Lcv[${1:variant}]{${2:first digit}}{${3:second digit}}{${4:text}}"}},
+		{"name":"Lcv","arg":{"format":"{}{}{}","snippet":"Lcv{${1:first digit}}{${2:second digit}}{${3:text}}"}},
+		{"name":"LCV","arg":{"format":"[]{}{}","snippet":"LCV[${1}]{${2}}{${3}}"},"unusual":true},
+		{"name":"LCV","arg":{"format":"{}{}","snippet":"LCV{${1}}{${2}}"},"unusual":true},
+		{"name":"Lfrac","arg":{"format":"{}","snippet":"Lfrac{${1:text}}"},"doc":"There are two macros: \\Lfrac{ arg} for a local fraction setting and \\LFRAC+ and \\LFRAC- for a global setting relative to the current group."},
+		{"name":"LFRAC","doc":"There are two macros: \\Lfrac{ arg} for a local fraction setting and \\LFRAC+ and \\LFRAC- for a global setting relative to the current group."},
+		{"name":"Llang","arg":{"format":"{}","snippet":"Llang{${1}}"},"unusual":true},
+		{"name":"Lliga","arg":{"format":"{}","snippet":"Lliga{${1:text}}"}},
+		{"name":"LLIGA"},
+		{"name":"Lss","arg":{"format":"{}{}{}","snippet":"Lss{${1:first digit}}{${2:second digit}}{${3:text}}"}},
+		{"name":"LSS","arg":{"format":"{}{}","snippet":"LSS{${1:first digit}}{${2:second digit}}"}},
+		{"name":"Lsub","arg":{"format":"{}","snippet":"Lsub{${1:text}}"}},
+		{"name":"LSUB"},
+		{"name":"Lsup","arg":{"format":"{}","snippet":"Lsup{${1:text}}"}},
+		{"name":"LSUP"}
+	],
+	"envs": [],
+	"keys": {}
+}

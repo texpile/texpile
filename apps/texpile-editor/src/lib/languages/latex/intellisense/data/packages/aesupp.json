@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/aesupp#c": ["OT1","T1","bx"]
+	},
+	"args": ["\\usepackage/aesupp#c"]
+}

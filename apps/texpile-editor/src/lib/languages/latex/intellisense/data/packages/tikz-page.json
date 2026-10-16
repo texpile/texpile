@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"fancyhdr"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"calc"},{"name":"textpos","if":"textpos"}],
+	"macros": [
+		{"name":"tikzpage","doc":"Generate a tikzpicture for the whole page. if a \\tikzpagelayout command exists, it will be executed."},
+		{"name":"tikzpageputanchors","doc":"A simple short hand to display all anchors at once."},
+		{"name":"tikzpageputanchorsbottom"},
+		{"name":"tikzpageputanchorsdefaults"},
+		{"name":"tikzpageputanchorsfooter"},
+		{"name":"tikzpageputanchorsheader"},
+		{"name":"tikzpageputanchorsleft"},
+		{"name":"tikzpageputanchorsmarginpar"},
+		{"name":"tikzpageputanchorsright"},
+		{"name":"tikzpageputanchorstop"},
+		{"name":"tpfancyhdrdefault","doc":"An example to display headers and footer as fancyhdr does."},
+		{"name":"tpflip","arg":{"format":"{}{}","snippet":"tpflip{${1}}{${2}}"}},
+		{"name":"tpshowframes","doc":"Display top, right, bottom and left block using a specific background."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/tikz-page#c": ["textpos"]
+	},
+	"args": ["\\usepackage/tikz-page#c"]
+}

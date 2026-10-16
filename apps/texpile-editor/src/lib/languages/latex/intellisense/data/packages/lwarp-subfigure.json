@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"subfig"},{"name":"keyval"},{"name":"caption"},{"name":"caption3"}],
+	"macros": [
+		{"name":"ifsubcapcenter","unusual":true},
+		{"name":"ifsubcapcenterlast","unusual":true},
+		{"name":"ifsubcaphang","unusual":true},
+		{"name":"ifsubcapnooneline","unusual":true},
+		{"name":"ifsubcapraggedright","unusual":true},
+		{"name":"subcapcenterfalse"},
+		{"name":"subcapcenterlastfalse"},
+		{"name":"subcapcenterlasttrue"},
+		{"name":"subcapcentertrue"},
+		{"name":"subcapfont"},
+		{"name":"subcaphangfalse"},
+		{"name":"subcaphangtrue"},
+		{"name":"subcaplabelfont"},
+		{"name":"subcapnoonelinefalse"},
+		{"name":"subcapnoonelinetrue"},
+		{"name":"subcapraggedrightfalse"},
+		{"name":"subcapraggedrighttrue"},
+		{"name":"subcapsize"},
+		{"name":"subfigbottomskip"},
+		{"name":"subfigcapmargin"},
+		{"name":"subfigcapskip"},
+		{"name":"subfigcaptopadj"},
+		{"name":"subfiglabelskip"},
+		{"name":"subfigtopskip"}
+	],
+	"envs": [],
+	"keys": {}
+}

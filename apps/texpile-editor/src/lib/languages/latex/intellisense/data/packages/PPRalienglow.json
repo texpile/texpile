@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"semhelv"}],
+	"macros": [
+		{"name":"mydarkgreen","unusual":true},
+		{"name":"mygreen","unusual":true},
+		{"name":"slidetitle","arg":{"format":"{}","snippet":"slidetitle{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

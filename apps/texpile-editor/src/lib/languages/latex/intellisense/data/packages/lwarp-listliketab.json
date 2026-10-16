@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"storeliststyle"},
+		{"name":"storestyleof","arg":{"format":"{}","snippet":"storestyleof{${1:list environment}}"}}
+	],
+	"envs": [
+		{"name":"listliketab"}
+	],
+	"keys": {}
+}

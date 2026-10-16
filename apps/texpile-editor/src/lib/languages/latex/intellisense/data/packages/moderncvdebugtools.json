@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"thedebugrule","unusual":true},
+		{"name":"tracedebughrule","arg":{"format":"[][]","snippet":"tracedebughrule[${1:draw options}][${2:vertical offset}]"}},
+		{"name":"tracedebughrule"},
+		{"name":"tracedebugvrule","arg":{"format":"[][]","snippet":"tracedebugvrule[${1:draw options}][${2:horizontal offset}]"}},
+		{"name":"tracedebugvrule"}
+	],
+	"envs": [],
+	"keys": {}
+}

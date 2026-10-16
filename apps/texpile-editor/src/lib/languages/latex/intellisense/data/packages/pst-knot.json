@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"psBorromean","arg":{"format":"[](){}{}","snippet":"psBorromean[${1:options}](${2:x,y}){${3:circle radius}}{${4:inner radius}}"},"doc":"The macro \\psBorromean draws the so called Borromean rings."},
+		{"name":"psBorromean","arg":{"format":"(){}{}","snippet":"psBorromean(${1:x,y}){${2:circle radius}}{${3:inner radius}}"},"doc":"The macro \\psBorromean draws the so called Borromean rings."},
+		{"name":"psKnot","arg":{"format":"[](){}","snippet":"psKnot[${1:options}](${2:x,y}){${3:knot type}}"}},
+		{"name":"psKnot","arg":{"format":"(){}","snippet":"psKnot(${1:x,y}){${2:knot type}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,38 @@
+{
+	"macros": [
+		{"name":"arc","arg":{"format":"[](){}","snippet":"arc[${1:symbol count}](${2:X1,Y1}){${3:angle}}"}},
+		{"name":"arc","arg":{"format":"(){}","snippet":"arc(${1:X1,Y1}){${2:angle}}"}},
+		{"name":"bigcircle","arg":{"format":"[]{}","snippet":"bigcircle[${1:symbol count}]{${2:diameter}}"},"doc":"The drawing command \\bigcircle works similarly to \\circle except there is no \\circle* equivalent."},
+		{"name":"bigcircle","arg":{"format":"{}","snippet":"bigcircle{${1:diameter}}"},"doc":"The drawing command \\bigcircle works similarly to \\circle except there is no \\circle* equivalent."},
+		{"name":"closecurve","arg":{"format":"[]()","snippet":"closecurve[${1:symbol count}](${2:coordinates})"},"doc":"\\closecurve adds a parabolic arc between end points to close the curve."},
+		{"name":"closecurve","arg":{"format":"()","snippet":"closecurve(${1:coordinates})"},"doc":"\\closecurve adds a parabolic arc between end points to close the curve."},
+		{"name":"csdiameter"},
+		{"name":"curve","arg":{"format":"[]()","snippet":"curve[${1:symbol count}](${2:coordinates})"}},
+		{"name":"curve","arg":{"format":"()","snippet":"curve(${1:coordinates})"}},
+		{"name":"curvedashes","arg":{"format":"[]{}","snippet":"curvedashes[${1:unit len}]{${2:blank length,dash,...}}"}},
+		{"name":"curvedashes","arg":{"format":"{}","snippet":"curvedashes{${1:blank length,dash,...}}"}},
+		{"name":"curvelength"},
+		{"name":"curvesymbol","arg":{"format":"{}","snippet":"curvesymbol{${1:character or symbol}}"}},
+		{"name":"curvewarnfalse","doc":"After a \\curvewarnfalse, curves still uses the straight lines but does not tell you."},
+		{"name":"curvewarntrue"},
+		{"name":"diskpitchstretch"},
+		{"name":"ifcurvewarn","unusual":true},
+		{"name":"ifstraight","unusual":true},
+		{"name":"overhang"},
+		{"name":"patternresolution","doc":"Adjusting \\patternresolution below one can reduce rounding error and increase alignment accuracy."},
+		{"name":"scaleput","arg":{"format":"(){}","snippet":"scaleput(${1:X1,Y1}){${2:picture object}}"}},
+		{"name":"straightfalse"},
+		{"name":"straighttrue"},
+		{"name":"tagcurve","arg":{"format":"[]()","snippet":"tagcurve[${1:symbol count}](${2:coordinates})"},"doc":"\\tagcurve omits the first and last segments drawing curves with end tangents specified."},
+		{"name":"tagcurve","arg":{"format":"()","snippet":"tagcurve(${1:coordinates})"},"doc":"\\tagcurve omits the first and last segments drawing curves with end tangents specified."},
+		{"name":"xscale"},
+		{"name":"xscaley"},
+		{"name":"yscale"},
+		{"name":"yscalex"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/curves#c": ["WML","dvips","emtex","xdvi"]
+	},
+	"args": ["\\usepackage/curves#c"]
+}

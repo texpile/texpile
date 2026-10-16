@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"nextgroupplot","arg":{"format":"[]","snippet":"nextgroupplot[${1:axis options}]"}},
+		{"name":"nextgroupplot"}
+	],
+	"envs": [
+		{"name":"groupplot","arg":{"format":"[]","snippet":"[${1:options}]"}},
+		{"name":"groupplot"}
+	],
+	"keys": {}
+}

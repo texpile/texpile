@@ -1,1230 +1,605 @@
 {
-  "deps": [
-    {
-      "name": "xkeyval"
-    },
-    {
-      "name": "ifthen"
-    },
-    {
-      "name": "xfor"
-    },
-    {
-      "name": "substr"
-    },
-    {
-      "name": "etoolbox"
-    },
-    {
-      "name": "datatool-base"
-    },
-    {
-      "name": "datatool-pgfmath",
-      "if": "math=pgfmath"
-    }
-  ],
-  "macros": [
-    {
-      "name": "DTLnewdb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLnewdb{${1:db%specialDef}}"
-      }
-    },
-    {
-      "name": "DTLgnewdb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLgnewdb{${1:db%specialDef}}"
-      }
-    },
-    {
-      "name": "DTLifdbempty",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLifdbempty{${1:db%special}}{${2:true case}}{${3:false case}}"
-      }
-    },
-    {
-      "name": "DTLrowcount",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLrowcount{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLcolumncount",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLcolumncount{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLnewrow",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLnewrow{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLnewdbentry",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLnewdbentry{${1:db%special}}{${2:dbkey}}{${3:value}}"
-      }
-    },
-    {
-      "name": "dtlexpandnewvalue",
-      "unusual": true
-    },
-    {
-      "name": "dtlnoexpandnewvalue",
-      "unusual": true
-    },
-    {
-      "name": "DTLpar",
-      "unusual": true
-    },
-    {
-      "name": "DTLaddentryforrow",
-      "arg": {
-        "format": "{}{}{}{}{}",
-        "snippet": "DTLaddentryforrow{${1:db%special}}{${2:assign list}}{${3:condition}}{${4:dbkey}}{${5:value}}"
-      }
-    },
-    {
-      "name": "DTLsetheader",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLsetheader{${1:db%special}}{${2:dbkey}}{${3:header}}"
-      }
-    },
-    {
-      "name": "DTLaddcolumn",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLaddcolumn{${1:db%special}}{${2:dbkey}}"
-      }
-    },
-    {
-      "name": "DTLloaddb",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLloaddb{${1:db%specialDef}}{${2:filename%file}}"
-      }
-    },
-    {
-      "name": "DTLloaddb",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "DTLloaddb[${3:options%keyvals}]{${1:db%specialDef}}{${2:filename%file}}",
-        "keys": [
-          "\\DTLloaddb,\\DTLloadrawdb"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "ifDTLnewdbonload",
-      "unusual": true
-    },
-    {
-      "name": "DTLnewdbonloadfalse",
-      "unusual": true
-    },
-    {
-      "name": "DTLnewdbonloadtrue",
-      "unusual": true
-    },
-    {
-      "name": "dtldefaultkey",
-      "unusual": true
-    },
-    {
-      "name": "DTLsettabseparator",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLsettabseparator{${1:character}}"
-      }
-    },
-    {
-      "name": "DTLmaketabspace",
-      "unusual": true
-    },
-    {
-      "name": "DTLsetseparator",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLsetseparator{${1:character}}"
-      }
-    },
-    {
-      "name": "DTLsetdelimiter",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLsetdelimiter{${1:character}}"
-      }
-    },
-    {
-      "name": "DTLloadrawdb",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLloadrawdb{${1:db%specialDef}}{${2:filename%file}}"
-      }
-    },
-    {
-      "name": "DTLloadrawdb",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "DTLloadrawdb[${3:options%keyvals}]{${1:db%specialDef}}{${2:filename%file}}"
-      }
-    },
-    {
-      "name": "DTLrawmap",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLrawmap{${1:string}}{${2:replacement}}"
-      }
-    },
-    {
-      "name": "DTLdisplaydb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLdisplaydb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLdisplaydb",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "DTLdisplaydb[${2:omit list}]{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLdisplaylongdb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLdisplaylongdb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLdisplaylongdb",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "DTLdisplaylongdb[${2:options%keyvals}]{${1:db%special}}",
-        "keys": [
-          "\\DTLdisplaylongdb"
-        ],
-        "keyPos": 0
-      }
-    },
-    {
-      "name": "dtlstringalign",
-      "unusual": true
-    },
-    {
-      "name": "dtlintalign",
-      "unusual": true
-    },
-    {
-      "name": "dtlrealalign",
-      "unusual": true
-    },
-    {
-      "name": "dtlcurrencyalign",
-      "unusual": true
-    },
-    {
-      "name": "dtlbeforecols",
-      "unusual": true
-    },
-    {
-      "name": "dtlbetweencols",
-      "unusual": true
-    },
-    {
-      "name": "dtlaftercols",
-      "unusual": true
-    },
-    {
-      "name": "dtladdalign",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "dtladdalign{${1:cmd}}{${2:type}}{${3:col index}}{${4:max cols}}"
-      }
-    },
-    {
-      "name": "dtlheaderformat",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlheaderformat{${1:format}}"
-      }
-    },
-    {
-      "name": "dtlstringformat",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlstringformat{${1:format}}"
-      }
-    },
-    {
-      "name": "dtlintformat",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlintformat{${1:format}}"
-      }
-    },
-    {
-      "name": "dtlrealformat",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlrealformat{${1:format}}"
-      }
-    },
-    {
-      "name": "dtlcurrencyformat",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlcurrencyformat{${1:format}}"
-      }
-    },
-    {
-      "name": "dtldisplayvalign",
-      "unusual": true
-    },
-    {
-      "name": "dtldisplaycr",
-      "unusual": true
-    },
-    {
-      "name": "dtldisplaystarttab",
-      "unusual": true
-    },
-    {
-      "name": "dtldisplayendtab",
-      "unusual": true
-    },
-    {
-      "name": "dtldisplayafterhead",
-      "unusual": true
-    },
-    {
-      "name": "dtldisplaystartrow",
-      "unusual": true
-    },
-    {
-      "name": "DTLforeach",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLforeach{${1:db%special}}{${2:assign list}}{${3:text}}"
-      }
-    },
-    {
-      "name": "DTLforeach",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLforeach[${4:condition}]{${1:db%special}}{${2:assign list}}{${3:text}}"
-      }
-    },
-    {
-      "name": "DTLforeach*",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLforeach*{${1:db%special}}{${2:assign list}}{${3:text}}"
-      }
-    },
-    {
-      "name": "DTLforeach*",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLforeach*[${4:condition}]{${1:db%special}}{${2:assign list}}{${3:text}}"
-      }
-    },
-    {
-      "name": "theDTLrow",
-      "unusual": true
-    },
-    {
-      "name": "theDTLrowi",
-      "unusual": true
-    },
-    {
-      "name": "theDTLrowii",
-      "unusual": true
-    },
-    {
-      "name": "theDTLrowiii",
-      "unusual": true
-    },
-    {
-      "name": "DTLcurrentindex",
-      "unusual": true
-    },
-    {
-      "name": "DTLiffirstrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLiffirstrow{${1:true case}}{${2:false case}}"
-      }
-    },
-    {
-      "name": "DTLiflastrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLiflastrow{${1:true case}}{${2:false case}}"
-      }
-    },
-    {
-      "name": "DTLifoddrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLifoddrow{${1:true case}}{${2:false case}}"
-      }
-    },
-    {
-      "name": "DTLsavelastrowcount",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLsavelastrowcount{${1:cmd}}"
-      }
-    },
-    {
-      "name": "DTLforeachkeyinrow",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLforeachkeyinrow{${1:cmd}}{${2:text}}"
-      }
-    },
-    {
-      "name": "dtlkey",
-      "unusual": true
-    },
-    {
-      "name": "dtlcol",
-      "unusual": true
-    },
-    {
-      "name": "dtltype",
-      "unusual": true
-    },
-    {
-      "name": "dtlheader",
-      "unusual": true
-    },
-    {
-      "name": "DTLstringnull",
-      "unusual": true
-    },
-    {
-      "name": "DTLnumbernull",
-      "unusual": true
-    },
-    {
-      "name": "DTLifnull",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLifnull{${1:cmd}}{${2:true case}}{${3:false case}}"
-      }
-    },
-    {
-      "name": "DTLifnullorempty",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLifnullorempty{${1:cmd}}{${2:true case}}{${3:false case}}"
-      }
-    },
-    {
-      "name": "dtlnovalue",
-      "unusual": true
-    },
-    {
-      "name": "dtlswaprows",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "dtlswaprows{${1:db%special}}{${2:row1 index}}{${3:row2 index}}"
-      }
-    },
-    {
-      "name": "DTLremoverow",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLremoverow{${1:db%special}}{${2:row index}}"
-      }
-    },
-    {
-      "name": "DTLappendtorow",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLappendtorow{${1:dbkey}}{${2:value}}"
-      }
-    },
-    {
-      "name": "DTLreplaceentryforrow",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLreplaceentryforrow{${1:dbkey}}{${2:value}}"
-      }
-    },
-    {
-      "name": "DTLremoveentryfromrow",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLremoveentryfromrow{${1:dbkey}}"
-      }
-    },
-    {
-      "name": "DTLremovecurrentrow"
-    },
-    {
-      "name": "DTLsumforkeys",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLsumforkeys{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsumforkeys",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLsumforkeys[${4:condition}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsumforkeys",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "DTLsumforkeys[${4:condition}][${5:assign list}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsumcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLsumcolumn{${1:db%special}}{${2:dbkey}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmeanforkeys",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLmeanforkeys{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmeanforkeys",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLmeanforkeys[${4:condition}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmeanforkeys",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "DTLmeanforkeys[${4:condition}][${5:assign list}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmeanforcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLmeanforcolumn{${1:db%special}}{${2:dbkey}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLvarianceforkeys",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLvarianceforkeys{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLvarianceforkeys",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLvarianceforkeys[${4:condition}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLvarianceforkeys",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "DTLvarianceforkeys[${4:condition}][${5:assign list}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLvarianceforcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLvarianceforcolumn{${1:db%special}}{${2:dbkey}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsdforkeys",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLsdforkeys{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsdforkeys",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLsdforkeys[${4:condition}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsdforkeys",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "DTLsdforkeys[${4:condition}][${5:assign list}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLsdforcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLsdforcolumn{${1:db%special}}{${2:dbkey}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLminforkeys",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLminforkeys{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLminforkeys",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLminforkeys[${4:condition}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLminforkeys",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "DTLminforkeys[${4:condition}][${5:assign list}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLminforcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLminforcolumn{${1:db%special}}{${2:dbkey}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmaxforkeys",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLmaxforkeys{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmaxforkeys",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "DTLmaxforkeys[${4:condition}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmaxforkeys",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "DTLmaxforkeys[${4:condition}][${5:assign list}]{${1:db%special}}{${2:key list}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLmaxforcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLmaxforcolumn{${1:db%special}}{${2:dbkey}}{${3:cmd}}"
-      }
-    },
-    {
-      "name": "DTLcomputebounds",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}{}{}{}",
-        "snippet": "DTLcomputebounds{${1:db%special}}{${2:x key}}{${3:y key}}{${4:minX%cmd}}{${5:minY%cmd}}{${6:maxX%cmd}}{${7:maxY%cmd}}"
-      }
-    },
-    {
-      "name": "dtlsort",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "dtlsort{${1:sort criteria}}{${2:db%special}}{${3:handler}}"
-      }
-    },
-    {
-      "name": "dtlsort",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "dtlsort[${4:replacement key list}]{${1:sort criteria}}{${2:db%special}}{${3:handler}}"
-      }
-    },
-    {
-      "name": "DTLsort",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLsort{${1:sort criteria}}{${2:db%special}}"
-      }
-    },
-    {
-      "name": "DTLsort",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "DTLsort[${3:replacement key list}]{${1:sort criteria}}{${2:db%special}}"
-      }
-    },
-    {
-      "name": "DTLsort*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLsort*{${1:sort criteria}}{${2:db%special}}"
-      }
-    },
-    {
-      "name": "DTLsort*",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "DTLsort*[${3:replacement key list}]{${1:sort criteria}}{${2:db%special}}"
-      }
-    },
-    {
-      "name": "DTLsavedb",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLsavedb{${1:db%special}}{${2:filename}}"
-      }
-    },
-    {
-      "name": "DTLsavetexdb",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLsavetexdb{${1:db%special}}{${2:filename}}"
-      }
-    },
-    {
-      "name": "DTLsaverawdb",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLsaverawdb{${1:db%special}}{${2:filename}}"
-      }
-    },
-    {
-      "name": "DTLprotectedsaverawdb",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLprotectedsaverawdb{${1:db%special}}{${2:filename}}"
-      }
-    },
-    {
-      "name": "DTLloaddbtex",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "DTLloaddbtex{${1:cmd}}{${2:filename%file}}"
-      }
-    },
-    {
-      "name": "dtllastloadeddb",
-      "unusual": true
-    },
-    {
-      "name": "DTLcleardb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLcleardb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLgcleardb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLgcleardb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLdeletedb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLdeletedb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLgdeletedb",
-      "arg": {
-        "format": "{}",
-        "snippet": "DTLgdeletedb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "DTLgetdatatype",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLgetdatatype{${1:cmd}}{${2:db%special}}{${3:dbkey}}"
-      }
-    },
-    {
-      "name": "DTLunsettype",
-      "unusual": true
-    },
-    {
-      "name": "DTLstringtype",
-      "unusual": true
-    },
-    {
-      "name": "DTLinttype",
-      "unusual": true
-    },
-    {
-      "name": "DTLrealtype",
-      "unusual": true
-    },
-    {
-      "name": "DTLcurrencytype",
-      "unusual": true
-    },
-    {
-      "name": "DTLifdbexists",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLifdbexists{${1:db%special}}{${2:true case}}{${3:false case}}"
-      }
-    },
-    {
-      "name": "DTLifhaskey",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLifhaskey{${1:db%special}}{${2:dbkey}}{${3:true case}}{${4:false case}}"
-      }
-    },
-    {
-      "name": "DTLgetcolumnindex",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLgetcolumnindex{${1:cmd}}{${2:db%special}}{${3:dbkey}}"
-      }
-    },
-    {
-      "name": "DTLgetkeyforcolumn",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLgetkeyforcolumn{${1:cmd}}{${2:db%special}}{${3:column index}}"
-      }
-    },
-    {
-      "name": "dtlcolumnindex",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlcolumnindex{${1:db%special}}{${2:dbkey}}"
-      }
-    },
-    {
-      "name": "DTLgetkeydata",
-      "arg": {
-        "format": "{}{}{}{}{}",
-        "snippet": "DTLgetkeydata{${1:dbkey}}{${2:db%special}}{${3:col cmd%cmd}}{${4:type cmd%cmd}}{${5:header cmd%cmd}}"
-      }
-    },
-    {
-      "name": "DTLgetvalue",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLgetvalue{${1:cmd}}{${2:db%special}}{${3:row}}{${4:column}}"
-      }
-    },
-    {
-      "name": "DTLgetlocation",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLgetlocation{${1:row cmd%cmd}}{${2:column cmd%cmd}}{${3:db%special}}{${4:value}}"
-      }
-    },
-    {
-      "name": "DTLgetvalueforkey",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}{}",
-        "snippet": "DTLgetvalueforkey{${1:cmd}}{${2:dbkey}}{${3:db%special}}{${4:ref key}}{${5:ref value}}"
-      }
-    },
-    {
-      "name": "DTLgetrowforkey",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLgetrowforkey{${1:cmd}}{${2:db%special}}{${3:ref key}}{${4:ref value}}"
-      }
-    },
-    {
-      "name": "DTLfetch",
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLfetch{${1:db%special}}{${2:col1 name}}{${3:col1 value}}{${4:col2 name}}"
-      }
-    },
-    {
-      "name": "DTLassign",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLassign{${1:db%special}}{${2:row index}}{${3:assign list}}"
-      }
-    },
-    {
-      "name": "DTLassignfirstmatch",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLassignfirstmatch{${1:db%special}}{${2:dbkey}}{${3:value}}{${4:assign list}}"
-      }
-    },
-    {
-      "name": "xDTLassignfirstmatch",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "xDTLassignfirstmatch{${1:db%special}}{${2:dbkey}}{${3:value}}{${4:assign list}}"
-      }
-    },
-    {
-      "name": "DTLswaprows",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "DTLswaprows{${1:db%special}}{${2:row1 index}}{${3:row2 index}}"
-      }
-    },
-    {
-      "name": "DTLgetrowindex",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "DTLgetrowindex{${1:row cmd%cmd}}{${2:db%special}}{${3:col index}}{${4:value}}"
-      }
-    },
-    {
-      "name": "dtlgetrowindex",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "dtlgetrowindex{${1:row cmd%cmd}}{${2:db%special}}{${3:col index}}{${4:value}}"
-      }
-    },
-    {
-      "name": "xdtlgetrowindex",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "xdtlgetrowindex{${1:row cmd%cmd}}{${2:db%special}}{${3:col index}}{${4:value}}"
-      }
-    },
-    {
-      "name": "dtlcurrentrow",
-      "unusual": true
-    },
-    {
-      "name": "dtlbeforerow",
-      "unusual": true
-    },
-    {
-      "name": "dtlafterrow",
-      "unusual": true
-    },
-    {
-      "name": "dtlrownum",
-      "unusual": true
-    },
-    {
-      "name": "dtlcolumnnum",
-      "unusual": true
-    },
-    {
-      "name": "dtldbname",
-      "unusual": true
-    },
-    {
-      "name": "dtlgetrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlgetrow{${1:db%special}}{${2:row index}}"
-      }
-    },
-    {
-      "name": "dtlgetrowforvalue",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "dtlgetrowforvalue{${1:db%special}}{${2:col index}}{${3:value}}"
-      }
-    },
-    {
-      "name": "edtlgetrowforvalue",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "edtlgetrowforvalue{${1:db%special}}{${2:col index}}{${3:value}}"
-      }
-    },
-    {
-      "name": "dtlrecombine",
-      "unusual": true
-    },
-    {
-      "name": "dtlrecombineomitcurrent",
-      "unusual": true
-    },
-    {
-      "name": "dtlsplitrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "dtlsplitrow{${1:row specs}}{${2:col index}}{${3:before cmd%cmd}}{${4:after cmd%cmd}}"
-      }
-    },
-    {
-      "name": "dtlgetentryfromcurrentrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlgetentryfromcurrentrow{${1:cmd}}{${2:col index}}"
-      }
-    },
-    {
-      "name": "dtlgetentryfromrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "dtlgetentryfromrow{${1:cmd}}{${2:col index}}{${3:row toks}}"
-      }
-    },
-    {
-      "name": "dtlreplaceentryincurrentrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlreplaceentryincurrentrow{${1:new value}}{${2:col index}}"
-      }
-    },
-    {
-      "name": "dtlswapentriesincurrentrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlswapentriesincurrentrow{${1:col1 index}}{${2:col2 index}}"
-      }
-    },
-    {
-      "name": "dtlappendentrytocurrentrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlappendentrytocurrentrow{${1:dbkey}}{${2:value}}"
-      }
-    },
-    {
-      "name": "dtlupdateentryincurrentrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlupdateentryincurrentrow{${1:dbkey}}{${2:value}}"
-      }
-    },
-    {
-      "name": "dtlremoveentryincurrentrow",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlremoveentryincurrentrow{${1:col index}}"
-      }
-    },
-    {
-      "name": "in",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "in{${1:db%special}}"
-      },
-      "detail": "∈",
-      "doc": "Set membership, variant"
-    },
-    {
-      "name": "do",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "do{${1:body}}"
-      }
-    },
-    {
-      "name": "dtlforcolumn",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "dtlforcolumn{${1:cmd}}{${2:db%special}}{${3:dbkey}}{${4:body}}"
-      }
-    },
-    {
-      "name": "dtlforcolumnidx",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}{}{}",
-        "snippet": "dtlforcolumnidx{${1:cmd}}{${2:db%special}}{${3:col index}}{${4:body}}"
-      }
-    },
-    {
-      "name": "theHDTLrow",
-      "unusual": true
-    },
-    {
-      "name": "theHDTLrowi",
-      "unusual": true
-    },
-    {
-      "name": "theHDTLrowii",
-      "unusual": true
-    },
-    {
-      "name": "theHDTLrowiii",
-      "unusual": true
-    },
-    {
-      "name": "dtlforeachlevel",
-      "unusual": true
-    },
-    {
-      "name": "dtlshowdb",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlshowdb{${1:db%special}}"
-      }
-    },
-    {
-      "name": "dtlshowdbkeys",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "dtlshowdbkeys{${1:db%special}}"
-      }
-    },
-    {
-      "name": "dtlshowtype",
-      "unusual": true,
-      "arg": {
-        "format": "{}{}",
-        "snippet": "dtlshowtype{${1:db%special}}{${2:dbkey}}"
-      }
-    },
-    {
-      "name": "ifdtlnoheader",
-      "unusual": true
-    },
-    {
-      "name": "dtlnoheadertrue",
-      "unusual": true
-    },
-    {
-      "name": "dtlnoheaderfalse",
-      "unusual": true
-    },
-    {
-      "name": "ifdtlautokeys",
-      "unusual": true
-    },
-    {
-      "name": "dtlautokeystrue",
-      "unusual": true
-    },
-    {
-      "name": "dtlautokeysfalse",
-      "unusual": true
-    }
-  ],
-  "envs": [
-    {
-      "name": "DTLenvforeach",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "{${1:db%special}}{${2:assign list}}"
-      }
-    },
-    {
-      "name": "DTLenvforeach",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "[${3:condition}]{${1:db%special}}{${2:assign list}}"
-      }
-    },
-    {
-      "name": "DTLenvforeach*",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "{${1:db%special}}{${2:assign list}}"
-      }
-    },
-    {
-      "name": "DTLenvforeach*",
-      "arg": {
-        "format": "[]{}{}",
-        "snippet": "[${3:condition}]{${1:db%special}}{${2:assign list}}"
-      }
-    }
-  ],
-  "keys": {
-    "\\usepackage/datatool#c": [
-      "utf8",
-      "verbose",
-      "math=${1|fp,pgfmath|}",
-      "delimiter=${1:delimiter}",
-      "separator=${1:separator}"
-    ],
-    "\\DTLloaddb,\\DTLloadrawdb": [
-      "noheader",
-      "keys={${1:key1,key2,...}}",
-      "autokeys",
-      "headers={${1:header1,header2,...}}",
-      "omitlines=${1:integer}"
-    ],
-    "\\DTLdisplaylongdb": [
-      "caption={${1:text}}",
-      "contcaption={${1:text}}",
-      "shortcaption={${1:text}}",
-      "label=",
-      "omit={${1:key1,key2,...}}",
-      "foot={${1:text}}",
-      "lastfoot={${1:text}}"
-    ]
-  },
-  "args": [
-    "\\usepackage/datatool#c"
-  ]
+	"deps": [{"name":"ifthen"},{"name":"xfor"},{"name":"etoolbox"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
+	"macros": [
+		{"name":"datatoolasciiend","doc":"Does nothing but influences sorting."},
+		{"name":"datatoolasciistart","doc":"Does nothing but influences sorting."},
+		{"name":"datatoolctrlboundary","doc":"Does nothing but influences sorting."},
+		{"name":"datatoolcurrencysymbolprefixfmt","arg":{"format":"{}","snippet":"datatoolcurrencysymbolprefixfmt{${1}}"}},
+		{"name":"DataToolDateFmt","arg":{"format":"{}{}{}{}","snippet":"DataToolDateFmt{${1}}{${2}}{${3}}{${4}}"},"doc":"Formats the date."},
+		{"name":"DataToolDateTimeFmt","arg":{"format":"{}{}{}","snippet":"DataToolDateTimeFmt{${1}}{${2}}{${3}}"},"doc":"Use to format timestamps (datetime date types)."},
+		{"name":"datatoolparen","arg":{"format":"{}","snippet":"datatoolparen{${1}}"}},
+		{"name":"datatoolparenstart","doc":"Designed to indicate the start of parenthetical content, this command expands to \\space normally."},
+		{"name":"datatoolpersoncomma","doc":"Designed to indicate word inversion for a person, this command expands to ,\\space normally."},
+		{"name":"datatoolplacecomma","doc":"Designed to indicate a comma to clarify a place, this command expands to ,\\space normally."},
+		{"name":"datatoolSetCurrencySort","doc":"Locally redefines common currency commands to their string alternatives."},
+		{"name":"datatoolsubjectcomma","doc":"Designed to indicate heading inversion (subjects, concepts and objects), this command expands to ,\\space normally."},
+		{"name":"DataToolTimeFmt","arg":{"format":"{}{}{}","snippet":"DataToolTimeFmt{${1}}{${2}}{${3}}"},"doc":"Formats the time."},
+		{"name":"DataToolTimeStampFmtSep","doc":"This is placed between the date and time."},
+		{"name":"DataToolTimeStampNoZoneFmt","arg":{"format":"{}{}{}{}{}{}{}","snippet":"DataToolTimeStampNoZoneFmt{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"},"doc":"Formats the date and time."},
+		{"name":"DataToolTimeStampWithZoneFmt","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"DataToolTimeStampWithZoneFmt{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}{${9}}"},"doc":"Formats the date, time and time zone."},
+		{"name":"DataToolTimeZoneFmt","arg":{"format":"{}{}","snippet":"DataToolTimeZoneFmt{${1}}{${2}}"},"doc":"Formats the time zone offset."},
+		{"name":"dtlabs","arg":{"format":"{}{}","snippet":"dtlabs{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the absolute value of ⟨num⟩."},
+		{"name":"DTLabs","arg":{"format":"{}{}","snippet":"DTLabs{${1}}{${2}}"}},
+		{"name":"DTLaction","arg":{"format":"[]{}","snippet":"DTLaction[${1}]{${2}}"}},
+		{"name":"DTLaction","arg":{"format":"{}","snippet":"DTLaction{${1}}"}},
+		{"name":"dtladd","arg":{"format":"{}{}{}","snippet":"dtladd{${1}}{${2}}{${3}}"},"doc":"Calculates ⟨num1⟩ + ⟨num2⟩ (addition) and stores the result in the control sequence ⟨cs⟩, where the numbers are plain numbers."},
+		{"name":"DTLadd","arg":{"format":"{}{}{}","snippet":"DTLadd{${1}}{${2}}{${3}}"},"doc":"Calculates ⟨num1⟩ + ⟨num2⟩ and stores the result in the control sequence ⟨cs⟩, where the numbers are formatted numbers."},
+		{"name":"dtladdalign","arg":{"format":"{}{}{}{}","snippet":"dtladdalign{${1}}{${2}}{${3}}{${4}}"},"doc":"Adds tabular column alignment character to ⟨cs⟩ for column ⟨col num⟩ which contains data type ⟨type⟩."},
+		{"name":"dtladdall","arg":{"format":"{}{}","snippet":"dtladdall{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the sum of all the numbers in the comma-separated list of numbers."},
+		{"name":"DTLaddall","arg":{"format":"{}{}","snippet":"DTLaddall{${1}}{${2}}"},"doc":"Sums all the values in ⟨num list⟩ and stores in ⟨cmd⟩ which must be a control sequence."},
+		{"name":"DTLaddcolumn","arg":{"format":"{}{}","snippet":"DTLaddcolumn{${1:db-name}}{${2:col key}}"}},
+		{"name":"DTLaddcolumnwithheader","arg":{"format":"{}{}{}","snippet":"DTLaddcolumnwithheader{${1}}{${2}}{${3}}"}},
+		{"name":"DTLaddcolumnwithheader*","arg":{"format":"{}{}{}","snippet":"DTLaddcolumnwithheader*{${1}}{${2}}{${3}}"}},
+		{"name":"DTLaddentryforrow","arg":{"format":"{}{}{}{}{}","snippet":"DTLaddentryforrow{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Adds the entry with key given by ⟨key⟩ and value given by ⟨value⟩ to the first row in the database ⟨db name⟩ which satisfies the condition given by ⟨condition⟩."},
+		{"name":"dtladdheaderalign","arg":{"format":"{}{}{}{}","snippet":"dtladdheaderalign{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"dtlaftercols","doc":"This specifies what to put after the last column alignment specifier."},
+		{"name":"DTLafterinitialbeforehyphen"},
+		{"name":"DTLafterinitials","doc":"Defines what to do after the final initial."},
+		{"name":"dtlafterrow"},
+		{"name":"DTLandname"},
+		{"name":"DTLaposinitialpunc","arg":{"format":"{}{}{}","snippet":"DTLaposinitialpunc{${1}}{${2}}{${3}}"},"doc":"This command is used to encapsulate an initial in a word split by an apostrophe in the form ⟨head⟩'⟨tail⟩."},
+		{"name":"dtlappendentrytocurrentrow","arg":{"format":"{}{}","snippet":"dtlappendentrytocurrentrow{${1}}{${2}}"},"doc":"Appends an entry with the given ⟨value⟩ to \\dtlcurrentrow for the column identified by ⟨col key⟩."},
+		{"name":"DTLappendtorow","arg":{"format":"{}{}","snippet":"DTLappendtorow{${1}}{${2}}"},"doc":"Appends an entry with the protected expansion of ⟨value⟩ to the current row for the column identified by ⟨col-key⟩."},
+		{"name":"DTLassign","arg":{"format":"{}{}{}","snippet":"DTLassign{${1}}{${2}}{${3}}"}},
+		{"name":"DTLassignfirstmatch","arg":{"format":"{}{}{}{}","snippet":"DTLassignfirstmatch{${1}}{${2}}{${3}}{${4}}"},"doc":"Applies the assignment list to the first row that has the given value in the given column."},
+		{"name":"DTLassignfromcurrentrow","arg":{"format":"{}","snippet":"DTLassignfromcurrentrow{${1}}"}},
+		{"name":"DTLassignlettergroup","arg":{"format":"{}{}{}","snippet":"DTLassignlettergroup{${1}}{${2}}{${3}}"},"doc":"Obtains the letter group from the sort value."},
+		{"name":"dtlautokeysfalse","unusual":true},
+		{"name":"dtlautokeystrue","unusual":true},
+		{"name":"dtlbeforecols","doc":"This specifies what to put before the first column alignment specifier."},
+		{"name":"dtlbeforerow","doc":"Define token register to store everything before the current row."},
+		{"name":"dtlbetweencols","doc":"This specifies what to put between the column alignment specifiers."},
+		{"name":"DTLbetweeninitials","doc":"Defines what to do between initials."},
+		{"name":"dtlbreak","doc":"Break out of loop at the end of current iteration."},
+		{"name":"DTLcleardb","arg":{"format":"{}","snippet":"DTLcleardb{${1}}"},"doc":"Clears the database."},
+		{"name":"dtlclip","arg":{"format":"{}{}","snippet":"dtlclip{${1}}{${2}}"},"doc":"Removes redundant trailing zeros from ⟨num⟩ and stores the result in ⟨cs⟩."},
+		{"name":"DTLclip","arg":{"format":"{}{}","snippet":"DTLclip{${1}}{${2}}"},"doc":"Converts the formatted number to a plain number, clips it using \\dtlclip and stores the result as a formatted number in the control sequence ⟨cs⟩."},
+		{"name":"dtlcol"},
+		{"name":"DTLcolumncount","arg":{"format":"{}","snippet":"DTLcolumncount{${1}}"},"doc":"Expands to the number of columns in the database identified by the label ⟨db-name⟩."},
+		{"name":"dtlcolumnheader","arg":{"format":"{}{}","snippet":"dtlcolumnheader{${1}}{${2}}"}},
+		{"name":"dtlcolumnindex","arg":{"format":"{}{}","snippet":"dtlcolumnindex{${1}}{${2}}"},"doc":"This will expand to 0 if the database or column don’t exist, otherwise it will expand to the column index."},
+		{"name":"dtlcolumnnum"},
+		{"name":"dtlcompare","arg":{"format":"{}{}{}","snippet":"dtlcompare{${1}}{${2}}{${3}}"},"doc":"Compares ⟨string1⟩ and ⟨string2⟩, and stores the result in the count register ⟨count⟩."},
+		{"name":"dtlcompareskipcsfalse","unusual":true},
+		{"name":"dtlcompareskipcstrue","unusual":true},
+		{"name":"dtlcomparewords","arg":{"format":"{}{}{}","snippet":"dtlcomparewords{${1}}{${2}}{${3}}"}},
+		{"name":"DTLcomputebounds","arg":{"format":"[]{}{}{}{}{}{}{}","snippet":"DTLcomputebounds[${1}]{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"},"doc":"Computes the maximum and minimum x and y values over all the databases listed in ⟨db list⟩ where the x value is given by ⟨x key⟩ and the y value is given by ⟨y key⟩."},
+		{"name":"DTLcomputebounds","arg":{"format":"{}{}{}{}{}{}{}","snippet":"DTLcomputebounds{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"},"doc":"Computes the maximum and minimum x and y values over all the databases listed in ⟨db list⟩ where the x value is given by ⟨x key⟩ and the y value is given by ⟨y key⟩."},
+		{"name":"DTLconverttodecimal","arg":{"format":"{}{}","snippet":"DTLconverttodecimal{${1}}{${2}}"},"doc":"Converts a formatted number ⟨num⟩ to a plain number and stores the result in ⟨cs⟩."},
+		{"name":"DTLcurr","arg":{"format":"{}","snippet":"DTLcurr{${1}}"},"doc":"This command will expand to \\DTLcurr⟨ISO⟩, if defined, otherwise it will expand to ⟨ISO⟩."},
+		{"name":"DTLcurrChar","arg":{"format":"{}","snippet":"DTLcurrChar{${1}}"},"doc":"Expands to the currency character associated with the currency identified by ⟨ISO⟩, or nothing if not defined."},
+		{"name":"DTLcurrCodeOrSymOrChar","arg":{"format":"{}{}{}","snippet":"DTLcurrCodeOrSymOrChar{${1}}{${2}}{${3}}"}},
+		{"name":"dtlcurrdefaultfmt","arg":{"format":"{}{}","snippet":"dtlcurrdefaultfmt{${1}}{${2}}"}},
+		{"name":"DTLcurrency","arg":{"format":"{}","snippet":"DTLcurrency{${1}}"},"doc":"Formats ⟨value⟩ as a currency using \\DTLfmtcurrency with the default currency symbol."},
+		{"name":"dtlcurrencyalign"},
+		{"name":"DTLCurrencyCode"},
+		{"name":"dtlcurrencyformat","arg":{"format":"{}","snippet":"dtlcurrencyformat{${1}}"},"doc":"Specifies how to format entries in columns with currency data type."},
+		{"name":"dtlcurrencygroup","arg":{"format":"{}{}","snippet":"dtlcurrencygroup{${1}}{${2}}"}},
+		{"name":"DTLCurrencySymbol","doc":"Expands to the internal command used to store the default currency symbol."},
+		{"name":"DTLcurrencytype","doc":"Data type representing currency."},
+		{"name":"DTLcurrentindex"},
+		{"name":"DTLCurrentLocaleCurrencyDP","unusual":true},
+		{"name":"DTLCurrentLocaleFormatDate","arg":{"format":"{}{}{}{}","snippet":"DTLCurrentLocaleFormatDate{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleFormatTime","arg":{"format":"{}{}{}","snippet":"DTLCurrentLocaleFormatTime{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleFormatTimeStampNoZone","arg":{"format":"{}{}{}{}{}{}{}","snippet":"DTLCurrentLocaleFormatTimeStampNoZone{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleFormatTimeStampWithZone","arg":{"format":"{}{}{}{}{}{}{}{}{}","snippet":"DTLCurrentLocaleFormatTimeStampWithZone{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}{${9}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleFormatTimeZone","arg":{"format":"{}{}","snippet":"DTLCurrentLocaleFormatTimeZone{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleGetGroupString","arg":{"format":"{}{}{}","snippet":"DTLCurrentLocaleGetGroupString{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleGetInitialLetter","arg":{"format":"{}{}","snippet":"DTLCurrentLocaleGetInitialLetter{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleGetMonthNameMap","arg":{"format":"{}","snippet":"DTLCurrentLocaleGetMonthNameMap{${1}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleGetTimeZoneMap","arg":{"format":"{}","snippet":"DTLCurrentLocaleGetTimeZoneMap{${1}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleIfpmTF","arg":{"format":"{}{}{}","snippet":"DTLCurrentLocaleIfpmTF{${1}}{${2}}{${3}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleParseDate","arg":{"format":"{}{}{}{}","snippet":"DTLCurrentLocaleParseDate{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleParseTime","arg":{"format":"{}{}{}{}","snippet":"DTLCurrentLocaleParseTime{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleParseTimeStamp","arg":{"format":"{}{}{}{}","snippet":"DTLCurrentLocaleParseTimeStamp{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"DTLCurrentLocaleTimeStampFmtSep","unusual":true},
+		{"name":"DTLCurrentLocaleWordHandler","arg":{"format":"{}","snippet":"DTLCurrentLocaleWordHandler{${1}}"},"unusual":true},
+		{"name":"dtlcurrentrow"},
+		{"name":"DTLcurrEUR"},
+		{"name":"dtlcurrfmtsep","doc":"Separator used by currency formats."},
+		{"name":"dtlcurrfmtsymsep"},
+		{"name":"dtlcurrprefixfmt","arg":{"format":"{}{}","snippet":"dtlcurrprefixfmt{${1}}{${2}}"}},
+		{"name":"DTLcurrStr","arg":{"format":"{}","snippet":"DTLcurrStr{${1}}"},"doc":"Expands to the detokenised string value associated with currency ⟨ISO⟩ or to nothing if not defined."},
+		{"name":"dtlcurrsuffixfmt","arg":{"format":"{}{}","snippet":"dtlcurrsuffixfmt{${1}}{${2}}"}},
+		{"name":"DTLcurrSym","arg":{"format":"{}","snippet":"DTLcurrSym{${1}}"}},
+		{"name":"DTLcurrXBT"},
+		{"name":"DTLcurrXXX","doc":"Generic currency XXX with symbol ¤."},
+		{"name":"DTLdatatypecurrencyname"},
+		{"name":"DTLdatatypedatename"},
+		{"name":"DTLdatatypedatetimename"},
+		{"name":"DTLdatatypedecimalname"},
+		{"name":"DTLdatatypeintegername"},
+		{"name":"DTLdatatypeinvalidname"},
+		{"name":"DTLdatatypestringname"},
+		{"name":"DTLdatatypetimename"},
+		{"name":"DTLdatatypeunsetname"},
+		{"name":"dtldatealign","doc":"Alignment character for columns containing dates."},
+		{"name":"dtldateformat","arg":{"format":"{}","snippet":"dtldateformat{${1}}"},"doc":"Specifies how to format entries in columns with date data type."},
+		{"name":"dtldategroup","arg":{"format":"{}","snippet":"dtldategroup{${1}}"}},
+		{"name":"dtldatetimealign","doc":"Alignment character for columns containing timestamps."},
+		{"name":"dtldatetimeformat","arg":{"format":"{}","snippet":"dtldatetimeformat{${1}}"},"doc":"Specifies how to format entries in columns with datetime data type."},
+		{"name":"dtldatetimegroup","arg":{"format":"{}","snippet":"dtldatetimegroup{${1}}"}},
+		{"name":"DTLdatumcurrency","arg":{"format":"{}","snippet":"DTLdatumcurrency{${1}}"},"doc":"Expands to the currency symbol if the parsed value was a currency, otherwise expands to empty."},
+		{"name":"DTLdatumtoDTM","arg":{"format":"{}{}","snippet":"DTLdatumtoDTM{${1}}{${2}}"},"doc":"Converts the time stamp stored in the given datum command to a datetime2 date saved with \\DTMsavetimestamp, \\DTMsavedate, or \\DTLsavetime."},
+		{"name":"DTLdatumtype","arg":{"format":"{}","snippet":"DTLdatumtype{${1}}"},"doc":"Expands to an integer representing the data type: 0 (string), 1 (integer), 2 (decimal), 3 (currency), 4 (timestamp), 5 (date), 6 (time) or -1 (unknown)."},
+		{"name":"DTLdatumvalue","arg":{"format":"{}","snippet":"DTLdatumvalue{${1}}"},"doc":"Expands to the numeric value (as a plain number) if the parsed value was numerical, otherwise expands to empty."},
+		{"name":"dtldbcolreconstruct","arg":{"format":"{}{}","snippet":"dtldbcolreconstruct{${1}}{${2}}"},"unusual":true},
+		{"name":"dtldbdatumreconstruct","arg":{"format":"{}{}{}{}","snippet":"dtldbdatumreconstruct{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"dtldbheaderreconstruct","arg":{"format":"{}{}{}{}","snippet":"dtldbheaderreconstruct{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"DTLdbLog","arg":{"format":"{}","snippet":"DTLdbLog{${1}}"},"unusual":true},
+		{"name":"dtldbname"},
+		{"name":"DTLdbNewEntry","arg":{"format":"{}{}","snippet":"DTLdbNewEntry{${1}}{${2}}"}},
+		{"name":"DTLdbNewRow"},
+		{"name":"DTLdbProvideData","arg":{"format":"{}","snippet":"DTLdbProvideData{${1}}"}},
+		{"name":"dtldbreconstructkeyindex","arg":{"format":"{}{}","snippet":"dtldbreconstructkeyindex{${1}}{${2}}"},"unusual":true},
+		{"name":"dtldbrowreconstruct","arg":{"format":"{}{}","snippet":"dtldbrowreconstruct{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLdbSetHeader","arg":{"format":"{}{}","snippet":"DTLdbSetHeader{${1}}{${2}}"}},
+		{"name":"dtldbvaluereconstruct","arg":{"format":"{}","snippet":"dtldbvaluereconstruct{${1}}"},"unusual":true},
+		{"name":"DTLdecimaltocurrency","arg":{"format":"[]{}{}","snippet":"DTLdecimaltocurrency[${1}]{${2}}{${3}}"},"doc":"This converts a decimal number into the locale dependent currency format."},
+		{"name":"DTLdecimaltocurrency","arg":{"format":"{}{}","snippet":"DTLdecimaltocurrency{${1}}{${2}}"},"doc":"This converts a decimal number into the locale dependent currency format."},
+		{"name":"DTLdecimaltodate","arg":{"format":"{}{}","snippet":"DTLdecimaltodate{${1}}{${2}}"},"doc":"Define command to convert a number (a Julian Day Number) into a date datum."},
+		{"name":"DTLdecimaltodatetime","arg":{"format":"{}{}","snippet":"DTLdecimaltodatetime{${1}}{${2}}"},"doc":"Define command to convert a decimal number into a datetime datum."},
+		{"name":"DTLdecimaltolocale","arg":{"format":"{}{}","snippet":"DTLdecimaltolocale{${1}}{${2}}"},"doc":"Converts a plain number ⟨num⟩ into a formatted number and stores the result in ⟨cs⟩."},
+		{"name":"DTLdecimaltotime","arg":{"format":"{}{}","snippet":"DTLdecimaltotime{${1}}{${2}}"},"doc":"Define command to convert a decimal number (Julian time of day fraction) into a time datum."},
+		{"name":"DTLdefaultEURcurrencyfmt","arg":{"format":"{}{}","snippet":"DTLdefaultEURcurrencyfmt{${1}}{${2}}"},"doc":"The default definition is just \\dtlcurrdefaultfmt but this makes it possible to vary the format of EUR specifically without affecting other currencies."},
+		{"name":"dtldefaultkey","doc":"Default key to use if none specified (column index will be appended)."},
+		{"name":"DTLDefaultLocaleWordHandler","arg":{"format":"{}","snippet":"DTLDefaultLocaleWordHandler{${1}}"}},
+		{"name":"DTLdefcurrency","arg":{"format":"[]{}{}{}","snippet":"DTLdefcurrency[${1:fmt}]{${2:ISO}}{${3:symbol}}{${4:string}}"},"doc":"Defines a new currency with associated ISO code, symbol and string equivalent."},
+		{"name":"DTLdefcurrency","arg":{"format":"{}{}{}","snippet":"DTLdefcurrency{${1:ISO}}{${2:symbol}}{${3:string}}"},"doc":"Defines a new currency with associated ISO code, symbol and string equivalent."},
+		{"name":"DTLdeletedb","arg":{"format":"{}","snippet":"DTLdeletedb{${1}}"},"doc":"Deletes the database identified by the label ⟨db-name⟩ (that is, the internal commands associated with the database are undefined)."},
+		{"name":"dtldisableUTFviii","unusual":true},
+		{"name":"dtldisplayafterhead","doc":"Indicates what to do after the header row, before the first row of data."},
+		{"name":"dtldisplaycr"},
+		{"name":"DTLdisplaydb","arg":{"format":"[]{}","snippet":"DTLdisplaydb[${1}]{${2}}"},"doc":"Displays the database ⟨db⟩ in a tabular environment."},
+		{"name":"DTLdisplaydb","arg":{"format":"{}","snippet":"DTLdisplaydb{${1}}"},"doc":"Displays the database ⟨db⟩ in a tabular environment."},
+		{"name":"DTLdisplaydb*","arg":{"format":"[]{}","snippet":"DTLdisplaydb*[${1}]{${2}}"},"doc":"Displays the database ⟨db⟩ in a tabular environment."},
+		{"name":"DTLdisplaydb*","arg":{"format":"{}","snippet":"DTLdisplaydb*{${1}}"},"doc":"Displays the database ⟨db⟩ in a tabular environment."},
+		{"name":"DTLdisplaydbAddBegin","arg":{"format":"{}{}{}","snippet":"DTLdisplaydbAddBegin{${1}}{${2}}{${3}}"},"doc":"Used by \\DTLdisplaydb to add the beginning of the tabular environment to the ⟨content-tlvar⟩ token list variable."},
+		{"name":"DTLdisplaydbAddEnd","arg":{"format":"{}","snippet":"DTLdisplaydbAddEnd{${1}}"}},
+		{"name":"DTLdisplaydbAddItem","arg":{"format":"{}{}{}{}{}{}{}{}","snippet":"DTLdisplaydbAddItem{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}{${7}}{${8}}"},"doc":"This command is used to append an item to the ⟨content-tl-var⟩ token list variable."},
+		{"name":"dtldisplaydbenv"},
+		{"name":"dtldisplayendtab","doc":"Indicates what to do just before \\end{tabular}."},
+		{"name":"DTLdisplaylongdb","arg":{"format":"[]{}","snippet":"DTLdisplaylongdb[${1}]{${2}}","keys":["datatool:display"],"keyPos":0},"doc":"Displays the database ⟨db⟩ in a longtable environment."},
+		{"name":"DTLdisplaylongdb","arg":{"format":"{}","snippet":"DTLdisplaylongdb{${1}}"},"doc":"Displays the database ⟨db⟩ in a longtable environment."},
+		{"name":"DTLdisplaylongdbAddBegin","arg":{"format":"{}{}{}","snippet":"DTLdisplaylongdbAddBegin{${1}}{${2}}{${3}}"},"doc":"Analogous to \\DTLdisplaydbAddBegin but used by \\DTLdisplaylongdb to add the start of the longtable environment to ⟨content-tl-var⟩."},
+		{"name":"DTLdisplaylongdbAddEnd","arg":{"format":"{}","snippet":"DTLdisplaylongdbAddEnd{${1}}"},"doc":"Adds the end longtable code to ⟨content-tl-var⟩ for \\DTLdisplaylongdb."},
+		{"name":"dtldisplaylongdbenv"},
+		{"name":"dtldisplaystartrow"},
+		{"name":"dtldisplaystarttab","doc":"Indicates what to do just after \\begin{tabular}{⟨column specs⟩} (e.g. \\hline)."},
+		{"name":"DTLdisplayTBrowidxmap","arg":{"format":"{}","snippet":"DTLdisplayTBrowidxmap{${1}}"},"doc":"Provided for use with row-idx-map-function, this command expands to a row index that will arrange data rows from top to bottom instead of left to right when per-row is greater than 1."},
+		{"name":"dtldisplayvalign"},
+		{"name":"dtldiv","arg":{"format":"{}{}{}","snippet":"dtldiv{${1}}{${2}}{${3}}"},"doc":"Divides two numbers and stores the result in ⟨cs⟩."},
+		{"name":"DTLdiv","arg":{"format":"{}{}{}","snippet":"DTLdiv{${1}}{${2}}{${3}}"},"doc":"Converts the formatted numbers ⟨num1⟩ and ⟨num2⟩ to plain numbers and divides them (⟨num1⟩÷ ⟨num2⟩) using \\dtldiv."},
+		{"name":"dtlenableUTFviii","unusual":true},
+		{"name":"dtlexpandnewvalue"},
+		{"name":"dtlfallbackaction","arg":{"format":"{}{}{}{}","snippet":"dtlfallbackaction{${1}}{${2}}{${3}}{${4}}"},"doc":"If two sort values are identical, this command is used to determine whether or not the sort function should swap the elements."},
+		{"name":"DTLfetch","arg":{"format":"{}{}{}{}","snippet":"DTLfetch{${1}}{${2}}{${3}}{${4}}"},"doc":"Fetches and displays the value for ⟨column2 name⟩ in the first row where the value of ⟨column1 name⟩ is ⟨column1 value⟩."},
+		{"name":"DTLfetchlistelement","arg":{"format":"{}{}{}","snippet":"DTLfetchlistelement{${1}}{${2}}{${3}}"},"doc":"Fetches the ⟨idx⟩th element in the list and stores in ⟨cs⟩."},
+		{"name":"DTLfmtcurr","arg":{"format":"{}{}","snippet":"DTLfmtcurr{${1}}{${2}}"}},
+		{"name":"DTLfmtcurrency","arg":{"format":"{}{}","snippet":"DTLfmtcurrency{${1}}{${2}}"},"doc":"Format currency using given symbol."},
+		{"name":"dtlforcolumn","arg":{"format":"{}{}{}{}","snippet":"dtlforcolumn{${1:cs}}{${2:db-name}}{${3:key}}{${4:body}}"},"doc":"Iterates through column given by ⟨key⟩ in database ⟨db⟩."},
+		{"name":"dtlforcolumn*","arg":{"format":"{}{}{}{}","snippet":"dtlforcolumn*{${1:cs}}{${2:db-name}}{${3:key}}{${4:body}}"},"doc":"Iterates through column given by ⟨key⟩ in database ⟨db⟩."},
+		{"name":"dtlforcolumnidx","arg":{"format":"{}{}{}{}","snippet":"dtlforcolumnidx{${1:cs}}{${2:db-name}}{${3:col-idx}}{${4:body}}"},"doc":"Iterates through the column with index ⟨col num⟩ in database ⟨db⟩."},
+		{"name":"dtlforcolumnidx*","arg":{"format":"{}{}{}{}","snippet":"dtlforcolumnidx*{${1:cs}}{${2:db-name}}{${3:col-idx}}{${4:body}}"},"doc":"Iterates through the column with index ⟨col num⟩ in database ⟨db⟩."},
+		{"name":"DTLforeach","arg":{"format":"[]{}{}{}","snippet":"DTLforeach[${1:condition}]{${2:db-name}}{${3:assign-list}}{${4:body}}"},"doc":"For each row of data in the database given by ⟨db name⟩, do ⟨text⟩, if the specified conditions are satisfied."},
+		{"name":"DTLforeach","arg":{"format":"{}{}{}","snippet":"DTLforeach{${1:db-name}}{${2:assign-list}}{${3:body}}"},"doc":"For each row of data in the database given by ⟨db name⟩, do ⟨text⟩, if the specified conditions are satisfied."},
+		{"name":"DTLforeach*","arg":{"format":"[]{}{}{}","snippet":"DTLforeach*[${1:condition}]{${2:db-name}}{${3:assign-list}}{${4:body}}"},"doc":"For each row of data in the database given by ⟨db name⟩, do ⟨text⟩, if the specified conditions are satisfied."},
+		{"name":"DTLforeach*","arg":{"format":"{}{}{}","snippet":"DTLforeach*{${1:db-name}}{${2:assign-list}}{${3:body}}"},"doc":"For each row of data in the database given by ⟨db name⟩, do ⟨text⟩, if the specified conditions are satisfied."},
+		{"name":"dtlforeachkey","arg":{"format":"()","snippet":"dtlforeachkey(${1:key-cs,col-cs,type-cs,header-cs})"},"doc":"Iterates through all the keys in database ⟨db⟩."},
+		{"name":"DTLforeachkeyinrow","arg":{"format":"{}{}","snippet":"DTLforeachkeyinrow{${1}}{${2}}"}},
+		{"name":"dtlforeachlevel","doc":"The current level register is incremented at the start of \\DTLforeach and corresponds to the level index."},
+		{"name":"dtlforint"},
+		{"name":"DTLformatlist","arg":{"format":"{}","snippet":"DTLformatlist{${1:list}}"},"doc":"Formats the comma-separated list supplied in its argument."},
+		{"name":"DTLformatlist*","arg":{"format":"{}","snippet":"DTLformatlist*{${1:list}}"},"doc":"Formats the comma-separated list supplied in its argument."},
+		{"name":"DTLgabs","arg":{"format":"{}{}","snippet":"DTLgabs{${1}}{${2}}"}},
+		{"name":"DTLgadd","arg":{"format":"{}{}{}","snippet":"DTLgadd{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgaddall","arg":{"format":"{}{}","snippet":"DTLgaddall{${1}}{${2}}"}},
+		{"name":"DTLgcleardb","arg":{"format":"{}","snippet":"DTLgcleardb{${1}}"},"doc":"Globally clears the database identified by the label ⟨db-name⟩, regardless of the global setting."},
+		{"name":"DTLgclip","arg":{"format":"{}{}","snippet":"DTLgclip{${1}}{${2}}"}},
+		{"name":"DTLgdeletedb","arg":{"format":"{}","snippet":"DTLgdeletedb{${1}}"},"doc":"Globally deletes the database identified by the label ⟨db-name⟩, regardless of the global setting."},
+		{"name":"DTLgdiv","arg":{"format":"{}{}{}","snippet":"DTLgdiv{${1}}{${2}}{${3}}"}},
+		{"name":"DTLget","arg":{"format":"[]{}","snippet":"DTLget[${1}]{${2}}"},"doc":"This will define the (token list variable) control sequence ⟨cs⟩ to the value obtained from the most recent \\DTLaction in the current scope."},
+		{"name":"DTLget","arg":{"format":"{}","snippet":"DTLget{${1}}"},"doc":"This will define the (token list variable) control sequence ⟨cs⟩ to the value obtained from the most recent \\DTLaction in the current scope."},
+		{"name":"DTLgetcolumnindex","arg":{"format":"{}{}{}","snippet":"DTLgetcolumnindex{${1:cs}}{${2:db-name}}{${3:col key}}"}},
+		{"name":"DTLgetcolumnindex*","arg":{"format":"{}{}{}","snippet":"DTLgetcolumnindex*{${1:cs}}{${2:db-name}}{${3:col key}}"}},
+		{"name":"DTLgetdatatype","arg":{"format":"{}{}{}","snippet":"DTLgetdatatype{${1:cs}}{${2:db-name}}{${3:col key}}"},"doc":"Gets data type associated with column labelled ⟨key⟩ in database ⟨db⟩ and stores in ⟨cs⟩."},
+		{"name":"DTLgetdatatype*","arg":{"format":"{}{}{}","snippet":"DTLgetdatatype*{${1:cs}}{${2:db-name}}{${3:col key}}"},"doc":"Gets data type associated with column labelled ⟨key⟩ in database ⟨db⟩ and stores in ⟨cs⟩."},
+		{"name":"DTLgetDataTypeName","arg":{"format":"{}","snippet":"DTLgetDataTypeName{${1}}"},"doc":"Expands to textual label associated with the data type ⟨number⟩."},
+		{"name":"dtlgetentryfromcurrentrow","arg":{"format":"{}{}","snippet":"dtlgetentryfromcurrentrow{${1}}{${2}}"},"doc":"This gets the value from the \\dtlcurrentrow register for the column with the index ⟨col num⟩ and stores the value in the control sequence ⟨cs⟩."},
+		{"name":"dtlgetentryfromrow","arg":{"format":"{}{}{}","snippet":"dtlgetentryfromrow{${1}}{${2}}{${3}}"}},
+		{"name":"DTLGetInitialLetter","arg":{"format":"{}{}","snippet":"DTLGetInitialLetter{${1}}{${2}}"},"doc":"Obtains the first letter of ⟨text⟩ and stores it in the control sequence ⟨cs⟩."},
+		{"name":"DTLgetkeydata","arg":{"format":"{}{}{}{}{}","snippet":"DTLgetkeydata{${1:col key}}{${2:db-name}}{${3:col cs}}{${4:type cs}}{${5:header cs}}"}},
+		{"name":"DTLgetkeydata*","arg":{"format":"{}{}{}{}{}","snippet":"DTLgetkeydata*{${1:col key}}{${2:db-name}}{${3:col cs}}{${4:type cs}}{${5:header cs}}"}},
+		{"name":"DTLgetkeyforcolumn","arg":{"format":"{}{}{}","snippet":"DTLgetkeyforcolumn{${1:cs}}{${2:db-name}}{${3:col idx}}"},"doc":"Gets the key associated with the given column index and stores in ⟨key cs⟩."},
+		{"name":"DTLgetkeyforcolumn*","arg":{"format":"{}{}{}","snippet":"DTLgetkeyforcolumn*{${1:cs}}{${2:db-name}}{${3:col idx}}"},"doc":"Gets the key associated with the given column index and stores in ⟨key cs⟩."},
+		{"name":"DTLgetlocation","arg":{"format":"{}{}{}{}","snippet":"DTLgetlocation{${1}}{${2}}{${3}}{${4}}"},"doc":"Assigns ⟨row cs⟩ and ⟨column cs⟩ to the indices of the first entry in ⟨database⟩ that matches ⟨value⟩."},
+		{"name":"dtlgetrow","arg":{"format":"{}{}","snippet":"dtlgetrow{${1}}{${2}}"},"doc":"Gets row with index ⟨row idx⟩ from database named ⟨db⟩ and stores the row in \\dtlcurrentrow, the preceding rows in \\dtlbeforerow and the following rows in \\dtlafterrow."},
+		{"name":"DTLgetrowforkey","arg":{"format":"{}{}{}{}","snippet":"DTLgetrowforkey{${1}}{${2}}{${3}}{${4}}"},"doc":"This (globally) sets ⟨cmd⟩ (a control sequence) to the first row of the database called ⟨db name⟩ which contains the key ⟨ref key⟩ that has the value ⟨value⟩."},
+		{"name":"dtlgetrowforvalue","arg":{"format":"{}{}{}","snippet":"dtlgetrowforvalue{${1}}{${2}}{${3}}"},"doc":"Like \\dtlgetrow, but gets the row where the entry in column ⟨column index⟩ matches ⟨value⟩."},
+		{"name":"dtlgetrowindex","arg":{"format":"{}{}{}{}","snippet":"dtlgetrowindex{${1}}{${2}}{${3}}{${4}}"},"doc":"Gets the row index for the first row in the database identified by ⟨db-name⟩ where the entry in the column given by its index ⟨col idx⟩ exactly matches the given ⟨value⟩."},
+		{"name":"DTLgetrowindex","arg":{"format":"{}{}{}{}","snippet":"DTLgetrowindex{${1}}{${2}}{${3}}{${4}}"},"doc":"Assigns ⟨row cs⟩ to the row index of the first entry in ⟨database⟩ where the entry in ⟨column index⟩ matches ⟨value⟩."},
+		{"name":"DTLgetrowindex*","arg":{"format":"{}{}{}{}","snippet":"DTLgetrowindex*{${1}}{${2}}{${3}}{${4}}"},"doc":"Assigns ⟨row cs⟩ to the row index of the first entry in ⟨database⟩ where the entry in ⟨column index⟩ matches ⟨value⟩."},
+		{"name":"DTLgetvalue","arg":{"format":"{}{}{}{}","snippet":"DTLgetvalue{${1}}{${2}}{${3}}{${4}}"},"doc":"Gets the element in row ⟨r⟩, column ⟨c⟩ from database ⟨db⟩ and stores in ⟨cs⟩."},
+		{"name":"DTLgetvalueforkey","arg":{"format":"{}{}{}{}{}","snippet":"DTLgetvalueforkey{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"dtlgforint"},
+		{"name":"DTLgmax","arg":{"format":"{}{}{}","snippet":"DTLgmax{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgmaxall","arg":{"format":"{}{}","snippet":"DTLgmaxall{${1}}{${2}}"}},
+		{"name":"DTLgmeanforall","arg":{"format":"{}{}","snippet":"DTLgmeanforall{${1}}{${2}}"}},
+		{"name":"DTLgmin","arg":{"format":"{}{}{}","snippet":"DTLgmin{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgminall","arg":{"format":"{}{}","snippet":"DTLgminall{${1}}{${2}}"}},
+		{"name":"DTLgmul","arg":{"format":"{}{}{}","snippet":"DTLgmul{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgneg","arg":{"format":"{}{}","snippet":"DTLgneg{${1}}{${2}}"}},
+		{"name":"DTLgnewdb","arg":{"format":"{}","snippet":"DTLgnewdb{${1:db-name}}"},"doc":"Globally defines a new database with the label ⟨db-name⟩."},
+		{"name":"DTLground","arg":{"format":"{}{}{}","snippet":"DTLground{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgsdforall","arg":{"format":"{}{}","snippet":"DTLgsdforall{${1}}{${2}}"}},
+		{"name":"DTLgsqrt","arg":{"format":"{}{}","snippet":"DTLgsqrt{${1}}{${2}}"}},
+		{"name":"DTLgsub","arg":{"format":"{}{}{}","snippet":"DTLgsub{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgtrunc","arg":{"format":"{}{}{}","snippet":"DTLgtrunc{${1}}{${2}}{${3}}"}},
+		{"name":"DTLgvarianceforall","arg":{"format":"{}{}","snippet":"DTLgvarianceforall{${1}}{${2}}"}},
+		{"name":"dtlheader","doc":"Defined by \\DTLforeachkeyinrow to the current column header."},
+		{"name":"dtlheaderformat","arg":{"format":"{}","snippet":"dtlheaderformat{${1}}"},"doc":"Specifies how to format the column title."},
+		{"name":"dtlicompare","arg":{"format":"{}{}{}","snippet":"dtlicompare{${1}}{${2}}{${3}}"},"doc":"Compares ⟨string1⟩ and ⟨string2⟩ and stores the result in the count register ⟨count-reg⟩, where 0 indicates the strings are the same, -1 means that ⟨string1⟩ comes before (less than) ⟨string2⟩ and 1 means that ⟨string1⟩ comes after (greater than) ⟨string2⟩ (case-insensitive) ."},
+		{"name":"dtlicomparewords","arg":{"format":"{}{}{}","snippet":"dtlicomparewords{${1}}{${2}}{${3}}"}},
+		{"name":"DTLifaction","arg":{"format":"{}{}{}","snippet":"DTLifaction{${1}}{${2}}{${3}}"},"doc":"Expands to ⟨true⟩ if the last action (within the current scope) set the return value identified by ⟨property⟩, otherwise it expands to ⟨false⟩."},
+		{"name":"DTLifAllLowerCase","arg":{"format":"{}{}{}","snippet":"DTLifAllLowerCase{${1}}{${2}}{${3}}"},"doc":"Does ⟨true⟩ if ⟨string⟩ contains only lowercase characters (disregarding punctuation and spaces), otherwise does ⟨false⟩."},
+		{"name":"DTLifAllUpperCase","arg":{"format":"{}{}{}","snippet":"DTLifAllUpperCase{${1}}{${2}}{${3}}"},"doc":"Does ⟨true⟩ if ⟨string⟩ contains only uppercase characters (disregarding punctuation and spaces), otherwise does ⟨false⟩."},
+		{"name":"dtlifcasechargroup","arg":{"format":"{}{}{}{}","snippet":"dtlifcasechargroup{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifcasedatatype","arg":{"format":"{}{}{}{}{}","snippet":"DTLifcasedatatype{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"If ⟨arg⟩ is a string, do ⟨string case⟩, if ⟨arg⟩ is an integer do ⟨int case⟩, if ⟨arg⟩ is a real number, do ⟨real case⟩, if ⟨arg⟩ is currency, do ⟨currency case⟩."},
+		{"name":"DTLifclosedbetween","arg":{"format":"{}{}{}{}{}","snippet":"DTLifclosedbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does \\DTLifnumclosedbetween if {⟨arg⟩}, ⟨min⟩ and ⟨max⟩ are numerical, otherwise do \\DTLifstringclosedbetween or \\DTLifstringclosedbetween*."},
+		{"name":"DTLifclosedbetween*","arg":{"format":"{}{}{}{}{}","snippet":"DTLifclosedbetween*{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does \\DTLifnumclosedbetween if {⟨arg⟩}, ⟨min⟩ and ⟨max⟩ are numerical, otherwise do \\DTLifstringclosedbetween or \\DTLifstringclosedbetween*."},
+		{"name":"DTLifcurrency","arg":{"format":"{}{}{}","snippet":"DTLifcurrency{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s currency do second argument, otherwise do third argument."},
+		{"name":"DTLifcurrencyunit","arg":{"format":"{}{}{}{}","snippet":"DTLifcurrencyunit{${1}}{${2}}{${3}}{${4}}"},"doc":"This tests if ⟨arg⟩ is currency, and uses the currency unit ⟨symbol⟩."},
+		{"name":"DTLifdate","arg":{"format":"{}{}{}","snippet":"DTLifdate{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s a date (no time) do second argument, otherwise do third argument."},
+		{"name":"DTLifdbempty","arg":{"format":"{}{}{}","snippet":"DTLifdbempty{${1}}{${2}}{${3}}"},"doc":"Check if named database is empty (i.e. no rows have been added)."},
+		{"name":"DTLifdbexists","arg":{"format":"{}{}{}","snippet":"DTLifdbexists{${1}}{${2}}{${3}}"},"doc":"Checks if a data base with the given name exists."},
+		{"name":"DTLifEndsWith","arg":{"format":"{}{}{}{}","snippet":"DTLifEndsWith{${1:string}}{${2:fragment}}{${3:true}}{${4:false}}"},"doc":"If ⟨string⟩ ends with ⟨substring⟩, this does ⟨true part⟩, otherwise it does ⟨false part⟩."},
+		{"name":"DTLifEndsWith*","arg":{"format":"{}{}{}{}","snippet":"DTLifEndsWith*{${1:string}}{${2:fragment}}{${3:true}}{${4:false}}"},"doc":"If ⟨string⟩ ends with ⟨substring⟩, this does ⟨true part⟩, otherwise it does ⟨false part⟩."},
+		{"name":"DTLifeq","arg":{"format":"{}{}{}{}","snippet":"DTLifeq{${1}}{${2}}{${3}}{${4}}"},"doc":"Does \\DTLifnumeq if both ⟨arg1⟩ and ⟨arg2⟩ are numerical, otherwise do \\DTLifstringeq or \\DTLifstringeq*."},
+		{"name":"DTLifeq*","arg":{"format":"{}{}{}{}","snippet":"DTLifeq*{${1}}{${2}}{${3}}{${4}}"},"doc":"Does \\DTLifnumeq if both ⟨arg1⟩ and ⟨arg2⟩ are numerical, otherwise do \\DTLifstringeq or \\DTLifstringeq*."},
+		{"name":"DTLiffirstrow","arg":{"format":"{}{}","snippet":"DTLiffirstrow{${1}}{${2}}"},"doc":"Test if the current row is the first row."},
+		{"name":"DTLifFPclosedbetween","arg":{"format":"{}{}{}{}{}","snippet":"DTLifFPclosedbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Determines if ⟨min⟩ ≤ ⟨num⟩ ≤ ⟨max⟩."},
+		{"name":"DTLifFPopenbetween","arg":{"format":"{}{}{}{}{}","snippet":"DTLifFPopenbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Determines if ⟨min⟩ < ⟨num⟩ < ⟨max⟩ where all arguments are in standard fixed point notation."},
+		{"name":"DTLifgt","arg":{"format":"{}{}{}{}","snippet":"DTLifgt{${1}}{${2}}{${3}}{${4}}"},"doc":"Does \\DTLifnumgt if both ⟨arg1⟩ and ⟨arg2⟩ are numerical, otherwise do \\DTLifstringgt or \\DTLifstringgt*."},
+		{"name":"DTLifgt*","arg":{"format":"{}{}{}{}","snippet":"DTLifgt*{${1}}{${2}}{${3}}{${4}}"},"doc":"Does \\DTLifnumgt if both ⟨arg1⟩ and ⟨arg2⟩ are numerical, otherwise do \\DTLifstringgt or \\DTLifstringgt*."},
+		{"name":"DTLifhaskey","arg":{"format":"{}{}{}{}","snippet":"DTLifhaskey{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifhaskey*","arg":{"format":"{}{}{}{}","snippet":"DTLifhaskey*{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifinlist","arg":{"format":"{}{}{}{}","snippet":"DTLifinlist{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifint","arg":{"format":"{}{}{}","snippet":"DTLifint{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s an integer do second argument, otherwise do third argument."},
+		{"name":"dtlifintclosedbetween","arg":{"format":"{}{}{}{}{}","snippet":"dtlifintclosedbetween{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"dtlifintopenbetween","arg":{"format":"{}{}{}{}{}","snippet":"dtlifintopenbetween{${1}}{${2}}{${3}}{${4}}{${5}}"}},
+		{"name":"DTLiflastrow","arg":{"format":"{}{}","snippet":"DTLiflastrow{${1}}{${2}}"},"doc":"Expands to ⟨true⟩, if this row is the last (that satisfies the condition)."},
+		{"name":"DTLiflt","arg":{"format":"{}{}{}{}","snippet":"DTLiflt{${1}}{${2}}{${3}}{${4}}"},"doc":"Does \\DTLifnumlt if both ⟨arg1⟩ and ⟨arg2⟩ are numerical, otherwise do \\DTLifstringlt (unstarred version) or \\DTLifstringlt* (starred version)."},
+		{"name":"DTLiflt*","arg":{"format":"{}{}{}{}","snippet":"DTLiflt*{${1}}{${2}}{${3}}{${4}}"},"doc":"Does \\DTLifnumlt if both ⟨arg1⟩ and ⟨arg2⟩ are numerical, otherwise do \\DTLifstringlt (unstarred version) or \\DTLifstringlt* (starred version)."},
+		{"name":"DTLifnull","arg":{"format":"{}{}{}","snippet":"DTLifnull{${1}}{${2}}{${3}}"},"doc":"Checks if ⟨command⟩ is null (either \\DTLstringnull or \\DTLnumbernull) if true, does ⟨true part⟩ otherwise does ⟨false part⟩."},
+		{"name":"DTLifnullorempty","arg":{"format":"{}{}{}","snippet":"DTLifnullorempty{${1}}{${2}}{${3}}"}},
+		{"name":"dtlifnumclosedbetween","arg":{"format":"{}{}{}{}{}","snippet":"dtlifnumclosedbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does ⟨true⟩ if ⟨num⟩ lies between ⟨min⟩ and ⟨max⟩, including the end points (that is, ⟨min⟩ ≤ ⟨num⟩ ≤ ⟨max⟩) otherwise does ⟨false⟩."},
+		{"name":"DTLifnumclosedbetween","arg":{"format":"{}{}{}{}{}","snippet":"DTLifnumclosedbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does ⟨true⟩ if ⟨num⟩ lies between ⟨min⟩ and ⟨max⟩, including the end points (that is, ⟨min⟩ ≤ ⟨num⟩ ≤ ⟨max⟩) otherwise does ⟨false⟩, where the values are formatted numbers."},
+		{"name":"dtlifnumeq","arg":{"format":"{}{}{}{}","snippet":"dtlifnumeq{${1}}{${2}}{${3}}{${4}}"},"doc":"Does ⟨true⟩ if ⟨num1⟩ equals ⟨num2⟩ otherwise does ⟨false⟩."},
+		{"name":"DTLifnumeq","arg":{"format":"{}{}{}{}","snippet":"DTLifnumeq{${1}}{${2}}{${3}}{${4}}"},"doc":"Does ⟨true⟩ if ⟨num1⟩ equals ⟨num2⟩ (⟨num1⟩ = ⟨num2⟩) otherwise does ⟨false⟩, where the values are formatted numbers."},
+		{"name":"DTLifnumerical","arg":{"format":"{}{}{}","snippet":"DTLifnumerical{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s numerical do second argument, otherwise do third argument."},
+		{"name":"dtlifnumgt","arg":{"format":"{}{}{}{}","snippet":"dtlifnumgt{${1}}{${2}}{${3}}{${4}}"},"doc":"Does ⟨true⟩ if ⟨num1⟩ is greater than ⟨num2⟩ otherwise does ⟨false⟩."},
+		{"name":"DTLifnumgt","arg":{"format":"{}{}{}{}","snippet":"DTLifnumgt{${1}}{${2}}{${3}}{${4}}"},"doc":"Does ⟨true⟩ if ⟨num1⟩ is greater than ⟨num2⟩ (⟨num1⟩ > ⟨num2⟩) otherwise does ⟨false⟩, where the values are formatted numbers."},
+		{"name":"dtlifnumlt","arg":{"format":"{}{}{}{}","snippet":"dtlifnumlt{${1}}{${2}}{${3}}{${4}}"},"doc":"Does ⟨true⟩ if ⟨num1⟩ is less than ⟨num2⟩ otherwise does ⟨false⟩."},
+		{"name":"DTLifnumlt","arg":{"format":"{}{}{}{}","snippet":"DTLifnumlt{${1}}{${2}}{${3}}{${4}}"},"doc":"Does ⟨true⟩ if ⟨num1⟩ is less than ⟨num2⟩ (⟨num1⟩ < ⟨num2⟩) otherwise does ⟨false⟩, where the values are formatted numbers."},
+		{"name":"dtlifnumopenbetween","arg":{"format":"{}{}{}{}{}","snippet":"dtlifnumopenbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does ⟨true⟩ if ⟨num⟩ lies between ⟨min⟩ and ⟨max⟩, excluding the end points (that is, ⟨min⟩ < ⟨num⟩ < ⟨max⟩) otherwise does ⟨false⟩."},
+		{"name":"DTLifnumopenbetween","arg":{"format":"{}{}{}{}{}","snippet":"DTLifnumopenbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does ⟨true⟩ if ⟨num⟩ lies between ⟨min⟩ and ⟨max⟩, excluding the end points (that is, ⟨min⟩ < ⟨num⟩ < ⟨max⟩) otherwise does ⟨false⟩, where the values are formatted numbers."},
+		{"name":"DTLifoddrow","arg":{"format":"{}{}","snippet":"DTLifoddrow{${1}}{${2}}"},"doc":"Determines whether the current row is odd (takes the optional argument of \\DTLforeach into account.)"},
+		{"name":"DTLifopenbetween","arg":{"format":"{}{}{}{}{}","snippet":"DTLifopenbetween{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does \\DTLifnumopenbetween if {⟨arg⟩}, ⟨min⟩ and ⟨max⟩ are numerical, otherwise do \\DTLifstringopenbetween or \\DTLifstringopenbetween*."},
+		{"name":"DTLifopenbetween*","arg":{"format":"{}{}{}{}{}","snippet":"DTLifopenbetween*{${1}}{${2}}{${3}}{${4}}{${5}}"},"doc":"Does \\DTLifnumopenbetween if {⟨arg⟩}, ⟨min⟩ and ⟨max⟩ are numerical, otherwise do \\DTLifstringopenbetween or \\DTLifstringopenbetween*."},
+		{"name":"DTLifreal","arg":{"format":"{}{}{}","snippet":"DTLifreal{${1}}{${2}}{${3}}"},"doc":"Parses ⟨arg⟩ and does ⟨true⟩ if ⟨arg⟩ is a real (decimal) formatted number or is in scientific notation, otherwise it does ⟨false⟩."},
+		{"name":"DTLifStartsWith","arg":{"format":"{}{}{}{}","snippet":"DTLifStartsWith{${1:string}}{${2:fragment}}{${3:true}}{${4:false}}"}},
+		{"name":"DTLifStartsWith*","arg":{"format":"{}{}{}{}","snippet":"DTLifStartsWith*{${1:string}}{${2:fragment}}{${3:true}}{${4:false}}"}},
+		{"name":"DTLifstring","arg":{"format":"{}{}{}","snippet":"DTLifstring{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s a string do second argument, otherwise do third argument."},
+		{"name":"DTLifstringclosedbetween","arg":{"format":"{}{}{}{}{}{}","snippet":"DTLifstringclosedbetween{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"Does ⟨true⟩ if ⟨str⟩ is lexicographically between ⟨min⟩ and ⟨max⟩, inclusive."},
+		{"name":"DTLifstringclosedbetween*","arg":{"format":"{}{}{}{}{}{}","snippet":"DTLifstringclosedbetween*{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"Does ⟨true⟩ if ⟨str⟩ is lexicographically between ⟨min⟩ and ⟨max⟩, inclusive."},
+		{"name":"DTLifstringeq","arg":{"format":"{}{}{}{}","snippet":"DTLifstringeq{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifstringeq*","arg":{"format":"{}{}{}{}","snippet":"DTLifstringeq*{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifstringgt","arg":{"format":"{}{}{}{}","snippet":"DTLifstringgt{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifstringgt*","arg":{"format":"{}{}{}{}","snippet":"DTLifstringgt*{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifstringlt","arg":{"format":"{}{}{}{}","snippet":"DTLifstringlt{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifstringlt*","arg":{"format":"{}{}{}{}","snippet":"DTLifstringlt*{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLifstringopenbetween","arg":{"format":"{}{}{}{}{}{}","snippet":"DTLifstringopenbetween{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"Does ⟨true⟩ if ⟨str⟩ is lexicographically between ⟨min⟩ and ⟨max⟩, but is not equal to ⟨min⟩ or ⟨max⟩."},
+		{"name":"DTLifstringopenbetween*","arg":{"format":"{}{}{}{}{}{}","snippet":"DTLifstringopenbetween*{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"},"doc":"Does ⟨true⟩ if ⟨str⟩ is lexicographically between ⟨min⟩ and ⟨max⟩, but is not equal to ⟨min⟩ or ⟨max⟩."},
+		{"name":"DTLifSubString","arg":{"format":"{}{}{}{}","snippet":"DTLifSubString{${1:string}}{${2:fragment}}{${3:true}}{${4:false}}"},"doc":"If ⟨sub string⟩ is contained in ⟨string⟩ does ⟨true part⟩, otherwise does ⟨false part⟩."},
+		{"name":"DTLifSubString*","arg":{"format":"{}{}{}{}","snippet":"DTLifSubString*{${1:string}}{${2:fragment}}{${3:true}}{${4:false}}"},"doc":"If ⟨sub string⟩ is contained in ⟨string⟩ does ⟨true part⟩, otherwise does ⟨false part⟩."},
+		{"name":"DTLiftemporal","arg":{"format":"{}{}{}","snippet":"DTLiftemporal{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s temporal do second argument, otherwise do third argument."},
+		{"name":"DTLiftime","arg":{"format":"{}{}{}","snippet":"DTLiftime{${1}}{${2}}{${3}}"},"doc":"Tests the first argument, if it’s a time (no date) do second argument, otherwise do third argument."},
+		{"name":"DTLiftimestamp","arg":{"format":"{}{}{}","snippet":"DTLiftimestamp{${1}}{${2}}{${3}}"}},
+		{"name":"DTLinitialhyphen"},
+		{"name":"DTLinitialpunc","arg":{"format":"{}{}","snippet":"DTLinitialpunc{${1}}{${2}}"},"doc":"This command is used to encapsulate each initial (except in the case of a word containing an apostrophe) and the following period/full stop."},
+		{"name":"DTLinitials","arg":{"format":"{}","snippet":"DTLinitials{${1}}"},"doc":"Splits ⟨text⟩ into words and displays the initial of each word."},
+		{"name":"dtlinsertinto","arg":{"format":"{}{}{}","snippet":"dtlinsertinto{${1}}{${2}}{${3}}"},"doc":"Globally inserts ⟨element⟩ into a sorted list (provided in the definition of the command ⟨sorted-list cs⟩) according to the comparison macro ⟨criteria cs⟩, which should have the same syntax as that for \\dtlsortlist."},
+		{"name":"dtlintalign"},
+		{"name":"dtlintformat","arg":{"format":"{}","snippet":"dtlintformat{${1}}"},"doc":"Specifies how to format entries in columns with integer data type."},
+		{"name":"DTLinttype","doc":"Data type representing integers."},
+		{"name":"DTLisclosedbetween","arg":{"format":"{}{}{}","snippet":"DTLisclosedbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLiscurrency","arg":{"format":"{}","snippet":"DTLiscurrency{${1}}"}},
+		{"name":"DTLiscurrencyunit","arg":{"format":"{}{}","snippet":"DTLiscurrencyunit{${1}}{${2}}"}},
+		{"name":"DTLiseq","arg":{"format":"{}{}","snippet":"DTLiseq{${1}}{${2}}"}},
+		{"name":"DTLisFPclosedbetween","arg":{"format":"{}{}{}","snippet":"DTLisFPclosedbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisFPeq","arg":{"format":"{}{}","snippet":"DTLisFPeq{${1}}{${2}}"}},
+		{"name":"DTLisFPgt","arg":{"format":"{}{}","snippet":"DTLisFPgt{${1}}{${2}}"}},
+		{"name":"DTLisFPgteq","arg":{"format":"{}{}","snippet":"DTLisFPgteq{${1}}{${2}}"}},
+		{"name":"DTLisFPlt","arg":{"format":"{}{}","snippet":"DTLisFPlt{${1}}{${2}}"}},
+		{"name":"DTLisFPlteq","arg":{"format":"{}{}","snippet":"DTLisFPlteq{${1}}{${2}}"}},
+		{"name":"DTLisFPopenbetween","arg":{"format":"{}{}{}","snippet":"DTLisFPopenbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisgt","arg":{"format":"{}{}","snippet":"DTLisgt{${1}}{${2}}"}},
+		{"name":"DTLisiclosedbetween","arg":{"format":"{}{}{}","snippet":"DTLisiclosedbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisieq","arg":{"format":"{}{}","snippet":"DTLisieq{${1}}{${2}}"}},
+		{"name":"DTLisigt","arg":{"format":"{}{}","snippet":"DTLisigt{${1}}{${2}}"}},
+		{"name":"DTLisilt","arg":{"format":"{}{}","snippet":"DTLisilt{${1}}{${2}}"}},
+		{"name":"DTLisinlist","arg":{"format":"{}{}","snippet":"DTLisinlist{${1}}{${2}}"}},
+		{"name":"DTLisint","arg":{"format":"{}","snippet":"DTLisint{${1}}"}},
+		{"name":"DTLisiopenbetween","arg":{"format":"{}{}{}","snippet":"DTLisiopenbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisiPrefix","arg":{"format":"{}{}","snippet":"DTLisiPrefix{${1}}{${2}}"}},
+		{"name":"DTLisiSubString","arg":{"format":"{}{}","snippet":"DTLisiSubString{${1}}{${2}}"},"doc":"Tests if second argument is contained in first argument (no case)."},
+		{"name":"DTLisiSuffix","arg":{"format":"{}{}","snippet":"DTLisiSuffix{${1}}{${2}}"},"doc":"Tests if first argument ends with second argument."},
+		{"name":"DTLislt","arg":{"format":"{}{}","snippet":"DTLislt{${1}}{${2}}"}},
+		{"name":"DTLisnumclosedbetween","arg":{"format":"{}{}{}","snippet":"DTLisnumclosedbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisnumeq","arg":{"format":"{}{}","snippet":"DTLisnumeq{${1}}{${2}}"}},
+		{"name":"DTLisnumerical","arg":{"format":"{}","snippet":"DTLisnumerical{${1}}"}},
+		{"name":"DTLisnumgt","arg":{"format":"{}{}","snippet":"DTLisnumgt{${1}}{${2}}"}},
+		{"name":"DTLisnumgteq","arg":{"format":"{}{}","snippet":"DTLisnumgteq{${1}}{${2}}"}},
+		{"name":"DTLisnumlt","arg":{"format":"{}{}","snippet":"DTLisnumlt{${1}}{${2}}"}},
+		{"name":"DTLisnumlteq","arg":{"format":"{}{}","snippet":"DTLisnumlteq{${1}}{${2}}"}},
+		{"name":"DTLisnumopenbetween","arg":{"format":"{}{}{}","snippet":"DTLisnumopenbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisopenbetween","arg":{"format":"{}{}{}","snippet":"DTLisopenbetween{${1}}{${2}}{${3}}"}},
+		{"name":"DTLisPrefix","arg":{"format":"{}{}","snippet":"DTLisPrefix{${1}}{${2}}"},"doc":"Tests if first argument starts with second argument."},
+		{"name":"DTLisreal","arg":{"format":"{}","snippet":"DTLisreal{${1}}"}},
+		{"name":"DTLisstring","arg":{"format":"{}","snippet":"DTLisstring{${1}}"}},
+		{"name":"DTLisSubString","arg":{"format":"{}{}","snippet":"DTLisSubString{${1}}{${2}}"},"doc":"Tests if second argument is contained in first argument."},
+		{"name":"DTLisSuffix","arg":{"format":"{}{}","snippet":"DTLisSuffix{${1}}{${2}}"},"doc":"Tests if first argument ends with second argument."},
+		{"name":"dtlkey"},
+		{"name":"dtllastloadeddb","doc":"Expands to the label of the last database to be loaded by \\DTLread."},
+		{"name":"dtllettergroup","arg":{"format":"{}","snippet":"dtllettergroup{${1}}"},"doc":"By default, this expands to \\text_titlecase_first:n{⟨character⟩}."},
+		{"name":"dtlletterindexcompare","arg":{"format":"{}{}{}","snippet":"dtlletterindexcompare{${1}}{${2}}{${3}}"}},
+		{"name":"DTLlistand"},
+		{"name":"DTLlistelement","arg":{"format":"{}{}","snippet":"DTLlistelement{${1}}{${2}}"},"doc":"Does the ⟨idx⟩th element in the list."},
+		{"name":"DTLlistformatitem","arg":{"format":"{}","snippet":"DTLlistformatitem{${1}}"},"doc":"Formats an item within \\DTLformatlist."},
+		{"name":"DTLlistformatlastsep","doc":"Separator used between the final two elements in \\DTLformatlist."},
+		{"name":"DTLlistformatoxford"},
+		{"name":"DTLlistformatsep"},
+		{"name":"DTLlistskipemptyfalse","unusual":true},
+		{"name":"DTLlistskipemptytrue","unusual":true},
+		{"name":"DTLloaddb","arg":{"format":"[]{}{}","snippet":"DTLloaddb[${1}]{${2}}{${3}}","keys":["datatool:load"],"keyPos":0}},
+		{"name":"DTLloaddb","arg":{"format":"{}{}","snippet":"DTLloaddb{${1}}{${2}}"}},
+		{"name":"DTLloaddbtex","arg":{"format":"{}{}","snippet":"DTLloaddbtex{${1}}{${2}}"}},
+		{"name":"DTLloadrawdb","arg":{"format":"[]{}{}","snippet":"DTLloadrawdb[${1}]{${2}}{${3}}","keys":["datatool:load"],"keyPos":0}},
+		{"name":"DTLloadrawdb","arg":{"format":"{}{}","snippet":"DTLloadrawdb{${1}}{${2}}"}},
+		{"name":"DTLmaketabspace"},
+		{"name":"dtlmapcurrentrow","arg":{"format":"{}{}","snippet":"dtlmapcurrentrow{${1}}{${2}}"},"doc":"Iterates over the columns of the current row."},
+		{"name":"DTLmapdata","arg":{"format":"[]{}","snippet":"DTLmapdata[${1}]{${2}}"},"doc":"Iterates over the data in a database, performing ⟨loop-body⟩ at each iteration."},
+		{"name":"DTLmapdata","arg":{"format":"{}","snippet":"DTLmapdata{${1}}"},"doc":"Iterates over the data in a database, performing ⟨loop-body⟩ at each iteration."},
+		{"name":"DTLmapdatabreak"},
+		{"name":"DTLmapdatabreak*"},
+		{"name":"DTLmapget","arg":{"format":"{}","snippet":"DTLmapget{${1}}"},"doc":"Gets the value of the given key in the current row."},
+		{"name":"DTLmapgetvalues","arg":{"format":"{}","snippet":"DTLmapgetvalues{${1}}"}},
+		{"name":"DTLmapgetvalues*","arg":{"format":"{}","snippet":"DTLmapgetvalues*{${1}}"}},
+		{"name":"DTLmaprow","arg":{"format":"{}{}","snippet":"DTLmaprow{${1}}{${2}}"},"doc":"Maps over the columns in the current row."},
+		{"name":"DTLmaprowbreak","doc":"This will stop the current \\DTLmaprow loop at that point but won’t stop the \\DTLmapdata loop."},
+		{"name":"dtlmax","arg":{"format":"{}{}{}","snippet":"dtlmax{${1}}{${2}}{${3}}"},"doc":"Defines ⟨cs⟩ to the larger of the two numbers."},
+		{"name":"DTLmax","arg":{"format":"{}{}{}","snippet":"DTLmax{${1}}{${2}}{${3}}"},"doc":"Converts the formatted numbers ⟨num1⟩ and ⟨num2⟩ to plain numbers and determines the maximum."},
+		{"name":"dtlmaxall","arg":{"format":"{}{}","snippet":"dtlmaxall{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the maximum in the comma-separated list of numbers."},
+		{"name":"DTLmaxall","arg":{"format":"{}{}","snippet":"DTLmaxall{${1}}{${2}}"},"doc":"Finds the maximum value in ⟨num list⟩ and stores in ⟨cmd⟩ which must be a control sequence."},
+		{"name":"DTLmaxforcolumn","arg":{"format":"{}{}{}","snippet":"DTLmaxforcolumn{${1}}{${2}}{${3}}"},"doc":"This determines the maximum value over all numeric items in the column with the label ⟨key⟩ of the database identified by ⟨db⟩ and stores the result as a formatted number in the control sequence ⟨cmd⟩."},
+		{"name":"DTLmaxforkeys","arg":{"format":"[][]{}{}{}","snippet":"DTLmaxforkeys[${1}][${2}]{${3}}{${4}}{${5}}"},"doc":"Determines the maximum value over all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the result as a formatted number."},
+		{"name":"DTLmaxforkeys","arg":{"format":"{}{}{}","snippet":"DTLmaxforkeys{${1}}{${2}}{${3}}"},"doc":"Determines the maximum value over all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the result as a formatted number."},
+		{"name":"dtlmeanforall","arg":{"format":"{}{}","snippet":"dtlmeanforall{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the mean (average) of all the values in the comma-separated list of numbers."},
+		{"name":"DTLmeanforall","arg":{"format":"{}{}","snippet":"DTLmeanforall{${1}}{${2}}"},"doc":"Computes the arithmetic mean of all the values in ⟨num list⟩ and stores in ⟨cmd⟩ which must be a control sequence."},
+		{"name":"DTLmeanforcolumn","arg":{"format":"{}{}{}","snippet":"DTLmeanforcolumn{${1}}{${2}}{${3}}"},"doc":"This computes the mean over all numeric items in the column with the label ⟨key⟩ of the database identified by ⟨db⟩ and stores the result as a formatted number in the control sequence ⟨cmd⟩."},
+		{"name":"DTLmeanforkeys","arg":{"format":"[][]{}{}{}","snippet":"DTLmeanforkeys[${1}][${2}]{${3}}{${4}}{${5}}"},"doc":"Computes the mean (average) of all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the result as a formatted number."},
+		{"name":"DTLmeanforkeys","arg":{"format":"{}{}{}","snippet":"DTLmeanforkeys{${1}}{${2}}{${3}}"},"doc":"Computes the mean (average) of all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the result as a formatted number."},
+		{"name":"dtlmin","arg":{"format":"{}{}{}","snippet":"dtlmin{${1}}{${2}}{${3}}"},"doc":"Defines ⟨cs⟩ to the smaller of the two numbers."},
+		{"name":"DTLmin","arg":{"format":"{}{}{}","snippet":"DTLmin{${1}}{${2}}{${3}}"},"doc":"Converts the formatted numbers ⟨num1⟩ and ⟨num2⟩ to plain numbers and determines the minimum."},
+		{"name":"dtlminall","arg":{"format":"{}{}","snippet":"dtlminall{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the minimum in the comma-separated list of numbers."},
+		{"name":"DTLminall","arg":{"format":"{}{}","snippet":"DTLminall{${1}}{${2}}"},"doc":"Finds the minimum value in ⟨num list⟩ and stores in ⟨cmd⟩ which must be a control sequence."},
+		{"name":"DTLminforcolumn","arg":{"format":"{}{}{}","snippet":"DTLminforcolumn{${1}}{${2}}{${3}}"},"doc":"This determines the minimum value over all numeric items in the column with the label ⟨key⟩ of the database identified by ⟨db⟩ and stores the result as a formatted number in the control sequence ⟨cmd⟩."},
+		{"name":"DTLminforkeys","arg":{"format":"[][]{}{}{}","snippet":"DTLminforkeys[${1}][${2}]{${3}}{${4}}{${5}}"},"doc":"Determines the minimum value over all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the result as a formatted number."},
+		{"name":"DTLminforkeys","arg":{"format":"{}{}{}","snippet":"DTLminforkeys{${1}}{${2}}{${3}}"},"doc":"Determines the minimum value over all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the result as a formatted number."},
+		{"name":"dtlmul","arg":{"format":"{}{}{}","snippet":"dtlmul{${1}}{${2}}{${3}}"},"doc":"Multiplies two numbers and stores the result in ⟨cs⟩."},
+		{"name":"DTLmul","arg":{"format":"{}{}{}","snippet":"DTLmul{${1}}{${2}}{${3}}"},"doc":"Converts the formatted numbers ⟨num1⟩ and ⟨num2⟩ to plain numbers and multiplies them (⟨num1⟩ × ⟨num2⟩)."},
+		{"name":"dtlneg","arg":{"format":"{}{}","snippet":"dtlneg{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the negative of ⟨num⟩."},
+		{"name":"DTLneg","arg":{"format":"{}{}","snippet":"DTLneg{${1}}{${2}}"},"doc":"Converts the formatted numbers ⟨num⟩ to a plain number and stores the negation (−⟨num⟩) as a formatted number in the command ⟨cs⟩."},
+		{"name":"DTLnewcurrencysymbol","arg":{"format":"{}","snippet":"DTLnewcurrencysymbol{${1}}"}},
+		{"name":"DTLnewdb","arg":{"format":"{}","snippet":"DTLnewdb{${1}}"},"doc":"Initialises a database called ⟨name⟩."},
+		{"name":"DTLnewdbentry","arg":{"format":"{}{}{}","snippet":"DTLnewdbentry{${1:db-name}}{${2:col key}}{${3:value}}"},"doc":"Adds an entry to the last row (adds new row if database is empty) and updates general column information if necessary."},
+		{"name":"DTLnewdbentry*","arg":{"format":"{}{}{}","snippet":"DTLnewdbentry*{${1:db-name}}{${2:col key}}{${3:value}}"},"doc":"Adds an entry to the last row (adds new row if database is empty) and updates general column information if necessary."},
+		{"name":"DTLnewdbonloadfalse","unusual":true},
+		{"name":"DTLnewdbonloadtrue","unusual":true},
+		{"name":"DTLnewrow","arg":{"format":"{}","snippet":"DTLnewrow{${1}}"},"doc":"Add a new row to named database."},
+		{"name":"DTLnewrow*","arg":{"format":"{}","snippet":"DTLnewrow*{${1}}"},"doc":"Add a new row to named database."},
+		{"name":"dtlnoexpandnewvalue","doc":"Prevents new values from being expanded when added to a database (equivalent to the new -value-expand=false option)."},
+		{"name":"dtlnoheaderfalse","unusual":true},
+		{"name":"dtlnoheadertrue","unusual":true},
+		{"name":"dtlnonlettergroup","arg":{"format":"{}","snippet":"dtlnonlettergroup{${1}}"},"doc":"By default, this simply expands to ⟨character⟩."},
+		{"name":"dtlnovalue"},
+		{"name":"dtlnumbergroup","arg":{"format":"{}","snippet":"dtlnumbergroup{${1}}"},"doc":"By default, this simply expands to ⟨num⟩."},
+		{"name":"DTLnumbernull","doc":"Represents null for values that are expected to be numeric."},
+		{"name":"DTLnumcompare","arg":{"format":"{}{}{}","snippet":"DTLnumcompare{${1}}{${2}}{${3}}"},"doc":"Compares ⟨num1⟩ and ⟨num2⟩ numerically, where the arguments are formatted numbers or datum control sequences."},
+		{"name":"dtlnumericformat","arg":{"format":"{}","snippet":"dtlnumericformat{${1}}"},"doc":"Used to format values in columns with a numeric data type."},
+		{"name":"DTLnumitemsinlist","arg":{"format":"{}{}","snippet":"DTLnumitemsinlist{${1}}{${2}}"},"doc":"Counts the number of elements in the list and defines the command ⟨cs⟩ to that number."},
+		{"name":"dtlpadleadingzeros","arg":{"format":"{}{}","snippet":"dtlpadleadingzeros{${1}}{${2}}"},"doc":"Expands to a plain number that is the supplied ⟨value⟩ padded with leading zeros to the number of digits identified in the ⟨num-digits⟩ argument."},
+		{"name":"dtlpadleadingzerosminus"},
+		{"name":"dtlpadleadingzerosplus"},
+		{"name":"DTLpar","doc":"This is a robust command that simply does \\par."},
+		{"name":"DTLparse","arg":{"format":"{}{}","snippet":"DTLparse{${1}}{${2}}"}},
+		{"name":"dtlparsewords","arg":{"format":"{}{}","snippet":"dtlparsewords{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLPreProcessCurrencyGroup","arg":{"format":"{}{}{}","snippet":"DTLPreProcessCurrencyGroup{${1}}{${2}}{${3}}"}},
+		{"name":"DTLPreProcessDateGroup","arg":{"format":"{}{}","snippet":"DTLPreProcessDateGroup{${1}}{${2}}"},"doc":"Hook to pre-process date group."},
+		{"name":"DTLPreProcessDateTimeGroup","arg":{"format":"{}{}","snippet":"DTLPreProcessDateTimeGroup{${1}}{${2}}"}},
+		{"name":"DTLPreProcessDecimalGroup","arg":{"format":"{}{}","snippet":"DTLPreProcessDecimalGroup{${1}}{${2}}"},"doc":"This is used when ⟨num⟩ has been identified as a decimal."},
+		{"name":"DTLPreProcessIntegerGroup","arg":{"format":"{}{}","snippet":"DTLPreProcessIntegerGroup{${1}}{${2}}"}},
+		{"name":"DTLPreProcessLetterGroup","arg":{"format":"{}","snippet":"DTLPreProcessLetterGroup{${1}}"}},
+		{"name":"DTLPreProcessNonLetterGroup","arg":{"format":"{}","snippet":"DTLPreProcessNonLetterGroup{${1}}"},"doc":"This hook is used for a non-letter and does nothing by default."},
+		{"name":"DTLPreProcessTimeGroup","arg":{"format":"{}{}","snippet":"DTLPreProcessTimeGroup{${1}}{${2}}"},"doc":"Hook to pre-process time group."},
+		{"name":"DTLprotectedsaverawdb","arg":{"format":"{}{}","snippet":"DTLprotectedsaverawdb{${1}}{${2}}"}},
+		{"name":"DTLrawmap","arg":{"format":"{}{}","snippet":"DTLrawmap{${1}}{${2}}"},"doc":"Additional mappings to perform when reading a raw data file."},
+		{"name":"DTLread","arg":{"format":"[]{}","snippet":"DTLread[${1}]{${2}}"}},
+		{"name":"DTLread","arg":{"format":"{}","snippet":"DTLread{${1}}"}},
+		{"name":"dtlrealalign"},
+		{"name":"dtlrealformat","arg":{"format":"{}","snippet":"dtlrealformat{${1}}"},"doc":"Used to format values in columns with the decimal data type."},
+		{"name":"DTLrealtype","doc":"Data type representing real numbers."},
+		{"name":"dtlrecombine"},
+		{"name":"dtlrecombineomitcurrent","doc":"Like \\dtlrecombine but omits \\dtlcurrentrow."},
+		{"name":"DTLreconstructdata","arg":{"format":"{}{}{}{}{}","snippet":"DTLreconstructdata{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"DTLreconstructdatabase","arg":{"format":"{}{}{}{}{}","snippet":"DTLreconstructdatabase{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"DTLreconstructdbdata","arg":{"format":"{}{}{}{}{}","snippet":"DTLreconstructdbdata{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
+		{"name":"DTLremovecurrentrow","doc":"Removes the current row from the database."},
+		{"name":"DTLremoveentryfromrow","arg":{"format":"{}","snippet":"DTLremoveentryfromrow{${1}}"},"doc":"Removes entry given by ⟨key⟩ from current row."},
+		{"name":"dtlremoveentryincurrentrow","arg":{"format":"{}","snippet":"dtlremoveentryincurrentrow{${1}}"}},
+		{"name":"DTLremoverow","arg":{"format":"{}{}","snippet":"DTLremoverow{${1}}{${2}}"}},
+		{"name":"DTLreplaceentryforrow","arg":{"format":"{}{}","snippet":"DTLreplaceentryforrow{${1}}{${2}}"},"doc":"Replaces entry given by ⟨key⟩ in current row with ⟨value⟩."},
+		{"name":"dtlreplaceentryincurrentrow","arg":{"format":"{}{}","snippet":"dtlreplaceentryincurrentrow{${1}}{${2}}"},"doc":"Replaces the entry for the column identified by the index ⟨col idx⟩ in \\dtlcurrentrow with the given value ⟨new value⟩."},
+		{"name":"DTLresetLanguage","doc":"Reset all language (not region) related commands."},
+		{"name":"DTLresetRegion","doc":"Reset all region related commands."},
+		{"name":"DTLrmentry","arg":{"format":"{}","snippet":"DTLrmentry{${1}}"},"doc":"Only available with \\DTLmapdata and read-only=false, this command will remove a column from the current iteration row."},
+		{"name":"DTLrmrow","doc":"Removes the current iteration row."},
+		{"name":"dtlroot","arg":{"format":"{}{}{}","snippet":"dtlroot{${1}}{${2}}{${3}}"},"doc":"Nth root number and store the result in ⟨cs⟩."},
+		{"name":"dtlround","arg":{"format":"{}{}{}","snippet":"dtlround{${1}}{${2}}{${3}}"},"doc":"Rounds ⟨num⟩ to ⟨dp⟩ decimal places and stores the result in ⟨cs⟩."},
+		{"name":"DTLround","arg":{"format":"{}{}{}","snippet":"DTLround{${1}}{${2}}{${3}}"},"doc":"Sets ⟨cmd⟩ to ⟨num⟩ rounded to ⟨num digits⟩ digits after the decimal character."},
+		{"name":"DTLrowcount","arg":{"format":"{}","snippet":"DTLrowcount{${1}}"},"doc":"Expands to the number of rows in the database identified by the label ⟨db-name⟩."},
+		{"name":"DTLrowincr","doc":"Increment counter for the next level."},
+		{"name":"dtlrownum","doc":"Count register to keep track of row index."},
+		{"name":"DTLrowreset","doc":"Reset counter for the next level."},
+		{"name":"DTLsavedb","arg":{"format":"{}{}","snippet":"DTLsavedb{${1}}{${2}}"}},
+		{"name":"DTLsavelastrowcount","arg":{"format":"{}","snippet":"DTLsavelastrowcount{${1}}"},"doc":"Stores the maximum row count for the last \\DTLforeach."},
+		{"name":"DTLsaverawdb","arg":{"format":"{}{}","snippet":"DTLsaverawdb{${1}}{${2}}"}},
+		{"name":"DTLsavetexdb","arg":{"format":"{}{}","snippet":"DTLsavetexdb{${1}}{${2}}"},"doc":"Save a database as a LaTeX file."},
+		{"name":"DTLscinum","arg":{"format":"{}","snippet":"DTLscinum{${1}}"}},
+		{"name":"dtlsdforall","arg":{"format":"[]{}{}","snippet":"dtlsdforall[${1}]{${2}}{${3}}"},"doc":"Defines ⟨cs⟩ to the standard deviation of all the values in the comma-separated list of numbers."},
+		{"name":"dtlsdforall","arg":{"format":"{}{}","snippet":"dtlsdforall{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the standard deviation of all the values in the comma-separated list of numbers."},
+		{"name":"DTLsdforall","arg":{"format":"{}{}","snippet":"DTLsdforall{${1}}{${2}}"},"doc":"Computes the standard deviation of all the values in ⟨num list⟩ and stores in ⟨cmd⟩ which must be a control sequence."},
+		{"name":"DTLsdforcolumn","arg":{"format":"{}{}{}","snippet":"DTLsdforcolumn{${1}}{${2}}{${3}}"},"doc":"This computes the standard deviation of all numeric items in the column with the label ⟨key⟩ of the database identified by ⟨db⟩ and stores the result as a formatted number in the control sequence ⟨cmd⟩."},
+		{"name":"DTLsdforkeys","arg":{"format":"[][]{}{}{}","snippet":"DTLsdforkeys[${1}][${2}]{${3}}{${4}}{${5}}"},"doc":"Computes the standard deviation of all entries for each key in ⟨key list⟩ over all databases in ⟨db list⟩, and stores in ⟨cmd⟩, which must be a control sequence."},
+		{"name":"DTLsdforkeys","arg":{"format":"{}{}{}","snippet":"DTLsdforkeys{${1}}{${2}}{${3}}"},"doc":"Computes the standard deviation of all entries for each key in ⟨key list⟩ over all databases in ⟨db list⟩, and stores in ⟨cmd⟩, which must be a control sequence."},
+		{"name":"dtlsetcharcode","arg":{"format":"{}{}","snippet":"dtlsetcharcode{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLsetcurrencydatum","arg":{"format":"{}{}{}{}","snippet":"DTLsetcurrencydatum{${1}}{${2}}{${3}}{${4}}"},"doc":"Sets ⟨cs⟩ to a currency datum."},
+		{"name":"DTLsetdecimaldatum","arg":{"format":"{}{}{}","snippet":"DTLsetdecimaldatum{${1}}{${2}}{${3}}"},"doc":"Sets ⟨cs⟩ to a decimal datum."},
+		{"name":"DTLsetdefaultcurrency","arg":{"format":"{}","snippet":"DTLsetdefaultcurrency{${1}}"},"doc":"\\DTLsetdefaultcurrency{⟨symbol⟩} sets the default currency."},
+		{"name":"dtlsetdefaultUTFviiicharcode","arg":{"format":"{}{}","snippet":"dtlsetdefaultUTFviiicharcode{${1}}{${2}}"},"unusual":true},
+		{"name":"dtlsetdefaultUTFviiilccharcode","arg":{"format":"{}{}","snippet":"dtlsetdefaultUTFviiilccharcode{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLsetdelimiter","arg":{"format":"{}","snippet":"DTLsetdelimiter{${1}}"},"doc":"This sets the delimiter."},
+		{"name":"DTLsetentry","arg":{"format":"{}","snippet":"DTLsetentry{${1}}"},"doc":"Sets the column identified by either column or key to the value identified by value or expand-value or expand-once-value."},
+		{"name":"DTLsetfpdatum","arg":{"format":"{}{}{}","snippet":"DTLsetfpdatum{${1}}{${2}}{${3}}"},"doc":"Sets ⟨cs⟩ to a floating point datum."},
+		{"name":"DTLsetheader","arg":{"format":"{}{}{}","snippet":"DTLsetheader{${1:db-name}}{${2:col key}}{${3:header}}"},"doc":"Sets header for column given by ⟨key⟩ in database ⟨db⟩."},
+		{"name":"DTLsetheader*","arg":{"format":"{}{}{}","snippet":"DTLsetheader*{${1:db-name}}{${2:col key}}{${3:header}}"},"doc":"Sets header for column given by ⟨key⟩ in database ⟨db⟩."},
+		{"name":"DTLsetintegerdatum","arg":{"format":"{}{}{}","snippet":"DTLsetintegerdatum{${1}}{${2}}{${3}}"},"doc":"Sets ⟨cs⟩ to an integer datum."},
+		{"name":"dtlsetlccharcode","arg":{"format":"{}{}","snippet":"dtlsetlccharcode{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLsetLocaleOptions","arg":{"format":"[]{}{}","snippet":"DTLsetLocaleOptions[${1}]{${2}}{${3}}"},"doc":"User command for setting options for the given locale."},
+		{"name":"DTLsetLocaleOptions","arg":{"format":"{}{}","snippet":"DTLsetLocaleOptions{${1}}{${2}}"},"doc":"User command for setting options for the given locale."},
+		{"name":"DTLsetLocaleOptions*","arg":{"format":"[]{}{}","snippet":"DTLsetLocaleOptions*[${1}]{${2}}{${3}}"},"doc":"User command for setting options for the given locale."},
+		{"name":"DTLsetLocaleOptions*","arg":{"format":"{}{}","snippet":"DTLsetLocaleOptions*{${1}}{${2}}"},"doc":"User command for setting options for the given locale."},
+		{"name":"DTLsetnumberchars","arg":{"format":"{}{}","snippet":"DTLsetnumberchars{${1}}{${2}}"},"doc":"Sets the current number group character and decimal character."},
+		{"name":"DTLsetseparator","arg":{"format":"{}","snippet":"DTLsetseparator{${1}}"}},
+		{"name":"DTLsetstringdatum","arg":{"format":"{}{}","snippet":"DTLsetstringdatum{${1}}{${2}}"},"doc":"Sets ⟨cs⟩ to a string datum."},
+		{"name":"DTLsettabseparator"},
+		{"name":"DTLsettemporaldatum","arg":{"format":"{}{}{}","snippet":"DTLsettemporaldatum{${1}}{${2}}{${3}}"},"doc":"Sets ⟨cs⟩ to a date/time datum."},
+		{"name":"DTLsetup","arg":{"format":"{}","snippet":"DTLsetup{${1}}","keys":["l3keys:datatool"],"keyPos":0},"doc":"Provide user interface command to set options later."},
+		{"name":"dtlsetUTFviiicharcode","arg":{"format":"{}{}","snippet":"dtlsetUTFviiicharcode{${1}}{${2}}"},"unusual":true},
+		{"name":"dtlsetUTFviiilccharcode","arg":{"format":"{}{}","snippet":"dtlsetUTFviiilccharcode{${1}}{${2}}"},"unusual":true},
+		{"name":"dtlshowdb","arg":{"format":"{}","snippet":"dtlshowdb{${1}}"},"unusual":true},
+		{"name":"dtlshowdbkeys","arg":{"format":"{}","snippet":"dtlshowdbkeys{${1}}"},"unusual":true},
+		{"name":"dtlshowtype","arg":{"format":"{}{}","snippet":"dtlshowtype{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLshufflelist","arg":{"format":"{}","snippet":"DTLshufflelist{${1}}"},"doc":"Shuffle a comma-separated list."},
+		{"name":"dtlsort","arg":{"format":"[]{}{}{}","snippet":"dtlsort[${1}]{${2}}{${3}}{${4}}"},"doc":"Sorts the database identified by ⟨db-name⟩ using the given ⟨handler-cs⟩ function for the comparisons, which should be of the type described in §2.9.5.1."},
+		{"name":"dtlsort","arg":{"format":"{}{}{}","snippet":"dtlsort{${1}}{${2}}{${3}}"},"doc":"Sorts the database identified by ⟨db-name⟩ using the given ⟨handler-cs⟩ function for the comparisons, which should be of the type described in §2.9.5.1."},
+		{"name":"DTLsort","arg":{"format":"[]{}{}","snippet":"DTLsort[${1:replacements}]{${2:criteria}}{${3:db-name}}"},"doc":"Sorts database ⟨db name⟩ according to {⟨sort criteria⟩}, which must be a comma separated list of keys, and optionally =⟨order⟩, where ⟨order⟩ is either ascending or descending."},
+		{"name":"DTLsort","arg":{"format":"{}{}","snippet":"DTLsort{${1:criteria}}{${2:db-name}}"},"doc":"Sorts database ⟨db name⟩ according to {⟨sort criteria⟩}, which must be a comma separated list of keys, and optionally =⟨order⟩, where ⟨order⟩ is either ascending or descending."},
+		{"name":"DTLsort*","arg":{"format":"[]{}{}","snippet":"DTLsort*[${1:replacements}]{${2:criteria}}{${3:db-name}}"},"doc":"Sorts database ⟨db name⟩ according to {⟨sort criteria⟩}, which must be a comma separated list of keys, and optionally =⟨order⟩, where ⟨order⟩ is either ascending or descending."},
+		{"name":"DTLsort*","arg":{"format":"{}{}","snippet":"DTLsort*{${1:criteria}}{${2:db-name}}"},"doc":"Sorts database ⟨db name⟩ according to {⟨sort criteria⟩}, which must be a comma separated list of keys, and optionally =⟨order⟩, where ⟨order⟩ is either ascending or descending."},
+		{"name":"DTLsortdata","arg":{"format":"[]{}{}","snippet":"DTLsortdata[${1}]{${2}}{${3}}"},"doc":"This command sorts the data (in the database identified by ⟨db-name⟩) according to the given criteria."},
+		{"name":"DTLsortdata","arg":{"format":"{}{}","snippet":"DTLsortdata{${1}}{${2}}"},"doc":"This command sorts the data (in the database identified by ⟨db-name⟩) according to the given criteria."},
+		{"name":"dtlsortdatavalue","arg":{"format":"{}{}","snippet":"dtlsortdatavalue{${1}}{${2}}"},"unusual":true},
+		{"name":"DTLsortedactual","arg":{"format":"{}","snippet":"DTLsortedactual{${1}}"},"doc":"Expands to the actual element."},
+		{"name":"DTLsortedletter","arg":{"format":"{}","snippet":"DTLsortedletter{${1}}"}},
+		{"name":"DTLsortedvalue","arg":{"format":"{}","snippet":"DTLsortedvalue{${1}}"},"doc":"Expands to the string sort value."},
+		{"name":"DTLsortlettercasehandler","arg":{"format":"{}{}","snippet":"DTLsortlettercasehandler{${1}}{${2}}"},"doc":"A case-sensitive letter order handler."},
+		{"name":"DTLsortletterhandler","arg":{"format":"{}{}","snippet":"DTLsortletterhandler{${1}}{${2}}"},"doc":"A case-insensitive letter order handler."},
+		{"name":"dtlsortlist","arg":{"format":"{}{}","snippet":"dtlsortlist{${1}}{${2}}"},"doc":"Sorts the given comma-separated list according to the ⟨criteria⟩ command, which must take three arguments."},
+		{"name":"DTLsortwordcasehandler","arg":{"format":"{}{}","snippet":"DTLsortwordcasehandler{${1}}{${2}}"},"doc":"A case-sensitive word order handler."},
+		{"name":"dtlSortWordCommands","arg":{"format":"{}","snippet":"dtlSortWordCommands{${1:code}}"}},
+		{"name":"DTLsortwordhandler","arg":{"format":"{}{}","snippet":"DTLsortwordhandler{${1}}{${2}}"},"doc":"A case-insensitive word order handler."},
+		{"name":"DTLsortwordlist","arg":{"format":"{}{}","snippet":"DTLsortwordlist{${1}}{${2}}"}},
+		{"name":"dtlspecialvalue","arg":{"format":"{}","snippet":"dtlspecialvalue{${1}}"},"doc":"This simply expands to its argument but its presence at the start of a value indicates that special treatment is required for that entry when adding the entry to the database and when writing the database to a DBTEX file."},
+		{"name":"dtlsplitrow","arg":{"format":"{}{}{}{}","snippet":"dtlsplitrow{${1}}{${2}}{${3}}{${4}}"},"doc":"Splits the row around the entry given by ⟨col num⟩."},
+		{"name":"DTLsplitstring","arg":{"format":"{}{}{}{}","snippet":"DTLsplitstring{${1}}{${2}}{${3}}{${4}}"},"doc":"Splits ⟨string⟩ at ⟨split text⟩ and defines ⟨before cmd⟩ to the pre-split text and ⟨after cmd⟩ to the post-split text."},
+		{"name":"dtlsqrt","arg":{"format":"{}{}","snippet":"dtlsqrt{${1}}{${2}}"},"doc":"Square root number and store the result in ⟨cs⟩."},
+		{"name":"DTLsqrt","arg":{"format":"{}{}","snippet":"DTLsqrt{${1}}{${2}}"}},
+		{"name":"DTLStoreInitialGetLetter","arg":{"format":"{}{}","snippet":"DTLStoreInitialGetLetter{${1}}{${2}}"}},
+		{"name":"DTLstoreinitials","arg":{"format":"{}{}","snippet":"DTLstoreinitials{${1}}{${2}}"},"doc":"Convert a string into initials and store in ⟨cmd⟩."},
+		{"name":"dtlstringalign"},
+		{"name":"dtlstringformat","arg":{"format":"{}","snippet":"dtlstringformat{${1}}"},"doc":"Specifies how to format entries in columns with string data type."},
+		{"name":"DTLstringnull","doc":"Represents null for values that are expected to be strings."},
+		{"name":"DTLstringtype","doc":"Data type representing strings."},
+		{"name":"dtlsub","arg":{"format":"{}{}{}","snippet":"dtlsub{${1}}{${2}}{${3}}"},"doc":"Subtracts two numbers and stores the result in ⟨cs⟩."},
+		{"name":"DTLsub","arg":{"format":"{}{}{}","snippet":"DTLsub{${1}}{${2}}{${3}}"},"doc":"Converts the formatted numbers ⟨num1⟩ and ⟨num2⟩ to plain numbers and subtracts ⟨num2⟩ from ⟨num1⟩ (⟨num1⟩ − ⟨num2⟩)."},
+		{"name":"DTLsubstitute","arg":{"format":"{}{}{}","snippet":"DTLsubstitute{${1}}{${2}}{${3}}"},"doc":"Substitutes the first occurrence of ⟨original⟩ with ⟨replacement⟩ within the expansion text of the command ⟨cs⟩."},
+		{"name":"DTLsubstituteall","arg":{"format":"{}{}{}","snippet":"DTLsubstituteall{${1}}{${2}}{${3}}"}},
+		{"name":"DTLsumcolumn","arg":{"format":"{}{}{}","snippet":"DTLsumcolumn{${1}}{${2}}{${3}}"},"doc":"This sums over all numeric items in the column with the label ⟨key⟩ of the database identified by ⟨db⟩ and stores the result as a formatted number in the control sequence ⟨cmd⟩."},
+		{"name":"DTLsumforkeys","arg":{"format":"[][]{}{}{}","snippet":"DTLsumforkeys[${1}][${2}]{${3}}{${4}}{${5}}"},"doc":"Sums all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the total as a formatted number."},
+		{"name":"DTLsumforkeys","arg":{"format":"{}{}{}","snippet":"DTLsumforkeys{${1}}{${2}}{${3}}"},"doc":"Sums all numeric values in the columns identified by the keys in the comma-separated ⟨key list⟩ for all databases listed in the comma-separated ⟨db list⟩ and assigns ⟨cmd⟩ to the total as a formatted number."},
+		{"name":"dtlswapentriesincurrentrow","arg":{"format":"{}{}","snippet":"dtlswapentriesincurrentrow{${1}}{${2}}"}},
+		{"name":"dtlswaprows","arg":{"format":"{}{}{}","snippet":"dtlswaprows{${1}}{${2}}{${3}}"},"doc":"Swaps the rows with indices ⟨row1 idx⟩ and ⟨row2 idx⟩ in the database ⟨db⟩."},
+		{"name":"DTLtemporalvalue","arg":{"format":"{}{}","snippet":"DTLtemporalvalue{${1}}{${2}}"},"doc":"This simply expands to the first argument by default, which is the numeric value associated with the data."},
+		{"name":"dtltexorsort","arg":{"format":"{}{}","snippet":"dtltexorsort{${1}}{${2}}"},"doc":"This normally expands to just its first argument but inside \\DTLsortwordlist it expands to its second argument instead."},
+		{"name":"DTLtherow","doc":"Show the counter for the next level."},
+		{"name":"dtltimealign","doc":"Alignment character for columns containing times."},
+		{"name":"dtltimeformat","arg":{"format":"{}","snippet":"dtltimeformat{${1}}"},"doc":"Specifies how to format entries in columns with time data type."},
+		{"name":"dtltimegroup","arg":{"format":"{}","snippet":"dtltimegroup{${1}}"}},
+		{"name":"dtltrunc","arg":{"format":"{}{}{}","snippet":"dtltrunc{${1}}{${2}}{${3}}"}},
+		{"name":"DTLtrunc","arg":{"format":"{}{}{}","snippet":"DTLtrunc{${1}}{${2}}{${3}}"},"doc":"Sets ⟨cmd⟩ to ⟨num⟩ truncated to ⟨num digits⟩ digits after the decimal character."},
+		{"name":"dtltype"},
+		{"name":"DTLunsettype","doc":"This expands to nothing and so can be used to check for the unset ID."},
+		{"name":"dtlupdateentryincurrentrow","arg":{"format":"{}{}","snippet":"dtlupdateentryincurrentrow{${1}}{${2}}"}},
+		{"name":"DTLuse","arg":{"format":"{}","snippet":"DTLuse{${1}}"},"doc":"This gets the primary or secondary return value and then uses it."},
+		{"name":"DTLusedatum","arg":{"format":"{}","snippet":"DTLusedatum{${1}}"},"doc":"Expands to the original value ⟨content⟩ that was parsed (or the expanded value in the case of \\DTLxparse, or the reformatted string value, if the applicable option was in effect)."},
+		{"name":"dtlvarianceforall","arg":{"format":"[]{}{}","snippet":"dtlvarianceforall[${1}]{${2}}{${3}}"},"doc":"Defines ⟨cs⟩ to the variance of all the values in the comma-separated list of numbers."},
+		{"name":"dtlvarianceforall","arg":{"format":"{}{}","snippet":"dtlvarianceforall{${1}}{${2}}"},"doc":"Defines ⟨cs⟩ to the variance of all the values in the comma-separated list of numbers."},
+		{"name":"DTLvarianceforall","arg":{"format":"{}{}","snippet":"DTLvarianceforall{${1}}{${2}}"},"doc":"Computes the variance of all the values in ⟨num list⟩ and stores in ⟨cmd⟩ which must be a control sequence."},
+		{"name":"DTLvarianceforcolumn","arg":{"format":"{}{}{}","snippet":"DTLvarianceforcolumn{${1}}{${2}}{${3}}"},"doc":"Quicker version of \\DTLvarianceforkeys that just computes the variance over one column (specified by ⟨key⟩) for a single database (specified by ⟨db⟩) and stores the result in ⟨cmd⟩."},
+		{"name":"DTLvarianceforkeys","arg":{"format":"[][]{}{}{}","snippet":"DTLvarianceforkeys[${1}][${2}]{${3}}{${4}}{${5}}"},"doc":"Computes the variance of all entries for each key in ⟨key list⟩ over all databases in ⟨db list⟩, and stores in ⟨cmd⟩, which must be a control sequence."},
+		{"name":"DTLvarianceforkeys","arg":{"format":"{}{}{}","snippet":"DTLvarianceforkeys{${1}}{${2}}{${3}}"},"doc":"Computes the variance of all entries for each key in ⟨key list⟩ over all databases in ⟨db list⟩, and stores in ⟨cmd⟩, which must be a control sequence."},
+		{"name":"dtlverbosefalse","unusual":true},
+		{"name":"dtlverbosetrue","unusual":true},
+		{"name":"dtlwordindexcompare","arg":{"format":"{}{}{}","snippet":"dtlwordindexcompare{${1}}{${2}}{${3}}"}},
+		{"name":"DTLwrite","arg":{"format":"[]{}","snippet":"DTLwrite[${1}]{${2}}"},"doc":"Saves the data from a database to the file given by ⟨filename⟩."},
+		{"name":"DTLwrite","arg":{"format":"{}","snippet":"DTLwrite{${1}}"},"doc":"Saves the data from a database to the file given by ⟨filename⟩."},
+		{"name":"DTLxparse","arg":{"format":"{}{}","snippet":"DTLxparse{${1}}{${2}}"}},
+		{"name":"DTLxsetcurrencydatum","arg":{"format":"{}{}{}{}","snippet":"DTLxsetcurrencydatum{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"DTLxsetdecimaldatum","arg":{"format":"{}{}{}","snippet":"DTLxsetdecimaldatum{${1}}{${2}}{${3}}"}},
+		{"name":"DTLxsetintegerdatum","arg":{"format":"{}{}{}","snippet":"DTLxsetintegerdatum{${1}}{${2}}{${3}}"}},
+		{"name":"DTLxsetstringdatum","arg":{"format":"{}{}","snippet":"DTLxsetstringdatum{${1}}{${2}}"}},
+		{"name":"DTLxsettemporaldatum","arg":{"format":"{}{}{}","snippet":"DTLxsettemporaldatum{${1}}{${2}}{${3}}"}},
+		{"name":"DTLxsplitstring","arg":{"format":"{}{}{}{}","snippet":"DTLxsplitstring{${1:string}}{${2:split text}}{${3:before cmd}}{${4:after cmd}}"}},
+		{"name":"edtlgetrowforvalue","arg":{"format":"{}{}{}","snippet":"edtlgetrowforvalue{${1}}{${2}}{${3}}"}},
+		{"name":"edtlinsertinto","arg":{"format":"{}{}{}","snippet":"edtlinsertinto{${1}}{${2}}{${3}}"},"doc":"First expands ⟨element⟩ before inserting into the list."},
+		{"name":"ifdtlautokeys","unusual":true},
+		{"name":"ifdtlcompareskipcs","unusual":true},
+		{"name":"ifDTLlistskipempty","unusual":true},
+		{"name":"ifDTLnewdbonload","unusual":true},
+		{"name":"ifdtlnoheader","unusual":true},
+		{"name":"ifdtlverbose","unusual":true},
+		{"name":"RequireDatatoolDialect","arg":{"format":"{}","snippet":"RequireDatatoolDialect{${1}}"},"unusual":true},
+		{"name":"theDTLrow","unusual":true},
+		{"name":"xDTLassignfirstmatch","arg":{"format":"{}{}{}{}","snippet":"xDTLassignfirstmatch{${1}}{${2}}{${3}}{${4}}"},"doc":"Applies the assignment list to the first row that has the given value in the given column."},
+		{"name":"xdtlgetrowindex","arg":{"format":"{}{}{}{}","snippet":"xdtlgetrowindex{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"xDTLinitials","arg":{"format":"{}","snippet":"xDTLinitials{${1}}"}}
+	],
+	"envs": [
+		{"name":"DTLenvforeach","arg":{"format":"[]{}{}","snippet":"[${1:condition}]{${2:db-name}}{${3:assign-list}}"}},
+		{"name":"DTLenvforeach","arg":{"format":"{}{}","snippet":"{${1:db-name}}{${2:assign-list}}"}},
+		{"name":"DTLenvforeach*","arg":{"format":"[]{}{}","snippet":"[${1:condition}]{${2:db-name}}{${3:assign-list}}"}},
+		{"name":"DTLenvforeach*","arg":{"format":"{}{}","snippet":"{${1:db-name}}{${2:assign-list}}"}},
+		{"name":"dtlenvgforint","arg":{"format":"{}","snippet":"{${1:count-reg=start\\to end\\step inc}}"}},
+		{"name":"dtlenvgforint*","arg":{"format":"{}","snippet":"{${1:count-reg=start\\to end\\step inc}}"}},
+		{"name":"DTLenvmapdata","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"DTLenvmapdata"}
+	],
+	"keys": {
+		"l3keys:datatool": ["auto-reformat-types=","compare={${1:options}}","datetime={${1:options}}","default-name=","display={${1:options}}","global=${1|true,false|}","initial-purify=${1|early,late|}","io={${1:options}}","lists={${1:options}}","new-value-expand=${1|true,false|}","new-value-trim=${1|true,false|}","numeric={${1:options}}","store-datum=${1|true,false|}","verbose=${1|true,false|}","io/add-delimiter=${1|detect,always,never|}","io/auto-keys=${1|true,false|}","io/autokeys=${1|true,false|}","io/convert-numbers=${1|true,false|}","io/csv-blank=${1|ignore,empty-row,end|}","io/csv-content=${1|literal,tex,no-parse|}","io/csv-escape-chars=${1|double-delim,delim,delim+bksl,none|}","io/csv-skip-lines=","io/data-types=","io/delimiter=","io/expand=${1|protected,full,none|}","io/format=${1|csv,tsv,dbtex,dbtex-2,dbtex-3,dtltex,dtltex-2,dtltex-3|}","io/headers=","io/keys=","io/load-action=${1|old-style,create,append,overwrite,detect|}","io/name=","io/no-header=${1|true,false|}","io/noheader=${1|true,false|}","io/omitlines=","io/only-reformat-columns=","io/overwrite=${1|error,warn,allow|}","io/separator=","io/trim=${1|true,false|}","display/after-head=","display/align-specs=","display/caption=","display/cont-caption=","display/contcaption=","display/currency-align=","display/decimal-align=","display/foot=","display/header-row=","display/init=","display/int-align=","display/integer-align=","display/inter-col=","display/label=","display/last-foot=","display/lastfoot=","display/longtable-env=","display/no-header=${1|true,false|}","display/omit=","display/omit-columns=","display/omit-keys=","display/only-columns=","display/only-keys=","display/per-row=","display/post-col=","display/post-head=","display/post-row-function=","display/post-row-inline=","display/pre-col=","display/pre-content=","display/pre-head=","display/real-align=","display/row-condition-function=","display/row-condition-inline=","display/row-idx-map-function=","display/row-idx-map-inline=","display/short-caption=","display/shortcaption=","display/string-align=","display/tabular-env=${1|tabular,array|}","lists/and=${1|word,symbol|}","lists/skip-empty=${1|true,false|}","lists/sort-datum=${1|true,false|}","lists/sort-reverse=${1|true,false|}","lists/trim=${1|true,false|}","compare/expand-cs=${1|true,false|}","compare/skip-cs=${1|true,false|}","numeric/auto-reformat=${1|true,false|}","numeric/currency-symbol-style=${1|iso,symbol,string|}","numeric/region-currency=${1|true,false|}","numeric/region-currency-prefix=${1|normal,smallcaps,smaller|}","numeric/region-number-chars=${1|true,false|}","numeric/set-currency=","datetime/auto-reformat=${1|true,false,region,iso,datetime2|}","datetime/parse=${1|false,true,parse-only,auto-reformat,iso-only,region-only,iso+region|}"],
+		"\\usepackage/datatool#c": ["auto-reformat-types=","compare={${1:options}}","datetime={${1:options}}","default-name=","delimiter=","global=${1|true,false|}","initial-purify=${1|early,late|}","lang-warn=${1|true,false|}","lang=","lists={${1:options}}","locales=","math=${1|l3fp,lua,fp,pgfmath|}","new-value-expand=${1|true,false|}","new-value-trim=${1|true,false|}","nolocale","numeric={${1:options}}","separator=","store-datum=${1|true,false|}","verbose=${1|true,false|}"],
+		"datatool:load": ["noheader","keys={${1:key1,key2,...}}","autokeys","headers={${1:header1,header2,...}}","omitlines=${1:integer}"],
+		"datatool:display": ["caption={${1:text}}","contcaption={${1:text}}","shortcaption={${1:text}}","label=","foot={${1:text}}","lastfoot={${1:text}}"]
+	},
+	"args": ["\\usepackage/datatool#c"]
 }

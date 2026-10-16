@@ -1,0 +1,13 @@
+{
+	"macros": [
+		{"name":"calligra","doc":"The command \\calligra changes the current font family to calligra and the encoding to T1."},
+		{"name":"docdate","unusual":true},
+		{"name":"docversion","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"textcalligra","arg":{"format":"{}","snippet":"textcalligra{${1:text}}"},"doc":"The command \\textcalligra typesets its argument with the calligra font."}
+	],
+	"envs": [],
+	"keys": {}
+}

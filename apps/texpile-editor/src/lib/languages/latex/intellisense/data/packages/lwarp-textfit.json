@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"scaletoheight","arg":{"format":"{}{}","snippet":"scaletoheight{${1:height}}{${2:text}}"}},
+		{"name":"scaletowidth","arg":{"format":"{}{}","snippet":"scaletowidth{${1:width}}{${2:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

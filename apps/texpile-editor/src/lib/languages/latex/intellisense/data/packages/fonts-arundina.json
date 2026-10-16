@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"xkeyval"}],
+	"macros": [
+		{"name":"englishfamilydefault","unusual":true},
+		{"name":"englishrmdefault","unusual":true},
+		{"name":"englishsfdefault","unusual":true},
+		{"name":"englishttdefault","unusual":true},
+		{"name":"latintext"},
+		{"name":"thaifamilydefault","unusual":true},
+		{"name":"thairmdefault","unusual":true},
+		{"name":"thaisfdefault","unusual":true},
+		{"name":"thaitext"},
+		{"name":"thaittdefault","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

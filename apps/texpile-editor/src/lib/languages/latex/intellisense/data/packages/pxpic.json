@@ -1,0 +1,22 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"expkv"}],
+	"macros": [
+		{"name":"px","doc":"You can output a pixel using \\px, and skip a pixel using \\pxskip."},
+		{"name":"pxpic","arg":{"format":"[]{}","snippet":"pxpic[${1:options}]{${2:pixel list}}"},"doc":"\\pxpic parses the ⟨pixel list⟩ and draws the corresponding picture."},
+		{"name":"pxpic","arg":{"format":"{}","snippet":"pxpic{${1:pixel list}}"},"doc":"\\pxpic parses the ⟨pixel list⟩ and draws the corresponding picture."},
+		{"name":"pxpicaddcolorlist","arg":{"format":"{}{}","snippet":"pxpicaddcolorlist{${1:name}}{${2:colour list}}"}},
+		{"name":"pxpicforget","arg":{"format":"{}","snippet":"pxpicforget{${1}}"},"doc":"Undefines the ⟨px⟩ definition for use in mode=px (or skip symbol) added with the colours (or skip) option."},
+		{"name":"pxpicHT"},
+		{"name":"pxpiclogo","arg":{"format":"[]","snippet":"pxpiclogo[${1}]"},"doc":"The logo is just a biggish pixel picture."},
+		{"name":"pxpiclogo","doc":"The logo is just a biggish pixel picture."},
+		{"name":"pxpicnewcolorlist","arg":{"format":"{}{}","snippet":"pxpicnewcolorlist{${1:name}}{${2:colour list}}"}},
+		{"name":"pxpicnewmode","arg":{"format":"{}{}","snippet":"pxpicnewmode{${1}}{${2}}"},"doc":"You can define your own modes with \\pxpicnewmode."},
+		{"name":"pxpicsetcolorlist","arg":{"format":"{}{}","snippet":"pxpicsetcolorlist{${1:name}}{${2:colour list}}"}},
+		{"name":"pxpicsetmode","arg":{"format":"{}{}","snippet":"pxpicsetmode{${1}}{${2}}"}},
+		{"name":"pxpicsetup","arg":{"format":"{}","snippet":"pxpicsetup{${1}}"},"doc":"Sets the ⟨options⟩ locally to the current TeX group."},
+		{"name":"pxpicWD"},
+		{"name":"pxskip"}
+	],
+	"envs": [],
+	"keys": {}
+}

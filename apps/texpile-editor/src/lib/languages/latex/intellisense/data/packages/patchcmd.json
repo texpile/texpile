@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"patchcommand","arg":{"format":"{}{}{}","snippet":"patchcommand{${1:command}}{${2:start}}{${3:end}}"},"doc":"The patchcmd package provides a command \\patchcommand that can be used to add material at the beginning and/or end of the replacement text of an existing macro."}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,33 @@
+{
+	"deps": [{"name":"pbox"},{"name":"calc"},{"name":"ifthen"},{"name":"tokcycle"}],
+	"macros": [
+		{"name":"blackout","arg":{"format":"{}","snippet":"blackout{${1}}"}},
+		{"name":"blackoutenv"},
+		{"name":"censor","arg":{"format":"{}","snippet":"censor{${1}}"}},
+		{"name":"censor*","arg":{"format":"{}","snippet":"censor*{${1}}"}},
+		{"name":"censorbox","arg":{"format":"[]{}","snippet":"censorbox[${1:pre-commands}]{${2:object box}}"},"doc":"As of version 3.0, the ability to censor “boxed” objects like images and/or tabular environments is made possible with the \\censorbox command."},
+		{"name":"censorbox","arg":{"format":"{}","snippet":"censorbox{${1:object box}}"},"doc":"As of version 3.0, the ability to censor “boxed” objects like images and/or tabular environments is made possible with the \\censorbox command."},
+		{"name":"censorbox*","arg":{"format":"[]{}{}{}","snippet":"censorbox*[${1:pre-commands}]{${2:width mult.}}{${3:height mult.}}{${4:depth mult.}}"}},
+		{"name":"censorbox*","arg":{"format":"{}{}{}","snippet":"censorbox*{${1:width mult.}}{${2:height mult.}}{${3:depth mult.}}"}},
+		{"name":"censordot"},
+		{"name":"censorfalse","unusual":true},
+		{"name":"censormathgreekfalse"},
+		{"name":"censormathgreektrue"},
+		{"name":"censorrule","arg":{"format":"{}","snippet":"censorrule{${1}}"}},
+		{"name":"censorruledepth"},
+		{"name":"censorruleheight"},
+		{"name":"censortrue","unusual":true},
+		{"name":"censorversiondate","unusual":true},
+		{"name":"censorversionnumber","unusual":true},
+		{"name":"endblackoutenv"},
+		{"name":"endxblackoutenv"},
+		{"name":"ifcensor","unusual":true},
+		{"name":"ifcensormathgreek","unusual":true},
+		{"name":"RestartCensoring","doc":"Censoring may be dynamically turned off and on in a document with the use of the \\StopCensoring and \\RestartCensoring commands, respectively."},
+		{"name":"StopCensoring"},
+		{"name":"xblackout","arg":{"format":"{}","snippet":"xblackout{${1}}"}},
+		{"name":"xblackoutenv"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"multicol"}],
+	"macros": [],
+	"envs": [
+		{"name":"adjmulticols","arg":{"format":"{}{}{}[][]","snippet":"{${1:number}}{${2:inner margin}}{${3:outer margin}}[${4:header}][${5:space needed}]"}},
+		{"name":"adjmulticols","arg":{"format":"{}{}{}","snippet":"{${1:number}}{${2:inner margin}}{${3:outer margin}}"}},
+		{"name":"adjmulticols*","arg":{"format":"{}{}{}[][]","snippet":"{${1:number}}{${2:inner margin}}{${3:outer margin}}[${4:header}][${5:space needed}]"}},
+		{"name":"adjmulticols*","arg":{"format":"{}{}{}","snippet":"{${1:number}}{${2:inner margin}}{${3:outer margin}}"}}
+	],
+	"keys": {}
+}

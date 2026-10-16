@@ -1,0 +1,41 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"calc"},{"name":"scalerel","if":"!mathstyle"},{"name":"etoolbox","if":"!mathstyle"},{"name":"mathstyle","if":"mathstyle"}],
+	"macros": [
+		{"name":"cutangleouterskip"},
+		{"name":"cutangleskip"},
+		{"name":"cutbarskip"},
+		{"name":"cutbraprimitive","arg":{"format":"{}","snippet":"cutbraprimitive{${1}}"},"unusual":true},
+		{"name":"cutcasebarskip","unusual":true},
+		{"name":"cutdebugfalse","unusual":true},
+		{"name":"cutdebugtrue","unusual":true},
+		{"name":"cutinterbarskip"},
+		{"name":"cutketprimitive","arg":{"format":"{}","snippet":"cutketprimitive{${1}}"},"unusual":true},
+		{"name":"cutprimitive","arg":{"format":"{}{}","snippet":"cutprimitive{${1}}{${2}}"},"unusual":true},
+		{"name":"ifcutdebug","unusual":true},
+		{"name":"lenleft","arg":{"format":"{}{}","snippet":"lenleft{${1:length}}{${2:delimiter}}"}},
+		{"name":"lenmiddle","arg":{"format":"{}{}","snippet":"lenmiddle{${1:length}}{${2:delimiter}}"}},
+		{"name":"lenright","arg":{"format":"{}{}","snippet":"lenright{${1:length}}{${2:delimiter}}"}},
+		{"name":"matchleft","arg":{"format":"{}{}","snippet":"matchleft{${1}}{${2}}"},"unusual":true},
+		{"name":"matchmiddle","arg":{"format":"{}{}","snippet":"matchmiddle{${1}}{${2}}"},"unusual":true},
+		{"name":"matchright","arg":{"format":"{}{}","snippet":"matchright{${1}}{${2}}"},"unusual":true},
+		{"name":"nthleft","arg":{"format":"{}{}","snippet":"nthleft{${1:size}}{${2:delimiter}}"}},
+		{"name":"nthmiddle","arg":{"format":"{}{}","snippet":"nthmiddle{${1:size}}{${2:delimiter}}"}},
+		{"name":"nthright","arg":{"format":"{}{}","snippet":"nthright{${1:size}}{${2:delimiter}}"}},
+		{"name":"perfectbinary","arg":{"format":"{}{}{}{}{}{}","snippet":"perfectbinary{${1}}{${2}}{${3}}{${4}}{${5}}{${6}}"}},
+		{"name":"perfectbra","arg":{"format":"{}","snippet":"perfectbra{${1:content}}"}},
+		{"name":"perfectbrackets","arg":{"format":"{}","snippet":"perfectbrackets{${1:content}}"}},
+		{"name":"perfectcase","arg":{"format":"{}{}","snippet":"perfectcase{${1:left}}{${2:right}}"}},
+		{"name":"perfectcut","arg":{"format":"{}{}","snippet":"perfectcut{${1:left}}{${2:right}}"},"doc":"This package defines the command \\perfectcut#1#2 which displays a bracket <#1||#2>."},
+		{"name":"perfectket","arg":{"format":"{}","snippet":"perfectket{${1:content}}"}},
+		{"name":"perfectparens","arg":{"format":"{}","snippet":"perfectparens{${1:content}}"}},
+		{"name":"perfectunary","arg":{"format":"{}{}{}{}","snippet":"perfectunary{${1}}{${2}}{${3}}{${4}}"}},
+		{"name":"reallenleft","arg":{"format":"{}{}","snippet":"reallenleft{${1:length}}{${2:delimiter}}"}},
+		{"name":"reallenmiddle","arg":{"format":"{}{}","snippet":"reallenmiddle{${1:length}}{${2:delimiter}}"}},
+		{"name":"reallenright","arg":{"format":"{}{}","snippet":"reallenright{${1:length}}{${2:delimiter}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/perfectcut#c": ["fixxits","mathstyle","nomathstyle","realVert"]
+	},
+	"args": ["\\usepackage/perfectcut#c"]
+}

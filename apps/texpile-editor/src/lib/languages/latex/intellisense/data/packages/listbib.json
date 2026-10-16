@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"inputenc"}],
+	"macros": [
+		{"name":"annote","unusual":true},
+		{"name":"BibTeX"},
+		{"name":"library","arg":{"format":"{}","snippet":"library{${1}}"},"unusual":true},
+		{"name":"monthname","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

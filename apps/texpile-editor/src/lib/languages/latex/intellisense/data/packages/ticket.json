@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"}],
+	"macros": [
+		{"name":"backside"},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"ticket","arg":{"format":"{}","snippet":"ticket{${1:content}}"}},
+		{"name":"ticketdefault"},
+		{"name":"ticketDistance","arg":{"format":"{}{}","snippet":"ticketDistance{${1:horizontal distance}}{${2:vertical distance}}"}},
+		{"name":"ticketNumbers","arg":{"format":"{}{}","snippet":"ticketNumbers{${1:tickets across}}{${2:tickets down}}"}},
+		{"name":"ticketreset"},
+		{"name":"ticketSize","arg":{"format":"{}{}","snippet":"ticketSize{${1:width}}{${2:height}}"}},
+		{"name":"ticketskip","arg":{"format":"{}","snippet":"ticketskip{${1:count}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ticket#c": ["boxed","circlemark","crossmark","cutmark","emptycrossmark","rowmode"]
+	},
+	"args": ["\\usepackage/ticket#c"]
+}

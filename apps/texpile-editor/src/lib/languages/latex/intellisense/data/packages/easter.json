@@ -1,0 +1,32 @@
+{
+	"deps": [{"name":"datenumber"}],
+	"macros": [
+		{"name":"calendarOffset","arg":{"format":"[]","snippet":"calendarOffset[${1:year}]"}},
+		{"name":"calendarOffset"},
+		{"name":"Easter","arg":{"format":"[]","snippet":"Easter[${1:year}]"}},
+		{"name":"Easter"},
+		{"name":"Easter*","arg":{"format":"[]","snippet":"Easter*[${1:year}]"}},
+		{"name":"Easter*"},
+		{"name":"EasterGregorian","arg":{"format":"[]","snippet":"EasterGregorian[${1:year}]"}},
+		{"name":"EasterGregorian"},
+		{"name":"EasterGregorian*","arg":{"format":"[]","snippet":"EasterGregorian*[${1:year}]"}},
+		{"name":"EasterGregorian*"},
+		{"name":"EasterJulian","arg":{"format":"[]","snippet":"EasterJulian[${1:year}]"}},
+		{"name":"EasterJulian"},
+		{"name":"EasterJulian*","arg":{"format":"[]","snippet":"EasterJulian*[${1:year}]"}},
+		{"name":"EasterJulian*"},
+		{"name":"printDate","arg":{"format":"{}","snippet":"printDate{${1:feast}}"},"doc":"Any date may be recalled and printed by the command \\printDate{feast}, taking the feast’s name as a mandatory argument."},
+		{"name":"selectComputus","arg":{"format":"{}","snippet":"selectComputus{${1:julian or gregorian}}"},"doc":"Computus can also be selected manually with \\selectComputus command. It takes one mandatory argument, julian or gregorian, and set \\Easter accordingly."},
+		{"name":"thecalendaroffset","unusual":true},
+		{"name":"theEasterDay","unusual":true},
+		{"name":"theEasterMonth","unusual":true},
+		{"name":"theEasterYear","unusual":true},
+		{"name":"toGregorian","arg":{"format":"{}{}{}","snippet":"toGregorian{${1:year}}{${2:month}}{${3:day}}"}},
+		{"name":"toJulian","arg":{"format":"{}{}{}","snippet":"toJulian{${1:year}}{${2:month}}{${3:day}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/easter#c": ["gregorian","julian"]
+	},
+	"args": ["\\usepackage/easter#c"]
+}

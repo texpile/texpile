@@ -1,0 +1,15 @@
+{
+	"macros": [
+		{"name":"hundredthpc","arg":{"format":"{}","snippet":"hundredthpc{${1:dimen}}"}},
+		{"name":"negpoints","arg":{"format":"{}","snippet":"negpoints{${1:dimen}}"}},
+		{"name":"picas","arg":{"format":"{}","snippet":"picas{${1:dimen}}"},"doc":"Print dimen converted to the nearest whole pica."},
+		{"name":"points","arg":{"format":"{}","snippet":"points{${1:dimen}}"},"doc":"Print dimen rounded to the nearest whole point."},
+		{"name":"pthundredthpc","arg":{"format":"{}","snippet":"pthundredthpc{${1:dimen}}"},"doc":"Print dimen in points followed by the equivalent in picas (to two decimal places)."},
+		{"name":"pttenthpc","arg":{"format":"{}","snippet":"pttenthpc{${1:dimen}}"},"doc":"Print dimen in points and tenths of a pica."},
+		{"name":"tenthpc","arg":{"format":"{}","snippet":"tenthpc{${1:dimen}}"}},
+		{"name":"tenthpcpt","arg":{"format":"{}","snippet":"tenthpcpt{${1:dimen}}"}},
+		{"name":"tenthpt","arg":{"format":"{}","snippet":"tenthpt{${1:dimen}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

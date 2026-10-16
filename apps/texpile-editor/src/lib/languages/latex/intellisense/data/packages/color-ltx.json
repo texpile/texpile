@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"color","arg":{"format":"[]{}","snippet":"color[${1:model}]{${2:color}}"}},
+		{"name":"color","arg":{"format":"{}","snippet":"color{${1:color}}"}},
+		{"name":"colorbox","arg":{"format":"[]{}{}","snippet":"colorbox[${1:model}]{${2:color}}{${3:text}}"}},
+		{"name":"colorbox","arg":{"format":"{}{}","snippet":"colorbox{${1:color}}{${2:text}}"}},
+		{"name":"definecolor","arg":{"format":"{}{}{}","snippet":"definecolor{${1:name}}{${2:model}}{${3:spec}}"}},
+		{"name":"DefineNamedColor","arg":{"format":"{}{}{}{}","snippet":"DefineNamedColor{${1:type}}{${2:name}}{${3:model}}{${4:spec}}"},"unusual":true},
+		{"name":"fcolorbox","arg":{"format":"[]{}{}{}","snippet":"fcolorbox[${1:model}]{${2:frame color}}{${3:background color}}{${4:text}}"}},
+		{"name":"fcolorbox","arg":{"format":"{}{}{}","snippet":"fcolorbox{${1:frame color}}{${2:background color}}{${3:text}}"}},
+		{"name":"nopagecolor"},
+		{"name":"normalcolor"},
+		{"name":"pagecolor","arg":{"format":"[]{}","snippet":"pagecolor[${1:model}]{${2:color}}"}},
+		{"name":"pagecolor","arg":{"format":"{}","snippet":"pagecolor{${1:color}}"}},
+		{"name":"textcolor","arg":{"format":"[]{}{}","snippet":"textcolor[${1:model}]{${2:color}}{${3:text}}"}},
+		{"name":"textcolor","arg":{"format":"{}{}","snippet":"textcolor{${1:color}}{${2:text}}"}}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/color-ltx#c": ["debugshow","dvipdf","dvipdfm","dvipdfmx","dvips","dvipsnames","dvipsone","dvisvgm","dviwin","dviwindo","emtex","luatex","monochrome","nodvipsnames","nosetpagesize","oztex","pctex32","pctexhp","pctexps","pctexwin","pdftex","setpagesize","tcidvi","textures","truetex","usenames","vtex","xdvi","xetex"]
+	},
+	"args": ["\\usepackage/color-ltx#c"]
+}

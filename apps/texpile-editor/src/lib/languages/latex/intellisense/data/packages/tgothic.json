@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"texttgoth","arg":{"format":"{}","snippet":"texttgoth{${1:text}}"}},
+		{"name":"tgothfamily"}
+	],
+	"envs": [],
+	"keys": {}
+}

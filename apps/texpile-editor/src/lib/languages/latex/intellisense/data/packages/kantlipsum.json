@@ -1,79 +1,15 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "kant"
-    },
-    {
-      "name": "kant",
-      "arg": {
-        "format": "[]",
-        "snippet": "kant[${1:num}]"
-      }
-    },
-    {
-      "name": "kant",
-      "arg": {
-        "format": "[]",
-        "snippet": "kant[${1:num-num}]"
-      }
-    },
-    {
-      "name": "kant",
-      "arg": {
-        "format": "[][]",
-        "snippet": "kant[${1:num}][${2:num-num}]"
-      }
-    },
-    {
-      "name": "kant*"
-    },
-    {
-      "name": "kant*",
-      "arg": {
-        "format": "[]",
-        "snippet": "kant*[${1:num}]"
-      }
-    },
-    {
-      "name": "kant*",
-      "arg": {
-        "format": "[]",
-        "snippet": "kant*[${1:num-num}]"
-      }
-    },
-    {
-      "name": "kant*",
-      "arg": {
-        "format": "[][]",
-        "snippet": "kant*[${1:num}][${2:num-num}]"
-      }
-    },
-    {
-      "name": "kantdef",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "kantdef{${1:cmd}}{${2:num}}"
-      }
-    },
-    {
-      "name": "kantdef",
-      "arg": {
-        "format": "{}{}[]",
-        "snippet": "kantdef{${1:cmd}}{${2:num}}[${3:num-num}]"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/kantlipsum#c": [
-      "par",
-      "nopar",
-      "numbers",
-      "index"
-    ]
-  },
-  "args": [
-    "\\usepackage/kantlipsum#c"
-  ]
+	"macros": [
+		{"name":"kant","arg":{"format":"[][]","snippet":"kant[${1:paragraphs}][${2:sentences}]"}},
+		{"name":"kant"},
+		{"name":"kant*","arg":{"format":"[][]","snippet":"kant*[${1:paragraphs}][${2:sentences}]"}},
+		{"name":"kant*"},
+		{"name":"kantdef","arg":{"format":"{}{}[]","snippet":"kantdef{${1:command}}{${2:paragraph}}[${3:sentences}]"},"doc":"This command takes two arguments, a control sequence and an integer; the call \\kantdef{\\mytext}{164} will store in \\mytext the 164th paragraph of pseudokantian text provided by this package."},
+		{"name":"kantdef","arg":{"format":"{}{}","snippet":"kantdef{${1:command}}{${2:paragraph}}"},"doc":"This command takes two arguments, a control sequence and an integer; the call \\kantdef{\\mytext}{164} will store in \\mytext the 164th paragraph of pseudokantian text provided by this package."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/kantlipsum#c": ["index","nopar","numbers","par"]
+	},
+	"args": ["\\usepackage/kantlipsum#c"]
 }

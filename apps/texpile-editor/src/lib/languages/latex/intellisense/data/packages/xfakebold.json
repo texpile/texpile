@@ -1,0 +1,10 @@
+{
+	"deps": [{"name":"xkeyval"},{"name":"pdfrender"},{"name":"iftex"},{"name":"kvsetkeys","engines":["pdflatex","lualatex"]}],
+	"macros": [
+		{"name":"setBold","arg":{"format":"[]","snippet":"setBold[${1}]"}},
+		{"name":"setBold"},
+		{"name":"unsetBold"}
+	],
+	"envs": [],
+	"keys": {}
+}

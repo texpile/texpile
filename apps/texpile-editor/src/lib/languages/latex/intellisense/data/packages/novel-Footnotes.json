@@ -1,0 +1,19 @@
+{
+	"macros": [
+		{"name":"endnote"},
+		{"name":"endnotetext","arg":{"format":"{}{}","snippet":"endnotetext{${1:number}}{${2:text}}"}},
+		{"name":"fakemarker"},
+		{"name":"realmarker"},
+		{"name":"Resetendnote"},
+		{"name":"ResetFootnote"},
+		{"name":"ResetFootnoteSymbol"},
+		{"name":"SetMarkers","arg":{"format":"[]{}","snippet":"SetMarkers[${1:real or fake}]{${2:asterisk, dagger or number}}"},"unusual":true},
+		{"name":"SetMarkers","arg":{"format":"{}","snippet":"SetMarkers{${1:asterisk, dagger or number}}"},"unusual":true},
+		{"name":"SetMarkerStyle","arg":{"format":"[]{}","snippet":"SetMarkerStyle[${1:real or fake}]{${2:asterisk, dagger or number}}"}},
+		{"name":"SetMarkerStyle","arg":{"format":"{}","snippet":"SetMarkerStyle{${1:asterisk, dagger or number}}"}},
+		{"name":"subs","arg":{"format":"{}","snippet":"subs{${1}}"},"unusual":true},
+		{"name":"sups","arg":{"format":"{}","snippet":"sups{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

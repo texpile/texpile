@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"calc"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"}],
+	"macros": [
+		{"name":"scalebar","arg":{"format":"[]{}{}{}{}{}{}","snippet":"scalebar[${1:inverse}]{${2:length}}{${3:minordivs}}{${4:majordivs}}{${5:starting No.}}{${6:ending No.}}{${7:units}}"}},
+		{"name":"scalebar","arg":{"format":"{}{}{}{}{}{}","snippet":"scalebar{${1:length}}{${2:minordivs}}{${3:majordivs}}{${4:starting No.}}{${5:ending No.}}{${6:units}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

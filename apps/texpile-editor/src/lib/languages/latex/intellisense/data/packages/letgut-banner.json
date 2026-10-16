@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"xcolor"},{"name":"accsupp"},{"name":"pdfescape"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

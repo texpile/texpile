@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"pgf"}],
+	"macros": [
+		{"name":"addlogo","arg":{"format":"{}","snippet":"addlogo{${1:logo}}"}},
+		{"name":"alterralogo"},
+		{"name":"bluesheets"},
+		{"name":"logobartext","arg":{"format":"{}","snippet":"logobartext{${1:text}}"}},
+		{"name":"nulogo"},
+		{"name":"nwologo"},
+		{"name":"picturebar","arg":{"format":"{}","snippet":"picturebar{${1:picture bar file}}"}},
+		{"name":"resetlogo"},
+		{"name":"whitesheets"}
+	],
+	"envs": [],
+	"keys": {}
+}

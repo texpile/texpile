@@ -1,0 +1,16 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"atom","arg":{"format":"[]{}","snippet":"atom[${1:options}]{${2:lobes}}"}},
+		{"name":"atom","arg":{"format":"{}","snippet":"atom{${1:lobes}}"}},
+		{"name":"drawLevel","arg":{"format":"[]{}","snippet":"drawLevel[${1:options}]{${2:name}}"}},
+		{"name":"drawLevel","arg":{"format":"{}","snippet":"drawLevel{${1:name}}"}},
+		{"name":"orbital","arg":{"format":"[]{}","snippet":"orbital[${1:options}]{${2:type}}"}},
+		{"name":"orbital","arg":{"format":"{}","snippet":"orbital{${1:type}}"}},
+		{"name":"satom","arg":{"format":"[]{}","snippet":"satom[${1:options}]{${2:lobes}}"},"doc":"The package TIKZORBILTAL provides the command \\satom in order to quickly draw an atom with several orbital lobes around it."},
+		{"name":"satom","arg":{"format":"{}","snippet":"satom{${1:lobes}}"},"doc":"The package TIKZORBILTAL provides the command \\satom in order to quickly draw an atom with several orbital lobes around it."},
+		{"name":"setOrbitalDrawing","arg":{"format":"{}","snippet":"setOrbitalDrawing{${1:tikz options}}"},"doc":"You can give a set of tikz options to the command \\setOrbitalDrawing."}
+	],
+	"envs": [],
+	"keys": {}
+}

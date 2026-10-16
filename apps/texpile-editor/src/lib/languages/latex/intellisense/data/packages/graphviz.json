@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"psfrag","if":"psfrag"}],
+	"macros": [
+		{"name":"digraph","arg":{"format":"[]{}{}","snippet":"digraph[${1:graphics options}]{${2:name}}{${3:graph}}"},"doc":"\\digraph writes out a dot file, and then invokes dot on it."},
+		{"name":"digraph","arg":{"format":"{}{}","snippet":"digraph{${1:name}}{${2:graph}}"},"doc":"\\digraph writes out a dot file, and then invokes dot on it."},
+		{"name":"ifpsfrag","unusual":true},
+		{"name":"ifsinglefile","unusual":true},
+		{"name":"inputdigraph","arg":{"format":"[]{}{}","snippet":"inputdigraph[${1:graphics options}]{${2:name}}{${3:program}}"},"doc":"The purpose is to include the ps/pdf rendering of the graph if it exists, or to give instructions on how to generate it."},
+		{"name":"inputdigraph","arg":{"format":"{}{}","snippet":"inputdigraph{${1:name}}{${2:program}}"},"doc":"The purpose is to include the ps/pdf rendering of the graph if it exists, or to give instructions on how to generate it."},
+		{"name":"neatograph","arg":{"format":"[]{}{}","snippet":"neatograph[${1:graphics options}]{${2:name}}{${3:graph}}"}},
+		{"name":"neatograph","arg":{"format":"{}{}","snippet":"neatograph{${1:name}}{${2:graph}}"}},
+		{"name":"psfragtrue","unusual":true},
+		{"name":"singlefiletrue","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/graphviz#c": ["pdf","ps","psfrag","singlefile","tmpdir"]
+	},
+	"args": ["\\usepackage/graphviz#c"]
+}

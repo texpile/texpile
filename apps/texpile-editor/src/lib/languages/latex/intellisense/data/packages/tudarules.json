@@ -1,0 +1,6 @@
+{
+	"deps": [{"name":"tudacolors"},{"name":"xcolor"},{"name":"xparse"}],
+	"macros": [],
+	"envs": [],
+	"keys": {}
+}

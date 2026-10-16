@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"tabularx"},{"name":"array"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
+	"macros": [
+		{"name":"avrcompile","arg":{"format":"[]{}","snippet":"avrcompile[${1:compiler options}]{${2:filename}}"},"unusual":true},
+		{"name":"avrcompile","arg":{"format":"{}","snippet":"avrcompile{${1:filename}}"},"unusual":true},
+		{"name":"avrdrawppm","arg":{"format":"{}","snippet":"avrdrawppm{${1:file}}"}},
+		{"name":"avrinstrcount","doc":"Expands to the number of executed instructions."},
+		{"name":"avrloadc","arg":{"format":"[]{}","snippet":"avrloadc[${1:compiler options}]{${2:filename}}"},"doc":"Compiles C source code file with avr-gcc and the given compiler options."},
+		{"name":"avrloadc","arg":{"format":"{}","snippet":"avrloadc{${1:filename}}"},"doc":"Compiles C source code file with avr-gcc and the given compiler options."},
+		{"name":"avrloadihex","arg":{"format":"{}","snippet":"avrloadihex{${1:filename}}"},"doc":"Load an Intel HEX formatted image of the flash into the code memory of the AVR emulator."},
+		{"name":"avrrun","doc":"Run the emulator until a break instruction occurs."},
+		{"name":"avrsinglestep","doc":"Starts an interactive single-stepping mode, which was mainly used for implementing the emulator."},
+		{"name":"avrstep","arg":{"format":"[]","snippet":"avrstep[${1:steps}]"},"doc":"Run the emulator for N instructions."},
+		{"name":"avrstep","doc":"Run the emulator for N instructions."},
+		{"name":"avrUDR","doc":"Expands to the internal UDR buffer."},
+		{"name":"avrUDRclear","doc":"Clears the internal UDR buffer."},
+		{"name":"useavremulibrary","arg":{"format":"{}","snippet":"useavremulibrary{${1:libraries}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

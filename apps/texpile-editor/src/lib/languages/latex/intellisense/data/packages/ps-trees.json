@@ -1,0 +1,31 @@
+{
+	"deps": [{"name":"tree-dvips"}],
+	"macros": [
+		{"name":"ifIsElement","unusual":true},
+		{"name":"ifTNode","unusual":true},
+		{"name":"IsElementfalse","unusual":true},
+		{"name":"IsElementtrue","unusual":true},
+		{"name":"MinNodeWidth","doc":"The length \\MinNodeWidth will subsequently be used to determine the minimal width of each node."},
+		{"name":"Node","arg":{"format":"[]{}{}","snippet":"Node[${1:box}]{${2:name}}{${3:text}}"}},
+		{"name":"Node","arg":{"format":"{}{}","snippet":"Node{${1:name}}{${2:text}}"}},
+		{"name":"NodeNo","arg":{"format":"{}[]{}","snippet":"NodeNo{${1:box}}[${2:width box}]{${3:name}}"}},
+		{"name":"NodeNo","arg":{"format":"{}{}","snippet":"NodeNo{${1:box}}{${2:name}}"}},
+		{"name":"NodeT","arg":{"format":"{}{}","snippet":"NodeT{${1}}{${2}}"},"unusual":true},
+		{"name":"NodeTNo","arg":{"format":"{}{}","snippet":"NodeTNo{${1:box}}{${2:name}}"}},
+		{"name":"NodeTZ","arg":{"format":"{}{}","snippet":"NodeTZ{${1}}{${2}}"},"unusual":true},
+		{"name":"NodeTZNo","arg":{"format":"{}{}","snippet":"NodeTZNo{${1:box}}{${2:name}}"}},
+		{"name":"NodeWidthNo","arg":{"format":"{}","snippet":"NodeWidthNo{${1:box}}"},"doc":"The minimal size of all nodes (or columns) can then be determined by the command \\NodeWidthNo{n}, where n is the number of the box, whose width should become the minimal width of all other columns."},
+		{"name":"nodeZ","arg":{"format":"{}{}","snippet":"nodeZ{${1:name}}{${2:text}}"}},
+		{"name":"NodeZ","arg":{"format":"{}{}","snippet":"NodeZ{${1:name}}{${2:text}}"}},
+		{"name":"NodeZT","arg":{"format":"{}{}","snippet":"NodeZT{${1}}{${2}}"},"unusual":true},
+		{"name":"NodeZTNo","arg":{"format":"{}{}","snippet":"NodeZTNo{${1:box}}{${2:name}}"}},
+		{"name":"TNodefalse","unusual":true},
+		{"name":"TNodetrue","unusual":true}
+	],
+	"envs": [
+		{"name":"psTree","unusual":true},
+		{"name":"treetab","arg":{"format":"[]{}","snippet":"[${1:position}]{${2:columns}}"}},
+		{"name":"treetab","arg":{"format":"{}","snippet":"{${1:columns}}"}}
+	],
+	"keys": {}
+}

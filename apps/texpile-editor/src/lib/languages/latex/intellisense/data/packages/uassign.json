@@ -1,0 +1,24 @@
+{
+	"deps": [{"name":"ifthen"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bookmark"},{"name":"color"},{"name":"enumerate"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"fancyhdr"},{"name":"titlesec"},{"name":"amsthm"}],
+	"macros": [
+		{"name":"ebox","arg":{"format":"{}","snippet":"ebox{${1}}"},"unusual":true},
+		{"name":"ientry","arg":{"format":"{}","snippet":"ientry{${1}}"}},
+		{"name":"thedefcounter","unusual":true},
+		{"name":"theexamplecounter","unusual":true},
+		{"name":"theexsolutioncounter","unusual":true},
+		{"name":"thequestioncounter","unusual":true},
+		{"name":"thesolutioncounter","unusual":true}
+	],
+	"envs": [
+		{"name":"definition"},
+		{"name":"example"},
+		{"name":"exsolution"},
+		{"name":"question"},
+		{"name":"solution","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"solution"}
+	],
+	"keys": {
+		"\\usepackage/uassign#c": ["assignheader","hideanswers","hidequestions","links","notesheader"]
+	},
+	"args": ["\\usepackage/uassign#c"]
+}

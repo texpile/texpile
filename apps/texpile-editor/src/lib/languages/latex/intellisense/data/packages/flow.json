@@ -1,0 +1,23 @@
+{
+	"macros": [
+		{"name":"ACTION","arg":{"format":"{}","snippet":"ACTION{${1}}"},"doc":"Specifies a normal statement."},
+		{"name":"CASE","arg":{"format":"{}{}","snippet":"CASE{${1}}{${2}}"},"doc":"Specifies a case statement with a case-item and a collection of when-statements."},
+		{"name":"ELSE","arg":{"format":"{}","snippet":"ELSE{${1:statements}}"}},
+		{"name":"ENDCASE"},
+		{"name":"ENDIF"},
+		{"name":"ENDWHILE"},
+		{"name":"IF","arg":{"format":"{}","snippet":"IF{${1:condition}}"},"doc":"Specifies an if statement with a condition and a collection of statements in the THEN and the ELSE part."},
+		{"name":"LABEL","arg":{"format":"{}","snippet":"LABEL{${1}}"},"doc":"Specifies a label with a label-name of only a few letters."},
+		{"name":"PROC","arg":{"format":"{}{}","snippet":"PROC{${1}}{${2}}"},"doc":"Specifies a special kind of action, a procedure call."},
+		{"name":"REPEAT","arg":{"format":"{}","snippet":"REPEAT{${1:statements}}"},"doc":"Specifies a loop statement with a collection of statements and an end-condition."},
+		{"name":"setiftext","arg":{"format":"{}{}","snippet":"setiftext{${1}}{${2}}"}},
+		{"name":"STRUCT","arg":{"format":"{}{}{}","snippet":"STRUCT{${1}}{${2}}{${3}}"},"doc":"Specifies the complete diagram."},
+		{"name":"THEN","arg":{"format":"{}","snippet":"THEN{${1:statements}}"}},
+		{"name":"unitwidth","doc":"Specifies the minimum width of a unit."},
+		{"name":"UNTIL","arg":{"format":"{}","snippet":"UNTIL{${1:test}}"}},
+		{"name":"WHEN","arg":{"format":"{}{}","snippet":"WHEN{${1}}{${2}}"},"doc":"Part of a case statement. Specifies a condition and a collection of statements."},
+		{"name":"WHILE","arg":{"format":"{}{}","snippet":"WHILE{${1}}{${2}}"},"doc":"Specifies a loop statement with a start-condition and a collection of statements."}
+	],
+	"envs": [],
+	"keys": {}
+}

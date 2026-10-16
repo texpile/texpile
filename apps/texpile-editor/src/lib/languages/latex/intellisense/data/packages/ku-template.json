@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"wallpaper"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"titling"}],
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ku-template#c": ["da","en","hum","jur","ku","sam","sci","sun","teo"]
+	},
+	"args": ["\\usepackage/ku-template#c"]
+}

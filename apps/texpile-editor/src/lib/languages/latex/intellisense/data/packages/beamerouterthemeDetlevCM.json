@@ -1,0 +1,9 @@
+{
+	"macros": [
+		{"name":"fachbereich","arg":{"format":"{}","snippet":"fachbereich{${1:department}}"}},
+		{"name":"insertfachbereich","unusual":true},
+		{"name":"titlevsep","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

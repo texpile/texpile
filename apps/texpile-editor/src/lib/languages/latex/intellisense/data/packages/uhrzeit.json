@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"soul"},{"name":"soul-ori"},{"name":"etexcmds"},{"name":"iftex"}],
+	"macros": [
+		{"name":"dtc"},
+		{"name":"dtd"},
+		{"name":"uhr","arg":{"format":"{}{}","snippet":"uhr{${1}}{${2}}"}},
+		{"name":"uhri"},
+		{"name":"uhrii"},
+		{"name":"uhriii"},
+		{"name":"uhriv"},
+		{"name":"vonbis","arg":{"format":"{}{}{}{}","snippet":"vonbis{${1}}{${2}}{${3}}{${4}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"etoolbox"},{"name":"xparse"},{"name":"calc"},{"name":"environ"},{"name":"mathtools"},{"name":"keyval"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"intomargin","doc":"When the equation is just slightly too large, it can be acceptable to move the equation into the margin just as much as needed to prevent the displacement of the equation number. To do this, place the command \\intomargin immediately before the equation environment."},
+		{"name":"noeqnnumwarn","doc":"If for whatever reason you wish to prevent a particular equation from generating a warning, place \\noeqnnumwarn immediately before the equation environment."}
+	],
+	"envs": [],
+	"keys": {}
+}

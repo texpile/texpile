@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/ae#c": ["slides"]
+	},
+	"args": ["\\usepackage/ae#c"]
+}

@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
+	"macros": [
+		{"name":"insertsectiongraphic","unusual":true},
+		{"name":"inserttitlecredit","unusual":true},
+		{"name":"sectiongraphic","arg":{"format":"{}","snippet":"sectiongraphic{${1:graphic file}}"},"doc":"The section graphic can also be set via \\sectiongraphic{...} after loading the theme."},
+		{"name":"titlecredit","arg":{"format":"{}","snippet":"titlecredit{${1:credit text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

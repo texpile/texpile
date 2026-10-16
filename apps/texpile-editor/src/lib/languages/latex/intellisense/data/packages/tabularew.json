@@ -1,0 +1,17 @@
+{
+	"deps": [{"name":"array"}],
+	"macros": [
+		{"name":"CurrentColumn","unusual":true},
+		{"name":"ExcessWidth"},
+		{"name":"GetExcessWidth","arg":{"format":"{}","snippet":"GetExcessWidth{${1}}"}},
+		{"name":"NumberOfColumns","unusual":true},
+		{"name":"spew","arg":{"format":"{}{}","snippet":"spew{${1}}{${2}}"}}
+	],
+	"envs": [
+		{"name":"tabularew","doc":"The tabularew environment is similar to tabular (LaTeX kernel) but adds a new command to modify the horizontal alignment in certain circumstances. It solves the problem of centering multicolumn headings when they are wider than the text underneath them."}
+	],
+	"keys": {
+		"\\usepackage/tabularew#c": ["debugshow"]
+	},
+	"args": ["\\usepackage/tabularew#c"]
+}

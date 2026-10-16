@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfplots"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"dimline","arg":{"format":"[]{}{}{}","snippet":"dimline[${1}]{${2}}{${3}}{${4}}"},"doc":"Creates a new dimension line from ⟨start⟩ to ⟨end⟩ with ⟨label⟩."},
+		{"name":"dimline","arg":{"format":"{}{}{}","snippet":"dimline{${1}}{${2}}{${3}}"},"doc":"Creates a new dimension line from ⟨start⟩ to ⟨end⟩ with ⟨label⟩."}
+	],
+	"envs": [],
+	"keys": {}
+}

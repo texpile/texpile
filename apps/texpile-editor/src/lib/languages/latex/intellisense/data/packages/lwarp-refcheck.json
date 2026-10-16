@@ -1,0 +1,16 @@
+{
+	"macros": [
+		{"name":"checkunlbld"},
+		{"name":"ignoreunlbld"},
+		{"name":"nocitenames"},
+		{"name":"norefnames"},
+		{"name":"refcheckxrdoc","arg":{"format":"[]{}","snippet":"refcheckxrdoc[${1:prefix}]{${2:document}}"}},
+		{"name":"refcheckxrdoc","arg":{"format":"{}","snippet":"refcheckxrdoc{${1:document}}"}},
+		{"name":"setoffmsgs"},
+		{"name":"setonmsgs"},
+		{"name":"showcitenames"},
+		{"name":"showrefnames"}
+	],
+	"envs": [],
+	"keys": {}
+}

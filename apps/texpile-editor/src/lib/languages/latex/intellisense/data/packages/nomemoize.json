@@ -1,0 +1,42 @@
+{
+	"deps": [{"name":"pgfkeys"}],
+	"macros": [
+		{"name":"ifinmemoize","unusual":true},
+		{"name":"ifmemoize","unusual":true},
+		{"name":"ifmemoizing","unusual":true},
+		{"name":"IfMemoizing","arg":{"format":"[]{}{}{}","snippet":"IfMemoizing[${1:offset}]{${2:name}}{${3:true code}}{${4:false code}}"},"unusual":true},
+		{"name":"IfMemoizing","arg":{"format":"{}{}{}","snippet":"IfMemoizing{${1:name}}{${2:true code}}{${3:false code}}"},"unusual":true},
+		{"name":"inmemoizefalse","unusual":true},
+		{"name":"inmemoizetrue","unusual":true},
+		{"name":"memoizefalse"},
+		{"name":"memoizetrue"},
+		{"name":"memoizingfalse","unusual":true},
+		{"name":"memoizingtrue","unusual":true},
+		{"name":"mmz","arg":{"format":"[]{}","snippet":"mmz[${1}]{${2}}"}},
+		{"name":"mmz","arg":{"format":"{}","snippet":"mmz{${1}}"}},
+		{"name":"mmzAbort","doc":"This command aborts the ongoing memoization."},
+		{"name":"mmzCCMemo","unusual":true},
+		{"name":"mmzCMemo","unusual":true},
+		{"name":"mmzContext","unusual":true},
+		{"name":"mmzContextExtra","unusual":true},
+		{"name":"mmzExternPages","unusual":true},
+		{"name":"mmzExtraPages","unusual":true},
+		{"name":"mmzForceNoRef","arg":{"format":"{}","snippet":"mmzForceNoRef{${1}}"},"unusual":true},
+		{"name":"mmznext","arg":{"format":"{}","snippet":"mmznext{${1}}"},"doc":"This command accepts the same ⟨options⟩ as \\mmzset, but interprets them as next-options — options which will be applied to the next, and only the next, automemoized command or environment."},
+		{"name":"mmzNoRef","arg":{"format":"{}","snippet":"mmzNoRef{${1}}"},"unusual":true},
+		{"name":"mmzset","arg":{"format":"{}","snippet":"mmzset{${1}}"},"doc":"Memoize can be configured using command \\mmzset{⟨keylist⟩} (and friends). The ⟨keylist⟩ argument is a comma-separated list of configuration settings, each setting having the form ⟨key⟩=⟨value⟩, or sometimes just ⟨key⟩."},
+		{"name":"mmzTracingOff","unusual":true},
+		{"name":"mmzTracingOn","unusual":true},
+		{"name":"mmzUnmemoizable","doc":"This command aborts the ongoing memoization, and marks the submitted code as unmemoizable."},
+		{"name":"nommz","arg":{"format":"[]{}","snippet":"nommz[${1}]{${2}}"}},
+		{"name":"nommz","arg":{"format":"{}","snippet":"nommz{${1}}"}},
+		{"name":"nommzkeys","arg":{"format":"{}","snippet":"nommzkeys{${1:keys}}"},"doc":"In package memoize, this command is a no-op; in packages nomemoize and memoizable, it defines key /mmz/⟨key⟩ as a no-op."}
+	],
+	"envs": [
+		{"name":"memoize","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"memoize"},
+		{"name":"nomemoize","arg":{"format":"[]","snippet":"[${1}]"}},
+		{"name":"nomemoize"}
+	],
+	"keys": {}
+}

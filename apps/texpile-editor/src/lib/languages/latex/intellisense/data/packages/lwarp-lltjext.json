@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"DeclareLayoutCaption","arg":{"format":"{}<>()[]","snippet":"DeclareLayoutCaption{${1:type}}<${2:direction}>(${3:width})[${4:positions}]"}},
+		{"name":"DeclareLayoutCaption","arg":{"format":"{}<>()","snippet":"DeclareLayoutCaption{${1:type}}<${2:direction}>(${3:width})"}},
+		{"name":"dtou"},
+		{"name":"layoutcaption","arg":{"format":"<>()[]","snippet":"layoutcaption<${1:direction}>(${2:width})[${3:position}]"}},
+		{"name":"layoutcaption","arg":{"format":"<>()","snippet":"layoutcaption<${1:direction}>(${2:width})"}},
+		{"name":"layoutfloat","arg":{"format":"()[]{}","snippet":"layoutfloat(${1:width,height})[${2:position}]{${3:contents}}"}},
+		{"name":"layoutfloat","arg":{"format":"(){}","snippet":"layoutfloat(${1:width,height}){${2:contents}}"}},
+		{"name":"pbox","arg":{"format":"<>[][]{}","snippet":"pbox<${1:direction}>[${2:width}][${3:position}]{${4:contents}}"}},
+		{"name":"pbox","arg":{"format":"<>{}","snippet":"pbox<${1:direction}>{${2:contents}}"}},
+		{"name":"pcaption","arg":{"format":"[]{}","snippet":"pcaption[${1:short caption}]{${2:caption}}"}},
+		{"name":"pcaption","arg":{"format":"{}","snippet":"pcaption{${1:caption}}"}},
+		{"name":"rensuji","arg":{"format":"[]{}","snippet":"rensuji[${1:position}]{${2:contents}}"}},
+		{"name":"rensuji","arg":{"format":"{}","snippet":"rensuji{${1:contents}}"}},
+		{"name":"rensuji*","arg":{"format":"[]{}","snippet":"rensuji*[${1:position}]{${2:contents}}"}},
+		{"name":"rensuji*","arg":{"format":"{}","snippet":"rensuji*{${1:contents}}"}},
+		{"name":"tate"},
+		{"name":"utod"},
+		{"name":"yoko"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"mxedb"},
+		{"name":"mxedc"},
+		{"name":"mxedi"},
+		{"name":"mxedr"}
+	],
+	"envs": [],
+	"keys": {}
+}

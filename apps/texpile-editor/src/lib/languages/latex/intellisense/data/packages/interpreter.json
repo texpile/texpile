@@ -1,0 +1,7 @@
+{
+	"macros": [
+		{"name":"interpretfile","arg":{"format":"{}{}","snippet":"interpretfile{${1:language}}{${2:file}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

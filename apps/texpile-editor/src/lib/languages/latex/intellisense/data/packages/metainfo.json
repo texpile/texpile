@@ -1,0 +1,10 @@
+{
+	"macros": [
+		{"name":"typesetmetainfo","arg":{"format":"{}","snippet":"typesetmetainfo{${1}}"},"doc":"This package provides the macro \\typesetmetainfo to typeset only these annotations (herein called ‘metainfo’, as they are information about the information contained in the text)."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/metainfo#c": ["compactheadings","indexshorthand","listlocalmetainfo"]
+	},
+	"args": ["\\usepackage/metainfo#c"]
+}

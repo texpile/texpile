@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"xparse"},{"name":"xcolor"},{"name":"etoolbox"},{"name":"mdwtab"}],
+	"macros": [
+		{"name":"cellprops","arg":{"format":"{}","snippet":"cellprops{${1}}"}},
+		{"name":"cellpropsclass","arg":{"format":"{}","snippet":"cellpropsclass{${1}}"}},
+		{"name":"cellpropsclass*","arg":{"format":"{}","snippet":"cellpropsclass*{${1}}"}},
+		{"name":"ExplFileDescription","unusual":true},
+		{"name":"ExplFileName","unusual":true},
+		{"name":"ExplFileVersion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

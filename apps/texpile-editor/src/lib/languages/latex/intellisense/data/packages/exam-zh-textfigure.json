@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"tabularray"},{"name":"varwidth"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"filehook"},{"name":"filehook-2020"},{"name":"wrapstuff"}],
+	"macros": [
+		{"name":"textfigure","arg":{"format":"[]{}{}","snippet":"textfigure[${1:key-value list}]{${2:text}}{${3:figure}}"}},
+		{"name":"textfigure","arg":{"format":"{}{}","snippet":"textfigure{${1:text}}{${2:figure}}"}}
+	],
+	"envs": [
+		{"name":"multifigures","arg":{"format":"[][]","snippet":"[${1:key-value list}][${2:tblr settings}]"}},
+		{"name":"multifigures"}
+	],
+	"keys": {}
+}

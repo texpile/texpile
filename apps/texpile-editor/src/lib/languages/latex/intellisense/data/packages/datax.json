@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"pgfkeys"},{"name":"pgfopts"}],
+	"macros": [
+		{"name":"datax","arg":{"format":"[]{}","snippet":"datax[${1:siunitx options}]{${2:tag}}"}},
+		{"name":"datax","arg":{"format":"{}","snippet":"datax{${1:tag}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

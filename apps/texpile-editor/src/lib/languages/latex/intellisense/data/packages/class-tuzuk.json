@@ -1,0 +1,21 @@
+{
+	"deps": [{"name":"class-article"},{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"mathptmx"},{"name":"setspace"},{"name":"enumitem"},{"name":"inputenc"},{"name":"babel"},{"name":"ulem"},{"name":"hyphenat"}],
+	"macros": [
+		{"name":"baskan","arg":{"format":"{}","snippet":"baskan{${1:name}}"}},
+		{"name":"baskanyrd","arg":{"format":"{}","snippet":"baskanyrd{${1:name}}"}},
+		{"name":"bolumadi","arg":{"format":"{}","snippet":"bolumadi{${1:title}}"}},
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"imzalar"},
+		{"name":"madde","arg":{"format":"{}{}","snippet":"madde{${1:number}}{${2:text}}"}},
+		{"name":"maketitle"},
+		{"name":"sayman","arg":{"format":"{}","snippet":"sayman{${1:name}}"}},
+		{"name":"sekreter","arg":{"format":"{}","snippet":"sekreter{${1:name}}"}},
+		{"name":"tuzukbasligi","arg":{"format":"{}","snippet":"tuzukbasligi{${1:title}}"}},
+		{"name":"uye","arg":{"format":"{}","snippet":"uye{${1:name}}"}}
+	],
+	"envs": [
+		{"name":"fikra"}
+	],
+	"keys": {}
+}

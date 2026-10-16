@@ -1,0 +1,24 @@
+{
+	"macros": [
+		{"name":"BiteCrit","unusual":true},
+		{"name":"BiteFindByIn","arg":{"format":"{}{}{}","snippet":"BiteFindByIn{${1}}{${2}}{${3}}"}},
+		{"name":"BiteFindByInBraces","arg":{"format":"{}{}{}{}{}","snippet":"BiteFindByInBraces{${1:find}}{${2:cmd}}{${3:list}}{${4:yes}}{${5:no}}"}},
+		{"name":"BiteFindByInIn","arg":{"format":"{}{}{}{}{}","snippet":"BiteFindByInIn{${1:find}}{${2:cmd}}{${3:list}}{${4:yes}}{${5:no}}"}},
+		{"name":"BiteGetNextWord","arg":{"format":"{}{}{}","snippet":"BiteGetNextWord{${1:list}}{${2:yes}}{${3:no}}"}},
+		{"name":"BiteIfCrit","arg":{"format":"{}{}{}","snippet":"BiteIfCrit{${1:suffix}}{${2:yes}}{${3:no}}"}},
+		{"name":"BiteIfSpace"},
+		{"name":"BiteMake","arg":{"format":"{}{}{}","snippet":"BiteMake{${1}}{${2}}{${3}}"}},
+		{"name":"BiteMakeIf","arg":{"format":"{}{}{}","snippet":"BiteMakeIf{${1}}{${2}}{${3}}"}},
+		{"name":"BiteMakeIfBraces","arg":{"format":"{}{}{}","snippet":"BiteMakeIfBraces{${1}}{${2}}{${3}}"}},
+		{"name":"BiteMakeIfOnly","arg":{"format":"{}{}{}","snippet":"BiteMakeIfOnly{${1}}{${2}}{${3}}"}},
+		{"name":"BiteTidied","arg":{"format":"{}{}{}{}","snippet":"BiteTidied{${1}}{${2}}{${3}}{${4}}"},"unusual":true},
+		{"name":"BiteTidyI","arg":{"format":"{}{}","snippet":"BiteTidyI{${1}}{${2}}"},"unusual":true},
+		{"name":"BiteTidyII","unusual":true},
+		{"name":"filedate","unusual":true},
+		{"name":"fileinfo","unusual":true},
+		{"name":"filename","unusual":true},
+		{"name":"fileversion","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

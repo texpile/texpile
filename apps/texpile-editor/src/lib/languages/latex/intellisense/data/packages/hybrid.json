@@ -1,0 +1,23 @@
+{
+	"deps": [{"name":"pylatex"},{"name":"comment"},{"name":"listings"},{"name":"keyval"},{"name":"etoolbox"},{"name":"xcolor"},{"name":"pymacros"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"multitoc"},{"name":"multicol"},{"name":"ifthen"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"breqn"},{"name":"flexisym"},{"name":"mathstyle"},{"name":"calc"},{"name":"longtable"}],
+	"macros": [
+		{"name":"bgcolour","arg":{"format":"{}","snippet":"bgcolour{${1:color}}"}},
+		{"name":"cdbLaTeX","unusual":true},
+		{"name":"latexstyle"},
+		{"name":"lstlatex","arg":{"format":"{}","snippet":"lstlatex{${1:listings keys}}"}},
+		{"name":"matLaTeX","unusual":true},
+		{"name":"mmaLaTeX","unusual":true},
+		{"name":"mplLaTeX","unusual":true},
+		{"name":"MyPar","arg":{"format":"{}{}","snippet":"MyPar{${1:width}}{${2:text}}"}},
+		{"name":"pyLaTeX"},
+		{"name":"pythonstyle"},
+		{"name":"PythonTeX"},
+		{"name":"SageTeX"},
+		{"name":"SymPyTeX","unusual":true},
+		{"name":"tts"}
+	],
+	"envs": [
+		{"name":"latex"}
+	],
+	"keys": {}
+}

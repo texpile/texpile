@@ -1,0 +1,8 @@
+{
+	"macros": [
+		{"name":"egothfamily"},
+		{"name":"textegoth","arg":{"format":"{}","snippet":"textegoth{${1:text}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

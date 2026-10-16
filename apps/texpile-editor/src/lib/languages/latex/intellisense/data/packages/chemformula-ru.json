@@ -1,0 +1,11 @@
+{
+	"deps": [{"name":"l3keys2e"},{"name":"chemformula"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"xfrac"},{"name":"nicefrac"},{"name":"ifthen"}],
+	"macros": [
+		{"name":"Ch","if":"ch2Ch"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/chemformula-ru#c": ["ch2Ch","cosh2ch"]
+	},
+	"args": ["\\usepackage/chemformula-ru#c"]
+}

@@ -1,0 +1,15 @@
+{
+	"deps": [{"name":"processkv"},{"name":"keyval"}],
+	"macros": [
+		{"name":"colchunk","arg":{"format":"[]{}","snippet":"colchunk[${1:column}]{${2:chunk}}"},"doc":"The macro \\colchunk sets a chunk of text for the next column."},
+		{"name":"colchunk","arg":{"format":"{}","snippet":"colchunk{${1:chunk}}"},"doc":"The macro \\colchunk sets a chunk of text for the next column."},
+		{"name":"colplacechunks","doc":"The macro \\colplacechunks places the chunks added with \\colchunk on the page."}
+	],
+	"envs": [
+		{"name":"parcolumns","arg":{"format":"[]{}","snippet":"[${1}]{${2}}","keys":["keyval:parcolumns"],"keyPos":0},"doc":"This package provides the parcolumns environment for typesetting text in several columns, where the text of all columns is aligned vertically."},
+		{"name":"parcolumns","arg":{"format":"{}","snippet":"{${1}}"},"doc":"This package provides the parcolumns environment for typesetting text in several columns, where the text of all columns is aligned vertically."}
+	],
+	"keys": {
+		"keyval:parcolumns": ["colwidths=","distance=","colwidths={${1:1}=${2:2cm}}","nofirstindent=${1|false,true|}","rulebetween=${1|false,true|}","sloppy=${1|false,true|}","sloppyspaces=${1|false,true|}"]
+	}
+}

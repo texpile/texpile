@@ -1,0 +1,9 @@
+{
+	"deps": [{"name":"iftex"}],
+	"macros": [
+		{"name":"PdfMathAccentsOff","doc":"\\PdfMathAccentsOff disables the conversion and \\PdfMathAccentsOn re-enables it."},
+		{"name":"PdfMathAccentsOn","doc":"\\PdfMathAccentsOff disables the conversion and \\PdfMathAccentsOn re-enables it."}
+	],
+	"envs": [],
+	"keys": {}
+}

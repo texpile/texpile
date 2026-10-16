@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"capstart"},
+		{"name":"capstartfalse"},
+		{"name":"capstarttrue"},
+		{"name":"hypcapredef","arg":{"format":"{}","snippet":"hypcapredef{${1:environment}}"}},
+		{"name":"hypcapspace"}
+	],
+	"envs": [],
+	"keys": {}
+}

@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"sublaboff","arg":{"format":"{}","snippet":"sublaboff{${1}}"}},
+		{"name":"sublabon","arg":{"format":"{}","snippet":"sublabon{${1}}"}},
+		{"name":"substyle","arg":{"format":"{}","snippet":"substyle{${1}}"},"doc":"The style in which the sublabels are written is determined by a command \\substyle."}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/sublabel#c": ["italic","roman"]
+	},
+	"args": ["\\usepackage/sublabel#c"]
+}

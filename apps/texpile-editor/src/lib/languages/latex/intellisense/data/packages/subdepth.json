@@ -1,0 +1,8 @@
+{
+	"macros": [],
+	"envs": [],
+	"keys": {
+		"\\usepackage/subdepth#c": ["low-sup"]
+	},
+	"args": ["\\usepackage/subdepth#c"]
+}

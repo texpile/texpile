@@ -1,0 +1,12 @@
+{
+	"deps": [{"name":"iftex"}],
+	"macros": [
+		{"name":"ASYalign","arg":{"format":"()(){}","snippet":"ASYalign(${1:x,y})(${2:dx,dy}){${3:label}}"},"unusual":true},
+		{"name":"ASYaligned","arg":{"format":"()(){}{}{}","snippet":"ASYaligned(${1:x,y})(${2:dx,dy}){${3:before}}{${4:after}}{${5:label}}"},"unusual":true},
+		{"name":"ASYalignT","arg":{"format":"()(){}{}","snippet":"ASYalignT(${1:x,y})(${2:dx,dy}){${3:transform}}{${4:label}}"},"unusual":true},
+		{"name":"ASYbase","arg":{"format":"{}{}","snippet":"ASYbase{${1}}{${2}}"},"unusual":true},
+		{"name":"ASYraw","arg":{"format":"{}","snippet":"ASYraw{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

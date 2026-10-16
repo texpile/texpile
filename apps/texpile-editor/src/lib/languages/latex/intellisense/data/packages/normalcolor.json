@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"filerevision","unusual":true},
+		{"name":"resetnormalcolor"},
+		{"name":"setnormalcolor","arg":{"format":"[]{}","snippet":"setnormalcolor[${1:model}]{${2:color}}"}},
+		{"name":"setnormalcolor","arg":{"format":"{}","snippet":"setnormalcolor{${1:color}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

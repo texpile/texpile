@@ -1,0 +1,14 @@
+{
+	"macros": [
+		{"name":"inuittext"},
+		{"name":"InuitToday"},
+		{"name":"textinuit","arg":{"format":"{}","snippet":"textinuit{${1:Inuktitut text}}"}}
+	],
+	"envs": [
+		{"name":"inuit"}
+	],
+	"keys": {
+		"\\usepackage/oinuit#c": ["iscii","nunavut","quebec","ucs2","utf8"]
+	},
+	"args": ["\\usepackage/oinuit#c"]
+}

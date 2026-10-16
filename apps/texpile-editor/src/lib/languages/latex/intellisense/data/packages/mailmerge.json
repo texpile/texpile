@@ -1,0 +1,20 @@
+{
+	"deps": [{"name":"ifthen"}],
+	"macros": [
+		{"name":"entrynumber","doc":"The command \\entrynumber is replaced by the current entry number."},
+		{"name":"field","arg":{"format":"{}","snippet":"field{${1:name}}"}},
+		{"name":"mailentry","arg":{"format":"{}","snippet":"mailentry{${1:value1,value2,...}}"}},
+		{"name":"mailfields","arg":{"format":"{}","snippet":"mailfields{${1:name1,name2,...}}"}},
+		{"name":"MAILMcurrtag","unusual":true},
+		{"name":"MAILMsetnumentries","arg":{"format":"{}{}","snippet":"MAILMsetnumentries{${1}}{${2}}"},"unusual":true},
+		{"name":"MAILMsetnumfields","arg":{"format":"{}{}","snippet":"MAILMsetnumfields{${1}}{${2}}"},"unusual":true},
+		{"name":"mailnewdata","doc":"In case of intention of use of several databases in the same file, use the command \\mailnewdata, which resets entries."},
+		{"name":"mailrepeat","arg":{"format":"{}","snippet":"mailrepeat{${1:text to repeat}}"}},
+		{"name":"numberofentries","doc":"The command \\numberoffields is replaced by the number of fields and \\numberofentries is replaced by the number of entries, but it is necessary two runs to update the value."},
+		{"name":"numberoffields","doc":"The command \\numberoffields is replaced by the number of fields and \\numberofentries is replaced by the number of entries, but it is necessary two runs to update the value."},
+		{"name":"theMAILMcount","unusual":true},
+		{"name":"theMAILMentry","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}

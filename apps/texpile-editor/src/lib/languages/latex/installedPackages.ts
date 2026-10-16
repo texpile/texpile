@@ -1,8 +1,11 @@
-// argument signatures for loaded packages, from the user's package file or what the reader's TeX reports
-import { macroInfo } from '@unified-latex/unified-latex-ctan';
+// argument signatures for loaded packages, from the user's package file, the bundled data or what the reader's TeX reports
 import { MACRO_SIGNATURES } from './parser/macros';
-import { isBundledPackage, type PackageData, type PkgEntry } from './intellisense/completion/packageData';
-import { signatureOfFormat, userPackage } from './intellisense/userPackages';
+import { signaturesOf } from './parser/signatures/formatSignature';
+import { keptMacroNames } from './parser/signatures/signatureTable';
+import { isBundledPackage, loadPackage, type PackageData, type PkgEntry } from './intellisense/packages/packageData';
+import { entriesUnder, type LoadedPackage } from './intellisense/packages/loadedPackages';
+import { listOf } from './intellisense/packages/packageUses';
+import { userPackage } from './intellisense/userPackages';
 
 /** spec: m/o tokens for a plain macro, or "X <xparse spec>" for a \NewDocumentCommand; own: the package's own command, not
  * one of a package it loads; redefined: it existed before the package loaded */
@@ -12,9 +15,13 @@ export type InstalledPackage = { name: string; options: string };
 export type ProbeInstalledPackage = (name: string, options: string, classOptions: string) => Promise<PackageProbe | null>;
 
 const PACKAGE_NAME = /^[\w.+-]+$/;
-// a package's own definition never narrows one the parser already has
-const KNOWN = new Set([...Object.keys(MACRO_SIGNATURES), ...Object.values(macroInfo).flatMap((pkg) => Object.keys(pkg))]);
-const cache = new Map<string, Promise<string>>();
+// the converter reads these commands' arguments as the parser lays them out, whatever a package says
+const KNOWN = new Set([...Object.keys(MACRO_SIGNATURES), ...keptMacroNames(false)]);
+// the tokenizer reads \verbatiminput as \verb with "a" as its delimiter, which swallows the definitions after it
+function definable(name: string): boolean {
+	return !KNOWN.has(name) && !name.startsWith('verb');
+}
+const cache = new Map<string, Promise<Map<string, string>>>();
 
 function definitionLine(name: string, signature: string): string {
 	const args = signature.split(/\s+/).filter(Boolean);
@@ -56,23 +63,27 @@ function environmentsIn(probe: PackageProbe): Set<string> {
 }
 
 // a command TeX reports with no arguments is left to the parser's usage guess: many read theirs as they run
-function probeDefinitions(probe: PackageProbe): string {
-	const lines: string[] = [];
+function probeDefinitions(probe: PackageProbe): Map<string, string> {
+	const lines = new Map<string, string>();
 	for (const { name, spec } of probe.commands) {
 		const args = argumentsOf(spec);
-		if (args && !KNOWN.has(name)) lines.push(definitionLine(name, args));
+		if (args && definable(name)) lines.set(name, definitionLine(name, args));
 	}
-	return lines.join('\n');
+	return lines;
 }
 
-function fileDefinitions(contents: PackageData): string {
+function fileDefinitions({ contents, options }: LoadedPackage): Map<string, string> {
 	const lines = new Map<string, string>();
-	for (const m of contents.macros) {
-		const signature = m.arg ? signatureOfFormat(m.arg.format) : '';
-		if (signature === null || !/^[a-zA-Z]+$/.test(m.name) || KNOWN.has(m.name) || lines.has(m.name)) continue;
-		lines.set(m.name, definitionLine(m.name, signature));
-	}
-	return [...lines.values()].join('\n');
+	for (const [name, signature] of signaturesOf(entriesUnder(contents.macros, options)))
+		if (definable(name)) lines.set(name, definitionLine(name, signature));
+	return lines;
+}
+
+// own commands only: algpseudocode loads algorithmicx, whose \algdef reads its arguments as it runs
+async function packageDefinitions(name: string, options: string, classOptions: string): Promise<Map<string, string>> {
+	const contents = await loadPackage(name);
+	if (!contents) return new Map();
+	return fileDefinitions({ name, contents, options: new Set([...listOf(options), ...listOf(classOptions)]) });
 }
 
 function entryOf(name: string, spec: string, prefix: string): PkgEntry {
@@ -95,37 +106,46 @@ export function packageFileFrom(probe: PackageProbe): PackageData {
 	return { macros, envs, keys: {} };
 }
 
-/** stub definitions of the packages' commands, for the parser's signature scan */
+/** stub definitions of the packages' commands, for the parser's signature scan; the document class is class-<name> */
 export async function installedPackageDefinitions(
 	packages: InstalledPackage[],
 	classOptions: string,
 	probe: ProbeInstalledPackage
 ): Promise<string> {
+	const named = packages.filter((p) => PACKAGE_NAME.test(p.name));
 	const found = await Promise.all(
-		packages
-			.filter((p) => PACKAGE_NAME.test(p.name))
-			.map(({ name, options }) => {
-				const own = userPackage(name);
-				if (own) return fileDefinitions(own);
-				if (isBundledPackage(name)) return '';
-				const key = `${name}[${options}]{${classOptions}}`;
-				let entry = cache.get(key);
-				if (!entry) {
-					entry = probe(name, options, classOptions).then(
-						(result) => {
-							// asked again next time: TeX may be installed or found by then
-							if (!result) cache.delete(key);
-							return result ? probeDefinitions(result) : '';
-						},
-						() => {
-							cache.delete(key);
-							return '';
-						}
-					);
-					cache.set(key, entry);
-				}
-				return entry;
-			})
+		named.map(({ name, options }) => {
+			if (userPackage(name) || isBundledPackage(name)) return packageDefinitions(name, options, classOptions);
+			// a class has no reading of its own
+			if (name.startsWith('class-')) return Promise.resolve(new Map<string, string>());
+			const key = `${name}[${options}]{${classOptions}}`;
+			let entry = cache.get(key);
+			if (!entry) {
+				entry = probe(name, options, classOptions).then(
+					(result) => {
+						// asked again next time: TeX may be installed or found by then
+						if (!result) cache.delete(key);
+						return result ? probeDefinitions(result) : new Map<string, string>();
+					},
+					() => {
+						cache.delete(key);
+						return new Map<string, string>();
+					}
+				);
+				cache.set(key, entry);
+			}
+			return entry;
+		})
 	);
-	return found.filter(Boolean).join('\n');
+	// a package loads after the class, so its definition stands; two packages that disagree (\For) leave the usage guess
+	const fromClass = new Map<string, string>();
+	const lines = new Map<string, string | null>();
+	found.forEach((defs, i) => {
+		const isClass = named[i].name.startsWith('class-');
+		for (const [name, line] of defs)
+			if (isClass) fromClass.set(name, line);
+			else lines.set(name, lines.has(name) && lines.get(name) !== line ? null : line);
+	});
+	for (const [name, line] of fromClass) if (!lines.has(name)) lines.set(name, line);
+	return [...lines.values()].filter(Boolean).join('\n');
 }

@@ -1,315 +1,74 @@
 {
-  "deps": [],
-  "macros": [
-    {
-      "name": "fancyfoot",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "fancyfoot[${2:places}]{${1:footer%text}}"
-      }
-    },
-    {
-      "name": "fancyfoot",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyfoot{${1:footer%text}}"
-      }
-    },
-    {
-      "name": "fancyhead",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "fancyhead[${2:places}]{${1:header%text}}"
-      }
-    },
-    {
-      "name": "fancyhead",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyhead{${1:header%text}}"
-      }
-    },
-    {
-      "name": "fancyhf",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "fancyhf[${2:places}]{${1:output%text}}"
-      }
-    },
-    {
-      "name": "fancyhf",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyhf{${1:output%text}}"
-      }
-    },
-    {
-      "name": "fancyfootoffset",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "fancyfootoffset[${2:places}]{${1:length}}"
-      }
-    },
-    {
-      "name": "fancyfootoffset",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyfootoffset{${1:length}}"
-      }
-    },
-    {
-      "name": "fancyheadoffset",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "fancyheadoffset[${2:places}]{${1:length}}"
-      }
-    },
-    {
-      "name": "fancyheadoffset",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyheadoffset{${1:length}}"
-      }
-    },
-    {
-      "name": "fancyhfoffset",
-      "arg": {
-        "format": "[]{}",
-        "snippet": "fancyhfoffset[${2:places}]{${1:length}}"
-      }
-    },
-    {
-      "name": "fancyhfoffset",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyhfoffset{${1:length}}"
-      }
-    },
-    {
-      "name": "fancypagestyle",
-      "arg": {
-        "format": "{}[]{}",
-        "snippet": "fancypagestyle{${1:style name}}[${3:base style}]{${2:definitions%text}}"
-      }
-    },
-    {
-      "name": "fancypagestyle",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "fancypagestyle{${1:style name%specialDef}}{${2:definitions%text}}"
-      }
-    },
-    {
-      "name": "iftopfloat",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "iftopfloat{${1:float page%text}}{${2:other%text}}"
-      }
-    },
-    {
-      "name": "ifbotfloat",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "ifbotfloat{${1:float page%text}}{${2:other%text}}"
-      }
-    },
-    {
-      "name": "iffloatpage",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "iffloatpage{${1:float page%text}}{${2:other%text}}"
-      }
-    },
-    {
-      "name": "iffootnote",
-      "arg": {
-        "format": "{}{}",
-        "snippet": "iffootnote{${1:float page%text}}{${2:other%text}}"
-      }
-    },
-    {
-      "name": "headrulewidth"
-    },
-    {
-      "name": "footrulewidth"
-    },
-    {
-      "name": "headruleskip"
-    },
-    {
-      "name": "footruleskip"
-    },
-    {
-      "name": "headrule"
-    },
-    {
-      "name": "footrule"
-    },
-    {
-      "name": "headwidth"
-    },
-    {
-      "name": "fancyheadinit",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyheadinit{${1:code}}"
-      }
-    },
-    {
-      "name": "fancyfootinit",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyfootinit{${1:code}}"
-      }
-    },
-    {
-      "name": "fancyhfinit",
-      "arg": {
-        "format": "{}",
-        "snippet": "fancyhfinit{${1:code}}"
-      }
-    },
-    {
-      "name": "fancycenter",
-      "arg": {
-        "format": "[][]{}{}{}",
-        "snippet": "fancycenter[${4:distance%l}][${5:stretch}]{${1:left-mark%text}}{${2:center-mark%text}}{${3:right-mark%text}}"
-      }
-    },
-    {
-      "name": "fancycenter",
-      "arg": {
-        "format": "[]{}{}{}",
-        "snippet": "fancycenter[${4:distance%l}]{${1:left-mark%text}}{${2:center-mark%text}}{${3:right-mark%text}}"
-      }
-    },
-    {
-      "name": "fancycenter",
-      "arg": {
-        "format": "{}{}{}",
-        "snippet": "fancycenter{${1:left-mark%text}}{${2:center-mark%text}}{${3:right-mark%text}}"
-      }
-    },
-    {
-      "name": "nouppercase",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "nouppercase{${1:text}}"
-      }
-    },
-    {
-      "name": "chead",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "chead[${2:CH-even%text}]{${1:CH-odd%text}}"
-      }
-    },
-    {
-      "name": "chead",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "chead{${1:header%text}}"
-      }
-    },
-    {
-      "name": "cfoot",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "cfoot[${2:CF-even%text}]{${1:CF-odd%text}}"
-      }
-    },
-    {
-      "name": "cfoot",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "cfoot{${1:footer%text}}"
-      }
-    },
-    {
-      "name": "lhead",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "lhead[${2:LH-even%text}]{${1:LH-odd%text}}"
-      }
-    },
-    {
-      "name": "lhead",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "lhead{${1:header%text}}"
-      }
-    },
-    {
-      "name": "lfoot",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "lfoot[${2:LF-even%text}]{${1:LF-odd%text}}"
-      }
-    },
-    {
-      "name": "lfoot",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "lfoot{${1:footer%text}}"
-      }
-    },
-    {
-      "name": "rhead",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "rhead[${2:RH-even%text}]{${1:RH-odd%text}}"
-      }
-    },
-    {
-      "name": "rhead",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "rhead{${1:header%text}}"
-      }
-    },
-    {
-      "name": "rfoot",
-      "unusual": true,
-      "arg": {
-        "format": "[]{}",
-        "snippet": "rfoot[${2:RF-even%text}]{${1:RF-odd%text}}"
-      }
-    },
-    {
-      "name": "rfoot",
-      "unusual": true,
-      "arg": {
-        "format": "{}",
-        "snippet": "rfoot{${1:footer%text}}"
-      }
-    }
-  ],
-  "envs": [],
-  "keys": {
-    "\\usepackage/fancyhdr#c": [
-      "nocheck",
-      "compatV3",
-      "twoside",
-      "myheadings",
-      "headings"
-    ],
-    "\\pagestyle#c,\\thispagestyle#c": [
-      "fancy",
-      "%fancypagestyle"
-    ]
-  },
-  "args": [
-    "\\usepackage/fancyhdr#c"
-  ]
+	"macros": [
+		{"name":"cfoot","arg":{"format":"[]{}","snippet":"cfoot[${1}]{${2}}"},"unusual":true},
+		{"name":"cfoot","arg":{"format":"{}","snippet":"cfoot{${1}}"},"unusual":true},
+		{"name":"chead","arg":{"format":"[]{}","snippet":"chead[${1}]{${2}}"},"unusual":true},
+		{"name":"chead","arg":{"format":"{}","snippet":"chead{${1}}"},"unusual":true},
+		{"name":"fancycenter","arg":{"format":"[][]{}{}{}","snippet":"fancycenter[${1:dist}][${2:stretch}]{${3:left-field}}{${4:center-field}}{${5:right-field}}"},"doc":"The command \\fancycenter packs 3 header fields into a full-width header."},
+		{"name":"fancycenter","arg":{"format":"{}{}{}","snippet":"fancycenter{${1:left-field}}{${2:center-field}}{${3:right-field}}"},"doc":"The command \\fancycenter packs 3 header fields into a full-width header."},
+		{"name":"fancyfoot","arg":{"format":"[]{}","snippet":"fancyfoot[${1:places}]{${2:text}}"}},
+		{"name":"fancyfoot","arg":{"format":"{}","snippet":"fancyfoot{${1:text}}"}},
+		{"name":"fancyfootalign","arg":{"format":"{}","snippet":"fancyfootalign{${1:length}}"},"doc":"The command \\fancyfootalign allows you to fine-tune the vertical position of the footer with respect to the page bottom."},
+		{"name":"fancyfootinit","arg":{"format":"{}","snippet":"fancyfootinit{${1:code}}"},"doc":"\\fancyheadinit and \\fancyfootinit can be used to define initialisation code for the header and footer, respectively, and \\fancyhfinit defines both of these."},
+		{"name":"fancyfootoffset","arg":{"format":"[]{}","snippet":"fancyfootoffset[${1:places}]{${2:length}}"}},
+		{"name":"fancyfootoffset","arg":{"format":"{}","snippet":"fancyfootoffset{${1:length}}"}},
+		{"name":"fancyfootwidth","arg":{"format":"[][]{}","snippet":"fancyfootwidth[${1:places}][${2:alignment}]{${3:length}}"}},
+		{"name":"fancyfootwidth","arg":{"format":"{}","snippet":"fancyfootwidth{${1:length}}"}},
+		{"name":"fancyfootwidth*","arg":{"format":"[][]{}","snippet":"fancyfootwidth*[${1:places}][${2:alignment}]{${3:length}}"}},
+		{"name":"fancyfootwidth*","arg":{"format":"{}","snippet":"fancyfootwidth*{${1:length}}"}},
+		{"name":"fancyhdrbox","arg":{"format":"[][]{}","snippet":"fancyhdrbox[${1:alignment}][${2:width}]{${3:lines}}"},"doc":"The command \\fancyhdrbox can be used to align multiline parts vertically and horizontally."},
+		{"name":"fancyhdrbox","arg":{"format":"{}","snippet":"fancyhdrbox{${1:lines}}"},"doc":"The command \\fancyhdrbox can be used to align multiline parts vertically and horizontally."},
+		{"name":"fancyhdrsettoheight","arg":{"format":"{}{}","snippet":"fancyhdrsettoheight{${1:lengthvar}}{${2:header/footer}}"},"doc":"Sets ⟨lengthvar⟩ to the height of the ⟨header/footer⟩, which must be one of oddhead, evenhead, oddfoot or evenfoot."},
+		{"name":"fancyhead","arg":{"format":"[]{}","snippet":"fancyhead[${1:places}]{${2:text}}"}},
+		{"name":"fancyhead","arg":{"format":"{}","snippet":"fancyhead{${1:text}}"}},
+		{"name":"fancyheadinit","arg":{"format":"{}","snippet":"fancyheadinit{${1:code}}"},"doc":"This macro can be used to define initialisation code that will be run before the construction of the header. It can for example set the color or the font, or change \\headrulewidth or \\headruleskip."},
+		{"name":"fancyheadoffset","arg":{"format":"[]{}","snippet":"fancyheadoffset[${1:places}]{${2:length}}"}},
+		{"name":"fancyheadoffset","arg":{"format":"{}","snippet":"fancyheadoffset{${1:length}}"}},
+		{"name":"fancyheadwidth","arg":{"format":"[][]{}","snippet":"fancyheadwidth[${1:places}][${2:alignment}]{${3:length}}"}},
+		{"name":"fancyheadwidth","arg":{"format":"{}","snippet":"fancyheadwidth{${1:length}}"}},
+		{"name":"fancyheadwidth*","arg":{"format":"[][]{}","snippet":"fancyheadwidth*[${1:places}][${2:alignment}]{${3:length}}"}},
+		{"name":"fancyheadwidth*","arg":{"format":"{}","snippet":"fancyheadwidth*{${1:length}}"}},
+		{"name":"fancyhf","arg":{"format":"[]{}","snippet":"fancyhf[${1:places}]{${2:field}}"},"doc":"There is also a more general command \\fancyhf that you can use to combine the specifications for headers and footers."},
+		{"name":"fancyhf","arg":{"format":"{}","snippet":"fancyhf{${1:field}}"},"doc":"There is also a more general command \\fancyhf that you can use to combine the specifications for headers and footers."},
+		{"name":"fancyhfinit","arg":{"format":"{}","snippet":"fancyhfinit{${1:code}}"},"doc":"\\fancyheadinit and \\fancyfootinit can be used to define initialisation code for the header and footer, respectively, and \\fancyhfinit defines both of these."},
+		{"name":"fancyhfoffset","arg":{"format":"[]{}","snippet":"fancyhfoffset[${1:places}]{${2:length}}"},"doc":"Use \\fancyhfoffset[place]{length} to offset one or more elements."},
+		{"name":"fancyhfoffset","arg":{"format":"{}","snippet":"fancyhfoffset{${1:length}}"},"doc":"Use \\fancyhfoffset[place]{length} to offset one or more elements."},
+		{"name":"fancyhfwidth","arg":{"format":"[][]{}","snippet":"fancyhfwidth[${1:places}][${2:alignment}]{${3:length}}"}},
+		{"name":"fancyhfwidth","arg":{"format":"{}","snippet":"fancyhfwidth{${1:length}}"}},
+		{"name":"fancyhfwidth*","arg":{"format":"[][]{}","snippet":"fancyhfwidth*[${1:places}][${2:alignment}]{${3:length}}"}},
+		{"name":"fancyhfwidth*","arg":{"format":"{}","snippet":"fancyhfwidth*{${1:length}}"}},
+		{"name":"fancypagestyle","arg":{"format":"{}[]{}","snippet":"fancypagestyle{${1:style-name}}[${2:base-style}]{${3:definitions}}"},"doc":"This command lets you (re)define page styles for use in special situations."},
+		{"name":"fancypagestyle","arg":{"format":"{}{}","snippet":"fancypagestyle{${1:style-name}}{${2:definitions}}"},"doc":"This command lets you (re)define page styles for use in special situations."},
+		{"name":"fancypagestyle*","arg":{"format":"{}[]{}","snippet":"fancypagestyle*{${1:style-name}}[${2:base-style}]{${3:definitions}}"},"doc":"This command lets you (re)define page styles for use in special situations."},
+		{"name":"fancypagestyle*","arg":{"format":"{}{}","snippet":"fancypagestyle*{${1:style-name}}{${2:definitions}}"},"doc":"This command lets you (re)define page styles for use in special situations."},
+		{"name":"fancypagestyleassign","arg":{"format":"{}{}","snippet":"fancypagestyleassign{${1:ps1}}{${2:ps2}}"},"doc":"This command assigns page style ⟨ps2⟩ to ⟨ps1⟩. This causes ⟨ps1⟩ to be an exact copy of ⟨ps2⟩, but completely independent of ⟨ps2⟩."},
+		{"name":"fancyplain","arg":{"format":"{}{}","snippet":"fancyplain{${1}}{${2}}"},"unusual":true},
+		{"name":"footrule","doc":"\\headrule and \\footrule are macros to completely redefine these lines."},
+		{"name":"footruleskip","doc":"\\headruleskip and \\footruleskip are macros that define the distance between the lines and the header and footer text, respectively."},
+		{"name":"footrulewidth","doc":"\\headrulewidth and \\footrulewidth are macros to define the thickness of a line under the header and above the footer."},
+		{"name":"headrule"},
+		{"name":"headruleskip","doc":"\\headruleskip and \\footruleskip are macros that define the distance between the lines and the header and footer text, respectively."},
+		{"name":"headrulewidth","doc":"\\headrulewidth and \\footrulewidth are macros to define the thickness of a line under the header and above the footer."},
+		{"name":"headwidth","doc":"The width of headers and footers is \\headwidth, which by default equals the width of the text: \\textwidth."},
+		{"name":"ifbotfloat","arg":{"format":"{}{}","snippet":"ifbotfloat{${1:value for bottom float}}{${2:value for other pages}}"},"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"iffloatpage","arg":{"format":"{}{}","snippet":"iffloatpage{${1:value for float page}}{${2:value for other pages}}"},"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"iffootnote","arg":{"format":"{}{}","snippet":"iffootnote{${1:value with footnote}}{${2:value for other pages}}"},"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"iftopfloat","arg":{"format":"{}{}","snippet":"iftopfloat{${1:value for top float}}{${2:value for other pages}}"},"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"lfoot","arg":{"format":"[]{}","snippet":"lfoot[${1}]{${2}}"},"unusual":true},
+		{"name":"lfoot","arg":{"format":"{}","snippet":"lfoot{${1}}"},"unusual":true},
+		{"name":"lhead","arg":{"format":"[]{}","snippet":"lhead[${1}]{${2}}"},"unusual":true},
+		{"name":"lhead","arg":{"format":"{}","snippet":"lhead{${1}}"},"unusual":true},
+		{"name":"nouppercase","arg":{"format":"{}","snippet":"nouppercase{${1:text}}"}},
+		{"name":"plainfootrulewidth","unusual":true},
+		{"name":"plainheadrulewidth","unusual":true},
+		{"name":"rfoot","arg":{"format":"[]{}","snippet":"rfoot[${1}]{${2}}"},"unusual":true},
+		{"name":"rfoot","arg":{"format":"{}","snippet":"rfoot{${1}}"},"unusual":true},
+		{"name":"rhead","arg":{"format":"[]{}","snippet":"rhead[${1}]{${2}}"},"unusual":true},
+		{"name":"rhead","arg":{"format":"{}","snippet":"rhead{${1}}"},"unusual":true}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/fancyhdr#c": ["headings","myheadings","nocheck","twoside"]
+	},
+	"args": ["\\usepackage/fancyhdr#c"]
 }

@@ -1,0 +1,13 @@
+{
+	"deps": [{"name":"fnpara","if":"multipara|para"}],
+	"macros": [
+		{"name":"filedate","unusual":true},
+		{"name":"fileversion","unusual":true},
+		{"name":"footnumbersep"}
+	],
+	"envs": [],
+	"keys": {
+		"\\usepackage/dhucsfn#c": ["hang","hangpar","indent","leftflush","leftflushindent","multipara","para","parenthesis","superscript","varhangpar"]
+	},
+	"args": ["\\usepackage/dhucsfn#c"]
+}

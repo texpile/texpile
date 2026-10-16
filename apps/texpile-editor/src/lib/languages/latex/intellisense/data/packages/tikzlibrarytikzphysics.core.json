@@ -1,0 +1,12 @@
+{
+	"macros": [
+		{"name":"geometryvalue","arg":{"format":"{}{}","snippet":"geometryvalue{${1:node}}{${2:property}}"}},
+		{"name":"physicshelp","arg":{"format":"[]{}","snippet":"physicshelp[${1:node options}]{${2:feature}}"}},
+		{"name":"physicshelp","arg":{"format":"{}","snippet":"physicshelp{${1:feature}}"}},
+		{"name":"tikzphysicsgeometryvalue","arg":{"format":"{}{}","snippet":"tikzphysicsgeometryvalue{${1:node}}{${2:property}}"}},
+		{"name":"tikzphysicshelp","arg":{"format":"[]{}","snippet":"tikzphysicshelp[${1:node options}]{${2:feature}}"}},
+		{"name":"tikzphysicshelp","arg":{"format":"{}","snippet":"tikzphysicshelp{${1:feature}}"}}
+	],
+	"envs": [],
+	"keys": {}
+}

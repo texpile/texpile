@@ -1,0 +1,7 @@
+{
+	"macros": [],
+	"envs": [
+		{"name":"plain","doc":"Typeset plain TeX markup in LaTeX documents."}
+	],
+	"keys": {}
+}

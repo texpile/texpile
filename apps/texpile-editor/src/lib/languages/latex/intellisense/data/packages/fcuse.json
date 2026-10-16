@@ -1,0 +1,11 @@
+{
+	"macros": [
+		{"name":"activecharactersoff"},
+		{"name":"activecharacterson"},
+		{"name":"originalequals","unusual":true},
+		{"name":"originalplus","unusual":true},
+		{"name":"originalslash","unusual":true}
+	],
+	"envs": [],
+	"keys": {}
+}
