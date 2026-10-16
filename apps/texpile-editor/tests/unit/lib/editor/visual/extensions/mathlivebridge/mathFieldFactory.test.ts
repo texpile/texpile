@@ -4,7 +4,7 @@ const platform = vi.hoisted(() => ({ isMac: true }));
 vi.mock('$lib/platform', () => platform);
 vi.mock('mathlive', () => ({ MathfieldElement: class {} }));
 
-import { dropIntlBackslashBinding } from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
+import { dropIntlBackslashBinding, quoteSwitchesText } from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
 import type { MathfieldElement } from 'mathlive';
 
 const bindings = [
@@ -37,5 +37,21 @@ describe('dropIntlBackslashBinding', () => {
 		const f = field();
 		dropIntlBackslashBinding(f);
 		expect(f.keybindings).toBe(bindings);
+	});
+});
+
+describe('quoteSwitchesText', () => {
+	function press(mode: string, key = '"', syntax = 'latex') {
+		const commands: unknown[] = [];
+		const f = { mode, syntax, executeCommand: (c: unknown) => commands.push(c) };
+		quoteSwitchesText({ key, currentTarget: f, preventDefault() {}, stopPropagation() {} } as unknown as KeyboardEvent);
+		return commands;
+	}
+
+	it('toggles text mode in a LaTeX field on any layout', () => {
+		expect(press('math')).toEqual([['switchMode', 'text']]);
+		expect(press('text')).toEqual([['switchMode', 'math']]);
+		expect(press('math', "'")).toEqual([]);
+		expect(press('math', '"', 'typst')).toEqual([]);
 	});
 });

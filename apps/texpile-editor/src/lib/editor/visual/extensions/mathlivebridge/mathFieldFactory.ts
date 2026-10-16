@@ -58,6 +58,7 @@ export function buildMathField(
 	// capture: mathlive stops the Space that completes a \command
 	field.addEventListener('keydown', completeWithPlaceholder, { capture: true });
 	field.addEventListener('keydown', mathSearchKeydown, { capture: true });
+	field.addEventListener('keydown', quoteSwitchesText, { capture: true });
 
 	// mathlive doesn't fire focus events on programmatic .focus(), so wrap it
 	const origFocus = field.focus.bind(field) as (options?: FocusOptions) => void;
@@ -112,6 +113,23 @@ function completeWithPlaceholder(event: KeyboardEvent): void {
 	field.insert(latex.replace(/\{\}/g, '{#?}'), { selectionMode: 'placeholder' });
 }
 
+// `"` goes in and out of text, \text{...}, on any keyboard: mathlive binds it only on English layouts
+export function quoteSwitchesText(event: KeyboardEvent): void {
+	const field = event.currentTarget as MathfieldElement;
+	if (
+		field.syntax === 'typst' ||
+		event.key !== '"' ||
+		event.altKey ||
+		event.ctrlKey ||
+		event.metaKey ||
+		(field.mode !== 'math' && field.mode !== 'text')
+	)
+		return;
+	event.preventDefault();
+	event.stopPropagation();
+	field.executeCommand(['switchMode', field.mode === 'math' ? 'text' : 'math']);
+}
+
 export function releaseMathField(
 	field: MathfieldElement,
 	origFocus: ((options?: FocusOptions) => void) | undefined,
@@ -125,6 +143,7 @@ export function releaseMathField(
 	field.removeEventListener('contextmenu', listeners.menu, { capture: true });
 	field.removeEventListener('keydown', completeWithPlaceholder, { capture: true });
 	field.removeEventListener('keydown', mathSearchKeydown, { capture: true });
+	field.removeEventListener('keydown', quoteSwitchesText, { capture: true });
 	if (origFocus) {
 		// eslint-disable-next-line no-param-reassign -- restoring the focus method the build wrapped
 		field.focus = origFocus as typeof field.focus;
