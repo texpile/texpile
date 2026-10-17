@@ -3,7 +3,6 @@
 // empty results.
 import { parseLatex } from './parser';
 import { findMacros, getTextContent } from './ast-utils';
-import { MACRO_SIGNATURES, ENV_SIGNATURES } from './macros';
 import type { Macro } from '@unified-latex/unified-latex-types';
 
 export type BibItemSlice = {
@@ -19,7 +18,7 @@ export function extractDocRefs(latex: string): { labels: string[]; bibitems: Bib
 	const labels = new Set<string>();
 	const bibitems: BibItemSlice[] = [];
 	try {
-		const ast = parseLatex(latex, { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES });
+		const ast = parseLatex(latex);
 		for (const macro of findMacros(ast, 'label')) {
 			const arg = macro.args?.[macro.args.length - 1];
 			if (!arg) continue;

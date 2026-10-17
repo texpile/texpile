@@ -174,9 +174,6 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	// size/series/shape switches are NOT dropped either: they fall through to raw, and a {...}
 	// group scoping one is kept whole (see SCOPED_SWITCHES / the 'group' case).
 
-	defbibheading: () => null,
-	addbibresource: () => null,
-
 	// table_wrapper/figure/block_math capture their own labels before this is reached, so a \label
 	// arriving here is a standalone one - after a \section, an \item, a theorem. It becomes a chip
 	// in place; a name with structure in it keeps its source, since the attr could only flatten it.

@@ -83,7 +83,7 @@ const DEF_LIKE_PRIMITIVES = new Set(['def', 'edef', 'gdef', 'xdef']);
 const LET_LIKE_PRIMITIVES = new Set(['let', 'futurelet']);
 
 /**
- * \def/\edef/\gdef/\xdef and \let/\futurelet are TeX primitives whose true syntax MACRO_SIGNATURES
+ * \def/\edef/\gdef/\xdef and \let/\futurelet are TeX primitives whose true syntax a signature
  * cannot express (\def's parameter text is arbitrary undelimited tokens, \let's target/source are
  * bare csnames). unregistered, the definition's parts become independent SIBLING nodes: the
  * primitive is dropped (ignoredMacros) while # gets escaped and the body's braces get stripped,

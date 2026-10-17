@@ -34,7 +34,7 @@ function packageFeatures(preamble: string, packages: ReadonlySet<string> | null)
 }
 
 export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
-export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
+export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 
 const IMAGE_EXT = /\.(png|jpe?g|gif|svg|webp|bmp|ico)$/i;
 const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin)$/i;
@@ -164,7 +164,8 @@ export class DocumentBuffer {
 		const macros = this.deps.projectMacros?.() ?? '';
 		const preamble = this.docMeta?.preamble ?? '';
 		const scan = macros ? `${macros}\n${preamble}` : preamble;
-		return (src) => parseLatexRegion(src, scan);
+		const table = this.docMeta?.table;
+		return (src) => parseLatexRegion(src, scan, table);
 	}
 
 	/** serialize the visual doc back to source in the open file's dialect, with where its runs
@@ -286,7 +287,7 @@ export class DocumentBuffer {
 	}
 
 	adoptParsed(parsed: ParsedLatexFile, source: string): void {
-		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
+		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
 		this.visualDoc = parsed.doc;
 		this.lastDoc = parsed.doc;
 		this.lastDocSource = source;

@@ -2,12 +2,11 @@
 // so a construct either side understands, both understand. A throw or an empty parse answers
 // null: an unreadable block must REFUSE, never compare equal to another unreadable one.
 import { createLatexParser } from '$lib/languages/latex/parser/latexParser';
-import { MACRO_SIGNATURES, ENV_SIGNATURES } from '$lib/languages/latex/parser/macros';
 import type { Node } from '@unified-latex/unified-latex-types';
 
 // built once: createLatexParser exists because per-call construction dominates the parse on
 // a string this short, and this runs on the keystroke path
-const parse = createLatexParser({ macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES });
+const parse = createLatexParser();
 
 export function parseBlock(src: string): Node[] | null {
 	if (!src.trim()) return null;

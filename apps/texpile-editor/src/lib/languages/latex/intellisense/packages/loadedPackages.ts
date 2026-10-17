@@ -1,5 +1,6 @@
 // the package files a document loads: the kernel, each use and what it loads in turn
 import { packageUsesIn, type PackageUse } from './packageUses';
+import { BASE_ID } from '../../knowledge/fileIds';
 import { loadFiles, type LoadedFile } from '../../knowledge/loadedFiles';
 import { userFilesVersion } from '../../knowledge/userFiles';
 import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -13,6 +14,11 @@ export type { LoadedFile };
 export const KERNEL_PACKAGE = 'latex-document';
 // a file that names no class reads like one in article, which most classes build on
 const DEFAULT_CLASS = 'class-article';
+
+/** the file's packages are unknown (no class and no package anywhere), so texpile/ctan-base stands in for them */
+export function isDegraded(loaded: LoadedFile[]): boolean {
+	return loaded.some((f) => f.id === BASE_ID);
+}
 
 /** the engine the folder's LaTeX command runs (the host's in a session), null when the command does not name one */
 export function compileEngine(): Engine | null {
@@ -32,19 +38,24 @@ const cache = new Map<string, Promise<LoadedFile[]>>();
 const settled = new Map<string, LoadedFile[]>();
 const CACHED = 8;
 
-function keyOf(uses: PackageUse[], engine: Engine | null): string {
-	return `${userFilesVersion()}:${engine}:${JSON.stringify(uses)}`;
+function keyOf(uses: PackageUse[], engine: Engine | null, base = false): string {
+	return `${userFilesVersion()}:${engine}:${base}:${JSON.stringify(uses)}`;
 }
 
-/** the kernel, the class, then every use with what it loads */
-export function loadedPackages(uses: PackageUse[]): Promise<LoadedFile[]> {
+/** the kernel, the class, then every use with what it loads; base: texpile/ctan-base under them all */
+export function loadedPackages(uses: PackageUse[], base = false): Promise<LoadedFile[]> {
 	const engine = compileEngine();
-	const key = keyOf(uses, engine);
+	const key = keyOf(uses, engine, base);
 	let loaded = cache.get(key);
 	if (!loaded) {
 		const classes = uses.filter((u) => u.name.startsWith('class-'));
 		const classOptions = classes.flatMap((u) => u.options);
-		const first = [{ name: KERNEL_PACKAGE, options: [] }, ...(classes.length ? [] : [{ name: DEFAULT_CLASS, options: [] }])];
+		const unknown = !uses.length;
+		const first = [
+			{ name: KERNEL_PACKAGE, options: [] },
+			...(base || unknown ? [{ name: BASE_ID, options: [] }] : []),
+			...(classes.length || unknown ? [] : [{ name: DEFAULT_CLASS, options: [] }])
+		];
 		const started = loadFiles([...first, ...uses], classOptions, engine);
 		loaded = started;
 		cache.set(key, started);
@@ -70,6 +81,12 @@ export function documentPackages(text: string): Promise<LoadedFile[]> {
 
 function namesOf(loaded: LoadedFile[]): Set<string> {
 	return new Set(loaded.map((p) => p.name));
+}
+
+/** what a parse of the open file reads: texpile/ctan-base under its own files, so a construct the visual editor models keeps
+ * its arguments whatever the file loads */
+export function parsedPackages(text: string): Promise<LoadedFile[]> {
+	return loadedPackages(documentUses(text), true);
 }
 
 /** the names of what the open file and the project load, the class as class-<name> */

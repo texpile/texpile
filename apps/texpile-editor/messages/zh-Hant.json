@@ -168,6 +168,7 @@
 	"snippets_typst_word": "\"{word}\" 已是 Typst 數學中的一個詞。有了這個片段，就無法在公式中直接輸入 {word}。請換一個觸發詞。",
 	"package_file_entries_dropped": "其中 {count} 個條目不符合套件檔案格式，已被略去。",
 	"package_file_old_format": "此檔案使用舊的套件檔案格式。套件檔案以 \"version\": 1 開頭（參見文件中的「LaTeX 套件檔案」）。",
+	"intellisense_degraded": "找不到主檔案。部分 IntelliSense 功能受限。",
 	"palette_project_snippets": "編輯專案程式碼片段",
 	"palette_global_snippets": "編輯全域程式碼片段",
 	"palette_save_package_file": "儲存 {name} 的巨集套件檔案",

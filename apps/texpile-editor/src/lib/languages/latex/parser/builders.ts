@@ -4,6 +4,7 @@ import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 import { Node as PMNodeT, Mark as PMMarkT } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { concatSpans, noteSpans, spansOf, type LeafSpan } from '$lib/editor/visual/sourceSpans';
+import type { PackageTable } from './signatures/packageTable';
 
 export type PmNode = PMNodeT;
 
@@ -26,6 +27,8 @@ export type ConversionOptions = {
 	/** the verbatim-preserved preamble. The parser only gets the body, so this is scanned for
 	 *  \newcommand signatures; otherwise preamble-defined commands' args detach and lose braces. */
 	preamble?: string;
+	/** the arguments the document's loaded files give; absent: texpile/ctan-base's */
+	table?: PackageTable;
 	/** progress ping for the loading UI; fired at the few boundaries we can actually observe
 	 *  (the unified-latex parse itself is one opaque sync call). */
 	onPhase?: (phase: 'building') => void;

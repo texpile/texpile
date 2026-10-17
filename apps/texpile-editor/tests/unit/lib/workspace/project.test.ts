@@ -28,6 +28,8 @@ vi.mock('../../../../src/lib/workspace/fileSystem', () => {
 import { detectMainFile, gatherProjectMacros } from '../../../../src/lib/workspace/project';
 import * as LatexParser from '$lib/languages/latex/parser/latexParser';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
+import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { packageTableOf } from '$lib/languages/latex/parser/signatures/packageTable';
 
 const ROOT = '/proj';
 const file = (rel: string) => ({ name: rel.split('/').pop()!, path: `${ROOT}/${rel}`, relPath: rel });
@@ -159,11 +161,11 @@ describe('an installed package gives the parser its commands', () => {
 	// what the reader's TeX reports: no arguments for commands that read theirs as they run
 	const PROBE = {
 		commands: [
-			{ name: 'hlnote', spec: 'o m' },
-			{ name: 'qtyof', spec: 'X O{}m>{\\TrimSpaces }m' },
-			{ name: 'cites', spec: '' },
-			{ name: 'section', spec: 'm' },
-			{ name: 'verbish', spec: 'X v' }
+			{ name: 'hlnote', spec: 'o m', own: true },
+			{ name: 'qtyof', spec: 'X O{}m>{\\TrimSpaces }m', own: true },
+			{ name: 'cites', spec: '', own: true },
+			{ name: 'section', spec: 'm', own: true, redefined: true },
+			{ name: 'verbish', spec: 'X v', own: true }
 		]
 	};
 	const MAIN = '\\documentclass[12pt]{article}\n\\usepackage[draft]{reviewnotes}\n\\begin{document}\n\\end{document}';
@@ -171,60 +173,48 @@ describe('an installed package gives the parser its commands', () => {
 	it("passes on what TeX reports with arguments, loaded with the document's options", async () => {
 		h.fs = { '/proj/main.tex': MAIN };
 		const asked: string[][] = [];
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (...args) => {
+		await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (...args) => {
 			asked.push(args);
 			return args[0] === 'reviewnotes' ? PROBE : null;
 		});
 		expect(asked).toEqual([['reviewnotes', 'draft', '12pt']]);
-		expect(macros).toContain('\\NewDocumentCommand{\\hlnote}{o m}{}');
-		expect(macros).toContain('\\NewDocumentCommand{\\qtyof}{o m m}{}');
-		expect(macros).not.toMatch(/\{\\(?:cites|section|verbish)\}/);
-		const { doc } = LatexParser.latexToProseMirror('Intro \\hlnote [Important]{check this} outro.', { preamble: macros });
+		const table = packageTableOf(await loadedPackages([{ name: 'reviewnotes', options: ['draft'] }], true));
+		expect(table.macros.hlnote.map((a) => a.kind)).toEqual(['o', 'm']);
+		expect(table.macros.qtyof.map((a) => a.kind)).toEqual(['o', 'm', 'm']);
+		expect(table.macros.section.map((a) => a.kind)).toEqual(['s', 'o', 'm']);
+		const { doc } = LatexParser.latexToProseMirror('Intro \\hlnote [Important]{check this} outro.', { table });
 		expect(serializeToLatex(doc)).toContain('[Important]{check this}');
 	});
-});
-
-describe('the packages a paper loads reach the parser', () => {
-	const noTeX = async () => null;
 
 	it('past a commented \\begin{document}', async () => {
 		h.fs = {
 			'/proj/main.tex':
-				'\\documentclass{article}\n%% the \\begin{document} command.\n\\usepackage{marginnote}\n\\begin{document}\n\\end{document}'
+				'\\documentclass{article}\n%% the \\begin{document} command.\n\\usepackage{reviewnotes}\n\\begin{document}\n\\end{document}'
 		};
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
-		expect(macros).toContain('\\NewDocumentCommand{\\marginnote}{o m o}{}');
+		const asked: string[] = [];
+		await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (name) => (asked.push(name), null));
+		expect(asked).toEqual(['reviewnotes']);
 	});
 
-	it('from the data for a copy of a package the paper ships', async () => {
+	it('never for a package Texpile has data for, nor from a copy the paper ships', async () => {
 		h.fs = {
 			'/proj/main.tex': '\\documentclass{article}\n\\usepackage{marginnote}\n\\begin{document}\n\\end{document}',
 			'/proj/marginnote.sty': '\\newcommand{\\shippedonly}{x}'
 		};
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async () => {
+			throw new Error('marginnote is not asked of TeX');
+		});
 		expect(macros).not.toContain('shippedonly');
-		expect(macros).toContain('\\NewDocumentCommand{\\marginnote}{o m o}{}');
-	});
-});
-
-describe('the document class gives the parser its commands', () => {
-	const noTeX = async () => {
-		throw new Error('a class is not asked of TeX');
-	};
-
-	it('from the bundled class data', async () => {
-		h.fs = { '/proj/main.tex': '\\documentclass[aps]{revtex4-2}\n\\begin{document}\n\\end{document}' };
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
-		expect(macros).toContain('\\NewDocumentCommand{\\altaffiliation}{o m}{}');
 	});
 
-	it('and never from a class file the project ships', async () => {
+	it('never for the class, nor from a class file the project ships', async () => {
 		h.fs = {
 			'/proj/main.tex': '\\documentclass{revtex4-2}\n\\begin{document}\n\\end{document}',
 			'/proj/revtex4-2.cls': '\\newcommand{\\venue}[1]{#1}'
 		};
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, noTeX);
+		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async () => {
+			throw new Error('a class is not asked of TeX');
+		});
 		expect(macros).not.toContain('\\venue');
-		expect(macros).toContain('\\NewDocumentCommand{\\altaffiliation}{o m}{}');
 	});
 });

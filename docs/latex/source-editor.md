@@ -16,6 +16,8 @@ Completion covers commands (your own `\newcommand` macros too), environments, pa
 
 Commands and environments come from the class, packages and libraries your project loads. Common packages outside your preamble offer theirs too, last in the list with the package name beside them. Choosing one offers to add its `\usepackage`.
 
+A file with no `\documentclass` or `\usepackage` in a folder with no main file has no packages Texpile can read. Completion then offers the commands of common packages under the heading "No main file found. Some IntelliSense features are degraded." and offers no `\usepackage`.
+
 ## Go to definition and hover
 
 F12, or Ctrl Click, on a label, a citation key, one of your own commands, or a file in `\input` opens where it is defined.

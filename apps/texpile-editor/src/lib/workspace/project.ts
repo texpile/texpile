@@ -4,7 +4,7 @@
 // session resolves through the workspace provider instead of the disk.
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
 import { documentStart, hasDocumentEnv } from './latexRoundtrip';
-import { installedPackageDefinitions, type ProbeInstalledPackage } from '$lib/languages/latex/installedPackages';
+import { probeInstalledPackages, type ProbeInstalledPackage } from '$lib/languages/latex/installedPackages';
 import { probeTexPackage } from '$lib/editor/snippets/file/snippetLoader';
 import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
@@ -162,9 +162,11 @@ export async function gatherProjectMacros(
 	} catch {
 		return ''; // main file unreadable, fall back to per-file preamble scanning
 	}
-	// last, so the project's own definitions win
-	const packages = [...installed].map(([name, options]) => ({ name, options }));
-	const definitions = await installedPackageDefinitions(packages, classOptions, probeInstalled);
-	if (definitions) chunks.push(definitions);
+	// TeX's report for what Texpile ships no file for, which the parse table reads like any package file
+	await probeInstalledPackages(
+		[...installed].map(([name, options]) => ({ name, options })),
+		classOptions,
+		probeInstalled
+	);
 	return chunks.join('\n');
 }

@@ -7,6 +7,7 @@ import { padTables } from '$lib/editor/visual/padTables';
 import { collectMap, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects, type ParseBody, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
+import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 
 // the importer runs in max-fidelity mode: unrecognized constructs are preserved as raw/inline LaTeX
 
@@ -74,6 +75,8 @@ export type ParsedLatexFile = {
 	warnings: string[];
 	/** where each run and block of the document came from in the file */
 	map: SourceMap;
+	/** the signatures it was parsed with, for a later parse of part of it; the base table when absent */
+	table?: PackageTable;
 	/** what the parse knew about every top-level block, for writing untouched ones back as they were */
 	origins: ParseOrigins;
 };
@@ -95,7 +98,12 @@ function countRaw(doc: Node): number {
  */
 export type ParsePhase = 'parsing' | 'building' | 'finalizing';
 
-export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (phase: ParsePhase) => void): ParsedLatexFile {
+export function parseLatexFile(
+	latex: string,
+	projectMacros = '',
+	onPhase?: (phase: ParsePhase) => void,
+	table?: PackageTable
+): ParsedLatexFile {
 	onPhase?.('parsing');
 	// a \begin{document} that only appears inside a comment must not count as the real
 	// wrapper, or the file gets mis-split and corrupted on save
@@ -124,7 +132,7 @@ export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (pha
 	// the parser only sees the body, so pass the preamble plus any cross-file
 	// project macros for \newcommand signature scanning
 	const scanPreamble = projectMacros ? `${projectMacros}\n${preamble}` : preamble;
-	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble, onPhase });
+	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble, onPhase, table });
 	onPhase?.('finalizing');
 	const doc = padTables(parsedDoc);
 
@@ -149,12 +157,12 @@ export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (pha
 	const map = collectMap(doc, hadDocumentEnv ? preamble.length : 0);
 	const origins = rememberParseMap(doc, map, parseBodyOf({ preamble, postamble, hadDocumentEnv }, latex));
 	warnMapDefects('latexRoundtrip', origins);
-	return { preamble, postamble, doc, hadDocumentEnv, warnings, map, origins };
+	return { preamble, postamble, doc, hadDocumentEnv, warnings, map, origins, table };
 }
 
 /** a stretch of the body parsed as the file is, for a comparison; the map's offsets are the stretch's own */
-export function parseLatexRegion(body: string, scanPreamble = ''): RegionParse {
-	const doc = padTables(LatexParser.latexToProseMirror(body, { preamble: scanPreamble }).doc);
+export function parseLatexRegion(body: string, scanPreamble = '', table?: PackageTable): RegionParse {
+	const doc = padTables(LatexParser.latexToProseMirror(body, { preamble: scanPreamble, table }).doc);
 	return { doc, map: collectMap(doc, 0) };
 }
 

@@ -10,7 +10,7 @@ import type { FileRef } from '$lib/workspace/fileRefs';
 // explicit signatures so the mandatory {path} arg always attaches (some of these live in CTAN
 // packages the bundled DB doesn't include, e.g. graphicx).
 const FILEREF_PARSE_OPTS = {
-	macros: {
+	documentMacros: {
 		includegraphics: { signature: 'o m' },
 		includesvg: { signature: 'o m' },
 		includepdf: { signature: 'o m' },
@@ -23,7 +23,7 @@ const FILEREF_PARSE_OPTS = {
 		verbatiminput: { signature: 'm' }
 	}
 };
-const FILE_COMMANDS = new Set(Object.keys(FILEREF_PARSE_OPTS.macros));
+const FILE_COMMANDS = new Set(Object.keys(FILEREF_PARSE_OPTS.documentMacros));
 
 /** Every file-path argument in `latex`, with the span holding the path itself. */
 export function collectLatexFileRefs(latex: string): FileRef[] {

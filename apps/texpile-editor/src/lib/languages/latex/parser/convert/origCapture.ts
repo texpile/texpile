@@ -90,13 +90,23 @@ function braceDebt(s: string): number {
  * each later (empty, position-less) arg's marks, whitespace allowed between. returns the
  * repaired end offset, or null when the source disagrees (caller falls back to printRaw).
  */
+// TeX reads a closer past a line-end comment as past a space
+function pastBlanks(src: string, from: number): number {
+	let at = from;
+	while (at < src.length) {
+		if (/[ \t\r\n]/.test(src[at])) at++;
+		else if (src[at] === '%') while (at < src.length && src[at] !== '\n') at++;
+		else break;
+	}
+	return at;
+}
+
 export function repairArgTail(node: Node, src: string, endIn: number): number | null {
 	if (!(node as Macro).args?.length) return endIn;
 	let end = endIn;
 	for (const { mark, nested } of closersAfter(node)) {
 		// lexical whitespace skip; which closers to expect came from the AST args above
-		let at = end;
-		while (at < src.length && /[ \t\r\n]/.test(src[at])) at++;
+		const at = pastBlanks(src, end);
 		if (src[at] === mark) end = at + 1;
 		else if (!nested) return null;
 	}
@@ -146,8 +156,7 @@ function closeUnbalanced(src: string, start: number, end: number): number {
 	let debt = braceDebt(src.slice(start, end));
 	let closed = end;
 	while (debt > 0) {
-		let k = closed;
-		while (k < src.length && /[ \t\r\n]/.test(src[k])) k++;
+		const k = pastBlanks(src, closed);
 		if (src[k] !== '}') break;
 		closed = k + 1;
 		debt--;

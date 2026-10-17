@@ -2,6 +2,7 @@
 import type { EditSession } from '../editSession';
 import { box } from '$lib/runes/box.svelte';
 import type { Engine } from '$lib/workspace/compileCommand';
+import { probedFiles, setProbedFiles } from '$lib/languages/latex/knowledge/userFiles';
 
 /** a guest's: the host's compile engine; undefined outside a session as a guest */
 export const hostEngine = box<Engine | null | undefined>(undefined);
@@ -20,11 +21,13 @@ export function followParseContext(deps: ParseContextDeps): void {
 	$effect(() => {
 		const session = deps.session();
 		if (!session.active || deps.guest()) return;
-		session.shareParseContext({ macros: deps.macros(), engine: deps.engine() });
+		// probing finishes before the macros it gathers with change, so this reruns after it
+		session.shareParseContext({ macros: deps.macros(), engine: deps.engine(), files: probedFiles() });
 	});
 	$effect(() => {
 		const session = deps.session();
 		if (!session.active || !deps.guest()) return;
+		setProbedFiles(session.parseContext?.files ?? {});
 		deps.adoptMacros(session.parseContext?.macros ?? '');
 		hostEngine.current = session.parseContext?.engine ?? null;
 		return () => (hostEngine.current = undefined);

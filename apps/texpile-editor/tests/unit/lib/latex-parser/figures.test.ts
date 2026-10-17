@@ -276,3 +276,12 @@ a & b \\\\
 		expect(String(doc.child(0).attrs.preBody)).toContain('\\begin{center}');
 	});
 });
+
+describe('a float with more than one label', () => {
+	it('keeps every label on regeneration', () => {
+		const src =
+			'\\begin{figure}\n\\includegraphics{img}%\n\\subfloat{\\label{fig:3a}}%\n\\subfloat{\\label{fig:3b}}%\n\\caption{x}\n\\label{fig:3}\n\\end{figure}\n';
+		const out = serializeToLatex(latexToProseMirror(src, {}).doc);
+		for (const label of ['fig:3a', 'fig:3b', 'fig:3']) expect(out).toContain(`\\label{${label}}`);
+	});
+});

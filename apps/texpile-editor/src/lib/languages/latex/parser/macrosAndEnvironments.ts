@@ -98,12 +98,52 @@ function processEnvironment(env: Ast.Environment, envInfo: Ast.EnvInfo): void {
 	for (const macro of bare) macro.args ??= [];
 }
 
+// in text (an equation behind a \def'd wrapper) a math command takes a braced argument or a single letter: a bare word
+// would be taken whole (\dot mx as \dot{mx})
+function bracedInText(commands: Record<string, Ast.MacroInfo>): Record<string, Ast.MacroInfo> {
+	const out: Record<string, Ast.MacroInfo> = {};
+	for (const [name, entry] of Object.entries(commands)) {
+		const kinds = entry.signature?.split(' ') ?? [];
+		if (!kinds.length || kinds.some((k) => k !== 'm')) continue;
+		out[name] = {
+			...entry,
+			argumentParser: (nodes, startPos) => {
+				let at = startPos;
+				for (let k = 0; k < kinds.length; k++, at++) {
+					while (match.whitespace(nodes[at])) at++;
+					const node = nodes[at];
+					const letter = node?.type === 'string' && node.content.length === 1;
+					if (!match.group(node) && !letter) return { args: undefined as unknown as Ast.Argument[], nodesRemoved: 0 };
+				}
+				return gobbleArguments(nodes, entry.signature!, startPos);
+			}
+		};
+	}
+	return out;
+}
+
+// the commands that define the command after them; step 7 of the package data plan gives them a role
+const DEFINER =
+	/^(?:(?:re)?new|provide)command[x]?$|^(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand$|^DeclareRobustCommand$|^DeclareMathOperator$|^(?:re)?newrobustcmd$|^[egx]?def$|^(?:future)?let$|^(?:math)?chardef$|^(?:count|dimen|skip|toks)def$/;
+
+// the command a definer names takes no arguments of its own (\providecommand*\natexlab[1]{#1}, natbib's \natexlab{x})
+function holdDefinedNames(nodes: Ast.Node[]): void {
+	for (let i = 0; i < nodes.length; i++) {
+		if (!match.anyMacro(nodes[i]) || !DEFINER.test((nodes[i] as Ast.Macro).content)) continue;
+		let at = i + 1;
+		while (match.whitespace(nodes[at]) || (nodes[at]?.type === 'string' && (nodes[at] as Ast.String).content === '*')) at++;
+		const named = nodes[at];
+		if (match.anyMacro(named) && named.args == null) named.args = [];
+	}
+}
+
 function mathOnly<T extends { renderInfo?: { inMathMode?: boolean } }>(table: Record<string, T>): Record<string, T> {
 	return Object.fromEntries(Object.entries(table).filter(([, entry]) => entry.renderInfo?.inMathMode === true));
 }
 
 export function processMacrosAndEnvironments(options: MacrosAndEnvironmentsOptions): Transformer<Ast.Root, Ast.Root> {
 	const { environments, macros, mathCommands = {} } = options;
+	const textMacros = { ...bracedInText(mathCommands), ...macros };
 	const mathMacros = mathOnly(macros);
 	const mathEnvs = mathOnly(environments);
 	const isMathEnvironment = match.createEnvironmentMatcher(Object.keys(mathEnvs));
@@ -118,6 +158,13 @@ export function processMacrosAndEnvironments(options: MacrosAndEnvironmentsOptio
 	}
 	return (tree, file) => {
 		const source = typeof file.value === 'string' ? file.value : undefined;
+		visit(
+			tree,
+			(nodes) => {
+				if (Array.isArray(nodes)) holdDefinedNames(nodes);
+			},
+			{ includeArrays: true }
+		);
 		visit(
 			tree,
 			{
@@ -155,7 +202,7 @@ export function processMacrosAndEnvironments(options: MacrosAndEnvironmentsOptio
 			tree,
 			{
 				enter: (nodes) => {
-					if (Array.isArray(nodes)) attachMacroArgsInArray(nodes, macros);
+					if (Array.isArray(nodes)) attachMacroArgsInArray(nodes, textMacros);
 				},
 				leave: (node) => {
 					if (isRelevantEnvironment(node)) processEnv(node);

@@ -3,7 +3,7 @@ import { pickedCompletion, type Completion } from '@codemirror/autocomplete';
 import type { EditorView } from '@codemirror/view';
 import { offerPackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { packageCompletions, type EnvironmentName, type MacroCompletion } from './packageCompletions';
-import { compileEngine, KERNEL_PACKAGE, packagesLoadedBy, type LoadedFile } from './loadedPackages';
+import { compileEngine, isDegraded, KERNEL_PACKAGE, packagesLoadedBy, type LoadedFile } from './loadedPackages';
 import { stackedCommands, stackedEnvironments } from '../../knowledge/stackedEntries';
 import { withoutComments } from './packageUses';
 import { LOAD_FAILS, PROBED, SUGGESTED_PACKAGES } from '../data/suggestedPackages';
@@ -97,6 +97,8 @@ let offeredCache: { loaded: LoadedFile[]; user: string; offered: PackageSuggesti
 
 /** what the common packages the document does not load bring, leaving out those that clash with it */
 export async function packageSuggestions(loaded: LoadedFile[], text: string): Promise<PackageSuggestions> {
+	// with the file's packages unknown, a \usepackage offer would guess at what is loaded already
+	if (isDegraded(loaded)) return { macros: [], envs: [] };
 	const user = userDefinitions(text);
 	const userKey = [...user].sort().join(',');
 	if (offeredCache?.loaded === loaded && offeredCache.user === userKey) return offeredCache.offered;

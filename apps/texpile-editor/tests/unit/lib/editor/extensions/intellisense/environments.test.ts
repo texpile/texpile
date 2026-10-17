@@ -51,7 +51,7 @@ describe('environment completion: ForBegin + close-environment', () => {
 		expect((await align('\\usepackage{amsmath}\n\\begin{'))?.detail).toBeUndefined();
 		// mathtools loads amsmath
 		expect((await align('\\usepackage{mathtools}\n\\begin{'))?.detail).toBeUndefined();
-		expect((await align('\\begin{'))?.detail).toBe('amsmath');
+		expect((await align('\\documentclass{article}\n\\begin{'))?.detail).toBe('amsmath');
 		expect(await align('\\usepackage{xcolor}\n\\begin{tikzpicture}\n\\end{')).toBeUndefined();
 	});
 
@@ -67,7 +67,7 @@ describe('environment completion: ForBegin + close-environment', () => {
 
 	it('offers what a package with no commands of its own loads', async () => {
 		const landscape = async (doc: string) => ((await completeAt(doc))?.options ?? []).find((o) => o.label === 'landscape');
-		expect((await landscape('\\begin{'))?.detail).toBeTruthy();
+		expect((await landscape('\\documentclass{article}\n\\begin{'))?.detail).toBeTruthy();
 		// pdflscape loads lscape, which defines it
 		expect(await landscape('\\usepackage{pdflscape}\n\\begin{')).toBeTruthy();
 		expect((await landscape('\\usepackage{pdflscape}\n\\begin{'))?.detail).toBeUndefined();

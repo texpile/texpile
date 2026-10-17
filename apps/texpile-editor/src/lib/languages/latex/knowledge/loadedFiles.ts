@@ -2,7 +2,7 @@
 import type { Engine } from '$lib/workspace/compileCommand';
 import { loadBundled } from './bundledFiles';
 import { fileIdOf, useNameOf } from './fileIds';
-import { userLayers } from './userFiles';
+import { probedFile, userLayers } from './userFiles';
 import type { Dependency, PackageFile } from './types';
 
 export type FileUse = { name: string; options: string[] };
@@ -26,8 +26,8 @@ export function conditionHolds(condition: string, options: Set<string>): boolean
 }
 
 export async function layersOf(name: string): Promise<PackageFile[]> {
-	const bundled = await loadBundled(fileIdOf(name));
-	return [...(bundled ? [bundled] : []), ...userLayers(name)];
+	const shipped = (await loadBundled(fileIdOf(name))) ?? probedFile(name);
+	return [...(shipped ? [shipped] : []), ...userLayers(name)];
 }
 
 // a layer's deps replace the ones below it

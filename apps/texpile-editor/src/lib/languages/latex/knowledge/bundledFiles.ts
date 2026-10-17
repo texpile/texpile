@@ -1,12 +1,16 @@
 // the package files Texpile ships, loaded when first asked for
-import kernel from './data/kernel/latex.json';
-import article from './data/classes/article.json';
-import type { PackageFile } from './types';
+import baseTable from './data/base-table.json';
+import type { Argument, PackageFile } from './types';
 
-/** the kernel, then article, which a parse reads without waiting */
-export const KERNEL_FILES = [kernel, article] as PackageFile[];
+/** the arguments the kernel and texpile/ctan-base's files give, stacked, for a parse that cannot wait for files */
+export const BASE_TABLE = baseTable as { macros: Record<string, Argument[]>; envs: Record<string, Argument[]>; math: string[] };
 
-const modules = import.meta.glob<{ default: PackageFile }>(['./data/**/*.json', '!./data/texpile/**', '!./data/keyed.json']);
+const modules = import.meta.glob<{ default: PackageFile }>([
+	'./data/**/*.json',
+	'!./data/texpile/catalog.json',
+	'!./data/keyed.json',
+	'!./data/base-table.json'
+]);
 const PREFIX = './data/';
 const cache = new Map<string, Promise<PackageFile | null>>();
 

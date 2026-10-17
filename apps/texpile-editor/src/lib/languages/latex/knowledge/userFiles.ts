@@ -1,4 +1,5 @@
-// the reader's own package files: .texpile/packages/<name>.json and the global folder's, named like the package
+// the reader's own package files: .texpile/packages/<name>.json and the global folder's, named like the package; and
+// the files drafted from what the reader's TeX reports for an installed package Texpile ships none for
 import { notJson, notObject, stripJsonc } from '$lib/editor/snippets/file/parseSnippetFile';
 import { m } from '$lib/paraglide/messages';
 import { isEngine } from '$lib/workspace/compileCommand';
@@ -6,7 +7,31 @@ import type { Argument, CommandEntry, Dependency, EnvironmentEntry, Key, Package
 
 /** global first, then the folder's: each stacks on what comes before it */
 const layers = new Map<string, PackageFile[]>();
+const probed = new Map<string, PackageFile>();
 let version = 0;
+
+/** what the reader's TeX reports for a package Texpile ships no file for */
+export function probedFile(name: string): PackageFile | null {
+	return probed.get(name) ?? null;
+}
+
+export function setProbedFile(name: string, file: PackageFile): void {
+	if (JSON.stringify(probed.get(name)) === JSON.stringify(file)) return;
+	version++;
+	probed.set(name, file);
+}
+
+/** a host's probed files, shared with its guests */
+export function probedFiles(): Record<string, PackageFile> {
+	return Object.fromEntries(probed);
+}
+
+export function setProbedFiles(next: Record<string, PackageFile>): void {
+	if (JSON.stringify(next) === JSON.stringify(probedFiles())) return;
+	version++;
+	probed.clear();
+	for (const [name, file] of Object.entries(next)) probed.set(name, file);
+}
 
 export function userLayers(name: string): PackageFile[] {
 	return layers.get(name) ?? [];

@@ -55,7 +55,7 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 		},
 		parse: async (text: string) => (await deps.parse(text)).parsed ?? null,
 		adopt(parsed: ParsedLatexFile, liveDoc: PMNode) {
-			doc.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
+			doc.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
 			// reference handshake: the editor sees its own live doc and skips the state swap
 			doc.visualDoc = liveDoc;
 			doc.lastDoc = liveDoc;

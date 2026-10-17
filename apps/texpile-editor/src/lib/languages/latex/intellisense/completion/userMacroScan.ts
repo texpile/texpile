@@ -3,7 +3,6 @@
 // 1MB; results are plain data so they can cross the worker boundary.
 import { listNewcommands } from '@unified-latex/unified-latex-util-macros';
 import { parseLatex } from '$lib/languages/latex/parser/parser';
-import { MACRO_SIGNATURES, ENV_SIGNATURES } from '$lib/languages/latex/parser/macros';
 
 export type UserMacroDef = {
 	name: string;
@@ -31,7 +30,7 @@ export function extractUserMacros(text: string): UserMacroDef[] {
 		out.push({ name, signature });
 	}
 	try {
-		const ast = parseLatex(text, { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES });
+		const ast = parseLatex(text);
 		for (const m of listNewcommands(ast)) add(m.name, m.signature);
 	} catch {
 		// unparseable mid-edit buffer: static + regex-scanned completions still work

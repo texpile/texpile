@@ -1,14 +1,8 @@
-// argument signatures for loaded packages, from the user's package file, the bundled data or what the reader's TeX reports
-import { MACRO_SIGNATURES } from './parser/macros';
-import { signaturesOf } from './parser/signatures/argSignature';
-import { keptMacroNames } from './parser/signatures/signatureTable';
+// package files for installed packages Texpile ships none for, from what the reader's TeX reports
 import { isBundled } from './knowledge/bundledFiles';
 import { fileIdOf } from './knowledge/fileIds';
-import { layersOf, type LoadedFile } from './knowledge/loadedFiles';
-import { stackedCommands } from './knowledge/stackedEntries';
-import { userLayers } from './knowledge/userFiles';
+import { setProbedFile, userLayers } from './knowledge/userFiles';
 import type { Argument, CommandEntry, EnvironmentEntry, PackageFile } from './knowledge/types';
-import { listOf } from './intellisense/packages/packageUses';
 
 /** spec: m/o tokens for a plain macro, or "X <xparse spec>" for a \NewDocumentCommand; own: the package's own command, not
  * one of a package it loads; redefined: it existed before the package loaded */
@@ -18,19 +12,7 @@ export type InstalledPackage = { name: string; options: string };
 export type ProbeInstalledPackage = (name: string, options: string, classOptions: string) => Promise<PackageProbe | null>;
 
 const PACKAGE_NAME = /^[\w.+-]+$/;
-// the converter reads these commands' arguments as the parser lays them out, whatever a package says
-const KNOWN = new Set([...Object.keys(MACRO_SIGNATURES), ...keptMacroNames(false)]);
-// the tokenizer reads \verbatiminput as \verb with "a" as its delimiter, which swallows the definitions after it
-function definable(name: string): boolean {
-	return !KNOWN.has(name) && !name.startsWith('verb');
-}
-const cache = new Map<string, Promise<Map<string, string>>>();
-
-function definitionLine(name: string, signature: string): string {
-	const args = signature.split(/\s+/).filter(Boolean);
-	if (args.every((a) => a === 'm')) return `\\newcommand{\\${name}}${args.length ? `[${args.length}]` : ''}{}`;
-	return `\\NewDocumentCommand{\\${name}}{${signature}}{}`;
-}
+const asked = new Map<string, Promise<void>>();
 
 /** the arguments as s, o and m; null for kinds the parser and package files cannot carry (delimited, verbatim) */
 export function argumentsOf(spec: string): string | null {
@@ -65,30 +47,6 @@ function environmentsIn(probe: PackageProbe): Set<string> {
 	return new Set([...names].filter((n) => names.has(`end${n}`)));
 }
 
-// a command TeX reports with no arguments is left to the parser's usage guess: many read theirs as they run
-function probeDefinitions(probe: PackageProbe): Map<string, string> {
-	const lines = new Map<string, string>();
-	for (const { name, spec } of probe.commands) {
-		const args = argumentsOf(spec);
-		if (args && definable(name)) lines.set(name, definitionLine(name, args));
-	}
-	return lines;
-}
-
-function fileDefinitions(file: LoadedFile): Map<string, string> {
-	const lines = new Map<string, string>();
-	for (const [name, signature] of signaturesOf(stackedCommands([file]).values()))
-		if (definable(name)) lines.set(name, definitionLine(name, signature));
-	return lines;
-}
-
-// own commands only: algpseudocode loads algorithmicx, whose \algdef reads its arguments as it runs
-async function packageDefinitions(name: string, options: string, classOptions: string): Promise<Map<string, string>> {
-	const layers = await layersOf(name);
-	if (!layers.length) return new Map();
-	return fileDefinitions({ id: fileIdOf(name), name, layers, options: new Set([...listOf(options), ...listOf(classOptions)]) });
-}
-
 function entryOf(name: string, spec: string): CommandEntry & EnvironmentEntry {
 	const args = (argumentsOf(spec) ?? '').split(' ').filter((a) => a === 's' || a === 'o' || a === 'm');
 	return args.length ? { name, args: args.map((kind): Argument => ({ kind })) } : { name };
@@ -105,46 +63,32 @@ export function packageFileFrom(probe: PackageProbe): PackageFile {
 	return { version: 1, macros, envs };
 }
 
-/** stub definitions of the packages' commands, for the parser's signature scan; the document class is class-<name> */
-export async function installedPackageDefinitions(
+/** asks the reader's TeX about every package Texpile and the reader have no file for; a class has no reading of its
+ * own. The answers become package files the parse and completion read */
+export async function probeInstalledPackages(
 	packages: InstalledPackage[],
 	classOptions: string,
 	probe: ProbeInstalledPackage
-): Promise<string> {
-	const named = packages.filter((p) => PACKAGE_NAME.test(p.name));
-	const found = await Promise.all(
-		named.map(({ name, options }) => {
-			if (userLayers(name).length || isBundled(fileIdOf(name))) return packageDefinitions(name, options, classOptions);
-			// a class has no reading of its own
-			if (name.startsWith('class-')) return Promise.resolve(new Map<string, string>());
+): Promise<void> {
+	const unknown = packages.filter(
+		(p) => PACKAGE_NAME.test(p.name) && !p.name.startsWith('class-') && !userLayers(p.name).length && !isBundled(fileIdOf(p.name))
+	);
+	await Promise.all(
+		unknown.map(({ name, options }) => {
 			const key = `${name}[${options}]{${classOptions}}`;
-			let entry = cache.get(key);
+			let entry = asked.get(key);
 			if (!entry) {
 				entry = probe(name, options, classOptions).then(
 					(result) => {
 						// asked again next time: TeX may be installed or found by then
-						if (!result) cache.delete(key);
-						return result ? probeDefinitions(result) : new Map<string, string>();
+						if (!result) asked.delete(key);
+						else setProbedFile(name, packageFileFrom(result));
 					},
-					() => {
-						cache.delete(key);
-						return new Map<string, string>();
-					}
+					() => void asked.delete(key)
 				);
-				cache.set(key, entry);
+				asked.set(key, entry);
 			}
 			return entry;
 		})
 	);
-	// a package loads after the class, so its definition stands; two packages that disagree (\For) leave the usage guess
-	const fromClass = new Map<string, string>();
-	const lines = new Map<string, string | null>();
-	found.forEach((defs, i) => {
-		const isClass = named[i].name.startsWith('class-');
-		for (const [name, line] of defs)
-			if (isClass) fromClass.set(name, line);
-			else lines.set(name, lines.has(name) && lines.get(name) !== line ? null : line);
-	});
-	for (const [name, line] of fromClass) if (!lines.has(name)) lines.set(name, line);
-	return [...lines.values()].filter(Boolean).join('\n');
 }

@@ -130,3 +130,9 @@ describe('the closers after a call kept as a chip', () => {
 		expect(rt(src)).toContain('\\right] \\bX');
 	});
 });
+
+describe('biblatex resources in the body', () => {
+	it('keeps \\addbibresource as written', () => {
+		expect(rt('% Add bibliography\n\\addbibresource{bibliography.bib}\n')).toContain('\\addbibresource{bibliography.bib}');
+	});
+});

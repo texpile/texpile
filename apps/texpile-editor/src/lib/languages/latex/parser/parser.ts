@@ -5,16 +5,16 @@ import {
 	unifiedLatexProcessAtLetterAndExplMacros
 } from '@unified-latex/unified-latex-util-parse';
 import { unifiedLatexTrimEnvironmentContents, unifiedLatexTrimRoot } from '@unified-latex/unified-latex-util-trim';
-import type { Root, Node, Argument } from '@unified-latex/unified-latex-types';
+import type { Root, Node, Argument, MacroInfoRecord, EnvInfoRecord } from '@unified-latex/unified-latex-types';
 import type { ParseOptions, LatexAst } from './types';
 import { parseMinimal } from './pegMinimal';
 import { processMacrosAndEnvironments } from './macrosAndEnvironments';
-import { environmentTable, KERNEL_IN_MATH, macroTable } from './signatures/signatureTable';
+import { environmentTable, macroTable, mathTable } from './signatures/signatureTable';
 
 // @unified-latex plugins are built against unified@10, this app uses @11: the Plugin<> generics
 // don't structurally match though the runtime contract is the same. cast via `unknown` first so
 // it stays a type erasure of a known shape, not an open hole.
-type UnifiedLatexPluginOptions = Pick<ParseOptions, 'mode' | 'macros' | 'environments' | 'flags'>;
+type UnifiedLatexPluginOptions = Pick<ParseOptions, 'mode' | 'flags'> & { macros: MacroInfoRecord; environments: EnvInfoRecord };
 type UnifiedLatexFromStringPlugin = Plugin<[UnifiedLatexPluginOptions], string, Root>;
 type UnifiedLatexParserPlugin = Plugin<[], string, Root>;
 type UnifiedLatexTransformPlugin<O = void> = Plugin<[O], Root, Root>;
@@ -35,8 +35,8 @@ function processorFor(options: ParseOptions) {
 		return unified()
 			.use(unifiedLatexFromString as unknown as UnifiedLatexFromStringPlugin, {
 				mode: options.mode,
-				macros: options.macros,
-				environments: options.environments,
+				macros: { ...macroTable(options), ...mathTable(options) },
+				environments: environmentTable(options),
 				flags: options.flags
 			})
 			.use(unifiedLatexAstComplier as unknown as UnifiedLatexAstComplierPlugin);
@@ -48,7 +48,7 @@ function processorFor(options: ParseOptions) {
 		.use(processMacrosAndEnvironments, {
 			macros: macroTable(options),
 			environments: environmentTable(options),
-			mathCommands: KERNEL_IN_MATH
+			mathCommands: mathTable(options)
 		})
 		.use(unifiedLatexTrimEnvironmentContents as unknown as UnifiedLatexTransformPlugin)
 		.use(unifiedLatexTrimRoot as unknown as UnifiedLatexTransformPlugin)

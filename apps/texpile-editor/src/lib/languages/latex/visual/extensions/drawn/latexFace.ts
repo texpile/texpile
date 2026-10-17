@@ -241,7 +241,7 @@ function drawLatex(source: string, d: Drawing): ChipFace | null {
 	let nodes = parsed.get(source);
 	if (!nodes) {
 		try {
-			parse ??= createLatexParser({ macros: SIGNATURES });
+			parse ??= createLatexParser({ documentMacros: SIGNATURES });
 			nodes = parse(source).content;
 		} catch {
 			return null;

@@ -9,7 +9,7 @@ import { attachMacroArgs } from '@unified-latex/unified-latex-util-arguments';
 import { mergeAdjacentRawBlocks } from '$lib/editor/visual/mergeRawBlocks';
 import { buildNode, textNode, createDefaultContext, collapseTextNodes, type PmNode, type PmMark, type ConversionOptions } from './builders';
 
-import { MACRO_SIGNATURES, ENV_SIGNATURES, stripSamelineComments, type SameLineCommented } from './macros';
+import { stripSamelineComments, type SameLineCommented } from './macros';
 import {
 	heuristicMarkCommentedMacroCalls,
 	heuristicMarkTexPrimitiveDefs,
@@ -27,7 +27,8 @@ import { macroHandlers } from './convert/macroHandlers';
 import { TABLE_RULE_MACROS } from './convert/tableConvert';
 import { isBlockNode } from './convert/blockKinds';
 import { scanPreambleText } from './convert/preambleScan';
-import { KERNEL_AFTER_PARSE, loadsBeamer, replacedBy } from './signatures/signatureTable';
+import { macroTable, mathTable, replacedBy } from './signatures/signatureTable';
+import { attachArgsPastComments } from './signatures/argsPastComments';
 import { convertNodeToBlock } from './convert/blockConvert';
 import {
 	applyLigaturesToNodes,
@@ -331,7 +332,7 @@ function extractContent(ast: Root): Node[] {
 // call dominated large projects. single slot, latest wins; a timed-out worker is rebooted,
 // which clears it for free.
 export function latexToProseMirror(latex: string, options: ConversionOptions = {}): { doc: PmNode; ast: Root } {
-	const baseOptions: ParseOptions = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES, beamer: loadsBeamer(options.preamble ?? '') };
+	const baseOptions: ParseOptions = { table: options.table };
 	const preScan = options.preamble ? scanPreambleText(options.preamble, baseOptions) : null;
 	const parseOptions: ParseOptions = { ...baseOptions, documentMacros: replacedBy(baseOptions, preScan?.newcommands ?? []) };
 
@@ -353,10 +354,9 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	// indent/noindent are zero-arg but handled by a direct content check, never via
 	// macroHandlers, so inference attached the next brace group as an "argument" that its own
 	// handling never reads, and the group silently vanished.
+	const known = { ...macroTable(parseOptions), ...mathTable(parseOptions) };
 	function heuristicKnows(name: string) {
-		return (
-			!!parseOptions.macros?.[name] || name in macroHandlers || TABLE_RULE_MACROS.has(name) || name === 'indent' || name === 'noindent'
-		);
+		return name in known || name in macroHandlers || TABLE_RULE_MACROS.has(name) || name === 'indent' || name === 'noindent';
 	}
 	heuristicMarkCommentedMacroCalls(ast.content as Node[], latex, heuristicKnows);
 
@@ -379,8 +379,9 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 
 	// drop trailing comments so a command's args can attach across them (see fn comment)
 	stripSamelineComments(ast.content as Node[]);
+	attachArgsPastComments(ast, known);
 
-	// signatures for user-defined commands so their args stay attached. four sources, in
+	// signatures for user-defined commands so their args stay attached. three sources, in
 	// priority order:
 	const macroInfo: Record<string, { signature: string }> = {};
 	//  1. \newcommand/\renewcommand/... in the body
@@ -391,9 +392,7 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 			if (!macroInfo[m.name]) macroInfo[m.name] = { signature: m.signature };
 		}
 	}
-	//  3. the kernel's commands unified-latex lacks
-	for (const [name, entry] of Object.entries(KERNEL_AFTER_PARSE)) macroInfo[name] ??= { signature: entry.signature! };
-	//  4. heuristic: infer an unknown command's arity from usage so the args don't flatten
+	//  3. heuristic: infer an unknown command's arity from usage so the args don't flatten
 	Object.assign(macroInfo, heuristicInferUnknownMacroSignatures(ast, heuristicKnows, macroInfo));
 
 	if (Object.keys(macroInfo).length > 0) {

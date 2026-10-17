@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
 import { findMacros } from '$lib/languages/latex/parser/ast-utils';
-import { installedPackageDefinitions } from '$lib/languages/latex/installedPackages';
+import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { packageTableOf } from '$lib/languages/latex/parser/signatures/packageTable';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { withoutOrigins } from '$lib/editor/visual/parseOrigins';
 
@@ -10,20 +11,27 @@ function regenerated(body: string): string {
 	return serializeLatexFile(parsed, withoutOrigins(parsed.doc));
 }
 
+async function tableOf(...names: string[]) {
+	return packageTableOf(
+		await loadedPackages(
+			names.map((name) => ({ name, options: [] })),
+			true
+		)
+	);
+}
+
 const LIST = '\\begin{itemize}\n\\item <5 ms, but >3 ms\n\\end{itemize}';
 
 describe('the signatures a parse reads', () => {
-	it("keeps beamer's overlay arguments to beamer documents", () => {
-		const article = latexToProseMirror(LIST, { preamble: '\\documentclass{article}\n\\begin{document}' });
+	it("keeps beamer's overlay arguments to beamer documents", async () => {
+		const article = latexToProseMirror(LIST, { table: await tableOf('class-article') });
 		expect(article.doc.textContent).toContain('5 ms, but');
-		const slides = latexToProseMirror(LIST, { preamble: '\\documentclass{beamer}\n\\begin{document}' });
+		const slides = latexToProseMirror(LIST, { table: await tableOf('class-beamer') });
 		expect(findMacros(slides.ast, 'item')[0].args?.some((a) => a.openMark === '<')).toBe(true);
 	});
 
-	it('reads the optional argument a class adds to a kernel command', () => {
-		const { ast } = latexToProseMirror('\\author[0000-0002-8077-094X]{Yuhao Chen}', {
-			preamble: '\\documentclass{aastex701}\n\\begin{document}'
-		});
+	it('reads the optional argument a class adds to a kernel command', async () => {
+		const { ast } = latexToProseMirror('\\author[0000-0002-8077-094X]{Yuhao Chen}', { table: await tableOf('class-aastex701') });
 		expect(findMacros(ast, 'author')[0].args?.map((a) => a.openMark)).toEqual(['[', '{']);
 	});
 
@@ -43,7 +51,25 @@ describe('the signatures a parse reads', () => {
 	});
 
 	it("gives the parser a package's signature where unified-latex has another", async () => {
-		const stubs = await installedPackageDefinitions([{ name: 'hyperref', options: '' }], '', async () => null);
-		expect(stubs).toContain('\\NewDocumentCommand{\\hyperdef}{o m m m}{}');
+		const { ast } = latexToProseMirror('\\hyperdef[x]{a}{b}{c}', { table: await tableOf('class-article', 'hyperref') });
+		expect(findMacros(ast, 'hyperdef')[0].args?.map((a) => a.openMark)).toEqual(['[', '{', '{', '{']);
+	});
+	it("keeps a command's optional arguments under a package that wraps it (bibunits over natbib's \\cite)", async () => {
+		const table = await tableOf('class-article', 'natbib', 'bibunits');
+		expect(table.macros.cite.map((a) => a.kind)).toEqual(['s', 'o', 'o', 'm']);
+	});
+
+	it('reads a parameterless \\newcommand as taking none and a \\renewcommand as handing on its arguments', () => {
+		const out = regenerated(
+			'\\newcommand{\\so}{0}\n\\providecommand{\\section}{}\n\\renewcommand\\section{\\@startsection{section}{1}{0pt}{1ex}{1ex}{\\bf}}\n\\section{Intro}\n\n\\begin{tabular}{ll}\na & \\so \\\\ b & \\so \\\\\n\\end{tabular}'
+		);
+		expect(out).toContain('\\section{Intro}');
+		expect(out).toMatch(/a & \\so \\\\\s*b & \\so \\\\/);
+	});
+
+	it('gives the command a definer names no arguments of its own', () => {
+		expect(regenerated('\\providecommand*\\natexlab[1]{#1}\n\\def\\vec{\\mathaccent"717E }\n\nText.')).toMatch(
+			/\\providecommand\*\\natexlab\[1\]\{#1\}\s*\\def\\vec\{/
+		);
 	});
 });

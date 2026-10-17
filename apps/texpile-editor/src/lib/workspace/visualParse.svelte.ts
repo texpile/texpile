@@ -7,6 +7,8 @@
 import type { ParsedLatexFile, ParsePhase } from '$lib/workspace/latexRoundtrip';
 import { parseLatexFileAsync, PARSE_TIMEOUT, PARSE_TOO_COMPLEX } from '$lib/workspace/latexParserClient';
 import { mark } from '$lib/debug/startupDoctor';
+import { parsedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { packageTableOf, type PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 import type { Node as PMNode } from 'prosemirror-model';
 
 // ProseMirror renders the whole doc with no virtualization and builds a node view per
@@ -24,6 +26,10 @@ const MAX_TIMEOUT_MS = 30000;
 /** parse time is roughly linear in the text, so the timeout scales with it */
 function timeoutFor(text: string): number {
 	return Math.min(MAX_TIMEOUT_MS, MIN_TIMEOUT_MS + Math.floor(text.length / 100));
+}
+
+async function tableFor(text: string, format: 'tex' | 'md'): Promise<PackageTable | undefined> {
+	return format === 'tex' ? packageTableOf(await parsedPackages(text)) : undefined;
 }
 
 export type ParseFailure = {
@@ -67,7 +73,8 @@ export class VisualParser {
 				const { parseTypstFile } = await import('$lib/languages/typst/visual/roundtrip');
 				return parseTypstFile(text, this.getMacros()).doc;
 			}
-			return (await parseLatexFileAsync(text, this.getMacros(), timeoutFor(text), undefined, 0, format)).doc;
+			const table = await tableFor(text, format);
+			return (await parseLatexFileAsync(text, this.getMacros(), timeoutFor(text), undefined, 0, format, table)).doc;
 		} catch {
 			return null;
 		}
@@ -84,7 +91,8 @@ export class VisualParser {
 			const timeoutMs = timeoutFor(text);
 			if (shown) this.progress = 'parsing';
 			const progress = shown ? (p: ParsePhase) => (this.progress = p) : undefined;
-			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format) };
+			const table = await tableFor(text, format);
+			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format, table) };
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : String(e);
 			// TODO: unified-latex's PEG tokenizer throws "RangeError: Invalid array length" on very

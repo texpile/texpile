@@ -1,150 +1,70 @@
-// the macros and environments a parse reads
+// the macros and environments a parse reads: the document's package table, and unified-latex's code for what a
+// signature cannot say
 import { environmentInfo, macroInfo } from '@unified-latex/unified-latex-ctan';
 import type * as Ast from '@unified-latex/unified-latex-types';
 import type { ParseOptions } from '../types';
-import { packageUsesIn } from '../../intellisense/packages/packageUses';
-import { KERNEL_MATH, KERNEL_SIGNATURES } from './kernelSignatures';
+import { BASE_PACKAGE_TABLE, environmentRecordOf, macroRecordOf, type PackageTable } from './packageTable';
 
-// the commands the converter reads arguments of, laid out as unified-latex gives them
-const CONVERTER_READS = new Set([
-	'textbf',
-	'textit',
-	'emph',
-	'underline',
-	'texttt',
-	'textsuperscript',
-	'textsubscript',
-	'abstract',
-	'verb',
-	'textcolor',
-	'hl',
-	'colorbox',
-	'url',
-	'href',
-	'section',
-	'subsection',
-	'subsubsection',
-	'paragraph',
-	'subparagraph',
-	'chapter',
-	'part',
-	'newline',
-	'label',
-	'rule',
-	'cite',
-	'ref',
-	'eqref',
-	'vspace',
-	'input',
-	'include',
-	'includegraphics',
-	'item',
-	'caption',
-	'bibitem',
-	'multicolumn'
-]);
-// listNewcommands reads a definition by how many arguments its definer took
-const DEFINER = /^(?:(?:re)?new|provide)(?:command|environment)$|(?:Document|ExpandableDocument)(?:Command|Environment)$/;
+// unified-latex reads these with code of its own (\lstinline|x|, \tikz ...;), or parses their arguments as math
+// (\frac, \sqrt), or they are not commands with names (^, _, \\)
+const CODE_MACROS: Ast.MacroInfoRecord = {};
+for (const [group, macros] of Object.entries(macroInfo))
+	if (group !== 'beamer')
+		for (const [name, entry] of Object.entries(macros))
+			if (entry.argumentParser || entry.renderInfo?.inMathMode || !/^[a-zA-Z]+$/.test(name)) CODE_MACROS[name] = entry;
 
-function required(signature: string): string {
-	return signature
-		.split(/\s+/)
-		.filter((t) => /^[mrRv]/.test(t))
-		.join(' ');
-}
-
-function width(signature: string): number {
-	return signature.split(/\s+/).filter(Boolean).length;
-}
-
-// classes add optional arguments to some kernel commands (\author[orcid]{name}), which unified-latex's wider signature reads
-function widensKernel(name: string, entry: Ast.MacroInfo): boolean {
-	const ours = KERNEL_SIGNATURES[name]?.signature;
-	const theirs = entry.signature;
-	return ours != null && theirs != null && required(theirs) === required(ours) && width(theirs) > width(ours);
-}
-
-function kept(name: string, entry: Ast.MacroInfo): boolean {
-	return (
-		CONVERTER_READS.has(name) ||
-		DEFINER.test(name) ||
-		!!entry.argumentParser ||
-		!!entry.renderInfo?.inMathMode ||
-		!/^[a-zA-Z]+$/.test(name) ||
-		widensKernel(name, entry)
-	);
-}
-
-// the other unified-latex package entries, for what our kernel lacks: ^ and _ take \mathbb{R} whole only when its
-// argument attaches in the same pass
-let restTable: Ast.MacroInfoRecord | null = null;
-function restMacros(): Ast.MacroInfoRecord {
-	if (!restTable) {
-		restTable = {};
-		for (const [group, macros] of Object.entries(macroInfo))
-			if (group !== 'beamer')
-				for (const [name, entry] of Object.entries(macros)) if (!(name in KERNEL_SIGNATURES) && !kept(name, entry)) restTable[name] = entry;
-	}
-	return restTable;
-}
-
-// what unified-latex attached in the parse still attaches there, where a list's processing reads it; the kernel's other
-// commands attach after the parse, as a usage guess did, and so read past a comment between arguments (\markboth{A}% {B})
-const unifiedNames = new Set(
-	Object.entries(macroInfo)
+// unified-latex splits list bodies into items and marks math environments; their signatures come from the table
+const CODE_ENVIRONMENTS: Ast.EnvInfoRecord = Object.assign(
+	{},
+	...Object.entries(environmentInfo)
 		.filter(([group]) => group !== 'beamer')
-		.flatMap(([, macros]) => Object.keys(macros))
+		.map(([, envs]) => envs)
 );
-function kernelWhere(test: (name: string) => boolean): Ast.MacroInfoRecord {
-	return Object.fromEntries(Object.entries(KERNEL_SIGNATURES).filter(([name]) => test(name)));
-}
-const KERNEL_IN_PARSE = kernelWhere((name) => unifiedNames.has(name));
-/** the kernel's math commands unified-latex lacks, which attach in math only */
-export const KERNEL_IN_MATH = kernelWhere((name) => !unifiedNames.has(name) && KERNEL_MATH.has(name));
-export const KERNEL_AFTER_PARSE = kernelWhere((name) => !unifiedNames.has(name) && !KERNEL_MATH.has(name));
 
-const keptTables = new Map<boolean, Ast.MacroInfoRecord>();
-function keptMacros(beamer: boolean): Ast.MacroInfoRecord {
-	let table = keptTables.get(beamer);
-	if (!table) {
-		table = {};
-		for (const [group, macros] of Object.entries(macroInfo)) {
-			if (group === 'beamer' && !beamer) continue;
-			// beamer's overlay arguments come whole: our package files cannot place one after an argument (\only{x}<2>)
-			for (const [name, entry] of Object.entries(macros)) if (group === 'beamer' || kept(name, entry)) table[name] = entry;
-		}
-		keptTables.set(beamer, table);
-	}
-	return table;
+function tableOf(options: ParseOptions): PackageTable {
+	return options.table ?? BASE_PACKAGE_TABLE;
 }
 
-/** the unified-latex entries a parse keeps, which nothing the document defines replaces */
-export function keptMacroNames(beamer: boolean): Set<string> {
-	return new Set(Object.keys(keptMacros(beamer)));
-}
-
+/** the commands the table gives, the ones valid only in math left to the math pass */
 export function macroTable(options: ParseOptions): Ast.MacroInfoRecord {
-	const table = { ...KERNEL_IN_PARSE, ...restMacros() };
-	for (const [name, entry] of Object.entries(options.documentMacros ?? {})) if (name in table) table[name] = entry;
-	return { ...table, ...keptMacros(!!options.beamer), ...options.macros };
+	const table = tableOf(options);
+	const record = { ...macroRecordOf(table) };
+	for (const name of table.math) delete record[name];
+	return { ...record, ...options.documentMacros, ...CODE_MACROS };
+}
+
+/** the commands valid only in math, which attach in math so an argument read as text (\begin{numcases}{\dot m_x})
+ * does not give \dot the word m_ */
+export function mathTable(options: ParseOptions): Ast.MacroInfoRecord {
+	const table = tableOf(options);
+	const record = macroRecordOf(table);
+	return Object.fromEntries(table.math.filter((n) => n in record && !(n in (options.documentMacros ?? {}))).map((n) => [n, record[n]]));
 }
 
 export function environmentTable(options: ParseOptions): Ast.EnvInfoRecord {
-	const groups = Object.entries(environmentInfo).filter(([group]) => group !== 'beamer' || options.beamer);
-	return Object.assign({}, ...groups.map(([, envs]) => envs), options.environments);
+	const out: Ast.EnvInfoRecord = { ...CODE_ENVIRONMENTS };
+	for (const [name, entry] of Object.entries(environmentRecordOf(tableOf(options)))) out[name] = { ...out[name], ...entry };
+	return out;
 }
 
-/** the definitions that replace an entry the table reads differently */
-export function replacedBy(options: ParseOptions, definitions: { name: string; signature: string }[]): Ast.MacroInfoRecord {
-	const table = macroTable(options);
-	const kept = { ...keptMacros(!!options.beamer), ...options.macros };
+/** the names a document's definitions never replace */
+export function codeMacroNames(): Set<string> {
+	return new Set(Object.keys(CODE_MACROS));
+}
+
+/** the definitions that replace an entry the table reads differently; a redefinition without parameters keeps the
+ * table's arguments, since it hands them to a command it calls (\renewcommand\section{\@startsection...}), and
+ * \providecommand leaves a command the table has as it is, as TeX does */
+export function replacedBy(
+	options: ParseOptions,
+	definitions: { name: string; signature: string; definition?: Ast.Macro }[]
+): Ast.MacroInfoRecord {
+	const table = { ...macroTable(options), ...mathTable(options) };
 	const replaced: Ast.MacroInfoRecord = {};
-	for (const { name, signature } of definitions)
-		if (name in table && !(name in kept) && table[name].signature !== signature) replaced[name] ??= { signature };
+	for (const { name, signature, definition } of definitions) {
+		const definer = definition?.content ?? '';
+		const keeps = definer.startsWith('provide') || definer.startsWith('Provide') || (!signature && definer.startsWith('renew'));
+		if (name in table && !(name in CODE_MACROS) && !keeps && table[name].signature !== signature) replaced[name] ??= { signature };
+	}
 	return replaced;
-}
-
-/** the preamble loads beamer, whose overlay arguments (\item<2>) apply only there */
-export function loadsBeamer(preamble: string): boolean {
-	return packageUsesIn(preamble).some((use) => use.name === 'class-beamer' || use.name === 'beamerarticle');
 }
